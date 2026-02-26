@@ -34,7 +34,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-  ],
+, "src/lib/holidays-engine.js"  ],
   "exclude": [
     "node_modules"
   ]
