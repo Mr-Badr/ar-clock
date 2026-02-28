@@ -34,6 +34,7 @@ const enrichEvent = (e) => {
   if (copy.day) copy.day = Number(copy.day);
 
   copy.title = copy.title || `كم باقي على ${copy.name}`;
+  copy.seoTitle = copy.seoTitle || `${copy.name} - عداد المواعيد`;
   copy.description = copy.description || `عد تنازلي لموعد ${copy.name} ومتابعة الوقت المتبقي بالدقة.`;
   copy.details = copy.details || `تعرف على موعد ${copy.name} وتابع العد التنازلي المباشر بالثانية والدقيقة والساعة.`;
 
@@ -216,6 +217,19 @@ export const COUNTRIES_EVENTS = [
   }
 ];
 
+// in holidays-engine.js
+
+export const ASTRONOMICAL_EVENTS = [
+  { id: 'solar-eclipse', slug: 'solar-eclipse', name: 'كسوف الشمس', type: 'fixed', month: 10, day: 14, seoTitle: 'موعد كسوف الشمس', description: 'تاريخ كسوف الشمس المتوقع', details: 'كسوف الشمس ظاهرة فلكية...' },
+  { id: 'lunar-eclipse', slug: 'lunar-eclipse', name: 'خسوف القمر', type: 'fixed', month: 9, day: 7, seoTitle: 'موعد خسوف القمر', description: 'تاريخ خسوف القمر المتوقع', details: 'خسوف القمر حدث فلكي...' },
+];
+// in holidays-engine.js
+
+export const EDUCATIONAL_EVENTS = [
+  { id: 'exam-results-first', slug: 'exam-results-first', name: 'نتائج الامتحانات الأولى', type: 'estimated', date: '2026-01-20', seoTitle: 'نتائج امتحانات الفصل الأول', description: 'موعد إعلان نتائج الامتحانات الأولى' },
+  { id: 'exam-results-final', slug: 'exam-results-final', name: 'نتائج الامتحانات النهائية', type: 'estimated', date: '2026-06-30', seoTitle: 'نتائج الامتحانات النهائية', description: 'الإعلان عن نتائج نهاية السنة' },
+];
+
 /* ---------------------
   Date utilities
   --------------------- */
@@ -317,5 +331,7 @@ export function getTimeRemaining(targetDate) {
 export const ALL_EVENTS = [
   ...RELIGIOUS_HOLIDAYS.map(enrichEvent),
   ...SEASONAL_EVENTS.map(enrichEvent),
+  ...ASTRONOMICAL_EVENTS.map(enrichEvent),   // added above
+  ...EDUCATIONAL_EVENTS.map(enrichEvent),     // added here
   ...COUNTRIES_EVENTS.flatMap(c => c.events.map(enrichEvent))
 ];
