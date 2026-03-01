@@ -1,13 +1,13 @@
+/* holidays/[slug]/page.jsx */ 
 import { ALL_EVENTS, getNextEventDate, getTimeRemaining } from '@/lib/holidays-engine';
 import Header from '@/components/layout/header';
 import CountdownTicker from '@/components/clocks/countdown-ticker';
-import { DEFAULT_SETTINGS } from '@/lib/storage';
 import Link from 'next/link';
 
 export async function generateStaticParams() {
-  console.log('🔥 generateStaticParams called');
-  console.log('ALL_EVENTS length:', ALL_EVENTS.length);
-  console.log('ALL_EVENTS slugs:', ALL_EVENTS.map(e => e.slug));
+  // console.log('🔥 generateStaticParams called');
+  // console.log('ALL_EVENTS length:', ALL_EVENTS.length);
+  // console.log('ALL_EVENTS slugs:', ALL_EVENTS.map(e => e.slug));
 
   return ALL_EVENTS.map((holiday) => ({
     slug: holiday.slug,
@@ -37,7 +37,7 @@ export default async function HolidayCountdown({ params }) {
 
   return (
     <div className="min-h-screen bg-background text-foreground" dir="rtl">
-      <Header settings={DEFAULT_SETTINGS} />
+      <Header />
 
       <script
         type="application/ld+json"
@@ -68,7 +68,6 @@ export default async function HolidayCountdown({ params }) {
           holiday={holiday}
           targetDate={targetDate.toISOString()}
           initialTimeRemaining={initialTimeRemaining}
-          settings={DEFAULT_SETTINGS}
           isEmbedInitial={false}
         />
       </main>

@@ -14,27 +14,16 @@ export class TimeEngine {
     return DateTime.utc();
   }
 
-  static formatTime(dateTime, is24Hour = true, useArabicNumerals = false) {
-    const format = is24Hour ? 'HH:mm:ss' : 'hh:mm:ss a';
-    let time = dateTime.toFormat(format);
-
-    if (useArabicNumerals) {
-      time = this.toArabicNumerals(time);
-    }
-
-    return time;
+  // Fixed: 24-hour format with seconds, western numerals
+  static formatTime(dateTime) {
+    return dateTime.toFormat('HH:mm:ss');
   }
 
-  static formatDate(dateTime, useArabicNumerals = false) {
+  // Fixed: Arabic weekday and month names, western numerals
+  static formatDate(dateTime) {
     const weekday = this.getArabicWeekday(dateTime.weekday);
     const month = this.getArabicMonth(dateTime.month);
-    let formatted = `${weekday} - ${month} ${dateTime.day}, ${dateTime.year}`;
-
-    if (useArabicNumerals) {
-      formatted = this.toArabicNumerals(formatted);
-    }
-
-    return formatted;
+    return `${weekday} - ${month} ${dateTime.day}, ${dateTime.year}`;
   }
 
   static getArabicWeekday(weekdayNumber) {
@@ -45,7 +34,7 @@ export class TimeEngine {
       4: 'الخميس',
       5: 'الجمعة',
       6: 'السبت',
-      7: 'الأحد'
+      7: 'الأحد',
     };
     return days[weekdayNumber] || '';
   }
@@ -63,25 +52,18 @@ export class TimeEngine {
       9: 'سبتمبر',
       10: 'أكتوبر',
       11: 'نوفمبر',
-      12: 'ديسمبر'
+      12: 'ديسمبر',
     };
     return months[monthNumber] || '';
   }
 
-  static toArabicNumerals(str) {
-    const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-    return str.replace(/\d/g, (digit) => arabicNumbers[parseInt(digit)]);
-  }
-
   static getRelativeDay(dateTime, referenceTime) {
     const diffInDays = dateTime.startOf('day').diff(referenceTime.startOf('day'), 'days').days;
-
     if (diffInDays === 0) return 'اليوم';
     if (diffInDays === 1) return 'غدًا';
     if (diffInDays === -1) return 'أمس';
     if (diffInDays > 1) return `+${Math.floor(diffInDays)} يوم`;
     if (diffInDays < -1) return `${Math.floor(diffInDays)} يوم`;
-
     return '';
   }
 

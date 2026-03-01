@@ -286,3 +286,25 @@ html.dark {
 *::-webkit-scrollbar-thumb:hover {
   background: var(--muted-foreground);
 }
+
+
+
+
+
+
+
+
+::backdrop {
+  background-color: hsl(var(--background));
+}
+
+/* Fallback for browsers that don't inherit CSS vars in ::backdrop */
+.dark::backdrop,
+:root:has(.dark)::backdrop {
+  background-color: #08c614; /* your dark bg value */
+}
+
+.light::backdrop,
+:root:has(.light)::backdrop {
+  background-color: #e94545; /* your light bg value */
+}

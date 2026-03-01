@@ -1,3 +1,4 @@
+/* FullscreenClock.jsx - A reusable component that provides fullscreen and zoom controls for its children content. */
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
@@ -92,13 +93,16 @@ export default function FullscreenClock({ children, overlayContent, showExpandBu
   };
 
   return (
-    <div ref={containerRef} className="relative group bg-background">
+    <div ref={containerRef} className="relative group bg-background w-full h-full">
       {/* Fullscreen Overlay */}
       {isFullscreen && (
-        <div 
-          className="fixed inset-0 bg-background text-foreground flex flex-col items-center justify-center z-[100]"
-          dir="rtl"
-        >
+      <div 
+        className="fixed inset-0 text-foreground flex flex-col items-center justify-center z-[100]"
+        style={{ backgroundColor: window.getComputedStyle(document.documentElement).getPropertyValue('--background') 
+          ? `hsl(${window.getComputedStyle(document.documentElement).getPropertyValue('--background')})`
+          : document.documentElement.classList.contains('dark') ? '#3737b3' : '#a7f8fb' }}
+        dir="rtl"
+      >
           {/* Controls Bar */}
           <div className="absolute top-8 right-8 left-8 flex justify-between items-center z-[110]">
              <div className="flex gap-2">
@@ -156,7 +160,7 @@ export default function FullscreenClock({ children, overlayContent, showExpandBu
         </div>
       )}
 
-      {children}
+      {!isFullscreen && children}
     </div>
   );
 }

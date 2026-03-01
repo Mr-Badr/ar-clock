@@ -1,3 +1,4 @@
+/* Holidays page */ 
 'use client';
 
 import React, { useMemo, useState } from 'react';
@@ -23,7 +24,6 @@ import {
   getNextEventDate,
   getTimeRemaining,
 } from '@/lib/holidays-engine';
-import { DEFAULT_SETTINGS } from '@/lib/storage';
 
 // ensure hijri month names
 moment.updateLocale('ar', {
@@ -62,15 +62,14 @@ const TIME_FILTERS = [
 
 function formatGregorian(date) {
   try {
-    // use Intl.DateTimeFormat with arabic locale for localized month names & digits
-    return new Intl.DateTimeFormat('ar-EG', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(date));
+    return new Intl.DateTimeFormat('ar-SA-u-nu-latn', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(date));
   } catch (e) {
     return moment(date).locale('ar').format('D MMMM YYYY');
   }
 }
 
 function formatHijri(date) {
-  return moment(date).locale('ar').format('iD iMMMM iYYYY');
+  return moment(date).locale('en').iDate() + ' ' + moment(date).locale('ar').format('iMMMM') + ' ' + moment(date).locale('en').iYear();
 }
 
 function getEventComputed(event) {
@@ -220,7 +219,7 @@ export default function HolidaysPage() {
 
   return (
     <div className="min-h-screen text-foreground selection:bg-primary/30" dir="rtl">
-      <Header settings={DEFAULT_SETTINGS} />
+      <Header />
 
       <main className="pt-24 pb-12 px-4 max-w-7xl mx-auto">
         <div className="mb-12">
