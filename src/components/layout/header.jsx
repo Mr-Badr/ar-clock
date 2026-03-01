@@ -65,15 +65,16 @@ export default function Header({ settings: propSettings, onSettingsChange: propO
     return () => window.removeEventListener('vclock_settings_changed', handleGlobalSettingsChange);
   }, []);
 
-  return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-surface dark:bg-surface-elevated shadow-sm h-16">
+return (
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border btn-glass shadow-sm h-16">
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
+
         {/* Logo */}
         <Link
           href="/"
           prefetch={true}
           aria-label="ساعة عربية - الصفحة الرئيسية"
-          className="flex items-center gap-2 text-xl font-bold text-foreground hover:text-primary transition-colors"
+          className="flex items-center gap-2 text-xl font-bold text-heading hover:text-emerald-accent transition-colors"
         >
           <Clock className="w-6 h-6" />
           <span className="hidden sm:inline">ساعة عربية</span>
@@ -84,14 +85,12 @@ export default function Header({ settings: propSettings, onSettingsChange: propO
           <nav className="flex items-center">
             {[
               { href: "/", label: "الساعة الرئيسية", shortLabel: "الرئيسية" },
-              { href: "/time", label: "الأوقات العالمية", shortLabel: "العالمية" },
               { href: "/holidays", label: "المناسبات", shortLabel: "المناسبات" },
             ].map((link) => {
               const isActive =
                 link.href === "/"
                   ? pathname === "/"
                   : pathname.startsWith(link.href);
-
               return (
                 <Link
                   key={link.href}
@@ -100,16 +99,15 @@ export default function Header({ settings: propSettings, onSettingsChange: propO
                   title={link.label}
                   aria-current={isActive ? "page" : undefined}
                   className={`relative text-xs sm:text-sm font-medium px-2 sm:px-3 py-2 rounded-lg transition-colors
-                    ${
-                      isActive
-                        ? "text-primary font-bold"
-                        : "text-foreground-muted hover:bg-secondary hover:text-foreground"
+                    ${isActive
+                      ? "text-emerald-accent font-bold"
+                      : "text-subtle hover:bg-panel-bg hover:text-heading"
                     }`}
                 >
                   <span className="hidden xs:inline">{link.label}</span>
                   <span className="xs:hidden">{link.shortLabel}</span>
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"></span>
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-accent rounded-full" />
                   )}
                 </Link>
               );
@@ -120,7 +118,7 @@ export default function Header({ settings: propSettings, onSettingsChange: propO
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2 hover:bg-secondary rounded-xl transition-all text-foreground-muted hover:text-primary group"
+              className="p-2 hover:bg-panel-bg rounded-xl transition-all text-subtle hover:text-emerald-accent group"
               title={internalSettings.theme === 'dark' ? "تبديل للوضع النهاري" : "تبديل للوضع الليلي"}
             >
               {internalSettings.theme === 'dark' ? (
@@ -130,13 +128,14 @@ export default function Header({ settings: propSettings, onSettingsChange: propO
               )}
             </button>
 
-            {/* Settings Panel - Always Visible */}
+            {/* Settings Panel */}
             <SettingsPanel
               settings={internalSettings}
               onSettingsChange={handleSettingsChange}
             />
           </div>
         </div>
+
       </div>
     </header>
   );

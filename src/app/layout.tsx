@@ -1,8 +1,11 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Cairo } from 'next/font/google';
+import { Noto_Kufi_Arabic } from 'next/font/google';
 
-const cairo = Cairo({ subsets: ['arabic'], weight: ['400', '600', '700'] });
+const notoKufi = Noto_Kufi_Arabic({ 
+  subsets: ['arabic'], 
+  weight: ['400', '600', '700'] 
+});
 
 export const metadata: Metadata = {
   title: 'ساعة عربية - الوقت الآن في جميع أنحاء العالم',
@@ -51,7 +54,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${cairo.className} bg-background text-foreground min-h-screen`} suppressHydrationWarning>
+      <body className={`${notoKufi.className} text-foreground min-h-screen`} suppressHydrationWarning>
         {children}
         <Toaster dir="rtl" position="bottom-center" />
       </body>
