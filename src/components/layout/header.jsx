@@ -19,18 +19,16 @@ export default function Header() {
   if (!mounted) return null;
 
   const toggleTheme = () => {
-    if (theme === "dark") setTheme("light");
-    else if (theme === "light") setTheme("contrast");
-    else setTheme("dark");
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   return (
     <header
       className="
-        fixed top-0 left-0 right-0 z-50
+        fixed top-0 left-0 right-0 z-[var(--z-sticky)]
         h-16
-        border-b border-[--border-default]
-        btn-glass
+        border-b border-border
+        bg-glass backdrop-blur-md
         shadow-sm
       "
     >
@@ -46,9 +44,9 @@ export default function Header() {
             text-xl font-bold
             text-primary
             hover:text-accent
-            transition-colors
+            transition-all
+            duration-200
           "
-          style={{ transition: "color var(--transition-fast)" }}
         >
           <Clock className="w-6 h-6" />
           <span className="hidden sm:inline">ساعة عربية</span>
@@ -60,8 +58,8 @@ export default function Header() {
           {/* Nav links */}
           <nav className="flex items-center">
             {[
-              { href: "/",         label: "الساعة الرئيسية", shortLabel: "الرئيسية"  },
-              { href: "/holidays", label: "المناسبات",        shortLabel: "المناسبات" },
+              { href: "/", label: "الساعة الرئيسية", shortLabel: "الرئيسية" },
+              { href: "/holidays", label: "المناسبات", shortLabel: "المناسبات" },
             ].map((link) => {
               const isActive =
                 link.href === "/"
@@ -76,18 +74,19 @@ export default function Header() {
                   title={link.label}
                   aria-current={isActive ? "page" : undefined}
                   className={`
+                    flex items-center justify-center
                     relative
                     text-xs sm:text-sm font-medium
-                    px-2 sm:px-3 py-2
+                    px-3 sm:px-3 py-3 sm:py-2
+                    min-h-[44px] sm:min-h-0
                     rounded-lg
-                    transition-colors
-                    ${
-                      isActive
-                        ? "text-accent font-bold"
-                        : "text-secondary hover:bg-surface-1 hover:text-primary"
+                    transition-all
+                    duration-200
+                    ${isActive
+                      ? "text-accent font-bold"
+                      : "text-secondary hover:bg-surface-1 hover:text-primary"
                     }
                   `}
-                  style={{ transition: "color var(--transition-fast), background-color var(--transition-fast)" }}
                 >
                   {/* Show full label on xs+ screens, short label on tiny screens */}
                   <span className="hidden xs:inline">{link.label}</span>
@@ -99,7 +98,7 @@ export default function Header() {
                       className="
                         absolute bottom-0 left-0 right-0
                         h-0.5 rounded-full
-                        bg-[--accent]
+                        bg-accent
                       "
                     />
                   )}
@@ -115,6 +114,7 @@ export default function Header() {
               className="
                 btn btn-ghost btn-icon
                 group
+                min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0
               "
               title="تبديل الوضع"
               aria-label="تبديل وضع العرض"
@@ -124,9 +124,6 @@ export default function Header() {
               )}
               {theme === "light" && (
                 <Moon className="w-5 h-5 group-hover:-rotate-12 transition-transform" />
-              )}
-              {theme === "contrast" && (
-                <Clock className="w-5 h-5 group-hover:scale-110 transition-transform" />
               )}
             </button>
           </div>

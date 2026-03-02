@@ -9,13 +9,13 @@ export default function NotFound() {
         الصفحة غير موجودة
       </h2>
 
-      <p className="text-muted-foreground mb-6">
+      <p className="text-muted mb-6">
         ربما تم حذف المناسبة أو أن الرابط غير صحيح.
       </p>
 
       <a
         href="/holidays"
-        className="px-6 py-3 bg-primary text-white rounded-lg"
+        className="btn btn-primary btn-lg"
       >
         العودة إلى المناسبات
       </a>

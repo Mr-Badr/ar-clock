@@ -2,17 +2,16 @@
    WAQT — Arabic Clock App — Design System v3.1
    Stack  : Next.js + Tailwind CSS 4.1 + shadcn/ui
    Font   : Noto Kufi Arabic (loaded in layout.tsx via next/font)
-   Dir    : RTL  |  Themes: dark (default) · light · contrast
-   Engine : next-themes → writes class="dark|light|contrast" on <html>
+   Dir    : RTL  |  Themes: dark (default) · light 
+   Engine : next-themes → writes class="dark|light" on <html>
 
    HOW THEMES WORK
    ───────────────
    next-themes sets a class on <html>:
      class="dark"      → slate-blue night mode  (default / SSR fallback)
      class="light"     → warm-white day mode
-     class="contrast"  → near-black AMOLED / high-contrast
 
-   Every CSS variable is defined inside :root/.dark, .light, .contrast.
+   Every CSS variable is defined inside :root/.dark, .light.
    No component ever hard-codes a colour. Every class just reads a var.
 
    TAILWIND INTEGRATION
@@ -33,7 +32,6 @@
    02  Raw palette            ← :root — never use directly in components
    03  Theme: dark / default  ← :root, .dark
    04  Theme: light           ← .light
-   05  Theme: contrast        ← .contrast
    06  @theme inline          ← Tailwind 4 bridge (TOP LEVEL, not in @layer)
    07  Base reset             ← @layer base
    08  Typography tokens
@@ -311,116 +309,6 @@
   --card:        var(--bg-surface-2);
   --card-foreground: var(--text-primary);
   --popover:     var(--bg-surface-1);
-  --popover-foreground: var(--text-primary);
-  --primary:     var(--accent);
-  --primary-foreground: var(--text-on-accent);
-  --secondary:   var(--bg-surface-3);
-  --secondary-foreground: var(--text-primary);
-  --muted:       var(--bg-surface-3);
-  --muted-foreground: var(--text-muted);
-  --accent-shadcn: var(--accent-soft);
-  --accent-foreground: var(--accent);
-  --destructive: var(--danger);
-  --destructive-foreground: #ffffff;
-  --border:      var(--border-default);
-  --input:       var(--border-default);
-  --ring:        var(--accent);
-  --radius:      0.625rem;
-}
-
-
-/* ─── 05. THEME: CONTRAST ────────────────────────────────────────────────── */
-/* next-themes adds class="contrast" to <html>                                */
-/* AMOLED-black background, pure-white clock digits, max-contrast text        */
-.contrast {
-  color-scheme: dark;
-
-  /* Backgrounds */
-  --bg-base:      #0A0A0A;
-  --bg-subtle:    #0F0F0F;
-  --bg-surface-1: #111111;
-  --bg-surface-2: #1A1A1A;
-  --bg-surface-3: #242424;
-  --bg-surface-4: #2E2E2E;
-  --bg-overlay:   rgba(0, 0, 0, 0.92);
-  --bg-glass:     rgba(20, 20, 20, 0.82);
-
-  /* Borders — extra visible for accessibility */
-  --border-subtle:        #2A2A2A;
-  --border-default:       #3A3A3A;
-  --border-strong:        #555555;
-  --border-accent:        rgba(0, 229, 216, 0.45);
-  --border-accent-strong: rgba(0, 229, 216, 0.80);
-
-  /* Text — maximum contrast */
-  --text-primary:   #F5F5F5;
-  --text-secondary: #AAAAAA;
-  --text-muted:     #666666;
-  --text-disabled:  #3A3A3A;
-  --text-on-accent: #000000;
-  --text-on-clock:  #FFFFFF;
-  --text-link:      #00E5D8;
-  --text-link-hover:#4AF0E8;
-
-  /* Accent (bright teal for max contrast) */
-  --accent:             #00E5D8;
-  --accent-hover:       #00C4B8;
-  --accent-active:      #009E94;
-  --accent-soft:        rgba(0, 229, 216, 0.14);
-  --accent-soft-hover:  rgba(0, 229, 216, 0.22);
-  --accent-glow:        rgba(0, 229, 216, 0.22);
-  --accent-glow-strong: rgba(0, 229, 216, 0.42);
-
-  /* Accent alt */
-  --accent-alt:       #5599FF;
-  --accent-alt-hover: #3377EE;
-  --accent-alt-soft:  rgba(85, 153, 255, 0.14);
-
-  /* States — vivid */
-  --danger:         #FF4444; --danger-hover:  #FF2222;
-  --danger-soft:    rgba(255, 68, 68, 0.14);
-  --danger-border:  rgba(255, 68, 68, 0.50);
-  --warning:        #FFCC00; --warning-hover: #FFAA00;
-  --warning-soft:   rgba(255, 204, 0, 0.14);
-  --warning-border: rgba(255, 204, 0, 0.50);
-  --success:        #00FF88; --success-hover: #00DD77;
-  --success-soft:   rgba(0, 255, 136, 0.14);
-  --success-border: rgba(0, 255, 136, 0.50);
-  --info:           #44CCFF; --info-hover:    #22AAEE;
-  --info-soft:      rgba(68, 204, 255, 0.14);
-  --info-border:    rgba(68, 204, 255, 0.50);
-
-  /* Shadows */
-  --shadow-xs:            0 1px 3px  rgba(0,0,0,0.60);
-  --shadow-sm:            0 2px 8px  rgba(0,0,0,0.70);
-  --shadow-md:            0 4px 16px rgba(0,0,0,0.75);
-  --shadow-lg:            0 8px 32px rgba(0,0,0,0.80);
-  --shadow-xl:            0 16px 48px rgba(0,0,0,0.85);
-  --shadow-card:          0 2px 12px rgba(0,0,0,0.70);
-  --shadow-accent:        0 0 24px rgba(0,229,216,0.25);
-  --shadow-accent-strong: 0 0 44px rgba(0,229,216,0.45);
-
-  /* Clock — white digits, strong halo */
-  --clock-digit-color: #FFFFFF;
-  --clock-digit-glow:
-    0 0 15px rgba(255,255,255,0.80),
-    0 0 40px rgba(255,255,255,0.40),
-    0 0 80px rgba(255,255,255,0.15);
-  --clock-separator: rgba(255, 255, 255, 0.30);
-  --clock-label:     #555555;
-  --clock-bg:        rgba(17, 17, 17, 0.95);
-
-  /* Scrollbar */
-  --scrollbar-track: #111111;
-  --scrollbar-thumb: #3A3A3A;
-  --scrollbar-hover: #555555;
-
-  /* shadcn compatibility */
-  --background:  var(--bg-base);
-  --foreground:  var(--text-primary);
-  --card:        var(--bg-surface-2);
-  --card-foreground: var(--text-primary);
-  --popover:     var(--bg-surface-3);
   --popover-foreground: var(--text-primary);
   --primary:     var(--accent);
   --primary-foreground: var(--text-on-accent);
@@ -1053,10 +941,9 @@
 /*  ─────────┼─────────────────────┼───────────────────────────────────────  */
 /*  dark     │ #4ECDC4 teal        │ Layered teal ambient glow               */
 /*  light    │ #1D4ED8 rich blue   │ None — sharp on white background        */
-/*  contrast │ #FFFFFF white       │ Intense white halo glow                 */
 /*                                                                            */
 /*  User custom colour: call element.style.setProperty('--clock-digit-color', '#hex')  */
-/*  Add .clock-glow only in dark + contrast themes (light has no glow)       */
+/*  Add .clock-glow only in dark  (light has no glow)       */
 
 .clock-wrapper  { display: flex; flex-direction: column; align-items: center; gap: var(--space-4); }
 
@@ -1076,7 +963,7 @@
 .clock-lg { font-size: var(--text-clock-lg); }
 .clock-xl { font-size: var(--text-clock-xl); }
 
-/* Glow — add only in dark/contrast themes */
+/* Glow — add only in dark theme */
 .clock-glow { text-shadow: var(--clock-digit-glow); }
 
 /* Blinking colon */

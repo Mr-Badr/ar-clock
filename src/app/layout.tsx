@@ -1,4 +1,4 @@
-import './globals.css';
+import './new.css';
 import type { Metadata } from 'next';
 import { Noto_Kufi_Arabic } from 'next/font/google';
 import { Toaster } from 'sonner';
@@ -15,11 +15,22 @@ const notoKufi = Noto_Kufi_Arabic({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ar-clock.vercel.app'), // Replace with actual domain when known
   title: 'ساعة عربية - الوقت الآن في جميع أنحاء العالم',
-  description: 'تطبيق ساعة عالمية باللغة العربية لمتابعة الوقت في مختلف المدن والدول حول العالم',
+  description: 'تطبيق ساعة عالمية باللغة العربية لمتابعة الوقت بدقة في مختلف المدن والدول حول العالم مع تنبيهات للمناسبات.',
+  keywords: ['ساعة', 'وقت', 'عالمية', 'توقيت', 'السعودية', 'مصر', 'الإمارات', 'موعد'],
+  authors: [{ name: 'Waqt Clock' }],
   openGraph: {
-    title: 'ساعة عربية',
+    title: 'ساعة عربية | الوقت الآن',
     description: 'الوقت الآن في جميع أنحاء العالم',
+    siteName: 'ساعة عربية',
+    locale: 'ar_SA',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ساعة عربية | الوقت الآن',
+    description: 'تطبيق ساعة عالمية لمتابعة الوقت في مختلف المدن والدول.',
   },
 };
 
@@ -42,7 +53,7 @@ export default function RootLayout({
       lang="ar"
       dir="rtl"
       suppressHydrationWarning
-      className={`${notoKufi.variable} theme-transition`}
+      className={`${notoKufi.variable}`}
     >
       {/* The CSS @layer base already sets body styles:
             background-color: var(--bg-base)
@@ -63,14 +74,14 @@ export default function RootLayout({
             toastOptions={{
               // Use design system surface and border tokens via CSS vars
               style: {
-                background:   'var(--bg-surface-3)',
-                color:        'var(--text-primary)',
-                border:       '1px solid var(--border-default)',
-                borderRight:  '3px solid var(--accent)',
+                background: 'var(--bg-surface-3)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-default)',
+                borderRight: '3px solid var(--accent)',
                 borderRadius: 'var(--radius-xl)',
-                boxShadow:    'var(--shadow-lg)',
-                fontFamily:   'var(--font-base)',
-                fontSize:     'var(--text-sm)',
+                boxShadow: 'var(--shadow-lg)',
+                fontFamily: 'var(--font-base)',
+                fontSize: 'var(--text-sm)',
               },
             }}
           />

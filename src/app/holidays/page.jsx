@@ -1,4 +1,4 @@
-/* Holidays page */ 
+/* Holidays page */
 'use client';
 
 import React, { useMemo, useState } from 'react';
@@ -95,18 +95,18 @@ function EventCard({ e, small = false, highlight = false }) {
         className="card-small group"
       >
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-full flex flex-col items-center justify-center text-[10px] font-bold border badge group-hover:bg-primary/10">
+          <div className="w-10 h-10 rounded-full flex flex-col items-center justify-center text-[10px] font-bold border border-border bg-surface-2 group-hover:bg-accent-soft group-hover:border-accent group-hover:text-accent transition-colors">
             <span>{daysLeft}</span>
             <span>يوم</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-semibold group-hover:text-primary transition-colors">{event.name}</span>
-            <span className="text-[10px] text-muted-foreground">{formattedDate}</span>
+            <span className="text-sm font-semibold group-hover:text-accent transition-colors">{event.name}</span>
+            <span className="text-[10px] text-muted">{formattedDate}</span>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <ShareButton event={event} className="p-1.5 opacity-0 group-hover:opacity-100 rounded-lg transition-all w-6 h-6 text-primary" />
-          <ChevronLeft className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+          <ShareButton event={event} className="p-1.5 opacity-0 group-hover:opacity-100 rounded-lg transition-all w-6 h-6 text-accent" />
+          <ChevronLeft className="w-4 h-4 text-muted group-hover:text-accent transition-colors" />
         </div>
       </Link>
     );
@@ -114,30 +114,28 @@ function EventCard({ e, small = false, highlight = false }) {
 
   return (
     <Link href={`/holidays/${event.slug}`} className="card h-40 group">
-  <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-2xl transition-colors duration-500 bg-primary/5" />
-  
-  <div className="flex justify-between items-start relative z-10">
-    <div className="p-2 rounded-xl transition-transform duration-500 bg-primary/10 text-primary">
-      {event.type === 'hijri' ? <Sparkles className="w-5 h-5" /> : <Clock className="w-5 h-5" />}
-    </div>
-    <ShareButton event={event} className="p-2 rounded-xl w-8 h-8 text-muted-foreground hover:text-primary hover:bg-primary/10" />
-  </div>
-
-  <div className="relative z-10">
-    <h3 className="text-xl font-bold mb-2 transition-colors">{event.name}</h3>
-    <div className="flex items-center gap-3">
-      <div className="text-xs font-medium px-2.5 py-1 rounded-lg border bg-secondary/50 text-muted-foreground" style={{ borderColor: 'var(--surface-border)' }}>
-        {formattedDate}
-      </div>
-      {daysLeft !== null && (
-        <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
-          <TrendingUp className="w-3 h-3" />
-          <span>متبقي {daysLeft} يوم</span>
+      <div className="flex justify-between items-start relative z-10">
+        <div className="p-2 rounded-xl transition-transform duration-500 bg-accent-soft text-accent group-hover:scale-110">
+          {event.type === 'hijri' ? <Sparkles className="w-5 h-5" /> : <Clock className="w-5 h-5" />}
         </div>
-      )}
-    </div>
-  </div>
-</Link>
+        <ShareButton event={event} className="p-2 rounded-xl w-8 h-8 text-muted hover:text-accent hover:bg-accent-soft transition-colors" />
+      </div>
+
+      <div className="relative z-10">
+        <h3 className="text-xl font-bold mb-2 transition-colors group-hover:text-accent">{event.name}</h3>
+        <div className="flex items-center gap-3">
+          <div className="text-xs font-medium px-2.5 py-1 rounded-lg border border-border bg-surface-2 text-muted transition-colors group-hover:border-accent-strong group-hover:text-primary">
+            {formattedDate}
+          </div>
+          {daysLeft !== null && (
+            <div className="flex items-center gap-1.5 text-xs font-bold text-accent">
+              <TrendingUp className="w-3 h-3" />
+              <span>متبقي {daysLeft} يوم</span>
+            </div>
+          )}
+        </div>
+      </div>
+    </Link>
   );
 }
 
@@ -170,10 +168,10 @@ export default function HolidaysPage() {
         return flattenedCountryEvents;
       case 'educational':
         // derive educational from seasonal (e.g., exams, results, back-to-school)
-        return SEASONAL_EVENTS.filter(e => ['back-to-school','exams','results','spring-vacation','summer-vacation'].includes(e.id));
+        return SEASONAL_EVENTS.filter(e => ['back-to-school', 'exams', 'results', 'spring-vacation', 'summer-vacation'].includes(e.id));
       case 'astronomical':
         // religious hijri dates are astronomical by nature but surface a curated subset
-        return RELIGIOUS_HOLIDAYS.filter(e => ['islamic-new-year','mawlid','hajj-start','day-of-arafa'].includes(e.id));
+        return RELIGIOUS_HOLIDAYS.filter(e => ['islamic-new-year', 'mawlid', 'hajj-start', 'day-of-arafa'].includes(e.id));
       case 'all':
       default:
         return [
@@ -218,13 +216,13 @@ export default function HolidaysPage() {
   }, [activeTab]);
 
   return (
-    <div className="min-h-screen text-foreground selection:bg-primary/30" dir="rtl">
+    <div className="min-h-screen bg-base text-primary selection:bg-accent-soft" dir="rtl">
       <Header />
 
       <main className="pt-24 pb-12 px-4 max-w-7xl mx-auto">
         <div className="mb-12">
-          <h1 className="text-4xl md:text-6xl font-black mb-4">عداد المواعيد <span className="text-primary italic">الذكية</span></h1>
-          <p className="text-foreground-muted">منصة متكاملة لتتبع أهم المواعيد الإسلامية، الوطنية، والأكاديمية في الوطن العربي — تصفح بسهولة عبر الأقسام والمرشحات.</p>
+          <h1 className="text-4xl md:text-6xl font-black mb-4">عداد المواعيد <span className="text-accent italic">الذكية</span></h1>
+          <p className="text-muted">منصة متكاملة لتتبع أهم المواعيد الإسلامية، الوطنية، والأكاديمية في الوطن العربي — تصفح بسهولة عبر الأقسام والمرشحات.</p>
         </div>
 
         {/* Tabs */}
@@ -238,11 +236,10 @@ export default function HolidaysPage() {
                 <button
                   key={t.key}
                   onClick={() => setActiveTab(t.key)}
-                  className={`flex items-center gap-3 p-4 rounded-2xl transition-all font-bold text-base ${
-                    isActive 
-                      ? 'bg-primary/20 text-primary border border-primary'
-                      : 'bg-surface/10 text-foreground hover:bg-surface/20'
-                  }`}
+                  className={`flex items-center gap-3 p-4 rounded-2xl transition-all font-bold text-base ${isActive
+                    ? 'bg-accent-soft text-accent border border-accent'
+                    : 'bg-surface-2 text-primary hover:bg-surface-3'
+                    }`}
                 >
                   <ActiveIcon className="w-6 h-6" />
                   <span>{t.label}</span>
@@ -254,45 +251,45 @@ export default function HolidaysPage() {
           {/* Filters & Search */}
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-4">
-  {/* Time Filter Dropdown */}
-  <select
-    value={timeFilter}
-    onChange={(e) => setTimeFilter(e.target.value)}
-    className="text-sm rounded-lg px-4 py-2 bg-surface/10 border border-border focus:ring-primary"
-  >
-    <option value="upcoming">القريبة (0–7 أيام)</option>
-    <option value="month">هذا الشهر</option>
-    <option value="quarter">خلال 3 أشهر</option>
-    <option value="all">عرض الكل</option>
-  </select>
+              {/* Time Filter Dropdown */}
+              <select
+                value={timeFilter}
+                onChange={(e) => setTimeFilter(e.target.value)}
+                className="text-sm rounded-lg px-4 py-2 bg-surface-2 border border-border focus:ring-accent"
+              >
+                <option value="upcoming">القريبة (0–7 أيام)</option>
+                <option value="month">هذا الشهر</option>
+                <option value="quarter">خلال 3 أشهر</option>
+                <option value="all">عرض الكل</option>
+              </select>
 
-  {/* Country Filter (only for countries tab) */}
-  {activeTab === 'countries' && (
-    <select
-      value={selectedCountryCode}
-      onChange={(e) => setSelectedCountryCode(e.target.value)}
-      className="text-sm rounded-lg px-4 py-2 bg-surface/10 border border-border focus:ring-primary"
-    >
-      <option value="all">كل الدول</option>
-      {COUNTRIES_EVENTS.map(c => (
-        <option key={c.code} value={c.code}>{c.name}</option>
-      ))}
-    </select>
-  )}
-</div>
+              {/* Country Filter (only for countries tab) */}
+              {activeTab === 'countries' && (
+                <select
+                  value={selectedCountryCode}
+                  onChange={(e) => setSelectedCountryCode(e.target.value)}
+                  className="text-sm rounded-lg px-4 py-2 bg-surface-2 border border-border focus:ring-accent"
+                >
+                  <option value="all">كل الدول</option>
+                  {COUNTRIES_EVENTS.map(c => (
+                    <option key={c.code} value={c.code}>{c.name}</option>
+                  ))}
+                </select>
+              )}
+            </div>
 
-            <div className="flex items-center gap-2 bg-surface/10 rounded-xl px-3 py-1 border border-border">
-              <Search className="w-4 h-4 text-foreground-muted" />
+            <div className="flex items-center gap-2 bg-surface-2 rounded-xl px-3 py-1 border border-border">
+              <Search className="w-4 h-4 text-muted" />
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="ابحث عن مناسبة أو دولة..."
-                className="bg-transparent outline-none text-sm placeholder:text-foreground-muted"
+                className="bg-transparent outline-none text-sm placeholder:text-muted"
               />
             </div>
 
             {activeTab === 'countries' && (
-              <select value={selectedCountryCode} onChange={(e) => setSelectedCountryCode(e.target.value)} className="text-sm rounded-lg px-3 py-1 bg-surface/10 border border-border">
+              <select value={selectedCountryCode} onChange={(e) => setSelectedCountryCode(e.target.value)} className="text-sm rounded-lg px-3 py-1 bg-surface-2 border border-border">
                 <option value="all">كل الدول</option>
                 {COUNTRIES_EVENTS.map(c => (
                   <option key={c.code} value={c.code}>{c.name}</option>
@@ -307,12 +304,12 @@ export default function HolidaysPage() {
           // countries view keeps country cards (compact) each with small event list
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {countriesMap.map(country => (
-              <div key={country.code} className="bg-surface/10 border border-border/40 rounded-2xl p-6">
+              <div key={country.code} className="bg-surface-2 border border-border-subtle rounded-2xl p-6">
                 <div className="flex items-center gap-4 mb-4">
                   <span className="text-4xl">{country.flag}</span>
                   <div>
                     <h3 className="text-2xl font-bold">{country.name}</h3>
-                    <p className="text-sm text-foreground-muted">مناسبات وفعاليات {country.name}</p>
+                    <p className="text-sm text-muted">مناسبات وفعاليات {country.name}</p>
                   </div>
                 </div>
                 <div className="flex flex-col gap-3">
@@ -345,8 +342,8 @@ export default function HolidaysPage() {
         )}
 
         {/* Helpful footer / SEO hint area */}
-        <div className="mt-16 p-8 bg-surface/20 border border-border/50 rounded-2xl text-center">
-          <p className="text-foreground-muted">يمكنك فرز الأحداث حسب الوقت أو البحث عن مناسبة معينة — هذه الصفحة مصممة لتكون قابلة للفهرسة وتحسين محركات البحث (SEO).</p>
+        <div className="mt-16 p-8 bg-surface-3 border border-border rounded-2xl text-center">
+          <p className="text-muted">يمكنك فرز الأحداث حسب الوقت أو البحث عن مناسبة معينة — هذه الصفحة مصممة لتكون قابلة للفهرسة وتحسين محركات البحث (SEO).</p>
         </div>
       </main>
     </div>

@@ -28,15 +28,15 @@ export async function generateMetadata({ params }) {
   const holiday = ALL_EVENTS.find((h) => h.slug === slug);
 
   if (!holiday) {
-  return {
-    title: "404 - الصفحة غير موجودة",
-    robots: {
-      index: false,
-      follow: false,
-      nocache: true
-    },
-  };
-}
+    return {
+      title: "404 - الصفحة غير موجودة",
+      robots: {
+        index: false,
+        follow: false,
+        nocache: true
+      },
+    };
+  }
 
   const url = `${SITE_URL}/holidays/${slug}`;
 
@@ -82,8 +82,8 @@ export default async function HolidayCountdown({ params }) {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground" dir="rtl">
-      
+    <div className="min-h-screen bg-base text-primary" dir="rtl">
+
       <Script
         id="event-schema"
         type="application/ld+json"
@@ -93,7 +93,7 @@ export default async function HolidayCountdown({ params }) {
       <Header />
 
       <main className="pt-24 pb-12 px-4 max-w-7xl mx-auto">
-        <nav className="flex items-center gap-2 text-sm text-foreground-muted mb-8">
+        <nav className="flex items-center gap-2 text-sm text-muted mb-8">
           <Link href="/">الرئيسية</Link>
           <span>/</span>
           <Link href="/holidays">المناسبات</Link>

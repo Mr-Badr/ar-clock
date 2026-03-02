@@ -7,13 +7,13 @@ export default function GlobalNotFound() {
         الصفحة غير موجودة
       </h2>
 
-      <p className="text-muted-foreground mb-6">
+      <p className="text-muted mb-6">
         الرابط الذي أدخلته غير صحيح.
       </p>
 
       <a
         href="/"
-        className="px-6 py-3 bg-primary text-white rounded-lg"
+        className="btn btn-primary btn-lg"
       >
         العودة للرئيسية
       </a>
