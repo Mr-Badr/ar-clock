@@ -1,0 +1,1391 @@
+/* =============================================================================
+   WAQT — Arabic Clock App — Design System v3.1
+   Stack  : Next.js + Tailwind CSS 4.1 + shadcn/ui
+   Font   : Noto Kufi Arabic (loaded in layout.tsx via next/font)
+   Dir    : RTL  |  Themes: dark (default) · light · contrast
+   Engine : next-themes → writes class="dark|light|contrast" on <html>
+
+   HOW THEMES WORK
+   ───────────────
+   next-themes sets a class on <html>:
+     class="dark"      → slate-blue night mode  (default / SSR fallback)
+     class="light"     → warm-white day mode
+     class="contrast"  → near-black AMOLED / high-contrast
+
+   Every CSS variable is defined inside :root/.dark, .light, .contrast.
+   No component ever hard-codes a colour. Every class just reads a var.
+
+   TAILWIND INTEGRATION
+   ────────────────────
+   @theme inline maps CSS vars → Tailwind utility class names.
+   Use these anywhere in JSX:
+     text-primary   text-secondary   text-muted      text-accent
+     text-accent-alt  text-danger    text-warning    text-success
+     text-info      text-clock
+     bg-base        bg-surface-1     bg-surface-2    bg-surface-3
+     bg-surface-4   bg-subtle        bg-accent-soft  bg-glass
+     border-subtle  border-default   border-strong   border-accent
+     shadow-sm      shadow-md        shadow-accent   (see section 30)
+
+   FILE STRUCTURE
+   ──────────────
+   01  @import lines          ← MUST be first two non-comment lines
+   02  Raw palette            ← :root — never use directly in components
+   03  Theme: dark / default  ← :root, .dark
+   04  Theme: light           ← .light
+   05  Theme: contrast        ← .contrast
+   06  @theme inline          ← Tailwind 4 bridge (TOP LEVEL, not in @layer)
+   07  Base reset             ← @layer base
+   08  Typography tokens
+   09  Spacing tokens
+   10  Radius tokens
+   11  Shadow tokens
+   12  Motion tokens
+   13  Z-index tokens
+   14  Layout
+   15  Cards
+   16  Buttons
+   17  Inputs & Forms
+   18  Badges & Chips
+   19  Tabs
+   20  Switch/Toggle
+   21  Select/Dropdown
+   22  Clock Display
+   23  Progress & Countdown
+   24  Alarm Item
+   25  Modal & Overlay
+   26  Toast
+   27  Empty State
+   28  Fullscreen Mode
+   29  Accent utilities
+   30  Utility classes
+============================================================================= */
+
+
+/* ─── 01. IMPORTS — must be first real CSS lines ─────────────────────────── */
+@import "tailwindcss";
+@import "shadcn/tailwind.css";
+
+
+/* ─── 02. RAW PALETTE ────────────────────────────────────────────────────── */
+/* These are pure colour values. NEVER use --raw-* in components.             */
+/* Only the theme blocks below may reference them.                             */
+:root {
+  /* Slate blue scale */
+  --raw-slate-980: #0A0C18;
+  --raw-slate-950: #0E1120;
+  --raw-slate-900: #181C2A;
+  --raw-slate-850: #1C2136;
+  --raw-slate-800: #1F2438;
+  --raw-slate-750: #242940;
+  --raw-slate-700: #272D45;
+  --raw-slate-650: #2D3350;
+  --raw-slate-600: #303755;
+  --raw-slate-550: #363D5C;
+  --raw-slate-500: #424A6E;
+  --raw-slate-400: #5A638A;
+  --raw-slate-300: #7880AA;
+  --raw-slate-200: #A8AFCC;
+  --raw-slate-100: #D8DCF0;
+  --raw-slate-50:  #ECEFFE;
+  --raw-slate-25:  #F2F4FF;
+
+  /* Teal — primary accent */
+  --raw-teal-700: #0E7A72;
+  --raw-teal-600: #1A9E97;
+  --raw-teal-500: #2BBFB6;
+  --raw-teal-400: #4ECDC4;
+  --raw-teal-300: #72DAD3;
+  --raw-teal-hc:  #00E5D8;
+
+  /* Blue — light-mode clock digits */
+  --raw-blue-800: #1D4ED8;
+  --raw-blue-700: #2563EB;
+  --raw-blue-500: #6C8EF5;
+
+  /* Semantic state palette */
+  --raw-danger-dark:   #FF6B6B;  --raw-danger-light:   #DC2626;  --raw-danger-hc:   #FF4444;
+  --raw-warn-dark:     #FFD166;  --raw-warn-light:     #B45309;  --raw-warn-hc:     #FFCC00;
+  --raw-success-dark:  #06D6A0;  --raw-success-light:  #047857;  --raw-success-hc:  #00FF88;
+  --raw-info-dark:     #74B9FF;  --raw-info-light:     #0369A1;  --raw-info-hc:     #44CCFF;
+}
+
+
+/* ─── 03. THEME: DARK (DEFAULT) ──────────────────────────────────────────── */
+/* :root gives dark values before JS hydrates (prevents flash)                */
+/* next-themes then adds class="dark" which re-confirms the same values        */
+:root,
+.dark {
+  color-scheme: dark;
+
+  /* Backgrounds */
+  --bg-base:      #181C2A;
+  --bg-subtle:    #1C2136;
+  --bg-surface-1: #1F2438;
+  --bg-surface-2: #272D45;
+  --bg-surface-3: #303755;
+  --bg-surface-4: #363D5C;
+  --bg-overlay:   rgba(10, 12, 24, 0.85);
+  --bg-glass:     rgba(31, 36, 56, 0.65);
+
+  /* Borders */
+  --border-subtle:        #2D3350;
+  --border-default:       #363D5C;
+  --border-strong:        #4A5278;
+  --border-accent:        rgba(78, 205, 196, 0.30);
+  --border-accent-strong: rgba(78, 205, 196, 0.60);
+
+  /* Text */
+  --text-primary:   #E8EAFF;
+  --text-secondary: #7880AA;
+  --text-muted:     #454D70;
+  --text-disabled:  #2E3455;
+  --text-on-accent: #0E1120;
+  --text-on-clock:  #4ECDC4;
+  --text-link:      #4ECDC4;
+  --text-link-hover:#72DAD3;
+
+  /* Accent (teal) */
+  --accent:             #4ECDC4;
+  --accent-hover:       #2BBFB6;
+  --accent-active:      #1A9E97;
+  --accent-soft:        rgba(78, 205, 196, 0.12);
+  --accent-soft-hover:  rgba(78, 205, 196, 0.20);
+  --accent-glow:        rgba(78, 205, 196, 0.15);
+  --accent-glow-strong: rgba(78, 205, 196, 0.30);
+
+  /* Accent alt (blue) */
+  --accent-alt:       #6C8EF5;
+  --accent-alt-hover: #4A6EE8;
+  --accent-alt-soft:  rgba(108, 142, 245, 0.12);
+
+  /* States */
+  --danger:         #FF6B6B; --danger-hover:  #FF4D4D;
+  --danger-soft:    rgba(255, 107, 107, 0.12);
+  --danger-border:  rgba(255, 107, 107, 0.30);
+  --warning:        #FFD166; --warning-hover: #FFC233;
+  --warning-soft:   rgba(255, 209, 102, 0.12);
+  --warning-border: rgba(255, 209, 102, 0.30);
+  --success:        #06D6A0; --success-hover: #04B888;
+  --success-soft:   rgba(6, 214, 160, 0.12);
+  --success-border: rgba(6, 214, 160, 0.30);
+  --info:           #74B9FF; --info-hover:    #4DA3FF;
+  --info-soft:      rgba(116, 185, 255, 0.12);
+  --info-border:    rgba(116, 185, 255, 0.30);
+
+  /* Shadows */
+  --shadow-xs:            0 1px 2px  rgba(0,0,0,0.30);
+  --shadow-sm:            0 2px 8px  rgba(0,0,0,0.35);
+  --shadow-md:            0 4px 16px rgba(0,0,0,0.40);
+  --shadow-lg:            0 8px 32px rgba(0,0,0,0.45);
+  --shadow-xl:            0 16px 48px rgba(0,0,0,0.55);
+  --shadow-card:          0 2px 8px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.25);
+  --shadow-accent:        0 0 24px rgba(78,205,196,0.18);
+  --shadow-accent-strong: 0 0 40px rgba(78,205,196,0.32);
+
+  /* Clock */
+  --clock-digit-color: #4ECDC4;
+  --clock-digit-glow:
+    0 0 20px rgba(78,205,196,0.55),
+    0 0 50px rgba(78,205,196,0.28),
+    0 0 90px rgba(78,205,196,0.12);
+  --clock-separator:   rgba(78, 205, 196, 0.40);
+  --clock-label:       #454D70;
+  --clock-bg:          rgba(31, 36, 56, 0.85);
+
+  /* Scrollbar */
+  --scrollbar-track: #1F2438;
+  --scrollbar-thumb: #363D5C;
+  --scrollbar-hover: #4A5278;
+
+  /* ── shadcn compatibility layer ──────────────────────────────────────── */
+  /* shadcn reads --background, --foreground, --border, --ring, --primary  */
+  /* We re-point them to our tokens so shadcn components match our theme.  */
+  --background:  var(--bg-base);
+  --foreground:  var(--text-primary);
+  --card:        var(--bg-surface-2);
+  --card-foreground: var(--text-primary);
+  --popover:     var(--bg-surface-3);
+  --popover-foreground: var(--text-primary);
+  --primary:     var(--accent);
+  --primary-foreground: var(--text-on-accent);
+  --secondary:   var(--bg-surface-3);
+  --secondary-foreground: var(--text-primary);
+  --muted:       var(--bg-surface-3);
+  --muted-foreground: var(--text-muted);
+  --accent-shadcn: var(--accent-soft);
+  --accent-foreground: var(--accent);
+  --destructive: var(--danger);
+  --destructive-foreground: #ffffff;
+  --border:      var(--border-default);
+  --input:       var(--border-default);
+  --ring:        var(--accent);
+  --radius:      0.625rem; /* 10px — matches our --radius-md */
+}
+
+
+/* ─── 04. THEME: LIGHT ───────────────────────────────────────────────────── */
+.light {
+  color-scheme: light;
+
+  /* Backgrounds */
+  --bg-base:      #F2F4FF;
+  --bg-subtle:    #ECEFFE;
+  --bg-surface-1: #FFFFFF;
+  --bg-surface-2: #F7F8FF;
+  --bg-surface-3: #EFF0FA;
+  --bg-surface-4: #E6E8F8;
+  --bg-overlay:   rgba(20, 24, 41, 0.45);
+  --bg-glass:     rgba(255, 255, 255, 0.82);
+
+  /* Borders */
+  --border-subtle:        #E0E3F5;
+  --border-default:       #D0D4F0;
+  --border-strong:        #B0B8E8;
+  --border-accent:        rgba(26, 158, 151, 0.30);
+  --border-accent-strong: rgba(26, 158, 151, 0.60);
+
+  /* Text */
+  --text-primary:   #141829;
+  --text-secondary: #4E5580;
+  --text-muted:     #9298C0;
+  --text-disabled:  #C8CCDF;
+  --text-on-accent: #FFFFFF;
+  --text-on-clock:  #1D4ED8;
+  --text-link:      #1A9E97;
+  --text-link-hover:#0E7A72;
+
+  /* Accent */
+  --accent:             #1A9E97;
+  --accent-hover:       #137A6E;
+  --accent-active:      #0E5E58;
+  --accent-soft:        rgba(26, 158, 151, 0.10);
+  --accent-soft-hover:  rgba(26, 158, 151, 0.18);
+  --accent-glow:        rgba(26, 158, 151, 0.12);
+  --accent-glow-strong: rgba(26, 158, 151, 0.24);
+
+  /* Accent alt */
+  --accent-alt:       #1D4ED8;
+  --accent-alt-hover: #1E3A8A;
+  --accent-alt-soft:  rgba(29, 78, 216, 0.10);
+
+  /* States */
+  --danger:         #DC2626; --danger-hover:  #B91C1C;
+  --danger-soft:    rgba(220, 38, 38, 0.08);
+  --danger-border:  rgba(220, 38, 38, 0.25);
+  --warning:        #B45309; --warning-hover: #92400E;
+  --warning-soft:   rgba(180, 83, 9, 0.08);
+  --warning-border: rgba(180, 83, 9, 0.25);
+  --success:        #047857; --success-hover: #065F46;
+  --success-soft:   rgba(4, 120, 87, 0.08);
+  --success-border: rgba(4, 120, 87, 0.25);
+  --info:           #0369A1; --info-hover:    #075985;
+  --info-soft:      rgba(3, 105, 161, 0.08);
+  --info-border:    rgba(3, 105, 161, 0.25);
+
+  /* Shadows */
+  --shadow-xs:            0 1px 2px  rgba(20,24,41,0.05);
+  --shadow-sm:            0 2px 8px  rgba(20,24,41,0.07);
+  --shadow-md:            0 4px 16px rgba(20,24,41,0.09);
+  --shadow-lg:            0 8px 32px rgba(20,24,41,0.11);
+  --shadow-xl:            0 16px 48px rgba(20,24,41,0.14);
+  --shadow-card:          0 1px 4px rgba(20,24,41,0.06), 0 4px 16px rgba(20,24,41,0.07);
+  --shadow-accent:        0 0 20px rgba(26,158,151,0.14);
+  --shadow-accent-strong: 0 0 36px rgba(26,158,151,0.22);
+
+  /* Clock */
+  --clock-digit-color: #1D4ED8;
+  --clock-digit-glow:  none;
+  --clock-separator:   rgba(29, 78, 216, 0.30);
+  --clock-label:       #9298C0;
+  --clock-bg:          rgba(255, 255, 255, 0.95);
+
+  /* Scrollbar */
+  --scrollbar-track: #ECEFFE;
+  --scrollbar-thumb: #C8CCDF;
+  --scrollbar-hover: #B0B8E8;
+
+  /* shadcn compatibility */
+  --background:  var(--bg-base);
+  --foreground:  var(--text-primary);
+  --card:        var(--bg-surface-2);
+  --card-foreground: var(--text-primary);
+  --popover:     var(--bg-surface-1);
+  --popover-foreground: var(--text-primary);
+  --primary:     var(--accent);
+  --primary-foreground: var(--text-on-accent);
+  --secondary:   var(--bg-surface-3);
+  --secondary-foreground: var(--text-primary);
+  --muted:       var(--bg-surface-3);
+  --muted-foreground: var(--text-muted);
+  --accent-shadcn: var(--accent-soft);
+  --accent-foreground: var(--accent);
+  --destructive: var(--danger);
+  --destructive-foreground: #ffffff;
+  --border:      var(--border-default);
+  --input:       var(--border-default);
+  --ring:        var(--accent);
+  --radius:      0.625rem;
+}
+
+
+/* ─── 05. THEME: CONTRAST ────────────────────────────────────────────────── */
+/* next-themes adds class="contrast" to <html>                                */
+/* AMOLED-black background, pure-white clock digits, max-contrast text        */
+.contrast {
+  color-scheme: dark;
+
+  /* Backgrounds */
+  --bg-base:      #0A0A0A;
+  --bg-subtle:    #0F0F0F;
+  --bg-surface-1: #111111;
+  --bg-surface-2: #1A1A1A;
+  --bg-surface-3: #242424;
+  --bg-surface-4: #2E2E2E;
+  --bg-overlay:   rgba(0, 0, 0, 0.92);
+  --bg-glass:     rgba(20, 20, 20, 0.82);
+
+  /* Borders — extra visible for accessibility */
+  --border-subtle:        #2A2A2A;
+  --border-default:       #3A3A3A;
+  --border-strong:        #555555;
+  --border-accent:        rgba(0, 229, 216, 0.45);
+  --border-accent-strong: rgba(0, 229, 216, 0.80);
+
+  /* Text — maximum contrast */
+  --text-primary:   #F5F5F5;
+  --text-secondary: #AAAAAA;
+  --text-muted:     #666666;
+  --text-disabled:  #3A3A3A;
+  --text-on-accent: #000000;
+  --text-on-clock:  #FFFFFF;
+  --text-link:      #00E5D8;
+  --text-link-hover:#4AF0E8;
+
+  /* Accent (bright teal for max contrast) */
+  --accent:             #00E5D8;
+  --accent-hover:       #00C4B8;
+  --accent-active:      #009E94;
+  --accent-soft:        rgba(0, 229, 216, 0.14);
+  --accent-soft-hover:  rgba(0, 229, 216, 0.22);
+  --accent-glow:        rgba(0, 229, 216, 0.22);
+  --accent-glow-strong: rgba(0, 229, 216, 0.42);
+
+  /* Accent alt */
+  --accent-alt:       #5599FF;
+  --accent-alt-hover: #3377EE;
+  --accent-alt-soft:  rgba(85, 153, 255, 0.14);
+
+  /* States — vivid */
+  --danger:         #FF4444; --danger-hover:  #FF2222;
+  --danger-soft:    rgba(255, 68, 68, 0.14);
+  --danger-border:  rgba(255, 68, 68, 0.50);
+  --warning:        #FFCC00; --warning-hover: #FFAA00;
+  --warning-soft:   rgba(255, 204, 0, 0.14);
+  --warning-border: rgba(255, 204, 0, 0.50);
+  --success:        #00FF88; --success-hover: #00DD77;
+  --success-soft:   rgba(0, 255, 136, 0.14);
+  --success-border: rgba(0, 255, 136, 0.50);
+  --info:           #44CCFF; --info-hover:    #22AAEE;
+  --info-soft:      rgba(68, 204, 255, 0.14);
+  --info-border:    rgba(68, 204, 255, 0.50);
+
+  /* Shadows */
+  --shadow-xs:            0 1px 3px  rgba(0,0,0,0.60);
+  --shadow-sm:            0 2px 8px  rgba(0,0,0,0.70);
+  --shadow-md:            0 4px 16px rgba(0,0,0,0.75);
+  --shadow-lg:            0 8px 32px rgba(0,0,0,0.80);
+  --shadow-xl:            0 16px 48px rgba(0,0,0,0.85);
+  --shadow-card:          0 2px 12px rgba(0,0,0,0.70);
+  --shadow-accent:        0 0 24px rgba(0,229,216,0.25);
+  --shadow-accent-strong: 0 0 44px rgba(0,229,216,0.45);
+
+  /* Clock — white digits, strong halo */
+  --clock-digit-color: #FFFFFF;
+  --clock-digit-glow:
+    0 0 15px rgba(255,255,255,0.80),
+    0 0 40px rgba(255,255,255,0.40),
+    0 0 80px rgba(255,255,255,0.15);
+  --clock-separator: rgba(255, 255, 255, 0.30);
+  --clock-label:     #555555;
+  --clock-bg:        rgba(17, 17, 17, 0.95);
+
+  /* Scrollbar */
+  --scrollbar-track: #111111;
+  --scrollbar-thumb: #3A3A3A;
+  --scrollbar-hover: #555555;
+
+  /* shadcn compatibility */
+  --background:  var(--bg-base);
+  --foreground:  var(--text-primary);
+  --card:        var(--bg-surface-2);
+  --card-foreground: var(--text-primary);
+  --popover:     var(--bg-surface-3);
+  --popover-foreground: var(--text-primary);
+  --primary:     var(--accent);
+  --primary-foreground: var(--text-on-accent);
+  --secondary:   var(--bg-surface-3);
+  --secondary-foreground: var(--text-primary);
+  --muted:       var(--bg-surface-3);
+  --muted-foreground: var(--text-muted);
+  --accent-shadcn: var(--accent-soft);
+  --accent-foreground: var(--accent);
+  --destructive: var(--danger);
+  --destructive-foreground: #ffffff;
+  --border:      var(--border-default);
+  --input:       var(--border-default);
+  --ring:        var(--accent);
+  --radius:      0.625rem;
+}
+
+
+/* ─── 06. TAILWIND 4 BRIDGE ──────────────────────────────────────────────── */
+/* @theme inline MUST sit at the TOP LEVEL — never inside @layer.             */
+/* It exposes CSS vars as Tailwind utility names. Tailwind generates:         */
+/*   bg-{name}     text-{name}     border-{name}                              */
+/* for every --color-{name} declared here.                                    */
+/*                                                                            */
+/* NAMING RULE: names mirror the CSS variable they wrap, minus the prefix.    */
+/*   --color-primary    → text-primary    bg-primary   border-primary         */
+/*   --color-accent     → text-accent     bg-accent    border-accent          */
+/*   --color-surface-1  → bg-surface-1    etc.                                */
+/*                                                                            */
+/* shadcn compatibility: --color-border wraps --border-default so that        */
+/* Tailwind's generated border-border utility works alongside shadcn's own    */
+/* var(--border) references.                                                  */
+@theme inline {
+
+  /* ── Text colours ── */
+  --color-primary:    var(--text-primary);
+  --color-secondary:  var(--text-secondary);
+  --color-muted:      var(--text-muted);
+  --color-disabled:   var(--text-disabled);
+  --color-on-accent:  var(--text-on-accent);
+  --color-clock:      var(--clock-digit-color);
+
+  /* ── Accent ── */
+  --color-accent:      var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-alt:  var(--accent-alt);
+
+  /* ── Surfaces ── */
+  --color-base:      var(--bg-base);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-surface-1: var(--bg-surface-1);
+  --color-surface-2: var(--bg-surface-2);
+  --color-surface-3: var(--bg-surface-3);
+  --color-surface-4: var(--bg-surface-4);
+
+  /* ── Borders ── */
+  /* --color-border powers the Tailwind border-border class used by shadcn   */
+  --color-border:         var(--border-default);
+  --color-border-subtle:  var(--border-subtle);
+  --color-border-strong:  var(--border-strong);
+  --color-border-accent:  var(--border-accent);
+
+  /* ── Semantic states ── */
+  --color-danger:  var(--danger);
+  --color-warning: var(--warning);
+  --color-success: var(--success);
+  --color-info:    var(--info);
+}
+
+
+/* ─── 07. BASE RESET & GLOBAL ────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: 'Noto Kufi Arabic', system-ui, sans-serif;
+    font-size: var(--text-base);
+    font-weight: var(--font-regular);
+    line-height: var(--leading-normal);
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    direction: rtl;
+    text-align: right;
+    transition:
+      background-color var(--transition-theme),
+      color var(--transition-theme);
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  a {
+    color: var(--text-link);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+  a:hover { color: var(--text-link-hover); }
+
+  img, video { max-width: 100%; height: auto; display: block; }
+  ul, ol     { list-style: none; }
+  button, input, select, textarea { font-family: inherit; font-size: inherit; }
+
+  /* Headings */
+  h1 { font-size: var(--text-3xl); font-weight: var(--font-bold);     line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); color: var(--text-primary); }
+  h2 { font-size: var(--text-2xl); font-weight: var(--font-semibold); line-height: var(--leading-tight); color: var(--text-primary); }
+  h3 { font-size: var(--text-xl);  font-weight: var(--font-semibold); line-height: var(--leading-snug);  color: var(--text-primary); }
+  h4 { font-size: var(--text-lg);  font-weight: var(--font-medium);   line-height: var(--leading-snug);  color: var(--text-primary); }
+  h5, h6 { font-size: var(--text-base); font-weight: var(--font-medium); color: var(--text-secondary); }
+  p  { line-height: var(--leading-normal); color: var(--text-primary); max-width: var(--measure-normal); }
+
+  /* Focus ring — branded teal outline */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Text selection */
+  ::selection {
+    background-color: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar              { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track        { background: var(--scrollbar-track); }
+  ::-webkit-scrollbar-thumb        { background: var(--scrollbar-thumb); border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover  { background: var(--scrollbar-hover); }
+
+  /* Respect reduced-motion — design system handles all animations */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration:       0.01ms !important;
+      animation-iteration-count: 1     !important;
+      transition-duration:      0.01ms !important;
+    }
+  }
+}
+
+
+/* ─── 08. TYPOGRAPHY TOKENS ──────────────────────────────────────────────── */
+/* CRITICAL RULES:                                                            */
+/*   1. Never add letter-spacing to Arabic text — it breaks connected script  */
+/*   2. Always add .tabular-nums to any element displaying time digits        */
+/*   3. Arabic body text needs line-height ≥ 1.6                             */
+:root {
+  --font-base: 'Noto Kufi Arabic', system-ui, sans-serif;
+
+  /* Type scale (base = 16px) */
+  --text-2xs:  0.65rem;  /* 10.4px — tiny labels   */
+  --text-xs:   0.72rem;  /* 11.5px — captions       */
+  --text-sm:   0.82rem;  /* 13.1px — supporting     */
+  --text-base: 0.94rem;  /* 15.0px — body ← default */
+  --text-md:   1.00rem;  /* 16.0px                  */
+  --text-lg:   1.13rem;  /* 18.0px — card titles    */
+  --text-xl:   1.31rem;  /* 21.0px — section heads  */
+  --text-2xl:  1.50rem;  /* 24.0px — page headings  */
+  --text-3xl:  1.88rem;  /* 30.0px — hero           */
+  --text-4xl:  2.25rem;  /* 36.0px — display        */
+
+  /* Clock sizes — only for .clock-display elements */
+  --text-clock-xs: 3.5rem;   /*  56px */
+  --text-clock-sm: 5.5rem;   /*  88px */
+  --text-clock-md: 8.0rem;   /* 128px — main home clock */
+  --text-clock-lg: 13.0rem;  /* 208px — fullscreen */
+  --text-clock-xl: 22.0rem;  /* 352px — AMOLED max */
+
+  /* Font weights */
+  --font-light:     300;
+  --font-regular:   400;
+  --font-medium:    500;
+  --font-semibold:  600;
+  --font-bold:      700;
+  --font-extrabold: 800;  /* ← always use for clock digits */
+  --font-black:     900;  /* fullscreen clock only */
+
+  /* Line heights */
+  --leading-none:    1.00;  /* clock digits only       */
+  --leading-tight:   1.25;  /* headings                */
+  --leading-snug:    1.40;  /* subheadings             */
+  --leading-normal:  1.60;  /* body — Arabic standard  */
+  --leading-relaxed: 1.75;  /* descriptions            */
+  --leading-loose:   2.00;  /* open / accessible       */
+
+  /* Letter spacing */
+  --tracking-tight:  -0.01em;
+  --tracking-normal:  0em;     /* Arabic body — ALWAYS zero */
+  --tracking-wide:    0.06em;  /* numbers & EN labels only  */
+  --tracking-clock:   0.04em;  /* clock digit spacing        */
+
+  /* Measure (max line width) */
+  --measure-narrow: 45ch;
+  --measure-normal: 65ch;
+  --measure-wide:   80ch;
+}
+
+/* Typography utilities */
+.font-light     { font-weight: var(--font-light);     }
+.font-regular   { font-weight: var(--font-regular);   }
+.font-medium    { font-weight: var(--font-medium);    }
+.font-semibold  { font-weight: var(--font-semibold);  }
+.font-bold      { font-weight: var(--font-bold);      }
+.font-extrabold { font-weight: var(--font-extrabold); }
+.font-black     { font-weight: var(--font-black);     }
+
+.leading-none    { line-height: var(--leading-none);    }
+.leading-tight   { line-height: var(--leading-tight);   }
+.leading-snug    { line-height: var(--leading-snug);    }
+.leading-normal  { line-height: var(--leading-normal);  }
+.leading-relaxed { line-height: var(--leading-relaxed); }
+.leading-loose   { line-height: var(--leading-loose);   }
+
+/* Prevents digit layout shift as clock ticks — use on every time display */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+
+/* ─── 09. SPACING TOKENS (8 px grid) ─────────────────────────────────────── */
+:root {
+  --space-px:  1px;
+  --space-0-5: 2px;
+  --space-1:   4px;
+  --space-1-5: 6px;
+  --space-2:   8px;
+  --space-2-5: 10px;
+  --space-3:   12px;
+  --space-3-5: 14px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-7:   28px;
+  --space-8:   32px;
+  --space-9:   36px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-14:  56px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+  --space-32:  128px;
+}
+
+
+/* ─── 10. BORDER RADIUS ──────────────────────────────────────────────────── */
+:root {
+  --radius-none: 0;
+  --radius-xs:   3px;
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   14px;
+  --radius-xl:   18px;
+  --radius-2xl:  24px;
+  --radius-3xl:  32px;
+  --radius-full: 9999px;
+}
+
+
+/* ─── 11. EXTRA SHADOW TOKENS (per-theme values defined in theme blocks) ─── */
+:root {
+  --shadow-inner:        inset 0 1px 3px rgba(0,0,0,0.15);
+  --shadow-inner-strong: inset 0 1px 5px rgba(0,0,0,0.35);
+  --shadow-focus:        0 0 0 3px var(--accent-soft);
+  --shadow-focus-danger: 0 0 0 3px var(--danger-soft);
+}
+
+
+/* ─── 12. MOTION TOKENS ──────────────────────────────────────────────────── */
+:root {
+  --duration-instant: 80ms;
+  --duration-fast:    150ms;
+  --duration-base:    250ms;
+  --duration-slow:    400ms;
+  --duration-slower:  600ms;
+
+  --ease-out:    cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --transition-fast:   var(--duration-fast)  var(--ease-out);
+  --transition-base:   var(--duration-base)  var(--ease-in-out);
+  --transition-slow:   var(--duration-slow)  var(--ease-in-out);
+  --transition-theme:  var(--duration-slow)  var(--ease-in-out);
+  --transition-spring: var(--duration-slow)  var(--ease-spring);
+}
+
+
+/* ─── 13. Z-INDEX SCALE ──────────────────────────────────────────────────── */
+/* Never use raw numbers. Reference these tokens in style={{ zIndex: 'var(--z-modal)' }} */
+:root {
+  --z-below:   -1;
+  --z-base:     0;
+  --z-raised:   10;
+  --z-float:    50;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-fixed:    250;
+  --z-overlay:  300;
+  --z-modal:    400;
+  --z-tooltip:  500;
+  --z-toast:    600;
+  --z-max:      9999;
+}
+
+
+/* ─── 14. LAYOUT ─────────────────────────────────────────────────────────── */
+
+/* Container */
+.container         { width: 100%; max-width: 1320px; margin-inline: auto; padding-inline: var(--space-6); }
+.container--narrow { max-width: 760px;  }
+.container--wide   { max-width: 1600px; }
+
+/* Section panel */
+.section {
+  background-color: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  transition: background-color var(--transition-theme), border-color var(--transition-theme);
+}
+.section--flat { border: none; background-color: transparent; }
+
+/* Dividers */
+.divider         { border: none; height: 1px; background-color: var(--border-subtle);  margin-block: var(--space-6); }
+.divider--strong { background-color: var(--border-default); }
+
+/* Responsive auto-grid */
+.grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-5);
+}
+
+/* ── Glass surface — frosted-glass panels, fixed bars, floating overlays ── */
+.btn-glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+
+/* ─── 15. CARD SYSTEM ────────────────────────────────────────────────────── */
+/* Elevation:  body → section → .card → .card-nested → .card-deep           */
+/* Always use minimum depth needed. Over-elevation looks cluttered.           */
+
+/* L1 — directly inside section or page */
+.card {
+  background-color: var(--bg-surface-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+  transition:
+    background-color var(--transition-theme),
+    border-color     var(--transition-theme),
+    box-shadow       var(--transition-base),
+    transform        var(--transition-base);
+}
+.card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* L2 — inside L1 */
+.card-nested {
+  background-color: var(--bg-surface-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  box-shadow: var(--shadow-xs);
+  transition: border-color var(--transition-fast);
+}
+.card-nested:hover { border-color: var(--border-default); }
+
+/* L3 — deepest, inputs / selected items */
+.card-deep {
+  background-color: var(--bg-surface-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+/* Card variants */
+.card--accent {
+  border-color: var(--border-accent-strong);
+  box-shadow: var(--shadow-card), 0 0 0 1px var(--border-accent);
+}
+.card--accent:hover { box-shadow: var(--shadow-accent); }
+
+.card--glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-default);
+}
+
+.card--flat   { box-shadow: none; border-color: var(--border-subtle); }
+.card--danger { border-color: var(--danger-border); background-color: var(--danger-soft); }
+
+/* Card sub-elements */
+.card__header {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
+  padding-bottom: var(--space-4); margin-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.card__title    { font-size: var(--text-lg); font-weight: var(--font-semibold); line-height: var(--leading-tight); color: var(--text-primary); }
+.card__subtitle { font-size: var(--text-sm); color: var(--text-secondary); margin-top: var(--space-1); line-height: var(--leading-snug); }
+.card__footer {
+  display: flex; align-items: center; gap: var(--space-3);
+  padding-top: var(--space-4); margin-top: var(--space-5);
+  border-top: 1px solid var(--border-subtle);
+}
+
+
+/* ─── 16. BUTTON SYSTEM ──────────────────────────────────────────────────── */
+/* Rule: ONE .btn-primary per screen — never more.                            */
+/* Pattern: className="btn btn-primary"  or  "btn btn-ghost btn-icon"         */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  font-family: inherit; font-weight: var(--font-semibold); font-size: var(--text-base);
+  line-height: var(--leading-none); letter-spacing: var(--tracking-normal);
+  text-decoration: none; white-space: nowrap; cursor: pointer;
+  border: 1px solid transparent; border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-5);
+  transition:
+    background-color var(--transition-fast), border-color var(--transition-fast),
+    color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+  user-select: none; -webkit-user-select: none;
+}
+.btn:active { transform: translateY(1px) scale(0.99); }
+.btn:disabled,
+.btn[aria-disabled="true"] { opacity: 0.38; cursor: not-allowed; pointer-events: none; }
+
+/* Types */
+.btn-primary   { background-color: var(--accent); color: var(--text-on-accent); border-color: var(--accent); }
+.btn-primary:hover  { background-color: var(--accent-hover); border-color: var(--accent-hover); box-shadow: var(--shadow-accent); }
+.btn-primary:active { background-color: var(--accent-active); }
+
+.btn-secondary { background-color: transparent; color: var(--accent); border-color: var(--border-accent-strong); }
+.btn-secondary:hover { background-color: var(--accent-soft); border-color: var(--accent); }
+
+.btn-ghost { background-color: transparent; color: var(--text-secondary); border-color: transparent; }
+.btn-ghost:hover { background-color: var(--bg-surface-3); color: var(--text-primary); }
+
+.btn-surface { background-color: var(--bg-surface-3); color: var(--text-primary); border-color: var(--border-default); }
+.btn-surface:hover { background-color: var(--bg-surface-4); border-color: var(--border-strong); }
+
+.btn-danger { background-color: var(--danger); color: #ffffff; border-color: var(--danger); }
+.btn-danger:hover { background-color: var(--danger-hover); box-shadow: 0 0 16px var(--danger-soft); }
+
+/* Sizes */
+.btn-xs { font-size: var(--text-xs);  padding: var(--space-1-5) var(--space-2-5); border-radius: var(--radius-xs); }
+.btn-sm { font-size: var(--text-sm);  padding: var(--space-2)   var(--space-3-5); border-radius: var(--radius-sm); }
+.btn-lg { font-size: var(--text-lg);  padding: var(--space-4)   var(--space-8);   border-radius: var(--radius-lg); }
+.btn-xl { font-size: var(--text-xl);  padding: var(--space-5)   var(--space-10);  border-radius: var(--radius-xl); }
+
+/* Shape modifiers */
+.btn-icon  { padding: var(--space-2-5); border-radius: var(--radius-md); aspect-ratio: 1 / 1; }
+.btn-pill  { border-radius: var(--radius-full); }
+.btn-block { width: 100%; }
+
+
+/* ─── 17. INPUT SYSTEM ───────────────────────────────────────────────────── */
+
+.input-group { display: flex; flex-direction: column; gap: var(--space-1-5); }
+
+.input-label { font-size: var(--text-sm); font-weight: var(--font-medium); color: var(--text-secondary); line-height: var(--leading-snug); }
+.input-label--required::after { content: ' *'; color: var(--danger); }
+
+.input {
+  width: 100%;
+  background-color: var(--bg-surface-3);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-family: inherit; font-size: var(--text-base); line-height: var(--leading-normal);
+  direction: rtl; outline: none;
+  transition:
+    border-color     var(--transition-fast),
+    box-shadow       var(--transition-fast),
+    background-color var(--transition-theme);
+}
+.input::placeholder { color: var(--text-muted); }
+.input:hover        { border-color: var(--border-strong); }
+.input:focus        { border-color: var(--accent); box-shadow: var(--shadow-focus); background-color: var(--bg-surface-2); }
+.input:disabled     { opacity: 0.5; cursor: not-allowed; background-color: var(--bg-surface-4); }
+.input--error       { border-color: var(--danger); }
+.input--error:focus { box-shadow: var(--shadow-focus-danger); }
+
+.textarea  { resize: vertical; min-height: 100px; line-height: var(--leading-relaxed); }
+
+/* Time/alarm input — styled with clock digit colour */
+.input-time {
+  font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1;
+  font-size: var(--text-2xl); font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-clock); text-align: center;
+  color: var(--clock-digit-color);
+  background-color: var(--bg-surface-2);
+  border-color: var(--border-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-6);
+}
+.input-time:focus { border-color: var(--accent); box-shadow: var(--shadow-accent); }
+
+.input-hint      { font-size: var(--text-xs); color: var(--text-muted); }
+.input-error-msg { font-size: var(--text-xs); color: var(--danger);     }
+
+
+/* ─── 18. BADGE & CHIP ───────────────────────────────────────────────────── */
+
+.badge {
+  display: inline-flex; align-items: center; gap: var(--space-1);
+  font-size: var(--text-xs); font-weight: var(--font-semibold);
+  line-height: 1; padding: 3px var(--space-2);
+  border-radius: var(--radius-full); border: 1px solid transparent; white-space: nowrap;
+}
+.badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background-color: currentColor; flex-shrink: 0; }
+
+.badge-default { background: var(--bg-surface-3); color: var(--text-secondary); border-color: var(--border-default); }
+.badge-accent  { background: var(--accent-soft);  color: var(--accent);         border-color: var(--border-accent); }
+.badge-danger  { background: var(--danger-soft);  color: var(--danger);         border-color: var(--danger-border); }
+.badge-warning { background: var(--warning-soft); color: var(--warning);        border-color: var(--warning-border); }
+.badge-success { background: var(--success-soft); color: var(--success);        border-color: var(--success-border); }
+.badge-info    { background: var(--info-soft);    color: var(--info);           border-color: var(--info-border); }
+
+/* Chip — clickable day/filter chips */
+.chip {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  font-size: var(--text-sm); font-weight: var(--font-medium);
+  padding: var(--space-2) var(--space-3-5); border-radius: var(--radius-full);
+  border: 1px solid var(--border-default); background-color: var(--bg-surface-3);
+  color: var(--text-secondary); cursor: pointer;
+  transition: all var(--transition-fast); user-select: none;
+}
+.chip:hover,
+.chip--active {
+  background-color: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--border-accent);
+}
+
+
+/* ─── 19. TAB SYSTEM ─────────────────────────────────────────────────────── */
+
+.tabs {
+  display: flex; gap: var(--space-1);
+  background-color: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl); padding: var(--space-1);
+}
+.tab {
+  flex: 1; text-align: center;
+  padding: var(--space-2) var(--space-4); border-radius: var(--radius-lg);
+  font-size: var(--text-base); font-weight: var(--font-medium); color: var(--text-secondary);
+  cursor: pointer; border: 1px solid transparent; transition: all var(--transition-fast);
+}
+.tab:hover { color: var(--text-primary); }
+.tab--active {
+  background-color: var(--bg-surface-4); color: var(--accent);
+  border-color: var(--border-accent); box-shadow: var(--shadow-xs); font-weight: var(--font-semibold);
+}
+
+/* Underline variant */
+.tabs--underline {
+  background: transparent; border: none;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0; padding: 0; gap: 0;
+}
+.tabs--underline .tab {
+  border-radius: 0; border: none;
+  border-bottom: 2px solid transparent;
+  padding-inline: var(--space-5); padding-block: var(--space-3);
+  margin-bottom: -1px; background: transparent;
+}
+.tabs--underline .tab--active {
+  border-bottom-color: var(--accent); background: transparent; box-shadow: none;
+}
+
+
+/* ─── 20. SWITCH / TOGGLE ────────────────────────────────────────────────── */
+
+.switch { position: relative; display: inline-block; width: 44px; height: 24px; cursor: pointer; flex-shrink: 0; }
+.switch input { display: none; }
+
+.switch__track {
+  position: absolute; inset: 0;
+  background-color: var(--bg-surface-4); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full); transition: all var(--transition-base);
+}
+.switch__thumb {
+  position: absolute; width: 18px; height: 18px; top: 2px; right: 2px;
+  background-color: var(--text-muted); border-radius: 50%;
+  transition: transform var(--transition-spring), background-color var(--transition-base);
+}
+.switch input:checked ~ .switch__track { background-color: var(--accent-soft); border-color: var(--accent); }
+.switch input:checked ~ .switch__thumb { background-color: var(--accent); transform: translateX(-20px); }
+
+
+/* ─── 21. SELECT / DROPDOWN ──────────────────────────────────────────────── */
+
+.select {
+  appearance: none; -webkit-appearance: none;
+  width: 100%; background-color: var(--bg-surface-3); color: var(--text-primary);
+  border: 1px solid var(--border-default); border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4); padding-left: var(--space-10);
+  font-family: inherit; font-size: var(--text-base); direction: rtl; cursor: pointer; outline: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237880AA' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: left var(--space-3) center;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.select:hover { border-color: var(--border-strong); }
+.select:focus { border-color: var(--accent); box-shadow: var(--shadow-focus); }
+
+
+/* ─── 22. CLOCK DISPLAY ──────────────────────────────────────────────────── */
+/*                                                                            */
+/*  Theme    │ --clock-digit-color │ Glow effect                             */
+/*  ─────────┼─────────────────────┼───────────────────────────────────────  */
+/*  dark     │ #4ECDC4 teal        │ Layered teal ambient glow               */
+/*  light    │ #1D4ED8 rich blue   │ None — sharp on white background        */
+/*  contrast │ #FFFFFF white       │ Intense white halo glow                 */
+/*                                                                            */
+/*  User custom colour: call element.style.setProperty('--clock-digit-color', '#hex')  */
+/*  Add .clock-glow only in dark + contrast themes (light has no glow)       */
+
+.clock-wrapper  { display: flex; flex-direction: column; align-items: center; gap: var(--space-4); }
+
+.clock-display {
+  display: flex; align-items: center; justify-content: center; gap: var(--space-1);
+  font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1;
+  font-weight: var(--font-extrabold); letter-spacing: var(--tracking-clock);
+  line-height: var(--leading-none);
+  color: var(--clock-digit-color);
+  transition: color var(--transition-theme);
+}
+
+/* Size variants */
+.clock-xs { font-size: var(--text-clock-xs); }
+.clock-sm { font-size: var(--text-clock-sm); }
+.clock-md { font-size: var(--text-clock-md); }
+.clock-lg { font-size: var(--text-clock-lg); }
+.clock-xl { font-size: var(--text-clock-xl); }
+
+/* Glow — add only in dark/contrast themes */
+.clock-glow { text-shadow: var(--clock-digit-glow); }
+
+/* Blinking colon */
+.clock-sep {
+  color: var(--clock-separator); margin-bottom: 0.12em;
+  user-select: none; animation: clock-blink 1s step-start infinite;
+}
+@keyframes clock-blink {
+  0%, 100% { opacity: 1;    }
+  50%       { opacity: 0.15; }
+}
+
+/* Digit group (number + label below it) */
+.clock-segment       { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); }
+.clock-segment__label {
+  font-size: var(--text-xs); font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-wide); color: var(--clock-label);
+  text-transform: uppercase; user-select: none;
+}
+
+/* AM/PM indicator */
+.clock-ampm {
+  font-size: var(--text-lg); font-weight: var(--font-semibold);
+  color: var(--clock-digit-color); opacity: 0.55;
+  align-self: flex-end; margin-bottom: 0.3em;
+}
+
+/* Colour picker swatches */
+.clock-color-picker    { display: flex; align-items: center; gap: var(--space-2); }
+.clock-color-swatch {
+  width: 22px; height: 22px; border-radius: var(--radius-full);
+  border: 2px solid transparent; cursor: pointer;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+.clock-color-swatch:hover  { transform: scale(1.25); }
+.clock-color-swatch--active { border-color: var(--text-primary); transform: scale(1.15); }
+
+
+/* ─── 23. PROGRESS & COUNTDOWN ───────────────────────────────────────────── */
+
+.progress-track {
+  width: 100%; height: 5px; background-color: var(--bg-surface-3);
+  border-radius: var(--radius-full); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; border-radius: var(--radius-full);
+  background-color: var(--accent); transition: width 1s linear;
+}
+/* Countdown bar: shifts green → amber → red as time runs low.                */
+/* Update background-position via JS: el.style.backgroundPosition = `${pct}% 0` */
+.progress-fill--countdown {
+  background: linear-gradient(90deg, var(--success) 0%, var(--warning) 60%, var(--danger) 100%);
+  background-size: 300% 100%;
+}
+
+/* Circular ring (SVG) */
+.progress-ring       { transform: rotate(-90deg); }
+.progress-ring__track { fill: none; stroke: var(--bg-surface-3); }
+.progress-ring__fill  { fill: none; stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
+
+
+/* ─── 24. ALARM ITEM ─────────────────────────────────────────────────────── */
+
+.alarm-item {
+  display: flex; align-items: center; gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--bg-surface-2); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  transition:
+    background-color var(--transition-fast),
+    border-color     var(--transition-fast),
+    box-shadow       var(--transition-fast);
+}
+.alarm-item:hover     { border-color: var(--border-default); background-color: var(--bg-surface-3); }
+.alarm-item--active   { border-color: var(--border-accent); background-color: var(--accent-soft); }
+.alarm-item--ringing  { border-color: var(--danger-border); background-color: var(--danger-soft); animation: alarm-pulse 0.7s ease-in-out infinite alternate; }
+
+@keyframes alarm-pulse {
+  from { box-shadow: 0 0 0 0 var(--danger-soft); }
+  to   { box-shadow: 0 0 0 10px transparent;      }
+}
+
+.alarm-time {
+  font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1;
+  font-size: var(--text-2xl); font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-clock); line-height: var(--leading-none);
+  color: var(--text-primary); flex-shrink: 0;
+}
+.alarm-item--active  .alarm-time { color: var(--accent); }
+.alarm-item--ringing .alarm-time { color: var(--danger); }
+
+.alarm-info  { flex: 1; min-width: 0; }
+.alarm-label { font-size: var(--text-base); font-weight: var(--font-medium); color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.alarm-days  { display: flex; gap: var(--space-1); flex-wrap: wrap; margin-top: var(--space-1-5); }
+.alarm-day   {
+  font-size: var(--text-2xs); font-weight: var(--font-medium);
+  color: var(--text-muted); padding: 2px var(--space-1-5);
+  border-radius: var(--radius-xs); background-color: var(--bg-surface-3);
+}
+.alarm-day--active { color: var(--accent); background-color: var(--accent-soft); }
+
+
+/* ─── 25. MODAL & OVERLAY ────────────────────────────────────────────────── */
+
+.modal-overlay {
+  position: fixed; inset: 0; background-color: var(--bg-overlay);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  z-index: var(--z-modal);
+  display: flex; align-items: center; justify-content: center; padding: var(--space-6);
+}
+.modal {
+  background-color: var(--bg-surface-2); border: 1px solid var(--border-default);
+  border-radius: var(--radius-2xl); padding: var(--space-8);
+  width: 100%; max-width: 500px;
+  box-shadow: var(--shadow-xl); position: relative; direction: rtl;
+}
+.modal__header   { padding-bottom: var(--space-5); margin-bottom: var(--space-6); border-bottom: 1px solid var(--border-subtle); }
+.modal__title    { font-size: var(--text-xl); font-weight: var(--font-semibold); color: var(--text-primary); }
+.modal__subtitle { font-size: var(--text-sm); color: var(--text-secondary); margin-top: var(--space-1); }
+.modal__close {
+  position: absolute; top: var(--space-5); left: var(--space-5);
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  background: var(--bg-surface-3); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);
+  color: var(--text-secondary); cursor: pointer; transition: all var(--transition-fast);
+}
+.modal__close:hover { background: var(--bg-surface-4); color: var(--text-primary); border-color: var(--border-default); }
+
+
+/* ─── 26. TOAST / NOTIFICATION ───────────────────────────────────────────── */
+
+.toast-container {
+  position: fixed; bottom: var(--space-6); left: var(--space-6);
+  display: flex; flex-direction: column; gap: var(--space-3);
+  z-index: var(--z-toast); pointer-events: none;
+  max-width: 380px; width: calc(100% - var(--space-12));
+}
+.toast {
+  display: flex; align-items: flex-start; gap: var(--space-3);
+  background-color: var(--bg-surface-3); border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl); padding: var(--space-4) var(--space-5);
+  box-shadow: var(--shadow-lg); font-size: var(--text-sm); color: var(--text-primary);
+  pointer-events: all; line-height: var(--leading-snug);
+  border-right: 3px solid var(--accent); /* RTL: accent bar on the right side */
+}
+.toast-danger  { border-right-color: var(--danger);  }
+.toast-warning { border-right-color: var(--warning); }
+.toast-success { border-right-color: var(--success); }
+.toast-info    { border-right-color: var(--info);    }
+.toast__title  { font-weight: var(--font-semibold); margin-bottom: var(--space-1); }
+.toast__msg    { color: var(--text-secondary); }
+
+
+/* ─── 27. EMPTY STATE ────────────────────────────────────────────────────── */
+
+.empty-state              { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-5); padding: var(--space-20) var(--space-8); text-align: center; }
+.empty-state__icon        { font-size: 3rem; opacity: 0.28; line-height: 1; }
+.empty-state__title       { font-size: var(--text-lg); font-weight: var(--font-semibold); color: var(--text-secondary); }
+.empty-state__description { font-size: var(--text-base); color: var(--text-muted); max-width: 300px; line-height: var(--leading-relaxed); }
+
+
+/* ─── 28. FULLSCREEN MODE ────────────────────────────────────────────────── */
+/* Always dark (#0A0C18) + always teal digits — regardless of current theme. */
+/* Long-duration clock viewing always benefits from dark + glow.              */
+
+.fullscreen-mode {
+  position: fixed; inset: 0; background-color: #0A0C18;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  z-index: var(--z-max);
+}
+.fullscreen-mode .clock-display {
+  color: #4ECDC4;
+}
+.fullscreen-mode .clock-glow {
+  text-shadow:
+    0 0 30px rgba(78,205,196,0.65),
+    0 0 70px rgba(78,205,196,0.32),
+    0 0 130px rgba(78,205,196,0.14);
+}
+.fullscreen-mode .clock-sep { color: rgba(78, 205, 196, 0.38); }
+
+/* Exit button — fades in on mouse movement */
+.fullscreen-exit {
+  position: absolute; top: var(--space-6); left: var(--space-6);
+  opacity: 0; transition: opacity var(--transition-base);
+}
+.fullscreen-mode:hover .fullscreen-exit { opacity: 1; }
+
+
+/* ─── 29. ACCENT UTILITIES ───────────────────────────────────────────────── */
+/* Teal should cover ≤ 10–15% of the visible screen.                         */
+/* It is a highlight, not a fill. Use sparingly.                              */
+
+.accent-dot          { width: 8px; height: 8px; border-radius: 50%; background-color: var(--accent); flex-shrink: 0; }
+.accent-dot--danger  { background-color: var(--danger);  }
+.accent-dot--warning { background-color: var(--warning); }
+.accent-dot--success { background-color: var(--success); }
+
+.accent-line-top  { border-top: 2px solid var(--accent); }
+.accent-highlight { background-color: var(--accent-soft); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); }
+.active-indicator { border-right: 3px solid var(--accent); padding-right: var(--space-4); }
+
+
+/* ─── 30. UTILITY CLASSES ────────────────────────────────────────────────── */
+/* These are design-system utility classes for use in any component.          */
+/* They are single-purpose, semantic, and theme-aware.                        */
+/* All colour values come from the token layer — never hardcoded.             */
+/*                                                                            */
+/* NAMING CONVENTION:                                                         */
+/*   text-{role}     — sets color only                                        */
+/*   bg-{role}       — sets background-color only                             */
+/*   border-{level}  — sets border shorthand (width + style + color)          */
+/*   rounded-{size}  — sets border-radius only                                */
+/*   shadow-{size}   — sets box-shadow only                                   */
+/*   text-{size}     — sets font-size only (type scale)                       */
+/*   gap-{n}         — sets gap only (matches spacing token n)                */
+
+/* ── Text colour ──────────────────────────────────────────────────────────── */
+.text-primary    { color: var(--text-primary)      !important; }
+.text-secondary  { color: var(--text-secondary)    !important; }
+.text-muted      { color: var(--text-muted)        !important; }
+.text-disabled   { color: var(--text-disabled)     !important; }
+.text-accent     { color: var(--accent)            !important; }
+.text-accent-alt { color: var(--accent-alt)        !important; }
+.text-danger     { color: var(--danger)            !important; }
+.text-warning    { color: var(--warning)           !important; }
+.text-success    { color: var(--success)           !important; }
+.text-info       { color: var(--info)              !important; }
+.text-clock      { color: var(--clock-digit-color) !important; }
+
+/* ── Background ───────────────────────────────────────────────────────────── */
+.bg-base        { background-color: var(--bg-base);      }
+.bg-subtle      { background-color: var(--bg-subtle);    }
+.bg-surface-1   { background-color: var(--bg-surface-1); }
+.bg-surface-2   { background-color: var(--bg-surface-2); }
+.bg-surface-3   { background-color: var(--bg-surface-3); }
+.bg-surface-4   { background-color: var(--bg-surface-4); }
+.bg-accent      { background-color: var(--accent);       }
+.bg-accent-soft { background-color: var(--accent-soft);  }
+.bg-danger-soft { background-color: var(--danger-soft);  }
+.bg-glass {
+  background-color: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ── Border ───────────────────────────────────────────────────────────────── */
+.border-subtle        { border: 1px solid var(--border-subtle);        }
+.border-default       { border: 1px solid var(--border-default);       }
+.border-strong        { border: 1px solid var(--border-strong);        }
+.border-accent        { border: 1px solid var(--border-accent);        }
+.border-accent-strong { border: 1px solid var(--border-accent-strong); }
+.border-danger        { border: 1px solid var(--danger-border);        }
+
+/* ── Border radius ────────────────────────────────────────────────────────── */
+.rounded-none { border-radius: var(--radius-none); }
+.rounded-xs   { border-radius: var(--radius-xs);   }
+.rounded-sm   { border-radius: var(--radius-sm);   }
+.rounded-md   { border-radius: var(--radius-md);   }
+.rounded-lg   { border-radius: var(--radius-lg);   }
+.rounded-xl   { border-radius: var(--radius-xl);   }
+.rounded-2xl  { border-radius: var(--radius-2xl);  }
+.rounded-3xl  { border-radius: var(--radius-3xl);  }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* ── Shadow ───────────────────────────────────────────────────────────────── */
+.shadow-xs            { box-shadow: var(--shadow-xs);            }
+.shadow-sm            { box-shadow: var(--shadow-sm);            }
+.shadow-md            { box-shadow: var(--shadow-md);            }
+.shadow-lg            { box-shadow: var(--shadow-lg);            }
+.shadow-xl            { box-shadow: var(--shadow-xl);            }
+.shadow-accent        { box-shadow: var(--shadow-accent);        }
+.shadow-accent-strong { box-shadow: var(--shadow-accent-strong); }
+
+/* ── Type scale ───────────────────────────────────────────────────────────── */
+.text-2xs  { font-size: var(--text-2xs);  }
+.text-xs   { font-size: var(--text-xs);   }
+.text-sm   { font-size: var(--text-sm);   }
+.text-base { font-size: var(--text-base); }
+.text-md   { font-size: var(--text-md);   }
+.text-lg   { font-size: var(--text-lg);   }
+.text-xl   { font-size: var(--text-xl);   }
+.text-2xl  { font-size: var(--text-2xl);  }
+.text-3xl  { font-size: var(--text-3xl);  }
+.text-4xl  { font-size: var(--text-4xl);  }
+
+/* ── Gap ──────────────────────────────────────────────────────────────────── */
+.gap-1  { gap: var(--space-1);  }
+.gap-2  { gap: var(--space-2);  }
+.gap-3  { gap: var(--space-3);  }
+.gap-4  { gap: var(--space-4);  }
+.gap-5  { gap: var(--space-5);  }
+.gap-6  { gap: var(--space-6);  }
+.gap-8  { gap: var(--space-8);  }
+.gap-10 { gap: var(--space-10); }
+.gap-12 { gap: var(--space-12); }
+
+/* ── Theme-switch transition ──────────────────────────────────────────────── */
+/* Add class="theme-transition" to <html> in layout.tsx                       */
+.theme-transition,
+.theme-transition * {
+  transition:
+    background-color var(--transition-theme),
+    border-color     var(--transition-theme),
+    color            var(--transition-theme),
+    box-shadow       var(--transition-theme) !important;
+}
+
+/* ── Accessibility & layout helpers ──────────────────────────────────────── */
+.sr-only      { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+.truncate     { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
