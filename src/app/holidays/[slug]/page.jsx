@@ -6,13 +6,14 @@ import CountdownTicker from '@/components/clocks/countdown-ticker';
 import Link from 'next/link';
 import Script from 'next/script';
 import { notFound } from 'next/navigation';
+import { headers } from 'next/headers';
+import { Suspense } from 'react';
 
 const SITE_URL = "https://yourdomain.com";
 
 /* --------------------------
    Static Params
 --------------------------- */
-
 export async function generateStaticParams() {
   return ALL_EVENTS.map((holiday) => ({
     slug: holiday.slug,
@@ -20,48 +21,62 @@ export async function generateStaticParams() {
 }
 
 /* --------------------------
-   SEO Metadata (Next 16 fix)
+   SEO Metadata
 --------------------------- */
-
 export async function generateMetadata({ params }) {
-  const { slug } = await params; // ✅ MUST await in Next 16
+  const { slug } = await params;
   const holiday = ALL_EVENTS.find((h) => h.slug === slug);
 
   if (!holiday) {
     return {
       title: "404 - الصفحة غير موجودة",
-      robots: {
-        index: false,
-        follow: false,
-        nocache: true
-      },
+      robots: { index: false, follow: false },
     };
   }
 
   const url = `${SITE_URL}/holidays/${slug}`;
-
   return {
     title: holiday.seoTitle || holiday.title,
     description: holiday.description,
-    alternates: {
-      canonical: url,
-    },
+    alternates: { canonical: url },
   };
 }
 
 /* --------------------------
    Page Component
 --------------------------- */
-
 export default async function HolidayCountdown({ params }) {
-  const { slug } = await params; // ✅ MUST await in Next 16
-
+  const { slug } = await params;
   const holiday = ALL_EVENTS.find((h) => h.slug === slug);
 
   if (!holiday) {
-    notFound(); // ✅ Proper Next.js way
+    notFound();
   }
 
+  return (
+    <div className="min-h-screen bg-base text-primary" dir="rtl">
+      <Header />
+      <main className="pt-24 pb-12 px-4 max-w-7xl mx-auto">
+        <nav className="flex items-center gap-2 text-sm text-muted mb-8">
+          <Link href="/">الرئيسية</Link>
+          <span>/</span>
+          <Link href="/holidays">المناسبات</Link>
+          <span>/</span>
+          <span>{holiday.name}</span>
+        </nav>
+
+        <Suspense fallback={<div className="h-64 animate-pulse bg-[var(--bg-surface-2)] rounded-2xl" />}>
+          <DynamicCountdown holiday={holiday} slug={slug} />
+        </Suspense>
+      </main>
+    </div>
+  );
+}
+
+// ─── Dynamic Sub-component ───
+// This handles time-dependent calculations and Schemas
+async function DynamicCountdown({ holiday, slug }) {
+  await headers();
   const targetDate = getNextEventDate(holiday);
   const initialTimeRemaining = getTimeRemaining(targetDate);
 
@@ -82,32 +97,18 @@ export default async function HolidayCountdown({ params }) {
   };
 
   return (
-    <div className="min-h-screen bg-base text-primary" dir="rtl">
-
+    <>
       <Script
-        id="event-schema"
+        id={`event-schema-${slug}`}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-
-      <Header />
-
-      <main className="pt-24 pb-12 px-4 max-w-7xl mx-auto">
-        <nav className="flex items-center gap-2 text-sm text-muted mb-8">
-          <Link href="/">الرئيسية</Link>
-          <span>/</span>
-          <Link href="/holidays">المناسبات</Link>
-          <span>/</span>
-          <span>{holiday.name}</span>
-        </nav>
-
-        <CountdownTicker
-          holiday={holiday}
-          targetDate={targetDate.toISOString()}
-          initialTimeRemaining={initialTimeRemaining}
-          isEmbedInitial={false}
-        />
-      </main>
-    </div>
+      <CountdownTicker
+        holiday={holiday}
+        targetDate={targetDate.toISOString()}
+        initialTimeRemaining={initialTimeRemaining}
+        isEmbedInitial={false}
+      />
+    </>
   );
 }

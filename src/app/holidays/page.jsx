@@ -1,7 +1,7 @@
 /* Holidays page */
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, Suspense } from 'react';
 import Link from 'next/link';
 import {
   Calendar,
@@ -25,25 +25,16 @@ import {
   getTimeRemaining,
 } from '@/lib/holidays-engine';
 
+// ─── Component ──────────────────────────────────────────────────────────────
+
 // ensure hijri month names
 moment.updateLocale('ar', {
   iMonths: [
-    'محرم',
-    'صفر',
-    'ربيع الأول',
-    'ربيع الآخر',
-    'جمادى الأولى',
-    'جمادى الآخرة',
-    'رجب',
-    'شعبان',
-    'رمضان',
-    'شوال',
-    'ذو القعدة',
-    'ذو الحجة',
+    'محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 'جمادى الآخرة',
+    'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة',
   ],
 });
 
-// Tabs definition (key -> label)
 const TABS = [
   { key: 'religious', label: 'المناسبات الدينية', icon: Calendar },
   { key: 'seasonal', label: 'المواسم العامة', icon: Sun },
@@ -51,13 +42,6 @@ const TABS = [
   { key: 'educational', label: 'تعليمية', icon: Clock },
   { key: 'astronomical', label: 'فلكية', icon: Sparkles },
   { key: 'all', label: 'الكل', icon: Calendar },
-];
-
-const TIME_FILTERS = [
-  { key: 'all', label: 'الكل' },
-  { key: 'week', label: 'هذا الأسبوع' },
-  { key: 'month', label: 'هذا الشهر' },
-  { key: 'upcoming', label: 'القادمة' },
 ];
 
 function formatGregorian(date) {
@@ -76,24 +60,17 @@ function getEventComputed(event) {
   const target = getNextEventDate(event);
   const remaining = getTimeRemaining(target);
   const daysLeft = remaining.days;
-
   const formattedDate = event.type === 'hijri' ? formatHijri(target) : formatGregorian(target);
-
   return { event, target, daysLeft, formattedDate };
 }
 
-// Small reusable EventCard (keeps your original look but adapted for tabbed UI)
-function EventCard({ e, small = false, highlight = false }) {
+function EventCard({ e, small = false }) {
   if (!e) return null;
   const { event, daysLeft, formattedDate } = getEventComputed(e);
 
   if (small) {
     return (
-      <Link
-        href={`/holidays/${event.slug}`}
-        title={event.title}
-        className="card-small group"
-      >
+      <Link href={`/holidays/${event.slug}`} className="card-small group">
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 rounded-full flex flex-col items-center justify-center text-[10px] font-bold border border-border bg-surface-2 group-hover:bg-accent-soft group-hover:border-accent group-hover:text-accent transition-colors">
             <span>{daysLeft}</span>
@@ -120,7 +97,6 @@ function EventCard({ e, small = false, highlight = false }) {
         </div>
         <ShareButton event={event} className="p-2 rounded-xl w-8 h-8 text-muted hover:text-accent hover:bg-accent-soft transition-colors" />
       </div>
-
       <div className="relative z-10">
         <h3 className="text-xl font-bold mb-2 transition-colors group-hover:text-accent">{event.name}</h3>
         <div className="flex items-center gap-3">
@@ -139,64 +115,40 @@ function EventCard({ e, small = false, highlight = false }) {
   );
 }
 
-export default function HolidaysPage() {
-  // UI state
+function HolidaysContent() {
   const [activeTab, setActiveTab] = useState('religious');
   const [timeFilter, setTimeFilter] = useState('all');
   const [query, setQuery] = useState('');
   const [selectedCountryCode, setSelectedCountryCode] = useState('all');
 
-  // prepare source datasets
-  const religious = RELIGIOUS_HOLIDAYS.map(en => en);
-  const seasonal = SEASONAL_EVENTS.map(en => en);
-  const countries = COUNTRIES_EVENTS.map(c => ({ ...c }));
-
-  // helper to flatten country events
+  const religious = RELIGIOUS_HOLIDAYS;
+  const seasonal = SEASONAL_EVENTS;
   const flattenedCountryEvents = useMemo(() => {
     return COUNTRIES_EVENTS.flatMap((c) => c.events.map(e => ({ ...e, _country: { name: c.name, code: c.code } })));
   }, []);
 
-  // choose current list based on tab
   const currentList = useMemo(() => {
     switch (activeTab) {
-      case 'religious':
-        return religious;
-      case 'seasonal':
-        return seasonal;
-      case 'countries':
-        // show flattened but keep country meta
-        return flattenedCountryEvents;
-      case 'educational':
-        // derive educational from seasonal (e.g., exams, results, back-to-school)
-        return SEASONAL_EVENTS.filter(e => ['back-to-school', 'exams', 'results', 'spring-vacation', 'summer-vacation'].includes(e.id));
-      case 'astronomical':
-        // religious hijri dates are astronomical by nature but surface a curated subset
-        return RELIGIOUS_HOLIDAYS.filter(e => ['islamic-new-year', 'mawlid', 'hajj-start', 'day-of-arafa'].includes(e.id));
+      case 'religious': return religious;
+      case 'seasonal': return seasonal;
+      case 'countries': return flattenedCountryEvents;
+      case 'educational': return SEASONAL_EVENTS.filter(e => ['back-to-school', 'exams', 'results', 'spring-vacation', 'summer-vacation'].includes(e.id));
+      case 'astronomical': return RELIGIOUS_HOLIDAYS.filter(e => ['islamic-new-year', 'mawlid', 'hajj-start', 'day-of-arafa'].includes(e.id));
       case 'all':
-      default:
-        return [
-          ...RELIGIOUS_HOLIDAYS,
-          ...SEASONAL_EVENTS,
-          ...flattenedCountryEvents,
-        ];
+      default: return [...RELIGIOUS_HOLIDAYS, ...SEASONAL_EVENTS, ...flattenedCountryEvents];
     }
-  }, [activeTab, flattenedCountryEvents]);
+  }, [activeTab, flattenedCountryEvents, religious, seasonal]);
 
-  // Apply search + time filter + country filter (simple & performant)
   const filtered = useMemo(() => {
-    const now = new Date();
-
     const matchesQuery = (ev) => {
       const q = query.trim().toLowerCase();
       if (!q) return true;
-      return (ev.name || ev.title || '').toLowerCase().includes(q) || (ev.slug || '').toLowerCase().includes(q);
+      return (ev.name || '').toLowerCase().includes(q);
     };
-
     const matchesCountry = (ev) => {
       if (selectedCountryCode === 'all') return true;
       return ev._country?.code === selectedCountryCode;
     };
-
     const matchesTime = (ev) => {
       if (timeFilter === 'all') return true;
       const { daysLeft } = getEventComputed(ev);
@@ -205,145 +157,105 @@ export default function HolidaysPage() {
       if (timeFilter === 'upcoming') return daysLeft > 0;
       return true;
     };
-
     return currentList.filter(ev => matchesQuery(ev) && matchesCountry(ev) && matchesTime(ev));
   }, [currentList, query, timeFilter, selectedCountryCode]);
 
-  // grouped countries view for countries tab
   const countriesMap = useMemo(() => {
     if (activeTab !== 'countries') return null;
-    return COUNTRIES_EVENTS.map(country => ({ ...country, events: country.events }));
+    return COUNTRIES_EVENTS;
   }, [activeTab]);
 
   return (
-    <div className="min-h-screen bg-base text-primary selection:bg-accent-soft" dir="rtl">
-      <Header />
-
-      <main className="pt-24 pb-12 px-4 max-w-7xl mx-auto">
-        <div className="mb-12">
-          <h1 className="text-4xl md:text-6xl font-black mb-4">عداد المواعيد <span className="text-accent italic">الذكية</span></h1>
-          <p className="text-muted">منصة متكاملة لتتبع أهم المواعيد الإسلامية، الوطنية، والأكاديمية في الوطن العربي — تصفح بسهولة عبر الأقسام والمرشحات.</p>
-        </div>
-
-        {/* Tabs */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-          {/* Tabs (better visual hierarchy) */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {TABS.map((t) => {
-              const ActiveIcon = t.icon;
-              const isActive = t.key === activeTab;
-              return (
-                <button
-                  key={t.key}
-                  onClick={() => setActiveTab(t.key)}
-                  className={`flex items-center gap-3 p-4 rounded-2xl transition-all font-bold text-base ${isActive
-                    ? 'bg-accent-soft text-accent border border-accent'
-                    : 'bg-surface-2 text-primary hover:bg-surface-3'
-                    }`}
-                >
-                  <ActiveIcon className="w-6 h-6" />
-                  <span>{t.label}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Filters & Search */}
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-4">
-              {/* Time Filter Dropdown */}
-              <select
-                value={timeFilter}
-                onChange={(e) => setTimeFilter(e.target.value)}
-                className="text-sm rounded-lg px-4 py-2 bg-surface-2 border border-border focus:ring-accent"
+    <>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 mb-8 w-full">
+          {TABS.map((t) => {
+            const ActiveIcon = t.icon;
+            const isActive = t.key === activeTab;
+            return (
+              <button
+                key={t.key}
+                onClick={() => setActiveTab(t.key)}
+                className={`flex items-center gap-2 p-3 rounded-xl transition-all font-bold text-sm ${isActive
+                  ? 'bg-accent-soft text-accent border border-accent'
+                  : 'bg-surface-2 text-primary hover:bg-surface-3'
+                  }`}
               >
-                <option value="upcoming">القريبة (0–7 أيام)</option>
-                <option value="month">هذا الشهر</option>
-                <option value="quarter">خلال 3 أشهر</option>
-                <option value="all">عرض الكل</option>
-              </select>
-
-              {/* Country Filter (only for countries tab) */}
-              {activeTab === 'countries' && (
-                <select
-                  value={selectedCountryCode}
-                  onChange={(e) => setSelectedCountryCode(e.target.value)}
-                  className="text-sm rounded-lg px-4 py-2 bg-surface-2 border border-border focus:ring-accent"
-                >
-                  <option value="all">كل الدول</option>
-                  {COUNTRIES_EVENTS.map(c => (
-                    <option key={c.code} value={c.code}>{c.name}</option>
-                  ))}
-                </select>
-              )}
-            </div>
-
-            <div className="flex items-center gap-2 bg-surface-2 rounded-xl px-3 py-1 border border-border">
-              <Search className="w-4 h-4 text-muted" />
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="ابحث عن مناسبة أو دولة..."
-                className="bg-transparent outline-none text-sm placeholder:text-muted"
-              />
-            </div>
-
-            {activeTab === 'countries' && (
-              <select value={selectedCountryCode} onChange={(e) => setSelectedCountryCode(e.target.value)} className="text-sm rounded-lg px-3 py-1 bg-surface-2 border border-border">
-                <option value="all">كل الدول</option>
-                {COUNTRIES_EVENTS.map(c => (
-                  <option key={c.code} value={c.code}>{c.name}</option>
-                ))}
-              </select>
-            )}
-          </div>
+                <ActiveIcon className="w-5 h-5" />
+                <span>{t.label}</span>
+              </button>
+            );
+          })}
         </div>
+      </div>
 
-        {/* Content area */}
-        {activeTab === 'countries' ? (
-          // countries view keeps country cards (compact) each with small event list
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {countriesMap.map(country => (
-              <div key={country.code} className="bg-surface-2 border border-border-subtle rounded-2xl p-6">
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="text-4xl">{country.flag}</span>
-                  <div>
-                    <h3 className="text-2xl font-bold">{country.name}</h3>
-                    <p className="text-sm text-muted">مناسبات وفعاليات {country.name}</p>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-3">
-                  {country.events
-                    .map(ev => ({ ...ev, _country: { name: country.name, code: country.code } }))
-                    .filter(ev => {
-                      if (selectedCountryCode !== 'all' && ev._country.code !== selectedCountryCode) return false;
-                      if (query && !(ev.name || '').toLowerCase().includes(query.toLowerCase())) return false;
-                      // time filter
-                      if (timeFilter !== 'all') {
-                        const { daysLeft } = getEventComputed(ev);
-                        if (timeFilter === 'week' && daysLeft > 7) return false;
-                        if (timeFilter === 'month' && daysLeft > 31) return false;
-                        if (timeFilter === 'upcoming' && daysLeft <= 0) return false;
-                      }
-                      return true;
-                    })
-                    .map(ev => <EventCard key={ev.id} e={ev} small />)}
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          // regular grid for other tabs
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map(ev => (
-              <EventCard key={ev.id || ev.slug} e={ev} />
-            ))}
-          </div>
+      <div className="flex flex-wrap items-center gap-4 mb-8">
+        <select value={timeFilter} onChange={(e) => setTimeFilter(e.target.value)} className="text-sm rounded-lg px-4 py-2 bg-surface-2 border border-border">
+          <option value="all">كل الأوقات</option>
+          <option value="upcoming">القريبة</option>
+          <option value="week">هذا الأسبوع</option>
+          <option value="month">هذا الشهر</option>
+        </select>
+
+        {activeTab === 'countries' && (
+          <select value={selectedCountryCode} onChange={(e) => setSelectedCountryCode(e.target.value)} className="text-sm rounded-lg px-4 py-2 bg-surface-2 border border-border">
+            <option value="all">كل الدول</option>
+            {COUNTRIES_EVENTS.map(c => <option key={c.code} value={c.code}>{c.name}</option>)}
+          </select>
         )}
 
-        {/* Helpful footer / SEO hint area */}
-        <div className="mt-16 p-8 bg-surface-3 border border-border rounded-2xl text-center">
-          <p className="text-muted">يمكنك فرز الأحداث حسب الوقت أو البحث عن مناسبة معينة — هذه الصفحة مصممة لتكون قابلة للفهرسة وتحسين محركات البحث (SEO).</p>
+        <div className="flex-1 min-w-[200px] flex items-center gap-2 bg-surface-2 rounded-xl px-3 py-2 border border-border">
+          <Search className="w-4 h-4 text-muted" />
+          <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="ابحث عن مناسبة..." className="bg-transparent outline-none text-sm w-full" />
+        </div>
+      </div>
+
+      {activeTab === 'countries' && countriesMap ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {countriesMap.map(country => (
+            <div key={country.code} className="bg-surface-2 border border-border-subtle rounded-2xl p-6">
+              <div className="flex items-center gap-4 mb-4">
+                <span className="text-4xl">{country.flag}</span>
+                <h3 className="text-2xl font-bold">{country.name}</h3>
+              </div>
+              <div className="flex flex-col gap-3">
+                {country.events
+                  .map(ev => ({ ...ev, _country: { code: country.code } }))
+                  .filter(ev => {
+                    if (selectedCountryCode !== 'all' && ev._country.code !== selectedCountryCode) return false;
+                    if (query && !(ev.name || '').toLowerCase().includes(query.toLowerCase())) return false;
+                    return true;
+                  })
+                  .map(ev => <EventCard key={ev.id} e={ev} small />)}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filtered.map(ev => <EventCard key={ev.id || ev.slug} e={ev} />)}
+        </div>
+      )}
+    </>
+  );
+}
+
+export default function HolidaysPageWrapper() {
+  return (
+    <div className="min-h-screen bg-base text-primary" dir="rtl">
+      <Header />
+      <main className="pt-24 pb-12 px-4 max-w-7xl mx-auto">
+        <div className="mb-12 text-center md:text-right">
+          <h1 className="text-4xl md:text-6xl font-black mb-4">عداد المواعيد <span className="text-accent italic">الذكية</span></h1>
+          <p className="text-muted max-w-2xl">تتبع أهم المواعيد الإسلامية، الوطنية، والأكاديمية.</p>
+        </div>
+
+        <Suspense fallback={<div className="h-96 animate-pulse bg-surface-2 rounded-3xl" />}>
+          <HolidaysContent />
+        </Suspense>
+
+        <div className="mt-16 p-8 bg-surface-3 border border-border rounded-2xl text-center text-sm text-muted">
+          جميع المواعيد تُحسب بناءً على التقويمين الهجري والميلادي.
         </div>
       </main>
     </div>

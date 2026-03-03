@@ -15,23 +15,56 @@ const notoKufi = Noto_Kufi_Arabic({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ar-clock.vercel.app'), // Replace with actual domain when known
-  title: 'ساعة عربية - الوقت الآن في جميع أنحاء العالم',
-  description: 'تطبيق ساعة عالمية باللغة العربية لمتابعة الوقت بدقة في مختلف المدن والدول حول العالم مع تنبيهات للمناسبات.',
-  keywords: ['ساعة', 'وقت', 'عالمية', 'توقيت', 'السعودية', 'مصر', 'الإمارات', 'موعد'],
-  authors: [{ name: 'Waqt Clock' }],
+  // ── Core ──────────────────────────────────────────────────────────────────
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com'),
+  title: {
+    default: 'مواقيت الصلاة — دقيقة في جميع أنحاء العالم',
+    template: '%s | مواقيت الصلاة',
+  },
+  description: 'احصل على مواقيت الصلاة الدقيقة (الفجر، الشروق، الظهر، العصر، المغرب، العشاء) لأي مدينة حول العالم. محسوبة بدقة فلكية وتُحدَّث يومياً.',
+  keywords: [
+    'مواقيت الصلاة', 'أوقات الصلاة', 'موعد الأذان', 'وقت الصلاة اليوم',
+    'الفجر', 'الظهر', 'العصر', 'المغرب', 'العشاء',
+    'prayer times', 'salah times', 'اتجاه القبلة', 'قبلة',
+  ],
+  authors: [{ name: 'Waqt — مواقيت الصلاة' }],
+
+  applicationName: 'مواقيت الصلاة',
+  appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: 'مواقيت' },
+
+  // ── Robots ────────────────────────────────────────────────────────────────
+  robots: {
+    index: true, follow: true,
+    googleBot: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large', 'max-video-preview': -1 },
+  },
+
+  // ── Open Graph ────────────────────────────────────────────────────────────
   openGraph: {
-    title: 'ساعة عربية | الوقت الآن',
-    description: 'الوقت الآن في جميع أنحاء العالم',
-    siteName: 'ساعة عربية',
+    title: 'مواقيت الصلاة الدقيقة',
+    description: 'احصل على مواقيت الصلاة في مدينتك — تحديث يومي',
+    siteName: 'مواقيت الصلاة',
     locale: 'ar_SA',
+    alternateLocale: ['ar_EG', 'ar_MA', 'ar_AE', 'ar_IQ'],
     type: 'website',
   },
+
+  // ── Twitter / X ───────────────────────────────────────────────────────────
   twitter: {
     card: 'summary_large_image',
-    title: 'ساعة عربية | الوقت الآن',
-    description: 'تطبيق ساعة عالمية لمتابعة الوقت في مختلف المدن والدول.',
+    title: 'مواقيت الصلاة الدقيقة',
+    description: 'مواقيت الصلاة في أي مدينة — تحديث يومي',
   },
+};
+
+export const viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: '#181C2A' },
+    { media: '(prefers-color-scheme: light)', color: '#F2F4FF' },
+  ],
+  colorScheme: 'dark light',
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({

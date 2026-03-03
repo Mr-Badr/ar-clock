@@ -60,6 +60,8 @@ export default function Header() {
             {[
               { href: "/", label: "الساعة الرئيسية", shortLabel: "الرئيسية" },
               { href: "/holidays", label: "المناسبات", shortLabel: "المناسبات" },
+              { href: "/mwaqit-al-salat/morocco/rabat", label: "مواقيت الصلاة", shortLabel: "الصلاة" },
+              { href: "/qibla", label: "تحديد القبلة", shortLabel: "القبلة" },
             ].map((link) => {
               const isActive =
                 link.href === "/"
