@@ -1,0 +1,140 @@
+
+> ar-clock@0.1.0 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack, Cache Components)
+- Experiments (use with caution):
+  ✓ optimizeCss
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 5 errors:
+./src/app/qibla/page.jsx:1:1
+Module not found: Can't resolve 'adhan'
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m { [33mQibla[39m[33m,[39m [33mCoordinates[39m } [36mfrom[39m [32m'adhan'[39m[33m;[39m
+ [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 2 |[39m [36mimport[39m [33mQiblaCompass[39m [36mfrom[39m [32m'@/components/QiblaCompass'[39m[33m;[39m
+ [90m 3 |[39m [36mimport[39m { [33mSuspense[39m } [36mfrom[39m [32m'react'[39m[33m;[39m
+ [90m 4 |[39m [36mimport[39m {[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/lib/prayerEngine.js:17:1
+Module not found: Can't resolve 'adhan'
+[0m [90m 15 |[39m [90m */[39m
+ [90m 16 |[39m
+[31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m { [33mPrayerTimes[39m[33m,[39m [33mCoordinates[39m[33m,[39m [33mCalculationMethod[39m } [36mfrom[39m [32m'adhan'[39m[33m;[39m
+ [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 18 |[39m
+ [90m 19 |[39m [90m// Module-level cache (survives warm lambdas; flushed on cold start)[39m
+ [90m 20 |[39m [36mconst[39m moduleCache [33m=[39m [36mnew[39m [33mMap[39m()[33m;[39m[0m
+
+
+
+Import traces:
+  App Route:
+    ./src/lib/prayerEngine.js
+    ./src/app/api/search-cities/route.js
+
+  Server Component:
+    ./src/lib/prayerEngine.js
+    ./src/app/mwaqit-al-salat/[country]/[city]/page.jsx
+
+  Edge App Route:
+    ./src/lib/prayerEngine.js
+    ./src/app/mwaqit-al-salat/[country]/[city]/opengraph-image.jsx
+    ./src/app/mwaqit-al-salat/[country]/[city]/opengraph-image--route-entry.js
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/holidays/page.jsx:18:1
+Module not found: Can't resolve 'moment-hijri'
+[0m [90m 16 |[39m [36mimport[39m [33mHeader[39m [36mfrom[39m [32m'@/components/layout/header'[39m[33m;[39m
+ [90m 17 |[39m [36mimport[39m [33mShareButton[39m [36mfrom[39m [32m'@/components/ui/share-button'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 18 |[39m [36mimport[39m moment [36mfrom[39m [32m'moment-hijri'[39m[33m;[39m
+ [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 19 |[39m [36mimport[39m [32m'moment/locale/ar'[39m[33m;[39m
+ [90m 20 |[39m [36mimport[39m {
+ [90m 21 |[39m   [33mRELIGIOUS_HOLIDAYS[39m[33m,[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/holidays/page.jsx [Client Component Browser]
+    ./src/app/holidays/page.jsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/holidays/page.jsx [Client Component SSR]
+    ./src/app/holidays/page.jsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/lib/holidays-engine.js:1:1
+Module not found: Can't resolve 'moment-hijri'
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m moment [36mfrom[39m [32m'moment-hijri'[39m[33m;[39m
+ [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 2 |[39m
+ [90m 3 |[39m [90m// make sure Arabic month names are available (optional)[39m
+ [90m 4 |[39m moment[33m.[39mlocale([32m'ar'[39m)[33m;[39m[0m
+
+
+
+Import traces:
+  Server Component:
+    ./src/lib/holidays-engine.js
+    ./src/app/holidays/[slug]/page.jsx
+
+  Client Component Browser:
+    ./src/lib/holidays-engine.js [Client Component Browser]
+    ./src/app/holidays/page.jsx [Client Component Browser]
+    ./src/app/holidays/page.jsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/holidays-engine.js [Client Component SSR]
+    ./src/app/holidays/page.jsx [Client Component SSR]
+    ./src/app/holidays/page.jsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/holidays/page.jsx:19:1
+Module not found: Can't resolve 'moment/locale/ar'
+[0m [90m 17 |[39m [36mimport[39m [33mShareButton[39m [36mfrom[39m [32m'@/components/ui/share-button'[39m[33m;[39m
+ [90m 18 |[39m [36mimport[39m moment [36mfrom[39m [32m'moment-hijri'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 19 |[39m [36mimport[39m [32m'moment/locale/ar'[39m[33m;[39m
+ [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 20 |[39m [36mimport[39m {
+ [90m 21 |[39m   [33mRELIGIOUS_HOLIDAYS[39m[33m,[39m
+ [90m 22 |[39m   [33mSEASONAL_EVENTS[39m[33m,[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/holidays/page.jsx [Client Component Browser]
+    ./src/app/holidays/page.jsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/holidays/page.jsx [Client Component SSR]
+    ./src/app/holidays/page.jsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (./src/app/qibla/page.jsx:1:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/lib/prayerEngine.js:17:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/app/holidays/page.jsx:18:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/lib/holidays-engine.js:1:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/app/holidays/page.jsx:19:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)

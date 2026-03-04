@@ -254,6 +254,42 @@
   {
     "country_slug": "morocco",
     "country_name_ar": "المغرب",
+    "city_slug": "sale",
+    "city_name_ar": "سلا",
+    "city_name_en": "Sale",
+    "lat": 34.0531,
+    "lon": -6.7985,
+    "timezone": "Africa/Casablanca",
+    "population": 900000,
+    "priority": 97
+  },
+  {
+    "country_slug": "morocco",
+    "country_name_ar": "المغرب",
+    "city_slug": "kenitra",
+    "city_name_ar": "القنيطرة",
+    "city_name_en": "Kenitra",
+    "lat": 34.2610,
+    "lon": -6.5802,
+    "timezone": "Africa/Casablanca",
+    "population": 450000,
+    "priority": 92
+  },
+  {
+    "country_slug": "morocco",
+    "country_name_ar": "المغرب",
+    "city_slug": "tetouan",
+    "city_name_ar": "تطوان",
+    "city_name_en": "Tetouan",
+    "lat": 35.5785,
+    "lon": -5.3684,
+    "timezone": "Africa/Casablanca",
+    "population": 380000,
+    "priority": 91
+  },
+  {
+    "country_slug": "morocco",
+    "country_name_ar": "المغرب",
     "city_slug": "marrakech",
     "city_name_ar": "مراكش",
     "city_name_en": "Marrakech",

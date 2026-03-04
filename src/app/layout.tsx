@@ -26,8 +26,11 @@ export const metadata: Metadata = {
     'مواقيت الصلاة', 'أوقات الصلاة', 'موعد الأذان', 'وقت الصلاة اليوم',
     'الفجر', 'الظهر', 'العصر', 'المغرب', 'العشاء',
     'prayer times', 'salah times', 'اتجاه القبلة', 'قبلة',
+    'فرق التوقيت', 'تحويل الوقت', 'الساعة الآن', 'المناسبات الإسلامية',
   ],
   authors: [{ name: 'Waqt — مواقيت الصلاة' }],
+  category: 'utilities',
+  classification: 'Public',
 
   applicationName: 'مواقيت الصلاة',
   appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: 'مواقيت' },
@@ -40,19 +43,22 @@ export const metadata: Metadata = {
 
   // ── Open Graph ────────────────────────────────────────────────────────────
   openGraph: {
-    title: 'مواقيت الصلاة الدقيقة',
-    description: 'احصل على مواقيت الصلاة في مدينتك — تحديث يومي',
+    title: 'مواقيت الصلاة الدقيقة وخدمات الوقت',
+    description: 'احصل على مواقيت الصلاة، فرق التوقيت، وعداد المناسبات في مكان واحد — تحديث يومي بدقة فلكية.',
     siteName: 'مواقيت الصلاة',
     locale: 'ar_SA',
-    alternateLocale: ['ar_EG', 'ar_MA', 'ar_AE', 'ar_IQ'],
+    alternateLocale: ['ar_EG', 'ar_MA', 'ar_AE', 'ar_IQ', 'ar_JO'],
     type: 'website',
   },
 
   // ── Twitter / X ───────────────────────────────────────────────────────────
   twitter: {
     card: 'summary_large_image',
-    title: 'مواقيت الصلاة الدقيقة',
-    description: 'مواقيت الصلاة في أي مدينة — تحديث يومي',
+    title: 'مواقيت الصلاة وخدمات الوقت الدقيقة',
+    description: 'مواقيت الصلاة، فرق التوقيت، واتجاه القبلة — تحديث يومي',
+  },
+  verification: {
+    google: 'verification_token', // Placeholder for user to fill later
   },
 };
 

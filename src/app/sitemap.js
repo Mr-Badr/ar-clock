@@ -13,6 +13,7 @@
 
 import seedData from '@/lib/seedCities.json';
 import { supabaseServer } from '@/lib/supabaseClient';
+import { ALL_EVENTS } from '@/lib/holidays-engine';
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
 
@@ -25,13 +26,42 @@ export default async function sitemap() {
   // ── Core pages ──────────────────────────────────────────────────────────────
   entries.push(
     { url: `${BASE}/`, lastModified: today, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${BASE}/qibla`, lastModified: today, changeFrequency: 'weekly', priority: 0.7 },
-    { url: `${BASE}/holidays`, lastModified: today, changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${BASE}/holidays`, lastModified: today, changeFrequency: 'daily', priority: 0.8 },
+    { url: `${BASE}/time-difference`, lastModified: today, changeFrequency: 'monthly', priority: 0.8 },
   );
 
+  // ── Holidays (Dynamic Events) ───────────────────────────────────────────────
+  for (const event of ALL_EVENTS) {
+    entries.push({
+      url: `${BASE}/holidays/${event.slug}`,
+      lastModified: today,
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    });
+  }
+
+  // ── Time Difference (Top Comparisons) ───────────────────────────────────────
+  // We include top capitals to boost "Time difference between X and Y" queries
+  const topCities = seedData.filter(c => c.priority >= 95);
+  for (let i = 0; i < topCities.length; i++) {
+    for (let j = i + 1; j < topCities.length; j++) {
+      const c1 = topCities[i];
+      const c2 = topCities[j];
+      entries.push({
+        url: `${BASE}/time-difference/${c1.country_slug}-${c1.city_slug}/${c2.country_slug}-${c2.city_slug}`,
+        lastModified: today,
+        changeFrequency: 'monthly',
+        priority: 0.8,
+      });
+    }
+  }
+
   // ── Top seed cities (1.0 priority → highest crawl attention) ────────────────
-  const topSeed = [...seedData].sort((a, b) => b.priority - a.priority).slice(0, 20);
-  for (const c of topSeed) {
+  const sortedSeed = [...seedData].sort((a, b) => b.priority - a.priority);
+  const topSeedCount = 20;
+  
+  for (let i = 0; i < topSeedCount && i < sortedSeed.length; i++) {
+    const c = sortedSeed[i];
     entries.push({
       url: `${BASE}/mwaqit-al-salat/${c.country_slug}/${c.city_slug}`,
       lastModified: today,
@@ -41,9 +71,9 @@ export default async function sitemap() {
   }
 
   // ── Rest of seed cities ──────────────────────────────────────────────────────
-  const seedSlugs = new Set(topSeed.map(c => `${c.country_slug}::${c.city_slug}`));
+  const topSeedSlugs = new Set(sortedSeed.slice(0, topSeedCount).map(c => `${c.country_slug}::${c.city_slug}`));
   for (const c of seedData) {
-    if (!seedSlugs.has(`${c.country_slug}::${c.city_slug}`)) {
+    if (!topSeedSlugs.has(`${c.country_slug}::${c.city_slug}`)) {
       entries.push({
         url: `${BASE}/mwaqit-al-salat/${c.country_slug}/${c.city_slug}`,
         lastModified: today,
@@ -59,7 +89,7 @@ export default async function sitemap() {
       .from('cities')
       .select('country_slug, city_slug, priority')
       .order('priority', { ascending: false })
-      .limit(2000);
+      .limit(1000); // reduced from 2000 to keep sitemap manageable
 
     const allSeedSlugs = new Set(seedData.map(c => `${c.country_slug}::${c.city_slug}`));
     for (const c of (data || [])) {
@@ -68,7 +98,7 @@ export default async function sitemap() {
           url: `${BASE}/mwaqit-al-salat/${c.country_slug}/${c.city_slug}`,
           lastModified: today,
           changeFrequency: 'daily',
-          priority: 0.8,
+          priority: 0.6,
         });
       }
     }

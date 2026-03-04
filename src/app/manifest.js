@@ -6,9 +6,9 @@
 
 export default function manifest() {
   return {
-    name: 'مواقيت الصلاة — Waqt',
-    short_name: 'مواقيت',
-    description: 'مواقيت الصلاة الدقيقة في أي مدينة حول العالم',
+    name: 'ساعة عربية — مواقيت الصلاة والوقت',
+    short_name: 'ساعة عربية',
+    description: 'مواقيت الصلاة، فرق التوقيت، وعداد المناسبات في تطبيق واحد عصري',
     start_url: '/',
     display: 'standalone',
     background_color: '#181C2A',
@@ -18,14 +18,24 @@ export default function manifest() {
     dir: 'rtl',
     icons: [
       { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-      { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+      { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
     ],
-    categories: ['lifestyle', 'utilities'],
+    categories: ['lifestyle', 'utilities', 'education'],
     shortcuts: [
       {
-        name: 'بحث عن مدينة',
-        url: '/?search=1',
-        description: 'ابحث عن مواقيت الصلاة في مدينتك',
+        name: 'مواقيت الصلاة',
+        url: '/mwaqit-al-salat/morocco/rabat',
+        description: 'تحقق من أوقات الصلاة الدقيقة',
+      },
+      {
+        name: 'فرق التوقيت',
+        url: '/time-difference',
+        description: 'قارن الوقت بين المدن العالمية',
+      },
+      {
+        name: 'عداد المناسبات',
+        url: '/holidays',
+        description: 'متى يبدأ رمضان والمناسبات القادمة؟',
       },
     ],
   };

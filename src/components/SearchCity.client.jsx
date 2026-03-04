@@ -51,7 +51,7 @@ function highlightArabic(text, query) {
   );
 }
 
-export default function SearchCity() {
+export default function SearchCity({ onSelectCity = null, initialCity = null }) {
   const router = useRouter();
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -69,13 +69,24 @@ export default function SearchCity() {
       .then(res => res.json())
       .then(data => {
         setCountries(data);
+        
+        // Priority 1: Use initialCity if passed
+        if (initialCity?.country_slug) {
+          const matched = data.find(c => c.slug === initialCity.country_slug);
+          if (matched) {
+            setSelectedCountry(matched);
+            return;
+          }
+        }
+
+        // Priority 2: LocalStorage fallback
         const saved = localStorage.getItem(LS_COUNTRY);
         if (saved) {
           const found = data.find(c => c.slug === saved);
           if (found) setSelectedCountry(found);
         }
       });
-  }, []);
+  }, [initialCity]);
 
   const performSearch = useCallback(async (q, countrySlug) => {
     if (!q.trim() && !countrySlug) {
@@ -113,7 +124,11 @@ export default function SearchCity() {
           const res = await fetch(`/api/nearest-city?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`);
           if (res.ok) {
             const city = await res.json();
-            router.push(`/mwaqit-al-salat/${city.country_slug}/${city.city_slug}`);
+            if (onSelectCity) {
+              onSelectCity(city);
+            } else {
+              router.push(`/mwaqit-al-salat/${city.country_slug}/${city.city_slug}`);
+            }
           }
         } catch (e) {
           console.error('Geo lookup failed', e);
@@ -136,7 +151,11 @@ export default function SearchCity() {
   const handleSelectCity = (city) => {
     setQuery('');
     setIsOpen(false);
-    router.push(`/mwaqit-al-salat/${city.country_slug}/${city.city_slug}`);
+    if (onSelectCity) {
+      onSelectCity(city);
+    } else {
+      router.push(`/mwaqit-al-salat/${city.country_slug}/${city.city_slug}`);
+    }
   };
 
   return (

@@ -9,7 +9,7 @@ import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
 import { Suspense } from 'react';
 
-const SITE_URL = "https://yourdomain.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://yourdomain.com";
 
 /* --------------------------
    Static Params

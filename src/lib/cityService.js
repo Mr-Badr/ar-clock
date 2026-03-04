@@ -306,7 +306,7 @@ export async function getCountries() {
  * Finds the nearest city to coordinates using Haversine distance.
  */
 export async function findNearestCity(lat, lon) {
-  // 1. Check seed data first
+  // 1. Check seed data first (Tier 1: Instant)
   let nearest = null;
   let minDistance = Infinity;
 
@@ -329,25 +329,66 @@ export async function findNearestCity(lat, lon) {
     }
   }
 
-  // 2. Check Supabase if distance > 50km (maybe there's a closer one in DB)
-  if (minDistance > 50) {
+  // 2. Check Supabase (Tier 2: Fast)
+  // If nearest seed is > 5km away, maybe the DB has a closer one
+  if (minDistance > 5) {
     try {
-      // Simple box query + client side distance check for precision
       const { data } = await supabaseServer.rpc('find_nearest_cities', {
         user_lat: lat,
         user_lon: lon,
-        lim: 5
+        lim: 1
       });
 
       if (data && data.length > 0) {
         const topDb = data[0];
         const dbDist = getDist(lat, lon, topDb.lat, topDb.lon);
         if (dbDist < minDistance) {
-          return topDb;
+          minDistance = dbDist;
+          nearest = topDb;
         }
       }
     } catch (e) {
       console.error('Nearest city RPC failed', e);
+    }
+  }
+
+  // 3. External Fallback (Tier 3: Reverse Geocoding)
+  // If still > 5km or no city, call Nominatim to find the real identity of this coordinate
+  if (minDistance > 5 || !nearest) {
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=ar`, {
+        headers: { 'User-Agent': 'MwaqitAlSalat/1.0' },
+        next: { revalidate: 86400 }
+      });
+
+      if (res.ok) {
+        const hit = await res.json();
+        if (hit && hit.address) {
+          const cityName = hit.address.city || hit.address.town || hit.address.village || hit.address.suburb || hit.display_name.split(',')[0];
+          const countryName = hit.address.country;
+          const countryCode = hit.address.country_code?.toLowerCase();
+
+          const newCity = {
+            country_slug: countryCode, // best guess from code
+            country_name_ar: countryName,
+            city_slug: cityName.toLowerCase().replace(/\s+/g, '-'),
+            city_name_ar: cityName,
+            city_name_en: cityName, // fallback
+            lat: parseFloat(hit.lat),
+            lon: parseFloat(hit.lon),
+            timezone: nearest?.timezone || 'UTC', // Borrow nearest seed city's timezone as best guess
+            population: 0,
+            priority: 0,
+          };
+
+          // Save to DB in background
+          supabaseServer.from('cities').upsert(newCity, { onConflict: 'country_slug,city_slug' }).then();
+
+          return newCity;
+        }
+      }
+    } catch (e) {
+      console.error('Nominatim reverse failed', e);
     }
   }
 

@@ -58,10 +58,11 @@ export default function Header() {
           {/* Nav links */}
           <nav className="flex items-center">
             {[
-              { href: "/", label: "الساعة الرئيسية", shortLabel: "الرئيسية" },
+              { href: "/", label: "الرئيسية", shortLabel: "الرئيسية" },
+              { href: "/mwaqit-al-salat", label: "مواقيت الصلاة", shortLabel: "الصلاة" },
+              { href: "/time-difference", label: "فرق التوقيت", shortLabel: "الفرق" },
               { href: "/holidays", label: "المناسبات", shortLabel: "المناسبات" },
-              { href: "/mwaqit-al-salat/morocco/rabat", label: "مواقيت الصلاة", shortLabel: "الصلاة" },
-              { href: "/qibla", label: "تحديد القبلة", shortLabel: "القبلة" },
+              { href: "/qibla", label: "القبلة", shortLabel: "القبلة" },
             ].map((link) => {
               const isActive =
                 link.href === "/"
