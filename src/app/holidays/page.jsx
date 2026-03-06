@@ -1,262 +1,259 @@
-/* Holidays page */
-'use client';
+/**
+ * app/holidays/page.jsx  (Server Component)
+ * WAQT design tokens: .section .container .card .badge .card__header .divider
+ * Streaming: hero → upcoming-3 → full grid
+ */
+import { Suspense } from 'react';
+import Script        from 'next/script';
+import Link          from 'next/link';
 
-import React, { useMemo, useState, Suspense } from 'react';
-import Link from 'next/link';
 import {
-  Calendar,
-  ChevronLeft,
-  Globe,
-  Sun,
-  Clock,
-  Sparkles,
-  TrendingUp,
-  Search,
-} from 'lucide-react';
-import Header from '@/components/layout/header';
-import ShareButton from '@/components/ui/share-button';
-import moment from 'moment-hijri';
-import 'moment/locale/ar';
-import {
-  RELIGIOUS_HOLIDAYS,
-  SEASONAL_EVENTS,
-  COUNTRIES_EVENTS,
-  getNextEventDate,
-  getTimeRemaining,
+  ALL_EVENTS, enrichEvent, CATEGORIES,
+  getNextEventDate, getTimeRemaining, formatGregorianAr,
+  resolveEventMeta, approxHijriYear,
+  buildBreadcrumbSchema,
 } from '@/lib/holidays-engine';
+import { resolveAllHijriEvents } from '@/lib/hijri-resolver';
+import { getInitialEvents } from './actions';
+import { PAGE_SIZE } from './constants';
+import HolidaysClient from './HolidaysClient';
+import { EventGridSkeleton } from '@/components/events/EventCard';
 
-// ─── Component ──────────────────────────────────────────────────────────────
+export const revalidate = 86_400;
+const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
 
-// ensure hijri month names
-moment.updateLocale('ar', {
-  iMonths: [
-    'محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 'جمادى الآخرة',
-    'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة',
-  ],
-});
-
-const TABS = [
-  { key: 'religious', label: 'المناسبات الدينية', icon: Calendar },
-  { key: 'seasonal', label: 'المواسم العامة', icon: Sun },
-  { key: 'countries', label: 'حسب الدولة', icon: Globe },
-  { key: 'educational', label: 'تعليمية', icon: Clock },
-  { key: 'astronomical', label: 'فلكية', icon: Sparkles },
-  { key: 'all', label: 'الكل', icon: Calendar },
-];
-
-function formatGregorian(date) {
-  try {
-    return new Intl.DateTimeFormat('ar-SA-u-nu-latn', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(date));
-  } catch (e) {
-    return moment(date).locale('ar').format('D MMMM YYYY');
-  }
+/* ── Dynamic metadata — year is always the current upcoming year ─────────── */
+export async function generateMetadata() {
+  const now  = new Date();
+  const gr   = now.getFullYear();
+  const hi   = approxHijriYear(gr);
+  return {
+    title:       `وقت — متى رمضان وعيد الفطر والأضحى ${gr} / ${hi} — عد تنازلي دقيق`,
+    description: `عد تنازلي للمناسبات الإسلامية والوطنية والمدرسية. متى رمضان ${gr}؟ عيد الفطر؟ عيد الأضحى؟ بالهجري والميلادي لكل الدول العربية.`,
+    keywords:    `متى رمضان ${gr}, عيد الفطر ${gr}, عيد الأضحى ${gr}, عد تنازلي, تقويم هجري ${hi}`,
+    alternates:  { canonical: `${SITE}/holidays`, languages: { 'ar': `${SITE}/holidays` } },
+    robots:      { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large' },
+    openGraph:   { title: `وقت — عداد المواعيد الإسلامية ${gr}`, locale: 'ar_SA', type: 'website', url: `${SITE}/holidays` },
+  };
 }
 
-function formatHijri(date) {
-  return moment(date).locale('en').iDate() + ' ' + moment(date).locale('ar').format('iMMMM') + ' ' + moment(date).locale('en').iYear();
-}
+/* ── Upcoming 3 hero — resolves fast (first 20 events only) ─────────────── */
+async function UpcomingHero() {
+  const sample   = ALL_EVENTS.slice(0, 20).map(enrichEvent);
+  const resolved = await resolveAllHijriEvents(sample);
+  const now      = new Date(); now.setHours(0,0,0,0);
 
-function getEventComputed(event) {
-  const target = getNextEventDate(event);
-  const remaining = getTimeRemaining(target);
-  const daysLeft = remaining.days;
-  const formattedDate = event.type === 'hijri' ? formatHijri(target) : formatGregorian(target);
-  return { event, target, daysLeft, formattedDate };
-}
-
-function EventCard({ e, small = false }) {
-  if (!e) return null;
-  const { event, daysLeft, formattedDate } = getEventComputed(e);
-
-  if (small) {
-    return (
-      <Link href={`/holidays/${event.slug}`} className="card-small group">
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-full flex flex-col items-center justify-center text-[10px] font-bold border border-border bg-surface-2 group-hover:bg-accent-soft group-hover:border-accent group-hover:text-accent transition-colors">
-            <span>{daysLeft}</span>
-            <span>يوم</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-sm font-semibold group-hover:text-accent transition-colors">{event.name}</span>
-            <span className="text-[10px] text-muted">{formattedDate}</span>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <ShareButton event={event} className="p-1.5 opacity-0 group-hover:opacity-100 rounded-lg transition-all w-6 h-6 text-accent" />
-          <ChevronLeft className="w-4 h-4 text-muted group-hover:text-accent transition-colors" />
-        </div>
-      </Link>
-    );
-  }
+  const top3 = sample
+    .map(ev => {
+      const d = getNextEventDate(ev, resolved);
+      return { ...ev, _daysLeft: getTimeRemaining(d).days, _formatted: formatGregorianAr(d) };
+    })
+    .filter(ev => ev._daysLeft > 0)
+    .sort((a, b) => a._daysLeft - b._daysLeft)
+    .slice(0, 3);
 
   return (
-    <Link href={`/holidays/${event.slug}`} className="card h-40 group">
-      <div className="flex justify-between items-start relative z-10">
-        <div className="p-2 rounded-xl transition-transform duration-500 bg-accent-soft text-accent group-hover:scale-110">
-          {event.type === 'hijri' ? <Sparkles className="w-5 h-5" /> : <Clock className="w-5 h-5" />}
-        </div>
-        <ShareButton event={event} className="p-2 rounded-xl w-8 h-8 text-muted hover:text-accent hover:bg-accent-soft transition-colors" />
-      </div>
-      <div className="relative z-10">
-        <h3 className="text-xl font-bold mb-2 transition-colors group-hover:text-accent">{event.name}</h3>
-        <div className="flex items-center gap-3">
-          <div className="text-xs font-medium px-2.5 py-1 rounded-lg border border-border bg-surface-2 text-muted transition-colors group-hover:border-accent-strong group-hover:text-primary">
-            {formattedDate}
-          </div>
-          {daysLeft !== null && (
-            <div className="flex items-center gap-1.5 text-xs font-bold text-accent">
-              <TrendingUp className="w-3 h-3" />
-              <span>متبقي {daysLeft} يوم</span>
-            </div>
+    <div
+      style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(200px, 1fr))', gap:'var(--space-4)', marginTop:'var(--space-6)' }}
+      aria-label="أقرب 3 مناسبات قادمة"
+    >
+      {top3.map((ev, i) => (
+        <Link
+          key={ev.slug}
+          href={`/holidays/${ev.slug}`}
+          className={`card ${i === 0 ? 'card--accent' : ''} no-underline`}
+          style={{ display:'flex', flexDirection:'column', gap:'var(--space-3)' }}
+        >
+          {i === 0 && (
+            <span className="badge badge-accent" style={{ alignSelf:'flex-start' }}>التالي</span>
           )}
-        </div>
-      </div>
-    </Link>
+          <div>
+            <span
+              className="clock-display tabular-nums"
+              style={{ fontSize:'var(--text-3xl)', color:'var(--accent)' }}
+            >
+              {ev._daysLeft}
+            </span>
+            <span style={{ fontSize:'var(--text-sm)', color:'var(--text-secondary)', marginRight:'var(--space-1)' }}>يوم</span>
+          </div>
+          <p style={{ fontSize:'var(--text-base)', fontWeight:'var(--font-semibold)', color:'var(--text-primary)' }}>
+            {ev.name}
+          </p>
+          <p style={{ fontSize:'var(--text-xs)', color:'var(--text-muted)' }}>{ev._formatted}</p>
+        </Link>
+      ))}
+    </div>
   );
 }
 
-function HolidaysContent() {
-  const [activeTab, setActiveTab] = useState('religious');
-  const [timeFilter, setTimeFilter] = useState('all');
-  const [query, setQuery] = useState('');
-  const [selectedCountryCode, setSelectedCountryCode] = useState('all');
+/* ── Initial grid (SSR'd, streamed) ─────────────────────────────────────── */
+async function InitialEventGrid() {
+  const { events, nextCursor, total } = await getInitialEvents();
+  return <HolidaysClient initialEvents={events} initialNextCursor={nextCursor} initialTotal={total} />;
+}
 
-  const religious = RELIGIOUS_HOLIDAYS;
-  const seasonal = SEASONAL_EVENTS;
-  const flattenedCountryEvents = useMemo(() => {
-    return COUNTRIES_EVENTS.flatMap((c) => c.events.map(e => ({ ...e, _country: { name: c.name, code: c.code } })));
-  }, []);
+/* ── Page ────────────────────────────────────────────────────────────────── */
+export default async function HolidaysPage() {
+  const breadcrumb = buildBreadcrumbSchema([
+    { name:'الرئيسية',  url:SITE },
+    { name:'المناسبات', url:`${SITE}/holidays` },
+  ]);
+  const websiteSchema = {
+    '@context':'https://schema.org','@type':'WebSite', name:'وقت — عداد المواعيد', url:SITE, inLanguage:'ar',
+    potentialAction:{'@type':'SearchAction',target:`${SITE}/holidays?q={search_term_string}`,'query-input':'required name=search_term_string'},
+  };
+  // Organization schema — establishes brand entity in Google Knowledge Graph (critical for AI Overview citation)
+  const orgSchema = {
+    '@context':'https://schema.org','@type':'Organization',
+    name:'وقت — عداد المواعيد',
+    url: SITE,
+    logo: { '@type':'ImageObject', url:`${SITE}/logo.png`, width:512, height:512 },
+    description:'منصة عربية متخصصة في العد التنازلي للمناسبات الإسلامية والوطنية والمدرسية في العالم العربي.',
+    inLanguage:'ar',
+    areaServed: ['SA','EG','MA','DZ','AE','TN','KW','QA'],
+    sameAs:[
+      `${SITE}`,
+      // Add your social URLs here when available:
+      // 'https://twitter.com/yourhandle',
+      // 'https://www.instagram.com/yourhandle',
+    ],
+    knowsAbout: ['التقويم الهجري','المناسبات الإسلامية','العد التنازلي','تقويم أم القرى','رمضان','عيد الفطر','عيد الأضحى'],
+  };
+  // Resolve the 3 most-searched events dynamically so dates + years are always correct
+  const keyEvents   = ['ramadan','eid-al-fitr','eid-al-adha'].map(s => ALL_EVENTS.find(e => e.slug === s)).filter(Boolean).map(enrichEvent);
+  const keyResolved = await resolveAllHijriEvents(keyEvents);
+  const keyMeta     = Object.fromEntries(keyEvents.map(ev => {
+    const target = getNextEventDate(ev, keyResolved);
+    const meta   = resolveEventMeta(ev, target);
+    return [ev.slug, { date: formatGregorianAr(target), ...meta }];
+  }));
 
-  const currentList = useMemo(() => {
-    switch (activeTab) {
-      case 'religious': return religious;
-      case 'seasonal': return seasonal;
-      case 'countries': return flattenedCountryEvents;
-      case 'educational': return SEASONAL_EVENTS.filter(e => ['back-to-school', 'exams', 'results', 'spring-vacation', 'summer-vacation'].includes(e.id));
-      case 'astronomical': return RELIGIOUS_HOLIDAYS.filter(e => ['islamic-new-year', 'mawlid', 'hajj-start', 'day-of-arafa'].includes(e.id));
-      case 'all':
-      default: return [...RELIGIOUS_HOLIDAYS, ...SEASONAL_EVENTS, ...flattenedCountryEvents];
-    }
-  }, [activeTab, flattenedCountryEvents, religious, seasonal]);
+  const gr = new Date().getFullYear();
+  const hi = approxHijriYear(gr);
 
-  const filtered = useMemo(() => {
-    const matchesQuery = (ev) => {
-      const q = query.trim().toLowerCase();
-      if (!q) return true;
-      return (ev.name || '').toLowerCase().includes(q);
-    };
-    const matchesCountry = (ev) => {
-      if (selectedCountryCode === 'all') return true;
-      return ev._country?.code === selectedCountryCode;
-    };
-    const matchesTime = (ev) => {
-      if (timeFilter === 'all') return true;
-      const { daysLeft } = getEventComputed(ev);
-      if (timeFilter === 'week') return daysLeft <= 7;
-      if (timeFilter === 'month') return daysLeft <= 31;
-      if (timeFilter === 'upcoming') return daysLeft > 0;
-      return true;
-    };
-    return currentList.filter(ev => matchesQuery(ev) && matchesCountry(ev) && matchesTime(ev));
-  }, [currentList, query, timeFilter, selectedCountryCode]);
-
-  const countriesMap = useMemo(() => {
-    if (activeTab !== 'countries') return null;
-    return COUNTRIES_EVENTS;
-  }, [activeTab]);
+  const faqSchema = {
+    '@context':'https://schema.org','@type':'FAQPage',
+    mainEntity:[
+      { q:`متى يبدأ رمضان ${gr}؟`,  a: keyMeta['ramadan']      ? `${keyMeta['ramadan'].description} — ${keyMeta['ramadan'].date}.`     : `يُحسب تلقائياً من AlAdhan API.` },
+      { q:`متى عيد الفطر ${gr}؟`,   a: keyMeta['eid-al-fitr']  ? `${keyMeta['eid-al-fitr'].date} وفق أم القرى.`                        : `يُحسب تلقائياً.` },
+      { q:`متى عيد الأضحى ${gr}؟`,  a: keyMeta['eid-al-adha']  ? `${keyMeta['eid-al-adha'].date} وفق أم القرى.`                        : `يُحسب تلقائياً.` },
+      { q:`كيف تُحسب التواريخ الهجرية؟`, a:`نعتمد AlAdhan API بتقويم أم القرى ${hi} هـ. للدول ذات الرؤية المحلية نُشير إلى احتمال اختلاف ±1 يوم.` },
+    ].map(({q,a})=>({'@type':'Question',name:q,acceptedAnswer:{'@type':'Answer',text:a}})),
+  };
 
   return (
-    <>
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 mb-8 w-full">
-          {TABS.map((t) => {
-            const ActiveIcon = t.icon;
-            const isActive = t.key === activeTab;
-            return (
-              <button
-                key={t.key}
-                onClick={() => setActiveTab(t.key)}
-                className={`flex items-center gap-2 p-3 rounded-xl transition-all font-bold text-sm ${isActive
-                  ? 'bg-accent-soft text-accent border border-accent'
-                  : 'bg-surface-2 text-primary hover:bg-surface-3'
-                  }`}
-              >
-                <ActiveIcon className="w-5 h-5" />
-                <span>{t.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
+    <div className="bg-base" style={{ minHeight:'100dvh' }} dir="rtl">
+      <Script id="s-ws"  type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
+      <Script id="s-org" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema)     }} />
+      <Script id="s-bc"  type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb)   }} />
+      <Script id="s-faq" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema)    }} />
 
-      <div className="flex flex-wrap items-center gap-4 mb-8">
-        <select value={timeFilter} onChange={(e) => setTimeFilter(e.target.value)} className="text-sm rounded-lg px-4 py-2 bg-surface-2 border border-border">
-          <option value="all">كل الأوقات</option>
-          <option value="upcoming">القريبة</option>
-          <option value="week">هذا الأسبوع</option>
-          <option value="month">هذا الشهر</option>
-        </select>
+      <main className="container" style={{ paddingTop:'var(--space-8)', paddingBottom:'var(--space-20)' }}>
 
-        {activeTab === 'countries' && (
-          <select value={selectedCountryCode} onChange={(e) => setSelectedCountryCode(e.target.value)} className="text-sm rounded-lg px-4 py-2 bg-surface-2 border border-border">
-            <option value="all">كل الدول</option>
-            {COUNTRIES_EVENTS.map(c => <option key={c.code} value={c.code}>{c.name}</option>)}
-          </select>
-        )}
+        {/* Breadcrumb */}
+        <nav aria-label="breadcrumb" style={{ display:'flex', alignItems:'center', gap:'var(--space-2)', fontSize:'var(--text-sm)', color:'var(--text-muted)', marginBottom:'var(--space-8)' }}>
+          <Link href="/" style={{ color:'var(--text-muted)' }}>الرئيسية</Link>
+          <span aria-hidden>/</span>
+          <span aria-current="page" style={{ color:'var(--text-secondary)' }}>المناسبات</span>
+        </nav>
 
-        <div className="flex-1 min-w-[200px] flex items-center gap-2 bg-surface-2 rounded-xl px-3 py-2 border border-border">
-          <Search className="w-4 h-4 text-muted" />
-          <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="ابحث عن مناسبة..." className="bg-transparent outline-none text-sm w-full" />
-        </div>
-      </div>
+        {/* ── Hero ──────────────────────────────────────────────────────────── */}
+        <header style={{ marginBottom:'var(--space-12)' }}>
+          <h1 style={{ fontSize:'var(--text-4xl)', fontWeight:'var(--font-black)', color:'var(--text-primary)', lineHeight:'var(--leading-tight)' }}>
+            عداد{' '}
+            <span style={{ color:'var(--accent)' }}>المواعيد</span>
+          </h1>
+          <p style={{ marginTop:'var(--space-4)', color:'var(--text-secondary)', maxWidth:'var(--measure-narrow)', lineHeight:'var(--leading-relaxed)', fontSize:'var(--text-lg)' }}>
+            تابع أهم المناسبات الإسلامية والوطنية والمدرسية في العالم العربي بدقة تامة — بالهجري والميلادي، مع عد تنازلي حي.
+          </p>
 
-      {activeTab === 'countries' && countriesMap ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {countriesMap.map(country => (
-            <div key={country.code} className="bg-surface-2 border border-border-subtle rounded-2xl p-6">
-              <div className="flex items-center gap-4 mb-4">
-                <span className="text-4xl">{country.flag}</span>
-                <h3 className="text-2xl font-bold">{country.name}</h3>
-              </div>
-              <div className="flex flex-col gap-3">
-                {country.events
-                  .map(ev => ({ ...ev, _country: { code: country.code } }))
-                  .filter(ev => {
-                    if (selectedCountryCode !== 'all' && ev._country.code !== selectedCountryCode) return false;
-                    if (query && !(ev.name || '').toLowerCase().includes(query.toLowerCase())) return false;
-                    return true;
-                  })
-                  .map(ev => <EventCard key={ev.id} e={ev} small />)}
-              </div>
+          {/* Upcoming 3 */}
+          <Suspense fallback={
+            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))', gap:'var(--space-4)', marginTop:'var(--space-6)' }}>
+              {[1,2,3].map(i=><div key={i} className="card" style={{ height:'120px', background:'var(--bg-surface-3)' }} />)}
             </div>
-          ))}
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map(ev => <EventCard key={ev.id || ev.slug} e={ev} />)}
-        </div>
-      )}
-    </>
-  );
-}
+          }>
+            <UpcomingHero />
+          </Suspense>
+        </header>
 
-export default function HolidaysPageWrapper() {
-  return (
-    <div className="min-h-screen bg-base text-primary" dir="rtl">
-      <Header />
-      <main className="pt-24 pb-12 px-4 max-w-7xl mx-auto">
-        <div className="mb-12 text-center md:text-right">
-          <h1 className="text-4xl md:text-6xl font-black mb-4">عداد المواعيد <span className="text-accent italic">الذكية</span></h1>
-          <p className="text-muted max-w-2xl">تتبع أهم المواعيد الإسلامية، الوطنية، والأكاديمية.</p>
+        {/* ── Calendar method legend ─────────────────────────────────────────── */}
+        <div className="card-nested" style={{ marginBottom:'var(--space-8)', display:'flex', flexWrap:'wrap', gap:'var(--space-5)', fontSize:'var(--text-xs)', color:'var(--text-muted)' }}>
+          <span style={{ display:'flex', alignItems:'center', gap:'var(--space-2)' }}>
+            <span className="accent-dot" aria-hidden />
+            هجري = أم القرى (AlAdhan API)
+          </span>
+          <span style={{ display:'flex', alignItems:'center', gap:'var(--space-2)' }}>
+            <span style={{ color:'var(--warning)' }}>⚠</span>
+            احتمال ±1 يوم برؤية الهلال المحلية
+          </span>
+          <span style={{ display:'flex', alignItems:'center', gap:'var(--space-2)' }}>
+            <span className="accent-dot accent-dot--success" aria-hidden />
+            ثابت = نفس التاريخ كل عام
+          </span>
+          <span style={{ display:'flex', alignItems:'center', gap:'var(--space-2)' }}>
+            <span className="accent-dot accent-dot--warning" aria-hidden />
+            تقديري = تاريخ قد يتغير
+          </span>
         </div>
 
-        <Suspense fallback={<div className="h-96 animate-pulse bg-surface-2 rounded-3xl" />}>
-          <HolidaysContent />
-        </Suspense>
+        {/* ── All events ────────────────────────────────────────────────────── */}
+        <section aria-labelledby="events-heading">
+          <div className="card__header" style={{ border:'none', padding:0, marginBottom:'var(--space-6)' }}>
+            <h2 id="events-heading" style={{ fontSize:'var(--text-xl)', fontWeight:'var(--font-semibold)', color:'var(--text-primary)' }}>
+                التصنيفات
+            </h2>
+          </div>
+          <Suspense fallback={<EventGridSkeleton count={PAGE_SIZE} />}>
+            <InitialEventGrid />
+          </Suspense>
+        </section>
 
-        <div className="mt-16 p-8 bg-surface-3 border border-border rounded-2xl text-center text-sm text-muted">
-          جميع المواعيد تُحسب بناءً على التقويمين الهجري والميلادي.
-        </div>
+        {/* ── SEO content ───────────────────────────────────────────────────── */}
+        <div className="divider" style={{ marginTop:'var(--space-16)' }} />
+        <section className="section section--flat container--narrow" aria-labelledby="seo-h">
+          <h2 id="seo-h" style={{ fontSize:'var(--text-2xl)', fontWeight:'var(--font-bold)', color:'var(--text-primary)', marginBottom:'var(--space-5)' }}>
+            مواعيد أهم المناسبات الإسلامية {gr} / {hi}
+          </h2>
+          <p style={{ color:'var(--text-secondary)', lineHeight:'var(--leading-relaxed)', marginBottom:'var(--space-4)' }}>
+            يعتمد <strong style={{ color:'var(--text-primary)' }}>وقت</strong> على <strong style={{ color:'var(--text-primary)' }}>تقويم أم القرى</strong> الرسمي عبر AlAdhan API لحساب جميع التواريخ الهجرية بدقة مطلقة — رمضان وعيد الفطر وعيد الأضحى ويوم عرفة وليلة القدر والمولد النبوي.
+          </p>
+          <p style={{ color:'var(--text-secondary)', lineHeight:'var(--leading-relaxed)', marginBottom:'var(--space-4)' }}>
+            للدول التي تعتمد رؤية الهلال المحلية — المغرب والجزائر وتونس ومصر — نُشير إلى احتمال اختلاف بيوم واحد مع إظهار مصدر التقويم بوضوح على كل بطاقة.
+          </p>
+          <p style={{ color:'var(--text-secondary)', lineHeight:'var(--leading-relaxed)' }}>
+            تُحدَّث جميع التواريخ تلقائياً كل 24 ساعة عبر ISR. عندما ينتهي حدث، يبدأ العداد فوراً للسنة القادمة — بلا أي تدخل يدوي.
+          </p>
+
+          {/* FAQ */}
+          <h2 style={{ fontSize:'var(--text-xl)', fontWeight:'var(--font-bold)', color:'var(--text-primary)', marginTop:'var(--space-10)', marginBottom:'var(--space-5)' }}>
+            أسئلة شائعة
+          </h2>
+          <div style={{ display:'flex', flexDirection:'column', gap:'var(--space-3)' }}>
+            {[
+              { q:`متى يبدأ رمضان ${gr}؟`,  a: keyMeta['ramadan']     ? `يبدأ رمضان ${hi} في ${keyMeta['ramadan'].date} وفق أم القرى. قد يختلف بيوم في بعض الدول.` : `يُحسب تلقائياً من AlAdhan API.` },
+              { q:`متى عيد الفطر ${gr}؟`,   a: keyMeta['eid-al-fitr'] ? `عيد الفطر ${hi} في ${keyMeta['eid-al-fitr'].date}.`  : `يُحسب تلقائياً.` },
+              { q:`متى عيد الأضحى ${gr}؟`,  a: keyMeta['eid-al-adha'] ? `عيد الأضحى ${hi} في ${keyMeta['eid-al-adha'].date}.` : `يُحسب تلقائياً.` },
+              { q:`كيف تُحسب التواريخ الهجرية؟`, a:`نعتمد AlAdhan API بتقويم أم القرى ${hi} هـ. للدول ذات الرؤية المحلية نُشير إلى احتمال اختلاف ±1 يوم.` },
+            ].map(({q,a}) => (
+              <details
+                key={q}
+                className="card-nested"
+                style={{ padding:'var(--space-4) var(--space-5)' }}
+              >
+                <summary
+                  style={{ cursor:'pointer', fontWeight:'var(--font-semibold)', color:'var(--text-primary)', display:'flex', justifyContent:'space-between', alignItems:'center', listStyle:'none', fontSize:'var(--text-base)' }}
+                >
+                  {q}
+                  <span style={{ color:'var(--text-muted)', fontSize:'var(--text-xl)', marginRight:'var(--space-2)', flexShrink:0 }} aria-hidden>+</span>
+                </summary>
+                <p style={{ marginTop:'var(--space-3)', color:'var(--text-secondary)', fontSize:'var(--text-sm)', lineHeight:'var(--leading-relaxed)' }}>
+                  {a}
+                </p>
+              </details>
+            ))}
+          </div>
+        </section>
       </main>
     </div>
   );

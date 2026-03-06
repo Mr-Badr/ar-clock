@@ -178,8 +178,8 @@
   --shadow-lg:            0 8px 32px rgba(0,0,0,0.45);
   --shadow-xl:            0 16px 48px rgba(0,0,0,0.55);
   --shadow-card:          0 2px 8px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.25);
-  --shadow-accent:        0 0 24px rgba(78,205,196,0.18);
-  --shadow-accent-strong: 0 0 40px rgba(78,205,196,0.32);
+  --shadow-accent:        0 0 20px rgba(78,205,196,0.10);  /* was 0.18 — toned down */
+  --shadow-accent-strong: 0 0 32px rgba(78,205,196,0.20);  /* was 0.32 — toned down */
 
   /* Clock */
   --clock-digit-color: #4ECDC4;
@@ -188,7 +188,7 @@
     0 0 50px rgba(78,205,196,0.28),
     0 0 90px rgba(78,205,196,0.12);
   --clock-separator:   rgba(78, 205, 196, 0.40);
-  --clock-label:       #454D70;
+  --clock-label:       #7880AA;  /* was #454D70 — too low contrast in dark */
   --clock-bg:          rgba(31, 36, 56, 0.85);
 
   /* Scrollbar */
@@ -295,7 +295,7 @@
   --clock-digit-color: #1D4ED8;
   --clock-digit-glow:  none;
   --clock-separator:   rgba(29, 78, 216, 0.30);
-  --clock-label:       #9298C0;
+  --clock-label:       #4E5580;  /* was #9298C0 — raised to match text-secondary */
   --clock-bg:          rgba(255, 255, 255, 0.95);
 
   /* Scrollbar */
@@ -531,7 +531,8 @@
 /* Prevents digit layout shift as clock ticks — use on every time display */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum" 1;
+  /* Note: font-feature-settings "tnum" removed — it triggers slashed-zero
+     in system fallback fonts (SF Pro, Segoe UI) before Noto Kufi loads. */
 }
 
 
@@ -814,7 +815,7 @@
 
 /* Time/alarm input — styled with clock digit colour */
 .input-time {
-  font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1;
+  font-variant-numeric: tabular-nums;
   font-size: var(--text-2xl); font-weight: var(--font-bold);
   letter-spacing: var(--tracking-clock); text-align: center;
   color: var(--clock-digit-color);
@@ -949,7 +950,8 @@
 
 .clock-display {
   display: flex; align-items: center; justify-content: center; gap: var(--space-1);
-  font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1;
+  font-family: var(--font-base);       /* Noto Kufi Arabic — always */
+  font-variant-numeric: tabular-nums;  /* standard CSS, no slashed-zero side-effect */
   font-weight: var(--font-extrabold); letter-spacing: var(--tracking-clock);
   line-height: var(--leading-none);
   color: var(--clock-digit-color);
@@ -966,14 +968,17 @@
 /* Glow — add only in dark theme */
 .clock-glow { text-shadow: var(--clock-digit-glow); }
 
-/* Blinking colon */
+/* Separator — static, no animation */
 .clock-sep {
-  color: var(--clock-separator); margin-bottom: 0.12em;
-  user-select: none; animation: clock-blink 1s step-start infinite;
+  color: var(--clock-separator);
+  margin-bottom: 0.12em;
+  user-select: none;
+  /* no animation — clean static separator */
 }
+/* kept for any existing references, does nothing */
 @keyframes clock-blink {
-  0%, 100% { opacity: 1;    }
-  50%       { opacity: 0.15; }
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 1; }
 }
 
 /* Digit group (number + label below it) */
@@ -1047,7 +1052,7 @@
 }
 
 .alarm-time {
-  font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1;
+  font-variant-numeric: tabular-nums;
   font-size: var(--text-2xl); font-weight: var(--font-bold);
   letter-spacing: var(--tracking-clock); line-height: var(--leading-none);
   color: var(--text-primary); flex-shrink: 0;

@@ -20,6 +20,7 @@ const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
 export const revalidate = 86400; // regenerate sitemap daily
 
 export default async function sitemap() {
+  const now = new Date();
   const entries = [];
   const today = new Date().toISOString();
 
@@ -31,14 +32,21 @@ export default async function sitemap() {
   );
 
   // ── Holidays (Dynamic Events) ───────────────────────────────────────────────
-  for (const event of ALL_EVENTS) {
-    entries.push({
-      url: `${BASE}/holidays/${event.slug}`,
-      lastModified: today,
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    });
-  }
+  const eventEntries = ALL_EVENTS.map(ev => {
+    // Priority: events within 7 days = 0.9, within 30 = 0.8, else 0.6
+    const isHijri     = ev.type === 'hijri';
+    const isMonthly   = ev.type === 'monthly';
+    const priority    = isHijri ? 0.9 : isMonthly ? 0.7 : 0.8;
+    const changefreq  = isHijri ? 'daily' : isMonthly ? 'daily' : 'yearly';
+
+    return {
+      url:          `${BASE}/holidays/${ev.slug}`,
+      lastModified: now,
+      changeFrequency: changefreq,
+      priority,
+    };
+  });
+  entries.push(...eventEntries);
 
   // ── Time Difference (Top Comparisons) ───────────────────────────────────────
   // We include top capitals to boost "Time difference between X and Y" queries
@@ -103,6 +111,6 @@ export default async function sitemap() {
       }
     }
   } catch { /* DB down — seed sitemap still works */ }
-
+ 
   return entries;
 }
