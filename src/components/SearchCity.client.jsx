@@ -1,49 +1,87 @@
-'use client';
-
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
-import { MapPin, Search, ChevronDown, Check, Loader2, X, Globe } from 'lucide-react';
-
-/* Shadcn Components */
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-
 /**
- * components/SearchCity.client.jsx (Shadcn Edition)
- * 
- * Premium Hybrid Search UX with Shadcn/Radix:
- * - Country Selecor as a Searchable Popover.
- * - Global City search with Command interface.
+ * SearchCity.client.jsx — WAQT Design System v4.0
+ * Single Trigger → CommandDialog pattern
+ *
+ * Fixes applied (v3):
+ *  1. ALL countries shown in chips strip and idle list (no more slice limits)
+ *  2. Geo error is a floating toast anchored to the bar — zero layout shift,
+ *     auto-dismisses after 5 s, user can also dismiss with ✕
+ *  3. No visible "محدد:" text — selected city shown exclusively inside the trigger
+ *  4. DialogTitle added (visually hidden) to silence the Radix a11y warning
  */
 
-const LS_COUNTRY = 'waqt-preferred-country';
+'use client';
 
-function stripDiacritics(str = '') {
-  return str.replace(/[\u064B-\u065F\u0670]/g, '');
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+  useTransition,
+  memo,
+} from 'react';
+import { useRouter } from 'next/navigation';
+import {
+  Search,
+  MapPin,
+  Navigation,
+  Loader2,
+  X,
+  AlertCircle,
+  Globe,
+  CheckCircle2,
+} from 'lucide-react';
+
+import {
+  CommandDialog,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+} from '@/components/ui/command';
+
+/*
+ * DialogTitle is required by Radix UI inside every DialogContent (which
+ * CommandDialog uses internally). We render it visually hidden so it satisfies
+ * the a11y requirement without appearing on screen.
+ */
+import { DialogTitle } from '@/components/ui/dialog';
+
+import './SearchCity.css';
+
+/* ── Constants ──────────────────────────────────────────────────────────── */
+const LS_COUNTRY      = 'waqt-preferred-country';
+const DEBOUNCE_MS     = 250;
+const GEO_TIMEOUT_MS  = 8000;
+const RESULT_LIMIT    = 50;
+const GEO_TOAST_MS    = 5000; /* auto-dismiss geo error after 5 s */
+
+/* ── Module-level country cache (lives for the tab session) ─────────────── */
+let _countriesCache = null;
+async function loadCountries() {
+  if (_countriesCache) return _countriesCache;
+  const res = await fetch('/api/countries', { next: { revalidate: 86400 } });
+  _countriesCache = await res.json();
+  return _countriesCache;
 }
 
-function highlightArabic(text, query) {
+/* ── Helpers ────────────────────────────────────────────────────────────── */
+function stripDiacritics(s = '') {
+  return s.replace(/[\u064B-\u065F\u0670]/g, '');
+}
+
+function highlight(text, query) {
   if (!query || !text) return text;
-  const normalized = stripDiacritics(text);
-  const nQuery = stripDiacritics(query);
-  const idx = normalized.indexOf(nQuery);
+  const nt  = stripDiacritics(text);
+  const nq  = stripDiacritics(query);
+  const idx = nt.indexOf(nq);
   if (idx === -1) return text;
   return (
     <>
       {text.slice(0, idx)}
-      <mark className="bg-[var(--accent-soft)] text-[var(--accent)] rounded-sm px-0.5">
+      <mark className="sc-highlight" aria-hidden="true">
         {text.slice(idx, idx + query.length)}
       </mark>
       {text.slice(idx + query.length)}
@@ -51,251 +89,577 @@ function highlightArabic(text, query) {
   );
 }
 
+function cityHref(city) {
+  return `/mwaqit-al-salat/${city.country_slug}/${city.city_slug}`;
+}
+
+/* ── Sub-components ─────────────────────────────────────────────────────── */
+
+const SkeletonRows = memo(function SkeletonRows() {
+  return (
+    <>
+      {[75, 60, 85, 50].map((w, i) => (
+        <div
+          key={i}
+          className="sc-skeleton"
+          style={{ width: `${w}%` }}
+          aria-hidden="true"
+        />
+      ))}
+    </>
+  );
+});
+
+const CityRow = memo(function CityRow({ city, query, showCountry, onSelect }) {
+  const href = cityHref(city);
+  const handleClick = useCallback(
+    (e) => { if (onSelect) { e.preventDefault(); onSelect(city); } },
+    [city, onSelect]
+  );
+  return (
+    <CommandItem
+      value={`${city.city_name_ar} ${city.city_name_en ?? ''} ${city.country_name_ar ?? ''}`}
+      onSelect={() => onSelect?.(city)}
+      asChild
+      className="sc-item"
+      aria-label={`${city.city_name_ar}${city.country_name_ar ? `، ${city.country_name_ar}` : ''}`}
+    >
+      <a
+        href={href}
+        onClick={handleClick}
+        lang="ar"
+        title={`${city.city_name_ar}${city.country_name_ar ? ` — ${city.country_name_ar}` : ''}`}
+      >
+        <span className="sc-item__icon" aria-hidden="true"><MapPin size={13} /></span>
+
+        <span className="sc-item__body">
+          <span className="sc-item__name">{highlight(city.city_name_ar, query)}</span>
+          {city.city_name_en && (
+            <span className="sc-item__sub" lang="en">{city.city_name_en}</span>
+          )}
+        </span>
+
+        <span className="sc-item__meta">
+          {showCountry && city.country_name_ar && (
+            <span className="sc-item__country">{city.country_name_ar}</span>
+          )}
+          {city.preview && (
+            <span className="sc-item__preview" aria-label={`وقت الصلاة: ${city.preview}`}>
+              {city.preview}
+            </span>
+          )}
+        </span>
+      </a>
+    </CommandItem>
+  );
+});
+
+/* ── Geo Toast — floats over the page, never shifts layout ─────────────── */
+const GeoToast = memo(function GeoToast({ type, onDismiss }) {
+  /* type: 'error' | 'success' */
+  const isError = type === 'error';
+  return (
+    <div
+      className={`sc-toast sc-toast--${type}`}
+      role="alert"
+      aria-live="assertive"
+    >
+      <span className="sc-toast__icon" aria-hidden="true">
+        {isError
+          ? <AlertCircle size={14} />
+          : <CheckCircle2 size={14} />
+        }
+      </span>
+      <span className="sc-toast__msg">
+        {isError
+          ? 'تعذّر تحديد الموقع — تأكد من منح إذن الوصول أو ابحث يدوياً'
+          : 'تم تحديد موقعك بنجاح'
+        }
+      </span>
+      <button
+        type="button"
+        className="sc-toast__close"
+        onClick={onDismiss}
+        aria-label="إغلاق"
+      >
+        <X size={12} aria-hidden="true" />
+      </button>
+    </div>
+  );
+});
+
+/* ── Main Component ─────────────────────────────────────────────────────── */
 export default function SearchCity({ onSelectCity = null, initialCity = null }) {
   const router = useRouter();
-  const [countries, setCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [geoLoading, setGeoLoading] = useState(false);
 
-  const containerRef = useRef(null);
-  const debounceRef = useRef(null);
+  const [open,            setOpen]           = useState(false);
+  const [countries,       setCountries]      = useState([]);
+  const [selectedCountry, setSelectedCountry]= useState(null);
+  const [selectedCity,    setSelectedCity]   = useState(initialCity ?? null);
+  const [query,           setQuery]          = useState('');
+  const [results,         setResults]        = useState([]);
+  const [isSearching,     setIsSearching]    = useState(false);
 
-  // Load countries & persistent pref
+  /* Geo state — toast type is 'error' | 'success' | null */
+  const [geoLoading,  setGeoLoading]  = useState(false);
+  const [geoToast,    setGeoToast]    = useState(null); /* 'error' | 'success' | null */
+
+  const [isPending, startTransition] = useTransition();
+
+  const abortRef      = useRef(null);
+  const debounceRef   = useRef(null);
+  const toastTimerRef = useRef(null);
+
+  /* ── Countries ───────────────────────────────────────────────────────── */
   useEffect(() => {
-    fetch('/api/countries')
-      .then(res => res.json())
-      .then(data => {
-        setCountries(data);
-        
-        // Priority 1: Use initialCity if passed
-        if (initialCity?.country_slug) {
-          const matched = data.find(c => c.slug === initialCity.country_slug);
-          if (matched) {
-            setSelectedCountry(matched);
-            return;
-          }
-        }
-
-        // Priority 2: LocalStorage fallback
+    loadCountries().then(data => {
+      setCountries(data);
+      if (initialCity?.country_slug) {
+        const m = data.find(c => c.slug === initialCity.country_slug);
+        if (m) setSelectedCountry(m);
+        return;
+      }
+      try {
         const saved = localStorage.getItem(LS_COUNTRY);
         if (saved) {
-          const found = data.find(c => c.slug === saved);
-          if (found) setSelectedCountry(found);
+          const f = data.find(c => c.slug === saved);
+          if (f) setSelectedCountry(f);
         }
-      });
+      } catch { /* private browsing */ }
+    });
   }, [initialCity]);
 
+  /* ── Auto-dismiss geo toast ──────────────────────────────────────────── */
+  const showToast = useCallback((type) => {
+    clearTimeout(toastTimerRef.current);
+    setGeoToast(type);
+    toastTimerRef.current = setTimeout(() => setGeoToast(null), GEO_TOAST_MS);
+  }, []);
+
+  const dismissToast = useCallback(() => {
+    clearTimeout(toastTimerRef.current);
+    setGeoToast(null);
+  }, []);
+
+  /* ── Search ──────────────────────────────────────────────────────────── */
   const performSearch = useCallback(async (q, countrySlug) => {
+    abortRef.current?.abort();
+    abortRef.current = new AbortController();
+
     if (!q.trim() && !countrySlug) {
-      setResults([]);
-      setIsOpen(false);
+      startTransition(() => setResults([]));
+      setIsSearching(false);
       return;
     }
+    setIsSearching(true);
     try {
-      let url = `/api/search-cities?q=${encodeURIComponent(q)}&country=${countrySlug || ''}`;
-      const res = await fetch(url);
+      const url = `/api/search-cities?q=${encodeURIComponent(q)}&country=${countrySlug || ''}&limit=${RESULT_LIMIT}`;
+      const res = await fetch(url, { signal: abortRef.current.signal });
       if (res.ok) {
         const data = await res.json();
-        setResults(data);
-        setIsOpen(data.length > 0);
+        startTransition(() => setResults(data));
       }
-    } catch (e) {
-      console.error('Search error', e);
+    } catch (err) {
+      if (err.name !== 'AbortError') console.error('Search error', err);
+    } finally {
+      setIsSearching(false);
     }
   }, []);
 
-  const onQueryChange = (val) => {
+  const onQueryChange = useCallback((val) => {
     setQuery(val);
-    if (debounceRef.current) clearTimeout(debounceRef.current);
+    clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
       performSearch(val, selectedCountry?.slug);
-    }, 250);
-  };
+    }, DEBOUNCE_MS);
+  }, [performSearch, selectedCountry]);
 
-  const handleGeoLocation = () => {
+  /* ── Geolocation ─────────────────────────────────────────────────────── */
+  const handleGeoLocation = useCallback(() => {
     if (!navigator.geolocation) return;
     setGeoLoading(true);
+    setGeoToast(null);
+    setOpen(false); /* close dialog first so user sees the trigger update */
+
     navigator.geolocation.getCurrentPosition(
-      async (pos) => {
+      async ({ coords }) => {
         try {
-          const res = await fetch(`/api/nearest-city?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`);
+          const res = await fetch(
+            `/api/nearest-city?lat=${coords.latitude}&lon=${coords.longitude}`
+          );
           if (res.ok) {
             const city = await res.json();
-            if (onSelectCity) {
-              onSelectCity(city);
-            } else {
-              router.push(`/mwaqit-al-salat/${city.country_slug}/${city.city_slug}`);
-            }
+            setSelectedCity(city);
+            showToast('success');
+            if (onSelectCity) onSelectCity(city);
+            else router.push(cityHref(city));
+          } else {
+            showToast('error');
           }
-        } catch (e) {
-          console.error('Geo lookup failed', e);
+        } catch (err) {
+          console.error('Geo lookup failed', err);
+          showToast('error');
         } finally {
           setGeoLoading(false);
         }
       },
-      () => setGeoLoading(false),
-      { timeout: 8000 }
+      () => { setGeoLoading(false); showToast('error'); },
+      { timeout: GEO_TIMEOUT_MS }
     );
-  };
+  }, [onSelectCity, router, showToast]);
 
-  const handleSelectCountry = (country) => {
-    setSelectedCountry(country);
-    if (country) localStorage.setItem(LS_COUNTRY, country.slug);
-    else localStorage.removeItem(LS_COUNTRY);
-    performSearch(query, country?.slug);
-  };
-
-  const handleSelectCity = (city) => {
+  /* ── Handlers ─────────────────────────────────────────────────────────── */
+  const handleOpenDialog = useCallback(() => {
+    setOpen(true);
     setQuery('');
-    setIsOpen(false);
-    if (onSelectCity) {
-      onSelectCity(city);
-    } else {
-      router.push(`/mwaqit-al-salat/${city.country_slug}/${city.city_slug}`);
-    }
-  };
+    startTransition(() => setResults([]));
+  }, []);
 
+  const handleSelectCountry = useCallback((country) => {
+    setSelectedCountry(country);
+    try {
+      country
+        ? localStorage.setItem(LS_COUNTRY, country.slug)
+        : localStorage.removeItem(LS_COUNTRY);
+    } catch { /* ignore */ }
+    performSearch(query, country?.slug);
+  }, [performSearch, query]);
+
+  const handleSelectCity = useCallback((city) => {
+    setSelectedCity(city);
+    setOpen(false);
+    setQuery('');
+    startTransition(() => setResults([]));
+    if (onSelectCity) onSelectCity(city);
+    else router.push(cityHref(city));
+  }, [onSelectCity, router]);
+
+  const handleClearSelection = useCallback((e) => {
+    e.stopPropagation();
+    setSelectedCity(null);
+    setSelectedCountry(null);
+  }, []);
+
+  /* ── Cleanup ─────────────────────────────────────────────────────────── */
+  useEffect(() => () => {
+    clearTimeout(debounceRef.current);
+    clearTimeout(toastTimerRef.current);
+    abortRef.current?.abort();
+  }, []);
+
+  /* ── Derived ─────────────────────────────────────────────────────────── */
+  const showSkeleton = isSearching || isPending;
+  const hasResults   = results.length > 0;
+  const showEmpty    = !showSkeleton && !hasResults && query.trim().length > 0;
+
+  const cityRows = useMemo(() =>
+    results.map(city => (
+      <CityRow
+        key={`${city.country_slug}-${city.city_slug}`}
+        city={city}
+        query={query}
+        showCountry={!selectedCountry}
+        onSelect={handleSelectCity}
+      />
+    )),
+    [results, query, selectedCountry, handleSelectCity]
+  );
+
+  const triggerLabel = selectedCity
+    ? selectedCity.city_name_ar
+    : 'ابحث عن مدينة لعرض مواقيت الصلاة…';
+
+  /* ── Render ──────────────────────────────────────────────────────────── */
   return (
-    <div className="w-full max-w-4xl mx-auto flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700" dir="rtl">
+    <search
+      className="sc-root"
+      dir="rtl"
+      lang="ar"
+      role="search"
+      aria-label="البحث عن مدينة لمعرفة مواقيت الصلاة"
+    >
 
-      <div className="flex flex-col md:flex-row gap-2 bg-[var(--bg-surface-2)] p-1 rounded-2xl shadow-lg border border-[var(--border-subtle)]">
+      {/* ── Trigger bar — position:relative so toast anchors to it ─── */}
+      <div className="sc-bar">
 
-        {/* Country Selector Popover */}
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="ghost"
-              className="h-14 md:w-[180px] justify-between text-sm hover:bg-[var(--accent-soft)] transition-all rounded-xl border-none"
+        {/* Single trigger button */}
+        <button
+          type="button"
+          className={`sc-trigger${selectedCity ? ' sc-trigger--selected' : ''}`}
+          onClick={handleOpenDialog}
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          aria-label={
+            selectedCity
+              ? `المدينة المختارة: ${selectedCity.city_name_ar}. اضغط للتغيير`
+              : 'اضغط للبحث عن مدينة'
+          }
+        >
+          {/* Icon: search or map-pin when selected */}
+          {selectedCity
+            ? <MapPin size={17} className="sc-trigger__icon sc-trigger__icon--selected" aria-hidden="true" />
+            : <Search  size={17} className="sc-trigger__icon" aria-hidden="true" />
+          }
+
+          <span className="sc-trigger__label">{triggerLabel}</span>
+
+          {/* Country badge */}
+          {selectedCity?.country_name_ar && (
+            <span className="sc-trigger__badge">
+              {selectedCity.country_name_ar}
+            </span>
+          )}
+
+          {/* Clear selection */}
+          {selectedCity && (
+            <span
+              role="button"
+              tabIndex={0}
+              className="sc-trigger__clear"
+              onClick={handleClearSelection}
+              onKeyDown={e => e.key === 'Enter' && handleClearSelection(e)}
+              aria-label="مسح الاختيار"
             >
-              <div className="flex items-center gap-2 truncate">
-                <Globe size={18} className="text-[var(--accent)]" />
-                <span className="truncate">{selectedCountry ? selectedCountry.name_ar : 'العالم'}</span>
-              </div>
-              <ChevronDown size={14} className="opacity-50" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-[280px] p-0 z-[100] bg-[var(--bg-surface-1)] border-[var(--border-default)]" align="start" dir="rtl">
-            <Command className="bg-transparent">
-              <CommandInput placeholder="ابحث عن الدولة..." className="text-right" />
-              <CommandList className="max-h-72 overflow-y-auto custom-scrollbar">
-                <CommandEmpty>لا توجد نتائج</CommandEmpty>
-                <CommandGroup heading="اختر الدولة">
-                  <CommandItem
-                    onSelect={() => handleSelectCountry(null)}
-                    className="flex items-center justify-between py-3 px-4 hover:bg-[var(--accent-soft)] transition-colors cursor-pointer"
-                  >
-                    <span>جميع الدول</span>
-                    {!selectedCountry && <Check size={16} className="text-[var(--accent)]" />}
-                  </CommandItem>
-                  {countries.map(c => (
-                    <CommandItem
-                      key={c.slug}
-                      onSelect={() => handleSelectCountry(c)}
-                      className="flex items-center justify-between py-3 px-4 hover:bg-[var(--accent-soft)] transition-colors cursor-pointer"
-                    >
-                      <span>{c.name_ar}</span>
-                      {selectedCountry?.slug === c.slug && <Check size={16} className="text-[var(--accent)]" />}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
+              <X size={11} aria-hidden="true" />
+            </span>
+          )}
+        </button>
 
-        {/* Separator Line */}
-        <div className="hidden md:block w-px h-8 self-center bg-[var(--border-subtle)]" />
+        {/* Geo button */}
+        <button
+          type="button"
+          onClick={handleGeoLocation}
+          disabled={geoLoading}
+          className={`sc-geo-btn${geoLoading ? ' sc-geo-btn--loading' : ''}`}
+          aria-label={geoLoading ? 'جارٍ تحديد موقعك…' : 'استخدم موقعي الحالي'}
+          title="استخدم موقعي"
+        >
+          {geoLoading
+            ? <Loader2 size={16} className="sc-geo-spinner" aria-hidden="true" />
+            : <Navigation size={16} aria-hidden="true" />
+          }
+          <span className="sc-geo-btn__label">موقعي</span>
+        </button>
 
-        {/* City/Global Search Input */}
-        <div className="relative flex-1 group">
-          <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-[var(--accent)] opacity-40 group-focus-within:opacity-100 transition-opacity">
-            <Search size={20} />
+        {/* Floating geo toast — anchored to .sc-bar, zero layout shift */}
+        {geoToast && (
+          <GeoToast type={geoToast} onDismiss={dismissToast} />
+        )}
+      </div>
+
+
+      {/* ── Command Dialog ───────────────────────────────────────────── */}
+      <CommandDialog
+        open={open}
+        onOpenChange={setOpen}
+        className="sc-dialog"
+        overlayClassName="sc-dialog-overlay"
+      >
+        {/*
+         * DialogTitle is required by Radix UI's DialogContent for accessibility.
+         * We render it visually hidden (sr-only) so screen readers announce it
+         * without it appearing on screen. This fixes the console warning:
+         * "DialogContent requires a DialogTitle for screen reader users."
+         */}
+        <DialogTitle className="sr-only">
+          البحث عن مدينة لمعرفة مواقيت الصلاة
+        </DialogTitle>
+
+        {/* ── Dialog header: input + country chips ──────────────────── */}
+        <div className="sc-dialog-header">
+
+          {/* Single search input row */}
+          <div className="sc-dialog-input-row">
+            <Search size={18} className="sc-dialog-search-icon" aria-hidden="true" />
+
+            <CommandInput
+              value={query}
+              onValueChange={onQueryChange}
+              placeholder={
+                selectedCountry
+                  ? `ابحث في ${selectedCountry.name_ar}…`
+                  : 'ابحث عن مدينة أو دولة…'
+              }
+              className="sc-dialog-input"
+              aria-label="ابحث عن مدينة"
+              aria-autocomplete="list"
+            />
+
+            {query ? (
+              <button
+                type="button"
+                className="sc-dialog-clear"
+                onClick={() => onQueryChange('')}
+                aria-label="مسح البحث"
+              >
+                <X size={13} aria-hidden="true" />
+              </button>
+            ) : (
+              <kbd className="sc-dialog-kbd" aria-label="اضغط Escape للإغلاق">Esc</kbd>
+            )}
           </div>
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => onQueryChange(e.target.value)}
-            onFocus={() => { if (results.length) setIsOpen(true); }}
-            placeholder={selectedCountry ? `ابحث في ${selectedCountry.name_ar}...` : "ابحث عن المدينة (مثال: كندا، مكة)"}
-            className="w-full h-14 pr-12 pl-12 bg-transparent border-none focus:ring-0 text-base placeholder:text-[var(--text-muted)] rounded-none"
-          />
 
-          {/* Results Modal/Overlay */}
-          {isOpen && (
-            <div className="absolute top-[calc(100%+8px)] right-0 left-0 bg-[var(--bg-surface-1)] border border-[var(--border-default)] rounded-2xl shadow-2xl z-[90] overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-              <Command>
-                <CommandList className="max-h-[420px] overflow-y-auto custom-scrollbar">
-                  <CommandGroup heading="المدن المقترحة">
-                    {results.map((city) => (
-                      <CommandItem
-                        key={`${city.country_slug}-${city.city_slug}`}
-                        onSelect={() => handleSelectCity(city)}
-                        className="flex flex-col items-start px-6 py-4 hover:bg-[var(--accent-soft)] transition-all border-b border-[var(--border-subtle)] last:border-0 cursor-pointer text-right group/item"
-                      >
-                        <div className="flex items-center justify-between w-full">
-                          <div className="flex items-center gap-3">
-                            <span className="font-bold text-base text-[var(--text-primary)] group-hover/item:text-[var(--accent)] transition-colors">
-                              {highlightArabic(city.city_name_ar, query)}
-                            </span>
-                            {!selectedCountry && (
-                              <span className="text-[var(--text-muted)] text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-[var(--bg-subtle)]">
-                                {city.country_name_ar}
-                              </span>
-                            )}
-                          </div>
-                          {city.preview && (
-                            <span className="text-[11px] font-bold text-[var(--accent)] opacity-80">
-                              {city.preview}
-                            </span>
-                          )}
-                        </div>
-                        {city.city_name_en && (
-                          <span className="text-[10px] text-[var(--text-muted)] font-mono uppercase tracking-widest mt-0.5">
-                            {city.city_name_en}
-                          </span>
-                        )}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
+          {/* Country filter chips — ALL countries, horizontally scrollable */}
+          {countries.length > 0 && (
+            <div
+              className="sc-chips-row"
+              role="group"
+              aria-label="تصفية حسب الدولة"
+            >
+              {/* "All" chip — visible only when a country is active */}
+              {selectedCountry && (
+                <button
+                  type="button"
+                  className="sc-chip sc-chip--all"
+                  onClick={() => handleSelectCountry(null)}
+                  aria-pressed={false}
+                  aria-label="عرض جميع الدول"
+                >
+                  <Globe size={10} aria-hidden="true" />
+                  الكل
+                </button>
+              )}
+
+              {/* Every country as a chip */}
+              {countries.map(c => (
+                <button
+                  key={c.slug}
+                  type="button"
+                  className={`sc-chip${selectedCountry?.slug === c.slug ? ' sc-chip--active' : ''}`}
+                  onClick={() => handleSelectCountry(
+                    selectedCountry?.slug === c.slug ? null : c
+                  )}
+                  aria-pressed={selectedCountry?.slug === c.slug}
+                  aria-label={`تصفية بدولة ${c.name_ar}`}
+                >
+                  {c.name_ar}
+                </button>
+              ))}
             </div>
           )}
         </div>
 
-        {/* Geolocation Button */}
-        <Button
-          onClick={handleGeoLocation}
-          disabled={geoLoading}
-          className="h-14 md:h-auto px-6 rounded-xl font-bold transition-all text-white bg-gradient-to-br from-[var(--accent)] to-[#38b2ac] hover:scale-[1.02] active:scale-95 shadow-lg shadow-[var(--accent-glow)]"
+        {/* ── Results list ────────────────────────────────────────────── */}
+        <CommandList
+          className="sc-dialog-list"
+          aria-label="نتائج البحث"
+          aria-busy={showSkeleton}
         >
-          {geoLoading ? (
-            <Loader2 size={18} className="animate-spin" />
-          ) : (
-            <MapPin size={18} />
-          )}
-          <span className="mr-2">موقعي</span>
-        </Button>
-      </div>
 
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: var(--border-subtle);
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: var(--text-muted);
-        }
-      `}</style>
-    </div>
+          {/* GPS — first item when no query is typed */}
+          {!query && (
+            <CommandGroup>
+              <CommandItem
+                value="__gps__"
+                onSelect={handleGeoLocation}
+                className="sc-gps-item"
+                aria-label="استخدم موقعي الحالي"
+              >
+                <span className="sc-gps-item__icon" aria-hidden="true">
+                  {geoLoading
+                    ? <Loader2 size={14} className="sc-geo-spinner" />
+                    : <Navigation size={14} />
+                  }
+                </span>
+                <span className="sc-gps-item__text">
+                  استخدم موقعي الحالي
+                  <span className="sc-gps-item__sub">تحديد الموقع تلقائياً</span>
+                </span>
+              </CommandItem>
+            </CommandGroup>
+          )}
+
+          {/* Loading */}
+          {showSkeleton && <SkeletonRows />}
+
+          {/* Empty */}
+          {showEmpty && (
+            <CommandEmpty>
+              <div className="sc-empty" role="status" aria-live="polite">
+                <span className="sc-empty__icon" aria-hidden="true">🔍</span>
+                <span>
+                  لم تُعثر أي مدن لـ «{query}»
+                  {selectedCountry ? ` في ${selectedCountry.name_ar}` : ''}
+                </span>
+              </div>
+            </CommandEmpty>
+          )}
+
+          {/* Search results */}
+          {!showSkeleton && hasResults && (
+            <CommandGroup
+              heading={selectedCountry ? selectedCountry.name_ar : 'المدن المقترحة'}
+              className="sc-group-heading"
+            >
+              {cityRows}
+            </CommandGroup>
+          )}
+
+          {/* Idle state: ALL countries as quick-select rows */}
+          {!query && !showSkeleton && countries.length > 0 && (
+            <CommandGroup heading="الدول" className="sc-group-heading">
+              {countries.map(c => (
+                <CommandItem
+                  key={c.slug}
+                  value={c.name_ar}
+                  onSelect={() => handleSelectCountry(
+                    selectedCountry?.slug === c.slug ? null : c
+                  )}
+                  className="sc-item"
+                  aria-label={`بحث في دولة ${c.name_ar}`}
+                  aria-selected={selectedCountry?.slug === c.slug}
+                >
+                  <span className="sc-item__icon" aria-hidden="true">
+                    <Globe size={13} />
+                  </span>
+                  <span className="sc-item__body">
+                    <span className="sc-item__name">{c.name_ar}</span>
+                  </span>
+                  {selectedCountry?.slug === c.slug && (
+                    <span className="sc-item__meta">
+                      <CheckCircle2 size={13} className="sc-item__check" aria-hidden="true" />
+                    </span>
+                  )}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          )}
+        </CommandList>
+
+        {/* Footer — keyboard hints */}
+        <div className="sc-dialog-footer" aria-hidden="true">
+          <span className="sc-dialog-footer__hint">
+            <kbd className="sc-dialog-footer__kbd">↑↓</kbd> للتنقل
+          </span>
+          <span className="sc-dialog-footer__hint">
+            <kbd className="sc-dialog-footer__kbd">↵</kbd> للاختيار
+          </span>
+          <span className="sc-dialog-footer__hint">
+            <kbd className="sc-dialog-footer__kbd">Esc</kbd> للإغلاق
+          </span>
+        </div>
+      </CommandDialog>
+
+      {/* No-JS fallback */}
+      <noscript>
+        <form
+          method="get"
+          action="/search"
+          style={{ marginTop: '0.5rem', display: 'flex', gap: '0.5rem' }}
+          aria-label="بحث بدون جافاسكريبت"
+        >
+          <input type="search" name="q" placeholder="ابحث عن مدينة…" dir="rtl" lang="ar"
+            style={{ flex:1, padding:'0.75rem 1rem', borderRadius:'0.75rem',
+              border:'1px solid #363D5C', background:'#1F2438', color:'#F0F4FF',
+              fontFamily:'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'1rem' }}
+          />
+          <button type="submit"
+            style={{ padding:'0.75rem 1.5rem', borderRadius:'0.75rem', background:'#1D4ED8',
+              color:'#fff', border:'none', cursor:'pointer',
+              fontFamily:'Noto Kufi Arabic, sans-serif', fontWeight:600 }}
+          >بحث</button>
+        </form>
+      </noscript>
+    </search>
   );
 }

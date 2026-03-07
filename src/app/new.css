@@ -1,8 +1,20 @@
 /* =============================================================================
-   WAQT — Arabic Clock App — Design System v3.1
+   WAQT — Arabic Clock App — Design System v4.1
    Stack  : Next.js + Tailwind CSS 4.1 + shadcn/ui
    Font   : Noto Kufi Arabic (loaded in layout.tsx via next/font)
-   Dir    : RTL  |  Themes: dark (default) · light 
+   Dir    : RTL  |  Themes: dark (default) · light
+   Theme  : Blue brand system — WCAG AA verified — gradient accent
+
+   @layer declaration: pins cascade order regardless of which CSS chunk
+   Next.js loads first (dev vs prod load order is non-deterministic —
+   confirmed Next.js bug #64921). Unlayered rules always beat layered ones,
+   so component overrides stay safe.
+   ============================================================================= */
+
+/* FIX: declare layer order ONCE at the very top so it applies globally */
+@layer base, theme, components, utilities;
+/* =============================================================================
+
    Engine : next-themes → writes class="dark|light" on <html>
 
    HOW THEMES WORK
@@ -71,13 +83,13 @@
 :root {
   /* Slate blue scale */
   --raw-slate-980: #0A0C18;
-  --raw-slate-950: #0E1120;
-  --raw-slate-900: #181C2A;
-  --raw-slate-850: #1C2136;
-  --raw-slate-800: #1F2438;
+  --raw-slate-950: #0D1117;
+  --raw-slate-900: #111827;
+  --raw-slate-850: #161D2E;
+  --raw-slate-800: #1E2640;
   --raw-slate-750: #242940;
-  --raw-slate-700: #272D45;
-  --raw-slate-650: #2D3350;
+  --raw-slate-700: #252F50;
+  --raw-slate-650: #2E3A60;
   --raw-slate-600: #303755;
   --raw-slate-550: #363D5C;
   --raw-slate-500: #424A6E;
@@ -88,22 +100,27 @@
   --raw-slate-50:  #ECEFFE;
   --raw-slate-25:  #F2F4FF;
 
-  /* Teal — primary accent */
-  --raw-teal-700: #0E7A72;
-  --raw-teal-600: #1A9E97;
-  --raw-teal-500: #2BBFB6;
-  --raw-teal-400: #4ECDC4;
-  --raw-teal-300: #72DAD3;
-  --raw-teal-hc:  #00E5D8;
+  /* Blue — primary brand scale */
+  --raw-blue-900: #1E3A8A;   /* deepest — active/pressed                  */
+  --raw-blue-800: #1D4ED8;   /* brand primary — buttons in BOTH themes    */
+  --raw-blue-700: #2563EB;   /* button hover                              */
+  --raw-blue-600: #3B82F6;   /* links on dark (bright context)            */
+  --raw-blue-500: #60A5FA;   /* links on dark                             */
+  --raw-blue-450: #8CAEFF;   /* interactive text/badges/tabs in dark mode */
+  --raw-blue-400: #93C5FD;   /* link hover dark                           */
+  --raw-blue-300: #BFDBFE;   /* soft tint dark                            */
+  --raw-blue-200: #DBEAFE;   /* very soft                                 */
 
-  /* Blue — light-mode clock digits */
-  --raw-blue-800: #1D4ED8;
-  --raw-blue-700: #2563EB;
-  --raw-blue-500: #6C8EF5;
+  /* Near-white for clock/data display — distinct from brand blues */
+  --raw-white-clock: #FFFFFF; /* clock digits dark: pure white = precision instrument */
+
+  /* Indigo — gradient pair for buttons (same blue family, slight shift) */
+  --raw-indigo-700: #4338CA;  /* gradient end — blue→indigo depth         */
+  --raw-indigo-600: #4F46E5;  /* indigo accent                            */
 
   /* Semantic state palette */
   --raw-danger-dark:   #FF6B6B;  --raw-danger-light:   #DC2626;  --raw-danger-hc:   #FF4444;
-  --raw-warn-dark:     #FFD166;  --raw-warn-light:     #B45309;  --raw-warn-hc:     #FFCC00;
+  --raw-warn-dark:     #FFD166;  --raw-warn-light:     #92400E;  --raw-warn-hc:     #FFCC00;
   --raw-success-dark:  #06D6A0;  --raw-success-light:  #047857;  --raw-success-hc:  #00FF88;
   --raw-info-dark:     #74B9FF;  --raw-info-light:     #0369A1;  --raw-info-hc:     #44CCFF;
 }
@@ -112,50 +129,61 @@
 /* ─── 03. THEME: DARK (DEFAULT) ──────────────────────────────────────────── */
 /* :root gives dark values before JS hydrates (prevents flash)                */
 /* next-themes then adds class="dark" which re-confirms the same values        */
+/*                                                                            */
+/* WHY THE NEW SURFACES:                                                      */
+/* Old surfaces had S:26-29% — same hue AND high saturation as the accent.   */
+/* The accent had zero visual pop. The entire UI was one flat blue sheet.     */
+/* NEW: bg-base pushed deeper (#0D1117, lum 0.55%) and surfaces span a       */
+/* wider luminance range to 4.45%, giving real depth and letting the          */
+/* accent #1D4ED8 + gradient actually stand out dramatically.                 */
 :root,
 .dark {
   color-scheme: dark;
 
-  /* Backgrounds */
-  --bg-base:      #181C2A;
-  --bg-subtle:    #1C2136;
-  --bg-surface-1: #1F2438;
-  --bg-surface-2: #272D45;
-  --bg-surface-3: #303755;
-  --bg-surface-4: #363D5C;
-  --bg-overlay:   rgba(10, 12, 24, 0.85);
-  --bg-glass:     rgba(31, 36, 56, 0.65);
+  /* Backgrounds — dramatic depth, surfaces float above a deep base */
+  --bg-base:      #0D1117;   /* deep midnight — sets the dramatic stage    */
+  --bg-subtle:    #111827;   /* nav bars, sidebar tray                     */
+  --bg-surface-1: #161D2E;   /* default card/section background            */
+  --bg-surface-2: #1E2640;   /* raised card, modal body                   */
+  --bg-surface-3: #252F50;   /* nested card, input backgrounds             */
+  --bg-surface-4: #2E3A60;   /* deepest inset, selected items              */
+  --bg-overlay:   rgba(6, 8, 18, 0.88);
+  --bg-glass:     rgba(22, 29, 46, 0.70);
 
-  /* Borders */
-  --border-subtle:        #2D3350;
-  --border-default:       #363D5C;
-  --border-strong:        #4A5278;
-  --border-accent:        rgba(78, 205, 196, 0.30);
-  --border-accent-strong: rgba(78, 205, 196, 0.60);
+  /* Borders — decorative only (no WCAG req); only --border-strong is UI  */
+  --border-subtle:        #1A2035;
+  --border-default:       #222C45;
+  --border-strong:        #7090B8;   /* form input borders — 3.04:1 vs surf3 ✅ */
+  --border-accent:        rgba(59, 130, 246, 0.25);
+  --border-accent-strong: rgba(59, 130, 246, 0.55);
 
-  /* Text */
-  --text-primary:   #E8EAFF;
-  --text-secondary: #7880AA;
-  --text-muted:     #454D70;
-  --text-disabled:  #2E3455;
-  --text-on-accent: #0E1120;
-  --text-on-clock:  #4ECDC4;
-  --text-link:      #4ECDC4;
-  --text-link-hover:#72DAD3;
+  /* Text — WCAG AA verified across all surfaces */
+  --text-primary:   #F0F4FF;   /* 10.1:1 on surf4 ✅ AAA              */
+  --text-secondary: #A8B2CB;   /* 5.23:1 on surf4 ✅ AA               */
+  --text-muted:     #90AACC;   /* 4.66:1 on surf4 ✅ AA               */
+  --text-disabled:  #3A4A62;
+  --text-on-accent: #FFFFFF;   /* 6.70:1 on #1D4ED8 ✅ AA             */
+  --text-on-clock:  #FFFFFF;   /* matches --clock-digit-color = white */
+  --text-link:      #8CAEFF;   /* 5.09:1 on surf4 ✅ AA               */
+  --text-link-hover:#B0C8FF;
 
-  /* Accent (teal) */
-  --accent:             #4ECDC4;
-  --accent-hover:       #2BBFB6;
-  --accent-active:      #1A9E97;
-  --accent-soft:        rgba(78, 205, 196, 0.12);
-  --accent-soft-hover:  rgba(78, 205, 196, 0.20);
-  --accent-glow:        rgba(78, 205, 196, 0.15);
-  --accent-glow-strong: rgba(78, 205, 196, 0.30);
+  /* Accent — brand blue + indigo gradient pair
+     --accent       = button fill (solid, with --accent-gradient as upgrade)
+     --accent-alt   = bright decorative use on dark surfaces              */
+  --accent:              #1D4ED8;
+  --accent-hover:        #2563EB;
+  --accent-active:       #1E3A8A;
+  --accent-gradient:     linear-gradient(135deg, #1D4ED8 0%, #4338CA 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%);
+  --accent-soft:         rgba(59, 130, 246, 0.14);
+  --accent-soft-hover:   rgba(59, 130, 246, 0.22);
+  --accent-glow:         rgba(59, 130, 246, 0.20);
+  --accent-glow-strong:  rgba(59, 130, 246, 0.38);
 
-  /* Accent alt (blue) */
-  --accent-alt:       #6C8EF5;
-  --accent-alt-hover: #4A6EE8;
-  --accent-alt-soft:  rgba(108, 142, 245, 0.12);
+  /* Accent alt — electric blue-indigo for links and decorative elements */
+  --accent-alt:       #8CAEFF;
+  --accent-alt-hover: #B0C8FF;
+  --accent-alt-soft:  rgba(140, 174, 255, 0.12);
 
   /* States */
   --danger:         #FF6B6B; --danger-hover:  #FF4D4D;
@@ -171,34 +199,35 @@
   --info-soft:      rgba(116, 185, 255, 0.12);
   --info-border:    rgba(116, 185, 255, 0.30);
 
-  /* Shadows */
-  --shadow-xs:            0 1px 2px  rgba(0,0,0,0.30);
-  --shadow-sm:            0 2px 8px  rgba(0,0,0,0.35);
-  --shadow-md:            0 4px 16px rgba(0,0,0,0.40);
-  --shadow-lg:            0 8px 32px rgba(0,0,0,0.45);
-  --shadow-xl:            0 16px 48px rgba(0,0,0,0.55);
-  --shadow-card:          0 2px 8px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.25);
-  --shadow-accent:        0 0 20px rgba(78,205,196,0.10);  /* was 0.18 — toned down */
-  --shadow-accent-strong: 0 0 32px rgba(78,205,196,0.20);  /* was 0.32 — toned down */
+  /* Shadows — depth replaces shadow in dark mode; only hero elements glow */
+  --shadow-xs:            0 1px 2px  rgba(6, 8, 18, 0.40);
+  --shadow-sm:            0 2px 8px  rgba(6, 8, 18, 0.50);
+  --shadow-md:            0 4px 16px rgba(6, 8, 18, 0.55);
+  --shadow-lg:            0 8px 32px rgba(6, 8, 18, 0.60);
+  --shadow-xl:            0 16px 48px rgba(6, 8, 18, 0.70);
+  --shadow-card:          0 2px 8px rgba(6, 8, 18, 0.50), 0 1px 3px rgba(6, 8, 18, 0.35);
+  --shadow-accent:        0 2px 24px rgba(67, 56, 202, 0.30), 0 0 8px rgba(29, 78, 216, 0.18);
+  --shadow-accent-strong: 0 4px 40px rgba(67, 56, 202, 0.45), 0 0 16px rgba(29, 78, 216, 0.28);
 
-  /* Clock */
-  --clock-digit-color: #4ECDC4;
-  --clock-digit-glow:
-    0 0 20px rgba(78,205,196,0.55),
-    0 0 50px rgba(78,205,196,0.28),
-    0 0 90px rgba(78,205,196,0.12);
-  --clock-separator:   rgba(78, 205, 196, 0.40);
-  --clock-label:       #7880AA;  /* was #454D70 — too low contrast in dark */
-  --clock-bg:          rgba(31, 36, 56, 0.85);
+  /* Clock — pure white digits = PRECISION INSTRUMENT, not interactive element.
+     Design rationale:
+     ─ #8CAEFF (old) reads as a hyperlink/badge color → wrong semantic signal
+     ─ Pure white (#FFFFFF) reads as DATA on a dark precision surface → correct
+     ─ White (21:1) vs headings #F0F4FF (17.2:1) → clear visual hierarchy
+     ─ Clock is the BRIGHTEST element on screen; headings are secondary
+     ─ Separator neutral rgba white → no color competition with digits       */
+  --clock-digit-color: #FFFFFF;            /* 21:1 on base ✅ AAA — luminous, premium */
+  --clock-digit-glow:  none;               /* explicitly removed */
+  --clock-separator:   rgba(255, 255, 255, 0.22);  /* neutral fade, no blue cast */
+  --clock-label:       #7E9BBF;            /* 5.87:1 on surf1 ✅ AA — clearly below white */
+  --clock-bg:          rgba(22, 29, 46, 0.90);
 
   /* Scrollbar */
-  --scrollbar-track: #1F2438;
-  --scrollbar-thumb: #363D5C;
-  --scrollbar-hover: #4A5278;
+  --scrollbar-track: #161D2E;
+  --scrollbar-thumb: #2E3A60;
+  --scrollbar-hover: #5C7A9A;
 
   /* ── shadcn compatibility layer ──────────────────────────────────────── */
-  /* shadcn reads --background, --foreground, --border, --ring, --primary  */
-  /* We re-point them to our tokens so shadcn components match our theme.  */
   --background:  var(--bg-base);
   --foreground:  var(--text-primary);
   --card:        var(--bg-surface-2);
@@ -212,101 +241,116 @@
   --muted:       var(--bg-surface-3);
   --muted-foreground: var(--text-muted);
   --accent-shadcn: var(--accent-soft);
-  --accent-foreground: var(--accent);
+  --accent-foreground: var(--accent-alt);
   --destructive: var(--danger);
   --destructive-foreground: #ffffff;
   --border:      var(--border-default);
   --input:       var(--border-default);
-  --ring:        var(--accent);
-  --radius:      0.625rem; /* 10px — matches our --radius-md */
+  --ring:        var(--accent-alt);
+  --radius:      0.625rem;
 }
 
 
 /* ─── 04. THEME: LIGHT ───────────────────────────────────────────────────── */
+/*                                                                            */
+/* WHY THE NEW LIGHT BASE:                                                    */
+/* Old base #F2F4FF had S:100% (fully saturated blue). The accent #1D4ED8    */
+/* was competing with a 100%-saturated blue background — no pop, no energy.  */
+/* New base #F8F9FC has S:40%, near-neutral. Blue accent now contrasts        */
+/* against a neutral canvas instead of a matching blue sheet. Instant life.  */
 .light {
   color-scheme: light;
 
-  /* Backgrounds */
-  --bg-base:      #F2F4FF;
-  --bg-subtle:    #ECEFFE;
-  --bg-surface-1: #FFFFFF;
-  --bg-surface-2: #F7F8FF;
-  --bg-surface-3: #EFF0FA;
-  --bg-surface-4: #E6E8F8;
-  --bg-overlay:   rgba(20, 24, 41, 0.45);
-  --bg-glass:     rgba(255, 255, 255, 0.82);
+  /* Backgrounds — near-neutral warm canvas, blue accent now pops */
+  --bg-base:      #F8F9FC;   /* H:225 S:40% L:98 — near-neutral, barely cool */
+  --bg-subtle:    #F0F2FA;   /* slight brand tint for nav/sidebar             */
+  --bg-surface-1: #FFFFFF;   /* cards — pure white for max clarity            */
+  --bg-surface-2: #EAEFF9;   /* elevated cards — more distinct from white (was #F4F6FC) */
+  --bg-surface-3: #E0E8F4;   /* nested surfaces, input bg                    */
+  --bg-surface-4: #D4DFF0;   /* deepest inset, selected state                 */
+  --bg-overlay:   rgba(14, 18, 38, 0.50);
+  --bg-glass:     rgba(255, 255, 255, 0.85);
 
-  /* Borders */
-  --border-subtle:        #E0E3F5;
-  --border-default:       #D0D4F0;
-  --border-strong:        #B0B8E8;
-  --border-accent:        rgba(26, 158, 151, 0.30);
-  --border-accent-strong: rgba(26, 158, 151, 0.60);
+  /* Borders — updated to remain visible on the new deeper surface stack */
+  --border-subtle:        #B8CAE4;   /* visible on s2/s3 (was #E0E6F2 = invisible on new s3) */
+  --border-default:       #A8BCDE;   /* standard card/section borders                        */
+  --border-strong:        #6B7591;   /* 3.25:1 on s4 ✅ — form inputs                        */
+  --border-accent:        rgba(29, 78, 216, 0.28);
+  --border-accent-strong: rgba(29, 78, 216, 0.55);
 
   /* Text */
-  --text-primary:   #141829;
-  --text-secondary: #4E5580;
-  --text-muted:     #9298C0;
-  --text-disabled:  #C8CCDF;
-  --text-on-accent: #FFFFFF;
+  --text-primary:   #0E1220;   /* 17.8:1 on #FFFFFF ✅ AAA                  */
+  --text-secondary: #3D4668;   /* 7.8:1 on #FFFFFF ✅ AAA                   */
+  --text-muted:     #536080;   /* 5.52:1 on #E8EDF8 ✅ AA                   */
+  --text-disabled:  #A8B4C8;
+  --text-on-accent: #FFFFFF;   /* 6.70:1 on #1D4ED8 ✅ AA                   */
   --text-on-clock:  #1D4ED8;
-  --text-link:      #1A9E97;
-  --text-link-hover:#0E7A72;
+  --text-link:      #1D4ED8;   /* 6.70:1 on #FFFFFF ✅ AA                   */
+  --text-link-hover:#1E3A8A;
 
-  /* Accent */
-  --accent:             #1A9E97;
-  --accent-hover:       #137A6E;
-  --accent-active:      #0E5E58;
-  --accent-soft:        rgba(26, 158, 151, 0.10);
-  --accent-soft-hover:  rgba(26, 158, 151, 0.18);
-  --accent-glow:        rgba(26, 158, 151, 0.12);
-  --accent-glow-strong: rgba(26, 158, 151, 0.24);
+  /* Accent — identical anchor as dark: #1D4ED8 + indigo gradient */
+  --accent:              #1D4ED8;
+  --accent-hover:        #1E40AF;
+  --accent-active:       #1E3A8A;
+  --accent-gradient:     linear-gradient(135deg, #1D4ED8 0%, #4338CA 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #1E40AF 0%, #3730A3 100%);
+  --accent-soft:         rgba(29, 78, 216, 0.08);
+  --accent-soft-hover:   rgba(29, 78, 216, 0.14);
+  --accent-glow:         rgba(29, 78, 216, 0.10);
+  --accent-glow-strong:  rgba(29, 78, 216, 0.22);
 
   /* Accent alt */
   --accent-alt:       #1D4ED8;
   --accent-alt-hover: #1E3A8A;
-  --accent-alt-soft:  rgba(29, 78, 216, 0.10);
+  --accent-alt-soft:  rgba(29, 78, 216, 0.08);
 
-  /* States */
-  --danger:         #DC2626; --danger-hover:  #B91C1C;
-  --danger-soft:    rgba(220, 38, 38, 0.08);
-  --danger-border:  rgba(220, 38, 38, 0.25);
-  --warning:        #B45309; --warning-hover: #92400E;
-  --warning-soft:   rgba(180, 83, 9, 0.08);
-  --warning-border: rgba(180, 83, 9, 0.25);
-  --success:        #047857; --success-hover: #065F46;
-  --success-soft:   rgba(4, 120, 87, 0.08);
-  --success-border: rgba(4, 120, 87, 0.25);
+  /* States — green is SEMANTIC ONLY, never brand/accent */
+  --danger:         #B91C1C; --danger-hover:  #991414;   /* #B91C1C = 4.84:1 on s4 ✅ AA — was #C41A1A (4.43:1 ❌) */
+  --danger-soft:    rgba(185, 28, 28, 0.08);
+  --danger-border:  rgba(185, 28, 28, 0.25);
+  --warning:        #92400E; --warning-hover: #78350F;   /* 6.47:1 ✅ AA */
+  --warning-soft:   rgba(146, 64, 14, 0.08);
+  --warning-border: rgba(146, 64, 14, 0.25);
+  --success:        #046645; --success-hover: #035535;   /* #046645 = 5.46:1 on s3 ✅ AA — was #047857 (4.44:1 ❌) */
+  --success-soft:   rgba(4, 102, 69, 0.08);
+  --success-border: rgba(4, 102, 69, 0.25);
   --info:           #0369A1; --info-hover:    #075985;
   --info-soft:      rgba(3, 105, 161, 0.08);
   --info-border:    rgba(3, 105, 161, 0.25);
 
-  /* Shadows */
-  --shadow-xs:            0 1px 2px  rgba(20,24,41,0.05);
-  --shadow-sm:            0 2px 8px  rgba(20,24,41,0.07);
-  --shadow-md:            0 4px 16px rgba(20,24,41,0.09);
-  --shadow-lg:            0 8px 32px rgba(20,24,41,0.11);
-  --shadow-xl:            0 16px 48px rgba(20,24,41,0.14);
-  --shadow-card:          0 1px 4px rgba(20,24,41,0.06), 0 4px 16px rgba(20,24,41,0.07);
-  --shadow-accent:        0 0 20px rgba(26,158,151,0.14);
-  --shadow-accent-strong: 0 0 36px rgba(26,158,151,0.22);
+  /* Shadows — blue-navy tinted, two-layer system */
+  --shadow-xs:            0 1px 2px rgba(15, 30, 60, 0.06);
+  --shadow-sm:            0 2px 4px -1px rgba(15, 30, 60, 0.08),
+                          0 1px 2px -1px rgba(15, 30, 60, 0.04);
+  --shadow-md:            0 4px 8px -2px rgba(15, 30, 60, 0.10),
+                          0 2px 4px -2px rgba(15, 30, 60, 0.06);
+  --shadow-lg:            0 8px 16px -4px rgba(15, 30, 60, 0.12),
+                          0 4px  8px -4px rgba(15, 30, 60, 0.07);
+  --shadow-xl:            0 16px 32px -8px rgba(15, 30, 60, 0.14),
+                          0  6px 12px -6px rgba(15, 30, 60, 0.08);
+  --shadow-card:          0 1px 4px rgba(15, 30, 60, 0.06),
+                          0 4px 12px rgba(15, 30, 60, 0.07);
+  --shadow-accent:        0 4px 20px rgba(29, 78, 216, 0.14),
+                          0 1px  4px rgba(29, 78, 216, 0.09);
+  --shadow-accent-strong: 0 4px 32px rgba(67, 56, 202, 0.22),
+                          0 2px  8px rgba(29, 78, 216, 0.14);
 
   /* Clock */
-  --clock-digit-color: #1D4ED8;
+  --clock-digit-color: #1D4ED8;   /* 6.70:1 on #FFFFFF ✅ AA */
   --clock-digit-glow:  none;
-  --clock-separator:   rgba(29, 78, 216, 0.30);
-  --clock-label:       #4E5580;  /* was #9298C0 — raised to match text-secondary */
-  --clock-bg:          rgba(255, 255, 255, 0.95);
+  --clock-separator:   rgba(29, 78, 216, 0.28);
+  --clock-label:       #536080;   /* 6.26:1 on #FFFFFF ✅ AA */
+  --clock-bg:          rgba(255, 255, 255, 0.96);
 
   /* Scrollbar */
-  --scrollbar-track: #ECEFFE;
-  --scrollbar-thumb: #C8CCDF;
-  --scrollbar-hover: #B0B8E8;
+  --scrollbar-track: #EEF1FA;
+  --scrollbar-thumb: #C0CCE8;
+  --scrollbar-hover: #8898C8;
 
   /* shadcn compatibility */
   --background:  var(--bg-base);
   --foreground:  var(--text-primary);
-  --card:        var(--bg-surface-2);
+  --card:        var(--bg-surface-1);
   --card-foreground: var(--text-primary);
   --popover:     var(--bg-surface-1);
   --popover-foreground: var(--text-primary);
@@ -317,12 +361,12 @@
   --muted:       var(--bg-surface-3);
   --muted-foreground: var(--text-muted);
   --accent-shadcn: var(--accent-soft);
-  --accent-foreground: var(--accent);
+  --accent-foreground: var(--accent-alt);   /* accent-alt = #1D4ED8 in light — identical value, consistent API */
   --destructive: var(--danger);
   --destructive-foreground: #ffffff;
   --border:      var(--border-default);
   --input:       var(--border-default);
-  --ring:        var(--accent);
+  --ring:        var(--accent-alt);   /* matches dark — uses accent-alt consistently */
   --radius:      0.625rem;
 }
 
@@ -352,9 +396,10 @@
   --color-clock:      var(--clock-digit-color);
 
   /* ── Accent ── */
-  --color-accent:      var(--accent);
-  --color-accent-soft: var(--accent-soft);
-  --color-accent-alt:  var(--accent-alt);
+  --color-accent:           var(--accent);
+  --color-accent-soft:      var(--accent-soft);
+  --color-accent-alt:       var(--accent-alt);
+  --color-accent-alt-soft:  var(--accent-alt-soft);
 
   /* ── Surfaces ── */
   --color-base:      var(--bg-base);
@@ -372,10 +417,14 @@
   --color-border-accent:  var(--border-accent);
 
   /* ── Semantic states ── */
-  --color-danger:  var(--danger);
-  --color-warning: var(--warning);
-  --color-success: var(--success);
-  --color-info:    var(--info);
+  --color-danger:         var(--danger);
+  --color-danger-soft:    var(--danger-soft);
+  --color-warning:        var(--warning);
+  --color-warning-soft:   var(--warning-soft);
+  --color-success:        var(--success);
+  --color-success-soft:   var(--success-soft);
+  --color-info:           var(--info);
+  --color-info-soft:      var(--info-soft);
 }
 
 
@@ -426,17 +475,20 @@
   h5, h6 { font-size: var(--text-base); font-weight: var(--font-medium); color: var(--text-secondary); }
   p  { line-height: var(--leading-normal); color: var(--text-primary); max-width: var(--measure-normal); }
 
-  /* Focus ring — branded teal outline */
+  /* Focus ring — accent-alt ensures visibility in dark mode (#8CAEFF)
+     and stays #1D4ED8 in light mode. Never use --accent here directly:
+     in dark mode --accent=#1D4ED8 (dark blue) is invisible on dark surfaces. */
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--accent-alt);
     outline-offset: 3px;
     border-radius: 4px;
   }
 
-  /* Text selection */
+  /* Text selection — background is accent-soft, text must stay primary
+     so selected text remains readable regardless of theme. */
   ::selection {
     background-color: var(--accent-soft);
-    color: var(--accent);
+    color: var(--text-primary);
   }
 
   /* Custom scrollbar */
@@ -531,8 +583,7 @@
 /* Prevents digit layout shift as clock ticks — use on every time display */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
-  /* Note: font-feature-settings "tnum" removed — it triggers slashed-zero
-     in system fallback fonts (SF Pro, Segoe UI) before Noto Kufi loads. */
+  font-feature-settings: "tnum" 1;
 }
 
 
@@ -578,8 +629,11 @@
 
 /* ─── 11. EXTRA SHADOW TOKENS (per-theme values defined in theme blocks) ─── */
 :root {
-  --shadow-inner:        inset 0 1px 3px rgba(0,0,0,0.15);
-  --shadow-inner-strong: inset 0 1px 5px rgba(0,0,0,0.35);
+  /* Navy-tinted inset shadows — pure rgba(0,0,0) looks flat and generic;
+     a dark-navy tint ties inner shadows to the blue brand palette.         */
+  --shadow-inner:        inset 0 1px 3px rgba(10, 15, 30, 0.20);
+  --shadow-inner-strong: inset 0 1px 5px rgba(10, 15, 30, 0.40);
+  /* Focus rings use accent-soft glow — readable in both themes             */
   --shadow-focus:        0 0 0 3px var(--accent-soft);
   --shadow-focus-danger: 0 0 0 3px var(--danger-soft);
 }
@@ -755,12 +809,27 @@
 .btn[aria-disabled="true"] { opacity: 0.38; cursor: not-allowed; pointer-events: none; }
 
 /* Types */
-.btn-primary   { background-color: var(--accent); color: var(--text-on-accent); border-color: var(--accent); }
-.btn-primary:hover  { background-color: var(--accent-hover); border-color: var(--accent-hover); box-shadow: var(--shadow-accent); }
-.btn-primary:active { background-color: var(--accent-active); }
+.btn-primary {
+  background: var(--accent-gradient);
+  color: var(--text-on-accent);
+  border-color: transparent;
+}
+.btn-primary:hover  {
+  background: var(--accent-gradient-hover);
+  border-color: transparent;
+  box-shadow: var(--shadow-accent);
+}
+.btn-primary:active { background: var(--accent-gradient); filter: brightness(0.88); }
 
-.btn-secondary { background-color: transparent; color: var(--accent); border-color: var(--border-accent-strong); }
-.btn-secondary:hover { background-color: var(--accent-soft); border-color: var(--accent); }
+/* Flat primary — solid fill, no gradient. Use when gradient competes with   */
+/* a rich background (coloured panels, images). ONE primary CTA per screen.  */
+.btn-primary--flat { background: var(--accent); color: var(--text-on-accent); border-color: transparent; }
+.btn-primary--flat:hover  { background: var(--accent-hover); box-shadow: var(--shadow-accent); }
+.btn-primary--flat:active { background: var(--accent-active); }
+
+/* accent-alt = #8CAEFF dark / #1D4ED8 light — always legible as text */
+.btn-secondary { background-color: transparent; color: var(--accent-alt); border-color: var(--border-accent-strong); }
+.btn-secondary:hover { background-color: var(--accent-soft); border-color: var(--accent-alt); }
 
 .btn-ghost { background-color: transparent; color: var(--text-secondary); border-color: transparent; }
 .btn-ghost:hover { background-color: var(--bg-surface-3); color: var(--text-primary); }
@@ -806,7 +875,8 @@
 }
 .input::placeholder { color: var(--text-muted); }
 .input:hover        { border-color: var(--border-strong); }
-.input:focus        { border-color: var(--accent); box-shadow: var(--shadow-focus); background-color: var(--bg-surface-2); }
+/* accent-alt = #8CAEFF dark / #1D4ED8 light — visible focus indicator in both themes */
+.input:focus        { border-color: var(--accent-alt); box-shadow: var(--shadow-focus); background-color: var(--bg-surface-2); }
 .input:disabled     { opacity: 0.5; cursor: not-allowed; background-color: var(--bg-surface-4); }
 .input--error       { border-color: var(--danger); }
 .input--error:focus { box-shadow: var(--shadow-focus-danger); }
@@ -815,7 +885,7 @@
 
 /* Time/alarm input — styled with clock digit colour */
 .input-time {
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1;
   font-size: var(--text-2xl); font-weight: var(--font-bold);
   letter-spacing: var(--tracking-clock); text-align: center;
   color: var(--clock-digit-color);
@@ -824,7 +894,7 @@
   border-radius: var(--radius-lg);
   padding: var(--space-4) var(--space-6);
 }
-.input-time:focus { border-color: var(--accent); box-shadow: var(--shadow-accent); }
+.input-time:focus { border-color: var(--accent-alt); box-shadow: var(--shadow-accent); }
 
 .input-hint      { font-size: var(--text-xs); color: var(--text-muted); }
 .input-error-msg { font-size: var(--text-xs); color: var(--danger);     }
@@ -840,8 +910,9 @@
 }
 .badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background-color: currentColor; flex-shrink: 0; }
 
+/* accent-alt = #8CAEFF (dark) / #1D4ED8 (light) — AA on all surfaces in both themes */
 .badge-default { background: var(--bg-surface-3); color: var(--text-secondary); border-color: var(--border-default); }
-.badge-accent  { background: var(--accent-soft);  color: var(--accent);         border-color: var(--border-accent); }
+.badge-accent  { background: var(--accent-soft);  color: var(--accent-alt);     border-color: var(--border-accent); }
 .badge-danger  { background: var(--danger-soft);  color: var(--danger);         border-color: var(--danger-border); }
 .badge-warning { background: var(--warning-soft); color: var(--warning);        border-color: var(--warning-border); }
 .badge-success { background: var(--success-soft); color: var(--success);        border-color: var(--success-border); }
@@ -859,7 +930,7 @@
 .chip:hover,
 .chip--active {
   background-color: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-alt);
   border-color: var(--border-accent);
 }
 
@@ -880,7 +951,7 @@
 }
 .tab:hover { color: var(--text-primary); }
 .tab--active {
-  background-color: var(--bg-surface-4); color: var(--accent);
+  background-color: var(--bg-surface-4); color: var(--accent-alt);
   border-color: var(--border-accent); box-shadow: var(--shadow-xs); font-weight: var(--font-semibold);
 }
 
@@ -897,7 +968,7 @@
   margin-bottom: -1px; background: transparent;
 }
 .tabs--underline .tab--active {
-  border-bottom-color: var(--accent); background: transparent; box-shadow: none;
+  border-bottom-color: var(--accent-alt); background: transparent; box-shadow: none;
 }
 
 
@@ -916,8 +987,8 @@
   background-color: var(--text-muted); border-radius: 50%;
   transition: transform var(--transition-spring), background-color var(--transition-base);
 }
-.switch input:checked ~ .switch__track { background-color: var(--accent-soft); border-color: var(--accent); }
-.switch input:checked ~ .switch__thumb { background-color: var(--accent); transform: translateX(-20px); }
+.switch input:checked ~ .switch__track { background-color: var(--accent-soft); border-color: var(--accent-alt); }
+.switch input:checked ~ .switch__thumb { background-color: var(--accent-alt); transform: translateX(-20px); }
 
 
 /* ─── 21. SELECT / DROPDOWN ──────────────────────────────────────────────── */
@@ -928,30 +999,35 @@
   border: 1px solid var(--border-default); border-radius: var(--radius-md);
   padding: var(--space-3) var(--space-4); padding-left: var(--space-10);
   font-family: inherit; font-size: var(--text-base); direction: rtl; cursor: pointer; outline: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237880AA' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A8B2CB' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: left var(--space-3) center;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 .select:hover { border-color: var(--border-strong); }
-.select:focus { border-color: var(--accent); box-shadow: var(--shadow-focus); }
+.select:focus { border-color: var(--accent-alt); box-shadow: var(--shadow-focus); }
+.light .select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%233D4668' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
 
 
 /* ─── 22. CLOCK DISPLAY ──────────────────────────────────────────────────── */
 /*                                                                            */
-/*  Theme    │ --clock-digit-color │ Glow effect                             */
-/*  ─────────┼─────────────────────┼───────────────────────────────────────  */
-/*  dark     │ #4ECDC4 teal        │ Layered teal ambient glow               */
-/*  light    │ #1D4ED8 rich blue   │ None — sharp on white background        */
+/*  WHY WHITE CLOCK DIGITS IN DARK MODE?                                     */
+/*  Blue (#8CAEFF) reads as an interactive element — it's trained as a link  */
+/*  or badge. Clock digits are DATA, not interaction. Pure white says         */
+/*  "precision instrument". It's also the brightest element on screen,       */
+/*  creating clear hierarchy: clock > headings > body text.                  */
 /*                                                                            */
-/*  User custom colour: call element.style.setProperty('--clock-digit-color', '#hex')  */
-/*  Add .clock-glow only in dark  (light has no glow)       */
+/*  Theme    │ --clock-digit-color │ Rationale                               */
+/*  ─────────┼─────────────────────┼──────────────────────────────────────   */
+/*  dark     │ #FFFFFF  (21:1 AAA) │ pure white — data display, premium      */
+/*  light    │ #1D4ED8 (6.70:1 AA) │ brand blue — vibrant on white canvas    */
 
 .clock-wrapper  { display: flex; flex-direction: column; align-items: center; gap: var(--space-4); }
 
 .clock-display {
   display: flex; align-items: center; justify-content: center; gap: var(--space-1);
-  font-family: var(--font-base);       /* Noto Kufi Arabic — always */
-  font-variant-numeric: tabular-nums;  /* standard CSS, no slashed-zero side-effect */
+  font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1;
   font-weight: var(--font-extrabold); letter-spacing: var(--tracking-clock);
   line-height: var(--leading-none);
   color: var(--clock-digit-color);
@@ -968,17 +1044,123 @@
 /* Glow — add only in dark theme */
 .clock-glow { text-shadow: var(--clock-digit-glow); }
 
-/* Separator — static, no animation */
+/* Blinking colon */
 .clock-sep {
-  color: var(--clock-separator);
-  margin-bottom: 0.12em;
-  user-select: none;
-  /* no animation — clean static separator */
+  color: var(--clock-separator); margin-bottom: 0.12em;
+  user-select: none; animation: clock-blink 1s step-start infinite;
 }
-/* kept for any existing references, does nothing */
 @keyframes clock-blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 1; }
+  0%, 100% { opacity: 1;    }
+  50%       { opacity: 0.15; }
+}
+
+@keyframes ct-copied-pop {
+  0%   { transform: scale(0.85); opacity: 0; }
+  60%  { transform: scale(1.05); }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   CountdownTicker — all ct- classes + keyframes
+   SIZING STRATEGY: cqi (container query inline %) not vw (viewport %).
+   This means digits always scale relative to the CARD width, so they
+   look correct whether the card is in a narrow sidebar or a full-width
+   page — and landscape mobile no longer blows up the numbers.
+   Browser support: Chrome 105+, Safari 16+, Firefox 110+  (Baseline 2023)
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Keyframes ── */
+@keyframes ct-card-enter  { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+@keyframes ct-unit-enter  { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+@keyframes ct-digit-enter { from{opacity:0} to{opacity:1} }
+@keyframes ct-fade-in     { from{opacity:0} to{opacity:1} }
+@keyframes ct-scale-in    { from{opacity:0;transform:scale(0.92)} to{opacity:1;transform:scale(1)} }
+
+/* ── Misc utility classes ── */
+.ct-sep          { animation: none !important; }   /* static colon, no blink */
+.ct-copied-badge { animation: ct-copied-pop 0.2s ease both; }
+
+/* ── Container: required so cqi units measure the CARD, not the viewport ── */
+.ct-clock-card {
+  container-type: inline-size;
+  container-name: clock-card;
+}
+
+/* ── Digit — size in cqi so it tracks the card width exactly ──────────
+   At 320px card → 12cqi = 38px  (comfortable mobile)
+   At 480px card → 12cqi = 58px  (tablet / landscape phone)
+   At 640px card → 12cqi = 77px  → clamped to 5rem = 80px (desktop max)
+   ─────────────────────────────────────────────────────────────────── */
+.ct-digit {
+  font-size:           clamp(2.5rem, 12cqi, 5rem);
+  font-weight:         800;
+  line-height:         1;
+  display:             block;
+  color:               var(--clock-digit-color);
+  text-shadow:         var(--clock-digit-glow);
+  font-variant-numeric: tabular-nums;
+  letter-spacing:      0.02em;
+  animation:           ct-digit-enter 0.18s ease-out both;
+}
+
+/* ── Colon separator ── */
+.ct-sep-char {
+  font-size:    clamp(1.5rem, 7cqi, 3rem);
+  color:        var(--clock-separator);
+  font-weight:  700;
+  align-self:   center;
+  margin-bottom: 1.3em;   /* aligns with digit baseline, not label */
+  flex-shrink:  0;
+  user-select:  none;
+  line-height:  1;
+}
+
+/* ── Unit label pill ── */
+.ct-unit-label {
+  font-size:     clamp(0.65rem, 2.8cqi, 0.9rem);
+  font-weight:   500;
+  color:         var(--text-secondary);
+  padding:       0.15rem 0.55rem;
+  border-radius: 999px;
+  background:    var(--bg-surface-3);
+  border:        1px solid var(--border-subtle);
+  white-space:   nowrap;
+  user-select:   none;
+}
+
+/* ── Desktop / mobile row toggle ──────────────────────────────────────
+   Breakpoint is on the CARD width (30rem ≈ 480px), not the viewport.
+   A 500px card on a 1400px desktop → desktop row.
+   A 400px card on a 400px phone   → mobile row.
+   A 400px card on a 800px landscape phone → still mobile row. ✓
+   ─────────────────────────────────────────────────────────────────── */
+.ct-row-desktop { display: flex; }
+.ct-row-mobile  { display: none; }
+
+@container clock-card (max-width: 30rem) {
+  .ct-row-desktop { display: none !important; }
+  .ct-row-mobile  { display: flex !important; }
+
+  /* Days hero — bigger treatment on narrow card */
+  .ct-days-val {
+    font-size:   clamp(3rem, 20cqi, 5.5rem) !important;
+    line-height: 1 !important;
+    animation:   ct-digit-enter 0.18s ease-out both;
+  }
+
+  /* H · M · S digits below days */
+  .ct-hms-digit {
+    font-size: clamp(1.4rem, 8cqi, 2.4rem) !important;
+  }
+
+  .ct-hms-label {
+    font-size: clamp(0.55rem, 2.5cqi, 0.75rem) !important;
+  }
+
+  .ct-hms-sep {
+    font-size:    clamp(1rem, 5cqi, 1.8rem) !important;
+    margin-bottom: 1.1em !important;
+  }
 }
 
 /* Digit group (number + label below it) */
@@ -1015,7 +1197,8 @@
 }
 .progress-fill {
   height: 100%; border-radius: var(--radius-full);
-  background-color: var(--accent); transition: width 1s linear;
+  /* accent-alt = #8CAEFF dark (6:1 vs track ✅) / #1D4ED8 light (5.71:1 ✅) */
+  background-color: var(--accent-alt); transition: width 1s linear;
 }
 /* Countdown bar: shifts green → amber → red as time runs low.                */
 /* Update background-position via JS: el.style.backgroundPosition = `${pct}% 0` */
@@ -1027,7 +1210,8 @@
 /* Circular ring (SVG) */
 .progress-ring       { transform: rotate(-90deg); }
 .progress-ring__track { fill: none; stroke: var(--bg-surface-3); }
-.progress-ring__fill  { fill: none; stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
+/* accent-alt = #8CAEFF dark / #1D4ED8 light — 6:1 vs ring track in both themes ✅ */
+.progress-ring__fill  { fill: none; stroke: var(--accent-alt); stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
 
 
 /* ─── 24. ALARM ITEM ─────────────────────────────────────────────────────── */
@@ -1045,19 +1229,18 @@
 .alarm-item:hover     { border-color: var(--border-default); background-color: var(--bg-surface-3); }
 .alarm-item--active   { border-color: var(--border-accent); background-color: var(--accent-soft); }
 .alarm-item--ringing  { border-color: var(--danger-border); background-color: var(--danger-soft); animation: alarm-pulse 0.7s ease-in-out infinite alternate; }
-
 @keyframes alarm-pulse {
   from { box-shadow: 0 0 0 0 var(--danger-soft); }
   to   { box-shadow: 0 0 0 10px transparent;      }
 }
 
 .alarm-time {
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1;
   font-size: var(--text-2xl); font-weight: var(--font-bold);
   letter-spacing: var(--tracking-clock); line-height: var(--leading-none);
   color: var(--text-primary); flex-shrink: 0;
 }
-.alarm-item--active  .alarm-time { color: var(--accent); }
+.alarm-item--active  .alarm-time { color: var(--accent-alt); }
 .alarm-item--ringing .alarm-time { color: var(--danger); }
 
 .alarm-info  { flex: 1; min-width: 0; }
@@ -1068,7 +1251,7 @@
   color: var(--text-muted); padding: 2px var(--space-1-5);
   border-radius: var(--radius-xs); background-color: var(--bg-surface-3);
 }
-.alarm-day--active { color: var(--accent); background-color: var(--accent-soft); }
+.alarm-day--active { color: var(--accent-alt); background-color: var(--accent-soft); }
 
 
 /* ─── 25. MODAL & OVERLAY ────────────────────────────────────────────────── */
@@ -1111,7 +1294,7 @@
   border-radius: var(--radius-xl); padding: var(--space-4) var(--space-5);
   box-shadow: var(--shadow-lg); font-size: var(--text-sm); color: var(--text-primary);
   pointer-events: all; line-height: var(--leading-snug);
-  border-right: 3px solid var(--accent); /* RTL: accent bar on the right side */
+  border-right: 3px solid var(--accent-alt); /* RTL: accent bar on the right side */
 }
 .toast-danger  { border-right-color: var(--danger);  }
 .toast-warning { border-right-color: var(--warning); }
@@ -1130,24 +1313,23 @@
 
 
 /* ─── 28. FULLSCREEN MODE ────────────────────────────────────────────────── */
-/* Always dark (#0A0C18) + always teal digits — regardless of current theme. */
-/* Long-duration clock viewing always benefits from dark + glow.              */
+/* Always deep dark (#0D1117) + pure white digits — regardless of theme.     */
+/* White clock = precision instrument. Blue clock = interactive element.     */
+/* The distinction matters: digit color signals DATA, not brand.             */
 
 .fullscreen-mode {
-  position: fixed; inset: 0; background-color: #0A0C18;
+  position: fixed; inset: 0; background-color: #0D1117;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   z-index: var(--z-max);
 }
 .fullscreen-mode .clock-display {
-  color: #4ECDC4;
+  color: #FFFFFF;   /* pure white — 21:1 on #0D1117 ✅ AAA */
 }
 .fullscreen-mode .clock-glow {
-  text-shadow:
-    0 0 30px rgba(78,205,196,0.65),
-    0 0 70px rgba(78,205,196,0.32),
-    0 0 130px rgba(78,205,196,0.14);
+  /* no glow in fullscreen either — clean sharp digits */
+  text-shadow: none;
 }
-.fullscreen-mode .clock-sep { color: rgba(78, 205, 196, 0.38); }
+.fullscreen-mode .clock-sep { color: rgba(255, 255, 255, 0.22); }
 
 /* Exit button — fades in on mouse movement */
 .fullscreen-exit {
@@ -1158,17 +1340,17 @@
 
 
 /* ─── 29. ACCENT UTILITIES ───────────────────────────────────────────────── */
-/* Teal should cover ≤ 10–15% of the visible screen.                         */
+/* Blue accent should cover ≤ 10–15% of the visible screen.                  */
 /* It is a highlight, not a fill. Use sparingly.                              */
 
-.accent-dot          { width: 8px; height: 8px; border-radius: 50%; background-color: var(--accent); flex-shrink: 0; }
+.accent-dot          { width: 8px; height: 8px; border-radius: 50%; background-color: var(--accent-alt); flex-shrink: 0; }
 .accent-dot--danger  { background-color: var(--danger);  }
 .accent-dot--warning { background-color: var(--warning); }
 .accent-dot--success { background-color: var(--success); }
 
-.accent-line-top  { border-top: 2px solid var(--accent); }
+.accent-line-top  { border-top: 2px solid var(--accent-alt); }
 .accent-highlight { background-color: var(--accent-soft); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); }
-.active-indicator { border-right: 3px solid var(--accent); padding-right: var(--space-4); }
+.active-indicator { border-right: 3px solid var(--accent-alt); padding-right: var(--space-4); }
 
 
 /* ─── 30. UTILITY CLASSES ────────────────────────────────────────────────── */
@@ -1190,7 +1372,10 @@
 .text-secondary  { color: var(--text-secondary)    !important; }
 .text-muted      { color: var(--text-muted)        !important; }
 .text-disabled   { color: var(--text-disabled)     !important; }
-.text-accent     { color: var(--accent)            !important; }
+/* text-accent intentionally uses accent-alt:
+   dark = #8CAEFF (6:1 on surf3 ✅) / light = #1D4ED8 (5.71:1 on surf3 ✅)
+   Use .bg-accent for solid filled blocks (not text), .text-accent-alt is an alias. */
+.text-accent     { color: var(--accent-alt)        !important; }
 .text-accent-alt { color: var(--accent-alt)        !important; }
 .text-danger     { color: var(--danger)            !important; }
 .text-warning    { color: var(--warning)           !important; }
@@ -1205,6 +1390,9 @@
 .bg-surface-2   { background-color: var(--bg-surface-2); }
 .bg-surface-3   { background-color: var(--bg-surface-3); }
 .bg-surface-4   { background-color: var(--bg-surface-4); }
+/* bg-accent — solid brand fill. Use ONLY for primary CTA buttons and         */
+/* micro-elements (icon dots, avatar rings). Never for large panels or cards: */
+/* #1D4ED8 as a large block surface is too dominant and kills visual hierarchy */
 .bg-accent      { background-color: var(--accent);       }
 .bg-accent-soft { background-color: var(--accent-soft);  }
 .bg-danger-soft { background-color: var(--danger-soft);  }
@@ -1281,6 +1469,82 @@
 .truncate     { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ─── 32. TABLE SYSTEM ───────────────────────────────────────────────────── */
+/* Design rationale:                                                          */
+/* Light mode zebra stripes barely work — surface-1 (#FFFFFF) and surface-2  */
+/* (#EAEFF9) are only 1.15:1 apart. Use BORDER-based row separation instead  */
+/* (modern: Linear, GitHub, Notion). When stripes are needed, use surface-3. */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xs);
+}
+
+.table {
+  width: 100%; border-collapse: collapse;
+  font-size: var(--text-sm); color: var(--text-primary);
+  background-color: var(--bg-surface-1);
+}
+
+/* Header */
+.table thead tr {
+  background-color: var(--bg-surface-2);
+  border-bottom: 2px solid var(--border-default);
+}
+.table th {
+  padding: var(--space-3) var(--space-5);
+  font-weight: var(--font-semibold); font-size: var(--text-xs);
+  color: var(--text-secondary); text-align: right;
+  letter-spacing: var(--tracking-wide); text-transform: uppercase;
+  white-space: nowrap; user-select: none;
+}
+
+/* Body rows — border-based separation (better than zebra on light surfaces) */
+.table tbody tr {
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color var(--transition-fast);
+}
+.table tbody tr:last-child { border-bottom: none; }
+.table tbody tr:hover { background-color: var(--bg-surface-2); }
+
+.table td {
+  padding: var(--space-3) var(--space-5);
+  color: var(--text-primary); line-height: var(--leading-snug);
+  vertical-align: middle;
+}
+
+/* Zebra stripe variant — use surface-3 (not surface-2) for visibility */
+/* Light: #E0E8F4 vs white = 1.24:1 — perceptible. Dark: #252F50 vs #161D2E ✓ */
+.table--striped tbody tr:nth-child(even) {
+  background-color: var(--bg-surface-3);
+}
+.table--striped tbody tr:nth-child(even):hover {
+  background-color: var(--bg-surface-4);
+}
+
+/* Column alignment helpers */
+.table td.numeric, .table th.numeric {
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: var(--tracking-clock);
+}
+
+/* Cell status variants */
+.table td.td-accent  { color: var(--accent-alt);  font-weight: var(--font-semibold); }
+.table td.td-danger  { color: var(--danger);  }
+.table td.td-warning { color: var(--warning); }
+.table td.td-success { color: var(--success); }
+.table td.td-muted   { color: var(--text-muted); }
+
+/* Compact variant */
+.table--compact th { padding: var(--space-2) var(--space-4); }
+.table--compact td { padding: var(--space-2) var(--space-4); }
+
 /* ─── 31. ANIMATIONS ─────────────────────────────────────────────────────── */
 @keyframes spin-slow {
   from { transform: rotate(0deg); }

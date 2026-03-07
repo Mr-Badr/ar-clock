@@ -1,5 +1,5 @@
 /* Main page */
-import MainClock from '@/components/clocks/main-clock';
+import LiveClock from '@/components/clocks/LiveClock';
 import Header from '@/components/layout/header';
 import Link from 'next/link';
 import { Clock, Calendar, Compass, ArrowLeftRight, Bell } from 'lucide-react';
@@ -42,9 +42,9 @@ export default function HomePage() {
           <p className="text-muted text-lg max-w-2xl mx-auto mb-12">
             المنصة العربية الأولى لمواقيت الصلاة الدقيقة، فرق التوقيت العالمي، وتتبع المناسبات بلمسة تصميم عصرية.
           </p>
-          
+
           <div className="bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-[var(--accent-glow-soft)]">
-             <MainClock timezone={null} />
+            <LiveClock timezone={null} />
           </div>
         </section>
 
