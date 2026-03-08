@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Noto_Kufi_Arabic } from 'next/font/google';
 import { Toaster } from 'sonner';
 import { ThemeProvider } from '@/components/theme-provider';
-
+import Header from '@/components/layout/header';
 // Load every weight the design system uses.
 // --font-extrabold (800) is required for clock digits.
 // --font-black (900) is required for fullscreen clock.
@@ -105,6 +105,7 @@ export default function RootLayout({
           notoKufi.className activates the loaded font family. */}
       <body className={notoKufi.className}>
         <ThemeProvider>
+          <Header />
           {children}
           {/* Sonner Toaster — dir and position match RTL layout */}
           <Toaster

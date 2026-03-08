@@ -13,6 +13,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+import { mapTimezoneToCityAction } from '@/app/actions/location';
+
 export default function TimezoneBanner() {
   const [city, setCity] = useState(null);
   const [show, setShow] = useState(false);
@@ -25,8 +27,7 @@ export default function TimezoneBanner() {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
       if (!tz) return;
 
-      fetch(`/api/map-timezone-to-city?tz=${encodeURIComponent(tz)}`)
-        .then(r => r.ok ? r.json() : null)
+      mapTimezoneToCityAction(tz)
         .then(data => {
           if (data?.city_name_ar) { setCity(data); setShow(true); }
         })

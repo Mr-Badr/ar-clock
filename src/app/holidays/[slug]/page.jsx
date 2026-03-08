@@ -21,9 +21,9 @@ import {
 } from '@/lib/holidays-engine';
 import { resolveAllHijriEvents } from '@/lib/hijri-resolver';
 import { COUNTRY_META }          from '@/lib/calendar-config';
+import { getCachedNowIso }       from '@/lib/date-utils';
 import CountdownTicker, { CountdownTickerSkeleton, ShareBar } from '@/components/clocks/CountdownTicker';
 
-export const revalidate = 43_200;   // 12 h — fast enough to catch moon-sighting updates
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
 
 /* ── Static params (pre-render top 50, ISR the rest) ─────────────────────── */
@@ -40,7 +40,8 @@ export async function generateMetadata({ params }) {
   const ev      = enrichEvent(raw);
   const res     = await resolveAllHijriEvents([ev]);
   const target  = getNextEventDate(ev, res);
-  const rem     = getTimeRemaining(target);
+  const nowMs   = new Date(await getCachedNowIso()).getTime();
+  const rem     = getTimeRemaining(target, nowMs);
   const seo     = resolveEventMeta(ev, target);          // ← year-correct
   const gregStr = formatGregorianAr(target);
   const url     = `${SITE}/holidays/${slug}`;
@@ -126,13 +127,12 @@ function CountryTable({ event }) {
 }
 
 /* ── Historical dates table ───────────────────────────────────────────────── */
-function HistoricalTable({ event, hijriYear }) {
+function HistoricalTable({ event, hijriYear, currentYear }) {
   if (event.type !== 'hijri') return null;
-  const thisYear = new Date().getFullYear();   // called once
   const rows = event.historicalDates || [
-    { year: `${hijriYear - 1} هـ`, gregorian: `${thisYear - 1}م`, note: 'السنة الماضية' },
-    { year: `${hijriYear} هـ`,     gregorian: `${thisYear}م`,     note: 'السنة الحالية' },
-    { year: `${hijriYear + 1} هـ`, gregorian: `${thisYear + 1}م`, note: 'تقديري (~11 يوماً أبكر)' },
+    { year: `${hijriYear - 1} هـ`, gregorian: `${currentYear - 1}م`, note: 'السنة الماضية' },
+    { year: `${hijriYear} هـ`,     gregorian: `${currentYear}م`,     note: 'السنة الحالية' },
+    { year: `${hijriYear + 1} هـ`, gregorian: `${currentYear + 1}م`, note: 'تقديري (~11 يوماً أبكر)' },
   ];
   return (
     <section style={{ marginTop: 'var(--space-8)' }} aria-labelledby="hist-h">
@@ -175,10 +175,11 @@ function HistoricalTable({ event, hijriYear }) {
 async function RelatedEvents({ slug }) {
   const related  = getRelatedEvents(slug, ALL_EVENTS, 4);
   const resolved = await resolveAllHijriEvents(related);
+  const nowMs    = new Date(await getCachedNowIso()).getTime();
   const ann = related.map(ev => {
     const d   = getNextEventDate(ev, resolved);
     const seo = resolveEventMeta(ev, d);
-    return { ...ev, _daysLeft: getTimeRemaining(d).days, _formatted: formatGregorianAr(d), _seoTitle: seo.seoTitle };
+    return { ...ev, _daysLeft: getTimeRemaining(d, nowMs).days, _formatted: formatGregorianAr(d), _seoTitle: seo.seoTitle };
   });
   return (
     <section style={{ marginTop: 'var(--space-12)' }} aria-labelledby="related-h">
@@ -210,12 +211,17 @@ export default async function HolidayPage({ params }) {
   const { slug } = await params;
   const raw = ALL_EVENTS.find(e => e.slug === slug);
   if (!raw) notFound();
+  
+  const nowIso = await getCachedNowIso();
+  const now    = new Date(nowIso);
+  const currentYear = now.getFullYear();
+
   const event = enrichEvent(raw);
 
   const resolved   = await resolveAllHijriEvents([event]);
   const calInfo    = resolved[event.slug] || null;
   const targetDate = getNextEventDate(event, resolved);
-  const remaining  = getTimeRemaining(targetDate);
+  const remaining  = getTimeRemaining(targetDate, now.getTime());
 
   // Year-correct all SEO strings for this actual upcoming date
   const seo = resolveEventMeta(event, targetDate);
@@ -252,7 +258,7 @@ export default async function HolidayPage({ params }) {
 
   /* Structured data — all use year-corrected seo.seoTitle / seo.description */
   const evSchema  = { ...buildEventSchema(event, targetDate, SITE), name: seo.seoTitle, description: seo.description };
-  const wpSchema  = { ...buildWebPageSchema(event, targetDate, SITE), name: seo.seoTitle, description: seo.description };
+  const wpSchema  = { ...buildWebPageSchema(event, targetDate, SITE, nowIso), name: seo.seoTitle, description: seo.description };
   const faqSchema = buildFAQSchema({ ...event, faqItems });
   const bcSchema  = buildBreadcrumbSchema([
     { name: 'الرئيسية',  url: SITE },
@@ -456,13 +462,13 @@ export default async function HolidayPage({ params }) {
             {event.type === 'estimated' && <p>⚠ هذا التاريخ تقديري — قد يتغير بقرار وزاري رسمي.</p>}
             {event.type === 'monthly'   && <p>🔁 يتكرر كل شهر في نفس اليوم.</p>}
             {event.type === 'fixed'     && <p>📌 تاريخ ثابت — نفس اليوم كل عام.</p>}
-            <p>🕐 آخر تحديث: {new Date().toLocaleDateString('ar-SA-u-nu-latn')}</p>
+            <p>🕐 آخر تحديث: {new Date(nowIso).toLocaleDateString('ar-SA-u-nu-latn')}</p>
           </div>
         </div>
 
         {/* ── TABLES ──────────────────────────────────────────────────────── */}
         <CountryTable    event={event} />
-        <HistoricalTable event={event} hijriYear={hijriYearNum} />
+        <HistoricalTable event={event} hijriYear={hijriYearNum} currentYear={currentYear} />
 
         {/* ── FAQ ─────────────────────────────────────────────────────────── */}
         {faqItems.length > 0 && (

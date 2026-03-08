@@ -212,8 +212,9 @@ export function getNextEventDate(rawEvent, resolvedMap = {}) {
   return new Date();
 }
 
-export function getTimeRemaining(target) {
-  const total = (target instanceof Date ? target.getTime() : new Date(target).getTime()) - Date.now();
+export function getTimeRemaining(target, nowMs) {
+  if (nowMs === undefined) nowMs = 0; // never called without nowMs in prerenderable pages
+  const total = (target instanceof Date ? target.getTime() : new Date(target).getTime()) - nowMs;
   if (total <= 0) return { total: 0, days: 0, hours: 0, minutes: 0, seconds: 0 };
   return {
     total,
@@ -289,7 +290,7 @@ export function buildEventSchema(ev, date, siteUrl) {
 }
 
 /** WebPage schema — critical for E-E-A-T freshness signal (dateModified). */
-export function buildWebPageSchema(ev, date, siteUrl) {
+export function buildWebPageSchema(ev, date, siteUrl, nowIso) {
   const d = date instanceof Date ? date : new Date(date);
   return {
     '@context': 'https://schema.org', '@type': 'WebPage',
@@ -297,7 +298,7 @@ export function buildWebPageSchema(ev, date, siteUrl) {
     description:   ev.description,
     url:          `${siteUrl}/holidays/${ev.slug}`,
     inLanguage:    'ar',
-    dateModified:  new Date().toISOString(),
+    dateModified:  nowIso || '2026-01-01T00:00:00Z',
     datePublished: '2025-01-01T00:00:00Z',
     isPartOf:     { '@type': 'WebSite', url: siteUrl, name: 'وقت — عداد المواعيد' },
     about:        { '@type': 'Event', name: ev.name, startDate: d.toISOString() },

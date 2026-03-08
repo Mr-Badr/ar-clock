@@ -1,6 +1,5 @@
 /* Main page */
 import LiveClock from '@/components/clocks/LiveClock';
-import Header from '@/components/layout/header';
 import Link from 'next/link';
 import { Clock, Calendar, Compass, ArrowLeftRight, Bell } from 'lucide-react';
 
@@ -31,7 +30,6 @@ const SERVICES = [
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-base text-primary" dir="rtl">
-      <Header />
 
       <main className="pt-24 pb-20">
         {/* --- Hero Section --- */}
@@ -88,7 +86,7 @@ export default function HomePage() {
             <Clock className="text-accent" size={24} />
             <span className="text-xl font-bold">ساعة عربية</span>
          </div>
-         <p className="text-muted text-sm">© {new Date().getFullYear()} جميع الحقوق محفوظة. صُمم بدقة للمستخدم العربي.</p>
+         <p className="text-muted text-sm">© 2025 جميع الحقوق محفوظة. صُمم بدقة للمستخدم العربي.</p>
       </footer>
     </div>
   );

@@ -9,6 +9,7 @@ import TimeConverter from './TimeConverter.client';
 import Timeline24h from './Timeline24h.client';
 import { ArrowLeftRight, Clock, Briefcase, Share2, Sun, Moon, Info, Check, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { getTimeDiffAction } from '@/app/actions/location';
 
 export default function TimeDiffCalculator({ initialFrom = null, initialTo = null }) {
   const router = useRouter();
@@ -31,12 +32,8 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
   const fetchDiff = useCallback(async (fromTz, toTz) => {
     setLoading(true);
     try {
-      const res = await fetch('/api/time-diff', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ from: fromTz, to: toTz }),
-      });
-      if (res.ok) setDiffData(await res.json());
+      const data = await getTimeDiffAction(fromTz, toTz);
+      if (data) setDiffData(data);
     } catch (e) {
       console.error(e);
     } finally {

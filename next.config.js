@@ -14,7 +14,8 @@ const nextConfig = {
   },
 
   // ── Production Cache ────────────────────────────────────────────────────────
-  // cacheComponents: true, // disabled because it breaks next-themes
+  cacheComponents: true,
+  reactCompiler: true,
 
   // ── Experiments ──────────────────────────────────────────────────────────────
   experimental: {

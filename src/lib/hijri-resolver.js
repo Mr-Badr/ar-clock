@@ -5,9 +5,13 @@
  */
 
 import { getCountryCalendarConfig } from './calendar-config.js';
+import { cacheTag, cacheLife } from 'next/cache';
 
 const ALADHAN = 'https://api.aladhan.com/v1';
 const _cache  = new Map(); // `${method}-${year}-${month}` → Map<day,iso> | null
+
+function getSafeNow() { return new Date(); }
+function getSafeNowMs() { return Date.now(); }
 
 async function fetchMonth(year, month, method = 1) {
   const key = `${method}-${year}-${month}`;
@@ -37,20 +41,23 @@ async function fetchMonth(year, month, method = 1) {
 
 let _yr = 0, _yrAt = 0;
 async function todayHijriYear() {
-  if (_yr && Date.now() - _yrAt < 86_400_000) return _yr;
-  const d   = new Date();
+  'use cache';
+  cacheTag('hijri-today');
+  cacheLife('hours');
+  if (_yr && getSafeNowMs() - _yrAt < 86_400_000) return _yr;
+  const d   = getSafeNow();
   const str = `${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${d.getFullYear()}`;
   try {
     const r = await fetch(`${ALADHAN}/gToH?date=${str}`, { next: { revalidate: 86_400, tags: ['hijri-today'] } });
     const j = await r.json();
     const y = parseInt(j?.data?.hijri?.year, 10);
-    if (y) { _yr = y; _yrAt = Date.now(); return y; }
+    if (y) { _yr = y; _yrAt = getSafeNowMs(); return y; }
   } catch {}
   return Math.floor((d.getTime() - new Date('0622-07-19').getTime()) / (354.37 * 86_400_000));
 }
 
 function roughFallback(hMonth, hDay) {
-  const now = new Date(), EP = new Date('0622-07-19').getTime(), MSY = 354.37 * 86_400_000;
+  const now = getSafeNow(), EP = new Date('0622-07-19').getTime(), MSY = 354.37 * 86_400_000;
   const yr  = Math.floor((now.getTime() - EP) / MSY);
   const t   = new Date(EP + yr * MSY + (hMonth - 1) * 29.53 * 86_400_000 + (hDay - 1) * 86_400_000);
   return t <= now ? new Date(t.getTime() + MSY) : t;
@@ -61,11 +68,14 @@ function roughFallback(hMonth, hDay) {
  * Returns plain object: { [slug]: { isoString, label, labelShort, variance, localSighting, note, accuracy } }
  */
 export async function resolveAllHijriEvents(events) {
+  'use cache';
+  cacheTag('hijri-events');
+  cacheLife('hours');
   const hijri = events.filter(e => e.type === 'hijri');
   if (!hijri.length) return {};
 
   const baseYear = await todayHijriYear();
-  const now      = new Date(); now.setHours(0, 0, 0, 0);
+  const now      = getSafeNow(); now.setHours(0, 0, 0, 0);
 
   // Collect unique (method, year, month) pairs — year and year+1
   const needed = new Set();

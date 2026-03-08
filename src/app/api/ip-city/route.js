@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
-import { findNearestCity, searchCities } from '@/lib/cityService';
+import { NextResponse, connection } from 'next/server';
+import { findNearestCity } from '@/lib/locationService';
+import { searchCities } from '@/lib/db/queries/cities';
 
 /**
  * api/ip-city/route.js
@@ -8,6 +9,7 @@ import { findNearestCity, searchCities } from '@/lib/cityService';
  * Uses ip-api.com (free for non-commercial).
  */
 export async function GET(request) {
+  await connection();
   try {
     // 1. Get client IP
     const forwarded = request.headers.get('x-forwarded-for');
@@ -29,9 +31,17 @@ export async function GET(request) {
     }
 
     // 4. Secondary fallback: Search by city name if nearest-city RPC failed
-    const results = await searchCities(data.city, 1, data.countryCode.toLowerCase());
+    const results = await searchCities(data.city, 1);
     if (results.length > 0) {
-      return NextResponse.json(results[0]);
+      return NextResponse.json({
+        ...results[0],
+        country_slug: results[0].countries?.country_slug,
+        country_name_ar: results[0].countries?.name_ar,
+        country_name_en: results[0].countries?.name_en,
+        city_name_ar: results[0].name_ar,
+        city_name_en: results[0].name_en,
+        timezone: results[0].timezone
+      });
     }
 
     return NextResponse.json({ error: 'No matching city in database' }, { status: 404 });

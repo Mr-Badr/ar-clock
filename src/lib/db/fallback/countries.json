@@ -1,0 +1,2018 @@
+[
+  {
+    "id": 757,
+    "country_code": "CS",
+    "country_slug": "serbia-and-montenegro",
+    "name_en": "Serbia and Montenegro",
+    "name_ar": "",
+    "timezone": "UTC"
+  },
+  {
+    "id": 536,
+    "country_code": "BQ",
+    "country_slug": "bonaire",
+    "name_en": "-saint-eustatius-and-saba-",
+    "name_ar": "Bonaire",
+    "timezone": "America/Kralendijk"
+  },
+  {
+    "id": 615,
+    "country_code": "IS",
+    "country_slug": "iceland",
+    "name_en": "Iceland",
+    "name_ar": "آيسلندا",
+    "timezone": "Atlantic/Reykjavik"
+  },
+  {
+    "id": 522,
+    "country_code": "AZ",
+    "country_slug": "azerbaijan",
+    "name_en": "Azerbaijan",
+    "name_ar": "أذربيجان",
+    "timezone": "Asia/Baku"
+  },
+  {
+    "id": 723,
+    "country_code": "TF",
+    "country_slug": "french-southern-territories",
+    "name_en": "French Southern Territories",
+    "name_ar": "أراض فرنسية جنوبية وأنتارتيكية",
+    "timezone": "Indian/Kerguelen"
+  },
+  {
+    "id": 513,
+    "country_code": "AM",
+    "country_slug": "armenia",
+    "name_en": "Armenia",
+    "name_ar": "أرمينيا",
+    "timezone": "Asia/Yerevan"
+  },
+  {
+    "id": 520,
+    "country_code": "AW",
+    "country_slug": "aruba",
+    "name_en": "Aruba",
+    "name_ar": "أروبا",
+    "timezone": "America/Aruba"
+  },
+  {
+    "id": 519,
+    "country_code": "AU",
+    "country_slug": "australia",
+    "name_en": "Australia",
+    "name_ar": "أستراليا",
+    "timezone": "Australia/Sydney"
+  },
+  {
+    "id": 509,
+    "country_code": "AF",
+    "country_slug": "afghanistan",
+    "name_en": "Afghanistan",
+    "name_ar": "أفغانستان",
+    "timezone": "Asia/Kabul"
+  },
+  {
+    "id": 512,
+    "country_code": "AL",
+    "country_slug": "albania",
+    "name_en": "Albania",
+    "name_ar": "ألبانيا",
+    "timezone": "Europe/Tirane"
+  },
+  {
+    "id": 563,
+    "country_code": "DE",
+    "country_slug": "germany",
+    "name_en": "Germany",
+    "name_ar": "ألمانيا",
+    "timezone": "Europe/Berlin"
+  },
+  {
+    "id": 510,
+    "country_code": "AG",
+    "country_slug": "antigua-and-barbuda",
+    "name_en": "Antigua and Barbuda",
+    "name_ar": "أنتيغوا وباربودا",
+    "timezone": "America/Antigua"
+  },
+  {
+    "id": 507,
+    "country_code": "AD",
+    "country_slug": "andorra",
+    "name_en": "Andorra",
+    "name_ar": "أندورا",
+    "timezone": "Europe/Andorra"
+  },
+  {
+    "id": 514,
+    "country_code": "AO",
+    "country_slug": "angola",
+    "name_en": "Angola",
+    "name_ar": "أنغولا",
+    "timezone": "Africa/Luanda"
+  },
+  {
+    "id": 511,
+    "country_code": "AI",
+    "country_slug": "anguilla",
+    "name_en": "Anguilla",
+    "name_ar": "أنغويلا",
+    "timezone": "America/Anguilla"
+  },
+  {
+    "id": 742,
+    "country_code": "UZ",
+    "country_slug": "uzbekistan",
+    "name_en": "Uzbekistan",
+    "name_ar": "أوزبكستان",
+    "timezone": "Asia/Tashkent"
+  },
+  {
+    "id": 738,
+    "country_code": "UG",
+    "country_slug": "uganda",
+    "name_en": "Uganda",
+    "name_ar": "أوغندا",
+    "timezone": "Africa/Kampala"
+  },
+  {
+    "id": 737,
+    "country_code": "UA",
+    "country_slug": "ukraine",
+    "name_en": "Ukraine",
+    "name_ar": "أوكرانيا",
+    "timezone": "Europe/Kyiv"
+  },
+  {
+    "id": 575,
+    "country_code": "ET",
+    "country_slug": "ethiopia",
+    "name_en": "Ethiopia",
+    "name_ar": "إثيوبيا",
+    "timezone": "Africa/Addis_Ababa"
+  },
+  {
+    "id": 573,
+    "country_code": "ER",
+    "country_slug": "eritrea",
+    "name_en": "Eritrea",
+    "name_ar": "إرتريا",
+    "timezone": "Africa/Asmara"
+  },
+  {
+    "id": 574,
+    "country_code": "ES",
+    "country_slug": "spain",
+    "name_en": "Spain",
+    "name_ar": "إسبانيا",
+    "timezone": "Europe/Madrid"
+  },
+  {
+    "id": 570,
+    "country_code": "EE",
+    "country_slug": "estonia",
+    "name_en": "Estonia",
+    "name_ar": "إستونيا",
+    "timezone": "Europe/Tallinn"
+  },
+  {
+    "id": 609,
+    "country_code": "IL",
+    "country_slug": "israel",
+    "name_en": "Israel",
+    "name_ar": "إسرائيل",
+    "timezone": "Asia/Jerusalem"
+  },
+  {
+    "id": 720,
+    "country_code": "SZ",
+    "country_slug": "eswatini",
+    "name_en": "Eswatini",
+    "name_ar": "إسواتيني",
+    "timezone": "Africa/Mbabane"
+  },
+  {
+    "id": 612,
+    "country_code": "IO",
+    "country_slug": "british-indian-ocean-territory",
+    "name_en": "British Indian Ocean Territory",
+    "name_ar": "إقليم المحيط الهندي البريطاني",
+    "timezone": "UTC"
+  },
+  {
+    "id": 607,
+    "country_code": "ID",
+    "country_slug": "indonesia",
+    "name_en": "Indonesia",
+    "name_ar": "إندونيسيا",
+    "timezone": "Asia/Jakarta"
+  },
+  {
+    "id": 614,
+    "country_code": "IR",
+    "country_slug": "iran",
+    "name_en": "Iran",
+    "name_ar": "إيران",
+    "timezone": "Asia/Tehran"
+  },
+  {
+    "id": 616,
+    "country_code": "IT",
+    "country_slug": "italy",
+    "name_en": "Italy",
+    "name_ar": "إيطاليا",
+    "timezone": "Europe/Rome"
+  },
+  {
+    "id": 516,
+    "country_code": "AR",
+    "country_slug": "argentina",
+    "name_en": "Argentina",
+    "name_ar": "الأرجنتين",
+    "timezone": "America/Argentina/Buenos_Aires"
+  },
+  {
+    "id": 619,
+    "country_code": "JO",
+    "country_slug": "jordan",
+    "name_en": "Jordan",
+    "name_ar": "الأردن",
+    "timezone": "Asia/Amman"
+  },
+  {
+    "id": 741,
+    "country_code": "UY",
+    "country_slug": "uruguay",
+    "name_en": "Uruguay",
+    "name_ar": "الأوروغواي",
+    "timezone": "America/Montevideo"
+  },
+  {
+    "id": 569,
+    "country_code": "EC",
+    "country_slug": "ecuador",
+    "name_en": "Ecuador",
+    "name_ar": "الإكوادور",
+    "timezone": "America/Guayaquil"
+  },
+  {
+    "id": 508,
+    "country_code": "AE",
+    "country_slug": "united-arab-emirates",
+    "name_en": "United Arab Emirates",
+    "name_ar": "الإمارات العربية المتحدة",
+    "timezone": "Asia/Dubai"
+  },
+  {
+    "id": 529,
+    "country_code": "BH",
+    "country_slug": "bahrain",
+    "name_en": "Bahrain",
+    "name_ar": "البحرين",
+    "timezone": "Asia/Bahrain"
+  },
+  {
+    "id": 537,
+    "country_code": "BR",
+    "country_slug": "brazil",
+    "name_en": "Brazil",
+    "name_ar": "البرازيل",
+    "timezone": "America/Sao_Paulo"
+  },
+  {
+    "id": 691,
+    "country_code": "PT",
+    "country_slug": "portugal",
+    "name_en": "Portugal",
+    "name_ar": "البرتغال",
+    "timezone": "ES"
+  },
+  {
+    "id": 523,
+    "country_code": "BA",
+    "country_slug": "bosnia-and-herzegovina",
+    "name_en": "Bosnia and Herzegovina",
+    "name_ar": "البوسنة والهرسك",
+    "timezone": "Europe/Sarajevo"
+  },
+  {
+    "id": 647,
+    "country_code": "ME",
+    "country_slug": "montenegro",
+    "name_en": "Montenegro",
+    "name_ar": "الجبل الأسود",
+    "timezone": "Europe/Podgorica"
+  },
+  {
+    "id": 568,
+    "country_code": "DZ",
+    "country_slug": "algeria",
+    "name_en": "Algeria",
+    "name_ar": "الجزائر",
+    "timezone": "Africa/Algiers"
+  },
+  {
+    "id": 565,
+    "country_code": "DK",
+    "country_slug": "denmark",
+    "name_en": "Denmark",
+    "name_ar": "الدنمارك",
+    "timezone": "DE"
+  },
+  {
+    "id": 558,
+    "country_code": "CV",
+    "country_slug": "cabo-verde",
+    "name_en": "Cabo Verde",
+    "name_ar": "الرأس الأخضر",
+    "timezone": "Atlantic/Cape_Verde"
+  },
+  {
+    "id": 700,
+    "country_code": "SA",
+    "country_slug": "saudi-arabia",
+    "name_en": "Saudi Arabia",
+    "name_ar": "السعودية",
+    "timezone": "Asia/Riyadh"
+  },
+  {
+    "id": 717,
+    "country_code": "SV",
+    "country_slug": "el-salvador",
+    "name_en": "El Salvador",
+    "name_ar": "السلفادور",
+    "timezone": "America/El_Salvador"
+  },
+  {
+    "id": 713,
+    "country_code": "SN",
+    "country_slug": "senegal",
+    "name_en": "Senegal",
+    "name_ar": "السنغال",
+    "timezone": "Africa/Dakar"
+  },
+  {
+    "id": 703,
+    "country_code": "SD",
+    "country_slug": "sudan",
+    "name_en": "Sudan",
+    "name_ar": "السودان",
+    "timezone": "Africa/Khartoum"
+  },
+  {
+    "id": 705,
+    "country_code": "SE",
+    "country_slug": "sweden",
+    "name_en": "Sweden",
+    "name_ar": "السويد",
+    "timezone": "Europe/Stockholm"
+  },
+  {
+    "id": 572,
+    "country_code": "EH",
+    "country_slug": "western-sahara",
+    "name_en": "Western Sahara",
+    "name_ar": "الصحراء الغربية",
+    "timezone": "Africa/El_Aaiun"
+  },
+  {
+    "id": 714,
+    "country_code": "SO",
+    "country_slug": "somalia",
+    "name_en": "Somalia",
+    "name_ar": "الصومال",
+    "timezone": "Africa/Mogadishu"
+  },
+  {
+    "id": 554,
+    "country_code": "CN",
+    "country_slug": "china",
+    "name_en": "China",
+    "name_ar": "الصين",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": 613,
+    "country_code": "IQ",
+    "country_slug": "iraq",
+    "name_en": "Iraq",
+    "name_ar": "العراق",
+    "timezone": "Asia/Baghdad"
+  },
+  {
+    "id": 582,
+    "country_code": "GA",
+    "country_slug": "gabon",
+    "name_en": "Gabon",
+    "name_ar": "الغابون",
+    "timezone": "Africa/Libreville"
+  },
+  {
+    "id": 743,
+    "country_code": "VA",
+    "country_slug": "vatican",
+    "name_en": "Vatican",
+    "name_ar": "الفاتيكان",
+    "timezone": "IT"
+  },
+  {
+    "id": 684,
+    "country_code": "PH",
+    "country_slug": "philippines",
+    "name_en": "Philippines",
+    "name_ar": "الفلبين",
+    "timezone": "Asia/Manila"
+  },
+  {
+    "id": 553,
+    "country_code": "CM",
+    "country_slug": "cameroon",
+    "name_en": "Cameroon",
+    "name_ar": "الكاميرون",
+    "timezone": "Africa/Douala"
+  },
+  {
+    "id": 630,
+    "country_code": "KW",
+    "country_slug": "kuwait",
+    "name_en": "Kuwait",
+    "name_ar": "الكويت",
+    "timezone": "Asia/Kuwait"
+  },
+  {
+    "id": 662,
+    "country_code": "MV",
+    "country_slug": "maldives",
+    "name_en": "Maldives",
+    "name_ar": "المالديف",
+    "timezone": "Indian/Maldives"
+  },
+  {
+    "id": 606,
+    "country_code": "HU",
+    "country_slug": "hungary",
+    "name_en": "Hungary",
+    "name_ar": "المجر",
+    "timezone": "Europe/Budapest"
+  },
+  {
+    "id": 644,
+    "country_code": "MA",
+    "country_slug": "morocco",
+    "name_en": "Morocco",
+    "name_ar": "المغرب",
+    "timezone": "Africa/Casablanca"
+  },
+  {
+    "id": 664,
+    "country_code": "MX",
+    "country_slug": "mexico",
+    "name_en": "Mexico",
+    "name_ar": "المكسيك",
+    "timezone": "America/Mexico_City"
+  },
+  {
+    "id": 583,
+    "country_code": "GB",
+    "country_slug": "united-kingdom",
+    "name_en": "United Kingdom",
+    "name_ar": "المملكة المتحدة",
+    "timezone": "IE"
+  },
+  {
+    "id": 674,
+    "country_code": "NO",
+    "country_slug": "norway",
+    "name_en": "Norway",
+    "name_ar": "النرويج",
+    "timezone": "Europe/Oslo"
+  },
+  {
+    "id": 518,
+    "country_code": "AT",
+    "country_slug": "austria",
+    "name_en": "Austria",
+    "name_ar": "النمسا",
+    "timezone": "Europe/Vienna"
+  },
+  {
+    "id": 669,
+    "country_code": "NE",
+    "country_slug": "niger",
+    "name_en": "Niger",
+    "name_ar": "النيجر",
+    "timezone": "Africa/Niamey"
+  },
+  {
+    "id": 611,
+    "country_code": "IN",
+    "country_slug": "india",
+    "name_en": "India",
+    "name_ar": "الهند",
+    "timezone": "Asia/Kolkata"
+  },
+  {
+    "id": 740,
+    "country_code": "US",
+    "country_slug": "united-states",
+    "name_en": "United States",
+    "name_ar": "الولايات المتحدة",
+    "timezone": "America/New_York"
+  },
+  {
+    "id": 620,
+    "country_code": "JP",
+    "country_slug": "japan",
+    "name_en": "Japan",
+    "name_ar": "اليابان",
+    "timezone": "Asia/Tokyo"
+  },
+  {
+    "id": 752,
+    "country_code": "YE",
+    "country_slug": "yemen",
+    "name_en": "Yemen",
+    "name_ar": "اليمن",
+    "timezone": "Asia/Aden"
+  },
+  {
+    "id": 595,
+    "country_code": "GR",
+    "country_slug": "greece",
+    "name_en": "Greece",
+    "name_ar": "اليونان",
+    "timezone": "Europe/Athens"
+  },
+  {
+    "id": 683,
+    "country_code": "PG",
+    "country_slug": "papua-new-guinea",
+    "name_en": "Papua New Guinea",
+    "name_ar": "بابوا غينيا الجديدة",
+    "timezone": "ID"
+  },
+  {
+    "id": 693,
+    "country_code": "PY",
+    "country_slug": "paraguay",
+    "name_en": "Paraguay",
+    "name_ar": "باراغواي",
+    "timezone": "America/Asuncion"
+  },
+  {
+    "id": 524,
+    "country_code": "BB",
+    "country_slug": "barbados",
+    "name_en": "Barbados",
+    "name_ar": "باربادوس",
+    "timezone": "America/Barbados"
+  },
+  {
+    "id": 685,
+    "country_code": "PK",
+    "country_slug": "pakistan",
+    "name_en": "Pakistan",
+    "name_ar": "باكستان",
+    "timezone": "Asia/Karachi"
+  },
+  {
+    "id": 692,
+    "country_code": "PW",
+    "country_slug": "palau",
+    "name_en": "Palau",
+    "name_ar": "بالاو",
+    "timezone": "Pacific/Palau"
+  },
+  {
+    "id": 533,
+    "country_code": "BM",
+    "country_slug": "bermuda",
+    "name_en": "Bermuda",
+    "name_ar": "برمودا",
+    "timezone": "Atlantic/Bermuda"
+  },
+  {
+    "id": 534,
+    "country_code": "BN",
+    "country_slug": "brunei",
+    "name_en": "Brunei",
+    "name_ar": "بروناي",
+    "timezone": "MY"
+  },
+  {
+    "id": 526,
+    "country_code": "BE",
+    "country_slug": "belgium",
+    "name_en": "Belgium",
+    "name_ar": "بلجيكا",
+    "timezone": "Europe/Brussels"
+  },
+  {
+    "id": 528,
+    "country_code": "BG",
+    "country_slug": "bulgaria",
+    "name_en": "Bulgaria",
+    "name_ar": "بلغاريا",
+    "timezone": "Europe/Sofia"
+  },
+  {
+    "id": 543,
+    "country_code": "BZ",
+    "country_slug": "belize",
+    "name_en": "Belize",
+    "name_ar": "بليز",
+    "timezone": "America/Belize"
+  },
+  {
+    "id": 525,
+    "country_code": "BD",
+    "country_slug": "bangladesh",
+    "name_en": "Bangladesh",
+    "name_ar": "بنغلاديش",
+    "timezone": "Asia/Dhaka"
+  },
+  {
+    "id": 680,
+    "country_code": "PA",
+    "country_slug": "panama",
+    "name_en": "Panama",
+    "name_ar": "بنما",
+    "timezone": "America/Panama"
+  },
+  {
+    "id": 531,
+    "country_code": "BJ",
+    "country_slug": "benin",
+    "name_en": "Benin",
+    "name_ar": "بنين",
+    "timezone": "Africa/Porto-Novo"
+  },
+  {
+    "id": 539,
+    "country_code": "BT",
+    "country_slug": "bhutan",
+    "name_en": "Bhutan",
+    "name_ar": "بوتان",
+    "timezone": "Asia/Thimphu"
+  },
+  {
+    "id": 541,
+    "country_code": "BW",
+    "country_slug": "botswana",
+    "name_en": "Botswana",
+    "name_ar": "بوتسوانا",
+    "timezone": "Africa/Gaborone"
+  },
+  {
+    "id": 689,
+    "country_code": "PR",
+    "country_slug": "puerto-rico",
+    "name_en": "Puerto Rico",
+    "name_ar": "بورتوريكو",
+    "timezone": "America/Puerto_Rico"
+  },
+  {
+    "id": 527,
+    "country_code": "BF",
+    "country_slug": "burkina-faso",
+    "name_en": "Burkina Faso",
+    "name_ar": "بوركينا فاسو",
+    "timezone": "Africa/Ouagadougou"
+  },
+  {
+    "id": 530,
+    "country_code": "BI",
+    "country_slug": "burundi",
+    "name_en": "Burundi",
+    "name_ar": "بوروندي",
+    "timezone": "Africa/Bujumbura"
+  },
+  {
+    "id": 686,
+    "country_code": "PL",
+    "country_slug": "poland",
+    "name_en": "Poland",
+    "name_ar": "بولندا",
+    "timezone": "Europe/Warsaw"
+  },
+  {
+    "id": 682,
+    "country_code": "PF",
+    "country_slug": "french-polynesia",
+    "name_en": "French Polynesia",
+    "name_ar": "بولنيزيا الفرنسية",
+    "timezone": "Pacific/Tahiti"
+  },
+  {
+    "id": 535,
+    "country_code": "BO",
+    "country_slug": "bolivia",
+    "name_en": "Bolivia",
+    "name_ar": "بوليفيا",
+    "timezone": "America/La_Paz"
+  },
+  {
+    "id": 681,
+    "country_code": "PE",
+    "country_slug": "peru",
+    "name_en": "Peru",
+    "name_ar": "بيرو",
+    "timezone": "America/Lima"
+  },
+  {
+    "id": 542,
+    "country_code": "BY",
+    "country_slug": "belarus",
+    "name_en": "Belarus",
+    "name_ar": "بيلاروس",
+    "timezone": "Europe/Minsk"
+  },
+  {
+    "id": 725,
+    "country_code": "TH",
+    "country_slug": "thailand",
+    "name_en": "Thailand",
+    "name_ar": "تايلاند",
+    "timezone": "Asia/Bangkok"
+  },
+  {
+    "id": 735,
+    "country_code": "TW",
+    "country_slug": "taiwan",
+    "name_en": "Taiwan",
+    "name_ar": "تايوان",
+    "timezone": "Asia/Taipei"
+  },
+  {
+    "id": 648,
+    "country_code": "MF",
+    "country_slug": "saint-martin",
+    "name_en": "Saint Martin",
+    "name_ar": "تجمع سان مارتين",
+    "timezone": "SX"
+  },
+  {
+    "id": 729,
+    "country_code": "TM",
+    "country_slug": "turkmenistan",
+    "name_en": "Turkmenistan",
+    "name_ar": "تركمانستان",
+    "timezone": "Asia/Ashgabat"
+  },
+  {
+    "id": 732,
+    "country_code": "TR",
+    "country_slug": "turkey",
+    "name_en": "Turkey",
+    "name_ar": "تركيا",
+    "timezone": "Europe/Istanbul"
+  },
+  {
+    "id": 733,
+    "country_code": "TT",
+    "country_slug": "trinidad-and-tobago",
+    "name_en": "Trinidad and Tobago",
+    "name_ar": "ترينيداد وتوباغو",
+    "timezone": "America/Port_of_Spain"
+  },
+  {
+    "id": 722,
+    "country_code": "TD",
+    "country_slug": "chad",
+    "name_en": "Chad",
+    "name_ar": "تشاد",
+    "timezone": "Africa/Ndjamena"
+  },
+  {
+    "id": 552,
+    "country_code": "CL",
+    "country_slug": "chile",
+    "name_en": "Chile",
+    "name_ar": "تشيلي",
+    "timezone": "America/Santiago"
+  },
+  {
+    "id": 736,
+    "country_code": "TZ",
+    "country_slug": "tanzania",
+    "name_en": "Tanzania",
+    "name_ar": "تنزانيا",
+    "timezone": "Africa/Dar_es_Salaam"
+  },
+  {
+    "id": 724,
+    "country_code": "TG",
+    "country_slug": "togo",
+    "name_en": "Togo",
+    "name_ar": "توغو",
+    "timezone": "Africa/Lome"
+  },
+  {
+    "id": 734,
+    "country_code": "TV",
+    "country_slug": "tuvalu",
+    "name_en": "Tuvalu",
+    "name_ar": "توفالو",
+    "timezone": "Pacific/Funafuti"
+  },
+  {
+    "id": 727,
+    "country_code": "TK",
+    "country_slug": "tokelau",
+    "name_en": "Tokelau",
+    "name_ar": "توكيلاو",
+    "timezone": "Pacific/Fakaofo"
+  },
+  {
+    "id": 730,
+    "country_code": "TN",
+    "country_slug": "tunisia",
+    "name_en": "Tunisia",
+    "name_ar": "تونس",
+    "timezone": "Africa/Tunis"
+  },
+  {
+    "id": 731,
+    "country_code": "TO",
+    "country_slug": "tonga",
+    "name_en": "Tonga",
+    "name_ar": "تونغا",
+    "timezone": "Pacific/Tongatapu"
+  },
+  {
+    "id": 728,
+    "country_code": "TL",
+    "country_slug": "timor-leste",
+    "name_en": "Timor Leste",
+    "name_ar": "تيمور الشرقية",
+    "timezone": "ID"
+  },
+  {
+    "id": 618,
+    "country_code": "JM",
+    "country_slug": "jamaica",
+    "name_en": "Jamaica",
+    "name_ar": "جامايكا",
+    "timezone": "America/Jamaica"
+  },
+  {
+    "id": 589,
+    "country_code": "GI",
+    "country_slug": "gibraltar",
+    "name_en": "Gibraltar",
+    "name_ar": "جبل طارق",
+    "timezone": "ES"
+  },
+  {
+    "id": 521,
+    "country_code": "AX",
+    "country_slug": "aland-islands",
+    "name_en": "Aland Islands",
+    "name_ar": "جزر أولاند",
+    "timezone": "Europe/Mariehamn"
+  },
+  {
+    "id": 758,
+    "country_code": "AN",
+    "country_slug": "netherlands-antilles",
+    "name_en": "Netherlands Antilles",
+    "name_ar": "جزر الأنتيل الهولندية",
+    "timezone": "GP"
+  },
+  {
+    "id": 538,
+    "country_code": "BS",
+    "country_slug": "bahamas",
+    "name_en": "Bahamas",
+    "name_ar": "جزر البهاما",
+    "timezone": "America/Nassau"
+  },
+  {
+    "id": 747,
+    "country_code": "VI",
+    "country_slug": "u.s.-virgin-islands",
+    "name_en": "U.S. Virgin Islands",
+    "name_ar": "جزر العذراء الأمريكية",
+    "timezone": "America/St_Thomas"
+  },
+  {
+    "id": 625,
+    "country_code": "KM",
+    "country_slug": "comoros",
+    "name_en": "Comoros",
+    "name_ar": "جزر القمر",
+    "timezone": "Indian/Comoro"
+  },
+  {
+    "id": 739,
+    "country_code": "UM",
+    "country_slug": "united-states-minor-outlying-islands",
+    "name_en": "United States Minor Outlying Islands",
+    "name_ar": "جزر الولايات المتحدة الصغيرة النائية",
+    "timezone": "UTC"
+  },
+  {
+    "id": 688,
+    "country_code": "PN",
+    "country_slug": "pitcairn",
+    "name_en": "Pitcairn",
+    "name_ar": "جزر بيتكيرن",
+    "timezone": "Pacific/Pitcairn"
+  },
+  {
+    "id": 721,
+    "country_code": "TC",
+    "country_slug": "turks-and-caicos-islands",
+    "name_en": "Turks and Caicos Islands",
+    "name_ar": "جزر توركس وكيكوس",
+    "timezone": "America/Grand_Turk"
+  },
+  {
+    "id": 701,
+    "country_code": "SB",
+    "country_slug": "solomon-islands",
+    "name_en": "Solomon Islands",
+    "name_ar": "جزر سليمان",
+    "timezone": "Pacific/Guadalcanal"
+  },
+  {
+    "id": 746,
+    "country_code": "VG",
+    "country_slug": "british-virgin-islands",
+    "name_en": "British Virgin Islands",
+    "name_ar": "جزر عذراء بريطانية",
+    "timezone": "America/Tortola"
+  },
+  {
+    "id": 580,
+    "country_code": "FO",
+    "country_slug": "faroe-islands",
+    "name_en": "Faroe Islands",
+    "name_ar": "جزر فارو",
+    "timezone": "Atlantic/Faroe"
+  },
+  {
+    "id": 578,
+    "country_code": "FK",
+    "country_slug": "falkland-islands",
+    "name_en": "Falkland Islands",
+    "name_ar": "جزر فوكلاند",
+    "timezone": "Atlantic/Stanley"
+  },
+  {
+    "id": 631,
+    "country_code": "KY",
+    "country_slug": "cayman-islands",
+    "name_en": "Cayman Islands",
+    "name_ar": "جزر كايمان",
+    "timezone": "America/Cayman"
+  },
+  {
+    "id": 551,
+    "country_code": "CK",
+    "country_slug": "cook-islands",
+    "name_en": "Cook Islands",
+    "name_ar": "جزر كوك",
+    "timezone": "Pacific/Rarotonga"
+  },
+  {
+    "id": 545,
+    "country_code": "CC",
+    "country_slug": "cocos-islands",
+    "name_en": "Cocos Islands",
+    "name_ar": "جزر كوكوس",
+    "timezone": "Indian/Cocos"
+  },
+  {
+    "id": 650,
+    "country_code": "MH",
+    "country_slug": "marshall-islands",
+    "name_en": "Marshall Islands",
+    "name_ar": "جزر مارشال",
+    "timezone": "Pacific/Majuro"
+  },
+  {
+    "id": 656,
+    "country_code": "MP",
+    "country_slug": "northern-mariana-islands",
+    "name_en": "Northern Mariana Islands",
+    "name_ar": "جزر ماريانا الشمالية",
+    "timezone": "Pacific/Saipan"
+  },
+  {
+    "id": 540,
+    "country_code": "BV",
+    "country_slug": "bouvet-island",
+    "name_en": "Bouvet Island",
+    "name_ar": "جزيرة بوفيه",
+    "timezone": "UTC"
+  },
+  {
+    "id": 560,
+    "country_code": "CX",
+    "country_slug": "christmas-island",
+    "name_en": "Christmas Island",
+    "name_ar": "جزيرة عيد الميلاد",
+    "timezone": "Indian/Christmas"
+  },
+  {
+    "id": 610,
+    "country_code": "IM",
+    "country_slug": "isle-of-man",
+    "name_en": "Isle of Man",
+    "name_ar": "جزيرة مان",
+    "timezone": "Europe/Isle_of_Man"
+  },
+  {
+    "id": 670,
+    "country_code": "NF",
+    "country_slug": "norfolk-island",
+    "name_en": "Norfolk Island",
+    "name_ar": "جزيرة نورفولك",
+    "timezone": "Pacific/Norfolk"
+  },
+  {
+    "id": 602,
+    "country_code": "HM",
+    "country_slug": "heard-island-and-mcdonald-islands",
+    "name_en": "Heard Island and McDonald Islands",
+    "name_ar": "جزيرة هيرد وجزر ماكدونالد",
+    "timezone": "UTC"
+  },
+  {
+    "id": 608,
+    "country_code": "IE",
+    "country_slug": "ireland",
+    "name_en": "Ireland",
+    "name_ar": "جمهورية أيرلندا",
+    "timezone": "GB"
+  },
+  {
+    "id": 547,
+    "country_code": "CF",
+    "country_slug": "central-african-republic",
+    "name_en": "Central African Republic",
+    "name_ar": "جمهورية إفريقيا الوسطى",
+    "timezone": "Africa/Bangui"
+  },
+  {
+    "id": 562,
+    "country_code": "CZ",
+    "country_slug": "czechia",
+    "name_en": "Czechia",
+    "name_ar": "جمهورية التشيك",
+    "timezone": "Europe/Prague"
+  },
+  {
+    "id": 567,
+    "country_code": "DO",
+    "country_slug": "dominican-republic",
+    "name_en": "Dominican Republic",
+    "name_ar": "جمهورية الدومينيكان",
+    "timezone": "HT"
+  },
+  {
+    "id": 548,
+    "country_code": "CG",
+    "country_slug": "republic-of-the-congo",
+    "name_en": "Republic of the Congo",
+    "name_ar": "جمهورية الكونغو",
+    "timezone": "Africa/Brazzaville"
+  },
+  {
+    "id": 546,
+    "country_code": "CD",
+    "country_slug": "democratic-republic-of-the-congo",
+    "name_en": "Democratic Republic of the Congo",
+    "name_ar": "جمهورية الكونغو الديمقراطية",
+    "timezone": "Africa/Kinshasa"
+  },
+  {
+    "id": 754,
+    "country_code": "ZA",
+    "country_slug": "south-africa",
+    "name_en": "South Africa",
+    "name_ar": "جنوب إفريقيا",
+    "timezone": "Africa/Johannesburg"
+  },
+  {
+    "id": 704,
+    "country_code": "SS",
+    "country_slug": "south-sudan",
+    "name_en": "South Sudan",
+    "name_ar": "جنوب السودان",
+    "timezone": "Africa/Juba"
+  },
+  {
+    "id": 585,
+    "country_code": "GE",
+    "country_slug": "georgia",
+    "name_en": "Georgia",
+    "name_ar": "جورجيا",
+    "timezone": "Asia/Tbilisi"
+  },
+  {
+    "id": 596,
+    "country_code": "GS",
+    "country_slug": "south-georgia-and-the-south-sandwich-islands",
+    "name_en": "South Georgia and the South Sandwich Islands",
+    "name_ar": "جورجيا الجنوبية وجزر ساندويتش الجنوبية",
+    "timezone": "Atlantic/South_Georgia"
+  },
+  {
+    "id": 564,
+    "country_code": "DJ",
+    "country_slug": "djibouti",
+    "name_en": "Djibouti",
+    "name_ar": "جيبوتي",
+    "timezone": "Africa/Djibouti"
+  },
+  {
+    "id": 617,
+    "country_code": "JE",
+    "country_slug": "jersey",
+    "name_en": "Jersey",
+    "name_ar": "جيرزي",
+    "timezone": "Europe/Jersey"
+  },
+  {
+    "id": 690,
+    "country_code": "PS",
+    "country_slug": "palestinian-territory",
+    "name_en": "Palestinian Territory",
+    "name_ar": "دولة فلسطين",
+    "timezone": "Asia/Hebron"
+  },
+  {
+    "id": 566,
+    "country_code": "DM",
+    "country_slug": "dominica",
+    "name_en": "Dominica",
+    "name_ar": "دومينيكا",
+    "timezone": "America/Dominica"
+  },
+  {
+    "id": 699,
+    "country_code": "RW",
+    "country_slug": "rwanda",
+    "name_en": "Rwanda",
+    "name_ar": "رواندا",
+    "timezone": "Africa/Kigali"
+  },
+  {
+    "id": 698,
+    "country_code": "RU",
+    "country_slug": "russia",
+    "name_en": "Russia",
+    "name_ar": "روسيا",
+    "timezone": "Europe/Moscow"
+  },
+  {
+    "id": 696,
+    "country_code": "RO",
+    "country_slug": "romania",
+    "name_en": "Romania",
+    "name_ar": "رومانيا",
+    "timezone": "Europe/Bucharest"
+  },
+  {
+    "id": 695,
+    "country_code": "RE",
+    "country_slug": "reunion",
+    "name_en": "Reunion",
+    "name_ar": "ريونيون",
+    "timezone": "Indian/Reunion"
+  },
+  {
+    "id": 755,
+    "country_code": "ZM",
+    "country_slug": "zambia",
+    "name_en": "Zambia",
+    "name_ar": "زامبيا",
+    "timezone": "Africa/Lusaka"
+  },
+  {
+    "id": 756,
+    "country_code": "ZW",
+    "country_slug": "zimbabwe",
+    "name_en": "Zimbabwe",
+    "name_ar": "زيمبابوي",
+    "timezone": "Africa/Harare"
+  },
+  {
+    "id": 550,
+    "country_code": "CI",
+    "country_slug": "ivory-coast",
+    "name_en": "Ivory Coast",
+    "name_ar": "ساحل العاج",
+    "timezone": "Africa/Abidjan"
+  },
+  {
+    "id": 751,
+    "country_code": "WS",
+    "country_slug": "samoa",
+    "name_en": "Samoa",
+    "name_ar": "ساموا",
+    "timezone": "Pacific/Apia"
+  },
+  {
+    "id": 517,
+    "country_code": "AS",
+    "country_slug": "american-samoa",
+    "name_en": "American Samoa",
+    "name_ar": "ساموا الأمريكية",
+    "timezone": "Pacific/Pago_Pago"
+  },
+  {
+    "id": 532,
+    "country_code": "BL",
+    "country_slug": "saint-barthelemy",
+    "name_en": "Saint Barthelemy",
+    "name_ar": "سان بارتيلمي",
+    "timezone": "America/St_Barthelemy"
+  },
+  {
+    "id": 687,
+    "country_code": "PM",
+    "country_slug": "saint-pierre-and-miquelon",
+    "name_en": "Saint Pierre and Miquelon",
+    "name_ar": "سان بيير وميكلون",
+    "timezone": "America/Miquelon"
+  },
+  {
+    "id": 712,
+    "country_code": "SM",
+    "country_slug": "san-marino",
+    "name_en": "San Marino",
+    "name_ar": "سان مارينو",
+    "timezone": "IT"
+  },
+  {
+    "id": 744,
+    "country_code": "VC",
+    "country_slug": "saint-vincent-and-the-grenadines",
+    "name_en": "Saint Vincent and the Grenadines",
+    "name_ar": "سانت فينسنت والغرينادين",
+    "timezone": "America/St_Vincent"
+  },
+  {
+    "id": 626,
+    "country_code": "KN",
+    "country_slug": "saint-kitts-and-nevis",
+    "name_en": "Saint Kitts and Nevis",
+    "name_ar": "سانت كيتس ونيفيس",
+    "timezone": "America/St_Kitts"
+  },
+  {
+    "id": 635,
+    "country_code": "LC",
+    "country_slug": "saint-lucia",
+    "name_en": "Saint Lucia",
+    "name_ar": "سانت لوسيا",
+    "timezone": "America/St_Lucia"
+  },
+  {
+    "id": 707,
+    "country_code": "SH",
+    "country_slug": "saint-helena",
+    "name_en": "Saint Helena",
+    "name_ar": "سانت هيلانة وأسينشين وتريستان دا كونا",
+    "timezone": "Atlantic/St_Helena"
+  },
+  {
+    "id": 716,
+    "country_code": "ST",
+    "country_slug": "sao-tome-and-principe",
+    "name_en": "Sao Tome and Principe",
+    "name_ar": "ساو تومي وبرينسيب",
+    "timezone": "Africa/Sao_Tome"
+  },
+  {
+    "id": 637,
+    "country_code": "LK",
+    "country_slug": "sri-lanka",
+    "name_en": "Sri Lanka",
+    "name_ar": "سريلانكا",
+    "timezone": "Asia/Colombo"
+  },
+  {
+    "id": 709,
+    "country_code": "SJ",
+    "country_slug": "svalbard-and-jan-mayen",
+    "name_en": "Svalbard and Jan Mayen",
+    "name_ar": "سفالبارد ويان ماين",
+    "timezone": "Arctic/Longyearbyen"
+  },
+  {
+    "id": 679,
+    "country_code": "OM",
+    "country_slug": "oman",
+    "name_en": "Oman",
+    "name_ar": "سلطنة عمان",
+    "timezone": "Asia/Muscat"
+  },
+  {
+    "id": 710,
+    "country_code": "SK",
+    "country_slug": "slovakia",
+    "name_en": "Slovakia",
+    "name_ar": "سلوفاكيا",
+    "timezone": "Europe/Bratislava"
+  },
+  {
+    "id": 708,
+    "country_code": "SI",
+    "country_slug": "slovenia",
+    "name_en": "Slovenia",
+    "name_ar": "سلوفينيا",
+    "timezone": "Europe/Ljubljana"
+  },
+  {
+    "id": 706,
+    "country_code": "SG",
+    "country_slug": "singapore",
+    "name_en": "Singapore",
+    "name_ar": "سنغافورة",
+    "timezone": "Asia/Singapore"
+  },
+  {
+    "id": 719,
+    "country_code": "SY",
+    "country_slug": "syria",
+    "name_en": "Syria",
+    "name_ar": "سوريا",
+    "timezone": "Asia/Damascus"
+  },
+  {
+    "id": 715,
+    "country_code": "SR",
+    "country_slug": "suriname",
+    "name_en": "Suriname",
+    "name_ar": "سورينام",
+    "timezone": "America/Paramaribo"
+  },
+  {
+    "id": 549,
+    "country_code": "CH",
+    "country_slug": "switzerland",
+    "name_en": "Switzerland",
+    "name_ar": "سويسرا",
+    "timezone": "Europe/Zurich"
+  },
+  {
+    "id": 711,
+    "country_code": "SL",
+    "country_slug": "sierra-leone",
+    "name_en": "Sierra Leone",
+    "name_ar": "سيراليون",
+    "timezone": "Africa/Freetown"
+  },
+  {
+    "id": 702,
+    "country_code": "SC",
+    "country_slug": "seychelles",
+    "name_en": "Seychelles",
+    "name_ar": "سيشل",
+    "timezone": "Indian/Mahe"
+  },
+  {
+    "id": 718,
+    "country_code": "SX",
+    "country_slug": "sint-maarten",
+    "name_en": "Sint Maarten",
+    "name_ar": "سينت مارتن",
+    "timezone": "MF"
+  },
+  {
+    "id": 697,
+    "country_code": "RS",
+    "country_slug": "serbia",
+    "name_en": "Serbia",
+    "name_ar": "صربيا",
+    "timezone": "Europe/Belgrade"
+  },
+  {
+    "id": 726,
+    "country_code": "TJ",
+    "country_slug": "tajikistan",
+    "name_en": "Tajikistan",
+    "name_ar": "طاجيكستان",
+    "timezone": "Asia/Dushanbe"
+  },
+  {
+    "id": 591,
+    "country_code": "GM",
+    "country_slug": "gambia",
+    "name_en": "Gambia",
+    "name_ar": "غامبيا",
+    "timezone": "SN"
+  },
+  {
+    "id": 588,
+    "country_code": "GH",
+    "country_slug": "ghana",
+    "name_en": "Ghana",
+    "name_ar": "غانا",
+    "timezone": "Africa/Accra"
+  },
+  {
+    "id": 584,
+    "country_code": "GD",
+    "country_slug": "grenada",
+    "name_en": "Grenada",
+    "name_ar": "غرنادة",
+    "timezone": "America/Grenada"
+  },
+  {
+    "id": 590,
+    "country_code": "GL",
+    "country_slug": "greenland",
+    "name_en": "Greenland",
+    "name_ar": "غرينلاند",
+    "timezone": "America/Nuuk"
+  },
+  {
+    "id": 597,
+    "country_code": "GT",
+    "country_slug": "guatemala",
+    "name_en": "Guatemala",
+    "name_ar": "غواتيمالا",
+    "timezone": "America/Guatemala"
+  },
+  {
+    "id": 593,
+    "country_code": "GP",
+    "country_slug": "guadeloupe",
+    "name_en": "Guadeloupe",
+    "name_ar": "غوادلوب",
+    "timezone": "America/Guadeloupe"
+  },
+  {
+    "id": 598,
+    "country_code": "GU",
+    "country_slug": "guam",
+    "name_en": "Guam",
+    "name_ar": "غوام",
+    "timezone": "Pacific/Guam"
+  },
+  {
+    "id": 586,
+    "country_code": "GF",
+    "country_slug": "french-guiana",
+    "name_en": "French Guiana",
+    "name_ar": "غويانا الفرنسية",
+    "timezone": "America/Cayenne"
+  },
+  {
+    "id": 600,
+    "country_code": "GY",
+    "country_slug": "guyana",
+    "name_en": "Guyana",
+    "name_ar": "غيانا",
+    "timezone": "America/Guyana"
+  },
+  {
+    "id": 587,
+    "country_code": "GG",
+    "country_slug": "guernsey",
+    "name_en": "Guernsey",
+    "name_ar": "غيرنزي",
+    "timezone": "Europe/Guernsey"
+  },
+  {
+    "id": 592,
+    "country_code": "GN",
+    "country_slug": "guinea",
+    "name_en": "Guinea",
+    "name_ar": "غينيا",
+    "timezone": "Africa/Conakry"
+  },
+  {
+    "id": 594,
+    "country_code": "GQ",
+    "country_slug": "equatorial-guinea",
+    "name_en": "Equatorial Guinea",
+    "name_ar": "غينيا الاستوائية",
+    "timezone": "Africa/Malabo"
+  },
+  {
+    "id": 599,
+    "country_code": "GW",
+    "country_slug": "guinea-bissau",
+    "name_en": "Guinea-Bissau",
+    "name_ar": "غينيا بيساو",
+    "timezone": "Africa/Bissau"
+  },
+  {
+    "id": 749,
+    "country_code": "VU",
+    "country_slug": "vanuatu",
+    "name_en": "Vanuatu",
+    "name_ar": "فانواتو",
+    "timezone": "Pacific/Efate"
+  },
+  {
+    "id": 581,
+    "country_code": "FR",
+    "country_slug": "france",
+    "name_en": "France",
+    "name_ar": "فرنسا",
+    "timezone": "Europe/Paris"
+  },
+  {
+    "id": 745,
+    "country_code": "VE",
+    "country_slug": "venezuela",
+    "name_en": "Venezuela",
+    "name_ar": "فنزويلا",
+    "timezone": "America/Caracas"
+  },
+  {
+    "id": 576,
+    "country_code": "FI",
+    "country_slug": "finland",
+    "name_en": "Finland",
+    "name_ar": "فنلندا",
+    "timezone": "Europe/Helsinki"
+  },
+  {
+    "id": 748,
+    "country_code": "VN",
+    "country_slug": "vietnam",
+    "name_en": "Vietnam",
+    "name_ar": "فيتنام",
+    "timezone": "Asia/Ho_Chi_Minh"
+  },
+  {
+    "id": 577,
+    "country_code": "FJ",
+    "country_slug": "fiji",
+    "name_en": "Fiji",
+    "name_ar": "فيجي",
+    "timezone": "Pacific/Fiji"
+  },
+  {
+    "id": 561,
+    "country_code": "CY",
+    "country_slug": "cyprus",
+    "name_en": "Cyprus",
+    "name_ar": "قبرص",
+    "timezone": "Asia/Nicosia"
+  },
+  {
+    "id": 622,
+    "country_code": "KG",
+    "country_slug": "kyrgyzstan",
+    "name_en": "Kyrgyzstan",
+    "name_ar": "قرغيزستان",
+    "timezone": "Asia/Bishkek"
+  },
+  {
+    "id": 694,
+    "country_code": "QA",
+    "country_slug": "qatar",
+    "name_en": "Qatar",
+    "name_ar": "قطر",
+    "timezone": "SA"
+  },
+  {
+    "id": 632,
+    "country_code": "KZ",
+    "country_slug": "kazakhstan",
+    "name_en": "Kazakhstan",
+    "name_ar": "كازاخستان",
+    "timezone": "Asia/Almaty"
+  },
+  {
+    "id": 668,
+    "country_code": "NC",
+    "country_slug": "new-caledonia",
+    "name_en": "New Caledonia",
+    "name_ar": "كاليدونيا الجديدة",
+    "timezone": "Pacific/Noumea"
+  },
+  {
+    "id": 604,
+    "country_code": "HR",
+    "country_slug": "croatia",
+    "name_en": "Croatia",
+    "name_ar": "كرواتيا",
+    "timezone": "Europe/Zagreb"
+  },
+  {
+    "id": 623,
+    "country_code": "KH",
+    "country_slug": "cambodia",
+    "name_en": "Cambodia",
+    "name_ar": "كمبوديا",
+    "timezone": "Asia/Phnom_Penh"
+  },
+  {
+    "id": 544,
+    "country_code": "CA",
+    "country_slug": "canada",
+    "name_en": "Canada",
+    "name_ar": "كندا",
+    "timezone": "US"
+  },
+  {
+    "id": 557,
+    "country_code": "CU",
+    "country_slug": "cuba",
+    "name_en": "Cuba",
+    "name_ar": "كوبا",
+    "timezone": "US"
+  },
+  {
+    "id": 559,
+    "country_code": "CW",
+    "country_slug": "curacao",
+    "name_en": "Curacao",
+    "name_ar": "كوراساو",
+    "timezone": "America/Curacao"
+  },
+  {
+    "id": 628,
+    "country_code": "KR",
+    "country_slug": "south-korea",
+    "name_en": "South Korea",
+    "name_ar": "كوريا الجنوبية",
+    "timezone": "KP"
+  },
+  {
+    "id": 627,
+    "country_code": "KP",
+    "country_slug": "north-korea",
+    "name_en": "North Korea",
+    "name_ar": "كوريا الشمالية",
+    "timezone": "Asia/Pyongyang"
+  },
+  {
+    "id": 556,
+    "country_code": "CR",
+    "country_slug": "costa-rica",
+    "name_en": "Costa Rica",
+    "name_ar": "كوستاريكا",
+    "timezone": "America/Costa_Rica"
+  },
+  {
+    "id": 629,
+    "country_code": "XK",
+    "country_slug": "kosovo",
+    "name_en": "Kosovo",
+    "name_ar": "كوسوفو",
+    "timezone": "Europe/Belgrade"
+  },
+  {
+    "id": 555,
+    "country_code": "CO",
+    "country_slug": "colombia",
+    "name_en": "Colombia",
+    "name_ar": "كولومبيا",
+    "timezone": "America/Bogota"
+  },
+  {
+    "id": 624,
+    "country_code": "KI",
+    "country_slug": "kiribati",
+    "name_en": "Kiribati",
+    "name_ar": "كيريباتي",
+    "timezone": "Pacific/Tarawa"
+  },
+  {
+    "id": 621,
+    "country_code": "KE",
+    "country_slug": "kenya",
+    "name_en": "Kenya",
+    "name_ar": "كينيا",
+    "timezone": "Africa/Nairobi"
+  },
+  {
+    "id": 642,
+    "country_code": "LV",
+    "country_slug": "latvia",
+    "name_en": "Latvia",
+    "name_ar": "لاتفيا",
+    "timezone": "Europe/Riga"
+  },
+  {
+    "id": 633,
+    "country_code": "LA",
+    "country_slug": "laos",
+    "name_en": "Laos",
+    "name_ar": "لاوس",
+    "timezone": "Asia/Vientiane"
+  },
+  {
+    "id": 634,
+    "country_code": "LB",
+    "country_slug": "lebanon",
+    "name_en": "Lebanon",
+    "name_ar": "لبنان",
+    "timezone": "Asia/Beirut"
+  },
+  {
+    "id": 640,
+    "country_code": "LT",
+    "country_slug": "lithuania",
+    "name_en": "Lithuania",
+    "name_ar": "لتوانيا",
+    "timezone": "Europe/Vilnius"
+  },
+  {
+    "id": 641,
+    "country_code": "LU",
+    "country_slug": "luxembourg",
+    "name_en": "Luxembourg",
+    "name_ar": "لوكسمبورغ",
+    "timezone": "Europe/Luxembourg"
+  },
+  {
+    "id": 643,
+    "country_code": "LY",
+    "country_slug": "libya",
+    "name_en": "Libya",
+    "name_ar": "ليبيا",
+    "timezone": "Africa/Tripoli"
+  },
+  {
+    "id": 638,
+    "country_code": "LR",
+    "country_slug": "liberia",
+    "name_en": "Liberia",
+    "name_ar": "ليبيريا",
+    "timezone": "Africa/Monrovia"
+  },
+  {
+    "id": 636,
+    "country_code": "LI",
+    "country_slug": "liechtenstein",
+    "name_en": "Liechtenstein",
+    "name_ar": "ليختنشتاين",
+    "timezone": "Europe/Vaduz"
+  },
+  {
+    "id": 639,
+    "country_code": "LS",
+    "country_slug": "lesotho",
+    "name_en": "Lesotho",
+    "name_ar": "ليسوتو",
+    "timezone": "ZA"
+  },
+  {
+    "id": 657,
+    "country_code": "MQ",
+    "country_slug": "martinique",
+    "name_en": "Martinique",
+    "name_ar": "مارتينيك",
+    "timezone": "America/Martinique"
+  },
+  {
+    "id": 655,
+    "country_code": "MO",
+    "country_slug": "macao",
+    "name_en": "Macao",
+    "name_ar": "ماكاو",
+    "timezone": "Asia/Macau"
+  },
+  {
+    "id": 660,
+    "country_code": "MT",
+    "country_slug": "malta",
+    "name_en": "Malta",
+    "name_ar": "مالطا",
+    "timezone": "Europe/Malta"
+  },
+  {
+    "id": 652,
+    "country_code": "ML",
+    "country_slug": "mali",
+    "name_en": "Mali",
+    "name_ar": "مالي",
+    "timezone": "Africa/Bamako"
+  },
+  {
+    "id": 665,
+    "country_code": "MY",
+    "country_slug": "malaysia",
+    "name_en": "Malaysia",
+    "name_ar": "ماليزيا",
+    "timezone": "Asia/Kuala_Lumpur"
+  },
+  {
+    "id": 753,
+    "country_code": "YT",
+    "country_slug": "mayotte",
+    "name_en": "Mayotte",
+    "name_ar": "مايوت",
+    "timezone": "Indian/Mayotte"
+  },
+  {
+    "id": 649,
+    "country_code": "MG",
+    "country_slug": "madagascar",
+    "name_en": "Madagascar",
+    "name_ar": "مدغشقر",
+    "timezone": "Indian/Antananarivo"
+  },
+  {
+    "id": 571,
+    "country_code": "EG",
+    "country_slug": "egypt",
+    "name_en": "Egypt",
+    "name_ar": "مصر",
+    "timezone": "Africa/Cairo"
+  },
+  {
+    "id": 651,
+    "country_code": "MK",
+    "country_slug": "north-macedonia",
+    "name_en": "North Macedonia",
+    "name_ar": "مقدونيا الشمالية",
+    "timezone": "Europe/Skopje"
+  },
+  {
+    "id": 663,
+    "country_code": "MW",
+    "country_slug": "malawi",
+    "name_en": "Malawi",
+    "name_ar": "ملاوي",
+    "timezone": "Africa/Blantyre"
+  },
+  {
+    "id": 673,
+    "country_code": "NL",
+    "country_slug": "the-netherlands",
+    "name_en": "The Netherlands",
+    "name_ar": "مملكة هولندا",
+    "timezone": "Europe/Amsterdam"
+  },
+  {
+    "id": 515,
+    "country_code": "AQ",
+    "country_slug": "antarctica",
+    "name_en": "Antarctica",
+    "name_ar": "منطقة معاهدة القطب الجنوبي",
+    "timezone": "UTC"
+  },
+  {
+    "id": 654,
+    "country_code": "MN",
+    "country_slug": "mongolia",
+    "name_en": "Mongolia",
+    "name_ar": "منغوليا",
+    "timezone": "Asia/Ulaanbaatar"
+  },
+  {
+    "id": 658,
+    "country_code": "MR",
+    "country_slug": "mauritania",
+    "name_en": "Mauritania",
+    "name_ar": "موريتانيا",
+    "timezone": "Africa/Nouakchott"
+  },
+  {
+    "id": 661,
+    "country_code": "MU",
+    "country_slug": "mauritius",
+    "name_en": "Mauritius",
+    "name_ar": "موريشيوس",
+    "timezone": "Indian/Mauritius"
+  },
+  {
+    "id": 666,
+    "country_code": "MZ",
+    "country_slug": "mozambique",
+    "name_en": "Mozambique",
+    "name_ar": "موزمبيق",
+    "timezone": "Africa/Maputo"
+  },
+  {
+    "id": 646,
+    "country_code": "MD",
+    "country_slug": "moldova",
+    "name_en": "Moldova",
+    "name_ar": "مولدوفا",
+    "timezone": "Europe/Chisinau"
+  },
+  {
+    "id": 645,
+    "country_code": "MC",
+    "country_slug": "monaco",
+    "name_en": "Monaco",
+    "name_ar": "موناكو",
+    "timezone": "FR"
+  },
+  {
+    "id": 659,
+    "country_code": "MS",
+    "country_slug": "montserrat",
+    "name_en": "Montserrat",
+    "name_ar": "مونتسيرات",
+    "timezone": "America/Montserrat"
+  },
+  {
+    "id": 653,
+    "country_code": "MM",
+    "country_slug": "myanmar",
+    "name_en": "Myanmar",
+    "name_ar": "ميانمار",
+    "timezone": "Asia/Yangon"
+  },
+  {
+    "id": 667,
+    "country_code": "NA",
+    "country_slug": "namibia",
+    "name_en": "Namibia",
+    "name_ar": "ناميبيا",
+    "timezone": "Africa/Windhoek"
+  },
+  {
+    "id": 676,
+    "country_code": "NR",
+    "country_slug": "nauru",
+    "name_en": "Nauru",
+    "name_ar": "ناورو",
+    "timezone": "Pacific/Nauru"
+  },
+  {
+    "id": 675,
+    "country_code": "NP",
+    "country_slug": "nepal",
+    "name_en": "Nepal",
+    "name_ar": "نيبال",
+    "timezone": "Asia/Kathmandu"
+  },
+  {
+    "id": 671,
+    "country_code": "NG",
+    "country_slug": "nigeria",
+    "name_en": "Nigeria",
+    "name_ar": "نيجيريا",
+    "timezone": "Africa/Lagos"
+  },
+  {
+    "id": 672,
+    "country_code": "NI",
+    "country_slug": "nicaragua",
+    "name_en": "Nicaragua",
+    "name_ar": "نيكاراغوا",
+    "timezone": "America/Managua"
+  },
+  {
+    "id": 678,
+    "country_code": "NZ",
+    "country_slug": "new-zealand",
+    "name_en": "New Zealand",
+    "name_ar": "نيوزيلندا",
+    "timezone": "Pacific/Auckland"
+  },
+  {
+    "id": 677,
+    "country_code": "NU",
+    "country_slug": "niue",
+    "name_en": "Niue",
+    "name_ar": "نييوي",
+    "timezone": "Pacific/Niue"
+  },
+  {
+    "id": 605,
+    "country_code": "HT",
+    "country_slug": "haiti",
+    "name_en": "Haiti",
+    "name_ar": "هايتي",
+    "timezone": "DO"
+  },
+  {
+    "id": 603,
+    "country_code": "HN",
+    "country_slug": "honduras",
+    "name_en": "Honduras",
+    "name_ar": "هندوراس",
+    "timezone": "America/Tegucigalpa"
+  },
+  {
+    "id": 601,
+    "country_code": "HK",
+    "country_slug": "hong-kong",
+    "name_en": "Hong Kong",
+    "name_ar": "هونغ كونغ",
+    "timezone": "Asia/Hong_Kong"
+  },
+  {
+    "id": 750,
+    "country_code": "WF",
+    "country_slug": "wallis-and-futuna",
+    "name_en": "Wallis and Futuna",
+    "name_ar": "واليس وفوتونا",
+    "timezone": "Pacific/Wallis"
+  },
+  {
+    "id": 579,
+    "country_code": "FM",
+    "country_slug": "micronesia",
+    "name_en": "Micronesia",
+    "name_ar": "ولايات ميكرونيسيا المتحدة",
+    "timezone": "Pacific/Chuuk"
+  }
+]

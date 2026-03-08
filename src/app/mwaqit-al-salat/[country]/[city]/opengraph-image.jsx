@@ -12,7 +12,8 @@
  */
 
 import { ImageResponse } from 'next/og';
-import { findCityBySlug } from '@/lib/cityService';
+import { getCityBySlug } from '@/lib/db/queries/cities';
+import { getCountryBySlug } from '@/lib/db/queries/countries';
 import { calculatePrayerTimes, formatTime } from '@/lib/prayerEngine';
 
 export const runtime = 'edge'; // fastest response possible
@@ -22,11 +23,12 @@ export const alt = 'مواقيت الصلاة';
 const PRAYER_AR = { fajr: 'الفجر', sunrise: 'الشروق', dhuhr: 'الظهر', asr: 'العصر', maghrib: 'المغرب', isha: 'العشاء' };
 
 export default async function OgImage({ params }) {
-  const { country, city } = await params;
-  const cityData = await findCityBySlug(country, city);
+  const { country: countrySlug, city: citySlug } = await params;
+  const country = await getCountryBySlug(countrySlug);
+  const cityData = country ? await getCityBySlug(country.country_code, citySlug) : null;
 
   // Fallback OG if city not found
-  if (!cityData) {
+  if (!cityData || !country) {
     return new ImageResponse(
       <div style={{ width: '100%', height: '100%', background: '#181C2A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <span style={{ color: '#4ECDC4', fontSize: 48, fontWeight: 900 }}>مواقيت الصلاة</span>
@@ -38,7 +40,7 @@ export default async function OgImage({ params }) {
   const times = calculatePrayerTimes({
     lat: cityData.lat, lon: cityData.lon,
     timezone: cityData.timezone, date: new Date(),
-    cacheKey: `${country}::${city}`
+    cacheKey: `${countrySlug}::${citySlug}`
   });
 
   const prayerRows = times
@@ -47,6 +49,9 @@ export default async function OgImage({ params }) {
       time: formatTime(iso, cityData.timezone, false),
     }))
     : [];
+
+  const cityNameAr = cityData.name_ar || cityData.name_en;
+  const countryNameAr = country.name_ar || country.name_en;
 
   return new ImageResponse(
     <div
@@ -62,10 +67,10 @@ export default async function OgImage({ params }) {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 40 }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <span style={{ color: '#4ECDC4', fontSize: 52, fontWeight: 900, lineHeight: 1.1 }}>
-            {cityData.city_name_ar}
+            {cityNameAr}
           </span>
           <span style={{ color: '#7880AA', fontSize: 28, marginTop: 8 }}>
-            {cityData.country_name_ar}
+            {countryNameAr}
           </span>
         </div>
         <div style={{

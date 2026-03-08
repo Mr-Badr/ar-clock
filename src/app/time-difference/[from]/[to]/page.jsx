@@ -1,6 +1,7 @@
 import React from 'react';
 import TimeDiffCalculator from '@/components/TimeDifference/TimeDiffCalculatorV2.client';
-import { findCityBySlug } from '@/lib/cityService';
+import { getCityBySlug } from '@/lib/db/queries/cities';
+import { getCountryBySlug } from '@/lib/db/queries/countries';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 
@@ -12,25 +13,31 @@ async function resolveCityFromSegment(segment) {
     const countrySlug = parts.slice(0, i + 1).join('-');
     const citySlug = parts.slice(i + 1).join('-');
     if (!countrySlug || !citySlug) continue;
-    const city = await findCityBySlug(countrySlug, citySlug);
+    
+    const country = await getCountryBySlug(countrySlug);
+    if (!country) continue;
+    
+    const city = await getCityBySlug(country.country_code, citySlug);
     if (city && city.timezone && city.timezone !== 'UTC') {
       return {
-        country_slug: city.country_slug,
-        country_name_ar: city.country_name_ar,
+        country_slug: country.country_slug,
+        country_name_ar: country.name_ar,
         city_slug: city.city_slug,
-        city_name_ar: city.city_name_ar,
+        city_name_ar: city.name_ar || city.name_en,
         timezone: city.timezone,
       };
     }
   }
   // Final fallback: simple first-dash split
-  const city = await findCityBySlug(parts[0], parts.slice(1).join('-'));
-  if (city) return {
-    country_slug: city.country_slug,
-    country_name_ar: city.country_name_ar,
-    city_slug: city.city_slug,
-    city_name_ar: city.city_name_ar,
-    timezone: city.timezone || 'UTC',
+  const countryFallback = await getCountryBySlug(parts[0]);
+  if (!countryFallback) return null;
+  const cityFallback = await getCityBySlug(countryFallback.country_code, parts.slice(1).join('-'));
+  if (cityFallback) return {
+    country_slug: countryFallback.country_slug,
+    country_name_ar: countryFallback.name_ar,
+    city_slug: cityFallback.city_slug,
+    city_name_ar: cityFallback.name_ar || cityFallback.name_en,
+    timezone: cityFallback.timezone || 'UTC',
   };
   return null;
 }

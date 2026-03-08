@@ -18,13 +18,13 @@ import { getInitialEvents } from './actions';
 import { PAGE_SIZE } from './constants';
 import HolidaysClient from './HolidaysClient';
 import { EventGridSkeleton } from '@/components/events/EventCard';
+import { getCachedNowIso } from '@/lib/date-utils';
 
-export const revalidate = 86_400;
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
 
 /* ── Dynamic metadata — year is always the current upcoming year ─────────── */
 export async function generateMetadata() {
-  const now  = new Date();
+  const now  = new Date(await getCachedNowIso());
   const gr   = now.getFullYear();
   const hi   = approxHijriYear(gr);
   return {
@@ -41,12 +41,13 @@ export async function generateMetadata() {
 async function UpcomingHero() {
   const sample   = ALL_EVENTS.slice(0, 20).map(enrichEvent);
   const resolved = await resolveAllHijriEvents(sample);
-  const now      = new Date(); now.setHours(0,0,0,0);
+  const now      = new Date(await getCachedNowIso()); now.setHours(0,0,0,0);
+  const nowMs    = now.getTime();
 
   const top3 = sample
     .map(ev => {
       const d = getNextEventDate(ev, resolved);
-      return { ...ev, _daysLeft: getTimeRemaining(d).days, _formatted: formatGregorianAr(d) };
+      return { ...ev, _daysLeft: getTimeRemaining(d, nowMs).days, _formatted: formatGregorianAr(d) };
     })
     .filter(ev => ev._daysLeft > 0)
     .sort((a, b) => a._daysLeft - b._daysLeft)
@@ -128,7 +129,7 @@ export default async function HolidaysPage() {
     return [ev.slug, { date: formatGregorianAr(target), ...meta }];
   }));
 
-  const gr = new Date().getFullYear();
+  const gr = new Date(await getCachedNowIso()).getFullYear();
   const hi = approxHijriYear(gr);
 
   const faqSchema = {

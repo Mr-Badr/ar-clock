@@ -12,8 +12,8 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader2, MapPin } from 'lucide-react';
-import seedData from '@/lib/seedCities.json';
 import SearchCity from '@/components/SearchCity.client';
+import { getNearestCityAction, mapTimezoneToCityAction } from '@/app/actions/location';
 
 const REDIRECT_KEY   = 'waqt-last-redirect';
 const CITY_KEY       = 'waqt-preferred-city';
@@ -68,16 +68,11 @@ export default function PrayerRedirectPage() {
 
       if (gpsPos && !cancelled) {
         try {
-          const res = await fetch(
-            `/api/nearest-city?lat=${gpsPos.coords.latitude}&lon=${gpsPos.coords.longitude}`
-          );
-          if (res.ok) {
-            const city = await res.json();
-            if (city?.country_slug && city?.city_slug) {
-              localStorage.setItem(CITY_KEY, JSON.stringify(city));
-              redirectTo(city.country_slug, city.city_slug);
-              return;
-            }
+          const city = await getNearestCityAction(gpsPos.coords.latitude, gpsPos.coords.longitude);
+          if (city?.country_slug && city?.city_slug) {
+            localStorage.setItem(CITY_KEY, JSON.stringify(city));
+            redirectTo(city.country_slug, city.city_slug);
+            return;
           }
         } catch (_) { /* GPS API failed */ }
       }
@@ -101,8 +96,8 @@ export default function PrayerRedirectPage() {
       // ── Tier 4: Timezone coarse match ──────────────────────────────────────
       try {
         const tz    = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const match = seedData.find(c => c.timezone === tz && c.priority >= 90);
-        if (match) {
+        const match = await mapTimezoneToCityAction(tz);
+        if (match?.country_slug && match?.city_slug) {
           redirectTo(match.country_slug, match.city_slug);
           return;
         }

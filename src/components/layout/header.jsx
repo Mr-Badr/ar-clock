@@ -62,7 +62,6 @@ export default function Header() {
               { href: "/mwaqit-al-salat", label: "مواقيت الصلاة", shortLabel: "الصلاة" },
               { href: "/time-difference", label: "فرق التوقيت", shortLabel: "الفرق" },
               { href: "/holidays", label: "المناسبات", shortLabel: "المناسبات" },
-              { href: "/qibla", label: "القبلة", shortLabel: "القبلة" },
             ].map((link) => {
               const isActive =
                 link.href === "/"

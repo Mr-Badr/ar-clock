@@ -49,6 +49,12 @@ import {
  */
 import { DialogTitle } from '@/components/ui/dialog';
 
+import { 
+  getCountriesAction, 
+  searchCitiesAction, 
+  getNearestCityAction 
+} from '@/app/actions/location';
+
 import './SearchCity.css';
 
 /* ── Constants ──────────────────────────────────────────────────────────── */
@@ -62,8 +68,7 @@ const GEO_TOAST_MS    = 5000; /* auto-dismiss geo error after 5 s */
 let _countriesCache = null;
 async function loadCountries() {
   if (_countriesCache) return _countriesCache;
-  const res = await fetch('/api/countries', { next: { revalidate: 86400 } });
-  _countriesCache = await res.json();
+  _countriesCache = await getCountriesAction();
   return _countriesCache;
 }
 
@@ -89,7 +94,8 @@ function highlight(text, query) {
   );
 }
 
-function cityHref(city) {
+function cityHref(city, mode = 'prayer') {
+  if (mode === 'time-now') return `/time-now/${city.country_slug}/${city.city_slug}`;
   return `/mwaqit-al-salat/${city.country_slug}/${city.city_slug}`;
 }
 
@@ -110,8 +116,8 @@ const SkeletonRows = memo(function SkeletonRows() {
   );
 });
 
-const CityRow = memo(function CityRow({ city, query, showCountry, onSelect }) {
-  const href = cityHref(city);
+const CityRow = memo(function CityRow({ city, query, showCountry, onSelect, mode }) {
+  const href = cityHref(city, mode);
   const handleClick = useCallback(
     (e) => { if (onSelect) { e.preventDefault(); onSelect(city); } },
     [city, onSelect]
@@ -189,7 +195,7 @@ const GeoToast = memo(function GeoToast({ type, onDismiss }) {
 });
 
 /* ── Main Component ─────────────────────────────────────────────────────── */
-export default function SearchCity({ onSelectCity = null, initialCity = null }) {
+export default function SearchCity({ onSelectCity = null, initialCity = null, mode = 'prayer' }) {
   const router = useRouter();
 
   const [open,            setOpen]           = useState(false);
@@ -253,12 +259,10 @@ export default function SearchCity({ onSelectCity = null, initialCity = null }) 
     }
     setIsSearching(true);
     try {
-      const url = `/api/search-cities?q=${encodeURIComponent(q)}&country=${countrySlug || ''}&limit=${RESULT_LIMIT}`;
-      const res = await fetch(url, { signal: abortRef.current.signal });
-      if (res.ok) {
-        const data = await res.json();
-        startTransition(() => setResults(data));
-      }
+      const data = await searchCitiesAction(q, RESULT_LIMIT, countrySlug);
+      // Skip updates if component unmounted or aborted
+      if (abortRef.current?.signal.aborted) return;
+      startTransition(() => setResults(data || []));
     } catch (err) {
       if (err.name !== 'AbortError') console.error('Search error', err);
     } finally {
@@ -284,15 +288,12 @@ export default function SearchCity({ onSelectCity = null, initialCity = null }) 
     navigator.geolocation.getCurrentPosition(
       async ({ coords }) => {
         try {
-          const res = await fetch(
-            `/api/nearest-city?lat=${coords.latitude}&lon=${coords.longitude}`
-          );
-          if (res.ok) {
-            const city = await res.json();
+          const city = await getNearestCityAction(coords.latitude, coords.longitude);
+          if (city) {
             setSelectedCity(city);
             showToast('success');
             if (onSelectCity) onSelectCity(city);
-            else router.push(cityHref(city));
+            else router.push(cityHref(city, mode));
           } else {
             showToast('error');
           }
@@ -331,8 +332,8 @@ export default function SearchCity({ onSelectCity = null, initialCity = null }) 
     setQuery('');
     startTransition(() => setResults([]));
     if (onSelectCity) onSelectCity(city);
-    else router.push(cityHref(city));
-  }, [onSelectCity, router]);
+    else router.push(cityHref(city, mode));
+  }, [onSelectCity, router, mode]);
 
   const handleClearSelection = useCallback((e) => {
     e.stopPropagation();
@@ -360,14 +361,17 @@ export default function SearchCity({ onSelectCity = null, initialCity = null }) 
         query={query}
         showCountry={!selectedCountry}
         onSelect={handleSelectCity}
+        mode={mode}
       />
     )),
-    [results, query, selectedCountry, handleSelectCity]
+    [results, query, selectedCountry, handleSelectCity, mode]
   );
 
   const triggerLabel = selectedCity
     ? selectedCity.city_name_ar
-    : 'ابحث عن مدينة لعرض مواقيت الصلاة…';
+    : mode === 'time-now'
+      ? 'ابحث عن مدينة أو دولة لمعرفة الوقت…'
+      : 'ابحث عن مدينة لعرض مواقيت الصلاة…';
 
   /* ── Render ──────────────────────────────────────────────────────────── */
   return (
@@ -462,7 +466,7 @@ export default function SearchCity({ onSelectCity = null, initialCity = null }) 
          * "DialogContent requires a DialogTitle for screen reader users."
          */}
         <DialogTitle className="sr-only">
-          البحث عن مدينة لمعرفة مواقيت الصلاة
+          {mode === 'time-now' ? 'البحث عن مدينة لمعرفة الوقت الحالي' : 'البحث عن مدينة لمعرفة مواقيت الصلاة'}
         </DialogTitle>
 
         {/* ── Dialog header: input + country chips ──────────────────── */}
