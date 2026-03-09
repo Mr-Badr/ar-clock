@@ -1,0 +1,43 @@
+export const PRIORITY_COUNTRY_SLUGS = [
+  'egypt',
+  'saudi-arabia',
+  'morocco',
+  'algeria',
+  'uae',
+  'tunisia',
+  'libya',
+  'sudan',
+  'iraq',
+  'jordan',
+  'syria',
+  'lebanon',
+  'yemen',
+  'kuwait',
+  'qatar',
+  'bahrain',
+  'oman',
+  'somalia',
+  'djibouti',
+  'mauritania',
+  'comoros'
+];
+
+export const GLOBAL_POPULAR_COUNTRIES = [
+  'turkey',
+  'united-states',
+  'united-kingdom',
+  'france',
+  'germany',
+  'canada',
+  'spain',
+  'italy',
+  'malaysia',
+  'indonesia',
+  'india',
+  'pakistan',
+  'japan',
+  'china',
+  'brazil',
+  'russia',
+  'australia'
+];

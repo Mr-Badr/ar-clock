@@ -29,7 +29,7 @@ export async function POST(request) {
   try {
     // Next.js 16 revalidatePath and revalidateTag for cache invalidation
     if (path) revalidatePath(path);
-    if (tag) revalidateTag(tag);
+    if (tag) revalidateTag(tag, 'max');
     return new Response(JSON.stringify({ revalidated: true, now: Date.now() }), { status: 200 });
   } catch (err) {
     return new Response(JSON.stringify({ message: 'Error revalidating path cache' }), { status: 500 });

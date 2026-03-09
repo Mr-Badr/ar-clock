@@ -25,22 +25,22 @@ export async function GET(request) {
 
     // 3. Find the best match in our database
     const city = await findNearestCity(data.lat, data.lon);
-    
+
     if (city) {
       return NextResponse.json(city);
     }
 
-    // 4. Secondary fallback: Search by city name if nearest-city RPC failed
+    // 4. Secondary fallback: Search by city name if nearest-city search failed
     const results = await searchCities(data.city, 1);
     if (results.length > 0) {
+      const result = results[0];
       return NextResponse.json({
-        ...results[0],
-        country_slug: results[0].countries?.country_slug,
-        country_name_ar: results[0].countries?.name_ar,
-        country_name_en: results[0].countries?.name_en,
-        city_name_ar: results[0].name_ar,
-        city_name_en: results[0].name_en,
-        timezone: results[0].timezone
+        ...result,
+        country_slug: result.countries?.country_slug || result.country_slug,
+        country_name_ar: result.countries?.name_ar || result.country_name_ar,
+        city_name_ar: result.name_ar,
+        city_name_en: result.name_en,
+        timezone: result.timezone
       });
     }
 

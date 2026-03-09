@@ -21,6 +21,13 @@ const nextConfig = {
   experimental: {
     // Inline critical CSS for faster FCP
     optimizeCss: true,
+    cacheLife: {
+      geodata: {
+        stale: 3600,        // serve stale for 1h client-side
+        revalidate: 86400,  // revalidate daily on server
+        expire: 604800,     // expire after 7 days maximum
+      }
+    }
   },
 
   // ── Security & Performance Headers ───────────────────────────────────────────

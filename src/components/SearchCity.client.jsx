@@ -49,20 +49,22 @@ import {
  */
 import { DialogTitle } from '@/components/ui/dialog';
 
-import { 
-  getCountriesAction, 
-  searchCitiesAction, 
-  getNearestCityAction 
+import {
+  getCountriesAction,
+  searchCitiesAction,
+  getNearestCityAction
 } from '@/app/actions/location';
+
+import { PRIORITY_COUNTRY_SLUGS, GLOBAL_POPULAR_COUNTRIES } from '@/lib/db/constants';
 
 import './SearchCity.css';
 
 /* ── Constants ──────────────────────────────────────────────────────────── */
-const LS_COUNTRY      = 'waqt-preferred-country';
-const DEBOUNCE_MS     = 250;
-const GEO_TIMEOUT_MS  = 8000;
-const RESULT_LIMIT    = 50;
-const GEO_TOAST_MS    = 5000; /* auto-dismiss geo error after 5 s */
+const LS_COUNTRY = 'waqt-preferred-country';
+const DEBOUNCE_MS = 250;
+const GEO_TIMEOUT_MS = 8000;
+const RESULT_LIMIT = 50;
+const GEO_TOAST_MS = 5000; /* auto-dismiss geo error after 5 s */
 
 /* ── Module-level country cache (lives for the tab session) ─────────────── */
 let _countriesCache = null;
@@ -72,6 +74,86 @@ async function loadCountries() {
   return _countriesCache;
 }
 
+/* ── Module-level city cache per country ── */
+const _countryCitiesCache = new Map();
+
+async function loadCitiesForCountry(countrySlug) {
+  if (!countrySlug) return [];
+  if (_countryCitiesCache.has(countrySlug)) return _countryCitiesCache.get(countrySlug);
+  try {
+    const res = await fetch(`/api/cities-by-country?country=${countrySlug}`);
+    if (res.status === 404) {
+      // Country not in DB — cache empty so we don't retry on every keystroke
+      _countryCitiesCache.set(countrySlug, []);
+      return [];
+    }
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+    const data = await res.json();
+    _countryCitiesCache.set(countrySlug, data);
+    return data;
+  } catch (err) {
+    console.warn(`[SearchCity] Could not load cities for "${countrySlug}":`, err.message);
+    return [];
+  }
+}
+
+/* ── Arabic Normalization & Flag Helper ─────────────────────────────────── */
+function getFlagEmoji(countryCode) {
+  if (!countryCode || countryCode === 'unknown') return '🏳️';
+  const codePoints = countryCode
+    .toUpperCase()
+    .split('')
+    .map(char => 0x1F1E6 + char.charCodeAt(0) - 65);
+  return String.fromCodePoint(...codePoints);
+}
+
+function normalizeArabic(s = '') {
+  if (!s) return '';
+  return s
+    .replace(/[أإآ]/g, 'ا')
+    .replace(/ة/g, 'ه')
+    .replace(/ى/g, 'ي')
+    .replace(/[\u064B-\u065F\u0670]/g, '') // remove tashkeel
+    .replace(/(^|\s)ال/g, '$1') // strip definite article 'ال' at start of ANY word
+    .toLowerCase()
+    .trim()
+    // Collapse multiple spaces into one to avoid matching issues
+    .replace(/\s+/g, ' ');
+}
+
+function filterCitiesLocally(cities, q) {
+  if (!q.trim()) return cities.slice(0, 80); // Show more when idle
+  const normalizedQuery = normalizeArabic(q);
+
+  return cities
+    .filter(city => {
+      const cityAr = normalizeArabic(city.city_name_ar);
+      const cityEn = (city.city_name_en || '').toLowerCase();
+      const countryAr = normalizeArabic(city.country_name_ar || '');
+      // Support English search terms but show Arabic
+      const qLower = normalizedQuery.toLowerCase();
+      // We check both Arabic and English normalized versions
+      return cityAr.includes(normalizedQuery) || cityEn.includes(qLower) || countryAr.includes(normalizedQuery);
+    })
+    .sort((a, b) => {
+      const aAr = normalizeArabic(a.city_name_ar);
+      const bAr = normalizeArabic(b.city_name_ar);
+      const aStarts = aAr.startsWith(normalizedQuery);
+      const bStarts = bAr.startsWith(normalizedQuery);
+
+      if (aStarts && !bStarts) return -1;
+      if (!aStarts && bStarts) return 1;
+
+      if (a.is_capital && !b.is_capital) return -1;
+      if (!a.is_capital && b.is_capital) return 1;
+
+      return (b.priority || 0) - (a.priority || 0) || (b.population || 0) - (a.population || 0);
+    })
+    .slice(0, 80);
+}
+
 /* ── Helpers ────────────────────────────────────────────────────────────── */
 function stripDiacritics(s = '') {
   return s.replace(/[\u064B-\u065F\u0670]/g, '');
@@ -79,8 +161,8 @@ function stripDiacritics(s = '') {
 
 function highlight(text, query) {
   if (!query || !text) return text;
-  const nt  = stripDiacritics(text);
-  const nq  = stripDiacritics(query);
+  const nt = stripDiacritics(text);
+  const nq = stripDiacritics(query);
   const idx = nt.indexOf(nq);
   if (idx === -1) return text;
   return (
@@ -124,7 +206,7 @@ const CityRow = memo(function CityRow({ city, query, showCountry, onSelect, mode
   );
   return (
     <CommandItem
-      value={`${city.city_name_ar} ${city.city_name_en ?? ''} ${city.country_name_ar ?? ''}`}
+      value={`${city.city_name_ar} ${city.city_name_en ?? ''} ${city.country_name_ar ?? ''} ${city.city_slug} ${city.country_slug}`}
       onSelect={() => onSelect?.(city)}
       asChild
       className="sc-item"
@@ -139,10 +221,15 @@ const CityRow = memo(function CityRow({ city, query, showCountry, onSelect, mode
         <span className="sc-item__icon" aria-hidden="true"><MapPin size={13} /></span>
 
         <span className="sc-item__body">
-          <span className="sc-item__name">{highlight(city.city_name_ar, query)}</span>
-          {city.city_name_en && (
-            <span className="sc-item__sub" lang="en">{city.city_name_en}</span>
-          )}
+          <span className="sc-item__name">
+            {city.country_code && (
+              <span className="sc-item__flag" aria-hidden="true" style={{ marginLeft: '0.4rem', fontSize: '1.2em' }}>
+                {getFlagEmoji(city.country_code)}
+              </span>
+            )}
+            {highlight(city.city_name_ar, query)}
+          </span>
+          {/* We don't care if user searches in English, we only show Arabic names now */}
         </span>
 
         <span className="sc-item__meta">
@@ -198,23 +285,36 @@ const GeoToast = memo(function GeoToast({ type, onDismiss }) {
 export default function SearchCity({ onSelectCity = null, initialCity = null, mode = 'prayer' }) {
   const router = useRouter();
 
-  const [open,            setOpen]           = useState(false);
-  const [countries,       setCountries]      = useState([]);
-  const [selectedCountry, setSelectedCountry]= useState(null);
-  const [selectedCity,    setSelectedCity]   = useState(initialCity ?? null);
-  const [query,           setQuery]          = useState('');
-  const [results,         setResults]        = useState([]);
-  const [isSearching,     setIsSearching]    = useState(false);
+  const [open, setOpen] = useState(false);
+  const [countries, setCountries] = useState([]);
+  const [showAllCountries, setShowAllCountries] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(initialCity ?? null);
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchEverywhere, setSearchEverywhere] = useState(false);
 
   /* Geo state — toast type is 'error' | 'success' | null */
-  const [geoLoading,  setGeoLoading]  = useState(false);
-  const [geoToast,    setGeoToast]    = useState(null); /* 'error' | 'success' | null */
+  const [geoLoading, setGeoLoading] = useState(false);
+  const [geoToast, setGeoToast] = useState(null); /* 'error' | 'success' | null */
 
   const [isPending, startTransition] = useTransition();
 
-  const abortRef      = useRef(null);
-  const debounceRef   = useRef(null);
+  const abortRef = useRef(null);
+  const debounceRef = useRef(null);
   const toastTimerRef = useRef(null);
+
+  /* ── Derived Lists ───────────────────────────────────────────────────── */
+  const mainCountriesSlugs = useMemo(() => [
+    ...PRIORITY_COUNTRY_SLUGS,
+    ...GLOBAL_POPULAR_COUNTRIES,
+  ], []);
+
+  const visibleCountries = useMemo(() => {
+    if (showAllCountries) return countries;
+    return countries.filter(c => mainCountriesSlugs.includes(c.slug));
+  }, [countries, showAllCountries, mainCountriesSlugs]);
 
   /* ── Countries ───────────────────────────────────────────────────────── */
   useEffect(() => {
@@ -248,20 +348,39 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
   }, []);
 
   /* ── Search ──────────────────────────────────────────────────────────── */
-  const performSearch = useCallback(async (q, countrySlug) => {
+  const performSearch = useCallback(async (q, countrySlug, forceGlobal = false) => {
     abortRef.current?.abort();
     abortRef.current = new AbortController();
 
-    if (!q.trim() && !countrySlug) {
+    if (!q.trim() && !countrySlug && !forceGlobal) {
       startTransition(() => setResults([]));
       setIsSearching(false);
       return;
     }
+
     setIsSearching(true);
+    setSearchEverywhere(forceGlobal);
     try {
-      const data = await searchCitiesAction(q, RESULT_LIMIT, countrySlug);
-      // Skip updates if component unmounted or aborted
-      if (abortRef.current?.signal.aborted) return;
+      // MODE: Country selected -> Use local cache
+      if (countrySlug && !forceGlobal) {
+        const allCities = await loadCitiesForCountry(countrySlug);
+        const filtered = filterCitiesLocally(allCities, q);
+        startTransition(() => setResults(filtered));
+        setIsSearching(false);
+        return;
+      }
+
+      // MODE: Global search -> Hit API
+      // If we are not forcing global and have a small query, maybe we check priority cities first?
+      // Actually the user wants "Most searched countries and cities should be always present"
+      // So we pre-warm them.
+
+      const res = await fetch(`/api/search-city?q=${encodeURIComponent(q)}`, {
+        signal: abortRef.current.signal
+      });
+      if (!res.ok) throw new Error('Search failed');
+      const data = await res.json();
+
       startTransition(() => setResults(data || []));
     } catch (err) {
       if (err.name !== 'AbortError') console.error('Search error', err);
@@ -313,16 +432,26 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
   const handleOpenDialog = useCallback(() => {
     setOpen(true);
     setQuery('');
-    startTransition(() => setResults([]));
-  }, []);
+    startTransition(() => {
+      setResults([]);
+      setSearchEverywhere(false);
+    });
 
-  const handleSelectCountry = useCallback((country) => {
+    // Pre-warm priority countries (Arab + Popular Global)
+    mainCountriesSlugs.forEach(slug => {
+      loadCitiesForCountry(slug);
+    });
+  }, [mainCountriesSlugs]);
+
+  const handleSelectCountry = useCallback(async (country) => {
     setSelectedCountry(country);
     try {
       country
         ? localStorage.setItem(LS_COUNTRY, country.slug)
         : localStorage.removeItem(LS_COUNTRY);
     } catch { /* ignore */ }
+
+    // Trigger load and search
     performSearch(query, country?.slug);
   }, [performSearch, query]);
 
@@ -350,8 +479,8 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
 
   /* ── Derived ─────────────────────────────────────────────────────────── */
   const showSkeleton = isSearching || isPending;
-  const hasResults   = results.length > 0;
-  const showEmpty    = !showSkeleton && !hasResults && query.trim().length > 0;
+  const hasResults = results.length > 0;
+  const showEmpty = !showSkeleton && !hasResults && query.trim().length > 0 && !searchEverywhere;
 
   const cityRows = useMemo(() =>
     results.map(city => (
@@ -402,7 +531,7 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
           {/* Icon: search or map-pin when selected */}
           {selectedCity
             ? <MapPin size={17} className="sc-trigger__icon sc-trigger__icon--selected" aria-hidden="true" />
-            : <Search  size={17} className="sc-trigger__icon" aria-hidden="true" />
+            : <Search size={17} className="sc-trigger__icon" aria-hidden="true" />
           }
 
           <span className="sc-trigger__label">{triggerLabel}</span>
@@ -456,6 +585,7 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
       <CommandDialog
         open={open}
         onOpenChange={setOpen}
+        shouldFilter={false}
         className="sc-dialog"
         overlayClassName="sc-dialog-overlay"
       >
@@ -503,29 +633,32 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
             )}
           </div>
 
-          {/* Country filter chips — ALL countries, horizontally scrollable */}
-          {countries.length > 0 && (
+          {/* Country filter chips — horizontal strip */}
+          {visibleCountries.length > 0 && (
             <div
               className="sc-chips-row"
               role="group"
               aria-label="تصفية حسب الدولة"
             >
-              {/* "All" chip — visible only when a country is active */}
-              {selectedCountry && (
+              {/* "All" chip — visible only when a country is active or showAllCountries is false */}
+              {(selectedCountry || showAllCountries) && (
                 <button
                   type="button"
                   className="sc-chip sc-chip--all"
-                  onClick={() => handleSelectCountry(null)}
+                  onClick={() => {
+                    handleSelectCountry(null);
+                    setShowAllCountries(false);
+                  }}
                   aria-pressed={false}
                   aria-label="عرض جميع الدول"
                 >
                   <Globe size={10} aria-hidden="true" />
-                  الكل
+                  {showAllCountries ? 'الرئيسية' : 'جميع الدول'}
                 </button>
               )}
 
-              {/* Every country as a chip */}
-              {countries.map(c => (
+              {/* Every visible country as a chip */}
+              {visibleCountries.map(c => (
                 <button
                   key={c.slug}
                   type="button"
@@ -536,9 +669,21 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
                   aria-pressed={selectedCountry?.slug === c.slug}
                   aria-label={`تصفية بدولة ${c.name_ar}`}
                 >
+                  <span style={{ marginLeft: '0.4rem' }}>{getFlagEmoji(c.country_code)}</span>
                   {c.name_ar}
                 </button>
               ))}
+
+              {!showAllCountries && (
+                <button
+                  type="button"
+                  className="sc-chip sc-chip--more"
+                  onClick={() => setShowAllCountries(true)}
+                  aria-label="عرض المزيد من الدول"
+                >
+                  المزيد...
+                </button>
+              )}
             </div>
           )}
         </div>
@@ -576,15 +721,27 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
           {/* Loading */}
           {showSkeleton && <SkeletonRows />}
 
-          {/* Empty */}
+          {/* Empty state with "Search Database" button */}
           {showEmpty && (
             <CommandEmpty>
               <div className="sc-empty" role="status" aria-live="polite">
-                <span className="sc-empty__icon" aria-hidden="true">🔍</span>
-                <span>
-                  لم تُعثر أي مدن لـ «{query}»
-                  {selectedCountry ? ` في ${selectedCountry.name_ar}` : ''}
-                </span>
+                <span className="sc-empty__icon" aria-hidden="true">📍</span>
+                <p className="sc-empty__text">
+                  {selectedCountry
+                    ? `عذراً، لم نجد نتائج في ${selectedCountry.name_ar}.`
+                    : `عذراً، لم نجد نتائج تطابق «${query}»`
+                  }
+                </p>
+                <p className="sc-empty__sub">
+                  تأكد من كتابة الاسم بشكل صحيح أو ابحث في قاعدة البيانات الشاملة.
+                </p>
+                <button
+                  type="button"
+                  className="sc-search-global-btn"
+                  onClick={() => performSearch(query, null, true)}
+                >
+                  البحث في قاعدة البيانات الشاملة
+                </button>
               </div>
             </CommandEmpty>
           )}
@@ -592,17 +749,17 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
           {/* Search results */}
           {!showSkeleton && hasResults && (
             <CommandGroup
-              heading={selectedCountry ? selectedCountry.name_ar : 'المدن المقترحة'}
+              heading={selectedCountry ? selectedCountry.name_ar : 'النتائج'}
               className="sc-group-heading"
             >
               {cityRows}
             </CommandGroup>
           )}
 
-          {/* Idle state: ALL countries as quick-select rows */}
-          {!query && !showSkeleton && countries.length > 0 && (
-            <CommandGroup heading="الدول" className="sc-group-heading">
-              {countries.map(c => (
+          {/* Idle state: prioritized list of countries */}
+          {!query && !showSkeleton && visibleCountries.length > 0 && (
+            <CommandGroup heading={showAllCountries ? "جميع الدول" : "الدول والأماكن الأكثر بحثاً"} className="sc-group-heading">
+              {visibleCountries.map(c => (
                 <CommandItem
                   key={c.slug}
                   value={c.name_ar}
@@ -614,10 +771,13 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
                   aria-selected={selectedCountry?.slug === c.slug}
                 >
                   <span className="sc-item__icon" aria-hidden="true">
-                    <Globe size={13} />
+                    {getFlagEmoji(c.country_code)}
                   </span>
                   <span className="sc-item__body">
                     <span className="sc-item__name">{c.name_ar}</span>
+                    <span className="sc-item__sub" lang="en" style={{ fontSize: '0.75rem', opacity: 0.6 }}>
+                      {mainCountriesSlugs.includes(c.slug) ? 'وصول سريع' : ''}
+                    </span>
                   </span>
                   {selectedCountry?.slug === c.slug && (
                     <span className="sc-item__meta">
@@ -626,6 +786,16 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
                   )}
                 </CommandItem>
               ))}
+              {!showAllCountries && (
+                <button
+                  type="button"
+                  className="sc-browse-all-btn"
+                  onClick={() => setShowAllCountries(true)}
+                >
+                  <Globe size={14} style={{ marginLeft: '0.5rem' }} />
+                  تصفح جميع دول العالم ({countries.length})
+                </button>
+              )}
             </CommandGroup>
           )}
         </CommandList>
@@ -653,14 +823,18 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
           aria-label="بحث بدون جافاسكريبت"
         >
           <input type="search" name="q" placeholder="ابحث عن مدينة…" dir="rtl" lang="ar"
-            style={{ flex:1, padding:'0.75rem 1rem', borderRadius:'0.75rem',
-              border:'1px solid #363D5C', background:'#1F2438', color:'#F0F4FF',
-              fontFamily:'Noto Kufi Arabic, sans-serif', direction:'rtl', fontSize:'1rem' }}
+            style={{
+              flex: 1, padding: '0.75rem 1rem', borderRadius: '0.75rem',
+              border: '1px solid #363D5C', background: '#1F2438', color: '#F0F4FF',
+              fontFamily: 'Noto Kufi Arabic, sans-serif', direction: 'rtl', fontSize: '1rem'
+            }}
           />
           <button type="submit"
-            style={{ padding:'0.75rem 1.5rem', borderRadius:'0.75rem', background:'#1D4ED8',
-              color:'#fff', border:'none', cursor:'pointer',
-              fontFamily:'Noto Kufi Arabic, sans-serif', fontWeight:600 }}
+            style={{
+              padding: '0.75rem 1.5rem', borderRadius: '0.75rem', background: '#1D4ED8',
+              color: '#fff', border: 'none', cursor: 'pointer',
+              fontFamily: 'Noto Kufi Arabic, sans-serif', fontWeight: 600
+            }}
           >بحث</button>
         </form>
       </noscript>

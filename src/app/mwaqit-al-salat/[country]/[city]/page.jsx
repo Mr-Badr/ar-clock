@@ -33,8 +33,16 @@ import TimezoneBanner from '@/components/TimezoneBanner.client';
 
 
 
+// Always pre-generate at least a small seed so Next.js Cache Component
+// validation passes in dev. All other slugs render at runtime (default behavior).
 export async function generateStaticParams() {
-  if (process.env.NODE_ENV === 'development') return [];
+  if (process.env.NODE_ENV === 'development') {
+    return [
+      { country: 'morocco', city: 'casablanca' },
+      { country: 'saudi-arabia', city: 'riyadh' },
+      { country: 'egypt', city: 'cairo' },
+    ];
+  }
   return getAllCityParams();
 }
 
@@ -56,10 +64,10 @@ export async function generateMetadata({ params }) {
   const seoDate = new Date('2025-06-01T12:00:00Z');
 
   const times = calculatePrayerTimes({
-    lat:      cityData.lat,
-    lon:      cityData.lon,
+    lat: cityData.lat,
+    lon: cityData.lon,
     timezone: cityData.timezone,
-    date:     seoDate,
+    date: seoDate,
     cacheKey: `meta::${countrySlug}::${citySlug}`,
   });
 
@@ -73,9 +81,9 @@ export async function generateMetadata({ params }) {
     nextPrayerHint = ` — ${AR[nextKey] ?? nextKey}: ${formatTime(nextIso, cityData.timezone)}`;
   }
 
-  const title       = `مواقيت الصلاة في ${cityNameAr}، ${countryNameAr} — اليوم`;
+  const title = `مواقيت الصلاة في ${cityNameAr}، ${countryNameAr} — اليوم`;
   const description = `أوقات الصلاة الدقيقة في ${cityNameAr} اليوم${nextPrayerHint}. الفجر والظهر والعصر والمغرب والعشاء.`;
-  const canonical   = `https://waqt.app/mwaqit-al-salat/${countrySlug}/${citySlug}`;
+  const canonical = `https://waqt.app/mwaqit-al-salat/${countrySlug}/${citySlug}`;
 
   return {
     title,
@@ -84,12 +92,12 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title,
       description,
-      type:   'website',
+      type: 'website',
       locale: 'ar_SA',
-      url:    canonical,
+      url: canonical,
     },
     twitter: {
-      card:        'summary',
+      card: 'summary',
       title,
       description,
     },
@@ -102,17 +110,17 @@ function PrayerTimesJsonLd({ cityData, countryNameAr }) {
   const cityNameAr = cityData.name_ar || cityData.name_en;
   const schema = {
     '@context': 'https://schema.org',
-    '@type':    'Place',
-    name:       cityNameAr,
+    '@type': 'Place',
+    name: cityNameAr,
     address: {
-      '@type':          'PostalAddress',
-      addressLocality:  cityNameAr,
-      addressCountry:   countryNameAr,
+      '@type': 'PostalAddress',
+      addressLocality: cityNameAr,
+      addressCountry: countryNameAr,
     },
     geo: {
-      '@type':    'GeoCoordinates',
-      latitude:   cityData.lat,
-      longitude:  cityData.lon,
+      '@type': 'GeoCoordinates',
+      latitude: cityData.lat,
+      longitude: cityData.lon,
     },
   };
 
@@ -127,12 +135,12 @@ function PrayerTimesJsonLd({ cityData, countryNameAr }) {
 // ─── Prayer labels ────────────────────────────────────────────────────────────
 
 const PRAYER_AR = {
-  fajr:    'الفجر',
+  fajr: 'الفجر',
   sunrise: 'الشروق',
-  dhuhr:   'الظهر',
-  asr:     'العصر',
+  dhuhr: 'الظهر',
+  asr: 'العصر',
   maghrib: 'المغرب',
-  isha:    'العشاء',
+  isha: 'العشاء',
 };
 
 // ─── Page shell (statically cached) ──────────────────────────────────────────
@@ -213,10 +221,10 @@ async function PrayerTimesContent({ country, city, cityData }) {
   const now = new Date();
 
   const times = calculatePrayerTimes({
-    lat:      cityData.lat,
-    lon:      cityData.lon,
+    lat: cityData.lat,
+    lon: cityData.lon,
     timezone: cityData.timezone,
-    date:     now,
+    date: now,
     cacheKey: `${country}::${city}`,
   });
 
@@ -229,13 +237,13 @@ async function PrayerTimesContent({ country, city, cityData }) {
   }
 
   const { nextKey, nextIso, prevIso } = getNextPrayer(times, now.toISOString());
-  const fajrStr    = formatTime(times.fajr,    cityData.timezone);
+  const fajrStr = formatTime(times.fajr, cityData.timezone);
   const maghribStr = formatTime(times.maghrib, cityData.timezone);
   const todayLabel = now.toLocaleDateString('ar-EG', {
     weekday: 'long',
-    year:    'numeric',
-    month:   'long',
-    day:     'numeric',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   });
 
   return (
@@ -259,27 +267,27 @@ async function PrayerTimesContent({ country, city, cityData }) {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
           {Object.entries(times).map(([key, isoStr]) => {
-            const isNext  = key === nextKey;
+            const isNext = key === nextKey;
             const timeStr = formatTime(isoStr, cityData.timezone, false);
             return (
               <div
                 key={key}
                 style={{
-                  display:        'flex',
-                  alignItems:     'center',
+                  display: 'flex',
+                  alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding:        'var(--space-4) var(--space-2)',
-                  borderRadius:   'var(--radius-md)',
-                  background:     isNext ? 'var(--accent-soft)' : 'transparent',
-                  borderRight:    isNext ? '3px solid var(--accent)' : '3px solid transparent',
+                  padding: 'var(--space-4) var(--space-2)',
+                  borderRadius: 'var(--radius-md)',
+                  background: isNext ? 'var(--accent-soft)' : 'transparent',
+                  borderRight: isNext ? '3px solid var(--accent)' : '3px solid transparent',
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
                   {isNext && <span className="badge badge-accent">القادمة</span>}
                   <span style={{
-                    color:      isNext ? 'var(--accent)' : 'var(--text-primary)',
+                    color: isNext ? 'var(--accent)' : 'var(--text-primary)',
                     fontWeight: 'var(--font-bold)',
-                    fontSize:   'var(--text-lg)',
+                    fontSize: 'var(--text-lg)',
                   }}>
                     {PRAYER_AR[key] ?? key}
                   </span>
@@ -288,10 +296,10 @@ async function PrayerTimesContent({ country, city, cityData }) {
                   dateTime={isoStr}
                   dir="ltr"
                   style={{
-                    color:      isNext ? 'var(--accent)' : 'var(--text-primary)',
+                    color: isNext ? 'var(--accent)' : 'var(--text-primary)',
                     fontFamily: 'monospace',
                     fontWeight: 'var(--font-bold)',
-                    fontSize:   'var(--text-xl)',
+                    fontSize: 'var(--text-xl)',
                   }}
                 >
                   {timeStr}

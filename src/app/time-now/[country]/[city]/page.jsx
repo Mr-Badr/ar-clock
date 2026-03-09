@@ -20,20 +20,20 @@
  *  SEO prose (server, hidden keyword list for crawlers)
  */
 
-import { Suspense }  from 'react';
-import Link          from 'next/link';
-import { notFound }  from 'next/navigation';
-import { headers }   from 'next/headers';
+import { Suspense } from 'react';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { headers } from 'next/headers';
 import { ChevronLeft, MapPin, Clock } from 'lucide-react';
 
 
-import TimeNowHero          from '@/components/time-now/TimeNowHero';
-import SearchCity            from '@/components/SearchCity.client';
-import CountryCitiesGrid     from '@/components/time-now/CountryCitiesGrid';
-import TimezoneInfoCard      from '@/components/time-now/TimezoneInfoCard';
+import TimeNowHero from '@/components/time-now/TimeNowHero';
+import SearchCity from '@/components/SearchCity.client';
+import CountryCitiesGrid from '@/components/time-now/CountryCitiesGrid';
+import TimezoneInfoCard from '@/components/time-now/TimezoneInfoCard';
 import SameTimezoneCountries from '@/components/time-now/SameTimezoneCountries';
-import TimeNowFAQ            from '@/components/time-now/TimeNowFAQ';
-import RelatedSearches       from '@/components/time-now/RelatedSearches';
+import TimeNowFAQ from '@/components/time-now/TimeNowFAQ';
+import RelatedSearches from '@/components/time-now/RelatedSearches';
 
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 import { getAllCityParams, getCityBySlug, getTopCitiesByCountry } from '@/lib/db/queries/cities';
@@ -46,7 +46,13 @@ const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
 
 
 export async function generateStaticParams() {
-  if (process.env.NODE_ENV === 'development') return [];
+  if (process.env.NODE_ENV === 'development') {
+    return [
+      { country: 'morocco', city: 'casablanca' },
+      { country: 'saudi-arabia', city: 'riyadh' },
+      { country: 'egypt', city: 'cairo' },
+    ];
+  }
   return getAllCityParams();
 }
 
@@ -67,12 +73,12 @@ export async function generateMetadata({ params }) {
   const city = await getCityBySlug(country.country_code, citySlug);
   if (!city) return { title: 'الوقت الآن' };
 
-  const cityAr    = city.name_ar    || city.name_en;
+  const cityAr = city.name_ar || city.name_en;
   const countryAr = country.name_ar || country.name_en;
-  const offset    = getUtcOffsetStr(city.timezone);
+  const offset = getUtcOffsetStr(city.timezone);
 
   return {
-    title:       `الوقت الآن في ${cityAr}، ${countryAr} — الساعة والتاريخ | ساعة عربية`,
+    title: `الوقت الآن في ${cityAr}، ${countryAr} — الساعة والتاريخ | ساعة عربية`,
     description: `الوقت الحالي في ${cityAr} بدقة حتى الثانية. الساعة الآن في ${cityAr}، ${countryAr} — التاريخ اليوم الميلادي والهجري، المنطقة الزمنية ${offset}.`,
     keywords: [
       `الوقت الآن في ${cityAr}`,
@@ -93,16 +99,16 @@ export async function generateMetadata({ params }) {
       canonical: `/time-now/${countrySlug}/${citySlug}`,
     },
     openGraph: {
-      type:        'website',
-      locale:      'ar_SA',
-      url:         `${BASE}/time-now/${countrySlug}/${citySlug}`,
-      siteName:    'ساعة عربية',
-      title:       `الوقت الآن في ${cityAr}، ${countryAr} | ساعة عربية`,
+      type: 'website',
+      locale: 'ar_SA',
+      url: `${BASE}/time-now/${countrySlug}/${citySlug}`,
+      siteName: 'ساعة عربية',
+      title: `الوقت الآن في ${cityAr}، ${countryAr} | ساعة عربية`,
       description: `الساعة الحالية في ${cityAr} بدقة حتى الثانية. ${countryAr} · ${offset}.`,
-      images:      [{ url: '/og-image.png', width: 1200, height: 630, alt: `الوقت الآن في ${cityAr}` }],
+      images: [{ url: '/og-image.png', width: 1200, height: 630, alt: `الوقت الآن في ${cityAr}` }],
     },
     twitter: {
-      card:  'summary_large_image',
+      card: 'summary_large_image',
       title: `الوقت الآن في ${cityAr}، ${countryAr}`,
     },
     robots: {
@@ -129,37 +135,37 @@ export default async function CityTimePage({ params }) {
   ]);
   const sameOffsetCountries = []; // Skipped
 
-  const cityAr    = city.name_ar    || city.name_en;
+  const cityAr = city.name_ar || city.name_en;
   const countryAr = country.name_ar || country.name_en;
-  const offset    = getUtcOffsetStr(city.timezone);
+  const offset = getUtcOffsetStr(city.timezone);
 
   /* ── JSON-LD SCHEMAS ─────────────────────────────────────────── */
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
-    '@type':    'BreadcrumbList',
+    '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type':'ListItem', position:1, name:'الرئيسية',             item:`${BASE}/`                                  },
-      { '@type':'ListItem', position:2, name:'الوقت الآن',           item:`${BASE}/time-now`                          },
-      { '@type':'ListItem', position:3, name:`الوقت في ${countryAr}`,item:`${BASE}/time-now/${countrySlug}`           },
-      { '@type':'ListItem', position:4, name:`الوقت في ${cityAr}`,   item:`${BASE}/time-now/${countrySlug}/${citySlug}`},
+      { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${BASE}/` },
+      { '@type': 'ListItem', position: 2, name: 'الوقت الآن', item: `${BASE}/time-now` },
+      { '@type': 'ListItem', position: 3, name: `الوقت في ${countryAr}`, item: `${BASE}/time-now/${countrySlug}` },
+      { '@type': 'ListItem', position: 4, name: `الوقت في ${cityAr}`, item: `${BASE}/time-now/${countrySlug}/${citySlug}` },
     ],
   };
 
   const webPageSchema = {
-    '@context':    'https://schema.org',
-    '@type':       'WebPage',
-    name:          `الوقت الآن في ${cityAr}، ${countryAr}`,
-    url:           `${BASE}/time-now/${countrySlug}/${citySlug}`,
-    description:   `الوقت الحالي في ${cityAr} بدقة حتى الثانية. ${countryAr} · ${offset}.`,
-    inLanguage:    'ar',
-    breadcrumb:    { '@id': `${BASE}/time-now/${countrySlug}/${citySlug}#breadcrumb` },
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `الوقت الآن في ${cityAr}، ${countryAr}`,
+    url: `${BASE}/time-now/${countrySlug}/${citySlug}`,
+    description: `الوقت الحالي في ${cityAr} بدقة حتى الثانية. ${countryAr} · ${offset}.`,
+    inLanguage: 'ar',
+    breadcrumb: { '@id': `${BASE}/time-now/${countrySlug}/${citySlug}#breadcrumb` },
     mainEntity: {
-      '@type':       'City',
-      name:          city.name_en,
+      '@type': 'City',
+      name: city.name_en,
       alternateName: cityAr,
       containedInPlace: {
         '@type': 'Country',
-        name:    country.name_en,
+        name: country.name_en,
         alternateName: countryAr,
       },
     },
@@ -167,11 +173,11 @@ export default async function CityTimePage({ params }) {
 
   const faqSchema = {
     '@context': 'https://schema.org',
-    '@type':    'FAQPage',
+    '@type': 'FAQPage',
     mainEntity: [
       {
         '@type': 'Question',
-        name:    `ما هو الوقت الآن في ${cityAr}؟`,
+        name: `ما هو الوقت الآن في ${cityAr}؟`,
         acceptedAnswer: {
           '@type': 'Answer',
           text: `يُعرض الوقت الحالي في ${cityAr}، ${countryAr} في أعلى هذه الصفحة بدقة حتى الثانية. ${cityAr} تتبع المنطقة الزمنية ${city.timezone} وهي ${offset}.`,
@@ -179,7 +185,7 @@ export default async function CityTimePage({ params }) {
       },
       {
         '@type': 'Question',
-        name:    `ما هي المنطقة الزمنية في ${cityAr}؟`,
+        name: `ما هي المنطقة الزمنية في ${cityAr}؟`,
         acceptedAnswer: {
           '@type': 'Answer',
           text: `${cityAr} تتبع المنطقة الزمنية ${city.timezone}، بتوقيت ${offset} من التوقيت العالمي المنسق (UTC).`,
@@ -187,7 +193,7 @@ export default async function CityTimePage({ params }) {
       },
       {
         '@type': 'Question',
-        name:    `كم الساعة الآن في ${cityAr}؟`,
+        name: `كم الساعة الآن في ${cityAr}؟`,
         acceptedAnswer: {
           '@type': 'Answer',
           text: `الساعة الحالية في ${cityAr} تظهر في أعلى الصفحة محدَّثةً تلقائياً كل ثانية. ${cityAr} تتبع ${offset}.`,
@@ -195,7 +201,7 @@ export default async function CityTimePage({ params }) {
       },
       {
         '@type': 'Question',
-        name:    `ما هو التاريخ اليوم في ${cityAr}؟`,
+        name: `ما هو التاريخ اليوم في ${cityAr}؟`,
         acceptedAnswer: {
           '@type': 'Answer',
           text: `تعرض هذه الصفحة التاريخ اليوم في ${cityAr} بالتقويم الميلادي والهجري معاً، وفق المنطقة الزمنية ${city.timezone}.`,
@@ -210,30 +216,30 @@ export default async function CityTimePage({ params }) {
 
       {/* Structured Data */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema)   }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema)       }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <main>
 
         {/* ══ BREADCRUMB ══════════════════════════════════════════ */}
         <nav aria-label="مسار التنقل" className="container mx-auto px-4 pt-6 pb-2">
           <ol style={{
-            display:'flex', alignItems:'center', gap:'0.3rem',
-            flexWrap:'wrap', margin:0, padding:0, listStyle:'none',
-            fontSize:'var(--text-sm)', color:'var(--text-muted)',
+            display: 'flex', alignItems: 'center', gap: '0.3rem',
+            flexWrap: 'wrap', margin: 0, padding: 0, listStyle: 'none',
+            fontSize: 'var(--text-sm)', color: 'var(--text-muted)',
           }}>
             {[
-              { href:'/', label:'الرئيسية' },
-              { href:'/time-now', label:'الوقت الآن' },
-              { href:`/time-now/${countrySlug}`, label:countryAr },
+              { href: '/', label: 'الرئيسية' },
+              { href: '/time-now', label: 'الوقت الآن' },
+              { href: `/time-now/${countrySlug}`, label: countryAr },
             ].map((item, i) => (
-              <li key={i} style={{ display:'flex', alignItems:'center', gap:'0.3rem' }}>
-                <Link href={item.href} style={{ color:'var(--text-muted)', textDecoration:'none' }}
+              <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <Link href={item.href} style={{ color: 'var(--text-muted)', textDecoration: 'none' }}
                   className="hover:text-accent transition-colors">{item.label}</Link>
-                <ChevronLeft size={12} style={{ rotate:'180deg', opacity:0.5 }} aria-hidden />
+                <ChevronLeft size={12} style={{ rotate: '180deg', opacity: 0.5 }} aria-hidden />
               </li>
             ))}
-            <li aria-current="page" style={{ color:'var(--text-primary)', fontWeight:'600' }}>{cityAr}</li>
+            <li aria-current="page" style={{ color: 'var(--text-primary)', fontWeight: '600' }}>{cityAr}</li>
           </ol>
         </nav>
 
@@ -250,7 +256,7 @@ export default async function CityTimePage({ params }) {
           <p className="text-muted text-center mb-1 text-lg">
             <Link href={`/time-now/${countrySlug}`}
               className="hover:text-accent transition-colors"
-              style={{ textDecoration:'none', color:'var(--text-muted)' }}
+              style={{ textDecoration: 'none', color: 'var(--text-muted)' }}
             >
               {countryAr}
             </Link>
@@ -259,7 +265,7 @@ export default async function CityTimePage({ params }) {
 
           {/* Population note — keyword-rich, subtle */}
           {city.population > 0 && (
-            <p className="text-center mb-6" style={{ fontSize:'var(--text-xs)', color:'var(--text-muted)' }}>
+            <p className="text-center mb-6" style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
               عدد السكان: {new Intl.NumberFormat('ar').format(city.population)} نسمة
             </p>
           )}
@@ -277,7 +283,7 @@ export default async function CityTimePage({ params }) {
           {/* Live clock */}
           <div className="max-w-3xl mx-auto">
             <Suspense fallback={
-              <div style={{ height:'280px', borderRadius:'1rem', background:'var(--bg-surface-2)', animation:'pulse 2s ease-in-out infinite' }} aria-hidden />
+              <div style={{ height: '280px', borderRadius: '1rem', background: 'var(--bg-surface-2)', animation: 'pulse 2s ease-in-out infinite' }} aria-hidden />
             }>
               <TimeNowHero
                 ianaTimezone={city.timezone}
@@ -296,7 +302,7 @@ export default async function CityTimePage({ params }) {
             aria-labelledby="cities-grid-h2"
             className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]"
           >
-            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'1.5rem', flexWrap:'wrap', gap:'0.5rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.5rem' }}>
               <h2 id="cities-grid-h2" className="text-2xl font-bold">
                 🏙️ مدن {countryAr} الأخرى
               </h2>
@@ -307,7 +313,7 @@ export default async function CityTimePage({ params }) {
               </Link>
             </div>
             <Suspense fallback={
-              <div style={{ height:'160px', borderRadius:'1rem', background:'var(--bg-surface-2)' }} aria-hidden />
+              <div style={{ height: '160px', borderRadius: '1rem', background: 'var(--bg-surface-2)' }} aria-hidden />
             }>
               <CountryCitiesGrid
                 cities={siblingCities.filter(c => c.slug !== citySlug)}
@@ -359,29 +365,29 @@ export default async function CityTimePage({ params }) {
         {/* ══ SEO PROSE ════════════════════════════════════════════ */}
         <section className="container mx-auto px-4 py-12 border-t border-[var(--border-subtle)]">
           <div className="max-w-4xl mx-auto space-y-5"
-            style={{ color:'var(--text-muted)', lineHeight:'1.9', fontSize:'var(--text-sm)' }}
+            style={{ color: 'var(--text-muted)', lineHeight: '1.9', fontSize: 'var(--text-sm)' }}
           >
-            <h2 className="text-2xl font-bold" style={{ color:'var(--text-primary)' }}>
+            <h2 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
               الوقت الآن في {cityAr} — معلومات شاملة
             </h2>
 
             <p>
-              <strong style={{ color:'var(--text-primary)' }}>{cityAr}</strong> هي إحدى مدن{' '}
+              <strong style={{ color: 'var(--text-primary)' }}>{cityAr}</strong> هي إحدى مدن{' '}
               <Link href={`/time-now/${countrySlug}`} className="text-accent hover:underline">{countryAr}</Link>،
-              وتتبع المنطقة الزمنية <strong style={{ color:'var(--text-primary)' }}>{city.timezone}</strong> وهي{' '}
-              <strong style={{ color:'var(--text-primary)' }}>{offset}</strong> من التوقيت العالمي المنسق (UTC).
+              وتتبع المنطقة الزمنية <strong style={{ color: 'var(--text-primary)' }}>{city.timezone}</strong> وهي{' '}
+              <strong style={{ color: 'var(--text-primary)' }}>{offset}</strong> من التوقيت العالمي المنسق (UTC).
               يعرض هذا الموقع الوقت الحالي في {cityAr} بدقة حتى الثانية دون الحاجة إلى تحديث الصفحة.
             </p>
 
             <p>
-              يتضمن عرض الوقت <strong style={{ color:'var(--text-primary)' }}>التاريخ اليوم</strong> بالتقويم
+              يتضمن عرض الوقت <strong style={{ color: 'var(--text-primary)' }}>التاريخ اليوم</strong> بالتقويم
               الميلادي والهجري (تقويم أم القرى)، فضلاً عن اسم اليوم بالعربية ورقم الأسبوع من السنة.
               يمكنك أيضاً تبديل المدينة بسهولة باستخدام خاصية البحث العالمي للحصول على وقت أي مدينة
               في العالم فوراً.
             </p>
 
             {/* Hidden keywords for crawlers */}
-            <ul aria-hidden="true" style={{ display:'none' }}>
+            <ul aria-hidden="true" style={{ display: 'none' }}>
               {[
                 `الوقت الآن في ${cityAr}`,
                 `الساعة الآن في ${cityAr}`,
@@ -411,9 +417,9 @@ export default async function CityTimePage({ params }) {
           <span className="text-lg font-bold">ساعة عربية</span>
         </div>
         <nav aria-label="روابط" className="flex justify-center gap-5 mb-3">
-          <Link href="/"             className="text-muted text-sm hover:text-accent transition-colors">الرئيسية</Link>
-          <Link href="/time-now"     className="text-muted text-sm hover:text-accent transition-colors">الوقت الآن</Link>
-          <Link href="/holidays"     className="text-muted text-sm hover:text-accent transition-colors">المناسبات</Link>
+          <Link href="/" className="text-muted text-sm hover:text-accent transition-colors">الرئيسية</Link>
+          <Link href="/time-now" className="text-muted text-sm hover:text-accent transition-colors">الوقت الآن</Link>
+          <Link href="/holidays" className="text-muted text-sm hover:text-accent transition-colors">المناسبات</Link>
           <Link href="/time-difference" className="text-muted text-sm hover:text-accent transition-colors">فرق التوقيت</Link>
         </nav>
         <p className="text-muted text-xs">
@@ -429,15 +435,15 @@ export default async function CityTimePage({ params }) {
 async function GeoBanner({ targetCountryCode }) {
   const hdrs = await headers();
   const userCountryCode = hdrs.get('x-vercel-ip-country') || null;
-  
+
   if (userCountryCode === targetCountryCode) {
     return (
       <div style={{
-        display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem',
-        margin:'0 auto 1.5rem', padding:'0.5rem 1.25rem',
-        borderRadius:'999px', width:'fit-content',
-        background:'var(--success-soft)', border:'1px solid var(--success-border)',
-        fontSize:'var(--text-sm)', color:'var(--success)', fontWeight:'600',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
+        margin: '0 auto 1.5rem', padding: '0.5rem 1.25rem',
+        borderRadius: '999px', width: 'fit-content',
+        background: 'var(--success-soft)', border: '1px solid var(--success-border)',
+        fontSize: 'var(--text-sm)', color: 'var(--success)', fontWeight: '600',
       }}>
         <MapPin size={14} aria-hidden /> تم اكتشاف موقعك تلقائياً
       </div>

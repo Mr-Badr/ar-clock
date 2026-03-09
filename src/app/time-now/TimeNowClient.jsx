@@ -4,9 +4,13 @@ import Link from 'next/link';
 
 function getOffset(tz) {
   try {
+    // We use a fixed reference date instead of new Date() to avoid
+    // Next.js hydration warnings (next-prerender-current-time-client).
+    // The exact date doesn't matter for fetching a static offset like GMT+3.
+    const refDate = new Date('2025-06-01T12:00:00Z');
     const parts = new Intl.DateTimeFormat('en', {
       timeZone: tz, timeZoneName: 'shortOffset',
-    }).formatToParts(new Date());
+    }).formatToParts(refDate);
     return parts.find((p) => p.type === 'timeZoneName')?.value ?? '';
   } catch { return ''; }
 }

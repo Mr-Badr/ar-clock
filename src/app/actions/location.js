@@ -1,8 +1,8 @@
 'use server';
 
-import { 
-  findNearestCity, 
-  mapTimezoneToCityFromSeed 
+import {
+  findNearestCity,
+  mapTimezoneToCityFromSeed
 } from '@/lib/locationService';
 import { searchCities } from '@/lib/db/queries/cities';
 import { getAllCountries } from '@/lib/db/queries/countries';
@@ -34,7 +34,7 @@ function buildPreviewSnippet(city) {
  */
 export async function searchCitiesAction(q = '', limit = 8, countrySlug = '') {
   const cities = await searchCities(q, limit); // Fallback ignores country filtering for now, relies on DB ranking
-  
+
   return cities.map((city, i) => {
     const metaCountrySlug = city.countries?.country_slug || '';
     return {
@@ -56,8 +56,26 @@ export async function searchCitiesAction(q = '', limit = 8, countrySlug = '') {
 /**
  * Get unified list of countries 
  */
+import { PRIORITY_COUNTRY_SLUGS, GLOBAL_POPULAR_COUNTRIES } from '@/lib/db/constants';
+
 export async function getCountriesAction() {
-  return await getAllCountries();
+  const all = await getAllCountries();
+
+  const priorityMap = new Map();
+  // Arab countries get tier 0 (0-21)
+  PRIORITY_COUNTRY_SLUGS.forEach((slug, index) => priorityMap.set(slug, index));
+  // Global popular countries get tier 1 (100-116)
+  GLOBAL_POPULAR_COUNTRIES.forEach((slug, index) => priorityMap.set(slug, 100 + index));
+
+  return all.sort((a, b) => {
+    const aPrio = priorityMap.has(a.country_slug) ? priorityMap.get(a.country_slug) : 999;
+    const bPrio = priorityMap.has(b.country_slug) ? priorityMap.get(b.country_slug) : 999;
+    if (aPrio !== bPrio) return aPrio - bPrio;
+    return (a.name_ar || '').localeCompare(b.name_ar || '', 'ar');
+  }).map(c => ({
+    ...c,
+    slug: c.country_slug
+  }));
 }
 
 /**
