@@ -28,7 +28,7 @@ import { calculatePrayerTimes, getNextPrayer, formatTime } from '@/lib/prayerEng
 import { getCountriesAction } from '@/app/actions/location';
 import PrayerHeroClient from '@/components/PrayerHero.client';
 import SearchCity from '@/components/SearchCityWrapper.client';
-import TimezoneBanner from '@/components/TimezoneBanner.client';
+import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar.client';
 
 // ─── ISR: pre-build top 100 cities, revalidate every 60s ─────────────────────
 
@@ -162,7 +162,6 @@ export default async function PrayerTimesPage({ params }) {
 
   return (
     <div className="min-h-screen bg-base" dir="rtl">
-      <TimezoneBanner />
       <main className="max-w-[600px] mx-auto px-4 pt-24 pb-32">
 
         {/* Static parts render immediately from cache */}
@@ -321,6 +320,16 @@ async function PrayerTimesContent({ country, city, cityData }) {
           الإحداثيات ({cityData.lat?.toFixed(4)}°،{' '}
           {cityData.lon?.toFixed(4)}°) والمنطقة الزمنية {cityData.timezone}.
         </p>
+      </section>
+
+      {/* Monthly Prayer Calendar */}
+      <section className="mb-6">
+        <MonthlyPrayerCalendar
+          lat={cityData.lat}
+          lon={cityData.lon}
+          timezone={cityData.timezone}
+          cityNameAr={cityData.name_ar || cityData.name_en}
+        />
       </section>
 
       {/* FAQ */}

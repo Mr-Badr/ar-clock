@@ -279,36 +279,41 @@ export default function TimeNowHero({
           </div>
         </div>
 
-        {/* Digits */}
+        {/* ─── DESKTOP ROW ─── */}
         <div
           className="ct-row-desktop"
           style={{
-            alignItems: 'center', justifyContent: 'center', direction: 'ltr',
-            opacity: visible ? 1 : 0,
-            transform: visible ? 'none' : 'scale(0.98)',
+            alignItems: 'center', justifyContent: 'center', gap: 'clamp(0.5rem, 3cqi, 2.5rem)', direction: 'ltr',
+            opacity: visible ? 1 : 0, transform: visible ? 'none' : 'scale(0.98)',
             transition: 'opacity 0.4s ease, transform 0.4s ease',
           }}
           role="timer" aria-live="off"
           aria-label={`الوقت الآن في ${cityNameAr}: ${pad2(t.h)} ساعة و ${pad2(t.m)} دقيقة و ${pad2(t.s)} ثانية`}
         >
           {UNITS.map(({ key, label }, i) => (
-            <div key={key} style={{ display: 'flex', alignItems: 'center' }}>
+            <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(0.5rem, 3cqi, 2.5rem)' }}>
               <Unit value={t[key]} label={label} staggerIndex={i} visible={visible} />
               {i < UNITS.length - 1 && <Colon visible={visible} />}
             </div>
           ))}
         </div>
 
-        {/* Mobile digits */}
+        {/* ─── MOBILE ROW (Stacked like holidays) ─── */}
         <div
           className="ct-row-mobile"
           style={{
-            flexDirection: 'column', alignItems: 'center', gap: '1.25rem', padding: '0.5rem 0',
+            flexDirection: 'column', alignItems: 'center', gap: '1.25rem', direction: 'ltr',
+            opacity: visible ? 1 : 0, transform: visible ? 'none' : 'scale(0.98)',
+            transition: 'opacity 0.4s ease, transform 0.4s ease',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', direction: 'ltr' }}>
+          {/* Top Row: Hours */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Unit value={t.h} label="ساعة" staggerIndex={0} visible={visible} />
-            <Colon visible={visible} />
+          </div>
+
+          {/* Bottom Row: Minutes : Seconds */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
             <Unit value={t.m} label="دقيقة" staggerIndex={1} visible={visible} />
             <Colon visible={visible} />
             <Unit value={t.s} label="ثانية" staggerIndex={2} visible={visible} />

@@ -13104,20 +13104,6 @@
     "country_slug": "south-sudan"
   },
   {
-    "id": 54062,
-    "city_slug": "muratpasa",
-    "country_code": "TR",
-    "name_ar": "مراد باشا",
-    "name_en": "Muratpasa",
-    "timezone": "Europe/Istanbul",
-    "is_capital": false,
-    "lat": 36.89157,
-    "lon": 30.76498,
-    "priority": 450000,
-    "population": 450000,
-    "country_slug": "turkey"
-  },
-  {
     "id": 11735,
     "city_slug": "wenshan-city",
     "country_code": "CN",
@@ -13130,6 +13116,20 @@
     "priority": 450000,
     "population": 450000,
     "country_slug": "china"
+  },
+  {
+    "id": 54062,
+    "city_slug": "muratpasa",
+    "country_code": "TR",
+    "name_ar": "مراد باشا",
+    "name_en": "Muratpasa",
+    "timezone": "Europe/Istanbul",
+    "is_capital": false,
+    "lat": 36.89157,
+    "lon": 30.76498,
+    "priority": 450000,
+    "population": 450000,
+    "country_slug": "turkey"
   },
   {
     "id": 54063,
