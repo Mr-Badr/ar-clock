@@ -2,6 +2,8 @@ import React from 'react';
 import TimeDiffCalculator from '@/components/TimeDifference/TimeDiffCalculatorV2.client';
 import { getCityBySlug } from '@/lib/db/queries/cities';
 import { getCountryBySlug } from '@/lib/db/queries/countries';
+import { getCountriesAction } from '@/app/actions/location';
+import { getCachedNowIso } from '@/lib/date-utils';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 
@@ -13,10 +15,10 @@ async function resolveCityFromSegment(segment) {
     const countrySlug = parts.slice(0, i + 1).join('-');
     const citySlug = parts.slice(i + 1).join('-');
     if (!countrySlug || !citySlug) continue;
-    
+
     const country = await getCountryBySlug(countrySlug);
     if (!country) continue;
-    
+
     const city = await getCityBySlug(country.country_code, citySlug);
     if (city && city.timezone && city.timezone !== 'UTC') {
       return {
@@ -46,12 +48,12 @@ const resolveCity = cache(resolveCityFromSegment);
 // ─── Reliable server-safe timezone helpers ────────────────────────────────────
 
 /** Returns offset in minutes vs UTC, correctly handling midnight boundary */
-function getOffsetMinutes(tz) {
+function getOffsetMinutes(tz, baseNow = new Date()) {
   try {
-    const now = new Date();
+    const now = baseNow;
     // Parse a "local" date string by forcing en-US locale with explicit fields
     const local = new Date(now.toLocaleString('en-US', { timeZone: tz }));
-    const utc   = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
+    const utc = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
     return Math.round((local.getTime() - utc.getTime()) / 60000);
   } catch { return 0; }
 }
@@ -61,20 +63,20 @@ function getOffsetMinutes(tz) {
  * Strategy: compare Jan offset (winter) vs Jul offset (summer).
  * If current offset differs from winter offset → DST active.
  */
-function isDSTActive(tz) {
+function isDSTActive(tz, baseNow = new Date()) {
   try {
-    const now = new Date();
+    const now = baseNow;
     const jan = new Date(now.getFullYear(), 0, 15); // mid-Jan (winter)
     const jul = new Date(now.getFullYear(), 6, 15); // mid-Jul (summer)
 
-    const offsetNow = getOffsetMinutes(tz);
-    const localJan  = new Date(jan.toLocaleString('en-US', { timeZone: tz }));
-    const utcJan    = new Date(jan.toLocaleString('en-US', { timeZone: 'UTC' }));
+    const offsetNow = getOffsetMinutes(tz, now);
+    const localJan = new Date(jan.toLocaleString('en-US', { timeZone: tz }));
+    const utcJan = new Date(jan.toLocaleString('en-US', { timeZone: 'UTC' }));
     const offsetJan = Math.round((localJan.getTime() - utcJan.getTime()) / 60000);
 
     // If timezone never changes (Jan=Jul offset), it's not a DST zone
     const localJul = new Date(jul.toLocaleString('en-US', { timeZone: tz }));
-    const utcJul   = new Date(jul.toLocaleString('en-US', { timeZone: 'UTC' }));
+    const utcJul = new Date(jul.toLocaleString('en-US', { timeZone: 'UTC' }));
     const offsetJul = Math.round((localJul.getTime() - utcJul.getTime()) / 60000);
     if (offsetJan === offsetJul) return false; // no DST
 
@@ -84,9 +86,9 @@ function isDSTActive(tz) {
 }
 
 /** Returns whether this timezone observes DST at all (any time of year) */
-function observesDST(tz) {
+function observesDST(tz, baseNow = new Date()) {
   try {
-    const now = new Date();
+    const now = baseNow;
     const jan = new Date(now.getFullYear(), 0, 15);
     const jul = new Date(now.getFullYear(), 6, 15);
     const lJan = new Date(jan.toLocaleString('en-US', { timeZone: tz }));
@@ -100,9 +102,9 @@ function observesDST(tz) {
 /** Format offset as "+3:00" or "-5:30" */
 function formatUTCOffset(minutes) {
   const sign = minutes >= 0 ? '+' : '-';
-  const abs  = Math.abs(minutes);
-  const h    = Math.floor(abs / 60);
-  const m    = abs % 60;
+  const abs = Math.abs(minutes);
+  const h = Math.floor(abs / 60);
+  const m = abs % 60;
   return `UTC${sign}${h}${m > 0 ? ':' + String(m).padStart(2, '0') : ''}`;
 }
 
@@ -121,11 +123,21 @@ function fmtAr(h24) {
 function dayNote(srcH, diffH) {
   const dest = srcH + diffH;
   if (dest >= 24) return '(اليوم التالي)';
-  if (dest < 0)   return '(اليوم السابق)';
+  if (dest < 0) return '(اليوم السابق)';
   return '';
 }
 
 // ─── Metadata ─────────────────────────────────────────────────────────────────
+export async function generateStaticParams() {
+  // Pre-render a few common pairings for faster initial load & build stability
+  return [
+    { from: 'morocco-rabat', to: 'saudi-arabia-riyadh' },
+    { from: 'egypt-cairo', to: 'uae-dubai' },
+    { from: 'saudi-arabia-riyadh', to: 'united-kingdom-london' },
+    { from: 'morocco-casablanca', to: 'france-paris' },
+  ];
+}
+
 export async function generateMetadata({ params }) {
   const { from, to } = await params;
   const [fromCity, toCity] = await Promise.all([resolveCity(from), resolveCity(to)]);
@@ -157,27 +169,34 @@ export async function generateMetadata({ params }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default async function ComparisonPage({ params }) {
   const { from, to } = await params;
-  const [fromCity, toCity] = await Promise.all([resolveCity(from), resolveCity(to)]);
+  const [fromCity, toCity, allCountries] = await Promise.all([
+    resolveCity(from),
+    resolveCity(to),
+    getCountriesAction()
+  ]);
   if (!fromCity || !toCity) notFound();
 
   // ── Compute offsets & DST info (server-safe) ──
-  const fromOffsetMin  = getOffsetMinutes(fromCity.timezone);
-  const toOffsetMin    = getOffsetMinutes(toCity.timezone);
-  const diffMinutes    = toOffsetMin - fromOffsetMin;
-  const diffHours      = diffMinutes / 60;
-  const fromDST        = isDSTActive(fromCity.timezone);
-  const toDST          = isDSTActive(toCity.timezone);
-  const fromObservesDST = observesDST(fromCity.timezone);
-  const toObservesDST   = observesDST(toCity.timezone);
-  const fromOffsetStr  = formatUTCOffset(fromOffsetMin);
-  const toOffsetStr    = formatUTCOffset(toOffsetMin);
+  const nowIso = await getCachedNowIso();
+  const baseNow = new Date(nowIso);
 
-  const absDiffH    = Math.floor(Math.abs(diffHours));
-  const absDiffM    = Math.abs(diffMinutes) % 60;
-  const diffLabel   = absDiffH > 0
+  const fromOffsetMin = getOffsetMinutes(fromCity.timezone, baseNow);
+  const toOffsetMin = getOffsetMinutes(toCity.timezone, baseNow);
+  const diffMinutes = toOffsetMin - fromOffsetMin;
+  const diffHours = diffMinutes / 60;
+  const fromDST = isDSTActive(fromCity.timezone, baseNow);
+  const toDST = isDSTActive(toCity.timezone, baseNow);
+  const fromObservesDST = observesDST(fromCity.timezone, baseNow);
+  const toObservesDST = observesDST(toCity.timezone, baseNow);
+  const fromOffsetStr = formatUTCOffset(fromOffsetMin);
+  const toOffsetStr = formatUTCOffset(toOffsetMin);
+
+  const absDiffH = Math.floor(Math.abs(diffHours));
+  const absDiffM = Math.abs(diffMinutes) % 60;
+  const diffLabel = absDiffH > 0
     ? `${absDiffH} ساعة${absDiffM > 0 ? ` و${absDiffM} دقيقة` : ''}`
     : `${absDiffM} دقيقة`;
-  const ahead  = diffMinutes > 0 ? toCity.city_name_ar  : fromCity.city_name_ar;
+  const ahead = diffMinutes > 0 ? toCity.city_name_ar : fromCity.city_name_ar;
   const behind = diffMinutes > 0 ? fromCity.city_name_ar : toCity.city_name_ar;
 
   // ── Time conversion example groups ──
@@ -322,7 +341,7 @@ export default async function ComparisonPage({ params }) {
 
       {/* ── Interactive Calculator ── */}
       <section className="px-4 pb-16 relative z-10" aria-label="حاسبة فرق التوقيت التفاعلية">
-        <TimeDiffCalculator initialFrom={fromCity} initialTo={toCity} />
+        <TimeDiffCalculator initialFrom={fromCity} initialTo={toCity} preloadedCountries={allCountries} />
       </section>
 
       {/* ── DST Comparison Block ── */}
@@ -460,17 +479,17 @@ export default async function ComparisonPage({ params }) {
             {
               label: 'يطبق التوقيت الصيفي؟',
               from: fromObservesDST ? '✅ نعم' : '❌ لا',
-              to:   toObservesDST   ? '✅ نعم' : '❌ لا',
+              to: toObservesDST ? '✅ نعم' : '❌ لا',
             },
             {
               label: 'الحالة الآن',
               from: fromDST ? '☀️ صيفي' : '🌙 شتوي',
-              to:   toDST   ? '☀️ صيفي' : '🌙 شتوي',
+              to: toDST ? '☀️ صيفي' : '🌙 شتوي',
             },
             {
               label: 'التوقيت (UTC)',
               from: fromOffsetStr,
-              to:   toOffsetStr,
+              to: toOffsetStr,
             },
             {
               label: 'الفارق ثابت طوال السنة؟',
@@ -490,10 +509,10 @@ export default async function ComparisonPage({ params }) {
           {(!fromObservesDST && !toObservesDST)
             ? <>الفارق بين {fromCity.city_name_ar} و{toCity.city_name_ar} ثابت تمامًا على مدار السنة. لا تطبق أي من المدينتين التوقيت الصيفي، لذا يبقى الفارق دائمًا <strong>{diffLabel}</strong> بغض النظر عن الشهر أو الموسم.</>
             : (!fromObservesDST && toObservesDST)
-            ? <>{toCity.city_name_ar} تطبق التوقيت الصيفي (تُقدّم ساعتها عادةً في آخر أحد من مارس وتُعيدها في آخر أحد من أكتوبر)، بينما {fromCity.city_name_ar} لا تطبقه. هذا يعني أن الفارق الحالي <strong>{diffLabel}</strong> قد يتغير بمقدار ساعة خلال فترة التوقيت الصيفي.</>
-            : (fromObservesDST && !toObservesDST)
-            ? <>{fromCity.city_name_ar} تطبق التوقيت الصيفي، بينما {toCity.city_name_ar} لا تطبقه. الفارق الحالي <strong>{diffLabel}</strong> قد يتغير بمقدار ساعة في الربيع والخريف.</>
-            : <>كلتا المدينتين تطبقان التوقيت الصيفي. إذا كانتا تُقدّمان ساعتيهما في نفس الوقت فالفارق يبقى ثابتًا، وإلا فقد يختلف مؤقتًا بمقدار ساعة. الفارق الحالي هو <strong>{diffLabel}</strong>.</>
+              ? <>{toCity.city_name_ar} تطبق التوقيت الصيفي (تُقدّم ساعتها عادةً في آخر أحد من مارس وتُعيدها في آخر أحد من أكتوبر)، بينما {fromCity.city_name_ar} لا تطبقه. هذا يعني أن الفارق الحالي <strong>{diffLabel}</strong> قد يتغير بمقدار ساعة خلال فترة التوقيت الصيفي.</>
+              : (fromObservesDST && !toObservesDST)
+                ? <>{fromCity.city_name_ar} تطبق التوقيت الصيفي، بينما {toCity.city_name_ar} لا تطبقه. الفارق الحالي <strong>{diffLabel}</strong> قد يتغير بمقدار ساعة في الربيع والخريف.</>
+                : <>كلتا المدينتين تطبقان التوقيت الصيفي. إذا كانتا تُقدّمان ساعتيهما في نفس الوقت فالفارق يبقى ثابتًا، وإلا فقد يختلف مؤقتًا بمقدار ساعة. الفارق الحالي هو <strong>{diffLabel}</strong>.</>
           }
         </p>
       </section>

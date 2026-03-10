@@ -14,33 +14,33 @@ import {
   resolveEventMeta,
 } from '@/lib/holidays-engine';
 import { resolveAllHijriEvents } from '@/lib/hijri-resolver';
-
+import { getCachedNowIso } from '@/lib/date-utils';
 
 import { PAGE_SIZE } from './constants';
 
 /* ── Annotate one event with computed runtime data ──────────────────────── */
-function annotate(raw, resolvedMap) {
-  const ev     = enrichEvent(raw);
-  const target = getNextEventDate(ev, resolvedMap);
-  const rem    = getTimeRemaining(target);
-  const cal    = resolvedMap[ev.slug] || null;
+function annotate(raw, resolvedMap, nowMs) {
+  const ev = enrichEvent(raw);
+  const target = getNextEventDate(ev, resolvedMap, nowMs);
+  const rem = getTimeRemaining(target, nowMs);
+  const cal = resolvedMap[ev.slug] || null;
   // resolveEventMeta patches stale years in title/description/keywords
-  const meta   = resolveEventMeta(ev, target);
+  const meta = resolveEventMeta(ev, target);
   return {
-    slug:           ev.slug,
-    name:           ev.name,
-    type:           ev.type,
-    category:       ev.category || 'islamic',
-    seoTitle:       meta.seoTitle,
-    description:    meta.description,
-    keywords:       meta.keywords,
-    _countryCode:   ev._countryCode    || null,
-    _targetISO:     target.toISOString(),
-    _daysLeft:      rem.days,
-    _formatted:     formatGregorianAr(target),
-    _calMethod:     cal?.labelShort    || null,
-    _calVariance:   cal?.variance      ?? 0,
-    _calAccuracy:   cal?.accuracy      || 'high',
+    slug: ev.slug,
+    name: ev.name,
+    type: ev.type,
+    category: ev.category || 'islamic',
+    seoTitle: meta.seoTitle,
+    description: meta.description,
+    keywords: meta.keywords,
+    _countryCode: ev._countryCode || null,
+    _targetISO: target.toISOString(),
+    _daysLeft: rem.days,
+    _formatted: formatGregorianAr(target),
+    _calMethod: cal?.labelShort || null,
+    _calVariance: cal?.variance ?? 0,
+    _calAccuracy: cal?.accuracy || 'high',
     _localSighting: cal?.localSighting || false,
   };
 }
@@ -60,10 +60,11 @@ export async function loadMoreEvents(cursor = 0, filter = {}) {
     );
   }
 
-  const total    = pool.length;
-  const slice    = pool.slice(cursor, cursor + PAGE_SIZE);
+  const total = pool.length;
+  const slice = pool.slice(cursor, cursor + PAGE_SIZE);
   const resolved = await resolveAllHijriEvents(slice);
-  const events   = slice.map(ev => annotate(ev, resolved));
+  const nowMs = new Date(await getCachedNowIso()).getTime();
+  const events = slice.map(ev => annotate(ev, resolved, nowMs));
   return {
     events,
     nextCursor: cursor + PAGE_SIZE < total ? cursor + PAGE_SIZE : null,

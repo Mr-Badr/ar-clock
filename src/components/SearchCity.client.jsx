@@ -61,7 +61,7 @@ import './SearchCity.css';
 
 /* ── Constants ──────────────────────────────────────────────────────────── */
 const LS_COUNTRY = 'waqt-preferred-country';
-const DEBOUNCE_MS = 250;
+const DEBOUNCE_MS = 150;
 const GEO_TIMEOUT_MS = 8000;
 const RESULT_LIMIT = 50;
 const GEO_TOAST_MS = 5000; /* auto-dismiss geo error after 5 s */
@@ -112,12 +112,17 @@ function getFlagEmoji(countryCode) {
 function normalizeArabic(s = '') {
   if (!s) return '';
   return s
+    .toLowerCase()
     .replace(/[أإآ]/g, 'ا')
+    .replace(/[ؤئ]/g, 'ء')
     .replace(/ة/g, 'ه')
     .replace(/ى/g, 'ي')
-    .replace(/[\u064B-\u065F\u0670]/g, '') // remove tashkeel
-    .replace(/(^|\s)ال/g, '$1') // strip definite article 'ال' at start of ANY word
-    .toLowerCase()
+    // Remove tashkeel (diacritics) and tatweel (kashida)
+    .replace(/[\u064B-\u065F\u0670\u0640]/g, '')
+    // Remove all punctuation and symbols (typing mistakes)
+    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\[\]"'?:؛،؟]/g, ' ')
+    // Strip definite article 'ال' at start of ANY word
+    .replace(/(^|\s)ال/g, '$1')
     .trim()
     // Collapse multiple spaces into one to avoid matching issues
     .replace(/\s+/g, ' ');
@@ -282,11 +287,16 @@ const GeoToast = memo(function GeoToast({ type, onDismiss }) {
 });
 
 /* ── Main Component ─────────────────────────────────────────────────────── */
-export default function SearchCity({ onSelectCity = null, initialCity = null, mode = 'prayer' }) {
+export default function SearchCity({
+  onSelectCity = null,
+  initialCity = null,
+  mode = 'prayer',
+  preloadedCountries = null
+}) {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
-  const [countries, setCountries] = useState([]);
+  const [countries, setCountries] = useState(preloadedCountries || []);
   const [showAllCountries, setShowAllCountries] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedCity, setSelectedCity] = useState(initialCity ?? null);
@@ -318,8 +328,20 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
 
   /* ── Countries ───────────────────────────────────────────────────────── */
   useEffect(() => {
-    loadCountries().then(data => {
-      setCountries(data);
+    async function initCountries() {
+      // If we already have the countries (passed from Server Component), use them immediately
+      let data = preloadedCountries;
+      if (data && data.length > 0) {
+        setCountries(data);
+      } else {
+        // Fallback: load them over the network
+        data = await loadCountries();
+        startTransition(() => {
+          setCountries(data);
+        });
+      }
+
+      // Check initial city or localStorage preferences
       if (initialCity?.country_slug) {
         const m = data.find(c => c.slug === initialCity.country_slug);
         if (m) setSelectedCountry(m);
@@ -332,8 +354,16 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
           if (f) setSelectedCountry(f);
         }
       } catch { /* private browsing */ }
+    }
+    initCountries();
+  }, [initialCity, preloadedCountries]);
+
+  // Pre-warm priority countries silently in the background on mount
+  useEffect(() => {
+    mainCountriesSlugs.forEach(slug => {
+      loadCitiesForCountry(slug);
     });
-  }, [initialCity]);
+  }, [mainCountriesSlugs]);
 
   /* ── Auto-dismiss geo toast ──────────────────────────────────────────── */
   const showToast = useCallback((type) => {
@@ -436,12 +466,7 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
       setResults([]);
       setSearchEverywhere(false);
     });
-
-    // Pre-warm priority countries (Arab + Popular Global)
-    mainCountriesSlugs.forEach(slug => {
-      loadCitiesForCountry(slug);
-    });
-  }, [mainCountriesSlugs]);
+  }, []);
 
   const handleSelectCountry = useCallback(async (country) => {
     setSelectedCountry(country);
@@ -756,6 +781,7 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
             </CommandGroup>
           )}
 
+
           {/* Idle state: prioritized list of countries */}
           {!query && !showSkeleton && visibleCountries.length > 0 && (
             <CommandGroup heading={showAllCountries ? "جميع الدول" : "الدول والأماكن الأكثر بحثاً"} className="sc-group-heading">
@@ -787,14 +813,17 @@ export default function SearchCity({ onSelectCity = null, initialCity = null, mo
                 </CommandItem>
               ))}
               {!showAllCountries && (
-                <button
-                  type="button"
-                  className="sc-browse-all-btn"
+                <div
+                  role="button"
+                  tabIndex={0}
                   onClick={() => setShowAllCountries(true)}
+                  onKeyDown={(e) => e.key === 'Enter' && setShowAllCountries(true)}
+                  className="sc-browse-all-btn"
+                  aria-label="تصفح جميع دول العالم"
                 >
-                  <Globe size={14} style={{ marginLeft: '0.5rem' }} />
-                  تصفح جميع دول العالم ({countries.length})
-                </button>
+                  <Globe size={15} style={{ marginLeft: '0.4rem', flexShrink: 0 }} />
+                  <span>تصفح جميع دول العالم ({countries.length})</span>
+                </div>
               )}
             </CommandGroup>
           )}

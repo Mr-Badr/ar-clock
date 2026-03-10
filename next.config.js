@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // ── Server ───────────────────────────────────────────────────────────────────
+  // Keep Drizzle/Postgres out of the Edge runtime bundle (they are Node-only)
+  serverExternalPackages: ['@neondatabase/serverless', 'postgres', 'drizzle-orm'],
+
+  // ── HTTP ─────────────────────────────────────────────────────────────────────
+  compress: true,
+  poweredByHeader: false,
+
   // ── Images ──────────────────────────────────────────────────────────────────
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -17,17 +25,19 @@ const nextConfig = {
   cacheComponents: true,
   reactCompiler: true,
 
+  // ── Cache Life (Next.js 16) ─────────────────────────────────────────────────
+  cacheLife: {
+    geodata: {
+      stale: 3600,        // serve stale for 1h client-side
+      revalidate: 86400,  // revalidate daily on server
+      expire: 604800,     // expire after 7 days maximum
+    }
+  },
+
   // ── Experiments ──────────────────────────────────────────────────────────────
   experimental: {
     // Inline critical CSS for faster FCP
     optimizeCss: true,
-    cacheLife: {
-      geodata: {
-        stale: 3600,        // serve stale for 1h client-side
-        revalidate: 86400,  // revalidate daily on server
-        expire: 604800,     // expire after 7 days maximum
-      }
-    }
   },
 
   // ── Security & Performance Headers ───────────────────────────────────────────
@@ -42,6 +52,8 @@ const nextConfig = {
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(self)' },
+          // Preconnect to Open-Meteo for faster weather API calls
+          { key: 'Link', value: '<https://api.open-meteo.com>; rel=preconnect' },
         ],
       },
       {

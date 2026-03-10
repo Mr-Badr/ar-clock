@@ -8,9 +8,15 @@
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronLeft, MapPin } from 'lucide-react';
-import { getCountryBySlug } from '@/lib/db/queries/countries';
+import { getCountryBySlug, getAllCountrySlugs } from '@/lib/db/queries/countries';
 import { getCitiesByCountry, getCapitalCity } from '@/lib/db/queries/cities';
-import SearchCity from '@/components/SearchCity.client';
+import { getCountriesAction } from '@/app/actions/location';
+import SearchCity from '@/components/SearchCityWrapper.client';
+
+export async function generateStaticParams() {
+  const slugs = await getAllCountrySlugs();
+  return slugs.map(slug => ({ country: slug }));
+}
 
 export async function generateMetadata({ params }) {
   const { country: countrySlug } = await params;
@@ -33,9 +39,10 @@ export default async function CountryPrayerPage({ params }) {
   const country = await getCountryBySlug(countrySlug);
   if (!country) notFound();
 
-  const [cities, capital] = await Promise.all([
+  const [cities, capital, allCountries] = await Promise.all([
     getCitiesByCountry(country.country_code),
     getCapitalCity(country.country_code),
+    getCountriesAction(),
   ]);
 
   const countryAr = country.name_ar || country.name_en;
@@ -62,7 +69,7 @@ export default async function CountryPrayerPage({ params }) {
         </header>
 
         <div className="max-w-xl mx-auto mb-12">
-          <SearchCity mode="mwaqit-al-salat" />
+          <SearchCity mode="mwaqit-al-salat" preloadedCountries={allCountries} />
         </div>
 
         {capital && (

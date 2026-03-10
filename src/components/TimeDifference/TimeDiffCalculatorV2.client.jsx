@@ -11,7 +11,7 @@ import { ArrowLeftRight, Clock, Briefcase, Share2, Sun, Moon, Info, Check, MapPi
 import { Button } from '@/components/ui/button';
 import { getTimeDiffAction } from '@/app/actions/location';
 
-export default function TimeDiffCalculator({ initialFrom = null, initialTo = null }) {
+export default function TimeDiffCalculator({ initialFrom = null, initialTo = null, preloadedCountries = null }) {
   const router = useRouter();
   const [fromCity, setFromCity] = useState(initialFrom);
   const [toCity, setToCity] = useState(initialTo);
@@ -60,7 +60,7 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
 
   const handleShare = () => {
     const url = window.location.origin + constructUrl(fromCity, toCity);
-    navigator.clipboard.writeText(url).catch(() => {});
+    navigator.clipboard.writeText(url).catch(() => { });
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -111,7 +111,7 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
               من مدينة (الوقت الأساسي)
             </label>
             <div className="relative z-50">
-              <SearchCity onSelectCity={handleSelectFrom} initialCity={fromCity} />
+              <SearchCity onSelectCity={handleSelectFrom} initialCity={fromCity} preloadedCountries={preloadedCountries} />
             </div>
             {fromCity && (
               <p className="text-sm font-bold text-[var(--accent)] pr-2">
@@ -139,7 +139,7 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
               إلى مدينة (الوجهة)
             </label>
             <div className="relative z-40">
-              <SearchCity onSelectCity={handleSelectTo} initialCity={toCity} />
+              <SearchCity onSelectCity={handleSelectTo} initialCity={toCity} preloadedCountries={preloadedCountries} />
             </div>
             {toCity && (
               <p className="text-sm font-bold text-[var(--accent)] pr-2">
@@ -192,7 +192,7 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                     <span className="text-3xl opacity-80">{diffData.sign}</span>
                     {diffData.formattedHours}
                     {diffData.formattedMinutes > 0 && (
-                      <span className="text-2xl opacity-80">:{String(diffData.formattedMinutes).padStart(2,'0')}</span>
+                      <span className="text-2xl opacity-80">:{String(diffData.formattedMinutes).padStart(2, '0')}</span>
                     )}
                     <span className="text-xl opacity-80 ml-1">ساعة</span>
                   </>
@@ -333,9 +333,9 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                       {(() => {
                         const diffH = diffData.totalMinutes / 60;
                         const toStart = bizStart + diffH;
-                        const toEnd   = bizEnd   + diffH;
+                        const toEnd = bizEnd + diffH;
                         const clampStart = ((toStart % 24) + 24) % 24;
-                        const clampEnd   = ((toEnd   % 24) + 24) % 24;
+                        const clampEnd = ((toEnd % 24) + 24) % 24;
                         return (
                           <div
                             className="absolute inset-y-0 rounded-full bg-[var(--accent-alt-soft)] border border-[var(--accent-alt-soft)]"
@@ -357,7 +357,7 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
 
                   {/* Scale */}
                   <div className="flex justify-between text-[10px] text-[var(--text-muted)]">
-                    {[0,6,12,18,24].map(h => <span key={h}>{h}:00</span>)}
+                    {[0, 6, 12, 18, 24].map(h => <span key={h}>{h}:00</span>)}
                   </div>
 
                   {/* Legend */}
@@ -383,7 +383,7 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                       <p className="text-xl font-black text-[var(--success)]">{businessHours.overlapFrom ? (() => {
                         // Compute overlap in to-city time
                         const diffH = diffData.totalMinutes / 60;
-                        const fmt = (h) => { const n = ((h%24)+24)%24; return `${n%12||12}:00 ${n>=12?'م':'ص'}`; };
+                        const fmt = (h) => { const n = ((h % 24) + 24) % 24; return `${n % 12 || 12}:00 ${n >= 12 ? 'م' : 'ص'}`; };
                         return `${fmt(businessHours.overlapStart + diffH)} – ${fmt(businessHours.overlapEnd + diffH)}`;
                       })() : '—'}</p>
                     </div>

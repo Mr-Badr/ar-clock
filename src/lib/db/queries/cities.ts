@@ -16,8 +16,10 @@ export async function getCitiesByCountry(countryCode: string): Promise<City[]> {
       .order('population', { ascending: false })
     if (error || !data?.length) throw new Error(error?.message ?? 'empty')
     return data as City[]
-  } catch (err) {
-    console.warn(`[DB] getCitiesByCountry(${countryCode}) → fallback:`, err)
+  } catch (err: any) {
+    if (err?.message !== 'empty') {
+      console.warn(`[DB] getCitiesByCountry(${countryCode}) → fallback:`, err.message)
+    }
     return (fallback as any[]).filter(c => c.country_code?.toUpperCase() === countryCode.toUpperCase()) as City[]
   }
 }
@@ -104,7 +106,21 @@ export async function getAllCityParams(): Promise<CityParams[]> {
 // Dynamic search — NOT cached (real-time autocomplete)
 export async function searchCities(query: string, limit = 10): Promise<City[]> {
   if (!query || query.trim().length < 2) return []
-  const q = query.trim()
+
+  // Pre-clean the query: normalize hamzas, remove tatweel & tashkeel, standardizing ta marbuta/alif maksura, strip punctuation
+  let q = query
+    .toLowerCase()
+    .replace(/[أإآ]/g, 'ا')
+    .replace(/[ؤئ]/g, 'ء')
+    .replace(/ة/g, 'ه')
+    .replace(/ى/g, 'ي')
+    .replace(/[\u064B-\u065F\u0670\u0640]/g, '')
+    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\[\]"'?:؛،؟]/g, ' ')
+    .trim()
+    .replace(/\s+/g, ' ');
+
+  if (!q || q.length < 2) return []
+
   // Strip Arabic definite article ال so "الرباط" matches "رباط", and "دار بيضاء" matches "الدار البيضاء"
   const qStripped = q.replace(/(^|\s)\u0627\u0644/g, '$1').trim()
 

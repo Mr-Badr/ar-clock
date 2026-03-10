@@ -9,7 +9,7 @@
  */
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import Link         from 'next/link';
+import Link from 'next/link';
 
 import {
   ALL_EVENTS, enrichEvent, HIJRI_MONTHS_AR,
@@ -20,8 +20,8 @@ import {
   getRelatedEvents,
 } from '@/lib/holidays-engine';
 import { resolveAllHijriEvents } from '@/lib/hijri-resolver';
-import { COUNTRY_META }          from '@/lib/calendar-config';
-import { getCachedNowIso }       from '@/lib/date-utils';
+import { COUNTRY_META } from '@/lib/calendar-config';
+import { getCachedNowIso } from '@/lib/date-utils';
 import CountdownTicker, { CountdownTickerSkeleton, ShareBar } from '@/components/clocks/CountdownTicker';
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
@@ -37,31 +37,31 @@ export async function generateMetadata({ params }) {
   const raw = ALL_EVENTS.find(e => e.slug === slug);
   if (!raw) return { title: '404', robots: { index: false } };
 
-  const ev      = enrichEvent(raw);
-  const res     = await resolveAllHijriEvents([ev]);
-  const target  = getNextEventDate(ev, res);
-  const nowMs   = new Date(await getCachedNowIso()).getTime();
-  const rem     = getTimeRemaining(target, nowMs);
-  const seo     = resolveEventMeta(ev, target);          // ← year-correct
+  const ev = enrichEvent(raw);
+  const res = await resolveAllHijriEvents([ev]);
+  const nowMs = new Date(await getCachedNowIso()).getTime();
+  const target = getNextEventDate(ev, res, nowMs);
+  const rem = getTimeRemaining(target, nowMs);
+  const seo = resolveEventMeta(ev, target);          // ← year-correct
   const gregStr = formatGregorianAr(target);
-  const url     = `${SITE}/holidays/${slug}`;
-  const desc    = `${seo.seoTitle} — ${gregStr}. متبقي ${rem.days} يوم. ${seo.description}`;
+  const url = `${SITE}/holidays/${slug}`;
+  const desc = `${seo.seoTitle} — ${gregStr}. متبقي ${rem.days} يوم. ${seo.description}`;
 
   return {
-    title:       seo.seoTitle,
+    title: seo.seoTitle,
     description: desc,
-    keywords:    seo.keywords.join(', '),
-    alternates:  { canonical: url, languages: { 'ar': url, 'ar-SA': url, 'ar-EG': url, 'ar-MA': url } },
-    robots:      { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large', 'max-video-preview': -1 },
-    openGraph:   { title: seo.seoTitle, description: desc, url, locale: 'ar_SA', type: 'website' },
-    twitter:     { card: 'summary_large_image', title: seo.seoTitle, description: desc },
+    keywords: seo.keywords.join(', '),
+    alternates: { canonical: url, languages: { 'ar': url, 'ar-SA': url, 'ar-EG': url, 'ar-MA': url } },
+    robots: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large', 'max-video-preview': -1 },
+    openGraph: { title: seo.seoTitle, description: desc, url, locale: 'ar_SA', type: 'website' },
+    twitter: { card: 'summary_large_image', title: seo.seoTitle, description: desc },
   };
 }
 
 /* ── Accuracy badge ───────────────────────────────────────────────────────── */
 function AccuracyBadge({ accuracy, localSighting }) {
   const cls = { high: 'badge-success', medium: 'badge-warning', low: 'badge-danger' }[accuracy] || 'badge-default';
-  const lbl = { high: 'دقيق',          medium: 'تقريبي',         low: 'تقديري'        }[accuracy] || '';
+  const lbl = { high: 'دقيق', medium: 'تقريبي', low: 'تقديري' }[accuracy] || '';
   return (
     <span className={`badge ${cls}`}>
       {localSighting && <span title="قد يختلف بيوم">⚠ </span>}
@@ -131,7 +131,7 @@ function HistoricalTable({ event, hijriYear, currentYear }) {
   if (event.type !== 'hijri') return null;
   const rows = event.historicalDates || [
     { year: `${hijriYear - 1} هـ`, gregorian: `${currentYear - 1}م`, note: 'السنة الماضية' },
-    { year: `${hijriYear} هـ`,     gregorian: `${currentYear}م`,     note: 'السنة الحالية' },
+    { year: `${hijriYear} هـ`, gregorian: `${currentYear}م`, note: 'السنة الحالية' },
     { year: `${hijriYear + 1} هـ`, gregorian: `${currentYear + 1}م`, note: 'تقديري (~11 يوماً أبكر)' },
   ];
   return (
@@ -173,11 +173,11 @@ function HistoricalTable({ event, hijriYear, currentYear }) {
 
 /* ── Related events ───────────────────────────────────────────────────────── */
 async function RelatedEvents({ slug }) {
-  const related  = getRelatedEvents(slug, ALL_EVENTS, 4);
+  const related = getRelatedEvents(slug, ALL_EVENTS, 4);
   const resolved = await resolveAllHijriEvents(related);
-  const nowMs    = new Date(await getCachedNowIso()).getTime();
+  const nowMs = new Date(await getCachedNowIso()).getTime();
   const ann = related.map(ev => {
-    const d   = getNextEventDate(ev, resolved);
+    const d = getNextEventDate(ev, resolved, nowMs);
     const seo = resolveEventMeta(ev, d);
     return { ...ev, _daysLeft: getTimeRemaining(d, nowMs).days, _formatted: formatGregorianAr(d), _seoTitle: seo.seoTitle };
   });
@@ -211,59 +211,59 @@ export default async function HolidayPage({ params }) {
   const { slug } = await params;
   const raw = ALL_EVENTS.find(e => e.slug === slug);
   if (!raw) notFound();
-  
+
   const nowIso = await getCachedNowIso();
-  const now    = new Date(nowIso);
+  const now = new Date(nowIso);
   const currentYear = now.getFullYear();
 
   const event = enrichEvent(raw);
 
-  const resolved   = await resolveAllHijriEvents([event]);
-  const calInfo    = resolved[event.slug] || null;
-  const targetDate = getNextEventDate(event, resolved);
-  const remaining  = getTimeRemaining(targetDate, now.getTime());
+  const resolved = await resolveAllHijriEvents([event]);
+  const calInfo = resolved[event.slug] || null;
+  const targetDate = getNextEventDate(event, resolved, now.getTime());
+  const remaining = getTimeRemaining(targetDate, now.getTime());
 
   // Year-correct all SEO strings for this actual upcoming date
   const seo = resolveEventMeta(event, targetDate);
   // Also patch any year-bearing strings in quickFacts / countryDates
-  const gregYear  = targetDate.getFullYear();
+  const gregYear = targetDate.getFullYear();
   const hijriYear = approxHijriYear(gregYear);
-  const patchStr  = (s) => replaceYears(s, gregYear, hijriYear);
+  const patchStr = (s) => replaceYears(s, gregYear, hijriYear);
   const quickFacts = (event.quickFacts || []).map(f => ({ ...f, value: patchStr(f.value) }));
   // faqItems come pre-patched from resolveEventMeta — no raw event.faqItems needed below
-  const faqItems   = seo.faqItems;
+  const faqItems = seo.faqItems;
 
   const gregStr = formatGregorianAr(targetDate);
-  const year    = targetDate.getFullYear();
+  const year = targetDate.getFullYear();
 
   /* Hijri display — call AlAdhan for the exact date */
   let hijriStr = null, hijriYearNum = year;
   if (event.type === 'hijri') {
     try {
-      const d   = targetDate;
-      const str = `${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${d.getFullYear()}`;
-      const r   = await fetch(`https://api.aladhan.com/v1/gToH?date=${str}`, { next: { revalidate: 86_400, tags: ['hijri-display'] } });
-      const j   = await r.json();
+      const d = targetDate;
+      const str = `${String(d.getDate()).padStart(2, '0')}-${String(d.getMonth() + 1).padStart(2, '0')}-${d.getFullYear()}`;
+      const r = await fetch(`https://api.aladhan.com/v1/gToH?date=${str}`, { next: { revalidate: 86_400, tags: ['hijri-display'] } });
+      const j = await r.json();
       if (j?.data?.hijri) {
         const hd = { day: +j.data.hijri.day, month: +j.data.hijri.month.number, year: +j.data.hijri.year };
-        hijriStr    = formatHijriDisplayAr(hd);
+        hijriStr = formatHijriDisplayAr(hd);
         hijriYearNum = hd.year;
       }
     } catch { /* use greg fallback */ }
   }
 
   /* WhatsApp share */
-  const shareText   = encodeURIComponent(`${event.name} — متبقي ${remaining.days} يوم (${gregStr}) 🗓\n${SITE}/holidays/${slug}`);
+  const shareText = encodeURIComponent(`${event.name} — متبقي ${remaining.days} يوم (${gregStr}) 🗓\n${SITE}/holidays/${slug}`);
   const whatsappUrl = `https://wa.me/?text=${shareText}`;
 
   /* Structured data — all use year-corrected seo.seoTitle / seo.description */
-  const evSchema  = { ...buildEventSchema(event, targetDate, SITE), name: seo.seoTitle, description: seo.description };
-  const wpSchema  = { ...buildWebPageSchema(event, targetDate, SITE, nowIso), name: seo.seoTitle, description: seo.description };
+  const evSchema = { ...buildEventSchema(event, targetDate, SITE), name: seo.seoTitle, description: seo.description };
+  const wpSchema = { ...buildWebPageSchema(event, targetDate, SITE, nowIso), name: seo.seoTitle, description: seo.description };
   const faqSchema = buildFAQSchema({ ...event, faqItems });
-  const bcSchema  = buildBreadcrumbSchema([
-    { name: 'الرئيسية',  url: SITE },
+  const bcSchema = buildBreadcrumbSchema([
+    { name: 'الرئيسية', url: SITE },
     { name: 'المناسبات', url: `${SITE}/holidays` },
-    { name: event.name,  url: `${SITE}/holidays/${slug}` },
+    { name: event.name, url: `${SITE}/holidays/${slug}` },
   ]);
 
   const typeLabel = { hijri: 'هجري', fixed: 'ثابت', estimated: 'تقديري', monthly: 'شهري', easter: 'ميلادي' }[event.type] || event.type;
@@ -271,16 +271,16 @@ export default async function HolidayPage({ params }) {
   return (
     <div className="bg-base" style={{ minHeight: '100dvh' }} dir="rtl">
       {/* JSON-LD inline — in initial HTML, never deferred, optimal for crawlers */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(evSchema)  }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(wpSchema)  }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(bcSchema)  }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(evSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(wpSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(bcSchema) }} />
       {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
 
       <main className="container container--narrow" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-20)' }}>
 
         {/* Breadcrumb */}
         <nav aria-label="breadcrumb" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)', marginBottom: 'var(--space-8)' }}>
-          <Link href="/"         style={{ color: 'var(--text-muted)' }}>الرئيسية</Link>
+          <Link href="/" style={{ color: 'var(--text-muted)' }}>الرئيسية</Link>
           <span aria-hidden>/</span>
           <Link href="/holidays" style={{ color: 'var(--text-muted)' }}>المناسبات</Link>
           <span aria-hidden>/</span>
@@ -324,8 +324,8 @@ export default async function HolidayPage({ params }) {
               ? ` يصادف هذا العام ${gregStr} الموافق ${hijriStr}. متبقي ${remaining.days} يوم${remaining.hours > 0 ? ` و${remaining.hours} ساعة` : ''}.`
               : ` يصادف هذا العام ${gregStr}. متبقي ${remaining.days} يوم.`
             }
-            {event.type === 'hijri'     && ' يُحسب الموعد وفق تقويم أم القرى الرسمي ويتقدم ~11 يوماً كل عام.'}
-            {event.type === 'fixed'     && ' الموعد ثابت كل عام في نفس اليوم.'}
+            {event.type === 'hijri' && ' يُحسب الموعد وفق تقويم أم القرى الرسمي ويتقدم ~11 يوماً كل عام.'}
+            {event.type === 'fixed' && ' الموعد ثابت كل عام في نفس اليوم.'}
             {event.type === 'estimated' && ' الموعد تقديري وقد يتغير بإعلان رسمي.'}
           </p>
 
@@ -348,11 +348,11 @@ export default async function HolidayPage({ params }) {
         {/* ── DATE INFO ROW — below the counter, clean pill style ──────────── */}
         <div
           style={{
-            display:        'flex',
-            flexWrap:       'wrap',
-            gap:            'var(--space-2)',
-            marginBottom:   'var(--space-10)',
-            alignItems:     'center',
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 'var(--space-2)',
+            marginBottom: 'var(--space-10)',
+            alignItems: 'center',
             justifyContent: 'center',
           }}
           aria-label="تفاصيل الموعد"
@@ -360,14 +360,14 @@ export default async function HolidayPage({ params }) {
           <time
             dateTime={targetDate.toISOString().split('T')[0]}
             style={{
-              display:      'flex', alignItems: 'center', gap: '0.4em',
-              padding:      'var(--space-2) var(--space-4)',
-              background:   'var(--bg-surface-3)',
-              border:       '1px solid var(--border-default)',
+              display: 'flex', alignItems: 'center', gap: '0.4em',
+              padding: 'var(--space-2) var(--space-4)',
+              background: 'var(--bg-surface-3)',
+              border: '1px solid var(--border-default)',
               borderRadius: '999px',
-              fontSize:     'var(--text-sm)',
-              fontWeight:   'var(--font-semibold)',
-              color:        'var(--text-primary)',
+              fontSize: 'var(--text-sm)',
+              fontWeight: 'var(--font-semibold)',
+              color: 'var(--text-primary)',
             }}
           >
             <span aria-hidden style={{ opacity: 0.6 }}>📅</span>
@@ -376,14 +376,14 @@ export default async function HolidayPage({ params }) {
 
           {hijriStr && (
             <span style={{
-              display:      'flex', alignItems: 'center', gap: '0.4em',
-              padding:      'var(--space-2) var(--space-4)',
-              background:   'var(--accent-soft)',
-              border:       '1px solid var(--border-accent)',
+              display: 'flex', alignItems: 'center', gap: '0.4em',
+              padding: 'var(--space-2) var(--space-4)',
+              background: 'var(--accent-soft)',
+              border: '1px solid var(--border-accent)',
               borderRadius: '999px',
-              fontSize:     'var(--text-sm)',
-              fontWeight:   'var(--font-semibold)',
-              color:        'var(--accent)',
+              fontSize: 'var(--text-sm)',
+              fontWeight: 'var(--font-semibold)',
+              color: 'var(--accent)',
             }}>
               <span aria-hidden style={{ opacity: 0.7 }}>☽</span>
               {hijriStr}
@@ -391,13 +391,13 @@ export default async function HolidayPage({ params }) {
           )}
 
           <span style={{
-            display:      'flex', alignItems: 'center', gap: '0.4em',
-            padding:      'var(--space-2) var(--space-4)',
-            background:   'var(--bg-surface-3)',
-            border:       '1px solid var(--border-default)',
+            display: 'flex', alignItems: 'center', gap: '0.4em',
+            padding: 'var(--space-2) var(--space-4)',
+            background: 'var(--bg-surface-3)',
+            border: '1px solid var(--border-default)',
             borderRadius: '999px',
-            fontSize:     'var(--text-sm)',
-            color:        'var(--text-secondary)',
+            fontSize: 'var(--text-sm)',
+            color: 'var(--text-secondary)',
           }}>
             <span style={{ color: 'var(--accent)', fontWeight: 'var(--font-bold)', fontVariantNumeric: 'tabular-nums' }}>{remaining.days}</span>
             &nbsp;يوم متبقي
@@ -405,10 +405,10 @@ export default async function HolidayPage({ params }) {
 
           {calInfo?.note && (
             <span style={{
-              display:      'flex', alignItems: 'center', gap: '0.3em',
-              padding:      'var(--space-2) var(--space-3)',
-              fontSize:     'var(--text-xs)',
-              color:        'var(--text-muted)',
+              display: 'flex', alignItems: 'center', gap: '0.3em',
+              padding: 'var(--space-2) var(--space-3)',
+              fontSize: 'var(--text-xs)',
+              color: 'var(--text-muted)',
             }}>
               {calInfo.localSighting && <span style={{ color: 'var(--warning)' }}>⚠</span>}
               {calInfo.note}
@@ -460,14 +460,14 @@ export default async function HolidayPage({ params }) {
               <p>🔄 يُحدَّث تلقائياً كل 12 ساعة من المصدر الرسمي.</p>
             </>}
             {event.type === 'estimated' && <p>⚠ هذا التاريخ تقديري — قد يتغير بقرار وزاري رسمي.</p>}
-            {event.type === 'monthly'   && <p>🔁 يتكرر كل شهر في نفس اليوم.</p>}
-            {event.type === 'fixed'     && <p>📌 تاريخ ثابت — نفس اليوم كل عام.</p>}
+            {event.type === 'monthly' && <p>🔁 يتكرر كل شهر في نفس اليوم.</p>}
+            {event.type === 'fixed' && <p>📌 تاريخ ثابت — نفس اليوم كل عام.</p>}
             <p>🕐 آخر تحديث: {new Date(nowIso).toLocaleDateString('ar-SA-u-nu-latn')}</p>
           </div>
         </div>
 
         {/* ── TABLES ──────────────────────────────────────────────────────── */}
-        <CountryTable    event={event} />
+        <CountryTable event={event} />
         <HistoricalTable event={event} hijriYear={hijriYearNum} currentYear={currentYear} />
 
         {/* ── FAQ ─────────────────────────────────────────────────────────── */}
@@ -493,7 +493,7 @@ export default async function HolidayPage({ params }) {
         {/* ── RELATED EVENTS ──────────────────────────────────────────────── */}
         <Suspense fallback={
           <div style={{ marginTop: 'var(--space-12)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 'var(--space-3)' }}>
-            {[1,2,3,4].map(i=><div key={i} className="alarm-item" style={{ height: '80px', opacity: 0.4 }} />)}
+            {[1, 2, 3, 4].map(i => <div key={i} className="alarm-item" style={{ height: '80px', opacity: 0.4 }} />)}
           </div>
         }>
           <RelatedEvents slug={slug} />
@@ -502,14 +502,14 @@ export default async function HolidayPage({ params }) {
         {/* ── BACK TO ALL EVENTS — prominent, end of page ─────────────────── */}
         <div
           style={{
-            marginTop:     'var(--space-16)',
-            paddingTop:    'var(--space-10)',
-            borderTop:     '1px solid var(--border-subtle)',
-            display:       'flex',
+            marginTop: 'var(--space-16)',
+            paddingTop: 'var(--space-10)',
+            borderTop: '1px solid var(--border-subtle)',
+            display: 'flex',
             flexDirection: 'column',
-            alignItems:    'center',
-            gap:           'var(--space-4)',
-            textAlign:     'center',
+            alignItems: 'center',
+            gap: 'var(--space-4)',
+            textAlign: 'center',
           }}
         >
           <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
@@ -519,17 +519,17 @@ export default async function HolidayPage({ params }) {
             href="/holidays"
             className="btn"
             style={{
-              display:      'inline-flex',
-              alignItems:   'center',
-              gap:          'var(--space-2)',
-              padding:      'var(--space-3) var(--space-8)',
-              background:   'var(--accent)',
-              color:        '#fff',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 'var(--space-2)',
+              padding: 'var(--space-3) var(--space-8)',
+              background: 'var(--accent)',
+              color: '#fff',
               borderRadius: 'var(--radius-2xl)',
-              fontWeight:   'var(--font-semibold)',
-              fontSize:     'var(--text-base)',
-              textDecoration:'none',
-              boxShadow:    'var(--shadow-accent)',
+              fontWeight: 'var(--font-semibold)',
+              fontSize: 'var(--text-base)',
+              textDecoration: 'none',
+              boxShadow: 'var(--shadow-accent)',
             }}
           >
             <span aria-hidden>←</span>

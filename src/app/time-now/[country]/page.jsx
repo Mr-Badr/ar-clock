@@ -24,7 +24,7 @@ import { MapPin, Clock, ChevronLeft } from 'lucide-react';
 
 
 import TimeNowHero from '@/components/time-now/TimeNowHero';
-import SearchCity from '@/components/SearchCity.client';
+import SearchCity from '@/components/SearchCityWrapper.client';
 import CountryCitiesGrid from '@/components/time-now/CountryCitiesGrid';
 import TimezoneInfoCard from '@/components/time-now/TimezoneInfoCard';
 import SameTimezoneCountries from '@/components/time-now/SameTimezoneCountries';
@@ -34,10 +34,12 @@ import {
   getAllCountrySlugs,
   getCountryBySlug,
 } from '@/lib/db/queries/countries';
+
 import {
   getTopCitiesByCountry,
   getCapitalCity,
 } from '@/lib/db/queries/cities';
+import { getCountriesAction } from '@/app/actions/location';
 import { getCachedNowIso } from '@/lib/date-utils';
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
@@ -129,9 +131,10 @@ export default async function CountryTimePage({ params }) {
   const timezone = capital ? capital.timezone : country.timezone;
 
   /* Fetch supporting data */
-  const [cities, nowIso] = await Promise.all([
+  const [cities, nowIso, allCountries] = await Promise.all([
     getTopCitiesByCountry(country.country_code, 30),
     getCachedNowIso(),
+    getCountriesAction(),
   ]);
   const sameOffsetCountries = []; // We won't fetch this as it requires another query, skip for migration simplicity if not in plan
 
@@ -161,7 +164,7 @@ export default async function CountryTimePage({ params }) {
         name: `ما هو الوقت الآن في ${countryAr}؟`,
         acceptedAnswer: {
           '@type': 'Answer',
-          text: `الوقت الحالي في ${countryAr} يُعرض في هذه الصفحة بدقة حتى الثانية. ${countryAr} تتبع المنطقة الزمنية ${capital.timezone} وهي ${utcOffset}.`,
+          text: `الوقت الحالي في ${countryAr} يُعرض في هذه الصفحة بدقة حتى الثانية. ${countryAr} تتبع المنطقة الزمنية ${timezone} وهي ${utcOffset}.`,
         },
       },
       {
@@ -169,7 +172,7 @@ export default async function CountryTimePage({ params }) {
         name: `ما هي المنطقة الزمنية في ${countryAr}؟`,
         acceptedAnswer: {
           '@type': 'Answer',
-          text: `${countryAr} تتبع المنطقة الزمنية ${capital.timezone}، وهي ${utcOffset} من التوقيت العالمي (UTC).`,
+          text: `${countryAr} تتبع المنطقة الزمنية ${timezone}، وهي ${utcOffset} من التوقيت العالمي (UTC).`,
         },
       },
       {
@@ -177,7 +180,7 @@ export default async function CountryTimePage({ params }) {
         name: `كم الساعة الآن في ${cityAr}؟`,
         acceptedAnswer: {
           '@type': 'Answer',
-          text: `الساعة الحالية في ${cityAr} تُعرض في أعلى هذه الصفحة بدقة حتى الثانية، مزامَنةً تلقائياً مع ${capital.timezone}.`,
+          text: `الساعة الحالية في ${cityAr} تُعرض في أعلى هذه الصفحة بدقة حتى الثانية، مزامَنةً تلقائياً مع ${timezone}.`,
         },
       },
     ],
@@ -207,12 +210,9 @@ export default async function CountryTimePage({ params }) {
 
         {/* ── HERO SECTION ── */}
         <section aria-labelledby="country-time-heading" className="container mx-auto px-4 py-8">
-          <h1 id="country-time-heading" className="text-3xl md:text-5xl font-black mb-3 leading-tight text-center">
+          <h1 id="country-time-heading" className="text-3xl md:text-5xl font-black mb-6 leading-tight text-center">
             الوقت الآن في <span className="text-accent">{countryAr}</span>
           </h1>
-          <p className="text-muted text-center mb-8 text-lg">
-            الساعة الحالية في {cityAr} · {utcOffset} · {capital.timezone}
-          </p>
 
           {/* Geo-detection banner */}
           <Suspense fallback={null}>
@@ -221,18 +221,17 @@ export default async function CountryTimePage({ params }) {
 
           {/* City Search */}
           <div className="w-full max-w-xl mx-auto shadow-sm rounded-xl mb-4">
-            <SearchCity mode="time-now" />
+            <SearchCity mode="time-now" preloadedCountries={allCountries} />
           </div>
 
           {/* Live Clock */}
           <div className="max-w-3xl mx-auto">
             <Suspense fallback={<div style={{ height: '280px', borderRadius: '1rem', background: 'var(--bg-surface-2)' }} aria-hidden />}>
               <TimeNowHero
-                ianaTimezone={capital.timezone}
+                ianaTimezone={timezone}
                 cityNameAr={cityAr}
                 countryNameAr={countryAr}
-                utcOffset={utcOffset}
-                tzLabel={capital.timezone}
+                countryCode={country.country_code}
               />
             </Suspense>
           </div>
@@ -254,7 +253,7 @@ export default async function CountryTimePage({ params }) {
         <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
           <Suspense fallback={null}>
             <TimezoneInfoCard
-              ianaTimezone={capital.timezone}
+              ianaTimezone={timezone}
               countryAr={countryAr}
               utcOffset={utcOffset}
               nowIso={nowIso}
@@ -276,7 +275,7 @@ export default async function CountryTimePage({ params }) {
               countryAr={countryAr}
               cityAr={cityAr}
               utcOffset={utcOffset}
-              timezone={capital.timezone}
+              timezone={timezone}
               cityNameEn={cityEn}
               countryNameEn={countryEn}
             />
@@ -296,7 +295,7 @@ export default async function CountryTimePage({ params }) {
             </h2>
             <p>
               تتبع <strong>{countryAr}</strong> المنطقة الزمنية{' '}
-              <strong>{capital.timezone}</strong> وهي{' '}
+              <strong>{timezone}</strong> وهي{' '}
               <strong>{utcOffset}</strong> من التوقيت العالمي المنسق (UTC).
               {' '}يعرض هذا الموقع الوقت الحالي في {countryAr} بدقة حتى الثانية،
               محدَّثاً تلقائياً دون الحاجة إلى تحديث الصفحة.

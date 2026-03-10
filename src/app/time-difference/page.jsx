@@ -1,5 +1,6 @@
 import React from 'react';
 import TimeDiffCalculator from '@/components/TimeDifference/TimeDiffCalculatorV2.client';
+import { getCountriesAction } from '@/app/actions/location';
 
 export const metadata = {
   title: 'فرق التوقيت بين مدينتين — حاسبة الفرق الزمني الدقيقة | وقت',
@@ -72,7 +73,8 @@ const faqs = [
   }
 ];
 
-export default function TimeDifferencePage() {
+export default async function TimeDifferencePage() {
+  const allCountries = await getCountriesAction();
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -93,13 +95,13 @@ export default function TimeDifferencePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      
+
       {/* Hero Section */}
       <section className="relative pt-24 pb-16 px-4 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[var(--accent-glow)] rounded-full blur-[120px] opacity-20 -z-10 animate-pulse-slow"></div>
         <div className="max-w-4xl mx-auto text-center space-y-6">
           <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
-            فرق التوقيت بين مدينتين — <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] to-[#38b2ac]">حاسبة الفرق الزمني الدقيقة</span>
+            فرق التوقيت بين مدينتين — <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] to-[#38b2ac]">حاسبة الفرق الزمني الدقيقة</span>
           </h1>
           <p className="text-lg md:text-xl text-[var(--text-muted)] max-w-2xl mx-auto font-medium">
             حاسبة دقيقة وسريعة لمعرفة فرق التوقيت وتحويل الوقت بين أي دولتين أو مدينتين حول العالم، مع دعم كلي للتوقيت الصيفي.
@@ -109,26 +111,26 @@ export default function TimeDifferencePage() {
 
       {/* Calculator Section */}
       <section className="px-4 pb-20 relative z-10">
-        <TimeDiffCalculator />
+        <TimeDiffCalculator preloadedCountries={allCountries} />
       </section>
 
       {/* SEO Content & SEO Structure */}
       <section className="px-4 py-20 bg-[var(--bg-surface-1)] border-t border-[var(--border-subtle)]">
         <div className="max-w-4xl mx-auto space-y-16">
-          
+
           <div className="space-y-6">
             <h2 className="text-3xl font-bold border-b border-[var(--border-subtle)] pb-4 inline-block">كيفية حساب فرق التوقيت</h2>
             <p className="text-[var(--text-muted)] leading-relaxed text-lg mb-4">
-              حساب فرق التوقيت لم يعد مهمة معقدة. تعتمد أداتنا على أحدث قواعد البيانات العالمية للمناطق الزمنية. 
-              عند اختيارك لمدينتين، يقوم خادمنا بحساب الفارق الزمني عبر تحويل الوقت القياسي لكل مدينة مقارنة بتوقيت جرينتش (UTC)، 
+              حساب فرق التوقيت لم يعد مهمة معقدة. تعتمد أداتنا على أحدث قواعد البيانات العالمية للمناطق الزمنية.
+              عند اختيارك لمدينتين، يقوم خادمنا بحساب الفارق الزمني عبر تحويل الوقت القياسي لكل مدينة مقارنة بتوقيت جرينتش (UTC)،
               ثم إيجاد الفارق النهائي لمساعدتك في تنسيق اجتماعاتك ومكالماتك الدولية بسهولة.
             </p>
             <p className="text-[var(--text-muted)] leading-relaxed text-lg">
-              وبمجرد معرفة فرق الساعات الدقيق والوقت أينما كنت تسافر، يمكنك أيضاً الاعتماد على منصتنا لمعرفة 
+              وبمجرد معرفة فرق الساعات الدقيق والوقت أينما كنت تسافر، يمكنك أيضاً الاعتماد على منصتنا لمعرفة
               <a href="/mwaqit-al-salat" className="text-[var(--text-link)] hover:text-[var(--text-link-hover)] underline">مواقيت الصلاة
               </a>
-               لمدينتك القادمة، وحتى تفحص <a href="/holidays" className="text-[var(--text-link)] hover:text-[var(--text-link-hover)] underline">العطلات الرسمية
-              </a> 
+              لمدينتك القادمة، وحتى تفحص <a href="/holidays" className="text-[var(--text-link)] hover:text-[var(--text-link-hover)] underline">العطلات الرسمية
+              </a>
               لتخطيط إجازتك الاستثنائية بكل ذكاء واحترافية.
             </p>
           </div>
@@ -162,7 +164,7 @@ export default function TimeDifferencePage() {
               ))}
             </div>
           </div>
-          
+
         </div>
       </section>
     </div>

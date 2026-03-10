@@ -364,6 +364,20 @@
     "country_slug": "united-kingdom"
   },
   {
+    "id": 56341,
+    "city_slug": "new-york-city",
+    "country_code": "US",
+    "name_ar": "نيويورك",
+    "name_en": "New York City",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 40.71427,
+    "lon": -74.00597,
+    "priority": 8804190,
+    "population": 8804190,
+    "country_slug": "united-states"
+  },
+  {
     "id": 26830,
     "city_slug": "jakarta",
     "country_code": "ID",
@@ -1050,6 +1064,20 @@
     "country_slug": "china"
   },
   {
+    "id": 56342,
+    "city_slug": "los-angeles",
+    "country_code": "US",
+    "name_ar": "لوس أنجلوس",
+    "name_en": "Los Angeles",
+    "timezone": "America/Los_Angeles",
+    "is_capital": false,
+    "lat": 34.05223,
+    "lon": -118.24368,
+    "priority": 3820914,
+    "population": 3820914,
+    "country_slug": "united-states"
+  },
+  {
     "id": 46276,
     "city_slug": "faisalabad",
     "country_code": "PK",
@@ -1582,6 +1610,20 @@
     "country_slug": "china"
   },
   {
+    "id": 56343,
+    "city_slug": "brooklyn",
+    "country_code": "US",
+    "name_ar": "بروكلين",
+    "name_en": "Brooklyn",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 39.23039,
+    "lon": -76.60219,
+    "priority": 2736074,
+    "population": 2736074,
+    "country_slug": "united-states"
+  },
+  {
     "id": 4118,
     "city_slug": "belo-horizonte",
     "country_code": "BR",
@@ -1622,6 +1664,20 @@
     "priority": 2690000,
     "population": 2690000,
     "country_slug": "nigeria"
+  },
+  {
+    "id": 56344,
+    "city_slug": "chicago",
+    "country_code": "US",
+    "name_ar": "شيكاغو",
+    "name_en": "Chicago",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 41.85003,
+    "lon": -87.65005,
+    "priority": 2664452,
+    "population": 2664452,
+    "country_slug": "united-states"
   },
   {
     "id": 11497,
@@ -1888,6 +1944,34 @@
     "priority": 2318895,
     "population": 2318895,
     "country_slug": "italy"
+  },
+  {
+    "id": 56345,
+    "city_slug": "queens",
+    "country_code": "US",
+    "name_ar": "كوينز",
+    "name_en": "Queens",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 40.68149,
+    "lon": -73.83652,
+    "priority": 2316841,
+    "population": 2316841,
+    "country_slug": "united-states"
+  },
+  {
+    "id": 56346,
+    "city_slug": "houston",
+    "country_code": "US",
+    "name_ar": "هيوستن",
+    "name_en": "Houston",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 29.76328,
+    "lon": -95.36327,
+    "priority": 2314157,
+    "population": 2314157,
+    "country_slug": "united-states"
   },
   {
     "id": 1150,
@@ -3010,6 +3094,20 @@
     "country_slug": "brazil"
   },
   {
+    "id": 56347,
+    "city_slug": "phoenix",
+    "country_code": "US",
+    "name_ar": "فينيكس",
+    "name_en": "Phoenix",
+    "timezone": "America/Phoenix",
+    "is_capital": false,
+    "lat": 33.44838,
+    "lon": -112.07404,
+    "priority": 1650070,
+    "population": 1650070,
+    "country_slug": "united-states"
+  },
+  {
     "id": 11529,
     "city_slug": "luan",
     "country_code": "CN",
@@ -3190,6 +3288,20 @@
     "priority": 1578722,
     "population": 1578722,
     "country_slug": "saudi-arabia"
+  },
+  {
+    "id": 56348,
+    "city_slug": "philadelphia",
+    "country_code": "US",
+    "name_ar": "فيلادلفيا",
+    "name_en": "Philadelphia",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 32.77152,
+    "lon": -89.11673,
+    "priority": 1573916,
+    "population": 1573916,
+    "country_slug": "united-states"
   },
   {
     "id": 38437,
@@ -3374,6 +3486,20 @@
     "country_slug": "brazil"
   },
   {
+    "id": 56349,
+    "city_slug": "san-antonio",
+    "country_code": "US",
+    "name_ar": "سان أنطونيو",
+    "name_en": "San Antonio",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 29.42412,
+    "lon": -98.49363,
+    "priority": 1526656,
+    "population": 1526656,
+    "country_slug": "united-states"
+  },
+  {
     "id": 36480,
     "city_slug": "kobe",
     "country_code": "JP",
@@ -3456,6 +3582,20 @@
     "priority": 1487579,
     "population": 1487579,
     "country_slug": "china"
+  },
+  {
+    "id": 56350,
+    "city_slug": "manhattan",
+    "country_code": "US",
+    "name_ar": "مانهاتن",
+    "name_en": "Manhattan",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 39.18361,
+    "lon": -96.57167,
+    "priority": 1487536,
+    "population": 1487536,
+    "country_slug": "united-states"
   },
   {
     "id": 27655,
@@ -3850,6 +3990,20 @@
     "country_slug": "indonesia"
   },
   {
+    "id": 56351,
+    "city_slug": "san-diego",
+    "country_code": "US",
+    "name_ar": "سان دييغو",
+    "name_en": "San Diego",
+    "timezone": "America/Los_Angeles",
+    "is_capital": false,
+    "lat": 32.71571,
+    "lon": -117.16472,
+    "priority": 1404452,
+    "population": 1404452,
+    "country_slug": "united-states"
+  },
+  {
     "id": 11557,
     "city_slug": "zhanjiang",
     "country_code": "CN",
@@ -3904,6 +4058,20 @@
     "priority": 1390581,
     "population": 1390581,
     "country_slug": "china"
+  },
+  {
+    "id": 56352,
+    "city_slug": "the-bronx",
+    "country_code": "US",
+    "name_ar": "البرونكس",
+    "name_en": "The Bronx",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 40.84985,
+    "lon": -73.86641,
+    "priority": 1385108,
+    "population": 1385108,
+    "country_slug": "united-states"
   },
   {
     "id": 11560,
@@ -4072,6 +4240,20 @@
     "priority": 1326564,
     "population": 1326564,
     "country_slug": "iraq"
+  },
+  {
+    "id": 56353,
+    "city_slug": "dallas",
+    "country_code": "US",
+    "name_ar": "دالاس",
+    "name_en": "Dallas",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 33.92371,
+    "lon": -84.84077,
+    "priority": 1326087,
+    "population": 1326087,
+    "country_slug": "united-states"
   },
   {
     "id": 36482,
@@ -4956,6 +5138,20 @@
     "country_slug": "india"
   },
   {
+    "id": 23310,
+    "city_slug": "birmingham",
+    "country_code": "GB",
+    "name_ar": "برمينغهام",
+    "name_en": "Birmingham",
+    "timezone": "Europe/London",
+    "is_capital": false,
+    "lat": 52.48142,
+    "lon": -1.89983,
+    "priority": 1157603,
+    "population": 1157603,
+    "country_slug": "united-kingdom"
+  },
+  {
     "id": 18170,
     "city_slug": "copenhagen",
     "country_code": "DK",
@@ -5754,6 +5950,34 @@
     "country_slug": "china"
   },
   {
+    "id": 56354,
+    "city_slug": "jacksonville",
+    "country_code": "US",
+    "name_ar": "جاكسونفيل",
+    "name_en": "Jacksonville",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 33.81382,
+    "lon": -85.7613,
+    "priority": 1009833,
+    "population": 1009833,
+    "country_slug": "united-states"
+  },
+  {
+    "id": 56355,
+    "city_slug": "fort-worth",
+    "country_code": "US",
+    "name_ar": "فورت وورث",
+    "name_en": "Fort Worth",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 32.72541,
+    "lon": -97.32085,
+    "priority": 1008106,
+    "population": 1008106,
+    "country_slug": "united-states"
+  },
+  {
     "id": 11605,
     "city_slug": "hanzhong",
     "country_code": "CN",
@@ -5850,6 +6074,20 @@
     "priority": 998900,
     "population": 998900,
     "country_slug": "china"
+  },
+  {
+    "id": 56356,
+    "city_slug": "san-jose",
+    "country_code": "US",
+    "name_ar": "سان هوزيه",
+    "name_en": "San Jose",
+    "timezone": "America/Los_Angeles",
+    "is_capital": false,
+    "lat": 37.33939,
+    "lon": -121.89496,
+    "priority": 997368,
+    "population": 997368,
+    "country_slug": "united-states"
   },
   {
     "id": 27689,
@@ -6004,6 +6242,20 @@
     "priority": 975886,
     "population": 975886,
     "country_slug": "pakistan"
+  },
+  {
+    "id": 56357,
+    "city_slug": "austin",
+    "country_code": "US",
+    "name_ar": "أوستن",
+    "name_en": "Austin",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 30.26715,
+    "lon": -97.74306,
+    "priority": 974447,
+    "population": 974447,
+    "country_slug": "united-states"
   },
   {
     "id": 43619,
@@ -6356,6 +6608,20 @@
     "country_slug": "brazil"
   },
   {
+    "id": 56358,
+    "city_slug": "columbus",
+    "country_code": "US",
+    "name_ar": "كولومبوس",
+    "name_en": "Columbus",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 32.46098,
+    "lon": -84.98771,
+    "priority": 913175,
+    "population": 913175,
+    "country_slug": "united-states"
+  },
+  {
     "id": 46284,
     "city_slug": "sialkot",
     "country_code": "PK",
@@ -6368,6 +6634,20 @@
     "priority": 911817,
     "population": 911817,
     "country_slug": "pakistan"
+  },
+  {
+    "id": 56359,
+    "city_slug": "charlotte",
+    "country_code": "US",
+    "name_ar": "تشارلوت",
+    "name_en": "Charlotte",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 35.22709,
+    "lon": -80.84313,
+    "priority": 911311,
+    "population": 911311,
+    "country_slug": "united-states"
   },
   {
     "id": 11623,
@@ -6564,6 +6844,20 @@
     "priority": 893550,
     "population": 893550,
     "country_slug": "china"
+  },
+  {
+    "id": 56360,
+    "city_slug": "indianapolis",
+    "country_code": "US",
+    "name_ar": "إنديانابوليس",
+    "name_en": "Indianapolis",
+    "timezone": "America/Indiana/Indianapolis",
+    "is_capital": false,
+    "lat": 39.76838,
+    "lon": -86.15804,
+    "priority": 887642,
+    "population": 887642,
+    "country_slug": "united-states"
   },
   {
     "id": 27696,
@@ -7000,6 +7294,20 @@
     "country_slug": "china"
   },
   {
+    "id": 56361,
+    "city_slug": "san-francisco",
+    "country_code": "US",
+    "name_ar": "سان فرانسيسكو",
+    "name_en": "San Francisco",
+    "timezone": "America/Los_Angeles",
+    "is_capital": false,
+    "lat": 37.77493,
+    "lon": -122.41942,
+    "priority": 827526,
+    "population": 827526,
+    "country_slug": "united-states"
+  },
+  {
     "id": 36488,
     "city_slug": "sakai",
     "country_code": "JP",
@@ -7348,6 +7656,20 @@
     "priority": 782671,
     "population": 782671,
     "country_slug": "china"
+  },
+  {
+    "id": 56362,
+    "city_slug": "seattle",
+    "country_code": "US",
+    "name_ar": "سياتل",
+    "name_en": "Seattle",
+    "timezone": "America/Los_Angeles",
+    "is_capital": false,
+    "lat": 47.60621,
+    "lon": -122.33207,
+    "priority": 780995,
+    "population": 780995,
+    "country_slug": "united-states"
   },
   {
     "id": 18915,
@@ -7826,6 +8148,20 @@
     "country_slug": "brazil"
   },
   {
+    "id": 56363,
+    "city_slug": "denver",
+    "country_code": "US",
+    "name_ar": "دنفر",
+    "name_en": "Denver",
+    "timezone": "America/Denver",
+    "is_capital": false,
+    "lat": 39.73915,
+    "lon": -104.9847,
+    "priority": 729019,
+    "population": 729019,
+    "country_slug": "united-states"
+  },
+  {
     "id": 4139,
     "city_slug": "osasco",
     "country_code": "BR",
@@ -8232,6 +8568,20 @@
     "country_slug": "united-states"
   },
   {
+    "id": 56364,
+    "city_slug": "nashville",
+    "country_code": "US",
+    "name_ar": "ناشفيل",
+    "name_en": "Nashville",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 35.9746,
+    "lon": -77.96554,
+    "priority": 689447,
+    "population": 689447,
+    "country_slug": "united-states"
+  },
+  {
     "id": 11661,
     "city_slug": "fuxin",
     "country_code": "CN",
@@ -8372,6 +8722,20 @@
     "country_slug": "china"
   },
   {
+    "id": 56365,
+    "city_slug": "oklahoma-city",
+    "country_code": "US",
+    "name_ar": "أوكلاهوما سيتي",
+    "name_en": "Oklahoma City",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 35.46756,
+    "lon": -97.51643,
+    "priority": 681054,
+    "population": 681054,
+    "country_slug": "united-states"
+  },
+  {
     "id": 11666,
     "city_slug": "yuncheng",
     "country_code": "CN",
@@ -8412,6 +8776,20 @@
     "priority": 679400,
     "population": 679400,
     "country_slug": "tajikistan"
+  },
+  {
+    "id": 56366,
+    "city_slug": "el-paso",
+    "country_code": "US",
+    "name_ar": "إل باسو",
+    "name_en": "El Paso",
+    "timezone": "America/Denver",
+    "is_capital": false,
+    "lat": 31.75872,
+    "lon": -106.48693,
+    "priority": 678815,
+    "population": 678815,
+    "country_slug": "united-states"
   },
   {
     "id": 27710,
@@ -8680,6 +9058,34 @@
     "country_slug": "canada"
   },
   {
+    "id": 56367,
+    "city_slug": "boston",
+    "country_code": "US",
+    "name_ar": "بوسطن",
+    "name_en": "Boston",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 42.35843,
+    "lon": -71.05977,
+    "priority": 653833,
+    "population": 653833,
+    "country_slug": "united-states"
+  },
+  {
+    "id": 56368,
+    "city_slug": "portland",
+    "country_code": "US",
+    "name_ar": "بورتلاند",
+    "name_en": "Portland",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 36.58171,
+    "lon": -86.51638,
+    "priority": 652503,
+    "population": 652503,
+    "country_slug": "united-states"
+  },
+  {
     "id": 15171,
     "city_slug": "frankfurt-am-main",
     "country_code": "DE",
@@ -8764,6 +9170,20 @@
     "country_slug": "india"
   },
   {
+    "id": 56369,
+    "city_slug": "detroit",
+    "country_code": "US",
+    "name_ar": "ديترويت",
+    "name_en": "Detroit",
+    "timezone": "America/Detroit",
+    "is_capital": false,
+    "lat": 42.33143,
+    "lon": -83.04575,
+    "priority": 645705,
+    "population": 645705,
+    "country_slug": "united-states"
+  },
+  {
     "id": 36499,
     "city_slug": "honcho",
     "country_code": "JP",
@@ -8804,6 +9224,34 @@
     "priority": 644037,
     "population": 644037,
     "country_slug": "brazil"
+  },
+  {
+    "id": 56370,
+    "city_slug": "las-vegas",
+    "country_code": "US",
+    "name_ar": "لاس فيغاس",
+    "name_en": "Las Vegas",
+    "timezone": "America/Denver",
+    "is_capital": false,
+    "lat": 35.59393,
+    "lon": -105.2239,
+    "priority": 641903,
+    "population": 641903,
+    "country_slug": "united-states"
+  },
+  {
+    "id": 56371,
+    "city_slug": "new-south-memphis",
+    "country_code": "US",
+    "name_ar": "نيو سوث ميمفيس",
+    "name_en": "New South Memphis",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 35.08676,
+    "lon": -90.05676,
+    "priority": 641608,
+    "population": 641608,
+    "country_slug": "united-states"
   },
   {
     "id": 1152,
@@ -8874,6 +9322,20 @@
     "priority": 633553,
     "population": 633553,
     "country_slug": "india"
+  },
+  {
+    "id": 56372,
+    "city_slug": "memphis",
+    "country_code": "US",
+    "name_ar": "ممفيس (توضيح)",
+    "name_en": "Memphis",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 27.53587,
+    "lon": -82.56121,
+    "priority": 633104,
+    "population": 633104,
+    "country_slug": "united-states"
   },
   {
     "id": 11675,
@@ -8988,6 +9450,20 @@
     "country_slug": "djibouti"
   },
   {
+    "id": 23311,
+    "city_slug": "glasgow",
+    "country_code": "GB",
+    "name_ar": "غلاسكو",
+    "name_en": "Glasgow",
+    "timezone": "Europe/London",
+    "is_capital": false,
+    "lat": 55.86515,
+    "lon": -4.25763,
+    "priority": 626410,
+    "population": 626410,
+    "country_slug": "united-kingdom"
+  },
+  {
     "id": 11677,
     "city_slug": "panshan",
     "country_code": "CN",
@@ -9000,6 +9476,20 @@
     "priority": 625040,
     "population": 625040,
     "country_slug": "china"
+  },
+  {
+    "id": 56373,
+    "city_slug": "louisville",
+    "country_code": "US",
+    "name_ar": "لويفيل",
+    "name_en": "Louisville",
+    "timezone": "America/Kentucky/Louisville",
+    "is_capital": false,
+    "lat": 38.25424,
+    "lon": -85.75941,
+    "priority": 624444,
+    "population": 624444,
+    "country_slug": "united-states"
   },
   {
     "id": 49231,
@@ -9576,6 +10066,20 @@
     "country_slug": "brazil"
   },
   {
+    "id": 56374,
+    "city_slug": "baltimore",
+    "country_code": "US",
+    "name_ar": "بالتيمور",
+    "name_en": "Baltimore",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 39.29038,
+    "lon": -76.61219,
+    "priority": 585708,
+    "population": 585708,
+    "country_slug": "united-states"
+  },
+  {
     "id": 36503,
     "city_slug": "itabashi",
     "country_code": "JP",
@@ -9786,6 +10290,20 @@
     "country_slug": "china"
   },
   {
+    "id": 56375,
+    "city_slug": "south-boston",
+    "country_code": "US",
+    "name_ar": "ساوث بوسطن",
+    "name_en": "South Boston",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 36.69875,
+    "lon": -78.9014,
+    "priority": 571281,
+    "population": 571281,
+    "country_slug": "united-states"
+  },
+  {
     "id": 8521,
     "city_slug": "hamilton",
     "country_code": "CA",
@@ -9812,6 +10330,20 @@
     "priority": 569068,
     "population": 569068,
     "country_slug": "jordan"
+  },
+  {
+    "id": 23312,
+    "city_slug": "manchester",
+    "country_code": "GB",
+    "name_ar": "مانشستر",
+    "name_en": "Manchester",
+    "timezone": "Europe/London",
+    "is_capital": false,
+    "lat": 53.48095,
+    "lon": -2.23743,
+    "priority": 568996,
+    "population": 568996,
+    "country_slug": "united-kingdom"
   },
   {
     "id": 42428,
@@ -9884,6 +10416,20 @@
     "country_slug": "russia"
   },
   {
+    "id": 56376,
+    "city_slug": "albuquerque",
+    "country_code": "US",
+    "name_ar": "ألباكركي",
+    "name_en": "Albuquerque",
+    "timezone": "America/Denver",
+    "is_capital": false,
+    "lat": 35.08449,
+    "lon": -106.65114,
+    "priority": 564559,
+    "population": 564559,
+    "country_slug": "united-states"
+  },
+  {
     "id": 27722,
     "city_slug": "bokaro",
     "country_code": "IN",
@@ -9940,6 +10486,20 @@
     "country_slug": "brazil"
   },
   {
+    "id": 56377,
+    "city_slug": "milwaukee",
+    "country_code": "US",
+    "name_ar": "ميلواكي",
+    "name_en": "Milwaukee",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 43.0389,
+    "lon": -87.90647,
+    "priority": 563531,
+    "population": 563531,
+    "country_slug": "united-states"
+  },
+  {
     "id": 11690,
     "city_slug": "wenchang",
     "country_code": "CN",
@@ -9980,6 +10540,20 @@
     "priority": 558400,
     "population": 558400,
     "country_slug": "iraq"
+  },
+  {
+    "id": 23313,
+    "city_slug": "sheffield",
+    "country_code": "GB",
+    "name_ar": "شفيلد",
+    "name_en": "Sheffield",
+    "timezone": "Europe/London",
+    "is_capital": false,
+    "lat": 53.38297,
+    "lon": -1.4659,
+    "priority": 556500,
+    "population": 556500,
+    "country_slug": "united-kingdom"
   },
   {
     "id": 15176,
@@ -10276,6 +10850,20 @@
     "country_slug": "india"
   },
   {
+    "id": 56378,
+    "city_slug": "tucson",
+    "country_code": "US",
+    "name_ar": "توسون",
+    "name_en": "Tucson",
+    "timezone": "America/Phoenix",
+    "is_capital": false,
+    "lat": 32.22174,
+    "lon": -110.92648,
+    "priority": 542629,
+    "population": 542629,
+    "country_slug": "united-states"
+  },
+  {
     "id": 42432,
     "city_slug": "selayang-baru-utara",
     "country_code": "MY",
@@ -10330,6 +10918,20 @@
     "priority": 542234,
     "population": 542234,
     "country_slug": "china"
+  },
+  {
+    "id": 56379,
+    "city_slug": "fresno",
+    "country_code": "US",
+    "name_ar": "فريسنو",
+    "name_en": "Fresno",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 29.53885,
+    "lon": -95.44744,
+    "priority": 542107,
+    "population": 542107,
+    "country_slug": "united-states"
   },
   {
     "id": 39552,
@@ -10414,6 +11016,20 @@
     "priority": 537842,
     "population": 537842,
     "country_slug": "turkey"
+  },
+  {
+    "id": 23314,
+    "city_slug": "leeds",
+    "country_code": "GB",
+    "name_ar": "ليدز",
+    "name_en": "Leeds",
+    "timezone": "Europe/London",
+    "is_capital": false,
+    "lat": 53.79648,
+    "lon": -1.54785,
+    "priority": 536280,
+    "population": 536280,
+    "country_slug": "united-kingdom"
   },
   {
     "id": 11701,
@@ -10652,6 +11268,20 @@
     "priority": 525016,
     "population": 525016,
     "country_slug": "turkey"
+  },
+  {
+    "id": 56380,
+    "city_slug": "sacramento",
+    "country_code": "US",
+    "name_ar": "ساكرامنتو",
+    "name_en": "Sacramento",
+    "timezone": "America/Los_Angeles",
+    "is_capital": false,
+    "lat": 38.58157,
+    "lon": -121.4944,
+    "priority": 524943,
+    "population": 524943,
+    "country_slug": "united-states"
   },
   {
     "id": 54058,
@@ -10934,6 +11564,20 @@
     "country_slug": "germany"
   },
   {
+    "id": 23315,
+    "city_slug": "edinburgh",
+    "country_code": "GB",
+    "name_ar": "إدنبرة",
+    "name_en": "Edinburgh",
+    "timezone": "Europe/London",
+    "is_capital": false,
+    "lat": 55.95206,
+    "lon": -3.19648,
+    "priority": 514990,
+    "population": 514990,
+    "country_slug": "united-kingdom"
+  },
+  {
     "id": 4154,
     "city_slug": "macapa",
     "country_code": "BR",
@@ -11030,6 +11674,20 @@
     "priority": 510875,
     "population": 510875,
     "country_slug": "pakistan"
+  },
+  {
+    "id": 56381,
+    "city_slug": "atlanta",
+    "country_code": "US",
+    "name_ar": "أتلانتا",
+    "name_en": "Atlanta",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 33.749,
+    "lon": -84.38798,
+    "priority": 510823,
+    "population": 510823,
+    "country_slug": "united-states"
   },
   {
     "id": 4156,
@@ -11410,6 +12068,20 @@
     "country_slug": "china"
   },
   {
+    "id": 23316,
+    "city_slug": "liverpool",
+    "country_code": "GB",
+    "name_ar": "ليفربول",
+    "name_en": "Liverpool",
+    "timezone": "Europe/London",
+    "is_capital": false,
+    "lat": 53.41058,
+    "lon": -2.97794,
+    "priority": 496770,
+    "population": 496770,
+    "country_slug": "united-kingdom"
+  },
+  {
     "id": 36510,
     "city_slug": "ichikawa",
     "country_code": "JP",
@@ -11536,6 +12208,34 @@
     "country_slug": "egypt"
   },
   {
+    "id": 56382,
+    "city_slug": "miami",
+    "country_code": "US",
+    "name_ar": "ميامي",
+    "name_en": "Miami",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 25.77427,
+    "lon": -80.19366,
+    "priority": 487014,
+    "population": 487014,
+    "country_slug": "united-states"
+  },
+  {
+    "id": 56383,
+    "city_slug": "omaha",
+    "country_code": "US",
+    "name_ar": "أوماها",
+    "name_en": "Omaha",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 41.25626,
+    "lon": -95.94043,
+    "priority": 486051,
+    "population": 486051,
+    "country_slug": "united-states"
+  },
+  {
     "id": 36512,
     "city_slug": "nishinomiya",
     "country_code": "JP",
@@ -11634,6 +12334,20 @@
     "country_slug": "iraq"
   },
   {
+    "id": 56384,
+    "city_slug": "raleigh",
+    "country_code": "US",
+    "name_ar": "رالي",
+    "name_en": "Raleigh",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 35.7721,
+    "lon": -78.63861,
+    "priority": 482295,
+    "population": 482295,
+    "country_slug": "united-states"
+  },
+  {
     "id": 11722,
     "city_slug": "xichang",
     "country_code": "CN",
@@ -11674,6 +12388,20 @@
     "priority": 480393,
     "population": 480393,
     "country_slug": "brazil"
+  },
+  {
+    "id": 23317,
+    "city_slug": "bristol",
+    "country_code": "GB",
+    "name_ar": "بريستول",
+    "name_en": "Bristol",
+    "timezone": "Europe/London",
+    "is_capital": false,
+    "lat": 51.45523,
+    "lon": -2.59665,
+    "priority": 479024,
+    "population": 479024,
+    "country_slug": "united-kingdom"
   },
   {
     "id": 11723,
@@ -11746,6 +12474,20 @@
     "country_slug": "china"
   },
   {
+    "id": 56385,
+    "city_slug": "kansas-city",
+    "country_code": "US",
+    "name_ar": "كانساس سيتي",
+    "name_en": "Kansas City",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 39.11417,
+    "lon": -94.62746,
+    "priority": 475378,
+    "population": 475378,
+    "country_slug": "united-states"
+  },
+  {
     "id": 11725,
     "city_slug": "yanan",
     "country_code": "CN",
@@ -11786,6 +12528,20 @@
     "priority": 474889,
     "population": 474889,
     "country_slug": "north-macedonia"
+  },
+  {
+    "id": 56386,
+    "city_slug": "long-beach",
+    "country_code": "US",
+    "name_ar": "لونغ بيتش",
+    "name_en": "Long Beach",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 30.35048,
+    "lon": -89.15282,
+    "priority": 474140,
+    "population": 474140,
+    "country_slug": "united-states"
   },
   {
     "id": 27745,
@@ -11842,6 +12598,20 @@
     "priority": 471982,
     "population": 471982,
     "country_slug": "spain"
+  },
+  {
+    "id": 56387,
+    "city_slug": "mesa",
+    "country_code": "US",
+    "name_ar": "ميسا",
+    "name_en": "Mesa",
+    "timezone": "America/Phoenix",
+    "is_capital": false,
+    "lat": 33.42227,
+    "lon": -111.82264,
+    "priority": 471825,
+    "population": 471825,
+    "country_slug": "united-states"
   },
   {
     "id": 8524,
@@ -11912,6 +12682,20 @@
     "priority": 468812,
     "population": 468812,
     "country_slug": "japan"
+  },
+  {
+    "id": 56388,
+    "city_slug": "staten-island",
+    "country_code": "US",
+    "name_ar": "جزيرة ستاتن",
+    "name_en": "Staten Island",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 40.56233,
+    "lon": -74.13986,
+    "priority": 468730,
+    "population": 468730,
+    "country_slug": "united-states"
   },
   {
     "id": 11729,
@@ -12138,6 +12922,20 @@
     "country_slug": "turkey"
   },
   {
+    "id": 56389,
+    "city_slug": "colorado-springs",
+    "country_code": "US",
+    "name_ar": "كولورادو سبرينغس",
+    "name_en": "Colorado Springs",
+    "timezone": "America/Denver",
+    "is_capital": false,
+    "lat": 38.83388,
+    "lon": -104.82136,
+    "priority": 456568,
+    "population": 456568,
+    "country_slug": "united-states"
+  },
+  {
     "id": 4163,
     "city_slug": "niteroi",
     "country_code": "BR",
@@ -12164,6 +12962,20 @@
     "priority": 455700,
     "population": 455700,
     "country_slug": "iraq"
+  },
+  {
+    "id": 56390,
+    "city_slug": "virginia-beach",
+    "country_code": "US",
+    "name_ar": "فرجينيا بيتش",
+    "name_en": "Virginia Beach",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 36.85293,
+    "lon": -75.97799,
+    "priority": 454808,
+    "population": 454808,
+    "country_slug": "united-states"
   },
   {
     "id": 11733,
@@ -13006,6 +13818,20 @@
     "country_slug": "brazil"
   },
   {
+    "id": 56391,
+    "city_slug": "oakland",
+    "country_code": "US",
+    "name_ar": "أوكلاند",
+    "name_en": "Oakland",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 35.22898,
+    "lon": -89.51508,
+    "priority": 419267,
+    "population": 419267,
+    "country_slug": "united-states"
+  },
+  {
     "id": 27757,
     "city_slug": "korba",
     "country_code": "IN",
@@ -13118,6 +13944,20 @@
     "country_slug": "morocco"
   },
   {
+    "id": 56392,
+    "city_slug": "tampa",
+    "country_code": "US",
+    "name_ar": "تامبا",
+    "name_en": "Tampa",
+    "timezone": "America/New_York",
+    "is_capital": false,
+    "lat": 27.94752,
+    "lon": -82.45843,
+    "priority": 414547,
+    "population": 414547,
+    "country_slug": "united-states"
+  },
+  {
     "id": 4169,
     "city_slug": "montes-claros",
     "country_code": "BR",
@@ -13144,6 +13984,20 @@
     "priority": 413351,
     "population": 413351,
     "country_slug": "russia"
+  },
+  {
+    "id": 56393,
+    "city_slug": "tulsa",
+    "country_code": "US",
+    "name_ar": "تلسا",
+    "name_en": "Tulsa",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 36.15398,
+    "lon": -95.99277,
+    "priority": 413066,
+    "population": 413066,
+    "country_slug": "united-states"
   },
   {
     "id": 27758,
@@ -13200,6 +14054,20 @@
     "priority": 411422,
     "population": 411422,
     "country_slug": "germany"
+  },
+  {
+    "id": 56394,
+    "city_slug": "minneapolis",
+    "country_code": "US",
+    "name_ar": "مينيابولس",
+    "name_en": "Minneapolis",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 44.97997,
+    "lon": -93.26384,
+    "priority": 410939,
+    "population": 410939,
+    "country_slug": "united-states"
   },
   {
     "id": 27759,
@@ -13524,6 +14392,20 @@
     "country_slug": "india"
   },
   {
+    "id": 56395,
+    "city_slug": "wichita",
+    "country_code": "US",
+    "name_ar": "ويتشيتا",
+    "name_en": "Wichita",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 37.69224,
+    "lon": -97.33754,
+    "priority": 396119,
+    "population": 396119,
+    "country_slug": "united-states"
+  },
+  {
     "id": 39555,
     "city_slug": "al-hoceima",
     "country_code": "MA",
@@ -13634,6 +14516,20 @@
     "priority": 391986,
     "population": 391986,
     "country_slug": "china"
+  },
+  {
+    "id": 56396,
+    "city_slug": "arlington",
+    "country_code": "US",
+    "name_ar": "أرلينغتون",
+    "name_en": "Arlington",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 35.2962,
+    "lon": -89.66147,
+    "priority": 388125,
+    "population": 388125,
+    "country_slug": "united-states"
   },
   {
     "id": 51876,
@@ -14056,6 +14952,20 @@
     "country_slug": "india"
   },
   {
+    "id": 56397,
+    "city_slug": "bakersfield",
+    "country_code": "US",
+    "name_ar": "بيكرسفيلد",
+    "name_en": "Bakersfield",
+    "timezone": "America/Los_Angeles",
+    "is_capital": false,
+    "lat": 35.37329,
+    "lon": -119.01871,
+    "priority": 373640,
+    "population": 373640,
+    "country_slug": "united-states"
+  },
+  {
     "id": 26864,
     "city_slug": "bengkulu",
     "country_code": "ID",
@@ -14168,6 +15078,20 @@
     "country_slug": "malaysia"
   },
   {
+    "id": 23318,
+    "city_slug": "cardiff",
+    "country_code": "GB",
+    "name_ar": "كارديف",
+    "name_en": "Cardiff",
+    "timezone": "Europe/London",
+    "is_capital": false,
+    "lat": 51.48,
+    "lon": -3.18,
+    "priority": 372089,
+    "population": 372089,
+    "country_slug": "united-kingdom"
+  },
+  {
     "id": 11754,
     "city_slug": "fenghuang",
     "country_code": "CN",
@@ -14222,6 +15146,20 @@
     "priority": 368650,
     "population": 368650,
     "country_slug": "egypt"
+  },
+  {
+    "id": 23319,
+    "city_slug": "leicester",
+    "country_code": "GB",
+    "name_ar": "لايستر",
+    "name_en": "Leicester",
+    "timezone": "Europe/London",
+    "is_capital": false,
+    "lat": 52.6386,
+    "lon": -1.13169,
+    "priority": 368600,
+    "population": 368600,
+    "country_slug": "united-kingdom"
   },
   {
     "id": 1146,
@@ -14322,6 +15260,20 @@
     "country_slug": "brazil"
   },
   {
+    "id": 23320,
+    "city_slug": "bradford",
+    "country_code": "GB",
+    "name_ar": "برادفورد",
+    "name_en": "Bradford",
+    "timezone": "Europe/London",
+    "is_capital": false,
+    "lat": 53.79391,
+    "lon": -1.75206,
+    "priority": 366187,
+    "population": 366187,
+    "country_slug": "united-kingdom"
+  },
+  {
     "id": 27771,
     "city_slug": "bilaspur",
     "country_code": "IN",
@@ -14334,6 +15286,20 @@
     "priority": 365579,
     "population": 365579,
     "country_slug": "india"
+  },
+  {
+    "id": 56398,
+    "city_slug": "cleveland",
+    "country_code": "US",
+    "name_ar": "كليفلاند",
+    "name_en": "Cleveland",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 33.744,
+    "lon": -90.72482,
+    "priority": 365379,
+    "population": 365379,
+    "country_slug": "united-states"
   },
   {
     "id": 8527,
@@ -14434,6 +15400,20 @@
     "country_slug": "pakistan"
   },
   {
+    "id": 56399,
+    "city_slug": "new-orleans",
+    "country_code": "US",
+    "name_ar": "نيو أورلينز",
+    "name_en": "New Orleans",
+    "timezone": "America/Chicago",
+    "is_capital": false,
+    "lat": 29.95465,
+    "lon": -90.07507,
+    "priority": 362701,
+    "population": 362701,
+    "country_slug": "united-states"
+  },
+  {
     "id": 11757,
     "city_slug": "jizhou",
     "country_code": "CN",
@@ -14518,20 +15498,6 @@
     "country_slug": "russia"
   },
   {
-    "id": 11758,
-    "city_slug": "huocheng",
-    "country_code": "CN",
-    "name_ar": "هووتشينغ",
-    "name_en": "Huocheng",
-    "timezone": "Asia/Urumqi",
-    "is_capital": false,
-    "lat": 44.05305,
-    "lon": 80.87173,
-    "priority": 360000,
-    "population": 360000,
-    "country_slug": "china"
-  },
-  {
     "id": 39264,
     "city_slug": "maseru",
     "country_code": "LS",
@@ -14544,482 +15510,6 @@
     "priority": 359753,
     "population": 359753,
     "country_slug": "lesotho"
-  },
-  {
-    "id": 27772,
-    "city_slug": "bhilwara",
-    "country_code": "IN",
-    "name_ar": "بهيلوارة",
-    "name_en": "Bhilwara",
-    "timezone": "Asia/Kolkata",
-    "is_capital": false,
-    "lat": 25.34707,
-    "lon": 74.64081,
-    "priority": 359483,
-    "population": 359483,
-    "country_slug": "india"
-  },
-  {
-    "id": 4183,
-    "city_slug": "franca",
-    "country_code": "BR",
-    "name_ar": "فرانكا (البرازيل)",
-    "name_en": "Franca",
-    "timezone": "America/Sao_Paulo",
-    "is_capital": false,
-    "lat": -20.53861,
-    "lon": -47.40083,
-    "priority": 358539,
-    "population": 358539,
-    "country_slug": "brazil"
-  },
-  {
-    "id": 36540,
-    "city_slug": "iwaki",
-    "country_code": "JP",
-    "name_ar": "لواكي",
-    "name_en": "Iwaki",
-    "timezone": "Asia/Tokyo",
-    "is_capital": false,
-    "lat": 37.05,
-    "lon": 140.88333,
-    "priority": 357309,
-    "population": 357309,
-    "country_slug": "japan"
-  },
-  {
-    "id": 49259,
-    "city_slug": "vladimir",
-    "country_code": "RU",
-    "name_ar": "فلاديمير",
-    "name_en": "Vladimir",
-    "timezone": "Europe/Moscow",
-    "is_capital": false,
-    "lat": 56.13854,
-    "lon": 40.39976,
-    "priority": 357024,
-    "population": 357024,
-    "country_slug": "russia"
-  },
-  {
-    "id": 36541,
-    "city_slug": "wakayama",
-    "country_code": "JP",
-    "name_ar": "واكاياما",
-    "name_en": "Wakayama",
-    "timezone": "Asia/Tokyo",
-    "is_capital": false,
-    "lat": 34.23333,
-    "lon": 135.16667,
-    "priority": 356729,
-    "population": 356729,
-    "country_slug": "japan"
-  },
-  {
-    "id": 27773,
-    "city_slug": "brahmapur",
-    "country_code": "IN",
-    "name_ar": "برهامبور",
-    "name_en": "Brahmapur",
-    "timezone": "Asia/Kolkata",
-    "is_capital": false,
-    "lat": 19.31151,
-    "lon": 84.7929,
-    "priority": 356598,
-    "population": 356598,
-    "country_slug": "india"
-  },
-  {
-    "id": 4184,
-    "city_slug": "caucaia",
-    "country_code": "BR",
-    "name_ar": "كاوكايا",
-    "name_en": "Caucaia",
-    "timezone": "America/Fortaleza",
-    "is_capital": false,
-    "lat": -3.73611,
-    "lon": -38.65306,
-    "priority": 355679,
-    "population": 355679,
-    "country_slug": "brazil"
-  },
-  {
-    "id": 39443,
-    "city_slug": "misratah",
-    "country_code": "LY",
-    "name_ar": "مصراتة",
-    "name_en": "Misratah",
-    "timezone": "Africa/Tripoli",
-    "is_capital": false,
-    "lat": 32.37535,
-    "lon": 15.09254,
-    "priority": 355657,
-    "population": 355657,
-    "country_slug": "libya"
-  },
-  {
-    "id": 36542,
-    "city_slug": "kawagoe",
-    "country_code": "JP",
-    "name_ar": "كاواغويه",
-    "name_en": "Kawagoe",
-    "timezone": "Asia/Tokyo",
-    "is_capital": false,
-    "lat": 35.90861,
-    "lon": 139.48528,
-    "priority": 354571,
-    "population": 354571,
-    "country_slug": "japan"
-  },
-  {
-    "id": 36543,
-    "city_slug": "takatsuki",
-    "country_code": "JP",
-    "name_ar": "تاكاتسوكي",
-    "name_en": "Takatsuki",
-    "timezone": "Asia/Tokyo",
-    "is_capital": false,
-    "lat": 34.84833,
-    "lon": 135.61678,
-    "priority": 354468,
-    "population": 354468,
-    "country_slug": "japan"
-  },
-  {
-    "id": 27774,
-    "city_slug": "muzaffarpur",
-    "country_code": "IN",
-    "name_ar": "مظفربور",
-    "name_en": "Muzaffarpur",
-    "timezone": "Asia/Kolkata",
-    "is_capital": false,
-    "lat": 26.12259,
-    "lon": 85.39055,
-    "priority": 354462,
-    "population": 354462,
-    "country_slug": "india"
-  },
-  {
-    "id": 11759,
-    "city_slug": "lhoka",
-    "country_code": "CN",
-    "name_ar": "لهوكا",
-    "name_en": "Lhoka",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 29.24301,
-    "lon": 91.77239,
-    "priority": 353700,
-    "population": 353700,
-    "country_slug": "china"
-  },
-  {
-    "id": 4185,
-    "city_slug": "cariacica",
-    "country_code": "BR",
-    "name_ar": "كارياسيكا",
-    "name_en": "Cariacica",
-    "timezone": "America/Sao_Paulo",
-    "is_capital": false,
-    "lat": -20.26389,
-    "lon": -40.42,
-    "priority": 353491,
-    "population": 353491,
-    "country_slug": "brazil"
-  },
-  {
-    "id": 42447,
-    "city_slug": "setapak",
-    "country_code": "MY",
-    "name_ar": "سيتاباك",
-    "name_en": "Setapak",
-    "timezone": "Asia/Kuala_Lumpur",
-    "is_capital": false,
-    "lat": 3.207,
-    "lon": 101.727,
-    "priority": 353268,
-    "population": 353268,
-    "country_slug": "malaysia"
-  },
-  {
-    "id": 54072,
-    "city_slug": "tarsus",
-    "country_code": "TR",
-    "name_ar": "طرسوس",
-    "name_en": "Tarsus",
-    "timezone": "Europe/Istanbul",
-    "is_capital": false,
-    "lat": 36.91766,
-    "lon": 34.89277,
-    "priority": 350732,
-    "population": 350732,
-    "country_slug": "turkey"
-  },
-  {
-    "id": 27775,
-    "city_slug": "punasa",
-    "country_code": "IN",
-    "name_ar": "بوناسا",
-    "name_en": "Punasa",
-    "timezone": "Asia/Kolkata",
-    "is_capital": false,
-    "lat": 22.23507,
-    "lon": 76.39335,
-    "priority": 350000,
-    "population": 350000,
-    "country_slug": "india"
-  },
-  {
-    "id": 11760,
-    "city_slug": "pengze",
-    "country_code": "CN",
-    "name_ar": "بينغزي",
-    "name_en": "Pengze",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 29.89885,
-    "lon": 116.54572,
-    "priority": 350000,
-    "population": 350000,
-    "country_slug": "china"
-  },
-  {
-    "id": 33811,
-    "city_slug": "al-mahmudiyah",
-    "country_code": "IQ",
-    "name_ar": "المحمودية",
-    "name_en": "Al Mahmudiyah",
-    "timezone": "Asia/Baghdad",
-    "is_capital": false,
-    "lat": 33.06221,
-    "lon": 44.36564,
-    "priority": 350000,
-    "population": 350000,
-    "country_slug": "iraq"
-  },
-  {
-    "id": 11761,
-    "city_slug": "xilinhot",
-    "country_code": "CN",
-    "name_ar": "شيلينهوت",
-    "name_en": "Xilinhot",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 43.93889,
-    "lon": 116.07021,
-    "priority": 349953,
-    "population": 349953,
-    "country_slug": "china"
-  },
-  {
-    "id": 4186,
-    "city_slug": "praia-grande",
-    "country_code": "BR",
-    "name_ar": "برايا غراندي",
-    "name_en": "Praia Grande",
-    "timezone": "America/Sao_Paulo",
-    "is_capital": false,
-    "lat": -29.19667,
-    "lon": -49.95028,
-    "priority": 349935,
-    "population": 349935,
-    "country_slug": "brazil"
-  },
-  {
-    "id": 49260,
-    "city_slug": "arkhangelsk",
-    "country_code": "RU",
-    "name_ar": "أرخانغلسك",
-    "name_en": "Arkhangel'sk",
-    "timezone": "Europe/Moscow",
-    "is_capital": false,
-    "lat": 64.5461,
-    "lon": 40.55183,
-    "priority": 349742,
-    "population": 349742,
-    "country_slug": "russia"
-  },
-  {
-    "id": 27776,
-    "city_slug": "muzaffarnagar",
-    "country_code": "IN",
-    "name_ar": "مظفر نگر",
-    "name_en": "Muzaffarnagar",
-    "timezone": "Asia/Kolkata",
-    "is_capital": false,
-    "lat": 29.47091,
-    "lon": 77.70332,
-    "priority": 349706,
-    "population": 349706,
-    "country_slug": "india"
-  },
-  {
-    "id": 11762,
-    "city_slug": "hulunbuir",
-    "country_code": "CN",
-    "name_ar": "هولونبوير",
-    "name_en": "Hulunbuir",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 49.21141,
-    "lon": 119.75582,
-    "priority": 349400,
-    "population": 349400,
-    "country_slug": "china"
-  },
-  {
-    "id": 36544,
-    "city_slug": "shinjuku",
-    "country_code": "JP",
-    "name_ar": "شينجوكو (طوكيو)",
-    "name_en": "Shinjuku",
-    "timezone": "Asia/Tokyo",
-    "is_capital": false,
-    "lat": 35.69115,
-    "lon": 139.70854,
-    "priority": 349385,
-    "population": 349385,
-    "country_slug": "japan"
-  },
-  {
-    "id": 49261,
-    "city_slug": "chita",
-    "country_code": "RU",
-    "name_ar": "تشيتا",
-    "name_en": "Chita",
-    "timezone": "Asia/Chita",
-    "is_capital": false,
-    "lat": 52.04311,
-    "lon": 113.49171,
-    "priority": 349005,
-    "population": 349005,
-    "country_slug": "russia"
-  },
-  {
-    "id": 4187,
-    "city_slug": "campina-grande",
-    "country_code": "BR",
-    "name_ar": "كامبينا غراندي",
-    "name_en": "Campina Grande",
-    "timezone": "America/Fortaleza",
-    "is_capital": false,
-    "lat": -7.23056,
-    "lon": -35.88111,
-    "priority": 348936,
-    "population": 348936,
-    "country_slug": "brazil"
-  },
-  {
-    "id": 19178,
-    "city_slug": "alicante",
-    "country_code": "ES",
-    "name_ar": "ألَلَقَنْت",
-    "name_en": "Alicante",
-    "timezone": "Europe/Madrid",
-    "is_capital": false,
-    "lat": 38.34517,
-    "lon": -0.48149,
-    "priority": 348901,
-    "population": 348901,
-    "country_slug": "spain"
-  },
-  {
-    "id": 11763,
-    "city_slug": "daye",
-    "country_code": "CN",
-    "name_ar": "دايي",
-    "name_en": "Daye",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 30.08333,
-    "lon": 114.95,
-    "priority": 347406,
-    "population": 347406,
-    "country_slug": "china"
-  },
-  {
-    "id": 19179,
-    "city_slug": "bilbao",
-    "country_code": "ES",
-    "name_ar": "بلباو",
-    "name_en": "Bilbao",
-    "timezone": "Europe/Madrid",
-    "is_capital": false,
-    "lat": 43.26271,
-    "lon": -2.92528,
-    "priority": 347342,
-    "population": 347342,
-    "country_slug": "spain"
-  },
-  {
-    "id": 26869,
-    "city_slug": "ambon",
-    "country_code": "ID",
-    "name_ar": "أمبون",
-    "name_en": "Ambon",
-    "timezone": "Asia/Jayapura",
-    "is_capital": false,
-    "lat": -3.69583,
-    "lon": 128.18333,
-    "priority": 347288,
-    "population": 347288,
-    "country_slug": "indonesia"
-  },
-  {
-    "id": 11764,
-    "city_slug": "chifeng",
-    "country_code": "CN",
-    "name_ar": "تشيفنغ",
-    "name_en": "Chifeng",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 42.26833,
-    "lon": 118.96361,
-    "priority": 346654,
-    "population": 346654,
-    "country_slug": "china"
-  },
-  {
-    "id": 1154,
-    "city_slug": "central-coast",
-    "country_code": "AU",
-    "name_ar": "كينترال كواست",
-    "name_en": "Central Coast",
-    "timezone": "Australia/Sydney",
-    "is_capital": false,
-    "lat": -33.42979,
-    "lon": 151.37144,
-    "priority": 346596,
-    "population": 346596,
-    "country_slug": "australia"
-  },
-  {
-    "id": 1155,
-    "city_slug": "sunshine-coast",
-    "country_code": "AU",
-    "name_ar": "سونشيني كواست",
-    "name_en": "Sunshine Coast",
-    "timezone": "Australia/Brisbane",
-    "is_capital": false,
-    "lat": -26.65682,
-    "lon": 153.07955,
-    "priority": 346522,
-    "population": 346522,
-    "country_slug": "australia"
-  },
-  {
-    "id": 27777,
-    "city_slug": "avadi",
-    "country_code": "IN",
-    "name_ar": "افادي",
-    "name_en": "Avadi",
-    "timezone": "Asia/Kolkata",
-    "is_capital": false,
-    "lat": 13.1147,
-    "lon": 80.10981,
-    "priority": 345996,
-    "population": 345996,
-    "country_slug": "india"
   },
   {
     "id": 38916,
@@ -15036,118 +15526,6 @@
     "country_slug": "kazakhstan"
   },
   {
-    "id": 11765,
-    "city_slug": "yunlong",
-    "country_code": "CN",
-    "name_ar": "يونلونغ",
-    "name_en": "Yunlong",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 30.5228,
-    "lon": 107.64196,
-    "priority": 345393,
-    "population": 345393,
-    "country_slug": "china"
-  },
-  {
-    "id": 36545,
-    "city_slug": "koshigaya",
-    "country_code": "JP",
-    "name_ar": "كوشيغايا",
-    "name_en": "Koshigaya",
-    "timezone": "Asia/Tokyo",
-    "is_capital": false,
-    "lat": 35.89035,
-    "lon": 139.78916,
-    "priority": 345353,
-    "population": 345353,
-    "country_slug": "japan"
-  },
-  {
-    "id": 49262,
-    "city_slug": "belgorod",
-    "country_code": "RU",
-    "name_ar": "بيلغورود",
-    "name_en": "Belgorod",
-    "timezone": "Europe/Moscow",
-    "is_capital": false,
-    "lat": 50.60343,
-    "lon": 36.58091,
-    "priority": 345289,
-    "population": 345289,
-    "country_slug": "russia"
-  },
-  {
-    "id": 26870,
-    "city_slug": "kendari",
-    "country_code": "ID",
-    "name_ar": "كنداري",
-    "name_en": "Kendari",
-    "timezone": "Asia/Makassar",
-    "is_capital": false,
-    "lat": -3.9778,
-    "lon": 122.51507,
-    "priority": 345107,
-    "population": 345107,
-    "country_slug": "indonesia"
-  },
-  {
-    "id": 1156,
-    "city_slug": "logan-city",
-    "country_code": "AU",
-    "name_ar": "لوغان سيتي",
-    "name_en": "Logan City",
-    "timezone": "Australia/Brisbane",
-    "is_capital": false,
-    "lat": -27.63917,
-    "lon": 153.10944,
-    "priority": 345098,
-    "population": 345098,
-    "country_slug": "australia"
-  },
-  {
-    "id": 36546,
-    "city_slug": "otsu",
-    "country_code": "JP",
-    "name_ar": "أوتسو",
-    "name_en": "Otsu",
-    "timezone": "Asia/Tokyo",
-    "is_capital": false,
-    "lat": 35,
-    "lon": 135.86667,
-    "priority": 345070,
-    "population": 345070,
-    "country_slug": "japan"
-  },
-  {
-    "id": 52012,
-    "city_slug": "kosti",
-    "country_code": "SD",
-    "name_ar": "ربك",
-    "name_en": "Kosti",
-    "timezone": "Africa/Khartoum",
-    "is_capital": false,
-    "lat": 13.1629,
-    "lon": 32.66347,
-    "priority": 345068,
-    "population": 345068,
-    "country_slug": "sudan"
-  },
-  {
-    "id": 11766,
-    "city_slug": "qitaihe",
-    "country_code": "CN",
-    "name_ar": "كيتايهي",
-    "name_en": "Qitaihe",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 45.768,
-    "lon": 130.9953,
-    "priority": 345033,
-    "population": 345033,
-    "country_slug": "china"
-  },
-  {
     "id": 48284,
     "city_slug": "doha",
     "country_code": "QA",
@@ -15162,300 +15540,6 @@
     "country_slug": "qatar"
   },
   {
-    "id": 27778,
-    "city_slug": "kadapa",
-    "country_code": "IN",
-    "name_ar": "كادابا",
-    "name_en": "Kadapa",
-    "timezone": "Asia/Kolkata",
-    "is_capital": false,
-    "lat": 14.47995,
-    "lon": 78.82346,
-    "priority": 344893,
-    "population": 344893,
-    "country_slug": "india"
-  },
-  {
-    "id": 36547,
-    "city_slug": "nakano",
-    "country_code": "JP",
-    "name_ar": "ناكانو",
-    "name_en": "Nakano",
-    "timezone": "Asia/Tokyo",
-    "is_capital": false,
-    "lat": 36.75,
-    "lon": 138.36667,
-    "priority": 344880,
-    "population": 344880,
-    "country_slug": "japan"
-  },
-  {
-    "id": 36548,
-    "city_slug": "tokorozawa",
-    "country_code": "JP",
-    "name_ar": "توكوروزاوا",
-    "name_en": "Tokorozawa",
-    "timezone": "Asia/Tokyo",
-    "is_capital": false,
-    "lat": 35.79916,
-    "lon": 139.46903,
-    "priority": 344194,
-    "population": 344194,
-    "country_slug": "japan"
-  },
-  {
-    "id": 11767,
-    "city_slug": "pizhou",
-    "country_code": "CN",
-    "name_ar": "بيجو",
-    "name_en": "Pizhou",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 34.31139,
-    "lon": 117.95028,
-    "priority": 343421,
-    "population": 343421,
-    "country_slug": "china"
-  },
-  {
-    "id": 18450,
-    "city_slug": "annaba",
-    "country_code": "DZ",
-    "name_ar": "عنابة",
-    "name_en": "Annaba",
-    "timezone": "Africa/Algiers",
-    "is_capital": false,
-    "lat": 36.9,
-    "lon": 7.76667,
-    "priority": 342703,
-    "population": 342703,
-    "country_slug": "algeria"
-  },
-  {
-    "id": 21240,
-    "city_slug": "nice",
-    "country_code": "FR",
-    "name_ar": "نيس",
-    "name_en": "Nice",
-    "timezone": "Europe/Paris",
-    "is_capital": false,
-    "lat": 43.70313,
-    "lon": 7.26608,
-    "priority": 342669,
-    "population": 342669,
-    "country_slug": "france"
-  },
-  {
-    "id": 39556,
-    "city_slug": "temara",
-    "country_code": "MA",
-    "name_ar": "تمارة",
-    "name_en": "Temara",
-    "timezone": "Africa/Casablanca",
-    "is_capital": false,
-    "lat": 33.92866,
-    "lon": -6.90656,
-    "priority": 342345,
-    "population": 342345,
-    "country_slug": "morocco"
-  },
-  {
-    "id": 11768,
-    "city_slug": "shiqi",
-    "country_code": "CN",
-    "name_ar": "شيكي",
-    "name_en": "Shiqi",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 22.51682,
-    "lon": 113.38521,
-    "priority": 342306,
-    "population": 342306,
-    "country_slug": "china"
-  },
-  {
-    "id": 4188,
-    "city_slug": "paulista",
-    "country_code": "BR",
-    "name_ar": "باوليستا (البرازيل)",
-    "name_en": "Paulista",
-    "timezone": "America/Recife",
-    "is_capital": false,
-    "lat": -7.94083,
-    "lon": -34.87306,
-    "priority": 342167,
-    "population": 342167,
-    "country_slug": "brazil"
-  },
-  {
-    "id": 26871,
-    "city_slug": "cirebon",
-    "country_code": "ID",
-    "name_ar": "سيريبون",
-    "name_en": "Cirebon",
-    "timezone": "Asia/Jakarta",
-    "is_capital": false,
-    "lat": -6.7063,
-    "lon": 108.557,
-    "priority": 341980,
-    "population": 341980,
-    "country_slug": "indonesia"
-  },
-  {
-    "id": 27779,
-    "city_slug": "kukatpally",
-    "country_code": "IN",
-    "name_ar": "كوكاتباللي",
-    "name_en": "Kukatpally",
-    "timezone": "Asia/Kolkata",
-    "is_capital": false,
-    "lat": 17.48486,
-    "lon": 78.41376,
-    "priority": 341709,
-    "population": 341709,
-    "country_slug": "india"
-  },
-  {
-    "id": 11769,
-    "city_slug": "laixi",
-    "country_code": "CN",
-    "name_ar": "لايشي",
-    "name_en": "Laixi",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 36.85917,
-    "lon": 120.52694,
-    "priority": 341470,
-    "population": 341470,
-    "country_slug": "china"
-  },
-  {
-    "id": 46301,
-    "city_slug": "jhang-sadr",
-    "country_code": "PK",
-    "name_ar": "جانغ صدر",
-    "name_en": "Jhang Sadr",
-    "timezone": "Asia/Karachi",
-    "is_capital": false,
-    "lat": 31.26981,
-    "lon": 72.31687,
-    "priority": 341210,
-    "population": 341210,
-    "country_slug": "pakistan"
-  },
-  {
-    "id": 33812,
-    "city_slug": "dihok",
-    "country_code": "IQ",
-    "name_ar": "دهوك",
-    "name_en": "Dihok",
-    "timezone": "Asia/Baghdad",
-    "is_capital": false,
-    "lat": 36.86608,
-    "lon": 42.9879,
-    "priority": 340900,
-    "population": 340900,
-    "country_slug": "iraq"
-  },
-  {
-    "id": 49263,
-    "city_slug": "kaluga",
-    "country_code": "RU",
-    "name_ar": "كالوغا",
-    "name_en": "Kaluga",
-    "timezone": "Europe/Moscow",
-    "is_capital": false,
-    "lat": 54.53063,
-    "lon": 36.27,
-    "priority": 340851,
-    "population": 340851,
-    "country_slug": "russia"
-  },
-  {
-    "id": 54073,
-    "city_slug": "karsiyaka",
-    "country_code": "TR",
-    "name_ar": "قارشياقة",
-    "name_en": "Karsiyaka",
-    "timezone": "Europe/Istanbul",
-    "is_capital": false,
-    "lat": 38.45772,
-    "lon": 27.1142,
-    "priority": 339624,
-    "population": 339624,
-    "country_slug": "turkey"
-  },
-  {
-    "id": 18931,
-    "city_slug": "hadaiq-al-qubbah",
-    "country_code": "EG",
-    "name_ar": "حدائق القبة",
-    "name_en": "Hada'iq al Qubbah",
-    "timezone": "Africa/Cairo",
-    "is_capital": false,
-    "lat": 30.08843,
-    "lon": 31.28351,
-    "priority": 339612,
-    "population": 339612,
-    "country_slug": "egypt"
-  },
-  {
-    "id": 8528,
-    "city_slug": "markham",
-    "country_code": "CA",
-    "name_ar": "ماركام",
-    "name_en": "Markham",
-    "timezone": "America/Toronto",
-    "is_capital": false,
-    "lat": 43.86682,
-    "lon": -79.2663,
-    "priority": 338503,
-    "population": 338503,
-    "country_slug": "canada"
-  },
-  {
-    "id": 4189,
-    "city_slug": "uberaba",
-    "country_code": "BR",
-    "name_ar": "أوبيرابا",
-    "name_en": "Uberaba",
-    "timezone": "America/Sao_Paulo",
-    "is_capital": false,
-    "lat": -19.74833,
-    "lon": -47.93194,
-    "priority": 337836,
-    "population": 337836,
-    "country_slug": "brazil"
-  },
-  {
-    "id": 49264,
-    "city_slug": "krasnogvargeisky",
-    "country_code": "RU",
-    "name_ar": "كراسنوغفارغييسكي",
-    "name_en": "Krasnogvargeisky",
-    "timezone": "Europe/Moscow",
-    "is_capital": false,
-    "lat": 59.97305,
-    "lon": 30.47607,
-    "priority": 337091,
-    "population": 337091,
-    "country_slug": "russia"
-  },
-  {
-    "id": 39557,
-    "city_slug": "safi",
-    "country_code": "MA",
-    "name_ar": "آسفي",
-    "name_en": "Safi",
-    "timezone": "Africa/Casablanca",
-    "is_capital": false,
-    "lat": 32.29939,
-    "lon": -9.23718,
-    "priority": 336883,
-    "population": 336883,
-    "country_slug": "morocco"
-  },
-  {
     "id": 14530,
     "city_slug": "san-jose",
     "country_code": "CR",
@@ -15468,104 +15552,6 @@
     "priority": 335007,
     "population": 335007,
     "country_slug": "costa-rica"
-  },
-  {
-    "id": 11770,
-    "city_slug": "tieling",
-    "country_code": "CN",
-    "name_ar": "تيلينغ",
-    "name_en": "Tieling",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 42.29306,
-    "lon": 123.84139,
-    "priority": 333907,
-    "population": 333907,
-    "country_slug": "china"
-  },
-  {
-    "id": 36549,
-    "city_slug": "asahikawa",
-    "country_code": "JP",
-    "name_ar": "أساهيكاوا",
-    "name_en": "Asahikawa",
-    "timezone": "Asia/Tokyo",
-    "is_capital": false,
-    "lat": 43.77063,
-    "lon": 142.36489,
-    "priority": 333530,
-    "population": 333530,
-    "country_slug": "japan"
-  },
-  {
-    "id": 27780,
-    "city_slug": "kamarhati",
-    "country_code": "IN",
-    "name_ar": "كامارهاتي",
-    "name_en": "Kamarhati",
-    "timezone": "Asia/Kolkata",
-    "is_capital": false,
-    "lat": 22.67111,
-    "lon": 88.37472,
-    "priority": 332965,
-    "population": 332965,
-    "country_slug": "india"
-  },
-  {
-    "id": 52013,
-    "city_slug": "wad-medani",
-    "country_code": "SD",
-    "name_ar": "ود مدني",
-    "name_en": "Wad Medani",
-    "timezone": "Africa/Khartoum",
-    "is_capital": false,
-    "lat": 14.40118,
-    "lon": 33.51989,
-    "priority": 332714,
-    "population": 332714,
-    "country_slug": "sudan"
-  },
-  {
-    "id": 36550,
-    "city_slug": "maebashi",
-    "country_code": "JP",
-    "name_ar": "مايه-باشي",
-    "name_en": "Maebashi",
-    "timezone": "Asia/Tokyo",
-    "is_capital": false,
-    "lat": 36.4,
-    "lon": 139.08333,
-    "priority": 332149,
-    "population": 332149,
-    "country_slug": "japan"
-  },
-  {
-    "id": 36551,
-    "city_slug": "kita",
-    "country_code": "JP",
-    "name_ar": "كيتا (توضيح)",
-    "name_en": "Kita",
-    "timezone": "Asia/Tokyo",
-    "is_capital": false,
-    "lat": 35.75264,
-    "lon": 139.73348,
-    "priority": 332140,
-    "population": 332140,
-    "country_slug": "japan"
-  },
-  {
-    "id": 36552,
-    "city_slug": "kochi",
-    "country_code": "JP",
-    "name_ar": "كاوازو",
-    "name_en": "Kochi",
-    "timezone": "Asia/Tokyo",
-    "is_capital": false,
-    "lat": 34.70009,
-    "lon": 138.93739,
-    "priority": 332059,
-    "population": 332059,
-    "country_slug": "japan"
   },
   {
     "id": 27630,

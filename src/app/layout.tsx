@@ -9,9 +9,13 @@ import Header from '@/components/layout/header';
 // --font-black (900) is required for fullscreen clock.
 const notoKufi = Noto_Kufi_Arabic({
   subsets: ['arabic'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  // Weights actually used by the design system:
+  // 400 = body, 600 = semi-bold labels, 700 = headings, 900 = clock digits/hero
+  // Removed 300 (unused) and 800 (superseded by 900 in all clock/hero usage)
+  weight: ['400', '600', '700', '900'],
   variable: '--font-noto-kufi',
   display: 'swap',
+  preload: true,
 });
 
 export const metadata: Metadata = {

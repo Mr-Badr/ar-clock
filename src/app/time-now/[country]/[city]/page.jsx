@@ -28,7 +28,7 @@ import { ChevronLeft, MapPin, Clock } from 'lucide-react';
 
 
 import TimeNowHero from '@/components/time-now/TimeNowHero';
-import SearchCity from '@/components/SearchCity.client';
+import SearchCity from '@/components/SearchCityWrapper.client';
 import CountryCitiesGrid from '@/components/time-now/CountryCitiesGrid';
 import TimezoneInfoCard from '@/components/time-now/TimezoneInfoCard';
 import SameTimezoneCountries from '@/components/time-now/SameTimezoneCountries';
@@ -37,6 +37,7 @@ import RelatedSearches from '@/components/time-now/RelatedSearches';
 
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 import { getAllCityParams, getCityBySlug, getTopCitiesByCountry } from '@/lib/db/queries/cities';
+import { getCountriesAction } from '@/app/actions/location';
 import { getCachedNowIso } from '@/lib/date-utils';
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
@@ -129,9 +130,10 @@ export default async function CityTimePage({ params }) {
   if (!city) notFound();
 
   /* Parallel data fetching — all cached */
-  const [nowIso, siblingCities] = await Promise.all([
+  const [nowIso, siblingCities, allCountries] = await Promise.all([
     getCachedNowIso(),
     getTopCitiesByCountry(country.country_code, 8),
+    getCountriesAction(),
   ]);
   const sameOffsetCountries = []; // Skipped
 
@@ -247,28 +249,12 @@ export default async function CityTimePage({ params }) {
         <section aria-labelledby="city-time-h1" className="container mx-auto px-4 py-8">
 
           <h1 id="city-time-h1"
-            className="text-3xl md:text-5xl font-black mb-2 leading-tight text-center"
+            className="text-3xl md:text-5xl font-black mb-6 leading-tight text-center"
           >
             الوقت الآن في{' '}
             <span className="text-accent">{cityAr}</span>
           </h1>
 
-          <p className="text-muted text-center mb-1 text-lg">
-            <Link href={`/time-now/${countrySlug}`}
-              className="hover:text-accent transition-colors"
-              style={{ textDecoration: 'none', color: 'var(--text-muted)' }}
-            >
-              {countryAr}
-            </Link>
-            {' · '}{offset}{' · '}{city.timezone}
-          </p>
-
-          {/* Population note — keyword-rich, subtle */}
-          {city.population > 0 && (
-            <p className="text-center mb-6" style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
-              عدد السكان: {new Intl.NumberFormat('ar').format(city.population)} نسمة
-            </p>
-          )}
 
           {/* Geo banner */}
           <Suspense fallback={null}>
@@ -277,7 +263,7 @@ export default async function CityTimePage({ params }) {
 
           {/* Global city search */}
           <div className="w-full max-w-xl mx-auto shadow-sm rounded-xl mb-4">
-            <SearchCity mode="time-now" />
+            <SearchCity mode="time-now" preloadedCountries={allCountries} />
           </div>
 
           {/* Live clock */}
@@ -291,6 +277,7 @@ export default async function CityTimePage({ params }) {
                 countryNameAr={countryAr}
                 utcOffset={offset}
                 tzLabel={city.timezone}
+                countryCode={country.country_code}
               />
             </Suspense>
           </div>
@@ -349,7 +336,7 @@ export default async function CityTimePage({ params }) {
         {/* ══ FAQ ══════════════════════════════════════════════════ */}
         <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
           <div className="w-full max-w-xl mx-auto rounded-xl">
-            <SearchCity mode="time-now" />
+            <SearchCity mode="time-now" preloadedCountries={allCountries} />
           </div>
         </section>
 

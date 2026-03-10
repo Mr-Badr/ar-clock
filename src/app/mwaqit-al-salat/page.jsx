@@ -8,13 +8,16 @@
 
 import { MapPin } from 'lucide-react';
 import SearchCityWrapper from '@/components/SearchCityWrapper.client';
+import { getCountriesAction } from '@/app/actions/location';
 
 export const metadata = {
   title: 'مواقيت الصلاة — دقيقة في جميع أنحاء العالم',
   description: 'احصل على مواقيت الصلاة الدقيقة لأي مدينة في العالم. الفجر والظهر والعصر والمغرب والعشاء.',
 };
 
-export default function PrayerLandingPage() {
+export default async function PrayerLandingPage() {
+  const allCountries = await getCountriesAction();
+
   return (
     <div className="min-h-screen bg-base py-12 px-6" dir="rtl">
       <div className="max-w-2xl mx-auto space-y-12 text-center">
@@ -36,7 +39,7 @@ export default function PrayerLandingPage() {
           <div className="relative space-y-6">
             <div className="text-right px-2">
               <label className="text-sm font-bold text-secondary mb-2 block mr-1">ابحث عن مدينة أو دولة</label>
-              <SearchCityWrapper mode="prayer" />
+              <SearchCityWrapper mode="prayer" preloadedCountries={allCountries} />
             </div>
           </div>
         </div>

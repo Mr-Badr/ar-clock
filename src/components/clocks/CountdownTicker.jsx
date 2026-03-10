@@ -22,6 +22,7 @@
  */
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Monitor, Minimize2, ZoomIn, ZoomOut, Share2, Link2 } from 'lucide-react';
+import DatePill from './DatePill';
 
 /* ─────────────────────────────────────────────────────────────────────
    HELPERS
@@ -31,10 +32,10 @@ function calcRem(targetMs) {
   if (!total) return { total: 0, days: 0, hours: 0, minutes: 0, seconds: 0 };
   return {
     total,
-    days:    Math.floor(total / 86_400_000),
-    hours:   Math.floor((total % 86_400_000) / 3_600_000),
-    minutes: Math.floor((total % 3_600_000)  / 60_000),
-    seconds: Math.floor((total % 60_000)     / 1_000),
+    days: Math.floor(total / 86_400_000),
+    hours: Math.floor((total % 86_400_000) / 3_600_000),
+    minutes: Math.floor((total % 3_600_000) / 60_000),
+    seconds: Math.floor((total % 60_000) / 1_000),
   };
 }
 function pad2(n) { return String(Math.max(0, n)).padStart(2, '0'); }
@@ -45,8 +46,8 @@ function pad2(n) { return String(Math.max(0, n)).padStart(2, '0'); }
 const ALL_UNITS = [
   { key: 'seconds', label: 'ثانية' },
   { key: 'minutes', label: 'دقيقة' },
-  { key: 'hours',   label: 'ساعة'  },
-  { key: 'days',    label: 'يوم'   },
+  { key: 'hours', label: 'ساعة' },
+  { key: 'days', label: 'يوم' },
 ];
 const HMS_UNITS = ALL_UNITS.slice(0, 3);
 
@@ -56,18 +57,18 @@ const HMS_UNITS = ALL_UNITS.slice(0, 3);
    The `visible` prop prevents the FOUC flash during dev CSS-load gap.
 ───────────────────────────────────────────────────────────────────── */
 function Unit({ value, staggerIndex = 0, label, visible }) {
-  const str   = pad2(value);
+  const str = pad2(value);
   const delay = `${staggerIndex * 0.1}s`;
   return (
     <div
       style={{
-        display:       'flex',
+        display: 'flex',
         flexDirection: 'column',
-        alignItems:    'center',
-        gap:           '0.55rem',
-        animation:     `ct-unit-enter 0.6s cubic-bezier(0.175,0.885,0.32,1.275) ${delay} both`,
+        alignItems: 'center',
+        gap: '0.55rem',
+        animation: `ct-unit-enter 0.6s cubic-bezier(0.175,0.885,0.32,1.275) ${delay} both`,
         /* Hide during CSS-load gap in dev — show instantly once mounted */
-        opacity:       visible ? undefined : 0,
+        opacity: visible ? undefined : 0,
       }}
     >
       <div style={{ display: 'flex', lineHeight: 1 }}>
@@ -110,10 +111,10 @@ function DesktopRow({ r, visible }) {
     <div
       className="ct-row-desktop"
       style={{
-        alignItems:     'center',
+        alignItems: 'center',
         justifyContent: 'center',
-        gap:            'clamp(0.5rem, 3cqi, 2.5rem)',
-        direction:      'ltr',
+        gap: 'clamp(0.5rem, 3cqi, 2.5rem)',
+        direction: 'ltr',
       }}
       role="timer"
       aria-label={`${r.days} يوم و ${r.hours} ساعة و ${r.minutes} دقيقة و ${r.seconds} ثانية`}
@@ -143,12 +144,12 @@ function MobileRow({ r, visible }) {
     >
       {/* Days hero */}
       <div style={{
-        display:       'flex',
+        display: 'flex',
         flexDirection: 'column',
-        alignItems:    'center',
-        gap:           '0.25rem',
-        animation:     'ct-unit-enter 0.6s cubic-bezier(0.175,0.885,0.32,1.275) both',
-        opacity:       visible ? undefined : 0,
+        alignItems: 'center',
+        gap: '0.25rem',
+        animation: 'ct-unit-enter 0.6s cubic-bezier(0.175,0.885,0.32,1.275) both',
+        opacity: visible ? undefined : 0,
       }}>
         <span
           key={pad2(r.days)}
@@ -169,12 +170,12 @@ function MobileRow({ r, visible }) {
         {HMS_UNITS.map(({ key, label }, i) => (
           <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(0.5rem, 4cqi, 1.5rem)' }}>
             <div style={{
-              display:       'flex',
+              display: 'flex',
               flexDirection: 'column',
-              alignItems:    'center',
-              gap:           '0.3rem',
-              animation:     `ct-unit-enter 0.6s cubic-bezier(0.175,0.885,0.32,1.275) ${(i + 1) * 0.12}s both`,
-              opacity:       visible ? undefined : 0,
+              alignItems: 'center',
+              gap: '0.3rem',
+              animation: `ct-unit-enter 0.6s cubic-bezier(0.175,0.885,0.32,1.275) ${(i + 1) * 0.12}s both`,
+              opacity: visible ? undefined : 0,
             }}>
               <span
                 key={pad2(r[key])}
@@ -216,31 +217,31 @@ function IconBtn({ onClick, label, title, children, disabled = false, variant = 
       title={title || label}
       disabled={disabled}
       style={{
-        display:      'flex',
-        alignItems:   'center',
-        gap:          '0.4rem',
-        padding:      '0.5rem 0.85rem',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.4rem',
+        padding: '0.5rem 0.85rem',
         borderRadius: '0.625rem',
-        border:       variant === 'ghost' ? '1px solid var(--border-default)' : 'none',
-        background:   'transparent',
-        cursor:       disabled ? 'not-allowed' : 'pointer',
-        color:        disabled ? 'var(--text-muted)' : 'var(--text-secondary)',
-        fontSize:     '0.82rem',
-        fontWeight:   '600',
-        opacity:      disabled ? 0.4 : 1,
-        transition:   'background 0.15s, color 0.15s, border-color 0.15s',
-        whiteSpace:   'nowrap',
+        border: variant === 'ghost' ? '1px solid var(--border-default)' : 'none',
+        background: 'transparent',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        color: disabled ? 'var(--text-muted)' : 'var(--text-secondary)',
+        fontSize: '0.82rem',
+        fontWeight: '600',
+        opacity: disabled ? 0.4 : 1,
+        transition: 'background 0.15s, color 0.15s, border-color 0.15s',
+        whiteSpace: 'nowrap',
       }}
       onMouseEnter={e => {
         if (!disabled) {
-          e.currentTarget.style.background  = 'color-mix(in srgb, var(--bg-surface-3) 80%, transparent)';
-          e.currentTarget.style.color       = 'var(--text-primary)';
+          e.currentTarget.style.background = 'color-mix(in srgb, var(--bg-surface-3) 80%, transparent)';
+          e.currentTarget.style.color = 'var(--text-primary)';
           e.currentTarget.style.borderColor = 'var(--border-accent)';
         }
       }}
       onMouseLeave={e => {
-        e.currentTarget.style.background  = 'transparent';
-        e.currentTarget.style.color       = disabled ? 'var(--text-muted)' : 'var(--text-secondary)';
+        e.currentTarget.style.background = 'transparent';
+        e.currentTarget.style.color = disabled ? 'var(--text-muted)' : 'var(--text-secondary)';
         e.currentTarget.style.borderColor = 'var(--border-default)';
       }}
     >
@@ -259,7 +260,7 @@ const PLATFORMS = [
     href: (u, t) => `https://wa.me/?text=${encodeURIComponent(t + '\n' + u)}`,
     Icon: () => (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488z"/>
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488z" />
       </svg>
     ),
   },
@@ -269,7 +270,7 @@ const PLATFORMS = [
     href: (u, t) => `https://t.me/share/url?url=${encodeURIComponent(u)}&text=${encodeURIComponent(t)}`,
     Icon: () => (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
       </svg>
     ),
   },
@@ -279,7 +280,7 @@ const PLATFORMS = [
     href: (u, t) => `https://twitter.com/intent/tweet?text=${encodeURIComponent(t)}&url=${encodeURIComponent(u)}`,
     Icon: () => (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
       </svg>
     ),
   },
@@ -289,7 +290,7 @@ const PLATFORMS = [
     href: (u) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(u)}`,
     Icon: () => (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
       </svg>
     ),
   },
@@ -300,7 +301,7 @@ const PLATFORMS = [
    window.location resolved only after mount (never in render path).
 ───────────────────────────────────────────────────────────────────── */
 export function ShareBar({ url, eventName, days, dateStr }) {
-  const [copied,  setCopied]  = useState(false);
+  const [copied, setCopied] = useState(false);
   const [pageUrl, setPageUrl] = useState(url || '');
 
   useEffect(() => {
@@ -321,28 +322,28 @@ export function ShareBar({ url, eventName, days, dateStr }) {
     <section
       style={{
         marginBottom: 'var(--space-8)',
-        background:   'var(--bg-surface-2)',
-        border:       '1px solid var(--border-subtle)',
+        background: 'var(--bg-surface-2)',
+        border: '1px solid var(--border-subtle)',
         borderRadius: 'var(--radius-2xl)',
-        padding:      'var(--space-5)',
+        padding: 'var(--space-5)',
       }}
       dir="rtl"
       aria-label="خيارات المشاركة"
     >
       <p style={{
-        fontSize:     'var(--text-sm)',
-        fontWeight:   '600',
-        color:        'var(--text-secondary)',
+        fontSize: 'var(--text-sm)',
+        fontWeight: '600',
+        color: 'var(--text-secondary)',
         marginBottom: 'var(--space-4)',
       }}>
         شارك هذه المناسبة
       </p>
 
       <div style={{
-        display:             'grid',
+        display: 'grid',
         gridTemplateColumns: `repeat(${PLATFORMS.length}, 1fr)`,
-        gap:                 'var(--space-2)',
-        marginBottom:        'var(--space-3)',
+        gap: 'var(--space-2)',
+        marginBottom: 'var(--space-3)',
       }}>
         {PLATFORMS.map(({ id, label, color, bg, border, href, Icon }) => (
           <a
@@ -352,19 +353,19 @@ export function ShareBar({ url, eventName, days, dateStr }) {
             rel="noopener noreferrer"
             aria-label={`مشاركة عبر ${label}`}
             style={{
-              display:        'flex',
-              flexDirection:  'column',
-              alignItems:     'center',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
               justifyContent: 'center',
-              gap:            '0.45rem',
-              padding:        'var(--space-3) var(--space-2)',
-              borderRadius:   'var(--radius-xl)',
-              border:         `1px solid ${border}`,
-              background:     bg,
+              gap: '0.45rem',
+              padding: 'var(--space-3) var(--space-2)',
+              borderRadius: 'var(--radius-xl)',
+              border: `1px solid ${border}`,
+              background: bg,
               color,
               textDecoration: 'none',
-              cursor:         'pointer',
-              transition:     'opacity 0.15s',
+              cursor: 'pointer',
+              transition: 'opacity 0.15s',
             }}
             onMouseEnter={e => { e.currentTarget.style.opacity = '0.75'; }}
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}
@@ -381,20 +382,20 @@ export function ShareBar({ url, eventName, days, dateStr }) {
         onClick={handleCopy}
         aria-label="نسخ الرابط"
         style={{
-          display:       'flex',
-          alignItems:    'center',
-          justifyContent:'center',
-          gap:           '0.5rem',
-          width:         '100%',
-          padding:       'var(--space-3)',
-          borderRadius:  'var(--radius-xl)',
-          border:        copied ? '1px solid var(--accent)' : '1px solid var(--border-default)',
-          background:    copied ? 'var(--accent-soft)' : 'var(--bg-surface-3)',
-          color:         copied ? 'var(--accent)' : 'var(--text-secondary)',
-          fontSize:      'var(--text-sm)',
-          fontWeight:    '600',
-          cursor:        'pointer',
-          transition:    'all 0.18s',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '0.5rem',
+          width: '100%',
+          padding: 'var(--space-3)',
+          borderRadius: 'var(--radius-xl)',
+          border: copied ? '1px solid var(--accent)' : '1px solid var(--border-default)',
+          background: copied ? 'var(--accent-soft)' : 'var(--bg-surface-3)',
+          color: copied ? 'var(--accent)' : 'var(--text-secondary)',
+          fontSize: 'var(--text-sm)',
+          fontWeight: '600',
+          cursor: 'pointer',
+          transition: 'all 0.18s',
         }}
       >
         <Link2 size={15} />
@@ -414,20 +415,20 @@ export function CountdownTickerSkeleton() {
   return (
     <div
       style={{
-        borderRadius:   '1rem',
-        border:         '1px solid var(--border-accent)',
-        background:     'var(--clock-bg)',
+        borderRadius: '1rem',
+        border: '1px solid var(--border-accent)',
+        background: 'var(--clock-bg)',
         backdropFilter: 'blur(20px)',
-        boxShadow:      'var(--shadow-accent)',
-        padding:        'clamp(1.25rem, 4vw, 2.5rem)',
-        display:        'flex',
-        flexDirection:  'column',
-        gap:            '1.5rem',
+        boxShadow: 'var(--shadow-accent)',
+        padding: 'clamp(1.25rem, 4vw, 2.5rem)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1.5rem',
       }}
       aria-hidden="true"
     >
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <div style={{ width: '80px',  height: '34px', borderRadius: '0.625rem', background: 'var(--bg-surface-4)' }} />
+        <div style={{ width: '80px', height: '34px', borderRadius: '0.625rem', background: 'var(--bg-surface-4)' }} />
         <div style={{ width: '110px', height: '34px', borderRadius: '0.625rem', background: 'var(--bg-surface-4)' }} />
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(1rem, 4vw, 3rem)', padding: '0.5rem 0' }}>
@@ -451,18 +452,20 @@ export function CountdownTickerSkeleton() {
 export default function CountdownTicker({
   targetISO,
   initialRemaining,
-  eventName   = '',
-  eventDate   = '',
+  eventName = '',
+  eventDate = '',
   whatsappUrl = '',
-  totalDays   = 365,
-  isDark      = true,
+  totalDays = 365,
+  isDark = true,
+  dateAr = '',
+  dateHijri = '',
 }) {
   const targetMs = new Date(targetISO).getTime();
 
   /* ── State ── */
-  const [rem,         setRem]         = useState(initialRemaining);
-  const [mounted,     setMounted]     = useState(false);
-  const [isZero,      setIsZero]      = useState(false);
+  const [rem, setRem] = useState(initialRemaining);
+  const [mounted, setMounted] = useState(false);
+  const [isZero, setIsZero] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
 
   /* ── FIX 1: Strict Mode guard ────────────────────────────────────────
@@ -508,20 +511,20 @@ export default function CountdownTicker({
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  const r   = mounted ? rem : initialRemaining;
+  const r = mounted ? rem : initialRemaining;
   const pct = Math.max(2, Math.min(98, Math.round((1 - r.days / Math.max(totalDays, 1)) * 100)));
 
   /* ── Fullscreen + zoom ── */
-  const containerRef     = useRef(null);
-  const [isFS,  setIsFS] = useState(false);
-  const [zoom,  setZoom] = useState(1);
+  const containerRef = useRef(null);
+  const [isFS, setIsFS] = useState(false);
+  const [zoom, setZoom] = useState(1);
 
   useEffect(() => {
     const onChange = () => {
       const active = !!(
-        document.fullscreenElement       ||
+        document.fullscreenElement ||
         document.webkitFullscreenElement ||
-        document.mozFullScreenElement    ||
+        document.mozFullScreenElement ||
         document.msFullscreenElement
       );
       if (!active) setIsFS(false);
@@ -536,27 +539,27 @@ export default function CountdownTicker({
       const el = containerRef.current;
       if (!el) return;
       try {
-        if      (el.requestFullscreen)          await el.requestFullscreen();
-        else if (el.webkitRequestFullscreen)          el.webkitRequestFullscreen();
-        else if (el.mozRequestFullScreen)             el.mozRequestFullScreen();
-        else if (el.msRequestFullscreen)              el.msRequestFullscreen();
+        if (el.requestFullscreen) await el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+        else if (el.msRequestFullscreen) el.msRequestFullscreen();
         setZoom(1);
       } catch { /* CSS fallback */ }
       setIsFS(true);
     } else {
       try {
-        if      (document.exitFullscreen)       await document.exitFullscreen();
+        if (document.exitFullscreen) await document.exitFullscreen();
         else if (document.webkitExitFullscreen) await document.webkitExitFullscreen();
-        else if (document.mozCancelFullScreen)  await document.mozCancelFullScreen();
-        else if (document.msExitFullscreen)     await document.msExitFullscreen();
+        else if (document.mozCancelFullScreen) await document.mozCancelFullScreen();
+        else if (document.msExitFullscreen) await document.msExitFullscreen();
       } catch { setIsFS(false); }
     }
   };
 
-  const zoomIn     = () => setZoom(z => Math.min(z + 1, 2));
-  const zoomOut    = () => setZoom(z => Math.max(z - 1, 0));
+  const zoomIn = () => setZoom(z => Math.min(z + 1, 2));
+  const zoomOut = () => setZoom(z => Math.max(z - 1, 0));
   const scaleValue = zoom === 0 ? 'scale(0.7)' : zoom === 2 ? 'scale(1.3)' : 'scale(1)';
-  const zoomLabel  = ['تصغير', 'حجم عادي', 'تكبير'][zoom];
+  const zoomLabel = ['تصغير', 'حجم عادي', 'تكبير'][zoom];
 
   /* ── Share ── */
   const handleShare = async () => {
@@ -613,9 +616,9 @@ export default function CountdownTicker({
               backdropFilter: 'blur(12px)', padding: '0.25rem',
               borderRadius: '0.875rem', border: '1px solid var(--border-default)',
             }}>
-              <IconBtn onClick={zoomOut} label="تصغير"  disabled={zoom === 0} variant="none"><ZoomOut size={20} /></IconBtn>
+              <IconBtn onClick={zoomOut} label="تصغير" disabled={zoom === 0} variant="none"><ZoomOut size={20} /></IconBtn>
               <span style={{ padding: '0.4rem 0.75rem', fontSize: '0.72rem', fontWeight: '900', minWidth: '80px', textAlign: 'center', color: 'var(--text-primary)' }}>{zoomLabel}</span>
-              <IconBtn onClick={zoomIn}  label="تكبير"  disabled={zoom === 2} variant="none"><ZoomIn  size={20} /></IconBtn>
+              <IconBtn onClick={zoomIn} label="تكبير" disabled={zoom === 2} variant="none"><ZoomIn size={20} /></IconBtn>
             </div>
           </div>
           <div style={{
@@ -668,14 +671,7 @@ export default function CountdownTicker({
                 </div>
               ))}
             </div>
-            {eventDate && (
-              <p style={{
-                fontSize: 'clamp(1rem, 2.5vw, 1.5rem)', color: 'var(--text-secondary)',
-                padding: '0.6rem 1.75rem',
-                background: 'color-mix(in srgb, var(--bg-surface-3) 50%, transparent)',
-                border: '1px solid var(--border-default)', borderRadius: '999px', margin: 0,
-              }}>{eventDate}</p>
-            )}
+            <DatePill dateAr={dateAr || eventDate} dateHijri={dateHijri} />
           </div>
         </div>
       )}
@@ -690,16 +686,16 @@ export default function CountdownTicker({
           <div
             className="ct-clock-card"
             style={{
-              borderRadius:         '1rem',
-              border:               '1px solid var(--border-accent)',
-              background:           'var(--clock-bg)',
-              backdropFilter:       'blur(20px)',
+              borderRadius: '1rem',
+              border: '1px solid var(--border-accent)',
+              background: 'var(--clock-bg)',
+              backdropFilter: 'blur(20px)',
               WebkitBackdropFilter: 'blur(20px)',
-              boxShadow:            'var(--shadow-accent)',
-              padding:              'clamp(1.25rem, 3.5vh, 2rem) clamp(1.5rem, 4vw, 3rem)',
-              display:              'flex',
-              flexDirection:        'column',
-              gap:                  'clamp(1.25rem, 3vh, 2rem)',
+              boxShadow: 'var(--shadow-accent)',
+              padding: 'clamp(1.25rem, 3.5vh, 2rem) clamp(1.5rem, 4vw, 3rem)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'clamp(1.25rem, 3vh, 2rem)',
             }}
           >
             {/* Control bar */}
@@ -710,9 +706,9 @@ export default function CountdownTicker({
                 style={{
                   display: 'flex', alignItems: 'center', gap: '0.4rem',
                   padding: '0.5rem 0.85rem', borderRadius: '0.625rem',
-                  border:      shareCopied ? '1px solid var(--accent)' : '1px solid var(--border-default)',
-                  background:  shareCopied ? 'var(--accent-soft)' : 'transparent',
-                  color:       shareCopied ? 'var(--accent)' : 'var(--text-secondary)',
+                  border: shareCopied ? '1px solid var(--accent)' : '1px solid var(--border-default)',
+                  background: shareCopied ? 'var(--accent-soft)' : 'transparent',
+                  color: shareCopied ? 'var(--accent)' : 'var(--text-secondary)',
                   fontSize: '0.82rem', fontWeight: '600',
                   cursor: 'pointer', transition: 'all 0.18s', whiteSpace: 'nowrap',
                 }}
@@ -727,22 +723,10 @@ export default function CountdownTicker({
 
             {/* Rows — CSS @container switches between them based on card width */}
             <DesktopRow r={r} visible={visible} />
-            <MobileRow  r={r} visible={visible} />
+            <MobileRow r={r} visible={visible} />
 
             {/* Date pill */}
-            {eventDate && (
-              <div style={{ display: 'flex', justifyContent: 'center', animation: 'ct-fade-in 0.6s ease 0.55s both' }}>
-                <span style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '0.4em',
-                  padding: '0.35rem 1.1rem', borderRadius: '999px',
-                  background: 'var(--bg-surface-3)', border: '1px solid var(--border-subtle)',
-                  fontSize: '0.85rem', fontWeight: '500', color: 'var(--text-muted)',
-                }}>
-                  <span aria-hidden style={{ opacity: 0.6 }}>📅</span>
-                  {eventDate}
-                </span>
-              </div>
-            )}
+            <DatePill dateAr={dateAr || eventDate} dateHijri={dateHijri} />
           </div>
 
           {/* Progress bar */}

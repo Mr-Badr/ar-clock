@@ -25,8 +25,9 @@ import { Suspense } from 'react';
 import { getCityBySlug, getAllCityParams } from '@/lib/db/queries/cities';
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 import { calculatePrayerTimes, getNextPrayer, formatTime } from '@/lib/prayerEngine';
+import { getCountriesAction } from '@/app/actions/location';
 import PrayerHeroClient from '@/components/PrayerHero.client';
-import SearchCity from '@/components/SearchCity.client';
+import SearchCity from '@/components/SearchCityWrapper.client';
 import TimezoneBanner from '@/components/TimezoneBanner.client';
 
 // ─── ISR: pre-build top 100 cities, revalidate every 60s ─────────────────────
@@ -154,6 +155,8 @@ export default async function PrayerTimesPage({ params }) {
   const cityData = await getCityBySlug(country.country_code, citySlug);
   if (!cityData) notFound();
 
+  const allCountries = await getCountriesAction();
+
   const cityNameAr = cityData.name_ar || cityData.name_en;
   const countryNameAr = country.name_ar || country.name_en;
 
@@ -188,6 +191,7 @@ export default async function PrayerTimesPage({ params }) {
           <SearchCity
             placeholder="البحث عن مدينة أخرى..."
             initialCity={{ ...cityData, country_slug: countrySlug, city_slug: citySlug, country_name_ar: countryNameAr, city_name_ar: cityNameAr }}
+            preloadedCountries={allCountries}
           />
           <p className="mt-2 text-[10px] font-bold text-[var(--accent)] pr-1">
             محدد حالياً: {cityNameAr}، {countryNameAr}

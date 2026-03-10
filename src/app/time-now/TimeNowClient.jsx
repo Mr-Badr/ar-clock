@@ -1,51 +1,71 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import Link from 'next/link';
+import { getFlagEmoji, getSafeTimezone, isValidTimeZone } from '@/lib/country-utils';
 
-function getOffset(tz) {
-  try {
-    // We use a fixed reference date instead of new Date() to avoid
-    // Next.js hydration warnings (next-prerender-current-time-client).
-    // The exact date doesn't matter for fetching a static offset like GMT+3.
-    const refDate = new Date('2025-06-01T12:00:00Z');
-    const parts = new Intl.DateTimeFormat('en', {
-      timeZone: tz, timeZoneName: 'shortOffset',
-    }).formatToParts(refDate);
-    return parts.find((p) => p.type === 'timeZoneName')?.value ?? '';
-  } catch { return ''; }
+/* ─── SHARED TICK ───────────────────────────────────────────────────
+ * One single 1-second interval for the entire page.
+ * Components subscribe by passing a callback; we call all of them.
+ * This avoids 250 independent setIntervals.
+ ─────────────────────────────────────────────────────────────────── */
+const subscribers = new Set();
+let tickerId = null;
+
+function subscribeTick(fn) {
+  subscribers.add(fn);
+  if (!tickerId) tickerId = setInterval(() => subscribers.forEach(f => f()), 1000);
+  return () => {
+    subscribers.delete(fn);
+    if (subscribers.size === 0 && tickerId) { clearInterval(tickerId); tickerId = null; }
+  };
 }
 
 function getTimeStr(tz) {
+  const resolved = getSafeTimezone(tz);
+  if (!resolved) return null;
   try {
-    return new Intl.DateTimeFormat('ar', {
-      timeZone: tz, hour: '2-digit', minute: '2-digit', hour12: true,
+    return new Intl.DateTimeFormat('en-US', {
+      timeZone: resolved,
+      hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
     }).format(new Date());
   } catch { return null; }
 }
 
-function useAllTimes(countries) {
-  const [times, setTimes] = useState({});
-  useEffect(() => {
-    const tick = () => {
-      const t = {};
-      for (const c of countries) {
-        if (!c.timezone) continue;
-        const v = getTimeStr(c.timezone);
-        if (v) t[c.country_slug] = v;
-      }
-      setTimes(t);
-    };
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, [countries]);
-  return times;
-}
+/* ─── INTERSECTION-AWARE COUNTRY CARD ───────────────────────────────
+ * Only computes & displays its time when it enters the viewport.
+ * When off-screen: static DOM node, zero JS cost.
+ ─────────────────────────────────────────────────────────────────── */
+function CountryCard({ country_slug, country_code, name_ar, timezone }) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  const [time, setTime] = useState(null);
+  const displayFlag = useMemo(() => getFlagEmoji(country_code) || '\uD83C\uDF0D', [country_code]);
 
-function CountryCard({ country_slug, name_ar, flag, timezone, time }) {
-  const offset = timezone ? getOffset(timezone) : '';
+  /* Observe viewport intersection */
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setVisible(true); // SSR fallback
+      return;
+    }
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setVisible(true); io.disconnect(); }
+    }, { rootMargin: '200px' });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  /* Only subscribe to the shared tick when in viewport */
+  useEffect(() => {
+    if (!visible || !timezone) return;
+    const refresh = () => setTime(getTimeStr(timezone));
+    refresh(); // immediate
+    return subscribeTick(refresh);
+  }, [visible, timezone]);
+
   return (
     <Link
+      ref={ref}
       href={`/time-now/${country_slug}`}
       prefetch={false}
       style={{
@@ -56,6 +76,7 @@ function CountryCard({ country_slug, name_ar, flag, timezone, time }) {
         background: 'var(--bg-surface-2)',
         textDecoration: 'none', color: 'inherit',
         transition: 'background 0.15s, border-color 0.15s, transform 0.15s',
+        contain: 'layout style', /* CSS containment for render perf */
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.background = 'var(--bg-surface-3)';
@@ -69,26 +90,23 @@ function CountryCard({ country_slug, name_ar, flag, timezone, time }) {
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', minWidth: 0 }}>
-        <span aria-hidden style={{ fontSize: '1.15rem', flexShrink: 0, lineHeight: 1 }}>{flag || '🌍'}</span>
+        <span aria-hidden style={{ fontSize: '1.25rem', flexShrink: 0, lineHeight: 1 }}>{displayFlag}</span>
         <span style={{
           fontSize: '0.875rem', fontWeight: '600', color: 'var(--text-primary)',
           whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
         }}>{name_ar}</span>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0, gap: '1px' }}>
-        {time ? (
+      <div style={{ flexShrink: 0, paddingRight: '0.2rem' }}>
+        {visible && time ? (
           <span suppressHydrationWarning style={{
-            fontSize: '0.85rem', fontWeight: '700', color: 'var(--accent-alt)',
+            fontSize: '0.9rem', fontWeight: '700', color: 'var(--accent-alt)',
             fontVariantNumeric: 'tabular-nums', direction: 'ltr', whiteSpace: 'nowrap',
           }}>
             {time}
           </span>
-        ) : null}
-        {offset && (
-          <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', direction: 'ltr', whiteSpace: 'nowrap' }}>
-            {offset}
-          </span>
+        ) : (
+          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>--:--</span>
         )}
       </div>
     </Link>
@@ -107,36 +125,84 @@ function SectionHeading({ children }) {
   );
 }
 
+const GRID_STYLE = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))',
+  gap: '0.45rem',
+};
+
+const PAGE_SIZE = 24;
+
 export default function TimeNowClient({ arabCountries, worldCountries }) {
-  const times = useAllTimes([...arabCountries, ...worldCountries]);
+  const [worldPage, setWorldPage] = useState(1);
+
+  const validArab = useMemo(
+    () => arabCountries.filter(c => isValidTimeZone(c.timezone)),
+    [arabCountries]
+  );
+  const validWorld = useMemo(
+    () => worldCountries.filter(c => isValidTimeZone(c.timezone)),
+    [worldCountries]
+  );
+  const visibleWorld = useMemo(
+    () => validWorld.slice(0, worldPage * PAGE_SIZE),
+    [validWorld, worldPage]
+  );
+  const hasMore = visibleWorld.length < validWorld.length;
+
+  const loadMore = useCallback(() => setWorldPage(p => p + 1), []);
 
   return (
     <section aria-label="تصفح الدول">
+      {/* ── Arab Countries ── */}
       <div style={{ marginBottom: '2rem' }}>
-        <SectionHeading>🌙 الدول العربية</SectionHeading>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))',
-          gap: '0.45rem',
-        }}>
-          {arabCountries.map((c) => (
-            <CountryCard key={c.country_slug} {...c} time={times[c.country_slug]} />
+        <SectionHeading>📍 الدول العربية</SectionHeading>
+        <div style={GRID_STYLE}>
+          {validArab.map((c) => (
+            <CountryCard key={c.country_slug} {...c} />
           ))}
         </div>
       </div>
 
+      {/* ── World Countries (paginated) ── */}
       <div>
-        <SectionHeading>🌍 دول العالم</SectionHeading>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))',
-          gap: '0.45rem',
-        }}>
-          {worldCountries.map((c) => (
-            <CountryCard key={c.country_slug} {...c} time={times[c.country_slug]} />
+        <SectionHeading>🌐 دول العالم</SectionHeading>
+        <div style={GRID_STYLE}>
+          {visibleWorld.map((c) => (
+            <CountryCard key={c.country_slug} {...c} />
           ))}
         </div>
+
+        {hasMore && (
+          <div style={{ textAlign: 'center', marginTop: '1.25rem' }}>
+            <button
+              onClick={loadMore}
+              style={{
+                padding: '0.6rem 2rem',
+                borderRadius: '999px',
+                border: '1px solid var(--border-default)',
+                background: 'var(--bg-surface-2)',
+                color: 'var(--text-secondary)',
+                fontSize: '0.875rem', fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'background 0.15s, border-color 0.15s',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = 'var(--bg-surface-3)';
+                e.currentTarget.style.borderColor = 'var(--border-accent)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = 'var(--bg-surface-2)';
+                e.currentTarget.style.borderColor = 'var(--border-default)';
+              }}
+            >
+              تحميل المزيد ({validWorld.length - visibleWorld.length} دولة متبقية)
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
 }
+
+
