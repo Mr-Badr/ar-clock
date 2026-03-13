@@ -11984,20 +11984,6 @@
     "country_slug": "malaysia"
   },
   {
-    "id": 42436,
-    "city_slug": "kampung-larkin-lama",
-    "country_code": "MY",
-    "name_ar": "كامبونغ لاركين لاما",
-    "name_en": "Kampung Larkin Lama",
-    "timezone": "Asia/Kuala_Lumpur",
-    "is_capital": false,
-    "lat": 1.5024,
-    "lon": 103.744,
-    "priority": 500000,
-    "population": 500000,
-    "country_slug": "malaysia"
-  },
-  {
     "id": 42437,
     "city_slug": "kota-damansara",
     "country_code": "MY",
@@ -12007,6 +11993,20 @@
     "is_capital": false,
     "lat": 3.15454,
     "lon": 101.58022,
+    "priority": 500000,
+    "population": 500000,
+    "country_slug": "malaysia"
+  },
+  {
+    "id": 42436,
+    "city_slug": "kampung-larkin-lama",
+    "country_code": "MY",
+    "name_ar": "كامبونغ لاركين لاما",
+    "name_en": "Kampung Larkin Lama",
+    "timezone": "Asia/Kuala_Lumpur",
+    "is_capital": false,
+    "lat": 1.5024,
+    "lon": 103.744,
     "priority": 500000,
     "population": 500000,
     "country_slug": "malaysia"

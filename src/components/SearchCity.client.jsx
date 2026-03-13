@@ -159,6 +159,31 @@ function filterCitiesLocally(cities, q) {
     .slice(0, 80);
 }
 
+function filterCountriesLocally(countries, q) {
+  if (!q.trim()) return [];
+  const normalizedQuery = normalizeArabic(q);
+
+  return countries
+    .filter(c => {
+      const cAr = normalizeArabic(c.name_ar);
+      const cEn = (c.name_en || '').toLowerCase();
+      const qLower = normalizedQuery.toLowerCase();
+      return cAr.includes(normalizedQuery) || cEn.includes(qLower);
+    })
+    .sort((a, b) => {
+      const aAr = normalizeArabic(a.name_ar);
+      const bAr = normalizeArabic(b.name_ar);
+      const aStarts = aAr.startsWith(normalizedQuery);
+      const bStarts = bAr.startsWith(normalizedQuery);
+
+      if (aStarts && !bStarts) return -1;
+      if (!aStarts && bStarts) return 1;
+
+      return 0; // Maintain original sorted order if both match similarly
+    })
+    .slice(0, 5); // Max 5 country suggestions
+}
+
 /* ── Helpers ────────────────────────────────────────────────────────────── */
 function stripDiacritics(s = '') {
   return s.replace(/[\u064B-\u065F\u0670]/g, '');
@@ -302,6 +327,7 @@ export default function SearchCity({
   const [selectedCity, setSelectedCity] = useState(initialCity ?? null);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
+  const [countryMatches, setCountryMatches] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [searchEverywhere, setSearchEverywhere] = useState(false);
 
@@ -383,13 +409,27 @@ export default function SearchCity({
     abortRef.current = new AbortController();
 
     if (!q.trim() && !countrySlug && !forceGlobal) {
-      startTransition(() => setResults([]));
+      startTransition(() => {
+        setResults([]);
+        setCountryMatches([]);
+      });
       setIsSearching(false);
       return;
     }
 
     setIsSearching(true);
     setSearchEverywhere(forceGlobal);
+
+    // Filter countries if no specific country is selected
+    if (!countrySlug && !forceGlobal) {
+      startTransition(() => {
+        setCountryMatches(filterCountriesLocally(countries, q));
+      });
+    } else {
+      startTransition(() => {
+        setCountryMatches([]);
+      });
+    }
     try {
       // MODE: Country selected -> Use local cache
       if (countrySlug && !forceGlobal) {
@@ -400,18 +440,64 @@ export default function SearchCity({
         return;
       }
 
-      // MODE: Global search -> Hit API
-      // If we are not forcing global and have a small query, maybe we check priority cities first?
-      // Actually the user wants "Most searched countries and cities should be always present"
-      // So we pre-warm them.
+      // MODE: Global search -> Hit API & Local Caches (Multi-Layer)
 
-      const res = await fetch(`/api/search-city?q=${encodeURIComponent(q)}`, {
-        signal: abortRef.current.signal
+      // Layer 1: Search local caches immediately
+      let localMatches = [];
+      const allCachedCities = [];
+      _countryCitiesCache.forEach(cities => {
+        allCachedCities.push(...cities);
       });
-      if (!res.ok) throw new Error('Search failed');
-      const data = await res.json();
+      if (allCachedCities.length > 0) {
+        localMatches = filterCitiesLocally(allCachedCities, q);
+        // Show local matches immediately while API is fetching
+        if (localMatches.length > 0) {
+          startTransition(() => setResults(localMatches));
+        }
+      }
 
-      startTransition(() => setResults(data || []));
+      // Layer 2: API Search
+      const apiPromise = fetch(`/api/search-city?q=${encodeURIComponent(q)}`, {
+        signal: abortRef.current.signal
+      }).then(res => {
+        if (!res.ok) throw new Error('Search failed');
+        return res.json();
+      }).catch(err => {
+        if (err.name !== 'AbortError') console.error('Search error', err);
+        return [];
+      });
+
+      const apiData = await apiPromise;
+
+      // Merge and deduplicate
+      const merged = [...localMatches];
+      const seenSlugs = new Set(localMatches.map(c => c.city_slug));
+
+      for (const city of (apiData || [])) {
+        if (!seenSlugs.has(city.city_slug)) {
+          seenSlugs.add(city.city_slug);
+          merged.push(city);
+        }
+      }
+
+      // Re-sort the merged list to ensure priority and population rank is preserved across local + API
+      merged.sort((a, b) => {
+        const nq = normalizeArabic(q);
+        const aAr = normalizeArabic(a.city_name_ar);
+        const bAr = normalizeArabic(b.city_name_ar);
+        const aStarts = aAr.startsWith(nq);
+        const bStarts = bAr.startsWith(nq);
+
+        if (aStarts && !bStarts) return -1;
+        if (!aStarts && bStarts) return 1;
+
+        if (a.is_capital && !b.is_capital) return -1;
+        if (!a.is_capital && b.is_capital) return 1;
+
+        return (b.priority || 0) - (a.priority || 0) || (b.population || 0) - (a.population || 0);
+      });
+
+      startTransition(() => setResults(merged.slice(0, 80)));
     } catch (err) {
       if (err.name !== 'AbortError') console.error('Search error', err);
     } finally {
@@ -769,6 +855,28 @@ export default function SearchCity({
                 </button>
               </div>
             </CommandEmpty>
+          )}
+
+          {/* Country Matches */}
+          {!showSkeleton && countryMatches.length > 0 && (
+            <CommandGroup heading="دول مطابقة" className="sc-group-heading">
+              {countryMatches.map(c => (
+                <CommandItem
+                  key={`match-${c.slug}`}
+                  value={c.name_ar}
+                  onSelect={() => handleSelectCountry(c)}
+                  className="sc-item"
+                  aria-label={`تحديد دولة ${c.name_ar}`}
+                >
+                  <span className="sc-item__icon" aria-hidden="true">
+                    {getFlagEmoji(c.country_code)}
+                  </span>
+                  <span className="sc-item__body">
+                    <span className="sc-item__name">{highlight(c.name_ar, query)}</span>
+                  </span>
+                </CommandItem>
+              ))}
+            </CommandGroup>
           )}
 
           {/* Search results */}

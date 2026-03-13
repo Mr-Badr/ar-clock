@@ -1,4 +1,5 @@
 import './new.css';
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { Noto_Kufi_Arabic } from 'next/font/google';
 import { Toaster } from 'sonner';
@@ -109,7 +110,9 @@ export default function RootLayout({
           notoKufi.className activates the loaded font family. */}
       <body className={notoKufi.className}>
         <ThemeProvider>
-          <Header />
+          <Suspense fallback={<div className="h-16" />}>
+            <Header />
+          </Suspense>
           {children}
           {/* Sonner Toaster — dir and position match RTL layout */}
           <Toaster

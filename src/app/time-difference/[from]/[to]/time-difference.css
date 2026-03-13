@@ -1,0 +1,171 @@
+/*
+ * time-difference.css
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Scope: app/time-difference/[from]/[to]/
+ *
+ * RULES (strictly enforced):
+ *   ✅ Only CSS that new.css does NOT already provide
+ *   ✅ All values from CSS custom properties — zero hardcoded colours
+ *   ✅ Hover ONLY on interactive elements (links, swap button, stepper btns)
+ *   ✅ tabular-nums on every numeric element
+ *   ✅ No letter-spacing on Arabic text (breaks connected script)
+ *   ✅ RTL-correct: logical properties (border-inline-*, padding-inline-*)
+ *
+ * Contents:
+ *   1.  .td-snapshot      — SSR current-time panel (static, no hover)
+ *   2.  .td-city-clock    — LiveClock size override inside comparison card
+ *   3.  .td-static        — suppresses .card:hover lift on data-only cards
+ *   4.  .td-faq-item      — FAQ accordion item (full border + rounded)
+ *   5.  .td-faq-trigger   — FAQ accordion trigger
+ *   6.  .td-faq-body      — FAQ answer text
+ *   7.  Print styles
+ *   8.  Reduced-motion
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+
+/* ── 1. SSR snapshot ──────────────────────────────────────────────────────────
+ * Server-rendered current-time comparison (crawlable, static).
+ * Looks like a card (bg-surface-2, border, shadow) but NO hover,
+ * because it is data display — not clickable.
+ */
+.td-snapshot {
+  background-color: var(--bg-surface-2);
+  border:           1px solid var(--border-default);
+  border-radius:    var(--radius-xl);
+  padding:          var(--space-4) var(--space-6);
+  box-shadow:       var(--shadow-xs);
+}
+
+
+/* ── 2. LiveClock size override ───────────────────────────────────────────────
+ *
+ * new.css clock sizes:
+ *   .clock-xs → --text-clock-xs = 3.5rem = 56px  (fullscreen widget)
+ *   .clock-sm → --text-clock-sm = 5.5rem = 88px  (even larger)
+ *
+ * At 56px+ the clock dominates a 2-column comparison card and breaks layout.
+ * 1.75rem (28px) reads as a "data value" — compact, scannable, correct size
+ * for a city panel inside a card.
+ *
+ * Wrapper: <div className="td-city-clock"><LiveClock .../></div>
+ * !important needed: LiveClock may inject inline style or use specificity
+ * that matches (0,1,0). Descendant selector wins at 0,2,0, but !important
+ * is the safe override for the class variants.
+ */
+.td-city-clock .clock-display {
+  font-size:   1.75rem;
+  font-weight: var(--font-extrabold);
+  line-height: var(--leading-none);
+}
+.td-city-clock .clock-xs,
+.td-city-clock .clock-sm {
+  font-size: 1.75rem !important;
+}
+
+
+/* ── 3. Suppress hover lift on data-only cards ────────────────────────────────
+ *
+ * new.css .card:hover      → transform: translateY(-1px); shadow-md  (lift)
+ * new.css .card-nested:hover → border-color: border-default          (subtle)
+ *
+ * Lift implies "I'm clickable". Data panels (city comparison, business hours,
+ * UTC info) are NOT clickable — they must NOT lift.
+ *
+ * Usage: className="card td-static" or "card-nested td-static"
+ *
+ * !important: .card:hover specificity = 0,2,0 (class + pseudo).
+ *             .td-static:hover        = 0,2,0 → same level → !important wins.
+ */
+.td-static,
+.td-static:hover {
+  transform:    none !important;
+  box-shadow:   var(--shadow-xs) !important;
+  border-color: var(--border-default) !important;
+  cursor:       default;
+}
+
+
+/* ── 4. FAQ accordion item ────────────────────────────────────────────────────
+ *
+ * shadcn AccordionItem applies only "border-b" by default (bottom border, no radius).
+ * Override to full card-style border + rounded corners.
+ * Open state gets accent border to visually indicate the active item.
+ */
+.td-faq-item {
+  background:    var(--bg-surface-2);
+  border:        1px solid var(--border-default) !important;
+  border-radius: var(--radius-lg) !important;
+  overflow:      hidden;
+  padding:       0 !important;
+  transition:    border-color var(--transition-fast);
+}
+.td-faq-item[data-state='open'] {
+  border-color: var(--border-accent-strong) !important;
+}
+
+
+/* ── 5. FAQ trigger ───────────────────────────────────────────────────────────
+ *
+ * shadcn default adds hover:underline — removed.
+ * Hover shows bg-accent-soft: correct (trigger IS interactive, opens/closes).
+ * Chevron icon pushed to logical-start (right in RTL = leading edge).
+ */
+.td-faq-trigger {
+  width:           100%;
+  display:         flex !important;
+  align-items:     center !important;
+  gap:             var(--space-3);
+  padding:         var(--space-3) var(--space-4) !important;
+  font-size:       var(--text-sm);
+  font-weight:     var(--font-semibold);
+  color:           var(--text-primary);
+  text-align:      right;
+  text-decoration: none !important;
+  background:      transparent;
+  border:          none;
+  cursor:          pointer;
+  line-height:     var(--leading-snug);
+  transition:      background var(--transition-fast);
+}
+.td-faq-trigger:hover {
+  background:      var(--accent-soft);
+  text-decoration: none !important;
+}
+/* Chevron: logical-start (right in RTL) */
+.td-faq-trigger svg {
+  color:               var(--accent-alt);
+  flex-shrink:         0;
+  margin-inline-start: auto;
+  margin-inline-end:   0;
+}
+
+
+/* ── 6. FAQ answer body ───────────────────────────────────────────────────────
+ */
+.td-faq-body {
+  padding:     0 var(--space-4) var(--space-4) !important;
+  padding-top: var(--space-3)   !important;
+  margin:      0;
+  font-size:   var(--text-sm);
+  color:       var(--text-secondary);
+  line-height: var(--leading-loose);
+  border-top:  1px solid var(--border-subtle);
+}
+
+
+/* ── 7. Print ─────────────────────────────────────────────────────────────────
+ */
+@media print {
+  [aria-label="حاسبة فرق التوقيت التفاعلية"] { display: none !important; }
+  .card, .card-nested { box-shadow: none !important; border: 1px solid #ccc !important; }
+  .td-snapshot        { box-shadow: none !important; }
+}
+
+
+/* ── 8. Reduced motion ────────────────────────────────────────────────────────
+ */
+@media (prefers-reduced-motion: reduce) {
+  .td-faq-item    { transition: none; }
+  .td-faq-trigger { transition: none; }
+}

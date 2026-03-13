@@ -26,8 +26,11 @@ export async function GET(request) {
       is_capital: city.is_capital,
       population: city.population
     }))
-
-    return NextResponse.json(formattedCities)
+    return NextResponse.json(formattedCities, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400'
+      }
+    })
   } catch (error) {
     console.error('[API] search-city error:', error)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })

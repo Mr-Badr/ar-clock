@@ -103,8 +103,12 @@ export async function getAllCityParams(): Promise<CityParams[]> {
   }
 }
 
-// Dynamic search — NOT cached (real-time autocomplete)
+// Dynamic search — Cached for high traffic (real-time autocomplete)
 export async function searchCities(query: string, limit = 10): Promise<City[]> {
+  'use cache'
+  cacheTag('cities', 'search-cities')
+  cacheLife('hours')
+
   if (!query || query.trim().length < 2) return []
 
   // Pre-clean the query: normalize hamzas, remove tatweel & tashkeel, standardizing ta marbuta/alif maksura, strip punctuation
