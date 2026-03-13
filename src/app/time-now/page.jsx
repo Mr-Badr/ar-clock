@@ -38,13 +38,14 @@ export default async function TimeNowPage() {
             fontSize: '0.78rem', color: 'var(--accent)', fontWeight: '700',
             marginBottom: '1rem',
           }}>
-            <Globe2 size={13} aria-hidden /> ساعة عالمية حية
+            <Globe2 size={13} aria-hidden /> 
+            الوقت الان في العالم  
           </div>
-          <h1 style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)', fontWeight: '900', lineHeight: 1.1, margin: '0 auto 0.75rem', maxWidth: '800px' }}>
-            الوقت الآن في أي <span className="text-accent">دولة</span>
+          <h1 style={{ fontSize: 'clamp(2rem, 6vw, 2rem)', fontWeight: '900', lineHeight: 1.1, margin: '0 auto 0.75rem', maxWidth: '800px' }}>
+            الساعة الان في <span className="text-accent">مدينتك</span> — كل ما يتعلق بالوقت في مكان واحد
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', margin: '0 auto', maxWidth: '520px', lineHeight: 1.6 }}>
-            ساعة حية دقيقة حتى الثانية لأي مدينة في العالم. التاريخ الميلادي والهجري والمنطقة الزمنية.
+            اعرف توقيتك بدقة لحظة بلحظة، واستكشف كل ما تحتاجه لفهم الوقت حولك وفي العالم في تجربة بسيطة وسريعة.
           </p>
         </header>
 

@@ -2,6 +2,7 @@
 import LiveClock from '@/components/clocks/LiveClock';
 import Link from 'next/link';
 import { Clock, Calendar, Compass, ArrowLeftRight, Bell } from 'lucide-react';
+import TimeNowPage from './time-now/page';
 
 const SERVICES = [
   {
@@ -68,16 +69,7 @@ export default function HomePage() {
       <main className="pt-24 pb-20">
         {/* --- Hero Section --- */}
         <section className="container mx-auto px-4 text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
-            ساعة عربية — <span className="text-accent italic">وقتك</span> في مكان واحد
-          </h1>
-          <p className="text-muted text-lg max-w-2xl mx-auto mb-12">
-            المنصة العربية الأولى لمواقيت الصلاة الدقيقة، فرق التوقيت العالمي، وتتبع المناسبات بلمسة تصميم عصرية.
-          </p>
-
-          <div className="bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-[var(--accent-glow-soft)]">
-            <LiveClock timezone={null} />
-          </div>
+          <TimeNowPage />
         </section>
 
         {/* --- Services Grid --- */}

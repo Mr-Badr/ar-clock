@@ -302,7 +302,7 @@ export default async function HolidayPage({ params }) {
           {/* Event name — big, clean, accent on the name itself */}
           <h1 style={{ lineHeight: 'var(--leading-tight)', marginBottom: 'var(--space-2)' }}>
             <span style={{ display: 'block', fontSize: 'var(--text-sm)', fontWeight: 'var(--font-medium)', color: 'var(--text-muted)', marginBottom: 'var(--space-1)', letterSpacing: 'var(--tracking-wide)' }}>
-              العد التنازلي لـ
+              كم باقي على  
             </span>
             <span style={{ fontSize: 'clamp(1.75rem, 5vw, 2.75rem)', fontWeight: 'var(--font-extrabold)', color: 'var(--accent)' }}>
               {event.name}

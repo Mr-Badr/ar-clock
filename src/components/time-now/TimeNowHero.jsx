@@ -272,7 +272,7 @@ export default function TimeNowHero({
                     </div>
                     <span style={{ fontSize: 'clamp(0.8rem, min(2.2vw, 3vh), 1.4rem)', fontWeight: '500', color: 'var(--text-secondary)', padding: '0.2rem 0.75rem', borderRadius: '999px', background: 'var(--bg-surface-3)', border: '1px solid var(--border-subtle)', whiteSpace: 'nowrap' }}>{label}</span>
                   </div>
-                  {i < UNITS.length - 1 && <span aria-hidden style={{ fontSize: 'clamp(2.5rem, min(10vw, 16vh), 10rem)', color: 'var(--clock-separator)', fontWeight: '700', alignSelf: 'center', marginBottom: '1.3em', flexShrink: 0, userSelect: 'none' }}>:</span>}
+                  {i < UNITS.length - 1 && <span aria-hidden style={{ fontSize: 'clamp(2.5rem, min(10vw, 16vh), 10rem)', color: 'var(--clock-separator)', fontWeight: '700', alignSelf: 'center', marginBottom: '1em', flexShrink: 0, userSelect: 'none' }}>:</span>}
                 </div>
               ))}
             </div>

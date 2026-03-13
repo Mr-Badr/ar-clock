@@ -411,7 +411,7 @@ export default function LiveClock({ timezone = null, cityLabel = null }) {
                       color: 'var(--clock-separator)',
                       fontWeight: '700',
                       alignSelf: 'center',
-                      marginBottom: '1.3em',
+                      marginBottom: '1em',
                       flexShrink: 0,
                       userSelect: 'none',
                     }}>:</span>

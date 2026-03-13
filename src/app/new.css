@@ -1799,7 +1799,7 @@
 
   /* H · M · S digits below days */
   .ct-hms-digit {
-    font-size: clamp(1.4rem, 8cqi, 2.4rem) !important;
+    font-size: clamp(2rem, 8cqi, 2.4rem) !important;
   }
 
   .ct-hms-label {

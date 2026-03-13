@@ -518,6 +518,7 @@ export default function CountdownTicker({
   const containerRef = useRef(null);
   const [isFS, setIsFS] = useState(false);
   const [zoom, setZoom] = useState(1);
+  const wakeLockRef = useRef(null);
 
   useEffect(() => {
     const onChange = () => {
@@ -555,6 +556,31 @@ export default function CountdownTicker({
       } catch { setIsFS(false); }
     }
   };
+
+  /* ══ FULLSCREEN ENHANCEMENTS (WakeLock + Orientation) ══ */
+  useEffect(() => {
+    if (!isFS) return;
+    // Force landscape on mobile
+    try {
+      if (screen.orientation?.lock) screen.orientation.lock('landscape').catch(() => { });
+    } catch (e) { }
+    // Prevent screen sleep
+    const requestWakeLock = async () => {
+      try {
+        if ('wakeLock' in navigator) wakeLockRef.current = await navigator.wakeLock.request('screen');
+      } catch (err) { }
+    };
+    requestWakeLock();
+    const handleVisibility = () => {
+      if (wakeLockRef.current !== null && document.visibilityState === 'visible') requestWakeLock();
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibility);
+      if (wakeLockRef.current) { wakeLockRef.current.release().catch(() => { }); wakeLockRef.current = null; }
+      try { if (screen.orientation?.unlock) screen.orientation.unlock(); } catch (e) { }
+    };
+  }, [isFS]);
 
   const zoomIn = () => setZoom(z => Math.min(z + 1, 2));
   const zoomOut = () => setZoom(z => Math.max(z - 1, 0));
@@ -597,13 +623,8 @@ export default function CountdownTicker({
 
       {/* ═══ FULLSCREEN ════════════════════════════════════════════════ */}
       {isFS && (
-        <div style={{
-          position: 'fixed', inset: 0, zIndex: 100,
-          background: 'var(--bg-base)',
-          display: 'flex', flexDirection: 'column',
-          alignItems: 'center', justifyContent: 'center',
-        }} dir="rtl">
-          <div style={{
+        <div className="fullscreen-mode" style={{ background: 'var(--clock-bg)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }} dir="rtl">
+          <div className="fullscreen-exit" style={{
             position: 'absolute', top: '1.5rem', right: '1.5rem', left: '1.5rem',
             display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 110,
           }}>
@@ -644,6 +665,7 @@ export default function CountdownTicker({
                           key={`fs-${i}-${pos}-${char}`}
                           suppressHydrationWarning
                           aria-hidden
+                          className="clock-display"
                           style={{
                             display: 'block',
                             fontSize: 'clamp(4rem, min(14vw, 20vh), 10rem)',
@@ -664,8 +686,9 @@ export default function CountdownTicker({
                   {i < ALL_UNITS.length - 1 && (
                     <span aria-hidden style={{
                       fontSize: 'clamp(2.5rem, min(8vw, 12vh), 6rem)',
-                      color: 'var(--clock-separator)', fontWeight: '700',
-                      alignSelf: 'center', marginBottom: '1.3em', flexShrink: 0, userSelect: 'none',
+                      color: 'var(--clock-separator)',
+                      fontWeight: '700',
+                      alignSelf: 'center', marginBottom: '1em', flexShrink: 0, userSelect: 'none',
                     }}>:</span>
                   )}
                 </div>
