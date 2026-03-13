@@ -12,7 +12,7 @@
  * Exports: default LiveClock · LiveClockSkeleton
  */
 import { useState, useEffect, useRef } from 'react';
-import { Monitor, Minimize2, ZoomIn, ZoomOut } from 'lucide-react';
+import { Fullscreen, Minimize2, ZoomIn, ZoomOut } from 'lucide-react';
 import DatePill from './DatePill';
 import { getSafeTimezone } from '@/lib/country-utils';
 
@@ -442,7 +442,7 @@ export default function LiveClock({ timezone = null, cityLabel = null }) {
         {/* Toolbar */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
           <IconBtn onClick={toggleFS} label="فتح الساعة بملء الشاشة" title="ملء الشاشة">
-            <Monitor size={15} /><span>ملء الشاشة</span>
+            <Fullscreen size={15} /><span>ملء الشاشة</span>
           </IconBtn>
         </div>
 

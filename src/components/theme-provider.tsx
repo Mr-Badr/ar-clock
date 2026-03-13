@@ -6,13 +6,12 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 // Theme names MUST exactly match the CSS class selectors in design-system.css:
 //   .dark      → slate-blue night mode     (section 03)
 //   .light     → warm-white day mode       (section 04)
-//   .contrast  → near-black AMOLED mode    (section 05)
 //
 // next-themes writes one of these as a class on <html>:
-//   <html class="dark">   or   <html class="light">   or   <html class="contrast">
+//   <html class="dark">   or   <html class="light">
 //
 // The CSS variable tokens (--bg-base, --accent, --text-primary, etc.) are
-// then resolved by whichever .dark / .light / .contrast block is active.
+// then resolved by whichever .dark / .light block is active.
 //
 // disableTransitionOnChange is intentionally NOT set here.
 // Our CSS handles theme transitions via .theme-transition on <html>

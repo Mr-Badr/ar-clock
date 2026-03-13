@@ -1,4 +1,5 @@
 /* app/time-difference/[from]/[to]/page.jsx */
+import { Suspense } from 'react';
 import TimeDiffCalculator from '@/components/TimeDifference/TimeDiffCalculatorV2.client';
 import { getCityBySlug } from '@/lib/db/queries/cities';
 import { getCountryBySlug } from '@/lib/db/queries/countries';
@@ -13,25 +14,28 @@ import {
 } from '@/components/ui/accordion';
 import { Separator } from '@/components/ui/separator';
 import './time-difference.css';
+import { SuspendedTimeSnapshot, getOffsetMinutes, observesDST, formatUTCOffset } from './time-snapshot';
+
 
 // ─── City resolution ──────────────────────────────────────────────────────────
 async function resolveCityFromSegment(segment) {
+  console.log(`[DEBUG - SSR] resolveCityFromSegment called with segment:`, segment);
   if (!segment) return null;
   const parts = segment.split('-');
   for (let i = 0; i < parts.length - 1; i++) {
     const countrySlug = parts.slice(0, i + 1).join('-');
-    const citySlug    = parts.slice(i + 1).join('-');
+    const citySlug = parts.slice(i + 1).join('-');
     if (!countrySlug || !citySlug) continue;
     const country = await getCountryBySlug(countrySlug);
     if (!country) continue;
     const city = await getCityBySlug(country.country_code, citySlug);
     if (city?.timezone && city.timezone !== 'UTC') {
       return {
-        country_slug:    country.country_slug,
+        country_slug: country.country_slug,
         country_name_ar: country.name_ar,
-        city_slug:       city.city_slug,
-        city_name_ar:    city.name_ar || city.name_en,
-        timezone:        city.timezone,
+        city_slug: city.city_slug,
+        city_name_ar: city.name_ar || city.name_en,
+        timezone: city.timezone,
       };
     }
   }
@@ -40,102 +44,56 @@ async function resolveCityFromSegment(segment) {
   const city = await getCityBySlug(country.country_code, parts.slice(1).join('-'));
   if (!city) return null;
   return {
-    country_slug:    country.country_slug,
+    country_slug: country.country_slug,
     country_name_ar: country.name_ar,
-    city_slug:       city.city_slug,
-    city_name_ar:    city.name_ar || city.name_en,
-    timezone:        city.timezone || 'UTC',
+    city_slug: city.city_slug,
+    city_name_ar: city.name_ar || city.name_en,
+    timezone: city.timezone || 'UTC',
   };
 }
 const resolveCity = cache(resolveCityFromSegment);
 
-// ─── Timezone helpers ─────────────────────────────────────────────────────────
-function getOffsetMinutes(tz) {
-  try {
-    const now   = new Date();
-    const local = new Date(now.toLocaleString('en-US', { timeZone: tz }));
-    const utc   = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
-    return Math.round((local - utc) / 60000);
-  } catch { return 0; }
-}
-
-function isDSTActive(tz) {
-  try {
-    const now     = new Date();
-    const jan     = new Date(now.getFullYear(), 0, 15);
-    const jul     = new Date(now.getFullYear(), 6, 15);
-    const offNow  = getOffsetMinutes(tz);
-    const offJan  = Math.round((new Date(jan.toLocaleString('en-US', { timeZone: tz })) - new Date(jan.toLocaleString('en-US', { timeZone: 'UTC' }))) / 60000);
-    const offJul  = Math.round((new Date(jul.toLocaleString('en-US', { timeZone: tz })) - new Date(jul.toLocaleString('en-US', { timeZone: 'UTC' }))) / 60000);
-    if (offJan === offJul) return false;
-    return offNow !== Math.min(offJan, offJul);
-  } catch { return false; }
-}
-
-function observesDST(tz) {
-  try {
-    const now    = new Date();
-    const jan    = new Date(now.getFullYear(), 0, 15);
-    const jul    = new Date(now.getFullYear(), 6, 15);
-    const offJan = Math.round((new Date(jan.toLocaleString('en-US', { timeZone: tz })) - new Date(jan.toLocaleString('en-US', { timeZone: 'UTC' }))) / 60000);
-    const offJul = Math.round((new Date(jul.toLocaleString('en-US', { timeZone: tz })) - new Date(jul.toLocaleString('en-US', { timeZone: 'UTC' }))) / 60000);
-    return offJan !== offJul;
-  } catch { return false; }
-}
-
-function formatUTCOffset(minutes) {
-  const sign = minutes >= 0 ? '+' : '-';
-  const abs  = Math.abs(minutes);
-  const h    = String(Math.floor(abs / 60));
-  const m    = abs % 60;
-  return `UTC${sign}${h}${m > 0 ? ':' + String(m).padStart(2, '0') : ''}`;
+function dayNote(srcH, diffH) {
+  const dest = srcH + diffH;
+  if (dest >= 24) return 'اليوم التالي';
+  if (dest < 0) return 'اليوم السابق';
+  return '';
 }
 
 /** Western-numeral 12-hour Arabic time string */
 function fmtTime(h24) {
-  const norm   = ((Math.round(h24 * 60) % 1440) + 1440) % 1440;
-  const h      = Math.floor(norm / 60);
-  const m      = norm % 60;
+  const norm = ((Math.round(h24 * 60) % 1440) + 1440) % 1440;
+  const h = Math.floor(norm / 60);
+  const m = norm % 60;
   const period = h >= 12 ? 'م' : 'ص';
-  const h12    = h % 12 || 12;
+  const h12 = h % 12 || 12;
   return `${h12}:${String(m).padStart(2, '0')} ${period}`;
-}
-
-/** SSR current time – Western numerals via -u-nu-latn */
-function getCurrentTime(tz) {
-  try {
-    return new Intl.DateTimeFormat('ar-SA-u-nu-latn', {
-      timeZone: tz, hour: '2-digit', minute: '2-digit', hour12: true,
-    }).format(new Date());
-  } catch { return '—'; }
-}
-
-function dayNote(srcH, diffH) {
-  const dest = srcH + diffH;
-  if (dest >= 24) return 'اليوم التالي';
-  if (dest < 0)   return 'اليوم السابق';
-  return '';
 }
 
 // ─── Metadata ─────────────────────────────────────────────────────────────────
 export async function generateMetadata({ params }) {
-  const { from, to } = await params;
+  console.log(`[DEBUG - SSR] generateMetadata started`);
+  const paramsResolved = await params;
+  console.log(`[DEBUG - SSR] generateMetadata params awaited:`, paramsResolved);
+
+  const { from, to } = paramsResolved;
   const [fromCity, toCity] = await Promise.all([resolveCity(from), resolveCity(to)]);
+  console.log(`[DEBUG - SSR] generateMetadata cities resolved`);
   if (!fromCity || !toCity) return { title: 'فرق التوقيت | وقت' };
 
-  const title       = `فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar} الآن`;
+  const title = `فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar} الآن`;
   const description =
     `كم الفرق الزمني بين ${fromCity.city_name_ar} و${toCity.city_name_ar}؟ تحويل فوري للوقت بدقة، ` +
-    `معلومات التوقيت الصيفي، وأفضل وقت للاجتماعات. محدّث لحظيًا.`;
+    `معلومات التوقيت الصيفي، وأفضل وقت للاجتماعات.محدّث لحظيًا.`;
   const keywords = [
-    `فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
-    `كم الفرق بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
-    `الساعة الآن في ${fromCity.city_name_ar}`,
-    `الساعة الآن في ${toCity.city_name_ar}`,
+    `فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar} `,
+    `كم الفرق بين ${fromCity.city_name_ar} و${toCity.city_name_ar} `,
+    `الساعة الآن في ${fromCity.city_name_ar} `,
+    `الساعة الآن في ${toCity.city_name_ar} `,
     `توقيت ${fromCity.city_name_ar} الآن`,
     `توقيت ${toCity.city_name_ar} الآن`,
-    `تحويل الوقت من ${fromCity.city_name_ar} إلى ${toCity.city_name_ar}`,
-    `فرق التوقيت بين ${fromCity.country_name_ar} و${toCity.country_name_ar}`,
+    `تحويل الوقت من ${fromCity.city_name_ar} إلى ${toCity.city_name_ar} `,
+    `فرق التوقيت بين ${fromCity.country_name_ar} و${toCity.country_name_ar} `,
     `هل ${fromCity.city_name_ar} تطبق التوقيت الصيفي`,
     `هل ${toCity.city_name_ar} تطبق التوقيت الصيفي`,
     'حاسبة فرق التوقيت', 'تحويل الوقت بين المدن', 'فرق التوقيت',
@@ -143,43 +101,53 @@ export async function generateMetadata({ params }) {
 
   return {
     title, description, keywords,
-    alternates: { canonical: `/time-difference/${from}/${to}` },
-    openGraph:  { title, description, locale: 'ar_SA', type: 'website' },
-    twitter:    { card: 'summary', title, description },
+    alternates: { canonical: `/ time - difference / ${from}/${to}` },
+    openGraph: { title, description, locale: 'ar_SA', type: 'website' },
+    twitter: { card: 'summary', title, description },
   };
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
-export default async function ComparisonPage({ params }) {
-  const { from, to } = await params;
+async function ComparisonPageContent({ paramsPromise }) {
+  console.log(`[DEBUG - SSR] ComparisonPageContent performing SEO calculations`);
+
+  const paramsResolved = await paramsPromise;
+  const { from, to } = paramsResolved;
+
   const [fromCity, toCity] = await Promise.all([resolveCity(from), resolveCity(to)]);
   if (!fromCity || !toCity) notFound();
 
-  const fromOffMin     = getOffsetMinutes(fromCity.timezone);
-  const toOffMin       = getOffsetMinutes(toCity.timezone);
-  const diffMinutes    = toOffMin - fromOffMin;
-  const diffHours      = diffMinutes / 60;
-  const fromDST        = isDSTActive(fromCity.timezone);
-  const toDST          = isDSTActive(toCity.timezone);
-  const fromHasDST     = observesDST(fromCity.timezone);
-  const toHasDST       = observesDST(toCity.timezone);
-  const fromOffStr     = formatUTCOffset(fromOffMin);
-  const toOffStr       = formatUTCOffset(toOffMin);
-  const absDiffH       = Math.floor(Math.abs(diffHours));
-  const absDiffM       = Math.abs(diffMinutes) % 60;
-  const diffLabel      = absDiffH > 0
+  // ─── Shared calculations (Independent of current time snapshot) ─────────────
+  // We use a fixed reference to prevent Next.js 15 SSR bailout from `new Date()`
+  const SEO_DATE = new Date('2024-01-01T12:00:00Z');
+  const fromOffMin = getOffsetMinutes(fromCity.timezone, SEO_DATE);
+  const toOffMin = getOffsetMinutes(toCity.timezone, SEO_DATE);
+  const diffMinutes = toOffMin - fromOffMin;
+  const diffHours = diffMinutes / 60;
+
+  // For SEO and static data, we assume standard time and state if they *observe* DST.
+  const fromHasDST = observesDST(fromCity.timezone, SEO_DATE);
+  const toHasDST = observesDST(toCity.timezone, SEO_DATE);
+
+  // Current DST state for the interactive table
+  const CURRENT_DATE = new Date();
+  const fromDST = observesDST(fromCity.timezone, CURRENT_DATE);
+  const toDST = observesDST(toCity.timezone, CURRENT_DATE);
+
+  const fromOffStr = formatUTCOffset(fromOffMin);
+  const toOffStr = formatUTCOffset(toOffMin);
+  const absDiffH = Math.floor(Math.abs(diffHours));
+  const absDiffM = Math.abs(diffMinutes) % 60;
+  const diffLabel = absDiffH > 0
     ? `${absDiffH} ساعة${absDiffM > 0 ? ` و${absDiffM} دقيقة` : ''}`
     : `${absDiffM} دقيقة`;
-  const ahead          = diffMinutes > 0 ? toCity.city_name_ar  : fromCity.city_name_ar;
-  const behind         = diffMinutes > 0 ? fromCity.city_name_ar : toCity.city_name_ar;
-  const fromTime       = getCurrentTime(fromCity.timezone);
-  const toTime         = getCurrentTime(toCity.timezone);
+  const ahead = diffMinutes > 0 ? toCity.city_name_ar : fromCity.city_name_ar;
+  const behind = diffMinutes > 0 ? fromCity.city_name_ar : toCity.city_name_ar;
 
   // Time conversion groups
   const timeGroups = [
-    { label: 'الصباح',  icon: '🌅', hours: [6, 7, 8, 9, 10, 11] },
+    { label: 'الصباح', icon: '🌅', hours: [6, 7, 8, 9, 10, 11] },
     { label: 'الظهيرة', icon: '🌞', hours: [12, 13, 14, 15] },
-    { label: 'المساء',  icon: '🌆', hours: [16, 17, 18, 19, 20, 21] },
+    { label: 'المساء', icon: '🌆', hours: [16, 17, 18, 19, 20, 21] },
   ];
 
   // FAQ data
@@ -193,13 +161,13 @@ export default async function ComparisonPage({ params }) {
     {
       q: `هل ${fromCity.city_name_ar} تطبق التوقيت الصيفي؟`,
       a: fromHasDST
-        ? `نعم. حاليًا ${fromDST ? 'في التوقيت الصيفي ☀️' : 'في التوقيت الشتوي 🌙'}.`
+        ? `نعم. قد يتغير توقيتها بين الصيفي والشتوي خلال العام.`
         : `لا، توقيتها ثابت طوال العام عند ${fromOffStr}.`,
     },
     {
       q: `هل ${toCity.city_name_ar} تطبق التوقيت الصيفي؟`,
       a: toHasDST
-        ? `نعم. حاليًا ${toDST ? 'في التوقيت الصيفي ☀️' : 'في التوقيت الشتوي 🌙'}.`
+        ? `نعم. قد يتغير توقيتها بين الصيفي والشتوي خلال العام.`
         : `لا، توقيتها ثابت طوال العام عند ${toOffStr}.`,
     },
     {
@@ -242,28 +210,29 @@ export default async function ComparisonPage({ params }) {
 
   // JSON-LD
   const faqSchema = {
-    '@context':   'https://schema.org',
-    '@type':      'FAQPage',
-    mainEntity:   faqs.map(f => ({
-      '@type':       'Question',
-      name:          f.q,
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({
+      '@type': 'Question',
+      name: f.q,
       acceptedAnswer: { '@type': 'Answer', text: f.a },
     })),
   };
   const breadcrumbSchema = {
     '@context': 'https://schema.org', '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'الرئيسية',    item: 'https://yourdomain.com' },
+      { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: 'https://yourdomain.com' },
       { '@type': 'ListItem', position: 2, name: 'فرق التوقيت', item: 'https://yourdomain.com/time-difference' },
       { '@type': 'ListItem', position: 3, name: `${fromCity.city_name_ar} – ${toCity.city_name_ar}`, item: `https://yourdomain.com/time-difference/${from}/${to}` },
     ],
   };
 
+  console.log(`[DEBUG - SSR] ComparisonPage returning JSX`);
+
   return (
     <div className="min-h-screen bg-base text-primary">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-
       <main className="mx-auto px-4 pt-24 pb-20 max-w-[640px]">
 
         {/* ── Breadcrumb ─────────────────────────────────────────── */}
@@ -297,35 +266,7 @@ export default async function ComparisonPage({ params }) {
 
         {/* ── SSR snapshot — crawlable current times ─────────────── */}
         <section className="td-snapshot mb-8" aria-label="الوقت الحالي في المدينتين">
-          <div className="grid grid-cols-3 items-center gap-2">
-            <div className="text-center">
-              <p className="text-xs text-muted mb-1">{fromCity.city_name_ar}</p>
-              <p className="text-2xl font-extrabold tabular-nums text-clock leading-none" dir="ltr">
-                {fromTime}
-              </p>
-              <p className="text-xs text-muted mt-1 tabular-nums" dir="ltr">{fromOffStr}</p>
-              {fromDST && <span className="badge badge-warning mt-2">صيفي</span>}
-            </div>
-
-            <div className="text-center border-x border-[var(--border-subtle)] py-1">
-              <p className="text-xs text-muted">الفارق</p>
-              <p className="text-xl font-black tabular-nums text-accent-alt leading-tight" dir="ltr">
-                {diffMinutes === 0
-                  ? '0'
-                  : `${diffMinutes > 0 ? '+' : ''}${absDiffH}${absDiffM > 0 ? `:${String(absDiffM).padStart(2, '0')}` : ''}`}
-              </p>
-              <p className="text-xs text-muted">{diffMinutes === 0 ? 'متطابق' : 'ساعة'}</p>
-            </div>
-
-            <div className="text-center">
-              <p className="text-xs text-muted mb-1">{toCity.city_name_ar}</p>
-              <p className="text-2xl font-extrabold tabular-nums text-clock leading-none" dir="ltr">
-                {toTime}
-              </p>
-              <p className="text-xs text-muted mt-1 tabular-nums" dir="ltr">{toOffStr}</p>
-              {toDST && <span className="badge badge-warning mt-2">صيفي</span>}
-            </div>
-          </div>
+          <SuspendedTimeSnapshot fromCity={fromCity} toCity={toCity} />
         </section>
 
         {/* ── Interactive calculator ──────────────────────────────── */}
@@ -349,12 +290,12 @@ export default async function ComparisonPage({ params }) {
               <div className="p-4">
                 <p className="text-xs text-muted mb-1">{fromCity.city_name_ar}</p>
                 <p className="text-xl font-black tabular-nums text-accent-alt" dir="ltr">{fromOffStr}</p>
-                <p className="text-xs text-muted mt-1">{fromDST ? '☀️ صيفي' : '🌙 شتوي'}{!fromHasDST ? ' · ثابت' : ''}</p>
+                <p className="text-xs text-muted mt-1">{fromHasDST ? '☀️ قد يتغير توقيتها موسميًا' : '· توقيت ثابت'}</p>
               </div>
               <div className="p-4 border-r border-[var(--border-subtle)]">
                 <p className="text-xs text-muted mb-1">{toCity.city_name_ar}</p>
                 <p className="text-xl font-black tabular-nums text-accent-alt" dir="ltr">{toOffStr}</p>
-                <p className="text-xs text-muted mt-1">{toDST ? '☀️ صيفي' : '🌙 شتوي'}{!toHasDST ? ' · ثابت' : ''}</p>
+                <p className="text-xs text-muted mt-1">{toHasDST ? '☀️ قد يتغير توقيتها موسميًا' : '· توقيت ثابت'}</p>
               </div>
             </div>
           </div>
@@ -362,24 +303,24 @@ export default async function ComparisonPage({ params }) {
           <p className="text-sm text-secondary leading-loose">
             {diffMinutes === 0
               ? <>
-                  <strong className="text-primary">{fromCity.city_name_ar}</strong> و
-                  <strong className="text-primary">{toCity.city_name_ar}</strong> في نفس
-                  النطاق الزمني <strong dir="ltr" className="tabular-nums">{fromOffStr}</strong>.
-                  الساعة متطابقة في كلا البلدين.
-                </>
+                <strong className="text-primary">{fromCity.city_name_ar}</strong> و
+                <strong className="text-primary">{toCity.city_name_ar}</strong> في نفس
+                النطاق الزمني <strong dir="ltr" className="tabular-nums">{fromOffStr}</strong>.
+                الساعة متطابقة في كلا البلدين.
+              </>
               : <>
-                  <strong className="text-primary">{fromCity.city_name_ar}</strong> في{' '}
-                  <strong dir="ltr" className="tabular-nums">{fromOffStr}</strong> و
-                  <strong className="text-primary">{toCity.city_name_ar}</strong> في{' '}
-                  <strong dir="ltr" className="tabular-nums">{toOffStr}</strong>.
-                  الفارق الحالي <strong className="text-primary">{diffLabel}</strong>،
-                  تسبق فيه <strong className="text-primary">{ahead}</strong> مدينة{' '}
-                  <strong className="text-primary">{behind}</strong>.
-                  {' '}مثال: إذا كانت الساعة <span dir="ltr" className="tabular-nums font-bold">9:00 ص</span> في{' '}
-                  {fromCity.city_name_ar} فهي{' '}
-                  <span dir="ltr" className="tabular-nums font-bold text-accent-alt">{fmtTime(9 + diffHours)}</span>{' '}
-                  في {toCity.city_name_ar}.
-                </>
+                <strong className="text-primary">{fromCity.city_name_ar}</strong> في{' '}
+                <strong dir="ltr" className="tabular-nums">{fromOffStr}</strong> و
+                <strong className="text-primary">{toCity.city_name_ar}</strong> في{' '}
+                <strong dir="ltr" className="tabular-nums">{toOffStr}</strong>.
+                الفارق الحالي <strong className="text-primary">{diffLabel}</strong>،
+                تسبق فيه <strong className="text-primary">{ahead}</strong> مدينة{' '}
+                <strong className="text-primary">{behind}</strong>.
+                {' '}مثال: إذا كانت الساعة <span dir="ltr" className="tabular-nums font-bold">9:00 ص</span> في{' '}
+                {fromCity.city_name_ar} فهي{' '}
+                <span dir="ltr" className="tabular-nums font-bold text-accent-alt">{fmtTime(9 + diffHours)}</span>{' '}
+                في {toCity.city_name_ar}.
+              </>
             }
           </p>
         </section>
@@ -461,12 +402,12 @@ export default async function ComparisonPage({ params }) {
                 <tr>
                   <td className="text-secondary text-xs">يطبق التوقيت الصيفي؟</td>
                   <td className="text-center">{fromHasDST ? '✅ نعم' : '❌ لا'}</td>
-                  <td className="text-center">{toHasDST   ? '✅ نعم' : '❌ لا'}</td>
+                  <td className="text-center">{toHasDST ? '✅ نعم' : '❌ لا'}</td>
                 </tr>
                 <tr>
                   <td className="text-secondary text-xs">الحالة الآن</td>
                   <td className={`text-center text-xs ${fromDST ? 'td-warning' : ''}`}>{fromDST ? '☀️ صيفي' : '🌙 شتوي'}</td>
-                  <td className={`text-center text-xs ${toDST   ? 'td-warning' : ''}`}>{toDST   ? '☀️ صيفي' : '🌙 شتوي'}</td>
+                  <td className={`text-center text-xs ${toDST ? 'td-warning' : ''}`}>{toDST ? '☀️ صيفي' : '🌙 شتوي'}</td>
                 </tr>
                 <tr>
                   <td className="text-secondary text-xs">الفارق ثابت السنة؟</td>
@@ -482,10 +423,10 @@ export default async function ComparisonPage({ params }) {
             {(!fromHasDST && !toHasDST)
               ? <>الفارق بين {fromCity.city_name_ar} و{toCity.city_name_ar} ثابت طوال العام عند <strong className="text-primary">{diffLabel}</strong>. لا تطبق أيٌّ منهما التوقيت الصيفي.</>
               : (!fromHasDST && toHasDST)
-              ? <>{toCity.city_name_ar} تطبق التوقيت الصيفي بينما {fromCity.city_name_ar} لا تطبقه. الفارق الحالي <strong className="text-primary">{diffLabel}</strong> قد يتغير ساعة في مارس/أكتوبر.</>
-              : (fromHasDST && !toHasDST)
-              ? <>{fromCity.city_name_ar} تطبق التوقيت الصيفي بينما {toCity.city_name_ar} لا تطبقه. الفارق الحالي <strong className="text-primary">{diffLabel}</strong> قد يتغير موسميًا.</>
-              : <>كلتاهما تطبقان التوقيت الصيفي. الفارق الحالي <strong className="text-primary">{diffLabel}</strong> قد يبقى ثابتًا أو يتغير ساعة حسب توقيت كل منهما.</>
+                ? <>{toCity.city_name_ar} تطبق التوقيت الصيفي بينما {fromCity.city_name_ar} لا تطبقه. الفارق الحالي <strong className="text-primary">{diffLabel}</strong> قد يتغير ساعة في مارس/أكتوبر.</>
+                : (fromHasDST && !toHasDST)
+                  ? <>{fromCity.city_name_ar} تطبق التوقيت الصيفي بينما {toCity.city_name_ar} لا تطبقه. الفارق الحالي <strong className="text-primary">{diffLabel}</strong> قد يتغير موسميًا.</>
+                  : <>كلتاهما تطبقان التوقيت الصيفي. الفارق الحالي <strong className="text-primary">{diffLabel}</strong> قد يبقى ثابتًا أو يتغير ساعة حسب توقيت كل منهما.</>
             }
           </p>
         </section>
@@ -529,7 +470,7 @@ export default async function ComparisonPage({ params }) {
           <div className="grid grid-cols-1 gap-2">
             {[
               { href: '/mwaqit-al-salat', icon: '🕌', label: 'مواقيت الصلاة', desc: 'أوقات دقيقة حسب موقعك أو أي مدينة' },
-              { href: '/holidays',        icon: '📅', label: 'العطل الرسمية', desc: 'تقويم العطل لجميع الدول العربية'   },
+              { href: '/holidays', icon: '📅', label: 'العطل الرسمية', desc: 'تقويم العطل لجميع الدول العربية' },
             ].map(link => (
               <a
                 key={link.href}
@@ -548,5 +489,16 @@ export default async function ComparisonPage({ params }) {
 
       </main>
     </div>
+  );
+}
+
+// ─── Page Wrapper ─────────────────────────────────────────────────────────────
+export default function ComparisonPage({ params }) {
+  console.log(`[DEBUG - SSR] ComparisonPage wrapper started`);
+
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-10 h-10 border-4 border-accent border-t-transparent rounded-full animate-spin" /></div>}>
+      <ComparisonPageContent paramsPromise={params} />
+    </Suspense>
   );
 }

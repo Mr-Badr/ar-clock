@@ -16,7 +16,7 @@
  *   tzLabel       — English TZ name e.g. "Eastern European Time"
  */
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { Monitor, Minimize2, ZoomIn, ZoomOut, Share2 } from 'lucide-react';
+import { Fullscreen, Minimize2, ZoomIn, ZoomOut, Share2 } from 'lucide-react';
 import DatePill from '../clocks/DatePill';
 import { getFlagEmoji, getSafeTimezone } from '@/lib/country-utils';
 
@@ -135,6 +135,7 @@ export default function TimeNowHero({
   const [zoom, setZoom] = useState(1);
   const [shareCopied, setShareCopied] = useState(false);
   const containerRef = useRef(null);
+  const wakeLockRef = useRef(null);
 
   const [mounted, setMounted] = useState(false);
 
@@ -159,6 +160,49 @@ export default function TimeNowHero({
     ['fullscreenchange', 'webkitfullscreenchange'].forEach(e => document.addEventListener(e, onChange));
     return () => ['fullscreenchange', 'webkitfullscreenchange'].forEach(e => document.removeEventListener(e, onChange));
   }, []);
+
+  /* ══ FULLSCREEN ENHANCEMENTS (Wake lock & Rotation) ══ */
+  useEffect(() => {
+    if (!isFS) return;
+
+    // 1. Force Landscape Orientation
+    try {
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('landscape').catch(() => { });
+      }
+    } catch (e) { }
+
+    // 2. Prevent Screen from sleeping
+    const requestWakeLock = async () => {
+      try {
+        if ('wakeLock' in navigator) {
+          wakeLockRef.current = await navigator.wakeLock.request('screen');
+        }
+      } catch (err) { }
+    };
+    requestWakeLock();
+
+    // Handle tab switching returning
+    const handleVisibilityChange = () => {
+      if (wakeLockRef.current !== null && document.visibilityState === 'visible') {
+        requestWakeLock();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (wakeLockRef.current) {
+        wakeLockRef.current.release().catch(() => { });
+        wakeLockRef.current = null;
+      }
+      try {
+        if (screen.orientation && screen.orientation.unlock) {
+          screen.orientation.unlock();
+        }
+      } catch (e) { }
+    };
+  }, [isFS]);
 
   const toggleFS = async () => {
     if (!isFS) {
@@ -204,7 +248,7 @@ export default function TimeNowHero({
     return (
       <div ref={containerRef} style={{ position: 'relative', width: '100%' }}>
         <div style={{
-          position: 'fixed', inset: 0, zIndex: 100, background: 'var(--bg-base)',
+          position: 'fixed', inset: 0, zIndex: 100, background: 'var(--clock-bg)',
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
         }} dir="rtl">
           <div style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', left: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 110 }}>
@@ -217,10 +261,6 @@ export default function TimeNowHero({
           </div>
 
           <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '1rem', transform: scaleValue, transition: 'transform 0.5s ease-in-out', gap: 'clamp(1.5rem, 4vh, 3.5rem)' }}>
-            <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.75rem)', fontWeight: '800', color: 'var(--accent)', margin: 0, textAlign: 'center' }}>
-              الوقت الآن في {cityNameAr}، {countryNameAr}
-            </h2>
-
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(1rem, 5vw, 5rem)', direction: 'ltr' }}>
               {UNITS.map(({ key, label }, i) => (
                 <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1rem, 5vw, 5rem)' }}>
@@ -257,6 +297,10 @@ export default function TimeNowHero({
       >
         {/* Toolbar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <IconBtn onClick={toggleFS} label="ملء الشاشة" title="ملء الشاشة">
+            <Fullscreen size={15} /><span>ملء الشاشة</span>
+          </IconBtn>
+
           <button
             onClick={handleShare} aria-label="مشاركة الوقت"
             style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.5rem 0.85rem', borderRadius: '0.625rem', border: shareCopied ? '1px solid var(--accent)' : '1px solid var(--border-default)', background: shareCopied ? 'var(--accent-soft)' : 'transparent', color: shareCopied ? 'var(--accent)' : 'var(--text-secondary)', fontSize: '0.82rem', fontWeight: '600', cursor: 'pointer', transition: 'all 0.18s', whiteSpace: 'nowrap' }}
@@ -264,17 +308,14 @@ export default function TimeNowHero({
             <Share2 size={15} />
             <span>{shareCopied ? '✓ تم النسخ' : 'مشاركة'}</span>
           </button>
-          <IconBtn onClick={toggleFS} label="ملء الشاشة" title="ملء الشاشة">
-            <Monitor size={15} /><span>ملء الشاشة</span>
-          </IconBtn>
         </div>
 
         {/* Location label */}
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.9rem', borderRadius: '999px', background: 'var(--accent-soft)', border: '1px solid var(--border-accent)' }}>
-            <span style={{ fontSize: '1.1rem' }} aria-hidden>{getFlagEmoji(countryCode)}</span>
+            {countryCode && <span style={{ fontSize: '1.1rem' }} aria-hidden>{getFlagEmoji(countryCode)}</span>}
             <span style={{ fontSize: 'var(--text-sm)', fontWeight: '700', color: 'var(--accent-alt)' }}>
-              {cityNameAr}، {countryNameAr}
+              {cityNameAr}{countryNameAr ? `، ${countryNameAr}` : ''}
             </span>
           </div>
         </div>

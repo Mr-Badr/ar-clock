@@ -8386,20 +8386,6 @@
     "country_slug": "brazil"
   },
   {
-    "id": 27709,
-    "city_slug": "dharavi",
-    "country_code": "IN",
-    "name_ar": "دهارافي",
-    "name_en": "Dharavi",
-    "timezone": "Asia/Kolkata",
-    "is_capital": false,
-    "lat": 19.05,
-    "lon": 72.86667,
-    "priority": 700000,
-    "population": 700000,
-    "country_slug": "india"
-  },
-  {
     "id": 46288,
     "city_slug": "battagram",
     "country_code": "PK",
@@ -8412,6 +8398,20 @@
     "priority": 700000,
     "population": 700000,
     "country_slug": "pakistan"
+  },
+  {
+    "id": 27709,
+    "city_slug": "dharavi",
+    "country_code": "IN",
+    "name_ar": "دهارافي",
+    "name_en": "Dharavi",
+    "timezone": "Asia/Kolkata",
+    "is_capital": false,
+    "lat": 19.05,
+    "lon": 72.86667,
+    "priority": 700000,
+    "population": 700000,
+    "country_slug": "india"
   },
   {
     "id": 18916,
@@ -11704,20 +11704,6 @@
     "country_slug": "brazil"
   },
   {
-    "id": 11711,
-    "city_slug": "tonghua",
-    "country_code": "CN",
-    "name_ar": "تونغهوا",
-    "name_en": "Tonghua",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 41.71972,
-    "lon": 125.92639,
-    "priority": 510000,
-    "population": 510000,
-    "country_slug": "china"
-  },
-  {
     "id": 11712,
     "city_slug": "mianzhu-deyang-sichuan",
     "country_code": "CN",
@@ -11727,6 +11713,20 @@
     "is_capital": false,
     "lat": 31.33786,
     "lon": 104.22057,
+    "priority": 510000,
+    "population": 510000,
+    "country_slug": "china"
+  },
+  {
+    "id": 11711,
+    "city_slug": "tonghua",
+    "country_code": "CN",
+    "name_ar": "تونغهوا",
+    "name_en": "Tonghua",
+    "timezone": "Asia/Shanghai",
+    "is_capital": false,
+    "lat": 41.71972,
+    "lon": 125.92639,
     "priority": 510000,
     "population": 510000,
     "country_slug": "china"
@@ -11984,20 +11984,6 @@
     "country_slug": "malaysia"
   },
   {
-    "id": 42437,
-    "city_slug": "kota-damansara",
-    "country_code": "MY",
-    "name_ar": "كوتا دامانسارا",
-    "name_en": "Kota Damansara",
-    "timezone": "Asia/Kuala_Lumpur",
-    "is_capital": false,
-    "lat": 3.15454,
-    "lon": 101.58022,
-    "priority": 500000,
-    "population": 500000,
-    "country_slug": "malaysia"
-  },
-  {
     "id": 42436,
     "city_slug": "kampung-larkin-lama",
     "country_code": "MY",
@@ -12007,6 +11993,20 @@
     "is_capital": false,
     "lat": 1.5024,
     "lon": 103.744,
+    "priority": 500000,
+    "population": 500000,
+    "country_slug": "malaysia"
+  },
+  {
+    "id": 42437,
+    "city_slug": "kota-damansara",
+    "country_code": "MY",
+    "name_ar": "كوتا دامانسارا",
+    "name_en": "Kota Damansara",
+    "timezone": "Asia/Kuala_Lumpur",
+    "is_capital": false,
+    "lat": 3.15454,
+    "lon": 101.58022,
     "priority": 500000,
     "population": 500000,
     "country_slug": "malaysia"

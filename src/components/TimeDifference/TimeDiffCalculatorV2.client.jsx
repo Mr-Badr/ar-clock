@@ -11,7 +11,7 @@ import Timeline24h from './Timeline24h.client';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import {
-  ArrowLeftRight,
+  ArrowUpDown,
   Briefcase,
   Share2,
   Sun,
@@ -30,30 +30,30 @@ const HOURS_24 = Array.from({ length: 24 }, (_, i) => i);
 function isInRange(h, start, end) {
   // handles midnight wrap
   const s = ((start % 24) + 24) % 24;
-  const e = ((end   % 24) + 24) % 24;
-  const n = ((h     % 24) + 24) % 24;
+  const e = ((end % 24) + 24) % 24;
+  const n = ((h % 24) + 24) % 24;
   return s <= e ? n >= s && n < e : n >= s || n < e;
 }
 
 // ── Time format: Western numerals, Arabic period marker ───────────────────────
 function fmtTime(totalMins) {
-  const norm   = ((Math.round(totalMins) % 1440) + 1440) % 1440;
-  const h      = Math.floor(norm / 60);
-  const m      = norm % 60;
+  const norm = ((Math.round(totalMins) % 1440) + 1440) % 1440;
+  const h = Math.floor(norm / 60);
+  const m = norm % 60;
   const period = h >= 12 ? 'م' : 'ص';
-  const h12    = h % 12 || 12;
+  const h12 = h % 12 || 12;
   return `${h12}:${String(m).padStart(2, '0')} ${period}`;
 }
 
 export default function TimeDiffCalculator({ initialFrom = null, initialTo = null }) {
   const router = useRouter();
   const [fromCity, setFromCity] = useState(initialFrom);
-  const [toCity, setToCity]     = useState(initialTo);
+  const [toCity, setToCity] = useState(initialTo);
   const [diffData, setDiffData] = useState(null);
-  const [loading, setLoading]   = useState(false);
-  const [copied, setCopied]     = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [bizStart, setBizStart] = useState(9);
-  const [bizEnd, setBizEnd]     = useState(17);
+  const [bizEnd, setBizEnd] = useState(17);
 
   useEffect(() => {
     if (fromCity && toCity) fetchDiff(fromCity.timezone, toCity.timezone);
@@ -72,11 +72,11 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
   const url = (f, t) =>
     `/time-difference/${f.country_slug}-${f.city_slug}/${t.country_slug}-${t.city_slug}`;
 
-  const handleFrom  = (c) => toCity   ? router.push(url(c, toCity))   : setFromCity(c);
-  const handleTo    = (c) => fromCity ? router.push(url(fromCity, c))  : setToCity(c);
-  const handleSwap  = ()  => fromCity && toCity && router.push(url(toCity, fromCity));
-  const handleShare = ()  => {
-    navigator.clipboard.writeText(window.location.origin + url(fromCity, toCity)).catch(() => {});
+  const handleFrom = (c) => toCity ? router.push(url(c, toCity)) : setFromCity(c);
+  const handleTo = (c) => fromCity ? router.push(url(fromCity, c)) : setToCity(c);
+  const handleSwap = () => fromCity && toCity && router.push(url(toCity, fromCity));
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.origin + url(fromCity, toCity)).catch(() => { });
     setCopied(true);
     setTimeout(() => setCopied(false), 2200);
   };
@@ -84,19 +84,19 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
   // ── Business hours ────────────────────────────────────────────────────────
   const biz = useMemo(() => {
     if (!diffData?.success) return null;
-    const diffH   = diffData.totalMinutes / 60;
+    const diffH = diffData.totalMinutes / 60;
     const bStartB = bizStart - diffH;  // City B working hours in City A time
-    const bEndB   = bizEnd   - diffH;
-    const ovS     = Math.max(bizStart, bStartB);
-    const ovE     = Math.min(bizEnd,   bEndB);
-    const hasOv   = ovS < ovE;
+    const bEndB = bizEnd - diffH;
+    const ovS = Math.max(bizStart, bStartB);
+    const ovE = Math.min(bizEnd, bEndB);
+    const hasOv = ovS < ovE;
     return {
       hasOverlap: hasOv,
-      ovHours:    hasOv ? ovE - ovS : 0,
-      ovFromA:    hasOv ? fmtTime(ovS * 60) : null,
-      ovToA:      hasOv ? fmtTime(ovE * 60) : null,
-      ovFromB:    hasOv ? fmtTime((ovS + diffH) * 60) : null,
-      ovToB:      hasOv ? fmtTime((ovE + diffH) * 60) : null,
+      ovHours: hasOv ? ovE - ovS : 0,
+      ovFromA: hasOv ? fmtTime(ovS * 60) : null,
+      ovToA: hasOv ? fmtTime(ovE * 60) : null,
+      ovFromB: hasOv ? fmtTime((ovS + diffH) * 60) : null,
+      ovToB: hasOv ? fmtTime((ovE + diffH) * 60) : null,
       bStartB, bEndB,
     };
   }, [diffData, bizStart, bizEnd]);
@@ -125,7 +125,7 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
 
       {/* ── Search row ──────────────────────────────────────────────── */}
       <div className="card p-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-end gap-3">
+        <div className="flex flex-wrap flex-col sm:flex-row items-start sm:items-end gap-3">
 
           <div className="flex-1 w-full input-group">
             <label className="input-label flex items-center gap-1.5">
@@ -143,14 +143,14 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
             )}
           </div>
 
-          <div className="flex justify-center sm:pb-0.5 w-full sm:w-auto">
+          <div className="flex justify-center w-full my-1">
             <button
               onClick={handleSwap}
               disabled={!fromCity || !toCity}
               aria-label="تبديل المدينتين"
-              className="btn btn-ghost btn-icon btn-sm rounded-full border border-[var(--border-default)] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-accent-soft hover:border-[var(--border-accent)]"
+              className="flex justify-center items-center w-10 h-10 shrink-0 rounded-full border border-[var(--border-strong)] bg-[var(--bg-surface-3)] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--bg-surface-4)] hover:border-[var(--border-accent)] transition-all shadow-sm"
             >
-              <ArrowLeftRight size={15} className="text-accent-alt" />
+              <ArrowUpDown size={18} className="text-accent-alt opacity-90" />
             </button>
           </div>
 
@@ -318,18 +318,18 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
               <div className="grid grid-cols-2 gap-3">
                 {[
                   {
-                    label:    'بداية الدوام',
-                    val:      bizStart,
-                    onDec:    () => setBizStart(s => Math.max(0,         s - 1)),
-                    onInc:    () => setBizStart(s => Math.min(bizEnd - 1, s + 1)),
+                    label: 'بداية الدوام',
+                    val: bizStart,
+                    onDec: () => setBizStart(s => Math.max(0, s - 1)),
+                    onInc: () => setBizStart(s => Math.min(bizEnd - 1, s + 1)),
                     decLabel: 'تقليل بداية الدوام',
                     incLabel: 'زيادة بداية الدوام',
                   },
                   {
-                    label:    'نهاية الدوام',
-                    val:      bizEnd,
-                    onDec:    () => setBizEnd(e => Math.max(bizStart + 1, e - 1)),
-                    onInc:    () => setBizEnd(e => Math.min(23,           e + 1)),
+                    label: 'نهاية الدوام',
+                    val: bizEnd,
+                    onDec: () => setBizEnd(e => Math.max(bizStart + 1, e - 1)),
+                    onInc: () => setBizEnd(e => Math.min(23, e + 1)),
                     decLabel: 'تقليل نهاية الدوام',
                     incLabel: 'زيادة نهاية الدوام',
                   },
@@ -370,13 +370,13 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                       style={{ border: '1px solid var(--border-default)' }}
                     >
                       {HOURS_24.map(h => {
-                        const inA  = h >= bizStart && h < bizEnd;
+                        const inA = h >= bizStart && h < bizEnd;
                         const inOv = biz.hasOverlap && h >= biz.ovHours &&
                           h >= Math.max(bizStart, biz.bStartB) &&
                           h < Math.min(bizEnd, biz.bEndB);
                         // Recalculate overlap for grid coloring
                         const ovS = Math.max(bizStart, biz.bStartB);
-                        const ovE = Math.min(bizEnd,   biz.bEndB);
+                        const ovE = Math.min(bizEnd, biz.bEndB);
                         const isOv = biz.hasOverlap && h >= ovS && h < ovE;
                         return (
                           <div
@@ -387,13 +387,13 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                               backgroundColor: isOv
                                 ? 'var(--success-soft)'
                                 : inA
-                                ? 'var(--accent-soft)'
-                                : 'var(--bg-surface-3)',
+                                  ? 'var(--accent-soft)'
+                                  : 'var(--bg-surface-3)',
                               borderTop: isOv
                                 ? '2px solid var(--success)'
                                 : inA
-                                ? '2px solid var(--accent-alt)'
-                                : '2px solid transparent',
+                                  ? '2px solid var(--accent-alt)'
+                                  : '2px solid transparent',
                             }}
                           />
                         );
@@ -409,8 +409,8 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                       style={{ border: '1px solid var(--border-default)' }}
                     >
                       {HOURS_24.map(h => {
-                        const inB  = isInRange(h, biz.bStartB, biz.bEndB);
-                        const inA  = h >= bizStart && h < bizEnd;
+                        const inB = isInRange(h, biz.bStartB, biz.bEndB);
+                        const inA = h >= bizStart && h < bizEnd;
                         const isOv = inA && inB;
                         return (
                           <div
@@ -421,13 +421,13 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                               backgroundColor: isOv
                                 ? 'var(--success-soft)'
                                 : inB
-                                ? 'var(--info-soft)'
-                                : 'var(--bg-surface-3)',
+                                  ? 'var(--info-soft)'
+                                  : 'var(--bg-surface-3)',
                               borderTop: isOv
                                 ? '2px solid var(--success)'
                                 : inB
-                                ? '2px solid var(--info)'
-                                : '2px solid transparent',
+                                  ? '2px solid var(--info)'
+                                  : '2px solid transparent',
                             }}
                           />
                         );
@@ -448,9 +448,9 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                   {/* Legend */}
                   <div className="flex gap-4 flex-wrap" style={{ fontSize: '11px' }}>
                     {[
-                      { color: 'var(--accent-soft)',  border: 'var(--accent-alt)', label: fromCity.city_name_ar },
-                      { color: 'var(--info-soft)',    border: 'var(--info)',       label: toCity.city_name_ar   },
-                      { color: 'var(--success-soft)', border: 'var(--success)',    label: 'وقت مشترك'           },
+                      { color: 'var(--accent-soft)', border: 'var(--accent-alt)', label: fromCity.city_name_ar },
+                      { color: 'var(--info-soft)', border: 'var(--info)', label: toCity.city_name_ar },
+                      { color: 'var(--success-soft)', border: 'var(--success)', label: 'وقت مشترك' },
                     ].map(item => (
                       <span key={item.label} className="flex items-center gap-1 text-secondary">
                         <span

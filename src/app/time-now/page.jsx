@@ -1,6 +1,7 @@
+// app/time-now/page.jsx
 import { Suspense } from 'react';
 import { Globe2, MapPin } from 'lucide-react';
-import LiveClock, { LiveClockSkeleton } from '@/components/clocks/LiveClock';
+import TimeNowHero from '@/components/time-now/TimeNowHero';
 import SearchCity from '@/components/SearchCityWrapper.client';
 import TimeNowClient from './TimeNowClient';
 import { getCountriesAction } from '@/app/actions/location';
@@ -54,17 +55,9 @@ export default async function TimeNowPage() {
 
         {/* ── Local Clock (Standardized Width) ── */}
         <section aria-label="توقيتك المحلي" style={{ marginBottom: '4rem' }}>
-          <div style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
-            color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: '600',
-            marginBottom: '0.75rem',
-          }}>
-            <MapPin size={14} aria-hidden />
-            توقيتك المحلي الآن
-          </div>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            <Suspense fallback={<LiveClockSkeleton />}>
-              <LiveClock />
+            <Suspense fallback={<div style={{ height: '320px', borderRadius: '1rem', background: 'var(--bg-surface-2)', opacity: 0.5, animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />}>
+              <TimeNowHero cityNameAr="توقيتك المحلي" />
             </Suspense>
           </div>
         </section>

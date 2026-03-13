@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Monitor, Minimize2, ZoomIn, ZoomOut } from 'lucide-react';
+import { Fullscreen, Minimize2, ZoomIn, ZoomOut } from 'lucide-react';
 
 /**
  * Reusable wrapper that provides a "Fullscreen" (CSS Overlay + Browser API) toggle
@@ -152,7 +152,7 @@ export default function FullscreenClock({ children, overlayContent, showExpandBu
             className="p-2 hover:bg-surface-3 rounded-lg transition-colors text-muted hover:text-primary"
             title="ملء الشاشة"
           >
-            <Monitor className="w-4 h-4" />
+            <Fullscreen className="w-4 h-4" />
           </button>
         </div>
       )}

@@ -32,6 +32,7 @@ import {
   Globe,
   CheckCircle2,
 } from 'lucide-react';
+import { toast } from 'sonner';
 
 import {
   CommandDialog,
@@ -277,40 +278,6 @@ const CityRow = memo(function CityRow({ city, query, showCountry, onSelect, mode
   );
 });
 
-/* ── Geo Toast — floats over the page, never shifts layout ─────────────── */
-const GeoToast = memo(function GeoToast({ type, onDismiss }) {
-  /* type: 'error' | 'success' */
-  const isError = type === 'error';
-  return (
-    <div
-      className={`sc-toast sc-toast--${type}`}
-      role="alert"
-      aria-live="assertive"
-    >
-      <span className="sc-toast__icon" aria-hidden="true">
-        {isError
-          ? <AlertCircle size={14} />
-          : <CheckCircle2 size={14} />
-        }
-      </span>
-      <span className="sc-toast__msg">
-        {isError
-          ? 'تعذّر تحديد الموقع — تأكد من منح إذن الوصول أو ابحث يدوياً'
-          : 'تم تحديد موقعك بنجاح'
-        }
-      </span>
-      <button
-        type="button"
-        className="sc-toast__close"
-        onClick={onDismiss}
-        aria-label="إغلاق"
-      >
-        <X size={12} aria-hidden="true" />
-      </button>
-    </div>
-  );
-});
-
 /* ── Main Component ─────────────────────────────────────────────────────── */
 export default function SearchCity({
   onSelectCity = null,
@@ -333,13 +300,11 @@ export default function SearchCity({
 
   /* Geo state — toast type is 'error' | 'success' | null */
   const [geoLoading, setGeoLoading] = useState(false);
-  const [geoToast, setGeoToast] = useState(null); /* 'error' | 'success' | null */
 
   const [isPending, startTransition] = useTransition();
 
   const abortRef = useRef(null);
   const debounceRef = useRef(null);
-  const toastTimerRef = useRef(null);
 
   /* ── Derived Lists ───────────────────────────────────────────────────── */
   const mainCountriesSlugs = useMemo(() => [
@@ -390,18 +355,6 @@ export default function SearchCity({
       loadCitiesForCountry(slug);
     });
   }, [mainCountriesSlugs]);
-
-  /* ── Auto-dismiss geo toast ──────────────────────────────────────────── */
-  const showToast = useCallback((type) => {
-    clearTimeout(toastTimerRef.current);
-    setGeoToast(type);
-    toastTimerRef.current = setTimeout(() => setGeoToast(null), GEO_TOAST_MS);
-  }, []);
-
-  const dismissToast = useCallback(() => {
-    clearTimeout(toastTimerRef.current);
-    setGeoToast(null);
-  }, []);
 
   /* ── Search ──────────────────────────────────────────────────────────── */
   const performSearch = useCallback(async (q, countrySlug, forceGlobal = false) => {
@@ -517,7 +470,6 @@ export default function SearchCity({
   const handleGeoLocation = useCallback(() => {
     if (!navigator.geolocation) return;
     setGeoLoading(true);
-    setGeoToast(null);
     setOpen(false); /* close dialog first so user sees the trigger update */
 
     navigator.geolocation.getCurrentPosition(
@@ -526,23 +478,23 @@ export default function SearchCity({
           const city = await getNearestCityAction(coords.latitude, coords.longitude);
           if (city) {
             setSelectedCity(city);
-            showToast('success');
+            toast.success('تم تحديد موقعك بنجاح');
             if (onSelectCity) onSelectCity(city);
             else router.push(cityHref(city, mode));
           } else {
-            showToast('error');
+            toast.error('تعذّر تحديد الموقع — تأكد من منح إذن الوصول أو ابحث يدوياً');
           }
         } catch (err) {
           console.error('Geo lookup failed', err);
-          showToast('error');
+          toast.error('تعذّر تحديد الموقع — تأكد من منح إذن الوصول أو ابحث يدوياً');
         } finally {
           setGeoLoading(false);
         }
       },
-      () => { setGeoLoading(false); showToast('error'); },
+      () => { setGeoLoading(false); toast.error('تعذّر تحديد الموقع — تأكد من منح إذن الوصول أو ابحث يدوياً'); },
       { timeout: GEO_TIMEOUT_MS }
     );
-  }, [onSelectCity, router, showToast]);
+  }, [onSelectCity, router, mode]);
 
   /* ── Handlers ─────────────────────────────────────────────────────────── */
   const handleOpenDialog = useCallback(() => {
@@ -584,7 +536,6 @@ export default function SearchCity({
   /* ── Cleanup ─────────────────────────────────────────────────────────── */
   useEffect(() => () => {
     clearTimeout(debounceRef.current);
-    clearTimeout(toastTimerRef.current);
     abortRef.current?.abort();
   }, []);
 
@@ -609,9 +560,9 @@ export default function SearchCity({
 
   const triggerLabel = selectedCity
     ? selectedCity.city_name_ar
-    : mode === 'time-now'
-      ? 'ابحث عن مدينة أو دولة لمعرفة الوقت…'
-      : 'ابحث عن مدينة لعرض مواقيت الصلاة…';
+    : mode === 'mwaqit-al-salat'
+      ? 'ابحث عن مدينة لعرض مواقيت الصلاة…'
+      : 'ابحث عن مدينة أو دولة لمعرفة الوقت…';
 
   /* ── Render ──────────────────────────────────────────────────────────── */
   return (
@@ -684,11 +635,6 @@ export default function SearchCity({
           }
           <span className="sc-geo-btn__label">موقعي</span>
         </button>
-
-        {/* Floating geo toast — anchored to .sc-bar, zero layout shift */}
-        {geoToast && (
-          <GeoToast type={geoToast} onDismiss={dismissToast} />
-        )}
       </div>
 
 

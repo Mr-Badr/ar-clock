@@ -78,11 +78,12 @@ export const viewport = {
   viewportFit: 'cover',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
+  console.log(`[DEBUG - SSR] RootLayout started`);
   return (
     // suppressHydrationWarning is required because next-themes writes
     // class="dark|light|contrast" on <html> after hydration.
@@ -117,18 +118,14 @@ export default function RootLayout({
           {/* Sonner Toaster — dir and position match RTL layout */}
           <Toaster
             dir="rtl"
-            position="bottom-left"
+            position="top-center"
+            richColors
+            expand={false}
             toastOptions={{
-              // Use design system surface and border tokens via CSS vars
               style: {
-                background: 'var(--bg-surface-3)',
-                color: 'var(--text-primary)',
-                border: '1px solid var(--border-default)',
-                borderRight: '3px solid var(--accent)',
-                borderRadius: 'var(--radius-xl)',
-                boxShadow: 'var(--shadow-lg)',
                 fontFamily: 'var(--font-base)',
                 fontSize: 'var(--text-sm)',
+                borderRadius: 'var(--radius-xl)',
               },
             }}
           />

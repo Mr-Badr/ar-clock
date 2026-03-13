@@ -21,7 +21,7 @@
  * Exports: default CountdownTicker · CountdownTickerSkeleton · ShareBar
  */
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Monitor, Minimize2, ZoomIn, ZoomOut, Share2, Link2 } from 'lucide-react';
+import { Fullscreen, Minimize2, ZoomIn, ZoomOut, Share2, Link2 } from 'lucide-react';
 import DatePill from './DatePill';
 
 /* ─────────────────────────────────────────────────────────────────────
@@ -700,6 +700,11 @@ export default function CountdownTicker({
           >
             {/* Control bar */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+
+              <IconBtn onClick={toggleFS} label="فتح العداد بملء الشاشة" title="ملء الشاشة">
+                <Fullscreen size={15} /><span>ملء الشاشة</span>
+              </IconBtn>
+
               <button
                 onClick={handleShare}
                 aria-label="مشاركة"
@@ -716,9 +721,6 @@ export default function CountdownTicker({
                 <Share2 size={15} />
                 <span>{shareCopied ? '✓ تم النسخ' : 'مشاركة'}</span>
               </button>
-              <IconBtn onClick={toggleFS} label="فتح العداد بملء الشاشة" title="ملء الشاشة">
-                <Monitor size={15} /><span>ملء الشاشة</span>
-              </IconBtn>
             </div>
 
             {/* Rows — CSS @container switches between them based on card width */}
