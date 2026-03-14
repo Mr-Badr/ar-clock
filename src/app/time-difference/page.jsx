@@ -1,172 +1,279 @@
-import React from 'react';
-import TimeDiffCalculator from '@/components/TimeDifference/TimeDiffCalculatorV2.client';
-import { getCountriesAction } from '@/app/actions/location';
+// app/time-difference/page.tsx
+import TimeDiffCalculator from "@/components/TimeDifference/TimeDiffCalculatorV2.client";
+import { getCountriesAction } from "@/app/actions/location";
+import CurrentTime from "@/components/helpers/CurrentTime";
 
+/**
+ * Metadata (Next.js App Router)
+ * - extend this object if you use dynamic city-pair pages later
+ */
 export const metadata = {
-  title: 'فرق التوقيت بين مدينتين — حاسبة الفرق الزمني الدقيقة | وقت',
-  description: 'احسب فرق التوقيت بين أي مدينتين في العالم بدقة متناهية. معرفة الساعة الآن في أي دولة مع مراعاة التوقيت الصيفي والشتوي تلقائياً.',
-  keywords: 'فرق التوقيت, فرق التوقيت بين المدن, تحويل التوقيت, الساعة الآن, الفرق بين توقيت, حاسبة الوقت',
+  title:
+    "فرق التوقيت بين مدينتين أو دولتين — حاسبة الفرق الزمني وتحويل الوقت بدقة",
+  description:
+    "احسب فرق التوقيت بين أي مدينتين أو دولتين في العالم. اعرف الساعة الآن، حول الوقت بين المناطق الزمنية، وتعرّف على أفضل وقت للاجتماع مع دعم التوقيت الصيفي.",
+  keywords:
+    "فرق التوقيت, تحويل الوقت, كم الساعة, فرق التوقيت بين المدن, فرق التوقيت بين الدول, ساعات العمل المشتركة, تحويل التوقيت, فرق التوقيت والدوام, تحويل التوقيت من إلى",
   alternates: {
-    canonical: '/time-difference'
+    canonical: "/time-difference",
+    // add hreflang alternatives if you have other locales, e.g.
+    // languages: { "en-US": "/en/time-difference" }
   },
   openGraph: {
-    title: 'حاسبة فرق التوقيت بين المدن',
-    description: 'احسب فرق التوقيت بين أي مدينتين في العالم بدقة متناهية.',
-    url: '/time-difference',
-    type: 'website',
-    locale: 'ar_SA'
-  }
+    title: "حاسبة فرق التوقيت بين المدن والدول — وقت",
+    description:
+      "أداة سريعة ودقيقة لمعرفة فرق التوقيت وتحويل الوقت بين أي مدينتين حول العالم مع دعم التوقيت الصيفي.",
+    url: "/time-difference",
+    type: "website",
+    locale: "ar_SA",
+  },
 };
 
 const faqs = [
+  // keep and extend your previous faqs
   {
     q: "كيفية حساب فرق التوقيت بين مدينتين؟",
-    a: "تقوم حاسبتنا بحساب فرق التوقيت تلقائياً بالاعتماد على قاعدة بيانات عالمية للمناطق الزمنية (TZ Database)، بحيث تقارن التوقيت المحلي للمدينة الأولى مع المدينة الثانية موفرةً لك الفرق الدقيق بالساعات والدقائق."
+    a:
+      "تقوم الحاسبة بتحويل التوقيت المحلي لكل مدينة إلى التوقيت العالمي (UTC) باستخدام قاعدة بيانات المناطق الزمنية المعتمدة (IANA TZ database)، ثم تحسب الفرق بالساعات والدقائق بدقة، مع مراعاة التوقيت الصيفي تلقائياً.",
   },
   {
-    q: "هل تأخذ الحاسبة التوقيت الصيفي (DST) في الاعتبار؟",
-    a: "نعم، النظام مبرمج للتعرف على التوقيت الصيفي والشتوي لكل مدينة وتحديثه تلقائياً حسب التاريخ الحالي."
+    q: "هل تُراعي الحاسبة التوقيت الصيفي (DST)؟",
+    a:
+      "نعم. بيانات المناطق الزمنية تتضمن قواعد التوقيت الصيفي والشتوي لكل منطقة، لذلك تظهر النتيجة بحالة التوقيت الحالية (صيفي/قياسي) بحسب التاريخ المحدد.",
   },
   {
-    q: "كيف يمكنني معرفة الساعة الآن في دولة أخرى؟",
-    a: "اختر دولتك أو مدينتك في الحقل الأول، ثم اختر المدينة التي تريد معرفة وقتها في الحقل الثاني. ستعرض لك الحاسبة الوقت الحالي هناك مباشرة."
+    q: "كيف أحسب أفضل وقت للاجتماع بين بلدين؟",
+    a:
+      "تعرّف أولاً ساعات العمل التقليدية في كل بلد (مثلاً 9 ص - 5 م)، ثم استخدم عرض 'ساعات العمل المشتركة' في الأداة لتحديد الفترات التي تتقاطع فيها ساعات العمل في كلا الموقعين.",
   },
   {
-    q: "هل يمكنني مشاركة نتيجة فرق التوقيت؟",
-    a: "نعم، بمجرد اختيار المدينتين، يمكنك النقر على زر 'مشاركة المقارنة' للحصول على رابط مباشر يفتح على نفس المدينتين."
+    q: "ما أفضل طريقة لمشاركة النتيجة مع زميل؟",
+    a:
+      "بعد تحديد المدينتين والحصول على النتيجة، اضغط 'مشاركة المقارنة' لنسخ رابط يحتوي على المدينتين يمكن لأي شخص فتحه ليظهر نفس المقارنة.",
   },
   {
-    q: "هل تختلف أوقات الدوام عند وجود فرق توقيت؟",
-    a: "نعم بالطبع. عندما يكون هناك فرق توقيت كبير، فإن ساعات العمل المعتادة (من 9 صباحًا إلى 5 مساءً) لا تتطابق بشكل كامل، وقد تضطر لتنسيق مواعيدك بدقة لضمان وجود التداخل المناسب للمكالمات والاجتماعات."
+    q: "هل يمكن للحاسبة التعامل مع المدن التي لها نفس الاسم؟",
+    a:
+      "نعم — عند وجود أكثر من مدينة بنفس الاسم نعرض القائمة الكاملة مع اسم الدولة والموقع الجغرافي لذلك يمكنك اختيار المدينة الصحيحة.",
   },
   {
-    q: "ما هو توقيت جرينتش (GMT) والتوقيت العالمي المنسق (UTC)؟",
-    a: "التوقيت العالمي المنسق (UTC) هو المعيار الزمني الذي يُبنى عليه توقيت كوكب الأرض، أما توقيت جرينتش (GMT) فهو المنطقة الزمنية لخط الطول صفر. جميع الدول تقاس بفروق الساعات نسبة إلى UTC، سواء بجمع الساعات أو طرحها."
+    q: "هل يمكنني استخدام هذه الصفحة لجدولة مكالمات عبر فرق زمنية متعددة؟",
+    a:
+      "نعم — الأداة تسمح بالمقارنة الزوجية، ويمكنك تكرار المقارنات أو إنشاء صفحات مقارنات مخصصة للمدن الأكثر استخداماً لديك.",
+  },
+  // add more targeted Qs:
+  {
+    q: "فرق التوقيت بين الرياض ودبي كم؟",
+    a: "تتقدم دبي على الرياض بساعة واحدة (دبي UTC+4، السعودية UTC+3)، ولا تطبق كلا الدولتين التوقيت الصيفي عادةً.",
   },
   {
-    q: "هل يمكنني الاعتماد على هذه الحاسبة للصلوات؟",
-    a: "بينما تعطيك الحاسبة الوقت الفعلي لأي مدينة، يفضل دائماً استخدام صفحة مواقيت الصلاة المخصصة لدينا للحصول على مواعيد دقيقة للأذان بحسب المعادلات الفلكية الدقيقة والموقع الجغرافي."
+    q: "كيف أتحقق من فرق التوقيت أثناء السفر؟",
+    a:
+      "استخدم الحاسبة مع اسم المدينة أو حقل البحث في هاتفك لاختيار المدينة الوجهة وسنظهر لك التوقيت المحلي هناك وكذلك الفرق بالنسبة لموقعك الحالي.",
   },
-  {
-    q: "لماذا تقوم بعض الدول بتغيير وقتها مرتين في السنة؟",
-    a: "بهدف توفير الطاقة واستغلال ساعات النهار، تعتمد الكثير من الدول نظام التوقيت الصيفي، حيث تُقدم الساعة بمقدار 60 دقيقة في الربيع، وتعاد كما كانت في الخريف."
-  },
-  {
-    q: "ما هو أكبر فرق توقيت بين بلدين في العالم؟",
-    a: "يبلغ أقصى فرق ممكن للتوقيت في العالم حوالي 26 ساعة، ويكون عادة بين الجزر الموجودة على طرفي خط التاريخ الدولي في المحيط الهادئ المتباعدة بحدود 12 ساعة موجبة وسالبة."
-  },
-  {
-    q: "كيف اتجنب الاتصال بشخص وهو نائم بسبب فرق التوقيت؟",
-    a: "تسهل أداة فرق التوقيت لدينا إظهار حالة الوقت في الوجهة إذا كانت (اليوم التالي) أو (السابق). كما توفر أداة توضيح ساعات العمل إمكانية رؤية أفضل وقت مشترك."
-  },
-  {
-    q: "هل يؤثر الفارق الزمني على أوقات الأذان؟",
-    a: "بالتأكيد، حيث ترتبط أوقات الأذان بحركة الشمس التي تختلف من مدينة لأخرى. لذلك فإن كل مدينة حول العالم لها مواقيت صلاة مستقلة حتى لو كانت تقع في نفس الدولة أو تتبع نفس التوقيت المحلي."
-  },
-  {
-    q: "كيف أرسل رابط فرق التوقيت لزميلي في العمل؟",
-    a: "من خلال حاسبة فرق الساعات أعلاه، بعد اختيار المدينتين، انقر على 'مشاركة المقارنة' لنسخ الرابط الذي يمكن لزميلك فتحه والاطلاع على التوقيت المشترك مباشرة."
-  },
-  {
-    q: "الفرق بين توقيت السعودية وتوقيت دبي؟",
-    a: "توقيت دبي يسبق توقيت السعودية (الرياض) بساعة واحدة دائماً، لأن الإمارات تقع في النطاق الزمني UTC+4 والسعودية تقع في UTC+3، ولا يطبقان التوقيت الصيفي."
-  }
 ];
 
 export default async function TimeDifferencePage() {
   const allCountries = await getCountriesAction();
+
+  // FAQ schema
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": faqs.map(faq => ({
+    mainEntity: faqs.map((faq) => ({
       "@type": "Question",
-      "name": faq.q,
-      "acceptedAnswer": {
+      name: faq.q,
+      acceptedAnswer: {
         "@type": "Answer",
-        "text": faq.a
+        text: faq.a,
+      },
+    })),
+  };
+
+  // HowTo schema for "تحويل الوقت بين مدينتين" (step-by-step)
+  const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "كيفية تحويل الوقت بين مدينتين (خطوة بخطوة)",
+    description:
+      "خطوات سريعة لتحويل الوقت من مدينة إلى أخرى مع مراعاة فرق التوقيت والتوقيت الصيفي.",
+    step: [
+      {
+        "@type": "HowToStep",
+        name: "حدد المدينة الأولى (مصدر الوقت)",
+        text: "اختر المدينة أو البلد الذي يظهر الوقت الذي تريد تحويله."
+      },
+      {
+        "@type": "HowToStep",
+        name: "حدد المدينة الثانية (الوجهة)",
+        text: "اختر المدينة المستهدفة لمعرفة الوقت المكافئ هناك."
+      },
+      {
+        "@type": "HowToStep",
+        name: "تحقق من حالة التوقيت الصيفي",
+        text: "تأكد من ما إذا كانت إحدى المدينتين في توقيت صيفي لأن ذلك يغير الفارق."
+      },
+      {
+        "@type": "HowToStep",
+        name: "اقرأ النتيجة واطّلع على ساعات العمل المشتركة",
+        text: "ستظهر لك النتيجة بالساعات والدقائق، وستعرض الأداة أيضاً أي تداخل في ساعات العمل لتسهيل جدول الاجتماعات."
       }
-    }))
+    ]
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg-default)] text-[var(--text-primary)]" dir="rtl">
-      {/* JSON-LD schemas */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+    <div className="min-h-screen bg-base text-primary">
+      <main className="mx-auto px-4 pt-24 pb-20 max-w-[900px] mt-12">
 
-      {/* Hero Section */}
-      <section className="relative pt-24 pb-16 px-4 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[var(--accent-glow)] rounded-full blur-[120px] opacity-20 -z-10 animate-pulse-slow"></div>
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
-            فرق التوقيت بين مدينتين — <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] to-[#38b2ac]">حاسبة الفرق الزمني الدقيقة</span>
+        {/* JSON-LD structured data (FAQ + HowTo) */}
+        <script
+          type="application/ld+json"
+          // FAQ schema first (Google reads both)
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+        />
+
+        {/* HERO */}
+        <header className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
+            فرق التوقيت بين مدينتين — حاسبة الوقت وتحويل التوقيت بسهولة
           </h1>
-          <p className="text-lg md:text-xl text-[var(--text-muted)] max-w-2xl mx-auto font-medium">
-            حاسبة دقيقة وسريعة لمعرفة فرق التوقيت وتحويل الوقت بين أي دولتين أو مدينتين حول العالم، مع دعم كلي للتوقيت الصيفي.
+          <p className="mt-4 text-lg text-[var(--text-muted)] max-w-3xl mx-auto leading-relaxed">
+            احسب الفرق بالساعة والدقيقة بين أي مدينتين أو دولتين في العالم، اعرف الساعة الآن
+            في الوجهة، وتعرّف على أفضل أوقات الاجتماع وساعات العمل المشتركة مع مراعاة التوقيت الصيفي.
           </p>
-        </div>
-      </section>
+        </header>
 
-      {/* Calculator Section */}
-      <section className="px-4 pb-20 relative z-10">
-        <TimeDiffCalculator preloadedCountries={allCountries} />
-      </section>
+        {/* Calculator */}
+        <section aria-label="حاسبة فرق التوقيت" className="mb-12">
+          <TimeDiffCalculator preloadedCountries={allCountries} />
+        </section>
 
-      {/* SEO Content & SEO Structure */}
-      <section className="px-4 py-20 bg-[var(--bg-surface-1)] border-t border-[var(--border-subtle)]">
-        <div className="max-w-4xl mx-auto space-y-16">
+        {/* Quick answer / examples (This helps featured snippets) */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold mb-4">أمثلة سريعة — إجابات فورية</h2>
 
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold border-b border-[var(--border-subtle)] pb-4 inline-block">كيفية حساب فرق التوقيت</h2>
-            <p className="text-[var(--text-muted)] leading-relaxed text-lg mb-4">
-              حساب فرق التوقيت لم يعد مهمة معقدة. تعتمد أداتنا على أحدث قواعد البيانات العالمية للمناطق الزمنية.
-              عند اختيارك لمدينتين، يقوم خادمنا بحساب الفارق الزمني عبر تحويل الوقت القياسي لكل مدينة مقارنة بتوقيت جرينتش (UTC)،
-              ثم إيجاد الفارق النهائي لمساعدتك في تنسيق اجتماعاتك ومكالماتك الدولية بسهولة.
-            </p>
-            <p className="text-[var(--text-muted)] leading-relaxed text-lg">
-              وبمجرد معرفة فرق الساعات الدقيق والوقت أينما كنت تسافر، يمكنك أيضاً الاعتماد على منصتنا لمعرفة
-              <a href="/mwaqit-al-salat" className="text-[var(--text-link)] hover:text-[var(--text-link-hover)] underline">مواقيت الصلاة
-              </a>
-              لمدينتك القادمة، وحتى تفحص <a href="/holidays" className="text-[var(--text-link)] hover:text-[var(--text-link-hover)] underline">العطلات الرسمية
-              </a>
-              لتخطيط إجازتك الاستثنائية بكل ذكاء واحترافية.
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Static example cards — keep concise answers visible for snippet */}
+            <article className="p-4 rounded-xl bg-[var(--bg-surface-2)] border border-[var(--border-subtle)]">
+              <h3 className="font-semibold mb-2">الفرق بين الرياض ودبي</h3>
+              <p className="text-[var(--text-muted)]">دبي تسبق الرياض بساعة واحدة (دبي UTC+4، الرياض UTC+3).</p>
+            </article>
+
+            <article className="p-4 rounded-xl bg-[var(--bg-surface-2)] border border-[var(--border-subtle)]">
+              <h3 className="font-semibold mb-2">الفرق بين القاهرة ولندن</h3>
+              <p className="text-[var(--text-muted)]">لندن غالباً متأخرة عن القاهرة بساعتين (قد تتغير مع التوقيت الصيفي).</p>
+            </article>
+          </div>
+        </section>
+
+        {/* Deep content: How it works, DST, work-overlap */}
+        <section className="prose px-2 mt-20 mb-20">
+          <h2 className="mt-4">كيف تعمل الحاسبة (ببساطة)</h2>
+          <p className="text-[var(--text-muted)] leading-relaxed mt-2">
+            عند اختيار مدينتين، نقوم بتحويل التوقيت المحلي لكل واحدة إلى التوقيت العالمي المنسق (UTC)
+            باستخدام بيانات المناطق الزمنية الموثوقة ثم نأخذ الفرق بين هذين التوقيتين. إن أخذنا بالحسبان
+            التوقيت الصيفي يضمن نتيجة دقيقة على مدار السنة.
+          </p>
+
+          <h3 className="mt-4">التوقيت الصيفي ولماذا يهم</h3>
+          <p className="text-[var(--text-muted)] leading-relaxed mt-2">
+            بعض الدول تقدّم أو تؤخر الساعة موسمياً (DST)، وهذا يؤثر مباشرة على فرق التوقيت. الحاسبة
+            تتحقق من حالة DST لكل مدينة في التاريخ المطلوب وتعرض علامة توضيحية إن كانت المدينة في حالة صيفي.
+          </p>
+
+          <h3 className="mt-4">حساب ساعات العمل المشتركة</h3>
+          <p className="text-[var(--text-muted)] leading-relaxed mt-2">
+            لتحديد أفضل وقت للاجتماع، نقارن نطاقات العمل التقليدية (مثلاً 09:00–17:00) في كل مدينة
+            ونحسب الفترة المشتركة. إن لم توجد فترة مشتركة، نقترح الفترات الأقرب بعد فحص فارق الساعات.
+          </p>
+        </section>
+
+        {/* FAQ */}
+        <section className="mb-20 mt-20">
+
+          <h2
+            style={{
+              fontSize: "var(--text-xl)",
+              fontWeight: "var(--font-bold)",
+              color: "var(--text-primary)",
+              marginTop: "var(--space-10)",
+              marginBottom: "var(--space-5)",
+              textAlign: "center",
+            }}
+          >
+            أسئلة شائعة حول فرق التوقيت وتحويل الوقت
+          </h2>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "var(--space-3)",
+            }}
+          >
+
+            {faqs.map(({ q, a }) => (
+
+              <details
+                key={q}
+                className="waqt-card-nested"
+                style={{
+                  padding: "var(--space-4) var(--space-5)",
+                }}
+              >
+
+                <summary
+                  style={{
+                    cursor: "pointer",
+                    fontWeight: "var(--font-semibold)",
+                    color: "var(--text-primary)",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    listStyle: "none",
+                    fontSize: "var(--text-base)",
+                  }}
+                >
+                  {q}
+
+                  <span
+                    style={{
+                      color: "var(--text-muted)",
+                      fontSize: "var(--text-xl)",
+                      marginRight: "var(--space-2)",
+                      flexShrink: 0,
+                    }}
+                    aria-hidden
+                  >
+                    +
+                  </span>
+
+                </summary>
+
+                <p
+                  style={{
+                    marginTop: "var(--space-3)",
+                    color: "var(--text-secondary)",
+                    fontSize: "var(--text-sm)",
+                    lineHeight: "var(--leading-relaxed)",
+                  }}
+                >
+                  {a}
+                </p>
+
+              </details>
+
+            ))}
+
           </div>
 
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold border-b border-[var(--border-subtle)] pb-4 inline-block">الفرق بين التوقيت الصيفي والشتوي</h2>
-            <p className="text-[var(--text-muted)] leading-relaxed text-lg">
-              تطبق العديد من الدول نظام التوقيت الصيفي (Daylight Saving Time)، حيث يتم تقديم الساعة بمقدار 60 دقيقة في أشهر الصيف.
-              حاسبة الوقت الخاصة بنا تتبنى هذا النظام وتبرز بوضوح ما إذا كانت المدينة تعتمد التوقيت الصيفي أو الشتوي (القياسي) في الوقت الحالي،
-              لتفادي أي التباس في فارق الساعات.
-            </p>
-          </div>
+        </section>
 
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold border-b border-[var(--border-subtle)] pb-4 inline-block">تحويل الوقت بين الدول خطوة بخطوة</h2>
-            <p className="text-[var(--text-muted)] leading-relaxed text-lg mb-4">
-              لتحويل الوقت بين أي دولتين بدقة، اتبع الخطوات التالية: أولاً، حدد مدينتك أو بلد الإقامة في الحقل الأول، ثم اختر الوجهة التي ترغب في معرفة فارق التوقيت معها.
-              فور اختيارك للوجهتين، سيتم عرض فرق الساعات مباشرة، بالإضافة إلى توقيت كلتا المدينتين جنباً إلى جنب متضمناً حالة التوقيت الصيفي.
-              كما توفر حاسبة الوقت لدينا ميزة عرض ساعات العمل المشتركة لتسهيل التنسيق الدولي بشكل تلقائي وذكي.
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold border-b border-[var(--border-subtle)] pb-4 inline-block">أسئلة شائعة حول فرق التوقيت</h2>
-            <div className="grid gap-6">
-              {faqs.map((faq, idx) => (
-                <div key={idx} className="bg-[var(--bg-surface-2)] p-6 rounded-2xl border border-[var(--border-subtle)]">
-                  <h3 className="font-bold text-xl mb-3">{faq.q}</h3>
-                  <p className="text-[var(--text-muted)] leading-relaxed">{faq.a}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-        </div>
-      </section>
+      </main>
     </div>
   );
 }

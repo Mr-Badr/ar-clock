@@ -18,8 +18,21 @@
  *   4.  .td-faq-item      — FAQ accordion item (full border + rounded)
  *   5.  .td-faq-trigger   — FAQ accordion trigger
  *   6.  .td-faq-body      — FAQ answer text
- *   7.  Print styles
- *   8.  Reduced-motion
+ *   7.  .td-day-note      — "next/prev day" pill inside table cell
+ *   8.  .td-dst-summary-row — summary row in DST table
+ *   9.  Print styles
+ *   10. Reduced-motion
+ *
+ * NOTE ON TABS:
+ * TimeConversionTable.client.jsx uses the design system's own
+ * .tabs / .tab / .tab--active classes (new.css §19) directly via useState.
+ * No shadcn Tabs component is used, so zero overrides are needed here.
+ *
+ * NOTE ON TABLE CENTER ALIGNMENT:
+ * new.css §32 sets .table th { text-align: right }.
+ * Centre-aligned columns (both city headers + all their cells) use
+ * style={{ textAlign: 'center' }} inline — inline styles beat class rules
+ * at any specificity, making !important unnecessary.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -39,19 +52,8 @@
 
 
 /* ── 2. LiveClock size override ───────────────────────────────────────────────
- *
- * new.css clock sizes:
- *   .clock-xs → --text-clock-xs = 3.5rem = 56px  (fullscreen widget)
- *   .clock-sm → --text-clock-sm = 5.5rem = 88px  (even larger)
- *
- * At 56px+ the clock dominates a 2-column comparison card and breaks layout.
- * 1.75rem (28px) reads as a "data value" — compact, scannable, correct size
- * for a city panel inside a card.
- *
- * Wrapper: <div className="td-city-clock"><LiveClock .../></div>
- * !important needed: LiveClock may inject inline style or use specificity
- * that matches (0,1,0). Descendant selector wins at 0,2,0, but !important
- * is the safe override for the class variants.
+ * 1.75rem (28px) fits a city panel inside a card without dominating the layout.
+ * !important: LiveClock may inject inline style at equal or higher specificity.
  */
 .td-city-clock .clock-display {
   font-size:   1.75rem;
@@ -65,17 +67,9 @@
 
 
 /* ── 3. Suppress hover lift on data-only cards ────────────────────────────────
- *
- * new.css .card:hover      → transform: translateY(-1px); shadow-md  (lift)
- * new.css .card-nested:hover → border-color: border-default          (subtle)
- *
- * Lift implies "I'm clickable". Data panels (city comparison, business hours,
- * UTC info) are NOT clickable — they must NOT lift.
- *
- * Usage: className="card td-static" or "card-nested td-static"
- *
- * !important: .card:hover specificity = 0,2,0 (class + pseudo).
- *             .td-static:hover        = 0,2,0 → same level → !important wins.
+ * new.css .card:hover → transform: translateY(-1px); shadow-md (lift).
+ * Lift implies "clickable". Data panels must NOT lift.
+ * !important: .card:hover and .td-static:hover share specificity 0,2,0.
  */
 .td-static,
 .td-static:hover {
@@ -87,10 +81,9 @@
 
 
 /* ── 4. FAQ accordion item ────────────────────────────────────────────────────
- *
- * shadcn AccordionItem applies only "border-b" by default (bottom border, no radius).
+ * shadcn AccordionItem default: border-b only, no radius.
  * Override to full card-style border + rounded corners.
- * Open state gets accent border to visually indicate the active item.
+ * Open state: accent border + shadow-accent glow.
  */
 .td-faq-item {
   background:    var(--bg-surface-2);
@@ -98,25 +91,27 @@
   border-radius: var(--radius-lg) !important;
   overflow:      hidden;
   padding:       0 !important;
-  transition:    border-color var(--transition-fast);
+  transition:    border-color var(--transition-fast),
+                 box-shadow   var(--transition-fast);
 }
 .td-faq-item[data-state='open'] {
   border-color: var(--border-accent-strong) !important;
+  box-shadow:   var(--shadow-accent) !important;
 }
 
 
 /* ── 5. FAQ trigger ───────────────────────────────────────────────────────────
- *
- * shadcn default adds hover:underline — removed.
- * Hover shows bg-accent-soft: correct (trigger IS interactive, opens/closes).
- * Chevron icon pushed to logical-start (right in RTL = leading edge).
+ * Removes shadcn's default hover:underline.
+ * Hover shows accent-soft bg (trigger IS interactive, opens/closes).
+ * SVG chevron pushed to logical-start (left edge in RTL layout).
  */
 .td-faq-trigger {
   width:           100%;
   display:         flex !important;
   align-items:     center !important;
+  justify-content: flex-start !important;
   gap:             var(--space-3);
-  padding:         var(--space-3) var(--space-4) !important;
+  padding:         var(--space-3-5) var(--space-5) !important;
   font-size:       var(--text-sm);
   font-weight:     var(--font-semibold);
   color:           var(--text-primary);
@@ -132,19 +127,22 @@
   background:      var(--accent-soft);
   text-decoration: none !important;
 }
-/* Chevron: logical-start (right in RTL) */
 .td-faq-trigger svg {
   color:               var(--accent-alt);
   flex-shrink:         0;
   margin-inline-start: auto;
   margin-inline-end:   0;
+  transition:          transform var(--transition-fast);
+}
+.td-faq-item[data-state='open'] .td-faq-trigger svg {
+  transform: rotate(180deg);
 }
 
 
 /* ── 6. FAQ answer body ───────────────────────────────────────────────────────
  */
 .td-faq-body {
-  padding:     0 var(--space-4) var(--space-4) !important;
+  padding:     0 var(--space-5) var(--space-4) !important;
   padding-top: var(--space-3)   !important;
   margin:      0;
   font-size:   var(--text-sm);
@@ -154,7 +152,38 @@
 }
 
 
-/* ── 7. Print ─────────────────────────────────────────────────────────────────
+/* ── 7. Day-note pill ─────────────────────────────────────────────────────────
+ * Appears below the destination time when it crosses midnight.
+ * "اليوم التالي" / "اليوم السابق"
+ * Rendered as a compact warning-coloured pill on its own line.
+ */
+.td-day-note {
+  display:       block;
+  margin-top:    2px;
+  font-size:     var(--text-2xs);
+  font-weight:   var(--font-semibold);
+  color:         var(--warning);
+  background:    var(--warning-soft);
+  border:        1px solid var(--warning-border);
+  border-radius: var(--radius-full);
+  padding:       1px var(--space-1-5);
+  white-space:   nowrap;
+  line-height:   1.4;
+}
+
+
+/* ── 8. DST summary row ───────────────────────────────────────────────────────
+ * The colSpan row at the bottom of the DST table.
+ * Slightly darker background (bg-surface-3) distinguishes it as a summary,
+ * not just another data row. Top border reinforces visual separation.
+ */
+.td-dst-summary-row td {
+  background-color: var(--bg-surface-3);
+  border-top:       1px solid var(--border-default);
+}
+
+
+/* ── 9. Print ─────────────────────────────────────────────────────────────────
  */
 @media print {
   [aria-label="حاسبة فرق التوقيت التفاعلية"] { display: none !important; }
@@ -163,9 +192,10 @@
 }
 
 
-/* ── 8. Reduced motion ────────────────────────────────────────────────────────
+/* ── 10. Reduced motion ───────────────────────────────────────────────────────
  */
 @media (prefers-reduced-motion: reduce) {
-  .td-faq-item    { transition: none; }
-  .td-faq-trigger { transition: none; }
+  .td-faq-item,
+  .td-faq-trigger,
+  .td-faq-trigger svg { transition: none !important; }
 }

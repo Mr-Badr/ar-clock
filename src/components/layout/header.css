@@ -1,0 +1,404 @@
+/* =============================================================================
+   Header — Base44-inspired RTL Navbar
+   ============================================================================= */
+
+/* ── Main Header Bar ── */
+.header-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
+  height: auto; /* Edited — was 64px, now auto to fit pill */
+  padding: var(--space-3) var(--space-6); /* Edited — outer padding around the pill */
+  background: transparent; /* Edited — transparent bg, pill has its own */
+  transition: none; /* Edited — no border/shadow on outer wrapper */
+}
+
+.header-nav.scrolled {
+  /* Edited — removed shadow/border, pill handles visuals */
+}
+
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--space-4); /* Edited — inner padding of the pill */
+  height: 56px; /* Edited — pill height */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-surface-1); /* Edited — pill background */
+  border: 1px solid var(--border-subtle); /* Edited — pill border */
+  border-radius: var(--radius-full); /* Edited — full rounded pill */
+  backdrop-filter: blur(20px); /* Edited — glass effect on pill */
+  -webkit-backdrop-filter: blur(20px); /* Edited */
+  box-shadow: var(--shadow-sm); /* Edited — subtle shadow on pill */
+  transition: box-shadow var(--transition-base), border-color var(--transition-base); /* Edited */
+}
+
+.header-nav.scrolled .header-inner {
+  box-shadow: var(--shadow-md); /* Edited — stronger shadow on scroll */
+  border-color: var(--border-default); /* Edited */
+}
+
+/* ── Logo ── */
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.header-logo:hover {
+  color: var(--accent-alt);
+}
+
+.header-logo-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--accent);
+}
+
+/* ── Desktop Center Nav — no separate pill, links sit inside main pill ── */
+.header-center-nav {
+  position: absolute; /* Edited — keep centered */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px; /* Edited — tight gap between links */
+  background: transparent; /* Edited — no separate bg, inherits from pill */
+  border: none; /* Edited — no separate border */
+  border-radius: 0; /* Edited — no separate radius */
+  padding: 0; /* Edited — no separate padding */
+}
+
+.header-nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.header-nav-link:hover {
+  color: var(--text-primary);
+  background: var(--accent-soft);
+}
+
+.header-nav-link.active {
+  color: var(--text-on-accent);
+  background: var(--accent);
+  font-weight: var(--font-semibold);
+  box-shadow: 0 1px 4px rgba(29, 78, 216, 0.3);
+}
+
+/* ── Dropdown (المزيد) ── */
+.header-dropdown-wrapper {
+  position: relative;
+}
+
+.header-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.header-dropdown-trigger:hover,
+.header-dropdown-trigger.open {
+  color: var(--text-primary);
+  background: var(--accent-soft);
+}
+
+.header-dropdown-trigger .chevron-icon {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--transition-fast);
+}
+
+.header-dropdown-trigger.open .chevron-icon {
+  transform: rotate(180deg);
+}
+
+.header-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 16px); /* Edited — more space since inside pill */
+  right: 0;
+  min-width: 200px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl); /* Edited — rounder to match pill aesthetic */
+  padding: var(--space-2); /* Edited — more padding */
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-dropdown);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+}
+
+.header-dropdown-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.header-dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 10px 14px;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.header-dropdown-link:hover {
+  background: var(--accent-soft);
+  color: var(--text-primary);
+}
+
+.header-dropdown-link.active {
+  color: var(--accent-alt);
+  background: var(--accent-alt-soft);
+}
+
+.header-dropdown-link-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+
+/* ── Theme Toggle ── */
+.header-theme-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; /* Edited — slightly smaller inside pill */
+  height: 36px; /* Edited */
+  border-radius: 50%;
+  border: none; /* Edited — no border, lives inside pill */
+  background: transparent; /* Edited — transparent, blends with pill */
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.header-theme-btn:hover {
+  background: var(--accent-soft);
+  color: var(--text-primary);
+  border-color: var(--border-accent);
+}
+
+.header-theme-btn svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
+}
+
+.header-theme-btn:hover svg {
+  transform: rotate(20deg);
+}
+
+/* ── Mobile Menu Button ── */
+.header-mobile-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px; /* Edited — match theme btn size */
+  height: 36px; /* Edited */
+  border-radius: var(--radius-full); /* Edited — round like other elements */
+  border: none; /* Edited — no border inside pill */
+  background: transparent; /* Edited — transparent inside pill */
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.header-mobile-btn:hover {
+  background: var(--accent-soft);
+  color: var(--text-primary);
+}
+
+/* ── Left controls container ── */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+/* ── Mobile Overlay + Panel ── */
+.header-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  top: 80px; /* Edited — pill height (56) + outer padding (12*2) ≈ 80 */
+  background: var(--bg-overlay);
+  z-index: calc(var(--z-sticky) - 1);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--transition-base), visibility var(--transition-base);
+}
+
+.header-mobile-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.header-mobile-menu {
+  position: fixed;
+  top: 80px; /* Edited — match overlay */
+  right: var(--space-6); /* Edited — align with pill edges */
+  left: var(--space-6); /* Edited */
+  max-height: calc(100dvh - 80px); /* Edited */
+  border-radius: var(--radius-xl); /* Edited — rounded menu panel */
+  overflow-y: auto;
+  background: var(--bg-surface-1);
+  border-bottom: 1px solid var(--border-default);
+  padding: var(--space-3) var(--space-4);
+  z-index: var(--z-sticky);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.header-mobile-menu.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.header-mobile-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 12px 16px;
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  min-height: 48px;
+}
+
+.header-mobile-link:hover {
+  background: var(--accent-soft);
+  color: var(--text-primary);
+}
+
+.header-mobile-link.active {
+  color: var(--accent-alt);
+  background: var(--accent-alt-soft);
+  font-weight: var(--font-semibold);
+}
+
+.header-mobile-link-icon {
+  width: 18px;
+  height: 18px;
+  opacity: 0.6;
+}
+
+.header-mobile-divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: var(--space-2) 0;
+}
+
+.header-mobile-section-title {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--text-muted);
+  padding: var(--space-2) var(--space-4);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Responsive ── */
+
+/* Tablet: shrink nav pill padding */
+@media (max-width: 1024px) {
+  .header-nav-link,
+  .header-dropdown-trigger {
+    padding: 8px 12px;
+    font-size: var(--text-xs);
+  }
+}
+
+/* Mobile: hide desktop nav, show hamburger */
+@media (max-width: 768px) {
+  .header-center-nav {
+    display: none;
+  }
+  .header-mobile-btn {
+    display: flex;
+  }
+  .header-inner {
+    padding: 0 var(--space-4);
+  }
+  .header-logo {
+    font-size: var(--text-lg);
+  }
+  .header-logo-icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 380px) {
+  .header-inner {
+    padding: 0 var(--space-3);
+  }
+  .header-theme-btn {
+    width: 36px;
+    height: 36px;
+  }
+  .header-mobile-btn {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (min-width: 769px) {
+  .header-mobile-overlay,
+  .header-mobile-menu {
+    display: none !important;
+  }
+}

@@ -961,10 +961,10 @@
     transform var(--transition-base);
 }
 
-.card:hover {
+.card-hover:hover {
   box-shadow:
     0 10px 28px -6px rgba(6, 8, 18, 0.45),
-    0 3px 10px  -2px rgba(6, 8, 18, 0.25);
+    0 3px 10px -2px rgba(6, 8, 18, 0.25);
   transform: translateY(-5px);
 }
 
@@ -2163,7 +2163,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-5);
-  padding: var(--space-20) var(--space-8);
+  padding: var(--space-8) var(--space-8);
   text-align: center;
 }
 
