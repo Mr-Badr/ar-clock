@@ -37,56 +37,6 @@ export async function generateMetadata() {
   };
 }
 
-/* ── Upcoming 3 hero — resolves fast (first 20 events only) ─────────────── */
-async function UpcomingHero() {
-  const sample = ALL_EVENTS.slice(0, 20).map(enrichEvent);
-  const resolved = await resolveAllHijriEvents(sample);
-  const now = new Date(await getCachedNowIso()); now.setHours(0, 0, 0, 0);
-  const nowMs = now.getTime();
-
-  const top3 = sample
-    .map(ev => {
-      const d = getNextEventDate(ev, resolved, nowMs);
-      return { ...ev, _daysLeft: getTimeRemaining(d, nowMs).days, _formatted: formatGregorianAr(d) };
-    })
-    .filter(ev => ev._daysLeft > 0)
-    .sort((a, b) => a._daysLeft - b._daysLeft)
-    .slice(0, 3);
-
-  return (
-    <div
-      style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-4)', marginTop: 'var(--space-6)' }}
-      aria-label="أقرب 3 مناسبات قادمة"
-    >
-      {top3.map((ev, i) => (
-        <Link
-          key={ev.slug}
-          href={`/holidays/${ev.slug}`}
-          className={`card ${i === 0 ? 'card--accent' : ''} no-underline`}
-          style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}
-        >
-          {i === 0 && (
-            <span className="badge badge-accent" style={{ alignSelf: 'flex-start' }}>التالي</span>
-          )}
-          <div>
-            <span
-              className="clock-display tabular-nums"
-              style={{ fontSize: 'var(--text-3xl)', color: 'var(--accent)' }}
-            >
-              {ev._daysLeft}
-            </span>
-            <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', marginRight: 'var(--space-1)' }}>يوم</span>
-          </div>
-          <p style={{ fontSize: 'var(--text-base)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)' }}>
-            {ev.name}
-          </p>
-          <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{ev._formatted}</p>
-        </Link>
-      ))}
-    </div>
-  );
-}
-
 /* ── Initial grid (SSR'd, streamed) ─────────────────────────────────────── */
 async function InitialEventGrid() {
   const { events, nextCursor, total } = await getInitialEvents();
@@ -167,36 +117,7 @@ export default async function HolidaysPage() {
           <p style={{ marginTop: 'var(--space-4)', color: 'var(--text-secondary)', maxWidth: 'var(--measure-narrow)', lineHeight: 'var(--leading-relaxed)', fontSize: 'var(--text-lg)' }}>
             تابع أهم المناسبات الإسلامية والوطنية والمدرسية في العالم العربي بدقة تامة — بالهجري والميلادي، مع عد تنازلي حي.
           </p>
-
-          {/* Upcoming 3 */}
-          <Suspense fallback={
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 'var(--space-4)', marginTop: 'var(--space-6)' }}>
-              {[1, 2, 3].map(i => <div key={i} className="card" style={{ height: '120px', background: 'var(--bg-surface-3)' }} />)}
-            </div>
-          }>
-            <UpcomingHero />
-          </Suspense>
         </header>
-
-        {/* ── Calendar method legend ─────────────────────────────────────────── */}
-        <div className="card-nested" style={{ marginBottom: 'var(--space-8)', display: 'flex', flexWrap: 'wrap', gap: 'var(--space-5)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-            <span className="accent-dot" aria-hidden />
-            هجري = أم القرى (AlAdhan API)
-          </span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-            <span style={{ color: 'var(--warning)' }}>⚠</span>
-            احتمال ±1 يوم برؤية الهلال المحلية
-          </span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-            <span className="accent-dot accent-dot--success" aria-hidden />
-            ثابت = نفس التاريخ كل عام
-          </span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-            <span className="accent-dot accent-dot--warning" aria-hidden />
-            تقديري = تاريخ قد يتغير
-          </span>
-        </div>
 
         {/* ── All events ────────────────────────────────────────────────────── */}
         <section aria-labelledby="events-heading">
@@ -209,6 +130,49 @@ export default async function HolidaysPage() {
             <InitialEventGrid />
           </Suspense>
         </section>
+
+                {/* ── Calendar method legend ─────────────────────────────────────────── */}
+        <aside
+          aria-label="ملاحظات التقويم"
+          className="mt-10 flex flex-col gap-2 text-[0.7rem]"
+          style={{
+            color: "var(--text-muted)",
+            borderRight: "2px solid var(--border-subtle)",
+            paddingRight: "var(--space-4)",
+            maxWidth: "540px",
+          }}
+        >
+          <p className="flex items-center gap-2">
+            <span style={{
+              width: 8,
+              height: 8,
+              borderRadius: 50,
+              backgroundColor: "var(--accent-alt)",
+              flexShrink: 0,
+            }} aria-hidden />
+            هجري = أم القرى (AlAdhan API)
+          </p>
+          <p className="flex items-center gap-2">
+            <span style={{ color: "var(--warning)", fontSize: "0.8rem",width: 8 }}>⚠</span>
+            احتمال ±1 يوم برؤية الهلال المحلية
+          </p>
+          <p className="flex items-center gap-2">
+            <span style={{ background: "var(--success)", width: 8,
+              height: 8,
+              borderRadius: 50,
+              backgroundColor: "var(--success)",
+              flexShrink: 0, }} aria-hidden />
+            ثابت = نفس التاريخ كل عام
+          </p>
+          <p className="flex items-center gap-2">
+            <span style={{ background: "var(--warning)", width: 8,
+              height: 8,
+              borderRadius: 50,
+              backgroundColor: "var(--warning)",
+              flexShrink: 0, }} aria-hidden />
+            تقديري = تاريخ قد يتغير
+          </p>
+        </aside>
 
         {/* ── SEO content ───────────────────────────────────────────────────── */}
         <div className="divider" style={{ marginTop: 'var(--space-16)' }} />
