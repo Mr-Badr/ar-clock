@@ -8,7 +8,7 @@ import { getCountryCalendarConfig } from './calendar-config.js';
 import { cacheTag, cacheLife } from 'next/cache';
 
 const ALADHAN = 'https://api.aladhan.com/v1';
-const _cache  = new Map(); // `${method}-${year}-${month}` → Map<day,iso> | null
+const _cache = new Map(); // `${method}-${year}-${month}` → Map<day,iso> | null
 
 function getSafeNow() { return new Date(); }
 function getSafeNowMs() { return Date.now(); }
@@ -28,7 +28,7 @@ async function fetchMonth(year, month, method = 1) {
       const d = parseInt(e.hijri?.day, 10);
       const p = e.gregorian?.date?.split('-');
       if (!d || !p) continue;
-      map.set(d, `${p[2]}-${p[1].padStart(2,'0')}-${p[0].padStart(2,'0')}`);
+      map.set(d, `${p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`);
     }
     _cache.set(key, map);
     return map;
@@ -45,22 +45,44 @@ async function todayHijriYear() {
   cacheTag('hijri-today');
   cacheLife('hours');
   if (_yr && getSafeNowMs() - _yrAt < 86_400_000) return _yr;
-  const d   = getSafeNow();
-  const str = `${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${d.getFullYear()}`;
+
+  const d = getSafeNow();
+  // 1. Try API
+  const str = `${String(d.getDate()).padStart(2, '0')}-${String(d.getMonth() + 1).padStart(2, '0')}-${d.getFullYear()}`;
   try {
     const r = await fetch(`${ALADHAN}/gToH?date=${str}`, { next: { revalidate: 86_400, tags: ['hijri-today'] } });
     const j = await r.json();
     const y = parseInt(j?.data?.hijri?.year, 10);
     if (y) { _yr = y; _yrAt = getSafeNowMs(); return y; }
-  } catch {}
+  } catch { }
+
+  // 2. Robust fallback using Intl (available in Node 14+ / modern browsers)
+  try {
+    const formatter = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', { year: 'numeric' });
+    const parts = formatter.formatToParts(d);
+    const yPart = parts.find(p => p.type === 'year');
+    if (yPart) {
+      const y = parseInt(yPart.value, 10);
+      _yr = y; _yrAt = getSafeNowMs();
+      return y;
+    }
+  } catch (e) { }
+
+  // 3. Last resort (rough math)
   return Math.floor((d.getTime() - new Date('0622-07-19').getTime()) / (354.37 * 86_400_000));
 }
 
 function roughFallback(hMonth, hDay) {
   const now = getSafeNow(), EP = new Date('0622-07-19').getTime(), MSY = 354.37 * 86_400_000;
-  const yr  = Math.floor((now.getTime() - EP) / MSY);
-  const t   = new Date(EP + yr * MSY + (hMonth - 1) * 29.53 * 86_400_000 + (hDay - 1) * 86_400_000);
-  return t <= now ? new Date(t.getTime() + MSY) : t;
+  let yr = Math.floor((now.getTime() - EP) / MSY);
+  let t = new Date(EP + yr * MSY + (hMonth - 1) * 29.53 * 86_400_000 + (hDay - 1) * 86_400_000);
+
+  // Ensure it is in the future
+  while (t <= now) {
+    yr++;
+    t = new Date(EP + yr * MSY + (hMonth - 1) * 29.53 * 86_400_000 + (hDay - 1) * 86_400_000);
+  }
+  return t;
 }
 
 /**
@@ -75,13 +97,13 @@ export async function resolveAllHijriEvents(events) {
   if (!hijri.length) return {};
 
   const baseYear = await todayHijriYear();
-  const now      = getSafeNow(); now.setHours(0, 0, 0, 0);
+  const now = getSafeNow(); now.setHours(0, 0, 0, 0);
 
-  // Collect unique (method, year, month) pairs — year and year+1
+  // Collect unique (method, year, month) pairs — base, +1, +2
   const needed = new Set();
   for (const ev of hijri) {
     const cfg = getCountryCalendarConfig(ev._countryCode);
-    for (let o = 0; o <= 1; o++) needed.add(`${cfg.method}|${baseYear + o}|${ev.hijriMonth}`);
+    for (let o = 0; o <= 2; o++) needed.add(`${cfg.method}|${baseYear + o}|${ev.hijriMonth}`);
   }
   await Promise.all([...needed].map(k => {
     const [m, y, mo] = k.split('|').map(Number);
@@ -92,19 +114,21 @@ export async function resolveAllHijriEvents(events) {
   for (const ev of hijri) {
     const cfg = getCountryCalendarConfig(ev._countryCode);
     let resolved = null;
-    for (let o = 0; o <= 2 && !resolved; o++) {
+
+    // Check baseYear, +1, +2 in order. Must be > now.
+    for (let o = 0; o <= 2; o++) {
       const map = _cache.get(`${cfg.method}-${baseYear + o}-${ev.hijriMonth}`);
-      if (!map) continue;
-      const iso = map.get(ev.hijriDay);
-      if (!iso) continue;
-      const d = new Date(iso); d.setHours(0, 0, 0, 0);
-      if (d > now) resolved = { isoString: iso, ...cfg };
+      const iso = map?.get(ev.hijriDay);
+      if (iso) {
+        const d = new Date(iso); d.setHours(0, 0, 0, 0);
+        if (d > now) {
+          resolved = { isoString: iso, ...cfg };
+          break;
+        }
+      }
     }
-    if (!resolved) {
-      const map2 = await fetchMonth(baseYear + 2, ev.hijriMonth, cfg.method);
-      const iso  = map2?.get(ev.hijriDay);
-      if (iso) resolved = { isoString: iso, ...cfg };
-    }
+
+    // Last resort fallback
     if (!resolved) {
       const fb = roughFallback(ev.hijriMonth, ev.hijriDay);
       resolved = { isoString: fb.toISOString().split('T')[0], ...cfg, accuracy: 'low', note: 'تعذّر الاتصال بـ API — التاريخ تقديري.' };

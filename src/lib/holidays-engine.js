@@ -194,9 +194,15 @@ function nextEasterOffset(offset = 0, now) {
 function roughHijri(hMonth, hDay, now) {
   const n = new Date(now);
   const EP = new Date('0622-07-19').getTime(), MSY = 354.37 * 86_400_000;
-  const yr = Math.floor((n.getTime() - EP) / MSY);
-  const t = new Date(EP + yr * MSY + (hMonth - 1) * 29.53 * 86_400_000 + (hDay - 1) * 86_400_000);
-  return t < n ? new Date(t.getTime() + MSY) : t;
+  let yr = Math.floor((n.getTime() - EP) / MSY);
+  let t = new Date(EP + yr * MSY + (hMonth - 1) * 29.53 * 86_400_000 + (hDay - 1) * 86_400_000);
+
+  // Guarantee a future date
+  while (t <= n) {
+    yr++;
+    t = new Date(EP + yr * MSY + (hMonth - 1) * 29.53 * 86_400_000 + (hDay - 1) * 86_400_000);
+  }
+  return t;
 }
 
 export function getNextEventDate(rawEvent, resolvedMap = {}, nowMs = Date.now()) {
