@@ -1,162 +1,160 @@
 /**
  * components/events/EventCard.jsx
- * Redesigned with WAQT design-system tokens.
- * Uses: .card .card--accent .card-nested .badge .badge-* .accent-dot
- * Zero hard-coded colors — all from CSS custom properties.
+ *
+ * Design direction: "Precision Instrument"
+ * ─────────────────────────────────────────
+ * The countdown number is the hero — it dominates the card like a Bloomberg
+ * terminal metric. Everything else is supporting context, arranged in a clear
+ * reading hierarchy: category → number → event name → date.
+ *
+ * Key decisions:
+ * • data-urgency attribute on <article> drives ALL color changes via CSS —
+ *   no inline styles for urgency. Clean separation of concerns.
+ * • Country flag top-right, category pill top-left — natural RTL scan path.
+ * • A 28 × 2px accent bar under the number replaces any progress bar.
+ *   It's purely decorative, NOT a progress indicator.
+ * • Hover: translateY(-5px) + shadow only. No border/bg color change ever.
+ * • Numbers: plain English integers (direction:ltr on the span).
+ * • Dates: Arabic month names preserved, only digits are Western.
  */
 import Link from 'next/link';
 
-/* Category → badge class from design system */
-const CAT_BADGE = {
-  islamic:   'badge-accent',
-  national:  'badge-info',
-  school:    'badge-warning',
-  holidays:  'badge-success',
-  astronomy: 'badge-info',
-  business:  'badge-default',
-};
+/* ── Static maps ──────────────────────────────────────────────────────────── */
 const CAT_ICON = {
-  islamic:'🌙', national:'🏳', school:'📚', holidays:'🏖', astronomy:'🌍', business:'💼',
+  islamic: '🌙', national: '🏳', school: '📚',
+  holidays: '🏖', astronomy: '🌍', business: '💼',
 };
 const CAT_LABEL = {
-  islamic:'إسلامي', national:'وطني', school:'مدرسي', holidays:'إجازة', astronomy:'فلكي', business:'أعمال',
+  islamic: 'إسلامي', national: 'وطني', school: 'مدرسي',
+  holidays: 'إجازة', astronomy: 'فلكي', business: 'أعمال',
+};
+const COUNTRY_FLAGS = {
+  sa: '🇸🇦', eg: '🇪🇬', ma: '🇲🇦', dz: '🇩🇿',
+  ae: '🇦🇪', tn: '🇹🇳', kw: '🇰🇼', qa: '🇶🇦',
 };
 
-/* Event type → small dot variant */
-const TYPE_DOT = {
-  hijri:'accent-dot', fixed:'accent-dot--success', estimated:'accent-dot--warning',
-  monthly:'accent-dot--warning', easter:'accent-dot--danger',
-};
-
-/* Urgency — drives card variant */
+/* Three urgency states — drives CSS via data-urgency attribute */
 function urgency(days) {
-  if (days <= 3)  return { card: 'card--danger',  badge: 'badge-danger',   label: 'عاجل' };
-  if (days <= 14) return { card: '',              badge: 'badge-warning',  label: 'قريب' };
-  if (days <= 30) return { card: 'card--accent',  badge: 'badge-accent',   label: null   };
-  return               { card: '',              badge: 'badge-default',  label: null   };
+  if (days <= 3)  return 'urgent';
+  if (days <= 14) return 'soon';
+  return 'normal';
 }
 
-export default function EventCard({ event, priority = false }) {
-  const cat  = event.category || 'islamic';
-  const urg  = urgency(event._daysLeft);
+/* ─────────────────────────────────────────────────────────────────────────── */
+export default function EventCard({ event, priority = false, index = 0 }) {
+  const cat = event.category || 'islamic';
 
   return (
-    <Link
-      href={`/holidays/${event.slug}`}
-      prefetch={priority}
-      aria-label={`${event.name} — متبقي ${event._daysLeft} يوم`}
-      className={`card ${urg.card} flex flex-col justify-between gap-4 no-underline group`}
-      style={{ minHeight: '200px', position: 'relative', overflow: 'hidden' }}
+    /* Stagger wrapper — layout dimensions controlled by .waqt-grid > div CSS */
+    <div
+      style={{
+        animationName: 'fade-in-up',
+        animationDuration: '0.35s',
+        animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
+        animationFillMode: 'both',
+        animationDelay: `${Math.min(index, 9) * 40}ms`,
+      }}
     >
-      {/* Category accent strip — left edge (LTR visual, RTL layout) */}
-      <span
-        aria-hidden
-        style={{
-          position:'absolute', insetInlineEnd:0, top:0, bottom:0, width:'3px',
-          background:'var(--accent)', opacity: cat === 'islamic' ? 1 : 0.5,
-        }}
-      />
+      <Link
+        href={`/holidays/${event.slug}`}
+        prefetch={priority}
+        aria-label={`${event.name} — متبقي ${event._daysLeft} يوم`}
+      >
+        {/* data-urgency drives number + accent-bar color entirely from CSS */}
+        <article className="waqt-ev" data-urgency={urgency(event._daysLeft)}>
 
-      {/* Top row: category badge + urgency label */}
-      <div className="flex items-center justify-between gap-2 flex-wrap">
-        <span className={`badge ${CAT_BADGE[cat] ?? 'badge-default'}`}>
-          {CAT_ICON[cat]} {CAT_LABEL[cat]}
-        </span>
-        {urg.label && <span className={`badge ${urg.badge}`}>{urg.label}</span>}
-      </div>
+          {/* ── 1. Card header: category pill + country flag ──────── */}
+          <div className="waqt-ev__header">
+            <span className="waqt-ev__cat">
+              <span aria-hidden>{CAT_ICON[cat]}</span>
+              <span className="waqt-ev__cat-label">{CAT_LABEL[cat]}</span>
+            </span>
+            {event._countryCode && (
+              <span className="waqt-ev__flag" aria-hidden>
+                {COUNTRY_FLAGS[event._countryCode]}
+              </span>
+            )}
+          </div>
 
-      {/* Event name + description */}
-      <div style={{ flex:1 }}>
-        <h3
-          className="font-semibold leading-snug"
-          style={{ fontSize:'var(--text-lg)', color:'var(--text-primary)', lineClamp:2 }}
-        >
-          {event.name}
-        </h3>
-        <p
-          className="leading-relaxed"
-          style={{ fontSize:'var(--text-sm)', color:'var(--text-secondary)', marginTop:'var(--space-1)', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical', overflow:'hidden' }}
-        >
-          {event.description}
-        </p>
-      </div>
+          {/* ── 2. Hero: the countdown number ─────────────────────── */}
+          <div className="waqt-ev__hero">
+            {/* Number row: large digits + "يوم" unit inline */}
+            <div className="waqt-ev__days-row">
+              {/*
+                direction:ltr + unicode-bidi:embed forces Western (0-9) digits
+                even inside the RTL page context. Arabic months in _formatted
+                are unaffected because they're in a different element.
+              */}
+              <span className="waqt-ev__days">{event._daysLeft}</span>
+              <span className="waqt-ev__days-unit">يوم متبقي</span>
+            </div>
 
-      {/* Bottom: days remaining + date */}
-      <div className="flex items-end justify-between gap-2">
-        {/* Countdown number */}
-        <div className="clock-segment">
-          <span
-            className="clock-display tabular-nums"
-            style={{ fontSize:'var(--text-3xl)', color:'var(--accent)', lineHeight:'var(--leading-none)' }}
-          >
-            {event._daysLeft.toLocaleString('ar-EG')}
-          </span>
-          <span className="clock-segment__label">يوم متبقي</span>
-        </div>
+            {/* 28px decorative accent bar — color = urgency, NOT a progress bar */}
+            <div className="waqt-ev__bar" aria-hidden />
+          </div>
 
-        {/* Date + calendar source */}
-        <div style={{ textAlign:'right' }}>
-          <time
-            dateTime={event._targetISO}
-            style={{ fontSize:'var(--text-sm)', color:'var(--text-primary)', fontWeight:'var(--font-medium)', display:'block' }}
-          >
-            {event._formatted}
-          </time>
-          {event._calMethod && (
-            <p style={{ fontSize:'var(--text-2xs)', color:'var(--text-muted)', marginTop:'var(--space-0-5)', display:'flex', alignItems:'center', gap:'var(--space-1)', justifyContent:'flex-end' }}>
-              {event._localSighting && <span style={{ color:'var(--warning)' }} title="±1 يوم بالرؤية المحلية">⚠</span>}
-              {event._calMethod}
-            </p>
-          )}
-        </div>
-      </div>
+          {/* ── 3. Body: event name + description ─────────────────── */}
+          <div className="waqt-ev__body">
+            <h3 className="waqt-ev__title">{event.name}</h3>
+            {event.description && (
+              <p className="waqt-ev__desc">{event.description}</p>
+            )}
+          </div>
 
-      {/* Mini urgency progress bar — only shown when ≤60 days away */}
-      {event._daysLeft <= 60 && (
-        <div
-          aria-hidden
-          style={{ height:'3px', borderRadius:'var(--radius-full)', background:'var(--bg-surface-4)', overflow:'hidden', marginTop:'var(--space-2)' }}
-        >
-          <div style={{
-            height:'100%', borderRadius:'var(--radius-full)',
-            background: event._daysLeft <= 7 ? 'var(--danger)' : event._daysLeft <= 14 ? 'var(--warning)' : 'var(--accent)',
-            width:`${Math.max(4, Math.round((1 - event._daysLeft / 60) * 100))}%`,
-            transition:'width var(--transition-slow)',
-          }} />
-        </div>
-      )}
+          {/* ── 4. Footer: date + calendar meta ───────────────────── */}
+          <div className="waqt-ev__footer">
+            <time className="waqt-ev__date" dateTime={event._targetISO}>
+              {event._formatted}
+            </time>
 
-      {/* Country flag badge if applicable */}
-      {event._countryCode && (
-        <div style={{ position:'absolute', top:'var(--space-4)', insetInlineStart:'var(--space-4)' }}>
-          <span style={{ fontSize:'var(--text-xl)' }}>
-            {{ sa:'🇸🇦', eg:'🇪🇬', ma:'🇲🇦', dz:'🇩🇿', ae:'🇦🇪', tn:'🇹🇳', kw:'🇰🇼', qa:'🇶🇦' }[event._countryCode]}
-          </span>
-        </div>
-      )}
-    </Link>
+            {/* Secondary meta: hijri tag + calendar method */}
+            {(event._hijriDate || event._calMethod) && (
+              <div className="waqt-ev__meta">
+                {event._hijriDate && (
+                  <span className="waqt-ev__hijri">{event._hijriDate}</span>
+                )}
+                {event._calMethod && (
+                  <span className="waqt-ev__method">
+                    {event._localSighting && (
+                      <span className="waqt-ev__sighting" title="±1 يوم برؤية الهلال">⚠</span>
+                    )}
+                    {event._calMethod}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+
+        </article>
+      </Link>
+    </div>
   );
 }
 
-/* ── Skeleton — exactly matches card dimensions ──────────────────────────── */
+
+/* ── Skeleton ─────────────────────────────────────────────────────────────── */
 export function EventCardSkeleton() {
   return (
-    <div className="card" style={{ minHeight:'200px', display:'flex', flexDirection:'column', gap:'var(--space-4)' }}>
-      <div className="flex items-center justify-between">
-        <div style={{ height:'20px', width:'72px', borderRadius:'var(--radius-full)', background:'var(--bg-surface-4)' }} />
-        <div style={{ height:'16px', width:'40px', borderRadius:'var(--radius-full)', background:'var(--bg-surface-4)' }} />
+    <div className="waqt-ev" aria-hidden style={{ minHeight: '240px' }}>
+      {/* header */}
+      <div className="waqt-ev__header">
+        <div style={{ height: '22px', width: '70px', borderRadius: 'var(--radius-full)', background: 'var(--bg-surface-4)', animation: 'pulse 1.5s ease-in-out infinite' }} />
+        <div style={{ height: '20px', width: '22px', borderRadius: '4px', background: 'var(--bg-surface-3)', animation: 'pulse 1.5s ease-in-out infinite' }} />
       </div>
-      <div style={{ flex:1, display:'flex', flexDirection:'column', gap:'var(--space-2)' }}>
-        <div style={{ height:'18px', width:'75%', borderRadius:'var(--radius-sm)', background:'var(--bg-surface-4)' }} />
-        <div style={{ height:'13px', width:'100%', borderRadius:'var(--radius-sm)', background:'var(--bg-surface-3)' }} />
-        <div style={{ height:'13px', width:'60%', borderRadius:'var(--radius-sm)', background:'var(--bg-surface-3)' }} />
+      {/* hero */}
+      <div className="waqt-ev__hero">
+        <div style={{ height: '3.5rem', width: '5rem', borderRadius: 'var(--radius-md)', background: 'var(--bg-surface-4)', animation: 'pulse 1.5s ease-in-out infinite' }} />
+        <div style={{ height: '0.6rem', width: '2.5rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-surface-3)', animation: 'pulse 1.5s ease-in-out infinite', marginTop: '6px' }} />
+        <div style={{ height: '2px', width: '28px', borderRadius: 'var(--radius-full)', background: 'var(--bg-surface-4)', animation: 'pulse 1.5s ease-in-out infinite', marginTop: '12px' }} />
       </div>
-      <div className="flex items-end justify-between">
-        <div style={{ height:'36px', width:'56px', borderRadius:'var(--radius-md)', background:'var(--bg-surface-4)' }} />
-        <div style={{ display:'flex', flexDirection:'column', gap:'var(--space-1)', alignItems:'flex-end' }}>
-          <div style={{ height:'13px', width:'96px', borderRadius:'var(--radius-sm)', background:'var(--bg-surface-4)' }} />
-          <div style={{ height:'10px', width:'64px', borderRadius:'var(--radius-sm)', background:'var(--bg-surface-3)' }} />
-        </div>
+      {/* body */}
+      <div className="waqt-ev__body" style={{ gap: '8px' }}>
+        <div style={{ height: '1rem', width: '80%', borderRadius: 'var(--radius-sm)', background: 'var(--bg-surface-4)', animation: 'pulse 1.5s ease-in-out infinite' }} />
+        <div style={{ height: '0.72rem', width: '60%', borderRadius: 'var(--radius-sm)', background: 'var(--bg-surface-3)', animation: 'pulse 1.5s ease-in-out infinite' }} />
+      </div>
+      {/* footer */}
+      <div className="waqt-ev__footer">
+        <div style={{ height: '0.75rem', width: '7rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg-surface-4)', animation: 'pulse 1.5s ease-in-out infinite' }} />
       </div>
     </div>
   );
@@ -164,7 +162,7 @@ export function EventCardSkeleton() {
 
 export function EventGridSkeleton({ count = 6 }) {
   return (
-    <div className="grid-auto">
+    <div className="waqt-grid">
       {Array.from({ length: count }).map((_, i) => <EventCardSkeleton key={i} />)}
     </div>
   );

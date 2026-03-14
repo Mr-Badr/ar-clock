@@ -962,9 +962,10 @@
 }
 
 .card:hover {
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
+  box-shadow:
+    0 10px 28px -6px rgba(6, 8, 18, 0.45),
+    0 3px 10px  -2px rgba(6, 8, 18, 0.25);
+  transform: translateY(-5px);
 }
 
 /* L2 — inside L1 */

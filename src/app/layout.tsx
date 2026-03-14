@@ -1,4 +1,5 @@
 import './new.css';
+import './waqt-ui.css';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { Noto_Kufi_Arabic } from 'next/font/google';
