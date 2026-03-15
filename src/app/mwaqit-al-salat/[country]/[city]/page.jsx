@@ -147,6 +147,11 @@ const PRAYER_AR = {
   asr: 'العصر', maghrib: 'المغرب', isha: 'العشاء',
 };
 
+const PRAYER_ICON = {
+  fajr: '🌙', sunrise: '🌅', dhuhr: '☀️',
+  asr: '🌇', maghrib: '🌆', isha: '🌃',
+};
+
 // ─── Page shell (statically cached) ──────────────────────────────────────────
 export default async function PrayerTimesPage({ params }) {
   const { country: countrySlug, city: citySlug } = await params;
@@ -334,6 +339,8 @@ async function PrayerTimesContent({ country, city, cityData, countryCode }) {
                   }}
                 >
                   <div className="flex items-center gap-3">
+                    <span className="text-lg">{PRAYER_ICON[key] ?? '🕌'}</span>
+                    {isNext && <span className="badge badge-accent text-xs">القادمة</span>}
                     <span style={{
                       color:      isNext ? 'var(--accent)' : 'var(--text-primary)',
                       fontWeight: 'var(--font-bold)',
@@ -341,7 +348,6 @@ async function PrayerTimesContent({ country, city, cityData, countryCode }) {
                     }}>
                       {PRAYER_AR[key] ?? key}
                     </span>
-                      {isNext && <span className="badge badge-accent text-xs">القادمة</span>}
                   </div>
                   <time dateTime={isoStr} dir="ltr" className="tabular-nums font-mono font-bold text-xl" style={{
                     color: isNext ? 'var(--accent)' : 'var(--text-primary)',

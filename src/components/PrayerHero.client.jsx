@@ -269,39 +269,6 @@ function PrayerHeroClient({
         </div>
       </div>
 
-      {/* Timezone + method */}
-      {timezone && (
-        <p className="text-muted text-xs text-center leading-relaxed">
-          المنطقة الزمنية: <span className="text-secondary">{timezone}</span>
-          {' — '}
-          طريقة الحساب: <span className="text-secondary">{methodLabel}</span>
-        </p>
-      )}
-
-      {/* Controls */}
-      <div className="flex items-center gap-3 flex-wrap justify-center">
-        <button
-          type="button"
-          onClick={handleHour12}
-          className={`chip ${hour12 ? 'chip--active' : ''}`}
-          aria-pressed={hour12}
-        >
-          {hour12 ? '١٢ ساعة' : '٢٤ ساعة'}
-        </button>
-
-        <select
-          value={method}
-          onChange={handleMethod}
-          className="input text-sm py-2 px-3 pr-8 cursor-pointer min-h-[48px]"
-          style={{ minWidth: '160px' }}
-          aria-label="طريقة حساب أوقات الصلاة"
-        >
-          {METHODS.map(({ value, label }) => (
-            <option key={value} value={value}>{label}</option>
-          ))}
-        </select>
-      </div>
-
     </div>
   );
 }

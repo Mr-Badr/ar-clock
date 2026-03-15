@@ -118,7 +118,7 @@ export default async function CountryPrayerPage({ params }) {
 
   return (
     <div className="min-h-screen bg-base text-primary" dir="rtl" lang="ar">
-      <main className="mx-auto px-4 pt-24 pb-20 max-w-[640px]">
+      <main className="mx-auto px-4 pt-24 pb-20 max-w-[900px]">
 
         <CountryPrayerJsonLd country={country} countryAr={countryAr} countrySlug={countrySlug} />
 
@@ -136,7 +136,7 @@ export default async function CountryPrayerPage({ params }) {
           <h1 className="text-3xl md:text-5xl font-black mb-3">
             مواقيت الصلاة في <span className="text-accent">{countryAr}</span>
           </h1>
-          <p className="text-muted text-base mb-3">
+          <p className="text-muted text-base mb-3" style={{ margin: '10px auto' }}>
             اختر المدينة لعرض مواقيت الصلاة الدقيقة اليوم
           </p>
           {/* Method badge */}
