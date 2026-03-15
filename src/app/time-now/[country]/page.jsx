@@ -318,7 +318,6 @@ export default async function CountryTimePage({ params }) {
               <li>time in {countryEn}</li>
               <li>current time {countryEn}</li>
               <li>{cityEn} time now</li>
-              <li>what time is it in {countryEn}</li>
               <li>clock {countryEn}</li>
             </ul>
           </div>

@@ -93,7 +93,6 @@ export async function generateMetadata({ params }) {
       `time in ${city.name_en}`,
       `${city.name_en} time now`,
       `current time ${city.name_en}`,
-      `what time is it in ${city.name_en}`,
     ],
     metadataBase: new URL(BASE),
     alternates: {
@@ -385,7 +384,6 @@ export default async function CityTimePage({ params }) {
                 `الوقت الان في ${countryAr}`,
                 `توقيت ${countryAr}`,
                 `time in ${city.name_en}`,
-                `what time is it in ${city.name_en}`,
                 `${city.name_en} time now`,
                 `current time ${city.name_en}`,
                 `${city.name_en} timezone`,

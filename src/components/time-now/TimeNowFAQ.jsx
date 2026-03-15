@@ -32,10 +32,6 @@ function buildFAQItems({ countryAr, cityAr, utcOffset, timezone, cityNameEn, cou
       a: `${cityAr} تقع في المنطقة الزمنية ${utcOffset}، أي أنها تسبق / تتأخر عن توقيت غرينتش (UTC±0) بمقدار الإزاحة المذكورة.`,
     },
     {
-      q: `what time is it in ${cityNameEn || cityAr}?`,
-      a: `The current time in ${cityNameEn || cityAr}, ${countryNameEn || countryAr} is displayed at the top of this page, updated every second. ${cityNameEn || cityAr} follows the ${timezone} timezone (${utcOffset}).`,
-    },
-    {
       q: `كيف أعرف فرق التوقيت بين ${cityAr} ومدينة أخرى؟`,
       a: `يمكنك استخدام أداة "فرق التوقيت" في منصتنا لمقارنة وقت ${cityAr} مع أي مدينة في العالم بدقة.`,
     },
