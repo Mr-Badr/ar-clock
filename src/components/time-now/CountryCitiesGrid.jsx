@@ -3,27 +3,29 @@ import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { MapPin, Thermometer, CloudSun } from 'lucide-react';
 
-/* ─── WEATHER UTILS ─────────────────────────────────────────────── */
-const WEATHER_MAP = {
-  0: { label: 'صافي', icon: '☀️' },
-  1: { label: 'صافي غالباً', icon: '🌤️' },
-  2: { label: 'غائم جزئياً', icon: '⛅' },
-  3: { label: 'غائم', icon: '☁️' },
-  45: { label: 'ضباب', icon: '🌫️' },
-  48: { label: 'ضباب جليدي', icon: '🌫️' },
-  51: { label: 'رذاذ خفيف', icon: '🌦️' },
-  53: { label: 'رذاذ متوسط', icon: '🌦️' },
-  55: { label: 'رذاذ كثيف', icon: '🌦️' },
-  61: { label: 'مطر خفيف', icon: '🌧️' },
-  63: { label: 'مطر متوسط', icon: '🌧️' },
-  65: { label: 'مطر غزير', icon: '🌧️' },
-  71: { label: 'ثلوج خفيفة', icon: '❄️' },
-  73: { label: 'ثلوج متوسطة', icon: '❄️' },
-  75: { label: 'ثلوج كثيفة', icon: '❄️' },
-  80: { label: 'زخات خفيفة', icon: '🌦️' },
-  81: { label: 'زخات متوسطة', icon: '🌦️' },
-  82: { label: 'زخات عنيفة', icon: '🌧️' },
-  95: { label: 'عواصف رعدية', icon: '⚡' },
+const getWeatherInfo = (wCode, isDay = 1) => {
+  const map = {
+    0: { label: 'صافي', icon: isDay ? '☀️' : '🌙' },
+    1: { label: 'صافي غالباً', icon: isDay ? '🌤️' : '🌑' },
+    2: { label: 'غائم جزئياً', icon: isDay ? '⛅' : '☁️' },
+    3: { label: 'غائم', icon: '☁️' },
+    45: { label: 'ضباب', icon: '🌫️' },
+    48: { label: 'ضباب جليدي', icon: '🌫️' },
+    51: { label: 'رذاذ خفيف', icon: '🌦️' },
+    53: { label: 'رذاذ متوسط', icon: '🌦️' },
+    55: { label: 'رذاذ كثيف', icon: '🌦️' },
+    61: { label: 'مطر خفيف', icon: '🌧️' },
+    63: { label: 'مطر متوسط', icon: '🌧️' },
+    65: { label: 'مطر غزير', icon: '🌧️' },
+    71: { label: 'ثلوج خفيفة', icon: '❄️' },
+    73: { label: 'ثلوج متوسطة', icon: '❄️' },
+    75: { label: 'ثلوج كثيفة', icon: '❄️' },
+    80: { label: 'زخات خفيفة', icon: '🌦️' },
+    81: { label: 'زخات متوسطة', icon: '🌦️' },
+    82: { label: 'زخات عنيفة', icon: '🌧️' },
+    95: { label: 'عواصف رعدية', icon: '⚡' },
+  };
+  return map[wCode] || { label: 'غير معروف', icon: '🌡️' };
 };
 
 function pad2(n) { return String(Math.max(0, n)).padStart(2, '0'); }
@@ -49,7 +51,8 @@ function CityCard({ city, time, weather, countrySlug, isActive }) {
 
   const temp = weather?.temperature_2m;
   const wCode = weather?.weather_code ?? 0;
-  const wInfo = WEATHER_MAP[wCode] || { label: 'غير معروف', icon: '🌡️' };
+  const isDay = weather?.is_day ?? 1;
+  const wInfo = getWeatherInfo(wCode, isDay);
 
   return (
     <Link
@@ -181,45 +184,59 @@ export default function CountryCitiesGrid({ cities = [], countrySlug, activeCity
       if (validCities.length === 0) return;
 
       /* ── Cache check ── */
-      const CACHE_KEY = `weather_${countrySlug}`;
       const CACHE_TTL = 10 * 60 * 1000; // 10 minutes
-      try {
-        const cached = typeof sessionStorage !== 'undefined'
-          ? sessionStorage.getItem(CACHE_KEY)
-          : null;
-        if (cached) {
-          const { ts, data } = JSON.parse(cached);
-          if (Date.now() - ts < CACHE_TTL) {
-            if (isMounted) setWeather(data);
-            return; // Serve from cache — no network request
-          }
-        }
-      } catch { /* ignore corrupt cache */ }
+      const now = Date.now();
+      const mapping = {};
+      const citiesToFetch = [];
 
-      /* ── Fetch from Open-Meteo ── */
+      for (const c of validCities) {
+        const key = c.city_slug ?? c.slug;
+        const cacheKey = `meteo_${key}`;
+        let found = false;
+        try {
+          if (typeof sessionStorage !== 'undefined') {
+            const cached = sessionStorage.getItem(cacheKey);
+            if (cached) {
+              const { ts, data } = JSON.parse(cached);
+              if (now - ts < CACHE_TTL) {
+                mapping[key] = data;
+                found = true;
+              }
+            }
+          }
+        } catch { /* ignore */ }
+        
+        if (!found) {
+          citiesToFetch.push(c);
+        }
+      }
+
+      if (citiesToFetch.length === 0) {
+        if (isMounted) setWeather(mapping);
+        return;
+      }
+
+      /* ── Fetch missing from Open-Meteo ── */
       try {
-        const lats = validCities.map(c => c.lat).join(',');
-        const lons = validCities.map(c => c.lon).join(',');
+        const lats = citiesToFetch.map(c => c.lat).join(',');
+        const lons = citiesToFetch.map(c => c.lon).join(',');
         const url = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&current=temperature_2m,weather_code,is_day`;
         const res = await fetch(url);
         if (!res.ok) return;
         const responseData = await res.json();
 
         const results = Array.isArray(responseData) ? responseData : [responseData];
-        const mapping = {};
-        validCities.forEach((c, i) => {
+        citiesToFetch.forEach((c, i) => {
           const key = c.city_slug ?? c.slug;
           if (results[i]?.current) {
             mapping[key] = results[i].current;
+            try {
+              if (typeof sessionStorage !== 'undefined') {
+                sessionStorage.setItem(`meteo_${key}`, JSON.stringify({ ts: now, data: results[i].current }));
+              }
+            } catch { /* ignore */ }
           }
         });
-
-        /* ── Persist to cache ── */
-        try {
-          if (typeof sessionStorage !== 'undefined') {
-            sessionStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: mapping }));
-          }
-        } catch { /* storage quota, ignore */ }
 
         if (isMounted) setWeather(mapping);
       } catch (err) {

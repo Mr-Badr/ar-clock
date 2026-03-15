@@ -80,7 +80,8 @@ export function TimeNowFAQ({ countryAr, cityAr, utcOffset, timezone, cityNameEn,
             }}
           >
             <summary style={SUMMARY_STYLE}>
-              <span>{item.q}</span>
+              <span style={{ fontSize:'var(--text-sm)', fontWeight:'700', color:'var(--text-primary)' }}
+              className="mt-1 mb-1">{item.q}</span>
               <span aria-hidden style={{ fontSize:'0.7rem', color:'var(--accent-alt)', flexShrink:0, transition:'transform 0.2s' }}>▼</span>
             </summary>
             <p style={{

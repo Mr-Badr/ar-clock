@@ -302,7 +302,7 @@ export default async function CityTimePage({ params }) {
               <div style={{ height: '160px', borderRadius: '1rem', background: 'var(--bg-surface-2)' }} aria-hidden />
             }>
               <CountryCitiesGrid
-                cities={siblingCities.filter(c => c.slug !== citySlug)}
+                cities={siblingCities.filter(c => c.city_slug !== citySlug)}
                 countrySlug={countrySlug}
                 activeCitySlug={citySlug}
               />
@@ -331,13 +331,6 @@ export default async function CityTimePage({ params }) {
             />
           </section>
         )}
-
-        {/* ══ FAQ ══════════════════════════════════════════════════ */}
-        <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
-          <div className="w-full max-w-xl mx-auto rounded-xl">
-            <SearchCity mode="time-now" preloadedCountries={allCountries} />
-          </div>
-        </section>
 
         {/* ══ RELATED SEARCHES ═════════════════════════════════════ */}
         <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
