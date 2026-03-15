@@ -27,7 +27,8 @@ const PRAYER_ICONS = {
 const PAGE_SIZE = 12;
 
 // Hydration-safe: render nothing on SSR to avoid class mismatches.
-export default function CityPrayerCardsGrid({ cities, countrySlug }) {
+export default function CityPrayerCardsGrid({ cities, countrySlug, countryCode }) {
+
   const [now, setNow] = useState(null);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
@@ -64,8 +65,9 @@ export default function CityPrayerCardsGrid({ cities, countrySlug }) {
           }
         `}</style>
         {visibleCities.map((city) => (
-          <CityCard key={city.city_slug} city={city} countrySlug={countrySlug} now={now} />
+          <CityCard key={city.city_slug} city={city} countrySlug={countrySlug} countryCode={countryCode} now={now} />
         ))}
+
       </div>
 
       {/* Footer: count + Load More */}
@@ -97,14 +99,16 @@ export default function CityPrayerCardsGrid({ cities, countrySlug }) {
 }
 
 // ── Individual City Card ──────────────────────────────────────────────────────
-function CityCard({ city, countrySlug, now }) {
+function CityCard({ city, countrySlug, countryCode, now }) {
   const times = calculatePrayerTimes({
     lat: city.lat,
     lon: city.lon,
     timezone: city.timezone,
     date: now,
+    countryCode: countryCode,
     cacheKey: `${countrySlug}::${city.city_slug}`,
   });
+
 
   if (!times) {
     // Minimal fallback — city has no coordinates

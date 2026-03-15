@@ -1,22 +1,6 @@
 'use client';
 /**
  * app/holidays/HolidaysClient.jsx
- * UI redesigned with Lovable's unified waqt-panel approach.
- *
- * Keeps (from old code):
- *  - loadMoreEvents server action + useTransition
- *  - applyFilter resets cursor to 0 on filter change
- *  - handleLoadMore appends to existing events
- *  - COUNTRIES.map (all countries, no Sheet component)
- *  - aria-live results counter, loading skeleton rows on load-more
- *
- * New (from Lovable):
- *  - Unified waqt-panel filter card
- *  - CategoryScroll-style grid with Lucide icons (inlined)
- *  - Sort mode (client-side re-order of loaded events)
- *  - Time-range filter (passed to server action as extra param)
- *  - Active filter tags with per-tag dismiss + "clear all"
- *  - waqt-empty state, waqt-btn load-more button
  */
 import { useState, useTransition, useCallback, useDeferredValue } from 'react';
 import {

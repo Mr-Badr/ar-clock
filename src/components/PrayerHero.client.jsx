@@ -15,6 +15,8 @@
  */
 
 import { useState, useEffect, useRef, useCallback, memo } from 'react';
+import { ALL_METHODS, getMethodByCountry } from '@/lib/prayer-methods';
+
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -27,15 +29,8 @@ const PRAYER_AR = {
   isha:    'العشاء',
 };
 
-const METHODS = [
-  { value: 'MuslimWorldLeague', label: 'رابطة العالم الإسلامي' },
-  { value: 'Egyptian',          label: 'الهيئة المصرية' },
-  { value: 'UmmAlQura',         label: 'أم القرى' },
-  { value: 'Kuwait',            label: 'الكويت' },
-  { value: 'Qatar',             label: 'قطر' },
-  { value: 'Turkey',            label: 'تركيا' },
-  { value: 'NorthAmerica',      label: 'أمريكا الشمالية' },
-];
+const METHODS = ALL_METHODS;
+
 
 const RING_SIZE          = 240;
 const RING_R             = 108;
@@ -43,7 +38,7 @@ const RING_CIRCUMFERENCE = 2 * Math.PI * RING_R;
 const FALLBACK_METHOD    = 'MuslimWorldLeague';
 
 // Static SSR-safe defaults — time-independent, identical on server and client
-const STATIC_TIME_LEFT  = '...';
+const STATIC_TIME_LEFT  = '--:--';
 const STATIC_PROGRESS   = 0;
 const STATIC_DASHOFFSET = RING_CIRCUMFERENCE; // arc invisible on SSR
 
@@ -88,7 +83,9 @@ function PrayerHeroClient({
   prevPrayerIso,
   timezone,
   method: defaultMethod,
+  countryCode,
 }) {
+
   // All initial values are static constants — identical on server and client.
   // `mounted` flips to true only inside useEffect (client-only).
   // This guarantees SSR HTML === first client render → zero hydration mismatch.
@@ -96,7 +93,8 @@ function PrayerHeroClient({
   const [timeLeft, setTimeLeft] = useState(STATIC_TIME_LEFT);
   const [progress, setProgress] = useState(STATIC_PROGRESS);
   const [hour12,   setHour12]   = useState(false);
-  const [method,   setMethod]   = useState(defaultMethod || FALLBACK_METHOD);
+  const [method,   setMethod]   = useState(defaultMethod || 'MuslimWorldLeague');
+
 
   // Props mirrored into refs — interval/RAF read these, never stale closures
   const nextIsoRef     = useRef(nextPrayerIso);
@@ -121,13 +119,20 @@ function PrayerHeroClient({
 
   // ── Effect 1: Mount — runs exactly once ──────────────────────────────────
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 50);
     // Restore user preferences
     try {
       const h = localStorage.getItem('pref_hour12') === '1';
-      const m = localStorage.getItem('pref_method') || defaultMethod || FALLBACK_METHOD;
+      let m = localStorage.getItem('pref_method');
+      if (!m) {
+        m = defaultMethod || getMethodByCountry(countryCode).name;
+      }
       setHour12(h);
       setMethod(m);
     } catch (_) {}
+
 
     // Seed the ref with real values before RAF starts
     timerValuesRef.current = computeTickValues(nextIsoRef.current, prevIsoRef.current);
@@ -143,7 +148,7 @@ function PrayerHeroClient({
     }, 1000);
 
     // Reveal real values — triggers one re-render with actual countdown
-    setMounted(true);
+    setMounted(prev => prev ? prev : true);
 
     return () => {
       clearInterval(intervalRef.current);

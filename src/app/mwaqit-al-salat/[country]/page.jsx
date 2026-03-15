@@ -1,23 +1,25 @@
 /**
  * app/mwaqit-al-salat/[country]/page.jsx
- * 
+ *
  * Country-level prayer times page.
- * Displays a list of cities in the country and redirects to the capital by default.
+ * Shows capital city prayers + grid of all cities.
  */
 
 import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
 import { Suspense } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, MapPin } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import { getCountryBySlug, getAllCountrySlugs } from '@/lib/db/queries/countries';
 import { getCitiesByCountry, getCapitalCity } from '@/lib/db/queries/cities';
 import { getCountriesAction } from '@/app/actions/location';
 import { calculatePrayerTimes, getNextPrayer, formatTime } from '@/lib/prayerEngine';
+import { getMethodByCountry } from '@/lib/prayer-methods';
 import PrayerHeroClient from '@/components/PrayerHero.client';
 import SearchCity from '@/components/SearchCityWrapper.client';
 import CityPrayerCardsGrid from '@/components/mwaqit/CityPrayerCardsGrid.client';
 import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar.client';
+import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 
 export async function generateStaticParams() {
   const slugs = await getAllCountrySlugs();
@@ -29,16 +31,76 @@ export async function generateMetadata({ params }) {
   const country = await getCountryBySlug(countrySlug);
   if (!country) return { title: 'مواقيت الصلاة' };
 
-  const countryAr = country.name_ar || country.name_en;
+  const countryAr  = country.name_ar || country.name_en;
+  const methodInfo = getMethodByCountry(country.country_code);
+  const canonical  = `${process.env.NEXT_PUBLIC_SITE_URL}/mwaqit-al-salat/${countrySlug}`;
+
+  // Fetch capital to include in title — key for SEO: "مواقيت الصلاة في السعودية، الرياض"
+  const capital = await getCapitalCity(country.country_code);
+  const capitalAr = capital ? (capital.name_ar || capital.name_en) : null;
+
+  // Title format: "مواقيت الصلاة في {البلد}، {العاصمة}"
+  const titleSuffix = capitalAr ? `، ${capitalAr}` : '';
+  const title = `مواقيت الصلاة في ${countryAr}${titleSuffix} اليوم — الفجر والمغرب والعصر`;
+  const description = capitalAr
+    ? `أوقات الصلاة الدقيقة في ${countryAr} — الفجر، الظهر، العصر، المغرب والعشاء في ${capitalAr} وكافة المدن. طريقة الحساب: ${methodInfo.label}. الشافعي والحنفي.`
+    : `أوقات الصلاة الدقيقة لكافة مدن ${countryAr} اليوم. طريقة الحساب: ${methodInfo.label}. الشافعي والحنفي.`;
 
   return {
-    title: `مواقيت الصلاة في ${countryAr} — مواعيد الأذان اليوم`,
-    description: `تعرف على مواقيت الصلاة في كافة مدن ${countryAr} اليوم. الفجر، الظهر، العصر، المغرب والعشاء بدقة عالية.`,
-    alternates: {
-      canonical: `/mwaqit-al-salat/${countrySlug}`,
-    }
+    title,
+    description,
+    keywords: [
+      `مواقيت الصلاة ${countryAr}`,
+      capitalAr ? `مواقيت الصلاة ${capitalAr}` : '',
+      `أوقات الصلاة ${countryAr} اليوم`,
+      `وقت الفجر ${countryAr}`,
+      `وقت المغرب ${countryAr}`,
+      capitalAr ? `وقت الفجر ${capitalAr}` : '',
+      `أذان ${countryAr} اليوم`,
+      `مواقيت الأذان ${countryAr}`,
+      `prayer times ${country.name_en}`,
+    ].filter(Boolean).join(', '),
+    alternates: { canonical },
+    openGraph: {
+      title,
+      description,
+      type:   'website',
+      locale: 'ar_SA',
+      url:    canonical,
+    },
   };
 }
+
+
+// ─── JSON-LD ──────────────────────────────────────────────────────────────────
+function CountryPrayerJsonLd({ country, countryAr, countrySlug }) {
+  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/mwaqit-al-salat/${countrySlug}`;
+  const schema = {
+    '@context':   'https://schema.org',
+    '@type':      'WebPage',
+    name:         `مواقيت الصلاة في ${countryAr}`,
+    url,
+    inLanguage:   'ar',
+    description:  `أوقات الصلاة الدقيقة لجميع مدن ${countryAr} — الفجر والظهر والعصر والمغرب والعشاء`,
+    about: {
+      '@type':       'Country',
+      name:          countryAr,
+      alternateName: country.name_en,
+    },
+  };
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
+}
+
+// ─── Prayer labels ────────────────────────────────────────────────────────────
+const PRAYER_AR = {
+  fajr: 'الفجر', sunrise: 'الشروق', dhuhr: 'الظهر',
+  asr: 'العصر', maghrib: 'المغرب', isha: 'العشاء',
+};
+
+const PRAYER_ICON = {
+  fajr: '🌙', sunrise: '🌅', dhuhr: '☀️',
+  asr: '🌇', maghrib: '🌆', isha: '🌃',
+};
 
 export default async function CountryPrayerPage({ params }) {
   const { country: countrySlug } = await params;
@@ -51,13 +113,17 @@ export default async function CountryPrayerPage({ params }) {
     getCountriesAction(),
   ]);
 
-  const countryAr = country.name_ar || country.name_en;
+  const countryAr  = country.name_ar || country.name_en;
+  const methodInfo = getMethodByCountry(country.country_code);
 
   return (
     <div className="min-h-screen bg-base text-primary" dir="rtl" lang="ar">
-      <main className="mx-auto px-4 pt-24 pb-20 max-w-[600px]">
+      <main className="mx-auto px-4 pt-24 pb-20 max-w-[640px]">
 
-        <nav aria-label="مسار التنقل" className="text-xs text-muted mb-8 flex items-center gap-1">
+        <CountryPrayerJsonLd country={country} countryAr={countryAr} countrySlug={countrySlug} />
+
+        {/* Breadcrumb */}
+        <nav aria-label="مسار التنقل" className="text-xs text-muted mb-8 flex items-center gap-1.5">
           <Link href="/" className="hover:text-accent transition-colors">الرئيسية</Link>
           <span aria-hidden="true">›</span>
           <Link href="/mwaqit-al-salat" className="hover:text-accent transition-colors">مواقيت الصلاة</Link>
@@ -65,26 +131,35 @@ export default async function CountryPrayerPage({ params }) {
           <span className="text-secondary">{countryAr}</span>
         </nav>
 
-        <header className="mb-12 text-center">
-          <h1 className="text-3xl md:text-5xl font-black mb-4">
+        {/* Header */}
+        <header className="mb-10 text-center">
+          <h1 className="text-3xl md:text-5xl font-black mb-3">
             مواقيت الصلاة في <span className="text-accent">{countryAr}</span>
           </h1>
-          <p className="text-muted text-lg">
+          <p className="text-muted text-base mb-3">
             اختر المدينة لعرض مواقيت الصلاة الدقيقة اليوم
           </p>
+          {/* Method badge */}
+          <span className="inline-flex items-center gap-1.5 text-xs bg-surface-2 border border-subtle px-3 py-1.5 rounded-full text-muted">
+            <span>🕌</span>
+            طريقة الحساب المعتمدة: <strong className="text-accent-alt">{methodInfo.label}</strong>
+          </span>
         </header>
 
+        {/* Search */}
         <div className="mb-12">
           <SearchCity mode="mwaqit-al-salat" preloadedCountries={allCountries} />
         </div>
 
+        {/* Capital city section */}
         {capital && (
           <section className="mb-12">
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-              <MapPin size={24} className="text-accent" />
-              أوقات الصلاة في العاصمة ({capital.name_ar})
+              <MapPin size={22} className="text-accent" />
+              أوقات الصلاة في العاصمة — <span className="text-accent">{capital.name_ar}</span>
             </h2>
 
+            <ErrorBoundary>
             <Suspense
               fallback={
                 <div className="space-y-4">
@@ -93,14 +168,25 @@ export default async function CountryPrayerPage({ params }) {
                 </div>
               }
             >
-              <PrayerTimesContent country={countrySlug} city={capital.city_slug} cityData={capital} />
+              <PrayerTimesContent
+                country={countrySlug}
+                city={capital.city_slug}
+                cityData={capital}
+                countryCode={country.country_code}
+              />
             </Suspense>
+            </ErrorBoundary>
           </section>
         )}
 
+        {/* All cities grid */}
         <section>
           <h2 className="text-xl font-bold mb-6">كافة المدن في {countryAr}</h2>
-          <CityPrayerCardsGrid cities={cities} countrySlug={countrySlug} />
+          <CityPrayerCardsGrid
+            cities={cities}
+            countrySlug={countrySlug}
+            countryCode={country.country_code}
+          />
         </section>
 
       </main>
@@ -108,45 +194,26 @@ export default async function CountryPrayerPage({ params }) {
   );
 }
 
-// ─── Dynamic content (opts into per-request rendering via headers()) ──────────
-const PRAYER_AR = {
-  fajr: 'الفجر',
-  sunrise: 'الشروق',
-  dhuhr: 'الظهر',
-  asr: 'العصر',
-  maghrib: 'المغرب',
-  isha: 'العشاء',
-};
+// ─── Dynamic content ──────────────────────────────────────────────────────────
+async function PrayerTimesContent({ country, city, cityData, countryCode }) {
+  await headers();
 
-async function PrayerTimesContent({ country, city, cityData }) {
-  await headers(); // opts this sub-tree into dynamic rendering only
-
-  const now = new Date();
+  const now        = new Date();
+  const methodInfo = getMethodByCountry(countryCode);
 
   const times = calculatePrayerTimes({
-    lat: cityData.lat,
-    lon: cityData.lon,
-    timezone: cityData.timezone,
-    date: now,
-    cacheKey: `${country}::${city}`,
+    lat: cityData.lat, lon: cityData.lon,
+    timezone: cityData.timezone, date: now,
+    countryCode, cacheKey: `country::${country}::${city}`,
   });
 
   if (!times) {
-    return (
-      <p className="text-danger text-center py-12">
-        عذراً، تعذّر حساب أوقات الصلاة للعاصمة.
-      </p>
-    );
+    return <p className="text-danger text-center py-12">عذراً، تعذّر حساب أوقات الصلاة للعاصمة.</p>;
   }
 
   const { nextKey, nextIso, prevIso } = getNextPrayer(times, now.toISOString());
-  const fajrStr = formatTime(times.fajr, cityData.timezone);
-  const maghribStr = formatTime(times.maghrib, cityData.timezone);
   const todayLabel = now.toLocaleDateString('ar-EG', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
   });
 
   return (
@@ -158,76 +225,70 @@ async function PrayerTimesContent({ country, city, cityData }) {
           nextPrayerIso={nextIso}
           prevPrayerIso={prevIso}
           timezone={cityData.timezone}
+          method={methodInfo.name}
+          countryCode={countryCode}
         />
       </section>
 
       {/* Prayer times list */}
       <section className="card mb-6" aria-label={`مواقيت الصلاة اليوم في ${cityData.name_ar}`}>
-        <div className="card__header flex flex-wrap justify-between items-center gap-4">
-          <h3 className="card__title m-0 text-xl font-bold">مواقيت الصلاة اليوم</h3>
+        <div className="card__header flex flex-wrap justify-between items-start gap-3">
+          <div>
+            <h3 className="card__title m-0 text-xl font-bold">مواقيت الصلاة اليوم</h3>
+            <p className="text-[11px] text-muted mt-0.5">
+              طريقة الحساب: <span className="text-accent-alt font-semibold">{methodInfo.label}</span>
+            </p>
+          </div>
           <span className="badge badge-accent">{todayLabel}</span>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-          {Object.entries(times).map(([key, isoStr]) => {
-            const isNext = key === nextKey;
+        <div className="flex flex-col" style={{ gap: '2px' }}>
+          {['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'].map((key) => {
+            const isoStr = times[key];
+            if (!isoStr) return null;
+            
+            const isNext  = key === nextKey;
             const timeStr = formatTime(isoStr, cityData.timezone, false);
+            
             return (
-              <div
-                key={key}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: 'var(--space-4) var(--space-2)',
-                  borderRadius: 'var(--radius-md)',
-                  background: isNext ? 'var(--accent-soft)' : 'transparent',
-                  borderRight: isNext ? '3px solid var(--accent)' : '3px solid transparent',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
-                  {isNext && <span className="badge badge-accent">القادمة</span>}
-                  <span style={{
-                    color: isNext ? 'var(--accent)' : 'var(--text-primary)',
-                    fontWeight: 'var(--font-bold)',
-                    fontSize: 'var(--text-lg)',
-                  }}>
-                    {PRAYER_AR[key] ?? key}
-                  </span>
-                </div>
-                <time
-                  dateTime={isoStr}
-                  dir="ltr"
+                <div
+                  key={key}
+                  className="flex items-center justify-between rounded-lg"
                   style={{
-                    color: isNext ? 'var(--accent)' : 'var(--text-primary)',
-                    fontFamily: 'monospace',
-                    fontWeight: 'var(--font-bold)',
-                    fontSize: 'var(--text-xl)',
+                    padding: 'var(--space-3) var(--space-2)',
+                    background:  isNext ? 'var(--accent-soft)' : 'transparent',
                   }}
                 >
-                  {timeStr}
-                </time>
-              </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-lg">{PRAYER_ICON[key] ?? '🕌'}</span>
+                    {isNext && <span className="badge badge-accent text-xs">القادمة</span>}
+                    <span style={{
+                      color:      isNext ? 'var(--accent)' : 'var(--text-primary)',
+                      fontWeight: 'var(--font-bold)',
+                      fontSize:   'var(--text-base)',
+                    }}>
+                      {PRAYER_AR[key] ?? key}
+                    </span>
+                  </div>
+                  <time dateTime={isoStr} dir="ltr" className="tabular-nums font-mono font-bold text-xl" style={{
+                    color: isNext ? 'var(--accent)' : 'var(--text-primary)',
+                  }}>
+                    {timeStr}
+                  </time>
+                </div>
             );
           })}
         </div>
       </section>
 
-      {/* Coordinates note */}
-      <section className="card-nested mb-6 text-sm text-secondary">
-        <p>
-          تُعرض مواقيت الصلاة بناءً على الإحداثيات ({cityData.lat?.toFixed(4)}°،{' '}
-          {cityData.lon?.toFixed(4)}°) والمنطقة الزمنية {cityData.timezone}.
-        </p>
-      </section>
-
-      {/* Monthly Prayer Calendar */}
+      {/* Monthly calendar */}
       <section className="mb-6">
         <MonthlyPrayerCalendar
           lat={cityData.lat}
           lon={cityData.lon}
           timezone={cityData.timezone}
           cityNameAr={cityData.name_ar || cityData.name_en}
+          countryCode={countryCode}
         />
       </section>
     </>
