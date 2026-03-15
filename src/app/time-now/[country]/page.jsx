@@ -73,7 +73,7 @@ function getUtcOffsetStr(timezone) {
 export async function generateMetadata({ params }) {
   const { country: countrySlug } = await params;
   const country = await getCountryBySlug(countrySlug);
-  if (!country) return { title: 'الوقت الآن' };
+  if (!country) return { title: 'الوقت الان' };
 
   const capital = await getCapitalCity(country.country_code);
 
@@ -83,14 +83,14 @@ export async function generateMetadata({ params }) {
   const offset = getUtcOffsetStr(timezone);
 
   return {
-    title: `الوقت الآن في ${countryAr} — الساعة والتاريخ في ${cityAr} | ساعة عربية`,
-    description: `اعرف الوقت الآن في ${countryAr} بدقة حتى الثانية. الساعة الحالية في ${cityAr} مع التاريخ اليوم الميلادي والهجري، المنطقة الزمنية ${offset}.`,
+    title: `الوقت الان في ${countryAr} — الساعة والتاريخ في ${cityAr} | ساعة عربية`,
+    description: `اعرف الوقت الان في ${countryAr} بدقة حتى الثانية. الساعة الحالية في ${cityAr} مع التاريخ اليوم الميلادي والهجري، المنطقة الزمنية ${offset}.`,
     keywords: [
-      `الوقت الآن في ${countryAr}`,
-      `الساعة الآن في ${countryAr}`,
+      `الوقت الان في ${countryAr}`,
+      `الساعة الان في ${countryAr}`,
       `كم الساعة في ${countryAr}`,
       `الوقت الحالي في ${countryAr}`,
-      `الوقت الآن في ${cityAr}`,
+      `الوقت الان في ${cityAr}`,
       `الساعة في ${cityAr}`,
       `توقيت ${countryAr}`,
       `المنطقة الزمنية ${countryAr}`,
@@ -109,13 +109,13 @@ export async function generateMetadata({ params }) {
       locale: 'ar_SA',
       url: `${BASE}/time-now/${countrySlug}`,
       siteName: 'ساعة عربية',
-      title: `الوقت الآن في ${countryAr} — ${cityAr} | ساعة عربية`,
+      title: `الوقت الان في ${countryAr} — ${cityAr} | ساعة عربية`,
       description: `الساعة الحالية في ${countryAr} مع التاريخ الميلادي والهجري. ${offset}.`,
       images: [{ url: '/og-image.png', width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `الوقت الآن في ${countryAr}`,
+      title: `الوقت الان في ${countryAr}`,
     },
   };
 }
@@ -150,7 +150,7 @@ export default async function CountryTimePage({ params }) {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${BASE}/` },
-      { '@type': 'ListItem', position: 2, name: 'الوقت الآن', item: `${BASE}/time-now` },
+      { '@type': 'ListItem', position: 2, name: 'الوقت الان', item: `${BASE}/time-now` },
       { '@type': 'ListItem', position: 3, name: `الوقت في ${countryAr}`, item: `${BASE}/time-now/${countrySlug}` },
     ],
   };
@@ -161,7 +161,7 @@ export default async function CountryTimePage({ params }) {
     mainEntity: [
       {
         '@type': 'Question',
-        name: `ما هو الوقت الآن في ${countryAr}؟`,
+        name: `ما هو الوقت الان في ${countryAr}؟`,
         acceptedAnswer: {
           '@type': 'Answer',
           text: `الوقت الحالي في ${countryAr} يُعرض في هذه الصفحة بدقة حتى الثانية. ${countryAr} تتبع المنطقة الزمنية ${timezone} وهي ${utcOffset}.`,
@@ -177,7 +177,7 @@ export default async function CountryTimePage({ params }) {
       },
       {
         '@type': 'Question',
-        name: `كم الساعة الآن في ${cityAr}؟`,
+        name: `كم الساعة الان في ${cityAr}؟`,
         acceptedAnswer: {
           '@type': 'Answer',
           text: `الساعة الحالية في ${cityAr} تُعرض في أعلى هذه الصفحة بدقة حتى الثانية، مزامَنةً تلقائياً مع ${timezone}.`,
@@ -202,7 +202,7 @@ export default async function CountryTimePage({ params }) {
           <ol style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', flexWrap: 'wrap', margin: 0, padding: 0, listStyle: 'none', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
             <li><Link href="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }} className="hover:text-accent transition-colors">الرئيسية</Link></li>
             <li aria-hidden><ChevronLeft size={13} style={{ rotate: '180deg' }} /></li>
-            <li><Link href="/time-now" style={{ color: 'var(--text-muted)', textDecoration: 'none' }} className="hover:text-accent transition-colors">الوقت الآن</Link></li>
+            <li><Link href="/time-now" style={{ color: 'var(--text-muted)', textDecoration: 'none' }} className="hover:text-accent transition-colors">الوقت الان</Link></li>
             <li aria-hidden><ChevronLeft size={13} style={{ rotate: '180deg' }} /></li>
             <li aria-current="page" style={{ color: 'var(--text-primary)', fontWeight: '600' }}>{countryAr}</li>
           </ol>
@@ -211,7 +211,7 @@ export default async function CountryTimePage({ params }) {
         {/* ── HERO SECTION ── */}
         <section aria-labelledby="country-time-heading" className="container mx-auto px-4 py-8">
           <h1 id="country-time-heading" className="text-3xl md:text-5xl font-black mb-6 leading-tight text-center">
-            الوقت الآن في <span className="text-accent">{countryAr}</span>
+            الوقت الان في <span className="text-accent">{countryAr}</span>
           </h1>
 
           {/* Geo-detection banner */}
@@ -241,7 +241,7 @@ export default async function CountryTimePage({ params }) {
         {cities.length > 1 && (
           <section aria-labelledby="cities-grid-heading" className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
             <h2 id="cities-grid-heading" className="text-2xl font-bold mb-6">
-              🏙️ الوقت الآن في مدن {countryAr}
+              🏙️ الوقت الان في مدن {countryAr}
             </h2>
             <Suspense fallback={<div style={{ height: '160px', borderRadius: '1rem', background: 'var(--bg-surface-2)' }} aria-hidden />}>
               <CountryCitiesGrid cities={cities} countrySlug={countrySlug} />
@@ -307,13 +307,13 @@ export default async function CountryTimePage({ params }) {
             </p>
             {/* Hidden keyword list for crawlers */}
             <ul aria-hidden="true" style={{ display: 'none' }}>
-              <li>الوقت الآن في {countryAr}</li>
-              <li>الساعة الآن في {countryAr}</li>
+              <li>الوقت الان في {countryAr}</li>
+              <li>الساعة الان في {countryAr}</li>
               <li>كم الساعة في {countryAr}</li>
               <li>الوقت الحالي في {countryAr}</li>
-              <li>الوقت الآن في {cityAr}</li>
+              <li>الوقت الان في {cityAr}</li>
               <li>الساعة في {cityAr}</li>
-              <li>توقيت {countryAr} الآن</li>
+              <li>توقيت {countryAr} الان</li>
               <li>المنطقة الزمنية في {countryAr}</li>
               <li>time in {countryEn}</li>
               <li>current time {countryEn}</li>

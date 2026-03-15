@@ -54,7 +54,7 @@ function CityCard({ city, time, weather, countrySlug, isActive }) {
   return (
     <Link
       href={`/time-now/${countrySlug}/${slug}`}
-      title={`حالة الطقس والوقت الآن في ${cityAr}`}
+      title={`حالة الطقس والوقت الان في ${cityAr}`}
       aria-label={`الطقس والوقت في ${cityAr}`}
       style={{ textDecoration: 'none' }}
     >

@@ -60,7 +60,7 @@ function computeTickValues(nextIso, prevIso) {
   const diff     = targetTs - nowTs;
 
   if (!Number.isFinite(diff) || diff <= 0) {
-    return { timeLeft: 'الآن', progress: 1 };
+    return { timeLeft: 'الان', progress: 1 };
   }
 
   const h = Math.floor(diff / 3_600_000);
@@ -139,7 +139,7 @@ function PrayerHeroClient({
     intervalRef.current = setInterval(() => {
       const result = computeTickValues(nextIsoRef.current, prevIsoRef.current);
       timerValuesRef.current = result;
-      if (result.timeLeft === 'الآن') clearInterval(intervalRef.current);
+      if (result.timeLeft === 'الان') clearInterval(intervalRef.current);
     }, 1000);
 
     // Reveal real values — triggers one re-render with actual countdown
@@ -169,7 +169,7 @@ function PrayerHeroClient({
     intervalRef.current = setInterval(() => {
       const result = computeTickValues(nextIsoRef.current, prevIsoRef.current);
       timerValuesRef.current = result;
-      if (result.timeLeft === 'الآن') clearInterval(intervalRef.current);
+      if (result.timeLeft === 'الان') clearInterval(intervalRef.current);
     }, 1000);
 
     return () => clearInterval(intervalRef.current);

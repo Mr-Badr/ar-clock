@@ -105,7 +105,7 @@ export default function Timeline24h({ fromCity, toCity, diffData }) {
         <div className="flex justify-between mt-1">
           <span className="text-[10px] text-[var(--text-muted)]">منتصف الليل</span>
           <span className="text-[10px] text-[var(--accent)] font-bold">
-            الآن: {(() => {
+            الان: {(() => {
               const h = Math.floor(fromHour);
               const m = Math.round((fromHour % 1) * 60);
               const p = h >= 12 ? 'م' : 'ص';
@@ -152,7 +152,7 @@ export default function Timeline24h({ fromCity, toCity, diffData }) {
         <div className="flex justify-between mt-1">
           <span className="text-[10px] text-[var(--text-muted)]">منتصف الليل</span>
           <span className="text-[10px] text-[var(--accent-alt)] font-bold">
-            الآن: {(() => {
+            الان: {(() => {
               const h = Math.floor(toHour);
               const m = Math.round((toHour % 1) * 60);
               const p = h >= 12 ? 'م' : 'ص';
@@ -180,11 +180,11 @@ export default function Timeline24h({ fromCity, toCity, diffData }) {
         </div>
         <div className="flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-full bg-[var(--accent)]" />
-          <span className="text-[var(--text-muted)]">{fromCity?.city_name_ar} — الآن</span>
+          <span className="text-[var(--text-muted)]">{fromCity?.city_name_ar} — الان</span>
         </div>
         <div className="flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-full bg-[var(--accent-alt)]" />
-          <span className="text-[var(--text-muted)]">{toCity?.city_name_ar} — الآن</span>
+          <span className="text-[var(--text-muted)]">{toCity?.city_name_ar} — الان</span>
         </div>
       </div>
     </div>

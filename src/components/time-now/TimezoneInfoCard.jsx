@@ -126,8 +126,8 @@ export default function TimezoneInfoCard({ ianaTimezone, countryAr, cityAr, utcO
         gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
         gap: '0.6rem',
       }}>
-        <InfoRow label="التاريخ الميلادي الآن"   value={m.dateAr}            valueEn={m.dateEn} />
-        <InfoRow label="التاريخ الهجري الآن"     value={m.hijriDate}         />
+        <InfoRow label="التاريخ الميلادي الان"   value={m.dateAr}            valueEn={m.dateEn} />
+        <InfoRow label="التاريخ الهجري الان"     value={m.hijriDate}         />
         <InfoRow label="الوقت الحالي"            value={m.timeStr}           />
       </div>
 

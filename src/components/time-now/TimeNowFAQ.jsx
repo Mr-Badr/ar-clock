@@ -8,12 +8,12 @@
 function buildFAQItems({ countryAr, cityAr, utcOffset, timezone, cityNameEn, countryNameEn }) {
   return [
     {
-      q: `ما هو الوقت الآن في ${cityAr}؟`,
+      q: `ما هو الوقت الان في ${cityAr}؟`,
       a: `الوقت الحالي في ${cityAr}، ${countryAr} يُعرض في أعلى هذه الصفحة بدقة حتى الثانية. يتم تحديثه تلقائياً وفق المنطقة الزمنية ${timezone} (${utcOffset}).`,
     },
     {
-      q: `كم الساعة الآن في ${cityAr}؟`,
-      a: `الساعة الآن في ${cityAr} تظهر في الساعة الرقمية أعلى الصفحة. ${cityAr} تتبع التوقيت ${utcOffset} وهو ${timezone}.`,
+      q: `كم الساعة الان في ${cityAr}؟`,
+      a: `الساعة الان في ${cityAr} تظهر في الساعة الرقمية أعلى الصفحة. ${cityAr} تتبع التوقيت ${utcOffset} وهو ${timezone}.`,
     },
     {
       q: `ما هي المنطقة الزمنية في ${cityAr}؟`,
@@ -68,7 +68,7 @@ export function TimeNowFAQ({ countryAr, cityAr, utcOffset, timezone, cityNameEn,
         ❓ أسئلة شائعة — الوقت في {cityAr}
       </h2>
       <p style={{ margin:'0 0 1rem', fontSize:'var(--text-sm)', color:'var(--text-muted)', lineHeight:'1.7' }}>
-        إجابات سريعة حول الساعة الآن في {cityAr}، المنطقة الزمنية، والتاريخ اليوم.
+        إجابات سريعة حول الساعة الان في {cityAr}، المنطقة الزمنية، والتاريخ اليوم.
       </p>
 
       <div style={{ display:'flex', flexDirection:'column', gap:'0.4rem' }}>
