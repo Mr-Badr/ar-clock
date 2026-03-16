@@ -16,27 +16,48 @@ function getSafeNowMs() { return Date.now(); }
 async function fetchMonth(year, month, method = 1) {
   const key = `${method}-${year}-${month}`;
   if (_cache.has(key)) return _cache.get(key);
-  try {
-    const r = await fetch(`${ALADHAN}/hToGCalendar/${month}/${year}?calendarMethod=${method}`, {
-      next: { revalidate: 86_400, tags: ['hijri', `hijri-${year}-${month}`] },
-    });
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    const j = await r.json();
-    if (j.code !== 200 || !Array.isArray(j.data)) throw new Error('bad shape');
-    const map = new Map();
-    for (const e of j.data) {
-      const d = parseInt(e.hijri?.day, 10);
-      const p = e.gregorian?.date?.split('-');
-      if (!d || !p) continue;
-      map.set(d, `${p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`);
+
+  const url = `${ALADHAN}/hToGCalendar/${month}/${year}?calendarMethod=${method}`;
+  let retries = 0;
+  const maxRetries = 3;
+
+  while (retries < maxRetries) {
+    try {
+      const r = await fetch(url, {
+        next: { revalidate: 86_400, tags: ['hijri', `hijri-${year}-${month}`] },
+      });
+
+      if (r.status === 429) {
+        retries++;
+        console.warn(`[hijri-resolver] 429 (retry ${retries}/3) for ${key}`);
+        await new Promise((res) => setTimeout(res, 1000 * retries + Math.random() * 500));
+        continue;
+      }
+
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const j = await r.json();
+      if (j.code !== 200 || !Array.isArray(j.data)) throw new Error('bad shape');
+
+      const map = new Map();
+      for (const e of j.data) {
+        const d = parseInt(e.hijri?.day, 10);
+        const p = e.gregorian?.date?.split('-');
+        if (!d || !p) continue;
+        map.set(d, `${p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`);
+      }
+      _cache.set(key, map);
+      return map;
+    } catch (err) {
+      if (retries >= maxRetries - 1) {
+        console.warn('[hijri-resolver] Fatal:', key, err.message);
+        _cache.set(key, null);
+        return null;
+      }
+      retries++;
+      await new Promise((res) => setTimeout(res, 500));
     }
-    _cache.set(key, map);
-    return map;
-  } catch (err) {
-    console.warn('[hijri-resolver]', key, err.message);
-    _cache.set(key, null);
-    return null;
   }
+  return null;
 }
 
 let _yr = 0, _yrAt = 0;

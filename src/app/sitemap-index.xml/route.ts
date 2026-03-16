@@ -1,7 +1,9 @@
 import { getSupabaseServer } from '@/lib/supabase-server';
+import { connection } from 'next/server';
 
 export async function GET() {
-  const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
+  await connection();
+  const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
 
   let countries: { country_slug: string }[] = [];
   try {

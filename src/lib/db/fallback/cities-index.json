@@ -11704,20 +11704,6 @@
     "country_slug": "brazil"
   },
   {
-    "id": 11711,
-    "city_slug": "tonghua",
-    "country_code": "CN",
-    "name_ar": "تونغهوا",
-    "name_en": "Tonghua",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 41.71972,
-    "lon": 125.92639,
-    "priority": 510000,
-    "population": 510000,
-    "country_slug": "china"
-  },
-  {
     "id": 11712,
     "city_slug": "mianzhu-deyang-sichuan",
     "country_code": "CN",
@@ -11727,6 +11713,20 @@
     "is_capital": false,
     "lat": 31.33786,
     "lon": 104.22057,
+    "priority": 510000,
+    "population": 510000,
+    "country_slug": "china"
+  },
+  {
+    "id": 11711,
+    "city_slug": "tonghua",
+    "country_code": "CN",
+    "name_ar": "تونغهوا",
+    "name_en": "Tonghua",
+    "timezone": "Asia/Shanghai",
+    "is_capital": false,
+    "lat": 41.71972,
+    "lon": 125.92639,
     "priority": 510000,
     "population": 510000,
     "country_slug": "china"
@@ -13104,20 +13104,6 @@
     "country_slug": "south-sudan"
   },
   {
-    "id": 54062,
-    "city_slug": "muratpasa",
-    "country_code": "TR",
-    "name_ar": "مراد باشا",
-    "name_en": "Muratpasa",
-    "timezone": "Europe/Istanbul",
-    "is_capital": false,
-    "lat": 36.89157,
-    "lon": 30.76498,
-    "priority": 450000,
-    "population": 450000,
-    "country_slug": "turkey"
-  },
-  {
     "id": 11735,
     "city_slug": "wenshan-city",
     "country_code": "CN",
@@ -13130,6 +13116,20 @@
     "priority": 450000,
     "population": 450000,
     "country_slug": "china"
+  },
+  {
+    "id": 54062,
+    "city_slug": "muratpasa",
+    "country_code": "TR",
+    "name_ar": "مراد باشا",
+    "name_en": "Muratpasa",
+    "timezone": "Europe/Istanbul",
+    "is_capital": false,
+    "lat": 36.89157,
+    "lon": 30.76498,
+    "priority": 450000,
+    "population": 450000,
+    "country_slug": "turkey"
   },
   {
     "id": 54063,
