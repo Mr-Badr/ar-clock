@@ -79,7 +79,7 @@ export function RelatedSearches({ currentCountrySlug, currentCountryAr, currentC
                 {flagEmoji2(c.code)}
               </span>
               <span style={{ whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>
-                الوقت في {c.nameAr}
+                الساعة في {c.nameAr}
               </span>
             </div>
           </Link>

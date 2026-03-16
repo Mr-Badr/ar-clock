@@ -24,7 +24,7 @@ import { COUNTRY_META } from '@/lib/calendar-config';
 import { getCachedNowIso } from '@/lib/date-utils';
 import CountdownTicker, { CountdownTickerSkeleton, ShareBar } from '@/components/clocks/CountdownTicker';
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
+const SITE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
 
 /* ── Static params (pre-render top 50, ISR the rest) ─────────────────────── */
 export async function generateStaticParams() {
@@ -302,7 +302,7 @@ export default async function HolidayPage({ params }) {
           {/* Event name — big, clean, accent on the name itself */}
           <h1 style={{ lineHeight: 'var(--leading-tight)', marginBottom: 'var(--space-2)' }}>
             <span style={{ display: 'block', fontSize: 'var(--text-sm)', fontWeight: 'var(--font-medium)', color: 'var(--text-muted)', marginBottom: 'var(--space-1)', letterSpacing: 'var(--tracking-wide)' }}>
-              كم باقي على  
+              كم باقي على
             </span>
             <span style={{ fontSize: 'clamp(1.75rem, 5vw, 2.75rem)', fontWeight: 'var(--font-extrabold)', color: 'var(--accent)' }}>
               {event.name}

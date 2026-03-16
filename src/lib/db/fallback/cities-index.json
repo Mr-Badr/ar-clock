@@ -8386,20 +8386,6 @@
     "country_slug": "brazil"
   },
   {
-    "id": 46288,
-    "city_slug": "battagram",
-    "country_code": "PK",
-    "name_ar": "بتغرام",
-    "name_en": "Battagram",
-    "timezone": "Asia/Karachi",
-    "is_capital": false,
-    "lat": 34.67719,
-    "lon": 73.02329,
-    "priority": 700000,
-    "population": 700000,
-    "country_slug": "pakistan"
-  },
-  {
     "id": 27709,
     "city_slug": "dharavi",
     "country_code": "IN",
@@ -8412,6 +8398,20 @@
     "priority": 700000,
     "population": 700000,
     "country_slug": "india"
+  },
+  {
+    "id": 46288,
+    "city_slug": "battagram",
+    "country_code": "PK",
+    "name_ar": "بتغرام",
+    "name_en": "Battagram",
+    "timezone": "Asia/Karachi",
+    "is_capital": false,
+    "lat": 34.67719,
+    "lon": 73.02329,
+    "priority": 700000,
+    "population": 700000,
+    "country_slug": "pakistan"
   },
   {
     "id": 18916,
@@ -11704,20 +11704,6 @@
     "country_slug": "brazil"
   },
   {
-    "id": 11712,
-    "city_slug": "mianzhu-deyang-sichuan",
-    "country_code": "CN",
-    "name_ar": "ميانزهو, دييانغ, سيتشوان",
-    "name_en": "Mianzhu, Deyang, Sichuan",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 31.33786,
-    "lon": 104.22057,
-    "priority": 510000,
-    "population": 510000,
-    "country_slug": "china"
-  },
-  {
     "id": 11711,
     "city_slug": "tonghua",
     "country_code": "CN",
@@ -11727,6 +11713,20 @@
     "is_capital": false,
     "lat": 41.71972,
     "lon": 125.92639,
+    "priority": 510000,
+    "population": 510000,
+    "country_slug": "china"
+  },
+  {
+    "id": 11712,
+    "city_slug": "mianzhu-deyang-sichuan",
+    "country_code": "CN",
+    "name_ar": "ميانزهو, دييانغ, سيتشوان",
+    "name_en": "Mianzhu, Deyang, Sichuan",
+    "timezone": "Asia/Shanghai",
+    "is_capital": false,
+    "lat": 31.33786,
+    "lon": 104.22057,
     "priority": 510000,
     "population": 510000,
     "country_slug": "china"

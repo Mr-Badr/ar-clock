@@ -15,7 +15,6 @@
  *  - fade-in-up stagger on hero-stat cards
  */
 import { Suspense } from 'react';
-import Script from 'next/script';
 import Link from 'next/link';
 
 import {
@@ -36,8 +35,8 @@ const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
 /* ── Dynamic metadata ────────────────────────────────────────────────── */
 export async function generateMetadata() {
   const now = new Date(await getCachedNowIso());
-  const gr  = now.getFullYear();
-  const hi  = approxHijriYear(gr);
+  const gr = now.getFullYear();
+  const hi = approxHijriYear(gr);
   return {
     title: `وقت — متى رمضان وعيد الفطر والأضحى ${gr} / ${hi} — عد تنازلي دقيق`,
     description: `عد تنازلي للمناسبات الإسلامية والوطنية والمدرسية. متى رمضان ${gr}؟ عيد الفطر؟ عيد الأضحى؟ بالهجري والميلادي لكل الدول العربية.`,
@@ -91,23 +90,23 @@ export default async function HolidaysPage() {
   };
 
   /* ── Date / year resolution ─────────────────────────────────────── */
-  const nowIso  = await getCachedNowIso();
-  const now     = new Date(nowIso);
-  const gr      = now.getFullYear();
-  const hi      = approxHijriYear(gr);
+  const nowIso = await getCachedNowIso();
+  const now = new Date(nowIso);
+  const gr = now.getFullYear();
+  const hi = approxHijriYear(gr);
   // Keep original behavior: getNextEventDate uses Jan-1 as reference
-  const nowMs   = new Date(gr.toString()).getTime();
+  const nowMs = new Date(gr.toString()).getTime();
 
   /* ── Key events (ramadan, eid-al-fitr, eid-al-adha) ──────────────── */
-  const keyEvents   = ['ramadan', 'eid-al-fitr', 'eid-al-adha']
+  const keyEvents = ['ramadan', 'eid-al-fitr', 'eid-al-adha']
     .map(s => ALL_EVENTS.find(e => e.slug === s))
     .filter(Boolean)
     .map(enrichEvent);
   const keyResolved = await resolveAllHijriEvents(keyEvents);
 
   const keyMeta = Object.fromEntries(keyEvents.map(ev => {
-    const target   = getNextEventDate(ev, keyResolved, nowMs);
-    const meta     = resolveEventMeta(ev, target);
+    const target = getNextEventDate(ev, keyResolved, nowMs);
+    const meta = resolveEventMeta(ev, target);
     // daysLeft uses actual now (not Jan-1) for accurate countdown display
     const daysLeft = Math.max(0, Math.ceil((target - now.getTime()) / (1000 * 60 * 60 * 24)));
     return [ev.slug, { date: formatGregorianAr(target), daysLeft, ...meta }];
@@ -116,7 +115,7 @@ export default async function HolidaysPage() {
   /* ── Hero stats — top 3 upcoming for the hero card row ───────────── */
   const heroStats = ['ramadan', 'eid-al-fitr', 'eid-al-adha']
     .map(slug => {
-      const ev   = ALL_EVENTS.find(e => e.slug === slug);
+      const ev = ALL_EVENTS.find(e => e.slug === slug);
       const meta = keyMeta[slug];
       if (!ev || !meta || meta.daysLeft <= 0) return null;
       return { slug, name: ev.name, daysLeft: meta.daysLeft, date: meta.date };
@@ -159,10 +158,10 @@ export default async function HolidaysPage() {
   return (
     <div className="bg-base" style={{ minHeight: '100dvh' }} dir="rtl">
       {/* JSON-LD schemas */}
-      <Script id="s-ws"  type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
-      <Script id="s-org" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
-      <Script id="s-bc"  type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
-      <Script id="s-faq" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <main
         className="container"
@@ -196,20 +195,20 @@ export default async function HolidaysPage() {
             <span style={{ color: 'var(--accent-alt)' }}>المواعيد</span>
           </h1>
           <div className='flex justify-center'>
-<p
-            style={{
-              marginTop: 'var(--space-4)',
-              color: 'var(--text-secondary)',
-              maxWidth: '65ch',
-              lineHeight: 'var(--leading-relaxed)',
-              fontSize: 'var(--text-lg)',
-            }}
-          >
-            تابع أهم المناسبات الإسلامية والوطنية والمدرسية في العالم العربي بدقة تامة،
-            بالهجري والميلادي، مع عد تنازلي حي.
-          </p>
+            <p
+              style={{
+                marginTop: 'var(--space-4)',
+                color: 'var(--text-secondary)',
+                maxWidth: '65ch',
+                lineHeight: 'var(--leading-relaxed)',
+                fontSize: 'var(--text-lg)',
+              }}
+            >
+              تابع أهم المناسبات الإسلامية والوطنية والمدرسية في العالم العربي بدقة تامة،
+              بالهجري والميلادي، مع عد تنازلي حي.
+            </p>
           </div>
-          
+
         </header>
 
         {/* ── All events ─────────────────────────────────────────────── */}

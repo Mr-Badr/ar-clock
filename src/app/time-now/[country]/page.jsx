@@ -42,7 +42,7 @@ import {
 import { getCountriesAction } from '@/app/actions/location';
 import { getCachedNowIso } from '@/lib/date-utils';
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
+const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
 
 /* ── ROUTE CONFIG ────────────────────────────────────────────────── */
 
@@ -83,7 +83,7 @@ export async function generateMetadata({ params }) {
   const offset = getUtcOffsetStr(timezone);
 
   return {
-    title: `الوقت الآن في ${countryAr} — الساعة والتاريخ في ${cityAr} | ساعة عربية`,
+    title: `الوقت الآن في ${countryAr} - المدن والمناطق`,
     description: `اعرف الوقت الآن في ${countryAr} بدقة حتى الثانية. الساعة الحالية في ${cityAr} مع التاريخ اليوم الميلادي والهجري، المنطقة الزمنية ${offset}.`,
     keywords: [
       `الوقت الآن في ${countryAr}`,
@@ -186,11 +186,27 @@ export default async function CountryTimePage({ params }) {
     ],
   };
 
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `الوقت الآن في ${countryAr}`,
+    url: `${BASE}/time-now/${countrySlug}`,
+    description: `اعرف الوقت الآن في ${countryAr} بدقة حتى الثانية. الساعة الحالية في ${cityAr} مع التاريخ اليوم الميلادي والهجري.`,
+    inLanguage: 'ar',
+    breadcrumb: { '@id': `${BASE}/time-now/${countrySlug}#breadcrumb` },
+    about: {
+      '@type': 'Country',
+      name: country.name_en,
+      alternateName: countryAr,
+    },
+  };
+
   return (
     <div className="min-h-screen bg-base text-primary" dir="rtl" lang="ar">
 
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <main>

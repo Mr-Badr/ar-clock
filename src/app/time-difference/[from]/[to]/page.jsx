@@ -30,18 +30,18 @@ async function resolveCityFromSegment(segment) {
   const parts = segment.split('-');
   for (let i = 0; i < parts.length - 1; i++) {
     const countrySlug = parts.slice(0, i + 1).join('-');
-    const citySlug    = parts.slice(i + 1).join('-');
+    const citySlug = parts.slice(i + 1).join('-');
     if (!countrySlug || !citySlug) continue;
     const country = await getCountryBySlug(countrySlug);
     if (!country) continue;
     const city = await getCityBySlug(country.country_code, citySlug);
     if (city?.timezone && city.timezone !== 'UTC') {
       return {
-        country_slug:    country.country_slug,
+        country_slug: country.country_slug,
         country_name_ar: country.name_ar,
-        city_slug:       city.city_slug,
-        city_name_ar:    city.name_ar || city.name_en,
-        timezone:        city.timezone,
+        city_slug: city.city_slug,
+        city_name_ar: city.name_ar || city.name_en,
+        timezone: city.timezone,
       };
     }
   }
@@ -50,11 +50,11 @@ async function resolveCityFromSegment(segment) {
   const city = await getCityBySlug(country.country_code, parts.slice(1).join('-'));
   if (!city) return null;
   return {
-    country_slug:    country.country_slug,
+    country_slug: country.country_slug,
     country_name_ar: country.name_ar,
-    city_slug:       city.city_slug,
-    city_name_ar:    city.name_ar || city.name_en,
-    timezone:        city.timezone || 'UTC',
+    city_slug: city.city_slug,
+    city_name_ar: city.name_ar || city.name_en,
+    timezone: city.timezone || 'UTC',
   };
 }
 const resolveCity = cache(resolveCityFromSegment);
@@ -62,17 +62,17 @@ const resolveCity = cache(resolveCityFromSegment);
 function dayNote(srcH, diffH) {
   const dest = srcH + diffH;
   if (dest >= 24) return 'اليوم التالي';
-  if (dest < 0)   return 'اليوم السابق';
+  if (dest < 0) return 'اليوم السابق';
   return '';
 }
 
 /** Western-numeral 12-hour Arabic time string */
 function fmtTime(h24) {
-  const norm  = ((Math.round(h24 * 60) % 1440) + 1440) % 1440;
-  const h     = Math.floor(norm / 60);
-  const m     = norm % 60;
+  const norm = ((Math.round(h24 * 60) % 1440) + 1440) % 1440;
+  const h = Math.floor(norm / 60);
+  const m = norm % 60;
   const period = h >= 12 ? 'م' : 'ص';
-  const h12   = h % 12 || 12;
+  const h12 = h % 12 || 12;
   return `${h12}:${String(m).padStart(2, '0')} ${period}`;
 }
 
@@ -85,7 +85,7 @@ export async function generateMetadata({ params }) {
   const [fromCity, toCity] = await Promise.all([resolveCity(from), resolveCity(to)]);
   if (!fromCity || !toCity) return { title: 'فرق التوقيت | وقت' };
 
-  const title = `فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar} الآن`;
+  const title = `فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`;
   const description =
     `كم الفرق الزمني بين ${fromCity.city_name_ar} و${toCity.city_name_ar}؟ تحويل فوري للوقت بدقة، ` +
     `معلومات التوقيت الصيفي، وأفضل وقت للاجتماعات.محدّث لحظيًا.`;
@@ -107,7 +107,7 @@ export async function generateMetadata({ params }) {
     title, description, keywords,
     alternates: { canonical: `/time-difference/${from}/${to}` },
     openGraph: { title, description, locale: 'ar_SA', type: 'website' },
-    twitter:   { card: 'summary', title, description },
+    twitter: { card: 'summary', title, description },
   };
 }
 
@@ -116,49 +116,49 @@ async function ComparisonPageContent({ paramsPromise }) {
   console.log(`[DEBUG - SSR] ComparisonPageContent performing SEO calculations`);
 
   const paramsResolved = await paramsPromise;
-  const { from, to }   = paramsResolved;
+  const { from, to } = paramsResolved;
 
   const [fromCity, toCity] = await Promise.all([resolveCity(from), resolveCity(to)]);
   if (!fromCity || !toCity) notFound();
 
   // ─── Shared calculations ─────────────────────────────────────────────────
   // Fixed reference prevents Next.js 15 SSR bailout from `new Date()`
-  const SEO_DATE    = new Date('2024-01-01T12:00:00Z');
-  const fromOffMin  = getOffsetMinutes(fromCity.timezone, SEO_DATE);
-  const toOffMin    = getOffsetMinutes(toCity.timezone,   SEO_DATE);
+  const SEO_DATE = new Date('2024-01-01T12:00:00Z');
+  const fromOffMin = getOffsetMinutes(fromCity.timezone, SEO_DATE);
+  const toOffMin = getOffsetMinutes(toCity.timezone, SEO_DATE);
   const diffMinutes = toOffMin - fromOffMin;
-  const diffHours   = diffMinutes / 60;
+  const diffHours = diffMinutes / 60;
 
   const fromHasDST = observesDST(fromCity.timezone, SEO_DATE);
-  const toHasDST   = observesDST(toCity.timezone,   SEO_DATE);
+  const toHasDST = observesDST(toCity.timezone, SEO_DATE);
 
   const CURRENT_DATE = new Date();
   const fromDST = observesDST(fromCity.timezone, CURRENT_DATE);
-  const toDST   = observesDST(toCity.timezone,   CURRENT_DATE);
+  const toDST = observesDST(toCity.timezone, CURRENT_DATE);
 
   const fromOffStr = formatUTCOffset(fromOffMin);
-  const toOffStr   = formatUTCOffset(toOffMin);
-  const absDiffH   = Math.floor(Math.abs(diffHours));
-  const absDiffM   = Math.abs(diffMinutes) % 60;
-  const diffLabel  = absDiffH > 0
+  const toOffStr = formatUTCOffset(toOffMin);
+  const absDiffH = Math.floor(Math.abs(diffHours));
+  const absDiffM = Math.abs(diffMinutes) % 60;
+  const diffLabel = absDiffH > 0
     ? `${absDiffH} ساعة${absDiffM > 0 ? ` و${absDiffM} دقيقة` : ''}`
     : `${absDiffM} دقيقة`;
-  const ahead  = diffMinutes > 0 ? toCity.city_name_ar   : fromCity.city_name_ar;
+  const ahead = diffMinutes > 0 ? toCity.city_name_ar : fromCity.city_name_ar;
   const behind = diffMinutes > 0 ? fromCity.city_name_ar : toCity.city_name_ar;
   const bothFixed = !fromHasDST && !toHasDST;
 
   // ─── Pre-compute conversion rows (serialisable → passed to Client) ─────
   const conversionGroups = [
-    { label: 'الصباح',  icon: '🌅', hours: [6, 7, 8, 9, 10, 11] },
+    { label: 'الصباح', icon: '🌅', hours: [6, 7, 8, 9, 10, 11] },
     { label: 'الظهيرة', icon: '🌞', hours: [12, 13, 14, 15] },
-    { label: 'المساء',  icon: '🌆', hours: [16, 17, 18, 19, 20, 21] },
+    { label: 'المساء', icon: '🌆', hours: [16, 17, 18, 19, 20, 21] },
   ].map(g => ({
     label: g.label,
-    icon:  g.icon,
-    rows:  g.hours.map(h => ({
+    icon: g.icon,
+    rows: g.hours.map(h => ({
       fromTime: fmtTime(h),
-      toTime:   fmtTime(h + diffHours),
-      note:     dayNote(h, diffHours),
+      toTime: fmtTime(h + diffHours),
+      note: dayNote(h, diffHours),
     })),
   }));
 
@@ -323,27 +323,27 @@ async function ComparisonPageContent({ paramsPromise }) {
           <p className="text-sm text-secondary leading-loose">
             {diffMinutes === 0
               ? <>
-                  <strong className="text-primary">{fromCity.city_name_ar}</strong> و
-                  <strong className="text-primary">{toCity.city_name_ar}</strong> في نفس
-                  النطاق الزمني <strong dir="ltr" className="tabular-nums">{fromOffStr}</strong>.
-                  الساعة متطابقة في كلا البلدين.
-                </>
+                <strong className="text-primary">{fromCity.city_name_ar}</strong> و
+                <strong className="text-primary">{toCity.city_name_ar}</strong> في نفس
+                النطاق الزمني <strong dir="ltr" className="tabular-nums">{fromOffStr}</strong>.
+                الساعة متطابقة في كلا البلدين.
+              </>
               : <>
-                  <strong className="text-primary">{fromCity.city_name_ar}</strong> في{' '}
-                  <strong dir="ltr" className="tabular-nums">{fromOffStr}</strong> و
-                  <strong className="text-primary">{toCity.city_name_ar}</strong> في{' '}
-                  <strong dir="ltr" className="tabular-nums">{toOffStr}</strong>.
-                  الفارق الحالي <strong className="text-primary">{diffLabel}</strong>،
-                  تسبق فيه <strong className="text-primary">{ahead}</strong> مدينة{' '}
-                  <strong className="text-primary">{behind}</strong>.{' '}
-                  مثال: إذا كانت الساعة{' '}
-                  <span dir="ltr" className="tabular-nums font-bold">9:00 ص</span> في{' '}
-                  {fromCity.city_name_ar} فهي{' '}
-                  <span dir="ltr" className="tabular-nums font-bold text-accent-alt">
-                    {fmtTime(9 + diffHours)}
-                  </span>{' '}
-                  في {toCity.city_name_ar}.
-                </>
+                <strong className="text-primary">{fromCity.city_name_ar}</strong> في{' '}
+                <strong dir="ltr" className="tabular-nums">{fromOffStr}</strong> و
+                <strong className="text-primary">{toCity.city_name_ar}</strong> في{' '}
+                <strong dir="ltr" className="tabular-nums">{toOffStr}</strong>.
+                الفارق الحالي <strong className="text-primary">{diffLabel}</strong>،
+                تسبق فيه <strong className="text-primary">{ahead}</strong> مدينة{' '}
+                <strong className="text-primary">{behind}</strong>.{' '}
+                مثال: إذا كانت الساعة{' '}
+                <span dir="ltr" className="tabular-nums font-bold">9:00 ص</span> في{' '}
+                {fromCity.city_name_ar} فهي{' '}
+                <span dir="ltr" className="tabular-nums font-bold text-accent-alt">
+                  {fmtTime(9 + diffHours)}
+                </span>{' '}
+                في {toCity.city_name_ar}.
+              </>
             }
           </p>
         </section>
@@ -550,7 +550,7 @@ async function ComparisonPageContent({ paramsPromise }) {
           <div className="grid grid-cols-1 gap-2">
             {[
               { href: '/mwaqit-al-salat', icon: '🕌', label: 'مواقيت الصلاة', desc: 'أوقات دقيقة حسب موقعك أو أي مدينة' },
-              { href: '/holidays',        icon: '📅', label: 'العطل الرسمية',  desc: 'تقويم العطل لجميع الدول العربية' },
+              { href: '/holidays', icon: '📅', label: 'العطل الرسمية', desc: 'تقويم العطل لجميع الدول العربية' },
             ].map(link => (
               <a
                 key={link.href}

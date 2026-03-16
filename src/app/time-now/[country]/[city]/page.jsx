@@ -40,7 +40,7 @@ import { getAllCityParams, getCityBySlug, getTopCitiesByCountry } from '@/lib/db
 import { getCountriesAction } from '@/app/actions/location';
 import { getCachedNowIso } from '@/lib/date-utils';
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
+const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
 
 /* ─── ROUTE CONFIG ──────────────────────────────────────────────── */
 
@@ -79,8 +79,8 @@ export async function generateMetadata({ params }) {
   const offset = getUtcOffsetStr(city.timezone);
 
   return {
-    title: `الوقت الآن في ${cityAr}، ${countryAr} — الساعة والتاريخ | ساعة عربية`,
-    description: `الوقت الحالي في ${cityAr} بدقة حتى الثانية. الساعة الآن في ${cityAr}، ${countryAr} — التاريخ اليوم الميلادي والهجري، المنطقة الزمنية ${offset}.`,
+    title: `الوقت الآن في ${cityAr} - التوقيت الرسمي`,
+    description: `اعرف الوقت الآن في ${cityAr} بدقة حتى الثانية. الساعة الحالية والتاريخ اليوم الميلادي والهجري، المنطقة الزمنية ${offset}.`,
     keywords: [
       `الوقت الآن في ${cityAr}`,
       `الساعة الآن في ${cityAr}`,

@@ -19,6 +19,8 @@ import SearchCity from '@/components/SearchCityWrapper.client';
 import CityPrayerCardsGrid from '@/components/mwaqit/CityPrayerCardsGrid.client';
 import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar.client';
 
+const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
+
 export async function generateStaticParams() {
   const slugs = await getAllCountrySlugs();
   return slugs.map(slug => ({ country: slug }));
@@ -32,10 +34,10 @@ export async function generateMetadata({ params }) {
   const countryAr = country.name_ar || country.name_en;
 
   return {
-    title: `مواقيت الصلاة في ${countryAr} — مواعيد الأذان اليوم`,
+    title: `مواقيت الصلاة في ${countryAr} اليوم`,
     description: `تعرف على مواقيت الصلاة في كافة مدن ${countryAr} اليوم. الفجر، الظهر، العصر، المغرب والعشاء بدقة عالية.`,
     alternates: {
-      canonical: `/mwaqit-al-salat/${countrySlug}`,
+      canonical: `${BASE}/mwaqit-al-salat/${countrySlug}`,
     }
   };
 }
@@ -53,8 +55,50 @@ export default async function CountryPrayerPage({ params }) {
 
   const countryAr = country.name_ar || country.name_en;
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${BASE}/` },
+      { '@type': 'ListItem', position: 2, name: 'مواقيت الصلاة', item: `${BASE}/mwaqit-al-salat` },
+      { '@type': 'ListItem', position: 3, name: `مواقيت الصلاة في ${countryAr}`, item: `${BASE}/mwaqit-al-salat/${countrySlug}` },
+    ],
+  };
+
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `مواقيت الصلاة في ${countryAr} اليوم`,
+    url: `${BASE}/mwaqit-al-salat/${countrySlug}`,
+    description: `تعرف على مواقيت الصلاة في كافة مدن ${countryAr} اليوم. الفجر، الظهر، العصر، المغرب والعشاء بدقة عالية.`,
+    inLanguage: 'ar',
+    breadcrumb: { '@id': `${BASE}/mwaqit-al-salat/${countrySlug}#breadcrumb` },
+    about: {
+      '@type': 'Country',
+      name: country.name_en,
+      alternateName: countryAr,
+    },
+  };
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: `كيف أجد مواقيت الصلاة في مدن ${countryAr}؟`,
+        acceptedAnswer: { '@type': 'Answer', text: `تُقدم هذه الصفحة أوقات الصلاة الدقيقة للعاصمة وكافة مدن ${countryAr}. يمكنك اختيار مدينتك من القائمة لعرض أوقات الفجر والمغرب وبقية الصلوات بدقة عالية.` },
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-base text-primary" dir="rtl" lang="ar">
+      {/* Structured Data */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+
       <main className="mx-auto px-4 pt-24 pb-20 max-w-[600px]">
 
         <nav aria-label="مسار التنقل" className="text-xs text-muted mb-8 flex items-center gap-1">

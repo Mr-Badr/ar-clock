@@ -34,6 +34,8 @@ import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar.cli
 
 
 
+const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
+
 // Always pre-generate at least a small seed so Next.js Cache Component
 // validation passes in dev. All other slugs render at runtime (default behavior).
 export async function generateStaticParams() {
@@ -82,9 +84,9 @@ export async function generateMetadata({ params }) {
     nextPrayerHint = ` — ${AR[nextKey] ?? nextKey}: ${formatTime(nextIso, cityData.timezone)}`;
   }
 
-  const title = `مواقيت الصلاة في ${cityNameAr}، ${countryNameAr} — اليوم`;
-  const description = `أوقات الصلاة الدقيقة في ${cityNameAr} اليوم${nextPrayerHint}. الفجر والظهر والعصر والمغرب والعشاء.`;
-  const canonical = `https://waqt.app/mwaqit-al-salat/${countrySlug}/${citySlug}`;
+  const title = `مواقيت الصلاة في ${cityNameAr} اليوم`;
+  const description = `أوقات الصلاة الدقيقة في ${cityNameAr} اليوم${nextPrayerHint}. الفجر والظهر والعصر والمغرب والعشاء بتحديث مستمر.`;
+  const canonical = `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}`;
 
   return {
     title,
@@ -105,33 +107,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// ─── JSON-LD structured data ──────────────────────────────────────────────────
-
-function PrayerTimesJsonLd({ cityData, countryNameAr }) {
-  const cityNameAr = cityData.name_ar || cityData.name_en;
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'Place',
-    name: cityNameAr,
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: cityNameAr,
-      addressCountry: countryNameAr,
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: cityData.lat,
-      longitude: cityData.lon,
-    },
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
-}
+// Component removed in favor of inline JSON-LD arrays in the page shell.
 
 // ─── Prayer labels ────────────────────────────────────────────────────────────
 
@@ -160,12 +136,69 @@ export default async function PrayerTimesPage({ params }) {
   const cityNameAr = cityData.name_ar || cityData.name_en;
   const countryNameAr = country.name_ar || country.name_en;
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${BASE}/` },
+      { '@type': 'ListItem', position: 2, name: 'مواقيت الصلاة', item: `${BASE}/mwaqit-al-salat` },
+      { '@type': 'ListItem', position: 3, name: countryNameAr, item: `${BASE}/mwaqit-al-salat/${countrySlug}` },
+      { '@type': 'ListItem', position: 4, name: `مواقيت الصلاة في ${cityNameAr}`, item: `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}` },
+    ],
+  };
+
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `مواقيت الصلاة في ${cityNameAr}، ${countryNameAr}`,
+    url: `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}`,
+    description: `أوقات الصلاة الدقيقة في ${cityNameAr} اليوم. الفجر والظهر والعصر والمغرب والعشاء.`,
+    inLanguage: 'ar',
+    breadcrumb: { '@id': `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}#breadcrumb` },
+    about: {
+      '@type': 'City',
+      name: cityData.name_en,
+      alternateName: cityNameAr,
+      containedInPlace: {
+        '@type': 'Country',
+        name: country.name_en,
+        alternateName: countryNameAr,
+      },
+    },
+  };
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: `متى وقت الفجر في ${cityNameAr} اليوم؟`,
+        acceptedAnswer: { '@type': 'Answer', text: `يُعرض وقت الفجر الدقيق لمدينة ${cityNameAr} في جدول مواقيت الصلاة أعلاه، ويُحسب تلقائياً حسب الموقع الجغرافي.` },
+      },
+      {
+        '@type': 'Question',
+        name: `متى وقت المغرب في ${cityNameAr} اليوم؟`,
+        acceptedAnswer: { '@type': 'Answer', text: `يُعرض وقت المغرب الدقيق لمدينة ${cityNameAr} في جدول مواقيت الصلاة أعلاه، ويُمثل موعد الإفطار في رمضان.` },
+      },
+      {
+        '@type': 'Question',
+        name: `كيف تُحسب مواقيت الصلاة في ${cityNameAr}؟`,
+        acceptedAnswer: { '@type': 'Answer', text: `تُحسب مواقيت الصلاة في ${cityNameAr} بناءً على إحداثيات المدينة (${parseFloat(cityData.lat).toFixed(4)}، ${parseFloat(cityData.lon).toFixed(4)}) والمنطقة الزمنية ${cityData.timezone} باستخدام أدق المعايير الفلكية.` },
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-base" dir="rtl">
+      {/* Structured Data */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+
       <main className="max-w-[600px] mx-auto px-4 pt-24 pb-32">
 
         {/* Static parts render immediately from cache */}
-        <PrayerTimesJsonLd cityData={cityData} countryNameAr={countryNameAr} />
 
         <nav
           aria-label="مسار التنقل"
