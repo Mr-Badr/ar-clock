@@ -85,17 +85,17 @@ export async function generateMetadata({ params }) {
   const [fromCity, toCity] = await Promise.all([resolveCity(from), resolveCity(to)]);
   if (!fromCity || !toCity) return { title: 'فرق التوقيت | وقت' };
 
-  const title = `فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`;
+  const title = `فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar} الان`;
   const description =
     `كم الفرق الزمني بين ${fromCity.city_name_ar} و${toCity.city_name_ar}؟ تحويل فوري للوقت بدقة، ` +
     `معلومات التوقيت الصيفي، وأفضل وقت للاجتماعات.محدّث لحظيًا.`;
   const keywords = [
     `فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
     `كم الفرق بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
-    `الساعة الآن في ${fromCity.city_name_ar}`,
-    `الساعة الآن في ${toCity.city_name_ar}`,
-    `توقيت ${fromCity.city_name_ar} الآن`,
-    `توقيت ${toCity.city_name_ar} الآن`,
+    `الساعة الان في ${fromCity.city_name_ar}`,
+    `الساعة الان في ${toCity.city_name_ar}`,
+    `توقيت ${fromCity.city_name_ar} الان`,
+    `توقيت ${toCity.city_name_ar} الان`,
     `تحويل الوقت من ${fromCity.city_name_ar} إلى ${toCity.city_name_ar}`,
     `فرق التوقيت بين ${fromCity.country_name_ar} و${toCity.country_name_ar}`,
     `هل ${fromCity.city_name_ar} تطبق التوقيت الصيفي`,
@@ -465,7 +465,7 @@ async function ComparisonPageContent({ paramsPromise }) {
 
                 {/* ── Row 3: Current season ─────────────────────────── */}
                 <tr>
-                  <td className="text-secondary text-xs">الحالة الآن</td>
+                  <td className="text-secondary text-xs">الحالة الان</td>
                   <td className="td-col-center">
                     {/*
                      * badge-warning = active DST (summer) — warm amber

@@ -89,9 +89,9 @@ export function RelatedSearches({ currentCountrySlug, currentCountryAr, currentC
       {/* Keyword-rich hidden list */}
       <ul aria-hidden="true" style={{ display:'none' }}>
         {related.map(c => (
-          <li key={c.slug}>الوقت الآن في {c.nameAr} — كم الساعة في {c.nameAr}</li>
+          <li key={c.slug}>الوقت الان في {c.nameAr} — كم الساعة في {c.nameAr}</li>
         ))}
-        {currentCityAr && <li>الوقت الآن في {currentCityAr} — الساعة في {currentCityAr}</li>}
+        {currentCityAr && <li>الوقت الان في {currentCityAr} — الساعة في {currentCityAr}</li>}
       </ul>
     </section>
   );

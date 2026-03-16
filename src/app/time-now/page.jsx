@@ -22,7 +22,7 @@ export default async function TimeNowPage() {
       <ul className="sr-only" aria-hidden="true">
         {allCountries.map((c) => (
           <li key={c.country_slug}>
-            الوقت الآن في {c.name_ar} — كم الساعة في {c.name_ar} — الساعة في {c.name_en} — توقيت {c.name_ar} — الوقت الحالي في {c.name_ar} — current time in {c.name_en} — {c.name_en} time now
+            الوقت الان في {c.name_ar} — كم الساعة في {c.name_ar} — الساعة في {c.name_en} — توقيت {c.name_ar} — الوقت الحالي في {c.name_ar} — current time in {c.name_en} — {c.name_en} time now
           </li>
         ))}
       </ul>

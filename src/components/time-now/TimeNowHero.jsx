@@ -216,7 +216,7 @@ export default function TimeNowHero({
 
   const handleShare = async () => {
     const url = typeof window !== 'undefined' ? window.location.href : '';
-    const text = `الوقت الآن في ${cityNameAr}: ${td ? `${pad2(td.h)}:${pad2(td.m)}:${pad2(td.s)}` : ''} ⏰`;
+    const text = `الوقت الان في ${cityNameAr}: ${td ? `${pad2(td.h)}:${pad2(td.m)}:${pad2(td.s)}` : ''} ⏰`;
     if (typeof navigator.share === 'function') {
       try { await navigator.share({ title: `الوقت في ${cityNameAr}`, text, url }); return; } catch { }
     }
@@ -329,7 +329,7 @@ export default function TimeNowHero({
             transition: 'opacity 0.4s ease, transform 0.4s ease',
           }}
           role="timer" aria-live="off"
-          aria-label={`الوقت الآن في ${cityNameAr}: ${pad2(t.h)} ساعة و ${pad2(t.m)} دقيقة و ${pad2(t.s)} ثانية`}
+          aria-label={`الوقت الان في ${cityNameAr}: ${pad2(t.h)} ساعة و ${pad2(t.m)} دقيقة و ${pad2(t.s)} ثانية`}
         >
           {UNITS.map(({ key, label }, i) => (
             <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(0.5rem, 3cqi, 2.5rem)' }}>

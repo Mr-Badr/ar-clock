@@ -221,7 +221,7 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                 <div className="td-city-time">
                   <LiveClock
                     timezone={diffData.from}
-                    aria-label={`الساعة الآن في ${fromCity.city_name_ar}`}
+                    aria-label={`الساعة الان في ${fromCity.city_name_ar}`}
                   />
                 </div>
                 <span className={`badge mt-2 ${diffData.isDSTFrom ? 'badge-warning' : 'badge-default'}`}>
@@ -239,7 +239,7 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                 <div className="td-city-time">
                   <LiveClock
                     timezone={diffData.to}
-                    aria-label={`الساعة الآن في ${toCity.city_name_ar}`}
+                    aria-label={`الساعة الان في ${toCity.city_name_ar}`}
                   />
                 </div>
                 <span className={`badge mt-2 ${diffData.isDSTTo ? 'badge-warning' : 'badge-default'}`}>

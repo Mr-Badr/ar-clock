@@ -215,7 +215,7 @@ The metadata function receives the same `params` and uses the same cached query 
 
 The `title` must contain the Arabic city name + the query users type.
 Research the actual search queries your users use. Common patterns:
-- `توقيت [city] الآن`
+- `توقيت [city] الان`
 - `الوقت في [city]`
 - `ما الوقت في [city]`
 - `[city] time now` (some users search in English)
@@ -229,7 +229,7 @@ The `openGraph` block must mirror the title and description.
 
 **Pattern for country pages** (`time-now/[country]/page.jsx`):
 
-Title pattern: `توقيت [country] الآن — الوقت الحالي في [country] ومدنها`
+Title pattern: `توقيت [country] الان — الوقت الحالي في [country] ومدنها`
 Description: mention the country, mention it has multiple cities, mention timezone.
 
 ### 2. JSON-LD Structured Data — Rank in Rich Results
@@ -245,7 +245,7 @@ It goes before or after the main content, typically near the end of the page com
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "توقيت الرباط الآن",
+  "name": "توقيت الرباط الان",
   "description": "الوقت الحالي في الرباط، المغرب",
   "url": "https://your-domain.com/time-now/morocco/rabat",
   "about": {
@@ -274,7 +274,7 @@ Same structure as above but with `"name": "مواقيت الصلاة في الر
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "توقيت المغرب الآن",
+  "name": "توقيت المغرب الان",
   "about": {
     "@type": "Country",
     "name": "المغرب",
@@ -345,11 +345,11 @@ The root layout should have `<html lang="ar" dir="rtl">` — confirm this is alr
 ### 5. Page Title Strategy — The Most Important SEO Element
 
 Bad title: `توقيت الرباط`
-Good title: `توقيت الرباط الآن | الوقت الحالي في الرباط المغرب`
-Best title: `⏰ توقيت الرباط الآن — الوقت الحالي في الرباط، المغرب`
+Good title: `توقيت الرباط الان | الوقت الحالي في الرباط المغرب`
+Best title: `⏰ توقيت الرباط الان — الوقت الحالي في الرباط، المغرب`
 
 The format that ranks:
-- Primary keyword at the start: `توقيت [city] الآن`
+- Primary keyword at the start: `توقيت [city] الان`
 - Secondary context: `الوقت الحالي في [city]، [country]`
 - Include the English city name in description (not title): `Rabat, Morocco`
 - Keep under 60 characters for the title to avoid truncation
@@ -460,7 +460,7 @@ change but Google interprets this as "check this page frequently" which helps cr
 - [ ] JSON-LD `BreadcrumbList` on nested city pages
 - [ ] JSON-LD `WebSite` + `SearchAction` on home page
 - [ ] Sitemap includes all cities with correct priority weights
-- [ ] Titles follow the `توقيت [city] الآن | الوقت الحالي في [city]، [country]` pattern
+- [ ] Titles follow the `توقيت [city] الان | الوقت الحالي في [city]، [country]` pattern
 - [ ] Build validated with Google Rich Results Test after deploy
 
 **Safety:**

@@ -760,7 +760,7 @@ export default function CountdownTicker({
               <div className="progress-fill progress-fill--countdown" style={{ width: `${pct}%`, backgroundPosition: `${pct}% 0` }} />
             </div>
             <div aria-hidden style={{ display: 'flex', justifyContent: 'space-between', marginTop: 'var(--space-2)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
-              <span>الآن</span>
+              <span>الان</span>
               <span suppressHydrationWarning>
                 {r.days > 0
                   ? `${r.days} يوم${r.hours > 0 ? ` و ${r.hours} ساعة` : ''} متبقي`

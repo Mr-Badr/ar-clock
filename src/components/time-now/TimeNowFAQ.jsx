@@ -8,12 +8,12 @@
 function buildFAQItems({ countryAr, cityAr, utcOffset, timezone, cityNameEn, countryNameEn }) {
   return [
     {
-      q: `ما هو الوقت الآن في ${cityAr}؟`,
+      q: `ما هو الوقت الان في ${cityAr}؟`,
       a: `الوقت الحالي في ${cityAr}، ${countryAr} يُعرض في أعلى هذه الصفحة بدقة حتى الثانية. يتم تحديثه تلقائياً وفق المنطقة الزمنية ${timezone} (${utcOffset}).`,
     },
     {
-      q: `كم الساعة الآن في ${cityAr}؟`,
-      a: `الساعة الآن في ${cityAr} تظهر في الساعة الرقمية أعلى الصفحة. ${cityAr} تتبع التوقيت ${utcOffset} وهو ${timezone}.`,
+      q: `كم الساعة الان في ${cityAr}؟`,
+      a: `الساعة الان في ${cityAr} تظهر في الساعة الرقمية أعلى الصفحة. ${cityAr} تتبع التوقيت ${utcOffset} وهو ${timezone}.`,
     },
     {
       q: `ما هي المنطقة الزمنية في ${cityAr}؟`,
@@ -30,10 +30,6 @@ function buildFAQItems({ countryAr, cityAr, utcOffset, timezone, cityNameEn, cou
     {
       q: `ما الفرق الزمني بين ${cityAr} وتوقيت غرينتش (UTC)؟`,
       a: `${cityAr} تقع في المنطقة الزمنية ${utcOffset}، أي أنها تسبق / تتأخر عن توقيت غرينتش (UTC±0) بمقدار الإزاحة المذكورة.`,
-    },
-    {
-      q: `what time is it in ${cityNameEn || cityAr}?`,
-      a: `The current time in ${cityNameEn || cityAr}, ${countryNameEn || countryAr} is displayed at the top of this page, updated every second. ${cityNameEn || cityAr} follows the ${timezone} timezone (${utcOffset}).`,
     },
     {
       q: `كيف أعرف فرق التوقيت بين ${cityAr} ومدينة أخرى؟`,
@@ -68,7 +64,7 @@ export function TimeNowFAQ({ countryAr, cityAr, utcOffset, timezone, cityNameEn,
         ❓ أسئلة شائعة — الوقت في {cityAr}
       </h2>
       <p style={{ margin:'0 0 1rem', fontSize:'var(--text-sm)', color:'var(--text-muted)', lineHeight:'1.7' }}>
-        إجابات سريعة حول الساعة الآن في {cityAr}، المنطقة الزمنية، والتاريخ اليوم.
+        إجابات سريعة حول الساعة الان في {cityAr}، المنطقة الزمنية، والتاريخ اليوم.
       </p>
 
       <div style={{ display:'flex', flexDirection:'column', gap:'0.4rem' }}>
@@ -84,7 +80,8 @@ export function TimeNowFAQ({ countryAr, cityAr, utcOffset, timezone, cityNameEn,
             }}
           >
             <summary style={SUMMARY_STYLE}>
-              <span>{item.q}</span>
+              <span style={{ fontSize:'var(--text-sm)', fontWeight:'700', color:'var(--text-primary)' }}
+              className="mt-1 mb-1">{item.q}</span>
               <span aria-hidden style={{ fontSize:'0.7rem', color:'var(--accent-alt)', flexShrink:0, transition:'transform 0.2s' }}>▼</span>
             </summary>
             <p style={{

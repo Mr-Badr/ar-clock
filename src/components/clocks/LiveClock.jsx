@@ -458,7 +458,7 @@ export default function LiveClock({ timezone = null, cityLabel = null }) {
             transition: 'opacity 0.4s ease, transform 0.4s ease',
           }}
           role="timer"
-          aria-label={`الساعة الآن ${pad2(t.hours)}:${pad2(t.minutes)}:${pad2(t.seconds)}`}
+          aria-label={`الساعة الان ${pad2(t.hours)}:${pad2(t.minutes)}:${pad2(t.seconds)}`}
           aria-live="off"
         >
           {TIME_UNITS.map(({ key, label }, i) => (

@@ -71,7 +71,7 @@ export default function TimeConverter({ fromCity, toCity, totalMinutes = 0 }) {
           <Clock size={20} className="text-[var(--accent)]" />
         </div>
         <div>
-          <h4 className="font-bold text-base">تحويل الوقت السريع</h4>
+          <h4 className="font-bold text-lg mb-2">تحويل الوقت السريع</h4>
           <p className="text-xs text-[var(--text-muted)]">أدخل وقتًا في أي مدينة واعرف مقابله</p>
         </div>
       </div>

@@ -14,28 +14,119 @@ const PRAYER_AR = {
   isha: 'العشاء',
 };
 
-const PRAYER_ICONS = {
-  fajr: '🌙',
-  sunrise: '🌅',
-  dhuhr: '☀️',
-  asr: '🌇',
-  maghrib: '🌆',
-  isha: '🌃',
+const getWeatherInfo = (wCode, isDay = 1) => {
+  const map = {
+    0: { label: 'صافي', icon: isDay ? '☀️' : '🌙' },
+    1: { label: 'صافي غالباً', icon: isDay ? '🌤️' : '🌑' },
+    2: { label: 'غائم جزئياً', icon: isDay ? '⛅' : '☁️' },
+    3: { label: 'غائم', icon: '☁️' },
+    45: { label: 'ضباب', icon: '🌫️' },
+    48: { label: 'ضباب جليدي', icon: '🌫️' },
+    51: { label: 'رذاذ خفيف', icon: '🌦️' },
+    53: { label: 'رذاذ متوسط', icon: '🌦️' },
+    55: { label: 'رذاذ كثيف', icon: '🌦️' },
+    61: { label: 'مطر خفيف', icon: '🌧️' },
+    63: { label: 'مطر متوسط', icon: '🌧️' },
+    65: { label: 'مطر غزير', icon: '🌧️' },
+    71: { label: 'ثلوج خفيفة', icon: '❄️' },
+    73: { label: 'ثلوج متوسطة', icon: '❄️' },
+    75: { label: 'ثلوج كثيفة', icon: '❄️' },
+    80: { label: 'زخات خفيفة', icon: '🌦️' },
+    81: { label: 'زخات متوسطة', icon: '🌦️' },
+    82: { label: 'زخات عنيفة', icon: '🌧️' },
+    95: { label: 'عواصف رعدية', icon: '⚡' },
+  };
+  return map[wCode] || { label: 'غير معروف', icon: '🌡️' };
 };
 
 // How many cards to show per page
 const PAGE_SIZE = 12;
 
 // Hydration-safe: render nothing on SSR to avoid class mismatches.
-export default function CityPrayerCardsGrid({ cities, countrySlug }) {
+export default function CityPrayerCardsGrid({ cities, countrySlug, countryCode }) {
+
   const [now, setNow] = useState(null);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [weather, setWeather] = useState({});
 
   useEffect(() => {
     setNow(new Date());
     const id = setInterval(() => setNow(new Date()), 60_000);
     return () => clearInterval(id);
   }, []);
+
+  // Weather Fetching (Batch) with sessionStorage cache (10 min TTL)
+  useEffect(() => {
+    if (!cities.length || !now) return;
+
+    let isMounted = true;
+    const fetchWeather = async () => {
+      const visibleCities = cities.slice(0, visibleCount);
+      const validCities = visibleCities.filter(c => c.lat != null && c.lon != null);
+      if (validCities.length === 0) return;
+
+      const CACHE_TTL = 10 * 60 * 1000;
+      const currentTs = Date.now();
+      const mapping = { ...weather };
+      const citiesToFetch = [];
+
+      for (const c of validCities) {
+        const key = `${c.lat},${c.lon}`;
+        const cacheKey = `meteo_${key}`;
+        let found = false;
+        try {
+          if (typeof sessionStorage !== 'undefined') {
+            const cached = sessionStorage.getItem(cacheKey);
+            if (cached) {
+              const { ts, data } = JSON.parse(cached);
+              if (currentTs - ts < CACHE_TTL) {
+                mapping[key] = data;
+                found = true;
+              }
+            }
+          }
+        } catch { /* ignore */ }
+        
+        if (!found && !weather[key]) {
+          citiesToFetch.push(c);
+        }
+      }
+
+      if (citiesToFetch.length === 0) {
+        if (isMounted) setWeather(mapping);
+        return;
+      }
+
+      try {
+        const lats = citiesToFetch.map(c => c.lat).join(',');
+        const lons = citiesToFetch.map(c => c.lon).join(',');
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&current=temperature_2m,weather_code,is_day`;
+        const res = await fetch(url);
+        if (!res.ok) return;
+        const responseData = await res.json();
+        const results = Array.isArray(responseData) ? responseData : [responseData];
+
+        citiesToFetch.forEach((c, i) => {
+          const key = `${c.lat},${c.lon}`;
+          if (results[i]?.current) {
+            mapping[key] = results[i].current;
+            try {
+              if (typeof sessionStorage !== 'undefined') {
+                sessionStorage.setItem(`meteo_${key}`, JSON.stringify({ ts: currentTs, data: results[i].current }));
+              }
+            } catch { /* ignore */ }
+          }
+        });
+
+        if (isMounted) setWeather(mapping);
+      } catch (err) {
+        console.warn('[Meteo] Fetch failed:', err);
+      }
+    };
+
+    fetchWeather();
+    return () => { isMounted = false; };
+  }, [cities, visibleCount, now]);
 
   // Server side: render null to avoid hydration mismatch
   if (!now) return null;
@@ -50,22 +141,35 @@ export default function CityPrayerCardsGrid({ cities, countrySlug }) {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
           gap: 'var(--space-3)',
         }}
-        className="sm:grid-cols-3-auto lg:grid-cols-4-auto"
+        className="city-prayer-grid"
       >
         <style suppressHydrationWarning>{`
+          .city-prayer-grid { 
+            grid-template-columns: repeat(2, 1fr); 
+          }
           @media (min-width: 640px) {
+            .city-prayer-grid { grid-template-columns: repeat(2, 1fr); }
+          }
+          @media (min-width: 768px) {
             .city-prayer-grid { grid-template-columns: repeat(3, 1fr); }
           }
           @media (min-width: 1024px) {
-            .city-prayer-grid { grid-template-columns: repeat(4, 1fr); }
+            .city-prayer-grid { grid-template-columns: repeat(3, 1fr); }
           }
         `}</style>
         {visibleCities.map((city) => (
-          <CityCard key={city.city_slug} city={city} countrySlug={countrySlug} now={now} />
+          <CityCard 
+            key={city.city_slug} 
+            city={city} 
+            countrySlug={countrySlug} 
+            countryCode={countryCode} 
+            now={now} 
+            weather={weather[`${city.lat},${city.lon}`]}
+          />
         ))}
+
       </div>
 
       {/* Footer: count + Load More */}
@@ -85,8 +189,12 @@ export default function CityPrayerCardsGrid({ cities, countrySlug }) {
         {hasMore && (
           <button
             onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-            className="btn btn-outline"
-            style={{ gap: 'var(--space-2)', minWidth: 160 }}
+            className="btn btn-surface btn-lg"
+            style={{ 
+              gap: 'var(--space-2)', 
+              minWidth: 180,
+              borderRadius: 'var(--radius-xl)',
+            }}
           >
             تحميل {Math.min(PAGE_SIZE, remaining)} مدينة أخرى
           </button>
@@ -97,14 +205,16 @@ export default function CityPrayerCardsGrid({ cities, countrySlug }) {
 }
 
 // ── Individual City Card ──────────────────────────────────────────────────────
-function CityCard({ city, countrySlug, now }) {
+function CityCard({ city, countrySlug, countryCode, now, weather }) {
   const times = calculatePrayerTimes({
     lat: city.lat,
     lon: city.lon,
     timezone: city.timezone,
     date: now,
+    countryCode: countryCode,
     cacheKey: `${countrySlug}::${city.city_slug}`,
   });
+
 
   if (!times) {
     // Minimal fallback — city has no coordinates
@@ -143,8 +253,9 @@ function CityCard({ city, countrySlug, now }) {
 
   const { nextKey, nextIso } = getNextPrayer(times, now.toISOString());
   const timeStr = formatTime(nextIso, city.timezone, false);
-  const icon = PRAYER_ICONS[nextKey] || '🕌';
   const prayerLabel = PRAYER_AR[nextKey] || nextKey;
+
+  const wInfo = weather ? getWeatherInfo(weather.weather_code, weather.is_day) : { icon: '🌡️' };
 
   return (
     <Link
@@ -174,13 +285,13 @@ function CityCard({ city, countrySlug, now }) {
         e.currentTarget.style.boxShadow = 'var(--shadow-xs)';
       }}
     >
-      {/* Top row: city name */}
+      {/* Top row: city name + weather/temp group */}
       <div
         style={{
           display: 'flex',
           alignItems: 'flex-start',
           justifyContent: 'space-between',
-          gap: 'var(--space-1)',
+          gap: 'var(--space-2)',
         }}
       >
         <span
@@ -194,17 +305,39 @@ function CityCard({ city, countrySlug, now }) {
         >
           {city.name_ar}
         </span>
-        {/* Prayer icon badge */}
-        <span
-          aria-label={prayerLabel}
-          style={{
-            fontSize: '1rem',
-            lineHeight: 1,
-            flexShrink: 0,
-          }}
-        >
-          {icon}
-        </span>
+
+        {/* Weather group (Top Left) */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--space-1-5)',
+          background: 'var(--bg-surface-3)',
+          padding: '6px 8px',
+          borderRadius: 'var(--radius-sm)',
+          border: '1px solid var(--border-subtle)',
+          flexShrink: 0,
+        }}>
+          {weather && (
+            <span style={{ 
+              fontSize: 'var(--text-xs)', 
+              fontWeight: 'var(--font-bold)',
+              color: 'var(--text-primary)',
+              fontVariantNumeric: 'tabular-nums',
+            }}>
+              {Math.round(weather.temperature_2m)}°
+            </span>
+          )}
+          <span
+            aria-hidden="true"
+            style={{
+              fontSize: '1rem',
+              lineHeight: 1,
+              filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.2))',
+            }}
+          >
+            {wInfo.icon}
+          </span>
+        </div>
       </div>
 
       {/* Next prayer label */}
@@ -218,21 +351,28 @@ function CityCard({ city, countrySlug, now }) {
         {prayerLabel}
       </span>
 
-      {/* Time */}
-      <time
-        dateTime={nextIso}
-        dir="ltr"
-        className="tabular-nums"
-        style={{
-          fontSize: 'var(--text-xl)',
-          fontWeight: 'var(--font-extrabold)',
-          color: 'var(--accent-alt)',
-          lineHeight: 1,
-          letterSpacing: 'var(--tracking-wide)',
-        }}
-      >
-        {timeStr}
-      </time>
+      {/* Time row */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 'var(--space-1)',
+      }}>
+        <time
+          dateTime={nextIso}
+          dir="ltr"
+          className="tabular-nums"
+          style={{
+            fontSize: 'var(--text-xl)',
+            fontWeight: 'var(--font-extrabold)',
+            color: 'var(--accent-alt)',
+            lineHeight: 1,
+            letterSpacing: 'var(--tracking-wide)',
+          }}
+        >
+          {timeStr}
+        </time>
+      </div>
 
       {/* Decorative accent glow */}
       <div

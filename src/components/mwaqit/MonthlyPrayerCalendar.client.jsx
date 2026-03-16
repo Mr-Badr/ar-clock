@@ -31,13 +31,17 @@ function getDaysInCurrentMonth() {
   return Array.from({ length: daysInMonth }, (_, i) => new Date(year, month, i + 1));
 }
 
-export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr }) {
+export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr, countryCode }) {
+
   const [mounted, setMounted] = useState(false);
   const [currentDay, setCurrentDay] = useState(null);
 
   useEffect(() => {
-    setMounted(true);
-    setCurrentDay(new Date().getDate());
+    const timer = setTimeout(() => {
+      setMounted(true);
+      setCurrentDay(new Date().getDate());
+    }, 100); // Slight delay for stability
+    return () => clearTimeout(timer);
   }, []);
 
   const monthLabel = useMemo(() => {
@@ -59,9 +63,11 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr }
         lon,
         timezone,
         date: midDay,
+        countryCode: countryCode,
         // Disable cache here to ensure fast bulk generation without filling memory
         cacheKey: null,
       });
+
 
       if (!times) return null;
 
@@ -103,7 +109,7 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr }
 
   if (!mounted || !lat || !lon) {
     return (
-      <div className="w-full h-96 bg-surface border border-border rounded-2xl animate-pulse" />
+      <div className="w-full h-[400px] bg-[var(--bg-surface-2)] border border-[var(--border-subtle)] rounded-2xl animate-pulse" />
     );
   }
 
@@ -213,8 +219,9 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr }
         </div>
 
         <div className="mt-8 text-xs text-muted text-center hidden print:block print:text-black">
-          تم الطباعة من موقع waqt.app — حسابات فلكية دقيقة بناءً على معايير رابطة العالم الإسلامي
+          تم الطباعة من موقع waqt.app — حسابات فلكية دقيقة بناءً على المعايير المعتمدة دولياً ومحلياً لكل بلد.
         </div>
+
       </div>
     </>
   );

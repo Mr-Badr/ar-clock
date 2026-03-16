@@ -15,6 +15,8 @@
  */
 
 import { useState, useEffect, useRef, useCallback, memo } from 'react';
+import { ALL_METHODS, getMethodByCountry } from '@/lib/prayer-methods';
+
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -27,15 +29,8 @@ const PRAYER_AR = {
   isha:    'العشاء',
 };
 
-const METHODS = [
-  { value: 'MuslimWorldLeague', label: 'رابطة العالم الإسلامي' },
-  { value: 'Egyptian',          label: 'الهيئة المصرية' },
-  { value: 'UmmAlQura',         label: 'أم القرى' },
-  { value: 'Kuwait',            label: 'الكويت' },
-  { value: 'Qatar',             label: 'قطر' },
-  { value: 'Turkey',            label: 'تركيا' },
-  { value: 'NorthAmerica',      label: 'أمريكا الشمالية' },
-];
+const METHODS = ALL_METHODS;
+
 
 const RING_SIZE          = 240;
 const RING_R             = 108;
@@ -43,7 +38,7 @@ const RING_CIRCUMFERENCE = 2 * Math.PI * RING_R;
 const FALLBACK_METHOD    = 'MuslimWorldLeague';
 
 // Static SSR-safe defaults — time-independent, identical on server and client
-const STATIC_TIME_LEFT  = '...';
+const STATIC_TIME_LEFT  = '--:--';
 const STATIC_PROGRESS   = 0;
 const STATIC_DASHOFFSET = RING_CIRCUMFERENCE; // arc invisible on SSR
 
@@ -60,7 +55,7 @@ function computeTickValues(nextIso, prevIso) {
   const diff     = targetTs - nowTs;
 
   if (!Number.isFinite(diff) || diff <= 0) {
-    return { timeLeft: 'الآن', progress: 1 };
+    return { timeLeft: 'الان', progress: 1 };
   }
 
   const h = Math.floor(diff / 3_600_000);
@@ -88,7 +83,9 @@ function PrayerHeroClient({
   prevPrayerIso,
   timezone,
   method: defaultMethod,
+  countryCode,
 }) {
+
   // All initial values are static constants — identical on server and client.
   // `mounted` flips to true only inside useEffect (client-only).
   // This guarantees SSR HTML === first client render → zero hydration mismatch.
@@ -96,7 +93,8 @@ function PrayerHeroClient({
   const [timeLeft, setTimeLeft] = useState(STATIC_TIME_LEFT);
   const [progress, setProgress] = useState(STATIC_PROGRESS);
   const [hour12,   setHour12]   = useState(false);
-  const [method,   setMethod]   = useState(defaultMethod || FALLBACK_METHOD);
+  const [method,   setMethod]   = useState(defaultMethod || 'MuslimWorldLeague');
+
 
   // Props mirrored into refs — interval/RAF read these, never stale closures
   const nextIsoRef     = useRef(nextPrayerIso);
@@ -121,13 +119,20 @@ function PrayerHeroClient({
 
   // ── Effect 1: Mount — runs exactly once ──────────────────────────────────
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 50);
     // Restore user preferences
     try {
       const h = localStorage.getItem('pref_hour12') === '1';
-      const m = localStorage.getItem('pref_method') || defaultMethod || FALLBACK_METHOD;
+      let m = localStorage.getItem('pref_method');
+      if (!m) {
+        m = defaultMethod || getMethodByCountry(countryCode).name;
+      }
       setHour12(h);
       setMethod(m);
     } catch (_) {}
+
 
     // Seed the ref with real values before RAF starts
     timerValuesRef.current = computeTickValues(nextIsoRef.current, prevIsoRef.current);
@@ -139,11 +144,11 @@ function PrayerHeroClient({
     intervalRef.current = setInterval(() => {
       const result = computeTickValues(nextIsoRef.current, prevIsoRef.current);
       timerValuesRef.current = result;
-      if (result.timeLeft === 'الآن') clearInterval(intervalRef.current);
+      if (result.timeLeft === 'الان') clearInterval(intervalRef.current);
     }, 1000);
 
     // Reveal real values — triggers one re-render with actual countdown
-    setMounted(true);
+    setMounted(prev => prev ? prev : true);
 
     return () => {
       clearInterval(intervalRef.current);
@@ -169,7 +174,7 @@ function PrayerHeroClient({
     intervalRef.current = setInterval(() => {
       const result = computeTickValues(nextIsoRef.current, prevIsoRef.current);
       timerValuesRef.current = result;
-      if (result.timeLeft === 'الآن') clearInterval(intervalRef.current);
+      if (result.timeLeft === 'الان') clearInterval(intervalRef.current);
     }, 1000);
 
     return () => clearInterval(intervalRef.current);
@@ -262,39 +267,6 @@ function PrayerHeroClient({
             {displayTimeLeft}
           </time>
         </div>
-      </div>
-
-      {/* Timezone + method */}
-      {timezone && (
-        <p className="text-muted text-xs text-center leading-relaxed">
-          المنطقة الزمنية: <span className="text-secondary">{timezone}</span>
-          {' — '}
-          طريقة الحساب: <span className="text-secondary">{methodLabel}</span>
-        </p>
-      )}
-
-      {/* Controls */}
-      <div className="flex items-center gap-3 flex-wrap justify-center">
-        <button
-          type="button"
-          onClick={handleHour12}
-          className={`chip ${hour12 ? 'chip--active' : ''}`}
-          aria-pressed={hour12}
-        >
-          {hour12 ? '١٢ ساعة' : '٢٤ ساعة'}
-        </button>
-
-        <select
-          value={method}
-          onChange={handleMethod}
-          className="input text-sm py-2 px-3 pr-8 cursor-pointer min-h-[48px]"
-          style={{ minWidth: '160px' }}
-          aria-label="طريقة حساب أوقات الصلاة"
-        >
-          {METHODS.map(({ value, label }) => (
-            <option key={value} value={value}>{label}</option>
-          ))}
-        </select>
       </div>
 
     </div>
