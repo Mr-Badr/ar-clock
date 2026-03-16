@@ -2710,3 +2710,374 @@
 .animate-spin-slow {
   animation: spin-slow 8s linear infinite;
 }
+
+
+/* =============================================================================
+   ──────────── 33. AD LAYOUT & AD SLOT SYSTEM ─────────────────────────────────
+   ============================================================================= */
+
+@layer components {
+
+  /* ──────────────────────────────────────────────────────────────────────────
+     CONTENT COLUMN
+     
+     Replace every `mx-auto px-4 max-w-[900px]` in your JSX with this ONE class.
+     
+     USAGE:
+       <main className="content-col pt-24 pb-20">
+     
+     WIDTH:  max 900px, centered, fluid below 900px
+     PAGES:  country, city, article, info pages
+     SKIP:   homepage hero, full-width landing sections
+     ────────────────────────────────────────────────────────────────────────── */
+  .content-col {
+    width: 100%;
+    max-width: 900px;
+    margin-inline: auto;
+    padding-inline: var(--space-4);   /* 16px mobile */
+  }
+
+  @media (min-width: 640px) {
+    .content-col {
+      padding-inline: var(--space-6); /* 24px tablet+ */
+    }
+  }
+
+
+  /* ──────────────────────────────────────────────────────────────────────────
+     3-COLUMN AD LAYOUT
+     
+     Wraps: [sidebar] + [content-col] + [sidebar]
+     Sidebars are display:none below 1280px — zero layout impact on mobile.
+     
+     USAGE:
+       <div className="layout-with-ads">
+         <AdSidebarSticky />           ← slot 1 (visual RIGHT in RTL)
+         <main className="content-col ...">...</main>
+         <AdSidebarSticky />           ← slot 3 (visual LEFT in RTL)
+       </div>
+     
+     RTL GRID NOTE:
+       With dir="rtl" on <body>, CSS Grid columns render RIGHT-to-LEFT visually.
+       So: DOM column 1 → visual RIGHT | DOM column 2 → visual CENTER | DOM column 3 → visual LEFT
+       This means sidebar-right (slot 1) appears on the visual RIGHT of the page
+       and sidebar-left (slot 3) appears on the visual LEFT.
+     ────────────────────────────────────────────────────────────────────────── */
+  .layout-with-ads {
+    display: grid;
+    grid-template-columns: 1fr;        /* mobile: single column */
+    gap: var(--space-6);
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: var(--space-4);
+    align-items: start;
+  }
+
+  @media (min-width: 640px) {
+    .layout-with-ads {
+      padding-inline: var(--space-6);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .layout-with-ads {
+      /* 240 + 32 + 900 + 32 + 240 = 1444px — fits in 1440px container */
+      grid-template-columns: 240px minmax(0, 900px) 240px;
+      gap: var(--space-8);             /* 32px between columns */
+      padding-inline: var(--space-8);
+    }
+  }
+
+
+  /* ──────────────────────────────────────────────────────────────────────────
+     AD SLOT BASE
+     
+     All ad containers extend this. Key properties:
+     - `contain: layout style` → isolates ad from page reflow (perf win)
+     - `overflow: hidden` → clips any oversized creatives
+     - Shimmer skeleton via .is-loading modifier
+     ────────────────────────────────────────────────────────────────────────── */
+  .ad-slot {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    background-color: transparent;
+    contain: layout style;             /* isolate from page reflow */
+  }
+
+  /* Shimmer skeleton — shown while ad is loading */
+  .ad-slot.is-loading {
+    background: linear-gradient(
+      90deg,
+      var(--bg-surface-1)       0%,
+      var(--bg-surface-2)       50%,
+      var(--bg-surface-1)       100%
+    );
+    background-size: 200% 100%;
+    animation: ad-shimmer 1.6s ease-in-out infinite;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-subtle);
+  }
+
+  @keyframes ad-shimmer {
+    0%   { background-position:  200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+
+  /* ──────────────────────────────────────────────────────────────────────────
+     TOP BANNER AD
+     
+     WHERE: Inside content-col, AFTER <h1> and BEFORE first content block.
+     
+     CORRECT ORDER in JSX:
+       <nav breadcrumb />
+       <h1>Page Title</h1>
+       <AdTopBanner />          ← HERE (just below H1, above content)
+       <PrayerTimesTable />
+     
+     WHY AFTER H1 (not before):
+       Google's heat map data shows ads just BELOW the first content element
+       (the title) have HIGHER viewability AND CTR than ads above the title.
+       Also: H1 before ad means Googlebot sees the topic FIRST → better SEO.
+     
+     SIZES: 320×50 mobile → 728×90 tablet → 970×90 desktop
+     ────────────────────────────────────────────────────────────────────────── */
+  .ad-slot--top-banner {
+    width: 100%;
+    /* aspect-ratio as primary CLS prevention (fluid) */
+    aspect-ratio: 320 / 50;
+    /* min-height as floor to prevent zero-height on very narrow screens */
+    min-height: 50px;
+    max-height: 100px;
+    margin-block: var(--space-6);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .ad-slot--top-banner {
+      aspect-ratio: 728 / 90;
+      min-height: 90px;
+      max-height: 90px;
+    }
+  }
+
+
+  /* ──────────────────────────────────────────────────────────────────────────
+     IN-ARTICLE AD (MPU 300×250)
+     
+     WHERE: Between major page sections, never inside a section.
+     
+     CORRECT USAGE:
+       <PrayerTimesTable />
+       <AdInArticle slotId="mid-1" />  ← between sections
+       <CityInfoSection />
+       <AdInArticle slotId="mid-2" />  ← optional second (only if page > 3 screens)
+       <RelatedContent />
+     
+     RULES:
+       ✅ Max 2 per page
+       ✅ At least one major content block between two ads
+       ❌ Never two AdInArticle back-to-back
+       ❌ Never as the first element on a page
+     ────────────────────────────────────────────────────────────────────────── */
+  .ad-slot--in-article {
+    width: 100%;
+    /* 300:250 aspect ratio preserves space on all screen widths */
+    aspect-ratio: 300 / 250;
+    min-height: 250px;
+    max-width: 336px;                  /* max MPU width */
+    margin-inline: auto;               /* center within content-col */
+    margin-block: var(--space-10);     /* 40px breathing room above/below */
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    /* Defer off-screen rendering for better LCP on long pages */
+    content-visibility: auto;
+    contain-intrinsic-size: 0 250px;
+  }
+
+
+  /* ──────────────────────────────────────────────────────────────────────────
+     IN-FEED AD (card-sized)
+     
+     WHERE: Inside a CSS Grid of cards, injected every 6–8 items.
+     
+     USAGE in JSX:
+       {items.map((item, i) => (
+         <>
+           <Card key={item.id} />
+           {(i + 1) % 6 === 0 && <AdInFeed key={`ad-${i}`} />}
+         </>
+       ))}
+     
+     NOTE: Width is 100% of the card slot — no fixed min-width here.
+     The parent grid (grid-auto / minmax(260px, 1fr)) controls min-width.
+     ────────────────────────────────────────────────────────────────────────── */
+  .ad-slot--in-feed {
+    width: 100%;
+    min-height: 120px;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    content-visibility: auto;
+    contain-intrinsic-size: 0 120px;
+  }
+
+
+  /* ──────────────────────────────────────────────────────────────────────────
+     SIDEBAR AD (desktop only, ≥1280px)
+     
+     WHERE: As first and third children inside .layout-with-ads.
+     
+     VISIBILITY: display:none on all screens < 1280px.
+     This means the sidebar occupies ZERO space on mobile/tablet.
+     The ad script is not even requested on mobile (handled in component JS).
+     
+     STICKY: Follows scroll, clears navbar (72px) + spacing (16px).
+     Adjust 72px if your navbar height differs.
+     ────────────────────────────────────────────────────────────────────────── */
+  .ad-slot--sidebar {
+    display: none;                     /* zero space on mobile — CSS-only */
+    width: 240px;
+    min-height: 400px;
+    max-height: 600px;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+  }
+
+  @media (min-width: 1280px) {
+    .ad-slot--sidebar {
+      display: block;
+      position: sticky;
+      /* 72px navbar + 16px gap = 88px from top */
+      top: 88px;
+      max-height: calc(100vh - 88px - var(--space-8));
+    }
+  }
+
+
+  /* ──────────────────────────────────────────────────────────────────────────
+     STICKY ANCHOR BAR (mobile only, < 960px)
+     
+     WHERE: In root layout.tsx, LAST element in <body>, outside all containers.
+     
+     CRITICAL: The `.sticky-anchor-spacer` div MUST be placed at the bottom
+     of every page to prevent the anchor from covering the last content item.
+     The spacer height is ALWAYS set on mobile — not conditionally.
+     This prevents the "hidden content" bug from v1.
+     
+     VISIBILITY: Hidden on ≥960px (sidebars handle desktop).
+     ────────────────────────────────────────────────────────────────────────── */
+  .ad-slot--sticky-anchor {
+    position: fixed;
+    bottom: 0;
+    bottom: env(safe-area-inset-bottom, 0px);   /* iOS notch */
+    inset-inline: 0;                 /* RTL-safe: covers left:0 right:0 */
+    width: 100%;
+    height: 60px;
+    z-index: var(--z-fixed);         /* 250 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-surface-1);
+    border-top: 1px solid var(--border-subtle);
+    box-shadow: 0 -4px 24px rgba(6, 8, 18, 0.28);
+    /* Smooth entry — opacity only (no layout-affecting property) */
+    transition: opacity var(--transition-base), transform var(--transition-base);
+  }
+
+  .ad-slot--sticky-anchor.is-hidden {
+    opacity: 0;
+    transform: translateY(100%);     /* slides out below screen — no layout shift */
+    pointer-events: none;
+  }
+
+  @media (min-width: 960px) {
+    .ad-slot--sticky-anchor {
+      display: none;                 /* sidebars handle desktop */
+    }
+  }
+
+  /* 
+     SPACER — prevents anchor from overlapping last content.
+     
+     KEY CHANGE FROM v1:
+     This spacer is ALWAYS 68px on mobile (not conditional on anchor visibility).
+     Reserve the space from the start → zero CLS from anchor appearance.
+     
+     ADD THIS in layout.tsx just before </body>:
+       <div className="sticky-anchor-spacer" aria-hidden="true" />
+       <AdStickyAnchor />
+  */
+  .sticky-anchor-spacer {
+    display: block;
+    height: 0;
+  }
+
+  @media (max-width: 959px) {
+    /* Always reserve anchor height on mobile — even before anchor appears.
+       This is the CORRECT CLS-free approach: space reserved unconditionally. */
+    .sticky-anchor-spacer {
+      height: 68px;                  /* anchor(60px) + border(1px) + buffer(7px) */
+    }
+  }
+
+
+  /* ──────────────────────────────────────────────────────────────────────────
+     AD SLOT UI — Label and Close Button
+     ────────────────────────────────────────────────────────────────────────── */
+
+  /* "إعلانات" label — must be VISIBLE per Google AdSense policy */
+  .ad-slot__label {
+    position: absolute;
+    top: var(--space-1-5);                        /* 6px */
+    inset-inline-start: var(--space-2-5);         /* 10px — RTL-safe */
+    font-size: var(--text-xs);                    /* 11.5px — readable */
+    font-weight: var(--font-medium);
+    color: var(--text-muted);
+    /* Must be readable per AdSense policy: muted but legible */
+    background-color: var(--bg-surface-2);
+    padding: 1px var(--space-1-5);
+    border-radius: var(--radius-xs);
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+    /* Do NOT use aria-hidden on this — Google policy requires it visible */
+  }
+
+  /* Dismiss/close button (for sticky anchor) */
+  .ad-slot__close {
+    position: absolute;
+    top: var(--space-1-5);
+    inset-inline-end: var(--space-2);             /* RTL-safe */
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    background-color: var(--bg-surface-3);
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    line-height: 1;
+    cursor: pointer;
+    border: 1px solid var(--border-subtle);
+    transition:
+      background-color var(--transition-fast),
+      color var(--transition-fast);
+    z-index: var(--z-raised);
+  }
+
+  .ad-slot__close:hover {
+    background-color: var(--bg-surface-4);
+    color: var(--text-primary);
+  }
+
+  .ad-slot__close:focus-visible {
+    outline: 2px solid var(--accent-alt);
+    outline-offset: 2px;
+  }
+
+}
+/* ─── END AD LAYOUT & AD SLOT SYSTEM ──────────────────────────────────── */
