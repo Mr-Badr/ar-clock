@@ -1,8 +1,9 @@
 /* Main page */
-import LiveClock from '@/components/clocks/LiveClock';
 import Link from 'next/link';
 import { Clock, Calendar, Compass, ArrowLeftRight, Bell } from 'lucide-react';
 import TimeNowPage from './time-now/page';
+import { Globe } from "@/components/ui/globe"
+
 
 const SERVICES = [
   {
@@ -129,13 +130,56 @@ export default function HomePage() {
         </section>
       </main>
 
-      <footer className="py-12 border-t border-[var(--border-subtle)] text-center">
-        <div className="flex items-center justify-center gap-2 mb-4">
-          <Clock className="text-accent" size={24} />
-          <span className="text-xl font-bold">ساعة عربية</span>
-        </div>
-        <p className="text-muted text-sm">© 2025 جميع الحقوق محفوظة. صُمم بدقة للمستخدم العربي.</p>
-      </footer>
+<footer className="relative overflow-hidden border-t border-[var(--border-subtle)]">
+
+  {/* content */}
+  <div className="max-w-7xl mx-auto px-6 pt-16 flex justify-between items-start mix-h-[100rem]">
+
+    {/* RIGHT */}
+    <div className="text-right max-w-sm">
+      <div className="flex items-center gap-2 mb-3">
+        <Clock className="text-accent" size={26} />
+        <span className="text-2xl font-bold"> ميقات</span>
+      </div>
+
+      <p className="text-sm text-[var(--text-muted)] leading-relaxed">
+        أدوات عربية دقيقة لحساب المواقيت والتقويمات والمناسبات الإسلامية.
+      </p>
+    </div>
+
+    {/* LEFT LINKS */}
+    <div className="flex gap-16 text-sm">
+
+      <div>
+        <h3 className="font-semibold mb-3">روابط مفيدة</h3>
+        <ul className="space-y-2 text-[var(--text-muted)]">
+          <li><Link href="/mwaqit-al-salat" className="hover:text-accent">مواقيت الصلاة</Link></li>
+          <li><Link href="/qibla" className="hover:text-accent">اتجاه القبلة</Link></li>
+          <li><Link href="/calendar" className="hover:text-accent">التقويم الإسلامي</Link></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 className="font-semibold mb-3">الموقع</h3>
+        <ul className="space-y-2 text-[var(--text-muted)]">
+          <li><Link href="/" className="hover:text-accent">الرئيسية</Link></li>
+          <li><Link href="/tools" className="hover:text-accent">الأدوات</Link></li>
+          <li><Link href="/about" className="hover:text-accent">من نحن</Link></li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  {/* GLOBE - يظهر فقط النصف العلوي */}
+  <div className="relative w-full h-[400px] overflow-hidden z-50">
+    <Globe className="w-[750px] h-[750px]" />
+  </div>
+
+</footer>
+
+
     </div>
   );
 }
