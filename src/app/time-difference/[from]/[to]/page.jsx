@@ -149,9 +149,9 @@ async function ComparisonPageContent({ paramsPromise }) {
 
   // ─── Pre-compute conversion rows (serialisable → passed to Client) ─────
   const conversionGroups = [
-    { label: 'الصباح', icon: '🌅', hours: [6, 7, 8, 9, 10, 11] },
-    { label: 'الظهيرة', icon: '🌞', hours: [12, 13, 14, 15] },
-    { label: 'المساء', icon: '🌆', hours: [16, 17, 18, 19, 20, 21] },
+    { label: 'الصباح', icon: ' 🌅 ', hours: [6, 7, 8, 9, 10, 11] },
+    { label: 'الظهيرة', icon: ' 🌞 ', hours: [12, 13, 14, 15] },
+    { label: 'المساء', icon: ' 🌆 ', hours: [16, 17, 18, 19, 20, 21] },
   ].map(g => ({
     label: g.label,
     icon: g.icon,

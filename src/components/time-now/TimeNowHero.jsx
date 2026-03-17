@@ -33,11 +33,11 @@ function getTimeData(tz) {
   }).formatToParts(now);
   const get = (t) => parseInt(parts.find(p => p.type === t)?.value ?? '0', 10);
 
-  const dateAr = new Intl.DateTimeFormat('ar', {
+  const dateAr = new Intl.DateTimeFormat('ar-u-nu-latn', {
     timeZone: tz, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
   }).format(now);
 
-  const dateHijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', {
+  const dateHijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn', {
     timeZone: tz, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
   }).format(now);
 

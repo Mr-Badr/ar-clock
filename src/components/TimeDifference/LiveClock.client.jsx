@@ -14,7 +14,7 @@ export default function LiveClock({ timezone, className = "" }) {
 
   if (!time) return <div className={`h-8 w-32 animate-pulse bg-[var(--bg-subtle)] rounded ${className}`}></div>;
 
-  const formatted = new Intl.DateTimeFormat('ar-EG', {
+  const formatted = new Intl.DateTimeFormat('ar-EG-u-nu-latn', {
     timeZone: timezone,
     hour: 'numeric',
     minute: '2-digit',

@@ -47,7 +47,7 @@ function getTimezoneMeta(tz, nowDate) {
       timeZone: tz, timeZoneName: 'shortOffset',
     }).formatToParts(now).find(p => p.type === 'timeZoneName')?.value ?? '';
 
-    const tzNameAr = new Intl.DateTimeFormat('ar', {
+    const tzNameAr = new Intl.DateTimeFormat('ar-u-nu-latn', {
       timeZone: tz, timeZoneName: 'long',
     }).formatToParts(now).find(p => p.type === 'timeZoneName')?.value ?? '';
 
@@ -68,7 +68,7 @@ function getTimezoneMeta(tz, nowDate) {
     const hasDST     = jan !== jul;
     const dstDetailAr = hasDST ? `صيف (${jul}) / شتاء (${jan})` : null;
 
-    const dateAr = new Intl.DateTimeFormat('ar', {
+    const dateAr = new Intl.DateTimeFormat('ar-u-nu-latn', {
       timeZone: tz, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
     }).format(now);
 
@@ -78,7 +78,7 @@ function getTimezoneMeta(tz, nowDate) {
 
     let hijriDate = '—';
     try {
-      hijriDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', {
+      hijriDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn', {
         timeZone: tz, year: 'numeric', month: 'long', day: 'numeric',
       }).format(now);
     } catch {}

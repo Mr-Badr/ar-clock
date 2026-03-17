@@ -62,7 +62,7 @@ export function getTimeDifference(fromTz, toTz, inputDate = new Date()) {
     const isDSTTo = getIsDST(toTz, d);
 
     const formatTimeAr = (tz, date) => {
-      return new Intl.DateTimeFormat('ar-EG', {
+      return new Intl.DateTimeFormat('ar-EG-u-nu-latn', {
         timeZone: tz,
         hour: 'numeric',
         minute: 'numeric',

@@ -327,7 +327,7 @@ async function PrayerTimesContent({ country, city, cityData, countryCode }) {
   const maghribStr = formatTime(times.maghrib,  cityData.timezone);
   const asrStr     = formatTime(times.asr,      cityData.timezone);
 
-  const todayLabel = now.toLocaleDateString('ar-EG', {
+  const todayLabel = now.toLocaleDateString('ar-EG-u-nu-latn', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
   });
 

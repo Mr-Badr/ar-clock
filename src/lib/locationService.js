@@ -283,8 +283,8 @@ export function getTimeDataForTimezone(tz) {
   const get = (t) => parseInt(parts.find(p => p.type === t)?.value ?? '0', 10);
   return {
     hours: get('hour'), minutes: get('minute'), seconds: get('second'),
-    dateStrAr:    new Intl.DateTimeFormat('ar', { timeZone: tz, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(now),
-    dateStrHijri: new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', { timeZone: tz, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(now),
+    dateStrAr:    new Intl.DateTimeFormat('ar-u-nu-latn', { timeZone: tz, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(now),
+    dateStrHijri: new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn', { timeZone: tz, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(now),
     tzLabel:      new Intl.DateTimeFormat('en', { timeZone: tz, timeZoneName: 'long' }).formatToParts(now).find(p => p.type === 'timeZoneName')?.value ?? '',
     utcOffset:    new Intl.DateTimeFormat('en', { timeZone: tz, timeZoneName: 'shortOffset' }).formatToParts(now).find(p => p.type === 'timeZoneName')?.value ?? '',
     ianaTimezone: tz,

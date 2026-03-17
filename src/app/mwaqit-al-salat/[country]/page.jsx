@@ -213,6 +213,7 @@ export default async function CountryPrayerPage({ params }) {
                 city={capital.city_slug}
                 cityData={capital}
                 countryCode={country.country_code}
+                countryNameAr={countryAr}
               />
             </Suspense>
             </ErrorBoundary>
@@ -235,7 +236,7 @@ export default async function CountryPrayerPage({ params }) {
 }
 
 // ─── Dynamic content ──────────────────────────────────────────────────────────
-async function PrayerTimesContent({ country, city, cityData, countryCode }) {
+async function PrayerTimesContent({ country, city, cityData, countryCode, countryNameAr }) {
   await headers();
 
   const now        = new Date();
@@ -252,7 +253,7 @@ async function PrayerTimesContent({ country, city, cityData, countryCode }) {
   }
 
   const { nextKey, nextIso, prevIso } = getNextPrayer(times, now.toISOString());
-  const todayLabel = now.toLocaleDateString('ar-EG', {
+  const todayLabel = now.toLocaleDateString('ar-EG-u-nu-latn', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
   });
 

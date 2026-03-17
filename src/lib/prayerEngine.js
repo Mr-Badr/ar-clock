@@ -15,13 +15,24 @@
  * NOTE: 'Gulf' is NOT a valid method name in Adhan.js — use 'Dubai' for Gulf-region countries.
  */
 
-import { PrayerTimes, Coordinates, CalculationMethod, Madhab } from 'adhan';
+import { PrayerTimes, Coordinates, CalculationMethod, Madhab, PolarCircleResolution, HighLatitudeRule } from 'adhan';
 import { getMethodByCountry, MADHAB_INFO } from './prayer-methods';
 
 // Module-level cache (survives warm lambdas; flushed on cold start).
 // Capped at MAX_CACHE_SIZE entries to prevent unbounded memory growth on long-running instances.
 const moduleCache   = new Map();
 const MAX_CACHE_SIZE = 500;
+
+function getLocalDateForCity(date, timezone) {
+  // Extract year/month/day AS SEEN in the city's timezone
+  const fmt = new Intl.DateTimeFormat('en-CA', {  // en-CA = YYYY-MM-DD format
+    timeZone: timezone,
+    year: 'numeric', month: '2-digit', day: '2-digit',
+  });
+  const [year, month, day] = fmt.format(date).split('-').map(Number);
+  // Return a plain Date with correct y/m/d — time portion is irrelevant to adhan.js
+  return new Date(year, month - 1, day);
+}
 
 /**
  * Calculate prayer times for a given location and date.
@@ -60,20 +71,7 @@ export function calculatePrayerTimes({ lat, lon, timezone, date, method, country
 
   try {
     const coordinates = new Coordinates(lat, lon);
-
-    // Derive the *local* date in the city's timezone — critical to avoid off-by-one day at midnight UTC
-    const parts = new Intl.DateTimeFormat('en-US', {
-      timeZone: timezone,
-      year:     'numeric',
-      month:    'numeric',
-      day:      'numeric',
-    }).formatToParts(date);
-
-    const localDate = new Date(
-      parseInt(parts.find(p => p.type === 'year').value),
-      parseInt(parts.find(p => p.type === 'month').value) - 1,
-      parseInt(parts.find(p => p.type === 'day').value),
-    );
+    const localDate = getLocalDateForCity(date, timezone);
 
     // Guard against an invalid method name — fall back to MWL instead of crashing
     const params = CalculationMethod[selectedMethod]
@@ -82,6 +80,11 @@ export function calculatePrayerTimes({ lat, lon, timezone, date, method, country
 
     // Apply madhab — only changes Asr calculation
     params.madhab = selectedMadhab === 'Hanafi' ? Madhab.Hanafi : Madhab.Shafi;
+
+    if (Math.abs(lat) >= 48) {
+      params.polarCircleResolution = PolarCircleResolution.AqrabYaum;
+      params.highLatitudeRule = HighLatitudeRule.recommended(new Coordinates(lat, 0));
+    }
 
     const pt = new PrayerTimes(coordinates, localDate, params);
 
