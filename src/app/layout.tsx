@@ -24,7 +24,7 @@ const notoKufi = Noto_Kufi_Arabic({
 
 export const metadata: Metadata = {
   // ── Core ──────────────────────────────────────────────────────────────────
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com'),
   title: {
     default: 'مواقيت الصلاة — دقيقة في جميع أنحاء العالم',
     template: '%s | مواقيت الصلاة',

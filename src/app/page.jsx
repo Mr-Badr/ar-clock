@@ -30,7 +30,7 @@ const SERVICES = [
 ];
 
 export default function HomePage() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://waqt.com';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
 
   const websiteSchema = {
     '@context': 'https://schema.org',

@@ -166,7 +166,7 @@ Descriptions must:
 
 ### 2.4 Canonical URL rules
 
-- Canonical must be an absolute URL: `https://yourdomain.com/time-now/morocco/casablanca`
+- Canonical must be an absolute URL: `https://miqatime.com/time-now/morocco/casablanca`
 - Never a relative URL, never with a trailing slash unless that's your URL format
 - If a page has both `/time-now/morocco/casablanca` and `/time-now/morocco/Casablanca`,
   only one canonical is correct. Normalize all slugs to lowercase in the DB and routes.
@@ -201,7 +201,7 @@ Three separate `<script>` tags:
   "@type": "WebPage",
   "name": "الوقت الآن في [المدينة]",
   "description": "...",
-  "url": "https://yourdomain.com/time-now/[country]/[city]",
+  "url": "https://miqatime.com/time-now/[country]/[city]",
   "inLanguage": "ar",
   "about": {
     "@type": "City",
@@ -220,10 +220,10 @@ Three separate `<script>` tags:
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "الرئيسية", "item": "https://yourdomain.com" },
-    { "@type": "ListItem", "position": 2, "name": "الوقت الآن", "item": "https://yourdomain.com/time-now" },
-    { "@type": "ListItem", "position": 3, "name": "[البلد]", "item": "https://yourdomain.com/time-now/[country]" },
-    { "@type": "ListItem", "position": 4, "name": "[المدينة]", "item": "https://yourdomain.com/time-now/[country]/[city]" }
+    { "@type": "ListItem", "position": 1, "name": "الرئيسية", "item": "https://miqatime.com" },
+    { "@type": "ListItem", "position": 2, "name": "الوقت الآن", "item": "https://miqatime.com/time-now" },
+    { "@type": "ListItem", "position": 3, "name": "[البلد]", "item": "https://miqatime.com/time-now/[country]" },
+    { "@type": "ListItem", "position": 4, "name": "[المدينة]", "item": "https://miqatime.com/time-now/[country]/[city]" }
   ]
 }
 ```
@@ -266,13 +266,13 @@ Only add this if `startDate` is actually fetched from DB and shown on the page.
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "[اسم الموقع]",
-  "url": "https://yourdomain.com",
+  "url": "https://miqatime.com",
   "inLanguage": "ar",
   "potentialAction": {
     "@type": "SearchAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": "https://yourdomain.com/time-now/{search_term_string}"
+      "urlTemplate": "https://miqatime.com/time-now/{search_term_string}"
     },
     "query-input": "required name=search_term_string"
   }
@@ -446,9 +446,9 @@ Check in the rendered HTML:
 
 If ANY page has an English version:
 ```html
-<link rel="alternate" hreflang="ar" href="https://yourdomain.com/time-now/morocco/casablanca" />
-<link rel="alternate" hreflang="en" href="https://yourdomain.com/en/time-now/morocco/casablanca" />
-<link rel="alternate" hreflang="x-default" href="https://yourdomain.com/time-now/morocco/casablanca" />
+<link rel="alternate" hreflang="ar" href="https://miqatime.com/time-now/morocco/casablanca" />
+<link rel="alternate" hreflang="en" href="https://miqatime.com/en/time-now/morocco/casablanca" />
+<link rel="alternate" hreflang="x-default" href="https://miqatime.com/time-now/morocco/casablanca" />
 ```
 This prevents duplicate content issues and routes Arabic users to Arabic pages.
 
@@ -583,7 +583,7 @@ After all changes, verify the following by reading the actual rendered HTML
 - [ ] `<script type="application/ld+json">` exists on every city page
 - [ ] No page returns 200 with empty or "not found" content (soft 404s)
 - [ ] `/sitemap-index.xml` returns valid XML with real country URLs
-- [ ] `/robots.txt` contains `Sitemap: https://yourdomain.com/sitemap-index.xml`
+- [ ] `/robots.txt` contains `Sitemap: https://miqatime.com/sitemap-index.xml`
 - [ ] Country pages contain visible `<a>` links to all city pages
 - [ ] City pages contain visible `<a>` links back to the country page
 - [ ] No `<img>` tags without `width` and `height` attributes (CLS)

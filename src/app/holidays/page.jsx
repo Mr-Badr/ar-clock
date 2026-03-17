@@ -33,7 +33,7 @@ import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
+const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
 
 /* ── Dynamic metadata ────────────────────────────────────────────────── */
 export async function generateMetadata() {

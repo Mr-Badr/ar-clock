@@ -36,7 +36,7 @@ import AdInArticle from '@/components/ads/AdInArticle';
 
 
 
-const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
+const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
 
 // Always pre-generate at least a small seed so Next.js Cache Component
 // validation passes in dev. All other slugs render at runtime (default behavior).

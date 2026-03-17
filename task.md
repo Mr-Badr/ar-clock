@@ -120,7 +120,7 @@ This route handler is the only way to expose all sitemaps to Google from a singl
 If `metadataBase` is not already set, add it to the root metadata export:
 ```js
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://yourdomain.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://miqatime.com'),
   // ... preserve everything else already in the file
 }
 ```
@@ -414,7 +414,7 @@ Apply to:
 Tell me which of these already exist and which I need to add:
 
 ```
-NEXT_PUBLIC_BASE_URL=https://yourdomain.com       ← required for canonical URLs
+NEXT_PUBLIC_BASE_URL=https://miqatime.com       ← required for canonical URLs
 SUPABASE_SERVICE_ROLE_KEY=                        ← server-only, never in NEXT_PUBLIC_
 NEXT_PUBLIC_SUPABASE_URL=                         ← probably already exists
 NEXT_PUBLIC_SUPABASE_ANON_KEY=                    ← probably already exists

@@ -245,9 +245,9 @@ async function ComparisonPageContent({ paramsPromise }) {
   const breadcrumbSchema = {
     '@context': 'https://schema.org', '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: 'https://yourdomain.com' },
-      { '@type': 'ListItem', position: 2, name: 'فرق التوقيت', item: 'https://yourdomain.com/time-difference' },
-      { '@type': 'ListItem', position: 3, name: `${fromCity.city_name_ar} – ${toCity.city_name_ar}`, item: `https://yourdomain.com/time-difference/${from}/${to}` },
+      { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: 'https://miqatime.com' },
+      { '@type': 'ListItem', position: 2, name: 'فرق التوقيت', item: 'https://miqatime.com/time-difference' },
+      { '@type': 'ListItem', position: 3, name: `${fromCity.city_name_ar} – ${toCity.city_name_ar}`, item: `https://miqatime.com/time-difference/${from}/${to}` },
     ],
   };
 
