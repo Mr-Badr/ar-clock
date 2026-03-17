@@ -30,9 +30,17 @@ export default function FAQAccordions({ items = [] }) {
           className="overflow-hidden rounded-xl border border-subtle bg-surface-2 shadow-sm transition-all duration-200 hover:border-default hover:shadow-md"
         >
           <AccordionTrigger
-            className="flex w-full items-center justify-between gap-4 px-5 py-4 text-right text-base font-bold text-primary hover:no-underline transition-colors [&[data-state=open]]:bg-surface-3 [&[data-state=open]]:border-b [&[data-state=open]]:border-subtle"
+            className="flex w-full items-center justify-between gap-4 px-5 py-4 text-right text-base font-bold text-primary hover:no-underline"
           >
             <span className="flex items-center gap-2 leading-snug">
+              {it.icon && (
+                <span
+                  aria-hidden="true"
+                  className="text-xl shrink-0 w-8 h-8 flex items-center justify-center"
+                >
+                  {it.icon}
+                </span>
+              )}
               {it.badge && (
                 <span className="shrink-0 rounded-full bg-accent-soft px-2 py-0.5 text-[10px] font-semibold text-accent-alt border border-accent">
                   {it.badge}

@@ -2,7 +2,9 @@
 import SearchCityWrapper from '@/components/SearchCityWrapper.client';
 import { getCountriesAction } from '@/app/actions/location';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
-import FeaturesAccordions from '@/components/mwaqit/FeaturesAccordions.client';
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL || '';
 
@@ -127,7 +129,7 @@ const features = [
   },
   {
     icon: '📅',
-    q: 'إمساكية شهرية قابلة للطباعة',
+    q: 'تقويم شهري قابل للطباعة',
     a: 'جدول شهري كامل بمواقيت الصلاة يومياً مع تمييز يوم الجمعة واليوم الحالي، قابل للطباعة في وضع مُحسَّن.',
   },
   {
@@ -169,7 +171,8 @@ export default async function PrayerLandingPage() {
 
   return (
     <div className="min-h-screen bg-base text-primary" dir="rtl" lang="ar">
-      <main className="mx-auto px-4 pt-24 pb-20 max-w-[860px] mt-12">
+      {/* <AdLayoutWrapper> */}
+      <main className="content-col pt-24 pb-20 mt-12">
 
         {/* JSON-LD */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
@@ -178,14 +181,24 @@ export default async function PrayerLandingPage() {
         {/* ── H1 Header ─────────────────────────────────────────────────── */}
         <header className="text-center mb-10">
           <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-4">
-            مواقيت الصلاة اليوم — الشافعي والحنفي لكل مدينة
+            مواقيت الصلاة اليوم لكل مدينة — حسب المذاهب الأربعة
           </h1>
+
           <p className="text-secondary text-base leading-[1.7] mx-auto max-w-[720px]">
-            احصل فوراً على <strong className="text-primary">مواقيت الصلاة الدقيقة</strong> لأي مدينة:
-            الفجر، الشروق، الظهر، العصر (الشافعي والحنفي)، المغرب والعشاء.
-            يختار الموقع تلقائياً <strong className="text-primary">طريقة الحساب الرسمية لبلدك</strong> من بين 12 طريقة معتمدة.
+            اعرف الآن{" "}
+            <strong className="text-primary">مواقيت الصلاة الدقيقة اليوم</strong>{" "}
+            لأي مدينة في العالم: الفجر، الشروق، الظهر، العصر، المغرب والعشاء.{" "}
+            يدعم الموقع{" "}
+            <strong className="text-primary">
+              المذاهب الأربعة (الشافعي، الحنفي، المالكي، الحنبلي)
+            </strong>{" "}
+            مع اختيار تلقائي لـ{" "}
+            <strong className="text-primary">طريقة الحساب المعتمدة في بلدك</strong>{" "}
+            من بين أكثر من 12 طريقة رسمية لحساب أوقات الصلاة.
           </p>
         </header>
+
+        {/* <AdTopBanner slotId="top-mwaqit" /> */}
 
         {/* ── Search Card ───────────────────────────────────────────────── */}
         <div className="card card--glass mb-16">
@@ -198,8 +211,10 @@ export default async function PrayerLandingPage() {
         {/* ── Features ─────────────────────────────────────────────────── */}
         <section className="mb-14" aria-label="مميزات الأداة">
           <h2 className="text-2xl font-semibold text-primary mb-6">مميزات الأداة</h2>
-          <FeaturesAccordions items={features} />
+          <FAQAccordions items={features} />
         </section>
+
+        {/* <AdInArticle slotId="mid-mwaqit-1" /> */}
 
         {/* ── Madhab Comparison Table ───────────────────────────────────── */}
         <section className="card mb-10" aria-label="الفرق بين المذاهب في وقت العصر">
@@ -288,6 +303,7 @@ export default async function PrayerLandingPage() {
         </section>
 
       </main>
+      {/* </AdLayoutWrapper> */}
     </div>
   );
 }

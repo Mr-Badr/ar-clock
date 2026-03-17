@@ -29,6 +29,9 @@ import { PAGE_SIZE } from './constants';
 import HolidaysClient from './HolidaysClient';
 import { EventGridSkeleton } from '@/components/events/EventCard';
 import { getCachedNowIso } from '@/lib/date-utils';
+import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
 
@@ -163,9 +166,9 @@ export default async function HolidaysPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
+      
       <main
-        className="container"
-        style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-20)' }}
+        className="container pt-24 pb-20"
       >
         {/* ── Breadcrumb ─────────────────────────────────────────────── */}
         <nav
@@ -211,6 +214,8 @@ export default async function HolidaysPage() {
 
         </header>
 
+        {/* <AdTopBanner slotId="top-holidays" /> */}
+
         {/* ── All events ─────────────────────────────────────────────── */}
         <section aria-labelledby="events-heading">
           <Suspense fallback={<EventGridSkeleton count={PAGE_SIZE} />}>
@@ -218,9 +223,12 @@ export default async function HolidaysPage() {
           </Suspense>
         </section>
 
+        {/* <AdInArticle slotId="mid-holidays-1" /> */}
+
         {/* ── SEO content ────────────────────────────────────────────── */}
         <div className="divider" style={{ marginTop: 'var(--space-16)' }} />
 
+        {/* <AdLayoutWrapper> */} 
         <section
           className="section section--flat"
           style={{ maxWidth: '48rem', marginInline: 'auto' }}
@@ -350,7 +358,9 @@ export default async function HolidaysPage() {
             ))}
           </div>
         </section>
+        {/* </AdLayoutWrapper> */}
       </main>
+      
     </div>
   );
 }

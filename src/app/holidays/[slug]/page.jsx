@@ -23,6 +23,9 @@ import { resolveAllHijriEvents } from '@/lib/hijri-resolver';
 import { COUNTRY_META } from '@/lib/calendar-config';
 import { getCachedNowIso } from '@/lib/date-utils';
 import CountdownTicker, { CountdownTickerSkeleton, ShareBar } from '@/components/clocks/CountdownTicker';
+import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 
 const SITE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
 
@@ -276,7 +279,8 @@ export default async function HolidayPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(bcSchema) }} />
       {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
 
-      <main className="container container--narrow" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-20)' }}>
+      {/* <AdLayoutWrapper> */}
+      <main className="content-col pt-24 pb-20">
 
         {/* Breadcrumb */}
         <nav aria-label="breadcrumb" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)', marginBottom: 'var(--space-8)' }}>
@@ -344,6 +348,8 @@ export default async function HolidayPage({ params }) {
             />
           </Suspense>
         </section>
+
+        {/* <AdTopBanner slotId="top-holiday-slug" /> */}
 
         {/* ── DATE INFO ROW — below the counter, clean pill style ──────────── */}
         <div
@@ -473,6 +479,7 @@ export default async function HolidayPage({ params }) {
         {/* ── FAQ ─────────────────────────────────────────────────────────── */}
         {faqItems.length > 0 && (
           <section style={{ marginTop: 'var(--space-10)' }} aria-labelledby="faq-h">
+            {/* <AdInArticle slotId="mid-holiday-slug-1" /> */}
             <h2 id="faq-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-5)' }}>
               أسئلة شائعة
             </h2>
@@ -538,6 +545,7 @@ export default async function HolidayPage({ params }) {
         </div>
 
       </main>
+      {/* </AdLayoutWrapper> */}
     </div>
   );
 }

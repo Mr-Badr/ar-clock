@@ -21,7 +21,7 @@
  *
  *   export default function CountryPage({ params }) {
  *     return (
- *       <AdLayoutWrapper>
+ *       // <AdLayoutWrapper> 
  *         <main className="content-col pt-24 pb-20">
  *
  *           <CountryPrayerJsonLd ... />
@@ -51,7 +51,7 @@
  *           <RelatedCountries />
  *
  *         </main>
- *       </AdLayoutWrapper>
+ *       // </AdLayoutWrapper> 
  *     );
  *   }
  *

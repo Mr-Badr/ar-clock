@@ -6020,20 +6020,6 @@
     "country_slug": "india"
   },
   {
-    "id": 27688,
-    "city_slug": "shivaji-nagar",
-    "country_code": "IN",
-    "name_ar": "شيفاجي ناغار",
-    "name_en": "Shivaji Nagar",
-    "timezone": "Asia/Kolkata",
-    "is_capital": false,
-    "lat": 18.53017,
-    "lon": 73.85263,
-    "priority": 1000000,
-    "population": 1000000,
-    "country_slug": "india"
-  },
-  {
     "id": 11607,
     "city_slug": "zhu-cheng-city",
     "country_code": "CN",
@@ -6046,6 +6032,20 @@
     "priority": 1000000,
     "population": 1000000,
     "country_slug": "china"
+  },
+  {
+    "id": 27688,
+    "city_slug": "shivaji-nagar",
+    "country_code": "IN",
+    "name_ar": "شيفاجي ناغار",
+    "name_en": "Shivaji Nagar",
+    "timezone": "Asia/Kolkata",
+    "is_capital": false,
+    "lat": 18.53017,
+    "lon": 73.85263,
+    "priority": 1000000,
+    "population": 1000000,
+    "country_slug": "india"
   },
   {
     "id": 11608,

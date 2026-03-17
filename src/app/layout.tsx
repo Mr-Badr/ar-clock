@@ -6,6 +6,8 @@ import { Noto_Kufi_Arabic } from 'next/font/google';
 import { Toaster } from 'sonner';
 import { ThemeProvider } from '@/components/theme-provider';
 import Header from '@/components/layout/header';
+import AdSenseProvider from '@/components/ads/AdSenseProvider';
+import AdStickyAnchor from '@/components/ads/AdStickyAnchor';
 // Load every weight the design system uses.
 // --font-extrabold (800) is required for clock digits.
 // --font-black (900) is required for fullscreen clock.
@@ -130,6 +132,9 @@ export default async function RootLayout({
               },
             }}
           />
+          <div className="sticky-anchor-spacer" aria-hidden="true" />
+          {/* <AdStickyAnchor />
+          <AdSenseProvider /> */}
         </ThemeProvider>
       </body>
     </html>

@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * AdSenseProvider — Global AdSense script loader
  * ─────────────────────────────────────────────────────────────────────────────
@@ -33,6 +35,12 @@
  *       </html>
  *     );
  *   }
+ *
+ * WHY 'use client':
+ *   Next.js <Script> with onError cannot be passed through Server Component
+ *   boundaries because event handlers are not serializable.
+ *   'use client' keeps it out of the SSR stream — the script still defers via
+ *   strategy="afterInteractive" so there is zero LCP impact.
  *
  * WHY NOT IN <head>:
  *   AdSense script in <head> blocks HTML parsing → slower LCP.

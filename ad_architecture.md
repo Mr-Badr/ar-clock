@@ -92,7 +92,7 @@ export default function CountryPage({ params }) {
     <div className="min-h-screen bg-base text-primary">
 
       {/* AdLayoutWrapper adds sidebars on desktop — single col on mobile */}
-      <AdLayoutWrapper>
+      {/* <AdLayoutWrapper> */}
 
         <main className="content-col pt-24 pb-20">
 
@@ -115,7 +115,7 @@ export default function CountryPage({ params }) {
 
           {/* 3. Top banner — AFTER H1, BEFORE content */}
           {/* Google viewability data: highest CTR just below first heading */}
-          <AdTopBanner slotId={`top-${countrySlug}`} />
+          {/* <AdTopBanner slotId={`top-${countrySlug}`} /> */}
 
           {/* 4. First major content section */}
           <section className="section mb-8">
@@ -123,7 +123,7 @@ export default function CountryPage({ params }) {
           </section>
 
           {/* 5. First in-article ad — after first content block */}
-          <AdInArticle slotId={`mid-${countrySlug}-1`} />
+          {/* <AdInArticle slotId={`mid-${countrySlug}-1`} /> */}
 
           {/* 6. Second content section */}
           <section className="section mb-8">
@@ -131,9 +131,9 @@ export default function CountryPage({ params }) {
           </section>
 
           {/* 7. Second in-article ad — only on long pages */}
-          {cities.length > 10 && (
+          {/* {cities.length > 10 && (
             <AdInArticle slotId={`mid-${countrySlug}-2`} />
-          )}
+          )} */}
 
           {/* 8. Footer content */}
           <section className="section">
@@ -141,7 +141,7 @@ export default function CountryPage({ params }) {
           </section>
 
         </main>
-      </AdLayoutWrapper>
+      {/* </AdLayoutWrapper> */}
 
     </div>
   );

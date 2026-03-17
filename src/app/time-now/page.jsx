@@ -27,7 +27,7 @@ export default async function TimeNowPage() {
         ))}
       </ul>
 
-      <main style={{ maxWidth: '940px', margin: '0 auto', padding: 'clamp(1.5rem, 5vw, 3rem) 1rem' }}>
+      <main style={{ maxWidth: '940px', margin: '0 auto' }}>
 
         {/* ── Page Header (Centered Hero Style) ── */}
         <header style={{ marginBottom: '3rem', textAlign: 'center' }}>

@@ -21,6 +21,9 @@ import {
   formatUTCOffset,
 } from './time-snapshot';
 import TimeConversionTable from './TimeConversionTable.client';
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
 
 
 // ─── City resolution ──────────────────────────────────────────────────────────
@@ -254,7 +257,8 @@ async function ComparisonPageContent({ paramsPromise }) {
     <div className="min-h-screen bg-base text-primary">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <main className="mx-auto px-4 pt-24 pb-20 max-w-[900px]">
+      {/* <AdLayoutWrapper> */}
+      <main className="content-col pt-24 pb-20">
 
         {/* ── Breadcrumb ─────────────────────────────────────────────── */}
         <nav aria-label="مسار التنقل" className="text-xs text-muted mb-6 flex items-center gap-1 flex-wrap">
@@ -284,6 +288,8 @@ async function ComparisonPageContent({ paramsPromise }) {
               : `${ahead} تسبق ${behind} بـ${diffLabel} — محدّث لحظيًا`}
           </p>
         </header>
+
+        {/* <AdTopBanner slotId="top-time-diff" /> */}
 
         {/* ── SSR snapshot — crawlable current times ─────────────────── */}
         <section className="td-snapshot mb-8" aria-label="الوقت الحالي في المدينتين">
@@ -509,6 +515,8 @@ async function ComparisonPageContent({ paramsPromise }) {
 
         <Separator className="mb-10" style={{ backgroundColor: 'var(--border-subtle)' }} />
 
+        {/* <AdInArticle slotId="mid-time-diff-1" /> */}
+
         {/* ════════════════════════════════════════════════════════
             SEO SECTION 4 — FAQ accordion
             ════════════════════════════════════════════════════════
@@ -568,6 +576,7 @@ async function ComparisonPageContent({ paramsPromise }) {
         </section>
 
       </main>
+      {/* </AdLayoutWrapper> */}
     </div>
   );
 }

@@ -2,6 +2,9 @@
 import TimeDiffCalculator from "@/components/TimeDifference/TimeDiffCalculatorV2.client";
 import { getCountriesAction } from "@/app/actions/location";
 import CurrentTime from "@/components/helpers/CurrentTime";
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
 
 /**
  * Metadata (Next.js App Router)
@@ -123,7 +126,8 @@ export default async function TimeDifferencePage() {
 
   return (
     <div className="min-h-screen bg-base text-primary">
-      <main className="mx-auto px-4 pt-24 pb-20 max-w-[900px] mt-12">
+      {/* <AdLayoutWrapper> */}
+      <main className="content-col pt-24 pb-20 mt-12">
 
         {/* JSON-LD structured data (FAQ + HowTo) */}
         <script
@@ -146,6 +150,8 @@ export default async function TimeDifferencePage() {
             في الوجهة، وتعرّف على أفضل أوقات الاجتماع وساعات العمل المشتركة مع مراعاة التوقيت الصيفي.
           </p>
         </header>
+
+        {/* <AdTopBanner slotId="top-time-diff-list" /> */}
 
         {/* Calculator */}
         <section aria-label="حاسبة فرق التوقيت" className="mb-12">
@@ -191,6 +197,8 @@ export default async function TimeDifferencePage() {
             ونحسب الفترة المشتركة. إن لم توجد فترة مشتركة، نقترح الفترات الأقرب بعد فحص فارق الساعات.
           </p>
         </section>
+
+        {/* <AdInArticle slotId="mid-time-diff-list-1" /> */}
 
         {/* FAQ */}
         <section className="mb-20 mt-20">
@@ -274,6 +282,7 @@ export default async function TimeDifferencePage() {
         </section>
 
       </main>
+      {/* </AdLayoutWrapper> */}
     </div>
   );
 }

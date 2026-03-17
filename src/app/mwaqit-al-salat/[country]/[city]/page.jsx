@@ -29,7 +29,9 @@ import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar.cli
 import MadhabSelector from '@/components/mwaqit/MadhabSelector.client';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
 import { ErrorBoundary } from '@/components/ErrorBoundary.client';
-
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
 // ─── ISR: pre-build top 100 cities, revalidate every 60s ─────────────────────
 
 
@@ -228,7 +230,8 @@ export default async function PrayerTimesPage({ params }) {
   return (
     <div className="min-h-screen bg-base" dir="rtl">
 
-      <main className="max-w-[900px] mx-auto px-4 pt-24 pb-32">
+      {/* <AdLayoutWrapper> */}
+      <main className="content-col pt-24 pb-32">
 
         {/* JSON-LD schemas */}
         <PrayerTimesJsonLd
@@ -256,6 +259,8 @@ export default async function PrayerTimesPage({ params }) {
           </h1>
           <p className="text-muted text-sm">{countryNameAr}</p>
         </header>
+
+        {/* <AdTopBanner slotId="top-city" /> */}
 
         {/* City search */}
         <div className="mb-8">
@@ -290,6 +295,7 @@ export default async function PrayerTimesPage({ params }) {
         </ErrorBoundary>
 
       </main>
+      {/* </AdLayoutWrapper> */}
     </div>
   );
 }
@@ -422,6 +428,8 @@ async function PrayerTimesContent({ country, city, cityData, countryCode }) {
         </div>
       </section>
 
+      {/* <AdInArticle slotId="mid-city-1" /> */}
+
       {/* ── Madhab section ────────────────────────────────────────────── */}
       <section className="card mb-6" aria-label="المذهب الفقهي ووقت العصر">
         <MadhabSelector
@@ -451,6 +459,8 @@ async function PrayerTimesContent({ country, city, cityData, countryCode }) {
           countryCode={countryCode}
         />
       </section>
+
+      {/* <AdInArticle slotId="mid-city-2" /> */}
 
       {/* ── FAQ (shadcn Accordion, Google-crawlable) ──────────────────── */}
       <section className="mb-6" aria-label="أسئلة شائعة عن مواقيت الصلاة">

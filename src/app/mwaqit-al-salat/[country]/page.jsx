@@ -20,6 +20,9 @@ import SearchCity from '@/components/SearchCityWrapper.client';
 import CityPrayerCardsGrid from '@/components/mwaqit/CityPrayerCardsGrid.client';
 import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar.client';
 import { ErrorBoundary } from '@/components/ErrorBoundary.client';
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
 
 const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
 
@@ -158,7 +161,8 @@ export default async function CountryPrayerPage({ params }) {
   return (
     <div className="min-h-screen bg-base text-primary" dir="rtl" lang="ar">
 
-      <main className="mx-auto px-4 pt-24 pb-20 max-w-[900px]">
+      {/* <AdLayoutWrapper> */}
+      <main className="content-col pt-24 pb-20">
 
         <CountryPrayerJsonLd country={country} countryAr={countryAr} countrySlug={countrySlug} />
 
@@ -185,6 +189,8 @@ export default async function CountryPrayerPage({ params }) {
             طريقة الحساب المعتمدة: <strong className="text-accent-alt">{methodInfo.label}</strong>
           </span>
         </header>
+
+        {/* <AdTopBanner slotId="top-country" /> */}
 
         {/* Search */}
         <div className="mb-12">
@@ -220,6 +226,8 @@ export default async function CountryPrayerPage({ params }) {
           </section>
         )}
 
+        {/* <AdInArticle slotId="mid-country-1" /> */}
+
         {/* All cities grid */}
         <section>
           <h2 className="text-xl font-bold mb-6">كافة المدن في {countryAr}</h2>
@@ -231,6 +239,7 @@ export default async function CountryPrayerPage({ params }) {
         </section>
 
       </main>
+      {/* </AdLayoutWrapper> */}
     </div>
   );
 }
