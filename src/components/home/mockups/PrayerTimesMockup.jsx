@@ -20,7 +20,7 @@ export default function PrayerTimesMockup() {
     <div
       className="relative w-full max-w-sm mx-auto select-none"
       aria-hidden="true"
-      style={{ filter: 'drop-shadow(0 20px 40px rgba(6,8,18,0.5))' }}
+      style={{ boxShadow: '0 20px 40px rgba(6,8,18,0.5)' }}
     >
       {/* Gradient border */}
       <div

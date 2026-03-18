@@ -86,14 +86,14 @@ const CARDS = [
     body: (
       <>
         يبحث ملايين المستخدمين كل عام عن:{' '}
-        <strong style={{ color: 'var(--text-primary)' }}>متى عيد الفطر 2025؟</strong>{' '}
+        <strong style={{ color: 'var(--text-primary)' }}>متى موعد عيد الفطر؟</strong>{' '}
         و
         <strong style={{ color: 'var(--text-primary)' }}>
           {' '}موعد عيد الأضحى المبارك
         </strong>{' '}
         و
         <strong style={{ color: 'var(--text-primary)' }}>
-          {' '}كم يوم رمضان 2026؟
+          {' '}كم يوماً شهر رمضان؟
         </strong>{' '}
         قسم{' '}
         <Link

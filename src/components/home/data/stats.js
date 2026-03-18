@@ -6,5 +6,5 @@ export const STATS = [
   { value: '+22 دولة', label: 'عربية مدعومة',       icon: MapPin   },
   { value: '5 صلوات',  label: 'دقيقة يومياً',        icon: Moon     },
   { value: '4 مذاهب', label: 'إسلامية مدعومة',      icon: BookOpen },
-  { value: '100%',    label: 'مجاني بلا تسجيل',     icon: Heart    },
+  { value: '100٪',    label: 'مجاني بلا تسجيل',     icon: Heart    },
 ]

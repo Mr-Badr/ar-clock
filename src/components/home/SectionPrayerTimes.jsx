@@ -1,22 +1,206 @@
 /**
- * SectionPrayerTimes — Feature section 1
+ * SectionPrayerTimes — Feature section 1  (async Server Component)
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Layout : Image RIGHT · Text LEFT  (RTL flex-row-reverse)
  *
- * Layout: Image RIGHT · Text LEFT
- * RTL flex-row-reverse: DOM order [Text, Mockup]
- *   → RTL reverses flow → Text appears LEFT, Mockup appears RIGHT ✓
+ * LOCATION DETECTION — 3-tier cascade, stops at the first hit:
+ *
+ *  Tier 1 — IP address  (most accurate: real city from our DB)
+ *    • Read `x-forwarded-for` header → extract client IP
+ *    • Fetch ip-api.com to get lat/lon (same source used in /api/ip-city)
+ *    • Call getNearestCityAction(lat, lon) → geodesic DB lookup
+ *    • Result: exact city slug + Arabic name + real timezone
+ *    • Cached: ip-api response revalidates every hour per unique IP
+ *
+ *  Tier 2 — IANA timezone header  (good: nearest city per timezone)
+ *    • Read `x-timezone` (middleware) or `cf-timezone` (Cloudflare)
+ *    • Call mapTimezoneToCityAction(tz) → seed-file city lookup
+ *    • Covers users behind proxies or CDN edge nodes
+ *
+ *  Tier 3 — Riyadh, Saudi Arabia  (safe default)
+ *    • Used when both Tier 1 and Tier 2 fail (rare, e.g. localhost dev)
+ *    • Riyadh is the most searched city for prayer times in Arabic search
+ *
+ * DATA SERIALISATION RULE:
+ *   Only ISO strings + primitives cross the server→client boundary.
+ *   Never pass Date objects — they are not serialisable.
+ *
+ * SEO: text column is unchanged — all keyword density preserved.
  */
 
-import Link from 'next/link'
+import { headers }               from 'next/headers'
+import Link                      from 'next/link'
+import { Qibla, Coordinates }    from 'adhan'
 import { Clock, Compass, BookOpen, Bell, Globe2, Moon } from 'lucide-react'
-import SectionWrapper from './shared/SectionWrapper'
-import SectionBadge from './shared/SectionBadge'
-import FeatureItem from './shared/FeatureItem'
-import CtaLink from './shared/CtaLink'
-import PrayerTimesMockup from './mockups/PrayerTimesMockup'
+
+import { calculatePrayerTimes, getNextPrayer } from '@/lib/prayerEngine'
+import { getNearestCityAction, mapTimezoneToCityAction } from '@/app/actions/location'
+
+import SectionWrapper      from './shared/SectionWrapper'
+import SectionBadge        from './shared/SectionBadge'
+import FeatureItem         from './shared/FeatureItem'
+import CtaLink             from './shared/CtaLink'
+import PrayerTimesLiveCard from './mockups/PrayerTimesLiveCard.client'
 
 const H2_ID = 'h2-prayer-times'
 
-export default function SectionPrayerTimes() {
+/* ── Tier 3 fallback: Riyadh ─────────────────────────────────────────────────
+ * Why Riyadh (not Mecca):
+ *   - Riyadh is the #1 searched city for prayer times in Arabic Google
+ *   - It is the capital and most populated Saudi city
+ *   - Mecca coordinates are reserved for Qibla (0° = pointing at Mecca)
+ */
+const RIYADH = {
+  lat:          24.6877,
+  lon:          46.7219,
+  timezone:     'Asia/Riyadh',
+  city_name_ar: 'الرياض',
+  city_slug:    'riyadh',
+  country_code: 'SA',
+  country_slug: 'saudi-arabia',
+}
+
+/* ── Helpers ──────────────────────────────────────────────────────────────── */
+
+/**
+ * Normalise any city object returned from DB actions into a consistent shape.
+ * Accepts the raw shape from both getNearestCityAction and mapTimezoneToCityAction.
+ */
+function normaliseCity(raw, fallbackTz) {
+  if (!raw?.lat || !raw?.lon) return null
+  return {
+    lat:          Number(raw.lat),
+    lon:          Number(raw.lon),
+    timezone:     raw.timezone     || raw.tz          || fallbackTz || 'Asia/Riyadh',
+    city_name_ar: raw.city_name_ar || raw.name_ar     || raw.name   || RIYADH.city_name_ar,
+    city_slug:    raw.city_slug    || raw.slug        || 'unknown',
+    country_code: raw.country_code || raw.countryCode || 'SA',
+    country_slug: raw.country_slug || '',
+  }
+}
+
+/**
+ * Arabic compass label for a bearing angle (0–360°).
+ * Western digit used for the degree number (numeral rule).
+ */
+function bearingLabel(deg) {
+  const d = ((deg % 360) + 360) % 360
+  if (d < 22.5  || d >= 337.5) return 'شمال'
+  if (d < 67.5)                 return 'شمال شرق'
+  if (d < 112.5)                return 'شرق'
+  if (d < 157.5)                return 'جنوب شرق'
+  if (d < 202.5)                return 'جنوب'
+  if (d < 247.5)                return 'جنوب غرب'
+  if (d < 292.5)                return 'غرب'
+  return 'شمال غرب'
+}
+
+/** Returns e.g. "157° جنوب غرب" or null on error. */
+function getQiblaText(lat, lon) {
+  try {
+    const deg = Math.round(new Qibla(new Coordinates(lat, lon)).direction)
+    return `${deg}° ${bearingLabel(deg)}`
+  } catch {
+    return null
+  }
+}
+
+function emptyTimes(iso) {
+  return { fajr: iso, sunrise: iso, dhuhr: iso, asr: iso, maghrib: iso, isha: iso }
+}
+
+/**
+ * Tier 1: detect city from client IP address.
+ * Mirrors the logic in /api/ip-city/route.js exactly.
+ * Returns a normalised city object or null.
+ */
+async function detectByIP(headersList) {
+  const forwarded = headersList.get('x-forwarded-for') || ''
+  const ip        = forwarded.split(',')[0].trim()
+
+  // Skip loopback and empty IPs — these never succeed with ip-api
+  if (!ip || ip === '::1' || ip.startsWith('127.') || ip.startsWith('10.')) {
+    return null
+  }
+
+  // ip-api.com free tier — same endpoint used in /api/ip-city
+  // revalidate: 3600 → Next.js Data Cache caches 1h per unique URL
+  const res = await fetch(
+    `http://ip-api.com/json/${ip}?fields=status,lat,lon,timezone`,
+    { next: { revalidate: 3600 } },
+  )
+
+  if (!res.ok) return null
+  const data = await res.json()
+  if (data.status !== 'success' || !data.lat || !data.lon) return null
+
+  // getNearestCityAction does a geodesic DB lookup — the same function used by
+  // findNearestCity in locationService.js, surfaced as a server action
+  const city = await getNearestCityAction(data.lat, data.lon)
+  return normaliseCity(city, data.timezone)
+}
+
+/**
+ * Tier 2: detect city from IANA timezone header set by middleware/CDN.
+ * Falls back to mapTimezoneToCityAction which uses a seed-file mapping.
+ */
+async function detectByTimezone(headersList) {
+  const tz = headersList.get('x-timezone') || headersList.get('cf-timezone') || null
+  if (!tz) return null
+
+  const city = await mapTimezoneToCityAction(tz)
+  return normaliseCity(city, tz)
+}
+
+/* ── Server Component ─────────────────────────────────────────────────────── */
+
+export default async function SectionPrayerTimes() {
+  const h   = await headers()
+  let city  = { ...RIYADH }
+
+  /* Tier 1: IP → nearest city in DB */
+  try {
+    const ipCity = await detectByIP(h)
+    if (ipCity) {
+      city = ipCity
+    } else {
+      /* Tier 2: timezone header → seed map */
+      const tzCity = await detectByTimezone(h)
+      if (tzCity) city = tzCity
+      /* Tier 3: implicit — city already set to RIYADH above */
+    }
+  } catch {
+    /* Any unexpected error: keep RIYADH default */
+  }
+
+  /* ── Prayer times & next prayer ─────────────────────────────────────── */
+  const nowIso = new Date().toISOString()
+
+  const times = calculatePrayerTimes({
+    lat:         city.lat,
+    lon:         city.lon,
+    timezone:    city.timezone,
+    date:        new Date(),
+    countryCode: city.country_code,
+    // cacheKey scoped to city so simultaneous users in different cities
+    // each get their own cached result
+    cacheKey:    `home::prayer::${city.city_slug}`,
+  })
+
+  const { nextKey, nextIso } = times
+    ? getNextPrayer(times, nowIso)
+    : { nextKey: 'dhuhr', nextIso: nowIso }
+
+  /* ── Qibla ───────────────────────────────────────────────────────────── */
+  const qiblaText = getQiblaText(city.lat, city.lon)
+  const safeTimes = times ?? emptyTimes(nowIso)
+
+  /* ── Build the deep link: /mwaqit-al-salat/[country]/[city] ─────────── */
+  const prayerHref = city.country_slug && city.city_slug !== 'unknown'
+    ? `/mwaqit-al-salat/${city.country_slug}/${city.city_slug}`
+    : '/mwaqit-al-salat'
+
+  /* ─────────────────────────────────────────────────────────────────────── */
   return (
     <SectionWrapper
       id="section-prayer-times"
@@ -29,10 +213,10 @@ export default function SectionPrayerTimes() {
         />
       }
     >
-      {/* flex-row-reverse in RTL: first DOM child (Text) → LEFT, second (Mockup) → RIGHT */}
+      {/* RTL flex-row-reverse: DOM [Text, Card] → Text LEFT, Card RIGHT ✓ */}
       <div className="flex flex-col md:flex-row-reverse items-center gap-10 lg:gap-16">
 
-        {/* Text — LEFT on desktop */}
+        {/* ── Text column — LEFT on desktop ──────────────────────────── */}
         <div className="w-full md:w-1/2 space-y-5">
           <SectionBadge><Moon size={11} />مواقيت الصلاة</SectionBadge>
 
@@ -45,10 +229,10 @@ export default function SectionPrayerTimes() {
             <span
               className="block"
               style={{
-                background: 'var(--accent-gradient)',
+                background:           'var(--accent-gradient)',
                 WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
+                WebkitTextFillColor:  'transparent',
+                backgroundClip:       'text',
               }}
             >
               لأي مدينة في العالم
@@ -83,25 +267,36 @@ export default function SectionPrayerTimes() {
             </FeatureItem>
             <FeatureItem icon={Globe2}>
               تغطية{' '}
-              <strong>أكثر من 3 ملايين مدينة</strong> حول العالم مع بيانات محدَّثة آنياً
+              <strong>أكثر من 3 ملايين مدينة</strong> حول العالم مع 12 طريقة حساب وبيانات
+              محدَّثة آنياً
             </FeatureItem>
           </ul>
 
           <div className="flex flex-wrap items-center gap-4 pt-2">
-            <CtaLink href="/mwaqit-al-salat">اعرف مواقيت الصلاة الآن</CtaLink>
+            {/* Deep-link to the user's exact city page */}
+            <CtaLink href={prayerHref}>
+              اعرف مواقيت الصلاة في {city.city_name_ar}
+            </CtaLink>
             <Link
               href="/mwaqit-al-salat"
               className="text-sm font-semibold transition-colors"
               style={{ color: 'var(--accent-alt)' }}
             >
-              تصفّح المدن →
+              تصفّح جميع المدن →
             </Link>
           </div>
         </div>
 
-        {/* Mockup — RIGHT on desktop */}
+        {/* ── Live prayer times card — RIGHT on desktop ──────────────── */}
         <div className="w-full md:w-1/2 flex justify-center">
-          <PrayerTimesMockup />
+          <PrayerTimesLiveCard
+            cityNameAr={city.city_name_ar}
+            times={safeTimes}
+            nextKey={nextKey}
+            nextIso={nextIso}
+            timezone={city.timezone}
+            qiblaText={qiblaText}
+          />
         </div>
 
       </div>

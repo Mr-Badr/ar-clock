@@ -1,24 +1,27 @@
 /**
- * SectionTimeDifference — Feature section 2
+ * SectionTimeDifference — Feature section 2  (Server Component — thin wrapper)
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Layout : Image LEFT · Text RIGHT  (RTL flex-row, DOM [Text, Card])
  *
- * Layout: Image LEFT · Text RIGHT  ← alternates with Section 1
+ * DATA FLOW:
+ *   This section requires real-time data (current clock in multiple cities)
+ *   so the card is a pure Client Component — no server data needed.
+ *   TimeDifferenceLiveCard detects the user's timezone from the browser's
+ *   Intl API and shows live updating times in 4 reference cities.
  *
- * BUG-1 FIX (from v1.0):
- * RTL flex-row (NO flex-row-reverse, NO order-* classes):
- *   - RTL flow = right → left
- *   - First DOM child (Text) lands on the RIGHT
- *   - Second DOM child (Mockup) lands on the LEFT ✓
- * v1.0 wrongly used md:order-1 on Text which, combined with RTL flex-row,
- * placed the mockup on the right — identical to Section 1. Now fixed.
+ * Server Component role here is only layout + SEO text column.
+ *
+ * SEO: text column unchanged from v1 — all keyword density preserved.
  */
 
 import Link from 'next/link'
 import { Clock, Sun, Globe2, Users, MapPin } from 'lucide-react'
-import SectionWrapper from './shared/SectionWrapper'
-import SectionBadge from './shared/SectionBadge'
-import FeatureItem from './shared/FeatureItem'
-import CtaLink from './shared/CtaLink'
-import TimeDifferenceMockup from './mockups/TimeDifferenceMockup'
+
+import SectionWrapper         from './shared/SectionWrapper'
+import SectionBadge           from './shared/SectionBadge'
+import FeatureItem            from './shared/FeatureItem'
+import CtaLink                from './shared/CtaLink'
+import TimeDifferenceLiveCard from './mockups/TimeDifferenceLiveCard.client'
 
 const H2_ID = 'h2-time-difference'
 
@@ -36,10 +39,10 @@ export default function SectionTimeDifference() {
         />
       }
     >
-      {/* RTL flex-row: Text (first DOM) → RIGHT, Mockup (second DOM) → LEFT ✓ */}
+      {/* RTL flex-row: Text (first DOM) → RIGHT, Card (second DOM) → LEFT ✓ */}
       <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-16">
 
-        {/* Text — RIGHT on desktop (first DOM child in RTL flex-row) */}
+        {/* ── Text — RIGHT on desktop ───────────────────────────────── */}
         <div className="w-full md:w-1/2 space-y-5">
           <SectionBadge><Globe2 size={11} />فرق التوقيت</SectionBadge>
 
@@ -52,10 +55,10 @@ export default function SectionTimeDifference() {
             <span
               className="block"
               style={{
-                background: 'var(--accent-gradient)',
+                background:           'var(--accent-gradient)',
                 WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
+                WebkitTextFillColor:  'transparent',
+                backgroundClip:       'text',
               }}
             >
               أي مدينتين في ثوانٍ
@@ -107,9 +110,9 @@ export default function SectionTimeDifference() {
           </div>
         </div>
 
-        {/* Mockup — LEFT on desktop (second DOM child in RTL flex-row) */}
+        {/* ── Live card — LEFT on desktop ──────────────────────────── */}
         <div className="w-full md:w-1/2 flex justify-center">
-          <TimeDifferenceMockup />
+          <TimeDifferenceLiveCard />
         </div>
 
       </div>

@@ -29,9 +29,8 @@ import { PAGE_SIZE } from './constants';
 import HolidaysClient from './HolidaysClient';
 import { EventGridSkeleton } from '@/components/events/EventCard';
 import { getCachedNowIso } from '@/lib/date-utils';
-import AdTopBanner from '@/components/ads/AdTopBanner';
-import AdInArticle from '@/components/ads/AdInArticle';
-import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import HolidaysSections from '@/components/holidays/index';
+import { SectionDivider } from '@/components/holidays/shared/primitives';
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
 
@@ -222,17 +221,9 @@ export default async function HolidaysPage() {
             <InitialEventGrid />
           </Suspense>
         </section>
-
         {/* <AdInArticle slotId="mid-holidays-1" /> */}
-
-        {/* ── SEO content ────────────────────────────────────────────── */}
-        <div className="divider" style={{ marginTop: 'var(--space-16)' }} />
-
-        {/* <AdLayoutWrapper> */} 
-        
-        {/* </AdLayoutWrapper> */}
       </main>
-      
+      <HolidaysSections nowIso={nowIso} />
     </div>
   );
 }

@@ -49,9 +49,11 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
+import { Suspense } from 'react'
 import GlobalSchemas       from './GlobalSchemas'
 import SectionStats        from './SectionStats'
 import SectionDivider      from './shared/SectionDivider'
+import SectionSkeleton     from './shared/SectionSkeleton'
 import SectionPrayerTimes  from './SectionPrayerTimes'
 import SectionTimeDifference from './SectionTimeDifference'
 import SectionHolidays     from './SectionHolidays'
@@ -69,9 +71,10 @@ export default function HomeSections() {
       {/* Trust bar — 5 authority numbers, shown right after hero */}
       <SectionStats />
 
-
       {/* Feature 1: Prayer times — Image RIGHT · Text LEFT */}
-      <SectionPrayerTimes />
+      <Suspense fallback={<SectionSkeleton />}>
+        <SectionPrayerTimes />
+      </Suspense>
 
       <SectionDivider />
 
@@ -81,7 +84,9 @@ export default function HomeSections() {
       <SectionDivider />
 
       {/* Feature 3: Holidays — Image RIGHT · Text LEFT */}
-      <SectionHolidays />
+      <Suspense fallback={<SectionSkeleton />}>
+        <SectionHolidays />
+      </Suspense>
 
       <SectionDivider />
 

@@ -7,10 +7,10 @@
 import { Calendar } from 'lucide-react'
 
 const HOLIDAYS = [
-  { name: 'عيد الفطر المبارك',    date: '31 مارس 2025',   type: 'ديني',  color: 'var(--success)'    },
-  { name: 'اليوم الوطني السعودي', date: '23 سبتمبر 2025', type: 'وطني',  color: 'var(--accent-alt)' },
-  { name: 'عيد الأضحى المبارك',   date: '6 يونيو 2025',   type: 'ديني',  color: 'var(--warning)'    },
-  { name: 'رأس السنة الهجرية',     date: '27 يوليو 2025',  type: 'هجري', color: 'var(--info)'       },
+  { name: 'عيد الفطر المبارك',    date: '31 مارس 2025',   type: 'ديني',  color: 'var(--success)',    softBg: 'var(--success-soft)'    },
+  { name: 'اليوم الوطني السعودي', date: '23 سبتمبر 2025', type: 'وطني',  color: 'var(--accent-alt)', softBg: 'var(--accent-alt-soft)' },
+  { name: 'عيد الأضحى المبارك',   date: '6 يونيو 2025',   type: 'ديني',  color: 'var(--warning)',    softBg: 'var(--warning-soft)'    },
+  { name: 'رأس السنة الهجرية',     date: '27 يوليو 2025',  type: 'هجري', color: 'var(--info)',        softBg: 'var(--info-soft)'       },
 ]
 
 export default function HolidaysMockup() {
@@ -18,7 +18,7 @@ export default function HolidaysMockup() {
     <div
       className="relative w-full max-w-sm mx-auto select-none"
       aria-hidden="true"
-      style={{ filter: 'drop-shadow(0 20px 40px rgba(6,8,18,0.5))' }}
+      style={{ boxShadow: '0 20px 40px rgba(6,8,18,0.5)' }}
     >
       <div
         className="rounded-3xl overflow-hidden"
@@ -56,7 +56,7 @@ export default function HolidaysMockup() {
             >
               <div
                 className="flex h-10 w-10 shrink-0 flex-col items-center justify-center rounded-xl"
-                style={{ background: `${h.color}18` }}
+                style={{ background: h.softBg }}
               >
                 <span className="text-[9px] font-bold" style={{ color: h.color }}>
                   {h.type}

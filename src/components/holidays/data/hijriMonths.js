@@ -1,0 +1,118 @@
+/**
+ * hijriMonths.js — 12 Hijri months with names, meanings, and key occasions.
+ * High-value SEO content — "أسماء الأشهر الهجرية" has strong organic search volume.
+ *
+ * 'sacred'    — true if one of the four sacred months (الأشهر الحرم)
+ * 'occasion'  — main Islamic event in that month (if any)
+ * 'meaning'   — etymological meaning of the month name
+ */
+export const HIJRI_MONTHS = [
+  {
+    number: 1,
+    name: 'محرم',
+    nameEn: 'Muharram',
+    meaning: 'الشهر المحرَّم فيه القتال',
+    sacred: true,
+    occasion: 'عاشوراء (10 محرم) · رأس السنة الهجرية',
+    days: '29–30',
+  },
+  {
+    number: 2,
+    name: 'صفر',
+    nameEn: 'Safar',
+    meaning: 'تَصفر البيوت أي تخلو من أهلها',
+    sacred: false,
+    occasion: null,
+    days: '29–30',
+  },
+  {
+    number: 3,
+    name: 'ربيع الأول',
+    nameEn: "Rabi' al-Awwal",
+    meaning: 'سُمّي في فصل الربيع',
+    sacred: false,
+    occasion: 'المولد النبوي الشريف (12 ربيع الأول)',
+    days: '29–30',
+  },
+  {
+    number: 4,
+    name: 'ربيع الثاني',
+    nameEn: "Rabi' al-Thani",
+    meaning: 'يعقب ربيع الأول',
+    sacred: false,
+    occasion: null,
+    days: '29–30',
+  },
+  {
+    number: 5,
+    name: 'جمادى الأولى',
+    nameEn: 'Jumada al-Ula',
+    meaning: 'سُمّي حين تجمّد الماء في الشتاء',
+    sacred: false,
+    occasion: null,
+    days: '29–30',
+  },
+  {
+    number: 6,
+    name: 'جمادى الآخرة',
+    nameEn: 'Jumada al-Akhira',
+    meaning: 'يعقب جمادى الأولى',
+    sacred: false,
+    occasion: null,
+    days: '29–30',
+  },
+  {
+    number: 7,
+    name: 'رجب',
+    nameEn: 'Rajab',
+    meaning: 'من التعظيم والهيبة',
+    sacred: true,
+    occasion: 'ليلة الإسراء والمعراج (27 رجب)',
+    days: '29–30',
+  },
+  {
+    number: 8,
+    name: 'شعبان',
+    nameEn: "Sha'ban",
+    meaning: 'من التشعّب أي التفرّق',
+    sacred: false,
+    occasion: 'ليلة النصف من شعبان (15 شعبان)',
+    days: '29–30',
+  },
+  {
+    number: 9,
+    name: 'رمضان',
+    nameEn: 'Ramadan',
+    meaning: 'من الرمضاء — شدة حرارة الشمس',
+    sacred: false,
+    occasion: 'شهر الصيام · ليلة القدر (العشر الأواخر)',
+    days: '29–30',
+  },
+  {
+    number: 10,
+    name: 'شوال',
+    nameEn: 'Shawwal',
+    meaning: 'من تشوّل الإبل أي ضعف لبنها',
+    sacred: false,
+    occasion: 'عيد الفطر المبارك (1 شوال)',
+    days: '29–30',
+  },
+  {
+    number: 11,
+    name: 'ذو القعدة',
+    nameEn: "Dhu al-Qi'da",
+    meaning: 'يقعد العرب فيه عن القتال',
+    sacred: true,
+    occasion: null,
+    days: '29–30',
+  },
+  {
+    number: 12,
+    name: 'ذو الحجة',
+    nameEn: 'Dhu al-Hijja',
+    meaning: 'شهر أداء مناسك الحج',
+    sacred: true,
+    occasion: 'يوم عرفة (9) · عيد الأضحى (10 ذو الحجة)',
+    days: '29–30',
+  },
+]

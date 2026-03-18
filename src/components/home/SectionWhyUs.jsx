@@ -1,7 +1,19 @@
 /**
  * SectionWhyUs — Feature cards section
- * Six benefit cards in a responsive 1→2→3 column grid.
- * Includes a short SEO paragraph targeting long-tail queries.
+ *
+ * SERVER COMPONENT BUG FIX:
+ *   v1 used onMouseEnter / onMouseLeave on <li> elements.
+ *   In Next.js App Router, event handlers on elements in Server Components
+ *   cause: "Event handlers cannot be passed to Client Component props"
+ *   or a serialization error at runtime — the page breaks.
+ *
+ *   FIX: Remove the event handlers entirely. Use a .feat-card CSS class
+ *   with :hover rules in a <style> tag (same technique as CtaLink).
+ *   The <style> tag is rendered once server-side; the browser deduplicates
+ *   identical blocks. No JS needed, no hydration, no bundle cost.
+ *
+ *   Before: onMouseEnter sets style.transform + style.boxShadow imperatively
+ *   After:  .feat-card:hover { transform: translateY(-2px); box-shadow: ... }
  */
 
 import { Star } from 'lucide-react'
@@ -14,6 +26,17 @@ const H2_ID = 'h2-why-us'
 export default function SectionWhyUs() {
   return (
     <SectionWrapper id="section-why-us" headingId={H2_ID} subtle>
+
+      {/* CSS for card hover — replaces the broken onMouseEnter/onMouseLeave */}
+      <style>{`
+        .feat-card {
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .feat-card:hover {
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-md);
+        }
+      `}</style>
 
       {/* Header */}
       <header className="max-w-2xl mx-auto text-center mb-10 space-y-3">
@@ -50,7 +73,7 @@ export default function SectionWhyUs() {
         </p>
       </header>
 
-      {/* Cards grid */}
+      {/* Cards grid — CSS hover only, no JS event handlers */}
       <ul
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
         role="list"
@@ -59,7 +82,8 @@ export default function SectionWhyUs() {
         {WHY_FEATURES.map((feat) => (
           <li
             key={feat.title}
-            className="rounded-2xl p-5 sm:p-6 transition-all duration-300 hover:-translate-y-0.5"
+            /* feat-card class handles hover via CSS — no onMouseEnter/onMouseLeave */
+            className="feat-card rounded-2xl p-5 sm:p-6"
             style={{
               background: 'var(--bg-surface-1)',
               border: '1px solid var(--border-subtle)',
@@ -68,7 +92,7 @@ export default function SectionWhyUs() {
           >
             <div
               className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl"
-              style={{ background: `${feat.color}18` }}
+              style={{ background: feat.color.replace(')', '-soft)') }}
               aria-hidden="true"
             >
               <feat.icon size={20} style={{ color: feat.color }} />
