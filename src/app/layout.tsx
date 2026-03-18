@@ -132,8 +132,10 @@ export default async function RootLayout({
               },
             }}
           />
+
+          {/*
           <div className="sticky-anchor-spacer" aria-hidden="true" />
-          {/* <AdStickyAnchor />
+          <AdStickyAnchor />
           <AdSenseProvider /> */}
         </ThemeProvider>
       </body>

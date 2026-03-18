@@ -103,7 +103,7 @@ export function Globe({
   return (
     <div
       className={cn(
-        "relative mx-auto w-32 h-32",
+        "relative mx-auto aspect-square w-full",
         className
       )}
     >
