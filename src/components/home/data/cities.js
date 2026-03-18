@@ -1,0 +1,32 @@
+/** @type {{ name: string, country: string, offset: number, flag: string, slug: string }[]} */
+export const CITIES = [
+  { name: 'الرياض', country: 'السعودية', offset: 3, flag: '🇸🇦', slug: 'saudi-arabia/riyadh' },
+  { name: 'دبي', country: 'الإمارات', offset: 4, flag: '🇦🇪', slug: 'united-arab-emirates/dubai' },
+  { name: 'مكة', country: 'السعودية', offset: 3, flag: '🇸🇦', slug: 'saudi-arabia/mecca' },
+  { name: 'المدينة', country: 'السعودية', offset: 3, flag: '🇸🇦', slug: 'saudi-arabia/medina' },
+  { name: 'القاهرة', country: 'مصر', offset: 2, flag: '🇪🇬', slug: 'egypt/cairo' },
+  { name: 'الدار البيضاء', country: 'المغرب', offset: 1, flag: '🇲🇦', slug: 'morocco/casablanca' },
+  { name: 'الرباط', country: 'المغرب', offset: 1, flag: '🇲🇦', slug: 'morocco/rabat' },
+  { name: 'الجزائر', country: 'الجزائر', offset: 1, flag: '🇩🇿', slug: 'algeria/algiers' },
+  { name: 'الكويت', country: 'الكويت', offset: 3, flag: '🇰🇼', slug: 'kuwait/kuwait-city' },
+  { name: 'الدوحة', country: 'قطر', offset: 3, flag: '🇶🇦', slug: 'qatar/doha' },
+  { name: 'إسطنبول', country: 'تركيا', offset: 3, flag: '🇹🇷', slug: 'turkey/istanbul' },
+  { name: 'لندن', country: 'المملكة المتحدة', offset: 0, flag: '🇬🇧', slug: 'united-kingdom/london' },
+  { name: 'باريس', country: 'فرنسا', offset: 1, flag: '🇫🇷', slug: 'france/paris' },
+  { name: 'برلين', country: 'ألمانيا', offset: 1, flag: '🇩🇪', slug: 'germany/berlin' },
+  { name: 'نيويورك', country: 'الولايات المتحدة', offset: -5, flag: '🇺🇸', slug: 'united-states/new-york' },
+  { name: 'واشنطن', country: 'الولايات المتحدة', offset: -5, flag: '🇺🇸', slug: 'united-states/washington-dc' },
+  { name: 'تورونتو', country: 'كندا', offset: -5, flag: '🇨🇦', slug: 'canada/toronto' },
+  { name: 'كوالالمبور', country: 'ماليزيا', offset: 8, flag: '🇲🇾', slug: 'malaysia/kuala-lumpur' },
+
+  // ✅ 9 newly added — highest Arabic search demand
+  { name: 'أبوظبي', country: 'الإمارات', offset: 4, flag: '🇦🇪', slug: 'united-arab-emirates/abu-dhabi' },
+  { name: 'بغداد', country: 'العراق', offset: 3, flag: '🇮🇶', slug: 'iraq/baghdad' },
+  { name: 'عمّان', country: 'الأردن', offset: 3, flag: '🇯🇴', slug: 'jordan/amman' },
+  { name: 'بيروت', country: 'لبنان', offset: 2, flag: '🇱🇧', slug: 'lebanon/beirut' },
+  { name: 'مسقط', country: 'عُمان', offset: 4, flag: '🇴🇲', slug: 'oman/muscat' },
+  { name: 'صنعاء', country: 'اليمن', offset: 3, flag: '🇾🇪', slug: 'yemen/sanaa' },
+  { name: 'موسكو', country: 'روسيا', offset: 3, flag: '🇷🇺', slug: 'russia/moscow' },
+  { name: 'لوس أنجلوس', country: 'الولايات المتحدة', offset: -8, flag: '🇺🇸', slug: 'united-states/los-angeles' },
+  { name: 'سيدني', country: 'أستراليا', offset: 11, flag: '🇦🇺', slug: 'australia/sydney' },
+]

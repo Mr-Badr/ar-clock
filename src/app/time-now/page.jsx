@@ -27,7 +27,7 @@ export default async function TimeNowPage() {
         ))}
       </ul>
 
-      <main style={{ maxWidth: '940px', margin: '0 auto' }}>
+      <main className="content-col pt-24 pb-20">
 
         {/* ── Page Header (Centered Hero Style) ── */}
         <header style={{ marginBottom: '3rem', textAlign: 'center' }}>
