@@ -86,14 +86,14 @@ const CARDS = [
     body: (
       <>
         يبحث ملايين المستخدمين كل عام عن:{' '}
-        <strong style={{ color: 'var(--text-primary)' }}>متى عيد الفطر ٢٠٢٥؟</strong>{' '}
+        <strong style={{ color: 'var(--text-primary)' }}>متى عيد الفطر 2025؟</strong>{' '}
         و
         <strong style={{ color: 'var(--text-primary)' }}>
           {' '}موعد عيد الأضحى المبارك
         </strong>{' '}
         و
         <strong style={{ color: 'var(--text-primary)' }}>
-          {' '}كم يوم رمضان ٢٠٢٦؟
+          {' '}كم يوم رمضان 2026؟
         </strong>{' '}
         قسم{' '}
         <Link
@@ -103,7 +103,7 @@ const CARDS = [
         >
           المناسبات والأعياد
         </Link>{' '}
-        يجمع العطل الرسمية لأكثر من ٢٢ دولة عربية مع التواريخ المزدوجة
+        يجمع العطل الرسمية لأكثر من 22 دولة عربية مع التواريخ المزدوجة
         بالتقويمين الهجري والميلادي وإمكانية{' '}
         <strong style={{ color: 'var(--text-primary)' }}>تحويل التاريخ</strong> بين
         النظامين بنقرة واحدة.

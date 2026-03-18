@@ -83,7 +83,7 @@ export default function SectionPrayerTimes() {
             </FeatureItem>
             <FeatureItem icon={Globe2}>
               تغطية{' '}
-              <strong>أكثر من ٣ ملايين مدينة</strong> حول العالم مع بيانات محدَّثة آنياً
+              <strong>أكثر من 3 ملايين مدينة</strong> حول العالم مع بيانات محدَّثة آنياً
             </FeatureItem>
           </ul>
 

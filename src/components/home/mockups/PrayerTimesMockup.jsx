@@ -61,7 +61,7 @@ export default function PrayerTimesMockup() {
                 الصلاة القادمة
               </p>
               <p className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
-                العصر — ٢:٢٣ ساعة
+                العصر — 2:23 ساعة
               </p>
             </div>
             <Bell size={16} style={{ color: 'var(--accent-alt)' }} />
@@ -120,7 +120,7 @@ export default function PrayerTimesMockup() {
               اتجاه القبلة:
             </span>
             <span className="text-xs font-bold" style={{ color: 'var(--text-primary)' }}>
-              ١٥٧.٤° جنوب غرب
+              157.4° جنوب غرب
             </span>
           </div>
 

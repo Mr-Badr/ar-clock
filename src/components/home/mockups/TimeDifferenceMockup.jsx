@@ -55,7 +55,7 @@ export default function TimeDifferenceMockup() {
           style={{ background: 'var(--accent-gradient)' }}
         >
           <Clock size={15} className="text-white" />
-          <span className="text-white font-bold text-base">فارق التوقيت: +٣ ساعات</span>
+          <span className="text-white font-bold text-base">فارق التوقيت: +3 ساعات</span>
         </div>
 
         {/* City list */}

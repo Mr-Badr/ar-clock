@@ -91,7 +91,7 @@ export default function SectionTimeDifference() {
               العائلات في الخارج
             </FeatureItem>
             <FeatureItem icon={MapPin}>
-              <strong>جدول توقيتات المدن</strong> التفاعلي — قارن ١٢ مدينة دفعةً واحدة
+              <strong>جدول توقيتات المدن</strong> التفاعلي — قارن 12 مدينة دفعةً واحدة
             </FeatureItem>
           </ul>
 

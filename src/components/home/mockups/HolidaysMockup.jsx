@@ -7,10 +7,10 @@
 import { Calendar } from 'lucide-react'
 
 const HOLIDAYS = [
-  { name: 'عيد الفطر المبارك',    date: '٣١ مارس ٢٠٢٥',   type: 'ديني',  color: 'var(--success)'    },
-  { name: 'اليوم الوطني السعودي', date: '٢٣ سبتمبر ٢٠٢٥', type: 'وطني',  color: 'var(--accent-alt)' },
-  { name: 'عيد الأضحى المبارك',   date: '٦ يونيو ٢٠٢٥',   type: 'ديني',  color: 'var(--warning)'    },
-  { name: 'رأس السنة الهجرية',     date: '٢٧ يوليو ٢٠٢٥',  type: 'هجري', color: 'var(--info)'       },
+  { name: 'عيد الفطر المبارك',    date: '31 مارس 2025',   type: 'ديني',  color: 'var(--success)'    },
+  { name: 'اليوم الوطني السعودي', date: '23 سبتمبر 2025', type: 'وطني',  color: 'var(--accent-alt)' },
+  { name: 'عيد الأضحى المبارك',   date: '6 يونيو 2025',   type: 'ديني',  color: 'var(--warning)'    },
+  { name: 'رأس السنة الهجرية',     date: '27 يوليو 2025',  type: 'هجري', color: 'var(--info)'       },
 ]
 
 export default function HolidaysMockup() {
@@ -32,7 +32,7 @@ export default function HolidaysMockup() {
           <div className="flex items-center gap-2">
             <Calendar size={15} style={{ color: 'var(--accent-alt)' }} />
             <span className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
-              مناسبات ٢٠٢٥
+              مناسبات 2025
             </span>
           </div>
           <span

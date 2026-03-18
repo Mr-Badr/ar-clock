@@ -49,7 +49,7 @@ export default function SectionHolidays() {
                 backgroundClip: 'text',
               }}
             >
-              الدينية والوطنية ٢٠٢٥
+              الدينية والوطنية 2025
             </span>
           </h2>
 
@@ -69,7 +69,7 @@ export default function SectionHolidays() {
               ليلة القدر، المولد النبوي، رأس السنة الهجرية
             </FeatureItem>
             <FeatureItem icon={Star}>
-              <strong>العطل الوطنية</strong> لأكثر من ٢٢ دولة عربية مُحدَّثة سنوياً
+              <strong>العطل الوطنية</strong> لأكثر من 22 دولة عربية مُحدَّثة سنوياً
               بالتواريخ الرسمية المعلنة
             </FeatureItem>
             <FeatureItem icon={Calendar}>
