@@ -5,7 +5,7 @@ import CurrentTime from "@/components/helpers/CurrentTime";
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
-
+import TimeDiffSections from '@/components/time-diff/index';
 /**
  * Metadata (Next.js App Router)
  * - extend this object if you use dynamic city-pair pages later
@@ -158,130 +158,8 @@ export default async function TimeDifferencePage() {
           <TimeDiffCalculator preloadedCountries={allCountries} />
         </section>
 
-        {/* Quick answer / examples (This helps featured snippets) */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-4">أمثلة سريعة — إجابات فورية</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Static example cards — keep concise answers visible for snippet */}
-            <article className="p-4 rounded-xl bg-[var(--bg-surface-2)] border border-[var(--border-subtle)]">
-              <h3 className="font-semibold mb-2">الفرق بين الرياض ودبي</h3>
-              <p className="text-[var(--text-muted)]">دبي تسبق الرياض بساعة واحدة (دبي UTC+4، الرياض UTC+3).</p>
-            </article>
-
-            <article className="p-4 rounded-xl bg-[var(--bg-surface-2)] border border-[var(--border-subtle)]">
-              <h3 className="font-semibold mb-2">الفرق بين القاهرة ولندن</h3>
-              <p className="text-[var(--text-muted)]">لندن غالباً متأخرة عن القاهرة بساعتين (قد تتغير مع التوقيت الصيفي).</p>
-            </article>
-          </div>
-        </section>
-
-        {/* Deep content: How it works, DST, work-overlap */}
-        <section className="prose px-2 mt-20 mb-20">
-          <h2 className="mt-4">كيف تعمل الحاسبة (ببساطة)</h2>
-          <p className="text-[var(--text-muted)] leading-relaxed mt-2">
-            عند اختيار مدينتين، نقوم بتحويل التوقيت المحلي لكل واحدة إلى التوقيت العالمي المنسق (UTC)
-            باستخدام بيانات المناطق الزمنية الموثوقة ثم نأخذ الفرق بين هذين التوقيتين. إن أخذنا بالحسبان
-            التوقيت الصيفي يضمن نتيجة دقيقة على مدار السنة.
-          </p>
-
-          <h3 className="mt-4">التوقيت الصيفي ولماذا يهم</h3>
-          <p className="text-[var(--text-muted)] leading-relaxed mt-2">
-            بعض الدول تقدّم أو تؤخر الساعة موسمياً (DST)، وهذا يؤثر مباشرة على فرق التوقيت. الحاسبة
-            تتحقق من حالة DST لكل مدينة في التاريخ المطلوب وتعرض علامة توضيحية إن كانت المدينة في حالة صيفي.
-          </p>
-
-          <h3 className="mt-4">حساب ساعات العمل المشتركة</h3>
-          <p className="text-[var(--text-muted)] leading-relaxed mt-2">
-            لتحديد أفضل وقت للاجتماع، نقارن نطاقات العمل التقليدية (مثلاً 09:00–17:00) في كل مدينة
-            ونحسب الفترة المشتركة. إن لم توجد فترة مشتركة، نقترح الفترات الأقرب بعد فحص فارق الساعات.
-          </p>
-        </section>
-
-        {/* <AdInArticle slotId="mid-time-diff-list-1" /> */}
-
-        {/* FAQ */}
-        <section className="mb-20 mt-20">
-
-          <h2
-            style={{
-              fontSize: "var(--text-xl)",
-              fontWeight: "var(--font-bold)",
-              color: "var(--text-primary)",
-              marginTop: "var(--space-10)",
-              marginBottom: "var(--space-5)",
-              textAlign: "center",
-            }}
-          >
-            أسئلة شائعة حول فرق التوقيت وتحويل الوقت
-          </h2>
-
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "var(--space-3)",
-            }}
-          >
-
-            {faqs.map(({ q, a }) => (
-
-              <details
-                key={q}
-                className="waqt-card-nested"
-                style={{
-                  padding: "var(--space-4) var(--space-5)",
-                }}
-              >
-
-                <summary
-                  style={{
-                    cursor: "pointer",
-                    fontWeight: "var(--font-semibold)",
-                    color: "var(--text-primary)",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    listStyle: "none",
-                    fontSize: "var(--text-base)",
-                  }}
-                >
-                  {q}
-
-                  <span
-                    style={{
-                      color: "var(--text-muted)",
-                      fontSize: "var(--text-xl)",
-                      marginRight: "var(--space-2)",
-                      flexShrink: 0,
-                    }}
-                    aria-hidden
-                  >
-                    +
-                  </span>
-
-                </summary>
-
-                <p
-                  style={{
-                    marginTop: "var(--space-3)",
-                    color: "var(--text-secondary)",
-                    fontSize: "var(--text-sm)",
-                    lineHeight: "var(--leading-relaxed)",
-                  }}
-                >
-                  {a}
-                </p>
-
-              </details>
-
-            ))}
-
-          </div>
-
-        </section>
-
       </main>
+        <TimeDiffSections />
       {/* </AdLayoutWrapper> */}
     </div>
   );

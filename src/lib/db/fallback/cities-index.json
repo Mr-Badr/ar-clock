@@ -6020,20 +6020,6 @@
     "country_slug": "india"
   },
   {
-    "id": 11607,
-    "city_slug": "zhu-cheng-city",
-    "country_code": "CN",
-    "name_ar": "زهو تشينغ كيتي",
-    "name_en": "Zhu Cheng City",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 35.99502,
-    "lon": 119.40259,
-    "priority": 1000000,
-    "population": 1000000,
-    "country_slug": "china"
-  },
-  {
     "id": 27688,
     "city_slug": "shivaji-nagar",
     "country_code": "IN",
@@ -6046,6 +6032,20 @@
     "priority": 1000000,
     "population": 1000000,
     "country_slug": "india"
+  },
+  {
+    "id": 11607,
+    "city_slug": "zhu-cheng-city",
+    "country_code": "CN",
+    "name_ar": "زهو تشينغ كيتي",
+    "name_en": "Zhu Cheng City",
+    "timezone": "Asia/Shanghai",
+    "is_capital": false,
+    "lat": 35.99502,
+    "lon": 119.40259,
+    "priority": 1000000,
+    "population": 1000000,
+    "country_slug": "china"
   },
   {
     "id": 11608,

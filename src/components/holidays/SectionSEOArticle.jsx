@@ -116,7 +116,7 @@ export default function SectionSEOArticle() {
               {' '}الأعياد والمناسبات الإسلامية
             </span>
           </h2>
-          <p className="text-sm sm:text-base" style={{ color: 'var(--text-secondary)' }}>
+          <p className="text-sm sm:text-base mx-auto" style={{ color: 'var(--text-secondary)' }}>
             مرجعك الشامل لفهم التقويم الهجري، كيفية تحديد مواعيد الأعياد، وأدوات التخطيط
             المسبق للمناسبات
           </p>
