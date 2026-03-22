@@ -34,7 +34,7 @@ export default function SectionStats() {
       className="w-full"
 
     >
-      <div className="container-col mx-4 px-4 sm:px-6 lg:px-8 max-w-7xl">
+      <div className="container-col mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <ul
           className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-px overflow-hidden
                      [&>li:last-child]:col-span-2 sm:[&>li:last-child]:col-span-1"

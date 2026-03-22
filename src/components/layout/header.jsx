@@ -9,6 +9,19 @@ import "./header.css";
 export const NAV_LINKS = [
   { href: "/", label: "الرئيسية" },
   { href: "/mwaqit-al-salat", label: "مواقيت الصلاة" },
+  {
+    href: "/date",
+    label: "التاريخ والتحويل",
+    sublinks: [
+      { href: '/date/today/hijri', label: 'التاريخ الهجري اليوم', icon: 'Moon', description: 'عرض تاريخ اليوم بالتقويم الهجري' },
+      { href: '/date/today/gregorian', label: 'التاريخ الميلادي اليوم', icon: 'Sun', description: 'عرض تاريخ اليوم بالتقويم الميلادي' },
+      { href: '/date/converter', label: 'محول التاريخ', icon: 'RefreshCw', description: 'تحويل بين الهجري والميلادي' },
+      { href: '/date/calendar/hijri', label: 'التقويم الهجري', icon: 'Calendar', description: 'عرض تقويم السنة الهجرية كاملة' },
+      { href: '/date/calendar', label: 'التقويم الميلادي', icon: 'CalendarDays', description: 'عرض تقويم السنة الميلادية كاملة' },
+      { href: '/date/hijri-to-gregorian', label: 'هجري إلى ميلادي', icon: 'ArrowRightLeft', description: 'تحويل سريع من الهجري للميلادي' },
+      { href: '/date/gregorian-to-hijri', label: 'ميلادي إلى هجري', icon: 'ArrowRightLeft', description: 'تحويل سريع من الميلادي للهجري' },
+    ]
+  },
   { href: "/time-difference", label: "فرق التوقيت" },
   { href: "/holidays", label: "المناسبات" },
 ];

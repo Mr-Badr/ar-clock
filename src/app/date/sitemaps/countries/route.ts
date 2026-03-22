@@ -1,0 +1,34 @@
+/**
+ * /date/sitemaps/countries/route.ts
+ * All country-specific Date pages.
+ */
+import { getAllCountrySlugs } from '@/lib/db/queries/countries';
+
+const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+
+export async function GET() {
+  const slugs = await getAllCountrySlugs();
+  const todayIso = new Date().toISOString().split('T')[0];
+
+  const entries = slugs.map(
+    slug => `
+  <url>
+    <loc>${BASE}/date/country/${slug}</loc>
+    <lastmod>${todayIso}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>`
+  ).join('');
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${entries}
+</urlset>`;
+
+  return new Response(xml, {
+    headers: {
+      'Content-Type': 'application/xml; charset=utf-8',
+      'Cache-Control': 's-maxage=86400, stale-while-revalidate=86400',
+    },
+  });
+}

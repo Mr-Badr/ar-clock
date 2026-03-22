@@ -11984,20 +11984,6 @@
     "country_slug": "malaysia"
   },
   {
-    "id": 42437,
-    "city_slug": "kota-damansara",
-    "country_code": "MY",
-    "name_ar": "كوتا دامانسارا",
-    "name_en": "Kota Damansara",
-    "timezone": "Asia/Kuala_Lumpur",
-    "is_capital": false,
-    "lat": 3.15454,
-    "lon": 101.58022,
-    "priority": 500000,
-    "population": 500000,
-    "country_slug": "malaysia"
-  },
-  {
     "id": 42436,
     "city_slug": "kampung-larkin-lama",
     "country_code": "MY",
@@ -12007,6 +11993,20 @@
     "is_capital": false,
     "lat": 1.5024,
     "lon": 103.744,
+    "priority": 500000,
+    "population": 500000,
+    "country_slug": "malaysia"
+  },
+  {
+    "id": 42437,
+    "city_slug": "kota-damansara",
+    "country_code": "MY",
+    "name_ar": "كوتا دامانسارا",
+    "name_en": "Kota Damansara",
+    "timezone": "Asia/Kuala_Lumpur",
+    "is_capital": false,
+    "lat": 3.15454,
+    "lon": 101.58022,
     "priority": 500000,
     "population": 500000,
     "country_slug": "malaysia"
@@ -13104,20 +13104,6 @@
     "country_slug": "south-sudan"
   },
   {
-    "id": 11735,
-    "city_slug": "wenshan-city",
-    "country_code": "CN",
-    "name_ar": "مدينة ونشان",
-    "name_en": "Wenshan City",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 23.36306,
-    "lon": 104.25047,
-    "priority": 450000,
-    "population": 450000,
-    "country_slug": "china"
-  },
-  {
     "id": 54062,
     "city_slug": "muratpasa",
     "country_code": "TR",
@@ -13130,6 +13116,20 @@
     "priority": 450000,
     "population": 450000,
     "country_slug": "turkey"
+  },
+  {
+    "id": 11735,
+    "city_slug": "wenshan-city",
+    "country_code": "CN",
+    "name_ar": "مدينة ونشان",
+    "name_en": "Wenshan City",
+    "timezone": "Asia/Shanghai",
+    "is_capital": false,
+    "lat": 23.36306,
+    "lon": 104.25047,
+    "priority": 450000,
+    "population": 450000,
+    "country_slug": "china"
   },
   {
     "id": 54063,
