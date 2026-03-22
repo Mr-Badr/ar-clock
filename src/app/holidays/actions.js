@@ -60,10 +60,25 @@ export async function loadMoreEvents(cursor = 0, filter = {}) {
     );
   }
 
+  const nowMs = new Date(await getCachedNowIso()).getTime();
+  const today = new Date(nowMs);
+  today.setHours(0, 0, 0, 0);
+
+  if (filter.timeRange && filter.timeRange !== 'all') {
+    const resolvedAll = await resolveAllHijriEvents(pool);
+    pool = pool.filter(e => {
+      const target = getNextEventDate(e, resolvedAll, nowMs);
+      const diffDays = Math.ceil((target.getTime() - today.getTime()) / 86_400_000);
+      if (filter.timeRange === 'week') return diffDays <= 7;
+      if (filter.timeRange === 'month') return diffDays <= 30;
+      if (filter.timeRange === '3months') return diffDays <= 90;
+      return true;
+    });
+  }
+
   const total = pool.length;
   const slice = pool.slice(cursor, cursor + PAGE_SIZE);
   const resolved = await resolveAllHijriEvents(slice);
-  const nowMs = new Date(await getCachedNowIso()).getTime();
   const events = slice.map(ev => annotate(ev, resolved, nowMs));
   return {
     events,

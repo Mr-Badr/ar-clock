@@ -15,14 +15,17 @@ import {
   ALL_EVENTS, enrichEvent, HIJRI_MONTHS_AR,
   getNextEventDate, getTimeRemaining,
   formatGregorianAr, formatHijriDisplayAr,
-  resolveEventMeta, approxHijriYear, replaceYears,
+  resolveEventMeta, approxHijriYear, replaceTokens,
   buildEventSchema, buildWebPageSchema, buildFAQSchema, buildBreadcrumbSchema,
-  getRelatedEvents,
+  getRelatedEvents, getEventState,
 } from '@/lib/holidays-engine';
 import { resolveAllHijriEvents } from '@/lib/hijri-resolver';
-import { COUNTRY_META } from '@/lib/calendar-config';
+import { COUNTRY_META, getCountryCalendarConfig } from '@/lib/calendar-config';
+import { buildDynamicCountryDates } from '@/lib/event-utils';
 import { getCachedNowIso } from '@/lib/date-utils';
+import { getRichContent } from '@/lib/event-content';
 import CountdownTicker, { CountdownTickerSkeleton, ShareBar } from '@/components/clocks/CountdownTicker';
+import EventVibeCard from '@/components/holidays/EventVibeCard';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
@@ -94,8 +97,8 @@ function QuickFactsTable({ facts }) {
 }
 
 /* ── Country comparison table ─────────────────────────────────────────────── */
-function CountryTable({ event }) {
-  if (!event.countryDates?.length) return null;
+function CountryTable({ event, countryDates }) {
+  if (!countryDates?.length) return null;
   return (
     <section style={{ marginTop: 'var(--space-8)' }} aria-labelledby="country-h">
       <h2 id="country-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
@@ -112,7 +115,7 @@ function CountryTable({ event }) {
             </tr>
           </thead>
           <tbody>
-            {event.countryDates.map((row, i) => (
+            {countryDates.map((row, i) => (
               <tr key={row.code} style={{ background: i % 2 === 0 ? 'var(--bg-surface-2)' : 'var(--bg-surface-3)', borderBottom: '1px solid var(--border-subtle)' }}>
                 <td style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-sm)', fontWeight: 'var(--font-medium)', color: 'var(--text-primary)' }}>{row.flag} {row.country}</td>
                 <td style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-primary)', fontVariantNumeric: 'tabular-nums' }}>{row.date}</td>
@@ -219,7 +222,11 @@ export default async function HolidayPage({ params }) {
   const now = new Date(nowIso);
   const currentYear = now.getFullYear();
 
-  const event = enrichEvent(raw);
+  const baseEvent = enrichEvent(raw);
+
+  // NEW: merge rich content — purely additive, never removes existing fields
+  const richContent = getRichContent(slug);
+  const event = { ...baseEvent, ...richContent };
 
   const resolved = await resolveAllHijriEvents([event]);
   const calInfo = resolved[event.slug] || null;
@@ -228,31 +235,21 @@ export default async function HolidayPage({ params }) {
 
   // Year-correct all SEO strings for this actual upcoming date
   const seo = resolveEventMeta(event, targetDate);
-  // Also patch any year-bearing strings in quickFacts / countryDates
-  const gregYear = targetDate.getFullYear();
-  const hijriYear = approxHijriYear(gregYear);
-  const patchStr = (s) => replaceYears(s, gregYear, hijriYear);
-  const quickFacts = (event.quickFacts || []).map(f => ({ ...f, value: patchStr(f.value) }));
-  // faqItems come pre-patched from resolveEventMeta — no raw event.faqItems needed below
   const faqItems = seo.faqItems;
+  const quickFacts = seo.quickFacts || [];
+
+  const eventState = getEventState(targetDate, now.getTime());
+  
+
 
   const gregStr = formatGregorianAr(targetDate);
   const year = targetDate.getFullYear();
 
-  /* Hijri display — call AlAdhan for the exact date */
+  /* Hijri display */
   let hijriStr = null, hijriYearNum = year;
-  if (event.type === 'hijri') {
-    try {
-      const d = targetDate;
-      const str = `${String(d.getDate()).padStart(2, '0')}-${String(d.getMonth() + 1).padStart(2, '0')}-${d.getFullYear()}`;
-      const r = await fetch(`https://api.aladhan.com/v1/gToH?date=${str}`, { next: { revalidate: 86_400, tags: ['hijri-display'] } });
-      const j = await r.json();
-      if (j?.data?.hijri) {
-        const hd = { day: +j.data.hijri.day, month: +j.data.hijri.month.number, year: +j.data.hijri.year };
-        hijriStr = formatHijriDisplayAr(hd);
-        hijriYearNum = hd.year;
-      }
-    } catch { /* use greg fallback */ }
+  if (event.type === 'hijri' && calInfo?.hijriLabel) {
+    hijriStr = calInfo.hijriLabel;
+    hijriYearNum = calInfo.hijriYear;
   }
 
   /* WhatsApp share */
@@ -260,7 +257,7 @@ export default async function HolidayPage({ params }) {
   const whatsappUrl = `https://wa.me/?text=${shareText}`;
 
   /* Structured data — all use year-corrected seo.seoTitle / seo.description */
-  const evSchema = { ...buildEventSchema(event, targetDate, SITE), name: seo.seoTitle, description: seo.description };
+  const evSchema = { ...buildEventSchema(event, targetDate, SITE, eventState), name: seo.seoTitle, description: seo.description };
   const wpSchema = { ...buildWebPageSchema(event, targetDate, SITE, nowIso), name: seo.seoTitle, description: seo.description };
   const faqSchema = buildFAQSchema({ ...event, faqItems });
   const bcSchema = buildBreadcrumbSchema([
@@ -430,6 +427,18 @@ export default async function HolidayPage({ params }) {
           dateStr={gregStr}
         />
 
+        {/* ── EVENT VIBE CARD — The "WOW" section ───────────────────────── */}
+        <section style={{ marginBottom: 'var(--space-8)' }} aria-label={`نظرة على ${event.name}`}>
+          <EventVibeCard
+            eventName={event.name}
+            daysLeft={remaining.days}
+            categoryId={event.category}
+            countryCode={event._countryCode || null}
+            slug={slug}
+            eventType={event.type}
+          />
+        </section>
+
         {/* ── QUICK FACTS ─────────────────────────────────────────────────── */}
         {quickFacts.length > 0 && (
           <section style={{ marginBottom: 'var(--space-8)' }}>
@@ -441,21 +450,41 @@ export default async function HolidayPage({ params }) {
         {/* ── ABOUT ───────────────────────────────────────────────────────── */}
         <div className="section" style={{ marginBottom: 'var(--space-6)' }}>
           <div className="card__header">
-            <h2 className="card__title">عن {event.name}</h2>
+            <h2 className="card__title">
+              {seo.about?.heading || `عن ${event.name}`}
+            </h2>
           </div>
-          <p style={{ color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', fontSize: 'var(--text-base)' }}>
-            {event.details || seo.description}
-          </p>
-          {event.history && (
+
+          {/* Render rich seo.about.paragraphs if they exist */}
+          {seo.about?.paragraphs?.length > 0 ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+              {seo.about.paragraphs.map((para, i) => (
+                <p key={i} style={{ color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', fontSize: 'var(--text-base)' }}>
+                  {para}
+                </p>
+              ))}
+            </div>
+          ) : (
+            /* Fallback: single paragraph from details or seo.description */
+            <p style={{ color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', fontSize: 'var(--text-base)' }}>
+              {seo.details || seo.description}
+            </p>
+          )}
+
+          {seo.history && (
             <div style={{ marginTop: 'var(--space-5)', paddingTop: 'var(--space-5)', borderTop: '1px solid var(--border-subtle)' }}>
               <h3 style={{ fontSize: 'var(--text-base)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', marginBottom: 'var(--space-2)' }}>التاريخ والخلفية</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', fontSize: 'var(--text-sm)' }}>{event.history}</p>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', fontSize: 'var(--text-sm)' }}>
+                {seo.history}
+              </p>
             </div>
           )}
-          {event.significance && (
+          {seo.significance && (
             <div style={{ marginTop: 'var(--space-5)', paddingTop: 'var(--space-5)', borderTop: '1px solid var(--border-subtle)' }}>
               <h3 style={{ fontSize: 'var(--text-base)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', marginBottom: 'var(--space-2)' }}>الأهمية والفضل</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', fontSize: 'var(--text-sm)' }}>{event.significance}</p>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', fontSize: 'var(--text-sm)' }}>
+                {seo.significance}
+              </p>
             </div>
           )}
           {/* Data source — E-E-A-T trust signals */}
@@ -472,8 +501,80 @@ export default async function HolidayPage({ params }) {
           </div>
         </div>
 
+        {/* ── TRADITIONS — from rich content ─────────────────────────────── */}
+        {seo.traditions && seo.traditions.length > 0 && (
+          <section style={{ marginBottom: 'var(--space-8)' }} aria-labelledby="traditions-h">
+            <h2 id="traditions-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
+              التقاليد والعادات
+            </h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 'var(--space-3)' }}>
+              {seo.traditions.map((trad, i) => (
+                <div key={i} className="card-nested" style={{ padding: 'var(--space-4)', textAlign: 'center' }}>
+                  <span style={{ fontSize: '2.5rem', display: 'block', marginBottom: 'var(--space-2)' }}>{trad.icon}</span>
+                  <h3 style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', marginBottom: 'var(--space-1)' }}>{trad.title}</h3>
+                  <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)' }}>{trad.description}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── TIMELINE — from rich content ───────────────────────────────── */}
+        {seo.timeline && seo.timeline.length > 0 && (
+          <section style={{ marginBottom: 'var(--space-8)' }} aria-labelledby="timeline-h">
+            <h2 id="timeline-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
+              المراحل الزمنية
+            </h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+              {seo.timeline.map((phase, i) => (
+                <div key={i} className="card-nested" style={{ padding: 'var(--space-4)', display: 'flex', gap: 'var(--space-3)', alignItems: 'flex-start' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: 'var(--radius-full)', background: 'var(--accent-soft)', color: 'var(--accent)', fontWeight: 'var(--font-bold)', fontSize: 'var(--text-sm)', flexShrink: 0 }}>
+                    {i + 1}
+                  </span>
+                  <div>
+                    <h3 style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', marginBottom: 'var(--space-1)' }}>{phase.phase}</h3>
+                    <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)' }}>{phase.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── HOW TO — from rich content ─────────────────────────────────── */}
+        {seo.howTo && (
+          <section style={{ marginBottom: 'var(--space-8)' }} aria-labelledby="howto-h">
+            <h2 id="howto-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
+              {seo.howTo.title || 'كيفية الاستعلام'}
+            </h2>
+            {seo.howTo.summary && (
+              <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', marginBottom: 'var(--space-4)', lineHeight: 'var(--leading-relaxed)' }}>
+                {seo.howTo.summary}
+              </p>
+            )}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+              {seo.howTo.steps && seo.howTo.steps.map((step, i) => (
+                <div key={i} className="card-nested" style={{ padding: 'var(--space-4)', display: 'flex', gap: 'var(--space-3)', alignItems: 'flex-start' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', borderRadius: 'var(--radius-full)', background: 'var(--bg-surface-3)', color: 'var(--text-primary)', fontWeight: 'var(--font-bold)', fontSize: 'var(--text-sm)', flexShrink: 0 }}>
+                    {i + 1}
+                  </span>
+                  <div style={{ flex: 1 }}>
+                    <h3 style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', marginBottom: 'var(--space-1)' }}>{step.name}</h3>
+                    <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)' }}>{step.text}</p>
+                    {step.url && (
+                      <a href={step.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 'var(--text-xs)', color: 'var(--text-link)', marginTop: 'var(--space-1)', display: 'inline-block' }}>
+                        {step.url}
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* ── TABLES ──────────────────────────────────────────────────────── */}
-        <CountryTable event={event} />
+        <CountryTable event={event} countryDates={seo.countryDates} />
         <HistoricalTable event={event} hijriYear={hijriYearNum} currentYear={currentYear} />
 
         {/* ── FAQ ─────────────────────────────────────────────────────────── */}
@@ -494,6 +595,24 @@ export default async function HolidayPage({ params }) {
                 </details>
               ))}
             </div>
+          </section>
+        )}
+
+        {/* ── SOURCES — from rich content (E-E-A-T) ─────────────────────── */}
+        {event.sources && event.sources.length > 0 && (
+          <section style={{ marginTop: 'var(--space-10)' }} aria-labelledby="sources-h">
+            <h2 id="sources-h" style={{ fontSize: 'var(--text-base)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>
+              المصادر والمراجع
+            </h2>
+            <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', listStyle: 'none', padding: 0, margin: 0 }}>
+              {event.sources.map((source, i) => (
+                <li key={i} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-link)' }}>
+                  <a href={source.url} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>
+                    {source.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </section>
         )}
 

@@ -25,7 +25,7 @@
  */
 
 import { Info } from 'lucide-react'
-import { RELIGIOUS_HOLIDAYS, buildHistoricalDates } from '@/lib/holidays-engine'
+import { RELIGIOUS_HOLIDAYS, buildHistoricalDates, replaceTokens, approxHijriYear, HIJRI_MONTHS_AR, getNextEventDate } from '@/lib/holidays-engine'
 import SectionWrapper from './shared/SectionWrapper'
 import { SectionBadge } from './shared/primitives'
 
@@ -36,14 +36,34 @@ const RAM  = RELIGIOUS_HOLIDAYS.find(e => e.id === 'ramadan')
 const FITR = RELIGIOUS_HOLIDAYS.find(e => e.id === 'eid-al-fitr')
 const ADHA = RELIGIOUS_HOLIDAYS.find(e => e.id === 'eid-al-adha')
 
+const resolveEvent = (ev) => {
+  if (!ev) return null
+  const gr = new Date().getFullYear();
+  const hi = approxHijriYear(gr);
+  return {
+    ...ev,
+    history: replaceTokens(ev.history || '', gr, hi),
+    significance: replaceTokens(ev.significance || '', gr, hi),
+    quickFacts: (ev.quickFacts || []).map(f => {
+      let value = replaceTokens(f.value || '', gr, hi);
+      if (f._dynamic === 'gregorian') {
+        const d = getNextEventDate(ev);
+        value = d ? d.toLocaleDateString('ar-SA-u-nu-latn', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+      }
+      if (f._dynamic === 'hijri') value = `${ev.hijriDay || 1} ${HIJRI_MONTHS_AR[ev.hijriMonth] || ''} ${hi} هـ`;
+      return { label: replaceTokens(f.label || '', gr, hi), value };
+    })
+  }
+}
+
 const EVENTS_WITH_FACTS = [
   {
-    ev:    RAM,
+    ev:    resolveEvent(RAM),
     color: 'var(--warning)',
     icon:  '🌙',
   },
   {
-    ev:    ADHA,
+    ev:    resolveEvent(ADHA),
     color: 'var(--success)',
     icon:  '🐑',
   },

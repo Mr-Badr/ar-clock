@@ -16,7 +16,7 @@
   ✓ optimizeCss
 
   Creating an optimized production build ...
-✓ Compiled successfully in 22.9s
+✓ Compiled successfully in 26.0s
   Running TypeScript ...
   Collecting page data using 7 workers ...
 ⚠ Using edge runtime on a page currently disables static generation for that page
@@ -24,7 +24,8 @@
   Generating static pages using 7 workers (2111/8447) 
   Generating static pages using 7 workers (4223/8447) 
   Generating static pages using 7 workers (6335/8447) 
-✓ Generating static pages using 7 workers (8447/8447) in 2.5min
+  Generating static pages using 7 workers (8115/8447) 
+✓ Generating static pages using 7 workers (8447/8447) in 3.1min
   Finalizing page optimization ...
 
 Route (app)                                            Revalidate  Expire

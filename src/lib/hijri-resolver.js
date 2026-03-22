@@ -6,6 +6,7 @@
 
 import { getCountryCalendarConfig } from './calendar-config.js';
 import { cacheTag, cacheLife } from 'next/cache';
+import { HIJRI_MONTHS_AR } from './holidays-engine.js';
 
 const ALADHAN = 'https://api.aladhan.com/v1';
 const _cache = new Map(); // `${method}-${year}-${month}` → Map<day,iso> | null
@@ -138,12 +139,20 @@ export async function resolveAllHijriEvents(events) {
 
     // Check baseYear, +1, +2 in order. Must be > now.
     for (let o = 0; o <= 2; o++) {
-      const map = _cache.get(`${cfg.method}-${baseYear + o}-${ev.hijriMonth}`);
+      const year = baseYear + o;
+      const map = _cache.get(`${cfg.method}-${year}-${ev.hijriMonth}`);
       const iso = map?.get(ev.hijriDay);
       if (iso) {
         const d = new Date(iso); d.setHours(0, 0, 0, 0);
         if (d > now) {
-          resolved = { isoString: iso, ...cfg };
+          resolved = { 
+            isoString: iso, 
+            ...cfg,
+            hijriYear: year,
+            hijriMonth: ev.hijriMonth,
+            hijriDay: ev.hijriDay,
+            hijriLabel: `${ev.hijriDay} ${HIJRI_MONTHS_AR[ev.hijriMonth] || ''} ${year} هـ`
+          };
           break;
         }
       }
@@ -152,7 +161,17 @@ export async function resolveAllHijriEvents(events) {
     // Last resort fallback
     if (!resolved) {
       const fb = roughFallback(ev.hijriMonth, ev.hijriDay);
-      resolved = { isoString: fb.toISOString().split('T')[0], ...cfg, accuracy: 'low', note: 'تعذّر الاتصال بـ API — التاريخ تقديري.' };
+      const year = baseYear + 1; // Approx
+      resolved = { 
+        isoString: fb.toISOString().split('T')[0], 
+        ...cfg, 
+        accuracy: 'low', 
+        note: 'تعذّر الاتصال بـ API — التاريخ تقديري.',
+        hijriYear: year,
+        hijriMonth: ev.hijriMonth,
+        hijriDay: ev.hijriDay,
+        hijriLabel: `${ev.hijriDay} ${HIJRI_MONTHS_AR[ev.hijriMonth] || ''} ${year} هـ`
+      };
     }
     out[ev.slug] = resolved;
   }

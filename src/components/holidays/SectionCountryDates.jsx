@@ -26,7 +26,7 @@
  */
 
 import { Globe2 } from 'lucide-react'
-import { RELIGIOUS_HOLIDAYS } from '@/lib/holidays-engine'
+import { RELIGIOUS_HOLIDAYS, replaceTokens, approxHijriYear } from '@/lib/holidays-engine'
 import SectionWrapper from './shared/SectionWrapper'
 import { SectionBadge } from './shared/primitives'
 
@@ -37,6 +37,16 @@ const RAM  = RELIGIOUS_HOLIDAYS.find(e => e.id === 'ramadan')
 const FITR = RELIGIOUS_HOLIDAYS.find(e => e.id === 'eid-al-fitr')
 const ADHA = RELIGIOUS_HOLIDAYS.find(e => e.id === 'eid-al-adha')
 
+const resolveDates = (datesArry) => {
+  const gr = new Date().getFullYear()
+  const hi = approxHijriYear(gr)
+  return (datesArry || []).map(cd => ({
+    ...cd,
+    date: replaceTokens(cd.date || '', gr, hi),
+    note: replaceTokens(cd.note || '', gr, hi)
+  }))
+}
+
 const EVENTS_WITH_COUNTRIES = [
   {
     id:           RAM?.id,
@@ -44,7 +54,7 @@ const EVENTS_WITH_COUNTRIES = [
     hijriDate:    '1 رمضان',
     color:        'var(--warning)',
     icon:         '🌙',
-    countryDates: RAM?.countryDates  || [],
+    countryDates: resolveDates(RAM?.countryDates),
   },
   {
     id:           FITR?.id,
@@ -52,7 +62,7 @@ const EVENTS_WITH_COUNTRIES = [
     hijriDate:    '1 شوال',
     color:        'var(--success)',
     icon:         '🎉',
-    countryDates: FITR?.countryDates || [],
+    countryDates: resolveDates(FITR?.countryDates),
   },
   {
     id:           ADHA?.id,
@@ -60,7 +70,7 @@ const EVENTS_WITH_COUNTRIES = [
     hijriDate:    '10 ذو الحجة',
     color:        'var(--accent-alt)',
     icon:         '🐑',
-    countryDates: ADHA?.countryDates || [],
+    countryDates: resolveDates(ADHA?.countryDates),
   },
 ]
 

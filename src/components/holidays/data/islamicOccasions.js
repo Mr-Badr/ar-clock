@@ -17,7 +17,7 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-import { RELIGIOUS_HOLIDAYS, HIJRI_MONTHS_AR } from '@/lib/holidays-engine'
+import { RELIGIOUS_HOLIDAYS, HIJRI_MONTHS_AR, replaceTokens, approxHijriYear } from '@/lib/holidays-engine'
 
 /* ── Visual config (id → icon / color / badge) ─────────────────────────────── */
 const ICONS = {
@@ -97,21 +97,27 @@ function buildDuration(ev) {
 export const ISLAMIC_OCCASIONS = RELIGIOUS_HOLIDAYS
   .filter(ev => FEATURED_IDS.includes(ev.id))
   .sort((a, b) => FEATURED_IDS.indexOf(a.id) - FEATURED_IDS.indexOf(b.id))
-  .map(ev => ({
-    id:           ev.id,
-    slug:         ev.slug,
-    name:         ev.name,
-    hijriDate:    buildHijriDate(ev),      // English numerals guaranteed
-    duration:     buildDuration(ev),
-    badge:        BADGES[ev.id]  || 'ديني',
-    description:  ev.details    || ev.description,
-    keywords:     ev.keywords   || [],
-    color:        COLORS[ev.id] || 'var(--accent-alt)',
-    icon:         ICONS[ev.id]  || '🌙',
-    // Pass-through engine fields for richer downstream sections
-    quickFacts:   ev.quickFacts   || [],
-    faqItems:     ev.faqItems     || [],
-    countryDates: ev.countryDates || [],
-    history:      ev.history      || null,
-    significance: ev.significance || null,
-  }))
+  .map(ev => {
+    const gr = new Date().getFullYear();
+    const hi = approxHijriYear(gr);
+    const rt = (s) => replaceTokens(s || '', gr, hi);
+
+    return {
+      id:           ev.id,
+      slug:         ev.slug,
+      name:         ev.name,
+      hijriDate:    buildHijriDate(ev),      // English numerals guaranteed
+      duration:     buildDuration(ev),
+      badge:        BADGES[ev.id]  || 'ديني',
+      description:  rt(ev.details || ev.description),
+      keywords:     (ev.keywords || []).map(rt),
+      color:        COLORS[ev.id] || 'var(--accent-alt)',
+      icon:         ICONS[ev.id]  || '🌙',
+      // Pass-through engine fields for richer downstream sections
+      quickFacts:   (ev.quickFacts || []).map(f => ({ ...f, label: rt(f.label), value: rt(f.value) })),
+      faqItems:     (ev.faqItems || []).map(f => ({ ...f, q: rt(f.q), a: rt(f.a) })),
+      countryDates: (ev.countryDates || []).map(c => ({ ...c, date: rt(c.date), note: rt(c.note) })),
+      history:      rt(ev.history),
+      significance: rt(ev.significance),
+    };
+  })

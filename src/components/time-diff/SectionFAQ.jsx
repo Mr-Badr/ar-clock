@@ -128,18 +128,6 @@ export default function SectionFAQ() {
         ))}
       </div>
 
-      {/* Footer CTA */}
-      <p className="mt-8 text-center text-sm" style={{ color: 'var(--text-muted)' }}>
-        لم تجد ما تبحث عنه؟{' '}
-        <Link
-          href="/time-difference"
-          className="font-semibold transition-colors"
-          style={{ color: 'var(--accent-alt)' }}
-        >
-          جرّب حاسبة فرق التوقيت مجاناً
-        </Link>
-      </p>
-
     </SectionWrapper>
   )
 }

@@ -9,10 +9,10 @@ export default async function sitemap() {
   const fixedDate = new Date('2026-01-01').toISOString();
 
   return [
-    { url: `${BASE}/`, lastModified: fixedDate },
-    { url: `${BASE}/time-now`, lastModified: fixedDate },
-    { url: `${BASE}/mwaqit-al-salat`, lastModified: fixedDate },
-    { url: `${BASE}/holidays`, lastModified: fixedDate },
-    { url: `${BASE}/time-difference`, lastModified: fixedDate },
+    { url: `${BASE}/`, lastModified: fixedDate, changeFrequency: 'daily', priority: 1.0 },
+    { url: `${BASE}/time-now`, lastModified: fixedDate, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${BASE}/mwaqit-al-salat`, lastModified: fixedDate, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${BASE}/holidays`, lastModified: fixedDate, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${BASE}/time-difference`, lastModified: fixedDate, changeFrequency: 'daily', priority: 0.8 },
   ];
 }

@@ -57,12 +57,12 @@ export function getCountryCalendarConfig(code) {
 }
 
 export const COUNTRY_META = {
-  sa: { name: 'السعودية', flag: '🇸🇦', timezone: 'Asia/Riyadh' },
-  eg: { name: 'مصر',      flag: '🇪🇬', timezone: 'Africa/Cairo' },
-  ma: { name: 'المغرب',   flag: '🇲🇦', timezone: 'Africa/Casablanca' },
-  dz: { name: 'الجزائر',  flag: '🇩🇿', timezone: 'Africa/Algiers' },
-  ae: { name: 'الإمارات', flag: '🇦🇪', timezone: 'Asia/Dubai' },
-  tn: { name: 'تونس',     flag: '🇹🇳', timezone: 'Africa/Tunis' },
-  kw: { name: 'الكويت',   flag: '🇰🇼', timezone: 'Asia/Kuwait' },
-  qa: { name: 'قطر',      flag: '🇶🇦', timezone: 'Asia/Qatar' },
+  sa: { name: 'السعودية', flag: '🇸🇦', timezone: 'Asia/Riyadh',     order: 1 },
+  eg: { name: 'مصر',      flag: '🇪🇬', timezone: 'Africa/Cairo',      order: 2 },
+  ma: { name: 'المغرب',   flag: '🇲🇦', timezone: 'Africa/Casablanca', order: 3 },
+  dz: { name: 'الجزائر',  flag: '🇩🇿', timezone: 'Africa/Algiers',    order: 4 },
+  ae: { name: 'الإمارات', flag: '🇦🇪', timezone: 'Asia/Dubai',        order: 5 },
+  tn: { name: 'تونس',     flag: '🇹🇳', timezone: 'Africa/Tunis',      order: 6 },
+  kw: { name: 'الكويت',   flag: '🇰🇼', timezone: 'Asia/Kuwait',       order: 7 },
+  qa: { name: 'قطر',      flag: '🇶🇦', timezone: 'Asia/Qatar',        order: 8 },
 };

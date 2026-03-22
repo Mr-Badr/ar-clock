@@ -10,14 +10,18 @@
  */
 
 import { ALL_EVENTS, getNextEventDate, resolveEventMeta } from '@/lib/holidays-engine'
+import { getRichContent } from '@/lib/event-content'
 
 /**
  * Resolve an event by slug and pick its FAQ items.
  * Ensures the year is current/future.
  */
 function resolveAndPick(slug, n = 2) {
-  const ev = ALL_EVENTS.find(e => e.slug === slug)
-  if (!ev) return []
+  const evRaw = ALL_EVENTS.find(e => e.slug === slug)
+  if (!evRaw) return []
+  
+  const rich = getRichContent(slug) || {}
+  const ev = { ...evRaw, ...rich }
   
   // Resolve for next occurrence
   const nextDate = getNextEventDate(ev)
@@ -54,3 +58,5 @@ export const FAQ_ITEMS = [
   ...resolveAndPick('citizen-account-sa', 1),
   ...resolveAndPick('social-security-sa', 1),
 ]
+
+// [HMR] trigger reload

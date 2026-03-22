@@ -1,0 +1,352 @@
+/*
+ * event-vibe-card.css
+ * EventVibeCard component styles — uses ONLY CSS variables from new.css
+ * Zero hardcoded colors. RTL-first. Full responsive.
+ * Import once in EventVibeCard.jsx via: import './event-vibe-card.css'
+ */
+
+/* ── Keyframe animations ────────────────────────────────────────────── */
+
+@keyframes evibe-card-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+@keyframes evibe-breathe {
+  0%, 100% { transform: scale(1);    opacity: 0.07; }
+  50%       { transform: scale(1.06); opacity: 0.10; }
+}
+
+/* Used on SVG elements — transform-box makes origin relative to the element itself */
+@keyframes evibe-spin-cw {
+  to { transform: rotate(360deg); }
+}
+@keyframes evibe-spin-ccw {
+  to { transform: rotate(-360deg); }
+}
+
+/* True orbital motion: rotate parent → counter-rotate child = planet stays upright */
+@keyframes evibe-orbit-parent {
+  to { transform: rotate(360deg); }
+}
+@keyframes evibe-orbit-child {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes evibe-twinkle {
+  from { opacity: 0.2; transform: scale(0.7); }
+  to   { opacity: 0.9; transform: scale(1.3); }
+}
+
+@keyframes evibe-wave-y {
+  from { transform: translateY(0px);  }
+  to   { transform: translateY(-10px); }
+}
+
+@keyframes evibe-float {
+  0%, 100% { transform: translateY(0);   }
+  50%       { transform: translateY(-5px); }
+}
+
+@keyframes evibe-pulse-ring {
+  0%   { transform: scale(0.95); opacity: 0.7; }
+  100% { transform: scale(1.6);  opacity: 0;   }
+}
+
+/*
+ * Arc animation trick:
+ * We set --evibe-circ and --evibe-offset as CSS custom properties
+ * via inline style on the element. This allows the keyframe to
+ * use those values, letting JS calculate the arc position
+ * while CSS handles the animation smoothly.
+ */
+@keyframes evibe-arc-fill {
+  from { stroke-dashoffset: var(--evibe-circ);   }
+  to   { stroke-dashoffset: var(--evibe-offset); }
+}
+
+@keyframes evibe-urgency-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--evibe-urgency-color-soft); }
+  50%       { box-shadow: 0 0 0 8px transparent; }
+}
+
+/* ── Wrapper ─────────────────────────────────────────────────────────── */
+.evibe-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-accent-strong);
+  background-color: var(--bg-surface-1);
+  box-shadow: var(--shadow-accent-strong);
+  padding: var(--space-8);
+  margin-block: var(--space-10);
+  animation: evibe-card-in 0.5s var(--ease-spring) both;
+  container-type: inline-size;
+  container-name: evibe-card;
+}
+
+/* ── Background gradient blob ────────────────────────────────────────── */
+.evibe-bg-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 65% 55% at 15% 50%,
+    var(--accent-glow-strong),
+    transparent 70%
+  );
+}
+
+/* ── SVG pattern layer ───────────────────────────────────────────────── */
+.evibe-pattern {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* Color inherited from a CSS var set in JSX via style={{ color: 'var(--accent-alt)' }} */
+}
+
+/* SVG-specific transform settings for cross-browser spin */
+.evibe-pattern .spin-cw {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: evibe-spin-cw 40s linear infinite;
+}
+.evibe-pattern .spin-ccw {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: evibe-spin-ccw 28s linear infinite;
+}
+.evibe-pattern .breathe {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: evibe-breathe 6s ease-in-out infinite;
+}
+.evibe-pattern .twinkle-1 { animation: evibe-twinkle 2.8s 0.0s ease-in-out infinite alternate; }
+.evibe-pattern .twinkle-2 { animation: evibe-twinkle 3.2s 0.6s ease-in-out infinite alternate; }
+.evibe-pattern .twinkle-3 { animation: evibe-twinkle 2.5s 1.1s ease-in-out infinite alternate; }
+.evibe-pattern .twinkle-4 { animation: evibe-twinkle 3.6s 0.3s ease-in-out infinite alternate; }
+.evibe-pattern .twinkle-5 { animation: evibe-twinkle 2.9s 1.7s ease-in-out infinite alternate; }
+.evibe-pattern .wave-1 { animation: evibe-wave-y 3.0s 0.0s ease-in-out infinite alternate; }
+.evibe-pattern .wave-2 { animation: evibe-wave-y 3.5s 0.5s ease-in-out infinite alternate; }
+.evibe-pattern .wave-3 { animation: evibe-wave-y 4.0s 1.0s ease-in-out infinite alternate; }
+
+/* Orbit: parent rotates, child counter-rotates — planet "orbits" */
+.evibe-pattern .orbit-arm {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: evibe-orbit-parent 12s linear infinite;
+}
+.evibe-pattern .orbit-planet {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: evibe-orbit-child 12s linear infinite;
+}
+
+/* ── Content layer (above SVG) ───────────────────────────────────────── */
+.evibe-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Top row: category chip + urgency badge ──────────────────────────── */
+.evibe-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.evibe-category-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  border-radius: var(--radius-full);
+  padding: var(--space-1-5) var(--space-4);
+  border: 1px solid var(--border-accent);
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+  white-space: nowrap;
+}
+
+.evibe-urgency-badge {
+  position: relative;
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  border-radius: var(--radius-full);
+  padding: var(--space-1) var(--space-3);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.evibe-urgency-badge--ring {
+  animation: evibe-urgency-pulse 1.8s ease-out infinite;
+}
+
+.evibe-pulse-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-full);
+  animation: evibe-pulse-ring 1.6s ease-out infinite;
+}
+
+/* ── Main body: arc + text ───────────────────────────────────────────── */
+.evibe-body {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  flex-wrap: wrap;
+}
+
+/* ── Arc SVG container ───────────────────────────────────────────────── */
+.evibe-arc-container {
+  position: relative;
+  flex-shrink: 0;
+  /* Size set via CSS container queries below */
+  width: 108px;
+  height: 108px;
+}
+
+.evibe-arc-track {
+  fill: none;
+  stroke: var(--border-subtle);
+  stroke-width: 5;
+}
+
+.evibe-arc-fill {
+  fill: none;
+  stroke-width: 5;
+  stroke-linecap: round;
+  transform-origin: center;
+  transform-box: fill-box;
+  transform: rotate(-90deg);
+  /* Use CSS custom properties set via style attribute for the arc values */
+  stroke-dasharray: var(--evibe-circ);
+  stroke-dashoffset: var(--evibe-circ); /* start at 0% filled */
+  animation: evibe-arc-fill 1.4s var(--ease-out) 0.3s both;
+  filter: drop-shadow(0 0 5px currentColor);
+}
+
+.evibe-arc-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.evibe-arc-number {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-black);
+  line-height: var(--leading-none);
+  font-variant-numeric: tabular-nums;
+}
+
+.evibe-arc-label {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+/* ── Text section ────────────────────────────────────────────────────── */
+.evibe-text {
+  flex: 1;
+  min-width: 160px;
+}
+
+.evibe-headline {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-2);
+}
+
+.evibe-subtext {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: 40ch;
+}
+
+/* ── Stats pills row ─────────────────────────────────────────────────── */
+.evibe-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+}
+
+.evibe-stat-pill {
+  background: var(--bg-surface-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+  min-width: 76px;
+}
+
+.evibe-stat-label {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+.evibe-stat-value {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-snug);
+}
+
+/* ── Responsive: container queries on the card itself ────────────────── */
+
+/* Narrow card (< 400px — single column phones) */
+@container evibe-card (max-width: 400px) {
+  .evibe-wrapper { padding: var(--space-5); }
+  .evibe-body    { gap: var(--space-5); }
+  .evibe-arc-container { width: 86px; height: 86px; }
+  .evibe-arc-number { font-size: var(--text-xl); }
+  .evibe-headline { font-size: var(--text-lg); }
+  .evibe-stat-pill { min-width: 64px; }
+}
+
+/* Medium card (400–600px — wide phones, narrow columns) */
+@container evibe-card (min-width: 400px) and (max-width: 600px) {
+  .evibe-arc-container { width: 96px; height: 96px; }
+}
+
+/* Wide card (> 600px — tablets and desktop) */
+@container evibe-card (min-width: 600px) {
+  .evibe-arc-container { width: 116px; height: 116px; }
+  .evibe-arc-number { font-size: var(--text-3xl); }
+  .evibe-headline { font-size: var(--text-2xl); }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .evibe-wrapper,
+  .evibe-pattern *,
+  .evibe-arc-fill,
+  .evibe-pulse-ring,
+  .evibe-urgency-badge--ring {
+    animation: none !important;
+    transition: none !important;
+  }
+  /* Still show the arc in its final filled state */
+  .evibe-arc-fill {
+    stroke-dashoffset: var(--evibe-offset) !important;
+  }
+}
+
+/* ── Light theme overrides ───────────────────────────────────────────── */
+/* All colors are already CSS vars that respond to .light — no extra rules needed */
+/* The border-accent-strong, bg-surface-1, etc. all automatically adapt */

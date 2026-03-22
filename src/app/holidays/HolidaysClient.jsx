@@ -18,19 +18,19 @@ import { loadMoreEvents } from './actions';
 import { PAGE_SIZE }      from './constants';
 import EventCard, { EventGridSkeleton } from '@/components/events/EventCard';
 import { CATEGORIES }     from '@/lib/holidays-engine';
+import { COUNTRY_META }   from '@/lib/calendar-config';
 
 /* ── Static data ──────────────────────────────────────────────────────── */
 
 const COUNTRIES = [
-  { value: 'all', label: 'كل الدول', flag: ''   },
-  { value: 'sa',  label: 'السعودية', flag: '🇸🇦' },
-  { value: 'eg',  label: 'مصر',      flag: '🇪🇬' },
-  { value: 'ma',  label: 'المغرب',   flag: '🇲🇦' },
-  { value: 'dz',  label: 'الجزائر',  flag: '🇩🇿' },
-  { value: 'ae',  label: 'الإمارات', flag: '🇦🇪' },
-  { value: 'tn',  label: 'تونس',     flag: '🇹🇳' },
-  { value: 'kw',  label: 'الكويت',   flag: '🇰🇼' },
-  { value: 'qa',  label: 'قطر',      flag: '🇶🇦' },
+  { value: 'all', label: 'كل الدول', flag: '' },
+  ...Object.entries(COUNTRY_META)
+    .sort(([, a], [, b]) => (a.order || 99) - (b.order || 99))
+    .map(([code, meta]) => ({
+      value: code,
+      label: meta.name,
+      flag: meta.flag
+    }))
 ];
 
 const TIME_RANGES = [
