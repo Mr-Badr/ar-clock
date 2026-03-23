@@ -257,7 +257,7 @@ export default async function PrayerTimesPage({ params }) {
           <h1 className="text-3xl sm:text-4xl font-black text-primary mb-2 leading-tight">
             مواقيت الصلاة في <span className="text-accent">{cityNameAr}</span>
           </h1>
-          <p className="text-muted text-sm">{countryNameAr}</p>
+          <p className="text-muted text-sm mx-auto">{countryNameAr}</p>
         </header>
 
         {/* <AdTopBanner slotId="top-city" /> */}

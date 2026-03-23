@@ -43,7 +43,8 @@
  *
  * Index 0 = محرم (month 1), Index 11 = ذو الحجة (month 12)
  */
-export { HIJRI_MONTHS_AR } from './constants';
+import { HIJRI_MONTHS_AR } from './constants';
+export { HIJRI_MONTHS_AR };
 
 // ─── Intl formatters (module-level singletons for performance) ────────────────
 // Creating Intl.DateTimeFormat is expensive. Reusing the same instance is
@@ -84,14 +85,18 @@ export function getDaysInCurrentMonth() {
 export function getHijriParts(date) {
   try {
     const parts = _hijriNumFmt.formatToParts(date);
-    const get   = (type) => parseInt(parts.find(p => p.type === type)?.value ?? '0', 10);
+    const get = (type) => {
+      const val = parts.find(p => p.type === type)?.value || '0';
+      // Strip any non-digit chars (e.g. RTL marks) before parsing
+      return parseInt(val.replace(/\D/g, ''), 10) || 0;
+    };
 
-    const monthNum = get('month');          // 1–12, always English via nu-latn
+    const monthNum = get('month'); // 1–12
     return {
-      hijriDay:       get('day'),
-      hijriMonthNum:  monthNum,
-      hijriMonthName: HIJRI_MONTHS_AR[monthNum - 1] ?? '',   // Arabic name
-      hijriYear:      get('year'),
+      hijriDay: get('day'),
+      hijriMonthNum: monthNum,
+      hijriMonthName: HIJRI_MONTHS_AR[monthNum - 1] ?? '', // Arabic name
+      hijriYear: get('year'),
     };
   } catch {
     return { hijriDay: 0, hijriMonthNum: 0, hijriMonthName: '', hijriYear: 0 };

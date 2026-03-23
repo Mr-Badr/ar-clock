@@ -1,79 +1,112 @@
 /**
- * app/api/pdf-calendar/route.js
+ * app/api/pdf-calendar/route.js — v7
  *
- * Puppeteer PDF generation for تقويم مواقيت الصلاة
+ * ── WHAT CHANGED FROM v6 ─────────────────────────────────────────────────────
+ *   ✦ Accepts `theme` in request body ('light' | 'dark') — default: 'light'
+ *   ✦ Dark colour palette (BD) built from the same design-system tokens as
+ *     the web component (base.css dark theme variables)
+ *   ✦ No today-row highlighting in either theme (today is irrelevant on paper)
+ *   ✦ Friday rows still highlighted (always semantically meaningful)
+ *   ✦ Font pre-loading improved — waits for document.fonts.ready after
+ *     networkidle0 to eliminate Arabic/mono glyph substitution artifacts
+ *   ✦ Dark theme sets page background to dark so no white bleed on edges
+ *   ✦ Footer shows theme indicator in dark mode
  *
- * ── INSTALLATION ──────────────────────────────────────────────────────────────
- *   Standard (local / Docker / self-hosted Node.js):
- *     npm install puppeteer
- *
- *   Vercel / Netlify / AWS Lambda (Chromium too large for standard serverless):
- *     npm install puppeteer-core @sparticuz/chromium
- *     Then swap the SERVERLESS block below (clearly marked).
- *
- * ── NUMERALS ──────────────────────────────────────────────────────────────────
- *   All numbers are English (Latin) digits.
- *   Month names are Arabic.
- *   This matches the app's standard: Arabic app, English numerals.
+ * ── SINGLE-PAGE GUARANTEE ────────────────────────────────────────────────────
+ *   Puppeteer viewport = A4 landscape in px (1122 × 794 at 96dpi).
+ *   body is locked: width:1122px; height:794px; overflow:hidden.
+ *   Row height: floor((794-56-72-24-10-28) / 31) = 19px
  *
  * ── FONTS ─────────────────────────────────────────────────────────────────────
- *   Noto Kufi Arabic — full Arabic glyph coverage, clean, modern
- *   IBM Plex Mono    — tabular monospace for prayer time digits
- *   Both loaded from Google Fonts. Puppeteer waits for networkidle0.
- *
- * ── BRAND CONSTANTS ───────────────────────────────────────────────────────────
- *   All colours are derived from new.css light-theme tokens.
- *   Light theme is used because PDF is always on white paper.
- *   Update BRAND.* if design system changes — one place, no hunting.
- *
- * ── FUTURE CUSTOMISATION SLOTS ───────────────────────────────────────────────
- *   Logo:    set LOGO_URL to an absolute URL
- *   Footer:  edit the FOOTER CUSTOM SLOT comment
- *   Multi-page: remove `page-break-inside: avoid` on .pdf-table
+ *   Noto Kufi Arabic  — Arabic text
+ *   IBM Plex Mono     — prayer time digits, tabular alignment
  */
 
 import { NextResponse } from 'next/server';
 
-// ─── Brand constants (from new.css light theme tokens) ────────────────────────
-const BRAND = {
-  // --accent (light)       = #1D4ED8
-  primary:        '#1D4ED8',
-  // --accent-active (light) = #1E3A8A
-  primaryDark:    '#1E3A8A',
-  // --accent-soft (light)   = rgba(29,78,216,0.08)
-  primarySoft:    'rgba(29,78,216,0.08)',
-  // --border-accent (light) = rgba(29,78,216,0.28)
-  primaryBorder:  'rgba(29,78,216,0.28)',
+// ─── Light theme (paper/white) ────────────────────────────────────────────────
+const BL = {
+  pageBg:        '#FFFFFF',
 
-  // --text-primary (light)   = #0E1220
-  textPrimary:    '#0E1220',
-  // --text-secondary (light) = #3D4668
-  textSecondary:  '#3D4668',
-  // --text-muted (light)     = #536080
-  textMuted:      '#536080',
+  primary:       '#1D4ED8',
+  primaryDark:   '#1E3A8A',
+  primaryGrad:   'linear-gradient(135deg,#1D4ED8 0%,#4338CA 100%)',
+  primarySoft:   'rgba(29,78,216,0.07)',
+  primaryBorder: 'rgba(29,78,216,0.22)',
 
-  // Row backgrounds
-  rowOdd:    '#FFFFFF',
-  // --bg-surface-1 (light) ≈ white; use a very light grey for even rows
-  rowEven:   '#F5F7FA',
-  // --success-soft (light) = rgba(4,102,69,0.08) → approximated
-  rowFriday: '#F0FFF8',
-  // --success (light)      = #046645
-  fridayText: '#046645',
+  text:          '#0E1220',
+  textSub:       '#3D4668',
+  textMuted:     '#536080',
 
-  // Table header background
-  headerBg:   '#1E3A8A',
-  // --border-subtle (light) = #B8CAE4
-  borderLight: '#D1D9E6',
+  rowOdd:        '#FFFFFF',
+  rowEven:       '#F4F7FC',
+  rowFriday:     'rgba(4,102,69,0.06)',
+
+  fridayBorder:  '#046645',
+  fridayText:    '#046645',
+  fridayTime:    '#046645',
+
+  theadBg:       '#1E3A8A',
+  theadText:     '#FFFFFF',
+  theadAccent:   '#BFDBFE',
+
+  borderRow:     '#E0E8F4',
+  borderSection: '#C8D4E8',
+
+  footerText:    '#7A88A8',
+  logoBg:        'rgba(29,78,216,0.07)',
 };
 
-// ─── Branding ─────────────────────────────────────────────────────────────────
-const SITE_NAME = 'waqt.app';
-const SITE_URL  = process.env.NEXT_PUBLIC_SITE_URL || 'https://waqt.app';
-const LOGO_URL  = null; // Set to absolute URL e.g. `${SITE_URL}/logo.png`
+// ─── Dark theme (deep navy) ───────────────────────────────────────────────────
+const BD = {
+  pageBg:        '#0D1117',
+
+  primary:       '#8CAEFF',   // --accent-alt in dark mode
+  primaryDark:   '#B0C8FF',
+  primaryGrad:   'linear-gradient(135deg,#3B5ED8 0%,#4338CA 100%)',
+  primarySoft:   'rgba(140,174,255,0.12)',
+  primaryBorder: 'rgba(140,174,255,0.25)',
+
+  text:          '#F0F4FF',   // --text-primary dark
+  textSub:       '#A8B2CB',   // --text-secondary dark
+  textMuted:     '#90AACC',   // --text-muted dark
+
+  rowOdd:        '#161D2E',   // --bg-surface-1 dark
+  rowEven:       '#1E2640',   // --bg-surface-2 dark
+  rowFriday:     'rgba(6,214,160,0.10)',
+
+  fridayBorder:  '#06D6A0',   // --success dark
+  fridayText:    '#06D6A0',
+  fridayTime:    '#06D6A0',
+
+  theadBg:       '#060B14',   // deeper than bg-base for contrast
+  theadText:     '#E2E8F7',
+  theadAccent:   '#8CAEFF',
+
+  borderRow:     '#222C45',   // --border-default dark
+  borderSection: '#2E3A60',
+
+  footerText:    '#6B7FA0',
+  logoBg:        'rgba(140,174,255,0.10)',
+};
+
+// ─── App branding ─────────────────────────────────────────────────────────────
+const SITE_NAME = 'MiqaTime.com';
+const SITE_URL  = process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+
+// ─── Prayer config ────────────────────────────────────────────────────────────
+const PRAYER_KEYS = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
+const PRAYER_AR   = {
+  fajr: 'الفجر', sunrise: 'الشروق', dhuhr: 'الظهر',
+  asr:  'العصر', maghrib: 'المغرب', isha:  'العشاء',
+};
+const PRAYER_ICON = {
+  fajr: '🌙', sunrise: '🌅', dhuhr: '☀️',
+  asr:  '🌤', maghrib: '🌇',  isha:  '⭐',
+};
 
 // ─── Puppeteer launch ─────────────────────────────────────────────────────────
-// ── SERVERLESS SWAP (Vercel / Netlify / Lambda): uncomment this block ──────────
+// ── SERVERLESS (Vercel / Netlify / Lambda) — uncomment to swap: ────────────────
 // import chromium  from '@sparticuz/chromium';
 // import puppeteer from 'puppeteer-core';
 // async function launchBrowser() {
@@ -84,277 +117,374 @@ const LOGO_URL  = null; // Set to absolute URL e.g. `${SITE_URL}/logo.png`
 //     headless:        chromium.headless,
 //   });
 // }
-// ─── STANDARD (local / Docker / self-hosted): ────────────────────────────────
+// ── STANDARD (local / Docker / self-hosted Node.js): ─────────────────────────
 import puppeteer from 'puppeteer';
 async function launchBrowser() {
   return puppeteer.launch({
     headless: 'new',
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',  // prevents /dev/shm overflow in Docker
-    ],
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
   });
 }
 
-// ─── Prayer labels ────────────────────────────────────────────────────────────
-const PRAYER_KEYS = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
-const PRAYER_AR   = {
-  fajr: 'الفجر', sunrise: 'الشروق', dhuhr: 'الظهر',
-  asr:  'العصر', maghrib: 'المغرب', isha:  'العشاء',
-};
-
 // ─── HTML template ────────────────────────────────────────────────────────────
 /**
- * Generates a fully self-contained HTML page for Puppeteer to render.
- * No React, no Tailwind, no external CSS files — just inline styles.
+ * Generates a fully self-contained HTML page sized EXACTLY to A4 landscape.
+ * Canvas: 1122 × 794px (96dpi). Everything is px-based for deterministic layout.
  *
- * NUMERAL GUARANTEE:
- * All numbers in the template are passed from the schedule object which was
- * produced using:
- *   - `date.getDate()`       → JS integer (English digit)
- *   - `getHijriParts(date)`  → nu-latn Intl (English digits)
- *   - `getTimeFmt(tz).format()` → 'en' locale (English digits)
- * No additional numeral conversion needed here.
+ * Row height maths:
+ *   content h = 794 - 56 (padT+padB)   = 738px
+ *   header    = 72px
+ *   footer    = 24px
+ *   gap       = 10px
+ *   thead     = 28px
+ *   tbody     = 738 - 72 - 24 - 10 - 28 = 604px
+ *   per row   = floor(604 / 31) = 19px
+ *
+ * NOTE: today-row highlighting intentionally omitted.
+ *   A printed sheet has no "current day" — Friday rows remain coloured
+ *   because Jumu'ah is always meaningful regardless of date.
  */
-function generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel }) {
+function generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, theme }) {
+  const B   = theme === 'dark' ? BD : BL;
+  const isDark = theme === 'dark';
+
+  // ── Row builder ─────────────────────────────────────────────────────────────
   const rows = schedule.map((row, idx) => {
-    const isEven   = idx % 2 === 0;
-    const isFriday = row.isFriday;
+    const isEven = idx % 2 === 0;
+    const isFri  = row.isFriday;
 
-    const bg      = isFriday ? BRAND.rowFriday : isEven ? BRAND.rowOdd : BRAND.rowEven;
-    const textCol = isFriday ? BRAND.fridayText : BRAND.textPrimary;
-    const timeCol = isFriday ? BRAND.fridayText : BRAND.primary;
-    const fw      = isFriday ? '700' : '500';
+    const bg      = isFri ? B.rowFriday : isEven ? B.rowOdd : B.rowEven;
+    const col     = isFri ? B.fridayText : B.text;
+    const timeCol = isFri ? B.fridayTime : B.primary;
+    const fw      = isFri ? '700' : '500';
 
-    const hijriPillHtml = row.isNewHijriMonth
+    // New hijri month pill
+    const pill = row.isNewHijriMonth
       ? `<span style="
-            display:inline-block; font-size:5.5pt; font-weight:700;
-            color:${isFriday ? BRAND.fridayText : BRAND.primary};
-            background:${isFriday ? 'rgba(4,102,69,0.08)' : BRAND.primarySoft};
-            border:0.5pt solid ${isFriday ? 'rgba(4,102,69,0.25)' : BRAND.primaryBorder};
-            border-radius:999pt; padding:0.5pt 4pt;
-            margin-top:1pt; white-space:nowrap; line-height:1.4;">
+            display:inline-flex;align-items:center;
+            margin-inline-start:2px;
+            font-size:5.5px;font-weight:700;
+            color:${isFri ? B.fridayText : B.primary};
+            background:${isFri ? (isDark ? 'rgba(6,214,160,0.12)' : 'rgba(4,102,69,0.06)') : B.primarySoft};
+            border:0.5px solid ${isFri ? (isDark ? 'rgba(6,214,160,0.30)' : 'rgba(4,102,69,0.25)') : B.primaryBorder};
+            border-radius:999px;padding:0 4px;line-height:16px;
+            white-space:nowrap;vertical-align:middle;">
             ${row.hijriMonthName}
           </span>`
       : '';
 
     return `
-      <tr style="background:${bg}; border-bottom:0.5pt solid ${BRAND.borderLight};">
-        <td class="cell" style="color:${textCol}; font-weight:${fw}; font-size:7pt;">
+      <tr style="
+          background:${bg};
+          border-bottom:0.5px solid ${B.borderRow};
+          height:19px; max-height:19px; overflow:hidden;
+          ${isFri ? `box-shadow:inset -3px 0 0 ${B.fridayBorder};` : ''}
+      ">
+        <td class="cell cell-day" style="color:${col};font-weight:${fw};">
           ${row.dayName}
         </td>
-        <td class="cell">
-          <span style="display:block; font-weight:600; color:${textCol};">
-            ${row.hijriDay}
-          </span>
-          ${hijriPillHtml}
+        <td class="cell cell-hijri" style="color:${col};">
+          <span style="font-weight:600;">${row.hijriDay}</span>${pill}
         </td>
-        <td class="cell" style="color:${textCol}; font-weight:700;">
+        <td class="cell cell-greg" style="color:${B.textSub};">
           ${row.dayNumber}
         </td>
-        ${PRAYER_KEYS.map(k => `
-          <td class="cell cell-time"
-              style="color:${timeCol}; font-weight:${isFriday ? '700' : '600'};"
-              dir="ltr">
+        ${PRAYER_KEYS.map((k) => `
+          <td class="cell cell-time" dir="ltr"
+              style="color:${timeCol};font-weight:${isFri ? 700 : 500};">
             ${row[k]}
-          </td>
-        `).join('')}
+          </td>`).join('')}
       </tr>`;
   }).join('');
-
-  const logoHtml = LOGO_URL
-    ? `<img src="${LOGO_URL}" alt="${SITE_NAME}"
-           style="height:26pt; width:auto; object-fit:contain;" />`
-    : `<div style="font-size:13pt; font-weight:800; color:${BRAND.primary};">
-         ${SITE_NAME}
-       </div>`;
 
   return `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <title>تقويم مواقيت الصلاة — ${cityNameAr} — ${gregorianLabel}</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap"
         rel="stylesheet" />
-  <style>
-    @page {
-      size: A4 landscape;
-      margin: 0.9cm 1cm;
-      /* ── RUNNING HEADER/FOOTER SLOT ──────────────────────────────────
-         Uncomment for multi-page tables:
-         @top-center    { content: "تقويم مواقيت الصلاة — ${SITE_NAME}";
-                         font-family: 'Noto Kufi Arabic', sans-serif;
-                         font-size: 7pt; color: #888; }
-         @bottom-center { content: "صفحة " counter(page);
-                         font-size: 6pt; color: #aaa; }
-      ─────────────────────────────────────────────────────────────────── */
-    }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Page canvas: locked to A4 landscape at 96dpi ──────────────────── */
+    @page { size: A4 landscape; margin: 0; }
+
+    html {
+      width: 1122px; height: 794px;
+      overflow: hidden;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
 
     body {
+      width: 1122px; height: 794px;
+      overflow: hidden;
       font-family: 'Noto Kufi Arabic', system-ui, sans-serif;
-      font-size: 8pt;
-      color: ${BRAND.textPrimary};
-      background: white;
+      color: ${B.text};
+      background: ${B.pageBg};
       direction: rtl;
-      /* Required so coloured rows actually print */
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
+      display: flex;
+      flex-direction: column;
+      padding: 28px 38px;
     }
 
-    /* ── Document header ──────────────────────────────────────────────── */
+    /* ── Header (72px total) ────────────────────────────────────────────── */
     .pdf-header {
+      flex-shrink: 0;
+      height: 72px;
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      gap: 10pt;
-      padding-bottom: 6pt;
-      margin-bottom: 5pt;
-      border-bottom: 2pt solid ${BRAND.primary};
+      gap: 20px;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 2px solid ${B.primary};
     }
-    .pdf-header-right { display: flex; flex-direction: column; gap: 2px; }
+    .pdf-header-left  { display: flex; flex-direction: column; gap: 3px; }
 
-    /* Title: Tier-2 keyword "تقويم مواقيت الصلاة" */
     .pdf-title {
-      font-size: 11pt; font-weight: 800;
-      color: ${BRAND.textPrimary}; line-height: 1.25;
-    }
-    .pdf-title-accent { color: ${BRAND.primary}; }
-
-    /* Sub-title: Tier-3 "جدول أوقات الصلاة الشهري" */
-    .pdf-subtitle { font-size: 7.5pt; color: ${BRAND.textSecondary}; margin-top: 2px; }
-
-    /* Badge row */
-    .pdf-badges { display: flex; gap: 5pt; margin-top: 3px; flex-wrap: wrap; align-items: center; }
-    .badge {
-      display: inline-flex; align-items: center;
-      font-size: 6.5pt; font-weight: 600;
-      border-radius: 999pt; padding: 1.5pt 6pt;
-      white-space: nowrap; line-height: 1.4;
-    }
-    .badge-primary {
-      color: ${BRAND.primary};
-      background: ${BRAND.primarySoft};
-      border: 0.5pt solid ${BRAND.primaryBorder};
-    }
-    .badge-neutral {
-      color: ${BRAND.textSecondary};
-      background: #F3F4F6;
-      border: 0.5pt solid #D1D5DB;
-    }
-
-    /* ── Table ────────────────────────────────────────────────────────── */
-    .pdf-table {
-      width: 100%; border-collapse: collapse;
-      table-layout: fixed;
-      /* Single page — remove page-break-inside:avoid for multi-page */
-      page-break-inside: avoid;
-    }
-
-    /* Column widths — tuned for A4 landscape ~277mm usable width */
-    .col-day    { width: 13%; }
-    .col-hijri  { width: 12%; }
-    .col-greg   { width:  5%; }
-    .col-prayer { width: calc(70% / 6); }
-
-    thead tr { background: ${BRAND.headerBg}; }
-    thead th {
-      font-size: 7.5pt; font-weight: 700;
-      color: white; text-align: center;
-      padding: 4pt 2pt;
-      border: 0.5pt solid rgba(255,255,255,0.15);
+      font-size: 17px;
+      font-weight: 800;
+      color: ${B.text};
+      line-height: 1.25;
       white-space: nowrap;
     }
-    thead th.th-prayer { color: #BFDBFE; } /* --raw-blue-300 */
+    .pdf-title-accent { color: ${B.primary}; }
 
+    .pdf-subtitle {
+      font-size: 8.5px;
+      color: ${B.textSub};
+      white-space: nowrap;
+    }
+
+    .pdf-badges {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 7px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 2px 8px;
+      white-space: nowrap;
+      line-height: 1.4;
+    }
+    .badge-primary {
+      color: ${B.primary};
+      background: ${B.primarySoft};
+      border: 0.5px solid ${B.primaryBorder};
+    }
+    .badge-neutral {
+      color: ${B.textSub};
+      background: ${isDark ? 'rgba(255,255,255,0.05)' : '#F0F4FA'};
+      border: 0.5px solid ${isDark ? 'rgba(255,255,255,0.10)' : '#C8D4E8'};
+    }
+
+    .pdf-header-right {
+      display: flex;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+    .pdf-logo {
+      font-size: 13px;
+      font-weight: 800;
+      color: ${B.primary};
+      background: ${B.logoBg};
+      border: 1px solid ${B.primaryBorder};
+      border-radius: 8px;
+      padding: 4px 12px;
+      white-space: nowrap;
+    }
+
+    /* ── Table wrapper (flex:1 fills space between header and footer) ─── */
+    .pdf-table-wrap {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Table (height:100% → fills wrapper) ────────────────────────────── */
+    .pdf-table {
+      width: 100%;
+      height: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    /* Column widths tuned for 1046px usable width */
+    .col-day    { width: 13%; }   /* ~136px — اليوم  */
+    .col-hijri  { width: 10%; }   /* ~105px — الهجري */
+    .col-greg   { width:  5%; }   /*  ~52px — م      */
+    .col-prayer { width: calc(72% / 6); } /* ~125px × 6 */
+
+    /* ── Thead (28px row) ───────────────────────────────────────────────── */
+    .pdf-table thead { background: ${B.theadBg}; }
+    .pdf-table thead tr { height: 28px; }
+
+    .pdf-table thead th {
+      text-align: center;
+      vertical-align: middle;
+      font-size: 7.5px;
+      font-weight: 700;
+      color: ${B.theadText};
+      border: 0.5px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.12)'};
+      padding: 0 2px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .th-day { text-align: right; padding-right: 8px; }
+    .th-prayer { color: ${B.theadAccent}; }
+
+    .th-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+      line-height: 1.2;
+    }
+    .th-icon  { font-size: 9px; }
+    .th-label { font-size: 6.5px; font-weight: 700; color: ${B.theadText}; }
+
+    /* ── Tbody rows (19px each) ─────────────────────────────────────────── */
+    .pdf-table tbody tr {
+      height: 19px;
+      max-height: 19px;
+      border-bottom: 0.5px solid ${B.borderRow};
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .pdf-table tbody tr:last-child { border-bottom: none; }
+
+    /* ── Cells ──────────────────────────────────────────────────────────── */
     .cell {
-      text-align: center; vertical-align: middle;
-      font-size: 7.5pt; padding: 3pt 2pt;
-      color: ${BRAND.textPrimary};
+      text-align: center;
+      vertical-align: middle;
+      font-size: 8px;
+      padding: 0 2px;
+      height: 19px;
+      max-height: 19px;
+      overflow: hidden;
+      color: ${B.text};
+    }
+    .cell-day {
+      text-align: right;
+      padding-right: 8px;
+      font-size: 8px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .cell-hijri {
+      font-size: 7.5px;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .cell-greg {
+      font-size: 7.5px;
+      color: ${B.textSub};
+      font-weight: 600;
+      direction: ltr;
     }
     .cell-time {
       font-family: 'IBM Plex Mono', 'Courier New', monospace;
       font-variant-numeric: tabular-nums;
-      font-size: 7.5pt;
-      letter-spacing: 0.02em;
+      font-feature-settings: "tnum" 1;
+      font-size: 8px;
+      font-weight: 500;
+      direction: ltr;
+      letter-spacing: 0;
     }
 
-    /* ── Footer ───────────────────────────────────────────────────────── */
+    /* ── Footer (24px) ──────────────────────────────────────────────────── */
     .pdf-footer {
-      margin-top: 5pt; padding-top: 4pt;
-      border-top: 0.5pt solid ${BRAND.borderLight};
+      flex-shrink: 0;
+      height: 24px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 8pt;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 6px;
+      margin-top: 4px;
+      border-top: 0.5px solid ${B.borderSection};
     }
-    .pdf-footer-text { font-size: 6pt; color: ${BRAND.textMuted}; }
-    .pdf-footer-url  { font-size: 6pt; color: ${BRAND.primary}; font-weight: 600; }
-    /* ── FOOTER CUSTOM SLOT ─────────────────────────────────────────────
-       Add a QR code image, disclaimer, or social handle here:
-       <span class="pdf-footer-custom">@waqt_app</span>
-    ──────────────────────────────────────────────────────────────────── */
-    .pdf-footer-custom { font-size: 6pt; color: #9CA3AF; }
+    .pdf-footer-text { font-size: 5.5px; color: ${B.footerText}; white-space: nowrap; }
+    .pdf-footer-url  { font-size: 7px;   color: ${B.primary};    font-weight: 700; white-space: nowrap; }
   </style>
 </head>
+
 <body>
 
-  <!-- ═══ HEADER ══════════════════════════════════════════════════════ -->
+  <!-- ═══ HEADER ════════════════════════════════════════════════════════ -->
   <header class="pdf-header">
-    <div class="pdf-header-right">
+    <div class="pdf-header-left">
       <h1 class="pdf-title">
         تقويم مواقيت الصلاة
         <span class="pdf-title-accent"> — ${cityNameAr}</span>
       </h1>
       <p class="pdf-subtitle">
-        جدول أوقات الصلاة الشهري · الفجر · الظهر · العصر · المغرب · العشاء
+        جدول أوقات الصلاة الشهري · الفجر · الشروق · الظهر · العصر · المغرب · العشاء
       </p>
       <div class="pdf-badges">
         <span class="badge badge-primary">📅 ${gregorianLabel}</span>
-        ${hijriLabel
-          ? `<span class="badge badge-neutral">🌙 ${hijriLabel}</span>`
-          : ''}
-        <span class="badge badge-neutral">هجري · ميلادي</span>
+        ${hijriLabel ? `<span class="badge badge-neutral">🌙 ${hijriLabel}</span>` : ''}
+        <span class="badge badge-neutral">${isDark ? '🌑 وضع ليلي' : '☀️ وضع نهاري'}</span>
       </div>
     </div>
-    <!-- LOGO SLOT ↓ replace with <img> when ready -->
-    ${logoHtml}
+    <div class="pdf-header-right">
+      <div class="pdf-logo">${SITE_NAME}</div>
+    </div>
   </header>
 
-  <!-- ═══ TABLE ════════════════════════════════════════════════════════ -->
-  <table class="pdf-table"
-    aria-label="جدول مواقيت الصلاة الشهري — ${cityNameAr} — ${gregorianLabel}">
-    <colgroup>
-      <col class="col-day" />
-      <col class="col-hijri" />
-      <col class="col-greg" />
-      ${PRAYER_KEYS.map(() => `<col class="col-prayer" />`).join('\n      ')}
-    </colgroup>
-    <thead>
-      <tr>
-        <th>اليوم</th>
-        <th>الهجري</th>
-        <th>الميلادي</th>
-        ${PRAYER_KEYS.map(k => `<th class="th-prayer">${PRAYER_AR[k]}</th>`).join('\n        ')}
-      </tr>
-    </thead>
-    <tbody>
-      ${rows}
-    </tbody>
-  </table>
+  <!-- ═══ TABLE ═════════════════════════════════════════════════════════ -->
+  <div class="pdf-table-wrap">
+    <table class="pdf-table"
+      aria-label="جدول مواقيت الصلاة الشهري — ${cityNameAr} — ${gregorianLabel}">
 
-  <!-- ═══ FOOTER ═══════════════════════════════════════════════════════ -->
+      <colgroup>
+        <col class="col-day" />
+        <col class="col-hijri" />
+        <col class="col-greg" />
+        ${PRAYER_KEYS.map(() => `<col class="col-prayer" />`).join('\n        ')}
+      </colgroup>
+
+      <thead>
+        <tr>
+          <th class="th-day">اليوم</th>
+          <th>الهجري</th>
+          <th>الميلادي</th>
+          ${PRAYER_KEYS.map((k) => `
+          <th class="th-prayer">
+            <div class="th-inner">
+              <span class="th-icon">${PRAYER_ICON[k]}</span>
+              <span class="th-label">${PRAYER_AR[k]}</span>
+            </div>
+          </th>`).join('')}
+        </tr>
+      </thead>
+
+      <tbody>
+        ${rows}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══ FOOTER ════════════════════════════════════════════════════════ -->
   <footer class="pdf-footer">
     <span class="pdf-footer-text">
       جدول مواقيت الصلاة الشهري لـ ${cityNameAr} — حسابات فلكية دقيقة وفق المعايير المعتمدة دولياً ومحلياً
     </span>
     <span class="pdf-footer-url">${SITE_URL}</span>
-    <!-- FOOTER CUSTOM SLOT ↓ -->
-    <span class="pdf-footer-custom"></span>
   </footer>
 
 </body>
@@ -367,41 +497,55 @@ export async function POST(request) {
   let browser;
   try {
     const body = await request.json();
-    const { schedule, cityNameAr, gregorianLabel, hijriLabel, countryCode } = body;
+    const { schedule, cityNameAr, gregorianLabel, hijriLabel, countryCode, theme = 'light' } = body;
 
     if (!Array.isArray(schedule) || !schedule.length) {
       return NextResponse.json({ error: 'البيانات غير صحيحة' }, { status: 400 });
     }
 
-    const html = generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, countryCode });
+    // Validate theme
+    const safeTheme = theme === 'dark' ? 'dark' : 'light';
+
+    const html = generateHtml({
+      schedule, cityNameAr, gregorianLabel, hijriLabel, countryCode,
+      theme: safeTheme,
+    });
 
     browser = await launchBrowser();
     const page = await browser.newPage();
 
-    // networkidle0 ensures Arabic + Mono fonts load before PDF generation
+    // A4 landscape in pixels at 96dpi
+    // 297mm × (96/25.4) ≈ 1122px  |  210mm × (96/25.4) ≈ 794px
+    await page.setViewport({ width: 1122, height: 794, deviceScaleFactor: 2 });
+
+    // networkidle0 waits for fonts to load; then fonts.ready ensures shaping is done
     await page.setContent(html, { waitUntil: 'networkidle0' });
+
+    // Extra safety: wait for Arabic shaping + IBM Plex Mono
+    await page.evaluate(() => document.fonts.ready);
+
     await page.emulateMediaType('print');
 
     const pdfBuffer = await page.pdf({
-      format:           'A4',
-      landscape:         true,
-      printBackground:   true,   // required for coloured rows
-      preferCSSPageSize: true,   // honours @page { size: A4 landscape; margin }
+      width:            '297mm',
+      height:           '210mm',
+      printBackground:   true,   // required for row background colours
+      preferCSSPageSize: false,  // explicit dimensions above take precedence
     });
 
     await browser.close();
     browser = null;
 
-    // Safe ASCII filename — Arabic chars break Content-Disposition in some clients
-    const safeCity  = (cityNameAr || 'city').replace(/\s+/g, '-');
-    const safeMonth = (gregorianLabel || 'calendar').replace(/\s+/g, '-');
-    const filename  = `taqwim-salat-${safeCity}-${safeMonth}.pdf`;
+    // Safe ASCII filename
+    const safeCity  = (cityNameAr    || 'city').replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+    const safeMonth = (gregorianLabel || 'calendar').replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+    const filename  = `taqwim-salat-${safeCity}-${safeMonth}-${safeTheme}.pdf`;
 
     return new Response(pdfBuffer, {
       status:  200,
       headers: {
         'Content-Type':        'application/pdf',
-        'Content-Disposition': `attachment; filename="${encodeURIComponent(filename)}"`,
+        'Content-Disposition': `attachment; filename*=UTF-8''${encodeURIComponent(filename)}`,
         'Cache-Control':       'no-store',
       },
     });
@@ -411,7 +555,7 @@ export async function POST(request) {
     console.error('[pdf-calendar]', err);
     return NextResponse.json(
       { error: 'فشل إنشاء ملف تقويم الصلاة. يرجى المحاولة مرة أخرى.' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
