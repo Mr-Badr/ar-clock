@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Clock } from "lucide-react";
+import { ClockIcon } from "@phosphor-icons/react/ssr";
 import NavLinks from "./NavLinks";
 import ThemeToggle from "./ThemeToggle";
 import MobileMenu from "./MobileMenu";
@@ -12,24 +12,25 @@ export const NAV_LINKS = [
   {
     href: "/date",
     label: "التاريخ والتحويل",
+    panelIcon: "CalendarDots",
+    panelDescription: "أدوات احترافية للتواريخ والتحويل بين التقويمين الهجري والميلادي",
     sublinks: [
-      { href: '/date/today/hijri', label: 'التاريخ الهجري اليوم', icon: 'Moon', description: 'عرض تاريخ اليوم بالتقويم الهجري' },
-      { href: '/date/today/gregorian', label: 'التاريخ الميلادي اليوم', icon: 'Sun', description: 'عرض تاريخ اليوم بالتقويم الميلادي' },
-      { href: '/date/converter', label: 'محول التاريخ', icon: 'RefreshCw', description: 'تحويل بين الهجري والميلادي' },
-      { href: '/date/calendar/hijri', label: 'التقويم الهجري', icon: 'Calendar', description: 'عرض تقويم السنة الهجرية كاملة' },
-      { href: '/date/calendar', label: 'التقويم الميلادي', icon: 'CalendarDays', description: 'عرض تقويم السنة الميلادية كاملة' },
-      { href: '/date/hijri-to-gregorian', label: 'هجري إلى ميلادي', icon: 'ArrowRightLeft', description: 'تحويل سريع من الهجري للميلادي' },
-      { href: '/date/gregorian-to-hijri', label: 'ميلادي إلى هجري', icon: 'ArrowRightLeft', description: 'تحويل سريع من الميلادي للهجري' },
-    ]
+      { href: '/date/today/hijri',           label: 'التاريخ الهجري اليوم',  icon: 'Moon',                   description: 'عرض تاريخ اليوم بالتقويم الهجري'       },
+      { href: '/date/today/gregorian',       label: 'التاريخ الميلادي اليوم', icon: 'Sun',                    description: 'عرض تاريخ اليوم بالتقويم الميلادي'      },
+      { href: '/date/converter',             label: 'محول التاريخ',           icon: 'ArrowsCounterClockwise', description: 'تحويل بين الهجري والميلادي'              },
+      { href: '/date/calendar/hijri',        label: 'التقويم الهجري',         icon: 'Calendar',               description: 'عرض تقويم السنة الهجرية كاملة'          },
+      { href: '/date/calendar',              label: 'التقويم الميلادي',       icon: 'CalendarDots',           description: 'عرض تقويم السنة الميلادية كاملة'        },
+      { href: '/date/hijri-to-gregorian',    label: 'هجري إلى ميلادي',       icon: 'ArrowsLeftRight',        description: 'تحويل سريع من الهجري للميلادي'          },
+      { href: '/date/gregorian-to-hijri',    label: 'ميلادي إلى هجري',       icon: 'ArrowsLeftRight',        description: 'تحويل سريع من الميلادي للهجري'          },
+    ],
   },
   { href: "/time-difference", label: "فرق التوقيت" },
-  { href: "/holidays", label: "المناسبات" },
+  { href: "/holidays",        label: "المناسبات"   },
 ];
 
 export default function Header() {
   return (
     <>
-      {/* id is used by HeaderScrollEffect to toggle the "scrolled" class */}
       <header className="header-nav" id="main-header">
         <div className="header-inner">
 
@@ -39,23 +40,22 @@ export default function Header() {
             aria-label="ميقات - الصفحة الرئيسية"
             className="header-logo"
           >
-            <Clock className="header-logo-icon" />
+            {/* ClockIcon from /ssr for Server Component safety */}
+            <ClockIcon className="header-logo-icon" weight="duotone" />
           </Link>
 
           <nav className="header-center-nav" aria-label="التنقل الرئيسي">
-            {/* Active-link state needs usePathname → client */}
             <NavLinks links={NAV_LINKS} />
           </nav>
 
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <ThemeToggle />          {/* useTheme → client */}
-            <MobileMenu links={NAV_LINKS} />  {/* useState → client */}
+            <ThemeToggle />
+            <MobileMenu links={NAV_LINKS} />
           </div>
 
         </div>
       </header>
 
-      {/* Attaches the scroll listener; renders nothing visible */}
       <HeaderScrollEffect />
     </>
   );

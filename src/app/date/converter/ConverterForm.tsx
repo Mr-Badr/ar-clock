@@ -11,12 +11,13 @@
 //   • Uses .card class for panels
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect } from 'react';
 import Link from 'next/link';
 import { getHijriParts, HIJRI_MONTHS_AR } from '@/lib/hijri-utils';
 import { convertDateAction } from './actions';
 import type { ConvertDateResult, ConversionMethod } from '@/lib/date-adapter';
 import { GREGORIAN_MONTHS_AR } from '@/lib/constants';
+import { cn } from '@/lib/utils';
 
 const METHODS: { value: ConversionMethod; label: string; sub: string; countries: string }[] = [
   { value: 'umalqura',    label: 'أم القرى',      sub: 'للسعودية والخليج',        countries: '🇸🇦🇦🇪🇰🇼🇶🇦🇧🇭🇴🇲' },
@@ -41,12 +42,24 @@ export function ConverterForm({
   defaultMonth,
   defaultDay,
 }: Props) {
-  const now = new Date();
+  // 1. Initialize with stable values for SSR to prevent hydration mismatch
   const [direction, setDirection] = useState<Direction>(defaultDirection);
   const [method,    setMethod]    = useState<ConversionMethod>('umalqura');
-  const [year,      setYear]      = useState(defaultYear  ?? now.getUTCFullYear());
+  const [year,      setYear]      = useState(defaultYear  ?? 2026); // Stable default
   const [month,     setMonth]     = useState(defaultMonth ?? 1);
   const [day,       setDay]       = useState(defaultDay   ?? 1);
+  
+  // 2. Use useEffect to switch to the "actual" now if no defaults were provided
+  // This is the correct way to handle dynamic client-only data in Next.js
+  useEffect(() => {
+    if (defaultYear === undefined || defaultMonth === undefined || defaultDay === undefined) {
+      const now = new Date();
+      if (defaultYear  === undefined) setYear(now.getUTCFullYear());
+      if (defaultMonth === undefined) setMonth(now.getUTCMonth() + 1);
+      if (defaultDay   === undefined) setDay(now.getUTCDate());
+    }
+  }, [defaultYear, defaultMonth, defaultDay]);
+
   const [result,    setResult]    = useState<ConvertDateResult | null>(null);
   const [error,     setError]     = useState<string | null>(null);
   const [copied,    setCopied]    = useState(false);
@@ -84,13 +97,12 @@ export function ConverterForm({
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr]" style={{ gap: '24px', alignItems: 'start' }}>
+    <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-6 items-stretch">
 
       {/* ── INPUT PANEL ───────────────────────────────────────────────── */}
       <form
         onSubmit={handleSubmit}
-        className="card"
-        style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
+        className="card flex flex-col gap-6"
       >
         {/* Direction toggle */}
         {!lockedDirection && (
@@ -207,13 +219,11 @@ export function ConverterForm({
 
       {/* ── RESULT PANEL ──────────────────────────────────────────────── */}
       <div
-        className={`card ${result ? 'card--accent' : ''}`}
-        style={{
-          minHeight: '420px',
-          display: 'flex',
-          flexDirection: 'column',
-          ...(result ? {} : { justifyContent: 'center', alignItems: 'center' }),
-        }}
+        className={cn(
+          "card h-full flex flex-col",
+          result && "card--accent",
+          !result && !error && "justify-center items-center"
+        )}
       >
         {/* Empty state */}
         {!result && !error && (

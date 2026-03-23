@@ -11,20 +11,53 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import * as Icons from "lucide-react";
+import { 
+  Moon, MoonIcon, 
+  Sun, SunIcon, 
+  ArrowsCounterClockwise, ArrowsCounterClockwiseIcon,
+  Calendar, CalendarIcon,
+  CalendarDots, CalendarDotsIcon,
+  ArrowRight, ArrowRightIcon,
+  ArrowLeft, ArrowLeftIcon,
+  ArrowsLeftRight, ArrowsLeftRightIcon,
+  CaretLeft, CaretLeftIcon,
+  Clock, ClockIcon,
+  Timer, TimerIcon,
+  Hourglass, HourglassIcon
+} from "@phosphor-icons/react";
+import * as PhosphorIcons from "@phosphor-icons/react";
 
 type SubLink = {
   href: string;
   label: string;
-  icon?: keyof typeof Icons;
-  description?: string
+  icon?: string;
+  description?: string;
 };
 
 type NavLink = {
   href: string;
   label: string;
-  sublinks?: SubLink[]
+  sublinks?: SubLink[];
+  panelDescription?: string;
+  panelIcon?: string;
 };
+
+function getPhosphorIcon(name?: string): React.ElementType | null {
+  if (!name) return null;
+  
+  // 1. Check a local map of explicitly imported icons for maximum reliability in Next.js
+  const iconMap: Record<string, React.ElementType> = {
+    Moon, Sun, ArrowsCounterClockwise, Calendar, CalendarDots, 
+    ArrowRight, ArrowLeft, ArrowsLeftRight, CaretLeft, Clock, Timer, Hourglass
+  };
+
+  if (iconMap[name]) return iconMap[name];
+  
+  // 2. Fallback to namespace lookup if not in map
+  const p = PhosphorIcons as any;
+  const icon = p[name] || p[`${name}Icon`];
+  return typeof icon === "function" ? (icon as React.ElementType) : null;
+}
 
 export default function NavLinks({ links }: { links: NavLink[] }) {
   const pathname = usePathname();
@@ -42,40 +75,93 @@ export default function NavLinks({ links }: { links: NavLink[] }) {
                 <NavigationMenuTrigger
                   className={cn(
                     "header-nav-link h-9 bg-transparent hover:bg-accent-soft hover:text-primary focus:bg-accent-soft data-[state=open]:bg-accent-soft data-[state=open]:text-primary transition-all rounded-full px-4 border-none shadow-none",
-                    isActive(link.href) && "bg-accent text-on-accent font-semibold shadow-sm hover:text-on-accent hover:bg-accent focus:bg-accent"
+                    isActive(link.href) &&
+                      "bg-accent text-on-accent font-semibold shadow-sm hover:text-on-accent hover:bg-accent focus:bg-accent"
                   )}
                 >
                   {link.label}
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-2 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-surface-1 border border-border rounded-xl shadow-xl">
-                    {link.sublinks.map((sublink) => {
-                      const Icon = Icons[sublink.icon as keyof typeof Icons] as any;
-                      return (
-                        <li key={sublink.href}>
-                          <NavigationMenuLink asChild>
+
+                <NavigationMenuContent className="bg-transparent border-none shadow-none p-0 outline-none">
+                  <div className="nav-mega-menu">
+
+                    {/* ── Side panel ── */}
+                    <div className="nav-mega-panel">
+                      <div className="nav-mega-panel-inner">
+                        {(() => {
+                          const PanelIcon = getPhosphorIcon(
+                            link.panelIcon ?? link.sublinks?.[0]?.icon ?? "CalendarDots"
+                          );
+                          return (
+                            <div className="nav-mega-panel-icon">
+                              {PanelIcon && (
+                                <PanelIcon size={22} weight="duotone" />
+                              )}
+                            </div>
+                          );
+                        })()}
+                        <p className="nav-mega-panel-title">{link.label}</p>
+                        <p className="nav-mega-panel-desc">
+                          {link.panelDescription ??
+                            `تصفح جميع أدوات ${link.label}`}
+                        </p>
+                        <Link href={link.href} className="nav-mega-panel-cta">
+                          استعرض الكل
+                          <PhosphorIcons.CaretLeftIcon size={12} weight="bold" />
+                        </Link>
+                      </div>
+                    </div>
+
+                    {/* ── Link grid ── */}
+                    <div className="nav-mega-links">
+                      {link.sublinks.map((sublink) => {
+                        const Icon = getPhosphorIcon(sublink.icon);
+                        const active = pathname === sublink.href;
+
+                        return (
+                          <NavigationMenuLink key={sublink.href} asChild>
                             <Link
                               href={sublink.href}
                               className={cn(
-                                "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent-soft hover:text-primary focus:bg-accent-soft focus:text-primary",
-                                pathname === sublink.href && "bg-accent-soft text-primary font-bold"
+                                "nav-mega-item",
+                                active && "nav-mega-item--active"
                               )}
                             >
-                              <div className="flex items-center gap-2 text-sm font-semibold leading-none">
-                                {Icon && <Icon className="size-4 text-accent" />}
-                                {sublink.label}
+                              <div className="nav-mega-top-row">
+                                <span
+                                  className={cn(
+                                    "nav-mega-icon",
+                                    active && "nav-mega-icon--active"
+                                  )}
+                                >
+                                  {Icon && (
+                                    <Icon
+                                      size={18}
+                                      weight={active ? "duotone" : "regular"}
+                                    />
+                                  )}
+                                </span>
+                                <span className="nav-mega-arrow">
+                                  <CaretLeftIcon size={14} weight="bold" />
+                                </span>
                               </div>
-                              {sublink.description && (
-                                <p className="line-clamp-2 text-xs leading-snug text-muted mt-1">
-                                  {sublink.description}
-                                </p>
-                              )}
+                              <span className="nav-mega-text">
+                                <span className="nav-mega-label">
+                                  {sublink.label}
+                                </span>
+                                {sublink.description && (
+                                  <span className="nav-mega-desc">
+                                    {sublink.description}
+                                  </span>
+                                )}
+                              </span>
                             </Link>
                           </NavigationMenuLink>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                        );
+                      })}
+                    </div>
+
+                  </div>
                 </NavigationMenuContent>
               </>
             ) : (

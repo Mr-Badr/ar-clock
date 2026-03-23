@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { Sun, Moon } from "lucide-react";
+import { SunIcon, MoonIcon } from "@phosphor-icons/react";
 import { useState, useEffect } from "react";
 
 export default function ThemeToggle() {
@@ -10,8 +10,6 @@ export default function ThemeToggle() {
 
   useEffect(() => setMounted(true), []);
 
-  // Before mount: both server and client render Moon (matches defaultTheme="dark")
-  // After mount: render the real resolved icon
   const isDark = mounted ? (resolvedTheme ?? theme) === "dark" : true;
 
   return (
@@ -21,7 +19,10 @@ export default function ThemeToggle() {
       title="تبديل الوضع"
       aria-label="تبديل وضع العرض"
     >
-      {isDark ? <Sun /> : <Moon />}
+      {isDark
+        ? <SunIcon size={18} weight="duotone" />
+        : <MoonIcon size={18} weight="duotone" />
+      }
     </button>
   );
 }

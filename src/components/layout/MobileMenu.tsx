@@ -3,7 +3,11 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { 
+  Moon, Sun, ArrowsCounterClockwise, Calendar, CalendarDots, 
+  ArrowRight, ArrowLeft, ArrowsLeftRight, Clock, Timer, Hourglass,
+  List, X, CaretDown, CaretUp
+} from "@phosphor-icons/react";
 import {
   Accordion,
   AccordionContent,
@@ -11,26 +15,40 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
-import * as Icons from "lucide-react";
+import * as PhosphorIcons from "@phosphor-icons/react";
 
 type SubLink = {
   href: string;
   label: string;
-  icon?: keyof typeof Icons;
-  description?: string
+  icon?: string;
+  description?: string;
 };
 
 type NavLink = {
   href: string;
   label: string;
-  sublinks?: SubLink[]
+  sublinks?: SubLink[];
 };
+
+function getPhosphorIcon(name?: string): React.ElementType | null {
+  if (!name) return null;
+
+  const iconMap: Record<string, React.ElementType> = {
+    Moon, Sun, ArrowsCounterClockwise, Calendar, CalendarDots, 
+    ArrowRight, ArrowLeft, ArrowsLeftRight, Clock, Timer, Hourglass, List, X
+  };
+
+  if (iconMap[name]) return iconMap[name];
+
+  const p = PhosphorIcons as any;
+  const icon = p[name] || p[`${name}Icon`];
+  return typeof icon === "function" ? (icon as React.ElementType) : null;
+}
 
 export default function MobileMenu({ links }: { links: NavLink[] }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  // Close on navigation
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
@@ -46,7 +64,10 @@ export default function MobileMenu({ links }: { links: NavLink[] }) {
         aria-label={open ? "إغلاق القائمة" : "فتح القائمة"}
         aria-expanded={open}
       >
-        {open ? <X /> : <Menu />}
+        {open
+          ? <X size={20} weight="bold" />
+          : <List size={20} weight="bold" />
+        }
       </button>
 
       <nav
@@ -69,17 +90,28 @@ export default function MobileMenu({ links }: { links: NavLink[] }) {
                     </AccordionTrigger>
                     <AccordionContent className="pb-2 px-6 flex flex-col gap-1">
                       {link.sublinks.map((sublink) => {
-                        const SubIcon = Icons[sublink.icon as keyof typeof Icons] as any;
+                        const SubIcon = getPhosphorIcon(sublink.icon);
                         return (
                           <Link
                             key={sublink.href}
                             href={sublink.href}
                             className={cn(
                               "flex items-center gap-3 p-3 rounded-md text-sm transition-colors hover:bg-accent-soft hover:text-primary",
-                              pathname === sublink.href && "text-primary font-bold bg-accent-soft"
+                              pathname === sublink.href &&
+                                "text-primary font-bold bg-accent-soft"
                             )}
                           >
-                            {SubIcon && <SubIcon className="size-4 text-accent" />}
+                            {SubIcon && (
+                              <SubIcon
+                                size={17}
+                                weight={
+                                  pathname === sublink.href
+                                    ? "duotone"
+                                    : "regular"
+                                }
+                                className="text-accent flex-shrink-0"
+                              />
+                            )}
                             {sublink.label}
                           </Link>
                         );
