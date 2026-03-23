@@ -15,8 +15,8 @@
 
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
-import SectionWrapper from './shared/SectionWrapper'
-import { SectionBadge } from './shared/primitives'
+import { SectionWrapper } from '@/components/shared/primitives'
+import { SectionBadge } from '@/components/shared/primitives'
 import { ISLAMIC_OCCASIONS } from './data/islamicOccasions'
 
 const H2_ID = 'h2-islamic-occasions'

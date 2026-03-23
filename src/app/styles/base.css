@@ -1,0 +1,886 @@
+/* =============================================================================
+   WAQT — Arabic Clock App — Design System v4.1
+   Stack  : Next.js + Tailwind CSS 4.1 + shadcn/ui
+   Font   : Noto Kufi Arabic (loaded in layout.tsx via next/font)
+   Dir    : RTL  |  Themes: dark (default) · light
+   Theme  : Blue brand system — WCAG AA verified — gradient accent
+
+   @layer declaration: pins cascade order regardless of which CSS chunk
+   Next.js loads first (dev vs prod load order is non-deterministic —
+   confirmed Next.js bug #64921). Unlayered rules always beat layered ones,
+   so component overrides stay safe.
+   ============================================================================= */
+
+/* FIX: declare layer order ONCE at the very top so it applies globally */
+@layer base, theme, components, utilities;
+/* =============================================================================
+
+   Engine : next-themes → writes class="dark|light" on <html>
+
+   HOW THEMES WORK
+   ───────────────
+   next-themes sets a class on <html>:
+     class="dark"      → slate-blue night mode  (default / SSR fallback)
+     class="light"     → warm-white day mode
+
+   Every CSS variable is defined inside :root/.dark, .light.
+   No component ever hard-codes a colour. Every class just reads a var.
+
+   TAILWIND INTEGRATION
+   ────────────────────
+   @theme inline maps CSS vars → Tailwind utility class names.
+   Use these anywhere in JSX:
+     text-primary   text-secondary   text-muted      text-accent
+     text-accent-alt  text-danger    text-warning    text-success
+     text-info      text-clock
+     bg-base        bg-surface-1     bg-surface-2    bg-surface-3
+     bg-surface-4   bg-subtle        bg-accent-soft  bg-glass
+     border-subtle  border-default   border-strong   border-accent
+     shadow-sm      shadow-md        shadow-accent   (see section 30)
+
+   FILE STRUCTURE
+   ──────────────
+   01  @import lines          ← MUST be first two non-comment lines
+   02  Raw palette            ← :root — never use directly in components
+   03  Theme: dark / default  ← :root, .dark
+   04  Theme: light           ← .light
+   06  @theme inline          ← Tailwind 4 bridge (TOP LEVEL, not in @layer)
+   07  Base reset             ← @layer base
+   08  Typography tokens
+   09  Spacing tokens
+   10  Radius tokens
+   11  Shadow tokens
+   12  Motion tokens
+   13  Z-index tokens
+   14  Layout
+   15  Cards
+   16  Buttons
+   17  Inputs & Forms
+   18  Badges & Chips
+   19  Tabs
+   20  Switch/Toggle
+   21  Select/Dropdown
+   22  Clock Display
+   23  Progress & Countdown
+   24  Alarm Item
+   25  Modal & Overlay
+   26  Toast
+   27  Empty State
+   28  Fullscreen Mode
+   29  Accent utilities
+   30  Utility classes
+============================================================================= */
+
+
+/* ─── 01. IMPORTS — must be first real CSS lines ─────────────────────────── */
+@import "tailwindcss";
+@import "shadcn/tailwind.css";
+
+
+/* ─── 02. RAW PALETTE ────────────────────────────────────────────────────── */
+/* These are pure colour values. NEVER use --raw-* in components.             */
+/* Only the theme blocks below may reference them.                             */
+:root {
+  /* Slate blue scale */
+  --raw-slate-980: #0A0C18;
+  --raw-slate-950: #0D1117;
+  --raw-slate-900: #111827;
+  --raw-slate-850: #161D2E;
+  --raw-slate-800: #1E2640;
+  --raw-slate-750: #242940;
+  --raw-slate-700: #252F50;
+  --raw-slate-650: #2E3A60;
+  --raw-slate-600: #303755;
+  --raw-slate-550: #363D5C;
+  --raw-slate-500: #424A6E;
+  --raw-slate-400: #5A638A;
+  --raw-slate-300: #7880AA;
+  --raw-slate-200: #A8AFCC;
+  --raw-slate-100: #D8DCF0;
+  --raw-slate-50: #ECEFFE;
+  --raw-slate-25: #F2F4FF;
+
+  /* Blue — primary brand scale */
+  --raw-blue-900: #1E3A8A;
+  /* deepest — active/pressed                  */
+  --raw-blue-800: #1D4ED8;
+  /* brand primary — buttons in BOTH themes    */
+  --raw-blue-700: #2563EB;
+  /* button hover                              */
+  --raw-blue-600: #3B82F6;
+  /* links on dark (bright context)            */
+  --raw-blue-500: #60A5FA;
+  /* links on dark                             */
+  --raw-blue-450: #8CAEFF;
+  /* interactive text/badges/tabs in dark mode */
+  --raw-blue-400: #93C5FD;
+  /* link hover dark                           */
+  --raw-blue-300: #BFDBFE;
+  /* soft tint dark                            */
+  --raw-blue-200: #DBEAFE;
+  /* very soft                                 */
+
+  /* Near-white for clock/data display — distinct from brand blues */
+  --raw-white-clock: #FFFFFF;
+  /* clock digits dark: pure white = precision instrument */
+
+  /* Indigo — gradient pair for buttons (same blue family, slight shift) */
+  --raw-indigo-700: #4338CA;
+  /* gradient end — blue→indigo depth         */
+  --raw-indigo-600: #4F46E5;
+  /* indigo accent                            */
+
+  /* Semantic state palette */
+  --raw-danger-dark: #FF6B6B;
+  --raw-danger-light: #DC2626;
+  --raw-danger-hc: #FF4444;
+  --raw-warn-dark: #FFD166;
+  --raw-warn-light: #92400E;
+  --raw-warn-hc: #FFCC00;
+  --raw-success-dark: #06D6A0;
+  --raw-success-light: #047857;
+  --raw-success-hc: #00FF88;
+  --raw-info-dark: #74B9FF;
+  --raw-info-light: #0369A1;
+  --raw-info-hc: #44CCFF;
+}
+
+
+/* ─── 03. THEME: DARK (DEFAULT) ──────────────────────────────────────────── */
+/* :root gives dark values before JS hydrates (prevents flash)                */
+/* next-themes then adds class="dark" which re-confirms the same values        */
+/*                                                                            */
+/* WHY THE NEW SURFACES:                                                      */
+/* Old surfaces had S:26-29% — same hue AND high saturation as the accent.   */
+/* The accent had zero visual pop. The entire UI was one flat blue sheet.     */
+/* NEW: bg-base pushed deeper (#0D1117, lum 0.55%) and surfaces span a       */
+/* wider luminance range to 4.45%, giving real depth and letting the          */
+/* accent #1D4ED8 + gradient actually stand out dramatically.                 */
+:root,
+.dark {
+  color-scheme: dark;
+
+  /* Backgrounds — dramatic depth, surfaces float above a deep base */
+  --bg-base: #0D1117;
+  /* deep midnight — sets the dramatic stage    */
+  --bg-subtle: #111827;
+  /* nav bars, sidebar tray                     */
+  --bg-surface-1: #161D2E;
+  /* default card/section background            */
+  --bg-surface-2: #1E2640;
+  /* raised card, modal body                   */
+  --bg-surface-3: #252F50;
+  /* nested card, input backgrounds             */
+  --bg-surface-4: #2E3A60;
+  /* deepest inset, selected items              */
+  --bg-overlay: rgba(6, 8, 18, 0.88);
+  --bg-glass: rgba(22, 29, 46, 0.70);
+
+  /* Borders — decorative only (no WCAG req); only --border-strong is UI  */
+  --border-subtle: #1A2035;
+  --border-default: #222C45;
+  --border-strong: #7090B8;
+  /* form input borders — 3.04:1 vs surf3 ✅ */
+  --border-accent: rgba(59, 130, 246, 0.25);
+  --border-accent-strong: rgba(59, 130, 246, 0.55);
+
+  /* Text — WCAG AA verified across all surfaces */
+  --text-primary: #F0F4FF;
+  /* 10.1:1 on surf4 ✅ AAA              */
+  --text-secondary: #A8B2CB;
+  /* 5.23:1 on surf4 ✅ AA               */
+  --text-muted: #90AACC;
+  /* 4.66:1 on surf4 ✅ AA               */
+  --text-disabled: #3A4A62;
+  --text-on-accent: #FFFFFF;
+  /* 6.70:1 on #1D4ED8 ✅ AA             */
+  --text-on-clock: #FFFFFF;
+  /* matches --clock-digit-color = white */
+  --text-link: #8CAEFF;
+  /* 5.09:1 on surf4 ✅ AA               */
+  --text-link-hover: #B0C8FF;
+
+  /* Accent — brand blue + indigo gradient pair
+     --accent       = button fill (solid, with --accent-gradient as upgrade)
+     --accent-alt   = bright decorative use on dark surfaces              */
+  --accent: #1D4ED8;
+  --accent-hover: #2563EB;
+  --accent-active: #1E3A8A;
+  --accent-gradient: linear-gradient(135deg, #1D4ED8 0%, #4338CA 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%);
+  --accent-soft: rgba(59, 130, 246, 0.14);
+  --accent-soft-hover: rgba(59, 130, 246, 0.22);
+  --accent-glow: rgba(59, 130, 246, 0.20);
+  --accent-glow-strong: rgba(59, 130, 246, 0.38);
+
+  /* Accent alt — electric blue-indigo for links and decorative elements */
+  --accent-alt: #8CAEFF;
+  --accent-alt-hover: #B0C8FF;
+  --accent-alt-soft: rgba(140, 174, 255, 0.12);
+
+  /* States */
+  --danger: #FF6B6B;
+  --danger-hover: #FF4D4D;
+  --danger-soft: rgba(255, 107, 107, 0.12);
+  --danger-border: rgba(255, 107, 107, 0.30);
+  --warning: #FFD166;
+  --warning-hover: #FFC233;
+  --warning-soft: rgba(255, 209, 102, 0.12);
+  --warning-border: rgba(255, 209, 102, 0.30);
+  --success: #06D6A0;
+  --success-hover: #04B888;
+  --success-soft: rgba(6, 214, 160, 0.12);
+  --success-border: rgba(6, 214, 160, 0.30);
+  --info: #74B9FF;
+  --info-hover: #4DA3FF;
+  --info-soft: rgba(116, 185, 255, 0.12);
+  --info-border: rgba(116, 185, 255, 0.30);
+
+  /* Shadows — depth replaces shadow in dark mode; only hero elements glow */
+  --shadow-xs: 0 1px 2px rgba(6, 8, 18, 0.40);
+  --shadow-sm: 0 2px 8px rgba(6, 8, 18, 0.50);
+  --shadow-md: 0 4px 16px rgba(6, 8, 18, 0.55);
+  --shadow-lg: 0 8px 32px rgba(6, 8, 18, 0.60);
+  --shadow-xl: 0 16px 48px rgba(6, 8, 18, 0.70);
+  --shadow-card: 0 2px 8px rgba(6, 8, 18, 0.50), 0 1px 3px rgba(6, 8, 18, 0.35);
+  --shadow-accent: 0 2px 24px rgba(67, 56, 202, 0.30), 0 0 8px rgba(29, 78, 216, 0.18);
+  --shadow-accent-strong: 0 4px 40px rgba(67, 56, 202, 0.45), 0 0 16px rgba(29, 78, 216, 0.28);
+
+  /* Clock — pure white digits = PRECISION INSTRUMENT, not interactive element.
+     Design rationale:
+     ─ #8CAEFF (old) reads as a hyperlink/badge color → wrong semantic signal
+     ─ Pure white (#FFFFFF) reads as DATA on a dark precision surface → correct
+     ─ White (21:1) vs headings #F0F4FF (17.2:1) → clear visual hierarchy
+     ─ Clock is the BRIGHTEST element on screen; headings are secondary
+     ─ Separator neutral rgba white → no color competition with digits       */
+  --clock-digit-color: #FFFFFF;
+  /* 21:1 on base ✅ AAA — luminous, premium */
+  --clock-digit-glow: none;
+  /* explicitly removed */
+  --clock-separator: rgba(255, 255, 255, 0.22);
+  /* neutral fade, no blue cast */
+  --clock-label: #7E9BBF;
+  /* 5.87:1 on surf1 ✅ AA — clearly below white */
+  --clock-bg: rgba(22, 29, 46, 0.90);
+
+  /* Scrollbar */
+  --scrollbar-track: #161D2E;
+  --scrollbar-thumb: #2E3A60;
+  --scrollbar-hover: #5C7A9A;
+
+  /* ── shadcn compatibility layer ──────────────────────────────────────── */
+  --background: var(--bg-base);
+  --foreground: var(--text-primary);
+  --card: var(--bg-surface-2);
+  --card-foreground: var(--text-primary);
+  --popover: var(--bg-surface-3);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--accent);
+  --primary-foreground: var(--text-on-accent);
+  --secondary: var(--bg-surface-3);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--bg-surface-3);
+  --muted-foreground: var(--text-muted);
+  --accent-shadcn: var(--accent-soft);
+  --accent-foreground: var(--accent-alt);
+  --destructive: var(--danger);
+  --destructive-foreground: #ffffff;
+  --border: var(--border-default);
+  --input: var(--border-default);
+  --ring: var(--accent-alt);
+  --radius: 0.625rem;
+}
+
+
+/* ─── 04. THEME: LIGHT ───────────────────────────────────────────────────── */
+/*                                                                            */
+/* WHY THE NEW LIGHT BASE:                                                    */
+/* Old base #F2F4FF had S:100% (fully saturated blue). The accent #1D4ED8    */
+/* was competing with a 100%-saturated blue background — no pop, no energy.  */
+/* New base #F8F9FC has S:40%, near-neutral. Blue accent now contrasts        */
+/* against a neutral canvas instead of a matching blue sheet. Instant life.  */
+.light {
+  color-scheme: light;
+
+  /* Backgrounds — near-neutral warm canvas, blue accent now pops */
+  --bg-base: #F8F9FC;
+  /* H:225 S:40% L:98 — near-neutral, barely cool */
+  --bg-subtle: #F0F2FA;
+  /* slight brand tint for nav/sidebar             */
+  --bg-surface-1: #FFFFFF;
+  /* cards — pure white for max clarity            */
+  --bg-surface-2: #EAEFF9;
+  /* elevated cards — more distinct from white (was #F4F6FC) */
+  --bg-surface-3: #E0E8F4;
+  /* nested surfaces, input bg                    */
+  --bg-surface-4: #D4DFF0;
+  /* deepest inset, selected state                 */
+  --bg-overlay: rgba(14, 18, 38, 0.50);
+  --bg-glass: rgba(255, 255, 255, 0.85);
+
+  /* Borders — updated to remain visible on the new deeper surface stack */
+  --border-subtle: #B8CAE4;
+  /* visible on s2/s3 (was #E0E6F2 = invisible on new s3) */
+  --border-default: #A8BCDE;
+  /* standard card/section borders                        */
+  --border-strong: #6B7591;
+  /* 3.25:1 on s4 ✅ — form inputs                        */
+  --border-accent: rgba(29, 78, 216, 0.28);
+  --border-accent-strong: rgba(29, 78, 216, 0.55);
+
+  /* Text */
+  --text-primary: #0E1220;
+  /* 17.8:1 on #FFFFFF ✅ AAA                  */
+  --text-secondary: #3D4668;
+  /* 7.8:1 on #FFFFFF ✅ AAA                   */
+  --text-muted: #536080;
+  /* 5.52:1 on #E8EDF8 ✅ AA                   */
+  --text-disabled: #A8B4C8;
+  --text-on-accent: #FFFFFF;
+  /* 6.70:1 on #1D4ED8 ✅ AA                   */
+  --text-on-clock: #1D4ED8;
+  --text-link: #1D4ED8;
+  /* 6.70:1 on #FFFFFF ✅ AA                   */
+  --text-link-hover: #1E3A8A;
+
+  /* Accent — identical anchor as dark: #1D4ED8 + indigo gradient */
+  --accent: #1D4ED8;
+  --accent-hover: #1E40AF;
+  --accent-active: #1E3A8A;
+  --accent-gradient: linear-gradient(135deg, #1D4ED8 0%, #4338CA 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #1E40AF 0%, #3730A3 100%);
+  --accent-soft: rgba(29, 78, 216, 0.08);
+  --accent-soft-hover: rgba(29, 78, 216, 0.14);
+  --accent-glow: rgba(29, 78, 216, 0.10);
+  --accent-glow-strong: rgba(29, 78, 216, 0.22);
+
+  /* Accent alt */
+  --accent-alt: #1D4ED8;
+  --accent-alt-hover: #1E3A8A;
+  --accent-alt-soft: rgba(29, 78, 216, 0.08);
+
+  /* States — green is SEMANTIC ONLY, never brand/accent */
+  --danger: #B91C1C;
+  --danger-hover: #991414;
+  /* #B91C1C = 4.84:1 on s4 ✅ AA — was #C41A1A (4.43:1 ❌) */
+  --danger-soft: rgba(185, 28, 28, 0.08);
+  --danger-border: rgba(185, 28, 28, 0.25);
+  --warning: #92400E;
+  --warning-hover: #78350F;
+  /* 6.47:1 ✅ AA */
+  --warning-soft: rgba(146, 64, 14, 0.08);
+  --warning-border: rgba(146, 64, 14, 0.25);
+  --success: #046645;
+  --success-hover: #035535;
+  /* #046645 = 5.46:1 on s3 ✅ AA — was #047857 (4.44:1 ❌) */
+  --success-soft: rgba(4, 102, 69, 0.08);
+  --success-border: rgba(4, 102, 69, 0.25);
+  --info: #0369A1;
+  --info-hover: #075985;
+  --info-soft: rgba(3, 105, 161, 0.08);
+  --info-border: rgba(3, 105, 161, 0.25);
+
+  /* Shadows — blue-navy tinted, two-layer system */
+  --shadow-xs: 0 1px 2px rgba(15, 30, 60, 0.06);
+  --shadow-sm: 0 2px 4px -1px rgba(15, 30, 60, 0.08),
+    0 1px 2px -1px rgba(15, 30, 60, 0.04);
+  --shadow-md: 0 4px 8px -2px rgba(15, 30, 60, 0.10),
+    0 2px 4px -2px rgba(15, 30, 60, 0.06);
+  --shadow-lg: 0 8px 16px -4px rgba(15, 30, 60, 0.12),
+    0 4px 8px -4px rgba(15, 30, 60, 0.07);
+  --shadow-xl: 0 16px 32px -8px rgba(15, 30, 60, 0.14),
+    0 6px 12px -6px rgba(15, 30, 60, 0.08);
+  --shadow-card: 0 1px 4px rgba(15, 30, 60, 0.06),
+    0 4px 12px rgba(15, 30, 60, 0.07);
+  --shadow-accent: 0 4px 20px rgba(29, 78, 216, 0.14),
+    0 1px 4px rgba(29, 78, 216, 0.09);
+  --shadow-accent-strong: 0 4px 32px rgba(67, 56, 202, 0.22),
+    0 2px 8px rgba(29, 78, 216, 0.14);
+
+  /* Clock */
+  --clock-digit-color: #1D4ED8;
+  /* 6.70:1 on #FFFFFF ✅ AA */
+  --clock-digit-glow: none;
+  --clock-separator: rgba(29, 78, 216, 0.28);
+  --clock-label: #536080;
+  /* 6.26:1 on #FFFFFF ✅ AA */
+  --clock-bg: rgba(255, 255, 255, 0.96);
+
+  /* Scrollbar */
+  --scrollbar-track: #EEF1FA;
+  --scrollbar-thumb: #C0CCE8;
+  --scrollbar-hover: #8898C8;
+
+  /* shadcn compatibility */
+  --background: var(--bg-base);
+  --foreground: var(--text-primary);
+  --card: var(--bg-surface-1);
+  --card-foreground: var(--text-primary);
+  --popover: var(--bg-surface-1);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--accent);
+  --primary-foreground: var(--text-on-accent);
+  --secondary: var(--bg-surface-3);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--bg-surface-3);
+  --muted-foreground: var(--text-muted);
+  --accent-shadcn: var(--accent-soft);
+  --accent-foreground: var(--accent-alt);
+  /* accent-alt = #1D4ED8 in light — identical value, consistent API */
+  --destructive: var(--danger);
+  --destructive-foreground: #ffffff;
+  --border: var(--border-default);
+  --input: var(--border-default);
+  --ring: var(--accent-alt);
+  /* matches dark — uses accent-alt consistently */
+  --radius: 0.625rem;
+}
+
+
+/* ─── 06. TAILWIND 4 BRIDGE ──────────────────────────────────────────────── */
+/* @theme inline MUST sit at the TOP LEVEL — never inside @layer.             */
+/* It exposes CSS vars as Tailwind utility names. Tailwind generates:         */
+/*   bg-{name}     text-{name}     border-{name}                              */
+/* for every --color-{name} declared here.                                    */
+/*                                                                            */
+/* NAMING RULE: names mirror the CSS variable they wrap, minus the prefix.    */
+/*   --color-primary    → text-primary    bg-primary   border-primary         */
+/*   --color-accent     → text-accent     bg-accent    border-accent          */
+/*   --color-surface-1  → bg-surface-1    etc.                                */
+/*                                                                            */
+/* shadcn compatibility: --color-border wraps --border-default so that        */
+/* Tailwind's generated border-border utility works alongside shadcn's own    */
+/* var(--border) references.                                                  */
+@theme inline {
+
+  /* ── Text colours ── */
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+  --color-disabled: var(--text-disabled);
+  --color-on-accent: var(--text-on-accent);
+  --color-clock: var(--clock-digit-color);
+
+  /* ── Accent ── */
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-alt: var(--accent-alt);
+  --color-accent-alt-soft: var(--accent-alt-soft);
+
+  /* ── Surfaces ── */
+  --color-base: var(--bg-base);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-surface-1: var(--bg-surface-1);
+  --color-surface-2: var(--bg-surface-2);
+  --color-surface-3: var(--bg-surface-3);
+  --color-surface-4: var(--bg-surface-4);
+
+  /* ── Borders ── */
+  /* --color-border powers the Tailwind border-border class used by shadcn   */
+  --color-border: var(--border-default);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+  --color-border-accent: var(--border-accent);
+
+  /* ── Semantic states ── */
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+}
+
+
+/* ─── 07. BASE RESET & GLOBAL ────────────────────────────────────────────── */
+@layer base {
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: 'Noto Kufi Arabic', system-ui, sans-serif;
+    font-size: var(--text-base);
+    font-weight: var(--font-regular);
+    line-height: var(--leading-normal);
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    direction: rtl;
+    text-align: right;
+    transition:
+      background-color var(--transition-theme),
+      color var(--transition-theme);
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  a {
+    color: var(--text-link);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  a:hover {
+    color: var(--text-link-hover);
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  ul,
+  ol {
+    list-style: none;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  /* Headings */
+  h1 {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-primary);
+  }
+
+  h2 {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-semibold);
+    line-height: var(--leading-tight);
+    color: var(--text-primary);
+  }
+
+  h3 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    line-height: var(--leading-snug);
+    color: var(--text-primary);
+  }
+
+  h4 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-medium);
+    line-height: var(--leading-snug);
+    color: var(--text-primary);
+  }
+
+  h5,
+  h6 {
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    color: var(--text-secondary);
+  }
+
+  p {
+    line-height: var(--leading-normal);
+    color: var(--text-primary);
+    max-width: var(--measure-normal);
+  }
+
+  /* Focus ring — accent-alt ensures visibility in dark mode (#8CAEFF)
+     and stays #1D4ED8 in light mode. Never use --accent here directly:
+     in dark mode --accent=#1D4ED8 (dark blue) is invisible on dark surfaces. */
+  :focus-visible {
+    outline: 2px solid var(--accent-alt);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Text selection — background is accent-soft, text must stay primary
+     so selected text remains readable regardless of theme. */
+  ::selection {
+    background-color: var(--accent-soft);
+    color: var(--text-primary);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-hover);
+  }
+
+  /* Respect reduced-motion — design system handles all animations */
+  @media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+
+/* ─── 08. TYPOGRAPHY TOKENS ──────────────────────────────────────────────── */
+/* CRITICAL RULES:                                                            */
+/*   1. Never add letter-spacing to Arabic text — it breaks connected script  */
+/*   2. Always add .tabular-nums to any element displaying time digits        */
+/*   3. Arabic body text needs line-height ≥ 1.6                             */
+:root {
+  --font-base: 'Noto Kufi Arabic', system-ui, sans-serif;
+
+  /* Type scale (base = 16px) */
+  --text-2xs: 0.65rem;
+  /* 10.4px — tiny labels   */
+  --text-xs: 0.72rem;
+  /* 11.5px — captions       */
+  --text-sm: 0.82rem;
+  /* 13.1px — supporting     */
+  --text-base: 0.94rem;
+  /* 15.0px — body ← default */
+  --text-md: 1.00rem;
+  /* 16.0px                  */
+  --text-lg: 1.13rem;
+  /* 18.0px — card titles    */
+  --text-xl: 1.31rem;
+  /* 21.0px — section heads  */
+  --text-2xl: 1.50rem;
+  /* 24.0px — page headings  */
+  --text-3xl: 1.88rem;
+  /* 30.0px — hero           */
+  --text-4xl: 2.25rem;
+  /* 36.0px — display        */
+
+  /* Clock sizes — only for .clock-display elements */
+  --text-clock-xs: 3.5rem;
+  /*  56px */
+  --text-clock-sm: 5.5rem;
+  /*  88px */
+  --text-clock-md: 8.0rem;
+  /* 128px — main home clock */
+  --text-clock-lg: 13.0rem;
+  /* 208px — fullscreen */
+  --text-clock-xl: 22.0rem;
+  /* 352px — AMOLED max */
+
+  /* Font weights */
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  /* ← always use for clock digits */
+  --font-black: 900;
+  /* fullscreen clock only */
+
+  /* Line heights */
+  --leading-none: 1.00;
+  /* clock digits only       */
+  --leading-tight: 1.25;
+  /* headings                */
+  --leading-snug: 1.40;
+  /* subheadings             */
+  --leading-normal: 1.60;
+  /* body — Arabic standard  */
+  --leading-relaxed: 1.75;
+  /* descriptions            */
+  --leading-loose: 2.00;
+  /* open / accessible       */
+
+  /* Letter spacing */
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0em;
+  /* Arabic body — ALWAYS zero */
+  --tracking-wide: 0.06em;
+  /* numbers & EN labels only  */
+  --tracking-clock: 0.04em;
+  /* clock digit spacing        */
+
+  /* Measure (max line width) */
+  --measure-narrow: 45ch;
+  --measure-normal: 65ch;
+  --measure-wide: 80ch;
+}
+
+/* Typography utilities */
+.font-light {
+  font-weight: var(--font-light);
+}
+
+.font-regular {
+  font-weight: var(--font-regular);
+}
+
+.font-medium {
+  font-weight: var(--font-medium);
+}
+
+.font-semibold {
+  font-weight: var(--font-semibold);
+}
+
+.font-bold {
+  font-weight: var(--font-bold);
+}
+
+.font-extrabold {
+  font-weight: var(--font-extrabold);
+}
+
+.font-black {
+  font-weight: var(--font-black);
+}
+
+.leading-none {
+  line-height: var(--leading-none);
+}
+
+.leading-tight {
+  line-height: var(--leading-tight);
+}
+
+.leading-snug {
+  line-height: var(--leading-snug);
+}
+
+.leading-normal {
+  line-height: var(--leading-normal);
+}
+
+.leading-relaxed {
+  line-height: var(--leading-relaxed);
+}
+
+.leading-loose {
+  line-height: var(--leading-loose);
+}
+
+/* Prevents digit layout shift as clock ticks — use on every time display */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+
+/* ─── 09. SPACING TOKENS (8 px grid) ─────────────────────────────────────── */
+:root {
+  --space-px: 1px;
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-1-5: 6px;
+  --space-2: 8px;
+  --space-2-5: 10px;
+  --space-3: 12px;
+  --space-3-5: 14px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+}
+
+
+/* ─── 10. BORDER RADIUS ──────────────────────────────────────────────────── */
+:root {
+  --radius-none: 0;
+  --radius-xs: 3px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
+  --radius-full: 9999px;
+}
+
+
+/* ─── 11. EXTRA SHADOW TOKENS (per-theme values defined in theme blocks) ─── */
+:root {
+  /* Navy-tinted inset shadows — pure rgba(0,0,0) looks flat and generic;
+     a dark-navy tint ties inner shadows to the blue brand palette.         */
+  --shadow-inner: inset 0 1px 3px rgba(10, 15, 30, 0.20);
+  --shadow-inner-strong: inset 0 1px 5px rgba(10, 15, 30, 0.40);
+  /* Focus rings use accent-soft glow — readable in both themes             */
+  --shadow-focus: 0 0 0 3px var(--accent-soft);
+  --shadow-focus-danger: 0 0 0 3px var(--danger-soft);
+}
+
+
+/* ─── 12. MOTION TOKENS ──────────────────────────────────────────────────── */
+:root {
+  --duration-instant: 80ms;
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --transition-fast: var(--duration-fast) var(--ease-out);
+  --transition-base: var(--duration-base) var(--ease-in-out);
+  --transition-slow: var(--duration-slow) var(--ease-in-out);
+  --transition-theme: var(--duration-slow) var(--ease-in-out);
+  --transition-spring: var(--duration-slow) var(--ease-spring);
+}
+
+
+/* ─── 13. Z-INDEX SCALE ──────────────────────────────────────────────────── */
+/* Never use raw numbers. Reference these tokens in style={{ zIndex: 'var(--z-modal)' }} */
+:root {
+  --z-below: -1;
+  --z-base: 0;
+  --z-raised: 10;
+  --z-float: 50;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 250;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-tooltip: 500;
+  --z-toast: 600;
+  --z-max: 9999;
+}
+
+

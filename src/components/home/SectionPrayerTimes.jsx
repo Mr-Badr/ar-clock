@@ -36,10 +36,8 @@ import { Clock, Compass, BookOpen, Bell, Globe2, Moon } from 'lucide-react'
 import { calculatePrayerTimes, getNextPrayer } from '@/lib/prayerEngine'
 import { getNearestCityAction, mapTimezoneToCityAction } from '@/app/actions/location'
 
-import SectionWrapper      from './shared/SectionWrapper'
-import SectionBadge        from './shared/SectionBadge'
-import FeatureItem         from './shared/FeatureItem'
-import CtaLink             from './shared/CtaLink'
+import { SectionWrapper, SectionBadge, FeatureItem } from '@/components/shared/primitives'
+import CtaLink             from '@/components/shared/CtaLink'
 import PrayerTimesLiveCard from './mockups/PrayerTimesLiveCard.client'
 
 const H2_ID = 'h2-prayer-times'

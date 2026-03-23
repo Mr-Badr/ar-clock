@@ -12,7 +12,7 @@
  * Design: 1→2→3 col grid, each card with colored icon + h3 + prose.
  */
 
-import { SectionWrapper, SectionBadge } from './shared/primitives'
+import { SectionWrapper, SectionBadge } from '@/components/shared/primitives'
 import { USE_CASES }                     from './data/useCases'
 import { Users }                         from 'lucide-react'
 

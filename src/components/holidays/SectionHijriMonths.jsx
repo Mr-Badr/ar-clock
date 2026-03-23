@@ -19,8 +19,8 @@
  * 3. Numbers: hijriMonth.number is already a JS integer (English digit).
  */
 
-import SectionWrapper from './shared/SectionWrapper'
-import { SectionBadge } from './shared/primitives'
+import { SectionWrapper } from '@/components/shared/primitives'
+import { SectionBadge } from '@/components/shared/primitives'
 import { HIJRI_MONTHS } from './data/hijriMonths'
 
 const H2_ID = 'h2-hijri-months'

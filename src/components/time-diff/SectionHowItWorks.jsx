@@ -16,8 +16,8 @@
 
 import Link from 'next/link'
 import { Globe2, Clock, Zap, MapPin, Calculator } from 'lucide-react'
-import { SectionWrapper, SectionBadge, FeatureItem } from './shared/primitives'
-import CtaLink from './shared/CtaLink'
+import { SectionWrapper, SectionBadge, FeatureItem } from '@/components/shared/primitives'
+import CtaLink from '@/components/shared/CtaLink'
 import HowItWorksMockup from './mockups/HowItWorksMockup'
 
 const H2_ID = 'h2-how-it-works'

@@ -15,7 +15,7 @@
 
 import Link from 'next/link'
 import { ChevronDown, CheckCircle2 } from 'lucide-react'
-import { SectionWrapper, SectionBadge } from './shared/primitives'
+import { SectionWrapper, SectionBadge } from '@/components/shared/primitives'
 import { FAQ_ITEMS }                     from './data/faqItems'
 
 const H2_ID = 'h2-td-faq'

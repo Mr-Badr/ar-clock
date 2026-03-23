@@ -38,6 +38,7 @@ const nextConfig = {
   experimental: {
     // Inline critical CSS for faster FCP
     optimizeCss: true,
+    optimizePackageImports: ['@phosphor-icons/react']
   },
 
   // ── Security & Performance Headers ───────────────────────────────────────────

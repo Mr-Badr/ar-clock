@@ -11,8 +11,8 @@ import { Suspense } from 'react'
 import dynamic from 'next/dynamic'
 
 import HolidaysGlobalSchemas   from './GlobalSchemas'
-import { SectionDivider }      from './shared/primitives'
-import SectionSkeleton         from './shared/SectionSkeleton'
+import { SectionDivider }      from '@/components/shared/primitives'
+import SectionSkeleton         from '@/components/shared/SectionSkeleton'
 
 // Immediately loaded (likely above the fold or close to it)
 import SectionHijriCalendar    from './SectionHijriCalendar'

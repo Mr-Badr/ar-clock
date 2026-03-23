@@ -16,7 +16,7 @@
 
 import Link from 'next/link'
 import { Clock } from 'lucide-react'
-import { SectionWrapper, SectionBadge } from './shared/primitives'
+import { SectionWrapper, SectionBadge } from '@/components/shared/primitives'
 import { POPULAR_PAIRS }                from './data/popularPairs'
 import PopularPairsLiveClient           from './mockups/PopularPairsLiveClient'
 

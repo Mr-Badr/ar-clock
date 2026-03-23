@@ -26,8 +26,8 @@
 
 import { Info } from 'lucide-react'
 import { RELIGIOUS_HOLIDAYS, buildHistoricalDates, replaceTokens, approxHijriYear, HIJRI_MONTHS_AR, getNextEventDate } from '@/lib/holidays-engine'
-import SectionWrapper from './shared/SectionWrapper'
-import { SectionBadge } from './shared/primitives'
+import { SectionWrapper } from '@/components/shared/primitives'
+import { SectionBadge } from '@/components/shared/primitives'
 
 const H2_ID = 'h2-quick-facts'
 

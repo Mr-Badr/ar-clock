@@ -58,7 +58,7 @@
  */
 
 import Link from 'next/link'
-import { SectionWrapper, SectionBadge } from './shared/primitives'
+import { SectionWrapper, SectionBadge } from '@/components/shared/primitives'
 import { SPECTRUM_CITIES, AXIS_MIN, AXIS_MAX, AXIS_RANGE } from './data/spectrumCities'
 
 const H2_ID = 'h2-timezone-spectrum'

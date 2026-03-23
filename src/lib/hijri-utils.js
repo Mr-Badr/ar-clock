@@ -43,20 +43,7 @@
  *
  * Index 0 = محرم (month 1), Index 11 = ذو الحجة (month 12)
  */
-export const HIJRI_MONTHS_AR = [
-  'محرم',          // 1
-  'صفر',           // 2
-  'ربيع الأول',    // 3
-  'ربيع الآخر',    // 4
-  'جمادى الأولى',  // 5
-  'جمادى الآخرة',  // 6
-  'رجب',           // 7
-  'شعبان',         // 8
-  'رمضان',         // 9
-  'شوال',          // 10
-  'ذو القعدة',     // 11
-  'ذو الحجة',      // 12
-];
+export { HIJRI_MONTHS_AR } from './constants';
 
 // ─── Intl formatters (module-level singletons for performance) ────────────────
 // Creating Intl.DateTimeFormat is expensive. Reusing the same instance is

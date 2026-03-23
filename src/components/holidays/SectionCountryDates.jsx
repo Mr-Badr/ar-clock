@@ -27,8 +27,8 @@
 
 import { Globe2 } from 'lucide-react'
 import { RELIGIOUS_HOLIDAYS, replaceTokens, approxHijriYear } from '@/lib/holidays-engine'
-import SectionWrapper from './shared/SectionWrapper'
-import { SectionBadge } from './shared/primitives'
+import { SectionWrapper } from '@/components/shared/primitives'
+import { SectionBadge } from '@/components/shared/primitives'
 
 const H2_ID = 'h2-country-dates'
 

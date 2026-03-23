@@ -18,6 +18,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { convertDate } from '@/lib/date-adapter';
+import { DAY_NAMES_AR, GREGORIAN_MONTHS_AR } from '@/lib/constants';
 import { isSacredMonth, isRamadan as checkRamadan, getIslamicEventsForHijriDate } from '@/lib/islamic-holidays';
 import { JsonLd } from '@/components/date/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
@@ -36,9 +37,7 @@ export const metadata: Metadata = {
   openGraph: { title: 'التاريخ الهجري اليوم | مواقيت', url: `${BASE_URL}/date/today/hijri`, locale: 'ar_SA' },
 };
 
-const DAY_NAMES_AR = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 const MONTH_ORDINALS = ['الأول', 'الثاني', 'الثالث', 'الرابع', 'الخامس', 'السادس', 'السابع', 'الثامن', 'التاسع', 'العاشر', 'الحادي عشر', 'الثاني عشر'];
-const GREGORIAN_MONTHS = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
 
 const MONTH_SIGNIFICANCE: Record<number, string> = {
   1: 'محرم من الأشهر الحرم. يوم عاشوراء (10 محرم) يوم عظيم يُستحب صومه.',
@@ -281,7 +280,7 @@ async function TodayHijriDynamicContent() {
               <h3 className="text-sm font-semibold text-muted mb-3">مشاركة التاريخ</h3>
               <DateShareActions
                 hijriFormatted={hijri.formatted.ar}
-                gregorianFormatted={`${d} ${GREGORIAN_MONTHS[m - 1]} ${y}`}
+                gregorianFormatted={`${d} ${GREGORIAN_MONTHS_AR[m - 1]} ${y}`}
                 hijriIso={hijri.formatted.iso}
                 gregorianIso={iso}
                 pageUrl={`${BASE_URL}/date/today/hijri`}

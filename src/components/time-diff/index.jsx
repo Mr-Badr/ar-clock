@@ -17,7 +17,7 @@
  */
 
 import GlobalSchemas            from './GlobalSchemas'
-import { SectionDivider }       from './shared/primitives'
+import { SectionDivider }       from '@/components/shared/primitives'
 import SectionPopularPairs      from './SectionPopularPairs'
 import SectionTimezoneSpectrum  from './SectionTimezoneSpectrum'
 import SectionHowItWorks        from './SectionHowItWorks'

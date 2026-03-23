@@ -11,8 +11,8 @@
 
 import Link from 'next/link'
 import { Globe2, ArrowLeft } from 'lucide-react'
-import SectionWrapper from './shared/SectionWrapper'
-import SectionBadge from './shared/SectionBadge'
+import { SectionWrapper } from '@/components/shared/primitives'
+import { SectionBadge } from '@/components/shared/primitives'
 import { CITIES } from './data/cities'
 
 const H2_ID = 'h2-cities'

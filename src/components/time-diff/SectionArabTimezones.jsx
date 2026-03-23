@@ -13,7 +13,7 @@
 import { Suspense }                        from 'react'
 import Link                                from 'next/link'
 import { Globe2, Info }                    from 'lucide-react'
-import { SectionWrapper, SectionBadge }   from './shared/primitives'
+import { SectionWrapper, SectionBadge }   from '@/components/shared/primitives'
 import { TIMEZONE_GROUPS }                 from './data/arabTimezones'
 import ArabTimezonesLiveClient             from './ArabTimezonesLiveClient'
 

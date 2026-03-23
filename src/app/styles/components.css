@@ -1,0 +1,1347 @@
+/* ─── 14. LAYOUT ─────────────────────────────────────────────────────────── */
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.container--narrow {
+  max-width: 760px;
+}
+
+.container--wide {
+  max-width: 1600px;
+}
+
+/* Section panel */
+.section {
+  background-color: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  transition: background-color var(--transition-theme), border-color var(--transition-theme);
+}
+
+.section--flat {
+  border: none;
+  background-color: transparent;
+}
+
+/* Dividers */
+.divider {
+  border: none;
+  height: 1px;
+  background-color: var(--border-subtle);
+  margin-block: var(--space-6);
+}
+
+.divider--strong {
+  background-color: var(--border-default);
+}
+
+/* Responsive auto-grid */
+.grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-5);
+}
+
+/* ── Glass surface — frosted-glass panels, fixed bars, floating overlays ── */
+.btn-glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+
+/* ─── 15. CARD SYSTEM ────────────────────────────────────────────────────── */
+/* Elevation:  body → section → .card → .card-nested → .card-deep           */
+/* Always use minimum depth needed. Over-elevation looks cluttered.           */
+
+/* L1 — directly inside section or page */
+.card {
+  background-color: var(--bg-surface-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+  transition:
+    background-color var(--transition-theme),
+    border-color var(--transition-theme),
+    box-shadow var(--transition-base),
+    transform var(--transition-base);
+}
+
+.card-hover:hover {
+  box-shadow:
+    0 10px 28px -6px rgba(6, 8, 18, 0.45),
+    0 3px 10px -2px rgba(6, 8, 18, 0.25);
+  transform: translateY(-5px);
+}
+
+/* L2 — inside L1 */
+.card-nested {
+  background-color: var(--bg-surface-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  box-shadow: var(--shadow-xs);
+  transition: border-color var(--transition-fast);
+}
+
+.card-nested:hover {
+  border-color: var(--border-default);
+}
+
+/* L3 — deepest, inputs / selected items */
+.card-deep {
+  background-color: var(--bg-surface-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+/* Card variants */
+.card--accent {
+  border-color: var(--border-accent-strong);
+  box-shadow: var(--shadow-card), 0 0 0 1px var(--border-accent);
+}
+
+.card--accent:hover {
+  box-shadow: var(--shadow-accent);
+}
+
+.card--glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-default);
+}
+
+.card--flat {
+  box-shadow: none;
+  border-color: var(--border-subtle);
+}
+
+.card--danger {
+  border-color: var(--danger-border);
+  background-color: var(--danger-soft);
+}
+
+/* Card sub-elements */
+.card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.card__title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-tight);
+  color: var(--text-primary);
+}
+
+.card__subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+  line-height: var(--leading-snug);
+}
+
+.card__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--border-subtle);
+}
+
+
+/* ─── 16. BUTTON SYSTEM ──────────────────────────────────────────────────── */
+/* Rule: ONE .btn-primary per screen — never more.                            */
+/* Pattern: className="btn btn-primary"  or  "btn btn-ghost btn-icon"         */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: inherit;
+  font-weight: var(--font-semibold);
+  font-size: var(--text-base);
+  line-height: var(--leading-none);
+  letter-spacing: var(--tracking-normal);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-5);
+  transition:
+    background-color var(--transition-fast), border-color var(--transition-fast),
+    color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.38;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Types */
+.btn-primary {
+  background: var(--accent-gradient);
+  color: var(--text-on-accent);
+  border-color: transparent;
+}
+
+.btn-primary:hover {
+  background: var(--accent-gradient-hover);
+  border-color: transparent;
+  box-shadow: var(--shadow-accent);
+}
+
+.btn-primary:active {
+  background: var(--accent-gradient);
+  filter: brightness(0.88);
+}
+
+/* Flat primary — solid fill, no gradient. Use when gradient competes with   */
+/* a rich background (coloured panels, images). ONE primary CTA per screen.  */
+.btn-primary--flat {
+  background: var(--accent);
+  color: var(--text-on-accent);
+  border-color: transparent;
+}
+
+.btn-primary--flat:hover {
+  background: var(--accent-hover);
+  box-shadow: var(--shadow-accent);
+}
+
+.btn-primary--flat:active {
+  background: var(--accent-active);
+}
+
+/* accent-alt = #8CAEFF dark / #1D4ED8 light — always legible as text */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--accent-alt);
+  border-color: var(--border-accent-strong);
+}
+
+.btn-secondary:hover {
+  background-color: var(--accent-soft);
+  border-color: var(--accent-alt);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+
+.btn-ghost:hover {
+  background-color: var(--bg-surface-3);
+  color: var(--text-primary);
+}
+
+.btn-surface {
+  background-color: var(--bg-surface-3);
+  color: var(--text-primary);
+  border-color: var(--border-default);
+}
+
+.btn-surface:hover {
+  background-color: var(--bg-surface-4);
+  border-color: var(--border-strong);
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  color: #ffffff;
+  border-color: var(--danger);
+}
+
+.btn-danger:hover {
+  background-color: var(--danger-hover);
+  box-shadow: 0 0 16px var(--danger-soft);
+}
+
+/* Sizes */
+.btn-xs {
+  font-size: var(--text-xs);
+  padding: var(--space-1-5) var(--space-2-5);
+  border-radius: var(--radius-xs);
+}
+
+.btn-sm {
+  font-size: var(--text-sm);
+  padding: var(--space-2) var(--space-3-5);
+  border-radius: var(--radius-sm);
+}
+
+.btn-lg {
+  font-size: var(--text-lg);
+  padding: var(--space-4) var(--space-8);
+  border-radius: var(--radius-lg);
+}
+
+.btn-xl {
+  font-size: var(--text-xl);
+  padding: var(--space-5) var(--space-10);
+  border-radius: var(--radius-xl);
+}
+
+/* Shape modifiers */
+.btn-icon {
+  padding: var(--space-2-5);
+  border-radius: var(--radius-md);
+  aspect-ratio: 1 / 1;
+}
+
+.btn-pill {
+  border-radius: var(--radius-full);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+
+/* ─── 17. INPUT SYSTEM ───────────────────────────────────────────────────── */
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);
+}
+
+.input-label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  line-height: var(--leading-snug);
+}
+
+.input-label--required::after {
+  content: ' *';
+  color: var(--danger);
+}
+
+.input {
+  width: 100%;
+  background-color: var(--bg-surface-3);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-family: inherit;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  direction: rtl;
+  outline: none;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-theme);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:hover {
+  border-color: var(--border-strong);
+}
+
+/* accent-alt = #8CAEFF dark / #1D4ED8 light — visible focus indicator in both themes */
+.input:focus {
+  border-color: var(--accent-alt);
+  box-shadow: var(--shadow-focus);
+  background-color: var(--bg-surface-2);
+}
+
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: var(--bg-surface-4);
+}
+
+.input--error {
+  border-color: var(--danger);
+}
+
+.input--error:focus {
+  box-shadow: var(--shadow-focus-danger);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: var(--leading-relaxed);
+}
+
+/* Time/alarm input — styled with clock digit colour */
+.input-time {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-clock);
+  text-align: center;
+  color: var(--clock-digit-color);
+  background-color: var(--bg-surface-2);
+  border-color: var(--border-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-6);
+}
+
+.input-time:focus {
+  border-color: var(--accent-alt);
+  box-shadow: var(--shadow-accent);
+}
+
+.input-hint {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.input-error-msg {
+  font-size: var(--text-xs);
+  color: var(--danger);
+}
+
+
+/* ─── 18. BADGE & CHIP ───────────────────────────────────────────────────── */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  line-height: 1;
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.badge::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: currentColor;
+  flex-shrink: 0;
+}
+
+/* accent-alt = #8CAEFF (dark) / #1D4ED8 (light) — AA on all surfaces in both themes */
+.badge-default {
+  background: var(--bg-surface-3);
+  color: var(--text-secondary);
+  border-color: var(--border-default);
+}
+
+.badge-accent {
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+  border-color: var(--border-accent);
+}
+
+.badge-danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border-color: var(--danger-border);
+}
+
+.badge-warning {
+  background: var(--warning-soft);
+  color: var(--warning);
+  border-color: var(--warning-border);
+}
+
+.badge-success {
+  background: var(--success-soft);
+  color: var(--success);
+  border-color: var(--success-border);
+}
+
+.badge-info {
+  background: var(--info-soft);
+  color: var(--info);
+  border-color: var(--info-border);
+}
+
+/* Chip — clickable day/filter chips */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  padding: var(--space-2) var(--space-3-5);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-default);
+  background-color: var(--bg-surface-3);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.chip:hover,
+.chip--active {
+  background-color: var(--accent-soft);
+  color: var(--accent-alt);
+  border-color: var(--border-accent);
+}
+
+
+/* ─── 19. TAB SYSTEM ─────────────────────────────────────────────────────── */
+
+.tabs {
+  display: flex;
+  gap: var(--space-1);
+  background-color: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-1);
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.tab:hover {
+  color: var(--text-primary);
+}
+
+.tab--active {
+  background-color: var(--bg-surface-4);
+  color: var(--accent-alt);
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-xs);
+  font-weight: var(--font-semibold);
+}
+
+/* Underline variant */
+.tabs--underline {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0;
+  padding: 0;
+  gap: 0;
+}
+
+.tabs--underline .tab {
+  border-radius: 0;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding-inline: var(--space-5);
+  padding-block: var(--space-3);
+  margin-bottom: -1px;
+  background: transparent;
+}
+
+.tabs--underline .tab--active {
+  border-bottom-color: var(--accent-alt);
+  background: transparent;
+  box-shadow: none;
+}
+
+
+/* ─── 20. SWITCH / TOGGLE ────────────────────────────────────────────────── */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.switch input {
+  display: none;
+}
+
+.switch__track {
+  position: absolute;
+  inset: 0;
+  background-color: var(--bg-surface-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-base);
+}
+
+.switch__thumb {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: 2px;
+  right: 2px;
+  background-color: var(--text-muted);
+  border-radius: 50%;
+  transition: transform var(--transition-spring), background-color var(--transition-base);
+}
+
+.switch input:checked~.switch__track {
+  background-color: var(--accent-soft);
+  border-color: var(--accent-alt);
+}
+
+.switch input:checked~.switch__thumb {
+  background-color: var(--accent-alt);
+  transform: translateX(-20px);
+}
+
+
+/* ─── 21. SELECT / DROPDOWN ──────────────────────────────────────────────── */
+
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  background-color: var(--bg-surface-3);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  padding-left: var(--space-10);
+  font-family: inherit;
+  font-size: var(--text-base);
+  direction: rtl;
+  cursor: pointer;
+  outline: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A8B2CB' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left var(--space-3) center;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.select:hover {
+  border-color: var(--border-strong);
+}
+
+.select:focus {
+  border-color: var(--accent-alt);
+  box-shadow: var(--shadow-focus);
+}
+
+.light .select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%233D4668' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+
+/* ─── 22. CLOCK DISPLAY ──────────────────────────────────────────────────── */
+/*                                                                            */
+/*  WHY WHITE CLOCK DIGITS IN DARK MODE?                                     */
+/*  Blue (#8CAEFF) reads as an interactive element — it's trained as a link  */
+/*  or badge. Clock digits are DATA, not interaction. Pure white says         */
+/*  "precision instrument". It's also the brightest element on screen,       */
+/*  creating clear hierarchy: clock > headings > body text.                  */
+/*                                                                            */
+/*  Theme    │ --clock-digit-color │ Rationale                               */
+/*  ─────────┼─────────────────────┼──────────────────────────────────────   */
+/*  dark     │ #FFFFFF  (21:1 AAA) │ pure white — data display, premium      */
+/*  light    │ #1D4ED8 (6.70:1 AA) │ brand blue — vibrant on white canvas    */
+
+.clock-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.clock-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-weight: var(--font-extrabold);
+  letter-spacing: var(--tracking-clock);
+  line-height: var(--leading-none);
+  color: var(--clock-digit-color);
+  transition: color var(--transition-theme);
+}
+
+/* Size variants */
+.clock-xs {
+  font-size: var(--text-clock-xs);
+}
+
+.clock-sm {
+  font-size: var(--text-clock-sm);
+}
+
+.clock-md {
+  font-size: var(--text-clock-md);
+}
+
+.clock-lg {
+  font-size: var(--text-clock-lg);
+}
+
+.clock-xl {
+  font-size: var(--text-clock-xl);
+}
+
+/* Glow — add only in dark theme */
+.clock-glow {
+  text-shadow: var(--clock-digit-glow);
+}
+
+/* Blinking colon */
+.clock-sep {
+  color: var(--clock-separator);
+  margin-bottom: 0.12em;
+  user-select: none;
+  animation: clock-blink 1s step-start infinite;
+}
+
+@keyframes clock-blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.15;
+  }
+}
+
+@keyframes ct-copied-pop {
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+
+  60% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   CountdownTicker — all ct- classes + keyframes
+   SIZING STRATEGY: cqi (container query inline %) not vw (viewport %).
+   This means digits always scale relative to the CARD width, so they
+   look correct whether the card is in a narrow sidebar or a full-width
+   page — and landscape mobile no longer blows up the numbers.
+   Browser support: Chrome 105+, Safari 16+, Firefox 110+  (Baseline 2023)
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Keyframes ── */
+@keyframes ct-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(30px)
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+
+@keyframes ct-unit-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px)
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+
+@keyframes ct-digit-enter {
+  from {
+    opacity: 0
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+@keyframes ct-fade-in {
+  from {
+    opacity: 0
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+@keyframes ct-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92)
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1)
+  }
+}
+
+/* ── Misc utility classes ── */
+.ct-sep {
+  animation: none !important;
+}
+
+/* static colon, no blink */
+.ct-copied-badge {
+  animation: ct-copied-pop 0.2s ease both;
+}
+
+/* ── Container: required so cqi units measure the CARD, not the viewport ── */
+.ct-clock-card {
+  container-type: inline-size;
+  container-name: clock-card;
+}
+
+/* ── Digit — size in cqi so it tracks the card width exactly ──────────
+   At 320px card → 12cqi = 38px  (comfortable mobile)
+   At 480px card → 12cqi = 58px  (tablet / landscape phone)
+   At 640px card → 12cqi = 77px  → clamped to 5rem = 80px (desktop max)
+   ─────────────────────────────────────────────────────────────────── */
+.ct-digit {
+  font-size: clamp(2.5rem, 12cqi, 5rem);
+  font-weight: 800;
+  line-height: 1;
+  display: block;
+  color: var(--clock-digit-color);
+  text-shadow: var(--clock-digit-glow);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  animation: ct-digit-enter 0.18s ease-out both;
+}
+
+/* ── Colon separator ── */
+.ct-sep-char {
+  font-size: clamp(1.5rem, 7cqi, 3rem);
+  color: var(--clock-separator);
+  font-weight: 700;
+  align-self: center;
+  margin-bottom: 1em;
+  /* aligns with digit baseline, not label */
+  flex-shrink: 0;
+  user-select: none;
+  line-height: 1;
+}
+
+/* ── Unit label pill ── */
+.ct-unit-label {
+  font-size: clamp(0.65rem, 2.8cqi, 0.9rem);
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: var(--bg-surface-3);
+  border: 1px solid var(--border-subtle);
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* ── Desktop / mobile row toggle ──────────────────────────────────────
+   Breakpoint is on the CARD width (30rem ≈ 480px), not the viewport.
+   A 500px card on a 1400px desktop → desktop row.
+   A 400px card on a 400px phone   → mobile row.
+   A 400px card on a 800px landscape phone → still mobile row. ✓
+   ─────────────────────────────────────────────────────────────────── */
+.ct-row-desktop {
+  display: flex;
+}
+
+.ct-row-mobile {
+  display: none;
+}
+
+@container clock-card (max-width: 30rem) {
+  .ct-row-desktop {
+    display: none !important;
+  }
+
+  .ct-row-mobile {
+    display: flex !important;
+  }
+
+  /* Days hero — bigger treatment on narrow card */
+  .ct-days-val {
+    font-size: clamp(3rem, 20cqi, 5.5rem) !important;
+    line-height: 1 !important;
+    animation: ct-digit-enter 0.18s ease-out both;
+  }
+
+  /* H · M · S digits below days */
+  .ct-hms-digit {
+    font-size: clamp(2rem, 8cqi, 2.4rem) !important;
+  }
+
+  .ct-hms-label {
+    font-size: clamp(0.55rem, 2.5cqi, 0.75rem) !important;
+  }
+
+  .ct-hms-sep {
+    font-size: clamp(1rem, 5cqi, 1.8rem) !important;
+    margin-bottom: 1.1em !important;
+  }
+}
+
+/* Digit group (number + label below it) */
+.clock-segment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.clock-segment__label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-wide);
+  color: var(--clock-label);
+  text-transform: uppercase;
+  user-select: none;
+}
+
+/* AM/PM indicator */
+.clock-ampm {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--clock-digit-color);
+  opacity: 0.55;
+  align-self: flex-end;
+  margin-bottom: 0.3em;
+}
+
+/* Colour picker swatches */
+.clock-color-picker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.clock-color-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.clock-color-swatch:hover {
+  transform: scale(1.25);
+}
+
+.clock-color-swatch--active {
+  border-color: var(--text-primary);
+  transform: scale(1.15);
+}
+
+
+/* ─── 23. PROGRESS & COUNTDOWN ───────────────────────────────────────────── */
+
+.progress-track {
+  width: 100%;
+  height: 5px;
+  background-color: var(--bg-surface-3);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  /* accent-alt = #8CAEFF dark (6:1 vs track ✅) / #1D4ED8 light (5.71:1 ✅) */
+  background-color: var(--accent-alt);
+  transition: width 1s linear;
+}
+
+/* Countdown bar: shifts green → amber → red as time runs low.                */
+/* Update background-position via JS: el.style.backgroundPosition = `${pct}% 0` */
+.progress-fill--countdown {
+  background: linear-gradient(90deg, var(--success) 0%, var(--warning) 60%, var(--danger) 100%);
+  background-size: 300% 100%;
+}
+
+/* Circular ring (SVG) */
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring__track {
+  fill: none;
+  stroke: var(--bg-surface-3);
+}
+
+/* accent-alt = #8CAEFF dark / #1D4ED8 light — 6:1 vs ring track in both themes ✅ */
+.progress-ring__fill {
+  fill: none;
+  stroke: var(--accent-alt);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+
+
+/* ─── 24. ALARM ITEM ─────────────────────────────────────────────────────── */
+
+.alarm-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.alarm-item:hover {
+  border-color: var(--border-default);
+  background-color: var(--bg-surface-3);
+}
+
+.alarm-item--active {
+  border-color: var(--border-accent);
+  background-color: var(--accent-soft);
+}
+
+.alarm-item--ringing {
+  border-color: var(--danger-border);
+  background-color: var(--danger-soft);
+  animation: alarm-pulse 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes alarm-pulse {
+  from {
+    box-shadow: 0 0 0 0 var(--danger-soft);
+  }
+
+  to {
+    box-shadow: 0 0 0 10px transparent;
+  }
+}
+
+.alarm-time {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-clock);
+  line-height: var(--leading-none);
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.alarm-item--active .alarm-time {
+  color: var(--accent-alt);
+}
+
+.alarm-item--ringing .alarm-time {
+  color: var(--danger);
+}
+
+.alarm-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.alarm-label {
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.alarm-days {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+  margin-top: var(--space-1-5);
+}
+
+.alarm-day {
+  font-size: var(--text-2xs);
+  font-weight: var(--font-medium);
+  color: var(--text-muted);
+  padding: 2px var(--space-1-5);
+  border-radius: var(--radius-xs);
+  background-color: var(--bg-surface-3);
+}
+
+.alarm-day--active {
+  color: var(--accent-alt);
+  background-color: var(--accent-soft);
+}
+
+
+/* ─── 25. MODAL & OVERLAY ────────────────────────────────────────────────── */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--bg-overlay);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+
+.modal {
+  background-color: var(--bg-surface-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  width: 100%;
+  max-width: 500px;
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  direction: rtl;
+}
+
+.modal__header {
+  padding-bottom: var(--space-5);
+  margin-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.modal__title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.modal__subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+}
+
+.modal__close {
+  position: absolute;
+  top: var(--space-5);
+  left: var(--space-5);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.modal__close:hover {
+  background: var(--bg-surface-4);
+  color: var(--text-primary);
+  border-color: var(--border-default);
+}
+
+
+/* ─── 25b. DATE PILL RESPONSIVE ─────────────────────────────────────────── */
+/* Uses !important because the spans have inline display:inline-flex styles */
+.date-pill-desktop {
+  display: inline-flex !important;
+}
+
+.date-pill-mobile {
+  display: none !important;
+}
+
+@media (max-width: 639px) {
+  .date-pill-desktop {
+    display: none !important;
+  }
+
+  .date-pill-mobile {
+    display: inline-flex !important;
+  }
+}
+
+
+/* ─── 26. TOAST / NOTIFICATION ───────────────────────────────────────────── */
+
+.toast-container {
+  position: fixed;
+  bottom: var(--space-6);
+  left: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  z-index: var(--z-toast);
+  pointer-events: none;
+  max-width: 380px;
+  width: calc(100% - var(--space-12));
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background-color: var(--bg-surface-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4) var(--space-5);
+  box-shadow: var(--shadow-lg);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  pointer-events: all;
+  line-height: var(--leading-snug);
+  border-right: 3px solid var(--accent-alt);
+  /* RTL: accent bar on the right side */
+}
+
+.toast-danger {
+  border-right-color: var(--danger);
+}
+
+.toast-warning {
+  border-right-color: var(--warning);
+}
+
+.toast-success {
+  border-right-color: var(--success);
+}
+
+.toast-info {
+  border-right-color: var(--info);
+}
+
+.toast__title {
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--space-1);
+}
+
+.toast__msg {
+  color: var(--text-secondary);
+}
+
+
+/* ─── 27. EMPTY STATE ────────────────────────────────────────────────────── */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
+  padding: var(--space-8) var(--space-8);
+  text-align: center;
+}
+
+.empty-state__icon {
+  font-size: 3rem;
+  opacity: 0.28;
+  line-height: 1;
+}
+
+.empty-state__title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-secondary);
+}
+
+.empty-state__description {
+  font-size: var(--text-base);
+  color: var(--text-muted);
+  max-width: 300px;
+  line-height: var(--leading-relaxed);
+}
+
+
+/* ─── 28. FULLSCREEN MODE ────────────────────────────────────────────────── */
+/* Always deep dark (#0D1117) + pure white digits — regardless of theme.     */
+/* White clock = precision instrument. Blue clock = interactive element.     */
+/* The distinction matters: digit color signals DATA, not brand.             */
+
+.fullscreen-mode {
+  position: fixed;
+  inset: 0;
+  background-color: #0D1117;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-max);
+}
+
+.fullscreen-mode .clock-display {
+  color: #FFFFFF;
+  /* pure white — 21:1 on #0D1117 ✅ AAA */
+}
+
+.fullscreen-mode .clock-glow {
+  /* no glow in fullscreen either — clean sharp digits */
+  text-shadow: none;
+}
+
+.fullscreen-mode .clock-sep {
+  color: rgba(255, 255, 255, 0.22);
+}
+
+/* Exit button — fades in on mouse movement */
+.fullscreen-exit {
+  position: absolute;
+  top: var(--space-6);
+  left: var(--space-6);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.fullscreen-mode:hover .fullscreen-exit {
+  opacity: 1;
+}
+
+

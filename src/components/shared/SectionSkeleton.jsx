@@ -4,7 +4,7 @@
  * Matches SectionWrapper layout + pulse animation
  */
 
-import SectionWrapper from './SectionWrapper'
+import { SectionWrapper } from './primitives'
 
 export default function SectionSkeleton() {
   return (

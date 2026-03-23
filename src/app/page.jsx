@@ -4,7 +4,7 @@ import { Clock, Calendar, Compass, ArrowLeftRight, Bell } from 'lucide-react';
 import TimeNowPage from './time-now/page';
 import { Globe } from "@/components/ui/globe"
 import HomeSections from '@/components/home'
-import SectionDivider from '@/components/home/shared/SectionDivider'
+import { SectionDivider } from '@/components/shared/primitives'
 
 const SERVICES = [
   {

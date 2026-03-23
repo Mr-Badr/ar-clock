@@ -1,0 +1,480 @@
+/* ─── 29. ACCENT UTILITIES ───────────────────────────────────────────────── */
+/* Blue accent should cover ≤ 10–15% of the visible screen.                  */
+/* It is a highlight, not a fill. Use sparingly.                              */
+
+.accent-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-alt);
+  flex-shrink: 0;
+}
+
+.accent-dot--danger {
+  background-color: var(--danger);
+}
+
+.accent-dot--warning {
+  background-color: var(--warning);
+}
+
+.accent-dot--success {
+  background-color: var(--success);
+}
+
+.accent-line-top {
+  border-top: 2px solid var(--accent-alt);
+}
+
+.accent-highlight {
+  background-color: var(--accent-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+.active-indicator {
+  border-right: 3px solid var(--accent-alt);
+  padding-right: var(--space-4);
+}
+
+
+/* ─── 30. UTILITY CLASSES ────────────────────────────────────────────────── */
+/* These are design-system utility classes for use in any component.          */
+/* They are single-purpose, semantic, and theme-aware.                        */
+/* All colour values come from the token layer — never hardcoded.             */
+/*                                                                            */
+/* NAMING CONVENTION:                                                         */
+/*   text-{role}     — sets color only                                        */
+/*   bg-{role}       — sets background-color only                             */
+/*   border-{level}  — sets border shorthand (width + style + color)          */
+/*   rounded-{size}  — sets border-radius only                                */
+/*   shadow-{size}   — sets box-shadow only                                   */
+/*   text-{size}     — sets font-size only (type scale)                       */
+/*   gap-{n}         — sets gap only (matches spacing token n)                */
+
+/* ── Text colour ──────────────────────────────────────────────────────────── */
+.text-primary {
+  color: var(--text-primary) !important;
+}
+
+.text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.text-disabled {
+  color: var(--text-disabled) !important;
+}
+
+/* text-accent intentionally uses accent-alt:
+   dark = #8CAEFF (6:1 on surf3 ✅) / light = #1D4ED8 (5.71:1 on surf3 ✅)
+   Use .bg-accent for solid filled blocks (not text), .text-accent-alt is an alias. */
+.text-accent {
+  color: var(--accent-alt) !important;
+}
+
+.text-accent-alt {
+  color: var(--accent-alt) !important;
+}
+
+.text-danger {
+  color: var(--danger) !important;
+}
+
+.text-warning {
+  color: var(--warning) !important;
+}
+
+.text-success {
+  color: var(--success) !important;
+}
+
+.text-info {
+  color: var(--info) !important;
+}
+
+.text-clock {
+  color: var(--clock-digit-color) !important;
+}
+
+/* ── Background ───────────────────────────────────────────────────────────── */
+.bg-base {
+  background-color: var(--bg-base);
+}
+
+.bg-subtle {
+  background-color: var(--bg-subtle);
+}
+
+.bg-surface-1 {
+  background-color: var(--bg-surface-1);
+}
+
+.bg-surface-2 {
+  background-color: var(--bg-surface-2);
+}
+
+.bg-surface-3 {
+  background-color: var(--bg-surface-3);
+}
+
+.bg-surface-4 {
+  background-color: var(--bg-surface-4);
+}
+
+/* bg-accent — solid brand fill. Use ONLY for primary CTA buttons and         */
+/* micro-elements (icon dots, avatar rings). Never for large panels or cards: */
+/* #1D4ED8 as a large block surface is too dominant and kills visual hierarchy */
+.bg-accent {
+  background-color: var(--accent);
+}
+
+.bg-accent-soft {
+  background-color: var(--accent-soft);
+}
+
+.bg-danger-soft {
+  background-color: var(--danger-soft);
+}
+
+.bg-glass {
+  background-color: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ── Border ───────────────────────────────────────────────────────────────── */
+.border-subtle {
+  border: 1px solid var(--border-subtle);
+}
+
+.border-default {
+  border: 1px solid var(--border-default);
+}
+
+.border-strong {
+  border: 1px solid var(--border-strong);
+}
+
+.border-accent {
+  border: 1px solid var(--border-accent);
+}
+
+.border-accent-strong {
+  border: 1px solid var(--border-accent-strong);
+}
+
+.border-danger {
+  border: 1px solid var(--danger-border);
+}
+
+/* ── Border radius ────────────────────────────────────────────────────────── */
+.rounded-none {
+  border-radius: var(--radius-none);
+}
+
+.rounded-xs {
+  border-radius: var(--radius-xs);
+}
+
+.rounded-sm {
+  border-radius: var(--radius-sm);
+}
+
+.rounded-md {
+  border-radius: var(--radius-md);
+}
+
+.rounded-lg {
+  border-radius: var(--radius-lg);
+}
+
+.rounded-xl {
+  border-radius: var(--radius-xl);
+}
+
+.rounded-2xl {
+  border-radius: var(--radius-2xl);
+}
+
+.rounded-3xl {
+  border-radius: var(--radius-3xl);
+}
+
+.rounded-full {
+  border-radius: var(--radius-full);
+}
+
+/* ── Shadow ───────────────────────────────────────────────────────────────── */
+.shadow-xs {
+  box-shadow: var(--shadow-xs);
+}
+
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+.shadow-xl {
+  box-shadow: var(--shadow-xl);
+}
+
+.shadow-accent {
+  box-shadow: var(--shadow-accent);
+}
+
+.shadow-accent-strong {
+  box-shadow: var(--shadow-accent-strong);
+}
+
+/* ── Type scale ───────────────────────────────────────────────────────────── */
+.text-2xs {
+  font-size: var(--text-2xs);
+}
+
+.text-xs {
+  font-size: var(--text-xs);
+}
+
+.text-sm {
+  font-size: var(--text-sm);
+}
+
+.text-base {
+  font-size: var(--text-base);
+}
+
+.text-md {
+  font-size: var(--text-md);
+}
+
+.text-lg {
+  font-size: var(--text-lg);
+}
+
+.text-xl {
+  font-size: var(--text-xl);
+}
+
+.text-2xl {
+  font-size: var(--text-2xl);
+}
+
+.text-3xl {
+  font-size: var(--text-3xl);
+}
+
+.text-4xl {
+  font-size: var(--text-4xl);
+}
+
+/* ── Gap ──────────────────────────────────────────────────────────────────── */
+.gap-1 {
+  gap: var(--space-1);
+}
+
+.gap-2 {
+  gap: var(--space-2);
+}
+
+.gap-3 {
+  gap: var(--space-3);
+}
+
+.gap-4 {
+  gap: var(--space-4);
+}
+
+.gap-5 {
+  gap: var(--space-5);
+}
+
+.gap-6 {
+  gap: var(--space-6);
+}
+
+.gap-8 {
+  gap: var(--space-8);
+}
+
+.gap-10 {
+  gap: var(--space-10);
+}
+
+.gap-12 {
+  gap: var(--space-12);
+}
+
+/* ── Theme-switch transition ──────────────────────────────────────────────── */
+/* Add class="theme-transition" to <html> in layout.tsx                       */
+.theme-transition,
+.theme-transition * {
+  transition:
+    background-color var(--transition-theme),
+    border-color var(--transition-theme),
+    color var(--transition-theme),
+    box-shadow var(--transition-theme) !important;
+}
+
+/* ── Accessibility & layout helpers ──────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── 32. TABLE SYSTEM ───────────────────────────────────────────────────── */
+/* Design rationale:                                                          */
+/* Light mode zebra stripes barely work — surface-1 (#FFFFFF) and surface-2  */
+/* (#EAEFF9) are only 1.15:1 apart. Use BORDER-based row separation instead  */
+/* (modern: Linear, GitHub, Notion). When stripes are needed, use surface-3. */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xs);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  background-color: var(--bg-surface-1);
+}
+
+/* Header */
+.table thead tr {
+  background-color: var(--bg-surface-2);
+  border-bottom: 2px solid var(--border-default);
+}
+
+.table th {
+  padding: var(--space-3) var(--space-5);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  text-align: right;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Body rows — border-based separation (better than zebra on light surfaces) */
+.table tbody tr {
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color var(--transition-fast);
+}
+
+.table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background-color: var(--bg-surface-2);
+}
+
+.table td {
+  padding: var(--space-3) var(--space-5);
+  color: var(--text-primary);
+  line-height: var(--leading-snug);
+  vertical-align: middle;
+}
+
+/* Zebra stripe variant — use surface-3 (not surface-2) for visibility */
+/* Light: #E0E8F4 vs white = 1.24:1 — perceptible. Dark: #252F50 vs #161D2E ✓ */
+.table--striped tbody tr:nth-child(even) {
+  background-color: var(--bg-surface-3);
+}
+
+.table--striped tbody tr:nth-child(even):hover {
+  background-color: var(--bg-surface-4);
+}
+
+/* Column alignment helpers */
+.table td.numeric,
+.table th.numeric {
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: var(--tracking-clock);
+}
+
+/* Cell status variants */
+.table td.td-accent {
+  color: var(--accent-alt);
+  font-weight: var(--font-semibold);
+}
+
+.table td.td-danger {
+  color: var(--danger);
+}
+
+.table td.td-warning {
+  color: var(--warning);
+}
+
+.table td.td-success {
+  color: var(--success);
+}
+
+.table td.td-muted {
+  color: var(--text-muted);
+}
+
+/* Compact variant */
+.table--compact th {
+  padding: var(--space-2) var(--space-4);
+}
+
+.table--compact td {
+  padding: var(--space-2) var(--space-4);
+}
+
+/* ─── 31. ANIMATIONS ─────────────────────────────────────────────────────── */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+

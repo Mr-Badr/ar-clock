@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { convertDate } from '@/lib/date-adapter';
+import { GREGORIAN_MONTHS_AR, DAY_NAMES_AR } from '@/lib/constants';
 import { JsonLd } from '@/components/date/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { headers } from 'next/headers';
@@ -22,8 +23,7 @@ export const metadata: Metadata = {
   },
 };
 
-const MONTHS_AR = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
-const DAY_NAMES_AR = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+
 
 function getWeekNumber(date: Date): number {
   const d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
@@ -100,7 +100,7 @@ async function TodayGregorianDynamicContent() {
               {dayOfWeek}
             </div>
             <h1 className="text-[clamp(2.5rem,7vw,4.5rem)] font-black text-accent-alt leading-[1.1] m-0 mb-3 md:mb-4">
-              {d} {MONTHS_AR[m - 1]} {y}
+              {d} {GREGORIAN_MONTHS_AR[m - 1]} {y}
             </h1>
             {hijri && (
               <div className="text-base md:text-lg font-medium text-muted">
@@ -143,7 +143,7 @@ async function TodayGregorianDynamicContent() {
             </h2>
             <div className="flex flex-col gap-1">
               {[
-                ['الشهر', MONTHS_AR[m - 1]],
+                ['الشهر', GREGORIAN_MONTHS_AR[m - 1]],
                 ['عدد أيام الشهر', new Date(y, m, 0).getDate()],
                 ['نوع السنة', isLeap ? 'سنة كبيسة (366 يوم)' : 'سنة بسيطة (365 يوم)'],
                 ['التاريخ الهجري الموافق', hijri ? hijri.formatted.ar : '—'],
@@ -172,7 +172,7 @@ async function TodayGregorianDynamicContent() {
               href={`/date/${y}/${String(m).padStart(2, '0')}/${String(d).padStart(2, '0')}`}
               className="text-accent text-sm font-semibold hover:underline"
             >
-              صفحة تاريخ {d} {MONTHS_AR[m - 1]} ←
+              صفحة تاريخ {d} {GREGORIAN_MONTHS_AR[m - 1]} ←
             </Link>
           </nav>
         </main>

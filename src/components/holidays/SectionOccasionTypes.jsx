@@ -12,9 +12,9 @@
 
 import Link from 'next/link'
 import { Moon, Flag, Globe2, GraduationCap, Briefcase, TreePine } from 'lucide-react'
-import SectionWrapper from './shared/SectionWrapper'
-import { SectionBadge, FeatureItem } from './shared/primitives'
-import CtaLink from './shared/CtaLink'
+import { SectionWrapper } from '@/components/shared/primitives'
+import { SectionBadge, FeatureItem } from '@/components/shared/primitives'
+import CtaLink from '@/components/shared/CtaLink'
 import OccasionTypesMockup from './mockups/OccasionTypesMockup'
 
 const H2_ID = 'h2-occasion-types'

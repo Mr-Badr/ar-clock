@@ -32,10 +32,8 @@ import { Moon, Star, Calendar, Bell } from 'lucide-react'
 
 import { resolveAllHijriEvents } from '@/lib/hijri-resolver'
 
-import SectionWrapper   from './shared/SectionWrapper'
-import SectionBadge     from './shared/SectionBadge'
-import FeatureItem      from './shared/FeatureItem'
-import CtaLink          from './shared/CtaLink'
+import { SectionWrapper, SectionBadge, FeatureItem } from '@/components/shared/primitives'
+import CtaLink          from '@/components/shared/CtaLink'
 import HolidaysLiveCard from './mockups/HolidaysLiveCard.client'
 
 const H2_ID = 'h2-holidays'

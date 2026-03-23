@@ -14,8 +14,8 @@
  */
 
 import { Sun, Info, Globe2, RefreshCcw, Shield } from 'lucide-react'
-import { SectionWrapper, SectionBadge, FeatureItem } from './shared/primitives'
-import CtaLink from './shared/CtaLink'
+import { SectionWrapper, SectionBadge, FeatureItem } from '@/components/shared/primitives'
+import CtaLink from '@/components/shared/CtaLink'
 import DSTMockup from './mockups/DSTMockup'
 
 const H2_ID = 'h2-dst'

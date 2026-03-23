@@ -17,10 +17,8 @@
 import Link from 'next/link'
 import { Clock, Sun, Globe2, Users, MapPin } from 'lucide-react'
 
-import SectionWrapper         from './shared/SectionWrapper'
-import SectionBadge           from './shared/SectionBadge'
-import FeatureItem            from './shared/FeatureItem'
-import CtaLink                from './shared/CtaLink'
+import { SectionWrapper, SectionBadge, FeatureItem } from '@/components/shared/primitives'
+import CtaLink                from '@/components/shared/CtaLink'
 import TimeDifferenceLiveCard from './mockups/TimeDifferenceLiveCard.client'
 
 const H2_ID = 'h2-time-difference'

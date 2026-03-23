@@ -11,6 +11,11 @@ import {
   GregorianCalendar,
   toCalendar as libToCalendar,
 } from '@internationalized/date';
+import { 
+  DAY_NAMES_AR as _DAY_NAMES_AR, 
+  GREGORIAN_MONTHS_AR as _GREGORIAN_MONTHS_AR,
+  GREGORIAN_MONTHS_EN as _GREGORIAN_MONTHS_EN
+} from '@/lib/constants';
 
 export type ConversionMethod = 'umalqura' | 'civil' | 'astronomical';
 
@@ -59,17 +64,10 @@ export const ISLAMIC_MONTH_NAMES_EN = [
   'Ramadan', 'Shawwal', "Dhu al-Qi'dah", 'Dhu al-Hijjah',
 ];
 
-export const GREGORIAN_MONTH_NAMES_AR = [
-  'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
-  'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر',
-];
+export const GREGORIAN_MONTH_NAMES_AR = _GREGORIAN_MONTHS_AR;
+export const GREGORIAN_MONTH_NAMES_EN = _GREGORIAN_MONTHS_EN;
 
-export const GREGORIAN_MONTH_NAMES_EN = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December',
-];
-
-export const DAY_NAMES_AR = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+export const DAY_NAMES_AR = _DAY_NAMES_AR;
 export const DAY_NAMES_EN = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 // ── Utilities ─────────────────────────────────────────────────────────────────

@@ -9,9 +9,9 @@
 
 import Link from 'next/link'
 import { Moon, Calendar, RefreshCcw, Globe2, BookOpen } from 'lucide-react'
-import SectionWrapper from './shared/SectionWrapper'
-import { SectionBadge, FeatureItem } from './shared/primitives'
-import CtaLink from './shared/CtaLink'
+import { SectionWrapper } from '@/components/shared/primitives'
+import { SectionBadge, FeatureItem } from '@/components/shared/primitives'
+import CtaLink from '@/components/shared/CtaLink'
 import HijriCalendarMockup from './mockups/HijriCalendarMockup'
 
 const H2_ID = 'h2-hijri-calendar'

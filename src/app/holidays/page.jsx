@@ -30,7 +30,7 @@ import HolidaysClient from './HolidaysClient';
 import { EventGridSkeleton } from '@/components/events/EventCard';
 import { getCachedNowIso } from '@/lib/date-utils';
 import HolidaysSections from '@/components/holidays/index';
-import { SectionDivider } from '@/components/holidays/shared/primitives';
+import { SectionDivider } from '@/components/shared/primitives';
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
 

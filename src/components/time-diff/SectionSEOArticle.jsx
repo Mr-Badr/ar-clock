@@ -17,7 +17,7 @@
 
 import Link from 'next/link'
 import { Globe2, Calculator, Clock, Users, BarChart3 } from 'lucide-react'
-import { SectionWrapper, SectionBadge } from './shared/primitives'
+import { SectionWrapper, SectionBadge } from '@/components/shared/primitives'
 
 const H2_ID = 'h2-td-about'
 

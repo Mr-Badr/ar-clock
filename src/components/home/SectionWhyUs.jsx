@@ -17,8 +17,8 @@
  */
 
 import { Star } from 'lucide-react'
-import SectionWrapper from './shared/SectionWrapper'
-import SectionBadge from './shared/SectionBadge'
+import { SectionWrapper } from '@/components/shared/primitives'
+import { SectionBadge } from '@/components/shared/primitives'
 import { WHY_FEATURES } from './data/whyFeatures'
 
 const H2_ID = 'h2-why-us'

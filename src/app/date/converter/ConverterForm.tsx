@@ -13,18 +13,10 @@
 
 import { useState, useTransition } from 'react';
 import Link from 'next/link';
+import { getHijriParts, HIJRI_MONTHS_AR } from '@/lib/hijri-utils';
 import { convertDateAction } from './actions';
 import type { ConvertDateResult, ConversionMethod } from '@/lib/date-adapter';
-
-const HIJRI_MONTHS_AR = [
-  'محرم','صفر','ربيع الأول','ربيع الثاني',
-  'جمادى الأولى','جمادى الثانية','رجب','شعبان',
-  'رمضان','شوال','ذو القعدة','ذو الحجة',
-];
-const GREGORIAN_MONTHS_AR = [
-  'يناير','فبراير','مارس','أبريل','مايو','يونيو',
-  'يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر',
-];
+import { GREGORIAN_MONTHS_AR } from '@/lib/constants';
 
 const METHODS: { value: ConversionMethod; label: string; sub: string; countries: string }[] = [
   { value: 'umalqura',    label: 'أم القرى',      sub: 'للسعودية والخليج',        countries: '🇸🇦🇦🇪🇰🇼🇶🇦🇧🇭🇴🇲' },
