@@ -23,7 +23,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Sun, Moon, Check, X, Download, Sparkle } from '@phosphor-icons/react';
+import { Sun, Moon, Check, X, Download, Palette } from '@phosphor-icons/react';
 
 // ─── Preview data — 8 rows, one Friday ───────────────────────────────────────
 
@@ -473,7 +473,7 @@ export default function PrintThemeChooserModal({ isOpen, onClose, onSelect, acti
                   background: 'var(--accent-soft)', border: '1px solid var(--border-accent)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
-                  <Sparkle size={17} color="var(--accent-alt)" weight="duotone" />
+                  <Palette size={17} color="var(--accent-alt)" weight="duotone" />
                 </div>
                 <div>
                   <h2 style={{

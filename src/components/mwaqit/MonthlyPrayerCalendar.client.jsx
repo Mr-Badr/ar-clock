@@ -156,11 +156,6 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr, 
           border:1px solid var(--border-default);border-radius:var(--radius-xl);
           box-shadow:var(--shadow-card);overflow:clip;
         }
-        .mpc-card::before{
-          content:'';position:absolute;top:0;inset-inline-start:0;inset-inline-end:0;
-          height:4px;background:var(--accent-gradient);
-          border-radius:var(--radius-xl) var(--radius-xl) 0 0;z-index:1;pointer-events:none;
-        }
 
         /* ── Header ── */
         .mpc-header{
