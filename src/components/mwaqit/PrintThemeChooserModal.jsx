@@ -23,22 +23,33 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Sun, Moon, Check, X, Download, Sparkles } from 'lucide-react';
+import { Sun, Moon, Check, X, Download, Sparkle } from '@phosphor-icons/react';
 
 // ─── Preview data — 8 rows, one Friday ───────────────────────────────────────
 
-const ROWS = [
-  { day: 'الأحد',     greg: '1',  h: '٢',  times: ['04:52', '06:18', '12:08', '15:30', '17:58', '19:22'] },
-  { day: 'الإثنين',  greg: '2',  h: '٣',  times: ['04:53', '06:19', '12:08', '15:31', '17:57', '19:21'] },
-  { day: 'الثلاثاء', greg: '3',  h: '٤',  times: ['04:54', '06:19', '12:09', '15:31', '17:57', '19:21'] },
-  { day: 'الأربعاء', greg: '4',  h: '٥',  times: ['04:55', '06:20', '12:09', '15:32', '17:56', '19:20'] },
-  { day: 'الخميس',   greg: '5',  h: '٦',  times: ['04:55', '06:20', '12:09', '15:32', '17:56', '19:20'] },
-  { day: 'الجمعة',   greg: '6',  h: '٧',  times: ['04:56', '06:21', '12:10', '15:33', '17:55', '19:19'], friday: true },
-  { day: 'السبت',    greg: '7',  h: '٨',  times: ['04:57', '06:21', '12:10', '15:33', '17:55', '19:19'] },
-  { day: 'الأحد',    greg: '8',  h: '٩',  times: ['04:58', '06:22', '12:10', '15:34', '17:54', '19:18'] },
-];
+const DAYS = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
 
-const HEADERS = ['اليوم', 'ه', 'م', 'الفجر', 'الشروق', 'الظهر', 'العصر', 'المغرب', 'العشاء'];
+const ROWS = Array.from({ length: 30 }, (_, i) => {
+  const dayIndex = i % 7;
+  const isFriday = DAYS[dayIndex] === 'الجمعة';
+
+  return {
+    day: DAYS[dayIndex],
+    greg: String(i + 1),     // ✅ normal numbers
+    h: String(i + 2),        // simple hijri progression
+    times: [
+      `04:${50 + (i % 5)}`,  // slight variation
+      `06:${15 + (i % 5)}`,
+      `12:${5 + (i % 3)}`,
+      `15:${25 + (i % 5)}`,
+      `17:${50 - (i % 5)}`,
+      `19:${20 - (i % 5)}`
+    ],
+    ...(isFriday && { friday: true })
+  };
+});
+
+const HEADERS = ['اليوم', 'الهجري', 'الميلادي', 'الفجر', 'الشروق', 'الظهر', 'العصر', 'المغرب', 'العشاء'];
 
 // ─── Palettes — exact match to route.js v9 ───────────────────────────────────
 
@@ -113,7 +124,7 @@ function A4Preview({ isDark }) {
   return (
     <div style={{
       width: '100%',
-      aspectRatio: '210 / 297',
+      aspectRatio: '210 / 240',
       background: C.page,
       borderRadius: '6px',
       overflow: 'hidden',
@@ -179,7 +190,7 @@ function A4Preview({ isDark }) {
       </div>
 
       {/* ══ TABLE ══ */}
-      <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ flex: 1, overflowY: 'auto' }}>
 
         {/* Thead — no cell borders, text only */}
         <div style={{
@@ -207,7 +218,6 @@ function A4Preview({ isDark }) {
             const timeCol = row.friday ? C.fridayTime : C.timeText;
             return (
               <div key={i} style={{
-                flex: 1,
                 background: bg,
                 borderBottom: `0.5px solid ${C.rowBorder}`,
                 display: 'grid', gridTemplateColumns: cols,
@@ -309,7 +319,7 @@ function ThemeCard({ isDark, selected, onSelect }) {
         flexShrink:      0,
         zIndex:          1,
       }}>
-        {selected && <Check size={10} color="#fff" strokeWidth={3} />}
+        {selected && <Check size={10} color="#fff" weight="bold" />}
       </div>
 
       {/* Preview thumbnail with paper shadow */}
@@ -463,7 +473,7 @@ export default function PrintThemeChooserModal({ isOpen, onClose, onSelect, acti
                   background: 'var(--accent-soft)', border: '1px solid var(--border-accent)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
-                  <Sparkles size={17} color="var(--accent-alt)" />
+                  <Sparkle size={17} color="var(--accent-alt)" weight="duotone" />
                 </div>
                 <div>
                   <h2 style={{

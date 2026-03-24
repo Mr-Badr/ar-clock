@@ -1,32 +1,5 @@
 /**
- * app/api/pdf-calendar/route.js — v9
- *
- * ── CHANGES FROM v8 ──────────────────────────────────────────────────────────
- *   ✦ Friday row: NO box-shadow border — background colour only
- *   ✦ Thead: NO icon emoji spans — Arabic labels only (clean, professional)
- *   ✦ Divider lines removed:
- *       – .pdf-header  border-bottom removed  (no line below header)
- *       – .pdf-footer  border-top removed     (no line above footer)
- *       – thead th     border removed         (no grid lines in header cells)
- *   ✦ Logo block: vertical layout — logo placeholder on top, "MiqaTime" below
- *       Stacked in a centered column, no longer side-by-side
- *
- * ── A4 PORTRAIT MATHS (Puppeteer at 96dpi) ──────────────────────────────────
- *   Viewport  : 794 × 1122px  (210mm × 297mm at 96dpi)
- *   Pad T/B   : 38px each  → content height 1046px
- *   Pad L/R   : 57px each  → content width   680px
- *   Header    : 70px  (title + subtitle + badges, no border line)
- *   Footer    : 20px  (text only, no border line)
- *   Gap       :  8px
- *   Thead     : 24px
- *   Tbody     : 1046 − 70 − 20 − 8 − 24 = 924px
- *   Per row(31): floor(924 / 31) = 29px
- *
- * ── COLUMN WIDTHS (680px usable) ────────────────────────────────────────────
- *   اليوم     : 22% ≈ 149px  — Arabic day names
- *   الهجري    : 11% ≈  75px  — day number + optional month pill
- *   الميلادي  :  8% ≈  54px  — numbers 1–31
- *   Prayer ×6 : 59%/6 ≈ 67px each
+ * app/api/pdf-calendar/route.js
  */
 
 import { NextResponse } from 'next/server';

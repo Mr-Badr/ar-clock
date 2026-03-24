@@ -25,6 +25,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@phosphor-icons/react": [
+        "./node_modules/@phosphor-icons/react/dist/ssr"
       ]
     }
   },
