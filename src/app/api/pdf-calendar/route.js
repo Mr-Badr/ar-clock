@@ -1,98 +1,83 @@
 /**
- * app/api/pdf-calendar/route.js — v7
+ * app/api/pdf-calendar/route.js — v9
  *
- * ── WHAT CHANGED FROM v6 ─────────────────────────────────────────────────────
- *   ✦ Accepts `theme` in request body ('light' | 'dark') — default: 'light'
- *   ✦ Dark colour palette (BD) built from the same design-system tokens as
- *     the web component (base.css dark theme variables)
- *   ✦ No today-row highlighting in either theme (today is irrelevant on paper)
- *   ✦ Friday rows still highlighted (always semantically meaningful)
- *   ✦ Font pre-loading improved — waits for document.fonts.ready after
- *     networkidle0 to eliminate Arabic/mono glyph substitution artifacts
- *   ✦ Dark theme sets page background to dark so no white bleed on edges
- *   ✦ Footer shows theme indicator in dark mode
+ * ── CHANGES FROM v8 ──────────────────────────────────────────────────────────
+ *   ✦ Friday row: NO box-shadow border — background colour only
+ *   ✦ Thead: NO icon emoji spans — Arabic labels only (clean, professional)
+ *   ✦ Divider lines removed:
+ *       – .pdf-header  border-bottom removed  (no line below header)
+ *       – .pdf-footer  border-top removed     (no line above footer)
+ *       – thead th     border removed         (no grid lines in header cells)
+ *   ✦ Logo block: vertical layout — logo placeholder on top, "MiqaTime" below
+ *       Stacked in a centered column, no longer side-by-side
  *
- * ── SINGLE-PAGE GUARANTEE ────────────────────────────────────────────────────
- *   Puppeteer viewport = A4 landscape in px (1122 × 794 at 96dpi).
- *   body is locked: width:1122px; height:794px; overflow:hidden.
- *   Row height: floor((794-56-72-24-10-28) / 31) = 19px
+ * ── A4 PORTRAIT MATHS (Puppeteer at 96dpi) ──────────────────────────────────
+ *   Viewport  : 794 × 1122px  (210mm × 297mm at 96dpi)
+ *   Pad T/B   : 38px each  → content height 1046px
+ *   Pad L/R   : 57px each  → content width   680px
+ *   Header    : 70px  (title + subtitle + badges, no border line)
+ *   Footer    : 20px  (text only, no border line)
+ *   Gap       :  8px
+ *   Thead     : 24px
+ *   Tbody     : 1046 − 70 − 20 − 8 − 24 = 924px
+ *   Per row(31): floor(924 / 31) = 29px
  *
- * ── FONTS ─────────────────────────────────────────────────────────────────────
- *   Noto Kufi Arabic  — Arabic text
- *   IBM Plex Mono     — prayer time digits, tabular alignment
+ * ── COLUMN WIDTHS (680px usable) ────────────────────────────────────────────
+ *   اليوم     : 22% ≈ 149px  — Arabic day names
+ *   الهجري    : 11% ≈  75px  — day number + optional month pill
+ *   الميلادي  :  8% ≈  54px  — numbers 1–31
+ *   Prayer ×6 : 59%/6 ≈ 67px each
  */
 
 import { NextResponse } from 'next/server';
 
-// ─── Light theme (paper/white) ────────────────────────────────────────────────
+// ─── Light palette ────────────────────────────────────────────────────────────
 const BL = {
   pageBg:        '#FFFFFF',
-
   primary:       '#1D4ED8',
-  primaryDark:   '#1E3A8A',
-  primaryGrad:   'linear-gradient(135deg,#1D4ED8 0%,#4338CA 100%)',
   primarySoft:   'rgba(29,78,216,0.07)',
   primaryBorder: 'rgba(29,78,216,0.22)',
-
   text:          '#0E1220',
   textSub:       '#3D4668',
   textMuted:     '#536080',
-
-  rowOdd:        '#FFFFFF',
-  rowEven:       '#F4F7FC',
-  rowFriday:     'rgba(4,102,69,0.06)',
-
-  fridayBorder:  '#046645',
+  rowAll:        '#FFFFFF',
+  rowFriday:     'rgba(4,102,69,0.06)',    // bg only, no border
   fridayText:    '#046645',
   fridayTime:    '#046645',
-
   theadBg:       '#1E3A8A',
   theadText:     '#FFFFFF',
   theadAccent:   '#BFDBFE',
-
-  borderRow:     '#E0E8F4',
-  borderSection: '#C8D4E8',
-
+  borderRow:     '#E8EEF8',               // subtle row separator only
   footerText:    '#7A88A8',
-  logoBg:        'rgba(29,78,216,0.07)',
+  logoBg:        'rgba(29,78,216,0.06)',
+  logoBorder:    'rgba(29,78,216,0.20)',
 };
 
-// ─── Dark theme (deep navy) ───────────────────────────────────────────────────
+// ─── Dark palette ─────────────────────────────────────────────────────────────
 const BD = {
   pageBg:        '#0D1117',
-
-  primary:       '#8CAEFF',   // --accent-alt in dark mode
-  primaryDark:   '#B0C8FF',
-  primaryGrad:   'linear-gradient(135deg,#3B5ED8 0%,#4338CA 100%)',
+  primary:       '#8CAEFF',
   primarySoft:   'rgba(140,174,255,0.12)',
   primaryBorder: 'rgba(140,174,255,0.25)',
-
-  text:          '#F0F4FF',   // --text-primary dark
-  textSub:       '#A8B2CB',   // --text-secondary dark
-  textMuted:     '#90AACC',   // --text-muted dark
-
-  rowOdd:        '#161D2E',   // --bg-surface-1 dark
-  rowEven:       '#1E2640',   // --bg-surface-2 dark
-  rowFriday:     'rgba(6,214,160,0.10)',
-
-  fridayBorder:  '#06D6A0',   // --success dark
+  text:          '#F0F4FF',
+  textSub:       '#A8B2CB',
+  textMuted:     '#90AACC',
+  rowAll:        '#161D2E',
+  rowFriday:     'rgba(6,214,160,0.10)',   // bg only, no border
   fridayText:    '#06D6A0',
   fridayTime:    '#06D6A0',
-
-  theadBg:       '#060B14',   // deeper than bg-base for contrast
+  theadBg:       '#060B14',
   theadText:     '#E2E8F7',
   theadAccent:   '#8CAEFF',
-
-  borderRow:     '#222C45',   // --border-default dark
-  borderSection: '#2E3A60',
-
+  borderRow:     '#222C45',
   footerText:    '#6B7FA0',
   logoBg:        'rgba(140,174,255,0.10)',
+  logoBorder:    'rgba(140,174,255,0.25)',
 };
 
-// ─── App branding ─────────────────────────────────────────────────────────────
-const SITE_NAME = 'MiqaTime.com';
-const SITE_URL  = process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+// ─── Branding ─────────────────────────────────────────────────────────────────
+const SITE_NAME = 'MiqaTime';
+const SITE_URL  = process.env.NEXT_PUBLIC_SITE_URL || 'https://MiqaTime.com';
 
 // ─── Prayer config ────────────────────────────────────────────────────────────
 const PRAYER_KEYS = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
@@ -100,13 +85,9 @@ const PRAYER_AR   = {
   fajr: 'الفجر', sunrise: 'الشروق', dhuhr: 'الظهر',
   asr:  'العصر', maghrib: 'المغرب', isha:  'العشاء',
 };
-const PRAYER_ICON = {
-  fajr: '🌙', sunrise: '🌅', dhuhr: '☀️',
-  asr:  '🌤', maghrib: '🌇',  isha:  '⭐',
-};
 
 // ─── Puppeteer launch ─────────────────────────────────────────────────────────
-// ── SERVERLESS (Vercel / Netlify / Lambda) — uncomment to swap: ────────────────
+// ── SERVERLESS (Vercel / Netlify / Lambda) — uncomment to swap: ──────────────
 // import chromium  from '@sparticuz/chromium';
 // import puppeteer from 'puppeteer-core';
 // async function launchBrowser() {
@@ -117,7 +98,7 @@ const PRAYER_ICON = {
 //     headless:        chromium.headless,
 //   });
 // }
-// ── STANDARD (local / Docker / self-hosted Node.js): ─────────────────────────
+// ── LOCAL / DOCKER / SELF-HOSTED: ────────────────────────────────────────────
 import puppeteer from 'puppeteer';
 async function launchBrowser() {
   return puppeteer.launch({
@@ -127,42 +108,22 @@ async function launchBrowser() {
 }
 
 // ─── HTML template ────────────────────────────────────────────────────────────
-/**
- * Generates a fully self-contained HTML page sized EXACTLY to A4 landscape.
- * Canvas: 1122 × 794px (96dpi). Everything is px-based for deterministic layout.
- *
- * Row height maths:
- *   content h = 794 - 56 (padT+padB)   = 738px
- *   header    = 72px
- *   footer    = 24px
- *   gap       = 10px
- *   thead     = 28px
- *   tbody     = 738 - 72 - 24 - 10 - 28 = 604px
- *   per row   = floor(604 / 31) = 19px
- *
- * NOTE: today-row highlighting intentionally omitted.
- *   A printed sheet has no "current day" — Friday rows remain coloured
- *   because Jumu'ah is always meaningful regardless of date.
- */
 function generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, theme }) {
-  const B   = theme === 'dark' ? BD : BL;
+  const B      = theme === 'dark' ? BD : BL;
   const isDark = theme === 'dark';
 
   // ── Row builder ─────────────────────────────────────────────────────────────
-  const rows = schedule.map((row, idx) => {
-    const isEven = idx % 2 === 0;
-    const isFri  = row.isFriday;
-
-    const bg      = isFri ? B.rowFriday : isEven ? B.rowOdd : B.rowEven;
+  const rows = schedule.map((row) => {
+    const isFri   = row.isFriday;
+    const bg      = isFri ? B.rowFriday : B.rowAll;
     const col     = isFri ? B.fridayText : B.text;
     const timeCol = isFri ? B.fridayTime : B.primary;
     const fw      = isFri ? '700' : '500';
 
-    // New hijri month pill
+    // Hijri month pill
     const pill = row.isNewHijriMonth
       ? `<span style="
-            display:inline-flex;align-items:center;
-            margin-inline-start:2px;
+            display:inline-flex;align-items:center;margin-inline-start:2px;
             font-size:5.5px;font-weight:700;
             color:${isFri ? B.fridayText : B.primary};
             background:${isFri ? (isDark ? 'rgba(6,214,160,0.12)' : 'rgba(4,102,69,0.06)') : B.primarySoft};
@@ -173,27 +134,18 @@ function generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, theme 
           </span>`
       : '';
 
+    // Friday: background colour ONLY — no box-shadow border
     return `
-      <tr style="
-          background:${bg};
-          border-bottom:0.5px solid ${B.borderRow};
-          height:19px; max-height:19px; overflow:hidden;
-          ${isFri ? `box-shadow:inset -3px 0 0 ${B.fridayBorder};` : ''}
-      ">
-        <td class="cell cell-day" style="color:${col};font-weight:${fw};">
-          ${row.dayName}
-        </td>
+      <tr style="background:${bg};border-bottom:0.5px solid ${B.borderRow};height:29px;max-height:29px;overflow:hidden;">
+        <td class="cell cell-day"   style="color:${col};font-weight:${fw};">${row.dayName}</td>
         <td class="cell cell-hijri" style="color:${col};">
           <span style="font-weight:600;">${row.hijriDay}</span>${pill}
         </td>
-        <td class="cell cell-greg" style="color:${B.textSub};">
-          ${row.dayNumber}
-        </td>
+        <td class="cell cell-greg"  style="color:${B.textSub};">${row.dayNumber}</td>
         ${PRAYER_KEYS.map((k) => `
-          <td class="cell cell-time" dir="ltr"
-              style="color:${timeCol};font-weight:${isFri ? 700 : 500};">
-            ${row[k]}
-          </td>`).join('')}
+        <td class="cell cell-time" dir="ltr" style="color:${timeCol};font-weight:${isFri ? 700 : 500};">
+          ${row[k]}
+        </td>`).join('')}
       </tr>`;
   }).join('');
 
@@ -209,217 +161,136 @@ function generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, theme 
         rel="stylesheet" />
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
-    /* ── Page canvas: locked to A4 landscape at 96dpi ──────────────────── */
-    @page { size: A4 landscape; margin: 0; }
-
-    html {
-      width: 1122px; height: 794px;
-      overflow: hidden;
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-      color-adjust: exact !important;
-    }
-
-    body {
-      width: 1122px; height: 794px;
-      overflow: hidden;
-      font-family: 'Noto Kufi Arabic', system-ui, sans-serif;
-      color: ${B.text};
-      background: ${B.pageBg};
-      direction: rtl;
-      display: flex;
-      flex-direction: column;
-      padding: 28px 38px;
+    /* ── A4 portrait canvas, locked ────────────────────────────────────── */
+    @page{size:A4 portrait;margin:0;}
+    html{width:794px;height:1122px;overflow:hidden;
+      -webkit-print-color-adjust:exact !important;
+      print-color-adjust:exact !important;color-adjust:exact !important;}
+    body{
+      width:794px;height:1122px;overflow:hidden;
+      font-family:'Noto Kufi Arabic',system-ui,sans-serif;
+      color:${B.text};background:${B.pageBg};direction:rtl;
+      display:flex;flex-direction:column;padding:38px 57px;
     }
 
-    /* ── Header (72px total) ────────────────────────────────────────────── */
-    .pdf-header {
-      flex-shrink: 0;
-      height: 72px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 20px;
-      padding-bottom: 10px;
-      margin-bottom: 10px;
-      border-bottom: 2px solid ${B.primary};
+    /* ── Header — NO border-bottom ────────────────────────────────────── */
+    .pdf-header{
+      flex-shrink:0;height:70px;
+      display:flex;align-items:flex-end;justify-content:space-between;
+      gap:16px;
+      padding-bottom:10px;
+      margin-bottom:8px;
+      /* ✦ border-bottom intentionally removed — clean look */
     }
-    .pdf-header-left  { display: flex; flex-direction: column; gap: 3px; }
-
-    .pdf-title {
-      font-size: 17px;
-      font-weight: 800;
-      color: ${B.text};
-      line-height: 1.25;
-      white-space: nowrap;
+    .pdf-header-left{display:flex;flex-direction:column;gap:3px;}
+    .pdf-title{font-size:16px;font-weight:800;color:${B.text};line-height:1.25;white-space:nowrap;}
+    .pdf-title-accent{color:${B.primary};}
+    .pdf-subtitle{font-size:8px;color:${B.textSub};white-space:nowrap;}
+    .pdf-badges{display:flex;gap:5px;align-items:center;margin-top:3px;}
+    .badge{
+      display:inline-flex;align-items:center;
+      font-size:6.5px;font-weight:700;border-radius:999px;
+      padding:2px 7px;white-space:nowrap;line-height:1.4;
     }
-    .pdf-title-accent { color: ${B.primary}; }
-
-    .pdf-subtitle {
-      font-size: 8.5px;
-      color: ${B.textSub};
-      white-space: nowrap;
+    .badge-primary{color:${B.primary};background:${B.primarySoft};border:.5px solid ${B.primaryBorder};}
+    .badge-neutral{
+      color:${B.textSub};
+      background:${isDark ? 'rgba(255,255,255,0.05)' : '#F0F4FA'};
+      border:.5px solid ${isDark ? 'rgba(255,255,255,0.10)' : '#C8D4E8'};
     }
 
-    .pdf-badges {
-      display: flex;
-      gap: 5px;
-      align-items: center;
-      margin-top: 4px;
+    /* ── Logo block — VERTICAL: placeholder on top, name below ─────────
+       Container is right-aligned in the header.
+       Logo box is a fixed square with placeholder/image inside.
+       Brand name sits below, centred.
+    ────────────────────────────────────────────────────────────────────── */
+    .pdf-header-right{display:flex;align-items:flex-end;flex-shrink:0;}
+    .pdf-logo-wrap{
+      display:flex;flex-direction:column;align-items:center;gap:5px;
+      background:${B.logoBg};border:1px solid ${B.logoBorder};
+      border-radius:10px;padding:8px 14px 7px;
     }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      font-size: 7px;
-      font-weight: 700;
-      border-radius: 999px;
-      padding: 2px 8px;
-      white-space: nowrap;
-      line-height: 1.4;
+    /*
+     * ── LOGO PLACEHOLDER ───────────────────────────────────────────────
+     * Replace .pdf-logo-img below with your actual logo <img> element:
+     *
+     *   <img src="data:image/svg+xml;base64,YOUR_BASE64_HERE"
+     *        class="pdf-logo-img" width="32" height="32" alt="" />
+     *
+     * Or embed your SVG inline inside .pdf-logo-wrap before .pdf-logo-text.
+     * The container (.pdf-logo-wrap) is already positioned correctly —
+     * just swap the placeholder span with your <img> or inline <svg>.
+     * ────────────────────────────────────────────────────────────────── */
+    .pdf-logo-img{
+      width:32px;height:32px;
+      display:block;flex-shrink:0;
+      background:${B.primarySoft};
+      border:1.5px dashed ${B.primaryBorder};
+      border-radius:6px;
     }
-    .badge-primary {
-      color: ${B.primary};
-      background: ${B.primarySoft};
-      border: 0.5px solid ${B.primaryBorder};
-    }
-    .badge-neutral {
-      color: ${B.textSub};
-      background: ${isDark ? 'rgba(255,255,255,0.05)' : '#F0F4FA'};
-      border: 0.5px solid ${isDark ? 'rgba(255,255,255,0.10)' : '#C8D4E8'};
-    }
-
-    .pdf-header-right {
-      display: flex;
-      align-items: flex-end;
-      flex-shrink: 0;
-    }
-    .pdf-logo {
-      font-size: 13px;
-      font-weight: 800;
-      color: ${B.primary};
-      background: ${B.logoBg};
-      border: 1px solid ${B.primaryBorder};
-      border-radius: 8px;
-      padding: 4px 12px;
-      white-space: nowrap;
+    .pdf-logo-text{
+      font-size:10px;font-weight:800;
+      color:${B.primary};white-space:nowrap;
+      letter-spacing:0.02em;
     }
 
-    /* ── Table wrapper (flex:1 fills space between header and footer) ─── */
-    .pdf-table-wrap {
-      flex: 1;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+    /* ── Table wrapper ──────────────────────────────────────────────────── */
+    .pdf-table-wrap{flex:1;overflow:hidden;display:flex;flex-direction:column;}
+
+    /* ── Table ──────────────────────────────────────────────────────────── */
+    .pdf-table{width:100%;height:100%;border-collapse:collapse;table-layout:fixed;}
+    .col-day   {width:22%;}
+    .col-hijri {width:11%;}
+    .col-greg  {width:8%;}
+    .col-prayer{width:calc(59% / 6);}
+
+    /* ── Thead — NO cell borders ─────────────────────────────────────────
+       border removed from th — clean header with no internal grid lines
+    ────────────────────────────────────────────────────────────────────── */
+    .pdf-table thead{background:${B.theadBg};}
+    .pdf-table thead tr{height:24px;}
+    .pdf-table thead th{
+      text-align:center;vertical-align:middle;
+      font-size:7px;font-weight:700;color:${B.theadText};
+      /* ✦ border removed — no vertical grid lines in thead */
+      padding:0 2px;white-space:nowrap;overflow:hidden;
     }
+    .th-day{text-align:right;padding-right:8px;}
 
-    /* ── Table (height:100% → fills wrapper) ────────────────────────────── */
-    .pdf-table {
-      width: 100%;
-      height: 100%;
-      border-collapse: collapse;
-      table-layout: fixed;
+    /* ── Tbody rows (29px) ───────────────────────────────────────────────
+       Only a subtle bottom border between rows — no side borders
+    ────────────────────────────────────────────────────────────────────── */
+    .pdf-table tbody tr{
+      height:29px;max-height:29px;
+      border-bottom:.5px solid ${B.borderRow};
+      page-break-inside:avoid;break-inside:avoid;
     }
-
-    /* Column widths tuned for 1046px usable width */
-    .col-day    { width: 13%; }   /* ~136px — اليوم  */
-    .col-hijri  { width: 10%; }   /* ~105px — الهجري */
-    .col-greg   { width:  5%; }   /*  ~52px — م      */
-    .col-prayer { width: calc(72% / 6); } /* ~125px × 6 */
-
-    /* ── Thead (28px row) ───────────────────────────────────────────────── */
-    .pdf-table thead { background: ${B.theadBg}; }
-    .pdf-table thead tr { height: 28px; }
-
-    .pdf-table thead th {
-      text-align: center;
-      vertical-align: middle;
-      font-size: 7.5px;
-      font-weight: 700;
-      color: ${B.theadText};
-      border: 0.5px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.12)'};
-      padding: 0 2px;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-    .th-day { text-align: right; padding-right: 8px; }
-    .th-prayer { color: ${B.theadAccent}; }
-
-    .th-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1px;
-      line-height: 1.2;
-    }
-    .th-icon  { font-size: 9px; }
-    .th-label { font-size: 6.5px; font-weight: 700; color: ${B.theadText}; }
-
-    /* ── Tbody rows (19px each) ─────────────────────────────────────────── */
-    .pdf-table tbody tr {
-      height: 19px;
-      max-height: 19px;
-      border-bottom: 0.5px solid ${B.borderRow};
-      page-break-inside: avoid;
-      break-inside: avoid;
-    }
-    .pdf-table tbody tr:last-child { border-bottom: none; }
+    .pdf-table tbody tr:last-child{border-bottom:none;}
 
     /* ── Cells ──────────────────────────────────────────────────────────── */
-    .cell {
-      text-align: center;
-      vertical-align: middle;
-      font-size: 8px;
-      padding: 0 2px;
-      height: 19px;
-      max-height: 19px;
-      overflow: hidden;
-      color: ${B.text};
-    }
-    .cell-day {
-      text-align: right;
-      padding-right: 8px;
-      font-size: 8px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .cell-hijri {
-      font-size: 7.5px;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-    .cell-greg {
-      font-size: 7.5px;
-      color: ${B.textSub};
-      font-weight: 600;
-      direction: ltr;
-    }
-    .cell-time {
-      font-family: 'IBM Plex Mono', 'Courier New', monospace;
-      font-variant-numeric: tabular-nums;
-      font-feature-settings: "tnum" 1;
-      font-size: 8px;
-      font-weight: 500;
-      direction: ltr;
-      letter-spacing: 0;
+    .cell{text-align:center;vertical-align:middle;font-size:7.5px;padding:0 2px;height:29px;max-height:29px;overflow:hidden;color:${B.text};}
+    .cell-day{text-align:right;padding-right:8px;font-size:7.5px;font-weight:600;white-space:nowrap;}
+    .cell-hijri{font-size:7px;text-align:center;white-space:nowrap;overflow:hidden;}
+    .cell-greg{font-size:7px;color:${B.textSub};font-weight:600;direction:ltr;}
+    .cell-time{
+      font-family:'IBM Plex Mono','Courier New',monospace;
+      font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;
+      font-size:7.5px;font-weight:500;direction:ltr;letter-spacing:0;
     }
 
-    /* ── Footer (24px) ──────────────────────────────────────────────────── */
-    .pdf-footer {
-      flex-shrink: 0;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding-top: 6px;
-      margin-top: 4px;
-      border-top: 0.5px solid ${B.borderSection};
+    /* ── Footer — NO border-top ──────────────────────────────────────────
+       ✦ border-top intentionally removed — no line above footer
+    ────────────────────────────────────────────────────────────────────── */
+    .pdf-footer{
+      flex-shrink:0;height:20px;
+      display:flex;align-items:center;justify-content:space-between;
+      gap:12px;padding-top:4px;margin-top:6px;
+      /* border-top intentionally removed */
     }
-    .pdf-footer-text { font-size: 5.5px; color: ${B.footerText}; white-space: nowrap; }
-    .pdf-footer-url  { font-size: 7px;   color: ${B.primary};    font-weight: 700; white-space: nowrap; }
+    .pdf-footer-text{font-size:5.5px;color:${B.footerText};white-space:nowrap;}
+    .pdf-footer-url{font-size:7px;color:${B.primary};font-weight:700;white-space:nowrap;}
   </style>
 </head>
 
@@ -438,11 +309,26 @@ function generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, theme 
       <div class="pdf-badges">
         <span class="badge badge-primary">📅 ${gregorianLabel}</span>
         ${hijriLabel ? `<span class="badge badge-neutral">🌙 ${hijriLabel}</span>` : ''}
-        <span class="badge badge-neutral">${isDark ? '🌑 وضع ليلي' : '☀️ وضع نهاري'}</span>
       </div>
     </div>
+
     <div class="pdf-header-right">
-      <div class="pdf-logo">${SITE_NAME}</div>
+      <!--
+        LOGO BLOCK — vertical layout: image on top, "MiqaTime" below
+        ─────────────────────────────────────────────────────────────
+        To add your real logo, replace the <span class="pdf-logo-img">
+        element below with your <img> element, e.g.:
+
+          <img src="data:image/svg+xml;base64,YOUR_BASE64"
+               class="pdf-logo-img" alt="" />
+
+        The .pdf-logo-wrap container handles spacing and alignment.
+        ─────────────────────────────────────────────────────────────
+      -->
+      <div class="pdf-logo-wrap">
+        <span class="pdf-logo-img"></span>
+        <span class="pdf-logo-text">${SITE_NAME}</span>
+      </div>
     </div>
   </header>
 
@@ -458,18 +344,13 @@ function generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, theme 
         ${PRAYER_KEYS.map(() => `<col class="col-prayer" />`).join('\n        ')}
       </colgroup>
 
+      <!-- ✦ thead: text labels ONLY — no emoji icons -->
       <thead>
         <tr>
           <th class="th-day">اليوم</th>
           <th>الهجري</th>
           <th>الميلادي</th>
-          ${PRAYER_KEYS.map((k) => `
-          <th class="th-prayer">
-            <div class="th-inner">
-              <span class="th-icon">${PRAYER_ICON[k]}</span>
-              <span class="th-label">${PRAYER_AR[k]}</span>
-            </div>
-          </th>`).join('')}
+          ${PRAYER_KEYS.map((k) => `<th>${PRAYER_AR[k]}</th>`).join('')}
         </tr>
       </thead>
 
@@ -503,46 +384,35 @@ export async function POST(request) {
       return NextResponse.json({ error: 'البيانات غير صحيحة' }, { status: 400 });
     }
 
-    // Validate theme
     const safeTheme = theme === 'dark' ? 'dark' : 'light';
-
-    const html = generateHtml({
-      schedule, cityNameAr, gregorianLabel, hijriLabel, countryCode,
-      theme: safeTheme,
-    });
+    const html = generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, countryCode, theme: safeTheme });
 
     browser = await launchBrowser();
     const page = await browser.newPage();
 
-    // A4 landscape in pixels at 96dpi
-    // 297mm × (96/25.4) ≈ 1122px  |  210mm × (96/25.4) ≈ 794px
-    await page.setViewport({ width: 1122, height: 794, deviceScaleFactor: 2 });
+    // A4 portrait: 210mm × 297mm at 96dpi = 794 × 1122px
+    await page.setViewport({ width: 794, height: 1122, deviceScaleFactor: 2 });
 
-    // networkidle0 waits for fonts to load; then fonts.ready ensures shaping is done
     await page.setContent(html, { waitUntil: 'networkidle0' });
-
-    // Extra safety: wait for Arabic shaping + IBM Plex Mono
     await page.evaluate(() => document.fonts.ready);
-
     await page.emulateMediaType('print');
 
     const pdfBuffer = await page.pdf({
-      width:            '297mm',
-      height:           '210mm',
-      printBackground:   true,   // required for row background colours
-      preferCSSPageSize: false,  // explicit dimensions above take precedence
+      width:            '210mm',
+      height:           '297mm',
+      printBackground:   true,
+      preferCSSPageSize: false,
     });
 
     await browser.close();
     browser = null;
 
-    // Safe ASCII filename
-    const safeCity  = (cityNameAr    || 'city').replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+    const safeCity  = (cityNameAr    || 'city').replace(/\s+/g, '-').replace(/[^\w\u0600-\u06FF-]/g, '');
     const safeMonth = (gregorianLabel || 'calendar').replace(/\s+/g, '-').replace(/[^\w-]/g, '');
     const filename  = `taqwim-salat-${safeCity}-${safeMonth}-${safeTheme}.pdf`;
 
     return new Response(pdfBuffer, {
-      status:  200,
+      status: 200,
       headers: {
         'Content-Type':        'application/pdf',
         'Content-Disposition': `attachment; filename*=UTF-8''${encodeURIComponent(filename)}`,
