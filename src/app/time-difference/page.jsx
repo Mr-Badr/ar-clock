@@ -127,7 +127,7 @@ export default async function TimeDifferencePage() {
   return (
     <div className="min-h-screen bg-base text-primary">
       {/* <AdLayoutWrapper> */}
-      <main className="content-col pt-24 pb-20 mt-12">
+      <main className="content-col pt-24 mt-12">
 
         {/* JSON-LD structured data (FAQ + HowTo) */}
         <script
@@ -154,7 +154,7 @@ export default async function TimeDifferencePage() {
         {/* <AdTopBanner slotId="top-time-diff-list" /> */}
 
         {/* Calculator */}
-        <section aria-label="حاسبة فرق التوقيت" className="mb-12">
+        <section aria-label="حاسبة فرق التوقيت">
           <TimeDiffCalculator preloadedCountries={allCountries} />
         </section>
 
