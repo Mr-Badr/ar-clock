@@ -19,6 +19,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Clock, TrendingUp } from 'lucide-react'
+import { ArrowLeft } from '@phosphor-icons/react';
 
 // ─── UTC helpers (mirror time-diff.js) ──────────────────────────────────────
 
@@ -189,10 +190,11 @@ export default function PopularPairsLiveClient({ pairs }) {
 
               {/* Hover CTA */}
               <p
-                className="text-[10px] mt-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="text-[10px] mt-1 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1"
                 style={{ color: 'var(--text-muted)' }}
               >
-                عرض التفاصيل →
+                عرض التفاصيل
+                <ArrowLeft size={10} weight="bold" />
               </p>
             </Link>
           </li>

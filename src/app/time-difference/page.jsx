@@ -6,6 +6,7 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import TimeDiffSections from '@/components/time-diff/index';
+import { Globe } from 'lucide-react';
 /**
  * Metadata (Next.js App Router)
  * - extend this object if you use dynamic city-pair pages later
@@ -142,6 +143,24 @@ export default async function TimeDifferencePage() {
 
         {/* HERO */}
         <header className="text-center mb-12">
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.3rem 0.9rem',
+              borderRadius: '999px',
+              background: 'var(--accent-soft)',
+              border: '1px solid var(--border-accent)',
+              fontSize: '0.78rem',
+              color: 'var(--accent)',
+              fontWeight: '700',
+              marginBottom: '1rem',
+            }}
+          >
+            <Globe size={13} />
+            فرق التوقيت بين مدينتين — حاسبة الوقت وتحويل التوقيت بسهولة
+          </div>
           <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
             فرق التوقيت بين مدينتين — حاسبة الوقت وتحويل التوقيت بسهولة
           </h1>

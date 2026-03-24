@@ -16,6 +16,7 @@
  */
 import { Suspense } from 'react';
 import Link from 'next/link';
+import { Calendar } from 'lucide-react';
 
 import {
   ALL_EVENTS, enrichEvent, CATEGORIES,
@@ -185,6 +186,24 @@ export default async function HolidaysPage() {
 
         {/* ── Hero ───────────────────────────────────────────────────── */}
         <header style={{ marginBottom: 'var(--space-12)' }} className='text-center'>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.3rem 0.9rem',
+              borderRadius: '999px',
+              background: 'var(--accent-soft)',
+              border: '1px solid var(--border-accent)',
+              fontSize: '0.78rem',
+              color: 'var(--accent)',
+              fontWeight: '700',
+              marginBottom: '1rem',
+            }}
+          >
+            <Calendar size={13} />
+            عداد المواعيد
+          </div>
           <h1
             style={{
               fontSize: 'var(--text-4xl)',

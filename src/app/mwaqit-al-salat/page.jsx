@@ -5,6 +5,7 @@ import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
+import { Clock } from 'lucide-react';
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL || '';
 
@@ -180,6 +181,24 @@ export default async function PrayerLandingPage() {
 
         {/* ── H1 Header ─────────────────────────────────────────────────── */}
         <header className="text-center mb-10">
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.3rem 0.9rem',
+              borderRadius: '999px',
+              background: 'var(--accent-soft)',
+              border: '1px solid var(--border-accent)',
+              fontSize: '0.78rem',
+              color: 'var(--accent)',
+              fontWeight: '700',
+              marginBottom: '1rem',
+            }}
+          >
+            <Clock size={13} /> 
+            مواقيت الصلاة اليوم لكل مدينة — حسب المذاهب الأربعة
+          </div>
           <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-4">
             مواقيت الصلاة اليوم لكل مدينة — حسب المذاهب الأربعة
           </h1>

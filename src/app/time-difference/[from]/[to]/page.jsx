@@ -6,13 +6,7 @@ import { getCountryBySlug } from '@/lib/db/queries/countries';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 import Link from 'next/link';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
-import { Separator } from '@/components/ui/separator';
+import { ChevronDown, CheckCircle2 } from 'lucide-react'
 import './time-difference.css';
 import {
   SuspendedTimeSnapshot,
@@ -24,6 +18,7 @@ import TimeConversionTable from './TimeConversionTable.client';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
+import { SectionDivider } from '@/components/shared/primitives';
 
 
 // ─── City resolution ──────────────────────────────────────────────────────────
@@ -301,7 +296,9 @@ async function ComparisonPageContent({ paramsPromise }) {
           <TimeDiffCalculator initialFrom={fromCity} initialTo={toCity} />
         </section>
 
-        <Separator className="mb-10" style={{ backgroundColor: 'var(--border-subtle)' }} />
+        <div className="my-20">
+          <SectionDivider />
+        </div>
 
         {/* ════════════════════════════════════════════════════════
             SEO SECTION 1 — Explanation
@@ -354,7 +351,9 @@ async function ComparisonPageContent({ paramsPromise }) {
           </p>
         </section>
 
-        <Separator className="mb-10" style={{ backgroundColor: 'var(--border-subtle)' }} />
+        <div className="my-20">
+          <SectionDivider />
+        </div>
 
         {/* ════════════════════════════════════════════════════════
             SEO SECTION 2 — Time conversion table (tabbed, client)
@@ -376,7 +375,9 @@ async function ComparisonPageContent({ paramsPromise }) {
           />
         </section>
 
-        <Separator className="mb-10" style={{ backgroundColor: 'var(--border-subtle)' }} />
+        <div className="my-20">
+          <SectionDivider />
+        </div>
 
         {/* ════════════════════════════════════════════════════════
             SEO SECTION 3 — DST comparison table
@@ -513,7 +514,9 @@ async function ComparisonPageContent({ paramsPromise }) {
           </p>
         </section>
 
-        <Separator className="mb-10" style={{ backgroundColor: 'var(--border-subtle)' }} />
+        <div className="my-20">
+          <SectionDivider />
+        </div>
 
         {/* <AdInArticle slotId="mid-time-diff-1" /> */}
 
@@ -532,30 +535,84 @@ async function ComparisonPageContent({ paramsPromise }) {
             أسئلة شائعة حول فرق التوقيت
           </h2>
 
-          <Accordion type="single" collapsible className="space-y-2">
-            {faqs.map((faq, i) => (
-              <AccordionItem
-                key={i}
-                value={`faq-${i}`}
-                className="td-faq-item"
+          <div
+            className="max-w-3xl mx-auto space-y-2"
+            itemScope
+            itemType="https://schema.org/FAQPage"
+          >
+            {faqs.map((item, idx) => (
+              <details
+                key={idx}
+                className="group rounded-2xl overflow-hidden"
+                style={{
+                  background: 'var(--bg-surface-1)',
+                  border: '1px solid var(--border-subtle)',
+                }}
+                itemScope
+                itemProp="mainEntity"
+                itemType="https://schema.org/Question"
+                aria-label={item.q}
               >
-                <AccordionTrigger className="td-faq-trigger mt-2 mb-2">
-                  {faq.q}
-                </AccordionTrigger>
-                <AccordionContent className="[&>div]:p-0">
-                  <p className="td-faq-body">{faq.a}</p>
-                </AccordionContent>
-              </AccordionItem>
+                <summary
+                  className="flex cursor-pointer list-none select-none items-center justify-between gap-4 px-5 py-4
+                                   [&::-webkit-details-marker]:hidden hover:bg-[color:var(--accent-soft)] transition-colors"
+                >
+                  {/*
+                          BUG-8 FIX: <span> not <h3> — heading inside interactive element
+                          is invalid HTML (causes parsing errors in some browsers).
+                          The accessible name comes from aria-label on <details>.
+                        */}
+                  <span
+                    className="text-sm sm:text-base font-semibold leading-snug"
+                    style={{ color: 'var(--text-primary)' }}
+                    itemProp="name"
+                  >
+                    {item.q}
+                  </span>
+
+                  {/*
+                          BUG-3 FIX: ChevronDown + group-open:rotate-180
+                          Closed = ↓  |  Open = ↑
+                          RTL-safe: the rotation is axis-symmetric, looks correct in both
+                          text directions unlike ChevronLeft which flips meaning in RTL.
+                        */}
+                  <ChevronDown
+                    size={18}
+                    className="shrink-0 transition-transform duration-200 group-open:rotate-180"
+                    style={{ color: 'var(--text-muted)' }}
+                    aria-hidden="true"
+                  />
+                </summary>
+
+                <div
+                  className="px-5 pb-5 pt-2"
+                  itemScope
+                  itemProp="acceptedAnswer"
+                  itemType="https://schema.org/Answer"
+                >
+                  <p
+                    className="text-sm sm:text-base leading-relaxed"
+                    style={{ color: 'var(--text-secondary)' }}
+                    itemProp="text"
+                  >
+                    {item.a}
+                  </p>
+                </div>
+              </details>
             ))}
-          </Accordion>
+          </div>
         </section>
+
+        <div className="my-20">
+          <SectionDivider />
+        </div>
 
         {/* ════════════════════════════════════════════════════════
             Internal links
             ════════════════════════════════════════════════════════ */}
-        <section>
+        <section className="mx-10">
           <h3 className="text-sm font-semibold text-muted mb-3">خدماتنا الأخرى</h3>
-          <div className="grid grid-cols-1 gap-2">
+          <div className="grid grid-cols-2 gap-2">
             {[
               { href: '/mwaqit-al-salat', icon: '🕌', label: 'مواقيت الصلاة', desc: 'أوقات دقيقة حسب موقعك أو أي مدينة' },
               { href: '/holidays', icon: '📅', label: 'العطل الرسمية', desc: 'تقويم العطل لجميع الدول العربية' },

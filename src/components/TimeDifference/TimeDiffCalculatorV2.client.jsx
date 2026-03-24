@@ -10,6 +10,7 @@ import TimeConverter from './TimeConverter.client';
 import Timeline24h from './Timeline24h.client';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
+import { SectionDivider } from '@/components/shared/primitives';
 import {
   ArrowUpDown,
   Briefcase,
@@ -176,84 +177,93 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
       {diffData?.success && (
         <>
           {/* City comparison card — compact, no clock-display sizes */}
-          <div className="card p-0 overflow-hidden">
 
-            {/* Diff header */}
-            <div
-              className="px-4 py-3 flex items-center justify-between"
-              style={{ background: 'var(--accent-gradient)' }}
-            >
-              <div className="flex items-center gap-2">
-                <span className="text-white text-xs font-semibold opacity-80">فارق التوقيت</span>
-                <div dir="ltr" className="text-white font-black tabular-nums">
-                  {diffData.totalMinutes === 0 ? (
-                    <span className="text-base">متطابق</span>
-                  ) : (
-                    <span className="text-lg">
-                      {diffData.sign}{diffData.formattedHours}
-                      {diffData.formattedMinutes > 0 && `:`}
-                      {diffData.formattedMinutes > 0 && String(diffData.formattedMinutes).padStart(2, '0')}
-                      {' '}ساعة
-                    </span>
-                  )}
+            <div style={{
+              background: 'var(--bg-surface-2)',
+              borderRadius: 'var(--radius-xl)',
+              boxShadow: 'var(--shadow-card)',
+              transition: 'background-color var(--transition-theme), border-color var(--transition-theme), box-shadow var(--transition-base), transform var(--transition-base)',
+              overflow: 'hidden',
+            }}>
+              {/* Diff header */}
+              <div
+                className="px-4 py-3 flex items-center justify-between"
+                style={{ background: 'var(--accent-gradient)' }}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-white text-xs font-semibold opacity-80">فارق التوقيت</span>
+                  <div dir="ltr" className="text-white font-black tabular-nums">
+                    {diffData.totalMinutes === 0 ? (
+                      <span className="text-base">متطابق</span>
+                    ) : (
+                      <span className="text-lg">
+                        {diffData.sign}{diffData.formattedHours}
+                        {diffData.formattedMinutes > 0 && `:`}
+                        {diffData.formattedMinutes > 0 && String(diffData.formattedMinutes).padStart(2, '0')}
+                        {' '}ساعة
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="flex gap-2 items-center">
+                  <SmartBadge totalMinutes={diffData.totalMinutes} />
+                  <button
+                    onClick={handleShare}
+                    className="btn btn-xs rounded-full bg-white/20 text-white border-white/30 hover:bg-white/30 font-semibold gap-1"
+                    aria-label={copied ? 'تم النسخ' : 'مشاركة'}
+                  >
+                    {copied ? <><Check size={12} /> نُسخ</> : <><Share2 size={12} /> مشاركة</>}
+                  </button>
                 </div>
               </div>
-              <div className="flex gap-2 items-center">
-                <SmartBadge totalMinutes={diffData.totalMinutes} />
-                <button
-                  onClick={handleShare}
-                  className="btn btn-xs rounded-full bg-white/20 text-white border-white/30 hover:bg-white/30 font-semibold gap-1"
-                  aria-label={copied ? 'تم النسخ' : 'مشاركة'}
-                >
-                  {copied ? <><Check size={12} /> نُسخ</> : <><Share2 size={12} /> مشاركة</>}
-                </button>
+              {/* City times — two columns */}
+              <div className="grid grid-cols-2 divide-x divide-x-reverse divide-[var(--border-subtle)]">
+
+                {/* From city */}
+                <div className="p-4 text-center">
+                  <p className="text-xs text-muted mb-1">{fromCity.city_name_ar}</p>
+                  <p className="text-xs text-muted mb-2">{fromCity.country_name_ar}</p>
+                  {/* LiveClock with small styling — NOT clock-display size */}
+                  <div className="td-city-time">
+                    <LiveClock
+                      timezone={diffData.from}
+                      aria-label={`الساعة الان في ${fromCity.city_name_ar}`}
+                    />
+                  </div>
+                  <span className={`badge mt-2 ${diffData.isDSTFrom ? 'badge-warning' : 'badge-default'}`}>
+                    {diffData.isDSTFrom
+                      ? <><Sun size={10} className="text-warning" aria-hidden="true" /> توقيت صيفي</>
+                      : <><Moon size={10} className="text-muted" aria-hidden="true" /> توقيت شتوي</>
+                    }
+                  </span>
+                </div>
+
+                {/* To city */}
+                <div className="p-4 text-center">
+                  <p className="text-xs text-muted mb-1">{toCity.city_name_ar}</p>
+                  <p className="text-xs text-muted mb-2">{toCity.country_name_ar}</p>
+                  <div className="td-city-time">
+                    <LiveClock
+                      timezone={diffData.to}
+                      aria-label={`الساعة الان في ${toCity.city_name_ar}`}
+                    />
+                  </div>
+                  <span className={`badge mt-2 ${diffData.isDSTTo ? 'badge-warning' : 'badge-default'}`}>
+                    {diffData.isDSTTo
+                      ? <><Sun size={10} className="text-warning" aria-hidden="true" /> توقيت صيفي</>
+                      : <><Moon size={10} className="text-muted" aria-hidden="true" /> توقيت شتوي</>
+                    }
+                  </span>
+                </div>
               </div>
             </div>
-
-            {/* City times — two columns */}
-            <div className="grid grid-cols-2 divide-x divide-x-reverse divide-[var(--border-subtle)]">
-
-              {/* From city */}
-              <div className="p-4 text-center">
-                <p className="text-xs text-muted mb-1">{fromCity.city_name_ar}</p>
-                <p className="text-xs text-muted mb-2">{fromCity.country_name_ar}</p>
-                {/* LiveClock with small styling — NOT clock-display size */}
-                <div className="td-city-time">
-                  <LiveClock
-                    timezone={diffData.from}
-                    aria-label={`الساعة الان في ${fromCity.city_name_ar}`}
-                  />
-                </div>
-                <span className={`badge mt-2 ${diffData.isDSTFrom ? 'badge-warning' : 'badge-default'}`}>
-                  {diffData.isDSTFrom
-                    ? <><Sun size={10} className="text-warning" aria-hidden="true" /> توقيت صيفي</>
-                    : <><Moon size={10} className="text-muted" aria-hidden="true" /> توقيت شتوي</>
-                  }
-                </span>
-              </div>
-
-              {/* To city */}
-              <div className="p-4 text-center">
-                <p className="text-xs text-muted mb-1">{toCity.city_name_ar}</p>
-                <p className="text-xs text-muted mb-2">{toCity.country_name_ar}</p>
-                <div className="td-city-time">
-                  <LiveClock
-                    timezone={diffData.to}
-                    aria-label={`الساعة الان في ${toCity.city_name_ar}`}
-                  />
-                </div>
-                <span className={`badge mt-2 ${diffData.isDSTTo ? 'badge-warning' : 'badge-default'}`}>
-                  {diffData.isDSTTo
-                    ? <><Sun size={10} className="text-warning" aria-hidden="true" /> توقيت صيفي</>
-                    : <><Moon size={10} className="text-muted" aria-hidden="true" /> توقيت شتوي</>
-                  }
-                </span>
-              </div>
-            </div>
-          </div>
 
           {/* ── Context Summary ───────────────────────────────── */}
           <ContextSummary fromCity={fromCity} toCity={toCity} diffData={diffData} />
+
+          <div className="my-20">
+            <SectionDivider />
+          </div>
 
           {/* ── Time Converter ────────────────────────────────── */}
           <TimeConverter fromCity={fromCity} toCity={toCity} totalMinutes={diffData.totalMinutes} />
