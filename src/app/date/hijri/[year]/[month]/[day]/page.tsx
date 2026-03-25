@@ -10,6 +10,7 @@ import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBre
 import { DateNavigation } from '@/components/date/DateNavigation';
 import { DateShareActions } from '@/components/date/DateShareActions';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import { CalendarDays, ArrowLeftRight, Calendar } from 'lucide-react';
 
 // NOTE: Static folder 'hijri' takes priority over dynamic '[year]' at the same level.
 // This resolves correctly: /date/hijri/... always hits this route, never the [year] route.
@@ -213,23 +214,52 @@ export default async function ProgrammaticHijriDatePage({
               nextUrl={fmtNav(nextHY, nextHMAdsj, nextHDAdj)}
               prevLabel={fmtLabel(prevHMAdj, prevHDAdj)}
               nextLabel={fmtLabel(nextHMAdsj, nextHDAdj)}
+              hubHref="/date/calendar/hijri"
             />
           </section>
 
           {/* LINKS */}
-          <nav className="flex gap-4 flex-wrap pt-4 border-t border-border mt-4">
-            <Link href="/date" className="text-accent text-sm font-semibold hover:text-accent-alt transition-colors">
-              التاريخ الرئيسية ←
-            </Link>
-            <Link href="/date/converter" className="text-accent text-sm font-semibold hover:text-accent-alt transition-colors">
-              تحويل تاريخ آخر ←
-            </Link>
-            <Link
-              href={`/date/${gregorian.year}/${String(gregorian.month).padStart(2, '0')}/${String(gregorian.day).padStart(2, '0')}`}
-              className="text-accent text-sm font-semibold hover:text-accent-alt transition-colors"
-            >
-              صفحة {gregorian.formatted.ar}م ←
-            </Link>
+          <nav aria-label="روابط ذات صلة" className="related-links mt-4" dir="rtl">
+            <p className="related-links__heading">صفحات ذات صلة</p>
+            <div className="related-links__grid">
+
+              <Link href="/date" className="related-link-card">
+                <span className="related-link-card__icon" aria-hidden="true">
+                  <CalendarDays size={16} strokeWidth={1.75} />
+                </span>
+                <span className="related-link-card__body">
+                  <span className="related-link-card__label">التاريخ الرئيسية</span>
+                  <span className="related-link-card__desc">عرض التاريخ الهجري والميلادي</span>
+                </span>
+                <span className="related-link-card__arrow" aria-hidden="true">←</span>
+              </Link>
+
+              <Link href="/date/converter" className="related-link-card">
+                <span className="related-link-card__icon" aria-hidden="true">
+                  <ArrowLeftRight size={16} strokeWidth={1.75} />
+                </span>
+                <span className="related-link-card__body">
+                  <span className="related-link-card__label">تحويل تاريخ آخر</span>
+                  <span className="related-link-card__desc">أداة تحويل التواريخ الهجرية والميلادية</span>
+                </span>
+                <span className="related-link-card__arrow" aria-hidden="true">←</span>
+              </Link>
+
+              <Link
+                href={`/date/${gregorian.year}/${String(gregorian.month).padStart(2, '0')}/${String(gregorian.day).padStart(2, '0')}`}
+                className="related-link-card"
+              >
+                <span className="related-link-card__icon" aria-hidden="true">
+                  <Calendar size={16} strokeWidth={1.75} />
+                </span>
+                <span className="related-link-card__body">
+                  <span className="related-link-card__label">صفحة {gregorian.formatted.ar}م</span>
+                  <span className="related-link-card__desc">تفاصيل هذا اليوم بالتقويمين</span>
+                </span>
+                <span className="related-link-card__arrow" aria-hidden="true">←</span>
+              </Link>
+
+            </div>
           </nav>
         </main>
       </AdLayoutWrapper>

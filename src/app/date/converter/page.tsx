@@ -8,6 +8,7 @@ import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBre
 import { ConverterForm } from './ConverterForm';
 import { headers } from 'next/headers';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import { ArrowLeftRight, Calendar, CalendarDays } from 'lucide-react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
 
@@ -182,17 +183,46 @@ async function ConverterDynamicContent() {
           </section>
 
           {/* NAVIGATION */}
-          <nav className="flex gap-4 flex-wrap pb-4 border-t border-border pt-6">
-            <Link href="/date/hijri-to-gregorian" className="text-accent text-sm font-semibold hover:text-accent-alt transition-colors">
-              تحويل هجري إلى ميلادي مباشرةً ←
-            </Link>
-            <Link href="/date/gregorian-to-hijri" className="text-accent text-sm font-semibold hover:text-accent-alt transition-colors">
-              تحويل ميلادي إلى هجري مباشرةً ←
-            </Link>
-            <Link href="/date/today/hijri" className="text-accent text-sm font-semibold hover:text-accent-alt transition-colors">
-              التاريخ الهجري اليوم ←
-            </Link>
+          <nav aria-label="روابط ذات صلة" className="related-links" dir="rtl">
+            <p className="related-links__heading">صفحات ذات صلة</p>
+            <div className="related-links__grid">
+
+              <Link href="/date/hijri-to-gregorian" className="related-link-card">
+                <span className="related-link-card__icon" aria-hidden="true">
+                  <ArrowLeftRight size={16} strokeWidth={1.75} />
+                </span>
+                <span className="related-link-card__body">
+                  <span className="related-link-card__label">تحويل هجري إلى ميلادي</span>
+                  <span className="related-link-card__desc">تحويل مباشر من التقويم الهجري</span>
+                </span>
+                <span className="related-link-card__arrow" aria-hidden="true">←</span>
+              </Link>
+
+              <Link href="/date/gregorian-to-hijri" className="related-link-card">
+                <span className="related-link-card__icon" aria-hidden="true">
+                  <ArrowLeftRight size={16} strokeWidth={1.75} />
+                </span>
+                <span className="related-link-card__body">
+                  <span className="related-link-card__label">تحويل ميلادي إلى هجري</span>
+                  <span className="related-link-card__desc">تحويل مباشر من التقويم الميلادي</span>
+                </span>
+                <span className="related-link-card__arrow" aria-hidden="true">←</span>
+              </Link>
+
+              <Link href="/date/today/hijri" className="related-link-card">
+                <span className="related-link-card__icon" aria-hidden="true">
+                  <CalendarDays size={16} strokeWidth={1.75} />
+                </span>
+                <span className="related-link-card__body">
+                  <span className="related-link-card__label">التاريخ الهجري اليوم</span>
+                  <span className="related-link-card__desc">اعرف تاريخ اليوم بالتقويم الهجري</span>
+                </span>
+                <span className="related-link-card__arrow" aria-hidden="true">←</span>
+              </Link>
+
+            </div>
           </nav>
+
         </main>
       </AdLayoutWrapper>
     </>

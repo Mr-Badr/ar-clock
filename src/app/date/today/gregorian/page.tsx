@@ -8,6 +8,7 @@ import { JsonLd } from '@/components/date/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { headers } from 'next/headers';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import { Moon, ArrowLeftRight, CalendarDays } from 'lucide-react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
 
@@ -161,19 +162,47 @@ async function TodayGregorianDynamicContent() {
           </section>
 
           {/* LINKS */}
-          <nav className="flex gap-4 flex-wrap mt-8 pt-6 border-t border-border">
-            <Link href="/date/today/hijri" className="text-accent text-sm font-semibold hover:underline">
-              التاريخ الهجري اليوم ←
-            </Link>
-            <Link href="/date/converter" className="text-accent text-sm font-semibold hover:underline">
-              محول التاريخ ←
-            </Link>
-            <Link
-              href={`/date/${y}/${String(m).padStart(2, '0')}/${String(d).padStart(2, '0')}`}
-              className="text-accent text-sm font-semibold hover:underline"
-            >
-              صفحة تاريخ {d} {GREGORIAN_MONTHS_AR[m - 1]} ←
-            </Link>
+          <nav aria-label="روابط ذات صلة" className="related-links mt-8" dir="rtl">
+            <p className="related-links__heading">صفحات ذات صلة</p>
+            <div className="related-links__grid">
+
+              <Link href="/date/today/hijri" className="related-link-card">
+                <span className="related-link-card__icon" aria-hidden="true">
+                  <Moon size={16} strokeWidth={1.75} />
+                </span>
+                <span className="related-link-card__body">
+                  <span className="related-link-card__label">التاريخ الهجري اليوم</span>
+                  <span className="related-link-card__desc">اعرف تاريخ اليوم بالتقويم الهجري</span>
+                </span>
+                <span className="related-link-card__arrow" aria-hidden="true">←</span>
+              </Link>
+
+              <Link href="/date/converter" className="related-link-card">
+                <span className="related-link-card__icon" aria-hidden="true">
+                  <ArrowLeftRight size={16} strokeWidth={1.75} />
+                </span>
+                <span className="related-link-card__body">
+                  <span className="related-link-card__label">محول التاريخ</span>
+                  <span className="related-link-card__desc">تحويل بين الهجري والميلادي بثلاث طرق</span>
+                </span>
+                <span className="related-link-card__arrow" aria-hidden="true">←</span>
+              </Link>
+
+              <Link
+                href={`/date/${y}/${String(m).padStart(2, '0')}/${String(d).padStart(2, '0')}`}
+                className="related-link-card"
+              >
+                <span className="related-link-card__icon" aria-hidden="true">
+                  <CalendarDays size={16} strokeWidth={1.75} />
+                </span>
+                <span className="related-link-card__body">
+                  <span className="related-link-card__label">صفحة تاريخ {d} {GREGORIAN_MONTHS_AR[m - 1]}</span>
+                  <span className="related-link-card__desc">تفاصيل هذا اليوم بالتقويمين</span>
+                </span>
+                <span className="related-link-card__arrow" aria-hidden="true">←</span>
+              </Link>
+
+            </div>
           </nav>
         </main>
       </AdLayoutWrapper>

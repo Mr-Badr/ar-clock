@@ -23,7 +23,8 @@ import {
   CaretLeft, CaretLeftIcon,
   Clock, ClockIcon,
   Timer, TimerIcon,
-  Hourglass, HourglassIcon
+  Hourglass, HourglassIcon,
+  Globe, GlobeIcon,
 } from "@phosphor-icons/react";
 import * as PhosphorIcons from "@phosphor-icons/react";
 
@@ -48,7 +49,7 @@ function getPhosphorIcon(name?: string): React.ElementType | null {
   // 1. Check a local map of explicitly imported icons for maximum reliability in Next.js
   const iconMap: Record<string, React.ElementType> = {
     Moon, Sun, ArrowsCounterClockwise, Calendar, CalendarDots, 
-    ArrowRight, ArrowLeft, ArrowsLeftRight, CaretLeft, Clock, Timer, Hourglass
+    ArrowRight, ArrowLeft, ArrowsLeftRight, CaretLeft, Clock, Timer, Hourglass, Globe
   };
 
   if (iconMap[name]) return iconMap[name];

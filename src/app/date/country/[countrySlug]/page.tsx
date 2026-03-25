@@ -7,13 +7,14 @@ import { Suspense } from 'react';
 import { getAllCountrySlugs, getCountryBySlug } from '@/lib/db/queries/countries';
 import { getCapitalCity } from '@/lib/db/queries/cities';
 import { getCachedNowIso } from '@/lib/date-utils';
-import { convertDate } from '@/lib/date-adapter';
+import { convertDate, GREGORIAN_MONTH_NAMES_AR } from '@/lib/date-adapter';
 import { getFlagEmoji, getSafeTimezone } from '@/lib/country-utils';
 import { JsonLd } from '@/components/date/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { DateShareActions } from '@/components/date/DateShareActions';
 import { headers } from 'next/headers';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import { Calendar, Clock, ArrowLeftRight } from "lucide-react"
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
 
@@ -33,6 +34,32 @@ const COUNTRY_HIJRI_METHODS: Record<string, 'umalqura' | 'astronomical' | 'civil
   'LB': 'astronomical',  // Lebanon
   'SY': 'astronomical',  // Syria
 };
+
+interface RelatedLinksProps {
+  countrySlug: string
+  countryNameAr: string
+}
+ 
+const links = (countrySlug: string, countryNameAr: string) => [
+  {
+    href: "/date",
+    label: "صفحة التاريخ الرئيسية",
+    description: "عرض التاريخ الهجري والميلادي",
+    icon: Calendar,
+  },
+  {
+    href: `/time-now/${countrySlug}`,
+    label: `الوقت الآن في ${countryNameAr}`,
+    description: "الساعة الحالية وفق التوقيت المحلي",
+    icon: Clock,
+  },
+  {
+    href: "/date/converter",
+    label: "تحويل تاريخ آخر",
+    description: "أداة تحويل التواريخ الهجرية والميلادية",
+    icon: ArrowLeftRight,
+  },
+]
 
 export async function generateStaticParams() {
   const slugs = await getAllCountrySlugs();
@@ -81,7 +108,12 @@ async function CountryDateDynamicContent({
 }) {
   await headers();
   const { countrySlug } = await params;
-  const countryRaw = await getCountryBySlug(countrySlug);
+  let countryRaw;
+  try {
+    countryRaw = await getCountryBySlug(countrySlug);
+  } catch {
+    notFound();
+  }
   if (!countryRaw) notFound();
   const country = countryRaw as NonNullable<typeof countryRaw>;
 
@@ -104,13 +136,25 @@ async function CountryDateDynamicContent({
   const method = COUNTRY_HIJRI_METHODS[country.country_code] || 'umalqura';
   const methodNameAr = method === 'umalqura' ? 'تقويم أم القرى' : method === 'astronomical' ? 'الحساب الفلكي' : 'التقويم المدني';
 
-  let hijri, gregorian;
+  let hijri;
   try {
     hijri = convertDate({ date: localDateIso, toCalendar: 'hijri', method });
-    gregorian = convertDate({ date: localDateIso, toCalendar: 'gregorian', method });
   } catch {
     notFound();
   }
+
+  // Build Gregorian info manually from localDateIso to avoid convertDate range errors
+  const [gy, gm, gd] = localDateIso.split('-').map(Number);
+  const gregorian = {
+    day: gd,
+    month: gm,
+    year: gy,
+    monthNameAr: GREGORIAN_MONTH_NAMES_AR[gm - 1],
+    formatted: {
+      ar: `${gd} ${GREGORIAN_MONTH_NAMES_AR[gm - 1]} ${gy}`,
+      iso: localDateIso
+    }
+  };
 
   const breadcrumb = [
     { label: 'الرئيسية', href: '/' },
@@ -227,16 +271,34 @@ async function CountryDateDynamicContent({
           </section>
 
           {/* LINKS */}
-          <nav className="flex gap-4 flex-wrap pt-6 border-t border-border mt-4">
-            <Link href="/date" className="text-accent text-sm font-semibold hover:text-accent-alt transition-colors">
-              صفحة التاريخ الرئيسية ←
-            </Link>
-            <Link href={`/time-now/${countrySlug}`} className="text-accent text-sm font-semibold hover:text-accent-alt transition-colors">
-              الوقت الآن في {country.name_ar} ←
-            </Link>
-            <Link href="/date/converter" className="text-accent text-sm font-semibold hover:text-accent-alt transition-colors">
-              تحويل تاريخ آخر ←
-            </Link>
+          <nav
+            aria-label="روابط ذات صلة"
+            className="related-links"
+            dir="rtl"
+          >
+            <p className="related-links__heading">
+              صفحات ذات صلة
+            </p>
+      
+            <div className="related-links__grid">
+              {links(countrySlug, country.name_ar).map(({ href, label, description, icon: Icon }) => (
+                <Link key={href} href={href} className="related-link-card">
+                  {/* Icon container */}
+                  <span className="related-link-card__icon" aria-hidden="true">
+                    <Icon size={16} strokeWidth={1.75} />
+                  </span>
+      
+                  {/* Text */}
+                  <span className="related-link-card__body">
+                    <span className="related-link-card__label">{label}</span>
+                    <span className="related-link-card__desc">{description}</span>
+                  </span>
+      
+                  {/* Arrow — flips to → in RTL */}
+                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
+                </Link>
+              ))}
+            </div>
           </nav>
 
         </main>

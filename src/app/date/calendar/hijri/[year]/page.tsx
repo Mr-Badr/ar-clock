@@ -85,21 +85,27 @@ export default async function HijriCalendarPage({
           <DateBreadcrumb items={breadcrumb} />
 
           <div className="flex flex-col md:flex-row justify-between items-center w-full mb-8 gap-4 border-b border-border pb-6">
-            <h1 className="text-3xl font-black text-accent-alt">
-              التقويم الهجري — عام {year}
-            </h1>
-            <nav className="flex items-center gap-2">
+
+            <nav className="flex items-center justify-between mx-auto w-full">
+              {/* Previous year link on the left */}
               <Link
                 href={`/date/calendar/hijri/${y - 1}`}
                 className="px-4 py-2 bg-surface-2 border border-border rounded-[var(--radius)] text-sm font-semibold hover:bg-surface-3 transition-colors text-primary"
               >
-                ← {y - 1} هـ
+                → {y - 1} هـ
               </Link>
+
+              {/* Heading in the center */}
+              <h1 className="text-3xl font-black text-accent-alt text-center flex-1">
+                التقويم الهجري — عام {year}
+              </h1>
+
+              {/* Next year link on the right */}
               <Link
                 href={`/date/calendar/hijri/${y + 1}`}
                 className="px-4 py-2 bg-surface-2 border border-border rounded-[var(--radius)] text-sm font-semibold hover:bg-surface-3 transition-colors text-primary"
               >
-                {y + 1} هـ →
+                {y + 1} هـ ←
               </Link>
             </nav>
           </div>

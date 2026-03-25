@@ -22,7 +22,7 @@ export function DateNavigation({
   nextUrl,
   prevLabel,
   nextLabel,
-  hubHref  = '/date',
+  hubHref  = '/date/calendar',
   hubLabel = 'التقويم',
 }: DateNavigationProps) {
   return (

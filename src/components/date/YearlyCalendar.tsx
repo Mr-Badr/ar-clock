@@ -12,7 +12,7 @@
 //
 // DESIGN IMPROVEMENTS:
 //   • Today highlighted with accent gradient + white text
-//   • Islamic events marked with a success-colored dot + cell tint
+//   • Islamic events marked with a 1px colored border + cell tint + shadcn Tooltip
 //   • Ramadan days tinted warning-soft
 //   • Friday Jumu'ah in success color
 //   • Each day is a full Link to /date/[y]/[m]/[d] for SEO
@@ -25,6 +25,7 @@ import Link from 'next/link';
 import { convertDate } from '@/lib/date-adapter';
 import { getIslamicEventsForHijriDate } from '@/lib/islamic-holidays';
 import { connection } from 'next/server';
+import { EventDayLink } from './EventDayLink';
 
 const MONTHS_AR = [
   'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
@@ -135,11 +136,11 @@ export async function YearlyCalendar({ year, serverTodayIso }: Props) {
             {/* Day grid */}
             <div
               className="grid p-2"
-              style={{ gridTemplateColumns: 'repeat(7, 1fr)', gap: '1px' }}
+              style={{ gridTemplateColumns: 'repeat(7, 1fr)', gap: '3px' }}
             >
               {/* Blank cells for offset */}
               {Array.from({ length: firstDay }).map((_, i) => (
-                <div key={`blank-${i}`} style={{ minHeight: '40px' }} />
+                <div key={`blank-${i}`} style={{ minHeight: '34px' }} />
               ))}
 
               {/* Day cells */}
@@ -161,56 +162,58 @@ export async function YearlyCalendar({ year, serverTodayIso }: Props) {
                 if (isToday) dayColor = '#ffffff';
                 else if (isFriday) dayColor = 'var(--success)';
 
+                // Hijri sub-label color
+                const hijriColor = isToday
+                  ? 'rgba(255,255,255,0.75)'
+                  : data?.hasEvent
+                    ? 'var(--success)'
+                    : 'var(--text-muted)';
+
+                const href = `/date/${year}/${monthStr}/${String(day).padStart(2, '0')}`;
+                const hijriLabel = data ? String(data.hijriDay) : undefined;
+
+                // Event days: client component with Tooltip + colored border
+                if (data?.hasEvent && !isToday) {
+                  return (
+                    <EventDayLink
+                      key={day}
+                      href={href}
+                      eventName={data.eventName}
+                      cellBg={cellBg}
+                      dayColor={dayColor}
+                      hijriColor={hijriColor}
+                      hijriLabel={hijriLabel}
+                      day={day}
+                    />
+                  );
+                }
+
+                // Non-event days: plain server-rendered Link
                 return (
                   <Link
                     key={day}
-                    href={`/date/${year}/${monthStr}/${String(day).padStart(2, '0')}`}
+                    href={href}
                     className="relative flex flex-col items-center justify-center rounded-md transition-colors group"
                     style={{
-                      minHeight: '40px',
+                      minHeight: '34px',
                       background: cellBg,
-                      border: '2px solid var(--bg-surface-2)',
+                      border: '1px solid transparent',
                     }}
-                    title={data?.eventName ?? (data ? `${data.hijriDay}/${data.hijriMonth}/${data.hijriYear} هـ` : '')}
+                    title={data ? `${data.hijriDay}/${data.hijriMonth}/${data.hijriYear} هـ` : ''}
                   >
-                    {/* Gregorian day number */}
                     <span
                       className="text-sm font-bold leading-none tabular-nums"
                       style={{ color: dayColor }}
                     >
                       {day}
                     </span>
-
-                    {/* Hijri day sub-label */}
                     {data && (
                       <span
                         className="text-2xs leading-none mt-0.5 tabular-nums"
-                        style={{
-                          color: isToday
-                            ? 'rgba(255,255,255,0.75)'
-                            : data.hasEvent
-                              ? 'var(--success)'
-                              : 'var(--text-muted)',
-                          fontWeight: data.hasEvent ? '700' : '400',
-                        }}
+                        style={{ color: hijriColor, fontWeight: '400' }}
                       >
                         {data.hijriDay}
                       </span>
-                    )}
-
-                    {/* Islamic event dot */}
-                    {data?.hasEvent && !isToday && (
-                      <span
-                        className="absolute rounded-full"
-                        style={{
-                          top: '2px',
-                          insetInlineEnd: '2px',
-                          width: '5px',
-                          height: '5px',
-                          background: 'var(--success)',
-                        }}
-                        aria-hidden="true"
-                      />
                     )}
                   </Link>
                 );

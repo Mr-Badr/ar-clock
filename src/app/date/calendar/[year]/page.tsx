@@ -7,6 +7,7 @@ import { JsonLd } from '@/components/date/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { YearlyCalendar } from '@/components/date/YearlyCalendar';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import { Calendar, ArrowLeftRight, CalendarDays } from 'lucide-react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
 
@@ -78,21 +79,21 @@ export default async function GregorianCalendarPage({
         <DateBreadcrumb items={breadcrumb} />
 
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 border-b border-border pb-6">
-          <h1 className="text-3xl font-black text-primary">
-            التقويم الميلادي — عام {year}
-          </h1>
-          <nav className="flex items-center gap-2">
+          <nav className="flex items-center justify-between mx-auto w-full">
             <Link
               href={`/date/calendar/${y - 1}`}
-              className="px-4 py-2 bg-surface-2 border border-border rounded-[var(--radius)] text-sm font-semibold hover:bg-surface-3 transition-colors"
+              className="px-4 py-2 bg-surface-2 border border-border rounded-[var(--radius)] text-sm font-semibold hover:bg-surface-3 transition-colors text-primary"
             >
-              ← {y - 1}
+              → {y - 1}
             </Link>
+            <h1 className="text-3xl font-black text-accent-alt text-center flex-1">
+              التقويم الميلادي — عام {year}
+            </h1>
             <Link
               href={`/date/calendar/${y + 1}`}
-              className="px-4 py-2 bg-surface-2 border border-border rounded-[var(--radius)] text-sm font-semibold hover:bg-surface-3 transition-colors"
+              className="px-4 py-2 bg-surface-2 border border-border rounded-[var(--radius)] text-sm font-semibold hover:bg-surface-3 transition-colors text-primary"
             >
-              {y + 1} →
+              {y + 1} ←
             </Link>
           </nav>
         </div>
@@ -107,17 +108,47 @@ export default async function GregorianCalendarPage({
           </Suspense>
         </section>
 
-        <nav className="flex gap-4 flex-wrap pt-6 border-t border-border mt-4">
-          <Link href="/date" className="text-accent text-sm font-semibold hover:text-accent-alt transition-colors">
-            صفحة التاريخ الرئيسية ←
-          </Link>
-          <Link href="/date/converter" className="text-accent text-sm font-semibold hover:text-accent-alt transition-colors">
-            محول التاريخ ←
-          </Link>
-          <Link href="/date/hijri-to-gregorian" className="text-accent text-sm font-semibold hover:text-accent-alt transition-colors">
-            تحويل هجري إلى ميلادي ←
-          </Link>
+        {/* NAVIGATION */}
+        <nav aria-label="روابط ذات صلة" className="related-links" dir="rtl">
+          <p className="related-links__heading">صفحات ذات صلة</p>
+          <div className="related-links__grid">
+
+            <Link href="/date" className="related-link-card">
+              <span className="related-link-card__icon" aria-hidden="true">
+                <CalendarDays size={16} strokeWidth={1.75} />
+              </span>
+              <span className="related-link-card__body">
+                <span className="related-link-card__label">صفحة التاريخ الرئيسية</span>
+                <span className="related-link-card__desc">عرض التاريخ الهجري والميلادي</span>
+              </span>
+              <span className="related-link-card__arrow" aria-hidden="true">←</span>
+            </Link>
+
+            <Link href="/date/converter" className="related-link-card">
+              <span className="related-link-card__icon" aria-hidden="true">
+                <ArrowLeftRight size={16} strokeWidth={1.75} />
+              </span>
+              <span className="related-link-card__body">
+                <span className="related-link-card__label">محول التاريخ</span>
+                <span className="related-link-card__desc">تحويل بين الهجري والميلادي</span>
+              </span>
+              <span className="related-link-card__arrow" aria-hidden="true">←</span>
+            </Link>
+
+            <Link href="/date/hijri-to-gregorian" className="related-link-card">
+              <span className="related-link-card__icon" aria-hidden="true">
+                <Calendar size={16} strokeWidth={1.75} />
+              </span>
+              <span className="related-link-card__body">
+                <span className="related-link-card__label">تحويل هجري إلى ميلادي</span>
+                <span className="related-link-card__desc">تحويل مباشر من التقويم الهجري</span>
+              </span>
+              <span className="related-link-card__arrow" aria-hidden="true">←</span>
+            </Link>
+
+          </div>
         </nav>
+
       </main>
       {/* </AdLayoutWrapper> */}
     </>

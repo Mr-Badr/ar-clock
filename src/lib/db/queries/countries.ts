@@ -28,7 +28,10 @@ export async function getCountryBySlug(slug: string): Promise<Country | null> {
     if (error) throw new Error(error.message)
     return data as Country
   } catch {
-    return (fallback as Country[]).find(c => c.country_slug === slug) ?? null
+    const fromFallback = (fallback as Country[]).find(c => c.country_slug === slug) ?? null
+    // Never cache a null result — throw so Next.js doesn't store null in the cache
+    if (!fromFallback) throw new Error(`Country not found: ${slug}`)
+    return fromFallback
   }
 }
 

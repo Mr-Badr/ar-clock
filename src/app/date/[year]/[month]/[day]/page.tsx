@@ -27,6 +27,7 @@ import { MethodComparisonTable } from '@/components/date/MethodComparisonTable';
 import { DateNavigation } from '@/components/date/DateNavigation';
 import { DateShareActions } from '@/components/date/DateShareActions';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import { CalendarDays, ArrowLeftRight, Moon } from 'lucide-react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://miqatime.com';
 
@@ -232,22 +233,56 @@ export default async function ProgrammaticDatePage({
               prevUrl={fmtNav(prevDate)} prevLabel={fmtLabel(prevDate)}
               nextUrl={fmtNav(nextDate)} nextLabel={fmtLabel(nextDate)}
               hubLabel="التقويم"
+              hubHref="/date/calendar"
             />
           </section>
 
           {/* ── QUICK LINKS ──────────────────────────────────────────── */}
-          <nav className="flex flex-wrap pt-4" style={{ borderTop: '1px solid var(--border-subtle)', gap: '16px' }}>
-            <Link href="/date" className="text-accent text-sm font-semibold hover:text-accent-alt transition-colors">صفحة التاريخ الرئيسية ←</Link>
-            <Link href="/date/converter" className="text-accent text-sm font-semibold hover:text-accent-alt transition-colors">تحويل تاريخ آخر ←</Link>
-            {hijri && (
-              <Link
-                href={`/date/hijri/${hijri.year}/${String(hijri.month).padStart(2, '0')}/${String(hijri.day).padStart(2, '0')}`}
-                className="text-accent text-sm font-semibold hover:text-accent-alt transition-colors"
-              >
-                صفحة {hijri.formatted.ar} هجري ←
+          <nav aria-label="روابط ذات صلة" className="related-links" dir="rtl">
+            <p className="related-links__heading">صفحات ذات صلة</p>
+            <div className="related-links__grid">
+
+              <Link href="/date" className="related-link-card">
+                <span className="related-link-card__icon" aria-hidden="true">
+                  <CalendarDays size={16} strokeWidth={1.75} />
+                </span>
+                <span className="related-link-card__body">
+                  <span className="related-link-card__label">صفحة التاريخ الرئيسية</span>
+                  <span className="related-link-card__desc">عرض التاريخ الهجري والميلادي</span>
+                </span>
+                <span className="related-link-card__arrow" aria-hidden="true">←</span>
               </Link>
-            )}
+
+              <Link href="/date/converter" className="related-link-card">
+                <span className="related-link-card__icon" aria-hidden="true">
+                  <ArrowLeftRight size={16} strokeWidth={1.75} />
+                </span>
+                <span className="related-link-card__body">
+                  <span className="related-link-card__label">تحويل تاريخ آخر</span>
+                  <span className="related-link-card__desc">أداة تحويل التواريخ الهجرية والميلادية</span>
+                </span>
+                <span className="related-link-card__arrow" aria-hidden="true">←</span>
+              </Link>
+
+              {hijri && (
+                <Link
+                  href={`/date/hijri/${hijri.year}/${String(hijri.month).padStart(2, '0')}/${String(hijri.day).padStart(2, '0')}`}
+                  className="related-link-card"
+                >
+                  <span className="related-link-card__icon" aria-hidden="true">
+                    <Moon size={16} strokeWidth={1.75} />
+                  </span>
+                  <span className="related-link-card__body">
+                    <span className="related-link-card__label">صفحة {hijri.formatted.ar} هجري</span>
+                    <span className="related-link-card__desc">عرض هذا اليوم بالتقويم الهجري</span>
+                  </span>
+                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
+                </Link>
+              )}
+
+            </div>
           </nav>
+
         </main>
       {/* </AdLayoutWrapper> */}
     </>
