@@ -44,7 +44,7 @@ export default function SectionUseCases() {
             {' '}حاسبة فرق التوقيت؟
           </span>
         </h2>
-        <p className="text-sm sm:text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+        <p className="text-sm sm:text-base leading-relaxed mx-auto" style={{ color: 'var(--text-secondary)' }}>
           سواء كنت مسافراً أو رجل أعمال أو مغترباً أو تريد مشاهدة مباراة مباشرة —
           معرفة <strong style={{ color: 'var(--text-primary)' }}>فرق التوقيت الدقيق</strong> يوفّر
           عليك الحرج ويمنع الفوضى في المواعيد

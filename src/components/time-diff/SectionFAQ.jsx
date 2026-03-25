@@ -66,7 +66,7 @@ export default function SectionFAQ() {
             حول فرق التوقيت والمناطق الزمنية
           </span>
         </h2>
-        <p className="text-sm sm:text-base" style={{ color: 'var(--text-secondary)' }}>
+        <p className="text-sm sm:text-base mx-auto" style={{ color: 'var(--text-secondary)' }}>
           إجابات مفصّلة حول UTC وGMT والتوقيت الصيفي وكيفية حساب فرق التوقيت بدقة
         </p>
       </header>

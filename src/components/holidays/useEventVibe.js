@@ -88,11 +88,11 @@ export function getUrgencyTier(daysLeft, categoryId = 'islamic') {
   const config = getCategoryConfig(categoryId)
   const { critical, high, medium } = config.urgencyThresholds
 
-  if (daysLeft <= 0)        return { label: 'اليوم!',    level: 5, cssVar: '--danger',      softVar: '--danger-soft',  ringPulse: true }
-  if (daysLeft === 1)       return { label: 'غداً!',     level: 4, cssVar: '--danger',      softVar: '--danger-soft',  ringPulse: true }
-  if (daysLeft <= critical) return { label: 'قريب جداً', level: 3, cssVar: '--danger',      softVar: '--danger-soft',  ringPulse: true }
-  if (daysLeft <= high)     return { label: 'هذا الأسبوع', level: 2, cssVar: '--warning',   softVar: '--warning-soft', ringPulse: false }
-  if (daysLeft <= medium)   return { label: 'هذا الشهر',  level: 1, cssVar: '--accent-alt', softVar: '--accent-alt-soft', ringPulse: false }
+  if (daysLeft <= 0) return { label: 'اليوم!', level: 5, cssVar: '--danger', softVar: '--danger-soft', ringPulse: true }
+  if (daysLeft === 1) return { label: 'غداً!', level: 4, cssVar: '--danger', softVar: '--danger-soft', ringPulse: true }
+  if (daysLeft <= critical) return { label: 'قريب جداً', level: 3, cssVar: '--danger', softVar: '--danger-soft', ringPulse: true }
+  if (daysLeft <= high) return { label: 'هذا الأسبوع', level: 2, cssVar: '--warning', softVar: '--warning-soft', ringPulse: false }
+  if (daysLeft <= medium) return { label: 'هذا الشهر', level: 1, cssVar: '--accent-alt', softVar: '--accent-alt-soft', ringPulse: false }
   return { label: null, level: 0, cssVar: config.accentCssVar, softVar: '--accent-soft', ringPulse: false }
 }
 
@@ -101,45 +101,45 @@ export function getUrgencyTier(daysLeft, categoryId = 'islamic') {
  * that feels written specifically for THIS event, not a template.
  */
 const SLUG_HEADLINES = {
-  'ramadan':           (days) => days <= 7  ? 'رمضان على الأبواب — هيّئ نفسك' : days <= 30 ? 'رمضان يقترب — ابدأ التحضير' : `${days} يوماً تفصلك عن رمضان المبارك`,
-  'eid-al-fitr':       (days) => days <= 3  ? 'عيد الفطر المبارك بعد أيام!' : `عيد الفطر يقترب — ${days} يوم متبقي`,
-  'eid-al-adha':       (days) => days <= 3  ? 'عيد الأضحى المبارك وشيك!' : `عيد الأضحى بعد ${days} يوم`,
-  'hajj-season':       (days) => days <= 10 ? 'الحجاج يستعدون لأقدس رحلة' : `موسم الحج بعد ${days} يوم`,
-  'day-of-arafa':      (days) => days <= 3  ? 'أفضل أيام العام — يوم عرفة وشيك' : `يوم عرفة بعد ${days} يوم — صيامه يكفّر سنتين`,
-  'laylat-al-qadr':    (days) => days <= 5  ? 'ليلة القدر — خير من ألف شهر' : `ليلة القدر بعد ${days} يوم`,
-  'mawlid':            (days) => `ذكرى المولد النبوي الشريف بعد ${days} يوم`,
-  'islamic-new-year':  (days) => `رأس السنة الهجرية الجديدة بعد ${days} يوم`,
-  'ashura':            (days) => `يوم عاشوراء بعد ${days} يوم — صيامه سنة مؤكدة`,
-  'isra-miraj':        (days) => `ذكرى الإسراء والمعراج بعد ${days} يوم`,
-  'laylat-al-qadr':    (days) => `ليلة القدر — خير من ألف شهر`,
-  'nisf-shaban':       (days) => `ليلة النصف من شعبان بعد ${days} يوم`,
+  'ramadan': (days) => days <= 7 ? 'رمضان على الأبواب — هيّئ نفسك' : days <= 30 ? 'رمضان يقترب — ابدأ التحضير' : `${days} يوماً تفصلك عن رمضان المبارك`,
+  'eid-al-fitr': (days) => days <= 3 ? 'عيد الفطر المبارك بعد أيام!' : `عيد الفطر يقترب — ${days} يوم متبقي`,
+  'eid-al-adha': (days) => days <= 3 ? 'عيد الأضحى المبارك وشيك!' : `عيد الأضحى بعد ${days} يوم`,
+  'hajj-season': (days) => days <= 10 ? 'الحجاج يستعدون لأقدس رحلة' : `موسم الحج بعد ${days} يوم`,
+  'day-of-arafa': (days) => days <= 3 ? 'أفضل أيام العام — يوم عرفة وشيك' : `يوم عرفة بعد ${days} يوم — صيامه يكفّر سنتين`,
+  'laylat-al-qadr': (days) => days <= 5 ? 'ليلة القدر — خير من ألف شهر' : `ليلة القدر بعد ${days} يوم`,
+  'mawlid': (days) => `ذكرى المولد النبوي الشريف بعد ${days} يوم`,
+  'islamic-new-year': (days) => `رأس السنة الهجرية الجديدة بعد ${days} يوم`,
+  'ashura': (days) => `يوم عاشوراء بعد ${days} يوم — صيامه سنة مؤكدة`,
+  'isra-miraj': (days) => `ذكرى الإسراء والمعراج بعد ${days} يوم`,
+  'laylat-al-qadr': (days) => `ليلة القدر — خير من ألف شهر`,
+  'nisf-shaban': (days) => `ليلة النصف من شعبان بعد ${days} يوم`,
   'first-dhul-hijjah': (days) => `أول ذي الحجة — أفضل أيام السنة — بعد ${days} يوم`,
   'saudi-national-day': (days) => days <= 7 ? 'اليوم الوطني السعودي — الاحتفال قريب!' : `اليوم الوطني السعودي بعد ${days} يوم`,
-  'uae-national-day':  (days) => `اليوم الوطني الإماراتي بعد ${days} يوم`,
+  'uae-national-day': (days) => `اليوم الوطني الإماراتي بعد ${days} يوم`,
   'kuwait-national-day': (days) => `اليوم الوطني الكويتي بعد ${days} يوم`,
   'independence-day-algeria': (days) => `ذكرى استقلال الجزائر المجيد بعد ${days} يوم`,
-  'bac-results-algeria':  (days) => days <= 14 ? `نتائج الباك قادمة — ${days} يوم للانتظار` : `نتائج الباكالوريا الجزائر بعد ${days} يوم`,
-  'thanaweya-results':    (days) => days <= 14 ? `نتيجة الثانوية قريبة — ${days} يوم متبقي` : `نتيجة الثانوية العامة مصر بعد ${days} يوم`,
-  'bac-results-morocco':  (days) => `نتائج الباكالوريا المغرب بعد ${days} يوم`,
-  'sham-nessim':          (days) => `شم النسيم — ربيع مصر بعد ${days} يوم`,
-  'salary-day-saudi':     (days) => days <= 5 ? `الراتب قادم — ${days} أيام فقط!` : `الراتب الحكومي السعودي بعد ${days} يوم`,
+  'bac-results-algeria': (days) => days <= 14 ? `نتائج الباك قادمة — ${days} يوم للانتظار` : `نتائج الباكالوريا الجزائر بعد ${days} يوم`,
+  'thanaweya-results': (days) => days <= 14 ? `نتيجة الثانوية قريبة — ${days} يوم متبقي` : `نتيجة الثانوية العامة مصر بعد ${days} يوم`,
+  'bac-results-morocco': (days) => `نتائج الباكالوريا المغرب بعد ${days} يوم`,
+  'sham-nessim': (days) => `شم النسيم — ربيع مصر بعد ${days} يوم`,
+  'salary-day-saudi': (days) => days <= 5 ? `الراتب قادم — ${days} أيام فقط!` : `الراتب الحكومي السعودي بعد ${days} يوم`,
   'citizen-account-saudi': (days) => days <= 5 ? `حساب المواطن قادم — ${days} أيام!` : `حساب المواطن بعد ${days} يوم`,
-  'salary-day-egypt':     (days) => days <= 5 ? `الراتب قادم — ${days} أيام!` : `الراتب الحكومي مصر بعد ${days} يوم`,
-  'new-year':             (days) => `رأس السنة الميلادية بعد ${days} يوم`,
-  'summer-season':        (days) => `بداية فصل الصيف فلكياً بعد ${days} يوم`,
-  'winter-season':        (days) => `بداية فصل الشتاء فلكياً بعد ${days} يوم`,
-  'spring-season':        (days) => `بداية فصل الربيع فلكياً بعد ${days} يوم`,
-  'autumn-season':        (days) => `بداية فصل الخريف فلكياً بعد ${days} يوم`,
+  'salary-day-egypt': (days) => days <= 5 ? `الراتب قادم — ${days} أيام!` : `الراتب الحكومي مصر بعد ${days} يوم`,
+  'new-year': (days) => `رأس السنة الميلادية بعد ${days} يوم`,
+  'summer-season': (days) => `بداية فصل الصيف فلكياً بعد ${days} يوم`,
+  'winter-season': (days) => `بداية فصل الشتاء فلكياً بعد ${days} يوم`,
+  'spring-season': (days) => `بداية فصل الربيع فلكياً بعد ${days} يوم`,
+  'autumn-season': (days) => `بداية فصل الخريف فلكياً بعد ${days} يوم`,
 }
 
 const CATEGORY_HEADLINE_FALLBACKS = {
-  islamic:    (name, days) => days <= 10 ? `${name} — الموعد اقترب` : `${days} يوماً على ${name}`,
-  national:   (name, days) => days <= 7  ? `احتفلوا — ${name} قريب` : `${days} يوماً على ${name}`,
-  school:     (name, days) => days <= 14 ? `${name} — انتبه!` : `${days} يوماً على ${name}`,
-  holidays:   (name, days) => days <= 7  ? `الإجازة قريبة — ${days} أيام!` : `${days} يوماً على ${name}`,
-  astronomy:  (name, days) => `${name} — موعد فلكي دقيق بعد ${days} يوم`,
-  business:   (name, days) => `${days} يوماً على ${name}`,
-  support:    (name, days) => days <= 5  ? `${name} — الإيداع قريب!` : `${days} يوماً على ${name}`,
+  islamic: (name, days) => days <= 10 ? `${name} — الموعد اقترب` : `${days} يوماً على ${name}`,
+  national: (name, days) => days <= 7 ? `احتفلوا — ${name} قريب` : `${days} يوماً على ${name}`,
+  school: (name, days) => days <= 14 ? `${name} — انتبه!` : `${days} يوماً على ${name}`,
+  holidays: (name, days) => days <= 7 ? `الإجازة قريبة — ${days} أيام!` : `${days} يوماً على ${name}`,
+  astronomy: (name, days) => `${name} — موعد فلكي دقيق بعد ${days} يوم`,
+  business: (name, days) => `${days} يوماً على ${name}`,
+  support: (name, days) => days <= 5 ? `${name} — الإيداع قريب!` : `${days} يوماً على ${name}`,
 }
 
 export function getEventHeadline(slug, categoryId, daysLeft, eventName) {
@@ -162,7 +162,7 @@ export function getEventSubtext(slug, categoryId, countryCode) {
     'day-of-arafa': 'أفضل أيام العام — يُستحب صيامه لغير الحاج.',
     'laylat-al-qadr': 'في الأوتار من آخر عشر ليالٍ — أرجحها ليلة 27.',
     'bac-results-algeria': 'تُنشر النتائج على bac.onec.dz فور الإعلان.',
-    'thanaweya-results': 'تُنشر على results.moe.gov.eg أو بالرقم القومي.',
+    'thanaweya-results': 'تُنشر على moe.gov.eg أو بالرقم القومي.',
     'bac-results-morocco': 'تُنشر على massar.men.gov.ma.',
     'salary-day-saudi': 'في رمضان يُصرف مبكراً يوم 25.',
     'citizen-account-saudi': 'تحقق عبر تطبيق حساب المواطن أو ca.gov.sa.',
@@ -171,13 +171,13 @@ export function getEventSubtext(slug, categoryId, countryCode) {
   if (SLUG_SUBTEXTS[slug]) return SLUG_SUBTEXTS[slug]
 
   const CATEGORY_SUBTEXTS = {
-    islamic:   'مناسبة إسلامية — التواريخ الهجرية قد تختلف بيوم بين الدول.',
-    national:  'إجازة رسمية في البلاد — احتفالات وطنية.',
-    school:    'تابع الجهات الرسمية للتأكيد النهائي.',
-    holidays:  'إجازة رسمية — تحقق من تقويم جهة عملك.',
+    islamic: 'مناسبة إسلامية — التواريخ الهجرية قد تختلف بيوم بين الدول.',
+    national: 'إجازة رسمية في البلاد — احتفالات وطنية.',
+    school: 'تابع الجهات الرسمية للتأكيد النهائي.',
+    holidays: 'إجازة رسمية — تحقق من تقويم جهة عملك.',
     astronomy: 'موعد فلكي محسوب بدقة — لا يتغير.',
-    business:  'تاريخ تقديري — تحقق من الجهات الرسمية.',
-    support:   'يُحدَّث شهرياً — قد يتقدم إذا وافق إجازة.',
+    business: 'تاريخ تقديري — تحقق من الجهات الرسمية.',
+    support: 'يُحدَّث شهرياً — قد يتقدم إذا وافق إجازة.',
   }
 
   return CATEGORY_SUBTEXTS[categoryId] ?? 'تابع آخر المستجدات.'
@@ -191,13 +191,13 @@ export function getEventSubtext(slug, categoryId, countryCode) {
  */
 export function getArcData(categoryId, daysLeft) {
   const MAX_DAYS = {
-    islamic:    365,
-    national:   365,
-    school:     365,
-    holidays:   365,
-    astronomy:  365,
-    business:   30,
-    support:    30,
+    islamic: 365,
+    national: 365,
+    school: 365,
+    holidays: 365,
+    astronomy: 365,
+    business: 30,
+    support: 30,
   }
 
   const maxDays = MAX_DAYS[categoryId] ?? 365
@@ -220,29 +220,29 @@ export function getArcData(categoryId, daysLeft) {
  * Each category shows the most relevant numeric context for the event.
  */
 export function getVibeStats(categoryId, daysLeft, slug) {
-  const weeks  = Math.floor(daysLeft / 7)
+  const weeks = Math.floor(daysLeft / 7)
   const months = Math.floor(daysLeft / 30)
-  const hours  = daysLeft * 24
+  const hours = daysLeft * 24
 
   switch (categoryId) {
     case 'islamic':
       return [
         { label: 'بالأسابيع', value: weeks > 0 ? `${weeks} أسبوع` : 'هذا الأسبوع' },
-        { label: 'بالأشهر',  value: months > 0 ? `${months} شهر`  : 'هذا الشهر'  },
-        { label: 'التقويم',  value: 'هجري قمري' },
+        { label: 'بالأشهر', value: months > 0 ? `${months} شهر` : 'هذا الشهر' },
+        { label: 'التقويم', value: 'هجري قمري' },
       ]
 
     case 'school':
       return [
         { label: 'أيام الانتظار', value: `${daysLeft} يوم` },
-        { label: 'بالأسابيع',     value: weeks > 0 ? `${weeks} أسبوع` : 'هذا الأسبوع' },
-        { label: 'بالساعات',      value: hours < 1000 ? `${hours} ساعة` : `${(hours / 24).toFixed(0)} يوم` },
+        { label: 'بالأسابيع', value: weeks > 0 ? `${weeks} أسبوع` : 'هذا الأسبوع' },
+        { label: 'بالساعات', value: hours < 1000 ? `${hours} ساعة` : `${(hours / 24).toFixed(0)} يوم` },
       ]
 
     case 'national':
       return [
         { label: 'بالأسابيع', value: weeks > 0 ? `${weeks} أسبوع` : 'هذا الأسبوع' },
-        { label: 'بالأشهر',  value: months > 0 ? `${months} شهر`  : 'هذا الشهر'  },
+        { label: 'بالأشهر', value: months > 0 ? `${months} شهر` : 'هذا الشهر' },
         { label: 'إجازة رسمية', value: 'نعم' },
       ]
 
@@ -256,10 +256,10 @@ export function getVibeStats(categoryId, daysLeft, slug) {
     case 'support':
     case 'business': {
       const daysInCycle = categoryId === 'support' ? 30 : 30
-      const pctThrough  = Math.round(((daysInCycle - daysLeft) / daysInCycle) * 100)
+      const pctThrough = Math.round(((daysInCycle - daysLeft) / daysInCycle) * 100)
       return [
-        { label: 'أيام متبقية',  value: `${daysLeft} يوم` },
-        { label: '% من الشهر',  value: `${Math.max(0, pctThrough)}%` },
+        { label: 'أيام متبقية', value: `${daysLeft} يوم` },
+        { label: '% من الشهر', value: `${Math.max(0, pctThrough)}%` },
         { label: 'دورة الصرف', value: 'شهرية' },
       ]
     }
@@ -267,7 +267,7 @@ export function getVibeStats(categoryId, daysLeft, slug) {
     case 'holidays':
       return [
         { label: 'أيام للإجازة', value: `${daysLeft} يوم` },
-        { label: 'بالأسابيع',   value: weeks > 0 ? `${weeks} أسبوع` : 'هذا الأسبوع' },
+        { label: 'بالأسابيع', value: weeks > 0 ? `${weeks} أسبوع` : 'هذا الأسبوع' },
       ]
 
     default:

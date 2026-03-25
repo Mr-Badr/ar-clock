@@ -421,7 +421,7 @@ export const SCHOOL_CONTENT = {
   },
 
   'thanaweya-results': {
-    // Tier 1 — Egyptian results via results.moe.gov.eg
+    // Tier 1 — Egyptian results via moe.gov.eg
     // howTo: search by seat number or name on moe.gov.eg
     // 6 FAQ, 2 about paragraphs
     // quickFacts: announcement timing, official portal link
@@ -1397,7 +1397,7 @@ export function getEventSubtext(slug, categoryId, countryCode) {
     'day-of-arafa': 'أفضل أيام العام — يُستحب صيامه لغير الحاج.',
     'laylat-al-qadr': 'في الأوتار من آخر عشر ليالٍ — أرجحها ليلة 27.',
     'bac-results-algeria': 'تُنشر النتائج على bac.onec.dz فور الإعلان.',
-    'thanaweya-results': 'تُنشر على results.moe.gov.eg أو بالرقم القومي.',
+    'thanaweya-results': 'تُنشر على moe.gov.eg أو بالرقم القومي.',
     'bac-results-morocco': 'تُنشر على massar.men.gov.ma.',
     'salary-day-saudi': 'في رمضان يُصرف مبكراً يوم 25.',
     'citizen-account-saudi': 'تحقق عبر تطبيق حساب المواطن أو ca.gov.sa.',

@@ -62,7 +62,7 @@ export default function SectionIslamicOccasions() {
           </span>
         </h2>
 
-        <p className="text-sm sm:text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+        <p className="text-sm sm:text-base leading-relaxed mx-auto" style={{ color: 'var(--text-secondary)' }}>
           دليلك المرجعي لأبرز الأعياد الإسلامية — تاريخها الهجري، معناها، ومدّتها،
           مع عداد تنازلي دقيق لكل منها في صفحة المناسبات
         </p>
@@ -137,18 +137,6 @@ export default function SectionIslamicOccasions() {
           </li>
         ))}
       </ul>
-
-      {/* View all CTA */}
-      <div className="mt-8 text-center">
-        <Link
-          href="/holidays"
-          className="inline-flex items-center gap-2 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 rounded"
-          style={{ color: 'var(--accent-alt)' }}
-        >
-          عرض جميع المناسبات مع العداد التنازلي
-          <ArrowLeft size={14} aria-hidden="true" />
-        </Link>
-      </div>
 
     </SectionWrapper>
   )
