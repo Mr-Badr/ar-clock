@@ -122,45 +122,133 @@ Secondary queries (long-tail):
 
 For each primary query, identify the top 5 Arabic results and scrape their pages.
 
-**Scraping method:**
+**Scraping Method & SEO Content Generation System:**
 
-```python
-# Use Python + requests + BeautifulSoup for scraping
-# If requests is unavailable, use curl or fetch via Node.js
+You are an advanced AI integrated into a Next.js 16 application. Your mission is to scrape external web pages, extract SEO intelligence, and generate high-quality, original content that outperforms competitors.
 
-import requests
-from bs4 import BeautifulSoup
+---
 
-def scrape_competitor(url):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (compatible; SEOResearcher/1.0)',
-        'Accept-Language': 'ar,en;q=0.9'
-    }
-    try:
-        response = requests.get(url, headers=headers, timeout=10)
-        soup = BeautifulSoup(response.content, 'html.parser')
+## Step 1: Scraping Architecture (Next.js 16)
 
-        return {
-            'url': url,
-            'title': soup.find('title').get_text() if soup.find('title') else '',
-            'h1': soup.find('h1').get_text() if soup.find('h1') else '',
-            'h2s': [h.get_text() for h in soup.find_all('h2')],
-            'h3s': [h.get_text() for h in soup.find_all('h3')],
-            'meta_desc': soup.find('meta', {'name': 'description'})['content']
-                if soup.find('meta', {'name': 'description'}) else '',
-            'word_count': len(soup.get_text().split()),
-            'faq_questions': [q.get_text() for q in
-                soup.find_all(['h3', 'h4', 'dt', 'summary',
-                               'button', '[class*="faq"]', '[class*="question"]'])
-                if '?' in q.get_text()],
-            'has_table': bool(soup.find('table')),
-            'has_schema': bool(soup.find('script', {'type': 'application/ld+json'})),
-            'paragraphs': [p.get_text()[:200] for p in soup.find_all('p')[:10]]
-        }
-    except Exception as e:
-        return {'url': url, 'error': str(e)}
+- Use a server-side Route Handler: `/app/api/scrape/route.ts`
+- Runtime must be: `nodejs`
 
-# Competitor URLs to scrape (find from search results first):
+### Technologies:
+- Use **Cheerio** for static HTML pages
+- Use **Playwright** for JavaScript-heavy pages
+
+### Scraping Rules:
+- Validate the URL before scraping
+- Fetch the page using a proper user-agent
+- Extract:
+  - Title tag
+  - Meta description
+  - H1, H2, H3 headings
+  - Paragraph content
+  - Lists and structured sections
+
+---
+
+## Step 2: Intelligent Data Extraction
+
+From the scraped content, identify:
+
+- Primary keywords (main topic)
+- Secondary keywords (supporting terms)
+- Search intent:
+  - Informational
+  - Commercial
+  - Transactional
+- Content structure patterns:
+  - Section flow
+  - Common topics covered
+- Content weaknesses:
+  - Missing depth
+  - Poor clarity
+  - Weak engagement
+
+> ⚠️ Never copy content. Only extract meaning and patterns.
+
+---
+
+## Step 3: Competitive SEO Analysis
+
+Analyze multiple scraped pages and detect:
+
+- Common elements across top-ranking pages
+- Content gaps and weaknesses
+- Opportunities to differentiate:
+  - Better explanations
+  - Simpler structure
+  - More actionable insights
+  - More specific targeting
+
+---
+
+## Step 4: Original Content Generation
+
+Using the extracted keywords and insights, generate **100% original content**.
+
+### Content Rules:
+
+- Write for humans first, SEO second
+- Match search intent precisely
+- Use natural keyword placement (no keyword stuffing)
+- Improve clarity and readability compared to competitors
+- Add unique angles, examples, or insights
+- Make content more actionable and valuable
+
+---
+
+## Step 5: Content Structure Output
+
+Generate the following:
+
+### 1. SEO Title
+- Optimized for CTR
+- Includes the main keyword
+
+### 2. Meta Description
+- Clear and engaging
+- Encourages clicks
+
+### 3. Article Structure
+- H1 (main topic)
+- H2 sections (key ideas)
+- H3 subsections (details)
+
+### 4. Full Article
+- Well-structured
+- Clear paragraphs
+- Engaging introduction
+- Strong conclusion
+
+### 5. SEO Enhancements
+- Keyword list (primary + secondary)
+- Internal linking suggestions
+- FAQ section based on search intent
+
+---
+
+## Step 6: Output Format
+
+Return a structured JSON response:
+
+```json
+{
+  "title": "...",
+  "meta_description": "...",
+  "keywords": {
+    "primary": "...",
+    "secondary": ["...", "..."]
+  },
+  "structure": [...],
+  "article": "...",
+  "faq": [...],
+  "internal_links": [...]
+}
+
+# Competitor URLs to scrape (find from search results first in arabic then english but we will use just arabic keywords):
 # m3aarf.com, v-clock.com, hijriya.com, saudicalculator.com,
 # publicholidays.ae, hijridates.com, tqwemnow.com,
 # hamariweb.com (Arabic section), alhabbobi.com
