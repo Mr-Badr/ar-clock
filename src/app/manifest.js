@@ -6,9 +6,9 @@
 
 export default function manifest() {
   return {
-    name: 'ساعة عربية — مواقيت الصلاة والوقت',
-    short_name: 'ساعة عربية',
-    description: 'مواقيت الصلاة، فرق التوقيت، وعداد المناسبات في تطبيق واحد عصري',
+    name: 'ميقات | دليلك الشامل للوقت والمواعيد',
+    short_name: 'ميقات',
+    description: 'دليلك الشامل للوقت، المواعيد، والمناسبات الإسلامية والعالمية في تطبيق ميقات العصري',
     start_url: '/',
     display: 'standalone',
     background_color: '#181C2A',
@@ -17,14 +17,17 @@ export default function manifest() {
     lang: 'ar',
     dir: 'rtl',
     icons: [
+      { src: '/icons/icon-192.svg', sizes: '192x192', type: 'image/svg+xml' },
       { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { src: '/icons/icon-512.svg', sizes: '512x512', type: 'image/svg+xml', purpose: 'any' },
       { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+      { src: '/icons/icon-512-maskable.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
     ],
     categories: ['lifestyle', 'utilities', 'education'],
     shortcuts: [
       {
         name: 'مواقيت الصلاة',
-        url: '/mwaqit-al-salat/morocco/rabat',
+        url: '/mwaqit-al-salat',
         description: 'تحقق من أوقات الصلاة الدقيقة',
       },
       {

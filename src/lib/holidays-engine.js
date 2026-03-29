@@ -9,6 +9,7 @@
  */
 
 import { HIJRI_MONTHS_AR as BASE_MONTHS } from '@/lib/hijri-utils';
+import { getCachedEventMeta } from '@/lib/event-cache';
 export const HIJRI_MONTHS_AR = ['', ...BASE_MONTHS];
 const GREG_MONTHS_AR = [
   '', 'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
@@ -60,8 +61,18 @@ export function replaceYears(str, gregorianYear, hijriYear) {
  * Generate fresh, year-accurate SEO meta for any event.
  * Call this at annotation time with the resolved target date.
  * Returns: { seoTitle, description, keywords, year, hijriYear }
+ *
+ * This function now uses caching to prevent duplicate processing.
  */
 export function resolveEventMeta(ev, targetDate, overrideHijriYear = null) {
+  return getCachedEventMeta(ev, targetDate, overrideHijriYear);
+}
+
+/**
+ * Internal function that performs the actual meta resolution.
+ * This is called by the cache when needed.
+ */
+export function _resolveEventMetaInternal(ev, targetDate, overrideHijriYear = null) {
   const gr = getEventYear(targetDate);
   const hi = overrideHijriYear || approxHijriYear(gr);
   const greg = formatGregorianAr(targetDate);
@@ -85,12 +96,12 @@ export function resolveEventMeta(ev, targetDate, overrideHijriYear = null) {
   }));
 
   // 🆕 Dynamic quickFacts: _dynamic flag drives computed values
-  const quickFacts = (ev.quickFacts || []).map(f => {
+  const quickFacts = Array.isArray(ev.quickFacts) ? ev.quickFacts.map(f => {
     let value = replaceTokens(f.value || '', gr, hi);
-    if (f._dynamic === 'gregorian') value = greg; 
+    if (f._dynamic === 'gregorian') value = greg;
     if (f._dynamic === 'hijri') value = `${ev.hijriDay || 1} ${HIJRI_MONTHS_AR[ev.hijriMonth] || ''} ${hi} هـ`;
     return { label: replaceTokens(f.label || '', gr, hi), value };
-  });
+  }) : [];
 
   // Resolve tokens in all rich text content fields
   const rt = (s) => replaceTokens(s || '', gr, hi);
@@ -133,9 +144,85 @@ export function resolveEventMeta(ev, targetDate, overrideHijriYear = null) {
     })),
   } : undefined;
 
+  // ── NEW AGENTS.md schema fields ──────────────────────────────────────────
+  const answerSummary = rt(ev.answerSummary);
+
+  // aboutEvent: { "ما هو ...": "...", "التاريخ والأصل": "..." }
+  const aboutEvent = ev.aboutEvent
+    ? Object.fromEntries(Object.entries(ev.aboutEvent).map(([k, v]) => [rt(k), rt(v)]))
+    : undefined;
+
+  // intentCards: array of card objects
+  const intentCards = (ev.intentCards || []).map(c => ({
+    ...c,
+    title: rt(c.title),
+    description: rt(c.description),
+    ctaText: rt(c.ctaText),
+  }));
+
+  // engagementContent: array of shareable text items
+  const engagementContent = (ev.engagementContent || []).map(item => ({
+    ...item,
+    text: rt(item.text),
+  }));
+
+  // faq: new format with { question, answer } — alias to faqItems if missing
+  const faq = (ev.faq || []).map(f => ({
+    question: rt(f.question),
+    answer: rt(f.answer),
+  }));
+
+  // seoMeta: resolved title tag, meta description, og fields
+  const seoMeta = ev.seoMeta ? {
+    ...ev.seoMeta,
+    titleTag: rt(ev.seoMeta.titleTag),
+    metaDescription: rt(ev.seoMeta.metaDescription),
+    h1: rt(ev.seoMeta.h1),
+    ogTitle: rt(ev.seoMeta.ogTitle),
+    ogDescription: rt(ev.seoMeta.ogDescription),
+    ogImageAlt: rt(ev.seoMeta.ogImageAlt),
+    secondaryKeywords: (ev.seoMeta.secondaryKeywords || []).map(rt),
+    longTailKeywords: (ev.seoMeta.longTailKeywords || []).map(rt),
+  } : undefined;
+
+  // recurringYears: context paragraph and source note for years table
+  const recurringYears = ev.recurringYears ? {
+    contextParagraph: rt(ev.recurringYears.contextParagraph),
+    sourceNote: rt(ev.recurringYears.sourceNote),
+    columns: ev.recurringYears.columns || ["السنة", "التاريخ", "ملاحظة"],
+    highlightCurrentYear: ev.recurringYears.highlightCurrentYear !== false,
+  } : undefined;
+
+  // schemaData: JSON-LD fields for structured data
+  const schemaData = ev.schemaData ? {
+    eventName: rt(ev.schemaData.eventName),
+    eventAlternateName: rt(ev.schemaData.eventAlternateName),
+    startDate: ev.schemaData.startDate,
+    endDate: ev.schemaData.endDate,
+    eventDescription: rt(ev.schemaData.eventDescription),
+    breadcrumbs: (ev.schemaData.breadcrumbs || []).map(b => ({
+      name: rt(b.name),
+      path: b.path,
+    })),
+    articleHeadline: rt(ev.schemaData.articleHeadline),
+    faqSchemaItems: (ev.schemaData.faqSchemaItems || []).map(f => ({
+      question: rt(f.question),
+      answer: rt(f.answer),
+    })),
+  } : undefined;
+
+  // Final merged FAQ: prefer new faq[], fall back to faqItems[]
+  const mergedFaq = faq.length > 0
+    ? faq.map(f => ({ q: f.question, a: f.answer }))
+    : faqItems;
+
   return {
-    seoTitle, description, keywords, faqItems, quickFacts, year: gr, hijriYear: hi,
+    seoTitle, description, keywords, faqItems: mergedFaq, faq: mergedFaq,
+    quickFacts, year: gr, hijriYear: hi,
     about, significance, details, history, traditions, timeline, countryDates, howTo,
+    // New fields
+    answerSummary, aboutEvent, intentCards, engagementContent, seoMeta,
+    recurringYears, schemaData,
   };
 }
 
@@ -375,14 +462,13 @@ export function buildEventSchema(ev, date, siteUrl, eventState = 'upcoming') {
     },
     organizer: {
       '@type': 'Organization',
-      name: 'وقت — عداد المواعيد',
+      name: 'ميقات | دليلك الشامل للوقت والمواعيد',
       url: siteUrl,
       logo: `${siteUrl}/logo.png`,
     },
     audience: { '@type': 'Audience', audienceType: 'Muslims', geographicArea: { '@type': 'AdministrativeArea', name: 'MENA' } },
   };
 }
-
 /** WebPage schema — critical for E-E-A-T freshness signal (dateModified). */
 export function buildWebPageSchema(ev, date, siteUrl, nowIso) {
   const d = date instanceof Date ? date : new Date(date);
@@ -394,9 +480,9 @@ export function buildWebPageSchema(ev, date, siteUrl, nowIso) {
     inLanguage: 'ar',
     dateModified: nowIso || '2026-01-01T00:00:00Z',
     datePublished: '2025-01-01T00:00:00Z',
-    isPartOf: { '@type': 'WebSite', url: siteUrl, name: 'وقت — عداد المواعيد' },
+    isPartOf: { '@type': 'WebSite', url: siteUrl, name: 'ميقات | دليلك الشامل للوقت والمواعيد' },
     about: { '@type': 'Event', name: ev.name, startDate: d.toISOString() },
-    author: { '@type': 'Organization', name: 'وقت — عداد المواعيد', url: siteUrl },
+    author: { '@type': 'Organization', name: 'ميقات | دليلك الشامل للوقت والمواعيد', url: siteUrl },
   };
 }
 export function buildFAQSchema(ev) {
@@ -415,7 +501,35 @@ export function buildBreadcrumbSchema(crumbs) {
     itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.url })),
   };
 }
-
+/**
+ * EventSeries schema — for recurring events (Islamic holidays, national days, etc.)
+ * Helps search engines understand that this event repeats annually.
+ */
+export function buildEventSeriesSchema(ev, siteUrl) {
+  // Only add EventSeries for recurring event types
+  const recurringTypes = ['hijri', 'fixed', 'easter'];
+  if (!recurringTypes.includes(ev.type)) return null;
+  
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'EventSeries',
+    name: ev.name,
+    description: ev.description,
+    url: `${siteUrl}/holidays/${ev.slug}`,
+    inLanguage: 'ar',
+    organizer: {
+      '@type': 'Organization',
+      name: 'ميقات | دليلك الشامل للوقت والمواعيد',
+      url: siteUrl,
+      logo: `${siteUrl}/logo.png`,
+    },
+    eventSchedule: {
+      '@type': 'Schedule',
+      repeatFrequency: ev.type === 'hijri' ? 'P354D' : 'P1Y', // Hijri year is ~354 days
+      startDate: '2025-01-01',
+    },
+  };
+}
 /* ══════════════════════════════════════════════════════════════════════════
  * Backward-compat re-export — all existing consumers keep working
  * Event data now lives in src/lib/events/ for better separation of concerns.
@@ -424,4 +538,3 @@ import { ALL_RAW_EVENTS } from './events/index.js';
 export const ALL_EVENTS = ALL_RAW_EVENTS.map(e => enrichEvent(e));
 export { RELIGIOUS_HOLIDAYS } from './events/islamic.js';
 export { SEASONAL_EVENTS } from './events/seasonal.js';
-

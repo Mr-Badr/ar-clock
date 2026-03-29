@@ -38,7 +38,14 @@ const nextConfig = {
   experimental: {
     // Inline critical CSS for faster FCP
     optimizeCss: true,
-    optimizePackageImports: ['@phosphor-icons/react']
+    // Tree-shake icon/animation libraries — only the used exports are bundled
+    optimizePackageImports: [
+      '@phosphor-icons/react',
+      'lucide-react',
+      'motion',
+      'recharts',
+      'date-fns',
+    ],
   },
 
   // ── Security & Performance Headers ───────────────────────────────────────────

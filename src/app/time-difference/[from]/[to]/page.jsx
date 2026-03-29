@@ -81,7 +81,7 @@ export async function generateMetadata({ params }) {
   const paramsResolved = await params;
   const { from, to } = paramsResolved;
   const [fromCity, toCity] = await Promise.all([resolveCity(from), resolveCity(to)]);
-  if (!fromCity || !toCity) return { title: 'فرق التوقيت | وقت' };
+  if (!fromCity || !toCity) return { title: 'فرق التوقيت | ميقات' };
 
   const title = `فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar} الان`;
   const description =

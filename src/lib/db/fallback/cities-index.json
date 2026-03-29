@@ -1092,6 +1092,20 @@
     "country_slug": "pakistan"
   },
   {
+    "id": 7,
+    "city_slug": "dubai",
+    "country_code": "AE",
+    "name_ar": "دبي",
+    "name_en": "Dubai",
+    "timezone": "Asia/Dubai",
+    "is_capital": false,
+    "lat": 25.07725,
+    "lon": 55.30927,
+    "priority": 3790000,
+    "population": 3790000,
+    "country_slug": "united-arab-emirates"
+  },
+  {
     "id": 36474,
     "city_slug": "yokohama",
     "country_code": "JP",
@@ -2699,6 +2713,20 @@
     "lon": 54.39696,
     "priority": 1807000,
     "population": 1807000,
+    "country_slug": "united-arab-emirates"
+  },
+  {
+    "id": 8,
+    "city_slug": "sharjah",
+    "country_code": "AE",
+    "name_ar": "إمارة الشارقة",
+    "name_en": "Sharjah",
+    "timezone": "Asia/Dubai",
+    "is_capital": false,
+    "lat": 25.3342,
+    "lon": 55.41221,
+    "priority": 1800000,
+    "population": 1800000,
     "country_slug": "united-arab-emirates"
   },
   {
@@ -6020,20 +6048,6 @@
     "country_slug": "india"
   },
   {
-    "id": 27688,
-    "city_slug": "shivaji-nagar",
-    "country_code": "IN",
-    "name_ar": "شيفاجي ناغار",
-    "name_en": "Shivaji Nagar",
-    "timezone": "Asia/Kolkata",
-    "is_capital": false,
-    "lat": 18.53017,
-    "lon": 73.85263,
-    "priority": 1000000,
-    "population": 1000000,
-    "country_slug": "india"
-  },
-  {
     "id": 11607,
     "city_slug": "zhu-cheng-city",
     "country_code": "CN",
@@ -6046,6 +6060,20 @@
     "priority": 1000000,
     "population": 1000000,
     "country_slug": "china"
+  },
+  {
+    "id": 27688,
+    "city_slug": "shivaji-nagar",
+    "country_code": "IN",
+    "name_ar": "شيفاجي ناغار",
+    "name_en": "Shivaji Nagar",
+    "timezone": "Asia/Kolkata",
+    "is_capital": false,
+    "lat": 18.53017,
+    "lon": 73.85263,
+    "priority": 1000000,
+    "population": 1000000,
+    "country_slug": "india"
   },
   {
     "id": 11608,
@@ -7152,6 +7180,20 @@
     "priority": 847182,
     "population": 847182,
     "country_slug": "indonesia"
+  },
+  {
+    "id": 9,
+    "city_slug": "al-ain-city",
+    "country_code": "AE",
+    "name_ar": "العين",
+    "name_en": "Al Ain City",
+    "timezone": "Asia/Dubai",
+    "is_capital": false,
+    "lat": 24.19167,
+    "lon": 55.76056,
+    "priority": 846747,
+    "population": 846747,
+    "country_slug": "united-arab-emirates"
   },
   {
     "id": 23277,
@@ -12166,6 +12208,20 @@
     "country_slug": "india"
   },
   {
+    "id": 10,
+    "city_slug": "ajman",
+    "country_code": "AE",
+    "name_ar": "عجمان",
+    "name_en": "Ajman",
+    "timezone": "Asia/Dubai",
+    "is_capital": false,
+    "lat": 25.40177,
+    "lon": 55.47878,
+    "priority": 490035,
+    "population": 490035,
+    "country_slug": "united-arab-emirates"
+  },
+  {
     "id": 11721,
     "city_slug": "jianshui",
     "country_code": "CN",
@@ -14392,6 +14448,20 @@
     "country_slug": "india"
   },
   {
+    "id": 11,
+    "city_slug": "dayrah",
+    "country_code": "AE",
+    "name_ar": "ديرة",
+    "name_en": "Dayrah",
+    "timezone": "Asia/Dubai",
+    "is_capital": false,
+    "lat": 25.27143,
+    "lon": 55.30207,
+    "priority": 400000,
+    "population": 400000,
+    "country_slug": "united-arab-emirates"
+  },
+  {
     "id": 56395,
     "city_slug": "wichita",
     "country_code": "US",
@@ -15412,90 +15482,6 @@
     "priority": 362701,
     "population": 362701,
     "country_slug": "united-states"
-  },
-  {
-    "id": 11757,
-    "city_slug": "jizhou",
-    "country_code": "CN",
-    "name_ar": "جيزهوو",
-    "name_en": "Jizhou",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 37.55054,
-    "lon": 115.56871,
-    "priority": 362013,
-    "population": 362013,
-    "country_slug": "china"
-  },
-  {
-    "id": 4182,
-    "city_slug": "blumenau",
-    "country_code": "BR",
-    "name_ar": "بلوميناو",
-    "name_en": "Blumenau",
-    "timezone": "America/Sao_Paulo",
-    "is_capital": false,
-    "lat": -26.91944,
-    "lon": -49.06611,
-    "priority": 361855,
-    "population": 361855,
-    "country_slug": "brazil"
-  },
-  {
-    "id": 54071,
-    "city_slug": "atasehir",
-    "country_code": "TR",
-    "name_ar": "أتاشهر",
-    "name_en": "Atasehir",
-    "timezone": "Europe/Istanbul",
-    "is_capital": false,
-    "lat": 40.9833,
-    "lon": 29.1167,
-    "priority": 361615,
-    "population": 361615,
-    "country_slug": "turkey"
-  },
-  {
-    "id": 15184,
-    "city_slug": "wuppertal",
-    "country_code": "DE",
-    "name_ar": "فوبرتال",
-    "name_en": "Wuppertal",
-    "timezone": "Europe/Berlin",
-    "is_capital": false,
-    "lat": 51.25627,
-    "lon": 7.14816,
-    "priority": 360797,
-    "population": 360797,
-    "country_slug": "germany"
-  },
-  {
-    "id": 26868,
-    "city_slug": "sukabumi",
-    "country_code": "ID",
-    "name_ar": "سوكابومي",
-    "name_en": "Sukabumi",
-    "timezone": "Asia/Jakarta",
-    "is_capital": false,
-    "lat": -6.91806,
-    "lon": 106.92667,
-    "priority": 360644,
-    "population": 360644,
-    "country_slug": "indonesia"
-  },
-  {
-    "id": 49258,
-    "city_slug": "ulan-ude",
-    "country_code": "RU",
-    "name_ar": "أولان-أودي",
-    "name_en": "Ulan-Ude",
-    "timezone": "Asia/Irkutsk",
-    "is_capital": false,
-    "lat": 51.82648,
-    "lon": 107.59979,
-    "priority": 360278,
-    "population": 360278,
-    "country_slug": "russia"
   },
   {
     "id": 39264,

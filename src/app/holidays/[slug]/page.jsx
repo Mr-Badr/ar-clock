@@ -7,8 +7,8 @@
  * WAQT tokens: .card .card-nested .card-deep .card__header .badge
  *              .btn .section .divider .empty-state
  */
-import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
 
 import {
@@ -24,11 +24,16 @@ import { COUNTRY_META, getCountryCalendarConfig } from '@/lib/calendar-config';
 import { buildDynamicCountryDates } from '@/lib/event-utils';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getRichContent } from '@/lib/event-content';
-import CountdownTicker, { CountdownTickerSkeleton, ShareBar } from '@/components/clocks/CountdownTicker';
+import CountdownTicker, { ShareBar } from '@/components/clocks/CountdownTicker';
 import EventVibeCard from '@/components/holidays/EventVibeCard';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+
+// Server components — imported normally, no dynamic import needed
+import CountryTable from './CountryTable';
+import HistoricalTable from './HistoricalTable';
+import RelatedEvents from './RelatedEvents';
 
 const SITE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
 
@@ -78,14 +83,18 @@ function AccuracyBadge({ accuracy, localSighting }) {
 
 /* ── Quick facts table ────────────────────────────────────────────────────── */
 function QuickFactsTable({ facts }) {
-  if (!facts?.length) return null;
+  if (!facts) return null;
+  const isArray = Array.isArray(facts);
+  const factEntries = isArray ? facts : Object.entries(facts).map(([label, value]) => ({ label, value }));
+  if (factEntries.length === 0) return null;
+
   return (
     <div className="card-nested" style={{ overflow: 'hidden', padding: 0 }}>
       <table style={{ width: '100%', borderCollapse: 'collapse' }} dir="rtl">
         <caption className="sr-only">معلومات سريعة</caption>
         <tbody>
-          {facts.map((f, i) => (
-            <tr key={f.label} style={{ background: i % 2 === 0 ? 'var(--bg-surface-3)' : 'var(--bg-surface-4)', borderBottom: '1px solid var(--border-subtle)' }}>
+          {factEntries.map((f, i) => (
+            <tr key={i} style={{ background: i % 2 === 0 ? 'var(--bg-surface-3)' : 'var(--bg-surface-4)', borderBottom: '1px solid var(--border-subtle)' }}>
               <th scope="row" style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-sm)', fontWeight: 'var(--font-medium)', color: 'var(--text-secondary)', textAlign: 'right', whiteSpace: 'nowrap', width: '40%' }}>{f.label}</th>
               <td style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-primary)', fontWeight: 'var(--font-semibold)' }}>{f.value}</td>
             </tr>
@@ -93,120 +102,6 @@ function QuickFactsTable({ facts }) {
         </tbody>
       </table>
     </div>
-  );
-}
-
-/* ── Country comparison table ─────────────────────────────────────────────── */
-function CountryTable({ event, countryDates }) {
-  if (!countryDates?.length) return null;
-  return (
-    <section style={{ marginTop: 'var(--space-8)' }} aria-labelledby="country-h">
-      <h2 id="country-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
-        مواعيد {event.name} حسب الدولة
-      </h2>
-      <div style={{ overflowX: 'auto', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-default)' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }} dir="rtl">
-          <caption className="sr-only">مقارنة مواعيد {event.name}</caption>
-          <thead>
-            <tr style={{ background: 'var(--bg-surface-3)', borderBottom: '1px solid var(--border-default)' }}>
-              {['الدولة', 'التاريخ المتوقع', 'مصدر التقويم'].map(h => (
-                <th key={h} scope="col" style={{ padding: 'var(--space-3) var(--space-4)', textAlign: 'right', fontSize: 'var(--text-xs)', fontWeight: 'var(--font-semibold)', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-wide)' }}>{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {countryDates.map((row, i) => (
-              <tr key={row.code} style={{ background: i % 2 === 0 ? 'var(--bg-surface-2)' : 'var(--bg-surface-3)', borderBottom: '1px solid var(--border-subtle)' }}>
-                <td style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-sm)', fontWeight: 'var(--font-medium)', color: 'var(--text-primary)' }}>{row.flag} {row.country}</td>
-                <td style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-primary)', fontVariantNumeric: 'tabular-nums' }}>{row.date}</td>
-                <td style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{row.note}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p style={{ marginTop: 'var(--space-2)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
-        * قد تختلف التواريخ بيوم بناءً على رؤية الهلال في كل دولة.
-      </p>
-    </section>
-  );
-}
-
-/* ── Historical dates table ───────────────────────────────────────────────── */
-function HistoricalTable({ event, hijriYear, currentYear }) {
-  if (event.type !== 'hijri') return null;
-  const rows = event.historicalDates || [
-    { year: `${hijriYear - 1} هـ`, gregorian: `${currentYear - 1}م`, note: 'السنة الماضية' },
-    { year: `${hijriYear} هـ`, gregorian: `${currentYear}م`, note: 'السنة الحالية' },
-    { year: `${hijriYear + 1} هـ`, gregorian: `${currentYear + 1}م`, note: 'تقديري (~11 يوماً أبكر)' },
-  ];
-  return (
-    <section style={{ marginTop: 'var(--space-8)' }} aria-labelledby="hist-h">
-      <h2 id="hist-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
-        {event.name} — مواعيد السنوات المتعاقبة
-      </h2>
-      <div style={{ overflowX: 'auto', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-default)' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }} dir="rtl">
-          <caption className="sr-only">تواريخ {event.name} لعدة سنوات</caption>
-          <thead>
-            <tr style={{ background: 'var(--bg-surface-3)', borderBottom: '1px solid var(--border-default)' }}>
-              {['السنة الهجرية', 'التاريخ الهجري', 'الميلادي (تقريبي)', 'ملاحظة'].map(h => (
-                <th key={h} scope="col" style={{ padding: 'var(--space-3) var(--space-4)', textAlign: 'right', fontSize: 'var(--text-xs)', fontWeight: 'var(--font-semibold)', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-wide)' }}>{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r, i) => (
-              <tr key={r.year} style={{
-                background: r.note?.includes('الحالية') ? 'var(--accent-soft)' : i % 2 === 0 ? 'var(--bg-surface-2)' : 'var(--bg-surface-3)',
-                borderBottom: '1px solid var(--border-subtle)',
-                fontWeight: r.note?.includes('الحالية') ? 'var(--font-semibold)' : 'var(--font-regular)',
-              }}>
-                <td style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-primary)', fontVariantNumeric: 'tabular-nums' }}>{r.year}</td>
-                <td style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>{event.hijriDay} {HIJRI_MONTHS_AR[event.hijriMonth]}</td>
-                <td style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-primary)', fontVariantNumeric: 'tabular-nums' }}>{r.gregorian}</td>
-                <td style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-xs)' }}>
-                  {r.note?.includes('الحالية') ? <span className="badge badge-accent">{r.note}</span> : <span style={{ color: 'var(--text-muted)' }}>{r.note}</span>}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
-  );
-}
-
-/* ── Related events ───────────────────────────────────────────────────────── */
-async function RelatedEvents({ slug }) {
-  const related = getRelatedEvents(slug, ALL_EVENTS, 4);
-  const resolved = await resolveAllHijriEvents(related);
-  const nowMs = new Date(await getCachedNowIso()).getTime();
-  const ann = related.map(ev => {
-    const d = getNextEventDate(ev, resolved, nowMs);
-    const seo = resolveEventMeta(ev, d);
-    return { ...ev, _daysLeft: getTimeRemaining(d, nowMs).days, _formatted: formatGregorianAr(d), _seoTitle: seo.seoTitle };
-  });
-  return (
-    <section style={{ marginTop: 'var(--space-12)' }} aria-labelledby="related-h">
-      <h2 id="related-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-5)' }}>
-        مناسبات ذات صلة
-      </h2>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-3)' }}>
-        {ann.map(ev => (
-          <Link key={ev.slug} href={`/holidays/${ev.slug}`} className="alarm-item no-underline" style={{ cursor: 'pointer' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '52px', height: '52px', borderRadius: 'var(--radius-full)', border: '1px solid var(--border-accent)', background: 'var(--accent-soft)', flexShrink: 0 }}>
-              <span className="clock-display tabular-nums" style={{ fontSize: 'var(--text-md)', color: 'var(--accent)', lineHeight: 1 }}>{ev._daysLeft}</span>
-              <span style={{ fontSize: 'var(--text-2xs)', color: 'var(--text-muted)' }}>يوم</span>
-            </div>
-            <div className="alarm-info">
-              <p className="alarm-label">{ev.name}</p>
-              <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 'var(--space-1)' }}>{ev._formatted}</p>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </section>
   );
 }
 
@@ -235,8 +130,8 @@ export default async function HolidayPage({ params }) {
 
   // Year-correct all SEO strings for this actual upcoming date
   const seo = resolveEventMeta(event, targetDate);
-  const faqItems = seo.faqItems;
-  const quickFacts = seo.quickFacts || [];
+  const faqItems = seo.faq || seo.faqItems || [];
+  const quickFacts = seo.quickFacts || {};
 
   const eventState = getEventState(targetDate, now.getTime());
   
@@ -311,39 +206,52 @@ export default async function HolidayPage({ params }) {
           </h1>
 
           {/* SEO answer capsule — stays in DOM for featured snippets */}
-          <p
-            id="answer"
-            style={{
-              fontSize: 'var(--text-sm)',
-              color: 'var(--text-muted)',
-              lineHeight: 'var(--leading-relaxed)',
-              marginTop: 'var(--space-3)',
-            }}
-          >
-            <strong style={{ color: 'var(--text-secondary)' }}>{event.name}</strong>
-            {hijriStr
-              ? ` يصادف هذا العام ${gregStr} الموافق ${hijriStr}. متبقي ${remaining.days} يوم${remaining.hours > 0 ? ` و${remaining.hours} ساعة` : ''}.`
-              : ` يصادف هذا العام ${gregStr}. متبقي ${remaining.days} يوم.`
-            }
-            {event.type === 'hijri' && ' يُحسب الموعد وفق تقويم أم القرى الرسمي ويتقدم ~11 يوماً كل عام.'}
-            {event.type === 'fixed' && ' الموعد ثابت كل عام في نفس اليوم.'}
-            {event.type === 'estimated' && ' الموعد تقديري وقد يتغير بإعلان رسمي.'}
-          </p>
+          {seo.answerSummary ? (
+            <p
+              id="answer"
+              style={{
+                fontSize: 'var(--text-sm)',
+                color: 'var(--text-muted)',
+                lineHeight: 'var(--leading-relaxed)',
+                marginTop: 'var(--space-3)',
+              }}
+              dangerouslySetInnerHTML={{
+                __html: replaceTokens(seo.answerSummary, { daysRemaining: remaining.days, ...event })
+              }}
+            />
+          ) : (
+            <p
+              id="answer"
+              style={{
+                fontSize: 'var(--text-sm)',
+                color: 'var(--text-muted)',
+                lineHeight: 'var(--leading-relaxed)',
+                marginTop: 'var(--space-3)',
+              }}
+            >
+              <strong style={{ color: 'var(--text-secondary)' }}>{event.name}</strong>
+              {hijriStr
+                ? ` يصادف هذا العام ${gregStr} الموافق ${hijriStr}. متبقي ${remaining.days} يوم${remaining.hours > 0 ? ` و${remaining.hours} ساعة` : ''}.`
+                : ` يصادف هذا العام ${gregStr}. متبقي ${remaining.days} يوم.`
+              }
+              {event.type === 'hijri' && ' يُحسب الموعد وفق تقويم أم القرى الرسمي ويتقدم ~11 يوماً كل عام.'}
+              {event.type === 'fixed' && ' الموعد ثابت كل عام في نفس اليوم.'}
+              {event.type === 'estimated' && ' الموعد تقديري وقد يتغير بإعلان رسمي.'}
+            </p>
+          )}
 
         </header>
 
         {/* ── COUNTDOWN TICKER — main element, first thing user sees ──────── */}
         <section style={{ marginBottom: 'var(--space-6)' }} aria-label="العد التنازلي">
-          <Suspense fallback={<CountdownTickerSkeleton />}>
-            <CountdownTicker
-              targetISO={targetDate.toISOString()}
-              initialRemaining={remaining}
-              eventName={event.name}
-              eventDate={hijriStr ? `${gregStr} — ${hijriStr}` : gregStr}
-              whatsappUrl={whatsappUrl}
-              isDark
-            />
-          </Suspense>
+          <CountdownTicker
+            targetISO={targetDate.toISOString()}
+            initialRemaining={remaining}
+            eventName={event.name}
+            eventDate={hijriStr ? `${gregStr} — ${hijriStr}` : gregStr}
+            whatsappUrl={whatsappUrl}
+            isDark
+          />
         </section>
 
         {/* <AdTopBanner slotId="top-holiday-slug" /> */}
@@ -440,10 +348,36 @@ export default async function HolidayPage({ params }) {
         </section>
 
         {/* ── QUICK FACTS ─────────────────────────────────────────────────── */}
-        {quickFacts.length > 0 && (
+        {(Array.isArray(quickFacts) ? quickFacts.length > 0 : Object.keys(quickFacts).length > 0) && (
           <section style={{ marginBottom: 'var(--space-8)' }}>
             <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>معلومات سريعة</h2>
             <QuickFactsTable facts={quickFacts} />
+          </section>
+        )}
+
+        {/* ── INTENT CARDS (Action Cards) ─────────────────────────────────── */}
+        {seo.intentCards && seo.intentCards.length > 0 && (
+          <section style={{ marginBottom: 'var(--space-8)' }} aria-label="أبرز الإجراءات">
+            <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
+              {event.category === 'islamic' ? `استعد لـ${event.name}` :
+                event.category === 'national' ? `احتفل بـ${event.name}` :
+                event.category === 'school' ? `استعد لـ${event.name}` :
+                event.category === 'holidays' ? `خطط لإجازتك` :
+                event.category === 'astronomy' ? `شاهد ${event.name}` :
+                event.category === 'business' ? `جهّز فريقك` : `شارك في ${event.name}`}
+            </h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-3)' }}>
+              {seo.intentCards.map((card, i) => (
+                <div key={i} className="card-nested" style={{ padding: 'var(--space-4)', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  <span style={{ fontSize: '2rem', marginBottom: 'var(--space-2)' }}>{card.icon}</span>
+                  <h3 style={{ fontSize: 'var(--text-md)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', marginBottom: 'var(--space-1)' }}>{card.title}</h3>
+                  <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', marginBottom: 'var(--space-4)', flex: 1 }}>{card.description}</p>
+                  <a href={card.ctaHref} className="btn" style={{ textAlign: 'center', padding: 'var(--space-2)', background: 'var(--bg-surface-4)', borderRadius: 'var(--radius-lg)', color: 'var(--text-primary)', fontSize: 'var(--text-sm)', fontWeight: 'var(--font-medium)', textDecoration: 'none' }}>
+                    {card.ctaText}
+                  </a>
+                </div>
+              ))}
+            </div>
           </section>
         )}
 
@@ -451,24 +385,36 @@ export default async function HolidayPage({ params }) {
         <div className="section" style={{ marginBottom: 'var(--space-6)' }}>
           <div className="card__header">
             <h2 className="card__title">
-              {seo.about?.heading || `عن ${event.name}`}
+              {seo.aboutEvent ? `عن ${event.name}` : (seo.about?.heading || `عن ${event.name}`)}
             </h2>
           </div>
 
-          {/* Render rich seo.about.paragraphs if they exist */}
-          {seo.about?.paragraphs?.length > 0 ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-              {seo.about.paragraphs.map((para, i) => (
-                <p key={i} style={{ color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', fontSize: 'var(--text-base)' }}>
-                  {para}
-                </p>
+          {/* Render NEW format (aboutEvent) if it exists, otherwise fallback to old format */}
+          {seo.aboutEvent ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
+              {Object.entries(seo.aboutEvent).map(([heading, content], i) => (
+                <div key={i}>
+                  <h3 style={{ fontSize: 'var(--text-base)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-2)' }}>{heading}</h3>
+                  <p style={{ color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', fontSize: 'var(--text-base)' }} dangerouslySetInnerHTML={{ __html: replaceTokens(content, event) }} />
+                </div>
               ))}
             </div>
           ) : (
-            /* Fallback: single paragraph from details or seo.description */
-            <p style={{ color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', fontSize: 'var(--text-base)' }}>
-              {seo.details || seo.description}
-            </p>
+            <>
+              {seo.about?.paragraphs?.length > 0 ? (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+                  {seo.about.paragraphs.map((para, i) => (
+                    <p key={i} style={{ color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', fontSize: 'var(--text-base)' }}>
+                      {para}
+                    </p>
+                  ))}
+                </div>
+              ) : (
+                <p style={{ color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', fontSize: 'var(--text-base)' }}>
+                  {seo.details || seo.description}
+                </p>
+              )}
+            </>
           )}
 
           {seo.history && (
@@ -541,6 +487,33 @@ export default async function HolidayPage({ params }) {
           </section>
         )}
 
+        {/* ── ENGAGEMENT CONTENT (Shareable Cards) ────────────────────────── */}
+        {seo.engagementContent && seo.engagementContent.length > 0 && (
+          <section style={{ marginBottom: 'var(--space-8)' }} aria-labelledby="engagement-h">
+            <h2 id="engagement-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
+              {event.category === 'islamic' ? `استعد لـ${event.name}` :
+               event.category === 'national' ? `احتفل بـ${event.name}` :
+               event.category === 'school' ? `استعد لـ${event.name}` :
+               event.category === 'holidays' ? `خطط لإجازتك` :
+               event.category === 'astronomy' ? `شاهد ${event.name}` :
+               event.category === 'business' ? `جهّز فريقك` : `شارك في ${event.name}`}
+            </h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-3)' }}>
+              {seo.engagementContent.map((item, i) => (
+                <div key={i} className="card-nested" style={{ padding: 'var(--space-5)', background: 'var(--bg-surface-2)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--space-2)' }}>
+                    {item.subcategory && <span style={{ fontSize: 'var(--text-xs)', color: 'var(--accent)', fontWeight: 'var(--font-semibold)' }}>{item.subcategory}</span>}
+                    <span className="badge badge-default" style={{ fontSize: 'var(--text-2xs)' }}>
+                      {item.type === 'greeting' ? 'تهنئة' : item.type === 'prayer' ? 'دعاء' : item.type === 'tip' ? 'نصيحة' : item.type === 'fact' ? 'معلومة' : item.type === 'quote' ? 'اقتباس' : 'فائدة'}
+                    </span>
+                  </div>
+                  <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 'var(--leading-relaxed)' }}>{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* ── HOW TO — from rich content ─────────────────────────────────── */}
         {seo.howTo && (
           <section style={{ marginBottom: 'var(--space-8)' }} aria-labelledby="howto-h">
@@ -577,6 +550,23 @@ export default async function HolidayPage({ params }) {
         <CountryTable event={event} countryDates={seo.countryDates} />
         <HistoricalTable event={event} hijriYear={hijriYearNum} currentYear={currentYear} />
 
+        {/* ── RECURRING YEARS — context paragraph for years table ─────────── */}
+        {seo.recurringYears && (
+          <section style={{ marginTop: 'var(--space-8)' }} aria-labelledby="recurring-h">
+            <h2 id="recurring-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
+              {event.name} — مواعيد السنوات
+            </h2>
+            <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', marginBottom: 'var(--space-4)' }}>
+              {seo.recurringYears.contextParagraph}
+            </p>
+            {seo.recurringYears.sourceNote && (
+              <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+                {seo.recurringYears.sourceNote}
+              </p>
+            )}
+          </section>
+        )}
+
         {/* ── FAQ ─────────────────────────────────────────────────────────── */}
         {faqItems.length > 0 && (
           <section style={{ marginTop: 'var(--space-10)' }} aria-labelledby="faq-h">
@@ -585,15 +575,19 @@ export default async function HolidayPage({ params }) {
               أسئلة شائعة
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-              {faqItems.map(({ q, a }) => (
-                <details key={q} className="card-nested" style={{ padding: 'var(--space-4) var(--space-5)' }}>
+              {faqItems.map((faqItem, i) => {
+                const q = faqItem.q || faqItem.question;
+                const a = faqItem.a || faqItem.answer;
+                return (
+                <details key={i} className="card-nested" style={{ padding: 'var(--space-4) var(--space-5)' }}>
                   <summary style={{ cursor: 'pointer', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', listStyle: 'none', fontSize: 'var(--text-base)' }}>
-                    {q}
+                    <span>{q || faqItem.question}</span>
                     <span aria-hidden style={{ color: 'var(--text-muted)', fontSize: 'var(--text-xl)', marginRight: 'var(--space-2)', flexShrink: 0 }}>+</span>
                   </summary>
-                  <p style={{ marginTop: 'var(--space-3)', color: 'var(--text-secondary)', fontSize: 'var(--text-sm)', lineHeight: 'var(--leading-relaxed)' }}>{a}</p>
+                  <p style={{ marginTop: 'var(--space-3)', color: 'var(--text-secondary)', fontSize: 'var(--text-sm)', lineHeight: 'var(--leading-relaxed)' }} dangerouslySetInnerHTML={{ __html: a || faqItem.answer }} />
                 </details>
-              ))}
+                );
+              })}
             </div>
           </section>
         )}

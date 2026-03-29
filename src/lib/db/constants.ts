@@ -3,7 +3,7 @@ export const PRIORITY_COUNTRY_SLUGS = [
   'saudi-arabia',
   'morocco',
   'algeria',
-  'uae',
+  'united-arab-emirates',
   'tunisia',
   'libya',
   'sudan',

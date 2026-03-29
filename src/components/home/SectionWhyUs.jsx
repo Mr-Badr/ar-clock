@@ -41,7 +41,7 @@ export default function SectionWhyUs() {
       {/* Header */}
       <header className="max-w-2xl mx-auto text-center mb-10 space-y-3">
         <div className="flex justify-center">
-          <SectionBadge><Star size={11} />مزايا الموقع</SectionBadge>
+          <SectionBadge><Star size={11} />دليلك الشامل</SectionBadge>
         </div>
 
         <h2
@@ -49,7 +49,7 @@ export default function SectionWhyUs() {
           className="text-2xl sm:text-3xl lg:text-[2.2rem] font-extrabold leading-tight"
           style={{ color: 'var(--text-primary)' }}
         >
-          بوابتك الأولى لكل ما يتعلق
+          بوابتك الشاملة لكل ما يتعلق
           <span
             style={{
               background: 'var(--accent-gradient)',
@@ -58,12 +58,12 @@ export default function SectionWhyUs() {
               backgroundClip: 'text',
             }}
           >
-            {' '}بالوقت والمواقيت
+            {' '}بالوقت والتقويم الهجري
           </span>
         </h2>
 
         <p className="text-base sm:text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-          موقع متخصص يجمع بين دقة العلم وسهولة الاستخدام، ليكون المرجع الأول لكل
+          تطبيق متخصص يجمع بين دقة العلم وسهولة الاستخدام، ليكون المرجع الأول لكل
           مسلم يبحث عن{' '}
           <strong style={{ color: 'var(--text-primary)' }}>أوقات الأذان</strong>، أو
           مسافر يريد معرفة{' '}
@@ -77,7 +77,7 @@ export default function SectionWhyUs() {
       <ul
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
         role="list"
-        aria-label="مزايا موقع وقت عربي"
+        aria-label="مزايا تطبيق ميقات"
       >
         {WHY_FEATURES.map((feat) => (
           <li

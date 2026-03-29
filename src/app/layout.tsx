@@ -8,6 +8,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import Header from '@/components/layout/header';
 import AdSenseProvider from '@/components/ads/AdSenseProvider';
 import AdStickyAnchor from '@/components/ads/AdStickyAnchor';
+import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
 // Load every weight the design system uses.
 // --font-extrabold (800) is required for clock digits.
 // --font-black (900) is required for fullscreen clock.
@@ -26,8 +27,8 @@ export const metadata: Metadata = {
   // ── Core ──────────────────────────────────────────────────────────────────
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com'),
   title: {
-    default: 'مواقيت الصلاة — دقيقة في جميع أنحاء العالم',
-    template: '%s | مواقيت الصلاة',
+    default: 'ميقات | دليلك الشامل للوقت والمواعيد والمناسبات',
+    template: '%s | ميقات',
   },
   description: 'احصل على مواقيت الصلاة الدقيقة (الفجر، الشروق، الظهر، العصر، المغرب، العشاء) لأي مدينة حول العالم. محسوبة بدقة فلكية وتُحدَّث يومياً.',
   keywords: [
@@ -36,12 +37,12 @@ export const metadata: Metadata = {
     'prayer times', 'salah times', 'اتجاه القبلة', 'قبلة',
     'فرق التوقيت', 'تحويل الوقت', 'الساعة الان', 'المناسبات الإسلامية',
   ],
-  authors: [{ name: 'Waqt — مواقيت الصلاة' }],
+  authors: [{ name: 'ميقات (Miqat) — دليلك الشامل للمواعيد' }],
   category: 'utilities',
   classification: 'Public',
 
-  applicationName: 'مواقيت الصلاة',
-  appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: 'مواقيت' },
+  applicationName: 'ميقات',
+  appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: 'ميقات' },
 
   // ── Robots ────────────────────────────────────────────────────────────────
   robots: {
@@ -51,9 +52,9 @@ export const metadata: Metadata = {
 
   // ── Open Graph ────────────────────────────────────────────────────────────
   openGraph: {
-    title: 'مواقيت الصلاة الدقيقة وخدمات الوقت',
+    title: 'ميقات | دليلك للوقت والمواعيد والمناسبات',
     description: 'احصل على مواقيت الصلاة، فرق التوقيت، وعداد المناسبات في مكان واحد — تحديث يومي بدقة فلكية.',
-    siteName: 'مواقيت الصلاة',
+    siteName: 'ميقات',
     locale: 'ar_SA',
     alternateLocale: ['ar_EG', 'ar_MA', 'ar_AE', 'ar_IQ', 'ar_JO'],
     type: 'website',
@@ -62,8 +63,8 @@ export const metadata: Metadata = {
   // ── Twitter / X ───────────────────────────────────────────────────────────
   twitter: {
     card: 'summary_large_image',
-    title: 'مواقيت الصلاة وخدمات الوقت الدقيقة',
-    description: 'مواقيت الصلاة، فرق التوقيت، واتجاه القبلة — تحديث يومي',
+    title: 'ميقات | دليل المواعيد والمناسبات',
+    description: 'رفيقك الشامل للوقت، المواعيد، والمناسبات الإسلامية والعالمية بدقة فلكية',
   },
   verification: {
     google: 'verification_token', // Placeholder for user to fill later
@@ -86,7 +87,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log(`[DEBUG - SSR] RootLayout started`);
   return (
     // suppressHydrationWarning is required because next-themes writes
     // class="dark|light|contrast" on <html> after hydration.
@@ -137,6 +137,7 @@ export default async function RootLayout({
           <div className="sticky-anchor-spacer" aria-hidden="true" />
           <AdStickyAnchor />
           <AdSenseProvider /> */}
+          <ServiceWorkerRegistration />
         </ThemeProvider>
       </body>
     </html>

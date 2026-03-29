@@ -5,7 +5,7 @@ import { getCountryBySlug } from '@/lib/db/queries/countries';
 export const runtime = 'edge';
 
 // We specify standard OG dimensions
-export const alt = 'وقت - التوقيت المحلي';
+export const alt = 'ميقات - التوقيت المحلي';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -68,7 +68,7 @@ export default async function Image({ params }) {
               justifyContent: 'center'
             }}
           >
-            ساعة عربية
+            ميقات | دليل المواعيد والمناسبات
           </div>
 
           <h1

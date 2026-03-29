@@ -10,6 +10,7 @@ import { HIJRI_MONTHS_AR } from './holidays-engine.js';
 
 const ALADHAN = 'https://api.aladhan.com/v1';
 const _cache = new Map(); // `${method}-${year}-${month}` → Map<day,iso> | null
+const _pendingRequests = new Map(); // For request deduplication
 
 function getSafeNow() { return new Date(); }
 function getSafeNowMs() { return Date.now(); }
@@ -18,47 +19,67 @@ async function fetchMonth(year, month, method = 1) {
   const key = `${method}-${year}-${month}`;
   if (_cache.has(key)) return _cache.get(key);
 
+  // Request deduplication: if there's already a pending request for this key, wait for it
+  if (_pendingRequests.has(key)) {
+    return _pendingRequests.get(key);
+  }
+
   const url = `${ALADHAN}/hToGCalendar/${month}/${year}?calendarMethod=${method}`;
   let retries = 0;
   const maxRetries = 3;
 
-  while (retries < maxRetries) {
-    try {
-      const r = await fetch(url, {
-        next: { revalidate: 86_400, tags: ['hijri', `hijri-${year}-${month}`] },
-      });
+  // Create a promise for this request and add it to pending requests
+  const requestPromise = (async () => {
+    while (retries < maxRetries) {
+      try {
+        const r = await fetch(url, {
+          next: { revalidate: 86_400, tags: ['hijri', `hijri-${year}-${month}`] },
+        });
 
-      if (r.status === 429) {
+        if (r.status === 429) {
+          retries++;
+          console.warn(`[hijri-resolver] 429 (retry ${retries}/3) for ${key}`);
+          await new Promise((res) => setTimeout(res, 1000 * retries + Math.random() * 500));
+          continue;
+        }
+
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        const j = await r.json();
+        if (j.code !== 200 || !Array.isArray(j.data)) throw new Error('bad shape');
+
+        const map = new Map();
+        for (const e of j.data) {
+          const d = parseInt(e.hijri?.day, 10);
+          const p = e.gregorian?.date?.split('-');
+          if (!d || !p) continue;
+          map.set(d, `${p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`);
+        }
+        _cache.set(key, map);
+        return map;
+      } catch (err) {
+        if (retries >= maxRetries - 1) {
+          console.warn('[hijri-resolver] Fatal:', key, err.message);
+          _cache.set(key, null);
+          return null;
+        }
         retries++;
-        console.warn(`[hijri-resolver] 429 (retry ${retries}/3) for ${key}`);
-        await new Promise((res) => setTimeout(res, 1000 * retries + Math.random() * 500));
-        continue;
+        await new Promise((res) => setTimeout(res, 500));
       }
-
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      const j = await r.json();
-      if (j.code !== 200 || !Array.isArray(j.data)) throw new Error('bad shape');
-
-      const map = new Map();
-      for (const e of j.data) {
-        const d = parseInt(e.hijri?.day, 10);
-        const p = e.gregorian?.date?.split('-');
-        if (!d || !p) continue;
-        map.set(d, `${p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`);
-      }
-      _cache.set(key, map);
-      return map;
-    } catch (err) {
-      if (retries >= maxRetries - 1) {
-        console.warn('[hijri-resolver] Fatal:', key, err.message);
-        _cache.set(key, null);
-        return null;
-      }
-      retries++;
-      await new Promise((res) => setTimeout(res, 500));
     }
+    return null;
+  })();
+
+  // Store the promise in pending requests
+  _pendingRequests.set(key, requestPromise);
+
+  try {
+    // Wait for the request to complete
+    const result = await requestPromise;
+    return result;
+  } finally {
+    // Remove from pending requests when done
+    _pendingRequests.delete(key);
   }
-  return null;
 }
 
 let _yr = 0, _yrAt = 0;
