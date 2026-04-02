@@ -49,14 +49,14 @@ export default function HolidaysSections({ nowIso }) {
 
       {/* 3 — 8 major Islamic occasions grid */}
       <Suspense fallback={<SectionSkeleton />}>
-        <SectionIslamicOccasions />
+        <SectionIslamicOccasions nowIso={nowIso} />
       </Suspense>
 
       <SectionDivider />
 
       {/* 4 — Country-specific dates for Ramadan/Eid */}
       <Suspense fallback={<SectionSkeleton />}>
-        <SectionCountryDates />
+        <SectionCountryDates nowIso={nowIso} />
       </Suspense>
 
       <SectionDivider />

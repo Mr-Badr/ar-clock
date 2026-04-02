@@ -1,0 +1,14 @@
+{
+  "slug": "school-start-algeria",
+  "tier": "tier2",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": false,
+    "factChecked": false,
+    "schemaValid": false,
+    "seoValidated": false,
+    "hasHardcodedYear": false
+  },
+  "notes": [],
+  "updatedAt": "2026-03-30T23:57:37.039Z"
+}

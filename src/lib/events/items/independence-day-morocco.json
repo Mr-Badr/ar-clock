@@ -1,0 +1,10 @@
+{
+  "id": "independence-ma",
+  "slug": "independence-day-morocco",
+  "name": "عيد الاستقلال المغربي",
+  "type": "fixed",
+  "category": "national",
+  "_countryCode": "ma",
+  "month": 11,
+  "day": 18
+}

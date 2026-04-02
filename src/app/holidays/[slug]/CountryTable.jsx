@@ -3,16 +3,17 @@
  * Shows dates for different countries with calendar method info
  */
 
-export default function CountryTable({ event, countryDates }) {
+export default function CountryTable({ title, event, countryDates }) {
   if (!countryDates?.length) return null;
+  const displayTitle = title || event.name;
   return (
     <section style={{ marginTop: 'var(--space-8)' }} aria-labelledby="country-h">
       <h2 id="country-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
-        مواعيد {event.name} حسب الدولة
+        مواعيد {displayTitle} حسب الدولة
       </h2>
       <div style={{ overflowX: 'auto', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-default)' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }} dir="rtl">
-          <caption className="sr-only">مقارنة مواعيد {event.name}</caption>
+          <caption className="sr-only">مقارنة مواعيد {displayTitle}</caption>
           <thead>
             <tr style={{ background: 'var(--bg-surface-3)', borderBottom: '1px solid var(--border-default)' }}>
               {['الدولة', 'التاريخ المتوقع', 'مصدر التقويم'].map(h => (

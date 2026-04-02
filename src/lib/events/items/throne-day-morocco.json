@@ -1,0 +1,10 @@
+{
+  "id": "throne-day",
+  "slug": "throne-day-morocco",
+  "name": "عيد العرش المغربي",
+  "type": "fixed",
+  "category": "national",
+  "_countryCode": "ma",
+  "month": 7,
+  "day": 30
+}

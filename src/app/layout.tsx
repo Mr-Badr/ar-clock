@@ -1,36 +1,54 @@
-import './new.css';
+import './globals.css';
 import './waqt-ui.css';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
-import { Noto_Kufi_Arabic } from 'next/font/google';
+import { IBM_Plex_Sans_Arabic, Noto_Sans_Arabic } from 'next/font/google';
 import { Toaster } from 'sonner';
 import { ThemeProvider } from '@/components/theme-provider';
 import Header from '@/components/layout/header';
+import Footer from '@/components/layout/Footer';
 import AdSenseProvider from '@/components/ads/AdSenseProvider';
 import AdStickyAnchor from '@/components/ads/AdStickyAnchor';
+import AnalyticsProvider from '@/components/analytics/AnalyticsProvider';
+import ConsentBanner from '@/components/consent/ConsentBanner';
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
-// Load every weight the design system uses.
-// --font-extrabold (800) is required for clock digits.
-// --font-black (900) is required for fullscreen clock.
-const notoKufi = Noto_Kufi_Arabic({
+import { getEnv } from '@/lib/env.server';
+import {
+  SITE_BRAND,
+  SITE_DESCRIPTION,
+  SITE_TITLE,
+  getMetadataBase,
+} from '@/lib/site-config';
+
+const env = getEnv();
+const adsFeatureEnabled = process.env.NEXT_PUBLIC_ENABLE_ADS === 'true';
+// Body copy uses Noto Sans Arabic across the app.
+// The heavier weights are still needed by the design system for clocks/heroes.
+const notoSansArabic = Noto_Sans_Arabic({
   subsets: ['arabic'],
-  // Weights actually used by the design system:
-  // 400 = body, 600 = semi-bold labels, 700 = headings, 900 = clock digits/hero
-  // Removed 300 (unused) and 800 (superseded by 900 in all clock/hero usage)
-  weight: ['400', '600', '700', '900'],
-  variable: '--font-noto-kufi',
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-noto-sans-arabic',
+  display: 'swap',
+  preload: true,
+});
+
+// Headings use IBM Plex Sans Arabic for a clearer visual hierarchy.
+const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
+  subsets: ['arabic'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-ibm-plex-sans-arabic',
   display: 'swap',
   preload: true,
 });
 
 export const metadata: Metadata = {
   // ── Core ──────────────────────────────────────────────────────────────────
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com'),
+  metadataBase: getMetadataBase(),
   title: {
-    default: 'ميقات | دليلك الشامل للوقت والمواعيد والمناسبات',
-    template: '%s | ميقات',
+    default: SITE_TITLE,
+    template: `%s | ${SITE_BRAND}`,
   },
-  description: 'احصل على مواقيت الصلاة الدقيقة (الفجر، الشروق، الظهر، العصر، المغرب، العشاء) لأي مدينة حول العالم. محسوبة بدقة فلكية وتُحدَّث يومياً.',
+  description: SITE_DESCRIPTION,
   keywords: [
     'مواقيت الصلاة', 'أوقات الصلاة', 'موعد الأذان', 'وقت الصلاة اليوم',
     'الفجر', 'الظهر', 'العصر', 'المغرب', 'العشاء',
@@ -41,8 +59,8 @@ export const metadata: Metadata = {
   category: 'utilities',
   classification: 'Public',
 
-  applicationName: 'ميقات',
-  appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: 'ميقات' },
+  applicationName: SITE_BRAND,
+  appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: SITE_BRAND },
 
   // ── Robots ────────────────────────────────────────────────────────────────
   robots: {
@@ -52,9 +70,9 @@ export const metadata: Metadata = {
 
   // ── Open Graph ────────────────────────────────────────────────────────────
   openGraph: {
-    title: 'ميقات | دليلك للوقت والمواعيد والمناسبات',
+    title: `${SITE_BRAND} | دليلك للوقت والمواعيد والمناسبات`,
     description: 'احصل على مواقيت الصلاة، فرق التوقيت، وعداد المناسبات في مكان واحد — تحديث يومي بدقة فلكية.',
-    siteName: 'ميقات',
+    siteName: SITE_BRAND,
     locale: 'ar_SA',
     alternateLocale: ['ar_EG', 'ar_MA', 'ar_AE', 'ar_IQ', 'ar_JO'],
     type: 'website',
@@ -63,12 +81,14 @@ export const metadata: Metadata = {
   // ── Twitter / X ───────────────────────────────────────────────────────────
   twitter: {
     card: 'summary_large_image',
-    title: 'ميقات | دليل المواعيد والمناسبات',
+    title: `${SITE_BRAND} | دليل المواعيد والمناسبات`,
     description: 'رفيقك الشامل للوقت، المواعيد، والمناسبات الإسلامية والعالمية بدقة فلكية',
   },
-  verification: {
-    google: 'verification_token', // Placeholder for user to fill later
-  },
+  verification: env.GOOGLE_SITE_VERIFICATION
+    ? {
+      google: env.GOOGLE_SITE_VERIFICATION,
+    }
+    : undefined,
 };
 
 export const viewport = {
@@ -95,29 +115,32 @@ export default async function RootLayout({
     // bg/color/border animations on every element when the theme class changes.
     // It MUST be on <html> (not <body>) to cover the full document tree.
     //
-    // The font variable is passed so any component can reference
-    // var(--font-noto-kufi) directly if needed alongside the body rule.
+    // Font variables are passed on <html> so the design system can map
+    // body copy and headings to different families.
     <html
       lang="ar"
       dir="rtl"
       suppressHydrationWarning
-      className={`${notoKufi.variable}`}
+      className={`${notoSansArabic.variable} ${ibmPlexSansArabic.variable}`}
     >
       {/* The CSS @layer base already sets body styles:
             background-color: var(--bg-base)
             color:            var(--text-primary)
-            font-family:      'Noto Kufi Arabic', system-ui, sans-serif
+            font-family:      var(--font-base)
             min-height:       100dvh
             direction:        rtl
           So no colour or layout classes are needed here — they would
           duplicate or fight the design system's base rules.
-          notoKufi.className activates the loaded font family. */}
-      <body className={notoKufi.className}>
+          notoSansArabic.className activates the body font family. */}
+      <body className={notoSansArabic.className}>
         <ThemeProvider>
           <Suspense fallback={<div className="h-16" />}>
             <Header />
           </Suspense>
           {children}
+          <Suspense fallback={<div className="h-24" />}>
+            <Footer />
+          </Suspense>
           {/* Sonner Toaster — dir and position match RTL layout */}
           <Toaster
             dir="rtl"
@@ -133,10 +156,11 @@ export default async function RootLayout({
             }}
           />
 
-          {/*
-          <div className="sticky-anchor-spacer" aria-hidden="true" />
+          {adsFeatureEnabled && <div className="sticky-anchor-spacer" aria-hidden="true" />}
           <AdStickyAnchor />
-          <AdSenseProvider /> */}
+          <ConsentBanner />
+          <AnalyticsProvider />
+          <AdSenseProvider />
           <ServiceWorkerRegistration />
         </ThemeProvider>
       </body>

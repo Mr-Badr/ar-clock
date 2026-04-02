@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "revolution-dz",
+    "slug": "revolution-day-algeria",
+    "name": "يوم الثورة الجزائرية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "dz",
+    "month": 11,
+    "day": 1
+  },
+  "richContent": {
+    "seoTitle": "عيد الثورة الجزائرية {{year}} — 1 نوفمبر | بداية الكفاح",
+    "description": "عيد الثورة الجزائرية {{year}} يصادف 1 نوفمبر. كم باقي؟ ذكرى اندلاع ثورة التحرير.",
+    "keywords": [
+      "عيد الثورة الجزائرية {{year}}",
+      "1 نوفمبر {{year}}",
+      "كم باقي على الثورة",
+      "ثورة التحرير",
+      "بداية الثورة",
+      "إجازة الثورة"
+    ],
+    "faqItems": [
+      {
+        "q": "متى عيد الثورة الجزائرية {{year}}؟",
+        "a": "1 نوفمبر {{year}}."
+      },
+      {
+        "q": "متى بدأت ثورة التحرير؟",
+        "a": "1 نوفمبر 1954."
+      }
+    ],
+    "about": {
+      "heading": "عن عيد الثورة الجزائرية",
+      "paragraphs": [
+        "عيد الثورة الجزائرية يصادف 1 نوفمبر من كل عام، إحياءً لذكرى اندلاع ثورة التحرير عام 1954.",
+        "في {{year}}، يصادف 1 نوفمبر يوم الأحد. تُقام الاحتفالات الرسمية وتكريم المجاهدين."
+      ]
+    },
+    "significance": "1 نوفمبر 1954 — بداية الكفاح المسلح",
+    "quickFacts": [
+      {
+        "label": "موعد الثورة {{year}}",
+        "value": "1 نوفمبر {{year}}"
+      },
+      {
+        "label": "سنة الاندلاع",
+        "value": "1954م"
+      },
+      {
+        "label": "إجازة رسمية",
+        "value": "نعم — يوم واحد"
+      }
+    ],
+    "relatedSlugs": [
+      "independence-day-algeria",
+      "bac-results-algeria"
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى يوم الثورة الجزائرية {{year}}",
+      "كم باقي على يوم الثورة الجزائرية {{year}}",
+      "موعد يوم الثورة الجزائرية {{year}}",
+      "يوم الثورة الجزائرية {{hijriYear}}"
+    ],
+    "country": [
+      "متى يوم الثورة الجزائرية في {{countryName}} {{year}}",
+      "يوم الثورة الجزائرية {{countryName}} {{year}}",
+      "كم باقي على يوم الثورة الجزائرية في {{countryName}}"
+    ]
+  },
+  "tier": "tier2",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/revolution-day-algeria",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar",
+  "queueOrder": 40
+}

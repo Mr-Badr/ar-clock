@@ -2,7 +2,7 @@
 import { Suspense } from 'react';
 import TimeDiffCalculator from '@/components/TimeDifference/TimeDiffCalculatorV2.client';
 import { getCityBySlug } from '@/lib/db/queries/cities';
-import { getCountryBySlug } from '@/lib/db/queries/countries';
+import { getAllCountries, getCountryBySlug } from '@/lib/db/queries/countries';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 import Link from 'next/link';
@@ -19,34 +19,50 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import { SectionDivider } from '@/components/shared/primitives';
+import { getSiteUrl } from '@/lib/site-config';
 
+const COUNTRY_SEO_ALIASES = {
+  'united-states': ['أمريكا', 'الولايات المتحدة'],
+  'united-kingdom': ['بريطانيا', 'المملكة المتحدة'],
+  'united-arab-emirates': ['الإمارات', 'الإمارات العربية المتحدة'],
+};
 
 // ─── City resolution ──────────────────────────────────────────────────────────
+const resolveCountryCityPair = cache(async (segment) => {
+  if (!segment || !segment.includes('-')) return null;
+
+  const normalizedSegment = segment.trim().replace(/^-+|-+$/g, '');
+  const countries = await getAllCountries();
+  const matchingCountrySlugs = countries
+    .map((country) => country.country_slug)
+    .filter(Boolean)
+    .filter(
+      (countrySlug) =>
+        normalizedSegment === countrySlug || normalizedSegment.startsWith(`${countrySlug}-`),
+    )
+    .sort((a, b) => b.length - a.length);
+
+  for (const countrySlug of matchingCountrySlugs) {
+    const citySlug = normalizedSegment.slice(countrySlug.length).replace(/^-/, '');
+    if (!citySlug) continue;
+    return { countrySlug, citySlug };
+  }
+
+  return null;
+});
+
 async function resolveCityFromSegment(segment) {
   console.log(`[DEBUG - SSR] resolveCityFromSegment called with segment:`, segment);
   if (!segment) return null;
-  const parts = segment.split('-');
-  for (let i = 0; i < parts.length - 1; i++) {
-    const countrySlug = parts.slice(0, i + 1).join('-');
-    const citySlug = parts.slice(i + 1).join('-');
-    if (!countrySlug || !citySlug) continue;
-    const country = await getCountryBySlug(countrySlug);
-    if (!country) continue;
-    const city = await getCityBySlug(country.country_code, citySlug);
-    if (city?.timezone && city.timezone !== 'UTC') {
-      return {
-        country_slug: country.country_slug,
-        country_name_ar: country.name_ar,
-        city_slug: city.city_slug,
-        city_name_ar: city.name_ar || city.name_en,
-        timezone: city.timezone,
-      };
-    }
-  }
-  const country = await getCountryBySlug(parts[0]);
+  const resolvedPair = await resolveCountryCityPair(segment);
+  if (!resolvedPair) return null;
+
+  const country = await getCountryBySlug(resolvedPair.countrySlug).catch(() => null);
   if (!country) return null;
-  const city = await getCityBySlug(country.country_code, parts.slice(1).join('-'));
+
+  const city = await getCityBySlug(country.country_code, resolvedPair.citySlug);
   if (!city) return null;
+
   return {
     country_slug: country.country_slug,
     country_name_ar: country.name_ar,
@@ -74,6 +90,42 @@ function fmtTime(h24) {
   return `${h12}:${String(m).padStart(2, '0')} ${period}`;
 }
 
+function unique(values) {
+  return Array.from(new Set(values.filter(Boolean)));
+}
+
+function getCountrySeoNames(countrySlug, countryNameAr) {
+  const aliases = COUNTRY_SEO_ALIASES[countrySlug] || [];
+  return unique([aliases[0], countryNameAr, ...aliases]);
+}
+
+function buildComparisonKeywords(fromCity, toCity) {
+  const fromCountryNames = getCountrySeoNames(fromCity.country_slug, fromCity.country_name_ar);
+  const toCountryNames = getCountrySeoNames(toCity.country_slug, toCity.country_name_ar);
+  const keywords = [
+    `فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
+    `كم فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
+    `الوقت الآن في ${fromCity.city_name_ar}`,
+    `الوقت الآن في ${toCity.city_name_ar}`,
+    `الساعة الآن في ${fromCity.city_name_ar}`,
+    `الساعة الآن في ${toCity.city_name_ar}`,
+    `تحويل الوقت من ${fromCity.city_name_ar} إلى ${toCity.city_name_ar}`,
+    'حاسبة فرق التوقيت',
+    'تحويل الوقت بين المدن',
+    'فرق التوقيت الآن',
+  ];
+
+  for (const fromCountryName of fromCountryNames) {
+    for (const toCountryName of toCountryNames) {
+      keywords.push(`فرق التوقيت بين ${fromCountryName} و${toCountryName}`);
+      keywords.push(`كم فرق التوقيت بين ${fromCountryName} و${toCountryName}`);
+      keywords.push(`الوقت الآن بين ${fromCountryName} و${toCountryName}`);
+    }
+  }
+
+  return unique(keywords);
+}
+
 
 // ─── Metadata ─────────────────────────────────────────────────────────────────
 export async function generateMetadata({ params }) {
@@ -83,28 +135,17 @@ export async function generateMetadata({ params }) {
   const [fromCity, toCity] = await Promise.all([resolveCity(from), resolveCity(to)]);
   if (!fromCity || !toCity) return { title: 'فرق التوقيت | ميقات' };
 
-  const title = `فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar} الان`;
+  const [fromCountryPrimary] = getCountrySeoNames(fromCity.country_slug, fromCity.country_name_ar);
+  const [toCountryPrimary] = getCountrySeoNames(toCity.country_slug, toCity.country_name_ar);
+  const title = `فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary} | ${fromCity.city_name_ar} و${toCity.city_name_ar} - ميقات`;
   const description =
-    `كم الفرق الزمني بين ${fromCity.city_name_ar} و${toCity.city_name_ar}؟ تحويل فوري للوقت بدقة، ` +
-    `معلومات التوقيت الصيفي، وأفضل وقت للاجتماعات.محدّث لحظيًا.`;
-  const keywords = [
-    `فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
-    `كم الفرق بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
-    `الساعة الان في ${fromCity.city_name_ar}`,
-    `الساعة الان في ${toCity.city_name_ar}`,
-    `توقيت ${fromCity.city_name_ar} الان`,
-    `توقيت ${toCity.city_name_ar} الان`,
-    `تحويل الوقت من ${fromCity.city_name_ar} إلى ${toCity.city_name_ar}`,
-    `فرق التوقيت بين ${fromCity.country_name_ar} و${toCity.country_name_ar}`,
-    `هل ${fromCity.city_name_ar} تطبق التوقيت الصيفي`,
-    `هل ${toCity.city_name_ar} تطبق التوقيت الصيفي`,
-    'حاسبة فرق التوقيت', 'تحويل الوقت بين المدن', 'فرق التوقيت',
-  ].join(', ');
+    `اعرف فرق التوقيت الآن بين ${fromCountryPrimary} (${fromCity.city_name_ar}) و${toCountryPrimary} (${toCity.city_name_ar}) مع تحويل الوقت المباشر والوقت الحالي والتوقيت الصيفي.`;
+  const keywords = buildComparisonKeywords(fromCity, toCity).join(', ');
 
   return {
     title, description, keywords,
-    alternates: { canonical: `/time-difference/${from}/${to}` },
-    openGraph: { title, description, locale: 'ar_SA', type: 'website' },
+    alternates: { canonical: `${BASE}/time-difference/${from}/${to}` },
+    openGraph: { title, description, url: `${BASE}/time-difference/${from}/${to}`, locale: 'ar_SA', type: 'website' },
     twitter: { card: 'summary', title, description },
   };
 }
@@ -118,6 +159,10 @@ async function ComparisonPageContent({ paramsPromise }) {
 
   const [fromCity, toCity] = await Promise.all([resolveCity(from), resolveCity(to)]);
   if (!fromCity || !toCity) notFound();
+  const [fromCountryPrimary] = getCountrySeoNames(fromCity.country_slug, fromCity.country_name_ar);
+  const [toCountryPrimary] = getCountrySeoNames(toCity.country_slug, toCity.country_name_ar);
+  const comparisonQuery = `فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary}`;
+  const countryContext = `${fromCountryPrimary} (${fromCity.city_name_ar}) و${toCountryPrimary} (${toCity.city_name_ar})`;
 
   // ─── Shared calculations ─────────────────────────────────────────────────
   // Fixed reference prevents Next.js 15 SSR bailout from `new Date()`
@@ -144,6 +189,9 @@ async function ComparisonPageContent({ paramsPromise }) {
   const ahead = diffMinutes > 0 ? toCity.city_name_ar : fromCity.city_name_ar;
   const behind = diffMinutes > 0 ? fromCity.city_name_ar : toCity.city_name_ar;
   const bothFixed = !fromHasDST && !toHasDST;
+  const directAnswer = diffMinutes === 0
+    ? `${comparisonQuery} يساوي صفر ساعة حاليًا، لأن ${fromCountryPrimary} و${toCountryPrimary} في هذا المثال يعتمدان التوقيت نفسه بين ${fromCity.city_name_ar} و${toCity.city_name_ar}.`
+    : `${comparisonQuery} هو ${diffLabel} حاليًا. هذه الصفحة تعرض الجواب مباشرة بين ${fromCity.city_name_ar} في ${fromCountryPrimary} و${toCity.city_name_ar} في ${toCountryPrimary} مع تحويل الوقت الفوري والتوقيت الصيفي.`;
 
   // ─── Pre-compute conversion rows (serialisable → passed to Client) ─────
   const conversionGroups = [
@@ -172,6 +220,12 @@ async function ComparisonPageContent({ paramsPromise }) {
   // ─── FAQ data ─────────────────────────────────────────────────────────────
   const faqs = [
     {
+      q: `كم فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary}؟`,
+      a: diffMinutes === 0
+        ? `فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary} في هذه الصفحة هو صفر ساعة، لأن المقارنة هنا بين ${fromCity.city_name_ar} و${toCity.city_name_ar} على التوقيت نفسه. وقد يختلف الجواب إذا قارنت مدنًا أخرى داخل الدولة متعددة المناطق الزمنية.`
+        : `فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary} في هذه الصفحة هو ${diffLabel}. المقارنة مبنية على ${fromCity.city_name_ar} و${toCity.city_name_ar} تحديدًا، لذلك قد يختلف الفرق إذا كانت الدولة تحتوي أكثر من منطقة زمنية مثل أمريكا.`
+    },
+    {
       q: `كم ساعة الفرق بين ${fromCity.city_name_ar} و${toCity.city_name_ar}؟`,
       a: diffMinutes === 0
         ? `لا يوجد فرق — كلتاهما في نفس النطاق (${fromOffStr}).`
@@ -194,6 +248,10 @@ async function ComparisonPageContent({ paramsPromise }) {
       a: bothFixed
         ? `لا — الفرق ثابت عند ${diffLabel} طوال السنة، إذ لا تطبق أيٌّ منهما التوقيت الصيفي.`
         : `نعم، قد يتغير بمقدار ساعة في فترات التوقيت الصيفي. الفرق الحالي ${diffLabel}.`,
+    },
+    {
+      q: `هل هذا هو نفس فرق التوقيت بين كل مدن ${toCountryPrimary} و${fromCountryPrimary}؟`,
+      a: `ليس دائمًا. هذه الصفحة تقارن ${fromCity.city_name_ar} و${toCity.city_name_ar} فقط، وقد يختلف فرق التوقيت داخل الدولة نفسها إذا كانت تضم أكثر من منطقة زمنية.`
     },
     {
       q: `ما أفضل وقت للاجتماعات بين ${fromCity.city_name_ar} و${toCity.city_name_ar}؟`,
@@ -240,9 +298,23 @@ async function ComparisonPageContent({ paramsPromise }) {
   const breadcrumbSchema = {
     '@context': 'https://schema.org', '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: 'https://miqatime.com' },
-      { '@type': 'ListItem', position: 2, name: 'فرق التوقيت', item: 'https://miqatime.com/time-difference' },
-      { '@type': 'ListItem', position: 3, name: `${fromCity.city_name_ar} – ${toCity.city_name_ar}`, item: `https://miqatime.com/time-difference/${from}/${to}` },
+      { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${BASE}` },
+      { '@type': 'ListItem', position: 2, name: 'فرق التوقيت', item: `${BASE}/time-difference` },
+      { '@type': 'ListItem', position: 3, name: `${fromCity.city_name_ar} – ${toCity.city_name_ar}`, item: `${BASE}/time-difference/${from}/${to}` },
+    ],
+  };
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `${comparisonQuery} | ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
+    url: `${BASE}/time-difference/${from}/${to}`,
+    description: directAnswer,
+    inLanguage: 'ar',
+    about: [
+      { '@type': 'Thing', name: fromCountryPrimary },
+      { '@type': 'Thing', name: toCountryPrimary },
+      { '@type': 'Thing', name: fromCity.city_name_ar },
+      { '@type': 'Thing', name: toCity.city_name_ar },
     ],
   };
 
@@ -252,6 +324,7 @@ async function ComparisonPageContent({ paramsPromise }) {
     <div className="min-h-screen bg-base text-primary">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
       {/* <AdLayoutWrapper> */}
       <main className="content-col pt-24 pb-20">
 
@@ -273,18 +346,21 @@ async function ComparisonPageContent({ paramsPromise }) {
           </div>
           <h1 className="text-3xl font-black leading-tight mb-2">
             فرق التوقيت بين{' '}
-            <span className="text-accent">{fromCity.city_name_ar}</span>
+            <span className="text-accent">{fromCountryPrimary}</span>
             {' '}و{' '}
-            <span className="text-accent">{toCity.city_name_ar}</span>
+            <span className="text-accent">{toCountryPrimary}</span>
           </h1>
           <p className="text-muted text-sm leading-relaxed">
             {diffMinutes === 0
-              ? `${fromCity.city_name_ar} و${toCity.city_name_ar} في نفس النطاق الزمني (${fromOffStr})`
-              : `${ahead} تسبق ${behind} بـ${diffLabel} — محدّث لحظيًا`}
+              ? `${countryContext} في نفس النطاق الزمني (${fromOffStr})`
+              : `${ahead} تسبق ${behind} بـ${diffLabel} — مقارنة ${countryContext} محدّثة لحظيًا`}
+          </p>
+          <p className="text-sm text-secondary leading-loose mt-4">
+            {directAnswer}
           </p>
         </header>
 
-        {/* <AdTopBanner slotId="top-time-diff" /> */}
+        <AdTopBanner slotId="top-time-diff" />
 
         {/* ── SSR snapshot — crawlable current times ─────────────────── */}
         <section className="td-snapshot mb-8" aria-label="الوقت الحالي في المدينتين">
@@ -305,7 +381,7 @@ async function ComparisonPageContent({ paramsPromise }) {
             ════════════════════════════════════════════════════════ */}
         <section className="mb-10" aria-labelledby="diff-heading">
           <h2 id="diff-heading" className="active-indicator text-xl font-bold mb-4">
-            فرق التوقيت بين {fromCity.city_name_ar} و{toCity.city_name_ar} اليوم
+            فرق التوقيت بين {fromCountryPrimary} و{toCountryPrimary} اليوم
           </h2>
 
           <div className="card--flat border-default card mb-4 p-0 overflow-hidden">
@@ -326,12 +402,12 @@ async function ComparisonPageContent({ paramsPromise }) {
           <p className="text-sm text-secondary leading-loose">
             {diffMinutes === 0
               ? <>
-                <strong className="text-primary">{fromCity.city_name_ar}</strong> و
-                <strong className="text-primary">{toCity.city_name_ar}</strong> في نفس
+                <strong className="text-primary">{countryContext}</strong> في نفس
                 النطاق الزمني <strong dir="ltr" className="tabular-nums">{fromOffStr}</strong>.
-                الساعة متطابقة في كلا البلدين.
+                الساعة متطابقة في هاتين المدينتين، وهو ما يجيب بسرعة عن بحث مثل "{comparisonQuery}" عندما تكون المقارنة بين {fromCity.city_name_ar} و{toCity.city_name_ar}.
               </>
               : <>
+                إذا كنت تبحث عن <strong className="text-primary">{comparisonQuery}</strong> فالإجابة هنا مبنية على{' '}
                 <strong className="text-primary">{fromCity.city_name_ar}</strong> في{' '}
                 <strong dir="ltr" className="tabular-nums">{fromOffStr}</strong> و
                 <strong className="text-primary">{toCity.city_name_ar}</strong> في{' '}
@@ -402,7 +478,7 @@ async function ComparisonPageContent({ paramsPromise }) {
          */}
         <section className="mb-10" aria-labelledby="dst-heading">
           <h2 id="dst-heading" className="active-indicator text-xl font-bold mb-4">
-            هل يتغير الفارق بين {fromCity.city_name_ar} و{toCity.city_name_ar} خلال السنة؟
+            هل يتغير الفارق بين {fromCountryPrimary} و{toCountryPrimary} خلال السنة؟
           </h2>
 
           <div className="table-wrapper mb-4">
@@ -518,7 +594,7 @@ async function ComparisonPageContent({ paramsPromise }) {
           <SectionDivider />
         </div>
 
-        {/* <AdInArticle slotId="mid-time-diff-1" /> */}
+        <AdInArticle slotId="mid-time-diff-1" />
 
         {/* ════════════════════════════════════════════════════════
             SEO SECTION 4 — FAQ accordion
@@ -653,3 +729,4 @@ export default function ComparisonPage({ params }) {
     </Suspense>
   );
 }
+const BASE = getSiteUrl();

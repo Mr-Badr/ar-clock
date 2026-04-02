@@ -1,0 +1,98 @@
+[
+  {
+    "code": "sa",
+    "aliasSlugToken": "saudi",
+    "nameAr": "السعودية",
+    "officialNameAr": "المملكة العربية السعودية",
+    "authority": "تقويم أم القرى",
+    "dateVarianceLabel": "أم القرى / رؤية هلال",
+    "localTerms": ["المملكة", "السعودية"],
+    "flag": "🇸🇦",
+    "timezone": "Asia/Riyadh",
+    "order": 1
+  },
+  {
+    "code": "eg",
+    "aliasSlugToken": "egypt",
+    "nameAr": "مصر",
+    "officialNameAr": "جمهورية مصر العربية",
+    "authority": "دار الإفتاء المصرية",
+    "dateVarianceLabel": "رؤية هلال محلية",
+    "localTerms": ["مصر"],
+    "flag": "🇪🇬",
+    "timezone": "Africa/Cairo",
+    "order": 2
+  },
+  {
+    "code": "ma",
+    "aliasSlugToken": "morocco",
+    "nameAr": "المغرب",
+    "officialNameAr": "المملكة المغربية",
+    "authority": "وزارة الأوقاف والشؤون الإسلامية",
+    "dateVarianceLabel": "رؤية هلال محلية",
+    "localTerms": ["المغرب"],
+    "flag": "🇲🇦",
+    "timezone": "Africa/Casablanca",
+    "order": 3
+  },
+  {
+    "code": "dz",
+    "aliasSlugToken": "algeria",
+    "nameAr": "الجزائر",
+    "officialNameAr": "الجمهورية الجزائرية الديمقراطية الشعبية",
+    "authority": "وزارة الشؤون الدينية والأوقاف",
+    "dateVarianceLabel": "رؤية هلال محلية",
+    "localTerms": ["الجزائر"],
+    "flag": "🇩🇿",
+    "timezone": "Africa/Algiers",
+    "order": 4
+  },
+  {
+    "code": "ae",
+    "aliasSlugToken": "uae",
+    "nameAr": "الإمارات",
+    "officialNameAr": "الإمارات العربية المتحدة",
+    "authority": "الهيئة العامة للشؤون الإسلامية والأوقاف",
+    "dateVarianceLabel": "أم القرى / لجان تحري",
+    "localTerms": ["الإمارات"],
+    "flag": "🇦🇪",
+    "timezone": "Asia/Dubai",
+    "order": 5
+  },
+  {
+    "code": "tn",
+    "aliasSlugToken": "tunisia",
+    "nameAr": "تونس",
+    "officialNameAr": "الجمهورية التونسية",
+    "authority": "دار الإفتاء التونسية",
+    "dateVarianceLabel": "رؤية هلال محلية",
+    "localTerms": ["تونس"],
+    "flag": "🇹🇳",
+    "timezone": "Africa/Tunis",
+    "order": 6
+  },
+  {
+    "code": "kw",
+    "aliasSlugToken": "kuwait",
+    "nameAr": "الكويت",
+    "officialNameAr": "دولة الكويت",
+    "authority": "وزارة الأوقاف والشؤون الإسلامية",
+    "dateVarianceLabel": "أم القرى / رؤية هلال",
+    "localTerms": ["الكويت"],
+    "flag": "🇰🇼",
+    "timezone": "Asia/Kuwait",
+    "order": 7
+  },
+  {
+    "code": "qa",
+    "aliasSlugToken": "qatar",
+    "nameAr": "قطر",
+    "officialNameAr": "دولة قطر",
+    "authority": "وزارة الأوقاف والشؤون الإسلامية",
+    "dateVarianceLabel": "أم القرى / رؤية هلال",
+    "localTerms": ["قطر"],
+    "flag": "🇶🇦",
+    "timezone": "Asia/Qatar",
+    "order": 8
+  }
+]

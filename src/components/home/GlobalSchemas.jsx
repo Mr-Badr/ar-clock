@@ -6,23 +6,25 @@
  *  2. Organization schema — sends E-E-A-T authority signals (name, areaServed,
  *     knowsAbout) that help Google understand the site's topic relevance.
  *
- * Placed once in HomeSections/index.jsx (rendered server-side, no JS bundle).
- * TODO: Replace 'https://waqt.app' with the real production domain.
  */
+import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
+
+const SITE_URL = getSiteUrl();
+
 export default function GlobalSchemas() {
   const websiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'وقت عربي',
+    name: SITE_BRAND,
     alternateName: ['Arabic Time', 'مواقيت الصلاة', 'أوقات الصلاة'],
     description: 'بوابة شاملة لمواقيت الصلاة، فرق التوقيت، والمناسبات الدينية والوطنية',
     inLanguage: 'ar',
-    url: 'https://waqt.app',
+    url: SITE_URL,
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: 'https://waqt.app/time-now?q={search_term_string}',
+        urlTemplate: `${SITE_URL}/time-now?q={search_term_string}`,
       },
       'query-input': 'required name=search_term_string',
     },
@@ -31,8 +33,8 @@ export default function GlobalSchemas() {
   const orgSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'وقت عربي',
-    url: 'https://waqt.app',
+    name: SITE_BRAND,
+    url: SITE_URL,
     description:
       'موقع متخصص في عرض مواقيت الصلاة الدقيقة وفروق التوقيت والمناسبات الدينية',
     areaServed: [

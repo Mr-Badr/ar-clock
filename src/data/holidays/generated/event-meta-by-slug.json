@@ -1,0 +1,460 @@
+{
+  "ramadan": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "all",
+    "canonicalPath": "/holidays/ramadan",
+    "aliases": [
+      "ramadan-in-saudi",
+      "ramadan-in-egypt",
+      "ramadan-in-morocco",
+      "ramadan-in-algeria",
+      "ramadan-in-uae",
+      "ramadan-in-tunisia",
+      "ramadan-in-kuwait",
+      "ramadan-in-qatar"
+    ]
+  },
+  "eid-al-fitr": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "all",
+    "canonicalPath": "/holidays/eid-al-fitr",
+    "aliases": [
+      "eid-al-fitr-in-saudi",
+      "eid-al-fitr-in-egypt",
+      "eid-al-fitr-in-morocco",
+      "eid-al-fitr-in-algeria",
+      "eid-al-fitr-in-uae",
+      "eid-al-fitr-in-tunisia",
+      "eid-al-fitr-in-kuwait",
+      "eid-al-fitr-in-qatar"
+    ]
+  },
+  "eid-al-adha": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "all",
+    "canonicalPath": "/holidays/eid-al-adha",
+    "aliases": [
+      "eid-al-adha-in-saudi",
+      "eid-al-adha-in-egypt",
+      "eid-al-adha-in-morocco",
+      "eid-al-adha-in-algeria",
+      "eid-al-adha-in-uae",
+      "eid-al-adha-in-tunisia",
+      "eid-al-adha-in-kuwait",
+      "eid-al-adha-in-qatar"
+    ]
+  },
+  "day-of-arafa": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/day-of-arafa",
+    "aliases": [
+      "day-of-arafa-in-saudi",
+      "day-of-arafa-in-egypt",
+      "day-of-arafa-in-morocco",
+      "day-of-arafa-in-algeria",
+      "day-of-arafa-in-uae",
+      "day-of-arafa-in-tunisia",
+      "day-of-arafa-in-kuwait",
+      "day-of-arafa-in-qatar"
+    ]
+  },
+  "hajj-season": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/hajj-season",
+    "aliases": [
+      "hajj-season-in-saudi",
+      "hajj-season-in-egypt",
+      "hajj-season-in-morocco",
+      "hajj-season-in-algeria",
+      "hajj-season-in-uae",
+      "hajj-season-in-tunisia",
+      "hajj-season-in-kuwait",
+      "hajj-season-in-qatar"
+    ]
+  },
+  "islamic-new-year": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/islamic-new-year",
+    "aliases": [
+      "islamic-new-year-in-saudi",
+      "islamic-new-year-in-egypt",
+      "islamic-new-year-in-morocco",
+      "islamic-new-year-in-algeria",
+      "islamic-new-year-in-uae",
+      "islamic-new-year-in-tunisia",
+      "islamic-new-year-in-kuwait",
+      "islamic-new-year-in-qatar"
+    ]
+  },
+  "ashura": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/ashura",
+    "aliases": [
+      "ashura-in-saudi",
+      "ashura-in-egypt",
+      "ashura-in-morocco",
+      "ashura-in-algeria",
+      "ashura-in-uae",
+      "ashura-in-tunisia",
+      "ashura-in-kuwait",
+      "ashura-in-qatar"
+    ]
+  },
+  "mawlid": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/mawlid",
+    "aliases": [
+      "mawlid-in-saudi",
+      "mawlid-in-egypt",
+      "mawlid-in-morocco",
+      "mawlid-in-algeria",
+      "mawlid-in-uae",
+      "mawlid-in-tunisia",
+      "mawlid-in-kuwait",
+      "mawlid-in-qatar"
+    ]
+  },
+  "laylat-al-qadr": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/laylat-al-qadr",
+    "aliases": [
+      "laylat-al-qadr-in-saudi",
+      "laylat-al-qadr-in-egypt",
+      "laylat-al-qadr-in-morocco",
+      "laylat-al-qadr-in-algeria",
+      "laylat-al-qadr-in-uae",
+      "laylat-al-qadr-in-tunisia",
+      "laylat-al-qadr-in-kuwait",
+      "laylat-al-qadr-in-qatar"
+    ]
+  },
+  "isra-miraj": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/isra-miraj",
+    "aliases": [
+      "isra-miraj-in-saudi",
+      "isra-miraj-in-egypt",
+      "isra-miraj-in-morocco",
+      "isra-miraj-in-algeria",
+      "isra-miraj-in-uae",
+      "isra-miraj-in-tunisia",
+      "isra-miraj-in-kuwait",
+      "isra-miraj-in-qatar"
+    ]
+  },
+  "nisf-shaban": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/nisf-shaban",
+    "aliases": [
+      "nisf-shaban-in-saudi",
+      "nisf-shaban-in-egypt",
+      "nisf-shaban-in-morocco",
+      "nisf-shaban-in-algeria",
+      "nisf-shaban-in-uae",
+      "nisf-shaban-in-tunisia",
+      "nisf-shaban-in-kuwait",
+      "nisf-shaban-in-qatar"
+    ]
+  },
+  "first-dhul-hijjah": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/first-dhul-hijjah",
+    "aliases": [
+      "first-dhul-hijjah-in-saudi",
+      "first-dhul-hijjah-in-egypt",
+      "first-dhul-hijjah-in-morocco",
+      "first-dhul-hijjah-in-algeria",
+      "first-dhul-hijjah-in-uae",
+      "first-dhul-hijjah-in-tunisia",
+      "first-dhul-hijjah-in-kuwait",
+      "first-dhul-hijjah-in-qatar"
+    ]
+  },
+  "new-year": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/new-year",
+    "aliases": []
+  },
+  "summer-season": {
+    "tier": "tier3",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/summer-season",
+    "aliases": []
+  },
+  "winter-season": {
+    "tier": "tier3",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/winter-season",
+    "aliases": []
+  },
+  "spring-season": {
+    "tier": "tier3",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/spring-season",
+    "aliases": []
+  },
+  "autumn-season": {
+    "tier": "tier3",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/autumn-season",
+    "aliases": []
+  },
+  "spring-vacation": {
+    "tier": "tier3",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/spring-vacation",
+    "aliases": []
+  },
+  "summer-vacation": {
+    "tier": "tier3",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/summer-vacation",
+    "aliases": []
+  },
+  "back-to-school": {
+    "tier": "tier3",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/back-to-school",
+    "aliases": []
+  },
+  "saudi-national-day": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/saudi-national-day",
+    "aliases": []
+  },
+  "saudi-founding-day": {
+    "tier": "tier3",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/saudi-founding-day",
+    "aliases": []
+  },
+  "school-start-saudi": {
+    "tier": "tier3",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/school-start-saudi",
+    "aliases": []
+  },
+  "salary-day-saudi": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/salary-day-saudi",
+    "aliases": []
+  },
+  "citizen-account-saudi": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/citizen-account-saudi",
+    "aliases": []
+  },
+  "social-security-saudi": {
+    "tier": "tier3",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/social-security-saudi",
+    "aliases": []
+  },
+  "thanaweya-results": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/thanaweya-results",
+    "aliases": []
+  },
+  "thanaweya-exams": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/thanaweya-exams",
+    "aliases": []
+  },
+  "school-start-egypt": {
+    "tier": "tier2",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/school-start-egypt",
+    "aliases": []
+  },
+  "salary-day-egypt": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/salary-day-egypt",
+    "aliases": []
+  },
+  "sham-nessim": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/sham-nessim",
+    "aliases": []
+  },
+  "bac-results-algeria": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/bac-results-algeria",
+    "aliases": []
+  },
+  "bac-exams-algeria": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/bac-exams-algeria",
+    "aliases": []
+  },
+  "school-start-algeria": {
+    "tier": "tier2",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/school-start-algeria",
+    "aliases": []
+  },
+  "independence-day-algeria": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/independence-day-algeria",
+    "aliases": []
+  },
+  "revolution-day-algeria": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/revolution-day-algeria",
+    "aliases": []
+  },
+  "bac-results-morocco": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/bac-results-morocco",
+    "aliases": []
+  },
+  "national-exams-morocco": {
+    "tier": "tier3",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/national-exams-morocco",
+    "aliases": []
+  },
+  "school-start-morocco": {
+    "tier": "tier2",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/school-start-morocco",
+    "aliases": []
+  },
+  "throne-day-morocco": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/throne-day-morocco",
+    "aliases": []
+  },
+  "independence-day-morocco": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/independence-day-morocco",
+    "aliases": []
+  },
+  "uae-national-day": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/uae-national-day",
+    "aliases": []
+  },
+  "school-start-uae": {
+    "tier": "tier3",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/school-start-uae",
+    "aliases": []
+  },
+  "bac-results-tunisia": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/bac-results-tunisia",
+    "aliases": []
+  },
+  "school-start-tunisia": {
+    "tier": "tier3",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/school-start-tunisia",
+    "aliases": []
+  },
+  "independence-day-tunisia": {
+    "tier": "tier3",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/independence-day-tunisia",
+    "aliases": []
+  },
+  "kuwait-national-day": {
+    "tier": "tier2",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/kuwait-national-day",
+    "aliases": []
+  },
+  "school-start-kuwait": {
+    "tier": "tier3",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/school-start-kuwait",
+    "aliases": []
+  },
+  "qatar-national-day": {
+    "tier": "tier3",
+    "publishStatus": "drafted",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/qatar-national-day",
+    "aliases": []
+  },
+  "school-start-qatar": {
+    "tier": "tier3",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/school-start-qatar",
+    "aliases": []
+  }
+}

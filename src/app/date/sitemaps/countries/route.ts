@@ -3,8 +3,9 @@
  * All country-specific Date pages.
  */
 import { getAllCountrySlugs } from '@/lib/db/queries/countries';
+import { getSiteUrl } from '@/lib/site-config';
 
-const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+const BASE = getSiteUrl();
 
 export async function GET() {
   const slugs = await getAllCountrySlugs();

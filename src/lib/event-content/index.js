@@ -14,17 +14,11 @@
  * ─────────────────────────────────────────────────────────────────────────
  */
 
-import { ISLAMIC_CONTENT }        from './islamic.js'
-import { SEASONAL_CONTENT }       from './seasonal.js'
-import { SA_CONTENT }             from './countries/sa.js'
-import { EG_CONTENT }             from './countries/eg.js'
-import { DZ_CONTENT }             from './countries/dz.js'
-import { MA_CONTENT }             from './countries/ma.js'
-import { AE_CONTENT }             from './countries/ae.js'
-import { TN_CONTENT }             from './countries/tn.js'
-import { KW_CONTENT }             from './countries/kw.js'
-import { QA_CONTENT }             from './countries/qa.js'
-import { SHARED_CONTENT }         from './countries/shared.js'
+import { parseRichContent }       from './schema.js'
+import { GENERATED_CONTENT_BY_SLUG } from './generated-index.js'
+import { featureFlags }           from '@/lib/feature-flags'
+import { resolveEventSlug }       from '@/lib/events'
+import LEGACY_RICH_CONTENT from '@/data/holidays/legacy-content/content-map.json';
 
 /** Fields owned by holidays-engine.js — never override */
 const PROTECTED_FIELDS = new Set([
@@ -32,18 +26,73 @@ const PROTECTED_FIELDS = new Set([
   'hijriMonth', 'hijriDay', 'month', 'day', 'date', '__enriched',
 ])
 
-const ALL_RICH_CONTENT = {
-  ...ISLAMIC_CONTENT,
-  ...SEASONAL_CONTENT,
-  ...SA_CONTENT,
-  ...EG_CONTENT,
-  ...DZ_CONTENT,
-  ...MA_CONTENT,
-  ...AE_CONTENT,
-  ...TN_CONTENT,
-  ...KW_CONTENT,
-  ...QA_CONTENT,
-  ...SHARED_CONTENT,
+const hasGeneratedContent =
+  GENERATED_CONTENT_BY_SLUG &&
+  typeof GENERATED_CONTENT_BY_SLUG === 'object' &&
+  Object.keys(GENERATED_CONTENT_BY_SLUG).length > 0;
+
+const ACTIVE_RICH_CONTENT =
+  featureFlags.eventsShardIndex && hasGeneratedContent
+    ? GENERATED_CONTENT_BY_SLUG
+    : LEGACY_RICH_CONTENT;
+
+const OVERLAY_FIELDS = new Set([
+  'seoTitle',
+  'description',
+  'keywords',
+  'quickFacts',
+  'countryDates',
+  'sources',
+  'seoMeta',
+]);
+
+function mergeKeywords(baseKeywords, overlayKeywords) {
+  const merged = [
+    ...(Array.isArray(baseKeywords) ? baseKeywords : []),
+    ...(Array.isArray(overlayKeywords) ? overlayKeywords : []),
+  ].map((value) => String(value || '').trim()).filter(Boolean);
+  return Array.from(new Set(merged));
+}
+
+function applyCountryOverlay(content, countryCode) {
+  if (!countryCode) return content;
+  const variant = content?.countrySeoVariants?.[countryCode];
+  const overlay = content?.countryOverrides?.[countryCode];
+  if (!variant && (!overlay || typeof overlay !== 'object')) return content;
+
+  const merged = { ...content };
+
+  if (variant && typeof variant === 'object') {
+    if (variant.seoTitle) merged.seoTitle = variant.seoTitle;
+    if (variant.description) merged.description = variant.description;
+    if (variant.keywords) merged.keywords = mergeKeywords(merged.keywords, variant.keywords);
+    if (variant.seoMeta && typeof variant.seoMeta === 'object') {
+      merged.seoMeta = {
+        ...(merged.seoMeta || {}),
+        ...variant.seoMeta,
+      };
+    }
+    if (variant.quickFacts && !overlay?.quickFacts) {
+      merged.quickFacts = variant.quickFacts;
+    }
+  }
+
+  if (overlay && typeof overlay === 'object') {
+    for (const key of Object.keys(overlay)) {
+      if (!OVERLAY_FIELDS.has(key)) continue;
+      if (key === 'keywords') {
+        merged.keywords = mergeKeywords(merged.keywords, overlay[key]);
+      } else if (key === 'seoMeta' && overlay[key] && typeof overlay[key] === 'object') {
+        merged.seoMeta = {
+          ...(merged.seoMeta || {}),
+          ...overlay[key],
+        };
+      } else {
+        merged[key] = overlay[key];
+      }
+    }
+  }
+  return merged;
 }
 
 /**
@@ -52,13 +101,22 @@ const ALL_RICH_CONTENT = {
  * Always safe to spread over enrichEvent() output.
  */
 export function getRichContent(slug) {
-  const raw = ALL_RICH_CONTENT[slug]
+  const resolved = resolveEventSlug(slug);
+  const canonicalSlug = resolved?.canonicalSlug || slug;
+  const raw = ACTIVE_RICH_CONTENT[canonicalSlug]
   if (!raw) return {}
 
-  const safe = { ...raw }
+  const parsed = featureFlags.holidaysNewContentResolver
+    ? parseRichContent(slug, raw)
+    : { content: raw, flags: { hasHardcodedYear: false, isValid: true } };
+
+  const withOverlay = applyCountryOverlay(parsed.content, resolved?.countryCode || null);
+  const safe = { ...withOverlay, __contentFlags: parsed.flags }
   for (const field of PROTECTED_FIELDS) {
     delete safe[field]
   }
+  delete safe.countryOverrides;
+  delete safe.countrySeoVariants;
   return safe
 }
 

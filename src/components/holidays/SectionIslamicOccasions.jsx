@@ -1,7 +1,7 @@
 /**
  * SectionIslamicOccasions — 8-card major Islamic occasions grid
  *
- * DATA: now sourced from ISLAMIC_OCCASIONS which connects to holidays-engine.js
+ * DATA: now sourced from canonical event packages + rich content overlays
  *
  * CSS BUG FIX:
  *   Old: `${occ.color}14`  → e.g. `var(--warning)14`  — INVALID CSS
@@ -13,11 +13,9 @@
  *   The `borderOf()` helper maps 'var(--warning)' → 'var(--warning-border)'
  */
 
-import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
 import { SectionWrapper } from '@/components/shared/primitives'
 import { SectionBadge } from '@/components/shared/primitives'
-import { ISLAMIC_OCCASIONS } from './data/islamicOccasions'
+import { buildIslamicOccasions } from './data/islamicOccasions'
 
 const H2_ID = 'h2-islamic-occasions'
 
@@ -33,7 +31,8 @@ const softOf = (cssVar) => cssVar.replace(')', '-soft)')
  */
 const borderOf = (cssVar) => cssVar.replace(')', '-border)')
 
-export default function SectionIslamicOccasions() {
+export default function SectionIslamicOccasions({ nowIso }) {
+  const occasions = buildIslamicOccasions(nowIso);
   return (
     <SectionWrapper id="section-islamic-occasions" headingId={H2_ID} subtle>
 
@@ -74,7 +73,7 @@ export default function SectionIslamicOccasions() {
         role="list"
         aria-label="المناسبات الإسلامية الكبرى"
       >
-        {ISLAMIC_OCCASIONS.map((occ) => (
+        {occasions.map((occ) => (
           <li
             key={occ.id}
             className="rounded-2xl overflow-hidden transition-all duration-200 hover:-translate-y-0.5"

@@ -2,7 +2,9 @@
  * /date/sitemap.xml — Sitemap Index
  * Points to specialized child sitemaps for scale and organization.
  */
-const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+import { getSiteUrl } from '@/lib/site-config';
+
+const BASE = getSiteUrl();
 
 export async function GET() {
   const todayIso = new Date().toISOString().split('T')[0];

@@ -1,0 +1,9 @@
+{
+  "id": "salary-sa",
+  "slug": "salary-day-saudi",
+  "name": "صرف الرواتب الحكومية (السعودية)",
+  "type": "monthly",
+  "category": "business",
+  "_countryCode": "sa",
+  "day": 27
+}

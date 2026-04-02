@@ -1,3 +1,5 @@
+import { HOLIDAY_COUNTRIES } from '@/lib/holidays/taxonomy';
+
 /**
  * lib/calendar-config.js
  * Per-country Islamic calendar method + display metadata.
@@ -56,13 +58,16 @@ export function getCountryCalendarConfig(code) {
   return COUNTRY_CALENDAR_CONFIG[code?.toLowerCase()] ?? COUNTRY_CALENDAR_CONFIG.default;
 }
 
-export const COUNTRY_META = {
-  sa: { name: 'السعودية', flag: '🇸🇦', timezone: 'Asia/Riyadh',     order: 1 },
-  eg: { name: 'مصر',      flag: '🇪🇬', timezone: 'Africa/Cairo',      order: 2 },
-  ma: { name: 'المغرب',   flag: '🇲🇦', timezone: 'Africa/Casablanca', order: 3 },
-  dz: { name: 'الجزائر',  flag: '🇩🇿', timezone: 'Africa/Algiers',    order: 4 },
-  ae: { name: 'الإمارات', flag: '🇦🇪', timezone: 'Asia/Dubai',        order: 5 },
-  tn: { name: 'تونس',     flag: '🇹🇳', timezone: 'Africa/Tunis',      order: 6 },
-  kw: { name: 'الكويت',   flag: '🇰🇼', timezone: 'Asia/Kuwait',       order: 7 },
-  qa: { name: 'قطر',      flag: '🇶🇦', timezone: 'Asia/Qatar',        order: 8 },
-};
+export const COUNTRY_META = Object.freeze(
+  Object.fromEntries(
+    HOLIDAY_COUNTRIES.map((country) => [
+      country.code,
+      {
+        name: country.nameAr,
+        flag: country.flag,
+        timezone: country.timezone,
+        order: country.order,
+      },
+    ]),
+  ),
+);

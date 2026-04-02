@@ -1,0 +1,14 @@
+{
+  "slug": "social-security-saudi",
+  "tier": "tier3",
+  "publishStatus": "drafted",
+  "checks": {
+    "contentReady": false,
+    "factChecked": false,
+    "schemaValid": false,
+    "seoValidated": false,
+    "hasHardcodedYear": false
+  },
+  "notes": [],
+  "updatedAt": "2026-03-30T23:57:37.051Z"
+}

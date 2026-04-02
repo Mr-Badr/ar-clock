@@ -6,8 +6,9 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import { Clock } from 'lucide-react';
+import { getSiteUrl } from '@/lib/site-config';
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || '';
+const BASE = getSiteUrl();
 
 export const metadata = {
   title: 'مواقيت الصلاة اليوم — أدق حساب للفجر والمغرب والعصر الشافعي والحنفي لكل مدينة',
@@ -217,7 +218,7 @@ export default async function PrayerLandingPage() {
           </p>
         </header>
 
-        {/* <AdTopBanner slotId="top-mwaqit" /> */}
+        <AdTopBanner slotId="top-mwaqit" />
 
         {/* ── Search Card ───────────────────────────────────────────────── */}
         <div className="card card--glass mb-16">
@@ -233,7 +234,7 @@ export default async function PrayerLandingPage() {
           <FAQAccordions items={features} />
         </section>
 
-        {/* <AdInArticle slotId="mid-mwaqit-1" /> */}
+        <AdInArticle slotId="mid-mwaqit-1" />
 
         {/* ── Madhab Comparison Table ───────────────────────────────────── */}
         <section className="card mb-10" aria-label="الفرق بين المذاهب في وقت العصر">

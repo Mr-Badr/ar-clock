@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "exams-bac-dz",
+    "slug": "bac-exams-algeria",
+    "name": "امتحانات الباك (الجزائر)",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "dz",
+    "month": 6,
+    "day": 15
+  },
+  "richContent": {
+    "seoTitle": "امتحانات الباك {{year}} الجزائر — موعد انطلاق الجدول",
+    "description": "متى تبدأ امتحانات الباك {{year}} في الجزائر؟ جدول الامتحانات وكل ما تحتاج معرفته.",
+    "keywords": [
+      "امتحانات الباك {{year}} الجزائر",
+      "جدول امتحانات الباك",
+      "موعد الباك {{year}}",
+      "تاريخ امتحانات الباكالوريا"
+    ],
+    "faqItems": [
+      {
+        "q": "متى تبدأ امتحانات الباك {{year}}؟",
+        "a": "15 يونيو {{year}} تقريباً."
+      },
+      {
+        "q": "كم تدوم الامتحانات؟",
+        "a": "حوالي أسبوعين حسب الشعب."
+      },
+      {
+        "q": "أين أجد جدول الامتحانات؟",
+        "a": "على الموقع الرسمي onec.dz."
+      }
+    ],
+    "about": {
+      "heading": "عن امتحانات بكالوريا الجزائر {{year}}",
+      "paragraphs": [
+        "تنطلق امتحانات البكالوريا في الجزائر منتصف يونيو تقريباً. تستمر لمدة أسبوعين حسب الشعب.",
+        "يُعلن الديوان الوطني للامتحانات (ONEC) عن الجدول الرسمي قبل شهر من الانطلاق."
+      ]
+    },
+    "quickFacts": [
+      {
+        "label": "موعد الانطلاق",
+        "value": "15 يونيو {{year}}"
+      },
+      {
+        "label": "المدة",
+        "value": "أسبوعين"
+      },
+      {
+        "label": "الموقع الرسمي",
+        "value": "onec.dz"
+      }
+    ],
+    "relatedSlugs": [
+      "bac-results-algeria",
+      "school-start-algeria"
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى امتحانات الباك (الجزائر) {{year}}",
+      "كم باقي على امتحانات الباك (الجزائر) {{year}}",
+      "موعد امتحانات الباك (الجزائر) {{year}}",
+      "امتحانات الباك (الجزائر) {{hijriYear}}"
+    ],
+    "country": [
+      "متى امتحانات الباك (الجزائر) في {{countryName}} {{year}}",
+      "امتحانات الباك (الجزائر) {{countryName}} {{year}}",
+      "كم باقي على امتحانات الباك (الجزائر) في {{countryName}}"
+    ]
+  },
+  "tier": "tier2",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/bac-exams-algeria",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar",
+  "queueOrder": 37
+}

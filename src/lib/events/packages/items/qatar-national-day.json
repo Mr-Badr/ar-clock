@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "national-day-qa",
+    "slug": "qatar-national-day",
+    "name": "اليوم الوطني القطري",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "qa",
+    "month": 12,
+    "day": 18
+  },
+  "richContent": {
+    "seoTitle": "اليوم الوطني القطري {{year}} — 18 ديسمبر",
+    "description": "اليوم الوطني لدولة قطر 18 ديسمبر.",
+    "keywords": [
+      "اليوم الوطني القطري {{year}}",
+      "18 ديسمبر قطر"
+    ],
+    "faqItems": [
+      {
+        "q": "متى اليوم الوطني القطري {{year}}؟",
+        "a": "18 ديسمبر {{year}}."
+      }
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى اليوم الوطني القطري {{year}}",
+      "كم باقي على اليوم الوطني القطري {{year}}",
+      "موعد اليوم الوطني القطري {{year}}",
+      "اليوم الوطني القطري {{hijriYear}}"
+    ],
+    "country": [
+      "متى اليوم الوطني القطري في {{countryName}} {{year}}",
+      "اليوم الوطني القطري {{countryName}} {{year}}",
+      "كم باقي على اليوم الوطني القطري في {{countryName}}"
+    ]
+  },
+  "tier": "tier3",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/qatar-national-day",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar",
+  "queueOrder": 58
+}

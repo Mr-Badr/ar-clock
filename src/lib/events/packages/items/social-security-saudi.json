@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "social-security-sa",
+    "slug": "social-security-saudi",
+    "name": "الضمان الاجتماعي المطور (السعودية)",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "sa",
+    "day": 1
+  },
+  "richContent": {
+    "seoTitle": "موعد صرف الضمان الاجتماعي المطور {{year}} — 1 من كل شهر",
+    "description": "متى ينزل الضمان الاجتماعي المطور؟ 1 من كل شهر ميلادي.",
+    "keywords": [
+      "موعد صرف الضمان الاجتماعي {{year}}",
+      "تاريخ صرف الضمان المطور",
+      "الضمان الاجتماعي 1 من كل شهر"
+    ],
+    "faqItems": [
+      {
+        "q": "متى ينزل الضمان الاجتماعي المطور؟",
+        "a": "في اليوم الأول من كل شهر ميلادي."
+      }
+    ],
+    "about": {
+      "heading": "عن صرف الضمان الاجتماعي المطور",
+      "paragraphs": [
+        "يُصرف الضمان الاجتماعي المطور يوم 1 من كل شهر ميلادي. إذا وافق يوم الصرف إجازة رسمية، يُقدَّم أو يُؤخَّر."
+      ]
+    },
+    "quickFacts": [
+      {
+        "label": "موعد الصرف",
+        "value": "1 من كل شهر ميلادي"
+      }
+    ],
+    "relatedSlugs": [
+      "salary-day-saudi",
+      "citizen-account-saudi"
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى الضمان الاجتماعي المطور (السعودية) {{year}}",
+      "كم باقي على الضمان الاجتماعي المطور (السعودية) {{year}}",
+      "موعد الضمان الاجتماعي المطور (السعودية) {{year}}",
+      "الضمان الاجتماعي المطور (السعودية) {{hijriYear}}"
+    ],
+    "country": [
+      "متى الضمان الاجتماعي المطور (السعودية) في {{countryName}} {{year}}",
+      "الضمان الاجتماعي المطور (السعودية) {{countryName}} {{year}}",
+      "كم باقي على الضمان الاجتماعي المطور (السعودية) في {{countryName}}"
+    ]
+  },
+  "tier": "tier3",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/social-security-saudi",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar",
+  "queueOrder": 26
+}

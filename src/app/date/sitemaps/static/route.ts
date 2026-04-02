@@ -2,7 +2,9 @@
  * /date/sitemaps/static/route.ts
  * Core static pages for the Date feature.
  */
-const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+import { getSiteUrl } from '@/lib/site-config';
+
+const BASE = getSiteUrl();
 
 const STATIC_PAGES = [
   { url: '/date', priority: '1.0', changefreq: 'daily' },

@@ -3,13 +3,17 @@
  * ─────────────────────────────────────────────────────────────────────────────
  * Pure logic utilities · 7 categories · dynamic year resolution · schema helpers
  *
- * Event data has been moved to src/lib/events/ for better separation of concerns.
+ * Event authoring now lives under src/data/holidays/events/ and is compiled
+ * into runtime indexes consumed through src/lib/events/.
  * This file now contains only utility functions and re-exports ALL_EVENTS.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 import { HIJRI_MONTHS_AR as BASE_MONTHS } from '@/lib/hijri-utils';
 import { getCachedEventMeta } from '@/lib/event-cache';
+import { buildTemplateContext, resolveTemplate } from '@/lib/template-resolver';
+import { getCountryByCode } from '@/lib/events/country-dictionary';
+import { HOLIDAY_CATEGORIES } from '@/lib/holidays/taxonomy';
 export const HIJRI_MONTHS_AR = ['', ...BASE_MONTHS];
 const GREG_MONTHS_AR = [
   '', 'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
@@ -37,12 +41,13 @@ export function approxHijriYear(gregorianYear) {
 /**
  * Replace {{year}}, {{hijriYear}}, {{nextYear}} tokens.
  */
-export function replaceTokens(str, gregorianYear, hijriYear) {
+export function replaceTokens(str, gregorianYearOrContext, hijriYear) {
   if (!str) return str;
-  return str
-    .replace(/\{\{year\}\}/g,      String(gregorianYear))
-    .replace(/\{\{hijriYear\}\}/g, hijriYear ? String(hijriYear) : String(gregorianYear))
-    .replace(/\{\{nextYear\}\}/g,  String(gregorianYear + 1));
+  const context =
+    gregorianYearOrContext && typeof gregorianYearOrContext === 'object'
+      ? buildTemplateContext(gregorianYearOrContext)
+      : buildTemplateContext({ year: gregorianYearOrContext, hijriYear });
+  return resolveTemplate(str, context);
 }
 
 /**
@@ -76,12 +81,30 @@ export function _resolveEventMetaInternal(ev, targetDate, overrideHijriYear = nu
   const gr = getEventYear(targetDate);
   const hi = overrideHijriYear || approxHijriYear(gr);
   const greg = formatGregorianAr(targetDate);
+  const country = getCountryByCode(ev._countryCode || ev.__aliasCountryCode || null);
+  const hijriDate =
+    ev.type === 'hijri' && ev.hijriDay && ev.hijriMonth
+      ? `${ev.hijriDay} ${HIJRI_MONTHS_AR[ev.hijriMonth] || ''} ${hi} هـ`
+      : '';
+  const tokenContext = buildTemplateContext({
+    ...ev,
+    year: gr,
+    hijriYear: hi,
+    eventName: ev.name,
+    formattedDate: greg,
+    hijriDate,
+    countryCode: country?.code || ev._countryCode || '',
+    countryName: country?.nameAr || '',
+    countryOfficialName: country?.officialNameAr || '',
+    authority: country?.authority || '',
+    dateVarianceLabel: country?.dateVarianceLabel || '',
+  });
 
   // Update stored rich strings — replaces old years with actual ones
-  const seoTitle = replaceTokens(ev.seoTitle || `متى ${ev.name} ${gr} — عد تنازلي دقيق`, gr, hi);
-  const description = replaceTokens(ev.description || `عد تنازلي دقيق لـ ${ev.name} — ${greg}.`, gr, hi);
+  const seoTitle = replaceTokens(ev.seoTitle || `متى ${ev.name} ${gr} — عد تنازلي دقيق`, tokenContext);
+  const description = replaceTokens(ev.description || `عد تنازلي دقيق لـ ${ev.name} — ${greg}.`, tokenContext);
   const keywords = (ev.keywords || [])
-    .map(k => replaceTokens(k, gr, hi))
+    .map(k => replaceTokens(k, tokenContext))
     .concat([
       `${ev.name} ${gr}`,
       `متى ${ev.name} ${gr}`,
@@ -91,20 +114,20 @@ export function _resolveEventMetaInternal(ev, targetDate, overrideHijriYear = nu
 
   // Patch faqItems so FAQ schema + UI always show the correct year
   const faqItems = (ev.faqItems || []).map(({ q, a }) => ({
-    q: replaceTokens(q, gr, hi),
-    a: replaceTokens(a, gr, hi),
+    q: replaceTokens(q, tokenContext),
+    a: replaceTokens(a, tokenContext),
   }));
 
   // 🆕 Dynamic quickFacts: _dynamic flag drives computed values
   const quickFacts = Array.isArray(ev.quickFacts) ? ev.quickFacts.map(f => {
-    let value = replaceTokens(f.value || '', gr, hi);
+    let value = replaceTokens(f.value || '', tokenContext);
     if (f._dynamic === 'gregorian') value = greg;
-    if (f._dynamic === 'hijri') value = `${ev.hijriDay || 1} ${HIJRI_MONTHS_AR[ev.hijriMonth] || ''} ${hi} هـ`;
-    return { label: replaceTokens(f.label || '', gr, hi), value };
+    if (f._dynamic === 'hijri') value = hijriDate || `${ev.hijriDay || 1} ${HIJRI_MONTHS_AR[ev.hijriMonth] || ''} ${hi} هـ`;
+    return { label: replaceTokens(f.label || '', tokenContext), value };
   }) : [];
 
   // Resolve tokens in all rich text content fields
-  const rt = (s) => replaceTokens(s || '', gr, hi);
+  const rt = (s) => replaceTokens(s || '', tokenContext);
 
   const about = ev.about ? {
     heading: rt(ev.about.heading),
@@ -254,16 +277,7 @@ export function buildHistoricalDates(ev, targetDate) {
 /* ══════════════════════════════════════════════════════════════════════════
  * CATEGORIES
  * ══════════════════════════════════════════════════════════════════════════ */
-export const CATEGORIES = [
-  { id: 'all', label: 'الكل', icon: '🗓', color: 'badge-default' },
-  { id: 'islamic', label: 'المناسبات الإسلامية', icon: '🌙', color: 'badge-accent' },
-  { id: 'national', label: 'الأعياد الوطنية', icon: '🏳', color: 'badge-info' },
-  { id: 'school', label: 'المناسبات المدرسية', icon: '📚', color: 'badge-warning' },
-  { id: 'holidays', label: 'الإجازات الرسمية', icon: '🏖', color: 'badge-success' },
-  { id: 'astronomy', label: 'فلكية وطبيعية', icon: '🌍', color: 'badge-info' },
-  { id: 'business', label: 'مناسبات الأعمال', icon: '💼', color: 'badge-default' },
-  { id: 'support', label: 'الدعم الاجتماعي', icon: '💰', color: 'badge-success' },
-];
+export const CATEGORIES = HOLIDAY_CATEGORIES;
 
 /* ══════════════════════════════════════════════════════════════════════════
  * DATE HELPERS
@@ -532,9 +546,28 @@ export function buildEventSeriesSchema(ev, siteUrl) {
 }
 /* ══════════════════════════════════════════════════════════════════════════
  * Backward-compat re-export — all existing consumers keep working
- * Event data now lives in src/lib/events/ for better separation of concerns.
+ * Event authoring lives in src/data/holidays/events/ and compiled runtime
+ * records are consumed through src/lib/events/.
  * ══════════════════════════════════════════════════════════════════════════ */
-import { ALL_RAW_EVENTS } from './events/index.js';
+import {
+  ALL_EVENT_SLUGS,
+  ALL_ROUTE_EVENT_SLUGS,
+  ALL_RAW_EVENTS,
+  resolveEventSlug as _resolveEventSlug,
+  getEventBySlug as _getRawEventBySlug,
+} from './events/index.js';
 export const ALL_EVENTS = ALL_RAW_EVENTS.map(e => enrichEvent(e));
-export { RELIGIOUS_HOLIDAYS } from './events/islamic.js';
-export { SEASONAL_EVENTS } from './events/seasonal.js';
+export { ALL_EVENT_SLUGS };
+export { ALL_ROUTE_EVENT_SLUGS };
+export function resolveEventSlug(slug) {
+  return _resolveEventSlug(slug);
+}
+export function getEventBySlug(slug) {
+  const raw = _getRawEventBySlug(slug);
+  return raw ? enrichEvent(raw) : null;
+}
+const CANONICAL_CORE_EVENTS = ALL_EVENTS.filter((event) => !event._countryCode && !event.__aliasCountryCode);
+export const RELIGIOUS_HOLIDAYS = CANONICAL_CORE_EVENTS.filter((event) => event.category === 'islamic');
+export const SEASONAL_EVENTS = CANONICAL_CORE_EVENTS.filter((event) =>
+  ['astronomy', 'school', 'holidays'].includes(event.category),
+);

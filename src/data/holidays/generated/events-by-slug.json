@@ -1,0 +1,473 @@
+{
+  "ramadan": {
+    "id": "ramadan",
+    "slug": "ramadan",
+    "name": "رمضان",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 9,
+    "hijriDay": 1
+  },
+  "eid-al-fitr": {
+    "id": "eid-al-fitr",
+    "slug": "eid-al-fitr",
+    "name": "عيد الفطر المبارك",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 10,
+    "hijriDay": 1
+  },
+  "eid-al-adha": {
+    "id": "eid-al-adha",
+    "slug": "eid-al-adha",
+    "name": "عيد الأضحى المبارك",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 12,
+    "hijriDay": 10
+  },
+  "day-of-arafa": {
+    "id": "day-of-arafa",
+    "slug": "day-of-arafa",
+    "name": "يوم عرفة",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 12,
+    "hijriDay": 9
+  },
+  "hajj-season": {
+    "id": "hajj-start",
+    "slug": "hajj-season",
+    "name": "بداية موسم الحج",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 12,
+    "hijriDay": 8
+  },
+  "islamic-new-year": {
+    "id": "islamic-new-year",
+    "slug": "islamic-new-year",
+    "name": "رأس السنة الهجرية",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 1,
+    "hijriDay": 1
+  },
+  "ashura": {
+    "id": "ashura",
+    "slug": "ashura",
+    "name": "يوم عاشوراء",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 1,
+    "hijriDay": 10
+  },
+  "mawlid": {
+    "id": "mawlid",
+    "slug": "mawlid",
+    "name": "المولد النبوي الشريف",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 3,
+    "hijriDay": 12
+  },
+  "laylat-al-qadr": {
+    "id": "laylat-al-qadr",
+    "slug": "laylat-al-qadr",
+    "name": "ليلة القدر",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 9,
+    "hijriDay": 27
+  },
+  "isra-miraj": {
+    "id": "isra-miraj",
+    "slug": "isra-miraj",
+    "name": "ليلة الإسراء والمعراج",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 7,
+    "hijriDay": 27
+  },
+  "nisf-shaban": {
+    "id": "nisf-shaban",
+    "slug": "nisf-shaban",
+    "name": "ليلة النصف من شعبان",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 8,
+    "hijriDay": 15
+  },
+  "first-dhul-hijjah": {
+    "id": "first-dhul-hijjah",
+    "slug": "first-dhul-hijjah",
+    "name": "أول ذو الحجة",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 12,
+    "hijriDay": 1
+  },
+  "new-year": {
+    "id": "new-year",
+    "slug": "new-year",
+    "name": "رأس السنة الميلادية",
+    "type": "fixed",
+    "category": "holidays",
+    "month": 1,
+    "day": 1
+  },
+  "summer-season": {
+    "id": "summer",
+    "slug": "summer-season",
+    "name": "بداية فصل الصيف",
+    "type": "fixed",
+    "category": "astronomy",
+    "month": 6,
+    "day": 21
+  },
+  "winter-season": {
+    "id": "winter",
+    "slug": "winter-season",
+    "name": "بداية فصل الشتاء",
+    "type": "fixed",
+    "category": "astronomy",
+    "month": 12,
+    "day": 21
+  },
+  "spring-season": {
+    "id": "spring",
+    "slug": "spring-season",
+    "name": "بداية فصل الربيع",
+    "type": "fixed",
+    "category": "astronomy",
+    "month": 3,
+    "day": 20
+  },
+  "autumn-season": {
+    "id": "autumn",
+    "slug": "autumn-season",
+    "name": "بداية فصل الخريف",
+    "type": "fixed",
+    "category": "astronomy",
+    "month": 9,
+    "day": 22
+  },
+  "spring-vacation": {
+    "id": "spring-vac",
+    "slug": "spring-vacation",
+    "name": "عطلة الربيع المدرسية",
+    "type": "estimated",
+    "category": "school",
+    "date": "{{year}}-03-29"
+  },
+  "summer-vacation": {
+    "id": "summer-vac",
+    "slug": "summer-vacation",
+    "name": "بداية الإجازة الصيفية",
+    "type": "estimated",
+    "category": "school",
+    "date": "{{year}}-06-11"
+  },
+  "back-to-school": {
+    "id": "back-to-school",
+    "slug": "back-to-school",
+    "name": "الدخول المدرسي",
+    "type": "estimated",
+    "category": "school",
+    "date": "{{year}}-09-20"
+  },
+  "saudi-national-day": {
+    "id": "national-day-sa",
+    "slug": "saudi-national-day",
+    "name": "اليوم الوطني السعودي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sa",
+    "month": 9,
+    "day": 23
+  },
+  "saudi-founding-day": {
+    "id": "founding-day-sa",
+    "slug": "saudi-founding-day",
+    "name": "يوم التأسيس السعودي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sa",
+    "month": 2,
+    "day": 22
+  },
+  "school-start-saudi": {
+    "id": "school-start-sa",
+    "slug": "school-start-saudi",
+    "name": "بداية الدراسة في السعودية",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "sa",
+    "month": 8,
+    "day": 30
+  },
+  "salary-day-saudi": {
+    "id": "salary-sa",
+    "slug": "salary-day-saudi",
+    "name": "صرف الرواتب الحكومية (السعودية)",
+    "type": "monthly",
+    "category": "business",
+    "_countryCode": "sa",
+    "day": 27
+  },
+  "citizen-account-saudi": {
+    "id": "citizen-account-sa",
+    "slug": "citizen-account-saudi",
+    "name": "حساب المواطن (السعودية)",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "sa",
+    "day": 10
+  },
+  "social-security-saudi": {
+    "id": "social-security-sa",
+    "slug": "social-security-saudi",
+    "name": "الضمان الاجتماعي المطور (السعودية)",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "sa",
+    "day": 1
+  },
+  "thanaweya-results": {
+    "id": "results-th-eg",
+    "slug": "thanaweya-results",
+    "name": "نتيجة الثانوية العامة (مصر)",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "eg",
+    "month": 7,
+    "day": 31
+  },
+  "thanaweya-exams": {
+    "id": "exams-th-eg",
+    "slug": "thanaweya-exams",
+    "name": "امتحانات الثانوية العامة (مصر)",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "eg",
+    "month": 6,
+    "day": 20
+  },
+  "school-start-egypt": {
+    "id": "school-start-eg",
+    "slug": "school-start-egypt",
+    "name": "بدء الدراسة في مصر",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "eg",
+    "month": 9,
+    "day": 20
+  },
+  "salary-day-egypt": {
+    "id": "salary-eg",
+    "slug": "salary-day-egypt",
+    "name": "صرف المرتبات الحكومية (مصر)",
+    "type": "monthly",
+    "category": "business",
+    "_countryCode": "eg",
+    "day": 24
+  },
+  "sham-nessim": {
+    "id": "sham-nessim",
+    "slug": "sham-nessim",
+    "name": "شم النسيم",
+    "type": "easter",
+    "category": "holidays",
+    "_countryCode": "eg"
+  },
+  "bac-results-algeria": {
+    "id": "results-bac-dz",
+    "slug": "bac-results-algeria",
+    "name": "نتائج بكالوريا الجزائر",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "dz",
+    "month": 7,
+    "day": 15
+  },
+  "bac-exams-algeria": {
+    "id": "exams-bac-dz",
+    "slug": "bac-exams-algeria",
+    "name": "امتحانات الباك (الجزائر)",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "dz",
+    "month": 6,
+    "day": 15
+  },
+  "school-start-algeria": {
+    "id": "school-start-dz",
+    "slug": "school-start-algeria",
+    "name": "الدخول المدرسي في الجزائر",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "dz",
+    "month": 9,
+    "day": 21
+  },
+  "independence-day-algeria": {
+    "id": "independence-dz",
+    "slug": "independence-day-algeria",
+    "name": "عيد الاستقلال الجزائري",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "dz",
+    "month": 7,
+    "day": 5
+  },
+  "revolution-day-algeria": {
+    "id": "revolution-dz",
+    "slug": "revolution-day-algeria",
+    "name": "يوم الثورة الجزائرية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "dz",
+    "month": 11,
+    "day": 1
+  },
+  "bac-results-morocco": {
+    "id": "results-bac-ma",
+    "slug": "bac-results-morocco",
+    "name": "نتائج الباكالوريا (المغرب)",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "ma",
+    "month": 6,
+    "day": 17
+  },
+  "national-exams-morocco": {
+    "id": "national-exam-ma",
+    "slug": "national-exams-morocco",
+    "name": "الامتحان الوطني (المغرب)",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "ma",
+    "month": 6,
+    "day": 10
+  },
+  "school-start-morocco": {
+    "id": "school-start-ma",
+    "slug": "school-start-morocco",
+    "name": "الدخول المدرسي في المغرب",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "ma",
+    "month": 9,
+    "day": 8
+  },
+  "throne-day-morocco": {
+    "id": "throne-day",
+    "slug": "throne-day-morocco",
+    "name": "عيد العرش المغربي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ma",
+    "month": 7,
+    "day": 30
+  },
+  "independence-day-morocco": {
+    "id": "independence-ma",
+    "slug": "independence-day-morocco",
+    "name": "عيد الاستقلال المغربي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ma",
+    "month": 11,
+    "day": 18
+  },
+  "uae-national-day": {
+    "id": "national-day-ae",
+    "slug": "uae-national-day",
+    "name": "اليوم الوطني الإماراتي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ae",
+    "month": 12,
+    "day": 2
+  },
+  "school-start-uae": {
+    "id": "school-start-ae",
+    "slug": "school-start-uae",
+    "name": "بداية الدراسة في الإمارات",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "ae",
+    "month": 8,
+    "day": 30
+  },
+  "bac-results-tunisia": {
+    "id": "results-bac-tn",
+    "slug": "bac-results-tunisia",
+    "name": "نتائج بكالوريا تونس",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "tn",
+    "month": 6,
+    "day": 23
+  },
+  "school-start-tunisia": {
+    "id": "school-start-tn",
+    "slug": "school-start-tunisia",
+    "name": "الدخول المدرسي في تونس",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "tn",
+    "month": 9,
+    "day": 15
+  },
+  "independence-day-tunisia": {
+    "id": "independence-tn",
+    "slug": "independence-day-tunisia",
+    "name": "عيد الاستقلال التونسي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "tn",
+    "month": 3,
+    "day": 20
+  },
+  "kuwait-national-day": {
+    "id": "national-day-kw",
+    "slug": "kuwait-national-day",
+    "name": "اليوم الوطني الكويتي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "kw",
+    "month": 2,
+    "day": 25
+  },
+  "school-start-kuwait": {
+    "id": "school-start-kw",
+    "slug": "school-start-kuwait",
+    "name": "بدء الدراسة في الكويت",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "kw",
+    "month": 9,
+    "day": 15
+  },
+  "qatar-national-day": {
+    "id": "national-day-qa",
+    "slug": "qatar-national-day",
+    "name": "اليوم الوطني القطري",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "qa",
+    "month": 12,
+    "day": 18
+  },
+  "school-start-qatar": {
+    "id": "school-start-qa",
+    "slug": "school-start-qatar",
+    "name": "بدء الدراسة في قطر",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "qa",
+    "month": 8,
+    "day": 30
+  }
+}

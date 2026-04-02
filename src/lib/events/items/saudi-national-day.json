@@ -1,0 +1,10 @@
+{
+  "id": "national-day-sa",
+  "slug": "saudi-national-day",
+  "name": "اليوم الوطني السعودي",
+  "type": "fixed",
+  "category": "national",
+  "_countryCode": "sa",
+  "month": 9,
+  "day": 23
+}

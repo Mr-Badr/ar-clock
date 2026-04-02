@@ -3,6 +3,7 @@
  */
 
 import { NextResponse } from 'next/server';
+import { getSiteUrl } from '@/lib/site-config';
 
 // ─── Light palette ────────────────────────────────────────────────────────────
 const BL = {
@@ -50,7 +51,7 @@ const BD = {
 
 // ─── Branding ─────────────────────────────────────────────────────────────────
 const SITE_NAME = 'MiqaTime';
-const SITE_URL  = process.env.NEXT_PUBLIC_SITE_URL || 'https://MiqaTime.com';
+const SITE_URL  = getSiteUrl();
 
 // ─── Prayer config ────────────────────────────────────────────────────────────
 const PRAYER_KEYS = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
@@ -60,20 +61,32 @@ const PRAYER_AR   = {
 };
 
 // ─── Puppeteer launch ─────────────────────────────────────────────────────────
-// ── SERVERLESS (Vercel / Netlify / Lambda) — uncomment to swap: ──────────────
-// import chromium  from '@sparticuz/chromium';
-// import puppeteer from 'puppeteer-core';
-// async function launchBrowser() {
-//   return puppeteer.launch({
-//     args:            chromium.args,
-//     defaultViewport: chromium.defaultViewport,
-//     executablePath:  await chromium.executablePath(),
-//     headless:        chromium.headless,
-//   });
-// }
-// ── LOCAL / DOCKER / SELF-HOSTED: ────────────────────────────────────────────
-import puppeteer from 'puppeteer';
 async function launchBrowser() {
+  const preferServerlessChromium =
+    process.env.PDF_BROWSER_MODE === 'serverless' ||
+    process.env.VERCEL === '1' ||
+    process.env.AWS_REGION;
+
+  if (preferServerlessChromium) {
+    try {
+      const [{ default: chromium }, puppeteerCoreModule] = await Promise.all([
+        import('@sparticuz/chromium'),
+        import('puppeteer-core'),
+      ]);
+      const puppeteerCore = puppeteerCoreModule.default || puppeteerCoreModule;
+      return puppeteerCore.launch({
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(),
+        headless: chromium.headless,
+      });
+    } catch (error) {
+      console.warn('[pdf-calendar] Falling back to bundled puppeteer:', error);
+    }
+  }
+
+  const puppeteerModule = await import('puppeteer');
+  const puppeteer = puppeteerModule.default || puppeteerModule;
   return puppeteer.launch({
     headless: 'new',
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],

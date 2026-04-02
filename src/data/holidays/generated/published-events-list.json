@@ -1,0 +1,155 @@
+[
+  {
+    "id": "ramadan",
+    "slug": "ramadan",
+    "name": "رمضان",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 9,
+    "hijriDay": 1
+  },
+  {
+    "id": "eid-al-fitr",
+    "slug": "eid-al-fitr",
+    "name": "عيد الفطر المبارك",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 10,
+    "hijriDay": 1
+  },
+  {
+    "id": "eid-al-adha",
+    "slug": "eid-al-adha",
+    "name": "عيد الأضحى المبارك",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 12,
+    "hijriDay": 10
+  },
+  {
+    "id": "day-of-arafa",
+    "slug": "day-of-arafa",
+    "name": "يوم عرفة",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 12,
+    "hijriDay": 9
+  },
+  {
+    "id": "hajj-start",
+    "slug": "hajj-season",
+    "name": "بداية موسم الحج",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 12,
+    "hijriDay": 8
+  },
+  {
+    "id": "mawlid",
+    "slug": "mawlid",
+    "name": "المولد النبوي الشريف",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 3,
+    "hijriDay": 12
+  },
+  {
+    "id": "laylat-al-qadr",
+    "slug": "laylat-al-qadr",
+    "name": "ليلة القدر",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 9,
+    "hijriDay": 27
+  },
+  {
+    "id": "national-day-sa",
+    "slug": "saudi-national-day",
+    "name": "اليوم الوطني السعودي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sa",
+    "month": 9,
+    "day": 23
+  },
+  {
+    "id": "results-th-eg",
+    "slug": "thanaweya-results",
+    "name": "نتيجة الثانوية العامة (مصر)",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "eg",
+    "month": 7,
+    "day": 31
+  },
+  {
+    "id": "school-start-eg",
+    "slug": "school-start-egypt",
+    "name": "بدء الدراسة في مصر",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "eg",
+    "month": 9,
+    "day": 20
+  },
+  {
+    "id": "results-bac-dz",
+    "slug": "bac-results-algeria",
+    "name": "نتائج بكالوريا الجزائر",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "dz",
+    "month": 7,
+    "day": 15
+  },
+  {
+    "id": "school-start-dz",
+    "slug": "school-start-algeria",
+    "name": "الدخول المدرسي في الجزائر",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "dz",
+    "month": 9,
+    "day": 21
+  },
+  {
+    "id": "school-start-ma",
+    "slug": "school-start-morocco",
+    "name": "الدخول المدرسي في المغرب",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "ma",
+    "month": 9,
+    "day": 8
+  },
+  {
+    "id": "school-start-ae",
+    "slug": "school-start-uae",
+    "name": "بداية الدراسة في الإمارات",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "ae",
+    "month": 8,
+    "day": 30
+  },
+  {
+    "id": "school-start-tn",
+    "slug": "school-start-tunisia",
+    "name": "الدخول المدرسي في تونس",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "tn",
+    "month": 9,
+    "day": 15
+  },
+  {
+    "id": "school-start-qa",
+    "slug": "school-start-qatar",
+    "name": "بدء الدراسة في قطر",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "qa",
+    "month": 8,
+    "day": 30
+  }
+]

@@ -1,0 +1,45 @@
+# Ranking Brief — bac-results-tunisia
+
+## Event Metadata
+- slug: bac-results-tunisia
+- name: نتائج بكالوريا تونس
+- category: school
+- tier: tier2
+
+## Search Intent
+- primary_keyword:
+- user_intent:
+- audience_segment:
+
+## Keyword Clusters
+- primary:
+- secondary:
+- long_tail:
+
+## Uniqueness Thesis
+1.
+2.
+3.
+
+## Must-Cover Sections
+- answerSummary
+- quickFacts
+- aboutEvent
+- recurringYears
+- faq
+
+## Fact Sources
+- authority_1:
+- authority_2:
+- authority_3:
+
+## Internal Linking Targets
+- same_category:
+- cross_category:
+
+## Publish Checklist
+- [ ] competitor gap reviewed
+- [ ] facts verified
+- [ ] direct-answer style applied
+- [ ] schema fields complete
+- [ ] editor approved

@@ -1,0 +1,8 @@
+{
+  "id": "back-to-school",
+  "slug": "back-to-school",
+  "name": "الدخول المدرسي",
+  "type": "estimated",
+  "category": "school",
+  "date": "{{year}}-09-20"
+}

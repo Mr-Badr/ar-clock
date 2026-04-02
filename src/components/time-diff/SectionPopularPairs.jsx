@@ -17,10 +17,12 @@
 import Link from 'next/link'
 import { Clock } from 'lucide-react'
 import { SectionWrapper, SectionBadge } from '@/components/shared/primitives'
+import { getSiteUrl }                from '@/lib/site-config'
 import { POPULAR_PAIRS }                from './data/popularPairs'
 import PopularPairsLiveClient           from './mockups/PopularPairsLiveClient'
 
 const H2_ID = 'h2-popular-pairs'
+const SITE_URL = getSiteUrl()
 
 function PairsSchema() {
   const schema = {
@@ -31,7 +33,7 @@ function PairsSchema() {
       '@type':    'ListItem',
       position:   i + 1,
       name:       `فرق التوقيت بين ${pair.from.nameAr} و${pair.to.nameAr}`,
-      url:        `https://waqt.app/time-difference/${pair.from.slug}/${pair.to.slug}`,
+      url:        `${SITE_URL}/time-difference/${pair.from.slug}/${pair.to.slug}`,
     })),
   }
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />

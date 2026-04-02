@@ -1,0 +1,10 @@
+{
+  "id": "founding-day-sa",
+  "slug": "saudi-founding-day",
+  "name": "يوم التأسيس السعودي",
+  "type": "fixed",
+  "category": "national",
+  "_countryCode": "sa",
+  "month": 2,
+  "day": 22
+}

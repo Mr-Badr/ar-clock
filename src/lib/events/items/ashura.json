@@ -1,0 +1,9 @@
+{
+  "id": "ashura",
+  "slug": "ashura",
+  "name": "يوم عاشوراء",
+  "type": "hijri",
+  "category": "islamic",
+  "hijriMonth": 1,
+  "hijriDay": 10
+}

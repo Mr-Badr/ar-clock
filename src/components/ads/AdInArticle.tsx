@@ -34,6 +34,10 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import {
+  isPublicEnvEnabled,
+  useMarketingPermission,
+} from "@/lib/client/marketing";
 
 interface AdInArticleProps {
   slotId?: string;
@@ -44,11 +48,17 @@ export default function AdInArticle({
   slotId = "in-article",
   className = "",
 }: AdInArticleProps) {
+  const adsEnabled = isPublicEnvEnabled(process.env.NEXT_PUBLIC_ENABLE_ADS);
+  const clientId = (process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "").trim();
+  const adSlot = (process.env.NEXT_PUBLIC_ADSENSE_IN_ARTICLE_SLOT || "").trim();
+  const shouldRenderAds = adsEnabled && clientId.startsWith("ca-pub-") && Boolean(adSlot);
+  const canLoadAds = useMarketingPermission(shouldRenderAds);
   const ref = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const loaded = useRef(false);
 
   useEffect(() => {
+    if (!canLoadAds) return;
     if (!ref.current || loaded.current) return;
 
     const observer = new IntersectionObserver(
@@ -57,15 +67,12 @@ export default function AdInArticle({
           if (entry.isIntersecting && !loaded.current) {
             loaded.current = true;
             setIsLoading(false);
-
-            // ─────────────────────────────────────────────────────────────────
-            // TODO: Replace with your AdSense code when ready:
-            //
-            //   try {
-            //     (window.adsbygoogle = window.adsbygoogle || []).push({});
-            //   } catch (e) {}
-            //
-            // ─────────────────────────────────────────────────────────────────
+            try {
+              const adsWindow = window as Window & { adsbygoogle?: unknown[] };
+              (adsWindow.adsbygoogle = adsWindow.adsbygoogle || []).push({});
+            } catch (error) {
+              console.warn("AdSense in-article slot failed to initialize:", error);
+            }
 
             observer.disconnect();
           }
@@ -76,7 +83,9 @@ export default function AdInArticle({
 
     observer.observe(ref.current);
     return () => observer.disconnect();
-  }, []);
+  }, [canLoadAds]);
+
+  if (!shouldRenderAds || !canLoadAds) return null;
 
   return (
     <div
@@ -87,19 +96,14 @@ export default function AdInArticle({
       aria-label="إعلانات"
     >
       <span className="ad-slot__label">إعلانات</span>
-
-      {/* ─────────────────────────────────────────────────────────────────────
-          TODO: Paste your AdSense <ins> tag here when ready:
-
-          <ins
-            className="adsbygoogle"
-            style={{ display: "block" }}
-            data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-            data-ad-slot="XXXXXXXXXX"
-            data-ad-format="auto"
-            data-full-width-responsive="true"
-          />
-          ───────────────────────────────────────────────────────────────────── */}
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-client={clientId}
+        data-ad-slot={adSlot}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      />
     </div>
   );
 }

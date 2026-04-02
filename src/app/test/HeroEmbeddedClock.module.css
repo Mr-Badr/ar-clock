@@ -1,0 +1,485 @@
+/* HeroEmbeddedClock.module.css */
+
+
+/* ── ROOT ──────────────────────────────────────────────────────────── */
+.clockRoot {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0;
+  color: var(--text-primary);
+  background: transparent;
+  overflow: hidden;
+}
+
+.clockRootFullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-max);
+  background: linear-gradient(180deg, #05070c 0%, #0a0f18 100%);
+  padding: clamp(1.25rem, 2.5vw, 2.5rem);
+  container-type: inline-size;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   MAGIC UI — SHINE BORDER
+   ───────────────────────────────────────────────────────────────────
+   This is a direct CSS port of the original Magic UI ShineBorder
+   component. The technique:
+
+   1. The .shineBorder span is absolutely positioned (inset:0) inside
+      its `position:relative; overflow:hidden` parent.
+
+   2. background-image is a radial-gradient containing the shine
+      colors, sized at 300% × 300% so the gradient is larger than
+      the element.
+
+   3. The keyframe animates background-position from 0%/0% through
+      100%/100% and back — the bright colour spot sweeps diagonally
+      across the 1 px border ring.
+
+   4. mask = linear-gradient(#fff 0 0) content-box,
+             linear-gradient(#fff 0 0)
+      with mask-composite:exclude punches out the content area,
+      leaving only the padding ring (= border-width) visible.
+
+   This is identical to the original Magic UI implementation.
+   ═══════════════════════════════════════════════════════════════════ */
+.shineBorder {
+  /* layout */
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+
+  /* border ring thickness comes from padding */
+  padding: var(--shine-border-width, 1px);
+
+  /* punch-out mask: only the padding ring is painted */
+  -webkit-mask: var(--shine-mask);
+          mask: var(--shine-mask);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+
+  /* the sweeping radial gradient */
+  background-image:    var(--shine-gradient);
+  background-size:     300% 300%;
+  background-position: 0% 0%;
+
+  /* no clicks on this decorative layer */
+  pointer-events: none;
+  will-change: background-position;
+
+  /* animate — same keyframe as Magic UI's `shine-pulse` */
+  animation: shinePulse var(--shine-duration, 14s) infinite linear;
+}
+
+/* Exact keyframe from the Magic UI source */
+@keyframes shinePulse {
+  0%   { background-position: 0%   0%;   }
+  50%  { background-position: 100% 100%; }
+  100% { background-position: 0%   0%;   }
+}
+
+
+/* ── TOPBAR ─────────────────────────────────────────────────────────── */
+.topbar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ── Action buttons ──────────────────────────────────────────────── */
+/*
+  REQUIRED for ShineBorder:
+    position: relative   (so the absolute child anchors correctly)
+    overflow: hidden     (clips the 300% radial gradient to the pill shape)
+*/
+.toolBtn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 34px;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  /* keep a base border so the button has shape before the shine arrives */
+  border: 1px solid rgba(112, 144, 184, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition:
+    color        var(--transition-fast),
+    background   var(--transition-fast);
+  white-space: nowrap;
+}
+
+.toolBtn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btnLabel {
+  /* hidden on very small screens via responsive rules */
+  position: relative; /* keeps text above the absolute shine layer */
+  z-index: 1;
+}
+
+/* make sure icons also sit above the shine layer */
+.toolBtn > svg {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Location pill ──────────────────────────────────────────────────── */
+.locationPill {
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 34px;
+  padding-inline: 0.85rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(112, 144, 184, 0.14);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.locationPin {
+  color: var(--accent-alt);
+  flex-shrink: 0;
+}
+
+
+/* ── CENTER STAGE ──────────────────────────────────────────────────── */
+.centerStage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 0 0.5rem;
+  container-type: inline-size;
+}
+
+/* ── Meta row: period badge + live indicator ─────────────────────── */
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+}
+
+/* Period of day badge */
+.periodBadge {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding-inline: 0.65rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-wide);
+  border: 1px solid currentColor;
+  opacity: 0.9;
+}
+
+.periodMorning { color: #FFD166; background: rgba(255, 209, 102, 0.08); }
+.periodNoon    { color: var(--accent-alt); background: rgba(140, 174, 255, 0.08); }
+.periodEvening { color: #FFAB76; background: rgba(255, 171, 118, 0.08); }
+.periodNight   { color: #B0C8FF; background: rgba(176, 200, 255, 0.07); }
+
+/* Live indicator */
+.livePill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 24px;
+  padding-inline: 0.65rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(6, 214, 160, 0.25);
+  background: rgba(6, 214, 160, 0.07);
+  color: var(--success);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Static dot — no animation, as requested */
+.liveDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  flex-shrink: 0;
+}
+
+
+/* ── Clock line ─────────────────────────────────────────────────── */
+.clockLine {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(0.2rem, 1.2cqi, 1rem);
+  direction: ltr;
+}
+
+/* ── Time unit ──────────────────────────────────────────────────── */
+.unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  position: relative;
+}
+
+.digitsWrap {
+  display: flex;
+  gap: 0.04em;
+}
+
+/* ── Digit ───────────────────────────────────────────────────────── */
+.digit {
+  display: block;
+  font-size: clamp(2.6rem, 10.5cqi, 6.5rem);
+  line-height: 0.9;
+  font-weight: var(--font-extrabold);
+  color: var(--clock-digit-color);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: var(--tracking-clock);
+  animation: digitDrop 0.28s var(--ease-spring) both;
+}
+
+@keyframes digitDrop {
+  0%   { opacity: 0; transform: translateY(-10px) scale(1.06); }
+  65%  { opacity: 1; transform: translateY(1.5px) scale(0.985); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Unit label ──────────────────────────────────────────────────── */
+.unitLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  padding-inline: 0.55rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(112, 144, 184, 0.13);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--clock-label);
+  font-size: clamp(0.6rem, 1.7cqi, 0.78rem);
+  font-weight: var(--font-medium);
+  white-space: nowrap;
+}
+
+/* ── Colon separator — static, no animation ──────────────────────── */
+.sep {
+  font-size: clamp(1.3rem, 5cqi, 3rem);
+  color: var(--clock-separator);
+  font-weight: var(--font-bold);
+  line-height: 1;
+  margin-bottom: 1.08em;
+  user-select: none;
+  opacity: 0.7;
+}
+
+
+/* ── Seconds progress bar ────────────────────────────────────────── */
+.progressTrack {
+  width: 100%;
+  max-width: 420px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  width: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-alt) 60%, rgba(140,174,255,0.6) 100%);
+  transform-origin: left center;
+  animation: secondsSweep 60s linear infinite;
+}
+
+@keyframes secondsSweep {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+
+/* ── Date line ───────────────────────────────────────────────────── */
+/*
+  REQUIRED for ShineBorder:
+    position: relative   (so the absolute child anchors correctly)
+    overflow: hidden     (clips the 300% radial gradient to the pill shape)
+*/
+.dateLine {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(112, 144, 184, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+  max-width: 100%;
+}
+
+/* keep text above the absolute shine layer */
+.dateAr,
+.dateHijri,
+.dateDivider {
+  position: relative;
+  z-index: 1;
+}
+
+.dateAr,
+.dateHijri {
+  color: var(--text-muted);
+  font-size: clamp(0.65rem, 1.8cqi, 0.82rem);
+  font-weight: var(--font-medium);
+  white-space: nowrap;
+}
+
+.dateHijri {
+  color: var(--clock-label);
+}
+
+.dateDivider {
+  color: rgba(255, 255, 255, 0.18);
+  font-size: 0.7rem;
+  user-select: none;
+}
+
+
+/* ── Skeleton (SSR placeholder) ──────────────────────────────────── */
+.skeleton {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+
+
+/* ── FULLSCREEN OVERRIDES ────────────────────────────────────────── */
+.clockRootFullscreen .topbar {
+  padding-bottom: 18px;
+}
+
+.clockRootFullscreen .digit {
+  font-size: clamp(5rem, 18cqi, 14rem);
+}
+
+.clockRootFullscreen .sep {
+  font-size: clamp(2.5rem, 8cqi, 6rem);
+}
+
+.clockRootFullscreen .progressTrack {
+  max-width: 600px;
+  height: 3px;
+}
+
+.clockRootFullscreen .dateLine {
+  padding: 0.55rem 1.4rem;
+}
+
+.clockRootFullscreen .dateAr,
+.clockRootFullscreen .dateHijri {
+  font-size: clamp(0.85rem, 1.6cqi, 1.05rem);
+}
+
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .topbar {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+
+  .locationPill {
+    grid-column: 1 / -1;
+    order: -1;
+    justify-self: stretch;
+    justify-content: center;
+  }
+
+  .toolBtn {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .centerStage {
+    gap: 0.5rem;
+    padding: 0.55rem 0 0.35rem;
+  }
+
+  .unitLabel {
+    height: 20px;
+    padding-inline: 0.42rem;
+    font-size: 0.62rem;
+  }
+
+  .dateLine {
+    padding: 0.32rem 0.75rem;
+  }
+
+  .periodBadge,
+  .livePill {
+    height: 20px;
+    font-size: 0.58rem;
+  }
+
+  .progressTrack {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 430px) {
+  .topbar {
+    grid-template-columns: auto 1fr auto;
+    gap: 0.35rem;
+  }
+
+  .locationPill {
+    grid-column: auto;
+    order: 0;
+    min-width: 0;
+    padding-inline: 0.6rem;
+  }
+
+  /* Icons only on very small screens */
+  .btnLabel {
+    display: none;
+  }
+
+  .toolBtn {
+    min-width: 36px;
+    padding-inline: 0.55rem;
+  }
+}

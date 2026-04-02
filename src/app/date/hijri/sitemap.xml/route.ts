@@ -3,9 +3,10 @@
  * Lists the current Hijri year ±1 (all days) for crawlable Hijri date pages.
  */
 import { convertDate } from '@/lib/date-adapter';
+import { getSiteUrl } from '@/lib/site-config';
 import { connection } from 'next/server';
 
-const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+const BASE = getSiteUrl();
 
 export async function GET() {
   await connection();

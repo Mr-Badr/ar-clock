@@ -28,8 +28,9 @@ import { DateNavigation } from '@/components/date/DateNavigation';
 import { DateShareActions } from '@/components/date/DateShareActions';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { CalendarDays, ArrowLeftRight, Moon } from 'lucide-react';
+import { getSiteUrl } from '@/lib/site-config';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://miqatime.com';
+const BASE_URL = getSiteUrl();
 
 // ── ISR: 24h cache managed via cacheComponents ──────────────────────────────
 

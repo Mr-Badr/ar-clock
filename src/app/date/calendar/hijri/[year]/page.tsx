@@ -6,8 +6,9 @@ import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBre
 import { HijriYearlyCalendar } from '@/components/date/HijriYearlyCalendar';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { convertDate } from '@/lib/date-adapter';
+import { getSiteUrl } from '@/lib/site-config';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+const BASE_URL = getSiteUrl();
 
 export async function generateStaticParams() {
   const now = new Date();

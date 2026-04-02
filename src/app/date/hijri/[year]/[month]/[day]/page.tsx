@@ -11,11 +11,12 @@ import { DateNavigation } from '@/components/date/DateNavigation';
 import { DateShareActions } from '@/components/date/DateShareActions';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { CalendarDays, ArrowLeftRight, Calendar } from 'lucide-react';
+import { getSiteUrl } from '@/lib/site-config';
 
 // NOTE: Static folder 'hijri' takes priority over dynamic '[year]' at the same level.
 // This resolves correctly: /date/hijri/... always hits this route, never the [year] route.
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+const BASE_URL = getSiteUrl();
 
 export async function generateStaticParams() {
   // Tier A: current Hijri year ±5

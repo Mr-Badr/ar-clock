@@ -20,7 +20,7 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
-import { MapPin, Clock, ChevronLeft } from 'lucide-react';
+import { MapPin, ChevronLeft } from 'lucide-react';
 
 
 import TimeNowHero from '@/components/time-now/TimeNowHero';
@@ -41,8 +41,9 @@ import {
 } from '@/lib/db/queries/cities';
 import { getCountriesAction } from '@/app/actions/location';
 import { getCachedNowIso } from '@/lib/date-utils';
+import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 
-const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+const BASE = getSiteUrl();
 
 /* ── ROUTE CONFIG ────────────────────────────────────────────────── */
 
@@ -83,7 +84,7 @@ export async function generateMetadata({ params }) {
   const offset = getUtcOffsetStr(timezone);
 
   return {
-    title: `الوقت الان في ${countryAr} — الساعة والتاريخ في ${cityAr} | ساعة عربية`,
+    title: `الوقت الان في ${countryAr} — الساعة والتاريخ في ${cityAr}`,
     description: `اعرف الوقت الان في ${countryAr} بدقة حتى الثانية. الساعة الحالية في ${cityAr} مع التاريخ اليوم الميلادي والهجري، المنطقة الزمنية ${offset}.`,
     keywords: [
       `الوقت الان في ${countryAr}`,
@@ -108,8 +109,8 @@ export async function generateMetadata({ params }) {
       type: 'website',
       locale: 'ar_SA',
       url: `${BASE}/time-now/${countrySlug}`,
-      siteName: 'ساعة عربية',
-      title: `الوقت الان في ${countryAr} — ${cityAr} | ساعة عربية`,
+      siteName: SITE_BRAND,
+      title: `الوقت الان في ${countryAr} — ${cityAr} | ${SITE_BRAND}`,
       description: `الساعة الحالية في ${countryAr} مع التاريخ الميلادي والهجري. ${offset}.`,
       images: [{ url: '/og-image.png', width: 1200, height: 630 }],
     },
@@ -339,15 +340,6 @@ export default async function CountryTimePage({ params }) {
           </div>
         </section>
       </main>
-
-      {/* Footer */}
-      <footer className="py-8 border-t border-[var(--border-subtle)] text-center">
-        <div className="flex items-center justify-center gap-2 mb-3">
-          <Clock className="text-accent" size={20} aria-hidden />
-          <span className="text-lg font-bold">ساعة عربية</span>
-        </div>
-        <p className="text-muted text-sm">© 2025 جميع الحقوق محفوظة.</p>
-      </footer>
     </div>
   );
 }

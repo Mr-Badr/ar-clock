@@ -29,8 +29,9 @@ import {
   enrichEvent,
 } from '@/lib/holidays-engine'
 import { FAQ_ITEMS } from './data/faqItems'
+import { getSiteUrl } from '@/lib/site-config';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://waqt.app'
+const SITE_URL = getSiteUrl();
 
 /** Synthetic "page-level" event object for buildWebPageSchema / buildFAQSchema */
 const PAGE_EVENT = enrichEvent({

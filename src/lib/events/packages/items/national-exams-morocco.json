@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "national-exam-ma",
+    "slug": "national-exams-morocco",
+    "name": "الامتحان الوطني (المغرب)",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "ma",
+    "month": 6,
+    "day": 10
+  },
+  "richContent": {
+    "seoTitle": "الامتحان الوطني {{year}} المغرب — موعد الجدول",
+    "description": "متى تبدأ الامتحانات الوطنية {{year}} في المغرب؟",
+    "keywords": [
+      "الامتحان الوطني {{year}} المغرب",
+      "جدول الامتحانات"
+    ],
+    "faqItems": [
+      {
+        "q": "متى تبدأ الامتحانات الوطنية {{year}}؟",
+        "a": "10 يونيو {{year}} تقريباً."
+      }
+    ],
+    "about": {
+      "heading": "عن الامتحان الوطني في المغرب {{year}}",
+      "paragraphs": [
+        "تنطلق الامتحانات الوطنية في المغرب أوائل يونيو.",
+        "تُعلن وزارة التربية الجدول الرسمي."
+      ]
+    },
+    "quickFacts": [
+      {
+        "label": "موعد الانطلاق",
+        "value": "10 يونيو {{year}}"
+      }
+    ],
+    "relatedSlugs": [
+      "bac-results-morocco",
+      "school-start-morocco"
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى الامتحان الوطني (المغرب) {{year}}",
+      "كم باقي على الامتحان الوطني (المغرب) {{year}}",
+      "موعد الامتحان الوطني (المغرب) {{year}}",
+      "الامتحان الوطني (المغرب) {{hijriYear}}"
+    ],
+    "country": [
+      "متى الامتحان الوطني (المغرب) في {{countryName}} {{year}}",
+      "الامتحان الوطني (المغرب) {{countryName}} {{year}}",
+      "كم باقي على الامتحان الوطني (المغرب) في {{countryName}}"
+    ]
+  },
+  "tier": "tier3",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/national-exams-morocco",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar",
+  "queueOrder": 43
+}

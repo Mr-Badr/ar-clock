@@ -1,0 +1,386 @@
+{
+  "ramadan-in-saudi": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "sa"
+  },
+  "ramadan-in-egypt": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "eg"
+  },
+  "ramadan-in-morocco": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "ma"
+  },
+  "ramadan-in-algeria": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "dz"
+  },
+  "ramadan-in-uae": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "ae"
+  },
+  "ramadan-in-tunisia": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "tn"
+  },
+  "ramadan-in-kuwait": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "kw"
+  },
+  "ramadan-in-qatar": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "qa"
+  },
+  "eid-al-fitr-in-saudi": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "sa"
+  },
+  "eid-al-fitr-in-egypt": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "eg"
+  },
+  "eid-al-fitr-in-morocco": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "ma"
+  },
+  "eid-al-fitr-in-algeria": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "dz"
+  },
+  "eid-al-fitr-in-uae": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "ae"
+  },
+  "eid-al-fitr-in-tunisia": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "tn"
+  },
+  "eid-al-fitr-in-kuwait": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "kw"
+  },
+  "eid-al-fitr-in-qatar": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "qa"
+  },
+  "eid-al-adha-in-saudi": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "sa"
+  },
+  "eid-al-adha-in-egypt": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "eg"
+  },
+  "eid-al-adha-in-morocco": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "ma"
+  },
+  "eid-al-adha-in-algeria": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "dz"
+  },
+  "eid-al-adha-in-uae": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "ae"
+  },
+  "eid-al-adha-in-tunisia": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "tn"
+  },
+  "eid-al-adha-in-kuwait": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "kw"
+  },
+  "eid-al-adha-in-qatar": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "qa"
+  },
+  "day-of-arafa-in-saudi": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "sa"
+  },
+  "day-of-arafa-in-egypt": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "eg"
+  },
+  "day-of-arafa-in-morocco": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "ma"
+  },
+  "day-of-arafa-in-algeria": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "dz"
+  },
+  "day-of-arafa-in-uae": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "ae"
+  },
+  "day-of-arafa-in-tunisia": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "tn"
+  },
+  "day-of-arafa-in-kuwait": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "kw"
+  },
+  "day-of-arafa-in-qatar": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "qa"
+  },
+  "hajj-season-in-saudi": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "sa"
+  },
+  "hajj-season-in-egypt": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "eg"
+  },
+  "hajj-season-in-morocco": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "ma"
+  },
+  "hajj-season-in-algeria": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "dz"
+  },
+  "hajj-season-in-uae": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "ae"
+  },
+  "hajj-season-in-tunisia": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "tn"
+  },
+  "hajj-season-in-kuwait": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "kw"
+  },
+  "hajj-season-in-qatar": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "qa"
+  },
+  "islamic-new-year-in-saudi": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "sa"
+  },
+  "islamic-new-year-in-egypt": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "eg"
+  },
+  "islamic-new-year-in-morocco": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "ma"
+  },
+  "islamic-new-year-in-algeria": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "dz"
+  },
+  "islamic-new-year-in-uae": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "ae"
+  },
+  "islamic-new-year-in-tunisia": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "tn"
+  },
+  "islamic-new-year-in-kuwait": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "kw"
+  },
+  "islamic-new-year-in-qatar": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "qa"
+  },
+  "ashura-in-saudi": {
+    "canonicalSlug": "ashura",
+    "countryCode": "sa"
+  },
+  "ashura-in-egypt": {
+    "canonicalSlug": "ashura",
+    "countryCode": "eg"
+  },
+  "ashura-in-morocco": {
+    "canonicalSlug": "ashura",
+    "countryCode": "ma"
+  },
+  "ashura-in-algeria": {
+    "canonicalSlug": "ashura",
+    "countryCode": "dz"
+  },
+  "ashura-in-uae": {
+    "canonicalSlug": "ashura",
+    "countryCode": "ae"
+  },
+  "ashura-in-tunisia": {
+    "canonicalSlug": "ashura",
+    "countryCode": "tn"
+  },
+  "ashura-in-kuwait": {
+    "canonicalSlug": "ashura",
+    "countryCode": "kw"
+  },
+  "ashura-in-qatar": {
+    "canonicalSlug": "ashura",
+    "countryCode": "qa"
+  },
+  "mawlid-in-saudi": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "sa"
+  },
+  "mawlid-in-egypt": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "eg"
+  },
+  "mawlid-in-morocco": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "ma"
+  },
+  "mawlid-in-algeria": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "dz"
+  },
+  "mawlid-in-uae": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "ae"
+  },
+  "mawlid-in-tunisia": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "tn"
+  },
+  "mawlid-in-kuwait": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "kw"
+  },
+  "mawlid-in-qatar": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "qa"
+  },
+  "laylat-al-qadr-in-saudi": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "sa"
+  },
+  "laylat-al-qadr-in-egypt": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "eg"
+  },
+  "laylat-al-qadr-in-morocco": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "ma"
+  },
+  "laylat-al-qadr-in-algeria": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "dz"
+  },
+  "laylat-al-qadr-in-uae": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "ae"
+  },
+  "laylat-al-qadr-in-tunisia": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "tn"
+  },
+  "laylat-al-qadr-in-kuwait": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "kw"
+  },
+  "laylat-al-qadr-in-qatar": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "qa"
+  },
+  "isra-miraj-in-saudi": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "sa"
+  },
+  "isra-miraj-in-egypt": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "eg"
+  },
+  "isra-miraj-in-morocco": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "ma"
+  },
+  "isra-miraj-in-algeria": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "dz"
+  },
+  "isra-miraj-in-uae": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "ae"
+  },
+  "isra-miraj-in-tunisia": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "tn"
+  },
+  "isra-miraj-in-kuwait": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "kw"
+  },
+  "isra-miraj-in-qatar": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "qa"
+  },
+  "nisf-shaban-in-saudi": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "sa"
+  },
+  "nisf-shaban-in-egypt": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "eg"
+  },
+  "nisf-shaban-in-morocco": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "ma"
+  },
+  "nisf-shaban-in-algeria": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "dz"
+  },
+  "nisf-shaban-in-uae": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "ae"
+  },
+  "nisf-shaban-in-tunisia": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "tn"
+  },
+  "nisf-shaban-in-kuwait": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "kw"
+  },
+  "nisf-shaban-in-qatar": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "qa"
+  },
+  "first-dhul-hijjah-in-saudi": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "sa"
+  },
+  "first-dhul-hijjah-in-egypt": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "eg"
+  },
+  "first-dhul-hijjah-in-morocco": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "ma"
+  },
+  "first-dhul-hijjah-in-algeria": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "dz"
+  },
+  "first-dhul-hijjah-in-uae": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "ae"
+  },
+  "first-dhul-hijjah-in-tunisia": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "tn"
+  },
+  "first-dhul-hijjah-in-kuwait": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "kw"
+  },
+  "first-dhul-hijjah-in-qatar": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "qa"
+  }
+}

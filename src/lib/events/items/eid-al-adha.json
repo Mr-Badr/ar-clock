@@ -1,0 +1,9 @@
+{
+  "id": "eid-al-adha",
+  "slug": "eid-al-adha",
+  "name": "عيد الأضحى المبارك",
+  "type": "hijri",
+  "category": "islamic",
+  "hijriMonth": 12,
+  "hijriDay": 10
+}

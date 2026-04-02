@@ -16,7 +16,6 @@ import { getCityBySlug } from '@/lib/db/queries/cities';
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 import { calculatePrayerTimes, formatTime } from '@/lib/prayerEngine';
 
-export const runtime = 'edge'; // fastest response possible
 export const size = { width: 1200, height: 630 };
 export const alt = 'مواقيت الصلاة';
 

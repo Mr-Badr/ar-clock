@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "exams-th-eg",
+    "slug": "thanaweya-exams",
+    "name": "امتحانات الثانوية العامة (مصر)",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "eg",
+    "month": 6,
+    "day": 20
+  },
+  "richContent": {
+    "seoTitle": "امتحانات الثانوية العامة {{year}} مصر — الجدول والمواعيد",
+    "description": "متى تبدأ امتحانات الثانوية العامة {{year}} في مصر؟ جدول الامتحانات.",
+    "keywords": [
+      "امتحانات الثانوية {{year}} مصر",
+      "جدول امتحانات الثانوية",
+      "موعد الثانوية {{year}}"
+    ],
+    "faqItems": [
+      {
+        "q": "متى تبدأ امتحانات الثانوية {{year}}؟",
+        "a": "20 يونيو {{year}} تقريباً."
+      },
+      {
+        "q": "كم تدوم الامتحانات؟",
+        "a": "حوالي 3-4 أسابيع."
+      }
+    ],
+    "about": {
+      "heading": "عن امتحانات الثانوية العامة المصرية {{year}}",
+      "paragraphs": [
+        "تنطلق امتحانات الثانوية العامة في مصر أواخر يونيو تقريباً. تستمر لمدة 3-4 أسابيع.",
+        "تُعلن وزارة التربية والتعليم الجدول الرسمي قبل شهر من الانطلاق."
+      ]
+    },
+    "quickFacts": [
+      {
+        "label": "موعد الانطلاق",
+        "value": "20 يونيو {{year}}"
+      },
+      {
+        "label": "المدة",
+        "value": "3-4 أسابيع"
+      },
+      {
+        "label": "الموقع الرسمي",
+        "value": "moe.gov.eg"
+      }
+    ],
+    "relatedSlugs": [
+      "thanaweya-results",
+      "school-start-egypt"
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى امتحانات الثانوية العامة (مصر) {{year}}",
+      "كم باقي على امتحانات الثانوية العامة (مصر) {{year}}",
+      "موعد امتحانات الثانوية العامة (مصر) {{year}}",
+      "امتحانات الثانوية العامة (مصر) {{hijriYear}}"
+    ],
+    "country": [
+      "متى امتحانات الثانوية العامة (مصر) في {{countryName}} {{year}}",
+      "امتحانات الثانوية العامة (مصر) {{countryName}} {{year}}",
+      "كم باقي على امتحانات الثانوية العامة (مصر) في {{countryName}}"
+    ]
+  },
+  "tier": "tier2",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/thanaweya-exams",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar",
+  "queueOrder": 31
+}

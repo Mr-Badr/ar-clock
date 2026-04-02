@@ -1,0 +1,10 @@
+{
+  "id": "school-start-kw",
+  "slug": "school-start-kuwait",
+  "name": "بدء الدراسة في الكويت",
+  "type": "fixed",
+  "category": "school",
+  "_countryCode": "kw",
+  "month": 9,
+  "day": 15
+}

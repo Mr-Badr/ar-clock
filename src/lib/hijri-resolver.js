@@ -7,6 +7,7 @@
 import { getCountryCalendarConfig } from './calendar-config.js';
 import { cacheTag, cacheLife } from 'next/cache';
 import { HIJRI_MONTHS_AR } from './holidays-engine.js';
+import { logError, logEvent } from '@/lib/observability';
 
 const ALADHAN = 'https://api.aladhan.com/v1';
 const _cache = new Map(); // `${method}-${year}-${month}` → Map<day,iso> | null
@@ -17,7 +18,10 @@ function getSafeNowMs() { return Date.now(); }
 
 async function fetchMonth(year, month, method = 1) {
   const key = `${method}-${year}-${month}`;
-  if (_cache.has(key)) return _cache.get(key);
+  if (_cache.has(key)) {
+    logEvent('hijri-cache-hit', { key });
+    return _cache.get(key);
+  }
 
   // Request deduplication: if there's already a pending request for this key, wait for it
   if (_pendingRequests.has(key)) {
@@ -38,7 +42,7 @@ async function fetchMonth(year, month, method = 1) {
 
         if (r.status === 429) {
           retries++;
-          console.warn(`[hijri-resolver] 429 (retry ${retries}/3) for ${key}`);
+          logEvent('hijri-rate-limit', { key, retries });
           await new Promise((res) => setTimeout(res, 1000 * retries + Math.random() * 500));
           continue;
         }
@@ -58,7 +62,7 @@ async function fetchMonth(year, month, method = 1) {
         return map;
       } catch (err) {
         if (retries >= maxRetries - 1) {
-          console.warn('[hijri-resolver] Fatal:', key, err.message);
+          logError('hijri-resolver-fatal', { key, message: err.message });
           _cache.set(key, null);
           return null;
         }

@@ -1,9 +1,10 @@
 import { getSupabaseServer } from '@/lib/supabase-server';
+import { getSiteUrl } from '@/lib/site-config';
 import { connection } from 'next/server';
 
 export async function GET() {
   await connection();
-  const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+  const BASE = getSiteUrl();
 
   let countries: { country_slug: string }[] = [];
   try {

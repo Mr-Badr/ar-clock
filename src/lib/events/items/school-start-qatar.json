@@ -1,0 +1,10 @@
+{
+  "id": "school-start-qa",
+  "slug": "school-start-qatar",
+  "name": "بدء الدراسة في قطر",
+  "type": "fixed",
+  "category": "school",
+  "_countryCode": "qa",
+  "month": 8,
+  "day": 30
+}

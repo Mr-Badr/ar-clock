@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "results-bac-tn",
+    "slug": "bac-results-tunisia",
+    "name": "نتائج بكالوريا تونس",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "tn",
+    "month": 6,
+    "day": 23
+  },
+  "richContent": {
+    "seoTitle": "نتائج البكالوريا {{year}} تونس — موعد الإعلان والاستعلام",
+    "description": "متى تصدر نتائج الباك {{year}} في تونس؟ كيف تستعلم عبر bac.edunet.tn؟",
+    "keywords": [
+      "نتائج الباك {{year}} تونس",
+      "بكالوريا {{year}} تونس",
+      "bac.edunet.tn",
+      "متى تصدر نتائج الباكالوريا تونس"
+    ],
+    "faqItems": [
+      {
+        "q": "متى تصدر نتائج الباك {{year}} في تونس؟",
+        "a": "عادةً بين 20 و25 يونيو {{year}}."
+      },
+      {
+        "q": "كيف أتحقق من نتيجتي؟",
+        "a": "ادخل bac.edunet.tn وأدخل رقم تسجيلك."
+      }
+    ],
+    "about": {
+      "heading": "عن نتائج بكالوريا تونس {{year}}",
+      "paragraphs": [
+        "تُعلن وزارة التربية التونسية عن نتائج البكالوريا أواخر يونيو تقريباً. تُنشر النتائج على موقع bac.edunet.tn.",
+        "يمكن الاستعلام برقم التسجيل والاسم الكامل."
+      ]
+    },
+    "quickFacts": [
+      {
+        "label": "موعد الإعلان",
+        "value": "أواخر يونيو {{year}}"
+      },
+      {
+        "label": "الموقع الرسمي",
+        "value": "bac.edunet.tn"
+      },
+      {
+        "label": "طريقة الاستعلام",
+        "value": "رقم التسجيل / الاسم"
+      }
+    ],
+    "relatedSlugs": [
+      "school-start-tunisia"
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى نتائج بكالوريا تونس {{year}}",
+      "كم باقي على نتائج بكالوريا تونس {{year}}",
+      "موعد نتائج بكالوريا تونس {{year}}",
+      "نتائج بكالوريا تونس {{hijriYear}}"
+    ],
+    "country": [
+      "متى نتائج بكالوريا تونس في {{countryName}} {{year}}",
+      "نتائج بكالوريا تونس {{countryName}} {{year}}",
+      "كم باقي على نتائج بكالوريا تونس في {{countryName}}"
+    ]
+  },
+  "tier": "tier2",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/bac-results-tunisia",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar",
+  "queueOrder": 51
+}

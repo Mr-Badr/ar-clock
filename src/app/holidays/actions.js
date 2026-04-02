@@ -13,22 +13,37 @@ import {
   getNextEventDate, getTimeRemaining, formatGregorianAr,
   resolveEventMeta,
 } from '@/lib/holidays-engine';
+import { getCountryByCode } from '@/lib/events/country-dictionary';
+import { getListableEvents } from '@/lib/events';
 import { resolveAllHijriEvents } from '@/lib/hijri-resolver';
 import { getCachedNowIso } from '@/lib/date-utils';
+import { getRichContent } from '@/lib/event-content';
 
 import { PAGE_SIZE } from './constants';
 
 /* ── Annotate one event with computed runtime data ──────────────────────── */
 function annotate(raw, resolvedMap, nowMs) {
-  const ev = enrichEvent(raw);
+  const base = enrichEvent(raw);
+  const routeSlug = base.__requestedSlug || base.slug;
+  const countryCode = base.__aliasCountryCode || base._countryCode || null;
+  const country = getCountryByCode(countryCode);
+  const ev = {
+    ...base,
+    slug: routeSlug,
+    ...getRichContent(routeSlug),
+    _countryCode: countryCode,
+  };
   const target = getNextEventDate(ev, resolvedMap, nowMs);
   const rem = getTimeRemaining(target, nowMs);
-  const cal = resolvedMap[ev.slug] || null;
+  const cal = resolvedMap[routeSlug] || null;
   // resolveEventMeta patches stale years in title/description/keywords
   const meta = resolveEventMeta(ev, target);
+  const displayName = base.__isAlias && country?.nameAr
+    ? `${base.name} في ${country.nameAr}`
+    : ev.name;
   return {
-    slug: ev.slug,
-    name: ev.name,
+    slug: routeSlug,
+    name: displayName,
     type: ev.type,
     category: ev.category || 'islamic',
     seoTitle: meta.seoTitle,
@@ -42,22 +57,44 @@ function annotate(raw, resolvedMap, nowMs) {
     _calVariance: cal?.variance ?? 0,
     _calAccuracy: cal?.accuracy || 'high',
     _localSighting: cal?.localSighting || false,
+    __canonicalSlug: base.__canonicalSlug || base.slug,
+    __isAlias: Boolean(base.__isAlias),
   };
+}
+
+function matchesSearch(raw, query) {
+  if (!query) return true;
+  const normalizedQuery = query.trim().toLowerCase();
+  if (!normalizedQuery) return true;
+
+  const country = getCountryByCode(raw.__aliasCountryCode || raw._countryCode || null);
+  const displayName = raw.__isAlias && country?.nameAr
+    ? `${raw.name} في ${country.nameAr}`
+    : raw.name;
+
+  const haystack = [
+    displayName,
+    raw.name,
+    country?.nameAr,
+    raw.description,
+    ...(Array.isArray(raw.keywords) ? raw.keywords : []),
+  ]
+    .map((value) => String(value || '').toLowerCase())
+    .join(' ');
+
+  return haystack.includes(normalizedQuery);
 }
 
 /* ── Paginated loader with optional filtering ───────────────────────────── */
 export async function loadMoreEvents(cursor = 0, filter = {}) {
-  let pool = ALL_EVENTS.map(enrichEvent);
+  let pool = filter.countryCode && filter.countryCode !== 'all'
+    ? getListableEvents({ countryCode: filter.countryCode }).map(enrichEvent)
+    : ALL_EVENTS.map(enrichEvent);
 
   if (filter.category && filter.category !== 'all')
     pool = pool.filter(e => e.category === filter.category);
-  if (filter.countryCode && filter.countryCode !== 'all')
-    pool = pool.filter(e => e._countryCode === filter.countryCode);
   if (filter.search?.trim()) {
-    const q = filter.search.trim().toLowerCase();
-    pool = pool.filter(e =>
-      e.name.includes(q) || e.description?.toLowerCase().includes(q)
-    );
+    pool = pool.filter((event) => matchesSearch(event, filter.search));
   }
 
   const nowMs = new Date(await getCachedNowIso()).getTime();

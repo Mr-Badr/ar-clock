@@ -18,6 +18,7 @@ import Link from 'next/link'
 import { Globe2, Clock, Zap, MapPin, Calculator } from 'lucide-react'
 import { SectionWrapper, SectionBadge, FeatureItem } from '@/components/shared/primitives'
 import CtaLink from '@/components/shared/CtaLink'
+import { SITE_BRAND } from '@/lib/site-config'
 import HowItWorksMockup from './mockups/HowItWorksMockup'
 
 const H2_ID = 'h2-how-it-works'
@@ -34,7 +35,7 @@ function HowToSchema() {
     tool: [
       {
         '@type': 'HowToTool',
-        name: 'حاسبة فرق التوقيت — وقت عربي',
+        name: `حاسبة فرق التوقيت — ${SITE_BRAND}`,
       },
     ],
     step: [
@@ -152,7 +153,7 @@ export default function SectionHowItWorks() {
               className="text-sm font-semibold transition-colors"
               style={{ color: 'var(--accent-alt)' }}
             >
-              الوقت الآن حول العالم →
+              الوقت الآن حول العالم ←
             </Link>
           </div>
         </div>

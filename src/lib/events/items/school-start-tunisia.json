@@ -1,0 +1,10 @@
+{
+  "id": "school-start-tn",
+  "slug": "school-start-tunisia",
+  "name": "الدخول المدرسي في تونس",
+  "type": "fixed",
+  "category": "school",
+  "_countryCode": "tn",
+  "month": 9,
+  "day": 15
+}

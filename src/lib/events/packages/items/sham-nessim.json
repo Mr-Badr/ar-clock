@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "sham-nessim",
+    "slug": "sham-nessim",
+    "name": "شم النسيم",
+    "type": "easter",
+    "category": "holidays",
+    "_countryCode": "eg"
+  },
+  "richContent": {
+    "easterOffset": 1,
+    "seoTitle": "شم النسيم {{year}} — 6 أبريل | عيد الربيع المصري",
+    "description": "شم النسيم {{year}} يصادف 6 أبريل. كم باقي؟ تقليد مصري فرعوني قديم.",
+    "details": "عيد مصري موروث من الحضارة الفرعونية. يخرج المصريون للمتنزهات احتفاءً بقدوم الربيع ويأكلون الفسيخ والبيض الملوّن.",
+    "keywords": [
+      "شم النسيم {{year}}",
+      "6 أبريل {{year}}",
+      "كم باقي على شم النسيم",
+      "شم النسيم مصر",
+      "عيد الربيع",
+      "الفسيخ"
+    ],
+    "faqItems": [
+      {
+        "q": "متى شم النسيم {{year}}؟",
+        "a": "6 أبريل {{year}} (الإثنين)."
+      },
+      {
+        "q": "ما أصل شم النسيم؟",
+        "a": "عيد فرعوني قديم يعود لأكثر من 4500 سنة."
+      },
+      {
+        "q": "ما هي تقاليد شم النسيم؟",
+        "a": "أكل الفسيخ والبيض الملون، والخروج إلى الحدائق."
+      }
+    ],
+    "about": {
+      "heading": "عن شم النسيم",
+      "paragraphs": [
+        "شم النسيم هو عيد مصري قديم يعود للعهد الفرعوني، يصادف يوم الإثنين التالي لعيد الفصح القبطي. في {{year}}، يصادف 6 أبريل.",
+        "من التقاليد: أكل الفسيخ (السمك المملح) والبيض الملون، والخروج إلى الحدائق والمتنزهات.",
+        "يُعد إجازة رسمية في مصر."
+      ]
+    },
+    "significance": "تقليد فرعوني عمره أكثر من 4500 سنة",
+    "quickFacts": [
+      {
+        "label": "موعد شم النسيم {{year}}",
+        "value": "6 أبريل {{year}}"
+      },
+      {
+        "label": "الأصل",
+        "value": "فرعوني"
+      },
+      {
+        "label": "التقاليد",
+        "value": "الفسيخ والبيض الملون"
+      },
+      {
+        "label": "إجازة رسمية",
+        "value": "نعم — في مصر"
+      }
+    ],
+    "relatedSlugs": [
+      "thanaweya-results",
+      "school-start-egypt"
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى شم النسيم {{year}}",
+      "كم باقي على شم النسيم {{year}}",
+      "موعد شم النسيم {{year}}",
+      "شم النسيم {{hijriYear}}"
+    ],
+    "country": [
+      "متى شم النسيم في {{countryName}} {{year}}",
+      "شم النسيم {{countryName}} {{year}}",
+      "كم باقي على شم النسيم في {{countryName}}"
+    ]
+  },
+  "tier": "tier2",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/sham-nessim",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar",
+  "queueOrder": 34
+}

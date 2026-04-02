@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "school-start-eg",
+    "slug": "school-start-egypt",
+    "name": "بدء الدراسة في مصر",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "eg",
+    "month": 9,
+    "day": 20
+  },
+  "richContent": {
+    "seoTitle": "بداية الدراسة في مصر {{year}} — موعد انطلاق العام الدراسي",
+    "description": "متى تبدأ الدراسة في مصر {{year}}؟ موعد العام الدراسي الجديد.",
+    "keywords": [
+      "بداية الدراسة في مصر {{year}}",
+      "موعد الدراسة مصر",
+      "العام الدراسي {{year}}"
+    ],
+    "faqItems": [
+      {
+        "q": "متى تبدأ الدراسة في مصر {{year}}؟",
+        "a": "20 سبتمبر {{year}} تقريباً."
+      }
+    ],
+    "about": {
+      "heading": "عن بداية العام الدراسي في مصر {{year}}",
+      "paragraphs": [
+        "يبدأ العام الدراسي في مصر أواخر سبتمبر تقريباً. تُعلن وزارة التربية والتعليم الموعد الرسمي.",
+        "في {{year}}، من المتوقع أن تبدأ الدراسة 20 سبتمبر."
+      ]
+    },
+    "quickFacts": [
+      {
+        "label": "موعد البداية",
+        "value": "20 سبتمبر {{year}}"
+      },
+      {
+        "label": "الموقع الرسمي",
+        "value": "moe.gov.eg"
+      }
+    ],
+    "relatedSlugs": [
+      "thanaweya-results",
+      "thanaweya-exams"
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى بدء الدراسة في مصر {{year}}",
+      "كم باقي على بدء الدراسة في مصر {{year}}",
+      "موعد بدء الدراسة في مصر {{year}}",
+      "بدء الدراسة في مصر {{hijriYear}}"
+    ],
+    "country": [
+      "متى بدء الدراسة في مصر في {{countryName}} {{year}}",
+      "بدء الدراسة في مصر {{countryName}} {{year}}",
+      "كم باقي على بدء الدراسة في مصر في {{countryName}}"
+    ]
+  },
+  "tier": "tier2",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/school-start-egypt",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar",
+  "queueOrder": 32
+}

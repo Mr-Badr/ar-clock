@@ -1,0 +1,14 @@
+{
+  "slug": "bac-results-tunisia",
+  "tier": "tier2",
+  "publishStatus": "drafted",
+  "checks": {
+    "contentReady": false,
+    "factChecked": false,
+    "schemaValid": false,
+    "seoValidated": false,
+    "hasHardcodedYear": false
+  },
+  "notes": [],
+  "updatedAt": "2026-03-30T23:57:36.984Z"
+}

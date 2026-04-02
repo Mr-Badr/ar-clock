@@ -34,6 +34,7 @@ import { Qibla, Coordinates }    from 'adhan'
 import { Clock, Compass, BookOpen, Bell, Globe2, Moon } from 'lucide-react'
 
 import { calculatePrayerTimes, getNextPrayer } from '@/lib/prayerEngine'
+import { lookupIpGeo } from '@/lib/ip-lookup'
 import { getNearestCityAction, mapTimezoneToCityAction } from '@/app/actions/location'
 
 import { SectionWrapper, SectionBadge, FeatureItem } from '@/components/shared/primitives'
@@ -121,16 +122,11 @@ async function detectByIP(headersList) {
     return null
   }
 
-  // ip-api.com free tier — same endpoint used in /api/ip-city
-  // revalidate: 3600 → Next.js Data Cache caches 1h per unique URL
-  const res = await fetch(
-    `http://ip-api.com/json/${ip}?fields=status,lat,lon,timezone`,
-    { next: { revalidate: 3600 } },
-  )
-
-  if (!res.ok) return null
-  const data = await res.json()
-  if (data.status !== 'success' || !data.lat || !data.lon) return null
+  const data = await lookupIpGeo(ip, {
+    fields: ['status', 'lat', 'lon', 'timezone'],
+    revalidate: 3600,
+  })
+  if (!data?.lat || !data?.lon) return null
 
   // getNearestCityAction does a geodesic DB lookup — the same function used by
   // findNearestCity in locationService.js, surfaced as a server action
@@ -280,7 +276,7 @@ export default async function SectionPrayerTimes() {
               className="text-sm font-semibold transition-colors"
               style={{ color: 'var(--accent-alt)' }}
             >
-              تصفّح جميع المدن →
+              تصفّح جميع المدن  ←
             </Link>
           </div>
         </div>

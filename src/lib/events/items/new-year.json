@@ -1,0 +1,9 @@
+{
+  "id": "new-year",
+  "slug": "new-year",
+  "name": "رأس السنة الميلادية",
+  "type": "fixed",
+  "category": "holidays",
+  "month": 1,
+  "day": 1
+}

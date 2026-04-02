@@ -32,6 +32,10 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import {
+  isPublicEnvEnabled,
+  useMarketingPermission,
+} from "@/lib/client/marketing";
 
 interface AdTopBannerProps {
   /** Unique ID per page to prevent AdSense slot conflicts */
@@ -43,11 +47,17 @@ export default function AdTopBanner({
   slotId = "top-banner",
   className = "",
 }: AdTopBannerProps) {
+  const adsEnabled = isPublicEnvEnabled(process.env.NEXT_PUBLIC_ENABLE_ADS);
+  const clientId = (process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "").trim();
+  const adSlot = (process.env.NEXT_PUBLIC_ADSENSE_TOP_BANNER_SLOT || "").trim();
+  const shouldRenderAds = adsEnabled && clientId.startsWith("ca-pub-") && Boolean(adSlot);
+  const canLoadAds = useMarketingPermission(shouldRenderAds);
   const ref = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const loaded = useRef(false);
 
   useEffect(() => {
+    if (!canLoadAds) return;
     if (!ref.current || loaded.current) return;
 
     // Load when slot is within 200px of viewport — gives ad time to render
@@ -58,15 +68,12 @@ export default function AdTopBanner({
           if (entry.isIntersecting && !loaded.current) {
             loaded.current = true;
             setIsLoading(false);
-
-            // ─────────────────────────────────────────────────────────────────
-            // TODO: Replace with your AdSense code when ready:
-            //
-            //   try {
-            //     (window.adsbygoogle = window.adsbygoogle || []).push({});
-            //   } catch (e) {}
-            //
-            // ─────────────────────────────────────────────────────────────────
+            try {
+              const adsWindow = window as Window & { adsbygoogle?: unknown[] };
+              (adsWindow.adsbygoogle = adsWindow.adsbygoogle || []).push({});
+            } catch (error) {
+              console.warn("AdSense top banner failed to initialize:", error);
+            }
 
             observer.disconnect();
           }
@@ -77,7 +84,9 @@ export default function AdTopBanner({
 
     observer.observe(ref.current);
     return () => observer.disconnect();
-  }, []);
+  }, [canLoadAds]);
+
+  if (!shouldRenderAds || !canLoadAds) return null;
 
   return (
     <div
@@ -89,20 +98,14 @@ export default function AdTopBanner({
     >
       {/* Label — required by Google AdSense policy to be visible */}
       <span className="ad-slot__label">إعلانات</span>
-
-      {/* ─────────────────────────────────────────────────────────────────────
-          TODO: Paste your AdSense <ins> tag here when ready.
-          For best fill rate, use "auto" format with full-width responsive:
-
-          <ins
-            className="adsbygoogle"
-            style={{ display: "block" }}
-            data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-            data-ad-slot="XXXXXXXXXX"
-            data-ad-format="auto"
-            data-full-width-responsive="true"
-          />
-          ───────────────────────────────────────────────────────────────────── */}
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-client={clientId}
+        data-ad-slot={adSlot}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      />
     </div>
   );
 }

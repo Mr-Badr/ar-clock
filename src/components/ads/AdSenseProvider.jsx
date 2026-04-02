@@ -50,14 +50,18 @@
  */
 
 import Script from "next/script";
+import {
+  isPublicEnvEnabled,
+  useMarketingPermission,
+} from "@/lib/client/marketing";
 
 export default function AdSenseProvider() {
-  // ─────────────────────────────────────────────────────────────────────────
-  // TODO: Replace XXXXXXXXXXXXXXXX with your real AdSense publisher ID
-  // Find it in AdSense dashboard → Account → Account information → Publisher ID
-  // Format: ca-pub-XXXXXXXXXXXXXXXX
-  // ─────────────────────────────────────────────────────────────────────────
-  const publisherId = "ca-pub-XXXXXXXXXXXXXXXX";
+  const adsEnabled = isPublicEnvEnabled(process.env.NEXT_PUBLIC_ENABLE_ADS);
+  const publisherId = (process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "").trim();
+  const shouldLoadAds = adsEnabled && publisherId.startsWith("ca-pub-");
+  const canLoad = useMarketingPermission(shouldLoadAds);
+
+  if (!shouldLoadAds || !canLoad) return null;
 
   return (
     <Script

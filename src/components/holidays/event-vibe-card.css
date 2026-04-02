@@ -262,6 +262,7 @@
 }
 
 .evibe-headline {
+  font-family: var(--font-heading);
   font-size: var(--text-xl);
   font-weight: var(--font-bold);
   color: var(--text-primary);

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "school-start-tn",
+    "slug": "school-start-tunisia",
+    "name": "الدخول المدرسي في تونس",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "tn",
+    "month": 9,
+    "day": 15
+  },
+  "richContent": {
+    "seoTitle": "بداية الدراسة في تونس {{year}} — موعد الدخول المدرسي",
+    "description": "متى تبدأ الدراسة في تونس {{year}}؟ موعد الدخول المدرسي الجديد.",
+    "keywords": [
+      "بداية الدراسة في تونس {{year}}",
+      "موعد الدراسة تونس",
+      "الدخول المدرسي {{year}}"
+    ],
+    "faqItems": [
+      {
+        "q": "متى تبدأ الدراسة في تونس {{year}}؟",
+        "a": "15 سبتمبر {{year}} تقريباً."
+      }
+    ],
+    "about": {
+      "heading": "عن الدخول المدرسي في تونس {{year}}",
+      "paragraphs": [
+        "يبدأ العام الدراسي في تونس منتصف سبتمبر تقريباً. تُعلن وزارة التربية الموعد الرسمي.",
+        "في {{year}}، من المتوقع أن تبدأ الدراسة 15 سبتمبر."
+      ]
+    },
+    "quickFacts": [
+      {
+        "label": "موعد البداية",
+        "value": "15 سبتمبر {{year}}"
+      }
+    ],
+    "relatedSlugs": [
+      "bac-results-tunisia"
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى الدخول المدرسي في تونس {{year}}",
+      "كم باقي على الدخول المدرسي في تونس {{year}}",
+      "موعد الدخول المدرسي في تونس {{year}}",
+      "الدخول المدرسي في تونس {{hijriYear}}"
+    ],
+    "country": [
+      "متى الدخول المدرسي في تونس في {{countryName}} {{year}}",
+      "الدخول المدرسي في تونس {{countryName}} {{year}}",
+      "كم باقي على الدخول المدرسي في تونس في {{countryName}}"
+    ]
+  },
+  "tier": "tier3",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/school-start-tunisia",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar",
+  "queueOrder": 52
+}

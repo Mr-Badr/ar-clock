@@ -100,7 +100,7 @@ export default function CityPrayerCardsGrid({ cities, countrySlug, countryCode }
       try {
         const lats = citiesToFetch.map(c => c.lat).join(',');
         const lons = citiesToFetch.map(c => c.lon).join(',');
-        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&current=temperature_2m,weather_code,is_day`;
+        const url = `/api/weather?latitudes=${encodeURIComponent(lats)}&longitudes=${encodeURIComponent(lons)}`;
         const res = await fetch(url);
         if (!res.ok) return;
         const responseData = await res.json();

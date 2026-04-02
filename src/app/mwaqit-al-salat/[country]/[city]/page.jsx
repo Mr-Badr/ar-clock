@@ -32,11 +32,12 @@ import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
+import { getSiteUrl } from '@/lib/site-config';
 // ─── ISR: pre-build top 100 cities, revalidate every 60s ─────────────────────
 
 
 
-const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+const BASE = getSiteUrl();
 
 // Always pre-generate at least a small seed so Next.js Cache Component
 // validation passes in dev. All other slugs render at runtime (default behavior).
@@ -81,7 +82,7 @@ export async function generateMetadata({ params }) {
 
   const title       = `مواقيت الصلاة في ${cityNameAr}، ${countryNameAr} اليوم — الفجر والمغرب والعصر`;
   const description = `أوقات الصلاة الدقيقة في ${cityNameAr} اليوم.${timesHint} طريقة الحساب: ${methodInfo.label}. الشافعي والحنفي.`;
-  const canonical   = `${process.env.NEXT_PUBLIC_SITE_URL}/mwaqit-al-salat/${countrySlug}/${citySlug}`;
+  const canonical   = `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}`;
 
   return {
     title,
@@ -108,7 +109,7 @@ export async function generateMetadata({ params }) {
 // ─── JSON-LD ──────────────────────────────────────────────────────────────────
 function PrayerTimesJsonLd({ cityData, countryNameAr, countrySlug, citySlug }) {
   const cityNameAr = cityData.name_ar || cityData.name_en;
-  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/mwaqit-al-salat/${countrySlug}/${citySlug}`;
+  const url = `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}`;
   const schemas = [
     {
       '@context': 'https://schema.org',
@@ -260,7 +261,7 @@ export default async function PrayerTimesPage({ params }) {
           <p className="text-muted text-sm mx-auto">{countryNameAr}</p>
         </header>
 
-        {/* <AdTopBanner slotId="top-city" /> */}
+        <AdTopBanner slotId="top-city" />
 
         {/* City search */}
         <div className="mb-8">
@@ -428,7 +429,7 @@ async function PrayerTimesContent({ country, city, cityData, countryCode }) {
         </div>
       </section>
 
-      {/* <AdInArticle slotId="mid-city-1" /> */}
+      <AdInArticle slotId="mid-city-1" />
 
       {/* ── Madhab section ────────────────────────────────────────────── */}
       <section className="card mb-6" aria-label="المذهب الفقهي ووقت العصر">
@@ -460,7 +461,7 @@ async function PrayerTimesContent({ country, city, cityData, countryCode }) {
         />
       </section>
 
-      {/* <AdInArticle slotId="mid-city-2" /> */}
+      <AdInArticle slotId="mid-city-2" />
 
       {/* ── FAQ (shadcn Accordion, Google-crawlable) ──────────────────── */}
       <section className="mb-6" aria-label="أسئلة شائعة عن مواقيت الصلاة">

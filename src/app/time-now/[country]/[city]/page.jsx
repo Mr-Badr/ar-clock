@@ -24,7 +24,7 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
-import { ChevronLeft, MapPin, Clock } from 'lucide-react';
+import { ChevronLeft, MapPin } from 'lucide-react';
 
 
 import TimeNowHero from '@/components/time-now/TimeNowHero';
@@ -39,8 +39,9 @@ import { getCountryBySlug } from '@/lib/db/queries/countries';
 import { getAllCityParams, getCityBySlug, getTopCitiesByCountry } from '@/lib/db/queries/cities';
 import { getCountriesAction } from '@/app/actions/location';
 import { getCachedNowIso } from '@/lib/date-utils';
+import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 
-const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+const BASE = getSiteUrl();
 
 /* ─── ROUTE CONFIG ──────────────────────────────────────────────── */
 
@@ -79,7 +80,7 @@ export async function generateMetadata({ params }) {
   const offset = getUtcOffsetStr(city.timezone);
 
   return {
-    title: `الوقت الان في ${cityAr}، ${countryAr} — الساعة والتاريخ | ساعة عربية`,
+    title: `الوقت الان في ${cityAr}، ${countryAr} — الساعة والتاريخ`,
     description: `الوقت الحالي في ${cityAr} بدقة حتى الثانية. الساعة الان في ${cityAr}، ${countryAr} — التاريخ اليوم الميلادي والهجري، المنطقة الزمنية ${offset}.`,
     keywords: [
       `الوقت الان في ${cityAr}`,
@@ -102,8 +103,8 @@ export async function generateMetadata({ params }) {
       type: 'website',
       locale: 'ar_SA',
       url: `${BASE}/time-now/${countrySlug}/${citySlug}`,
-      siteName: 'ساعة عربية',
-      title: `الوقت الان في ${cityAr}، ${countryAr} | ساعة عربية`,
+      siteName: SITE_BRAND,
+      title: `الوقت الان في ${cityAr}، ${countryAr} | ${SITE_BRAND}`,
       description: `الساعة الحالية في ${cityAr} بدقة حتى الثانية. ${countryAr} · ${offset}.`,
       images: [{ url: '/og-image.png', width: 1200, height: 630, alt: `الوقت الان في ${cityAr}` }],
     },
@@ -387,24 +388,6 @@ export default async function CityTimePage({ params }) {
         </section>
 
       </main>
-
-      {/* ── FOOTER ── */}
-      <footer className="py-8 border-t border-[var(--border-subtle)] text-center">
-        <div className="flex items-center justify-center gap-2 mb-3">
-          <Clock className="text-accent" size={20} aria-hidden />
-          <span className="text-lg font-bold">ساعة عربية</span>
-        </div>
-        <nav aria-label="روابط" className="flex justify-center gap-5 mb-3">
-          <Link href="/" className="text-muted text-sm hover:text-accent transition-colors">الرئيسية</Link>
-          <Link href="/time-now" className="text-muted text-sm hover:text-accent transition-colors">الوقت الان</Link>
-          <Link href="/holidays" className="text-muted text-sm hover:text-accent transition-colors">المناسبات</Link>
-          <Link href="/time-difference" className="text-muted text-sm hover:text-accent transition-colors">فرق التوقيت</Link>
-        </nav>
-        <p className="text-muted text-xs">
-          © 2025 ساعة عربية — جميع الحقوق محفوظة.
-        </p>
-      </footer>
-
       <style>{`@keyframes pulse { 0%,100%{opacity:.5} 50%{opacity:1} }`}</style>
     </div>
   );

@@ -1,0 +1,10 @@
+{
+  "id": "national-day-ae",
+  "slug": "uae-national-day",
+  "name": "اليوم الوطني الإماراتي",
+  "type": "fixed",
+  "category": "national",
+  "_countryCode": "ae",
+  "month": 12,
+  "day": 2
+}

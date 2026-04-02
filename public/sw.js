@@ -3,24 +3,19 @@
  * Provides offline support and caching for Arabic clock app
  */
 
-const CACHE_VERSION = 'v1'; // Bump this when deploying major updates
+const CACHE_VERSION = 'v3'; // Bump this when deploying major updates
 const STATIC_CACHE = `miqat-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `miqat-dynamic-${CACHE_VERSION}`;
+const IS_LOCALHOST =
+  self.location.hostname === 'localhost' ||
+  self.location.hostname === '127.0.0.1' ||
+  self.location.hostname === '::1';
 
 // Core assets to cache immediately on install (atomic)
 const CORE_ASSETS = [
-  '/',
   '/offline',
   '/manifest.webmanifest',
   '/favicon.ico',
-];
-
-// Content pages prefixed to cache individually (best-effort)
-const CONTENT_PAGES = [
-  '/holidays',
-  '/mwaqit-al-salat',
-  '/time-now',
-  '/time-difference',
 ];
 
 // API endpoints to cache with network-first strategy
@@ -32,20 +27,16 @@ const API_ENDPOINTS = [
 
 // Install event - cache static assets safely
 self.addEventListener('install', (event) => {
+  if (IS_LOCALHOST) {
+    self.skipWaiting();
+    return;
+  }
+
   event.waitUntil(
     caches.open(STATIC_CACHE).then(async (cache) => {
       console.log(`[SW] Caching core assets for ${CACHE_VERSION}`);
-      // Atomic caching - core requirements
+      // Atomic caching - only minimal shell requirements
       await cache.addAll(CORE_ASSETS);
-      
-      // Best-effort caching - content pages
-      for (const page of CONTENT_PAGES) {
-        try {
-          await cache.add(page);
-        } catch (e) {
-          console.warn(`[SW] Failed to precache ${page}`, e);
-        }
-      }
     })
   );
   self.skipWaiting();
@@ -53,6 +44,26 @@ self.addEventListener('install', (event) => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
+  if (IS_LOCALHOST) {
+    event.waitUntil(
+      (async () => {
+        const cacheNames = await caches.keys();
+        await Promise.all(
+          cacheNames
+            .filter((cacheName) => cacheName.startsWith('miqat-'))
+            .map((cacheName) => caches.delete(cacheName))
+        );
+        await self.registration.unregister();
+        const clientsList = await self.clients.matchAll({
+          type: 'window',
+          includeUncontrolled: true,
+        });
+        await Promise.all(clientsList.map((client) => client.navigate(client.url)));
+      })()
+    );
+    return;
+  }
+
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -70,6 +81,10 @@ self.addEventListener('activate', (event) => {
 
 // Fetch event - implement caching strategies
 self.addEventListener('fetch', (event) => {
+  if (IS_LOCALHOST) {
+    return;
+  }
+
   const { request } = event;
   const url = new URL(request.url);
 
@@ -80,6 +95,17 @@ self.addEventListener('fetch', (event) => {
 
   // Skip chrome-extension and other non-http requests
   if (!url.protocol.startsWith('http')) {
+    return;
+  }
+
+  // Only handle same-origin requests inside the SW.
+  if (url.origin !== self.location.origin) {
+    return;
+  }
+
+  // Navigations: network-first + offline fallback.
+  if (request.mode === 'navigate') {
+    event.respondWith(networkFirstPage(request));
     return;
   }
 
@@ -95,7 +121,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Strategy 3: Stale-while-revalidate for pages
+  // Strategy 3: Stale-while-revalidate for safe same-origin GET requests
   event.respondWith(staleWhileRevalidate(request));
 });
 
@@ -157,6 +183,21 @@ async function staleWhileRevalidate(request) {
   });
 
   return cachedResponse || fetchPromise;
+}
+
+async function networkFirstPage(request) {
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      const cache = await caches.open(DYNAMIC_CACHE);
+      cache.put(request, networkResponse.clone());
+    }
+    return networkResponse;
+  } catch {
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) return cachedResponse;
+    return caches.match('/offline');
+  }
 }
 
 // Helper functions

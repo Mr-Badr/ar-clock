@@ -909,14 +909,14 @@ export default function SearchCity({
             style={{
               flex: 1, padding: '0.75rem 1rem', borderRadius: '0.75rem',
               border: '1px solid #363D5C', background: '#1F2438', color: '#F0F4FF',
-              fontFamily: 'Noto Kufi Arabic, sans-serif', direction: 'rtl', fontSize: '1rem'
+              fontFamily: 'var(--font-base)', direction: 'rtl', fontSize: '1rem'
             }}
           />
           <button type="submit"
             style={{
               padding: '0.75rem 1.5rem', borderRadius: '0.75rem', background: '#1D4ED8',
               color: '#fff', border: 'none', cursor: 'pointer',
-              fontFamily: 'Noto Kufi Arabic, sans-serif', fontWeight: 600
+              fontFamily: 'var(--font-base)', fontWeight: 600
             }}
           >بحث</button>
         </form>

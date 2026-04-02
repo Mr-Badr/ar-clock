@@ -115,7 +115,7 @@ function A4Preview({ isDark }) {
   const C = isDark ? D : L;
 
   const mono = '"IBM Plex Mono","Courier New",monospace';
-  const sans = '"Noto Kufi Arabic",system-ui,sans-serif';
+  const sans = 'var(--font-base)';
 
   // Column grid: اليوم | ه | م | ×6 prayers
   // Proportional to route.js: 22% | 11% | 8% | ~9.8%×6

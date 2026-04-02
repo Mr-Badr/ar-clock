@@ -89,9 +89,6 @@ export default function SectionOccasionTypes() {
 
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <CtaLink href="/holidays">تصفّح المناسبات الآن</CtaLink>
-            <Link href="/holidays" className="text-sm font-semibold transition-colors" style={{ color: 'var(--accent-alt)' }}>
-              عرض جميع الدول →
-            </Link>
           </div>
         </div>
 

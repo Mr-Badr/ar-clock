@@ -1,7 +1,7 @@
 /* =============================================================================
    WAQT — Arabic Clock App — Design System v4.1
    Stack  : Next.js + Tailwind CSS 4.1 + shadcn/ui
-   Font   : Noto Kufi Arabic (loaded in layout.tsx via next/font)
+   Font   : Noto Sans Arabic for body + IBM Plex Sans Arabic for headings
    Dir    : RTL  |  Themes: dark (default) · light
    Theme  : Blue brand system — WCAG AA verified — gradient accent
 
@@ -512,7 +512,7 @@
   }
 
   body {
-    font-family: 'Noto Kufi Arabic', system-ui, sans-serif;
+    font-family: var(--font-base);
     font-size: var(--text-base);
     font-weight: var(--font-regular);
     line-height: var(--leading-normal);
@@ -561,6 +561,7 @@
 
   /* Headings */
   h1 {
+    font-family: var(--font-heading);
     font-size: var(--text-3xl);
     font-weight: var(--font-bold);
     line-height: var(--leading-tight);
@@ -569,6 +570,7 @@
   }
 
   h2 {
+    font-family: var(--font-heading);
     font-size: var(--text-2xl);
     font-weight: var(--font-semibold);
     line-height: var(--leading-tight);
@@ -576,6 +578,7 @@
   }
 
   h3 {
+    font-family: var(--font-heading);
     font-size: var(--text-xl);
     font-weight: var(--font-semibold);
     line-height: var(--leading-snug);
@@ -583,6 +586,7 @@
   }
 
   h4 {
+    font-family: var(--font-heading);
     font-size: var(--text-lg);
     font-weight: var(--font-medium);
     line-height: var(--leading-snug);
@@ -591,6 +595,7 @@
 
   h5,
   h6 {
+    font-family: var(--font-heading);
     font-size: var(--text-base);
     font-weight: var(--font-medium);
     color: var(--text-secondary);
@@ -657,7 +662,8 @@
 /*   2. Always add .tabular-nums to any element displaying time digits        */
 /*   3. Arabic body text needs line-height ≥ 1.6                             */
 :root {
-  --font-base: 'Noto Kufi Arabic', system-ui, sans-serif;
+  --font-base: var(--font-noto-sans-arabic), system-ui, sans-serif;
+  --font-heading: var(--font-ibm-plex-sans-arabic), var(--font-base);
 
   /* Type scale (base = 16px) */
   --text-2xs: 0.65rem;
@@ -734,6 +740,14 @@
 }
 
 /* Typography utilities */
+.font-base {
+  font-family: var(--font-base);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
 .font-light {
   font-weight: var(--font-light);
 }
@@ -882,5 +896,4 @@
   --z-toast: 600;
   --z-max: 9999;
 }
-
 

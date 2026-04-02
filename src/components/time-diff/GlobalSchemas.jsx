@@ -1,3 +1,7 @@
+import { getSiteUrl } from '@/lib/site-config';
+
+const SITE_URL = getSiteUrl();
+
 /**
  * GlobalSchemas — Time-difference page
  * WebPage + BreadcrumbList + SoftwareApplication JSON-LD.
@@ -12,8 +16,8 @@ export default function TimeDiffGlobalSchemas() {
     description:
       'احسب فرق التوقيت بالساعة والدقيقة بين أي مدينتين أو دولتين في العالم مع مراعاة التوقيت الصيفي DST تلقائياً',
     inLanguage: 'ar',
-    url:        'https://waqt.app/time-difference',
-    isPartOf:   { '@type': 'WebSite', url: 'https://waqt.app' },
+    url:        `${SITE_URL}/time-difference`,
+    isPartOf:   { '@type': 'WebSite', url: SITE_URL },
     about: [
       { '@type': 'Thing', name: 'فرق التوقيت' },
       { '@type': 'Thing', name: 'المناطق الزمنية' },
@@ -28,8 +32,8 @@ export default function TimeDiffGlobalSchemas() {
     '@context':       'https://schema.org',
     '@type':          'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'الرئيسية',    item: 'https://waqt.app' },
-      { '@type': 'ListItem', position: 2, name: 'فرق التوقيت', item: 'https://waqt.app/time-difference' },
+      { '@type': 'ListItem', position: 1, name: 'الرئيسية',    item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'فرق التوقيت', item: `${SITE_URL}/time-difference` },
     ],
   }
 

@@ -31,9 +31,12 @@ import HolidaysClient from './HolidaysClient';
 import { EventGridSkeleton } from '@/components/events/EventCard';
 import { getCachedNowIso } from '@/lib/date-utils';
 import HolidaysSections from '@/components/holidays/index';
+import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
 import { SectionDivider } from '@/components/shared/primitives';
+import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+const SITE = getSiteUrl();
 
 /* ── Dynamic metadata ────────────────────────────────────────────────── */
 export async function generateMetadata() {
@@ -41,32 +44,42 @@ export async function generateMetadata() {
   const gr = now.getFullYear();
   const hi = approxHijriYear(gr);
   return {
-    title: `وقت — متى رمضان وعيد الفطر والأضحى ${gr} / ${hi} — عد تنازلي دقيق`,
+    title: `متى رمضان وعيد الفطر والأضحى ${gr} / ${hi} — عد تنازلي دقيق`,
     description: `عد تنازلي للمناسبات الإسلامية والوطنية والمدرسية. متى رمضان ${gr}؟ عيد الفطر؟ عيد الأضحى؟ بالهجري والميلادي لكل الدول العربية.`,
     keywords: `متى رمضان ${gr}, عيد الفطر ${gr}, عيد الأضحى ${gr}, عد تنازلي, تقويم هجري ${hi}`,
     alternates: { canonical: `${SITE}/holidays`, languages: { ar: `${SITE}/holidays` } },
     robots: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large' },
     openGraph: {
-      title: `وقت — عداد المواعيد الإسلامية ${gr}`,
+      title: `${SITE_BRAND} — عداد المواعيد الإسلامية ${gr}`,
       locale: 'ar_SA', type: 'website', url: `${SITE}/holidays`,
     },
   };
 }
 
 /* ── Initial grid (SSR, streamed) ────────────────────────────────────── */
-async function InitialEventGrid() {
-  const { events, nextCursor, total } = await getInitialEvents();
+function normalizeFilter(searchParams = {}) {
+  return {
+    category: searchParams?.category || 'all',
+    countryCode: searchParams?.country || 'all',
+    search: searchParams?.q || '',
+    timeRange: searchParams?.range || 'all',
+  };
+}
+
+async function InitialEventGrid({ filter }) {
+  const { events, nextCursor, total } = await getInitialEvents(filter);
   return (
     <HolidaysClient
       initialEvents={events}
       initialNextCursor={nextCursor}
       initialTotal={total}
+      initialFilters={filter}
     />
   );
 }
 
 /* ── Page ────────────────────────────────────────────────────────────── */
-export default async function HolidaysPage() {
+export default async function HolidaysPage({ searchParams }) {
   /* ── Schemas ──────────────────────────────────────────────────────── */
   const breadcrumb = buildBreadcrumbSchema([
     { name: 'الرئيسية', url: SITE },
@@ -74,7 +87,7 @@ export default async function HolidaysPage() {
   ]);
   const websiteSchema = {
     '@context': 'https://schema.org', '@type': 'WebSite',
-    name: 'وقت — عداد المواعيد', url: SITE, inLanguage: 'ar',
+    name: `${SITE_BRAND} — عداد المواعيد`, url: SITE, inLanguage: 'ar',
     potentialAction: {
       '@type': 'SearchAction',
       target: `${SITE}/holidays?q={search_term_string}`,
@@ -83,7 +96,7 @@ export default async function HolidaysPage() {
   };
   const orgSchema = {
     '@context': 'https://schema.org', '@type': 'Organization',
-    name: 'وقت — عداد المواعيد', url: SITE,
+    name: `${SITE_BRAND} — عداد المواعيد`, url: SITE,
     logo: { '@type': 'ImageObject', url: `${SITE}/logo.png`, width: 512, height: 512 },
     description: 'منصة عربية متخصصة في العد التنازلي للمناسبات الإسلامية والوطنية والمدرسية في العالم العربي.',
     inLanguage: 'ar',
@@ -156,6 +169,8 @@ export default async function HolidaysPage() {
       acceptedAnswer: { '@type': 'Answer', text: a },
     })),
   };
+
+  const filter = normalizeFilter(await searchParams);
 
   /* ── Render ──────────────────────────────────────────────────────── */
   return (
@@ -232,15 +247,15 @@ export default async function HolidaysPage() {
 
         </header>
 
-        {/* <AdTopBanner slotId="top-holidays" /> */}
+        <AdTopBanner slotId="top-holidays" />
 
         {/* ── All events ─────────────────────────────────────────────── */}
         <section aria-labelledby="events-heading">
-          <Suspense fallback={<EventGridSkeleton count={PAGE_SIZE} />}>
-            <InitialEventGrid />
-          </Suspense>
+        <Suspense fallback={<EventGridSkeleton count={PAGE_SIZE} />}>
+          <InitialEventGrid filter={filter} />
+        </Suspense>
         </section>
-        {/* <AdInArticle slotId="mid-holidays-1" /> */}
+        <AdInArticle slotId="mid-holidays-1" />
       </main>
       <HolidaysSections nowIso={nowIso} />
     </div>

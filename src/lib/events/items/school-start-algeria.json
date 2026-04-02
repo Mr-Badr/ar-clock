@@ -1,0 +1,10 @@
+{
+  "id": "school-start-dz",
+  "slug": "school-start-algeria",
+  "name": "الدخول المدرسي في الجزائر",
+  "type": "fixed",
+  "category": "school",
+  "_countryCode": "dz",
+  "month": 9,
+  "day": 21
+}

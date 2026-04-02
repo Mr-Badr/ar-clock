@@ -74,6 +74,12 @@ export default function AdLayoutWrapper({
   children,
   hideSidebars = false,
 }: AdLayoutWrapperProps) {
+  const adsEnabled = process.env.NEXT_PUBLIC_ENABLE_ADS === "true";
+
+  if (!adsEnabled) {
+    return <>{children}</>;
+  }
+
   return (
     <div className="layout-with-ads">
 

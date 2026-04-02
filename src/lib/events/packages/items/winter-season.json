@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "winter",
+    "slug": "winter-season",
+    "name": "بداية فصل الشتاء",
+    "type": "fixed",
+    "category": "astronomy",
+    "month": 12,
+    "day": 21
+  },
+  "richContent": {
+    "seoTitle": "بداية فصل الشتاء {{year}} — 21 ديسمبر | الانقلاب الشتوي",
+    "description": "بداية فصل الشتاء {{year}} يصادف 21 ديسمبر. كم باقي على الشتاء؟ أقصر نهار في السنة.",
+    "keywords": [
+      "بداية الشتاء {{year}}",
+      "21 ديسمبر {{year}}",
+      "كم باقي على الشتاء",
+      "الانقلاب الشتوي",
+      "أقصر نهار {{year}}"
+    ],
+    "faqItems": [
+      {
+        "q": "متى يبدأ فصل الشتاء {{year}}؟",
+        "a": "21 ديسمبر {{year}} (الانقلاب الشتوي)."
+      },
+      {
+        "q": "كم يدوم فصل الشتاء؟",
+        "a": "حوالي 89 يوماً حتى الاعتدال الربيعي."
+      }
+    ],
+    "about": {
+      "heading": "عن بداية فصل الشتاء",
+      "paragraphs": [
+        "يبدأ فصل الشتاء فلكياً في 21 ديسمبر تقريباً، وهو يوم الانقلاب الشتوي. في هذا اليوم يكون النهار في أقصر مدة له والليل في أطول مدة له.",
+        "في {{year}}، يصادف 21 ديسمبر يوم الإثنين."
+      ]
+    },
+    "quickFacts": [
+      {
+        "label": "موعد الشتاء {{year}}",
+        "value": "21 ديسمبر {{year}}"
+      },
+      {
+        "label": "النهار",
+        "value": "أقصر نهار في السنة"
+      },
+      {
+        "label": "المدة",
+        "value": "89 يوماً تقريباً"
+      }
+    ],
+    "relatedSlugs": [
+      "autumn-season",
+      "spring-season"
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى بداية فصل الشتاء {{year}}",
+      "كم باقي على بداية فصل الشتاء {{year}}",
+      "موعد بداية فصل الشتاء {{year}}",
+      "بداية فصل الشتاء {{hijriYear}}"
+    ],
+    "country": [
+      "متى بداية فصل الشتاء في {{countryName}} {{year}}",
+      "بداية فصل الشتاء {{countryName}} {{year}}",
+      "كم باقي على بداية فصل الشتاء في {{countryName}}"
+    ]
+  },
+  "tier": "tier3",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/winter-season",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar",
+  "queueOrder": 15
+}

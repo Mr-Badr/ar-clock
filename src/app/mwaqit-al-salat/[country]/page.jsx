@@ -23,8 +23,9 @@ import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
+import { getSiteUrl } from '@/lib/site-config';
 
-const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+const BASE = getSiteUrl();
 
 export async function generateStaticParams() {
   const slugs = await getAllCountrySlugs();
@@ -38,7 +39,7 @@ export async function generateMetadata({ params }) {
 
   const countryAr  = country.name_ar || country.name_en;
   const methodInfo = getMethodByCountry(country.country_code);
-  const canonical  = `${process.env.NEXT_PUBLIC_SITE_URL}/mwaqit-al-salat/${countrySlug}`;
+  const canonical  = `${BASE}/mwaqit-al-salat/${countrySlug}`;
 
   // Fetch capital to include in title — key for SEO: "مواقيت الصلاة في السعودية، الرياض"
   const capital = await getCapitalCity(country.country_code);
@@ -79,7 +80,7 @@ export async function generateMetadata({ params }) {
 
 // ─── JSON-LD ──────────────────────────────────────────────────────────────────
 function CountryPrayerJsonLd({ country, countryAr, countrySlug }) {
-  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/mwaqit-al-salat/${countrySlug}`;
+  const url = `${BASE}/mwaqit-al-salat/${countrySlug}`;
   const schema = {
     '@context':   'https://schema.org',
     '@type':      'WebPage',
@@ -190,7 +191,7 @@ export default async function CountryPrayerPage({ params }) {
           </span>
         </header>
 
-        {/* <AdTopBanner slotId="top-country" /> */}
+        <AdTopBanner slotId="top-country" />
 
         {/* Search */}
         <div className="mb-12">
@@ -226,7 +227,7 @@ export default async function CountryPrayerPage({ params }) {
           </section>
         )}
 
-        {/* <AdInArticle slotId="mid-country-1" /> */}
+        <AdInArticle slotId="mid-country-1" />
 
         {/* All cities grid */}
         <section>

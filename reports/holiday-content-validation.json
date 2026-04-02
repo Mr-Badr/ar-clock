@@ -1,0 +1,845 @@
+{
+  "generatedAt": "2026-03-31T01:16:51.965Z",
+  "strict": false,
+  "changedOnly": false,
+  "tiers": [
+    "tier1",
+    "tier2",
+    "tier3"
+  ],
+  "totals": {
+    "checked": 50,
+    "withIssues": 34,
+    "errors": 0,
+    "warnings": 106
+  },
+  "byCode": {
+    "faq_below_minimum:4": 4,
+    "seo_meta_description_length_out_of_range:84": 1,
+    "related_not_reciprocal:ramadan": 2,
+    "related_not_reciprocal:laylat-al-qadr": 1,
+    "faq_below_minimum:2": 10,
+    "seo_meta_description_length_out_of_range:89": 3,
+    "content_similarity_high:spring-season:0.85": 1,
+    "faq_below_minimum:3": 9,
+    "seo_meta_description_length_out_of_range:97": 2,
+    "seo_meta_description_length_out_of_range:99": 1,
+    "direct_answer_missing:faq:كيف أتحقق من نتيجتي؟": 2,
+    "seo_meta_description_length_out_of_range:92": 5,
+    "faq_below_minimum:1": 9,
+    "seo_meta_description_length_out_of_range:87": 1,
+    "direct_answer_missing:faq:كم باقي على الدراسة {{year}}؟": 1,
+    "seo_meta_description_length_out_of_range:96": 1,
+    "seo_meta_description_length_out_of_range:85": 1,
+    "seo_meta_description_length_out_of_range:95": 2,
+    "direct_answer_missing:faq:كم عدد شهداء الثورة؟": 1,
+    "related_not_reciprocal:uae-national-day": 2,
+    "seo_meta_description_length_out_of_range:94": 4,
+    "direct_answer_missing:faq:متى استقل المغرب؟": 1,
+    "direct_answer_missing:faq:متى عيد الاستقلال التونسي {{ye": 1,
+    "related_not_reciprocal:independence-day-morocco": 2,
+    "seo_meta_description_length_out_of_range:90": 2,
+    "seo_meta_description_length_out_of_range:93": 3,
+    "related_not_reciprocal:first-dhul-hijjah": 1,
+    "direct_answer_missing:faq:هل يُحتفل بالنصف من شعبان؟": 1,
+    "related_not_reciprocal:new-year": 1,
+    "direct_answer_missing:faq:متى اليوم الوطني القطري {{year": 1,
+    "direct_answer_missing:faq:متى عيد الثورة الجزائرية {{yea": 1,
+    "direct_answer_missing:faq:متى بدأت ثورة التحرير؟": 1,
+    "related_not_reciprocal:bac-results-algeria": 2,
+    "seo_meta_description_length_out_of_range:100": 1,
+    "related_not_reciprocal:thanaweya-results": 3,
+    "related_not_reciprocal:school-start-egypt": 1,
+    "seo_meta_description_length_out_of_range:104": 1,
+    "related_not_reciprocal:school-start-saudi": 1,
+    "related_not_reciprocal:saudi-founding-day": 1,
+    "direct_answer_missing:faq:متى يوم التأسيس السعودي {{year": 1,
+    "related_not_reciprocal:independence-day-algeria": 1,
+    "related_not_reciprocal:revolution-day-algeria": 1,
+    "related_not_reciprocal:throne-day-morocco": 1,
+    "related_not_reciprocal:school-start-uae": 1,
+    "seo_meta_description_length_out_of_range:82": 1,
+    "seo_meta_description_length_out_of_range:107": 1,
+    "content_similarity_high:autumn-season:0.85": 1,
+    "direct_answer_missing:faq:كم باقي على عطلة الربيع {{year": 1,
+    "seo_meta_description_length_out_of_range:88": 1,
+    "content_similarity_high:winter-season:0.83": 1,
+    "direct_answer_missing:faq:كم باقي على الإجازة الصيفية {{": 1,
+    "seo_meta_description_length_out_of_range:103": 1,
+    "direct_answer_missing:faq:كم تدوم الامتحانات؟": 1,
+    "related_not_reciprocal:bac-exams-algeria": 1,
+    "direct_answer_missing:faq:متى عيد العرش المغربي {{year}}": 1,
+    "direct_answer_missing:faq:متى تولى الملك محمد السادس الح": 1,
+    "content_similarity_high:summer-season:0.83": 1
+  },
+  "events": [
+    {
+      "slug": "ashura",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:4",
+          "severity": "warn",
+          "message": "FAQ count 4 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:84",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "related_not_reciprocal:ramadan",
+          "severity": "warn",
+          "message": "Related link \"ramadan\" does not reciprocate link back to \"ashura\"."
+        },
+        {
+          "code": "related_not_reciprocal:laylat-al-qadr",
+          "severity": "warn",
+          "message": "Related link \"laylat-al-qadr\" does not reciprocate link back to \"ashura\"."
+        }
+      ]
+    },
+    {
+      "slug": "autumn-season",
+      "tier": "tier3",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:2",
+          "severity": "warn",
+          "message": "FAQ count 2 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:89",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "content_similarity_high:spring-season:0.85",
+          "severity": "warn",
+          "message": "Content similarity with \"spring-season\" is high (0.85)."
+        }
+      ]
+    },
+    {
+      "slug": "bac-exams-algeria",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:3",
+          "severity": "warn",
+          "message": "FAQ count 3 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:97",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        }
+      ]
+    },
+    {
+      "slug": "bac-results-morocco",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:3",
+          "severity": "warn",
+          "message": "FAQ count 3 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:99",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "direct_answer_missing:faq:كيف أتحقق من نتيجتي؟",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        }
+      ]
+    },
+    {
+      "slug": "bac-results-tunisia",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:2",
+          "severity": "warn",
+          "message": "FAQ count 2 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:92",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "direct_answer_missing:faq:كيف أتحقق من نتيجتي؟",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        }
+      ]
+    },
+    {
+      "slug": "back-to-school",
+      "tier": "tier3",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:1",
+          "severity": "warn",
+          "message": "FAQ count 1 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:87",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "direct_answer_missing:faq:كم باقي على الدراسة {{year}}؟",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        }
+      ]
+    },
+    {
+      "slug": "citizen-account-saudi",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:2",
+          "severity": "warn",
+          "message": "FAQ count 2 is below category minimum 4."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:96",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        }
+      ]
+    },
+    {
+      "slug": "first-dhul-hijjah",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:4",
+          "severity": "warn",
+          "message": "FAQ count 4 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:85",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        }
+      ]
+    },
+    {
+      "slug": "independence-day-algeria",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:3",
+          "severity": "warn",
+          "message": "FAQ count 3 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:95",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "direct_answer_missing:faq:كم عدد شهداء الثورة؟",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        },
+        {
+          "code": "related_not_reciprocal:uae-national-day",
+          "severity": "warn",
+          "message": "Related link \"uae-national-day\" does not reciprocate link back to \"independence-day-algeria\"."
+        }
+      ]
+    },
+    {
+      "slug": "independence-day-morocco",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:2",
+          "severity": "warn",
+          "message": "FAQ count 2 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:94",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "direct_answer_missing:faq:متى استقل المغرب؟",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        }
+      ]
+    },
+    {
+      "slug": "independence-day-tunisia",
+      "tier": "tier3",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:1",
+          "severity": "warn",
+          "message": "FAQ count 1 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:94",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "direct_answer_missing:faq:متى عيد الاستقلال التونسي {{ye",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        },
+        {
+          "code": "related_not_reciprocal:independence-day-morocco",
+          "severity": "warn",
+          "message": "Related link \"independence-day-morocco\" does not reciprocate link back to \"independence-day-tunisia\"."
+        }
+      ]
+    },
+    {
+      "slug": "islamic-new-year",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:4",
+          "severity": "warn",
+          "message": "FAQ count 4 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:90",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "related_not_reciprocal:ramadan",
+          "severity": "warn",
+          "message": "Related link \"ramadan\" does not reciprocate link back to \"islamic-new-year\"."
+        }
+      ]
+    },
+    {
+      "slug": "isra-miraj",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:4",
+          "severity": "warn",
+          "message": "FAQ count 4 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:94",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        }
+      ]
+    },
+    {
+      "slug": "kuwait-national-day",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:3",
+          "severity": "warn",
+          "message": "FAQ count 3 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:93",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "related_not_reciprocal:independence-day-morocco",
+          "severity": "warn",
+          "message": "Related link \"independence-day-morocco\" does not reciprocate link back to \"kuwait-national-day\"."
+        }
+      ]
+    },
+    {
+      "slug": "national-exams-morocco",
+      "tier": "tier3",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:1",
+          "severity": "warn",
+          "message": "FAQ count 1 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:97",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        }
+      ]
+    },
+    {
+      "slug": "new-year",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:3",
+          "severity": "warn",
+          "message": "FAQ count 3 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:92",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "related_not_reciprocal:first-dhul-hijjah",
+          "severity": "warn",
+          "message": "Related link \"first-dhul-hijjah\" does not reciprocate link back to \"new-year\"."
+        }
+      ]
+    },
+    {
+      "slug": "nisf-shaban",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:3",
+          "severity": "warn",
+          "message": "FAQ count 3 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:92",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "direct_answer_missing:faq:هل يُحتفل بالنصف من شعبان؟",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        },
+        {
+          "code": "related_not_reciprocal:new-year",
+          "severity": "warn",
+          "message": "Related link \"new-year\" does not reciprocate link back to \"nisf-shaban\"."
+        }
+      ]
+    },
+    {
+      "slug": "qatar-national-day",
+      "tier": "tier3",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:1",
+          "severity": "warn",
+          "message": "FAQ count 1 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:92",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "direct_answer_missing:faq:متى اليوم الوطني القطري {{year",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        },
+        {
+          "code": "related_not_reciprocal:uae-national-day",
+          "severity": "warn",
+          "message": "Related link \"uae-national-day\" does not reciprocate link back to \"qatar-national-day\"."
+        }
+      ]
+    },
+    {
+      "slug": "revolution-day-algeria",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:2",
+          "severity": "warn",
+          "message": "FAQ count 2 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:93",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "direct_answer_missing:faq:متى عيد الثورة الجزائرية {{yea",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        },
+        {
+          "code": "direct_answer_missing:faq:متى بدأت ثورة التحرير؟",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        },
+        {
+          "code": "related_not_reciprocal:bac-results-algeria",
+          "severity": "warn",
+          "message": "Related link \"bac-results-algeria\" does not reciprocate link back to \"revolution-day-algeria\"."
+        }
+      ]
+    },
+    {
+      "slug": "salary-day-egypt",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:1",
+          "severity": "warn",
+          "message": "FAQ count 1 is below category minimum 4."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:100",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "related_not_reciprocal:thanaweya-results",
+          "severity": "warn",
+          "message": "Related link \"thanaweya-results\" does not reciprocate link back to \"salary-day-egypt\"."
+        },
+        {
+          "code": "related_not_reciprocal:school-start-egypt",
+          "severity": "warn",
+          "message": "Related link \"school-start-egypt\" does not reciprocate link back to \"salary-day-egypt\"."
+        }
+      ]
+    },
+    {
+      "slug": "salary-day-saudi",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:3",
+          "severity": "warn",
+          "message": "FAQ count 3 is below category minimum 4."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:104",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "related_not_reciprocal:school-start-saudi",
+          "severity": "warn",
+          "message": "Related link \"school-start-saudi\" does not reciprocate link back to \"salary-day-saudi\"."
+        },
+        {
+          "code": "related_not_reciprocal:saudi-founding-day",
+          "severity": "warn",
+          "message": "Related link \"saudi-founding-day\" does not reciprocate link back to \"salary-day-saudi\"."
+        }
+      ]
+    },
+    {
+      "slug": "saudi-founding-day",
+      "tier": "tier3",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:1",
+          "severity": "warn",
+          "message": "FAQ count 1 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:92",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "direct_answer_missing:faq:متى يوم التأسيس السعودي {{year",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        },
+        {
+          "code": "related_not_reciprocal:independence-day-algeria",
+          "severity": "warn",
+          "message": "Related link \"independence-day-algeria\" does not reciprocate link back to \"saudi-founding-day\"."
+        },
+        {
+          "code": "related_not_reciprocal:revolution-day-algeria",
+          "severity": "warn",
+          "message": "Related link \"revolution-day-algeria\" does not reciprocate link back to \"saudi-founding-day\"."
+        },
+        {
+          "code": "related_not_reciprocal:throne-day-morocco",
+          "severity": "warn",
+          "message": "Related link \"throne-day-morocco\" does not reciprocate link back to \"saudi-founding-day\"."
+        }
+      ]
+    },
+    {
+      "slug": "school-start-kuwait",
+      "tier": "tier3",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "related_not_reciprocal:school-start-uae",
+          "severity": "warn",
+          "message": "Related link \"school-start-uae\" does not reciprocate link back to \"school-start-kuwait\"."
+        }
+      ]
+    },
+    {
+      "slug": "school-start-saudi",
+      "tier": "tier3",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "related_not_reciprocal:thanaweya-results",
+          "severity": "warn",
+          "message": "Related link \"thanaweya-results\" does not reciprocate link back to \"school-start-saudi\"."
+        }
+      ]
+    },
+    {
+      "slug": "sham-nessim",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:3",
+          "severity": "warn",
+          "message": "FAQ count 3 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:82",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "related_not_reciprocal:bac-results-algeria",
+          "severity": "warn",
+          "message": "Related link \"bac-results-algeria\" does not reciprocate link back to \"sham-nessim\"."
+        }
+      ]
+    },
+    {
+      "slug": "social-security-saudi",
+      "tier": "tier3",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:1",
+          "severity": "warn",
+          "message": "FAQ count 1 is below category minimum 4."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:107",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        }
+      ]
+    },
+    {
+      "slug": "spring-season",
+      "tier": "tier3",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:2",
+          "severity": "warn",
+          "message": "FAQ count 2 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:89",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "content_similarity_high:autumn-season:0.85",
+          "severity": "warn",
+          "message": "Content similarity with \"autumn-season\" is high (0.85)."
+        }
+      ]
+    },
+    {
+      "slug": "spring-vacation",
+      "tier": "tier3",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:1",
+          "severity": "warn",
+          "message": "FAQ count 1 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:93",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "direct_answer_missing:faq:كم باقي على عطلة الربيع {{year",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        },
+        {
+          "code": "related_not_reciprocal:thanaweya-results",
+          "severity": "warn",
+          "message": "Related link \"thanaweya-results\" does not reciprocate link back to \"spring-vacation\"."
+        }
+      ]
+    },
+    {
+      "slug": "summer-season",
+      "tier": "tier3",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:2",
+          "severity": "warn",
+          "message": "FAQ count 2 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:88",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "content_similarity_high:winter-season:0.83",
+          "severity": "warn",
+          "message": "Content similarity with \"winter-season\" is high (0.83)."
+        }
+      ]
+    },
+    {
+      "slug": "summer-vacation",
+      "tier": "tier3",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:1",
+          "severity": "warn",
+          "message": "FAQ count 1 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:94",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "direct_answer_missing:faq:كم باقي على الإجازة الصيفية {{",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        }
+      ]
+    },
+    {
+      "slug": "thanaweya-exams",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:2",
+          "severity": "warn",
+          "message": "FAQ count 2 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:103",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "direct_answer_missing:faq:كم تدوم الامتحانات؟",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        },
+        {
+          "code": "related_not_reciprocal:bac-exams-algeria",
+          "severity": "warn",
+          "message": "Related link \"bac-exams-algeria\" does not reciprocate link back to \"thanaweya-exams\"."
+        }
+      ]
+    },
+    {
+      "slug": "throne-day-morocco",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:2",
+          "severity": "warn",
+          "message": "FAQ count 2 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:90",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "direct_answer_missing:faq:متى عيد العرش المغربي {{year}}",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        },
+        {
+          "code": "direct_answer_missing:faq:متى تولى الملك محمد السادس الح",
+          "severity": "warn",
+          "message": "FAQ answer should start with a direct-answer sentence."
+        }
+      ]
+    },
+    {
+      "slug": "uae-national-day",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:3",
+          "severity": "warn",
+          "message": "FAQ count 3 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:95",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        }
+      ]
+    },
+    {
+      "slug": "winter-season",
+      "tier": "tier3",
+      "publishStatus": "published",
+      "issues": [
+        {
+          "code": "faq_below_minimum:2",
+          "severity": "warn",
+          "message": "FAQ count 2 is below category minimum 6."
+        },
+        {
+          "code": "seo_meta_description_length_out_of_range:89",
+          "severity": "warn",
+          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+        },
+        {
+          "code": "content_similarity_high:summer-season:0.83",
+          "severity": "warn",
+          "message": "Content similarity with \"summer-season\" is high (0.83)."
+        }
+      ]
+    }
+  ]
+}

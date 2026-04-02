@@ -10,7 +10,7 @@
  *   "متى عيد الفطر السعودية 2026"    15,000+
  *   "موعد عيد الأضحى الإمارات 2026"  6,000+
  *
- * Data source: RELIGIOUS_HOLIDAYS[*].countryDates from holidays-engine.js
+ * Data source: canonical event packages + rich content overlays
  *   Ramadan:     8 countries
  *   Eid al-Fitr: 4 countries
  *   Eid al-Adha: 4 countries
@@ -26,58 +26,18 @@
  */
 
 import { Globe2 } from 'lucide-react'
-import { RELIGIOUS_HOLIDAYS, replaceTokens, approxHijriYear } from '@/lib/holidays-engine'
 import { SectionWrapper } from '@/components/shared/primitives'
 import { SectionBadge } from '@/components/shared/primitives'
+import { buildIslamicCountryDateCards } from './data/islamicOccasions'
 
 const H2_ID = 'h2-country-dates'
-
-/* Pull the 3 events we want from the engine */
-const RAM  = RELIGIOUS_HOLIDAYS.find(e => e.id === 'ramadan')
-const FITR = RELIGIOUS_HOLIDAYS.find(e => e.id === 'eid-al-fitr')
-const ADHA = RELIGIOUS_HOLIDAYS.find(e => e.id === 'eid-al-adha')
-
-const resolveDates = (datesArry) => {
-  const gr = new Date().getFullYear()
-  const hi = approxHijriYear(gr)
-  return (datesArry || []).map(cd => ({
-    ...cd,
-    date: replaceTokens(cd.date || '', gr, hi),
-    note: replaceTokens(cd.note || '', gr, hi)
-  }))
-}
-
-const EVENTS_WITH_COUNTRIES = [
-  {
-    id:           RAM?.id,
-    name:         RAM?.name          || 'رمضان',
-    hijriDate:    '1 رمضان',
-    color:        'var(--warning)',
-    icon:         '🌙',
-    countryDates: resolveDates(RAM?.countryDates),
-  },
-  {
-    id:           FITR?.id,
-    name:         FITR?.name         || 'عيد الفطر المبارك',
-    hijriDate:    '1 شوال',
-    color:        'var(--success)',
-    icon:         '🎉',
-    countryDates: resolveDates(FITR?.countryDates),
-  },
-  {
-    id:           ADHA?.id,
-    name:         ADHA?.name         || 'عيد الأضحى المبارك',
-    hijriDate:    '10 ذو الحجة',
-    color:        'var(--accent-alt)',
-    icon:         '🐑',
-    countryDates: resolveDates(ADHA?.countryDates),
-  },
-]
 
 const softOf   = (v) => v.replace(')', '-soft)')
 const borderOf = (v) => v.replace(')', '-border)')
 
-export default function SectionCountryDates() {
+export default async function SectionCountryDates({ nowIso }) {
+  const eventsWithCountries = await buildIslamicCountryDateCards(nowIso)
+
   return (
     <SectionWrapper id="section-country-dates" headingId={H2_ID} subtle>
 
@@ -117,7 +77,7 @@ export default function SectionCountryDates() {
 
       {/* 3 cards — 1 per event, each with country rows */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {EVENTS_WITH_COUNTRIES.map((ev) => (
+        {eventsWithCountries.map((ev) => (
           <div
             key={ev.id}
             className="rounded-2xl overflow-hidden"

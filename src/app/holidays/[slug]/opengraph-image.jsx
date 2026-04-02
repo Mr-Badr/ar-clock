@@ -14,14 +14,9 @@
  *   <img src="/holidays/eid-al-fitr/opengraph-image?sq=1" />
  */
 import { ImageResponse } from 'next/og';
-import {
-  ALL_EVENTS, enrichEvent,
-  getNextEventDate, getTimeRemaining,
-  formatGregorianAr, resolveEventMeta,
-} from '@/lib/holidays-engine';
-import { resolveAllHijriEvents } from '@/lib/hijri-resolver';
+import { getHolidayOgData } from '@/lib/holidays/og-data';
+import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 
-export const runtime = 'edge';
 export const contentType = 'image/png';
 
 // Default size — overridden per-request below
@@ -61,34 +56,29 @@ export default async function Image({ params, searchParams }) {
   const H = isSquare ? 1200 : 630;
 
   /* ── Unknown slug fallback ── */
-  const raw = ALL_EVENTS.find(e => e.slug === slug);
-  if (!raw) {
+  const ogData = await getHolidayOgData(slug);
+  if (!ogData) {
     return new ImageResponse(
       <div style={{
         width: '100%', height: '100%',
         background: '#0F1117',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
-        <span style={{ color: '#4ECDC4', fontSize: 48, fontWeight: 800 }}>وقت — عداد المواعيد</span>
+        <span style={{ color: '#4ECDC4', fontSize: 48, fontWeight: 800 }}>{SITE_BRAND} — عداد المواعيد</span>
       </div>,
       { width: W, height: H },
     );
   }
 
   /* ── Data ── */
-  const event = enrichEvent(raw);
-  const resolved = await resolveAllHijriEvents([event]);
-  const nowMs = Date.now();
-  const target = getNextEventDate(event, resolved, nowMs);
-  const rem = getTimeRemaining(target, nowMs);
-  const seo = resolveEventMeta(event, target);
-  const dateStr = formatGregorianAr(target);
+  const { event, remaining: rem, seo, dateStr } = ogData;
   const accent = CAT_COLOR[event.category] || '#4ECDC4';
   const emoji = CAT_EMOJI[event.category] || '📅';
   const daysFg = daysColor(rem.days, accent);
 
   /* ── Title — prefer short name; fall back to event.name ── */
-  const titleText = seo.seoTitle.length > 52 ? event.name : seo.seoTitle;
+  const ogTitle = seo?.seoMeta?.ogTitle || seo?.seoMeta?.titleTag || seo.seoTitle;
+  const titleText = ogTitle.length > 52 ? event.name : ogTitle;
 
   /* ══════════════════════════════════════════════════════════════════════
      WIDE (1200×630) — optimised for Twitter, Facebook, WhatsApp, Telegram
@@ -132,7 +122,7 @@ export default async function Image({ params, searchParams }) {
                 {CAT_LABEL[event.category] || 'مناسبة'}
               </span>
             </div>
-            <span style={{ color: '#4A5568', fontSize: 14, fontWeight: 500 }}>وقت — عداد المواعيد</span>
+            <span style={{ color: '#4A5568', fontSize: 14, fontWeight: 500 }}>{SITE_BRAND} — عداد المواعيد</span>
           </div>
 
           {/* Middle: event name + date */}
@@ -189,7 +179,7 @@ export default async function Image({ params, searchParams }) {
             {/* URL watermark */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, opacity: 0.4 }}>
               <div style={{ width: 8, height: 8, borderRadius: '50%', background: accent }} />
-              <span style={{ fontSize: 14, color: '#A0AEC0' }}>waqt.app</span>
+              <span style={{ fontSize: 14, color: '#A0AEC0' }}>{new URL(getSiteUrl()).host}</span>
             </div>
           </div>
         </div>
@@ -261,7 +251,7 @@ export default async function Image({ params, searchParams }) {
 
       {/* Watermark */}
       <span style={{ position: 'absolute', bottom: 24, left: '50%', transform: 'translateX(-50%)', color: '#4A5568', fontSize: 16, opacity: 0.5 }}>
-        waqt.app
+        {new URL(getSiteUrl()).host}
       </span>
     </div>,
     { width: W, height: H },

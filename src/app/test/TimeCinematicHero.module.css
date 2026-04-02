@@ -1,0 +1,450 @@
+/* TimeCinematicHero.module.css */
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  position: relative;
+  overflow: clip;
+  min-height: 980px;
+  padding-top: clamp(5rem, 7vw, 6.5rem);
+  background:
+    radial-gradient(circle at 58% 18%, rgba(95, 120, 255, 0.08), transparent 18%),
+    radial-gradient(circle at 86% 58%, rgba(85, 110, 255, 0.07), transparent 22%),
+    linear-gradient(180deg, #05070c 0%, #06080d 54%, #05070c 100%);
+  isolation: isolate;
+}
+
+/* ============================================================
+   VIDEO
+   ============================================================ */
+.videoLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  mix-blend-mode: screen;
+  opacity: 0.92;
+}
+
+/* ============================================================
+   CLOCK PANEL
+   z-index 10 ensures it sits above the content shell (z:8)
+   and receives pointer events correctly.
+   ============================================================ */
+.stagePanel {
+  position: absolute;
+  left:   var(--panel-left,   20%);
+  top:    var(--panel-top,    55%);
+  width:  var(--panel-width,  50%);
+  height: var(--panel-height, 35%);
+  z-index: 10;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.stagePanelVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.heroCardWrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 18px 20px 16px;
+}
+
+
+/* ============================================================
+   DESKTOP CONTENT LAYER
+   pointer-events:none on the container lets mouse events pass
+   through to the clock panel (z:10). Re-enabled on .copy.
+   ============================================================ */
+.heroDesktopContent {
+  position: relative;
+  z-index: 8;
+  pointer-events: none;
+  width: 100%;
+}
+
+/* ============================================================
+   CONTENT SHELL
+   RTL GRID: column 1 = RIGHT side, column 2 = LEFT side.
+   Copy lives in col-1 (RIGHT). Spacer fills col-2 (LEFT).
+   Width increased to 560px for comfortable reading width.
+   ============================================================ */
+.shell {
+  display: grid;
+  grid-template-columns: minmax(0, 560px) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  min-height: 860px;
+  padding-top: clamp(1rem, 2vw, 2rem);
+}
+
+.stageSpacer { /* intentionally empty — the left / video column */ }
+
+/* ============================================================
+   COPY COLUMN — RIGHT (column 1 in RTL)
+   pointer-events re-enabled here so links and button work.
+   ============================================================ */
+.copy {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  pointer-events: auto;
+}
+
+/* ── Badge ────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding-inline: 16px;
+  border-radius: 999px;
+  background: rgba(8, 12, 30, 0.65);
+  border: 1px solid rgba(140, 174, 255, 0.22);
+  color: rgba(180, 210, 255, 0.85);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 0 24px rgba(95, 120, 255, 0.1), inset 0 1px 0 rgba(255,255,255,0.06);
+  margin: 0;
+}
+
+/* ============================================================
+   TITLE — AuroraText app name + subtitle line
+   ============================================================ */
+.title {
+  margin: 22px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.05em;
+  line-height: 0.88;
+  font-weight: 900;
+  color: var(--text-primary, #fff);
+}
+
+/* ── Magic UI Aurora Text ──────────────────────────────────── */
+@keyframes auroraShift {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+.auroraText {
+  display: inline;
+  font-size: clamp(4.2rem, 8.5vw, 7rem);
+  font-weight: 900;
+  background: linear-gradient(
+    90deg,
+    #5f78ff  0%,
+    #a07cfe 22%,
+    #fe8fb5 44%,
+    #ffbe7b 62%,
+    #8caeff 80%,
+    #5f78ff 100%
+  );
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  animation: auroraShift 5s linear infinite;
+}
+
+.titleSub {
+  display: block;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: rgba(255, 255, 255, 0.72);
+  margin-top: 0.2em;
+}
+
+/* ── Description ─────────────────────────────────────────── */
+.desc {
+  margin-top: 20px;
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  line-height: 1.75;
+  color: rgba(160, 185, 220, 0.82);
+  max-width: 36ch;
+}
+
+
+/* ============================================================
+   Magic UI — Shimmer Button
+
+   How it works:
+   • .shimmerBtn is the OUTER ring — its background is a
+     conic-gradient that rotates via --shimmer-angle (CSS
+     Houdini @property enables smooth angle animation).
+   • padding: 2px creates a 2px "border" ring of gradient.
+   • .shimmerBtnInner is the dark INNER fill, covering
+     everything except that 2px ring.
+   • Result: a bright shimmer light travels around the pill.
+   ============================================================ */
+@property --shimmer-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes shimmerSpin {
+  to { --shimmer-angle: 360deg; }
+}
+
+.shimmerBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  border-radius: 100px;
+  background: conic-gradient(
+    from var(--shimmer-angle),
+    transparent       0deg,
+    rgba(255,255,255,0)  320deg,
+    rgba(255,255,255,0.8) 340deg,
+    rgba(160,124,254,1)   350deg,
+    rgba(255,255,255,0.8) 360deg
+  );
+  animation: shimmerSpin 3s linear infinite;
+  text-decoration: none;
+  margin-top: 32px;
+  transition: box-shadow 0.25s ease;
+}
+
+.shimmerBtn:hover {
+  box-shadow:
+    0 0 28px rgba(160, 124, 254, 0.35),
+    0 0 60px rgba(160, 124, 254, 0.15);
+}
+
+.shimmerBtnInner {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 14px 30px;
+  background: rgba(5, 7, 15, 0.96);
+  border-radius: 98px;
+  font-size: 0.97rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #fff;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+
+.shimmerBtn:hover .shimmerBtnInner {
+  background: rgba(10, 12, 28, 0.94);
+}
+
+/* Arrow flipped to point away from the RTL text */
+.btnArrow {
+  flex-shrink: 0;
+  opacity: 0.8;
+  transform: scaleX(-1);
+  transition: transform 0.2s ease;
+}
+
+.shimmerBtn:hover .btnArrow {
+  transform: scaleX(-1) translateX(-3px);
+}
+
+
+/* ============================================================
+   BOTTOM META
+   ============================================================ */
+.bottomMeta {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  padding-bottom: 18px;
+  margin-top: auto;
+  pointer-events: auto;
+}
+
+.bottomLabel {
+  color: rgba(130, 155, 190, 0.7);
+  font-size: 0.85rem;
+}
+
+.bottomItems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  color: rgba(200, 220, 255, 0.88);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.bottomItems span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.bottomItems span:not(:last-child)::after {
+  content: "•";
+  margin-inline: 10px;
+  color: rgba(120, 140, 180, 0.5);
+  font-weight: 400;
+}
+
+.bottomFade {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 220px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(5,7,12,0) 0%, #05070c 68%);
+  z-index: 5;
+}
+
+
+/* ============================================================
+   VISIBILITY TOGGLES — desktop vs mobile sections
+   ============================================================ */
+
+/* Desktop content (inside hero) — shown ≥641px, hidden on mobile */
+.heroDesktopContent {
+  display: block;
+}
+
+/* Mobile section (below hero) — hidden ≥641px, shown on mobile */
+.heroMobileContent {
+  display: none;
+}
+
+
+/* ============================================================
+   MOBILE SECTION STYLES
+   Background matches the hero so the two sections feel like one.
+   ============================================================ */
+.heroMobileContent {
+  background: linear-gradient(180deg, #05070c 0%, #060a12 100%);
+  padding: 2.5rem 0 3.5rem;
+}
+
+/* Center-align the copy block when shown below the hero */
+.copyMobileCenter {
+  align-items: center;
+  text-align: center;
+}
+
+.copyMobileCenter .desc {
+  max-width: 32ch;
+}
+
+
+/* ============================================================
+   RESPONSIVE — TABLET (≤ 980px)
+   Two-column grid → single column.
+   Copy stays inside the hero, centered.
+   ============================================================ */
+@media (max-width: 980px) {
+  .hero {
+    min-height: 1060px;
+    padding-top: 5.2rem;
+  }
+
+  .shell {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .stageSpacer {
+    display: none;
+  }
+
+  .copy {
+    grid-column: 1;
+    align-items: center;
+    text-align: center;
+  }
+
+  .desc {
+    max-width: 38ch;
+  }
+
+  .bottomMeta {
+    align-items: center;
+    padding-bottom: 24px;
+  }
+
+  .bottomItems {
+    justify-content: center;
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE — MOBILE (≤ 640px)
+   Hero shows ONLY video + clock.
+   Text content lives in .heroMobileContent BELOW the hero.
+   ============================================================ */
+@media (max-width: 640px) {
+
+  /* Hero becomes compact — just the video rectangle */
+  .hero {
+    min-height: 620px;
+    padding-top: 4rem;
+  }
+
+  /* Hide desktop copy layer inside the hero */
+  .heroDesktopContent {
+    display: none;
+  }
+
+  /* Show mobile text section below the hero */
+  .heroMobileContent {
+    display: block;
+  }
+
+  /* Mobile copy centered */
+  .copyMobileCenter {
+    align-items: center;
+    text-align: center;
+  }
+
+  .copyMobileCenter .auroraText {
+    font-size: clamp(3.6rem, 14vw, 5rem);
+  }
+
+  .copyMobileCenter .titleSub {
+    font-size: clamp(1.2rem, 5.5vw, 1.6rem);
+  }
+
+  .heroMobileContent .bottomMeta {
+    align-items: center;
+  }
+
+  .heroMobileContent .bottomItems {
+    justify-content: center;
+  }
+
+  /* Clock panel: keep proportional but add safe overflow clip */
+  .heroCardWrap {
+    padding: 12px;
+  }
+}

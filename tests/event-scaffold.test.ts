@@ -1,0 +1,44 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+
+import {
+  buildRichContentScaffold,
+  suggestRelatedSlugs,
+} from '../scripts/lib/event-scaffold';
+
+test('buildRichContentScaffold creates baseline SEO and content sections', () => {
+  const scaffold = buildRichContentScaffold(
+    {
+      slug: 'demo-event',
+      name: 'مناسبة تجريبية',
+      type: 'fixed',
+      category: 'holidays',
+    },
+    '2026-03-31T00:00:00.000Z',
+  );
+
+  assert.ok(scaffold.answerSummary);
+  assert.ok(scaffold.seoMeta?.titleTag);
+  assert.ok(scaffold.seoMeta?.primaryKeyword);
+  assert.equal(Array.isArray(scaffold.faq), true);
+  assert.equal(scaffold.faq.length >= 6, true);
+  assert.equal(Array.isArray(scaffold.intentCards), true);
+});
+
+test('suggestRelatedSlugs prioritizes same category first', () => {
+  const result = suggestRelatedSlugs(
+    { slug: 'a', category: 'islamic', queueOrder: 10 },
+    [
+      { slug: 'a', category: 'islamic', queueOrder: 10 },
+      { slug: 'b', category: 'islamic', queueOrder: 11 },
+      { slug: 'c', category: 'national', queueOrder: 9 },
+      { slug: 'd', category: 'islamic', queueOrder: 20 },
+      { slug: 'e', category: 'school', queueOrder: 12 },
+      { slug: 'f', category: 'holidays', queueOrder: 13 },
+    ],
+  );
+
+  assert.equal(result[0], 'b');
+  assert.equal(result.includes('a'), false);
+  assert.equal(result.length, 4);
+});

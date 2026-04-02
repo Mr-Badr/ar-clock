@@ -1,0 +1,10 @@
+{
+  "id": "independence-tn",
+  "slug": "independence-day-tunisia",
+  "name": "عيد الاستقلال التونسي",
+  "type": "fixed",
+  "category": "national",
+  "_countryCode": "tn",
+  "month": 3,
+  "day": 20
+}

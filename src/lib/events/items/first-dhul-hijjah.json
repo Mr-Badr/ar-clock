@@ -1,0 +1,9 @@
+{
+  "id": "first-dhul-hijjah",
+  "slug": "first-dhul-hijjah",
+  "name": "أول ذو الحجة",
+  "type": "hijri",
+  "category": "islamic",
+  "hijriMonth": 12,
+  "hijriDay": 1
+}

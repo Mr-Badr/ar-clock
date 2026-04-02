@@ -7,10 +7,13 @@ import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import TimeDiffSections from '@/components/time-diff/index';
 import { Globe } from 'lucide-react';
+import { getSiteUrl } from '@/lib/site-config';
 /**
  * Metadata (Next.js App Router)
  * - extend this object if you use dynamic city-pair pages later
  */
+const SITE_URL = getSiteUrl();
+
 export const metadata = {
   title:
     "فرق التوقيت بين مدينتين أو دولتين — حاسبة الفرق الزمني وتحويل الوقت بدقة",
@@ -19,7 +22,7 @@ export const metadata = {
   keywords:
     "فرق التوقيت, تحويل الوقت, كم الساعة, فرق التوقيت بين المدن, فرق التوقيت بين الدول, ساعات العمل المشتركة, تحويل التوقيت, فرق التوقيت والدوام, تحويل التوقيت من إلى",
   alternates: {
-    canonical: "/time-difference",
+    canonical: `${SITE_URL}/time-difference`,
     // add hreflang alternatives if you have other locales, e.g.
     // languages: { "en-US": "/en/time-difference" }
   },
@@ -27,7 +30,7 @@ export const metadata = {
     title: "حاسبة فرق التوقيت بين المدن والدول — وقت",
     description:
       "أداة سريعة ودقيقة لمعرفة فرق التوقيت وتحويل الوقت بين أي مدينتين حول العالم مع دعم التوقيت الصيفي.",
-    url: "/time-difference",
+    url: `${SITE_URL}/time-difference`,
     type: "website",
     locale: "ar_SA",
   },
@@ -170,7 +173,7 @@ export default async function TimeDifferencePage() {
           </p>
         </header>
 
-        {/* <AdTopBanner slotId="top-time-diff-list" /> */}
+        <AdTopBanner slotId="top-time-diff-list" />
 
         {/* Calculator */}
         <section aria-label="حاسبة فرق التوقيت">

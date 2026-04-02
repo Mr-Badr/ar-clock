@@ -143,6 +143,7 @@
 }
 
 .card__title {
+  font-family: var(--font-heading);
   font-size: var(--text-lg);
   font-weight: var(--font-semibold);
   line-height: var(--leading-tight);
@@ -318,6 +319,12 @@
 
 .btn-pill {
   border-radius: var(--radius-full);
+}
+
+/* Holidays v2 rollout shell (feature-flagged). */
+.holidays-page-v2 .section,
+.holidays-page-v2 .card-nested {
+  transition: border-color var(--transition-fast), background-color var(--transition-theme);
 }
 
 .btn-block {

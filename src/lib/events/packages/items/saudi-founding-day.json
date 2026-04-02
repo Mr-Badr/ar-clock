@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "founding-day-sa",
+    "slug": "saudi-founding-day",
+    "name": "يوم التأسيس السعودي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sa",
+    "month": 2,
+    "day": 22
+  },
+  "richContent": {
+    "seoTitle": "يوم التأسيس السعودي {{year}} — 22 فبراير — عد تنازلي",
+    "description": "يوم التأسيس 22 فبراير — يُحتفل بتأسيس الدولة السعودية الأولى 1727م.",
+    "keywords": [
+      "يوم التأسيس السعودي {{year}}",
+      "22 فبراير السعودية",
+      "يوم التأسيس 1444"
+    ],
+    "faqItems": [
+      {
+        "q": "متى يوم التأسيس السعودي {{year}}؟",
+        "a": "22 فبراير {{year}}."
+      }
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى يوم التأسيس السعودي {{year}}",
+      "كم باقي على يوم التأسيس السعودي {{year}}",
+      "موعد يوم التأسيس السعودي {{year}}",
+      "يوم التأسيس السعودي {{hijriYear}}"
+    ],
+    "country": [
+      "متى يوم التأسيس السعودي في {{countryName}} {{year}}",
+      "يوم التأسيس السعودي {{countryName}} {{year}}",
+      "كم باقي على يوم التأسيس السعودي في {{countryName}}"
+    ]
+  },
+  "tier": "tier3",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/saudi-founding-day",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar",
+  "queueOrder": 22
+}

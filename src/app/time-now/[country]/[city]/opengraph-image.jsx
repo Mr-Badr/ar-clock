@@ -2,8 +2,6 @@ import { ImageResponse } from 'next/og';
 import { getCityBySlug } from '@/lib/db/queries/cities';
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 
-export const runtime = 'edge';
-
 // We specify standard OG dimensions
 export const alt = 'ميقات - التوقيت المحلي';
 export const size = { width: 1200, height: 630 };

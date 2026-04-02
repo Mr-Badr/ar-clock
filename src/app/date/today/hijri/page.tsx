@@ -27,8 +27,9 @@ import { DateShareActions } from '@/components/date/DateShareActions';
 import { headers } from 'next/headers';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { Moon, CalendarDays, ArrowLeftRight, Calendar, Star } from 'lucide-react';
+import { getSiteUrl } from '@/lib/site-config';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://miqatime.com';
+const BASE_URL = getSiteUrl();
 
 export const metadata: Metadata = {
   title: 'التاريخ الهجري اليوم — كم التاريخ الهجري الآن',

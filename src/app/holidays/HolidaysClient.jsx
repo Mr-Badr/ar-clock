@@ -3,6 +3,7 @@
  * app/holidays/HolidaysClient.jsx
  */
 import { useState, useTransition, useCallback, useDeferredValue } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutGrid, Moon, Flag, GraduationCap, Palmtree, Globe, Briefcase,
 } from 'lucide-react';
@@ -69,23 +70,36 @@ function sortEvents(events, mode) {
 
 /* ── Component ────────────────────────────────────────────────────────── */
 
-export default function HolidaysClient({ initialEvents, initialNextCursor, initialTotal }) {
+export default function HolidaysClient({ initialEvents, initialNextCursor, initialTotal, initialFilters }) {
+  const router = useRouter();
+  const pathname = usePathname();
+
   /* Server-synced state */
   const [events,  setEvents]  = useState(initialEvents);
   const [cursor,  setCursor]  = useState(initialNextCursor);
   const [total,   setTotal]   = useState(initialTotal);
 
   /* Filter state */
-  const [category,  setCategory]  = useState('all');
-  const [country,   setCountry]   = useState('all');
-  const [search,    setSearch]    = useState('');
-  const [timeRange, setTimeRange] = useState('all');
+  const [category,  setCategory]  = useState(initialFilters?.category || 'all');
+  const [country,   setCountry]   = useState(initialFilters?.countryCode || 'all');
+  const [search,    setSearch]    = useState(initialFilters?.search || '');
+  const [timeRange, setTimeRange] = useState(initialFilters?.timeRange || 'all');
 
   /* Display-only state (no server round-trip) */
   const [sortMode, setSortMode] = useState('daysLeft');
 
   const [isPending, startTransition] = useTransition();
   const deferredSearch = useDeferredValue(search);
+
+  const syncUrl = useCallback((cat, co, q, tr) => {
+    const params = new URLSearchParams();
+    if (cat && cat !== 'all') params.set('category', cat);
+    if (co && co !== 'all') params.set('country', co);
+    if (q && q.trim()) params.set('q', q.trim());
+    if (tr && tr !== 'all') params.set('range', tr);
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+  }, [pathname, router]);
 
   /* ── Server action wrapper ──────────────────────────────────────────── */
   /**
@@ -94,6 +108,7 @@ export default function HolidaysClient({ initialEvents, initialNextCursor, initi
    *       Update your loadMoreEvents server action to handle it if needed.
    */
   const applyFilter = useCallback((cat, co, q, tr) => {
+    syncUrl(cat, co, q, tr);
     startTransition(async () => {
       const r = await loadMoreEvents(0, {
         category: cat,
@@ -105,7 +120,7 @@ export default function HolidaysClient({ initialEvents, initialNextCursor, initi
       setCursor(r.nextCursor);
       setTotal(r.total);
     });
-  }, []);
+  }, [syncUrl]);
 
   /* ── Handlers ──────────────────────────────────────────────────────── */
   const handleCategory  = (v) => { setCategory(v);  applyFilter(v, country, deferredSearch, timeRange); };

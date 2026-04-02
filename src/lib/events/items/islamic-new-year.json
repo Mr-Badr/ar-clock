@@ -1,0 +1,9 @@
+{
+  "id": "islamic-new-year",
+  "slug": "islamic-new-year",
+  "name": "رأس السنة الهجرية",
+  "type": "hijri",
+  "category": "islamic",
+  "hijriMonth": 1,
+  "hijriDay": 1
+}

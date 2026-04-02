@@ -12,6 +12,7 @@
  */
 import fallbackCountries from '@/lib/db/fallback/countries.json';
 import fallbackCities from '@/lib/db/fallback/cities-index.json';
+import { getSiteUrl } from '@/lib/site-config';
 
 // ⚠️ Do NOT prerender sitemap segments at build time — we need live DB data.
 // Googlebot will call these URLs on-demand after deploy.
@@ -26,8 +27,8 @@ export async function generateSitemaps() {
 export default async function sitemap(params) {
   const { id } = await params;
   const resolvedId = typeof id === 'object' && id !== null && 'then' in id ? await id : id;
-  const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
-  const fixedDate = '2025-01-01T00:00:00.000Z';
+  const BASE = getSiteUrl();
+  const lastModified = new Date().toISOString();
 
   // 1. Fallback cities for this country (guaranteed coverage)
   const fallbackSet = new Set(
@@ -75,13 +76,13 @@ export default async function sitemap(params) {
   }
 
   const urls = [
-    { url: `${BASE}/time-now/${resolvedId}`, lastModified: fixedDate },
+    { url: `${BASE}/time-now/${resolvedId}`, lastModified },
   ];
 
   for (const citySlug of allCitySlugs) {
     urls.push({
       url: `${BASE}/time-now/${resolvedId}/${citySlug}`,
-      lastModified: fixedDate,
+      lastModified,
     });
   }
 

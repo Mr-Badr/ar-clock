@@ -9,8 +9,9 @@ import { ConverterForm } from '../converter/ConverterForm';
 import { headers } from 'next/headers';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { ArrowLeftRight, CalendarDays, Calendar } from 'lucide-react';
+import { getSiteUrl } from '@/lib/site-config';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+const BASE_URL = getSiteUrl();
 
 export const metadata: Metadata = {
   title: 'تحويل هجري إلى ميلادي',

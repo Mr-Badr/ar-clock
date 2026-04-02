@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "summer-vac",
+    "slug": "summer-vacation",
+    "name": "بداية الإجازة الصيفية",
+    "type": "estimated",
+    "category": "school",
+    "date": "{{year}}-06-11"
+  },
+  "richContent": {
+    "seoTitle": "الإجازة الصيفية {{year}} — مواعيد نهاية العام الدراسي",
+    "description": "مواعيد الإجازة الصيفية {{year}} في الدول العربية.",
+    "keywords": [
+      "الإجازة الصيفية {{year}}",
+      "نهاية العام الدراسي",
+      "عطلة الصيف"
+    ],
+    "faqItems": [
+      {
+        "q": "كم باقي على الإجازة الصيفية {{year}}؟",
+        "a": "~يونيو {{year}}. التواريخ تقديرية حسب الدولة."
+      }
+    ],
+    "about": {
+      "heading": "عن الإجازة الصيفية {{year}}",
+      "paragraphs": [
+        "تبدأ الإجازة الصيفية في معظم الدول العربية بين أواخر مايو ومنتصف يونيو.",
+        "تختلف المواعيد حسب كل دولة."
+      ]
+    },
+    "quickFacts": [
+      {
+        "label": "السعودية",
+        "value": "أواخر مايو"
+      },
+      {
+        "label": "مصر",
+        "value": "أواخر يونيو"
+      },
+      {
+        "label": "المغرب",
+        "value": "أواخر يونيو"
+      },
+      {
+        "label": "الجزائر",
+        "value": "أواخر يونيو"
+      }
+    ],
+    "relatedSlugs": [
+      "back-to-school",
+      "spring-vacation"
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى بداية الإجازة الصيفية {{year}}",
+      "كم باقي على بداية الإجازة الصيفية {{year}}",
+      "موعد بداية الإجازة الصيفية {{year}}",
+      "بداية الإجازة الصيفية {{hijriYear}}"
+    ],
+    "country": [
+      "متى بداية الإجازة الصيفية في {{countryName}} {{year}}",
+      "بداية الإجازة الصيفية {{countryName}} {{year}}",
+      "كم باقي على بداية الإجازة الصيفية في {{countryName}}"
+    ]
+  },
+  "tier": "tier3",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/summer-vacation",
+  "canonicalSource": "internal",
+  "sourceAuthority": "official-announcement",
+  "queueOrder": 19
+}

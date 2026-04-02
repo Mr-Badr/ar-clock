@@ -1,0 +1,10 @@
+{
+  "id": "school-start-sa",
+  "slug": "school-start-saudi",
+  "name": "بداية الدراسة في السعودية",
+  "type": "fixed",
+  "category": "school",
+  "_countryCode": "sa",
+  "month": 8,
+  "day": 30
+}

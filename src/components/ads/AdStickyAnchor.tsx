@@ -45,6 +45,10 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import {
+  isPublicEnvEnabled,
+  useMarketingPermission,
+} from "@/lib/client/marketing";
 
 interface AdStickyAnchorProps {
   /**
@@ -60,6 +64,11 @@ export default function AdStickyAnchor({
   scrollThreshold = 0.25,
   className = "",
 }: AdStickyAnchorProps) {
+  const adsEnabled = isPublicEnvEnabled(process.env.NEXT_PUBLIC_ENABLE_ADS);
+  const clientId = (process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "").trim();
+  const adSlot = (process.env.NEXT_PUBLIC_ADSENSE_STICKY_ANCHOR_SLOT || "").trim();
+  const shouldRenderAds = adsEnabled && clientId.startsWith("ca-pub-") && Boolean(adSlot);
+  const canLoadAds = useMarketingPermission(shouldRenderAds);
   // Initialize dismissed state synchronously from sessionStorage.
   // This avoids the flash/re-render of v1's useEffect-based check.
   const [dismissed, setDismissed] = useState<boolean>(() => {
@@ -73,6 +82,7 @@ export default function AdStickyAnchor({
 
   // Show anchor after scrollThreshold scroll depth
   useEffect(() => {
+    if (!canLoadAds) return;
     if (dismissed) return;
 
     const handleScroll = () => {
@@ -87,22 +97,20 @@ export default function AdStickyAnchor({
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [dismissed, scrollThreshold]);
+  }, [canLoadAds, dismissed, scrollThreshold]);
 
   // Load ad script once on first appearance
   useEffect(() => {
+    if (!canLoadAds) return;
     if (!visible || loaded.current || dismissed) return;
     loaded.current = true;
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // TODO: Replace with your AdSense / ad network code when ready:
-    //
-    //   try {
-    //     (window.adsbygoogle = window.adsbygoogle || []).push({});
-    //   } catch (e) {}
-    //
-    // ─────────────────────────────────────────────────────────────────────────
-  }, [visible, dismissed]);
+    try {
+      const adsWindow = window as Window & { adsbygoogle?: unknown[] };
+      (adsWindow.adsbygoogle = adsWindow.adsbygoogle || []).push({});
+    } catch (error) {
+      console.warn("AdSense sticky anchor failed to initialize:", error);
+    }
+  }, [canLoadAds, visible, dismissed]);
 
   const handleDismiss = () => {
     setVisible(false);
@@ -113,7 +121,7 @@ export default function AdStickyAnchor({
 
   // When dismissed: render null (removes from DOM — frees space)
   // The .sticky-anchor-spacer CSS handles the layout reservation independently
-  if (dismissed) return null;
+  if (!shouldRenderAds || !canLoadAds || dismissed) return null;
 
   return (
     <div
@@ -141,17 +149,12 @@ export default function AdStickyAnchor({
         ×
       </button>
 
-      {/* ─────────────────────────────────────────────────────────────────────
-          TODO: Paste your AdSense <ins> tag here when ready.
-          For mobile anchor, use the fixed 320×50 size:
-
-          <ins
-            className="adsbygoogle"
-            style={{ display: "inline-block", width: "320px", height: "50px" }}
-            data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-            data-ad-slot="XXXXXXXXXX"
-          />
-          ───────────────────────────────────────────────────────────────────── */}
+      <ins
+        className="adsbygoogle"
+        style={{ display: "inline-block", width: "320px", height: "50px" }}
+        data-ad-client={clientId}
+        data-ad-slot={adSlot}
+      />
     </div>
   );
 }

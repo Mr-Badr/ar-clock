@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "school-start-sa",
+    "slug": "school-start-saudi",
+    "name": "بداية الدراسة في السعودية",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "sa",
+    "month": 8,
+    "day": 30
+  },
+  "richContent": {
+    "seoTitle": "موعد بداية الدراسة في السعودية {{year}} — 30 أغسطس",
+    "description": "انطلاق العام الدراسي {{year}}–{{nextYear}} في المملكة العربية السعودية.",
+    "keywords": [
+      "بداية الدراسة السعودية {{year}}",
+      "الدخول المدرسي السعودية {{year}}",
+      "موعد الدراسة السعودية"
+    ],
+    "faqItems": [
+      {
+        "q": "متى بداية الدراسة السعودية {{year}}؟",
+        "a": "30 أغسطس {{year}}."
+      }
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى بداية الدراسة في السعودية {{year}}",
+      "كم باقي على بداية الدراسة في السعودية {{year}}",
+      "موعد بداية الدراسة في السعودية {{year}}",
+      "بداية الدراسة في السعودية {{hijriYear}}"
+    ],
+    "country": [
+      "متى بداية الدراسة في السعودية في {{countryName}} {{year}}",
+      "بداية الدراسة في السعودية {{countryName}} {{year}}",
+      "كم باقي على بداية الدراسة في السعودية في {{countryName}}"
+    ]
+  },
+  "tier": "tier3",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/school-start-saudi",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar",
+  "queueOrder": 23
+}

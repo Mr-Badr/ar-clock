@@ -1,0 +1,57 @@
+[
+  {
+    "id": "all",
+    "label": "الكل",
+    "icon": "🗓",
+    "color": "badge-default"
+  },
+  {
+    "id": "islamic",
+    "label": "المناسبات الإسلامية",
+    "icon": "🌙",
+    "color": "badge-accent",
+    "intentHeading": "استعد لـ{{eventName}}"
+  },
+  {
+    "id": "national",
+    "label": "الأعياد الوطنية",
+    "icon": "🏳",
+    "color": "badge-info",
+    "intentHeading": "احتفل بـ{{eventName}}"
+  },
+  {
+    "id": "school",
+    "label": "المناسبات المدرسية",
+    "icon": "📚",
+    "color": "badge-warning",
+    "intentHeading": "استعد لـ{{eventName}}"
+  },
+  {
+    "id": "holidays",
+    "label": "الإجازات الرسمية",
+    "icon": "🏖",
+    "color": "badge-success",
+    "intentHeading": "خطط لإجازتك"
+  },
+  {
+    "id": "astronomy",
+    "label": "فلكية وطبيعية",
+    "icon": "🌍",
+    "color": "badge-info",
+    "intentHeading": "شاهد {{eventName}}"
+  },
+  {
+    "id": "business",
+    "label": "مناسبات الأعمال",
+    "icon": "💼",
+    "color": "badge-default",
+    "intentHeading": "جهّز فريقك"
+  },
+  {
+    "id": "support",
+    "label": "الدعم الاجتماعي",
+    "icon": "💰",
+    "color": "badge-success",
+    "intentHeading": "شارك في {{eventName}}"
+  }
+]

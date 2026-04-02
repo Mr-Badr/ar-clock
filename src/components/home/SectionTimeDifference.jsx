@@ -103,7 +103,7 @@ export default function SectionTimeDifference() {
               className="text-sm font-semibold transition-colors"
               style={{ color: 'var(--accent-alt)' }}
             >
-              الوقت الآن حول العالم →
+              الوقت الآن حول العالم ←
             </Link>
           </div>
         </div>

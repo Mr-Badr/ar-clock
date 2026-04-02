@@ -1,0 +1,10 @@
+{
+  "id": "exams-bac-dz",
+  "slug": "bac-exams-algeria",
+  "name": "امتحانات الباك (الجزائر)",
+  "type": "fixed",
+  "category": "school",
+  "_countryCode": "dz",
+  "month": 6,
+  "day": 15
+}

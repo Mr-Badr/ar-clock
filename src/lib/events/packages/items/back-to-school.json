@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "back-to-school",
+    "slug": "back-to-school",
+    "name": "الدخول المدرسي",
+    "type": "estimated",
+    "category": "school",
+    "date": "{{year}}-09-20"
+  },
+  "richContent": {
+    "seoTitle": "العودة إلى المدرسة {{year}} — مواعيد الدراسة في الدول العربية",
+    "description": "مواعيد العودة إلى المدرسة {{year}} في كل الدول العربية.",
+    "keywords": [
+      "العودة إلى المدرسة {{year}}",
+      "مواعيد الدراسة {{year}}",
+      "بداية العام الدراسي"
+    ],
+    "faqItems": [
+      {
+        "q": "كم باقي على الدراسة {{year}}؟",
+        "a": "~سبتمبر {{year}}. يتفاوت بحسب كل دولة."
+      }
+    ],
+    "about": {
+      "heading": "عن العودة إلى المدرسة {{year}}",
+      "paragraphs": [
+        "تختلف مواعيد العودة إلى المدرسة بين الدول العربية. معظم الدول تبدأ بين أواخر أغسطس ومنتصف سبتمبر.",
+        "راجع الصفحات الخاصة بكل دولة للتفاصيل."
+      ]
+    },
+    "quickFacts": [
+      {
+        "label": "السعودية",
+        "value": "30 أغسطس"
+      },
+      {
+        "label": "مصر",
+        "value": "20 سبتمبر"
+      },
+      {
+        "label": "المغرب",
+        "value": "8 سبتمبر"
+      },
+      {
+        "label": "الجزائر",
+        "value": "21 سبتمبر"
+      },
+      {
+        "label": "الإمارات",
+        "value": "30 أغسطس"
+      },
+      {
+        "label": "الكويت",
+        "value": "15 سبتمبر"
+      }
+    ],
+    "relatedSlugs": [
+      "school-start-egypt",
+      "school-start-algeria",
+      "school-start-morocco"
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى الدخول المدرسي {{year}}",
+      "كم باقي على الدخول المدرسي {{year}}",
+      "موعد الدخول المدرسي {{year}}",
+      "الدخول المدرسي {{hijriYear}}"
+    ],
+    "country": [
+      "متى الدخول المدرسي في {{countryName}} {{year}}",
+      "الدخول المدرسي {{countryName}} {{year}}",
+      "كم باقي على الدخول المدرسي في {{countryName}}"
+    ]
+  },
+  "tier": "tier3",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/back-to-school",
+  "canonicalSource": "internal",
+  "sourceAuthority": "official-announcement",
+  "queueOrder": 20
+}

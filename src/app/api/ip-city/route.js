@@ -1,6 +1,7 @@
 import { NextResponse, connection } from 'next/server';
 import { findNearestCity } from '@/lib/locationService';
 import { searchCities } from '@/lib/db/queries/cities';
+import { lookupIpGeo } from '@/lib/ip-lookup';
 
 /**
  * api/ip-city/route.js
@@ -13,13 +14,19 @@ export async function GET(request) {
   try {
     // 1. Get client IP
     const forwarded = request.headers.get('x-forwarded-for');
-    const ip = forwarded ? forwarded.split(/, /)[0] : request.ip || '8.8.8.8'; // fallback to google DNS for test
+    const rawIp = forwarded ? forwarded.split(/, /)[0] : request.ip || '';
+    const ip = String(rawIp || '').trim() || (process.env.NODE_ENV === 'production' ? '' : '8.8.8.8');
+    if (!ip) {
+      return NextResponse.json({ error: 'IP not available' }, { status: 400 });
+    }
 
-    // 2. Fetch from ip-api
-    const res = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,country,countryCode,city,lat,lon`);
-    const data = await res.json();
-
-    if (data.status !== 'success') {
+    // 2. Fetch from the shared IP lookup helper.
+    // Note: the default provider uses ip-api over HTTP on the free tier.
+    const data = await lookupIpGeo(ip, {
+      fields: ['status', 'message', 'country', 'countryCode', 'city', 'lat', 'lon', 'timezone'],
+      revalidate: 3600,
+    });
+    if (!data?.lat || !data?.lon) {
       return NextResponse.json({ error: 'IP detection failed' }, { status: 500 });
     }
 

@@ -5,45 +5,77 @@ import { useEffect } from 'react';
 export default function ServiceWorkerRegistration() {
   useEffect(() => {
     if (
-      typeof window !== 'undefined' &&
-      'serviceWorker' in navigator &&
-      process.env.NODE_ENV === 'production'
+      typeof window === 'undefined' ||
+      !('serviceWorker' in navigator) ||
+      !window.isSecureContext
     ) {
-      const registerSW = async () => {
-        try {
-          const registration = await navigator.serviceWorker.register('/sw.js', {
-            scope: '/',
-          });
-
-          registration.addEventListener('updatefound', () => {
-            const newWorker = registration.installing;
-            if (newWorker) {
-              newWorker.addEventListener('statechange', () => {
-                if (
-                  newWorker.state === 'installed' &&
-                  navigator.serviceWorker.controller
-                ) {
-                  // New content is available
-                  console.log('[PWA] New content is available; please refresh.');
-                }
-              });
-            }
-          });
-
-          console.log('[PWA] Service Worker registered successfully:', registration.scope);
-        } catch (error) {
-          console.error('[PWA] Service Worker registration failed:', error);
-        }
-      };
-
-      // Register after page load to avoid blocking initial render
-      if (document.readyState === 'complete') {
-        registerSW();
-      } else {
-        window.addEventListener('load', registerSW);
-        return () => window.removeEventListener('load', registerSW);
-      }
+      return undefined;
     }
+
+    const swEnabled = process.env.NEXT_PUBLIC_ENABLE_SW === 'true';
+    const hostname = window.location.hostname;
+    const isLocalhost =
+      hostname === 'localhost' ||
+      hostname === '127.0.0.1' ||
+      hostname === '::1';
+    const shouldRegister =
+      process.env.NODE_ENV === 'production' && swEnabled && !isLocalhost;
+
+    const cleanupExistingServiceWorkers = async () => {
+      try {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(registrations.map((registration) => registration.unregister()));
+
+        if ('caches' in window) {
+          const cacheKeys = await window.caches.keys();
+          await Promise.all(
+            cacheKeys
+              .filter((key) => key.startsWith('miqat-'))
+              .map((key) => window.caches.delete(key)),
+          );
+        }
+      } catch (error) {
+        console.warn('[PWA] Service Worker cleanup skipped:', error);
+      }
+    };
+
+    if (!shouldRegister) {
+      cleanupExistingServiceWorkers();
+      return undefined;
+    }
+
+    const registerSW = async () => {
+      try {
+        const registration = await navigator.serviceWorker.register('/sw.js', {
+          scope: '/',
+        });
+
+        registration.addEventListener('updatefound', () => {
+          const newWorker = registration.installing;
+          if (newWorker) {
+            newWorker.addEventListener('statechange', () => {
+              if (
+                newWorker.state === 'installed' &&
+                navigator.serviceWorker.controller
+              ) {
+                console.info('[PWA] New content is available; please refresh.');
+              }
+            });
+          }
+        });
+      } catch (error) {
+        console.error('[PWA] Service Worker registration failed:', error);
+      }
+    };
+
+    // Register after page load to avoid blocking initial render
+    if (document.readyState === 'complete') {
+      registerSW();
+      return undefined;
+    }
+
+    window.addEventListener('load', registerSW);
+    return () => window.removeEventListener('load', registerSW);
   }, []);
 
   return null;

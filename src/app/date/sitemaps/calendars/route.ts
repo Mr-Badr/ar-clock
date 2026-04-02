@@ -2,7 +2,9 @@
  * /date/sitemaps/calendars/route.ts
  * Yearly calendars (Gregorian and Hijri).
  */
-const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+import { getSiteUrl } from '@/lib/site-config';
+
+const BASE = getSiteUrl();
 
 export async function GET() {
   const currentYear = new Date().getUTCFullYear();

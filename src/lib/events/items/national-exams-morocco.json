@@ -1,0 +1,10 @@
+{
+  "id": "national-exam-ma",
+  "slug": "national-exams-morocco",
+  "name": "الامتحان الوطني (المغرب)",
+  "type": "fixed",
+  "category": "school",
+  "_countryCode": "ma",
+  "month": 6,
+  "day": 10
+}

@@ -1,11 +1,72 @@
 /**
+ * app/holidays/[slug]/RelatedEvents.jsx
  * RelatedEvents — Related events section
  * Shows other events in the same category
  */
 
 import Link from 'next/link';
+import { ALL_EVENTS, getRelatedEvents } from '@/lib/holidays-engine';
+import { getHolidayCategoryById } from '@/lib/holidays/taxonomy';
+import { resolveHolidayRuntimeData } from '@/lib/holidays/runtime-data';
 
-export default function RelatedEvents({ events, currentSlug }) {
+function toPlainText(value) {
+  if (!value) return '';
+  return String(value).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function buildExcerpt(value, maxLength = 165) {
+  const text = toPlainText(value);
+  if (!text) return { text: '', truncated: false };
+  if (text.length <= maxLength) {
+    return { text, truncated: false };
+  }
+
+  const slice = text.slice(0, maxLength);
+  const safeEnd = Math.max(slice.lastIndexOf(' '), slice.lastIndexOf('،'), slice.lastIndexOf('.'));
+  const nextText = (safeEnd > maxLength * 0.65 ? slice.slice(0, safeEnd) : slice).trim();
+  return {
+    text: `${nextText}...`,
+    truncated: true,
+  };
+}
+
+async function buildRelatedCard(slug) {
+  const event = ALL_EVENTS.find((item) => item.slug === slug);
+  if (!event) return null;
+  const runtime = await resolveHolidayRuntimeData(slug);
+  if (!runtime) return null;
+  const category = getHolidayCategoryById(event.category);
+  const rawDescription =
+    runtime.pageModel?.hero?.answerSummary ||
+    runtime.seo?.seoMeta?.metaDescription ||
+    runtime.seo?.description ||
+    runtime.event?.details ||
+    `تعرف على موعد ${runtime.event?.name || event.name} والعد التنازلي الخاص به.`;
+  const excerpt = buildExcerpt(rawDescription);
+  return {
+    slug: event.slug,
+    name: runtime.pageModel?.meta?.displayTitle || runtime.event?.name || event.name,
+    emoji: category?.icon || '📅',
+    categoryName: category?.label || event.category,
+    description: excerpt.text,
+    hasMore: excerpt.truncated,
+  };
+}
+
+export default async function RelatedEvents({ relatedSlugs = [], currentSlug }) {
+  const candidateSlugs = relatedSlugs.length > 0
+    ? relatedSlugs
+    : getRelatedEvents(currentSlug, ALL_EVENTS, 4).map((event) => event.slug);
+  const events = (
+    await Promise.all(
+      candidateSlugs
+        .filter((slug) => slug && slug !== currentSlug)
+        .map(buildRelatedCard),
+    )
+  )
+    .filter(Boolean)
+    .slice(0, 6);
+
   if (!events?.length) return null;
   
   return (
@@ -41,8 +102,22 @@ export default function RelatedEvents({ events, currentSlug }) {
               </div>
             </div>
             <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', lineHeight: 'var(--leading-relaxed)' }}>
-              {event.description?.substring(0, 100)}...
+              {event.description}
             </p>
+            <div style={{ marginTop: 'var(--space-3)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)' }}>
+              <span
+                style={{
+                  fontSize: 'var(--text-sm)',
+                  fontWeight: 'var(--font-semibold)',
+                  color: 'var(--accent-strong)',
+                }}
+              >
+                {event.hasMore ? 'أكمل القراءة' : 'عرض المناسبة'}
+              </span>
+              <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }} aria-hidden="true">
+                ←
+              </span>
+            </div>
           </Link>
         ))}
       </div>

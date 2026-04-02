@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "school-start-dz",
+    "slug": "school-start-algeria",
+    "name": "الدخول المدرسي في الجزائر",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "dz",
+    "month": 9,
+    "day": 21
+  },
+  "richContent": {
+    "seoTitle": "بداية الدراسة في الجزائر {{year}} — موعد الدخول المدرسي",
+    "description": "متى تبدأ الدراسة في الجزائر {{year}}؟ موعد الدخول المدرسي الجديد.",
+    "keywords": [
+      "بداية الدراسة في الجزائر {{year}}",
+      "موعد الدراسة الجزائر",
+      "الدخول المدرسي {{year}}"
+    ],
+    "faqItems": [
+      {
+        "q": "متى تبدأ الدراسة في الجزائر {{year}}؟",
+        "a": "21 سبتمبر {{year}} تقريباً."
+      }
+    ],
+    "about": {
+      "heading": "عن الدخول المدرسي في الجزائر {{year}}",
+      "paragraphs": [
+        "يبدأ العام الدراسي في الجزائر أواخر سبتمبر تقريباً. تُعلن وزارة التربية الموعد الرسمي.",
+        "في {{year}}، من المتوقع أن تبدأ الدراسة 21 سبتمبر."
+      ]
+    },
+    "quickFacts": [
+      {
+        "label": "موعد البداية",
+        "value": "21 سبتمبر {{year}}"
+      }
+    ],
+    "relatedSlugs": [
+      "bac-results-algeria",
+      "bac-exams-algeria"
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "keywordTemplateSet": {
+    "base": [
+      "متى الدخول المدرسي في الجزائر {{year}}",
+      "كم باقي على الدخول المدرسي في الجزائر {{year}}",
+      "موعد الدخول المدرسي في الجزائر {{year}}",
+      "الدخول المدرسي في الجزائر {{hijriYear}}"
+    ],
+    "country": [
+      "متى الدخول المدرسي في الجزائر في {{countryName}} {{year}}",
+      "الدخول المدرسي في الجزائر {{countryName}} {{year}}",
+      "كم باقي على الدخول المدرسي في الجزائر في {{countryName}}"
+    ]
+  },
+  "tier": "tier2",
+  "publishStatus": "published",
+  "canonicalPath": "/holidays/school-start-algeria",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar",
+  "queueOrder": 38
+}
