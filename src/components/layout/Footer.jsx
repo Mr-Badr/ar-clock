@@ -139,6 +139,7 @@ const Footer = () => {
         gap: 'var(--space-14)',
         justifyContent: 'flex-end',
       }}>
+
         {/* Column 1 */}
         <div style={{ textAlign: 'right' }}>
           <h3 style={{
@@ -149,10 +150,10 @@ const Footer = () => {
             textTransform: 'uppercase',
             letterSpacing: '0.05em',
           }}>
-            الأدوات
+            روابط مهمة
           </h3>
           <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            {PRODUCT_LINKS.map(({ href, label }) => (
+            {COMPANY_LINKS.map(({ href, label }) => (
               <li key={href}>
                 <Link
                   href={href}
@@ -179,10 +180,10 @@ const Footer = () => {
             textTransform: 'uppercase',
             letterSpacing: '0.05em',
           }}>
-            معلومات الموقع
+            الصفحات الرئيسية
           </h3>
           <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            {COMPANY_LINKS.map(({ href, label }) => (
+            {PRODUCT_LINKS.map(({ href, label }) => (
               <li key={href}>
                 <Link
                   href={href}
@@ -198,6 +199,7 @@ const Footer = () => {
             ))}
           </ul>
         </div>
+
       </div>
 
     </div>

@@ -358,92 +358,64 @@
 
 
 /* ============================================================
-   RESPONSIVE — TABLET (≤ 980px)
-   Two-column grid → single column.
-   Copy stays inside the hero, centered.
+   RESPONSIVE — TABLET (641px – 980px)
+   Keep two-column grid. Copy stays on the RIGHT, right-aligned.
+   Shrink the copy column slightly to avoid overlap with the clock.
    ============================================================ */
-@media (max-width: 980px) {
+@media (max-width: 980px) and (min-width: 641px) {
   .hero {
     min-height: 1060px;
     padding-top: 5.2rem;
   }
 
+  /* Narrower copy column so it doesn't collide with the clock panel */
   .shell {
-    grid-template-columns: 1fr;
-    min-height: auto;
+    grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
+    min-height: 860px;
   }
 
-  .stageSpacer {
-    display: none;
-  }
-
+  /* Copy stays in column 1 (RIGHT in RTL) — no centering */
   .copy {
-    grid-column: 1;
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: right;
+  }
+
+  .auroraText {
+    font-size: clamp(3.4rem, 7vw, 5.5rem);
+  }
+
+  .titleSub {
+    font-size: clamp(1.3rem, 2.5vw, 2rem);
   }
 
   .desc {
-    max-width: 38ch;
-  }
-
-  .bottomMeta {
-    align-items: center;
-    padding-bottom: 24px;
-  }
-
-  .bottomItems {
-    justify-content: center;
+    max-width: 32ch;
   }
 }
 
 
 /* ============================================================
    RESPONSIVE — MOBILE (≤ 640px)
-   Hero shows ONLY video + clock.
-   Text content lives in .heroMobileContent BELOW the hero.
+   Hero is compact — video + clock only.
+   Text flows in .heroMobileContent BELOW the hero, centered.
    ============================================================ */
 @media (max-width: 640px) {
 
-  /* Hero becomes compact — just the video rectangle */
   .hero {
     min-height: 620px;
     padding-top: 4rem;
   }
 
-  /* Hide desktop copy layer inside the hero */
+  /* Hide desktop copy inside the hero */
   .heroDesktopContent {
     display: none;
   }
 
-  /* Show mobile text section below the hero */
+  /* Show the mobile section below */
   .heroMobileContent {
     display: block;
   }
 
-  /* Mobile copy centered */
-  .copyMobileCenter {
-    align-items: center;
-    text-align: center;
-  }
-
-  .copyMobileCenter .auroraText {
-    font-size: clamp(3.6rem, 14vw, 5rem);
-  }
-
-  .copyMobileCenter .titleSub {
-    font-size: clamp(1.2rem, 5.5vw, 1.6rem);
-  }
-
-  .heroMobileContent .bottomMeta {
-    align-items: center;
-  }
-
-  .heroMobileContent .bottomItems {
-    justify-content: center;
-  }
-
-  /* Clock panel: keep proportional but add safe overflow clip */
   .heroCardWrap {
     padding: 12px;
   }
