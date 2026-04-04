@@ -1,7 +1,4 @@
-'use client';
-import {
-  Accordion, AccordionItem, AccordionTrigger, AccordionContent,
-} from '@/components/ui/accordion';
+import { ChevronDown } from 'lucide-react';
 
 /**
  * FAQAccordions — Generic FAQ accordion using shadcn/ui primitives.
@@ -22,15 +19,14 @@ import {
  */
 export default function FAQAccordions({ items = [] }) {
   return (
-    <Accordion type="single" collapsible className="w-full space-y-3">
+    <div className="w-full space-y-3">
       {items.map((it, idx) => (
-        <AccordionItem
+        <details
           key={idx}
-          value={`faq-${idx}`}
-          className="overflow-hidden rounded-xl border border-subtle bg-surface-2 shadow-sm transition-all duration-200 hover:border-default hover:shadow-md"
+          className="group overflow-hidden rounded-xl border border-subtle bg-surface-2 shadow-sm transition-all duration-200 hover:border-default hover:shadow-md"
         >
-          <AccordionTrigger
-            className="flex w-full items-center justify-between gap-4 px-5 py-4 text-right text-base font-bold text-primary hover:no-underline"
+          <summary
+            className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-right text-base font-bold text-primary [&::-webkit-details-marker]:hidden"
           >
             <span className="flex items-center gap-2 leading-snug">
               {it.icon && (
@@ -48,12 +44,17 @@ export default function FAQAccordions({ items = [] }) {
               )}
               {it.q}
             </span>
-          </AccordionTrigger>
-          <AccordionContent className="px-5 pb-5 pt-3 text-right text-sm text-secondary leading-relaxed bg-surface-2">
+            <ChevronDown
+              size={18}
+              className="shrink-0 text-muted transition-transform duration-200 group-open:rotate-180"
+              aria-hidden="true"
+            />
+          </summary>
+          <div className="px-5 pb-5 pt-3 text-right text-sm text-secondary leading-relaxed bg-surface-2">
             {it.node ?? <p>{it.a}</p>}
-          </AccordionContent>
-        </AccordionItem>
+          </div>
+        </details>
       ))}
-    </Accordion>
+    </div>
   );
 }

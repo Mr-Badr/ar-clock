@@ -23,6 +23,21 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Fullscreen, Minimize2, ZoomIn, ZoomOut, Share2, Link2 } from 'lucide-react';
 import DatePill from './DatePill';
+import {
+  FULLSCREEN_LAYER_STYLE,
+  FULLSCREEN_TITLE_STYLE,
+  FULLSCREEN_TOOLBAR_STYLE,
+  FULLSCREEN_UNIT_LABEL_STYLE,
+  FULLSCREEN_ZOOM_GROUP_STYLE,
+  FULLSCREEN_ZOOM_LABEL_STYLE,
+  getFullscreenContentStyle,
+  getFullscreenDigitStyle,
+  getFullscreenRowStyle,
+  getFullscreenScale,
+  getFullscreenSeparatorStyle,
+  getFullscreenUnitWrapStyle,
+  getFullscreenZoomLabel,
+} from './fullscreenShared';
 
 /* ─────────────────────────────────────────────────────────────────────
    HELPERS
@@ -584,8 +599,8 @@ export default function CountdownTicker({
 
   const zoomIn = () => setZoom(z => Math.min(z + 1, 2));
   const zoomOut = () => setZoom(z => Math.max(z - 1, 0));
-  const scaleValue = zoom === 0 ? 'scale(0.7)' : zoom === 2 ? 'scale(1.3)' : 'scale(1)';
-  const zoomLabel = ['تصغير', 'حجم عادي', 'تكبير'][zoom];
+  const scaleValue = getFullscreenScale(zoom, 'fourUnit');
+  const zoomLabel = getFullscreenZoomLabel(zoom);
 
   /* ── Share ── */
   const handleShare = async () => {
@@ -623,41 +638,30 @@ export default function CountdownTicker({
 
       {/* ═══ FULLSCREEN ════════════════════════════════════════════════ */}
       {isFS && (
-        <div className="fullscreen-mode" style={{ background: 'var(--clock-bg)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }} dir="rtl">
-          <div className="fullscreen-exit" style={{
-            position: 'absolute', top: '1.5rem', right: '1.5rem', left: '1.5rem',
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 110,
-          }}>
+        <div
+          className="fullscreen-mode"
+          style={{ ...FULLSCREEN_LAYER_STYLE, background: 'var(--clock-bg)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
+          dir="rtl"
+        >
+          <div className="fullscreen-exit" style={FULLSCREEN_TOOLBAR_STYLE}>
             <IconBtn onClick={toggleFS} label="إغلاق ملء الشاشة">
               <Minimize2 size={18} /><span>إغلاق</span>
             </IconBtn>
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: '0.25rem',
-              background: 'color-mix(in srgb, var(--bg-surface-3) 70%, transparent)',
-              backdropFilter: 'blur(12px)', padding: '0.25rem',
-              borderRadius: '0.875rem', border: '1px solid var(--border-default)',
-            }}>
+            <div style={FULLSCREEN_ZOOM_GROUP_STYLE}>
               <IconBtn onClick={zoomOut} label="تصغير" disabled={zoom === 0} variant="none"><ZoomOut size={20} /></IconBtn>
-              <span style={{ padding: '0.4rem 0.75rem', fontSize: '0.72rem', fontWeight: '900', minWidth: '80px', textAlign: 'center', color: 'var(--text-primary)' }}>{zoomLabel}</span>
+              <span style={FULLSCREEN_ZOOM_LABEL_STYLE}>{zoomLabel}</span>
               <IconBtn onClick={zoomIn} label="تكبير" disabled={zoom === 2} variant="none"><ZoomIn size={20} /></IconBtn>
             </div>
           </div>
-          <div style={{
-            width: '100%', height: '100%',
-            display: 'flex', flexDirection: 'column',
-            alignItems: 'center', justifyContent: 'center',
-            padding: '1rem', transform: scaleValue, transition: 'transform 0.5s ease-in-out',
-            gap: 'clamp(1.5rem, 4vh, 3.5rem)',
-          }}>
+          <div style={getFullscreenContentStyle(scaleValue)}>
             {eventName && (
-              <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.75rem)', fontWeight: '800', color: 'var(--accent)', textAlign: 'center', margin: 0 }}>
+              <h2 style={FULLSCREEN_TITLE_STYLE}>
                 {eventName}
               </h2>
             )}
-            {/* Fullscreen uses vw/vh — correct since it IS the full viewport */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(1rem, 4vw, 4rem)', direction: 'ltr' }}>
+            <div style={getFullscreenRowStyle(4)}>
               {ALL_UNITS.map(({ key, label }, i) => (
-                <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1rem, 4vw, 4rem)' }}>
+                <div key={key} style={getFullscreenUnitWrapStyle(4)}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem' }}>
                     <div style={{ display: 'flex', lineHeight: 1 }}>
                       {pad2(r[key]).split('').map((char, pos) => (
@@ -666,30 +670,14 @@ export default function CountdownTicker({
                           suppressHydrationWarning
                           aria-hidden
                           className="clock-display"
-                          style={{
-                            display: 'block',
-                            fontSize: 'clamp(4rem, min(14vw, 20vh), 10rem)',
-                            fontWeight: '800', lineHeight: 1,
-                            color: 'var(--clock-digit-color)', textShadow: 'var(--clock-digit-glow)',
-                            fontVariantNumeric: 'tabular-nums', letterSpacing: '0.02em',
-                          }}
+                          style={getFullscreenDigitStyle(4)}
                         >{char}</span>
                       ))}
                     </div>
-                    <span style={{
-                      fontSize: 'clamp(0.8rem, min(2.2vw, 3vh), 1.4rem)', fontWeight: '500',
-                      color: 'var(--text-secondary)', padding: '0.2rem 0.75rem',
-                      borderRadius: '999px', background: 'var(--bg-surface-3)',
-                      border: '1px solid var(--border-subtle)', whiteSpace: 'nowrap',
-                    }}>{label}</span>
+                    <span style={FULLSCREEN_UNIT_LABEL_STYLE}>{label}</span>
                   </div>
                   {i < ALL_UNITS.length - 1 && (
-                    <span aria-hidden style={{
-                      fontSize: 'clamp(2.5rem, min(8vw, 12vh), 6rem)',
-                      color: 'var(--clock-separator)',
-                      fontWeight: '700',
-                      alignSelf: 'center', marginBottom: '1em', flexShrink: 0, userSelect: 'none',
-                    }}>:</span>
+                    <span aria-hidden style={getFullscreenSeparatorStyle(4)}>:</span>
                   )}
                 </div>
               ))}

@@ -418,7 +418,7 @@ export function ConverterForm({
                   borderRadius: 'var(--radius-md)',
                 }}
               >
-                <CalendarBlank weight={direction === 'gregorian-to-hijri' ? 'duotone' : 'regular'} size={20} />
+                <CalendarBlank className='mx-auto' weight={direction === 'gregorian-to-hijri' ? 'duotone' : 'regular'} size={20} />
                 <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--font-semibold)' }}>
                   ميلادي → هجري
                 </span>
@@ -453,7 +453,7 @@ export function ConverterForm({
                   borderRadius: 'var(--radius-md)',
                 }}
               >
-                <Moon weight={direction === 'hijri-to-gregorian' ? 'duotone' : 'regular'} size={20} />
+                <Moon className='mx-auto' weight={direction === 'hijri-to-gregorian' ? 'duotone' : 'regular'} size={20} />
                 <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--font-semibold)' }}>
                   هجري → ميلادي
                 </span>

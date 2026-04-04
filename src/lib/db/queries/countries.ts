@@ -4,6 +4,35 @@ import { supabase } from '@/lib/supabase/server'
 import type { Country } from '@/lib/db/types'
 import fallback from '@/lib/db/fallback/countries.json'
 
+const fallbackCountries = fallback as Country[]
+
+function getCountryKey(country: Partial<Country>) {
+  return country.country_slug || country.country_code || ''
+}
+
+function sortCountries(a: Country, b: Country) {
+  return String(a.name_ar || a.name_en || a.country_slug).localeCompare(
+    String(b.name_ar || b.name_en || b.country_slug),
+    'ar',
+  )
+}
+
+function mergeCountries(rows: Country[]) {
+  const merged = new Map<string, Country>()
+
+  for (const country of fallbackCountries) {
+    const key = getCountryKey(country)
+    if (key) merged.set(key, country)
+  }
+
+  for (const country of rows) {
+    const key = getCountryKey(country)
+    if (key) merged.set(key, country)
+  }
+
+  return Array.from(merged.values()).sort(sortCountries)
+}
+
 export async function getAllCountries(): Promise<Country[]> {
   'use cache'
   cacheTag('countries')
@@ -11,10 +40,10 @@ export async function getAllCountries(): Promise<Country[]> {
   try {
     const { data, error } = await supabase.from('countries').select('*').order('name_ar')
     if (error || !data?.length) throw new Error(error?.message ?? 'empty')
-    return data as Country[]
+    return mergeCountries(data as Country[])
   } catch (err) {
     console.error('[DB] getAllCountries → fallback:', err)
-    return fallback as Country[]
+    return mergeCountries([])
   }
 }
 
@@ -56,8 +85,12 @@ export async function getAllCountrySlugs(): Promise<string[]> {
   try {
     const { data, error } = await supabase.from('countries').select('country_slug')
     if (error) throw new Error(error.message)
-    return (data ?? []).map(c => c.country_slug)
+    const dbSlugs = (data ?? []).map(c => c.country_slug).filter(Boolean)
+    return Array.from(new Set([
+      ...dbSlugs,
+      ...fallbackCountries.map(c => c.country_slug).filter(Boolean),
+    ]))
   } catch {
-    return (fallback as Country[]).map(c => c.country_slug)
+    return fallbackCountries.map(c => c.country_slug)
   }
 }

@@ -1,5 +1,5 @@
 import { NextResponse, connection } from 'next/server';
-import { findNearestCity } from '@/lib/locationService';
+import { detectBestCityMatch } from '@/lib/locationService';
 import { searchCities } from '@/lib/db/queries/cities';
 import { lookupIpGeo } from '@/lib/ip-lookup';
 
@@ -15,7 +15,7 @@ export async function GET(request) {
     // 1. Get client IP
     const forwarded = request.headers.get('x-forwarded-for');
     const rawIp = forwarded ? forwarded.split(/, /)[0] : request.ip || '';
-    const ip = String(rawIp || '').trim() || (process.env.NODE_ENV === 'production' ? '' : '8.8.8.8');
+    const ip = String(rawIp || '').trim();
     if (!ip) {
       return NextResponse.json({ error: 'IP not available' }, { status: 400 });
     }
@@ -30,8 +30,14 @@ export async function GET(request) {
       return NextResponse.json({ error: 'IP detection failed' }, { status: 500 });
     }
 
-    // 3. Find the best match in our database
-    const city = await findNearestCity(data.lat, data.lon);
+    // 3. Find the best match in our database using every signal we have
+    const city = await detectBestCityMatch({
+      lat: data.lat,
+      lon: data.lon,
+      timezone: data.timezone,
+      countryCode: data.countryCode,
+      cityName: data.city,
+    });
 
     if (city) {
       return NextResponse.json(city);

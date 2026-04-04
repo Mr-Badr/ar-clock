@@ -14,6 +14,21 @@
 import { useState, useEffect, useRef } from 'react';
 import { Fullscreen, Minimize2, ZoomIn, ZoomOut } from 'lucide-react';
 import DatePill from './DatePill';
+import {
+  FULLSCREEN_LAYER_STYLE,
+  FULLSCREEN_TITLE_STYLE,
+  FULLSCREEN_TOOLBAR_STYLE,
+  FULLSCREEN_UNIT_LABEL_STYLE,
+  FULLSCREEN_ZOOM_GROUP_STYLE,
+  FULLSCREEN_ZOOM_LABEL_STYLE,
+  getFullscreenContentStyle,
+  getFullscreenDigitStyle,
+  getFullscreenRowStyle,
+  getFullscreenScale,
+  getFullscreenSeparatorStyle,
+  getFullscreenUnitWrapStyle,
+  getFullscreenZoomLabel,
+} from './fullscreenShared';
 import { getSafeTimezone } from '@/lib/country-utils';
 
 
@@ -289,8 +304,8 @@ export default function LiveClock({ timezone = null, cityLabel = null }) {
 
   const zoomIn = () => setZoom(z => Math.min(z + 1, 2));
   const zoomOut = () => setZoom(z => Math.max(z - 1, 0));
-  const scaleValue = zoom === 0 ? 'scale(0.7)' : zoom === 2 ? 'scale(1.3)' : 'scale(1)';
-  const zoomLabel = ['تصغير', 'حجم عادي', 'تكبير'][zoom];
+  const scaleValue = getFullscreenScale(zoom, 'threeUnit');
+  const zoomLabel = getFullscreenZoomLabel(zoom);
 
   const t = time ?? { hours: 0, minutes: 0, seconds: 0, dateAr: '', dateHijri: '' };
 
@@ -304,43 +319,19 @@ export default function LiveClock({ timezone = null, cityLabel = null }) {
       <div ref={containerRef} style={{ position: 'relative', width: '100%' }}>
         <div
           style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 100,
+            ...FULLSCREEN_LAYER_STYLE,
             background: 'var(--bg-base)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
           }}
           dir="rtl"
         >
           {/* FS toolbar */}
-          <div style={{
-            position: 'absolute',
-            top: '1.5rem',
-            right: '1.5rem',
-            left: '1.5rem',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            zIndex: 110,
-          }}>
+          <div style={FULLSCREEN_TOOLBAR_STYLE}>
             <IconBtn onClick={toggleFS} label="إغلاق ملء الشاشة">
               <Minimize2 size={18} /><span>إغلاق</span>
             </IconBtn>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.25rem',
-              background: 'color-mix(in srgb, var(--bg-surface-3) 70%, transparent)',
-              backdropFilter: 'blur(12px)',
-              padding: '0.25rem',
-              borderRadius: '0.875rem',
-              border: '1px solid var(--border-default)',
-            }}>
+            <div style={FULLSCREEN_ZOOM_GROUP_STYLE}>
               <IconBtn onClick={zoomOut} label="تصغير" disabled={zoom === 0}><ZoomOut size={20} /></IconBtn>
-              <span style={{ padding: '0.4rem 0.75rem', fontSize: '0.72rem', fontWeight: '900', minWidth: '80px', textAlign: 'center', color: 'var(--text-primary)' }}>
+              <span style={FULLSCREEN_ZOOM_LABEL_STYLE}>
                 {zoomLabel}
               </span>
               <IconBtn onClick={zoomIn} label="تكبير" disabled={zoom === 2}><ZoomIn size={20} /></IconBtn>
@@ -348,28 +339,16 @@ export default function LiveClock({ timezone = null, cityLabel = null }) {
           </div>
 
           {/* FS content */}
-          <div style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '1rem',
-            transform: scaleValue,
-            transition: 'transform 0.5s ease-in-out',
-            gap: 'clamp(1.5rem, 4vh, 3.5rem)',
-          }}>
+          <div style={getFullscreenContentStyle(scaleValue)}>
             {cityLabel && (
-              <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.75rem)', fontWeight: '800', color: 'var(--accent)', textAlign: 'center', margin: 0 }}>
+              <h2 style={FULLSCREEN_TITLE_STYLE}>
                 {cityLabel}
               </h2>
             )}
 
-            {/* FS digits — use vw/vh since it IS the full viewport */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(1rem, 5vw, 5rem)', direction: 'ltr' }}>
+            <div style={getFullscreenRowStyle(3)}>
               {TIME_UNITS.map(({ key, label }, i) => (
-                <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1rem, 5vw, 5rem)' }}>
+                <div key={key} style={getFullscreenUnitWrapStyle(3)}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem' }}>
                     <div style={{ display: 'flex', lineHeight: 1 }}>
                       {pad2(t[key]).split('').map((char, pos) => (
@@ -377,44 +356,18 @@ export default function LiveClock({ timezone = null, cityLabel = null }) {
                           key={`fs-${i}-${pos}-${char}`}
                           suppressHydrationWarning
                           aria-hidden
-                          style={{
-                            display: 'block',
-                            fontSize: 'clamp(4rem, min(18vw, 28vh), 16rem)',
-                            fontWeight: '800',
-                            lineHeight: 1,
-                            color: 'var(--clock-digit-color)',
-                            textShadow: 'var(--clock-digit-glow)',
-                            fontVariantNumeric: 'tabular-nums',
-                            letterSpacing: '0.02em',
-                          }}
+                          style={getFullscreenDigitStyle(3)}
                         >
                           {char}
                         </span>
                       ))}
                     </div>
-                    <span style={{
-                      fontSize: 'clamp(0.8rem, min(2.2vw, 3vh), 1.4rem)',
-                      fontWeight: '500',
-                      color: 'var(--text-secondary)',
-                      padding: '0.2rem 0.75rem',
-                      borderRadius: '999px',
-                      background: 'var(--bg-surface-3)',
-                      border: '1px solid var(--border-subtle)',
-                      whiteSpace: 'nowrap',
-                    }}>
+                    <span style={FULLSCREEN_UNIT_LABEL_STYLE}>
                       {label}
                     </span>
                   </div>
                   {i < TIME_UNITS.length - 1 && (
-                    <span aria-hidden style={{
-                      fontSize: 'clamp(2.5rem, min(10vw, 16vh), 10rem)',
-                      color: 'var(--clock-separator)',
-                      fontWeight: '700',
-                      alignSelf: 'center',
-                      marginBottom: '1em',
-                      flexShrink: 0,
-                      userSelect: 'none',
-                    }}>:</span>
+                    <span aria-hidden style={getFullscreenSeparatorStyle(3)}>:</span>
                   )}
                 </div>
               ))}

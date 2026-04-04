@@ -1,25 +1,60 @@
-import Link from 'next/link';
+// app/page.jsx
 
+import { Suspense } from 'react';
 import HomeSections from '@/components/home';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
-import { SITE_BRAND, SITE_DESCRIPTION, getSiteUrl } from '@/lib/site-config';
+import TimeCinematicHero from '@/components/hero/TimeCinematicHero';
+import { headers } from 'next/headers';
+import { detectBestCityMatch } from '@/lib/locationService';
+import { getCountryByCode } from '@/lib/db/queries/countries';
+import {
+  SITE_BRAND,
+  SITE_DESCRIPTION,
+  SITE_HOME_TITLE,
+  SITE_KEYWORDS,
+  SITE_SCHEMA_TOPICS,
+  getSiteUrl,
+} from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
-  title: 'الوقت الآن ومواقيت الصلاة وعداد المناسبات',
-  description:
-    'منصة عربية لمتابعة الوقت الحالي، مواقيت الصلاة، فرق التوقيت، وعداد المناسبات بصفحات سريعة ومهيأة لمحركات البحث.',
-  keywords: [
-    'الوقت الآن',
-    'مواقيت الصلاة',
-    'فرق التوقيت',
-    'عداد المناسبات',
-    'التاريخ الهجري',
-    'التاريخ الميلادي',
-  ],
+  title: SITE_HOME_TITLE,
+  description: SITE_DESCRIPTION,
+  keywords: SITE_KEYWORDS,
   url: SITE_URL,
 });
+
+async function getHomeHeroLocation() {
+  const hdrs = await headers();
+  const timezone = hdrs.get('x-vercel-ip-timezone') ?? '';
+  const countryCode = hdrs.get('x-vercel-ip-country') ?? '';
+  const cityName = hdrs.get('x-vercel-ip-city') ?? '';
+
+  let countryNameAr = '';
+  if (countryCode) {
+    const country = await getCountryByCode(countryCode).catch(() => null);
+    countryNameAr = country?.name_ar || country?.name_en || '';
+  }
+
+  const matchedCity = await detectBestCityMatch({
+    timezone: timezone || undefined,
+    countryCode: countryCode || undefined,
+    cityName: cityName || undefined,
+  }).catch(() => null);
+
+  return {
+    ianaTimezone: matchedCity?.timezone || timezone || undefined,
+    cityNameAr: matchedCity?.city_name_ar || matchedCity?.name_ar || '',
+    countryNameAr: matchedCity?.country_name_ar || countryNameAr || '',
+    countryCode: matchedCity?.country_code || countryCode || '',
+  };
+}
+
+async function PersonalizedTimeHero() {
+  const heroLocation = await getHomeHeroLocation();
+  return <TimeCinematicHero {...heroLocation} />;
+}
 
 export default function HomePage() {
   const websiteSchema = {
@@ -27,6 +62,7 @@ export default function HomePage() {
     '@type': 'WebSite',
     name: SITE_BRAND,
     url: SITE_URL,
+    description: SITE_DESCRIPTION,
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -42,8 +78,9 @@ export default function HomePage() {
     '@type': 'Organization',
     name: SITE_BRAND,
     url: SITE_URL,
-    logo: `${SITE_URL}/logo.png`,
+    logo: `${SITE_URL}/icons/icon-512.png`,
     description: SITE_DESCRIPTION,
+    knowsAbout: SITE_SCHEMA_TOPICS,
     contactPoint: [
       {
         '@type': 'ContactPoint',
@@ -66,19 +103,9 @@ export default function HomePage() {
       />
 
       <main>
-        <section className="container mx-auto px-4 text-center mb-16">
-          <div className="section card-nested" style={{ padding: 'var(--space-8)', textAlign: 'center' }}>
-            <h1 style={{ fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-3)' }}>
-              الوقت الآن في مدينتك
-            </h1>
-            <p style={{ color: 'var(--text-muted)', marginBottom: 'var(--space-5)' }}>
-              اعرف توقيت مدينتك بدقة لحظية وانتقل مباشرة إلى صفحات الوقت، المواقيت، والمناسبات.
-            </p>
-            <Link href="/time-now" className="btn btn-primary">
-              افتح صفحة الوقت الآن
-            </Link>
-          </div>
-        </section>
+        <Suspense fallback={<TimeCinematicHero cityNameAr="توقيتك المحلي" />}>
+          <PersonalizedTimeHero />
+        </Suspense>
 
         <HomeSections className="container-col" />
       </main>

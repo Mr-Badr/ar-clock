@@ -47,9 +47,35 @@ function AccuracyBadge({ accuracy, localSighting }) {
   );
 }
 
-function toPlainText(value) {
-  if (!value) return '';
-  return String(value).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+function buildEventSearchQueries({ event, seo, tokenContext, currentYear }) {
+  const displayName = replaceTokens(
+    seo?.seoMeta?.h1 || seo?.seoTitle || event?.name || '',
+    tokenContext,
+  ).trim();
+
+  const fallbackQueries = [
+    `كم باقي على ${displayName}`,
+    `متى ${displayName} ${currentYear}`,
+    `${displayName} ${currentYear} العد التنازلي`,
+    `موعد ${displayName} ${currentYear}`,
+    `متى ${displayName} ${currentYear + 1}`,
+    `ما هو ${displayName}`,
+    `ما أهمية ${displayName}`,
+    `كيف أستعد لـ${displayName}`,
+  ];
+
+  const resolved = [
+    seo?.seoMeta?.primaryKeyword,
+    ...(Array.isArray(seo?.keywords) ? seo.keywords : []),
+    ...(Array.isArray(seo?.seoMeta?.secondaryKeywords) ? seo.seoMeta.secondaryKeywords : []),
+    ...(Array.isArray(seo?.seoMeta?.longTailKeywords) ? seo.seoMeta.longTailKeywords : []),
+    ...fallbackQueries,
+  ]
+    .map((keyword) => replaceTokens(keyword || '', tokenContext))
+    .map((keyword) => keyword.replace(/\s+/g, ' ').trim())
+    .filter(Boolean);
+
+  return Array.from(new Set(resolved)).slice(0, 12);
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -72,12 +98,20 @@ export default async function HolidayPage({ params }) {
     hijriYearNum,
     currentYear,
     pageModel,
+    tokenContext,
     typeLabel,
     whatsappUrl,
     siteUrl,
     schemas: { evSchema, wpSchema, faqSchema, bcSchema },
   } = data;
   const pageClassName = featureFlags.holidaysSectionizedUi ? 'bg-base holidays-page-v2' : 'bg-base';
+  const eventSearchQueries = buildEventSearchQueries({
+    event,
+    seo,
+    tokenContext,
+    currentYear,
+  });
+  const primarySearchQuery = eventSearchQueries[0] || `كم باقي على ${pageModel.hero.title || event.name}`;
 
   return (
     <div className={pageClassName} style={{ minHeight: '100dvh' }} dir="rtl">
@@ -249,6 +283,69 @@ export default async function HolidayPage({ params }) {
           days={remaining.days}
           dateStr={gregStr}
         />
+
+        {eventSearchQueries.length > 0 && (
+          <section
+            style={{ marginTop: 'var(--space-8)', marginBottom: 'var(--space-8)' }}
+            aria-labelledby="event-search-intent-heading"
+          >
+            <div
+              className="card-nested"
+              style={{
+                padding: 'var(--space-5)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 'var(--space-4)',
+              }}
+            >
+              <div>
+                <h2
+                  id="event-search-intent-heading"
+                  style={{
+                    fontSize: 'var(--text-lg)',
+                    fontWeight: 'var(--font-bold)',
+                    color: 'var(--text-primary)',
+                    marginBottom: 'var(--space-2)',
+                  }}
+                >
+                  هذا الدليل يجيب عن أكثر عمليات البحث حول {pageModel.hero.title || event.name}
+                </h2>
+                <p
+                  style={{
+                    fontSize: 'var(--text-sm)',
+                    color: 'var(--text-secondary)',
+                    lineHeight: 'var(--leading-relaxed)',
+                    margin: 0,
+                  }}
+                >
+                  إذا كان المستخدم يبحث عن <strong style={{ color: 'var(--text-primary)' }}>{primarySearchQuery}</strong>
+                  ، أو يريد معرفة الموعد والتاريخ والعد التنازلي وأسئلة العام القادم، فهذه الصفحة
+                  تعرض الجواب مباشرة في HTML مع معلومات محدثة وروابط ذات صلة ومحتوى تفصيلي عن المناسبة.
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
+                {eventSearchQueries.map((query) => (
+                  <span
+                    key={query}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      padding: 'var(--space-2) var(--space-3)',
+                      borderRadius: '999px',
+                      background: 'var(--bg-surface-3)',
+                      border: '1px solid var(--border-subtle)',
+                      color: 'var(--text-secondary)',
+                      fontSize: 'var(--text-sm)',
+                    }}
+                  >
+                    {query}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ── EVENT VIBE CARD — The "WOW" section ───────────────────────── */}
         <section style={{ marginBottom: 'var(--space-8)' }} aria-label={`نظرة على ${pageModel.hero.title || event.name}`}>

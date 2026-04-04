@@ -19,7 +19,7 @@ import { getSiteUrl } from '@/lib/site-config';
 const BASE_URL = getSiteUrl();
 
 export async function generateStaticParams() {
-  // Tier A: current Hijri year ±5
+  // Build only the nearest Hijri years; older/future pages render on demand.
   const now = new Date();
   const isoNow = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}-${String(now.getUTCDate()).padStart(2, '0')}`;
   let currentHijriYear = 1447;
@@ -29,7 +29,7 @@ export async function generateStaticParams() {
   } catch { }
 
   const params = [];
-  for (let hy = currentHijriYear - 5; hy <= currentHijriYear + 5; hy++) {
+  for (let hy = currentHijriYear - 1; hy <= currentHijriYear + 1; hy++) {
     for (let hm = 1; hm <= 12; hm++) {
       const daysInMonth = hm % 2 !== 0 ? 30 : 29;
       for (let hd = 1; hd <= daysInMonth; hd++) {

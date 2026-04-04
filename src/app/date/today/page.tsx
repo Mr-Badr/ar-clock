@@ -10,9 +10,9 @@ import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBre
 import { MethodComparisonTable } from '@/components/date/MethodComparisonTable';
 import { DateShareActions } from '@/components/date/DateShareActions';
 import TodayClientHydration from './TodayClientHydration'; // Force TS Server refresh
-import { headers } from 'next/headers';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { Moon, CalendarDays, ArrowLeftRight } from 'lucide-react';
+import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
 
 const BASE_URL = getSiteUrl();
@@ -53,8 +53,7 @@ export default function TodayPage() {
 }
 
 async function TodayDynamicContent() {
-  await headers();
-  const now = new Date();
+  const now = new Date(await getCachedNowIso());
   const y = now.getUTCFullYear();
   const m = now.getUTCMonth() + 1;
   const d = now.getUTCDate();

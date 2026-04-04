@@ -10,8 +10,8 @@
  *   3. Nominatim geocode fallback   — for unknown cities only
  */
 
-import { getCountryBySlug, getAllCountries }                           from '@/lib/db/queries/countries';
-import { getCityBySlug, getTopCitiesByCountry, getCapitalCity,
+import { getCountryBySlug, getAllCountries, getCountryByCode }         from '@/lib/db/queries/countries';
+import { getCityBySlug, getTopCitiesByCountry, getCapitalCity, getCitiesByCountry,
          searchCities as dbSearchCities, getAllCityParams }            from '@/lib/db/queries/cities';
 import { supabase }                                                    from '@/lib/supabase/server';
 import citiesFallback                                                  from '@/lib/db/fallback/cities-index.json';
@@ -256,10 +256,160 @@ export function getTopSeedCities(n = 100) {
 
 /** Find city by IANA timezone from fallback data */
 export function mapTimezoneToCityFromSeed(tz) {
-  const direct = citiesFallback.find(c => c.timezone === tz && (c.priority || 0) >= 90);
-  if (direct) return normalise(direct, direct.country_slug || '');
-  const any = citiesFallback.find(c => c.timezone === tz);
-  return any ? normalise(any, any.country_slug || '') : null;
+  const matches = citiesFallback.filter(c => c.timezone === tz);
+  if (!matches.length) return null;
+
+  const countries = new Set(matches.map(c => c.country_slug || c.country_code || ''));
+  if (countries.size === 1) {
+    const capital = matches.find(c => c.is_capital);
+    if (capital) return normalise(capital, capital.country_slug || '');
+  }
+
+  const rankedPool = matches.some(c => (c.priority || 0) >= 90)
+    ? matches.filter(c => (c.priority || 0) >= 90)
+    : matches;
+
+  const ranked = [...rankedPool].sort((a, b) =>
+    Number(Boolean(b.is_capital)) - Number(Boolean(a.is_capital)) ||
+    (b.priority || 0) - (a.priority || 0) ||
+    (b.population || 0) - (a.population || 0)
+  );
+
+  return ranked[0] ? normalise(ranked[0], ranked[0].country_slug || '') : null;
+}
+
+function normalizeLooseText(s = '') {
+  return String(s || '')
+    .toLowerCase()
+    .replace(/[أإآ]/g, 'ا')
+    .replace(/[ؤئ]/g, 'ء')
+    .replace(/ة/g, 'ه')
+    .replace(/ى/g, 'ي')
+    .replace(/[\u064B-\u065F\u0670\u0640]/g, '')
+    .replace(/[^\p{L}\p{N}\s-]/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function sortRepresentativeCities(a, b) {
+  return Number(Boolean(b.is_capital)) - Number(Boolean(a.is_capital))
+    || (b.priority || 0) - (a.priority || 0)
+    || (b.population || 0) - (a.population || 0);
+}
+
+function getDistanceKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1 * Math.PI / 180) *
+    Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function findNearestInPool(lat, lon, cities) {
+  let nearest = null;
+  let minDist = Infinity;
+
+  for (const city of cities) {
+    if (typeof city.lat !== 'number' || typeof city.lon !== 'number') continue;
+    const distance = getDistanceKm(lat, lon, city.lat, city.lon);
+    if (distance < minDist) {
+      minDist = distance;
+      nearest = city;
+    }
+  }
+
+  return nearest;
+}
+
+function findCityByNameInPool(cities, cityName) {
+  const query = normalizeLooseText(cityName);
+  if (!query) return null;
+
+  const ranked = cities
+    .map((city) => {
+      const names = [
+        city.name_ar,
+        city.name_en,
+        city.city_name_ar,
+        city.city_name_en,
+        String(city.city_slug || '').replace(/-/g, ' '),
+      ]
+        .map(normalizeLooseText)
+        .filter(Boolean);
+
+      let score = -1;
+      for (const name of names) {
+        if (name === query) score = Math.max(score, 100);
+        else if (name.startsWith(query)) score = Math.max(score, 80);
+        else if (name.includes(query)) score = Math.max(score, 60);
+      }
+
+      return { city, score };
+    })
+    .filter((entry) => entry.score >= 0)
+    .sort((a, b) => b.score - a.score || sortRepresentativeCities(a.city, b.city));
+
+  return ranked[0]?.city || null;
+}
+
+function pickRepresentativeCity(cities, timezone = '') {
+  const sameTimezone = timezone
+    ? cities.filter((city) => city.timezone === timezone)
+    : [];
+  const pool = sameTimezone.length ? sameTimezone : cities;
+  return [...pool].sort(sortRepresentativeCities)[0] || null;
+}
+
+export async function detectBestCityMatch({ lat, lon, timezone, countryCode, cityName } = {}) {
+  const normalizedCountryCode = String(countryCode || '').trim().toUpperCase();
+  const hasCoords = Number.isFinite(lat) && Number.isFinite(lon);
+
+  if (normalizedCountryCode) {
+    const country = await getCountryByCode(normalizedCountryCode).catch(() => null);
+    const countrySlug = country?.country_slug || COUNTRY_CODE_TO_SLUG[normalizedCountryCode] || '';
+
+    let countryCities = await getCitiesByCountry(normalizedCountryCode).catch(() => []);
+    if (!countryCities.length) {
+      countryCities = citiesFallback.filter(
+        (city) => city.country_code?.toUpperCase() === normalizedCountryCode,
+      );
+    }
+
+    if (cityName) {
+      const nameMatch = findCityByNameInPool(countryCities, cityName);
+      if (nameMatch) return normalise(nameMatch, countrySlug);
+    }
+
+    if (hasCoords && countryCities.length) {
+      const nearestInCountry = findNearestInPool(lat, lon, countryCities);
+      if (nearestInCountry) return normalise(nearestInCountry, countrySlug);
+    }
+
+    if (countryCities.length) {
+      const representative = pickRepresentativeCity(countryCities, timezone);
+      if (representative) return normalise(representative, countrySlug);
+    }
+
+    if (countrySlug) {
+      const capital = await getCapitalByCountrySlug(countrySlug).catch(() => null);
+      if (capital) return capital;
+    }
+  }
+
+  if (hasCoords) {
+    const nearest = await findNearestCity(lat, lon);
+    if (nearest) return nearest;
+  }
+
+  if (timezone) {
+    return mapTimezoneToCityFromSeed(timezone);
+  }
+
+  return null;
 }
 
 /** Detect country / city from Vercel edge headers */

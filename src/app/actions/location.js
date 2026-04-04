@@ -2,7 +2,8 @@
 
 import {
   findNearestCity,
-  mapTimezoneToCityFromSeed
+  mapTimezoneToCityFromSeed,
+  detectBestCityMatch
 } from '@/lib/locationService';
 import { searchCities } from '@/lib/db/queries/cities';
 import { getAllCountries } from '@/lib/db/queries/countries';
@@ -92,6 +93,10 @@ export async function mapTimezoneToCityAction(tz) {
   const city = mapTimezoneToCityFromSeed(tz);
   if (!city) return null;
   return city;
+}
+
+export async function detectBestCityAction(input = {}) {
+  return await detectBestCityMatch(input);
 }
 
 /**

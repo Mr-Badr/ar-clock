@@ -5,6 +5,10 @@ import ReloadButton from './ReloadButton';
 export const metadata: Metadata = {
   title: 'غير متصل | ميقات',
   description: 'أنت غير متصل بالإنترنت حالياً',
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function OfflinePage() {

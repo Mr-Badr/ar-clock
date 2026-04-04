@@ -33,7 +33,6 @@ import { getCachedNowIso } from '@/lib/date-utils';
 import HolidaysSections from '@/components/holidays/index';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
-import { SectionDivider } from '@/components/shared/primitives';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 
 const SITE = getSiteUrl();
@@ -97,7 +96,7 @@ export default async function HolidaysPage({ searchParams }) {
   const orgSchema = {
     '@context': 'https://schema.org', '@type': 'Organization',
     name: `${SITE_BRAND} — عداد المواعيد`, url: SITE,
-    logo: { '@type': 'ImageObject', url: `${SITE}/logo.png`, width: 512, height: 512 },
+    logo: { '@type': 'ImageObject', url: `${SITE}/icons/icon-512.png`, width: 512, height: 512 },
     description: 'منصة عربية متخصصة في العد التنازلي للمناسبات الإسلامية والوطنية والمدرسية في العالم العربي.',
     inLanguage: 'ar',
     areaServed: ['SA', 'EG', 'MA', 'DZ', 'AE', 'TN', 'KW', 'QA'],

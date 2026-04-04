@@ -478,7 +478,7 @@ export function buildEventSchema(ev, date, siteUrl, eventState = 'upcoming') {
       '@type': 'Organization',
       name: 'ميقات | دليلك الشامل للوقت والمواعيد',
       url: siteUrl,
-      logo: `${siteUrl}/logo.png`,
+      logo: `${siteUrl}/icons/icon-512.png`,
     },
     audience: { '@type': 'Audience', audienceType: 'Muslims', geographicArea: { '@type': 'AdministrativeArea', name: 'MENA' } },
   };
@@ -535,7 +535,7 @@ export function buildEventSeriesSchema(ev, siteUrl) {
       '@type': 'Organization',
       name: 'ميقات | دليلك الشامل للوقت والمواعيد',
       url: siteUrl,
-      logo: `${siteUrl}/logo.png`,
+      logo: `${siteUrl}/icons/icon-512.png`,
     },
     eventSchedule: {
       '@type': 'Schedule',

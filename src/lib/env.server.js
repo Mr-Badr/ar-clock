@@ -9,6 +9,9 @@ const schema = z
     VERCEL_URL: z.string().min(1).optional(),
     GOOGLE_SITE_VERIFICATION: z.string().min(6).optional(),
     REVALIDATE_SECRET: z.string().min(12).optional(),
+    SUPABASE_URL: z.string().url().optional(),
+    SUPABASE_ANON_KEY: z.string().min(20).optional(),
+    SUPABASE_SERVICE_ROLE_KEY: z.string().min(20).optional(),
     NEXT_PUBLIC_SUPABASE_URL: z.string().url().optional(),
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(20).optional(),
   })
@@ -32,6 +35,22 @@ const schema = z
         code: 'custom',
         message: 'REVALIDATE_SECRET is required in production',
         path: ['REVALIDATE_SECRET'],
+      });
+    }
+
+    if (value.NODE_ENV === 'production' && !value.SUPABASE_URL) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'SUPABASE_URL is required in production',
+        path: ['SUPABASE_URL'],
+      });
+    }
+
+    if (value.NODE_ENV === 'production' && !value.SUPABASE_ANON_KEY) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'SUPABASE_ANON_KEY is required in production',
+        path: ['SUPABASE_ANON_KEY'],
       });
     }
   });

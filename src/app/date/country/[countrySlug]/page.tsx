@@ -12,7 +12,6 @@ import { getFlagEmoji, getSafeTimezone } from '@/lib/country-utils';
 import { JsonLd } from '@/components/date/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { DateShareActions } from '@/components/date/DateShareActions';
-import { headers } from 'next/headers';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { Calendar, Clock, ArrowLeftRight } from "lucide-react"
 import { getSiteUrl } from '@/lib/site-config';
@@ -107,7 +106,6 @@ async function CountryDateDynamicContent({
 }: {
   params: Promise<{ countrySlug: string }>;
 }) {
-  await headers();
   const { countrySlug } = await params;
   let countryRaw;
   try {

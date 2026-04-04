@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import { convertDate } from '@/lib/date-adapter';
 import { JsonLd } from '@/components/date/JsonLd';
-import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
+import { DateBreadcrumb } from '@/components/date/DateBreadcrumb';
 import { ConverterForm } from './ConverterForm';
-import { headers } from 'next/headers';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { ArrowLeftRight, Calendar, CalendarDays } from 'lucide-react';
+import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
 
 const BASE_URL = getSiteUrl();
@@ -34,8 +34,7 @@ export default function ConverterPage() {
 }
 
 async function ConverterDynamicContent() {
-  await headers();
-  const now = new Date();
+  const now = new Date(await getCachedNowIso());
   const y = now.getUTCFullYear();
   const m = now.getUTCMonth() + 1;
   const d = now.getUTCDate();

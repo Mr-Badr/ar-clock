@@ -6,9 +6,9 @@ import { convertDate } from '@/lib/date-adapter';
 import { GREGORIAN_MONTHS_AR, DAY_NAMES_AR } from '@/lib/constants';
 import { JsonLd } from '@/components/date/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
-import { headers } from 'next/headers';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { Moon, ArrowLeftRight, CalendarDays } from 'lucide-react';
+import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
 
 const BASE_URL = getSiteUrl();
@@ -54,8 +54,7 @@ export default function TodayGregorianPage() {
 }
 
 async function TodayGregorianDynamicContent() {
-  await headers();
-  const now = new Date();
+  const now = new Date(await getCachedNowIso());
   const y = now.getUTCFullYear();
   const m = now.getUTCMonth() + 1;
   const d = now.getUTCDate();

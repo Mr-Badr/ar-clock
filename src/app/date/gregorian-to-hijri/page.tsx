@@ -5,8 +5,8 @@ import { Suspense } from 'react';
 import { JsonLd } from '@/components/date/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { ConverterForm } from '../converter/ConverterForm';
-import { headers } from 'next/headers';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
 
 const BASE_URL = getSiteUrl();
@@ -32,8 +32,7 @@ export default function GregorianToHijriPage() {
 }
 
 async function GregorianToHijriDynamicContent() {
-  await headers();
-  const now = new Date();
+  const now = new Date(await getCachedNowIso());
   const y = now.getUTCFullYear();
   const m = now.getUTCMonth() + 1;
   const d = now.getUTCDate();

@@ -1,10 +1,9 @@
 import { redirect } from 'next/navigation';
-import { headers } from 'next/headers';
 import { Suspense } from 'react';
+import { getCachedNowIso } from '@/lib/date-utils';
 
 async function CalendarRedirect() {
-  await headers();
-  const currentYear = new Date().getUTCFullYear();
+  const currentYear = new Date(await getCachedNowIso()).getUTCFullYear();
   redirect(`/date/calendar/${currentYear}`);
   return null;
 }

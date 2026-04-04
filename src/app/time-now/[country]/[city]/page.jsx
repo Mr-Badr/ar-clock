@@ -17,7 +17,7 @@
  *  Same-timezone countries (server, zero JS)
  *  Dense FAQ (server, native <details>, FAQPage JSON-LD)
  *  Related searches (server, zero JS, internal links)
- *  SEO prose (server, hidden keyword list for crawlers)
+ *  SEO prose (server, visible keyword-rich copy for readers and crawlers)
  */
 
 import { Suspense } from 'react';
@@ -32,11 +32,10 @@ import SearchCity from '@/components/SearchCityWrapper.client';
 import CountryCitiesGrid from '@/components/time-now/CountryCitiesGrid';
 import TimezoneInfoCard from '@/components/time-now/TimezoneInfoCard';
 import SameTimezoneCountries from '@/components/time-now/SameTimezoneCountries';
-import TimeNowFAQ from '@/components/time-now/TimeNowFAQ';
 import RelatedSearches from '@/components/time-now/RelatedSearches';
 
 import { getCountryBySlug } from '@/lib/db/queries/countries';
-import { getAllCityParams, getCityBySlug, getTopCitiesByCountry } from '@/lib/db/queries/cities';
+import { getPriorityCityParams, getCityBySlug, getTopCitiesByCountry } from '@/lib/db/queries/cities';
 import { getCountriesAction } from '@/app/actions/location';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
@@ -55,7 +54,7 @@ export async function generateStaticParams() {
       { country: 'egypt', city: 'cairo' },
     ];
   }
-  return getAllCityParams();
+  return getPriorityCityParams(500);
 }
 
 function getUtcOffsetStr(timezone) {
@@ -85,8 +84,11 @@ export async function generateMetadata({ params }) {
     keywords: [
       `الوقت الان في ${cityAr}`,
       `الساعة الان في ${cityAr}`,
+      `الوقت الان في ${cityAr} اليوم`,
       `كم الساعة في ${cityAr}`,
       `الوقت الحالي في ${cityAr}`,
+      `التاريخ اليوم في ${cityAr}`,
+      `المنطقة الزمنية في ${cityAr}`,
       `توقيت ${cityAr}`,
       `الوقت الان في ${countryAr}`,
       `الساعة في ${countryAr}`,
@@ -106,7 +108,12 @@ export async function generateMetadata({ params }) {
       siteName: SITE_BRAND,
       title: `الوقت الان في ${cityAr}، ${countryAr} | ${SITE_BRAND}`,
       description: `الساعة الحالية في ${cityAr} بدقة حتى الثانية. ${countryAr} · ${offset}.`,
-      images: [{ url: '/og-image.png', width: 1200, height: 630, alt: `الوقت الان في ${cityAr}` }],
+      images: [{
+        url: `${BASE}/time-now/${countrySlug}/${citySlug}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: `الوقت الان في ${cityAr}`,
+      }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -337,7 +344,6 @@ export default async function CityTimePage({ params }) {
         <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
           <RelatedSearches
             currentCountrySlug={countrySlug}
-            currentCountryAr={countryAr}
             currentCityAr={cityAr}
           />
         </section>
@@ -365,25 +371,19 @@ export default async function CityTimePage({ params }) {
               يمكنك أيضاً تبديل المدينة بسهولة باستخدام خاصية البحث العالمي للحصول على وقت أي مدينة
               في العالم فوراً.
             </p>
-
-            {/* Hidden keywords for crawlers */}
-            <ul aria-hidden="true" style={{ display: 'none' }}>
-              {[
-                `الوقت الان في ${cityAr}`,
-                `الساعة الان في ${cityAr}`,
-                `كم الساعة في ${cityAr}`,
-                `الوقت الحالي في ${cityAr}`,
-                `توقيت ${cityAr}`,
-                `ساعة ${cityAr}`,
-                `الوقت الان في ${countryAr}`,
-                `توقيت ${countryAr}`,
-                `time in ${city.name_en}`,
-                `${city.name_en} time now`,
-                `current time ${city.name_en}`,
-                `${city.name_en} timezone`,
-                `${city.name_en} ${offset}`,
-              ].map(kw => <li key={kw}>{kw}</li>)}
-            </ul>
+            <p>
+              تغطي الصفحة كذلك أكثر العبارات التي يكتبها المستخدمون عند البحث مثل
+              {' '}
+              <strong style={{ color: 'var(--text-primary)' }}>الوقت الان في {cityAr}</strong>
+              {' '}و
+              {' '}
+              <strong style={{ color: 'var(--text-primary)' }}>كم الساعة في {cityAr}</strong>
+              {' '}و
+              {' '}
+              <strong style={{ color: 'var(--text-primary)' }}>التاريخ اليوم في {cityAr}</strong>
+              ، لكن بصياغة طبيعية ومحتوى ظاهر يشرح الوقت الفعلي والمنطقة الزمنية
+              والروابط ذات الصلة داخل الموقع.
+            </p>
           </div>
         </section>
 

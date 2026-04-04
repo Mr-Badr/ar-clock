@@ -24,9 +24,9 @@ import { JsonLd } from '@/components/date/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { MethodComparisonTable } from '@/components/date/MethodComparisonTable';
 import { DateShareActions } from '@/components/date/DateShareActions';
-import { headers } from 'next/headers';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { Moon, CalendarDays, ArrowLeftRight, Calendar, Star } from 'lucide-react';
+import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
 
 const BASE_URL = getSiteUrl();
@@ -65,9 +65,7 @@ export default function TodayHijriPage() {
 }
 
 async function TodayHijriDynamicContent() {
-  await headers();
-
-  const now = new Date();
+  const now = new Date(await getCachedNowIso());
   const y = now.getUTCFullYear();
   const m = now.getUTCMonth() + 1;
   const d = now.getUTCDate();

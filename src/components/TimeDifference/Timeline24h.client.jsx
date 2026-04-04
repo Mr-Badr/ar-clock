@@ -1,6 +1,6 @@
 'use client';
 // Refreshed: 2026-03-03 to fix HMR cache
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 /**
  * Timeline24h — lightweight 24-hour visual timeline.
@@ -11,11 +11,31 @@ import React, { useMemo } from 'react';
  * Tailwind only — no chart library.
  */
 export default function Timeline24h({ fromCity, toCity, diffData }) {
-  const data = useMemo(() => {
-    if (!diffData?.success) return null;
+  const [currentDate, setCurrentDate] = useState(() => {
+    if (!diffData?.timestamp) return null;
+    const snapshotDate = new Date(diffData.timestamp);
+    return Number.isNaN(snapshotDate.getTime()) ? null : snapshotDate;
+  });
 
-    const nowUTC = new Date();
-    const nowHoursUTC = nowUTC.getUTCHours() + nowUTC.getUTCMinutes() / 60 + nowUTC.getUTCSeconds() / 3600;
+  useEffect(() => {
+    if (!diffData?.success) return undefined;
+
+    setCurrentDate(new Date());
+
+    const intervalId = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [diffData?.success]);
+
+  const data = useMemo(() => {
+    if (!diffData?.success || !currentDate) return null;
+
+    const nowHoursUTC =
+      currentDate.getUTCHours() +
+      currentDate.getUTCMinutes() / 60 +
+      currentDate.getUTCSeconds() / 3600;
     
     // fromOffsetMinutes and toOffsetMinutes are provided by the updated API
     const fromHour = (nowHoursUTC + (diffData.fromOffsetMinutes / 60) + 24) % 24;
@@ -33,7 +53,7 @@ export default function Timeline24h({ fromCity, toCity, diffData }) {
     const hasOverlap = overlapStart < overlapEnd;
 
     return { fromHour, toHour, overlapStart, overlapEnd, hasOverlap, diffHours };
-  }, [diffData]);
+  }, [currentDate, diffData]);
 
   if (!data) return null;
 
@@ -41,9 +61,6 @@ export default function Timeline24h({ fromCity, toCity, diffData }) {
 
   // Convert hour to percentage
   const pct = (h) => `${((((h % 24) + 24) % 24) / 24) * 100}%`;
-
-  // Day/Night segments (day: 6am-8pm = 25%-83%)
-  const isDayHour = (h) => h >= 6 && h < 20;
 
   return (
     <div

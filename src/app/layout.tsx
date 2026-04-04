@@ -16,6 +16,7 @@ import { getEnv } from '@/lib/env.server';
 import {
   SITE_BRAND,
   SITE_DESCRIPTION,
+  SITE_KEYWORDS,
   SITE_TITLE,
   getMetadataBase,
 } from '@/lib/site-config';
@@ -49,13 +50,8 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_BRAND}`,
   },
   description: SITE_DESCRIPTION,
-  keywords: [
-    'مواقيت الصلاة', 'أوقات الصلاة', 'موعد الأذان', 'وقت الصلاة اليوم',
-    'الفجر', 'الظهر', 'العصر', 'المغرب', 'العشاء',
-    'prayer times', 'salah times', 'اتجاه القبلة', 'قبلة',
-    'فرق التوقيت', 'تحويل الوقت', 'الساعة الان', 'المناسبات الإسلامية',
-  ],
-  authors: [{ name: 'ميقات (Miqat) — دليلك الشامل للمواعيد' }],
+  keywords: SITE_KEYWORDS,
+  authors: [{ name: 'ميقات (Miqat) — منصة عربية للوقت والتاريخ والمواقيت' }],
   category: 'utilities',
   classification: 'Public',
 
@@ -70,8 +66,8 @@ export const metadata: Metadata = {
 
   // ── Open Graph ────────────────────────────────────────────────────────────
   openGraph: {
-    title: `${SITE_BRAND} | دليلك للوقت والمواعيد والمناسبات`,
-    description: 'احصل على مواقيت الصلاة، فرق التوقيت، وعداد المناسبات في مكان واحد — تحديث يومي بدقة فلكية.',
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     siteName: SITE_BRAND,
     locale: 'ar_SA',
     alternateLocale: ['ar_EG', 'ar_MA', 'ar_AE', 'ar_IQ', 'ar_JO'],
@@ -81,8 +77,8 @@ export const metadata: Metadata = {
   // ── Twitter / X ───────────────────────────────────────────────────────────
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_BRAND} | دليل المواعيد والمناسبات`,
-    description: 'رفيقك الشامل للوقت، المواعيد، والمناسبات الإسلامية والعالمية بدقة فلكية',
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
   verification: env.GOOGLE_SITE_VERIFICATION
     ? {

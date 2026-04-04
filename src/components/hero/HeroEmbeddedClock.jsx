@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Fullscreen, Minimize2, Share2, MapPin } from 'lucide-react';
 import styles from './HeroEmbeddedClock.module.css';
 import { getSafeTimezone } from '@/lib/country-utils';
+import { detectBestCityAction } from '@/app/actions/location';
 
 function pad2(n) {
   return String(Math.max(0, n)).padStart(2, '0');
@@ -123,10 +124,18 @@ async function writeToClipboard(text) {
   }
 }
 
-export default function HeroEmbeddedClock({ ianaTimezone, cityNameAr = "توقيتك المحلي", countryNameAr }) {
+export default function HeroEmbeddedClock({ ianaTimezone, cityNameAr = 'توقيتك المحلي', countryNameAr }) {
+  const [resolvedLocation, setResolvedLocation] = useState(() => ({
+    ianaTimezone: getSafeTimezone(ianaTimezone) || ianaTimezone || '',
+    cityNameAr: cityNameAr || 'توقيتك المحلي',
+    countryNameAr: countryNameAr || '',
+  }));
+
+  const safeCityName = resolvedLocation.cityNameAr || 'توقيتك المحلي';
+  const safeCountryName = safeCityName === 'توقيتك المحلي' ? '' : (resolvedLocation.countryNameAr || '');
   const activeTz = useMemo(
-    () => getSafeTimezone(ianaTimezone) || ianaTimezone,
-    [ianaTimezone],
+    () => resolvedLocation.ianaTimezone || undefined,
+    [resolvedLocation.ianaTimezone],
   );
 
   const [timeData, setTimeData]   = useState(null);
@@ -137,6 +146,71 @@ export default function HeroEmbeddedClock({ ianaTimezone, cityNameAr = "توقي
 
   const containerRef = useRef(null);
   const wakeLockRef  = useRef(null);
+
+  useEffect(() => {
+    setResolvedLocation({
+      ianaTimezone: getSafeTimezone(ianaTimezone) || ianaTimezone || '',
+      cityNameAr: cityNameAr || 'توقيتك المحلي',
+      countryNameAr: countryNameAr || '',
+    });
+  }, [ianaTimezone, cityNameAr, countryNameAr]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const applyDetectedCity = (city) => {
+      if (!city || cancelled) return false;
+
+      setResolvedLocation((prev) => ({
+        ianaTimezone: getSafeTimezone(city.timezone) || city.timezone || prev.ianaTimezone,
+        cityNameAr: city.city_name_ar || city.name_ar || prev.cityNameAr,
+        countryNameAr: city.country_name_ar || prev.countryNameAr,
+      }));
+      return true;
+    };
+
+    const upgradeLocation = async () => {
+      const browserTimezone =
+        getSafeTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone || '') ||
+        Intl.DateTimeFormat().resolvedOptions().timeZone ||
+        '';
+
+      if (!safeCityName || safeCityName === 'توقيتك المحلي') {
+        if (browserTimezone && !resolvedLocation.ianaTimezone && !cancelled) {
+          setResolvedLocation((prev) => ({
+            ...prev,
+            ianaTimezone: browserTimezone,
+          }));
+        }
+
+        try {
+          const permissionState = navigator.permissions?.query
+            ? (await navigator.permissions.query({ name: 'geolocation' })).state
+            : 'prompt';
+
+          if (permissionState === 'granted' && navigator.geolocation) {
+            const position = await new Promise((resolve, reject) => {
+              navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 4000 });
+            });
+
+            const gpsCity = await detectBestCityAction({
+              lat: position.coords.latitude,
+              lon: position.coords.longitude,
+              timezone: browserTimezone || undefined,
+            });
+
+            if (applyDetectedCity(gpsCity)) return;
+          }
+        } catch {}
+      }
+    };
+
+    upgradeLocation();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [resolvedLocation.ianaTimezone, safeCityName]);
 
   /* ── Tick ──────────────────────────────────────────────────────────── */
   useEffect(() => {
@@ -192,12 +266,12 @@ export default function HeroEmbeddedClock({ ianaTimezone, cityNameAr = "توقي
     const timeStr = timeData
       ? `${pad2(timeData.h)}:${pad2(timeData.m)}:${pad2(timeData.s)}`
       : '';
-    const text = `الوقت الآن في ${cityNameAr}: ${timeStr}`;
+    const text = `الوقت الآن في ${safeCityName}: ${timeStr}`;
 
     // 1. Try native share sheet (mobile / supported desktop)
     if (typeof navigator?.share === 'function') {
       try {
-        await navigator.share({ title: `الوقت في ${cityNameAr}`, text, url });
+        await navigator.share({ title: `الوقت في ${safeCityName}`, text, url });
         return;
       } catch (e) {
         // User cancelled (AbortError) — don't fall through to clipboard
@@ -269,7 +343,7 @@ export default function HeroEmbeddedClock({ ianaTimezone, cityNameAr = "توقي
 
         <div className={styles.locationPill}>
           <MapPin size={12} className={styles.locationPin} aria-hidden="true" />
-          <span>{cityNameAr}{countryNameAr ? `، ${countryNameAr}` : ''}</span>
+          <span>{safeCityName}{safeCountryName ? `، ${safeCountryName}` : ''}</span>
         </div>
 
         <button
@@ -300,7 +374,7 @@ export default function HeroEmbeddedClock({ ianaTimezone, cityNameAr = "توقي
           className={styles.clockLine}
           role="timer"
           aria-live="off"
-          aria-label={`الوقت الآن في ${cityNameAr}: ${pad2(t.h)}:${pad2(t.m)}:${pad2(t.s)}`}
+          aria-label={`الوقت الآن في ${safeCityName}: ${pad2(t.h)}:${pad2(t.m)}:${pad2(t.s)}`}
         >
           <Unit value={t.h} label="ساعة"  />
           <span className={styles.sep} aria-hidden="true">:</span>

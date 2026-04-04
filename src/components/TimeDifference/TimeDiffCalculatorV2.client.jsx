@@ -1,6 +1,6 @@
 /* components/TimeDifference/TimeDiffCalculatorV2.client.jsx */
 'use client';
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import SearchCity from '../SearchCity.client';
 import LiveClock from './LiveClock.client';
@@ -9,7 +9,6 @@ import ContextSummary from './ContextSummary.client';
 import TimeConverter from './TimeConverter.client';
 import Timeline24h from './Timeline24h.client';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
 import { SectionDivider } from '@/components/shared/primitives';
 import {
   ArrowUpDown,
@@ -17,7 +16,6 @@ import {
   Share2,
   Sun,
   Moon,
-  Info,
   Check,
   MapPin,
   ChevronUp,
@@ -46,29 +44,55 @@ function fmtTime(totalMins) {
   return `${h12}:${String(m).padStart(2, '0')} ${period}`;
 }
 
-export default function TimeDiffCalculator({ initialFrom = null, initialTo = null }) {
+export default function TimeDiffCalculator({ initialFrom = null, initialTo = null, initialDiffData = null }) {
   const router = useRouter();
   const [fromCity, setFromCity] = useState(initialFrom);
   const [toCity, setToCity] = useState(initialTo);
-  const [diffData, setDiffData] = useState(null);
+  const [diffData, setDiffData] = useState(initialDiffData);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [bizStart, setBizStart] = useState(9);
   const [bizEnd, setBizEnd] = useState(17);
 
   useEffect(() => {
-    if (fromCity && toCity) fetchDiff(fromCity.timezone, toCity.timezone);
-    else setDiffData(null);
-  }, [fromCity, toCity]);
+    if (!fromCity || !toCity) {
+      setDiffData(null);
+      return;
+    }
 
-  const fetchDiff = useCallback(async (fromTz, toTz) => {
-    setLoading(true);
-    try {
-      const data = await getTimeDiffAction(fromTz, toTz);
-      if (data) setDiffData(data);
-    } catch (e) { console.error(e); }
-    finally { setLoading(false); }
-  }, []);
+    const matchesCurrentPair =
+      diffData?.success &&
+      diffData.from === fromCity.timezone &&
+      diffData.to === toCity.timezone;
+
+    if (matchesCurrentPair) {
+      return;
+    }
+
+    let cancelled = false;
+
+    async function loadDiff() {
+      setLoading(true);
+      try {
+        const data = await getTimeDiffAction(fromCity.timezone, toCity.timezone);
+        if (!cancelled && data) {
+          setDiffData(data);
+        }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadDiff();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [fromCity, toCity, diffData]);
 
   const url = (f, t) =>
     `/time-difference/${f.country_slug}-${f.city_slug}/${t.country_slug}-${t.city_slug}`;

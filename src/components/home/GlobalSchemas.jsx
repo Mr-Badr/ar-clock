@@ -7,7 +7,12 @@
  *     knowsAbout) that help Google understand the site's topic relevance.
  *
  */
-import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
+import {
+  SITE_BRAND,
+  SITE_DESCRIPTION,
+  SITE_SCHEMA_TOPICS,
+  getSiteUrl,
+} from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 
@@ -16,8 +21,8 @@ export default function GlobalSchemas() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: SITE_BRAND,
-    alternateName: ['Arabic Time', 'مواقيت الصلاة', 'أوقات الصلاة'],
-    description: 'بوابة شاملة لمواقيت الصلاة، فرق التوقيت، والمناسبات الدينية والوطنية',
+    alternateName: ['Miqat', 'الوقت الآن', 'مواقيت الصلاة', 'فرق التوقيت', 'التاريخ الهجري'],
+    description: SITE_DESCRIPTION,
     inLanguage: 'ar',
     url: SITE_URL,
     potentialAction: {
@@ -35,19 +40,12 @@ export default function GlobalSchemas() {
     '@type': 'Organization',
     name: SITE_BRAND,
     url: SITE_URL,
-    description:
-      'موقع متخصص في عرض مواقيت الصلاة الدقيقة وفروق التوقيت والمناسبات الدينية',
+    description: SITE_DESCRIPTION,
     areaServed: [
       'SA', 'AE', 'EG', 'IQ', 'KW', 'QA', 'JO', 'LB',
       'MA', 'DZ', 'TN', 'LY', 'SD', 'SY', 'YE', 'OM', 'BH', 'MR',
     ],
-    knowsAbout: [
-      'مواقيت الصلاة',
-      'أوقات الصلاة الإسلامية',
-      'فرق التوقيت',
-      'التقويم الهجري',
-      'اتجاه القبلة',
-    ],
+    knowsAbout: SITE_SCHEMA_TOPICS,
   }
 
   return (

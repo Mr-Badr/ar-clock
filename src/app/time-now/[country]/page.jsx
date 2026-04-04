@@ -89,6 +89,7 @@ export async function generateMetadata({ params }) {
     keywords: [
       `الوقت الان في ${countryAr}`,
       `الساعة الان في ${countryAr}`,
+      `الوقت الان في ${countryAr} اليوم`,
       `كم الساعة في ${countryAr}`,
       `الوقت الحالي في ${countryAr}`,
       `الوقت الان في ${cityAr}`,
@@ -96,6 +97,7 @@ export async function generateMetadata({ params }) {
       `توقيت ${countryAr}`,
       `المنطقة الزمنية ${countryAr}`,
       `التاريخ اليوم في ${countryAr}`,
+      `كم الساعة الآن في ${countryAr}`,
       `ساعة ${countryAr}`,
       `time in ${country.name_en}`,
       `current time ${country.name_en}`,
@@ -112,7 +114,12 @@ export async function generateMetadata({ params }) {
       siteName: SITE_BRAND,
       title: `الوقت الان في ${countryAr} — ${cityAr} | ${SITE_BRAND}`,
       description: `الساعة الحالية في ${countryAr} مع التاريخ الميلادي والهجري. ${offset}.`,
-      images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+      images: [{
+        url: `${BASE}/time-now/${countrySlug}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: `الوقت الان في ${countryAr}`,
+      }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -301,7 +308,7 @@ export default async function CountryTimePage({ params }) {
 
         {/* ── RELATED SEARCHES ── */}
         <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
-          <RelatedSearches currentCountrySlug={countrySlug} currentCountryAr={countryAr} />
+          <RelatedSearches currentCountrySlug={countrySlug} />
         </section>
 
         {/* ── SEO PROSE ── */}
@@ -322,21 +329,19 @@ export default async function CountryTimePage({ params }) {
               والهجري (تقويم أم القرى)، وأوقات أهم مدن {countryAr}، وفرق التوقيت مع
               الدول الأخرى.
             </p>
-            {/* Hidden keyword list for crawlers */}
-            <ul aria-hidden="true" style={{ display: 'none' }}>
-              <li>الوقت الان في {countryAr}</li>
-              <li>الساعة الان في {countryAr}</li>
-              <li>كم الساعة في {countryAr}</li>
-              <li>الوقت الحالي في {countryAr}</li>
-              <li>الوقت الان في {cityAr}</li>
-              <li>الساعة في {cityAr}</li>
-              <li>توقيت {countryAr} الان</li>
-              <li>المنطقة الزمنية في {countryAr}</li>
-              <li>time in {countryEn}</li>
-              <li>current time {countryEn}</li>
-              <li>{cityEn} time now</li>
-              <li>clock {countryEn}</li>
-            </ul>
+            <p>
+              صُممت هذه الصفحة لتجيب مباشرة عن صيغ البحث الشائعة مثل
+              {' '}
+              <strong>الوقت الان في {countryAr}</strong>
+              {' '}و
+              {' '}
+              <strong>كم الساعة في {countryAr}</strong>
+              {' '}و
+              {' '}
+              <strong>التاريخ اليوم في {countryAr}</strong>
+              ، مع محتوى ظاهر يربط بين الدولة والعاصمة والمدن الكبرى ليسهّل الفهم
+              والفهرسة والزحف الداخلي.
+            </p>
           </div>
         </section>
       </main>

@@ -1,10 +1,15 @@
 import { Suspense } from 'react';
+import Link from 'next/link';
 import { Globe2 } from 'lucide-react';
 
 import { getCountriesAction } from '@/app/actions/location';
 import SearchCity from '@/components/SearchCityWrapper.client';
 import TimeNowHero from '@/components/time-now/TimeNowHero';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
+import {
+  getPopularTimeNowCityLinks,
+  getPopularTimeNowCountryLinks,
+} from '@/lib/seo/popular-links';
 import { getSiteUrl } from '@/lib/site-config';
 
 import TimeNowClient from './TimeNowClient';
@@ -21,13 +26,21 @@ export const metadata = buildCanonicalMetadata({
     'الوقت في العالم',
     'توقيت المدن',
     'المنطقة الزمنية',
+    'الوقت الآن في المدن العربية',
+    'الوقت الآن في العالم',
+    'كم الساعة الآن في مدينتي',
+    'التاريخ اليوم في المدن',
     'current time',
   ],
   url: `${SITE_URL}/time-now`,
 });
 
 export default async function TimeNowPage() {
-  const allCountries = await getCountriesAction();
+  const [allCountries, popularCityLinks, popularCountryLinks] = await Promise.all([
+    getCountriesAction(),
+    getPopularTimeNowCityLinks(),
+    getPopularTimeNowCountryLinks(),
+  ]);
 
   const arabTags = ['SA', 'EG', 'AE', 'KW', 'QA', 'BH', 'OM', 'IQ', 'JO', 'LB', 'SY', 'PS', 'YE', 'MA', 'DZ', 'TN', 'LY', 'SD', 'SO', 'MR', 'DJ'];
   const arabCountries = allCountries.filter((country) => arabTags.includes(country.country_code));
@@ -72,6 +85,143 @@ export default async function TimeNowPage() {
             <Suspense fallback={<div style={{ height: '320px', borderRadius: '1rem', background: 'var(--bg-surface-2)', opacity: 0.5, animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />}>
               <TimeNowHero cityNameAr="توقيتك المحلي" />
             </Suspense>
+          </div>
+        </section>
+
+        <section
+          aria-labelledby="popular-time-now-pages-heading"
+          style={{ marginBottom: '3rem' }}
+        >
+          <div
+            style={{
+              maxWidth: '1080px',
+              margin: '0 auto',
+              padding: '1.5rem',
+              borderRadius: '1.5rem',
+              background: 'var(--bg-surface-2)',
+              border: '1px solid var(--border-default)',
+            }}
+          >
+            <h2
+              id="popular-time-now-pages-heading"
+              style={{
+                fontSize: 'var(--text-2xl)',
+                fontWeight: '800',
+                color: 'var(--text-primary)',
+                marginBottom: '0.75rem',
+              }}
+            >
+              صفحات الوقت الآن الأكثر بحثاً
+            </h2>
+            <p
+              style={{
+                color: 'var(--text-secondary)',
+                lineHeight: 1.8,
+                marginBottom: '1.25rem',
+                maxWidth: '72ch',
+              }}
+            >
+              هذه الروابط مبنية لتجيب مباشرة عن عمليات البحث من نوع "الوقت الآن في
+              [مدينة]" و"الساعة الآن في [مدينة]"، مع صفحات داخلية تعرض الوقت الحالي،
+              التاريخ اليوم، والمنطقة الزمنية في HTML يمكن لمحركات البحث قراءته فوراً.
+            </p>
+
+            <nav aria-label="روابط المدن الأكثر بحثاً">
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                  gap: '0.75rem',
+                }}
+              >
+                {popularCityLinks.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    style={{
+                      display: 'block',
+                      padding: '1rem',
+                      borderRadius: '1rem',
+                      textDecoration: 'none',
+                      background: 'var(--bg-surface-1)',
+                      border: '1px solid var(--border-subtle)',
+                    }}
+                  >
+                    <strong
+                      style={{
+                        display: 'block',
+                        color: 'var(--text-primary)',
+                        marginBottom: '0.35rem',
+                      }}
+                    >
+                      {item.label}
+                    </strong>
+                    <span style={{ color: 'var(--text-muted)', lineHeight: 1.7 }}>
+                      {item.description}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </nav>
+          </div>
+        </section>
+
+        <section
+          aria-labelledby="popular-country-time-heading"
+          style={{ marginBottom: '3rem' }}
+        >
+          <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
+            <h2
+              id="popular-country-time-heading"
+              style={{
+                fontSize: 'var(--text-2xl)',
+                fontWeight: '800',
+                color: 'var(--text-primary)',
+                marginBottom: '0.75rem',
+              }}
+            >
+              الوقت الآن في الدول والمدن العربية
+            </h2>
+            <p
+              style={{
+                color: 'var(--text-secondary)',
+                lineHeight: 1.8,
+                marginBottom: '1rem',
+                maxWidth: '70ch',
+              }}
+            >
+              إذا كان المستخدم يبحث عن الوقت الآن في دولة كاملة ثم ينتقل إلى مدينة
+              بعينها، فهذه الصفحات تمنح مساراً واضحاً بين الدولة والعاصمة والمدن
+              الكبرى، وهذا يساعد على الزحف والفهم الموضوعي لصفحات التوقيت في الموقع.
+            </p>
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '0.6rem',
+              }}
+            >
+              {popularCountryLinks.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '0.7rem 1rem',
+                    borderRadius: '999px',
+                    textDecoration: 'none',
+                    color: 'var(--text-secondary)',
+                    background: 'var(--bg-surface-2)',
+                    border: '1px solid var(--border-default)',
+                    fontWeight: '600',
+                  }}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
           </div>
         </section>
 

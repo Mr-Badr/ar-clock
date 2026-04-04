@@ -19,11 +19,13 @@ import PrayerHeroClient from '@/components/PrayerHero.client';
 import SearchCity from '@/components/SearchCityWrapper.client';
 import CityPrayerCardsGrid from '@/components/mwaqit/CityPrayerCardsGrid.client';
 import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar.client';
+import CalendarSeoBlock from '@/components/mwaqit/CalendarSeoBlock';
 import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import { getSiteUrl } from '@/lib/site-config';
+import { formatGregorianLabel, getHijriMonthSpanFromDate } from '@/lib/hijri-utils';
 
 const BASE = getSiteUrl();
 
@@ -334,6 +336,13 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
 
       {/* Monthly calendar */}
       <section className="mb-6">
+        <CalendarSeoBlock
+          cityNameAr={cityData.name_ar || cityData.name_en}
+          countryNameAr={countryNameAr}
+          gregorianLabel={formatGregorianLabel(now)}
+          hijriLabel={getHijriMonthSpanFromDate(now)}
+          methodLabel={methodInfo.label}
+        />
         <MonthlyPrayerCalendar
           lat={cityData.lat}
           lon={cityData.lon}

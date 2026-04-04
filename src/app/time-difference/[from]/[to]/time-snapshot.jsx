@@ -1,23 +1,26 @@
 import 'server-only';
 import { Suspense } from 'react';
+import { getCachedNowIso } from '@/lib/date-utils';
 
 // ─── Timezone helpers ─────────────────────────────────────────────────────────
 
 export function getOffsetMinutes(tz, dateInfo = null) {
   try {
-    const now = dateInfo || new Date();
+    if (!dateInfo) return 0;
+    const now = dateInfo;
     const local = new Date(now.toLocaleString('en-US', { timeZone: tz }));
     const utc = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
     return Math.round((local - utc) / 60000);
   } catch { return 0; }
 }
 
-function isDSTActive(tz) {
+function isDSTActive(tz, dateInfo) {
   try {
-    const now = new Date();
+    if (!dateInfo) return false;
+    const now = dateInfo;
     const jan = new Date(now.getFullYear(), 0, 15);
     const jul = new Date(now.getFullYear(), 6, 15);
-    const offNow = getOffsetMinutes(tz);
+    const offNow = getOffsetMinutes(tz, now);
     const offJan = Math.round((new Date(jan.toLocaleString('en-US', { timeZone: tz })) - new Date(jan.toLocaleString('en-US', { timeZone: 'UTC' }))) / 60000);
     const offJul = Math.round((new Date(jul.toLocaleString('en-US', { timeZone: tz })) - new Date(jul.toLocaleString('en-US', { timeZone: 'UTC' }))) / 60000);
     if (offJan === offJul) return false;
@@ -27,7 +30,8 @@ function isDSTActive(tz) {
 
 export function observesDST(tz, dateInfo = null) {
   try {
-    const now = dateInfo || new Date();
+    if (!dateInfo) return false;
+    const now = dateInfo;
     const jan = new Date(now.getFullYear(), 0, 15);
     const jul = new Date(now.getFullYear(), 6, 15);
     const offJan = Math.round((new Date(jan.toLocaleString('en-US', { timeZone: tz })) - new Date(jan.toLocaleString('en-US', { timeZone: 'UTC' }))) / 60000);
@@ -45,30 +49,31 @@ export function formatUTCOffset(minutes) {
 }
 
 /** SSR current time – Western numerals via -u-nu-latn */
-function getCurrentTime(tz) {
+function getCurrentTime(tz, dateInfo) {
   try {
+    if (!dateInfo) return '—';
     return new Intl.DateTimeFormat('ar-SA-u-nu-latn', {
       timeZone: tz, hour: '2-digit', minute: '2-digit', hour12: true,
-    }).format(new Date());
+    }).format(dateInfo);
   } catch { return '—'; }
 }
 
 export async function TimeSnapshot({ fromCity, toCity }) {
-  // Compute dynamically based on current time
-  const fromOffMin = getOffsetMinutes(fromCity.timezone);
-  const toOffMin = getOffsetMinutes(toCity.timezone);
+  const currentDate = new Date(await getCachedNowIso());
+  const fromOffMin = getOffsetMinutes(fromCity.timezone, currentDate);
+  const toOffMin = getOffsetMinutes(toCity.timezone, currentDate);
   const diffMinutes = toOffMin - fromOffMin;
   const diffHours = diffMinutes / 60;
-  const fromDST = isDSTActive(fromCity.timezone);
-  const toDST = isDSTActive(toCity.timezone);
+  const fromDST = isDSTActive(fromCity.timezone, currentDate);
+  const toDST = isDSTActive(toCity.timezone, currentDate);
   const fromOffStr = formatUTCOffset(fromOffMin);
   const toOffStr = formatUTCOffset(toOffMin);
 
   const absDiffH = Math.floor(Math.abs(diffHours));
   const absDiffM = Math.abs(diffMinutes) % 60;
 
-  const fromTime = getCurrentTime(fromCity.timezone);
-  const toTime = getCurrentTime(toCity.timezone);
+  const fromTime = getCurrentTime(fromCity.timezone, currentDate);
+  const toTime = getCurrentTime(toCity.timezone, currentDate);
 
   return (
     <div className="grid grid-cols-3 items-center gap-2">

@@ -55,7 +55,6 @@ const nextConfig = {
         // Apply to all routes
         source: '/(.*)',
         headers: [
-          { key: 'X-Robots-Tag', value: 'index, follow' },
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },

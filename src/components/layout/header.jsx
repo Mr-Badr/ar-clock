@@ -26,6 +26,7 @@ export const NAV_LINKS = [
     ],
   },
   { href: "/time-difference", label: "فرق التوقيت" },
+  { href: "/time-now",        label: "الوقت الآن"   },
   { href: "/holidays",        label: "المناسبات"   },
 ];
 

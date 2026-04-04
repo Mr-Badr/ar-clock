@@ -12,7 +12,7 @@
 import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
 import { Suspense } from 'react';
-import { getCityBySlug, getAllCityParams } from '@/lib/db/queries/cities';
+import { getCityBySlug, getPriorityCityParams } from '@/lib/db/queries/cities';
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 import {
   calculatePrayerTimes,
@@ -26,6 +26,7 @@ import { getCountriesAction } from '@/app/actions/location';
 import PrayerHeroClient from '@/components/PrayerHero.client';
 import SearchCity from '@/components/SearchCityWrapper.client';
 import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar.client';
+import CalendarSeoBlock from '@/components/mwaqit/CalendarSeoBlock';
 import MadhabSelector from '@/components/mwaqit/MadhabSelector.client';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
 import { ErrorBoundary } from '@/components/ErrorBoundary.client';
@@ -33,6 +34,7 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import { getSiteUrl } from '@/lib/site-config';
+import { formatGregorianLabel, getHijriMonthSpanFromDate } from '@/lib/hijri-utils';
 // ─── ISR: pre-build top 100 cities, revalidate every 60s ─────────────────────
 
 
@@ -50,7 +52,7 @@ export async function generateStaticParams() {
       { country: 'egypt',        city: 'cairo'       },
     ];
   }
-  return getAllCityParams();
+  return getPriorityCityParams(100);
 }
 
 // ─── SEO Metadata ─────────────────────────────────────────────────────────────
@@ -291,6 +293,7 @@ export default async function PrayerTimesPage({ params }) {
             city={citySlug}
             cityData={cityData}
             countryCode={country.country_code}
+            countryNameAr={countryNameAr}
           />
         </Suspense>
         </ErrorBoundary>
@@ -302,7 +305,7 @@ export default async function PrayerTimesPage({ params }) {
 }
 
 // ─── Dynamic section (per-request, inside Suspense) ──────────────────────────
-async function PrayerTimesContent({ country, city, cityData, countryCode }) {
+async function PrayerTimesContent({ country, city, cityData, countryCode, countryNameAr }) {
   await headers(); // opts only this sub-tree to dynamic rendering
 
   const now        = new Date();
@@ -452,6 +455,13 @@ async function PrayerTimesContent({ country, city, cityData, countryCode }) {
 
       {/* ── Monthly Calendar ──────────────────────────────────────────── */}
       <section className="mb-6">
+        <CalendarSeoBlock
+          cityNameAr={cityNameAr}
+          countryNameAr={countryNameAr}
+          gregorianLabel={formatGregorianLabel(now)}
+          hijriLabel={getHijriMonthSpanFromDate(now)}
+          methodLabel={methodInfo.label}
+        />
         <MonthlyPrayerCalendar
           lat={cityData.lat}
           lon={cityData.lon}

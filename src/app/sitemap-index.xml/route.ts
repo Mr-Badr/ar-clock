@@ -1,40 +1,24 @@
-import { getSupabaseServer } from '@/lib/supabase-server';
+import { getAllCountrySlugs } from '@/lib/db/queries/countries';
 import { getSiteUrl } from '@/lib/site-config';
-import { connection } from 'next/server';
 
 export async function GET() {
-  await connection();
   const BASE = getSiteUrl();
-
-  let countries: { country_slug: string }[] = [];
-  try {
-    const supabase = getSupabaseServer();
-    const { data, error } = await supabase
-      .from('countries')
-      .select('country_slug');
-
-    if (!error && data) {
-      countries = data;
-    } else {
-      console.error('[Sitemap Index] DB Error:', error);
-    }
-  } catch (err) {
-    console.error('[Sitemap Index] Request Error:', err);
-  }
+  const countrySlugs = await getAllCountrySlugs();
 
   const sitemaps = [
     `${BASE}/sitemap.xml`,
     `${BASE}/holidays/sitemap.xml`,
+    `${BASE}/time-difference/sitemap.xml`,
     // Date feature sitemaps
     `${BASE}/date/sitemap.xml`,
     `${BASE}/date/hijri/sitemap.xml`,
   ];
 
   // Add per-country sitemaps for time-now and mwaqit-al-salat
-  for (const c of countries) {
-    if (c.country_slug) {
-      sitemaps.push(`${BASE}/time-now/sitemap/${c.country_slug}.xml`);
-      sitemaps.push(`${BASE}/mwaqit-al-salat/sitemap/${c.country_slug}.xml`);
+  for (const countrySlug of countrySlugs) {
+    if (countrySlug) {
+      sitemaps.push(`${BASE}/time-now/sitemap/${countrySlug}.xml`);
+      sitemaps.push(`${BASE}/mwaqit-al-salat/sitemap/${countrySlug}.xml`);
     }
   }
 

@@ -53,7 +53,7 @@ import { DialogTitle } from '@/components/ui/dialog';
 import {
   getCountriesAction,
   searchCitiesAction,
-  getNearestCityAction
+  detectBestCityAction
 } from '@/app/actions/location';
 
 import { PRIORITY_COUNTRY_SLUGS, GLOBAL_POPULAR_COUNTRIES } from '@/lib/db/constants';
@@ -108,6 +108,23 @@ function getFlagEmoji(countryCode) {
     .split('')
     .map(char => 0x1F1E6 + char.charCodeAt(0) - 65);
   return String.fromCodePoint(...codePoints);
+}
+
+function getBrowserCountryCode() {
+  if (typeof navigator === 'undefined') return '';
+
+  const locales = [navigator.language, ...(navigator.languages || [])].filter(Boolean);
+  for (const locale of locales) {
+    try {
+      const region = new Intl.Locale(locale).region;
+      if (region && region.length === 2) return region.toUpperCase();
+    } catch {
+      const match = String(locale).match(/[-_]([A-Za-z]{2})(?:[-_]|$)/);
+      if (match?.[1]) return match[1].toUpperCase();
+    }
+  }
+
+  return '';
 }
 
 function normalizeArabic(s = '') {
@@ -466,35 +483,79 @@ export default function SearchCity({
     }, DEBOUNCE_MS);
   }, [performSearch, selectedCountry]);
 
+  const applyDetectedCity = useCallback((city, message) => {
+    if (!city) return false;
+
+    setSelectedCity(city);
+    if (message) toast.success(message);
+
+    if (onSelectCity) onSelectCity(city);
+    else router.push(cityHref(city, mode));
+
+    return true;
+  }, [mode, onSelectCity, router]);
+
   /* ── Geolocation ─────────────────────────────────────────────────────── */
   const handleGeoLocation = useCallback(() => {
-    if (!navigator.geolocation) return;
     setGeoLoading(true);
     setOpen(false); /* close dialog first so user sees the trigger update */
 
-    navigator.geolocation.getCurrentPosition(
-      async ({ coords }) => {
-        try {
-          const city = await getNearestCityAction(coords.latitude, coords.longitude);
-          if (city) {
-            setSelectedCity(city);
-            toast.success('تم تحديد موقعك بنجاح');
-            if (onSelectCity) onSelectCity(city);
-            else router.push(cityHref(city, mode));
-          } else {
-            toast.error('تعذّر تحديد الموقع — تأكد من منح إذن الوصول أو ابحث يدوياً');
+    const detectWithFallbacks = async () => {
+      const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      const browserCountryCode = getBrowserCountryCode();
+
+      try {
+        if (navigator.geolocation) {
+          const position = await new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: GEO_TIMEOUT_MS });
+          });
+
+          const gpsCity = await detectBestCityAction({
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+            timezone: browserTimezone,
+            countryCode: browserCountryCode,
+          });
+
+          if (applyDetectedCity(gpsCity, 'تم تحديد موقعك بنجاح')) {
+            return;
           }
-        } catch (err) {
-          console.error('Geo lookup failed', err);
-          toast.error('تعذّر تحديد الموقع — تأكد من منح إذن الوصول أو ابحث يدوياً');
-        } finally {
-          setGeoLoading(false);
         }
-      },
-      () => { setGeoLoading(false); toast.error('تعذّر تحديد الموقع — تأكد من منح إذن الوصول أو ابحث يدوياً'); },
-      { timeout: GEO_TIMEOUT_MS }
-    );
-  }, [onSelectCity, router, mode]);
+      } catch (err) {
+        console.warn('Precise geolocation failed, trying fallbacks:', err);
+      }
+
+      try {
+        const response = await fetch('/api/ip-city', { cache: 'no-store' });
+        const ipCity = response.ok ? await response.json() : null;
+        if (applyDetectedCity(ipCity, 'تم تحديد موقعك تقريبياً عبر الشبكة')) {
+          return;
+        }
+      } catch (err) {
+        console.warn('IP fallback failed:', err);
+      }
+
+      try {
+        if (browserTimezone) {
+          const timezoneCity = await detectBestCityAction({
+            timezone: browserTimezone,
+            countryCode: browserCountryCode,
+          });
+          if (applyDetectedCity(timezoneCity, 'تم تحديد موقعك تقريبياً حسب المنطقة الزمنية')) {
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('Timezone fallback failed:', err);
+      }
+
+      toast.error('تعذّر تحديد الموقع — تأكد من منح إذن الوصول أو ابحث يدوياً');
+    };
+
+    detectWithFallbacks().finally(() => {
+      setGeoLoading(false);
+    });
+  }, [applyDetectedCity]);
 
   /* ── Handlers ─────────────────────────────────────────────────────────── */
   const handleOpenDialog = useCallback(() => {

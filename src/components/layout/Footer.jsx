@@ -3,6 +3,11 @@ import Link from "next/link";
 import { Clock } from "lucide-react";
 import { SectionDivider } from "@/components/shared/primitives";
 import { Globe } from "@/components/ui/globe";
+import { POPULAR_PAIRS } from "@/components/time-diff/data/popularPairs";
+import {
+  FEATURED_COUNTDOWN_LINKS,
+  getPopularTimeNowCityLinks,
+} from "@/lib/seo/popular-links";
 
 const PRODUCT_LINKS = [
   { href: '/time-now', label: 'الوقت الآن' },
@@ -18,245 +23,370 @@ const COMPANY_LINKS = [
   { href: '/contact', label: 'اتصل بنا' },
 ];
 
-const Footer = () => {
+const FOOTER_TIME_DIFFERENCE_LINKS = POPULAR_PAIRS.slice(0, 6).map((pair) => ({
+  href: `/time-difference/${pair.from.slug}/${pair.to.slug}`,
+  label: `فرق التوقيت بين ${pair.from.nameAr} و${pair.to.nameAr}`,
+}));
+const FOOTER_COUNTDOWN_LINKS = FEATURED_COUNTDOWN_LINKS.slice(0, 6);
+
+const Footer = async () => {
+  const footerTimeNowLinks = await getPopularTimeNowCityLinks(6);
+
   return (
-        <footer
-  style={{
-    position: 'relative',
-    overflow: 'hidden',
-    backgroundColor: 'var(--bg-subtle)',
-    borderTop: '1px solid var(--border-subtle)',
-  }}
->
-  <SectionDivider />
+    <footer className="footer-root">
+      <SectionDivider />
 
-  {/* ── Top accent glow line ── */}
-  <div style={{
-    position: 'absolute',
-    top: 0,
-    left: '50%',
-    transform: 'translateX(-50%)',
-    width: '70%',
-    maxWidth: '700px',
-    height: '1px',
-    background: 'linear-gradient(90deg, transparent 0%, var(--accent-alt) 50%, transparent 100%)',
-    opacity: 0.35,
-    pointerEvents: 'none',
-  }} />
+      {/* ── Top accent glow line ── */}
+      <div className="footer-glow-line" />
 
-  {/* ── Main content ── */}
-  <div style={{
-    maxWidth: '1320px',
-    margin: '0 auto',
-    padding: 'var(--space-16) var(--space-6) 0',
-    position: 'relative',
-    zIndex: 1,
-  }}>
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 'var(--space-10)',
-    }}
-      className="footer-inner"
-    >
+      {/* ── Main content ── */}
+      <div className="footer-container">
 
-      {/* ── Brand block ── */}
-      <div style={{ textAlign: 'right' }}>
-        {/* Logo row */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 'var(--space-2-5)',
-          marginBottom: 'var(--space-4)',
-        }}>
-          
-          <div style={{
-            width: '38px',
-            height: '38px',
-            borderRadius: 'var(--radius-md)',
-            background: 'var(--accent-gradient)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: 'var(--shadow-accent)',
-            flexShrink: 0,
-          }}>
-            <Clock size={20} color="white" />
+        {/* ── Brand + Links row ── */}
+        <div className="footer-main">
+
+          {/* ── Brand block ── */}
+          <div className="footer-brand">
+            <div className="footer-brand-logo">
+              <div className="footer-brand-icon">
+                <Clock size={20} color="white" />
+              </div>
+              <span className="footer-brand-name">ميقات</span>
+            </div>
+
+            <p className="footer-brand-desc">
+              ميقات منصة عربية مستقلة، بُنيت على فكرة واحدة — المستخدم العربي يستحق أدوات صُنعت له، لا تُرجمت إليه. سريعة، دقيقة، وتستحق ثقتك.
+            </p>
+
+            <div className="footer-brand-badge-wrap">
+              <span className="footer-brand-badge">
+                <span className="footer-brand-dot" />
+                متاح مجاناً
+              </span>
+            </div>
           </div>
-          <span style={{
-            fontSize: 'var(--text-2xl)',
-            fontWeight: 'var(--font-bold)',
-            color: 'var(--text-primary)',
-          }}>
-            ميقات
-          </span>
+
+          {/* ── Links grid — all 5 columns flat ── */}
+          <nav className="footer-links-grid" aria-label="روابط التذييل">
+
+            <div className="footer-col">
+              <h3 className="footer-col-heading">روابط مهمة</h3>
+              <ul className="footer-col-list">
+                {COMPANY_LINKS.map(({ href, label }) => (
+                  <li key={href}>
+                    <Link href={href} className="footer-col-link">{label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="footer-col">
+              <h3 className="footer-col-heading">الصفحات الرئيسية</h3>
+              <ul className="footer-col-list">
+                {PRODUCT_LINKS.map(({ href, label }) => (
+                  <li key={href}>
+                    <Link href={href} className="footer-col-link">{label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="footer-col">
+              <h3 className="footer-col-heading">الوقت الآن في المدن</h3>
+              <ul className="footer-col-list">
+                {footerTimeNowLinks.map(({ href, label }) => (
+                  <li key={href}>
+                    <Link href={href} className="footer-col-link">{label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="footer-col">
+              <h3 className="footer-col-heading">أشهر فروق التوقيت</h3>
+              <ul className="footer-col-list">
+                {FOOTER_TIME_DIFFERENCE_LINKS.map(({ href, label }) => (
+                  <li key={href}>
+                    <Link href={href} className="footer-col-link">{label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="footer-col">
+              <h3 className="footer-col-heading">أشهر العدادات</h3>
+              <ul className="footer-col-list">
+                {FOOTER_COUNTDOWN_LINKS.map(({ href, label }) => (
+                  <li key={href}>
+                    <Link href={href} className="footer-col-link">{label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </nav>
         </div>
+        {/* ── end footer-main ── */}
 
-        {/* Description */}
-        <p style={{
-          fontSize: 'var(--text-sm)',
-          color: 'var(--text-muted)',
-          lineHeight: 'var(--leading-relaxed)',
-          maxWidth: '300px',
-          marginRight: 0,
-          marginLeft: 'auto',
-        }}>
-          أدوات عربية دقيقة لحساب المواقيت والتقويمات والمناسبات الإسلامية.
-        </p>
+      </div>
 
-        {/* Badge pill */}
-        <div style={{
-          marginTop: 'var(--space-5)',
+      {/* ── Globe ── */}
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: 'clamp(260px, 32vw, 400px)',
+          overflow: 'hidden',
           display: 'flex',
-        }}>
-          <span style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 'var(--space-1-5)',
-            fontSize: 'var(--text-xs)',
-            fontWeight: 'var(--font-medium)',
-            color: 'var(--accent-alt)',
-            backgroundColor: 'var(--accent-soft)',
-            border: '1px solid var(--border-accent)',
-            borderRadius: 'var(--radius-full)',
-            padding: 'var(--space-1-5) var(--space-3)',
-          }}>
-            <span style={{
-              width: '6px',
-              height: '6px',
-              borderRadius: '9999px',
-              backgroundColor: 'var(--success)',
-              flexShrink: 0,
-            }} />
-            متاح مجاناً
-          </span>
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+          zIndex: 1,
+        }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: 'clamp(500px, 60vw, 780px)',
+            height: 'clamp(500px, 60vw, 780px)',
+            flexShrink: 0,
+          }}
+        >
+          <Globe style={{ width: '100%', height: '100%' }} />
         </div>
       </div>
 
-      {/* ── Links block ── */}
-      <div style={{
-        display: 'flex',
-        gap: 'var(--space-14)',
-        justifyContent: 'flex-end',
-      }}>
+      {/* ── Styles ── */}
+      <style>{`
 
-        {/* Column 1 */}
-        <div style={{ textAlign: 'right' }}>
-          <h3 style={{
-            fontSize: 'var(--text-sm)',
-            fontWeight: 'var(--font-semibold)',
-            color: 'var(--text-primary)',
-            marginBottom: 'var(--space-4)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-          }}>
-            روابط مهمة
-          </h3>
-          <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            {COMPANY_LINKS.map(({ href, label }) => (
-              <li key={href}>
-                <Link
-                  href={href}
-                  style={{
-                    fontSize: 'var(--text-sm)',
-                    color: 'var(--text-muted)',
-                    transition: 'color var(--transition-fast)',
-                  }}
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        /* ─────────────────────────────────────────
+           ROOT
+        ───────────────────────────────────────── */
+        .footer-root {
+          position: relative;
+          overflow: hidden;
+          background-color: var(--bg-subtle);
+          border-top: 1px solid var(--border-subtle);
+        }
 
-        {/* Column 2 */}
-        <div style={{ textAlign: 'right' }}>
-          <h3 style={{
-            fontSize: 'var(--text-sm)',
-            fontWeight: 'var(--font-semibold)',
-            color: 'var(--text-primary)',
-            marginBottom: 'var(--space-4)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-          }}>
-            الصفحات الرئيسية
-          </h3>
-          <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            {PRODUCT_LINKS.map(({ href, label }) => (
-              <li key={href}>
-                <Link
-                  href={href}
-                  style={{
-                    fontSize: 'var(--text-sm)',
-                    color: 'var(--text-muted)',
-                    transition: 'color var(--transition-fast)',
-                  }}
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        /* ─────────────────────────────────────────
+           GLOW LINE
+        ───────────────────────────────────────── */
+        .footer-glow-line {
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 70%;
+          max-width: 700px;
+          height: 1px;
+          background: linear-gradient(90deg, transparent 0%, var(--accent-alt) 50%, transparent 100%);
+          opacity: 0.35;
+          pointer-events: none;
+        }
 
-      </div>
+        /* ─────────────────────────────────────────
+           CONTAINER
+        ───────────────────────────────────────── */
+        .footer-container {
+          max-width: 1320px;
+          margin: 0 auto;
+          padding: var(--space-16) var(--space-6) 0;
+          position: relative;
+          z-index: 1;
+        }
 
-    </div>
-  </div>
+        /* ─────────────────────────────────────────
+           MAIN ROW  (brand + links)
 
+          Mobile (<640px):  column, centered
+          Tablet (640-1023): column, centered
+          Desktop (1024px+): single row — brand on
+                             the right (RTL start),
+                             links fill the rest
+        ───────────────────────────────────────── */
+        .footer-main {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: var(--space-10);
+        }
 
-  {/* ── Globe — always perfectly centered, top half only ── */}
-  <div
-    style={{
-      position: 'relative',
-      width: '100%',
-      height: 'clamp(260px, 32vw, 400px)',
-      overflow: 'hidden',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'flex-start',
-      zIndex: 1,
-    }}
-  >
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: 'clamp(500px, 60vw, 780px)',
-        height: 'clamp(500px, 60vw, 780px)',
-        flexShrink: 0,
-      }}
-    >
-      <Globe style={{ width: '100%', height: '100%' }} />
-    </div>
-  </div>
+        @media (min-width: 1024px) {
+          .footer-main {
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: var(--space-14);
+          }
+        }
 
+        /* ─────────────────────────────────────────
+           BRAND BLOCK
+        ───────────────────────────────────────── */
+        .footer-brand {
+          flex-shrink: 0;
+          width: 100%;
+          text-align: right;
+        }
 
-  {/* ── Responsive styles ── */}
-  <style>{`
-  .footer-inner {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  @media (min-width: 768px) {
-    .footer-inner {
-      flex-direction: row !important;
-      justify-content: space-between !important;
-      align-items: flex-start !important;
-    }
-  }
-  footer canvas,
-  footer .globe-container,
-  footer [class*="globe"] {
-    width: 100% !important;
-    height: 100% !important;
-  }
-`}</style>
+        @media (min-width: 1024px) {
+          .footer-brand {
+            width: auto;
+            max-width: 280px;
+          }
+        }
 
-</footer>
+        .footer-brand-logo {
+          display: flex;
+          align-items: center;
+          gap: var(--space-2-5);
+          margin-bottom: var(--space-4);
+       justify-content: flex-start;
+        }
+
+        .footer-brand-icon {
+          width: 38px;
+          height: 38px;
+          border-radius: var(--radius-md);
+          background: var(--accent-gradient);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: var(--shadow-accent);
+          flex-shrink: 0;
+        }
+
+        .footer-brand-name {
+          font-size: var(--text-2xl);
+          font-weight: var(--font-bold);
+          color: var(--text-primary);
+        }
+
+        .footer-brand-desc {
+          font-size: var(--text-sm);
+          color: var(--text-muted);
+          line-height: var(--leading-relaxed);
+          max-width: 300px;
+          margin: 0 0 0 auto;
+        }
+
+        @media (min-width: 1024px) {
+          .footer-brand-desc {
+            margin: 0;
+          }
+        }
+
+        .footer-brand-badge-wrap {
+          margin-top: var(--space-5);
+          display: flex;
+       justify-content: flex-start;
+        }
+
+        .footer-brand-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: var(--space-1-5);
+          font-size: var(--text-xs);
+          font-weight: var(--font-medium);
+          color: var(--accent-alt);
+          background-color: var(--accent-soft);
+          border: 1px solid var(--border-accent);
+          border-radius: var(--radius-full);
+          padding: var(--space-1-5) var(--space-3);
+        }
+
+        .footer-brand-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 9999px;
+          background-color: var(--success);
+          flex-shrink: 0;
+        }
+
+        /* ─────────────────────────────────────────
+           LINKS GRID
+
+          All 5 columns live in ONE flat CSS Grid.
+          No nested rows, no display:contents tricks.
+
+          Mobile  (<640px):  2 columns
+          Tablet (640-1023): 3 columns
+          Desktop (1024px+): 5 columns, all in one line
+        ───────────────────────────────────────── */
+        .footer-links-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: var(--space-8) var(--space-6);
+          width: 100%;
+        }
+
+        @media (min-width: 640px) {
+          .footer-links-grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .footer-links-grid {
+            /* Each column is sized to its content —
+               no stretching, no overflow.            */
+            grid-template-columns: repeat(5, auto);
+            gap: var(--space-10);
+            width: auto;
+            flex: 1;             /* fill remaining space in the main row */
+            justify-content: flex-start; /* columns hug their content */
+          }
+        }
+
+        /* ─────────────────────────────────────────
+           INDIVIDUAL COLUMN
+        ───────────────────────────────────────── */
+        .footer-col {
+          text-align: right;
+        }
+
+        .footer-col-heading {
+          font-size: var(--text-sm);
+          font-weight: var(--font-semibold);
+          color: var(--text-primary);
+          margin-bottom: var(--space-4);
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          white-space: nowrap;
+        }
+
+        .footer-col-list {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-3);
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        .footer-col-link {
+          font-size: var(--text-sm);
+          color: var(--text-muted);
+          transition: color var(--transition-fast);
+          display: block;
+        }
+
+        .footer-col-link:hover {
+          color: var(--text-primary);
+        }
+
+        footer canvas,
+        footer .globe-container,
+        footer [class*="globe"] {
+          width: 100% !important;
+          height: 100% !important;
+        }
+
+      `}</style>
+    </footer>
   );
 };
 

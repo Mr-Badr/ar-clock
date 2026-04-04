@@ -21,9 +21,9 @@ import { convertDate } from '@/lib/date-adapter';
 import { getIslamicEventsForHijriDate } from '@/lib/islamic-holidays';
 import { JsonLd } from '@/components/date/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
-import { headers } from 'next/headers';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { ArrowLeftRight, Moon, CalendarDays, Calendar } from 'lucide-react';
+import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
 
 const BASE_URL = getSiteUrl();
@@ -56,9 +56,7 @@ export default function DateHubPage() {
 }
 
 async function DateHubDynamicContent() {
-  await headers();
-
-  const now = new Date();
+  const now = new Date(await getCachedNowIso());
   const y = now.getUTCFullYear();
   const m = now.getUTCMonth() + 1;
   const d = now.getUTCDate();
