@@ -4,7 +4,7 @@
 //   OLD: generateStaticParams built ±5 years = 3,650 pages at deploy time
 //        → huge build cost, large bundle
 //   NEW: generateStaticParams builds only ±90 days = 181 pages (faster deploys)
-//        + export const dynamicParams = true → ISR for all other dates
+//        + unlisted dates render on demand by default
 //        + export const revalidate = 86400 → cache 24h for ISR pages
 //
 // DESIGN IMPROVEMENTS:
@@ -31,7 +31,6 @@ import { CalendarDays, ArrowLeftRight, Moon } from 'lucide-react';
 import { getSiteUrl } from '@/lib/site-config';
 
 const BASE_URL = getSiteUrl();
-export const dynamicParams = true;
 
 // ── ISR: 24h cache managed via cacheComponents ──────────────────────────────
 

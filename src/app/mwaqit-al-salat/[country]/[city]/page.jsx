@@ -40,7 +40,6 @@ import { formatGregorianLabel, getHijriMonthSpanFromDate } from '@/lib/hijri-uti
 
 
 const BASE = getSiteUrl();
-export const dynamicParams = true;
 
 // Always pre-generate at least a small seed so Next.js Cache Component
 // validation passes in dev. All other slugs render at runtime (default behavior).

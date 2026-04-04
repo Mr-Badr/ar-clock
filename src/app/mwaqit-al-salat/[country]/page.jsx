@@ -28,7 +28,6 @@ import { getSiteUrl } from '@/lib/site-config';
 import { formatGregorianLabel, getHijriMonthSpanFromDate } from '@/lib/hijri-utils';
 
 const BASE = getSiteUrl();
-export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const slugs = await getPriorityCountrySlugs(30);

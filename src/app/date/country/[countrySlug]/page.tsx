@@ -17,7 +17,6 @@ import { Calendar, Clock, ArrowLeftRight } from "lucide-react"
 import { getSiteUrl } from '@/lib/site-config';
 
 const BASE_URL = getSiteUrl();
-export const dynamicParams = true;
 
 const COUNTRY_HIJRI_METHODS: Record<string, 'umalqura' | 'astronomical' | 'civil'> = {
   'SA': 'umalqura',      // Saudi Arabia

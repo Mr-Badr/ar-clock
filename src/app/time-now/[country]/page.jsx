@@ -5,8 +5,8 @@
  *
  * Next.js 15 patterns used:
  *  - params is a Promise → await params
- *  - generateStaticParams → top 200 countries pre-built at build time
- *  - dynamicParams = true → any unknown country renders on-demand, cached
+ *  - generateStaticParams → top countries pre-built at build time
+ *  - any unknown country renders on-demand by default, then cached
  *  - revalidate = 86400 → pages rebuilt once per day (DST changes etc.)
  *  - unstable_cache() in lib/city-resolver for Supabase queries
  *
@@ -46,8 +46,6 @@ import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 const BASE = getSiteUrl();
 
 /* ── ROUTE CONFIG ────────────────────────────────────────────────── */
-export const dynamicParams = true;
-
 
 /* ── PRE-BUILD TOP COUNTRIES ─────────────────────────────────────── */
 export async function generateStaticParams() {

@@ -17,7 +17,6 @@ import { getSiteUrl } from '@/lib/site-config';
 // This resolves correctly: /date/hijri/... always hits this route, never the [year] route.
 
 const BASE_URL = getSiteUrl();
-export const dynamicParams = true;
 
 export async function generateStaticParams() {
   // Build only the current Hijri year; older/future pages render on demand.

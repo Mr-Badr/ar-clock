@@ -5,8 +5,8 @@
  *
  * Next.js 15 patterns:
  *  - await params (params is a Promise in Next.js 15)
- *  - generateStaticParams → pre-builds top 120 priority cities at build time
- *  - dynamicParams = true → any unknown city renders on-demand, then cached
+ *  - generateStaticParams → pre-builds top priority cities at build time
+ *  - any unknown city renders on-demand by default, then cached
  *  - revalidate = 86400 → ISR daily (DST transitions, timezone DB updates)
  *
  * SEO sections per page:
@@ -43,8 +43,6 @@ import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 const BASE = getSiteUrl();
 
 /* ─── ROUTE CONFIG ──────────────────────────────────────────────── */
-export const dynamicParams = true;
-
 
 export async function generateStaticParams() {
   if (process.env.NODE_ENV === 'development') {
