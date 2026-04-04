@@ -142,6 +142,37 @@ function buildTimeNowCountryLink(country) {
   };
 }
 
+function buildPrayerCityLink(country, city) {
+  if (!country?.country_slug || !city?.city_slug) return null;
+
+  const cityName = city.name_ar || city.name_en;
+  const countryName = country.name_ar || country.name_en;
+
+  if (!cityName || !countryName) return null;
+
+  return {
+    href: `/mwaqit-al-salat/${country.country_slug}/${city.city_slug}`,
+    countrySlug: country.country_slug,
+    citySlug: city.city_slug,
+    label: `مواقيت الصلاة في ${cityName}`,
+    description: `أوقات الصلاة اليوم في ${cityName}، ${countryName} مع الفجر والظهر والعصر والمغرب والعشاء.`,
+  };
+}
+
+function buildPrayerCountryLink(country) {
+  if (!country?.country_slug) return null;
+
+  const countryName = country.name_ar || country.name_en;
+  if (!countryName) return null;
+
+  return {
+    href: `/mwaqit-al-salat/${country.country_slug}`,
+    countrySlug: country.country_slug,
+    label: `مواقيت الصلاة في ${countryName}`,
+    description: `صفحة مواقيت الصلاة في ${countryName} مع العاصمة وأبرز المدن وروابط داخلية قابلة للفهرسة.`,
+  };
+}
+
 function dedupeLinks(links) {
   const seen = new Set();
   return links.filter((link) => {
@@ -196,6 +227,43 @@ export const getPopularTimeNowCityLinks = cache(async (limit = 60) => {
   for (const bucket of buckets) {
     for (const city of bucket.cities) {
       const link = buildTimeNowCityLink(bucket.country, city);
+      if (link) links.push(link);
+      if (links.length >= limit * 3) break;
+    }
+    if (links.length >= limit * 3) break;
+  }
+
+  return dedupeLinks(links).slice(0, limit);
+});
+
+export const getPopularPrayerCountryLinks = cache(async (limit = 32) => {
+  const countries = (await getAllCountries()).slice().sort(sortCountries);
+  return countries
+    .map((country) => buildPrayerCountryLink(country))
+    .filter(Boolean)
+    .slice(0, limit);
+});
+
+export const getPopularPrayerCityLinks = cache(async (limit = 60) => {
+  const buckets = await getCountryBuckets(limit);
+  const bucketsByCountry = new Map(
+    buckets.map((bucket) => [bucket.country.country_slug, bucket]),
+  );
+
+  const links = [];
+
+  for (const [countrySlug, citySlug] of POPULAR_TIME_NOW_CITY_PRIORITY) {
+    const bucket = bucketsByCountry.get(countrySlug);
+    if (!bucket) continue;
+    const city = bucket.cities.find((item) => item.city_slug === citySlug);
+    if (!city) continue;
+    const link = buildPrayerCityLink(bucket.country, city);
+    if (link) links.push(link);
+  }
+
+  for (const bucket of buckets) {
+    for (const city of bucket.cities) {
+      const link = buildPrayerCityLink(bucket.country, city);
       if (link) links.push(link);
       if (links.length >= limit * 3) break;
     }

@@ -88,6 +88,21 @@ export default async function TimeNowPage() {
           </div>
         </section>
 
+
+
+        <Suspense
+          fallback={
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: '0.45rem' }}>
+              {Array.from({ length: 21 }).map((_, index) => (
+                <div key={index} style={{ height: '52px', borderRadius: '0.875rem', background: 'var(--bg-surface-2)', border: '1px solid var(--border-default)', opacity: 0.6 }} />
+              ))}
+            </div>
+          }
+        >
+          <TimeNowClient arabCountries={arabCountries} worldCountries={worldCountries} />
+        </Suspense>
+
+        
         <section
           aria-labelledby="popular-time-now-pages-heading"
           style={{ marginBottom: '3rem' }}
@@ -224,18 +239,7 @@ export default async function TimeNowPage() {
             </div>
           </div>
         </section>
-
-        <Suspense
-          fallback={
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: '0.45rem' }}>
-              {Array.from({ length: 21 }).map((_, index) => (
-                <div key={index} style={{ height: '52px', borderRadius: '0.875rem', background: 'var(--bg-surface-2)', border: '1px solid var(--border-default)', opacity: 0.6 }} />
-              ))}
-            </div>
-          }
-        >
-          <TimeNowClient arabCountries={arabCountries} worldCountries={worldCountries} />
-        </Suspense>
+        
       </main>
     </div>
   );

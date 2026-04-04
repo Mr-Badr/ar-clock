@@ -1,19 +1,26 @@
 import { z } from 'zod';
 
+const emptyToUndefined = (schema) =>
+  z.preprocess((value) => {
+    if (typeof value !== 'string') return value;
+    const trimmed = value.trim();
+    return trimmed === '' ? undefined : trimmed;
+  }, schema);
+
 const schema = z
   .object({
     NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
-    NEXT_PUBLIC_SITE_URL: z.string().url().optional(),
-    NEXT_PUBLIC_BASE_URL: z.string().url().optional(),
-    VERCEL_PROJECT_PRODUCTION_URL: z.string().min(1).optional(),
-    VERCEL_URL: z.string().min(1).optional(),
-    GOOGLE_SITE_VERIFICATION: z.string().min(6).optional(),
-    REVALIDATE_SECRET: z.string().min(12).optional(),
-    SUPABASE_URL: z.string().url().optional(),
-    SUPABASE_ANON_KEY: z.string().min(20).optional(),
-    SUPABASE_SERVICE_ROLE_KEY: z.string().min(20).optional(),
-    NEXT_PUBLIC_SUPABASE_URL: z.string().url().optional(),
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(20).optional(),
+    NEXT_PUBLIC_SITE_URL: emptyToUndefined(z.string().url().optional()),
+    NEXT_PUBLIC_BASE_URL: emptyToUndefined(z.string().url().optional()),
+    VERCEL_PROJECT_PRODUCTION_URL: emptyToUndefined(z.string().min(1).optional()),
+    VERCEL_URL: emptyToUndefined(z.string().min(1).optional()),
+    GOOGLE_SITE_VERIFICATION: emptyToUndefined(z.string().min(6).optional()),
+    REVALIDATE_SECRET: emptyToUndefined(z.string().min(12).optional()),
+    SUPABASE_URL: emptyToUndefined(z.string().url().optional()),
+    SUPABASE_ANON_KEY: emptyToUndefined(z.string().min(20).optional()),
+    SUPABASE_SERVICE_ROLE_KEY: emptyToUndefined(z.string().min(20).optional()),
+    NEXT_PUBLIC_SUPABASE_URL: emptyToUndefined(z.string().url().optional()),
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: emptyToUndefined(z.string().min(20).optional()),
   })
   .superRefine((value, ctx) => {
     const hasResolvableSiteUrl =

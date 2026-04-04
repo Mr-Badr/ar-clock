@@ -1,4 +1,5 @@
 // app/mwaqit-al-salat/page.jsx
+import Link from 'next/link';
 import SearchCityWrapper from '@/components/SearchCityWrapper.client';
 import { getCountriesAction } from '@/app/actions/location';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
@@ -7,6 +8,10 @@ import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import { Clock } from 'lucide-react';
 import { getSiteUrl } from '@/lib/site-config';
+import {
+  getPopularPrayerCityLinks,
+  getPopularPrayerCountryLinks,
+} from '@/lib/seo/popular-links';
 
 const BASE = getSiteUrl();
 
@@ -147,7 +152,11 @@ const features = [
 ];
 
 export default async function PrayerLandingPage() {
-  const allCountries = await getCountriesAction();
+  const [allCountries, popularPrayerCityLinks, popularPrayerCountryLinks] = await Promise.all([
+    getCountriesAction(),
+    getPopularPrayerCityLinks(),
+    getPopularPrayerCountryLinks(),
+  ]);
 
   const faqSchema = {
     '@context': 'https://schema.org',
@@ -227,6 +236,75 @@ export default async function PrayerLandingPage() {
           </label>
           <SearchCityWrapper mode="prayer" preloadedCountries={allCountries} />
         </div>
+
+        <section className="card mb-10" aria-labelledby="popular-prayer-city-links-heading">
+          <h2 id="popular-prayer-city-links-heading" className="text-xl font-semibold text-primary mb-2">
+            صفحات مواقيت الصلاة الأكثر بحثاً
+          </h2>
+          <p className="text-sm text-secondary leading-[1.8] mb-5">
+            هذه الروابط تُساعد محركات البحث والمستخدمين على الوصول مباشرة إلى صفحات المدن الأكثر طلباً مثل
+            "مواقيت الصلاة في الرياض" و"مواقيت الصلاة في الرباط" و"مواقيت الصلاة في القاهرة".
+          </p>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+              gap: '0.75rem',
+            }}
+          >
+            {popularPrayerCityLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                style={{
+                  display: 'block',
+                  padding: '1rem',
+                  borderRadius: '1rem',
+                  textDecoration: 'none',
+                  background: 'var(--bg-surface-1)',
+                  border: '1px solid var(--border-subtle)',
+                }}
+                title={item.description}
+              >
+                <strong
+                  style={{
+                    display: 'block',
+                    color: 'var(--text-primary)',
+                    marginBottom: '0.35rem',
+                  }}
+                >
+                  {item.label}
+                </strong>
+                <span style={{ color: 'var(--text-muted)', lineHeight: 1.7 }}>
+                  {item.description}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="card-nested mb-12" aria-labelledby="popular-prayer-country-links-heading">
+          <h2 id="popular-prayer-country-links-heading" className="text-xl font-semibold text-primary mb-2">
+            مواقيت الصلاة في الدول
+          </h2>
+          <p className="text-sm text-secondary leading-[1.8] mb-4">
+            الصفحات التالية تربط بين صفحة الدولة وصفحات المدن التابعة لها، مما يحسن اكتشاف الصفحات الطويلة الذيل
+            في نتائج البحث والزحف الداخلي.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {popularPrayerCountryLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="waqt-pill"
+                style={{ textDecoration: 'none' }}
+                title={item.description}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </section>
 
         {/* ── Features ─────────────────────────────────────────────────── */}
         <section className="mb-14" aria-label="مميزات الأداة">
