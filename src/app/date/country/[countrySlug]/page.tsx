@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Suspense } from 'react';
 
-import { getAllCountrySlugs, getCountryBySlug } from '@/lib/db/queries/countries';
+import { getPriorityCountrySlugs, getCountryBySlug } from '@/lib/db/queries/countries';
 import { getCapitalCity } from '@/lib/db/queries/cities';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { convertDate, GREGORIAN_MONTH_NAMES_AR } from '@/lib/date-adapter';
@@ -62,7 +62,7 @@ const links = (countrySlug: string, countryNameAr: string) => [
 ]
 
 export async function generateStaticParams() {
-  const slugs = await getAllCountrySlugs();
+  const slugs = await getPriorityCountrySlugs(60);
   return slugs.map(slug => ({ countrySlug: slug }));
 }
 

@@ -10,8 +10,8 @@ import { headers } from 'next/headers';
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { MapPin } from 'lucide-react';
-import { getCountryBySlug, getAllCountrySlugs } from '@/lib/db/queries/countries';
-import { getCitiesByCountry, getCapitalCity } from '@/lib/db/queries/cities';
+import { getCountryBySlug, getPriorityCountrySlugs } from '@/lib/db/queries/countries';
+import { getTopCitiesByCountry, getCapitalCity } from '@/lib/db/queries/cities';
 import { getCountriesAction } from '@/app/actions/location';
 import { calculatePrayerTimes, getNextPrayer, formatTime } from '@/lib/prayerEngine';
 import { getMethodByCountry } from '@/lib/prayer-methods';
@@ -30,7 +30,7 @@ import { formatGregorianLabel, getHijriMonthSpanFromDate } from '@/lib/hijri-uti
 const BASE = getSiteUrl();
 
 export async function generateStaticParams() {
-  const slugs = await getAllCountrySlugs();
+  const slugs = await getPriorityCountrySlugs(60);
   return slugs.map(slug => ({ country: slug }));
 }
 
@@ -116,7 +116,7 @@ export default async function CountryPrayerPage({ params }) {
   if (!country) notFound();
 
   const [cities, capital, allCountries] = await Promise.all([
-    getCitiesByCountry(country.country_code),
+    getTopCitiesByCountry(country.country_code, 120),
     getCapitalCity(country.country_code),
     getCountriesAction(),
   ]);
@@ -233,7 +233,7 @@ export default async function CountryPrayerPage({ params }) {
 
         {/* All cities grid */}
         <section>
-          <h2 className="text-xl font-bold mb-6">كافة المدن في {countryAr}</h2>
+          <h2 className="text-xl font-bold mb-6">أبرز المدن في {countryAr}</h2>
           <CityPrayerCardsGrid
             cities={cities}
             countrySlug={countrySlug}

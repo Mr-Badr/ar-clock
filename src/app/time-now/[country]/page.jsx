@@ -31,7 +31,7 @@ import SameTimezoneCountries from '@/components/time-now/SameTimezoneCountries';
 import TimeNowFAQ from '@/components/time-now/TimeNowFAQ';
 import RelatedSearches from '@/components/time-now/RelatedSearches';
 import {
-  getAllCountrySlugs,
+  getPriorityCountrySlugs,
   getCountryBySlug,
 } from '@/lib/db/queries/countries';
 
@@ -57,7 +57,7 @@ export async function generateStaticParams() {
       { country: 'egypt' },
     ];
   }
-  const slugs = await getAllCountrySlugs();
+  const slugs = await getPriorityCountrySlugs(60);
   return slugs.map(slug => ({ country: slug }));
 }
 

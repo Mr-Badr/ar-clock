@@ -3,6 +3,7 @@ import { cacheTag, cacheLife } from 'next/cache'
 import { supabase } from '@/lib/supabase/server'
 import type { Country } from '@/lib/db/types'
 import fallback from '@/lib/db/fallback/countries.json'
+import { PRIORITY_COUNTRY_SLUGS, GLOBAL_POPULAR_COUNTRIES } from '@/lib/db/constants'
 
 const fallbackCountries = fallback as Country[]
 
@@ -93,4 +94,21 @@ export async function getAllCountrySlugs(): Promise<string[]> {
   } catch {
     return fallbackCountries.map(c => c.country_slug)
   }
+}
+
+export async function getPriorityCountrySlugs(limit = 60): Promise<string[]> {
+  'use cache'
+  cacheTag('countries', 'priority-country-slugs')
+  cacheLife('days')
+
+  const allSlugs = await getAllCountrySlugs()
+  const priority = [...PRIORITY_COUNTRY_SLUGS, ...GLOBAL_POPULAR_COUNTRIES]
+  const seen = new Set<string>()
+  const merged = [...priority, ...allSlugs].filter((slug): slug is string => {
+    if (!slug || seen.has(slug)) return false
+    seen.add(slug)
+    return true
+  })
+
+  return merged.slice(0, limit)
 }
