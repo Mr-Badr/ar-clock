@@ -46,6 +46,7 @@ import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 const BASE = getSiteUrl();
 
 /* ── ROUTE CONFIG ────────────────────────────────────────────────── */
+export const dynamicParams = true;
 
 
 /* ── PRE-BUILD TOP COUNTRIES ─────────────────────────────────────── */
@@ -57,7 +58,7 @@ export async function generateStaticParams() {
       { country: 'egypt' },
     ];
   }
-  const slugs = await getPriorityCountrySlugs(60);
+  const slugs = await getPriorityCountrySlugs(30);
   return slugs.map(slug => ({ country: slug }));
 }
 

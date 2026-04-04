@@ -17,9 +17,10 @@ import { getSiteUrl } from '@/lib/site-config';
 // This resolves correctly: /date/hijri/... always hits this route, never the [year] route.
 
 const BASE_URL = getSiteUrl();
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  // Build only the nearest Hijri years; older/future pages render on demand.
+  // Build only the current Hijri year; older/future pages render on demand.
   const now = new Date();
   const isoNow = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}-${String(now.getUTCDate()).padStart(2, '0')}`;
   let currentHijriYear = 1447;
@@ -29,7 +30,7 @@ export async function generateStaticParams() {
   } catch { }
 
   const params = [];
-  for (let hy = currentHijriYear - 1; hy <= currentHijriYear + 1; hy++) {
+  for (let hy = currentHijriYear; hy <= currentHijriYear; hy++) {
     for (let hm = 1; hm <= 12; hm++) {
       const daysInMonth = hm % 2 !== 0 ? 30 : 29;
       for (let hd = 1; hd <= daysInMonth; hd++) {

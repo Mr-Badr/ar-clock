@@ -35,11 +35,12 @@ import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import { getSiteUrl } from '@/lib/site-config';
 import { formatGregorianLabel, getHijriMonthSpanFromDate } from '@/lib/hijri-utils';
-// ─── ISR: pre-build top 100 cities, revalidate every 60s ─────────────────────
+// ─── ISR: pre-build top 30 cities, revalidate every 60s ─────────────────────
 
 
 
 const BASE = getSiteUrl();
+export const dynamicParams = true;
 
 // Always pre-generate at least a small seed so Next.js Cache Component
 // validation passes in dev. All other slugs render at runtime (default behavior).
@@ -52,7 +53,7 @@ export async function generateStaticParams() {
       { country: 'egypt',        city: 'cairo'       },
     ];
   }
-  return getPriorityCityParams(100);
+  return getPriorityCityParams(30);
 }
 
 // ─── SEO Metadata ─────────────────────────────────────────────────────────────

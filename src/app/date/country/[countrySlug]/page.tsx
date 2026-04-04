@@ -17,6 +17,7 @@ import { Calendar, Clock, ArrowLeftRight } from "lucide-react"
 import { getSiteUrl } from '@/lib/site-config';
 
 const BASE_URL = getSiteUrl();
+export const dynamicParams = true;
 
 const COUNTRY_HIJRI_METHODS: Record<string, 'umalqura' | 'astronomical' | 'civil'> = {
   'SA': 'umalqura',      // Saudi Arabia
@@ -62,7 +63,7 @@ const links = (countrySlug: string, countryNameAr: string) => [
 ]
 
 export async function generateStaticParams() {
-  const slugs = await getPriorityCountrySlugs(60);
+  const slugs = await getPriorityCountrySlugs(30);
   return slugs.map(slug => ({ countrySlug: slug }));
 }
 

@@ -5,7 +5,7 @@
  *
  * Next.js 15 patterns:
  *  - await params (params is a Promise in Next.js 15)
- *  - generateStaticParams → pre-builds top 500 priority cities at build time
+ *  - generateStaticParams → pre-builds top 120 priority cities at build time
  *  - dynamicParams = true → any unknown city renders on-demand, then cached
  *  - revalidate = 86400 → ISR daily (DST transitions, timezone DB updates)
  *
@@ -43,7 +43,7 @@ import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 const BASE = getSiteUrl();
 
 /* ─── ROUTE CONFIG ──────────────────────────────────────────────── */
-
+export const dynamicParams = true;
 
 
 export async function generateStaticParams() {
@@ -54,7 +54,7 @@ export async function generateStaticParams() {
       { country: 'egypt', city: 'cairo' },
     ];
   }
-  return getPriorityCityParams(500);
+  return getPriorityCityParams(120);
 }
 
 function getUtcOffsetStr(timezone) {
