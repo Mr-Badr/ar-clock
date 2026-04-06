@@ -33,6 +33,7 @@ import {
   getFullscreenZoomLabel,
 } from '../clocks/fullscreenShared';
 import { getFlagEmoji, getSafeTimezone } from '@/lib/country-utils';
+import { getCurrentPageUrl, useCopyFeedback } from '@/lib/share.client';
 
 /* ─── HELPERS ───────────────────────────────────────────────────────── */
 function pad2(n) { return String(Math.max(0, n)).padStart(2, '0'); }
@@ -147,9 +148,9 @@ export default function TimeNowHero({
   const [visible, setVisible] = useState(false);
   const [isFS, setIsFS] = useState(false);
   const [zoom, setZoom] = useState(1);
-  const [shareCopied, setShareCopied] = useState(false);
   const containerRef = useRef(null);
   const wakeLockRef = useRef(null);
+  const { copied: shareCopied, copy: copyShareUrl } = useCopyFeedback(2500);
 
   const [mounted, setMounted] = useState(false);
 
@@ -229,16 +230,7 @@ export default function TimeNowHero({
   };
 
   const handleShare = async () => {
-    const url = typeof window !== 'undefined' ? window.location.href : '';
-    const text = `الوقت الان في ${cityNameAr}: ${td ? `${pad2(td.h)}:${pad2(td.m)}:${pad2(td.s)}` : ''} ⏰`;
-    if (typeof navigator.share === 'function') {
-      try { await navigator.share({ title: `الوقت في ${cityNameAr}`, text, url }); return; } catch { }
-    }
-    try {
-      await navigator.clipboard.writeText(url);
-      setShareCopied(true);
-      setTimeout(() => setShareCopied(false), 2500);
-    } catch { }
+    await copyShareUrl(getCurrentPageUrl());
   };
 
   const scaleValue = getFullscreenScale(zoom, 'threeUnit');

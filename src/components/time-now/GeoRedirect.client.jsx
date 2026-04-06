@@ -12,7 +12,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { mapTimezoneToCityAction, getNearestCityAction } from '@/app/actions/location';
+import { resolveCurrentUserCity } from '@/lib/user-location.client';
 
 export default function GeoRedirect() {
   const router = useRouter();
@@ -21,34 +21,19 @@ export default function GeoRedirect() {
     let done = false;
 
     async function tryRedirect() {
-      // ── Tier A: Timezone match ─────────────────────────────────────
       try {
-        const tz    = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const match = await mapTimezoneToCityAction(tz);
-        if (match?.country_slug && !done) {
-          done = true;
-          // redirect to country level so user stays on the page they asked for
-          router.replace(`/time-now/${match.country_slug}`);
-          return;
-        }
-      } catch { /* ignore */ }
-
-      // ── Tier B: GPS ───────────────────────────────────────────────
-      if (done) return;
-      try {
-        const pos = await new Promise((res) => {
-          if (!navigator?.geolocation) return res(null);
-          navigator.geolocation.getCurrentPosition(res, () => res(null), { timeout: 8_000 });
+        const detection = await resolveCurrentUserCity({
+          geolocation: 'if-granted',
+          gpsTimeoutMs: 8_000,
         });
-        if (pos && !done) {
-          const city = await getNearestCityAction(pos.coords.latitude, pos.coords.longitude);
-          if (city?.country_slug) {
-            done = true;
-            const path = city.city_slug
-              ? `/time-now/${city.country_slug}/${city.city_slug}`
-              : `/time-now/${city.country_slug}`;
-            router.replace(path);
-          }
+
+        const city = detection.city;
+        if (city?.country_slug && !done) {
+          done = true;
+          const path = city.city_slug
+            ? `/time-now/${city.country_slug}/${city.city_slug}`
+            : `/time-now/${city.country_slug}`;
+          router.replace(path);
         }
       } catch { /* ignore */ }
     }

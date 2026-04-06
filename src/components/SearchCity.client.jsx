@@ -28,7 +28,6 @@ import {
   Navigation,
   Loader2,
   X,
-  AlertCircle,
   Globe,
   CheckCircle2,
 } from 'lucide-react';
@@ -51,10 +50,15 @@ import {
 import { DialogTitle } from '@/components/ui/dialog';
 
 import {
-  getCountriesAction,
-  searchCitiesAction,
-  detectBestCityAction
-} from '@/app/actions/location';
+  getInitialCountries,
+  getLoadedCountryCities,
+  loadCountriesDirectory,
+  loadCountryCities,
+} from '@/lib/location-picker.client';
+import {
+  getLocationSourceMessage,
+  resolveCurrentUserCity,
+} from '@/lib/user-location.client';
 
 import { PRIORITY_COUNTRY_SLUGS, GLOBAL_POPULAR_COUNTRIES } from '@/lib/db/constants';
 
@@ -64,41 +68,6 @@ import './SearchCity.css';
 const LS_COUNTRY = 'waqt-preferred-country';
 const DEBOUNCE_MS = 150;
 const GEO_TIMEOUT_MS = 8000;
-const RESULT_LIMIT = 50;
-const GEO_TOAST_MS = 5000; /* auto-dismiss geo error after 5 s */
-
-/* ── Module-level country cache (lives for the tab session) ─────────────── */
-let _countriesCache = null;
-async function loadCountries() {
-  if (_countriesCache) return _countriesCache;
-  _countriesCache = await getCountriesAction();
-  return _countriesCache;
-}
-
-/* ── Module-level city cache per country ── */
-const _countryCitiesCache = new Map();
-
-async function loadCitiesForCountry(countrySlug) {
-  if (!countrySlug) return [];
-  if (_countryCitiesCache.has(countrySlug)) return _countryCitiesCache.get(countrySlug);
-  try {
-    const res = await fetch(`/api/cities-by-country?country=${countrySlug}`);
-    if (res.status === 404) {
-      // Country not in DB — cache empty so we don't retry on every keystroke
-      _countryCitiesCache.set(countrySlug, []);
-      return [];
-    }
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`);
-    }
-    const data = await res.json();
-    _countryCitiesCache.set(countrySlug, data);
-    return data;
-  } catch (err) {
-    console.warn(`[SearchCity] Could not load cities for "${countrySlug}":`, err.message);
-    return [];
-  }
-}
 
 /* ── Arabic Normalization & Flag Helper ─────────────────────────────────── */
 function getFlagEmoji(countryCode) {
@@ -108,23 +77,6 @@ function getFlagEmoji(countryCode) {
     .split('')
     .map(char => 0x1F1E6 + char.charCodeAt(0) - 65);
   return String.fromCodePoint(...codePoints);
-}
-
-function getBrowserCountryCode() {
-  if (typeof navigator === 'undefined') return '';
-
-  const locales = [navigator.language, ...(navigator.languages || [])].filter(Boolean);
-  for (const locale of locales) {
-    try {
-      const region = new Intl.Locale(locale).region;
-      if (region && region.length === 2) return region.toUpperCase();
-    } catch {
-      const match = String(locale).match(/[-_]([A-Za-z]{2})(?:[-_]|$)/);
-      if (match?.[1]) return match[1].toUpperCase();
-    }
-  }
-
-  return '';
 }
 
 function normalizeArabic(s = '') {
@@ -303,9 +255,10 @@ export default function SearchCity({
   preloadedCountries = null
 }) {
   const router = useRouter();
+  const isTimeNowMode = mode === 'time-now';
 
   const [open, setOpen] = useState(false);
-  const [countries, setCountries] = useState(preloadedCountries || []);
+  const [countries, setCountries] = useState(() => getInitialCountries(preloadedCountries));
   const [showAllCountries, setShowAllCountries] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedCity, setSelectedCity] = useState(initialCity ?? null);
@@ -336,18 +289,18 @@ export default function SearchCity({
 
   /* ── Countries ───────────────────────────────────────────────────────── */
   useEffect(() => {
+    let active = true;
+
     async function initCountries() {
-      // If we already have the countries (passed from Server Component), use them immediately
-      let data = preloadedCountries;
-      if (data && data.length > 0) {
+      const seededCountries = getInitialCountries(preloadedCountries);
+      if (active) setCountries(seededCountries);
+
+      const data = await loadCountriesDirectory(preloadedCountries);
+      if (!active) return;
+
+      startTransition(() => {
         setCountries(data);
-      } else {
-        // Fallback: load them over the network
-        data = await loadCountries();
-        startTransition(() => {
-          setCountries(data);
-        });
-      }
+      });
 
       // Check initial city or localStorage preferences
       if (initialCity?.country_slug) {
@@ -364,12 +317,16 @@ export default function SearchCity({
       } catch { /* private browsing */ }
     }
     initCountries();
+
+    return () => {
+      active = false;
+    };
   }, [initialCity, preloadedCountries]);
 
   // Pre-warm priority countries silently in the background on mount
   useEffect(() => {
     mainCountriesSlugs.forEach(slug => {
-      loadCitiesForCountry(slug);
+      loadCountryCities(slug);
     });
   }, [mainCountriesSlugs]);
 
@@ -403,7 +360,7 @@ export default function SearchCity({
     try {
       // MODE: Country selected -> Use local cache
       if (countrySlug && !forceGlobal) {
-        const allCities = await loadCitiesForCountry(countrySlug);
+        const allCities = await loadCountryCities(countrySlug);
         const filtered = filterCitiesLocally(allCities, q);
         startTransition(() => setResults(filtered));
         setIsSearching(false);
@@ -414,10 +371,7 @@ export default function SearchCity({
 
       // Layer 1: Search local caches immediately
       let localMatches = [];
-      const allCachedCities = [];
-      _countryCitiesCache.forEach(cities => {
-        allCachedCities.push(...cities);
-      });
+      const allCachedCities = getLoadedCountryCities();
       if (allCachedCities.length > 0) {
         localMatches = filterCitiesLocally(allCachedCities, q);
         // Show local matches immediately while API is fetching
@@ -473,7 +427,7 @@ export default function SearchCity({
     } finally {
       setIsSearching(false);
     }
-  }, []);
+  }, [countries]);
 
   const onQueryChange = useCallback((val) => {
     setQuery(val);
@@ -501,52 +455,14 @@ export default function SearchCity({
     setOpen(false); /* close dialog first so user sees the trigger update */
 
     const detectWithFallbacks = async () => {
-      const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-      const browserCountryCode = getBrowserCountryCode();
+      const detection = await resolveCurrentUserCity({
+        geolocation: 'always',
+        gpsTimeoutMs: GEO_TIMEOUT_MS,
+        preferFresh: true,
+      });
 
-      try {
-        if (navigator.geolocation) {
-          const position = await new Promise((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: GEO_TIMEOUT_MS });
-          });
-
-          const gpsCity = await detectBestCityAction({
-            lat: position.coords.latitude,
-            lon: position.coords.longitude,
-            timezone: browserTimezone,
-            countryCode: browserCountryCode,
-          });
-
-          if (applyDetectedCity(gpsCity, 'تم تحديد موقعك بنجاح')) {
-            return;
-          }
-        }
-      } catch (err) {
-        console.warn('Precise geolocation failed, trying fallbacks:', err);
-      }
-
-      try {
-        const response = await fetch('/api/ip-city', { cache: 'no-store' });
-        const ipCity = response.ok ? await response.json() : null;
-        if (applyDetectedCity(ipCity, 'تم تحديد موقعك تقريبياً عبر الشبكة')) {
-          return;
-        }
-      } catch (err) {
-        console.warn('IP fallback failed:', err);
-      }
-
-      try {
-        if (browserTimezone) {
-          const timezoneCity = await detectBestCityAction({
-            timezone: browserTimezone,
-            countryCode: browserCountryCode,
-          });
-          if (applyDetectedCity(timezoneCity, 'تم تحديد موقعك تقريبياً حسب المنطقة الزمنية')) {
-            return;
-          }
-        }
-      } catch (err) {
-        console.warn('Timezone fallback failed:', err);
+      if (applyDetectedCity(detection.city, getLocationSourceMessage(detection.source))) {
+        return;
       }
 
       toast.error('تعذّر تحديد الموقع — تأكد من منح إذن الوصول أو ابحث يدوياً');
@@ -621,9 +537,9 @@ export default function SearchCity({
 
   const triggerLabel = selectedCity
     ? selectedCity.city_name_ar
-    : mode === 'mwaqit-al-salat'
-      ? 'ابحث عن مدينة لعرض مواقيت الصلاة…'
-      : 'ابحث عن مدينة أو دولة لمعرفة الوقت…';
+    : isTimeNowMode
+      ? 'ابحث عن مدينة أو دولة لمعرفة الوقت…'
+      : 'ابحث عن مدينة لعرض مواقيت الصلاة…';
 
   /* ── Render ──────────────────────────────────────────────────────────── */
   return (
@@ -632,7 +548,7 @@ export default function SearchCity({
       dir="rtl"
       lang="ar"
       role="search"
-      aria-label="البحث عن مدينة لمعرفة مواقيت الصلاة"
+      aria-label={isTimeNowMode ? 'البحث عن مدينة لمعرفة الوقت الحالي' : 'البحث عن مدينة لمعرفة مواقيت الصلاة'}
     >
 
       {/* ── Trigger bar — position:relative so toast anchors to it ─── */}
@@ -714,7 +630,7 @@ export default function SearchCity({
          * "DialogContent requires a DialogTitle for screen reader users."
          */}
         <DialogTitle className="sr-only">
-          {mode === 'time-now' ? 'البحث عن مدينة لمعرفة الوقت الحالي' : 'البحث عن مدينة لمعرفة مواقيت الصلاة'}
+          {isTimeNowMode ? 'البحث عن مدينة لمعرفة الوقت الحالي' : 'البحث عن مدينة لمعرفة مواقيت الصلاة'}
         </DialogTitle>
 
         {/* ── Dialog header: input + country chips ──────────────────── */}

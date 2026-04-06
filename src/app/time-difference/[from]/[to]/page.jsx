@@ -1,10 +1,7 @@
 /* app/time-difference/[from]/[to]/page.jsx */
 import { Suspense } from 'react';
 import TimeDiffCalculator from '@/components/TimeDifference/TimeDiffCalculatorV2.client';
-import { getCityBySlug } from '@/lib/db/queries/cities';
-import { getAllCountries, getCountryBySlug } from '@/lib/db/queries/countries';
-import { notFound } from 'next/navigation';
-import { cache } from 'react';
+import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react'
 import './time-difference.css';
@@ -24,57 +21,14 @@ import { POPULAR_PAIRS } from '@/components/time-diff/data/popularPairs';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
 import { getTimeDifference } from '@/lib/time-diff';
+import { resolveTimeDifferenceCityFromSegment } from '@/lib/time-difference-route';
+import { buildTimeDifferenceHref } from '@/lib/time-difference-links';
 
 const COUNTRY_SEO_ALIASES = {
   'united-states': ['أمريكا', 'الولايات المتحدة'],
   'united-kingdom': ['بريطانيا', 'المملكة المتحدة'],
   'united-arab-emirates': ['الإمارات', 'الإمارات العربية المتحدة'],
 };
-
-// ─── City resolution ──────────────────────────────────────────────────────────
-const resolveCountryCityPair = cache(async (segment) => {
-  if (!segment || !segment.includes('-')) return null;
-
-  const normalizedSegment = segment.trim().replace(/^-+|-+$/g, '');
-  const countries = await getAllCountries();
-  const matchingCountrySlugs = countries
-    .map((country) => country.country_slug)
-    .filter(Boolean)
-    .filter(
-      (countrySlug) =>
-        normalizedSegment === countrySlug || normalizedSegment.startsWith(`${countrySlug}-`),
-    )
-    .sort((a, b) => b.length - a.length);
-
-  for (const countrySlug of matchingCountrySlugs) {
-    const citySlug = normalizedSegment.slice(countrySlug.length).replace(/^-/, '');
-    if (!citySlug) continue;
-    return { countrySlug, citySlug };
-  }
-
-  return null;
-});
-
-async function resolveCityFromSegment(segment) {
-  if (!segment) return null;
-  const resolvedPair = await resolveCountryCityPair(segment);
-  if (!resolvedPair) return null;
-
-  const country = await getCountryBySlug(resolvedPair.countrySlug).catch(() => null);
-  if (!country) return null;
-
-  const city = await getCityBySlug(country.country_code, resolvedPair.citySlug);
-  if (!city) return null;
-
-  return {
-    country_slug: country.country_slug,
-    country_name_ar: country.name_ar,
-    city_slug: city.city_slug,
-    city_name_ar: city.name_ar || city.name_en,
-    timezone: city.timezone || 'UTC',
-  };
-}
-const resolveCity = cache(resolveCityFromSegment);
 
 function dayNote(srcH, diffH) {
   const dest = srcH + diffH;
@@ -140,9 +94,15 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const paramsResolved = await params;
   const { from, to } = paramsResolved;
-  const [fromCity, toCity] = await Promise.all([resolveCity(from), resolveCity(to)]);
+  const [fromCity, toCity] = await Promise.all([
+    resolveTimeDifferenceCityFromSegment(from),
+    resolveTimeDifferenceCityFromSegment(to),
+  ]);
   if (!fromCity || !toCity) return { title: 'فرق التوقيت | ميقات' };
 
+  const canonicalFrom = fromCity.canonicalSegment || from;
+  const canonicalTo = toCity.canonicalSegment || to;
+  const canonicalHref = buildTimeDifferenceHref(canonicalFrom, canonicalTo);
   const [fromCountryPrimary] = getCountrySeoNames(fromCity.country_slug, fromCity.country_name_ar);
   const [toCountryPrimary] = getCountrySeoNames(toCity.country_slug, toCity.country_name_ar);
   const title = `فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary} | ${fromCity.city_name_ar} و${toCity.city_name_ar} - ميقات`;
@@ -152,8 +112,8 @@ export async function generateMetadata({ params }) {
 
   return {
     title, description, keywords,
-    alternates: { canonical: `${BASE}/time-difference/${from}/${to}` },
-    openGraph: { title, description, url: `${BASE}/time-difference/${from}/${to}`, locale: 'ar_SA', type: 'website' },
+    alternates: { canonical: `${BASE}${canonicalHref}` },
+    openGraph: { title, description, url: `${BASE}${canonicalHref}`, locale: 'ar_SA', type: 'website' },
     twitter: { card: 'summary', title, description },
   };
 }
@@ -163,8 +123,16 @@ async function ComparisonPageContent({ paramsPromise }) {
   const paramsResolved = await paramsPromise;
   const { from, to } = paramsResolved;
 
-  const [fromCity, toCity] = await Promise.all([resolveCity(from), resolveCity(to)]);
+  const [fromCity, toCity] = await Promise.all([
+    resolveTimeDifferenceCityFromSegment(from),
+    resolveTimeDifferenceCityFromSegment(to),
+  ]);
   if (!fromCity || !toCity) notFound();
+  const canonicalFrom = fromCity.canonicalSegment || from;
+  const canonicalTo = toCity.canonicalSegment || to;
+  if (canonicalFrom !== from || canonicalTo !== to) {
+    permanentRedirect(buildTimeDifferenceHref(canonicalFrom, canonicalTo));
+  }
   const [fromCountryPrimary] = getCountrySeoNames(fromCity.country_slug, fromCity.country_name_ar);
   const [toCountryPrimary] = getCountrySeoNames(toCity.country_slug, toCity.country_name_ar);
   const comparisonQuery = `فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary}`;
@@ -324,14 +292,14 @@ async function ComparisonPageContent({ paramsPromise }) {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${BASE}` },
       { '@type': 'ListItem', position: 2, name: 'فرق التوقيت', item: `${BASE}/time-difference` },
-      { '@type': 'ListItem', position: 3, name: `${fromCity.city_name_ar} – ${toCity.city_name_ar}`, item: `${BASE}/time-difference/${from}/${to}` },
+      { '@type': 'ListItem', position: 3, name: `${fromCity.city_name_ar} – ${toCity.city_name_ar}`, item: `${BASE}${buildTimeDifferenceHref(canonicalFrom, canonicalTo)}` },
     ],
   };
   const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: `${comparisonQuery} | ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
-    url: `${BASE}/time-difference/${from}/${to}`,
+    url: `${BASE}${buildTimeDifferenceHref(canonicalFrom, canonicalTo)}`,
     description: directAnswer,
     inLanguage: 'ar',
     about: [

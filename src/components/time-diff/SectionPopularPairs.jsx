@@ -20,6 +20,7 @@ import { SectionWrapper, SectionBadge } from '@/components/shared/primitives'
 import { getSiteUrl }                from '@/lib/site-config'
 import { POPULAR_PAIRS }                from './data/popularPairs'
 import PopularPairsLiveClient           from './mockups/PopularPairsLiveClient'
+import { buildTimeDifferenceHref } from '@/lib/time-difference-links'
 
 const H2_ID = 'h2-popular-pairs'
 const SITE_URL = getSiteUrl()
@@ -33,7 +34,7 @@ function PairsSchema() {
       '@type':    'ListItem',
       position:   i + 1,
       name:       `فرق التوقيت بين ${pair.from.nameAr} و${pair.to.nameAr}`,
-      url:        `${SITE_URL}/time-difference/${pair.from.slug}/${pair.to.slug}`,
+      url:        `${SITE_URL}${buildTimeDifferenceHref(pair.from.slug, pair.to.slug)}`,
     })),
   }
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -80,7 +81,7 @@ export default function SectionPopularPairs() {
         <ul>
           {POPULAR_PAIRS.map((pair) => (
             <li key={`${pair.from.slug}-${pair.to.slug}`}>
-              <Link href={`/time-difference/${pair.from.slug}/${pair.to.slug}`}>
+              <Link href={buildTimeDifferenceHref(pair.from.slug, pair.to.slug)}>
                 فرق التوقيت بين {pair.from.nameAr} و{pair.to.nameAr}
               </Link>
             </li>

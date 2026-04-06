@@ -12,35 +12,39 @@ import { lookupIpGeo } from '@/lib/ip-lookup';
 export async function GET(request) {
   await connection();
   try {
+    const { searchParams } = new URL(request.url);
+    const timezoneHint = String(searchParams.get('timezoneHint') || '').trim();
+    const countryCodeHint = String(searchParams.get('countryCodeHint') || '').trim().toUpperCase();
+
     // 1. Get client IP
     const forwarded = request.headers.get('x-forwarded-for');
     const rawIp = forwarded ? forwarded.split(/, /)[0] : request.ip || '';
     const ip = String(rawIp || '').trim();
-    if (!ip) {
-      return NextResponse.json({ error: 'IP not available' }, { status: 400 });
-    }
 
     // 2. Fetch from the shared IP lookup helper.
     // Note: the default provider uses ip-api over HTTP on the free tier.
-    const data = await lookupIpGeo(ip, {
-      fields: ['status', 'message', 'country', 'countryCode', 'city', 'lat', 'lon', 'timezone'],
-      revalidate: 3600,
-    });
-    if (!data?.lat || !data?.lon) {
-      return NextResponse.json({ error: 'IP detection failed' }, { status: 500 });
-    }
+    const data = ip
+      ? await lookupIpGeo(ip, {
+          fields: ['status', 'message', 'country', 'countryCode', 'city', 'lat', 'lon', 'timezone'],
+          revalidate: 3600,
+        })
+      : null;
 
     // 3. Find the best match in our database using every signal we have
     const city = await detectBestCityMatch({
-      lat: data.lat,
-      lon: data.lon,
-      timezone: data.timezone,
-      countryCode: data.countryCode,
-      cityName: data.city,
+      lat: data?.lat,
+      lon: data?.lon,
+      timezone: timezoneHint || data?.timezone,
+      countryCode: countryCodeHint || data?.countryCode,
+      cityName: data?.city,
     });
 
     if (city) {
       return NextResponse.json(city);
+    }
+
+    if (!data?.city) {
+      return NextResponse.json({ error: 'No location hints available' }, { status: 404 });
     }
 
     // 4. Secondary fallback: Search by city name if nearest-city search failed

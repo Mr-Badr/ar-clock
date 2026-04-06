@@ -76,7 +76,7 @@ export const POPULAR_PAIRS = [
   },
   {
     from: { nameAr: 'الرياض',   flag: '🇸🇦', slug: 'saudi-arabia-riyadh',          tz: 'Asia/Riyadh'          },
-    to:   { nameAr: 'نيويورك',  flag: '🇺🇸', slug: 'united-states-new-york',       tz: 'America/New_York'     },
+    to:   { nameAr: 'نيويورك',  flag: '🇺🇸', slug: 'united-states-new-york-city',  tz: 'America/New_York'     },
     labelAr: 'السعودية ↔ أمريكا',
     volume: null,
   },

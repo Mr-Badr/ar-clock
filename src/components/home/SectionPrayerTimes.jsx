@@ -34,8 +34,7 @@ import { Qibla, Coordinates }    from 'adhan'
 import { Clock, Compass, BookOpen, Bell, Globe2, Moon } from 'lucide-react'
 
 import { calculatePrayerTimes, getNextPrayer } from '@/lib/prayerEngine'
-import { lookupIpGeo } from '@/lib/ip-lookup'
-import { getNearestCityAction, mapTimezoneToCityAction } from '@/app/actions/location'
+import { resolveRequestLocationFromHeaders } from '@/lib/locationService'
 
 import { SectionWrapper, SectionBadge, FeatureItem } from '@/components/shared/primitives'
 import CtaLink             from '@/components/shared/CtaLink'
@@ -108,61 +107,16 @@ function emptyTimes(iso) {
   return { fajr: iso, sunrise: iso, dhuhr: iso, asr: iso, maghrib: iso, isha: iso }
 }
 
-/**
- * Tier 1: detect city from client IP address.
- * Mirrors the logic in /api/ip-city/route.js exactly.
- * Returns a normalised city object or null.
- */
-async function detectByIP(headersList) {
-  const forwarded = headersList.get('x-forwarded-for') || ''
-  const ip        = forwarded.split(',')[0].trim()
-
-  // Skip loopback and empty IPs — these never succeed with ip-api
-  if (!ip || ip === '::1' || ip.startsWith('127.') || ip.startsWith('10.')) {
-    return null
-  }
-
-  const data = await lookupIpGeo(ip, {
-    fields: ['status', 'lat', 'lon', 'timezone'],
-    revalidate: 3600,
-  })
-  if (!data?.lat || !data?.lon) return null
-
-  // getNearestCityAction does a geodesic DB lookup — the same function used by
-  // findNearestCity in locationService.js, surfaced as a server action
-  const city = await getNearestCityAction(data.lat, data.lon)
-  return normaliseCity(city, data.timezone)
-}
-
-/**
- * Tier 2: detect city from IANA timezone header set by middleware/CDN.
- * Falls back to mapTimezoneToCityAction which uses a seed-file mapping.
- */
-async function detectByTimezone(headersList) {
-  const tz = headersList.get('x-timezone') || headersList.get('cf-timezone') || null
-  if (!tz) return null
-
-  const city = await mapTimezoneToCityAction(tz)
-  return normaliseCity(city, tz)
-}
-
 /* ── Server Component ─────────────────────────────────────────────────────── */
 
 export default async function SectionPrayerTimes() {
   const h   = await headers()
   let city  = { ...RIYADH }
 
-  /* Tier 1: IP → nearest city in DB */
+  /* Shared server-side resolver: headers → IP lookup → timezone/country fallback */
   try {
-    const ipCity = await detectByIP(h)
-    if (ipCity) {
-      city = ipCity
-    } else {
-      /* Tier 2: timezone header → seed map */
-      const tzCity = await detectByTimezone(h)
-      if (tzCity) city = tzCity
-      /* Tier 3: implicit — city already set to RIYADH above */
-    }
+    const resolvedCity = await resolveRequestLocationFromHeaders(h)
+    if (resolvedCity) city = normaliseCity(resolvedCity, resolvedCity.timezone)
   } catch {
     /* Any unexpected error: keep RIYADH default */
   }

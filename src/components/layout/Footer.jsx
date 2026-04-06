@@ -4,6 +4,7 @@ import { Clock } from "lucide-react";
 import { SectionDivider } from "@/components/shared/primitives";
 import { Globe } from "@/components/ui/globe";
 import { POPULAR_PAIRS } from "@/components/time-diff/data/popularPairs";
+import { buildTimeDifferenceHref } from "@/lib/time-difference-links";
 import {
   FEATURED_COUNTDOWN_LINKS,
   getPopularTimeNowCityLinks,
@@ -24,7 +25,7 @@ const COMPANY_LINKS = [
 ];
 
 const FOOTER_TIME_DIFFERENCE_LINKS = POPULAR_PAIRS.slice(0, 6).map((pair) => ({
-  href: `/time-difference/${pair.from.slug}/${pair.to.slug}`,
+  href: buildTimeDifferenceHref(pair.from.slug, pair.to.slug),
   label: `فرق التوقيت بين ${pair.from.nameAr} و${pair.to.nameAr}`,
 }));
 const FOOTER_COUNTDOWN_LINKS = FEATURED_COUNTDOWN_LINKS.slice(0, 6);

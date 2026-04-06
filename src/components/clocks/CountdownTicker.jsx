@@ -38,6 +38,7 @@ import {
   getFullscreenUnitWrapStyle,
   getFullscreenZoomLabel,
 } from './fullscreenShared';
+import { getCurrentPageUrl, useCopyFeedback } from '@/lib/share.client';
 
 /* ─────────────────────────────────────────────────────────────────────
    HELPERS
@@ -316,21 +317,17 @@ const PLATFORMS = [
    window.location resolved only after mount (never in render path).
 ───────────────────────────────────────────────────────────────────── */
 export function ShareBar({ url, eventName, days, dateStr }) {
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyFeedback(2500);
   const [pageUrl, setPageUrl] = useState(url || '');
 
   useEffect(() => {
-    if (!url) setPageUrl(window.location.href);
+    if (!url) setPageUrl(getCurrentPageUrl());
   }, [url]);
 
   const shareText = `${eventName} — متبقي ${days} يوم (${dateStr}) 🗓`;
 
   const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(pageUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    } catch { /* silent */ }
+    await copy(pageUrl);
   };
 
   return (
@@ -481,7 +478,7 @@ export default function CountdownTicker({
   const [rem, setRem] = useState(initialRemaining);
   const [mounted, setMounted] = useState(false);
   const [isZero, setIsZero] = useState(false);
-  const [shareCopied, setShareCopied] = useState(false);
+  const { copied: shareCopied, copy: copyShareUrl } = useCopyFeedback(2500);
 
   /* ── FIX 1: Strict Mode guard ────────────────────────────────────────
      React StrictMode (dev only) mounts → unmounts → remounts.
@@ -604,18 +601,7 @@ export default function CountdownTicker({
 
   /* ── Share ── */
   const handleShare = async () => {
-    const shareUrl = window.location.href;
-    if (typeof navigator.share === 'function') {
-      try {
-        await navigator.share({ title: eventName, text: `${eventName} — متبقي ${r.days} يوم (${eventDate}) 🗓`, url: shareUrl });
-        return;
-      } catch { /* user cancelled */ }
-    }
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      setShareCopied(true);
-      setTimeout(() => setShareCopied(false), 2500);
-    } catch { /* silent */ }
+    await copyShareUrl(getCurrentPageUrl());
   };
 
   /* ── Zero state ── */

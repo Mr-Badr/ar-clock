@@ -398,7 +398,7 @@
     0 2px 8px rgba(29, 78, 216, 0.14);
 
   /* Clock */
-  --clock-digit-color: #1D4ED8;
+  --clock-digit-color: #000;
   /* 6.70:1 on #FFFFFF ✅ AA */
   --clock-digit-glow: none;
   --clock-separator: rgba(29, 78, 216, 0.28);

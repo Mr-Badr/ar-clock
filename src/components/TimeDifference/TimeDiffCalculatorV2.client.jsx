@@ -22,6 +22,7 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import { getTimeDiffAction } from '@/app/actions/location';
+import { useCopyFeedback } from '@/lib/share.client';
 
 // ── 24-hour slot helpers ──────────────────────────────────────────────────────
 const HOURS_24 = Array.from({ length: 24 }, (_, i) => i);
@@ -50,9 +51,9 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
   const [toCity, setToCity] = useState(initialTo);
   const [diffData, setDiffData] = useState(initialDiffData);
   const [loading, setLoading] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [bizStart, setBizStart] = useState(9);
   const [bizEnd, setBizEnd] = useState(17);
+  const { copied, copy } = useCopyFeedback();
 
   useEffect(() => {
     if (!fromCity || !toCity) {
@@ -100,10 +101,8 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
   const handleFrom = (c) => toCity ? router.push(url(c, toCity)) : setFromCity(c);
   const handleTo = (c) => fromCity ? router.push(url(fromCity, c)) : setToCity(c);
   const handleSwap = () => fromCity && toCity && router.push(url(toCity, fromCity));
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.origin + url(fromCity, toCity)).catch(() => { });
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2200);
+  const handleShare = async () => {
+    await copy(window.location.origin + url(fromCity, toCity));
   };
 
   // ── Business hours ────────────────────────────────────────────────────────
@@ -236,7 +235,7 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                     className="btn btn-xs rounded-full bg-white/20 text-white border-white/30 hover:bg-white/30 font-semibold gap-1"
                     aria-label={copied ? 'تم النسخ' : 'مشاركة'}
                   >
-                    {copied ? <><Check size={12} /> نُسخ</> : <><Share2 size={12} /> مشاركة</>}
+                    {copied ? <><Check size={12} /> تم النسخ</> : <><Share2 size={12} /> مشاركة</>}
                   </button>
                 </div>
               </div>

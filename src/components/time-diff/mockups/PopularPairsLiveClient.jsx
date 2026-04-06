@@ -20,6 +20,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Clock, TrendingUp } from 'lucide-react'
 import { ArrowLeft } from '@phosphor-icons/react';
+import { buildTimeDifferenceHref } from '@/lib/time-difference-links';
 
 // ─── UTC helpers (mirror time-diff.js) ──────────────────────────────────────
 
@@ -121,7 +122,7 @@ export default function PopularPairsLiveClient({ pairs }) {
         return (
           <li key={key}>
             <Link
-              href={`/time-difference/${pair.from.slug}/${pair.to.slug}`}
+              href={buildTimeDifferenceHref(pair.from.slug, pair.to.slug)}
               className="group flex flex-col rounded-2xl p-4 min-h-[100px] h-full transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2"
               style={{
                 background:  isTop ? 'var(--accent-soft)' : 'var(--bg-surface-1)',

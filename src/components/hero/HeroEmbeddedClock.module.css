@@ -2,13 +2,21 @@
 
 
 /* ── ROOT ──────────────────────────────────────────────────────────── */
+/*
+  WHY flexbox instead of grid:
+  The component has three flex children — topbar, <SectionDivider />, and
+  the stage wrapper. The old `grid-template-rows: auto 1fr` only defined
+  two rows, so SectionDivider claimed the 1fr row and the stage landed in
+  an implicit auto row with no height — making vertical centering impossible
+  in fullscreen. Flexbox column lets .stageWrapper use `flex: 1` to consume
+  all remaining height cleanly, regardless of how many siblings exist.
+*/
 .clockRoot {
   position: relative;
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: 0;
+  display: flex;
+  flex-direction: column;
   color: var(--text-primary);
   background: transparent;
   overflow: hidden;
@@ -18,6 +26,13 @@
   position: fixed;
   inset: 0;
   z-index: var(--z-max);
+  /*
+    Dark default: deep dramatic gradient — slightly darker than --bg-base
+    to give the fullscreen clock a more cinematic, immersive feel.
+    The raw hex values are intentional: they sit below --bg-base (#0D1117)
+    on the luminance scale so the clock digits pop with maximum contrast.
+    Light override is handled in the :global(.light) block below.
+  */
   background: linear-gradient(180deg, #05070c 0%, #0a0f18 100%);
   padding: clamp(1.25rem, 2.5vw, 2.5rem);
   container-type: inline-size;
@@ -168,6 +183,33 @@
 }
 
 
+/* ── STAGE WRAPPER ─────────────────────────────────────────────────── */
+/*
+  Fills all vertical space left after the topbar + divider, then centres
+  its child (.centerStage) both axes.
+
+  Normal mode: padding-bottom nudges the visual centre slightly upward so
+  the clock sits in the optical centre of the card (the 3rem that was
+  previously an inline style on centerStage itself — moved here so it can
+  be overridden cleanly in fullscreen without touching JSX).
+
+  Fullscreen: padding-bottom is zeroed so the clock sits in the true
+  geometric centre of the viewport.
+*/
+.stageWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 3rem;
+  min-height: 0; /* prevents flex children from overflowing in rare cases */
+}
+
+.clockRootFullscreen .stageWrapper {
+  padding-bottom: 0;
+}
+
+
 /* ── CENTER STAGE ──────────────────────────────────────────────────── */
 .centerStage {
   display: flex;
@@ -201,10 +243,22 @@
   opacity: 0.9;
 }
 
+/*
+  All four period variants use hardcoded dark-palette values so the badge
+  always reads as a dark-surface element regardless of the page theme.
+
+  Design rationale:
+  ─ The clock card itself renders against a near-black surface in both
+    fullscreen and the hero section. The period badge must always contrast
+    against that dark background, not against the global light-theme canvas.
+  ─ .periodNoon previously used var(--accent-alt) which resolves to
+    #1D4ED8 (dark navy) in light mode — visually incorrect on dark glass.
+    Hardcoding #8CAEFF (the dark-mode --accent-alt value) fixes this.
+*/
 .periodMorning { color: #FFD166; background: rgba(255, 209, 102, 0.08); }
-.periodNoon    { color: var(--accent-alt); background: rgba(140, 174, 255, 0.08); }
+.periodNoon    { color: #8CAEFF; background: rgba(140, 174, 255, 0.08); }
 .periodEvening { color: #FFAB76; background: rgba(255, 171, 118, 0.08); }
-.periodNight   { color: #B0C8FF; background: rgba(176, 200, 255, 0.07); }
+.periodNight   { color: #1D4ED8; background: rgba(176, 200, 255, 0.07); }
 
 /* Live indicator */
 .livePill {
@@ -312,6 +366,7 @@
   background: rgba(255, 255, 255, 0.06);
   border-radius: 2px;
   overflow: hidden;
+  margin-top: 1rem;
 }
 
 .progressBar {
@@ -411,6 +466,66 @@
 .clockRootFullscreen .dateAr,
 .clockRootFullscreen .dateHijri {
   font-size: clamp(0.85rem, 1.6cqi, 1.05rem);
+}
+
+
+/* ── LIGHT MODE — fullscreen-only overrides ──────────────────────────
+   The base glass values (rgba(255,255,255,...)) are correct for dark
+   surfaces and the non-fullscreen hero overlay. In light mode fullscreen
+   the background flips to a near-white canvas, so every white-alpha
+   value must be swapped for its design-token or dark-alpha counterpart.
+
+   Scope: :global(.light) ensures these rules only fire when next-themes
+   has written class="light" on <html>, and only affect elements inside
+   .clockRootFullscreen — leaving the non-fullscreen hero styles untouched.
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Background: token-based gradient — light gives an airy near-white sweep */
+:global(.light) .clockRootFullscreen {
+  background: linear-gradient(180deg, var(--bg-subtle) 0%, var(--bg-base) 100%);
+}
+
+/* Topbar divider: rgba(255,255,255,0.05) is invisible on white */
+:global(.light) .clockRootFullscreen .topbar {
+  border-bottom-color: var(--border-subtle);
+}
+
+/* Action buttons: white-alpha bg + border vanish on white canvas */
+:global(.light) .clockRootFullscreen .toolBtn {
+  background: var(--bg-surface-2);
+  border-color: var(--border-default);
+}
+
+:global(.light) .clockRootFullscreen .toolBtn:hover {
+  background: var(--bg-surface-3);
+}
+
+/* Location pill */
+:global(.light) .clockRootFullscreen .locationPill {
+  background: var(--bg-surface-2);
+  border-color: var(--border-default);
+}
+
+/* Unit labels under each clock column */
+:global(.light) .clockRootFullscreen .unitLabel {
+  background: var(--bg-surface-2);
+  border-color: var(--border-subtle);
+}
+
+/* Progress track: rgba(255,255,255,0.06) becomes invisible on white */
+:global(.light) .clockRootFullscreen .progressTrack {
+  background: var(--border-subtle);
+}
+
+/* Date pill */
+:global(.light) .clockRootFullscreen .dateLine {
+  background: var(--bg-surface-2);
+  border-color: var(--border-subtle);
+}
+
+/* Date divider dot: rgba(255,255,255,0.18) is invisible on white */
+:global(.light) .clockRootFullscreen .dateDivider {
+  color: var(--border-strong);
 }
 
 

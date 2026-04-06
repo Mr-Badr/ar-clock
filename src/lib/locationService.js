@@ -10,10 +10,11 @@
  *   3. Nominatim geocode fallback   — for unknown cities only
  */
 
-import { getCountryBySlug, getAllCountries, getCountryByCode }         from '@/lib/db/queries/countries';
+import { getCountryBySlug, getCountryByCode }                          from '@/lib/db/queries/countries';
 import { getCityBySlug, getTopCitiesByCountry, getCapitalCity, getCitiesByCountry,
          searchCities as dbSearchCities, getAllCityParams }            from '@/lib/db/queries/cities';
 import { supabase }                                                    from '@/lib/supabase/server';
+import { lookupIpGeo }                                                 from '@/lib/ip-lookup';
 import citiesFallback                                                  from '@/lib/db/fallback/cities-index.json';
 
 /* ── In-memory index from build-time fallback for O(1) lookups ─────────── */
@@ -49,6 +50,8 @@ export const COUNTRY_CODE_TO_SLUG = {
   NZ: 'new-zealand',      NE: 'niger',             TD: 'chad',
   ML: 'mali',             SN: 'senegal',           CM: 'cameroon',
 };
+
+const MAX_COUNTRY_HINT_DISTANCE_KM = 750;
 
 /* ── Normalise a city row from either schema to a consistent shape ──────── */
 function normalise(city, countrySlug = '') {
@@ -162,13 +165,6 @@ export async function getTopCitiesForCountry(countrySlug, limit = 12) {
    ══════════════════════════════════════════════════════════════════════════ */
 export async function searchCities(query, limit = 10) {
   return dbSearchCities(query, limit);
-}
-
-/* ══════════════════════════════════════════════════════════════════════════
-   getCountries — passthrough to new DB query
-   ══════════════════════════════════════════════════════════════════════════ */
-export async function getCountries() {
-  return getAllCountries();
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -322,7 +318,10 @@ function findNearestInPool(lat, lon, cities) {
     }
   }
 
-  return nearest;
+  return {
+    city: nearest,
+    distanceKm: minDist,
+  };
 }
 
 function findCityByNameInPool(cities, cityName) {
@@ -368,11 +367,14 @@ export async function detectBestCityMatch({ lat, lon, timezone, countryCode, cit
   const normalizedCountryCode = String(countryCode || '').trim().toUpperCase();
   const hasCoords = Number.isFinite(lat) && Number.isFinite(lon);
 
-  if (normalizedCountryCode) {
-    const country = await getCountryByCode(normalizedCountryCode).catch(() => null);
-    const countrySlug = country?.country_slug || COUNTRY_CODE_TO_SLUG[normalizedCountryCode] || '';
+  let country = null;
+  let countrySlug = '';
+  let countryCities = [];
 
-    let countryCities = await getCitiesByCountry(normalizedCountryCode).catch(() => []);
+  if (normalizedCountryCode) {
+    country = await getCountryByCode(normalizedCountryCode).catch(() => null);
+    countrySlug = country?.country_slug || COUNTRY_CODE_TO_SLUG[normalizedCountryCode] || '';
+    countryCities = await getCitiesByCountry(normalizedCountryCode).catch(() => []);
     if (!countryCities.length) {
       countryCities = citiesFallback.filter(
         (city) => city.country_code?.toUpperCase() === normalizedCountryCode,
@@ -386,17 +388,19 @@ export async function detectBestCityMatch({ lat, lon, timezone, countryCode, cit
 
     if (hasCoords && countryCities.length) {
       const nearestInCountry = findNearestInPool(lat, lon, countryCities);
-      if (nearestInCountry) return normalise(nearestInCountry, countrySlug);
+      if (
+        nearestInCountry.city &&
+        Number.isFinite(nearestInCountry.distanceKm) &&
+        nearestInCountry.distanceKm <= MAX_COUNTRY_HINT_DISTANCE_KM
+      ) {
+        return normalise(nearestInCountry.city, countrySlug);
+      }
     }
 
-    if (countryCities.length) {
-      const representative = pickRepresentativeCity(countryCities, timezone);
+    if (timezone && countryCities.length) {
+      const sameTimezoneCities = countryCities.filter((city) => city.timezone === timezone);
+      const representative = pickRepresentativeCity(sameTimezoneCities, timezone);
       if (representative) return normalise(representative, countrySlug);
-    }
-
-    if (countrySlug) {
-      const capital = await getCapitalByCountrySlug(countrySlug).catch(() => null);
-      if (capital) return capital;
     }
   }
 
@@ -406,10 +410,67 @@ export async function detectBestCityMatch({ lat, lon, timezone, countryCode, cit
   }
 
   if (timezone) {
-    return mapTimezoneToCityFromSeed(timezone);
+    const timezoneCity = mapTimezoneToCityFromSeed(timezone);
+    if (timezoneCity) return timezoneCity;
+  }
+
+  if (countrySlug) {
+    const capital = await getCapitalByCountrySlug(countrySlug).catch(() => null);
+    if (capital) return capital;
+
+    if (countryCities.length) {
+      const representative = pickRepresentativeCity(countryCities, timezone);
+      if (representative) return normalise(representative, countrySlug);
+    }
   }
 
   return null;
+}
+
+function getForwardedIp(headersLike) {
+  const forwarded = headersLike?.get?.('x-forwarded-for') || '';
+  return forwarded.split(',')[0]?.trim() || '';
+}
+
+function isLookupableIp(ip) {
+  if (!ip) return false;
+  if (ip === '::1' || ip === 'localhost') return false;
+  if (ip.startsWith('127.') || ip.startsWith('10.') || ip.startsWith('192.168.')) return false;
+  if (/^172\.(1[6-9]|2\d|3[01])\./.test(ip)) return false;
+  if (/^(fc|fd|fe80)/i.test(ip)) return false;
+  return true;
+}
+
+export async function resolveRequestLocationFromHeaders(headersLike) {
+  const headerTimezone =
+    headersLike?.get?.('x-vercel-ip-timezone') ||
+    headersLike?.get?.('x-timezone') ||
+    headersLike?.get?.('cf-timezone') ||
+    null;
+
+  const headerCountryCode =
+    headersLike?.get?.('x-vercel-ip-country') ||
+    headersLike?.get?.('cf-ipcountry') ||
+    null;
+
+  const headerCityName = headersLike?.get?.('x-vercel-ip-city') || null;
+  const ip = getForwardedIp(headersLike);
+
+  let ipGeo = null;
+  if (isLookupableIp(ip)) {
+    ipGeo = await lookupIpGeo(ip, {
+      fields: ['status', 'countryCode', 'city', 'lat', 'lon', 'timezone'],
+      revalidate: 3600,
+    }).catch(() => null);
+  }
+
+  return detectBestCityMatch({
+    lat: ipGeo?.lat,
+    lon: ipGeo?.lon,
+    timezone: headerTimezone || ipGeo?.timezone || undefined,
+    countryCode: headerCountryCode || ipGeo?.countryCode || undefined,
+    cityName: headerCityName || ipGeo?.city || undefined,
+  });
 }
 
 /** Detect country / city from Vercel edge headers */

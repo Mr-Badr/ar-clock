@@ -9,7 +9,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './TimeCinematicHero.module.css';
 import HeroEmbeddedClock from './HeroEmbeddedClock';
 
-const VIDEO_ROI = { x: 0.189, y: 0.513, w: 0.522, h: 0.379 };
+const VIDEO_ROI = { x: 0.180, y: 0.506, w: 0.537, h: 0.395 };
 
 function clamp(v, a, b) { return Math.min(Math.max(v, a), b); }
 
@@ -116,7 +116,13 @@ export default function HeroVideoPanel({
         style={panelStyle}
         aria-hidden={!panelBox}
       >
-        <div className={styles.heroCardWrap}>
+        {/*
+          card--glass  → bg-glass + backdrop blur (from components.css §15)
+          card--accent → border-accent-strong + shadow-accent ring (from components.css §15)
+          Both resolve to the dark-mode values because .hero overrides the
+          CSS tokens at the section level — light theme has no effect here.
+        */}
+        <div className={`${styles.heroCardWrap} card--glass`}>
           <HeroEmbeddedClock
             ianaTimezone={ianaTimezone}
             cityNameAr={cityNameAr}

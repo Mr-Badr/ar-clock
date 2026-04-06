@@ -1,8 +1,15 @@
 /* TimeCinematicHero.module.css */
 
 /* ============================================================
-   HERO
+   HERO — DARK TOKEN OVERRIDE
+   The hero always uses a cinematic dark background regardless
+   of the user's theme. We re-declare every CSS token used
+   inside this section to its dark-mode value so that when
+   <html class="light"> is set, nothing breaks visually.
+   next-themes sets tokens on :root / .light — a local
+   override here wins the cascade for all descendants.
    ============================================================ */
+/* base layout only — no token overrides */
 .hero {
   position: relative;
   overflow: clip;
@@ -13,6 +20,13 @@
     radial-gradient(circle at 86% 58%, rgba(85, 110, 255, 0.07), transparent 22%),
     linear-gradient(180deg, #05070c 0%, #06080d 54%, #05070c 100%);
   isolation: isolate;
+}
+
+/* light mode — override only what needs to change */
+:global(.light) .hero {
+  --clock-digit-color: #000;
+  --clock-separator:   rgba(29, 78, 216, 0.28);
+  --clock-label:       #536080;
 }
 
 /* ============================================================
@@ -47,10 +61,10 @@
   width:  var(--panel-width,  50%);
   height: var(--panel-height, 35%);
   z-index: 10;
-
+  background-color: var(--bg-base);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.35s ease;
+  transition: opacity var(--transition-slow);
 }
 
 .stagePanelVisible {
@@ -58,6 +72,10 @@
   pointer-events: auto;
 }
 
+/* heroCardWrap — structural only.
+   Visual surface comes from global card--glass + card--accent
+   classes applied in JSX, which resolve via the dark overrides
+   declared on .hero above. */
 .heroCardWrap {
   position: relative;
   z-index: 2;
@@ -66,14 +84,14 @@
   display: flex;
   align-items: stretch;
   justify-content: stretch;
-  padding: 18px 20px 16px;
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  box-shadow: none;
 }
-
 
 /* ============================================================
    DESKTOP CONTENT LAYER
-   pointer-events:none on the container lets mouse events pass
-   through to the clock panel (z:10). Re-enabled on .copy.
    ============================================================ */
 .heroDesktopContent {
   position: relative;
@@ -83,10 +101,8 @@
 }
 
 /* ============================================================
-   CONTENT SHELL
-   RTL GRID: column 1 = RIGHT side, column 2 = LEFT side.
-   Copy lives in col-1 (RIGHT). Spacer fills col-2 (LEFT).
-   Width increased to 560px for comfortable reading width.
+   CONTENT SHELL — RTL GRID
+   Column 1 = RIGHT (copy). Column 2 = LEFT (clock spacer).
    ============================================================ */
 .shell {
   display: grid;
@@ -97,11 +113,10 @@
   padding-top: clamp(1rem, 2vw, 2rem);
 }
 
-.stageSpacer { /* intentionally empty — the left / video column */ }
+.stageSpacer { /* intentionally empty — clock lives here visually */ }
 
 /* ============================================================
    COPY COLUMN — RIGHT (column 1 in RTL)
-   pointer-events re-enabled here so links and button work.
    ============================================================ */
 .copy {
   grid-column: 1;
@@ -116,35 +131,35 @@
 .badge {
   display: inline-flex;
   align-items: center;
-  height: 36px;
-  padding-inline: 16px;
-  border-radius: 999px;
-  background: rgba(8, 12, 30, 0.65);
-  border: 1px solid rgba(140, 174, 255, 0.22);
-  color: rgba(180, 210, 255, 0.85);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+  height: var(--space-9);
+  padding-inline: var(--space-4);
+  border-radius: var(--radius-full);
+  background: rgba(8, 12, 30, 0.65); /* cinematic overlay — intentionally dark */
+  border: 1px solid var(--border-accent);
+  color: var(--accent-alt);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-wide);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 0 24px rgba(95, 120, 255, 0.1), inset 0 1px 0 rgba(255,255,255,0.06);
+  box-shadow: 0 0 24px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   margin: 0;
 }
 
 /* ============================================================
-   TITLE — AuroraText app name + subtitle line
+   TITLE
    ============================================================ */
 .title {
-  margin: 22px 0 0;
+  margin: var(--space-6) 0 0;
   display: flex;
   flex-direction: column;
   gap: 0.05em;
-  line-height: 0.88;
-  font-weight: 900;
-  color: var(--text-primary, #fff);
+  line-height: var(--leading-none);
+  font-weight: var(--font-black);
+  color: var(--text-primary);
 }
 
-/* ── Magic UI Aurora Text ──────────────────────────────────── */
+/* ── Aurora Text — animation stays hardcoded (it's a visual FX) ── */
 @keyframes auroraShift {
   0%   { background-position: 0%   50%; }
   50%  { background-position: 100% 50%; }
@@ -154,7 +169,7 @@
 .auroraText {
   display: inline;
   font-size: clamp(4.2rem, 8.5vw, 7rem);
-  font-weight: 900;
+  font-weight: var(--font-black);
   background: linear-gradient(
     90deg,
     #5f78ff  0%,
@@ -174,34 +189,27 @@
 .titleSub {
   display: block;
   font-size: clamp(1.5rem, 3vw, 2.5rem);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
-  color: rgba(255, 255, 255, 0.72);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  color: var(--text-secondary);
   margin-top: 0.2em;
 }
 
-/* ── Description ─────────────────────────────────────────── */
+/* ── Description ──────────────────────────────────────────── */
 .desc {
-  margin-top: 20px;
+  margin-top: var(--space-5);
   font-size: clamp(0.9rem, 1.1vw, 1rem);
-  line-height: 1.75;
-  color: rgba(160, 185, 220, 0.82);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
   max-width: 36ch;
 }
 
-
 /* ============================================================
-   Magic UI — Shimmer Button
-
-   How it works:
-   • .shimmerBtn is the OUTER ring — its background is a
-     conic-gradient that rotates via --shimmer-angle (CSS
-     Houdini @property enables smooth angle animation).
-   • padding: 2px creates a 2px "border" ring of gradient.
-   • .shimmerBtnInner is the dark INNER fill, covering
-     everything except that 2px ring.
-   • Result: a bright shimmer light travels around the pill.
+   SHIMMER BUTTON
+   Animation gradient values stay hardcoded — they are a
+   deliberate visual FX, not theme-sensitive colours.
+   All structural and interactive values use tokens.
    ============================================================ */
 @property --shimmer-angle {
   syntax: '<angle>';
@@ -217,19 +225,19 @@
   display: inline-flex;
   align-items: center;
   padding: 2px;
-  border-radius: 100px;
+  border-radius: var(--radius-full);
   background: conic-gradient(
     from var(--shimmer-angle),
-    transparent       0deg,
-    rgba(255,255,255,0)  320deg,
+    transparent          0deg,
+    rgba(255,255,255,0)   320deg,
     rgba(255,255,255,0.8) 340deg,
     rgba(160,124,254,1)   350deg,
     rgba(255,255,255,0.8) 360deg
   );
   animation: shimmerSpin 3s linear infinite;
   text-decoration: none;
-  margin-top: 32px;
-  transition: box-shadow 0.25s ease;
+  margin-top: var(--space-8);
+  transition: box-shadow var(--transition-base);
 }
 
 .shimmerBtn:hover {
@@ -242,33 +250,31 @@
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  padding: 14px 30px;
-  background: rgba(5, 7, 15, 0.96);
-  border-radius: 98px;
-  font-size: 0.97rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  color: #fff;
+  padding: var(--space-3-5) var(--space-7);
+  background: rgba(5, 7, 15, 0.96);   /* cinematic dark fill */
+  border-radius: var(--radius-full);
+  font-size: var(--text-md);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-normal);
+  color: var(--text-primary);
   white-space: nowrap;
-  transition: background 0.2s ease;
+  transition: background var(--transition-fast);
 }
 
 .shimmerBtn:hover .shimmerBtnInner {
   background: rgba(10, 12, 28, 0.94);
 }
 
-/* Arrow flipped to point away from the RTL text */
 .btnArrow {
   flex-shrink: 0;
   opacity: 0.8;
   transform: scaleX(-1);
-  transition: transform 0.2s ease;
+  transition: transform var(--transition-fast);
 }
 
 .shimmerBtn:hover .btnArrow {
   transform: scaleX(-1) translateX(-3px);
 }
-
 
 /* ============================================================
    BOTTOM META
@@ -278,25 +284,25 @@
   z-index: 6;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--space-2-5);
   align-items: flex-start;
-  padding-bottom: 18px;
+  padding-bottom: var(--space-4);
   margin-top: auto;
   pointer-events: auto;
 }
 
 .bottomLabel {
-  color: rgba(130, 155, 190, 0.7);
-  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
 }
 
 .bottomItems {
   display: flex;
   flex-wrap: wrap;
   gap: 0;
-  color: rgba(200, 220, 255, 0.88);
-  font-size: 0.92rem;
-  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
 }
 
 .bottomItems span {
@@ -306,47 +312,36 @@
 
 .bottomItems span:not(:last-child)::after {
   content: "•";
-  margin-inline: 10px;
-  color: rgba(120, 140, 180, 0.5);
-  font-weight: 400;
+  margin-inline: var(--space-2-5);
+  color: var(--text-disabled);
+  font-weight: var(--font-regular);
 }
 
+/* cinematic bottom fade — always dark */
 .bottomFade {
   position: absolute;
   inset-inline: 0;
   bottom: 0;
   height: 220px;
   pointer-events: none;
-  background: linear-gradient(to bottom, rgba(5,7,12,0) 0%, #05070c 68%);
+  background: linear-gradient(to bottom, rgba(5, 7, 12, 0) 0%, #05070c 68%);
   z-index: 5;
 }
 
-
 /* ============================================================
-   VISIBILITY TOGGLES — desktop vs mobile sections
+   VISIBILITY TOGGLES
    ============================================================ */
-
-/* Desktop content (inside hero) — shown ≥641px, hidden on mobile */
-.heroDesktopContent {
-  display: block;
-}
-
-/* Mobile section (below hero) — hidden ≥641px, shown on mobile */
-.heroMobileContent {
-  display: none;
-}
-
+.heroDesktopContent { display: block; }
+.heroMobileContent  { display: none;  }
 
 /* ============================================================
-   MOBILE SECTION STYLES
-   Background matches the hero so the two sections feel like one.
+   MOBILE SECTION
    ============================================================ */
 .heroMobileContent {
   background: linear-gradient(180deg, #05070c 0%, #060a12 100%);
   padding: 2.5rem 0 3.5rem;
 }
 
-/* Center-align the copy block when shown below the hero */
 .copyMobileCenter {
   align-items: center;
   text-align: center;
@@ -356,11 +351,8 @@
   max-width: 32ch;
 }
 
-
 /* ============================================================
    RESPONSIVE — TABLET (641px – 980px)
-   Keep two-column grid. Copy stays on the RIGHT, right-aligned.
-   Shrink the copy column slightly to avoid overlap with the clock.
    ============================================================ */
 @media (max-width: 980px) and (min-width: 641px) {
   .hero {
@@ -368,13 +360,11 @@
     padding-top: 5.2rem;
   }
 
-  /* Narrower copy column so it doesn't collide with the clock panel */
   .shell {
     grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
     min-height: 860px;
   }
 
-  /* Copy stays in column 1 (RIGHT in RTL) — no centering */
   .copy {
     align-items: flex-start;
     text-align: right;
@@ -393,11 +383,8 @@
   }
 }
 
-
 /* ============================================================
    RESPONSIVE — MOBILE (≤ 640px)
-   Hero is compact — video + clock only.
-   Text flows in .heroMobileContent BELOW the hero, centered.
    ============================================================ */
 @media (max-width: 640px) {
 
@@ -406,17 +393,15 @@
     padding-top: 4rem;
   }
 
-  /* Hide desktop copy inside the hero */
   .heroDesktopContent {
     display: none;
   }
 
-  /* Show the mobile section below */
   .heroMobileContent {
     display: block;
   }
 
   .heroCardWrap {
-    padding: 12px;
+    padding: var(--space-3);
   }
 }

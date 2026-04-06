@@ -5,7 +5,7 @@ import HomeSections from '@/components/home';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import TimeCinematicHero from '@/components/hero/TimeCinematicHero';
 import { headers } from 'next/headers';
-import { detectBestCityMatch } from '@/lib/locationService';
+import { resolveRequestLocationFromHeaders } from '@/lib/locationService';
 import { getCountryByCode } from '@/lib/db/queries/countries';
 import {
   SITE_BRAND,
@@ -29,7 +29,6 @@ async function getHomeHeroLocation() {
   const hdrs = await headers();
   const timezone = hdrs.get('x-vercel-ip-timezone') ?? '';
   const countryCode = hdrs.get('x-vercel-ip-country') ?? '';
-  const cityName = hdrs.get('x-vercel-ip-city') ?? '';
 
   let countryNameAr = '';
   if (countryCode) {
@@ -37,11 +36,7 @@ async function getHomeHeroLocation() {
     countryNameAr = country?.name_ar || country?.name_en || '';
   }
 
-  const matchedCity = await detectBestCityMatch({
-    timezone: timezone || undefined,
-    countryCode: countryCode || undefined,
-    cityName: cityName || undefined,
-  }).catch(() => null);
+  const matchedCity = await resolveRequestLocationFromHeaders(hdrs).catch(() => null);
 
   return {
     ianaTimezone: matchedCity?.timezone || timezone || undefined,
