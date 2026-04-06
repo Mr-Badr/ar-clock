@@ -54,3 +54,20 @@
     transform: translateZ(0) rotate(270deg);}
   100% {
     transform: translateZ(0) rotate(360deg);}}}
+
+/* ── View Transition (theme ripple) ────────────────────────────────────── */
+/* New snapshot always expands on top — works for both dark→light & light→dark */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  z-index: 999;
+  will-change: clip-path; /* promotes to GPU layer → no composite blink */
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
