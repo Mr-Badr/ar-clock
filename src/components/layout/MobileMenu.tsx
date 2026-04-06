@@ -82,7 +82,7 @@ export default function MobileMenu({ links }: { links: NavLink[] }) {
                   <AccordionItem value={link.href} className="border-none">
                     <AccordionTrigger
                       className={cn(
-                        "header-mobile-link hover:no-underline py-3 px-4 w-full justify-between flex [&>svg]:order-first border-none shadow-none",
+                        "header-mobile-link hover:no-underline py-3 px-4 w-full justify-between flex [&>svg]:order-last border-none shadow-none",
                         isActive(link.href) && "active"
                       )}
                     >
