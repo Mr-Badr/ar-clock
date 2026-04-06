@@ -1,0 +1,19 @@
+{
+  "slug": "saudi-flag-day",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: SPA: Saudi Arabia names Flag Day, March 11 every year",
+    "fact-source: SPA: Saudi Arabia Marks Flag Day Tomorrow",
+    "fact-source: SPA: DARAH issues Saudi Flag Day knowledge guide",
+    "fact-source: سبل: طابع بريدي بمناسبة يوم العلم"
+  ],
+  "updatedAt": "2026-04-06T00:00:00.000Z"
+}

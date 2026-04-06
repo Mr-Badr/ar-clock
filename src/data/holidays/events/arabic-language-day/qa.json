@@ -1,0 +1,18 @@
+{
+  "slug": "arabic-language-day",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: UNESCO: World Arabic Language Day",
+    "fact-source: UNESCO: World Arabic Language Day (alt path)",
+    "fact-source: United Nations: World Arabic Language Day"
+  ],
+  "updatedAt": "2026-04-06T00:00:00.000Z"
+}

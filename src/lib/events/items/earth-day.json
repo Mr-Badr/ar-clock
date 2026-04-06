@@ -1,0 +1,9 @@
+{
+  "id": "earth-day",
+  "slug": "earth-day",
+  "name": "يوم الأرض",
+  "type": "fixed",
+  "category": "support",
+  "month": 4,
+  "day": 22
+}

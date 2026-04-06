@@ -9,6 +9,7 @@ import {
   type EventCategory,
   type EventType,
 } from './lib/event-scaffold';
+import { buildEmptyQaRecord, buildEmptyResearchRecord } from './lib/event-authoring';
 
 const ROOT = process.cwd();
 const EVENTS_SOURCE_DIR = join(ROOT, 'src/data/holidays/events');
@@ -57,7 +58,7 @@ function main() {
     args.countryScope ||
     (countryCode ? 'none' : type === 'hijri' && category === 'islamic' ? 'all' : 'none')
   ) as 'none' | 'all' | 'custom';
-  const publishStatus = (args.status || (args.publish === 'true' ? 'published' : 'published')) as
+  const publishStatus = (args.status || (args.publish === 'true' ? 'published' : 'drafted')) as
     | 'briefed'
     | 'drafted'
     | 'validated'
@@ -111,32 +112,19 @@ function main() {
     canonicalSource: 'internal',
   });
 
-  const research = {
+  const createdAt = new Date().toISOString();
+  const research = buildEmptyResearchRecord({
     slug,
     locale: 'ar',
-    capturedAt: new Date().toISOString(),
-    primaryQueries: [],
-    competitors: [],
-    coverageMatrix: [],
-    keywordGaps: [],
-    unansweredQuestions: [],
-    differentiationIdeas: [],
-  };
+    capturedAt: createdAt,
+  });
 
-  const qa = {
+  const qa = buildEmptyQaRecord({
     slug,
     tier: 'tier3',
     publishStatus,
-    checks: {
-      contentReady: false,
-      factChecked: false,
-      schemaValid: false,
-      seoValidated: false,
-      hasHardcodedYear: false,
-    },
-    notes: [],
-    updatedAt: new Date().toISOString(),
-  };
+    updatedAt: createdAt,
+  });
 
   writeJson(packagePath, eventPackage);
   writeJson(researchPath, research);
@@ -155,7 +143,7 @@ function main() {
 
   console.log(`[events:new] Created event folder: ${eventDir}`);
   console.log('[events:new] Next steps: update package.json, research.json, qa.json, then run npm run events:build && npm run validate:holidays:slug -- --slug <slug>.');
-  console.log('[events:new] New events default to publishStatus="published" so they appear on /holidays after build. Pass --status drafted if you want a hidden draft.');
+  console.log('[events:new] New events now default to publishStatus="drafted". Pass --publish true or --status published only after the content is ready.');
 }
 
 main();

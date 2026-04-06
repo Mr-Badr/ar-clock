@@ -63,6 +63,15 @@
     "hijriDay": 27
   },
   {
+    "id": "new-year",
+    "slug": "new-year",
+    "name": "رأس السنة الميلادية",
+    "type": "fixed",
+    "category": "holidays",
+    "month": 1,
+    "day": 1
+  },
+  {
     "id": "national-day-sa",
     "slug": "saudi-national-day",
     "name": "اليوم الوطني السعودي",
@@ -71,6 +80,34 @@
     "_countryCode": "sa",
     "month": 9,
     "day": 23
+  },
+  {
+    "id": "founding-day-sa",
+    "slug": "saudi-founding-day",
+    "name": "يوم التأسيس السعودي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sa",
+    "month": 2,
+    "day": 22
+  },
+  {
+    "id": "salary-sa",
+    "slug": "salary-day-saudi",
+    "name": "راتب السعودية",
+    "type": "monthly",
+    "category": "business",
+    "_countryCode": "sa",
+    "day": 27
+  },
+  {
+    "id": "citizen-account-sa",
+    "slug": "citizen-account-saudi",
+    "name": "حساب المواطن",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "sa",
+    "day": 10
   },
   {
     "id": "results-th-eg",
@@ -123,6 +160,16 @@
     "day": 8
   },
   {
+    "id": "national-day-ae",
+    "slug": "uae-national-day",
+    "name": "اليوم الوطني الإماراتي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ae",
+    "month": 12,
+    "day": 2
+  },
+  {
     "id": "school-start-ae",
     "slug": "school-start-uae",
     "name": "بداية الدراسة في الإمارات",
@@ -143,6 +190,16 @@
     "day": 15
   },
   {
+    "id": "national-day-qa",
+    "slug": "qatar-national-day",
+    "name": "اليوم الوطني القطري",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "qa",
+    "month": 12,
+    "day": 18
+  },
+  {
     "id": "school-start-qa",
     "slug": "school-start-qatar",
     "name": "بدء الدراسة في قطر",
@@ -151,5 +208,143 @@
     "_countryCode": "qa",
     "month": 8,
     "day": 30
+  },
+  {
+    "id": "mothers-day",
+    "slug": "mothers-day",
+    "name": "عيد الأم",
+    "type": "fixed",
+    "category": "holidays",
+    "month": 3,
+    "day": 21
+  },
+  {
+    "id": "pension-sa",
+    "slug": "pension-day-saudi",
+    "name": "راتب التقاعد (السعودية)",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "sa",
+    "day": 1
+  },
+  {
+    "id": "valentines-day",
+    "slug": "valentines-day",
+    "name": "عيد الحب",
+    "type": "fixed",
+    "category": "holidays",
+    "month": 2,
+    "day": 14
+  },
+  {
+    "id": "labor-day",
+    "slug": "labor-day",
+    "name": "عيد العمال العالمي",
+    "type": "fixed",
+    "category": "holidays",
+    "month": 5,
+    "day": 1
+  },
+  {
+    "id": "sand-sa",
+    "slug": "sand-payment-saudi",
+    "name": "ساند (السعودية)",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "sa",
+    "day": 1
+  },
+  {
+    "id": "takaful-karama-eg",
+    "slug": "takaful-karama-egypt",
+    "name": "تكافل وكرامة (مصر)",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "eg",
+    "day": 15
+  },
+  {
+    "id": "world-health-day",
+    "slug": "world-health-day",
+    "name": "يوم الصحة العالمي",
+    "type": "fixed",
+    "category": "support",
+    "month": 4,
+    "day": 7
+  },
+  {
+    "id": "earth-day",
+    "slug": "earth-day",
+    "name": "يوم الأرض",
+    "type": "fixed",
+    "category": "support",
+    "month": 4,
+    "day": 22
+  },
+  {
+    "id": "pension-eg",
+    "slug": "pension-day-egypt",
+    "name": "صرف المعاشات (مصر)",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "eg",
+    "day": 1
+  },
+  {
+    "id": "international-womens-day",
+    "slug": "international-womens-day",
+    "name": "اليوم الدولي للمرأة",
+    "type": "fixed",
+    "category": "support",
+    "month": 3,
+    "day": 8
+  },
+  {
+    "id": "world-teachers-day",
+    "slug": "world-teachers-day",
+    "name": "اليوم العالمي للمعلم",
+    "type": "fixed",
+    "category": "school",
+    "month": 10,
+    "day": 5
+  },
+  {
+    "id": "arabic-language-day",
+    "slug": "arabic-language-day",
+    "name": "اليوم العالمي للغة العربية",
+    "type": "fixed",
+    "category": "support",
+    "month": 12,
+    "day": 18
+  },
+  {
+    "id": "saudi-flag-day",
+    "slug": "saudi-flag-day",
+    "name": "يوم العلم السعودي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sa",
+    "month": 3,
+    "day": 11
+  },
+  {
+    "id": "jordan-independence-day",
+    "slug": "jordan-independence-day",
+    "name": "عيد الاستقلال الأردني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "jo",
+    "month": 5,
+    "day": 25
+  },
+  {
+    "id": "bahrain-national-day",
+    "slug": "bahrain-national-day",
+    "name": "اليوم الوطني البحريني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "bh",
+    "month": 12,
+    "day": 16
   }
 ]

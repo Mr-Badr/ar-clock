@@ -3,12 +3,16 @@
   "tier": "tier1",
   "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:37.037Z"
+  "notes": [
+    "fact-source: SPA: الملك عبدالعزيز وقصة اليوم الوطني",
+    "fact-source: SPA: دارة الملك عبدالعزيز تصدر دليلاً تاريخياً لليوم الوطني",
+    "fact-source: وزارة الموارد البشرية والتنمية الاجتماعية: صفحة الإجازات"
+  ],
+  "updatedAt": "2026-04-06T00:00:00.000Z"
 }

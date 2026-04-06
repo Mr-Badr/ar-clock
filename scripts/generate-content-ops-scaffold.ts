@@ -7,6 +7,8 @@ import {
 } from 'node:fs';
 import { join } from 'node:path';
 
+import { buildEmptyQaRecord, buildEmptyResearchRecord } from './lib/event-authoring';
+
 const ROOT = process.cwd();
 const EVENTS_SOURCE_DIR = join(ROOT, 'src/data/holidays/events');
 const MANIFEST_PATH = join(ROOT, 'src/data/holidays/generated/manifest.json');
@@ -53,45 +55,6 @@ function hydrateEventNames(events: any[]) {
   });
 }
 
-function buildResearchTemplate(event: any) {
-  return JSON.stringify(
-    {
-      slug: event.slug,
-      locale: 'ar',
-      capturedAt: new Date().toISOString(),
-      primaryQueries: [],
-      competitors: [],
-      coverageMatrix: [],
-      keywordGaps: [],
-      unansweredQuestions: [],
-      differentiationIdeas: [],
-    },
-    null,
-    2,
-  );
-}
-
-function buildQaTemplate(event: any) {
-  return JSON.stringify(
-    {
-      slug: event.slug,
-      tier: event.tier || 'tier3',
-      publishStatus: event.publishStatus || 'drafted',
-      checks: {
-        contentReady: false,
-        factChecked: false,
-        schemaValid: false,
-        seoValidated: false,
-        hasHardcodedYear: false,
-      },
-      notes: [],
-      updatedAt: new Date().toISOString(),
-    },
-    null,
-    2,
-  );
-}
-
 function main() {
   ensureDir(EVENTS_SOURCE_DIR);
   const canonicalEvents = hydrateEventNames(loadCanonicalEvents());
@@ -99,8 +62,22 @@ function main() {
   for (const event of canonicalEvents) {
     const eventDir = join(EVENTS_SOURCE_DIR, event.slug);
     ensureDir(eventDir);
-    writeIfMissing(join(eventDir, 'research.json'), `${buildResearchTemplate(event)}\n`);
-    writeIfMissing(join(eventDir, 'qa.json'), `${buildQaTemplate(event)}\n`);
+    writeIfMissing(
+      join(eventDir, 'research.json'),
+      `${JSON.stringify(buildEmptyResearchRecord({ slug: event.slug, locale: 'ar' }), null, 2)}\n`,
+    );
+    writeIfMissing(
+      join(eventDir, 'qa.json'),
+      `${JSON.stringify(
+        buildEmptyQaRecord({
+          slug: event.slug,
+          tier: event.tier || 'tier3',
+          publishStatus: event.publishStatus || 'drafted',
+        }),
+        null,
+        2,
+      )}\n`,
+    );
   }
 
   const folders = readdirSync(EVENTS_SOURCE_DIR, { withFileTypes: true })

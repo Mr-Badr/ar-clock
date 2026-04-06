@@ -192,8 +192,8 @@
     ]
   },
   "new-year": {
-    "tier": "tier2",
-    "publishStatus": "drafted",
+    "tier": "tier1",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/new-year",
     "aliases": []
@@ -250,14 +250,14 @@
   "saudi-national-day": {
     "tier": "tier1",
     "publishStatus": "published",
-    "countryScope": "custom",
+    "countryScope": "none",
     "canonicalPath": "/holidays/saudi-national-day",
     "aliases": []
   },
   "saudi-founding-day": {
-    "tier": "tier3",
-    "publishStatus": "drafted",
-    "countryScope": "custom",
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "none",
     "canonicalPath": "/holidays/saudi-founding-day",
     "aliases": []
   },
@@ -269,15 +269,15 @@
     "aliases": []
   },
   "salary-day-saudi": {
-    "tier": "tier2",
-    "publishStatus": "drafted",
+    "tier": "tier1",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/salary-day-saudi",
     "aliases": []
   },
   "citizen-account-saudi": {
-    "tier": "tier2",
-    "publishStatus": "drafted",
+    "tier": "tier1",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/citizen-account-saudi",
     "aliases": []
@@ -396,7 +396,7 @@
   },
   "uae-national-day": {
     "tier": "tier2",
-    "publishStatus": "drafted",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/uae-national-day",
     "aliases": []
@@ -444,8 +444,8 @@
     "aliases": []
   },
   "qatar-national-day": {
-    "tier": "tier3",
-    "publishStatus": "drafted",
+    "tier": "tier2",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/qatar-national-day",
     "aliases": []
@@ -455,6 +455,156 @@
     "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/school-start-qatar",
+    "aliases": []
+  },
+  "mothers-day": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "none",
+    "canonicalPath": "/holidays/mothers-day",
+    "aliases": []
+  },
+  "pension-day-saudi": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/pension-day-saudi",
+    "aliases": []
+  },
+  "valentines-day": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "all",
+    "canonicalPath": "/holidays/valentines-day",
+    "aliases": [
+      "valentines-day-in-saudi",
+      "valentines-day-in-egypt",
+      "valentines-day-in-morocco",
+      "valentines-day-in-algeria",
+      "valentines-day-in-uae",
+      "valentines-day-in-tunisia",
+      "valentines-day-in-kuwait",
+      "valentines-day-in-qatar"
+    ]
+  },
+  "labor-day": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "none",
+    "canonicalPath": "/holidays/labor-day",
+    "aliases": []
+  },
+  "sand-payment-saudi": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/sand-payment-saudi",
+    "aliases": []
+  },
+  "takaful-karama-egypt": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/takaful-karama-egypt",
+    "aliases": []
+  },
+  "world-health-day": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "all",
+    "canonicalPath": "/holidays/world-health-day",
+    "aliases": [
+      "world-health-day-in-saudi",
+      "world-health-day-in-egypt",
+      "world-health-day-in-morocco",
+      "world-health-day-in-algeria",
+      "world-health-day-in-uae",
+      "world-health-day-in-tunisia",
+      "world-health-day-in-kuwait",
+      "world-health-day-in-qatar"
+    ]
+  },
+  "earth-day": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "all",
+    "canonicalPath": "/holidays/earth-day",
+    "aliases": [
+      "earth-day-in-saudi",
+      "earth-day-in-egypt",
+      "earth-day-in-morocco",
+      "earth-day-in-algeria",
+      "earth-day-in-uae",
+      "earth-day-in-tunisia",
+      "earth-day-in-kuwait",
+      "earth-day-in-qatar"
+    ]
+  },
+  "pension-day-egypt": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/pension-day-egypt",
+    "aliases": []
+  },
+  "international-womens-day": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "none",
+    "canonicalPath": "/holidays/international-womens-day",
+    "aliases": []
+  },
+  "world-teachers-day": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "all",
+    "canonicalPath": "/holidays/world-teachers-day",
+    "aliases": [
+      "world-teachers-day-in-saudi",
+      "world-teachers-day-in-egypt",
+      "world-teachers-day-in-morocco",
+      "world-teachers-day-in-algeria",
+      "world-teachers-day-in-uae",
+      "world-teachers-day-in-tunisia",
+      "world-teachers-day-in-kuwait",
+      "world-teachers-day-in-qatar"
+    ]
+  },
+  "arabic-language-day": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "all",
+    "canonicalPath": "/holidays/arabic-language-day",
+    "aliases": [
+      "arabic-language-day-in-saudi",
+      "arabic-language-day-in-egypt",
+      "arabic-language-day-in-morocco",
+      "arabic-language-day-in-algeria",
+      "arabic-language-day-in-uae",
+      "arabic-language-day-in-tunisia",
+      "arabic-language-day-in-kuwait",
+      "arabic-language-day-in-qatar"
+    ]
+  },
+  "saudi-flag-day": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "none",
+    "canonicalPath": "/holidays/saudi-flag-day",
+    "aliases": []
+  },
+  "jordan-independence-day": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "none",
+    "canonicalPath": "/holidays/jordan-independence-day",
+    "aliases": []
+  },
+  "bahrain-national-day": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "none",
+    "canonicalPath": "/holidays/bahrain-national-day",
     "aliases": []
   }
 }

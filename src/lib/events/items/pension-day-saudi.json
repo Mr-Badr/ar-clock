@@ -1,0 +1,9 @@
+{
+  "id": "pension-sa",
+  "slug": "pension-day-saudi",
+  "name": "راتب التقاعد (السعودية)",
+  "type": "monthly",
+  "category": "support",
+  "_countryCode": "sa",
+  "day": 1
+}

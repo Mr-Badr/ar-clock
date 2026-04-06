@@ -1,0 +1,18 @@
+{
+  "slug": "international-womens-day",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: الأمم المتحدة: اليوم الدولي للمرأة",
+    "fact-source: الأمم المتحدة: خلفية اليوم الدولي للمرأة",
+    "fact-source: UN Women: International Women’s Day"
+  ],
+  "updatedAt": "2026-04-06T00:00:00.000Z"
+}

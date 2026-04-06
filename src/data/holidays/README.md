@@ -7,6 +7,11 @@
 
 Each event owns its complete authoring state inside one folder.
 
+Important:
+- These three files are the only authoring files you should edit for an event.
+- `src/lib/events/*` and `src/lib/event-content/*` are runtime or compatibility layers.
+- `src/data/holidays/generated/*` is compiled output.
+
 ## Taxonomy
 - `src/data/holidays/taxonomy/countries.json`
 - `src/data/holidays/taxonomy/categories.json`
@@ -31,6 +36,39 @@ Key files:
 4. Run `npm run validate:holidays` or `npm run validate:holidays:slug -- --slug <slug>`
 
 Do not hand-edit files inside `src/data/holidays/generated/`.
+
+## Recommended Authoring Flow
+
+### One event
+
+Use this when adding a single new event:
+
+```bash
+npm run events:new -- --slug your-slug --name "اسم المناسبة" --type fixed --category national
+```
+
+This now defaults to `publishStatus: "drafted"` so the event starts as a safe draft.
+
+### Many events or bulk updates
+
+Use a reusable batch file instead of creating a one-off script in the root `scripts/` folder:
+
+```bash
+npm run events:apply-batch -- --file src/data/holidays/batches/your-batch.ts --build --validate
+```
+
+Batch files should describe the event updates, while the reusable command handles writing the event folders, rebuilding generated output, and optional validation.
+
+### What not to edit
+
+Do not hand-edit:
+
+- `src/data/holidays/generated/*`
+- `src/lib/events/items/*`
+- `src/lib/event-content/items/*`
+- `src/lib/events/manifest.json`
+
+Those files are generated or compatibility output, not authoring input.
 
 ## Event Shapes
 

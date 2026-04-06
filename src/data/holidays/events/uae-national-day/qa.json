@@ -1,14 +1,17 @@
 {
   "slug": "uae-national-day",
   "tier": "tier2",
-  "publishStatus": "drafted",
+  "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:37.062Z"
+  "notes": [
+    "fact-source: البوابة الرسمية لحكومة الإمارات: العطلات الرسمية",
+    "fact-source: البوابة الرسمية لحكومة الإمارات: النظام السياسي والاتحاد"
+  ],
+  "updatedAt": "2026-04-06T00:00:00.000Z"
 }

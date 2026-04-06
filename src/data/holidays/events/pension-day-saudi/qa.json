@@ -1,0 +1,18 @@
+{
+  "slug": "pension-day-saudi",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: التأمينات الاجتماعية: إيداع المعاشات بداية كل شهر ميلادي اعتباراً من 1 يونيو 2018",
+    "fact-source: التأمينات الاجتماعية: تقديم موعد صرف معاش شهر أغسطس إلى 29 يوليو",
+    "fact-source: التأمينات الاجتماعية: FAQ المتقاعدين"
+  ],
+  "updatedAt": "2026-04-06T00:00:00.000Z"
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "bahrain-national-day",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: البوابة الوطنية للبحرين: عن البحرين",
+    "fact-source: Bahrain News Agency: National Day",
+    "fact-source: البوابة الوطنية للبحرين: عن البحرين (إنجليزي)"
+  ],
+  "updatedAt": "2026-04-06T00:00:00.000Z"
+}

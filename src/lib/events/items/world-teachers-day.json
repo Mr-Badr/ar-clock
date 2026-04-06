@@ -1,0 +1,9 @@
+{
+  "id": "world-teachers-day",
+  "slug": "world-teachers-day",
+  "name": "اليوم العالمي للمعلم",
+  "type": "fixed",
+  "category": "school",
+  "month": 10,
+  "day": 5
+}

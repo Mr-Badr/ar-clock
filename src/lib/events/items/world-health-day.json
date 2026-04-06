@@ -1,0 +1,9 @@
+{
+  "id": "world-health-day",
+  "slug": "world-health-day",
+  "name": "يوم الصحة العالمي",
+  "type": "fixed",
+  "category": "support",
+  "month": 4,
+  "day": 7
+}

@@ -1,0 +1,9 @@
+{
+  "id": "labor-day",
+  "slug": "labor-day",
+  "name": "عيد العمال العالمي",
+  "type": "fixed",
+  "category": "holidays",
+  "month": 5,
+  "day": 1
+}

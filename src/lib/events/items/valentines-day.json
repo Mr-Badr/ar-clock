@@ -1,0 +1,9 @@
+{
+  "id": "valentines-day",
+  "slug": "valentines-day",
+  "name": "عيد الحب",
+  "type": "fixed",
+  "category": "holidays",
+  "month": 2,
+  "day": 14
+}

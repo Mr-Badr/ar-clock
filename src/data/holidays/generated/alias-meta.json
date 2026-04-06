@@ -382,5 +382,165 @@
   "first-dhul-hijjah-in-qatar": {
     "canonicalSlug": "first-dhul-hijjah",
     "countryCode": "qa"
+  },
+  "valentines-day-in-saudi": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "sa"
+  },
+  "valentines-day-in-egypt": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "eg"
+  },
+  "valentines-day-in-morocco": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "ma"
+  },
+  "valentines-day-in-algeria": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "dz"
+  },
+  "valentines-day-in-uae": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "ae"
+  },
+  "valentines-day-in-tunisia": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "tn"
+  },
+  "valentines-day-in-kuwait": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "kw"
+  },
+  "valentines-day-in-qatar": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "qa"
+  },
+  "world-health-day-in-saudi": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "sa"
+  },
+  "world-health-day-in-egypt": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "eg"
+  },
+  "world-health-day-in-morocco": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "ma"
+  },
+  "world-health-day-in-algeria": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "dz"
+  },
+  "world-health-day-in-uae": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "ae"
+  },
+  "world-health-day-in-tunisia": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "tn"
+  },
+  "world-health-day-in-kuwait": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "kw"
+  },
+  "world-health-day-in-qatar": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "qa"
+  },
+  "earth-day-in-saudi": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "sa"
+  },
+  "earth-day-in-egypt": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "eg"
+  },
+  "earth-day-in-morocco": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "ma"
+  },
+  "earth-day-in-algeria": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "dz"
+  },
+  "earth-day-in-uae": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "ae"
+  },
+  "earth-day-in-tunisia": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "tn"
+  },
+  "earth-day-in-kuwait": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "kw"
+  },
+  "earth-day-in-qatar": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "qa"
+  },
+  "world-teachers-day-in-saudi": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "sa"
+  },
+  "world-teachers-day-in-egypt": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "eg"
+  },
+  "world-teachers-day-in-morocco": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "ma"
+  },
+  "world-teachers-day-in-algeria": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "dz"
+  },
+  "world-teachers-day-in-uae": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "ae"
+  },
+  "world-teachers-day-in-tunisia": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "tn"
+  },
+  "world-teachers-day-in-kuwait": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "kw"
+  },
+  "world-teachers-day-in-qatar": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "qa"
+  },
+  "arabic-language-day-in-saudi": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "sa"
+  },
+  "arabic-language-day-in-egypt": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "eg"
+  },
+  "arabic-language-day-in-morocco": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "ma"
+  },
+  "arabic-language-day-in-algeria": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "dz"
+  },
+  "arabic-language-day-in-uae": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "ae"
+  },
+  "arabic-language-day-in-tunisia": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "tn"
+  },
+  "arabic-language-day-in-kuwait": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "kw"
+  },
+  "arabic-language-day-in-qatar": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "qa"
   }
 }

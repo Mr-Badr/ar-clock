@@ -1,0 +1,9 @@
+{
+  "id": "mothers-day",
+  "slug": "mothers-day",
+  "name": "عيد الأم",
+  "type": "fixed",
+  "category": "holidays",
+  "month": 3,
+  "day": 21
+}

@@ -1,0 +1,106 @@
+{
+  "slug": "bahrain-national-day",
+  "locale": "ar",
+  "capturedAt": "2026-04-06T00:00:00.000Z",
+  "primaryQueries": [
+    "كم باقي على اليوم الوطني البحريني",
+    "متى اليوم الوطني البحريني {{year}}",
+    "16 ديسمبر البحرين",
+    "هل اليوم الوطني البحريني إجازة",
+    "الفرق بين اليوم الوطني البحريني والاستقلال"
+  ],
+  "competitors": [
+    {
+      "site": "calendarz.com",
+      "type": "calendar",
+      "url": "https://www.calendarz.com/ar/when-is/bahrain-holidays/national-day/2025",
+      "focus": [
+        "التاريخ",
+        "مدة الإجازة",
+        "متى يبدأ اليوم الوطني"
+      ],
+      "gaps": [
+        "لا يشرح الفرق بين اليوم الوطني والاستقلال بدقة كافية",
+        "لغة عامة",
+        "ضعف في البعد الوطني المحلي"
+      ]
+    },
+    {
+      "site": "البوابة الوطنية البحرينية",
+      "type": "official",
+      "url": "https://www.bahrain.bh/wps/portal/ar/BNP/BahrainAtAGlance/AboutBahrain",
+      "focus": [
+        "اليوم الوطني 16 ديسمبر",
+        "بيانات الدولة الرسمية",
+        "الإجازات المرتبطة بالمناسبة"
+      ],
+      "gaps": [
+        "لا يخدم نية كم باقي",
+        "ليس مبنياً كصفحة SEO للأسئلة الشائعة",
+        "لا يقدم عداداً أو محتوى استعدادياً"
+      ]
+    },
+    {
+      "site": "بوابات العطلات",
+      "type": "countdown",
+      "focus": [
+        "التاريخ والإجازة",
+        "مدة العطلة",
+        "سؤال ما هو الموعد"
+      ],
+      "gaps": [
+        "ضعف في التوثيق الرسمي العربي",
+        "قلة التوضيح التاريخي",
+        "خلط محتمل بين الاستقلال واليوم الوطني"
+      ]
+    }
+  ],
+  "coverageMatrix": [
+    {
+      "keyword": "متى اليوم الوطني البحريني {{year}}",
+      "whyItMatters": "أعلى نية مباشرة عند الباحث الذي يريد التاريخ الحالي والجواب السريع."
+    },
+    {
+      "keyword": "كم باقي على اليوم الوطني البحريني {{year}}",
+      "whyItMatters": "نية عدّاد تنازلي مرتبطة مباشرة بنمط صفحات /holidays."
+    },
+    {
+      "keyword": "موعد اليوم الوطني البحريني {{year}}",
+      "whyItMatters": "يخدم صيغة الموعد المباشر التي تظهر كثيراً في SERP العربي."
+    },
+    {
+      "keyword": "اليوم الوطني البحريني 16 ديسمبر",
+      "whyItMatters": "يغلق فجوة تفسيرية لا تجيب عنها معظم صفحات العدّاد القصيرة."
+    }
+  ],
+  "keywordGaps": [
+    "الفرق بين 16 ديسمبر و15 أغسطس في المصادر البحرينية",
+    "مدة الإجازة الفعلية المرتبطة بالمناسبة",
+    "خدمة الباحث المحلي بالمعلومة الرسمية والعداد معاً"
+  ],
+  "unansweredQuestions": [
+    "هل اليوم الوطني البحريني يوم واحد أم يومان؟",
+    "ما الفرق بين اليوم الوطني وتاريخ الاستقلال في البحرين؟",
+    "كيف أعرف ترتيبات العطلة الرسمية لهذه السنة؟"
+  ],
+  "differentiationIdeas": [
+    "إزالة الالتباس التاريخي بين اليوم الوطني والاستقلال",
+    "إظهار المصدر البحريني الرسمي داخل الصفحة",
+    "دمج التاريخ والإجازة والFAQ في بنية واضحة عالية النية"
+  ],
+  "factSources": [
+    {
+      "label": "البوابة الوطنية للبحرين: عن البحرين",
+      "url": "https://www.bahrain.bh/wps/portal/ar/BNP/BahrainAtAGlance/AboutBahrain"
+    },
+    {
+      "label": "Bahrain News Agency: National Day",
+      "url": "https://beta.bna.bh/en/article/JHTiuWKqWE4lNELb"
+    },
+    {
+      "label": "البوابة الوطنية للبحرين: عن البحرين (إنجليزي)",
+      "url": "https://bahrain.bh/wps/portal/en/BNP/HomeNationalPortal/ContentDetailsPage/%21ut/p/z1/nVRdd6IwFPwr7IOPnNyEEMIjtgp-FcXiVl56CKSVroJFquv--k337McB1NbNW8IMM5l7b1CEHlCUx_vsOa6yIo_Xar-M2CMemODxG4DpLSUwW9gB604wTFwDfa0D8H0ICjBwAr9_i4FiFH2GD2eWA5_j_wXY9zYDRohDydw1wL-W3wZEl-01-N54bgKb3M27OHTHdGE09G-myp6J-4NZYOLANC7ysTdgdX77ek3_LYF3voF5zx2OAE_ZnAKb2qPhaBIS8K3f_AuAun4Y9oFxt08p45bDrFb-LUCDzwCYG2KMh6pROGnzm4Aa35uFXN1_PPQZ6Rp-D7fyawHq-YdExevgCZ75qj0JQwsUoWibZClaUouaPCVMTxIbdMqZpYuUEj2RBsYpZSIm8I5O8mpbrdBS5NvHuOxALIq3SqtWUvuW5c9psflzJOJVGWd5Y9sqWctTdLkjhh_1tBra7OX1NXKU1yKv5PcKPfy_2ejECDjQDVS-AK5PTgLqI1w3fOKNuNBlgWVaH_xh1JJojiFBSxW6dTa0gRrEfSYPKMyLcqPevfmVbeFBU6FuYQTkvMKTMJnEPNFtYhk6jYXQuWRPuim4oJwLRixoVr390FxZ9V223svy5U1kayk7sFHF1n7x8qoDpVzHlUy1qthmya4Dci2TqsySrDpqcZ5qB_W11HbqsCjRdhP-WxtuHPVIsKAXeD-6d7p7I_jx8OUnxw-v7g%21%21/dz/d5/L0lDUmlTV0EhL3dPa0FKRnRnLzROV3FpQSEhL2Vu/"
+    }
+  ],
+  "notes": "المعاينة اعتمدت على أنماط SERP العربي لصفحات العدّادات المختصرة والمقالات الإخبارية/الإرشادية، مع ترجيح المصادر الرسمية والمرجعية في الحقائق الأساسية."
+}

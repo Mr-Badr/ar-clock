@@ -22,11 +22,11 @@ import Link from 'next/link';
 /* ── Static maps ──────────────────────────────────────────────────────────── */
 const CAT_ICON = {
   islamic: '🌙', national: '🏳', school: '📚',
-  holidays: '🏖', astronomy: '🌍', business: '💼',
+  holidays: '🏖', astronomy: '🌍', business: '💼', support: '💰',
 };
 const CAT_LABEL = {
   islamic: 'إسلامي', national: 'وطني', school: 'مدرسي',
-  holidays: 'إجازة', astronomy: 'فلكي', business: 'أعمال',
+  holidays: 'إجازة', astronomy: 'فلكي', business: 'أعمال', support: 'دعم',
 };
 const COUNTRY_FLAGS = {
   sa: '🇸🇦', eg: '🇪🇬', ma: '🇲🇦', dz: '🇩🇿',
@@ -43,6 +43,8 @@ function urgency(days) {
 /* ─────────────────────────────────────────────────────────────────────────── */
 export default function EventCard({ event, priority = false, index = 0 }) {
   const cat = event.category || 'islamic';
+  const categoryIcon = CAT_ICON[cat] || '🗓';
+  const categoryLabel = CAT_LABEL[cat] || 'مناسبة';
 
   return (
     /* Stagger wrapper — layout dimensions controlled by .waqt-grid > div CSS */
@@ -66,8 +68,8 @@ export default function EventCard({ event, priority = false, index = 0 }) {
           {/* ── 1. Card header: category pill + country flag ──────── */}
           <div className="waqt-ev__header">
             <span className="waqt-ev__cat">
-              <span aria-hidden>{CAT_ICON[cat]}</span>
-              <span className="waqt-ev__cat-label">{CAT_LABEL[cat]}</span>
+              <span aria-hidden>{categoryIcon}</span>
+              <span className="waqt-ev__cat-label">{categoryLabel}</span>
             </span>
             {event._countryCode && (
               <span className="waqt-ev__flag" aria-hidden>

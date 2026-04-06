@@ -1,0 +1,18 @@
+{
+  "slug": "jordan-independence-day",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: الديوان الملكي الهاشمي: الملك يرعى حفل عيد الاستقلال التاسع والسبعين",
+    "fact-source: RHC: Jordan celebrates 60 years of independence",
+    "fact-source: RHC: King congratulates Jordanians on 79th Independence Day"
+  ],
+  "updatedAt": "2026-04-06T00:00:00.000Z"
+}

@@ -156,5 +156,65 @@
   "kuwait-national-day": [],
   "school-start-kuwait": [],
   "qatar-national-day": [],
-  "school-start-qatar": []
+  "school-start-qatar": [],
+  "mothers-day": [],
+  "pension-day-saudi": [],
+  "valentines-day": [
+    "valentines-day-in-saudi",
+    "valentines-day-in-egypt",
+    "valentines-day-in-morocco",
+    "valentines-day-in-algeria",
+    "valentines-day-in-uae",
+    "valentines-day-in-tunisia",
+    "valentines-day-in-kuwait",
+    "valentines-day-in-qatar"
+  ],
+  "labor-day": [],
+  "sand-payment-saudi": [],
+  "takaful-karama-egypt": [],
+  "world-health-day": [
+    "world-health-day-in-saudi",
+    "world-health-day-in-egypt",
+    "world-health-day-in-morocco",
+    "world-health-day-in-algeria",
+    "world-health-day-in-uae",
+    "world-health-day-in-tunisia",
+    "world-health-day-in-kuwait",
+    "world-health-day-in-qatar"
+  ],
+  "earth-day": [
+    "earth-day-in-saudi",
+    "earth-day-in-egypt",
+    "earth-day-in-morocco",
+    "earth-day-in-algeria",
+    "earth-day-in-uae",
+    "earth-day-in-tunisia",
+    "earth-day-in-kuwait",
+    "earth-day-in-qatar"
+  ],
+  "pension-day-egypt": [],
+  "international-womens-day": [],
+  "world-teachers-day": [
+    "world-teachers-day-in-saudi",
+    "world-teachers-day-in-egypt",
+    "world-teachers-day-in-morocco",
+    "world-teachers-day-in-algeria",
+    "world-teachers-day-in-uae",
+    "world-teachers-day-in-tunisia",
+    "world-teachers-day-in-kuwait",
+    "world-teachers-day-in-qatar"
+  ],
+  "arabic-language-day": [
+    "arabic-language-day-in-saudi",
+    "arabic-language-day-in-egypt",
+    "arabic-language-day-in-morocco",
+    "arabic-language-day-in-algeria",
+    "arabic-language-day-in-uae",
+    "arabic-language-day-in-tunisia",
+    "arabic-language-day-in-kuwait",
+    "arabic-language-day-in-qatar"
+  ],
+  "saudi-flag-day": [],
+  "jordan-independence-day": [],
+  "bahrain-national-day": []
 }

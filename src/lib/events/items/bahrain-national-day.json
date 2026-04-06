@@ -1,0 +1,10 @@
+{
+  "id": "bahrain-national-day",
+  "slug": "bahrain-national-day",
+  "name": "اليوم الوطني البحريني",
+  "type": "fixed",
+  "category": "national",
+  "_countryCode": "bh",
+  "month": 12,
+  "day": 16
+}

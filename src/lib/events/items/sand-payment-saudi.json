@@ -1,0 +1,9 @@
+{
+  "id": "sand-sa",
+  "slug": "sand-payment-saudi",
+  "name": "ساند (السعودية)",
+  "type": "monthly",
+  "category": "support",
+  "_countryCode": "sa",
+  "day": 1
+}

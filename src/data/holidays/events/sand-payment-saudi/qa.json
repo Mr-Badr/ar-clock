@@ -1,0 +1,18 @@
+{
+  "slug": "sand-payment-saudi",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: التأمينات الاجتماعية: الأسئلة الشائعة لساند",
+    "fact-source: التأمينات الاجتماعية: خبر تقديم معاش أغسطس ومستفيدي ساند",
+    "fact-source: التأمينات الاجتماعية: FAQ Contributor"
+  ],
+  "updatedAt": "2026-04-06T00:00:00.000Z"
+}

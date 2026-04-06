@@ -1,0 +1,17 @@
+{
+  "slug": "earth-day",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: EARTHDAY.ORG",
+    "fact-source: Earth Day campaign resources"
+  ],
+  "updatedAt": "2026-04-06T00:00:00.000Z"
+}
