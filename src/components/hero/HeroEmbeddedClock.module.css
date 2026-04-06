@@ -201,7 +201,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-bottom: 3rem;
   min-height: 0; /* prevents flex children from overflowing in rare cases */
 }
 
@@ -285,6 +284,11 @@
   flex-shrink: 0;
 }
 
+.clockContainer {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+} 
+
 
 /* ── Clock line ─────────────────────────────────────────────────── */
 .clockLine {
@@ -294,6 +298,8 @@
   justify-content: center;
   gap: clamp(0.2rem, 1.2cqi, 1rem);
   direction: ltr;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 /* ── Time unit ──────────────────────────────────────────────────── */
@@ -531,6 +537,11 @@
 
 /* ── RESPONSIVE ──────────────────────────────────────────────────── */
 @media (max-width: 900px) {
+  .clockContainer {
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+  } 
+
   .topbar {
     grid-template-columns: 1fr 1fr;
     gap: 0.4rem;
@@ -549,6 +560,11 @@
 }
 
 @media (max-width: 640px) {
+  .clockContainer {
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+  } 
+
   .centerStage {
     gap: 0.5rem;
     padding: 0.55rem 0 0.35rem;
@@ -573,10 +589,8 @@
   .progressTrack {
     max-width: 90%;
   }
-}
 
-@media (max-width: 430px) {
-  .topbar {
+    .topbar {
     grid-template-columns: auto 1fr auto;
     gap: 0.35rem;
   }

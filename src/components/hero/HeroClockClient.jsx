@@ -340,7 +340,7 @@ export default function HeroClockClient({
             </span>
           </div>
 
-          <div style={{ marginBottom: '1rem', marginTop: '1rem' }}>
+          <div className={styles.clockContainer}>
                     <div
                       className={styles.clockLine}
                       role="timer"
