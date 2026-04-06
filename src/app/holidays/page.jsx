@@ -1,39 +1,22 @@
 /**
- * app/holidays/page.jsx  (Server Component)
- * UI updated with Lovable's hero-stat grid + waqt-badge + waqt-card-nested.
- *
- * Keeps (from old code):
- *  - generateMetadata, JSON-LD schemas (WebSite, Organization, BreadcrumbList, FAQPage)
- *  - Suspense streaming with InitialEventGrid
- *  - getCachedNowIso, approxHijriYear, resolveAllHijriEvents
- *  - Calendar legend aside, full SEO text section
- *
- * New (from Lovable):
- *  - heroStats: top-3 upcoming events displayed as waqt-hero-stat cards in the hero
- *  - waqt-badge on the "التالي" label
- *  - waqt-card-nested for FAQ <details> elements
- *  - fade-in-up stagger on hero-stat cards
+ * app/holidays/page.jsx
+ * Static-first holidays landing page with client-synced query filters.
  */
-import { Suspense } from 'react';
 import Link from 'next/link';
 import { Calendar } from 'lucide-react';
 
 import {
-  ALL_EVENTS, enrichEvent, CATEGORIES,
-  getNextEventDate, getTimeRemaining, formatGregorianAr,
-  resolveEventMeta, approxHijriYear,
+  approxHijriYear,
   buildBreadcrumbSchema,
 } from '@/lib/holidays-engine';
-import { resolveAllHijriEvents } from '@/lib/hijri-resolver';
-import { getInitialEvents } from './actions';
-import { PAGE_SIZE } from './constants';
+import { getInitialEvents } from './data';
 import HolidaysClient from './HolidaysClient';
-import { EventGridSkeleton } from '@/components/events/EventCard';
 import { getCachedNowIso } from '@/lib/date-utils';
 import HolidaysSections from '@/components/holidays/index';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
+import { normalizeHolidayFilter } from './holidays-filter-utils';
 
 const SITE = getSiteUrl();
 
@@ -55,30 +38,10 @@ export async function generateMetadata() {
   };
 }
 
-/* ── Initial grid (SSR, streamed) ────────────────────────────────────── */
-function normalizeFilter(searchParams = {}) {
-  return {
-    category: searchParams?.category || 'all',
-    countryCode: searchParams?.country || 'all',
-    search: searchParams?.q || '',
-    timeRange: searchParams?.range || 'all',
-  };
-}
-
-async function InitialEventGrid({ filter }) {
-  const { events, nextCursor, total } = await getInitialEvents(filter);
-  return (
-    <HolidaysClient
-      initialEvents={events}
-      initialNextCursor={nextCursor}
-      initialTotal={total}
-      initialFilters={filter}
-    />
-  );
-}
+const DEFAULT_FILTER = normalizeHolidayFilter();
 
 /* ── Page ────────────────────────────────────────────────────────────── */
-export default async function HolidaysPage({ searchParams }) {
+export default async function HolidaysPage() {
   /* ── Schemas ──────────────────────────────────────────────────────── */
   const breadcrumb = buildBreadcrumbSchema([
     { name: 'الرئيسية', url: SITE },
@@ -105,37 +68,13 @@ export default async function HolidaysPage({ searchParams }) {
   };
 
   /* ── Date / year resolution ─────────────────────────────────────── */
-  const nowIso = await getCachedNowIso();
+  const [nowIso, defaultData] = await Promise.all([
+    getCachedNowIso(),
+    getInitialEvents(DEFAULT_FILTER),
+  ]);
   const now = new Date(nowIso);
   const gr = now.getFullYear();
   const hi = approxHijriYear(gr);
-  // Keep original behavior: getNextEventDate uses Jan-1 as reference
-  const nowMs = new Date(gr.toString()).getTime();
-
-  /* ── Key events (ramadan, eid-al-fitr, eid-al-adha) ──────────────── */
-  const keyEvents = ['ramadan', 'eid-al-fitr', 'eid-al-adha']
-    .map(s => ALL_EVENTS.find(e => e.slug === s))
-    .filter(Boolean)
-    .map(enrichEvent);
-  const keyResolved = await resolveAllHijriEvents(keyEvents);
-
-  const keyMeta = Object.fromEntries(keyEvents.map(ev => {
-    const target = getNextEventDate(ev, keyResolved, nowMs);
-    const meta = resolveEventMeta(ev, target);
-    // daysLeft uses actual now (not Jan-1) for accurate countdown display
-    const daysLeft = Math.max(0, Math.ceil((target - now.getTime()) / (1000 * 60 * 60 * 24)));
-    return [ev.slug, { date: formatGregorianAr(target), daysLeft, ...meta }];
-  }));
-
-  /* ── Hero stats — top 3 upcoming for the hero card row ───────────── */
-  const heroStats = ['ramadan', 'eid-al-fitr', 'eid-al-adha']
-    .map(slug => {
-      const ev = ALL_EVENTS.find(e => e.slug === slug);
-      const meta = keyMeta[slug];
-      if (!ev || !meta || meta.daysLeft <= 0) return null;
-      return { slug, name: ev.name, daysLeft: meta.daysLeft, date: meta.date };
-    })
-    .filter(Boolean);
 
   /* ── FAQ schema ───────────────────────────────────────────────────── */
   const faqSchema = {
@@ -143,21 +82,15 @@ export default async function HolidaysPage({ searchParams }) {
     mainEntity: [
       {
         q: `متى يبدأ رمضان ${gr}؟`,
-        a: keyMeta['ramadan']
-          ? `${keyMeta['ramadan'].description} — ${keyMeta['ramadan'].date}.`
-          : `يُحسب تلقائياً من AlAdhan API.`,
+        a: `تُحدَّث صفحة المناسبات موعد رمضان ${gr} تلقائياً وفق تقويم أم القرى، مع الإشارة لاحتمال اختلاف يوم واحد بحسب الرؤية المحلية في بعض الدول.`,
       },
       {
         q: `متى عيد الفطر ${gr}؟`,
-        a: keyMeta['eid-al-fitr']
-          ? `${keyMeta['eid-al-fitr'].date} وفق أم القرى.`
-          : `يُحسب تلقائياً.`,
+        a: `تُحدَّث صفحة المناسبات موعد عيد الفطر ${gr} تلقائياً وفق الحسابات المعتمدة، مع تنبيه واضح عند وجود احتمال اختلاف بالرؤية المحلية.`,
       },
       {
         q: `متى عيد الأضحى ${gr}؟`,
-        a: keyMeta['eid-al-adha']
-          ? `${keyMeta['eid-al-adha'].date} وفق أم القرى.`
-          : `يُحسب تلقائياً.`,
+        a: `تُحدَّث صفحة المناسبات موعد عيد الأضحى ${gr} تلقائياً وفق الحسابات المعتمدة، مع مراعاة اختلاف إعلان الموعد النهائي بين بعض الدول.`,
       },
       {
         q: `كيف تُحسب التواريخ الهجرية؟`,
@@ -168,8 +101,6 @@ export default async function HolidaysPage({ searchParams }) {
       acceptedAnswer: { '@type': 'Answer', text: a },
     })),
   };
-
-  const filter = normalizeFilter(await searchParams);
 
   /* ── Render ──────────────────────────────────────────────────────── */
   return (
@@ -250,9 +181,12 @@ export default async function HolidaysPage({ searchParams }) {
 
         {/* ── All events ─────────────────────────────────────────────── */}
         <section aria-labelledby="events-heading">
-        <Suspense fallback={<EventGridSkeleton count={PAGE_SIZE} />}>
-          <InitialEventGrid filter={filter} />
-        </Suspense>
+          <HolidaysClient
+            initialEvents={defaultData.events}
+            initialNextCursor={defaultData.nextCursor}
+            initialTotal={defaultData.total}
+            initialFilters={DEFAULT_FILTER}
+          />
         </section>
         <AdInArticle slotId="mid-holidays-1" />
       </main>

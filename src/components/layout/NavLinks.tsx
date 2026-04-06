@@ -27,6 +27,7 @@ import {
   Globe, GlobeIcon,
 } from "@phosphor-icons/react";
 import * as PhosphorIcons from "@phosphor-icons/react";
+import { useIntentPrefetch } from "./useIntentPrefetch";
 
 type SubLink = {
   href: string;
@@ -62,6 +63,7 @@ function getPhosphorIcon(name?: string): React.ElementType | null {
 
 export default function NavLinks({ links }: { links: NavLink[] }) {
   const pathname = usePathname();
+  const { getPrefetchHandlers, prefetchMany } = useIntentPrefetch();
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -71,9 +73,14 @@ export default function NavLinks({ links }: { links: NavLink[] }) {
       <NavigationMenuList className="gap-1 flex-row">
         {links.map((link) => (
           <NavigationMenuItem key={link.href} className="flex">
-            {link.sublinks ? (
+            {link.sublinks ? (() => {
+              const sublinkHrefs = link.sublinks.map((sublink) => sublink.href);
+
+              return (
               <>
                 <NavigationMenuTrigger
+                  onMouseEnter={() => prefetchMany([link.href, ...sublinkHrefs])}
+                  onFocus={() => prefetchMany([link.href, ...sublinkHrefs])}
                   className={cn(
                     "header-nav-link h-9 bg-transparent hover:bg-accent-soft hover:text-primary focus:bg-accent-soft data-[state=open]:bg-accent-soft data-[state=open]:text-primary transition-all rounded-full px-4 border-none shadow-none",
                     isActive(link.href) &&
@@ -106,7 +113,12 @@ export default function NavLinks({ links }: { links: NavLink[] }) {
                           {link.panelDescription ??
                             `تصفح جميع أدوات ${link.label}`}
                         </p>
-                        <Link href={link.href} className="nav-mega-panel-cta">
+                        <Link
+                          href={link.href}
+                          prefetch
+                          className="nav-mega-panel-cta"
+                          {...getPrefetchHandlers(link.href)}
+                        >
                           استعرض الكل
                           <PhosphorIcons.CaretLeftIcon size={12} weight="bold" />
                         </Link>
@@ -123,10 +135,12 @@ export default function NavLinks({ links }: { links: NavLink[] }) {
                           <NavigationMenuLink key={sublink.href} asChild>
                             <Link
                               href={sublink.href}
+                              prefetch
                               className={cn(
                                 "nav-mega-item",
                                 active && "nav-mega-item--active"
                               )}
+                              {...getPrefetchHandlers(sublink.href)}
                             >
                               <div className="nav-mega-top-row">
                                 <span
@@ -165,14 +179,17 @@ export default function NavLinks({ links }: { links: NavLink[] }) {
                   </div>
                 </NavigationMenuContent>
               </>
-            ) : (
+              );
+            })() : (
               <NavigationMenuLink asChild active={isActive(link.href)}>
                 <Link
                   href={link.href}
+                  prefetch
                   className={cn(
                     "header-nav-link",
                     isActive(link.href) && "active"
                   )}
+                  {...getPrefetchHandlers(link.href)}
                 >
                   {link.label}
                 </Link>

@@ -12,6 +12,7 @@
 import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
 import { Suspense } from 'react';
+import Link from 'next/link';
 import { getCityBySlug, getPriorityCityParams } from '@/lib/db/queries/cities';
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 import {
@@ -246,11 +247,11 @@ export default async function PrayerTimesPage({ params }) {
 
         {/* Breadcrumb */}
         <nav aria-label="مسار التنقل" className="text-xs text-muted mb-6 hidden sm:flex items-center gap-1.5">
-          <a href="/" className="hover:text-accent transition-colors">الرئيسية</a>
+          <Link href="/" prefetch className="hover:text-accent transition-colors">الرئيسية</Link>
           <span aria-hidden="true">›</span>
-          <a href="/mwaqit-al-salat" className="hover:text-accent transition-colors">مواقيت الصلاة</a>
+          <Link href="/mwaqit-al-salat" prefetch className="hover:text-accent transition-colors">مواقيت الصلاة</Link>
           <span aria-hidden="true">›</span>
-          <a href={`/mwaqit-al-salat/${countrySlug}`} className="hover:text-accent transition-colors">{countryNameAr}</a>
+          <Link href={`/mwaqit-al-salat/${countrySlug}`} prefetch className="hover:text-accent transition-colors">{countryNameAr}</Link>
           <span aria-hidden="true">›</span>
           <span className="text-secondary">{cityNameAr}</span>
         </nav>

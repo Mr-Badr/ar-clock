@@ -17,10 +17,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { convertDate } from '@/lib/date-adapter';
+import { convertDate, type ConvertDateResult } from '@/lib/date-adapter';
 import { getIslamicEventsForHijriDate } from '@/lib/islamic-holidays';
 import { JsonLd } from '@/components/date/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
+import DateRouteLoading from '@/components/date/DateRouteLoading';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { ArrowLeftRight, Moon, CalendarDays, Calendar } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
@@ -47,9 +48,36 @@ const GREGORIAN_MONTHS = [
 ];
 const DAY_NAMES = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
+const HUB_FAQ_ITEMS = [
+  {
+    question: 'كم تاريخ اليوم بالهجري؟',
+    answer: 'تاريخ اليوم بالهجري يظهر هنا وفق تقويم أم القرى مع تحديث مستمر. ويمكنك من الصفحة نفسها الانتقال إلى التفاصيل اليومية أو مقارنة النتائج مع طرق الحساب الأخرى.',
+  },
+  {
+    question: 'كيف أحول تاريخاً من ميلادي إلى هجري؟',
+    answer: 'يمكنك تحويل أي تاريخ من ميلادي إلى هجري عبر أداة محول التاريخ في هذا القسم. اختر نوع التحويل وأدخل التاريخ المطلوب ثم ستظهر لك النتيجة مباشرة مع أكثر من طريقة حساب.',
+  },
+  {
+    question: 'ما الفرق بين تقويم أم القرى والحساب الفلكي؟',
+    answer: 'تقويم أم القرى هو المرجع الرسمي الشائع في السعودية ودول الخليج، بينما يعتمد الحساب الفلكي في دول وجهات أخرى. قد يؤدي اختلاف المنهج إلى فرق بيوم واحد في بعض التواريخ الهجرية.',
+  },
+  {
+    question: 'هل يختلف التاريخ الهجري بين الدول العربية؟',
+    answer: 'نعم، قد يختلف التاريخ الهجري بين الدول العربية بحسب الجهة الرسمية وطريقة الإثبات المعتمدة. لهذا نوفر صفحات للتحويل والتقويم حتى تتمكن من المقارنة والوصول إلى التاريخ المناسب لبلدك.',
+  },
+];
+
 export default function DateHubPage() {
   return (
-    <Suspense fallback={<div className="h-screen animate-pulse bg-surface-1" />}>
+    <Suspense
+      fallback={(
+        <DateRouteLoading
+          kind="hub"
+          title="جاري تحميل مركز التاريخ"
+          description="نجهز لك تاريخ اليوم وأدوات التحويل وروابط التقاويم الآن."
+        />
+      )}
+    >
       <DateHubDynamicContent />
     </Suspense>
   );
@@ -64,7 +92,7 @@ async function DateHubDynamicContent() {
   const dayOfWeek = DAY_NAMES[now.getUTCDay()];
   const monthAr = GREGORIAN_MONTHS[m - 1];
 
-  let hijri;
+  let hijri: ConvertDateResult | undefined;
   try { hijri = convertDate({ date: iso, toCalendar: 'hijri', method: 'umalqura' }); } catch { /**/ }
 
   const events = hijri ? getIslamicEventsForHijriDate(hijri.year, hijri.month, hijri.day) : [];
@@ -80,23 +108,16 @@ async function DateHubDynamicContent() {
     breadcrumb: buildBreadcrumbJsonLd(breadcrumb, BASE_URL),
     mainEntity: {
       '@type': 'FAQPage',
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name: 'كم تاريخ اليوم بالهجري؟',
-          acceptedAnswer: { '@type': 'Answer', text: hijri ? `تاريخ اليوم بالهجري هو ${hijri.formatted.ar} وفق تقويم أم القرى.` : 'يمكنك معرفة التاريخ الهجري اليوم عبر هذه الصفحة.' },
+      mainEntity: HUB_FAQ_ITEMS.map((item, index) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: index === 0 && hijri
+            ? `تاريخ اليوم بالهجري هو ${hijri.formatted.ar} وفق تقويم أم القرى.`
+            : item.answer,
         },
-        {
-          '@type': 'Question',
-          name: 'كيف أحوّل تاريخاً من ميلادي إلى هجري؟',
-          acceptedAnswer: { '@type': 'Answer', text: 'استخدم محول التاريخ: أدخل التاريخ الميلادي واختر «ميلادي إلى هجري» ثم اضغط تحويل.' },
-        },
-        {
-          '@type': 'Question',
-          name: 'ما الفرق بين تقويم أم القرى والحساب الفلكي؟',
-          acceptedAnswer: { '@type': 'Answer', text: 'أم القرى هو التقويم الرسمي للسعودية ودول الخليج. الحساب الفلكي تتبعه مصر والمغرب والأردن. قد يختلفان بيوم واحد.' },
-        },
-      ],
+      })),
     },
   };
 
@@ -201,7 +222,7 @@ async function DateHubDynamicContent() {
                 { href: '/date/hijri-to-gregorian', icon: '📿', title: 'هجري → ميلادي', sub: 'تحويل مباشر' },
                 { href: `/date/calendar/${y}`, icon: '📆', title: `تقويم ${y}`, sub: 'ميلادي + هجري' },
                 { href: `/date/calendar/hijri/${hijri?.year ?? 1447}`, icon: '🗓', title: `تقويم ${hijri?.year ?? 1447} هـ`, sub: 'هجري كامل' },
-                { href: '/date/country/saudi-arabia', icon: '🌍', title: 'التاريخ حسب الدولة', sub: '22+ دولة عربية' },
+                { href: '/date/country', icon: '🌍', title: 'التاريخ حسب الدولة', sub: '22+ دولة عربية' },
               ].map((tool) => (
                 <Link
                   key={tool.href}
@@ -286,6 +307,18 @@ async function DateHubDynamicContent() {
                     <h3 className="card__title text-base">{card.title}</h3>
                   </div>
                   <p className="text-sm text-secondary leading-relaxed m-0">{card.body}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-xl font-bold text-primary mb-5">أسئلة شائعة حول التاريخ الهجري والميلادي</h2>
+            <div className="grid md:grid-cols-2" style={{ gap: '16px' }}>
+              {HUB_FAQ_ITEMS.map((item) => (
+                <article key={item.question} className="card">
+                  <h3 className="card__title text-base mb-3">{item.question}</h3>
+                  <p className="text-sm text-secondary leading-relaxed m-0">{item.answer}</p>
                 </article>
               ))}
             </div>

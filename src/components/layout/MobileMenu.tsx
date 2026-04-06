@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import * as PhosphorIcons from "@phosphor-icons/react";
+import { useIntentPrefetch } from "./useIntentPrefetch";
 
 type SubLink = {
   href: string;
@@ -48,6 +49,7 @@ function getPhosphorIcon(name?: string): React.ElementType | null {
 export default function MobileMenu({ links }: { links: NavLink[] }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const { getPrefetchHandlers, prefetchMany } = useIntentPrefetch();
 
   useEffect(() => {
     setOpen(false);
@@ -77,10 +79,15 @@ export default function MobileMenu({ links }: { links: NavLink[] }) {
         <div className="flex flex-col gap-1 w-full rtl">
           {links.map((link) => (
             <div key={link.href}>
-              {link.sublinks ? (
+              {link.sublinks ? (() => {
+                const sublinkHrefs = link.sublinks.map((sublink) => sublink.href);
+
+                return (
                 <Accordion type="single" collapsible className="w-full">
                   <AccordionItem value={link.href} className="border-none">
                     <AccordionTrigger
+                      onMouseEnter={() => prefetchMany([link.href, ...sublinkHrefs])}
+                      onFocus={() => prefetchMany([link.href, ...sublinkHrefs])}
                       className={cn(
                         "header-mobile-link hover:no-underline py-3 px-4 w-full justify-between flex [&>svg]:order-last border-none shadow-none",
                         isActive(link.href) && "active"
@@ -95,11 +102,13 @@ export default function MobileMenu({ links }: { links: NavLink[] }) {
                           <Link
                             key={sublink.href}
                             href={sublink.href}
+                            prefetch
                             className={cn(
                               "flex items-center gap-3 p-3 rounded-md text-sm transition-colors hover:bg-accent-soft hover:text-primary",
                               pathname === sublink.href &&
                                 "text-primary font-bold bg-accent-soft"
                             )}
+                            {...getPrefetchHandlers(sublink.href)}
                           >
                             {SubIcon && (
                               <SubIcon
@@ -119,7 +128,8 @@ export default function MobileMenu({ links }: { links: NavLink[] }) {
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
-              ) : (
+                );
+              })() : (
                 <Link
                   href={link.href}
                   prefetch
@@ -128,6 +138,7 @@ export default function MobileMenu({ links }: { links: NavLink[] }) {
                     "header-mobile-link",
                     isActive(link.href) && "active"
                   )}
+                  {...getPrefetchHandlers(link.href)}
                 >
                   {link.label}
                 </Link>

@@ -10,6 +10,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import Link from 'next/link';
+import { cacheLife, cacheTag } from 'next/cache';
 import { convertDate } from '@/lib/date-adapter';
 import { getIslamicEventsForHijriDate } from '@/lib/islamic-holidays';
 import {
@@ -66,9 +67,12 @@ interface HijriDayData {
   eventName?: string;
 }
 
-export function HijriYearlyCalendar({ year }: { year: number }) {
-  // ── PRE-COMPUTE gregorian crossovers ──────────────────────────────────────
-  const dayMap = new Map<string, HijriDayData>();
+async function getHijriCalendarDayLookup(year: number) {
+  'use cache';
+  cacheTag('date-calendar-hijri', `date-calendar-hijri-${year}`);
+  cacheLife('days');
+
+  const dayLookup: Record<string, HijriDayData> = {};
 
   for (let month = 1; month <= 12; month++) {
     const days = getHijriMonthDays(year, month);
@@ -77,15 +81,23 @@ export function HijriYearlyCalendar({ year }: { year: number }) {
       try {
         const g = convertDate({ date: isoH, toCalendar: 'gregorian', method: 'umalqura' });
         const events = getIslamicEventsForHijriDate(year, month, day);
-        dayMap.set(isoH, {
+        dayLookup[isoH] = {
           gregDay: g.day,
           gregMonth: g.month,
           hasEvent: events.length > 0,
           eventName: events[0]?.nameAr,
-        });
-      } catch { /* out of range */ }
+        };
+      } catch {
+        // Keep unsupported dates empty.
+      }
     }
   }
+
+  return dayLookup;
+}
+
+export async function HijriYearlyCalendar({ year }: { year: number }) {
+  const dayLookup = await getHijriCalendarDayLookup(year);
 
   // ── RENDER ────────────────────────────────────────────────────────────────
   return (
@@ -170,7 +182,7 @@ export function HijriYearlyCalendar({ year }: { year: number }) {
 
                 {Array.from({ length: days }, (_, i) => i + 1).map((day) => {
                   const isoH = `${year}-${monthStr}-${String(day).padStart(2, '0')}`;
-                  const data = dayMap.get(isoH);
+                  const data = dayLookup[isoH];
 
                   const eventBorderColor = special?.color ?? 'var(--success)';
                   const eventSoftBg = special?.softBg ?? 'var(--success-soft)';

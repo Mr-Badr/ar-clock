@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 import { getPriorityCountrySlugs, getCountryBySlug } from '@/lib/db/queries/countries';
 import { getCapitalCity } from '@/lib/db/queries/cities';
 import { getCachedNowIso } from '@/lib/date-utils';
-import { convertDate, GREGORIAN_MONTH_NAMES_AR } from '@/lib/date-adapter';
+import { convertDate, GREGORIAN_MONTH_NAMES_AR, type ConversionMethod } from '@/lib/date-adapter';
 import { getFlagEmoji, getSafeTimezone } from '@/lib/country-utils';
 import { JsonLd } from '@/components/date/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
@@ -18,22 +18,42 @@ import { getSiteUrl } from '@/lib/site-config';
 
 const BASE_URL = getSiteUrl();
 
-const COUNTRY_HIJRI_METHODS: Record<string, 'umalqura' | 'astronomical' | 'civil'> = {
+const GLOBAL_HIJRI_METHOD: ConversionMethod = 'astronomical';
+
+const COUNTRY_HIJRI_METHOD_OVERRIDES: Partial<Record<string, ConversionMethod>> = {
   'SA': 'umalqura',      // Saudi Arabia
   'AE': 'umalqura',      // UAE
   'KW': 'umalqura',      // Kuwait
   'QA': 'umalqura',      // Qatar
   'BH': 'umalqura',      // Bahrain
   'OM': 'umalqura',      // Oman
-  'MA': 'astronomical',  // Morocco
-  'EG': 'astronomical',  // Egypt
-  'JO': 'astronomical',  // Jordan
-  'DZ': 'astronomical',  // Algeria
-  'TN': 'astronomical',  // Tunisia
-  'IQ': 'astronomical',  // Iraq
-  'LB': 'astronomical',  // Lebanon
-  'SY': 'astronomical',  // Syria
 };
+
+function getHijriMethodNameAr(method: ConversionMethod) {
+  if (method === 'umalqura') return 'تقويم أم القرى';
+  if (method === 'civil') return 'التقويم المدني';
+  return 'الحساب الفلكي';
+}
+
+function resolveCountryHijriMethod(countryCode: string) {
+  const normalizedCode = String(countryCode || '').toUpperCase();
+  const method = COUNTRY_HIJRI_METHOD_OVERRIDES[normalizedCode] ?? GLOBAL_HIJRI_METHOD;
+  const isGlobalDefault = !COUNTRY_HIJRI_METHOD_OVERRIDES[normalizedCode];
+  const methodNameAr = getHijriMethodNameAr(method);
+
+  const methodNoteAr = isGlobalDefault
+    ? 'للدول التي لا يتوفر لها تخصيص محلي في قاعدة البيانات، نستخدم الحساب الفلكي كإعداد افتراضي عالمي.'
+    : method === 'umalqura'
+      ? 'تم اختيار هذه الطريقة لأنها الأقرب للاستخدام الرسمي في هذا البلد.'
+      : 'تم اختيار هذه الطريقة لأنها الأقرب للاستخدام الشائع في هذا البلد.';
+
+  return {
+    method,
+    methodNameAr,
+    methodNoteAr,
+    isGlobalDefault,
+  };
+}
 
 interface RelatedLinksProps {
   countrySlug: string
@@ -78,7 +98,7 @@ export async function generateMetadata({
   const countryAr = country.name_ar;
   return {
     title: `التاريخ الهجري اليوم في ${countryAr} | مواقيت`,
-    description: `تعرف على التاريخ الهجري والميلادي اليوم في ${countryAr} حسب التقويم المعتمد.`,
+    description: `تعرف على التاريخ الهجري والميلادي اليوم في ${countryAr} حسب طريقة الحساب المناسبة لهذه الصفحة.`,
     alternates: { canonical: `${BASE_URL}/date/country/${countrySlug}` },
     openGraph: {
       title: `التاريخ الهجري والميلادي اليوم في ${countryAr}`,
@@ -132,8 +152,7 @@ async function CountryDateDynamicContent({
     if (y && m && d) localDateIso = `${y}-${m}-${d}`;
   } catch { }
 
-  const method = COUNTRY_HIJRI_METHODS[country.country_code] || 'umalqura';
-  const methodNameAr = method === 'umalqura' ? 'تقويم أم القرى' : method === 'astronomical' ? 'الحساب الفلكي' : 'التقويم المدني';
+  const { method, methodNameAr, methodNoteAr, isGlobalDefault } = resolveCountryHijriMethod(country.country_code);
 
   let hijri;
   try {
@@ -226,7 +245,7 @@ async function CountryDateDynamicContent({
                   {hijri.formatted.ar}
                 </div>
                 <div className="text-sm text-muted font-medium bg-surface-2 inline-block px-3 py-1 rounded-md">
-                  يعتمد على: {methodNameAr}
+                  طريقة الحساب: {methodNameAr}
                 </div>
               </div>
 
@@ -252,8 +271,8 @@ async function CountryDateDynamicContent({
               <h3 className="text-base font-bold text-primary mb-1.5">معلومة تهمك</h3>
               <p className="text-sm text-secondary leading-relaxed">
                 وفقاً لقاعدة البيانات، فإن التوقيت في {country.name_ar} حالياً يتوافق مع يوم {hijri.dayNameAr}.
-                يتم عرض التاريخ الهجري باستخدام {methodNameAr} وهو التقويم الأقرب للرسمي المعتمد في هذه الدولة.
-                قد تختلف رؤية الهلال في بعض الدول المجاورة.
+                يتم عرض التاريخ الهجري باستخدام {methodNameAr}. {methodNoteAr}
+                {!isGlobalDefault ? ' قد تختلف رؤية الهلال في بعض الدول المجاورة.' : ' قد تختلف النتائج عن التقاويم المحلية إذا اعتمدت الدولة إعلاناً رسمياً مختلفاً.'}
               </p>
             </div>
           </section>

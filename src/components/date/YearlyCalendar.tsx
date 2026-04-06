@@ -22,9 +22,9 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import Link from 'next/link';
+import { cacheLife, cacheTag } from 'next/cache';
 import { convertDate } from '@/lib/date-adapter';
 import { getIslamicEventsForHijriDate } from '@/lib/islamic-holidays';
-import { connection } from 'next/server';
 import { EventDayLink } from './EventDayLink';
 
 const MONTHS_AR = [
@@ -55,11 +55,12 @@ interface Props {
   serverTodayIso?: string; // Pass from page to avoid server/client time mismatch
 }
 
-export async function YearlyCalendar({ year, serverTodayIso }: Props) {
-  // ── PRE-COMPUTE: one pass over all days in the year ──────────────────────
-  if (!serverTodayIso) await connection();
-  const todayIso = serverTodayIso ?? new Date().toISOString().slice(0, 10);
-  const dayMap = new Map<string, DayData>();
+async function getGregorianCalendarDayLookup(year: number) {
+  'use cache';
+  cacheTag('date-calendar-gregorian', `date-calendar-gregorian-${year}`);
+  cacheLife('days');
+
+  const dayLookup: Record<string, DayData> = {};
 
   for (let month = 1; month <= 12; month++) {
     const days = getDaysInMonth(year, month);
@@ -68,17 +69,26 @@ export async function YearlyCalendar({ year, serverTodayIso }: Props) {
       try {
         const h = convertDate({ date: iso, toCalendar: 'hijri', method: 'umalqura' });
         const events = getIslamicEventsForHijriDate(h.year, h.month, h.day);
-        dayMap.set(iso, {
+        dayLookup[iso] = {
           hijriDay: h.day,
           hijriMonth: h.month,
           hijriYear: h.year,
           hasEvent: events.length > 0,
           isRamadan: h.month === 9,
           eventName: events[0]?.nameAr,
-        });
-      } catch { /* out of supported range */ }
+        };
+      } catch {
+        // Keep unsupported dates empty.
+      }
     }
   }
+
+  return dayLookup;
+}
+
+export async function YearlyCalendar({ year, serverTodayIso }: Props) {
+  const todayIso = serverTodayIso ?? '';
+  const dayLookup = await getGregorianCalendarDayLookup(year);
 
   // ── RENDER ────────────────────────────────────────────────────────────────
   return (
@@ -146,7 +156,7 @@ export async function YearlyCalendar({ year, serverTodayIso }: Props) {
               {/* Day cells */}
               {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((day) => {
                 const iso = `${year}-${monthStr}-${String(day).padStart(2, '0')}`;
-                const data = dayMap.get(iso);
+                const data = dayLookup[iso];
                 const isToday = iso === todayIso;
                 const dayOfWeek = new Date(Date.UTC(year, month - 1, day)).getUTCDay();
                 const isFriday = dayOfWeek === 5;
