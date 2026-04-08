@@ -43,10 +43,10 @@ export function DateShareActions({ hijriFormatted, gregorianFormatted, hijriIso,
     const ts = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z';
     const body = [
       'BEGIN:VCALENDAR', 'VERSION:2.0',
-      'PRODID:-//MiqaTime//HijriDate//AR',
+      'PRODID:-//Miqatona//HijriDate//AR',
       'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
       'BEGIN:VEVENT',
-      `UID:${ts}-${iso}@miqatime.com`,
+      `UID:${ts}-${iso}@miqatona.com`,
       `DTSTAMP:${ts}`,
       `DTSTART;VALUE=DATE:${iso}`,
       `SUMMARY:${hijriFormatted}`,

@@ -1,12 +1,19 @@
-import { getAllCountrySlugs } from '@/lib/db/queries/countries';
 import { getSiteUrl } from '@/lib/site-config';
 
 export async function GET() {
   const BASE = getSiteUrl();
-  const countrySlugs = await getAllCountrySlugs();
+  let countrySlugs: string[] = [];
+
+  try {
+    const countriesModule = await import('@/lib/db/queries/countries');
+    countrySlugs = await countriesModule.getAllCountrySlugs();
+  } catch {
+    // Keep the sitemap index crawlable even if the country-query layer is unavailable.
+  }
 
   const sitemaps = [
     `${BASE}/sitemap.xml`,
+    `${BASE}/economie/sitemap.xml`,
     `${BASE}/holidays/sitemap.xml`,
     `${BASE}/time-difference/sitemap.xml`,
     // Date feature sitemaps

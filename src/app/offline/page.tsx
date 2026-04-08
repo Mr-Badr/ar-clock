@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import ReloadButton from './ReloadButton';
 
 export const metadata: Metadata = {
-  title: 'غير متصل | ميقات',
+  title: 'غير متصل | ميقاتنا',
   description: 'أنت غير متصل بالإنترنت حالياً',
   robots: {
     index: false,

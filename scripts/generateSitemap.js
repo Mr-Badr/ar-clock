@@ -21,7 +21,7 @@ async function generate() {
 
   const xmlUrls = data.map(city => `
     <url>
-      <loc>https://miqatime.com/mwaqit-al-salat/${city.country_slug}/${city.city_slug}</loc>
+      <loc>https://miqatona.com/mwaqit-al-salat/${city.country_slug}/${city.city_slug}</loc>
       <changefreq>daily</changefreq>
       <priority>0.8</priority>
     </url>

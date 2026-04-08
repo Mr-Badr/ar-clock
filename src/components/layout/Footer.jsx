@@ -9,6 +9,7 @@ import {
   FEATURED_COUNTDOWN_LINKS,
   getPopularTimeNowCityLinks,
 } from "@/lib/seo/popular-links";
+import { SITE_BRAND } from "@/lib/site-config";
 
 const PRODUCT_LINKS = [
   { href: '/time-now', label: 'الوقت الآن' },
@@ -18,8 +19,19 @@ const PRODUCT_LINKS = [
   { href: '/date', label: 'التاريخ والتحويل' },
 ];
 
+const ECONOMY_LINKS = [
+  { href: '/economie', label: 'الاقتصاد الحي' },
+  { href: '/economie/us-market-open', label: 'متى يفتح السوق الأمريكي؟' },
+  { href: '/economie/gold-market-hours', label: 'هل الذهب مفتوح الآن؟' },
+  { href: '/economie/stock-markets', label: 'البورصات العالمية الآن' },
+  { href: '/economie/forex-sessions', label: 'جلسات الفوركس الآن' },
+  { href: '/economie/market-clock', label: 'ساعة التداول' },
+  { href: '/economie/best-trading-time', label: 'أفضل وقت للتداول' },
+];
+
 const COMPANY_LINKS = [
   { href: '/about', label: 'من نحن' },
+  { href: '/disclaimer', label: 'إخلاء المسؤولية' },
   { href: '/privacy', label: 'سياسة الخصوصية' },
   { href: '/contact', label: 'اتصل بنا' },
 ];
@@ -52,11 +64,11 @@ const Footer = async () => {
               <div className="footer-brand-icon">
                 <Clock size={20} color="white" />
               </div>
-              <span className="footer-brand-name">ميقات</span>
+              <span className="footer-brand-name">{SITE_BRAND}</span>
             </div>
 
             <p className="footer-brand-desc">
-              ميقات منصة عربية مستقلة، بُنيت على فكرة واحدة — المستخدم العربي يستحق أدوات صُنعت له، لا تُرجمت إليه. سريعة، دقيقة، وتستحق ثقتك.
+              {SITE_BRAND} منصة عربية مستقلة، بُنيت على فكرة واحدة — المستخدم العربي يستحق أدوات صُنعت له، لا تُرجمت إليه. سريعة، دقيقة، وتستحق ثقتك.
             </p>
 
             <div className="footer-brand-badge-wrap">
@@ -85,6 +97,17 @@ const Footer = async () => {
               <h3 className="footer-col-heading">الصفحات الرئيسية</h3>
               <ul className="footer-col-list">
                 {PRODUCT_LINKS.map(({ href, label }) => (
+                  <li key={href}>
+                    <Link href={href} className="footer-col-link">{label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="footer-col">
+              <h3 className="footer-col-heading">أدوات الاقتصاد</h3>
+              <ul className="footer-col-list">
+                {ECONOMY_LINKS.map(({ href, label }) => (
                   <li key={href}>
                     <Link href={href} className="footer-col-link">{label}</Link>
                   </li>
@@ -315,7 +338,7 @@ const Footer = async () => {
 
           Mobile  (<640px):  2 columns
           Tablet (640-1023): 3 columns
-          Desktop (1024px+): 5 columns, all in one line
+          Desktop (1024px+): 6 columns, all in one line
         ───────────────────────────────────────── */
         .footer-links-grid {
           display: grid;
@@ -334,7 +357,7 @@ const Footer = async () => {
           .footer-links-grid {
             /* Each column is sized to its content —
                no stretching, no overflow.            */
-            grid-template-columns: repeat(5, auto);
+            grid-template-columns: repeat(6, auto);
             gap: var(--space-10);
             width: auto;
             flex: 1;             /* fill remaining space in the main row */

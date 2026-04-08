@@ -14,6 +14,7 @@ import { getCachedEventMeta } from '@/lib/event-cache';
 import { buildTemplateContext, resolveTemplate } from '@/lib/template-resolver';
 import { getCountryByCode } from '@/lib/events/country-dictionary';
 import { HOLIDAY_CATEGORIES } from '@/lib/holidays/taxonomy';
+import { SITE_APP_NAME } from '@/lib/site-config';
 export const HIJRI_MONTHS_AR = ['', ...BASE_MONTHS];
 const GREG_MONTHS_AR = [
   '', 'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
@@ -476,7 +477,7 @@ export function buildEventSchema(ev, date, siteUrl, eventState = 'upcoming') {
     },
     organizer: {
       '@type': 'Organization',
-      name: 'ميقات | دليلك الشامل للوقت والمواعيد',
+      name: SITE_APP_NAME,
       url: siteUrl,
       logo: `${siteUrl}/icons/icon-512.png`,
     },
@@ -494,9 +495,9 @@ export function buildWebPageSchema(ev, date, siteUrl, nowIso) {
     inLanguage: 'ar',
     dateModified: nowIso || '2026-01-01T00:00:00Z',
     datePublished: '2025-01-01T00:00:00Z',
-    isPartOf: { '@type': 'WebSite', url: siteUrl, name: 'ميقات | دليلك الشامل للوقت والمواعيد' },
+    isPartOf: { '@type': 'WebSite', url: siteUrl, name: SITE_APP_NAME },
     about: { '@type': 'Event', name: ev.name, startDate: d.toISOString() },
-    author: { '@type': 'Organization', name: 'ميقات | دليلك الشامل للوقت والمواعيد', url: siteUrl },
+    author: { '@type': 'Organization', name: SITE_APP_NAME, url: siteUrl },
   };
 }
 export function buildFAQSchema(ev) {
@@ -533,7 +534,7 @@ export function buildEventSeriesSchema(ev, siteUrl) {
     inLanguage: 'ar',
     organizer: {
       '@type': 'Organization',
-      name: 'ميقات | دليلك الشامل للوقت والمواعيد',
+      name: SITE_APP_NAME,
       url: siteUrl,
       logo: `${siteUrl}/icons/icon-512.png`,
     },

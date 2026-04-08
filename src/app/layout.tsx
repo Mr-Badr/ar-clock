@@ -1,5 +1,6 @@
 import './globals.css';
 import './waqt-ui.css';
+import './styles/economy.css';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { IBM_Plex_Sans_Arabic, Noto_Sans_Arabic } from 'next/font/google';
@@ -15,6 +16,7 @@ import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
 import { getEnv } from '@/lib/env.server';
 import {
   SITE_BRAND,
+  SITE_BRAND_EN,
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
   SITE_TITLE,
@@ -51,7 +53,7 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   keywords: SITE_KEYWORDS,
-  authors: [{ name: 'ميقات (Miqat) — منصة عربية للوقت والتاريخ والمواقيت' }],
+  authors: [{ name: `${SITE_BRAND} (${SITE_BRAND_EN}) — منصة عربية للوقت والتاريخ والمواقيت` }],
   category: 'utilities',
   classification: 'Public',
 
@@ -117,7 +119,7 @@ export default async function RootLayout({
       lang="ar"
       dir="rtl"
       suppressHydrationWarning
-      className={`${notoSansArabic.variable} ${ibmPlexSansArabic.variable}`}
+      className={`dark ${notoSansArabic.variable} ${ibmPlexSansArabic.variable}`}
     >
       {/* The CSS @layer base already sets body styles:
             background-color: var(--bg-base)

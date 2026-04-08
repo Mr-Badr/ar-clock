@@ -1,12 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-process.env.NEXT_PUBLIC_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatime.com';
+process.env.NEXT_PUBLIC_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://miqatona.com';
 
 import manifest from '@/data/holidays/generated/manifest.json';
 import { GENERATED_ALIAS_META_BY_SLUG } from '@/lib/events/generated-aliases';
+import economySitemap from '@/app/economie/sitemap';
 import holidaysSitemap from '@/app/holidays/sitemap';
 import rootSitemap from '@/app/sitemap';
+import { GET as sitemapIndexRoute } from '@/app/sitemap-index.xml/route';
 import robots from '@/app/robots';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
@@ -65,7 +67,7 @@ test('holiday sitemap urls use site base url and valid lastModified values', asy
 test('root sitemap includes key static pages', async () => {
   const sitemap = await rootSitemap();
   const base = getSiteUrl();
-  const expectedPaths: string[] = ['/holidays', '/map', '/about', '/privacy', '/contact'];
+  const expectedPaths: string[] = ['/holidays', '/map', '/about', '/disclaimer', '/privacy', '/contact'];
   for (const expectedPath of expectedPaths) {
     assert.equal(
       sitemap.some((row) => row.url === `${base}${expectedPath}`),
@@ -73,6 +75,38 @@ test('root sitemap includes key static pages', async () => {
       `${expectedPath} should appear in the root sitemap`,
     );
   }
+});
+
+test('economy sitemap includes all economy routes with site base urls', async () => {
+  const sitemap = await economySitemap();
+  const base = getSiteUrl();
+  const expectedPaths: string[] = [
+    '/economie',
+    '/economie/us-market-open',
+    '/economie/gold-market-hours',
+    '/economie/forex-sessions',
+    '/economie/stock-markets',
+    '/economie/market-clock',
+    '/economie/best-trading-time',
+  ];
+
+  assert.equal(sitemap.length, expectedPaths.length);
+
+  for (const expectedPath of expectedPaths) {
+    assert.equal(
+      sitemap.some((row) => row.url === `${base}${expectedPath}`),
+      true,
+      `${expectedPath} should appear in the economy sitemap`,
+    );
+  }
+});
+
+test('sitemap index includes economy sitemap entry', async () => {
+  const base = getSiteUrl();
+  const response = await sitemapIndexRoute();
+  const xml = await response.text();
+
+  assert.match(xml, new RegExp(`${base}/economie/sitemap\\.xml`));
 });
 
 test('robots points crawlers to sitemap index', () => {

@@ -17,6 +17,7 @@ export default async function sitemap() {
     { url: `${BASE}/time-difference`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
     { url: `${BASE}/map`, lastModified: now, changeFrequency: 'weekly', priority: 0.5 },
     { url: `${BASE}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.4 },
+    { url: `${BASE}/disclaimer`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
     { url: `${BASE}/privacy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
     { url: `${BASE}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.4 },
   ];

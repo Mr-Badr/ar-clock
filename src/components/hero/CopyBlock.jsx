@@ -19,6 +19,7 @@
 
 import styles from './TimeCinematicHero.module.css';
 import HulyButton from '@/components/HulyButton/HulyButton';
+import { SITE_BRAND } from '@/lib/site-config';
 
 function AuroraText({ children }) {
   return (
@@ -35,7 +36,7 @@ export default function CopyBlock({ extraClass = '' }) {
       <p className={styles.badge}>أخيراً، أداة صُنعت لك</p>
 
       <h1 className={styles.title}>
-        <AuroraText>ميقات</AuroraText>
+        <AuroraText>{SITE_BRAND}</AuroraText>
         {/*
           .dark forces dark-palette CSS vars for this subtree.
           Dark --text-secondary (#A8B2CB) reads correctly on the hero's
@@ -53,7 +54,7 @@ export default function CopyBlock({ extraClass = '' }) {
         global theme the user has selected.
       */}
       <p className={`${styles.desc} dark`}>
-        نعرف كم يعني لك وقتك. لذلك بنينا ميقات — منصة عربية تضع كل ما يحتاجه يومك بين يديك، بدقة تشعر معها أن كل أداة صُممت لك وحدك
+        نعرف كم يعني لك وقتك. لذلك بنينا {SITE_BRAND}، منصة عربية تضع كل ما يحتاجه يومك بين يديك، بدقة تشعر معها أن كل أداة صُممت لك وحدك
       </p>
 
       <div style={{ marginTop: '32px', padding: '4px' }}>

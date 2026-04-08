@@ -19,7 +19,7 @@ import AdInArticle from '@/components/ads/AdInArticle';
 import { SectionDivider } from '@/components/shared/primitives';
 import { POPULAR_PAIRS } from '@/components/time-diff/data/popularPairs';
 import { getCachedNowIso } from '@/lib/date-utils';
-import { getSiteUrl } from '@/lib/site-config';
+import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 import { getTimeDifference } from '@/lib/time-diff';
 import { resolveTimeDifferenceCityFromSegment } from '@/lib/time-difference-route';
 import { buildTimeDifferenceHref } from '@/lib/time-difference-links';
@@ -98,14 +98,14 @@ export async function generateMetadata({ params }) {
     resolveTimeDifferenceCityFromSegment(from),
     resolveTimeDifferenceCityFromSegment(to),
   ]);
-  if (!fromCity || !toCity) return { title: 'فرق التوقيت | ميقات' };
+  if (!fromCity || !toCity) return { title: `فرق التوقيت | ${SITE_BRAND}` };
 
   const canonicalFrom = fromCity.canonicalSegment || from;
   const canonicalTo = toCity.canonicalSegment || to;
   const canonicalHref = buildTimeDifferenceHref(canonicalFrom, canonicalTo);
   const [fromCountryPrimary] = getCountrySeoNames(fromCity.country_slug, fromCity.country_name_ar);
   const [toCountryPrimary] = getCountrySeoNames(toCity.country_slug, toCity.country_name_ar);
-  const title = `فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary} | ${fromCity.city_name_ar} و${toCity.city_name_ar} - ميقات`;
+  const title = `فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary} | ${fromCity.city_name_ar} و${toCity.city_name_ar} - ${SITE_BRAND}`;
   const description =
     `اعرف كم ساعة بين ${fromCountryPrimary} (${fromCity.city_name_ar}) و${toCountryPrimary} (${toCity.city_name_ar}) مع تحويل الوقت المباشر والساعة الآن والتوقيت الصيفي وأفضل وقت للاجتماعات.`;
   const keywords = buildComparisonKeywords(fromCity, toCity).join(', ');

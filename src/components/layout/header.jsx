@@ -5,6 +5,7 @@ import ThemeToggle from "./ThemeToggle";
 import MobileMenu from "./MobileMenu";
 import HeaderScrollEffect from "./HeaderScrollEffect";
 import HeaderRouteWarmup from "./HeaderRouteWarmup";
+import { SITE_BRAND } from "@/lib/site-config";
 import "./header.css";
 
 export const NAV_LINKS = [
@@ -29,6 +30,50 @@ export const NAV_LINKS = [
   { href: "/time-difference", label: "فرق التوقيت" },
   { href: "/time-now",        label: "الوقت الآن"   },
   { href: "/holidays",        label: "المناسبات"   },
+  {
+    href: "/economie",
+    label: "الاقتصاد",
+    panelIcon: "ChartLineUp",
+    panelDescription: "أدوات مجانية مبنية على التوقيت المحلي: السوق الأمريكي، الذهب، جلسات الفوركس، والبورصات العالمية",
+    sublinks: [
+      {
+        href: '/economie/us-market-open',
+        label: 'متى يفتح السوق الأمريكي؟',
+        icon: 'Bank',
+        description: 'الافتتاح الرسمي والعد التنازلي بتوقيتك',
+      },
+      {
+        href: '/economie/gold-market-hours',
+        label: 'هل الذهب مفتوح الآن؟',
+        icon: 'Sparkle',
+        description: 'أوقات الذهب وأفضل نافذة سيولة يومية',
+      },
+      {
+        href: '/economie/forex-sessions',
+        label: 'جلسات الفوركس الآن',
+        icon: 'ChartLineUp',
+        description: 'سيدني وطوكيو ولندن ونيويورك بتوقيتك المحلي',
+      },
+      {
+        href: '/economie/stock-markets',
+        label: 'البورصات العالمية الآن',
+        icon: 'Bank',
+        description: 'تتبّع NYSE وتداول ولندن وطوكيو وباريس بتوقيتك',
+      },
+      {
+        href: '/economie/market-clock',
+        label: 'ساعة التداول',
+        icon: 'ClockCountdown',
+        description: 'خريطة بصرية 24 ساعة لجلسات الفوركس والسيولة',
+      },
+      {
+        href: '/economie/best-trading-time',
+        label: 'أفضل وقت للتداول',
+        icon: 'Target',
+        description: 'أفضل نافذة يومية وأسبوعية من مدينتك',
+      },
+    ],
+  },
 ];
 
 export default function Header() {
@@ -42,7 +87,7 @@ export default function Header() {
           <Link
             href="/"
             prefetch
-            aria-label="ميقات - الصفحة الرئيسية"
+            aria-label={`${SITE_BRAND} - الصفحة الرئيسية`}
             className="header-logo"
           >
             {/* ClockIcon from /ssr for Server Component safety */}

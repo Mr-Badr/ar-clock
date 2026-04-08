@@ -220,7 +220,7 @@ function buildCountrySeoVariants(pkg: EventPackage, expandedKeywords: string[]) 
         ...overlaySeoMeta,
         titleTag:
           overlaySeoMeta?.titleTag ||
-          template('{{eventName}} {{year}} في {{countryName}} | كم باقي؟ - ميقات', context),
+          template('{{eventName}} {{year}} في {{countryName}} | كم باقي؟ - ميقاتنا', context),
         metaDescription: overlaySeoMeta?.metaDescription || defaultDescription,
         h1: overlaySeoMeta?.h1 || template('{{eventName}} {{year}} في {{countryName}}', context),
         canonicalPath: `/holidays/${pkg.core.slug}`,

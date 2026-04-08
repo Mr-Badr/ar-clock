@@ -77,7 +77,7 @@ export default function SectionWhyUs() {
       <ul
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
         role="list"
-        aria-label="مزايا تطبيق ميقات"
+        aria-label="مزايا تطبيق ميقاتنا"
       >
         {WHY_FEATURES.map((feat) => (
           <li

@@ -1,9 +1,10 @@
 import { ImageResponse } from 'next/og';
 import { getCityBySlug } from '@/lib/db/queries/cities';
 import { getCountryBySlug } from '@/lib/db/queries/countries';
+import { SITE_BRAND } from '@/lib/site-config';
 
 // We specify standard OG dimensions
-export const alt = 'ميقات - التوقيت المحلي';
+export const alt = `${SITE_BRAND} - التوقيت المحلي`;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -66,7 +67,7 @@ export default async function Image({ params }) {
               justifyContent: 'center'
             }}
           >
-            ميقات | دليل المواعيد والمناسبات
+            {SITE_BRAND} | دليل المواعيد والمناسبات
           </div>
 
           <h1

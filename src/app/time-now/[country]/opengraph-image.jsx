@@ -1,8 +1,9 @@
 import { ImageResponse } from 'next/og';
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 import { getCapitalCity } from '@/lib/db/queries/cities';
+import { SITE_BRAND } from '@/lib/site-config';
 
-export const alt = 'ميقات - الوقت الآن';
+export const alt = `${SITE_BRAND} - الوقت الآن`;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -59,7 +60,7 @@ export default async function Image({ params }) {
               color: '#cbd5e1',
             }}
           >
-            ميقات | الوقت الآن
+            {SITE_BRAND} | الوقت الآن
           </div>
 
           <div

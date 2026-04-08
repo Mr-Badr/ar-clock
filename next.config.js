@@ -99,6 +99,31 @@ const nextConfig = {
   // ── Redirects ────────────────────────────────────────────────────────────────
   async redirects() {
     return [
+      // Force a single canonical production host for SEO, sitemaps, and Search Console.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.miqatona.com' }],
+        destination: 'https://miqatona.com/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'miqatime.com' }],
+        destination: 'https://miqatona.com/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.miqatime.com' }],
+        destination: 'https://miqatona.com/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'miqatime.vercel.app' }],
+        destination: 'https://miqatona.com/:path*',
+        permanent: true,
+      },
       // Support common alternative URL formats
       { source: '/prayer-times/:country/:city', destination: '/mwaqit-al-salat/:country/:city', permanent: true },
       { source: '/salat/:country/:city', destination: '/mwaqit-al-salat/:country/:city', permanent: true },

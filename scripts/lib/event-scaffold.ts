@@ -222,7 +222,7 @@ export function buildFaq(name: string) {
 export function buildSeoMeta(core: EventCoreLike, nowIso: string) {
   const modifier = CATEGORY_TITLE_MODIFIERS[core.category];
   return {
-    titleTag: `${core.name} {{year}} | ${modifier} - ميقات`,
+    titleTag: `${core.name} {{year}} | ${modifier} - ميقاتنا`,
     metaDescription: `تعرف على موعد ${core.name} {{year}} مع عد تنازلي دقيق ومحتوى عربي شامل وسريع التحديث.`,
     h1: `${core.name} {{year}} | ${modifier}`,
     canonicalPath: `/holidays/${core.slug}`,

@@ -9,6 +9,8 @@
  */
 import {
   SITE_BRAND,
+  SITE_BRAND_EN,
+  SITE_LEGACY_BRANDS,
   SITE_DESCRIPTION,
   SITE_SCHEMA_TOPICS,
   getSiteUrl,
@@ -21,7 +23,7 @@ export default function GlobalSchemas() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: SITE_BRAND,
-    alternateName: ['Miqat', 'الوقت الآن', 'مواقيت الصلاة', 'فرق التوقيت', 'التاريخ الهجري'],
+    alternateName: [SITE_BRAND_EN, ...SITE_LEGACY_BRANDS, 'الوقت الآن', 'مواقيت الصلاة', 'فرق التوقيت', 'التاريخ الهجري'],
     description: SITE_DESCRIPTION,
     inLanguage: 'ar',
     url: SITE_URL,

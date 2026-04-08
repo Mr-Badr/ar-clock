@@ -1,3 +1,5 @@
+import { SITE_APP_NAME, SITE_BRAND } from '@/lib/site-config';
+
 /**
  * app/manifest.js — PWA Web App Manifest
  * Served at /manifest.webmanifest
@@ -6,9 +8,9 @@
 
 export default function manifest() {
   return {
-    name: 'ميقات | دليلك الشامل للوقت والمواعيد',
-    short_name: 'ميقات',
-    description: 'دليلك الشامل للوقت، المواعيد، والمناسبات الإسلامية والعالمية في تطبيق ميقات العصري',
+    name: SITE_APP_NAME,
+    short_name: SITE_BRAND,
+    description: `دليلك الشامل للوقت، المواعيد، والمناسبات الإسلامية والعالمية في تطبيق ${SITE_BRAND} العصري`,
     start_url: '/',
     display: 'standalone',
     background_color: '#181C2A',
