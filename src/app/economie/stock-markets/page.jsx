@@ -1,5 +1,8 @@
+import { Suspense } from 'react';
+
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
+  STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
   buildEconomyWebApplicationSchema,
   getInitialEconomyPageState,
@@ -25,8 +28,7 @@ export const metadata = buildCanonicalMetadata({
   url: `${SITE_URL}/economie/stock-markets`,
 });
 
-export default async function StockMarketsPage() {
-  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+export default function StockMarketsPage() {
   const webApplicationSchema = buildEconomyWebApplicationSchema({
     siteUrl: SITE_URL,
     path: '/economie/stock-markets',
@@ -50,8 +52,22 @@ export default async function StockMarketsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <main className="economy-shell">
-        <StockMarketsLive initialViewer={initialViewer} initialNowIso={initialNowIso} />
+        <Suspense
+          fallback={(
+            <StockMarketsLive
+              initialViewer={STATIC_ECONOMY_PAGE_STATE.initialViewer}
+              initialNowIso={STATIC_ECONOMY_PAGE_STATE.initialNowIso}
+            />
+          )}
+        >
+          <StockMarketsRequestContent />
+        </Suspense>
       </main>
     </div>
   );
+}
+
+async function StockMarketsRequestContent() {
+  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+  return <StockMarketsLive initialViewer={initialViewer} initialNowIso={initialNowIso} />;
 }

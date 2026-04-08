@@ -8,6 +8,11 @@ export const DEFAULT_ECONOMY_VIEWER = {
   source: 'static',
 };
 
+export const STATIC_ECONOMY_PAGE_STATE = {
+  initialViewer: DEFAULT_ECONOMY_VIEWER,
+  initialNowIso: null,
+};
+
 export async function getInitialEconomyPageState() {
   try {
     const viewer = await getEconomyViewerContext();

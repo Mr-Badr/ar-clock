@@ -1,5 +1,8 @@
+import { Suspense } from 'react';
+
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
+  STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
   buildEconomyWebApplicationSchema,
   getInitialEconomyPageState,
@@ -56,8 +59,7 @@ export const metadata = buildCanonicalMetadata({
   url: `${SITE_URL}/economie/gold-market-hours`,
 });
 
-export default async function GoldMarketHoursPage() {
-  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+export default function GoldMarketHoursPage() {
   const webApplicationSchema = buildEconomyWebApplicationSchema({
     siteUrl: SITE_URL,
     path: '/economie/gold-market-hours',
@@ -85,8 +87,22 @@ export default async function GoldMarketHoursPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <main className="economy-shell">
-        <GoldMarketHoursLive initialViewer={initialViewer} initialNowIso={initialNowIso} />
+        <Suspense
+          fallback={(
+            <GoldMarketHoursLive
+              initialViewer={STATIC_ECONOMY_PAGE_STATE.initialViewer}
+              initialNowIso={STATIC_ECONOMY_PAGE_STATE.initialNowIso}
+            />
+          )}
+        >
+          <GoldMarketHoursRequestContent />
+        </Suspense>
       </main>
     </div>
   );
+}
+
+async function GoldMarketHoursRequestContent() {
+  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+  return <GoldMarketHoursLive initialViewer={initialViewer} initialNowIso={initialNowIso} />;
 }

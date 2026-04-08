@@ -1,5 +1,8 @@
+import { Suspense } from 'react';
+
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
+  STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
   buildEconomyWebApplicationSchema,
   getInitialEconomyPageState,
@@ -25,8 +28,7 @@ export const metadata = buildCanonicalMetadata({
   url: `${SITE_URL}/economie/forex-sessions`,
 });
 
-export default async function ForexSessionsPage() {
-  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+export default function ForexSessionsPage() {
   const webApplicationSchema = buildEconomyWebApplicationSchema({
     siteUrl: SITE_URL,
     path: '/economie/forex-sessions',
@@ -50,8 +52,22 @@ export default async function ForexSessionsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <main className="economy-shell">
-        <ForexSessionsLive initialViewer={initialViewer} initialNowIso={initialNowIso} />
+        <Suspense
+          fallback={(
+            <ForexSessionsLive
+              initialViewer={STATIC_ECONOMY_PAGE_STATE.initialViewer}
+              initialNowIso={STATIC_ECONOMY_PAGE_STATE.initialNowIso}
+            />
+          )}
+        >
+          <ForexSessionsRequestContent />
+        </Suspense>
       </main>
     </div>
   );
+}
+
+async function ForexSessionsRequestContent() {
+  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+  return <ForexSessionsLive initialViewer={initialViewer} initialNowIso={initialNowIso} />;
 }

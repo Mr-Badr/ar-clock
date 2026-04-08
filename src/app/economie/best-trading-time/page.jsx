@@ -1,5 +1,8 @@
+import { Suspense } from 'react';
+
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
+  STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
   buildEconomyWebApplicationSchema,
   getInitialEconomyPageState,
@@ -24,8 +27,7 @@ export const metadata = buildCanonicalMetadata({
   url: `${SITE_URL}/economie/best-trading-time`,
 });
 
-export default async function BestTradingTimePage() {
-  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+export default function BestTradingTimePage() {
   const webApplicationSchema = buildEconomyWebApplicationSchema({
     siteUrl: SITE_URL,
     path: '/economie/best-trading-time',
@@ -49,8 +51,22 @@ export default async function BestTradingTimePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <main className="economy-shell">
-        <BestTradingTimeLive initialViewer={initialViewer} initialNowIso={initialNowIso} />
+        <Suspense
+          fallback={(
+            <BestTradingTimeLive
+              initialViewer={STATIC_ECONOMY_PAGE_STATE.initialViewer}
+              initialNowIso={STATIC_ECONOMY_PAGE_STATE.initialNowIso}
+            />
+          )}
+        >
+          <BestTradingTimeRequestContent />
+        </Suspense>
       </main>
     </div>
   );
+}
+
+async function BestTradingTimeRequestContent() {
+  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+  return <BestTradingTimeLive initialViewer={initialViewer} initialNowIso={initialNowIso} />;
 }

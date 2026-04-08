@@ -1,5 +1,8 @@
+import { Suspense } from 'react';
+
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
+  STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
   buildEconomyWebApplicationSchema,
   getInitialEconomyPageState,
@@ -56,8 +59,7 @@ export const metadata = buildCanonicalMetadata({
   url: `${SITE_URL}/economie/us-market-open`,
 });
 
-export default async function UsMarketOpenPage() {
-  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+export default function UsMarketOpenPage() {
   const webApplicationSchema = buildEconomyWebApplicationSchema({
     siteUrl: SITE_URL,
     path: '/economie/us-market-open',
@@ -85,8 +87,22 @@ export default async function UsMarketOpenPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <main className="economy-shell">
-        <UsMarketOpenLive initialViewer={initialViewer} initialNowIso={initialNowIso} />
+        <Suspense
+          fallback={(
+            <UsMarketOpenLive
+              initialViewer={STATIC_ECONOMY_PAGE_STATE.initialViewer}
+              initialNowIso={STATIC_ECONOMY_PAGE_STATE.initialNowIso}
+            />
+          )}
+        >
+          <UsMarketOpenRequestContent />
+        </Suspense>
       </main>
     </div>
   );
+}
+
+async function UsMarketOpenRequestContent() {
+  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+  return <UsMarketOpenLive initialViewer={initialViewer} initialNowIso={initialNowIso} />;
 }

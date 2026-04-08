@@ -1,5 +1,8 @@
+import { Suspense } from 'react';
+
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
+  STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
   buildEconomyWebApplicationSchema,
   getInitialEconomyPageState,
@@ -24,8 +27,7 @@ export const metadata = buildCanonicalMetadata({
   url: `${SITE_URL}/economie/market-clock`,
 });
 
-export default async function MarketClockPage() {
-  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+export default function MarketClockPage() {
   const webApplicationSchema = buildEconomyWebApplicationSchema({
     siteUrl: SITE_URL,
     path: '/economie/market-clock',
@@ -49,8 +51,22 @@ export default async function MarketClockPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <main className="economy-shell">
-        <MarketClockLive initialViewer={initialViewer} initialNowIso={initialNowIso} />
+        <Suspense
+          fallback={(
+            <MarketClockLive
+              initialViewer={STATIC_ECONOMY_PAGE_STATE.initialViewer}
+              initialNowIso={STATIC_ECONOMY_PAGE_STATE.initialNowIso}
+            />
+          )}
+        >
+          <MarketClockRequestContent />
+        </Suspense>
       </main>
     </div>
   );
+}
+
+async function MarketClockRequestContent() {
+  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+  return <MarketClockLive initialViewer={initialViewer} initialNowIso={initialNowIso} />;
 }
