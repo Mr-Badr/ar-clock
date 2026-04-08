@@ -343,7 +343,7 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr, 
                 {/*
                  * LOGO PLACEHOLDER ─────────────────────────────────────────
                  * Replace CalendarDays with your brand logo:
-                 *   <Image src="/logo-miqatime.svg" alt="MiqaTime"
+                 *   <Image src="/logo-miqatona.svg" alt="MiqaTona"
                  *          width={22} height={22} className="mpc-title-icon" />
                  * ────────────────────────────────────────────────────────── */}
                 <CalendarDays size={18} className="mpc-title-icon" aria-hidden="true" />

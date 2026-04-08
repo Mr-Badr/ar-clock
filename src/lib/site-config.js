@@ -81,9 +81,7 @@ export const SITE_DEFAULT_LOCALE = 'ar-SA';
 export const SITE_SUPPORTED_LOCALES = ['ar-SA', 'ar-EG', 'ar-MA', 'ar-AE'];
 const SITE_CANONICAL_ALIAS_HOSTS = new Set([
   'www.miqatona.com',
-  'miqatime.com',
-  'www.miqatime.com',
-  'miqatime.vercel.app',
+  'miqatona.com',
 ]);
 
 function normalizeSiteUrl(value) {

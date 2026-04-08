@@ -50,7 +50,7 @@ const BD = {
 };
 
 // ─── Branding ─────────────────────────────────────────────────────────────────
-const SITE_NAME = 'MiqaTime';
+const SITE_NAME = 'MiqaTona';
 const SITE_URL  = getSiteUrl();
 
 // ─── Prayer config ────────────────────────────────────────────────────────────
@@ -300,7 +300,7 @@ function generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, theme 
 
     <div class="pdf-header-right">
       <!--
-        LOGO BLOCK — vertical layout: image on top, "MiqaTime" below
+        LOGO BLOCK — vertical layout: image on top, "MiqaTona" below
         ─────────────────────────────────────────────────────────────
         To add your real logo, replace the <span class="pdf-logo-img">
         element below with your <img> element, e.g.:

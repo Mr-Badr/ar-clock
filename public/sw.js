@@ -1,9 +1,9 @@
 /**
- * Service Worker for Miqat PWA
+ * Service Worker for Miqatona PWA
  * Provides offline support and caching for Arabic clock app
  */
 
-const CACHE_VERSION = 'v3'; // Bump this when deploying major updates
+const CACHE_VERSION = 'v4'; // Bump this when deploying major updates
 const STATIC_CACHE = `miqat-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `miqat-dynamic-${CACHE_VERSION}`;
 const IS_LOCALHOST =
@@ -187,15 +187,8 @@ async function staleWhileRevalidate(request) {
 
 async function networkFirstPage(request) {
   try {
-    const networkResponse = await fetch(request);
-    if (networkResponse.ok) {
-      const cache = await caches.open(DYNAMIC_CACHE);
-      cache.put(request, networkResponse.clone());
-    }
-    return networkResponse;
+    return await fetch(request);
   } catch {
-    const cachedResponse = await caches.match(request);
-    if (cachedResponse) return cachedResponse;
     return caches.match('/offline');
   }
 }

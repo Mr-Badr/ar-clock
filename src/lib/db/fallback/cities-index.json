@@ -8428,20 +8428,6 @@
     "country_slug": "brazil"
   },
   {
-    "id": 27709,
-    "city_slug": "dharavi",
-    "country_code": "IN",
-    "name_ar": "دهارافي",
-    "name_en": "Dharavi",
-    "timezone": "Asia/Kolkata",
-    "is_capital": false,
-    "lat": 19.05,
-    "lon": 72.86667,
-    "priority": 700000,
-    "population": 700000,
-    "country_slug": "india"
-  },
-  {
     "id": 46288,
     "city_slug": "battagram",
     "country_code": "PK",
@@ -8454,6 +8440,20 @@
     "priority": 700000,
     "population": 700000,
     "country_slug": "pakistan"
+  },
+  {
+    "id": 27709,
+    "city_slug": "dharavi",
+    "country_code": "IN",
+    "name_ar": "دهارافي",
+    "name_en": "Dharavi",
+    "timezone": "Asia/Kolkata",
+    "is_capital": false,
+    "lat": 19.05,
+    "lon": 72.86667,
+    "priority": 700000,
+    "population": 700000,
+    "country_slug": "india"
   },
   {
     "id": 18916,

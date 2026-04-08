@@ -596,7 +596,7 @@ import { TIER_1_SLUGS, TIER_2_SLUGS } from '@/lib/event-content/index'
 export default async function sitemap() {
   const BASE = process.env.NEXT_PUBLIC_SITE_URL
     || process.env.NEXT_PUBLIC_BASE_URL
-    || 'https://miqatime.com'
+    || 'https://miqatona.com'
 
   const now = new Date().toISOString() // ← THE FIX: always current timestamp
 

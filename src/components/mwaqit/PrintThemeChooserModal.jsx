@@ -184,7 +184,7 @@ function A4Preview({ isDark }) {
             borderRadius: '3px', flexShrink: 0,
           }} />
           <span style={{ fontSize: '5px', fontWeight: 800, color: C.logoText, whiteSpace: 'nowrap' }}>
-            MiqaTime
+            MiqaTona.com
           </span>
         </div>
       </div>
@@ -260,7 +260,7 @@ function A4Preview({ isDark }) {
           جدول مواقيت الصلاة الشهري لـ الرباط — حسابات فلكية دقيقة
         </span>
         <span style={{ fontSize: '4px', color: C.footerUrl, fontWeight: 700 }}>
-          MiqaTime.com
+          MiqaTona.com
         </span>
       </div>
     </div>
