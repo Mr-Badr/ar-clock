@@ -501,9 +501,11 @@ export function buildWebPageSchema(ev, date, siteUrl, nowIso) {
 }
 export function buildFAQSchema(ev) {
   if (!ev.faqItems?.length) return null;
+  const validItems = ev.faqItems.filter(item => item && item.q && item.a);
+  if (validItems.length === 0) return null;
   return {
     '@context': 'https://schema.org', '@type': 'FAQPage',
-    mainEntity: ev.faqItems.map(({ q, a }) => ({
+    mainEntity: validItems.map(({ q, a }) => ({
       '@type': 'Question', name: q,
       acceptedAnswer: { '@type': 'Answer', text: a },
     })),
