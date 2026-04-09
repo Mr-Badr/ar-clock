@@ -20,6 +20,7 @@ These files define shared country and category metadata used across runtime, SEO
 
 ## Generated Runtime Data
 `npm run events:build` compiles the authored folders into `src/data/holidays/generated/`.
+This step now runs automatically inside `npm run dev` and `npm run build`.
 
 Key files:
 - `manifest.json`: event inventory and file map
@@ -32,10 +33,11 @@ Key files:
 ## Editing Workflow
 1. Scaffold with `npm run events:new -- --slug <slug> --name "<name>" ...`
 2. Edit only the event folder JSON files
-3. Run `npm run events:build`
-4. Run `npm run validate:holidays` or `npm run validate:holidays:slug -- --slug <slug>`
+3. Start dev or build normally; event indexes regenerate automatically
+4. Run `npm run validate:holidays` or `npm run validate:holidays:slug -- --slug <slug>` when you want an explicit content check
 
 Do not hand-edit files inside `src/data/holidays/generated/`.
+Do not add manual imports in `src/lib/events/index.js` or `src/lib/event-content/index.js`.
 
 ## Recommended Authoring Flow
 

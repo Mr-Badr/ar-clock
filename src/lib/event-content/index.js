@@ -8,6 +8,10 @@
  *   - The returned object NEVER contains filter-critical fields
  *   - Spreading the result over enrichEvent() output is always safe
  *
+ * Runtime reads generated rich-content indexes only. Those indexes are rebuilt
+ * automatically in `npm run dev` and `npm run build`, so authors only touch
+ * `src/data/holidays/events/<slug>/`.
+ *
  * PROTECTED FIELDS (stripped automatically before return):
  *   category, _countryCode, type, slug, id,
  *   hijriMonth, hijriDay, month, day, date, __enriched
@@ -19,14 +23,6 @@ import { GENERATED_CONTENT_BY_SLUG } from './generated-index.js'
 import { featureFlags }           from '@/lib/feature-flags'
 import { resolveEventSlug }       from '@/lib/events'
 import LEGACY_RICH_CONTENT from '@/data/holidays/legacy-content/content-map.json';
-import ashuraPackage from '@/data/holidays/events/ashura/package.json';
-import firstDhulHijjahPackage from '@/data/holidays/events/first-dhul-hijjah/package.json';
-import hafezSaudiPackage from '@/data/holidays/events/hafez-saudi/package.json';
-import housingSupportSaudiPackage from '@/data/holidays/events/housing-support-saudi/package.json';
-import islamicNewYearPackage from '@/data/holidays/events/islamic-new-year/package.json';
-import socialSecuritySaudiPackage from '@/data/holidays/events/social-security-saudi/package.json';
-import summerSeasonPackage from '@/data/holidays/events/summer-season/package.json';
-import thanaweyaExamsPackage from '@/data/holidays/events/thanaweya-exams/package.json';
 
 /** Fields owned by holidays-engine.js — never override */
 const PROTECTED_FIELDS = new Set([
@@ -39,41 +35,10 @@ const hasGeneratedContent =
   typeof GENERATED_CONTENT_BY_SLUG === 'object' &&
   Object.keys(GENERATED_CONTENT_BY_SLUG).length > 0;
 
-const SOURCE_PACKAGE_CONTENT_OVERLAYS = Object.fromEntries(
-  [
-    ashuraPackage,
-    firstDhulHijjahPackage,
-    hafezSaudiPackage,
-    housingSupportSaudiPackage,
-    islamicNewYearPackage,
-    socialSecuritySaudiPackage,
-    summerSeasonPackage,
-    thanaweyaExamsPackage,
-  ]
-    .map((pkg) => {
-      if (pkg?.publishStatus !== 'published') return null;
-      const slug = pkg?.core?.slug;
-      const content = pkg?.richContent;
-      if (!slug || !content) return null;
-      return [slug, content];
-    })
-    .filter(Boolean),
-);
-
-function overlayContent(baseContent = {}, overlayContentBySlug = {}) {
-  return {
-    ...(baseContent || {}),
-    ...(overlayContentBySlug || {}),
-  };
-}
-
 const ACTIVE_RICH_CONTENT =
-  overlayContent(
-    featureFlags.eventsShardIndex && hasGeneratedContent
-      ? GENERATED_CONTENT_BY_SLUG
-      : LEGACY_RICH_CONTENT,
-    SOURCE_PACKAGE_CONTENT_OVERLAYS,
-  );
+  featureFlags.eventsShardIndex && hasGeneratedContent
+    ? GENERATED_CONTENT_BY_SLUG
+    : LEGACY_RICH_CONTENT;
 
 const OVERLAY_FIELDS = new Set([
   'seoTitle',

@@ -142,7 +142,8 @@ function main() {
   }
 
   console.log(`[events:new] Created event folder: ${eventDir}`);
-  console.log('[events:new] Next steps: update package.json, research.json, qa.json, then run npm run events:build && npm run validate:holidays:slug -- --slug <slug>.');
+  console.log('[events:new] Next steps: update package.json, research.json, qa.json, then run npm run validate:holidays:slug -- --slug <slug>.');
+  console.log('[events:new] You do not need to edit src/lib/events/index.js or src/lib/event-content/index.js. Dev/build regenerate the event indexes automatically.');
   console.log('[events:new] New events now default to publishStatus="drafted". Pass --publish true or --status published only after the content is ready.');
 }
 

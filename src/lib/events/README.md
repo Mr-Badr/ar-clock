@@ -17,5 +17,11 @@ These files are generated or compatibility layers.
 
 ## Build Flow
 1. Author event data in `src/data/holidays/events/<slug>/`
-2. Run `npm run events:build`
-3. Runtime reads compiled JSON indexes only
+2. Start the app with `npm run dev` or build with `npm run build`
+3. The generated indexes are rebuilt automatically from the event folders
+4. Runtime reads the compiled JSON indexes only
+
+## Authoring Rule
+- Adding a new event should never require editing `src/lib/events/index.js`
+- Adding a new event should never require editing `src/lib/event-content/index.js`
+- If you created the folder and package files correctly, the next `dev` or `build` run will include it automatically
