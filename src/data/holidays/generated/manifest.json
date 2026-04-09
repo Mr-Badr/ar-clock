@@ -1,8 +1,8 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-04-06T06:24:50.931Z",
-  "totalEvents": 65,
-  "totalPublished": 37,
+  "generatedAt": "2026-04-09T17:57:16.221Z",
+  "totalEvents": 67,
+  "totalPublished": 55,
   "totalAliases": 136,
   "events": [
     {
@@ -33,7 +33,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "eid-al-fitr",
@@ -63,7 +63,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "eid-al-adha",
@@ -93,7 +93,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "day-of-arafa",
@@ -123,7 +123,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "hajj-start",
@@ -153,14 +153,14 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "islamic-new-year",
       "slug": "islamic-new-year",
       "category": "islamic",
-      "tier": "tier2",
-      "publishStatus": "drafted",
+      "tier": "tier1",
+      "publishStatus": "published",
       "canonicalPath": "/holidays/islamic-new-year",
       "canonicalSource": "internal",
       "sourceAuthority": "hijri-authority",
@@ -183,14 +183,14 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "ashura",
       "slug": "ashura",
       "category": "islamic",
-      "tier": "tier2",
-      "publishStatus": "drafted",
+      "tier": "tier1",
+      "publishStatus": "published",
       "canonicalPath": "/holidays/ashura",
       "canonicalSource": "internal",
       "sourceAuthority": "hijri-authority",
@@ -213,7 +213,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "mawlid",
@@ -243,7 +243,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "laylat-al-qadr",
@@ -273,7 +273,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "isra-miraj",
@@ -303,7 +303,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "nisf-shaban",
@@ -333,14 +333,14 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "first-dhul-hijjah",
       "slug": "first-dhul-hijjah",
       "category": "islamic",
-      "tier": "tier2",
-      "publishStatus": "drafted",
+      "tier": "tier1",
+      "publishStatus": "published",
       "canonicalPath": "/holidays/first-dhul-hijjah",
       "canonicalSource": "internal",
       "sourceAuthority": "hijri-authority",
@@ -363,7 +363,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "new-year",
@@ -384,17 +384,17 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "summer",
       "slug": "summer-season",
       "category": "astronomy",
       "tier": "tier3",
-      "publishStatus": "drafted",
+      "publishStatus": "published",
       "canonicalPath": "/holidays/summer-season",
       "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
+      "sourceAuthority": "astronomical-calendar",
       "queueOrder": 14,
       "eventDir": "src/data/holidays/events/summer-season",
       "packageFile": "src/data/holidays/events/summer-season/package.json",
@@ -405,7 +405,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "winter",
@@ -426,7 +426,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "spring",
@@ -447,28 +447,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
-    },
-    {
-      "id": "autumn",
-      "slug": "autumn-season",
-      "category": "astronomy",
-      "tier": "tier3",
-      "publishStatus": "drafted",
-      "canonicalPath": "/holidays/autumn-season",
-      "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
-      "queueOrder": 17,
-      "eventDir": "src/data/holidays/events/autumn-season",
-      "packageFile": "src/data/holidays/events/autumn-season/package.json",
-      "researchFile": "src/data/holidays/events/autumn-season/research.json",
-      "qaFile": "src/data/holidays/events/autumn-season/qa.json",
-      "generatedEventFile": "src/lib/events/items/autumn-season.json",
-      "generatedContentFile": "src/lib/event-content/items/autumn-season.json",
-      "aliasSlugs": [],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "spring-vac",
@@ -489,14 +468,14 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "summer-vac",
       "slug": "summer-vacation",
       "category": "school",
-      "tier": "tier3",
-      "publishStatus": "drafted",
+      "tier": "tier1",
+      "publishStatus": "published",
       "canonicalPath": "/holidays/summer-vacation",
       "canonicalSource": "internal",
       "sourceAuthority": "official-announcement",
@@ -510,7 +489,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "back-to-school",
@@ -531,7 +510,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "national-day-sa",
@@ -552,7 +531,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "founding-day-sa",
@@ -573,17 +552,17 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "school-start-sa",
       "slug": "school-start-saudi",
       "category": "school",
-      "tier": "tier3",
-      "publishStatus": "drafted",
+      "tier": "tier1",
+      "publishStatus": "published",
       "canonicalPath": "/holidays/school-start-saudi",
       "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
+      "sourceAuthority": "official-announcement",
       "queueOrder": 23,
       "eventDir": "src/data/holidays/events/school-start-saudi",
       "packageFile": "src/data/holidays/events/school-start-saudi/package.json",
@@ -594,7 +573,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "salary-sa",
@@ -615,7 +594,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "citizen-account-sa",
@@ -636,17 +615,17 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "social-security-sa",
       "slug": "social-security-saudi",
       "category": "support",
-      "tier": "tier3",
-      "publishStatus": "drafted",
+      "tier": "tier1",
+      "publishStatus": "published",
       "canonicalPath": "/holidays/social-security-saudi",
       "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
+      "sourceAuthority": "official-announcement",
       "queueOrder": 26,
       "eventDir": "src/data/holidays/events/social-security-saudi",
       "packageFile": "src/data/holidays/events/social-security-saudi/package.json",
@@ -657,7 +636,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "results-th-eg",
@@ -678,17 +657,38 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
+    },
+    {
+      "id": "hafez-sa",
+      "slug": "hafez-saudi",
+      "category": "support",
+      "tier": "tier1",
+      "publishStatus": "published",
+      "canonicalPath": "/holidays/hafez-saudi",
+      "canonicalSource": "internal",
+      "sourceAuthority": "hrdf-faq",
+      "queueOrder": 31,
+      "eventDir": "src/data/holidays/events/hafez-saudi",
+      "packageFile": "src/data/holidays/events/hafez-saudi/package.json",
+      "researchFile": "src/data/holidays/events/hafez-saudi/research.json",
+      "qaFile": "src/data/holidays/events/hafez-saudi/qa.json",
+      "generatedEventFile": "src/lib/events/items/hafez-saudi.json",
+      "generatedContentFile": "src/lib/event-content/items/hafez-saudi.json",
+      "aliasSlugs": [],
+      "hasResearch": true,
+      "hasQa": true,
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "exams-th-eg",
       "slug": "thanaweya-exams",
       "category": "school",
       "tier": "tier2",
-      "publishStatus": "drafted",
+      "publishStatus": "published",
       "canonicalPath": "/holidays/thanaweya-exams",
       "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
+      "sourceAuthority": "official-academic-calendar",
       "queueOrder": 31,
       "eventDir": "src/data/holidays/events/thanaweya-exams",
       "packageFile": "src/data/holidays/events/thanaweya-exams/package.json",
@@ -699,7 +699,28 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
+    },
+    {
+      "id": "housing-support-sa",
+      "slug": "housing-support-saudi",
+      "category": "support",
+      "tier": "tier1",
+      "publishStatus": "published",
+      "canonicalPath": "/holidays/housing-support-saudi",
+      "canonicalSource": "internal",
+      "sourceAuthority": "saudi-housing-support",
+      "queueOrder": 32,
+      "eventDir": "src/data/holidays/events/housing-support-saudi",
+      "packageFile": "src/data/holidays/events/housing-support-saudi/package.json",
+      "researchFile": "src/data/holidays/events/housing-support-saudi/research.json",
+      "qaFile": "src/data/holidays/events/housing-support-saudi/qa.json",
+      "generatedEventFile": "src/lib/events/items/housing-support-saudi.json",
+      "generatedContentFile": "src/lib/event-content/items/housing-support-saudi.json",
+      "aliasSlugs": [],
+      "hasResearch": true,
+      "hasQa": true,
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "school-start-eg",
@@ -720,7 +741,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "salary-eg",
@@ -741,18 +762,18 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "sham-nessim",
       "slug": "sham-nessim",
       "category": "holidays",
-      "tier": "tier2",
-      "publishStatus": "drafted",
+      "tier": "tier1",
+      "publishStatus": "published",
       "canonicalPath": "/holidays/sham-nessim",
       "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
-      "queueOrder": 34,
+      "sourceAuthority": "official-announcement",
+      "queueOrder": 35,
       "eventDir": "src/data/holidays/events/sham-nessim",
       "packageFile": "src/data/holidays/events/sham-nessim/package.json",
       "researchFile": "src/data/holidays/events/sham-nessim/research.json",
@@ -762,7 +783,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "results-bac-dz",
@@ -783,17 +804,17 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "exams-bac-dz",
       "slug": "bac-exams-algeria",
       "category": "school",
-      "tier": "tier2",
-      "publishStatus": "drafted",
+      "tier": "tier1",
+      "publishStatus": "published",
       "canonicalPath": "/holidays/bac-exams-algeria",
       "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
+      "sourceAuthority": "official-announcement",
       "queueOrder": 37,
       "eventDir": "src/data/holidays/events/bac-exams-algeria",
       "packageFile": "src/data/holidays/events/bac-exams-algeria/package.json",
@@ -804,7 +825,28 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
+    },
+    {
+      "id": "autumn",
+      "slug": "autumn-season",
+      "category": "astronomy",
+      "tier": "tier1",
+      "publishStatus": "published",
+      "canonicalPath": "/holidays/autumn-season",
+      "canonicalSource": "internal",
+      "sourceAuthority": "astronomical-calendar",
+      "queueOrder": 38,
+      "eventDir": "src/data/holidays/events/autumn-season",
+      "packageFile": "src/data/holidays/events/autumn-season/package.json",
+      "researchFile": "src/data/holidays/events/autumn-season/research.json",
+      "qaFile": "src/data/holidays/events/autumn-season/qa.json",
+      "generatedEventFile": "src/lib/events/items/autumn-season.json",
+      "generatedContentFile": "src/lib/event-content/items/autumn-season.json",
+      "aliasSlugs": [],
+      "hasResearch": true,
+      "hasQa": true,
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "school-start-dz",
@@ -825,28 +867,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
-    },
-    {
-      "id": "independence-dz",
-      "slug": "independence-day-algeria",
-      "category": "national",
-      "tier": "tier2",
-      "publishStatus": "drafted",
-      "canonicalPath": "/holidays/independence-day-algeria",
-      "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
-      "queueOrder": 39,
-      "eventDir": "src/data/holidays/events/independence-day-algeria",
-      "packageFile": "src/data/holidays/events/independence-day-algeria/package.json",
-      "researchFile": "src/data/holidays/events/independence-day-algeria/research.json",
-      "qaFile": "src/data/holidays/events/independence-day-algeria/qa.json",
-      "generatedEventFile": "src/lib/events/items/independence-day-algeria.json",
-      "generatedContentFile": "src/lib/event-content/items/independence-day-algeria.json",
-      "aliasSlugs": [],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "revolution-dz",
@@ -867,17 +888,17 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "results-bac-ma",
       "slug": "bac-results-morocco",
       "category": "school",
-      "tier": "tier2",
-      "publishStatus": "drafted",
+      "tier": "tier1",
+      "publishStatus": "published",
       "canonicalPath": "/holidays/bac-results-morocco",
       "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
+      "sourceAuthority": "official-announcement",
       "queueOrder": 42,
       "eventDir": "src/data/holidays/events/bac-results-morocco",
       "packageFile": "src/data/holidays/events/bac-results-morocco/package.json",
@@ -888,17 +909,17 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "national-exam-ma",
       "slug": "national-exams-morocco",
       "category": "school",
-      "tier": "tier3",
-      "publishStatus": "drafted",
+      "tier": "tier1",
+      "publishStatus": "published",
       "canonicalPath": "/holidays/national-exams-morocco",
       "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
+      "sourceAuthority": "official-announcement",
       "queueOrder": 43,
       "eventDir": "src/data/holidays/events/national-exams-morocco",
       "packageFile": "src/data/holidays/events/national-exams-morocco/package.json",
@@ -909,7 +930,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "school-start-ma",
@@ -930,14 +951,14 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "throne-day",
       "slug": "throne-day-morocco",
       "category": "national",
       "tier": "tier2",
-      "publishStatus": "drafted",
+      "publishStatus": "published",
       "canonicalPath": "/holidays/throne-day-morocco",
       "canonicalSource": "internal",
       "sourceAuthority": "fixed-calendar",
@@ -951,7 +972,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "independence-ma",
@@ -972,7 +993,28 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
+    },
+    {
+      "id": "independence-dz",
+      "slug": "independence-day-algeria",
+      "category": "national",
+      "tier": "tier2",
+      "publishStatus": "published",
+      "canonicalPath": "/holidays/independence-day-algeria",
+      "canonicalSource": "internal",
+      "sourceAuthority": "fixed-calendar",
+      "queueOrder": 48,
+      "eventDir": "src/data/holidays/events/independence-day-algeria",
+      "packageFile": "src/data/holidays/events/independence-day-algeria/package.json",
+      "researchFile": "src/data/holidays/events/independence-day-algeria/research.json",
+      "qaFile": "src/data/holidays/events/independence-day-algeria/qa.json",
+      "generatedEventFile": "src/lib/events/items/independence-day-algeria.json",
+      "generatedContentFile": "src/lib/event-content/items/independence-day-algeria.json",
+      "aliasSlugs": [],
+      "hasResearch": true,
+      "hasQa": true,
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "national-day-ae",
@@ -993,7 +1035,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "school-start-ae",
@@ -1014,17 +1056,17 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "results-bac-tn",
       "slug": "bac-results-tunisia",
       "category": "school",
-      "tier": "tier2",
-      "publishStatus": "drafted",
+      "tier": "tier1",
+      "publishStatus": "published",
       "canonicalPath": "/holidays/bac-results-tunisia",
       "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
+      "sourceAuthority": "official-announcement",
       "queueOrder": 51,
       "eventDir": "src/data/holidays/events/bac-results-tunisia",
       "packageFile": "src/data/holidays/events/bac-results-tunisia/package.json",
@@ -1035,7 +1077,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "school-start-tn",
@@ -1056,7 +1098,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "independence-tn",
@@ -1077,7 +1119,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "national-day-kw",
@@ -1098,7 +1140,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "school-start-kw",
@@ -1119,7 +1161,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "national-day-qa",
@@ -1140,7 +1182,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "school-start-qa",
@@ -1161,7 +1203,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "mothers-day",
@@ -1182,7 +1224,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "pension-sa",
@@ -1203,7 +1245,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "valentines-day",
@@ -1233,7 +1275,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "labor-day",
@@ -1254,7 +1296,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "sand-sa",
@@ -1275,7 +1317,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "takaful-karama-eg",
@@ -1296,7 +1338,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "world-health-day",
@@ -1326,7 +1368,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "earth-day",
@@ -1356,7 +1398,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "pension-eg",
@@ -1377,7 +1419,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "international-womens-day",
@@ -1398,7 +1440,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "world-teachers-day",
@@ -1428,7 +1470,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "arabic-language-day",
@@ -1458,7 +1500,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "saudi-flag-day",
@@ -1479,7 +1521,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "jordan-independence-day",
@@ -1500,7 +1542,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     },
     {
       "id": "bahrain-national-day",
@@ -1521,7 +1563,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-04-06T06:24:50.931Z"
+      "lastModified": "2026-04-09T17:57:16.221Z"
     }
   ]
 }

@@ -2,8 +2,7 @@
   "id": "autumn",
   "slug": "autumn-season",
   "name": "بداية فصل الخريف",
-  "type": "fixed",
+  "type": "estimated",
   "category": "astronomy",
-  "month": 9,
-  "day": 22
+  "date": "{{year}}-09-23"
 }

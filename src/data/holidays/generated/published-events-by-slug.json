@@ -44,6 +44,24 @@
     "hijriMonth": 12,
     "hijriDay": 8
   },
+  "islamic-new-year": {
+    "id": "islamic-new-year",
+    "slug": "islamic-new-year",
+    "name": "رأس السنة الهجرية",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 1,
+    "hijriDay": 1
+  },
+  "ashura": {
+    "id": "ashura",
+    "slug": "ashura",
+    "name": "عاشوراء",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 1,
+    "hijriDay": 10
+  },
   "mawlid": {
     "id": "mawlid",
     "slug": "mawlid",
@@ -62,6 +80,15 @@
     "hijriMonth": 9,
     "hijriDay": 27
   },
+  "first-dhul-hijjah": {
+    "id": "first-dhul-hijjah",
+    "slug": "first-dhul-hijjah",
+    "name": "أول ذي الحجة",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 12,
+    "hijriDay": 1
+  },
   "new-year": {
     "id": "new-year",
     "slug": "new-year",
@@ -70,6 +97,23 @@
     "category": "holidays",
     "month": 1,
     "day": 1
+  },
+  "summer-season": {
+    "id": "summer",
+    "slug": "summer-season",
+    "name": "بداية فصل الصيف",
+    "type": "fixed",
+    "category": "astronomy",
+    "month": 6,
+    "day": 21
+  },
+  "summer-vacation": {
+    "id": "summer-vac",
+    "slug": "summer-vacation",
+    "name": "بداية الإجازة الصيفية",
+    "type": "estimated",
+    "category": "school",
+    "date": "{{year}}-06-25"
   },
   "saudi-national-day": {
     "id": "national-day-sa",
@@ -91,6 +135,15 @@
     "month": 2,
     "day": 22
   },
+  "school-start-saudi": {
+    "id": "school-start-sa",
+    "slug": "school-start-saudi",
+    "name": "بداية الدراسة في السعودية",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "sa",
+    "date": "{{year}}-08-23"
+  },
   "salary-day-saudi": {
     "id": "salary-sa",
     "slug": "salary-day-saudi",
@@ -109,6 +162,15 @@
     "_countryCode": "sa",
     "day": 10
   },
+  "social-security-saudi": {
+    "id": "social-security-sa",
+    "slug": "social-security-saudi",
+    "name": "الضمان الاجتماعي المطور",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "sa",
+    "day": 1
+  },
   "thanaweya-results": {
     "id": "results-th-eg",
     "slug": "thanaweya-results",
@@ -118,6 +180,34 @@
     "_countryCode": "eg",
     "month": 7,
     "day": 31
+  },
+  "hafez-saudi": {
+    "id": "hafez-sa",
+    "slug": "hafez-saudi",
+    "name": "حافز البحث عن عمل",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "sa",
+    "day": 5
+  },
+  "thanaweya-exams": {
+    "id": "exams-th-eg",
+    "slug": "thanaweya-exams",
+    "name": "امتحانات الثانوية العامة (مصر)",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "eg",
+    "month": 6,
+    "day": 20
+  },
+  "housing-support-saudi": {
+    "id": "housing-support-sa",
+    "slug": "housing-support-saudi",
+    "name": "الدعم السكني",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "sa",
+    "day": 24
   },
   "school-start-egypt": {
     "id": "school-start-eg",
@@ -129,6 +219,15 @@
     "month": 9,
     "day": 20
   },
+  "sham-nessim": {
+    "id": "sham-nessim",
+    "slug": "sham-nessim",
+    "name": "شم النسيم",
+    "type": "estimated",
+    "category": "holidays",
+    "_countryCode": "eg",
+    "date": "{{year}}-04-13"
+  },
   "bac-results-algeria": {
     "id": "results-bac-dz",
     "slug": "bac-results-algeria",
@@ -138,6 +237,23 @@
     "_countryCode": "dz",
     "month": 7,
     "day": 15
+  },
+  "bac-exams-algeria": {
+    "id": "exams-bac-dz",
+    "slug": "bac-exams-algeria",
+    "name": "بكالوريا الجزائر",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "dz",
+    "date": "{{year}}-06-07"
+  },
+  "autumn-season": {
+    "id": "autumn",
+    "slug": "autumn-season",
+    "name": "بداية فصل الخريف",
+    "type": "estimated",
+    "category": "astronomy",
+    "date": "{{year}}-09-23"
   },
   "school-start-algeria": {
     "id": "school-start-dz",
@@ -149,6 +265,24 @@
     "month": 9,
     "day": 21
   },
+  "bac-results-morocco": {
+    "id": "results-bac-ma",
+    "slug": "bac-results-morocco",
+    "name": "نتائج البكالوريا في المغرب",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "ma",
+    "date": "{{year}}-06-17"
+  },
+  "national-exams-morocco": {
+    "id": "national-exam-ma",
+    "slug": "national-exams-morocco",
+    "name": "الامتحان الوطني للبكالوريا في المغرب",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "ma",
+    "date": "{{year}}-06-04"
+  },
   "school-start-morocco": {
     "id": "school-start-ma",
     "slug": "school-start-morocco",
@@ -158,6 +292,26 @@
     "_countryCode": "ma",
     "month": 9,
     "day": 8
+  },
+  "throne-day-morocco": {
+    "id": "throne-day",
+    "slug": "throne-day-morocco",
+    "name": "عيد العرش المغربي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ma",
+    "month": 7,
+    "day": 30
+  },
+  "independence-day-algeria": {
+    "id": "independence-dz",
+    "slug": "independence-day-algeria",
+    "name": "عيد الاستقلال والشباب في الجزائر",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "dz",
+    "month": 7,
+    "day": 5
   },
   "uae-national-day": {
     "id": "national-day-ae",
@@ -178,6 +332,15 @@
     "_countryCode": "ae",
     "month": 8,
     "day": 30
+  },
+  "bac-results-tunisia": {
+    "id": "results-bac-tn",
+    "slug": "bac-results-tunisia",
+    "name": "نتائج بكالوريا تونس",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "tn",
+    "date": "{{year}}-06-23"
   },
   "school-start-tunisia": {
     "id": "school-start-tn",

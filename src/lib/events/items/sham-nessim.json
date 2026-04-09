@@ -2,7 +2,8 @@
   "id": "sham-nessim",
   "slug": "sham-nessim",
   "name": "شم النسيم",
-  "type": "easter",
+  "type": "estimated",
   "category": "holidays",
-  "_countryCode": "eg"
+  "_countryCode": "eg",
+  "date": "{{year}}-04-13"
 }

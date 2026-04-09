@@ -80,8 +80,8 @@
     ]
   },
   "islamic-new-year": {
-    "tier": "tier2",
-    "publishStatus": "drafted",
+    "tier": "tier1",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/islamic-new-year",
     "aliases": [
@@ -96,8 +96,8 @@
     ]
   },
   "ashura": {
-    "tier": "tier2",
-    "publishStatus": "drafted",
+    "tier": "tier1",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/ashura",
     "aliases": [
@@ -176,8 +176,8 @@
     ]
   },
   "first-dhul-hijjah": {
-    "tier": "tier2",
-    "publishStatus": "drafted",
+    "tier": "tier1",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/first-dhul-hijjah",
     "aliases": [
@@ -200,7 +200,7 @@
   },
   "summer-season": {
     "tier": "tier3",
-    "publishStatus": "drafted",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/summer-season",
     "aliases": []
@@ -219,13 +219,6 @@
     "canonicalPath": "/holidays/spring-season",
     "aliases": []
   },
-  "autumn-season": {
-    "tier": "tier3",
-    "publishStatus": "drafted",
-    "countryScope": "custom",
-    "canonicalPath": "/holidays/autumn-season",
-    "aliases": []
-  },
   "spring-vacation": {
     "tier": "tier3",
     "publishStatus": "drafted",
@@ -234,8 +227,8 @@
     "aliases": []
   },
   "summer-vacation": {
-    "tier": "tier3",
-    "publishStatus": "drafted",
+    "tier": "tier1",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/summer-vacation",
     "aliases": []
@@ -262,8 +255,8 @@
     "aliases": []
   },
   "school-start-saudi": {
-    "tier": "tier3",
-    "publishStatus": "drafted",
+    "tier": "tier1",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/school-start-saudi",
     "aliases": []
@@ -283,8 +276,8 @@
     "aliases": []
   },
   "social-security-saudi": {
-    "tier": "tier3",
-    "publishStatus": "drafted",
+    "tier": "tier1",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/social-security-saudi",
     "aliases": []
@@ -296,11 +289,25 @@
     "canonicalPath": "/holidays/thanaweya-results",
     "aliases": []
   },
+  "hafez-saudi": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/hafez-saudi",
+    "aliases": []
+  },
   "thanaweya-exams": {
     "tier": "tier2",
-    "publishStatus": "drafted",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/thanaweya-exams",
+    "aliases": []
+  },
+  "housing-support-saudi": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/housing-support-saudi",
     "aliases": []
   },
   "school-start-egypt": {
@@ -318,8 +325,8 @@
     "aliases": []
   },
   "sham-nessim": {
-    "tier": "tier2",
-    "publishStatus": "drafted",
+    "tier": "tier1",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/sham-nessim",
     "aliases": []
@@ -332,10 +339,17 @@
     "aliases": []
   },
   "bac-exams-algeria": {
-    "tier": "tier2",
-    "publishStatus": "drafted",
+    "tier": "tier1",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/bac-exams-algeria",
+    "aliases": []
+  },
+  "autumn-season": {
+    "tier": "tier1",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/autumn-season",
     "aliases": []
   },
   "school-start-algeria": {
@@ -343,13 +357,6 @@
     "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/school-start-algeria",
-    "aliases": []
-  },
-  "independence-day-algeria": {
-    "tier": "tier2",
-    "publishStatus": "drafted",
-    "countryScope": "custom",
-    "canonicalPath": "/holidays/independence-day-algeria",
     "aliases": []
   },
   "revolution-day-algeria": {
@@ -360,15 +367,15 @@
     "aliases": []
   },
   "bac-results-morocco": {
-    "tier": "tier2",
-    "publishStatus": "drafted",
+    "tier": "tier1",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/bac-results-morocco",
     "aliases": []
   },
   "national-exams-morocco": {
-    "tier": "tier3",
-    "publishStatus": "drafted",
+    "tier": "tier1",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/national-exams-morocco",
     "aliases": []
@@ -382,7 +389,7 @@
   },
   "throne-day-morocco": {
     "tier": "tier2",
-    "publishStatus": "drafted",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/throne-day-morocco",
     "aliases": []
@@ -392,6 +399,13 @@
     "publishStatus": "drafted",
     "countryScope": "custom",
     "canonicalPath": "/holidays/independence-day-morocco",
+    "aliases": []
+  },
+  "independence-day-algeria": {
+    "tier": "tier2",
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "canonicalPath": "/holidays/independence-day-algeria",
     "aliases": []
   },
   "uae-national-day": {
@@ -409,8 +423,8 @@
     "aliases": []
   },
   "bac-results-tunisia": {
-    "tier": "tier2",
-    "publishStatus": "drafted",
+    "tier": "tier1",
+    "publishStatus": "published",
     "countryScope": "custom",
     "canonicalPath": "/holidays/bac-results-tunisia",
     "aliases": []

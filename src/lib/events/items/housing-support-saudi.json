@@ -1,0 +1,9 @@
+{
+  "id": "housing-support-sa",
+  "slug": "housing-support-saudi",
+  "name": "الدعم السكني",
+  "type": "monthly",
+  "category": "support",
+  "_countryCode": "sa",
+  "day": 24
+}

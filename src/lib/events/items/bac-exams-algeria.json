@@ -1,10 +1,9 @@
 {
   "id": "exams-bac-dz",
   "slug": "bac-exams-algeria",
-  "name": "امتحانات الباك (الجزائر)",
-  "type": "fixed",
+  "name": "بكالوريا الجزائر",
+  "type": "estimated",
   "category": "school",
   "_countryCode": "dz",
-  "month": 6,
-  "day": 15
+  "date": "{{year}}-06-07"
 }

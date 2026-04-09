@@ -14,7 +14,7 @@
     "test:unit": "tsx --test tests/*.test.ts",
     "events:migrate-packages": "tsx --env-file=.env.local scripts/migrate-events-to-packages.ts",
     "events:migrate-data": "tsx --env-file=.env.local scripts/migrate-events-to-data-folders.ts",
-    "events:build": "tsx --env-file=.env.local scripts/generate-events-index.ts",
+    "events:build": "tsx scripts/generate-events-index.ts",
     "events:generate-index": "npm run events:build",
     "events:new": "tsx --env-file=.env.local scripts/events-new.ts",
     "events:apply-batch": "node --import tsx scripts/events-apply-batch.ts",
