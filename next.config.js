@@ -108,19 +108,19 @@ const nextConfig = {
       },
       {
         source: '/:path*',
-        has: [{ type: 'host', value: 'miqatona.com' }],
+        has: [{ type: 'host', value: 'miqatime.com' }],
         destination: 'https://miqatona.com/:path*',
         permanent: true,
       },
       {
         source: '/:path*',
-        has: [{ type: 'host', value: 'www.miqatona.com' }],
+        has: [{ type: 'host', value: 'www.miqatime.com' }],
         destination: 'https://miqatona.com/:path*',
         permanent: true,
       },
       {
         source: '/:path*',
-        has: [{ type: 'host', value: 'www.miqatona.com' }],
+        has: [{ type: 'host', value: 'miqatime.vercel.app' }],
         destination: 'https://miqatona.com/:path*',
         permanent: true,
       },
