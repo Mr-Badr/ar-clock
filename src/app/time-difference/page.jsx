@@ -83,20 +83,6 @@ const faqs = [
 export default async function TimeDifferencePage() {
   const allCountries = await getCountriesAction();
 
-  // FAQ schema
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.a,
-      },
-    })),
-  };
-
   // HowTo schema for "تحويل الوقت بين مدينتين" (step-by-step)
   const howToSchema = {
     "@context": "https://schema.org",
@@ -133,12 +119,7 @@ export default async function TimeDifferencePage() {
       {/* <AdLayoutWrapper> */}
       <main className="content-col pt-24 mt-12">
 
-        {/* JSON-LD structured data (FAQ + HowTo) */}
-        <script
-          type="application/ld+json"
-          // FAQ schema first (Google reads both)
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
+        {/* JSON-LD structured data (HowTo) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}

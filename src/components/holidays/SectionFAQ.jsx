@@ -27,31 +27,12 @@ import { getFaqItems } from './data/faqItems'
 
 const H2_ID = 'h2-holidays-faq'
 
-function FAQSchema({ items }) {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: items.map((item) => ({
-      '@type': 'Question',
-      name: item.q,
-      acceptedAnswer: { '@type': 'Answer', text: item.a },
-    })),
-  }
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  )
-}
 
 export default async function SectionFAQ() {
   const faqItems = await getFaqItems()
 
   return (
     <SectionWrapper id="section-holidays-faq" headingId={H2_ID} subtle>
-
-      <FAQSchema items={faqItems} />
 
       {/* Header */}
       <header className="max-w-2xl mx-auto text-center mb-10 space-y-3">

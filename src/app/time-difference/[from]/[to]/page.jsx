@@ -108,7 +108,15 @@ export async function generateMetadata({ params }) {
   const title = `فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary} | ${fromCity.city_name_ar} و${toCity.city_name_ar} - ${SITE_BRAND}`;
   const description =
     `اعرف كم ساعة بين ${fromCountryPrimary} (${fromCity.city_name_ar}) و${toCountryPrimary} (${toCity.city_name_ar}) مع تحويل الوقت المباشر والساعة الآن والتوقيت الصيفي وأفضل وقت للاجتماعات.`;
-  const keywords = buildComparisonKeywords(fromCity, toCity).join(', ');
+  const keywordsArray = [
+    ...buildComparisonKeywords(fromCity, toCity),
+    `كم ساعة بين ${fromCountryPrimary} و${toCountryPrimary}`,
+    `متى يفتح الدوام في ${toCity.city_name_ar} بتوقيت ${fromCity.city_name_ar}`,
+    `الساعة الان في ${toCity.city_name_ar} مقارنة بـ ${fromCity.city_name_ar} مع التوقيت الصيفي`,
+    `حساب فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary} بالدقيقة`,
+    `أفضل وقت للاجتماعات المشتركة بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`
+  ];
+  const keywords = keywordsArray.join(', ');
 
   return {
     title, description, keywords,
@@ -278,15 +286,6 @@ async function ComparisonPageContent({ paramsPromise }) {
   ];
 
   // ─── JSON-LD ──────────────────────────────────────────────────────────────
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map(f => ({
-      '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
-    })),
-  };
   const breadcrumbSchema = {
     '@context': 'https://schema.org', '@type': 'BreadcrumbList',
     itemListElement: [
@@ -310,11 +309,32 @@ async function ComparisonPageContent({ paramsPromise }) {
     ],
   };
 
+  const toolSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: `حاسبة فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Web',
+    inLanguage: 'ar',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    description: directAnswer,
+    featureList: [
+      'حساب دقيق لفرق التوقيت',
+      'مراعاة التوقيت الصيفي تلقائياً',
+      'تحويل فوري للتوقيت',
+      'حساب ساعات العمل المشتركة للشركات'
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-base text-primary">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }} />
       {/* <AdLayoutWrapper> */}
       <main className="content-col pt-24 pb-20">
 

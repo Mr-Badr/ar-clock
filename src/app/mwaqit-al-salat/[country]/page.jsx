@@ -59,15 +59,21 @@ export async function generateMetadata({ params }) {
     title,
     description,
     keywords: [
+      // Short-tail
       `مواقيت الصلاة ${countryAr}`,
-      capitalAr ? `مواقيت الصلاة ${capitalAr}` : '',
-      `أوقات الصلاة ${countryAr} اليوم`,
-      `وقت الفجر ${countryAr}`,
-      `وقت المغرب ${countryAr}`,
-      capitalAr ? `وقت الفجر ${capitalAr}` : '',
-      `أذان ${countryAr} اليوم`,
-      `مواقيت الأذان ${countryAr}`,
-      `prayer times ${country.name_en}`,
+      `أوقات الأذان ${countryAr}`,
+      capitalAr ? `صلاة الفجر ${capitalAr}` : '',
+      `أذان المغرب ${countryAr}`,
+      // Medium-tail
+      `أوقات الصلاة في ${countryAr} اليوم`,
+      `مواقيت الصلاة لجميع مدن ${countryAr}`,
+      capitalAr ? `موعد أذان الفجر ${capitalAr}` : '',
+      `أوقات الأذان والتوقيت المحلي ${countryAr}`,
+      // Long-tail
+      `متى يأذن المغرب في ${countryAr} اليوم`,
+      `مواقيت الصلاة في ${countryAr} دقيقة يومياً`,
+      `جدول موعد صلاة العصر والمغرب لشهر كامل ${countryAr}`,
+      `prayer times ${country.name_en}`
     ].filter(Boolean).join(', '),
     alternates: { canonical },
     openGraph: {

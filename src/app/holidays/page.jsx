@@ -77,31 +77,9 @@ export default async function HolidaysPage() {
   const gr = now.getFullYear();
   const hi = approxHijriYear(gr);
 
-  /* ── FAQ schema ───────────────────────────────────────────────────── */
-  const faqSchema = {
-    '@context': 'https://schema.org', '@type': 'FAQPage',
-    mainEntity: [
-      {
-        q: `متى يبدأ رمضان ${gr}؟`,
-        a: `تُحدَّث صفحة المناسبات موعد رمضان ${gr} تلقائياً وفق تقويم أم القرى، مع الإشارة لاحتمال اختلاف يوم واحد بحسب الرؤية المحلية في بعض الدول.`,
-      },
-      {
-        q: `متى عيد الفطر ${gr}؟`,
-        a: `تُحدَّث صفحة المناسبات موعد عيد الفطر ${gr} تلقائياً وفق الحسابات المعتمدة، مع تنبيه واضح عند وجود احتمال اختلاف بالرؤية المحلية.`,
-      },
-      {
-        q: `متى عيد الأضحى ${gr}؟`,
-        a: `تُحدَّث صفحة المناسبات موعد عيد الأضحى ${gr} تلقائياً وفق الحسابات المعتمدة، مع مراعاة اختلاف إعلان الموعد النهائي بين بعض الدول.`,
-      },
-      {
-        q: `كيف تُحسب التواريخ الهجرية؟`,
-        a: `نعتمد AlAdhan API بتقويم أم القرى ${hi} هـ. للدول ذات الرؤية المحلية نُشير إلى احتمال اختلاف ±1 يوم.`,
-      },
-    ].map(({ q, a }) => ({
-      '@type': 'Question', name: q,
-      acceptedAnswer: { '@type': 'Answer', text: a },
-    })),
-  };
+  // NOTE: FAQPage schema is emitted by HolidaysGlobalSchemas (via HolidaysSections below).
+  // Do NOT add a second FAQPage here — Google flags "Duplicate field FAQPage" and
+  // invalidates both schemas, making the page ineligible for FAQ rich results.
 
   /* ── Render ──────────────────────────────────────────────────────── */
   return (
@@ -110,7 +88,6 @@ export default async function HolidaysPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       
       <main

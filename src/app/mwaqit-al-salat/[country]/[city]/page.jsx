@@ -92,15 +92,22 @@ export async function generateMetadata({ params }) {
     title,
     description,
     keywords: [
+      // Short-tail
       `مواقيت الصلاة ${cityNameAr}`,
       `أوقات الصلاة ${cityNameAr}`,
-      `وقت الفجر ${cityNameAr}`,
-      `وقت المغرب ${cityNameAr}`,
-      `وقت العصر ${cityNameAr}`,
-      `أذان ${cityNameAr} اليوم`,
-      `مواقيت الصلاة ${countryNameAr}`,
-      `صلاة العصر الشافعي ${cityNameAr}`,
-      `صلاة العصر الحنفي ${cityNameAr}`,
+      `صلاة الفجر ${cityNameAr}`,
+      `أذان المغرب ${cityNameAr}`,
+      // Medium-tail
+      `أوقات الصلاة في ${cityNameAr} اليوم`,
+      `موعد أذان الفجر ${cityNameAr}`,
+      `توقيت صلاة العصر ${cityNameAr}`,
+      `وقت الإفطار ${cityNameAr}`,
+      `أوقات الأذان ${countryNameAr} ${cityNameAr}`,
+      // Long-tail
+      `متى يأذن المغرب في ${cityNameAr} اليوم`,
+      `مواقيت الصلاة في ${cityNameAr} ${countryNameAr} حسب التوقيت المحلي`,
+      `موعد صلاة العصر المذهب الحنفي والشافعي في ${cityNameAr}`,
+      `جدول أوقات الصلاة لشهر كامل ${cityNameAr}`
     ].join(', '),
     alternates: { canonical },
     openGraph: {
@@ -208,11 +215,34 @@ export default async function PrayerTimesPage({ params }) {
     ],
   };
 
+  const toolSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: `حاسبة مواقيت الصلاة - ${cityNameAr}`,
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Web',
+    inLanguage: 'ar',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    description: `أداة مجانية لحساب مواقيت الصلاة الدقيقة وعرض أوقات الفجر والمغرب والعصر في ${cityNameAr} مع دعم لجميع المذاهب الفقهية.`,
+    featureList: [
+      'حساب دقيق لمواقيت الصلاة',
+      'تحديد أوقات الفجر والمغرب يومياً',
+      'دعم المذهب الشافعي والحنفي',
+      'تحديث تلقائي لحالة التوقيت الصيفي',
+      'مواقيت شهرية كاملة',
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-base" dir="rtl">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }} />
 
       {/* <AdLayoutWrapper> */}
       <main className="content-col pt-24 pb-32">
