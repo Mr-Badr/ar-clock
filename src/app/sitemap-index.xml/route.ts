@@ -18,7 +18,6 @@ export async function GET() {
     `${BASE}/time-difference/sitemap.xml`,
     // Date feature sitemaps
     `${BASE}/date/sitemap.xml`,
-    `${BASE}/date/hijri/sitemap.xml`,
   ];
 
   // Add per-country sitemaps for time-now and mwaqit-al-salat

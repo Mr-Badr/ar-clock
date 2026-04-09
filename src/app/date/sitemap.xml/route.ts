@@ -13,6 +13,8 @@ export async function GET() {
     '/date/sitemaps/static',
     '/date/sitemaps/countries',
     '/date/sitemaps/calendars',
+    '/date/gregorian/sitemap.xml',
+    '/date/hijri/sitemap.xml',
   ];
 
   const entries = sitemaps.map(
