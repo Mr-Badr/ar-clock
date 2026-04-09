@@ -253,7 +253,7 @@ export default function TimeNowHero({
   if (isFS) {
     return (
       <div ref={containerRef} style={{ position: 'relative', width: '100%' }}>
-        <div style={{
+        <div className="fullscreen-mode" style={{
           ...FULLSCREEN_LAYER_STYLE,
           background: 'var(--clock-bg)',
         }} dir="rtl">
@@ -267,7 +267,7 @@ export default function TimeNowHero({
           </div>
 
           <div style={getFullscreenContentStyle(scaleValue)}>
-            <div style={getFullscreenRowStyle(3)}>
+            <div className="ct-row-desktop" style={getFullscreenRowStyle(3)}>
               {UNITS.map(({ key, label }, i) => (
                 <div key={key} style={getFullscreenUnitWrapStyle(3)}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem' }}>

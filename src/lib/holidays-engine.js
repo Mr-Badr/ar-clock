@@ -221,8 +221,8 @@ export function _resolveEventMetaInternal(ev, targetDate, overrideHijriYear = nu
   const schemaData = ev.schemaData ? {
     eventName: rt(ev.schemaData.eventName),
     eventAlternateName: rt(ev.schemaData.eventAlternateName),
-    startDate: ev.schemaData.startDate,
-    endDate: ev.schemaData.endDate,
+    startDate: rt(ev.schemaData.startDate),
+    endDate: rt(ev.schemaData.endDate),
     eventDescription: rt(ev.schemaData.eventDescription),
     breadcrumbs: (ev.schemaData.breadcrumbs || []).map(b => ({
       name: rt(b.name),

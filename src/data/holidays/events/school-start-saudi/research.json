@@ -1,11 +1,98 @@
 {
   "slug": "school-start-saudi",
   "locale": "ar",
-  "capturedAt": "2026-03-30T13:03:24.658Z",
-  "primaryQueries": [],
-  "competitors": [],
-  "coverageMatrix": [],
-  "keywordGaps": [],
-  "unansweredQuestions": [],
-  "differentiationIdeas": []
+  "capturedAt": "2026-04-09T00:00:00.000Z",
+  "primaryQueries": [
+    "متى تبدأ الدراسة في السعودية 2026",
+    "بداية الدراسة 1448",
+    "كم باقي على الدراسة في السعودية 1448",
+    "موعد الدراسة السعودية 23 أغسطس 2026"
+  ],
+  "competitors": [
+    {
+      "site": "saudicalculator",
+      "url": "https://www.saudicalculator.com/academic-calendar/school-start",
+      "strengths": [
+        "يمسك نية العد التنازلي مباشرة",
+        "يعرض 23 أغسطس 2026 بوضوح"
+      ],
+      "weaknesses": [
+        "لا يشرح اختلاف الإدارات التعليمية الغربية",
+        "يقدم جواباً واحداً قد لا يحل الالتباس لدى كل الأسر"
+      ]
+    },
+    {
+      "site": "saudicalendars",
+      "url": "https://saudicalendars.com/academic-calendar/",
+      "strengths": [
+        "يعرض الموعد العام والموعد المختلف لمكة والمدينة وجدة والطائف"
+      ],
+      "weaknesses": [
+        "صفحة تقويم لا صفحة SEO عربية متكاملة عن بداية الدراسة",
+        "لا تقدم شرحاً عملياً لسبب وجود التاريخين"
+      ]
+    }
+  ],
+  "coverageMatrix": [
+    {
+      "keyword": "متى تبدأ الدراسة في السعودية 2026",
+      "competitorCoverage": [
+        "saudicalculator",
+        "saudicalendars"
+      ],
+      "ourGap": false
+    },
+    {
+      "keyword": "لماذا 23 أغسطس و30 أغسطس",
+      "competitorCoverage": [
+        "saudicalendars"
+      ],
+      "ourGap": false
+    },
+    {
+      "keyword": "كيف أعرف التاريخ الصحيح لمدرستي",
+      "competitorCoverage": [],
+      "ourGap": true
+    },
+    {
+      "keyword": "كيف أستعد لأول أسبوع دراسي",
+      "competitorCoverage": [],
+      "ourGap": true
+    }
+  ],
+  "keywordGaps": [
+    "اختلاف 23 أغسطس و30 أغسطس",
+    "بداية الدراسة مكة جدة الطائف المدينة 2026",
+    "كيف أعرف الموعد الصحيح لمدرستي",
+    "الاستعداد لأول أسبوع دراسي"
+  ],
+  "unansweredQuestions": [
+    "هل يبدأ جميع الطلاب في السعودية في اليوم نفسه؟",
+    "ما سبب اختلاف الموعد بين بعض الصفحات؟",
+    "ما أول شيء يجب أن تراجعه الأسرة قبل العودة؟"
+  ],
+  "differentiationIdeas": [
+    "تحويل تضارب 23 و30 أغسطس إلى نقطة قوة شرح واضحة",
+    "إضافة توجيه عملي للأسرة بدل العدّاد وحده",
+    "بناء صفحة تجمع الموعد العام والاستثناءات المعروفة في مكان واحد"
+  ],
+  "factSources": [
+    {
+      "label": "وزارة التعليم السعودية RSS: بداية العام الدراسي 1448 - 1449 هـ",
+      "url": "https://moe.gov.sa/ar/education/generaleducation/Pages/rss.aspx"
+    },
+    {
+      "label": "تقويم السعودية: بداية العام الدراسي 2026-2027",
+      "url": "https://saudicalendars.com/events/%D8%A8%D8%AF%D8%A7%D9%8A%D8%A9-%D8%A7%D9%84%D8%B9%D8%A7%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-2026-2027/"
+    },
+    {
+      "label": "تقويم السعودية: التقويم الدراسي مع اختلاف الإدارات الغربية",
+      "url": "https://saudicalendars.com/academic-calendar/"
+    },
+    {
+      "label": "حاسبة السعودية: كم باقي على المدرسة 1448",
+      "url": "https://www.saudicalculator.com/academic-calendar/school-start"
+    }
+  ],
+  "notes": "أكبر فرصة في هذه الصفحة هي أن الباحث السعودي يرى تاريخين مختلفين كثيراً في النتائج. الصفحة تربح إذا فسرت هذا التضارب بوضوح وربطته بالمستخدم مباشرة."
 }

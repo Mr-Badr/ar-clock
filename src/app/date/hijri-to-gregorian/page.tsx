@@ -14,12 +14,12 @@ import { getSiteUrl } from '@/lib/site-config';
 const BASE_URL = getSiteUrl();
 
 export const metadata: Metadata = {
-  title: 'تحويل هجري إلى ميلادي',
-  description: 'تحويل أي تاريخ هجري إلى ميلادي بثلاث طرق حساب: أم القرى، فلكي، ومدني. فوري ودقيق.',
+  title: 'تحويل هجري إلى ميلادي - محول التاريخ',
+  description: 'حوّل أي تاريخ هجري إلى ميلادي فوراً مع ثلاث طرق حساب: أم القرى، الفلكي، والمدني، وبواجهة عربية واضحة وسريعة.',
   alternates: { canonical: `${BASE_URL}/date/hijri-to-gregorian` },
   openGraph: {
-    title: 'تحويل هجري إلى ميلادي | مواقيت',
-    description: 'من هجري إلى ميلادي بثلاث طرق حساب',
+    title: 'تحويل هجري إلى ميلادي | ميقاتنا',
+    description: 'تحويل من هجري إلى ميلادي بثلاث طرق حساب مع نتائج فورية.',
     url: `${BASE_URL}/date/hijri-to-gregorian`,
     locale: 'ar_SA',
   },

@@ -1,14 +1,17 @@
 {
   "slug": "sham-nessim",
-  "tier": "tier2",
-  "publishStatus": "drafted",
+  "tier": "tier1",
+  "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:37.050Z"
+  "notes": [
+    "fact-source: المصري اليوم — قرار الإجازة الرسمية لشم النسيم 2026",
+    "fact-source: اليوم السابع — الاثنين 13 أبريل 2026 إجازة رسمية بمناسبة شم النسيم"
+  ],
+  "updatedAt": "2026-04-09T00:00:00.000Z"
 }

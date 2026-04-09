@@ -68,7 +68,7 @@ export async function generateMetadata({
     description: `تاريخ ${hDay} ${monthAr} ${hYear} هجري يوافق ${gregorian.formatted.ar} ميلادي.`,
     alternates: { canonical: `${BASE_URL}/date/hijri/${year}/${month}/${day}` },
     openGraph: {
-      title: `${hDay} ${monthAr} ${hYear} هـ — ${gregorian.formatted.ar}م | مواقيت`,
+      title: `${hDay} ${monthAr} ${hYear} هـ — ${gregorian.formatted.ar}م | ميقاتنا`,
       url: `${BASE_URL}/date/hijri/${year}/${month}/${day}`,
       locale: 'ar_SA',
     },

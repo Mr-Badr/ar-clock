@@ -40,7 +40,7 @@ export async function generateMetadata({
     description: `تقويم عام ${year} ميلادي كامل مع الشهور والأيام وما يوافقها بالتقويم الهجري. تصفح السنة كلها مع روابط كل يوم وتحويل التاريخ بسرعة.`,
     alternates: { canonical: `${BASE_URL}/date/calendar/${year}` },
     openGraph: {
-      title: `تقويم عام ${year} ميلادي | مواقيت`,
+      title: `تقويم عام ${year} ميلادي | ميقاتنا`,
       description: `تصفح التقويم الميلادي لعام ${year} وما يوافقه من الهجري مع روابط كل يوم`,
       url: `${BASE_URL}/date/calendar/${year}`,
       locale: 'ar_SA',

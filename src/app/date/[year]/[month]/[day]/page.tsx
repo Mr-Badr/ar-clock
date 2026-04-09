@@ -64,7 +64,7 @@ export async function generateMetadata({
     title: `${day} ${monthAr} ${year} — ${hijri.formatted.ar}`,
     description: `تاريخ ${day} ${monthAr} ${year} بالهجري هو ${hijri.formatted.ar}. تحويل فوري بثلاث طرق حساب.`,
     alternates: { canonical: `${BASE_URL}/date/${year}/${month}/${day}` },
-    openGraph: { title: `${day} ${monthAr} ${year} — ${hijri.formatted.ar} | مواقيت`, url: `${BASE_URL}/date/${year}/${month}/${day}`, locale: 'ar_SA' },
+    openGraph: { title: `${day} ${monthAr} ${year} — ${hijri.formatted.ar} | ميقاتنا`, url: `${BASE_URL}/date/${year}/${month}/${day}`, locale: 'ar_SA' },
   };
 }
 

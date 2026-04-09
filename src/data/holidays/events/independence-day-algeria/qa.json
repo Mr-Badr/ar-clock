@@ -1,14 +1,17 @@
 {
   "slug": "independence-day-algeria",
   "tier": "tier2",
-  "publishStatus": "drafted",
+  "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:36.999Z"
+  "notes": [
+    "fact-source: وكالة الأنباء الجزائرية — ذكرى عيد الاستقلال",
+    "fact-source: وكالة الأنباء الجزائرية — الذكرى الثالثة والستين لعيد الاستقلال"
+  ],
+  "updatedAt": "2026-04-09T00:00:00.000Z"
 }

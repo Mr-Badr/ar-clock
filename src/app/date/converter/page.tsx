@@ -14,12 +14,12 @@ import { getSiteUrl } from '@/lib/site-config';
 const BASE_URL = getSiteUrl();
 
 export const metadata: Metadata = {
-  title: 'محول التاريخ — هجري وميلادي',
-  description: 'تحويل فوري بين التاريخ الهجري والميلادي بثلاث طرق حساب: أم القرى، فلكي، ومدني. أدق محول تاريخ عربي.',
+  title: 'محول التاريخ الهجري والميلادي - تحويل دقيق وفوري',
+  description: 'حوّل أي تاريخ بين الهجري والميلادي فوراً مع ثلاث طرق حساب: أم القرى، الفلكي، والمدني، وبواجهة عربية واضحة وسريعة.',
   alternates: { canonical: `${BASE_URL}/date/converter` },
   openGraph: {
-    title: 'محول التاريخ الهجري والميلادي | مواقيت',
-    description: 'تحويل فوري وبثلاث طرق حساب',
+    title: 'محول التاريخ الهجري والميلادي | ميقاتنا',
+    description: 'تحويل فوري بين التاريخ الهجري والميلادي بثلاث طرق حساب.',
     url: `${BASE_URL}/date/converter`,
     locale: 'ar_SA',
   },

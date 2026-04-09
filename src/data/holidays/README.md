@@ -5,6 +5,9 @@
 - `src/data/holidays/events/<slug>/research.json`
 - `src/data/holidays/events/<slug>/qa.json`
 
+See also:
+- `docs/add-new-event.md` for the step-by-step contributor workflow
+
 Each event owns its complete authoring state inside one folder.
 
 Important:

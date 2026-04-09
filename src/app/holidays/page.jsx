@@ -26,13 +26,14 @@ export async function generateMetadata() {
   const gr = now.getFullYear();
   const hi = approxHijriYear(gr);
   return {
-    title: `متى رمضان وعيد الفطر والأضحى ${gr} / ${hi} — عد تنازلي دقيق`,
-    description: `عد تنازلي للمناسبات الإسلامية والوطنية والمدرسية. متى رمضان ${gr}؟ عيد الفطر؟ عيد الأضحى؟ بالهجري والميلادي لكل الدول العربية.`,
-    keywords: `متى رمضان ${gr}, عيد الفطر ${gr}, عيد الأضحى ${gr}, عد تنازلي, تقويم هجري ${hi}`,
+    title: `المناسبات والأعياد والفعاليات القادمة ${gr} / ${hi}`,
+    description: `دليل عربي للمناسبات الإسلامية والوطنية والمدرسية والاجتماعية مع عد تنازلي ومواعيد بالهجري والميلادي وروابط تفصيلية لكل مناسبة.`,
+    keywords: `المناسبات القادمة ${gr}, الأعياد ${gr}, المناسبات الإسلامية ${hi}, العطل الرسمية ${gr}, عداد المناسبات, المناسبات المدرسية`,
     alternates: { canonical: `${SITE}/holidays`, languages: { ar: `${SITE}/holidays` } },
     robots: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large' },
     openGraph: {
-      title: `${SITE_BRAND} — عداد المواعيد الإسلامية ${gr}`,
+      title: `المناسبات والأعياد والفعاليات القادمة ${gr}`,
+      description: `تصفح المناسبات القادمة في العالم العربي مع العد التنازلي والتصنيف والصفحات التفصيلية لكل مناسبة.`,
       locale: 'ar_SA', type: 'website', url: `${SITE}/holidays`,
     },
   };

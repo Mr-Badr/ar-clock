@@ -1,14 +1,17 @@
 {
   "slug": "throne-day-morocco",
   "tier": "tier2",
-  "publishStatus": "drafted",
+  "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:37.061Z"
+  "notes": [
+    "fact-source: هسبريس: عيد العرش بالمغرب.. تاريخه ورمزيته",
+    "fact-source: هسبريس: الذكرى السادسة والعشرون لعيد العرش المجيد"
+  ],
+  "updatedAt": "2026-04-09T00:00:00.000Z"
 }

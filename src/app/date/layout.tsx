@@ -4,8 +4,8 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   // Overridden per-page; this is just the segment fallback
   title: {
-    default: 'أدوات التاريخ — هجري وميلادي | مواقيت',
-    template: '%s | مواقيت الصلاة',
+    default: 'أدوات التاريخ الهجري والميلادي | ميقاتنا',
+    template: '%s | ميقاتنا',
   },
 };
 

@@ -645,7 +645,7 @@ export default function CountdownTicker({
                 {eventName}
               </h2>
             )}
-            <div style={getFullscreenRowStyle(4)}>
+            <div className="ct-row-desktop" style={getFullscreenRowStyle(4)}>
               {ALL_UNITS.map(({ key, label }, i) => (
                 <div key={key} style={getFullscreenUnitWrapStyle(4)}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem' }}>

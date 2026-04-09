@@ -3,13 +3,13 @@ import { getEnv } from '@/lib/env.server';
 export const SITE_BRAND = 'ميقاتنا';
 export const SITE_BRAND_EN = 'Miqatona';
 export const SITE_CONTACT_EMAIL = 'contact@miqatona.com';
-export const SITE_LEGACY_BRANDS = ['ميقات', 'Miqat'];
+export const SITE_LEGACY_BRANDS = ['ميقاتنا', 'Miqatona'];
 export const SITE_PRIMARY_DOMAIN = 'https://miqatona.com';
 export const SITE_APP_NAME = `${SITE_BRAND} | دليلك الشامل للوقت والمواعيد`;
-export const SITE_HOME_TITLE = 'الوقت الآن ومواقيت الصلاة وفرق التوقيت والتاريخ الهجري';
+export const SITE_HOME_TITLE = 'الوقت الان ومواقيت الصلاة وفرق التوقيت والتاريخ اليوم';
 export const SITE_TITLE = `${SITE_HOME_TITLE} | ${SITE_BRAND}`;
 export const SITE_DESCRIPTION =
-  'منصة عربية شاملة لمعرفة الوقت الآن في أي مدينة، مواقيت الصلاة، فرق التوقيت، التاريخ الهجري والميلادي، تحويل التاريخ، والتقويم وعدادات المناسبات بدقة عالية.';
+  'منصة عربية شاملة للوقت الآن في المدن والدول، مواقيت الصلاة، فرق التوقيت، التاريخ الهجري والميلادي، تحويل التاريخ، التقويم، والمناسبات مع صفحات داخلية مهيأة لمحركات البحث.';
 
 export const SITE_KEYWORDS = Array.from(new Set([
   SITE_BRAND,

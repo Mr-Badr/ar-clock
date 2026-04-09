@@ -97,11 +97,11 @@ export async function generateMetadata({
 
   const countryAr = country.name_ar;
   return {
-    title: `التاريخ الهجري اليوم في ${countryAr} | مواقيت`,
-    description: `تعرف على التاريخ الهجري والميلادي اليوم في ${countryAr} حسب طريقة الحساب المناسبة لهذه الصفحة.`,
+    title: `التاريخ الهجري والميلادي اليوم في ${countryAr}`,
+    description: `اعرف التاريخ الهجري والميلادي اليوم في ${countryAr} مع طريقة الحساب المعتمدة لهذه الصفحة وروابط الوقت الآن والتحويل والتقويم.`,
     alternates: { canonical: `${BASE_URL}/date/country/${countrySlug}` },
     openGraph: {
-      title: `التاريخ الهجري والميلادي اليوم في ${countryAr}`,
+      title: `التاريخ الهجري والميلادي اليوم في ${countryAr} | ميقاتنا`,
       description: `التاريخ اليوم في ${countryAr} مع التقويم الهجري والميلادي.`,
       url: `${BASE_URL}/date/country/${countrySlug}`,
       locale: 'ar_SA',

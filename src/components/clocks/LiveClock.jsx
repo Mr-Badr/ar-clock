@@ -318,6 +318,7 @@ export default function LiveClock({ timezone = null, cityLabel = null }) {
     return (
       <div ref={containerRef} style={{ position: 'relative', width: '100%' }}>
         <div
+          className="fullscreen-mode"
           style={{
             ...FULLSCREEN_LAYER_STYLE,
             background: 'var(--bg-base)',
@@ -346,7 +347,7 @@ export default function LiveClock({ timezone = null, cityLabel = null }) {
               </h2>
             )}
 
-            <div style={getFullscreenRowStyle(3)}>
+            <div className="ct-row-desktop" style={getFullscreenRowStyle(3)}>
               {TIME_UNITS.map(({ key, label }, i) => (
                 <div key={key} style={getFullscreenUnitWrapStyle(3)}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem' }}>

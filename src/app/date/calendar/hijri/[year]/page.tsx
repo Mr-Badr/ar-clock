@@ -60,7 +60,7 @@ export async function generateMetadata({
     description: `التقويم الهجري لعام ${year} هـ كاملًا مع ما يوافقه بالتقويم الميلادي. تصفح الشهور الهجرية وروابط الأيام وتحويل التاريخ بسهولة.`,
     alternates: { canonical: `${BASE_URL}/date/calendar/hijri/${year}` },
     openGraph: {
-      title: `تقويم عام ${year} هجري | مواقيت`,
+      title: `تقويم عام ${year} هجري | ميقاتنا`,
       description: `تصفح التقويم الهجري لعام ${year} هـ وما يوافقه من الميلادي مع روابط الأيام`,
       url: `${BASE_URL}/date/calendar/hijri/${year}`,
       locale: 'ar_SA',

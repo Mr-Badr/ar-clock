@@ -1,11 +1,91 @@
 {
   "slug": "bac-results-morocco",
   "locale": "ar",
-  "capturedAt": "2026-03-30T13:03:24.671Z",
-  "primaryQueries": [],
-  "competitors": [],
-  "coverageMatrix": [],
-  "keywordGaps": [],
-  "unansweredQuestions": [],
-  "differentiationIdeas": []
+  "capturedAt": "2026-04-09T00:00:00.000Z",
+  "primaryQueries": [
+    "موعد نتائج الباك 2026 المغرب",
+    "متى نتائج البكالوريا 2026 في المغرب",
+    "كم باقي على نتائج الباك 2026",
+    "bac.men.gov.ma نتائج البكالوريا"
+  ],
+  "competitors": [
+    {
+      "site": "Moutamadris",
+      "url": "https://moutamadris.ma/notes/",
+      "strengths": [
+        "يذكر 17 يونيو 2026 صباحاً لنتائج الدورة العادية",
+        "يجمع قنوات متعددة للاطلاع على النتائج"
+      ],
+      "weaknesses": [
+        "محتوى خدماتي عام وليس صفحة موجهة تحديداً للنتائج",
+        "لا يشرح للمستخدم ماذا يفعل إذا لم تظهر النتيجة فوراً"
+      ]
+    },
+    {
+      "site": "Moutamadris خدمات مسار",
+      "url": "https://moutamadris.ma/moutamadris-%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D9%85%D8%B3%D8%A7%D8%B1/",
+      "strengths": [
+        "يمسك نية البحث المرتبطة بمسار والنقط والنتائج",
+        "يذكر منصات الاطلاع الأكثر تداولاً"
+      ],
+      "weaknesses": [
+        "يتشعب إلى خدمات كثيرة فيضعف تركيز صفحة النتائج نفسها",
+        "لا يقدم بناء FAQ واضحاً حول يوم النتائج"
+      ]
+    }
+  ],
+  "coverageMatrix": [
+    {
+      "keyword": "موعد نتائج الباك 2026 المغرب",
+      "competitorCoverage": [
+        "Moutamadris",
+        "Moutamadris خدمات مسار"
+      ],
+      "ourGap": false
+    },
+    {
+      "keyword": "ماذا أفعل إذا لم تظهر النتيجة فوراً",
+      "competitorCoverage": [],
+      "ourGap": true
+    },
+    {
+      "keyword": "أفضل قناة للاطلاع على نتائج البكالوريا",
+      "competitorCoverage": [],
+      "ourGap": true
+    },
+    {
+      "keyword": "نتائج الدورة الاستدراكية البكالوريا المغرب",
+      "competitorCoverage": [
+        "Moutamadris"
+      ],
+      "ourGap": false
+    }
+  ],
+  "keywordGaps": [
+    "كيف أطلع على النتائج بهدوء يوم الضغط",
+    "ما الفرق بين Massar وtaalim.ma وbac.men.gov.ma",
+    "متى نتائج الدورة الاستدراكية",
+    "كم باقي على نتائج الباك"
+  ],
+  "unansweredQuestions": [
+    "ما أول منصة أجربها يوم النتائج؟",
+    "هل تأخر المنصة يعني مشكلة في النتيجة؟",
+    "كيف أستعد قبل صباح 17 يونيو؟"
+  ],
+  "differentiationIdeas": [
+    "جمع الموعد وقنوات الاطلاع والخطوات العملية في صفحة واحدة",
+    "بناء FAQ يجيب عن مشاكل يوم النتائج لا عن التاريخ فقط",
+    "إضافة عداد تنازلي يرفع فائدة الصفحة قبل يوم الإعلان"
+  ],
+  "factSources": [
+    {
+      "label": "Moutamadris: نتائج البكالوريا 2026 يوم 17 يونيو صباحاً",
+      "url": "https://moutamadris.ma/notes/"
+    },
+    {
+      "label": "Moutamadris خدمات مسار 2026",
+      "url": "https://moutamadris.ma/moutamadris-%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D9%85%D8%B3%D8%A7%D8%B1/"
+    }
+  ],
+  "notes": "صفحة النتائج تكسب إذا خدمت لحظة الضغط الفعلية عند المستخدم: الموعد، القنوات، ماذا أفعل لو لم تفتح المنصة، وما الفرق بين الروابط الأكثر تداولاً."
 }
