@@ -8,11 +8,14 @@ import {
   useMarketingPermission,
 } from "@/lib/client/marketing";
 
-const analyticsEnabled = isPublicEnvEnabled(
-  process.env.NEXT_PUBLIC_ENABLE_ANALYTICS,
-);
 const gaMeasurementId = (process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "").trim();
 const gtmId = (process.env.NEXT_PUBLIC_GTM_ID || "").trim();
+const hasTrackingId = Boolean(gtmId || gaMeasurementId);
+const analyticsFlag = String(
+  process.env.NEXT_PUBLIC_ENABLE_ANALYTICS || "",
+).trim().toLowerCase();
+const analyticsEnabled =
+  analyticsFlag === "true" || (analyticsFlag !== "false" && hasTrackingId);
 
 function RouteChangeTracker({ activeMode, measurementId }) {
   const pathname = usePathname();
@@ -47,7 +50,6 @@ function RouteChangeTracker({ activeMode, measurementId }) {
 }
 
 export default function AnalyticsProvider() {
-  const hasTrackingId = Boolean(gtmId || gaMeasurementId);
   const shouldLoadAnalytics = analyticsEnabled && hasTrackingId;
   const canLoad = useMarketingPermission(shouldLoadAnalytics);
 

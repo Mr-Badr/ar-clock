@@ -1,19 +1,19 @@
-# Submit in Search Console -> Sitemaps
-https://miqatona.com/sitemap-index.xml
+# Submit ONLY this in Search Console -> Sitemaps
+https://miqatona.com/sitemap-index.xml ✅
 
 # Optional debug sitemaps
-https://miqatona.com/sitemap.xml
-https://miqatona.com/economie/sitemap.xml
-https://miqatona.com/holidays/sitemap.xml
-https://miqatona.com/time-difference/sitemap.xml
-https://miqatona.com/date/sitemap.xml
-https://miqatona.com/date/gregorian/sitemap.xml
-https://miqatona.com/date/hijri/sitemap.xml
-https://miqatona.com/date/sitemaps/static
-https://miqatona.com/date/sitemaps/countries
-https://miqatona.com/date/sitemaps/calendars
+https://miqatona.com/sitemap.xml ✅
+https://miqatona.com/economie/sitemap.xml ✅
+https://miqatona.com/holidays/sitemap.xml ✅
+https://miqatona.com/time-difference/sitemap.xml ✅
+https://miqatona.com/date/sitemap.xml ✅
+https://miqatona.com/date/gregorian/sitemap.xml ✅
+https://miqatona.com/date/hijri/sitemap.xml ✅
+https://miqatona.com/date/sitemaps/static ✅
+https://miqatona.com/date/sitemaps/countries ✅
+https://miqatona.com/date/sitemaps/calendars ✅
 
-# Verify manually, do not submit in the Sitemaps box
+# NEVER submit this in the Sitemaps box. Open it manually only.
 https://miqatona.com/robots.txt
 
 # Request indexing in URL Inspection -> Core hubs
@@ -25,7 +25,80 @@ https://miqatona.com/holidays
 https://miqatona.com/date
 https://miqatona.com/economie
 
-# Request indexing in URL Inspection -> Top 20 MENA priority country/city pages
+# Request indexing in URL Inspection -> Priority economy pages
+https://miqatona.com/economie
+https://miqatona.com/economie/us-market-open
+https://miqatona.com/economie/gold-market-hours
+https://miqatona.com/economie/forex-sessions
+https://miqatona.com/economie/stock-markets
+https://miqatona.com/economie/market-clock
+https://miqatona.com/economie/best-trading-time
+
+# Request indexing in URL Inspection -> Priority time-difference pages
+https://miqatona.com/time-difference
+https://miqatona.com/time-difference/saudi-arabia-riyadh/egypt-cairo
+https://miqatona.com/time-difference/saudi-arabia-riyadh/morocco-rabat
+https://miqatona.com/time-difference/united-arab-emirates-dubai/egypt-cairo
+https://miqatona.com/time-difference/saudi-arabia-riyadh/united-kingdom-london
+https://miqatona.com/time-difference/saudi-arabia-riyadh/united-arab-emirates-dubai
+https://miqatona.com/time-difference/egypt-cairo/morocco-rabat
+https://miqatona.com/time-difference/saudi-arabia-riyadh/jordan-amman
+https://miqatona.com/time-difference/united-arab-emirates-dubai/united-kingdom-london
+https://miqatona.com/time-difference/kuwait-kuwait-city/egypt-cairo
+https://miqatona.com/time-difference/saudi-arabia-riyadh/france-paris
+https://miqatona.com/time-difference/iraq-baghdad/egypt-cairo
+https://miqatona.com/time-difference/saudi-arabia-riyadh/united-states-new-york-city
+
+# Request indexing in URL Inspection -> Priority date pages
+https://miqatona.com/date
+https://miqatona.com/date/today
+https://miqatona.com/date/today/hijri
+https://miqatona.com/date/today/gregorian
+https://miqatona.com/date/converter
+https://miqatona.com/date/gregorian-to-hijri
+https://miqatona.com/date/hijri-to-gregorian
+https://miqatona.com/date/country/saudi-arabia
+https://miqatona.com/date/country/egypt
+https://miqatona.com/date/country/morocco
+https://miqatona.com/date/country/united-arab-emirates
+https://miqatona.com/date/country/algeria
+https://miqatona.com/date/country/qatar
+https://miqatona.com/date/calendar/2026
+https://miqatona.com/date/calendar/2027
+https://miqatona.com/date/calendar/hijri/1447
+https://miqatona.com/date/calendar/hijri/1448
+
+# Request indexing in URL Inspection -> Priority holiday pages
+https://miqatona.com/holidays/ramadan
+https://miqatona.com/holidays/eid-al-fitr
+https://miqatona.com/holidays/eid-al-adha
+https://miqatona.com/holidays/day-of-arafa
+https://miqatona.com/holidays/hajj-season
+https://miqatona.com/holidays/mawlid
+https://miqatona.com/holidays/laylat-al-qadr
+https://miqatona.com/holidays/saudi-national-day
+https://miqatona.com/holidays/saudi-founding-day
+https://miqatona.com/holidays/uae-national-day
+https://miqatona.com/holidays/qatar-national-day
+https://miqatona.com/holidays/saudi-flag-day
+https://miqatona.com/holidays/new-year
+https://miqatona.com/holidays/mothers-day
+https://miqatona.com/holidays/valentines-day
+https://miqatona.com/holidays/labor-day
+https://miqatona.com/holidays/world-health-day
+https://miqatona.com/holidays/world-teachers-day
+https://miqatona.com/holidays/thanaweya-results
+https://miqatona.com/holidays/bac-results-algeria
+https://miqatona.com/holidays/school-start-egypt
+https://miqatona.com/holidays/school-start-algeria
+https://miqatona.com/holidays/school-start-morocco
+https://miqatona.com/holidays/school-start-uae
+https://miqatona.com/holidays/salary-day-saudi
+https://miqatona.com/holidays/citizen-account-saudi
+https://miqatona.com/holidays/pension-day-saudi
+https://miqatona.com/holidays/takaful-karama-egypt
+
+# Request indexing in URL Inspection -> Priority MENA country hubs
 https://miqatona.com/time-now/saudi-arabia
 https://miqatona.com/mwaqit-al-salat/saudi-arabia
 https://miqatona.com/time-now/egypt
@@ -34,15 +107,69 @@ https://miqatona.com/time-now/united-arab-emirates
 https://miqatona.com/mwaqit-al-salat/united-arab-emirates
 https://miqatona.com/time-now/morocco
 https://miqatona.com/mwaqit-al-salat/morocco
+https://miqatona.com/time-now/algeria
+https://miqatona.com/mwaqit-al-salat/algeria
+https://miqatona.com/time-now/qatar
+https://miqatona.com/mwaqit-al-salat/qatar
+https://miqatona.com/time-now/kuwait
+https://miqatona.com/mwaqit-al-salat/kuwait
+https://miqatona.com/time-now/jordan
+https://miqatona.com/mwaqit-al-salat/jordan
+https://miqatona.com/time-now/iraq
+https://miqatona.com/mwaqit-al-salat/iraq
+https://miqatona.com/time-now/oman
+https://miqatona.com/mwaqit-al-salat/oman
+https://miqatona.com/time-now/bahrain
+https://miqatona.com/mwaqit-al-salat/bahrain
+https://miqatona.com/time-now/tunisia
+https://miqatona.com/mwaqit-al-salat/tunisia
+https://miqatona.com/time-now/lebanon
+https://miqatona.com/mwaqit-al-salat/lebanon
+
+# Request indexing in URL Inspection -> Priority MENA city pages
 https://miqatona.com/time-now/saudi-arabia/riyadh
 https://miqatona.com/mwaqit-al-salat/saudi-arabia/riyadh
 https://miqatona.com/time-now/saudi-arabia/jeddah
 https://miqatona.com/mwaqit-al-salat/saudi-arabia/jeddah
 https://miqatona.com/time-now/saudi-arabia/makkah
 https://miqatona.com/mwaqit-al-salat/saudi-arabia/makkah
+https://miqatona.com/time-now/saudi-arabia/madinah
+https://miqatona.com/mwaqit-al-salat/saudi-arabia/madinah
+https://miqatona.com/time-now/saudi-arabia/dammam
+https://miqatona.com/mwaqit-al-salat/saudi-arabia/dammam
 https://miqatona.com/time-now/egypt/cairo
 https://miqatona.com/mwaqit-al-salat/egypt/cairo
+https://miqatona.com/time-now/egypt/alexandria
+https://miqatona.com/mwaqit-al-salat/egypt/alexandria
+https://miqatona.com/time-now/egypt/giza
+https://miqatona.com/mwaqit-al-salat/egypt/giza
 https://miqatona.com/time-now/united-arab-emirates/dubai
 https://miqatona.com/mwaqit-al-salat/united-arab-emirates/dubai
+https://miqatona.com/time-now/united-arab-emirates/abu-dhabi
+https://miqatona.com/mwaqit-al-salat/united-arab-emirates/abu-dhabi
+https://miqatona.com/time-now/united-arab-emirates/sharjah
+https://miqatona.com/mwaqit-al-salat/united-arab-emirates/sharjah
 https://miqatona.com/time-now/morocco/casablanca
 https://miqatona.com/mwaqit-al-salat/morocco/casablanca
+https://miqatona.com/time-now/morocco/rabat
+https://miqatona.com/mwaqit-al-salat/morocco/rabat
+https://miqatona.com/time-now/morocco/marrakesh
+https://miqatona.com/mwaqit-al-salat/morocco/marrakesh
+https://miqatona.com/time-now/qatar/doha
+https://miqatona.com/mwaqit-al-salat/qatar/doha
+https://miqatona.com/time-now/kuwait/kuwait-city
+https://miqatona.com/mwaqit-al-salat/kuwait/kuwait-city
+https://miqatona.com/time-now/jordan/amman
+https://miqatona.com/mwaqit-al-salat/jordan/amman
+https://miqatona.com/time-now/iraq/baghdad
+https://miqatona.com/mwaqit-al-salat/iraq/baghdad
+https://miqatona.com/time-now/oman/muscat
+https://miqatona.com/mwaqit-al-salat/oman/muscat
+https://miqatona.com/time-now/bahrain/manama
+https://miqatona.com/mwaqit-al-salat/bahrain/manama
+https://miqatona.com/time-now/tunisia/tunis
+https://miqatona.com/mwaqit-al-salat/tunisia/tunis
+https://miqatona.com/time-now/algeria/algiers
+https://miqatona.com/mwaqit-al-salat/algeria/algiers
+https://miqatona.com/time-now/lebanon/beirut
+https://miqatona.com/mwaqit-al-salat/lebanon/beirut
