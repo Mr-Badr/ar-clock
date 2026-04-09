@@ -20,19 +20,18 @@
  * Accordion: native <details>/<summary> — zero JS, SSR-safe, keyboard accessible
  */
 
-import Link from 'next/link'
 import { ChevronDown, CheckCircle2 } from 'lucide-react'
 import { SectionWrapper } from '@/components/shared/primitives'
 import { SectionBadge } from '@/components/shared/primitives'
-import { FAQ_ITEMS } from './data/faqItems'
+import { getFaqItems } from './data/faqItems'
 
 const H2_ID = 'h2-holidays-faq'
 
-function FAQSchema() {
+function FAQSchema({ items }) {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: FAQ_ITEMS.map((item) => ({
+    mainEntity: items.map((item) => ({
       '@type': 'Question',
       name: item.q,
       acceptedAnswer: { '@type': 'Answer', text: item.a },
@@ -46,11 +45,13 @@ function FAQSchema() {
   )
 }
 
-export default function SectionFAQ() {
+export default async function SectionFAQ() {
+  const faqItems = await getFaqItems()
+
   return (
     <SectionWrapper id="section-holidays-faq" headingId={H2_ID} subtle>
 
-      <FAQSchema />
+      <FAQSchema items={faqItems} />
 
       {/* Header */}
       <header className="max-w-2xl mx-auto text-center mb-10 space-y-3">
@@ -89,7 +90,7 @@ export default function SectionFAQ() {
         itemScope
         itemType="https://schema.org/FAQPage"
       >
-        {FAQ_ITEMS.map((item, idx) => (
+        {faqItems.map((item, idx) => (
           <details
             key={idx}
             className="group rounded-2xl overflow-hidden"

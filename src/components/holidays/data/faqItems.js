@@ -9,54 +9,78 @@
  *   3. Expands topics: Islamic, National, School, and Business (Salaries).
  */
 
-import { ALL_EVENTS, getNextEventDate, resolveEventMeta } from '@/lib/holidays-engine'
+import {
+  ALL_EVENTS,
+  formatGregorianAr,
+  getNextEventDate,
+  getTimeRemaining,
+  replaceTokens,
+  resolveEventMeta,
+} from '@/lib/holidays-engine'
 import { getRichContent } from '@/lib/event-content'
+import { getCachedNowIso } from '@/lib/date-utils'
 
 /**
  * Resolve an event by slug and pick its FAQ items.
  * Ensures the year is current/future.
  */
-function resolveAndPick(slug, n = 2) {
+function resolveAndPick(slug, nowMs, n = 2) {
   const evRaw = ALL_EVENTS.find(e => e.slug === slug)
   if (!evRaw) return []
-  
+
   const rich = getRichContent(slug) || {}
   const ev = { ...evRaw, ...rich }
-  
+
   // Resolve for next occurrence
-  const nextDate = getNextEventDate(ev)
+  const nextDate = getNextEventDate(ev, undefined, nowMs)
   const meta = resolveEventMeta(ev, nextDate)
-  
-  return (meta.faqItems || []).slice(0, n)
+  const remaining = getTimeRemaining(nextDate, nowMs)
+  const tokenContext = {
+    ...ev,
+    ...meta,
+    eventName: ev.name,
+    formattedDate: formatGregorianAr(nextDate),
+    daysRemaining: remaining.days,
+  }
+
+  return (meta.faqItems || []).slice(0, n).map((item) => ({
+    q: replaceTokens(item.q || item.question || '', tokenContext),
+    a: replaceTokens(item.a || item.answer || '', tokenContext),
+  }))
 }
 
 /**
- * FAQ_ITEMS
+ * getFaqItems
  * Aggregated from major Islamic, National, School, and Salary events.
  */
-export const FAQ_ITEMS = [
-  // ── Islamic ──
-  ...resolveAndPick('ramadan',          2),
-  ...resolveAndPick('eid-al-fitr',      2),
-  ...resolveAndPick('eid-al-adha',      2),
-  ...resolveAndPick('day-of-arafa',     1),
-  ...resolveAndPick('ashura',           1),
-  
-  // ── National & Seasonal ──
-  ...resolveAndPick('saudi-national-day', 1),
-  ...resolveAndPick('new-year',           1),
-  
-  // ── School ──
-  ...resolveAndPick('school-start-saudi', 1),
-  ...resolveAndPick('back-to-school',     1),
-  
-  // ── Business / Salary ──
-  ...resolveAndPick('salary-day-saudi',   1),
-  ...resolveAndPick('salary-day-egypt',   1),
-  
-  // ── Support ──
-  ...resolveAndPick('citizen-account-sa', 1),
-  ...resolveAndPick('social-security-sa', 1),
-]
+export async function getFaqItems() {
+  const nowIso = await getCachedNowIso()
+  const nowMs = new Date(nowIso).getTime()
+
+  return [
+    // ── Islamic ──
+    ...resolveAndPick('ramadan', nowMs, 2),
+    ...resolveAndPick('eid-al-fitr', nowMs, 2),
+    ...resolveAndPick('eid-al-adha', nowMs, 2),
+    ...resolveAndPick('day-of-arafa', nowMs, 1),
+    ...resolveAndPick('ashura', nowMs, 1),
+
+    // ── National & Seasonal ──
+    ...resolveAndPick('saudi-national-day', nowMs, 1),
+    ...resolveAndPick('new-year', nowMs, 1),
+
+    // ── School ──
+    ...resolveAndPick('school-start-saudi', nowMs, 1),
+    ...resolveAndPick('back-to-school', nowMs, 1),
+
+    // ── Business / Salary ──
+    ...resolveAndPick('salary-day-saudi', nowMs, 1),
+    ...resolveAndPick('salary-day-egypt', nowMs, 1),
+
+    // ── Support ──
+    ...resolveAndPick('citizen-account-sa', nowMs, 1),
+    ...resolveAndPick('social-security-sa', nowMs, 1),
+  ]
+}
 
 // [HMR] trigger reload

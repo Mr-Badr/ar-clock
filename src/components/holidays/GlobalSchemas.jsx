@@ -28,28 +28,27 @@ import {
   buildWebPageSchema,
   enrichEvent,
 } from '@/lib/holidays-engine'
-import { FAQ_ITEMS } from './data/faqItems'
+import { getFaqItems } from './data/faqItems'
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 
-/** Synthetic "page-level" event object for buildWebPageSchema / buildFAQSchema */
-const PAGE_EVENT = enrichEvent({
-  slug:        'holidays',
-  name:        'المناسبات والأعياد الإسلامية والوطنية',
-  seoTitle:    'عداد المواعيد — الأعياد والمناسبات الإسلامية والوطنية بالعد التنازلي',
-  description: 'تقويم شامل للمناسبات الإسلامية والأعياد الدينية والعطل الوطنية مع عداد تنازلي دقيق بالتقويمين الهجري والميلادي',
-  faqItems:    FAQ_ITEMS,
-})
-
 /** @param {{ nowIso?: string }} props */
-export default function HolidaysGlobalSchemas({ nowIso }) {
+export default async function HolidaysGlobalSchemas({ nowIso }) {
+  const faqItems = await getFaqItems()
+  const pageEvent = enrichEvent({
+    slug:        'holidays',
+    name:        'المناسبات والأعياد الإسلامية والوطنية',
+    seoTitle:    'عداد المواعيد — الأعياد والمناسبات الإسلامية والوطنية بالعد التنازلي',
+    description: 'تقويم شامل للمناسبات الإسلامية والأعياد الدينية والعطل الوطنية مع عداد تنازلي دقيق بالتقويمين الهجري والميلادي',
+    faqItems,
+  })
   const nowStr = nowIso || new Date().toISOString()
   const nowDate = new Date(nowStr)
 
   /* 1. WebPage — E-E-A-T freshness + author + subject entity */
   const webPageSchema = buildWebPageSchema(
-    PAGE_EVENT,
+    pageEvent,
     nowDate,
     SITE_URL,
     nowStr,
@@ -64,7 +63,7 @@ export default function HolidaysGlobalSchemas({ nowIso }) {
   ])
 
   /* 3. FAQPage — 8 high-volume questions from the engine */
-  const faqSchema = buildFAQSchema(PAGE_EVENT)
+  const faqSchema = buildFAQSchema(pageEvent)
 
   /* 4. ItemList — signals a curated event list to Google */
   const itemListSchema = {
