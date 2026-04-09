@@ -25,11 +25,101 @@ import {
 } from './generated-aliases.js';
 import { featureFlags } from '@/lib/feature-flags';
 import { getHolidayCountryByCode } from '@/lib/holidays/taxonomy';
+import ashuraPackage from '@/data/holidays/events/ashura/package.json';
+import firstDhulHijjahPackage from '@/data/holidays/events/first-dhul-hijjah/package.json';
+import hafezSaudiPackage from '@/data/holidays/events/hafez-saudi/package.json';
+import housingSupportSaudiPackage from '@/data/holidays/events/housing-support-saudi/package.json';
+import islamicNewYearPackage from '@/data/holidays/events/islamic-new-year/package.json';
+import socialSecuritySaudiPackage from '@/data/holidays/events/social-security-saudi/package.json';
 
-const GENERATED_SOURCE_ALL_EVENTS = Array.isArray(GENERATED_ALL_EVENTS_LIST)
-  ? GENERATED_ALL_EVENTS_LIST
-  : [];
+const SOURCE_PACKAGE_EVENT_OVERLAYS = [
+  ashuraPackage,
+  firstDhulHijjahPackage,
+  hafezSaudiPackage,
+  housingSupportSaudiPackage,
+  islamicNewYearPackage,
+  socialSecuritySaudiPackage,
+].filter(Boolean);
+
+function shouldIncludePackage(pkg, includeDrafted = false) {
+  if (!pkg?.core?.slug) return false;
+  return includeDrafted || pkg?.publishStatus === 'published';
+}
+
+function overlayEvents(primaryEvents = [], overlayPackages = [], options = {}) {
+  const includeDrafted = Boolean(options.includeDrafted);
+  const bySlug = new Map();
+  const order = [];
+
+  const merged = [];
+
+  for (const event of Array.isArray(primaryEvents) ? primaryEvents : []) {
+    if (!event?.slug || bySlug.has(event.slug)) continue;
+    bySlug.set(event.slug, event);
+    order.push(event.slug);
+  }
+
+  for (const pkg of overlayPackages) {
+    const event = pkg?.core;
+    if (!shouldIncludePackage(pkg, includeDrafted)) continue;
+    if (!bySlug.has(event.slug)) order.push(event.slug);
+    bySlug.set(event.slug, event);
+  }
+
+  for (const slug of order) {
+    const event = bySlug.get(slug);
+    if (event) merged.push(event);
+  }
+
+  return merged;
+}
+
+function overlayEventMap(primaryMap = {}, overlayPackages = [], options = {}) {
+  const includeDrafted = Boolean(options.includeDrafted);
+  const merged = { ...(primaryMap || {}) };
+
+  for (const pkg of overlayPackages) {
+    const event = pkg?.core;
+    if (!shouldIncludePackage(pkg, includeDrafted)) continue;
+    merged[event.slug] = event;
+  }
+
+  return merged;
+}
+
+function buildPackageEventMetaMap(overlayPackages = [], options = {}) {
+  const includeDrafted = Boolean(options.includeDrafted);
+  return Object.fromEntries(
+    overlayPackages
+      .map((pkg) => {
+        if (!shouldIncludePackage(pkg, includeDrafted)) return null;
+        const slug = pkg?.core?.slug;
+        if (!slug) return null;
+        return [
+          slug,
+          {
+            tier: pkg?.tier || 'tier3',
+            publishStatus: pkg?.publishStatus || 'drafted',
+            countryScope: pkg?.countryScope || 'none',
+            canonicalPath: pkg?.canonicalPath || `/holidays/${slug}`,
+            aliases: Array.isArray(pkg?.aliasSlugs) ? pkg.aliasSlugs : [],
+          },
+        ];
+      })
+      .filter(Boolean),
+  );
+}
+
+const GENERATED_SOURCE_ALL_EVENTS = overlayEvents(
+  Array.isArray(GENERATED_ALL_EVENTS_LIST) ? GENERATED_ALL_EVENTS_LIST : [],
+  SOURCE_PACKAGE_EVENT_OVERLAYS,
+  { includeDrafted: true },
+);
 const hasGeneratedEvents = GENERATED_SOURCE_ALL_EVENTS.length > 0;
+const SOURCE_PACKAGE_EVENT_META_BY_SLUG = buildPackageEventMetaMap(
+  SOURCE_PACKAGE_EVENT_OVERLAYS,
+  { includeDrafted: true },
+);
 
 if (!hasGeneratedEvents && process.env.NODE_ENV !== 'test') {
   console.warn(
@@ -40,11 +130,11 @@ if (!hasGeneratedEvents && process.env.NODE_ENV !== 'test') {
 export const SOURCE_RAW_EVENTS = GENERATED_SOURCE_ALL_EVENTS;
 
 const GENERATED_ACTIVE_EVENTS_LIST = featureFlags.eventsPublishedOnly
-  ? GENERATED_EVENTS_LIST
+  ? overlayEvents(GENERATED_EVENTS_LIST, SOURCE_PACKAGE_EVENT_OVERLAYS, { includeDrafted: false })
   : GENERATED_SOURCE_ALL_EVENTS;
 const GENERATED_ACTIVE_EVENTS_BY_SLUG = featureFlags.eventsPublishedOnly
-  ? GENERATED_EVENTS_BY_SLUG
-  : GENERATED_ALL_EVENTS_BY_SLUG;
+  ? overlayEventMap(GENERATED_EVENTS_BY_SLUG, SOURCE_PACKAGE_EVENT_OVERLAYS, { includeDrafted: false })
+  : overlayEventMap(GENERATED_ALL_EVENTS_BY_SLUG, SOURCE_PACKAGE_EVENT_OVERLAYS, { includeDrafted: true });
 
 export const ALL_RAW_EVENTS = GENERATED_ACTIVE_EVENTS_LIST;
 
@@ -53,7 +143,7 @@ const ACTIVE_EVENTS_BY_SLUG =
   Object.fromEntries(ALL_RAW_EVENTS.map((event) => [event.slug, event]));
 
 const ALL_EVENTS_BY_SLUG =
-  GENERATED_ALL_EVENTS_BY_SLUG ||
+  overlayEventMap(GENERATED_ALL_EVENTS_BY_SLUG, SOURCE_PACKAGE_EVENT_OVERLAYS, { includeDrafted: true }) ||
   ACTIVE_EVENTS_BY_SLUG;
 
 export const ALL_EVENT_SLUGS = ALL_RAW_EVENTS.map((event) => event.slug);
@@ -71,7 +161,11 @@ export function getAliasMeta(slug) {
 export function getEventMeta(slug) {
   const resolved = resolveEventSlug(slug);
   const canonicalSlug = resolved?.canonicalSlug || slug;
-  return GENERATED_EVENT_META_BY_SLUG?.[canonicalSlug] || null;
+  return (
+    SOURCE_PACKAGE_EVENT_META_BY_SLUG?.[canonicalSlug] ||
+    GENERATED_EVENT_META_BY_SLUG?.[canonicalSlug] ||
+    null
+  );
 }
 
 export function getAliasesForCanonical(slug) {

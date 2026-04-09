@@ -9,6 +9,7 @@ import { resolveRequestLocationFromHeaders } from '@/lib/locationService';
 import { getCountryByCode } from '@/lib/db/queries/countries';
 import {
   SITE_BRAND,
+  SITE_CONTACT_EMAIL,
   SITE_DESCRIPTION,
   SITE_HOME_TITLE,
   SITE_KEYWORDS,
@@ -80,7 +81,7 @@ export default function HomePage() {
       {
         '@type': 'ContactPoint',
         contactType: 'customer support',
-        email: 'mr.elharchali@gmail.com',
+        email: SITE_CONTACT_EMAIL,
         availableLanguage: ['ar'],
       },
     ],

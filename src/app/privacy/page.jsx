@@ -1,5 +1,5 @@
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
-import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
+import { SITE_BRAND, SITE_CONTACT_EMAIL, getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 const PAGE_URL = `${SITE_URL}/privacy`;
@@ -141,8 +141,8 @@ export default function PrivacyPage() {
               للموقع أو إعدادات النشر، فهذا يعني أننا بحاجة إلى تحديث الوثيقة، ويمكنك الإبلاغ مباشرة
               عبر البريد التالي:
               {' '}
-              <a href="mailto:mr.elharchali@gmail.com" style={{ color: 'var(--accent-alt)' }}>
-                mr.elharchali@gmail.com
+              <a href={`mailto:${SITE_CONTACT_EMAIL}`} style={{ color: 'var(--accent-alt)' }}>
+                {SITE_CONTACT_EMAIL}
               </a>
               .
             </p>
@@ -153,8 +153,8 @@ export default function PrivacyPage() {
               إذا كنت ترغب في الإبلاغ عن خطأ في المحتوى، أو لديك سؤال متعلق بالخصوصية، أو تحتاج إلى
               توضيح بخصوص البيانات المستخدمة في صفحة معينة، يمكنك مراسلتنا على:
               {' '}
-              <a href="mailto:mr.elharchali@gmail.com" style={{ color: 'var(--accent-alt)' }}>
-                mr.elharchali@gmail.com
+              <a href={`mailto:${SITE_CONTACT_EMAIL}`} style={{ color: 'var(--accent-alt)' }}>
+                {SITE_CONTACT_EMAIL}
               </a>
               .
             </p>

@@ -1,0 +1,18 @@
+{
+  "slug": "hafez-saudi",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: هدف: بنك المعلومات لبرنامج إعانة البحث عن عمل",
+    "fact-source: صندوق تنمية الموارد البشرية: إعانة البحث عن عمل",
+    "fact-source: هيئة الخبراء بمجلس الوزراء: تنظيم إعانة البحث عن عمل"
+  ],
+  "updatedAt": "2026-04-09T00:00:00.000Z"
+}

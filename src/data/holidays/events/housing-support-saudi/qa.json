@@ -1,0 +1,18 @@
+{
+  "slug": "housing-support-saudi",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: أرقام: الصندوق العقاري يعتمد يوم 24 من كل شهر موعداً لإيداع الدعم لمستفيدي سكني",
+    "fact-source: المواطن: إيداع الدعم السكني يوم 24 من كل شهر بمدة أقصاها 5 أيام عمل",
+    "fact-source: أخبار 24: سكني يوضح موعد إيداع الدفعة الجديدة من المستحقات"
+  ],
+  "updatedAt": "2026-04-09T00:00:00.000Z"
+}

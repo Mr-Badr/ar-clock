@@ -1,5 +1,5 @@
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
-import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
+import { SITE_BRAND, SITE_CONTACT_EMAIL, getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 const PAGE_URL = `${SITE_URL}/about`;
@@ -61,7 +61,7 @@ export default function AboutPage() {
       contactPoint: {
         '@type': 'ContactPoint',
         contactType: 'customer support',
-        email: 'mr.elharchali@gmail.com',
+        email: SITE_CONTACT_EMAIL,
         availableLanguage: ['ar'],
       },
     },
@@ -141,8 +141,8 @@ export default function AboutPage() {
               إذا لاحظت خطأ في تاريخ أو وصف أو صفحة قانونية أو كانت لديك ملاحظة تخص المحتوى أو
               الأداء، يمكنك التواصل مباشرة عبر البريد التالي:
               {' '}
-              <a href="mailto:mr.elharchali@gmail.com" style={{ color: 'var(--accent-alt)' }}>
-                mr.elharchali@gmail.com
+              <a href={`mailto:${SITE_CONTACT_EMAIL}`} style={{ color: 'var(--accent-alt)' }}>
+                {SITE_CONTACT_EMAIL}
               </a>
               .
             </p>

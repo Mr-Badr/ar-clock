@@ -1,5 +1,5 @@
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
-import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
+import { SITE_BRAND, SITE_CONTACT_EMAIL, getSiteUrl } from '@/lib/site-config';
 import Link from 'next/link';
 
 const SITE_URL = getSiteUrl();
@@ -174,8 +174,8 @@ export default function DisclaimerPage() {
               إذا لاحظت خطأ في صفحة اقتصادية أو أردت لفت نظرنا إلى تنبيه قانوني أو تنظيمي أو مصدر رسمي
               يجب إضافته، يمكنك مراسلتنا على:
               {' '}
-              <Link href="mailto:mr.elharchali@gmail.com" style={{ color: 'var(--accent-alt)' }}>
-                mr.elharchali@gmail.com
+              <Link href={`mailto:${SITE_CONTACT_EMAIL}`} style={{ color: 'var(--accent-alt)' }}>
+                {SITE_CONTACT_EMAIL}
               </Link>
               .
             </p>

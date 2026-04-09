@@ -19,6 +19,12 @@ import { GENERATED_CONTENT_BY_SLUG } from './generated-index.js'
 import { featureFlags }           from '@/lib/feature-flags'
 import { resolveEventSlug }       from '@/lib/events'
 import LEGACY_RICH_CONTENT from '@/data/holidays/legacy-content/content-map.json';
+import ashuraPackage from '@/data/holidays/events/ashura/package.json';
+import firstDhulHijjahPackage from '@/data/holidays/events/first-dhul-hijjah/package.json';
+import hafezSaudiPackage from '@/data/holidays/events/hafez-saudi/package.json';
+import housingSupportSaudiPackage from '@/data/holidays/events/housing-support-saudi/package.json';
+import islamicNewYearPackage from '@/data/holidays/events/islamic-new-year/package.json';
+import socialSecuritySaudiPackage from '@/data/holidays/events/social-security-saudi/package.json';
 
 /** Fields owned by holidays-engine.js — never override */
 const PROTECTED_FIELDS = new Set([
@@ -31,10 +37,39 @@ const hasGeneratedContent =
   typeof GENERATED_CONTENT_BY_SLUG === 'object' &&
   Object.keys(GENERATED_CONTENT_BY_SLUG).length > 0;
 
+const SOURCE_PACKAGE_CONTENT_OVERLAYS = Object.fromEntries(
+  [
+    ashuraPackage,
+    firstDhulHijjahPackage,
+    hafezSaudiPackage,
+    housingSupportSaudiPackage,
+    islamicNewYearPackage,
+    socialSecuritySaudiPackage,
+  ]
+    .map((pkg) => {
+      if (pkg?.publishStatus !== 'published') return null;
+      const slug = pkg?.core?.slug;
+      const content = pkg?.richContent;
+      if (!slug || !content) return null;
+      return [slug, content];
+    })
+    .filter(Boolean),
+);
+
+function overlayContent(baseContent = {}, overlayContentBySlug = {}) {
+  return {
+    ...(baseContent || {}),
+    ...(overlayContentBySlug || {}),
+  };
+}
+
 const ACTIVE_RICH_CONTENT =
-  featureFlags.eventsShardIndex && hasGeneratedContent
-    ? GENERATED_CONTENT_BY_SLUG
-    : LEGACY_RICH_CONTENT;
+  overlayContent(
+    featureFlags.eventsShardIndex && hasGeneratedContent
+      ? GENERATED_CONTENT_BY_SLUG
+      : LEGACY_RICH_CONTENT,
+    SOURCE_PACKAGE_CONTENT_OVERLAYS,
+  );
 
 const OVERLAY_FIELDS = new Set([
   'seoTitle',
@@ -125,12 +160,13 @@ export const TIER_1_SLUGS = [
   'ramadan', 'eid-al-fitr', 'eid-al-adha', 'hajj-season',
   'bac-results-algeria', 'thanaweya-results', 'day-of-arafa',
   'saudi-national-day', 'laylat-al-qadr', 'mawlid',
+  'ashura', 'first-dhul-hijjah', 'hafez-saudi',
+  'housing-support-saudi', 'islamic-new-year', 'social-security-saudi',
 ]
 
 /** Tier 2 — medium traffic, enhanced content */
 export const TIER_2_SLUGS = [
-  'islamic-new-year', 'ashura', 'isra-miraj', 'nisf-shaban',
-  'first-dhul-hijjah', 'bac-results-morocco', 'bac-results-tunisia',
+  'isra-miraj', 'nisf-shaban', 'bac-results-morocco', 'bac-results-tunisia',
   'bac-exams-algeria', 'thanaweya-exams', 'school-start-egypt',
   'school-start-algeria', 'school-start-morocco', 'kuwait-national-day',
   'uae-national-day', 'independence-day-algeria', 'revolution-day-algeria',

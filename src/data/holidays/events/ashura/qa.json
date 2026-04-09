@@ -1,14 +1,18 @@
 {
   "slug": "ashura",
-  "tier": "tier2",
-  "publishStatus": "drafted",
+  "tier": "tier1",
+  "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:36.972Z"
+  "notes": [
+    "fact-source: ابن باز: حكم صيام عاشوراء دون صيام قبله أو بعده",
+    "fact-source: ابن باز: صيام عاشوراء يكفر السنة التي قبله",
+    "fact-source: الإسلام سؤال وجواب: مراتب صوم عاشوراء"
+  ],
+  "updatedAt": "2026-04-09T00:00:00.000Z"
 }

@@ -2,6 +2,7 @@ import { getEnv } from '@/lib/env.server';
 
 export const SITE_BRAND = 'ميقاتنا';
 export const SITE_BRAND_EN = 'Miqatona';
+export const SITE_CONTACT_EMAIL = 'contact@miqatona.com';
 export const SITE_LEGACY_BRANDS = ['ميقات', 'Miqat'];
 export const SITE_PRIMARY_DOMAIN = 'https://miqatona.com';
 export const SITE_APP_NAME = `${SITE_BRAND} | دليلك الشامل للوقت والمواعيد`;

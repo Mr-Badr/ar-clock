@@ -1,7 +1,7 @@
 import { Mail, ShieldCheck, Wrench } from 'lucide-react';
 
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
-import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
+import { SITE_BRAND, SITE_CONTACT_EMAIL, getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 const PAGE_URL = `${SITE_URL}/contact`;
@@ -90,7 +90,7 @@ export default function ContactPage() {
           }}
         >
           <a
-            href="mailto:mr.elharchali@gmail.com"
+            href={`mailto:${SITE_CONTACT_EMAIL}`}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -102,7 +102,7 @@ export default function ContactPage() {
             }}
           >
             <Mail size={18} />
-            mr.elharchali@gmail.com
+            {SITE_CONTACT_EMAIL}
           </a>
           <p style={{ color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', marginTop: 'var(--space-4)' }}>
             من المفيد عند المراسلة أن تتضمن رسالتك رابط الصفحة، نوع الملاحظة، وما الذي تتوقع رؤيته
