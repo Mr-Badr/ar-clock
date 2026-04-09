@@ -1,4 +1,13 @@
 /** @type {import('next').NextConfig} */
+const SHARED_HTML_CACHE_HEADERS = [
+  { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=86400, stale-while-revalidate=3600' },
+  { key: 'Vary', value: 'Accept-Encoding' },
+];
+
+const SHARED_XML_CACHE_HEADERS = [
+  { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=86400, stale-while-revalidate=86400' },
+];
+
 const nextConfig = {
   // ── Server ───────────────────────────────────────────────────────────────────
   // Keep Drizzle/Postgres out of the Edge runtime bundle (they are Node-only)
@@ -72,19 +81,46 @@ const nextConfig = {
         ],
       },
       {
-        // Prayer time pages — ISR-friendly cache hint
-        source: '/mwaqit-al-salat/(.*)',
-        headers: [
-          { key: 'Cache-Control', value: 's-maxage=86400, stale-while-revalidate=3600' },
-          { key: 'Vary', value: 'Accept-Encoding' },
-        ],
+        // High-intent content hubs that are safe to cache publicly.
+        source: '/mwaqit-al-salat/:path*',
+        headers: SHARED_HTML_CACHE_HEADERS,
       },
       {
-        // Sitemaps — daily cache
-        source: '/sitemap(.*)',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=86400, s-maxage=86400' },
-        ],
+        source: '/holidays/:path*',
+        headers: SHARED_HTML_CACHE_HEADERS,
+      },
+      {
+        source: '/time-difference/:path*',
+        headers: SHARED_HTML_CACHE_HEADERS,
+      },
+      {
+        // robots.txt should stay cacheable but easy to refresh.
+        source: '/robots.txt',
+        headers: SHARED_XML_CACHE_HEADERS,
+      },
+      {
+        // Root sitemap files.
+        source: '/sitemap.xml',
+        headers: SHARED_XML_CACHE_HEADERS,
+      },
+      {
+        source: '/sitemap-index.xml',
+        headers: SHARED_XML_CACHE_HEADERS,
+      },
+      {
+        // Nested sitemap metadata routes such as /holidays/sitemap.xml and /date/hijri/sitemap.xml.
+        source: '/:section*/sitemap.xml',
+        headers: SHARED_XML_CACHE_HEADERS,
+      },
+      {
+        // Per-country sharded sitemaps such as /time-now/sitemap/morocco.xml.
+        source: '/:section*/sitemap/:slug*',
+        headers: SHARED_XML_CACHE_HEADERS,
+      },
+      {
+        // Date feature child sitemap routes return XML without the .xml suffix.
+        source: '/date/sitemaps/:slug*',
+        headers: SHARED_XML_CACHE_HEADERS,
       },
       {
         // API routes — no public caching
@@ -103,24 +139,6 @@ const nextConfig = {
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'www.miqatona.com' }],
-        destination: 'https://miqatona.com/:path*',
-        permanent: true,
-      },
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'miqatime.com' }],
-        destination: 'https://miqatona.com/:path*',
-        permanent: true,
-      },
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.miqatime.com' }],
-        destination: 'https://miqatona.com/:path*',
-        permanent: true,
-      },
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'miqatime.vercel.app' }],
         destination: 'https://miqatona.com/:path*',
         permanent: true,
       },
