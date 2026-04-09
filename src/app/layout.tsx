@@ -13,6 +13,7 @@ import AdStickyAnchor from '@/components/ads/AdStickyAnchor';
 import AnalyticsProvider from '@/components/analytics/AnalyticsProvider';
 import ConsentBanner from '@/components/consent/ConsentBanner';
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
+import { Analytics } from '@vercel/analytics/next';
 import { getEnv } from '@/lib/env.server';
 import {
   SITE_BRAND,
@@ -136,6 +137,7 @@ export default async function RootLayout({
             <Header />
           </Suspense>
           {children}
+          <Analytics />
           <Suspense fallback={<div className="h-24" />}>
             <Footer />
           </Suspense>
