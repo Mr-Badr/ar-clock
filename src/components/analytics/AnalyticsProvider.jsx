@@ -42,7 +42,10 @@ function RouteChangeTracker({ activeMode, measurementId }) {
     }
 
     if (activeMode === "ga4" && typeof window.gtag === "function") {
-      window.gtag("config", measurementId, pagePayload);
+      window.gtag("event", "page_view", {
+        send_to: measurementId,
+        ...pagePayload,
+      });
     }
   }, [activeMode, measurementId, pathname, searchQuery]);
 
