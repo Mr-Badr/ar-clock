@@ -1,4 +1,7 @@
+# Submit in Search Console -> Sitemaps
 https://miqatona.com/sitemap-index.xml
+
+# Optional debug sitemaps
 https://miqatona.com/sitemap.xml
 https://miqatona.com/economie/sitemap.xml
 https://miqatona.com/holidays/sitemap.xml
@@ -9,4 +12,37 @@ https://miqatona.com/date/hijri/sitemap.xml
 https://miqatona.com/date/sitemaps/static
 https://miqatona.com/date/sitemaps/countries
 https://miqatona.com/date/sitemaps/calendars
+
+# Verify manually, do not submit in the Sitemaps box
 https://miqatona.com/robots.txt
+
+# Request indexing in URL Inspection -> Core hubs
+https://miqatona.com/
+https://miqatona.com/time-now
+https://miqatona.com/mwaqit-al-salat
+https://miqatona.com/time-difference
+https://miqatona.com/holidays
+https://miqatona.com/date
+https://miqatona.com/economie
+
+# Request indexing in URL Inspection -> Top 20 MENA priority country/city pages
+https://miqatona.com/time-now/saudi-arabia
+https://miqatona.com/mwaqit-al-salat/saudi-arabia
+https://miqatona.com/time-now/egypt
+https://miqatona.com/mwaqit-al-salat/egypt
+https://miqatona.com/time-now/united-arab-emirates
+https://miqatona.com/mwaqit-al-salat/united-arab-emirates
+https://miqatona.com/time-now/morocco
+https://miqatona.com/mwaqit-al-salat/morocco
+https://miqatona.com/time-now/saudi-arabia/riyadh
+https://miqatona.com/mwaqit-al-salat/saudi-arabia/riyadh
+https://miqatona.com/time-now/saudi-arabia/jeddah
+https://miqatona.com/mwaqit-al-salat/saudi-arabia/jeddah
+https://miqatona.com/time-now/saudi-arabia/makkah
+https://miqatona.com/mwaqit-al-salat/saudi-arabia/makkah
+https://miqatona.com/time-now/egypt/cairo
+https://miqatona.com/mwaqit-al-salat/egypt/cairo
+https://miqatona.com/time-now/united-arab-emirates/dubai
+https://miqatona.com/mwaqit-al-salat/united-arab-emirates/dubai
+https://miqatona.com/time-now/morocco/casablanca
+https://miqatona.com/mwaqit-al-salat/morocco/casablanca

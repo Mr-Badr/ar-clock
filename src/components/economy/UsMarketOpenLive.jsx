@@ -4,6 +4,7 @@ import { Bank, ClockCountdown } from '@phosphor-icons/react';
 
 import { buildUsMarketOpenPageModel } from '@/lib/economy/engine';
 
+import { FAQ_ITEMS } from './data/faqItems';
 import { useEconomyLiveModel } from './useEconomyLiveModel';
 import {
   EconomyBanner,
@@ -97,9 +98,9 @@ export default function UsMarketOpenLive({ initialViewer, initialNowIso }) {
       <section className="economy-section">
         <EconomySectionHeader
           title="أسئلة شائعة"
-          lead="هذه الإجابات مبنية على نفس المحرك الزمني المجاني المستخدم داخل الصفحة، لذلك تبقى متوافقة مع التوقيت الصيفي وتحويل المدن العربية."
+          lead="هذه الإجابات تلخص أكثر أسئلة السوق الأمريكي تكراراً في البحث العربي بصياغة مباشرة وسهلة المسح."
         />
-        <EconomyFaq items={model.faqItems} />
+        <EconomyFaq items={FAQ_ITEMS.usMarketOpen} />
       </section>
 
       <section className="economy-section">

@@ -6,6 +6,7 @@ import { Bank, ClockCounterClockwise, GlobeHemisphereWest } from '@phosphor-icon
 
 import { buildStockMarketsPageModel } from '@/lib/economy/engine';
 
+import { FAQ_ITEMS } from './data/faqItems';
 import { useEconomyLiveModel } from './useEconomyLiveModel';
 import {
   EconomyBanner,
@@ -242,9 +243,9 @@ export default function StockMarketsLive({ initialViewer, initialNowIso }) {
       <section className="economy-section">
         <EconomySectionHeader
           title="أسئلة شائعة"
-          lead="الإجابات التالية تتحدث بلغة المستخدم العربي نفسه، وتُشتق من المحرك الزمني الظاهر في البطاقات أعلاه."
+          lead="الإجابات التالية تختصر أشهر أسئلة البورصات العالمية بلغة مباشرة مناسبة للمستخدم العربي."
         />
-        <EconomyFaq items={model.faqItems} />
+        <EconomyFaq items={FAQ_ITEMS.stockMarkets} />
       </section>
 
       <section className="economy-section">

@@ -4,6 +4,7 @@ import { ClockCountdown, Sparkle } from '@phosphor-icons/react';
 
 import { buildGoldMarketHoursPageModel } from '@/lib/economy/engine';
 
+import { FAQ_ITEMS } from './data/faqItems';
 import HourlyActivityChart from './HourlyActivityChart';
 import { useEconomyLiveModel } from './useEconomyLiveModel';
 import {
@@ -117,7 +118,7 @@ export default function GoldMarketHoursLive({ initialViewer, initialNowIso }) {
           title="أسئلة شائعة"
           lead="الإجابات التالية مكتوبة بصيغة مباشرة قابلة للاقتباس، لأنها تعالج أكثر أسئلة الذهب تكراراً في البحث العربي اليومي."
         />
-        <EconomyFaq items={model.faqItems} />
+        <EconomyFaq items={FAQ_ITEMS.goldMarketHours} />
       </section>
 
       <section className="economy-section">

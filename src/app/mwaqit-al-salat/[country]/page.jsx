@@ -20,6 +20,7 @@ import SearchCity from '@/components/SearchCityWrapper.client';
 import CityPrayerCardsGrid from '@/components/mwaqit/CityPrayerCardsGrid.client';
 import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar.client';
 import CalendarSeoBlock from '@/components/mwaqit/CalendarSeoBlock';
+import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
@@ -123,6 +124,28 @@ export default async function CountryPrayerPage({ params }) {
 
   const countryAr  = country.name_ar || country.name_en;
   const methodInfo = getMethodByCountry(country.country_code);
+  const utilityLinks = [
+    {
+      href: `/time-now/${countrySlug}`,
+      label: `الوقت الان في ${countryAr}`,
+      description: `صفحة الوقت الآن في ${countryAr} مع الساعة الحالية والعاصمة والمدن الرئيسية.`,
+    },
+    {
+      href: `/date/country/${countrySlug}`,
+      label: `التاريخ اليوم في ${countryAr}`,
+      description: `صفحة التاريخ الهجري والميلادي في ${countryAr} بحسب الجهة الرسمية المعتمدة.`,
+    },
+    capital ? {
+      href: `/mwaqit-al-salat/${countrySlug}/${capital.city_slug}`,
+      label: `مواقيت الصلاة في ${capital.name_ar || capital.name_en}`,
+      description: `انتقل مباشرة إلى صفحة العاصمة لمشاهدة مواقيت الصلاة اليوم والجدول الشهري.`,
+    } : null,
+    {
+      href: '/date/today/hijri',
+      label: 'التاريخ الهجري اليوم',
+      description: 'راجع التاريخ الهجري اليوم وأدوات التحويل والتقويم المرتبطة به.',
+    },
+  ].filter(Boolean);
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -238,6 +261,15 @@ export default async function CountryPrayerPage({ params }) {
             cities={cities}
             countrySlug={countrySlug}
             countryCode={country.country_code}
+          />
+        </section>
+
+        <section className="mt-12 pt-8 border-t border-[var(--border-subtle)]">
+          <GeoInternalLinks
+            title={`روابط مهمة عن ${countryAr}`}
+            description={`نربط هنا بين صفحات الصلاة والوقت والتاريخ الخاصة بـ${countryAr} حتى تبقى الصفحات الرئيسية والمدن المهمة قريبة من بعضها في البنية الداخلية للموقع.`}
+            links={utilityLinks}
+            ariaLabel={`روابط مهمة عن ${countryAr}`}
           />
         </section>
 

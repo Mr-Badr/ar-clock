@@ -2,8 +2,8 @@
 export const CITIES = [
   { name: 'الرياض', country: 'السعودية', offset: 3, flag: '🇸🇦', slug: 'saudi-arabia/riyadh' },
   { name: 'دبي', country: 'الإمارات', offset: 4, flag: '🇦🇪', slug: 'united-arab-emirates/dubai' },
-  { name: 'مكة', country: 'السعودية', offset: 3, flag: '🇸🇦', slug: 'saudi-arabia/mecca' },
-  { name: 'المدينة', country: 'السعودية', offset: 3, flag: '🇸🇦', slug: 'saudi-arabia/medina' },
+  { name: 'مكة', country: 'السعودية', offset: 3, flag: '🇸🇦', slug: 'saudi-arabia/makkah' },
+  { name: 'المدينة', country: 'السعودية', offset: 3, flag: '🇸🇦', slug: 'saudi-arabia/madinah' },
   { name: 'القاهرة', country: 'مصر', offset: 2, flag: '🇪🇬', slug: 'egypt/cairo' },
   { name: 'الدار البيضاء', country: 'المغرب', offset: 1, flag: '🇲🇦', slug: 'morocco/casablanca' },
   { name: 'الرباط', country: 'المغرب', offset: 1, flag: '🇲🇦', slug: 'morocco/rabat' },
@@ -14,8 +14,8 @@ export const CITIES = [
   { name: 'لندن', country: 'المملكة المتحدة', offset: 0, flag: '🇬🇧', slug: 'united-kingdom/london' },
   { name: 'باريس', country: 'فرنسا', offset: 1, flag: '🇫🇷', slug: 'france/paris' },
   { name: 'برلين', country: 'ألمانيا', offset: 1, flag: '🇩🇪', slug: 'germany/berlin' },
-  { name: 'نيويورك', country: 'الولايات المتحدة', offset: -5, flag: '🇺🇸', slug: 'united-states/new-york' },
-  { name: 'واشنطن', country: 'الولايات المتحدة', offset: -5, flag: '🇺🇸', slug: 'united-states/washington-dc' },
+  { name: 'نيويورك', country: 'الولايات المتحدة', offset: -5, flag: '🇺🇸', slug: 'united-states/new-york-city' },
+  { name: 'واشنطن', country: 'الولايات المتحدة', offset: -5, flag: '🇺🇸', slug: 'united-states/washington' },
   { name: 'تورونتو', country: 'كندا', offset: -5, flag: '🇨🇦', slug: 'canada/toronto' },
   { name: 'كوالالمبور', country: 'ماليزيا', offset: 8, flag: '🇲🇾', slug: 'malaysia/kuala-lumpur' },
 

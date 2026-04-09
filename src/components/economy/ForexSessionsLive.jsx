@@ -6,6 +6,7 @@ import { ChartLineUp, Sparkle } from '@phosphor-icons/react';
 
 import { buildForexPageModel } from '@/lib/economy/engine';
 
+import { FAQ_ITEMS } from './data/faqItems';
 import HourlyActivityChart from './HourlyActivityChart';
 import { useEconomyLiveModel } from './useEconomyLiveModel';
 import {
@@ -229,9 +230,9 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
       <section className="economy-section">
         <EconomySectionHeader
           title="أسئلة شائعة"
-          lead="هذه الإجابات تعتمد على نفس المحرك الزمني الذي يغذي البطاقات الحية في أعلى الصفحة."
+          lead="هذه الأسئلة تلخص أكثر ما يبحث عنه المستخدم العربي حول جلسات الفوركس والذهب خلال اليوم."
         />
-        <EconomyFaq items={model.faqItems} />
+        <EconomyFaq items={FAQ_ITEMS.forexSessions} />
       </section>
 
       <section className="economy-section">

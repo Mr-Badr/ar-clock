@@ -6,10 +6,12 @@ import { ClockCountdown, GlobeHemisphereEast } from '@phosphor-icons/react';
 
 import { buildMarketClockPageModel } from '@/lib/economy/engine';
 
+import { FAQ_ITEMS } from './data/faqItems';
 import HourlyActivityChart from './HourlyActivityChart';
 import { useEconomyLiveModel } from './useEconomyLiveModel';
 import {
   EconomyBanner,
+  EconomyFaq,
   EconomyGuide,
   EconomyHero,
   EconomySectionHeader,
@@ -87,6 +89,14 @@ export default function MarketClockLive({ initialViewer, initialNowIso }) {
           lead="هذه ليست صفحة للزينة. الغرض منها أن تمنحك قراراً سريعاً: هل تراقب الآن، أم تنتظر، أم تكتفي بمتابعة جلسة أهدأ؟"
         />
         <EconomyGuide sections={model.guideSections} />
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="أسئلة شائعة"
+          lead="هذه الأسئلة تشرح كيفية قراءة ساعة السوق ولماذا تختلف عن الجداول التقليدية الثابتة."
+        />
+        <EconomyFaq items={FAQ_ITEMS.marketClock} />
       </section>
 
       <section className="economy-section">

@@ -30,6 +30,7 @@ import TimezoneInfoCard from '@/components/time-now/TimezoneInfoCard';
 import SameTimezoneCountries from '@/components/time-now/SameTimezoneCountries';
 import TimeNowFAQ from '@/components/time-now/TimeNowFAQ';
 import RelatedSearches from '@/components/time-now/RelatedSearches';
+import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import {
   getPriorityCountrySlugs,
   getCountryBySlug,
@@ -150,6 +151,28 @@ export default async function CountryTimePage({ params }) {
   const cityEn = capital ? capital.name_en : '';
   const countryEn = country.name_en || '';
   const utcOffset = getUtcOffsetStr(timezone);
+  const countryUtilityLinks = [
+    {
+      href: `/mwaqit-al-salat/${countrySlug}`,
+      label: `مواقيت الصلاة في ${countryAr}`,
+      description: `صفحة مواقيت الصلاة في ${countryAr} مع العاصمة وأبرز المدن وروابط داخلية قابلة للفهرسة.`,
+    },
+    {
+      href: `/date/country/${countrySlug}`,
+      label: `التاريخ اليوم في ${countryAr}`,
+      description: `اعرف التاريخ الهجري والميلادي اليوم في ${countryAr} بالطريقة الرسمية المعتمدة.`,
+    },
+    capital ? {
+      href: `/time-now/${countrySlug}/${capital.city_slug}`,
+      label: `الوقت الان في ${cityAr}`,
+      description: `انتقل مباشرة إلى صفحة العاصمة للحصول على الساعة الحالية والتاريخ والمنطقة الزمنية.`,
+    } : null,
+    {
+      href: '/time-difference',
+      label: 'حاسبة فرق التوقيت',
+      description: `قارن توقيت ${countryAr} مع أي دولة أو مدينة أخرى من نفس الموقع.`,
+    },
+  ].filter(Boolean);
 
   /* ── JSON-LD ─────────────────────────────────────────────────── */
   const breadcrumbSchema = {
@@ -308,6 +331,15 @@ export default async function CountryTimePage({ params }) {
         {/* ── RELATED SEARCHES ── */}
         <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
           <RelatedSearches currentCountrySlug={countrySlug} />
+        </section>
+
+        <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
+          <GeoInternalLinks
+            title={`روابط مهمة عن ${countryAr}`}
+            description={`هذه الروابط تقوي الربط الداخلي بين صفحات الوقت، الصلاة، والتاريخ الخاصة بـ${countryAr} وتساعد المستخدم ومحركات البحث على اكتشاف الصفحات الأقرب للنية البحثية.`}
+            links={countryUtilityLinks}
+            ariaLabel={`روابط مهمة عن ${countryAr}`}
+          />
         </section>
 
         {/* ── SEO PROSE ── */}

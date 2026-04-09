@@ -33,6 +33,7 @@ import CountryCitiesGrid from '@/components/time-now/CountryCitiesGrid';
 import TimezoneInfoCard from '@/components/time-now/TimezoneInfoCard';
 import SameTimezoneCountries from '@/components/time-now/SameTimezoneCountries';
 import RelatedSearches from '@/components/time-now/RelatedSearches';
+import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 import { getPriorityCityParams, getCityBySlug, getTopCitiesByCountry } from '@/lib/db/queries/cities';
@@ -145,6 +146,28 @@ export default async function CityTimePage({ params }) {
   const cityAr = city.name_ar || city.name_en;
   const countryAr = country.name_ar || country.name_en;
   const offset = getUtcOffsetStr(city.timezone);
+  const cityUtilityLinks = [
+    {
+      href: `/mwaqit-al-salat/${countrySlug}/${citySlug}`,
+      label: `مواقيت الصلاة في ${cityAr}`,
+      description: `صفحة أوقات الصلاة اليوم في ${cityAr} مع الفجر والظهر والعصر والمغرب والعشاء.`,
+    },
+    {
+      href: `/time-now/${countrySlug}`,
+      label: `الوقت الان في ${countryAr}`,
+      description: `استكشف العاصمة والمدن الكبرى الأخرى داخل ${countryAr} من صفحة الدولة الأساسية.`,
+    },
+    {
+      href: `/date/country/${countrySlug}`,
+      label: `التاريخ اليوم في ${countryAr}`,
+      description: `اعرف التاريخ الهجري والميلادي اليوم في ${countryAr} مع الروابط المرتبطة بالدولة.`,
+    },
+    {
+      href: '/time-difference',
+      label: 'حاسبة فرق التوقيت',
+      description: `قارن توقيت ${cityAr} مع أي مدينة أخرى بسرعة داخل أداة فرق التوقيت.`,
+    },
+  ];
 
   /* ── JSON-LD SCHEMAS ─────────────────────────────────────────── */
   const breadcrumbSchema = {
@@ -343,6 +366,15 @@ export default async function CityTimePage({ params }) {
           <RelatedSearches
             currentCountrySlug={countrySlug}
             currentCityAr={cityAr}
+          />
+        </section>
+
+        <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
+          <GeoInternalLinks
+            title={`روابط مفيدة لمدينة ${cityAr}`}
+            description={`أضفنا هذه الروابط حتى لا تبقى صفحة ${cityAr} معزولة داخل السايت ماب فقط، بل مرتبطة بصفحات الصلاة والتاريخ وصفحة الدولة نفسها.`}
+            links={cityUtilityLinks}
+            ariaLabel={`روابط مفيدة لمدينة ${cityAr}`}
           />
         </section>
 

@@ -30,6 +30,7 @@ import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar.cli
 import CalendarSeoBlock from '@/components/mwaqit/CalendarSeoBlock';
 import MadhabSelector from '@/components/mwaqit/MadhabSelector.client';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
+import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
@@ -177,6 +178,28 @@ export default async function PrayerTimesPage({ params }) {
   const allCountries  = await getCountriesAction();
   const cityNameAr    = cityData.name_ar || cityData.name_en;
   const countryNameAr = country.name_ar  || country.name_en;
+  const utilityLinks = [
+    {
+      href: `/time-now/${countrySlug}/${citySlug}`,
+      label: `الوقت الان في ${cityNameAr}`,
+      description: `اعرف الساعة الحالية والتاريخ اليوم في ${cityNameAr} من صفحة الوقت المباشرة.`,
+    },
+    {
+      href: `/time-now/${countrySlug}`,
+      label: `الوقت الان في ${countryNameAr}`,
+      description: `استكشف العاصمة والمدن الأخرى داخل ${countryNameAr} من صفحة الدولة الأساسية.`,
+    },
+    {
+      href: `/date/country/${countrySlug}`,
+      label: `التاريخ اليوم في ${countryNameAr}`,
+      description: `راجع التاريخ الهجري والميلادي اليوم في ${countryNameAr} والروابط الخاصة بالدولة.`,
+    },
+    {
+      href: '/date/today/hijri',
+      label: 'التاريخ الهجري اليوم',
+      description: 'انتقل إلى صفحة التاريخ الهجري اليوم والتحويلات المرتبطة بها.',
+    },
+  ];
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -298,6 +321,15 @@ export default async function PrayerTimesPage({ params }) {
           />
         </Suspense>
         </ErrorBoundary>
+
+        <section className="mb-6">
+          <GeoInternalLinks
+            title={`روابط مفيدة لمدينة ${cityNameAr}`}
+            description={`هذه الروابط تقرّب بين صفحة الصلاة في ${cityNameAr} وصفحات الوقت والتاريخ المرتبطة بها، وهو ما يساعد المستخدم ومحركات البحث على الوصول إلى الصفحات المكملة بسرعة.`}
+            links={utilityLinks}
+            ariaLabel={`روابط مفيدة لمدينة ${cityNameAr}`}
+          />
+        </section>
 
       </main>
       {/* </AdLayoutWrapper> */}
