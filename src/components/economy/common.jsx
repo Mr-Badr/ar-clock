@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import EconomyFaqAccordion from './EconomyFaqAccordion';
+
 export function EconomyHero({ eyebrow, title, lead, metaPills = [], note = '' }) {
   return (
     <header className="economy-hero">
@@ -52,16 +54,7 @@ export function EconomyGuide({ sections }) {
 }
 
 export function EconomyFaq({ items }) {
-  return (
-    <div className="economy-faq-grid">
-      {items.map((item) => (
-        <details key={item.question} className="economy-faq-item">
-          <summary>{item.question}</summary>
-          <p>{item.answer}</p>
-        </details>
-      ))}
-    </div>
-  );
+  return <EconomyFaqAccordion items={items} />;
 }
 
 export function EconomyTimeline({ timeline }) {
