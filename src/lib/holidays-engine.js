@@ -486,7 +486,6 @@ export function buildEventSchema(ev, date, siteUrl, eventState = 'upcoming') {
 }
 /** WebPage schema — critical for E-E-A-T freshness signal (dateModified). */
 export function buildWebPageSchema(ev, date, siteUrl, nowIso) {
-  const d = date instanceof Date ? date : new Date(date);
   return {
     '@context': 'https://schema.org', '@type': 'WebPage',
     name: ev.seoTitle || ev.name,
@@ -496,7 +495,7 @@ export function buildWebPageSchema(ev, date, siteUrl, nowIso) {
     dateModified: nowIso || '2026-01-01T00:00:00Z',
     datePublished: '2025-01-01T00:00:00Z',
     isPartOf: { '@type': 'WebSite', url: siteUrl, name: SITE_APP_NAME },
-    about: { '@type': 'Event', name: ev.name, startDate: d.toISOString() },
+    about: { '@type': 'Thing', name: ev.name },
     author: { '@type': 'Organization', name: SITE_APP_NAME, url: siteUrl },
   };
 }

@@ -74,8 +74,6 @@ export default function SectionFAQ() {
       {/* FAQ Accordion */}
       <div
         className="max-w-3xl mx-auto space-y-2"
-        itemScope
-        itemType="https://schema.org/FAQPage"
       >
         {FAQ_ITEMS.map((item, idx) => (
           <details
@@ -85,9 +83,6 @@ export default function SectionFAQ() {
               background: 'var(--bg-surface-1)',
               border:     '1px solid var(--border-subtle)',
             }}
-            itemScope
-            itemProp="mainEntity"
-            itemType="https://schema.org/Question"
             aria-label={item.q}
           >
             <summary
@@ -97,7 +92,6 @@ export default function SectionFAQ() {
               <span
                 className="text-sm sm:text-base font-semibold leading-snug"
                 style={{ color: 'var(--text-primary)' }}
-                itemProp="name"
               >
                 {item.q}
               </span>
@@ -112,14 +106,10 @@ export default function SectionFAQ() {
 
             <div
               className="px-5 pb-5 pt-2"
-              itemScope
-              itemProp="acceptedAnswer"
-              itemType="https://schema.org/Answer"
             >
               <p
                 className="text-sm sm:text-base leading-relaxed"
                 style={{ color: 'var(--text-secondary)' }}
-                itemProp="text"
               >
                 {item.a}
               </p>

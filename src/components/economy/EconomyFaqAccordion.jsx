@@ -36,11 +36,7 @@ export default function EconomyFaqAccordion({ items }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
 
-      <div
-        className="economy-faq-list"
-        itemScope
-        itemType="https://schema.org/FAQPage"
-      >
+      <div className="economy-faq-list">
         {normalizedItems.map((item, index) => {
           const itemKey = item.question;
           const isOpen = Boolean(openItems[itemKey]);
@@ -52,9 +48,6 @@ export default function EconomyFaqAccordion({ items }) {
               key={item.question}
               className="economy-faq-item"
               data-open={isOpen ? 'true' : 'false'}
-              itemScope
-              itemProp="mainEntity"
-              itemType="https://schema.org/Question"
             >
               <button
                 id={triggerId}
@@ -69,7 +62,7 @@ export default function EconomyFaqAccordion({ items }) {
                   }));
                 }}
               >
-                <span className="economy-faq-item__question" itemProp="name">
+                <span className="economy-faq-item__question">
                   {item.question}
                 </span>
                 <ChevronDown
@@ -81,14 +74,11 @@ export default function EconomyFaqAccordion({ items }) {
               <div
                 id={panelId}
                 className="economy-faq-item__answer"
-                itemScope
-                itemProp="acceptedAnswer"
-                itemType="https://schema.org/Answer"
                 role="region"
                 aria-labelledby={triggerId}
                 hidden={!isOpen}
               >
-                <p itemProp="text">{item.answer}</p>
+                <p>{item.answer}</p>
               </div>
             </div>
           );

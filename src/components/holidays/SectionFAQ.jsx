@@ -16,7 +16,7 @@
  *     "متى يوم عرفة 2026؟"
  *   Each = a Google featured-snippet candidate + "People Also Ask" box.
  *
- * Dual schema: JSON-LD FAQPage + itemScope microdata
+ * Schema: JSON-LD FAQPage
  * Accordion: native <details>/<summary> — zero JS, SSR-safe, keyboard accessible
  */
 
@@ -84,12 +84,8 @@ export default async function SectionFAQ() {
         </p>
       </header>
 
-      {/* Accordion — dual-schema: JSON-LD above + microdata here */}
-      <div
-        className="max-w-3xl mx-auto space-y-2"
-        itemScope
-        itemType="https://schema.org/FAQPage"
-      >
+      {/* Accordion — visible UI only, schema stays in JSON-LD above */}
+      <div className="max-w-3xl mx-auto space-y-2">
         {faqItems.map((item, idx) => (
           <details
             key={idx}
@@ -98,9 +94,6 @@ export default async function SectionFAQ() {
               background: 'var(--bg-surface-1)',
               border: '1px solid var(--border-subtle)',
             }}
-            itemScope
-            itemProp="mainEntity"
-            itemType="https://schema.org/Question"
             aria-label={item.q}
           >
             <summary
@@ -111,7 +104,6 @@ export default async function SectionFAQ() {
               <span
                 className="text-sm sm:text-base font-semibold leading-snug"
                 style={{ color: 'var(--text-primary)' }}
-                itemProp="name"
               >
                 {item.q}
               </span>
@@ -128,16 +120,10 @@ export default async function SectionFAQ() {
               />
             </summary>
 
-            <div
-              className="px-5 pb-5 pt-2"
-              itemScope
-              itemProp="acceptedAnswer"
-              itemType="https://schema.org/Answer"
-            >
+            <div className="px-5 pb-5 pt-2">
               <p
                 className="text-sm sm:text-base leading-relaxed"
                 style={{ color: 'var(--text-secondary)' }}
-                itemProp="text"
               >
                 {item.a}
               </p>

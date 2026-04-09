@@ -1,9 +1,8 @@
 /**
  * SectionFAQ — Frequently asked questions
  *
- * Dual schema strategy:
+ * Schema strategy:
  *  1. JSON-LD FAQPage  — machine-readable, picked up by Google's crawler
- *  2. itemScope/itemProp microdata — redundant signal for older crawlers
  *
  * Accordion: native <details>/<summary> — zero JS, keyboard-accessible,
  * works before hydration.
@@ -77,12 +76,8 @@ export default function SectionFAQ() {
         </p>
       </header>
 
-      {/* Accordion list — microdata + native details */}
-      <div
-        className="max-w-3xl mx-auto space-y-2"
-        itemScope
-        itemType="https://schema.org/FAQPage"
-      >
+      {/* Accordion list — native details, schema stays in JSON-LD above */}
+      <div className="max-w-3xl mx-auto space-y-2">
         {FAQ_ITEMS.map((item, idx) => (
           <details
             key={idx}
@@ -91,9 +86,6 @@ export default function SectionFAQ() {
               background: 'var(--bg-surface-1)',
               border: '1px solid var(--border-subtle)',
             }}
-            itemScope
-            itemProp="mainEntity"
-            itemType="https://schema.org/Question"
             aria-label={item.q}
           >
             <summary
@@ -108,7 +100,6 @@ export default function SectionFAQ() {
               <span
                 className="text-sm sm:text-base font-semibold leading-snug"
                 style={{ color: 'var(--text-primary)' }}
-                itemProp="name"
               >
                 {item.q}
               </span>
@@ -127,16 +118,10 @@ export default function SectionFAQ() {
               />
             </summary>
 
-            <div
-              className="px-5 pb-5 pt-2"
-              itemScope
-              itemProp="acceptedAnswer"
-              itemType="https://schema.org/Answer"
-            >
+            <div className="px-5 pb-5 pt-2">
               <p
                 className="text-sm sm:text-base leading-relaxed"
                 style={{ color: 'var(--text-secondary)' }}
-                itemProp="text"
               >
                 {item.a}
               </p>
