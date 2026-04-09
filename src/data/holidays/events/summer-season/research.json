@@ -1,11 +1,66 @@
 {
   "slug": "summer-season",
   "locale": "ar",
-  "capturedAt": "2026-03-30T13:03:24.653Z",
-  "primaryQueries": [],
-  "competitors": [],
-  "coverageMatrix": [],
-  "keywordGaps": [],
-  "unansweredQuestions": [],
-  "differentiationIdeas": []
+  "capturedAt": "2026-04-09T00:00:00.000Z",
+  "primaryQueries": [
+    "متى يبدأ فصل الصيف 2026",
+    "كم باقي على الصيف 2026",
+    "بداية فصل الصيف 2026",
+    "الانقلاب الصيفي 2026"
+  ],
+  "competitors": [
+    {
+      "url": "https://www.timeanddate.com/calendar/june-solstice.html?_kx=Cmu1xRyNItMvaq8RVSi38pmN-Z414JVhgz10eZPQB_W-uBwea8Y87MK7lLDnRiXr.QrUXt3",
+      "site": "timeanddate",
+      "strengths": [
+        "يعطي لحظة الانقلاب الصيفي بدقة: 21 يونيو 2026 عند 08:24 UTC",
+        "يوضح أن اليوم يمثل أطول نهار في النصف الشمالي"
+      ],
+      "weaknesses": [
+        "ليس موجهاً للعربية أو للنية البحثية الشائعة: كم باقي على الصيف",
+        "لا يشرح للقارئ العربي لماذا تختلف الصفحات بين 20 و21 يونيو"
+      ]
+    }
+  ],
+  "coverageMatrix": [
+    {
+      "keyword": "بداية فصل الصيف 2026",
+      "competitorCoverage": [
+        "timeanddate"
+      ],
+      "ourGap": false
+    },
+    {
+      "keyword": "لماذا بداية الصيف 20 أو 21 يونيو",
+      "competitorCoverage": [],
+      "ourGap": true
+    },
+    {
+      "keyword": "متى يبدأ الصيف في السعودية والمغرب",
+      "competitorCoverage": [],
+      "ourGap": true
+    },
+    {
+      "keyword": "ما الفرق بين الصيف الفلكي والصيف المناخي",
+      "competitorCoverage": [],
+      "ourGap": true
+    }
+  ],
+  "keywordGaps": [
+    "هل الصيف يبدأ 20 أم 21 يونيو",
+    "وقت الانقلاب الصيفي 2026 UTC",
+    "بداية فصل الصيف في السعودية",
+    "بداية فصل الصيف في المغرب",
+    "الفرق بين الصيف الفلكي والصيف المناخي"
+  ],
+  "unansweredQuestions": [
+    "لماذا يختلف تاريخ بداية الصيف بين بعض المواقع؟",
+    "هل يوم بداية الصيف هو أشد الأيام حرارة؟",
+    "متى يبدأ النهار في التناقص بعد الانقلاب الصيفي؟"
+  ],
+  "differentiationIdeas": [
+    "تفسير عربي مباشر لفارق 20 و21 يونيو بدل الاكتفاء بعداد",
+    "ربط الحدث بلحظة الانقلاب العالمية مع أمثلة محلية عربية",
+    "إضافة FAQ علمي بسيط يشرح الفرق بين الصيف الفلكي والصيف المناخي"
+  ]
 }

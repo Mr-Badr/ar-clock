@@ -25,6 +25,8 @@ import hafezSaudiPackage from '@/data/holidays/events/hafez-saudi/package.json';
 import housingSupportSaudiPackage from '@/data/holidays/events/housing-support-saudi/package.json';
 import islamicNewYearPackage from '@/data/holidays/events/islamic-new-year/package.json';
 import socialSecuritySaudiPackage from '@/data/holidays/events/social-security-saudi/package.json';
+import summerSeasonPackage from '@/data/holidays/events/summer-season/package.json';
+import thanaweyaExamsPackage from '@/data/holidays/events/thanaweya-exams/package.json';
 
 /** Fields owned by holidays-engine.js — never override */
 const PROTECTED_FIELDS = new Set([
@@ -45,6 +47,8 @@ const SOURCE_PACKAGE_CONTENT_OVERLAYS = Object.fromEntries(
     housingSupportSaudiPackage,
     islamicNewYearPackage,
     socialSecuritySaudiPackage,
+    summerSeasonPackage,
+    thanaweyaExamsPackage,
   ]
     .map((pkg) => {
       if (pkg?.publishStatus !== 'published') return null;

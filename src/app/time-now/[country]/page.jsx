@@ -218,7 +218,7 @@ export default async function CountryTimePage({ params }) {
 
   const webPageSchema = {
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
+    '@type': 'CollectionPage',
     name: `الوقت الآن في ${countryAr}`,
     url: `${BASE}/time-now/${countrySlug}`,
     description: `اعرف الوقت الآن في ${countryAr} بدقة حتى الثانية. الساعة الحالية في ${cityAr} مع التاريخ اليوم الميلادي والهجري.`,
@@ -230,6 +230,17 @@ export default async function CountryTimePage({ params }) {
       alternateName: countryAr,
     },
   };
+  const cityItemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `مدن ${countryAr} في قسم الوقت الآن`,
+    itemListElement: cities.slice(0, 30).map((cityItem, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: cityItem.name_ar || cityItem.name_en,
+      url: `${BASE}/time-now/${countrySlug}/${cityItem.city_slug}`,
+    })),
+  };
 
   return (
     <div className="min-h-screen bg-base text-primary" dir="rtl" lang="ar">
@@ -237,6 +248,7 @@ export default async function CountryTimePage({ params }) {
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(cityItemListSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <main>

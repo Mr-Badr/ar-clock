@@ -10,6 +10,7 @@
 import {
   SITE_BRAND,
   SITE_BRAND_EN,
+  SITE_CONTACT_EMAIL,
   SITE_LEGACY_BRANDS,
   SITE_DESCRIPTION,
   SITE_SCHEMA_TOPICS,
@@ -42,12 +43,21 @@ export default function GlobalSchemas() {
     '@type': 'Organization',
     name: SITE_BRAND,
     url: SITE_URL,
+    logo: `${SITE_URL}/icons/icon-512.png`,
     description: SITE_DESCRIPTION,
     areaServed: [
       'SA', 'AE', 'EG', 'IQ', 'KW', 'QA', 'JO', 'LB',
       'MA', 'DZ', 'TN', 'LY', 'SD', 'SY', 'YE', 'OM', 'BH', 'MR',
     ],
     knowsAbout: SITE_SCHEMA_TOPICS,
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        contactType: 'customer support',
+        email: SITE_CONTACT_EMAIL,
+        availableLanguage: ['ar'],
+      },
+    ],
   }
 
   return (

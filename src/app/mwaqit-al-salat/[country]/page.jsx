@@ -79,27 +79,6 @@ export async function generateMetadata({ params }) {
     },
   };
 }
-
-
-// ─── JSON-LD ──────────────────────────────────────────────────────────────────
-function CountryPrayerJsonLd({ country, countryAr, countrySlug }) {
-  const url = `${BASE}/mwaqit-al-salat/${countrySlug}`;
-  const schema = {
-    '@context':   'https://schema.org',
-    '@type':      'WebPage',
-    name:         `مواقيت الصلاة في ${countryAr}`,
-    url,
-    inLanguage:   'ar',
-    description:  `أوقات الصلاة الدقيقة لجميع مدن ${countryAr} — الفجر والظهر والعصر والمغرب والعشاء`,
-    about: {
-      '@type':       'Country',
-      name:          countryAr,
-      alternateName: country.name_en,
-    },
-  };
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
-}
-
 // ─── Prayer labels ────────────────────────────────────────────────────────────
 const PRAYER_AR = {
   fajr: 'الفجر', sunrise: 'الشروق', dhuhr: 'الظهر',
@@ -159,7 +138,7 @@ export default async function CountryPrayerPage({ params }) {
 
   const webPageSchema = {
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
+    '@type': 'CollectionPage',
     name: `مواقيت الصلاة في ${countryAr} اليوم`,
     url: `${BASE}/mwaqit-al-salat/${countrySlug}`,
     description: `تعرف على مواقيت الصلاة في كافة مدن ${countryAr} اليوم. الفجر، الظهر، العصر، المغرب والعشاء بدقة عالية.`,
@@ -170,6 +149,17 @@ export default async function CountryPrayerPage({ params }) {
       name: country.name_en,
       alternateName: countryAr,
     },
+  };
+  const cityItemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `مدن ${countryAr} في قسم مواقيت الصلاة`,
+    itemListElement: cities.slice(0, 30).map((cityItem, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: cityItem.name_ar || cityItem.name_en,
+      url: `${BASE}/mwaqit-al-salat/${countrySlug}/${cityItem.city_slug}`,
+    })),
   };
 
   const faqSchema = {
@@ -186,11 +176,13 @@ export default async function CountryPrayerPage({ params }) {
 
   return (
     <div className="min-h-screen bg-base text-primary" dir="rtl" lang="ar">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(cityItemListSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       {/* <AdLayoutWrapper> */}
       <main className="content-col pt-24 pb-20">
-
-        <CountryPrayerJsonLd country={country} countryAr={countryAr} countrySlug={countrySlug} />
 
         {/* Breadcrumb */}
         <nav aria-label="مسار التنقل" className="text-xs text-muted mb-8 flex items-center gap-1.5">

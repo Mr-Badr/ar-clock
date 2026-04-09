@@ -110,52 +110,6 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// ─── JSON-LD ──────────────────────────────────────────────────────────────────
-function PrayerTimesJsonLd({ cityData, countryNameAr, countrySlug, citySlug }) {
-  const cityNameAr = cityData.name_ar || cityData.name_en;
-  const url = `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}`;
-  const schemas = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'WebPage',
-      name: `مواقيت الصلاة في ${cityNameAr}`,
-      url,
-      inLanguage: 'ar',
-      description: `أوقات الصلاة الدقيقة في ${cityNameAr} — الفجر، الظهر، العصر، المغرب، العشاء`,
-      about: {
-        '@type': 'Place',
-        name: cityNameAr,
-        address: { '@type': 'PostalAddress', addressLocality: cityNameAr, addressCountry: countryNameAr },
-        geo: { '@type': 'GeoCoordinates', latitude: cityData.lat, longitude: cityData.lon },
-      },
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name:  `ما وقت الفجر في ${cityNameAr} اليوم؟`,
-          acceptedAnswer: { '@type': 'Answer', text: `يمكن الاطلاع على وقت الفجر الدقيق في ${cityNameAr} في الجدول الموجود أعلى هذه الصفحة. يتغير الوقت يومياً بحسب موضع الشمس.` },
-        },
-        {
-          '@type': 'Question',
-          name: 'ما الفرق بين المذهب الشافعي والحنفي في وقت العصر؟',
-          acceptedAnswer: { '@type': 'Answer', text: 'الشافعية يحسبون العصر حين يساوي ظل الشيء طوله (× 1)، أما الحنفية فيحسبونه حين يصبح الظل ضعف الطول (× 2)، مما يجعل وقت العصر الحنفي متأخراً بـ 45–90 دقيقة عادةً.' },
-        },
-        {
-          '@type': 'Question',
-          name: `كيف تُحسب مواقيت الصلاة في ${cityNameAr}؟`,
-          acceptedAnswer: { '@type': 'Answer', text: `تُحسب مواقيت الصلاة في ${cityNameAr} بالمعادلات الفلكية المعتمدة، مع مراعاة إحداثيات المدينة والمنطقة الزمنية وطريقة الحساب المعتمدة محلياً.` },
-        },
-      ],
-    },
-  ];
-  return schemas.map((schema, i) => (
-    <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-  ));
-}
-
 // ─── Prayer labels ────────────────────────────────────────────────────────────
 const PRAYER_AR = {
   fajr: 'الفجر', sunrise: 'الشروق', dhuhr: 'الظهر',
@@ -256,17 +210,12 @@ export default async function PrayerTimesPage({ params }) {
 
   return (
     <div className="min-h-screen bg-base" dir="rtl">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       {/* <AdLayoutWrapper> */}
       <main className="content-col pt-24 pb-32">
-
-        {/* JSON-LD schemas */}
-        <PrayerTimesJsonLd
-          cityData={cityData}
-          countryNameAr={countryNameAr}
-          countrySlug={countrySlug}
-          citySlug={citySlug}
-        />
 
         {/* Breadcrumb */}
         <nav aria-label="مسار التنقل" className="text-xs text-muted mb-6 hidden sm:flex items-center gap-1.5">

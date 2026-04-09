@@ -31,6 +31,8 @@ import hafezSaudiPackage from '@/data/holidays/events/hafez-saudi/package.json';
 import housingSupportSaudiPackage from '@/data/holidays/events/housing-support-saudi/package.json';
 import islamicNewYearPackage from '@/data/holidays/events/islamic-new-year/package.json';
 import socialSecuritySaudiPackage from '@/data/holidays/events/social-security-saudi/package.json';
+import summerSeasonPackage from '@/data/holidays/events/summer-season/package.json';
+import thanaweyaExamsPackage from '@/data/holidays/events/thanaweya-exams/package.json';
 
 const SOURCE_PACKAGE_EVENT_OVERLAYS = [
   ashuraPackage,
@@ -39,6 +41,8 @@ const SOURCE_PACKAGE_EVENT_OVERLAYS = [
   housingSupportSaudiPackage,
   islamicNewYearPackage,
   socialSecuritySaudiPackage,
+  summerSeasonPackage,
+  thanaweyaExamsPackage,
 ].filter(Boolean);
 
 function shouldIncludePackage(pkg, includeDrafted = false) {

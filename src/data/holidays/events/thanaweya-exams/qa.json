@@ -1,14 +1,17 @@
 {
   "slug": "thanaweya-exams",
   "tier": "tier2",
-  "publishStatus": "drafted",
+  "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:37.058Z"
+  "notes": [
+    "تمت ترقية الصفحة من نسخة خبرية ضعيفة إلى مرجع دائم يوضح أن الموعد المؤكد حالياً هو يوم 20 يونيو 2026 وفق الخريطة الزمنية.",
+    "تمت إضافة فجوة تنافسية مهمة: الفرق بين موعد البداية وجدول المواد التفصيلي."
+  ],
+  "updatedAt": "2026-04-09T00:00:00.000Z"
 }
