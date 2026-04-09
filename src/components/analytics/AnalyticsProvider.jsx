@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import {
@@ -84,7 +84,9 @@ export default function AnalyticsProvider() {
             title="Google Tag Manager"
           />
         </noscript>
-        <RouteChangeTracker activeMode="gtm" measurementId="" />
+        <Suspense fallback={null}>
+          <RouteChangeTracker activeMode="gtm" measurementId="" />
+        </Suspense>
       </>
     );
   }
@@ -108,7 +110,9 @@ export default function AnalyticsProvider() {
           });
         `}
       </Script>
-      <RouteChangeTracker activeMode="ga4" measurementId={gaMeasurementId} />
+      <Suspense fallback={null}>
+        <RouteChangeTracker activeMode="ga4" measurementId={gaMeasurementId} />
+      </Suspense>
     </>
   );
 }
