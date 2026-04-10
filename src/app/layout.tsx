@@ -11,6 +11,7 @@ import Footer from '@/components/layout/Footer';
 import AdSenseProvider from '@/components/ads/AdSenseProvider';
 import AdStickyAnchor from '@/components/ads/AdStickyAnchor';
 import AnalyticsProvider from '@/components/analytics/AnalyticsProvider';
+import SiteWideSchemas from '@/components/seo/SiteWideSchemas';
 import ConsentBanner from '@/components/consent/ConsentBanner';
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
 import { Analytics } from '@vercel/analytics/next';
@@ -55,6 +56,8 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   keywords: SITE_KEYWORDS,
   authors: [{ name: `${SITE_BRAND} (${SITE_BRAND_EN}) — منصة عربية للوقت والتاريخ والمواقيت` }],
+  creator: SITE_BRAND,
+  publisher: SITE_BRAND,
   category: 'utilities',
   classification: 'Public',
 
@@ -133,6 +136,7 @@ export default async function RootLayout({
           notoSansArabic.className activates the body font family. */}
       <body className={notoSansArabic.className}>
         <ThemeProvider>
+          <SiteWideSchemas />
           <Suspense fallback={<div className="h-16" />}>
             <Header />
           </Suspense>

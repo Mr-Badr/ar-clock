@@ -1,5 +1,5 @@
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
-import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
+import { SITE_BRAND, SITE_ECONOMY_KEYWORDS, getSiteUrl } from '@/lib/site-config';
 
 import EconomyLanding from '@/components/economy/EconomyLanding';
 
@@ -20,6 +20,7 @@ export const metadata = buildCanonicalMetadata({
     'هل بورصة الذهب مفتوحة الآن', 'ساعات جلسات الفوركس العالمية الان', 'أفضل وأسوأ أوقات التداول خلال اليوم',
     'خريطة سيولة الأسواق المالية اليومية', 'مواعيد إغلاق وافتتاح البورصات العالمية 2026',
     'ساعة التداول لأسواق الفوركس والذهب', 'أدوات التداول الحي اللحظية', 'متابعة اقتصادية يومية دقيقة',
+    ...SITE_ECONOMY_KEYWORDS,
   ],
   url: `${SITE_URL}/economie`,
 });

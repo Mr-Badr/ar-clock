@@ -23,12 +23,12 @@ import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 import { getTimeDifference } from '@/lib/time-diff';
 import { resolveTimeDifferenceCityFromSegment } from '@/lib/time-difference-route';
 import { buildTimeDifferenceHref } from '@/lib/time-difference-links';
-
-const COUNTRY_SEO_ALIASES = {
-  'united-states': ['أمريكا', 'الولايات المتحدة'],
-  'united-kingdom': ['بريطانيا', 'المملكة المتحدة'],
-  'united-arab-emirates': ['الإمارات', 'الإمارات العربية المتحدة'],
-};
+import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
+import {
+  buildTimeDifferenceKeywords,
+  getCountrySeoNames,
+  uniqueKeywords,
+} from '@/lib/seo/section-search-intent';
 
 function dayNote(srcH, diffH) {
   const dest = srcH + diffH;
@@ -45,42 +45,6 @@ function fmtTime(h24) {
   const period = h >= 12 ? 'م' : 'ص';
   const h12 = h % 12 || 12;
   return `${h12}:${String(m).padStart(2, '0')} ${period}`;
-}
-
-function unique(values) {
-  return Array.from(new Set(values.filter(Boolean)));
-}
-
-function getCountrySeoNames(countrySlug, countryNameAr) {
-  const aliases = COUNTRY_SEO_ALIASES[countrySlug] || [];
-  return unique([aliases[0], countryNameAr, ...aliases]);
-}
-
-function buildComparisonKeywords(fromCity, toCity) {
-  const fromCountryNames = getCountrySeoNames(fromCity.country_slug, fromCity.country_name_ar);
-  const toCountryNames = getCountrySeoNames(toCity.country_slug, toCity.country_name_ar);
-  const keywords = [
-    `فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
-    `كم فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
-    `الوقت الآن في ${fromCity.city_name_ar}`,
-    `الوقت الآن في ${toCity.city_name_ar}`,
-    `الساعة الآن في ${fromCity.city_name_ar}`,
-    `الساعة الآن في ${toCity.city_name_ar}`,
-    `تحويل الوقت من ${fromCity.city_name_ar} إلى ${toCity.city_name_ar}`,
-    'حاسبة فرق التوقيت',
-    'تحويل الوقت بين المدن',
-    'فرق التوقيت الآن',
-  ];
-
-  for (const fromCountryName of fromCountryNames) {
-    for (const toCountryName of toCountryNames) {
-      keywords.push(`فرق التوقيت بين ${fromCountryName} و${toCountryName}`);
-      keywords.push(`كم فرق التوقيت بين ${fromCountryName} و${toCountryName}`);
-      keywords.push(`الوقت الآن بين ${fromCountryName} و${toCountryName}`);
-    }
-  }
-
-  return unique(keywords);
 }
 
 export async function generateStaticParams() {
@@ -109,14 +73,19 @@ export async function generateMetadata({ params }) {
   const description =
     `اعرف كم ساعة بين ${fromCountryPrimary} (${fromCity.city_name_ar}) و${toCountryPrimary} (${toCity.city_name_ar}) مع تحويل الوقت المباشر والساعة الآن والتوقيت الصيفي وأفضل وقت للاجتماعات.`;
   const keywordsArray = [
-    ...buildComparisonKeywords(fromCity, toCity),
+    ...buildTimeDifferenceKeywords({
+      fromCityAr: fromCity.city_name_ar,
+      toCityAr: toCity.city_name_ar,
+      fromCountryNames: getCountrySeoNames(fromCity.country_slug, fromCity.country_name_ar),
+      toCountryNames: getCountrySeoNames(toCity.country_slug, toCity.country_name_ar),
+    }),
     `كم ساعة بين ${fromCountryPrimary} و${toCountryPrimary}`,
     `متى يفتح الدوام في ${toCity.city_name_ar} بتوقيت ${fromCity.city_name_ar}`,
     `الساعة الان في ${toCity.city_name_ar} مقارنة بـ ${fromCity.city_name_ar} مع التوقيت الصيفي`,
     `حساب فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary} بالدقيقة`,
     `أفضل وقت للاجتماعات المشتركة بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`
   ];
-  const keywords = keywordsArray.join(', ');
+  const keywords = uniqueKeywords(keywordsArray);
 
   return {
     title, description, keywords,
@@ -329,12 +298,70 @@ async function ComparisonPageContent({ paramsPromise }) {
       'حساب ساعات العمل المشتركة للشركات'
     ],
   };
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
+    })),
+  };
+  const comparisonUtilityLinks = Array.from(
+    new Map([
+      {
+        href: `/time-now/${fromCity.country_slug}/${fromCity.city_slug}`,
+        label: `الوقت الآن في ${fromCity.city_name_ar}`,
+        description: `اعرف الساعة الحالية والتاريخ اليوم في ${fromCity.city_name_ar}.`,
+      },
+      {
+        href: `/time-now/${toCity.country_slug}/${toCity.city_slug}`,
+        label: `الوقت الآن في ${toCity.city_name_ar}`,
+        description: `اعرف الساعة الحالية والتاريخ اليوم في ${toCity.city_name_ar}.`,
+      },
+      {
+        href: `/time-now/${fromCity.country_slug}`,
+        label: `الوقت الآن في ${fromCountryPrimary}`,
+        description: 'صفحة الدولة مع العاصمة والمدن الكبرى المرتبطة بهذه المقارنة.',
+      },
+      {
+        href: `/time-now/${toCity.country_slug}`,
+        label: `الوقت الآن في ${toCountryPrimary}`,
+        description: 'صفحة الدولة مع العاصمة والمدن الكبرى المرتبطة بهذه المقارنة.',
+      },
+      {
+        href: `/mwaqit-al-salat/${fromCity.country_slug}/${fromCity.city_slug}`,
+        label: `مواقيت الصلاة في ${fromCity.city_name_ar}`,
+        description: `انتقل إلى أوقات الصلاة الدقيقة في ${fromCity.city_name_ar}.`,
+      },
+      {
+        href: `/mwaqit-al-salat/${toCity.country_slug}/${toCity.city_slug}`,
+        label: `مواقيت الصلاة في ${toCity.city_name_ar}`,
+        description: `انتقل إلى أوقات الصلاة الدقيقة في ${toCity.city_name_ar}.`,
+      },
+      {
+        href: `/date/country/${fromCity.country_slug}`,
+        label: `التاريخ اليوم في ${fromCountryPrimary}`,
+        description: `راجع التاريخ الهجري والميلادي اليوم في ${fromCountryPrimary}.`,
+      },
+      {
+        href: `/date/country/${toCity.country_slug}`,
+        label: `التاريخ اليوم في ${toCountryPrimary}`,
+        description: `راجع التاريخ الهجري والميلادي اليوم في ${toCountryPrimary}.`,
+      },
+    ].map((link) => [link.href, link]),
+    ).values(),
+  );
 
   return (
     <div className="min-h-screen bg-base text-primary">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       {/* <AdLayoutWrapper> */}
       <main className="content-col pt-24 pb-20">
 
@@ -738,6 +765,15 @@ async function ComparisonPageContent({ paramsPromise }) {
               </details>
             ))}
           </div>
+        </section>
+
+        <section className="mb-10">
+          <GeoInternalLinks
+            title={`روابط مرتبطة بمقارنة ${fromCity.city_name_ar} و${toCity.city_name_ar}`}
+            description={`هذه الروابط توصل مقارنة فرق التوقيت بصفحات الوقت الحالي والصلاة والتاريخ الخاصة بكل مدينة ودولة، وهو ما يقوّي الربط الداخلي حول نفس نية البحث.`}
+            links={comparisonUtilityLinks}
+            ariaLabel={`روابط مرتبطة بمقارنة ${fromCity.city_name_ar} و${toCity.city_name_ar}`}
+          />
         </section>
 
         <div className="my-20">

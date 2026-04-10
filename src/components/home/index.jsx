@@ -50,7 +50,6 @@
  */
 
 import { Suspense } from 'react'
-import GlobalSchemas       from './GlobalSchemas'
 import SectionStats        from './SectionStats'
 import { SectionDivider } from '@/components/shared/primitives'
 import SectionSkeleton     from '@/components/shared/SectionSkeleton'
@@ -65,9 +64,6 @@ import SectionFAQ          from './SectionFAQ'
 export default function HomeSections() {
   return (
     <>
-      {/* Global JSON-LD: WebSite (SearchAction) + Organization schemas */}
-      <GlobalSchemas />
-
       {/* Trust bar — 5 authority numbers, shown right after hero */}
       <SectionStats />
 
@@ -112,7 +108,6 @@ export default function HomeSections() {
 }
 
 /* Named re-exports for individual use */
-export { default as GlobalSchemas }        from './GlobalSchemas'
 export { default as SectionStats }         from './SectionStats'
 export { default as SectionPrayerTimes }   from './SectionPrayerTimes'
 export { default as SectionTimeDifference } from './SectionTimeDifference'

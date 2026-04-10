@@ -1,87 +1,73 @@
 // app/time-difference/page.tsx
 import TimeDiffCalculator from "@/components/TimeDifference/TimeDiffCalculatorV2.client";
 import { getCountriesAction } from "@/app/actions/location";
-import CurrentTime from "@/components/helpers/CurrentTime";
-import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
-import AdInArticle from '@/components/ads/AdInArticle';
 import TimeDiffSections from '@/components/time-diff/index';
+import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
+import { POPULAR_PAIRS } from '@/components/time-diff/data/popularPairs';
 import { Globe } from 'lucide-react';
 import { getSiteUrl } from '@/lib/site-config';
+import { buildCanonicalMetadata } from '@/lib/seo/metadata';
+import { buildTimeDifferenceHubKeywords } from '@/lib/seo/section-search-intent';
 /**
  * Metadata (Next.js App Router)
  * - extend this object if you use dynamic city-pair pages later
  */
 const SITE_URL = getSiteUrl();
 
-export const metadata = {
+export const metadata = buildCanonicalMetadata({
   title:
     "فرق التوقيت بين المدن والدول - حاسبة تحويل الوقت",
   description:
     "احسب فرق التوقيت والساعة الآن بين أي مدينتين أو دولتين، مع تحويل الوقت بين المناطق الزمنية، ودعم التوقيت الصيفي، وتحديد أفضل وقت للاجتماعات.",
-  keywords:
-    "فرق التوقيت, تحويل الوقت, كم الساعة, فرق التوقيت بين المدن, فرق التوقيت بين الدول, ساعات العمل المشتركة, تحويل التوقيت, فرق التوقيت والدوام, تحويل التوقيت من إلى",
-  alternates: {
-    canonical: `${SITE_URL}/time-difference`,
-    // add hreflang alternatives if you have other locales, e.g.
-    // languages: { "en-US": "/en/time-difference" }
-  },
-  openGraph: {
-    title: "فرق التوقيت بين المدن والدول | حاسبة تحويل الوقت",
-    description:
-      "أداة عربية دقيقة لمعرفة فرق التوقيت وتحويل الوقت بين المدن والدول مع دعم التوقيت الصيفي.",
-    url: `${SITE_URL}/time-difference`,
-    type: "website",
-    locale: "ar_SA",
-  },
-};
-
-const faqs = [
-  // keep and extend your previous faqs
-  {
-    q: "كيفية حساب فرق التوقيت بين مدينتين؟",
-    a:
-      "تقوم الحاسبة بتحويل التوقيت المحلي لكل مدينة إلى التوقيت العالمي (UTC) باستخدام قاعدة بيانات المناطق الزمنية المعتمدة (IANA TZ database)، ثم تحسب الفرق بالساعات والدقائق بدقة، مع مراعاة التوقيت الصيفي تلقائياً.",
-  },
-  {
-    q: "هل تُراعي الحاسبة التوقيت الصيفي (DST)؟",
-    a:
-      "نعم. بيانات المناطق الزمنية تتضمن قواعد التوقيت الصيفي والشتوي لكل منطقة، لذلك تظهر النتيجة بحالة التوقيت الحالية (صيفي/قياسي) بحسب التاريخ المحدد.",
-  },
-  {
-    q: "كيف أحسب أفضل وقت للاجتماع بين بلدين؟",
-    a:
-      "تعرّف أولاً ساعات العمل التقليدية في كل بلد (مثلاً 9 ص - 5 م)، ثم استخدم عرض 'ساعات العمل المشتركة' في الأداة لتحديد الفترات التي تتقاطع فيها ساعات العمل في كلا الموقعين.",
-  },
-  {
-    q: "ما أفضل طريقة لمشاركة النتيجة مع زميل؟",
-    a:
-      "بعد تحديد المدينتين والحصول على النتيجة، اضغط 'مشاركة المقارنة' لنسخ رابط يحتوي على المدينتين يمكن لأي شخص فتحه ليظهر نفس المقارنة.",
-  },
-  {
-    q: "هل يمكن للحاسبة التعامل مع المدن التي لها نفس الاسم؟",
-    a:
-      "نعم — عند وجود أكثر من مدينة بنفس الاسم نعرض القائمة الكاملة مع اسم الدولة والموقع الجغرافي لذلك يمكنك اختيار المدينة الصحيحة.",
-  },
-  {
-    q: "هل يمكنني استخدام هذه الصفحة لجدولة مكالمات عبر فرق زمنية متعددة؟",
-    a:
-      "نعم — الأداة تسمح بالمقارنة الزوجية، ويمكنك تكرار المقارنات أو إنشاء صفحات مقارنات مخصصة للمدن الأكثر استخداماً لديك.",
-  },
-  // add more targeted Qs:
-  {
-    q: "فرق التوقيت بين الرياض ودبي كم؟",
-    a: "تتقدم دبي على الرياض بساعة واحدة (دبي UTC+4، السعودية UTC+3)، ولا تطبق كلا الدولتين التوقيت الصيفي عادةً.",
-  },
-  {
-    q: "كيف أتحقق من فرق التوقيت أثناء السفر؟",
-    a:
-      "استخدم الحاسبة مع اسم المدينة أو حقل البحث في هاتفك لاختيار المدينة الوجهة وسنظهر لك التوقيت المحلي هناك وكذلك الفرق بالنسبة لموقعك الحالي.",
-  },
-];
+  keywords: buildTimeDifferenceHubKeywords(POPULAR_PAIRS),
+  url: `${SITE_URL}/time-difference`,
+});
 
 export default async function TimeDifferencePage() {
   const allCountries = await getCountriesAction();
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "فرق التوقيت بين المدن والدول",
+    url: `${SITE_URL}/time-difference`,
+    description:
+      "قسم حاسبة فرق التوقيت في ميقاتنا يربط بين مقارنات الدول والمدن، والتحويل المباشر، وساعات العمل المشتركة، مع دعم التوقيت الصيفي.",
+    inLanguage: "ar",
+  };
+  const popularPairsSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "أشهر مقارنات فرق التوقيت",
+    itemListElement: POPULAR_PAIRS.slice(0, 12).map((pair, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: `فرق التوقيت بين ${pair.from.nameAr} و${pair.to.nameAr}`,
+      url: `${SITE_URL}/time-difference/${pair.from.slug}/${pair.to.slug}`,
+    })),
+  };
+  const utilityLinks = [
+    {
+      href: "/time-now",
+      label: "الوقت الآن في المدن والدول",
+      description: "تحقق من الوقت الحالي في كل مدينة قبل المقارنة بينها وبين أي مدينة أخرى.",
+    },
+    {
+      href: "/mwaqit-al-salat",
+      label: "مواقيت الصلاة اليوم",
+      description: "انتقل إلى مواقيت الصلاة في المدن نفسها إذا كنت تخطط للسفر أو العمل بين مناطق زمنية مختلفة.",
+    },
+    {
+      href: "/date/today",
+      label: "تاريخ اليوم",
+      description: "راجع التاريخ الهجري والميلادي اليوم مع الروابط المرتبطة بالتقويم والتحويل.",
+    },
+    {
+      href: "/holidays",
+      label: "المناسبات القادمة",
+      description: "استكشف المناسبات والإجازات القادمة عند تنسيق الاجتماعات والسفر عبر الدول.",
+    },
+  ];
 
   // HowTo schema for "تحويل الوقت بين مدينتين" (step-by-step)
   const howToSchema = {
@@ -117,6 +103,14 @@ export default async function TimeDifferencePage() {
   return (
     <div className="min-h-screen bg-base text-primary">
       {/* <AdLayoutWrapper> */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(popularPairsSchema) }}
+      />
       <main className="content-col pt-24 mt-12">
 
         {/* JSON-LD structured data (HowTo) */}
@@ -162,7 +156,15 @@ export default async function TimeDifferencePage() {
         </section>
 
       </main>
-        <TimeDiffSections />
+      <TimeDiffSections />
+      <section className="content-col pb-20">
+        <GeoInternalLinks
+          title="روابط مهمة مرتبطة بفرق التوقيت"
+          description="ربطنا حاسبة فرق التوقيت بأقسام الوقت الآن والصلاة والتاريخ والمناسبات حتى تبقى المقارنات مرتبطة بسياقها الكامل داخل الموقع."
+          links={utilityLinks}
+          ariaLabel="روابط مهمة مرتبطة بفرق التوقيت"
+        />
+      </section>
       {/* </AdLayoutWrapper> */}
     </div>
   );

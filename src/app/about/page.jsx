@@ -1,5 +1,6 @@
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { SITE_BRAND, SITE_CONTACT_EMAIL, getSiteUrl } from '@/lib/site-config';
+import Link from 'next/link';
 
 const SITE_URL = getSiteUrl();
 const PAGE_URL = `${SITE_URL}/about`;
@@ -128,6 +129,17 @@ export default function AboutPage() {
             <p>
               وعندما يكون التاريخ تقديرياً أو مرتبطاً بإعلان رسمي، نوضح ذلك داخل المحتوى بدلاً من
               عرض معلومة تبدو نهائية وهي ليست كذلك.
+            </p>
+            <p>
+              يمكنك مراجعة{' '}
+              <Link href="/editorial-policy" style={{ color: 'var(--accent-alt)' }}>
+                السياسة التحريرية
+              </Link>
+              {' '}و{' '}
+              <Link href="/terms" style={{ color: 'var(--accent-alt)' }}>
+                شروط الاستخدام
+              </Link>
+              {' '}للتعرف على طريقة المراجعة والتحديث وحدود استخدام الأدوات والمحتوى.
             </p>
           </Section>
 

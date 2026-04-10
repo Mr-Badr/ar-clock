@@ -4,8 +4,10 @@ import {
   replaceTokens,
   buildEventSchema,
   buildWebPageSchema,
+  buildArticleSchema,
   buildFAQSchema,
   buildBreadcrumbSchema,
+  buildEventSeriesSchema,
 } from '@/lib/holidays-engine';
 import { COUNTRY_META } from '@/lib/calendar-config';
 import { getSiteUrl } from '@/lib/site-config';
@@ -156,6 +158,9 @@ export async function getHolidayPageData(slug) {
       replaceTokens(seo.description || '', tokenContext),
       event,
     ),
+    keywords: Array.isArray(seo.keywords) ? seo.keywords : event.keywords,
+    seoMeta: seo.seoMeta || event.seoMeta,
+    schemaData: seo.schemaData || event.schemaData,
   };
   const breadcrumbTitle = localizeEventLabel(
     replaceTokens(seo?.seoMeta?.h1 || event.name, tokenContext),
@@ -177,6 +182,8 @@ export async function getHolidayPageData(slug) {
     { name: 'المناسبات', url: `${siteUrl}/holidays` },
     { name: breadcrumbTitle, url: `${siteUrl}${routePath}` },
   ]);
+  const articleSchema = buildArticleSchema(pageSchemaEvent, targetDate, siteUrl, nowIso);
+  const eventSeriesSchema = buildEventSeriesSchema(pageSchemaEvent, siteUrl);
 
   const typeLabel =
     {
@@ -192,6 +199,8 @@ export async function getHolidayPageData(slug) {
     ...validateSchemaShape(wpSchema).map((issue) => `webpage:${issue}`),
     ...(faqSchema ? validateSchemaShape(faqSchema).map((issue) => `faq:${issue}`) : []),
     ...validateSchemaShape(bcSchema).map((issue) => `breadcrumb:${issue}`),
+    ...validateSchemaShape(articleSchema).map((issue) => `article:${issue}`),
+    ...(eventSeriesSchema ? validateSchemaShape(eventSeriesSchema).map((issue) => `eventseries:${issue}`) : []),
   ];
   if (schemaIssues.length) {
     logEvent('holiday-schema-validation-issues', {
@@ -236,7 +245,7 @@ export async function getHolidayPageData(slug) {
     quickFacts,
     faqItems,
     pageModel,
-    schemas: { evSchema, wpSchema, faqSchema, bcSchema },
+    schemas: { evSchema, wpSchema, faqSchema, bcSchema, articleSchema, eventSeriesSchema },
     typeLabel,
     siteUrl,
     whatsappUrl: `https://wa.me/?text=${shareText}`,

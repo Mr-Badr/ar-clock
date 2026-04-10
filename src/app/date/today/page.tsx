@@ -14,18 +14,25 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { Moon, CalendarDays, ArrowLeftRight } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
+import { buildDateKeywords } from '@/lib/seo/section-search-intent';
 
 const BASE_URL = getSiteUrl();
 
 export const metadata: Metadata = {
   title: 'تاريخ اليوم بالهجري والميلادي - التاريخ الكامل اليوم',
   description: 'اعرف تاريخ اليوم بالهجري والميلادي مع مقارنة طرق الحساب، واليوم من السنة، ورقم الأسبوع، وروابط التحويل والتقويم المرتبطة به.',
+  keywords: buildDateKeywords(),
   alternates: { canonical: `${BASE_URL}/date/today` },
   openGraph: {
     title: 'تاريخ اليوم بالهجري والميلادي | ميقاتنا',
     description: 'تاريخ اليوم الهجري والميلادي مع مقارنة طرق الحساب وروابط الأدوات المرتبطة.',
     url: `${BASE_URL}/date/today`,
     locale: 'ar_SA',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'تاريخ اليوم بالهجري والميلادي | ميقاتنا',
+    description: 'اعرف تاريخ اليوم بالهجري والميلادي مع مقارنة طرق الحساب وروابط الأدوات المرتبطة.',
   },
 };
 

@@ -40,6 +40,7 @@ import { getPriorityCityParams, getCityBySlug, getTopCitiesByCountry } from '@/l
 import { getCountriesAction } from '@/app/actions/location';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
+import { buildTimeNowKeywords } from '@/lib/seo/section-search-intent';
 
 const BASE = getSiteUrl();
 
@@ -80,22 +81,14 @@ export async function generateMetadata({ params }) {
   return {
     title: `الوقت الان في ${cityAr}، ${countryAr} — الساعة والتاريخ`,
     description: `الوقت الحالي في ${cityAr} بدقة حتى الثانية. الساعة الان في ${cityAr}، ${countryAr} — التاريخ اليوم الميلادي والهجري، المنطقة الزمنية ${offset}.`,
-    keywords: [
-      `الوقت الان في ${cityAr}`,
-      `الساعة الان في ${cityAr}`,
-      `الوقت الان في ${cityAr} اليوم`,
-      `كم الساعة في ${cityAr}`,
-      `الوقت الحالي في ${cityAr}`,
-      `التاريخ اليوم في ${cityAr}`,
-      `المنطقة الزمنية في ${cityAr}`,
-      `توقيت ${cityAr}`,
-      `الوقت الان في ${countryAr}`,
-      `الساعة في ${countryAr}`,
-      `${offset} توقيت`,
-      `time in ${city.name_en}`,
-      `${city.name_en} time now`,
-      `current time ${city.name_en}`,
-    ],
+    keywords: buildTimeNowKeywords({
+      countryAr,
+      countryEn: country.name_en,
+      cityAr,
+      cityEn: city.name_en,
+      timezone: city.timezone,
+      utcOffset: offset,
+    }),
     metadataBase: new URL(BASE),
     alternates: {
       canonical: `/time-now/${countrySlug}/${citySlug}`,
@@ -117,6 +110,7 @@ export async function generateMetadata({ params }) {
     twitter: {
       card: 'summary_large_image',
       title: `الوقت الان في ${cityAr}، ${countryAr}`,
+      description: `الوقت الحالي في ${cityAr} بدقة حتى الثانية مع التاريخ اليوم والمنطقة الزمنية ${offset}.`,
     },
     robots: {
       index: true, follow: true,

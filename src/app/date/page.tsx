@@ -22,10 +22,12 @@ import { getIslamicEventsForHijriDate } from '@/lib/islamic-holidays';
 import { JsonLd } from '@/components/date/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import DateRouteLoading from '@/components/date/DateRouteLoading';
+import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { ArrowLeftRight, Moon, CalendarDays, Calendar } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
+import { buildDateKeywords } from '@/lib/seo/section-search-intent';
 
 const BASE_URL = getSiteUrl();
 
@@ -33,6 +35,7 @@ export const metadata: Metadata = {
   title: 'التاريخ الهجري والميلادي اليوم - تحويل وتقويم وأدوات',
   description:
     'اعرف تاريخ اليوم بالهجري والميلادي، وحوّل التواريخ بين التقويمين، وتصفح التقويم الكامل وصفحات اليوم والبلدان من مركز تاريخ عربي شامل.',
+  keywords: buildDateKeywords(),
   alternates: { canonical: `${BASE_URL}/date` },
   openGraph: {
     title: 'التاريخ الهجري والميلادي اليوم | ميقاتنا',
@@ -98,32 +101,87 @@ async function DateHubDynamicContent() {
   const events = hijri ? getIslamicEventsForHijriDate(hijri.year, hijri.month, hijri.day) : [];
 
   const breadcrumb = [{ label: 'الرئيسية', href: '/' }, { label: 'التاريخ' }];
+  const toolLinks = [
+    { href: '/date/converter', label: 'محول التاريخ', description: 'تحويل بين الهجري والميلادي بثلاث طرق حساب.' },
+    { href: '/date/today/hijri', label: 'التاريخ الهجري اليوم', description: 'اعرف التاريخ الهجري اليوم ومقارنة طرق الحساب.' },
+    { href: '/date/today/gregorian', label: 'التاريخ الميلادي اليوم', description: 'استعرض التاريخ الميلادي اليوم واليوم من السنة.' },
+    { href: '/date/gregorian-to-hijri', label: 'ميلادي إلى هجري', description: 'تحويل مباشر من التاريخ الميلادي إلى التاريخ الهجري.' },
+    { href: '/date/hijri-to-gregorian', label: 'هجري إلى ميلادي', description: 'تحويل مباشر من التاريخ الهجري إلى التاريخ الميلادي.' },
+    { href: `/date/calendar/${y}`, label: `تقويم ${y}`, description: `التقويم الميلادي الكامل لعام ${y} مع المقابل الهجري.` },
+    { href: `/date/calendar/hijri/${hijri?.year ?? 1447}`, label: `تقويم ${hijri?.year ?? 1447} هـ`, description: 'التقويم الهجري الكامل مع الأيام والمناسبات.' },
+    { href: '/date/country', label: 'التاريخ حسب الدولة', description: 'اعرف التاريخ اليوم في الدول العربية وفق الطريقة الأقرب للاستخدام الرسمي.' },
+  ];
+  const dateUtilityLinks = [
+    {
+      href: '/time-now',
+      label: 'الوقت الآن',
+      description: 'اعرف الساعة الحالية في المدن والدول المرتبطة بتاريخ اليوم.',
+    },
+    {
+      href: '/mwaqit-al-salat',
+      label: 'مواقيت الصلاة اليوم',
+      description: 'انتقل إلى مواقيت الصلاة الدقيقة من نفس بنية الوقت والتاريخ.',
+    },
+    {
+      href: '/time-difference',
+      label: 'حاسبة فرق التوقيت',
+      description: 'قارن الوقت بين الدول والمدن عند التخطيط للتواريخ والسفر والعمل.',
+    },
+    {
+      href: '/holidays',
+      label: 'المناسبات القادمة',
+      description: 'استكشف المناسبات والإجازات القادمة المرتبطة بالتاريخ الهجري والميلادي.',
+    },
+  ];
 
-  const jsonLd = {
+  const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: 'مركز التاريخ الهجري والميلادي',
     description: 'تاريخ اليوم الهجري والميلادي مع أدوات تحويل شاملة',
     url: `${BASE_URL}/date`,
     breadcrumb: buildBreadcrumbJsonLd(breadcrumb, BASE_URL),
-    mainEntity: {
-      '@type': 'FAQPage',
-      mainEntity: HUB_FAQ_ITEMS.map((item, index) => ({
-        '@type': 'Question',
-        name: item.question,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: index === 0 && hijri
-            ? `تاريخ اليوم بالهجري هو ${hijri.formatted.ar} وفق تقويم أم القرى.`
-            : item.answer,
-        },
-      })),
-    },
+  };
+  const collectionSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'أدوات التاريخ الهجري والميلادي',
+    url: `${BASE_URL}/date`,
+    description: 'مجموعة أدوات وصفحات التاريخ في ميقاتنا: تاريخ اليوم، محول التاريخ، التقاويم، والتاريخ حسب الدولة.',
+    inLanguage: 'ar',
+  };
+  const toolsItemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'أدوات التاريخ الأساسية',
+    itemListElement: toolLinks.map((tool, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: tool.label,
+      url: `${BASE_URL}${tool.href}`,
+    })),
+  };
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: HUB_FAQ_ITEMS.map((item, index) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: index === 0 && hijri
+          ? `تاريخ اليوم بالهجري هو ${hijri.formatted.ar} وفق تقويم أم القرى.`
+          : item.answer,
+      },
+    })),
   };
 
   return (
     <>
-      <JsonLd data={jsonLd} />
+      <JsonLd data={webPageSchema} />
+      <JsonLd data={collectionSchema} />
+      <JsonLd data={toolsItemListSchema} />
+      <JsonLd data={faqSchema} />
       <AdLayoutWrapper>
         <main className="content-col pt-24 pb-20 mt-12">
           <DateBreadcrumb items={breadcrumb} />
@@ -375,6 +433,15 @@ async function DateHubDynamicContent() {
 
             </div>
           </nav>
+
+          <section className="mt-12">
+            <GeoInternalLinks
+              title="روابط أساسية مرتبطة بقسم التاريخ"
+              description="هذه الروابط تربط قسم التاريخ بأقسام الوقت الحالي والصلاة وفرق التوقيت والمناسبات، حتى تبقى الصفحات المرجعية الأساسية قريبة من بعضها في الهيكل الداخلي للموقع."
+              links={dateUtilityLinks}
+              ariaLabel="روابط أساسية مرتبطة بقسم التاريخ"
+            />
+          </section>
         </main>
       </AdLayoutWrapper>
     </>

@@ -1,0 +1,403 @@
+/* PrintThemeChooserModal.module.css
+   Responsive modal for choosing light / dark PDF theme.
+   All colours reference design-system tokens — zero hard-coded values.
+   Breakpoints: mobile-first → tablet (≥ 600px) → desktop (≥ 768px)
+   ─────────────────────────────────────────────────────────────────────── */
+
+/* ── Keyframes ──────────────────────────────────────────────────────────── */
+@keyframes backdropIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+
+/* ── Portal / focus trap wrapper ────────────────────────────────────────── */
+.portal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: flex-end;       /* mobile: sheet slides up from bottom */
+  justify-content: center;
+  padding: 0;
+}
+
+@media (min-width: 600px) {
+  .portal {
+    align-items: center;
+    padding: var(--space-4);
+  }
+}
+
+
+/* ── Backdrop ────────────────────────────────────────────────────────────── */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: backdropIn var(--duration-base) var(--ease-out) both;
+  cursor: pointer;
+}
+
+
+/* ── Dialog card ─────────────────────────────────────────────────────────── */
+.card {
+  position: relative;
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-xl),
+              0 0 0 1px rgba(255, 255, 255, 0.03);
+  animation: cardIn var(--duration-slow) var(--ease-bounce) both;
+
+  /* Mobile — full-width bottom sheet */
+  width: 100%;
+  max-width: 100%;
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+  padding: var(--space-4) var(--space-4) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  /* Prevent content from touching OS home-indicator */
+  padding-bottom: max(var(--space-6), env(safe-area-inset-bottom));
+}
+
+@media (min-width: 600px) {
+  .card {
+    max-width: 520px;
+    border-radius: var(--radius-2xl);
+    padding: var(--space-5) var(--space-5) var(--space-5);
+    gap: var(--space-4);
+  }
+}
+
+@media (min-width: 768px) {
+  .card {
+    max-width: 720px;
+    padding: var(--space-6) var(--space-6) var(--space-5);
+    gap: var(--space-5);
+  }
+}
+
+
+/* ── Drag handle (mobile only) ───────────────────────────────────────────── */
+.dragHandle {
+  width: 36px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--border-strong);
+  margin: 0 auto var(--space-1);
+  flex-shrink: 0;
+}
+
+@media (min-width: 600px) {
+  .dragHandle {
+    display: none;
+  }
+}
+
+
+/* ── Title row ───────────────────────────────────────────────────────────── */
+.titleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  direction: rtl;
+  gap: var(--space-3);
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  direction: rtl;
+}
+
+.iconWrap {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-lg);
+  flex-shrink: 0;
+  background: var(--accent-soft);
+  border: 1px solid var(--border-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heading {
+  margin: 0;
+  font-size: var(--text-md);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
+}
+
+.subheading {
+  margin: 3px 0 0;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: var(--leading-snug);
+}
+
+@media (min-width: 600px) {
+  .heading {
+    font-size: var(--text-lg);
+  }
+  .subheading {
+    font-size: var(--text-sm);
+  }
+}
+
+
+/* ── Close button ────────────────────────────────────────────────────────── */
+.closeBtn {
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-1-5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: background var(--transition-fast),
+              color var(--transition-fast);
+}
+
+.closeBtn:hover {
+  background: var(--bg-surface-3);
+  color: var(--text-primary);
+}
+
+
+/* ── Theme cards grid ────────────────────────────────────────────────────── */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: 1fr;      /* mobile: stacked */
+  gap: var(--space-3);
+}
+
+@media (min-width: 480px) {
+  .cardsGrid {
+    grid-template-columns: 1fr 1fr; /* tablet+: side by side */
+  }
+}
+
+
+/* ── Individual ThemeCard ────────────────────────────────────────────────── */
+.themeCard {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  border-radius: var(--radius-xl);
+  padding: var(--space-3) var(--space-3) var(--space-4);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5);
+  transition: border-color var(--transition-fast),
+              background  var(--transition-fast),
+              box-shadow  var(--transition-fast);
+  outline: none;
+  text-align: right;
+
+  /* Mobile: horizontal layout (preview left, label right) */
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+@media (min-width: 480px) {
+  .themeCard {
+    flex-direction: column;   /* restore vertical on tablet+ */
+    gap: var(--space-2-5);
+  }
+}
+
+.themeCard:focus-visible {
+  box-shadow: var(--shadow-focus);
+}
+
+
+/* ── Preview thumbnail wrapper ───────────────────────────────────────────── */
+.previewWrap {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: box-shadow var(--transition-fast);
+  flex-shrink: 0;
+
+  /* Mobile: fixed small width */
+  width: 100px;
+}
+
+@media (min-width: 480px) {
+  .previewWrap {
+    width: 100%;    /* full width in column layout */
+  }
+}
+
+
+/* ── Card label area ─────────────────────────────────────────────────────── */
+.cardLabel {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-1-5);
+  direction: rtl;
+  flex: 1;          /* on mobile takes remaining space */
+}
+
+@media (min-width: 480px) {
+  .cardLabel {
+    justify-content: center;
+    padding-top: var(--space-1);
+    flex: none;
+  }
+}
+
+.labelName {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-snug);
+  transition: color var(--transition-fast);
+}
+
+.labelDesc {
+  font-size: var(--text-2xs);
+  margin-top: 2px;
+  line-height: var(--leading-snug);
+}
+
+@media (min-width: 600px) {
+  .labelName {
+    font-size: var(--text-base);
+  }
+  .labelDesc {
+    font-size: var(--text-xs);
+  }
+}
+
+
+/* ── Selection indicator circle ─────────────────────────────────────────── */
+.selIndicator {
+  position: absolute;
+  top: var(--space-2-5);
+  left: var(--space-2-5);
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+
+/* ── Footer actions ──────────────────────────────────────────────────────── */
+.footer {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  direction: rtl;
+
+  /* Mobile: full-width buttons stacked */
+  flex-direction: column;
+}
+
+@media (min-width: 480px) {
+  .footer {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+.selectionHint {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  direction: rtl;
+  order: -1;   /* appears above buttons on mobile */
+
+  /* push to left on desktop */
+  margin-right: auto;
+}
+
+@media (min-width: 480px) {
+  .selectionHint {
+    order: 0;
+    margin-right: auto;
+    margin-left: 0;
+  }
+}
+
+.cancelBtn {
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  width: 100%;
+}
+
+.cancelBtn:hover {
+  background: var(--bg-surface-3);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+@media (min-width: 480px) {
+  .cancelBtn {
+    width: auto;
+  }
+}
+
+.confirmBtn {
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-6);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1-5);
+  white-space: nowrap;
+  width: 100%;
+}
+
+.confirmBtn:not(:disabled):hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.confirmBtn:not(:disabled):active {
+  transform: translateY(0);
+}
+
+.confirmBtn:disabled {
+  cursor: not-allowed;
+}
+
+@media (min-width: 480px) {
+  .confirmBtn {
+    width: auto;
+  }
+}

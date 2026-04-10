@@ -8428,20 +8428,6 @@
     "country_slug": "brazil"
   },
   {
-    "id": 27709,
-    "city_slug": "dharavi",
-    "country_code": "IN",
-    "name_ar": "دهارافي",
-    "name_en": "Dharavi",
-    "timezone": "Asia/Kolkata",
-    "is_capital": false,
-    "lat": 19.05,
-    "lon": 72.86667,
-    "priority": 700000,
-    "population": 700000,
-    "country_slug": "india"
-  },
-  {
     "id": 46288,
     "city_slug": "battagram",
     "country_code": "PK",
@@ -8454,6 +8440,20 @@
     "priority": 700000,
     "population": 700000,
     "country_slug": "pakistan"
+  },
+  {
+    "id": 27709,
+    "city_slug": "dharavi",
+    "country_code": "IN",
+    "name_ar": "دهارافي",
+    "name_en": "Dharavi",
+    "timezone": "Asia/Kolkata",
+    "is_capital": false,
+    "lat": 19.05,
+    "lon": 72.86667,
+    "priority": 700000,
+    "population": 700000,
+    "country_slug": "india"
   },
   {
     "id": 18916,
@@ -13160,20 +13160,6 @@
     "country_slug": "south-sudan"
   },
   {
-    "id": 11735,
-    "city_slug": "wenshan-city",
-    "country_code": "CN",
-    "name_ar": "مدينة ونشان",
-    "name_en": "Wenshan City",
-    "timezone": "Asia/Shanghai",
-    "is_capital": false,
-    "lat": 23.36306,
-    "lon": 104.25047,
-    "priority": 450000,
-    "population": 450000,
-    "country_slug": "china"
-  },
-  {
     "id": 54062,
     "city_slug": "muratpasa",
     "country_code": "TR",
@@ -13186,6 +13172,20 @@
     "priority": 450000,
     "population": 450000,
     "country_slug": "turkey"
+  },
+  {
+    "id": 11735,
+    "city_slug": "wenshan-city",
+    "country_code": "CN",
+    "name_ar": "مدينة ونشان",
+    "name_en": "Wenshan City",
+    "timezone": "Asia/Shanghai",
+    "is_capital": false,
+    "lat": 23.36306,
+    "lon": 104.25047,
+    "priority": 450000,
+    "population": 450000,
+    "country_slug": "china"
   },
   {
     "id": 54063,

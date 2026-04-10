@@ -15,6 +15,7 @@ import { DateShareActions } from '@/components/date/DateShareActions';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { Calendar, Clock, ArrowLeftRight } from "lucide-react"
 import { getSiteUrl } from '@/lib/site-config';
+import { buildDateKeywords } from '@/lib/seo/section-search-intent';
 
 const BASE_URL = getSiteUrl();
 
@@ -99,12 +100,18 @@ export async function generateMetadata({
   return {
     title: `التاريخ الهجري والميلادي اليوم في ${countryAr}`,
     description: `اعرف التاريخ الهجري والميلادي اليوم في ${countryAr} مع طريقة الحساب المعتمدة لهذه الصفحة وروابط الوقت الآن والتحويل والتقويم.`,
+    keywords: buildDateKeywords({ countryNameAr: countryAr }),
     alternates: { canonical: `${BASE_URL}/date/country/${countrySlug}` },
     openGraph: {
       title: `التاريخ الهجري والميلادي اليوم في ${countryAr} | ميقاتنا`,
       description: `التاريخ اليوم في ${countryAr} مع التقويم الهجري والميلادي.`,
       url: `${BASE_URL}/date/country/${countrySlug}`,
       locale: 'ar_SA',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `التاريخ الهجري والميلادي اليوم في ${countryAr} | ميقاتنا`,
+      description: `اعرف التاريخ اليوم في ${countryAr} مع التقويم الهجري والميلادي والروابط المرتبطة به.`,
     },
   };
 }

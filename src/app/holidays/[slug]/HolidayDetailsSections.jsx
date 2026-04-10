@@ -3,6 +3,7 @@ import Link from 'next/link';
 import CountryTable from './CountryTable';
 import HistoricalTable from './HistoricalTable';
 import RelatedEvents from './RelatedEvents';
+import HolidayInternalLinks from './HolidayInternalLinks';
 
 function QuickFactsTable({ facts }) {
   if (!facts?.length) return null;
@@ -168,6 +169,13 @@ export default function HolidayDetailsSections({
           </div>
         </section>
       )}
+
+      <HolidayInternalLinks
+        event={event}
+        displayTitle={displayTitle}
+        currentYear={currentYear}
+        hijriYearNum={hijriYearNum}
+      />
 
       {sources.length > 0 && (
         <section style={{ marginTop: 'var(--space-10)' }} aria-labelledby="sources-h">

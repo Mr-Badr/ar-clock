@@ -6,35 +6,25 @@ import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
+import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import { Clock } from 'lucide-react';
 import { getSiteUrl } from '@/lib/site-config';
+import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
   getPopularPrayerCityLinks,
   getPopularPrayerCountryLinks,
 } from '@/lib/seo/popular-links';
+import { buildPrayerKeywords } from '@/lib/seo/section-search-intent';
 
 const BASE = getSiteUrl();
 
-export const metadata = {
+export const metadata = buildCanonicalMetadata({
   title: 'مواقيت الصلاة اليوم في الدول والمدن - الفجر والظهر والعصر والمغرب والعشاء',
   description:
     'اعرف مواقيت الصلاة اليوم بدقة في الدول والمدن العربية والعالمية، مع الفجر والشروق والظهر والعصر والمغرب والعشاء، واختيار طريقة الحساب المناسبة لكل بلد وإمساكية شهرية قابلة للطباعة.',
-  keywords: [
-    'مواقيت الصلاة', 'أوقات الصلاة اليوم', 'وقت الفجر اليوم',
-    'وقت المغرب اليوم', 'وقت العصر الشافعي', 'وقت العصر الحنفي',
-    'وقت العصر المالكي', 'وقت العصر الحنبلي', 'أذان اليوم', 'إمساكية رمضان',
-    'prayer times', 'أم القرى', 'الطريقة المصرية', 'رابطة العالم الإسلامي',
-    'كراتشي', 'Diyanet Turkey', 'ISNA', 'MUIS Singapore',
-  ].join(', '),
-  alternates: { canonical: `${BASE}/mwaqit-al-salat` },
-  openGraph: {
-    title:       'مواقيت الصلاة اليوم في الدول والمدن',
-    description: 'أداة عربية شاملة لمواقيت الصلاة اليوم مع طرق الحساب الرسمية والإمساكية الشهرية.',
-    url:    `${BASE}/mwaqit-al-salat`,
-    type:   'website',
-    locale: 'ar_SA',
-  },
-};
+  keywords: buildPrayerKeywords(),
+  url: `${BASE}/mwaqit-al-salat`,
+});
 
 // ─── 12 Calculation Methods data ──────────────────────────────────────────────
 const METHODS_TABLE = [
@@ -157,6 +147,59 @@ export default async function PrayerLandingPage() {
     getPopularPrayerCityLinks(),
     getPopularPrayerCountryLinks(),
   ]);
+  const collectionSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'مواقيت الصلاة اليوم في الدول والمدن',
+    url: `${BASE}/mwaqit-al-salat`,
+    description:
+      'قسم مواقيت الصلاة في ميقاتنا يربط بين صفحات الدول والمدن مع مواقيت الفجر والظهر والعصر والمغرب والعشاء والجداول الشهرية.',
+    inLanguage: 'ar',
+  };
+  const cityItemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'صفحات مواقيت الصلاة الأكثر بحثاً',
+    itemListElement: popularPrayerCityLinks.slice(0, 24).map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.label,
+      url: `${BASE}${item.href}`,
+    })),
+  };
+  const countryItemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'صفحات مواقيت الصلاة في الدول',
+    itemListElement: popularPrayerCountryLinks.slice(0, 24).map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.label,
+      url: `${BASE}${item.href}`,
+    })),
+  };
+  const utilityLinks = [
+    {
+      href: '/time-now',
+      label: 'الوقت الآن في المدن والدول',
+      description: 'اعرف الساعة الحالية في نفس المدن التي تتابع فيها مواقيت الصلاة.',
+    },
+    {
+      href: '/date/today/hijri',
+      label: 'التاريخ الهجري اليوم',
+      description: 'راجع التاريخ الهجري اليوم المرتبط بالمواقيت والتقويم والمناسبات الإسلامية.',
+    },
+    {
+      href: '/date/converter',
+      label: 'محول التاريخ',
+      description: 'حوّل بين التاريخ الهجري والميلادي بسرعة عند التخطيط للمناسبات والعبادات.',
+    },
+    {
+      href: '/time-difference',
+      label: 'حاسبة فرق التوقيت',
+      description: 'قارن التوقيت بين المدن والدول عند متابعة الصلاة والسفر والعمل عن بعد.',
+    },
+  ];
 
   const faqSchema = {
     '@context': 'https://schema.org',
@@ -186,6 +229,9 @@ export default async function PrayerLandingPage() {
       <main className="content-col pt-24 pb-20 mt-12">
 
         {/* JSON-LD */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(cityItemListSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(countryItemListSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
@@ -399,6 +445,15 @@ export default async function PrayerLandingPage() {
         <section className="mb-20" aria-label="أسئلة شائعة">
           <h2 className="text-2xl font-semibold text-primary mb-6 text-center">أسئلة شائعة</h2>
           <FAQAccordions items={faqs} />
+        </section>
+
+        <section className="mb-12">
+          <GeoInternalLinks
+            title="روابط أساسية مرتبطة بمواقيت الصلاة"
+            description="هذه الروابط تربط صفحات الصلاة مع الوقت الآن والتاريخ وفرق التوقيت حتى تصل محركات البحث والمستخدمون إلى الأقسام المكملة من نفس بنية الموقع."
+            links={utilityLinks}
+            ariaLabel="روابط أساسية مرتبطة بمواقيت الصلاة"
+          />
         </section>
 
       </main>

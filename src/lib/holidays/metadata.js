@@ -5,16 +5,26 @@ import {
   ensureCountryContextSentence,
   localizeEventLabel,
 } from '@/lib/holidays/display';
-import { getSiteUrl } from '@/lib/site-config';
+import { getSiteUrl, SITE_APP_NAME } from '@/lib/site-config';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { resolveHolidayRuntimeData } from '@/lib/holidays/runtime-data';
+import { getHolidayMetadataKeywords } from '@/lib/holidays/search-intent';
 
 export async function getHolidayMetadata(slug) {
   const runtime = await resolveHolidayRuntimeData(slug);
   if (!runtime) {
     return { title: '404', robots: { index: false } };
   }
-  const { requestedSlug, remaining, seo, gregStr, tokenContext } = runtime;
+  const {
+    requestedSlug,
+    remaining,
+    seo,
+    gregStr,
+    tokenContext,
+    currentYear,
+    nowIso,
+    event,
+  } = runtime;
   const siteUrl = getSiteUrl();
   const url = `${siteUrl}/holidays/${requestedSlug}`;
 
@@ -27,17 +37,14 @@ export async function getHolidayMetadata(slug) {
     replaceTokens(rawDescription, tokenContext),
     runtime.event,
   );
-  const keywords = Array.from(
-    new Set([
-      ...(Array.isArray(seo?.keywords) ? seo.keywords : []),
-      ...(Array.isArray(seo?.seoMeta?.secondaryKeywords) ? seo.seoMeta.secondaryKeywords : []),
-      ...(Array.isArray(seo?.seoMeta?.longTailKeywords) ? seo.seoMeta.longTailKeywords : []),
-    ]
-      .map((keyword) => replaceTokens(keyword, tokenContext))
-      .filter(Boolean)),
-  );
+  const keywords = getHolidayMetadataKeywords({
+    event,
+    seo,
+    tokenContext,
+    currentYear,
+  });
 
-  return buildCanonicalMetadata({
+  const metadata = buildCanonicalMetadata({
     title: titleTag,
     description,
     keywords,
@@ -52,4 +59,18 @@ export async function getHolidayMetadata(slug) {
       },
     },
   });
+
+  return {
+    ...metadata,
+    category: 'events',
+    openGraph: {
+      ...metadata.openGraph,
+      type: 'article',
+      publishedTime: seo?.seoMeta?.datePublished || '2025-01-01T00:00:00.000Z',
+      modifiedTime: seo?.seoMeta?.dateModified || nowIso,
+      authors: [SITE_APP_NAME],
+      section: event?.category || 'holidays',
+      tags: keywords.slice(0, 20),
+    },
+  };
 }

@@ -27,6 +27,7 @@ import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import { getSiteUrl } from '@/lib/site-config';
 import { formatGregorianLabel, getHijriMonthSpanFromDate } from '@/lib/hijri-utils';
+import { buildPrayerKeywords } from '@/lib/seo/section-search-intent';
 
 const BASE = getSiteUrl();
 
@@ -58,23 +59,13 @@ export async function generateMetadata({ params }) {
   return {
     title,
     description,
-    keywords: [
-      // Short-tail
-      `مواقيت الصلاة ${countryAr}`,
-      `أوقات الأذان ${countryAr}`,
-      capitalAr ? `صلاة الفجر ${capitalAr}` : '',
-      `أذان المغرب ${countryAr}`,
-      // Medium-tail
-      `أوقات الصلاة في ${countryAr} اليوم`,
-      `مواقيت الصلاة لجميع مدن ${countryAr}`,
-      capitalAr ? `موعد أذان الفجر ${capitalAr}` : '',
-      `أوقات الأذان والتوقيت المحلي ${countryAr}`,
-      // Long-tail
-      `متى يأذن المغرب في ${countryAr} اليوم`,
-      `مواقيت الصلاة في ${countryAr} دقيقة يومياً`,
-      `جدول موعد صلاة العصر والمغرب لشهر كامل ${countryAr}`,
-      `prayer times ${country.name_en}`
-    ].filter(Boolean).join(', '),
+    keywords: buildPrayerKeywords({
+      countryAr,
+      countryEn: country.name_en,
+      cityAr: capitalAr,
+      cityEn: capital?.name_en,
+      methodLabel: methodInfo.label,
+    }),
     alternates: { canonical },
     openGraph: {
       title,
@@ -82,6 +73,16 @@ export async function generateMetadata({ params }) {
       type:   'website',
       locale: 'ar_SA',
       url:    canonical,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-snippet': -1,
+        'max-image-preview': 'large',
+      },
     },
   };
 }

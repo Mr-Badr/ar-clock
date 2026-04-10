@@ -4,34 +4,47 @@ import { Globe2 } from 'lucide-react';
 
 import { getCountriesAction } from '@/app/actions/location';
 import SearchCity from '@/components/SearchCityWrapper.client';
+import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import TimeNowHero from '@/components/time-now/TimeNowHero';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
   getPopularTimeNowCityLinks,
   getPopularTimeNowCountryLinks,
 } from '@/lib/seo/popular-links';
+import { buildTimeNowKeywords } from '@/lib/seo/section-search-intent';
 import { getSiteUrl } from '@/lib/site-config';
 
 import TimeNowClient from './TimeNowClient';
 
 const SITE_URL = getSiteUrl();
+const TIME_NOW_FAQ_ITEMS = [
+  {
+    question: 'كيف أعرف الوقت الآن في مدينتي؟',
+    answer:
+      'استخدم مربع البحث في أعلى الصفحة ثم اختر مدينتك أو دولتك. ستنتقل مباشرة إلى صفحة مخصصة تعرض الساعة الحالية، التاريخ اليوم، والمنطقة الزمنية بشكل قابل للفهرسة.',
+  },
+  {
+    question: 'هل صفحات الوقت الآن تشمل الدول والمدن العربية؟',
+    answer:
+      'نعم، القسم يغطي الدول العربية والعواصم والمدن الأكثر بحثاً مع روابط داخلية بين صفحة الدولة وصفحات المدن الرئيسية لتسهيل الوصول والزحف.',
+  },
+  {
+    question: 'هل تعرض الصفحة التوقيت المحلي بدقة؟',
+    answer:
+      'نعم، الوقت يُعرض وفق المنطقة الزمنية الرسمية للمدينة أو الدولة مع مراعاة فروق التوقيت والتحديث اللحظي للساعة الحالية.',
+  },
+  {
+    question: 'ما الصفحات المرتبطة بالوقت الآن داخل الموقع؟',
+    answer:
+      'يمكنك الانتقال من هذا القسم إلى صفحات فرق التوقيت، مواقيت الصلاة، وصفحات التاريخ اليوم، ما يجعل تجربة التنقل والبحث أكثر اكتمالاً.',
+  },
+];
 
 export const metadata = buildCanonicalMetadata({
   title: 'الوقت الآن في العالم والدول والمدن',
   description:
     'اعرف الساعة الآن والتاريخ والمنطقة الزمنية في الدول والمدن العربية والعالمية، مع صفحات داخلية لكل دولة ومدينة وروابط مرتبطة بفرق التوقيت والتاريخ.',
-  keywords: [
-    // Short
-    'الوقت الان', 'الساعة الان', 'الوقت', 'الساعة', 'توقيت', 'التوقيت', 'كم الساعة', 'الزمن',
-    // Medium
-    'الوقت في العالم', 'توقيت المدن', 'المنطقة الزمنية', 'الساعة في مدينتي',
-    'الوقت الان في الدول', 'التاريخ اليوم', 'فرق التوقيت', 'توقيت العواصم', 'التوقيت الصيفي',
-    // Long
-    'كم الساعة الان في مدينتي بالتحديد', 'معرفة توقيت المدن والعواصم العربية والعالمية الان',
-    'ساعة العالم لمعرفة الوقت في جميع الدول مباشر', 'تحويلات المناطق الزمنية وحساب فارق التوقيت',
-    'التاريخ الميلادي والهجري اليوم مع الوقت اللحظي', 'متابعة تغير التوقيت الصيفي والشتوي في العالم',
-    'تتبع الساعة الحية الدقيقة وتوقيت جرينتش الآن',
-  ],
+  keywords: buildTimeNowKeywords(),
   url: `${SITE_URL}/time-now`,
 });
 
@@ -45,9 +58,83 @@ export default async function TimeNowPage() {
   const arabTags = ['SA', 'EG', 'AE', 'KW', 'QA', 'BH', 'OM', 'IQ', 'JO', 'LB', 'SY', 'PS', 'YE', 'MA', 'DZ', 'TN', 'LY', 'SD', 'SO', 'MR', 'DJ'];
   const arabCountries = allCountries.filter((country) => arabTags.includes(country.country_code));
   const worldCountries = allCountries.filter((country) => !arabTags.includes(country.country_code));
+  const collectionSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'الوقت الآن في العالم والدول والمدن',
+    url: `${SITE_URL}/time-now`,
+    description:
+      'صفحة تجمع الوقت الآن في الدول والمدن العربية والعالمية مع روابط داخلية إلى صفحات الدولة والمدينة وصفحات فرق التوقيت والتاريخ.',
+    inLanguage: 'ar',
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'ميقاتنا',
+      url: SITE_URL,
+    },
+  };
+  const cityItemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'صفحات الوقت الآن الأكثر بحثاً',
+    itemListElement: popularCityLinks.slice(0, 24).map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.label,
+      url: `${SITE_URL}${item.href}`,
+    })),
+  };
+  const countryItemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'صفحات الوقت الآن في الدول',
+    itemListElement: popularCountryLinks.slice(0, 24).map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.label,
+      url: `${SITE_URL}${item.href}`,
+    })),
+  };
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: TIME_NOW_FAQ_ITEMS.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
+  const utilityLinks = [
+    {
+      href: '/time-difference',
+      label: 'حاسبة فرق التوقيت',
+      description: 'قارن الوقت بين أي مدينتين أو دولتين مباشرة بعد معرفة الوقت الحالي في كل منهما.',
+    },
+    {
+      href: '/mwaqit-al-salat',
+      label: 'مواقيت الصلاة اليوم',
+      description: 'انتقل إلى أوقات الصلاة الدقيقة في المدن والدول نفسها من داخل الموقع.',
+    },
+    {
+      href: '/date/today',
+      label: 'تاريخ اليوم',
+      description: 'راجع التاريخ الهجري والميلادي اليوم مع روابط التحويل والتقويم المرتبطة به.',
+    },
+    {
+      href: '/holidays',
+      label: 'المناسبات القادمة',
+      description: 'استكشف العد التنازلي للأعياد والمناسبات والإجازات الرسمية المرتبطة بالتاريخ الحالي.',
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-base text-primary" dir="rtl" lang="ar">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(cityItemListSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(countryItemListSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <main className="content-col pt-24 pb-20">
         <header style={{ marginBottom: '3rem', textAlign: 'center' }}>
           <div
@@ -239,7 +326,64 @@ export default async function TimeNowPage() {
             </div>
           </div>
         </section>
-        
+
+        <section style={{ marginBottom: '3rem' }} aria-labelledby="time-now-faq-heading">
+          <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
+            <h2
+              id="time-now-faq-heading"
+              style={{
+                fontSize: 'var(--text-2xl)',
+                fontWeight: '800',
+                color: 'var(--text-primary)',
+                marginBottom: '0.75rem',
+              }}
+            >
+              أسئلة سريعة عن الوقت الآن
+            </h2>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                gap: '0.75rem',
+              }}
+            >
+              {TIME_NOW_FAQ_ITEMS.map((item) => (
+                <article
+                  key={item.question}
+                  style={{
+                    padding: '1rem',
+                    borderRadius: '1rem',
+                    background: 'var(--bg-surface-1)',
+                    border: '1px solid var(--border-subtle)',
+                  }}
+                >
+                  <h3
+                    style={{
+                      fontSize: 'var(--text-base)',
+                      fontWeight: '700',
+                      color: 'var(--text-primary)',
+                      marginBottom: '0.5rem',
+                    }}
+                  >
+                    {item.question}
+                  </h3>
+                  <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, margin: 0 }}>
+                    {item.answer}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section style={{ marginBottom: '2rem' }}>
+          <GeoInternalLinks
+            title="روابط مهمة مرتبطة بالوقت الآن"
+            description="ربطنا هذا القسم بصفحات فرق التوقيت والصلاة والتاريخ والمناسبات حتى تبقى الصفحات الأساسية قريبة من بعضها، وهو ما يساعد المستخدم ومحركات البحث على فهم هيكل الموقع بشكل أوضح."
+            links={utilityLinks}
+            ariaLabel="روابط مهمة مرتبطة بالوقت الآن"
+          />
+        </section>
       </main>
     </div>
   );

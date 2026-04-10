@@ -441,11 +441,37 @@ const COUNTRY_NAMES = {
   ae: 'الإمارات العربية المتحدة', tn: 'تونس', kw: 'الكويت', qa: 'قطر',
 };
 
+function getSchemaLocationName(ev) {
+  if (ev._countryCode) {
+    return COUNTRY_NAMES[ev._countryCode] || 'العالم العربي';
+  }
+
+  if (ev.category === 'islamic') return 'العالم الإسلامي';
+  if (ev.category === 'astronomy') return 'العالم';
+  if (ev.category === 'business') return 'الأسواق العالمية';
+  if (ev.category === 'school') return 'العالم العربي';
+  return 'العالم العربي';
+}
+
+function getSchemaAudience(ev) {
+  const audienceMap = {
+    islamic: { type: 'المسلمون', area: 'العالم الإسلامي' },
+    national: { type: 'الجمهور العام', area: 'العالم العربي' },
+    school: { type: 'الطلاب وأولياء الأمور', area: 'العالم العربي' },
+    holidays: { type: 'الجمهور العام', area: 'العالم العربي' },
+    astronomy: { type: 'الجمهور العام', area: 'العالم' },
+    business: { type: 'المتداولون والمستثمرون', area: 'الأسواق العالمية' },
+    support: { type: 'المستفيدون', area: 'العالم العربي' },
+  };
+  return audienceMap[ev.category] || { type: 'الجمهور العام', area: 'العالم العربي' };
+}
 
 export function buildEventSchema(ev, date, siteUrl, eventState = 'upcoming') {
   const d = date instanceof Date ? date : new Date(date);
   const end = new Date(d.getTime() + 86_400_000);
   const imgBase = `${siteUrl}/holidays/${ev.slug}/opengraph-image`;
+  const schemaData = ev.schemaData || {};
+  const audience = getSchemaAudience(ev);
   
   const statusMap = {
     today:    'https://schema.org/EventInProgress',
@@ -455,8 +481,9 @@ export function buildEventSchema(ev, date, siteUrl, eventState = 'upcoming') {
 
   return {
     '@context': 'https://schema.org', '@type': 'Event',
-    name: ev.seoTitle || ev.name,
-    description: ev.description,
+    name: schemaData.eventName || ev.seoTitle || ev.name,
+    alternateName: schemaData.eventAlternateName || undefined,
+    description: schemaData.eventDescription || ev.description,
     startDate: d.toISOString().split('T')[0],
     endDate: end.toISOString().split('T')[0],
     eventStatus: statusMap[eventState] || statusMap.upcoming,
@@ -472,8 +499,15 @@ export function buildEventSchema(ev, date, siteUrl, eventState = 'upcoming') {
     ],
     location: {
       '@type': 'Place',
-      name: ev._countryCode ? (COUNTRY_NAMES[ev._countryCode] || 'العالم الإسلامي') : 'العالم الإسلامي',
-      address: { '@type': 'PostalAddress', addressCountry: (ev._countryCode || 'SA').toUpperCase() },
+      name: getSchemaLocationName(ev),
+      ...(ev._countryCode
+        ? {
+            address: {
+              '@type': 'PostalAddress',
+              addressCountry: ev._countryCode.toUpperCase(),
+            },
+          }
+        : {}),
     },
     organizer: {
       '@type': 'Organization',
@@ -481,22 +515,81 @@ export function buildEventSchema(ev, date, siteUrl, eventState = 'upcoming') {
       url: siteUrl,
       logo: `${siteUrl}/icons/icon-512.png`,
     },
-    audience: { '@type': 'Audience', audienceType: 'Muslims', geographicArea: { '@type': 'AdministrativeArea', name: 'MENA' } },
+    audience: {
+      '@type': 'Audience',
+      audienceType: audience.type,
+      geographicArea: { '@type': 'AdministrativeArea', name: audience.area },
+    },
   };
 }
 /** WebPage schema — critical for E-E-A-T freshness signal (dateModified). */
 export function buildWebPageSchema(ev, date, siteUrl, nowIso) {
+  const schemaData = ev.schemaData || {};
+  const seoMeta = ev.seoMeta || {};
+  const imageUrl = `${siteUrl}/holidays/${ev.slug}/opengraph-image?w=1200&h=675`;
   return {
     '@context': 'https://schema.org', '@type': 'WebPage',
-    name: ev.seoTitle || ev.name,
-    description: ev.description,
+    name: schemaData.articleHeadline || ev.seoTitle || ev.name,
+    description: schemaData.eventDescription || ev.description,
     url: `${siteUrl}/holidays/${ev.slug}`,
     inLanguage: 'ar',
-    dateModified: nowIso || '2026-01-01T00:00:00Z',
-    datePublished: '2025-01-01T00:00:00Z',
+    dateModified: seoMeta.dateModified || nowIso || '2026-01-01T00:00:00Z',
+    datePublished: seoMeta.datePublished || '2025-01-01T00:00:00Z',
     isPartOf: { '@type': 'WebSite', url: siteUrl, name: SITE_APP_NAME },
     about: { '@type': 'Thing', name: ev.name },
     author: { '@type': 'Organization', name: SITE_APP_NAME, url: siteUrl },
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      url: imageUrl,
+    },
+    keywords: [
+      ...(Array.isArray(ev.keywords) ? ev.keywords : []),
+      ...(Array.isArray(seoMeta.secondaryKeywords) ? seoMeta.secondaryKeywords : []),
+      ...(Array.isArray(seoMeta.longTailKeywords) ? seoMeta.longTailKeywords : []),
+    ].join(', '),
+  };
+}
+
+export function buildArticleSchema(ev, date, siteUrl, nowIso) {
+  const schemaData = ev.schemaData || {};
+  const seoMeta = ev.seoMeta || {};
+  const imageUrl = `${siteUrl}/holidays/${ev.slug}/opengraph-image?w=1200&h=675`;
+  const keywords = [
+    ...(Array.isArray(ev.keywords) ? ev.keywords : []),
+    ...(Array.isArray(seoMeta.secondaryKeywords) ? seoMeta.secondaryKeywords : []),
+    ...(Array.isArray(seoMeta.longTailKeywords) ? seoMeta.longTailKeywords : []),
+  ].filter(Boolean);
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: schemaData.articleHeadline || ev.seoTitle || ev.name,
+    description: schemaData.eventDescription || ev.description,
+    mainEntityOfPage: `${siteUrl}/holidays/${ev.slug}`,
+    url: `${siteUrl}/holidays/${ev.slug}`,
+    inLanguage: 'ar',
+    datePublished: seoMeta.datePublished || '2025-01-01T00:00:00Z',
+    dateModified: seoMeta.dateModified || nowIso || '2026-01-01T00:00:00Z',
+    image: [imageUrl],
+    author: {
+      '@type': 'Organization',
+      name: SITE_APP_NAME,
+      url: siteUrl,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: SITE_APP_NAME,
+      url: siteUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/icons/icon-512.png`,
+      },
+    },
+    about: {
+      '@type': 'Thing',
+      name: ev.name,
+    },
+    keywords: keywords.join(', '),
   };
 }
 export function buildFAQSchema(ev) {
@@ -523,7 +616,7 @@ export function buildBreadcrumbSchema(crumbs) {
  */
 export function buildEventSeriesSchema(ev, siteUrl) {
   // Only add EventSeries for recurring event types
-  const recurringTypes = ['hijri', 'fixed', 'easter'];
+  const recurringTypes = ['hijri', 'fixed', 'easter', 'monthly'];
   if (!recurringTypes.includes(ev.type)) return null;
   
   return {
@@ -541,7 +634,7 @@ export function buildEventSeriesSchema(ev, siteUrl) {
     },
     eventSchedule: {
       '@type': 'Schedule',
-      repeatFrequency: ev.type === 'hijri' ? 'P354D' : 'P1Y', // Hijri year is ~354 days
+      repeatFrequency: ev.type === 'hijri' ? 'P354D' : ev.type === 'monthly' ? 'P1M' : 'P1Y',
       startDate: '2025-01-01',
     },
   };

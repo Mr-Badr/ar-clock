@@ -1,3 +1,4 @@
+// layout/header.jsx
 import Link from "next/link";
 import { ClockIcon } from "@phosphor-icons/react/ssr";
 import NavLinks from "./NavLinks";

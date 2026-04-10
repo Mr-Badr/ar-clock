@@ -1,8 +1,10 @@
+import { SITE_BRAND, getMetadataBase } from '@/lib/site-config';
+
 /**
  * @param {{
  *   title: string;
  *   description: string;
- *   keywords?: string[];
+ *   keywords?: string[] | string;
  *   url: string;
  *   locale?: string;
  *   alternates?: Record<string, string>;
@@ -16,10 +18,13 @@ export function buildCanonicalMetadata({
   locale = 'ar_SA',
   alternates = {},
 }) {
+  const normalizedKeywords = Array.isArray(keywords) ? keywords.join(', ') : keywords;
+
   return {
+    metadataBase: getMetadataBase(),
     title,
     description,
-    keywords: keywords.join(', '),
+    keywords: normalizedKeywords,
     alternates: {
       canonical: url,
       ...alternates,
@@ -37,6 +42,7 @@ export function buildCanonicalMetadata({
       url,
       locale,
       type: 'website',
+      siteName: SITE_BRAND,
     },
     twitter: {
       card: 'summary_large_image',

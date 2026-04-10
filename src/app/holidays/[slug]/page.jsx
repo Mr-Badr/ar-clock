@@ -12,7 +12,6 @@ import Link from 'next/link';
 
 import {
   ALL_ROUTE_EVENT_SLUGS,
-  replaceTokens,
 } from '@/lib/holidays-engine';
 import { COUNTRY_META } from '@/lib/calendar-config';
 import CountdownTicker, { ShareBar } from '@/components/clocks/CountdownTicker';
@@ -22,6 +21,7 @@ import HolidayDetailsSections from './HolidayDetailsSections';
 import { featureFlags } from '@/lib/feature-flags';
 import { getHolidayMetadata } from '@/lib/holidays/metadata';
 import { getHolidayPageData } from '@/lib/holidays/page-data';
+import { getHolidaySearchQueries } from '@/lib/holidays/search-intent';
 
 /* ── Static params (pre-render top 50, ISR the rest) ─────────────────────── */
 export async function generateStaticParams() {
@@ -45,37 +45,6 @@ function AccuracyBadge({ accuracy, localSighting }) {
       {lbl}
     </span>
   );
-}
-
-function buildEventSearchQueries({ event, seo, tokenContext, currentYear }) {
-  const displayName = replaceTokens(
-    seo?.seoMeta?.h1 || seo?.seoTitle || event?.name || '',
-    tokenContext,
-  ).trim();
-
-  const fallbackQueries = [
-    `كم باقي على ${displayName}`,
-    `متى ${displayName} ${currentYear}`,
-    `${displayName} ${currentYear} العد التنازلي`,
-    `موعد ${displayName} ${currentYear}`,
-    `متى ${displayName} ${currentYear + 1}`,
-    `ما هو ${displayName}`,
-    `ما أهمية ${displayName}`,
-    `كيف أستعد لـ${displayName}`,
-  ];
-
-  const resolved = [
-    seo?.seoMeta?.primaryKeyword,
-    ...(Array.isArray(seo?.keywords) ? seo.keywords : []),
-    ...(Array.isArray(seo?.seoMeta?.secondaryKeywords) ? seo.seoMeta.secondaryKeywords : []),
-    ...(Array.isArray(seo?.seoMeta?.longTailKeywords) ? seo.seoMeta.longTailKeywords : []),
-    ...fallbackQueries,
-  ]
-    .map((keyword) => replaceTokens(keyword || '', tokenContext))
-    .map((keyword) => keyword.replace(/\s+/g, ' ').trim())
-    .filter(Boolean);
-
-  return Array.from(new Set(resolved)).slice(0, 12);
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -102,10 +71,10 @@ export default async function HolidayPage({ params }) {
     typeLabel,
     whatsappUrl,
     siteUrl,
-    schemas: { evSchema, wpSchema, faqSchema, bcSchema },
+    schemas: { evSchema, wpSchema, faqSchema, bcSchema, articleSchema, eventSeriesSchema },
   } = data;
   const pageClassName = featureFlags.holidaysSectionizedUi ? 'bg-base holidays-page-v2' : 'bg-base';
-  const eventSearchQueries = buildEventSearchQueries({
+  const eventSearchQueries = getHolidaySearchQueries({
     event,
     seo,
     tokenContext,
@@ -120,6 +89,8 @@ export default async function HolidayPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(wpSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(bcSchema) }} />
       {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
+      {articleSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />}
+      {eventSeriesSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSeriesSchema) }} />}
 
       {/* <AdLayoutWrapper> */}
       <main className="content-col pt-24 pb-20">

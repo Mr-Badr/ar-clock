@@ -1,5 +1,12 @@
 import Link from 'next/link';
 
+/**
+ * @param {Object} props
+ * @param {string} props.title
+ * @param {string} [props.description]
+ * @param {Array<{href: string, label: string, description?: string}>} [props.links]
+ * @param {string} [props.ariaLabel]
+ */
 export default function GeoInternalLinks({
   title,
   description,

@@ -9,7 +9,7 @@ import {
   FEATURED_COUNTDOWN_LINKS,
   getPopularTimeNowCityLinks,
 } from "@/lib/seo/popular-links";
-import { SITE_BRAND } from "@/lib/site-config";
+import { SITE_BRAND, SITE_CONTACT_EMAIL } from "@/lib/site-config";
 
 const PRODUCT_LINKS = [
   { href: '/time-now', label: 'الوقت الآن' },
@@ -31,6 +31,8 @@ const ECONOMY_LINKS = [
 
 const COMPANY_LINKS = [
   { href: '/about', label: 'من نحن' },
+  { href: '/editorial-policy', label: 'السياسة التحريرية' },
+  { href: '/terms', label: 'شروط الاستخدام' },
   { href: '/disclaimer', label: 'إخلاء المسؤولية' },
   { href: '/privacy', label: 'سياسة الخصوصية' },
   { href: '/contact', label: 'اتصل بنا' },
@@ -77,6 +79,10 @@ const Footer = async () => {
                 متاح مجاناً
               </span>
             </div>
+
+            <p className="footer-brand-contact">
+              للتواصل: <a href={`mailto:${SITE_CONTACT_EMAIL}`}>{SITE_CONTACT_EMAIL}</a>
+            </p>
           </div>
 
           {/* ── Links grid — all 5 columns flat ── */}
@@ -307,6 +313,22 @@ const Footer = async () => {
           margin-top: var(--space-5);
           display: flex;
        justify-content: flex-start;
+        }
+
+        .footer-brand-contact {
+          margin-top: var(--space-4);
+          font-size: var(--text-sm);
+          color: var(--text-muted);
+          line-height: var(--leading-relaxed);
+        }
+
+        .footer-brand-contact a {
+          color: var(--accent-alt);
+          text-decoration: none;
+        }
+
+        .footer-brand-contact a:hover {
+          text-decoration: underline;
         }
 
         .footer-brand-badge {

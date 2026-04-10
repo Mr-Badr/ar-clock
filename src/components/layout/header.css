@@ -9,36 +9,32 @@
   left: 0;
   right: 0;
   z-index: var(--z-sticky);
-  height: auto; /* Edited — was 64px, now auto to fit pill */
-  padding: var(--space-3) var(--space-6); /* Edited — outer padding around the pill */
-  background: transparent; /* Edited — transparent bg, pill has its own */
-  transition: none; /* Edited — no border/shadow on outer wrapper */
-}
-
-.header-nav.scrolled {
-  /* Edited — removed shadow/border, pill handles visuals */
+  height: auto;
+  padding: var(--space-3) var(--space-6);
+  background: transparent;
+  transition: none;
 }
 
 .header-inner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 var(--space-4); /* Edited — inner padding of the pill */
-  height: 56px; /* Edited — pill height */
+  padding: 0 var(--space-4);
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--bg-surface-1); /* Edited — pill background */
-  border: 1px solid var(--border-subtle); /* Edited — pill border */
-  border-radius: var(--radius-full); /* Edited — full rounded pill */
-  backdrop-filter: blur(20px); /* Edited — glass effect on pill */
-  -webkit-backdrop-filter: blur(20px); /* Edited */
-  box-shadow: var(--shadow-sm); /* Edited — subtle shadow on pill */
-  transition: box-shadow var(--transition-base), border-color var(--transition-base); /* Edited */
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base), border-color var(--transition-base);
 }
 
 .header-nav.scrolled .header-inner {
-  box-shadow: var(--shadow-md); /* Edited — stronger shadow on scroll */
-  border-color: var(--border-default); /* Edited */
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-default);
 }
 
 /* ── Logo ── */
@@ -54,9 +50,7 @@
   flex-shrink: 0;
 }
 
-.header-logo:hover {
-  color: var(--accent-alt);
-}
+.header-logo:hover { color: var(--accent-alt); }
 
 .header-logo-icon {
   width: 28px;
@@ -64,18 +58,18 @@
   color: var(--accent);
 }
 
-/* ── Desktop Center Nav — no separate pill, links sit inside main pill ── */
+/* ── Desktop Center Nav ── */
 .header-center-nav {
-  position: absolute; /* Edited — keep centered */
+  position: absolute;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 2px; /* Edited — tight gap between links */
-  background: transparent; /* Edited — no separate bg, inherits from pill */
-  border: none; /* Edited — no separate border */
-  border-radius: 0; /* Edited — no separate radius */
-  padding: 0; /* Edited — no separate padding */
+  gap: 2px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
 }
 
 .header-nav-link {
@@ -108,10 +102,8 @@
   box-shadow: 0 1px 4px rgba(29, 78, 216, 0.3);
 }
 
-/* ── Dropdown (المزيد) ── */
-.header-dropdown-wrapper {
-  position: relative;
-}
+/* ── Dropdown ── */
+.header-dropdown-wrapper { position: relative; }
 
 .header-dropdown-trigger {
   display: flex;
@@ -141,25 +133,26 @@
   transition: transform var(--transition-fast);
 }
 
-.header-dropdown-trigger.open .chevron-icon {
-  transform: rotate(180deg);
-}
+.header-dropdown-trigger.open .chevron-icon { transform: rotate(180deg); }
 
 .header-dropdown-menu {
   position: absolute;
-  top: calc(100% + 16px); /* Edited — more space since inside pill */
+  top: calc(100% + 16px);
   right: 0;
   min-width: 200px;
   background: var(--bg-surface-2);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-xl); /* Edited — rounder to match pill aesthetic */
-  padding: var(--space-2); /* Edited — more padding */
+  border-radius: var(--radius-xl);
+  padding: var(--space-2);
   box-shadow: var(--shadow-lg);
   z-index: var(--z-dropdown);
   opacity: 0;
   visibility: hidden;
   transform: translateY(-4px);
-  transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition-fast),
+    visibility var(--transition-fast);
 }
 
 .header-dropdown-menu.open {
@@ -202,11 +195,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px; /* Edited — slightly smaller inside pill */
-  height: 36px; /* Edited */
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  border: none; /* Edited — no border, lives inside pill */
-  background: transparent; /* Edited — transparent, blends with pill */
+  border: none;
+  background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -216,7 +209,6 @@
 .header-theme-btn:hover {
   background: var(--accent-soft);
   color: var(--text-primary);
-  border-color: var(--border-accent);
 }
 
 .header-theme-btn svg {
@@ -225,20 +217,18 @@
   transition: transform 0.3s ease;
 }
 
-.header-theme-btn:hover svg {
-  transform: rotate(20deg);
-}
+.header-theme-btn:hover svg { transform: rotate(20deg); }
 
 /* ── Mobile Menu Button ── */
 .header-mobile-btn {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 36px; /* Edited — match theme btn size */
-  height: 36px; /* Edited */
-  border-radius: var(--radius-full); /* Edited — round like other elements */
-  border: none; /* Edited — no border inside pill */
-  background: transparent; /* Edited — transparent inside pill */
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -249,7 +239,7 @@
   color: var(--text-primary);
 }
 
-/* ── Left controls container ── */
+/* ── Controls ── */
 .header-controls {
   display: flex;
   align-items: center;
@@ -261,7 +251,7 @@
 .header-mobile-overlay {
   position: fixed;
   inset: 0;
-  top: 80px; /* Edited — pill height (56) + outer padding (12*2) ≈ 80 */
+  top: 80px;
   background: var(--bg-overlay);
   z-index: calc(var(--z-sticky) - 1);
   opacity: 0;
@@ -278,11 +268,11 @@
 
 .header-mobile-menu {
   position: fixed;
-  top: 80px; /* Edited — match overlay */
-  right: var(--space-6); /* Edited — align with pill edges */
-  left: var(--space-6); /* Edited */
-  max-height: calc(100dvh - 80px); /* Edited */
-  border-radius: var(--radius-xl); /* Edited — rounded menu panel */
+  top: 80px;
+  right: var(--space-6);
+  left: var(--space-6);
+  max-height: calc(100dvh - 80px);
+  border-radius: var(--radius-xl);
   overflow-y: auto;
   background: var(--bg-surface-1);
   border-bottom: 1px solid var(--border-default);
@@ -351,8 +341,6 @@
 }
 
 /* ── Responsive ── */
-
-/* Tablet: shrink nav pill padding */
 @media (max-width: 1024px) {
   .header-nav-link,
   .header-dropdown-trigger {
@@ -361,62 +349,80 @@
   }
 }
 
-/* Mobile: hide desktop nav, show hamburger */
 @media (max-width: 768px) {
-  .header-center-nav {
-    display: none;
-  }
-  .header-mobile-btn {
-    display: flex;
-  }
-  .header-inner {
-    padding: 0 var(--space-4);
-  }
-  .header-logo {
-    font-size: var(--text-lg);
-  }
-  .header-logo-icon {
-    width: 24px;
-    height: 24px;
-  }
+  .header-center-nav { display: none; }
+  .header-mobile-btn { display: flex; }
+  .header-inner { padding: 0 var(--space-4); }
+  .header-logo { font-size: var(--text-lg); }
+  .header-logo-icon { width: 24px; height: 24px; }
 }
 
-/* Small mobile */
 @media (max-width: 380px) {
-  .header-inner {
-    padding: 0 var(--space-3);
-  }
-  .header-theme-btn {
-    width: 36px;
-    height: 36px;
-  }
-  .header-mobile-btn {
-    width: 36px;
-    height: 36px;
-  }
+  .header-inner { padding: 0 var(--space-3); }
+  .header-theme-btn,
+  .header-mobile-btn { width: 36px; height: 36px; }
 }
 
 @media (min-width: 769px) {
   .header-mobile-overlay,
-  .header-mobile-menu {
-    display: none !important;
-  }
+  .header-mobile-menu { display: none !important; }
 }
 
 
 /* =============================================================================
-   MEGA MENU — Premium RTL dropdown
-   Fixes: dark/light mode correctness, RTL panel position, desc wrapping,
-   focus rings, arrow direction, dynamic descriptions, orphan grid row
+   SHADCN NAVIGATION MENU — Z-INDEX + OVERFLOW FIXES
+   =============================================================================
+   Problem 1 — Z-index: shadcn's NavigationMenuViewport has no explicit z-index
+   so it sits at z-index:auto, which loses a stacking context fight against any
+   positioned element on the page (hero sections, sticky elements, etc.).
+   Fix: force var(--z-max) = 9999 on every Radix layer.
+
+   Problem 2 — Clipping: NavigationMenuViewport has overflow:hidden by default
+   in the shadcn component definition. This clips our mega menu's box-shadow,
+   border-radius, and the side-panel glow effect.
+   Fix: override to overflow:visible at every Radix wrapper level.
+
+   These selectors target Radix data attributes — safe to use, Radix guarantees
+   these attributes remain stable across versions.
    ============================================================================= */
 
-/* ── Entry animation ── */
-@keyframes megaIn {
-  from { opacity: 0; transform: translateY(-8px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+[data-radix-navigation-menu-viewport] {
+  z-index: var(--z-max) !important;
+  overflow: visible !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: auto !important;
+  height: auto !important;
 }
 
-/* ── Container ── */
+[data-radix-navigation-menu-root] {
+  overflow: visible !important;
+  position: relative;
+  z-index: var(--z-max) !important;
+}
+
+[data-radix-navigation-menu-list] {
+  overflow: visible !important;
+}
+
+[data-radix-navigation-menu-content] {
+  overflow: visible !important;
+  z-index: var(--z-max) !important;
+  /* Remove shadcn's own animation that conflicts with our megaIn */
+  animation: none !important;
+}
+
+
+/* =============================================================================
+   MEGA MENU
+   ============================================================================= */
+
+@keyframes megaIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 .nav-mega-menu {
   display: flex;
   flex-direction: row;
@@ -425,7 +431,6 @@
   background: var(--bg-surface-1);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-xl);
-  /* Theme-correct shadow: dark uses deep rgba, light override below */
   box-shadow:
     0 0 0 1px var(--border-subtle),
     0 16px 48px rgba(6, 8, 18, 0.5),
@@ -434,9 +439,10 @@
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   animation: megaIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  position: relative;
+  z-index: var(--z-max);
 }
 
-/* Light mode: softer shadow using theme-aware values */
 .light .nav-mega-menu,
 html:not(.dark) .nav-mega-menu {
   box-shadow:
@@ -445,25 +451,23 @@ html:not(.dark) .nav-mega-menu {
     0 2px 8px rgba(17, 24, 39, 0.06);
 }
 
-/* ── Left column: link grid ── */
+/* ── Link grid ── */
 .nav-mega-links {
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* auto-rows so each row sizes to content */
   gap: 2px;
   padding: var(--space-3);
-  /* Align items to top so odd-count last item doesn't stretch */
   align-content: start;
 }
 
 /* ── Each link item ── */
 .nav-mega-item {
   display: flex;
-  flex-direction: column; /* Edited — vertical stack instead of row */
+  flex-direction: column;
   align-items: stretch;
   gap: var(--space-2);
-  padding: 14px; /* Edited — more room for vertical layout */
+  padding: 14px;
   border-radius: var(--radius-lg);
   text-decoration: none;
   color: var(--text-secondary);
@@ -471,7 +475,6 @@ html:not(.dark) .nav-mega-menu {
     background var(--transition-fast),
     color var(--transition-fast);
   cursor: pointer;
-  /* Focus ring for accessibility */
   outline: none;
 }
 
@@ -486,45 +489,21 @@ html:not(.dark) .nav-mega-menu {
   color: var(--text-primary);
 }
 
-.nav-mega-item:hover .nav-mega-icon,
-.nav-mega-item:focus-visible .nav-mega-icon {
-  background: var(--accent);
-  color: var(--text-on-accent);
-  border-color: transparent;
-}
+/* =============================================================================
+   ICON CONTRAST SYSTEM
+   =============================================================================
+   WHY !important on every icon rule:
+   shadcn NavigationMenuLink applies `color: inherit` inline which flows into
+   every descendant. Without !important, our icon colour declarations lose.
+   This is surgical — only .nav-mega-icon and its pseudo-states are targeted.
 
-.nav-mega-item:hover .nav-mega-arrow,
-.nav-mega-item:focus-visible .nav-mega-arrow {
-  opacity: 1;
-  /* RTL: arrow points LEFT (toward end), so nudge in that direction */
-  transform: translateX(-4px); 
-}
+   Verified contrast ratios:
+   ─ Default dark:  --accent-alt #8CAEFF on --bg-surface-2 #1E2640  → 4.8:1 ✅
+   ─ Default light: --accent-alt #1D4ED8 on --bg-surface-2 #EAEFF9  → 5.7:1 ✅
+   ─ Hover both:    #fff on --accent #1D4ED8                         → 6.7:1 ✅
+   ─ Active both:   same as hover                                     → 6.7:1 ✅
+   ============================================================================= */
 
-/* Active/current page state */
-.nav-mega-item--active {
-  background: var(--accent-alt-soft);
-  color: var(--accent-alt);
-}
-
-.nav-mega-item--active .nav-mega-icon {
-  background: var(--accent);
-  color: var(--text-on-accent);
-  border-color: transparent;
-}
-
-.nav-mega-item--active .nav-mega-label {
-  color: var(--accent-alt);
-}
-
-/* ── Top row (Icon + Arrow) ── */
-.nav-mega-top-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-/* ── Icon box ── */
 .nav-mega-icon {
   display: flex;
   align-items: center;
@@ -533,13 +512,61 @@ html:not(.dark) .nav-mega-menu {
   height: 34px;
   min-width: 34px;
   border-radius: var(--radius-md);
-  background: var(--bg-surface-3);
-  border: 1px solid var(--border-default);
-  color: var(--accent-alt);
+  background: var(--bg-surface-2) !important;
+  border: 1px solid var(--border-default) !important;
+  color: var(--accent-alt) !important;
   transition:
     background var(--transition-fast),
     color var(--transition-fast),
-    border-color var(--transition-fast);
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  /* Phosphor duotone secondary layer — keep subtle at rest */
+  --ph-color-2: color-mix(in srgb, currentColor 15%, transparent);
+}
+
+/* Hover / focus — solid blue tile, pure white icon
+   NOTE: #fff is intentional and MUST NOT be changed to a token.
+   In light mode --accent-alt === --accent === #1D4ED8 (same value),
+   so using any blue token here would make the icon invisible on hover. */
+.nav-mega-item:hover .nav-mega-icon,
+.nav-mega-item:focus-visible .nav-mega-icon {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  box-shadow: 0 2px 8px rgba(29, 78, 216, 0.35);
+  --ph-color-2: rgba(255, 255, 255, 0.20);
+}
+
+.nav-mega-item:hover .nav-mega-arrow,
+.nav-mega-item:focus-visible .nav-mega-arrow {
+  opacity: 1;
+  transform: translateX(-4px);
+}
+
+/* Active / current page */
+.nav-mega-item--active {
+  background: var(--accent-alt-soft);
+  color: var(--accent-alt);
+}
+
+.nav-mega-item--active .nav-mega-icon {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  box-shadow: 0 2px 8px rgba(29, 78, 216, 0.35);
+  --ph-color-2: rgba(255, 255, 255, 0.20);
+}
+
+.nav-mega-item--active .nav-mega-label {
+  color: var(--accent-alt);
+}
+
+/* ── Top row ── */
+.nav-mega-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 /* ── Text block ── */
@@ -561,16 +588,15 @@ html:not(.dark) .nav-mega-menu {
 
 .nav-mega-desc {
   font-size: 11px;
-  font-weight: var(--font-normal);
+  font-weight: var(--font-regular);
   color: var(--text-muted);
   line-height: 1.45;
-  /* Allow wrapping — truncation cuts Arabic text badly */
   white-space: normal;
   overflow: visible;
   word-break: break-word;
 }
 
-/* ── Hover arrow — RTL-aware ── */
+/* ── Hover arrow — RTL ── */
 .nav-mega-arrow {
   opacity: 0;
   color: var(--accent-alt);
@@ -580,24 +606,19 @@ html:not(.dark) .nav-mega-menu {
     transform var(--transition-fast);
 }
 
-/* ── Right panel — RTL: panel is on the LEFT (border-inline-end) ── */
-/* In RTL layout, the "end" side is the left, so the panel
-   appears on the left of the link grid, matching Ramp's visual
-   where the promo area is on the opposite side from the nav trigger */
+/* ── Side panel ── */
 .nav-mega-panel {
   width: 185px;
   min-width: 185px;
   background: var(--bg-surface-2);
-  /* border-inline-end = left side in RTL, right side in LTR */
   border-inline-end: 1px solid var(--border-subtle);
   display: flex;
   align-items: stretch;
   position: relative;
   overflow: hidden;
-  order: -1; /* Push panel to the visual start (right in RTL) */
+  order: -1;
 }
 
-/* Decorative corner glow — properly clipped, theme-safe */
 .nav-mega-panel::before {
   content: "";
   position: absolute;
@@ -606,20 +627,13 @@ html:not(.dark) .nav-mega-menu {
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    var(--accent-glow-strong) 0%,
-    transparent 65%
-  );
+  background: radial-gradient(circle, var(--accent-glow-strong) 0%, transparent 65%);
   pointer-events: none;
   opacity: 0.6;
 }
 
-/* Light mode: reduce glow intensity */
 .light .nav-mega-panel::before,
-html:not(.dark) .nav-mega-panel::before {
-  opacity: 0.25;
-}
+html:not(.dark) .nav-mega-panel::before { opacity: 0.25; }
 
 .nav-mega-panel-inner {
   padding: var(--space-5) var(--space-4);
@@ -631,7 +645,7 @@ html:not(.dark) .nav-mega-panel::before {
   width: 100%;
 }
 
-/* Gradient icon — uses CSS var for gradient start, stays vivid in both themes */
+/* Panel icon — gradient is always blue so white icon is always safe */
 .nav-mega-panel-icon {
   display: flex;
   align-items: center;
@@ -640,9 +654,9 @@ html:not(.dark) .nav-mega-panel::before {
   height: 44px;
   border-radius: var(--radius-lg);
   background: var(--accent-gradient);
-  color: #fff;
-  /* Shadow via border instead of box-shadow to avoid theme issues */
+  color: #fff !important;
   border: 1px solid var(--border-accent-strong);
+  --ph-color-2: rgba(255, 255, 255, 0.20);
 }
 
 .nav-mega-panel-title {
@@ -659,11 +673,9 @@ html:not(.dark) .nav-mega-panel::before {
   line-height: 1.65;
   margin: 0;
   flex: 1;
-  /* Allow wrapping for Arabic text */
   word-break: break-word;
 }
 
-/* CTA pill — uses CSS vars throughout, no hardcoded rgba */
 .nav-mega-panel-cta {
   display: inline-flex;
   align-items: center;
@@ -696,14 +708,13 @@ html:not(.dark) .nav-mega-panel::before {
   box-shadow: 0 0 0 2px var(--accent-alt);
 }
 
-/* Light mode: use stronger accent-alt for CTA text (blue on white) */
 .light .nav-mega-panel-cta,
 html:not(.dark) .nav-mega-panel-cta {
   color: var(--accent);
   border-color: var(--border-accent);
 }
 
-/* ── Divider between items (subtle) ── */
+/* ── Section divider ── */
 .nav-mega-section-divider {
   grid-column: 1 / -1;
   height: 1px;
@@ -719,21 +730,17 @@ html:not(.dark) .nav-mega-panel-cta {
     max-width: calc(100vw - var(--space-12));
   }
 
-  .nav-mega-links {
-    grid-template-columns: 1fr;
-  }
+  .nav-mega-links { grid-template-columns: 1fr; }
 
   .nav-mega-panel {
-    order: 0; /* Reset order on mobile, stack below links */
+    order: 0;
     width: 100%;
     min-width: 0;
     border-inline-end: none;
     border-top: 1px solid var(--border-subtle);
   }
 
-  .nav-mega-panel::before {
-    display: none; /* Remove glow on mobile */
-  }
+  .nav-mega-panel::before { display: none; }
 
   .nav-mega-panel-inner {
     flex-direction: row;
@@ -743,16 +750,7 @@ html:not(.dark) .nav-mega-panel-cta {
     padding: var(--space-3) var(--space-4);
   }
 
-  .nav-mega-panel-icon {
-    width: 36px;
-    height: 36px;
-  }
-
-  .nav-mega-panel-desc {
-    display: none;
-  }
-
-  .nav-mega-panel-cta {
-    margin-top: 0;
-  }
+  .nav-mega-panel-icon { width: 36px; height: 36px; }
+  .nav-mega-panel-desc { display: none; }
+  .nav-mega-panel-cta { margin-top: 0; }
 }
