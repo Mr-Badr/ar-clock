@@ -1,0 +1,17 @@
+{
+  "slug": "green-march-morocco",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: Maroc.ma: البوابة الوطنية للمملكة المغربية",
+    "fact-source: Encyclopaedia Britannica: Green March"
+  ],
+  "updatedAt": "2026-04-10T00:00:00.000Z"
+}

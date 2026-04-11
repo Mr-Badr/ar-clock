@@ -10,10 +10,12 @@ import {
 interface AdSidebarStickyProps {
   slotId?: string;
   className?: string;
+  side?: "right" | "left";
+  sticky?: boolean;
 }
 
-function resolveSidebarSlot(slotId: string) {
-  if (slotId.includes("right")) {
+function resolveSidebarSlot(side: "right" | "left", slotId: string) {
+  if (side === "right" || slotId.includes("right")) {
     return (
       process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_RIGHT_SLOT ||
       process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT ||
@@ -21,7 +23,7 @@ function resolveSidebarSlot(slotId: string) {
     ).trim();
   }
 
-  if (slotId.includes("left")) {
+  if (side === "left" || slotId.includes("left")) {
     return (
       process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_LEFT_SLOT ||
       process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT ||
@@ -35,10 +37,12 @@ function resolveSidebarSlot(slotId: string) {
 export default function AdSidebarSticky({
   slotId = "sidebar-ad",
   className = "",
+  side = "right",
+  sticky = true,
 }: AdSidebarStickyProps) {
   const adsEnabled = isPublicEnvEnabled(process.env.NEXT_PUBLIC_ENABLE_ADS);
   const clientId = (process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "").trim();
-  const adSlot = resolveSidebarSlot(slotId);
+  const adSlot = resolveSidebarSlot(side, slotId);
   const shouldRenderAds = adsEnabled && clientId.startsWith("ca-pub-") && Boolean(adSlot);
   const canLoadAds = useMarketingPermission(shouldRenderAds);
   const ref = useRef<HTMLElement>(null);
@@ -49,7 +53,8 @@ export default function AdSidebarSticky({
     if (!canLoadAds) return;
     if (!ref.current || loaded.current) return;
 
-    const isDesktop = window.matchMedia("(min-width: 1280px)").matches;
+    const minWidthQuery = sticky ? "(min-width: 1280px)" : "(min-width: 1536px)";
+    const isDesktop = window.matchMedia(minWidthQuery).matches;
     if (!isDesktop) return;
 
     const observer = new IntersectionObserver(
@@ -83,7 +88,16 @@ export default function AdSidebarSticky({
     <aside
       id={slotId}
       ref={ref}
-      className={`ad-slot ad-slot--sidebar ${isLoading ? "is-loading" : ""} ${className}`}
+      className={[
+        "ad-slot",
+        "ad-slot--sidebar",
+        sticky ? "ad-slot--sidebar--sticky" : "ad-slot--sidebar--static",
+        side === "left" ? "ad-slot--sidebar--left" : "ad-slot--sidebar--right",
+        isLoading ? "is-loading" : "",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
       role="complementary"
       aria-label="إعلانات جانبية"
     >

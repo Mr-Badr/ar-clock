@@ -2,8 +2,9 @@
   "id": "spring",
   "slug": "spring-season",
   "name": "بداية فصل الربيع",
-  "type": "fixed",
+  "type": "estimated",
   "category": "astronomy",
   "month": 3,
-  "day": 20
+  "day": 20,
+  "date": "{{year}}-03-20"
 }

@@ -25,6 +25,9 @@
 .clockRootFullscreen {
   position: fixed;
   inset: 0;
+  width: 100vw;
+  min-height: 100svh;
+  height: 100dvh;
   z-index: var(--z-max);
   /*
     Dark default: deep dramatic gradient — slightly darker than --bg-base
@@ -34,8 +37,18 @@
     Light override is handled in the :global(.light) block below.
   */
   background: linear-gradient(180deg, #05070c 0%, #0a0f18 100%);
-  padding: clamp(1.25rem, 2.5vw, 2.5rem);
+  padding:
+    max(clamp(1.25rem, 2.5vw, 2.5rem), env(safe-area-inset-top))
+    max(clamp(1.25rem, 2.5vw, 2.5rem), env(safe-area-inset-right))
+    max(clamp(1.25rem, 2.5vw, 2.5rem), env(safe-area-inset-bottom))
+    max(clamp(1.25rem, 2.5vw, 2.5rem), env(safe-area-inset-left));
   container-type: inline-size;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
+
+:global(.has-css-fullscreen) .clockRootFullscreen {
+  padding-bottom: max(calc(env(safe-area-inset-bottom) + 7rem), clamp(1.25rem, 2.5vw, 2.5rem));
 }
 
 

@@ -192,7 +192,9 @@ export default async function TimeNowPage() {
         
         <section
           aria-labelledby="popular-time-now-pages-heading"
-          style={{ marginBottom: '3rem' }}
+          style={{ 
+            marginBottom: '3rem',
+            marginTop: '3rem' }}
         >
           <div
             style={{

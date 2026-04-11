@@ -7,7 +7,8 @@
     "ramadan-in-uae",
     "ramadan-in-tunisia",
     "ramadan-in-kuwait",
-    "ramadan-in-qatar"
+    "ramadan-in-qatar",
+    "ramadan-in-usa"
   ],
   "eid-al-fitr": [
     "eid-al-fitr-in-saudi",
@@ -17,7 +18,8 @@
     "eid-al-fitr-in-uae",
     "eid-al-fitr-in-tunisia",
     "eid-al-fitr-in-kuwait",
-    "eid-al-fitr-in-qatar"
+    "eid-al-fitr-in-qatar",
+    "eid-al-fitr-in-usa"
   ],
   "eid-al-adha": [
     "eid-al-adha-in-saudi",
@@ -27,7 +29,8 @@
     "eid-al-adha-in-uae",
     "eid-al-adha-in-tunisia",
     "eid-al-adha-in-kuwait",
-    "eid-al-adha-in-qatar"
+    "eid-al-adha-in-qatar",
+    "eid-al-adha-in-usa"
   ],
   "day-of-arafa": [
     "day-of-arafa-in-saudi",
@@ -37,7 +40,8 @@
     "day-of-arafa-in-uae",
     "day-of-arafa-in-tunisia",
     "day-of-arafa-in-kuwait",
-    "day-of-arafa-in-qatar"
+    "day-of-arafa-in-qatar",
+    "day-of-arafa-in-usa"
   ],
   "hajj-season": [
     "hajj-season-in-saudi",
@@ -47,7 +51,8 @@
     "hajj-season-in-uae",
     "hajj-season-in-tunisia",
     "hajj-season-in-kuwait",
-    "hajj-season-in-qatar"
+    "hajj-season-in-qatar",
+    "hajj-season-in-usa"
   ],
   "islamic-new-year": [
     "islamic-new-year-in-saudi",
@@ -57,7 +62,8 @@
     "islamic-new-year-in-uae",
     "islamic-new-year-in-tunisia",
     "islamic-new-year-in-kuwait",
-    "islamic-new-year-in-qatar"
+    "islamic-new-year-in-qatar",
+    "islamic-new-year-in-usa"
   ],
   "ashura": [
     "ashura-in-saudi",
@@ -67,7 +73,8 @@
     "ashura-in-uae",
     "ashura-in-tunisia",
     "ashura-in-kuwait",
-    "ashura-in-qatar"
+    "ashura-in-qatar",
+    "ashura-in-usa"
   ],
   "mawlid": [
     "mawlid-in-saudi",
@@ -77,7 +84,8 @@
     "mawlid-in-uae",
     "mawlid-in-tunisia",
     "mawlid-in-kuwait",
-    "mawlid-in-qatar"
+    "mawlid-in-qatar",
+    "mawlid-in-usa"
   ],
   "laylat-al-qadr": [
     "laylat-al-qadr-in-saudi",
@@ -87,7 +95,8 @@
     "laylat-al-qadr-in-uae",
     "laylat-al-qadr-in-tunisia",
     "laylat-al-qadr-in-kuwait",
-    "laylat-al-qadr-in-qatar"
+    "laylat-al-qadr-in-qatar",
+    "laylat-al-qadr-in-usa"
   ],
   "isra-miraj": [
     "isra-miraj-in-saudi",
@@ -97,7 +106,8 @@
     "isra-miraj-in-uae",
     "isra-miraj-in-tunisia",
     "isra-miraj-in-kuwait",
-    "isra-miraj-in-qatar"
+    "isra-miraj-in-qatar",
+    "isra-miraj-in-usa"
   ],
   "nisf-shaban": [
     "nisf-shaban-in-saudi",
@@ -107,7 +117,8 @@
     "nisf-shaban-in-uae",
     "nisf-shaban-in-tunisia",
     "nisf-shaban-in-kuwait",
-    "nisf-shaban-in-qatar"
+    "nisf-shaban-in-qatar",
+    "nisf-shaban-in-usa"
   ],
   "first-dhul-hijjah": [
     "first-dhul-hijjah-in-saudi",
@@ -117,7 +128,8 @@
     "first-dhul-hijjah-in-uae",
     "first-dhul-hijjah-in-tunisia",
     "first-dhul-hijjah-in-kuwait",
-    "first-dhul-hijjah-in-qatar"
+    "first-dhul-hijjah-in-qatar",
+    "first-dhul-hijjah-in-usa"
   ],
   "new-year": [],
   "summer-season": [],
@@ -169,7 +181,8 @@
     "valentines-day-in-uae",
     "valentines-day-in-tunisia",
     "valentines-day-in-kuwait",
-    "valentines-day-in-qatar"
+    "valentines-day-in-qatar",
+    "valentines-day-in-usa"
   ],
   "labor-day": [],
   "sand-payment-saudi": [],
@@ -182,7 +195,8 @@
     "world-health-day-in-uae",
     "world-health-day-in-tunisia",
     "world-health-day-in-kuwait",
-    "world-health-day-in-qatar"
+    "world-health-day-in-qatar",
+    "world-health-day-in-usa"
   ],
   "earth-day": [
     "earth-day-in-saudi",
@@ -192,7 +206,8 @@
     "earth-day-in-uae",
     "earth-day-in-tunisia",
     "earth-day-in-kuwait",
-    "earth-day-in-qatar"
+    "earth-day-in-qatar",
+    "earth-day-in-usa"
   ],
   "pension-day-egypt": [],
   "international-womens-day": [],
@@ -204,7 +219,8 @@
     "world-teachers-day-in-uae",
     "world-teachers-day-in-tunisia",
     "world-teachers-day-in-kuwait",
-    "world-teachers-day-in-qatar"
+    "world-teachers-day-in-qatar",
+    "world-teachers-day-in-usa"
   ],
   "arabic-language-day": [
     "arabic-language-day-in-saudi",
@@ -214,9 +230,21 @@
     "arabic-language-day-in-uae",
     "arabic-language-day-in-tunisia",
     "arabic-language-day-in-kuwait",
-    "arabic-language-day-in-qatar"
+    "arabic-language-day-in-qatar",
+    "arabic-language-day-in-usa"
   ],
   "saudi-flag-day": [],
   "jordan-independence-day": [],
-  "bahrain-national-day": []
+  "bahrain-national-day": [],
+  "liberation-day-kuwait": [],
+  "revolution-day-egypt": [],
+  "armed-forces-day-egypt": [],
+  "green-march-morocco": [],
+  "martyrs-day-uae": [],
+  "thanksgiving-usa": [],
+  "black-friday-usa": [],
+  "cyber-monday-usa": [],
+  "halloween-usa": [],
+  "christmas-usa": [],
+  "new-years-eve-new-york": []
 }

@@ -94,5 +94,17 @@
     "flag": "🇶🇦",
     "timezone": "Asia/Qatar",
     "order": 8
+  },
+  {
+    "code": "us",
+    "aliasSlugToken": "usa",
+    "nameAr": "أمريكا",
+    "officialNameAr": "الولايات المتحدة الأمريكية",
+    "authority": "الجهات الفدرالية والمرجعية الأمريكية",
+    "dateVarianceLabel": "تقويم أمريكي رسمي / التوقيت الشرقي",
+    "localTerms": ["أمريكا", "أميركا", "الولايات المتحدة", "الولايات المتحدة الأمريكية"],
+    "flag": "🇺🇸",
+    "timezone": "America/New_York",
+    "order": 9
   }
 ]

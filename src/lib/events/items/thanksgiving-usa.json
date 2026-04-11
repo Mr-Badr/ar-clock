@@ -1,0 +1,12 @@
+{
+  "id": "thanksgiving-usa",
+  "slug": "thanksgiving-usa",
+  "name": "عيد الشكر في أمريكا",
+  "type": "floating",
+  "category": "holidays",
+  "_countryCode": "us",
+  "month": 11,
+  "weekday": 4,
+  "nth": 4,
+  "offsetDays": 0
+}

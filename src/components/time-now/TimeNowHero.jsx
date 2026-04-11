@@ -19,11 +19,13 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { Fullscreen, Minimize2, ZoomIn, ZoomOut, Share2 } from 'lucide-react';
 import DatePill from '../clocks/DatePill';
 import {
+  exitActiveFullscreen,
   FULLSCREEN_LAYER_STYLE,
   FULLSCREEN_TOOLBAR_STYLE,
   FULLSCREEN_UNIT_LABEL_STYLE,
   FULLSCREEN_ZOOM_GROUP_STYLE,
   FULLSCREEN_ZOOM_LABEL_STYLE,
+  getActiveFullscreenElement,
   getFullscreenContentStyle,
   getFullscreenDigitStyle,
   getFullscreenRowStyle,
@@ -31,6 +33,8 @@ import {
   getFullscreenSeparatorStyle,
   getFullscreenUnitWrapStyle,
   getFullscreenZoomLabel,
+  requestElementFullscreen,
+  syncFullscreenDocumentState,
 } from '../clocks/fullscreenShared';
 import { getFlagEmoji, getSafeTimezone } from '@/lib/country-utils';
 import { getCurrentPageUrl, useCopyFeedback } from '@/lib/share.client';
@@ -169,12 +173,17 @@ export default function TimeNowHero({
 
   useEffect(() => {
     const onChange = () => {
-      const active = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      const active = !!getActiveFullscreenElement();
       if (!active) setIsFS(false);
     };
     ['fullscreenchange', 'webkitfullscreenchange'].forEach(e => document.addEventListener(e, onChange));
     return () => ['fullscreenchange', 'webkitfullscreenchange'].forEach(e => document.removeEventListener(e, onChange));
   }, []);
+
+  useEffect(() => {
+    syncFullscreenDocumentState(isFS);
+    return () => syncFullscreenDocumentState(false);
+  }, [isFS]);
 
   /* ══ FULLSCREEN ENHANCEMENTS (Wake lock & Rotation) ══ */
   useEffect(() => {
@@ -221,11 +230,14 @@ export default function TimeNowHero({
 
   const toggleFS = async () => {
     if (!isFS) {
-      const el = containerRef.current; if (!el) return;
-      try { await (el.requestFullscreen || el.webkitRequestFullscreen).call(el); setZoom(1); } catch { }
+      const el = containerRef.current;
+      if (!el) return;
+      setZoom(1);
+      await requestElementFullscreen(el);
       setIsFS(true);
     } else {
-      try { await (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch { setIsFS(false); }
+      await exitActiveFullscreen();
+      setIsFS(false);
     }
   };
 

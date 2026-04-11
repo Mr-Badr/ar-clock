@@ -2,6 +2,8 @@
 
 import { ClockCountdown, Sparkle } from '@phosphor-icons/react';
 
+import AdInArticle from '@/components/ads/AdInArticle';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { buildGoldMarketHoursPageModel } from '@/lib/economy/engine';
 
 import { FAQ_ITEMS } from './data/faqItems';
@@ -60,6 +62,8 @@ export default function GoldMarketHoursLive({ initialViewer, initialNowIso }) {
         note={model.viewer.notice}
       />
 
+      <AdTopBanner slotId="top-economy-gold-market-hours" />
+
       <EconomyBanner
         kicker="الجواب السريع"
         title={model.gold.statusLabel}
@@ -104,6 +108,8 @@ export default function GoldMarketHoursLive({ initialViewer, initialNowIso }) {
           rows={model.countryRows}
         />
       </section>
+
+      <AdInArticle slotId="mid-economy-gold-market-hours" />
 
       <section className="economy-section">
         <EconomySectionHeader

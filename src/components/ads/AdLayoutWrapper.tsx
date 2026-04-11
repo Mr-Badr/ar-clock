@@ -68,38 +68,46 @@ interface AdLayoutWrapperProps {
   children: React.ReactNode;
   /** Hide both sidebars (short pages, special layouts) */
   hideSidebars?: boolean;
+  /** Standard = broad content pages, narrow = denser tool pages such as economy */
+  layout?: "standard" | "narrow";
+  /** single = one sticky rail, dual = sticky right + static left, none = content only */
+  sidebarMode?: "single" | "dual" | "none";
 }
 
 export default function AdLayoutWrapper({
   children,
   hideSidebars = false,
+  layout = "standard",
+  sidebarMode = "single",
 }: AdLayoutWrapperProps) {
   const adsEnabled = process.env.NEXT_PUBLIC_ENABLE_ADS === "true";
+  const resolvedSidebarMode = hideSidebars ? "none" : sidebarMode;
 
-  if (!adsEnabled) {
+  if (!adsEnabled || resolvedSidebarMode === "none") {
     return <>{children}</>;
   }
 
   return (
-    <div className="layout-with-ads">
+    <div
+      className="layout-with-ads"
+      data-layout={layout}
+      data-rail-mode={resolvedSidebarMode}
+    >
 
       {/*
-        Sidebar slot 1 — DOM first → visual RIGHT side in RTL layout
-        Hidden via CSS on < 1280px. Zero layout impact on mobile.
+        Primary rail — sticky and always on the visual right in RTL layouts.
       */}
-      {!hideSidebars && (
-        <AdSidebarSticky slotId="sidebar-right" />
-      )}
+      <AdSidebarSticky slotId="sidebar-right" side="right" sticky />
 
       {/* Main content — always present, always center column */}
       {children}
 
       {/*
-        Sidebar slot 3 — DOM last → visual LEFT side in RTL layout
-        Hidden via CSS on < 1280px. Zero layout impact on mobile.
+        Secondary rail — only on layouts that can carry more density.
+        It stays static so we never show mirrored sticky ads.
       */}
-      {!hideSidebars && (
-        <AdSidebarSticky slotId="sidebar-left" />
+      {resolvedSidebarMode === "dual" && (
+        <AdSidebarSticky slotId="sidebar-left" side="left" sticky={false} />
       )}
 
     </div>

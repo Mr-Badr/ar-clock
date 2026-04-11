@@ -1,11 +1,51 @@
 {
   "slug": "winter-season",
   "locale": "ar",
-  "capturedAt": "2026-03-30T13:03:24.654Z",
-  "primaryQueries": [],
+  "capturedAt": "2026-04-10T00:00:00.000Z",
+  "primaryQueries": [
+    "متى يبدأ الشتاء {{year}}",
+    "كم باقي على الشتاء",
+    "الانقلاب الشتوي",
+    "هل الشتاء يبدأ 21 أم 22 ديسمبر"
+  ],
   "competitors": [],
-  "coverageMatrix": [],
-  "keywordGaps": [],
+  "coverageMatrix": [
+    {
+      "keyword": "متى يبدأ الشتاء {{year}}",
+      "whyItMatters": "الطلب المباشر على معرفة الموعد هو المدخل الأول للترتيب."
+    },
+    {
+      "keyword": "كم باقي على الشتاء",
+      "whyItMatters": "يغطي صياغات قريبة يستعملها الباحث العربي قبل المناسبة وأثناءها."
+    },
+    {
+      "keyword": "الانقلاب الشتوي",
+      "whyItMatters": "يغطي صياغات قريبة يستعملها الباحث العربي قبل المناسبة وأثناءها."
+    },
+    {
+      "keyword": "هل الشتاء يبدأ 21 أم 22 ديسمبر",
+      "whyItMatters": "يغطي صياغات قريبة يستعملها الباحث العربي قبل المناسبة وأثناءها."
+    }
+  ],
+  "keywordGaps": [
+    "لماذا يختلف موعد بداية الشتاء",
+    "متى يبدأ فصل الشتاء فلكياً",
+    "أقصر نهار في السنة",
+    "هل البرد يبدأ مع الانقلاب الشتوي"
+  ],
   "unansweredQuestions": [],
-  "differentiationIdeas": []
+  "differentiationIdeas": [
+    "الجمع بين العد التنازلي والإجابة التفسيرية في صفحة واحدة بدلاً من المحتوى الخبري العابر."
+  ],
+  "factSources": [
+    {
+      "label": "timeanddate - Seasons",
+      "url": "https://www.timeanddate.com/calendar/seasons.html"
+    },
+    {
+      "label": "Encyclopaedia Britannica - Winter solstice",
+      "url": "https://www.britannica.com/science/winter-solstice"
+    }
+  ],
+  "notes": "الفجوة الأكبر في المحتوى العربي هي غياب تفسير اختلاف 21 و22 ديسمبر. توضيح هذه النقطة مع معنى الانقلاب الشتوي يرفع جودة الصفحة بوضوح."
 }

@@ -1316,12 +1316,23 @@
 .fullscreen-mode {
   position: fixed;
   inset: 0;
+  width: 100vw;
+  min-height: 100svh;
+  height: 100dvh;
   background-color: #0D1117;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: var(--z-max);
+  padding:
+    max(var(--space-3), env(safe-area-inset-top))
+    max(var(--space-3), env(safe-area-inset-right))
+    max(var(--space-3), env(safe-area-inset-bottom))
+    max(var(--space-3), env(safe-area-inset-left));
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: manipulation;
 }
 
 .fullscreen-mode .clock-display {
@@ -1347,12 +1358,33 @@
   position: absolute;
   top: var(--space-6);
   left: var(--space-6);
-  opacity: 0;
   transition: opacity var(--transition-base);
 }
 
-.fullscreen-mode:hover .fullscreen-exit {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .fullscreen-exit {
+    opacity: 0;
+  }
+
+  .fullscreen-mode:hover .fullscreen-exit {
+    opacity: 1;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .fullscreen-exit {
+    opacity: 1;
+  }
+}
+
+html.has-css-fullscreen,
+body.has-css-fullscreen {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body.has-css-fullscreen {
+  touch-action: none;
 }
 
 

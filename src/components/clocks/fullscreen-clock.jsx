@@ -3,6 +3,12 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Fullscreen, Minimize2, ZoomIn, ZoomOut } from 'lucide-react';
+import {
+  exitActiveFullscreen,
+  getActiveFullscreenElement,
+  requestElementFullscreen,
+  syncFullscreenDocumentState,
+} from './fullscreenShared';
 
 /**
  * Reusable wrapper that provides a "Fullscreen" (CSS Overlay + Browser API) toggle
@@ -16,12 +22,7 @@ export default function FullscreenClock({ children, overlayContent, showExpandBu
   // Sync state with native fullscreen changes (e.g., exiting via 'Esc' key)
   useEffect(() => {
     const handleFullscreenChange = () => {
-      const isNativeFullscreen = !!(
-        document.fullscreenElement ||
-        document.webkitFullscreenElement ||
-        document.mozFullScreenElement ||
-        document.msFullscreenElement
-      );
+      const isNativeFullscreen = !!getActiveFullscreenElement();
       setIsFullscreen(isNativeFullscreen);
     };
 
@@ -38,42 +39,22 @@ export default function FullscreenClock({ children, overlayContent, showExpandBu
     };
   }, []);
 
+  useEffect(() => {
+    syncFullscreenDocumentState(isFullscreen);
+    return () => syncFullscreenDocumentState(false);
+  }, [isFullscreen]);
+
   const toggleFullscreen = async () => {
     if (!isFullscreen) {
       const element = containerRef.current;
       if (!element) return;
 
-      try {
-        if (element.requestFullscreen) {
-          await element.requestFullscreen();
-        } else if (element.webkitRequestFullscreen) {
-          await element.webkitRequestFullscreen();
-        } else if (element.mozRequestFullScreen) {
-          await element.mozRequestFullScreen();
-        } else if (element.msRequestFullscreen) {
-          await element.msRequestFullscreen();
-        }
-        setZoomLevel(1); // Reset zoom when opening
-      } catch (err) {
-        console.error(`Error attempting to enable fullscreen: ${err.message}`);
-        // Fallback to CSS-only fullscreen if API fails
-        setIsFullscreen(true);
-      }
+      setZoomLevel(1);
+      await requestElementFullscreen(element);
+      setIsFullscreen(true);
     } else {
-      try {
-        if (document.exitFullscreen) {
-          await document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-          await document.webkitExitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-          await document.mozCancelFullScreen();
-        } else if (document.msExitFullscreen) {
-          await document.msExitFullscreen();
-        }
-      } catch (err) {
-        console.error(`Error attempting to exit fullscreen: ${err.message}`);
-        setIsFullscreen(false);
-      }
+      await exitActiveFullscreen();
+      setIsFullscreen(false);
     }
   };
 
@@ -97,7 +78,8 @@ export default function FullscreenClock({ children, overlayContent, showExpandBu
       {/* Fullscreen Overlay */}
       {isFullscreen && (
         <div
-          className="fixed inset-0 text-primary flex flex-col items-center justify-center z-[100] bg-base"
+          className="fullscreen-mode text-primary"
+          style={{ backgroundColor: 'var(--bg-base)' }}
           dir="rtl"
         >
           {/* Controls Bar */}

@@ -9,6 +9,7 @@ import {
 } from '@/lib/economy/page-helpers';
 import { getSiteUrl } from '@/lib/site-config';
 
+import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
 import UsMarketOpenLive from '@/components/economy/UsMarketOpenLive';
 
 const SITE_URL = getSiteUrl();
@@ -60,7 +61,7 @@ export default function UsMarketOpenPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <main className="economy-shell">
+      <EconomyAdLayout>
         <Suspense
           fallback={(
             <UsMarketOpenLive
@@ -71,7 +72,7 @@ export default function UsMarketOpenPage() {
         >
           <UsMarketOpenRequestContent />
         </Suspense>
-      </main>
+      </EconomyAdLayout>
     </div>
   );
 }

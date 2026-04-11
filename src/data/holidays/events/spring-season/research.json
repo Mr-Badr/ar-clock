@@ -1,11 +1,51 @@
 {
   "slug": "spring-season",
   "locale": "ar",
-  "capturedAt": "2026-03-30T13:03:24.655Z",
-  "primaryQueries": [],
+  "capturedAt": "2026-04-10T00:00:00.000Z",
+  "primaryQueries": [
+    "متى يبدأ الربيع {{year}}",
+    "كم باقي على الربيع",
+    "الاعتدال الربيعي",
+    "هل الربيع يبدأ 20 أم 21 مارس"
+  ],
   "competitors": [],
-  "coverageMatrix": [],
-  "keywordGaps": [],
+  "coverageMatrix": [
+    {
+      "keyword": "متى يبدأ الربيع {{year}}",
+      "whyItMatters": "الطلب المباشر على معرفة الموعد هو المدخل الأول للترتيب."
+    },
+    {
+      "keyword": "كم باقي على الربيع",
+      "whyItMatters": "يغطي صياغات قريبة يستعملها الباحث العربي قبل المناسبة وأثناءها."
+    },
+    {
+      "keyword": "الاعتدال الربيعي",
+      "whyItMatters": "يغطي صياغات قريبة يستعملها الباحث العربي قبل المناسبة وأثناءها."
+    },
+    {
+      "keyword": "هل الربيع يبدأ 20 أم 21 مارس",
+      "whyItMatters": "يغطي صياغات قريبة يستعملها الباحث العربي قبل المناسبة وأثناءها."
+    }
+  ],
+  "keywordGaps": [
+    "لماذا يختلف موعد بداية الربيع",
+    "متى يبدأ فصل الربيع فلكياً",
+    "ما هو الاعتدال الربيعي",
+    "هل يبدأ الربيع 20 مارس"
+  ],
   "unansweredQuestions": [],
-  "differentiationIdeas": []
+  "differentiationIdeas": [
+    "الجمع بين العد التنازلي والإجابة التفسيرية في صفحة واحدة بدلاً من المحتوى الخبري العابر."
+  ],
+  "factSources": [
+    {
+      "label": "timeanddate - Seasons",
+      "url": "https://www.timeanddate.com/calendar/seasons.html"
+    },
+    {
+      "label": "Encyclopaedia Britannica - Spring equinox",
+      "url": "https://www.britannica.com/science/vernal-equinox"
+    }
+  ],
+  "notes": "أفضل فرصة ترتيب هنا تأتي من شرح اختلاف 20 و21 مارس وربط ذلك بالاعتدال الربيعي بلغة عربية سهلة، لأن كثيراً من النتائج الحالية تكرر التاريخ دون تفسير."
 }

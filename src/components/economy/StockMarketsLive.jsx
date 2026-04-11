@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import { Bank, ClockCounterClockwise, GlobeHemisphereWest } from '@phosphor-icons/react';
 
+import AdInArticle from '@/components/ads/AdInArticle';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { buildStockMarketsPageModel } from '@/lib/economy/engine';
 
 import { FAQ_ITEMS } from './data/faqItems';
@@ -119,6 +121,8 @@ export default function StockMarketsLive({ initialViewer, initialNowIso }) {
         note={model.viewer.notice}
       />
 
+      <AdTopBanner slotId="top-economy-stock-markets" />
+
       <EconomyBanner
         kicker="جواب فوري"
         title="هل السوق مفتوح الآن؟"
@@ -163,6 +167,8 @@ export default function StockMarketsLive({ initialViewer, initialNowIso }) {
           <EconomySourceTable rows={sourceRows} />
         </section>
       ) : null}
+
+      <AdInArticle slotId="mid-economy-stock-markets" />
 
       <section className="economy-grid">
         <article className="market-card">

@@ -1,0 +1,10 @@
+{
+  "id": "halloween-usa",
+  "slug": "halloween-usa",
+  "name": "الهالوين في أمريكا",
+  "type": "fixed",
+  "category": "holidays",
+  "_countryCode": "us",
+  "month": 10,
+  "day": 31
+}

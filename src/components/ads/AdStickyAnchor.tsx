@@ -45,23 +45,18 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import {
   isPublicEnvEnabled,
   useMarketingPermission,
 } from "@/lib/client/marketing";
+import { getAdRoutePolicy } from "@/lib/ads/route-policy";
 
 interface AdStickyAnchorProps {
-  /**
-   * How far user must scroll (0–1) before anchor appears.
-   * Default: 0.25 (25% of page height)
-   * Rationale: user has seen content → ad appears contextually, not aggressively.
-   */
-  scrollThreshold?: number;
   className?: string;
 }
 
 export default function AdStickyAnchor({
-  scrollThreshold = 0.25,
   className = "",
 }: AdStickyAnchorProps) {
   const adsEnabled = isPublicEnvEnabled(process.env.NEXT_PUBLIC_ENABLE_ADS);
@@ -69,40 +64,41 @@ export default function AdStickyAnchor({
   const adSlot = (process.env.NEXT_PUBLIC_ADSENSE_STICKY_ANCHOR_SLOT || "").trim();
   const shouldRenderAds = adsEnabled && clientId.startsWith("ca-pub-") && Boolean(adSlot);
   const canLoadAds = useMarketingPermission(shouldRenderAds);
-  // Initialize dismissed state synchronously from sessionStorage.
-  // This avoids the flash/re-render of v1's useEffect-based check.
+  const pathname = usePathname();
+  const routePolicy = getAdRoutePolicy(pathname || "/");
   const [dismissed, setDismissed] = useState<boolean>(() => {
-    // Server-side: sessionStorage doesn't exist → not dismissed
     if (typeof window === "undefined") return false;
-    return sessionStorage.getItem("waqt-anchor-dismissed") === "1";
+    return sessionStorage.getItem("waqt-fullscreen-companion-dismissed") === "1";
   });
-
   const [visible, setVisible] = useState(false);
+  const [fullscreenActive, setFullscreenActive] = useState(false);
   const loaded = useRef(false);
 
-  // Show anchor after scrollThreshold scroll depth
   useEffect(() => {
-    if (!canLoadAds) return;
-    if (dismissed) return;
+    if (typeof document === "undefined") return undefined;
 
-    const handleScroll = () => {
-      const scrolled =
-        window.scrollY / Math.max(1, document.body.scrollHeight - window.innerHeight);
-      if (scrolled >= scrollThreshold) {
+    const update = () => {
+      const active = document.body.classList.contains("has-css-fullscreen");
+      setFullscreenActive(active);
+      if (!active) {
+        setVisible(false);
+      } else if (!dismissed) {
         setVisible(true);
       }
     };
 
-    // Check immediately in case page is short
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [canLoadAds, dismissed, scrollThreshold]);
+    update();
 
-  // Load ad script once on first appearance
+    const observer = new MutationObserver(update);
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+
+    return () => observer.disconnect();
+  }, [dismissed]);
+
   useEffect(() => {
     if (!canLoadAds) return;
-    if (!visible || loaded.current || dismissed) return;
+    if (!routePolicy.enableFullscreenCompanion) return;
+    if (!fullscreenActive || !visible || loaded.current || dismissed) return;
     loaded.current = true;
     try {
       const adsWindow = window as Window & { adsbygoogle?: unknown[] };
@@ -110,31 +106,35 @@ export default function AdStickyAnchor({
     } catch (error) {
       console.warn("AdSense sticky anchor failed to initialize:", error);
     }
-  }, [canLoadAds, visible, dismissed]);
+  }, [canLoadAds, dismissed, fullscreenActive, routePolicy.enableFullscreenCompanion, visible]);
 
   const handleDismiss = () => {
     setVisible(false);
     setDismissed(true);
-    // Session-scoped: respects user decision per visit without permanent tracking
-    sessionStorage.setItem("waqt-anchor-dismissed", "1");
+    sessionStorage.setItem("waqt-fullscreen-companion-dismissed", "1");
   };
 
-  // When dismissed: render null (removes from DOM — frees space)
-  // The .sticky-anchor-spacer CSS handles the layout reservation independently
-  if (!shouldRenderAds || !canLoadAds || dismissed) return null;
+  if (
+    !shouldRenderAds ||
+    !canLoadAds ||
+    dismissed ||
+    !routePolicy.enableFullscreenCompanion
+  ) {
+    return null;
+  }
 
   return (
     <div
       className={[
         "ad-slot ad-slot--sticky-anchor",
-        !visible ? "is-hidden" : "",  // is-hidden: translateY(100%) via CSS
+        !fullscreenActive || !visible ? "is-hidden" : "",
         className,
       ]
         .filter(Boolean)
         .join(" ")}
       role="complementary"
       aria-label="إعلانات"
-      aria-hidden={!visible}
+      aria-hidden={!fullscreenActive || !visible}
     >
       {/* Label — visible per Google AdSense policy */}
       <span className="ad-slot__label">إعلانات</span>
@@ -151,9 +151,11 @@ export default function AdStickyAnchor({
 
       <ins
         className="adsbygoogle"
-        style={{ display: "inline-block", width: "320px", height: "50px" }}
+        style={{ display: "block" }}
         data-ad-client={clientId}
         data-ad-slot={adSlot}
+        data-ad-format="horizontal"
+        data-full-width-responsive="true"
       />
     </div>
   );

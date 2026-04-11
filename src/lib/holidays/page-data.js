@@ -191,6 +191,7 @@ export async function getHolidayPageData(slug) {
       fixed: 'ثابت',
       estimated: 'تقديري',
       monthly: 'شهري',
+      floating: 'سنوي متحرك',
       easter: 'ميلادي',
     }[event.type] || event.type;
 

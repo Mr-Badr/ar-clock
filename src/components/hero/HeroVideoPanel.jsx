@@ -10,6 +10,7 @@ import styles from './TimeCinematicHero.module.css';
 import HeroEmbeddedClock from './HeroEmbeddedClock';
 
 const VIDEO_ROI = { x: 0.180, y: 0.506, w: 0.537, h: 0.395 };
+const FALLBACK_VIDEO_SIZE = { width: 1920, height: 1080 };
 
 function clamp(v, a, b) { return Math.min(Math.max(v, a), b); }
 
@@ -40,12 +41,16 @@ export default function HeroVideoPanel({
   const updatePanelPlacement = useCallback(() => {
     const hero  = heroRef.current;
     const video = videoRef.current;
-    if (!hero || !video || !video.videoWidth || !video.videoHeight) return;
+    if (!hero || !video) return;
 
     const { width: sw, height: sh } = hero.getBoundingClientRect();
+    if (!sw || !sh) return;
+
+    const videoWidth = video.videoWidth || FALLBACK_VIDEO_SIZE.width;
+    const videoHeight = video.videoHeight || FALLBACK_VIDEO_SIZE.height;
     const p = projectVideoRectToStage({
       stageWidth: sw, stageHeight: sh,
-      videoWidth: video.videoWidth, videoHeight: video.videoHeight,
+      videoWidth, videoHeight,
       roi: VIDEO_ROI,
     });
     const si = sw <= 640 ? 8 : sw <= 980 ? 12 : 16;
@@ -54,6 +59,23 @@ export default function HeroVideoPanel({
     const top    = clamp(p.top,            si, sh - si);
     const bottom = clamp(p.top + p.height, si, sh - si);
     setPanelBox({ left, top, width: Math.max(0, right - left), height: Math.max(0, bottom - top) });
+  }, []);
+
+  const tryStartPlayback = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.defaultMuted = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', 'true');
+    video.setAttribute('webkit-playsinline', 'true');
+
+    const playPromise = video.play?.();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {});
+    }
   }, []);
 
   useEffect(() => {
@@ -66,21 +88,39 @@ export default function HeroVideoPanel({
       rafRef.current = requestAnimationFrame(updatePanelPlacement);
     };
 
-    video.addEventListener('loadedmetadata', schedule);
-    video.addEventListener('loadeddata', schedule);
+    const handleVideoReady = () => {
+      tryStartPlayback();
+      schedule();
+    };
+
+    const handleVisibility = () => {
+      if (document.visibilityState !== 'visible') return;
+      tryStartPlayback();
+      schedule();
+    };
+
+    video.addEventListener('loadedmetadata', handleVideoReady);
+    video.addEventListener('loadeddata', handleVideoReady);
+    video.addEventListener('canplay', handleVideoReady);
+    video.addEventListener('playing', schedule);
     roRef.current = new ResizeObserver(schedule);
     roRef.current.observe(hero);
     window.addEventListener('resize', schedule);
+    document.addEventListener('visibilitychange', handleVisibility);
+    tryStartPlayback();
     schedule();
 
     return () => {
       cancelAnimationFrame(rafRef.current);
-      video.removeEventListener('loadedmetadata', schedule);
-      video.removeEventListener('loadeddata', schedule);
+      video.removeEventListener('loadedmetadata', handleVideoReady);
+      video.removeEventListener('loadeddata', handleVideoReady);
+      video.removeEventListener('canplay', handleVideoReady);
+      video.removeEventListener('playing', schedule);
       roRef.current?.disconnect();
       window.removeEventListener('resize', schedule);
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
-  }, [updatePanelPlacement]);
+  }, [tryStartPlayback, updatePanelPlacement]);
 
   const panelStyle = useMemo(() =>
     !panelBox ? undefined : ({
@@ -103,7 +143,7 @@ export default function HeroVideoPanel({
           loop
           muted
           playsInline
-          preload="metadata"
+          preload="auto"
         >
           <source src="/videos/hero.webm" type="video/webm" />
           <source src="/videos/hero.mp4"  type="video/mp4"  />

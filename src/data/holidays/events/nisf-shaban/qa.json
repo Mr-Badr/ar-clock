@@ -1,14 +1,18 @@
 {
   "slug": "nisf-shaban",
-  "tier": "tier2",
-  "publishStatus": "drafted",
+  "tier": "tier1",
+  "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:37.016Z"
+  "notes": [
+    "fact-source: الإسلام سؤال وجواب",
+    "fact-source: موقع الإمام ابن باز",
+    "fact-source: إسلام ويب"
+  ],
+  "updatedAt": "2026-04-10T00:00:00.000Z"
 }

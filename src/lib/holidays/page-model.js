@@ -70,6 +70,9 @@ function buildAboutNotes({ event, calInfo, nowIso }) {
   if (event.type === 'monthly') {
     notes.push({ id: 'monthly', kind: 'text', text: 'يتكرر هذا الموعد كل شهر وفق نمط الصرف أو الاستحقاق المعتمد.' });
   }
+  if (event.type === 'floating') {
+    notes.push({ id: 'floating', kind: 'text', text: 'يتكرر هذا الموعد سنوياً وفق قاعدة تقويمية متحركة مرتبطة بيوم الأسبوع داخل الشهر.' });
+  }
   if (event.type === 'fixed') {
     notes.push({ id: 'fixed', kind: 'text', text: 'هذا التاريخ ثابت في التقويم الميلادي كل عام.' });
   }

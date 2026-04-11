@@ -9,6 +9,7 @@ import {
 } from '@/lib/economy/page-helpers';
 import { getSiteUrl } from '@/lib/site-config';
 
+import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
 import BestTradingTimeLive from '@/components/economy/BestTradingTimeLive';
 
 const SITE_URL = getSiteUrl();
@@ -57,7 +58,7 @@ export default function BestTradingTimePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <main className="economy-shell">
+      <EconomyAdLayout>
         <Suspense
           fallback={(
             <BestTradingTimeLive
@@ -68,7 +69,7 @@ export default function BestTradingTimePage() {
         >
           <BestTradingTimeRequestContent />
         </Suspense>
-      </main>
+      </EconomyAdLayout>
     </div>
   );
 }

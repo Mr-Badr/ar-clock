@@ -31,6 +31,10 @@
     "canonicalSlug": "ramadan",
     "countryCode": "qa"
   },
+  "ramadan-in-usa": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "us"
+  },
   "eid-al-fitr-in-saudi": {
     "canonicalSlug": "eid-al-fitr",
     "countryCode": "sa"
@@ -62,6 +66,10 @@
   "eid-al-fitr-in-qatar": {
     "canonicalSlug": "eid-al-fitr",
     "countryCode": "qa"
+  },
+  "eid-al-fitr-in-usa": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "us"
   },
   "eid-al-adha-in-saudi": {
     "canonicalSlug": "eid-al-adha",
@@ -95,6 +103,10 @@
     "canonicalSlug": "eid-al-adha",
     "countryCode": "qa"
   },
+  "eid-al-adha-in-usa": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "us"
+  },
   "day-of-arafa-in-saudi": {
     "canonicalSlug": "day-of-arafa",
     "countryCode": "sa"
@@ -126,6 +138,10 @@
   "day-of-arafa-in-qatar": {
     "canonicalSlug": "day-of-arafa",
     "countryCode": "qa"
+  },
+  "day-of-arafa-in-usa": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "us"
   },
   "hajj-season-in-saudi": {
     "canonicalSlug": "hajj-season",
@@ -159,6 +175,10 @@
     "canonicalSlug": "hajj-season",
     "countryCode": "qa"
   },
+  "hajj-season-in-usa": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "us"
+  },
   "islamic-new-year-in-saudi": {
     "canonicalSlug": "islamic-new-year",
     "countryCode": "sa"
@@ -190,6 +210,10 @@
   "islamic-new-year-in-qatar": {
     "canonicalSlug": "islamic-new-year",
     "countryCode": "qa"
+  },
+  "islamic-new-year-in-usa": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "us"
   },
   "ashura-in-saudi": {
     "canonicalSlug": "ashura",
@@ -223,6 +247,10 @@
     "canonicalSlug": "ashura",
     "countryCode": "qa"
   },
+  "ashura-in-usa": {
+    "canonicalSlug": "ashura",
+    "countryCode": "us"
+  },
   "mawlid-in-saudi": {
     "canonicalSlug": "mawlid",
     "countryCode": "sa"
@@ -254,6 +282,10 @@
   "mawlid-in-qatar": {
     "canonicalSlug": "mawlid",
     "countryCode": "qa"
+  },
+  "mawlid-in-usa": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "us"
   },
   "laylat-al-qadr-in-saudi": {
     "canonicalSlug": "laylat-al-qadr",
@@ -287,6 +319,10 @@
     "canonicalSlug": "laylat-al-qadr",
     "countryCode": "qa"
   },
+  "laylat-al-qadr-in-usa": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "us"
+  },
   "isra-miraj-in-saudi": {
     "canonicalSlug": "isra-miraj",
     "countryCode": "sa"
@@ -318,6 +354,10 @@
   "isra-miraj-in-qatar": {
     "canonicalSlug": "isra-miraj",
     "countryCode": "qa"
+  },
+  "isra-miraj-in-usa": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "us"
   },
   "nisf-shaban-in-saudi": {
     "canonicalSlug": "nisf-shaban",
@@ -351,6 +391,10 @@
     "canonicalSlug": "nisf-shaban",
     "countryCode": "qa"
   },
+  "nisf-shaban-in-usa": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "us"
+  },
   "first-dhul-hijjah-in-saudi": {
     "canonicalSlug": "first-dhul-hijjah",
     "countryCode": "sa"
@@ -382,6 +426,10 @@
   "first-dhul-hijjah-in-qatar": {
     "canonicalSlug": "first-dhul-hijjah",
     "countryCode": "qa"
+  },
+  "first-dhul-hijjah-in-usa": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "us"
   },
   "valentines-day-in-saudi": {
     "canonicalSlug": "valentines-day",
@@ -415,6 +463,10 @@
     "canonicalSlug": "valentines-day",
     "countryCode": "qa"
   },
+  "valentines-day-in-usa": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "us"
+  },
   "world-health-day-in-saudi": {
     "canonicalSlug": "world-health-day",
     "countryCode": "sa"
@@ -446,6 +498,10 @@
   "world-health-day-in-qatar": {
     "canonicalSlug": "world-health-day",
     "countryCode": "qa"
+  },
+  "world-health-day-in-usa": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "us"
   },
   "earth-day-in-saudi": {
     "canonicalSlug": "earth-day",
@@ -479,6 +535,10 @@
     "canonicalSlug": "earth-day",
     "countryCode": "qa"
   },
+  "earth-day-in-usa": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "us"
+  },
   "world-teachers-day-in-saudi": {
     "canonicalSlug": "world-teachers-day",
     "countryCode": "sa"
@@ -511,6 +571,10 @@
     "canonicalSlug": "world-teachers-day",
     "countryCode": "qa"
   },
+  "world-teachers-day-in-usa": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "us"
+  },
   "arabic-language-day-in-saudi": {
     "canonicalSlug": "arabic-language-day",
     "countryCode": "sa"
@@ -542,5 +606,9 @@
   "arabic-language-day-in-qatar": {
     "canonicalSlug": "arabic-language-day",
     "countryCode": "qa"
+  },
+  "arabic-language-day-in-usa": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "us"
   }
 }

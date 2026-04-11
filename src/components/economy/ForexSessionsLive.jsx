@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import { ChartLineUp, Sparkle } from '@phosphor-icons/react';
 
+import AdInArticle from '@/components/ads/AdInArticle';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { buildForexPageModel } from '@/lib/economy/engine';
 
 import { FAQ_ITEMS } from './data/faqItems';
@@ -92,6 +94,8 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
         ]}
         note={model.viewer.notice}
       />
+
+      <AdTopBanner slotId="top-economy-forex-sessions" />
 
       <EconomyBanner
         kicker="الحالة الحالية"
@@ -188,6 +192,8 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
           }))}
         />
       </section>
+
+      <AdInArticle slotId="mid-economy-forex-sessions" />
 
       <EconomyBanner
         kicker="كيف نعرض الجلسات بمهنية؟"

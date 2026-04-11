@@ -1,4 +1,4 @@
-import { defineEventBatch } from '../../../../scripts/lib/event-authoring';
+import { defineEventBatch } from '../lib/event-authoring';
 
 type FaqItem = {
   question: string;

@@ -91,6 +91,7 @@ function main() {
       ...(type === 'hijri' ? { hijriMonth: 1, hijriDay: 1 } : {}),
       ...(type === 'estimated' ? { date: '{{year}}-01-01' } : {}),
       ...(type === 'monthly' ? { day: 1 } : {}),
+      ...(type === 'floating' ? { month: 1, weekday: 1, nth: 1, offsetDays: 0 } : {}),
     },
     richContent: buildRichContentScaffold(
       {

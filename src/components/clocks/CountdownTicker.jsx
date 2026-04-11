@@ -24,12 +24,14 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { Fullscreen, Minimize2, ZoomIn, ZoomOut, Share2, Link2 } from 'lucide-react';
 import DatePill from './DatePill';
 import {
+  exitActiveFullscreen,
   FULLSCREEN_LAYER_STYLE,
   FULLSCREEN_TITLE_STYLE,
   FULLSCREEN_TOOLBAR_STYLE,
   FULLSCREEN_UNIT_LABEL_STYLE,
   FULLSCREEN_ZOOM_GROUP_STYLE,
   FULLSCREEN_ZOOM_LABEL_STYLE,
+  getActiveFullscreenElement,
   getFullscreenContentStyle,
   getFullscreenDigitStyle,
   getFullscreenRowStyle,
@@ -37,6 +39,8 @@ import {
   getFullscreenSeparatorStyle,
   getFullscreenUnitWrapStyle,
   getFullscreenZoomLabel,
+  requestElementFullscreen,
+  syncFullscreenDocumentState,
 } from './fullscreenShared';
 import { getCurrentPageUrl, useCopyFeedback } from '@/lib/share.client';
 
@@ -534,12 +538,7 @@ export default function CountdownTicker({
 
   useEffect(() => {
     const onChange = () => {
-      const active = !!(
-        document.fullscreenElement ||
-        document.webkitFullscreenElement ||
-        document.mozFullScreenElement ||
-        document.msFullscreenElement
-      );
+      const active = !!getActiveFullscreenElement();
       if (!active) setIsFS(false);
     };
     const evts = ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'];
@@ -547,25 +546,21 @@ export default function CountdownTicker({
     return () => evts.forEach(e => document.removeEventListener(e, onChange));
   }, []);
 
+  useEffect(() => {
+    syncFullscreenDocumentState(isFS);
+    return () => syncFullscreenDocumentState(false);
+  }, [isFS]);
+
   const toggleFS = async () => {
     if (!isFS) {
       const el = containerRef.current;
       if (!el) return;
-      try {
-        if (el.requestFullscreen) await el.requestFullscreen();
-        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-        else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
-        else if (el.msRequestFullscreen) el.msRequestFullscreen();
-        setZoom(1);
-      } catch { /* CSS fallback */ }
+      setZoom(1);
+      await requestElementFullscreen(el);
       setIsFS(true);
     } else {
-      try {
-        if (document.exitFullscreen) await document.exitFullscreen();
-        else if (document.webkitExitFullscreen) await document.webkitExitFullscreen();
-        else if (document.mozCancelFullScreen) await document.mozCancelFullScreen();
-        else if (document.msExitFullscreen) await document.msExitFullscreen();
-      } catch { setIsFS(false); }
+      await exitActiveFullscreen();
+      setIsFS(false);
     }
   };
 

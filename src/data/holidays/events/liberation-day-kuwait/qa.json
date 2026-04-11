@@ -1,0 +1,17 @@
+{
+  "slug": "liberation-day-kuwait",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: بوابة الكويت الرسمية",
+    "fact-source: Encyclopaedia Britannica: Kuwait"
+  ],
+  "updatedAt": "2026-04-10T00:00:00.000Z"
+}

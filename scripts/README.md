@@ -13,7 +13,7 @@ Avoid adding one-off content seeding scripts here for every batch of events.
 For holiday-event content work:
 
 - author source data in `src/data/holidays/events/<slug>/`
-- place reusable batch definitions in `src/data/holidays/batches/`
+- place reusable batch definitions in `scripts/holiday-batches/`
 - run them with `npm run events:apply-batch -- --file <batch-file> --build --validate`
 
 This keeps `scripts/` focused on tooling, while event-specific content instructions stay close to the holiday data itself.

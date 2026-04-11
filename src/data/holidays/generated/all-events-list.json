@@ -129,19 +129,21 @@
     "id": "winter",
     "slug": "winter-season",
     "name": "بداية فصل الشتاء",
-    "type": "fixed",
+    "type": "estimated",
     "category": "astronomy",
     "month": 12,
-    "day": 21
+    "day": 21,
+    "date": "{{year}}-12-21"
   },
   {
     "id": "spring",
     "slug": "spring-season",
     "name": "بداية فصل الربيع",
-    "type": "fixed",
+    "type": "estimated",
     "category": "astronomy",
     "month": 3,
-    "day": 20
+    "day": 20,
+    "date": "{{year}}-03-20"
   },
   {
     "id": "spring-vac",
@@ -457,11 +459,12 @@
     "id": "school-start-kw",
     "slug": "school-start-kuwait",
     "name": "بدء الدراسة في الكويت",
-    "type": "fixed",
+    "type": "estimated",
     "category": "school",
     "_countryCode": "kw",
     "month": 9,
-    "day": 15
+    "day": 15,
+    "date": "{{year}}-09-15"
   },
   {
     "id": "national-day-qa",
@@ -620,5 +623,121 @@
     "_countryCode": "bh",
     "month": 12,
     "day": 16
+  },
+  {
+    "id": "liberation-day-kw",
+    "slug": "liberation-day-kuwait",
+    "name": "عيد التحرير الكويتي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "kw",
+    "month": 2,
+    "day": 26
+  },
+  {
+    "id": "revolution-day-eg",
+    "slug": "revolution-day-egypt",
+    "name": "ذكرى ثورة 23 يوليو في مصر",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "eg",
+    "month": 7,
+    "day": 23
+  },
+  {
+    "id": "armed-forces-day-eg",
+    "slug": "armed-forces-day-egypt",
+    "name": "يوم القوات المسلحة المصرية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "eg",
+    "month": 10,
+    "day": 6
+  },
+  {
+    "id": "green-march-ma",
+    "slug": "green-march-morocco",
+    "name": "ذكرى المسيرة الخضراء المغربية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ma",
+    "month": 11,
+    "day": 6
+  },
+  {
+    "id": "martyrs-day-ae",
+    "slug": "martyrs-day-uae",
+    "name": "يوم الشهيد الإماراتي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ae",
+    "month": 11,
+    "day": 30
+  },
+  {
+    "id": "thanksgiving-usa",
+    "slug": "thanksgiving-usa",
+    "name": "عيد الشكر في أمريكا",
+    "type": "floating",
+    "category": "holidays",
+    "_countryCode": "us",
+    "month": 11,
+    "weekday": 4,
+    "nth": 4,
+    "offsetDays": 0
+  },
+  {
+    "id": "black-friday-usa",
+    "slug": "black-friday-usa",
+    "name": "الجمعة السوداء في أمريكا",
+    "type": "floating",
+    "category": "holidays",
+    "_countryCode": "us",
+    "month": 11,
+    "weekday": 4,
+    "nth": 4,
+    "offsetDays": 1
+  },
+  {
+    "id": "cyber-monday-usa",
+    "slug": "cyber-monday-usa",
+    "name": "الإثنين الإلكتروني في أمريكا",
+    "type": "floating",
+    "category": "holidays",
+    "_countryCode": "us",
+    "month": 11,
+    "weekday": 4,
+    "nth": 4,
+    "offsetDays": 4
+  },
+  {
+    "id": "halloween-usa",
+    "slug": "halloween-usa",
+    "name": "الهالوين في أمريكا",
+    "type": "fixed",
+    "category": "holidays",
+    "_countryCode": "us",
+    "month": 10,
+    "day": 31
+  },
+  {
+    "id": "christmas-usa",
+    "slug": "christmas-usa",
+    "name": "الكريسماس في أمريكا",
+    "type": "fixed",
+    "category": "holidays",
+    "_countryCode": "us",
+    "month": 12,
+    "day": 25
+  },
+  {
+    "id": "new-years-eve-new-york",
+    "slug": "new-years-eve-new-york",
+    "name": "ليلة رأس السنة في نيويورك",
+    "type": "fixed",
+    "category": "holidays",
+    "_countryCode": "us",
+    "month": 12,
+    "day": 31
   }
 ]

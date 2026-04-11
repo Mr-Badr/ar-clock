@@ -1,0 +1,17 @@
+{
+  "slug": "armed-forces-day-egypt",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: الهيئة العامة للاستعلامات المصرية",
+    "fact-source: Encyclopaedia Britannica: October War"
+  ],
+  "updatedAt": "2026-04-10T00:00:00.000Z"
+}

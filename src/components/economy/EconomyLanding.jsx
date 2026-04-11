@@ -1,5 +1,7 @@
 import { ChartLineUp, ClockCounterClockwise, GlobeHemisphereEast } from '@phosphor-icons/react/ssr';
 
+import AdInArticle from '@/components/ads/AdInArticle';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { getEconomyToolCards } from '@/lib/economy/engine';
 import { SITE_BRAND } from '@/lib/site-config';
 
@@ -27,6 +29,8 @@ export default function EconomyLanding() {
         note={`التركيز في هذه المرحلة هو على الصفحات التي يمكن أن تكسب طلباً يومياً عربياً واضحاً وتعمل محلياً وعلى Vercel بالمجان، مع الاستفادة من بنية الوقت والموقع الموجودة أصلاً في ${SITE_BRAND}.`}
       />
 
+      <AdTopBanner slotId="top-economy-landing" />
+
       <section className="economy-section">
         <EconomySectionHeader
           title="ما الذي أضفناه في هذه المرحلة؟"
@@ -34,6 +38,8 @@ export default function EconomyLanding() {
         />
         <EconomyToolCards cards={cards} />
       </section>
+
+      <AdInArticle slotId="mid-economy-landing" />
 
       <section className="economy-grid">
         <article className="economy-copy-card">

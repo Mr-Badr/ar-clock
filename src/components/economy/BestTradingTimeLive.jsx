@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import { Lightning, Target } from '@phosphor-icons/react';
 
+import AdInArticle from '@/components/ads/AdInArticle';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { buildBestTradingTimePageModel } from '@/lib/economy/engine';
 
 import { FAQ_ITEMS } from './data/faqItems';
@@ -59,6 +61,8 @@ export default function BestTradingTimeLive({ initialViewer, initialNowIso }) {
         note={model.viewer.notice}
       />
 
+      <AdTopBanner slotId="top-economy-best-trading-time" />
+
       <EconomyBanner
         kicker="الخلاصة العملية"
         title={model.bestWindow.isActive ? 'أنت داخل أفضل نافذة الآن' : 'أفضل نافذة اليوم معروضة بوضوح'}
@@ -112,6 +116,8 @@ export default function BestTradingTimeLive({ initialViewer, initialNowIso }) {
           }))}
         />
       </section>
+
+      <AdInArticle slotId="mid-economy-best-trading-time" />
 
       <section className="economy-section">
         <EconomySectionHeader

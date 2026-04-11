@@ -9,6 +9,7 @@ import {
 } from '@/lib/economy/page-helpers';
 import { getSiteUrl } from '@/lib/site-config';
 
+import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
 import GoldMarketHoursLive from '@/components/economy/GoldMarketHoursLive';
 
 const SITE_URL = getSiteUrl();
@@ -60,7 +61,7 @@ export default function GoldMarketHoursPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <main className="economy-shell">
+      <EconomyAdLayout>
         <Suspense
           fallback={(
             <GoldMarketHoursLive
@@ -71,7 +72,7 @@ export default function GoldMarketHoursPage() {
         >
           <GoldMarketHoursRequestContent />
         </Suspense>
-      </main>
+      </EconomyAdLayout>
     </div>
   );
 }

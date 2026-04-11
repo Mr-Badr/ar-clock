@@ -1,0 +1,18 @@
+{
+  "slug": "thanksgiving-usa",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: U.S. Office of Personnel Management: What are Federal holidays?",
+    "fact-source: National Retail Federation: Thanksgiving Holiday Weekend Sees Record Number of Shoppers",
+    "fact-source: Britannica Dictionary: Thanksgiving"
+  ],
+  "updatedAt": "2026-04-10T00:00:00.000Z"
+}

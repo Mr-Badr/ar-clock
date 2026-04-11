@@ -39,6 +39,8 @@
     ".next/dev/types/**/*.ts"
 , "src/lib/holidays-engine.js"  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "scripts/holiday-batches/**/*",
+    "src/data/holidays/batches/**/*"
   ]
 }

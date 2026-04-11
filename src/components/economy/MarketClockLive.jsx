@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import { ClockCountdown, GlobeHemisphereEast } from '@phosphor-icons/react';
 
+import AdInArticle from '@/components/ads/AdInArticle';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { buildMarketClockPageModel } from '@/lib/economy/engine';
 
 import { FAQ_ITEMS } from './data/faqItems';
@@ -60,6 +62,8 @@ export default function MarketClockLive({ initialViewer, initialNowIso }) {
         note={model.viewer.notice}
       />
 
+      <AdTopBanner slotId="top-economy-market-clock" />
+
       <EconomyBanner
         kicker="قراءة فورية"
         title={model.hero.label}
@@ -82,6 +86,8 @@ export default function MarketClockLive({ initialViewer, initialNowIso }) {
         />
         <HourlyActivityChart chart={model.activityChart} title="ساعة السيولة على مدار 24 ساعة" />
       </section>
+
+      <AdInArticle slotId="mid-economy-market-clock" />
 
       <section className="economy-section">
         <EconomySectionHeader

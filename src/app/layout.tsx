@@ -26,7 +26,6 @@ import {
 } from '@/lib/site-config';
 
 const env = getEnv();
-const adsFeatureEnabled = process.env.NEXT_PUBLIC_ENABLE_ADS === 'true';
 // Body copy uses Noto Sans Arabic across the app.
 // The heavier weights are still needed by the design system for clocks/heroes.
 const notoSansArabic = Noto_Sans_Arabic({
@@ -160,7 +159,6 @@ export default async function RootLayout({
             }}
           />
 
-          {adsFeatureEnabled && <div className="sticky-anchor-spacer" aria-hidden="true" />}
           <AdStickyAnchor />
           <ConsentBanner />
           <AnalyticsProvider />

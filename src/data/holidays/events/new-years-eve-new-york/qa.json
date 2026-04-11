@@ -1,0 +1,18 @@
+{
+  "slug": "new-years-eve-new-york",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: Times Square Alliance: NYE History & Times Square Ball",
+    "fact-source: Times Square Alliance: NYE Live Schedule",
+    "fact-source: U.S. Office of Personnel Management: What are Federal holidays?"
+  ],
+  "updatedAt": "2026-04-10T00:00:00.000Z"
+}

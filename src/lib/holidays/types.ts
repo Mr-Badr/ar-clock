@@ -11,7 +11,7 @@ export interface EventCore {
   id: string;
   slug: string;
   name: string;
-  type: 'hijri' | 'fixed' | 'estimated' | 'monthly' | 'easter';
+  type: 'hijri' | 'fixed' | 'estimated' | 'monthly' | 'easter' | 'floating';
   category: EventCategory;
   _countryCode?: string | null;
   month?: number;
@@ -19,6 +19,9 @@ export interface EventCore {
   date?: string;
   hijriMonth?: number;
   hijriDay?: number;
+  weekday?: number;
+  nth?: number;
+  offsetDays?: number;
 }
 
 export interface EventRichContent {

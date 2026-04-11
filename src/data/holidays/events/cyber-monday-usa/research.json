@@ -1,0 +1,105 @@
+{
+  "slug": "cyber-monday-usa",
+  "locale": "ar",
+  "capturedAt": "2026-04-10T00:00:00.000Z",
+  "primaryQueries": [
+    "كم باقي على الإثنين الإلكتروني",
+    "كم باقي على Cyber Monday",
+    "متى الإثنين الإلكتروني في أمريكا {{year}}",
+    "Cyber Monday أمريكا {{year}}",
+    "هل Cyber Monday بعد الجمعة السوداء",
+    "عروض الإثنين الإلكتروني أمريكا"
+  ],
+  "competitors": [
+    {
+      "site": "صفحات العد العربية",
+      "type": "countdown",
+      "focus": [
+        "التاريخ",
+        "عداد",
+        "الاسم الإنجليزي"
+      ],
+      "gaps": [
+        "لا تشرح التسلسل بعد عيد الشكر",
+        "ضعف المقارنة مع البلاك فرايدي",
+        "لا تخاطب نية الشراء الإلكتروني بوضوح"
+      ]
+    },
+    {
+      "site": "المواقع التجارية",
+      "type": "commerce",
+      "focus": [
+        "صفقات مباشرة",
+        "منتجات",
+        "كوبونات"
+      ],
+      "gaps": [
+        "غياب المحتوى الخالد حول الموعد نفسه",
+        "إهمال صياغة متى وكم باقي",
+        "لا توجد خلفية زمنية دقيقة"
+      ]
+    },
+    {
+      "site": "المحتوى الإخباري والتحليلي",
+      "type": "news",
+      "focus": [
+        "أرقام الإنفاق",
+        "التوقعات",
+        "سلوك الشراء"
+      ],
+      "gaps": [
+        "تغطية موسمية لا تبني صفحة دائمة",
+        "ضعف التوافق مع نية العد التنازلي",
+        "عدم خدمة الباحث العربي مباشرة"
+      ]
+    }
+  ],
+  "coverageMatrix": [
+    {
+      "keyword": "متى الإثنين الإلكتروني في أمريكا {{year}}",
+      "whyItMatters": "صيغة مباشرة تلائم نية الباحث المعلوماتية."
+    },
+    {
+      "keyword": "كم باقي على Cyber Monday",
+      "whyItMatters": "صيغة العد الأشهر مع الاسم الإنجليزي."
+    },
+    {
+      "keyword": "هل Cyber Monday بعد الجمعة السوداء",
+      "whyItMatters": "تسد فجوة مهمة في فهم التسلسل الموسمي."
+    },
+    {
+      "keyword": "عروض الإثنين الإلكتروني أمريكا",
+      "whyItMatters": "تربط الصفحة بنية شراء إلكترونية واضحة."
+    }
+  ],
+  "keywordGaps": [
+    "تقديم قاعدة زمنية سهلة الفهم بدل مجرد تاريخ متغير",
+    "شرح الفرق العملي بين Cyber Monday وBlack Friday",
+    "دمج الاسم العربي والإنجليزي في الصفحة نفسها"
+  ],
+  "unansweredQuestions": [
+    "هل Cyber Monday أقوى فعلاً للشراء الإلكتروني؟",
+    "متى يبدأ ضمن موسم Thanksgiving الأمريكي؟",
+    "هل يجب أن أنتظر هذا اليوم أم أشتري من الجمعة السوداء؟"
+  ],
+  "differentiationIdeas": [
+    "توضيح التسلسل الزمني من Thanksgiving إلى Black Friday ثم Cyber Monday",
+    "إضافة FAQ مقارن لا يكتفي بالتعريف",
+    "خدمة الباحث العربي الذي يستخدم الاسم الإنجليزي أكثر من الترجمة أحياناً"
+  ],
+  "factSources": [
+    {
+      "label": "U.S. Office of Personnel Management: What are Federal holidays?",
+      "url": "https://www.opm.gov/faq/payleave/what-are-federal-holidays.ashx"
+    },
+    {
+      "label": "National Retail Federation: Thanksgiving Holiday Weekend Sees Record Number of Shoppers",
+      "url": "https://nrf.com/media-center/press-releases/thanksgiving-holiday-weekend-sees-record-number-shoppers"
+    },
+    {
+      "label": "Adobe: U.S. Holiday Shopping Season to Cross $250 Billion Online, Rising 5.3% YoY",
+      "url": "https://news.adobe.com/news/2025/10/adobe-us-holiday-shopping-season-cross-250-billion-online-rising-yoy"
+    }
+  ],
+  "notes": "الزاوية الأقوى لهذا الحدث في العربية هي دمج اسم Cyber Monday مع الترجمة العربية وتوضيح أنه ليس يوماً مستقلاً زمنياً بل جزء من تسلسل Thanksgiving الأمريكي."
+}

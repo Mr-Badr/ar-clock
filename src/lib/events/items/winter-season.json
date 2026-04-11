@@ -2,8 +2,9 @@
   "id": "winter",
   "slug": "winter-season",
   "name": "بداية فصل الشتاء",
-  "type": "fixed",
+  "type": "estimated",
   "category": "astronomy",
   "month": 12,
-  "day": 21
+  "day": 21,
+  "date": "{{year}}-12-21"
 }

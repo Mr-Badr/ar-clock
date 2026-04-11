@@ -1,0 +1,12 @@
+{
+  "id": "cyber-monday-usa",
+  "slug": "cyber-monday-usa",
+  "name": "الإثنين الإلكتروني في أمريكا",
+  "type": "floating",
+  "category": "holidays",
+  "_countryCode": "us",
+  "month": 11,
+  "weekday": 4,
+  "nth": 4,
+  "offsetDays": 4
+}

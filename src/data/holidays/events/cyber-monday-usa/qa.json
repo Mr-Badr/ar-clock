@@ -1,0 +1,18 @@
+{
+  "slug": "cyber-monday-usa",
+  "tier": "tier1",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: U.S. Office of Personnel Management: What are Federal holidays?",
+    "fact-source: National Retail Federation: Thanksgiving Holiday Weekend Sees Record Number of Shoppers",
+    "fact-source: Adobe: U.S. Holiday Shopping Season to Cross $250 Billion Online, Rising 5.3% YoY"
+  ],
+  "updatedAt": "2026-04-10T00:00:00.000Z"
+}

@@ -59,7 +59,7 @@ This now defaults to `publishStatus: "drafted"` so the event starts as a safe dr
 Use a reusable batch file instead of creating a one-off script in the root `scripts/` folder:
 
 ```bash
-npm run events:apply-batch -- --file src/data/holidays/batches/your-batch.ts --build --validate
+npm run events:apply-batch -- --file scripts/holiday-batches/your-batch.ts --build --validate
 ```
 
 Batch files should describe the event updates, while the reusable command handles writing the event folders, rebuilding generated output, and optional validation.

@@ -8428,20 +8428,6 @@
     "country_slug": "brazil"
   },
   {
-    "id": 46288,
-    "city_slug": "battagram",
-    "country_code": "PK",
-    "name_ar": "بتغرام",
-    "name_en": "Battagram",
-    "timezone": "Asia/Karachi",
-    "is_capital": false,
-    "lat": 34.67719,
-    "lon": 73.02329,
-    "priority": 700000,
-    "population": 700000,
-    "country_slug": "pakistan"
-  },
-  {
     "id": 27709,
     "city_slug": "dharavi",
     "country_code": "IN",
@@ -8454,6 +8440,20 @@
     "priority": 700000,
     "population": 700000,
     "country_slug": "india"
+  },
+  {
+    "id": 46288,
+    "city_slug": "battagram",
+    "country_code": "PK",
+    "name_ar": "بتغرام",
+    "name_en": "Battagram",
+    "timezone": "Asia/Karachi",
+    "is_capital": false,
+    "lat": 34.67719,
+    "lon": 73.02329,
+    "priority": 700000,
+    "population": 700000,
+    "country_slug": "pakistan"
   },
   {
     "id": 18916,
@@ -12026,20 +12026,6 @@
     "country_slug": "malaysia"
   },
   {
-    "id": 42437,
-    "city_slug": "kota-damansara",
-    "country_code": "MY",
-    "name_ar": "كوتا دامانسارا",
-    "name_en": "Kota Damansara",
-    "timezone": "Asia/Kuala_Lumpur",
-    "is_capital": false,
-    "lat": 3.15454,
-    "lon": 101.58022,
-    "priority": 500000,
-    "population": 500000,
-    "country_slug": "malaysia"
-  },
-  {
     "id": 42436,
     "city_slug": "kampung-larkin-lama",
     "country_code": "MY",
@@ -12049,6 +12035,20 @@
     "is_capital": false,
     "lat": 1.5024,
     "lon": 103.744,
+    "priority": 500000,
+    "population": 500000,
+    "country_slug": "malaysia"
+  },
+  {
+    "id": 42437,
+    "city_slug": "kota-damansara",
+    "country_code": "MY",
+    "name_ar": "كوتا دامانسارا",
+    "name_en": "Kota Damansara",
+    "timezone": "Asia/Kuala_Lumpur",
+    "is_capital": false,
+    "lat": 3.15454,
+    "lon": 101.58022,
     "priority": 500000,
     "population": 500000,
     "country_slug": "malaysia"
@@ -13160,20 +13160,6 @@
     "country_slug": "south-sudan"
   },
   {
-    "id": 54062,
-    "city_slug": "muratpasa",
-    "country_code": "TR",
-    "name_ar": "مراد باشا",
-    "name_en": "Muratpasa",
-    "timezone": "Europe/Istanbul",
-    "is_capital": false,
-    "lat": 36.89157,
-    "lon": 30.76498,
-    "priority": 450000,
-    "population": 450000,
-    "country_slug": "turkey"
-  },
-  {
     "id": 11735,
     "city_slug": "wenshan-city",
     "country_code": "CN",
@@ -13186,6 +13172,20 @@
     "priority": 450000,
     "population": 450000,
     "country_slug": "china"
+  },
+  {
+    "id": 54062,
+    "city_slug": "muratpasa",
+    "country_code": "TR",
+    "name_ar": "مراد باشا",
+    "name_en": "Muratpasa",
+    "timezone": "Europe/Istanbul",
+    "is_capital": false,
+    "lat": 36.89157,
+    "lon": 30.76498,
+    "priority": 450000,
+    "population": 450000,
+    "country_slug": "turkey"
   },
   {
     "id": 54063,

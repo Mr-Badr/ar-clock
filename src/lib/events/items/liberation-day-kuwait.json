@@ -1,0 +1,10 @@
+{
+  "id": "liberation-day-kw",
+  "slug": "liberation-day-kuwait",
+  "name": "عيد التحرير الكويتي",
+  "type": "fixed",
+  "category": "national",
+  "_countryCode": "kw",
+  "month": 2,
+  "day": 26
+}

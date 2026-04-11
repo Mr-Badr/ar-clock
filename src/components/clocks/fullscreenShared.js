@@ -12,22 +12,90 @@ export function getFullscreenScale(level, variant = 'threeUnit') {
   return `scale(${levels[level] ?? levels[1]})`;
 }
 
+export function getActiveFullscreenElement() {
+  if (typeof document === 'undefined') return null;
+  return (
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.mozFullScreenElement ||
+    document.msFullscreenElement ||
+    null
+  );
+}
+
+export async function requestElementFullscreen(element) {
+  if (!element) return false;
+
+  const request =
+    element.requestFullscreen?.bind(element) ||
+    element.webkitRequestFullscreen?.bind(element) ||
+    element.mozRequestFullScreen?.bind(element) ||
+    element.msRequestFullscreen?.bind(element);
+
+  if (!request) return false;
+
+  try {
+    const result = request();
+    if (result && typeof result.then === 'function') {
+      await result;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function exitActiveFullscreen() {
+  if (typeof document === 'undefined') return false;
+
+  const exit =
+    document.exitFullscreen?.bind(document) ||
+    document.webkitExitFullscreen?.bind(document) ||
+    document.mozCancelFullScreen?.bind(document) ||
+    document.msExitFullscreen?.bind(document);
+
+  if (!exit) return false;
+
+  try {
+    const result = exit();
+    if (result && typeof result.then === 'function') {
+      await result;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function syncFullscreenDocumentState(active) {
+  if (typeof document === 'undefined') return;
+  document.documentElement.classList.toggle('has-css-fullscreen', active);
+  document.body.classList.toggle('has-css-fullscreen', active);
+}
+
 export const FULLSCREEN_LAYER_STYLE = {
   position: 'fixed',
   inset: 0,
+  width: '100vw',
+  minHeight: '100svh',
+  height: '100dvh',
   zIndex: 100,
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  padding: 'max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left))',
   overflow: 'hidden',
+  overscrollBehavior: 'none',
+  WebkitOverflowScrolling: 'touch',
+  touchAction: 'manipulation',
 };
 
 export const FULLSCREEN_TOOLBAR_STYLE = {
   position: 'absolute',
-  top: '1.5rem',
-  right: '1.5rem',
-  left: '1.5rem',
+  top: 0,
+  right: 0,
+  left: 0,
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'space-between',
@@ -61,7 +129,7 @@ export function getFullscreenContentStyle(scaleValue) {
   return {
     width: 'min(100%, 1700px)',
     maxWidth: 'calc(100vw - 1.25rem)',
-    maxHeight: 'calc(100vh - 5.5rem)',
+    maxHeight: 'calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 6.5rem)',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

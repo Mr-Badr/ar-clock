@@ -1,0 +1,12 @@
+{
+  "id": "black-friday-usa",
+  "slug": "black-friday-usa",
+  "name": "الجمعة السوداء في أمريكا",
+  "type": "floating",
+  "category": "holidays",
+  "_countryCode": "us",
+  "month": 11,
+  "weekday": 4,
+  "nth": 4,
+  "offsetDays": 1
+}

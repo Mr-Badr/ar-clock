@@ -2,6 +2,8 @@
 
 import { Bank, ClockCountdown } from '@phosphor-icons/react';
 
+import AdInArticle from '@/components/ads/AdInArticle';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { buildUsMarketOpenPageModel } from '@/lib/economy/engine';
 
 import { FAQ_ITEMS } from './data/faqItems';
@@ -58,6 +60,8 @@ export default function UsMarketOpenLive({ initialViewer, initialNowIso }) {
         note={model.viewer.notice}
       />
 
+      <AdTopBanner slotId="top-economy-us-market-open" />
+
       <EconomyBanner
         kicker="الجواب السريع"
         title={model.usCard?.statusLabel || 'السوق الأمريكي اليوم'}
@@ -86,6 +90,8 @@ export default function UsMarketOpenLive({ initialViewer, initialNowIso }) {
           rows={model.countryExtendedRows}
         />
       </section>
+
+      <AdInArticle slotId="mid-economy-us-market-open" />
 
       <section className="economy-section">
         <EconomySectionHeader

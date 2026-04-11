@@ -1,6 +1,7 @@
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { SITE_BRAND, SITE_ECONOMY_KEYWORDS, getSiteUrl } from '@/lib/site-config';
 
+import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
 import EconomyLanding from '@/components/economy/EconomyLanding';
 
 const SITE_URL = getSiteUrl();
@@ -70,9 +71,9 @@ export default function EconomyPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
       />
-      <main className="economy-shell">
+      <EconomyAdLayout>
         <EconomyLanding />
-      </main>
+      </EconomyAdLayout>
     </div>
   );
 }

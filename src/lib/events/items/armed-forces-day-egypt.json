@@ -1,0 +1,10 @@
+{
+  "id": "armed-forces-day-eg",
+  "slug": "armed-forces-day-egypt",
+  "name": "يوم القوات المسلحة المصرية",
+  "type": "fixed",
+  "category": "national",
+  "_countryCode": "eg",
+  "month": 10,
+  "day": 6
+}

@@ -12,6 +12,12 @@ import { getSafeTimezone } from '@/lib/country-utils';
 import { resolveCurrentUserCity } from '@/lib/user-location.client';
 import { getCurrentPageUrl, useCopyFeedback } from '@/lib/share.client';
 import { SectionDivider } from '@/components/shared/primitives';
+import {
+  exitActiveFullscreen,
+  getActiveFullscreenElement,
+  requestElementFullscreen,
+  syncFullscreenDocumentState,
+} from '@/components/clocks/fullscreenShared';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -215,7 +221,7 @@ export default function HeroClockClient({
   // ── Fullscreen change listener ────────────────────────────────────────────
   useEffect(() => {
     const onChange = () => {
-      const active = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      const active = !!getActiveFullscreenElement();
       if (!active) setIsFS(false);
     };
     document.addEventListener('fullscreenchange', onChange);
@@ -225,6 +231,11 @@ export default function HeroClockClient({
       document.removeEventListener('webkitfullscreenchange', onChange);
     };
   }, []);
+
+  useEffect(() => {
+    syncFullscreenDocumentState(isFS);
+    return () => syncFullscreenDocumentState(false);
+  }, [isFS]);
 
   // ── Wake lock while fullscreen ────────────────────────────────────────────
   useEffect(() => {
@@ -259,19 +270,11 @@ export default function HeroClockClient({
     if (!isFS) {
       const el = containerRef.current;
       if (!el) return;
-      try {
-        const reqFS = el.requestFullscreen?.bind(el) || el.webkitRequestFullscreen?.bind(el);
-        if (reqFS) { await reqFS(); setIsFS(true); }
-      } catch {
-        // Fullscreen may be blocked in sandboxed iframes; fail silently
-      }
+      await requestElementFullscreen(el);
+      setIsFS(true);
     } else {
-      try {
-        const exitFS =
-          document.exitFullscreen?.bind(document) ||
-          document.webkitExitFullscreen?.bind(document);
-        if (exitFS) await exitFS();
-      } catch { setIsFS(false); }
+      await exitActiveFullscreen();
+      setIsFS(false);
     }
   };
 

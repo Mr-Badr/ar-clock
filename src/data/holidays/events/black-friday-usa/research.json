@@ -1,0 +1,109 @@
+{
+  "slug": "black-friday-usa",
+  "locale": "ar",
+  "capturedAt": "2026-04-10T00:00:00.000Z",
+  "primaryQueries": [
+    "كم باقي على الجمعة السوداء",
+    "كم باقي على البلاك فرايدي في أمريكا",
+    "متى الجمعة السوداء في أمريكا {{year}}",
+    "Black Friday أمريكا {{year}}",
+    "عروض الجمعة السوداء أمريكا",
+    "هل الجمعة السوداء بعد عيد الشكر"
+  ],
+  "competitors": [
+    {
+      "site": "صفحات العدادات العربية",
+      "type": "countdown",
+      "focus": [
+        "التاريخ",
+        "عداد سريع",
+        "صياغة قصيرة"
+      ],
+      "gaps": [
+        "لا تشرح القاعدة المرتبطة بعيد الشكر",
+        "لا تفرق بين البلاك فرايدي وCyber Monday",
+        "تفقد البعد التجاري العملي"
+      ]
+    },
+    {
+      "site": "مواقع العروض والشراء",
+      "type": "commerce",
+      "focus": [
+        "صفقات مباشرة",
+        "قوائم منتجات",
+        "نبرة بيعية"
+      ],
+      "gaps": [
+        "ضعف الإجابة عن سؤال متى",
+        "غياب تعريف واضح بالسياق الأمريكي",
+        "تركيز مفرط على البيع لا على نية الباحث"
+      ]
+    },
+    {
+      "site": "التغطيات الإخبارية",
+      "type": "news",
+      "focus": [
+        "أرقام المبيعات",
+        "حجم الإنفاق",
+        "اتجاهات المتسوقين"
+      ],
+      "gaps": [
+        "ليست صفحات خالدة لنية العد التنازلي",
+        "لا تبني صفحة شاملة عن الموعد نفسه",
+        "ضعف في الربط بالكلمات العربية الشائعة مثل كم باقي"
+      ]
+    }
+  ],
+  "coverageMatrix": [
+    {
+      "keyword": "متى الجمعة السوداء في أمريكا {{year}}",
+      "whyItMatters": "أعلى صيغة مباشرة تجمع التوقيت والمكان والنية."
+    },
+    {
+      "keyword": "كم باقي على البلاك فرايدي في أمريكا",
+      "whyItMatters": "صيغة العد التنازلي الأشهر عربياً لهذا الحدث."
+    },
+    {
+      "keyword": "هل الجمعة السوداء بعد عيد الشكر",
+      "whyItMatters": "تغلق فجوة تفسيرية لا تجيب عنها صفحات كثيرة بوضوح."
+    },
+    {
+      "keyword": "عروض الجمعة السوداء أمريكا",
+      "whyItMatters": "تلتقط النية التجارية المرتبطة بالحدث لا التاريخ فقط."
+    }
+  ],
+  "keywordGaps": [
+    "شرح أن البلاك فرايدي مشتق زمنياً من عيد الشكر الأمريكي",
+    "التمييز التحريري بين يوم العروض ومتوالية Cyber Week",
+    "تقديم عداد وتفسير وقرار شراء في مساحة واحدة"
+  ],
+  "unansweredQuestions": [
+    "هل البلاك فرايدي يوم واحد فقط أم بداية موسم؟",
+    "هل الأفضل الشراء يوم الجمعة أم الانتظار حتى الإثنين الإلكتروني؟",
+    "لماذا يهم المتسوق العربي توقيت السوق الأمريكي تحديداً؟"
+  ],
+  "differentiationIdeas": [
+    "إبراز القاعدة الزمنية اليوم التالي لعيد الشكر في أول الشاشة",
+    "إضافة أسئلة مقارنة عملية مع Cyber Monday",
+    "مخاطبة نية العروض العربية بعبارة البلاك فرايدي والجمعة السوداء معاً"
+  ],
+  "factSources": [
+    {
+      "label": "U.S. Office of Personnel Management: What are Federal holidays?",
+      "url": "https://www.opm.gov/faq/payleave/what-are-federal-holidays.ashx"
+    },
+    {
+      "label": "National Retail Federation: Thanksgiving Holiday Weekend Sees Record Number of Shoppers",
+      "url": "https://nrf.com/media-center/press-releases/thanksgiving-holiday-weekend-sees-record-number-shoppers"
+    },
+    {
+      "label": "Adobe: U.S. Holiday Shopping Season to Cross $250 Billion Online, Rising 5.3% YoY",
+      "url": "https://news.adobe.com/news/2025/10/adobe-us-holiday-shopping-season-cross-250-billion-online-rising-yoy"
+    },
+    {
+      "label": "Britannica: Why Is It Called Black Friday?",
+      "url": "https://www.britannica.com/video/origin-history-Black-Friday-Thanksgiving-United-States/-293072"
+    }
+  ],
+  "notes": "البحث يوضح أن أفضل زاوية SEO عربية هنا هي الجمع بين التسمية العربية والإنجليزية، ثم ربط الموعد مباشرة بعيد الشكر لا عرض التاريخ كرقم منفصل بلا قاعدة."
+}

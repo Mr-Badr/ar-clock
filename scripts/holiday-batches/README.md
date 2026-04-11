@@ -11,13 +11,13 @@ Use this folder when you want to:
 Run a batch with:
 
 ```bash
-npm run events:apply-batch -- --file src/data/holidays/batches/your-batch.ts --build --validate
+npm run events:apply-batch -- --file scripts/holiday-batches/your-batch.ts --build --validate
 ```
 
 Expected shape:
 
 ```ts
-import { defineEventBatch } from '../../../../scripts/lib/event-authoring';
+import { defineEventBatch } from '../lib/event-authoring';
 
 export default defineEventBatch([
   {

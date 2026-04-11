@@ -9,6 +9,7 @@ import {
 } from '@/lib/economy/page-helpers';
 import { getSiteUrl } from '@/lib/site-config';
 
+import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
 import MarketClockLive from '@/components/economy/MarketClockLive';
 
 const SITE_URL = getSiteUrl();
@@ -55,7 +56,7 @@ export default function MarketClockPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <main className="economy-shell">
+      <EconomyAdLayout>
         <Suspense
           fallback={(
             <MarketClockLive
@@ -66,7 +67,7 @@ export default function MarketClockPage() {
         >
           <MarketClockRequestContent />
         </Suspense>
-      </main>
+      </EconomyAdLayout>
     </div>
   );
 }

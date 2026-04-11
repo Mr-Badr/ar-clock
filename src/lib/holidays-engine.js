@@ -271,7 +271,7 @@ export function buildHistoricalDates(ev, targetDate) {
     { gregorian: `${gr - 2}م`, note: 'ماضي' },
     { gregorian: `${gr - 1}م`, note: 'ماضي' },
     { gregorian: `${gr}م`, note: 'السنة الحالية', current: true },
-    { gregorian: `${gr + 1}م`, note: ev.type === 'estimated' ? 'تقديري' : 'ثابت' },
+    { gregorian: `${gr + 1}م`, note: ev.type === 'estimated' ? 'تقديري' : ev.type === 'floating' ? 'متحرك وفق القاعدة السنوية' : 'ثابت' },
   ];
 }
 
@@ -295,7 +295,9 @@ export const enrichEvent = (raw) => {
     if (!('hijriMonth' in e) && 'month' in e) e.hijriMonth = e.month;
     if (!('hijriDay' in e) && 'day' in e) e.hijriDay = e.day;
   }
-  ['hijriMonth', 'hijriDay', 'month', 'day'].forEach(k => { if (e[k] != null) e[k] = Number(e[k]); });
+  ['hijriMonth', 'hijriDay', 'month', 'day', 'weekday', 'nth', 'offsetDays'].forEach(k => {
+    if (e[k] != null) e[k] = Number(e[k]);
+  });
   
   if (e.category && !VALID_CATEGORIES.has(e.category)) {
     console.warn(`[enrichEvent] Invalid category '${e.category}' on slug '${e.slug}'. Defaulting to 'islamic'.`);
@@ -314,7 +316,15 @@ export const enrichEvent = (raw) => {
   e.faqItems ??= [
     { q: `كم باقي على ${e.name}؟`, a: e.description },
     { q: `كم يوماً تبقى على ${e.name}؟`, a: 'تابع العد التنازلي الدقيق على هذه الصفحة.' },
-    { q: `هل يتغير موعد ${e.name} كل عام؟`, a: e.type === 'hijri' ? 'نعم، يتقدم ~11 يوماً سنوياً في التقويم الهجري.' : `موعد ${e.name} ثابت كل عام.` },
+    {
+      q: `هل يتغير موعد ${e.name} كل عام؟`,
+      a:
+        e.type === 'hijri'
+          ? 'نعم، يتقدم ~11 يوماً سنوياً في التقويم الهجري.'
+          : e.type === 'floating'
+            ? `موعد ${e.name} يتحرك سنوياً وفق قاعدة تقويمية ثابتة مرتبطة بيوم الأسبوع داخل الشهر.`
+            : `موعد ${e.name} ثابت كل عام.`,
+    },
   ];
   return e;
 };
@@ -337,6 +347,32 @@ function nextMonthly(day, now) {
   if (d < n) d = new Date(n.getFullYear(), n.getMonth() + 1, day);
   if (d.getDate() !== day) d = new Date(d.getFullYear(), d.getMonth() + 1, 0);
   return d;
+}
+function nthWeekdayOfMonth(year, month, weekday, nth) {
+  if ([year, month, weekday, nth].some((value) => value == null || Number.isNaN(Number(value)))) {
+    return null;
+  }
+  const first = new Date(year, month - 1, 1);
+  const offset = (weekday - first.getDay() + 7) % 7;
+  const dayOfMonth = 1 + offset + (nth - 1) * 7;
+  const date = new Date(year, month - 1, dayOfMonth);
+  date.setHours(0, 0, 0, 0);
+  if (date.getMonth() !== month - 1) return null;
+  return date;
+}
+function resolveFloatingDate(ev, year) {
+  const base = nthWeekdayOfMonth(year, ev.month, ev.weekday, ev.nth);
+  if (!base) return null;
+  const date = new Date(base);
+  date.setDate(date.getDate() + (ev.offsetDays || 0));
+  date.setHours(0, 0, 0, 0);
+  return date;
+}
+function nextFloating(ev, now) {
+  const n = new Date(now); n.setHours(0, 0, 0, 0);
+  let d = resolveFloatingDate(ev, n.getFullYear());
+  if (!d || d < n) d = resolveFloatingDate(ev, n.getFullYear() + 1);
+  return d || n;
 }
 function easterSunday(yr) {
   const a = yr % 19, b = Math.floor(yr / 100), c = yr % 100, d = Math.floor(b / 4), e = b % 4;
@@ -385,6 +421,7 @@ export function getNextEventDate(rawEvent, resolvedMap = {}, nowMs = Date.now())
     return nextEstimated(resolvedDate, now);
   }
   if (ev.type === 'monthly') return nextMonthly(ev.day, now);
+  if (ev.type === 'floating') return nextFloating(ev, now);
   if (ev.type === 'easter') return nextEasterOffset(ev.easterOffset || 0, now);
   return now;
 }
@@ -439,6 +476,7 @@ export function getRelatedEvents(slug, all, n = 4) {
 const COUNTRY_NAMES = {
   sa: 'المملكة العربية السعودية', eg: 'مصر', ma: 'المغرب', dz: 'الجزائر',
   ae: 'الإمارات العربية المتحدة', tn: 'تونس', kw: 'الكويت', qa: 'قطر',
+  us: 'الولايات المتحدة الأمريكية',
 };
 
 function getSchemaLocationName(ev) {
@@ -616,7 +654,7 @@ export function buildBreadcrumbSchema(crumbs) {
  */
 export function buildEventSeriesSchema(ev, siteUrl) {
   // Only add EventSeries for recurring event types
-  const recurringTypes = ['hijri', 'fixed', 'easter', 'monthly'];
+  const recurringTypes = ['hijri', 'fixed', 'easter', 'monthly', 'floating'];
   if (!recurringTypes.includes(ev.type)) return null;
   
   return {

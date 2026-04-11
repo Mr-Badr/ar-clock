@@ -17,7 +17,7 @@ const eventCoreSchema = z.object({
   id: z.string().min(1),
   slug: z.string().min(1),
   name: z.string().min(1),
-  type: z.enum(['hijri', 'fixed', 'estimated', 'monthly', 'easter']),
+  type: z.enum(['hijri', 'fixed', 'estimated', 'monthly', 'easter', 'floating']),
   category: z.enum(['islamic', 'national', 'school', 'holidays', 'astronomy', 'business', 'support']),
   _countryCode: z.string().nullable().optional(),
   month: z.number().int().min(1).max(12).optional(),
@@ -25,6 +25,9 @@ const eventCoreSchema = z.object({
   date: z.string().optional(),
   hijriMonth: z.number().int().min(1).max(12).optional(),
   hijriDay: z.number().int().min(1).max(30).optional(),
+  weekday: z.number().int().min(0).max(6).optional(),
+  nth: z.number().int().min(1).max(5).optional(),
+  offsetDays: z.number().int().optional(),
 }).passthrough();
 
 const richContentSchema = z.object({}).passthrough();
@@ -88,5 +91,6 @@ export function parseEventPackage(slug, raw) {
 export function inferSourceAuthority(core) {
   if (core?.type === 'hijri') return 'hijri-authority';
   if (core?.type === 'estimated') return 'official-announcement';
+  if (core?.type === 'floating') return 'rule-based-calendar';
   return 'fixed-calendar';
 }
