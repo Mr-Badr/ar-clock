@@ -3,7 +3,7 @@ import { getAllCountrySlugs, getCountryBySlug } from '@/lib/db/queries/countries
 import { getSiteUrl } from '@/lib/site-config';
 
 export const dynamic = 'force-dynamic';
-export const revalidate = 86400;
+// export const revalidate = 86400;
 
 export async function generateSitemaps() {
   const countrySlugs = await getAllCountrySlugs();
