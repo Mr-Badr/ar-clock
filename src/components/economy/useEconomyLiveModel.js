@@ -1,3 +1,4 @@
+// components/economy/useEconomyLiveModel.jsx
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
@@ -23,7 +24,7 @@ function mergeViewerWithDetection(currentViewer, detection) {
   };
 }
 
-export function useEconomyLiveModel(buildModel, initialViewer, initialNowIso) {
+export function useEconomyLiveModel(buildModel, initialViewer, initialNowIso, getDocumentTitle = null) {
   const [viewer, setViewer] = useState(initialViewer);
   const [nowIso, setNowIso] = useState(initialNowIso || null);
 
@@ -32,7 +33,7 @@ export function useEconomyLiveModel(buildModel, initialViewer, initialNowIso) {
 
     const timer = window.setInterval(() => {
       setNowIso(new Date().toISOString());
-    }, 30_000);
+    }, 1_000);
 
     return () => window.clearInterval(timer);
   }, []);
@@ -64,8 +65,25 @@ export function useEconomyLiveModel(buildModel, initialViewer, initialNowIso) {
     };
   }, []);
 
-  return useMemo(() => {
+  const model = useMemo(() => {
     if (!nowIso) return null;
     return buildModel(viewer, nowIso);
   }, [buildModel, nowIso, viewer]);
+
+  useEffect(() => {
+    if (!model || typeof getDocumentTitle !== 'function') return undefined;
+
+    const nextTitle = getDocumentTitle(model);
+    const previousTitle = document.title;
+
+    if (nextTitle) {
+      document.title = nextTitle;
+    }
+
+    return () => {
+      document.title = previousTitle;
+    };
+  }, [getDocumentTitle, model]);
+
+  return model;
 }

@@ -1,3 +1,4 @@
+// components/economy/GoldMarketHoursLive.jsx
 'use client';
 
 import { ClockCountdown, Sparkle } from '@phosphor-icons/react';
@@ -15,10 +16,13 @@ import {
   EconomyGuide,
   EconomyHero,
   EconomySectionHeader,
+  EconomySpotlight,
+  EconomyStatCards,
   EconomySourceLinks,
   EconomyTable,
   EconomyTimeline,
   EconomyToolCards,
+  GoldActivityMeter,
 } from './common';
 
 export default function GoldMarketHoursLive({ initialViewer, initialNowIso }) {
@@ -62,6 +66,15 @@ export default function GoldMarketHoursLive({ initialViewer, initialNowIso }) {
         note={model.viewer.notice}
       />
 
+      <EconomyStatCards cards={model.signalCards} />
+      <EconomySpotlight model={model.spotlight} />
+
+      <GoldActivityMeter
+        score={model.goldActivity.score}
+        label={model.goldActivity.label}
+        tone={model.goldActivity.tone}
+      />
+
       <AdTopBanner slotId="top-economy-gold-market-hours" />
 
       <EconomyBanner
@@ -70,6 +83,17 @@ export default function GoldMarketHoursLive({ initialViewer, initialNowIso }) {
         detail={`أفضل وقت لمتابعة الذهب من ${model.bestWindow.startLabel} إلى ${model.bestWindow.endLabel} بتوقيتك. أما الاستراحة اليومية المعتادة فتظهر من ${model.maintenanceWindow.startLabel} إلى ${model.maintenanceWindow.endLabel}.`}
         tone={model.gold.isActive ? 'success' : model.gold.tone}
       />
+
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="الذهب العالمي مقابل محلات الذهب المحلية"
+          lead="هذا الفرق من أكثر النقاط التي يخلط فيها المستخدم العربي بين التداول العالمي وشراء الذهب الفيزيائي."
+        />
+        <EconomyTable
+          columns={['العنصر', 'سوق الذهب العالمي', 'محلات الذهب المحلية']}
+          rows={model.shopComparisonRows}
+        />
+      </section>
 
       <section className="economy-section">
         <EconomySectionHeader
@@ -100,6 +124,14 @@ export default function GoldMarketHoursLive({ initialViewer, initialNowIso }) {
 
       <section className="economy-section">
         <EconomySectionHeader
+          title="ما الفرق بين LBMA وCOMEX وOTC؟"
+          lead="أضفنا هذا الشرح لأن الفرق بين أسواق الذهب الثلاثة شبه غائب في المحتوى العربي المبسط رغم أنه يفسر سلوك السعر وساعات النشاط."
+        />
+        <EconomyGuide sections={model.marketGuideCards} />
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
           title="أوقات الذهب في السعودية والإمارات ومصر والمغرب"
           lead="هذا الجدول هو الفجوة الأوضح في المحتوى العربي الحالي: نافذة الذهب اليومية والاستراحة المعتادة في أكثر أربع مناطق عربية بحثاً عن هذا الموضوع."
         />
@@ -119,12 +151,23 @@ export default function GoldMarketHoursLive({ initialViewer, initialNowIso }) {
         <EconomyGuide sections={model.guideSections} />
       </section>
 
+      {model.ramadanSection ? (
+        <section className="economy-section">
+          <EconomyBanner
+            kicker="قسم موسمي"
+            title={model.ramadanSection.title}
+            detail={model.ramadanSection.body}
+            tone="warning"
+          />
+        </section>
+      ) : null}
+
       <section className="economy-section">
         <EconomySectionHeader
           title="أسئلة شائعة"
           lead="الإجابات التالية مكتوبة بصيغة مباشرة قابلة للاقتباس، لأنها تعالج أكثر أسئلة الذهب تكراراً في البحث العربي اليومي."
         />
-        <EconomyFaq items={FAQ_ITEMS.goldMarketHours} />
+        <EconomyFaq items={model.faqItems || FAQ_ITEMS.goldMarketHours} />
       </section>
 
       <section className="economy-section">

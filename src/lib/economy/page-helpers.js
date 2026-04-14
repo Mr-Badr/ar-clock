@@ -1,4 +1,7 @@
+// lib/economy/page-helpers.js
 import { getEconomyViewerContext } from '@/lib/economy/location';
+
+const CURRENT_YEAR = new Date().getUTCFullYear();
 
 export const DEFAULT_ECONOMY_VIEWER = {
   timezone: 'UTC',
@@ -33,15 +36,67 @@ export function buildEconomyWebApplicationSchema({ siteUrl, path, name, descript
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     applicationCategory: 'FinanceApplication',
+    operatingSystem: 'Any',
     name,
     url: `${siteUrl}${path}`,
     inLanguage: 'ar',
     description,
+    featureList: [
+      'تحديد المنطقة الزمنية تلقائياً',
+      'تحويل أوقات الجلسات إلى توقيت المستخدم',
+      'عدادات تنازلية حية وتوصيات مبنية على الوقت',
+    ],
+    audience: {
+      '@type': 'Audience',
+      geographicArea: 'Arab World',
+    },
     offers: {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'USD',
     },
+  };
+}
+
+export function buildEconomyDatasetSchema({ siteUrl, path, name, description }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name,
+    description,
+    url: `${siteUrl}${path}`,
+    inLanguage: 'ar',
+    license: 'https://creativecommons.org/licenses/by/4.0/',
+    temporalCoverage: `${CURRENT_YEAR}/..`,
+  };
+}
+
+export function buildEconomySpeakableSchema({ siteUrl, path }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    url: `${siteUrl}${path}`,
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['.economy-banner__title', '.economy-banner__detail'],
+    },
+  };
+}
+
+export function buildEconomyFaqSchema({ siteUrl, path, items = [] }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    url: `${siteUrl}${path}`,
+    inLanguage: 'ar',
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
   };
 }
 

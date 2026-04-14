@@ -5,6 +5,7 @@ process.env.NEXT_PUBLIC_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://
 
 import manifest from '@/data/holidays/generated/manifest.json';
 import { GENERATED_ALIAS_META_BY_SLUG } from '@/lib/events/generated-aliases';
+import calculatorsSitemap from '@/app/calculators/sitemap';
 import economySitemap from '@/app/economie/sitemap';
 import holidaysSitemap from '@/app/holidays/sitemap';
 import rootSitemap from '@/app/sitemap';
@@ -67,12 +68,43 @@ test('holiday sitemap urls use site base url and valid lastModified values', asy
 test('root sitemap includes key static pages', async () => {
   const sitemap = await rootSitemap();
   const base = getSiteUrl();
-  const expectedPaths: string[] = ['/holidays', '/map', '/about', '/disclaimer', '/privacy', '/contact'];
+  const expectedPaths: string[] = ['/holidays', '/calculators', '/calculators/age', '/map', '/about', '/disclaimer', '/privacy', '/contact'];
   for (const expectedPath of expectedPaths) {
     assert.equal(
       sitemap.some((row) => row.url === `${base}${expectedPath}`),
       true,
       `${expectedPath} should appear in the root sitemap`,
+    );
+  }
+});
+
+test('calculators sitemap includes hub and detail routes', async () => {
+  const sitemap = await calculatorsSitemap();
+  const base = getSiteUrl();
+  const expectedPaths: string[] = [
+    '/calculators',
+    '/calculators/age',
+    '/calculators/age/calculator',
+    '/calculators/age/hijri',
+    '/calculators/age/difference',
+    '/calculators/age/birth-day',
+    '/calculators/age/milestones',
+    '/calculators/age/planets',
+    '/calculators/age/countdown',
+    '/calculators/age/retirement',
+    '/calculators/end-of-service-benefits',
+    '/calculators/monthly-installment',
+    '/calculators/vat',
+    '/calculators/percentage',
+  ];
+
+  assert.equal(sitemap.length, expectedPaths.length);
+
+  for (const expectedPath of expectedPaths) {
+    assert.equal(
+      sitemap.some((row) => row.url === `${base}${expectedPath}`),
+      true,
+      `${expectedPath} should appear in the calculators sitemap`,
     );
   }
 });
@@ -106,6 +138,7 @@ test('sitemap index includes economy sitemap entry', async () => {
   const response = await sitemapIndexRoute();
   const xml = await response.text();
 
+  assert.match(xml, new RegExp(`${base}/calculators/sitemap\\.xml`));
   assert.match(xml, new RegExp(`${base}/economie/sitemap\\.xml`));
 });
 

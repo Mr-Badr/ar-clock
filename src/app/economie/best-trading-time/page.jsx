@@ -1,15 +1,20 @@
+// src/app/economie/best-trading-time/page.jsx
 import { Suspense } from 'react';
 
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
   STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
+  buildEconomyDatasetSchema,
+  buildEconomyFaqSchema,
+  buildEconomySpeakableSchema,
   buildEconomyWebApplicationSchema,
   getInitialEconomyPageState,
 } from '@/lib/economy/page-helpers';
 import { getSiteUrl } from '@/lib/site-config';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
+import { FAQ_ITEMS } from '@/components/economy/data/faqItems';
 import BestTradingTimeLive from '@/components/economy/BestTradingTimeLive';
 
 const SITE_URL = getSiteUrl();
@@ -31,6 +36,9 @@ export const metadata = buildCanonicalMetadata({
     'تداخل ونشاط الجلسات الأوروبية والأمريكية للتداول اللحظي', 'أفضل استراتيجية لاختيار وقت الذروة في تداول العملات',
     'خريطة السيولة والتقلبات العالية لمعرفة أنسب موعد للتداول والدخول', 'متى أتداول في بورصة نيويورك ولندن للحصول على أكبر سيولة',
     'دليل معرفة أوقات سيولة الفوركس العالية والمخاطرة المنخفضة', 'ساعات الذروة الذهبية للتداول والمضاربة في الأسواق العالمية',
+    'أسوأ أوقات التداول في الفوركس', 'أفضل وقت لتداول الذهب من السعودية',
+    'أفضل وقت لتداول EURUSD', 'أفضل وقت لتداول XAUUSD',
+    'مقارنة أفضل وقت للتداول بين الرياض ودبي', 'متى أتجنب التداول وقت الأخبار',
   ],
   url: `${SITE_URL}/economie/best-trading-time`,
 });
@@ -47,6 +55,21 @@ export default function BestTradingTimePage() {
     'أفضل وقت للتداول',
     '/economie/best-trading-time',
   );
+  const datasetSchema = buildEconomyDatasetSchema({
+    siteUrl: SITE_URL,
+    path: '/economie/best-trading-time',
+    name: 'بيانات أفضل وقت للتداول',
+    description: 'بيانات نوافذ السيولة والتداخلات اليومية والأسبوعية للمتداول العربي من مدينته الحالية.',
+  });
+  const speakableSchema = buildEconomySpeakableSchema({
+    siteUrl: SITE_URL,
+    path: '/economie/best-trading-time',
+  });
+  const faqSchema = buildEconomyFaqSchema({
+    siteUrl: SITE_URL,
+    path: '/economie/best-trading-time',
+    items: FAQ_ITEMS.bestTradingTime,
+  });
 
   return (
     <div className="bg-base" dir="rtl">
@@ -57,6 +80,18 @@ export default function BestTradingTimePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(speakableSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <EconomyAdLayout>
         <Suspense

@@ -28,6 +28,11 @@ import {
   Timer,
   Hourglass,
   Globe,
+  Calculator,
+  Percent,
+  Receipt,
+  Wallet,
+  Buildings,
   // Economie submenu — MUST be explicit; namespace fallback fails with Turbopack
   Bank,
   Sparkle,
@@ -72,6 +77,11 @@ function getPhosphorIcon(name?: string): React.ElementType | null {
     Timer,
     Hourglass,
     Globe,
+    Calculator,
+    Percent,
+    Receipt,
+    Wallet,
+    Buildings,
     // economie
     Bank,
     Sparkle,

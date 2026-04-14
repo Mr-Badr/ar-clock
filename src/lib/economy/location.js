@@ -1,3 +1,4 @@
+// lib/economy/location.js
 import { headers } from 'next/headers';
 
 import { resolveRequestLocationFromHeaders } from '@/lib/locationService';

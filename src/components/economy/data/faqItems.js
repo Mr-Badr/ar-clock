@@ -1,3 +1,4 @@
+// components/economy/data/faqItems.js
 export const FAQ_ITEMS = {
   usMarketOpen: [
     {

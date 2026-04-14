@@ -1,7 +1,7 @@
+/* styles/economy.css */
 .economy-shell {
-  max-width: 1180px;
-  margin-inline: auto;
-  padding: 6.5rem var(--space-6) var(--space-16);
+  width: 100%;
+  padding-block: 6.5rem var(--space-16);
 }
 
 .economy-stack {
@@ -112,6 +112,262 @@
 .economy-banner__detail {
   color: var(--text-secondary);
   line-height: var(--leading-relaxed);
+}
+
+.economy-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--space-4);
+}
+
+.economy-stat-card,
+.economy-spotlight {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-default);
+  background: linear-gradient(180deg, var(--bg-surface-2) 0%, var(--bg-surface-1) 100%);
+  box-shadow: var(--shadow-card);
+}
+
+.economy-stat-card[data-tone='success'],
+.economy-spotlight[data-tone='success'] {
+  border-color: var(--success-border);
+}
+
+.economy-stat-card[data-tone='warning'],
+.economy-spotlight[data-tone='warning'] {
+  border-color: var(--warning-border);
+}
+
+.economy-stat-card[data-tone='danger'],
+.economy-spotlight[data-tone='danger'] {
+  border-color: var(--danger-border);
+}
+
+.economy-stat-card[data-tone='info'],
+.economy-spotlight[data-tone='info'],
+.economy-spotlight[data-tone='brand'] {
+  border-color: var(--info-border);
+}
+
+.economy-stat-card__label,
+.economy-spotlight__eyebrow {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+}
+
+.economy-stat-card__value,
+.economy-spotlight__title {
+  color: var(--text-primary);
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: var(--font-black);
+}
+
+.economy-stat-card__detail,
+.economy-spotlight__body {
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.economy-countdown-hero {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-default);
+  background: linear-gradient(135deg, var(--bg-surface-2) 0%, color-mix(in srgb, var(--accent-soft) 55%, var(--bg-surface-1)) 100%);
+  box-shadow: var(--shadow-card);
+}
+
+.economy-countdown-hero[data-tone='success'] {
+  border-color: var(--success-border);
+}
+
+.economy-countdown-hero[data-tone='warning'] {
+  border-color: var(--warning-border);
+}
+
+.economy-countdown-hero[data-tone='danger'] {
+  border-color: var(--danger-border);
+}
+
+.economy-countdown-hero__eyebrow,
+.economy-meter__eyebrow {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+}
+
+.economy-countdown-hero__clock {
+  font-family: var(--font-heading);
+  font-size: clamp(2.6rem, 9vw, 5rem);
+  font-weight: var(--font-black);
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+}
+
+.economy-countdown-hero__title,
+.economy-meter__title,
+.economy-strip__title {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: var(--font-black);
+  color: var(--text-primary);
+}
+
+.economy-countdown-hero__detail,
+.economy-meter__detail {
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.economy-countdown-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.economy-strip,
+.economy-hour-panel,
+.economy-profile-selector,
+.economy-comparison-card {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-2);
+  box-shadow: var(--shadow-card);
+}
+
+.economy-strip__head,
+.economy-hour-panel__head,
+.economy-comparison-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.economy-strip__grid,
+.economy-profile-selector__grid,
+.economy-comparison-card__chips,
+.economy-city-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3);
+}
+
+.economy-strip__item,
+.economy-city-card,
+.economy-profile-selector__button,
+.economy-comparison-card__chip {
+  padding: var(--space-4);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-1);
+}
+
+.economy-strip__item {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.economy-strip__item strong,
+.economy-city-card__name {
+  color: var(--text-primary);
+}
+
+.economy-strip__item span,
+.economy-city-card__country {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.economy-strip__item[data-tone='success'] {
+  border-color: var(--success-border);
+}
+
+.economy-strip__item[data-tone='warning'] {
+  border-color: var(--warning-border);
+}
+
+.economy-meter {
+  display: grid;
+  grid-template-columns: minmax(180px, 260px) 1fr;
+  gap: var(--space-6);
+  align-items: center;
+  padding: var(--space-6);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-default);
+  background: linear-gradient(180deg, var(--bg-surface-2) 0%, var(--bg-surface-1) 100%);
+  box-shadow: var(--shadow-card);
+}
+
+.economy-meter__dial {
+  --score-angle: calc((var(--score) / 100) * 180deg);
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 62%, var(--bg-surface-1) 0 42%, transparent 43%),
+    conic-gradient(from 180deg, var(--success) 0deg, var(--warning) var(--score-angle), color-mix(in srgb, var(--border-default) 70%, transparent) var(--score-angle), color-mix(in srgb, var(--border-default) 70%, transparent) 180deg, transparent 180deg);
+}
+
+.economy-meter__inner {
+  position: absolute;
+  inset: 20%;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  border-radius: 999px;
+  background: var(--bg-surface-1);
+  text-align: center;
+}
+
+.economy-meter__inner strong {
+  font-size: clamp(2rem, 6vw, 3rem);
+  color: var(--text-primary);
+}
+
+.economy-meter__inner span {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.economy-meter__copy {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.economy-city-card {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.economy-city-card__times,
+.economy-hour-panel__grid,
+.economy-comparison-card__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--space-3);
+}
+
+.economy-city-card__times small,
+.economy-hour-panel__grid small,
+.economy-comparison-card__grid small {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.economy-city-card__times strong,
+.economy-hour-panel__grid strong,
+.economy-comparison-card__grid strong {
+  color: var(--text-primary);
 }
 
 .economy-grid {
@@ -416,6 +672,37 @@
   font-size: 0.78rem;
 }
 
+.economy-timeline__picker {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.economy-timeline__picker-button,
+.economy-profile-selector__button,
+.economy-comparison-card__chip {
+  cursor: pointer;
+  color: var(--text-secondary);
+  text-align: center;
+  transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+}
+
+.economy-timeline__picker-button {
+  padding: 0.55rem 0.3rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-1);
+}
+
+.economy-timeline__picker-button[data-active='true'],
+.economy-profile-selector__button[data-active='true'],
+.economy-comparison-card__chip[data-active='true'] {
+  border-color: var(--accent-alt);
+  background: var(--accent-soft);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
 .economy-guide-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -440,6 +727,14 @@
 .economy-copy-card__body {
   color: var(--text-secondary);
   line-height: var(--leading-relaxed);
+}
+
+.economy-profile-selector__button {
+  font: inherit;
+}
+
+.economy-comparison-card__chips {
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
 }
 
 .economy-faq-list {
@@ -510,6 +805,11 @@
   overflow: hidden;
   border-radius: var(--radius-xl);
   border: 1px solid var(--border-default);
+}
+
+.economy-table-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius-xl);
 }
 
 .economy-table th,
@@ -684,6 +984,10 @@
     padding-top: 6rem;
   }
 
+  .economy-meter {
+    grid-template-columns: 1fr;
+  }
+
   .economy-timeline__row {
     grid-template-columns: 1fr;
   }
@@ -716,6 +1020,2151 @@
   }
 
   .economy-activity-chart__hour {
+    font-size: 0.62rem;
+  }
+
+  .economy-timeline__picker {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .economy-strip__head,
+  .economy-hour-panel__head,
+  .economy-comparison-card__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+/* =============================================================================
+   ECONOMY PREMIUM EXTENSIONS — v2
+   Added on top of the existing design system.
+   All variables come from base.css — nothing hardcoded.
+   ============================================================================= */
+
+/* ── PULSE ANIMATION ─────────────────────────────────────────────────────── */
+@keyframes economy-pulse {
+  0%   { box-shadow: 0 0 0 0 var(--economy-pulse-color, var(--success)); opacity: 1; }
+  60%  { box-shadow: 0 0 0 7px transparent; opacity: 0.7; }
+  100% { box-shadow: 0 0 0 0 transparent; opacity: 1; }
+}
+
+@keyframes economy-fade-in-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── LIVE BADGE ─────────────────────────────────────────────────────────── */
+.economy-live-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.economy-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  background: var(--success-soft);
+  border: 1px solid var(--success-border);
+  color: var(--success);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+}
+
+.economy-live-dot {
+  --economy-pulse-color: var(--success);
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background: var(--success);
+  flex-shrink: 0;
+  animation: economy-pulse 2.4s ease-in-out infinite;
+}
+
+.economy-live-dot--warning {
+  --economy-pulse-color: var(--warning);
+  background: var(--warning);
+}
+
+.economy-live-dot--danger {
+  --economy-pulse-color: var(--danger);
+  background: var(--danger);
+}
+
+/* ── SECTION LABEL / DIVIDER ──────────────────────────────────────────────── */
+.economy-section-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-1);
+}
+
+.economy-section-label__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  background: var(--accent-soft);
+  border: 1px solid var(--border-accent);
+  color: var(--accent-alt);
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  font-family: var(--font-heading);
+  letter-spacing: 0;
+}
+
+.economy-section-label__text {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.economy-section-label__line {
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+  min-width: 0;
+}
+
+/* ── KPI CARDS (premium stat cards) ──────────────────────────────────────── */
+/* Use instead of economy-stat-card for a more terminal/dashboard feel.        */
+.economy-kpi-rail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+  gap: var(--space-4);
+}
+
+.economy-kpi-card {
+  position: relative;
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-5) var(--space-5) calc(var(--space-5) + 1px);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-default);
+  background: linear-gradient(160deg, var(--bg-surface-2) 0%, var(--bg-surface-1) 100%);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.economy-kpi-card::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 3px;
+  background: var(--kpi-accent, var(--border-default));
+  border-radius: var(--radius-full) 0 0 var(--radius-full);
+  transition: background 200ms ease;
+}
+
+.economy-kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.economy-kpi-card[data-tone='success'] {
+  --kpi-accent: var(--success);
+  border-color: var(--success-border);
+}
+
+.economy-kpi-card[data-tone='warning'] {
+  --kpi-accent: var(--warning);
+  border-color: var(--warning-border);
+}
+
+.economy-kpi-card[data-tone='danger'] {
+  --kpi-accent: var(--danger);
+  border-color: var(--danger-border);
+}
+
+.economy-kpi-card[data-tone='info'] {
+  --kpi-accent: var(--info);
+  border-color: var(--info-border);
+}
+
+.economy-kpi-card[data-tone='brand'] {
+  --kpi-accent: var(--accent-alt);
+  border-color: var(--border-accent);
+}
+
+.economy-kpi-card__label {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.economy-kpi-card__value {
+  color: var(--text-primary);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: var(--font-black);
+  font-family: var(--font-heading);
+  line-height: 1.1;
+  transition: color 200ms ease;
+}
+
+.economy-kpi-card[data-tone='success'] .economy-kpi-card__value { color: var(--success); }
+.economy-kpi-card[data-tone='warning'] .economy-kpi-card__value { color: var(--warning); }
+.economy-kpi-card[data-tone='danger']  .economy-kpi-card__value { color: var(--danger); }
+.economy-kpi-card[data-tone='info']    .economy-kpi-card__value { color: var(--info); }
+.economy-kpi-card[data-tone='brand']   .economy-kpi-card__value { color: var(--accent-alt); }
+
+.economy-kpi-card__detail {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}
+
+/* ── MARKET STATUS GRID (Quick "is it open?" answer) ─────────────────────── */
+.economy-status-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.economy-status-card {
+  position: relative;
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-2);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: transform 200ms ease;
+}
+
+.economy-status-card:hover {
+  transform: translateY(-2px);
+}
+
+.economy-status-card__bar {
+  position: absolute;
+  top: 0;
+  inset-inline: 0;
+  height: 3px;
+  background: var(--status-bar-color, var(--border-default));
+}
+
+.economy-status-card[data-tone='success'] {
+  --status-bar-color: var(--success);
+  border-color: var(--success-border);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--success-soft) 45%, var(--bg-surface-2)) 0%, var(--bg-surface-2) 100%);
+}
+
+.economy-status-card[data-tone='warning'] {
+  --status-bar-color: var(--warning);
+  border-color: var(--warning-border);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--warning-soft) 45%, var(--bg-surface-2)) 0%, var(--bg-surface-2) 100%);
+}
+
+.economy-status-card[data-tone='info'] {
+  --status-bar-color: var(--info);
+  border-color: var(--info-border);
+}
+
+.economy-status-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.economy-status-card__flag {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.economy-status-card__header-end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.economy-status-card__name {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.economy-status-card__status-label {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: var(--font-black);
+  color: var(--text-secondary);
+}
+
+.economy-status-card[data-tone='success'] .economy-status-card__status-label {
+  color: var(--success);
+}
+
+.economy-status-card[data-tone='warning'] .economy-status-card__status-label {
+  color: var(--warning);
+}
+
+.economy-status-card__countdown {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-family: var(--font-heading);
+  font-weight: var(--font-semibold);
+}
+
+/* ── PROGRESS BAR ─────────────────────────────────────────────────────────── */
+.economy-progress-track {
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-4);
+  overflow: hidden;
+}
+
+.economy-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--text-muted);
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.economy-progress-fill[data-tone='success'] { background: var(--success); }
+.economy-progress-fill[data-tone='warning'] { background: var(--warning); }
+.economy-progress-fill[data-tone='danger']  { background: var(--danger); }
+.economy-progress-fill[data-tone='info']    { background: var(--info); }
+.economy-progress-fill[data-tone='brand']   { background: var(--accent-alt); }
+
+/* ── MARKET CARD UPGRADES ─────────────────────────────────────────────────── */
+/* Override existing .market-card to add premium features.                      */
+/* The original padding/gap is removed; use .market-card__body instead.         */
+.market-card {
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+  border-radius: var(--radius-2xl);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.market-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.market-card[data-tone='success'] {
+  border-color: var(--success-border);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--success-soft) 28%, var(--bg-surface-2)) 0%, var(--bg-surface-2) 70%);
+}
+
+.market-card[data-tone='warning'] {
+  border-color: var(--warning-border);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--warning-soft) 28%, var(--bg-surface-2)) 0%, var(--bg-surface-2) 70%);
+}
+
+.market-card[data-tone='danger'] {
+  border-color: var(--danger-border);
+}
+
+.market-card__accent-bar {
+  height: 3px;
+  background: var(--market-accent, var(--border-default));
+  flex-shrink: 0;
+}
+
+.market-card[data-tone='success'] .market-card__accent-bar { --market-accent: var(--success); }
+.market-card[data-tone='warning'] .market-card__accent-bar { --market-accent: var(--warning); }
+.market-card[data-tone='danger']  .market-card__accent-bar { --market-accent: var(--danger); }
+.market-card[data-tone='info']    .market-card__accent-bar { --market-accent: var(--info); }
+.market-card[data-tone='brand']   .market-card__accent-bar { --market-accent: var(--accent-alt); }
+
+.market-card__body {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.market-card__status {
+  gap: var(--space-2);
+}
+
+/* Countdown display — large hero number inside card */
+.market-card__countdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-3);
+}
+
+.market-card__countdown-prefix {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  margin-bottom: 0.2rem;
+}
+
+.market-card__countdown-value {
+  color: var(--text-secondary);
+  font-size: clamp(1.35rem, 3vw, 1.9rem);
+  font-weight: var(--font-black);
+  font-family: var(--font-heading);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  transition: color 200ms ease;
+}
+
+.market-card[data-tone='success'] .market-card__countdown-value { color: var(--success); }
+.market-card[data-tone='warning'] .market-card__countdown-value { color: var(--warning); }
+
+.market-card__countdown-aside {
+  text-align: end;
+}
+
+.market-card__countdown-aside-label {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  margin-bottom: 0.2rem;
+}
+
+.market-card__countdown-aside-value {
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  font-family: var(--font-heading);
+}
+
+/* 2×2 metric grid inside market card */
+.market-card__metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.market-card__metric-cell {
+  display: grid;
+  gap: 0.2rem;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
+}
+
+.market-card__metric-cell dt {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+}
+
+.market-card__metric-cell dd {
+  color: var(--text-primary);
+  font-weight: var(--font-bold);
+  font-size: var(--text-sm);
+  font-family: var(--font-heading);
+}
+
+.market-card__footnotes {
+  display: grid;
+  gap: 0.3rem;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ── CHART CARD ───────────────────────────────────────────────────────────── */
+.economy-chart-card {
+  display: grid;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-default);
+  background: linear-gradient(180deg, var(--bg-surface-2) 0%, var(--bg-surface-1) 100%);
+  box-shadow: var(--shadow-card);
+}
+
+.economy-chart-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.economy-chart-card__title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.economy-chart-card__subtitle {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  margin-top: 0.2rem;
+}
+
+.economy-chart-card__legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+}
+
+.economy-chart-card__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.economy-chart-card__legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+/* ── SESSIONS TIMELINE CHART ─────────────────────────────────────────────── */
+.economy-sessions-chart {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.economy-sessions-chart__row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.economy-sessions-chart__label {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  text-align: end;
+}
+
+.economy-sessions-chart__track {
+  position: relative;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-4);
+}
+
+.economy-sessions-chart__bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: var(--radius-full);
+  opacity: 0.88;
+  transition: opacity 200ms ease;
+}
+
+.economy-sessions-chart__bar:hover {
+  opacity: 1;
+}
+
+.economy-sessions-chart__now {
+  position: absolute;
+  top: -6px;
+  bottom: -6px;
+  width: 2px;
+  background: var(--text-primary);
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--text-primary) 20%, transparent);
+  z-index: 2;
+}
+
+.economy-sessions-chart__now::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--text-primary);
+}
+
+.economy-sessions-chart__hours {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding-inline-start: 80px;
+  padding-inline-start: calc(80px + var(--space-3));
+}
+
+/* ── ACTIVITY HEAT CHART (24h bar chart) ─────────────────────────────────── */
+.economy-activity-grid {
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  gap: 3px;
+  align-items: end;
+  height: 80px;
+}
+
+.economy-activity-bar {
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background: var(--bg-surface-4);
+  min-height: 4px;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.economy-activity-bar:hover {
+  opacity: 0.8;
+  transform: scaleY(1.05);
+  transform-origin: bottom;
+}
+
+.economy-activity-bar[data-band='cool']   { background: var(--bg-surface-4); }
+.economy-activity-bar[data-band='warm']   { background: color-mix(in srgb, var(--info) 70%, var(--bg-surface-4)); }
+.economy-activity-bar[data-band='active'] { background: var(--success); }
+.economy-activity-bar[data-band='peak']   { background: var(--warning); }
+
+.economy-activity-hours {
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  gap: 3px;
+  margin-top: var(--space-1);
+}
+
+.economy-activity-hours span {
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* ── ARAB MARKETS SUMMARY CARD ──────────────────────────────────────────── */
+.economy-arab-summary {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-default);
+  background: linear-gradient(160deg, var(--bg-surface-2) 0%, var(--bg-surface-1) 100%);
+  box-shadow: var(--shadow-card);
+  transition: border-color 200ms ease;
+}
+
+.economy-arab-summary[data-tone='success'] {
+  border-color: var(--success-border);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--success-soft) 40%, var(--bg-surface-2)) 0%, var(--bg-surface-1) 100%);
+}
+
+.economy-arab-summary__row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.economy-arab-summary__count {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: var(--font-black);
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.economy-arab-summary__of {
+  font-size: var(--text-base);
+  color: var(--text-muted);
+  font-weight: var(--font-medium);
+  margin-inline-start: var(--space-2);
+}
+
+.economy-arab-summary__names {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+.economy-arab-summary__names strong {
+  color: var(--text-primary);
+}
+
+/* ── TRUST SECTION ─────────────────────────────────────────────────────────── */
+.economy-trust {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--info-border);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--info-soft) 35%, var(--bg-surface-2)) 0%, var(--bg-surface-1) 100%);
+}
+
+.economy-trust__header {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.economy-trust__kicker {
+  color: var(--info);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.economy-trust__title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.economy-trust__lead {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+}
+
+.economy-trust__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-3);
+}
+
+.economy-trust__item {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
+  transition: border-color 160ms ease;
+}
+
+.economy-trust__item:hover {
+  border-color: var(--info-border);
+}
+
+.economy-trust__item-title {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.economy-trust__item-body {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+/* ── SESSION DETAIL CARDS ───────────────────────────────────────────────── */
+.economy-session-detail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
+.economy-session-card {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-default);
+  background: linear-gradient(160deg, var(--bg-surface-2) 0%, var(--bg-surface-1) 100%);
+  box-shadow: var(--shadow-card);
+}
+
+.economy-session-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.economy-session-card__title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.economy-session-card__subtitle {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  margin-top: 0.2rem;
+}
+
+.economy-session-card__icon {
+  color: var(--accent-alt);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.economy-session-card__metrics {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.economy-session-card__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-2-5) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-3);
+  font-size: var(--text-sm);
+}
+
+.economy-session-card__row dt {
+  color: var(--text-muted);
+}
+
+.economy-session-card__row dd {
+  color: var(--text-primary);
+  font-weight: var(--font-bold);
+  font-family: var(--font-heading);
+}
+
+.economy-session-card__note {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ── TADAWUL PHASES ─────────────────────────────────────────────────────── */
+.economy-phases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-3);
+}
+
+.economy-phase-card {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface-3);
+  border: 1px solid var(--border-subtle);
+  text-align: center;
+}
+
+.economy-phase-card__label {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.economy-phase-card__value {
+  font-size: var(--text-xl);
+  font-weight: var(--font-black);
+  font-family: var(--font-heading);
+  line-height: 1;
+}
+
+.economy-phase-card[data-tone='warning'] .economy-phase-card__value { color: var(--warning); }
+.economy-phase-card[data-tone='success'] .economy-phase-card__value { color: var(--success); }
+.economy-phase-card[data-tone='info']    .economy-phase-card__value { color: var(--info); }
+
+/* ── RESPONSIVE ─────────────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .economy-status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .economy-kpi-rail {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .economy-sessions-chart__row {
+    grid-template-columns: 60px 1fr;
+  }
+
+  .economy-sessions-chart__label {
+    font-size: 0.72rem;
+  }
+
+  .economy-sessions-chart__hours {
+    padding-inline-start: calc(60px + var(--space-3));
+    font-size: 0.62rem;
+  }
+
+  .economy-chart-card {
+    padding: var(--space-4);
+  }
+
+  .economy-arab-summary {
+    padding: var(--space-4);
+  }
+
+  .economy-session-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .economy-phases {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .economy-status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .economy-kpi-rail {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .market-card__metrics-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+/* =============================================================================
+   MARKET BOARD — Premium Exchange Cards v3
+   Layout: 1 featured hero card (full-width horizontal) + compact 2-col grid
+   All colours from design system vars — nothing hardcoded.
+   ============================================================================= */
+
+/* ── BOARD CONTAINER ───────────────────────────────────────────────────────── */
+.economy-market-board {
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* ── REGION BADGE ──────────────────────────────────────────────────────────── */
+.market-region-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.22rem 0.55rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.68rem;
+  font-weight: var(--font-bold);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.market-region-badge[data-region='americas'] {
+  background: var(--info-soft);
+  color: var(--info);
+  border: 1px solid var(--info-border);
+}
+
+.market-region-badge[data-region='europe'] {
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+  border: 1px solid var(--border-accent);
+}
+
+.market-region-badge[data-region='asia'] {
+  background: var(--success-soft);
+  color: var(--success);
+  border: 1px solid var(--success-border);
+}
+
+.market-region-badge[data-region='gulf'] {
+  background: color-mix(in srgb, var(--warning-soft) 80%, transparent);
+  color: var(--warning);
+  border: 1px solid var(--warning-border);
+}
+
+.market-region-badge[data-region='arab'] {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid var(--danger-border);
+}
+
+/* ── FEATURED CARD — horizontal 3-panel layout ─────────────────────────────── */
+.market-card--featured {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  overflow: hidden;
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-2);
+  box-shadow: var(--shadow-card);
+  min-height: 180px;
+  transition: box-shadow 250ms ease, transform 250ms ease;
+}
+
+.market-card--featured:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Status tones — featured */
+.market-card--featured[data-tone='success'] {
+  border-color: var(--success-border);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--success-soft) 22%, var(--bg-surface-2)) 0%,
+    var(--bg-surface-2) 55%,
+    var(--bg-surface-1) 100%
+  );
+}
+
+.market-card--featured[data-tone='warning'] {
+  border-color: var(--warning-border);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--warning-soft) 22%, var(--bg-surface-2)) 0%,
+    var(--bg-surface-2) 55%,
+    var(--bg-surface-1) 100%
+  );
+}
+
+.market-card--featured[data-tone='danger'] {
+  border-color: var(--danger-border);
+}
+
+/* Top accent line — featured */
+.market-card--featured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  inset-inline: 0;
+  height: 3px;
+  background: var(--featured-accent, var(--border-default));
+  z-index: 1;
+}
+
+.market-card--featured[data-tone='success']::before { --featured-accent: var(--success); }
+.market-card--featured[data-tone='warning']::before { --featured-accent: var(--warning); }
+.market-card--featured[data-tone='danger']::before  { --featured-accent: var(--danger); }
+.market-card--featured[data-tone='info']::before    { --featured-accent: var(--info); }
+.market-card--featured[data-tone='brand']::before   { --featured-accent: var(--accent-alt); }
+
+/* Panel base */
+.market-card__panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-6);
+}
+
+/* Identity panel — left */
+.market-card__panel--identity {
+  gap: var(--space-3);
+}
+
+.market-card__featured-flag {
+  font-size: 2.6rem;
+  line-height: 1;
+  display: block;
+  margin-bottom: var(--space-1);
+}
+
+.market-card__featured-name {
+  font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+  font-weight: var(--font-black);
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
+}
+
+.market-card__featured-exchange {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  margin-top: -0.2rem;
+}
+
+.market-card__featured-tags {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-top: var(--space-1);
+}
+
+/* Countdown panel — center */
+.market-card__panel--countdown {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-inline: 1px solid var(--border-subtle);
+  background: var(--bg-surface-3);
+  padding: var(--space-6) var(--space-8);
+  min-width: 200px;
+  gap: var(--space-2);
+}
+
+.market-card__featured-prefix {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.market-card__featured-countdown {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: var(--font-black);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--text-secondary);
+  transition: color 300ms ease;
+}
+
+.market-card--featured[data-tone='success'] .market-card__featured-countdown {
+  color: var(--success);
+  text-shadow: 0 0 32px color-mix(in srgb, var(--success) 30%, transparent);
+}
+
+.market-card--featured[data-tone='warning'] .market-card__featured-countdown {
+  color: var(--warning);
+  text-shadow: 0 0 32px color-mix(in srgb, var(--warning) 25%, transparent);
+}
+
+.market-card__featured-market-time {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-family: var(--font-heading);
+  font-weight: var(--font-semibold);
+  margin-top: var(--space-1);
+}
+
+.market-card__featured-time-label {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  margin-top: var(--space-1);
+}
+
+/* Details panel — right */
+.market-card__panel--details {
+  gap: var(--space-3);
+}
+
+.market-card__details-grid {
+  display: grid;
+  gap: var(--space-2);
+  flex: 1;
+  text-align: center;
+}
+
+.market-card__detail-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
+}
+
+.market-card__detail-cell dt {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.market-card__detail-cell dd {
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  font-family: var(--font-heading);
+}
+
+.market-card__featured-footnote {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-relaxed);
+}
+
+.market-card__featured-footnote a {
+  color: var(--accent-alt);
+  text-decoration: none;
+}
+
+.market-card__featured-footnote a:hover {
+  text-decoration: underline;
+}
+
+/* ── COMPACT CARD GRID ──────────────────────────────────────────────────────── */
+.economy-market-compact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+
+/* ── COMPACT CARD — horizontal row ─────────────────────────────────────────── */
+.market-card--compact {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-2);
+  box-shadow: var(--shadow-card);
+  min-height: 88px;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.market-card--compact:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Status tones — compact */
+.market-card--compact[data-tone='success'] {
+  border-color: var(--success-border);
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--success-soft) 20%, var(--bg-surface-2)) 0%,
+    var(--bg-surface-2) 100%
+  );
+}
+
+.market-card--compact[data-tone='warning'] {
+  border-color: var(--warning-border);
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--warning-soft) 20%, var(--bg-surface-2)) 0%,
+    var(--bg-surface-2) 100%
+  );
+}
+
+/* Inline-start accent stripe */
+.market-card--compact::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 3px;
+  background: var(--compact-accent, var(--border-default));
+  border-radius: 0;
+  flex-shrink: 0;
+}
+
+.market-card--compact[data-tone='success']::before { --compact-accent: var(--success); }
+.market-card--compact[data-tone='warning']::before { --compact-accent: var(--warning); }
+.market-card--compact[data-tone='danger']::before  { --compact-accent: var(--danger); }
+.market-card--compact[data-tone='info']::before    { --compact-accent: var(--info); }
+
+/* Compact sections */
+.market-card__compact-flag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4) var(--space-3) var(--space-4) var(--space-5);
+  font-size: 1.75rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.market-card__compact-identity {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem;
+  flex: 1;
+  padding: var(--space-3) var(--space-3);
+  min-width: 0;
+  border-inline-start: 1px solid var(--border-subtle);
+}
+
+.market-card__compact-name {
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.market-card__compact-exchange {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.market-card__compact-tags {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-top: 0.15rem;
+}
+
+.market-card__compact-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-4);
+  flex-shrink: 0;
+  border-inline-start: 1px solid var(--border-subtle);
+}
+
+.market-card__compact-countdown {
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: var(--font-black);
+  letter-spacing: 0.03em;
+  line-height: 1;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.market-card--compact[data-tone='success'] .market-card__compact-countdown { color: var(--success); }
+.market-card--compact[data-tone='warning'] .market-card__compact-countdown { color: var(--warning); }
+
+.market-card__compact-times {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.market-card__compact-time-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.market-card__compact-time-item strong {
+  color: var(--text-secondary);
+  font-weight: var(--font-semibold);
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+}
+
+/* ── ARC PROGRESS (SVG session progress) ───────────────────────────────────── */
+.market-card__arc-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: var(--space-1) 0;
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .market-card--featured {
+    grid-template-columns: 1fr;
+    min-height: unset;
+  }
+
+  .market-card__panel--countdown {
+    border-inline: none;
+    border-block: 1px solid var(--border-subtle);
+    padding: var(--space-5);
+    min-width: unset;
+  }
+}
+
+@media (max-width: 640px) {
+  .economy-market-compact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .market-card__featured-flag {
+    font-size: 2rem;
+  }
+
+  .market-card__panel {
+    padding: var(--space-4);
+  }
+
+  .market-card__panel--countdown {
+    padding: var(--space-4);
+  }
+
+  .market-card--compact {
+    min-height: 76px;
+  }
+
+  .market-card__compact-flag {
+    font-size: 1.5rem;
+    padding-inline: var(--space-3);
+  }
+
+  .market-card__details-grid {
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+  }
+}
+
+/* =============================================================================
+   ECONOMY — FULL RESPONSIVE LAYER  (mobile-first extensions)
+   Breakpoints:
+     ≤1024px  — tablet landscape / small desktop
+     ≤ 900px  — tablet portrait
+     ≤ 720px  — phablet  (existing, gaps filled)
+     ≤ 540px  — large phone
+     ≤ 400px  — small phone
+     ≤ 360px  — very small phone (SE, Galaxy A series)
+   All values use design-system tokens — nothing hardcoded.
+   ============================================================================= */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ≤ 1024 px — tablet landscape
+   ───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  /* Shell — tighten horizontal padding */
+  .economy-shell {
+    padding-inline: var(--space-5);
+  }
+
+  /* Status grid: 3 → 2 col at tablet */
+  .economy-status-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* KPI rail — allow tighter min so 4 cards fit side-by-side */
+  .economy-kpi-rail {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+
+  /* Session detail — allow tighter minmax */
+  .economy-session-detail {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  /* Guide / tool grids — tighter floor */
+  .economy-guide-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .economy-tool-grid {
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  }
+
+  /* Meter — keep two-column but shrink the dial column */
+  .economy-meter {
+    grid-template-columns: minmax(150px, 210px) 1fr;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ≤ 900 px — tablet portrait  (featured card already handled; extend here)
+   ───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  /* Shell */
+  .economy-shell {
+    padding-inline: var(--space-4);
+    padding-top: 5.5rem;
+  }
+
+  /* Status grid: 2 → 2 col (unchanged) — no layout change but add scroll hint */
+  .economy-status-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Strip / city / profile grids — allow scroll on overflow */
+  .economy-strip__grid,
+  .economy-profile-selector__grid,
+  .economy-city-grid {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  }
+
+  /* Compact card grid: 2 → 2 (already ok), but ensure compact right panel fits */
+  .market-card__compact-right {
+    padding-inline: var(--space-3);
+  }
+
+  /* Chart card — reduce padding */
+  .economy-chart-card {
+    padding: var(--space-5);
+    gap: var(--space-4);
+  }
+
+  /* Arab summary padding */
+  .economy-arab-summary {
+    padding: var(--space-4) var(--space-5);
+  }
+
+  /* Trust section */
+  .economy-trust {
+    padding: var(--space-4) var(--space-5);
+  }
+
+  /* Timeline picker — 8 columns at this width */
+  .economy-timeline__picker {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ≤ 720 px — phablet  (supplement existing block — fills gaps)
+   ───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  /* Hero */
+  .economy-hero__lead {
+    font-size: var(--text-base);
+  }
+
+  /* Section title */
+  .economy-section__title {
+    font-size: var(--text-xl);
+  }
+
+  /* Status grid → single column (override) */
+  .economy-status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* KPI rail → 2 columns (already set — re-assert for specificity) */
+  .economy-kpi-rail {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Banner — reduce padding */
+  .economy-banner {
+    padding: var(--space-4) var(--space-5);
+  }
+
+  /* Countdown hero — reduce clock and padding */
+  .economy-countdown-hero {
+    padding: var(--space-5);
+  }
+
+  /* Meter — stack dial above copy (already set) + constrain dial size */
+  .economy-meter {
+    grid-template-columns: 1fr;
+    padding: var(--space-5);
+    gap: var(--space-4);
+  }
+
+  .economy-meter__dial {
+    max-width: 220px;
+    margin-inline: auto;
+  }
+
+  /* City card times → wrap to 2 columns when 3 cells present */
+  .economy-city-card__times {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Guide / insight / tool grids → single column */
+  .economy-guide-grid,
+  .economy-tool-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Stat grid → 2 cols */
+  .economy-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Comparison card grid → wrap on small */
+  .economy-comparison-card__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Timeline — label shown above the lane (already grid-template-columns:1fr)
+     Add extra visual cue spacing */
+  .economy-timeline__row {
+    gap: var(--space-1);
+  }
+
+  .economy-timeline__label {
+    font-size: var(--text-xs);
+    text-align: start;
+  }
+
+  /* Activity chart — wrap inside a scrollable container on mobile.
+     The chart element keeps 24 equal columns; the container scrolls.
+     NOTE: wrap .economy-activity-chart in a div.economy-activity-chart-scroll
+     for horizontal scroll, OR let it shrink (bars will be very narrow but still legible). */
+  .economy-activity-chart {
+    min-height: 160px;
+    gap: 0.2rem;
+  }
+
+  .economy-activity-chart__value {
+    display: none; /* hide value labels — too crowded at 24 columns */
+  }
+
+  .economy-activity-chart__hour {
+    font-size: 0.58rem;
+  }
+
+  /* Activity grid (inline bar version) */
+  .economy-activity-grid {
+    height: 56px;
+  }
+
+  .economy-activity-hours span {
+    font-size: 0.58rem;
+  }
+
+  /* Sessions chart hours — smaller text */
+  .economy-sessions-chart__hours {
+    font-size: 0.58rem;
+  }
+
+  /* Trust grid → single col */
+  .economy-trust {
+    padding: var(--space-4);
+  }
+
+  .economy-trust__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Phases → 2 col (already set) */
+
+  /* Session detail → single col (already set) */
+
+  /* Source table — label-above-value pattern for stacked rows */
+  .economy-source-table__row > div::before {
+    display: block;
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+
+  .economy-source-table__row > div:nth-child(2)::before { content: 'الحالة'; }
+  .economy-source-table__row > div:nth-child(3)::before { content: 'المصدر المباشر'; }
+  .economy-source-table__row > div:nth-child(4)::before { content: 'المرجع الرسمي'; }
+  .economy-source-table__row > div:nth-child(5)::before { content: 'آخر مزامنة'; }
+
+  /* KPI card value — scale down slightly */
+  .economy-kpi-card__value {
+    font-size: clamp(1.2rem, 5vw, 1.75rem);
+  }
+
+  /* Chart card header — stack on mobile */
+  .economy-chart-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Arab summary */
+  .economy-arab-summary {
+    padding: var(--space-4);
+  }
+
+  .economy-arab-summary__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  /* Hour panel grid → single col */
+  .economy-hour-panel__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Strip/profile/city — tighter min */
+  .economy-strip__grid,
+  .economy-profile-selector__grid,
+  .economy-city-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+
+  /* FAQ — reduce padding */
+  .economy-faq-item__summary {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-sm);
+  }
+
+  .economy-faq-item__answer {
+    padding: 0 var(--space-4) var(--space-4);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ≤ 540 px — large phone
+   ───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 540px) {
+  /* Shell */
+  .economy-shell {
+    padding-inline: var(--space-3);
+    padding-top: 4.75rem;
+    padding-bottom: var(--space-10);
+  }
+
+  /* Stack — tighter gap */
+  .economy-stack {
+    gap: var(--space-4);
+  }
+
+  /* Hero */
+  .economy-hero {
+    gap: var(--space-3);
+  }
+
+  .economy-hero__title {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+  }
+
+  .economy-hero__lead {
+    font-size: var(--text-sm);
+    max-width: 100%;
+  }
+
+  /* Eyebrow */
+  .economy-hero__eyebrow {
+    font-size: var(--text-xs);
+    padding: 0.35rem 0.75rem;
+  }
+
+  /* Meta pills — smaller */
+  .economy-meta-pill {
+    font-size: var(--text-xs);
+    padding: 0.5rem 0.75rem;
+  }
+
+  /* Banner */
+  .economy-banner {
+    padding: var(--space-4);
+    border-radius: var(--radius-xl);
+  }
+
+  /* Countdown hero */
+  .economy-countdown-hero {
+    padding: var(--space-4);
+    border-radius: var(--radius-xl);
+    gap: var(--space-3);
+  }
+
+  /* KPI rail → 2 col (keep) */
+  .economy-kpi-rail {
+    gap: var(--space-3);
+  }
+
+  /* Status grid → single col (keep) */
+
+  /* Stat grid → single col on small phone */
+  .economy-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Market compact grid → single col (already set at 640px) */
+
+  /* Compact card — compact right panel text */
+  .market-card__compact-countdown {
+    font-size: 1rem;
+  }
+
+  .market-card__compact-time-item {
+    display: none; /* hide times, keep countdown only */
+  }
+
+  /* Strip / profile / city → enforce 2-col */
+  .economy-strip__grid,
+  .economy-profile-selector__grid,
+  .economy-city-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Strip/comparison card heads */
+  .economy-strip__head,
+  .economy-hour-panel__head,
+  .economy-comparison-card__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Timeline picker → 6 col */
+  .economy-timeline__picker {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .economy-timeline__picker-button {
+    padding: 0.45rem 0.2rem;
+    font-size: var(--text-xs);
+  }
+
+  /* Timeline — reduce padding */
+  .economy-timeline {
+    padding: var(--space-4);
+  }
+
+  /* Activity chart — give more height room, hide hour labels */
+  .economy-activity-chart {
+    min-height: 120px;
+  }
+
+  .economy-activity-chart__hour {
+    display: none; /* too dense at 24 columns on 360px */
+  }
+
+  /* Activity grid */
+  .economy-activity-grid {
+    height: 48px;
+  }
+
+  .economy-activity-hours span {
+    display: none;
+  }
+
+  /* Sessions chart row — extra tight label */
+  .economy-sessions-chart__row {
+    grid-template-columns: 50px 1fr;
+  }
+
+  .economy-sessions-chart__label {
+    font-size: 0.68rem;
+  }
+
+  .economy-sessions-chart__hours {
+    padding-inline-start: calc(50px + var(--space-3));
+    font-size: 0.58rem;
+  }
+
+  /* Copy card */
+  .economy-copy-card {
+    padding: var(--space-4);
+  }
+
+  /* Tool card */
+  .economy-tool-card {
+    padding: var(--space-4);
+  }
+
+  /* Market card body */
+  .market-card__body {
+    padding: var(--space-4);
+  }
+
+  /* Featured card panels */
+  .market-card__panel {
+    padding: var(--space-4);
+  }
+
+  /* Metrics grid 2×2 — keep 2 cols (good on 540px) */
+
+  /* Phases → single col */
+  .economy-phases {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+  }
+
+  /* Section title */
+  .economy-section__title {
+    font-size: var(--text-lg);
+  }
+
+  /* Strip/hour panel reduced padding */
+  .economy-strip,
+  .economy-hour-panel,
+  .economy-profile-selector,
+  .economy-comparison-card {
+    padding: var(--space-4);
+    border-radius: var(--radius-xl);
+  }
+
+  /* Arab summary count */
+  .economy-arab-summary__count {
+    font-size: clamp(1.5rem, 8vw, 2.2rem);
+  }
+
+  /* Meter dial max-width */
+  .economy-meter__dial {
+    max-width: 180px;
+  }
+
+  /* Guide grid → single col */
+  .economy-guide-grid,
+  .economy-tool-grid {
+    gap: var(--space-3);
+  }
+
+  /* Comparison chip grid — 3 cols wrapping */
+  .economy-comparison-card__chips {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  }
+
+  /* Trust grid */
+  .economy-trust__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  /* Session card */
+  .economy-session-card {
+    padding: var(--space-4);
+  }
+
+  /* Economy table — tighter cells */
+  .economy-table th,
+  .economy-table td {
+    padding: 0.65rem 0.75rem;
+    font-size: var(--text-xs);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ≤ 400 px — small phone
+   ───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 400px) {
+  /* Shell — minimum safe padding */
+  .economy-shell {
+    padding-inline: var(--space-3);
+  }
+
+  /* Hero title clamp lower bound */
+  .economy-hero__title {
+    font-size: clamp(1.55rem, 8vw, 2rem);
+  }
+
+  /* KPI rail — 2 col with tighter gap */
+  .economy-kpi-rail {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+  }
+
+  .economy-kpi-card {
+    padding: var(--space-4) var(--space-4) var(--space-4) calc(var(--space-4) + 1px);
+  }
+
+  .economy-kpi-card__value {
+    font-size: clamp(1.1rem, 6vw, 1.5rem);
+  }
+
+  /* Countdown clock size — prevent overflow */
+  .economy-countdown-hero__clock {
+    font-size: clamp(2rem, 12vw, 3.5rem);
+  }
+
+  /* Status cards — always single col */
+  .economy-status-card {
+    padding: var(--space-4);
+  }
+
+  /* Strip / city / profile — single column */
+  .economy-strip__grid,
+  .economy-city-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .economy-profile-selector__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Timeline picker — 4 columns */
+  .economy-timeline__picker {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  /* Sessions chart — hide hours entirely */
+  .economy-sessions-chart__hours {
+    display: none;
+  }
+
+  /* Sessions chart label col */
+  .economy-sessions-chart__row {
+    grid-template-columns: 44px 1fr;
+  }
+
+  /* Compact card right section — minimal */
+  .market-card__compact-right {
+    padding-inline: var(--space-2);
+    gap: var(--space-1);
+  }
+
+  /* Featured card flag emoji size */
+  .market-card__featured-flag {
+    font-size: 2rem;
+  }
+
+  /* Phases → single col on very small */
+  .economy-phases {
+    grid-template-columns: 1fr;
+  }
+
+  /* Comparison card chips */
+  .economy-comparison-card__chips {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Stat card value font */
+  .economy-stat-card__value,
+  .economy-spotlight__title {
+    font-size: clamp(1.15rem, 6vw, 1.6rem);
+  }
+
+  /* Market card metrics grid — keep 2 cols but tighter */
+  .market-card__metrics-grid {
+    gap: var(--space-1);
+  }
+
+  .market-card__metric-cell {
+    padding: var(--space-2);
+  }
+
+  /* Section label line hidden on tiny screens */
+  .economy-section-label__line {
+    display: none;
+  }
+
+  /* Banner border-radius */
+  .economy-banner,
+  .economy-countdown-hero,
+  .economy-strip,
+  .economy-hour-panel,
+  .economy-profile-selector,
+  .economy-comparison-card,
+  .economy-timeline,
+  .economy-arab-summary,
+  .economy-trust,
+  .economy-chart-card {
+    border-radius: var(--radius-lg);
+  }
+
+  .economy-copy-card,
+  .economy-tool-card,
+  .economy-kpi-card,
+  .economy-status-card,
+  .economy-session-card,
+  .economy-phase-card,
+  .market-card,
+  .market-card--compact,
+  .market-card--featured {
+    border-radius: var(--radius-lg);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ≤ 360 px — very small phone (iPhone SE, Galaxy A series)
+   ───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 360px) {
+  /* Shell */
+  .economy-shell {
+    padding-inline: var(--space-2);
+  }
+
+  /* KPI rail → single col so values aren't clipped */
+  .economy-kpi-rail {
+    grid-template-columns: 1fr;
+  }
+
+  /* Phases → single col */
+  .economy-phases {
+    grid-template-columns: 1fr;
+  }
+
+  /* City grid → single col */
+  .economy-city-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Compact card — hide exchange sub-label */
+  .market-card__compact-exchange {
+    display: none;
+  }
+
+  /* Timeline picker → 4 col (keep from 400px rule) */
+
+  /* Meta pills — ultra compact */
+  .economy-meta-pill {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.72rem;
+  }
+
+  /* Hero eyebrow */
+  .economy-hero__eyebrow {
+    font-size: 0.72rem;
+  }
+
+  /* Countdown value in market card */
+  .market-card__countdown-value {
+    font-size: clamp(1.15rem, 6vw, 1.5rem);
+  }
+
+  /* Compact countdown */
+  .market-card__compact-countdown {
+    font-size: 0.9rem;
+  }
+
+  /* Tool card — minimal padding */
+  .economy-tool-card {
+    padding: var(--space-3);
+  }
+
+  .economy-copy-card {
+    padding: var(--space-3);
+  }
+
+  /* KPI card value — readable minimum */
+  .economy-kpi-card__value {
+    font-size: 1.25rem;
+  }
+
+  /* Trust items — tight */
+  .economy-trust__item {
+    padding: var(--space-3);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   UTILITY — Touch targets
+   Ensure interactive elements meet 44×44 px minimum per WCAG 2.5.5
+   ───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .economy-timeline__picker-button,
+  .economy-profile-selector__button,
+  .economy-comparison-card__chip {
+    min-height: 44px;
+  }
+
+  .economy-faq-item__summary {
+    min-height: 48px;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   UTILITY — Scrollable wrappers for dense 24-column charts on narrow viewports
+   Add class="economy-activity-chart-scroll" around .economy-activity-chart
+   or .economy-activity-grid to enable horizontal scroll as a fallback.
+   ───────────────────────────────────────────────────────────────────────────── */
+.economy-activity-chart-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.economy-activity-chart-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 540px) {
+  .economy-activity-chart-scroll .economy-activity-chart,
+  .economy-activity-chart-scroll .economy-activity-grid {
+    min-width: 480px; /* preserve legibility; container scrolls */
+  }
+
+  .economy-activity-chart-scroll .economy-activity-chart__hour,
+  .economy-activity-chart-scroll .economy-activity-hours span,
+  .economy-activity-chart-scroll .economy-activity-chart__value {
+    display: block; /* restore labels when inside scroll container */
     font-size: 0.62rem;
   }
 }

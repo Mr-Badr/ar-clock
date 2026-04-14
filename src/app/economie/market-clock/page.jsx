@@ -1,15 +1,20 @@
+// src/app/economie/best-trading-time/page.jsx
 import { Suspense } from 'react';
 
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
   STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
+  buildEconomyDatasetSchema,
+  buildEconomyFaqSchema,
+  buildEconomySpeakableSchema,
   buildEconomyWebApplicationSchema,
   getInitialEconomyPageState,
 } from '@/lib/economy/page-helpers';
 import { getSiteUrl } from '@/lib/site-config';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
+import { FAQ_ITEMS } from '@/components/economy/data/faqItems';
 import MarketClockLive from '@/components/economy/MarketClockLive';
 
 const SITE_URL = getSiteUrl();
@@ -29,6 +34,8 @@ export const metadata = buildCanonicalMetadata({
     'مؤشر تداخل جلسة لندن ونيويورك اللحظي', 'متى تبدأ وتنتهي جلسات التداول العالمية',
     'خريطة توضيحية لسيولة الفوركس بتوقيتك المحلي', 'أفضل أداة لمتابعة افتتاح وإغلاق البورصات',
     'تتبع حركة السوق المالي في الوقت الفعلي', 'كيفية قراءة ساعة تداول سوق العملات',
+    'متى تكون ذروة لندن ونيويورك اليوم', 'ساعة سيولة الفوركس بتوقيت السعودية',
+    'أفضل وقت الآن في السوق', 'خريطة نشاط الذهب اليوم', 'مقارنة اليوم وغداً في سيولة التداول',
   ],
   url: `${SITE_URL}/economie/market-clock`,
 });
@@ -45,6 +52,21 @@ export default function MarketClockPage() {
     'ساعة التداول العالمية',
     '/economie/market-clock',
   );
+  const datasetSchema = buildEconomyDatasetSchema({
+    siteUrl: SITE_URL,
+    path: '/economie/market-clock',
+    name: 'بيانات ساعة التداول العالمية',
+    description: 'بيانات بصرية لحركة الجلسات العالمية عبر 24 ساعة من منظور المنطقة الزمنية للمستخدم.',
+  });
+  const speakableSchema = buildEconomySpeakableSchema({
+    siteUrl: SITE_URL,
+    path: '/economie/market-clock',
+  });
+  const faqSchema = buildEconomyFaqSchema({
+    siteUrl: SITE_URL,
+    path: '/economie/market-clock',
+    items: FAQ_ITEMS.marketClock,
+  });
 
   return (
     <div className="bg-base" dir="rtl">
@@ -55,6 +77,18 @@ export default function MarketClockPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(speakableSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <EconomyAdLayout>
         <Suspense

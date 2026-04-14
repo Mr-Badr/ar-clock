@@ -1,6 +1,9 @@
+// components/economy/ForexSessionsLive.jsx
 'use client';
 
 import Link from 'next/link';
+
+import styles from './market-card-v2.module.css';
 
 import { ChartLineUp, Sparkle } from '@phosphor-icons/react';
 
@@ -17,40 +20,121 @@ import {
   EconomyGuide,
   EconomyHero,
   EconomySectionHeader,
+  EconomySpotlight,
+  EconomyStatCards,
   EconomySourceLinks,
   EconomyTable,
   EconomyTimeline,
   EconomyToolCards,
+  LiveSessionsStrip,
 } from './common';
 
 function ForexCard({ card }) {
+  const tone = card.statusTone || 'default';
+  const isLive = tone === 'success';
+  const isPre  = tone === 'warning';
+  const showPulse = isLive || isPre;
+  const progress = Number(card.progressPct) || 0;
+  const hasProgress = progress > 0 && progress <= 100;
+
   return (
-    <article className="market-card">
-      <div className="market-card__top">
-        <div className="market-card__title-wrap">
-          <h3 className="market-card__title">{card.flag} {card.nameAr}</h3>
-          <p className="market-card__subtitle">{card.pairsLabel}</p>
+    <article className={styles.mcSession} data-tone={tone}>
+      {/* Tone-matched top stripe */}
+      <div className={styles.mcSessionStripe} />
+
+      {/* Header */}
+      <div className={styles.mcSessionHead}>
+        <div className={styles.mcSessionIdentity}>
+          <span className={styles.mcSessionFlag} aria-hidden="true">{card.flag}</span>
+          <div className={styles.mcSessionNameWrap}>
+            <h3 className={styles.mcSessionName}>{card.nameAr}</h3>
+            <p className={styles.mcSessionPairs}>{card.pairsLabel}</p>
+          </div>
         </div>
-        <span className="market-card__status" data-tone={card.statusTone}>
+        <span className={styles.mcSessionBadge} data-tone={tone}>
+          {showPulse && <span className={styles.mcSessionPulse} aria-hidden="true" />}
           {card.statusLabel}
         </span>
       </div>
 
-      <dl className="market-card__metrics">
-        <div className="market-card__metric">
-          <dt>تفتح</dt>
-          <dd>{card.openLabel}</dd>
+      {/* Countdown hero */}
+      <div className={styles.mcSessionCountdown}>
+        <div className={styles.mcSessionCountdownMain}>
+          <div className={styles.mcSessionCountdownPrefix}>{card.countdownPrefix}</div>
+          <div className={styles.mcSessionCountdownValue} aria-label={`${card.countdownPrefix}: ${card.countdownLabel}`}>
+            {card.countdownLabel}
+          </div>
         </div>
-        <div className="market-card__metric">
-          <dt>تغلق</dt>
-          <dd>{card.closeLabel}</dd>
+        {card.marketTimeLabel && (
+          <div className={styles.mcSessionCountdownAside}>
+            <div className={styles.mcSessionCountdownAsideLabel}>الوقت في السوق</div>
+            <div className={styles.mcSessionCountdownAsideValue}>{card.marketTimeLabel}</div>
+          </div>
+        )}
+      </div>
+
+      {/* 2×2 metrics */}
+      <dl className={styles.mcSessionMetrics}>
+        <div className={styles.mcSessionMetricCell}>
+          <dt>طبيعة الجلسة</dt>
+          <dd>{card.liquidityLabel || '—'}</dd>
+        </div>
+        <div className={styles.mcSessionMetricCell}>
+          <dt>يفتح بتوقيتك</dt>
+          <dd>{card.openLabel || '—'}</dd>
+        </div>
+        <div className={styles.mcSessionMetricCell}>
+          <dt>يغلق بتوقيتك</dt>
+          <dd>{card.closeLabel || '—'}</dd>
+        </div>
+        <div className={styles.mcSessionMetricCell}>
+          <dt>تقدّم الجلسة</dt>
+          <dd>{hasProgress ? `${Math.round(progress)}٪` : '—'}</dd>
         </div>
       </dl>
 
-      <div className="market-card__highlight">
-        <div className="market-card__highlight-title">{card.countdownPrefix}</div>
-        <div className="market-card__highlight-value">{card.countdownLabel}</div>
-      </div>
+      {/* Progress bar — live sessions only */}
+      {hasProgress && (
+        <div className={styles.mcSessionProgressWrap}>
+          <div className={styles.mcSessionProgressLabel}>
+            <span>{card.openLabel}</span>
+            <span>{card.closeLabel}</span>
+          </div>
+          <div
+            className={styles.mcSessionProgressTrack}
+            role="progressbar"
+            aria-valuenow={Math.round(progress)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+          >
+            <div className={styles.mcSessionProgressFill} style={{ width: `${progress}%` }} />
+          </div>
+        </div>
+      )}
+
+      {/* Insight footnotes */}
+      {(card.bestFor || card.volatilityLabel || card.watchLabel) && (
+        <div className={styles.mcSessionInsights}>
+          {card.bestFor && (
+            <p className={styles.mcSessionInsight}>
+              <span className={styles.mcSessionInsightDot} aria-hidden="true" />
+              <span><strong>ما تراقبه: </strong>{card.bestFor}</span>
+            </p>
+          )}
+          {card.volatilityLabel && (
+            <p className={styles.mcSessionInsight}>
+              <span className={styles.mcSessionInsightDot} aria-hidden="true" />
+              <span><strong>السلوك المعتاد: </strong>{card.volatilityLabel}</span>
+            </p>
+          )}
+          {card.watchLabel && (
+            <p className={styles.mcSessionInsight}>
+              <span className={styles.mcSessionInsightDot} aria-hidden="true" />
+              <span>{card.watchLabel}</span>
+            </p>
+          )}
+        </div>
+      )}
     </article>
   );
 }
@@ -95,6 +179,11 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
         note={model.viewer.notice}
       />
 
+      <EconomyStatCards cards={model.signalCards} />
+      <EconomySpotlight model={model.spotlight} />
+
+      <LiveSessionsStrip sessions={model.liveSessionsSummary} nowLabel={model.nowLabel} />
+
       <AdTopBanner slotId="top-economy-forex-sessions" />
 
       <EconomyBanner
@@ -126,56 +215,127 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
 
       <section className="economy-section">
         <EconomySectionHeader
+          title="أفضل الأزواج لكل جلسة"
+          lead="هذا الجدول يربط وقت الجلسة بالأزواج المناسبة لها عملياً بدلاً من ترك المستخدم يكتشف ذلك بنفسه بالتجربة."
+        />
+        <EconomyTable
+          columns={['الجلسة', 'أفضل الأزواج', 'لماذا؟', 'أزواج أقل مناسبة']}
+          rows={model.sessionPairRows}
+        />
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
           title="خريطة السيولة خلال يومك"
           lead="بدلاً من سؤال واحد عن ساعة الافتتاح، يُظهر هذا الرسم كيف ترتفع وتنخفض السيولة خلال يومك المحلي، ومتى تبلغ الذروة فعلياً."
         />
         <HourlyActivityChart chart={model.activityChart} />
       </section>
 
-      <section className="economy-grid">
-        <article className="market-card">
-          <div className="market-card__top">
-            <div className="market-card__title-wrap">
-              <h2 className="market-card__title">🥇 تداول الذهب الآن</h2>
-              <p className="market-card__subtitle">XAU/USD</p>
+      <section className={styles.mcInstrumentRow} aria-label="أدوات التداول الرئيسية">
+        {/* Gold Card */}
+        <article className={styles.mcInstrument} data-variant="gold" data-tone={model.gold.tone || 'default'}>
+          <div className={styles.mcInstrumentStripe} />
+          <div className={styles.mcInstrumentHead}>
+            <div className={styles.mcInstrumentTitleWrap}>
+              <h2 className={`${styles.mcInstrumentTitle} ${styles.mcInstrumentTitleGold}`}>تداول الذهب الآن</h2>
+              <p className={styles.mcInstrumentSubtitle}>XAU/USD · توقيتك المحلي</p>
             </div>
-            <span className="market-card__status" data-tone={model.gold.tone}>
+            <span className={styles.mcInstrumentBadge} data-tone={model.gold.tone || 'default'}>
+              {model.gold.tone === 'success' && <span className={styles.mcInstrumentPulse} aria-hidden="true" />}
               {model.gold.statusLabel}
             </span>
           </div>
-
-          <div className="market-card__highlight">
-            <div className="market-card__highlight-title">أفضل نافذة اليوم</div>
-            <div className="market-card__highlight-value">{model.gold.bestWindowLabel}</div>
+          <div className={styles.mcInstrumentHighlight}>
+            <div className={styles.mcInstrumentHighlightMain}>
+              <div className={styles.mcInstrumentHighlightLabel}>أفضل نافذة اليوم</div>
+              <div className={styles.mcInstrumentHighlightValue}>{model.gold.bestWindowLabel}</div>
+            </div>
+            <span className={styles.mcInstrumentHighlightIcon} aria-hidden="true">🥇</span>
           </div>
-
-          <p className="market-card__footnote">{model.gold.detail}</p>
-          {model.gold.nextWindowLabel ? (
-            <p className="market-card__footnote">إعادة الفتح التقريبية: {model.gold.nextWindowLabel}</p>
-          ) : null}
+          {model.gold.nextWindowLabel && (
+            <dl className={styles.mcInstrumentDetails}>
+              <div className={styles.mcInstrumentDetailRow}>
+                <dt>إعادة الفتح التقريبية</dt>
+                <dd>{model.gold.nextWindowLabel}</dd>
+              </div>
+            </dl>
+          )}
+          {model.gold.detail && (
+            <div className={styles.mcInstrumentFootnotes}>
+              <p className={styles.mcInstrumentFootnote}>
+                <span className={styles.mcInstrumentFootnoteDot} aria-hidden="true" />
+                <span>{model.gold.detail}</span>
+              </p>
+            </div>
+          )}
         </article>
 
-        <article className="market-card">
-          <div className="market-card__top">
-            <div className="market-card__title-wrap">
-              <h2 className="market-card__title">⭐ النافذة الذهبية للتداول</h2>
-              <p className="market-card__subtitle">أفضل وقت لمتابعة EUR/USD وXAU/USD</p>
+        {/* Best Window Card */}
+        <article
+          className={styles.mcInstrument}
+          data-variant="window"
+          data-tone={model.bestWindow.isActive ? 'success' : 'warning'}
+        >
+          <div className={styles.mcInstrumentStripe} />
+          <div className={styles.mcInstrumentHead}>
+            <div className={styles.mcInstrumentTitleWrap}>
+              <h2 className={styles.mcInstrumentTitle}>النافذة الذهبية</h2>
+              <p className={styles.mcInstrumentSubtitle}>تداخل لندن · نيويورك — EUR/USD · XAU/USD</p>
             </div>
-            <span className="market-card__status" data-tone={model.bestWindow.isActive ? 'success' : 'warning'}>
+            <span
+              className={styles.mcInstrumentBadge}
+              data-tone={model.bestWindow.isActive ? 'success' : 'warning'}
+            >
+              {model.bestWindow.isActive && <span className={styles.mcInstrumentPulse} aria-hidden="true" />}
               {model.bestWindow.statusLabel}
             </span>
           </div>
-
-          <div className="market-card__highlight">
-            <div className="market-card__highlight-title">التوقيت المحلي</div>
-            <div className="market-card__highlight-value">
-              {model.bestWindow.startLabel} - {model.bestWindow.endLabel}
+          <div className={styles.mcInstrumentHighlight}>
+            <div className={styles.mcInstrumentHighlightMain}>
+              <div className={styles.mcInstrumentHighlightLabel}>التوقيت المحلي</div>
+              <div className={styles.mcInstrumentHighlightValue}>
+                {model.bestWindow.startLabel} – {model.bestWindow.endLabel}
+              </div>
+            </div>
+            <span className={styles.mcInstrumentHighlightIcon} aria-hidden="true">⭐</span>
+          </div>
+          {/* 24-hour timeline visual */}
+          <div className={styles.mcInstrumentTimeline}>
+            <div className={styles.mcInstrumentTimelineLabel}>خريطة اليوم 24 ساعة</div>
+            <div className={styles.mcInstrumentTimelineTrack}>
+              {model.bestWindow.startPct !== undefined && (
+                <div
+                  className={styles.mcInstrumentTimelineFill}
+                  style={{
+                    insetInlineStart: `${model.bestWindow.startPct}%`,
+                    width: `${model.bestWindow.widthPct || 0}%`,
+                  }}
+                />
+              )}
+              {model.bestWindow.nowPct !== undefined && (
+                <div
+                  className={styles.mcInstrumentTimelineNow}
+                  style={{ insetInlineStart: `${model.bestWindow.nowPct}%` }}
+                  aria-label="الآن"
+                />
+              )}
+            </div>
+            <div className={styles.mcInstrumentTimelineHours} aria-hidden="true">
+              {[0, 6, 12, 18, 24].map((h) => (
+                <span key={h}>{String(h).padStart(2, '0')}:00</span>
+              ))}
             </div>
           </div>
-
-          <p className="market-card__footnote">
-            هذه الفترة تمثل تداخل لندن ونيويورك، وغالباً ما تكون أوضح نافذة للمتداول العربي لأنها تجمع أعلى سيولة وأسرع استجابة للأخبار.
-          </p>
+          <div className={styles.mcInstrumentFootnotes}>
+            <p className={styles.mcInstrumentFootnote}>
+              <span className={styles.mcInstrumentFootnoteDot} aria-hidden="true" />
+              <span>
+                هذه الفترة تمثل تداخل لندن ونيويورك — أعلى سيولة وأسرع استجابة للأخبار،
+                وغالباً أوضح نافذة للمتداول العربي.
+              </span>
+            </p>
+          </div>
         </article>
       </section>
 
@@ -190,6 +350,17 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
             key: row.key,
             cells: row.cells,
           }))}
+        />
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="أثر التوقيت الصيفي على المدن العربية"
+          lead="هذه هي النقطة التي تربك كثيراً من المتداولين العرب مرتين كل سنة، لذلك حولناها إلى جدول واضح بين الشتاء والصيف."
+        />
+        <EconomyTable
+          columns={['المدينة', 'افتتاح نيويورك شتاءً', 'افتتاح نيويورك صيفاً', 'الملاحظة']}
+          rows={model.dstImpactRows}
         />
       </section>
 
@@ -227,6 +398,20 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
 
       <section className="economy-section">
         <EconomySectionHeader
+          title="الأحداث الاقتصادية المرتبطة بالجلسات"
+          lead="هذه طبقة عملية تربط الجدول الأسبوعي بالجلسة التي تصدر فيها البيانات حتى لا تبقى الأوقات منفصلة عن الأخبار."
+        />
+        <EconomyTable
+          columns={['الحدث', 'العملة', 'التوقيت المحلي', 'الجلسة', 'التأثير']}
+          rows={model.weeklyEvents.map((event) => ({
+            key: event.key,
+            cells: [event.nameAr, event.currency, event.timeLocal, event.sessionLabel, event.impactLabel],
+          }))}
+        />
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
           title="دليل الجلسات بتوقيتك"
           lead="المحتوى هنا مكتوب ليشرح ما يحدث للمستخدم العربي نفسه، لا ليكرر جدولاً عالمياً معزولاً عن منطقته الزمنية."
         />
@@ -238,7 +423,7 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
           title="أسئلة شائعة"
           lead="هذه الأسئلة تلخص أكثر ما يبحث عنه المستخدم العربي حول جلسات الفوركس والذهب خلال اليوم."
         />
-        <EconomyFaq items={FAQ_ITEMS.forexSessions} />
+        <EconomyFaq items={model.faqItems || FAQ_ITEMS.forexSessions} />
       </section>
 
       <section className="economy-section">

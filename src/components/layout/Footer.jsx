@@ -15,6 +15,7 @@ const PRODUCT_LINKS = [
   { href: '/time-now', label: 'الوقت الآن' },
   { href: '/mwaqit-al-salat', label: 'مواقيت الصلاة' },
   { href: '/time-difference', label: 'فرق التوقيت' },
+  { href: '/calculators', label: 'الحاسبات' },
   { href: '/holidays', label: 'المناسبات' },
   { href: '/date', label: 'التاريخ والتحويل' },
 ];

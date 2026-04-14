@@ -1,15 +1,20 @@
+// src/app/economie/best-trading-time/page.jsx
 import { Suspense } from 'react';
 
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
   STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
+  buildEconomyDatasetSchema,
+  buildEconomyFaqSchema,
+  buildEconomySpeakableSchema,
   buildEconomyWebApplicationSchema,
   getInitialEconomyPageState,
 } from '@/lib/economy/page-helpers';
 import { getSiteUrl } from '@/lib/site-config';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
+import { FAQ_ITEMS } from '@/components/economy/data/faqItems';
 import UsMarketOpenLive from '@/components/economy/UsMarketOpenLive';
 
 const SITE_URL = getSiteUrl();
@@ -33,6 +38,9 @@ export const metadata = buildCanonicalMetadata({
     'أوقات تداول السوق الأمريكي بتوقيت مصر والمغرب والمحلي', 'هل السوق الأمريكي للأسهم مفتوح اليوم أم إجازة',
     'العد التنازلي لافتتاح بورصة نيويورك ووول ستريت', 'موعد بداية ونهاية جلسة تداول السوق الأمريكي',
     'تتبع افتتاح مؤشرات السوق الأمريكي ناسداك وداو جونز', 'أوقات تداول الأسهم الأمريكية قبل وبعد الإغلاق',
+    'متى يفتح السوق الأمريكي بتوقيت الكويت', 'متى يفتح السوق الأمريكي بتوقيت دبي',
+    'متى يفتح السوق الأمريكي بتوقيت المغرب', 'هل السوق الأمريكي مفتوح اليوم أم عطلة',
+    'عطل بورصة نيويورك 2026', 'ساعات ما قبل السوق الأمريكي وما بعد الإغلاق',
   ],
   url: `${SITE_URL}/economie/us-market-open`,
 });
@@ -49,6 +57,21 @@ export default function UsMarketOpenPage() {
     'متى يفتح السوق الأمريكي اليوم؟',
     '/economie/us-market-open',
   );
+  const datasetSchema = buildEconomyDatasetSchema({
+    siteUrl: SITE_URL,
+    path: '/economie/us-market-open',
+    name: 'بيانات افتتاح السوق الأمريكي',
+    description: 'بيانات مواعيد الجلسة الرسمية والجلسات الموسعة للسوق الأمريكي بعد تحويلها إلى توقيت المستخدم العربي.',
+  });
+  const speakableSchema = buildEconomySpeakableSchema({
+    siteUrl: SITE_URL,
+    path: '/economie/us-market-open',
+  });
+  const faqSchema = buildEconomyFaqSchema({
+    siteUrl: SITE_URL,
+    path: '/economie/us-market-open',
+    items: FAQ_ITEMS.usMarketOpen,
+  });
 
   return (
     <div className="bg-base" dir="rtl">
@@ -59,6 +82,18 @@ export default function UsMarketOpenPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(speakableSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       <EconomyAdLayout>

@@ -1,0 +1,808 @@
+/* =============================================================================
+   MARKET CARD v2 — Premium Session & Instrument Cards
+   Design language: refined dark-glass terminal with RTL-first layout.
+   Every colour is a design-system token — nothing hardcoded.
+   ============================================================================= */
+
+/* ── KEYFRAMES ────────────────────────────────────────────────────────────────*/
+@keyframes mc-pulse {
+  0%   { box-shadow: 0 0 0 0 var(--mc-pulse-clr, var(--success)); opacity: 1; }
+  60%  { box-shadow: 0 0 0 6px transparent; opacity: 0.7; }
+  100% { box-shadow: 0 0 0 0 transparent; opacity: 1; }
+}
+
+@keyframes mc-shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+@keyframes mc-breathe {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1; }
+}
+
+@keyframes mc-slide-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SESSION CARD ─────────────────────────────────────────────────────────────
+   .mc-session  — wraps one exchange / trading session
+   ────────────────────────────────────────────────────────────────────────── */
+.mc-session {
+  --mc-accent:      var(--border-default);
+  --mc-accent-soft: transparent;
+  --mc-glow:        transparent;
+  --mc-pulse-clr:   var(--success);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-2);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 240ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 240ms ease,
+    border-color 240ms ease;
+  animation: mc-slide-up 380ms ease both;
+}
+
+.mc-session:hover {
+  transform: translateY(-4px) scale(1.005);
+  box-shadow:
+    var(--shadow-lg),
+    0 0 0 1px var(--mc-accent),
+    0 0 28px -4px var(--mc-glow);
+}
+
+/* Status tones */
+.mc-session[data-tone='success'] {
+  --mc-accent:      var(--success);
+  --mc-accent-soft: color-mix(in srgb, var(--success-soft) 40%, transparent);
+  --mc-glow:        color-mix(in srgb, var(--success) 22%, transparent);
+  border-color: var(--success-border);
+}
+.mc-session[data-tone='warning'] {
+  --mc-accent:      var(--warning);
+  --mc-accent-soft: color-mix(in srgb, var(--warning-soft) 40%, transparent);
+  --mc-glow:        color-mix(in srgb, var(--warning) 18%, transparent);
+  border-color: var(--warning-border);
+}
+.mc-session[data-tone='danger'] {
+  --mc-accent:      var(--danger);
+  --mc-accent-soft: color-mix(in srgb, var(--danger-soft) 30%, transparent);
+  --mc-glow:        color-mix(in srgb, var(--danger) 14%, transparent);
+  border-color: var(--danger-border);
+}
+.mc-session[data-tone='info'] {
+  --mc-accent:      var(--info);
+  --mc-accent-soft: color-mix(in srgb, var(--info-soft) 35%, transparent);
+  border-color: var(--info-border);
+}
+
+/* Top accent stripe — 3 px, full width, tone-matched */
+.mc-session__stripe {
+  height: 3px;
+  width: 100%;
+  flex-shrink: 0;
+  background: linear-gradient(90deg,
+    var(--mc-accent) 0%,
+    color-mix(in srgb, var(--mc-accent) 45%, transparent) 100%);
+}
+
+/* ── HEADER ──────────────────────────────────────────────────────────────── */
+.mc-session__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-5) 0;
+}
+
+.mc-session__identity {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.mc-session__flag {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
+}
+
+.mc-session__name-wrap {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.mc-session__name {
+  font-size: var(--text-lg);
+  font-weight: var(--font-black);
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
+  font-family: var(--font-heading);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mc-session__pairs {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Status badge */
+.mc-session__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5, 0.375rem);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: var(--bg-surface-3);
+  color: var(--text-secondary);
+  border-color: var(--border-default);
+  transition: background 200ms ease, color 200ms ease;
+}
+
+.mc-session__badge[data-tone='success'] {
+  background: var(--success-soft);
+  color: var(--success);
+  border-color: var(--success-border);
+}
+.mc-session__badge[data-tone='warning'] {
+  background: var(--warning-soft);
+  color: var(--warning);
+  border-color: var(--warning-border);
+}
+.mc-session__badge[data-tone='danger'] {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border-color: var(--danger-border);
+}
+.mc-session__badge[data-tone='info'] {
+  background: var(--info-soft);
+  color: var(--info);
+  border-color: var(--info-border);
+}
+
+/* Animated pulse dot inside badge */
+.mc-session__pulse {
+  --mc-pulse-clr: var(--success);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+  animation: mc-pulse 2.6s ease-in-out infinite;
+}
+
+.mc-session__badge[data-tone='warning'] .mc-session__pulse { --mc-pulse-clr: var(--warning); }
+.mc-session__badge[data-tone='danger']  .mc-session__pulse { --mc-pulse-clr: var(--danger); }
+.mc-session__badge[data-tone='info']    .mc-session__pulse { --mc-pulse-clr: var(--info); }
+
+/* ── COUNTDOWN HERO ───────────────────────────────────────────────────────── */
+.mc-session__countdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: var(--space-4) var(--space-5) 0;
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-xl);
+  border: 1px solid color-mix(in srgb, var(--mc-accent) 30%, var(--border-subtle));
+  background: linear-gradient(135deg,
+    var(--mc-accent-soft) 0%,
+    var(--bg-surface-3) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle shimmer on the countdown block */
+.mc-session__countdown::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg,
+    transparent 20%,
+    color-mix(in srgb, var(--mc-accent) 6%, transparent) 50%,
+    transparent 80%);
+  background-size: 200% 100%;
+  animation: mc-shimmer 4s linear infinite;
+  pointer-events: none;
+}
+
+.mc-session__countdown-main { display: grid; gap: 0.2rem; }
+
+.mc-session__countdown-prefix {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.mc-session__countdown-value {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: var(--font-black);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--text-secondary);
+  transition: color 300ms ease;
+}
+
+.mc-session[data-tone='success'] .mc-session__countdown-value {
+  color: var(--success);
+  text-shadow: 0 0 24px color-mix(in srgb, var(--success) 35%, transparent);
+}
+.mc-session[data-tone='warning'] .mc-session__countdown-value {
+  color: var(--warning);
+  text-shadow: 0 0 24px color-mix(in srgb, var(--warning) 28%, transparent);
+}
+
+.mc-session__countdown-aside { text-align: end; display: grid; gap: 0.2rem; }
+
+.mc-session__countdown-aside-label {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.mc-session__countdown-aside-value {
+  color: var(--text-primary);
+  font-weight: var(--font-bold);
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+}
+
+/* ── METRICS 2×2 GRID ─────────────────────────────────────────────────────── */
+.mc-session__metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5) 0;
+}
+
+.mc-session__metric-cell {
+  display: grid;
+  gap: 0.25rem;
+  padding: var(--space-3) var(--space-3);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
+  transition: border-color 200ms ease, background 200ms ease;
+}
+
+.mc-session__metric-cell:hover {
+  border-color: color-mix(in srgb, var(--mc-accent) 40%, var(--border-subtle));
+  background: color-mix(in srgb, var(--mc-accent-soft) 30%, var(--bg-surface-1));
+}
+
+.mc-session__metric-cell dt {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mc-session__metric-cell dd {
+  color: var(--text-primary);
+  font-weight: var(--font-bold);
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+}
+
+/* ── SESSION PROGRESS BAR ─────────────────────────────────────────────────── */
+.mc-session__progress-wrap {
+  padding: var(--space-3) var(--space-5) 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.mc-session__progress-label {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.mc-session__progress-track {
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-4);
+  overflow: hidden;
+}
+
+.mc-session__progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--mc-accent);
+  box-shadow: 0 0 8px -1px var(--mc-glow);
+  transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── INSIGHTS (footnotes) ─────────────────────────────────────────────────── */
+.mc-session__insights {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-5);
+  margin-top: auto; /* push to bottom */
+  border-top: 1px solid var(--border-subtle);
+}
+
+.mc-session__insight {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  line-height: var(--leading-relaxed);
+}
+
+.mc-session__insight-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--mc-accent);
+  flex-shrink: 0;
+  margin-top: 0.4em;
+  animation: mc-breathe 3s ease-in-out infinite;
+}
+
+.mc-session__insight strong {
+  color: var(--text-primary);
+  font-weight: var(--font-semibold);
+}
+
+
+/* =============================================================================
+   INSTRUMENT CARDS — Gold & Best Window
+   .mc-instrument — wraps a gold/pair/window card
+   ============================================================================= */
+.mc-instrument {
+  --mc-accent:      var(--border-default);
+  --mc-accent-soft: transparent;
+  --mc-glow:        transparent;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-2);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 240ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 240ms ease,
+    border-color 240ms ease;
+  animation: mc-slide-up 420ms ease both;
+}
+
+.mc-instrument:hover {
+  transform: translateY(-4px) scale(1.005);
+  box-shadow:
+    var(--shadow-lg),
+    0 0 0 1px color-mix(in srgb, var(--mc-accent) 50%, transparent),
+    0 0 28px -4px var(--mc-glow);
+}
+
+/* Gold variant */
+.mc-instrument[data-variant='gold'] {
+  --mc-accent:      #D4A843;
+  --mc-accent-soft: color-mix(in srgb, #D4A843 15%, transparent);
+  --mc-glow:        color-mix(in srgb, #D4A843 20%, transparent);
+  border-color: color-mix(in srgb, #D4A843 35%, var(--border-default));
+  background: linear-gradient(160deg,
+    color-mix(in srgb, #D4A843 8%, var(--bg-surface-2)) 0%,
+    var(--bg-surface-2) 60%,
+    var(--bg-surface-1) 100%);
+}
+
+/* Window variant (success tone for active, warning for upcoming) */
+.mc-instrument[data-variant='window'][data-tone='success'] {
+  --mc-accent:      var(--success);
+  --mc-accent-soft: color-mix(in srgb, var(--success-soft) 40%, transparent);
+  --mc-glow:        color-mix(in srgb, var(--success) 22%, transparent);
+  border-color: var(--success-border);
+  background: linear-gradient(160deg,
+    color-mix(in srgb, var(--success-soft) 20%, var(--bg-surface-2)) 0%,
+    var(--bg-surface-2) 65%,
+    var(--bg-surface-1) 100%);
+}
+
+.mc-instrument[data-variant='window'][data-tone='warning'] {
+  --mc-accent:      var(--warning);
+  --mc-accent-soft: color-mix(in srgb, var(--warning-soft) 35%, transparent);
+  --mc-glow:        color-mix(in srgb, var(--warning) 16%, transparent);
+  border-color: var(--warning-border);
+  background: linear-gradient(160deg,
+    color-mix(in srgb, var(--warning-soft) 18%, var(--bg-surface-2)) 0%,
+    var(--bg-surface-2) 65%,
+    var(--bg-surface-1) 100%);
+}
+
+/* Top accent stripe */
+.mc-instrument__stripe {
+  height: 3px;
+  width: 100%;
+  flex-shrink: 0;
+  background: linear-gradient(90deg,
+    var(--mc-accent) 0%,
+    color-mix(in srgb, var(--mc-accent) 30%, transparent) 100%);
+}
+
+/* ── HEADER ───────────────────────────────────────────────────────────────── */
+.mc-instrument__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-5) 0;
+}
+
+.mc-instrument__title-wrap { display: grid; gap: 0.25rem; min-width: 0; }
+
+.mc-instrument__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--font-black);
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mc-instrument[data-variant='gold'] .mc-instrument__title {
+  background: linear-gradient(120deg, #F0C857 0%, #D4A843 50%, #B8882A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mc-instrument__subtitle {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+}
+
+/* Status badge — reuse session badge classes */
+.mc-instrument__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.mc-instrument__badge[data-tone='success'] {
+  background: var(--success-soft);
+  color: var(--success);
+  border-color: var(--success-border);
+}
+.mc-instrument__badge[data-tone='warning'] {
+  background: var(--warning-soft);
+  color: var(--warning);
+  border-color: var(--warning-border);
+}
+.mc-instrument__badge[data-tone='info'] {
+  background: var(--info-soft);
+  color: var(--info);
+  border-color: var(--info-border);
+}
+.mc-instrument__badge[data-tone='default'] {
+  background: var(--bg-surface-3);
+  color: var(--text-secondary);
+  border-color: var(--border-default);
+}
+
+.mc-instrument__pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+  animation: mc-pulse 2.6s ease-in-out infinite;
+}
+
+/* ── HIGHLIGHT BLOCK ──────────────────────────────────────────────────────── */
+.mc-instrument__highlight {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin: var(--space-4) var(--space-5) 0;
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-xl);
+  border: 1px solid color-mix(in srgb, var(--mc-accent) 25%, var(--border-subtle));
+  background: linear-gradient(135deg,
+    var(--mc-accent-soft) 0%,
+    var(--bg-surface-3) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.mc-instrument__highlight::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg,
+    transparent 20%,
+    color-mix(in srgb, var(--mc-accent) 5%, transparent) 50%,
+    transparent 80%);
+  background-size: 200% 100%;
+  animation: mc-shimmer 5s linear infinite;
+  pointer-events: none;
+}
+
+.mc-instrument__highlight-main { display: grid; gap: 0.2rem; }
+
+.mc-instrument__highlight-label {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.mc-instrument__highlight-value {
+  font-family: var(--font-heading);
+  font-size: clamp(1.3rem, 3.5vw, 1.85rem);
+  font-weight: var(--font-black);
+  line-height: 1;
+  color: var(--text-primary);
+  transition: color 300ms ease;
+}
+
+.mc-instrument[data-variant='gold'] .mc-instrument__highlight-value {
+  color: #D4A843;
+  text-shadow: 0 0 20px color-mix(in srgb, #D4A843 30%, transparent);
+}
+
+.mc-instrument[data-variant='window'][data-tone='success'] .mc-instrument__highlight-value {
+  color: var(--success);
+  text-shadow: 0 0 20px color-mix(in srgb, var(--success) 28%, transparent);
+}
+
+.mc-instrument[data-variant='window'][data-tone='warning'] .mc-instrument__highlight-value {
+  color: var(--warning);
+}
+
+/* Icon on the right of highlight */
+.mc-instrument__highlight-icon {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+  opacity: 0.75;
+  filter: drop-shadow(0 2px 8px var(--mc-glow));
+}
+
+/* ── WINDOW TIMELINE VISUAL ──────────────────────────────────────────────── */
+/* A 24-hour strip showing when the golden window is active */
+.mc-instrument__timeline {
+  padding: 0 var(--space-5);
+  margin-top: var(--space-3);
+  display: grid;
+  gap: var(--space-2);
+}
+
+.mc-instrument__timeline-label {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.mc-instrument__timeline-track {
+  position: relative;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-4);
+  overflow: visible;
+}
+
+.mc-instrument__timeline-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--mc-accent) 60%, transparent) 0%,
+    var(--mc-accent) 100%);
+  box-shadow: 0 0 12px -2px var(--mc-glow);
+}
+
+.mc-instrument__timeline-now {
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  width: 2px;
+  background: var(--text-primary);
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--text-primary) 20%, transparent);
+  z-index: 2;
+}
+
+.mc-instrument__timeline-hours {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+}
+
+/* ── DETAIL LIST ──────────────────────────────────────────────────────────── */
+.mc-instrument__details {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5) 0;
+}
+
+.mc-instrument__detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
+  font-size: var(--text-xs);
+}
+
+.mc-instrument__detail-row dt {
+  color: var(--text-muted);
+}
+
+.mc-instrument__detail-row dd {
+  color: var(--text-primary);
+  font-weight: var(--font-semibold);
+  font-family: var(--font-heading);
+  text-align: end;
+}
+
+/* ── FOOTNOTES / INSIGHTS ─────────────────────────────────────────────────── */
+.mc-instrument__footnotes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-5);
+  margin-top: auto;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.mc-instrument__footnote {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  line-height: var(--leading-relaxed);
+}
+
+.mc-instrument__footnote-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--mc-accent);
+  flex-shrink: 0;
+  margin-top: 0.4em;
+}
+
+/* ── GRID CONTAINER ───────────────────────────────────────────────────────── */
+/* For the session cards grid */
+.mc-session-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: var(--space-4);
+}
+
+/* For the instrument (gold + window) 2-col row */
+.mc-instrument-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .mc-instrument-row {
+    grid-template-columns: 1fr;
+  }
+  .mc-session-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .mc-session-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mc-session__countdown-value {
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+  }
+
+  .mc-instrument__highlight-value {
+    font-size: clamp(1.2rem, 5.5vw, 1.6rem);
+  }
+}
+
+@media (max-width: 540px) {
+  .mc-session__head,
+  .mc-instrument__head {
+    padding: var(--space-4) var(--space-4) 0;
+  }
+
+  .mc-session__countdown,
+  .mc-instrument__highlight {
+    margin-inline: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .mc-session__metrics,
+  .mc-instrument__details,
+  .mc-instrument__timeline {
+    padding-inline: var(--space-4);
+  }
+
+  .mc-session__insights,
+  .mc-instrument__footnotes {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .mc-session__flag {
+    font-size: 1.6rem;
+  }
+
+  .mc-session__name {
+    font-size: var(--text-base);
+  }
+
+  .mc-instrument__title {
+    font-size: var(--text-lg);
+  }
+
+  .mc-instrument-row {
+    gap: var(--space-3);
+  }
+}
+
+@media (max-width: 400px) {
+  .mc-session__metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .mc-session__countdown {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .mc-session__countdown-aside {
+    text-align: start;
+  }
+}

@@ -1,15 +1,20 @@
+// src/app/economie/best-trading-time/page.jsx
 import { Suspense } from 'react';
 
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
   STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
+  buildEconomyDatasetSchema,
+  buildEconomyFaqSchema,
+  buildEconomySpeakableSchema,
   buildEconomyWebApplicationSchema,
   getInitialEconomyPageState,
 } from '@/lib/economy/page-helpers';
 import { getSiteUrl } from '@/lib/site-config';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
+import { FAQ_ITEMS } from '@/components/economy/data/faqItems';
 import StockMarketsLive from '@/components/economy/StockMarketsLive';
 
 const SITE_URL = getSiteUrl();
@@ -31,6 +36,9 @@ export const metadata = buildCanonicalMetadata({
     'أوقات الفتح والإغلاق لخريطة البورصات العالمية الكبرى', 'متى تفتح أسواق الأسهم في طوكيو باريس لندن ونيويورك',
     'جلسات ما قبل الافتتاح وما بعد الإغلاق للبورصات (Pre-market)', 'أوقات تداول السوق السعودي تاسي وحالة السوق اليوم',
     'دليل ساعات تداول البورصات العالمية وجلسات وول ستريت', 'متابعة حية لمعرفة هل البورصات العالمية الكبرى مفتوحة',
+    'بورصة دبي اليوم مفتوحة أم مغلقة', 'بورصة أبوظبي اليوم بتوقيتك',
+    'بورصة الكويت الآن', 'بورصة قطر اليوم', 'البورصة المصرية اليوم مفتوحة أم مغلقة',
+    'عطل البورصات العربية 2026', 'هل تاسي مفتوح الآن',
   ],
   url: `${SITE_URL}/economie/stock-markets`,
 });
@@ -47,6 +55,21 @@ export default function StockMarketsPage() {
     'البورصات العالمية الآن',
     '/economie/stock-markets',
   );
+  const datasetSchema = buildEconomyDatasetSchema({
+    siteUrl: SITE_URL,
+    path: '/economie/stock-markets',
+    name: 'بيانات البورصات العالمية والعربية',
+    description: 'بيانات أوقات الفتح والإغلاق والجلسات الموسعة لأهم البورصات العالمية والعربية بتحويلها إلى توقيت المستخدم.',
+  });
+  const speakableSchema = buildEconomySpeakableSchema({
+    siteUrl: SITE_URL,
+    path: '/economie/stock-markets',
+  });
+  const faqSchema = buildEconomyFaqSchema({
+    siteUrl: SITE_URL,
+    path: '/economie/stock-markets',
+    items: FAQ_ITEMS.stockMarkets,
+  });
 
   return (
     <div className="bg-base" dir="rtl">
@@ -57,6 +80,18 @@ export default function StockMarketsPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(speakableSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <EconomyAdLayout>
         <Suspense

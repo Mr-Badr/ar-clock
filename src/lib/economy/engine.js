@@ -1,8 +1,9 @@
+// lib/economy/engine.js
 import { DateTime } from 'luxon';
 import { SITE_BRAND } from '@/lib/site-config';
 
 const VIEWER_LOCALE = 'ar-SA-u-nu-latn';
-const DATE_LABEL_LOCALE = 'ar-SA';
+const DATE_LABEL_LOCALE = 'ar-SA-u-nu-latn';
 
 const FOREX_SESSION_DEFS = [
   {
@@ -51,12 +52,44 @@ const FOREX_SESSION_DEFS = [
   },
 ];
 
+const FOREX_SESSION_INTELLIGENCE = {
+  sydney: {
+    cityNameAr: 'سيدني',
+    liquidityLabel: 'سيولة خفيفة إلى متوسطة',
+    volatilityLabel: 'أهدأ من لندن ونيويورك',
+    bestFor: 'AUD وNZD وبداية إعادة التسعير الأسبوعي',
+    watchLabel: 'تصلح للمراجعة الهادئة أو متابعة الأصول الأسترالية.',
+  },
+  tokyo: {
+    cityNameAr: 'طوكيو',
+    liquidityLabel: 'سيولة متوسطة',
+    volatilityLabel: 'أوضح على أزواج الين',
+    bestFor: 'JPY وAUD/JPY والأخبار الآسيوية',
+    watchLabel: 'تزداد أهميتها عندما تظهر بيانات يابانية أو صينية مفاجئة.',
+  },
+  london: {
+    cityNameAr: 'لندن',
+    liquidityLabel: 'سيولة عالية',
+    volatilityLabel: 'نشاط أوروبي واضح',
+    bestFor: 'EUR وGBP وبداية حركة الذهب اليومية',
+    watchLabel: 'هي البوابة العملية لمعظم المتداولين العرب أثناء النهار.',
+  },
+  newyork: {
+    cityNameAr: 'نيويورك',
+    liquidityLabel: 'سيولة عالية جداً',
+    volatilityLabel: 'أعلى حساسية للأخبار الأمريكية',
+    bestFor: 'USD وXAU/USD وبيانات الاقتصاد الأمريكي',
+    watchLabel: 'أول ساعة فيها قد تعيد تشكيل مزاج السوق لبقية اليوم.',
+  },
+};
+
 const STOCK_MARKETS = [
   {
     id: 'us',
     nameAr: 'السوق الأمريكي',
     shortNameAr: 'NYSE / NASDAQ',
     flag: '🇺🇸',
+    region: 'global',
     timezone: 'America/New_York',
     tone: 'warning',
     sessions: [{ open: '09:30', close: '16:00', days: [1, 2, 3, 4, 5] }],
@@ -69,9 +102,12 @@ const STOCK_MARKETS = [
     nameAr: 'تداول السعودي',
     shortNameAr: 'Tadawul',
     flag: '🇸🇦',
+    region: 'arab',
     timezone: 'Asia/Riyadh',
     tone: 'success',
-    sessions: [{ open: '10:00', close: '15:00', days: [7, 1, 2, 3, 4] }],
+    sessions: [{ open: '10:00', close: '15:00', days: [7, 1, 2, 3, 4], label: 'الجلسة الرئيسية' }],
+    premarket: { open: '09:30', close: '10:00', days: [7, 1, 2, 3, 4] },
+    afterhours: { open: '15:00', close: '15:30', days: [7, 1, 2, 3, 4] },
     note: 'أيام العمل من الأحد إلى الخميس.',
   },
   {
@@ -79,6 +115,7 @@ const STOCK_MARKETS = [
     nameAr: 'بورصة لندن',
     shortNameAr: 'LSE',
     flag: '🇬🇧',
+    region: 'global',
     timezone: 'Europe/London',
     tone: 'brand',
     sessions: [{ open: '08:00', close: '16:30', days: [1, 2, 3, 4, 5] }],
@@ -88,6 +125,7 @@ const STOCK_MARKETS = [
     nameAr: 'بورصة طوكيو',
     shortNameAr: 'TSE',
     flag: '🇯🇵',
+    region: 'global',
     timezone: 'Asia/Tokyo',
     tone: 'info',
     sessions: [
@@ -101,11 +139,199 @@ const STOCK_MARKETS = [
     nameAr: 'بورصة باريس',
     shortNameAr: 'Euronext',
     flag: '🇫🇷',
+    region: 'global',
     timezone: 'Europe/Paris',
     tone: 'default',
     sessions: [{ open: '09:00', close: '17:30', days: [1, 2, 3, 4, 5] }],
   },
+  {
+    id: 'de',
+    nameAr: 'بورصة فرانكفورت',
+    shortNameAr: 'Xetra',
+    flag: '🇩🇪',
+    region: 'global',
+    timezone: 'Europe/Berlin',
+    tone: 'default',
+    sessions: [{ open: '09:00', close: '17:30', days: [1, 2, 3, 4, 5] }],
+  },
+  {
+    id: 'ae-dfm',
+    nameAr: 'بورصة دبي',
+    shortNameAr: 'DFM',
+    flag: '🇦🇪',
+    region: 'arab',
+    timezone: 'Asia/Dubai',
+    tone: 'info',
+    sessions: [{ open: '10:00', close: '14:00', days: [7, 1, 2, 3, 4] }],
+    premarket: { open: '09:30', close: '10:00', days: [7, 1, 2, 3, 4] },
+    note: 'من الأحد إلى الخميس، مع تمهيد قصير قبل الجلسة الرئيسية.',
+  },
+  {
+    id: 'ae-adx',
+    nameAr: 'بورصة أبوظبي',
+    shortNameAr: 'ADX',
+    flag: '🇦🇪',
+    region: 'arab',
+    timezone: 'Asia/Dubai',
+    tone: 'brand',
+    sessions: [{ open: '10:00', close: '14:00', days: [7, 1, 2, 3, 4] }],
+    premarket: { open: '09:30', close: '10:00', days: [7, 1, 2, 3, 4] },
+  },
+  {
+    id: 'kw',
+    nameAr: 'بورصة الكويت',
+    shortNameAr: 'Boursa Kuwait',
+    flag: '🇰🇼',
+    region: 'arab',
+    timezone: 'Asia/Kuwait',
+    tone: 'success',
+    sessions: [{ open: '09:30', close: '12:30', days: [7, 1, 2, 3, 4] }],
+  },
+  {
+    id: 'qa',
+    nameAr: 'بورصة قطر',
+    shortNameAr: 'QSE',
+    flag: '🇶🇦',
+    region: 'arab',
+    timezone: 'Asia/Qatar',
+    tone: 'warning',
+    sessions: [{ open: '09:00', close: '13:30', days: [7, 1, 2, 3, 4] }],
+  },
+  {
+    id: 'eg',
+    nameAr: 'البورصة المصرية',
+    shortNameAr: 'EGX',
+    flag: '🇪🇬',
+    region: 'arab',
+    timezone: 'Africa/Cairo',
+    tone: 'default',
+    sessions: [{ open: '10:00', close: '15:30', days: [7, 1, 2, 3, 4] }],
+  },
 ];
+
+const STOCK_MARKET_INTELLIGENCE = {
+  us: {
+    cityNameAr: 'نيويورك',
+    regionLabelAr: 'عالمي',
+    localCurrency: 'USD',
+    referenceIndex: 'S&P 500 / Nasdaq 100',
+    liquidityTierLabel: 'سيولة مؤسسية عميقة',
+    catalystLabel: 'الأخبار الأمريكية والعوائد ونتائج الشركات',
+  },
+  sa: {
+    cityNameAr: 'الرياض',
+    regionLabelAr: 'عربي',
+    localCurrency: 'SAR',
+    referenceIndex: 'TASI',
+    liquidityTierLabel: 'سيولة خليجية محلية قوية',
+    catalystLabel: 'الطاقة والمصارف والأخبار المحلية',
+  },
+  uk: {
+    cityNameAr: 'لندن',
+    regionLabelAr: 'عالمي',
+    localCurrency: 'GBP',
+    referenceIndex: 'FTSE 100',
+    liquidityTierLabel: 'سيولة أوروبية عالية',
+    catalystLabel: 'المصارف والطاقة والجنيه الإسترليني',
+  },
+  jp: {
+    cityNameAr: 'طوكيو',
+    regionLabelAr: 'عالمي',
+    localCurrency: 'JPY',
+    referenceIndex: 'Nikkei 225',
+    liquidityTierLabel: 'سيولة آسيوية مستقرة',
+    catalystLabel: 'الين والمصدرون والسياسة اليابانية',
+  },
+  fr: {
+    cityNameAr: 'باريس',
+    regionLabelAr: 'عالمي',
+    localCurrency: 'EUR',
+    referenceIndex: 'CAC 40',
+    liquidityTierLabel: 'سيولة أوروبية متوازنة',
+    catalystLabel: 'الأسهم الصناعية والسلع الفاخرة واليورو',
+  },
+  de: {
+    cityNameAr: 'فرانكفورت',
+    regionLabelAr: 'عالمي',
+    localCurrency: 'EUR',
+    referenceIndex: 'DAX',
+    liquidityTierLabel: 'سيولة صناعية أوروبية قوية',
+    catalystLabel: 'التصنيع الألماني والطاقة والسياسة الأوروبية',
+  },
+  'ae-dfm': {
+    cityNameAr: 'دبي',
+    regionLabelAr: 'عربي',
+    localCurrency: 'AED',
+    referenceIndex: 'DFM General',
+    liquidityTierLabel: 'سيولة خليجية متوسطة',
+    catalystLabel: 'العقار والبنوك وشهية المخاطرة الخليجية',
+  },
+  'ae-adx': {
+    cityNameAr: 'أبوظبي',
+    regionLabelAr: 'عربي',
+    localCurrency: 'AED',
+    referenceIndex: 'ADX General',
+    liquidityTierLabel: 'سيولة خليجية متنامية',
+    catalystLabel: 'الطاقة والشركات الحكومية والسيولة الإقليمية',
+  },
+  kw: {
+    cityNameAr: 'الكويت',
+    regionLabelAr: 'عربي',
+    localCurrency: 'KWD',
+    referenceIndex: 'Premier Market',
+    liquidityTierLabel: 'سيولة خليجية انتقائية',
+    catalystLabel: 'البنوك والإنفاق الحكومي والسيولة المحلية',
+  },
+  qa: {
+    cityNameAr: 'الدوحة',
+    regionLabelAr: 'عربي',
+    localCurrency: 'QAR',
+    referenceIndex: 'QE Index',
+    liquidityTierLabel: 'سيولة خليجية متوسطة',
+    catalystLabel: 'الغاز والبنوك والإنفاق المحلي',
+  },
+  eg: {
+    cityNameAr: 'القاهرة',
+    regionLabelAr: 'عربي',
+    localCurrency: 'EGP',
+    referenceIndex: 'EGX 30',
+    liquidityTierLabel: 'سيولة عربية محلية متقلبة',
+    catalystLabel: 'العملة والتمويل المحلي وقرارات السياسة الاقتصادية',
+  },
+};
+
+const ECONOMIC_EVENT_INTELLIGENCE = {
+  factories: {
+    descriptionAr: 'يقيس طلبات المصانع الأمريكية ويعطي إشارة مبكرة على المزاج الصناعي والإنفاق الرأسمالي.',
+    affectedPairs: ['EUR/USD', 'USD/JPY'],
+    surpriseRiskLabel: 'متوسط',
+    frequencyLabel: 'شهري',
+  },
+  confidence: {
+    descriptionAr: 'يكشف درجة تفاؤل المستهلك الأمريكي ويؤثر على الدولار والأسهم عندما تأتي القراءة بعيدة عن المتوقع.',
+    affectedPairs: ['EUR/USD', 'XAU/USD'],
+    surpriseRiskLabel: 'متوسط',
+    frequencyLabel: 'شهري',
+  },
+  jobless: {
+    descriptionAr: 'يراقب قوة سوق العمل الأمريكي أسبوعياً ويؤثر بسرعة على توقعات الفائدة والدولار.',
+    affectedPairs: ['USD/JPY', 'XAU/USD'],
+    surpriseRiskLabel: 'متوسط إلى مرتفع',
+    frequencyLabel: 'أسبوعي',
+  },
+  boe: {
+    descriptionAr: 'مراجعات بنك إنجلترا تهم الجنيه والأسواق الأوروبية وقد تغير توقيت التوقعات النقدية.',
+    affectedPairs: ['GBP/USD', 'EUR/GBP'],
+    surpriseRiskLabel: 'مرتفع',
+    frequencyLabel: 'دوري',
+  },
+  nfp: {
+    descriptionAr: 'أهم تقرير وظائف أمريكي شهري، وغالباً ما يحرك الدولار والذهب والأسهم بسرعة واضحة.',
+    affectedPairs: ['EUR/USD', 'XAU/USD', 'USD/CAD'],
+    surpriseRiskLabel: 'مرتفع جداً',
+    frequencyLabel: 'شهري',
+  },
+};
 
 const ARAB_REFERENCE_VIEWERS = [
   {
@@ -139,6 +365,130 @@ const GOLD_SESSION_CONTEXT = {
   tokyo: 'نافذة مفيدة لحركة آسيا والين مع هدوء نسبي مقارنة بلندن ونيويورك.',
   london: 'بداية السيولة الأقوى للذهب الفوري مع دخول المراكز الأوروبية.',
   newyork: 'أكثر الفترات حساسية لبيانات الدولار والسوق الأمريكي والذهب.',
+};
+
+const GOLD_MARKET_GUIDE = [
+  {
+    id: 'lbma',
+    title: 'LBMA',
+    subtitle: 'مرجع الذهب الفوري في لندن',
+    body: 'يهتم به المتداول لأنه يعكس قلب التسعير المؤسسي للذهب الفوري مع بداية النشاط الأوروبي، ولذلك ترتبط نافذة لندن غالباً بأوضح حركة مبكرة على الذهب.',
+  },
+  {
+    id: 'comex',
+    title: 'COMEX',
+    subtitle: 'عقود الذهب الآجلة في نيويورك',
+    body: 'هنا تظهر عقود الذهب الأكثر متابعة في السوق الأمريكي. الفرق العملي أن العقود الآجلة لها مواصفات وتواريخ استحقاق، بينما كثير من المتداولين العرب يركزون على العقود الفورية أو عقود الفروقات.',
+  },
+  {
+    id: 'otc',
+    title: 'OTC',
+    subtitle: 'سوق بين البنوك والمؤسسات',
+    body: 'هذا هو السوق اللامركزي الذي يجعل الذهب يبدو وكأنه يعمل معظم اليوم. أهميته أنه يفسر لماذا لا يشبه الذهب ساعات متجر الذهب المحلي أو جلسة بورصة واحدة فقط.',
+  },
+];
+
+const SESSION_PAIR_GUIDE = {
+  sydney: {
+    best: ['AUD/USD', 'NZD/USD'],
+    worst: ['EUR/USD', 'GBP/USD'],
+    reason: 'تبدأ السيولة الأسترالية والنيوزيلندية مبكراً بينما تبقى أوروبا وأمريكا هادئتين نسبياً.',
+  },
+  tokyo: {
+    best: ['USD/JPY', 'AUD/JPY'],
+    worst: ['GBP/USD', 'EUR/GBP'],
+    reason: 'بنك اليابان والأخبار الآسيوية تجعل أزواج الين أوضح من الأزواج الأوروبية الثقيلة.',
+  },
+  london: {
+    best: ['EUR/USD', 'GBP/USD'],
+    worst: ['AUD/NZD', 'NZD/CAD'],
+    reason: 'هذه أعلى ساعات السيولة الأوروبية وتكون الحركة على اليورو والجنيه أوضح وأسرع.',
+  },
+  newyork: {
+    best: ['EUR/USD', 'USD/CAD', 'XAU/USD'],
+    worst: ['AUD/NZD', 'EUR/CHF'],
+    reason: 'الأخبار الأمريكية والدولار والذهب تتصدر المشهد مع بداية نيويورك وتداخلها مع لندن.',
+  },
+};
+
+const WEEKLY_ECONOMIC_EVENTS = [
+  { id: 'factories', dayOfWeek: 1, timeUtc: '14:30', currency: 'USD', impact: 'medium', nameAr: 'أوامر المصانع الأمريكية', sessionId: 'newyork' },
+  { id: 'confidence', dayOfWeek: 2, timeUtc: '15:00', currency: 'USD', impact: 'medium', nameAr: 'مؤشر ثقة المستهلك الأمريكي', sessionId: 'newyork' },
+  { id: 'jobless', dayOfWeek: 3, timeUtc: '14:30', currency: 'USD', impact: 'medium', nameAr: 'مطالبات البطالة الأمريكية', sessionId: 'newyork' },
+  { id: 'boe', dayOfWeek: 4, timeUtc: '12:00', currency: 'GBP', impact: 'high', nameAr: 'مراجعة بنك إنجلترا الدورية', sessionId: 'london' },
+  { id: 'nfp', dayOfWeek: 5, timeUtc: '13:30', currency: 'USD', impact: 'critical', nameAr: 'الوظائف الأمريكية NFP', sessionId: 'newyork' },
+];
+
+const PROFILE_RECOMMENDATIONS = {
+  scalper: {
+    title: 'مضاربة يومية قصيرة',
+    summary: 'ركّز على تداخل لندن ونيويورك وتجنّب الساعات الرمادية.',
+    detail: 'أفضل نافذة للمضاربة السريعة تكون عادةً عندما تتجمع السيولة والأوامر في وقت واحد، لذلك تبقى ساعة التداخل هي الأنسب غالباً لـ EUR/USD وXAU/USD.',
+  },
+  swing: {
+    title: 'تداول أسبوعي',
+    summary: 'استخدم هذه الصفحة لاختيار وقت المراقبة لا وقت الإفراط في الدخول.',
+    detail: 'للتداول الأسبوعي، يكفيك ربط بداية لندن وأول ساعة من نيويورك بالأيام الثقيلة مثل الأربعاء والخميس ثم تقليل المتابعة في الفترات الأهدأ.',
+  },
+  news: {
+    title: 'متابعة الأخبار والبيانات',
+    summary: 'انتبه للنوافذ التي تسبق البيانات الأمريكية والإنجليزية مباشرة.',
+    detail: 'هذا النمط يستفيد من معرفة توقيت الجلسة الأقرب للخبر، مع التحذير من أن ارتفاع النشاط لا يعني وضوح الاتجاه أو سهولة التنفيذ.',
+  },
+  gold: {
+    title: 'تداول الذهب تحديداً',
+    summary: 'راقب نافذة لندن ونيويورك مع تجنب الاستراحة اليومية للذهب.',
+    detail: 'الذهب غالباً يستجيب بأوضح صورة عند دخول نيويورك على سيولة لندن القائمة، لذلك تتكرر أفضلية هذه النافذة أكثر من غيرها.',
+  },
+};
+
+const NYSE_HOLIDAYS = [
+  { date: '2026-01-01', nameAr: 'رأس السنة الميلادية', compensated: false },
+  { date: '2026-01-19', nameAr: 'يوم مارتن لوثر كينج', compensated: false },
+  { date: '2026-02-16', nameAr: 'يوم الرؤساء', compensated: false },
+  { date: '2026-04-03', nameAr: 'الجمعة العظيمة', compensated: false },
+  { date: '2026-05-25', nameAr: 'يوم الذكرى', compensated: false },
+  { date: '2026-06-19', nameAr: 'جونتينث', compensated: false },
+  { date: '2026-07-03', nameAr: 'تعويض عيد الاستقلال', compensated: true },
+  { date: '2026-09-07', nameAr: 'عيد العمال', compensated: false },
+  { date: '2026-11-26', nameAr: 'عيد الشكر', compensated: false },
+  { date: '2026-12-25', nameAr: 'عيد الميلاد', compensated: false },
+  { date: '2027-01-01', nameAr: 'رأس السنة الميلادية', compensated: false },
+  { date: '2027-01-18', nameAr: 'يوم مارتن لوثر كينج', compensated: false },
+  { date: '2027-02-15', nameAr: 'يوم الرؤساء', compensated: false },
+  { date: '2027-03-26', nameAr: 'الجمعة العظيمة', compensated: false },
+  { date: '2027-05-31', nameAr: 'يوم الذكرى', compensated: false },
+  { date: '2027-06-18', nameAr: 'تعويض جونتينث', compensated: true },
+  { date: '2027-07-05', nameAr: 'تعويض عيد الاستقلال', compensated: true },
+  { date: '2027-09-06', nameAr: 'عيد العمال', compensated: false },
+  { date: '2027-11-25', nameAr: 'عيد الشكر', compensated: false },
+  { date: '2027-12-24', nameAr: 'تعويض عيد الميلاد', compensated: true },
+];
+
+const ARAB_MARKET_HOLIDAY_REFERENCES = {
+  sa: [
+    { date: '2026-02-22', nameAr: 'يوم التأسيس', exchange: 'تداول السعودي', statusLabel: 'مرجع ثابت' },
+    { date: '2026-09-23', nameAr: 'اليوم الوطني السعودي', exchange: 'تداول السعودي', statusLabel: 'مرجع ثابت' },
+  ],
+  'ae-dfm': [
+    { date: '2026-01-01', nameAr: 'رأس السنة الميلادية', exchange: 'بورصة دبي', statusLabel: 'مرجع ثابت' },
+    { date: '2026-12-02', nameAr: 'اليوم الوطني الإماراتي', exchange: 'بورصة دبي', statusLabel: 'مرجع ثابت' },
+  ],
+  'ae-adx': [
+    { date: '2026-01-01', nameAr: 'رأس السنة الميلادية', exchange: 'بورصة أبوظبي', statusLabel: 'مرجع ثابت' },
+    { date: '2026-12-02', nameAr: 'اليوم الوطني الإماراتي', exchange: 'بورصة أبوظبي', statusLabel: 'مرجع ثابت' },
+  ],
+  kw: [
+    { date: '2026-02-25', nameAr: 'العيد الوطني الكويتي', exchange: 'بورصة الكويت', statusLabel: 'مرجع ثابت' },
+    { date: '2026-02-26', nameAr: 'عيد التحرير', exchange: 'بورصة الكويت', statusLabel: 'مرجع ثابت' },
+  ],
+  qa: [
+    { date: '2026-12-18', nameAr: 'اليوم الوطني القطري', exchange: 'بورصة قطر', statusLabel: 'مرجع ثابت' },
+  ],
+  eg: [
+    { date: '2026-01-07', nameAr: 'عيد الميلاد الشرقي', exchange: 'البورصة المصرية', statusLabel: 'مرجع شائع' },
+    { date: '2026-07-23', nameAr: 'عيد الثورة', exchange: 'البورصة المصرية', statusLabel: 'مرجع شائع' },
+  ],
 };
 
 const US_MARKET_SOURCE_LINKS = [
@@ -224,6 +574,66 @@ const STOCK_MARKET_REFERENCE_MAP = {
     },
     supportSource: null,
     note: 'تعرض الصفحة ساعات باريس النقدية الأساسية ضمن Euronext وفق توقيتك الحالي.',
+  },
+  de: {
+    marketLabel: 'بورصة فرانكفورت',
+    statusLabel: 'جلسة اعتيادية محسوبة',
+    officialSource: {
+      label: 'Deutsche Boerse Xetra',
+      url: 'https://www.xetra.com/xetra-en/trading/trading-calendar-and-trading-hours',
+    },
+    supportSource: null,
+    note: 'تعرض الصفحة جلسة Xetra الأساسية الأكثر استخداماً في المتابعة العربية المختصرة.',
+  },
+  'ae-dfm': {
+    marketLabel: 'بورصة دبي',
+    statusLabel: 'جلسة اعتيادية محسوبة',
+    officialSource: {
+      label: 'Dubai Financial Market',
+      url: 'https://www.dfm.ae',
+    },
+    supportSource: null,
+    note: 'هذه واحدة من أكثر البورصات الخليجية بحثاً، لذا أضفناها بجلسة عربية واضحة بتوقيت الزائر.',
+  },
+  'ae-adx': {
+    marketLabel: 'بورصة أبوظبي',
+    statusLabel: 'جلسة اعتيادية محسوبة',
+    officialSource: {
+      label: 'Abu Dhabi Securities Exchange',
+      url: 'https://www.adx.ae',
+    },
+    supportSource: null,
+    note: 'تُعرض الساعات الاعتيادية الرئيسية لبورصة أبوظبي مع تحويلها مباشرة إلى توقيت المستخدم.',
+  },
+  kw: {
+    marketLabel: 'بورصة الكويت',
+    statusLabel: 'جلسة اعتيادية محسوبة',
+    officialSource: {
+      label: 'Boursa Kuwait',
+      url: 'https://www.boursakuwait.com.kw',
+    },
+    supportSource: null,
+    note: 'أضفناها لأن البحث الخليجي عنها أعلى بكثير من حضورها الحالي في الأدوات العربية المبسطة.',
+  },
+  qa: {
+    marketLabel: 'بورصة قطر',
+    statusLabel: 'جلسة اعتيادية محسوبة',
+    officialSource: {
+      label: 'Qatar Stock Exchange',
+      url: 'https://www.qe.com.qa',
+    },
+    supportSource: null,
+    note: 'تعرض الصفحة الساعات الاعتيادية لبورصة قطر بصياغة مباشرة تركز على سؤال الفتح الآن.',
+  },
+  eg: {
+    marketLabel: 'البورصة المصرية',
+    statusLabel: 'جلسة اعتيادية محسوبة',
+    officialSource: {
+      label: 'Egyptian Exchange',
+      url: 'https://www.egx.com.eg',
+    },
+    supportSource: null,
+    note: 'وجود البورصة المصرية مهم لأن كثيراً من المستخدمين العرب يبحثون عن توقيتها المحلي لا عن بورصات أوروبا فقط.',
   },
 };
 
@@ -313,6 +723,23 @@ function formatDateLabel(dateTime, timeZone, options = {}) {
   }).format(dateTime.toJSDate());
 }
 
+function formatHijriDateLabel(dateTime, timeZone) {
+  return new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn', {
+    timeZone,
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(dateTime.toJSDate());
+}
+
+function getHijriMonth(dateTime, timeZone) {
+  const month = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', {
+    timeZone,
+    month: 'numeric',
+  }).format(dateTime.toJSDate());
+  return Number(month);
+}
+
 function formatWeekday(dateTime, timeZone, width = 'short') {
   return new Intl.DateTimeFormat(DATE_LABEL_LOCALE, {
     timeZone,
@@ -355,6 +782,15 @@ function formatDuration(totalMinutesRaw) {
 
 function diffMinutes(later, earlier) {
   return later.diff(earlier, 'minutes').minutes;
+}
+
+function formatCountdownClock(totalSecondsRaw) {
+  const totalSeconds = Math.max(0, Math.floor(totalSecondsRaw));
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return [hours, minutes, seconds].map((value) => String(value).padStart(2, '0')).join(':');
 }
 
 function getIntersection(a, b) {
@@ -420,6 +856,284 @@ function evaluateMarket(nowUtc, market) {
   };
 }
 
+function getWeekdayEventDate(nowUtc, viewerTimezone, weekday) {
+  const viewerNow = nowUtc.setZone(viewerTimezone);
+  const startOfWeek = viewerNow.startOf('week');
+  return startOfWeek.plus({ days: weekday - 1 }).startOf('day');
+}
+
+function isFirstFridayOfMonth(dateTime) {
+  return dateTime.weekday === 5 && dateTime.day <= 7;
+}
+
+function buildWeeklyEconomicEvents(nowUtc, viewerTimezone) {
+  return WEEKLY_ECONOMIC_EVENTS.flatMap((event) => {
+    const day = getWeekdayEventDate(nowUtc, viewerTimezone, event.dayOfWeek);
+    if (event.id === 'nfp' && !isFirstFridayOfMonth(day)) return [];
+
+    const { hour, minute } = parseClock(event.timeUtc);
+    const eventUtc = DateTime.utc(day.year, day.month, day.day, hour, minute);
+    const session = FOREX_SESSION_DEFS.find((item) => item.id === event.sessionId);
+    const eventMeta = ECONOMIC_EVENT_INTELLIGENCE[event.id] || {};
+    const countdownMinutes = diffMinutes(eventUtc, nowUtc);
+
+    return [{
+      key: `${event.id}-${eventUtc.toISODate()}`,
+      nameAr: event.nameAr,
+      currency: event.currency,
+      impact: event.impact,
+      impactLabel: event.impact === 'critical' ? 'حرج' : event.impact === 'high' ? 'عالي' : 'متوسط',
+      sessionLabel: session?.nameAr || '--',
+      timeLocal: formatTime(eventUtc, viewerTimezone),
+      dateLabel: formatDateLabel(eventUtc, viewerTimezone, { weekday: 'long', day: 'numeric', month: 'long' }),
+      countdownLabel: countdownMinutes > 0 ? `خلال ${formatDuration(countdownMinutes)}` : 'صدر أو مضى هذا الأسبوع',
+      descriptionAr: eventMeta.descriptionAr || '',
+      affectedPairs: eventMeta.affectedPairs || [],
+      affectedPairsLabel: (eventMeta.affectedPairs || []).join('، '),
+      surpriseRiskLabel: eventMeta.surpriseRiskLabel || 'متوسط',
+      frequencyLabel: eventMeta.frequencyLabel || 'دوري',
+      viewerDateTime: eventUtc.setZone(viewerTimezone),
+    }];
+  }).sort((left, right) => left.viewerDateTime.toMillis() - right.viewerDateTime.toMillis());
+}
+
+function getNextHighImpactEvent(nowUtc, viewerTimezone, weeklyEvents = buildWeeklyEconomicEvents(nowUtc, viewerTimezone)) {
+  const viewerNow = nowUtc.setZone(viewerTimezone);
+  return weeklyEvents.find((event) => (
+    ['critical', 'high'].includes(event.impact)
+      && event.viewerDateTime >= viewerNow
+  )) || weeklyEvents.find((event) => ['critical', 'high'].includes(event.impact)) || null;
+}
+
+function buildUsCountdownHero(nowUtc, viewerTimezone) {
+  const market = getMarketById('us');
+  const state = evaluateMarket(nowUtc, market);
+  const premarketState = evaluateMarket(nowUtc, {
+    timezone: market.timezone,
+    sessions: [market.premarket],
+  });
+  const afterhoursState = evaluateMarket(nowUtc, {
+    timezone: market.timezone,
+    sessions: [market.afterhours],
+  });
+
+  const inOpen = Boolean(state.active);
+  const inPremarket = Boolean(premarketState.active);
+  const inAfterhours = Boolean(afterhoursState.active);
+  const nextInterval = state.active || state.next || state.intervals[0];
+  const targetUtc = inOpen ? state.active.endUtc : nextInterval?.startUtc || nowUtc;
+  const secondsRemaining = Math.max(0, Math.floor(targetUtc.diff(nowUtc, 'seconds').seconds));
+  const clockLabel = formatCountdownClock(secondsRemaining);
+
+  let phase = 'CLOSED';
+  let title = 'السوق الأمريكي مغلق الآن';
+  let detail = `يفتح خلال ${clockLabel}`;
+  let tone = 'info';
+  let browserTitle = `${clockLabel} | السوق الأمريكي مغلق — ${SITE_BRAND}`;
+
+  if (inPremarket) {
+    phase = 'PRE_MARKET';
+    title = 'ما قبل السوق الأمريكي نشطة';
+    detail = `الجرس الرسمي خلال ${clockLabel}`;
+    tone = 'warning';
+    browserTitle = `${clockLabel} | السوق يفتح — ${SITE_BRAND}`;
+  } else if (inOpen) {
+    phase = 'OPEN';
+    title = 'السوق الأمريكي مفتوح الآن';
+    detail = `يغلق خلال ${clockLabel}`;
+    tone = 'success';
+    browserTitle = `${clockLabel} | السوق مفتوح — ${SITE_BRAND}`;
+  } else if (inAfterhours) {
+    phase = 'AFTER_HOURS';
+    title = 'السوق في ما بعد الإغلاق';
+    detail = `الافتتاح التالي خلال ${clockLabel}`;
+    tone = 'info';
+    browserTitle = `${clockLabel} | ما بعد الإغلاق — ${SITE_BRAND}`;
+  } else {
+    const marketNow = nowUtc.setZone(market.timezone);
+    if (marketNow.weekday === 6 || marketNow.weekday === 7) {
+      phase = 'WEEKEND';
+      title = 'عطلة نهاية الأسبوع في وول ستريت';
+      detail = `العودة المتوقعة خلال ${clockLabel}`;
+      tone = 'danger';
+      browserTitle = `${clockLabel} | عطلة نهاية الأسبوع — ${SITE_BRAND}`;
+    }
+  }
+
+  return {
+    phase,
+    title,
+    detail,
+    tone,
+    clockLabel,
+    openLabel: nextInterval ? formatTime(nextInterval.startUtc, viewerTimezone) : '--',
+    closeLabel: nextInterval ? formatTime(nextInterval.endUtc, viewerTimezone) : '--',
+    browserTitle,
+  };
+}
+
+function buildNyseHolidayRows(nowUtc, viewerTimezone) {
+  const rows = NYSE_HOLIDAYS.map((holiday) => {
+    const date = DateTime.fromISO(holiday.date, { zone: 'utc' });
+    return {
+      date,
+      key: holiday.date,
+      cells: [
+        formatDateLabel(date, viewerTimezone, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }),
+        formatHijriDateLabel(date, viewerTimezone),
+        holiday.nameAr,
+        holiday.compensated ? 'يوم تعويضي' : 'مغلق',
+      ],
+      isUpcoming: date >= nowUtc.startOf('day'),
+    };
+  });
+
+  const nextHoliday = rows.find((item) => item.isUpcoming) || rows[0] || null;
+
+  return {
+    rows,
+    nextHoliday,
+    summary: nextHoliday
+      ? `أقرب عطلة في الجدول هي ${nextHoliday.cells[2]} بعد ${formatDuration(diffMinutes(nextHoliday.date, nowUtc))}.`
+      : 'لا توجد عطلة قادمة ضمن الجدول الحالي.',
+  };
+}
+
+function buildUsCityClockRows(nowUtc) {
+  return ARAB_REFERENCE_VIEWERS.map((viewerPreset) => {
+    const focus = buildUsFocus(nowUtc, viewerPreset.timezone);
+    return {
+      id: viewerPreset.id,
+      cityNameAr: viewerPreset.cityNameAr,
+      countryNameAr: viewerPreset.countryNameAr,
+      openLabel: focus.openLabel,
+      closeLabel: focus.closeLabel,
+    };
+  });
+}
+
+function buildUsImpactCards(nowUtc, viewerTimezone) {
+  const todayEvent = buildWeeklyEconomicEvents(nowUtc, viewerTimezone).find((event) => event.impact === 'critical' || event.impact === 'high');
+  return [
+    {
+      title: 'أثر الافتتاح الأمريكي على الذهب',
+      body: 'في أول 30 دقيقة من الافتتاح الأمريكي يتسارع عادةً تسعير الدولار والعوائد، ولهذا تصبح حركة XAU/USD أوضح وأحياناً أعنف من الساعات الهادئة.',
+      href: '/economie/gold-market-hours',
+      cta: 'متابعة الذهب الآن',
+    },
+    {
+      title: 'أثر الافتتاح الأمريكي على النفط',
+      body: 'مع دخول نيويورك تزداد حساسية خام WTI للأخبار الأمريكية وتوقعات المخزون والنمو، لذلك تتغير جودة الحركة كثيراً بين ما قبل الافتتاح وبداية الجلسة.',
+      href: '/economie/market-clock',
+      cta: 'قراءة ساعة السوق',
+    },
+    {
+      title: 'ماذا لو كان اليوم فيه بيان كبير؟',
+      body: todayEvent
+        ? `${todayEvent.nameAr} يصدر ${todayEvent.timeLocal} بتوقيتك، لذلك قد تكون بداية الجلسة الأمريكية أكثر حدة من المعتاد على الذهب والأسهم والدولار.`
+        : 'إذا كان اليوم فيه NFP أو CPI أو قرار فائدة، فتعامل مع أول ساعة بعد الافتتاح على أنها نافذة نشاط مرتفع لا ضمان لاتجاه واضح.',
+      href: '/economie/best-trading-time',
+      cta: 'أفضل وقت للتداول',
+    },
+  ];
+}
+
+function isRamadan(nowUtc, viewerTimezone) {
+  return getHijriMonth(nowUtc, viewerTimezone) === 9;
+}
+
+function buildGoldActivityScore(nowUtc, viewerTimezone) {
+  const gold = buildGoldState(nowUtc, viewerTimezone);
+  const bestWindow = buildPreferredWindow(nowUtc, viewerTimezone);
+  const weeklyEvents = buildWeeklyEconomicEvents(nowUtc, viewerTimezone);
+  const hasCriticalUsdEventToday = weeklyEvents.some((event) => (
+    ['critical', 'high'].includes(event.impact)
+      && event.currency === 'USD'
+      && event.viewerDateTime.hasSame(nowUtc.setZone(viewerTimezone), 'day')
+  ));
+
+  if (!gold.isActive) {
+    return {
+      score: gold.statusLabel.includes('عطلة') ? 8 : 18,
+      label: gold.statusLabel.includes('عطلة') ? 'السوق مغلق تقريباً' : 'سيولة منخفضة جداً',
+      tone: gold.tone,
+    };
+  }
+
+  if (hasCriticalUsdEventToday) {
+    return {
+      score: 95,
+      label: 'يوم بيانات قوية على الذهب',
+      tone: 'warning',
+    };
+  }
+
+  const activeSessions = FOREX_SESSION_DEFS.filter((session) => buildForexCard(nowUtc, viewerTimezone, session).isOpen);
+  const activeIds = activeSessions.map((session) => session.id);
+
+  if (bestWindow.isActive) {
+    return { score: 88, label: 'ذروة نشاط الذهب الآن', tone: 'success' };
+  }
+  if (activeIds.includes('london')) {
+    return { score: 68, label: 'لندن تدعم الذهب بوضوح', tone: 'success' };
+  }
+  if (activeIds.includes('newyork')) {
+    return { score: 74, label: 'نيويورك ترفع حساسية الذهب', tone: 'warning' };
+  }
+  if (activeIds.includes('tokyo')) {
+    return { score: 42, label: 'آسيا هادئة نسبياً', tone: 'info' };
+  }
+
+  return { score: 28, label: 'نشاط خفيف', tone: 'default' };
+}
+
+function buildArabMarketHolidayRows(viewerTimezone) {
+  return Object.values(ARAB_MARKET_HOLIDAY_REFERENCES)
+    .flat()
+    .map((holiday) => {
+      const date = DateTime.fromISO(holiday.date, { zone: 'utc' });
+      return {
+        key: `${holiday.exchange}-${holiday.date}`,
+        cells: [
+          holiday.exchange,
+          formatDateLabel(date, viewerTimezone, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }),
+          formatHijriDateLabel(date, viewerTimezone),
+          holiday.nameAr,
+          holiday.statusLabel,
+        ],
+      };
+    });
+}
+
+function buildTadawulDetail(nowUtc, viewerTimezone) {
+  const market = getMarketById('sa');
+  const main = buildExchangeCard(nowUtc, viewerTimezone, market);
+  const pre = evaluateMarket(nowUtc, { timezone: market.timezone, sessions: [market.premarket] }).intervals[0];
+  const after = evaluateMarket(nowUtc, { timezone: market.timezone, sessions: [market.afterhours] }).intervals[0];
+  const weeklyHolidays = (ARAB_MARKET_HOLIDAY_REFERENCES.sa || []).map((item) => item.nameAr).join('، ');
+
+  return {
+    statusLabel: main.statusLabel,
+    premarketLabel: pre ? `${formatTime(pre.startUtc, viewerTimezone)} - ${formatTime(pre.endUtc, viewerTimezone)}` : '--',
+    regularLabel: `${main.openLabel} - ${main.closeLabel}`,
+    afterhoursLabel: after ? `${formatTime(after.startUtc, viewerTimezone)} - ${formatTime(after.endUtc, viewerTimezone)}` : '--',
+    note: `أيام المتابعة هذا الأسبوع: ${buildWeeklySnapshot(nowUtc, viewerTimezone).map((day) => day.label).join('، ')}.`,
+    holidaysLabel: weeklyHolidays || 'تحقق من موقع تداول السعودي عند العطل الرسمية.',
+    sourceUrl: 'https://www.saudiexchange.sa',
+  };
+}
+
+function buildArabMarketsSummary(cards) {
+  const arabCards = cards.filter((card) => getMarketById(card.id)?.region === 'arab');
+  const openCards = arabCards.filter((card) => card.isOpen || card.statusLabel === 'على وشك الفتح');
+  return {
+    arabCards,
+    arabMarketsOpenCount: openCards.length,
+    arabMarketsTotal: arabCards.length,
+    arabMarketsOpenNames: openCards.map((card) => card.nameAr),
+  };
+}
+
 function getViewerLabel(viewer) {
   if (viewer.cityNameAr && viewer.countryNameAr) return `${viewer.cityNameAr}، ${viewer.countryNameAr}`;
   if (viewer.cityNameAr) return viewer.cityNameAr;
@@ -444,6 +1158,7 @@ function getLocationNotice(viewer) {
 }
 
 function buildForexCard(nowUtc, viewerTimezone, sessionDef) {
+  const intelligence = FOREX_SESSION_INTELLIGENCE[sessionDef.id] || {};
   const state = evaluateMarket(nowUtc, {
     timezone: sessionDef.timezone,
     sessions: [{ open: sessionDef.open, close: sessionDef.close, days: sessionDef.days }],
@@ -473,6 +1188,11 @@ function buildForexCard(nowUtc, viewerTimezone, sessionDef) {
     countdownLabel: formatDuration(minutesUntil),
     nextStartMinutes: state.next ? diffMinutes(state.next.startUtc, nowUtc) : minutesUntil,
     pairsLabel: sessionDef.pairs.join('، '),
+    cityNameAr: intelligence.cityNameAr || sessionDef.nameAr,
+    liquidityLabel: intelligence.liquidityLabel || 'سيولة متوسطة',
+    volatilityLabel: intelligence.volatilityLabel || 'تقلب متوسط',
+    bestFor: intelligence.bestFor || sessionDef.pairs.join('، '),
+    watchLabel: intelligence.watchLabel || '',
     isOpen,
     nextStartUtc: state.next?.startUtc?.toISO() || null,
   };
@@ -665,6 +1385,7 @@ function buildPreferredWindow(nowUtc, viewerTimezone) {
     isActive: Boolean(current),
     startLabel: target ? formatTime(target.startUtc, viewerTimezone) : '--',
     endLabel: target ? formatTime(target.endUtc, viewerTimezone) : '--',
+    durationMinutes: target ? diffMinutes(target.endUtc, target.startUtc) : 0,
     statusLabel: current
       ? 'نشطة الآن'
       : next
@@ -675,6 +1396,7 @@ function buildPreferredWindow(nowUtc, viewerTimezone) {
 
 function buildForexActivityChart(nowUtc, viewerTimezone) {
   const viewerDayStart = nowUtc.setZone(viewerTimezone).startOf('day');
+  const goldState = buildGoldState(nowUtc, viewerTimezone);
 
   const points = Array.from({ length: 24 }, (_, hour) => {
     const instant = viewerDayStart.plus({ hours: hour, minutes: 30 }).toUTC();
@@ -693,16 +1415,22 @@ function buildForexActivityChart(nowUtc, viewerTimezone) {
 
     let band = 'quiet';
     let hint = 'فترة هادئة نسبياً';
+    let note = 'مناسبة للمراجعة أو تتبع أزواج أهدأ من الذروة الأمريكية.';
 
     if (overlapBonus > 0) {
       band = 'peak';
       hint = 'ذروة السيولة مع تداخل لندن ونيويورك';
+      note = 'هذه الساعة غالباً هي الأفضل لـ EUR/USD وXAU/USD لأن السيولة الأوروبية والأمريكية تعمل معاً.';
     } else if (activeIds.includes('london') || activeIds.includes('newyork')) {
       band = 'active';
       hint = 'سيولة جيدة على الأزواج الرئيسية';
+      note = activeIds.includes('newyork')
+        ? 'نافذة حساسة لبيانات الدولار والذهب مع تحسن واضح في النشاط.'
+        : 'بداية أوروبا تمنح السوق وضوحاً أعلى من ساعات آسيا الهادئة.';
     } else if (activeSessions.length >= 2) {
       band = 'warm';
       hint = 'تداخل متوسط مناسب للمتابعة';
+      note = 'يوجد تداخل متوسط بين أكثر من جلسة لكنه لا يصل عادة إلى ذروة لندن ونيويورك.';
     }
 
     return {
@@ -713,9 +1441,14 @@ function buildForexActivityChart(nowUtc, viewerTimezone) {
       activeCount: activeSessions.length,
       band,
       hint,
+      sessions: activeSessions.map((session) => session.nameAr),
       sessionsLabel: activeSessions.length
         ? activeSessions.map((session) => session.nameAr).join(' + ')
         : 'لا توجد جلسة رئيسية',
+      bestPairs: activeSessions.flatMap((session) => SESSION_PAIR_GUIDE[session.id]?.best || []).slice(0, 3),
+      goldStatus: overlapBonus > 0 ? 'نافذة سيولة عالية للذهب' : goldState.isActive ? 'الذهب يعمل لكن النشاط متفاوت' : goldState.statusLabel,
+      note,
+      isCurrent: instant.hour === nowUtc.setZone(viewerTimezone).hour,
     };
   });
 
@@ -768,7 +1501,141 @@ function buildTradingWeekWindows(nowUtc, viewerTimezone) {
   });
 }
 
+function buildSessionPairRows() {
+  return FOREX_SESSION_DEFS.map((session) => ({
+    key: session.id,
+    cells: [
+      session.nameAr,
+      (SESSION_PAIR_GUIDE[session.id]?.best || []).join('، '),
+      SESSION_PAIR_GUIDE[session.id]?.reason || '--',
+      (SESSION_PAIR_GUIDE[session.id]?.worst || []).join('، '),
+    ],
+  }));
+}
+
+function buildDstImpactRows(nowUtc) {
+  return ARAB_REFERENCE_VIEWERS.map((viewerPreset) => {
+    const january = DateTime.utc(nowUtc.year, 1, 15, 12, 0);
+    const july = DateTime.utc(nowUtc.year, 7, 15, 12, 0);
+    const winterFocus = buildUsFocus(january, viewerPreset.timezone);
+    const summerFocus = buildUsFocus(july, viewerPreset.timezone);
+
+    return {
+      key: viewerPreset.id,
+      cells: [
+        viewerPreset.cityNameAr,
+        winterFocus.openLabel,
+        summerFocus.openLabel,
+        `الفارق الصيفي في ${viewerPreset.countryNameAr} يتأثر أساساً بتبدل لندن ونيويورك لا بالمدينة العربية نفسها.`,
+      ],
+    };
+  });
+}
+
+function buildDayComparisonRows(nowUtc, viewerTimezone) {
+  const viewerNow = nowUtc.setZone(viewerTimezone);
+  return [0, 1].map((offset) => {
+    const target = viewerNow.plus({ days: offset }).startOf('day').toUTC();
+    const weeklyEvents = buildWeeklyEconomicEvents(target, viewerTimezone).filter((event) => (
+      event.viewerDateTime.hasSame(target.setZone(viewerTimezone), 'day')
+    ));
+    const peakHours = buildForexActivityChart(target, viewerTimezone).points.filter((point) => point.band === 'peak').length;
+
+    return {
+      key: offset === 0 ? 'today' : 'tomorrow',
+      dayLabel: offset === 0 ? 'اليوم' : 'غداً',
+      summary: weeklyEvents.length
+        ? `${weeklyEvents[0].nameAr} ضمن جلسة ${weeklyEvents[0].sessionLabel}`
+        : 'لا يوجد حدث رئيسي ثابت في هذا النموذج',
+      peakLabel: peakHours > 0 ? 'تداخل قوي حاضر' : 'يوم أهدأ نسبياً',
+      note: weeklyEvents.length > 1 ? `${weeklyEvents.length} أحداث مدرجة هذا اليوم.` : 'التركيز الأساسي يبقى على الجلسات نفسها.',
+    };
+  });
+}
+
+function buildNowRecommendation(nowUtc, viewerTimezone) {
+  const chart = buildForexActivityChart(nowUtc, viewerTimezone);
+  const currentHour = nowUtc.setZone(viewerTimezone).hour;
+  const currentPoint = chart.points.find((point) => point.hour === currentHour) || chart.points[0];
+
+  if (currentPoint.band === 'peak') {
+    return {
+      title: 'الآن ذروة لندن ونيويورك',
+      body: 'هذه الساعة من أفضل الساعات لمتابعة EUR/USD وXAU/USD إذا كنت تبحث عن حركة أوضح وسيولة أعلى.',
+      tone: 'success',
+    };
+  }
+  if (currentPoint.band === 'active') {
+    return {
+      title: 'الآن مناسب للمتابعة المركزة',
+      body: currentPoint.sessions.includes('نيويورك')
+        ? 'جلسة نيويورك تعطي الدولار والذهب وزناً أعلى الآن، لذلك تابع الأخبار الأمريكية والأصول المرتبطة بها.'
+        : 'جلسة لندن تمنح الأزواج الأوروبية وضوحاً جيداً قبل الذروة الأمريكية.',
+      tone: 'warning',
+    };
+  }
+  if (currentPoint.band === 'warm') {
+    return {
+      title: 'الآن تداخل متوسط',
+      body: 'توجد حركة معقولة لكن ليست في أقصى نشاطها، لذا يصلح الوقت للمراقبة أو لخطط أقل اندفاعاً.',
+      tone: 'info',
+    };
+  }
+  return {
+    title: 'السوق هادئ نسبياً الآن',
+    body: 'هذه الفترة أنسب للمراجعة والتخطيط أو متابعة الأزواج الأهدأ بدلاً من البحث عن ذروة حركة غير موجودة.',
+    tone: 'default',
+  };
+}
+
+function buildCityComparisonModel(viewer, nowUtc, selectedCityId = 'sa') {
+  const comparePreset = ARAB_REFERENCE_VIEWERS.find((item) => item.id === selectedCityId) || ARAB_REFERENCE_VIEWERS[0];
+  const viewerBest = buildPreferredWindow(nowUtc, viewer.timezone);
+  const compareBest = buildPreferredWindow(nowUtc, comparePreset.timezone);
+  const viewerOffset = nowUtc.setZone(viewer.timezone).offset;
+  const compareOffset = nowUtc.setZone(comparePreset.timezone).offset;
+  const diffHours = (compareOffset - viewerOffset) / 60;
+
+  return {
+    compareCityId: comparePreset.id,
+    compareCityNameAr: comparePreset.cityNameAr,
+    compareCountryNameAr: comparePreset.countryNameAr,
+    timeDiffLabel: diffHours === 0 ? 'نفس التوقيت' : `${diffHours > 0 ? '+' : ''}${diffHours} ساعة`,
+    viewerPeakLabel: `${viewerBest.startLabel} - ${viewerBest.endLabel}`,
+    comparePeakLabel: `${compareBest.startLabel} - ${compareBest.endLabel}`,
+    summary: diffHours === 0
+      ? 'هذه المدينتان تتحركان تقريباً على نفس يوم التداول.'
+      : diffHours > 0
+        ? `${comparePreset.cityNameAr} تسبق مدينتك، لذلك تبدأ نافذة الذروة هناك أبكر على الساعة المحلية.`
+        : `${comparePreset.cityNameAr} تتأخر عن مدينتك، لذلك تبقى نافذة الذروة هناك في وقت محلي مختلف.`,
+  };
+}
+
+function buildWorstTradingRows(nowUtc, viewerTimezone) {
+  const maintenance = buildGoldMaintenanceWindow(nowUtc, viewerTimezone);
+  const firstEvent = buildWeeklyEconomicEvents(nowUtc, viewerTimezone).find((event) => ['critical', 'high'].includes(event.impact));
+  return [
+    {
+      key: 'first-hour',
+      cells: ['أول دقائق الجلسة الجديدة', 'التذبذب قد يكون أسرع من قدرة بعض الخطط على التكيف', 'خفف الاندفاع وانتظر وضوح الاتجاه إن لم تكن تعتمد على الافتتاح'],
+    },
+    {
+      key: 'news',
+      cells: ['قبل وبعد الأخبار العالية التأثير', firstEvent ? `${firstEvent.nameAr} مثال مباشر هذا الأسبوع.` : 'البيانات الكبرى قد توسع الفروقات وتضعف وضوح التنفيذ.', 'اربط هذه الصفحة دائماً بوقت الخبر لا بالسيولة وحدها'],
+    },
+    {
+      key: 'gold-break',
+      cells: ['استراحة الذهب اليومية', `${maintenance.startLabel} - ${maintenance.endLabel}`, 'تجنب اعتبار هذه الفترة نشاطاً طبيعياً للذهب العالمي'],
+    },
+    {
+      key: 'late-friday',
+      cells: ['نهاية الجمعة في نيويورك', 'السيولة تضعف ويقترب إغلاق الأسبوع', 'يفضل تقليل المجازفة أو الاكتفاء بالمراجعة والتحضير'],
+    },
+  ];
+}
+
 function buildExchangeCard(nowUtc, viewerTimezone, market) {
+  const intelligence = STOCK_MARKET_INTELLIGENCE[market.id] || {};
   const state = evaluateMarket(nowUtc, market);
   const marketNow = nowUtc.setZone(market.timezone);
   const sourceMeta = STOCK_MARKET_REFERENCE_MAP[market.id] || null;
@@ -794,15 +1661,15 @@ function buildExchangeCard(nowUtc, viewerTimezone, market) {
   let statusLabel = isOpen ? 'مفتوحة الآن' : 'مغلقة الآن';
   let statusTone = isOpen ? 'success' : 'default';
 
-  if (!isOpen && nextMinutes <= 75) {
-    statusLabel = 'على وشك الفتح';
-    statusTone = 'warning';
-  } else if (inPremarket) {
+  if (inPremarket) {
     statusLabel = 'ما قبل السوق';
     statusTone = 'warning';
   } else if (inAfterhours) {
     statusLabel = 'ما بعد الإغلاق';
     statusTone = 'info';
+  } else if (!isOpen && nextMinutes <= 75) {
+    statusLabel = 'على وشك الفتح';
+    statusTone = 'warning';
   }
 
   return {
@@ -810,6 +1677,7 @@ function buildExchangeCard(nowUtc, viewerTimezone, market) {
     nameAr: market.nameAr,
     shortNameAr: market.shortNameAr,
     flag: market.flag,
+    region: market.region,
     tone: market.tone,
     statusLabel,
     statusTone,
@@ -820,6 +1688,12 @@ function buildExchangeCard(nowUtc, viewerTimezone, market) {
     countdownPrefix: isOpen ? 'تغلق خلال' : 'تفتح خلال',
     countdownLabel: formatDuration(nextMinutes),
     phaseLabel: 'الجلسة الاعتيادية',
+    regionLabelAr: intelligence.regionLabelAr || (market.region === 'arab' ? 'عربي' : 'عالمي'),
+    cityNameAr: intelligence.cityNameAr || market.nameAr,
+    localCurrency: intelligence.localCurrency || '--',
+    referenceIndex: intelligence.referenceIndex || '--',
+    liquidityTierLabel: intelligence.liquidityTierLabel || 'سيولة اعتيادية',
+    catalystLabel: intelligence.catalystLabel || '',
     note: market.note || null,
     sourceLabel: 'الساعات الرسمية المعتادة',
     sourceUrl: sourceMeta?.officialSource?.url || null,
@@ -1029,6 +1903,201 @@ function buildGoldCountryRows(nowUtc) {
   });
 }
 
+function buildLandingStatCards() {
+  const arabMarketCount = STOCK_MARKETS.filter((market) => market.region === 'arab').length;
+  const globalMarketCount = STOCK_MARKETS.filter((market) => market.region === 'global').length;
+
+  return [
+    {
+      label: 'الأدوات الحية',
+      value: `${TOOL_CARDS.filter((card) => card.isLive).length}`,
+      detail: 'صفحات تبني الجواب المباشر من توقيت الزائر نفسه.',
+      tone: 'success',
+    },
+    {
+      label: 'الأسواق المغطاة',
+      value: `${globalMarketCount + arabMarketCount}`,
+      detail: `${arabMarketCount} سوقاً عربياً و${globalMarketCount} سوقاً عالمياً داخل نفس المحرك.`,
+      tone: 'warning',
+    },
+    {
+      label: 'طبقات البيانات',
+      value: 'جلسات + عطل + أحداث',
+      detail: 'لم نعد نعرض الوقت فقط، بل سياق السيولة والأحداث والعطل أيضاً.',
+      tone: 'info',
+    },
+  ];
+}
+
+function buildLandingPremiumSections() {
+  return [
+    {
+      title: 'جواب مباشر لا لوحة مزدحمة',
+      body: 'التركيز هنا على السؤال الذي يفتحه المتداول العربي كل يوم: هل السوق مفتوح الآن، ما أفضل نافذة، وما أقرب حدث قد يغيّر الحركة؟',
+    },
+    {
+      title: 'محرك وقت عربي حقيقي',
+      body: 'المحرك يتعامل مع التوقيت الصيفي، المدن العربية المرجعية، العطل، والجلسات الموسعة بدل الاكتفاء بنقل توقيت نيويورك أو لندن كما هو.',
+    },
+    {
+      title: 'جاهز للتوسع إلى صفحات مدن',
+      body: 'كل طبقة بُنيت لتصلح لاحقاً لصفحات مثل "بتوقيت الرياض" و"بتوقيت الكويت" و"بتوقيت الدار البيضاء" على نفس البنية.',
+    },
+  ];
+}
+
+function buildForexSignalCards(nowUtc, viewerTimezone, cards, bestWindow, weeklyEvents, hero) {
+  const nextEvent = getNextHighImpactEvent(nowUtc, viewerTimezone, weeklyEvents);
+  return [
+    {
+      label: 'الجلسات المفتوحة الآن',
+      value: `${cards.filter((card) => card.isOpen).length}/4`,
+      detail: hero.detail,
+      tone: hero.tone,
+    },
+    {
+      label: 'مدة نافذة الذروة',
+      value: `${Math.round((bestWindow.durationMinutes || 0) / 60)} ساعات`,
+      detail: `${bestWindow.startLabel} - ${bestWindow.endLabel}`,
+      tone: bestWindow.isActive ? 'success' : 'warning',
+    },
+    {
+      label: 'أقرب حدث قوي',
+      value: nextEvent ? nextEvent.nameAr : 'لا حدث مرتفع قريب',
+      detail: nextEvent ? `${nextEvent.timeLocal} · ${nextEvent.sessionLabel}` : 'المحرك الثابت لم يجد حدثاً أقرب',
+      tone: nextEvent ? 'warning' : 'info',
+    },
+  ];
+}
+
+function buildStockSignalCards(globalCards, arabCards, usFocus, viewerTimezone, nowUtc) {
+  const nextEvent = getNextHighImpactEvent(nowUtc, viewerTimezone);
+  return [
+    {
+      label: 'الأسواق العالمية المفتوحة',
+      value: `${globalCards.filter((card) => card.isOpen).length}/${globalCards.length}`,
+      detail: 'قراءة سريعة لوضع البورصات الكبرى الآن.',
+      tone: 'warning',
+    },
+    {
+      label: 'الأسواق العربية المفتوحة',
+      value: `${arabCards.filter((card) => card.isOpen).length}/${arabCards.length}`,
+      detail: 'تغطي الخليج ومصر داخل نفس اللوحة.',
+      tone: 'success',
+    },
+    {
+      label: 'جرس نيويورك',
+      value: usFocus.openLabel,
+      detail: nextEvent ? `أقرب حدث قوي: ${nextEvent.nameAr}` : 'مفيد لمزامنة يومك مع وول ستريت',
+      tone: 'info',
+    },
+  ];
+}
+
+function buildUsSignalCards(base, countdownHero, weeklyEvents, nextHolidaySummary) {
+  const nextEvent = getNextHighImpactEvent(toUtc(base.nowIso), base.viewer.timezone, weeklyEvents);
+  return [
+    {
+      label: 'مرحلة الجلسة',
+      value: countdownHero.phase === 'OPEN' ? 'مفتوح' : countdownHero.phase === 'PRE_MARKET' ? 'ما قبل السوق' : 'مغلق',
+      detail: countdownHero.detail,
+      tone: countdownHero.tone,
+    },
+    {
+      label: 'أول ساعة',
+      value: base.usFocus.firstHourLabel,
+      detail: 'أهم نافذة للمراقبة السريعة في الأسهم الأمريكية.',
+      tone: 'warning',
+    },
+    {
+      label: 'الحدث القادم',
+      value: nextEvent ? nextEvent.nameAr : 'لا حدث قوي قريب',
+      detail: nextEvent ? `${nextEvent.timeLocal} · ${nextEvent.affectedPairsLabel}` : nextHolidaySummary,
+      tone: nextEvent ? 'danger' : 'info',
+    },
+  ];
+}
+
+function buildGoldSignalCards(goldActivity, bestWindow, maintenanceWindow, weeklyEvents, viewerTimezone, nowUtc) {
+  const nextEvent = getNextHighImpactEvent(nowUtc, viewerTimezone, weeklyEvents);
+  return [
+    {
+      label: 'مؤشر النشاط',
+      value: `${goldActivity.score}/100`,
+      detail: goldActivity.label,
+      tone: goldActivity.tone,
+    },
+    {
+      label: 'أفضل نافذة اليوم',
+      value: `${bestWindow.startLabel} - ${bestWindow.endLabel}`,
+      detail: `مدتها التقريبية ${Math.round((bestWindow.durationMinutes || 0) / 60)} ساعات`,
+      tone: bestWindow.isActive ? 'success' : 'warning',
+    },
+    {
+      label: 'التوقف اليومي',
+      value: `${maintenanceWindow.startLabel} - ${maintenanceWindow.endLabel}`,
+      detail: nextEvent ? `انتبه أيضاً إلى ${nextEvent.nameAr}` : 'نافذة صيانة معتادة للذهب العالمي',
+      tone: 'info',
+    },
+  ];
+}
+
+function buildClockSignalCards(activityChart, nowRecommendation) {
+  const peakCount = activityChart.points.filter((point) => point.band === 'peak').length;
+  const current = activityChart.points.find((point) => point.isCurrent) || activityChart.points[0];
+  return [
+    {
+      label: 'ساعات الذروة اليوم',
+      value: `${peakCount}`,
+      detail: 'عدد الساعات التي يظهر فيها تداخل لندن ونيويورك بوضوح.',
+      tone: 'success',
+    },
+    {
+      label: 'الحالة الحالية',
+      value: current.hint,
+      detail: current.sessionsLabel,
+      tone: current.band === 'peak' ? 'success' : current.band === 'active' ? 'warning' : 'info',
+    },
+    {
+      label: 'أفضل قرار الآن',
+      value: nowRecommendation.title,
+      detail: nowRecommendation.body,
+      tone: nowRecommendation.tone,
+    },
+  ];
+}
+
+function buildBestTimeSignalCards(base, selectedProfilesCount, cityComparisonCount, nextEvent) {
+  return [
+    {
+      label: 'مدة نافذة الذروة',
+      value: `${Math.round((base.bestWindow.durationMinutes || 0) / 60)} ساعات`,
+      detail: `${base.bestWindow.startLabel} - ${base.bestWindow.endLabel}`,
+      tone: base.bestWindow.isActive ? 'success' : 'warning',
+    },
+    {
+      label: 'أنماط الاستخدام',
+      value: `${selectedProfilesCount}`,
+      detail: 'ملفات استخدام سريعة لتخصيص الصفحة بدل قراءة عامة للجميع.',
+      tone: 'info',
+    },
+    {
+      label: 'مقارنة المدن',
+      value: `${cityComparisonCount}`,
+      detail: nextEvent ? `${nextEvent.nameAr} هو الحدث الأهم الأقرب` : 'تعطيك منظوراً زمنياً عملياً بين المدن العربية',
+      tone: nextEvent ? 'warning' : 'default',
+    },
+  ];
+}
+
+export function buildEconomyLandingModel() {
+  return {
+    stats: buildLandingStatCards(),
+    premiumSections: buildLandingPremiumSections(),
+    cards: getEconomyToolCards(),
+  };
+}
+
 export function getEconomyToolCards() {
   return TOOL_CARDS;
 }
@@ -1055,6 +2124,8 @@ export function buildForexPageModel(viewer, nowInput = new Date()) {
   const gold = buildGoldState(nowUtc, viewer.timezone);
   const activityChart = buildForexActivityChart(nowUtc, viewer.timezone);
   const tradingWeek = buildTradingWeekWindows(nowUtc, viewer.timezone);
+  const weeklyEvents = buildWeeklyEconomicEvents(nowUtc, viewer.timezone);
+  const nextHighImpactEvent = getNextHighImpactEvent(nowUtc, viewer.timezone, weeklyEvents);
 
   return {
     viewer: {
@@ -1073,6 +2144,28 @@ export function buildForexPageModel(viewer, nowInput = new Date()) {
     bestWindow,
     gold,
     tradingWeek,
+    signalCards: buildForexSignalCards(nowUtc, viewer.timezone, cards, bestWindow, weeklyEvents, hero),
+    spotlight: nextHighImpactEvent ? {
+      eyebrow: 'إشارة مهمة',
+      title: nextHighImpactEvent.nameAr,
+      body: `${nextHighImpactEvent.descriptionAr} الأزواج الأكثر حساسية هنا: ${nextHighImpactEvent.affectedPairsLabel}. التوقيت المحلي: ${nextHighImpactEvent.timeLocal}.`,
+      tone: nextHighImpactEvent.impact === 'critical' ? 'danger' : 'warning',
+    } : {
+      eyebrow: 'إشارة مهمة',
+      title: hero.label,
+      body: hero.detail,
+      tone: hero.tone,
+    },
+    liveSessionsSummary: cards.map((card) => ({
+      id: card.id,
+      nameAr: card.nameAr,
+      isOpen: card.isOpen,
+      statusLabel: card.statusLabel,
+      statusTone: card.statusTone,
+    })),
+    sessionPairRows: buildSessionPairRows(),
+    dstImpactRows: buildDstImpactRows(nowUtc),
+    weeklyEvents,
     sessionReferenceRows: [
       {
         key: 'week',
@@ -1157,6 +2250,10 @@ export function buildStockMarketsPageModel(viewer, nowInput = new Date()) {
   const nowUtc = toUtc(nowInput);
   const cards = STOCK_MARKETS.map((market) => buildExchangeCard(nowUtc, viewer.timezone, market));
   const majorBoards = cards.filter((card) => ['us', 'sa', 'uk'].includes(card.id));
+  const globalCards = cards.filter((card) => card.region === 'global');
+  const arabSummary = buildArabMarketsSummary(cards);
+  const weeklyEvents = buildWeeklyEconomicEvents(nowUtc, viewer.timezone);
+  const nextHighImpactEvent = getNextHighImpactEvent(nowUtc, viewer.timezone, weeklyEvents);
 
   return {
     viewer: {
@@ -1170,6 +2267,11 @@ export function buildStockMarketsPageModel(viewer, nowInput = new Date()) {
     todayLabel: formatDateLabel(nowUtc, viewer.timezone),
     cards,
     majorBoards,
+    globalCards,
+    arabCards: arabSummary.arabCards,
+    arabMarketsOpenCount: arabSummary.arabMarketsOpenCount,
+    arabMarketsTotal: arabSummary.arabMarketsTotal,
+    arabMarketsOpenNames: arabSummary.arabMarketsOpenNames,
     trustSummary:
       'هذه الصفحة تعمل بالكامل بالمجان وتعتمد على الساعات الاعتيادية الرسمية لكل سوق مع تحويلها تلقائياً إلى توقيت الزائر. وهي ممتازة للمتابعة اليومية، لكن يجب التحقق من العطل والإغلاقات الخاصة من الجهة الرسمية قبل التنفيذ.',
     trustPoints: buildStockTrustPoints(),
@@ -1177,6 +2279,20 @@ export function buildStockMarketsPageModel(viewer, nowInput = new Date()) {
     usFocus: buildUsFocus(nowUtc, viewer.timezone),
     extendedHours: buildUsExtendedHours(nowUtc, viewer.timezone),
     weeklySnapshot: buildWeeklySnapshot(nowUtc, viewer.timezone),
+    arabHolidayRows: buildArabMarketHolidayRows(viewer.timezone),
+    tadawulDetail: buildTadawulDetail(nowUtc, viewer.timezone),
+    signalCards: buildStockSignalCards(globalCards, arabSummary.arabCards, buildUsFocus(nowUtc, viewer.timezone), viewer.timezone, nowUtc),
+    spotlight: nextHighImpactEvent ? {
+      eyebrow: 'أقرب محفز قوي',
+      title: nextHighImpactEvent.nameAr,
+      body: `${nextHighImpactEvent.descriptionAr} هذا يهم خصوصاً السوق الأمريكي والذهب عند ${nextHighImpactEvent.timeLocal} بتوقيتك.`,
+      tone: nextHighImpactEvent.impact === 'critical' ? 'danger' : 'warning',
+    } : {
+      eyebrow: 'منهجية الصفحة',
+      title: 'جلسات واضحة مع هوية كل سوق',
+      body: 'جمعنا الأسواق العربية والعالمية في طبقة واحدة حتى لا يضطر المستخدم إلى التنقل بين أدوات متفرقة لمجرد سؤال الفتح الآن.',
+      tone: 'info',
+    },
     relatedTools: getRelatedTools('/economie/stock-markets'),
     guideSections: [
       {
@@ -1226,10 +2342,14 @@ export function buildUsMarketOpenPageModel(viewer, nowInput = new Date()) {
   const saudiRow = countryOpenRows.find((row) => row.key === 'sa');
   const moroccoRow = countryOpenRows.find((row) => row.key === 'ma');
   const viewerCard = buildExchangeCard(nowUtc, viewer.timezone, usMarket);
+  const countdownHero = buildUsCountdownHero(nowUtc, viewer.timezone);
+  const nyseHolidayTable = buildNyseHolidayRows(nowUtc, viewer.timezone);
+  const weeklyEvents = buildWeeklyEconomicEvents(nowUtc, viewer.timezone);
 
   return {
     ...base,
     usCard,
+    countdownHero,
     heroTitle: `متى يفتح السوق الأمريكي من ${base.viewer.label}؟`,
     heroLead:
       'هذه الصفحة مبنية لسؤال عربي يومي مباشر: متى يفتح السوق الأمريكي اليوم، وكم بقي على الافتتاح، وما وقت أول ساعة، وكيف يختلف الموعد بين السعودية والإمارات ومصر والمغرب. نعطي الجواب كأداة وقت واضحة، لا كمقال وسيط طويل مليء بالحشو.',
@@ -1238,6 +2358,17 @@ export function buildUsMarketOpenPageModel(viewer, nowInput = new Date()) {
       : `السوق الأمريكي ${viewerCard?.statusLabel || 'مغلق الآن'} ويفتح خلال ${viewerCard?.countdownLabel || '--'}. جرس الافتتاح الرسمي التالي عند ${base.usFocus.openLabel} بتوقيتك.`,
     countryOpenRows,
     countryExtendedRows,
+    cityClockRows: buildUsCityClockRows(nowUtc),
+    impactCards: buildUsImpactCards(nowUtc, viewer.timezone),
+    nyseHolidayRows: nyseHolidayTable.rows,
+    nextUsHolidaySummary: nyseHolidayTable.summary,
+    signalCards: buildUsSignalCards(base, countdownHero, weeklyEvents, nyseHolidayTable.summary),
+    spotlight: {
+      eyebrow: 'لماذا تهم هذه الصفحة؟',
+      title: 'الافتتاح الأمريكي يعيد ضبط السوق العالمي',
+      body: 'كثير من الأصول لا تكتسب وزنها الحقيقي إلا بعد دخول نيويورك. لهذا لا يكفي معرفة التوقيت فقط، بل فهم أول ساعة والجلسات الموسعة والعطل أيضاً.',
+      tone: 'warning',
+    },
     sourceLinks: US_MARKET_SOURCE_LINKS,
     guideSections: [
       {
@@ -1293,13 +2424,25 @@ export function buildUsMarketOpenPageModel(viewer, nowInput = new Date()) {
 }
 
 export function buildMarketClockPageModel(viewer, nowInput = new Date()) {
+  const nowUtc = toUtc(nowInput);
   const base = buildForexPageModel(viewer, nowInput);
+  const signalCards = buildClockSignalCards(base.activityChart, buildNowRecommendation(nowUtc, viewer.timezone));
 
   return {
     ...base,
     heroTitle: `ساعة التداول العالمية من ${base.viewer.label}`,
     heroLead:
       'هذه الصفحة تمثل يومك الحالي بالكامل كساعة سوق بصرية: من افتتاح آسيا حتى ذروة لندن ونيويورك، ثم انتقال السيولة تدريجياً. الهدف أن ترى السوق في لقطة واحدة بدلاً من تفكيك أربعة جداول منفصلة.',
+    browserTitle: `${base.hero.label} | ساعة التداول — ${SITE_BRAND}`,
+    dayComparisonRows: buildDayComparisonRows(nowUtc, viewer.timezone),
+    nowRecommendation: buildNowRecommendation(nowUtc, viewer.timezone),
+    signalCards,
+    spotlight: {
+      eyebrow: 'ميزة بصرية',
+      title: 'اليوم كله في شاشة واحدة',
+      body: 'بدلاً من قراءة أربع جداول، تعطيك هذه الصفحة إحساساً فورياً بمتى ترتفع السيولة، ومتى يهدأ السوق، وما الذي يستحق الانتباه الآن.',
+      tone: 'brand',
+    },
     guideSections: [
       {
         title: 'كيف تقرأ الساعة؟',
@@ -1319,7 +2462,9 @@ export function buildMarketClockPageModel(viewer, nowInput = new Date()) {
 }
 
 export function buildBestTradingTimePageModel(viewer, nowInput = new Date()) {
+  const nowUtc = toUtc(nowInput);
   const base = buildForexPageModel(viewer, nowInput);
+  const nextHighImpactEvent = getNextHighImpactEvent(nowUtc, viewer.timezone, base.weeklyEvents);
 
   return {
     ...base,
@@ -1411,6 +2556,29 @@ export function buildBestTradingTimePageModel(viewer, nowInput = new Date()) {
       detail:
         'قد تختلف الساعات المعروضة عن ساعات وسيطك أو عن أوضاع السوق الفعلية في العطل والإغلاقات الخاصة أو عند التوقفات الفنية. قبل أي تنفيذ فعلي، تحقق من الوسيط والسوق الرسمي والأخبار وإدارة المخاطر.',
     },
+    profileRecommendations: PROFILE_RECOMMENDATIONS,
+    worstTradingRows: buildWorstTradingRows(nowUtc, viewer.timezone),
+    cityComparisonOptions: ARAB_REFERENCE_VIEWERS.map((item) => ({ id: item.id, label: item.cityNameAr })),
+    cityComparisonMap: Object.fromEntries(
+      ARAB_REFERENCE_VIEWERS.map((item) => [item.id, buildCityComparisonModel(viewer, nowUtc, item.id)]),
+    ),
+    signalCards: buildBestTimeSignalCards(
+      base,
+      Object.keys(PROFILE_RECOMMENDATIONS).length,
+      ARAB_REFERENCE_VIEWERS.length,
+      nextHighImpactEvent,
+    ),
+    spotlight: nextHighImpactEvent ? {
+      eyebrow: 'تذكير عملي',
+      title: nextHighImpactEvent.nameAr,
+      body: `${nextHighImpactEvent.descriptionAr} لهذا لا يكفي اختيار ساعة جيدة فقط، بل يجب أيضاً الانتباه إلى الحدث الأقرب وسياقه.`,
+      tone: 'warning',
+    } : {
+      eyebrow: 'فكرة الصفحة',
+      title: 'أفضل وقت لا يعني قراراً جاهزاً',
+      body: 'هذه الصفحة تصفي لك الساعات الأفضل والأسوأ، لكنها تترك قرار التنفيذ لخطة المتداول وإدارة مخاطر واعية.',
+      tone: 'info',
+    },
     relatedTools: getRelatedTools('/economie/best-trading-time'),
   };
 }
@@ -1422,6 +2590,9 @@ export function buildGoldMarketHoursPageModel(viewer, nowInput = new Date()) {
   const countryRows = buildGoldCountryRows(nowUtc);
   const saudiRow = countryRows.find((row) => row.key === 'sa');
   const moroccoRow = countryRows.find((row) => row.key === 'ma');
+  const goldActivity = buildGoldActivityScore(nowUtc, viewer.timezone);
+  const ramadanActive = isRamadan(nowUtc, viewer.timezone);
+  const nextHighImpactEvent = getNextHighImpactEvent(nowUtc, viewer.timezone, base.weeklyEvents);
 
   return {
     ...base,
@@ -1429,8 +2600,40 @@ export function buildGoldMarketHoursPageModel(viewer, nowInput = new Date()) {
     heroLead:
       'هذه الصفحة موجهة لعبارة بحث يومية واضحة: هل الذهب مفتوح الآن، ومتى يفتح سوق الذهب اليوم، وما أفضل وقت لتداول الذهب من السعودية والإمارات ومصر والمغرب. نعتمد على جلسات السوق العالمية المجانية ونحوّلها إلى توقيت الزائر بدقة بدلاً من الاكتفاء بجداول ثابتة أو مقالات وسيط طويلة.',
     maintenanceWindow,
+    goldActivity,
+    signalCards: buildGoldSignalCards(goldActivity, base.bestWindow, maintenanceWindow, base.weeklyEvents, viewer.timezone, nowUtc),
+    spotlight: nextHighImpactEvent ? {
+      eyebrow: 'محفز الذهب القادم',
+      title: nextHighImpactEvent.nameAr,
+      body: `${nextHighImpactEvent.descriptionAr} لهذا تصبح متابعة الذهب أقوى قرب ${nextHighImpactEvent.timeLocal} على ${nextHighImpactEvent.affectedPairsLabel}.`,
+      tone: nextHighImpactEvent.impact === 'critical' ? 'danger' : 'warning',
+    } : {
+      eyebrow: 'سلوك الذهب',
+      title: 'الذهب لا يعيش على "مفتوح أو مغلق" فقط',
+      body: 'القيمة الحقيقية هنا في فهم درجة النشاط، النافذة الأفضل، والاستراحة اليومية، لا الاكتفاء بسؤال الفتح الآن.',
+      tone: 'info',
+    },
     goldSessionRows: buildGoldSessionRows(nowUtc, viewer.timezone),
     countryRows,
+    marketGuideCards: GOLD_MARKET_GUIDE,
+    shopComparisonRows: [
+      {
+        key: 'pricing',
+        cells: ['التسعير', 'سعر لحظي دولاري أو مشتق منه', 'سعر محلي + مصنعية + عرض وطلب محلي'],
+      },
+      {
+        key: 'hours',
+        cells: ['ساعات العمل', 'يكاد يغطي اليوم العالمي مع توقفات معروفة', 'مرتبط بدوام المحل والمنطقة التجارية'],
+      },
+      {
+        key: 'goal',
+        cells: ['الهدف', 'مضاربة أو تحوط أو متابعة سعرية', 'شراء فيزيائي وادخار ومشغولات'],
+      },
+    ],
+    ramadanSection: ramadanActive ? {
+      title: 'الذهب في رمضان',
+      body: 'في رمضان يتغير نمط متابعة كثير من المتداولين العرب، لذلك تميل نافذة ما بعد الإفطار إلى أن تكون أنسب للمراقبة العملية من أول النهار المحلي. كما يزداد الالتباس بين الذهب العالمي والطلب المحلي على الذهب الفيزيائي في هذه الفترة.',
+    } : null,
     sourceLinks: GOLD_MARKET_SOURCE_LINKS,
     guideSections: [
       {

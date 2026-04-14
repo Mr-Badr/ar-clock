@@ -1,3 +1,4 @@
+// components/economy/UsMarketOpenLive.jsx
 'use client';
 
 import { Bank, ClockCountdown } from '@phosphor-icons/react';
@@ -9,18 +10,28 @@ import { buildUsMarketOpenPageModel } from '@/lib/economy/engine';
 import { FAQ_ITEMS } from './data/faqItems';
 import { useEconomyLiveModel } from './useEconomyLiveModel';
 import {
+  CityClockGrid,
+  CountdownHero,
   EconomyBanner,
   EconomyFaq,
   EconomyGuide,
   EconomyHero,
   EconomySectionHeader,
+  EconomySpotlight,
+  EconomyStatCards,
   EconomySourceLinks,
   EconomyTable,
   EconomyToolCards,
+  InsightCards,
 } from './common';
 
 export default function UsMarketOpenLive({ initialViewer, initialNowIso }) {
-  const model = useEconomyLiveModel(buildUsMarketOpenPageModel, initialViewer, initialNowIso);
+  const model = useEconomyLiveModel(
+    buildUsMarketOpenPageModel,
+    initialViewer,
+    initialNowIso,
+    (nextModel) => nextModel?.countdownHero?.browserTitle,
+  );
 
   if (!model) {
     return (
@@ -60,6 +71,11 @@ export default function UsMarketOpenLive({ initialViewer, initialNowIso }) {
         note={model.viewer.notice}
       />
 
+      <EconomyStatCards cards={model.signalCards} />
+      <EconomySpotlight model={model.spotlight} />
+
+      <CountdownHero model={model.countdownHero} />
+
       <AdTopBanner slotId="top-economy-us-market-open" />
 
       <EconomyBanner
@@ -91,6 +107,31 @@ export default function UsMarketOpenLive({ initialViewer, initialNowIso }) {
         />
       </section>
 
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="عطل NYSE الرسمية"
+          lead="أضفنا جدولاً سنوياً واضحاً لأن المستخدم العربي يبحث كثيراً عن عمل السوق الأمريكي في العطل، لا عن مواعيد الجلسة اليومية فقط."
+        />
+        <EconomyBanner
+          kicker="أقرب عطلة"
+          title="تقويم العطل الأمريكية"
+          detail={model.nextUsHolidaySummary}
+          tone="info"
+        />
+        <EconomyTable
+          columns={['التاريخ الميلادي', 'التاريخ الهجري', 'اسم العطلة', 'الحالة']}
+          rows={model.nyseHolidayRows}
+        />
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="كيف تبدو ساعة الافتتاح في العواصم العربية؟"
+          lead="هذا العرض البصري يجعل الفرق بين المدن الأربع واضحاً فوراً من دون قراءة جدول كامل في كل مرة."
+        />
+        <CityClockGrid cities={model.cityClockRows} />
+      </section>
+
       <AdInArticle slotId="mid-economy-us-market-open" />
 
       <section className="economy-section">
@@ -103,10 +144,18 @@ export default function UsMarketOpenLive({ initialViewer, initialNowIso }) {
 
       <section className="economy-section">
         <EconomySectionHeader
+          title="أثر الافتتاح الأمريكي على الذهب والنفط"
+          lead="هذه الزاوية مهمة لأنها تربط سؤال الافتتاح الأمريكي بما يتبعه عملياً في الذهب والنفط والدولار."
+        />
+        <InsightCards cards={model.impactCards} />
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
           title="أسئلة شائعة"
           lead="هذه الإجابات تلخص أكثر أسئلة السوق الأمريكي تكراراً في البحث العربي بصياغة مباشرة وسهلة المسح."
         />
-        <EconomyFaq items={FAQ_ITEMS.usMarketOpen} />
+        <EconomyFaq items={model.faqItems || FAQ_ITEMS.usMarketOpen} />
       </section>
 
       <section className="economy-section">

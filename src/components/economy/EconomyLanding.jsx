@@ -1,14 +1,15 @@
+// components/economy/EconomyLanding.jsx
 import { ChartLineUp, ClockCounterClockwise, GlobeHemisphereEast } from '@phosphor-icons/react/ssr';
 
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdTopBanner from '@/components/ads/AdTopBanner';
-import { getEconomyToolCards } from '@/lib/economy/engine';
+import { buildEconomyLandingModel } from '@/lib/economy/engine';
 import { SITE_BRAND } from '@/lib/site-config';
 
-import { EconomyHero, EconomySectionHeader, EconomyToolCards } from './common';
+import { EconomyHero, EconomySectionHeader, EconomySpotlight, EconomyStatCards, EconomyToolCards, EconomyGuide } from './common';
 
 export default function EconomyLanding() {
-  const cards = getEconomyToolCards();
+  const model = buildEconomyLandingModel();
 
   return (
     <div className="economy-stack">
@@ -29,17 +30,36 @@ export default function EconomyLanding() {
         note={`التركيز في هذه المرحلة هو على الصفحات التي يمكن أن تكسب طلباً يومياً عربياً واضحاً وتعمل محلياً وعلى Vercel بالمجان، مع الاستفادة من بنية الوقت والموقع الموجودة أصلاً في ${SITE_BRAND}.`}
       />
 
+      <EconomyStatCards cards={model.stats} />
+
       <AdTopBanner slotId="top-economy-landing" />
+
+      <EconomySpotlight
+        model={{
+          eyebrow: 'منهج القسم',
+          title: 'اقتصاد يومي بصياغة عربية تبحث عنها محركات البحث',
+          body: 'الهدف ليس نسخ مواقع الاستثمار العالمية، بل تحويل أكثر الأسئلة تداولاً في البحث العربي إلى صفحات سريعة، واضحة، ومبنية على البيانات.',
+          tone: 'info',
+        }}
+      />
 
       <section className="economy-section">
         <EconomySectionHeader
           title="ما الذي أضفناه في هذه المرحلة؟"
           lead="بدلاً من بناء صفحات اقتصادية عامة بلا نية بحث واضحة، ركزنا على الأدوات المجانية التي يكررها المستخدم العربي يومياً: وقت السوق الأمريكي، وقت الذهب، جلسات الفوركس، وساعات السيولة."
         />
-        <EconomyToolCards cards={cards} />
+        <EconomyToolCards cards={model.cards} />
       </section>
 
       <AdInArticle slotId="mid-economy-landing" />
+
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="ما الذي يجعل التجربة أقرب إلى تطبيقات Premium؟"
+          lead="رفعنا القيمة من مجرد جداول ساعات إلى طبقات بيانات تساعد المستخدم على فهم السياق، لا الوقت فقط."
+        />
+        <EconomyGuide sections={model.premiumSections} />
+      </section>
 
       <section className="economy-grid">
         <article className="economy-copy-card">

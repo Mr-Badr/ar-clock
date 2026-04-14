@@ -29,6 +29,8 @@ test('forex model detects London and New York overlap in Riyadh during April DST
 
   assert.ok(london?.isOpen);
   assert.ok(newYork?.isOpen);
+  assert.equal(model.signalCards.length >= 3, true);
+  assert.match(london?.liquidityLabel || '', /سيولة/);
 });
 
 test('stock model marks Tadawul open on Sunday while US market remains closed', () => {
@@ -47,6 +49,8 @@ test('stock model exposes extended-hours labels for the US market', () => {
   assert.match(model.extendedHours.premarketLabel, /\d/);
   assert.match(model.extendedHours.afterhoursLabel, /\d/);
   assert.match(model.usFocus.openLabel, /\d/);
+  assert.equal(model.signalCards.length >= 3, true);
+  assert.match(model.cards.find((card) => card.id === 'us')?.referenceIndex || '', /S&P|Nasdaq/);
 });
 
 test('economy tool cards expose the new related live routes', () => {
@@ -67,6 +71,7 @@ test('best trading time model builds chart data and weekly windows', () => {
   assert.equal(model.helpSections.length >= 3, true);
   assert.equal(model.disclaimerCards.length >= 3, true);
   assert.match(model.legalDisclaimer.summary, /ليست|مطلق/);
+  assert.equal(model.signalCards.length >= 3, true);
 });
 
 test('us market open model exposes Arab-country reference rows and countdown summary', () => {
@@ -76,6 +81,7 @@ test('us market open model exposes Arab-country reference rows and countdown sum
   assert.equal(model.countryExtendedRows.length, 4);
   assert.match(model.countdownSummary, /السوق الأمريكي|الافتتاح/);
   assert.equal(model.sourceLinks.length >= 3, true);
+  assert.equal(model.signalCards.length >= 3, true);
 });
 
 test('gold market hours model exposes country rows and maintenance window', () => {
@@ -85,4 +91,6 @@ test('gold market hours model exposes country rows and maintenance window', () =
   assert.equal(model.countryRows.length, 4);
   assert.match(model.maintenanceWindow.startLabel, /\d/);
   assert.equal(model.sourceLinks.length >= 3, true);
+  assert.equal(model.signalCards.length >= 3, true);
+  assert.equal(model.weeklyEvents.every((event) => typeof event.descriptionAr === 'string'), true);
 });

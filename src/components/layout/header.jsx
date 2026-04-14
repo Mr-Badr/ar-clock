@@ -1,6 +1,6 @@
 // layout/header.jsx
 import Link from "next/link";
-import { ClockIcon } from "@phosphor-icons/react/ssr";
+import { ClockIcon, Buildings } from "@phosphor-icons/react/ssr";
 import NavLinks from "./NavLinks";
 import ThemeToggle from "./ThemeToggle";
 import MobileMenu from "./MobileMenu";
@@ -29,6 +29,50 @@ export const NAV_LINKS = [
     ],
   },
   { href: "/time-difference", label: "فرق التوقيت" },
+  {
+    href: "/calculators",
+    label: "الحاسبات",
+    panelIcon: "Calculator",
+    panelDescription: "حاسبات عملية بتجربة عربية مرتبة: العمر، المستحقات، القروض، الضريبة، والنسب المئوية",
+    sublinks: [
+      {
+        href: "/calculators/age",
+        label: "حاسبات العمر",
+        icon: "Hourglass",
+        description: "العمر الشامل، فرق العمر، العد التنازلي، والكواكب",
+      },
+      {
+        href: "/calculators/end-of-service-benefits",
+        label: "مكافأة نهاية الخدمة",
+        icon: "Wallet",
+        description: "احسب الاستحقاق وفق مدة الخدمة وسبب الإنهاء",
+      },
+      {
+        href: "/calculators/monthly-installment",
+        label: "القسط الشهري",
+        icon: "Calculator",
+        description: "قارن القرض والمدة والفائدة والسداد المبكر",
+      },
+      {
+        href: "/calculators/vat",
+        label: "ضريبة القيمة المضافة",
+        icon: "Receipt",
+        description: "أضف الضريبة أو استخرجها وراجع صافي الشهر",
+      },
+      {
+        href: "/calculators/percentage",
+        label: "النسبة المئوية",
+        icon: "Percent",
+        description: "احسب النسبة والزيادة والخصم ونسبة التغيير",
+      },
+      {
+        href: "/calculators/building",
+        label: "حاسبة البناء",
+        icon: "Buildings",
+        description: "تكلفة المنزل، الأسمنت، الحديد — 12 دولة",
+      },
+    ],
+  },
   { href: "/time-now",        label: "الوقت الآن"   },
   { href: "/holidays",        label: "المناسبات"   },
   {

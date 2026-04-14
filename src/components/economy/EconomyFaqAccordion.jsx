@@ -1,3 +1,4 @@
+// components/economy/EconomyFaqAccordion.jsx
 'use client';
 
 import { useId, useState } from 'react';

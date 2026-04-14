@@ -1,3 +1,4 @@
+// components/economy/HourlyActivityChart.jsx
 export default function HourlyActivityChart({ chart, title = 'خريطة النشاط اليومي' }) {
   return (
     <div className="economy-activity-card">

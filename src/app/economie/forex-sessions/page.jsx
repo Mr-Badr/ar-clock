@@ -1,15 +1,20 @@
+// src/app/economie/best-trading-time/page.jsx
 import { Suspense } from 'react';
 
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
   STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
+  buildEconomyDatasetSchema,
+  buildEconomyFaqSchema,
+  buildEconomySpeakableSchema,
   buildEconomyWebApplicationSchema,
   getInitialEconomyPageState,
 } from '@/lib/economy/page-helpers';
 import { getSiteUrl } from '@/lib/site-config';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
+import { FAQ_ITEMS } from '@/components/economy/data/faqItems';
 import ForexSessionsLive from '@/components/economy/ForexSessionsLive';
 
 const SITE_URL = getSiteUrl();
@@ -20,17 +25,20 @@ export const metadata = buildCanonicalMetadata({
     'تابع جلسات الفوركس الأربع والذهب بتوقيتك المحلي الآن. اعرف هل السوق مفتوح، ومتى تبدأ لندن ونيويورك، وأين تقع نافذة السيولة العالية.',
   keywords: [
     // Short
-    'جلسات الفوركس', 'سوق العملات', 'الفوركس الآن', 'تداخل الجلسات', 'سيولة فوركس',
+    'جلسات الفوركس', 'سوق العملات', 'الفوركس الان', 'تداخل الجلسات', 'سيولة فوركس',
     'جلسة لندن', 'جلسة نيويورك', 'جلسة آسيا',
     // Medium
     'أوقات جلسات الفوركس', 'متى تفتح جلسة لندن', 'جلسة نيويورك وسيدني',
-    'هل سوق الفوركس مفتوح الآن', 'ساعات عمل سوق العملات', 'السيولة العالية في الفوركس',
+    'هل سوق الفوركس مفتوح الان', 'ساعات عمل سوق العملات', 'السيولة العالية في الفوركس',
     'أوقات افتتاح وإغلاق الفوركس',
     // Long
     'مواعيد وتوقيت جلسات الفوركس الأربع بتوقيت السعودية والمحلي', 'متى تفتح وتغلق جلسات التداول في لندن ونيويورك',
-    'خريطة تداخل جلسات الفوركس لمعرفة أوقات السيولة العالية', 'حالة سوق العملات والفوركس هل هو مفتوح أم مغلق الآن',
+    'خريطة تداخل جلسات الفوركس لمعرفة أوقات السيولة العالية', 'حالة سوق العملات والفوركس هل هو مفتوح أم مغلق الان',
     'أفضل الأوقات للتداول في سوق الفوركس وجلسات آسيا', 'جدول ساعات العمل لاهم جلسات الفوركس وتداخلاتها',
     'تتبع حركة جلسات تداول سيدني طوكيو لندن نيويورك', 'الساعة وتوقيت سوق الفوركس الحي واللحظي',
+    'جلسات الفوركس بتوقيت الرياض', 'جلسات الفوركس بتوقيت الكويت',
+    'جلسة لندن بتوقيت السعودية', 'جلسة نيويورك بتوقيت الإمارات',
+    'أفضل أزواج كل جلسة فوركس', 'موعد NFP داخل جلسة نيويورك',
   ],
   url: `${SITE_URL}/economie/forex-sessions`,
 });
@@ -47,6 +55,21 @@ export default function ForexSessionsPage() {
     'جلسات الفوركس والذهب الآن',
     '/economie/forex-sessions',
   );
+  const datasetSchema = buildEconomyDatasetSchema({
+    siteUrl: SITE_URL,
+    path: '/economie/forex-sessions',
+    name: 'بيانات جلسات الفوركس',
+    description: 'بيانات مواعيد جلسات سيدني وطوكيو ولندن ونيويورك مع تحويلها إلى توقيت المستخدم العربي.',
+  });
+  const speakableSchema = buildEconomySpeakableSchema({
+    siteUrl: SITE_URL,
+    path: '/economie/forex-sessions',
+  });
+  const faqSchema = buildEconomyFaqSchema({
+    siteUrl: SITE_URL,
+    path: '/economie/forex-sessions',
+    items: FAQ_ITEMS.forexSessions,
+  });
 
   return (
     <div className="bg-base" dir="rtl">
@@ -57,6 +80,18 @@ export default function ForexSessionsPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(speakableSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <EconomyAdLayout>
         <Suspense

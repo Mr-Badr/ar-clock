@@ -61,6 +61,7 @@ export default function SiteWideSchemas() {
       '/time-now',
       '/mwaqit-al-salat',
       '/time-difference',
+      '/calculators',
       '/date',
       '/holidays',
       '/economie',

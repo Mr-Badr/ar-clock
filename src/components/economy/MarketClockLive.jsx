@@ -1,4 +1,7 @@
+// components/economy/MarketClockLive.jsx
 'use client';
+
+import { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
@@ -17,13 +20,31 @@ import {
   EconomyGuide,
   EconomyHero,
   EconomySectionHeader,
+  EconomySpotlight,
+  EconomyStatCards,
   EconomySourceLinks,
   EconomyTimeline,
   EconomyToolCards,
+  HourDetailPanel,
 } from './common';
 
 export default function MarketClockLive({ initialViewer, initialNowIso }) {
-  const model = useEconomyLiveModel(buildMarketClockPageModel, initialViewer, initialNowIso);
+  const model = useEconomyLiveModel(
+    buildMarketClockPageModel,
+    initialViewer,
+    initialNowIso,
+    (nextModel) => nextModel?.browserTitle,
+  );
+  const [selectedHour, setSelectedHour] = useState(null);
+
+  useEffect(() => {
+    if (!model) return;
+    setSelectedHour((current) => (
+      current == null
+        ? model.activityChart.points.find((point) => point.isCurrent)?.hour ?? model.activityChart.points[0]?.hour ?? 0
+        : current
+    ));
+  }, [model]);
 
   if (!model) {
     return (
@@ -42,6 +63,8 @@ export default function MarketClockLive({ initialViewer, initialNowIso }) {
       </div>
     );
   }
+
+  const selectedPoint = model.activityChart.points.find((point) => point.hour === selectedHour) || model.activityChart.points[0];
 
   return (
     <div className="economy-stack">
@@ -62,6 +85,9 @@ export default function MarketClockLive({ initialViewer, initialNowIso }) {
         note={model.viewer.notice}
       />
 
+      <EconomyStatCards cards={model.signalCards} />
+      <EconomySpotlight model={model.spotlight} />
+
       <AdTopBanner slotId="top-economy-market-clock" />
 
       <EconomyBanner
@@ -76,7 +102,12 @@ export default function MarketClockLive({ initialViewer, initialNowIso }) {
           title="الساعة البصرية"
           lead="الخط الزمني التالي يحوّل جلسات سيدني وطوكيو ولندن ونيويورك إلى يومك المحلي، مع إبراز تداخل لندن ونيويورك كأهم نافذة سيولة."
         />
-        <EconomyTimeline timeline={model.timeline} />
+        <EconomyTimeline
+          timeline={model.timeline}
+          selectedHour={selectedHour}
+          onHourClick={setSelectedHour}
+        />
+        <HourDetailPanel point={selectedPoint} />
       </section>
 
       <section className="economy-section">
@@ -97,12 +128,34 @@ export default function MarketClockLive({ initialViewer, initialNowIso }) {
         <EconomyGuide sections={model.guideSections} />
       </section>
 
+      <section className="economy-grid">
+        {model.dayComparisonRows.map((row) => (
+          <article key={row.key} className="market-card">
+            <div className="market-card__top">
+              <div className="market-card__title-wrap">
+                <h2 className="market-card__title">{row.dayLabel}</h2>
+                <p className="market-card__subtitle">{row.peakLabel}</p>
+              </div>
+            </div>
+            <p className="economy-banner__detail">{row.summary}</p>
+            <p className="market-card__footnote">{row.note}</p>
+          </article>
+        ))}
+      </section>
+
+      <EconomyBanner
+        kicker="ما الأفضل الآن؟"
+        title={model.nowRecommendation.title}
+        detail={model.nowRecommendation.body}
+        tone={model.nowRecommendation.tone}
+      />
+
       <section className="economy-section">
         <EconomySectionHeader
           title="أسئلة شائعة"
           lead="هذه الأسئلة تشرح كيفية قراءة ساعة السوق ولماذا تختلف عن الجداول التقليدية الثابتة."
         />
-        <EconomyFaq items={FAQ_ITEMS.marketClock} />
+        <EconomyFaq items={model.faqItems || FAQ_ITEMS.marketClock} />
       </section>
 
       <section className="economy-section">

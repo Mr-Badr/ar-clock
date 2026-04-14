@@ -11,6 +11,10 @@ import {
   ArrowRight, ArrowLeft, ArrowsLeftRight,
   Clock, Timer, Hourglass,
   Globe,
+  Calculator,
+  Percent,
+  Receipt,
+  Wallet,
   List, X,
   // Economie — must be explicit imports, namespace fallback is unreliable
   Bank,
@@ -48,7 +52,7 @@ function getPhosphorIcon(name?: string): React.ElementType | null {
     // date
     Moon, Sun, ArrowsCounterClockwise, Calendar, CalendarDots,
     ArrowRight, ArrowLeft, ArrowsLeftRight, Clock, Timer, Hourglass,
-    Globe, List, X,
+    Globe, Calculator, Percent, Receipt, Wallet, List, X,
     // economie
     Bank, Sparkle, ChartLineUp, ClockCountdown, Target,
   };

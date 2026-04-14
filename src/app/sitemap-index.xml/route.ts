@@ -13,6 +13,7 @@ export async function GET() {
 
   const sitemaps = [
     `${BASE}/sitemap.xml`,
+    `${BASE}/calculators/sitemap.xml`,
     `${BASE}/economie/sitemap.xml`,
     `${BASE}/holidays/sitemap.xml`,
     `${BASE}/time-difference/sitemap.xml`,

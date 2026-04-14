@@ -1,7 +1,21 @@
 // shared/primitives.jsx — SectionWrapper, SectionDivider, SectionBadge, FeatureItem
 
 // ─── SectionWrapper ───────────────────────────────────────────────────────────
-export function SectionWrapper({ id, children, className = '', glow, headingId, subtle = false }) {
+export function SectionWrapper({
+  id,
+  children,
+  className = '',
+  glow,
+  headingId,
+  subtle = false,
+  contentWidth = 'container',
+  containerClassName = '',
+}) {
+  const containerClasses =
+    contentWidth === 'content-col'
+      ? `content-col ${containerClassName}`.trim()
+      : `container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl ${containerClassName}`.trim();
+
   return (
     <section
       id={id}
@@ -10,7 +24,7 @@ export function SectionWrapper({ id, children, className = '', glow, headingId, 
       style={subtle ? { background: 'var(--bg-subtle)' } : undefined}
     >
       {glow}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+      <div className={containerClasses}>
         {children}
       </div>
     </section>

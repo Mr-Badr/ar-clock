@@ -1,13 +1,5 @@
 [
   {
-    "id": 757,
-    "country_code": "CS",
-    "country_slug": "serbia-and-montenegro",
-    "name_en": "Serbia and Montenegro",
-    "name_ar": "",
-    "timezone": "UTC"
-  },
-  {
     "id": 536,
     "country_code": "BQ",
     "country_slug": "bonaire",
@@ -1390,6 +1382,14 @@
     "name_en": "Serbia",
     "name_ar": "صربيا",
     "timezone": "Europe/Belgrade"
+  },
+  {
+    "id": 757,
+    "country_code": "CS",
+    "country_slug": "serbia-and-montenegro",
+    "name_en": "Serbia and Montenegro",
+    "name_ar": "صربيا والجبل الأسود",
+    "timezone": "UTC"
   },
   {
     "id": 726,

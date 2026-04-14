@@ -72,6 +72,11 @@
     }
   }
 
+  .layout-content-shell {
+    width: 100%;
+    min-width: 0;
+  }
+
   @media (min-width: 1280px) {
     .layout-with-ads[data-rail-mode='single'] {
       grid-template-columns: 240px minmax(0, 900px);
@@ -406,6 +411,11 @@
   .layout-with-ads[data-layout='narrow'] .economy-shell {
     max-width: none;
     padding-inline: 0;
+  }
+
+  .layout-with-ads .calculator-layout-shell {
+    width: 100%;
+    min-width: 0;
   }
 
 }

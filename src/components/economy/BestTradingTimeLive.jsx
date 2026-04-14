@@ -1,4 +1,7 @@
+// components/economy/BestTradingTimeLive.jsx
 'use client';
+
+import { useState } from 'react';
 
 import Link from 'next/link';
 
@@ -12,17 +15,23 @@ import { FAQ_ITEMS } from './data/faqItems';
 import HourlyActivityChart from './HourlyActivityChart';
 import { useEconomyLiveModel } from './useEconomyLiveModel';
 import {
+  CityComparisonWidget,
   EconomyBanner,
   EconomyFaq,
   EconomyGuide,
   EconomyHero,
   EconomySectionHeader,
+  EconomySpotlight,
+  EconomyStatCards,
   EconomyTable,
   EconomyToolCards,
+  TradingProfileSelector,
 } from './common';
 
 export default function BestTradingTimeLive({ initialViewer, initialNowIso }) {
   const model = useEconomyLiveModel(buildBestTradingTimePageModel, initialViewer, initialNowIso);
+  const [profileId, setProfileId] = useState('scalper');
+  const [compareCityId, setCompareCityId] = useState(model?.cityComparisonOptions?.[0]?.id || 'sa');
 
   if (!model) {
     return (
@@ -41,6 +50,9 @@ export default function BestTradingTimeLive({ initialViewer, initialNowIso }) {
       </div>
     );
   }
+
+  const selectedProfile = model.profileRecommendations[profileId] || model.profileRecommendations.scalper;
+  const comparison = model.cityComparisonMap[compareCityId] || Object.values(model.cityComparisonMap)[0];
 
   return (
     <div className="economy-stack">
@@ -61,6 +73,20 @@ export default function BestTradingTimeLive({ initialViewer, initialNowIso }) {
         note={model.viewer.notice}
       />
 
+      <EconomyStatCards cards={model.signalCards} />
+      <EconomySpotlight model={model.spotlight} />
+
+      <TradingProfileSelector
+        selectedId={profileId}
+        onSelect={setProfileId}
+        options={[
+          { id: 'scalper', label: 'مضاربة يومية قصيرة', icon: '⚡' },
+          { id: 'swing', label: 'تداول أسبوعي', icon: '📈' },
+          { id: 'news', label: 'متابعة الأخبار', icon: '📰' },
+          { id: 'gold', label: 'تداول الذهب', icon: '🥇' },
+        ]}
+      />
+
       <AdTopBanner slotId="top-economy-best-trading-time" />
 
       <EconomyBanner
@@ -69,6 +95,15 @@ export default function BestTradingTimeLive({ initialViewer, initialNowIso }) {
         detail={`أفضل فترة لمتابعة EUR/USD وXAU/USD من ${model.bestWindow.startLabel} إلى ${model.bestWindow.endLabel} بتوقيتك، لأنها تجمع عادةً أعلى سيولة وتفاعل أوضح مع الأخبار.`}
         tone={model.bestWindow.isActive ? 'success' : 'warning'}
       />
+
+      <EconomyBanner
+        kicker="تخصيص سريع"
+        title={selectedProfile.title}
+        detail={selectedProfile.summary}
+        tone="info"
+      >
+        <p className="economy-banner__detail">{selectedProfile.detail}</p>
+      </EconomyBanner>
 
       <EconomyBanner
         kicker="إخلاء مسؤولية"
@@ -137,6 +172,24 @@ export default function BestTradingTimeLive({ initialViewer, initialNowIso }) {
 
       <section className="economy-section">
         <EconomySectionHeader
+          title="أسوأ أوقات التداول"
+          lead="هذا القسم يجيب عن السؤال الذي يفتقده المحتوى العربي عادة: متى أتجنب التداول أو أخفف اندفاعي؟"
+        />
+        <EconomyTable
+          columns={['الوقت أو الحالة', 'لماذا يُتجنب؟', 'الإجراء الأفضل']}
+          rows={model.worstTradingRows}
+        />
+      </section>
+
+      <CityComparisonWidget
+        options={model.cityComparisonOptions}
+        selectedId={compareCityId}
+        onSelect={setCompareCityId}
+        comparison={comparison}
+      />
+
+      <section className="economy-section">
+        <EconomySectionHeader
           title="قبل أن تعتمد على التوقيت"
           lead="هذه الصفحة تعطيك أفضلية تنظيمية، لكن القرار المسؤول يحتاج إلى تحقق إضافي من الوسيط والسوق والأخبار والمخاطر."
         />
@@ -170,7 +223,7 @@ export default function BestTradingTimeLive({ initialViewer, initialNowIso }) {
           title="أسئلة شائعة"
           lead="حتى مع وجود توصية زمنية، تبقى الأسئلة الأساسية مهمة: هل السوق مفتوح الآن؟ ومتى تبدأ لندن؟ ولماذا تتغير المواعيد؟"
         />
-        <EconomyFaq items={FAQ_ITEMS.bestTradingTime} />
+        <EconomyFaq items={model.faqItems || FAQ_ITEMS.bestTradingTime} />
       </section>
 
       <section className="economy-section">
