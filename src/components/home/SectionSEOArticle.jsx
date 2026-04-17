@@ -13,7 +13,7 @@
  */
 
 import Link from 'next/link'
-import { Moon, Globe2, Calendar, Heart, BarChart3 } from 'lucide-react'
+import { Moon, Globe2, Calendar, Heart, BarChart3, Calculator, TrendingUp } from 'lucide-react'
 import { SectionWrapper } from '@/components/shared/primitives'
 import { SectionBadge } from '@/components/shared/primitives'
 
@@ -111,6 +111,83 @@ const CARDS = [
     ),
   },
   {
+    icon: Calculator,
+    title: 'حاسبات تخدم نية البحث مباشرة',
+    body: (
+      <>
+        عندما يكتب المستخدم{' '}
+        <strong style={{ color: 'var(--text-primary)' }}>حاسبة العمر</strong> أو{' '}
+        <strong style={{ color: 'var(--text-primary)' }}>حاسبة القسط الشهري</strong>{' '}
+        أو{' '}
+        <strong style={{ color: 'var(--text-primary)' }}>حساب الضريبة 15%</strong>{' '}
+        فهو لا يريد مقالاً عاماً، بل نتيجة فورية مع شرح واضح. لهذا صممنا قسم{' '}
+        <Link
+          href="/calculators"
+          style={{ color: 'var(--accent-alt)' }}
+          className="font-semibold hover:underline underline-offset-2"
+        >
+          الحاسبات
+        </Link>{' '}
+        ليربط بين الحاسبة والمحتوى المساعد والأسئلة الشائعة، ويقودك بسرعة إلى صفحات مثل{' '}
+        <Link
+          href="/calculators/age/calculator"
+          style={{ color: 'var(--accent-alt)' }}
+          className="font-semibold hover:underline underline-offset-2"
+        >
+          حاسبة العمر
+        </Link>{' '}
+        و{' '}
+        <Link
+          href="/calculators/vat"
+          style={{ color: 'var(--accent-alt)' }}
+          className="font-semibold hover:underline underline-offset-2"
+        >
+          حاسبة ضريبة القيمة المضافة
+        </Link>
+        .
+      </>
+    ),
+  },
+  {
+    icon: TrendingUp,
+    title: 'اقتصاد حي بلغة يفهمها المتداول العربي',
+    body: (
+      <>
+        كثير من عمليات البحث الاقتصادية تأتي بصيغة وقتية مثل{' '}
+        <strong style={{ color: 'var(--text-primary)' }}>هل الذهب مفتوح الآن</strong>{' '}
+        أو{' '}
+        <strong style={{ color: 'var(--text-primary)' }}>
+          متى يفتح السوق الأمريكي بتوقيت السعودية
+        </strong>
+        . قسم{' '}
+        <Link
+          href="/economie"
+          style={{ color: 'var(--accent-alt)' }}
+          className="font-semibold hover:underline underline-offset-2"
+        >
+          الاقتصاد
+        </Link>{' '}
+        يعرض هذه الإجابات مباشرة ويقودك إلى صفحات متخصصة مثل{' '}
+        <Link
+          href="/economie/us-market-open"
+          style={{ color: 'var(--accent-alt)' }}
+          className="font-semibold hover:underline underline-offset-2"
+        >
+          السوق الأمريكي
+        </Link>{' '}
+        و{' '}
+        <Link
+          href="/economie/gold-market-hours"
+          style={{ color: 'var(--accent-alt)' }}
+          className="font-semibold hover:underline underline-offset-2"
+        >
+          ساعات الذهب
+        </Link>{' '}
+        بدل أن يضيع المستخدم بين مواقع أجنبية أو صفحات مبهمة.
+      </>
+    ),
+  },
+  {
     icon: Heart,
     title: 'مصمَّم للمستخدم العربي',
     body: (
@@ -150,7 +227,7 @@ export default function SectionSEOArticle() {
             className="text-2xl sm:text-3xl font-extrabold"
             style={{ color: 'var(--text-primary)' }}
           >
-            كل ما تحتاجه عن الوقت في مكان واحد
+            الوقت والأدوات اليومية في مكان واحد
           </h2>
         </div>
 

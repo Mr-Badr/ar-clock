@@ -21,8 +21,8 @@ import {
 const SITE_URL = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
-  title: 'حاسبة حديد التسليح — وزن الحديد بالكجم والطن',
-  description: 'احسب وزن حديد التسليح بسهولة حسب القطر (⌀8 إلى ⌀32) والطول. مع جدول أوزان الأقطار الكاملة واحتساب عدد أسياخ 12 متر.',
+  title: 'كم وزن الحديد؟ | حاسبة حديد التسليح بالكجم والطن',
+  description: 'احسب وزن حديد التسليح حسب القطر والطول، واعرف وزن سيخ 12 متر وعدد الأطنان المطلوبة بسرعة.',
   keywords: getBuildingKeywords('rebar'),
   url: `${SITE_URL}/calculators/building/rebar`,
 });
@@ -72,7 +72,7 @@ export default function RebarPage() {
     <main className="bg-base text-primary">
       <CalculatorHero
         badge="هندسة / حديد"
-        title="حاسبة وزن حديد التسليح"
+        title="كم وزن الحديد؟ حاسبة وزن حديد التسليح"
         description="حوّل أطوال الحديد إلى أوزان بدقة عالية. أدخل قطر الحديد وعدد الأسياخ وأطوالها وستحصل فوراً على الوزن الإجمالي (كجم / طن) وعدد الأسياخ القياسية 12 متر."
         accent="#EF4444"
         highlights={[

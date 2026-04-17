@@ -4,11 +4,11 @@ import { buildAgeMetadata, buildBreadcrumbSchema, buildSoftwareSchema } from '..
 import { Suspense } from 'react';
 import SectionSkeleton from '@/components/shared/SectionSkeleton'
 
-const title = 'حاسبة العمر الهجري';
+const title = 'كم عمري بالهجري؟';
 const description = 'احسب عمرك بالهجري أو ابدأ بتاريخ هجري ثم حوّله إلى الميلادي مع عرض الفارق بين التقويمين في نفس الشاشة.';
 
 export const metadata = buildAgeMetadata({
-  title: 'حاسبة العمر الهجري | احسب عمرك بالتقويم الإسلامي',
+  title: 'كم عمري بالهجري؟ | حاسبة العمر الهجري والميلادي',
   description,
   keywords: [
     'حاسبة العمر الهجري',

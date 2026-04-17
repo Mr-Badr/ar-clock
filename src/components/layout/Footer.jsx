@@ -30,6 +30,15 @@ const ECONOMY_LINKS = [
   { href: '/economie/best-trading-time', label: 'أفضل وقت للتداول' },
 ];
 
+const CALCULATOR_LINKS = [
+  { href: '/calculators/age/calculator', label: 'كم عمري الآن؟ حاسبة العمر' },
+  { href: '/calculators/end-of-service-benefits', label: 'حاسبة نهاية الخدمة في السعودية' },
+  { href: '/calculators/monthly-installment', label: 'حاسبة القسط الشهري والقرض' },
+  { href: '/calculators/vat', label: 'حاسبة الضريبة 15% والسعر شامل الضريبة' },
+  { href: '/calculators/percentage', label: 'حاسبة النسبة المئوية والخصم' },
+  { href: '/calculators/building', label: 'حاسبة تكلفة البناء' },
+];
+
 const COMPANY_LINKS = [
   { href: '/about', label: 'من نحن' },
   { href: '/editorial-policy', label: 'السياسة التحريرية' },
@@ -115,6 +124,17 @@ const Footer = async () => {
               <h3 className="footer-col-heading">أدوات الاقتصاد</h3>
               <ul className="footer-col-list">
                 {ECONOMY_LINKS.map(({ href, label }) => (
+                  <li key={href}>
+                    <Link href={href} className="footer-col-link">{label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="footer-col">
+              <h3 className="footer-col-heading">أشهر الحاسبات</h3>
+              <ul className="footer-col-list">
+                {CALCULATOR_LINKS.map(({ href, label }) => (
                   <li key={href}>
                     <Link href={href} className="footer-col-link">{label}</Link>
                   </li>
@@ -356,12 +376,12 @@ const Footer = async () => {
         /* ─────────────────────────────────────────
            LINKS GRID
 
-          All 5 columns live in ONE flat CSS Grid.
+          All columns live in ONE flat CSS Grid.
           No nested rows, no display:contents tricks.
 
           Mobile  (<640px):  2 columns
           Tablet (640-1023): 3 columns
-          Desktop (1024px+): 6 columns, all in one line
+          Desktop (1024px+): 7 columns, all in one line
         ───────────────────────────────────────── */
         .footer-links-grid {
           display: grid;
@@ -380,7 +400,7 @@ const Footer = async () => {
           .footer-links-grid {
             /* Each column is sized to its content —
                no stretching, no overflow.            */
-            grid-template-columns: repeat(6, auto);
+            grid-template-columns: repeat(7, auto);
             gap: var(--space-10);
             width: auto;
             flex: 1;             /* fill remaining space in the main row */

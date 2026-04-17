@@ -8,9 +8,9 @@ import EconomyLanding from '@/components/economy/EconomyLanding';
 const SITE_URL = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
-  title: 'الاقتصاد الحي | أوقات الأسواق والذهب والفوركس والأحداث الاقتصادية',
+  title: 'هل الذهب أو السوق الأمريكي مفتوح الآن؟ | أدوات الاقتصاد الحي',
   description:
-    `قسم عربي غني داخل ${SITE_BRAND} يجمع أوقات السوق الأمريكي والذهب وجلسات الفوركس والبورصات العربية والعالمية، مع طبقات سيولة وأحداث اقتصادية وقراءات مباشرة بتوقيت المستخدم المحلي.`,
+    `تحقق فوراً هل السوق الأمريكي أو الذهب أو الفوركس مفتوح الآن، وتابع أوقات البورصات العالمية والأحداث الاقتصادية من صفحات عربية سريعة داخل ${SITE_BRAND}.`,
   keywords: [
     // Short
     'اقتصاد', 'اقتصاديات', 'تداول', 'فوركس', 'بورصة', 'ذهب', 'أسواق', 'مؤشرات', 
@@ -30,7 +30,7 @@ export const metadata = buildCanonicalMetadata({
 });
 
 export default function EconomyPage() {
-  const webApplicationSchema = {
+  const collectionSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: 'قسم الاقتصاد الحي',
@@ -64,7 +64,7 @@ export default function EconomyPage() {
     <div className="bg-base" dir="rtl">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
       />
       <script
         type="application/ld+json"

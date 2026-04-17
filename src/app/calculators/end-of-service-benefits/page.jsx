@@ -21,6 +21,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
+import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
@@ -115,17 +116,13 @@ export default async function EndOfServiceBenefitsPage() {
       { '@type': 'ListItem', position: 3, name: PAGE.title, item: `${SITE_URL}${PAGE.href}` },
     ],
   };
-  const softwareSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
+  const softwareSchema = buildFreeToolPageSchema({
+    siteUrl: SITE_URL,
+    path: PAGE.href,
     name: PAGE.title,
-    applicationCategory: 'FinanceApplication',
-    operatingSystem: 'Web',
-    inLanguage: 'ar',
-    offers: { '@type': 'Offer', price: '0' },
-    url: `${SITE_URL}${PAGE.href}`,
     description: PAGE.description,
-  };
+    about: PAGE.keywords.slice(0, 8),
+  });
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -173,7 +170,7 @@ export default async function EndOfServiceBenefitsPage() {
 
       <CalculatorHero
         badge="نظام العمل السعودي"
-        title="حاسبة مكافأة نهاية الخدمة 2026"
+        title={PAGE.heroTitle}
         description="احسب مستحقاتك بسرعة وفق القاعدة العامة في نظام العمل السعودي، واعرف فرق الاستحقاق بين نهاية العقد والاستقالة، وشاهد كيف تتغير النتيجة إذا انتظرت حتى تصل إلى شريحة أفضل."
         accent={PAGE.accent}
         highlights={[

@@ -14,11 +14,11 @@ import { getSiteUrl } from '@/lib/site-config';
 const BASE_URL = getSiteUrl();
 
 export const metadata: Metadata = {
-  title: 'التاريخ الميلادي اليوم - اليوم والشهر والسنة كاملة',
-  description: 'اعرف التاريخ الميلادي اليوم مع تفاصيل اليوم من السنة، ورقم الأسبوع، وJulian Day، والتاريخ الهجري الموافق وروابط أدوات التاريخ.',
+  title: 'كم التاريخ الميلادي اليوم؟ | اليوم والشهر والسنة كاملة',
+  description: 'اعرف التاريخ الميلادي اليوم مع اليوم من السنة، ورقم الأسبوع، والتاريخ الهجري الموافق وروابط أدوات التاريخ.',
   alternates: { canonical: `${BASE_URL}/date/today/gregorian` },
   openGraph: {
-    title: 'التاريخ الميلادي اليوم | ميقاتنا',
+    title: 'كم التاريخ الميلادي اليوم؟',
     description: 'تفاصيل التاريخ الميلادي اليوم مع التاريخ الهجري الموافق وروابط الأدوات.',
     url: `${BASE_URL}/date/today/gregorian`,
     locale: 'ar_SA',

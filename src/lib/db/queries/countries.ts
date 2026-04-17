@@ -1,10 +1,15 @@
 import 'server-only'
 import { cacheTag, cacheLife } from 'next/cache'
-import { supabase } from '@/lib/supabase/server'
 import type { Country } from '@/lib/db/types'
 import fallback from '@/lib/db/fallback/countries.json'
 import snapshot from '../../../../public/geo/countries.json'
 import { PRIORITY_COUNTRY_SLUGS, GLOBAL_POPULAR_COUNTRIES } from '@/lib/db/constants'
+import {
+  isLiveGeoDbEnabled,
+  loadAllCountrySlugs,
+  loadCountryByCode,
+  loadCountryBySlug,
+} from '@/lib/db/live-geo-source'
 
 type SnapshotCountry = Country & { slug?: string | null }
 
@@ -30,7 +35,7 @@ const fallbackCountries = (fallback as SnapshotCountry[])
 const snapshotCountries = (snapshot as SnapshotCountry[])
   .map(normalizeCountry)
   .filter((country): country is Country => Boolean(country?.country_slug))
-const GEO_DB_FALLBACK_ENABLED = process.env.ENABLE_LIVE_GEO_DB === 'true'
+const GEO_DB_FALLBACK_ENABLED = isLiveGeoDbEnabled()
 
 function getCountryKey(country: Partial<Country>) {
   return country.country_slug || country.country_code || ''
@@ -74,51 +79,15 @@ function findFallbackCountryByCode(code: string) {
 }
 
 async function fetchCountryBySlugFromDb(slug: string) {
-  if (!GEO_DB_FALLBACK_ENABLED) return null
-
-  const { data, error } = await supabase
-    .from('countries')
-    .select('*')
-    .eq('country_slug', slug)
-    .single()
-
-  if (error || !data) {
-    throw new Error(error?.message || `Country not found: ${slug}`)
-  }
-
-  return data as Country
+  return loadCountryBySlug(slug)
 }
 
 async function fetchCountryByCodeFromDb(code: string) {
-  if (!GEO_DB_FALLBACK_ENABLED) return null
-
-  const { data, error } = await supabase
-    .from('countries')
-    .select('*')
-    .eq('country_code', code.toUpperCase())
-    .single()
-
-  if (error || !data) {
-    throw new Error(error?.message || `Country not found: ${code}`)
-  }
-
-  return data as Country
+  return loadCountryByCode(code)
 }
 
 async function fetchAllCountrySlugsFromDb() {
-  if (!GEO_DB_FALLBACK_ENABLED) return []
-
-  const { data, error } = await supabase
-    .from('countries')
-    .select('country_slug')
-
-  if (error || !data) {
-    throw new Error(error?.message || 'Unable to load country slugs')
-  }
-
-  return data
-    .map((row) => row.country_slug)
-    .filter((slug): slug is string => Boolean(slug))
+  return loadAllCountrySlugs()
 }
 
 export async function getAllCountries(): Promise<Country[]> {

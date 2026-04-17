@@ -539,6 +539,14 @@
     "canonicalSlug": "earth-day",
     "countryCode": "us"
   },
+  "international-womens-day-in-morocco": {
+    "canonicalSlug": "international-womens-day",
+    "countryCode": "ma"
+  },
+  "international-womens-day-in-tunisia": {
+    "canonicalSlug": "international-womens-day",
+    "countryCode": "tn"
+  },
   "world-teachers-day-in-saudi": {
     "canonicalSlug": "world-teachers-day",
     "countryCode": "sa"

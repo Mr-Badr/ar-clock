@@ -4,11 +4,11 @@ import { buildAgeMetadata, buildBreadcrumbSchema, buildSoftwareSchema } from '..
 import { Suspense } from 'react';
 import SectionSkeleton from '@/components/shared/SectionSkeleton'
 
-const title = 'عمرك على الكواكب';
+const title = 'كم عمرك على المريخ والكواكب؟';
 const description = 'شاهد عمرك إذا قسته بسنوات عطارد والزهرة والمريخ والمشتري وبقية كواكب المجموعة الشمسية.';
 
 export const metadata = buildAgeMetadata({
-  title: 'عمرك على الكواكب | احسب عمرك على المريخ وعطارد',
+  title: 'كم عمرك على المريخ والكواكب؟ | احسب عمرك خارج الأرض',
   description,
   keywords: [
     'عمرك على الكواكب',

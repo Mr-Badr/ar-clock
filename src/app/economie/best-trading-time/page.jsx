@@ -8,7 +8,7 @@ import {
   buildEconomyDatasetSchema,
   buildEconomyFaqSchema,
   buildEconomySpeakableSchema,
-  buildEconomyWebApplicationSchema,
+  buildEconomyToolSchema,
   getInitialEconomyPageState,
 } from '@/lib/economy/page-helpers';
 import { getSiteUrl } from '@/lib/site-config';
@@ -20,9 +20,9 @@ import BestTradingTimeLive from '@/components/economy/BestTradingTimeLive';
 const SITE_URL = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
-  title: 'أفضل وقت للتداول | نافذة الفوركس والذهب من مدينتك',
+  title: 'ما أفضل وقت للتداول اليوم؟ | الفوركس والذهب من مدينتك',
   description:
-    'اعرف أفضل وقت لتداول الفوركس والذهب من مدينتك: نافذة لندن ونيويورك، أول ساعة أمريكية، وخريطة السيولة اليومية والأسبوعية.',
+    'اعرف أفضل وقت للتداول اليوم من مدينتك: نافذة لندن ونيويورك، أول ساعة أمريكية، وخريطة السيولة اليومية والأسبوعية للفوركس والذهب.',
   keywords: [
     // Short
     'أفضل أوقات التداول', 'تداول العملات', 'وقت الذروة', 'نافذة التداول', 'متى أتداول',
@@ -44,7 +44,7 @@ export const metadata = buildCanonicalMetadata({
 });
 
 export default function BestTradingTimePage() {
-  const webApplicationSchema = buildEconomyWebApplicationSchema({
+  const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/best-trading-time',
     name: 'أفضل وقت للتداول',
@@ -75,7 +75,7 @@ export default function BestTradingTimePage() {
     <div className="bg-base" dir="rtl">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }}
       />
       <script
         type="application/ld+json"

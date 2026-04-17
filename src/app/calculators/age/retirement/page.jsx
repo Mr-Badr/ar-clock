@@ -4,11 +4,11 @@ import { buildAgeMetadata, buildBreadcrumbSchema, buildSoftwareSchema } from '..
 import { Suspense } from 'react';
 import SectionSkeleton from '@/components/shared/SectionSkeleton'
 
-const title = 'حاسبة سن التقاعد';
+const title = 'متى أتقاعد؟';
 const description = 'تقدير مبسط لموعد التقاعد حسب الدولة والقطاع مع تذكير واضح بأن المرجع النهائي هو الأنظمة والجهات الرسمية في كل بلد.';
 
 export const metadata = buildAgeMetadata({
-  title: 'حاسبة سن التقاعد | متى أبلغ سن التقاعد؟',
+  title: 'متى أتقاعد؟ | حاسبة سن التقاعد',
   description,
   keywords: [
     'حاسبة سن التقاعد',

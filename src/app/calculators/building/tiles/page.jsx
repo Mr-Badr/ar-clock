@@ -16,8 +16,8 @@ import { getBuildingKeywords } from '@/lib/calculators/building/seo-keywords';
 const SITE_URL = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
-  title: 'حاسبة البلاط والسيراميك والبورسلان',
-  description: 'احسب كمية البلاط والسيراميك المطلوبة لأي عدد من الغرف. تحديد المقاس، ونمط التركيب (مستقيم أو قطري) لضمان نسبة الهدر الدقيقة ومعرفة عدد الكراتين المطلوبة.',
+  title: 'كم كرتون بلاط أحتاج؟ | حاسبة البلاط والسيراميك',
+  description: 'احسب كمية البلاط والسيراميك المطلوبة لأي عدد من الغرف، مع معرفة عدد الكراتين المطلوبة ونسبة الهدر حسب طريقة التركيب.',
   keywords: getBuildingKeywords('tiles'),
   url: `${SITE_URL}/calculators/building/tiles`,
 });
@@ -66,7 +66,7 @@ export default function TilesPage() {
     <main className="bg-base text-primary">
       <CalculatorHero
         badge="هندسة / تشطيب"
-        title="حاسبة غرف البلاط والسيراميك"
+        title="كم كرتون بلاط أحتاج؟ حاسبة البلاط والسيراميك"
         description="خطط لأرضيات بيتك بسهولة. أضف مقاسات كل غرفة وحدد نمط التركيب لنعطيك عدد البلاطات والكراتين المطلوبة مع إضافة الهدر الهندسي الدقيق."
         accent="#06B6D4" // Cyan
         highlights={[

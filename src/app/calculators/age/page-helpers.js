@@ -1,4 +1,5 @@
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
+import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
@@ -26,17 +27,13 @@ export function buildBreadcrumbSchema(items) {
 }
 
 export function buildSoftwareSchema({ name, description, path }) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
+  return buildFreeToolPageSchema({
+    siteUrl: SITE_URL,
+    path,
     name,
-    applicationCategory: 'UtilityApplication',
-    operatingSystem: 'Web',
-    inLanguage: 'ar',
-    offers: { '@type': 'Offer', price: '0' },
-    url: `${SITE_URL}${path}`,
     description,
-  };
+    about: [name, 'الحاسبات', 'أداة مجانية'],
+  });
 }
 
 export { SITE_URL };

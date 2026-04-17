@@ -8,11 +8,12 @@ import { ConverterForm } from '../converter/ConverterForm';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
+import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 
 const BASE_URL = getSiteUrl();
 
 export const metadata: Metadata = {
-  title: 'تحويل ميلادي إلى هجري - محول التاريخ',
+  title: 'كيف أحول من ميلادي إلى هجري؟ | تحويل التاريخ الفوري',
   description: 'حوّل أي تاريخ ميلادي إلى هجري فوراً مع ثلاث طرق حساب: أم القرى، الفلكي، والمدني، وبصفحة عربية واضحة وسريعة.',
   keywords: [
     'ميلادي لهجري', 'تحويل من ميلادي لهجري', 'تاريخ اليوم هجري',
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   ].join(', '),
   alternates: { canonical: `${BASE_URL}/date/gregorian-to-hijri` },
   openGraph: {
-    title: 'تحويل ميلادي إلى هجري | ميقاتنا',
+    title: 'كيف أحول من ميلادي إلى هجري؟',
     description: 'تحويل من ميلادي إلى هجري بثلاث طرق حساب مع نتائج فورية.',
     url: `${BASE_URL}/date/gregorian-to-hijri`,
     locale: 'ar_SA',
@@ -50,13 +51,13 @@ async function GregorianToHijriDynamicContent() {
   ];
 
   const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: 'تحويل من ميلادي إلى هجري',
-    applicationCategory: 'UtilityApplication',
-    operatingSystem: 'Web',
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    url: `${BASE_URL}/date/gregorian-to-hijri`,
+    ...buildFreeToolPageSchema({
+      siteUrl: BASE_URL,
+      path: '/date/gregorian-to-hijri',
+      name: 'تحويل من ميلادي إلى هجري',
+      description: 'حوّل أي تاريخ ميلادي إلى هجري فوراً مع أكثر من طريقة حساب معتمدة.',
+      about: ['تحويل التاريخ', 'ميلادي إلى هجري', 'تقويم أم القرى', 'التاريخ الهجري'],
+    }),
     breadcrumb: buildBreadcrumbJsonLd(breadcrumb, BASE_URL),
   };
 

@@ -5,11 +5,11 @@ import { buildDateKeywords } from '@/lib/seo/section-search-intent';
 export const metadata: Metadata = {
   // Overridden per-page; this is just the segment fallback
   title: {
-    default: 'أدوات التاريخ الهجري والميلادي | ميقاتنا',
+    default: 'كم التاريخ اليوم؟ | أدوات التاريخ الهجري والميلادي',
     template: '%s | ميقاتنا',
   },
   description:
-    'قسم التاريخ في ميقاتنا يضم تاريخ اليوم بالهجري والميلادي، محول التاريخ، التقويم السنوي، والتاريخ حسب الدولة مع صفحات داخلية قابلة للفهرسة.',
+    'قسم التاريخ في ميقاتنا يضم تاريخ اليوم بالهجري والميلادي، محول التاريخ، التقويم السنوي، والتاريخ حسب الدولة مع صفحات عربية قابلة للفهرسة.',
   keywords: buildDateKeywords(),
   robots: {
     index: true,

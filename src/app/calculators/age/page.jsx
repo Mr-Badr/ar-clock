@@ -14,23 +14,36 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { AGE_CALCULATOR_ROUTES, AGE_COMMON_FAQ, AGE_HUB_QUICK_LINKS, AGE_ROUTE } from '@/lib/calculators/age-data';
 import { buildBreadcrumbSchema, buildSoftwareSchema, buildAgeMetadata } from './page-helpers';
+import { getSiteUrl } from '@/lib/site-config';
+
+const SITE_URL = getSiteUrl();
 
 export const metadata = buildAgeMetadata({
-  title: 'حاسبات العمر الشاملة | احسب عمرك بالهجري والميلادي',
+  title: 'كم عمري الآن؟ | حاسبات العمر بالهجري والميلادي وفرق العمر',
   description:
-    'قسم عربي متكامل لحساب العمر: العمر الشامل، العمر الهجري، فرق العمر، يوم الميلاد، الإنجازات الزمنية، العد التنازلي، وعمرك على الكواكب.',
+    'ابدأ من السؤال الأكثر بحثاً: كم عمري الآن؟ ثم انتقل إلى العمر بالهجري والميلادي، فرق العمر، يوم الميلاد، الإنجازات الزمنية، وعدّاد عيد الميلاد.',
   keywords: AGE_ROUTE.keywords,
   path: AGE_ROUTE.href,
 });
 
 export default function AgeHubPage() {
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: AGE_CALCULATOR_ROUTES.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.title,
+      url: `${SITE_URL}${item.href}`,
+    })),
+  };
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'الرئيسية', href: '/' },
     { name: 'الحاسبات', href: '/calculators' },
     { name: 'حاسبات العمر', href: '/calculators/age' },
   ]);
   const softwareSchema = buildSoftwareSchema({
-    name: 'حاسبات العمر الشاملة',
+    name: 'حاسبات العمر',
     description: metadata.description,
     path: '/calculators/age',
   });
@@ -39,14 +52,15 @@ export default function AgeHubPage() {
     <main className="bg-base text-primary">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
 
       <CalculatorHero
         badge="قسم جديد داخل الحاسبات"
-        title="حاسبات العمر الشاملة في مكان واحد"
-        description="بَنينا هذا القسم ليجمع أهم ما يحتاجه المستخدم حول العمر: الحساب الدقيق بالسنوات والأيام، المقارنة بين الهجري والميلادي، فرق العمر، تفاصيل يوم الميلاد، الإنجازات الزمنية، العد التنازلي، وعمرك على الكواكب."
+        title="كم عمري الآن؟ ابدأ من أشهر حاسبات العمر"
+        description="هذا القسم يجمع أهم ما يحتاجه المستخدم عندما يبحث عن حاسبة العمر: الحساب الدقيق بالسنوات والأيام، المقارنة بين الهجري والميلادي، فرق العمر، تفاصيل يوم الميلاد، الإنجازات الزمنية، العد التنازلي، وعمرك على الكواكب."
         accent={AGE_ROUTE.accent}
         highlights={[
-          'التركيز هنا على أدوات عمر عملية ومباشرة بلا تشتيت.',
+          'التركيز هنا على أدوات عمر عملية مبنية على صيَغ البحث العربية المباشرة.',
           'لا يوجد تكرار لمحوّل التاريخ لأن التطبيق يملكه بالفعل في قسم التاريخ.',
           'تم استبعاد أي محتوى متعلق بالأبراج من هذا القسم بالكامل.',
         ]}

@@ -581,7 +581,10 @@
     "publishStatus": "published",
     "countryScope": "none",
     "canonicalPath": "/holidays/international-womens-day",
-    "aliases": []
+    "aliases": [
+      "international-womens-day-in-morocco",
+      "international-womens-day-in-tunisia"
+    ]
   },
   "world-teachers-day": {
     "tier": "tier1",

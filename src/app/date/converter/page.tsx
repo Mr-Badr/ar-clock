@@ -10,11 +10,12 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { ArrowLeftRight, Calendar, CalendarDays } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
+import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 
 const BASE_URL = getSiteUrl();
 
 export const metadata: Metadata = {
-  title: 'محول التاريخ الهجري والميلادي - تحويل دقيق وفوري',
+  title: 'كيف أحول التاريخ الهجري والميلادي؟ | محول التاريخ الفوري',
   description: 'حوّل أي تاريخ بين الهجري والميلادي فوراً مع ثلاث طرق حساب: أم القرى، الفلكي، والمدني، وبواجهة عربية واضحة وسريعة.',
   keywords: [
     'تحويل التاريخ', 'محول التاريخ', 'هجري لميلادي', 'ميلادي لهجري', 'تاريخ اليوم',
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   ].join(', '),
   alternates: { canonical: `${BASE_URL}/date/converter` },
   openGraph: {
-    title: 'محول التاريخ الهجري والميلادي | ميقاتنا',
+    title: 'كيف أحول التاريخ الهجري والميلادي؟',
     description: 'تحويل فوري بين التاريخ الهجري والميلادي بثلاث طرق حساب.',
     url: `${BASE_URL}/date/converter`,
     locale: 'ar_SA',
@@ -58,14 +59,13 @@ async function ConverterDynamicContent() {
   ];
 
   const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: 'محول التاريخ الهجري والميلادي',
-    applicationCategory: 'UtilityApplication',
-    operatingSystem: 'Web',
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    description: 'تحويل فوري بين التاريخ الهجري والميلادي بثلاث طرق حساب',
-    url: `${BASE_URL}/date/converter`,
+    ...buildFreeToolPageSchema({
+      siteUrl: BASE_URL,
+      path: '/date/converter',
+      name: 'محول التاريخ الهجري والميلادي',
+      description: 'تحويل فوري بين التاريخ الهجري والميلادي بثلاث طرق حساب',
+      about: ['تحويل التاريخ', 'التاريخ الهجري', 'التاريخ الميلادي', 'تقويم أم القرى'],
+    }),
     mainEntity: {
       '@type': 'FAQPage',
       mainEntity: [

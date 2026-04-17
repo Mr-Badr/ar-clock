@@ -11,14 +11,14 @@ import { buildAgeMetadata, buildBreadcrumbSchema, buildSoftwareSchema } from '..
 import { Suspense } from 'react';
 import SectionSkeleton from '@/components/shared/SectionSkeleton'
 
-const pageTitle = 'حاسبة العمر الشاملة';
-const pageDescription = 'احسب عمرك بدقة بالسنوات والأشهر والأيام والساعات والثواني، وتعرّف على عيد ميلادك القادم والعمر الهجري التقريبي.';
+const pageTitle = 'حاسبة العمر';
+const pageDescription = 'احسب عمرك بدقة بالسنوات والأشهر والأيام والساعات والثواني، وتعرّف على عيد ميلادك القادم والعمر الهجري التقريبي إذا كنت تبحث عن إجابة سريعة لسؤال: كم عمري؟';
 
 export const metadata = buildAgeMetadata({
-  title: 'حاسبة العمر الشاملة | احسب عمرك بالأيام والثواني',
+  title: 'كم عمري الآن؟ | حاسبة العمر بالسنوات والأيام والثواني',
   description: pageDescription,
   keywords: [
-    'حاسبة العمر الشاملة',
+    'حاسبة العمر',
     'احسب عمرك',
     'كم عمري',
     'حساب العمر بالأيام',
@@ -48,7 +48,7 @@ export default function AgeCalculatorPage() {
 
       <CalculatorHero
         badge="العمر الكامل"
-        title="حاسبة العمر الشاملة"
+        title={pageTitle}
         description={pageDescription}
         accent="#EA580C"
         highlights={[

@@ -1,5 +1,6 @@
 // lib/economy/page-helpers.js
 import { getCachedNowIso } from '@/lib/date-utils';
+import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 
 const CURRENT_YEAR = new Date().getUTCFullYear();
 
@@ -30,31 +31,21 @@ export async function getInitialEconomyPageState() {
   }
 }
 
-export function buildEconomyWebApplicationSchema({ siteUrl, path, name, description }) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    applicationCategory: 'FinanceApplication',
-    operatingSystem: 'Any',
+export function buildEconomyToolSchema({ siteUrl, path, name, description }) {
+  return buildFreeToolPageSchema({
+    siteUrl,
+    path,
     name,
-    url: `${siteUrl}${path}`,
-    inLanguage: 'ar',
     description,
-    featureList: [
-      'تحديد المنطقة الزمنية تلقائياً',
-      'تحويل أوقات الجلسات إلى توقيت المستخدم',
-      'عدادات تنازلية حية وتوصيات مبنية على الوقت',
+    about: [
+      'الاقتصاد الحي',
+      'الأسواق العالمية',
+      'السوق الأمريكي',
+      'الذهب',
+      'الفوركس',
+      name,
     ],
-    audience: {
-      '@type': 'Audience',
-      geographicArea: 'Arab World',
-    },
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-    },
-  };
+  });
 }
 
 export function buildEconomyDatasetSchema({ siteUrl, path, name, description }) {

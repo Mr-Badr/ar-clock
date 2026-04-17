@@ -77,8 +77,8 @@ export async function generateMetadata({ params }) {
   const offset = getUtcOffsetStr(city.timezone);
 
   return {
-    title: `الوقت الان في ${cityAr}، ${countryAr} — الساعة والتاريخ`,
-    description: `الوقت الحالي في ${cityAr} بدقة حتى الثانية. الساعة الان في ${cityAr}، ${countryAr} — التاريخ اليوم الميلادي والهجري، المنطقة الزمنية ${offset}.`,
+    title: `كم الساعة الآن في ${cityAr}؟ | الوقت والتاريخ اليوم في ${countryAr}`,
+    description: `تحقق فوراً من الساعة الآن في ${cityAr} مع تاريخ اليوم والمنطقة الزمنية ${offset} وروابط الصلاة وفرق التوقيت والوقت في بقية مدن ${countryAr}.`,
     keywords: buildTimeNowKeywords({
       countryAr,
       countryEn: country.name_en,
@@ -96,8 +96,8 @@ export async function generateMetadata({ params }) {
       locale: 'ar_SA',
       url: `${BASE}/time-now/${countrySlug}/${citySlug}`,
       siteName: SITE_BRAND,
-      title: `الوقت الان في ${cityAr}، ${countryAr} | ${SITE_BRAND}`,
-      description: `الساعة الحالية في ${cityAr} بدقة حتى الثانية. ${countryAr} · ${offset}.`,
+      title: `كم الساعة الآن في ${cityAr}؟ | ${countryAr}`,
+      description: `اعرف الساعة الحالية في ${cityAr} مع تاريخ اليوم والتوقيت المحلي ${offset}.`,
       images: [{
         url: `${BASE}/time-now/${countrySlug}/${citySlug}/opengraph-image`,
         width: 1200,
@@ -107,8 +107,8 @@ export async function generateMetadata({ params }) {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `الوقت الان في ${cityAr}، ${countryAr}`,
-      description: `الوقت الحالي في ${cityAr} بدقة حتى الثانية مع التاريخ اليوم والمنطقة الزمنية ${offset}.`,
+      title: `كم الساعة الآن في ${cityAr}؟`,
+      description: `اعرف الساعة الحالية في ${cityAr} مع تاريخ اليوم والمنطقة الزمنية ${offset}.`,
     },
     robots: {
       index: true, follow: true,
@@ -271,9 +271,13 @@ export default async function CityTimePage({ params }) {
           <h1 id="city-time-h1"
             className="text-3xl md:text-5xl font-black mb-6 leading-tight text-center"
           >
-            الوقت الان في{' '}
+            كم الساعة الآن في{' '}
             <span className="text-accent">{cityAr}</span>
+            ؟
           </h1>
+          <p className="mx-auto mb-6 max-w-2xl text-center text-sm leading-7 text-[var(--text-muted)] sm:text-base">
+            اعرف الوقت الحالي في {cityAr}، {countryAr} مع تاريخ اليوم والمنطقة الزمنية {offset} وروابط الصلاة وفرق التوقيت من نفس الصفحة.
+          </p>
 
 
           {/* Global city search */}

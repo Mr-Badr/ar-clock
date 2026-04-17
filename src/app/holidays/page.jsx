@@ -26,14 +26,14 @@ export async function generateMetadata() {
   const gr = now.getFullYear();
   const hi = approxHijriYear(gr);
   return {
-    title: `كم باقي على الأعياد والمناسبات القادمة ${gr} / ${hi}`,
-    description: `دليل عربي شامل لمعرفة كم باقي على الأعياد والمناسبات الإسلامية والوطنية والمدرسية والاجتماعية، مع عد تنازلي مباشر ومواعيد بالهجري والميلادي وروابط تفصيلية لكل مناسبة.`,
+    title: `كم باقي على الأعياد والمناسبات القادمة؟ | عداد مباشر ${gr}`,
+    description: `اعرف كم باقي على رمضان والعيد والمناسبات الوطنية والمدرسية مع عداد مباشر، وتاريخ هجري وميلادي، وصفحات تفصيلية لكل مناسبة.`,
     keywords: `كم باقي على المناسبات, كم باقي على الأعياد ${gr}, المناسبات القادمة ${gr}, المناسبات الإسلامية ${hi}, عداد المناسبات, العطل الرسمية ${gr}, المناسبات المدرسية, متى المناسبة القادمة`,
     alternates: { canonical: `${SITE}/holidays`, languages: { ar: `${SITE}/holidays` } },
     robots: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large' },
     openGraph: {
-      title: `كم باقي على الأعياد والمناسبات القادمة ${gr}`,
-      description: `تصفح المناسبات القادمة في العالم العربي مع العد التنازلي المباشر والتصنيف والصفحات التفصيلية لكل مناسبة.`,
+      title: `كم باقي على الأعياد والمناسبات القادمة؟`,
+      description: `تصفح المناسبات القادمة مع عداد مباشر وروابط تفصيلية للأحداث الأكثر بحثاً.`,
       locale: 'ar_SA', type: 'website', url: `${SITE}/holidays`,
     },
   };
@@ -135,8 +135,8 @@ export default async function HolidaysPage() {
               lineHeight: 'var(--leading-tight)',
             }}
           >
-            عداد{' '}
-            <span style={{ color: 'var(--accent-alt)' }}>المواعيد</span>
+            كم باقي على{' '}
+            <span style={{ color: 'var(--accent-alt)' }}>المناسبات القادمة؟</span>
           </h1>
           <div className='flex justify-center'>
             <p

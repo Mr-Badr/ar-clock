@@ -210,7 +210,10 @@
     "earth-day-in-usa"
   ],
   "pension-day-egypt": [],
-  "international-womens-day": [],
+  "international-womens-day": [
+    "international-womens-day-in-morocco",
+    "international-womens-day-in-tunisia"
+  ],
   "world-teachers-day": [
     "world-teachers-day-in-saudi",
     "world-teachers-day-in-egypt",

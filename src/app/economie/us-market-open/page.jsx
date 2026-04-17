@@ -8,7 +8,7 @@ import {
   buildEconomyDatasetSchema,
   buildEconomyFaqSchema,
   buildEconomySpeakableSchema,
-  buildEconomyWebApplicationSchema,
+  buildEconomyToolSchema,
   getInitialEconomyPageState,
 } from '@/lib/economy/page-helpers';
 import { getSiteUrl } from '@/lib/site-config';
@@ -46,7 +46,7 @@ export const metadata = buildCanonicalMetadata({
 });
 
 export default function UsMarketOpenPage() {
-  const webApplicationSchema = buildEconomyWebApplicationSchema({
+  const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/us-market-open',
     name: 'متى يفتح السوق الأمريكي اليوم؟',
@@ -77,7 +77,7 @@ export default function UsMarketOpenPage() {
     <div className="bg-base" dir="rtl">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }}
       />
       <script
         type="application/ld+json"

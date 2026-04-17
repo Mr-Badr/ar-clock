@@ -13,7 +13,7 @@
 import { getCountryBySlug, getCountryByCode }                          from '@/lib/db/queries/countries';
 import { getCityBySlug, getTopCitiesByCountry, getCapitalCity, getCitiesByCountry,
          searchCities as dbSearchCities, getAllCityParams }            from '@/lib/db/queries/cities';
-import { supabase }                                                    from '@/lib/supabase/server';
+import { findNearestCitiesViaLiveSource }                              from '@/lib/db/live-geo-source';
 import { lookupIpGeo }                                                 from '@/lib/ip-lookup';
 import citiesFallback                                                  from '@/lib/db/fallback/cities-index.json';
 
@@ -227,7 +227,7 @@ export async function findNearestCity(lat, lon) {
   // If fallback match is too far, try DB
   if (minDist > 5) {
     try {
-      const { data } = await supabase.rpc('find_nearest_cities', { user_lat: lat, user_lon: lon, lim: 1 });
+      const data = await findNearestCitiesViaLiveSource(lat, lon, 1);
       if (data?.length) {
         const db = data[0];
         const dbDist = getDist(lat, lon, db.lat, db.lon);

@@ -32,12 +32,12 @@ import { getSiteUrl } from '@/lib/site-config';
 const BASE_URL = getSiteUrl();
 
 export const metadata: Metadata = {
-  title: 'التاريخ الهجري اليوم - أم القرى والتحويل والتقويم',
+  title: 'كم التاريخ الهجري اليوم؟ | أم القرى والتحويل والتقويم',
   description:
     'اعرف التاريخ الهجري اليوم بتقويم أم القرى والحساب الفلكي والمدني، مع مقارنة الطرق، ومعلومات الشهر الحالي، والمناسبات الإسلامية المرتبطة به.',
   alternates: { canonical: `${BASE_URL}/date/today/hijri` },
   openGraph: {
-    title: 'التاريخ الهجري اليوم | ميقاتنا',
+    title: 'كم التاريخ الهجري اليوم؟',
     description: 'التاريخ الهجري اليوم مع مقارنة طرق الحساب والتقويم والمناسبات الإسلامية.',
     url: `${BASE_URL}/date/today/hijri`,
     locale: 'ar_SA',

@@ -4,11 +4,11 @@ import { buildAgeMetadata, buildBreadcrumbSchema, buildSoftwareSchema } from '..
 import { Suspense } from 'react';
 import SectionSkeleton from '@/components/shared/SectionSkeleton'
 
-const title = 'حاسبة فرق العمر';
+const title = 'كم فرق العمر بين شخصين؟';
 const description = 'قارن بين عمر شخصين بالسنوات والأشهر والأيام، واعرف من الأكبر سناً وهل أنتما من الجيل نفسه أم لا.';
 
 export const metadata = buildAgeMetadata({
-  title: 'حاسبة فرق العمر | الفرق بين شخصين بالأيام والسنوات',
+  title: 'كم فرق العمر بين شخصين؟ | حاسبة الفرق بالأيام والسنوات',
   description,
   keywords: [
     'حاسبة فرق العمر',

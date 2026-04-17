@@ -1,9 +1,16 @@
 import 'server-only'
 import { cacheTag, cacheLife } from 'next/cache'
-import { supabase } from '@/lib/supabase/server'
 import type { City, CityParams } from '@/lib/db/types'
 import fallback from '@/lib/db/fallback/cities-index.json'
 import snapshot from '../../../../public/geo/city-search-index.json'
+import {
+  isLiveGeoDbEnabled,
+  loadAllCityParams,
+  loadCitiesByCountry,
+  loadCityBySlug,
+  searchCitiesViaLiveSource,
+  type LiveSearchableCity,
+} from '@/lib/db/live-geo-source'
 
 type SearchResultCountryMeta = {
   country_slug: string
@@ -17,7 +24,7 @@ type CityParamRow = {
   countries: { country_slug: string | null } | Array<{ country_slug: string | null }> | null
 }
 
-type SearchableCity = City & {
+type SearchableCity = LiveSearchableCity & {
   countries?: SearchResultCountryMeta
   country_slug?: string
   country_name_ar?: string
@@ -95,7 +102,7 @@ const fallbackCities = [
     .map(normalizeSearchableCity)
     .filter((city): city is SearchableCity => Boolean(city?.city_slug)),
 ]
-const GEO_DB_FALLBACK_ENABLED = process.env.ENABLE_LIVE_GEO_DB === 'true'
+const GEO_DB_FALLBACK_ENABLED = isLiveGeoDbEnabled()
 
 function getCityCountrySlug(city: Partial<SearchableCity>) {
   return city.country_slug || city.country_code?.toLowerCase() || ''
@@ -162,60 +169,15 @@ function buildFallbackSearchMeta(city: SearchableCity) {
 }
 
 async function fetchCitiesByCountryFromDb(countryCode: string) {
-  if (!GEO_DB_FALLBACK_ENABLED) return []
-
-  const { data, error } = await supabase
-    .from('cities').select('*')
-    .eq('country_code', countryCode.toUpperCase())
-    .order('priority', { ascending: false })
-    .order('population', { ascending: false })
-
-  if (error || !data?.length) {
-    throw new Error(error?.message ?? 'empty')
-  }
-
-  return data as SearchableCity[]
+  return loadCitiesByCountry(countryCode) as Promise<SearchableCity[]>
 }
 
 async function fetchCityBySlugFromDb(countryCode: string, citySlug: string) {
-  if (!GEO_DB_FALLBACK_ENABLED) return null
-
-  const { data, error } = await supabase
-    .from('cities').select('*')
-    .eq('country_code', countryCode.toUpperCase())
-    .eq('city_slug', citySlug)
-    .single()
-
-  if (error || !data) {
-    throw new Error(error?.message ?? 'not found')
-  }
-
-  return data as SearchableCity
+  return loadCityBySlug(countryCode, citySlug) as Promise<SearchableCity | null>
 }
 
 async function fetchAllCityParamsFromDb(): Promise<CityParams[]> {
-  if (!GEO_DB_FALLBACK_ENABLED) return []
-
-  const { data, error } = await supabase
-    .from('cities')
-    .select('city_slug, country_code, countries!inner(country_slug)')
-    .order('priority', { ascending: false })
-    .order('population', { ascending: false })
-
-  if (error || !data) {
-    throw new Error(error?.message || 'Unable to load city params')
-  }
-
-  return (data as unknown as CityParamRow[]).map((row) => {
-    const countrySlug = Array.isArray(row.countries)
-      ? row.countries[0]?.country_slug
-      : row.countries?.country_slug
-
-    return {
-      country: countrySlug || String(row.country_code || '').toLowerCase(),
-      city: row.city_slug || '',
-    }
-  })
+  return loadAllCityParams()
 }
 
 export async function getCitiesByCountry(countryCode: string): Promise<City[]> {
@@ -392,32 +354,14 @@ export async function searchCities(query: string, limit = 10): Promise<City[]> {
 
   const q = normalizeSearchQuery(query)
   const qStripped = q.replace(/(^|\s)\u0627\u0644/g, '$1').trim()
-  const arOrFilter = `name_ar.ilike.%${q}%,name_ar.ilike.%${qStripped}%`
 
   try {
-    const [arResult, enResult] = await Promise.all([
-      supabase
-        .from('cities')
-        .select('*, countries!inner(country_slug, name_ar, name_en)')
-        .or(arOrFilter)
-        .order('priority', { ascending: false })
-        .order('population', { ascending: false })
-        .limit(limit),
-      supabase
-        .from('cities')
-        .select('*, countries!inner(country_slug, name_ar, name_en)')
-        .ilike('name_en', `%${q}%`)
-        .order('priority', { ascending: false })
-        .order('population', { ascending: false })
-        .limit(limit),
-    ])
-
-    if (arResult.error) throw arResult.error
+    const liveRows = await searchCitiesViaLiveSource(q, qStripped, limit)
 
     const merged: SearchableCity[] = [...localMatches]
     const seen = new Set(merged.map((city) => `${city.country_code}:${city.city_slug}`))
 
-    for (const row of [...(arResult.data ?? []), ...(enResult.data ?? [])]) {
+    for (const row of liveRows) {
       const key = `${row.country_code}:${row.city_slug}`
       if (seen.has(key)) continue
 

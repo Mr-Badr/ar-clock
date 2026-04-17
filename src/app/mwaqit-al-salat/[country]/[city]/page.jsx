@@ -82,8 +82,8 @@ export async function generateMetadata({ params }) {
     timesHint = ` الفجر ${fajrFmt} — المغرب ${maghribFmt}.`;
   }
 
-  const title       = `مواقيت الصلاة في ${cityNameAr}، ${countryNameAr} اليوم — الفجر والمغرب والعصر`;
-  const description = `أوقات الصلاة الدقيقة في ${cityNameAr} اليوم.${timesHint} طريقة الحساب: ${methodInfo.label}. الشافعي والحنفي.`;
+  const title       = `مواقيت الصلاة اليوم في ${cityNameAr} | الفجر والمغرب والعشاء بدقة`;
+  const description = `اعرف مواقيت الصلاة اليوم في ${cityNameAr} بدقة.${timesHint} تشمل الصفحة الصلاة القادمة، الجدول الشهري، وطريقة الحساب ${methodInfo.label}.`;
   const canonical   = `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}`;
 
   return {
@@ -212,34 +212,11 @@ export default async function PrayerTimesPage({ params }) {
     ],
   };
 
-  const toolSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: `حاسبة مواقيت الصلاة - ${cityNameAr}`,
-    applicationCategory: 'UtilitiesApplication',
-    operatingSystem: 'Web',
-    inLanguage: 'ar',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-    },
-    description: `أداة مجانية لحساب مواقيت الصلاة الدقيقة وعرض أوقات الفجر والمغرب والعصر في ${cityNameAr} مع دعم لجميع المذاهب الفقهية.`,
-    featureList: [
-      'حساب دقيق لمواقيت الصلاة',
-      'تحديد أوقات الفجر والمغرب يومياً',
-      'دعم المذهب الشافعي والحنفي',
-      'تحديث تلقائي لحالة التوقيت الصيفي',
-      'مواقيت شهرية كاملة',
-    ],
-  };
-
   return (
     <div className="min-h-screen bg-base" dir="rtl">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }} />
 
       {/* <AdLayoutWrapper> */}
       <main className="content-col pt-24 pb-32">
@@ -258,9 +235,9 @@ export default async function PrayerTimesPage({ params }) {
         {/* Header */}
         <header className="text-center mb-8">
           <h1 className="text-3xl sm:text-4xl font-black text-primary mb-2 leading-tight">
-            مواقيت الصلاة في <span className="text-accent">{cityNameAr}</span>
+            مواقيت الصلاة اليوم في <span className="text-accent">{cityNameAr}</span>
           </h1>
-          <p className="text-muted text-sm mx-auto">{countryNameAr}</p>
+          <p className="text-muted text-sm mx-auto">{countryNameAr} — الفجر والشروق والظهر والعصر والمغرب والعشاء بدقة اليوم</p>
         </header>
 
         <AdTopBanner slotId="top-city" />

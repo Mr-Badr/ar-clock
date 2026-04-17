@@ -20,6 +20,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
+import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
@@ -100,17 +101,13 @@ export default function VatPage() {
       { '@type': 'ListItem', position: 3, name: PAGE.title, item: `${SITE_URL}${PAGE.href}` },
     ],
   };
-  const softwareSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
+  const softwareSchema = buildFreeToolPageSchema({
+    siteUrl: SITE_URL,
+    path: PAGE.href,
     name: PAGE.title,
-    applicationCategory: 'FinanceApplication',
-    operatingSystem: 'Web',
-    inLanguage: 'ar',
-    offers: { '@type': 'Offer', price: '0' },
-    url: `${SITE_URL}${PAGE.href}`,
     description: PAGE.description,
-  };
+    about: PAGE.keywords.slice(0, 8),
+  });
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -142,7 +139,7 @@ export default function VatPage() {
 
       <CalculatorHero
         badge="VAT / TVA"
-        title="حاسبة ضريبة القيمة المضافة"
+        title={PAGE.heroTitle}
         description="أضف الضريبة أو استخرجها من الفاتورة بسرعة، واحسب صافي ضريبة الشهر للشركات الصغيرة، ثم قارن بين النسب العامة الشائعة في عدد من الدول العربية من نفس الصفحة."
         accent={PAGE.accent}
         highlights={[

@@ -8,7 +8,7 @@ import {
   buildEconomyDatasetSchema,
   buildEconomyFaqSchema,
   buildEconomySpeakableSchema,
-  buildEconomyWebApplicationSchema,
+  buildEconomyToolSchema,
   getInitialEconomyPageState,
 } from '@/lib/economy/page-helpers';
 import { getSiteUrl } from '@/lib/site-config';
@@ -20,9 +20,9 @@ import MarketClockLive from '@/components/economy/MarketClockLive';
 const SITE_URL = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
-  title: 'ساعة التداول العالمية | السوق على مدار 24 ساعة',
+  title: 'ساعة السوق الآن | أين السيولة الأعلى في الفوركس والذهب؟',
   description:
-    'ساعة تداول بصرية تُظهر جلسات الفوركس العالمية على مدار 24 ساعة بتوقيتك المحلي، مع تداخل لندن ونيويورك وخريطة السيولة.',
+    'استخدم ساعة السوق الآن لمعرفة أين تتركز السيولة في الفوركس والذهب على مدار 24 ساعة، مع تداخل لندن ونيويورك وخريطة النشاط بتوقيتك المحلي.',
   keywords: [
     // Short
     'ساعة التداول', 'مؤشر فوركس', 'سيولة', 'تداخل جلسات', 'تداول 24', 'market clock',
@@ -41,7 +41,7 @@ export const metadata = buildCanonicalMetadata({
 });
 
 export default function MarketClockPage() {
-  const webApplicationSchema = buildEconomyWebApplicationSchema({
+  const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/market-clock',
     name: 'ساعة التداول العالمية',
@@ -72,7 +72,7 @@ export default function MarketClockPage() {
     <div className="bg-base" dir="rtl">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }}
       />
       <script
         type="application/ld+json"

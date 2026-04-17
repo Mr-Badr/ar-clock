@@ -10,6 +10,34 @@ import {
 const SITE_URL = getSiteUrl();
 const ORG_ID = `${SITE_URL}#organization`;
 const WEBSITE_ID = `${SITE_URL}#website`;
+const WEBSITE_PARTS = [
+  '/time-now',
+  '/mwaqit-al-salat',
+  '/time-difference',
+  '/calculators',
+  '/calculators/age',
+  '/calculators/age/calculator',
+  '/calculators/end-of-service-benefits',
+  '/calculators/monthly-installment',
+  '/calculators/vat',
+  '/calculators/percentage',
+  '/calculators/building',
+  '/date',
+  '/holidays',
+  '/economie',
+  '/economie/us-market-open',
+  '/economie/gold-market-hours',
+  '/economie/forex-sessions',
+  '/economie/stock-markets',
+  '/economie/market-clock',
+  '/economie/best-trading-time',
+  '/about',
+  '/privacy',
+  '/disclaimer',
+  '/contact',
+  '/terms',
+  '/editorial-policy',
+];
 
 export default function SiteWideSchemas() {
   const organizationSchema = {
@@ -57,21 +85,7 @@ export default function SiteWideSchemas() {
       '@type': 'Thing',
       name: topic,
     })),
-    hasPart: [
-      '/time-now',
-      '/mwaqit-al-salat',
-      '/time-difference',
-      '/calculators',
-      '/date',
-      '/holidays',
-      '/economie',
-      '/about',
-      '/privacy',
-      '/disclaimer',
-      '/contact',
-      '/terms',
-      '/editorial-policy',
-    ].map((path) => ({
+    hasPart: WEBSITE_PARTS.map((path) => ({
       '@type': 'WebPage',
       url: `${SITE_URL}${path}`,
     })),

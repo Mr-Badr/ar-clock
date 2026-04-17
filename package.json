@@ -12,6 +12,8 @@
     "lint": "eslint . --ext .js,.jsx",
     "typecheck": "tsc --noEmit",
     "test:unit": "tsx --test tests/*.test.ts",
+    "seo:audit": "node --import tsx scripts/seo-audit.ts",
+    "seo:audit:live": "node --import tsx scripts/seo-audit.ts --base=https://miqatona.com",
     "events:migrate-packages": "tsx --env-file=.env.local scripts/migrate-events-to-packages.ts",
     "events:migrate-data": "tsx --env-file=.env.local scripts/migrate-events-to-data-folders.ts",
     "events:build": "tsx scripts/generate-events-index.ts",

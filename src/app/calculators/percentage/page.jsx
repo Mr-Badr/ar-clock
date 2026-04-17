@@ -16,6 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
+import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
@@ -96,17 +97,13 @@ export default function PercentagePage() {
       { '@type': 'ListItem', position: 3, name: PAGE.title, item: `${SITE_URL}${PAGE.href}` },
     ],
   };
-  const softwareSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
+  const softwareSchema = buildFreeToolPageSchema({
+    siteUrl: SITE_URL,
+    path: PAGE.href,
     name: PAGE.title,
-    applicationCategory: 'EducationalApplication',
-    operatingSystem: 'Web',
-    inLanguage: 'ar',
-    offers: { '@type': 'Offer', price: '0' },
-    url: `${SITE_URL}${PAGE.href}`,
     description: PAGE.description,
-  };
+    about: PAGE.keywords.slice(0, 8),
+  });
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -138,7 +135,7 @@ export default function PercentagePage() {
 
       <CalculatorHero
         badge="4 حاسبات في صفحة واحدة"
-        title="حاسبة النسبة المئوية الشاملة"
+        title={PAGE.heroTitle}
         description="أداة عربية شاملة لحل مسائل النسبة اليومية: كم يساوي X% من مبلغ، كم نسبة X من Y، ما المبلغ بعد زيادة أو خفض، وما نسبة التغيير من قيمة إلى أخرى، مع أدوات إضافية مثل الخصومات المتتالية وتقسيم المبالغ."
         accent={PAGE.accent}
         highlights={[

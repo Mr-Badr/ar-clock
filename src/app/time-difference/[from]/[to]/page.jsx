@@ -69,9 +69,13 @@ export async function generateMetadata({ params }) {
   const canonicalHref = buildTimeDifferenceHref(canonicalFrom, canonicalTo);
   const [fromCountryPrimary] = getCountrySeoNames(fromCity.country_slug, fromCity.country_name_ar);
   const [toCountryPrimary] = getCountrySeoNames(toCity.country_slug, toCity.country_name_ar);
-  const title = `فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary} | ${fromCity.city_name_ar} و${toCity.city_name_ar} - ${SITE_BRAND}`;
-  const description =
-    `اعرف كم ساعة بين ${fromCountryPrimary} (${fromCity.city_name_ar}) و${toCountryPrimary} (${toCity.city_name_ar}) مع تحويل الوقت المباشر والساعة الآن والتوقيت الصيفي وأفضل وقت للاجتماعات.`;
+  const sameCountry = fromCountryPrimary === toCountryPrimary;
+  const title = sameCountry
+    ? `كم فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar}؟ | من يسبق الآن؟`
+    : `كم فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary}؟ | من يسبق الآن؟`;
+  const description = sameCountry
+    ? `اعرف فوراً من يسبق الآن بين ${fromCity.city_name_ar} و${toCity.city_name_ar} وكم ساعة الفرق بينهما، مع تحويل الوقت المباشر وأفضل وقت للاتصال أو الاجتماع.`
+    : `اعرف فوراً من يسبق الآن بين ${fromCountryPrimary} و${toCountryPrimary} وكم ساعة الفرق بين ${fromCity.city_name_ar} و${toCity.city_name_ar}، مع تحويل الوقت المباشر وأفضل وقت للاتصال أو الاجتماع.`;
   const keywordsArray = [
     ...buildTimeDifferenceKeywords({
       fromCityAr: fromCity.city_name_ar,
@@ -112,6 +116,7 @@ async function ComparisonPageContent({ paramsPromise }) {
   }
   const [fromCountryPrimary] = getCountrySeoNames(fromCity.country_slug, fromCity.country_name_ar);
   const [toCountryPrimary] = getCountrySeoNames(toCity.country_slug, toCity.country_name_ar);
+  const sameCountry = fromCountryPrimary === toCountryPrimary;
   const comparisonQuery = `فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary}`;
   const countryContext = `${fromCountryPrimary} (${fromCity.city_name_ar}) و${toCountryPrimary} (${toCity.city_name_ar})`;
 
@@ -278,26 +283,6 @@ async function ComparisonPageContent({ paramsPromise }) {
     ],
   };
 
-  const toolSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: `حاسبة فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
-    applicationCategory: 'UtilitiesApplication',
-    operatingSystem: 'Web',
-    inLanguage: 'ar',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-    },
-    description: directAnswer,
-    featureList: [
-      'حساب دقيق لفرق التوقيت',
-      'مراعاة التوقيت الصيفي تلقائياً',
-      'تحويل فوري للتوقيت',
-      'حساب ساعات العمل المشتركة للشركات'
-    ],
-  };
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -360,7 +345,6 @@ async function ComparisonPageContent({ paramsPromise }) {
     <div className="min-h-screen bg-base text-primary">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       {/* <AdLayoutWrapper> */}
       <main className="content-col pt-24 pb-20">
@@ -382,10 +366,19 @@ async function ComparisonPageContent({ paramsPromise }) {
             </span>
           </div>
           <h1 className="text-3xl font-black leading-tight mb-2">
-            فرق التوقيت بين{' '}
-            <span className="text-accent">{fromCountryPrimary}</span>
-            {' '}و{' '}
-            <span className="text-accent">{toCountryPrimary}</span>
+            {sameCountry ? (
+              <>
+                كم فرق التوقيت بين <span className="text-accent">{fromCity.city_name_ar}</span>
+                {' '}و{' '}
+                <span className="text-accent">{toCity.city_name_ar}</span>؟
+              </>
+            ) : (
+              <>
+                كم فرق التوقيت بين <span className="text-accent">{fromCountryPrimary}</span>
+                {' '}و{' '}
+                <span className="text-accent">{toCountryPrimary}</span>؟
+              </>
+            )}
           </h1>
           <p className="text-muted text-sm leading-relaxed">
             {diffMinutes === 0

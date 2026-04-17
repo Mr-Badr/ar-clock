@@ -20,6 +20,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
+import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
@@ -99,17 +100,13 @@ export default function MonthlyInstallmentPage() {
       { '@type': 'ListItem', position: 3, name: PAGE.title, item: `${SITE_URL}${PAGE.href}` },
     ],
   };
-  const softwareSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
+  const softwareSchema = buildFreeToolPageSchema({
+    siteUrl: SITE_URL,
+    path: PAGE.href,
     name: PAGE.title,
-    applicationCategory: 'FinanceApplication',
-    operatingSystem: 'Web',
-    inLanguage: 'ar',
-    offers: { '@type': 'Offer', price: '0' },
-    url: `${SITE_URL}${PAGE.href}`,
     description: PAGE.description,
-  };
+    about: PAGE.keywords.slice(0, 8),
+  });
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -141,7 +138,7 @@ export default function MonthlyInstallmentPage() {
 
       <CalculatorHero
         badge="تمويل شخصي وعقاري"
-        title="حاسبة القسط الشهري 2026"
+        title={PAGE.heroTitle}
         description="احسب أقساط القروض الشخصية والعقارية وقروض السيارات بدقة أوضح، وقارن بين الفائدة الثابتة والمتناقصة، وشاهد جدول السداد وأثر السداد المبكر قبل اتخاذ القرار."
         accent={PAGE.accent}
         highlights={[

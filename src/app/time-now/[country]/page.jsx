@@ -83,8 +83,8 @@ export async function generateMetadata({ params }) {
   const offset = getUtcOffsetStr(timezone);
 
   return {
-    title: `الوقت الان في ${countryAr} — الساعة والتاريخ في ${cityAr}`,
-    description: `اعرف الوقت الان في ${countryAr} بدقة حتى الثانية. الساعة الحالية في ${cityAr} مع التاريخ اليوم الميلادي والهجري، المنطقة الزمنية ${offset}.`,
+    title: `كم الساعة الآن في ${countryAr}؟ | الوقت في ${cityAr} وبقية المدن`,
+    description: `تحقق فوراً من الساعة الآن في ${countryAr} مع الوقت الحالي في ${cityAr}، تاريخ اليوم، فرق UTC ${offset}، وروابط المدن الأكثر بحثاً داخل الدولة.`,
     keywords: buildTimeNowKeywords({
       countryAr,
       countryEn: country.name_en,
@@ -102,8 +102,8 @@ export async function generateMetadata({ params }) {
       locale: 'ar_SA',
       url: `${BASE}/time-now/${countrySlug}`,
       siteName: SITE_BRAND,
-      title: `الوقت الان في ${countryAr} — ${cityAr} | ${SITE_BRAND}`,
-      description: `الساعة الحالية في ${countryAr} مع التاريخ الميلادي والهجري. ${offset}.`,
+      title: `كم الساعة الآن في ${countryAr}؟ | ${cityAr} والتاريخ اليوم`,
+      description: `اعرف الوقت الحالي في ${countryAr} مع توقيت ${cityAr} المباشر، والتاريخ اليوم، والمنطقة الزمنية ${offset}.`,
       images: [{
         url: `${BASE}/time-now/${countrySlug}/opengraph-image`,
         width: 1200,
@@ -113,7 +113,7 @@ export async function generateMetadata({ params }) {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `الوقت الان في ${countryAr}`,
+      title: `كم الساعة الآن في ${countryAr}؟`,
     },
     robots: {
       index: true,
@@ -269,8 +269,11 @@ export default async function CountryTimePage({ params }) {
         {/* ── HERO SECTION ── */}
         <section aria-labelledby="country-time-heading" className="container mx-auto px-4 py-8">
           <h1 id="country-time-heading" className="text-3xl md:text-5xl font-black mb-6 leading-tight text-center">
-            الوقت الان في <span className="text-accent">{countryAr}</span>
+            كم الساعة الآن في <span className="text-accent">{countryAr}</span>؟
           </h1>
+          <p className="mx-auto mb-6 max-w-2xl text-center text-sm leading-7 text-[var(--text-muted)] sm:text-base">
+            اعرف الوقت الحالي في {countryAr} مع توقيت {cityAr} والتاريخ اليوم والمنطقة الزمنية {utcOffset || timezone}، ثم انتقل إلى صفحات المدن داخل الدولة.
+          </p>
 
           {/* City Search */}
           <div className="w-full max-w-xl mx-auto shadow-sm rounded-xl mb-4">

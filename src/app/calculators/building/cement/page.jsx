@@ -17,8 +17,8 @@ import { getBuildingKeywords } from '@/lib/calculators/building/seo-keywords';
 const SITE_URL = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
-  title: 'حاسبة الأسمنت الدقيقة',
-  description: 'احسب عدد أكياس الأسمنت، الرمل، الحصى، وكمية الماء لأي حجم خرسانة بدقة هندسية.',
+  title: 'كم كيس أسمنت أحتاج؟ | حاسبة الأسمنت والخرسانة',
+  description: 'احسب عدد أكياس الأسمنت والرمل والحصى وكمية الماء لأي حجم خرسانة، مع تقدير سريع لخلطات الصبة الشائعة.',
   keywords: getBuildingKeywords('cement'),
   url: `${SITE_URL}/calculators/building/cement`,
 });
@@ -58,7 +58,7 @@ export default function CementPage() {
     <main className="bg-base text-primary">
       <CalculatorHero
         badge="هندسة / مواد"
-        title="حاسبة الأسمنت والخرسانة"
+        title="كم كيس أسمنت أحتاج؟ حاسبة الأسمنت والخرسانة"
         description="أدخل حجم الخرسانة المطلوبة وسنحسب لك كمية الأسمنت (بالكيس أو الكجم)، الرمل، الحصى، والمياه بمعادلات الكود الهندسي."
         accent="#8B5CF6" // Violet for specific materials
         highlights={[

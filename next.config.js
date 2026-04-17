@@ -12,6 +12,9 @@ const nextConfig = {
   // ── Server ───────────────────────────────────────────────────────────────────
   // Keep Drizzle/Postgres out of the Edge runtime bundle (they are Node-only)
   serverExternalPackages: ['@neondatabase/serverless', 'postgres', 'drizzle-orm'],
+  // Opt-in standalone output for Docker/Hetzner builds. The default Vercel path
+  // stays unchanged unless NEXT_OUTPUT_MODE=standalone is set explicitly.
+  output: process.env.NEXT_OUTPUT_MODE === 'standalone' ? 'standalone' : undefined,
 
   // ── HTTP ─────────────────────────────────────────────────────────────────────
   compress: true,
@@ -95,6 +98,14 @@ const nextConfig = {
       },
       {
         source: '/time-difference/:path*',
+        headers: SHARED_HTML_CACHE_HEADERS,
+      },
+      {
+        source: '/calculators/:path*',
+        headers: SHARED_HTML_CACHE_HEADERS,
+      },
+      {
+        source: '/economie/:path*',
         headers: SHARED_HTML_CACHE_HEADERS,
       },
       {

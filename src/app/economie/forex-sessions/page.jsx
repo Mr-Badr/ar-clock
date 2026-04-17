@@ -8,7 +8,7 @@ import {
   buildEconomyDatasetSchema,
   buildEconomyFaqSchema,
   buildEconomySpeakableSchema,
-  buildEconomyWebApplicationSchema,
+  buildEconomyToolSchema,
   getInitialEconomyPageState,
 } from '@/lib/economy/page-helpers';
 import { getSiteUrl } from '@/lib/site-config';
@@ -20,9 +20,9 @@ import ForexSessionsLive from '@/components/economy/ForexSessionsLive';
 const SITE_URL = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
-  title: 'جلسات الفوركس والذهب الآن | ساعات السوق بتوقيتك',
+  title: 'جلسات الفوركس الآن | متى تبدأ لندن ونيويورك بتوقيتك؟',
   description:
-    'تابع جلسات الفوركس الأربع والذهب بتوقيتك المحلي الآن. اعرف هل السوق مفتوح، ومتى تبدأ لندن ونيويورك، وأين تقع نافذة السيولة العالية.',
+    'تابع جلسات الفوركس الأربع الآن بتوقيتك المحلي. اعرف هل السوق مفتوح، ومتى تبدأ لندن ونيويورك، وأين تقع نافذة السيولة العالية للتداول.',
   keywords: [
     // Short
     'جلسات الفوركس', 'سوق العملات', 'الفوركس الان', 'تداخل الجلسات', 'سيولة فوركس',
@@ -44,7 +44,7 @@ export const metadata = buildCanonicalMetadata({
 });
 
 export default function ForexSessionsPage() {
-  const webApplicationSchema = buildEconomyWebApplicationSchema({
+  const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/forex-sessions',
     name: 'جلسات الفوركس والذهب الآن',
@@ -75,7 +75,7 @@ export default function ForexSessionsPage() {
     <div className="bg-base" dir="rtl">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }}
       />
       <script
         type="application/ld+json"

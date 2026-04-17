@@ -48,12 +48,11 @@ export async function generateMetadata({ params }) {
   const capital = await getCapitalCity(country.country_code);
   const capitalAr = capital ? (capital.name_ar || capital.name_en) : null;
 
-  // Title format: "مواقيت الصلاة في {البلد}، {العاصمة}"
   const titleSuffix = capitalAr ? `، ${capitalAr}` : '';
-  const title = `مواقيت الصلاة في ${countryAr}${titleSuffix} اليوم — الفجر والمغرب والعصر`;
+  const title = `مواقيت الصلاة اليوم في ${countryAr}${titleSuffix} | الفجر والمغرب بدقة`;
   const description = capitalAr
-    ? `أوقات الصلاة الدقيقة في ${countryAr} — الفجر، الظهر، العصر، المغرب والعشاء في ${capitalAr} وكافة المدن. طريقة الحساب: ${methodInfo.label}. الشافعي والحنفي.`
-    : `أوقات الصلاة الدقيقة لكافة مدن ${countryAr} اليوم. طريقة الحساب: ${methodInfo.label}. الشافعي والحنفي.`;
+    ? `اعرف مواقيت الصلاة اليوم في ${countryAr} مع أوقات الفجر والشروق والظهر والعصر والمغرب والعشاء في ${capitalAr} وبقية المدن، وطريقة الحساب ${methodInfo.label}.`
+    : `اعرف مواقيت الصلاة اليوم في ${countryAr} مع الفجر والشروق والظهر والعصر والمغرب والعشاء، وطريقة الحساب ${methodInfo.label} وروابط المدن الرئيسية.`;
 
   return {
     title,
@@ -202,10 +201,10 @@ export default async function CountryPrayerPage({ params }) {
         {/* Header */}
         <header className="mb-10 text-center">
           <h1 className="text-3xl md:text-5xl font-black mb-3">
-            مواقيت الصلاة في <span className="text-accent">{countryAr}</span>
+            مواقيت الصلاة اليوم في <span className="text-accent">{countryAr}</span>
           </h1>
           <p className="text-muted text-base mb-3" style={{ margin: '10px auto' }}>
-            اختر المدينة لعرض مواقيت الصلاة الدقيقة اليوم
+            اختر المدينة لعرض الفجر والظهر والعصر والمغرب والعشاء بدقة، مع طريقة الحساب المعتمدة داخل الدولة.
           </p>
           {/* Method badge */}
           <span className="inline-flex items-center gap-1.5 text-xs bg-surface-2 border border-subtle px-3 py-1.5 rounded-full text-muted">

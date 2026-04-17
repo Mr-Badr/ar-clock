@@ -30,8 +30,8 @@ export async function generateMetadata({ params }) {
   
   if (!country) return notFound();
 
-  const title = `حاسبة تكلفة البناء ${country.nameShort} | أداة تسعير سريعة`;
-  const description = `احسب تكلفة البناء التقريبية في ${country.name} (عظم أو تشطيب) بناءً على المساحة وعدد الأدوار. الأسعار تشمل المواد والعمالة حسب ${country.regions?.[Object.keys(country.regions)[0]]?.name || 'السوق المحلي'}.`;
+  const title = `كم تكلفة البناء في ${country.nameShort}؟ | حاسبة سعر المتر والبيت`;
+  const description = `احسب تكلفة البناء التقريبية في ${country.name} (عظم أو تشطيب) بناءً على المساحة وعدد الأدوار، مع أسعار تشمل المواد والعمالة حسب ${country.regions?.[Object.keys(country.regions)[0]]?.name || 'السوق المحلي'}.`;
 
   return buildCanonicalMetadata({
     title,
@@ -47,7 +47,7 @@ export default async function CountryBuildingPage({ params }) {
   
   if (!country) return notFound();
 
-  const title = `حاسبة تكلفة المنزل في ${country.nameShort}`;
+  const title = `كم تكلفة البناء في ${country.nameShort}؟`;
 
   const faqItems = [
     {
@@ -84,7 +84,7 @@ export default async function CountryBuildingPage({ params }) {
       <CalculatorHero
         badge={`بناء / ${country.symbol}`}
         title={title}
-        description={`حدّد مساحة البناء وعدد الأدوار، وسنقوم بتقدير التكلفة الإجمالية في مدنك الرئيسية باستخدام متوسط الأسعار الحالية لعام 2025 في ${country.name}.`}
+        description={`حدّد مساحة البناء وعدد الأدوار، وسنقدّر لك تكلفة البناء الإجمالية وسعر المتر في ${country.name} باستخدام متوسط الأسعار الحالية في المدن الرئيسية.`}
         accent="#10B981" // emerald green for building
         highlights={[
           `أسعار تناسب السوق في ${country.nameShort}.`,

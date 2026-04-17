@@ -20,13 +20,31 @@ import { COUNTRY_LIST } from '@/lib/calculators/building/country-data';
 const SITE_URL = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
-  title: 'حاسبة تكلفة البناء الإجمالية',
-  description: 'أدق حاسبة لتكلفة البناء في العالم العربي. احسب تكلفة البيت، العظم، والتشطيب، مع تقديرات فورية لكمية الحديد والأسمنت لـ 12 دولة عربية.',
+  title: 'كم تكلفة بناء بيت؟ | حاسبة تكلفة البناء والمواد',
+  description: 'احسب تكلفة بناء البيت والعظم والتشطيب بسرعة، مع تقديرات فورية لكمية الحديد والأسمنت والبلاط لـ 12 دولة عربية.',
   keywords: getBuildingKeywords('global'),
   url: `${SITE_URL}/calculators/building`,
 });
 
 export default function BuildingHubPage() {
+  const collectionSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'حاسبات البناء والتشييد',
+    url: `${SITE_URL}/calculators/building`,
+    inLanguage: 'ar',
+    description: 'مجموعة حاسبات عربية لتكلفة البناء، الأسمنت، حديد التسليح، والبلاط.',
+  };
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'كم تكلفة بناء بيت؟', url: `${SITE_URL}/calculators/building` },
+      { '@type': 'ListItem', position: 2, name: 'كم كيس أسمنت أحتاج؟', url: `${SITE_URL}/calculators/building/cement` },
+      { '@type': 'ListItem', position: 3, name: 'كم وزن الحديد؟', url: `${SITE_URL}/calculators/building/rebar` },
+      { '@type': 'ListItem', position: 4, name: 'كم كرتون بلاط أحتاج؟', url: `${SITE_URL}/calculators/building/tiles` },
+    ],
+  };
   const faqItems = [
     {
       question: 'كيف تحسب هذه الأداة تكلفة البناء؟',
@@ -64,10 +82,12 @@ export default function BuildingHubPage() {
 
   return (
     <main className="bg-base text-primary">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
       <CalculatorHero
         badge="هندسة / بناء"
-        title="حاسبات البناء والتشييد"
-        description="خطط لمشروع عمرك بذكاء. حاسبة تسعير دقيقة لمنزلك، و أدوات هندسية لحساب كميات الأسمنت والحديد بأيسر الطرق."
+        title="كم تكلفة بناء بيتك؟ احسبها قبل أن تبدأ"
+        description="خطط لمشروعك بذكاء عبر حاسبة عربية تقدّر تكلفة البناء والعظم والتشطيب، ثم انتقل إلى أدوات الأسمنت والحديد والبلاط لفهم المواد بشكل أدق."
         accent="#10B981"
         highlights={[
           'حاسبات للحديد والأسمنت والمواد الأساسية.',

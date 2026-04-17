@@ -4,11 +4,11 @@ import { buildAgeMetadata, buildBreadcrumbSchema, buildSoftwareSchema } from '..
 import { Suspense } from 'react';
 import SectionSkeleton from '@/components/shared/SectionSkeleton'
 
-const title = 'حاسبة الإنجازات الزمنية';
+const title = 'متى تكمل 10000 يوم أو مليار ثانية؟';
 const description = 'اكتشف متى تكمل 10,000 يوم أو مليار ثانية، وما المحطات التي تجاوزتها بالفعل منذ تاريخ ميلادك.';
 
 export const metadata = buildAgeMetadata({
-  title: 'متى تكمل 10,000 يوم أو مليار ثانية؟ | إنجازات العمر',
+  title: 'متى تكمل 10000 يوم أو مليار ثانية؟ | إنجازات العمر',
   description,
   keywords: [
     'متى يكون عمري مليار ثانية',

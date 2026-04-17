@@ -19,9 +19,9 @@ import { buildPrayerKeywords } from '@/lib/seo/section-search-intent';
 const BASE = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
-  title: 'مواقيت الصلاة اليوم في الدول والمدن - الفجر والظهر والعصر والمغرب والعشاء',
+  title: 'مواقيت الصلاة اليوم في مدينتك | الفجر والمغرب والعشاء بدقة',
   description:
-    'اعرف مواقيت الصلاة اليوم بدقة في الدول والمدن العربية والعالمية، مع الفجر والشروق والظهر والعصر والمغرب والعشاء، واختيار طريقة الحساب المناسبة لكل بلد وإمساكية شهرية قابلة للطباعة.',
+    'اعرف مواقيت الصلاة اليوم بدقة في مدينتك: الفجر والشروق والظهر والعصر والمغرب والعشاء، مع إمساكية شهرية وطريقة الحساب المناسبة لكل بلد وروابط المدن الأكثر بحثاً.',
   keywords: buildPrayerKeywords(),
   url: `${BASE}/mwaqit-al-salat`,
 });
@@ -367,7 +367,7 @@ export default async function PrayerLandingPage() {
             مواقيت الصلاة اليوم لكل مدينة — حسب المذاهب الأربعة
           </div>
           <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-4">
-            مواقيت الصلاة اليوم لكل مدينة — حسب المذاهب الأربعة
+            مواقيت الصلاة اليوم في مدينتك — حسب المذاهب الأربعة
           </h1>
 
           <p className="text-secondary text-base leading-[1.7] mx-auto max-w-[720px]">

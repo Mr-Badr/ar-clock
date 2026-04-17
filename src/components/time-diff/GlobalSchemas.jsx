@@ -4,9 +4,7 @@ const SITE_URL = getSiteUrl();
 
 /**
  * GlobalSchemas — Time-difference page
- * WebPage + BreadcrumbList + SoftwareApplication JSON-LD.
- * The SoftwareApplication schema signals this is a tool/calculator
- * which can unlock rich results in Google for tool-type pages.
+ * WebPage + BreadcrumbList JSON-LD.
  */
 export default function TimeDiffGlobalSchemas() {
   const webPageSchema = {
@@ -37,34 +35,10 @@ export default function TimeDiffGlobalSchemas() {
     ],
   }
 
-  const toolSchema = {
-    '@context':          'https://schema.org',
-    '@type':             'SoftwareApplication',
-    name:                'حاسبة فرق التوقيت',
-    applicationCategory: 'UtilitiesApplication',
-    operatingSystem:     'Web',
-    inLanguage:          'ar',
-    offers: {
-      '@type': 'Offer',
-      price:   '0',
-      priceCurrency: 'USD',
-    },
-    description:
-      'أداة مجانية لحساب فرق التوقيت بالساعة والدقيقة بين أي مدينتين أو دولتين مع احتساب التوقيت الصيفي تلقائياً',
-    featureList: [
-      'حساب فرق التوقيت بالساعة والدقيقة',
-      'مراعاة التوقيت الصيفي DST تلقائياً',
-      'تحويل الوقت بين المدن',
-      'جدول أفضل وقت للاجتماعات المشتركة',
-      'يدعم 3 ملايين مدينة',
-    ],
-  }
-
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }} />
     </>
   )
 }

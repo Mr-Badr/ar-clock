@@ -41,9 +41,9 @@ const TIME_NOW_FAQ_ITEMS = [
 ];
 
 export const metadata = buildCanonicalMetadata({
-  title: 'الوقت الآن في العالم والدول والمدن',
+  title: 'كم الساعة الآن في مدينتك؟ | الوقت الآن في المدن والدول',
   description:
-    'اعرف الساعة الآن والتاريخ والمنطقة الزمنية في الدول والمدن العربية والعالمية، مع صفحات داخلية لكل دولة ومدينة وروابط مرتبطة بفرق التوقيت والتاريخ.',
+    'اعرف كم الساعة الآن مباشرة في أي مدينة أو دولة، مع تاريخ اليوم والمنطقة الزمنية وروابط سريعة لصفحات الوقت المحلية وفرق التوقيت ومواقيت الصلاة.',
   keywords: buildTimeNowKeywords(),
   url: `${SITE_URL}/time-now`,
 });
@@ -156,10 +156,10 @@ export default async function TimeNowPage() {
             الوقت الان في العالم
           </div>
           <h1 style={{ fontSize: 'clamp(2rem, 6vw, 2rem)', fontWeight: '900', lineHeight: 1.1, margin: '0 auto 0.75rem', maxWidth: '800px' }}>
-            الساعة الان في <span className="text-accent">مدينتك</span> — كل ما يتعلق بالوقت في مكان واحد
+            كم الساعة الآن في <span className="text-accent">مدينتك</span>؟
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', margin: '0 auto', maxWidth: '520px', lineHeight: 1.6 }}>
-            اعرف توقيتك بدقة لحظة بلحظة، واستكشف كل ما تحتاجه لفهم الوقت حولك وفي العالم في تجربة بسيطة وسريعة.
+            تحقّق فوراً من الوقت الحالي في أي مدينة أو دولة، ثم انتقل إلى فرق التوقيت والصلاة والتاريخ من نفس التجربة السريعة.
           </p>
         </header>
 

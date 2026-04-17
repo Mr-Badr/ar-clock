@@ -56,6 +56,8 @@ import SectionSkeleton     from '@/components/shared/SectionSkeleton'
 import SectionPrayerTimes  from './SectionPrayerTimes'
 import SectionTimeDifference from './SectionTimeDifference'
 import SectionHolidays     from './SectionHolidays'
+import SectionCalculators  from './SectionCalculators'
+import SectionEconomy      from './SectionEconomy'
 import SectionWhyUs        from './SectionWhyUs'
 import SectionSEOArticle   from './SectionSEOArticle'
 import SectionCitiesGrid   from './SectionCitiesGrid'
@@ -86,6 +88,14 @@ export default function HomeSections() {
 
       <SectionDivider />
 
+      <SectionCalculators />
+
+      <SectionDivider />
+
+      <SectionEconomy />
+
+      <SectionDivider />
+
       {/* 6 benefit cards + SEO intro paragraph */}
       <SectionWhyUs />
 
@@ -112,6 +122,8 @@ export { default as SectionStats }         from './SectionStats'
 export { default as SectionPrayerTimes }   from './SectionPrayerTimes'
 export { default as SectionTimeDifference } from './SectionTimeDifference'
 export { default as SectionHolidays }      from './SectionHolidays'
+export { default as SectionCalculators }   from './SectionCalculators'
+export { default as SectionEconomy }       from './SectionEconomy'
 export { default as SectionWhyUs }         from './SectionWhyUs'
 export { default as SectionSEOArticle }    from './SectionSEOArticle'
 export { default as SectionCitiesGrid }    from './SectionCitiesGrid'

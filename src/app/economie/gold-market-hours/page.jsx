@@ -8,7 +8,7 @@ import {
   buildEconomyDatasetSchema,
   buildEconomyFaqSchema,
   buildEconomySpeakableSchema,
-  buildEconomyWebApplicationSchema,
+  buildEconomyToolSchema,
   getInitialEconomyPageState,
 } from '@/lib/economy/page-helpers';
 import { getSiteUrl } from '@/lib/site-config';
@@ -46,7 +46,7 @@ export const metadata = buildCanonicalMetadata({
 });
 
 export default function GoldMarketHoursPage() {
-  const webApplicationSchema = buildEconomyWebApplicationSchema({
+  const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/gold-market-hours',
     name: 'هل الذهب مفتوح الآن؟',
@@ -77,7 +77,7 @@ export default function GoldMarketHoursPage() {
     <div className="bg-base" dir="rtl">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }}
       />
       <script
         type="application/ld+json"
