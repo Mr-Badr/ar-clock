@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "kuwait-city",
+    "city_name_ar": "مدينة الكويت",
+    "city_name_en": "Kuwait City",
+    "country_slug": "kuwait",
+    "country_code": "KW",
+    "country_name_ar": "الكويت",
+    "country_name_en": "Kuwait",
+    "timezone": "Asia/Kuwait",
+    "lat": 29.367,
+    "lon": 47.97429,
+    "is_capital": true,
+    "priority": 60064,
+    "population": 60064
+  },
+  {
+    "city_slug": "al-ahmadi",
+    "city_name_ar": "اَلأَحْمَدِي",
+    "city_name_en": "Al Ahmadi",
+    "country_slug": "kuwait",
+    "country_code": "KW",
+    "country_name_ar": "الكويت",
+    "country_name_en": "Kuwait",
+    "timezone": "Asia/Kuwait",
+    "lat": 29.07694,
+    "lon": 48.08389,
+    "is_capital": false,
+    "priority": 637411,
+    "population": 637411
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "panama",
+    "city_name_ar": "مدينة بنما",
+    "city_name_en": "Panama",
+    "country_slug": "panama",
+    "country_code": "PA",
+    "country_name_ar": "بنما",
+    "country_name_en": "Panama",
+    "timezone": "America/Panama",
+    "lat": 8.9936,
+    "lon": -79.51973,
+    "is_capital": true,
+    "priority": 408168,
+    "population": 408168
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "ljubljana",
+    "city_name_ar": "ليوبليانا",
+    "city_name_en": "Ljubljana",
+    "country_slug": "slovenia",
+    "country_code": "SI",
+    "country_name_ar": "سلوفينيا",
+    "country_name_en": "Slovenia",
+    "timezone": "Europe/Ljubljana",
+    "lat": 46.05108,
+    "lon": 14.50513,
+    "is_capital": true,
+    "priority": 272220,
+    "population": 272220
+  }
+]

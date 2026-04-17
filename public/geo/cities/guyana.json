@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "georgetown",
+    "city_name_ar": "جورج توغن",
+    "city_name_en": "Georgetown",
+    "country_slug": "guyana",
+    "country_code": "GY",
+    "country_name_ar": "غيانا",
+    "country_name_en": "Guyana",
+    "timezone": "America/Guyana",
+    "lat": 6.80448,
+    "lon": -58.15527,
+    "is_capital": true,
+    "priority": 235017,
+    "population": 235017
+  }
+]

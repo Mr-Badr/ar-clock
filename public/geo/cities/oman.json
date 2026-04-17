@@ -1,0 +1,47 @@
+[
+  {
+    "city_slug": "muscat",
+    "city_name_ar": "مسقط",
+    "city_name_en": "Muscat",
+    "country_slug": "oman",
+    "country_code": "OM",
+    "country_name_ar": "سلطنة عمان",
+    "country_name_en": "Oman",
+    "timezone": "Asia/Muscat",
+    "lat": 23.58413,
+    "lon": 58.40778,
+    "is_capital": true,
+    "priority": 797000,
+    "population": 797000
+  },
+  {
+    "city_slug": "seeb",
+    "city_name_ar": "السيب الجديدة",
+    "city_name_en": "Seeb",
+    "country_slug": "oman",
+    "country_code": "OM",
+    "country_name_ar": "سلطنة عمان",
+    "country_name_en": "Oman",
+    "timezone": "Asia/Muscat",
+    "lat": 23.67027,
+    "lon": 58.18911,
+    "is_capital": false,
+    "priority": 470878,
+    "population": 470878
+  },
+  {
+    "city_slug": "bawshar",
+    "city_name_ar": "بوشر",
+    "city_name_en": "Bawshar",
+    "country_slug": "oman",
+    "country_code": "OM",
+    "country_name_ar": "سلطنة عمان",
+    "country_name_en": "Oman",
+    "timezone": "Asia/Muscat",
+    "lat": 23.57769,
+    "lon": 58.39982,
+    "is_capital": false,
+    "priority": 383257,
+    "population": 383257
+  }
+]

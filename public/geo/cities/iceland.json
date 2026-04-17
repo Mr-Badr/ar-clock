@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "reykjavik",
+    "city_name_ar": "ريكيافيك",
+    "city_name_en": "Reykjavik",
+    "country_slug": "iceland",
+    "country_code": "IS",
+    "country_name_ar": "آيسلندا",
+    "country_name_en": "Iceland",
+    "timezone": "Atlantic/Reykjavik",
+    "lat": 64.13548,
+    "lon": -21.89541,
+    "is_capital": true,
+    "priority": 118918,
+    "population": 118918
+  }
+]

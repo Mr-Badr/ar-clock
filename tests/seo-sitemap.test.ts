@@ -13,6 +13,7 @@ import { GET as sitemapIndexRoute } from '@/app/sitemap-index.xml/route';
 import robots from '@/app/robots';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
+import { COUNTRY_LIST } from '@/lib/calculators/building/country-data';
 
 test('holiday sitemap contains published canonical events and their routable aliases', async () => {
   const sitemap = await holidaysSitemap();
@@ -68,7 +69,21 @@ test('holiday sitemap urls use site base url and valid lastModified values', asy
 test('root sitemap includes key static pages', async () => {
   const sitemap = await rootSitemap();
   const base = getSiteUrl();
-  const expectedPaths: string[] = ['/holidays', '/calculators', '/calculators/age', '/map', '/about', '/disclaimer', '/privacy', '/contact'];
+  const expectedPaths: string[] = [
+    '/',
+    '/time-now',
+    '/mwaqit-al-salat',
+    '/holidays',
+    '/time-difference',
+    '/calculators',
+    '/map',
+    '/about',
+    '/editorial-policy',
+    '/terms',
+    '/disclaimer',
+    '/privacy',
+    '/contact',
+  ];
   for (const expectedPath of expectedPaths) {
     assert.equal(
       sitemap.some((row) => row.url === `${base}${expectedPath}`),
@@ -76,12 +91,18 @@ test('root sitemap includes key static pages', async () => {
       `${expectedPath} should appear in the root sitemap`,
     );
   }
+
+  assert.equal(
+    sitemap.some((row) => row.url === `${base}/calculators/age`),
+    false,
+    '/calculators/age should be covered by the calculators sitemap, not duplicated in the root sitemap',
+  );
 });
 
 test('calculators sitemap includes hub and detail routes', async () => {
   const sitemap = await calculatorsSitemap();
   const base = getSiteUrl();
-  const expectedPaths: string[] = [
+  const staticPaths: string[] = [
     '/calculators',
     '/calculators/age',
     '/calculators/age/calculator',
@@ -96,7 +117,13 @@ test('calculators sitemap includes hub and detail routes', async () => {
     '/calculators/monthly-installment',
     '/calculators/vat',
     '/calculators/percentage',
+    '/calculators/building',
+    '/calculators/building/cement',
+    '/calculators/building/rebar',
+    '/calculators/building/tiles',
   ];
+  const countryPaths = COUNTRY_LIST.map((country) => `/calculators/building/${country.slug}`);
+  const expectedPaths = [...staticPaths, ...countryPaths];
 
   assert.equal(sitemap.length, expectedPaths.length);
 
@@ -140,6 +167,9 @@ test('sitemap index includes economy sitemap entry', async () => {
 
   assert.match(xml, new RegExp(`${base}/calculators/sitemap\\.xml`));
   assert.match(xml, new RegExp(`${base}/economie/sitemap\\.xml`));
+  assert.match(xml, new RegExp(`${base}/date/sitemaps/static`));
+  assert.match(xml, new RegExp(`${base}/date/sitemaps/countries`));
+  assert.match(xml, new RegExp(`${base}/date/sitemaps/calendars`));
 });
 
 test('robots points crawlers to sitemap index', () => {

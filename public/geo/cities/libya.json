@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "tripoli",
+    "city_name_ar": "طَرَابُلُس",
+    "city_name_en": "Tripoli",
+    "country_slug": "libya",
+    "country_code": "LY",
+    "country_name_ar": "ليبيا",
+    "country_name_en": "Libya",
+    "timezone": "Africa/Tripoli",
+    "lat": 32.88743,
+    "lon": 13.18733,
+    "is_capital": true,
+    "priority": 1302947,
+    "population": 1302947
+  },
+  {
+    "city_slug": "benghazi",
+    "city_name_ar": "بنغازي",
+    "city_name_en": "Benghazi",
+    "country_slug": "libya",
+    "country_code": "LY",
+    "country_name_ar": "ليبيا",
+    "country_name_en": "Libya",
+    "timezone": "Africa/Tripoli",
+    "lat": 32.11486,
+    "lon": 20.06859,
+    "is_capital": false,
+    "priority": 757490,
+    "population": 757490
+  }
+]

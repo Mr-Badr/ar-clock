@@ -1,0 +1,47 @@
+[
+  {
+    "city_slug": "amman",
+    "city_name_ar": "عمّان",
+    "city_name_en": "Amman",
+    "country_slug": "jordan",
+    "country_code": "JO",
+    "country_name_ar": "الأردن",
+    "country_name_en": "Jordan",
+    "timezone": "Asia/Amman",
+    "lat": 31.95522,
+    "lon": 35.94503,
+    "is_capital": true,
+    "priority": 1275857,
+    "population": 1275857
+  },
+  {
+    "city_slug": "zarqa",
+    "city_name_ar": "زرقاء",
+    "city_name_en": "Zarqa",
+    "country_slug": "jordan",
+    "country_code": "JO",
+    "country_name_ar": "الأردن",
+    "country_name_en": "Jordan",
+    "timezone": "Asia/Amman",
+    "lat": 32.07275,
+    "lon": 36.08796,
+    "is_capital": false,
+    "priority": 792665,
+    "population": 792665
+  },
+  {
+    "city_slug": "irbid",
+    "city_name_ar": "إربد",
+    "city_name_en": "Irbid",
+    "country_slug": "jordan",
+    "country_code": "JO",
+    "country_name_ar": "الأردن",
+    "country_name_en": "Jordan",
+    "timezone": "Asia/Amman",
+    "lat": 32.55556,
+    "lon": 35.85,
+    "is_capital": false,
+    "priority": 569068,
+    "population": 569068
+  }
+]

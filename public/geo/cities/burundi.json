@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "gitega",
+    "city_name_ar": "غيتيغا",
+    "city_name_en": "Gitega",
+    "country_slug": "burundi",
+    "country_code": "BI",
+    "country_name_ar": "بوروندي",
+    "country_name_en": "Burundi",
+    "timezone": "Africa/Bujumbura",
+    "lat": -3.42708,
+    "lon": 29.92463,
+    "is_capital": true,
+    "priority": 64904,
+    "population": 64904
+  },
+  {
+    "city_slug": "bujumbura",
+    "city_name_ar": "بوجومبورا",
+    "city_name_en": "Bujumbura",
+    "country_slug": "burundi",
+    "country_code": "BI",
+    "country_name_ar": "بوروندي",
+    "country_name_en": "Burundi",
+    "timezone": "Africa/Bujumbura",
+    "lat": -3.38193,
+    "lon": 29.36142,
+    "is_capital": false,
+    "priority": 769317,
+    "population": 769317
+  }
+]

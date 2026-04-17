@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "porto-novo",
+    "city_name_ar": "بورتو نوفو",
+    "city_name_en": "Porto-Novo",
+    "country_slug": "benin",
+    "country_code": "BJ",
+    "country_name_ar": "بنين",
+    "country_name_en": "Benin",
+    "timezone": "Africa/Porto-Novo",
+    "lat": 6.49646,
+    "lon": 2.60359,
+    "is_capital": true,
+    "priority": 264320,
+    "population": 264320
+  },
+  {
+    "city_slug": "cotonou",
+    "city_name_ar": "كوتونو",
+    "city_name_en": "Cotonou",
+    "country_slug": "benin",
+    "country_code": "BJ",
+    "country_name_ar": "بنين",
+    "country_name_en": "Benin",
+    "timezone": "Africa/Porto-Novo",
+    "lat": 6.36536,
+    "lon": 2.41833,
+    "is_capital": false,
+    "priority": 679012,
+    "population": 679012
+  }
+]

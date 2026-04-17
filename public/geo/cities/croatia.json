@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "zagreb",
+    "city_name_ar": "زغرب",
+    "city_name_en": "Zagreb",
+    "country_slug": "croatia",
+    "country_code": "HR",
+    "country_name_ar": "كرواتيا",
+    "country_name_en": "Croatia",
+    "timezone": "Europe/Zagreb",
+    "lat": 45.81444,
+    "lon": 15.97798,
+    "is_capital": true,
+    "priority": 663592,
+    "population": 663592
+  }
+]

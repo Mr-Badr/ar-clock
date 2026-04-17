@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "santiago",
+    "city_name_ar": "سانتياغو",
+    "city_name_en": "Santiago",
+    "country_slug": "chile",
+    "country_code": "CL",
+    "country_name_ar": "تشيلي",
+    "country_name_en": "Chile",
+    "timezone": "America/Santiago",
+    "lat": -33.45694,
+    "lon": -70.64827,
+    "is_capital": true,
+    "priority": 4837295,
+    "population": 4837295
+  }
+]

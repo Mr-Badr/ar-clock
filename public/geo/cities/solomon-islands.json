@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "honiara",
+    "city_name_ar": "هونيارا",
+    "city_name_en": "Honiara",
+    "country_slug": "solomon-islands",
+    "country_code": "SB",
+    "country_name_ar": "جزر سليمان",
+    "country_name_en": "Solomon Islands",
+    "timezone": "Pacific/Guadalcanal",
+    "lat": -9.43333,
+    "lon": 159.95,
+    "is_capital": true,
+    "priority": 56298,
+    "population": 56298
+  }
+]

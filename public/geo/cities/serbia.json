@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "belgrade",
+    "city_name_ar": "بلغراد",
+    "city_name_en": "Belgrade",
+    "country_slug": "serbia",
+    "country_code": "RS",
+    "country_name_ar": "صربيا",
+    "country_name_en": "Serbia",
+    "timezone": "Europe/Belgrade",
+    "lat": 44.80401,
+    "lon": 20.46513,
+    "is_capital": true,
+    "priority": 1273651,
+    "population": 1273651
+  }
+]

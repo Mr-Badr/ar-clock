@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "bissau",
+    "city_name_ar": "بيساو",
+    "city_name_en": "Bissau",
+    "country_slug": "guinea-bissau",
+    "country_code": "GW",
+    "country_name_ar": "غينيا بيساو",
+    "country_name_en": "Guinea-Bissau",
+    "timezone": "Africa/Bissau",
+    "lat": 11.86357,
+    "lon": -15.59767,
+    "is_capital": true,
+    "priority": 439704,
+    "population": 439704
+  }
+]

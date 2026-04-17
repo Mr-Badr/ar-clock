@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "helsinki",
+    "city_name_ar": "هلسنكي",
+    "city_name_en": "Helsinki",
+    "country_slug": "finland",
+    "country_code": "FI",
+    "country_name_ar": "فنلندا",
+    "country_name_en": "Finland",
+    "timezone": "Europe/Helsinki",
+    "lat": 60.16952,
+    "lon": 24.93545,
+    "is_capital": true,
+    "priority": 658864,
+    "population": 658864
+  }
+]

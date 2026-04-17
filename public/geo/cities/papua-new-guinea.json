@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "port-moresby",
+    "city_name_ar": "بورت مورسبي",
+    "city_name_en": "Port Moresby",
+    "country_slug": "papua-new-guinea",
+    "country_code": "PG",
+    "country_name_ar": "بابوا غينيا الجديدة",
+    "country_name_en": "Papua New Guinea",
+    "timezone": "Pacific/Port_Moresby",
+    "lat": -9.47723,
+    "lon": 147.15089,
+    "is_capital": true,
+    "priority": 283733,
+    "population": 283733
+  }
+]

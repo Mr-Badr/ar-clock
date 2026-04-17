@@ -2,6 +2,12 @@
 
 This guide explains how to add a new event to the `/holidays/[slug]` system using the current JSON-first architecture.
 
+For the exact file contract and the AI-ready "create these files and keys" workflow, use:
+- [`docs/add-new-event.md`](./add-new-event.md)
+
+Treat `docs/add-new-event.md` as the canonical authoring contract.
+Treat this playbook as the broader strategy and context document.
+
 Use this document when you want to:
 - create a new event
 - understand where event data lives

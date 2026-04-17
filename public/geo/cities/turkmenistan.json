@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "ashgabat",
+    "city_name_ar": "عشق آباد",
+    "city_name_en": "Ashgabat",
+    "country_slug": "turkmenistan",
+    "country_code": "TM",
+    "country_name_ar": "تركمانستان",
+    "country_name_en": "Turkmenistan",
+    "timezone": "Asia/Ashgabat",
+    "lat": 37.95,
+    "lon": 58.38333,
+    "is_capital": true,
+    "priority": 727700,
+    "population": 727700
+  }
+]

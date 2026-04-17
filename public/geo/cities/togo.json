@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "lome",
+    "city_name_ar": "لومي",
+    "city_name_en": "Lome",
+    "country_slug": "togo",
+    "country_code": "TG",
+    "country_name_ar": "توغو",
+    "country_name_en": "Togo",
+    "timezone": "Africa/Lome",
+    "lat": 6.12874,
+    "lon": 1.22154,
+    "is_capital": true,
+    "priority": 2188376,
+    "population": 2188376
+  }
+]

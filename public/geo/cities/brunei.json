@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "bandar-seri-begawan",
+    "city_name_ar": "بندر سري بكاوان",
+    "city_name_en": "Bandar Seri Begawan",
+    "country_slug": "brunei",
+    "country_code": "BN",
+    "country_name_ar": "بروناي",
+    "country_name_en": "Brunei",
+    "timezone": "Asia/Brunei",
+    "lat": 4.89035,
+    "lon": 114.94006,
+    "is_capital": true,
+    "priority": 64409,
+    "population": 64409
+  }
+]

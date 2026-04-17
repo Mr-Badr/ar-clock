@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "singapore",
+    "city_name_ar": "سنغافورة",
+    "city_name_en": "Singapore",
+    "country_slug": "singapore",
+    "country_code": "SG",
+    "country_name_ar": "سنغافورة",
+    "country_name_en": "Singapore",
+    "timezone": "Asia/Singapore",
+    "lat": 1.28967,
+    "lon": 103.85007,
+    "is_capital": true,
+    "priority": 5638700,
+    "population": 5638700
+  }
+]

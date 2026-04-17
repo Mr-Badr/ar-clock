@@ -1,0 +1,47 @@
+[
+  {
+    "city_slug": "mogadishu",
+    "city_name_ar": "مقديشو",
+    "city_name_en": "Mogadishu",
+    "country_slug": "somalia",
+    "country_code": "SO",
+    "country_name_ar": "الصومال",
+    "country_name_en": "Somalia",
+    "timezone": "Africa/Mogadishu",
+    "lat": 2.03711,
+    "lon": 45.34375,
+    "is_capital": true,
+    "priority": 2587183,
+    "population": 2587183
+  },
+  {
+    "city_slug": "borama",
+    "city_name_ar": "بوراما‎",
+    "city_name_en": "Borama",
+    "country_slug": "somalia",
+    "country_code": "SO",
+    "country_name_ar": "الصومال",
+    "country_name_en": "Somalia",
+    "timezone": "Africa/Mogadishu",
+    "lat": 9.93611,
+    "lon": 43.18278,
+    "is_capital": false,
+    "priority": 597842,
+    "population": 597842
+  },
+  {
+    "city_slug": "hargeysa",
+    "city_name_ar": "هرجيسا",
+    "city_name_en": "Hargeysa",
+    "country_slug": "somalia",
+    "country_code": "SO",
+    "country_name_ar": "الصومال",
+    "country_name_en": "Somalia",
+    "timezone": "Africa/Mogadishu",
+    "lat": 9.56,
+    "lon": 44.065,
+    "is_capital": false,
+    "priority": 477876,
+    "population": 477876
+  }
+]

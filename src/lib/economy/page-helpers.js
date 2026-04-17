@@ -1,5 +1,5 @@
 // lib/economy/page-helpers.js
-import { getEconomyViewerContext } from '@/lib/economy/location';
+import { getCachedNowIso } from '@/lib/date-utils';
 
 const CURRENT_YEAR = new Date().getUTCFullYear();
 
@@ -18,10 +18,9 @@ export const STATIC_ECONOMY_PAGE_STATE = {
 
 export async function getInitialEconomyPageState() {
   try {
-    const viewer = await getEconomyViewerContext();
     return {
-      initialViewer: viewer,
-      initialNowIso: new Date().toISOString(),
+      initialViewer: DEFAULT_ECONOMY_VIEWER,
+      initialNowIso: await getCachedNowIso(),
     };
   } catch {
     return {

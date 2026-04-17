@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "palikir",
+    "city_name_ar": "باليكير",
+    "city_name_en": "Palikir",
+    "country_slug": "micronesia",
+    "country_code": "FM",
+    "country_name_ar": "ولايات ميكرونيسيا المتحدة",
+    "country_name_en": "Micronesia",
+    "timezone": "Pacific/Pohnpei",
+    "lat": 6.92477,
+    "lon": 158.16109,
+    "is_capital": true,
+    "priority": 6942,
+    "population": 6942
+  }
+]

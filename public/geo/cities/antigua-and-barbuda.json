@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "saint-johns",
+    "city_name_ar": "سانت جونز، أنتيغوا وبربودا",
+    "city_name_en": "Saint John's",
+    "country_slug": "antigua-and-barbuda",
+    "country_code": "AG",
+    "country_name_ar": "أنتيغوا وباربودا",
+    "country_name_en": "Antigua and Barbuda",
+    "timezone": "America/Antigua",
+    "lat": 17.12096,
+    "lon": -61.84329,
+    "is_capital": true,
+    "priority": 51737,
+    "population": 51737
+  }
+]

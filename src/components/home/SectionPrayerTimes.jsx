@@ -3,38 +3,16 @@
  * ─────────────────────────────────────────────────────────────────────────────
  * Layout : Image RIGHT · Text LEFT  (RTL flex-row-reverse)
  *
- * LOCATION DETECTION — 3-tier cascade, stops at the first hit:
- *
- *  Tier 1 — IP address  (most accurate: real city from our DB)
- *    • Read `x-forwarded-for` header → extract client IP
- *    • Fetch ip-api.com to get lat/lon (same source used in /api/ip-city)
- *    • Call getNearestCityAction(lat, lon) → geodesic DB lookup
- *    • Result: exact city slug + Arabic name + real timezone
- *    • Cached: ip-api response revalidates every hour per unique IP
- *
- *  Tier 2 — IANA timezone header  (good: nearest city per timezone)
- *    • Read `x-timezone` (middleware) or `cf-timezone` (Cloudflare)
- *    • Call mapTimezoneToCityAction(tz) → seed-file city lookup
- *    • Covers users behind proxies or CDN edge nodes
- *
- *  Tier 3 — Riyadh, Saudi Arabia  (safe default)
- *    • Used when both Tier 1 and Tier 2 fail (rare, e.g. localhost dev)
- *    • Riyadh is the most searched city for prayer times in Arabic search
- *
- * DATA SERIALISATION RULE:
- *   Only ISO strings + primitives cross the server→client boundary.
- *   Never pass Date objects — they are not serialisable.
- *
- * SEO: text column is unchanged — all keyword density preserved.
+ * Bridge mode: render this section from a stable default city so the home page
+ * stays cacheable. Any viewer-specific location hint happens client-side only.
  */
 
-import { headers }               from 'next/headers'
 import Link                      from 'next/link'
 import { Qibla, Coordinates }    from 'adhan'
 import { Clock, Compass, BookOpen, Bell, Globe2, Moon } from 'lucide-react'
 
 import { calculatePrayerTimes, getNextPrayer } from '@/lib/prayerEngine'
-import { resolveRequestLocationFromHeaders } from '@/lib/locationService'
+import { getCachedNowIso } from '@/lib/date-utils'
 
 import { SectionWrapper, SectionBadge, FeatureItem } from '@/components/shared/primitives'
 import CtaLink             from '@/components/shared/CtaLink'
@@ -56,25 +34,6 @@ const RIYADH = {
   city_slug:    'riyadh',
   country_code: 'SA',
   country_slug: 'saudi-arabia',
-}
-
-/* ── Helpers ──────────────────────────────────────────────────────────────── */
-
-/**
- * Normalise any city object returned from DB actions into a consistent shape.
- * Accepts the raw shape from both getNearestCityAction and mapTimezoneToCityAction.
- */
-function normaliseCity(raw, fallbackTz) {
-  if (!raw?.lat || !raw?.lon) return null
-  return {
-    lat:          Number(raw.lat),
-    lon:          Number(raw.lon),
-    timezone:     raw.timezone     || raw.tz          || fallbackTz || 'Asia/Riyadh',
-    city_name_ar: raw.city_name_ar || raw.name_ar     || raw.name   || RIYADH.city_name_ar,
-    city_slug:    raw.city_slug    || raw.slug        || 'unknown',
-    country_code: raw.country_code || raw.countryCode || 'SA',
-    country_slug: raw.country_slug || '',
-  }
 }
 
 /**
@@ -110,25 +69,17 @@ function emptyTimes(iso) {
 /* ── Server Component ─────────────────────────────────────────────────────── */
 
 export default async function SectionPrayerTimes() {
-  const h   = await headers()
-  let city  = { ...RIYADH }
-
-  /* Shared server-side resolver: headers → IP lookup → timezone/country fallback */
-  try {
-    const resolvedCity = await resolveRequestLocationFromHeaders(h)
-    if (resolvedCity) city = normaliseCity(resolvedCity, resolvedCity.timezone)
-  } catch {
-    /* Any unexpected error: keep RIYADH default */
-  }
+  const city = { ...RIYADH }
 
   /* ── Prayer times & next prayer ─────────────────────────────────────── */
-  const nowIso = new Date().toISOString()
+  const nowIso = await getCachedNowIso()
+  const now = new Date(nowIso)
 
   const times = calculatePrayerTimes({
     lat:         city.lat,
     lon:         city.lon,
     timezone:    city.timezone,
-    date:        new Date(),
+    date:        now,
     countryCode: city.country_code,
     // cacheKey scoped to city so simultaneous users in different cities
     // each get their own cached result

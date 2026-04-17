@@ -13,6 +13,11 @@ import { HIJRI_MONTHS_AR as BASE_MONTHS } from '@/lib/hijri-utils';
 import { getCachedEventMeta } from '@/lib/event-cache';
 import { buildTemplateContext, resolveTemplate } from '@/lib/template-resolver';
 import { getCountryByCode } from '@/lib/events/country-dictionary';
+import {
+  buildFaqItems,
+  buildFaqSchemaItems,
+  pickFaqEntries,
+} from '@/lib/holidays/faq-normalizer';
 import { HOLIDAY_CATEGORIES } from '@/lib/holidays/taxonomy';
 import { SITE_APP_NAME } from '@/lib/site-config';
 export const HIJRI_MONTHS_AR = ['', ...BASE_MONTHS];
@@ -113,12 +118,6 @@ export function _resolveEventMetaInternal(ev, targetDate, overrideHijriYear = nu
     ])
     .filter((v, i, a) => a.indexOf(v) === i); // dedupe
 
-  // Patch faqItems so FAQ schema + UI always show the correct year
-  const faqItems = (ev.faqItems || []).map(({ q, a }) => ({
-    q: replaceTokens(q, tokenContext),
-    a: replaceTokens(a, tokenContext),
-  }));
-
   // 🆕 Dynamic quickFacts: _dynamic flag drives computed values
   const quickFacts = Array.isArray(ev.quickFacts) ? ev.quickFacts.map(f => {
     let value = replaceTokens(f.value || '', tokenContext);
@@ -190,11 +189,11 @@ export function _resolveEventMetaInternal(ev, targetDate, overrideHijriYear = nu
     text: rt(item.text),
   }));
 
-  // faq: new format with { question, answer } — alias to faqItems if missing
-  const faq = (ev.faq || []).map(f => ({
-    question: rt(f.question),
-    answer: rt(f.answer),
+  const faq = pickFaqEntries(ev).map((item) => ({
+    question: rt(item.question),
+    answer: rt(item.answer),
   }));
+  const faqItems = buildFaqItems(faq);
 
   // seoMeta: resolved title tag, meta description, og fields
   const seoMeta = ev.seoMeta ? {
@@ -229,19 +228,11 @@ export function _resolveEventMetaInternal(ev, targetDate, overrideHijriYear = nu
       path: b.path,
     })),
     articleHeadline: rt(ev.schemaData.articleHeadline),
-    faqSchemaItems: (ev.schemaData.faqSchemaItems || []).map(f => ({
-      question: rt(f.question),
-      answer: rt(f.answer),
-    })),
+    faqSchemaItems: buildFaqSchemaItems(faq),
   } : undefined;
 
-  // Final merged FAQ: prefer new faq[], fall back to faqItems[]
-  const mergedFaq = faq.length > 0
-    ? faq.map(f => ({ q: f.question, a: f.answer }))
-    : faqItems;
-
   return {
-    seoTitle, description, keywords, faqItems: mergedFaq, faq: mergedFaq,
+    seoTitle, description, keywords, faqItems, faq,
     quickFacts, year: gr, hijriYear: hi,
     about, significance, details, history, traditions, timeline, countryDates, howTo,
     // New fields
@@ -313,19 +304,21 @@ export const enrichEvent = (raw) => {
     `متى ${e.name}`, `موعد ${e.name}`,
     `كم باقي على ${e.name}`, `عد تنازلي ${e.name}`,
   ];
-  e.faqItems ??= [
-    { q: `كم باقي على ${e.name}؟`, a: e.description },
-    { q: `كم يوماً تبقى على ${e.name}؟`, a: 'تابع العد التنازلي الدقيق على هذه الصفحة.' },
-    {
-      q: `هل يتغير موعد ${e.name} كل عام؟`,
-      a:
-        e.type === 'hijri'
-          ? 'نعم، يتقدم ~11 يوماً سنوياً في التقويم الهجري.'
-          : e.type === 'floating'
-            ? `موعد ${e.name} يتحرك سنوياً وفق قاعدة تقويمية ثابتة مرتبطة بيوم الأسبوع داخل الشهر.`
-            : `موعد ${e.name} ثابت كل عام.`,
-    },
-  ];
+  if (pickFaqEntries(e).length === 0) {
+    e.faq = [
+      { question: `كم باقي على ${e.name}؟`, answer: e.description },
+      { question: `كم يوماً تبقى على ${e.name}؟`, answer: 'تابع العد التنازلي الدقيق على هذه الصفحة.' },
+      {
+        question: `هل يتغير موعد ${e.name} كل عام؟`,
+        answer:
+          e.type === 'hijri'
+            ? 'نعم، يتقدم ~11 يوماً سنوياً في التقويم الهجري.'
+            : e.type === 'floating'
+              ? `موعد ${e.name} يتحرك سنوياً وفق قاعدة تقويمية ثابتة مرتبطة بيوم الأسبوع داخل الشهر.`
+              : `موعد ${e.name} ثابت كل عام.`,
+      },
+    ];
+  }
   return e;
 };
 
@@ -631,8 +624,7 @@ export function buildArticleSchema(ev, date, siteUrl, nowIso) {
   };
 }
 export function buildFAQSchema(ev) {
-  if (!ev.faqItems?.length) return null;
-  const validItems = ev.faqItems.filter(item => item && item.q && item.a);
+  const validItems = buildFaqItems(pickFaqEntries(ev));
   if (validItems.length === 0) return null;
   return {
     '@context': 'https://schema.org', '@type': 'FAQPage',

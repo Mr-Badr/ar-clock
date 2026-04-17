@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "asmara",
+    "city_name_ar": "أسمرة",
+    "city_name_en": "Asmara",
+    "country_slug": "eritrea",
+    "country_code": "ER",
+    "country_name_ar": "إرتريا",
+    "country_name_en": "Eritrea",
+    "timezone": "Africa/Asmara",
+    "lat": 15.33805,
+    "lon": 38.93184,
+    "is_capital": true,
+    "priority": 563930,
+    "population": 563930
+  }
+]

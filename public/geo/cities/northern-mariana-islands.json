@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "saipan",
+    "city_name_ar": "سايبان",
+    "city_name_en": "Saipan",
+    "country_slug": "northern-mariana-islands",
+    "country_code": "MP",
+    "country_name_ar": "جزر ماريانا الشمالية",
+    "country_name_en": "Northern Mariana Islands",
+    "timezone": "Pacific/Saipan",
+    "lat": 15.21233,
+    "lon": 145.7545,
+    "is_capital": true,
+    "priority": 48220,
+    "population": 48220
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "mamoudzou",
+    "city_name_ar": "مامودزو",
+    "city_name_en": "Mamoudzou",
+    "country_slug": "mayotte",
+    "country_code": "YT",
+    "country_name_ar": "مايوت",
+    "country_name_en": "Mayotte",
+    "timezone": "Indian/Mayotte",
+    "lat": -12.78234,
+    "lon": 45.22878,
+    "is_capital": true,
+    "priority": 54831,
+    "population": 54831
+  }
+]

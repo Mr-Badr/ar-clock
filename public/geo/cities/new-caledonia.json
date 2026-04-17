@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "noumea",
+    "city_name_ar": "نوميا",
+    "city_name_en": "Noumea",
+    "country_slug": "new-caledonia",
+    "country_code": "NC",
+    "country_name_ar": "كاليدونيا الجديدة",
+    "country_name_en": "New Caledonia",
+    "timezone": "Pacific/Noumea",
+    "lat": -22.27407,
+    "lon": 166.44884,
+    "is_capital": true,
+    "priority": 93060,
+    "population": 93060
+  }
+]

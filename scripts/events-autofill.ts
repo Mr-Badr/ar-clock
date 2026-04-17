@@ -3,6 +3,10 @@ import { join } from 'node:path';
 
 import { parseEventPackage } from '../src/lib/events/package-schema.js';
 import {
+  buildAuthoringFaqContent,
+  pickFaqEntries,
+} from '../src/lib/holidays/faq-normalizer.js';
+import {
   buildAboutEvent,
   buildKeywordTemplateSet,
   buildRichContentScaffold,
@@ -49,16 +53,8 @@ function listPackageSlugs() {
 }
 
 function mergeFaq(existing: any, scaffoldFaq: Array<{ question: string; answer: string }>) {
-  if (Array.isArray(existing?.faq) && existing.faq.length > 0) return existing.faq;
-  if (Array.isArray(existing?.faqItems) && existing.faqItems.length > 0) {
-    return existing.faqItems
-      .map((item: any) => ({
-        question: item.question || item.q || '',
-        answer: item.answer || item.a || '',
-      }))
-      .filter((item: any) => item.question && item.answer);
-  }
-  return scaffoldFaq;
+  const faq = pickFaqEntries(existing);
+  return faq.length > 0 ? faq : scaffoldFaq;
 }
 
 function deriveAboutEvent(core: any, richContent: any, scaffoldAboutEvent: Record<string, string>) {
@@ -86,22 +82,11 @@ function mergeSeoMeta(existingSeoMeta: any, scaffoldSeoMeta: any, nowIso: string
   };
 }
 
-function mergeSchemaData(existingSchemaData: any, scaffoldSchemaData: any, faq: Array<{ question: string; answer: string }>) {
+function mergeSchemaData(existingSchemaData: any, scaffoldSchemaData: any) {
   return {
     ...scaffoldSchemaData,
     ...(existingSchemaData || {}),
-    faqSchemaItems:
-      Array.isArray(existingSchemaData?.faqSchemaItems) && existingSchemaData.faqSchemaItems.length > 0
-        ? existingSchemaData.faqSchemaItems
-        : faq,
   };
-}
-
-function ensureFaqItems(faq: Array<{ question: string; answer: string }>) {
-  return faq.map((item) => ({
-    q: item.question,
-    a: item.answer,
-  }));
 }
 
 function enrichPackage(pkg: any, allPackages: any[], nowIso: string) {
@@ -130,7 +115,7 @@ function enrichPackage(pkg: any, allPackages: any[], nowIso: string) {
   );
   const relatedSlugs = Array.from(new Set([...relatedSeed, ...relatedSuggestions])).filter((slug) => slug !== core.slug).slice(0, 4);
 
-  const mergedRichContent = {
+  const mergedRichContent = buildAuthoringFaqContent({
     ...scaffold,
     ...existing,
     seoTitle: existing.seoTitle || scaffold.seoTitle,
@@ -140,14 +125,13 @@ function enrichPackage(pkg: any, allPackages: any[], nowIso: string) {
     quickFacts: hasData(existing.quickFacts) ? existing.quickFacts : scaffold.quickFacts,
     aboutEvent: deriveAboutEvent(core, existing, scaffold.aboutEvent),
     faq,
-    faqItems: ensureFaqItems(faq),
     intentCards: hasData(existing.intentCards) ? existing.intentCards : scaffold.intentCards,
     engagementContent: hasData(existing.engagementContent) ? existing.engagementContent : scaffold.engagementContent,
     seoMeta: mergeSeoMeta(existing.seoMeta, scaffold.seoMeta, nowIso, core.slug, core.category),
     recurringYears: hasData(existing.recurringYears) ? existing.recurringYears : scaffold.recurringYears,
-    schemaData: mergeSchemaData(existing.schemaData, scaffold.schemaData, faq),
+    schemaData: mergeSchemaData(existing.schemaData, scaffold.schemaData),
     relatedSlugs: relatedSlugs.length > 0 ? relatedSlugs : existing.relatedSlugs || [],
-  };
+  });
 
   return {
     ...pkg,

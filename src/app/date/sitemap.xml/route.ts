@@ -1,27 +1,27 @@
 /**
- * /date/sitemap.xml — Sitemap Index
- * Points to specialized child sitemaps for scale and organization.
+ * /date/sitemap.xml — Date feature sitemap index
+ * Kept as a feature-local diagnostic index, while the root sitemap index lists
+ * the date leaf sitemaps directly for simpler Search Console visibility.
  */
 import { getSiteUrl } from '@/lib/site-config';
+import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
 const BASE = getSiteUrl();
 
 export async function GET() {
-  const todayIso = new Date().toISOString().split('T')[0];
+  const lastmod = getSitemapLastModifiedDate();
 
   const sitemaps = [
     '/date/sitemaps/static',
     '/date/sitemaps/countries',
     '/date/sitemaps/calendars',
-    '/date/gregorian/sitemap.xml',
-    '/date/hijri/sitemap.xml',
   ];
 
   const entries = sitemaps.map(
     url => `
   <sitemap>
     <loc>${BASE}${url}</loc>
-    <lastmod>${todayIso}</lastmod>
+    <lastmod>${lastmod}</lastmod>
   </sitemap>`
   ).join('');
 

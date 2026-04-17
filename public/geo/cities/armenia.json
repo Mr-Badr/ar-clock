@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "yerevan",
+    "city_name_ar": "يريفان",
+    "city_name_en": "Yerevan",
+    "country_slug": "armenia",
+    "country_code": "AM",
+    "country_name_ar": "أرمينيا",
+    "country_name_en": "Armenia",
+    "timezone": "Asia/Yerevan",
+    "lat": 40.17765,
+    "lon": 44.5126,
+    "is_capital": true,
+    "priority": 1144700,
+    "population": 1144700
+  }
+]

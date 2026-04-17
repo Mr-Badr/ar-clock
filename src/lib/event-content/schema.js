@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { buildCompiledFaqContent } from '@/lib/holidays/faq-normalizer';
 
 const faqItemSchema = z.object({
   question: z.string().min(1).optional(),
@@ -50,21 +51,7 @@ const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}(T.*)?$/;
 const META_DATE_KEYS = new Set(['datePublished', 'dateModified', 'updatedAt', 'generatedAt', 'lastModified']);
 
 function normalizeFaq(content) {
-  const list = content.faq?.length ? content.faq : content.faqItems || [];
-  const normalized = list
-    .map((entry) => {
-      const question = entry.question || entry.q;
-      const answer = entry.answer || entry.a;
-      if (!question || !answer) return null;
-      return { question, answer, q: question, a: answer };
-    })
-    .filter(Boolean);
-
-  return {
-    ...content,
-    faq: normalized,
-    faqItems: normalized.map(({ q, a }) => ({ q, a })),
-  };
+  return buildCompiledFaqContent(content);
 }
 
 function hasHardcodedYear(content) {

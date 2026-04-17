@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "saint-georges",
+    "city_name_ar": "سانت جورجز",
+    "city_name_en": "Saint George's",
+    "country_slug": "grenada",
+    "country_code": "GD",
+    "country_name_ar": "غرنادة",
+    "country_name_en": "Grenada",
+    "timezone": "America/Grenada",
+    "lat": 12.05288,
+    "lon": -61.75226,
+    "is_capital": true,
+    "priority": 7500,
+    "population": 7500
+  }
+]

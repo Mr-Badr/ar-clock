@@ -1,29 +1,29 @@
-import { getCitiesByCountry } from '@/lib/db/queries/cities';
-import { getAllCountrySlugs, getCountryBySlug } from '@/lib/db/queries/countries';
+import { getAllCityParams } from '@/lib/db/queries/cities';
+import { getAllCountrySlugs } from '@/lib/db/queries/countries';
 import { getSiteUrl } from '@/lib/site-config';
+import { getSitemapLastModified } from '@/lib/sitemap';
 
-export const dynamic = 'force-dynamic';
-// export const revalidate = 86400;
-
-export async function generateSitemaps() {
-  const countrySlugs = await getAllCountrySlugs();
-  return countrySlugs.map((countrySlug) => ({ id: countrySlug }));
-}
-
-export default async function sitemap(params) {
-  const { id } = await params;
-  const resolvedId = typeof id === 'object' && id !== null && 'then' in id ? await id : id;
+export default async function sitemap() {
   const base = getSiteUrl();
-  const lastModified = new Date().toISOString();
-  const country = await getCountryBySlug(resolvedId).catch(() => null);
-  const cities = country ? await getCitiesByCountry(country.country_code) : [];
+  const lastModified = getSitemapLastModified();
+  const [countrySlugs, cities] = await Promise.all([
+    getAllCountrySlugs(),
+    getAllCityParams(),
+  ]);
+  const urls = [];
 
-  const urls = [{ url: `${base}/time-now/${resolvedId}`, lastModified }];
+  for (const countrySlug of countrySlugs) {
+    if (!countrySlug) continue;
+    urls.push({
+      url: `${base}/time-now/${countrySlug}`,
+      lastModified,
+    });
+  }
 
   for (const city of cities) {
-    if (!city?.city_slug) continue;
+    if (!city?.country || !city?.city) continue;
     urls.push({
-      url: `${base}/time-now/${resolvedId}/${city.city_slug}`,
+      url: `${base}/time-now/${city.country}/${city.city}`,
       lastModified,
     });
   }

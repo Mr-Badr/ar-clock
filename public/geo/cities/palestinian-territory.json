@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "east-jerusalem",
+    "city_name_ar": "القدس الشرقية",
+    "city_name_en": "East Jerusalem",
+    "country_slug": "palestinian-territory",
+    "country_code": "PS",
+    "country_name_ar": "دولة فلسطين",
+    "country_name_en": "Palestinian Territory",
+    "timezone": "Asia/Hebron",
+    "lat": 31.78336,
+    "lon": 35.23388,
+    "is_capital": true,
+    "priority": 428304,
+    "population": 428304
+  }
+]

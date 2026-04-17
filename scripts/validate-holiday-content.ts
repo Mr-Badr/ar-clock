@@ -8,6 +8,7 @@ import { getAllCountryNamesAr } from '../src/lib/events/country-dictionary.js';
 import { parseEventPackage } from '../src/lib/events/package-schema.js';
 import { getRichContent } from '../src/lib/event-content/index.js';
 import { parseRichContent } from '../src/lib/event-content/schema.js';
+import { pickFaqEntries } from '../src/lib/holidays/faq-normalizer.js';
 
 type Tier = 'tier1' | 'tier2' | 'tier3';
 type Severity = 'error' | 'warn';
@@ -322,8 +323,8 @@ function collectEventText(content: any) {
   if (content.answerSummary) pieces.push(content.answerSummary);
   if (content.about?.paragraphs?.length) pieces.push(content.about.paragraphs.join(' '));
   if (content.aboutEvent) pieces.push(Object.values(content.aboutEvent).join(' '));
-  if (content.faq?.length) pieces.push(content.faq.map((q: any) => `${q.question} ${q.answer}`).join(' '));
-  if (content.faqItems?.length) pieces.push(content.faqItems.map((q: any) => `${q.q} ${q.a}`).join(' '));
+  const faq = pickFaqEntries(content);
+  if (faq.length) pieces.push(faq.map((item: any) => `${item.question} ${item.answer}`).join(' '));
   return normalizeText(pieces.join(' '));
 }
 
@@ -361,8 +362,8 @@ function collectBaseContentText(content: any) {
   if (typeof content.history === 'string') pieces.push(content.history);
   if (content.about?.paragraphs?.length) pieces.push(content.about.paragraphs.join(' '));
   if (content.aboutEvent) pieces.push(Object.values(content.aboutEvent).join(' '));
-  if (content.faq?.length) pieces.push(content.faq.map((item: any) => `${item.question || ''} ${item.answer || ''}`).join(' '));
-  if (content.faqItems?.length) pieces.push(content.faqItems.map((item: any) => `${item.q || ''} ${item.a || ''}`).join(' '));
+  const faq = pickFaqEntries(content);
+  if (faq.length) pieces.push(faq.map((item: any) => `${item.question || ''} ${item.answer || ''}`).join(' '));
   return normalizeText(pieces.join(' '));
 }
 
@@ -433,7 +434,8 @@ function main() {
     }
 
     const raw = loadShardContent(event.slug) || eventPackage?.richContent || getRichContent(event.slug);
-    const { content, flags } = parseRichContent(event.slug, raw);
+    const { content: parsedContent, flags } = parseRichContent(event.slug, raw);
+    const content: any = parsedContent;
 
     if (!eventPackage) {
       pushIssue(
@@ -529,7 +531,7 @@ function main() {
     for (const section of required) {
       const value =
         section === 'faq'
-          ? (content.faq || content.faqItems || [])
+          ? pickFaqEntries(content)
           : (content as any)[section];
       if (!hasData(value)) {
         pushIssue(
@@ -541,7 +543,10 @@ function main() {
       }
     }
 
-    const faq = content.faq || content.faqItems || [];
+    const faq: Array<{ question?: string; answer?: string }> = pickFaqEntries(content) as Array<{
+      question?: string;
+      answer?: string;
+    }>;
     const minFaq = MIN_FAQ_BY_CATEGORY[event.category] || 4;
     if (faq.length < minFaq) {
       pushIssue(
@@ -647,13 +652,13 @@ function main() {
     }
 
     for (const faqItem of faq) {
-      const answer = faqItem.answer || faqItem.a || '';
+      const answer = faqItem?.answer || '';
       const sentence = firstSentence(String(answer));
       if (sentence.length < 20) {
         pushIssue(
           issues,
           tier,
-          `direct_answer_missing:faq:${(faqItem.question || faqItem.q || '').slice(0, 30)}`,
+          `direct_answer_missing:faq:${String(faqItem?.question || '').slice(0, 30)}`,
           'FAQ answer should start with a direct-answer sentence.',
         );
       }

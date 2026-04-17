@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "harare",
+    "city_name_ar": "هراري",
+    "city_name_en": "Harare",
+    "country_slug": "zimbabwe",
+    "country_code": "ZW",
+    "country_name_ar": "زيمبابوي",
+    "country_name_en": "Zimbabwe",
+    "timezone": "Africa/Harare",
+    "lat": -17.82772,
+    "lon": 31.05337,
+    "is_capital": true,
+    "priority": 1542813,
+    "population": 1542813
+  },
+  {
+    "city_slug": "bulawayo",
+    "city_name_ar": "بولاوايو",
+    "city_name_en": "Bulawayo",
+    "country_slug": "zimbabwe",
+    "country_code": "ZW",
+    "country_name_ar": "زيمبابوي",
+    "country_name_en": "Zimbabwe",
+    "timezone": "Africa/Harare",
+    "lat": -20.15,
+    "lon": 28.58333,
+    "is_capital": false,
+    "priority": 665952,
+    "population": 665952
+  }
+]

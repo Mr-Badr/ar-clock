@@ -1,0 +1,62 @@
+[
+  {
+    "city_slug": "paris",
+    "city_name_ar": "باريس",
+    "city_name_en": "Paris",
+    "country_slug": "france",
+    "country_code": "FR",
+    "country_name_ar": "فرنسا",
+    "country_name_en": "France",
+    "timezone": "Europe/Paris",
+    "lat": 48.85341,
+    "lon": 2.3488,
+    "is_capital": true,
+    "priority": 2138551,
+    "population": 2138551
+  },
+  {
+    "city_slug": "marseille",
+    "city_name_ar": "مرسيليا",
+    "city_name_en": "Marseille",
+    "country_slug": "france",
+    "country_code": "FR",
+    "country_name_ar": "فرنسا",
+    "country_name_en": "France",
+    "timezone": "Europe/Paris",
+    "lat": 43.29695,
+    "lon": 5.38107,
+    "is_capital": false,
+    "priority": 877215,
+    "population": 877215
+  },
+  {
+    "city_slug": "lyon",
+    "city_name_ar": "ليون",
+    "city_name_en": "Lyon",
+    "country_slug": "france",
+    "country_code": "FR",
+    "country_name_ar": "فرنسا",
+    "country_name_en": "France",
+    "timezone": "Europe/Paris",
+    "lat": 45.74906,
+    "lon": 4.84789,
+    "is_capital": false,
+    "priority": 520774,
+    "population": 520774
+  },
+  {
+    "city_slug": "toulouse",
+    "city_name_ar": "تولوز",
+    "city_name_en": "Toulouse",
+    "country_slug": "france",
+    "country_code": "FR",
+    "country_name_ar": "فرنسا",
+    "country_name_en": "France",
+    "timezone": "Europe/Paris",
+    "lat": 43.60426,
+    "lon": 1.44367,
+    "is_capital": false,
+    "priority": 511684,
+    "population": 511684
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "kingston",
+    "city_name_ar": "كينغستون",
+    "city_name_en": "Kingston",
+    "country_slug": "jamaica",
+    "country_code": "JM",
+    "country_name_ar": "جامايكا",
+    "country_name_en": "Jamaica",
+    "timezone": "America/Jamaica",
+    "lat": 17.99702,
+    "lon": -76.79358,
+    "is_capital": true,
+    "priority": 937700,
+    "population": 937700
+  }
+]

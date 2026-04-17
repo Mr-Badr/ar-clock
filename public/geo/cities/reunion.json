@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "saint-denis",
+    "city_name_ar": "سان ديني",
+    "city_name_en": "Saint-Denis",
+    "country_slug": "reunion",
+    "country_code": "RE",
+    "country_name_ar": "ريونيون",
+    "country_name_en": "Reunion",
+    "timezone": "Indian/Reunion",
+    "lat": -20.88231,
+    "lon": 55.4504,
+    "is_capital": true,
+    "priority": 154765,
+    "population": 154765
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "oslo",
+    "city_name_ar": "أوسلو",
+    "city_name_en": "Oslo",
+    "country_slug": "norway",
+    "country_code": "NO",
+    "country_name_ar": "النرويج",
+    "country_name_en": "Norway",
+    "timezone": "Europe/Oslo",
+    "lat": 59.91273,
+    "lon": 10.74609,
+    "is_capital": true,
+    "priority": 1082575,
+    "population": 1082575
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "libreville",
+    "city_name_ar": "ليبرفيل",
+    "city_name_en": "Libreville",
+    "country_slug": "gabon",
+    "country_code": "GA",
+    "country_name_ar": "الغابون",
+    "country_name_en": "Gabon",
+    "timezone": "Africa/Libreville",
+    "lat": 0.39241,
+    "lon": 9.45356,
+    "is_capital": true,
+    "priority": 846090,
+    "population": 846090
+  }
+]

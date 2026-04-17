@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "colombo",
+    "city_name_ar": "كولمبو",
+    "city_name_en": "Colombo",
+    "country_slug": "sri-lanka",
+    "country_code": "LK",
+    "country_name_ar": "سريلانكا",
+    "country_name_en": "Sri Lanka",
+    "timezone": "Asia/Colombo",
+    "lat": 6.93548,
+    "lon": 79.84868,
+    "is_capital": true,
+    "priority": 648034,
+    "population": 648034
+  }
+]

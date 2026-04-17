@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "funafuti",
+    "city_name_ar": "فونافوتي",
+    "city_name_en": "Funafuti",
+    "country_slug": "tuvalu",
+    "country_code": "TV",
+    "country_name_ar": "توفالو",
+    "country_name_en": "Tuvalu",
+    "timezone": "Pacific/Funafuti",
+    "lat": -8.52425,
+    "lon": 179.19417,
+    "is_capital": true,
+    "priority": 6320,
+    "population": 6320
+  }
+]

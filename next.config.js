@@ -82,6 +82,10 @@ const nextConfig = {
       },
       {
         // High-intent content hubs that are safe to cache publicly.
+        source: '/time-now/:path*',
+        headers: SHARED_HTML_CACHE_HEADERS,
+      },
+      {
         source: '/mwaqit-al-salat/:path*',
         headers: SHARED_HTML_CACHE_HEADERS,
       },

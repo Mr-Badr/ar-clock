@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "victoria",
+    "city_name_ar": "فيكتوريا",
+    "city_name_en": "Victoria",
+    "country_slug": "seychelles",
+    "country_code": "SC",
+    "country_name_ar": "سيشل",
+    "country_name_en": "Seychelles",
+    "timezone": "Indian/Mahe",
+    "lat": -4.62001,
+    "lon": 55.45501,
+    "is_capital": true,
+    "priority": 22881,
+    "population": 22881
+  }
+]

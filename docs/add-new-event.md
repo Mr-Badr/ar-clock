@@ -1,17 +1,17 @@
 # Add New Event
 
-This guide is the simplest safe workflow for adding a new holiday event to `/holidays/[slug]`.
+This is the single authoritative guide for adding a new `/holidays/[slug]` event.
 
-The goal is:
+Use this file when:
+- a developer adds an event manually
+- an AI agent is asked to add a new event
+- you want to know which files to create
+- you want to know which keys are required
+- you want the event to become live, buildable, and indexable without editing runtime code
 
-- add one new event folder
-- edit only the event JSON files
-- let the generated indexes rebuild automatically
-- avoid touching runtime code
+## Architecture Rule
 
-## Source Of Truth
-
-Every event lives in its own folder:
+There is only one authoring source of truth:
 
 ```text
 src/data/holidays/events/<slug>/
@@ -20,21 +20,39 @@ src/data/holidays/events/<slug>/
   qa.json
 ```
 
-These are the only files you should author directly for a new event.
+Everything else is generated, runtime-only, or compatibility output.
 
 Do not hand-edit:
-
 - `src/data/holidays/generated/*`
+- `src/lib/events/generated-index.js`
+- `src/lib/events/generated-aliases.js`
+- `src/lib/events/manifest.json`
+- `src/lib/events/items/*`
+- `src/lib/events/packages/items/*`
+- `src/lib/event-content/items/*`
 - `src/lib/events/index.js`
 - `src/lib/event-content/index.js`
-- `src/lib/events/items/*`
-- `src/lib/event-content/items/*`
 
-## Quick Start
+If the event folder is correct, `npm run dev`, `npm run build`, or `npm run events:build` will pick it up automatically.
 
-### 1. Scaffold the event
+## What Makes An Event Go Live
 
-Run:
+For a new event to be publicly usable and indexable, all of this should be true:
+
+1. The folder exists under `src/data/holidays/events/<slug>/`.
+2. `package.json` is valid against the event package schema.
+3. Generated indexes are rebuilt with `npm run events:build` or any normal app build.
+4. The event is published with `publishStatus: "published"` or `publishStatus: "monitored"`.
+5. The page has enough real content to pass validation and be worth indexing.
+
+Important:
+- Draft events can exist in the source tree without being ready for public rollout.
+- The holiday sitemap includes canonical and alias pages only for events whose `publishStatus` is `published` or `monitored`.
+- `qa.json` does not publish a page by itself. Runtime behavior is driven by `package.json`.
+
+## Fast Workflow
+
+### 1. Scaffold the folder
 
 ```bash
 npm run events:new -- --slug your-slug --name "اسم المناسبة" --type fixed --category holidays
@@ -43,270 +61,978 @@ npm run events:new -- --slug your-slug --name "اسم المناسبة" --type f
 Example:
 
 ```bash
-npm run events:new -- --slug school-start-jordan --name "أول يوم دراسي في الأردن" --type estimated --category school
+npm run events:new -- --slug eid-al-rajul --name "عيد الرجل" --type fixed --category support
 ```
 
 This creates:
 
 ```text
-src/data/holidays/events/your-slug/package.json
-src/data/holidays/events/your-slug/research.json
-src/data/holidays/events/your-slug/qa.json
+src/data/holidays/events/eid-al-rajul/package.json
+src/data/holidays/events/eid-al-rajul/research.json
+src/data/holidays/events/eid-al-rajul/qa.json
 ```
 
-New events default to:
-
+Scaffold defaults:
 - `publishStatus: "drafted"`
 - `tier: "tier3"`
+- empty research and QA tracking records
 
-That is intentional so new content starts in a safe draft state.
+### 2. Fill the three authoring files
 
-### 2. Edit the three event files
-
-Update:
-
+Edit only:
 - `package.json`
-  - event identity
-  - schedule/date fields
-  - rich content
-  - SEO metadata
-  - related slugs
 - `research.json`
-  - sources
-  - keyword research
-  - competitor notes
-  - fact-check notes
 - `qa.json`
-  - editorial progress
-  - validation state
-  - publish readiness
 
-### 3. Start dev or build
-
-Run either:
+### 3. Build generated indexes
 
 ```bash
-npm run dev
+npm run events:build
 ```
 
-or:
-
-```bash
-npm run build
-```
-
-The event indexes regenerate automatically because:
-
-- `predev` runs `npm run events:build`
-- `prebuild` runs `npm run events:build`
-
-You do not need to add imports anywhere.
+This also runs automatically inside:
+- `npm run dev`
+- `npm run build`
 
 ### 4. Validate the event
-
-Run:
 
 ```bash
 npm run validate:holidays:slug -- --slug your-slug
 ```
 
-For a broader check, you can also run:
+### 5. Publish when the content is ready
+
+Recommended:
 
 ```bash
-npm run validate:holidays
+npm run events:publish -- --slug your-slug --status published
 ```
 
-## Required Command Examples
+This is safer than flipping `publishStatus` manually because it rebuilds and validates.
 
-### Fixed-date event
+## Folder Contract
 
-```bash
-npm run events:new -- --slug national-day-qatar --name "اليوم الوطني القطري" --type fixed --category national
+Each event folder must contain exactly these three authored files:
+
+```text
+src/data/holidays/events/<slug>/
+  package.json
+  research.json
+  qa.json
 ```
 
-Then set the fixed date in `package.json`, for example:
+### `package.json`
 
-- `month`
-- `day`
+Purpose:
+- event identity
+- date logic
+- page content
+- SEO metadata
+- aliases and country behavior
+- publish state
 
-### Hijri event
+This file controls runtime behavior.
 
-```bash
-npm run events:new -- --slug islamic-new-year --name "رأس السنة الهجرية" --type hijri --category islamic
-```
+### `research.json`
 
-Then set in `package.json`:
+Purpose:
+- search intent research
+- competitor notes
+- fact sources
+- keyword gaps
+- editorial differentiation
 
-- `hijriMonth`
-- `hijriDay`
+This file helps content quality and SEO, but it does not control routing.
 
-### Estimated event
+### `qa.json`
 
-Use this when the date is announced later or shifts based on an authority:
+Purpose:
+- editorial readiness tracking
+- fact-check tracking
+- schema tracking
+- SEO validation tracking
 
-```bash
-npm run events:new -- --slug school-results-egypt --name "نتيجة الثانوية العامة في مصر" --type estimated --category school
-```
+This file is for workflow status, not routing logic.
 
-Then set in `package.json`:
+## `package.json` Structure
 
-- `date`
-
-Example pattern:
+This is the full model you should think in:
 
 ```json
-"date": "{{year}}-07-15"
+{
+  "schemaVersion": 1,
+  "core": {},
+  "richContent": {},
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "countryScope": "none",
+  "countryAliasTemplate": "{{slug}}-in-{{countrySlug}}",
+  "keywordTemplateSet": {
+    "base": [],
+    "country": []
+  },
+  "tier": "tier3",
+  "publishStatus": "drafted",
+  "canonicalPath": "/holidays/your-slug",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar"
+}
 ```
 
-### Monthly event
+### Top-level keys
 
-Use this when the event repeats every month on a known day:
+`schemaVersion`
+- Current schema version.
+- Keep this as `1`.
 
-```bash
-npm run events:new -- --slug housing-support-saudi --name "نزول الدعم السكني" --type monthly --category support
+`core`
+- Required.
+- Defines the event identity and date rules.
+
+`richContent`
+- Required in practice.
+- Holds the public page content and SEO content.
+
+`countryOverrides`
+- Optional map keyed by country code like `sa`, `eg`, `ma`.
+- Use only when one country needs custom SEO or factual wording.
+
+`aliasSlugs`
+- Optional extra slugs that should resolve to the same canonical event.
+
+`countryScope`
+- Required in practice.
+- Allowed values:
+  - `none`
+  - `all`
+  - `custom`
+
+`countryAliasTemplate`
+- Template for auto-generated country aliases when `countryScope` expands by country.
+- Default is `{{slug}}-in-{{countrySlug}}`.
+
+`keywordTemplateSet`
+- Optional but strongly recommended.
+- Lets the build generate reusable keyword variants.
+
+`tier`
+- Priority bucket:
+  - `tier1`
+  - `tier2`
+  - `tier3`
+- Higher tiers get stronger internal priority and sitemap priority.
+
+`publishStatus`
+- Controls public readiness state.
+- Allowed values:
+  - `briefed`
+  - `drafted`
+  - `validated`
+  - `fact_checked`
+  - `editor_approved`
+  - `published`
+  - `monitored`
+
+`canonicalPath`
+- Must be `/holidays/<slug>`.
+
+`canonicalSource`
+- Usually `internal`.
+
+`sourceAuthority`
+- Optional label for the date source style.
+- Typical values are inferred from type, such as:
+  - `hijri-authority`
+  - `official-announcement`
+  - `rule-based-calendar`
+  - `fixed-calendar`
+
+`queueOrder`
+- Optional manual ordering hint.
+
+`notes`
+- Optional internal notes.
+
+## `core` Keys
+
+Example:
+
+```json
+{
+  "id": "world-health-day",
+  "slug": "world-health-day",
+  "name": "يوم الصحة العالمي",
+  "type": "fixed",
+  "category": "support",
+  "month": 4,
+  "day": 7
+}
 ```
 
-Then set in `package.json`:
+### Core identity keys
 
-- `day`
+`id`
+- Internal event id.
+- Keep it the same as the canonical slug.
 
-## Common Arguments
+`slug`
+- Canonical route slug.
+- Must be lowercase and URL-safe.
 
-### Required
+`name`
+- Public Arabic event name.
 
-- `--slug`
-- `--name`
-
-### Optional
-
-- `--type`
+`type`
+- Determines which date fields are required.
+- Allowed values:
   - `fixed`
   - `hijri`
   - `estimated`
   - `monthly`
-- `--category`
-  - use the project taxonomy value that matches the event
-- `--countryCode`
-  - for country-specific events
-- `--countryScope`
-  - `none`
-  - `all`
-  - `custom`
-- `--status`
-  - defaults to `drafted`
-- `--publish true`
-  - only use when the content is fully ready
-- `--build true`
-  - runs `npm run events:build` immediately after scaffolding
+  - `floating`
+  - `easter`
 
-## Country Scope
+`category`
+- Allowed values:
+  - `islamic`
+  - `national`
+  - `school`
+  - `holidays`
+  - `astronomy`
+  - `business`
+  - `support`
 
-### Global event
+`_countryCode`
+- Optional.
+- Use for a single-country event like a country-specific national day or salary date.
 
-Use:
+### Date keys by `type`
 
-- `countryScope: "none"`
-- no `core._countryCode`
+For `fixed`:
+- `month`
+- `day`
 
 Example:
 
-- one worldwide canonical page
+```json
+{
+  "type": "fixed",
+  "month": 4,
+  "day": 7
+}
+```
+
+For `hijri`:
+- `hijriMonth`
+- `hijriDay`
+
+Example:
+
+```json
+{
+  "type": "hijri",
+  "hijriMonth": 9,
+  "hijriDay": 1
+}
+```
+
+For `estimated`:
+- `date`
+
+Use a dynamic pattern when the year changes:
+
+```json
+{
+  "type": "estimated",
+  "date": "{{year}}-07-15"
+}
+```
+
+For `monthly`:
+- `day`
+
+Example:
+
+```json
+{
+  "type": "monthly",
+  "day": 27
+}
+```
+
+For `floating`:
+- `month`
+- `weekday`
+- `nth`
+- optional `offsetDays`
+
+Meaning:
+- `weekday` uses `0` to `6`
+- `nth` means first, second, third, fourth, or fifth matching weekday
+
+Example:
+
+```json
+{
+  "type": "floating",
+  "month": 11,
+  "weekday": 4,
+  "nth": 4,
+  "offsetDays": 0
+}
+```
+
+For `easter`
+- the schema supports this type
+- keep the supporting event content and SEO explicit
+- if you use it, make sure the date behavior is already supported by the downstream runtime before rollout
+
+## `richContent` Keys
+
+This is the content the user actually sees and the search engine actually evaluates.
+
+The safest structure is:
+
+```json
+{
+  "seoTitle": "",
+  "description": "",
+  "keywords": [],
+  "answerSummary": "",
+  "quickFacts": {},
+  "aboutEvent": {},
+  "faq": [],
+  "intentCards": [],
+  "engagementContent": [],
+  "seoMeta": {},
+  "recurringYears": {},
+  "schemaData": {},
+  "relatedSlugs": []
+}
+```
+
+### Core `richContent` fields
+
+`seoTitle`
+- Human-readable page title idea.
+
+`description`
+- Short summary of the event and why it matters.
+
+`keywords`
+- Direct keyword targets for the event page.
+
+`answerSummary`
+- Short, snippet-friendly answer that directly answers "when is it" or "what is it".
+
+`quickFacts`
+- Either an object or an array.
+- Usually easiest as a simple object.
+- Good for date, day of week, category, authority, and countdown facts.
+
+`aboutEvent`
+- Object of section headings to paragraph text.
+- Good default headings:
+  - `ما هو <event>?`
+  - `التاريخ والأصل`
+  - `الأهمية والمكانة`
+  - `كيف يُحيا هذا اليوم`
+
+`faq`
+- Array of `{ "question": "...", "answer": "..." }`.
+- This is the clearest authoring format.
+- This is now the only FAQ format you need to author by hand.
+- The build/runtime pipeline generates the legacy FAQ mirrors automatically.
+
+`intentCards`
+- Optional cards for user action paths.
+
+`engagementContent`
+- Optional short content units like facts, tips, checklist items, or quotes.
+
+`seoMeta`
+- Main technical SEO metadata block.
+
+`recurringYears`
+- Text used for recurring-year explanation tables.
+
+`schemaData`
+- Structured-data helper values used by JSON-LD generation.
+
+`relatedSlugs`
+- Related canonical event slugs that already exist in the repo.
+
+### `seoMeta` keys
+
+Typical shape:
+
+```json
+{
+  "titleTag": "يوم الصحة العالمي {{year}} | كم باقي؟ - ميقات",
+  "metaDescription": "موعد يوم الصحة العالمي {{year}} في 7 أبريل...",
+  "h1": "يوم الصحة العالمي {{year}} | كم باقي؟",
+  "canonicalPath": "/holidays/world-health-day",
+  "ogTitle": "يوم الصحة العالمي {{year}} | كم باقي؟",
+  "ogDescription": "موعد يوم الصحة العالمي {{year}} في 7 أبريل...",
+  "ogImageAlt": "يوم الصحة العالمي {{year}} — {{formattedDate}}",
+  "primaryKeyword": "متى يوم الصحة العالمي {{year}}",
+  "secondaryKeywords": [],
+  "longTailKeywords": [],
+  "datePublished": "2026-04-06T00:00:00.000Z",
+  "dateModified": "2026-04-06T00:00:00.000Z",
+  "inLanguage": "ar",
+  "eventCategory": "support"
+}
+```
+
+Purpose of each key:
+
+`titleTag`
+- Browser title and SERP title baseline.
+
+`metaDescription`
+- Search snippet baseline.
+
+`h1`
+- Main heading.
+
+`canonicalPath`
+- Must match `/holidays/<slug>`.
+
+`ogTitle`, `ogDescription`, `ogImageAlt`
+- Social sharing metadata.
+
+`primaryKeyword`
+- Main SEO phrase.
+
+`secondaryKeywords`
+- Supporting search phrases.
+
+`longTailKeywords`
+- Longer intent-driven phrases.
+
+`datePublished`, `dateModified`
+- ISO timestamps for freshness and article metadata.
+
+`inLanguage`
+- Usually `ar`.
+
+`eventCategory`
+- Same taxonomy family as the event category.
+
+### `schemaData` keys
+
+Typical shape:
+
+```json
+{
+  "eventName": "يوم الصحة العالمي {{year}}",
+  "eventAlternateName": "",
+  "startDate": "{{year}}-04-07",
+  "endDate": "{{year}}-04-07",
+  "eventDescription": "موعد يوم الصحة العالمي {{year}} في 7 أبريل...",
+  "breadcrumbs": [
+    { "name": "الرئيسية", "path": "/" },
+    { "name": "المناسبات", "path": "/holidays" },
+    { "name": "يوم الصحة العالمي", "path": "/holidays/world-health-day" }
+  ],
+  "articleHeadline": "يوم الصحة العالمي {{year}} — العد التنازلي والمعلومات الكاملة"
+}
+```
+
+Purpose:
+
+`eventName`
+- Structured event/article name.
+
+`eventAlternateName`
+- Optional alternate naming.
+
+`startDate`, `endDate`
+- Structured date output for the event.
+
+`eventDescription`
+- Structured-data summary.
+
+`breadcrumbs`
+- Structured breadcrumb trail.
+
+`articleHeadline`
+- Structured article headline.
+
+`faqSchemaItems`
+- Generated automatically from `faq` during compile/runtime compatibility.
+- You do not need to author this field manually for new events.
+
+### Allowed dynamic tokens
+
+Use only supported tokens in dynamic text:
+- `{{year}}`
+- `{{hijriYear}}`
+- `{{nextYear}}`
+- `{{daysRemaining}}`
+- `{{eventName}}`
+- `{{formattedDate}}`
+- `{{hijriDate}}`
+
+Avoid hardcoding fresh years like `2026` in public copy unless the value is intentionally static metadata.
+
+## Country Behavior
+
+### Global canonical event
+
+Use:
+- no `core._countryCode`
+- `countryScope: "none"`
+
+Good when:
+- the event is one global page
+- no country aliases are needed
 
 ### Multi-country canonical event
 
 Use:
-
-- `countryScope: "all"`
 - no `core._countryCode`
+- `countryScope: "all"`
 
-This is useful when:
-
-- one event should generate country-aware variants automatically
-- country pages can appear in filters, routing, and sitemap logic
+Good when:
+- one canonical page should also serve country-specific search demand
+- the build should generate country route aliases automatically
+- the event should be available in country filters and the holiday sitemap
 
 ### Single-country event
 
 Use:
-
+- `core._countryCode`
 - `countryScope: "none"`
-- set `core._countryCode`
 
-This is useful when the event belongs to one country only.
+Good when:
+- the event belongs to one country only
 
-## Authoring Checklist
+### `countryOverrides`
 
-Before you publish a new event, make sure:
+Use `countryOverrides` only when a specific country needs custom text.
 
-- the slug is clean and lowercase
-- the event name is correct in Arabic
-- the schedule fields are filled correctly
-- `canonicalPath` matches `/holidays/<slug>`
-- `publishStatus` is still `drafted` until content is ready
-- `research.json` includes real sources
-- `qa.json` reflects actual status
-- related slugs point to real events
-- SEO title, description, and FAQ are not placeholders
+Example:
 
-## Publish Workflow
-
-Recommended flow:
-
-1. create the event as `drafted`
-2. complete `package.json`
-3. fill `research.json`
-4. complete `qa.json`
-5. run build
-6. run validation
-7. only then move toward `published`
-
-If you want to publish later with a dedicated script, use the repo's publish flow rather than hand-editing generated files.
-
-## Troubleshooting
-
-### “Why is my event not showing up?”
-
-Check:
-
-- the folder exists under `src/data/holidays/events/<slug>/`
-- JSON is valid
-- you ran `npm run dev` or `npm run build`
-- validation does not report blocking errors
-
-### “Do I need to edit `src/lib/events/index.js`?”
-
-No.
-
-That manual overlay workflow has been removed. New events are picked up through the generated indexes.
-
-### “Do I need to edit `src/lib/event-content/index.js`?”
-
-No.
-
-Content is discovered through the generated output after rebuild.
-
-### “Should I edit `src/data/holidays/generated/*`?”
-
-No.
-
-Those files are build output only.
-
-## Recommended Minimal Workflow
-
-For most teammates, this is enough:
-
-```bash
-npm run events:new -- --slug your-slug --name "اسم المناسبة" --type fixed --category holidays
-npm run validate:holidays:slug -- --slug your-slug
-npm run dev
+```json
+{
+  "countryOverrides": {
+    "sa": {
+      "seoTitle": "عيد الرجل في السعودية {{year}}",
+      "description": "شرح محلي خاص بالسعودية...",
+      "keywords": [
+        "عيد الرجل في السعودية {{year}}"
+      ],
+      "aliasSlugs": [
+        "eid-al-rajul-in-saudi"
+      ],
+      "seoMeta": {
+        "h1": "عيد الرجل في السعودية {{year}}"
+      }
+    }
+  }
+}
 ```
 
-Then edit only:
+Do not put country-specific wording into the base content unless the whole event is single-country.
 
-- `src/data/holidays/events/your-slug/package.json`
-- `src/data/holidays/events/your-slug/research.json`
-- `src/data/holidays/events/your-slug/qa.json`
+## `research.json` Structure
 
-## Related Docs
+This is the recommended shape:
 
-- `src/data/holidays/README.md`
-- `docs/holidays-architecture-plan.md`
+```json
+{
+  "slug": "your-slug",
+  "locale": "ar",
+  "capturedAt": "2026-04-17T00:00:00.000Z",
+  "primaryQueries": [],
+  "competitors": [],
+  "coverageMatrix": [],
+  "keywordGaps": [],
+  "unansweredQuestions": [],
+  "differentiationIdeas": [],
+  "factSources": [],
+  "notes": ""
+}
+```
+
+### Research keys
+
+`slug`
+- Must match the event slug.
+
+`locale`
+- Usually `ar`.
+
+`capturedAt`
+- ISO timestamp for the research snapshot.
+
+`primaryQueries`
+- Main search queries you want this page to rank for.
+
+`competitors`
+- Existing ranking pages or official sources.
+
+Recommended competitor item:
+
+```json
+{
+  "site": "who.int",
+  "type": "official",
+  "url": "https://example.com",
+  "focus": ["التاريخ الرسمي", "الموضوع"],
+  "gaps": ["لا يستهدف نية الباحث العربي"]
+}
+```
+
+`coverageMatrix`
+- Keyword-to-purpose mapping.
+
+Example:
+
+```json
+{
+  "keyword": "متى يوم الصحة العالمي {{year}}",
+  "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي بسرعة."
+}
+```
+
+`keywordGaps`
+- Important missing angles in competitor content.
+
+`unansweredQuestions`
+- Real user questions the page should answer.
+
+`differentiationIdeas`
+- Why this page can be better than competitors.
+
+`factSources`
+- Official or trustworthy URLs used to verify facts.
+
+Example:
+
+```json
+{
+  "label": "WHO: World Health Day",
+  "url": "https://www.who.int/campaigns/world-health-day"
+}
+```
+
+`notes`
+- Freeform editorial note about SERP patterns, source confidence, or SEO angle.
+
+## `qa.json` Structure
+
+Recommended shape:
+
+```json
+{
+  "slug": "your-slug",
+  "tier": "tier3",
+  "publishStatus": "drafted",
+  "checks": {
+    "contentReady": false,
+    "factChecked": false,
+    "schemaValid": false,
+    "seoValidated": false,
+    "hasHardcodedYear": false
+  },
+  "notes": [],
+  "updatedAt": "2026-04-17T00:00:00.000Z"
+}
+```
+
+### QA keys
+
+`slug`
+- Must match the event slug.
+
+`tier`
+- Workflow copy of the content tier.
+
+`publishStatus`
+- Workflow copy of the package publish status.
+
+`checks.contentReady`
+- Set to `true` when the page content is truly ready for users.
+
+`checks.factChecked`
+- Set to `true` after factual review.
+
+`checks.schemaValid`
+- Set to `true` after structured-data review.
+
+`checks.seoValidated`
+- Set to `true` after SEO review.
+
+`checks.hasHardcodedYear`
+- Should usually stay `false`.
+
+`notes`
+- Short QA or source notes.
+
+`updatedAt`
+- ISO timestamp of the latest review.
+
+## Recommended Content Rules
+
+For strong indexing and ranking potential:
+- write an `answerSummary` that answers the main query immediately
+- include at least 6 strong FAQ entries for high-priority events
+- use real `relatedSlugs`
+- include trustworthy `factSources` in `research.json`
+- keep `titleTag`, `metaDescription`, `h1`, and `schemaData` aligned
+- author one clean `faq` array and let the compiler generate FAQ mirrors automatically
+- avoid placeholder text like `TODO`, `TBD`, or `قريباً`
+- avoid unexplained hardcoded current years in body copy
+- keep country-neutral base content when the event expands across countries
+
+## Example Event: `عيد الرجل`
+
+This is a demo example only to show the contract.
+
+### Folder
+
+```text
+src/data/holidays/events/eid-al-rajul/
+  package.json
+  research.json
+  qa.json
+```
+
+### Example `package.json`
+
+```json
+{
+  "schemaVersion": 1,
+  "core": {
+    "id": "eid-al-rajul",
+    "slug": "eid-al-rajul",
+    "name": "عيد الرجل",
+    "type": "fixed",
+    "category": "support",
+    "month": 11,
+    "day": 19
+  },
+  "richContent": {
+    "seoTitle": "متى عيد الرجل {{year}} — عد تنازلي ومعلومات كاملة",
+    "description": "تعرف على موعد عيد الرجل {{year}} مع عد تنازلي مباشر وشرح مختصر لفكرة المناسبة وكيفية الاحتفاء بها ورسائلها الاجتماعية.",
+    "keywords": [
+      "متى عيد الرجل {{year}}",
+      "كم باقي على عيد الرجل {{year}}",
+      "موعد عيد الرجل {{year}}"
+    ],
+    "answerSummary": "عيد الرجل {{year}} يوافق {{formattedDate}}. توضح هذه الصفحة الموعد، والعد التنازلي، وفكرة المناسبة، وأبرز الأسئلة الشائعة حولها.",
+    "quickFacts": {
+      "الموعد": "{{formattedDate}}",
+      "يوم الأسبوع": "يُحتسب تلقائياً",
+      "كم يوم باقي": "{{daysRemaining}} يوم",
+      "الفئة": "الدعم الاجتماعي"
+    },
+    "aboutEvent": {
+      "ما هو عيد الرجل؟": "عيد الرجل مناسبة اجتماعية رمزية يزداد البحث عنها عند اقتراب موعدها لمعرفة التاريخ وأفكار المشاركة والرسائل المناسبة.",
+      "التاريخ والأصل": "يرتبط هذا المثال التوضيحي بتاريخ ثابت داخل السنة الميلادية، ولذلك يبقى من السهل التخطيط له مسبقاً.",
+      "الأهمية والمكانة": "تكمن قيمة الصفحة في الإجابة المباشرة عن الموعد، ثم توسيع المحتوى ليغطي الفكرة والرسائل والأسئلة العملية.",
+      "كيف يُحيا هذا اليوم": "يمكن إحياء المناسبة عبر رسائل تقدير، أو مشاركة اجتماعية لطيفة، أو نشاط بسيط يناسب طبيعة الجمهور المستهدف."
+    },
+    "faq": [
+      {
+        "question": "متى عيد الرجل {{year}}؟",
+        "answer": "عيد الرجل {{year}} يوافق {{formattedDate}}."
+      },
+      {
+        "question": "كم باقي على عيد الرجل؟",
+        "answer": "يتبقى على عيد الرجل {{daysRemaining}} يوماً."
+      },
+      {
+        "question": "ما هو عيد الرجل؟",
+        "answer": "هو مثال توضيحي هنا على مناسبة اجتماعية تحتاج إلى صفحة منظمة تجيب عن الموعد والمعنى وطريقة الاحتفاء."
+      },
+      {
+        "question": "كيف أحتفل بعيد الرجل؟",
+        "answer": "يمكن الاحتفال برسالة لطيفة أو لفتة تقدير أو مشاركة اجتماعية مناسبة لطبيعة المناسبة."
+      },
+      {
+        "question": "متى عيد الرجل {{nextYear}}؟",
+        "answer": "إذا بقيت المناسبة ثابتة فسيكون الموعد في اليوم نفسه من السنة القادمة."
+      },
+      {
+        "question": "لماذا يبحث الناس عن عيد الرجل؟",
+        "answer": "لأنهم يريدون معرفة الموعد الصحيح وأفكار التهنئة والمشاركة قبل حلول المناسبة."
+      }
+    ],
+    "seoMeta": {
+      "titleTag": "عيد الرجل {{year}} | كم باقي؟ - ميقات",
+      "metaDescription": "تعرف على موعد عيد الرجل {{year}} مع عد تنازلي مباشر ومعلومات مختصرة ومنظمة.",
+      "h1": "عيد الرجل {{year}} | كم باقي؟",
+      "canonicalPath": "/holidays/eid-al-rajul",
+      "ogTitle": "عيد الرجل {{year}} | كم باقي؟",
+      "ogDescription": "تعرف على موعد عيد الرجل {{year}} مع عد تنازلي مباشر ومعلومات مختصرة ومنظمة.",
+      "ogImageAlt": "عيد الرجل {{year}} — {{formattedDate}}",
+      "primaryKeyword": "متى عيد الرجل {{year}}",
+      "secondaryKeywords": [
+        "كم باقي على عيد الرجل {{year}}",
+        "موعد عيد الرجل {{year}}"
+      ],
+      "longTailKeywords": [
+        "متى عيد الرجل {{year}}",
+        "كم باقي على عيد الرجل",
+        "ما هو عيد الرجل",
+        "كيف أحتفل بعيد الرجل"
+      ],
+      "datePublished": "2026-04-17T00:00:00.000Z",
+      "dateModified": "2026-04-17T00:00:00.000Z",
+      "inLanguage": "ar",
+      "eventCategory": "support"
+    },
+    "recurringYears": {
+      "contextParagraph": "موعد عيد الرجل ثابت في التاريخ نفسه كل عام ضمن هذا المثال التوضيحي، لذلك يساعد جدول السنوات على معرفة توافقه مع يوم الأسبوع والتخطيط المبكر له.",
+      "sourceNote": "يُراجع المصدر الرسمي أو الجهة المنظمة لتأكيد الموعد النهائي.",
+      "columns": ["السنة", "التاريخ", "ملاحظة"],
+      "highlightCurrentYear": true
+    },
+    "schemaData": {
+      "eventName": "عيد الرجل {{year}}",
+      "eventAlternateName": "",
+      "startDate": "{{year}}-11-19",
+      "endDate": "{{year}}-11-19",
+      "eventDescription": "تعرف على موعد عيد الرجل {{year}} مع عد تنازلي مباشر ومعلومات مختصرة ومنظمة.",
+      "breadcrumbs": [
+        { "name": "الرئيسية", "path": "/" },
+        { "name": "المناسبات", "path": "/holidays" },
+        { "name": "عيد الرجل", "path": "/holidays/eid-al-rajul" }
+      ],
+      "articleHeadline": "عيد الرجل {{year}} — العد التنازلي والمعلومات الكاملة"
+    },
+    "relatedSlugs": [
+      "world-health-day",
+      "international-womens-day"
+    ]
+  },
+  "countryOverrides": {},
+  "aliasSlugs": [],
+  "countryScope": "none",
+  "keywordTemplateSet": {
+    "base": [
+      "متى عيد الرجل {{year}}",
+      "كم باقي على عيد الرجل {{year}}",
+      "موعد عيد الرجل {{year}}"
+    ],
+    "country": []
+  },
+  "tier": "tier3",
+  "publishStatus": "drafted",
+  "canonicalPath": "/holidays/eid-al-rajul",
+  "canonicalSource": "internal",
+  "sourceAuthority": "fixed-calendar"
+}
+```
+
+### Example `research.json`
+
+```json
+{
+  "slug": "eid-al-rajul",
+  "locale": "ar",
+  "capturedAt": "2026-04-17T00:00:00.000Z",
+  "primaryQueries": [
+    "متى عيد الرجل {{year}}",
+    "كم باقي على عيد الرجل {{year}}",
+    "موعد عيد الرجل {{year}}"
+  ],
+  "competitors": [],
+  "coverageMatrix": [
+    {
+      "keyword": "متى عيد الرجل {{year}}",
+      "whyItMatters": "أوضح صيغة مباشرة للباحث الذي يريد التاريخ الحالي."
+    },
+    {
+      "keyword": "كم باقي على عيد الرجل {{year}}",
+      "whyItMatters": "تتناسب مع نية العد التنازلي في صفحات /holidays."
+    }
+  ],
+  "keywordGaps": [
+    "شرح المعنى الاجتماعي للمناسبة",
+    "أسئلة التهنئة والاحتفاء",
+    "صفحة عربية منظمة تجمع الموعد والشرح"
+  ],
+  "unansweredQuestions": [
+    "ما هو عيد الرجل؟",
+    "كيف أحتفل بعيد الرجل؟"
+  ],
+  "differentiationIdeas": [
+    "جواب مباشر عن الموعد",
+    "FAQ عملي",
+    "محتوى عربي منظم بدلاً من نص قصير جداً"
+  ],
+  "factSources": [],
+  "notes": "مثال توضيحي على ملف بحث يمكن توسيعه لاحقاً بمصادر فعلية إذا كانت المناسبة حقيقية."
+}
+```
+
+### Example `qa.json`
+
+```json
+{
+  "slug": "eid-al-rajul",
+  "tier": "tier3",
+  "publishStatus": "drafted",
+  "checks": {
+    "contentReady": false,
+    "factChecked": false,
+    "schemaValid": false,
+    "seoValidated": false,
+    "hasHardcodedYear": false
+  },
+  "notes": [],
+  "updatedAt": "2026-04-17T00:00:00.000Z"
+}
+```
+
+## AI Checklist
+
+If you give this file to an AI and ask it to add an event, the AI should:
+
+1. Choose a canonical slug in lowercase English slug format.
+2. Create `src/data/holidays/events/<slug>/`.
+3. Create `package.json`, `research.json`, and `qa.json`.
+4. Fill `core` with the right `type`, `category`, and date keys.
+5. Fill `richContent` with real Arabic content, not placeholders.
+6. Keep `canonicalPath` exactly `/holidays/<slug>`.
+7. Author a single clean `faq` array only.
+8. Add real `relatedSlugs` only if those events already exist.
+9. Leave generated files alone.
+10. Run:
+
+```bash
+npm run events:build
+npm run validate:holidays:slug -- --slug <slug>
+```
+
+11. Only publish with:
+
+```bash
+npm run events:publish -- --slug <slug> --status published
+```
+
+## Files The AI Must Never Edit Manually
+
+- `src/data/holidays/generated/*`
+- `src/lib/events/generated-index.js`
+- `src/lib/events/generated-aliases.js`
+- `src/lib/events/manifest.json`
+- `src/lib/events/items/*`
+- `src/lib/events/packages/items/*`
+- `src/lib/event-content/items/*`
+- `src/lib/events/index.js`
+- `src/lib/event-content/index.js`
+
+## Summary
+
+If you remember only one thing, remember this:
+
+- author in `src/data/holidays/events/<slug>/`
+- never author inside runtime/generated folders
+- build and validate
+- publish only when the event is real and ready

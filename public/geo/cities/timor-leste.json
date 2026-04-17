@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "dili",
+    "city_name_ar": "ديلي",
+    "city_name_en": "Dili",
+    "country_slug": "timor-leste",
+    "country_code": "TL",
+    "country_name_ar": "تيمور الشرقية",
+    "country_name_en": "Timor Leste",
+    "timezone": "Asia/Dili",
+    "lat": -8.55861,
+    "lon": 125.57361,
+    "is_capital": true,
+    "priority": 150000,
+    "population": 150000
+  }
+]

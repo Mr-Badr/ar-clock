@@ -1,4 +1,5 @@
 import { getCountryByCode } from '../../src/lib/events/country-dictionary.js';
+import { buildAuthoringFaqContent } from '../../src/lib/holidays/faq-normalizer.js';
 import {
   buildAboutEvent,
   buildBaseKeywords,
@@ -433,11 +434,11 @@ export function buildNormalizedRichContent(pkg: PackageLike, nowIso: string) {
   };
 
   const schemaData = {
-    ...buildSchemaData(core, faq),
+    ...buildSchemaData(core),
     eventDescription: buildSchemaDescription(core),
   };
 
-  return {
+  return buildAuthoringFaqContent({
     seoTitle: `متى ${core.name} {{year}} — عد تنازلي دقيق`,
     description: buildMetaDescription(core),
     keywords: buildBaseKeywords(core),
@@ -445,7 +446,6 @@ export function buildNormalizedRichContent(pkg: PackageLike, nowIso: string) {
     quickFacts: buildQuickFactsObject(core),
     aboutEvent: buildGenericAboutEvent(core),
     faq,
-    faqItems: faq.map((item) => ({ q: item.question, a: item.answer })),
     intentCards: buildIntentCards(core.category),
     engagementContent:
       core.category === 'school'
@@ -478,7 +478,7 @@ export function buildNormalizedRichContent(pkg: PackageLike, nowIso: string) {
     recurringYears: buildRecurringYearsNormalized(core),
     schemaData,
     relatedSlugs: pkg.richContent?.relatedSlugs || [],
-  };
+  });
 }
 
 export function buildSchoolStartRichContent(pkg: PackageLike, nowIso: string) {

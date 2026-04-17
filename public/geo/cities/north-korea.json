@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "pyongyang",
+    "city_name_ar": "بيونغيانغ",
+    "city_name_en": "Pyongyang",
+    "country_slug": "north-korea",
+    "country_code": "KP",
+    "country_name_ar": "كوريا الشمالية",
+    "country_name_en": "North Korea",
+    "timezone": "Asia/Pyongyang",
+    "lat": 39.03385,
+    "lon": 125.75432,
+    "is_capital": true,
+    "priority": 3222000,
+    "population": 3222000
+  }
+]

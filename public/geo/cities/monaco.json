@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "monaco",
+    "city_name_ar": "موناكو",
+    "city_name_en": "Monaco",
+    "country_slug": "monaco",
+    "country_code": "MC",
+    "country_name_ar": "موناكو",
+    "country_name_en": "Monaco",
+    "timezone": "Europe/Monaco",
+    "lat": 43.73718,
+    "lon": 7.42145,
+    "is_capital": true,
+    "priority": 32965,
+    "population": 32965
+  }
+]

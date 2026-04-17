@@ -4,18 +4,19 @@
  */
 import { getAllCountrySlugs } from '@/lib/db/queries/countries';
 import { getSiteUrl } from '@/lib/site-config';
+import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
 const BASE = getSiteUrl();
 
 export async function GET() {
   const slugs = await getAllCountrySlugs();
-  const todayIso = new Date().toISOString().split('T')[0];
+  const lastmod = getSitemapLastModifiedDate();
 
   const entries = slugs.map(
     slug => `
   <url>
     <loc>${BASE}/date/country/${slug}</loc>
-    <lastmod>${todayIso}</lastmod>
+    <lastmod>${lastmod}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>`

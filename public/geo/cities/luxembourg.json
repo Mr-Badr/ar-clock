@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "luxembourg",
+    "city_name_ar": "لوكسمبورغ",
+    "city_name_en": "Luxembourg",
+    "country_slug": "luxembourg",
+    "country_code": "LU",
+    "country_name_ar": "لوكسمبورغ",
+    "country_name_en": "Luxembourg",
+    "timezone": "Europe/Luxembourg",
+    "lat": 49.60982,
+    "lon": 6.13268,
+    "is_capital": true,
+    "priority": 76684,
+    "population": 76684
+  }
+]

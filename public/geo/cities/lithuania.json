@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "vilnius",
+    "city_name_ar": "فيلنيوس",
+    "city_name_en": "Vilnius",
+    "country_slug": "lithuania",
+    "country_code": "LT",
+    "country_name_ar": "لتوانيا",
+    "country_name_en": "Lithuania",
+    "timezone": "Europe/Vilnius",
+    "lat": 54.68916,
+    "lon": 25.2798,
+    "is_capital": true,
+    "priority": 542366,
+    "population": 542366
+  }
+]

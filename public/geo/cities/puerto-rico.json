@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "san-juan",
+    "city_name_ar": "سان خوان",
+    "city_name_en": "San Juan",
+    "country_slug": "puerto-rico",
+    "country_code": "PR",
+    "country_name_ar": "بورتوريكو",
+    "country_name_en": "Puerto Rico",
+    "timezone": "America/Puerto_Rico",
+    "lat": 18.46633,
+    "lon": -66.10572,
+    "is_capital": true,
+    "priority": 418140,
+    "population": 418140
+  }
+]

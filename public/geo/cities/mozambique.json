@@ -1,0 +1,62 @@
+[
+  {
+    "city_slug": "maputo",
+    "city_name_ar": "مابوتو",
+    "city_name_en": "Maputo",
+    "country_slug": "mozambique",
+    "country_code": "MZ",
+    "country_name_ar": "موزمبيق",
+    "country_name_en": "Mozambique",
+    "timezone": "Africa/Maputo",
+    "lat": -25.96553,
+    "lon": 32.58322,
+    "is_capital": true,
+    "priority": 1254837,
+    "population": 1254837
+  },
+  {
+    "city_slug": "matola",
+    "city_name_ar": "ماتولا",
+    "city_name_en": "Matola",
+    "country_slug": "mozambique",
+    "country_code": "MZ",
+    "country_name_ar": "موزمبيق",
+    "country_name_en": "Mozambique",
+    "timezone": "Africa/Maputo",
+    "lat": -25.96222,
+    "lon": 32.45889,
+    "is_capital": false,
+    "priority": 1198988,
+    "population": 1198988
+  },
+  {
+    "city_slug": "nampula",
+    "city_name_ar": "نامبولا",
+    "city_name_en": "Nampula",
+    "country_slug": "mozambique",
+    "country_code": "MZ",
+    "country_name_ar": "موزمبيق",
+    "country_name_en": "Mozambique",
+    "timezone": "Africa/Maputo",
+    "lat": -15.11646,
+    "lon": 39.2666,
+    "is_capital": false,
+    "priority": 770379,
+    "population": 770379
+  },
+  {
+    "city_slug": "beira",
+    "city_name_ar": "بيرا",
+    "city_name_en": "Beira",
+    "country_slug": "mozambique",
+    "country_code": "MZ",
+    "country_name_ar": "موزمبيق",
+    "country_name_en": "Mozambique",
+    "timezone": "Africa/Maputo",
+    "lat": -19.84361,
+    "lon": 34.83889,
+    "is_capital": false,
+    "priority": 687764,
+    "population": 687764
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "tallinn",
+    "city_name_ar": "تالين",
+    "city_name_en": "Tallinn",
+    "country_slug": "estonia",
+    "country_code": "EE",
+    "country_name_ar": "إستونيا",
+    "country_name_en": "Estonia",
+    "timezone": "Europe/Tallinn",
+    "lat": 59.43696,
+    "lon": 24.75353,
+    "is_capital": true,
+    "priority": 394024,
+    "population": 394024
+  }
+]

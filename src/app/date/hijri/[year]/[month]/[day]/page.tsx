@@ -19,29 +19,23 @@ import { getSiteUrl } from '@/lib/site-config';
 const BASE_URL = getSiteUrl();
 
 export async function generateStaticParams() {
-  // Build only the current Hijri year; older/future pages render on demand.
-  const now = new Date();
-  const isoNow = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}-${String(now.getUTCDate()).padStart(2, '0')}`;
-  let currentHijriYear = 1447;
   try {
-    const h = convertDate({ date: isoNow, toCalendar: 'hijri', method: 'umalqura' });
-    currentHijriYear = h.year;
-  } catch { }
+    const now = new Date();
+    const isoDate = [
+      String(now.getUTCFullYear()),
+      String(now.getUTCMonth() + 1).padStart(2, '0'),
+      String(now.getUTCDate()).padStart(2, '0'),
+    ].join('-');
+    const hijri = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' });
 
-  const params = [];
-  for (let hy = currentHijriYear; hy <= currentHijriYear; hy++) {
-    for (let hm = 1; hm <= 12; hm++) {
-      const daysInMonth = hm % 2 !== 0 ? 30 : 29;
-      for (let hd = 1; hd <= daysInMonth; hd++) {
-        params.push({
-          year: String(hy),
-          month: String(hm).padStart(2, '0'),
-          day: String(hd).padStart(2, '0'),
-        });
-      }
-    }
+    return [{
+      year: String(hijri.year),
+      month: String(hijri.month).padStart(2, '0'),
+      day: String(hijri.day).padStart(2, '0'),
+    }];
+  } catch {
+    return [{ year: '1447', month: '01', day: '01' }];
   }
-  return params;
 }
 
 export async function generateMetadata({
@@ -67,6 +61,14 @@ export async function generateMetadata({
     title: `${hDay} ${monthAr} ${hYear} — ${gregorian.formatted.ar}`,
     description: `تاريخ ${hDay} ${monthAr} ${hYear} هجري يوافق ${gregorian.formatted.ar} ميلادي.`,
     alternates: { canonical: `${BASE_URL}/date/hijri/${year}/${month}/${day}` },
+    robots: {
+      index: false,
+      follow: true,
+      googleBot: {
+        index: false,
+        follow: true,
+      },
+    },
     openGraph: {
       title: `${hDay} ${monthAr} ${hYear} هـ — ${gregorian.formatted.ar}م | ميقاتنا`,
       url: `${BASE_URL}/date/hijri/${year}/${month}/${day}`,

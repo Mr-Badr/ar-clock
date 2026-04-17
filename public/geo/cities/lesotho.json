@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "maseru",
+    "city_name_ar": "ماسيرو",
+    "city_name_en": "Maseru",
+    "country_slug": "lesotho",
+    "country_code": "LS",
+    "country_name_ar": "ليسوتو",
+    "country_name_en": "Lesotho",
+    "timezone": "Africa/Maseru",
+    "lat": -29.31667,
+    "lon": 27.48333,
+    "is_capital": true,
+    "priority": 359753,
+    "population": 359753
+  }
+]

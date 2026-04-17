@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "kralendijk",
+    "city_name_ar": "كراليندايك",
+    "city_name_en": "Kralendijk",
+    "country_slug": "bonaire",
+    "country_code": "BQ",
+    "country_name_ar": "Bonaire",
+    "country_name_en": "-saint-eustatius-and-saba-",
+    "timezone": "America/Kralendijk",
+    "lat": 12.15,
+    "lon": -68.26667,
+    "is_capital": true,
+    "priority": 10620,
+    "population": 10620
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "city_slug": "santo-domingo",
+    "city_name_ar": "سانتو دومينغو",
+    "city_name_en": "Santo Domingo",
+    "country_slug": "dominican-republic",
+    "country_code": "DO",
+    "country_name_ar": "جمهورية الدومينيكان",
+    "country_name_en": "Dominican Republic",
+    "timezone": "America/Santo_Domingo",
+    "lat": 18.47186,
+    "lon": -69.89232,
+    "is_capital": true,
+    "priority": 2201941,
+    "population": 2201941
+  },
+  {
+    "city_slug": "santiago-de-los-caballeros",
+    "city_name_ar": "سانتياغو دي لوس كاباليروس",
+    "city_name_en": "Santiago de los Caballeros",
+    "country_slug": "dominican-republic",
+    "country_code": "DO",
+    "country_name_ar": "جمهورية الدومينيكان",
+    "country_name_en": "Dominican Republic",
+    "timezone": "America/Santo_Domingo",
+    "lat": 19.45036,
+    "lon": -70.69085,
+    "is_capital": false,
+    "priority": 1200000,
+    "population": 1200000
+  },
+  {
+    "city_slug": "santo-domingo-oeste",
+    "city_name_ar": "سانتو دومينغو ويستي",
+    "city_name_en": "Santo Domingo Oeste",
+    "country_slug": "dominican-republic",
+    "country_code": "DO",
+    "country_name_ar": "جمهورية الدومينيكان",
+    "country_name_en": "Dominican Republic",
+    "timezone": "America/Santo_Domingo",
+    "lat": 18.5,
+    "lon": -70,
+    "is_capital": false,
+    "priority": 701269,
+    "population": 701269
+  },
+  {
+    "city_slug": "santo-domingo-este",
+    "city_name_ar": "سانتو دومينغو يستي",
+    "city_name_en": "Santo Domingo Este",
+    "country_slug": "dominican-republic",
+    "country_code": "DO",
+    "country_name_ar": "جمهورية الدومينيكان",
+    "country_name_en": "Dominican Republic",
+    "timezone": "America/Santo_Domingo",
+    "lat": 18.48511,
+    "lon": -69.84757,
+    "is_capital": false,
+    "priority": 700000,
+    "population": 700000
+  }
+]

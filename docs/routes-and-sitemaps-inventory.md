@@ -71,21 +71,20 @@ Primary sitemap submission URL:
 - `/sitemap.xml`
 
 ### Feature sitemaps
+- `/calculators/sitemap.xml`
 - `/economie/sitemap.xml`
 - `/holidays/sitemap.xml`
 - `/time-difference/sitemap.xml`
-- `/date/sitemap.xml`
-- `/date/gregorian/sitemap.xml`
-- `/date/hijri/sitemap.xml`
+- `/time-now/sitemap.xml`
+- `/mwaqit-al-salat/sitemap.xml`
+- `/date/sitemap.xml` — feature-local diagnostic index
+- `/date/gregorian/sitemap.xml` — intentionally empty in bridge mode
+- `/date/hijri/sitemap.xml` — intentionally empty in bridge mode
 
 ### Date child sitemap routes
 - `/date/sitemaps/static`
 - `/date/sitemaps/countries`
 - `/date/sitemaps/calendars`
-
-### Country-sharded sitemap routes
-- `/time-now/sitemap/[country].xml`
-- `/mwaqit-al-salat/sitemap/[country].xml`
 
 ## Sitemap Coverage Map
 
@@ -95,11 +94,28 @@ Primary sitemap submission URL:
 - `/mwaqit-al-salat`
 - `/holidays`
 - `/time-difference`
+- `/calculators`
 - `/map`
 - `/about`
+- `/editorial-policy`
+- `/terms`
 - `/disclaimer`
 - `/privacy`
 - `/contact`
+
+### Covered by `/calculators/sitemap.xml`
+- `/calculators`
+- `/calculators/age`
+- `/calculators/age/*`
+- `/calculators/building`
+- `/calculators/building/cement`
+- `/calculators/building/rebar`
+- `/calculators/building/tiles`
+- `/calculators/building/[country]`
+- `/calculators/end-of-service-benefits`
+- `/calculators/monthly-installment`
+- `/calculators/vat`
+- `/calculators/percentage`
 
 ### Covered by `/economie/sitemap.xml`
 - `/economie`
@@ -118,11 +134,11 @@ Primary sitemap submission URL:
 - `/time-difference`
 - popular `/time-difference/[from]/[to]` pairs from the data source
 
-### Covered by `/time-now/sitemap/[country].xml`
+### Covered by `/time-now/sitemap.xml`
 - `/time-now/[country]`
 - `/time-now/[country]/[city]`
 
-### Covered by `/mwaqit-al-salat/sitemap/[country].xml`
+### Covered by `/mwaqit-al-salat/sitemap.xml`
 - `/mwaqit-al-salat/[country]`
 - `/mwaqit-al-salat/[country]/[city]`
 
@@ -142,36 +158,30 @@ Primary sitemap submission URL:
 - `/date/calendar/[year]`
 - `/date/calendar/hijri/[year]`
 
-### Covered by `/date/gregorian/sitemap.xml`
-- `/date/[year]/[month]/[day]` for current year ±1
-
-### Covered by `/date/hijri/sitemap.xml`
-- `/date/hijri/[year]/[month]/[day]` for current Hijri year ±1
-
 ## Intentionally Not In Sitemaps
 
 - `/offline` — utility/offline fallback page
 - `/date/country` — redirects to a detected country page
 - `/date/calendar` — redirects to the current Gregorian year calendar
 - `/date/calendar/hijri` — redirects to the current Hijri year calendar
+- `/date/[year]/[month]/[day]` — bridge mode keeps daily Gregorian date pages reachable but not submitted
+- `/date/hijri/[year]/[month]/[day]` — bridge mode keeps daily Hijri date pages reachable but not submitted
 - API routes under `/api/*`
 - metadata/image/helper routes such as Open Graph image handlers
 
 ## Google Search Console Submission List
 
-Submit this main sitemap:
+Recommended steady-state submission:
 - `https://miqatona.com/sitemap-index.xml`
 
-Optional manual submissions:
+Optional temporary diagnostic submissions:
 - `https://miqatona.com/sitemap.xml`
 - `https://miqatona.com/economie/sitemap.xml`
 - `https://miqatona.com/holidays/sitemap.xml`
 - `https://miqatona.com/time-difference/sitemap.xml`
-- `https://miqatona.com/date/sitemap.xml`
-- `https://miqatona.com/date/gregorian/sitemap.xml`
-- `https://miqatona.com/date/hijri/sitemap.xml`
+- `https://miqatona.com/time-now/sitemap.xml`
+- `https://miqatona.com/mwaqit-al-salat/sitemap.xml`
 - `https://miqatona.com/date/sitemaps/static`
 - `https://miqatona.com/date/sitemaps/countries`
 - `https://miqatona.com/date/sitemaps/calendars`
-
-Do not submit country shard sitemaps manually unless you have a specific reason. They are already discoverable from the root sitemap index.
+- `https://miqatona.com/date/sitemap.xml` — optional feature-local diagnostic index

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "bratislava",
+    "city_name_ar": "براتيسلافا",
+    "city_name_en": "Bratislava",
+    "country_slug": "slovakia",
+    "country_code": "SK",
+    "country_name_ar": "سلوفاكيا",
+    "country_name_en": "Slovakia",
+    "timezone": "Europe/Bratislava",
+    "lat": 48.14816,
+    "lon": 17.10674,
+    "is_capital": true,
+    "priority": 423737,
+    "population": 423737
+  }
+]

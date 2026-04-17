@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "djibouti",
+    "city_name_ar": "جيبوتي",
+    "city_name_en": "Djibouti",
+    "country_slug": "djibouti",
+    "country_code": "DJ",
+    "country_name_ar": "جيبوتي",
+    "country_name_en": "Djibouti",
+    "timezone": "Africa/Djibouti",
+    "lat": 11.58901,
+    "lon": 43.14503,
+    "is_capital": true,
+    "priority": 626512,
+    "population": 626512
+  }
+]

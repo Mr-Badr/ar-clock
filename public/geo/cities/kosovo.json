@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "pristina",
+    "city_name_ar": "بريشتينا",
+    "city_name_en": "Pristina",
+    "country_slug": "kosovo",
+    "country_code": "XK",
+    "country_name_ar": "كوسوفو",
+    "country_name_en": "Kosovo",
+    "timezone": "Europe/Belgrade",
+    "lat": 42.67272,
+    "lon": 21.16688,
+    "is_capital": true,
+    "priority": 550000,
+    "population": 550000
+  }
+]

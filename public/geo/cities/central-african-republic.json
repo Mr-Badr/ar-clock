@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "bangui",
+    "city_name_ar": "بنغي",
+    "city_name_en": "Bangui",
+    "country_slug": "central-african-republic",
+    "country_code": "CF",
+    "country_name_ar": "جمهورية إفريقيا الوسطى",
+    "country_name_en": "Central African Republic",
+    "timezone": "Africa/Bangui",
+    "lat": 4.36122,
+    "lon": 18.55496,
+    "is_capital": true,
+    "priority": 812407,
+    "population": 812407
+  }
+]

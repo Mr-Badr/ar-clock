@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "dublin",
+    "city_name_ar": "دبلن",
+    "city_name_en": "Dublin",
+    "country_slug": "ireland",
+    "country_code": "IE",
+    "country_name_ar": "جمهورية أيرلندا",
+    "country_name_en": "Ireland",
+    "timezone": "Europe/Dublin",
+    "lat": 53.33306,
+    "lon": -6.24889,
+    "is_capital": true,
+    "priority": 1024027,
+    "population": 1024027
+  }
+]

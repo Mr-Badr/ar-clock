@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "road-town",
+    "city_name_ar": "رود تاون",
+    "city_name_en": "Road Town",
+    "country_slug": "british-virgin-islands",
+    "country_code": "VG",
+    "country_name_ar": "جزر عذراء بريطانية",
+    "country_name_en": "British Virgin Islands",
+    "timezone": "America/Tortola",
+    "lat": 18.42693,
+    "lon": -64.62079,
+    "is_capital": true,
+    "priority": 8449,
+    "population": 8449
+  }
+]

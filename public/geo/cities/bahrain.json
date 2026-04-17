@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "manama",
+    "city_name_ar": "المنامة",
+    "city_name_en": "Manama",
+    "country_slug": "bahrain",
+    "country_code": "BH",
+    "country_name_ar": "البحرين",
+    "country_name_en": "Bahrain",
+    "timezone": "Asia/Bahrain",
+    "lat": 26.22787,
+    "lon": 50.58565,
+    "is_capital": true,
+    "priority": 147074,
+    "population": 147074
+  }
+]

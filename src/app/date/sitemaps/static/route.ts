@@ -3,6 +3,7 @@
  * Core static pages for the Date feature.
  */
 import { getSiteUrl } from '@/lib/site-config';
+import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
 const BASE = getSiteUrl();
 
@@ -17,13 +18,13 @@ const STATIC_PAGES = [
 ];
 
 export async function GET() {
-  const todayIso = new Date().toISOString().split('T')[0];
+  const lastmod = getSitemapLastModifiedDate();
 
   const entries = STATIC_PAGES.map(
     p => `
   <url>
     <loc>${BASE}${p.url}</loc>
-    <lastmod>${todayIso}</lastmod>
+    <lastmod>${lastmod}</lastmod>
     <changefreq>${p.changefreq}</changefreq>
     <priority>${p.priority}</priority>
   </url>`

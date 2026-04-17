@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "torshavn",
+    "city_name_ar": "توشهافن",
+    "city_name_en": "Torshavn",
+    "country_slug": "faroe-islands",
+    "country_code": "FO",
+    "country_name_ar": "جزر فارو",
+    "country_name_en": "Faroe Islands",
+    "timezone": "Atlantic/Faroe",
+    "lat": 62.00973,
+    "lon": -6.77164,
+    "is_capital": true,
+    "priority": 13200,
+    "population": 13200
+  }
+]

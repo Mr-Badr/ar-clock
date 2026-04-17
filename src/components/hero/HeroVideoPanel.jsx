@@ -143,7 +143,7 @@ export default function HeroVideoPanel({
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
         >
           <source src="/videos/hero.webm" type="video/webm" />
           <source src="/videos/hero.mp4"  type="video/mp4"  />

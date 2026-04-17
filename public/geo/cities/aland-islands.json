@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "mariehamn",
+    "city_name_ar": "ماريهامن",
+    "city_name_en": "Mariehamn",
+    "country_slug": "aland-islands",
+    "country_code": "AX",
+    "country_name_ar": "جزر أولاند",
+    "country_name_en": "Aland Islands",
+    "timezone": "Europe/Mariehamn",
+    "lat": 60.09726,
+    "lon": 19.93481,
+    "is_capital": true,
+    "priority": 10682,
+    "population": 10682
+  }
+]

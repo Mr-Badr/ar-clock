@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "castries",
+    "city_name_ar": "كاستريس",
+    "city_name_en": "Castries",
+    "country_slug": "saint-lucia",
+    "country_code": "LC",
+    "country_name_ar": "سانت لوسيا",
+    "country_name_en": "Saint Lucia",
+    "timezone": "America/St_Lucia",
+    "lat": 13.9957,
+    "lon": -61.00614,
+    "is_capital": true,
+    "priority": 20000,
+    "population": 20000
+  }
+]

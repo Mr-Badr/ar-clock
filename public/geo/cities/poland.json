@@ -1,0 +1,62 @@
+[
+  {
+    "city_slug": "warsaw",
+    "city_name_ar": "وارسو",
+    "city_name_en": "Warsaw",
+    "country_slug": "poland",
+    "country_code": "PL",
+    "country_name_ar": "بولندا",
+    "country_name_en": "Poland",
+    "timezone": "Europe/Warsaw",
+    "lat": 52.22977,
+    "lon": 21.01178,
+    "is_capital": true,
+    "priority": 1702139,
+    "population": 1702139
+  },
+  {
+    "city_slug": "krakow",
+    "city_name_ar": "كراكوف",
+    "city_name_en": "Krakow",
+    "country_slug": "poland",
+    "country_code": "PL",
+    "country_name_ar": "بولندا",
+    "country_name_en": "Poland",
+    "timezone": "Europe/Warsaw",
+    "lat": 50.06143,
+    "lon": 19.93658,
+    "is_capital": false,
+    "priority": 804237,
+    "population": 804237
+  },
+  {
+    "city_slug": "wroclaw",
+    "city_name_ar": "فروتسواف",
+    "city_name_en": "Wroclaw",
+    "country_slug": "poland",
+    "country_code": "PL",
+    "country_name_ar": "بولندا",
+    "country_name_en": "Poland",
+    "timezone": "Europe/Warsaw",
+    "lat": 51.10286,
+    "lon": 17.03006,
+    "is_capital": false,
+    "priority": 672545,
+    "population": 672545
+  },
+  {
+    "city_slug": "lodz",
+    "city_name_ar": "وودج",
+    "city_name_en": "Lodz",
+    "country_slug": "poland",
+    "country_code": "PL",
+    "country_name_ar": "بولندا",
+    "country_name_en": "Poland",
+    "timezone": "Europe/Warsaw",
+    "lat": 51.77058,
+    "lon": 19.47395,
+    "is_capital": false,
+    "priority": 645693,
+    "population": 645693
+  }
+]

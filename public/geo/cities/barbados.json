@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "bridgetown",
+    "city_name_ar": "بريدج تاون",
+    "city_name_en": "Bridgetown",
+    "country_slug": "barbados",
+    "country_code": "BB",
+    "country_name_ar": "باربادوس",
+    "country_name_en": "Barbados",
+    "timezone": "America/Barbados",
+    "lat": 13.10732,
+    "lon": -59.62021,
+    "is_capital": true,
+    "priority": 98511,
+    "population": 98511
+  }
+]

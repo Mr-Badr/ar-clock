@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "nukualofa",
+    "city_name_ar": "نوكو ألوفا",
+    "city_name_en": "Nuku'alofa",
+    "country_slug": "tonga",
+    "country_code": "TO",
+    "country_name_ar": "تونغا",
+    "country_name_en": "Tonga",
+    "timezone": "Pacific/Tongatapu",
+    "lat": -21.13683,
+    "lon": -175.20114,
+    "is_capital": true,
+    "priority": 22400,
+    "population": 22400
+  }
+]

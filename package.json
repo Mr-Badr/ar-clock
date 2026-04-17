@@ -5,9 +5,9 @@
   "scripts": {
     "predev": "npm run events:build",
     "dev": "next dev",
-    "prebuild": "npm run events:build",
-    "export-fallback": "sh -c 'if [ -f .env.local ]; then tsx --env-file=.env.local scripts/export-fallback.ts; else tsx scripts/export-fallback.ts; fi'",
-    "build": "npm run export-fallback && next build",
+    "geo:snapshot": "sh -c 'if [ -f .env.local ]; then tsx --env-file=.env.local scripts/generate-geo-snapshot.ts; else tsx scripts/generate-geo-snapshot.ts; fi'",
+    "export-fallback": "npm run geo:snapshot",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx",
     "typecheck": "tsc --noEmit",

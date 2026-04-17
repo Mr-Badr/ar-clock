@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "saint-helier",
+    "city_name_ar": "ساينت هيلير",
+    "city_name_en": "Saint Helier",
+    "country_slug": "jersey",
+    "country_code": "JE",
+    "country_name_ar": "جيرزي",
+    "country_name_en": "Jersey",
+    "timezone": "Europe/Jersey",
+    "lat": 49.18804,
+    "lon": -2.10491,
+    "is_capital": true,
+    "priority": 28000,
+    "population": 28000
+  }
+]

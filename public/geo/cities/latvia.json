@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "riga",
+    "city_name_ar": "ريغا",
+    "city_name_en": "Riga",
+    "country_slug": "latvia",
+    "country_code": "LV",
+    "country_name_ar": "لاتفيا",
+    "country_name_en": "Latvia",
+    "timezone": "Europe/Riga",
+    "lat": 56.946,
+    "lon": 24.10589,
+    "is_capital": true,
+    "priority": 742572,
+    "population": 742572
+  }
+]

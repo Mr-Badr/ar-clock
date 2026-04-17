@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "kigali",
+    "city_name_ar": "كيغالي",
+    "city_name_en": "Kigali",
+    "country_slug": "rwanda",
+    "country_code": "RW",
+    "country_name_ar": "رواندا",
+    "country_name_en": "Rwanda",
+    "timezone": "Africa/Kigali",
+    "lat": -1.94995,
+    "lon": 30.05885,
+    "is_capital": true,
+    "priority": 1132686,
+    "population": 1132686
+  }
+]

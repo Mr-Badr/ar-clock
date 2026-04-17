@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "vientiane",
+    "city_name_ar": "فيينتيان",
+    "city_name_en": "Vientiane",
+    "country_slug": "laos",
+    "country_code": "LA",
+    "country_name_ar": "لاوس",
+    "country_name_en": "Laos",
+    "timezone": "Asia/Vientiane",
+    "lat": 17.96667,
+    "lon": 102.6,
+    "is_capital": true,
+    "priority": 196731,
+    "population": 196731
+  }
+]

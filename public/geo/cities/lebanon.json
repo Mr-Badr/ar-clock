@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "beirut",
+    "city_name_ar": "بيروت",
+    "city_name_en": "Beirut",
+    "country_slug": "lebanon",
+    "country_code": "LB",
+    "country_name_ar": "لبنان",
+    "country_name_en": "Lebanon",
+    "timezone": "Asia/Beirut",
+    "lat": 33.89332,
+    "lon": 35.50157,
+    "is_capital": true,
+    "priority": 1916100,
+    "population": 1916100
+  },
+  {
+    "city_slug": "ras-bayrut",
+    "city_name_ar": "رأس بيروت",
+    "city_name_en": "Ra's Bayrut",
+    "country_slug": "lebanon",
+    "country_code": "LB",
+    "country_name_ar": "لبنان",
+    "country_name_en": "Lebanon",
+    "timezone": "Asia/Beirut",
+    "lat": 33.9,
+    "lon": 35.48333,
+    "is_capital": false,
+    "priority": 1251739,
+    "population": 1251739
+  }
+]

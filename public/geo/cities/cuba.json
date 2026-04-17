@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "havana",
+    "city_name_ar": "هافانا",
+    "city_name_en": "Havana",
+    "country_slug": "cuba",
+    "country_code": "CU",
+    "country_name_ar": "كوبا",
+    "country_name_en": "Cuba",
+    "timezone": "America/Havana",
+    "lat": 23.13302,
+    "lon": -82.38304,
+    "is_capital": true,
+    "priority": 2163824,
+    "population": 2163824
+  }
+]

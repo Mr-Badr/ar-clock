@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "charlotte-amalie",
+    "city_name_ar": "شارلوت أمالي",
+    "city_name_en": "Charlotte Amalie",
+    "country_slug": "u.s.-virgin-islands",
+    "country_code": "VI",
+    "country_name_ar": "جزر العذراء الأمريكية",
+    "country_name_en": "U.S. Virgin Islands",
+    "timezone": "America/St_Thomas",
+    "lat": 18.3419,
+    "lon": -64.9307,
+    "is_capital": true,
+    "priority": 20000,
+    "population": 20000
+  }
+]

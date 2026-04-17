@@ -18,13 +18,6 @@ const CORE_ASSETS = [
   '/favicon.ico',
 ];
 
-// API endpoints to cache with network-first strategy
-const API_ENDPOINTS = [
-  '/api/ip-city',
-  '/api/search-city',
-  '/api/cities-by-country',
-];
-
 // Install event - cache static assets safely
 self.addEventListener('install', (event) => {
   if (IS_LOCALHOST) {
@@ -115,13 +108,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Strategy 2: Network-first for API calls
-  if (isApiEndpoint(url.pathname)) {
-    event.respondWith(networkFirst(request));
-    return;
-  }
-
-  // Strategy 3: Stale-while-revalidate for safe same-origin GET requests
+  // Strategy 2: Stale-while-revalidate for safe same-origin GET requests
   event.respondWith(staleWhileRevalidate(request));
 });
 
@@ -205,10 +192,6 @@ function isStaticAsset(pathname) {
     pathname.endsWith('.svg') ||
     pathname.endsWith('.ico')
   );
-}
-
-function isApiEndpoint(pathname) {
-  return API_ENDPOINTS.some((endpoint) => pathname.startsWith(endpoint));
 }
 
 // Background sync for offline actions

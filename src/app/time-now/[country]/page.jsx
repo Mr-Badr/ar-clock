@@ -19,8 +19,7 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { headers } from 'next/headers';
-import { MapPin, ChevronLeft } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 
 
 import TimeNowHero from '@/components/time-now/TimeNowHero';
@@ -40,7 +39,6 @@ import {
   getTopCitiesByCountry,
   getCapitalCity,
 } from '@/lib/db/queries/cities';
-import { getCountriesAction } from '@/app/actions/location';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 import { buildTimeNowKeywords } from '@/lib/seo/section-search-intent';
@@ -58,7 +56,7 @@ export async function generateStaticParams() {
       { country: 'egypt' },
     ];
   }
-  const slugs = await getPriorityCountrySlugs(30);
+  const slugs = await getPriorityCountrySlugs(24);
   return slugs.map(slug => ({ country: slug }));
 }
 
@@ -141,10 +139,9 @@ export default async function CountryTimePage({ params }) {
   const timezone = capital ? capital.timezone : country.timezone;
 
   /* Fetch supporting data */
-  const [cities, nowIso, allCountries] = await Promise.all([
+  const [cities, nowIso] = await Promise.all([
     getTopCitiesByCountry(country.country_code, 30),
     getCachedNowIso(),
-    getCountriesAction(),
   ]);
   const sameOffsetCountries = []; // We won't fetch this as it requires another query, skip for migration simplicity if not in plan
 
@@ -180,6 +177,7 @@ export default async function CountryTimePage({ params }) {
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
+    '@id': `${BASE}/time-now/${countrySlug}#breadcrumb`,
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${BASE}/` },
       { '@type': 'ListItem', position: 2, name: 'الوقت الان', item: `${BASE}/time-now` },
@@ -274,14 +272,9 @@ export default async function CountryTimePage({ params }) {
             الوقت الان في <span className="text-accent">{countryAr}</span>
           </h1>
 
-          {/* Geo-detection banner */}
-          <Suspense fallback={null}>
-            <GeoBanner targetCountryCode={country.country_code} />
-          </Suspense>
-
           {/* City Search */}
           <div className="w-full max-w-xl mx-auto shadow-sm rounded-xl mb-4">
-            <SearchCity mode="time-now" preloadedCountries={allCountries} />
+            <SearchCity mode="time-now" />
           </div>
 
           {/* Live Clock */}
@@ -392,24 +385,4 @@ export default async function CountryTimePage({ params }) {
       </main>
     </div>
   );
-}
-
-async function GeoBanner({ targetCountryCode }) {
-  const hdrs = await headers();
-  const userCountryCode = hdrs.get('x-vercel-ip-country') || null;
-
-  if (userCountryCode === targetCountryCode) {
-    return (
-      <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-        margin: '0 auto 1.5rem', padding: '0.5rem 1.25rem',
-        borderRadius: '999px', width: 'fit-content',
-        background: 'var(--success-soft)', border: '1px solid var(--success-border)',
-        fontSize: 'var(--text-sm)', color: 'var(--success)', fontWeight: '600',
-      }}>
-        <MapPin size={14} aria-hidden /> تم اكتشاف موقعك تلقائياً
-      </div>
-    );
-  }
-  return null;
 }

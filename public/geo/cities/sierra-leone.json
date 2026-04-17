@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "freetown",
+    "city_name_ar": "فريتون",
+    "city_name_en": "Freetown",
+    "country_slug": "sierra-leone",
+    "country_code": "SL",
+    "country_name_ar": "سيراليون",
+    "country_name_en": "Sierra Leone",
+    "timezone": "Africa/Freetown",
+    "lat": 8.48714,
+    "lon": -13.2356,
+    "is_capital": true,
+    "priority": 802639,
+    "population": 802639
+  }
+]

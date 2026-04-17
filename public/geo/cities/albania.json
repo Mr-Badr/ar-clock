@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "tirana",
+    "city_name_ar": "تيرانا",
+    "city_name_en": "Tirana",
+    "country_slug": "albania",
+    "country_code": "AL",
+    "country_name_ar": "ألبانيا",
+    "country_name_en": "Albania",
+    "timezone": "Europe/Tirane",
+    "lat": 41.32744,
+    "lon": 19.81866,
+    "is_capital": true,
+    "priority": 418495,
+    "population": 418495
+  }
+]

@@ -22,6 +22,8 @@ test('buildRichContentScaffold creates baseline SEO and content sections', () =>
   assert.ok(scaffold.seoMeta?.primaryKeyword);
   assert.equal(Array.isArray(scaffold.faq), true);
   assert.equal(scaffold.faq.length >= 6, true);
+  assert.equal('faqItems' in scaffold, false);
+  assert.equal('faqSchemaItems' in (scaffold.schemaData || {}), false);
   assert.equal(Array.isArray(scaffold.intentCards), true);
 });
 

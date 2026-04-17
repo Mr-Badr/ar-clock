@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "athens",
+    "city_name_ar": "أثينا",
+    "city_name_en": "Athens",
+    "country_slug": "greece",
+    "country_code": "GR",
+    "country_name_ar": "اليونان",
+    "country_name_en": "Greece",
+    "timezone": "Europe/Athens",
+    "lat": 37.98376,
+    "lon": 23.72784,
+    "is_capital": true,
+    "priority": 664046,
+    "population": 664046
+  }
+]

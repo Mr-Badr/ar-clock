@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "apia",
+    "city_name_ar": "أبيا",
+    "city_name_en": "Apia",
+    "country_slug": "samoa",
+    "country_code": "WS",
+    "country_name_ar": "ساموا",
+    "country_name_en": "Samoa",
+    "timezone": "Pacific/Apia",
+    "lat": -13.83333,
+    "lon": -171.76666,
+    "is_capital": true,
+    "priority": 40407,
+    "population": 40407
+  }
+]

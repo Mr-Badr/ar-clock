@@ -1,0 +1,47 @@
+[
+  {
+    "city_slug": "nairobi",
+    "city_name_ar": "نيروبي",
+    "city_name_en": "Nairobi",
+    "country_slug": "kenya",
+    "country_code": "KE",
+    "country_name_ar": "كينيا",
+    "country_name_en": "Kenya",
+    "timezone": "Africa/Nairobi",
+    "lat": -1.28333,
+    "lon": 36.81667,
+    "is_capital": true,
+    "priority": 4397073,
+    "population": 4397073
+  },
+  {
+    "city_slug": "kakamega",
+    "city_name_ar": "كاكاميغا",
+    "city_name_en": "Kakamega",
+    "country_slug": "kenya",
+    "country_code": "KE",
+    "country_name_ar": "كينيا",
+    "country_name_en": "Kenya",
+    "timezone": "Africa/Nairobi",
+    "lat": 0.28422,
+    "lon": 34.75229,
+    "is_capital": false,
+    "priority": 1867579,
+    "population": 1867579
+  },
+  {
+    "city_slug": "mombasa",
+    "city_name_ar": "مومباسا",
+    "city_name_en": "Mombasa",
+    "country_slug": "kenya",
+    "country_code": "KE",
+    "country_name_ar": "كينيا",
+    "country_name_en": "Kenya",
+    "timezone": "Africa/Nairobi",
+    "lat": -4.05466,
+    "lon": 39.66359,
+    "is_capital": false,
+    "priority": 1208333,
+    "population": 1208333
+  }
+]

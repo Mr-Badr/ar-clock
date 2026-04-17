@@ -1,0 +1,62 @@
+[
+  {
+    "city_slug": "nay-pyi-taw",
+    "city_name_ar": "نايبيداو",
+    "city_name_en": "Nay Pyi Taw",
+    "country_slug": "myanmar",
+    "country_code": "MM",
+    "country_name_ar": "ميانمار",
+    "country_name_en": "Myanmar",
+    "timezone": "Asia/Yangon",
+    "lat": 19.745,
+    "lon": 96.12972,
+    "is_capital": true,
+    "priority": 925000,
+    "population": 925000
+  },
+  {
+    "city_slug": "yangon",
+    "city_name_ar": "يانغون",
+    "city_name_en": "Yangon",
+    "country_slug": "myanmar",
+    "country_code": "MM",
+    "country_name_ar": "ميانمار",
+    "country_name_en": "Myanmar",
+    "timezone": "Asia/Yangon",
+    "lat": 16.80528,
+    "lon": 96.15611,
+    "is_capital": false,
+    "priority": 4477638,
+    "population": 4477638
+  },
+  {
+    "city_slug": "mandalay",
+    "city_name_ar": "ماندالاي",
+    "city_name_en": "Mandalay",
+    "country_slug": "myanmar",
+    "country_code": "MM",
+    "country_name_ar": "ميانمار",
+    "country_name_en": "Myanmar",
+    "timezone": "Asia/Yangon",
+    "lat": 21.97473,
+    "lon": 96.08359,
+    "is_capital": false,
+    "priority": 1208099,
+    "population": 1208099
+  },
+  {
+    "city_slug": "hlaingthaya",
+    "city_name_ar": "هلاينغثايا",
+    "city_name_en": "Hlaingthaya",
+    "country_slug": "myanmar",
+    "country_code": "MM",
+    "country_name_ar": "ميانمار",
+    "country_name_en": "Myanmar",
+    "timezone": "Asia/Yangon",
+    "lat": 16.85,
+    "lon": 96.06667,
+    "is_capital": false,
+    "priority": 687867,
+    "population": 687867
+  }
+]

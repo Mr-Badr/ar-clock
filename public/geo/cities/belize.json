@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "belmopan",
+    "city_name_ar": "بلموبان",
+    "city_name_en": "Belmopan",
+    "country_slug": "belize",
+    "country_code": "BZ",
+    "country_name_ar": "بليز",
+    "country_name_en": "Belize",
+    "timezone": "America/Belize",
+    "lat": 17.25376,
+    "lon": -88.76401,
+    "is_capital": true,
+    "priority": 13381,
+    "population": 13381
+  }
+]

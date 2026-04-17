@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "port-vila",
+    "city_name_ar": "بورت فيلا",
+    "city_name_en": "Port-Vila",
+    "country_slug": "vanuatu",
+    "country_code": "VU",
+    "country_name_ar": "فانواتو",
+    "country_name_en": "Vanuatu",
+    "timezone": "Pacific/Efate",
+    "lat": -17.73648,
+    "lon": 168.31366,
+    "is_capital": true,
+    "priority": 35901,
+    "population": 35901
+  }
+]

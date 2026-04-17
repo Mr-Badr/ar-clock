@@ -23,8 +23,7 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { headers } from 'next/headers';
-import { ChevronLeft, MapPin } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 
 
 import TimeNowHero from '@/components/time-now/TimeNowHero';
@@ -37,7 +36,6 @@ import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 import { getPriorityCityParams, getCityBySlug, getTopCitiesByCountry } from '@/lib/db/queries/cities';
-import { getCountriesAction } from '@/app/actions/location';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 import { buildTimeNowKeywords } from '@/lib/seo/section-search-intent';
@@ -54,7 +52,7 @@ export async function generateStaticParams() {
       { country: 'egypt', city: 'cairo' },
     ];
   }
-  return getPriorityCityParams(120);
+  return getPriorityCityParams(24);
 }
 
 function getUtcOffsetStr(timezone) {
@@ -130,10 +128,9 @@ export default async function CityTimePage({ params }) {
   if (!city) notFound();
 
   /* Parallel data fetching — all cached */
-  const [nowIso, siblingCities, allCountries] = await Promise.all([
+  const [nowIso, siblingCities] = await Promise.all([
     getCachedNowIso(),
     getTopCitiesByCountry(country.country_code, 8),
-    getCountriesAction(),
   ]);
   const sameOffsetCountries = []; // Skipped
 
@@ -167,6 +164,7 @@ export default async function CityTimePage({ params }) {
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
+    '@id': `${BASE}/time-now/${countrySlug}/${citySlug}#breadcrumb`,
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${BASE}/` },
       { '@type': 'ListItem', position: 2, name: 'الوقت الان', item: `${BASE}/time-now` },
@@ -278,14 +276,9 @@ export default async function CityTimePage({ params }) {
           </h1>
 
 
-          {/* Geo banner */}
-          <Suspense fallback={null}>
-            <GeoBanner targetCountryCode={country.country_code} />
-          </Suspense>
-
           {/* Global city search */}
           <div className="w-full max-w-xl mx-auto shadow-sm rounded-xl mb-4">
-            <SearchCity mode="time-now" preloadedCountries={allCountries} />
+            <SearchCity mode="time-now" />
           </div>
 
           {/* Live clock */}
@@ -415,24 +408,4 @@ export default async function CityTimePage({ params }) {
       <style>{`@keyframes pulse { 0%,100%{opacity:.5} 50%{opacity:1} }`}</style>
     </div>
   );
-}
-
-async function GeoBanner({ targetCountryCode }) {
-  const hdrs = await headers();
-  const userCountryCode = hdrs.get('x-vercel-ip-country') || null;
-
-  if (userCountryCode === targetCountryCode) {
-    return (
-      <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-        margin: '0 auto 1.5rem', padding: '0.5rem 1.25rem',
-        borderRadius: '999px', width: 'fit-content',
-        background: 'var(--success-soft)', border: '1px solid var(--success-border)',
-        fontSize: 'var(--text-sm)', color: 'var(--success)', fontWeight: '600',
-      }}>
-        <MapPin size={14} aria-hidden /> تم اكتشاف موقعك تلقائياً
-      </div>
-    );
-  }
-  return null;
 }

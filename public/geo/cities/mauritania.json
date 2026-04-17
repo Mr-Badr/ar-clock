@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "nouakchott",
+    "city_name_ar": "نواكشوط",
+    "city_name_en": "Nouakchott",
+    "country_slug": "mauritania",
+    "country_code": "MR",
+    "country_name_ar": "موريتانيا",
+    "country_name_en": "Mauritania",
+    "timezone": "Africa/Nouakchott",
+    "lat": 18.08581,
+    "lon": -15.9785,
+    "is_capital": true,
+    "priority": 1184530,
+    "population": 1184530
+  }
+]

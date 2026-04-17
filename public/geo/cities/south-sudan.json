@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "juba",
+    "city_name_ar": "جوبا",
+    "city_name_en": "Juba",
+    "country_slug": "south-sudan",
+    "country_code": "SS",
+    "country_name_ar": "جنوب السودان",
+    "country_name_en": "South Sudan",
+    "timezone": "Africa/Juba",
+    "lat": 4.85165,
+    "lon": 31.58247,
+    "is_capital": true,
+    "priority": 450000,
+    "population": 450000
+  }
+]

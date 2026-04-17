@@ -1,0 +1,47 @@
+[
+  {
+    "city_slug": "quito",
+    "city_name_ar": "كيتو",
+    "city_name_en": "Quito",
+    "country_slug": "ecuador",
+    "country_code": "EC",
+    "country_name_ar": "الإكوادور",
+    "country_name_en": "Ecuador",
+    "timezone": "America/Guayaquil",
+    "lat": -0.22985,
+    "lon": -78.52495,
+    "is_capital": true,
+    "priority": 2781641,
+    "population": 2781641
+  },
+  {
+    "city_slug": "guayaquil",
+    "city_name_ar": "غواياكيل",
+    "city_name_en": "Guayaquil",
+    "country_slug": "ecuador",
+    "country_code": "EC",
+    "country_name_ar": "الإكوادور",
+    "country_name_en": "Ecuador",
+    "timezone": "America/Guayaquil",
+    "lat": -2.19616,
+    "lon": -79.88621,
+    "is_capital": false,
+    "priority": 2723665,
+    "population": 2723665
+  },
+  {
+    "city_slug": "cuenca",
+    "city_name_ar": "كوينكا",
+    "city_name_en": "Cuenca",
+    "country_slug": "ecuador",
+    "country_code": "EC",
+    "country_name_ar": "الإكوادور",
+    "country_name_en": "Ecuador",
+    "timezone": "America/Guayaquil",
+    "lat": -2.8953,
+    "lon": -78.9963,
+    "is_capital": false,
+    "priority": 636996,
+    "population": 636996
+  }
+]

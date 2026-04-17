@@ -1,15 +1,9 @@
 import { getSiteUrl } from '@/lib/site-config';
+import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
 export async function GET() {
   const BASE = getSiteUrl();
-  let countrySlugs: string[] = [];
-
-  try {
-    const countriesModule = await import('@/lib/db/queries/countries');
-    countrySlugs = await countriesModule.getAllCountrySlugs();
-  } catch {
-    // Keep the sitemap index crawlable even if the country-query layer is unavailable.
-  }
+  const lastmod = getSitemapLastModifiedDate();
 
   const sitemaps = [
     `${BASE}/sitemap.xml`,
@@ -17,17 +11,15 @@ export async function GET() {
     `${BASE}/economie/sitemap.xml`,
     `${BASE}/holidays/sitemap.xml`,
     `${BASE}/time-difference/sitemap.xml`,
-    // Date feature sitemaps
-    `${BASE}/date/sitemap.xml`,
+    `${BASE}/time-now/sitemap.xml`,
+    `${BASE}/mwaqit-al-salat/sitemap.xml`,
+    // Date leaf sitemaps are listed directly here so crawlers and Search
+    // Console can see the actual submitted URL sets without following a
+    // nested feature-local sitemap index first.
+    `${BASE}/date/sitemaps/static`,
+    `${BASE}/date/sitemaps/countries`,
+    `${BASE}/date/sitemaps/calendars`,
   ];
-
-  // Add per-country sitemaps for time-now and mwaqit-al-salat
-  for (const countrySlug of countrySlugs) {
-    if (countrySlug) {
-      sitemaps.push(`${BASE}/time-now/sitemap/${countrySlug}.xml`);
-      sitemaps.push(`${BASE}/mwaqit-al-salat/sitemap/${countrySlug}.xml`);
-    }
-  }
 
   // Build the XML
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -36,6 +28,7 @@ export async function GET() {
       .map(url => `
   <sitemap>
     <loc>${url}</loc>
+    <lastmod>${lastmod}</lastmod>
   </sitemap>`)
       .join('')}
 </sitemapindex>

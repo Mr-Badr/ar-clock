@@ -5,7 +5,7 @@
 //        → huge build cost, large bundle
 //   NEW: generateStaticParams builds only ±90 days = 181 pages (faster deploys)
 //        + unlisted dates render on demand by default
-//        + export const revalidate = 86400 → cache 24h for ISR pages
+//        + cache behavior is handled by Cache Components rather than route-level revalidate
 //
 // DESIGN IMPROVEMENTS:
 //   • .card CSS class for sections
@@ -34,20 +34,14 @@ const BASE_URL = getSiteUrl();
 
 // ── ISR: 24h cache managed via cacheComponents ──────────────────────────────
 
-// ── Static: only build ±1 year at deploy (365 pages, not 3650) ─────────────
 export async function generateStaticParams() {
-  const today = new Date();
-  const results = [];
-  for (let offset = -90; offset <= 90; offset++) {
-    const dt = new Date(today);
-    dt.setUTCDate(today.getUTCDate() + offset);
-    results.push({
-      year: String(dt.getUTCFullYear()),
-      month: String(dt.getUTCMonth() + 1).padStart(2, '0'),
-      day: String(dt.getUTCDate()).padStart(2, '0'),
-    });
-  }
-  return results;
+  const now = new Date();
+
+  return [{
+    year: String(now.getUTCFullYear()),
+    month: String(now.getUTCMonth() + 1).padStart(2, '0'),
+    day: String(now.getUTCDate()).padStart(2, '0'),
+  }];
 }
 
 export async function generateMetadata({
@@ -64,6 +58,14 @@ export async function generateMetadata({
     title: `${day} ${monthAr} ${year} — ${hijri.formatted.ar}`,
     description: `تاريخ ${day} ${monthAr} ${year} بالهجري هو ${hijri.formatted.ar}. تحويل فوري بثلاث طرق حساب.`,
     alternates: { canonical: `${BASE_URL}/date/${year}/${month}/${day}` },
+    robots: {
+      index: false,
+      follow: true,
+      googleBot: {
+        index: false,
+        follow: true,
+      },
+    },
     openGraph: { title: `${day} ${monthAr} ${year} — ${hijri.formatted.ar} | ميقاتنا`, url: `${BASE_URL}/date/${year}/${month}/${day}`, locale: 'ar_SA' },
   };
 }

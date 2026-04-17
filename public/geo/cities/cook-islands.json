@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "avarua",
+    "city_name_ar": "آواروآ",
+    "city_name_en": "Avarua",
+    "country_slug": "cook-islands",
+    "country_code": "CK",
+    "country_name_ar": "جزر كوك",
+    "country_name_en": "Cook Islands",
+    "timezone": "Pacific/Rarotonga",
+    "lat": -21.2075,
+    "lon": -159.77546,
+    "is_capital": true,
+    "priority": 13373,
+    "population": 13373
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "guatemala-city",
+    "city_name_ar": "مدينة غواتيمالا",
+    "city_name_en": "Guatemala City",
+    "country_slug": "guatemala",
+    "country_code": "GT",
+    "country_name_ar": "غواتيمالا",
+    "country_name_en": "Guatemala",
+    "timezone": "America/Guatemala",
+    "lat": 14.64072,
+    "lon": -90.51327,
+    "is_capital": true,
+    "priority": 994938,
+    "population": 994938
+  },
+  {
+    "city_slug": "villa-nueva",
+    "city_name_ar": "فيللا نويفا",
+    "city_name_en": "Villa Nueva",
+    "country_slug": "guatemala",
+    "country_code": "GT",
+    "country_name_ar": "غواتيمالا",
+    "country_name_en": "Guatemala",
+    "timezone": "America/Guatemala",
+    "lat": 14.52512,
+    "lon": -90.58544,
+    "is_capital": false,
+    "priority": 618397,
+    "population": 618397
+  }
+]

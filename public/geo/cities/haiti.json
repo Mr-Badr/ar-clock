@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "port-au-prince",
+    "city_name_ar": "بورت أو برانس",
+    "city_name_en": "Port-au-Prince",
+    "country_slug": "haiti",
+    "country_code": "HT",
+    "country_name_ar": "هايتي",
+    "country_name_en": "Haiti",
+    "timezone": "America/Port-au-Prince",
+    "lat": 18.54349,
+    "lon": -72.33881,
+    "is_capital": true,
+    "priority": 1234742,
+    "population": 1234742
+  }
+]

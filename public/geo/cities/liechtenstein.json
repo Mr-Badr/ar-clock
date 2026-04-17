@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "vaduz",
+    "city_name_ar": "فادوتس",
+    "city_name_en": "Vaduz",
+    "country_slug": "liechtenstein",
+    "country_code": "LI",
+    "country_name_ar": "ليختنشتاين",
+    "country_name_en": "Liechtenstein",
+    "timezone": "Europe/Vaduz",
+    "lat": 47.14151,
+    "lon": 9.52154,
+    "is_capital": true,
+    "priority": 5197,
+    "population": 5197
+  }
+]

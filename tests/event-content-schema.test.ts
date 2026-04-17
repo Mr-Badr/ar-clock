@@ -9,6 +9,20 @@ test('normalizes faq format to faq and faqItems', () => {
   assert.equal(content.faq.length, 1);
   assert.equal(content.faqItems.length, 1);
   assert.equal(content.faqItems[0].q, 'س');
+  assert.equal(content.schemaData.faqSchemaItems.length, 1);
+  assert.equal(content.schemaData.faqSchemaItems[0].question, 'س');
+});
+
+test('normalizes schemaData faqSchemaItems into faq and faqItems', () => {
+  const { content } = parseRichContent('slug', {
+    schemaData: {
+      faqSchemaItems: [{ question: 'س', answer: 'ج' }],
+    },
+  });
+  assert.equal(content.faq.length, 1);
+  assert.equal(content.faq[0].question, 'س');
+  assert.equal(content.faqItems.length, 1);
+  assert.equal(content.faqItems[0].a, 'ج');
 });
 
 test('detects hardcoded years for strict cleanup', () => {
@@ -17,4 +31,3 @@ test('detects hardcoded years for strict cleanup', () => {
   });
   assert.equal(flags.hasHardcodedYear, true);
 });
-

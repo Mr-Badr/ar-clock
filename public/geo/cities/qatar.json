@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "doha",
+    "city_name_ar": "الدوحة",
+    "city_name_en": "Doha",
+    "country_slug": "qatar",
+    "country_code": "QA",
+    "country_name_ar": "قطر",
+    "country_name_en": "Qatar",
+    "timezone": "Asia/Qatar",
+    "lat": 25.28545,
+    "lon": 51.53096,
+    "is_capital": true,
+    "priority": 344939,
+    "population": 344939
+  }
+]

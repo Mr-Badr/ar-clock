@@ -1,0 +1,62 @@
+[
+  {
+    "city_slug": "yamoussoukro",
+    "city_name_ar": "ياموسوكرو",
+    "city_name_en": "Yamoussoukro",
+    "country_slug": "ivory-coast",
+    "country_code": "CI",
+    "country_name_ar": "ساحل العاج",
+    "country_name_en": "Ivory Coast",
+    "timezone": "Africa/Abidjan",
+    "lat": 6.82055,
+    "lon": -5.27674,
+    "is_capital": true,
+    "priority": 275686,
+    "population": 275686
+  },
+  {
+    "city_slug": "abidjan",
+    "city_name_ar": "أبيدجان",
+    "city_name_en": "Abidjan",
+    "country_slug": "ivory-coast",
+    "country_code": "CI",
+    "country_name_ar": "ساحل العاج",
+    "country_name_en": "Ivory Coast",
+    "timezone": "Africa/Abidjan",
+    "lat": 5.35444,
+    "lon": -4.00167,
+    "is_capital": false,
+    "priority": 6321017,
+    "population": 6321017
+  },
+  {
+    "city_slug": "abobo",
+    "city_name_ar": "أبوبو",
+    "city_name_en": "Abobo",
+    "country_slug": "ivory-coast",
+    "country_code": "CI",
+    "country_name_ar": "ساحل العاج",
+    "country_name_en": "Ivory Coast",
+    "timezone": "Africa/Abidjan",
+    "lat": 5.41613,
+    "lon": -4.0159,
+    "is_capital": false,
+    "priority": 1340083,
+    "population": 1340083
+  },
+  {
+    "city_slug": "bouake",
+    "city_name_ar": "بواكي",
+    "city_name_en": "Bouake",
+    "country_slug": "ivory-coast",
+    "country_code": "CI",
+    "country_name_ar": "ساحل العاج",
+    "country_name_en": "Ivory Coast",
+    "timezone": "Africa/Abidjan",
+    "lat": 7.69385,
+    "lon": -5.03031,
+    "is_capital": false,
+    "priority": 832371,
+    "population": 832371
+  }
+]

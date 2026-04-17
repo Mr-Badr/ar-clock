@@ -1,0 +1,47 @@
+[
+  {
+    "city_slug": "algiers",
+    "city_name_ar": "الجزائر",
+    "city_name_en": "Algiers",
+    "country_slug": "algeria",
+    "country_code": "DZ",
+    "country_name_ar": "الجزائر",
+    "country_name_en": "Algeria",
+    "timezone": "Africa/Algiers",
+    "lat": 36.73225,
+    "lon": 3.08746,
+    "is_capital": true,
+    "priority": 2364230,
+    "population": 2364230
+  },
+  {
+    "city_slug": "oran",
+    "city_name_ar": "وهران",
+    "city_name_en": "Oran",
+    "country_slug": "algeria",
+    "country_code": "DZ",
+    "country_name_ar": "الجزائر",
+    "country_name_en": "Algeria",
+    "timezone": "Africa/Algiers",
+    "lat": 35.69906,
+    "lon": -0.63588,
+    "is_capital": false,
+    "priority": 803329,
+    "population": 803329
+  },
+  {
+    "city_slug": "constantine",
+    "city_name_ar": "قسنطينة",
+    "city_name_en": "Constantine",
+    "country_slug": "algeria",
+    "country_code": "DZ",
+    "country_name_ar": "الجزائر",
+    "country_name_en": "Algeria",
+    "timezone": "Africa/Algiers",
+    "lat": 36.365,
+    "lon": 6.61472,
+    "is_capital": false,
+    "priority": 448028,
+    "population": 448028
+  }
+]

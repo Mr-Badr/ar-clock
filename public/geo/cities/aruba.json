@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "oranjestad",
+    "city_name_ar": "أورنجستاد",
+    "city_name_en": "Oranjestad",
+    "country_slug": "aruba",
+    "country_code": "AW",
+    "country_name_ar": "أروبا",
+    "country_name_en": "Aruba",
+    "timezone": "America/Aruba",
+    "lat": 12.52398,
+    "lon": -70.02703,
+    "is_capital": true,
+    "priority": 29998,
+    "population": 29998
+  }
+]

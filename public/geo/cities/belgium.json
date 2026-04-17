@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "brussels",
+    "city_name_ar": "بروكسل",
+    "city_name_en": "Brussels",
+    "country_slug": "belgium",
+    "country_code": "BE",
+    "country_name_ar": "بلجيكا",
+    "country_name_en": "Belgium",
+    "timezone": "Europe/Brussels",
+    "lat": 50.85045,
+    "lon": 4.34878,
+    "is_capital": true,
+    "priority": 1019022,
+    "population": 1019022
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "tarawa",
+    "city_name_ar": "تاراوا",
+    "city_name_en": "Tarawa",
+    "country_slug": "kiribati",
+    "country_code": "KI",
+    "country_name_ar": "كيريباتي",
+    "country_name_en": "Kiribati",
+    "timezone": "Pacific/Tarawa",
+    "lat": 1.3278,
+    "lon": 172.97696,
+    "is_capital": true,
+    "priority": 40311,
+    "population": 40311
+  }
+]

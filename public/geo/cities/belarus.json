@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "minsk",
+    "city_name_ar": "مينسك",
+    "city_name_en": "Minsk",
+    "country_slug": "belarus",
+    "country_code": "BY",
+    "country_name_ar": "بيلاروس",
+    "country_name_en": "Belarus",
+    "timezone": "Europe/Minsk",
+    "lat": 53.90019,
+    "lon": 27.56653,
+    "is_capital": true,
+    "priority": 1742124,
+    "population": 1742124
+  }
+]

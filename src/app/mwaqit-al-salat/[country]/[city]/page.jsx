@@ -3,17 +3,16 @@
  *
  * ARCHITECTURE:
  *  - Page shell (static, ISR-cached): renders header, breadcrumb, search.
- *  - PrayerTimesContent (dynamic, Suspense-streamed): calls headers(), calculates
- *    live prayer times, renders times list + MadhabSelector + FAQ + Calendar.
+ *  - PrayerTimesContent (ISR-cached + client countdown): calculates prayer times
+ *    without request headers so the route stays cacheable on Vercel.
  *
  * SEO: WebPage + Place + FAQPage JSON-LD schemas, rich keywords, canonical URL.
  */
 
 import { notFound } from 'next/navigation';
-import { headers } from 'next/headers';
 import { Suspense } from 'react';
 import Link from 'next/link';
-import { getCityBySlug, getPriorityCityParams } from '@/lib/db/queries/cities';
+import { getPriorityCityParams, getCityBySlug } from '@/lib/db/queries/cities';
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 import {
   calculatePrayerTimes,
@@ -22,7 +21,6 @@ import {
   formatTime,
 } from '@/lib/prayerEngine';
 import { getMethodByCountry, MADHAB_INFO } from '@/lib/prayer-methods';
-import { getCountriesAction } from '@/app/actions/location';
 
 import PrayerHeroClient from '@/components/PrayerHero.client';
 import SearchCity from '@/components/SearchCityWrapper.client';
@@ -36,11 +34,10 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import { getSiteUrl } from '@/lib/site-config';
+import { getCachedNowIso } from '@/lib/date-utils';
 import { formatGregorianLabel, getHijriMonthSpanFromDate } from '@/lib/hijri-utils';
 import { buildPrayerKeywords } from '@/lib/seo/section-search-intent';
-// ─── ISR: pre-build top 30 cities, revalidate every 60s ─────────────────────
-
-
+// ─── ISR: pre-build bridge-priority cities, revalidate hourly ───────────────
 
 const BASE = getSiteUrl();
 
@@ -55,7 +52,7 @@ export async function generateStaticParams() {
       { country: 'egypt',        city: 'cairo'       },
     ];
   }
-  return getPriorityCityParams(30);
+  return getPriorityCityParams(24);
 }
 
 // ─── SEO Metadata ─────────────────────────────────────────────────────────────
@@ -136,7 +133,6 @@ export default async function PrayerTimesPage({ params }) {
   const cityData = await getCityBySlug(country.country_code, citySlug);
   if (!cityData) notFound();
 
-  const allCountries  = await getCountriesAction();
   const cityNameAr    = cityData.name_ar || cityData.name_en;
   const countryNameAr = country.name_ar  || country.name_en;
   const utilityLinks = [
@@ -165,6 +161,7 @@ export default async function PrayerTimesPage({ params }) {
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
+    '@id': `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}#breadcrumb`,
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${BASE}/` },
       { '@type': 'ListItem', position: 2, name: 'مواقيت الصلاة', item: `${BASE}/mwaqit-al-salat` },
@@ -273,7 +270,6 @@ export default async function PrayerTimesPage({ params }) {
           <SearchCity
             placeholder="البحث عن مدينة أخرى..."
             initialCity={{ ...cityData, country_slug: countrySlug, city_slug: citySlug, country_name_ar: countryNameAr, city_name_ar: cityNameAr }}
-            preloadedCountries={allCountries}
           />
           <p className="mt-2 text-[10px] font-bold text-[var(--accent)] pr-1">
             محدد حالياً: {cityNameAr}، {countryNameAr}
@@ -318,9 +314,8 @@ export default async function PrayerTimesPage({ params }) {
 
 // ─── Dynamic section (per-request, inside Suspense) ──────────────────────────
 async function PrayerTimesContent({ country, city, cityData, countryCode, countryNameAr }) {
-  await headers(); // opts only this sub-tree to dynamic rendering
-
-  const now        = new Date();
+  const nowIso     = await getCachedNowIso();
+  const now        = new Date(nowIso);
   const methodInfo = getMethodByCountry(countryCode);
 
   const times = calculatePrayerTimes({
@@ -344,7 +339,7 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
   const shafiAsrStr  = shafiAsr  ? formatTime(shafiAsr,  cityData.timezone) : null;
   const hanafiAsrStr = hanafiAsr ? formatTime(hanafiAsr, cityData.timezone) : null;
 
-  const { nextKey, nextIso, prevIso } = getNextPrayer(times, now.toISOString());
+  const { nextKey, nextIso, prevIso } = getNextPrayer(times, nowIso);
   const fajrStr    = formatTime(times.fajr,    cityData.timezone);
   const maghribStr = formatTime(times.maghrib,  cityData.timezone);
   const asrStr     = formatTime(times.asr,      cityData.timezone);

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "kabul",
+    "city_name_ar": "كابل",
+    "city_name_en": "Kabul",
+    "country_slug": "afghanistan",
+    "country_code": "AF",
+    "country_name_ar": "أفغانستان",
+    "country_name_en": "Afghanistan",
+    "timezone": "Asia/Kabul",
+    "lat": 34.52813,
+    "lon": 69.17233,
+    "is_capital": true,
+    "priority": 4434550,
+    "population": 4434550
+  }
+]

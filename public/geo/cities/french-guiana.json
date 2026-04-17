@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "cayenne",
+    "city_name_ar": "كايين",
+    "city_name_en": "Cayenne",
+    "country_slug": "french-guiana",
+    "country_code": "GF",
+    "country_name_ar": "غويانا الفرنسية",
+    "country_name_en": "French Guiana",
+    "timezone": "America/Cayenne",
+    "lat": 4.9381,
+    "lon": -52.33455,
+    "is_capital": true,
+    "priority": 61550,
+    "population": 61550
+  }
+]

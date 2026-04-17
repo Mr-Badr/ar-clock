@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "monrovia",
+    "city_name_ar": "مونروفيا",
+    "city_name_en": "Monrovia",
+    "country_slug": "liberia",
+    "country_code": "LR",
+    "country_name_ar": "ليبيريا",
+    "country_name_en": "Liberia",
+    "timezone": "Africa/Monrovia",
+    "lat": 6.30054,
+    "lon": -10.7969,
+    "is_capital": true,
+    "priority": 1542549,
+    "population": 1542549
+  }
+]

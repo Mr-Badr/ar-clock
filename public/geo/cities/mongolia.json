@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "ulan-bator",
+    "city_name_ar": "أولان باتور",
+    "city_name_en": "Ulan Bator",
+    "country_slug": "mongolia",
+    "country_code": "MN",
+    "country_name_ar": "منغوليا",
+    "country_name_en": "Mongolia",
+    "timezone": "Asia/Ulaanbaatar",
+    "lat": 47.90771,
+    "lon": 106.88324,
+    "is_capital": true,
+    "priority": 844818,
+    "population": 844818
+  }
+]

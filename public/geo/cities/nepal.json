@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "kathmandu",
+    "city_name_ar": "كاتماندو",
+    "city_name_en": "Kathmandu",
+    "country_slug": "nepal",
+    "country_code": "NP",
+    "country_name_ar": "نيبال",
+    "country_name_en": "Nepal",
+    "timezone": "Asia/Kathmandu",
+    "lat": 27.70169,
+    "lon": 85.3206,
+    "is_capital": true,
+    "priority": 1442271,
+    "population": 1442271
+  }
+]

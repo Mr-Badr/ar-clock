@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "windhoek",
+    "city_name_ar": "ويندهوك",
+    "city_name_en": "Windhoek",
+    "country_slug": "namibia",
+    "country_code": "NA",
+    "country_name_ar": "ناميبيا",
+    "country_name_en": "Namibia",
+    "timezone": "Africa/Windhoek",
+    "lat": -22.55941,
+    "lon": 17.08323,
+    "is_capital": true,
+    "priority": 386219,
+    "population": 386219
+  }
+]

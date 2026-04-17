@@ -6,6 +6,7 @@ import {
   getCountryAliasToken,
   getCountryByCode,
 } from '../src/lib/events/country-dictionary.js';
+import { buildCompiledFaqContent } from '../src/lib/holidays/faq-normalizer.js';
 import { inferSourceAuthority, parseEventPackage } from '../src/lib/events/package-schema.js';
 
 type EventPackage = ReturnType<typeof parseEventPackage>;
@@ -362,7 +363,7 @@ function main() {
       const shouldGenerateCountryVariants =
         autoExpandCountries || aliasSlugs.length > 0 || Object.keys(pkg.countryOverrides || {}).length > 0;
       const expandedKeywords = buildCountryKeywordVariants(pkg, shouldGenerateCountryVariants);
-      const contentRecord = {
+      const contentRecord = buildCompiledFaqContent({
         ...pkg.richContent,
         keywords: expandedKeywords,
         countrySeoVariants: shouldGenerateCountryVariants
@@ -370,7 +371,7 @@ function main() {
           : {},
         countryOverrides: pkg.countryOverrides || {},
         ...(relatedSlugs.length > 0 ? { relatedSlugs } : {}),
-      };
+      });
 
       writeJson(eventPath, coreRecord);
       writeJson(contentPath, contentRecord);

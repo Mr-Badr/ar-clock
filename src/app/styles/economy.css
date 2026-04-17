@@ -1350,7 +1350,7 @@
 /* Override existing .market-card to add premium features.                      */
 /* The original padding/gap is removed; use .market-card__body instead.         */
 .market-card {
-  padding: 0;
+  padding: var(--space-5);
   gap: 0;
   overflow: hidden;
   border-radius: var(--radius-2xl);
@@ -2312,9 +2312,10 @@
   align-items: flex-end;
   justify-content: center;
   gap: var(--space-2);
-  padding: var(--space-4) var(--space-4);
+  padding: var(--space-3) var(--space-4);
   flex-shrink: 0;
   border-inline-start: 1px solid var(--border-subtle);
+  min-width: fit-content;
 }
 
 .market-card__compact-countdown {
@@ -2360,6 +2361,141 @@
   align-items: center;
   justify-content: center;
   margin: var(--space-1) 0;
+}
+
+/* ── SEGMENTED CLOCK DISPLAY ────────────────────────────────────────────────── */
+
+/* Compact card clock — sits inside .market-card__compact-right */
+.market-card__compact-clock {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* Featured card clock — sits inside .market-card__panel--countdown */
+.market-card__featured-clock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+/* Individual segment — number stacked above label */
+.market-card__clock-seg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* Number */
+.market-card__clock-num {
+  font-family: var(--font-heading);
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  font-weight: var(--font-black);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* Tone overrides for compact */
+.market-card__compact-clock[data-tone='success'] .market-card__clock-num { color: var(--success); }
+.market-card__compact-clock[data-tone='warning'] .market-card__clock-num { color: var(--warning); }
+
+/* Large variant for featured */
+.market-card__clock-seg--lg {}
+
+.market-card__clock-num--lg {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--text-secondary);
+}
+
+.market-card--featured[data-tone='success'] .market-card__clock-num--lg {
+  color: var(--success);
+  text-shadow: 0 0 32px color-mix(in srgb, var(--success) 30%, transparent);
+}
+
+.market-card--featured[data-tone='warning'] .market-card__clock-num--lg {
+  color: var(--warning);
+  text-shadow: 0 0 32px color-mix(in srgb, var(--warning) 25%, transparent);
+}
+
+/* Label — plain small text */
+.market-card__clock-lbl {
+  font-size: 0.6rem;
+  font-weight: var(--font-semibold);
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+/* Pill variant for featured card labels */
+.market-card__clock-lbl--pill {
+  font-size: 0.68rem;
+  font-weight: var(--font-semibold);
+  color: var(--text-muted);
+  background: var(--bg-surface-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  padding: 0.15rem 0.55rem;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+/* Colon separator */
+.market-card__clock-colon {
+  font-family: var(--font-heading);
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+  font-weight: var(--font-black);
+  color: var(--text-muted);
+  line-height: 1;
+  align-self: flex-start;
+  padding-top: 0.1rem;
+  /* push colon up slightly so it aligns with the numbers, not the labels */
+  margin-bottom: calc(0.3rem + 1.4em);
+}
+
+.market-card__clock-colon--lg {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  margin-bottom: calc(0.3rem + 1.4em);
+}
+
+/* Responsive adjustments for clock */
+@media (max-width: 640px) {
+  .market-card__compact-clock {
+    gap: 0.2rem;
+  }
+
+  .market-card__clock-num {
+    font-size: 1rem;
+  }
+
+  .market-card__clock-lbl {
+    font-size: 0.55rem;
+  }
+
+  .market-card__clock-num--lg {
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+  }
+
+  .market-card__clock-colon--lg {
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+  }
+}
+
+@media (max-width: 400px) {
+  .market-card__compact-clock {
+    gap: 0.15rem;
+  }
+
+  .market-card__clock-num {
+    font-size: 0.88rem;
+  }
+
+  .market-card__clock-colon {
+    font-size: 0.75rem;
+  }
 }
 
 /* ── RESPONSIVE ─────────────────────────────────────────────────────────────── */

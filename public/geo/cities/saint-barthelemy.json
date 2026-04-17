@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "gustavia",
+    "city_name_ar": "غوستافيا، سانت بارتيليمي",
+    "city_name_en": "Gustavia",
+    "country_slug": "saint-barthelemy",
+    "country_code": "BL",
+    "country_name_ar": "سان بارتيلمي",
+    "country_name_en": "Saint Barthelemy",
+    "timezone": "America/St_Barthelemy",
+    "lat": 17.89618,
+    "lon": -62.84978,
+    "is_capital": true,
+    "priority": 5988,
+    "population": 5988
+  }
+]

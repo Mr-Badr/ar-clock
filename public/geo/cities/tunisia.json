@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "tunis",
+    "city_name_ar": "تونس",
+    "city_name_en": "Tunis",
+    "country_slug": "tunisia",
+    "country_code": "TN",
+    "country_name_ar": "تونس",
+    "country_name_en": "Tunisia",
+    "timezone": "Africa/Tunis",
+    "lat": 36.81897,
+    "lon": 10.16579,
+    "is_capital": true,
+    "priority": 693210,
+    "population": 693210
+  }
+]

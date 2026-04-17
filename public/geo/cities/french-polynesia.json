@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "papeete",
+    "city_name_ar": "بابيتي",
+    "city_name_en": "Papeete",
+    "country_slug": "french-polynesia",
+    "country_code": "PF",
+    "country_name_ar": "بولنيزيا الفرنسية",
+    "country_name_en": "French Polynesia",
+    "timezone": "Pacific/Tahiti",
+    "lat": -17.5347,
+    "lon": -149.56843,
+    "is_capital": true,
+    "priority": 26357,
+    "population": 26357
+  }
+]

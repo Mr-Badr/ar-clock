@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "port-of-spain",
+    "city_name_ar": "بورت أوف سبين",
+    "city_name_en": "Port of Spain",
+    "country_slug": "trinidad-and-tobago",
+    "country_code": "TT",
+    "country_name_ar": "ترينيداد وتوباغو",
+    "country_name_en": "Trinidad and Tobago",
+    "timezone": "America/Port_of_Spain",
+    "lat": 10.66668,
+    "lon": -61.51889,
+    "is_capital": true,
+    "priority": 49031,
+    "population": 49031
+  }
+]

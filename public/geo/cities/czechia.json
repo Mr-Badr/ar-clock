@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "prague",
+    "city_name_ar": "براغ",
+    "city_name_en": "Prague",
+    "country_slug": "czechia",
+    "country_code": "CZ",
+    "country_name_ar": "جمهورية التشيك",
+    "country_name_en": "Czechia",
+    "timezone": "Europe/Prague",
+    "lat": 50.08804,
+    "lon": 14.42076,
+    "is_capital": true,
+    "priority": 1165581,
+    "population": 1165581
+  }
+]

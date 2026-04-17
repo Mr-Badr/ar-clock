@@ -583,7 +583,30 @@ function FeaturedExchangeCard({ card }) {
       {/* Panel 2 — Countdown (hero center) */}
       <div className="market-card__panel market-card__panel--countdown">
         <div className="market-card__featured-prefix">{card.countdownPrefix}</div>
-        <div className="market-card__featured-countdown">{card.countdownLabel}</div>
+        {(() => {
+          const m = String(card.countdownLabel || '').match(/^(\d+):(\d+):(\d+)$/);
+          if (m) {
+            return (
+              <div className="market-card__featured-clock" data-tone={tone}>
+                <div className="market-card__clock-seg market-card__clock-seg--lg">
+                  <span className="market-card__clock-num market-card__clock-num--lg">{m[1]}</span>
+                  <span className="market-card__clock-lbl market-card__clock-lbl--pill">ساعة</span>
+                </div>
+                <span className="market-card__clock-colon market-card__clock-colon--lg" aria-hidden="true">:</span>
+                <div className="market-card__clock-seg market-card__clock-seg--lg">
+                  <span className="market-card__clock-num market-card__clock-num--lg">{m[2]}</span>
+                  <span className="market-card__clock-lbl market-card__clock-lbl--pill">دقيقة</span>
+                </div>
+                <span className="market-card__clock-colon market-card__clock-colon--lg" aria-hidden="true">:</span>
+                <div className="market-card__clock-seg market-card__clock-seg--lg">
+                  <span className="market-card__clock-num market-card__clock-num--lg">{m[3]}</span>
+                  <span className="market-card__clock-lbl market-card__clock-lbl--pill">ثانية</span>
+                </div>
+              </div>
+            );
+          }
+          return <div className="market-card__featured-countdown">{card.countdownLabel}</div>;
+        })()}
         <div className="market-card__featured-market-time">{card.marketTimeLabel}</div>
         {isOpen && progress > 0.01 && (
           <div className="market-card__arc-wrap">
@@ -668,7 +691,30 @@ function CompactExchangeCard({ card }) {
 
       {/* Countdown / times zone */}
       <div className="market-card__compact-right">
-        <div className="market-card__compact-countdown">{card.countdownLabel}</div>
+        {(() => {
+          const m = String(card.countdownLabel || '').match(/^(\d+):(\d+):(\d+)$/);
+          if (m) {
+            return (
+              <div className="market-card__compact-clock" data-tone={tone}>
+                <div className="market-card__clock-seg">
+                  <span className="market-card__clock-num">{m[1]}</span>
+                  <span className="market-card__clock-lbl">ساعة</span>
+                </div>
+                <span className="market-card__clock-colon" aria-hidden="true">:</span>
+                <div className="market-card__clock-seg">
+                  <span className="market-card__clock-num">{m[2]}</span>
+                  <span className="market-card__clock-lbl">دقيقة</span>
+                </div>
+                <span className="market-card__clock-colon" aria-hidden="true">:</span>
+                <div className="market-card__clock-seg">
+                  <span className="market-card__clock-num">{m[3]}</span>
+                  <span className="market-card__clock-lbl">ثانية</span>
+                </div>
+              </div>
+            );
+          }
+          return <div className="market-card__compact-countdown">{card.countdownLabel}</div>;
+        })()}
         <div className="market-card__compact-times">
           <span className="market-card__compact-time-item">
             <span style={{ opacity: 0.5 }}>↑</span>

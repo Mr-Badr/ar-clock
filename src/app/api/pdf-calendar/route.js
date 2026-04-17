@@ -361,6 +361,15 @@ function generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, theme 
 // ─── Route handler ────────────────────────────────────────────────────────────
 
 export async function POST(request) {
+  const pdfCalendarEnabled = process.env.ENABLE_PDF_CALENDAR === 'true';
+
+  if (!pdfCalendarEnabled) {
+    return NextResponse.json(
+      { error: 'PDF calendar generation is temporarily disabled during the bridge stabilization period.' },
+      { status: 503 },
+    );
+  }
+
   let browser;
   try {
     const body = await request.json();

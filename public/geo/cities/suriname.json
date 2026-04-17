@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "paramaribo",
+    "city_name_ar": "باراماريبو",
+    "city_name_en": "Paramaribo",
+    "country_slug": "suriname",
+    "country_code": "SR",
+    "country_name_ar": "سورينام",
+    "country_name_en": "Suriname",
+    "timezone": "America/Paramaribo",
+    "lat": 5.86638,
+    "lon": -55.16682,
+    "is_capital": true,
+    "priority": 223757,
+    "population": 223757
+  }
+]

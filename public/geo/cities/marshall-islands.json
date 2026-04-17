@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "majuro",
+    "city_name_ar": "ماجورو",
+    "city_name_en": "Majuro",
+    "country_slug": "marshall-islands",
+    "country_code": "MH",
+    "country_name_ar": "جزر مارشال",
+    "country_name_en": "Marshall Islands",
+    "timezone": "Pacific/Majuro",
+    "lat": 7.08971,
+    "lon": 171.38027,
+    "is_capital": true,
+    "priority": 25400,
+    "population": 25400
+  }
+]

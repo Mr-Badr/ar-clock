@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "phnom-penh",
+    "city_name_ar": "بنوم بنه",
+    "city_name_en": "Phnom Penh",
+    "country_slug": "cambodia",
+    "country_code": "KH",
+    "country_name_ar": "كمبوديا",
+    "country_name_en": "Cambodia",
+    "timezone": "Asia/Phnom_Penh",
+    "lat": 11.56245,
+    "lon": 104.91601,
+    "is_capital": true,
+    "priority": 1573544,
+    "population": 1573544
+  },
+  {
+    "city_slug": "takeo",
+    "city_name_ar": "تاكيو",
+    "city_name_en": "Takeo",
+    "country_slug": "cambodia",
+    "country_code": "KH",
+    "country_name_ar": "كمبوديا",
+    "country_name_en": "Cambodia",
+    "timezone": "Asia/Phnom_Penh",
+    "lat": 10.99081,
+    "lon": 104.78498,
+    "is_capital": false,
+    "priority": 843931,
+    "population": 843931
+  }
+]

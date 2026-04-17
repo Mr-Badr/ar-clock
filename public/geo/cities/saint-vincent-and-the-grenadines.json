@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "kingstown",
+    "city_name_ar": "كينغستاون",
+    "city_name_en": "Kingstown",
+    "country_slug": "saint-vincent-and-the-grenadines",
+    "country_code": "VC",
+    "country_name_ar": "سانت فينسنت والغرينادين",
+    "country_name_en": "Saint Vincent and the Grenadines",
+    "timezone": "America/St_Vincent",
+    "lat": 13.15527,
+    "lon": -61.22742,
+    "is_capital": true,
+    "priority": 24518,
+    "population": 24518
+  }
+]

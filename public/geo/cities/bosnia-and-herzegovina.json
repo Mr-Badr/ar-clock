@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "sarajevo",
+    "city_name_ar": "سراييفو",
+    "city_name_en": "Sarajevo",
+    "country_slug": "bosnia-and-herzegovina",
+    "country_code": "BA",
+    "country_name_ar": "البوسنة والهرسك",
+    "country_name_en": "Bosnia and Herzegovina",
+    "timezone": "Europe/Sarajevo",
+    "lat": 43.84864,
+    "lon": 18.35644,
+    "is_capital": true,
+    "priority": 696731,
+    "population": 696731
+  }
+]

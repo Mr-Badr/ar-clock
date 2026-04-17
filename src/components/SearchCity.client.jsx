@@ -7,7 +7,7 @@
  *  2. Geo error is a floating toast anchored to the bar — zero layout shift,
  *     auto-dismisses after 5 s, user can also dismiss with ✕
  *  3. No visible "محدد:" text — selected city shown exclusively inside the trigger
- *  4. DialogTitle added (visually hidden) to silence the Radix a11y warning
+ *  4. DialogTitle kept inside the modal header for Radix a11y compliance
  */
 
 'use client';
@@ -42,16 +42,13 @@ import {
   CommandItem,
 } from '@/components/ui/command';
 
-/*
- * DialogTitle is required by Radix UI inside every DialogContent (which
- * CommandDialog uses internally). We render it visually hidden so it satisfies
- * the a11y requirement without appearing on screen.
- */
-import { DialogTitle } from '@/components/ui/dialog';
+/* DialogTitle / DialogDescription are required by Radix UI for accessible dialogs. */
+import { DialogDescription, DialogTitle } from '@/components/ui/dialog';
 
 import {
   getInitialCountries,
   getLoadedCountryCities,
+  loadCitySearchIndex,
   loadCountriesDirectory,
   loadCountryCities,
 } from '@/lib/location-picker.client';
@@ -68,6 +65,8 @@ import './SearchCity.css';
 const LS_COUNTRY = 'waqt-preferred-country';
 const DEBOUNCE_MS = 150;
 const GEO_TIMEOUT_MS = 8000;
+const MIN_GLOBAL_QUERY_LENGTH = 2;
+const API_FALLBACK_RESULT_THRESHOLD = 12;
 
 /* ── Arabic Normalization & Flag Helper ─────────────────────────────────── */
 function getFlagEmoji(countryCode) {
@@ -152,6 +151,39 @@ function filterCountriesLocally(countries, q) {
       return 0; // Maintain original sorted order if both match similarly
     })
     .slice(0, 5); // Max 5 country suggestions
+}
+
+function sortCitySearchResults(cities, query) {
+  const normalizedQuery = normalizeArabic(query);
+
+  return [...cities].sort((a, b) => {
+    const aAr = normalizeArabic(a.city_name_ar);
+    const bAr = normalizeArabic(b.city_name_ar);
+    const aStarts = normalizedQuery ? aAr.startsWith(normalizedQuery) : false;
+    const bStarts = normalizedQuery ? bAr.startsWith(normalizedQuery) : false;
+
+    if (aStarts && !bStarts) return -1;
+    if (!aStarts && bStarts) return 1;
+
+    if (a.is_capital && !b.is_capital) return -1;
+    if (!a.is_capital && b.is_capital) return 1;
+
+    return (b.priority || 0) - (a.priority || 0) || (b.population || 0) - (a.population || 0);
+  });
+}
+
+function mergeCityResults(query, ...resultSets) {
+  const merged = new Map();
+
+  for (const resultSet of resultSets) {
+    for (const city of resultSet || []) {
+      if (!city?.city_slug) continue;
+      const dedupeKey = `${city.country_slug || ''}:${city.city_slug}`;
+      merged.set(dedupeKey, city);
+    }
+  }
+
+  return sortCitySearchResults(Array.from(merged.values()), query).slice(0, 80);
 }
 
 /* ── Helpers ────────────────────────────────────────────────────────────── */
@@ -323,24 +355,50 @@ export default function SearchCity({
     };
   }, [initialCity, preloadedCountries]);
 
-  // Pre-warm priority countries silently in the background on mount
   useEffect(() => {
-    mainCountriesSlugs.forEach(slug => {
-      loadCountryCities(slug);
-    });
-  }, [mainCountriesSlugs]);
+    if (typeof window === 'undefined') return undefined;
+
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (connection?.saveData) return undefined;
+
+    const warmGlobalSearch = () => {
+      void loadCitySearchIndex();
+    };
+
+    if (typeof window.requestIdleCallback === 'function') {
+      const idleId = window.requestIdleCallback(warmGlobalSearch, { timeout: 1800 });
+      return () => window.cancelIdleCallback?.(idleId);
+    }
+
+    const timeoutId = window.setTimeout(warmGlobalSearch, 900);
+    return () => window.clearTimeout(timeoutId);
+  }, []);
 
   /* ── Search ──────────────────────────────────────────────────────────── */
   const performSearch = useCallback(async (q, countrySlug, forceGlobal = false) => {
     abortRef.current?.abort();
-    abortRef.current = new AbortController();
+    const controller = new AbortController();
+    abortRef.current = controller;
+    const { signal } = controller;
+    const trimmedQuery = q.trim();
 
-    if (!q.trim() && !countrySlug && !forceGlobal) {
+    if (!trimmedQuery && !countrySlug && !forceGlobal) {
       startTransition(() => {
         setResults([]);
         setCountryMatches([]);
       });
       setIsSearching(false);
+      setSearchEverywhere(false);
+      return;
+    }
+
+    if (!countrySlug && !forceGlobal && trimmedQuery.length < MIN_GLOBAL_QUERY_LENGTH) {
+      startTransition(() => {
+        setResults([]);
+        setCountryMatches(filterCountriesLocally(countries, q));
+      });
+      setIsSearching(false);
+      setSearchEverywhere(false);
       return;
     }
 
@@ -361,6 +419,7 @@ export default function SearchCity({
       // MODE: Country selected -> Use local cache
       if (countrySlug && !forceGlobal) {
         const allCities = await loadCountryCities(countrySlug);
+        if (signal.aborted) return;
         const filtered = filterCitiesLocally(allCities, q);
         startTransition(() => setResults(filtered));
         setIsSearching(false);
@@ -380,52 +439,41 @@ export default function SearchCity({
         }
       }
 
-      // Layer 2: API Search
-      const apiPromise = fetch(`/api/search-city?q=${encodeURIComponent(q)}`, {
-        signal: abortRef.current.signal
-      }).then(res => {
-        if (!res.ok) throw new Error('Search failed');
-        return res.json();
-      }).catch(err => {
-        if (err.name !== 'AbortError') console.error('Search error', err);
-        return [];
-      });
+      // Layer 2: Global static index
+      const indexMatches = filterCitiesLocally(await loadCitySearchIndex(), q);
+      if (signal.aborted) return;
 
-      const apiData = await apiPromise;
+      const mergedLocalResults = mergeCityResults(q, localMatches, indexMatches);
+      startTransition(() => setResults(mergedLocalResults));
 
-      // Merge and deduplicate
-      const merged = [...localMatches];
-      const seenSlugs = new Set(localMatches.map(c => c.city_slug));
-
-      for (const city of (apiData || [])) {
-        if (!seenSlugs.has(city.city_slug)) {
-          seenSlugs.add(city.city_slug);
-          merged.push(city);
-        }
+      // Layer 3: API fallback only when we still need more coverage
+      if (!forceGlobal && mergedLocalResults.length >= API_FALLBACK_RESULT_THRESHOLD) {
+        return;
       }
 
-      // Re-sort the merged list to ensure priority and population rank is preserved across local + API
-      merged.sort((a, b) => {
-        const nq = normalizeArabic(q);
-        const aAr = normalizeArabic(a.city_name_ar);
-        const bAr = normalizeArabic(b.city_name_ar);
-        const aStarts = aAr.startsWith(nq);
-        const bStarts = bAr.startsWith(nq);
+      const apiData = await fetch(`/api/search-city?q=${encodeURIComponent(q)}`, {
+        signal,
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error('Search failed');
+          return res.json();
+        })
+        .catch((err) => {
+          if (err.name !== 'AbortError') console.error('Search error', err);
+          return [];
+        });
 
-        if (aStarts && !bStarts) return -1;
-        if (!aStarts && bStarts) return 1;
+      if (signal.aborted) return;
 
-        if (a.is_capital && !b.is_capital) return -1;
-        if (!a.is_capital && b.is_capital) return 1;
-
-        return (b.priority || 0) - (a.priority || 0) || (b.population || 0) - (a.population || 0);
+      startTransition(() => {
+        setResults(mergeCityResults(q, mergedLocalResults, apiData));
       });
-
-      startTransition(() => setResults(merged.slice(0, 80)));
     } catch (err) {
       if (err.name !== 'AbortError') console.error('Search error', err);
     } finally {
-      setIsSearching(false);
+      if (!signal.aborted) {
+        setIsSearching(false);
+      }
     }
   }, [countries]);
 
@@ -475,6 +523,7 @@ export default function SearchCity({
 
   /* ── Handlers ─────────────────────────────────────────────────────────── */
   const handleOpenDialog = useCallback(() => {
+    void loadCitySearchIndex();
     setOpen(true);
     setQuery('');
     startTransition(() => {
@@ -519,7 +568,7 @@ export default function SearchCity({
   /* ── Derived ─────────────────────────────────────────────────────────── */
   const showSkeleton = isSearching || isPending;
   const hasResults = results.length > 0;
-  const showEmpty = !showSkeleton && !hasResults && query.trim().length > 0 && !searchEverywhere;
+  const showEmpty = !showSkeleton && !hasResults && query.trim().length >= MIN_GLOBAL_QUERY_LENGTH && !searchEverywhere;
 
   const cityRows = useMemo(() =>
     results.map(city => (
@@ -619,25 +668,35 @@ export default function SearchCity({
       <CommandDialog
         open={open}
         onOpenChange={setOpen}
+        modal
         shouldFilter={false}
         className="sc-dialog"
         overlayClassName="sc-dialog-overlay"
+        showCloseButton
       >
-        {/*
-         * DialogTitle is required by Radix UI's DialogContent for accessibility.
-         * We render it visually hidden (sr-only) so screen readers announce it
-         * without it appearing on screen. This fixes the console warning:
-         * "DialogContent requires a DialogTitle for screen reader users."
-         */}
-        <DialogTitle className="sr-only">
-          {isTimeNowMode ? 'البحث عن مدينة لمعرفة الوقت الحالي' : 'البحث عن مدينة لمعرفة مواقيت الصلاة'}
-        </DialogTitle>
-
         {/* ── Dialog header: input + country chips ──────────────────── */}
         <div className="sc-dialog-header">
+          <div className="sc-dialog-intro">
+            <div className="sc-dialog-copy">
+              <DialogTitle className="sc-dialog-title">
+                {isTimeNowMode ? 'ابحث عن مدينة لمعرفة الوقت الحالي' : 'ابحث عن مدينة لمعرفة مواقيت الصلاة'}
+              </DialogTitle>
+              <DialogDescription className="sc-dialog-subtitle">
+                {selectedCountry
+                  ? `تظهر النتائج الآن داخل ${selectedCountry.name_ar}. يمكنك تغيير الدولة أو كتابة اسم المدينة مباشرة.`
+                  : isTimeNowMode
+                    ? 'اختر مدينة أو دولة، أو استخدم موقعك الحالي للوصول السريع إلى الوقت المحلي.'
+                    : 'اختر مدينة أو دولة، أو استخدم موقعك الحالي للوصول السريع إلى المواقيت.'}
+              </DialogDescription>
+            </div>
+
+            <div className="sc-dialog-meta" aria-hidden="true">
+              <kbd className="sc-dialog-kbd">Esc</kbd>
+            </div>
+          </div>
 
           {/* Single search input row */}
-          <div className="sc-dialog-input-row">
+          <div className="sc-dialog-input-shell">
             <Search size={18} className="sc-dialog-search-icon" aria-hidden="true" />
 
             <CommandInput
@@ -648,6 +707,8 @@ export default function SearchCity({
                   ? `ابحث في ${selectedCountry.name_ar}…`
                   : 'ابحث عن مدينة أو دولة…'
               }
+              wrapperClassName="sc-dialog-input-control"
+              showIcon={false}
               className="sc-dialog-input"
               aria-label="ابحث عن مدينة"
               aria-autocomplete="list"
@@ -662,62 +723,66 @@ export default function SearchCity({
               >
                 <X size={13} aria-hidden="true" />
               </button>
-            ) : (
-              <kbd className="sc-dialog-kbd" aria-label="اضغط Escape للإغلاق">Esc</kbd>
-            )}
+            ) : null}
           </div>
 
           {/* Country filter chips — horizontal strip */}
           {visibleCountries.length > 0 && (
-            <div
-              className="sc-chips-row"
-              role="group"
-              aria-label="تصفية حسب الدولة"
-            >
-              {/* "All" chip — visible only when a country is active or showAllCountries is false */}
-              {(selectedCountry || showAllCountries) && (
-                <button
-                  type="button"
-                  className="sc-chip sc-chip--all"
-                  onClick={() => {
-                    handleSelectCountry(null);
-                    setShowAllCountries(false);
-                  }}
-                  aria-pressed={false}
-                  aria-label="عرض جميع الدول"
-                >
-                  <Globe size={10} aria-hidden="true" />
-                  {showAllCountries ? 'الرئيسية' : 'جميع الدول'}
-                </button>
-              )}
+            <div className="sc-dialog-filters">
+              <span className="sc-dialog-filters__label">
+                {selectedCountry ? 'تصفية حسب الدولة' : 'اختيارات سريعة'}
+              </span>
 
-              {/* Every visible country as a chip */}
-              {visibleCountries.map(c => (
-                <button
-                  key={c.slug}
-                  type="button"
-                  className={`sc-chip${selectedCountry?.slug === c.slug ? ' sc-chip--active' : ''}`}
-                  onClick={() => handleSelectCountry(
-                    selectedCountry?.slug === c.slug ? null : c
-                  )}
-                  aria-pressed={selectedCountry?.slug === c.slug}
-                  aria-label={`تصفية بدولة ${c.name_ar}`}
-                >
-                  <span style={{ marginLeft: '0.4rem' }}>{getFlagEmoji(c.country_code)}</span>
-                  {c.name_ar}
-                </button>
-              ))}
+              <div
+                className="sc-chips-row"
+                role="group"
+                aria-label="تصفية حسب الدولة"
+              >
+                {/* "All" chip — visible only when a country is active or showAllCountries is false */}
+                {(selectedCountry || showAllCountries) && (
+                  <button
+                    type="button"
+                    className="sc-chip sc-chip--all"
+                    onClick={() => {
+                      handleSelectCountry(null);
+                      setShowAllCountries(false);
+                    }}
+                    aria-pressed={false}
+                    aria-label="عرض جميع الدول"
+                  >
+                    <Globe size={10} aria-hidden="true" />
+                    {showAllCountries ? 'الرئيسية' : 'جميع الدول'}
+                  </button>
+                )}
 
-              {!showAllCountries && (
-                <button
-                  type="button"
-                  className="sc-chip sc-chip--more"
-                  onClick={() => setShowAllCountries(true)}
-                  aria-label="عرض المزيد من الدول"
-                >
-                  المزيد...
-                </button>
-              )}
+                {/* Every visible country as a chip */}
+                {visibleCountries.map(c => (
+                  <button
+                    key={c.slug}
+                    type="button"
+                    className={`sc-chip${selectedCountry?.slug === c.slug ? ' sc-chip--active' : ''}`}
+                    onClick={() => handleSelectCountry(
+                      selectedCountry?.slug === c.slug ? null : c
+                    )}
+                    aria-pressed={selectedCountry?.slug === c.slug}
+                    aria-label={`تصفية بدولة ${c.name_ar}`}
+                  >
+                    <span style={{ marginLeft: '0.4rem' }}>{getFlagEmoji(c.country_code)}</span>
+                    {c.name_ar}
+                  </button>
+                ))}
+
+                {!showAllCountries && (
+                  <button
+                    type="button"
+                    className="sc-chip sc-chip--more"
+                    onClick={() => setShowAllCountries(true)}
+                    aria-label="عرض المزيد من الدول"
+                  >
+                    المزيد...
+                  </button>
+                )}
+              </div>
             </div>
           )}
         </div>

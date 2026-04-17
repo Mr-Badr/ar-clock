@@ -1,3 +1,5 @@
+import { buildAuthoringFaqContent } from '../../src/lib/holidays/faq-normalizer.js';
+
 export type EventType = 'hijri' | 'fixed' | 'estimated' | 'monthly' | 'easter' | 'floating';
 export type EventCategory =
   | 'islamic'
@@ -20,6 +22,27 @@ type RelatedEntry = {
   slug: string;
   category: string;
   queueOrder?: number;
+};
+
+type FaqEntry = {
+  question: string;
+  answer: string;
+};
+
+type RichContentScaffold = {
+  seoTitle: string;
+  description: string;
+  keywords: string[];
+  answerSummary: string;
+  quickFacts: Record<string, string>;
+  aboutEvent: Record<string, string>;
+  faq: FaqEntry[];
+  intentCards: Array<Record<string, any>>;
+  engagementContent: Array<Record<string, any>>;
+  seoMeta: Record<string, any>;
+  recurringYears: Record<string, any>;
+  schemaData: Record<string, any>;
+  relatedSlugs: string[];
 };
 
 const CATEGORY_LABELS: Record<EventCategory, string> = {
@@ -258,7 +281,7 @@ export function buildSeoMeta(core: EventCoreLike, nowIso: string) {
   };
 }
 
-export function buildSchemaData(core: EventCoreLike, faq: Array<{ question: string; answer: string }>) {
+export function buildSchemaData(core: EventCoreLike) {
   return {
     eventName: `${core.name} {{year}}`,
     eventAlternateName: '',
@@ -271,7 +294,6 @@ export function buildSchemaData(core: EventCoreLike, faq: Array<{ question: stri
       { name: core.name, path: `/holidays/${core.slug}` },
     ],
     articleHeadline: `${core.name} {{year}} — العد التنازلي والمعلومات الكاملة`,
-    faqSchemaItems: faq,
   };
 }
 
@@ -291,10 +313,10 @@ export function buildBaseKeywords(core: EventCoreLike) {
   ];
 }
 
-export function buildRichContentScaffold(core: EventCoreLike, nowIso: string) {
+export function buildRichContentScaffold(core: EventCoreLike, nowIso: string): RichContentScaffold {
   const faq = buildFaq(core.name);
   const aboutEvent = buildAboutEvent(core);
-  return {
+  return buildAuthoringFaqContent({
     seoTitle: `متى ${core.name} {{year}} — عد تنازلي دقيق`,
     description: `تعرف على موعد ${core.name} {{year}} مع عد تنازلي دقيق ومحتوى عربي منظم.`,
     keywords: buildBaseKeywords(core),
@@ -302,14 +324,13 @@ export function buildRichContentScaffold(core: EventCoreLike, nowIso: string) {
     quickFacts: buildQuickFacts(core.category, core.type),
     aboutEvent,
     faq,
-    faqItems: faq.map((item) => ({ q: item.question, a: item.answer })),
     intentCards: buildIntentCards(core.category),
     engagementContent: buildEngagementContent(core.name),
     seoMeta: buildSeoMeta(core, nowIso),
     recurringYears: buildRecurringYears(core.type, core.name),
-    schemaData: buildSchemaData(core, faq),
+    schemaData: buildSchemaData(core),
     relatedSlugs: [],
-  };
+  }) as RichContentScaffold;
 }
 
 export function suggestRelatedSlugs(current: RelatedEntry, allEntries: RelatedEntry[]) {

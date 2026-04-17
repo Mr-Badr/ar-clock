@@ -164,7 +164,7 @@ export default async function TimeNowPage() {
         </header>
 
         <section aria-label="البحث عن مدينة" style={{ marginBottom: '1rem', maxWidth: '600px', margin: '0 auto 1.5rem' }}>
-          <SearchCity mode="time-now" preloadedCountries={allCountries} />
+          <SearchCity mode="time-now" />
         </section>
 
         <section aria-label="توقيتك المحلي" style={{ marginBottom: '4rem' }}>

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "bern",
+    "city_name_ar": "برن",
+    "city_name_en": "Bern",
+    "country_slug": "switzerland",
+    "country_code": "CH",
+    "country_name_ar": "سويسرا",
+    "country_name_en": "Switzerland",
+    "timezone": "Europe/Zurich",
+    "lat": 46.94809,
+    "lon": 7.44744,
+    "is_capital": true,
+    "priority": 121631,
+    "population": 121631
+  }
+]

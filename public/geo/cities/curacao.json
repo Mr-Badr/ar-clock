@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "willemstad",
+    "city_name_ar": "ويلمستاد",
+    "city_name_en": "Willemstad",
+    "country_slug": "curacao",
+    "country_code": "CW",
+    "country_name_ar": "كوراساو",
+    "country_name_en": "Curacao",
+    "timezone": "America/Curacao",
+    "lat": 12.12246,
+    "lon": -68.88641,
+    "is_capital": true,
+    "priority": 125000,
+    "population": 125000
+  }
+]

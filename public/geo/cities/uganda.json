@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "kampala",
+    "city_name_ar": "كمبالا",
+    "city_name_en": "Kampala",
+    "country_slug": "uganda",
+    "country_code": "UG",
+    "country_name_ar": "أوغندا",
+    "country_name_en": "Uganda",
+    "timezone": "Africa/Kampala",
+    "lat": 0.31628,
+    "lon": 32.58219,
+    "is_capital": true,
+    "priority": 1680600,
+    "population": 1680600
+  }
+]

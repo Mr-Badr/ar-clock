@@ -6,13 +6,11 @@
  */
 
 import { notFound } from 'next/navigation';
-import { headers } from 'next/headers';
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { MapPin } from 'lucide-react';
-import { getCountryBySlug, getPriorityCountrySlugs } from '@/lib/db/queries/countries';
+import { getPriorityCountrySlugs, getCountryBySlug } from '@/lib/db/queries/countries';
 import { getTopCitiesByCountry, getCapitalCity } from '@/lib/db/queries/cities';
-import { getCountriesAction } from '@/app/actions/location';
 import { calculatePrayerTimes, getNextPrayer, formatTime } from '@/lib/prayerEngine';
 import { getMethodByCountry } from '@/lib/prayer-methods';
 import PrayerHeroClient from '@/components/PrayerHero.client';
@@ -26,13 +24,14 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import { getSiteUrl } from '@/lib/site-config';
+import { getCachedNowIso } from '@/lib/date-utils';
 import { formatGregorianLabel, getHijriMonthSpanFromDate } from '@/lib/hijri-utils';
 import { buildPrayerKeywords } from '@/lib/seo/section-search-intent';
 
 const BASE = getSiteUrl();
 
 export async function generateStaticParams() {
-  const slugs = await getPriorityCountrySlugs(30);
+  const slugs = await getPriorityCountrySlugs(24);
   return slugs.map(slug => ({ country: slug }));
 }
 
@@ -102,10 +101,9 @@ export default async function CountryPrayerPage({ params }) {
   const country = await getCountryBySlug(countrySlug);
   if (!country) notFound();
 
-  const [cities, capital, allCountries] = await Promise.all([
+  const [cities, capital] = await Promise.all([
     getTopCitiesByCountry(country.country_code, 120),
     getCapitalCity(country.country_code),
-    getCountriesAction(),
   ]);
 
   const countryAr  = country.name_ar || country.name_en;
@@ -136,6 +134,7 @@ export default async function CountryPrayerPage({ params }) {
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
+    '@id': `${BASE}/mwaqit-al-salat/${countrySlug}#breadcrumb`,
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${BASE}/` },
       { '@type': 'ListItem', position: 2, name: 'مواقيت الصلاة', item: `${BASE}/mwaqit-al-salat` },
@@ -219,7 +218,7 @@ export default async function CountryPrayerPage({ params }) {
 
         {/* Search */}
         <div className="mb-12">
-          <SearchCity mode="mwaqit-al-salat" preloadedCountries={allCountries} />
+          <SearchCity mode="mwaqit-al-salat" />
         </div>
 
         {/* Capital city section */}
@@ -280,9 +279,8 @@ export default async function CountryPrayerPage({ params }) {
 
 // ─── Dynamic content ──────────────────────────────────────────────────────────
 async function PrayerTimesContent({ country, city, cityData, countryCode, countryNameAr }) {
-  await headers();
-
-  const now        = new Date();
+  const nowIso     = await getCachedNowIso();
+  const now        = new Date(nowIso);
   const methodInfo = getMethodByCountry(countryCode);
 
   const times = calculatePrayerTimes({
@@ -295,7 +293,7 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
     return <p className="text-danger text-center py-12">عذراً، تعذّر حساب أوقات الصلاة للعاصمة.</p>;
   }
 
-  const { nextKey, nextIso, prevIso } = getNextPrayer(times, now.toISOString());
+  const { nextKey, nextIso, prevIso } = getNextPrayer(times, nowIso);
   const todayLabel = now.toLocaleDateString('ar-EG-u-nu-latn', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
   });

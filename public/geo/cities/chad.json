@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "ndjamena",
+    "city_name_ar": "انجمينا",
+    "city_name_en": "N'Djamena",
+    "country_slug": "chad",
+    "country_code": "TD",
+    "country_name_ar": "تشاد",
+    "country_name_en": "Chad",
+    "timezone": "Africa/Ndjamena",
+    "lat": 12.10672,
+    "lon": 15.0444,
+    "is_capital": true,
+    "priority": 1359526,
+    "population": 1359526
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "banjul",
+    "city_name_ar": "بانجول",
+    "city_name_en": "Banjul",
+    "country_slug": "gambia",
+    "country_code": "GM",
+    "country_name_ar": "غامبيا",
+    "country_name_en": "Gambia",
+    "timezone": "Africa/Banjul",
+    "lat": 13.45274,
+    "lon": -16.57803,
+    "is_capital": true,
+    "priority": 37274,
+    "population": 37274
+  }
+]

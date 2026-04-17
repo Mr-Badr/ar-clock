@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "luanda",
+    "city_name_ar": "لواندا",
+    "city_name_en": "Luanda",
+    "country_slug": "angola",
+    "country_code": "AO",
+    "country_name_ar": "أنغولا",
+    "country_name_en": "Angola",
+    "timezone": "Africa/Luanda",
+    "lat": -8.83682,
+    "lon": 13.23432,
+    "is_capital": true,
+    "priority": 2776168,
+    "population": 2776168
+  }
+]

@@ -1,4 +1,5 @@
 import { getSiteUrl } from '@/lib/site-config';
+import { getSitemapLastModified } from '@/lib/sitemap';
 
 const ECONOMY_SITEMAP_ROUTES = [
   { path: '/economie', priority: 0.9, changeFrequency: 'daily' },
@@ -12,7 +13,7 @@ const ECONOMY_SITEMAP_ROUTES = [
 
 export default async function sitemap() {
   const base = getSiteUrl();
-  const lastModified = new Date().toISOString();
+  const lastModified = getSitemapLastModified();
 
   return ECONOMY_SITEMAP_ROUTES.map((route) => ({
     url: `${base}${route.path}`,

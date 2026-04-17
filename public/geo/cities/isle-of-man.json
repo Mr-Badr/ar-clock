@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "douglas",
+    "city_name_ar": "دوغلاس",
+    "city_name_en": "Douglas",
+    "country_slug": "isle-of-man",
+    "country_code": "IM",
+    "country_name_ar": "جزيرة مان",
+    "country_name_en": "Isle of Man",
+    "timezone": "Europe/Isle_of_Man",
+    "lat": 54.15,
+    "lon": -4.48333,
+    "is_capital": true,
+    "priority": 26218,
+    "population": 26218
+  }
+]

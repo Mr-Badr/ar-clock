@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "podgorica",
+    "city_name_ar": "بودغوريتسا",
+    "city_name_en": "Podgorica",
+    "country_slug": "montenegro",
+    "country_code": "ME",
+    "country_name_ar": "الجبل الأسود",
+    "country_name_en": "Montenegro",
+    "timezone": "Europe/Podgorica",
+    "lat": 42.44124,
+    "lon": 19.26309,
+    "is_capital": true,
+    "priority": 236852,
+    "population": 236852
+  }
+]

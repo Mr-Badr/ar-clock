@@ -1,0 +1,62 @@
+[
+  {
+    "city_slug": "sucre",
+    "city_name_ar": "سوكري",
+    "city_name_en": "Sucre",
+    "country_slug": "bolivia",
+    "country_code": "BO",
+    "country_name_ar": "بوليفيا",
+    "country_name_en": "Bolivia",
+    "timezone": "America/La_Paz",
+    "lat": -19.03332,
+    "lon": -65.26274,
+    "is_capital": true,
+    "priority": 224838,
+    "population": 224838
+  },
+  {
+    "city_slug": "la-paz",
+    "city_name_ar": "لاباز",
+    "city_name_en": "La Paz",
+    "country_slug": "bolivia",
+    "country_code": "BO",
+    "country_name_ar": "بوليفيا",
+    "country_name_en": "Bolivia",
+    "timezone": "America/La_Paz",
+    "lat": -16.5,
+    "lon": -68.15,
+    "is_capital": false,
+    "priority": 2004652,
+    "population": 2004652
+  },
+  {
+    "city_slug": "santa-cruz-de-la-sierra",
+    "city_name_ar": "سانتا كروز دي لا سييرا",
+    "city_name_en": "Santa Cruz de la Sierra",
+    "country_slug": "bolivia",
+    "country_code": "BO",
+    "country_name_ar": "بوليفيا",
+    "country_name_en": "Bolivia",
+    "timezone": "America/La_Paz",
+    "lat": -17.78629,
+    "lon": -63.18117,
+    "is_capital": false,
+    "priority": 1831434,
+    "population": 1831434
+  },
+  {
+    "city_slug": "cochabamba",
+    "city_name_ar": "كوتشابامبا",
+    "city_name_en": "Cochabamba",
+    "country_slug": "bolivia",
+    "country_code": "BO",
+    "country_name_ar": "بوليفيا",
+    "country_name_en": "Bolivia",
+    "timezone": "America/La_Paz",
+    "lat": -17.38195,
+    "lon": -66.15995,
+    "is_capital": false,
+    "priority": 841276,
+    "population": 841276
+  }
+]

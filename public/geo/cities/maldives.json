@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "male",
+    "city_name_ar": "ماليه",
+    "city_name_en": "Male",
+    "country_slug": "maldives",
+    "country_code": "MV",
+    "country_name_ar": "المالديف",
+    "country_name_en": "Maldives",
+    "timezone": "Indian/Maldives",
+    "lat": 4.17521,
+    "lon": 73.50916,
+    "is_capital": true,
+    "priority": 103693,
+    "population": 103693
+  }
+]

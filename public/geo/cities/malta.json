@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "valletta",
+    "city_name_ar": "فاليتا",
+    "city_name_en": "Valletta",
+    "country_slug": "malta",
+    "country_code": "MT",
+    "country_name_ar": "مالطا",
+    "country_name_en": "Malta",
+    "timezone": "Europe/Malta",
+    "lat": 35.89968,
+    "lon": 14.5148,
+    "is_capital": true,
+    "priority": 6794,
+    "population": 6794
+  }
+]

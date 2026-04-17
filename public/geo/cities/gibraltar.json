@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "gibraltar",
+    "city_name_ar": "جبل طارق",
+    "city_name_en": "Gibraltar",
+    "country_slug": "gibraltar",
+    "country_code": "GI",
+    "country_name_ar": "جبل طارق",
+    "country_name_en": "Gibraltar",
+    "timezone": "Europe/Gibraltar",
+    "lat": 36.14474,
+    "lon": -5.35257,
+    "is_capital": true,
+    "priority": 26544,
+    "population": 26544
+  }
+]

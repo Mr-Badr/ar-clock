@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "copenhagen",
+    "city_name_ar": "كوبنهاغن",
+    "city_name_en": "Copenhagen",
+    "country_slug": "denmark",
+    "country_code": "DK",
+    "country_name_ar": "الدنمارك",
+    "country_name_en": "Denmark",
+    "timezone": "Europe/Copenhagen",
+    "lat": 55.67594,
+    "lon": 12.56553,
+    "is_capital": true,
+    "priority": 1153615,
+    "population": 1153615
+  }
+]

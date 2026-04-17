@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "saint-peter-port",
+    "city_name_ar": "سان بيتر بورت",
+    "city_name_en": "Saint Peter Port",
+    "country_slug": "guernsey",
+    "country_code": "GG",
+    "country_name_ar": "غيرنزي",
+    "country_name_en": "Guernsey",
+    "timezone": "Europe/Guernsey",
+    "lat": 49.45981,
+    "lon": -2.53527,
+    "is_capital": true,
+    "priority": 16488,
+    "population": 16488
+  }
+]

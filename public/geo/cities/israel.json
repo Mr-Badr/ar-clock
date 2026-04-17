@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "jerusalem",
+    "city_name_ar": "القدس",
+    "city_name_en": "Jerusalem",
+    "country_slug": "israel",
+    "country_code": "IL",
+    "country_name_ar": "إسرائيل",
+    "country_name_en": "Israel",
+    "timezone": "Asia/Jerusalem",
+    "lat": 31.76904,
+    "lon": 35.21633,
+    "is_capital": true,
+    "priority": 971800,
+    "population": 971800
+  }
+]

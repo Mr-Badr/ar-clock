@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "tbilisi",
+    "city_name_ar": "تبليسي",
+    "city_name_en": "Tbilisi",
+    "country_slug": "georgia",
+    "country_code": "GE",
+    "country_name_ar": "جورجيا",
+    "country_name_en": "Georgia",
+    "timezone": "Asia/Tbilisi",
+    "lat": 41.69143,
+    "lon": 44.83412,
+    "is_capital": true,
+    "priority": 1049498,
+    "population": 1049498
+  }
+]

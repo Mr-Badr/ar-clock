@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "george-town",
+    "city_name_ar": "جورج تاون",
+    "city_name_en": "George Town",
+    "country_slug": "cayman-islands",
+    "country_code": "KY",
+    "country_name_ar": "جزر كايمان",
+    "country_name_en": "Cayman Islands",
+    "timezone": "America/Cayman",
+    "lat": 19.2866,
+    "lon": -81.37436,
+    "is_capital": true,
+    "priority": 29370,
+    "population": 29370
+  }
+]

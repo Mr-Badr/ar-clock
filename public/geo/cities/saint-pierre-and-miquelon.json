@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "saint-pierre",
+    "city_name_ar": "سان بيير (سان بيير وميكلون)",
+    "city_name_en": "Saint-Pierre",
+    "country_slug": "saint-pierre-and-miquelon",
+    "country_code": "PM",
+    "country_name_ar": "سان بيير وميكلون",
+    "country_name_en": "Saint Pierre and Miquelon",
+    "timezone": "America/Miquelon",
+    "lat": 46.77914,
+    "lon": -56.1773,
+    "is_capital": true,
+    "priority": 6200,
+    "population": 6200
+  }
+]

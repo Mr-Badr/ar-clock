@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "budapest",
+    "city_name_ar": "بودابست",
+    "city_name_en": "Budapest",
+    "country_slug": "hungary",
+    "country_code": "HU",
+    "country_name_ar": "المجر",
+    "country_name_en": "Hungary",
+    "timezone": "Europe/Budapest",
+    "lat": 47.49835,
+    "lon": 19.04045,
+    "is_capital": true,
+    "priority": 1741041,
+    "population": 1741041
+  }
+]

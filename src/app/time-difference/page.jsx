@@ -1,6 +1,5 @@
 // app/time-difference/page.tsx
 import TimeDiffCalculator from "@/components/TimeDifference/TimeDiffCalculatorV2.client";
-import { getCountriesAction } from "@/app/actions/location";
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import TimeDiffSections from '@/components/time-diff/index';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
@@ -25,7 +24,6 @@ export const metadata = buildCanonicalMetadata({
 });
 
 export default async function TimeDifferencePage() {
-  const allCountries = await getCountriesAction();
   const collectionSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -152,7 +150,7 @@ export default async function TimeDifferencePage() {
 
         {/* Calculator */}
         <section aria-label="حاسبة فرق التوقيت">
-          <TimeDiffCalculator preloadedCountries={allCountries} />
+          <TimeDiffCalculator />
         </section>
 
       </main>

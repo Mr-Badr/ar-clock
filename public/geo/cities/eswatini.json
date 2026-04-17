@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "mbabane",
+    "city_name_ar": "مبابان",
+    "city_name_en": "Mbabane",
+    "country_slug": "eswatini",
+    "country_code": "SZ",
+    "country_name_ar": "إسواتيني",
+    "country_name_en": "Eswatini",
+    "timezone": "Africa/Mbabane",
+    "lat": -26.31667,
+    "lon": 31.13333,
+    "is_capital": true,
+    "priority": 76218,
+    "population": 76218
+  }
+]

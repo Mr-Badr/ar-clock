@@ -83,7 +83,7 @@ const links = (countrySlug: string, countryNameAr: string) => [
 ]
 
 export async function generateStaticParams() {
-  const slugs = await getPriorityCountrySlugs(30);
+  const slugs = await getPriorityCountrySlugs(24);
   return slugs.map(slug => ({ countrySlug: slug }));
 }
 

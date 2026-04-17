@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "antananarivo",
+    "city_name_ar": "أنتاناناريفو",
+    "city_name_en": "Antananarivo",
+    "country_slug": "madagascar",
+    "country_code": "MG",
+    "country_name_ar": "مدغشقر",
+    "country_name_en": "Madagascar",
+    "timezone": "Indian/Antananarivo",
+    "lat": -18.91368,
+    "lon": 47.53613,
+    "is_capital": true,
+    "priority": 1349501,
+    "population": 1349501
+  }
+]

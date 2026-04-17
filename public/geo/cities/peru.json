@@ -1,0 +1,62 @@
+[
+  {
+    "city_slug": "lima",
+    "city_name_ar": "ليما",
+    "city_name_en": "Lima",
+    "country_slug": "peru",
+    "country_code": "PE",
+    "country_name_ar": "بيرو",
+    "country_name_en": "Peru",
+    "timezone": "America/Lima",
+    "lat": -12.04318,
+    "lon": -77.02824,
+    "is_capital": true,
+    "priority": 7737002,
+    "population": 7737002
+  },
+  {
+    "city_slug": "callao",
+    "city_name_ar": "كاياو",
+    "city_name_en": "Callao",
+    "country_slug": "peru",
+    "country_code": "PE",
+    "country_name_ar": "بيرو",
+    "country_name_en": "Peru",
+    "timezone": "America/Lima",
+    "lat": -12.05162,
+    "lon": -77.13452,
+    "is_capital": false,
+    "priority": 1300000,
+    "population": 1300000
+  },
+  {
+    "city_slug": "arequipa",
+    "city_name_ar": "أريكيبا",
+    "city_name_en": "Arequipa",
+    "country_slug": "peru",
+    "country_code": "PE",
+    "country_name_ar": "بيرو",
+    "country_name_en": "Peru",
+    "timezone": "America/Lima",
+    "lat": -16.39899,
+    "lon": -71.53747,
+    "is_capital": false,
+    "priority": 1008290,
+    "population": 1008290
+  },
+  {
+    "city_slug": "trujillo",
+    "city_name_ar": "تروخيو، بيرو",
+    "city_name_en": "Trujillo",
+    "country_slug": "peru",
+    "country_code": "PE",
+    "country_name_ar": "بيرو",
+    "country_name_en": "Peru",
+    "timezone": "America/Lima",
+    "lat": -8.11599,
+    "lon": -79.02998,
+    "is_capital": false,
+    "priority": 919899,
+    "population": 919899
+  }
+]

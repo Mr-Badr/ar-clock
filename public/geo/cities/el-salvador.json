@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "san-salvador",
+    "city_name_ar": "سان سلفادور",
+    "city_name_en": "San Salvador",
+    "country_slug": "el-salvador",
+    "country_code": "SV",
+    "country_name_ar": "السلفادور",
+    "country_name_en": "El Salvador",
+    "timezone": "America/El_Salvador",
+    "lat": 13.68935,
+    "lon": -89.18718,
+    "is_capital": true,
+    "priority": 525990,
+    "population": 525990
+  }
+]

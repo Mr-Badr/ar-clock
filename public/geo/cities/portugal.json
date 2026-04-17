@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "lisbon",
+    "city_name_ar": "لشبونة",
+    "city_name_en": "Lisbon",
+    "country_slug": "portugal",
+    "country_code": "PT",
+    "country_name_ar": "البرتغال",
+    "country_name_en": "Portugal",
+    "timezone": "Europe/Lisbon",
+    "lat": 38.72509,
+    "lon": -9.1498,
+    "is_capital": true,
+    "priority": 517802,
+    "population": 517802
+  }
+]

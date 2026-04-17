@@ -1,6 +1,7 @@
 /**
  * /date/gregorian/sitemap.xml — Gregorian daily date pages
- * Lists the current Gregorian year ±1 for crawlable daily date pages.
+ * Bridge mode: daily date pages stay reachable, but they are not submitted for
+ * indexing. Return an empty sitemap to shrink crawl pressure.
  */
 import { getSiteUrl } from '@/lib/site-config';
 
@@ -11,32 +12,8 @@ function daysInMonth(year: number, month: number) {
 }
 
 export async function GET() {
-  const currentYear = new Date().getUTCFullYear();
-  const urls: string[] = [];
-
-  for (let year = currentYear - 1; year <= currentYear + 1; year++) {
-    for (let month = 1; month <= 12; month++) {
-      const maxDay = daysInMonth(year, month);
-      for (let day = 1; day <= maxDay; day++) {
-        urls.push(
-          `${BASE}/date/${year}/${String(month).padStart(2, '0')}/${String(day).padStart(2, '0')}`
-        );
-      }
-    }
-  }
-
-  const entries = urls.map(
-    (url) => `
-  <url>
-    <loc>${url}</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>`
-  ).join('');
-
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${entries}
 </urlset>`;
 
   return new Response(xml, {

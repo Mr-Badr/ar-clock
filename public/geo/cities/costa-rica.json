@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "san-jose",
+    "city_name_ar": "سان خوسيه (توضيح)",
+    "city_name_en": "San Jose",
+    "country_slug": "costa-rica",
+    "country_code": "CR",
+    "country_name_ar": "كوستاريكا",
+    "country_name_en": "Costa Rica",
+    "timezone": "America/Costa_Rica",
+    "lat": 10.95192,
+    "lon": -85.13572,
+    "is_capital": true,
+    "priority": 335007,
+    "population": 335007
+  }
+]

@@ -2,10 +2,11 @@ import { getRichContent } from '@/lib/event-content';
 import { ALL_EVENT_SLUGS, getEventMeta } from '@/lib/events';
 import { GENERATED_ALIAS_META_BY_SLUG } from '@/lib/events/generated-aliases';
 import { getSiteUrl } from '@/lib/site-config';
+import { getSitemapLastModified } from '@/lib/sitemap';
 
 export default async function sitemap() {
   const BASE = getSiteUrl();
-  const now = new Date().toISOString();
+  const fallbackLastModified = getSitemapLastModified();
   const rows = ALL_EVENT_SLUGS
     .map((slug) => ({ slug, ...(getEventMeta(slug) || {}) }))
     .filter((row) => row?.slug && ['published', 'monitored'].includes(row.publishStatus));
@@ -29,7 +30,7 @@ export default async function sitemap() {
     if (typeof canonicalRichDate === 'string' && !Number.isNaN(Date.parse(canonicalRichDate))) {
       return canonicalRichDate;
     }
-    return now;
+    return fallbackLastModified;
   };
 
   const canonicalEntries = rows.map((row) => {

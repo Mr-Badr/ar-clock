@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "port-louis",
+    "city_name_ar": "بور لويس",
+    "city_name_en": "Port Louis",
+    "country_slug": "mauritius",
+    "country_code": "MU",
+    "country_name_ar": "موريشيوس",
+    "country_name_en": "Mauritius",
+    "timezone": "Indian/Mauritius",
+    "lat": -20.16194,
+    "lon": 57.49889,
+    "is_capital": true,
+    "priority": 155226,
+    "population": 155226
+  }
+]

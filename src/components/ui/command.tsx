@@ -25,12 +25,28 @@ Command.displayName = CommandPrimitive.displayName
 interface CommandDialogProps extends React.ComponentProps<typeof Dialog> {
   children?: React.ReactNode;
   shouldFilter?: boolean;
+  className?: string;
+  overlayClassName?: string;
+  contentClassName?: string;
+  showCloseButton?: boolean;
 }
 
-const CommandDialog = ({ children, shouldFilter, ...props }: CommandDialogProps) => {
+const CommandDialog = ({
+  children,
+  shouldFilter,
+  className,
+  overlayClassName,
+  contentClassName,
+  showCloseButton = false,
+  ...props
+}: CommandDialogProps) => {
   return (
     <Dialog {...props}>
-      <DialogContent className="overflow-hidden p-0 shadow-lg">
+      <DialogContent
+        className={cn("overflow-hidden p-0 shadow-lg", contentClassName, className)}
+        overlayClassName={overlayClassName}
+        showCloseButton={showCloseButton}
+      >
         <Command shouldFilter={shouldFilter} className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
           {children}
         </Command>
@@ -41,10 +57,16 @@ const CommandDialog = ({ children, shouldFilter, ...props }: CommandDialogProps)
 
 const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
->(({ className, ...props }, ref) => (
-  <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
-    <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input> & {
+    wrapperClassName?: string;
+    iconClassName?: string;
+    showIcon?: boolean;
+  }
+>(({ className, wrapperClassName, iconClassName, showIcon = true, ...props }, ref) => (
+  <div className={cn("flex items-center border-b px-3", wrapperClassName)} cmdk-input-wrapper="">
+    {showIcon && (
+      <Search className={cn("mr-2 h-4 w-4 shrink-0 opacity-50", iconClassName)} />
+    )}
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
@@ -63,7 +85,7 @@ const CommandList = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.List
     ref={ref}
-    className={cn("max-h-[300px] overflow-y-scroll overflow-x-hidden overscroll-contain pointer-events-auto", className)}
+    className={cn("min-h-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain pointer-events-auto", className)}
     {...props}
   />
 ))

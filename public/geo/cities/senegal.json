@@ -1,0 +1,47 @@
+[
+  {
+    "city_slug": "dakar",
+    "city_name_ar": "داكار",
+    "city_name_en": "Dakar",
+    "country_slug": "senegal",
+    "country_code": "SN",
+    "country_name_ar": "السنغال",
+    "country_name_en": "Senegal",
+    "timezone": "Africa/Dakar",
+    "lat": 14.6937,
+    "lon": -17.44406,
+    "is_capital": true,
+    "priority": 2646503,
+    "population": 2646503
+  },
+  {
+    "city_slug": "touba",
+    "city_name_ar": "طوبى",
+    "city_name_en": "Touba",
+    "country_slug": "senegal",
+    "country_code": "SN",
+    "country_name_ar": "السنغال",
+    "country_name_en": "Senegal",
+    "timezone": "Africa/Dakar",
+    "lat": 14.86229,
+    "lon": -15.87532,
+    "is_capital": false,
+    "priority": 1120824,
+    "population": 1120824
+  },
+  {
+    "city_slug": "pikine",
+    "city_name_ar": "بيكين",
+    "city_name_en": "Pikine",
+    "country_slug": "senegal",
+    "country_code": "SN",
+    "country_name_ar": "السنغال",
+    "country_name_en": "Senegal",
+    "timezone": "Africa/Dakar",
+    "lat": 14.76457,
+    "lon": -17.39071,
+    "is_capital": false,
+    "priority": 874062,
+    "population": 874062
+  }
+]

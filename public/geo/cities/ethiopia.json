@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "addis-ababa",
+    "city_name_ar": "أديس أبابا",
+    "city_name_en": "Addis Ababa",
+    "country_slug": "ethiopia",
+    "country_code": "ET",
+    "country_name_ar": "إثيوبيا",
+    "country_name_en": "Ethiopia",
+    "timezone": "Africa/Addis_Ababa",
+    "lat": 9.02497,
+    "lon": 38.74689,
+    "is_capital": true,
+    "priority": 3860000,
+    "population": 3860000
+  }
+]

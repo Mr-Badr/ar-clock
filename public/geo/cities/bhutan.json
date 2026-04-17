@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "thimphu",
+    "city_name_ar": "تيمفو",
+    "city_name_en": "Thimphu",
+    "country_slug": "bhutan",
+    "country_code": "BT",
+    "country_name_ar": "بوتان",
+    "country_name_en": "Bhutan",
+    "timezone": "Asia/Thimphu",
+    "lat": 27.46609,
+    "lon": 89.64191,
+    "is_capital": true,
+    "priority": 98676,
+    "population": 98676
+  }
+]

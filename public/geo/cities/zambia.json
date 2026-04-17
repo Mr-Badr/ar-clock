@@ -1,0 +1,47 @@
+[
+  {
+    "city_slug": "lusaka",
+    "city_name_ar": "لوساكا",
+    "city_name_en": "Lusaka",
+    "country_slug": "zambia",
+    "country_code": "ZM",
+    "country_name_ar": "زامبيا",
+    "country_name_en": "Zambia",
+    "timezone": "Africa/Lusaka",
+    "lat": -15.40669,
+    "lon": 28.28713,
+    "is_capital": true,
+    "priority": 2212301,
+    "population": 2212301
+  },
+  {
+    "city_slug": "kitwe",
+    "city_name_ar": "كيتوي",
+    "city_name_en": "Kitwe",
+    "country_slug": "zambia",
+    "country_code": "ZM",
+    "country_name_ar": "زامبيا",
+    "country_name_en": "Zambia",
+    "timezone": "Africa/Lusaka",
+    "lat": -12.80243,
+    "lon": 28.21323,
+    "is_capital": false,
+    "priority": 665961,
+    "population": 665961
+  },
+  {
+    "city_slug": "ndola",
+    "city_name_ar": "ندولا",
+    "city_name_en": "Ndola",
+    "country_slug": "zambia",
+    "country_code": "ZM",
+    "country_name_ar": "زامبيا",
+    "country_name_en": "Zambia",
+    "timezone": "Africa/Lusaka",
+    "lat": -12.95867,
+    "lon": 28.63659,
+    "is_capital": false,
+    "priority": 627503,
+    "population": 627503
+  }
+]

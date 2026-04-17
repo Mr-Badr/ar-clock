@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "nassau",
+    "city_name_ar": "ناساو",
+    "city_name_en": "Nassau",
+    "country_slug": "bahamas",
+    "country_code": "BS",
+    "country_name_ar": "جزر البهاما",
+    "country_name_en": "Bahamas",
+    "timezone": "America/Nassau",
+    "lat": 25.05823,
+    "lon": -77.34306,
+    "is_capital": true,
+    "priority": 227940,
+    "population": 227940
+  }
+]

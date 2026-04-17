@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "praia",
+    "city_name_ar": "برايا",
+    "city_name_en": "Praia",
+    "country_slug": "cabo-verde",
+    "country_code": "CV",
+    "country_name_ar": "الرأس الأخضر",
+    "country_name_en": "Cabo Verde",
+    "timezone": "Atlantic/Cape_Verde",
+    "lat": 14.93152,
+    "lon": -23.51254,
+    "is_capital": true,
+    "priority": 137868,
+    "population": 137868
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "sao-tome",
+    "city_name_ar": "ساو تومي",
+    "city_name_en": "Sao Tome",
+    "country_slug": "sao-tome-and-principe",
+    "country_code": "ST",
+    "country_name_ar": "ساو تومي وبرينسيب",
+    "country_name_en": "Sao Tome and Principe",
+    "timezone": "Africa/Sao_Tome",
+    "lat": 0.33756,
+    "lon": 6.7299,
+    "is_capital": true,
+    "priority": 53300,
+    "population": 53300
+  }
+]

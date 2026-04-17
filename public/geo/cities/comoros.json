@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "moroni",
+    "city_name_ar": "موروني",
+    "city_name_en": "Moroni",
+    "country_slug": "comoros",
+    "country_code": "KM",
+    "country_name_ar": "جزر القمر",
+    "country_name_en": "Comoros",
+    "timezone": "Indian/Comoro",
+    "lat": -11.70216,
+    "lon": 43.25506,
+    "is_capital": true,
+    "priority": 74749,
+    "population": 74749
+  }
+]

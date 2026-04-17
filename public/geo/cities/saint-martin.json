@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "marigot",
+    "city_name_ar": "ماريجوت، سانت مارتن",
+    "city_name_en": "Marigot",
+    "country_slug": "saint-martin",
+    "country_code": "MF",
+    "country_name_ar": "تجمع سان مارتين",
+    "country_name_en": "Saint Martin",
+    "timezone": "America/Marigot",
+    "lat": 18.06819,
+    "lon": -63.08302,
+    "is_capital": true,
+    "priority": 5700,
+    "population": 5700
+  }
+]

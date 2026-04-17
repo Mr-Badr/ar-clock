@@ -166,11 +166,18 @@ export async function getHolidayPageData(slug) {
     replaceTokens(seo?.seoMeta?.h1 || event.name, tokenContext),
     event,
   );
-  const evSchema = {
-    ...buildEventSchema(pageSchemaEvent, targetDate, siteUrl, eventState),
-    name: pageSchemaEvent.seoTitle,
-    description: pageSchemaEvent.description,
-  };
+  // Google Event rich results are for actual public event postings with
+  // bookable/attendable venue details. Our holiday countdown/info pages should
+  // only emit Event markup when an entry explicitly opts in with event-ready
+  // structured data.
+  const shouldEmitEventSchema = pageSchemaEvent?.schemaData?.googleEventRichResult === true;
+  const evSchema = shouldEmitEventSchema
+    ? {
+        ...buildEventSchema(pageSchemaEvent, targetDate, siteUrl, eventState),
+        name: pageSchemaEvent.seoTitle,
+        description: pageSchemaEvent.description,
+      }
+    : null;
   const wpSchema = {
     ...buildWebPageSchema(pageSchemaEvent, targetDate, siteUrl, nowIso),
     name: pageSchemaEvent.seoTitle,
@@ -183,7 +190,9 @@ export async function getHolidayPageData(slug) {
     { name: breadcrumbTitle, url: `${siteUrl}${routePath}` },
   ]);
   const articleSchema = buildArticleSchema(pageSchemaEvent, targetDate, siteUrl, nowIso);
-  const eventSeriesSchema = buildEventSeriesSchema(pageSchemaEvent, siteUrl);
+  const eventSeriesSchema = shouldEmitEventSchema
+    ? buildEventSeriesSchema(pageSchemaEvent, siteUrl)
+    : null;
 
   const typeLabel =
     {
@@ -196,7 +205,7 @@ export async function getHolidayPageData(slug) {
     }[event.type] || event.type;
 
   const schemaIssues = [
-    ...validateSchemaShape(evSchema).map((issue) => `event:${issue}`),
+    ...(evSchema ? validateSchemaShape(evSchema).map((issue) => `event:${issue}`) : []),
     ...validateSchemaShape(wpSchema).map((issue) => `webpage:${issue}`),
     ...(faqSchema ? validateSchemaShape(faqSchema).map((issue) => `faq:${issue}`) : []),
     ...validateSchemaShape(bcSchema).map((issue) => `breadcrumb:${issue}`),

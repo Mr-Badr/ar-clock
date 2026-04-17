@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "skopje",
+    "city_name_ar": "إسكوبية",
+    "city_name_en": "Skopje",
+    "country_slug": "north-macedonia",
+    "country_code": "MK",
+    "country_name_ar": "مقدونيا الشمالية",
+    "country_name_en": "North Macedonia",
+    "timezone": "Europe/Skopje",
+    "lat": 41.99646,
+    "lon": 21.43141,
+    "is_capital": true,
+    "priority": 474889,
+    "population": 474889
+  }
+]

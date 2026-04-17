@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "sofia",
+    "city_name_ar": "صوفيا",
+    "city_name_en": "Sofia",
+    "country_slug": "bulgaria",
+    "country_code": "BG",
+    "country_name_ar": "بلغاريا",
+    "country_name_en": "Bulgaria",
+    "timezone": "Europe/Sofia",
+    "lat": 42.69751,
+    "lon": 23.32415,
+    "is_capital": true,
+    "priority": 1152556,
+    "population": 1152556
+  }
+]

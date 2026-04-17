@@ -1,0 +1,47 @@
+[
+  {
+    "city_slug": "buenos-aires",
+    "city_name_ar": "بوينس آيرس",
+    "city_name_en": "Buenos Aires",
+    "country_slug": "argentina",
+    "country_code": "AR",
+    "country_name_ar": "الأرجنتين",
+    "country_name_en": "Argentina",
+    "timezone": "America/Argentina/Buenos_Aires",
+    "lat": -34.61315,
+    "lon": -58.37723,
+    "is_capital": true,
+    "priority": 2891082,
+    "population": 2891082
+  },
+  {
+    "city_slug": "cordoba",
+    "city_name_ar": "كوردوبا",
+    "city_name_en": "Cordoba",
+    "country_slug": "argentina",
+    "country_code": "AR",
+    "country_name_ar": "الأرجنتين",
+    "country_name_en": "Argentina",
+    "timezone": "America/Argentina/Cordoba",
+    "lat": -31.40648,
+    "lon": -64.18853,
+    "is_capital": false,
+    "priority": 2106734,
+    "population": 2106734
+  },
+  {
+    "city_slug": "rosario",
+    "city_name_ar": "روساريو",
+    "city_name_en": "Rosario",
+    "country_slug": "argentina",
+    "country_code": "AR",
+    "country_name_ar": "الأرجنتين",
+    "country_name_en": "Argentina",
+    "timezone": "America/Argentina/Cordoba",
+    "lat": -32.94682,
+    "lon": -60.63932,
+    "is_capital": false,
+    "priority": 948312,
+    "population": 948312
+  }
+]

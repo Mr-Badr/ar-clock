@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "macau",
+    "city_name_ar": "ماكاو",
+    "city_name_en": "Macau",
+    "country_slug": "macao",
+    "country_code": "MO",
+    "country_name_ar": "ماكاو",
+    "country_name_en": "Macao",
+    "timezone": "Asia/Macau",
+    "lat": 22.20056,
+    "lon": 113.54611,
+    "is_capital": true,
+    "priority": 649335,
+    "population": 649335
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "baku",
+    "city_name_ar": "باكو",
+    "city_name_en": "Baku",
+    "country_slug": "azerbaijan",
+    "country_code": "AZ",
+    "country_name_ar": "أذربيجان",
+    "country_name_en": "Azerbaijan",
+    "timezone": "Asia/Baku",
+    "lat": 40.37767,
+    "lon": 49.89201,
+    "is_capital": true,
+    "priority": 1116513,
+    "population": 1116513
+  }
+]

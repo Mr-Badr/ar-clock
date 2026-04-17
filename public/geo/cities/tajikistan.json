@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "dushanbe",
+    "city_name_ar": "دوشنبة",
+    "city_name_en": "Dushanbe",
+    "country_slug": "tajikistan",
+    "country_code": "TJ",
+    "country_name_ar": "طاجيكستان",
+    "country_name_en": "Tajikistan",
+    "timezone": "Asia/Dushanbe",
+    "lat": 38.53575,
+    "lon": 68.77905,
+    "is_capital": true,
+    "priority": 679400,
+    "population": 679400
+  }
+]

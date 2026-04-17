@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "wellington",
+    "city_name_ar": "ويلينغتون",
+    "city_name_en": "Wellington",
+    "country_slug": "new-zealand",
+    "country_code": "NZ",
+    "country_name_ar": "نيوزيلندا",
+    "country_name_en": "New Zealand",
+    "timezone": "Pacific/Auckland",
+    "lat": -41.28664,
+    "lon": 174.77557,
+    "is_capital": true,
+    "priority": 381900,
+    "population": 381900
+  },
+  {
+    "city_slug": "auckland",
+    "city_name_ar": "أوكلاند",
+    "city_name_en": "Auckland",
+    "country_slug": "new-zealand",
+    "country_code": "NZ",
+    "country_name_ar": "نيوزيلندا",
+    "country_name_en": "New Zealand",
+    "timezone": "Pacific/Auckland",
+    "lat": -36.84853,
+    "lon": 174.76349,
+    "is_capital": false,
+    "priority": 1530500,
+    "population": 1530500
+  }
+]

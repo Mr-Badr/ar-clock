@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "chisinau",
+    "city_name_ar": "كيشيناو",
+    "city_name_en": "Chisinau",
+    "country_slug": "moldova",
+    "country_code": "MD",
+    "country_name_ar": "مولدوفا",
+    "country_name_en": "Moldova",
+    "timezone": "Europe/Chisinau",
+    "lat": 47.00902,
+    "lon": 28.85938,
+    "is_capital": true,
+    "priority": 635994,
+    "population": 635994
+  }
+]

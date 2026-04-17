@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "conakry",
+    "city_name_ar": "كوناكري",
+    "city_name_en": "Conakry",
+    "country_slug": "guinea",
+    "country_code": "GN",
+    "country_name_ar": "غينيا",
+    "country_name_en": "Guinea",
+    "timezone": "Africa/Conakry",
+    "lat": 9.53795,
+    "lon": -13.67729,
+    "is_capital": true,
+    "priority": 1928389,
+    "population": 1928389
+  },
+  {
+    "city_slug": "camayenne",
+    "city_name_ar": "كامايينني",
+    "city_name_en": "Camayenne",
+    "country_slug": "guinea",
+    "country_code": "GN",
+    "country_name_ar": "غينيا",
+    "country_name_en": "Guinea",
+    "timezone": "Africa/Conakry",
+    "lat": 9.535,
+    "lon": -13.68778,
+    "is_capital": false,
+    "priority": 1871242,
+    "population": 1871242
+  }
+]

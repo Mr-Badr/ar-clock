@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "suva",
+    "city_name_ar": "سوفا",
+    "city_name_en": "Suva",
+    "country_slug": "fiji",
+    "country_code": "FJ",
+    "country_name_ar": "فيجي",
+    "country_name_en": "Fiji",
+    "timezone": "Pacific/Fiji",
+    "lat": -18.13683,
+    "lon": 178.42531,
+    "is_capital": true,
+    "priority": 77366,
+    "population": 77366
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "montevideo",
+    "city_name_ar": "مونتفيدو",
+    "city_name_en": "Montevideo",
+    "country_slug": "uruguay",
+    "country_code": "UY",
+    "country_name_ar": "الأوروغواي",
+    "country_name_en": "Uruguay",
+    "timezone": "America/Montevideo",
+    "lat": -34.90328,
+    "lon": -56.18816,
+    "is_capital": true,
+    "priority": 1270737,
+    "population": 1270737
+  }
+]

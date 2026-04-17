@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "tegucigalpa",
+    "city_name_ar": "تيغوسيغالبا",
+    "city_name_en": "Tegucigalpa",
+    "country_slug": "honduras",
+    "country_code": "HN",
+    "country_name_ar": "هندوراس",
+    "country_name_en": "Honduras",
+    "timezone": "America/Tegucigalpa",
+    "lat": 14.0818,
+    "lon": -87.20681,
+    "is_capital": true,
+    "priority": 850848,
+    "population": 850848
+  },
+  {
+    "city_slug": "san-pedro-sula",
+    "city_name_ar": "سان بيدرو سولا",
+    "city_name_en": "San Pedro Sula",
+    "country_slug": "honduras",
+    "country_code": "HN",
+    "country_name_ar": "هندوراس",
+    "country_name_en": "Honduras",
+    "timezone": "America/Tegucigalpa",
+    "lat": 15.50585,
+    "lon": -88.02588,
+    "is_capital": false,
+    "priority": 801259,
+    "population": 801259
+  }
+]

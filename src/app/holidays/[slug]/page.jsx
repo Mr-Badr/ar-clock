@@ -11,8 +11,9 @@ import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
 
 import {
-  ALL_ROUTE_EVENT_SLUGS,
+  ALL_EVENT_SLUGS,
 } from '@/lib/holidays-engine';
+import { getEventMeta } from '@/lib/events';
 import { COUNTRY_META } from '@/lib/calendar-config';
 import CountdownTicker, { ShareBar } from '@/components/clocks/CountdownTicker';
 import EventVibeCard from '@/components/holidays/EventVibeCard';
@@ -23,9 +24,23 @@ import { getHolidayMetadata } from '@/lib/holidays/metadata';
 import { getHolidayPageData } from '@/lib/holidays/page-data';
 import { getHolidaySearchQueries } from '@/lib/holidays/search-intent';
 
-/* ── Static params (pre-render top 50, ISR the rest) ─────────────────────── */
+const PRIORITY_HOLIDAY_TIERS = new Set(['tier1', 'tier2']);
+
+function getPriorityHolidayStaticSlugs(limit = 48) {
+  const prioritized = ALL_EVENT_SLUGS.filter((slug) => (
+    PRIORITY_HOLIDAY_TIERS.has(getEventMeta(slug)?.tier || '')
+  ));
+
+  if (prioritized.length > 0) {
+    return prioritized.slice(0, limit);
+  }
+
+  return ALL_EVENT_SLUGS.slice(0, Math.min(limit, 24));
+}
+
+/* ── Static params (seed top holidays, render the rest on demand) ───────── */
 export async function generateStaticParams() {
-  return ALL_ROUTE_EVENT_SLUGS.map((slug) => ({ slug }));
+  return getPriorityHolidayStaticSlugs().map((slug) => ({ slug }));
 }
 
 /* ── Metadata ─────────────────────────────────────────────────────────────── */
@@ -85,7 +100,7 @@ export default async function HolidayPage({ params }) {
   return (
     <div className={pageClassName} style={{ minHeight: '100dvh' }} dir="rtl">
       {/* JSON-LD inline — in initial HTML, never deferred, optimal for crawlers */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(evSchema) }} />
+      {evSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(evSchema) }} />}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(wpSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(bcSchema) }} />
       {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}

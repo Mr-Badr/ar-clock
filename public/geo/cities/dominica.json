@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "roseau",
+    "city_name_ar": "روسو",
+    "city_name_en": "Roseau",
+    "country_slug": "dominica",
+    "country_code": "DM",
+    "country_name_ar": "دومينيكا",
+    "country_name_en": "Dominica",
+    "timezone": "America/Dominica",
+    "lat": 15.30174,
+    "lon": -61.38808,
+    "is_capital": true,
+    "priority": 16571,
+    "population": 16571
+  }
+]

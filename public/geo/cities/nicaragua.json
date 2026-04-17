@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "managua",
+    "city_name_ar": "ماناغوا",
+    "city_name_en": "Managua",
+    "country_slug": "nicaragua",
+    "country_code": "NI",
+    "country_name_ar": "نيكاراغوا",
+    "country_name_en": "Nicaragua",
+    "timezone": "America/Managua",
+    "lat": 12.13282,
+    "lon": -86.2504,
+    "is_capital": true,
+    "priority": 973087,
+    "population": 973087
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "basseterre",
+    "city_name_ar": "باستير",
+    "city_name_en": "Basseterre",
+    "country_slug": "saint-kitts-and-nevis",
+    "country_code": "KN",
+    "country_name_ar": "سانت كيتس ونيفيس",
+    "country_name_en": "Saint Kitts and Nevis",
+    "timezone": "America/St_Kitts",
+    "lat": 17.2955,
+    "lon": -62.72499,
+    "is_capital": true,
+    "priority": 12920,
+    "population": 12920
+  }
+]

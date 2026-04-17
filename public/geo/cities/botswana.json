@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "gaborone",
+    "city_name_ar": "جابورون",
+    "city_name_en": "Gaborone",
+    "country_slug": "botswana",
+    "country_code": "BW",
+    "country_name_ar": "بوتسوانا",
+    "country_name_en": "Botswana",
+    "timezone": "Africa/Gaborone",
+    "lat": -24.65451,
+    "lon": 25.90859,
+    "is_capital": true,
+    "priority": 246325,
+    "population": 246325
+  }
+]

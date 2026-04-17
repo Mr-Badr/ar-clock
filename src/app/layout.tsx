@@ -133,7 +133,7 @@ export default async function RootLayout({
           So no colour or layout classes are needed here — they would
           duplicate or fight the design system's base rules.
           notoSansArabic.className activates the body font family. */}
-      <body className={notoSansArabic.className}>
+      <body suppressHydrationWarning className={notoSansArabic.className}>
         <ThemeProvider>
           <SiteWideSchemas />
           <Suspense fallback={<div className="h-16" />}>

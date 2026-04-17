@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "asuncion",
+    "city_name_ar": "أسونسيون",
+    "city_name_en": "Asuncion",
+    "country_slug": "paraguay",
+    "country_code": "PY",
+    "country_name_ar": "باراغواي",
+    "country_name_en": "Paraguay",
+    "timezone": "America/Asuncion",
+    "lat": -25.28646,
+    "lon": -57.647,
+    "is_capital": true,
+    "priority": 1482200,
+    "population": 1482200
+  }
+]

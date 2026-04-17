@@ -1,0 +1,47 @@
+[
+  {
+    "city_slug": "tashkent",
+    "city_name_ar": "طشقند",
+    "city_name_en": "Tashkent",
+    "country_slug": "uzbekistan",
+    "country_code": "UZ",
+    "country_name_ar": "أوزبكستان",
+    "country_name_en": "Uzbekistan",
+    "timezone": "Asia/Tashkent",
+    "lat": 41.26465,
+    "lon": 69.21627,
+    "is_capital": true,
+    "priority": 1978028,
+    "population": 1978028
+  },
+  {
+    "city_slug": "andijon",
+    "city_name_ar": "أنديجان",
+    "city_name_en": "Andijon",
+    "country_slug": "uzbekistan",
+    "country_code": "UZ",
+    "country_name_ar": "أوزبكستان",
+    "country_name_en": "Uzbekistan",
+    "timezone": "Asia/Tashkent",
+    "lat": 40.78338,
+    "lon": 72.35067,
+    "is_capital": false,
+    "priority": 747800,
+    "population": 747800
+  },
+  {
+    "city_slug": "namangan",
+    "city_name_ar": "نمنكان",
+    "city_name_en": "Namangan",
+    "country_slug": "uzbekistan",
+    "country_code": "UZ",
+    "country_name_ar": "أوزبكستان",
+    "country_name_en": "Uzbekistan",
+    "timezone": "Asia/Tashkent",
+    "lat": 40.9983,
+    "lon": 71.67257,
+    "is_capital": false,
+    "priority": 713220,
+    "population": 713220
+  }
+]

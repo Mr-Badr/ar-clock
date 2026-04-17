@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "nicosia",
+    "city_name_ar": "نيقوسيا",
+    "city_name_en": "Nicosia",
+    "country_slug": "cyprus",
+    "country_code": "CY",
+    "country_name_ar": "قبرص",
+    "country_name_en": "Cyprus",
+    "timezone": "Asia/Nicosia",
+    "lat": 35.17284,
+    "lon": 33.35397,
+    "is_capital": true,
+    "priority": 200452,
+    "population": 200452
+  }
+]

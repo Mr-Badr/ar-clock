@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "amsterdam",
+    "city_name_ar": "أمستردام",
+    "city_name_en": "Amsterdam",
+    "country_slug": "the-netherlands",
+    "country_code": "NL",
+    "country_name_ar": "مملكة هولندا",
+    "country_name_en": "The Netherlands",
+    "timezone": "Europe/Amsterdam",
+    "lat": 52.37403,
+    "lon": 4.88969,
+    "is_capital": true,
+    "priority": 741636,
+    "population": 741636
+  },
+  {
+    "city_slug": "rotterdam",
+    "city_name_ar": "روتردام",
+    "city_name_en": "Rotterdam",
+    "country_slug": "the-netherlands",
+    "country_code": "NL",
+    "country_name_ar": "مملكة هولندا",
+    "country_name_en": "The Netherlands",
+    "timezone": "Europe/Amsterdam",
+    "lat": 51.9225,
+    "lon": 4.47917,
+    "is_capital": false,
+    "priority": 868135,
+    "population": 868135
+  }
+]

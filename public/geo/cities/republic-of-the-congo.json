@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "brazzaville",
+    "city_name_ar": "برازافيل",
+    "city_name_en": "Brazzaville",
+    "country_slug": "republic-of-the-congo",
+    "country_code": "CG",
+    "country_name_ar": "جمهورية الكونغو",
+    "country_name_en": "Republic of the Congo",
+    "timezone": "Africa/Brazzaville",
+    "lat": -4.26613,
+    "lon": 15.28318,
+    "is_capital": true,
+    "priority": 1982000,
+    "population": 1982000
+  },
+  {
+    "city_slug": "pointe-noire",
+    "city_name_ar": "بوانت-نوار",
+    "city_name_en": "Pointe-Noire",
+    "country_slug": "republic-of-the-congo",
+    "country_code": "CG",
+    "country_name_ar": "جمهورية الكونغو",
+    "country_name_en": "Republic of the Congo",
+    "timezone": "Africa/Brazzaville",
+    "lat": -4.77609,
+    "lon": 11.86352,
+    "is_capital": false,
+    "priority": 1032000,
+    "population": 1032000
+  }
+]

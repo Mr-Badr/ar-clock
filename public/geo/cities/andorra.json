@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "andorra-la-vella",
+    "city_name_ar": "أندورا لا فيلا",
+    "city_name_en": "Andorra la Vella",
+    "country_slug": "andorra",
+    "country_code": "AD",
+    "country_name_ar": "أندورا",
+    "country_name_en": "Andorra",
+    "timezone": "Europe/Andorra",
+    "lat": 42.50779,
+    "lon": 1.52109,
+    "is_capital": true,
+    "priority": 20430,
+    "population": 20430
+  }
+]

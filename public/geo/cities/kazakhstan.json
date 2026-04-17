@@ -1,0 +1,47 @@
+[
+  {
+    "city_slug": "astana",
+    "city_name_ar": "أسطانا",
+    "city_name_en": "Astana",
+    "country_slug": "kazakhstan",
+    "country_code": "KZ",
+    "country_name_ar": "كازاخستان",
+    "country_name_en": "Kazakhstan",
+    "timezone": "Asia/Almaty",
+    "lat": 51.1801,
+    "lon": 71.44598,
+    "is_capital": true,
+    "priority": 345604,
+    "population": 345604
+  },
+  {
+    "city_slug": "almaty",
+    "city_name_ar": "ألماتي",
+    "city_name_en": "Almaty",
+    "country_slug": "kazakhstan",
+    "country_code": "KZ",
+    "country_name_ar": "كازاخستان",
+    "country_name_en": "Kazakhstan",
+    "timezone": "Asia/Almaty",
+    "lat": 43.25249,
+    "lon": 76.9115,
+    "is_capital": false,
+    "priority": 1977011,
+    "population": 1977011
+  },
+  {
+    "city_slug": "shymkent",
+    "city_name_ar": "شيمكنت",
+    "city_name_en": "Shymkent",
+    "country_slug": "kazakhstan",
+    "country_code": "KZ",
+    "country_name_ar": "كازاخستان",
+    "country_name_en": "Kazakhstan",
+    "timezone": "Asia/Almaty",
+    "lat": 42.30988,
+    "lon": 69.60042,
+    "is_capital": false,
+    "priority": 1200000,
+    "population": 1200000
+  }
+]

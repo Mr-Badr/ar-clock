@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "ouagadougou",
+    "city_name_ar": "واغادوغو",
+    "city_name_en": "Ouagadougou",
+    "country_slug": "burkina-faso",
+    "country_code": "BF",
+    "country_name_ar": "بوركينا فاسو",
+    "country_name_en": "Burkina Faso",
+    "timezone": "Africa/Ouagadougou",
+    "lat": 12.36566,
+    "lon": -1.53388,
+    "is_capital": true,
+    "priority": 2415266,
+    "population": 2415266
+  },
+  {
+    "city_slug": "bobo-dioulasso",
+    "city_name_ar": "بوبوديولاسو",
+    "city_name_en": "Bobo-Dioulasso",
+    "country_slug": "burkina-faso",
+    "country_code": "BF",
+    "country_name_ar": "بوركينا فاسو",
+    "country_name_en": "Burkina Faso",
+    "timezone": "Africa/Ouagadougou",
+    "lat": 11.18064,
+    "lon": -4.29489,
+    "is_capital": false,
+    "priority": 904920,
+    "population": 904920
+  }
+]

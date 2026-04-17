@@ -1,7 +1,7 @@
 // app/mwaqit-al-salat/page.jsx
 import Link from 'next/link';
+import { Suspense } from 'react';
 import SearchCityWrapper from '@/components/SearchCityWrapper.client';
-import { getCountriesAction } from '@/app/actions/location';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
@@ -141,21 +141,45 @@ const features = [
   },
 ];
 
-export default async function PrayerLandingPage() {
-  const [allCountries, popularPrayerCityLinks, popularPrayerCountryLinks] = await Promise.all([
-    getCountriesAction(),
+function PrayerLandingPopularLinksFallback() {
+  return (
+    <div className="space-y-6 mb-12" aria-hidden="true">
+      <section className="card mb-0">
+        <div className="h-7 w-56 rounded-full bg-[var(--bg-surface-2)] mb-3 animate-pulse" />
+        <div className="h-4 w-full rounded-full bg-[var(--bg-surface-2)] mb-2 animate-pulse" />
+        <div className="h-4 w-4/5 rounded-full bg-[var(--bg-surface-2)] mb-6 animate-pulse" />
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div
+              key={`popular-city-skeleton-${index}`}
+              className="h-24 rounded-2xl bg-[var(--bg-surface-2)] animate-pulse"
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="card-nested mb-0">
+        <div className="h-7 w-48 rounded-full bg-[var(--bg-surface-2)] mb-3 animate-pulse" />
+        <div className="h-4 w-3/4 rounded-full bg-[var(--bg-surface-2)] mb-4 animate-pulse" />
+        <div className="flex flex-wrap gap-2">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <div
+              key={`popular-country-skeleton-${index}`}
+              className="h-10 w-40 rounded-full bg-[var(--bg-surface-2)] animate-pulse"
+            />
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+async function PrayerLandingPopularLinks() {
+  const [popularPrayerCityLinks, popularPrayerCountryLinks] = await Promise.all([
     getPopularPrayerCityLinks(),
     getPopularPrayerCountryLinks(),
   ]);
-  const collectionSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: 'مواقيت الصلاة اليوم في الدول والمدن',
-    url: `${BASE}/mwaqit-al-salat`,
-    description:
-      'قسم مواقيت الصلاة في ميقاتنا يربط بين صفحات الدول والمدن مع مواقيت الفجر والظهر والعصر والمغرب والعشاء والجداول الشهرية.',
-    inLanguage: 'ar',
-  };
+
   const cityItemListSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -167,6 +191,7 @@ export default async function PrayerLandingPage() {
       url: `${BASE}${item.href}`,
     })),
   };
+
   const countryItemListSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -177,6 +202,94 @@ export default async function PrayerLandingPage() {
       name: item.label,
       url: `${BASE}${item.href}`,
     })),
+  };
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(cityItemListSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(countryItemListSchema) }} />
+
+      <section className="card mb-10" aria-labelledby="popular-prayer-city-links-heading">
+        <h2 id="popular-prayer-city-links-heading" className="text-xl font-semibold text-primary mb-2">
+          صفحات مواقيت الصلاة الأكثر بحثاً
+        </h2>
+        <p className="text-sm text-secondary leading-[1.8] mb-5">
+          هذه الروابط تُساعد محركات البحث والمستخدمين على الوصول مباشرة إلى صفحات المدن الأكثر طلباً مثل
+          &quot;مواقيت الصلاة في الرياض&quot; و&quot;مواقيت الصلاة في الرباط&quot; و&quot;مواقيت الصلاة في القاهرة&quot;.
+        </p>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: '0.75rem',
+          }}
+        >
+          {popularPrayerCityLinks.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              style={{
+                display: 'block',
+                padding: '1rem',
+                borderRadius: '1rem',
+                textDecoration: 'none',
+                background: 'var(--bg-surface-1)',
+                border: '1px solid var(--border-subtle)',
+              }}
+              title={item.description}
+            >
+              <strong
+                style={{
+                  display: 'block',
+                  color: 'var(--text-primary)',
+                  marginBottom: '0.35rem',
+                }}
+              >
+                {item.label}
+              </strong>
+              <span style={{ color: 'var(--text-muted)', lineHeight: 1.7 }}>
+                {item.description}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="card-nested mb-12" aria-labelledby="popular-prayer-country-links-heading">
+        <h2 id="popular-prayer-country-links-heading" className="text-xl font-semibold text-primary mb-2">
+          مواقيت الصلاة في الدول
+        </h2>
+        <p className="text-sm text-secondary leading-[1.8] mb-4">
+          الصفحات التالية تربط بين صفحة الدولة وصفحات المدن التابعة لها، مما يحسن اكتشاف الصفحات الطويلة الذيل
+          في نتائج البحث والزحف الداخلي.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {popularPrayerCountryLinks.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="waqt-pill"
+              style={{ textDecoration: 'none' }}
+              title={item.description}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
+
+export default async function PrayerLandingPage() {
+  const collectionSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'مواقيت الصلاة اليوم في الدول والمدن',
+    url: `${BASE}/mwaqit-al-salat`,
+    description:
+      'قسم مواقيت الصلاة في ميقاتنا يربط بين صفحات الدول والمدن مع مواقيت الفجر والظهر والعصر والمغرب والعشاء والجداول الشهرية.',
+    inLanguage: 'ar',
   };
   const utilityLinks = [
     {
@@ -230,8 +343,6 @@ export default async function PrayerLandingPage() {
 
         {/* JSON-LD */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(cityItemListSchema) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(countryItemListSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
@@ -280,7 +391,7 @@ export default async function PrayerLandingPage() {
           <label className="block text-sm font-semibold text-secondary mb-3">
             ابحث عن مدينتك أو دولتك
           </label>
-          <SearchCityWrapper mode="prayer" preloadedCountries={allCountries} />
+          <SearchCityWrapper mode="prayer" />
         </div>
 
         {/* ── Features ─────────────────────────────────────────────────── */}
@@ -371,75 +482,9 @@ export default async function PrayerLandingPage() {
           </div>
         </section>
 
-        {/* ── SEO Content ───────────────────────────────────────── */}
-        <section className="card mb-10" aria-labelledby="popular-prayer-city-links-heading">
-          <h2 id="popular-prayer-city-links-heading" className="text-xl font-semibold text-primary mb-2">
-            صفحات مواقيت الصلاة الأكثر بحثاً
-          </h2>
-          <p className="text-sm text-secondary leading-[1.8] mb-5">
-            هذه الروابط تُساعد محركات البحث والمستخدمين على الوصول مباشرة إلى صفحات المدن الأكثر طلباً مثل
-            "مواقيت الصلاة في الرياض" و"مواقيت الصلاة في الرباط" و"مواقيت الصلاة في القاهرة".
-          </p>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-              gap: '0.75rem',
-            }}
-          >
-            {popularPrayerCityLinks.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                style={{
-                  display: 'block',
-                  padding: '1rem',
-                  borderRadius: '1rem',
-                  textDecoration: 'none',
-                  background: 'var(--bg-surface-1)',
-                  border: '1px solid var(--border-subtle)',
-                }}
-                title={item.description}
-              >
-                <strong
-                  style={{
-                    display: 'block',
-                    color: 'var(--text-primary)',
-                    marginBottom: '0.35rem',
-                  }}
-                >
-                  {item.label}
-                </strong>
-                <span style={{ color: 'var(--text-muted)', lineHeight: 1.7 }}>
-                  {item.description}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        <section className="card-nested mb-12" aria-labelledby="popular-prayer-country-links-heading">
-          <h2 id="popular-prayer-country-links-heading" className="text-xl font-semibold text-primary mb-2">
-            مواقيت الصلاة في الدول
-          </h2>
-          <p className="text-sm text-secondary leading-[1.8] mb-4">
-            الصفحات التالية تربط بين صفحة الدولة وصفحات المدن التابعة لها، مما يحسن اكتشاف الصفحات الطويلة الذيل
-            في نتائج البحث والزحف الداخلي.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {popularPrayerCountryLinks.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="waqt-pill"
-                style={{ textDecoration: 'none' }}
-                title={item.description}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </section>
+        <Suspense fallback={<PrayerLandingPopularLinksFallback />}>
+          <PrayerLandingPopularLinks />
+        </Suspense>
 
         {/* ── FAQ ──────────────────────────────────────────────────────── */}
         <section className="mb-20" aria-label="أسئلة شائعة">

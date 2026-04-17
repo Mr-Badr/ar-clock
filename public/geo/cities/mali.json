@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "bamako",
+    "city_name_ar": "باماكو",
+    "city_name_en": "Bamako",
+    "country_slug": "mali",
+    "country_code": "ML",
+    "country_name_ar": "مالي",
+    "country_name_en": "Mali",
+    "timezone": "Africa/Bamako",
+    "lat": 12.60915,
+    "lon": -7.97522,
+    "is_capital": true,
+    "priority": 4227569,
+    "population": 4227569
+  }
+]

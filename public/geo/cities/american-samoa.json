@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "pago-pago",
+    "city_name_ar": "باغو باغو",
+    "city_name_en": "Pago Pago",
+    "country_slug": "american-samoa",
+    "country_code": "AS",
+    "country_name_ar": "ساموا الأمريكية",
+    "country_name_en": "American Samoa",
+    "timezone": "Pacific/Pago_Pago",
+    "lat": -14.27806,
+    "lon": -170.7025,
+    "is_capital": true,
+    "priority": 11500,
+    "population": 11500
+  }
+]

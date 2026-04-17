@@ -15,6 +15,7 @@ import { ImageResponse } from 'next/og';
 import { getCityBySlug } from '@/lib/db/queries/cities';
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 import { calculatePrayerTimes, formatTime } from '@/lib/prayerEngine';
+import { getCachedNowIso } from '@/lib/date-utils';
 
 export const size = { width: 1200, height: 630 };
 export const alt = 'مواقيت الصلاة';
@@ -36,9 +37,12 @@ export default async function OgImage({ params }) {
     );
   }
 
+  const nowIso = await getCachedNowIso();
+  const now = new Date(nowIso);
+
   const times = calculatePrayerTimes({
     lat: cityData.lat, lon: cityData.lon,
-    timezone: cityData.timezone, date: new Date(),
+    timezone: cityData.timezone, date: now,
     cacheKey: `${countrySlug}::${citySlug}`
   });
 

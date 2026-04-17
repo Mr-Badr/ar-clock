@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "bucharest",
+    "city_name_ar": "بوخارست",
+    "city_name_en": "Bucharest",
+    "country_slug": "romania",
+    "country_code": "RO",
+    "country_name_ar": "رومانيا",
+    "country_name_en": "Romania",
+    "timezone": "Europe/Bucharest",
+    "lat": 44.43225,
+    "lon": 26.10626,
+    "is_capital": true,
+    "priority": 1877155,
+    "population": 1877155
+  }
+]

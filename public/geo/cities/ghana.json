@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "accra",
+    "city_name_ar": "أكرا",
+    "city_name_en": "Accra",
+    "country_slug": "ghana",
+    "country_code": "GH",
+    "country_name_ar": "غانا",
+    "country_name_en": "Ghana",
+    "timezone": "Africa/Accra",
+    "lat": 5.55602,
+    "lon": -0.1969,
+    "is_capital": true,
+    "priority": 1963264,
+    "population": 1963264
+  },
+  {
+    "city_slug": "kumasi",
+    "city_name_ar": "كوماسي",
+    "city_name_en": "Kumasi",
+    "country_slug": "ghana",
+    "country_code": "GH",
+    "country_name_ar": "غانا",
+    "country_name_en": "Ghana",
+    "timezone": "Africa/Accra",
+    "lat": 6.68848,
+    "lon": -1.62443,
+    "is_capital": false,
+    "priority": 2544530,
+    "population": 2544530
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "niamey",
+    "city_name_ar": "نيامي",
+    "city_name_en": "Niamey",
+    "country_slug": "niger",
+    "country_code": "NE",
+    "country_name_ar": "النيجر",
+    "country_name_en": "Niger",
+    "timezone": "Africa/Niamey",
+    "lat": 13.51366,
+    "lon": 2.1098,
+    "is_capital": true,
+    "priority": 1323691,
+    "population": 1323691
+  }
+]

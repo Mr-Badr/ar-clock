@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "basse-terre",
+    "city_name_ar": "باس-تير",
+    "city_name_en": "Basse-Terre",
+    "country_slug": "guadeloupe",
+    "country_code": "GP",
+    "country_name_ar": "غوادلوب",
+    "country_name_en": "Guadeloupe",
+    "timezone": "America/Guadeloupe",
+    "lat": 15.99714,
+    "lon": -61.73214,
+    "is_capital": true,
+    "priority": 11472,
+    "population": 11472
+  }
+]

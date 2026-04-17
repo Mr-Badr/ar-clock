@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "bishkek",
+    "city_name_ar": "بيشكك",
+    "city_name_en": "Bishkek",
+    "country_slug": "kyrgyzstan",
+    "country_code": "KG",
+    "country_name_ar": "قرغيزستان",
+    "country_name_en": "Kyrgyzstan",
+    "timezone": "Asia/Bishkek",
+    "lat": 42.87,
+    "lon": 74.59,
+    "is_capital": true,
+    "priority": 900000,
+    "population": 900000
+  }
+]

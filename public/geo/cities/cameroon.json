@@ -1,0 +1,32 @@
+[
+  {
+    "city_slug": "yaounde",
+    "city_name_ar": "ياوندي",
+    "city_name_en": "Yaounde",
+    "country_slug": "cameroon",
+    "country_code": "CM",
+    "country_name_ar": "الكاميرون",
+    "country_name_en": "Cameroon",
+    "timezone": "Africa/Douala",
+    "lat": 3.86667,
+    "lon": 11.51667,
+    "is_capital": true,
+    "priority": 1299369,
+    "population": 1299369
+  },
+  {
+    "city_slug": "douala",
+    "city_name_ar": "دوالا",
+    "city_name_en": "Douala",
+    "country_slug": "cameroon",
+    "country_code": "CM",
+    "country_name_ar": "الكاميرون",
+    "country_name_en": "Cameroon",
+    "timezone": "Africa/Douala",
+    "lat": 4.04827,
+    "lon": 9.70428,
+    "is_capital": false,
+    "priority": 1338082,
+    "population": 1338082
+  }
+]

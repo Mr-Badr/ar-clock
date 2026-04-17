@@ -1,0 +1,17 @@
+[
+  {
+    "city_slug": "nuuk",
+    "city_name_ar": "نوك",
+    "city_name_en": "Nuuk",
+    "country_slug": "greenland",
+    "country_code": "GL",
+    "country_name_ar": "غرينلاند",
+    "country_name_en": "Greenland",
+    "timezone": "America/Nuuk",
+    "lat": 64.18347,
+    "lon": -51.72157,
+    "is_capital": true,
+    "priority": 14798,
+    "population": 14798
+  }
+]

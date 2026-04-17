@@ -1,10 +1,11 @@
 import { POPULAR_PAIRS } from '@/components/time-diff/data/popularPairs';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildTimeDifferenceHref } from '@/lib/time-difference-links';
+import { getSitemapLastModified } from '@/lib/sitemap';
 
 export default async function sitemap() {
   const base = getSiteUrl();
-  const lastModified = new Date().toISOString();
+  const lastModified = getSitemapLastModified();
 
   return [
     {
