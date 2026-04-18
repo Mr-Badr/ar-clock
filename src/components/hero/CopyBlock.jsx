@@ -1,20 +1,19 @@
 // src/components/hero/CopyBlock.jsx  — Server Component (no 'use client')
 //
-// THEME NOTE — .dark class on child elements:
+// Theme note:
 // ─────────────────────────────────────────────────────────────────────────────
-// next-themes writes class="dark" on <html>, which defines the dark-palette
-// CSS custom properties as a new cascading scope. Adding className="dark"
-// to any child element creates an identical scope for that subtree, so all
-// CSS vars (--text-primary, --text-secondary, etc.) resolve to dark-theme
-// values inside it — regardless of what the <html> class says.
+// The previous version added className="dark" to titleSub and desc to force
+// dark-palette token values. That worked when the hero always had a dark video
+// background. Now that the hero uses a proper light/dark gradient background
+// (`:global(.light) .heroRoot` in TimeCinematicHero.module.css), every text
+// element should resolve its color tokens naturally from the cascade — no
+// manual .dark override needed.
 //
-// We apply this to .titleSub and the description <p> because:
-//   ─ The hero section always renders on a dark/translucent background.
-//   ─ Light-mode values (#3D4668, #536080) are designed for white cards and
-//     would clash with the dark hero canvas.
-//   ─ Hardcoding hex values would bypass the design-token system and make
-//     future palette changes invisible here. The .dark wrapper approach
-//     keeps the elements design-system-aware while pinning them to dark tokens.
+// Adding .dark on a light-background hero makes light-palette text
+// (--text-secondary: #A8B2CB) invisible against the near-white canvas.
+// Removing it lets next-themes resolve the correct value per mode:
+//   dark  → --text-secondary: #A8B2CB  ✓ readable on dark hero
+//   light → --text-secondary: #536080  ✓ readable on light hero
 // ─────────────────────────────────────────────────────────────────────────────
 
 import styles from './TimeCinematicHero.module.css';
@@ -37,23 +36,14 @@ export default function CopyBlock({ extraClass = '' }) {
 
       <h1 className={styles.title}>
         <AuroraText>{SITE_BRAND}</AuroraText>
-        {/*
-          .dark forces dark-palette CSS vars for this subtree.
-          Dark --text-secondary (#A8B2CB) reads correctly on the hero's
-          dark/translucent canvas; light-mode value (#3D4668) does not.
-        */}
-        <span className={`${styles.titleSub} dark`}>
+        {/* No .dark override — resolves to correct token per active theme */}
+        <span className={styles.titleSub}>
           لكل لحظة، معناها الحقيقي
         </span>
       </h1>
 
-      {/*
-        Same rationale: description text must always read against a dark
-        background. .dark ensures --text-secondary / --text-muted resolves
-        to the dark-palette values (#A8B2CB / #90AACC) no matter the
-        global theme the user has selected.
-      */}
-      <p className={`${styles.desc} dark`}>
+      {/* No .dark override — resolves to correct token per active theme */}
+      <p className={styles.desc}>
         نعرف كم يعني لك وقتك. لذلك بنينا {SITE_BRAND}، منصة عربية تضع كل ما يحتاجه يومك بين يديك، بدقة تشعر معها أن كل أداة صُممت لك وحدك
       </p>
 

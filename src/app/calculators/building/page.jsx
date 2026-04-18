@@ -7,17 +7,21 @@ import {
   CalculatorStoryBand,
   CalculatorQuickAnswerGrid,
   CalculatorFaqSection,
+  CalculatorResourceLinks,
   CalculatorFooterCta,
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
+import { getGuidesBySlugs } from '@/lib/guides/data';
+import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { getSiteUrl } from '@/lib/site-config';
 import { getBuildingKeywords } from '@/lib/calculators/building/seo-keywords';
 import { COUNTRY_LIST } from '@/lib/calculators/building/country-data';
 
 const SITE_URL = getSiteUrl();
+const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.building);
 
 export const metadata = buildCanonicalMetadata({
   title: 'كم تكلفة بناء بيت؟ | حاسبة تكلفة البناء والمواد',
@@ -202,6 +206,16 @@ export default function BuildingHubPage() {
         title="تساؤلات معمارية"
       >
         <CalculatorQuickAnswerGrid items={quickAnswers} />
+      </CalculatorSection>
+
+      <CalculatorSection
+        id="building-guides"
+        eyebrow="أدلة مرتبطة"
+        title="اقرأ قبل شراء المواد أو طلب التسعير"
+        description="هذه الأدلة تساعد الزائر على فهم سؤال الأسمنت والحديد نفسه قبل الانتقال إلى الأداة المناسبة، وهو ما يقوّي فائدة القسم للمستخدم ووضوحه لمحركات البحث."
+        subtle
+      >
+        <CalculatorResourceLinks items={RELATED_GUIDES} />
       </CalculatorSection>
 
       <CalculatorSection

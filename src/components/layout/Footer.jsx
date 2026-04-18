@@ -3,40 +3,37 @@ import Link from "next/link";
 import { Clock } from "lucide-react";
 import { SectionDivider } from "@/components/shared/primitives";
 import { Globe } from "@/components/ui/globe";
-import { POPULAR_PAIRS } from "@/components/time-diff/data/popularPairs";
-import { buildTimeDifferenceHref } from "@/lib/time-difference-links";
-import {
-  FEATURED_COUNTDOWN_LINKS,
-  getPopularTimeNowCityLinks,
-} from "@/lib/seo/popular-links";
 import { SITE_BRAND, SITE_CONTACT_EMAIL } from "@/lib/site-config";
 
 const PRODUCT_LINKS = [
-  { href: '/time-now', label: 'الوقت الآن' },
+  { href: '/fahras', label: 'الفهرس الشامل' },
   { href: '/mwaqit-al-salat', label: 'مواقيت الصلاة' },
+  { href: '/time-now', label: 'الوقت الآن' },
   { href: '/time-difference', label: 'فرق التوقيت' },
   { href: '/calculators', label: 'الحاسبات' },
+  { href: '/economie', label: 'الاقتصاد الحي' },
   { href: '/holidays', label: 'المناسبات' },
   { href: '/date', label: 'التاريخ والتحويل' },
 ];
 
 const ECONOMY_LINKS = [
-  { href: '/economie', label: 'الاقتصاد الحي' },
+  { href: '/economie/market-hours', label: 'ساعات الأسواق والتداول' },
   { href: '/economie/us-market-open', label: 'متى يفتح السوق الأمريكي؟' },
   { href: '/economie/gold-market-hours', label: 'هل الذهب مفتوح الآن؟' },
-  { href: '/economie/stock-markets', label: 'البورصات العالمية الآن' },
   { href: '/economie/forex-sessions', label: 'جلسات الفوركس الآن' },
+  { href: '/economie/stock-markets', label: 'البورصات العالمية الآن' },
   { href: '/economie/market-clock', label: 'ساعة التداول' },
-  { href: '/economie/best-trading-time', label: 'أفضل وقت للتداول' },
+  { href: '/economie/best-trading-time', label: 'أفضل وقت للتداول اليوم' },
 ];
 
 const CALCULATOR_LINKS = [
+  { href: '/calculators/personal-finance', label: 'حاسبات التخطيط المالي الشخصي' },
+  { href: '/calculators/sleep', label: 'حاسبات النوم الذكي' },
   { href: '/calculators/age/calculator', label: 'كم عمري الآن؟ حاسبة العمر' },
-  { href: '/calculators/end-of-service-benefits', label: 'حاسبة نهاية الخدمة في السعودية' },
   { href: '/calculators/monthly-installment', label: 'حاسبة القسط الشهري والقرض' },
   { href: '/calculators/vat', label: 'حاسبة الضريبة 15% والسعر شامل الضريبة' },
   { href: '/calculators/percentage', label: 'حاسبة النسبة المئوية والخصم' },
-  { href: '/calculators/building', label: 'حاسبة تكلفة البناء' },
+  { href: '/calculators/building', label: 'حاسبات البناء والتشطيب' },
 ];
 
 const COMPANY_LINKS = [
@@ -48,15 +45,7 @@ const COMPANY_LINKS = [
   { href: '/contact', label: 'اتصل بنا' },
 ];
 
-const FOOTER_TIME_DIFFERENCE_LINKS = POPULAR_PAIRS.slice(0, 6).map((pair) => ({
-  href: buildTimeDifferenceHref(pair.from.slug, pair.to.slug),
-  label: `فرق التوقيت بين ${pair.from.nameAr} و${pair.to.nameAr}`,
-}));
-const FOOTER_COUNTDOWN_LINKS = FEATURED_COUNTDOWN_LINKS.slice(0, 6);
-
-const Footer = async () => {
-  const footerTimeNowLinks = await getPopularTimeNowCityLinks(6);
-
+const Footer = () => {
   return (
     <footer className="footer-root">
       <SectionDivider />
@@ -82,6 +71,12 @@ const Footer = async () => {
             <p className="footer-brand-desc">
               {SITE_BRAND} منصة عربية مستقلة، بُنيت على فكرة واحدة — المستخدم العربي يستحق أدوات صُنعت له، لا تُرجمت إليه. سريعة، دقيقة، وتستحق ثقتك.
             </p>
+
+            <div className="footer-brand-actions">
+              <Link href="/fahras" className="footer-brand-index">
+                افتح الفهرس الشامل
+              </Link>
+            </div>
 
             <div className="footer-brand-badge-wrap">
               <span className="footer-brand-badge">
@@ -142,37 +137,20 @@ const Footer = async () => {
               </ul>
             </div>
 
-            <div className="footer-col">
-              <h3 className="footer-col-heading">الوقت الآن في المدن</h3>
-              <ul className="footer-col-list">
-                {footerTimeNowLinks.map(({ href, label }) => (
-                  <li key={href}>
-                    <Link href={href} className="footer-col-link">{label}</Link>
-                  </li>
-                ))}
+            <div className="footer-col footer-directory-col">
+              <h3 className="footer-col-heading">لا تبحث في كل مكان</h3>
+              <p className="footer-directory-note">
+                افتح صفحة <strong>الفهرس</strong> لترى كل الحاسبات وأدوات الاقتصاد والأدلة
+                والصفحات المهمة في خريطة واحدة نظيفة وسريعة التصفح.
+              </p>
+              <ul className="footer-directory-list">
+                <li>مسارات عليا أوضح من التشتت بين بطاقات كثيرة</li>
+                <li>روابط مباشرة للحاسبات والأدلة الأكثر أهمية</li>
+                <li>صفحة واحدة تعطيك صورة كاملة عمّا يقدمه الموقع</li>
               </ul>
-            </div>
-
-            <div className="footer-col">
-              <h3 className="footer-col-heading">أشهر فروق التوقيت</h3>
-              <ul className="footer-col-list">
-                {FOOTER_TIME_DIFFERENCE_LINKS.map(({ href, label }) => (
-                  <li key={href}>
-                    <Link href={href} className="footer-col-link">{label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="footer-col">
-              <h3 className="footer-col-heading">أشهر العدادات</h3>
-              <ul className="footer-col-list">
-                {FOOTER_COUNTDOWN_LINKS.map(({ href, label }) => (
-                  <li key={href}>
-                    <Link href={href} className="footer-col-link">{label}</Link>
-                  </li>
-                ))}
-              </ul>
+              <Link href="/fahras" className="footer-directory-link">
+                افتح الفهرس الشامل
+              </Link>
             </div>
 
           </nav>
@@ -249,6 +227,68 @@ const Footer = async () => {
           z-index: 1;
         }
 
+        .footer-directory-col {
+          background: linear-gradient(180deg, rgba(59, 130, 246, 0.10), rgba(15, 23, 42, 0.04));
+          border: 1px solid var(--border-subtle);
+          border-radius: 24px;
+          padding: 1rem;
+        }
+
+        .footer-directory-note {
+          color: var(--text-secondary);
+          font-size: 0.95rem;
+          line-height: 1.8;
+          margin: 0 0 0.85rem 0;
+        }
+
+        .footer-directory-list {
+          margin: 0 0 1rem 0;
+          padding: 0;
+          list-style: none;
+          display: grid;
+          gap: 0.55rem;
+          color: var(--text-secondary);
+          font-size: 0.92rem;
+        }
+
+        .footer-directory-list li {
+          position: relative;
+          padding-inline-start: 1rem;
+        }
+
+        .footer-directory-list li::before {
+          content: "";
+          position: absolute;
+          inset-inline-start: 0;
+          top: 0.7rem;
+          width: 0.38rem;
+          height: 0.38rem;
+          border-radius: 999px;
+          background: var(--accent-alt);
+          opacity: 0.9;
+        }
+
+        .footer-directory-link {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 2.75rem;
+          padding: 0.7rem 1rem;
+          border-radius: 999px;
+          text-decoration: none;
+          font-weight: 800;
+          color: var(--on-accent);
+          background: linear-gradient(135deg, var(--accent-alt), #2563eb);
+          box-shadow: 0 14px 36px rgba(37, 99, 235, 0.22);
+          transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+        }
+
+        .footer-directory-link:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 16px 40px rgba(37, 99, 235, 0.28);
+          opacity: 0.98;
+        }
+
         /* ─────────────────────────────────────────
            MAIN ROW  (brand + links)
 
@@ -281,12 +321,14 @@ const Footer = async () => {
           flex-shrink: 0;
           width: 100%;
           text-align: right;
+          padding-top: 1rem;
         }
 
         @media (min-width: 1024px) {
           .footer-brand {
             width: auto;
             max-width: 280px;
+            padding-top: 1rem;
           }
         }
 
@@ -334,6 +376,35 @@ const Footer = async () => {
           margin-top: var(--space-5);
           display: flex;
        justify-content: flex-start;
+        }
+
+        .footer-brand-actions {
+          margin-top: var(--space-5);
+          display: flex;
+          justify-content: flex-start;
+        }
+
+        .footer-brand-index {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: var(--space-2-5) var(--space-4);
+          border-radius: var(--radius-full);
+          border: 1px solid var(--border-accent);
+          background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 100%),
+            var(--bg-surface-1);
+          color: var(--text-primary);
+          font-size: var(--text-sm);
+          font-weight: var(--font-semibold);
+          text-decoration: none;
+          transition: transform var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+        }
+
+        .footer-brand-index:hover {
+          transform: translateY(-1px);
+          border-color: var(--accent-alt);
+          color: var(--accent-alt);
         }
 
         .footer-brand-contact {
@@ -413,6 +484,7 @@ const Footer = async () => {
         ───────────────────────────────────────── */
         .footer-col {
           text-align: right;
+          padding-top: 1rem;
         }
 
         .footer-col-heading {

@@ -7,6 +7,7 @@ import {
   CalculatorInfoGrid,
   CalculatorIntentCloud,
   CalculatorQuickAnswerGrid,
+  CalculatorResourceLinks,
   CalculatorSection,
   CalculatorSectionNav,
   CalculatorStoryBand,
@@ -15,12 +16,15 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
+import { getGuidesBySlugs } from '@/lib/guides/data';
+import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'percentage');
+const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.percentage);
 
 const faqItems = [
   {
@@ -330,6 +334,16 @@ export default function PercentagePage() {
             </TableBody>
           </Table>
         </div>
+      </CalculatorSection>
+
+      <CalculatorSection
+        id="percent-guides"
+        eyebrow="أدلة مرتبطة"
+        title="متى تحتاج شرحًا قبل الحاسبة؟"
+        description="هذه الأدلة تساعد المستخدم الذي يريد فهم الخصومات ونسبة التغير والنقاط المئوية قبل الانتقال إلى التبويب الصحيح داخل الحاسبة."
+        subtle
+      >
+        <CalculatorResourceLinks items={RELATED_GUIDES} />
       </CalculatorSection>
 
       <CalculatorSection

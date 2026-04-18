@@ -9,6 +9,7 @@ import {
   CalculatorInfoGrid,
   CalculatorIntentCloud,
   CalculatorQuickAnswerGrid,
+  CalculatorResourceLinks,
   CalculatorSection,
   CalculatorSectionNav,
   CalculatorStoryBand,
@@ -19,12 +20,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
+import { getGuidesBySlugs } from '@/lib/guides/data';
+import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'monthly-installment');
+const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.monthlyInstallment);
 
 const faqItems = [
   {
@@ -362,6 +366,16 @@ export default function MonthlyInstallmentPage() {
             content="قد يكون العرض الأطول مناسباً إذا كانت الأولوية للسيولة الشهرية، لكن عليك أن تعرف مقدار ما تدفعه مقابل هذا الارتياح. لهذا تعرض الحاسبة القسط والإجمالي والرسم البياني معاً."
           />
         </div>
+      </CalculatorSection>
+
+      <CalculatorSection
+        id="loan-guides"
+        eyebrow="أدلة مرتبطة"
+        title="قبل أن تختار عرض التمويل"
+        description="هذه الأدلة تكمل الحاسبة: واحد يشرح كيف تقارن العروض، وآخر يوضح الفرق بين الفائدة الثابتة والمتناقصة بلغة عملية."
+        subtle
+      >
+        <CalculatorResourceLinks items={RELATED_GUIDES} />
       </CalculatorSection>
 
       <CalculatorSection

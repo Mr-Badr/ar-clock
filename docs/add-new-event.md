@@ -50,6 +50,31 @@ Important:
 - The holiday sitemap includes canonical and alias pages only for events whose `publishStatus` is `published` or `monitored`.
 - `qa.json` does not publish a page by itself. Runtime behavior is driven by `package.json`.
 
+## What This Guide Can And Cannot Guarantee
+
+This guide can make a new event:
+- routable
+- buildable
+- canonical
+- sitemap-eligible
+- structured-data-ready
+- indexable in the technical SEO sense after deployment
+- much more likely to rank and earn clicks if the content quality is strong
+
+This guide cannot honestly guarantee:
+- first place in Google
+- automatic indexing for every event
+- automatic ranking
+- automatic clicks or impressions
+
+Google decides indexing, ranking, and title rewriting.
+
+The purpose of this guide is to give an AI enough rules to produce an event package that is:
+- technically correct
+- editorially stronger
+- safer to publish
+- better aligned with Arabic search behavior
+
 ## Fast Workflow
 
 ### 1. Scaffold the folder
@@ -788,6 +813,91 @@ For strong indexing and ranking potential:
 - avoid unexplained hardcoded current years in body copy
 - keep country-neutral base content when the event expands across countries
 
+## SEO Rules For AI-Written Events
+
+When another AI writes an event, it should not produce flat or generic SEO copy.
+
+### Title rules
+
+Avoid weak titles like:
+- `يوم الطيبة العالمي {{year}}`
+- `معلومات عن يوم الطيبة العالمي`
+- `الصفحة الرسمية ليوم الطيبة العالمي`
+
+Prefer strong Arabic intent-led titles such as:
+- `متى يوم الطيبة العالمي {{year}}؟ | كم باقي على المناسبة`
+- `كم باقي على يوم الطيبة العالمي {{year}}؟ | العد التنازلي والموعد`
+- `ما هو يوم الطيبة العالمي؟ | الموعد والمعنى والأسئلة الشائعة`
+
+Title requirements:
+- must match the main search intent
+- should usually start with the main query
+- should avoid robotic wording
+- should avoid stuffing many keywords into one line
+- should feel useful and clickable to an Arabic user
+
+### Meta description rules
+
+The `metaDescription` should:
+- answer the main question fast
+- mention the date or countdown angle when available
+- mention one or two extra reasons to click
+- stay specific instead of generic
+
+Weak:
+- `تعرف على معلومات عن يوم الطيبة العالمي.`
+
+Better:
+- `إذا كنت تبحث عن موعد يوم الطيبة العالمي {{year}} فهذه الصفحة تعرض التاريخ الصحيح والعد التنازلي وفكرة المناسبة وأهم الأسئلة الشائعة عنها.`
+
+### Keyword rules
+
+The AI should not generate random keyword spam.
+
+Use this hierarchy:
+- `primaryKeyword`: one strongest main query
+- `secondaryKeywords`: 3 to 6 close variations
+- `longTailKeywords`: 6 to 12 real intent phrases
+
+Good Arabic query patterns:
+- `متى <event> {{year}}`
+- `كم باقي على <event> {{year}}`
+- `موعد <event> {{year}}`
+- `ما هو <event>`
+- `كيف يحتفل الناس بـ <event>`
+- `تاريخ <event> {{year}}`
+
+### Content rules
+
+The page should answer the intent fast:
+- first answer in `answerSummary`
+- then quick facts
+- then short explanation
+- then FAQ
+
+The AI should write content that is:
+- direct
+- Arabic-first
+- helpful
+- non-robotic
+- non-repetitive
+
+## Real Event vs Unverified Event
+
+If the requested event is fictional, unclear, or not supported by trustworthy sources, the AI must not pretend it is fully publish-ready.
+
+Rules:
+- if the date or legitimacy of the event is unclear, keep `publishStatus: "drafted"`
+- keep `qa.checks.factChecked` as `false`
+- add source uncertainty in `research.json`
+- do not invent official sources
+- do not write fake certainty in `metaDescription`, `answerSummary`, or FAQ
+
+Example:
+- if someone asks for `يوم الطيبة العالمي` and there is no trustworthy source confirming the event, the AI should still create the three files if asked, but it should mark the event as draft and explain the factual uncertainty in `research.json` and `qa.json`
+
+This protects the site from weak or misleading pages, which helps long-term SEO much more than publishing speculative content.
+
 ## Example Event: `عيد الرجل`
 
 This is a demo example only to show the contract.
@@ -1015,6 +1125,98 @@ npm run validate:holidays:slug -- --slug <slug>
 ```bash
 npm run events:publish -- --slug <slug> --status published
 ```
+
+## AI Output Contract
+
+When you give this file to another AI, require it to return the result in this exact format:
+
+1. A short slug decision note.
+2. A folder tree.
+3. The full contents of:
+   - `src/data/holidays/events/<slug>/package.json`
+   - `src/data/holidays/events/<slug>/research.json`
+   - `src/data/holidays/events/<slug>/qa.json`
+4. Any assumptions or factual uncertainty.
+5. Whether the event should stay `drafted` or can safely move toward `published`.
+
+The AI should return full file contents, not partial diffs.
+
+Recommended response shape:
+
+```text
+src/data/holidays/events/<slug>/
+  package.json
+  research.json
+  qa.json
+
+package.json
+```json
+{ ... }
+```
+
+research.json
+```json
+{ ... }
+```
+
+qa.json
+```json
+{ ... }
+```
+```
+
+## Ready-To-Send Prompt For Another AI
+
+You can copy this prompt and replace the event name:
+
+```text
+Use docs/add-new-event.md as a strict contract.
+
+Add a new holiday event called "يوم الطيبة العالمي".
+
+Requirements:
+- choose a safe canonical English slug
+- create exactly:
+  - src/data/holidays/events/<slug>/package.json
+  - src/data/holidays/events/<slug>/research.json
+  - src/data/holidays/events/<slug>/qa.json
+- fill every important key with real Arabic content
+- make the SEO strong for Arabic Google Search
+- keep the page query-first, not generic
+- if the event is not fully verifiable, keep it drafted and explain why
+- do not edit generated files
+- return the full file contents in import-ready JSON blocks
+```
+
+## Publish And Indexing Checklist
+
+After importing the AI-produced files into this repo:
+
+1. Run:
+
+```bash
+npm run events:build
+npm run validate:holidays:slug -- --slug <slug>
+```
+
+2. Confirm:
+- `package.json` is valid
+- `publishStatus` is appropriate
+- no placeholder text exists
+- the SEO fields align
+- FAQ is authored only in `richContent.faq`
+
+3. If the event is real and ready:
+
+```bash
+npm run events:publish -- --slug <slug> --status published
+```
+
+4. Deploy the site.
+5. Confirm the canonical event page appears in the live holidays sitemap.
+6. Inspect the live URL in Google Search Console if the event matters strategically.
+
+If all of the above is true, the event is technically positioned to be indexed and compete for traffic.
 
 ## Files The AI Must Never Edit Manually
 

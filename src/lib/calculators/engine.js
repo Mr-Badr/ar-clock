@@ -228,6 +228,295 @@ export function buildEndOfServiceMilestones(startDate) {
   }));
 }
 
+function addMonthsFromReference(referenceDateIso, monthsToAdd) {
+  if (!referenceDateIso) return null;
+  const months = Math.max(0, Math.round(toNumber(monthsToAdd)));
+  const now = new Date(referenceDateIso);
+  if (Number.isNaN(now.getTime())) return null;
+  const target = new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth() + months,
+    now.getUTCDate(),
+  ));
+
+  return target.toISOString().slice(0, 10);
+}
+
+export function calculateEmergencyFund({
+  monthlyExpenses,
+  targetMonths = 3,
+  currentSavings = 0,
+  monthlyContribution = 0,
+  referenceDateIso = null,
+}) {
+  const expenses = Math.max(0, toNumber(monthlyExpenses));
+  const months = Math.max(1, Math.round(toNumber(targetMonths)));
+  const current = Math.max(0, toNumber(currentSavings));
+  const contribution = Math.max(0, toNumber(monthlyContribution));
+  const targetAmount = round(expenses * months);
+  const remainingAmount = round(Math.max(targetAmount - current, 0));
+  const coverageMonths = expenses > 0 ? current / expenses : 0;
+  const progressPercent = targetAmount > 0 ? clamp((current / targetAmount) * 100, 0, 100) : 0;
+  const monthsToGoal = remainingAmount === 0
+    ? 0
+    : contribution > 0
+      ? Math.ceil(remainingAmount / contribution)
+      : null;
+
+  let status = 'ضعيف';
+  if (progressPercent >= 100 || coverageMonths >= months) status = 'ممتاز';
+  else if (progressPercent >= 50 || coverageMonths >= Math.min(months, 3)) status = 'جيد';
+
+  return {
+    isValid: expenses > 0,
+    monthlyExpenses: expenses,
+    targetMonths: months,
+    currentSavings: current,
+    monthlyContribution: contribution,
+    targetAmount,
+    remainingAmount,
+    coverageMonths: round(coverageMonths, 1),
+    progressPercent: round(progressPercent, 1),
+    monthsToGoal,
+    targetDate: monthsToGoal === null ? null : addMonthsFromReference(referenceDateIso, monthsToGoal),
+    recommendedRange: months <= 3 ? 'حد أدنى مقبول' : months <= 6 ? 'منطقة آمنة شائعة' : 'حماية عالية',
+    status,
+  };
+}
+
+function computeSavingsPayment(goalAmount, currentSavings, months, annualReturn) {
+  const goal = Math.max(0, toNumber(goalAmount));
+  const current = Math.max(0, toNumber(currentSavings));
+  const totalMonths = Math.max(1, Math.round(toNumber(months)));
+  const monthlyRate = Math.max(0, toNumber(annualReturn)) / 1200;
+
+  const grownCurrent = current * ((1 + monthlyRate) ** totalMonths);
+  if (grownCurrent >= goal) return 0;
+
+  if (monthlyRate === 0) {
+    return (goal - current) / totalMonths;
+  }
+
+  const annuityFactor = (((1 + monthlyRate) ** totalMonths) - 1) / monthlyRate;
+  if (annuityFactor <= 0) return 0;
+
+  return (goal - grownCurrent) / annuityFactor;
+}
+
+export function calculateSavingsGoal({
+  goalAmount,
+  currentSavings = 0,
+  months = 12,
+  annualReturn = 0,
+  referenceDateIso = null,
+}) {
+  const goal = Math.max(0, toNumber(goalAmount));
+  const current = Math.max(0, toNumber(currentSavings));
+  const totalMonths = Math.max(1, Math.round(toNumber(months)));
+  const returnRate = Math.max(0, toNumber(annualReturn));
+  const monthlyRequired = round(Math.max(0, computeSavingsPayment(goal, current, totalMonths, returnRate)));
+  const weeklyRequired = round((monthlyRequired * 12) / 52);
+  const extraSixMonths = totalMonths + 6;
+  const monthlyRequiredExtended = round(Math.max(0, computeSavingsPayment(goal, current, extraSixMonths, returnRate)));
+  const gapNow = round(Math.max(goal - current, 0));
+
+  return {
+    isValid: goal > 0,
+    goalAmount: goal,
+    currentSavings: current,
+    months: totalMonths,
+    annualReturn: returnRate,
+    gapNow,
+    monthlyRequired,
+    weeklyRequired,
+    targetDate: addMonthsFromReference(referenceDateIso, totalMonths),
+    monthlyRequiredExtended,
+    monthlyDifferenceIfExtended: round(Math.max(monthlyRequired - monthlyRequiredExtended, 0)),
+  };
+}
+
+export function calculateNetWorth({
+  cash = 0,
+  investments = 0,
+  properties = 0,
+  otherAssets = 0,
+  loans = 0,
+  creditCards = 0,
+  otherLiabilities = 0,
+}) {
+  const assetEntries = [
+    { key: 'cash', label: 'النقد والمدخرات', value: Math.max(0, toNumber(cash)) },
+    { key: 'investments', label: 'الاستثمارات', value: Math.max(0, toNumber(investments)) },
+    { key: 'properties', label: 'الممتلكات', value: Math.max(0, toNumber(properties)) },
+    { key: 'otherAssets', label: 'أصول أخرى', value: Math.max(0, toNumber(otherAssets)) },
+  ];
+  const liabilityEntries = [
+    { key: 'loans', label: 'القروض', value: Math.max(0, toNumber(loans)) },
+    { key: 'creditCards', label: 'بطاقات الائتمان', value: Math.max(0, toNumber(creditCards)) },
+    { key: 'otherLiabilities', label: 'التزامات أخرى', value: Math.max(0, toNumber(otherLiabilities)) },
+  ];
+
+  const totalAssets = round(assetEntries.reduce((sum, item) => sum + item.value, 0));
+  const totalLiabilities = round(liabilityEntries.reduce((sum, item) => sum + item.value, 0));
+  const netWorth = round(totalAssets - totalLiabilities);
+  const liabilitiesRatio = totalAssets > 0 ? round((totalLiabilities / totalAssets) * 100, 1) : 0;
+
+  let status = 'تحتاج خطة';
+  let nextStep = 'ابدأ بحصر أصولك والتزاماتك بوضوح ثم خفف الديون الأعلى كلفة أولاً.';
+  if (netWorth >= 0 && liabilitiesRatio <= 35) {
+    status = 'جيد';
+    nextStep = 'حافظ على نمو الأصول المنتجة وراجع توزيع السيولة والطوارئ بانتظام.';
+  }
+  if (netWorth > 0 && liabilitiesRatio <= 20) {
+    status = 'ممتاز';
+    nextStep = 'أنت في وضع مريح نسبياً. ركز الآن على زيادة الأصول طويلة الأجل وتحسين العائد.';
+  }
+
+  return {
+    isValid: totalAssets > 0 || totalLiabilities > 0,
+    assetEntries,
+    liabilityEntries,
+    totalAssets,
+    totalLiabilities,
+    netWorth,
+    liabilitiesRatio,
+    status,
+    nextStep,
+  };
+}
+
+function normalizeDebtItems(debts = []) {
+  return debts
+    .map((debt, index) => ({
+      id: debt.id || `debt-${index + 1}`,
+      name: debt.name || `دين ${index + 1}`,
+      balance: Math.max(0, toNumber(debt.balance)),
+      annualRate: Math.max(0, toNumber(debt.annualRate)),
+      minimumPayment: Math.max(0, toNumber(debt.minimumPayment)),
+    }))
+    .filter((debt) => debt.balance > 0 && debt.minimumPayment > 0);
+}
+
+function sortDebtIndexes(items, method) {
+  return items
+    .map((item, index) => ({ ...item, index }))
+    .sort((a, b) => {
+      if (method === 'avalanche') {
+        if (b.annualRate !== a.annualRate) return b.annualRate - a.annualRate;
+        return a.balance - b.balance;
+      }
+      if (a.balance !== b.balance) return a.balance - b.balance;
+      return b.annualRate - a.annualRate;
+    })
+    .map((item) => item.index);
+}
+
+export function simulateDebtPayoff({
+  debts = [],
+  extraPayment = 0,
+  method = 'snowball',
+  referenceDateIso = null,
+}) {
+  const normalizedDebts = normalizeDebtItems(debts);
+  if (!normalizedDebts.length) {
+    return {
+      isValid: false,
+      months: 0,
+      totalInterest: 0,
+      payoffDate: null,
+      debts: [],
+    };
+  }
+
+  const totalBudget = normalizedDebts.reduce((sum, debt) => sum + debt.minimumPayment, 0) + Math.max(0, toNumber(extraPayment));
+  const working = normalizedDebts.map((debt) => ({ ...debt }));
+  const debtSnapshots = [];
+  let totalInterest = 0;
+  let months = 0;
+
+  while (months < 600 && working.some((debt) => debt.balance > 0.01)) {
+    months += 1;
+    working.forEach((debt) => {
+      if (debt.balance <= 0) return;
+      const interest = debt.balance * (debt.annualRate / 100 / 12);
+      debt.balance += interest;
+      totalInterest += interest;
+    });
+
+    const active = working.filter((debt) => debt.balance > 0.01);
+    const sortedIndexes = sortDebtIndexes(active, method);
+    const sortedActive = sortedIndexes.map((index) => active[index]);
+    let remainingBudget = totalBudget;
+    const focusDebt = sortedActive[0] || null;
+
+    sortedActive.slice(1).forEach((debt) => {
+      const payment = Math.min(debt.balance, debt.minimumPayment);
+      debt.balance = round(Math.max(0, debt.balance - payment), 2);
+      remainingBudget -= payment;
+    });
+
+    if (focusDebt) {
+      const payment = Math.min(focusDebt.balance, Math.max(remainingBudget, 0));
+      focusDebt.balance = round(Math.max(0, focusDebt.balance - payment), 2);
+      remainingBudget -= payment;
+    }
+
+    if (remainingBudget > 0) {
+      sortedActive.slice(1).forEach((debt) => {
+        if (remainingBudget <= 0 || debt.balance <= 0) return;
+        const extra = Math.min(debt.balance, remainingBudget);
+        debt.balance = round(Math.max(0, debt.balance - extra), 2);
+        remainingBudget -= extra;
+      });
+    }
+
+    if (months <= 12 || months % 6 === 0) {
+      debtSnapshots.push({
+        month: months,
+        balances: working.map((debt) => ({
+          name: debt.name,
+          balance: round(debt.balance),
+        })),
+      });
+    }
+  }
+
+  return {
+    isValid: true,
+    method,
+    months,
+    payoffDate: addMonthsFromReference(referenceDateIso, months),
+    totalInterest: round(totalInterest),
+    totalPaid: round(totalBudget * months),
+    debtSnapshots,
+    debts: working.map((debt) => ({
+      name: debt.name,
+      annualRate: debt.annualRate,
+      minimumPayment: debt.minimumPayment,
+    })),
+  };
+}
+
+export function compareDebtPayoffPlans({
+  debts = [],
+  extraPayment = 0,
+  referenceDateIso = null,
+}) {
+  const normalizedDebts = normalizeDebtItems(debts);
+  const baseline = simulateDebtPayoff({ debts: normalizedDebts, extraPayment: 0, method: 'avalanche', referenceDateIso });
+  const snowball = simulateDebtPayoff({ debts: normalizedDebts, extraPayment, method: 'snowball', referenceDateIso });
+  const avalanche = simulateDebtPayoff({ debts: normalizedDebts, extraPayment, method: 'avalanche', referenceDateIso });
+
+  return {
+    isValid: normalizedDebts.length > 0,
+    baseline,
+    snowball,
+    avalanche,
+    monthsSavedWithExtra: baseline.isValid && avalanche.isValid ? Math.max(baseline.months - avalanche.months, 0) : 0,
+    interestSavedWithAvalanche: snowball.isValid && avalanche.isValid ? round(Math.max(snowball.totalInterest - avalanche.totalInterest, 0)) : 0,
+  };
+}
+
 function normalizeMonths(years, months) {
   const directMonths = Math.round(toNumber(months));
   if (directMonths > 0) return directMonths;

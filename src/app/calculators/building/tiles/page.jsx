@@ -125,7 +125,7 @@ export default function TilesPage() {
         eyebrow="روابط داخلية"
         title="حاسبات تفيدك قبل التشطيب"
       >
-        <RelatedCalculators currentSlug="building" />
+        <RelatedCalculators currentSlug="tiles" />
       </CalculatorSection>
 
       <CalculatorFooterCta />

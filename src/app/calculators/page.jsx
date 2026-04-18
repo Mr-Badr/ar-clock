@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Calculator, Landmark, Percent, ReceiptText } from 'lucide-react';
 
 import {
@@ -8,7 +9,7 @@ import {
   CalculatorSection,
 } from '@/components/calculators/common';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
-import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
+import { CALCULATOR_HUBS, CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
@@ -17,7 +18,10 @@ export const metadata = buildCanonicalMetadata({
   title: 'كم عمري؟ كم القسط؟ كم الضريبة؟ | أشهر الحاسبات العربية',
   description:
     'ابدأ من أكثر الحاسبات التي يبحث عنها المستخدم العربي يومياً: كم عمري الآن، كم قسط قرض 100 ألف، كم ضريبة 1000 ريال عند 15%، وكم مكافأة نهاية الخدمة، مع نتائج فورية وشرح عربي واضح.',
-  keywords: CALCULATOR_ROUTES.flatMap((item) => item.keywords),
+  keywords: [
+    ...CALCULATOR_HUBS.flatMap((item) => item.keywords),
+    ...CALCULATOR_ROUTES.flatMap((item) => item.keywords),
+  ],
   url: `${SITE_URL}/calculators`,
 });
 
@@ -60,11 +64,36 @@ export default function CalculatorsPage() {
         highlights={[
           'أدوات مبنية على نيات بحث عربية واضحة وليست عناوين عامة فقط.',
           'نتائج مباشرة مع شروحات عربية واضحة وأمثلة قابلة للفهم بسرعة.',
-          'ربط داخلي بين الحاسبات لتسهيل الاكتشاف والفهرسة والاستمرار داخل الموقع.',
+          'ربط داخلي بين الحاسبات والمسارات العليا والأدلة الداعمة لتسهيل الاكتشاف والفهرسة والاستمرار داخل الموقع.',
         ]}
       >
         <CalculatorHubGrid />
       </CalculatorHero>
+
+      <CalculatorSection
+        id="calculator-clusters"
+        eyebrow="المسارات العليا"
+        title="ابدأ من القسم المناسب قبل الدخول إلى الأداة"
+        description="لم نعد نتعامل مع الحاسبات كصفحات معزولة فقط. هناك الآن مسارات عليا تجمع الأدوات المتقاربة في نية البحث حتى يصبح الاكتشاف أوضح للمستخدم ومحركات البحث."
+        subtle
+      >
+        <div className="calc-related-grid">
+          {CALCULATOR_HUBS.map((hub) => (
+            <div key={hub.slug} className="calc-surface-card calc-related-card card-hover">
+              <div className="p-6">
+                <div className="mb-3 inline-flex rounded-full border px-3 py-1 text-xs font-bold" style={{ background: hub.accentSoft, borderColor: 'var(--border-accent)', color: hub.accent }}>
+                  {hub.badge}
+                </div>
+                <h3 className="calc-card-title">{hub.title}</h3>
+                <p className="calc-card-description mt-2">{hub.description}</p>
+                <Link href={hub.href} className="btn btn-primary--flat calc-button calc-inline-button mt-4">
+                  افتح المسار
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </CalculatorSection>
 
       <CalculatorSection
         id="calculator-benefits"
@@ -76,9 +105,9 @@ export default function CalculatorsPage() {
         <CalculatorInfoGrid
           items={[
             {
-              title: 'مكافأة نهاية الخدمة',
-              description: 'حساب الاستحقاق الكامل أو الجزئي مع مقارنة أثر الانتظار بضعة أشهر.',
-              content: 'مفيد للموظف الذي يفكر في الاستقالة أو يراجع تسوية نهاية العقد ويريد رقماً سريعاً قبل التوجه للمصدر الرسمي أو المستشار.',
+              title: 'التخطيط المالي الشخصي',
+              description: 'عنقود جديد يجمع صندوق الطوارئ والديون والادخار وصافي الثروة.',
+              content: 'هذا المسار يخاطب نيات بحث واسعة وعالية القيمة مثل: كم أحتاج صندوق طوارئ؟ متى أخلص من ديوني؟ كم أوفر شهرياً؟ وما صافي ثروتي الآن؟',
             },
             {
               title: 'حاسبات العمر',
@@ -113,8 +142,8 @@ export default function CalculatorsPage() {
         <div className="calc-grid-4">
           <div className="calc-metric-card">
             <div className="calc-metric-card__label"><Landmark size={16} /></div>
-            <div className="calc-metric-card__value">5</div>
-            <div className="calc-metric-card__note">صفحات أساسية</div>
+            <div className="calc-metric-card__value">9+</div>
+            <div className="calc-metric-card__note">صفحات أساسية عالية النية</div>
           </div>
           <div className="calc-metric-card">
             <div className="calc-metric-card__label"><Calculator size={16} /></div>

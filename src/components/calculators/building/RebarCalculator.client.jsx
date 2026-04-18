@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { Hash, Plus, Ruler, Scaling, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -29,87 +31,97 @@ export default function RebarCalculator() {
   const results = calcRebarWeight(diameter, totalLengthM);
 
   return (
-    <div className="grid gap-8 lg:grid-cols-12">
+    <div
+      className="calc-app-grid grid gap-8 lg:grid-cols-12"
+      style={{ '--calc-accent': '#EF4444' }}
+    >
       <div className="lg:col-span-5 space-y-6">
         <Card className="calc-surface-card">
           <CardHeader>
             <CardTitle className="calc-card-title text-xl">مواصفات الحديد</CardTitle>
           </CardHeader>
           <CardContent className="space-y-8">
-            
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <Label>قطر السيخ (ملم)</Label>
-                <span className="text-xs text-text-secondary bg-base px-2 py-1 rounded-md">
+            <div className="calc-field">
+              <div className="calc-field-row">
+                <Label className="calc-label">قطر السيخ (ملم)</Label>
+                <span className="calc-hint rounded-md bg-base px-2 py-1">
                   {REBAR_TYPICAL_USE[diameter]}
                 </span>
               </div>
               <div className="flex flex-wrap gap-2">
                 {REBAR_DIAMETERS.map((d) => (
-                  <button
+                  <Button
                     key={d}
+                    type="button"
                     onClick={() => setDiameter(d)}
-                    className={`flex-1 min-w-[50px] py-2 px-1 rounded-lg text-sm font-bold transition-all border ${
-                      diameter === d
-                        ? 'border-primary bg-primary text-on-accent'
-                        : 'border-accent/20 bg-accent/5 hover:bg-accent/10'
-                    }`}
+                    variant="outline"
+                    size="sm"
+                    className={`calc-chip-button chip min-w-[56px] ${diameter === d ? 'is-active' : ''}`}
                   >
                     ⌀{d}
-                  </button>
+                  </Button>
                 ))}
               </div>
+              <p className="calc-hint">اختر القطر أولاً لأن وزن المتر الطولي يتغير مباشرة حسبه.</p>
             </div>
 
-            <div className="space-y-4">
-              <div className="flex justify-between items-center border-b border-accent/10 pb-2">
-                <Label>أسياخ التقطيع</Label>
+            <div className="calc-field">
+              <div className="calc-field-row border-b border-accent/10 pb-2">
+                <Label className="calc-label">أسياخ التقطيع</Label>
+                <span className="calc-hint">أدخل الأطوال المختلفة وعدد كل طول</span>
               </div>
 
               <div className="space-y-3">
                 {lengthInputGroup.map((group, index) => (
-                  <div key={index} className="flex gap-2 items-end">
-                    <div className="flex-1 space-y-1">
-                      <Label className="text-xs">الطول (متر)</Label>
+                  <div key={index} className="calc-grid-2 items-end rounded-2xl border border-accent/10 bg-base p-3">
+                    <div className="calc-field">
+                      <Label className="calc-label text-xs">الطول (متر)</Label>
                       <Input
                         type="number"
                         min="0.1"
                         step="0.1"
                         value={group.length}
                         onChange={(e) => updateGroup(index, 'length', e.target.value)}
-                        className="text-center"
+                        className="calc-input text-center"
                       />
                     </div>
-                    <span className="mb-2 text-text-secondary">×</span>
-                    <div className="flex-1 space-y-1">
-                      <Label className="text-xs">العدد</Label>
+                    <div className="calc-field">
+                      <Label className="calc-label text-xs">العدد</Label>
                       <Input
                         type="number"
                         min="1"
                         value={group.count}
                         onChange={(e) => updateGroup(index, 'count', e.target.value)}
-                        className="text-center"
+                        className="calc-input text-center"
                       />
                     </div>
-                    <button
-                      onClick={() => removeGroup(index)}
-                      disabled={lengthInputGroup.length === 1}
-                      className="h-10 px-3 flex items-center justify-center rounded-md bg-accent/10 hover:bg-red-500/10 hover:text-red-500 transition-colors disabled:opacity-30"
-                    >
-                      ×
-                    </button>
+                    <div className="flex justify-end sm:col-span-2">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeGroup(index)}
+                        disabled={lengthInputGroup.length === 1}
+                        className="calc-button"
+                      >
+                        <X size={16} />
+                        حذف السطر
+                      </Button>
+                    </div>
                   </div>
                 ))}
               </div>
-              
-              <button
-                onClick={addGroup}
-                className="w-full py-2 text-sm text-primary font-medium border border-primary border-dashed rounded-lg hover:bg-primary/5 transition-colors"
-              >
-                + إضافة مقاس آخر
-              </button>
-            </div>
 
+              <Button
+                type="button"
+                onClick={addGroup}
+                variant="outline"
+                className="calc-button w-full border-dashed"
+              >
+                <Plus size={16} />
+                إضافة مقاس آخر
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -121,7 +133,7 @@ export default function RebarCalculator() {
           <CardHeader className="pb-2 border-b border-accent/10">
             <CardTitle className="calc-card-title text-base">الوزن النهائي</CardTitle>
           </CardHeader>
-          
+
           <CardContent className="pt-8 space-y-8">
             <div className="flex flex-col items-center justify-center text-center">
               <h4 className="text-sm text-text-secondary font-medium mb-2">إجمالي الوزن</h4>
@@ -138,23 +150,35 @@ export default function RebarCalculator() {
               )}
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-accent/10">
-              <div className="flex flex-col justify-center p-4 bg-base rounded-xl border border-accent/10 text-center">
-                <span className="text-xs text-text-secondary mb-1">إجمالي الأطوال الحقيقية</span>
-                <span className="font-bold text-lg">{fmt(totalLengthM, 1)} متر</span>
+            <div className="calc-metric-grid calc-grid-2 mt-6 pt-6 border-t border-accent/10">
+              <div className="calc-metric-card">
+                <div className="calc-metric-card__label">
+                  <Ruler size={15} />
+                  إجمالي الأطوال الحقيقية
+                </div>
+                <div className="calc-metric-card__value">{fmt(totalLengthM, 1)} متر</div>
+                <div className="calc-metric-card__note">مجموع كل أطوال الأسياخ قبل تحويلها إلى وزن.</div>
               </div>
-              
-              <div className="flex flex-col justify-center p-4 bg-base rounded-xl border border-accent/10 text-center">
-                <span className="text-xs text-text-secondary mb-1">يعادل (طول 12م القياسي)</span>
-                <span className="font-bold text-lg">{fmt(results.barsOf12m)} سيخ</span>
+
+              <div className="calc-metric-card">
+                <div className="calc-metric-card__label">
+                  <Hash size={15} />
+                  يعادل (طول 12م القياسي)
+                </div>
+                <div className="calc-metric-card__value">{fmt(results.barsOf12m)} سيخ</div>
+                <div className="calc-metric-card__note">تحويل تقريبي مفيد عند الشراء أو طلب التسعير.</div>
               </div>
-            </div>
-            
-            <div className="flex items-center justify-between p-3 bg-primary/10 rounded-lg text-sm text-text-primary px-4">
-              <span>وزن المتر الطولي لقطر {diameter} ملم</span>
-              <span className="font-bold font-mono">{fmt(results.weightPerMeter, 3)} كجم/م</span>
             </div>
 
+            <div className="calc-note">
+              <div className="flex items-center justify-between gap-4">
+                <span className="flex items-center gap-2">
+                  <Scaling size={15} />
+                  وزن المتر الطولي لقطر {diameter} ملم
+                </span>
+                <strong className="font-mono">{fmt(results.weightPerMeter, 3)} كجم/م</strong>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>

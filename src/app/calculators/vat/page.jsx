@@ -10,6 +10,7 @@ import {
   CalculatorInfoGrid,
   CalculatorIntentCloud,
   CalculatorQuickAnswerGrid,
+  CalculatorResourceLinks,
   CalculatorSection,
   CalculatorSectionNav,
   CalculatorStoryBand,
@@ -19,12 +20,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
+import { getGuidesBySlugs } from '@/lib/guides/data';
+import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'vat');
+const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.vat);
 
 const faqItems = [
   {
@@ -326,6 +330,16 @@ export default function VatPage() {
             </Button>
           </CardContent>
         </Card>
+      </CalculatorSection>
+
+      <CalculatorSection
+        id="vat-guides"
+        eyebrow="أدلة مرتبطة"
+        title="افهم الفاتورة قبل أن تعتمد الرقم"
+        description="هذه الصفحات التعليمية تشرح الفرق بين السعر الشامل وغير الشامل، ومعنى ضريبة المدخلات والمخرجات، ثم تعيدك إلى الحاسبة لتطبيق الفكرة فوراً."
+        subtle
+      >
+        <CalculatorResourceLinks items={RELATED_GUIDES} />
       </CalculatorSection>
 
       <CalculatorSection

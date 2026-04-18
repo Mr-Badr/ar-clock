@@ -14,17 +14,21 @@ import {
 import { getSiteUrl } from '@/lib/site-config';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
+import { EconomyReadingShelf } from '@/components/economy/common';
 import { FAQ_ITEMS } from '@/components/economy/data/faqItems';
 import GoldMarketHoursLive from '@/components/economy/GoldMarketHoursLive';
+import { getGuideCardsBySlugs } from '@/lib/guides/data';
+import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 
 const SITE_URL = getSiteUrl();
+const RELATED_GUIDES = getGuideCardsBySlugs(TOOL_GUIDE_GROUPS.goldMarketHours);
 
 
 
 export const metadata = buildCanonicalMetadata({
-  title: 'هل الذهب مفتوح الآن؟ | أوقات الذهب اليوم بتوقيت السعودية ومدينتك',
+  title: 'هل الذهب مفتوح الآن؟ | متى يفتح سوق الذهب اليوم من مدينتك',
   description:
-    'اعرف هل الذهب مفتوح الآن، ومتى يفتح سوق الذهب اليوم بتوقيت السعودية أو مدينتك، وما أفضل نافذة للتداول، مع جداول السعودية والإمارات ومصر والمغرب.',
+    'إذا كان سؤالك: هل الذهب مفتوح الآن؟ فهذه الصفحة تعطيك فوراً حالة سوق الذهب، ومتى يفتح اليوم من مدينتك، وأفضل نافذة لتداول XAU/USD، مع جداول عربية واضحة.',
   keywords: [
     // Short
     'سوق الذهب', 'بورصة الذهب', 'تداول الذهب', 'الذهب الآن', 'أسعار الذهب',
@@ -50,7 +54,7 @@ export default function GoldMarketHoursPage() {
     siteUrl: SITE_URL,
     path: '/economie/gold-market-hours',
     name: 'هل الذهب مفتوح الآن؟',
-    description: 'أداة عربية لمعرفة حالة سوق الذهب العالمي وأفضل نافذة للسيولة اليومية بتوقيت المستخدم المحلي.',
+    description: 'أداة عربية تجيب مباشرة عن حالة سوق الذهب الآن، ومتى يفتح اليوم، وأفضل نافذة للسيولة اليومية بتوقيت المستخدم المحلي.',
     about: ['هل الذهب مفتوح الآن', 'متى يفتح سوق الذهب', 'أوقات تداول الذهب', 'تداول XAUUSD'],
   });
   const breadcrumbSchema = buildEconomyBreadcrumbSchema(
@@ -108,6 +112,11 @@ export default function GoldMarketHoursPage() {
         >
           <GoldMarketHoursRequestContent />
         </Suspense>
+        <EconomyReadingShelf
+          title="اقرأ قبل متابعة الذهب"
+          lead="هذه الأدلة تضيف قيمة فوق سؤال هل الذهب مفتوح الآن: متى تكون النافذة الأفضل، وما علاقة الجلسات، وكيف تفصل بين السوق العالمي والمتاجر المحلية."
+          items={RELATED_GUIDES}
+        />
       </EconomyAdLayout>
     </div>
   );

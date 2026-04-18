@@ -9,6 +9,11 @@ import { SectionDivider, SectionWrapper } from '@/components/shared/primitives';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 
 const CALCULATOR_DISCOVERY_LINKS = [
+  { href: '/calculators/sleep', title: 'حاسبات النوم الذكي', description: 'ابدأ من متى تنام ومتى تستيقظ والقيلولة ودين النوم.' },
+  { href: '/calculators/sleep/bedtime', title: 'متى أنام لأستيقظ في الوقت المناسب؟', description: 'خطط نومك انطلاقاً من وقت الاستيقاظ.' },
+  { href: '/calculators/personal-finance', title: 'حاسبات التخطيط المالي الشخصي', description: 'ابدأ من صندوق الطوارئ والديون والادخار وصافي الثروة.' },
+  { href: '/calculators/personal-finance/emergency-fund', title: 'كم تحتاج صندوق طوارئ؟', description: 'احسب المبلغ المناسب ومدة الوصول إليه.' },
+  { href: '/calculators/finance', title: 'حاسبات المال والعمل', description: 'ابدأ من مسار يجمع القرض والضريبة والنسبة ومكافأة نهاية الخدمة.' },
   { href: '/calculators/age/calculator', title: 'كم عمري الآن؟', description: 'حاسبة العمر بالسنوات والأيام والثواني.' },
   { href: '/calculators/monthly-installment', title: 'كم قسط القرض الشهري؟', description: 'قارن التمويل والقسط وإجمالي الفوائد.' },
   { href: '/calculators/vat', title: 'كم الضريبة 15%؟', description: 'أضف الضريبة أو استخرجها من السعر الشامل.' },
@@ -253,6 +258,33 @@ export function RelatedCalculators({ currentSlug }) {
             <Button asChild variant="ghost" className="btn btn-surface btn-sm calc-button calc-inline-button">
               <Link href={item.href}>
                 افتح الحاسبة
+                <ArrowLeft size={16} />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+export function CalculatorResourceLinks({ items = [], buttonLabel = 'افتح الدليل' }) {
+  if (!items.length) return null;
+
+  return (
+    <div className="calc-related-grid">
+      {items.map((item) => (
+        <Card key={item.href} className="calc-surface-card calc-related-card card-hover">
+          <CardHeader>
+            <CardTitle className="calc-card-title">{item.title}</CardTitle>
+            <CardDescription className="calc-card-description">
+              {item.description}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild variant="ghost" className="btn btn-primary--flat calc-button calc-inline-button">
+              <Link href={item.href}>
+                {item.ctaLabel || buttonLabel}
                 <ArrowLeft size={16} />
               </Link>
             </Button>

@@ -3,6 +3,7 @@ import { getSitemapLastModified } from '@/lib/sitemap';
 
 const ECONOMY_SITEMAP_ROUTES = [
   { path: '/economie', priority: 0.9, changeFrequency: 'daily' },
+  { path: '/economie/market-hours', priority: 0.92, changeFrequency: 'daily' },
   { path: '/economie/us-market-open', priority: 0.95, changeFrequency: 'daily' },
   { path: '/economie/gold-market-hours', priority: 0.95, changeFrequency: 'daily' },
   { path: '/economie/forex-sessions', priority: 0.9, changeFrequency: 'daily' },

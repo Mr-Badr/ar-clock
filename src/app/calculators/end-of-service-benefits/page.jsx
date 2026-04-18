@@ -9,6 +9,7 @@ import {
   CalculatorInfoGrid,
   CalculatorIntentCloud,
   CalculatorQuickAnswerGrid,
+  CalculatorResourceLinks,
   CalculatorSection,
   CalculatorSectionNav,
   CalculatorStoryBand,
@@ -20,12 +21,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getCachedNowIso } from '@/lib/date-utils';
+import { getGuidesBySlugs } from '@/lib/guides/data';
+import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'end-of-service-benefits');
+const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.endOfService);
 
 const faqItems = [
   {
@@ -467,6 +471,16 @@ export default async function EndOfServiceBenefitsPage() {
             </Button>
           </CardContent>
         </Card>
+      </CalculatorSection>
+
+      <CalculatorSection
+        id="esb-guides"
+        eyebrow="أدلة مرتبطة"
+        title="افهم الاستحقاق قبل أن تعتمد النتيجة"
+        description="هذه الأدلة تشرح منطق المكافأة وفرق الاستقالة ونهاية العقد، ثم تعيدك إلى الحاسبة لمقارنة سيناريوهاتك الفعلية."
+        subtle
+      >
+        <CalculatorResourceLinks items={RELATED_GUIDES} />
       </CalculatorSection>
 
       <CalculatorSection

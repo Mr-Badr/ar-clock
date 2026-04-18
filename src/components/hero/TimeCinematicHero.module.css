@@ -1,157 +1,198 @@
 /* TimeCinematicHero.module.css */
 
 /* ============================================================
-   HERO — DARK TOKEN OVERRIDE
-   The hero always uses a cinematic dark background regardless
-   of the user's theme. We re-declare every CSS token used
-   inside this section to its dark-mode value so that when
-   <html class="light"> is set, nothing breaks visually.
-   next-themes sets tokens on :root / .light — a local
-   override here wins the cascade for all descendants.
+   HERO ROOT
+   Dark mode : deep midnight gradient with soft indigo glows
+   Light mode : airy warm-white gradient (overridden below)
+   All text color, border, and background values use design
+   tokens so both themes resolve correctly without overrides.
    ============================================================ */
-/* base layout only — no token overrides */
-.hero {
+.heroRoot {
   position: relative;
   overflow: hidden;
-  overflow: clip;
-  min-height: 980px;
-  padding-top: clamp(5rem, 7vw, 6.5rem);
+  min-height: clamp(700px, 100svh, 1080px);
+  display: flex;
+  align-items: center;
+
   background:
-    radial-gradient(circle at 58% 18%, rgba(95, 120, 255, 0.08), transparent 18%),
-    radial-gradient(circle at 86% 58%, rgba(85, 110, 255, 0.07), transparent 22%),
-    linear-gradient(180deg, #05070c 0%, #06080d 54%, #05070c 100%);
+    radial-gradient(ellipse 70% 60% at 18% 35%,  rgba(67, 56, 202, 0.11) 0%, transparent 62%),
+    radial-gradient(ellipse 55% 70% at 82% 72%,  rgba(29, 78, 216, 0.08) 0%, transparent 58%),
+    radial-gradient(ellipse 40% 40% at 50% 100%, rgba(95, 120, 255, 0.05) 0%, transparent 70%),
+    linear-gradient(165deg, #0A0E1A 0%, #0D1117 45%, #0c1020 75%, #0D1117 100%);
+
+  padding-block: clamp(4.5rem, 7vw, 7rem);
   isolation: isolate;
 }
 
-/* light mode — override only what needs to change */
-:global(.light) .hero {
-  --clock-digit-color: #000;
-  --clock-separator:   rgba(29, 78, 216, 0.28);
-  --clock-label:       #536080;
+/* Light mode — airy near-white canvas */
+:global(.light) .heroRoot {
+  background:
+    radial-gradient(ellipse 70% 60% at 18% 35%, rgba(67, 56, 202, 0.06) 0%, transparent 62%),
+    radial-gradient(ellipse 55% 70% at 82% 72%, rgba(29, 78, 216, 0.05) 0%, transparent 58%),
+    linear-gradient(165deg, #eef1ff 0%, #f0f4ff 50%, #e8eeff 100%);
 }
 
+
 /* ============================================================
-   VIDEO
+   AMBIENT ORBS — decorative blobs, behind grid content
    ============================================================ */
-.videoLayer {
+.orbLeft {
   position: absolute;
-  inset: 0;
+  width: 640px;
+  height: 640px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(67, 56, 202, 0.10) 0%, transparent 68%);
+  top: -160px;
+  left: -80px;
   pointer-events: none;
+  z-index: 0;
+}
+
+.orbRight {
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(140, 174, 255, 0.07) 0%, transparent 68%);
+  bottom: -120px;
+  right: -60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* ============================================================
+   HERO GRID — RTL two-column layout
+   col-1 (RTL RIGHT) : copy
+   col-2 (RTL LEFT)  : clock card
+   ============================================================ */
+.heroGrid {
+  position: relative;
   z-index: 1;
-  overflow: hidden;
-}
-
-.video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  mix-blend-mode: screen;
-  opacity: 0.92;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  will-change: transform, opacity;
-}
-
-@supports (-webkit-touch-callout: none) {
-  .video {
-    mix-blend-mode: normal;
-    opacity: 0.78;
-    filter: saturate(1.04) brightness(0.88);
-  }
-}
-
-/* ============================================================
-   CLOCK PANEL
-   z-index 10 ensures it sits above the content shell (z:8)
-   and receives pointer events correctly.
-   ============================================================ */
-.stagePanel {
-  position: absolute;
-  left:   var(--panel-left,   20%);
-  top:    var(--panel-top,    55%);
-  width:  var(--panel-width,  50%);
-  height: var(--panel-height, 35%);
-  z-index: 10;
-  background-color: var(--bg-base);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--transition-slow);
-    border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-}
-
-.stagePanelVisible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* heroCardWrap — structural only.
-   Visual surface comes from global card--glass + card--accent
-   classes applied in JSX, which resolve via the dark overrides
-   declared on .hero above. */
-.heroCardWrap {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
-  padding: var(--space-4) var(--space-5);
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  box-shadow: none;
-}
-
-/* ============================================================
-   DESKTOP CONTENT LAYER
-   ============================================================ */
-.heroDesktopContent {
-  position: relative;
-  z-index: 8;
-  pointer-events: none;
-  width: 100%;
-}
-
-/* ============================================================
-   CONTENT SHELL — RTL GRID
-   Column 1 = RIGHT (copy). Column 2 = LEFT (clock spacer).
-   ============================================================ */
-.shell {
   display: grid;
-  grid-template-columns: minmax(0, 560px) minmax(0, 1fr);
-  align-items: start;
-  gap: clamp(1.5rem, 3vw, 3rem);
-  min-height: 860px;
-  padding-top: clamp(1rem, 2vw, 2rem);
+  grid-template-columns: minmax(0, 1fr) clamp(360px, 40vw, 540px);
+  gap: clamp(2.5rem, 5vw, 6rem);
+  align-items: center;
+  padding-block: clamp(0.5rem, 2vw, 2rem);
 }
 
-.stageSpacer { /* intentionally empty — clock lives here visually */ }
 
 /* ============================================================
-   COPY COLUMN — RIGHT (column 1 in RTL)
+   CLOCK COLUMN WRAPPER — LEFT col in RTL
+   Centers the card horizontally and vertically in its cell.
+   ============================================================ */
+.clockColumn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ============================================================
+   CLOCK PANEL — glass card
+   Sized to feel substantial without overwhelming the copy col.
+
+   Shadow layers:
+     1. inset top rim   — 1 px bright highlight lifts the card
+     2. inset face glow — faint blue cast over the glass
+     3. accent corona   — 8–32 px indigo spread
+     4. wide diffuse    — 80 px deep-blue depth
+     5. grounding drop  — tight dark anchor shadow
+   ============================================================ */
+.clockPanel {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+
+  background: var(--bg-glass);              /* rgba(22, 29, 46, 0.70) */
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-accent);   /* rgba(59,130,246,0.25) */
+  border-radius: var(--radius-2xl);          /* 24px */
+
+  box-shadow:
+    0 2px 0 0   rgba(255, 255, 255, 0.06) inset,
+    0 0 0 1px   rgba(140, 174, 255, 0.07) inset,
+    0 8px 32px  rgba(67, 56, 202, 0.24),
+    0 24px 80px rgba(29, 78, 216, 0.12),
+    0 1px 4px   rgba(6, 8, 18, 0.45);
+
+  /*
+    Vertical padding gives the card breathing room without forcing a fixed
+    height. Horizontal padding is intentionally tighter (space-5 = 20px) so
+    the inner centerStage element gets more inline width — cqi-based digit
+    sizes scale with container width, so less padding = bigger clock digits.
+
+    NO min-height: card height is now fully driven by content + padding.
+    Previously min-height:400px forced clockRoot to stretch to 400px, making
+    stageWrapper { flex:1 } consume all that empty space and push the date
+    pill down with ~100px of dead air below it.
+  */
+  padding: var(--space-8) var(--space-5);
+  display: flex;
+  flex-direction: column;
+
+  transition:
+    box-shadow      var(--transition-slow),
+    border-color    var(--transition-slow);
+}
+
+.clockPanel:hover {
+  border-color: var(--border-accent-strong);
+  box-shadow:
+    0 2px 0 0   rgba(255, 255, 255, 0.08) inset,
+    0 0 0 1px   rgba(140, 174, 255, 0.10) inset,
+    0 8px 40px  rgba(67, 56, 202, 0.30),
+    0 28px 90px rgba(29, 78, 216, 0.14),
+    0 1px 4px   rgba(6, 8, 18, 0.50);
+}
+
+/* Light mode: opaque card over the near-white canvas */
+:global(.light) .clockPanel {
+  background: rgba(255, 255, 255, 0.90);
+  border-color: rgba(59, 130, 246, 0.22);
+  box-shadow:
+    0 2px 0 0   rgba(255, 255, 255, 0.90) inset,
+    0 4px 24px  rgba(67, 56, 202, 0.13),
+    0 16px 60px rgba(29, 78, 216, 0.08),
+    0 1px 3px   rgba(6, 8, 18, 0.10);
+}
+
+:global(.light) .clockPanel:hover {
+  border-color: rgba(59, 130, 246, 0.40);
+  box-shadow:
+    0 2px 0 0   rgba(255, 255, 255, 0.95) inset,
+    0 8px 32px  rgba(67, 56, 202, 0.18),
+    0 20px 70px rgba(29, 78, 216, 0.11),
+    0 1px 3px   rgba(6, 8, 18, 0.12);
+}
+
+
+/* ============================================================
+   COPY COLUMN — RIGHT column in RTL
    ============================================================ */
 .copy {
-  grid-column: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0;
-  pointer-events: auto;
 }
 
-/* ── Badge ────────────────────────────────────────────────── */
+
+/* ── Badge ─────────────────────────────────────────────────
+   Uses design tokens so it adapts correctly to both themes:
+     dark  → bg-surface-2 (#1E2640) + border-accent (rgba blue)
+     light → bg-surface-1 (#FFFFFF) + border-accent (rgba blue)
+   The old rgba(8,12,30,0.65) hardcode made it a black blob in
+   light mode — replaced entirely with token values.
+   ────────────────────────────────────────────────────────── */
 .badge {
   display: inline-flex;
   align-items: center;
   height: var(--space-9);
   padding-inline: var(--space-4);
   border-radius: var(--radius-full);
-  background: rgba(8, 12, 30, 0.65); /* cinematic overlay — intentionally dark */
+  background: var(--bg-surface-2);
   border: 1px solid var(--border-accent);
   color: var(--accent-alt);
   font-size: var(--text-xs);
@@ -159,9 +200,12 @@
   letter-spacing: var(--tracking-wide);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 0 24px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 0 24px var(--accent-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
   margin: 0;
 }
+
 
 /* ============================================================
    TITLE
@@ -173,10 +217,11 @@
   gap: 0.05em;
   line-height: var(--leading-none);
   font-weight: var(--font-black);
-  color: var(--text-primary);
+  color: var(--text-primary);   /* token: #F0F4FF dark / #111827 light */
 }
 
-/* ── Aurora Text — animation stays hardcoded (it's a visual FX) ── */
+
+/* ── Aurora brand name — animation is a visual FX, stays hardcoded ── */
 @keyframes auroraShift {
   0%   { background-position: 0%   50%; }
   50%  { background-position: 100% 50%; }
@@ -203,6 +248,7 @@
   animation: auroraShift 5s linear infinite;
 }
 
+/* Token: #A8B2CB dark / #536080 light — both readable on respective canvas */
 .titleSub {
   display: block;
   font-size: clamp(1.5rem, 3vw, 2.5rem);
@@ -213,7 +259,8 @@
   margin-top: 0.2em;
 }
 
-/* ── Description ──────────────────────────────────────────── */
+
+/* ── Description — token: #90AACC dark / readable muted on light ── */
 .desc {
   margin-top: var(--space-5);
   font-size: clamp(0.9rem, 1.1vw, 1rem);
@@ -222,169 +269,18 @@
   max-width: 36ch;
 }
 
-/* ============================================================
-   SHIMMER BUTTON
-   Animation gradient values stay hardcoded — they are a
-   deliberate visual FX, not theme-sensitive colours.
-   All structural and interactive values use tokens.
-   ============================================================ */
-@property --shimmer-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes shimmerSpin {
-  to { --shimmer-angle: 360deg; }
-}
-
-.shimmerBtn {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px;
-  border-radius: var(--radius-full);
-  background: conic-gradient(
-    from var(--shimmer-angle),
-    transparent          0deg,
-    rgba(255,255,255,0)   320deg,
-    rgba(255,255,255,0.8) 340deg,
-    rgba(160,124,254,1)   350deg,
-    rgba(255,255,255,0.8) 360deg
-  );
-  animation: shimmerSpin 3s linear infinite;
-  text-decoration: none;
-  margin-top: var(--space-8);
-  transition: box-shadow var(--transition-base);
-}
-
-.shimmerBtn:hover {
-  box-shadow:
-    0 0 28px rgba(160, 124, 254, 0.35),
-    0 0 60px rgba(160, 124, 254, 0.15);
-}
-
-.shimmerBtnInner {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  padding: var(--space-3-5) var(--space-7);
-  background: rgba(5, 7, 15, 0.96);   /* cinematic dark fill */
-  border-radius: var(--radius-full);
-  font-size: var(--text-md);
-  font-weight: var(--font-semibold);
-  letter-spacing: var(--tracking-normal);
-  color: var(--text-primary);
-  white-space: nowrap;
-  transition: background var(--transition-fast);
-}
-
-.shimmerBtn:hover .shimmerBtnInner {
-  background: rgba(10, 12, 28, 0.94);
-}
-
-.btnArrow {
-  flex-shrink: 0;
-  opacity: 0.8;
-  transform: scaleX(-1);
-  transition: transform var(--transition-fast);
-}
-
-.shimmerBtn:hover .btnArrow {
-  transform: scaleX(-1) translateX(-3px);
-}
 
 /* ============================================================
-   BOTTOM META
+   RESPONSIVE — TABLET  (769px – 980px)
    ============================================================ */
-.bottomMeta {
-  position: relative;
-  z-index: 6;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2-5);
-  align-items: flex-start;
-  padding-bottom: var(--space-4);
-  margin-top: auto;
-  pointer-events: auto;
-}
-
-.bottomLabel {
-  color: var(--text-muted);
-  font-size: var(--text-sm);
-}
-
-.bottomItems {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0;
-  color: var(--text-secondary);
-  font-size: var(--text-base);
-  font-weight: var(--font-semibold);
-}
-
-.bottomItems span {
-  display: inline-flex;
-  align-items: center;
-}
-
-.bottomItems span:not(:last-child)::after {
-  content: "•";
-  margin-inline: var(--space-2-5);
-  color: var(--text-disabled);
-  font-weight: var(--font-regular);
-}
-
-/* cinematic bottom fade — always dark */
-.bottomFade {
-  position: absolute;
-  inset-inline: 0;
-  bottom: 0;
-  height: 220px;
-  pointer-events: none;
-  background: linear-gradient(to bottom, rgba(5, 7, 12, 0) 0%, #05070c 68%);
-  z-index: 5;
-}
-
-/* ============================================================
-   VISIBILITY TOGGLES
-   ============================================================ */
-.heroDesktopContent { display: block; }
-.heroMobileContent  { display: none;  }
-
-/* ============================================================
-   MOBILE SECTION
-   ============================================================ */
-.heroMobileContent {
-  background: linear-gradient(180deg, #05070c 0%, #060a12 100%);
-  padding: 2.5rem 0 3.5rem;
-}
-
-.copyMobileCenter {
-  align-items: center;
-  text-align: center;
-}
-
-.copyMobileCenter .desc {
-  max-width: 32ch;
-}
-
-/* ============================================================
-   RESPONSIVE — TABLET (641px – 980px)
-   ============================================================ */
-@media (max-width: 980px) and (min-width: 641px) {
-  .hero {
-    min-height: 1060px;
-    padding-top: 5.2rem;
+@media (max-width: 980px) and (min-width: 769px) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 1fr) clamp(300px, 42vw, 440px);
+    gap: clamp(2rem, 4vw, 4rem);
   }
 
-  .shell {
-    grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
-    min-height: 860px;
-  }
-
-  .copy {
-    align-items: flex-start;
-    text-align: right;
+  .clockPanel {
+    padding: var(--space-7) var(--space-4);
   }
 
   .auroraText {
@@ -400,25 +296,64 @@
   }
 }
 
+
 /* ============================================================
-   RESPONSIVE — MOBILE (≤ 640px)
+   RESPONSIVE — MOBILE  (≤ 768px)
+   Single column: copy on top, clock below, copy centered.
    ============================================================ */
-@media (max-width: 640px) {
-
-  .hero {
-    min-height: 620px;
-    padding-top: 4rem;
+@media (max-width: 768px) {
+  .heroRoot {
+    min-height: auto;
+    padding-block: clamp(4rem, 8vw, 6rem);
+    align-items: flex-start;
   }
 
-  .heroDesktopContent {
-    display: none;
+  .heroGrid {
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 5vw, 3rem);
+    padding-block: 0;
   }
 
-  .heroMobileContent {
-    display: block;
+  /* Copy centered on mobile */
+  .copy {
+    align-items: center;
+    text-align: center;
   }
 
-  .heroCardWrap {
-    padding: var(--space-3);
+  .desc {
+    max-width: 32ch;
+  }
+
+  /* Clock column full width, card stays centered */
+  .clockColumn {
+    width: 100%;
+  }
+
+  .clockPanel {
+    max-width: 100%;
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .auroraText {
+    font-size: clamp(3.2rem, 12vw, 5rem);
+  }
+
+  .titleSub {
+    font-size: clamp(1.25rem, 4.5vw, 1.8rem);
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE — SMALL MOBILE  (≤ 480px)
+   ============================================================ */
+@media (max-width: 480px) {
+  .heroRoot {
+    padding-block: clamp(3.5rem, 7vw, 5rem);
+  }
+
+  .clockPanel {
+    padding: var(--space-5) var(--space-3);
+    border-radius: var(--radius-xl);
   }
 }

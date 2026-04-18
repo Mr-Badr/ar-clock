@@ -30,6 +30,25 @@ import {
 
 const HISTORY_KEY = 'miqatona-percentage-history';
 
+const TAB_GUIDES = {
+  amount: {
+    title: 'عندما تريد معرفة قيمة نسبة من مبلغ',
+    note: 'مثال: كم يساوي 15% من 500؟ أدخل النسبة في الحقل الأول والمبلغ الأساسي في الحقل الثاني.',
+  },
+  ratio: {
+    title: 'عندما تريد تحويل جزء من كل إلى نسبة',
+    note: 'مثال: كم نسبة 42 من 60؟ أدخل الجزء أولاً ثم الكل الذي تريد القياس عليه.',
+  },
+  adjust: {
+    title: 'عندما تريد زيادة مبلغ أو خفضه بنسبة',
+    note: 'استخدم هذا التبويب للسعر بعد الخصم أو للراتب بعد الزيادة، وليس لمعرفة نسبة جزء من كل.',
+  },
+  change: {
+    title: 'عندما تريد قياس التغير بين رقمين',
+    note: 'مثال: من 100 إلى 150 = زيادة 50%. الحقل الأول هو البداية والثاني هو القيمة الجديدة.',
+  },
+};
+
 export default function PercentageCalculator() {
   const [activeTab, setActiveTab] = useState('amount');
   const [amountPercent, setAmountPercent] = useState('15');
@@ -239,6 +258,7 @@ export default function PercentageCalculator() {
   }
 
   const shareText = `${currentSummary.title}\nالنتيجة: ${currentSummary.value}`;
+  const activeGuide = TAB_GUIDES[activeTab];
 
   return (
     <div className="calc-app">
@@ -285,6 +305,9 @@ export default function PercentageCalculator() {
                 <TabsTrigger value="adjust" className="calc-tabs-trigger">زيادة أو خفض</TabsTrigger>
                 <TabsTrigger value="change" className="calc-tabs-trigger">نسبة التغيير</TabsTrigger>
               </TabsList>
+              <div className="calc-note">
+                <strong>{activeGuide.title}:</strong> {activeGuide.note}
+              </div>
 
               <TabsContent value="amount" className="calc-tabs-panel">
                 <div className="calc-form-grid">
@@ -526,14 +549,30 @@ export default function PercentageCalculator() {
       <div className="calc-grid-3">
         <Card className="calc-surface-card">
           <CardHeader>
-            <CardTitle className="calc-card-title">خصومات متتالية</CardTitle>
+            <CardTitle className="calc-card-title">ماذا لو كان عندي خصمان متتاليان؟</CardTitle>
           </CardHeader>
           <CardContent className="calc-form-grid">
+            <p className="calc-note">
+              مفيدة للعروض من نوع: خصم 20% ثم خصم إضافي 10%. النتيجة النهائية ليست جمع النسبتين
+              ببساطة، لذلك تفصل لك هذه البطاقة السعر النهائي والخصم الفعلي.
+            </p>
             <div className="calc-grid-2">
-              <Input inputMode="decimal" value={discountBase} onChange={(event) => setDiscountBase(event.target.value)} placeholder="السعر الأصلي" />
-              <Input inputMode="decimal" value={discount1} onChange={(event) => setDiscount1(event.target.value)} placeholder="الخصم 1" />
-              <Input inputMode="decimal" value={discount2} onChange={(event) => setDiscount2(event.target.value)} placeholder="الخصم 2" />
-              <Input inputMode="decimal" value={discount3} onChange={(event) => setDiscount3(event.target.value)} placeholder="الخصم 3" />
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="discount-base">السعر الأصلي قبل الخصومات</Label>
+                <Input id="discount-base" inputMode="decimal" value={discountBase} onChange={(event) => setDiscountBase(event.target.value)} placeholder="مثال: 1000" />
+              </div>
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="discount-1">الخصم الأول %</Label>
+                <Input id="discount-1" inputMode="decimal" value={discount1} onChange={(event) => setDiscount1(event.target.value)} placeholder="مثال: 20" />
+              </div>
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="discount-2">الخصم الثاني %</Label>
+                <Input id="discount-2" inputMode="decimal" value={discount2} onChange={(event) => setDiscount2(event.target.value)} placeholder="مثال: 10" />
+              </div>
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="discount-3">خصم إضافي اختياري %</Label>
+                <Input id="discount-3" inputMode="decimal" value={discount3} onChange={(event) => setDiscount3(event.target.value)} placeholder="اتركه 0 إذا لا يوجد" />
+              </div>
             </div>
             <div className="calc-breakdown-list">
               <div className="calc-breakdown-item">
@@ -550,14 +589,30 @@ export default function PercentageCalculator() {
 
         <Card className="calc-surface-card">
           <CardHeader>
-            <CardTitle className="calc-card-title">تقسيم مبلغ بالنسب</CardTitle>
+            <CardTitle className="calc-card-title">كيف أقسم مبلغًا بالنسب؟</CardTitle>
           </CardHeader>
           <CardContent className="calc-form-grid">
+            <p className="calc-note">
+              مناسبة للميزانيات من نوع 50% ادخار و30% مصاريف و20% التزامات. أدخل المبلغ الكلي ثم
+              نسب التوزيع لترى حصة كل جزء وما إذا بقي مبلغ غير موزع.
+            </p>
             <div className="calc-grid-2">
-              <Input inputMode="decimal" value={splitTotal} onChange={(event) => setSplitTotal(event.target.value)} placeholder="المبلغ الكلي" />
-              <Input inputMode="decimal" value={splitA} onChange={(event) => setSplitA(event.target.value)} placeholder="النسبة 1" />
-              <Input inputMode="decimal" value={splitB} onChange={(event) => setSplitB(event.target.value)} placeholder="النسبة 2" />
-              <Input inputMode="decimal" value={splitC} onChange={(event) => setSplitC(event.target.value)} placeholder="النسبة 3" />
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="split-total">المبلغ الكلي</Label>
+                <Input id="split-total" inputMode="decimal" value={splitTotal} onChange={(event) => setSplitTotal(event.target.value)} placeholder="مثال: 10000" />
+              </div>
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="split-a">النسبة الأولى %</Label>
+                <Input id="split-a" inputMode="decimal" value={splitA} onChange={(event) => setSplitA(event.target.value)} placeholder="مثال: 50" />
+              </div>
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="split-b">النسبة الثانية %</Label>
+                <Input id="split-b" inputMode="decimal" value={splitB} onChange={(event) => setSplitB(event.target.value)} placeholder="مثال: 30" />
+              </div>
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="split-c">النسبة الثالثة %</Label>
+                <Input id="split-c" inputMode="decimal" value={splitC} onChange={(event) => setSplitC(event.target.value)} placeholder="مثال: 20" />
+              </div>
             </div>
             <div className="calc-breakdown-list">
               {splitResult.allocations.map((item) => (
@@ -576,14 +631,30 @@ export default function PercentageCalculator() {
 
         <Card className="calc-surface-card">
           <CardHeader>
-            <CardTitle className="calc-card-title">تغيرات متعددة</CardTitle>
+            <CardTitle className="calc-card-title">ماذا يحدث بعد عدة تغيرات متتابعة؟</CardTitle>
           </CardHeader>
           <CardContent className="calc-form-grid">
+            <p className="calc-note">
+              استخدمها إذا كان السعر أو الراتب أو المؤشر يتغير أكثر من مرة، مثل: +10% ثم -5% ثم
+              +12%. هذا أفضل من الحساب الذهني لأن كل نسبة تُطبَّق على قيمة جديدة.
+            </p>
             <div className="calc-grid-2">
-              <Input inputMode="decimal" value={multiInitial} onChange={(event) => setMultiInitial(event.target.value)} placeholder="القيمة الأولية" />
-              <Input inputMode="decimal" value={multiA} onChange={(event) => setMultiA(event.target.value)} placeholder="التغير 1" />
-              <Input inputMode="decimal" value={multiB} onChange={(event) => setMultiB(event.target.value)} placeholder="التغير 2" />
-              <Input inputMode="decimal" value={multiC} onChange={(event) => setMultiC(event.target.value)} placeholder="التغير 3" />
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="multi-initial">القيمة الأولية</Label>
+                <Input id="multi-initial" inputMode="decimal" value={multiInitial} onChange={(event) => setMultiInitial(event.target.value)} placeholder="مثال: 100" />
+              </div>
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="multi-a">التغير الأول %</Label>
+                <Input id="multi-a" inputMode="decimal" value={multiA} onChange={(event) => setMultiA(event.target.value)} placeholder="مثال: 10" />
+              </div>
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="multi-b">التغير الثاني %</Label>
+                <Input id="multi-b" inputMode="decimal" value={multiB} onChange={(event) => setMultiB(event.target.value)} placeholder="مثال: -5" />
+              </div>
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="multi-c">التغير الثالث %</Label>
+                <Input id="multi-c" inputMode="decimal" value={multiC} onChange={(event) => setMultiC(event.target.value)} placeholder="مثال: 12" />
+              </div>
             </div>
             <div className="calc-breakdown-list">
               <div className="calc-breakdown-item">

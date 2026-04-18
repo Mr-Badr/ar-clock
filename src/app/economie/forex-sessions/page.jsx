@@ -14,15 +14,19 @@ import {
 import { getSiteUrl } from '@/lib/site-config';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
+import { EconomyReadingShelf } from '@/components/economy/common';
 import { FAQ_ITEMS } from '@/components/economy/data/faqItems';
 import ForexSessionsLive from '@/components/economy/ForexSessionsLive';
+import { getGuideCardsBySlugs } from '@/lib/guides/data';
+import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 
 const SITE_URL = getSiteUrl();
+const RELATED_GUIDES = getGuideCardsBySlugs(TOOL_GUIDE_GROUPS.forexSessions);
 
 export const metadata = buildCanonicalMetadata({
-  title: 'متى تبدأ جلسة لندن ونيويورك اليوم؟ | جلسات الفوركس الآن',
+  title: 'متى تبدأ جلسة لندن ونيويورك اليوم؟ | هل سوق الفوركس مفتوح الآن',
   description:
-    'تابع جلسات الفوركس الأربع الآن بتوقيتك المحلي. اعرف متى تبدأ لندن ونيويورك اليوم، وهل سوق الفوركس مفتوح الآن، وأين تقع نافذة السيولة العالية للتداول.',
+    'إذا كان سؤالك: متى تبدأ جلسة لندن ونيويورك اليوم؟ فهذه الصفحة تعطيك جواباً مباشراً: هل سوق الفوركس مفتوح الآن، متى تفتح الجلسات الأربع، وأين تقع نافذة السيولة الأعلى بتوقيتك المحلي.',
   keywords: [
     // Short
     'جلسات الفوركس', 'سوق العملات', 'الفوركس الان', 'تداخل الجلسات', 'سيولة فوركس',
@@ -47,13 +51,13 @@ export default function ForexSessionsPage() {
   const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/forex-sessions',
-    name: 'جلسات الفوركس الآن',
-    description: 'أداة حية لمعرفة جلسات لندن ونيويورك وطوكيو وسيدني بتوقيت المستخدم المحلي.',
+    name: 'متى تبدأ جلسة لندن ونيويورك اليوم؟',
+    description: 'أداة حية تجيب مباشرة عن وقت جلسات لندن ونيويورك وطوكيو وسيدني، وهل سوق الفوركس مفتوح الآن، وأين تقع ذروة السيولة بتوقيت المستخدم المحلي.',
     about: ['جلسة لندن', 'جلسة نيويورك', 'ساعات الفوركس', 'هل سوق الفوركس مفتوح الآن'],
   });
   const breadcrumbSchema = buildEconomyBreadcrumbSchema(
     SITE_URL,
-    'جلسات الفوركس الآن',
+    'متى تبدأ جلسة لندن ونيويورك اليوم؟',
     '/economie/forex-sessions',
   );
   const datasetSchema = buildEconomyDatasetSchema({
@@ -105,6 +109,11 @@ export default function ForexSessionsPage() {
         >
           <ForexSessionsRequestContent />
         </Suspense>
+        <EconomyReadingShelf
+          title="اقرأ قبل الاعتماد على الجلسات"
+          lead="هذه الأدلة تشرح معنى الجلسات والتداخل والسيولة وساعة السوق، ثم تعيد الزائر إلى الأداة الحية وهو يفهم ما يراه بشكل أفضل."
+          items={RELATED_GUIDES}
+        />
       </EconomyAdLayout>
     </div>
   );

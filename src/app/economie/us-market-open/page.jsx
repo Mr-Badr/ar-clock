@@ -14,17 +14,21 @@ import {
 import { getSiteUrl } from '@/lib/site-config';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
+import { EconomyReadingShelf } from '@/components/economy/common';
 import { FAQ_ITEMS } from '@/components/economy/data/faqItems';
 import UsMarketOpenLive from '@/components/economy/UsMarketOpenLive';
+import { getGuideCardsBySlugs } from '@/lib/guides/data';
+import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 
 const SITE_URL = getSiteUrl();
+const RELATED_GUIDES = getGuideCardsBySlugs(TOOL_GUIDE_GROUPS.usMarketOpen);
 
 
 
 export const metadata = buildCanonicalMetadata({
-  title: 'متى يفتح السوق الأمريكي اليوم؟ | العد التنازلي بتوقيت السعودية ومدينتك',
+  title: 'متى يفتح السوق الأمريكي اليوم؟ | كم باقي على افتتاح وول ستريت',
   description:
-    'اعرف متى يفتح السوق الأمريكي اليوم بتوقيت السعودية أو مدينتك، وكم باقي على الافتتاح، وأول ساعة تداول، مع جداول السعودية والإمارات ومصر والمغرب.',
+    'إذا كان سؤالك: متى يفتح السوق الأمريكي اليوم؟ فهذه الصفحة تعرض كم باقي على افتتاح وول ستريت، ووقت الافتتاح من مدينتك، وأول ساعة تداول، وحالة السوق الآن بشكل مباشر.',
   keywords: [
     // Short
     'السوق الأمريكي', 'بورصة نيويورك', 'وول ستريت', 'تداول أسهم', 'السوق المفتوح',
@@ -50,7 +54,7 @@ export default function UsMarketOpenPage() {
     siteUrl: SITE_URL,
     path: '/economie/us-market-open',
     name: 'متى يفتح السوق الأمريكي اليوم؟',
-    description: 'أداة عربية لمعرفة وقت افتتاح السوق الأمريكي والعد التنازلي للجرس الرسمي بتوقيت المستخدم المحلي.',
+    description: 'أداة عربية تجيب مباشرة عن وقت افتتاح السوق الأمريكي اليوم وكم بقي على الجرس الرسمي، مع توقيت مدينتك وحالة السوق الآن.',
     about: ['متى يفتح السوق الأمريكي', 'افتتاح ناسداك', 'افتتاح بورصة نيويورك', 'هل السوق الأمريكي مفتوح الآن'],
   });
   const breadcrumbSchema = buildEconomyBreadcrumbSchema(
@@ -108,6 +112,11 @@ export default function UsMarketOpenPage() {
         >
           <UsMarketOpenRequestContent />
         </Suspense>
+        <EconomyReadingShelf
+          title="اقرأ قبل متابعة الافتتاح"
+          lead="هذه الأدلة تشرح معنى الافتتاح الأمريكي والساعة البصرية حتى لا تبقى الصفحة مجرد عد تنازلي من دون سياق."
+          items={RELATED_GUIDES}
+        />
       </EconomyAdLayout>
     </div>
   );

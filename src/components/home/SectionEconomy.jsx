@@ -18,6 +18,12 @@ const SITE_URL = getSiteUrl();
 
 const TOOLS = [
   {
+    href: '/economie/market-hours',
+    title: 'ساعات الأسواق والتداول',
+    description: 'ابدأ من مسار يجمع السوق الأمريكي والذهب والفوركس والبورصات العالمية في بوابة واحدة.',
+    icon: Clock3,
+  },
+  {
     href: '/economie/us-market-open',
     title: 'متى يفتح السوق الأمريكي اليوم؟',
     description: 'اعرف موعد افتتاح السوق الأمريكي اليوم من مدينتك وبتوقيتك المحلي مع العد التنازلي.',
@@ -146,7 +152,7 @@ export default function SectionEconomy() {
             className="text-2xl font-extrabold leading-tight sm:text-3xl lg:text-[2.15rem]"
             style={{ color: 'var(--text-primary)' }}
           >
-            هل الذهب أو السوق الأمريكي مفتوح الآن؟
+            مسارات اقتصاد واضحة: ساعات الأسواق، الذهب، الفوركس، والبورصات
           </h2>
 
           <p
@@ -157,7 +163,8 @@ export default function SectionEconomy() {
             مثل <strong style={{ color: 'var(--text-primary)' }}>هل الذهب مفتوح الآن</strong>
             ، <strong style={{ color: 'var(--text-primary)' }}>متى يفتح السوق الأمريكي</strong>
             ، أو <strong style={{ color: 'var(--text-primary)' }}>جلسات الفوركس الآن</strong>.
-            لذلك جمعنا الأدوات الاقتصادية في مركز واحد سهل الاكتشاف وسريع القراءة.
+            لذلك بدأنا أيضاً ببناء مسارات أعلى تجمع الأدوات المتقاربة حتى يصل الزائر إلى
+            الصفحة الصحيحة أسرع وتصبح الفهرسة أوضح.
           </p>
 
           <ul className="space-y-3" role="list" aria-label="مزايا قسم الاقتصاد">
@@ -176,11 +183,11 @@ export default function SectionEconomy() {
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <CtaLink href="/economie">افتح قسم الاقتصاد</CtaLink>
             <Link
-              href="/economie/us-market-open"
+              href="/economie/market-hours"
               className="text-sm font-semibold transition-colors hover:opacity-80"
               style={{ color: 'var(--accent-alt)' }}
             >
-              ابدأ بالسوق الأمريكي
+              ابدأ بمسار ساعات الأسواق
             </Link>
           </div>
         </div>

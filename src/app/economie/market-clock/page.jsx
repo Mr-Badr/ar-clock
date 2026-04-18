@@ -14,15 +14,19 @@ import {
 import { getSiteUrl } from '@/lib/site-config';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
+import { EconomyReadingShelf } from '@/components/economy/common';
 import { FAQ_ITEMS } from '@/components/economy/data/faqItems';
 import MarketClockLive from '@/components/economy/MarketClockLive';
+import { getGuideCardsBySlugs } from '@/lib/guides/data';
+import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 
 const SITE_URL = getSiteUrl();
+const RELATED_GUIDES = getGuideCardsBySlugs(TOOL_GUIDE_GROUPS.marketClock);
 
 export const metadata = buildCanonicalMetadata({
-  title: 'أين السيولة الأعلى الآن؟ | ساعة السوق للفوركس والذهب',
+  title: 'أين السيولة الأعلى الآن؟ | ساعة السوق وذروة الفوركس والذهب',
   description:
-    'استخدم ساعة السوق الآن لمعرفة أين تتركز السيولة في الفوركس والذهب على مدار 24 ساعة، مع تداخل لندن ونيويورك وخريطة النشاط بتوقيتك المحلي ومدينتك.',
+    'إذا كان سؤالك: أين السيولة الأعلى الآن؟ فهذه الصفحة تعرض ساعة السوق على مدار 24 ساعة، وتوضح ذروة لندن ونيويورك وخريطة النشاط في الفوركس والذهب من مدينتك.',
   keywords: [
     // Short
     'ساعة التداول', 'مؤشر فوركس', 'سيولة', 'تداخل جلسات', 'تداول 24', 'market clock',
@@ -44,13 +48,13 @@ export default function MarketClockPage() {
   const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/market-clock',
-    name: 'ساعة السوق الآن',
-    description: 'أداة بصرية لقراءة جلسات الفوركس والذهب ونوافذ السيولة على مدار 24 ساعة بتوقيت المستخدم.',
+    name: 'أين السيولة الأعلى الآن؟',
+    description: 'أداة بصرية تجيب مباشرة عن مكان تركز السيولة الآن عبر جلسات الفوركس والذهب على مدار 24 ساعة من توقيت المستخدم المحلي.',
     about: ['ساعة السوق', 'سيولة الفوركس', 'تداخل لندن ونيويورك', 'خريطة نشاط الذهب'],
   });
   const breadcrumbSchema = buildEconomyBreadcrumbSchema(
     SITE_URL,
-    'ساعة السوق الآن',
+    'أين السيولة الأعلى الآن؟',
     '/economie/market-clock',
   );
   const datasetSchema = buildEconomyDatasetSchema({
@@ -102,6 +106,11 @@ export default function MarketClockPage() {
         >
           <MarketClockRequestContent />
         </Suspense>
+        <EconomyReadingShelf
+          title="كيف تفهم الساعة لا الرقم فقط؟"
+          lead="هذه الأدلة تشرح معنى ساعة السوق والسيولة والجلسات، ثم تعيد المستخدم إلى الأداة وهو يفهم القراءة البصرية بشكل أوضح."
+          items={RELATED_GUIDES}
+        />
       </EconomyAdLayout>
     </div>
   );

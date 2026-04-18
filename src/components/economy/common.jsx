@@ -185,6 +185,24 @@ export function InsightCards({ cards }) {
   );
 }
 
+export function EconomyReadingShelf({ title, lead, items = [] }) {
+  if (!items.length) return null;
+
+  return (
+    <section className="economy-section">
+      <EconomySectionHeader title={title} lead={lead} />
+      <InsightCards
+        cards={items.map((item) => ({
+          title: item.title,
+          body: item.description || item.body,
+          href: item.href,
+          cta: item.ctaLabel || item.cta || 'افتح الدليل',
+        }))}
+      />
+    </section>
+  );
+}
+
 export function EconomyTimeline({ timeline, onHourClick = null, selectedHour = null }) {
   const hourButtons = Array.from({ length: 24 }, (_, hour) => ({
     hour,

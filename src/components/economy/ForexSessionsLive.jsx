@@ -198,10 +198,125 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
           title="بطاقات الجلسات الأربع"
           lead="كل بطاقة تحوّل توقيت المركز المالي إلى توقيتك الحالي، مع عداد يوضح هل الجلسة مفتوحة الآن أم أنها على وشك الفتح."
         />
-        <div className="economy-grid">
-          {model.cards.map((card) => (
-            <ForexCard key={card.id} card={card} />
-          ))}
+        <div className="economy-feature-frame">
+          <div className={styles.mcSessionGrid}>
+            {model.cards.map((card) => (
+              <ForexCard key={card.id} card={card} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="تداول الذهب الآن والنافذة الذهبية"
+          lead="هذه الكتلة تجمع أكثر سؤالين قيمة للمتداول العربي في نفس المكان: هل الذهب في نافذة نشطة الآن؟ ومتى تقع أفضل ساعة في يومك المحلي؟"
+        />
+        <div className="economy-feature-frame economy-feature-frame--warm">
+          <div className={styles.mcInstrumentRow} aria-label="أدوات التداول الرئيسية">
+            {/* Gold Card */}
+            <article className={styles.mcInstrument} data-variant="gold" data-tone={model.gold.tone || 'default'}>
+              <div className={styles.mcInstrumentStripe} />
+              <div className={styles.mcInstrumentHead}>
+                <div className={styles.mcInstrumentTitleWrap}>
+                  <h2 className={`${styles.mcInstrumentTitle} ${styles.mcInstrumentTitleGold}`}>تداول الذهب الآن</h2>
+                  <p className={styles.mcInstrumentSubtitle}>XAU/USD · توقيتك المحلي</p>
+                </div>
+                <span className={styles.mcInstrumentBadge} data-tone={model.gold.tone || 'default'}>
+                  {model.gold.tone === 'success' && <span className={styles.mcInstrumentPulse} aria-hidden="true" />}
+                  {model.gold.statusLabel}
+                </span>
+              </div>
+              <div className={styles.mcInstrumentHighlight}>
+                <div className={styles.mcInstrumentHighlightMain}>
+                  <div className={styles.mcInstrumentHighlightLabel}>أفضل نافذة اليوم</div>
+                  <div className={styles.mcInstrumentHighlightValue}>{model.gold.bestWindowLabel}</div>
+                </div>
+                <span className={styles.mcInstrumentHighlightIcon} aria-hidden="true">🥇</span>
+              </div>
+              {model.gold.nextWindowLabel && (
+                <dl className={styles.mcInstrumentDetails}>
+                  <div className={styles.mcInstrumentDetailRow}>
+                    <dt>إعادة الفتح التقريبية</dt>
+                    <dd>{model.gold.nextWindowLabel}</dd>
+                  </div>
+                </dl>
+              )}
+              {model.gold.detail && (
+                <div className={styles.mcInstrumentFootnotes}>
+                  <p className={styles.mcInstrumentFootnote}>
+                    <span className={styles.mcInstrumentFootnoteDot} aria-hidden="true" />
+                    <span>{model.gold.detail}</span>
+                  </p>
+                </div>
+              )}
+            </article>
+
+            <article
+              className={styles.mcInstrument}
+              data-variant="window"
+              data-tone={model.bestWindow.isActive ? 'success' : 'warning'}
+            >
+              <div className={styles.mcInstrumentStripe} />
+              <div className={styles.mcInstrumentHead}>
+                <div className={styles.mcInstrumentTitleWrap}>
+                  <h2 className={styles.mcInstrumentTitle}>النافذة الذهبية</h2>
+                  <p className={styles.mcInstrumentSubtitle}>تداخل لندن · نيويورك — EUR/USD · XAU/USD</p>
+                </div>
+                <span
+                  className={styles.mcInstrumentBadge}
+                  data-tone={model.bestWindow.isActive ? 'success' : 'warning'}
+                >
+                  {model.bestWindow.isActive && <span className={styles.mcInstrumentPulse} aria-hidden="true" />}
+                  {model.bestWindow.statusLabel}
+                </span>
+              </div>
+              <div className={styles.mcInstrumentHighlight}>
+                <div className={styles.mcInstrumentHighlightMain}>
+                  <div className={styles.mcInstrumentHighlightLabel}>التوقيت المحلي</div>
+                  <div className={styles.mcInstrumentHighlightValue}>
+                    {model.bestWindow.startLabel} – {model.bestWindow.endLabel}
+                  </div>
+                </div>
+                <span className={styles.mcInstrumentHighlightIcon} aria-hidden="true">⭐</span>
+              </div>
+              <div className={styles.mcInstrumentTimeline}>
+                <div className={styles.mcInstrumentTimelineLabel}>خريطة اليوم 24 ساعة</div>
+                <div className={styles.mcInstrumentTimelineTrack}>
+                  {model.bestWindow.startPct !== undefined && (
+                    <div
+                      className={styles.mcInstrumentTimelineFill}
+                      style={{
+                        insetInlineStart: `${model.bestWindow.startPct}%`,
+                        width: `${model.bestWindow.widthPct || 0}%`,
+                      }}
+                    />
+                  )}
+                  {model.bestWindow.nowPct !== undefined && (
+                    <div
+                      className={styles.mcInstrumentTimelineNow}
+                      style={{ insetInlineStart: `${model.bestWindow.nowPct}%` }}
+                      aria-label="الآن"
+                    />
+                  )}
+                </div>
+                <div className={styles.mcInstrumentTimelineHours} aria-hidden="true">
+                  {[0, 6, 12, 18, 24].map((h) => (
+                    <span key={h}>{String(h).padStart(2, '0')}:00</span>
+                  ))}
+                </div>
+              </div>
+              <div className={styles.mcInstrumentFootnotes}>
+                <p className={styles.mcInstrumentFootnote}>
+                  <span className={styles.mcInstrumentFootnoteDot} aria-hidden="true" />
+                  <span>
+                    هذه الفترة تمثل تداخل لندن ونيويورك — أعلى سيولة وأسرع استجابة للأخبار،
+                    وغالباً أوضح نافذة للمتداول العربي.
+                  </span>
+                </p>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -230,113 +345,6 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
           lead="بدلاً من سؤال واحد عن ساعة الافتتاح، يُظهر هذا الرسم كيف ترتفع وتنخفض السيولة خلال يومك المحلي، ومتى تبلغ الذروة فعلياً."
         />
         <HourlyActivityChart chart={model.activityChart} />
-      </section>
-
-      <section className={styles.mcInstrumentRow} aria-label="أدوات التداول الرئيسية">
-        {/* Gold Card */}
-        <article className={styles.mcInstrument} data-variant="gold" data-tone={model.gold.tone || 'default'}>
-          <div className={styles.mcInstrumentStripe} />
-          <div className={styles.mcInstrumentHead}>
-            <div className={styles.mcInstrumentTitleWrap}>
-              <h2 className={`${styles.mcInstrumentTitle} ${styles.mcInstrumentTitleGold}`}>تداول الذهب الآن</h2>
-              <p className={styles.mcInstrumentSubtitle}>XAU/USD · توقيتك المحلي</p>
-            </div>
-            <span className={styles.mcInstrumentBadge} data-tone={model.gold.tone || 'default'}>
-              {model.gold.tone === 'success' && <span className={styles.mcInstrumentPulse} aria-hidden="true" />}
-              {model.gold.statusLabel}
-            </span>
-          </div>
-          <div className={styles.mcInstrumentHighlight}>
-            <div className={styles.mcInstrumentHighlightMain}>
-              <div className={styles.mcInstrumentHighlightLabel}>أفضل نافذة اليوم</div>
-              <div className={styles.mcInstrumentHighlightValue}>{model.gold.bestWindowLabel}</div>
-            </div>
-            <span className={styles.mcInstrumentHighlightIcon} aria-hidden="true">🥇</span>
-          </div>
-          {model.gold.nextWindowLabel && (
-            <dl className={styles.mcInstrumentDetails}>
-              <div className={styles.mcInstrumentDetailRow}>
-                <dt>إعادة الفتح التقريبية</dt>
-                <dd>{model.gold.nextWindowLabel}</dd>
-              </div>
-            </dl>
-          )}
-          {model.gold.detail && (
-            <div className={styles.mcInstrumentFootnotes}>
-              <p className={styles.mcInstrumentFootnote}>
-                <span className={styles.mcInstrumentFootnoteDot} aria-hidden="true" />
-                <span>{model.gold.detail}</span>
-              </p>
-            </div>
-          )}
-        </article>
-
-        {/* Best Window Card */}
-        <article
-          className={styles.mcInstrument}
-          data-variant="window"
-          data-tone={model.bestWindow.isActive ? 'success' : 'warning'}
-        >
-          <div className={styles.mcInstrumentStripe} />
-          <div className={styles.mcInstrumentHead}>
-            <div className={styles.mcInstrumentTitleWrap}>
-              <h2 className={styles.mcInstrumentTitle}>النافذة الذهبية</h2>
-              <p className={styles.mcInstrumentSubtitle}>تداخل لندن · نيويورك — EUR/USD · XAU/USD</p>
-            </div>
-            <span
-              className={styles.mcInstrumentBadge}
-              data-tone={model.bestWindow.isActive ? 'success' : 'warning'}
-            >
-              {model.bestWindow.isActive && <span className={styles.mcInstrumentPulse} aria-hidden="true" />}
-              {model.bestWindow.statusLabel}
-            </span>
-          </div>
-          <div className={styles.mcInstrumentHighlight}>
-            <div className={styles.mcInstrumentHighlightMain}>
-              <div className={styles.mcInstrumentHighlightLabel}>التوقيت المحلي</div>
-              <div className={styles.mcInstrumentHighlightValue}>
-                {model.bestWindow.startLabel} – {model.bestWindow.endLabel}
-              </div>
-            </div>
-            <span className={styles.mcInstrumentHighlightIcon} aria-hidden="true">⭐</span>
-          </div>
-          {/* 24-hour timeline visual */}
-          <div className={styles.mcInstrumentTimeline}>
-            <div className={styles.mcInstrumentTimelineLabel}>خريطة اليوم 24 ساعة</div>
-            <div className={styles.mcInstrumentTimelineTrack}>
-              {model.bestWindow.startPct !== undefined && (
-                <div
-                  className={styles.mcInstrumentTimelineFill}
-                  style={{
-                    insetInlineStart: `${model.bestWindow.startPct}%`,
-                    width: `${model.bestWindow.widthPct || 0}%`,
-                  }}
-                />
-              )}
-              {model.bestWindow.nowPct !== undefined && (
-                <div
-                  className={styles.mcInstrumentTimelineNow}
-                  style={{ insetInlineStart: `${model.bestWindow.nowPct}%` }}
-                  aria-label="الآن"
-                />
-              )}
-            </div>
-            <div className={styles.mcInstrumentTimelineHours} aria-hidden="true">
-              {[0, 6, 12, 18, 24].map((h) => (
-                <span key={h}>{String(h).padStart(2, '0')}:00</span>
-              ))}
-            </div>
-          </div>
-          <div className={styles.mcInstrumentFootnotes}>
-            <p className={styles.mcInstrumentFootnote}>
-              <span className={styles.mcInstrumentFootnoteDot} aria-hidden="true" />
-              <span>
-                هذه الفترة تمثل تداخل لندن ونيويورك — أعلى سيولة وأسرع استجابة للأخبار،
-                وغالباً أوضح نافذة للمتداول العربي.
-              </span>
-            </p>
-          </div>
-        </article>
       </section>
 
       <section className="economy-section">

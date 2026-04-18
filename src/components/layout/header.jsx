@@ -1,6 +1,6 @@
 // layout/header.jsx
 import Link from "next/link";
-import { ClockIcon, Buildings } from "@phosphor-icons/react/ssr";
+import { ClockIcon } from "@phosphor-icons/react/ssr";
 import NavLinks from "./NavLinks";
 import ThemeToggle from "./ThemeToggle";
 import MobileMenu from "./MobileMenu";
@@ -11,6 +11,7 @@ import "./header.css";
 
 export const NAV_LINKS = [
   { href: "/", label: "الرئيسية" },
+  { href: "/fahras", label: "الفهرس" },
   { href: "/mwaqit-al-salat", label: "مواقيت الصلاة" },
   {
     href: "/date",
@@ -33,8 +34,26 @@ export const NAV_LINKS = [
     href: "/calculators",
     label: "الحاسبات",
     panelIcon: "Calculator",
-    panelDescription: "حاسبات عملية بتجربة عربية مرتبة: العمر، المستحقات، القروض، الضريبة، والنسب المئوية",
+    panelDescription: "حاسبات عملية بتجربة عربية مرتبة: النوم الذكي، التخطيط المالي، العمر، القروض، الضريبة، البناء، والنسب المئوية",
     sublinks: [
+      {
+        href: "/calculators/personal-finance",
+        label: "التخطيط المالي الشخصي",
+        icon: "Wallet",
+        description: "صندوق الطوارئ والديون والادخار وصافي الثروة في مسار واحد",
+      },
+      {
+        href: "/calculators/sleep",
+        label: "حاسبات النوم الذكي",
+        icon: "Moon",
+        description: "متى أنام، متى أستيقظ، القيلولة، ودين النوم",
+      },
+      {
+        href: "/calculators/finance",
+        label: "حاسبات المال والعمل",
+        icon: "Calculator",
+        description: "القسط والضريبة والنسبة المئوية ونهاية الخدمة في مركز واحد",
+      },
       {
         href: "/calculators/age",
         label: "حاسبات العمر",
@@ -81,6 +100,12 @@ export const NAV_LINKS = [
     panelIcon: "ChartLineUp",
     panelDescription: "أدوات مجانية مبنية على التوقيت المحلي: السوق الأمريكي، الذهب، جلسات الفوركس، والبورصات العالمية",
     sublinks: [
+      {
+        href: '/economie/market-hours',
+        label: 'ساعات الأسواق والتداول',
+        icon: 'ClockCountdown',
+        description: 'بوابة تجمع السوق الأمريكي والذهب والفوركس والبورصات',
+      },
       {
         href: '/economie/us-market-open',
         label: 'متى يفتح السوق الأمريكي؟',

@@ -14,15 +14,19 @@ import {
 import { getSiteUrl } from '@/lib/site-config';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
+import { EconomyReadingShelf } from '@/components/economy/common';
 import { FAQ_ITEMS } from '@/components/economy/data/faqItems';
 import BestTradingTimeLive from '@/components/economy/BestTradingTimeLive';
+import { getGuideCardsBySlugs } from '@/lib/guides/data';
+import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 
 const SITE_URL = getSiteUrl();
+const RELATED_GUIDES = getGuideCardsBySlugs(TOOL_GUIDE_GROUPS.bestTradingTime);
 
 export const metadata = buildCanonicalMetadata({
-  title: 'ما أفضل وقت للتداول اليوم؟ | الفوركس والذهب من مدينتك',
+  title: 'ما أفضل وقت للتداول اليوم؟ | متى تدخل الفوركس أو الذهب من مدينتك',
   description:
-    'اعرف أفضل وقت للتداول اليوم من مدينتك: نافذة لندن ونيويورك، أول ساعة أمريكية، وخريطة السيولة اليومية والأسبوعية للفوركس والذهب.',
+    'إذا كان سؤالك: ما أفضل وقت للتداول اليوم؟ فهذه الصفحة تعرض أفضل نافذة من مدينتك لدخول الفوركس أو الذهب، مع نافذة لندن ونيويورك وأول ساعة أمريكية وخريطة السيولة اليومية والأسبوعية.',
   keywords: [
     // Short
     'أفضل أوقات التداول', 'تداول العملات', 'وقت الذروة', 'نافذة التداول', 'متى أتداول',
@@ -48,7 +52,7 @@ export default function BestTradingTimePage() {
     siteUrl: SITE_URL,
     path: '/economie/best-trading-time',
     name: 'ما أفضل وقت للتداول اليوم؟',
-    description: 'أداة عربية لحساب أفضل نوافذ التداول اليومية والأسبوعية من مدينة المستخدم.',
+    description: 'أداة عربية تجيب مباشرة عن أفضل نوافذ التداول اليومية والأسبوعية من مدينة المستخدم للفوركس والذهب.',
     about: ['أفضل وقت للتداول', 'أفضل وقت لتداول الذهب', 'أفضل وقت لتداول الفوركس', 'سيولة السوق'],
   });
   const breadcrumbSchema = buildEconomyBreadcrumbSchema(
@@ -105,6 +109,11 @@ export default function BestTradingTimePage() {
         >
           <BestTradingTimeRequestContent />
         </Suspense>
+        <EconomyReadingShelf
+          title="أدلة تساعدك على قراءة التوقيت"
+          lead="هذه الأدلة تضيف طبقة فهم فوق التوصية الزمنية نفسها: كيف تقرأ الساعة، ومتى ينشط الذهب، وكيف ترتبط الجلسات بالنافذة الأفضل."
+          items={RELATED_GUIDES}
+        />
       </EconomyAdLayout>
     </div>
   );

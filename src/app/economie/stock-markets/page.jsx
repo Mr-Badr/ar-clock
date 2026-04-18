@@ -14,15 +14,19 @@ import {
 import { getSiteUrl } from '@/lib/site-config';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
+import { EconomyReadingShelf } from '@/components/economy/common';
 import { FAQ_ITEMS } from '@/components/economy/data/faqItems';
 import StockMarketsLive from '@/components/economy/StockMarketsLive';
+import { getGuideCardsBySlugs } from '@/lib/guides/data';
+import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 
 const SITE_URL = getSiteUrl();
+const RELATED_GUIDES = getGuideCardsBySlugs(TOOL_GUIDE_GROUPS.stockMarkets);
 
 export const metadata = buildCanonicalMetadata({
-  title: 'هل البورصات العالمية مفتوحة الآن؟ | أمريكا ولندن وتاسي اليوم',
+  title: 'هل البورصات العالمية مفتوحة الآن؟ | أمريكا ولندن وتاسي في شاشة واحدة',
   description:
-    'تحقق فوراً هل البورصات العالمية مفتوحة الآن بتوقيتك المحلي: السوق الأمريكي، تاسي، لندن، طوكيو وباريس، مع أوقات الفتح والإغلاق والجلسات الموسعة.',
+    'إذا كنت تريد أن تعرف هل البورصات العالمية مفتوحة الآن، فهذه الصفحة تعرض فوراً حالة السوق الأمريكي وتاسي ولندن وطوكيو وباريس، مع أوقات الفتح والإغلاق والجلسات الموسعة من مدينتك.',
   keywords: [
     // Short
     'البورصات العالمية', 'تداول البورصة', 'أسواق المال', 'ساعات البورصة',
@@ -48,7 +52,7 @@ export default function StockMarketsPage() {
     siteUrl: SITE_URL,
     path: '/economie/stock-markets',
     name: 'هل البورصات العالمية مفتوحة الآن؟',
-    description: 'أداة حية لمعرفة حالة البورصات العالمية والعربية بتوقيت المستخدم المحلي.',
+    description: 'أداة حية تجيب مباشرة عن حالة البورصات العالمية والعربية الآن، مع أوقات الفتح والإغلاق والجلسات الموسعة بتوقيت المستخدم المحلي.',
     about: ['بورصة نيويورك', 'بورصة لندن', 'البورصات العربية', 'هل السوق مفتوح الآن'],
   });
   const breadcrumbSchema = buildEconomyBreadcrumbSchema(
@@ -105,6 +109,11 @@ export default function StockMarketsPage() {
         >
           <StockMarketsRequestContent />
         </Suspense>
+        <EconomyReadingShelf
+          title="اقرأ لفهم السوق قبل الشاشة"
+          lead="هذه الأدلة تضيف طبقة تفسيرية حول السوق الأمريكي وساعة السوق حتى لا تبقى متابعة البورصات مجرد جدول فتح وإغلاق."
+          items={RELATED_GUIDES}
+        />
       </EconomyAdLayout>
     </div>
   );

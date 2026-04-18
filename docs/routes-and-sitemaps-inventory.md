@@ -12,11 +12,11 @@ Primary sitemap submission URL:
 
 ### Core pages
 - `/` — homepage
+- `/fahras`
 - `/about`
 - `/contact`
 - `/privacy`
 - `/disclaimer`
-- `/map`
 - `/offline`
 
 ### Time now
@@ -90,12 +90,16 @@ Primary sitemap submission URL:
 
 ### Covered by `/sitemap.xml`
 - `/`
+- `/fahras`
 - `/time-now`
 - `/mwaqit-al-salat`
 - `/holidays`
 - `/time-difference`
 - `/calculators`
-- `/map`
+- `/calculators/sleep`
+- `/calculators/personal-finance`
+- `/calculators/finance`
+- `/economie/market-hours`
 - `/about`
 - `/editorial-policy`
 - `/terms`
@@ -105,6 +109,19 @@ Primary sitemap submission URL:
 
 ### Covered by `/calculators/sitemap.xml`
 - `/calculators`
+- `/calculators/sleep`
+- `/calculators/sleep/bedtime`
+- `/calculators/sleep/wake-time`
+- `/calculators/sleep/sleep-duration`
+- `/calculators/sleep/nap-calculator`
+- `/calculators/sleep/sleep-debt`
+- `/calculators/sleep/sleep-needs-by-age`
+- `/calculators/personal-finance`
+- `/calculators/personal-finance/emergency-fund`
+- `/calculators/personal-finance/debt-payoff`
+- `/calculators/personal-finance/savings-goal`
+- `/calculators/personal-finance/net-worth`
+- `/calculators/finance`
 - `/calculators/age`
 - `/calculators/age/*`
 - `/calculators/building`
@@ -117,8 +134,41 @@ Primary sitemap submission URL:
 - `/calculators/vat`
 - `/calculators/percentage`
 
+### Covered by `/sitemap.xml` via priority paths
+- `/guides/emergency-fund`
+- `/guides/how-to-compare-loan-offers`
+- `/guides/fixed-vs-reducing-loan-rate`
+- `/guides/vat-inclusive-vs-exclusive-price`
+- `/guides/what-is-vat-input-vs-output-tax`
+- `/guides/how-to-calculate-percentage-discount`
+- `/guides/percentage-change-vs-percentage-points`
+- `/guides/how-many-cement-bags-do-i-need`
+- `/guides/how-to-estimate-rebar-weight`
+- `/guides/end-of-service-benefits-saudi`
+- `/guides/resignation-vs-contract-end-gratuity`
+- `/guides/what-is-a-sleep-cycle`
+- `/guides/how-many-hours-of-sleep-do-i-need`
+- `/guides/best-nap-length`
+- `/guides/sleep-debt-explained`
+- `/guides/why-am-i-tired-after-sleeping`
+- `/guides/how-long-does-it-take-to-fall-asleep`
+- `/guides/rem-vs-deep-sleep`
+- `/guides/sleep-hygiene-basics`
+- `/guides/debt-payoff-methods`
+- `/guides/how-much-save-monthly`
+- `/guides/net-worth-explained`
+- `/guides/how-many-months-emergency-fund`
+- `/guides/how-to-pay-off-debt-fast`
+- `/guides/save-for-goal`
+- `/guides/assets-vs-liabilities`
+- `/guides/when-does-us-market-open`
+- `/guides/what-are-forex-sessions`
+- `/guides/best-time-to-trade-gold`
+- `/guides/how-to-read-market-clock`
+
 ### Covered by `/economie/sitemap.xml`
 - `/economie`
+- `/economie/market-hours`
 - `/economie/us-market-open`
 - `/economie/gold-market-hours`
 - `/economie/forex-sessions`

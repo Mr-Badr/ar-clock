@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import CementCalculator from '@/components/calculators/building/CementCalculator.client';
 import {
   CalculatorHero,
@@ -7,18 +6,23 @@ import {
   CalculatorStoryBand,
   CalculatorQuickAnswerGrid,
   CalculatorFaqSection,
+  CalculatorResourceLinks,
   CalculatorFooterCta,
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
+import { getGuidesBySlugs } from '@/lib/guides/data';
+import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { getSiteUrl } from '@/lib/site-config';
 import { getBuildingKeywords } from '@/lib/calculators/building/seo-keywords';
 
 const SITE_URL = getSiteUrl();
+const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.cement);
 
 export const metadata = buildCanonicalMetadata({
-  title: 'كم كيس أسمنت أحتاج؟ | حاسبة الأسمنت والخرسانة',
-  description: 'احسب عدد أكياس الأسمنت والرمل والحصى وكمية الماء لأي حجم خرسانة، مع تقدير سريع لخلطات الصبة الشائعة.',
+  title: 'كم كيس أسمنت أحتاج لصبة اليوم؟ | احسب الأسمنت والرمل والحصى بسرعة',
+  description:
+    'إذا كان سؤالك: كم كيس أسمنت أحتاج؟ فهذه الحاسبة تعطيك فوراً عدد الأكياس وكمية الرمل والحصى والماء لأي صبة خرسانة، مع العيار والهدر ونتيجة واضحة قبل الشراء.',
   keywords: getBuildingKeywords('cement'),
   url: `${SITE_URL}/calculators/building/cement`,
 });
@@ -45,6 +49,11 @@ export default function CementPage() {
       description: 'حساب سريع لكمية بسيطة',
       answer: 'في حالة استخدام عيار 200 (المتوسط)، ستحتاج 10 متر × 7.4 أكياس = 74 كيس أسمنت تقريباً (وزن 50 كجم للكيس).',
     },
+    {
+      question: 'كم كيس أسمنت في متر خرسانة واحد؟',
+      description: 'من أكثر الأسئلة قبل الشراء',
+      answer: 'في أغلب الصبات السكنية المتوسطة عيار M20 تحتاج تقريباً من 7 إلى 7.5 أكياس لكل متر مكعب، لكن الرقم يرتفع أو ينخفض حسب العيار والهدر.',
+    },
   ];
 
   const sectionNavItems = [
@@ -58,13 +67,13 @@ export default function CementPage() {
     <main className="bg-base text-primary">
       <CalculatorHero
         badge="هندسة / مواد"
-        title="كم كيس أسمنت أحتاج؟ حاسبة الأسمنت والخرسانة"
-        description="أدخل حجم الخرسانة المطلوبة وسنحسب لك كمية الأسمنت (بالكيس أو الكجم)، الرمل، الحصى، والمياه بمعادلات الكود الهندسي."
+        title="كم كيس أسمنت أحتاج؟ احسب الأسمنت والرمل والحصى لصبتك"
+        description="أدخل حجم الخرسانة المطلوبة لتحصل فوراً على عدد أكياس الأسمنت وكمية الرمل والحصى والماء، مع تقدير العيار والهدر بطريقة سريعة وواضحة قبل التنفيذ أو طلب المواد."
         accent="#8B5CF6" // Violet for specific materials
         highlights={[
-          'حساب دقيق لعدد الأكياس لـ M15 وحتى M30.',
-          'حساب كمية الرمل والحصى بالمتر المكعب.',
-          'اعتبار نسب الهدر الشائعة (5-10%).',
+          'يعطيك عدد الأكياس فوراً من M15 إلى M30.',
+          'يحسب الرمل والحصى والماء في نفس الشاشة.',
+          'يضيف الهدر المتوقع حتى لا تنقصك المواد وقت الصبة.',
         ]}
       >
         <CementCalculator />
@@ -100,9 +109,19 @@ export default function CementPage() {
       <CalculatorSection
         id="cement-answers"
         eyebrow="إجابات مباشرة"
-        title="تساؤلات متكررة في الموقع"
+        title="إجابات سريعة قبل شراء الأسمنت"
       >
         <CalculatorQuickAnswerGrid items={quickAnswers} />
+      </CalculatorSection>
+
+      <CalculatorSection
+        id="cement-guides"
+        eyebrow="دليل داعم"
+        title="افهم السؤال قبل شراء الأسمنت"
+        description="هذا الدليل القصير يلتقط السؤال التعليمي الشائع حول عدد الأكياس والعيار والهدر، ثم يعيد الزائر إلى الحاسبة لتطبيق الفكرة فوراً."
+        subtle
+      >
+        <CalculatorResourceLinks items={RELATED_GUIDES} />
       </CalculatorSection>
 
       <CalculatorSection
@@ -116,9 +135,9 @@ export default function CementPage() {
       <CalculatorSection
         id="cement-related"
         eyebrow="روابط داخلية"
-        title="تكملة أعمال الهندسة"
+        title="أكمل حساب مواد البناء"
       >
-        <RelatedCalculators currentSlug="building" />
+        <RelatedCalculators currentSlug="cement" />
       </CalculatorSection>
 
       <CalculatorFooterCta />

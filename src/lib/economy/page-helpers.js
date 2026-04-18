@@ -69,7 +69,7 @@ export function buildEconomySpeakableSchema({ siteUrl, path }) {
     url: `${siteUrl}${path}`,
     speakable: {
       '@type': 'SpeakableSpecification',
-      cssSelector: ['.economy-banner__title', '.economy-banner__detail'],
+      cssSelector: ['.economy-hero__title', '.economy-hero__lead', '.economy-banner__title', '.economy-banner__detail'],
     },
   };
 }

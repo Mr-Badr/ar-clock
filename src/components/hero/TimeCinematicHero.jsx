@@ -1,42 +1,51 @@
 // TimeCinematicHero.jsx — Server Component (no 'use client')
 //
-// Renders two things:
-//   1. HeroVideoPanel (client) — video, clock, refs, panel placement.
-//      CopyBlock is passed as children so it crosses the RSC boundary
-//      as a server-rendered subtree (never bundled in the client JS).
+// Renders a clean two-column RTL grid:
+//   col-1 (RTL RIGHT) — CopyBlock: badge, title, description, CTA
+//   col-2 (RTL LEFT)  — HeroEmbeddedClock inside a glass card
 //
-//   2. The mobile section — purely static, server-rendered HTML.
+// The .clockColumn wrapper centers the card both axes within its grid cell.
+// Mobile (≤ 768px): single column, copy on top, clock below.
 
 import styles from './TimeCinematicHero.module.css';
-import HeroVideoPanel from './HeroVideoPanel';
 import CopyBlock from './CopyBlock';
+import HeroEmbeddedClock from './HeroEmbeddedClock';
 
 export default function TimeCinematicHero({
   ianaTimezone,
   cityNameAr,
   countryNameAr,
 }) {
-  const safeCityName = cityNameAr || 'توقيتك المحلي';
+  const safeCityName    = cityNameAr || 'توقيتك المحلي';
   const safeCountryName = safeCityName === 'توقيتك المحلي' ? '' : (countryNameAr || '');
 
   return (
-    <main className='mb-16 lg:mb-24' dir="rtl">
-      {/* ── Hero (video + clock panel + desktop copy) ── */}
-      <HeroVideoPanel
-        ianaTimezone={ianaTimezone}
-        cityNameAr={safeCityName}
-        countryNameAr={safeCountryName}
-      >
-        {/* Passed as children → stays server-rendered inside the client panel */}
-        <CopyBlock />
-      </HeroVideoPanel>
+    <main className={`${styles.heroRoot} mb-16 lg:mb-24`} dir="rtl">
 
-      {/* ── Mobile copy — static, no JS needed ── */}
-      <section className={styles.heroMobileContent} dir="rtl">
-        <div className="container">
-          <CopyBlock extraClass={styles.copyMobileCenter} />
+      {/* Decorative ambient orbs */}
+      <div className={styles.orbLeft}  aria-hidden="true" />
+      <div className={styles.orbRight} aria-hidden="true" />
+
+      <div className="container">
+        <div className={styles.heroGrid}>
+
+          {/* ── Col 1 → RIGHT in RTL — copy ─────────────────────── */}
+          <CopyBlock />
+
+          {/* ── Col 2 → LEFT in RTL — centered glass clock card ─── */}
+          <div className={styles.clockColumn}>
+            <div className={styles.clockPanel}>
+              <HeroEmbeddedClock
+                ianaTimezone={ianaTimezone}
+                cityNameAr={safeCityName}
+                countryNameAr={safeCountryName}
+              />
+            </div>
+          </div>
+
         </div>
-      </section>
+      </div>
+
     </main>
   );
 }

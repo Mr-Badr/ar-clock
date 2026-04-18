@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Droplets, Package, Triangle, Waves } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -18,7 +19,10 @@ export default function CementCalculator() {
   const results = calcConcrete(volumeM3, grade, bagWeight, wastePct / 100);
 
   return (
-    <div className="grid gap-8 lg:grid-cols-12">
+    <div
+      className="calc-app-grid grid gap-8 lg:grid-cols-12"
+      style={{ '--calc-accent': '#8B5CF6' }}
+    >
       <div className="lg:col-span-5 space-y-6">
         <Card className="calc-surface-card">
           <CardHeader>
@@ -26,30 +30,45 @@ export default function CementCalculator() {
           </CardHeader>
           <CardContent className="space-y-6">
             <Tabs value={tab} onValueChange={setTab} className="w-full" dir="rtl">
-              <TabsList className="grid w-full grid-cols-3 mb-6">
-                <TabsTrigger value="concrete">خرسانة</TabsTrigger>
-                <TabsTrigger value="mortar">مونة بناء</TabsTrigger>
-                <TabsTrigger value="plaster">لياسة / بياض</TabsTrigger>
+              <TabsList className="calc-tabs-list mb-6 grid w-full grid-cols-3">
+                <TabsTrigger value="concrete" className="calc-tabs-trigger">
+                  <span className="calc-tabs-copy">
+                    <span>خرسانة</span>
+                    <span>الصبة والخلطة</span>
+                  </span>
+                </TabsTrigger>
+                <TabsTrigger value="mortar" className="calc-tabs-trigger">
+                  <span className="calc-tabs-copy">
+                    <span>مونة</span>
+                    <span>قريباً</span>
+                  </span>
+                </TabsTrigger>
+                <TabsTrigger value="plaster" className="calc-tabs-trigger">
+                  <span className="calc-tabs-copy">
+                    <span>لياسة</span>
+                    <span>قريباً</span>
+                  </span>
+                </TabsTrigger>
               </TabsList>
 
-              <TabsContent value="concrete" className="space-y-6">
-                <div className="space-y-2">
-                  <Label>حجم الخرسانة (متر مكعب m³)</Label>
+              <TabsContent value="concrete" className="calc-tabs-panel space-y-6">
+                <div className="calc-field">
+                  <Label className="calc-label">حجم الخرسانة (متر مكعب m³)</Label>
                   <Input
                     type="number"
                     min="0.1"
                     step="0.1"
                     value={volumeM3}
                     onChange={(e) => setVolumeM3(parseFloat(e.target.value) || 0)}
-                    className="font-bold text-lg"
+                    className="calc-input text-lg font-bold"
                   />
-                  <p className="text-xs text-text-secondary">الطول × العرض × السماكة</p>
+                  <p className="calc-hint">الطول × العرض × السماكة بعد تحويل الأبعاد إلى متر.</p>
                 </div>
 
-                <div className="space-y-2">
-                  <Label>عيار الخرسانة (المتانة)</Label>
+                <div className="calc-field">
+                  <Label className="calc-label">عيار الخرسانة (المتانة)</Label>
                   <Select value={grade} onValueChange={setGrade}>
-                    <SelectTrigger dir="rtl">
+                    <SelectTrigger dir="rtl" className="calc-select-trigger">
                       <SelectValue placeholder="اختر العيار" />
                     </SelectTrigger>
                     <SelectContent dir="rtl">
@@ -63,27 +82,28 @@ export default function CementCalculator() {
                       ))}
                     </SelectContent>
                   </Select>
+                  <p className="calc-hint">اختر العيار بحسب نوع العنصر الإنشائي لا بحسب السعر فقط.</p>
                 </div>
               </TabsContent>
 
-              <TabsContent value="mortar">
-                <div className="p-4 bg-accent/10 rounded-lg text-center text-sm text-text-secondary">
+              <TabsContent value="mortar" className="calc-tabs-panel">
+                <div className="calc-note text-center">
                   قريباً: حاسبة مونة البناء التفصيلية (للطوب والبلك).
                 </div>
               </TabsContent>
 
-              <TabsContent value="plaster">
-                <div className="p-4 bg-accent/10 rounded-lg text-center text-sm text-text-secondary">
+              <TabsContent value="plaster" className="calc-tabs-panel">
+                <div className="calc-note text-center">
                   قريباً: حاسبة اللياسة والبياض الداخلي والخارجي.
                 </div>
               </TabsContent>
             </Tabs>
 
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-accent/10">
-              <div className="space-y-2">
-                <Label>وزن الكيس (كجم)</Label>
-                <Select value={bagWeight.toString()} onValueChange={(val) => setBagWeight(parseInt(val))}>
-                  <SelectTrigger dir="rtl">
+            <div className="calc-grid-2 pt-4">
+              <div className="calc-field">
+                <Label className="calc-label">وزن الكيس (كجم)</Label>
+                <Select value={bagWeight.toString()} onValueChange={(val) => setBagWeight(parseFloat(val))}>
+                  <SelectTrigger dir="rtl" className="calc-select-trigger">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent dir="rtl">
@@ -93,18 +113,19 @@ export default function CementCalculator() {
                 </Select>
               </div>
 
-              <div className="space-y-2">
-                <Label>نسبة الهدر (%)</Label>
+              <div className="calc-field">
+                <Label className="calc-label">نسبة الهدر (%)</Label>
                 <Input
                   type="number"
                   min="0"
                   max="20"
                   value={wastePct}
                   onChange={(e) => setWastePct(parseFloat(e.target.value) || 0)}
+                  className="calc-input"
                 />
+                <p className="calc-hint">أضف هامش هدر بسيط إذا كانت الصبة تتضمن نقل أو تقطيع أو ظروف تنفيذ أصعب.</p>
               </div>
             </div>
-
           </CardContent>
         </Card>
       </div>
@@ -120,9 +141,8 @@ export default function CementCalculator() {
             </CardTitle>
           </CardHeader>
           <CardContent className="pt-8 space-y-8">
-            
             <div className="text-center space-y-2">
-              <h4 className="text-sm text-text-secondary font-medium">الأسمنت</h4>
+              <h4 className="text-sm text-text-secondary font-medium">إجمالي الأسمنت</h4>
               <div className="text-5xl font-black text-primary" style={{ fontFamily: 'var(--font-ibm-plex-sans-arabic)' }}>
                 {fmt(results.bags)}
                 <span className="text-xl text-text-secondary ml-2 font-medium">كيس</span>
@@ -132,26 +152,44 @@ export default function CementCalculator() {
               </p>
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
-              <div className="flex flex-col items-center justify-center p-4 bg-base rounded-xl border border-accent/10">
-                <span className="text-2xl mb-2">🏖️</span>
-                <span className="text-xs text-text-secondary mb-1">الرمل</span>
-                <span className="font-bold text-lg">{fmt(results.sandM3, 1)} م³</span>
+            <div className="calc-metric-grid calc-grid-3">
+              <div className="calc-metric-card">
+                <div className="calc-metric-card__label">
+                  <Waves size={15} />
+                  الرمل
+                </div>
+                <div className="calc-metric-card__value">{fmt(results.sandM3, 1)} م³</div>
+                <div className="calc-metric-card__note">الكمية التقديرية للرمل ضمن الخلطة المختارة.</div>
               </div>
-              
-              <div className="flex flex-col items-center justify-center p-4 bg-base rounded-xl border border-accent/10">
-                <span className="text-2xl mb-2">🪨</span>
-                <span className="text-xs text-text-secondary mb-1">الحصى / الزلط</span>
-                <span className="font-bold text-lg">{fmt(results.gravelM3, 1)} م³</span>
+
+              <div className="calc-metric-card">
+                <div className="calc-metric-card__label">
+                  <Triangle size={15} />
+                  الحصى / الزلط
+                </div>
+                <div className="calc-metric-card__value">{fmt(results.gravelM3, 1)} م³</div>
+                <div className="calc-metric-card__note">الكمية الحجمية التقديرية بعد إضافة الهدر.</div>
               </div>
-              
-              <div className="flex flex-col items-center justify-center p-4 bg-base rounded-xl border border-accent/10">
-                <span className="text-2xl mb-2">💧</span>
-                <span className="text-xs text-text-secondary mb-1">الماء</span>
-                <span className="font-bold text-lg">{fmt(results.waterL)} لتر</span>
+
+              <div className="calc-metric-card">
+                <div className="calc-metric-card__label">
+                  <Droplets size={15} />
+                  الماء
+                </div>
+                <div className="calc-metric-card__value">{fmt(results.waterL)} لتر</div>
+                <div className="calc-metric-card__note">تقدير مبدئي قابل للتعديل حسب الرطوبة وظروف التنفيذ.</div>
               </div>
             </div>
 
+            <div className="calc-note">
+              <div className="calc-metric-card__label">
+                <Package size={15} />
+                ملاحظة تنفيذية
+              </div>
+              <div className="mt-2">
+                هذه الحاسبة تعطيك تقديراً سريعاً قبل الشراء أو الطلب. إذا كانت الصبة إنشائية مهمة، فالمخطط والإشراف الهندسي يبقيان المرجع النهائي.
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>

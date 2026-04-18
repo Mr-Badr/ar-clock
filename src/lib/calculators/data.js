@@ -1,7 +1,29 @@
 export const CALCULATOR_ROUTES = [
   {
+    slug: 'sleep',
+    href: '/calculators/sleep',
+    cluster: 'sleep',
+    shortLabel: 'حاسبات النوم الذكي',
+    title: 'متى أنام؟ متى أستيقظ؟ حاسبات النوم الذكي',
+    heroTitle: 'حاسبات النوم الذكي | متى أنام ومتى أستيقظ وكم أحتاج نوم',
+    description:
+      'منظومة عربية للنوم الذكي تجمع وقت النوم، وقت الاستيقاظ، القيلولة، دين النوم، ومدة النوم الفعلية في مسار واحد عالي الاستخدام.',
+    accent: '#4F46E5',
+    accentSoft: 'rgba(79, 70, 229, 0.14)',
+    badge: 'نوم / روتين',
+    keywords: [
+      'حاسبات النوم الذكي',
+      'متى أنام',
+      'إذا نمت الآن متى أستيقظ',
+      'كم ساعة نوم أحتاج',
+      'حاسبة القيلولة',
+      'دين النوم',
+    ],
+  },
+  {
     slug: 'age',
     href: '/calculators/age',
+    cluster: 'age',
     shortLabel: 'حاسبات العمر',
     title: 'كم عمري الآن؟ حاسبات العمر',
     heroTitle: 'كم عمري الآن؟ حاسبات العمر بالهجري والميلادي وفرق العمر',
@@ -22,8 +44,210 @@ export const CALCULATOR_ROUTES = [
     ],
   },
   {
+    slug: 'emergency-fund',
+    href: '/calculators/personal-finance/emergency-fund',
+    cluster: 'personal-finance',
+    shortLabel: 'صندوق الطوارئ',
+    title: 'كم تحتاج صندوق طوارئ؟',
+    heroTitle: 'كم تحتاج صندوق طوارئ؟ احسب المبلغ المناسب لك',
+    description:
+      'احسب صندوق الطوارئ المناسب لك بناءً على مصاريفك الشهرية وعدد الأشهر التي تريد تغطيتها، واعرف المبلغ المتبقي والوقت المتوقع للوصول.',
+    accent: '#0EA5E9',
+    accentSoft: 'rgba(14, 165, 233, 0.14)',
+    badge: 'أمان مالي',
+    keywords: [
+      'كم تحتاج صندوق طوارئ',
+      'كيف أحسب صندوق الطوارئ',
+      'حاسبة صندوق الطوارئ',
+      'كم شهرًا يجب أن يغطي صندوق الطوارئ',
+      'كم يجب أن يكون الادخار للطوارئ',
+    ],
+  },
+  {
+    slug: 'debt-payoff',
+    href: '/calculators/personal-finance/debt-payoff',
+    cluster: 'personal-finance',
+    shortLabel: 'سداد الديون',
+    title: 'متى أخلص من ديوني؟',
+    heroTitle: 'متى أخلص من ديوني؟ احسب خطة سداد الديون',
+    description:
+      'احسب مدة سداد ديونك، إجمالي الفائدة، وقارن بين طريقتي كرة الثلج والانهيار، واعرف كيف يتغير المسار إذا زدت دفعتك الشهرية.',
+    accent: '#EF4444',
+    accentSoft: 'rgba(239, 68, 68, 0.14)',
+    badge: 'ديون / خطة',
+    keywords: [
+      'متى أخلص من ديوني',
+      'حاسبة سداد الديون',
+      'كيف أسدد ديوني بسرعة',
+      'طريقة كرة الثلج',
+      'طريقة الانهيار',
+      'كم يستغرق سداد الدين',
+    ],
+  },
+  {
+    slug: 'savings-goal',
+    href: '/calculators/personal-finance/savings-goal',
+    cluster: 'personal-finance',
+    shortLabel: 'هدف الادخار',
+    title: 'كم يجب أن أدخر كل شهر؟',
+    heroTitle: 'كم يجب أن أدخر كل شهر؟ حاسبة هدف الادخار',
+    description:
+      'احسب المبلغ الشهري المطلوب للوصول إلى هدفك المالي خلال مدة محددة، مع المطلوب أسبوعياً وتاريخ الوصول وكيف يتغير الرقم إذا زدت المدة.',
+    accent: '#10B981',
+    accentSoft: 'rgba(16, 185, 129, 0.14)',
+    badge: 'ادخار / هدف',
+    keywords: [
+      'كم يجب أن أدخر كل شهر',
+      'حاسبة هدف الادخار',
+      'كيف أوفر لهدف معين',
+      'كم أوفر شهريًا',
+      'خطة ادخار شهرية',
+    ],
+  },
+  {
+    slug: 'net-worth',
+    href: '/calculators/personal-finance/net-worth',
+    cluster: 'personal-finance',
+    shortLabel: 'صافي الثروة',
+    title: 'ما صافي ثروتي الآن؟',
+    heroTitle: 'ما صافي ثروتي الآن؟ احسب أصولك وديونك',
+    description:
+      'احسب صافي ثروتك بطرح الالتزامات من الأصول، وافهم وضعك المالي الحالي بشكل أوضح، مع تقييم أولي وخطوة مقترحة تالية.',
+    accent: '#8B5CF6',
+    accentSoft: 'rgba(139, 92, 246, 0.14)',
+    badge: 'وضع مالي',
+    keywords: [
+      'ما صافي ثروتي',
+      'حاسبة صافي الثروة',
+      'كيف أحسب صافي الثروة',
+      'الفرق بين الأصول والالتزامات',
+      'هل وضعي المالي جيد',
+    ],
+  },
+  {
+    slug: 'bedtime',
+    href: '/calculators/sleep/bedtime',
+    cluster: 'sleep',
+    shortLabel: 'متى أنام؟',
+    title: 'متى أنام لأستيقظ في الوقت المناسب؟',
+    heroTitle: 'متى أنام لأستيقظ في الوقت المناسب؟ حاسبة النوم',
+    description:
+      'أدخل وقت الاستيقاظ لتحصل على أفضل أوقات النوم المقترحة حسب دورات النوم ووقت الغفو، مع تنبيه واضح إذا كان الخيار أقل من الموصى به لعُمرك.',
+    accent: '#4F46E5',
+    accentSoft: 'rgba(79, 70, 229, 0.14)',
+    badge: 'وقت النوم',
+    keywords: [
+      'متى أنام لأستيقظ في الوقت المناسب',
+      'متى أنام لأستيقظ الساعة 6',
+      'متى أنام لأستيقظ الساعة 7',
+      'كم دورة نوم أحتاج',
+      'أفضل وقت للنوم',
+    ],
+  },
+  {
+    slug: 'wake-time',
+    href: '/calculators/sleep/wake-time',
+    cluster: 'sleep',
+    shortLabel: 'إذا نمت الآن',
+    title: 'إذا نمت الآن، متى أستيقظ؟',
+    heroTitle: 'إذا نمت الآن، متى أستيقظ؟ احسب وقت الاستيقاظ',
+    description:
+      'أداة لحظية تجيب مباشرة: إذا نمت الآن أو في وقت تختاره، متى تستيقظ؟ مع أفضل خيار وخيار سريع وخيار أطول.',
+    accent: '#2563EB',
+    accentSoft: 'rgba(37, 99, 235, 0.14)',
+    badge: 'الآن / استيقاظ',
+    keywords: [
+      'إذا نمت الآن متى أستيقظ',
+      'متى أستيقظ إذا نمت الآن',
+      'إذا نمت الساعة 11 متى أستيقظ',
+      'حاسبة وقت الاستيقاظ',
+      'وقت الاستيقاظ المناسب',
+    ],
+  },
+  {
+    slug: 'sleep-duration',
+    href: '/calculators/sleep/sleep-duration',
+    cluster: 'sleep',
+    shortLabel: 'مدة النوم',
+    title: 'احسب عدد ساعات نومك الفعلية',
+    heroTitle: 'احسب عدد ساعات نومك الفعلية',
+    description:
+      'احسب صافي نومك الفعلي بين وقت النوم والاستيقاظ مع الاستيقاظات الليلية، واعرف هل يقع ضمن الموصى به لعُمرك.',
+    accent: '#0F766E',
+    accentSoft: 'rgba(15, 118, 110, 0.14)',
+    badge: 'صافي النوم',
+    keywords: [
+      'احسب عدد ساعات نومك الفعلية',
+      'كيف أحسب ساعات نومي',
+      'كم نمت فعلياً',
+      'عدد ساعات النوم الفعلية',
+      'لماذا أستيقظ متعباً رغم أني نمت',
+    ],
+  },
+  {
+    slug: 'nap-calculator',
+    href: '/calculators/sleep/nap-calculator',
+    cluster: 'sleep',
+    shortLabel: 'القيلولة',
+    title: 'أفضل وقت للقيلولة | حاسبة القيلولة الذكية',
+    heroTitle: 'أفضل وقت للقيلولة | حاسبة القيلولة الذكية',
+    description:
+      'اختر قيلولة قصيرة أو دورة كاملة واحسب وقت الاستيقاظ المناسب بدون خمول زائد، مع تنبيه إذا كانت القيلولة متأخرة على نوم الليل.',
+    accent: '#D97706',
+    accentSoft: 'rgba(217, 119, 6, 0.14)',
+    badge: 'قيلولة',
+    keywords: [
+      'أفضل وقت للقيلولة',
+      'أفضل مدة للقيلولة',
+      'حاسبة القيلولة الذكية',
+      'قيلولة 20 دقيقة',
+      'قيلولة 90 دقيقة',
+    ],
+  },
+  {
+    slug: 'sleep-debt',
+    href: '/calculators/sleep/sleep-debt',
+    cluster: 'sleep',
+    shortLabel: 'دين النوم',
+    title: 'هل لديك دين نوم؟ احسبه الآن',
+    heroTitle: 'هل لديك دين نوم؟ احسبه الآن',
+    description:
+      'أدخل ساعات نومك خلال الأسبوع واكتشف إن كان لديك عجز نوم تقريبي، وما الخطة الواقعية لتقليله تدريجياً.',
+    accent: '#DC2626',
+    accentSoft: 'rgba(220, 38, 38, 0.14)',
+    badge: 'عجز النوم',
+    keywords: [
+      'هل عندي دين نوم',
+      'حاسبة دين النوم',
+      'ما هو دين النوم',
+      'كيف أعوض نقص النوم',
+      'عجز النوم الأسبوعي',
+    ],
+  },
+  {
+    slug: 'sleep-needs-by-age',
+    href: '/calculators/sleep/sleep-needs-by-age',
+    cluster: 'sleep',
+    shortLabel: 'الاحتياج حسب العمر',
+    title: 'كم ساعة نوم تحتاج حسب العمر؟',
+    heroTitle: 'كم ساعة نوم تحتاج حسب العمر؟',
+    description:
+      'اعرف عدد ساعات النوم الموصى بها حسب العمر للأطفال والمراهقين والبالغين وكبار السن مع أداة بسيطة لاختيار العمر.',
+    accent: '#7C3AED',
+    accentSoft: 'rgba(124, 58, 237, 0.14)',
+    badge: 'العمر / النوم',
+    keywords: [
+      'كم ساعة نوم تحتاج حسب العمر',
+      'كم ساعة نوم أحتاج',
+      'كم ساعة يحتاج الطفل للنوم',
+      'كم ساعة يحتاج المراهق للنوم',
+      'هل 6 ساعات نوم تكفي',
+    ],
+  },
+  {
     slug: 'end-of-service-benefits',
     href: '/calculators/end-of-service-benefits',
+    cluster: 'finance',
     shortLabel: 'مكافأة نهاية الخدمة',
     title: 'كم مكافأة نهاية الخدمة بعد 5 سنوات في السعودية؟',
     heroTitle: 'كم مكافأة نهاية الخدمة بعد 5 سنوات؟ | حاسبة السعودية',
@@ -53,6 +277,7 @@ export const CALCULATOR_ROUTES = [
   {
     slug: 'monthly-installment',
     href: '/calculators/monthly-installment',
+    cluster: 'finance',
     shortLabel: 'القسط الشهري',
     title: 'كم قسط قرض 100 ألف؟',
     heroTitle: 'كم قسط قرض 100 ألف؟ | حاسبة القسط الشهري والتمويل',
@@ -82,6 +307,7 @@ export const CALCULATOR_ROUTES = [
   {
     slug: 'vat',
     href: '/calculators/vat',
+    cluster: 'finance',
     shortLabel: 'ضريبة القيمة المضافة',
     title: 'كم ضريبة 1000 ريال عند 15%؟',
     heroTitle: 'كم ضريبة 1000 ريال عند 15%؟ | حاسبة الضريبة',
@@ -111,6 +337,7 @@ export const CALCULATOR_ROUTES = [
   {
     slug: 'percentage',
     href: '/calculators/percentage',
+    cluster: 'finance',
     shortLabel: 'النسبة المئوية',
     title: 'كم يساوي 20% من 500؟',
     heroTitle: 'كم يساوي 20% من 500؟ | حاسبة النسبة المئوية والخصم',
@@ -140,6 +367,7 @@ export const CALCULATOR_ROUTES = [
   {
     slug: 'building',
     href: '/calculators/building',
+    cluster: 'building',
     shortLabel: 'حاسبة البناء',
     title: 'كم تكلفة بناء بيت؟',
     heroTitle: 'كم تكلفة بناء بيت؟ | حاسبات البناء والتشييد',
@@ -165,7 +393,205 @@ export const CALCULATOR_ROUTES = [
       'حاسبة البناء الإمارات',
     ],
   },
+  {
+    slug: 'cement',
+    href: '/calculators/building/cement',
+    cluster: 'building',
+    shortLabel: 'حاسبة الأسمنت',
+    title: 'كم كيس أسمنت أحتاج؟',
+    heroTitle: 'كم كيس أسمنت أحتاج؟ | حاسبة الأسمنت والخرسانة',
+    description:
+      'احسب عدد أكياس الأسمنت والرمل والحصى وكمية الماء لأي حجم خرسانة، مع تقدير سريع لعيارات الصبة الشائعة والهدر.',
+    accent: '#8B5CF6',
+    accentSoft: 'rgba(139, 92, 246, 0.14)',
+    badge: 'خرسانة / مواد',
+    keywords: [
+      'كم كيس أسمنت أحتاج',
+      'حاسبة الأسمنت',
+      'كم كيس أسمنت في المتر المكعب',
+      'حساب كمية الأسمنت والرمل والحصى',
+      'حاسبة الخرسانة',
+    ],
+  },
+  {
+    slug: 'rebar',
+    href: '/calculators/building/rebar',
+    cluster: 'building',
+    shortLabel: 'حاسبة الحديد',
+    title: 'كم وزن الحديد؟',
+    heroTitle: 'كم وزن الحديد؟ | حاسبة وزن حديد التسليح',
+    description:
+      'احسب وزن حديد التسليح حسب القطر والطول والعدد، واعرف وزن المتر الطولي وعدد الأسياخ القياسية 12 متر بسرعة.',
+    accent: '#EF4444',
+    accentSoft: 'rgba(239, 68, 68, 0.14)',
+    badge: 'حديد / تسليح',
+    keywords: [
+      'كم وزن الحديد',
+      'حاسبة الحديد',
+      'وزن حديد التسليح',
+      'وزن سيخ 12 متر',
+      'حساب الحديد بالكيلو والطن',
+    ],
+  },
+  {
+    slug: 'tiles',
+    href: '/calculators/building/tiles',
+    cluster: 'building',
+    shortLabel: 'حاسبة البلاط',
+    title: 'كم كرتون بلاط أحتاج؟',
+    heroTitle: 'كم كرتون بلاط أحتاج؟ | حاسبة البلاط والسيراميك',
+    description:
+      'احسب عدد كراتين البلاط والسيراميك والاحتياطي المطلوب مع الهدر حسب مساحة الأرضية أو الجدار.',
+    accent: '#06B6D4',
+    accentSoft: 'rgba(6, 182, 212, 0.14)',
+    badge: 'بلاط / تشطيب',
+    keywords: [
+      'كم كرتون بلاط أحتاج',
+      'حاسبة البلاط',
+      'حاسبة السيراميك',
+      'عدد كراتين البلاط',
+      'حساب البلاط مع الهدر',
+    ],
+  },
 ];
+
+export const CALCULATOR_HUBS = [
+  {
+    slug: 'sleep',
+    href: '/calculators/sleep',
+    badge: 'نوم / صحة يومية',
+    title: 'حاسبات النوم الذكي',
+    heroTitle: 'حاسبات النوم الذكي | متى أنام ومتى أستيقظ وكم أحتاج نوم',
+    description:
+      'بوابة عربية تبني نظام نوم يومي: وقت النوم، وقت الاستيقاظ، مدة النوم الفعلية، القيلولة، دين النوم، والاحتياج حسب العمر.',
+    accent: '#4F46E5',
+    accentSoft: 'rgba(79, 70, 229, 0.14)',
+    keywords: [
+      'حاسبات النوم الذكي',
+      'متى أنام',
+      'إذا نمت الآن متى أستيقظ',
+      'كم ساعة نوم أحتاج',
+      'أفضل وقت للقيلولة',
+      'دين النوم',
+    ],
+    routeSlugs: [
+      'sleep',
+      'bedtime',
+      'wake-time',
+      'sleep-duration',
+      'nap-calculator',
+      'sleep-debt',
+      'sleep-needs-by-age',
+    ],
+  },
+  {
+    slug: 'age',
+    href: '/calculators/age',
+    badge: 'عمر / وقت',
+    title: 'كم عمري الآن؟',
+    heroTitle: 'كم عمري الآن؟ | قسم حاسبات العمر بالهجري والميلادي',
+    description:
+      'قسم كامل يجيب عن أسئلة العمر الأكثر بحثاً: كم عمري الآن، كم باقي على عيد ميلادي، ما فرق العمر، وما عمري بالهجري والميلادي.',
+    accent: '#EA580C',
+    accentSoft: 'rgba(234, 88, 12, 0.14)',
+    keywords: [
+      'حاسبة العمر',
+      'كم عمري الآن',
+      'حساب العمر بالهجري والميلادي',
+      'كم باقي على عيد ميلادي',
+      'حاسبة فرق العمر',
+    ],
+    routeSlugs: [
+      'age',
+    ],
+  },
+  {
+    slug: 'personal-finance',
+    href: '/calculators/personal-finance',
+    badge: 'تخطيط مالي',
+    title: 'حاسبات التخطيط المالي الشخصي',
+    heroTitle: 'حاسبات التخطيط المالي الشخصي | ادخار وديون وصافي الثروة',
+    description:
+      'بوابة عربية تجمع أدوات صندوق الطوارئ وسداد الديون وهدف الادخار وصافي الثروة مع صفحات داعمة وروابط داخلية قوية.',
+    accent: '#2563EB',
+    accentSoft: 'rgba(37, 99, 235, 0.14)',
+    keywords: [
+      'حاسبات التخطيط المالي الشخصي',
+      'حاسبات مالية شخصية',
+      'صندوق الطوارئ',
+      'سداد الديون',
+      'هدف الادخار',
+      'صافي الثروة',
+    ],
+    routeSlugs: [
+      'emergency-fund',
+      'debt-payoff',
+      'savings-goal',
+      'net-worth',
+    ],
+  },
+  {
+    slug: 'finance',
+    href: '/calculators/finance',
+    badge: 'مال / عمل',
+    title: 'كم القسط؟ كم الضريبة؟ كم مكافأة نهاية الخدمة؟',
+    heroTitle: 'حاسبات المال والعمل | القسط والضريبة ونهاية الخدمة والنسبة',
+    description:
+      'بوابة عربية تجمع أقوى الحاسبات التي تمس المال والعمل مباشرة: القسط الشهري، ضريبة القيمة المضافة، النسبة المئوية، ومكافأة نهاية الخدمة.',
+    accent: '#2563EB',
+    accentSoft: 'rgba(37, 99, 235, 0.14)',
+    keywords: [
+      'حاسبات مالية',
+      'حاسبة القسط الشهري',
+      'حاسبة ضريبة القيمة المضافة',
+      'حاسبة النسبة المئوية',
+      'حاسبة مكافأة نهاية الخدمة',
+      'حساب القروض والضريبة',
+    ],
+    routeSlugs: [
+      'end-of-service-benefits',
+      'monthly-installment',
+      'vat',
+      'percentage',
+    ],
+  },
+  {
+    slug: 'building',
+    href: '/calculators/building',
+    badge: 'هندسة / بناء',
+    title: 'كم تكلفة بناء بيت؟',
+    heroTitle: 'حاسبات البناء والتشييد | تكلفة البيت والمواد',
+    description:
+      'قسم البناء يغطي تكلفة البيت، كمية الأسمنت، وزن الحديد، وعدد كراتين البلاط مع صفحات مخصصة للدول العربية.',
+    accent: '#10B981',
+    accentSoft: 'rgba(16, 185, 129, 0.14)',
+    keywords: [
+      'حاسبة تكلفة البناء',
+      'حاسبة الأسمنت',
+      'حاسبة الحديد',
+      'حاسبة البلاط',
+      'تكلفة بناء بيت',
+    ],
+    routeSlugs: [
+      'building',
+      'cement',
+      'rebar',
+      'tiles',
+    ],
+  },
+];
+
+export function getCalculatorRoutesByCluster(cluster) {
+  return CALCULATOR_ROUTES.filter((route) => route.cluster === cluster);
+}
+
+export function getCalculatorRouteBySlug(slug) {
+  return CALCULATOR_ROUTES.find((route) => route.slug === slug) || null;
+}
+
+export function getCalculatorHubBySlug(slug) {
+  return CALCULATOR_HUBS.find((hub) => hub.slug === slug) || null;
+}
 
 export const LOAN_PRESETS = {
   personal: {

@@ -6,10 +6,13 @@ import {
   CalculatorStoryBand,
   CalculatorQuickAnswerGrid,
   CalculatorFaqSection,
+  CalculatorResourceLinks,
   CalculatorFooterCta,
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
+import { getGuidesBySlugs } from '@/lib/guides/data';
+import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { getSiteUrl } from '@/lib/site-config';
 import { getBuildingKeywords } from '@/lib/calculators/building/seo-keywords';
 import {
@@ -19,10 +22,12 @@ import {
 } from '@/lib/calculators/building/constants';
 
 const SITE_URL = getSiteUrl();
+const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.rebar);
 
 export const metadata = buildCanonicalMetadata({
-  title: 'كم وزن الحديد؟ | حاسبة حديد التسليح بالكجم والطن',
-  description: 'احسب وزن حديد التسليح حسب القطر والطول، واعرف وزن سيخ 12 متر وعدد الأطنان المطلوبة بسرعة.',
+  title: 'كم وزن الحديد؟ | احسب وزن سيخ 12 متر وحديد التسليح بالكجم والطن',
+  description:
+    'إذا كان سؤالك: كم وزن الحديد؟ فهذه الصفحة تحسب وزن حديد التسليح حسب القطر والطول والعدد، وتحوّل النتيجة إلى كجم وطن وعدد الأسياخ القياسية 12 متر فوراً.',
   keywords: getBuildingKeywords('rebar'),
   url: `${SITE_URL}/calculators/building/rebar`,
 });
@@ -58,6 +63,11 @@ export default function RebarPage() {
       description: 'تقدير مبدئي لمنزل عائلي',
       answer: 'بشكل تقديري عام (مع مراعاة وجود مخطط إنشائي): مبنى 400 م² إجمالي × 45 كجم/م² تقديرياً = حوالي 18 طن حديد. هذا مجرد مؤشر أولي.',
     },
+    {
+      question: 'كم وزن سيخ 16 بطول 12 متر؟',
+      description: 'سؤال شراء وتسعير متكرر',
+      answer: 'سيخ 16 ملم يزن تقريباً 18.94 كجم عند طول 12 متر، لأن وزن المتر الواحد منه 1.578 كجم تقريباً.',
+    },
   ];
 
   const sectionNavItems = [
@@ -72,13 +82,13 @@ export default function RebarPage() {
     <main className="bg-base text-primary">
       <CalculatorHero
         badge="هندسة / حديد"
-        title="كم وزن الحديد؟ حاسبة وزن حديد التسليح"
-        description="حوّل أطوال الحديد إلى أوزان بدقة عالية. أدخل قطر الحديد وعدد الأسياخ وأطوالها وستحصل فوراً على الوزن الإجمالي (كجم / طن) وعدد الأسياخ القياسية 12 متر."
+        title="كم وزن الحديد؟ احسب وزن حديد التسليح وسيخ 12 متر"
+        description="أدخل قطر الحديد والأطوال والعدد لتحصل فوراً على الوزن الإجمالي بالكجم والطن، مع وزن المتر الطولي وعدد الأسياخ القياسية 12 متر بطريقة واضحة وسريعة."
         accent="#EF4444"
         highlights={[
-          'يدعم جميع الأقطار: من ⌀8 إلى ⌀32.',
-          'احتساب متعدد للأطوال في عملية واحدة.',
-          'نتيجة بالكجم والطن وعدد الأسياخ.',
+          'يعطيك الوزن بالكجم والطن في نفس اللحظة.',
+          'يدعم جميع الأقطار الشائعة من ⌀8 إلى ⌀32.',
+          'يحوّل النتيجة إلى عدد أسياخ 12 متر بسهولة.',
         ]}
       >
         <RebarCalculator />
@@ -99,26 +109,23 @@ export default function RebarPage() {
         description="مشتق من المعادلة القياسية: وزن (كجم/م) = قطر (مم)² ÷ 162"
         subtle
       >
-        <div className="calc-table-wrap overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
+        <div className="calc-table-wrap">
+          <table className="calc-guide-table">
             <thead>
-              <tr className="bg-accent/10 border-b border-accent/20">
-                <th className="p-3 text-right font-bold">القطر (مم)</th>
-                <th className="p-3 text-right font-bold">الوزن (كجم/م)</th>
-                <th className="p-3 text-right font-bold">وزن سيخ 12م</th>
-                <th className="p-3 text-right font-bold">الاستخدام الشائع</th>
+              <tr>
+                <th>القطر (مم)</th>
+                <th>الوزن (كجم/م)</th>
+                <th>وزن سيخ 12م</th>
+                <th>الاستخدام الشائع</th>
               </tr>
             </thead>
             <tbody>
               {REBAR_DIAMETERS.map((d, idx) => (
-                <tr
-                  key={d}
-                  className={`border-b border-accent/10 transition hover:bg-accent/5 ${idx % 2 === 0 ? 'bg-base' : 'bg-accent/5'}`}
-                >
-                  <td className="p-3 font-bold text-primary">⌀{d}</td>
-                  <td className="p-3 font-mono">{REBAR_WEIGHT_PER_METER[d]}</td>
-                  <td className="p-3 font-mono font-bold">{(REBAR_WEIGHT_PER_METER[d] * 12).toFixed(2)} كجم</td>
-                  <td className="p-3 text-text-secondary text-xs">{REBAR_TYPICAL_USE[d]}</td>
+                <tr key={d} className={idx % 2 === 0 ? 'bg-base' : ''}>
+                  <td>⌀{d}</td>
+                  <td className="font-mono">{REBAR_WEIGHT_PER_METER[d]}</td>
+                  <td className="font-mono font-bold">{(REBAR_WEIGHT_PER_METER[d] * 12).toFixed(2)} كجم</td>
+                  <td>{REBAR_TYPICAL_USE[d]}</td>
                 </tr>
               ))}
             </tbody>
@@ -147,9 +154,19 @@ export default function RebarPage() {
       <CalculatorSection
         id="rebar-answers"
         eyebrow="إجابات مباشرة"
-        title="أرقام جاهزة"
+        title="أرقام جاهزة قبل شراء الحديد"
       >
         <CalculatorQuickAnswerGrid items={quickAnswers} />
+      </CalculatorSection>
+
+      <CalculatorSection
+        id="rebar-guides"
+        eyebrow="دليل داعم"
+        title="قبل شراء الحديد أو طلب العرض"
+        description="هذا الدليل يشرح طريقة تقدير الوزن والصيغة الأقرب للشراء، ثم يربطك مباشرة بحاسبة الحديد لتطبيق الحساب على القطر والطول والعدد."
+        subtle
+      >
+        <CalculatorResourceLinks items={RELATED_GUIDES} />
       </CalculatorSection>
 
       <CalculatorSection
@@ -165,7 +182,7 @@ export default function RebarPage() {
         eyebrow="روابط داخلية"
         title="حاسبات مكملة"
       >
-        <RelatedCalculators currentSlug="building" />
+        <RelatedCalculators currentSlug="rebar" />
       </CalculatorSection>
 
       <CalculatorFooterCta />

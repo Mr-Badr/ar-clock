@@ -19,6 +19,7 @@ export default async function sitemap() {
 
   return [
     { url: `${BASE}/`, lastModified, changeFrequency: 'daily', priority: 1.0 },
+    { url: `${BASE}/fahras`, lastModified, changeFrequency: 'weekly', priority: 0.82 },
     { url: `${BASE}/time-now`, lastModified, changeFrequency: 'daily', priority: 0.9 },
     { url: `${BASE}/mwaqit-al-salat`, lastModified, changeFrequency: 'daily', priority: 0.9 },
     { url: `${BASE}/holidays`, lastModified, changeFrequency: 'daily', priority: 0.9 },
@@ -26,8 +27,6 @@ export default async function sitemap() {
     { url: `${BASE}/calculators`, lastModified, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${BASE}/economie`, lastModified, changeFrequency: 'weekly', priority: 0.8 },
     ...topToolEntries,
-    // ─────────────────────────────────────────────────────────────────────────
-    { url: `${BASE}/map`, lastModified, changeFrequency: 'weekly', priority: 0.5 },
     { url: `${BASE}/about`, lastModified, changeFrequency: 'monthly', priority: 0.4 },
     { url: `${BASE}/editorial-policy`, lastModified, changeFrequency: 'monthly', priority: 0.4 },
     { url: `${BASE}/terms`, lastModified, changeFrequency: 'monthly', priority: 0.4 },
