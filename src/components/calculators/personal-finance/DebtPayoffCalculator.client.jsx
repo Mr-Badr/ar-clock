@@ -59,7 +59,7 @@ export default function DebtPayoffCalculator() {
 
   return (
     <div className="calc-app">
-      <div className="calc-app-grid lg:grid-cols-[1.15fr_0.85fr]">
+      <div className="calc-app-grid">
         <Card className="calc-surface-card calc-app-panel">
           <CardHeader>
             <CardTitle className="calc-card-title">أدخل ديونك الحالية</CardTitle>

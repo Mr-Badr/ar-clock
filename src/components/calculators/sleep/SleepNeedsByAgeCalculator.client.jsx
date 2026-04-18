@@ -21,7 +21,7 @@ export default function SleepNeedsByAgeCalculator() {
 
   return (
     <div className="calc-app">
-      <div className="calc-app-grid lg:grid-cols-[0.92fr_1.08fr]">
+      <div className="calc-app-grid">
         <Card className="calc-surface-card calc-app-panel">
           <CardHeader>
             <CardTitle className="calc-card-title">اختر العمر لمعرفة النطاق المناسب</CardTitle>

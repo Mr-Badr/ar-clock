@@ -34,7 +34,7 @@ export default function SavingsGoalCalculator() {
 
   return (
     <div className="calc-app">
-      <div className="calc-app-grid lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="calc-app-grid">
         <Card className="calc-surface-card calc-app-panel">
           <CardHeader>
             <CardTitle className="calc-card-title">إعدادات هدف الادخار</CardTitle>

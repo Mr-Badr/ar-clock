@@ -40,7 +40,7 @@ export default function NapCalculator() {
 
   return (
     <div className="calc-app">
-      <div className="calc-app-grid lg:grid-cols-[1.02fr_0.98fr]">
+      <div className="calc-app-grid">
         <Card className="calc-surface-card calc-app-panel">
           <CardHeader>
             <CardTitle className="calc-card-title">اختر القيلولة التي تناسب هدفك</CardTitle>

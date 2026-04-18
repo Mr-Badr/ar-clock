@@ -31,7 +31,7 @@ export default function SleepDurationCalculator() {
 
   return (
     <div className="calc-app">
-      <div className="calc-app-grid lg:grid-cols-[1.02fr_0.98fr]">
+      <div className="calc-app-grid">
         <Card className="calc-surface-card calc-app-panel">
           <CardHeader>
             <CardTitle className="calc-card-title">أدخل نومك الفعلي لا الظاهري فقط</CardTitle>
