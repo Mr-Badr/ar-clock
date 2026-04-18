@@ -15,6 +15,8 @@ import { getCachedNowIso } from '@/lib/date-utils';
 import HolidaysSections from '@/components/holidays/index';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
+import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
+import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 import { normalizeHolidayFilter } from './holidays-filter-utils';
 
@@ -26,13 +28,13 @@ export async function generateMetadata() {
   const gr = now.getFullYear();
   const hi = approxHijriYear(gr);
   return {
-    title: `كم باقي على الأعياد والمناسبات القادمة؟ | عداد مباشر ${gr}`,
-    description: `اعرف كم باقي على رمضان والعيد والمناسبات الوطنية والمدرسية مع عداد مباشر، وتاريخ هجري وميلادي، وصفحات تفصيلية لكل مناسبة.`,
+    title: `كم باقي على رمضان والعيد والمناسبات القادمة؟ | عداد مباشر ${gr}`,
+    description: `اعرف فوراً كم باقي على رمضان والعيد والمناسبات الوطنية والمدرسية مع عداد مباشر، وتاريخ هجري وميلادي، وصفحات تفصيلية لكل مناسبة.`,
     keywords: `كم باقي على المناسبات, كم باقي على الأعياد ${gr}, المناسبات القادمة ${gr}, المناسبات الإسلامية ${hi}, عداد المناسبات, العطل الرسمية ${gr}, المناسبات المدرسية, متى المناسبة القادمة`,
     alternates: { canonical: `${SITE}/holidays`, languages: { ar: `${SITE}/holidays` } },
     robots: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large' },
     openGraph: {
-      title: `كم باقي على الأعياد والمناسبات القادمة؟`,
+      title: `كم باقي على رمضان والعيد والمناسبات القادمة؟`,
       description: `تصفح المناسبات القادمة مع عداد مباشر وروابط تفصيلية للأحداث الأكثر بحثاً.`,
       locale: 'ar_SA', type: 'website', url: `${SITE}/holidays`,
     },
@@ -76,6 +78,23 @@ export default async function HolidaysPage() {
   const now = new Date(nowIso);
   const gr = now.getFullYear();
   const hi = approxHijriYear(gr);
+  const utilityLinks = appendToolDiscoveryLinks([
+    {
+      href: '/date/today',
+      label: 'كم التاريخ اليوم؟',
+      description: 'اعرف التاريخ الهجري والميلادي اليوم ثم انتقل إلى المناسبات المرتبطة به مباشرة.',
+    },
+    {
+      href: '/mwaqit-al-salat',
+      label: 'مواقيت الصلاة اليوم',
+      description: 'اربط بين التاريخ الحالي والمواقيت اليومية عند متابعة رمضان والأعياد والمناسبات الإسلامية.',
+    },
+    {
+      href: '/time-now',
+      label: 'كم الساعة الآن؟',
+      description: 'راجع الوقت الحالي في مدينتك أو دولة أخرى عند متابعة العدادات المباشرة والمناسبات الدولية.',
+    },
+  ]);
 
   // NOTE: FAQPage schema is emitted by HolidaysGlobalSchemas (via HolidaysSections below).
   // Do NOT add a second FAQPage here — Google flags "Duplicate field FAQPage" and
@@ -136,7 +155,7 @@ export default async function HolidaysPage() {
             }}
           >
             كم باقي على{' '}
-            <span style={{ color: 'var(--accent-alt)' }}>المناسبات القادمة؟</span>
+            <span style={{ color: 'var(--accent-alt)' }}>رمضان والعيد والمناسبات القادمة؟</span>
           </h1>
           <div className='flex justify-center'>
             <p
@@ -167,6 +186,14 @@ export default async function HolidaysPage() {
           />
         </section>
         <AdInArticle slotId="mid-holidays-1" />
+        <section className="mt-12">
+          <GeoInternalLinks
+            title="أدوات يومية يبحث عنها زوار المناسبات أيضاً"
+            description="الزائر الذي يبحث عن رمضان أو العيد أو مناسبة قادمة يحتاج غالباً أدوات مكمّلة مثل تاريخ اليوم، الصلاة، الوقت الآن، وحاسبات وأدوات اقتصادية سريعة. لهذا ربطنا هذه الصفحات داخلياً بشكل أوضح."
+            links={utilityLinks}
+            ariaLabel="أدوات يومية مرتبطة بالمناسبات"
+          />
+        </section>
       </main>
       <HolidaysSections nowIso={nowIso} />
     </div>

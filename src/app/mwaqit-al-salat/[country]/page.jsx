@@ -49,10 +49,10 @@ export async function generateMetadata({ params }) {
   const capitalAr = capital ? (capital.name_ar || capital.name_en) : null;
 
   const titleSuffix = capitalAr ? `، ${capitalAr}` : '';
-  const title = `مواقيت الصلاة اليوم في ${countryAr}${titleSuffix} | الفجر والمغرب بدقة`;
+  const title = `مواقيت الصلاة اليوم في ${countryAr}${titleSuffix} | متى الأذان اليوم؟`;
   const description = capitalAr
-    ? `اعرف مواقيت الصلاة اليوم في ${countryAr} مع أوقات الفجر والشروق والظهر والعصر والمغرب والعشاء في ${capitalAr} وبقية المدن، وطريقة الحساب ${methodInfo.label}.`
-    : `اعرف مواقيت الصلاة اليوم في ${countryAr} مع الفجر والشروق والظهر والعصر والمغرب والعشاء، وطريقة الحساب ${methodInfo.label} وروابط المدن الرئيسية.`;
+    ? `اعرف فوراً مواقيت الصلاة اليوم في ${countryAr} مع أوقات الفجر والشروق والظهر والعصر والمغرب والعشاء في ${capitalAr} وبقية المدن، وطريقة الحساب ${methodInfo.label}.`
+    : `اعرف فوراً مواقيت الصلاة اليوم في ${countryAr} مع الفجر والشروق والظهر والعصر والمغرب والعشاء، وطريقة الحساب ${methodInfo.label} وروابط المدن الرئيسية.`;
 
   return {
     title,
@@ -201,7 +201,7 @@ export default async function CountryPrayerPage({ params }) {
         {/* Header */}
         <header className="mb-10 text-center">
           <h1 className="text-3xl md:text-5xl font-black mb-3">
-            مواقيت الصلاة اليوم في <span className="text-accent">{countryAr}</span>
+            متى الأذان اليوم في <span className="text-accent">{countryAr}</span>؟
           </h1>
           <p className="text-muted text-base mb-3" style={{ margin: '10px auto' }}>
             اختر المدينة لعرض الفجر والظهر والعصر والمغرب والعشاء بدقة، مع طريقة الحساب المعتمدة داخل الدولة.

@@ -83,8 +83,8 @@ export async function generateMetadata({ params }) {
   const offset = getUtcOffsetStr(timezone);
 
   return {
-    title: `كم الساعة الآن في ${countryAr}؟ | الوقت في ${cityAr} وبقية المدن`,
-    description: `تحقق فوراً من الساعة الآن في ${countryAr} مع الوقت الحالي في ${cityAr}، تاريخ اليوم، فرق UTC ${offset}، وروابط المدن الأكثر بحثاً داخل الدولة.`,
+    title: `كم الساعة الآن في ${countryAr}؟ | ${cityAr} والمدن الرئيسية اليوم`,
+    description: `اعرف فوراً الساعة الآن في ${countryAr} مع الوقت الحالي في ${cityAr}، والتاريخ اليوم، وفارق UTC ${offset}، وروابط أبرز المدن داخل الدولة.`,
     keywords: buildTimeNowKeywords({
       countryAr,
       countryEn: country.name_en,
@@ -102,8 +102,8 @@ export async function generateMetadata({ params }) {
       locale: 'ar_SA',
       url: `${BASE}/time-now/${countrySlug}`,
       siteName: SITE_BRAND,
-      title: `كم الساعة الآن في ${countryAr}؟ | ${cityAr} والتاريخ اليوم`,
-      description: `اعرف الوقت الحالي في ${countryAr} مع توقيت ${cityAr} المباشر، والتاريخ اليوم، والمنطقة الزمنية ${offset}.`,
+      title: `كم الساعة الآن في ${countryAr}؟ | ${cityAr} والمدن اليوم`,
+      description: `اعرف الوقت الحالي في ${countryAr} مع توقيت ${cityAr} المباشر والتاريخ اليوم والمنطقة الزمنية ${offset}.`,
       images: [{
         url: `${BASE}/time-now/${countrySlug}/opengraph-image`,
         width: 1200,
@@ -113,7 +113,7 @@ export async function generateMetadata({ params }) {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `كم الساعة الآن في ${countryAr}؟`,
+      title: `كم الساعة الآن في ${countryAr}؟ | ${cityAr} الآن`,
     },
     robots: {
       index: true,

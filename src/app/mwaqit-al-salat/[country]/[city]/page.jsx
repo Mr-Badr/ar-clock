@@ -82,8 +82,8 @@ export async function generateMetadata({ params }) {
     timesHint = ` الفجر ${fajrFmt} — المغرب ${maghribFmt}.`;
   }
 
-  const title       = `مواقيت الصلاة اليوم في ${cityNameAr} | الفجر والمغرب والعشاء بدقة`;
-  const description = `اعرف مواقيت الصلاة اليوم في ${cityNameAr} بدقة.${timesHint} تشمل الصفحة الصلاة القادمة، الجدول الشهري، وطريقة الحساب ${methodInfo.label}.`;
+  const title       = `متى أذان الفجر والمغرب اليوم في ${cityNameAr}؟ | مواقيت الصلاة`;
+  const description = `اعرف فوراً مواقيت الصلاة اليوم في ${cityNameAr}.${timesHint} تشمل الصفحة الصلاة القادمة، الجدول الشهري، وطريقة الحساب ${methodInfo.label}.`;
   const canonical   = `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}`;
 
   return {
@@ -235,7 +235,7 @@ export default async function PrayerTimesPage({ params }) {
         {/* Header */}
         <header className="text-center mb-8">
           <h1 className="text-3xl sm:text-4xl font-black text-primary mb-2 leading-tight">
-            مواقيت الصلاة اليوم في <span className="text-accent">{cityNameAr}</span>
+            متى أذان الفجر والمغرب اليوم في <span className="text-accent">{cityNameAr}</span>؟
           </h1>
           <p className="text-muted text-sm mx-auto">{countryNameAr} — الفجر والشروق والظهر والعصر والمغرب والعشاء بدقة اليوم</p>
         </header>

@@ -5,6 +5,7 @@ import TimeDiffSections from '@/components/time-diff/index';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import { POPULAR_PAIRS } from '@/components/time-diff/data/popularPairs';
 import { Globe } from 'lucide-react';
+import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildTimeDifferenceHubKeywords } from '@/lib/seo/section-search-intent';
@@ -16,9 +17,9 @@ const SITE_URL = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
   title:
-    "كم فرق التوقيت بين مدينتين؟ | حاسبة فرق التوقيت الآن",
+    "كم فرق التوقيت بين بلدين أو مدينتين الآن؟ | الحاسبة المباشرة",
   description:
-    "اعرف كم فرق التوقيت الآن بين أي مدينتين أو دولتين، ومن يسبق الآخر، وما أفضل وقت للاجتماعات مع دعم التوقيت الصيفي وتحويل الوقت مباشرة.",
+    "اعرف فوراً كم فرق التوقيت بين أي مدينتين أو دولتين، ومن يسبق الآخر الآن، وما أفضل وقت للاتصال أو الاجتماع مع دعم التوقيت الصيفي وتحويل الوقت مباشرة.",
   keywords: buildTimeDifferenceHubKeywords(POPULAR_PAIRS),
   url: `${SITE_URL}/time-difference`,
 });
@@ -44,7 +45,7 @@ export default async function TimeDifferencePage() {
       url: `${SITE_URL}/time-difference/${pair.from.slug}/${pair.to.slug}`,
     })),
   };
-  const utilityLinks = [
+  const utilityLinks = appendToolDiscoveryLinks([
     {
       href: "/time-now",
       label: "الوقت الآن في المدن والدول",
@@ -65,7 +66,7 @@ export default async function TimeDifferencePage() {
       label: "المناسبات القادمة",
       description: "استكشف المناسبات والإجازات القادمة عند تنسيق الاجتماعات والسفر عبر الدول.",
     },
-  ];
+  ]);
 
   // HowTo schema for "تحويل الوقت بين مدينتين" (step-by-step)
   const howToSchema = {
@@ -138,7 +139,7 @@ export default async function TimeDifferencePage() {
             فرق التوقيت بين مدينتين — حاسبة الوقت وتحويل التوقيت بسهولة
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
-            كم فرق التوقيت بين مدينتين؟
+            كم فرق التوقيت بين بلدين أو مدينتين الآن؟
           </h1>
           <p className="mt-4 text-lg text-[var(--text-muted)] max-w-3xl mx-auto leading-relaxed">
             احسب الفرق بالساعة والدقيقة بين أي مدينتين أو دولتين في العالم، واعرف من يسبق الآن وما أفضل وقت للاتصال أو الاجتماع مع مراعاة التوقيت الصيفي.

@@ -20,9 +20,9 @@ import StockMarketsLive from '@/components/economy/StockMarketsLive';
 const SITE_URL = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
-  title: 'هل البورصات العالمية مفتوحة الآن؟ | أمريكا ولندن وطوكيو',
+  title: 'هل البورصات العالمية مفتوحة الآن؟ | أمريكا ولندن وتاسي اليوم',
   description:
-    'تحقق فوراً هل البورصات العالمية مفتوحة الآن بتوقيتك المحلي: السوق الأمريكي، تداول السعودي، لندن، طوكيو وباريس، مع أوقات الفتح والإغلاق والجلسات الموسعة.',
+    'تحقق فوراً هل البورصات العالمية مفتوحة الآن بتوقيتك المحلي: السوق الأمريكي، تاسي، لندن، طوكيو وباريس، مع أوقات الفتح والإغلاق والجلسات الموسعة.',
   keywords: [
     // Short
     'البورصات العالمية', 'تداول البورصة', 'أسواق المال', 'ساعات البورصة',
@@ -47,12 +47,13 @@ export default function StockMarketsPage() {
   const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/stock-markets',
-    name: 'البورصات العالمية الآن',
-    description: 'أداة حية لعرض البورصات العالمية بتوقيت المستخدم المحلي.',
+    name: 'هل البورصات العالمية مفتوحة الآن؟',
+    description: 'أداة حية لمعرفة حالة البورصات العالمية والعربية بتوقيت المستخدم المحلي.',
+    about: ['بورصة نيويورك', 'بورصة لندن', 'البورصات العربية', 'هل السوق مفتوح الآن'],
   });
   const breadcrumbSchema = buildEconomyBreadcrumbSchema(
     SITE_URL,
-    'البورصات العالمية الآن',
+    'هل البورصات العالمية مفتوحة الآن؟',
     '/economie/stock-markets',
   );
   const datasetSchema = buildEconomyDatasetSchema({

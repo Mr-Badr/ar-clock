@@ -139,7 +139,7 @@ export default function MonthlyInstallmentPage() {
       <CalculatorHero
         badge="تمويل شخصي وعقاري"
         title={PAGE.heroTitle}
-        description="احسب أقساط القروض الشخصية والعقارية وقروض السيارات بدقة أوضح، وقارن بين الفائدة الثابتة والمتناقصة، وشاهد جدول السداد وأثر السداد المبكر قبل اتخاذ القرار."
+        description="إذا كنت تبحث: كم قسط قرض 100 ألف؟ فهذه الصفحة لا تعطيك رقماً عشوائياً، بل تحسب القسط الحقيقي بحسب المدة والفائدة والدفعة المقدمة، ثم تعرض إجمالي الفوائد وجدول السداد وأثر السداد المبكر."
         accent={PAGE.accent}
         highlights={[
           'نتيجة شهرية مع إجمالي الفوائد والرسوم.',
@@ -289,7 +289,7 @@ export default function MonthlyInstallmentPage() {
       <CalculatorSection
         id="loan-answers"
         eyebrow="إجابات مباشرة"
-        title="أسئلة شائعة يبحث بها المستخدمون قبل أخذ التمويل"
+        title="إذا كتبت في Google: كم قسط قرض 100 ألف؟"
         description="هذا القسم يخاطب نية البحث الطويلة مثل: كم قسط قرض 100 ألف؟ وهل الفائدة المتناقصة أوفر؟ ومتى يفيد السداد المبكر؟"
       >
         <CalculatorQuickAnswerGrid items={quickAnswers} />

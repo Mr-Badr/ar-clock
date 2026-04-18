@@ -47,12 +47,13 @@ export default function BestTradingTimePage() {
   const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/best-trading-time',
-    name: 'أفضل وقت للتداول',
+    name: 'ما أفضل وقت للتداول اليوم؟',
     description: 'أداة عربية لحساب أفضل نوافذ التداول اليومية والأسبوعية من مدينة المستخدم.',
+    about: ['أفضل وقت للتداول', 'أفضل وقت لتداول الذهب', 'أفضل وقت لتداول الفوركس', 'سيولة السوق'],
   });
   const breadcrumbSchema = buildEconomyBreadcrumbSchema(
     SITE_URL,
-    'أفضل وقت للتداول',
+    'ما أفضل وقت للتداول اليوم؟',
     '/economie/best-trading-time',
   );
   const datasetSchema = buildEconomyDatasetSchema({

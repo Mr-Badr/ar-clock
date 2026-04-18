@@ -8,6 +8,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { SectionDivider, SectionWrapper } from '@/components/shared/primitives';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 
+const CALCULATOR_DISCOVERY_LINKS = [
+  { href: '/calculators/age/calculator', title: 'كم عمري الآن؟', description: 'حاسبة العمر بالسنوات والأيام والثواني.' },
+  { href: '/calculators/monthly-installment', title: 'كم قسط القرض الشهري؟', description: 'قارن التمويل والقسط وإجمالي الفوائد.' },
+  { href: '/calculators/vat', title: 'كم الضريبة 15%؟', description: 'أضف الضريبة أو استخرجها من السعر الشامل.' },
+  { href: '/calculators/percentage', title: 'كم تساوي النسبة المئوية؟', description: 'احسب الخصم والزيادة ونسبة التغيير.' },
+  { href: '/economie/us-market-open', title: 'متى يفتح السوق الأمريكي اليوم؟', description: 'أداة اقتصادية حية بتوقيتك المحلي.' },
+  { href: '/economie/gold-market-hours', title: 'هل الذهب مفتوح الآن؟', description: 'تحقق من ساعات تداول الذهب الآن.' },
+];
+
 export function CalculatorHero({
   badge,
   title,
@@ -298,7 +307,7 @@ export function CalculatorFooterCta() {
               <CardDescription className="calc-card-description">
                 هذا القسم بُني كحزمة أدوات عملية: احسب مستحقاتك، ثم قارن القسط، ثم راجع
                 الضريبة أو النسبة المئوية من نفس المكان.
-            </CardDescription>
+              </CardDescription>
           </CardHeader>
           <CardContent className="calc-cta-actions">
             <Button asChild variant="ghost" className="btn btn-primary--flat calc-button">
@@ -307,6 +316,28 @@ export function CalculatorFooterCta() {
             <Button asChild variant="ghost" className="btn btn-secondary calc-button">
               <Link href="/contact">أرسل ملاحظتك أو اقتراحك</Link>
             </Button>
+          </CardContent>
+          <CardContent>
+            <div className="calc-related-grid">
+              {CALCULATOR_DISCOVERY_LINKS.map((item) => (
+                <Card key={item.href} className="calc-surface-card calc-related-card card-hover">
+                  <CardHeader>
+                    <CardTitle className="calc-card-title">{item.title}</CardTitle>
+                    <CardDescription className="calc-card-description">
+                      {item.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button asChild variant="ghost" className="btn btn-primary--flat calc-button calc-inline-button">
+                      <Link href={item.href}>
+                        افتح الصفحة
+                        <ArrowLeft size={16} />
+                      </Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </CardContent>
           </Card>
         </div>

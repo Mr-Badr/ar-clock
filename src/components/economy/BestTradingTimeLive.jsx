@@ -40,11 +40,11 @@ export default function BestTradingTimeLive({ initialViewer, initialNowIso }) {
           eyebrow={(
             <>
               <Target size={16} weight="duotone" />
-              أفضل وقت للتداول
+              ما أفضل وقت للتداول اليوم؟
             </>
           )}
-          title="نحمّل نافذة التداول الأنسب لمدينتك"
-          lead="بعد تحديد منطقتك الزمنية نحسب أفضل الأوقات العملية لمتابعة الفوركس والذهب من يومك المحلي."
+          title="نحمّل أفضل نافذة للتداول من مدينتك"
+          lead="بعد تحديد منطقتك الزمنية نحسب متى تكون نافذة التداول الأنسب اليوم لمتابعة الفوركس والذهب من يومك المحلي."
           metaPills={[{ label: 'جارٍ تحديد توقيتك الحالي' }]}
         />
       </div>
@@ -60,7 +60,7 @@ export default function BestTradingTimeLive({ initialViewer, initialNowIso }) {
         eyebrow={(
           <>
             <Target size={16} weight="duotone" />
-            أفضل وقت للتداول
+            ما أفضل وقت للتداول اليوم؟
           </>
         )}
         title={model.heroTitle}

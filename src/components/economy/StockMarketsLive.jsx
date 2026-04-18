@@ -760,9 +760,9 @@ export default function StockMarketsLive({ initialViewer, initialNowIso }) {
     return (
       <div className="economy-stack">
         <EconomyHero
-          eyebrow={<><Bank size={16} weight="duotone" /> البورصات العالمية الآن</>}
-          title="البورصات العالمية بتوقيتك المحلي"
-          lead="نحمّل المنطقة الزمنية الحالية أولاً، ثم نعرض أوقات الفتح والإغلاق والجلسات الموسعة مباشرةً."
+          eyebrow={<><Bank size={16} weight="duotone" /> هل البورصات العالمية مفتوحة الآن؟</>}
+          title="نحمّل توقيت البورصات العالمية من مدينتك"
+          lead="بعد تحديد منطقتك الزمنية نعرض حالة أمريكا ولندن وتداول السعودي الآن، مع أوقات الافتتاح والإغلاق والجلسات الموسعة مباشرةً بتوقيتك المحلي."
           metaPills={[{ label: 'جارٍ تحديد توقيتك الحالي' }]}
         />
       </div>
@@ -777,7 +777,7 @@ export default function StockMarketsLive({ initialViewer, initialNowIso }) {
         <div className="economy-live-row">
           <span className="economy-hero__eyebrow">
             <Bank size={16} weight="duotone" />
-            البورصات العالمية الآن
+            هل البورصات العالمية مفتوحة الآن؟
           </span>
           <span className="economy-live-badge">
             <span className="economy-live-dot" />
@@ -785,12 +785,12 @@ export default function StockMarketsLive({ initialViewer, initialNowIso }) {
           </span>
         </div>
         <h1 className="economy-hero__title">
-          البورصات العالمية بتوقيت{' '}
+          هل البورصات العالمية مفتوحة الآن من{' '}
           <span style={{ color: 'var(--accent-alt)' }}>{model.viewer.label}</span>
+          ؟
         </h1>
         <p className="economy-hero__lead">
-          هل السوق مفتوح الآن؟ متى يفتح بتوقيتك؟ ما الفرق بين الجلسة الرسمية والجلسات الموسعة؟
-          كل ذلك محسوب تلقائياً من منطقتك الزمنية الحقيقية — بدون خدمة مدفوعة.
+          هذه الصفحة تجيب بسرعة عن الأسئلة التي يكررها المستخدم العربي يومياً: هل السوق الأمريكي مفتوح الآن، متى تفتح لندن، هل تداول السعودي يعمل حالياً، وما الفرق بين الجلسة الرسمية والجلسات الموسعة؟ كل ذلك محسوب من منطقتك الزمنية الحقيقية من دون خدمة مدفوعة.
         </p>
         <div className="economy-hero__meta">
           {[model.viewer.sublabel, model.todayLabel, 'المصدر: الساعات الاعتيادية الرسمية']

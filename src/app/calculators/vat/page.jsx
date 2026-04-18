@@ -140,7 +140,7 @@ export default function VatPage() {
       <CalculatorHero
         badge="VAT / TVA"
         title={PAGE.heroTitle}
-        description="أضف الضريبة أو استخرجها من الفاتورة بسرعة، واحسب صافي ضريبة الشهر للشركات الصغيرة، ثم قارن بين النسب العامة الشائعة في عدد من الدول العربية من نفس الصفحة."
+        description="إذا كنت تبحث: كم ضريبة 1000 ريال عند 15%؟ فالجواب 150 ريالاً والإجمالي 1150. ثم تساعدك الصفحة على إضافة الضريبة أو استخراجها من الفاتورة وحساب صافي ضريبة الشهر بسرعة."
         accent={PAGE.accent}
         highlights={[
           '3 أوضاع: إضافة، استخراج، وصافي ضريبة الشهر.',
@@ -193,7 +193,7 @@ export default function VatPage() {
       <CalculatorSection
         id="vat-answers"
         eyebrow="إجابات مباشرة"
-        title="أسئلة طويلة الذيل مرتبطة بالفواتير والضريبة 15%"
+        title="إذا كتبت في Google: كم ضريبة 1000 ريال عند 15%؟"
         description="إجابات مكتوبة بلغة واضحة على الأسئلة التي يدخل بها المستخدم مباشرة إلى محركات البحث."
       >
         <CalculatorQuickAnswerGrid items={quickAnswers} />

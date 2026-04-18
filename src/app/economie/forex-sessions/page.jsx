@@ -20,9 +20,9 @@ import ForexSessionsLive from '@/components/economy/ForexSessionsLive';
 const SITE_URL = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
-  title: 'جلسات الفوركس الآن | متى تبدأ لندن ونيويورك بتوقيتك؟',
+  title: 'متى تبدأ جلسة لندن ونيويورك اليوم؟ | جلسات الفوركس الآن',
   description:
-    'تابع جلسات الفوركس الأربع الآن بتوقيتك المحلي. اعرف هل السوق مفتوح، ومتى تبدأ لندن ونيويورك، وأين تقع نافذة السيولة العالية للتداول.',
+    'تابع جلسات الفوركس الأربع الآن بتوقيتك المحلي. اعرف متى تبدأ لندن ونيويورك اليوم، وهل سوق الفوركس مفتوح الآن، وأين تقع نافذة السيولة العالية للتداول.',
   keywords: [
     // Short
     'جلسات الفوركس', 'سوق العملات', 'الفوركس الان', 'تداخل الجلسات', 'سيولة فوركس',
@@ -47,12 +47,13 @@ export default function ForexSessionsPage() {
   const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/forex-sessions',
-    name: 'جلسات الفوركس والذهب الآن',
-    description: 'أداة حية لحساب جلسات الفوركس والذهب بتوقيت المستخدم المحلي.',
+    name: 'جلسات الفوركس الآن',
+    description: 'أداة حية لمعرفة جلسات لندن ونيويورك وطوكيو وسيدني بتوقيت المستخدم المحلي.',
+    about: ['جلسة لندن', 'جلسة نيويورك', 'ساعات الفوركس', 'هل سوق الفوركس مفتوح الآن'],
   });
   const breadcrumbSchema = buildEconomyBreadcrumbSchema(
     SITE_URL,
-    'جلسات الفوركس والذهب الآن',
+    'جلسات الفوركس الآن',
     '/economie/forex-sessions',
   );
   const datasetSchema = buildEconomyDatasetSchema({

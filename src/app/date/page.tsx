@@ -26,6 +26,7 @@ import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { ArrowLeftRight, Moon, CalendarDays, Calendar } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
+import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildDateKeywords } from '@/lib/seo/section-search-intent';
 
@@ -111,7 +112,7 @@ async function DateHubDynamicContent() {
     { href: `/date/calendar/hijri/${hijri?.year ?? 1447}`, label: `تقويم ${hijri?.year ?? 1447} هـ`, description: 'التقويم الهجري الكامل مع الأيام والمناسبات.' },
     { href: '/date/country', label: 'التاريخ حسب الدولة', description: 'اعرف التاريخ اليوم في الدول العربية وفق الطريقة الأقرب للاستخدام الرسمي.' },
   ];
-  const dateUtilityLinks = [
+  const dateUtilityLinks = appendToolDiscoveryLinks([
     {
       href: '/time-now',
       label: 'الوقت الآن',
@@ -132,7 +133,7 @@ async function DateHubDynamicContent() {
       label: 'المناسبات القادمة',
       description: 'استكشف المناسبات والإجازات القادمة المرتبطة بالتاريخ الهجري والميلادي.',
     },
-  ];
+  ]);
 
   const webPageSchema = {
     '@context': 'https://schema.org',

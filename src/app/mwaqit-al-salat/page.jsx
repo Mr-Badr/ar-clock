@@ -8,6 +8,7 @@ import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import { Clock } from 'lucide-react';
+import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
@@ -19,9 +20,9 @@ import { buildPrayerKeywords } from '@/lib/seo/section-search-intent';
 const BASE = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
-  title: 'مواقيت الصلاة اليوم في مدينتك | الفجر والمغرب والعشاء بدقة',
+  title: 'متى أذان الفجر والمغرب اليوم في مدينتك؟ | مواقيت الصلاة الدقيقة',
   description:
-    'اعرف مواقيت الصلاة اليوم بدقة في مدينتك: الفجر والشروق والظهر والعصر والمغرب والعشاء، مع إمساكية شهرية وطريقة الحساب المناسبة لكل بلد وروابط المدن الأكثر بحثاً.',
+    'اعرف فوراً مواقيت الصلاة اليوم في مدينتك: الفجر والشروق والظهر والعصر والمغرب والعشاء، مع الصلاة القادمة، وإمساكية شهرية، وطريقة الحساب المناسبة لكل بلد.',
   keywords: buildPrayerKeywords(),
   url: `${BASE}/mwaqit-al-salat`,
 });
@@ -291,7 +292,7 @@ export default async function PrayerLandingPage() {
       'قسم مواقيت الصلاة في ميقاتنا يربط بين صفحات الدول والمدن مع مواقيت الفجر والظهر والعصر والمغرب والعشاء والجداول الشهرية.',
     inLanguage: 'ar',
   };
-  const utilityLinks = [
+  const utilityLinks = appendToolDiscoveryLinks([
     {
       href: '/time-now',
       label: 'الوقت الآن في المدن والدول',
@@ -312,7 +313,7 @@ export default async function PrayerLandingPage() {
       label: 'حاسبة فرق التوقيت',
       description: 'قارن التوقيت بين المدن والدول عند متابعة الصلاة والسفر والعمل عن بعد.',
     },
-  ];
+  ]);
 
   const faqSchema = {
     '@context': 'https://schema.org',
@@ -367,7 +368,7 @@ export default async function PrayerLandingPage() {
             مواقيت الصلاة اليوم لكل مدينة — حسب المذاهب الأربعة
           </div>
           <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-4">
-            مواقيت الصلاة اليوم في مدينتك — حسب المذاهب الأربعة
+            متى أذان الفجر والمغرب اليوم في مدينتك؟
           </h1>
 
           <p className="text-secondary text-base leading-[1.7] mx-auto max-w-[720px]">

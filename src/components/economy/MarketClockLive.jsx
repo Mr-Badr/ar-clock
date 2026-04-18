@@ -53,11 +53,11 @@ export default function MarketClockLive({ initialViewer, initialNowIso }) {
           eyebrow={(
             <>
               <ClockCountdown size={16} weight="duotone" />
-              ساعة التداول العالمية
+              أين السيولة الأعلى الآن؟
             </>
           )}
-          title="نحمّل ساعة السوق حسب توقيتك"
-          lead="بعد تحديد منطقتك الزمنية نعرض اليوم بالكامل كساعة تداول بصرية بدلاً من جدول تقليدي ثابت."
+          title="نحمّل ساعة السوق من مدينتك"
+          lead="بعد تحديد منطقتك الزمنية نعرض اليوم بالكامل كساعة سوق بصرية تكشف أين ترتفع السيولة الآن بدل جدول ثابت يصعب قراءته."
           metaPills={[{ label: 'جارٍ تحديد توقيتك الحالي' }]}
         />
       </div>
@@ -72,7 +72,7 @@ export default function MarketClockLive({ initialViewer, initialNowIso }) {
         eyebrow={(
           <>
             <ClockCountdown size={16} weight="duotone" />
-            ساعة التداول العالمية
+            أين السيولة الأعلى الآن؟
           </>
         )}
         title={model.heroTitle}

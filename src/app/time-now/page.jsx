@@ -7,6 +7,7 @@ import SearchCity from '@/components/SearchCityWrapper.client';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import TimeNowHero from '@/components/time-now/TimeNowHero';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
+import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
 import {
   getPopularTimeNowCityLinks,
   getPopularTimeNowCountryLinks,
@@ -41,9 +42,9 @@ const TIME_NOW_FAQ_ITEMS = [
 ];
 
 export const metadata = buildCanonicalMetadata({
-  title: 'كم الساعة الآن في مدينتك؟ | الوقت الآن في المدن والدول',
+  title: 'كم الساعة الآن في مدينتك؟ | الوقت المحلي الحالي والتاريخ اليوم',
   description:
-    'اعرف كم الساعة الآن مباشرة في أي مدينة أو دولة، مع تاريخ اليوم والمنطقة الزمنية وروابط سريعة لصفحات الوقت المحلية وفرق التوقيت ومواقيت الصلاة.',
+    'اعرف فوراً كم الساعة الآن في أي مدينة أو دولة، مع التاريخ اليوم والمنطقة الزمنية والانتقال السريع إلى فرق التوقيت ومواقيت الصلاة وصفحات الوقت المحلية.',
   keywords: buildTimeNowKeywords(),
   url: `${SITE_URL}/time-now`,
 });
@@ -106,7 +107,7 @@ export default async function TimeNowPage() {
       },
     })),
   };
-  const utilityLinks = [
+  const utilityLinks = appendToolDiscoveryLinks([
     {
       href: '/time-difference',
       label: 'حاسبة فرق التوقيت',
@@ -127,7 +128,7 @@ export default async function TimeNowPage() {
       label: 'المناسبات القادمة',
       description: 'استكشف العد التنازلي للأعياد والمناسبات والإجازات الرسمية المرتبطة بالتاريخ الحالي.',
     },
-  ];
+  ]);
 
   return (
     <div className="min-h-screen bg-base text-primary" dir="rtl" lang="ar">

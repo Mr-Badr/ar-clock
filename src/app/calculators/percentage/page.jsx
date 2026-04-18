@@ -136,7 +136,7 @@ export default function PercentagePage() {
       <CalculatorHero
         badge="4 حاسبات في صفحة واحدة"
         title={PAGE.heroTitle}
-        description="أداة عربية شاملة لحل مسائل النسبة اليومية: كم يساوي X% من مبلغ، كم نسبة X من Y، ما المبلغ بعد زيادة أو خفض، وما نسبة التغيير من قيمة إلى أخرى، مع أدوات إضافية مثل الخصومات المتتالية وتقسيم المبالغ."
+        description="إذا كان سؤالك: كم يساوي 20% من 500؟ فالجواب 100. وبعدها تساعدك الصفحة على حل بقية مسائل النسبة اليومية: كم نسبة X من Y، وما المبلغ بعد الخصم أو الزيادة، وما نسبة التغيير بين قيمتين."
         accent={PAGE.accent}
         highlights={[
           'أربع حاسبات أساسية في واجهة واحدة.',
@@ -208,7 +208,7 @@ export default function PercentagePage() {
       <CalculatorSection
         id="percent-answers"
         eyebrow="إجابات مباشرة"
-        title="أسئلة طويلة الذيل في النسبة المئوية"
+        title="إذا كتبت في Google: كم يساوي 20% من 500؟"
         description="هذا القسم مكتوب خصيصاً لصيغ البحث التي يدخلها المستخدم كما هي تقريباً إلى Google."
       >
         <CalculatorQuickAnswerGrid items={quickAnswers} />

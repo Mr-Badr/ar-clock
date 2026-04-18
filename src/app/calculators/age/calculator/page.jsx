@@ -1,8 +1,10 @@
 import AgeCalculator from '@/components/calculators/age/AgeCalculator.client';
 import {
+  CalculatorIntentCloud,
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorInfoGrid,
+  CalculatorQuickAnswerGrid,
   CalculatorSection,
   RelatedCalculators,
 } from '@/components/calculators/common';
@@ -11,8 +13,35 @@ import { buildAgeMetadata, buildBreadcrumbSchema, buildSoftwareSchema } from '..
 import { Suspense } from 'react';
 import SectionSkeleton from '@/components/shared/SectionSkeleton'
 
-const pageTitle = 'حاسبة العمر';
-const pageDescription = 'احسب عمرك بدقة بالسنوات والأشهر والأيام والساعات والثواني، وتعرّف على عيد ميلادك القادم والعمر الهجري التقريبي إذا كنت تبحث عن إجابة سريعة لسؤال: كم عمري؟';
+const pageTitle = 'كم عمري الآن؟';
+const pageDescription = 'إذا كان سؤالك: كم عمري الآن؟ فهذه الصفحة تحسب عمرك بدقة بالسنوات والأشهر والأيام والساعات والثواني، وتعرض كم يوم عشت ومتى عيد ميلادك القادم فوراً.';
+const ageIntentKeywords = [
+  'كم عمري الآن',
+  'حاسبة العمر',
+  'احسب عمرك',
+  'حساب العمر',
+  'كم يوم عشت',
+  'عمري بالسنوات والأشهر والأيام',
+  'عمري بالثواني',
+  'متى عيد ميلادي القادم',
+];
+const quickAnswers = [
+  {
+    question: 'كيف أعرف كم عمري الآن بدقة؟',
+    description: 'أشهر سؤال يدخل به المستخدم إلى Google قبل فتح أي حاسبة عمر.',
+    answer: 'أدخل تاريخ ميلادك فقط، وستحسب الصفحة عمرك الحالي بالسنوات والأشهر والأيام مع مجموع الأيام والساعات والثواني وموعد عيد الميلاد القادم.',
+  },
+  {
+    question: 'هل الحاسبة تعرض كم يوم عشت؟',
+    description: 'هذه نية بحث تتكرر كثيراً مع حاسبات العمر العربية.',
+    answer: 'نعم. لا تكتفي الصفحة بعدد السنوات، بل تعرض أيضاً الأيام والأسابيع والساعات والدقائق والثواني حتى تصل إلى جواب أوضح وأكثر فائدة.',
+  },
+  {
+    question: 'هل أستطيع معرفة العمر الهجري أيضاً؟',
+    description: 'كثير من المستخدمين يريدون الميلادي والهجري معاً في نفس التجربة.',
+    answer: 'تعرض الصفحة تقديراً للعمر الهجري التقريبي، ويمكنك أيضاً الانتقال إلى حاسبة العمر بالهجري إذا كنت تريد مقارنة أعمق بين التقويمين.',
+  },
+];
 
 export const metadata = buildAgeMetadata({
   title: 'كم عمري الآن؟ | حاسبة العمر بالسنوات والأيام والثواني',
@@ -40,14 +69,51 @@ export default function AgeCalculatorPage() {
     description: pageDescription,
     path: '/calculators/age/calculator',
   });
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: AGE_COMMON_FAQ.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
+  const howToSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'كيفية استخدام حاسبة العمر',
+    description: 'خطوات سريعة لمعرفة عمرك الحالي بالسنوات والأشهر والأيام مع الأيام والساعات وعيد الميلاد القادم.',
+    step: [
+      {
+        '@type': 'HowToStep',
+        name: 'أدخل تاريخ الميلاد',
+        text: 'اختر اليوم والشهر والسنة بدقة حتى تكون نتيجة العمر صحيحة.',
+      },
+      {
+        '@type': 'HowToStep',
+        name: 'دع الصفحة تحسب العمر الحالي',
+        text: 'ستظهر النتيجة فوراً بالسنوات والأشهر والأيام مع التحويل إلى أيام وساعات وثوانٍ.',
+      },
+      {
+        '@type': 'HowToStep',
+        name: 'راجع عيد الميلاد القادم',
+        text: 'انظر إلى عدد الأيام المتبقية حتى عيد ميلادك والعمر الذي ستبلغه عنده.',
+      },
+    ],
+  };
 
   return (
     <main className="bg-base text-primary">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
       <CalculatorHero
-        badge="العمر الكامل"
+        badge="حاسبة العمر"
         title={pageTitle}
         description={pageDescription}
         accent="#EA580C"
@@ -61,6 +127,19 @@ export default function AgeCalculatorPage() {
           <AgeCalculator />
         </Suspense>
       </CalculatorHero>
+
+      <CalculatorSection
+        id="age-main-intent"
+        eyebrow="نية البحث"
+        title="هذه الصفحة تجيب عن سؤال واحد بوضوح: كم عمري الآن؟"
+        description="بدلاً من عنوان عام، بُنيت الصفحة لتلتقط صيغ البحث العربية المباشرة مثل كم عمري، احسب عمرك، وكم يوم عشت."
+        subtle
+      >
+        <div className="calc-grid-2">
+          <CalculatorIntentCloud items={ageIntentKeywords} />
+          <CalculatorQuickAnswerGrid items={quickAnswers} />
+        </div>
+      </CalculatorSection>
 
       <CalculatorSection
         id="age-main-content"

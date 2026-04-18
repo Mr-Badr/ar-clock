@@ -20,9 +20,9 @@ import MarketClockLive from '@/components/economy/MarketClockLive';
 const SITE_URL = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
-  title: 'ساعة السوق الآن | أين السيولة الأعلى في الفوركس والذهب؟',
+  title: 'أين السيولة الأعلى الآن؟ | ساعة السوق للفوركس والذهب',
   description:
-    'استخدم ساعة السوق الآن لمعرفة أين تتركز السيولة في الفوركس والذهب على مدار 24 ساعة، مع تداخل لندن ونيويورك وخريطة النشاط بتوقيتك المحلي.',
+    'استخدم ساعة السوق الآن لمعرفة أين تتركز السيولة في الفوركس والذهب على مدار 24 ساعة، مع تداخل لندن ونيويورك وخريطة النشاط بتوقيتك المحلي ومدينتك.',
   keywords: [
     // Short
     'ساعة التداول', 'مؤشر فوركس', 'سيولة', 'تداخل جلسات', 'تداول 24', 'market clock',
@@ -44,12 +44,13 @@ export default function MarketClockPage() {
   const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/market-clock',
-    name: 'ساعة التداول العالمية',
-    description: 'أداة بصرية لقراءة جلسات الفوركس العالمية على مدار 24 ساعة بتوقيت المستخدم.',
+    name: 'ساعة السوق الآن',
+    description: 'أداة بصرية لقراءة جلسات الفوركس والذهب ونوافذ السيولة على مدار 24 ساعة بتوقيت المستخدم.',
+    about: ['ساعة السوق', 'سيولة الفوركس', 'تداخل لندن ونيويورك', 'خريطة نشاط الذهب'],
   });
   const breadcrumbSchema = buildEconomyBreadcrumbSchema(
     SITE_URL,
-    'ساعة التداول العالمية',
+    'ساعة السوق الآن',
     '/economie/market-clock',
   );
   const datasetSchema = buildEconomyDatasetSchema({

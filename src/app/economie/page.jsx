@@ -8,9 +8,9 @@ import EconomyLanding from '@/components/economy/EconomyLanding';
 const SITE_URL = getSiteUrl();
 
 export const metadata = buildCanonicalMetadata({
-  title: 'هل الذهب أو السوق الأمريكي مفتوح الآن؟ | أدوات الاقتصاد الحي',
+  title: 'هل السوق الأمريكي أو الذهب مفتوح الآن؟ | جلسات الفوركس والبورصات',
   description:
-    `تحقق فوراً هل السوق الأمريكي أو الذهب أو الفوركس مفتوح الآن، وتابع أوقات البورصات العالمية والأحداث الاقتصادية من صفحات عربية سريعة داخل ${SITE_BRAND}.`,
+    `تحقق فوراً هل السوق الأمريكي أو الذهب أو الفوركس مفتوح الآن، ومتى تبدأ جلسة لندن ونيويورك، وهل البورصات العالمية مفتوحة، من صفحات عربية سريعة داخل ${SITE_BRAND}.`,
   keywords: [
     // Short
     'اقتصاد', 'اقتصاديات', 'تداول', 'فوركس', 'بورصة', 'ذهب', 'أسواق', 'مؤشرات', 
@@ -36,7 +36,7 @@ export default function EconomyPage() {
     name: 'قسم الاقتصاد الحي',
     url: `${SITE_URL}/economie`,
     inLanguage: 'ar',
-    description: 'صفحة تجمع أدوات حية لجلسات الفوركس والذهب والبورصات العالمية.',
+    description: 'صفحة تجمع أدوات حية للسوق الأمريكي والذهب وجلسات الفوركس والبورصات العالمية بصياغة عربية مباشرة.',
   };
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -54,9 +54,9 @@ export default function EconomyPage() {
       { '@type': 'ListItem', position: 1, name: 'متى يفتح السوق الأمريكي؟', url: `${SITE_URL}/economie/us-market-open` },
       { '@type': 'ListItem', position: 2, name: 'هل الذهب مفتوح الآن؟', url: `${SITE_URL}/economie/gold-market-hours` },
       { '@type': 'ListItem', position: 3, name: 'جلسات الفوركس الآن', url: `${SITE_URL}/economie/forex-sessions` },
-      { '@type': 'ListItem', position: 4, name: 'البورصات العالمية الآن', url: `${SITE_URL}/economie/stock-markets` },
-      { '@type': 'ListItem', position: 5, name: 'ساعة التداول', url: `${SITE_URL}/economie/market-clock` },
-      { '@type': 'ListItem', position: 6, name: 'أفضل وقت للتداول', url: `${SITE_URL}/economie/best-trading-time` },
+      { '@type': 'ListItem', position: 4, name: 'هل البورصات العالمية مفتوحة الآن؟', url: `${SITE_URL}/economie/stock-markets` },
+      { '@type': 'ListItem', position: 5, name: 'ساعة السوق الآن', url: `${SITE_URL}/economie/market-clock` },
+      { '@type': 'ListItem', position: 6, name: 'ما أفضل وقت للتداول اليوم؟', url: `${SITE_URL}/economie/best-trading-time` },
     ],
   };
 

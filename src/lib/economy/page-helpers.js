@@ -31,7 +31,7 @@ export async function getInitialEconomyPageState() {
   }
 }
 
-export function buildEconomyToolSchema({ siteUrl, path, name, description }) {
+export function buildEconomyToolSchema({ siteUrl, path, name, description, about = [] }) {
   return buildFreeToolPageSchema({
     siteUrl,
     path,
@@ -44,6 +44,7 @@ export function buildEconomyToolSchema({ siteUrl, path, name, description }) {
       'الذهب',
       'الفوركس',
       name,
+      ...about,
     ],
   });
 }

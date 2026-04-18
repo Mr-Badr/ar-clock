@@ -171,7 +171,7 @@ export default async function EndOfServiceBenefitsPage() {
       <CalculatorHero
         badge="نظام العمل السعودي"
         title={PAGE.heroTitle}
-        description="احسب مستحقاتك بسرعة وفق القاعدة العامة في نظام العمل السعودي، واعرف فرق الاستحقاق بين نهاية العقد والاستقالة، وشاهد كيف تتغير النتيجة إذا انتظرت حتى تصل إلى شريحة أفضل."
+        description="إذا كنت تبحث: كم مكافأة نهاية الخدمة بعد 5 سنوات؟ فهذه الصفحة تحسبها لك بسرعة وفق القاعدة العامة في نظام العمل السعودي، وتوضح فرق الاستحقاق بين نهاية العقد والاستقالة وأثر الانتظار حتى شريحة أفضل."
         accent={PAGE.accent}
         highlights={[
           'تحسب الاستقالة تلقائياً حسب مدة الخدمة الحالية.',
@@ -318,7 +318,7 @@ export default async function EndOfServiceBenefitsPage() {
       <CalculatorSection
         id="esb-answers"
         eyebrow="إجابات مباشرة"
-        title="أسئلة طويلة الذيل تتكرر في البحث"
+        title="إذا كتبت في Google: كم مكافأة نهاية الخدمة بعد 5 سنوات؟"
         description="هذا القسم مخصص لأسئلة من نوع: كم مكافأة نهاية الخدمة بعد X سنوات؟ وهل أستحق بعد سنتين؟ وما الفرق بين الاستقالة والفصل؟"
       >
         <CalculatorQuickAnswerGrid items={quickAnswers} />

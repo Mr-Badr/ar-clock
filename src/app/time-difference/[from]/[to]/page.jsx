@@ -71,8 +71,8 @@ export async function generateMetadata({ params }) {
   const [toCountryPrimary] = getCountrySeoNames(toCity.country_slug, toCity.country_name_ar);
   const sameCountry = fromCountryPrimary === toCountryPrimary;
   const title = sameCountry
-    ? `كم فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar}؟ | من يسبق الآن؟`
-    : `كم فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary}؟ | من يسبق الآن؟`;
+    ? `كم فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar} اليوم؟ | من يسبق الآن؟`
+    : `كم فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary} اليوم؟ | من يسبق الآن؟`;
   const description = sameCountry
     ? `اعرف فوراً من يسبق الآن بين ${fromCity.city_name_ar} و${toCity.city_name_ar} وكم ساعة الفرق بينهما، مع تحويل الوقت المباشر وأفضل وقت للاتصال أو الاجتماع.`
     : `اعرف فوراً من يسبق الآن بين ${fromCountryPrimary} و${toCountryPrimary} وكم ساعة الفرق بين ${fromCity.city_name_ar} و${toCity.city_name_ar}، مع تحويل الوقت المباشر وأفضل وقت للاتصال أو الاجتماع.`;
