@@ -2,7 +2,7 @@ services:
   app:
     image: ghcr.io/mr-badr/ar-clock:staging
     env_file:
-      - ../../.env.staging
+      - /opt/miqatona/env/staging.env
     depends_on:
       postgres:
         condition: service_healthy
