@@ -36,3 +36,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# runtime
+backups/
+*.sql
+
+# logs
+*.log
+
+# system noise
+=
+.DS_Store
