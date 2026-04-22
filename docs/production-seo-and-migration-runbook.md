@@ -102,18 +102,24 @@ Safe settings when Hetzner becomes the origin later:
 ## Docker And Hetzner Bridge
 
 The repo now includes:
-- [Dockerfile](/Users/hamza/Downloads/alarm/ar-clock/Dockerfile)
-- [compose.hetzner.yml](/Users/hamza/Downloads/alarm/ar-clock/compose.hetzner.yml)
-- [.dockerignore](/Users/hamza/Downloads/alarm/ar-clock/.dockerignore)
-- [infra/hetzner/Caddyfile](/Users/hamza/Downloads/alarm/ar-clock/infra/hetzner/Caddyfile)
-- [.env.production.example](/Users/hamza/Downloads/alarm/ar-clock/.env.production.example)
+- [Dockerfile](../Dockerfile)
+- [.dockerignore](../.dockerignore)
+- [.env.local.example](../.env.local.example)
+- [infra/env/staging.env.example](../infra/env/staging.env.example)
+- [infra/env/production.env.example](../infra/env/production.env.example)
+- [infra/docker/compose.base.yml](../infra/docker/compose.base.yml)
+- [infra/docker/compose.staging.yml](../infra/docker/compose.staging.yml)
+- [infra/docker/compose.production.yml](../infra/docker/compose.production.yml)
+- [infra/nginx/nginx.conf](../infra/nginx/nginx.conf)
+- [infra/nginx/templates/site.conf.template](../infra/nginx/templates/site.conf.template)
+- [docs/deployment-architecture.md](./deployment-architecture.md)
 
 Important:
 - These files are `opt-in`.
 - They do not change the current live environment.
-- The `postgres` container in `compose.hetzner.yml` is only a preparation step for later.
+- The staging `postgres` container is only a preparation step for later.
 - The current app still expects Supabase credentials in production unless you intentionally migrate the query layer.
-- The `caddy` service is the future edge/reverse-proxy layer for Hetzner.
+- `nginx` is now the reverse-proxy layer for the VPS path.
 
 ### Docker build
 
@@ -130,19 +136,25 @@ docker build --build-arg NEXT_OUTPUT_MODE=standalone -t miqatona-app .
 Copy the env template first:
 
 ```bash
-cp .env.production.example .env.production
+cp infra/env/production.env.example .env.production
 ```
 
-App plus edge proxy, still using Supabase:
+App plus Nginx, still using Supabase:
 
 ```bash
-docker compose -f compose.hetzner.yml up -d caddy app
+docker compose --env-file .env.production \
+  -f infra/docker/compose.base.yml \
+  -f infra/docker/compose.production.yml \
+  up -d --build
 ```
 
 App plus local PostgreSQL container for staging the next phase:
 
 ```bash
-docker compose -f compose.hetzner.yml --profile postgres up -d
+docker compose --env-file .env.staging \
+  -f infra/docker/compose.base.yml \
+  -f infra/docker/compose.staging.yml \
+  up -d --build
 ```
 
 ## Hetzner VPS Checklist
@@ -186,10 +198,11 @@ docker compose version
 Recommended server path:
 
 ```bash
-mkdir -p /srv/miqatona
-cd /srv/miqatona
-git clone <your-repo-url> .
-cp .env.production.example .env.production
+mkdir -p /opt/miqatona/production
+cd /opt/miqatona/production
+git clone <your-repo-url> current
+cd current
+cp infra/env/production.env.example .env.production
 ```
 
 ### 5. Fill `.env.production`
@@ -197,8 +210,8 @@ cp .env.production.example .env.production
 Before first boot, set:
 - `NEXT_PUBLIC_SITE_URL=https://miqatona.com`
 - `NEXT_PUBLIC_BASE_URL=https://miqatona.com`
-- `SITE_DOMAIN=miqatona.com`
-- `SITE_DOMAIN_WWW=www.miqatona.com`
+- `NGINX_SERVER_NAME=miqatona.com www.miqatona.com`
+- `NGINX_CANONICAL_HOST=miqatona.com`
 - current live Supabase keys
 - `REVALIDATE_SECRET`
 - any analytics/ads values you actively use
@@ -210,7 +223,10 @@ Do not switch `DATABASE_URL` yet.
 Start with the current working architecture:
 
 ```bash
-docker compose -f compose.hetzner.yml up -d --build caddy app
+docker compose --env-file .env.production \
+  -f infra/docker/compose.base.yml \
+  -f infra/docker/compose.production.yml \
+  up -d --build
 ```
 
 Then verify:
@@ -285,16 +301,16 @@ On Hetzner, monitor at least:
 - container restarts
 - memory pressure
 - disk usage
-- TLS renewal state in Caddy
+- TLS state in the Nginx or edge layer you place in front of the app later
 - app health via `/api/health`
 - response times on sitemap and top landing pages
 
 Useful commands:
 
 ```bash
-docker compose -f compose.hetzner.yml ps
-docker compose -f compose.hetzner.yml logs -f app
-docker compose -f compose.hetzner.yml logs -f caddy
+docker compose --env-file .env.production -f infra/docker/compose.base.yml -f infra/docker/compose.production.yml ps
+docker compose --env-file .env.production -f infra/docker/compose.base.yml -f infra/docker/compose.production.yml logs -f app
+docker compose --env-file .env.production -f infra/docker/compose.base.yml -f infra/docker/compose.production.yml logs -f nginx
 docker stats
 ```
 
@@ -311,7 +327,7 @@ Phase 1:
 - Confirm `/api/health`, `/robots.txt`, `/sitemap-index.xml`, and key pages match.
 
 Phase 2:
-- Put the Hetzner app behind a reverse proxy.
+- Put the Hetzner app behind Nginx.
 - Keep `NEXT_PUBLIC_SITE_URL=https://miqatona.com`.
 - Keep the same `www -> apex` redirect behavior.
 - Keep the same sitemap and robots URLs.

@@ -1,0 +1,77 @@
+x-default-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  app:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+      args:
+        NEXT_OUTPUT_MODE: ${NEXT_OUTPUT_MODE:-standalone}
+    image: ${APP_IMAGE:-ghcr.io/mr-badr/ar-clock}:${APP_TAG:-latest}
+    restart: unless-stopped
+    init: true
+    expose:
+      - "3000"
+    environment:
+      NODE_ENV: production
+      NEXT_OUTPUT_MODE: ${NEXT_OUTPUT_MODE:-standalone}
+      HOSTNAME: 0.0.0.0
+      PORT: 3000
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then((res)=>{if(!res.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    stop_grace_period: 30s
+    networks:
+      - backend
+    security_opt:
+      - no-new-privileges:true
+    logging: *default-logging
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_healthy
+    environment:
+      NGINX_SERVER_NAME: ${NGINX_SERVER_NAME}
+      NGINX_CANONICAL_HOST: ${NGINX_CANONICAL_HOST}
+      NGINX_X_ROBOTS_TAG: ${NGINX_X_ROBOTS_TAG:-all}
+      NGINX_ENVSUBST_FILTER: NGINX_SERVER_NAME|NGINX_CANONICAL_HOST|NGINX_X_ROBOTS_TAG
+    ports:
+      - "127.0.0.1:${NGINX_HTTP_PORT:-8080}:80"
+    volumes:
+      - ../nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../nginx/templates/site.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ../nginx/snippets:/etc/nginx/snippets:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1/nginx-health | grep -q ok"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/cache/nginx
+      - /etc/nginx/conf.d
+    networks:
+      - edge
+      - backend
+    security_opt:
+      - no-new-privileges:true
+    logging: *default-logging
+
+networks:
+  edge:
+    driver: bridge
+  backend:
+    driver: bridge
+    internal: true

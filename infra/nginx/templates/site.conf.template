@@ -1,0 +1,52 @@
+upstream next_app {
+  server app:3000;
+  keepalive 32;
+}
+
+map $host $redirect_to_canonical {
+  default 1;
+  ${NGINX_CANONICAL_HOST} 0;
+  localhost 0;
+  127.0.0.1 0;
+}
+
+server {
+  listen 80 default_server;
+  server_name _;
+  access_log off;
+
+  location = /nginx-health {
+    add_header Content-Type text/plain;
+    return 200 "ok";
+  }
+
+  return 444;
+}
+
+server {
+  listen 80;
+  server_name ${NGINX_SERVER_NAME} localhost 127.0.0.1;
+
+  include /etc/nginx/snippets/security.conf;
+  add_header X-Robots-Tag "${NGINX_X_ROBOTS_TAG}" always;
+
+  if ($redirect_to_canonical) {
+    return 301 $origin_scheme://${NGINX_CANONICAL_HOST}$request_uri;
+  }
+
+  location = /api/health {
+    include /etc/nginx/snippets/proxy-common.conf;
+    proxy_pass http://next_app;
+  }
+
+  location /_next/static/ {
+    include /etc/nginx/snippets/static-cache.conf;
+    include /etc/nginx/snippets/proxy-common.conf;
+    proxy_pass http://next_app;
+  }
+
+  location / {
+    include /etc/nginx/snippets/proxy-common.conf;
+    proxy_pass http://next_app;
+  }
+}

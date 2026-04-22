@@ -1,0 +1,6 @@
+name: miqatona-production
+
+services:
+  app:
+    env_file:
+      - ../../.env.production
