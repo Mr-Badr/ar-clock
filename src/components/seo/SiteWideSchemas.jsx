@@ -1,3 +1,4 @@
+// src/components/seo/SiteWideSchemas.jsx
 import {
   SITE_BRAND,
   SITE_BRAND_EN,
