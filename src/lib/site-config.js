@@ -1,4 +1,4 @@
-import { getEnv } from '@/lib/env.server';
+import { getSiteEnv } from '@/lib/env.server';
 import publishedEventsList from '@/data/holidays/generated/published-events-list.json';
 
 export const SITE_BRAND = 'ميقاتنا';
@@ -258,7 +258,7 @@ function canonicalizeSiteUrl(value) {
 }
 
 export function getSiteUrl() {
-  const env = getEnv();
+  const env = getSiteEnv();
   const explicitSiteUrl =
     canonicalizeSiteUrl(env.NEXT_PUBLIC_BASE_URL) ||
     canonicalizeSiteUrl(env.NEXT_PUBLIC_SITE_URL);

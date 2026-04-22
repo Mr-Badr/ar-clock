@@ -127,7 +127,7 @@ function normalizeCityFromPrisma(row: PrismaCityRow): LiveSearchableCity {
 
 async function getSupabaseClient() {
   const mod = await import('@/lib/supabase/server')
-  return mod.supabase
+  return mod.getSupabase()
 }
 
 async function getPrismaClient() {

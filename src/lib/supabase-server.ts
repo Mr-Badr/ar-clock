@@ -1,7 +1,7 @@
 import 'server-only'
-import { supabaseAdmin } from './supabase/admin'
+import { getSupabaseAdmin } from './supabase/admin'
 
 // Never import this in a Client Component
 export function getSupabaseServer() {
-  return supabaseAdmin;
+  return getSupabaseAdmin();
 }

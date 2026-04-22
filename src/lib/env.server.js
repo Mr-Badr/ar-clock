@@ -7,13 +7,43 @@ const emptyToUndefined = (schema) =>
     return trimmed === '' ? undefined : trimmed;
   }, schema);
 
-const schema = z
+const siteEnvShape = {
+  NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
+  NEXT_PUBLIC_SITE_URL: emptyToUndefined(z.string().url().optional()),
+  NEXT_PUBLIC_BASE_URL: emptyToUndefined(z.string().url().optional()),
+  VERCEL_PROJECT_PRODUCTION_URL: emptyToUndefined(z.string().min(1).optional()),
+  VERCEL_URL: emptyToUndefined(z.string().min(1).optional()),
+};
+
+function ensureResolvableSiteUrl(value, ctx) {
+  const hasResolvableSiteUrl =
+    value.NEXT_PUBLIC_SITE_URL ||
+    value.NEXT_PUBLIC_BASE_URL ||
+    value.VERCEL_PROJECT_PRODUCTION_URL ||
+    value.VERCEL_URL;
+
+  if (value.NODE_ENV === 'production' && !hasResolvableSiteUrl) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Set NEXT_PUBLIC_SITE_URL/NEXT_PUBLIC_BASE_URL or rely on Vercel system URL variables',
+      path: ['NEXT_PUBLIC_SITE_URL'],
+    });
+  }
+}
+
+const siteSchema = z
+  .object(siteEnvShape)
+  .superRefine((value, ctx) => {
+    ensureResolvableSiteUrl(value, ctx);
+  });
+
+const metadataSchema = z.object({
+  GOOGLE_SITE_VERIFICATION: emptyToUndefined(z.string().min(6).optional()),
+});
+
+const runtimeSchema = z
   .object({
-    NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
-    NEXT_PUBLIC_SITE_URL: emptyToUndefined(z.string().url().optional()),
-    NEXT_PUBLIC_BASE_URL: emptyToUndefined(z.string().url().optional()),
-    VERCEL_PROJECT_PRODUCTION_URL: emptyToUndefined(z.string().min(1).optional()),
-    VERCEL_URL: emptyToUndefined(z.string().min(1).optional()),
+    ...siteEnvShape,
     GOOGLE_SITE_VERIFICATION: emptyToUndefined(z.string().min(6).optional()),
     REVALIDATE_SECRET: emptyToUndefined(z.string().min(12).optional()),
     SUPABASE_URL: emptyToUndefined(z.string().url().optional()),
@@ -26,22 +56,11 @@ const schema = z
     LIVE_GEO_PROVIDER: emptyToUndefined(z.enum(['supabase', 'postgres']).optional()),
   })
   .superRefine((value, ctx) => {
-    const hasResolvableSiteUrl =
-      value.NEXT_PUBLIC_SITE_URL ||
-      value.NEXT_PUBLIC_BASE_URL ||
-      value.VERCEL_PROJECT_PRODUCTION_URL ||
-      value.VERCEL_URL;
+    ensureResolvableSiteUrl(value, ctx);
+
     const liveGeoUsesPostgres =
       value.ENABLE_LIVE_GEO_DB === 'true' &&
       value.LIVE_GEO_PROVIDER === 'postgres';
-
-    if (value.NODE_ENV === 'production' && !hasResolvableSiteUrl) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'Set NEXT_PUBLIC_SITE_URL/NEXT_PUBLIC_BASE_URL or rely on Vercel system URL variables',
-        path: ['NEXT_PUBLIC_SITE_URL'],
-      });
-    }
 
     if (value.NODE_ENV === 'production' && !value.REVALIDATE_SECRET) {
       ctx.addIssue({
@@ -76,17 +95,38 @@ const schema = z
     }
   });
 
-let _cached = null;
+function formatIssues(issues) {
+  return issues
+    .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    .join('; ');
+}
 
-export function getEnv() {
-  if (_cached) return _cached;
+function parseEnv(schema, label) {
   const parsed = schema.safeParse(process.env);
   if (!parsed.success) {
-    const details = parsed.error.issues
-      .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
-      .join('; ');
-    throw new Error(`[env] Invalid environment configuration: ${details}`);
+    throw new Error(`[env] Invalid ${label} environment configuration: ${formatIssues(parsed.error.issues)}`);
   }
-  _cached = parsed.data;
-  return _cached;
+  return parsed.data;
+}
+
+let _siteEnv = null;
+let _metadataEnv = null;
+let _runtimeEnv = null;
+
+export function getSiteEnv() {
+  if (_siteEnv) return _siteEnv;
+  _siteEnv = parseEnv(siteSchema, 'site');
+  return _siteEnv;
+}
+
+export function getMetadataEnv() {
+  if (_metadataEnv) return _metadataEnv;
+  _metadataEnv = parseEnv(metadataSchema, 'metadata');
+  return _metadataEnv;
+}
+
+export function getEnv() {
+  if (_runtimeEnv) return _runtimeEnv;
+  _runtimeEnv = parseEnv(runtimeSchema, 'runtime');
+  return _runtimeEnv;
 }

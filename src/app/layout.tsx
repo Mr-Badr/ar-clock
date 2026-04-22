@@ -15,7 +15,7 @@ import SiteWideSchemas from '@/components/seo/SiteWideSchemas';
 import ConsentBanner from '@/components/consent/ConsentBanner';
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
 import { Analytics } from '@vercel/analytics/next';
-import { getEnv } from '@/lib/env.server';
+import { getMetadataEnv } from '@/lib/env.server';
 import {
   SITE_BRAND,
   SITE_BRAND_EN,
@@ -25,7 +25,7 @@ import {
   getMetadataBase,
 } from '@/lib/site-config';
 
-const env = getEnv();
+const env = getMetadataEnv();
 // Body copy uses Noto Sans Arabic across the app.
 // The heavier weights are still needed by the design system for clocks/heroes.
 const notoSansArabic = Noto_Sans_Arabic({
