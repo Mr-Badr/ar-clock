@@ -3,4 +3,4 @@ name: miqatona-production
 services:
   app:
     env_file:
-      - ../../.env.production
+      - /opt/miqatona/env/staging.env
