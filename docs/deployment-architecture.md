@@ -23,6 +23,9 @@ Shared infra:
 - `infra/nginx/nginx.conf`
 - `infra/nginx/templates/site.conf.template`
 - `infra/nginx/snippets/*`
+- `infra/postgres/init/001_geo_schema.sql`
+- `prisma/schema.prisma`
+- `scripts/extract-geo-import.sh`
 
 This removes the old duplicated `compose.hetzner.yml`, `docker-compose.staging.yml`,
 and Caddy-specific files.
@@ -90,15 +93,56 @@ Networks:
 - `edge`: host-facing reverse-proxy side
 - `backend`: private internal network for Nginx, app, and database traffic
 
-## Why Supabase Still Exists In Staging And Production Templates
+## Runtime Provider Strategy
 
-The app currently still loads Supabase clients in runtime code.
+The geo data layer now supports two runtime providers:
+- `supabase`
+- `postgres`
 
-That means the safe current posture is:
-- app runtime stays Supabase-compatible
-- local PostgreSQL in staging is the migration rehearsal target
+Safe first posture:
+- keep `ENABLE_LIVE_GEO_DB=false`
+- keep `LIVE_GEO_PROVIDER=supabase`
+- boot staging and validate Docker, Nginx, and app health first
 
-The PostgreSQL cutover should happen only after the provider layer is switched cleanly.
+After the staging PostgreSQL import succeeds:
+- set `ENABLE_LIVE_GEO_DB=true`
+- set `LIVE_GEO_PROVIDER=postgres`
+- restart the staging stack
+
+This lets one codebase move from Supabase to self-hosted PostgreSQL through env
+configuration instead of code duplication.
+
+## App Database Scope
+
+The backup from Supabase is a full platform dump, but the app-owned schema we
+should move into Docker Postgres first is the `public` geo schema:
+- `public.countries`
+- `public.cities`
+- their sequences, constraints, and indexes
+
+The repo now includes:
+- `infra/postgres/init/001_geo_schema.sql` for first-run Postgres initialization
+- `prisma/schema.prisma` for the app-owned relational model
+- `prisma.config.ts` for Prisma 7 CLI configuration
+- `scripts/extract-geo-import.sh` to extract app-only data from the full Supabase dump
+
+Important:
+- do not import the entire Supabase dump directly into plain Docker Postgres
+- Supabase-specific schemas like `auth`, `storage`, and `realtime` are not the first migration target
+- the original `find_nearest_cities` RPC is not present in the dump, so the Postgres provider now replaces it with a direct nearest-city SQL query
+
+## Database URL Split
+
+Use two connection URLs:
+- `DATABASE_URL`: app runtime inside Docker
+- `PRISMA_DATABASE_URL`: Prisma CLI from the host or VPS shell
+
+Example in staging:
+- `DATABASE_URL=postgresql://miqatona:...@postgres:5432/miqatona_staging`
+- `PRISMA_DATABASE_URL=postgresql://miqatona:...@127.0.0.1:5433/miqatona_staging`
+
+This is the cleanest setup because the app talks over the Docker network while
+host-side Prisma commands use the published localhost port.
 
 ## Commands
 
@@ -139,10 +183,33 @@ docker compose --env-file .env.production \
 Once staging is up:
 
 ```bash
+./scripts/extract-geo-import.sh /opt/miqatona/backups/backup.sql /opt/miqatona/backups/geo-import.sql
 docker compose --env-file .env.staging \
   -f infra/docker/compose.base.yml \
   -f infra/docker/compose.staging.yml \
-  exec -T postgres psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" < /opt/miqatona/backups/backup.sql
+  exec -T postgres psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" < /opt/miqatona/backups/geo-import.sql
+```
+
+Then switch staging to local PostgreSQL:
+
+```bash
+nano .env.staging
+```
+
+Set:
+
+```bash
+ENABLE_LIVE_GEO_DB=true
+LIVE_GEO_PROVIDER=postgres
+```
+
+Restart:
+
+```bash
+docker compose --env-file .env.staging \
+  -f infra/docker/compose.base.yml \
+  -f infra/docker/compose.staging.yml \
+  up -d
 ```
 
 ## Future Cloudflare And Zero-Downtime Path

@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Country {
+  id          BigInt  @id @default(autoincrement())
+  countryCode String  @unique @map("country_code") @db.Char(2)
+  countrySlug String  @unique @map("country_slug")
+  nameEn      String? @map("name_en")
+  nameAr      String  @map("name_ar")
+  timezone    String?
+  cities      City[]
+
+  @@map("countries")
+}
+
+model City {
+  id          BigInt  @id @default(autoincrement())
+  countryCode String  @map("country_code") @db.Char(2)
+  citySlug    String  @map("city_slug")
+  nameEn      String? @map("name_en")
+  nameAr      String  @map("name_ar")
+  lat         Float
+  lon         Float
+  timezone    String
+  population  Int     @default(0)
+  priority    Int     @default(0)
+  isCapital   Boolean @default(false) @map("is_capital")
+  country     Country @relation(fields: [countryCode], references: [countryCode], onDelete: Cascade)
+
+  @@index([countryCode], map: "idx_city_country")
+  @@index([nameAr], map: "idx_city_name_ar")
+  @@index([population(sort: Desc)], map: "idx_city_population")
+  @@map("cities")
+}

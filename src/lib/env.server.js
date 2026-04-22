@@ -21,6 +21,9 @@ const schema = z
     SUPABASE_SERVICE_ROLE_KEY: emptyToUndefined(z.string().min(20).optional()),
     NEXT_PUBLIC_SUPABASE_URL: emptyToUndefined(z.string().url().optional()),
     NEXT_PUBLIC_SUPABASE_ANON_KEY: emptyToUndefined(z.string().min(20).optional()),
+    DATABASE_URL: emptyToUndefined(z.string().min(1).optional()),
+    ENABLE_LIVE_GEO_DB: z.enum(['true', 'false']).optional(),
+    LIVE_GEO_PROVIDER: emptyToUndefined(z.enum(['supabase', 'postgres']).optional()),
   })
   .superRefine((value, ctx) => {
     const hasResolvableSiteUrl =
@@ -28,6 +31,9 @@ const schema = z
       value.NEXT_PUBLIC_BASE_URL ||
       value.VERCEL_PROJECT_PRODUCTION_URL ||
       value.VERCEL_URL;
+    const liveGeoUsesPostgres =
+      value.ENABLE_LIVE_GEO_DB === 'true' &&
+      value.LIVE_GEO_PROVIDER === 'postgres';
 
     if (value.NODE_ENV === 'production' && !hasResolvableSiteUrl) {
       ctx.addIssue({
@@ -45,7 +51,15 @@ const schema = z
       });
     }
 
-    if (value.NODE_ENV === 'production' && !value.SUPABASE_URL) {
+    if (value.NODE_ENV === 'production' && liveGeoUsesPostgres && !value.DATABASE_URL) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'DATABASE_URL is required when LIVE_GEO_PROVIDER=postgres',
+        path: ['DATABASE_URL'],
+      });
+    }
+
+    if (value.NODE_ENV === 'production' && !liveGeoUsesPostgres && !value.SUPABASE_URL) {
       ctx.addIssue({
         code: 'custom',
         message: 'SUPABASE_URL is required in production',
@@ -53,7 +67,7 @@ const schema = z
       });
     }
 
-    if (value.NODE_ENV === 'production' && !value.SUPABASE_ANON_KEY) {
+    if (value.NODE_ENV === 'production' && !liveGeoUsesPostgres && !value.SUPABASE_ANON_KEY) {
       ctx.addIssue({
         code: 'custom',
         message: 'SUPABASE_ANON_KEY is required in production',

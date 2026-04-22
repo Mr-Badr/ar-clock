@@ -14,10 +14,10 @@ Production stays untouched on Vercel + Supabase.
 Boot a safe staging stack on the VPS:
 - Next.js app in Docker
 - Nginx in front of the app
-- local PostgreSQL in Docker for migration rehearsal
+- local PostgreSQL in Docker for migration rehearsal and Postgres-provider validation
 
-The app runtime still uses Supabase-compatible envs for now. Local PostgreSQL is
-there for import and validation, not for the live app cutover yet.
+Safe first boot uses Supabase-compatible envs. After the import succeeds, staging
+can switch to the local PostgreSQL provider by env only.
 
 ## 1. Host Prep
 
@@ -107,6 +107,12 @@ Set these values correctly:
   Leave empty unless you explicitly need admin/server operations in staging.
 - `POSTGRES_PASSWORD`
   Set a strong password.
+- `DATABASE_URL`
+  Keep the Docker-network form:
+  `postgresql://miqatona:YOUR_PASSWORD@postgres:5432/miqatona_staging`
+- `PRISMA_DATABASE_URL`
+  Keep the host-shell form:
+  `postgresql://miqatona:YOUR_PASSWORD@127.0.0.1:5433/miqatona_staging`
 
 Safe first values:
 - `NGINX_HTTP_PORT=8081`
@@ -178,13 +184,16 @@ Expected:
 
 Because this is staging, `X-Robots-Tag` should be `noindex, nofollow, noarchive`.
 
-## 8. Test From Your Laptop Via SSH Tunnel
+## 8. Optional Laptop Access Via Password-Based SSH Tunnel
 
 From your laptop:
 
 ```bash
 ssh -L 8081:127.0.0.1:8081 badr@YOUR_SERVER_IP
 ```
+
+If you use password login only, that is fine. SSH will simply prompt for the
+server password.
 
 Then open:
 
@@ -202,13 +211,27 @@ From your laptop:
 scp /home/badr/backup.sql badr@YOUR_SERVER_IP:/opt/miqatona/backups/backup.sql
 ```
 
+`scp` also works with password login. It will prompt for the same VPS password.
+
 Then on the VPS:
 
 ```bash
 ls -lh /opt/miqatona/backups/backup.sql
 ```
 
-## 10. Import The Backup Into Staging PostgreSQL
+## 10. Extract App-Only SQL From The Supabase Dump
+
+Do not import the full Supabase dump directly into plain Docker Postgres.
+Extract the app-owned geo data first:
+
+```bash
+cd /opt/miqatona/staging/current
+chmod +x scripts/extract-geo-import.sh
+./scripts/extract-geo-import.sh /opt/miqatona/backups/backup.sql /opt/miqatona/backups/geo-import.sql
+ls -lh /opt/miqatona/backups/geo-import.sql
+```
+
+## 11. Import The App Data Into Staging PostgreSQL
 
 Run on the VPS:
 
@@ -218,7 +241,7 @@ docker compose --env-file .env.staging \
   -f infra/docker/compose.base.yml \
   -f infra/docker/compose.staging.yml \
   exec -T postgres \
-  psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" < /opt/miqatona/backups/backup.sql
+  psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" < /opt/miqatona/backups/geo-import.sql
 ```
 
 If your shell does not expand the variables in that form, use explicit values from `.env.staging`:
@@ -228,10 +251,10 @@ docker compose --env-file .env.staging \
   -f infra/docker/compose.base.yml \
   -f infra/docker/compose.staging.yml \
   exec -T postgres \
-  psql -U miqatona -d miqatona_staging < /opt/miqatona/backups/backup.sql
+  psql -U miqatona -d miqatona_staging < /opt/miqatona/backups/geo-import.sql
 ```
 
-## 11. Inspect Database State
+## 12. Inspect Database State
 
 Run:
 
@@ -242,9 +265,55 @@ docker compose --env-file .env.staging \
   exec postgres psql -U miqatona -d miqatona_staging -c '\dt'
 ```
 
-Then check important tables and counts before any app-side database cutover work.
+Then check counts:
 
-## 12. Useful Day-2 Commands
+```bash
+docker compose --env-file .env.staging \
+  -f infra/docker/compose.base.yml \
+  -f infra/docker/compose.staging.yml \
+  exec postgres psql -U miqatona -d miqatona_staging -c 'SELECT COUNT(*) FROM public.countries;'
+
+docker compose --env-file .env.staging \
+  -f infra/docker/compose.base.yml \
+  -f infra/docker/compose.staging.yml \
+  exec postgres psql -U miqatona -d miqatona_staging -c 'SELECT COUNT(*) FROM public.cities;'
+```
+
+## 13. Switch Staging From Supabase To Local PostgreSQL
+
+Edit the staging env:
+
+```bash
+nano .env.staging
+```
+
+Change these two values:
+
+```bash
+ENABLE_LIVE_GEO_DB=true
+LIVE_GEO_PROVIDER=postgres
+```
+
+Then restart the stack:
+
+```bash
+docker compose --env-file .env.staging \
+  -f infra/docker/compose.base.yml \
+  -f infra/docker/compose.staging.yml \
+  up -d
+```
+
+Verify that staging is now reading from local PostgreSQL:
+
+```bash
+curl http://127.0.0.1:8081/api/health
+```
+
+You should see:
+- `liveGeoDbEnabled: true`
+- `liveGeoProvider: "postgres"`
+
+## 14. Useful Day-2 Commands
 
 Stop staging:
 
@@ -282,7 +351,7 @@ free -h
 df -h
 ```
 
-## 13. What Not To Do Yet
+## 15. What Not To Do Yet
 
 Do not do these yet:
 - do not point Cloudflare production DNS to this VPS
