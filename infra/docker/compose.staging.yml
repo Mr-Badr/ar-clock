@@ -33,8 +33,6 @@ services:
       - backend
 
   nginx:
-    ports:
-      - "8081:80"
 
 volumes:
   postgres-data:
