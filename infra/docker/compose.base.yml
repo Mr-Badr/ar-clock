@@ -67,8 +67,6 @@ services:
       NGINX_CANONICAL_HOST: ${NGINX_CANONICAL_HOST}
       NGINX_X_ROBOTS_TAG: ${NGINX_X_ROBOTS_TAG:-all}
       NGINX_ENVSUBST_FILTER: NGINX_SERVER_NAME|NGINX_CANONICAL_HOST|NGINX_X_ROBOTS_TAG
-    ports:
-      - "127.0.0.1:${NGINX_HTTP_PORT:-8080}:80"
     volumes:
       - ../nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ../nginx/templates/site.conf.template:/etc/nginx/templates/default.conf.template:ro
