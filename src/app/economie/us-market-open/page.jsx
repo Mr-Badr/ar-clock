@@ -1,9 +1,5 @@
-// src/app/economie/best-trading-time/page.jsx
-import { Suspense } from 'react';
-
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
-  STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
   buildEconomyDatasetSchema,
   buildEconomyFaqSchema,
@@ -49,7 +45,9 @@ export const metadata = buildCanonicalMetadata({
   url: `${SITE_URL}/economie/us-market-open`,
 });
 
-export default function UsMarketOpenPage() {
+export default async function UsMarketOpenPage() {
+  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+
   const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/us-market-open',
@@ -102,16 +100,7 @@ export default function UsMarketOpenPage() {
       />
 
       <EconomyAdLayout>
-        <Suspense
-          fallback={(
-            <UsMarketOpenLive
-              initialViewer={STATIC_ECONOMY_PAGE_STATE.initialViewer}
-              initialNowIso={STATIC_ECONOMY_PAGE_STATE.initialNowIso}
-            />
-          )}
-        >
-          <UsMarketOpenRequestContent />
-        </Suspense>
+        <UsMarketOpenLive initialViewer={initialViewer} initialNowIso={initialNowIso} />
         <EconomyReadingShelf
           title="اقرأ قبل متابعة الافتتاح"
           lead="هذه الأدلة تشرح معنى الافتتاح الأمريكي والساعة البصرية حتى لا تبقى الصفحة مجرد عد تنازلي من دون سياق."
@@ -120,9 +109,4 @@ export default function UsMarketOpenPage() {
       </EconomyAdLayout>
     </div>
   );
-}
-
-async function UsMarketOpenRequestContent() {
-  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
-  return <UsMarketOpenLive initialViewer={initialViewer} initialNowIso={initialNowIso} />;
 }

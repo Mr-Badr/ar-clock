@@ -1,9 +1,5 @@
-// src/app/economie/best-trading-time/page.jsx
-import { Suspense } from 'react';
-
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
-  STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
   buildEconomyDatasetSchema,
   buildEconomyFaqSchema,
@@ -44,7 +40,9 @@ export const metadata = buildCanonicalMetadata({
   url: `${SITE_URL}/economie/market-clock`,
 });
 
-export default function MarketClockPage() {
+export default async function MarketClockPage() {
+  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+
   const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/market-clock',
@@ -96,16 +94,7 @@ export default function MarketClockPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <EconomyAdLayout>
-        <Suspense
-          fallback={(
-            <MarketClockLive
-              initialViewer={STATIC_ECONOMY_PAGE_STATE.initialViewer}
-              initialNowIso={STATIC_ECONOMY_PAGE_STATE.initialNowIso}
-            />
-          )}
-        >
-          <MarketClockRequestContent />
-        </Suspense>
+        <MarketClockLive initialViewer={initialViewer} initialNowIso={initialNowIso} />
         <EconomyReadingShelf
           title="كيف تفهم الساعة لا الرقم فقط؟"
           lead="هذه الأدلة تشرح معنى ساعة السوق والسيولة والجلسات، ثم تعيد المستخدم إلى الأداة وهو يفهم القراءة البصرية بشكل أوضح."
@@ -114,9 +103,4 @@ export default function MarketClockPage() {
       </EconomyAdLayout>
     </div>
   );
-}
-
-async function MarketClockRequestContent() {
-  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
-  return <MarketClockLive initialViewer={initialViewer} initialNowIso={initialNowIso} />;
 }

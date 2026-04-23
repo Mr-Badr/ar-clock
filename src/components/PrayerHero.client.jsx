@@ -15,6 +15,7 @@
  */
 
 import { useState, useEffect, useRef, useCallback, memo } from 'react';
+import { calculatePrayerTimes, getNextPrayer } from '@/lib/prayerEngine';
 import { ALL_METHODS, getMethodByCountry } from '@/lib/prayer-methods';
 
 
@@ -75,12 +76,78 @@ function computeTickValues(nextIso, prevIso) {
   return { timeLeft, progress };
 }
 
+function resolveLivePrayerWindow({
+  lat,
+  lon,
+  timezone,
+  countryCode,
+  method,
+  fallbackNextPrayerKey,
+  fallbackNextPrayerIso,
+  fallbackPrevPrayerIso,
+}) {
+  const parsedLat = Number(lat);
+  const parsedLon = Number(lon);
+
+  if (!Number.isFinite(parsedLat) || !Number.isFinite(parsedLon) || !timezone) {
+    return {
+      nextKey: fallbackNextPrayerKey,
+      nextIso: fallbackNextPrayerIso,
+      prevIso: fallbackPrevPrayerIso,
+    };
+  }
+
+  try {
+    const now = new Date();
+    const times = calculatePrayerTimes({
+      lat: parsedLat,
+      lon: parsedLon,
+      timezone,
+      date: now,
+      method,
+      countryCode,
+      cacheKey: `prayer-hero::${countryCode || timezone}::${parsedLat.toFixed(4)}::${parsedLon.toFixed(4)}`,
+    });
+
+    if (!times) {
+      return {
+        nextKey: fallbackNextPrayerKey,
+        nextIso: fallbackNextPrayerIso,
+        prevIso: fallbackPrevPrayerIso,
+      };
+    }
+
+    return getNextPrayer(times, now.toISOString());
+  } catch {
+    return {
+      nextKey: fallbackNextPrayerKey,
+      nextIso: fallbackNextPrayerIso,
+      prevIso: fallbackPrevPrayerIso,
+    };
+  }
+}
+
+function buildLiveTickState(config) {
+  const windowState = resolveLivePrayerWindow(config);
+  const { timeLeft, progress } = computeTickValues(windowState.nextIso, windowState.prevIso);
+
+  return {
+    nextPrayerKey: windowState.nextKey,
+    nextPrayerIso: windowState.nextIso,
+    prevPrayerIso: windowState.prevIso,
+    timeLeft,
+    progress,
+  };
+}
+
 // ── Component ─────────────────────────────────────────────────────────────────
 
 function PrayerHeroClient({
   nextPrayerKey,
   nextPrayerIso,
   prevPrayerIso,
+  lat,
+  lon,
   timezone,
   method: defaultMethod,
   countryCode,
@@ -89,39 +156,68 @@ function PrayerHeroClient({
   // All initial values are static constants — identical on server and client.
   // `mounted` flips to true only inside useEffect (client-only).
   // This guarantees SSR HTML === first client render → zero hydration mismatch.
-  const [mounted,  setMounted]  = useState(false);
-  const [timeLeft, setTimeLeft] = useState(STATIC_TIME_LEFT);
-  const [progress, setProgress] = useState(STATIC_PROGRESS);
+  const [mounted, setMounted] = useState(false);
+  const [tickState, setTickState] = useState(() => ({
+    nextPrayerKey,
+    nextPrayerIso,
+    prevPrayerIso,
+    timeLeft: STATIC_TIME_LEFT,
+    progress: STATIC_PROGRESS,
+  }));
   const [hour12,   setHour12]   = useState(false);
   const [method,   setMethod]   = useState(defaultMethod || 'MuslimWorldLeague');
 
 
   // Props mirrored into refs — interval/RAF read these, never stale closures
+  const nextKeyRef     = useRef(nextPrayerKey);
   const nextIsoRef     = useRef(nextPrayerIso);
   const prevIsoRef     = useRef(prevPrayerIso);
-  nextIsoRef.current   = nextPrayerIso;
-  prevIsoRef.current   = prevPrayerIso;
+  const latRef         = useRef(lat);
+  const lonRef         = useRef(lon);
+  const timezoneRef    = useRef(timezone);
+  const countryCodeRef = useRef(countryCode);
+  const methodRef      = useRef(defaultMethod || FALLBACK_METHOD);
+  nextKeyRef.current     = nextPrayerKey;
+  nextIsoRef.current     = nextPrayerIso;
+  prevIsoRef.current     = prevPrayerIso;
+  latRef.current         = lat;
+  lonRef.current         = lon;
+  timezoneRef.current    = timezone;
+  countryCodeRef.current = countryCode;
+  methodRef.current      = defaultMethod || FALLBACK_METHOD;
 
   const intervalRef    = useRef(null);
-  const rafRef         = useRef(null);
-  // Timer writes here → RAF reads here → setState only when value changed
-  // This decouples setState from the interval, making loops impossible
-  const timerValuesRef = useRef({ timeLeft: STATIC_TIME_LEFT, progress: STATIC_PROGRESS });
+  const buildCurrentTick = useCallback(() => (
+    buildLiveTickState({
+      lat: latRef.current,
+      lon: lonRef.current,
+      timezone: timezoneRef.current,
+      countryCode: countryCodeRef.current,
+      method: methodRef.current,
+      fallbackNextPrayerKey: nextKeyRef.current,
+      fallbackNextPrayerIso: nextIsoRef.current,
+      fallbackPrevPrayerIso: prevIsoRef.current,
+    })
+  ), []);
 
-  // ── RAF flush: drains timerValuesRef into state ───────────────────────────
-  // Empty deps: reads only refs and stable setState setters. Never recreated.
-  const flushTimerValues = useCallback(() => {
-    const { timeLeft: tl, progress: pr } = timerValuesRef.current;
-    setTimeLeft(prev => prev === tl ? prev : tl);
-    setProgress(prev => Math.abs(prev - pr) < 0.0001 ? prev : pr);
-    rafRef.current = requestAnimationFrame(flushTimerValues);
+  const commitTick = useCallback((nextState) => {
+    setTickState((currentState) => {
+      if (
+        currentState.nextPrayerKey === nextState.nextPrayerKey &&
+        currentState.nextPrayerIso === nextState.nextPrayerIso &&
+        currentState.prevPrayerIso === nextState.prevPrayerIso &&
+        currentState.timeLeft === nextState.timeLeft &&
+        Math.abs(currentState.progress - nextState.progress) < 0.0001
+      ) {
+        return currentState;
+      }
+
+      return nextState;
+    });
   }, []);
 
   // ── Effect 1: Mount — runs exactly once ──────────────────────────────────
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setMounted(true);
-    }, 50);
     // Restore user preferences
     try {
       const h = localStorage.getItem('pref_hour12') === '1';
@@ -133,32 +229,20 @@ function PrayerHeroClient({
       setMethod(m);
     } catch (_) {}
 
+    commitTick(buildCurrentTick());
+    setMounted(true);
 
-    // Seed the ref with real values before RAF starts
-    timerValuesRef.current = computeTickValues(nextIsoRef.current, prevIsoRef.current);
-
-    // RAF loop: flushes ref values to state ~60fps, with bailout equality checks
-    rafRef.current = requestAnimationFrame(flushTimerValues);
-
-    // Interval: computes new tick values every second, writes to ref only (no setState)
     intervalRef.current = setInterval(() => {
-      const result = computeTickValues(nextIsoRef.current, prevIsoRef.current);
-      timerValuesRef.current = result;
-      if (result.timeLeft === 'الان') clearInterval(intervalRef.current);
+      commitTick(buildCurrentTick());
     }, 1000);
-
-    // Reveal real values — triggers one re-render with actual countdown
-    setMounted(prev => prev ? prev : true);
 
     return () => {
       clearInterval(intervalRef.current);
-      cancelAnimationFrame(rafRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // mount/unmount only — intentionally empty
+  }, [buildCurrentTick, commitTick, countryCode, defaultMethod]);
 
   // ── Effect 2: Restart when prayer window changes (city switch etc.) ───────
-  const windowKey        = `${nextPrayerIso}|${prevPrayerIso}`;
+  const windowKey        = `${nextPrayerKey}|${nextPrayerIso}|${prevPrayerIso}|${lat}|${lon}|${timezone}|${countryCode}|${defaultMethod}`;
   const prevWindowKeyRef = useRef(windowKey);
 
   useEffect(() => {
@@ -169,16 +253,14 @@ function PrayerHeroClient({
     prevWindowKeyRef.current = windowKey;
 
     clearInterval(intervalRef.current);
-    timerValuesRef.current = computeTickValues(nextIsoRef.current, prevIsoRef.current);
+    commitTick(buildCurrentTick());
 
     intervalRef.current = setInterval(() => {
-      const result = computeTickValues(nextIsoRef.current, prevIsoRef.current);
-      timerValuesRef.current = result;
-      if (result.timeLeft === 'الان') clearInterval(intervalRef.current);
+      commitTick(buildCurrentTick());
     }, 1000);
 
     return () => clearInterval(intervalRef.current);
-  }, [windowKey, mounted]);
+  }, [buildCurrentTick, commitTick, mounted, windowKey]);
 
   // ── Handlers ─────────────────────────────────────────────────────────────
 
@@ -200,15 +282,17 @@ function PrayerHeroClient({
 
   // Before mount: static values (matches SSR HTML exactly)
   // After mount:  real countdown values
-  const displayTimeLeft = mounted ? timeLeft  : STATIC_TIME_LEFT;
-  const displayProgress = mounted ? progress  : STATIC_PROGRESS;
+  const displayTimeLeft = mounted ? tickState.timeLeft : STATIC_TIME_LEFT;
+  const displayProgress = mounted ? tickState.progress : STATIC_PROGRESS;
   const displayOffset   = mounted
     ? RING_CIRCUMFERENCE * (1 - displayProgress)
     : STATIC_DASHOFFSET;
 
   const fontSize    = displayTimeLeft.length > 5 ? '1.6rem' : '2rem';
   const methodLabel = METHODS.find(m => m.value === method)?.label ?? method;
-  const prayerLabel = PRAYER_AR[nextPrayerKey] ?? nextPrayerKey ?? '—';
+  const activePrayerKey = mounted ? tickState.nextPrayerKey : nextPrayerKey;
+  const activeNextPrayerIso = mounted ? tickState.nextPrayerIso : nextPrayerIso;
+  const prayerLabel = PRAYER_AR[activePrayerKey] ?? activePrayerKey ?? '—';
 
   // ── Render ────────────────────────────────────────────────────────────────
 
@@ -258,7 +342,7 @@ function PrayerHeroClient({
           <span className="text-muted text-sm font-medium">الصلاة القادمة</span>
           <span className="text-accent text-xl font-bold">{prayerLabel}</span>
           <time
-            dateTime={mounted ? (nextPrayerIso ?? undefined) : undefined}
+            dateTime={mounted ? (activeNextPrayerIso ?? undefined) : undefined}
             className="text-primary font-mono font-black tabular-nums"
             style={{ fontSize, direction: 'ltr' }}
             aria-live="polite"
@@ -274,8 +358,12 @@ function PrayerHeroClient({
 }
 
 export default memo(PrayerHeroClient, (prev, next) =>
+  prev.lat           === next.lat &&
+  prev.lon           === next.lon &&
   prev.nextPrayerIso === next.nextPrayerIso &&
   prev.prevPrayerIso === next.prevPrayerIso &&
   prev.nextPrayerKey === next.nextPrayerKey &&
-  prev.timezone      === next.timezone
+  prev.timezone      === next.timezone &&
+  prev.countryCode   === next.countryCode &&
+  prev.method        === next.method
 );

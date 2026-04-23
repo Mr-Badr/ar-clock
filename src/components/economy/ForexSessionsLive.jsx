@@ -195,6 +195,14 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
 
       <section className="economy-section">
         <EconomySectionHeader
+          title="خريطة السيولة خلال يومك"
+          lead="هذا الرسم يظهر بسرعة متى يرتفع النشاط ومتى يهدأ، حتى يرى الزائر الشكل العملي لليوم قبل الدخول في التفاصيل والجداول."
+        />
+        <HourlyActivityChart chart={model.activityChart} />
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
           title="بطاقات الجلسات الأربع"
           lead="كل بطاقة تحوّل توقيت المركز المالي إلى توقيتك الحالي، مع عداد يوضح هل الجلسة مفتوحة الآن أم أنها على وشك الفتح."
         />
@@ -337,14 +345,6 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
           columns={['الجلسة', 'أفضل الأزواج', 'لماذا؟', 'أزواج أقل مناسبة']}
           rows={model.sessionPairRows}
         />
-      </section>
-
-      <section className="economy-section">
-        <EconomySectionHeader
-          title="خريطة السيولة خلال يومك"
-          lead="بدلاً من سؤال واحد عن ساعة الافتتاح، يُظهر هذا الرسم كيف ترتفع وتنخفض السيولة خلال يومك المحلي، ومتى تبلغ الذروة فعلياً."
-        />
-        <HourlyActivityChart chart={model.activityChart} />
       </section>
 
       <section className="economy-section">

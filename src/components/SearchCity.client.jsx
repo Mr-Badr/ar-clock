@@ -307,6 +307,8 @@ export default function SearchCity({
 
   const abortRef = useRef(null);
   const debounceRef = useRef(null);
+  const inputRef = useRef(null);
+  const listRef = useRef(null);
 
   /* ── Derived Lists ───────────────────────────────────────────────────── */
   const mainCountriesSlugs = useMemo(() => [
@@ -373,6 +375,27 @@ export default function SearchCity({
     const timeoutId = window.setTimeout(warmGlobalSearch, 900);
     return () => window.clearTimeout(timeoutId);
   }, []);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const rafId = window.requestAnimationFrame(() => {
+      inputRef.current?.focus();
+    });
+
+    return () => window.cancelAnimationFrame(rafId);
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const rafId = window.requestAnimationFrame(() => {
+      listRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+      inputRef.current?.focus();
+    });
+
+    return () => window.cancelAnimationFrame(rafId);
+  }, [open, selectedCountry?.slug]);
 
   /* ── Search ──────────────────────────────────────────────────────────── */
   const performSearch = useCallback(async (q, countrySlug, forceGlobal = false) => {
@@ -700,6 +723,7 @@ export default function SearchCity({
             <Search size={18} className="sc-dialog-search-icon" aria-hidden="true" />
 
             <CommandInput
+              ref={inputRef}
               value={query}
               onValueChange={onQueryChange}
               placeholder={
@@ -789,6 +813,7 @@ export default function SearchCity({
 
         {/* ── Results list ────────────────────────────────────────────── */}
         <CommandList
+          ref={listRef}
           className="sc-dialog-list"
           aria-label="نتائج البحث"
           aria-busy={showSkeleton}

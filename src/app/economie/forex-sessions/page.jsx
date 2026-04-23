@@ -1,9 +1,5 @@
-// src/app/economie/best-trading-time/page.jsx
-import { Suspense } from 'react';
-
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
-  STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
   buildEconomyDatasetSchema,
   buildEconomyFaqSchema,
@@ -47,7 +43,9 @@ export const metadata = buildCanonicalMetadata({
   url: `${SITE_URL}/economie/forex-sessions`,
 });
 
-export default function ForexSessionsPage() {
+export default async function ForexSessionsPage() {
+  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+
   const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/forex-sessions',
@@ -99,16 +97,7 @@ export default function ForexSessionsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <EconomyAdLayout>
-        <Suspense
-          fallback={(
-            <ForexSessionsLive
-              initialViewer={STATIC_ECONOMY_PAGE_STATE.initialViewer}
-              initialNowIso={STATIC_ECONOMY_PAGE_STATE.initialNowIso}
-            />
-          )}
-        >
-          <ForexSessionsRequestContent />
-        </Suspense>
+        <ForexSessionsLive initialViewer={initialViewer} initialNowIso={initialNowIso} />
         <EconomyReadingShelf
           title="اقرأ قبل الاعتماد على الجلسات"
           lead="هذه الأدلة تشرح معنى الجلسات والتداخل والسيولة وساعة السوق، ثم تعيد الزائر إلى الأداة الحية وهو يفهم ما يراه بشكل أفضل."
@@ -117,9 +106,4 @@ export default function ForexSessionsPage() {
       </EconomyAdLayout>
     </div>
   );
-}
-
-async function ForexSessionsRequestContent() {
-  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
-  return <ForexSessionsLive initialViewer={initialViewer} initialNowIso={initialNowIso} />;
 }

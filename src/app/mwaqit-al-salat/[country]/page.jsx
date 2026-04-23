@@ -307,6 +307,8 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
           nextPrayerKey={nextKey}
           nextPrayerIso={nextIso}
           prevPrayerIso={prevIso}
+          lat={cityData.lat}
+          lon={cityData.lon}
           timezone={cityData.timezone}
           method={methodInfo.name}
           countryCode={countryCode}

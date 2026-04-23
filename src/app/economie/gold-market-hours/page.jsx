@@ -1,9 +1,5 @@
-// src/app/economie/best-trading-time/page.jsx
-import { Suspense } from 'react';
-
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
-  STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
   buildEconomyDatasetSchema,
   buildEconomyFaqSchema,
@@ -49,7 +45,9 @@ export const metadata = buildCanonicalMetadata({
   url: `${SITE_URL}/economie/gold-market-hours`,
 });
 
-export default function GoldMarketHoursPage() {
+export default async function GoldMarketHoursPage() {
+  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+
   const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/gold-market-hours',
@@ -102,16 +100,7 @@ export default function GoldMarketHoursPage() {
       />
 
       <EconomyAdLayout>
-        <Suspense
-          fallback={(
-            <GoldMarketHoursLive
-              initialViewer={STATIC_ECONOMY_PAGE_STATE.initialViewer}
-              initialNowIso={STATIC_ECONOMY_PAGE_STATE.initialNowIso}
-            />
-          )}
-        >
-          <GoldMarketHoursRequestContent />
-        </Suspense>
+        <GoldMarketHoursLive initialViewer={initialViewer} initialNowIso={initialNowIso} />
         <EconomyReadingShelf
           title="اقرأ قبل متابعة الذهب"
           lead="هذه الأدلة تضيف قيمة فوق سؤال هل الذهب مفتوح الآن: متى تكون النافذة الأفضل، وما علاقة الجلسات، وكيف تفصل بين السوق العالمي والمتاجر المحلية."
@@ -120,9 +109,4 @@ export default function GoldMarketHoursPage() {
       </EconomyAdLayout>
     </div>
   );
-}
-
-async function GoldMarketHoursRequestContent() {
-  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
-  return <GoldMarketHoursLive initialViewer={initialViewer} initialNowIso={initialNowIso} />;
 }

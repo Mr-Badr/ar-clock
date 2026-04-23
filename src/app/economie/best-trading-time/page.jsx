@@ -1,9 +1,5 @@
-// src/app/economie/best-trading-time/page.jsx
-import { Suspense } from 'react';
-
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
-  STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
   buildEconomyDatasetSchema,
   buildEconomyFaqSchema,
@@ -47,7 +43,9 @@ export const metadata = buildCanonicalMetadata({
   url: `${SITE_URL}/economie/best-trading-time`,
 });
 
-export default function BestTradingTimePage() {
+export default async function BestTradingTimePage() {
+  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+
   const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/best-trading-time',
@@ -99,16 +97,7 @@ export default function BestTradingTimePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <EconomyAdLayout>
-        <Suspense
-          fallback={(
-            <BestTradingTimeLive
-              initialViewer={STATIC_ECONOMY_PAGE_STATE.initialViewer}
-              initialNowIso={STATIC_ECONOMY_PAGE_STATE.initialNowIso}
-            />
-          )}
-        >
-          <BestTradingTimeRequestContent />
-        </Suspense>
+        <BestTradingTimeLive initialViewer={initialViewer} initialNowIso={initialNowIso} />
         <EconomyReadingShelf
           title="أدلة تساعدك على قراءة التوقيت"
           lead="هذه الأدلة تضيف طبقة فهم فوق التوصية الزمنية نفسها: كيف تقرأ الساعة، ومتى ينشط الذهب، وكيف ترتبط الجلسات بالنافذة الأفضل."
@@ -117,9 +106,4 @@ export default function BestTradingTimePage() {
       </EconomyAdLayout>
     </div>
   );
-}
-
-async function BestTradingTimeRequestContent() {
-  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
-  return <BestTradingTimeLive initialViewer={initialViewer} initialNowIso={initialNowIso} />;
 }

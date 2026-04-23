@@ -1,9 +1,5 @@
-// src/app/economie/best-trading-time/page.jsx
-import { Suspense } from 'react';
-
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
-  STATIC_ECONOMY_PAGE_STATE,
   buildEconomyBreadcrumbSchema,
   buildEconomyDatasetSchema,
   buildEconomyFaqSchema,
@@ -47,7 +43,9 @@ export const metadata = buildCanonicalMetadata({
   url: `${SITE_URL}/economie/stock-markets`,
 });
 
-export default function StockMarketsPage() {
+export default async function StockMarketsPage() {
+  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+
   const toolSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
     path: '/economie/stock-markets',
@@ -99,16 +97,7 @@ export default function StockMarketsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <EconomyAdLayout>
-        <Suspense
-          fallback={(
-            <StockMarketsLive
-              initialViewer={STATIC_ECONOMY_PAGE_STATE.initialViewer}
-              initialNowIso={STATIC_ECONOMY_PAGE_STATE.initialNowIso}
-            />
-          )}
-        >
-          <StockMarketsRequestContent />
-        </Suspense>
+        <StockMarketsLive initialViewer={initialViewer} initialNowIso={initialNowIso} />
         <EconomyReadingShelf
           title="اقرأ لفهم السوق قبل الشاشة"
           lead="هذه الأدلة تضيف طبقة تفسيرية حول السوق الأمريكي وساعة السوق حتى لا تبقى متابعة البورصات مجرد جدول فتح وإغلاق."
@@ -117,9 +106,4 @@ export default function StockMarketsPage() {
       </EconomyAdLayout>
     </div>
   );
-}
-
-async function StockMarketsRequestContent() {
-  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
-  return <StockMarketsLive initialViewer={initialViewer} initialNowIso={initialNowIso} />;
 }
