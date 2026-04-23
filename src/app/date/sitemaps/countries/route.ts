@@ -3,13 +3,14 @@
  * All country-specific Date pages.
  */
 import { getAllCountrySlugs } from '@/lib/db/queries/countries';
+import { filterSeoPriorityCountrySlugs } from '@/lib/seo/country-indexing';
 import { getSiteUrl } from '@/lib/site-config';
 import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
 const BASE = getSiteUrl();
 
 export async function GET() {
-  const slugs = await getAllCountrySlugs();
+  const slugs = filterSeoPriorityCountrySlugs(await getAllCountrySlugs());
   const lastmod = getSitemapLastModifiedDate();
 
   const entries = slugs.map(

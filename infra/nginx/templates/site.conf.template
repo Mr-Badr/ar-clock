@@ -31,7 +31,11 @@ server {
   add_header X-Robots-Tag "${NGINX_X_ROBOTS_TAG}" always;
 
   if ($redirect_to_canonical) {
-    return 301 $origin_scheme://${NGINX_CANONICAL_HOST}$request_uri;
+    return 301 https://${NGINX_CANONICAL_HOST}$request_uri;
+  }
+
+  location = /& {
+    return 301 https://${NGINX_CANONICAL_HOST}/;
   }
 
   location = /api/health {

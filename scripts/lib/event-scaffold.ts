@@ -1,4 +1,5 @@
 import { buildAuthoringFaqContent } from '../../src/lib/holidays/faq-normalizer.js';
+import { normalizeIslamicRichContentYears } from '../../src/lib/islamic-year-format.js';
 
 export type EventType = 'hijri' | 'fixed' | 'estimated' | 'monthly' | 'easter' | 'floating';
 export type EventCategory =
@@ -316,7 +317,7 @@ export function buildBaseKeywords(core: EventCoreLike) {
 export function buildRichContentScaffold(core: EventCoreLike, nowIso: string): RichContentScaffold {
   const faq = buildFaq(core.name);
   const aboutEvent = buildAboutEvent(core);
-  return buildAuthoringFaqContent({
+  const scaffold = buildAuthoringFaqContent({
     seoTitle: `متى ${core.name} {{year}} — عد تنازلي دقيق`,
     description: `تعرف على موعد ${core.name} {{year}} مع عد تنازلي دقيق ومحتوى عربي منظم.`,
     keywords: buildBaseKeywords(core),
@@ -331,6 +332,10 @@ export function buildRichContentScaffold(core: EventCoreLike, nowIso: string): R
     schemaData: buildSchemaData(core),
     relatedSlugs: [],
   }) as RichContentScaffold;
+
+  return core.category === 'islamic'
+    ? normalizeIslamicRichContentYears(scaffold, { eventName: core.name }) as RichContentScaffold
+    : scaffold;
 }
 
 export function suggestRelatedSlugs(current: RelatedEntry, allEntries: RelatedEntry[]) {

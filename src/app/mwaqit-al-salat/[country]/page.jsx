@@ -23,6 +23,7 @@ import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
+import { isSeoPriorityCountrySlug } from '@/lib/seo/country-indexing';
 import { getSiteUrl } from '@/lib/site-config';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { formatGregorianLabel, getHijriMonthSpanFromDate } from '@/lib/hijri-utils';
@@ -43,6 +44,7 @@ export async function generateMetadata({ params }) {
   const countryAr  = country.name_ar || country.name_en;
   const methodInfo = getMethodByCountry(country.country_code);
   const canonical  = `${BASE}/mwaqit-al-salat/${countrySlug}`;
+  const isIndexableCountry = isSeoPriorityCountrySlug(countrySlug);
 
   // Fetch capital to include in title — key for SEO: "مواقيت الصلاة في السعودية، الرياض"
   const capital = await getCapitalCity(country.country_code);
@@ -73,10 +75,10 @@ export async function generateMetadata({ params }) {
       url:    canonical,
     },
     robots: {
-      index: true,
+      index: isIndexableCountry,
       follow: true,
       googleBot: {
-        index: true,
+        index: isIndexableCountry,
         follow: true,
         'max-snippet': -1,
         'max-image-preview': 'large',

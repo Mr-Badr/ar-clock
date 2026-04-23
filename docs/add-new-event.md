@@ -440,9 +440,13 @@ The safest structure is:
 
 `seoTitle`
 - Human-readable page title idea.
+- For Islamic events, always include both years in this exact dynamic pattern:
+  - `{{year}} - {{hijriYear}} هـ`
 
 `description`
 - Short summary of the event and why it matters.
+- For Islamic events, the description must also include the same dynamic year pair:
+  - `{{year}} - {{hijriYear}} هـ`
 
 `keywords`
 - Direct keyword targets for the event page.
@@ -483,6 +487,7 @@ The safest structure is:
 
 `schemaData`
 - Structured-data helper values used by JSON-LD generation.
+- For Islamic events, `schemaData.eventName`, `schemaData.eventDescription`, and `schemaData.articleHeadline` should all include `{{year}} - {{hijriYear}} هـ`.
 
 `relatedSlugs`
 - Related canonical event slugs that already exist in the repo.
@@ -601,6 +606,35 @@ Use only supported tokens in dynamic text:
 - `{{hijriDate}}`
 
 Avoid hardcoding fresh years like `2026` in public copy unless the value is intentionally static metadata.
+
+### Islamic event year-pair rule
+
+If `core.category` is `islamic`, titles and descriptions must always use both the Gregorian year and Hijri year together in this exact dynamic form:
+
+```text
+{{year}} - {{hijriYear}} هـ
+```
+
+Apply this rule to:
+- `richContent.seoTitle`
+- `richContent.description`
+- `richContent.seoMeta.titleTag`
+- `richContent.seoMeta.metaDescription`
+- `richContent.seoMeta.h1`
+- `richContent.seoMeta.ogTitle`
+- `richContent.seoMeta.ogDescription`
+- `richContent.schemaData.eventName`
+- `richContent.schemaData.eventDescription`
+- `richContent.schemaData.articleHeadline`
+
+Good examples:
+- `رمضان {{year}} - {{hijriYear}} هـ — عد تنازلي دقيق`
+- `تعرف على موعد رمضان {{year}} - {{hijriYear}} هـ مع عداد تنازلي دقيق...`
+
+Do not:
+- write only `{{year}}` for Islamic event titles/descriptions
+- hardcode `2026` or `1447` in reusable copy
+- use a slash or a different separator when the paired year label is intended
 
 ## Country Behavior
 
@@ -1109,18 +1143,19 @@ If you give this file to an AI and ask it to add an event, the AI should:
 3. Create `package.json`, `research.json`, and `qa.json`.
 4. Fill `core` with the right `type`, `category`, and date keys.
 5. Fill `richContent` with real Arabic content, not placeholders.
-6. Keep `canonicalPath` exactly `/holidays/<slug>`.
-7. Author a single clean `faq` array only.
-8. Add real `relatedSlugs` only if those events already exist.
-9. Leave generated files alone.
-10. Run:
+6. If the event category is `islamic`, use `{{year}} - {{hijriYear}} هـ` in every title/description field.
+7. Keep `canonicalPath` exactly `/holidays/<slug>`.
+8. Author a single clean `faq` array only.
+9. Add real `relatedSlugs` only if those events already exist.
+10. Leave generated files alone.
+11. Run:
 
 ```bash
 npm run events:build
 npm run validate:holidays:slug -- --slug <slug>
 ```
 
-11. Only publish with:
+12. Only publish with:
 
 ```bash
 npm run events:publish -- --slug <slug> --status published
@@ -1182,6 +1217,7 @@ Requirements:
   - src/data/holidays/events/<slug>/qa.json
 - fill every important key with real Arabic content
 - make the SEO strong for Arabic Google Search
+- if the event category is islamic, every title/description field must include `{{year}} - {{hijriYear}} هـ`
 - keep the page query-first, not generic
 - if the event is not fully verifiable, keep it drafted and explain why
 - do not edit generated files

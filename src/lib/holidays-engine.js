@@ -13,6 +13,7 @@ import { HIJRI_MONTHS_AR as BASE_MONTHS } from '@/lib/hijri-utils';
 import { getCachedEventMeta } from '@/lib/event-cache';
 import { buildTemplateContext, resolveTemplate } from '@/lib/template-resolver';
 import { getCountryByCode } from '@/lib/events/country-dictionary';
+import { normalizeIslamicRichContentYears } from '@/lib/islamic-year-format';
 import {
   buildFaqItems,
   buildFaqSchemaItems,
@@ -25,6 +26,7 @@ const GREG_MONTHS_AR = [
   '', 'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
   'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر',
 ];
+const DAY_NAMES_AR = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
 /* ══════════════════════════════════════════════════════════════════════════
  * YEAR UTILITIES — the core of the dynamic year system
@@ -87,6 +89,7 @@ export function _resolveEventMetaInternal(ev, targetDate, overrideHijriYear = nu
   const gr = getEventYear(targetDate);
   const hi = overrideHijriYear || approxHijriYear(gr);
   const greg = formatGregorianAr(targetDate);
+  const dayName = DAY_NAMES_AR[new Date(targetDate).getDay()] || '';
   const country = getCountryByCode(ev._countryCode || ev.__aliasCountryCode || null);
   const hijriDate =
     ev.type === 'hijri' && ev.hijriDay && ev.hijriMonth
@@ -99,6 +102,7 @@ export function _resolveEventMetaInternal(ev, targetDate, overrideHijriYear = nu
     eventName: ev.name,
     formattedDate: greg,
     hijriDate,
+    dayName,
     countryCode: country?.code || ev._countryCode || '',
     countryName: country?.nameAr || '',
     countryOfficialName: country?.officialNameAr || '',
@@ -231,13 +235,36 @@ export function _resolveEventMetaInternal(ev, targetDate, overrideHijriYear = nu
     faqSchemaItems: buildFaqSchemaItems(faq),
   } : undefined;
 
+  const normalizedSeoContent =
+    ev.category === 'islamic'
+      ? normalizeIslamicRichContentYears(
+          {
+            seoTitle,
+            description,
+            seoMeta,
+            schemaData,
+          },
+          {
+            year: String(gr),
+            hijriYear: String(hi),
+            eventName: ev.name,
+          },
+        )
+      : { seoTitle, description, seoMeta, schemaData };
+
   return {
-    seoTitle, description, keywords, faqItems, faq,
+    seoTitle: normalizedSeoContent.seoTitle,
+    description: normalizedSeoContent.description,
+    keywords,
+    faqItems,
+    faq,
     quickFacts, year: gr, hijriYear: hi,
     about, significance, details, history, traditions, timeline, countryDates, howTo,
     // New fields
-    answerSummary, aboutEvent, intentCards, engagementContent, seoMeta,
-    recurringYears, schemaData,
+    answerSummary, aboutEvent, intentCards, engagementContent,
+    seoMeta: normalizedSeoContent.seoMeta,
+    recurringYears,
+    schemaData: normalizedSeoContent.schemaData,
   };
 }
 

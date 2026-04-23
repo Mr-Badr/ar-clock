@@ -1,5 +1,6 @@
 import { getCountryByCode } from '../../src/lib/events/country-dictionary.js';
 import { buildAuthoringFaqContent } from '../../src/lib/holidays/faq-normalizer.js';
+import { normalizeIslamicRichContentYears } from '../../src/lib/islamic-year-format.js';
 import {
   buildAboutEvent,
   buildBaseKeywords,
@@ -438,7 +439,7 @@ export function buildNormalizedRichContent(pkg: PackageLike, nowIso: string) {
     eventDescription: buildSchemaDescription(core),
   };
 
-  return buildAuthoringFaqContent({
+  const content = buildAuthoringFaqContent({
     seoTitle: `متى ${core.name} {{year}} — عد تنازلي دقيق`,
     description: buildMetaDescription(core),
     keywords: buildBaseKeywords(core),
@@ -479,6 +480,10 @@ export function buildNormalizedRichContent(pkg: PackageLike, nowIso: string) {
     schemaData,
     relatedSlugs: pkg.richContent?.relatedSlugs || [],
   });
+
+  return core.category === 'islamic'
+    ? normalizeIslamicRichContentYears(content, { eventName: core.name })
+    : content;
 }
 
 export function buildSchoolStartRichContent(pkg: PackageLike, nowIso: string) {

@@ -60,10 +60,10 @@ export async function generateMetadata({
     alternates: { canonical: `${BASE_URL}/date/${year}/${month}/${day}` },
     robots: {
       index: false,
-      follow: true,
+      follow: false,
       googleBot: {
         index: false,
-        follow: true,
+        follow: false,
       },
     },
     openGraph: { title: `${day} ${monthAr} ${year} — ${hijri.formatted.ar} | ميقاتنا`, url: `${BASE_URL}/date/${year}/${month}/${day}`, locale: 'ar_SA' },

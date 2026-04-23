@@ -271,7 +271,8 @@
       "spring-season",
       "autumn-season",
       "winter-season",
-      "new-year"
+      "new-year",
+      "valentines-day"
     ],
     "about": {
       "heading": "عن بداية فصل الصيف {{year}}",

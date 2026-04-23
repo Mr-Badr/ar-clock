@@ -48,7 +48,11 @@ export async function resolveHolidayRuntimeData(slug, options = {}) {
   const targetDate = getNextEventDate(event, resolved, nowMs);
   const remaining = getTimeRemaining(targetDate, nowMs);
   const eventState = getEventState(targetDate, nowMs);
-  const seo = resolveEventMeta(event, targetDate);
+  const seo = resolveEventMeta(
+    event,
+    targetDate,
+    event.type === 'hijri' && calInfo?.hijriYear ? calInfo.hijriYear : null,
+  );
 
   const gregStr = formatGregorianAr(targetDate);
   const hijriStr = event.type === 'hijri' && calInfo?.hijriLabel ? calInfo.hijriLabel : null;

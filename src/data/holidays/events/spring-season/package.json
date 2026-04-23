@@ -260,7 +260,8 @@
       "summer-season",
       "autumn-season",
       "spring-vacation",
-      "earth-day"
+      "earth-day",
+      "valentines-day"
     ],
     "about": {
       "heading": "عن بداية فصل الربيع",
@@ -294,7 +295,8 @@
       "كم باقي على الربيع",
       "الاعتدال الربيعي",
       "هل الربيع يبدأ 20 أم 21 مارس"
-    ]
+    ],
+    "country": []
   },
   "tier": "tier1",
   "publishStatus": "published",

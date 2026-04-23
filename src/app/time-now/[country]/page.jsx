@@ -40,6 +40,7 @@ import {
   getCapitalCity,
 } from '@/lib/db/queries/cities';
 import { getCachedNowIso } from '@/lib/date-utils';
+import { isSeoPriorityCountrySlug } from '@/lib/seo/country-indexing';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 import { buildTimeNowKeywords } from '@/lib/seo/section-search-intent';
 
@@ -81,6 +82,7 @@ export async function generateMetadata({ params }) {
   const cityAr = capital ? capital.name_ar : countryAr;
   const timezone = capital ? capital.timezone : country.timezone;
   const offset = getUtcOffsetStr(timezone);
+  const isIndexableCountry = isSeoPriorityCountrySlug(countrySlug);
 
   return {
     title: `كم الساعة الآن في ${countryAr}؟ | ${cityAr} والمدن الرئيسية اليوم`,
@@ -116,10 +118,10 @@ export async function generateMetadata({ params }) {
       title: `كم الساعة الآن في ${countryAr}؟ | ${cityAr} الآن`,
     },
     robots: {
-      index: true,
+      index: isIndexableCountry,
       follow: true,
       googleBot: {
-        index: true,
+        index: isIndexableCountry,
         follow: true,
         'max-snippet': -1,
         'max-image-preview': 'large',

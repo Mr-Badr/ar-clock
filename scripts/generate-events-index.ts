@@ -7,6 +7,7 @@ import {
   getCountryByCode,
 } from '../src/lib/events/country-dictionary.js';
 import { buildCompiledFaqContent } from '../src/lib/holidays/faq-normalizer.js';
+import { normalizeIslamicRichContentYears } from '../src/lib/islamic-year-format.js';
 import { inferSourceAuthority, parseEventPackage } from '../src/lib/events/package-schema.js';
 
 type EventPackage = ReturnType<typeof parseEventPackage>;
@@ -208,14 +209,9 @@ function buildCountrySeoVariants(pkg: EventPackage, expandedKeywords: string[]) 
       context,
     );
 
-    variants[code] = {
-      countryCode: code,
-      countryName: country.nameAr,
-      authority: country.authority,
-      dateVarianceLabel: country.dateVarianceLabel,
+    const variantContent = {
       seoTitle: overlay.seoTitle || defaultSeoTitle,
       description: overlay.description || defaultDescription,
-      keywords: mergedKeywords,
       seoMeta: {
         ...baseSeoMeta,
         ...overlaySeoMeta,
@@ -241,6 +237,22 @@ function buildCountrySeoVariants(pkg: EventPackage, expandedKeywords: string[]) 
         inLanguage: 'ar',
         eventCategory: pkg.core.category,
       },
+    };
+
+    const normalizedVariantContent =
+      pkg.core.category === 'islamic'
+        ? normalizeIslamicRichContentYears(variantContent, { eventName: pkg.core.name })
+        : variantContent;
+
+    variants[code] = {
+      countryCode: code,
+      countryName: country.nameAr,
+      authority: country.authority,
+      dateVarianceLabel: country.dateVarianceLabel,
+      seoTitle: normalizedVariantContent.seoTitle,
+      description: normalizedVariantContent.description,
+      keywords: mergedKeywords,
+      seoMeta: normalizedVariantContent.seoMeta,
     };
 
     if (overlay.quickFacts !== undefined) {

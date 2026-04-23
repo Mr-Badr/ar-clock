@@ -157,6 +157,12 @@ const nextConfig = {
         destination: 'https://miqatona.com/:path*',
         permanent: true,
       },
+      // Recover from malformed probes that should resolve to the homepage instead of surfacing a 404 in GSC.
+      {
+        source: '/&',
+        destination: '/',
+        permanent: true,
+      },
       // Support common alternative URL formats
       { source: '/prayer-times/:country/:city', destination: '/mwaqit-al-salat/:country/:city', permanent: true },
       { source: '/salat/:country/:city', destination: '/mwaqit-al-salat/:country/:city', permanent: true },

@@ -209,7 +209,7 @@ export default async function GregorianCalendarPage({
           </p>
           <div className="flex flex-wrap" style={{ gap: '8px' }}>
             {monthLinks.map((month) => (
-              <Link key={month.href} href={month.href} className="chip">
+              <Link key={month.href} href={month.href} rel="nofollow" className="chip">
                 {month.label}
               </Link>
             ))}

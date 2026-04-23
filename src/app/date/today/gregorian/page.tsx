@@ -190,6 +190,7 @@ async function TodayGregorianDynamicContent() {
 
               <Link
                 href={`/date/${y}/${String(m).padStart(2, '0')}/${String(d).padStart(2, '0')}`}
+                rel="nofollow"
                 className="related-link-card"
               >
                 <span className="related-link-card__icon" aria-hidden="true">

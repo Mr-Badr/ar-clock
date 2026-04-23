@@ -29,7 +29,11 @@ function annotate(raw, resolvedMap, nowMs) {
   };
   const target = getNextEventDate(ev, resolvedMap, nowMs);
   const cal = resolvedMap[routeSlug] || null;
-  const meta = resolveEventMeta(ev, target);
+  const meta = resolveEventMeta(
+    ev,
+    target,
+    ev.type === 'hijri' && cal?.hijriYear ? cal.hijriYear : null,
+  );
   const displayName = base.__isAlias && country?.nameAr
     ? `${base.name} في ${country.nameAr}`
     : ev.name;

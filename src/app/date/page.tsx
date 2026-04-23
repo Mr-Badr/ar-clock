@@ -112,6 +112,7 @@ async function DateHubDynamicContent() {
     { href: `/date/calendar/hijri/${hijri?.year ?? 1447}`, label: `تقويم ${hijri?.year ?? 1447} هـ`, description: 'التقويم الهجري الكامل مع الأيام والمناسبات.' },
     { href: '/date/country', label: 'التاريخ حسب الدولة', description: 'اعرف التاريخ اليوم في الدول العربية وفق الطريقة الأقرب للاستخدام الرسمي.' },
   ];
+  const isDailyDateHref = (href: string) => /^\/date(?:\/hijri)?\/\d{4}\/\d{2}\/\d{2}$/.test(href);
   const dateUtilityLinks = appendToolDiscoveryLinks([
     {
       href: '/time-now',
@@ -261,6 +262,7 @@ async function DateHubDynamicContent() {
                 <div className="text-xl font-semibold text-secondary mb-4">{y}م</div>
                 <Link
                   href={`/date/${y}/${String(m).padStart(2, '0')}/${String(d).padStart(2, '0')}`}
+                  rel="nofollow"
                   className="block text-xs font-semibold text-accent-alt hover:text-accent transition-colors"
                 >
                   صفحة {d} {monthAr} {y} ←
@@ -326,6 +328,7 @@ async function DateHubDynamicContent() {
                 <Link
                   key={href}
                   href={href}
+                  rel={isDailyDateHref(href) ? 'nofollow' : undefined}
                   className="chip"
                 >
                   {label}

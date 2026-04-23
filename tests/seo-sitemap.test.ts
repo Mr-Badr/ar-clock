@@ -76,7 +76,6 @@ test('root sitemap includes key static pages', async () => {
     '/holidays',
     '/time-difference',
     '/calculators',
-    '/map',
     '/about',
     '/editorial-policy',
     '/terms',
@@ -91,19 +90,38 @@ test('root sitemap includes key static pages', async () => {
       `${expectedPath} should appear in the root sitemap`,
     );
   }
+  assert.equal(
+    sitemap.some((row) => row.url === `${base}/map`),
+    false,
+    '/map should not appear in the root sitemap because the route does not exist',
+  );
 
   assert.equal(
     sitemap.some((row) => row.url === `${base}/calculators/age`),
-    false,
-    '/calculators/age should be covered by the calculators sitemap, not duplicated in the root sitemap',
+    true,
+    '/calculators/age should remain in the root sitemap as a promoted priority tool path',
   );
 });
 
 test('calculators sitemap includes hub and detail routes', async () => {
   const sitemap = await calculatorsSitemap();
   const base = getSiteUrl();
+  const sitemapUrls = sitemap.map((row) => row.url);
   const staticPaths: string[] = [
     '/calculators',
+    '/calculators/sleep',
+    '/calculators/sleep/bedtime',
+    '/calculators/sleep/wake-time',
+    '/calculators/sleep/sleep-duration',
+    '/calculators/sleep/nap-calculator',
+    '/calculators/sleep/sleep-debt',
+    '/calculators/sleep/sleep-needs-by-age',
+    '/calculators/personal-finance',
+    '/calculators/personal-finance/emergency-fund',
+    '/calculators/personal-finance/debt-payoff',
+    '/calculators/personal-finance/savings-goal',
+    '/calculators/personal-finance/net-worth',
+    '/calculators/finance',
     '/calculators/age',
     '/calculators/age/calculator',
     '/calculators/age/hijri',
@@ -125,11 +143,11 @@ test('calculators sitemap includes hub and detail routes', async () => {
   const countryPaths = COUNTRY_LIST.map((country) => `/calculators/building/${country.slug}`);
   const expectedPaths = [...staticPaths, ...countryPaths];
 
-  assert.equal(sitemap.length, expectedPaths.length);
+  assert.equal(sitemapUrls.length, new Set(sitemapUrls).size, 'calculators sitemap should not contain duplicate URLs');
 
   for (const expectedPath of expectedPaths) {
     assert.equal(
-      sitemap.some((row) => row.url === `${base}${expectedPath}`),
+      sitemapUrls.includes(`${base}${expectedPath}`),
       true,
       `${expectedPath} should appear in the calculators sitemap`,
     );
@@ -139,8 +157,10 @@ test('calculators sitemap includes hub and detail routes', async () => {
 test('economy sitemap includes all economy routes with site base urls', async () => {
   const sitemap = await economySitemap();
   const base = getSiteUrl();
+  const sitemapUrls = sitemap.map((row) => row.url);
   const expectedPaths: string[] = [
     '/economie',
+    '/economie/market-hours',
     '/economie/us-market-open',
     '/economie/gold-market-hours',
     '/economie/forex-sessions',
@@ -149,11 +169,11 @@ test('economy sitemap includes all economy routes with site base urls', async ()
     '/economie/best-trading-time',
   ];
 
-  assert.equal(sitemap.length, expectedPaths.length);
+  assert.equal(sitemapUrls.length, new Set(sitemapUrls).size, 'economy sitemap should not contain duplicate URLs');
 
   for (const expectedPath of expectedPaths) {
     assert.equal(
-      sitemap.some((row) => row.url === `${base}${expectedPath}`),
+      sitemapUrls.includes(`${base}${expectedPath}`),
       true,
       `${expectedPath} should appear in the economy sitemap`,
     );

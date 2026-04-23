@@ -14,6 +14,7 @@ import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBre
 import { DateShareActions } from '@/components/date/DateShareActions';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { Calendar, Clock, ArrowLeftRight } from "lucide-react"
+import { isSeoPriorityCountrySlug } from '@/lib/seo/country-indexing';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildDateKeywords } from '@/lib/seo/section-search-intent';
 
@@ -97,11 +98,22 @@ export async function generateMetadata({
   if (!country) return { title: 'التاريخ الهجري' };
 
   const countryAr = country.name_ar;
+  const isIndexableCountry = isSeoPriorityCountrySlug(countrySlug);
   return {
     title: `التاريخ الهجري والميلادي اليوم في ${countryAr}`,
     description: `اعرف التاريخ الهجري والميلادي اليوم في ${countryAr} مع طريقة الحساب المعتمدة لهذه الصفحة وروابط الوقت الآن والتحويل والتقويم.`,
     keywords: buildDateKeywords({ countryNameAr: countryAr }),
     alternates: { canonical: `${BASE_URL}/date/country/${countrySlug}` },
+    robots: {
+      index: isIndexableCountry,
+      follow: true,
+      googleBot: {
+        index: isIndexableCountry,
+        follow: true,
+        'max-snippet': -1,
+        'max-image-preview': 'large',
+      },
+    },
     openGraph: {
       title: `التاريخ الهجري والميلادي اليوم في ${countryAr} | ميقاتنا`,
       description: `التاريخ اليوم في ${countryAr} مع التقويم الهجري والميلادي.`,

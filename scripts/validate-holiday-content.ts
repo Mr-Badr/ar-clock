@@ -44,6 +44,7 @@ const ALLOWED_TEMPLATE_TOKENS = new Set([
   'eventName',
   'formattedDate',
   'hijriDate',
+  'dayName',
 ]);
 const VALID_PUBLISH_STATUSES = new Set([
   'briefed',
@@ -294,6 +295,7 @@ function issueSeverity(code: string, tier: Tier): Severity {
   }
   if (
     code.startsWith('hardcoded_year_detected') ||
+    code.startsWith('islamic_year_pair_missing') ||
     code.startsWith('faq_below_minimum') ||
     code.startsWith('direct_answer_missing') ||
     code.startsWith('missing_source_attribution') ||
@@ -376,6 +378,29 @@ function isKnownToken(token: string, event: any, content: any) {
   if (token in content) return true;
   if (content?.seoMeta && token in content.seoMeta) return true;
   return false;
+}
+
+function hasIslamicYearPair(value: unknown) {
+  if (typeof value !== 'string' || !value.trim()) return false;
+  return (
+    /\{\{\s*year\s*\}\}\s*-\s*\{\{\s*hijriYear\s*\}\}\s*هـ/.test(value) ||
+    /\b20\d{2}\s*-\s*1\d{3}\s*هـ\b/.test(value)
+  );
+}
+
+function validateIslamicYearPairFields(content: any) {
+  return [
+    ['richContent.seoTitle', content?.seoTitle],
+    ['richContent.description', content?.description],
+    ['richContent.seoMeta.titleTag', content?.seoMeta?.titleTag],
+    ['richContent.seoMeta.metaDescription', content?.seoMeta?.metaDescription],
+    ['richContent.seoMeta.h1', content?.seoMeta?.h1],
+    ['richContent.seoMeta.ogTitle', content?.seoMeta?.ogTitle],
+    ['richContent.seoMeta.ogDescription', content?.seoMeta?.ogDescription],
+    ['richContent.schemaData.eventName', content?.schemaData?.eventName],
+    ['richContent.schemaData.eventDescription', content?.schemaData?.eventDescription],
+    ['richContent.schemaData.articleHeadline', content?.schemaData?.articleHeadline],
+  ].filter(([, value]) => typeof value === 'string' && value.trim() && !hasIslamicYearPair(value));
 }
 
 function main() {
@@ -523,6 +548,17 @@ function main() {
           tier,
           `unknown_template_token:${token}`,
           `Unknown template token "{{${token}}}" in content.`,
+        );
+      }
+    }
+
+    if (event.category === 'islamic') {
+      for (const [field] of validateIslamicYearPairFields(content)) {
+        pushIssue(
+          issues,
+          tier,
+          `islamic_year_pair_missing:${field}`,
+          `Islamic events must include the paired Gregorian and Hijri year label "{{year}} - {{hijriYear}} هـ" in ${field}.`,
         );
       }
     }

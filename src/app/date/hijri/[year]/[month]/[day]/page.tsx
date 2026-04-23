@@ -63,10 +63,10 @@ export async function generateMetadata({
     alternates: { canonical: `${BASE_URL}/date/hijri/${year}/${month}/${day}` },
     robots: {
       index: false,
-      follow: true,
+      follow: false,
       googleBot: {
         index: false,
-        follow: true,
+        follow: false,
       },
     },
     openGraph: {

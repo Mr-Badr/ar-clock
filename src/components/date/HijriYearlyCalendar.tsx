@@ -191,6 +191,7 @@ export async function HijriYearlyCalendar({ year }: { year: number }) {
                     <Link
                       key={day}
                       href={`/date/hijri/${year}/${monthStr}/${String(day).padStart(2, '0')}`}
+                      rel="nofollow"
                       className="relative flex flex-col items-center justify-center rounded-md transition-colors"
                       style={{
                         minHeight: '40px',

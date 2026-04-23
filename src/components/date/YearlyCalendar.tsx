@@ -15,7 +15,7 @@
 //   • Islamic events marked with a 1px colored border + cell tint + shadcn Tooltip
 //   • Ramadan days tinted warning-soft
 //   • Friday Jumu'ah in success color
-//   • Each day is a full Link to /date/[y]/[m]/[d] for SEO
+//   • Each day stays clickable for users while marking day-detail URLs as nofollow
 //   • Uses .card CSS class for month cards
 //   • Uses new.css tokens exclusively — zero hard-coded colors
 //   • Responsive: 1→2→3→4 column grid
@@ -118,6 +118,7 @@ export async function YearlyCalendar({ year, serverTodayIso }: Props) {
               <Link
                 href={`/date/${year}/${monthStr}/01`}
                 className="text-xs font-medium"
+                rel="nofollow"
                 style={{ color: 'rgba(255,255,255,0.75)' }}
               >
                 {month}/{year}
@@ -203,6 +204,7 @@ export async function YearlyCalendar({ year, serverTodayIso }: Props) {
                   <Link
                     key={day}
                     href={href}
+                    rel="nofollow"
                     className="relative flex flex-col items-center justify-center rounded-md transition-colors group"
                     style={{
                       minHeight: '34px',

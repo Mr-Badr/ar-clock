@@ -2,6 +2,7 @@ import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { parseEventPackage } from '../src/lib/events/package-schema.js';
+import { normalizeIslamicRichContentYears } from '../src/lib/islamic-year-format.js';
 import {
   buildAuthoringFaqContent,
   pickFaqEntries,
@@ -139,7 +140,10 @@ function enrichPackage(pkg: any, allPackages: any[], nowIso: string) {
       pkg.keywordTemplateSet && (pkg.keywordTemplateSet.base?.length || pkg.keywordTemplateSet.country?.length)
         ? pkg.keywordTemplateSet
         : buildKeywordTemplateSet(core.name),
-    richContent: mergedRichContent,
+    richContent:
+      core.category === 'islamic'
+        ? normalizeIslamicRichContentYears(mergedRichContent, { eventName: core.name })
+        : mergedRichContent,
   };
 }
 
