@@ -748,6 +748,25 @@
   line-height: var(--leading-relaxed);
 }
 
+.economy-intent-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.economy-intent-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-1);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  line-height: 1.4;
+}
+
 .economy-profile-selector__button {
   font: inherit;
 }

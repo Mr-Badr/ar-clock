@@ -66,7 +66,8 @@ const LS_COUNTRY = 'waqt-preferred-country';
 const DEBOUNCE_MS = 150;
 const GEO_TIMEOUT_MS = 8000;
 const MIN_GLOBAL_QUERY_LENGTH = 2;
-const API_FALLBACK_RESULT_THRESHOLD = 12;
+const API_FALLBACK_RESULT_THRESHOLD = 4;
+const API_FALLBACK_MIN_QUERY_LENGTH = 4;
 
 /* ── Arabic Normalization & Flag Helper ─────────────────────────────────── */
 function getFlagEmoji(countryCode) {
@@ -469,8 +470,16 @@ export default function SearchCity({
       const mergedLocalResults = mergeCityResults(q, localMatches, indexMatches);
       startTransition(() => setResults(mergedLocalResults));
 
-      // Layer 3: API fallback only when we still need more coverage
-      if (!forceGlobal && mergedLocalResults.length >= API_FALLBACK_RESULT_THRESHOLD) {
+      const shouldSkipApiFallback = (
+        !forceGlobal
+        && (
+          q.trim().length < API_FALLBACK_MIN_QUERY_LENGTH
+          || mergedLocalResults.length >= API_FALLBACK_RESULT_THRESHOLD
+        )
+      );
+
+      // Layer 3: API fallback only when we still need long-tail coverage
+      if (shouldSkipApiFallback) {
         return;
       }
 
@@ -968,7 +977,7 @@ export default function SearchCity({
       <noscript>
         <form
           method="get"
-          action="/search"
+          action="/fahras"
           style={{ marginTop: '0.5rem', display: 'flex', gap: '0.5rem' }}
           aria-label="بحث بدون جافاسكريبت"
         >

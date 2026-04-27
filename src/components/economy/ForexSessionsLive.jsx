@@ -1,11 +1,12 @@
 // components/economy/ForexSessionsLive.jsx
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import styles from './market-card-v2.module.css';
 
-import { ChartLineUp, Sparkle } from '@phosphor-icons/react';
+import { ChartLineUp, ClockCountdown, Lightning, Sparkle } from '@phosphor-icons/react';
 
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdTopBanner from '@/components/ads/AdTopBanner';
@@ -22,6 +23,7 @@ import {
   EconomySectionHeader,
   EconomySpotlight,
   EconomyStatCards,
+  HourDetailPanel,
   EconomySourceLinks,
   EconomyTable,
   EconomyTimeline,
@@ -29,7 +31,39 @@ import {
   LiveSessionsStrip,
 } from './common';
 
-function ForexCard({ card }) {
+function SessionTrack({ timelineBar, nowPercent, tone }) {
+  if (!timelineBar) return null;
+
+  return (
+    <div className={styles.fxSessionTrack}>
+      <div className={styles.fxSessionTrackHead}>
+        <span>خريطة الجلسة داخل يومك</span>
+        <span>24 ساعة</span>
+      </div>
+      <div className={styles.fxSessionTrackLane}>
+        {timelineBar.segments.map((segment) => (
+          <span
+            key={`${timelineBar.id}-${segment.startPercent.toFixed(2)}`}
+            className={styles.fxSessionTrackSegment}
+            data-tone={tone}
+            style={{
+              insetInlineStart: `${segment.startPercent}%`,
+              width: `${segment.widthPercent}%`,
+            }}
+          />
+        ))}
+        <span className={styles.fxSessionTrackNow} style={{ insetInlineStart: `${nowPercent}%` }} />
+      </div>
+      <div className={styles.fxSessionTrackHours} aria-hidden="true">
+        {[0, 6, 12, 18, 24].map((hour) => (
+          <span key={hour}>{String(hour).padStart(2, '0')}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ForexCard({ card, timelineBar, nowPercent }) {
   const tone = card.statusTone || 'default';
   const isLive = tone === 'success';
   const isPre  = tone === 'warning';
@@ -93,6 +127,11 @@ function ForexCard({ card }) {
         </div>
       </dl>
 
+      <div className={styles.fxSessionTagRow}>
+        <span className={styles.fxSessionTag}>{card.cityNameAr}</span>
+        <span className={styles.fxSessionTag}>{card.volatilityLabel}</span>
+      </div>
+
       {/* Progress bar — live sessions only */}
       {hasProgress && (
         <div className={styles.mcSessionProgressWrap}>
@@ -111,6 +150,8 @@ function ForexCard({ card }) {
           </div>
         </div>
       )}
+
+      <SessionTrack timelineBar={timelineBar} nowPercent={nowPercent} tone={tone} />
 
       {/* Insight footnotes */}
       {(card.bestFor || card.volatilityLabel || card.watchLabel) && (
@@ -141,6 +182,17 @@ function ForexCard({ card }) {
 
 export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
   const model = useEconomyLiveModel(buildForexPageModel, initialViewer, initialNowIso);
+  const [sessionFilter, setSessionFilter] = useState('all');
+  const [selectedHour, setSelectedHour] = useState(null);
+
+  useEffect(() => {
+    if (!model) return;
+    setSelectedHour((current) => (
+      current == null
+        ? model.activityChart.points.find((point) => point.isCurrent)?.hour ?? model.activityChart.points[0]?.hour ?? 0
+        : current
+    ));
+  }, [model]);
 
   if (!model) {
     return (
@@ -159,6 +211,23 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
       </div>
     );
   }
+
+  const currentPoint = model.activityChart.points.find((point) => point.isCurrent) || model.activityChart.points[0];
+  const selectedPoint = model.activityChart.points.find((point) => point.hour === selectedHour) || currentPoint;
+  const nextEvent = model.weeklyEvents.find((event) => ['critical', 'high'].includes(event.impact) && event.countdownLabel !== 'صدر أو مضى هذا الأسبوع')
+    || model.weeklyEvents.find((event) => ['critical', 'high'].includes(event.impact))
+    || model.weeklyEvents[0]
+    || null;
+  const sessionFilters = [
+    { id: 'all', label: 'الكل' },
+    { id: 'live', label: 'النشطة الآن' },
+    { id: 'next', label: 'القريبة' },
+  ];
+  const filteredCards = model.cards.filter((card) => {
+    if (sessionFilter === 'live') return card.isOpen;
+    if (sessionFilter === 'next') return !card.isOpen;
+    return true;
+  });
 
   return (
     <div className="economy-stack">
@@ -196,7 +265,7 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
       <section className="economy-section">
         <EconomySectionHeader
           title="خريطة السيولة خلال يومك"
-          lead="هذا الرسم يظهر بسرعة متى يرتفع النشاط ومتى يهدأ، حتى يرى الزائر الشكل العملي لليوم قبل الدخول في التفاصيل والجداول."
+          lead="بدلاً من وصف عام، هذا الرسم يبين لحظياً أين تقف الآن داخل اليوم: هل أنت في هدوء، في نشاط جيد، أم داخل ذروة لندن ونيويورك."
         />
         <HourlyActivityChart chart={model.activityChart} />
       </section>
@@ -204,12 +273,86 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
       <section className="economy-section">
         <EconomySectionHeader
           title="بطاقات الجلسات الأربع"
-          lead="كل بطاقة تحوّل توقيت المركز المالي إلى توقيتك الحالي، مع عداد يوضح هل الجلسة مفتوحة الآن أم أنها على وشك الفتح."
+          lead="بدل أربع بطاقات ثابتة، حولنا هذا الجزء إلى لوحة قرار: اختر اللحظة من الخريطة، صفِّ الجلسات النشطة أو القريبة، ثم اقرأ كل جلسة كمنطقة تداول حيّة داخل يومك المحلي."
         />
-        <div className="economy-feature-frame">
-          <div className={styles.mcSessionGrid}>
-            {model.cards.map((card) => (
-              <ForexCard key={card.id} card={card} />
+        <div className={styles.fxSessionShell}>
+          <aside className={styles.fxCommandPanel}>
+            <div className={styles.fxCommandTop}>
+              <span className={styles.fxCommandEyebrow}>
+                <Lightning size={14} weight="duotone" />
+                غرفة القرار السريع
+              </span>
+              <h3 className={styles.fxCommandTitle}>ما الذي يستحق انتباهك الآن؟</h3>
+              <p className={styles.fxCommandLead}>
+                اختر ساعة من يومك لترى الجلسات الفعالة والأزواج الأوضح والذهب في تلك اللحظة، ثم صفِّ الجلسات التي تريدها بدلاً من قراءة كل شيء دفعة واحدة.
+              </p>
+            </div>
+
+            <div className={styles.fxCommandGrid}>
+              <article className={styles.fxCommandStat} data-tone={currentPoint.band === 'peak' ? 'success' : currentPoint.band === 'active' ? 'warning' : 'info'}>
+                <span>أفضل قراءة الآن</span>
+                <strong>{currentPoint.hint}</strong>
+                <small>{currentPoint.sessionsLabel}</small>
+              </article>
+              <article className={styles.fxCommandStat} data-tone={model.bestWindow.isActive ? 'success' : 'warning'}>
+                <span>النافذة الذهبية</span>
+                <strong>{model.bestWindow.statusLabel}</strong>
+                <small>{model.bestWindow.startLabel} - {model.bestWindow.endLabel}</small>
+              </article>
+              <article className={styles.fxCommandStat} data-tone={nextEvent?.impact === 'critical' ? 'danger' : 'warning'}>
+                <span>أقرب حدث قوي</span>
+                <strong>{nextEvent ? nextEvent.nameAr : 'لا حدث قوي قريب'}</strong>
+                <small>{nextEvent ? `${nextEvent.timeLocal} · ${nextEvent.sessionLabel}` : 'تابع الجلسات أولاً'}</small>
+              </article>
+            </div>
+
+            <div className={styles.fxFilterRow}>
+              {sessionFilters.map((filter) => (
+                <button
+                  key={filter.id}
+                  type="button"
+                  className={styles.fxFilterButton}
+                  data-active={sessionFilter === filter.id}
+                  onClick={() => setSessionFilter(filter.id)}
+                >
+                  {filter.label}
+                </button>
+              ))}
+            </div>
+
+            <div className={styles.fxHeatmap}>
+              <div className={styles.fxHeatmapHead}>
+                <strong>خريطة ساعات اليوم</strong>
+                <span>{selectedPoint.hourLabel}</span>
+              </div>
+              <div className={styles.fxHeatmapGrid}>
+                {model.activityChart.points.map((point) => (
+                  <button
+                    key={point.key}
+                    type="button"
+                    className={styles.fxHeatmapButton}
+                    data-band={point.band}
+                    data-selected={selectedPoint.hour === point.hour}
+                    onClick={() => setSelectedHour(point.hour)}
+                    title={`${point.hourLabel} — ${point.hint}`}
+                  >
+                    <span>{String(point.hour).padStart(2, '0')}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <HourDetailPanel point={selectedPoint} />
+          </aside>
+
+          <div className={styles.fxSessionDeck}>
+            {filteredCards.map((card) => (
+              <ForexCard
+                key={card.id}
+                card={card}
+                timelineBar={model.timeline.bars.find((bar) => bar.id === card.id)}
+                nowPercent={model.timeline.nowPercent}
+              />
             ))}
           </div>
         </div>
@@ -218,10 +361,10 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
       <section className="economy-section">
         <EconomySectionHeader
           title="تداول الذهب الآن والنافذة الذهبية"
-          lead="هذه الكتلة تجمع أكثر سؤالين قيمة للمتداول العربي في نفس المكان: هل الذهب في نافذة نشطة الآن؟ ومتى تقع أفضل ساعة في يومك المحلي؟"
+          lead="هذا الجزء لم يعد مجرد بطاقتين. صار لوحة متابعة مركزة تربط حالة الذهب الآن بالنافذة الذهبية وبالأحداث القريبة وبما يجب أن تراقبه فوراً."
         />
-        <div className="economy-feature-frame economy-feature-frame--warm">
-          <div className={styles.mcInstrumentRow} aria-label="أدوات التداول الرئيسية">
+        <div className={styles.fxGoldShell}>
+          <div className={styles.fxGoldMain} aria-label="أدوات التداول الرئيسية">
             {/* Gold Card */}
             <article className={styles.mcInstrument} data-variant="gold" data-tone={model.gold.tone || 'default'}>
               <div className={styles.mcInstrumentStripe} />
@@ -242,14 +385,23 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
                 </div>
                 <span className={styles.mcInstrumentHighlightIcon} aria-hidden="true">🥇</span>
               </div>
-              {model.gold.nextWindowLabel && (
-                <dl className={styles.mcInstrumentDetails}>
-                  <div className={styles.mcInstrumentDetailRow}>
-                    <dt>إعادة الفتح التقريبية</dt>
-                    <dd>{model.gold.nextWindowLabel}</dd>
-                  </div>
-                </dl>
-              )}
+              <div className={styles.fxGoldMetrics}>
+                <div className={styles.fxGoldMetric}>
+                  <span>مؤشر النشاط</span>
+                  <strong>{model.goldActivity.score}/100</strong>
+                  <small>{model.goldActivity.label}</small>
+                </div>
+                <div className={styles.fxGoldMetric}>
+                  <span>سلوك اللحظة</span>
+                  <strong>{currentPoint.goldStatus}</strong>
+                  <small>{selectedPoint.hourLabel}</small>
+                </div>
+                <div className={styles.fxGoldMetric}>
+                  <span>إعادة الفتح</span>
+                  <strong>{model.gold.nextWindowLabel || 'مفتوح الآن'}</strong>
+                  <small>{model.gold.isActive ? 'لا يوجد توقف قريب ظاهر' : 'أقرب وقت متوقع للعودة'}</small>
+                </div>
+              </div>
               {model.gold.detail && (
                 <div className={styles.mcInstrumentFootnotes}>
                   <p className={styles.mcInstrumentFootnote}>
@@ -314,6 +466,23 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
                   ))}
                 </div>
               </div>
+              <div className={styles.fxGoldMetrics}>
+                <div className={styles.fxGoldMetric}>
+                  <span>الحالة الآن</span>
+                  <strong>{model.bestWindow.isActive ? 'داخل الذروة' : 'خارج الذروة'}</strong>
+                  <small>{model.bestWindow.statusLabel}</small>
+                </div>
+                <div className={styles.fxGoldMetric}>
+                  <span>أفضل أزواج اللحظة</span>
+                  <strong>{selectedPoint.bestPairs?.length ? selectedPoint.bestPairs.join('، ') : 'راقب EUR/USD وXAU/USD'}</strong>
+                  <small>{selectedPoint.sessionsLabel}</small>
+                </div>
+                <div className={styles.fxGoldMetric}>
+                  <span>الحدث الأقرب</span>
+                  <strong>{nextEvent ? nextEvent.nameAr : 'لا حدث قوي قريب'}</strong>
+                  <small>{nextEvent ? `${nextEvent.timeLocal} · ${nextEvent.impactLabel}` : 'يعتمد القرار على التوقيت أكثر من الخبر الآن'}</small>
+                </div>
+              </div>
               <div className={styles.mcInstrumentFootnotes}>
                 <p className={styles.mcInstrumentFootnote}>
                   <span className={styles.mcInstrumentFootnoteDot} aria-hidden="true" />
@@ -325,6 +494,54 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
               </div>
             </article>
           </div>
+
+          <aside className={styles.fxGoldSide}>
+            <article className={styles.fxSideCard}>
+              <div className={styles.fxSideCardHead}>
+                <span className={styles.fxCommandEyebrow}>
+                  <ClockCountdown size={14} weight="duotone" />
+                  لوحة الآن
+                </span>
+                <h3 className={styles.fxSideCardTitle}>ماذا تراقب هذه اللحظة؟</h3>
+              </div>
+              <div className={styles.fxSideList}>
+                <div className={styles.fxSideListItem}>
+                  <strong>أفضل وقت الآن</strong>
+                  <span>{currentPoint.hint}</span>
+                </div>
+                <div className={styles.fxSideListItem}>
+                  <strong>الجلسات الفعالة</strong>
+                  <span>{selectedPoint.sessionsLabel}</span>
+                </div>
+                <div className={styles.fxSideListItem}>
+                  <strong>الأزواج الأوضح</strong>
+                  <span>{selectedPoint.bestPairs?.length ? selectedPoint.bestPairs.join('، ') : 'XAU/USD · EUR/USD'}</span>
+                </div>
+                <div className={styles.fxSideListItem}>
+                  <strong>الذهب</strong>
+                  <span>{model.gold.detail}</span>
+                </div>
+              </div>
+            </article>
+
+            <article className={styles.fxSideCard}>
+              <div className={styles.fxSideCardHead}>
+                <span className={styles.fxCommandEyebrow}>
+                  <Sparkle size={14} weight="duotone" />
+                  مفكرة هذا الأسبوع
+                </span>
+                <h3 className={styles.fxSideCardTitle}>الأحداث التي قد تغيّر الإيقاع</h3>
+              </div>
+              <div className={styles.fxEventRail}>
+                {model.weeklyEvents.slice(0, 3).map((event) => (
+                  <div key={event.key} className={styles.fxEventPill} data-tone={event.impact === 'critical' ? 'danger' : event.impact === 'high' ? 'warning' : 'info'}>
+                    <strong>{event.nameAr}</strong>
+                    <span>{event.timeLocal} · {event.sessionLabel}</span>
+                  </div>
+                ))}
+              </div>
+            </article>
+          </aside>
         </div>
       </section>
 

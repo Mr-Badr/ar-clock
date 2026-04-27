@@ -3,10 +3,20 @@ import { searchCities } from '@/lib/db/queries/cities'
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url)
-  const query = searchParams.get('q')
+  const query = String(searchParams.get('q') || '').trim()
 
   if (!query || query.length < 2) {
     return NextResponse.json([])
+  }
+
+  // Short queries are served well enough from the local city indexes on the client.
+  // Keeping the live API for longer-tail searches reduces database pressure.
+  if (query.length < 4) {
+    return NextResponse.json([], {
+      headers: {
+        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400'
+      }
+    })
   }
 
   try {

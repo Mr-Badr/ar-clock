@@ -28,6 +28,21 @@ export default function manifest() {
     categories: ['lifestyle', 'utilities', 'education'],
     shortcuts: [
       {
+        name: 'فهرس الأدوات',
+        url: '/fahras',
+        description: 'ابحث داخل الوقت والحاسبات والاقتصاد من صفحة واحدة',
+      },
+      {
+        name: 'الحاسبات',
+        url: '/calculators',
+        description: 'ابدأ من أشهر الحاسبات العربية اليومية',
+      },
+      {
+        name: 'الاقتصاد الحي',
+        url: '/economie',
+        description: 'تابع السوق الأمريكي والذهب والفوركس في لوحة واحدة',
+      },
+      {
         name: 'مواقيت الصلاة',
         url: '/mwaqit-al-salat',
         description: 'تحقق من أوقات الصلاة الدقيقة',
@@ -36,11 +51,6 @@ export default function manifest() {
         name: 'فرق التوقيت',
         url: '/time-difference',
         description: 'قارن الوقت بين المدن العالمية',
-      },
-      {
-        name: 'عداد المناسبات',
-        url: '/holidays',
-        description: 'متى يبدأ رمضان والمناسبات القادمة؟',
       },
     ],
   };

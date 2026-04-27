@@ -19,7 +19,7 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import { convertDate, type ConvertDateResult } from '@/lib/date-adapter';
 import { getIslamicEventsForHijriDate } from '@/lib/islamic-holidays';
-import { JsonLd } from '@/components/date/JsonLd';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import DateRouteLoading from '@/components/date/DateRouteLoading';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';

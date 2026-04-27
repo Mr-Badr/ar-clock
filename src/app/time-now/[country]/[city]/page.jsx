@@ -37,6 +37,10 @@ import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 import { getPriorityCityParams, getCityBySlug, getTopCitiesByCountry } from '@/lib/db/queries/cities';
 import { getCachedNowIso } from '@/lib/date-utils';
+import {
+  GEO_ROUTE_INDEXING_POLICIES,
+  isSeoIndexableCityParams,
+} from '@/lib/seo/country-indexing';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 import { buildTimeNowKeywords } from '@/lib/seo/section-search-intent';
 
@@ -75,6 +79,11 @@ export async function generateMetadata({ params }) {
   const cityAr = city.name_ar || city.name_en;
   const countryAr = country.name_ar || country.name_en;
   const offset = getUtcOffsetStr(city.timezone);
+  const policy = GEO_ROUTE_INDEXING_POLICIES.timeNow;
+  const isIndexableCity = isSeoIndexableCityParams(
+    { country: countrySlug, city: citySlug },
+    { countryScope: policy.countryScope, cityScope: policy.cityScope },
+  );
 
   return {
     title: `كم الساعة الآن في ${cityAr}؟ | التوقيت المحلي والتاريخ اليوم`,
@@ -111,8 +120,13 @@ export async function generateMetadata({ params }) {
       description: `اعرف الساعة الحالية في ${cityAr} مع تاريخ اليوم والمنطقة الزمنية ${offset}.`,
     },
     robots: {
-      index: true, follow: true,
-      googleBot: { index: true, follow: true, 'max-snippet': -1 },
+      index: isIndexableCity,
+      follow: true,
+      googleBot: {
+        index: isIndexableCity,
+        follow: true,
+        'max-snippet': -1,
+      },
     },
   };
 }

@@ -3,7 +3,7 @@
  * Provides offline support and caching for Arabic clock app
  */
 
-const CACHE_VERSION = 'v4'; // Bump this when deploying major updates
+const CACHE_VERSION = 'v5'; // Bump this when deploying major updates
 const STATIC_CACHE = `miqat-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `miqat-dynamic-${CACHE_VERSION}`;
 const IS_LOCALHOST =
@@ -16,6 +16,9 @@ const CORE_ASSETS = [
   '/offline',
   '/manifest.webmanifest',
   '/favicon.ico',
+  '/icons/icon-192.png',
+  '/geo/countries.json',
+  '/geo/city-search-index.json',
 ];
 
 // Install event - cache static assets safely
@@ -93,6 +96,11 @@ self.addEventListener('fetch', (event) => {
 
   // Only handle same-origin requests inside the SW.
   if (url.origin !== self.location.origin) {
+    return;
+  }
+
+  // Keep APIs fresh and avoid serving stale dynamic payloads from the SW.
+  if (url.pathname.startsWith('/api/')) {
     return;
   }
 
@@ -174,8 +182,18 @@ async function staleWhileRevalidate(request) {
 
 async function networkFirstPage(request) {
   try {
-    return await fetch(request);
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      const cache = await caches.open(DYNAMIC_CACHE);
+      cache.put(request, networkResponse.clone());
+    }
+    return networkResponse;
   } catch {
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+
     return caches.match('/offline');
   }
 }
@@ -185,6 +203,7 @@ function isStaticAsset(pathname) {
   return (
     pathname.startsWith('/_next/static/') ||
     pathname.startsWith('/icons/') ||
+    pathname.startsWith('/geo/') ||
     pathname.endsWith('.css') ||
     pathname.endsWith('.js') ||
     pathname.endsWith('.png') ||

@@ -21,7 +21,7 @@ import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { convertDate } from '@/lib/date-adapter';
 import { getIslamicEventsForHijriDate, generateUniqueContext, getGregorianMonthNameAr } from '@/lib/islamic-holidays';
-import { JsonLd } from '@/components/date/JsonLd';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { MethodComparisonTable } from '@/components/date/MethodComparisonTable';
 import { DateNavigation } from '@/components/date/DateNavigation';
@@ -60,10 +60,10 @@ export async function generateMetadata({
     alternates: { canonical: `${BASE_URL}/date/${year}/${month}/${day}` },
     robots: {
       index: false,
-      follow: false,
+      follow: true,
       googleBot: {
         index: false,
-        follow: false,
+        follow: true,
       },
     },
     openGraph: { title: `${day} ${monthAr} ${year} — ${hijri.formatted.ar} | ميقاتنا`, url: `${BASE_URL}/date/${year}/${month}/${day}`, locale: 'ar_SA' },

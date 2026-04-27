@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import BuildingCostCalculator from '@/components/calculators/building/BuildingCostCalculator.client';
 import {
   CalculatorHero,
@@ -19,6 +20,7 @@ import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { getSiteUrl } from '@/lib/site-config';
 import { getBuildingKeywords } from '@/lib/calculators/building/seo-keywords';
 import { COUNTRY_LIST } from '@/lib/calculators/building/country-data';
+import SectionSkeleton from '@/components/shared/SectionSkeleton';
 
 const SITE_URL = getSiteUrl();
 const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.building);
@@ -99,7 +101,9 @@ export default function BuildingHubPage() {
           'واجهة صديقة لغير المهندسين.',
         ]}
       >
-        <BuildingCostCalculator />
+        <Suspense fallback={<SectionSkeleton />}>
+          <BuildingCostCalculator />
+        </Suspense>
       </CalculatorHero>
 
       <CalculatorSection

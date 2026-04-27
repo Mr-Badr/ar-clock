@@ -68,14 +68,38 @@ export default function ServiceWorkerRegistration() {
       }
     };
 
+    const scheduleRegistration = () => {
+      if ('requestIdleCallback' in window) {
+        const idleId = window.requestIdleCallback(() => {
+          registerSW();
+        }, { timeout: 2500 });
+
+        return () => window.cancelIdleCallback(idleId);
+      }
+
+      const timeoutId = globalThis.setTimeout(() => {
+        registerSW();
+      }, 1200);
+
+      return () => globalThis.clearTimeout(timeoutId);
+    };
+
     // Register after page load to avoid blocking initial render
     if (document.readyState === 'complete') {
-      registerSW();
-      return undefined;
+      return scheduleRegistration();
     }
 
-    window.addEventListener('load', registerSW);
-    return () => window.removeEventListener('load', registerSW);
+    let cleanupScheduledRegistration = () => {};
+
+    const onLoad = () => {
+      cleanupScheduledRegistration = scheduleRegistration();
+    };
+
+    window.addEventListener('load', onLoad);
+    return () => {
+      cleanupScheduledRegistration();
+      window.removeEventListener('load', onLoad);
+    };
   }, []);
 
   return null;

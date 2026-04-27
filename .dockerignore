@@ -5,6 +5,13 @@ node_modules
 coverage
 reports
 build
+dist
+docs
+tests
+scripts
+content-ops
+playwright-report
+test-results
 *.log
 .DS_Store
 .env*.local

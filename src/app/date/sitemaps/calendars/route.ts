@@ -2,14 +2,30 @@
  * /date/sitemaps/calendars/route.ts
  * Yearly calendars (Gregorian and Hijri).
  */
+import { convertDate } from '@/lib/date-adapter';
 import { getSiteUrl } from '@/lib/site-config';
 import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
 const BASE = getSiteUrl();
 
+function getCurrentHijriYear() {
+  const now = new Date();
+  const isoDate = [
+    String(now.getUTCFullYear()),
+    String(now.getUTCMonth() + 1).padStart(2, '0'),
+    String(now.getUTCDate()).padStart(2, '0'),
+  ].join('-');
+
+  try {
+    return convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' }).year;
+  } catch {
+    return 1447;
+  }
+}
+
 export async function GET() {
   const currentYear = new Date().getUTCFullYear();
-  const currentHijriYear = 1446; // Base year for safety, can be dynamic but sitemap index doesn't need high precision
+  const currentHijriYear = getCurrentHijriYear();
 
   const entries: string[] = [];
   const lastmod = getSitemapLastModifiedDate();

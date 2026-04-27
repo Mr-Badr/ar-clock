@@ -103,6 +103,25 @@ export function EconomyGuide({ sections }) {
   );
 }
 
+export function EconomyIntentCards({ groups = [] }) {
+  if (!groups.length) return null;
+
+  return (
+    <div className="economy-guide-grid">
+      {groups.map((group) => (
+        <article key={group.title} className="economy-copy-card economy-intent-card">
+          <h3 className="economy-copy-card__title">{group.title}</h3>
+          <div className="economy-intent-card__chips">
+            {group.items.map((item) => (
+              <span key={item} className="economy-intent-chip">{item}</span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
 export function EconomyFaq({ items }) {
   return <EconomyFaqAccordion items={items} />;
 }

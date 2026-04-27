@@ -34,6 +34,28 @@ const FINANCE_ICONS = {
   vat: ReceiptText,
   percentage: BadgePercent,
 };
+const FINANCE_RETURN_PATHS = [
+  {
+    href: '/calculators/monthly-installment',
+    title: 'كم قسط قرض 100 ألف؟',
+    description: 'مسار قرار تمويلي يومي يعرض القسط وإجمالي الفوائد والسداد المبكر بدلاً من رقم شهري معزول.',
+  },
+  {
+    href: '/calculators/vat',
+    title: 'كم ضريبة 1000 ريال عند 15%؟',
+    description: 'مناسب للتاجر وصاحب الفاتورة ومن يريد إضافة الضريبة أو استخراجها بسرعة من نفس الصفحة.',
+  },
+  {
+    href: '/calculators/percentage',
+    title: 'كم يساوي 20% من 500؟',
+    description: 'يخدم الخصومات والزيادات ونسبة التغيير والأسئلة العامة المرتبطة بالبروسنت.',
+  },
+  {
+    href: '/calculators/end-of-service-benefits',
+    title: 'كم مكافأة نهاية الخدمة بعد 5 سنوات؟',
+    description: 'صفحة عالية النية للسوق السعودي تجمع الحاسبة مع الشرح والمقارنة بين الاستقالة ونهاية العقد.',
+  },
+];
 
 const FAQ_ITEMS = [
   {
@@ -240,6 +262,16 @@ export default function FinanceCalculatorsHubPage() {
             },
           ]}
         />
+      </CalculatorSection>
+
+      <CalculatorSection
+        id="finance-return-paths"
+        eyebrow="رحلات متكررة"
+        title="صفحات تجعل المستخدم يعود إلى الموقع بدل زيارة واحدة فقط"
+        description="هذه الصفحات ليست مجرد أدوات متجاورة، بل أسئلة مالية يومية متكررة يمكن أن تبني عادة استخدام مستمرة إذا وصل الزائر إلى المسار الصحيح من البداية."
+        subtle
+      >
+        <CalculatorResourceLinks items={FINANCE_RETURN_PATHS} buttonLabel="افتح السؤال مباشرة" />
       </CalculatorSection>
 
       <CalculatorSection

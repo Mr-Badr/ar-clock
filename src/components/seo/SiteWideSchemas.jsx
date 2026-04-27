@@ -1,4 +1,6 @@
 // src/components/seo/SiteWideSchemas.jsx
+import { JsonLd } from '@/components/seo/JsonLd';
+import { WEBSITE_ARCHITECTURE_PATHS } from '@/lib/seo/site-architecture';
 import {
   SITE_BRAND,
   SITE_BRAND_EN,
@@ -11,73 +13,7 @@ import {
 const SITE_URL = getSiteUrl();
 const ORG_ID = `${SITE_URL}#organization`;
 const WEBSITE_ID = `${SITE_URL}#website`;
-const WEBSITE_PARTS = [
-  '/time-now',
-  '/mwaqit-al-salat',
-  '/time-difference',
-  '/fahras',
-  '/calculators',
-  '/calculators/sleep',
-  '/calculators/sleep/bedtime',
-  '/calculators/sleep/wake-time',
-  '/calculators/sleep/sleep-duration',
-  '/calculators/sleep/nap-calculator',
-  '/calculators/sleep/sleep-debt',
-  '/calculators/sleep/sleep-needs-by-age',
-  '/calculators/personal-finance',
-  '/calculators/personal-finance/emergency-fund',
-  '/calculators/personal-finance/debt-payoff',
-  '/calculators/personal-finance/savings-goal',
-  '/calculators/personal-finance/net-worth',
-  '/calculators/age',
-  '/calculators/age/calculator',
-  '/calculators/age/hijri',
-  '/calculators/age/difference',
-  '/calculators/age/milestones',
-  '/calculators/building/cement',
-  '/calculators/building/rebar',
-  '/calculators/building/tiles',
-  '/calculators/end-of-service-benefits',
-  '/calculators/monthly-installment',
-  '/calculators/vat',
-  '/calculators/percentage',
-  '/calculators/building',
-  '/date',
-  '/date/converter',
-  '/date/today/hijri',
-  '/date/today/gregorian',
-  '/holidays',
-  '/economie',
-  '/economie/market-hours',
-  '/economie/us-market-open',
-  '/economie/gold-market-hours',
-  '/economie/forex-sessions',
-  '/economie/stock-markets',
-  '/economie/market-clock',
-  '/economie/best-trading-time',
-  '/about',
-  '/privacy',
-  '/disclaimer',
-  '/contact',
-  '/guides/emergency-fund',
-  '/guides/what-is-a-sleep-cycle',
-  '/guides/how-many-hours-of-sleep-do-i-need',
-  '/guides/best-nap-length',
-  '/guides/sleep-debt-explained',
-  '/guides/why-am-i-tired-after-sleeping',
-  '/guides/how-long-does-it-take-to-fall-asleep',
-  '/guides/rem-vs-deep-sleep',
-  '/guides/sleep-hygiene-basics',
-  '/guides/debt-payoff-methods',
-  '/guides/how-much-save-monthly',
-  '/guides/net-worth-explained',
-  '/guides/how-many-months-emergency-fund',
-  '/guides/how-to-pay-off-debt-fast',
-  '/guides/save-for-goal',
-  '/guides/assets-vs-liabilities',
-  '/terms',
-  '/editorial-policy',
-];
+const WEBSITE_PARTS = WEBSITE_ARCHITECTURE_PATHS;
 
 export default function SiteWideSchemas() {
   const organizationSchema = {
@@ -125,6 +61,14 @@ export default function SiteWideSchemas() {
       '@type': 'Thing',
       name: topic,
     })),
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${SITE_URL}/search?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
     hasPart: WEBSITE_PARTS.map((path) => ({
       '@type': 'WebPage',
       url: `${SITE_URL}${path}`,
@@ -132,15 +76,6 @@ export default function SiteWideSchemas() {
   };
 
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-      />
-    </>
+    <JsonLd data={[organizationSchema, websiteSchema]} />
   );
 }

@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { convertDate } from '@/lib/date-adapter';
-import { JsonLd } from '@/components/date/JsonLd';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb } from '@/components/date/DateBreadcrumb';
 import { ConverterForm } from './ConverterForm';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';

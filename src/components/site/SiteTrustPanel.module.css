@@ -1,0 +1,123 @@
+.panel {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--border-default) 86%, var(--accent-alt) 14%);
+  border-radius: 1.5rem;
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--accent-soft) 72%, transparent) 0%, transparent 42%),
+    linear-gradient(180deg, var(--bg-surface-2) 0%, var(--bg-surface-1) 100%);
+  box-shadow: var(--shadow-card);
+}
+
+.head {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: fit-content;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-accent);
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+  font-weight: 900;
+}
+
+.lead {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.9rem;
+}
+
+.card {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 1.15rem;
+  border: 1px solid var(--border-subtle);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-surface-1) 84%, transparent) 0%, var(--bg-surface-1) 100%);
+  text-decoration: none;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.cardIcon {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-accent);
+  background: color-mix(in srgb, var(--accent-soft) 84%, transparent);
+  color: var(--accent-alt);
+}
+
+.cardTitle {
+  color: var(--text-primary);
+  font-size: 0.96rem;
+  font-weight: 850;
+}
+
+.cardBody {
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.75;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--accent-alt);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.note {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.75;
+}
+
+@media (max-width: 640px) {
+  .panel {
+    padding: 1rem;
+    border-radius: 1.25rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 0.95rem;
+  }
+}

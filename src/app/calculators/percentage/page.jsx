@@ -16,6 +16,8 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
+import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
+import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
 import { getGuidesBySlugs } from '@/lib/guides/data';
 import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -24,70 +26,14 @@ import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'percentage');
+const CONTENT = getFinancePageContent('percentage');
+const SEARCH_COVERAGE = buildFinancePageSearchCoverage(PAGE, CONTENT);
 const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.percentage);
-
-const faqItems = [
-  {
-    question: 'كيف أحسب 15% من مبلغ بسرعة؟',
-    answer: 'حوّل 15% إلى 0.15 ثم اضربه في المبلغ، أو احسب 10% ثم أضف نصفها تقريباً. الصفحة تنفذ الحالتين فوراً دون الحاجة إلى خطوات ذهنية.',
-  },
-  {
-    question: 'هل 20% خصم ثم 10% خصم يساوي 30%؟',
-    answer: 'لا. الخصم الثاني يطبق على السعر المخفض بالفعل، لذلك يكون الخصم الفعلي أقل من 30%. استخدم أداة الخصومات المتتالية لرؤية الفرق بدقة.',
-  },
-  {
-    question: 'ما الفرق بين 20% من 100 و20% زيادة على 100؟',
-    answer: '20% من 100 تساوي 20 فقط، أما 20% زيادة على 100 فتعني أن النتيجة النهائية تصبح 120.',
-  },
-  {
-    question: 'هل يمكن أن تكون النسبة أكثر من 100%؟',
-    answer: 'نعم. إذا كان الجزء أكبر من الأساس أو إذا كانت الزيادة كبيرة بما يكفي، فقد تظهر النسبة أعلى من 100% وهذا أمر طبيعي حسابياً.',
-  },
-  {
-    question: 'ما الفرق بين النسبة المئوية ونقطة مئوية؟',
-    answer: 'النسبة المئوية تعبر عن التغير النسبي، أما النقطة المئوية فتعني الفرق المباشر بين نسبتين مثل الانتقال من 10% إلى 12% = نقطتان مئويتان.',
-  },
-];
-
-const sectionNavItems = [
-  { href: '#calculator-hero', label: 'الحاسبة', description: 'أربع حاسبات في تبويبات منفصلة' },
-  { href: '#percent-overview', label: 'خريطة الصفحة', description: 'كل ما ستجده داخل الصفحة' },
-  { href: '#percent-intents', label: 'نية البحث', description: 'أسئلة وكلمات طويلة الذيل' },
-  { href: '#percent-examples', label: 'الاستخدامات', description: 'مجالات الحياة اليومية التي تخدمها الصفحة' },
-  { href: '#percent-answers', label: 'إجابات مباشرة', description: 'كم يساوي X%؟ وكم نسبة X من Y؟' },
-  { href: '#percent-content', label: 'الفهم العميق', description: 'الأخطاء الشائعة والحيل الذهنية' },
-  { href: '#percent-playbook', label: 'خطة الحل', description: 'كيف تختار نوع المسألة الصحيح' },
-  { href: '#percent-table', label: 'الجدول المرجعي', description: 'كسور ونسب وعشري' },
-  { href: '#percent-faq', label: 'FAQ', description: 'الأسئلة الشائعة' },
-];
-
-const quickAnswers = [
-  {
-    question: 'كم يساوي 20% من 500؟',
-    description: 'أبسط نية بحث مرتبطة بالخصومات والضرائب.',
-    answer: '20% من 500 تساوي 100. داخل الصفحة يمكنك تنفيذ النوع نفسه على أي مبلغ فوراً من أول تبويب، مع أمثلة سريعة قابلة للنقر وتكرار النتائج في السجل.',
-  },
-  {
-    question: 'كم نسبة 40 من 200؟',
-    description: 'مفيد للعلامات والإنجاز والإحصاءات.',
-    answer: '40 من 200 تساوي 20%. تبويب "كم نسبة X من Y؟" يعرض النتيجة أيضاً بشكل مرئي عبر شريط تقدم ليسهّل قراءة النسبة بسرعة.',
-  },
-  {
-    question: 'ما المبلغ بعد خصم 25% من 1000؟',
-    description: 'من أشهر تطبيقات النسبة في التسوق.',
-    answer: 'بعد خصم 25% من 1000 يصبح المبلغ 750. تبويب الزيادة أو الخفض في الصفحة يفصل بين قيمة الخصم والنتيجة النهائية بدل إعطاء رقم واحد فقط.',
-  },
-  {
-    question: 'ما نسبة التغيير من 100 إلى 150؟',
-    description: 'تطبيق شائع في الربح والنمو والأسعار.',
-    answer: 'الانتقال من 100 إلى 150 يعني زيادة 50%. تبويب نسبة التغيير يوضح أيضاً الفرق المطلق واتجاه التغير حتى لا تختلط الزيادة بالقيمة النهائية.',
-  },
-];
 
 export const metadata = buildCanonicalMetadata({
   title: PAGE.heroTitle,
   description: PAGE.description,
-  keywords: PAGE.keywords,
+  keywords: SEARCH_COVERAGE.metadataKeywords,
   url: `${SITE_URL}${PAGE.href}`,
 });
 
@@ -106,12 +52,13 @@ export default function PercentagePage() {
     path: PAGE.href,
     name: PAGE.title,
     description: PAGE.description,
-    about: PAGE.keywords.slice(0, 8),
+    about: SEARCH_COVERAGE.schemaAbout,
+    keywords: SEARCH_COVERAGE.metadataKeywords,
   });
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqItems.map((item) => ({
+    mainEntity: CONTENT.faqItems.map((item) => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: { '@type': 'Answer', text: item.answer },
@@ -120,14 +67,13 @@ export default function PercentagePage() {
   const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: 'كيفية استخدام حاسبة النسبة المئوية',
-    description: 'خطوات سريعة لاختيار نوع مسألة النسبة المئوية المناسب وحلها بدقة.',
-    step: [
-      { '@type': 'HowToStep', name: 'حدد نوع السؤال', text: 'هل تريد نسبة من مبلغ؟ أم معرفة نسبة جزء من كل؟ أم زيادة أو خفض؟ أم نسبة التغيير؟' },
-      { '@type': 'HowToStep', name: 'افتح التبويب المناسب', text: 'كل تبويب في الصفحة مخصص لنوع مختلف من المسائل حتى لا تختلط المعادلات.' },
-      { '@type': 'HowToStep', name: 'أدخل القيم أو اختر مثالاً جاهزاً', text: 'يمكنك بدء الحساب يدوياً أو استخدام الأمثلة القابلة للنقر.' },
-      { '@type': 'HowToStep', name: 'راجع النتيجة والفرق والمقارنة', text: 'بعض التبويبات تعرض قيمة التغير أو الخصم إلى جانب النتيجة النهائية لمزيد من الوضوح.' },
-    ],
+    name: CONTENT.howTo.name,
+    description: CONTENT.howTo.description,
+    step: CONTENT.howTo.steps.map((item) => ({
+      '@type': 'HowToStep',
+      name: item.name,
+      text: item.text,
+    })),
   };
 
   return (
@@ -138,15 +84,11 @@ export default function PercentagePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
       <CalculatorHero
-        badge="4 حاسبات في صفحة واحدة"
+        badge={CONTENT.hero.badge}
         title={PAGE.heroTitle}
-        description="إذا كان سؤالك: كم يساوي 20% من 500؟ فالجواب 100. وبعدها تساعدك الصفحة على حل بقية مسائل النسبة اليومية: كم نسبة X من Y، وما المبلغ بعد الخصم أو الزيادة، وما نسبة التغيير بين قيمتين."
+        description={CONTENT.hero.description}
         accent={PAGE.accent}
-        highlights={[
-          'أربع حاسبات أساسية في واجهة واحدة.',
-          'أمثلة جاهزة تضخ الأرقام مباشرة داخل التبويب المناسب.',
-          'سجل بسيط لأهم النتائج التي تريد الرجوع لها.',
-        ]}
+        highlights={CONTENT.hero.highlights}
       >
         <PercentageCalculator />
       </CalculatorHero>
@@ -157,7 +99,7 @@ export default function PercentagePage() {
         title="صفحة نسبة مئوية شاملة تحل أكثر من نوع واحد من المسائل"
         description="بدلاً من حاسبة ضيقة لوظيفة واحدة، هذه الصفحة تجمع الحاسبة الأساسية مع أقسام تعليمية وأمثلة واستخدامات يومية وجداول مرجعية وأدوات إضافية."
       >
-        <CalculatorSectionNav items={sectionNavItems} />
+        <CalculatorSectionNav items={CONTENT.sectionNavItems} />
       </CalculatorSection>
 
       <CalculatorSection
@@ -168,7 +110,7 @@ export default function PercentagePage() {
         subtle
       >
         <div className="calc-grid-2">
-          <CalculatorIntentCloud items={PAGE.keywords.slice(0, 10)} />
+          <CalculatorIntentCloud items={SEARCH_COVERAGE.intentChips} />
           <CalculatorStoryBand
             title="ميزة تنافسية واضحة: 4 حاسبات في تجربة واحدة"
             description="بدلاً من تحويل المستخدم بين أربع صفحات ضعيفة، صممنا هذه الصفحة كمركز واحد لمسائل النسبة المئوية الأكثر شيوعاً، مع أمثلة جاهزة وسجل نتائج وأدوات مكمّلة."
@@ -215,7 +157,7 @@ export default function PercentagePage() {
         title="إذا كتبت في Google: كم يساوي 20% من 500؟"
         description="هذا القسم مكتوب خصيصاً لصيغ البحث التي يدخلها المستخدم كما هي تقريباً إلى Google."
       >
-        <CalculatorQuickAnswerGrid items={quickAnswers} />
+        <CalculatorQuickAnswerGrid items={CONTENT.quickAnswers} />
       </CalculatorSection>
 
       <CalculatorSection
@@ -351,7 +293,7 @@ export default function PercentagePage() {
         eyebrow="الأسئلة الشائعة"
         title="أسئلة تتكرر في الخصومات والدرجات والتغيرات"
       >
-        <CalculatorFaqSection items={faqItems} />
+        <CalculatorFaqSection items={CONTENT.faqItems} />
       </CalculatorSection>
 
       <CalculatorSection

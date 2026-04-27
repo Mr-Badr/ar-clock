@@ -20,7 +20,7 @@ import { Suspense } from 'react';
 import { convertDate } from '@/lib/date-adapter';
 import { DAY_NAMES_AR, GREGORIAN_MONTHS_AR } from '@/lib/constants';
 import { isSacredMonth, isRamadan as checkRamadan, getIslamicEventsForHijriDate } from '@/lib/islamic-holidays';
-import { JsonLd } from '@/components/date/JsonLd';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { MethodComparisonTable } from '@/components/date/MethodComparisonTable';
 import { DateShareActions } from '@/components/date/DateShareActions';

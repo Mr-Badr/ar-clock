@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { convertDate } from '@/lib/date-adapter';
 import { ISLAMIC_MONTH_NAMES_AR } from '@/lib/date-adapter';
 import { getIslamicEventsForHijriDate } from '@/lib/islamic-holidays';
-import { JsonLd } from '@/components/date/JsonLd';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { DateNavigation } from '@/components/date/DateNavigation';
 import { DateShareActions } from '@/components/date/DateShareActions';
@@ -63,10 +63,10 @@ export async function generateMetadata({
     alternates: { canonical: `${BASE_URL}/date/hijri/${year}/${month}/${day}` },
     robots: {
       index: false,
-      follow: false,
+      follow: true,
       googleBot: {
         index: false,
-        follow: false,
+        follow: true,
       },
     },
     openGraph: {

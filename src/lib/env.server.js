@@ -34,6 +34,12 @@ const runtimeSchema = z
     DATABASE_URL: emptyToUndefined(z.string().min(1).optional()),
     ENABLE_LIVE_GEO_DB: z.enum(['true', 'false']).optional(),
     LIVE_GEO_PROVIDER: emptyToUndefined(z.enum(['supabase', 'postgres']).optional()),
+    ECONOMY_LIVE_DATA_PROVIDER: emptyToUndefined(z.enum(['auto', 'alphavantage', 'twelvedata', 'yahoo']).optional()),
+    ALPHA_VANTAGE_API_KEY: emptyToUndefined(z.string().min(8).optional()),
+    TWELVE_DATA_API_KEY: emptyToUndefined(z.string().min(8).optional()),
+    FRED_API_KEY: emptyToUndefined(z.string().min(8).optional()),
+    NEWSAPI_API_KEY: emptyToUndefined(z.string().min(8).optional()),
+    GNEWS_API_KEY: emptyToUndefined(z.string().min(8).optional()),
   })
   .superRefine((value, ctx) => {
     const liveGeoUsesPostgres =

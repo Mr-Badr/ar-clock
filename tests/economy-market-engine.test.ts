@@ -19,7 +19,7 @@ const viewer = {
 };
 
 test('forex model detects London and New York overlap in Riyadh during April DST window', () => {
-  const model = buildForexPageModel(viewer, new Date('2026-04-06T12:30:00.000Z'));
+  const model = buildForexPageModel(viewer, '2026-04-06T12:30:00.000Z');
 
   assert.equal(model.hero.label, 'نافذة السيولة العالية');
   assert.equal(model.bestWindow.isActive, true);
@@ -34,7 +34,7 @@ test('forex model detects London and New York overlap in Riyadh during April DST
 });
 
 test('stock model marks Tadawul open on Sunday while US market remains closed', () => {
-  const model = buildStockMarketsPageModel(viewer, new Date('2026-04-05T08:00:00.000Z'));
+  const model = buildStockMarketsPageModel(viewer, '2026-04-05T08:00:00.000Z');
 
   const saudi = model.cards.find((card) => card.id === 'sa');
   const us = model.cards.find((card) => card.id === 'us');
@@ -44,7 +44,7 @@ test('stock model marks Tadawul open on Sunday while US market remains closed', 
 });
 
 test('stock model exposes extended-hours labels for the US market', () => {
-  const model = buildStockMarketsPageModel(viewer, new Date('2026-04-06T10:00:00.000Z'));
+  const model = buildStockMarketsPageModel(viewer, '2026-04-06T10:00:00.000Z');
 
   assert.match(model.extendedHours.premarketLabel, /\d/);
   assert.match(model.extendedHours.afterhoursLabel, /\d/);
@@ -63,7 +63,7 @@ test('economy tool cards expose the new related live routes', () => {
 });
 
 test('best trading time model builds chart data and weekly windows', () => {
-  const model = buildBestTradingTimePageModel(viewer, new Date('2026-04-06T12:30:00.000Z'));
+  const model = buildBestTradingTimePageModel(viewer, '2026-04-06T12:30:00.000Z');
 
   assert.equal(model.activityChart.points.length, 24);
   assert.equal(model.tradingWeek.length, 5);
@@ -75,7 +75,7 @@ test('best trading time model builds chart data and weekly windows', () => {
 });
 
 test('us market open model exposes Arab-country reference rows and countdown summary', () => {
-  const model = buildUsMarketOpenPageModel(viewer, new Date('2026-04-06T10:00:00.000Z'));
+  const model = buildUsMarketOpenPageModel(viewer, '2026-04-06T10:00:00.000Z');
 
   assert.equal(model.countryOpenRows.length, 4);
   assert.equal(model.countryExtendedRows.length, 4);
@@ -85,7 +85,7 @@ test('us market open model exposes Arab-country reference rows and countdown sum
 });
 
 test('gold market hours model exposes country rows and maintenance window', () => {
-  const model = buildGoldMarketHoursPageModel(viewer, new Date('2026-04-06T12:30:00.000Z'));
+  const model = buildGoldMarketHoursPageModel(viewer, '2026-04-06T12:30:00.000Z');
 
   assert.equal(model.goldSessionRows.length, 4);
   assert.equal(model.countryRows.length, 4);

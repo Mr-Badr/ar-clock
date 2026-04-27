@@ -19,6 +19,7 @@ import AdInArticle from '@/components/ads/AdInArticle';
 import { SectionDivider } from '@/components/shared/primitives';
 import { POPULAR_PAIRS } from '@/components/time-diff/data/popularPairs';
 import { getCachedNowIso } from '@/lib/date-utils';
+import { isSeoIndexableTimeDifferencePair } from '@/lib/seo/time-difference-indexing';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 import { getTimeDifference } from '@/lib/time-diff';
 import { resolveTimeDifferenceCityFromSegment } from '@/lib/time-difference-route';
@@ -70,6 +71,7 @@ export async function generateMetadata({ params }) {
   const [fromCountryPrimary] = getCountrySeoNames(fromCity.country_slug, fromCity.country_name_ar);
   const [toCountryPrimary] = getCountrySeoNames(toCity.country_slug, toCity.country_name_ar);
   const sameCountry = fromCountryPrimary === toCountryPrimary;
+  const isIndexablePair = isSeoIndexableTimeDifferencePair(canonicalFrom, canonicalTo);
   const title = sameCountry
     ? `كم فرق التوقيت بين ${fromCity.city_name_ar} و${toCity.city_name_ar} اليوم؟ | من يسبق الآن؟`
     : `كم فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary} اليوم؟ | من يسبق الآن؟`;
@@ -96,6 +98,16 @@ export async function generateMetadata({ params }) {
     alternates: { canonical: `${BASE}${canonicalHref}` },
     openGraph: { title, description, url: `${BASE}${canonicalHref}`, locale: 'ar_SA', type: 'website' },
     twitter: { card: 'summary', title, description },
+    robots: {
+      index: isIndexablePair,
+      follow: true,
+      googleBot: {
+        index: isIndexablePair,
+        follow: true,
+        'max-snippet': -1,
+        'max-image-preview': 'large',
+      },
+    },
   };
 }
 

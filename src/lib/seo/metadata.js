@@ -1,5 +1,9 @@
 import { SITE_BRAND, getMetadataBase } from '@/lib/site-config';
 
+function normalizeKeyword(value) {
+  return String(value || '').trim().replace(/\s+/g, ' ');
+}
+
 /**
  * @param {{
  *   title: string;
@@ -18,7 +22,9 @@ export function buildCanonicalMetadata({
   locale = 'ar_SA',
   alternates = {},
 }) {
-  const normalizedKeywords = Array.isArray(keywords) ? keywords.join(', ') : keywords;
+  const normalizedKeywords = Array.isArray(keywords)
+    ? Array.from(new Set(keywords.map(normalizeKeyword).filter(Boolean))).join(', ')
+    : normalizeKeyword(keywords);
 
   return {
     metadataBase: getMetadataBase(),
@@ -35,6 +41,13 @@ export function buildCanonicalMetadata({
       'max-snippet': -1,
       'max-image-preview': 'large',
       'max-video-preview': -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-snippet': -1,
+        'max-image-preview': 'large',
+        'max-video-preview': -1,
+      },
     },
     openGraph: {
       title,

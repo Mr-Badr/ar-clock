@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import { convertDate } from '@/lib/date-adapter';
 import { GREGORIAN_MONTHS_AR, DAY_NAMES_AR } from '@/lib/constants';
-import { JsonLd } from '@/components/date/JsonLd';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { Moon, ArrowLeftRight, CalendarDays } from 'lucide-react';

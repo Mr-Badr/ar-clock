@@ -494,8 +494,8 @@
    the background flips to a near-white canvas, so every white-alpha
    value must be swapped for its design-token or dark-alpha counterpart.
 
-   Scope: :global(.light) ensures these rules only fire when next-themes
-   has written class="light" on <html>, and only affect elements inside
+   Scope: :global(.light) ensures these rules only fire when the app theme
+   bootstrap has written class="light" on <html>, and only affect elements inside
    .clockRootFullscreen — leaving the non-fullscreen hero styles untouched.
    ─────────────────────────────────────────────────────────────────── */
 

@@ -1,6 +1,7 @@
 import AgeHijriCalculator from '@/components/calculators/age/AgeHijriCalculator.client';
-import { CalculatorHero, CalculatorSection } from '@/components/calculators/common';
+import { CalculatorHero } from '@/components/calculators/common';
 import { buildAgeMetadata, buildBreadcrumbSchema, buildSoftwareSchema } from '../page-helpers';
+import { AgeToolSections } from '../tool-sections';
 import { Suspense } from 'react';
 import SectionSkeleton from '@/components/shared/SectionSkeleton'
 
@@ -48,12 +49,7 @@ export default function AgeHijriPage() {
         </Suspense>
       </CalculatorHero>
 
-      <CalculatorSection
-        id="age-hijri-content"
-        eyebrow="شرح سريع"
-        title="لماذا هذه الصفحة مفيدة؟"
-        description="بعض المستخدمين يعرف تاريخ ميلاده الميلادي فقط، وآخرون يعتمدون على التاريخ الهجري داخل الأسرة أو الوثائق. هذه الصفحة تربط بين الجانبين دون الحاجة لفتح محول منفصل."
-      />
+      <AgeToolSections toolId="hijri" />
     </main>
   );
 }

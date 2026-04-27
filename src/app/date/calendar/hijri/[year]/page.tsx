@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { JsonLd } from '@/components/date/JsonLd';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { HijriYearlyCalendar } from '@/components/date/HijriYearlyCalendar';
 import { DateCalendarGridSkeleton } from '@/components/date/DateRouteLoading';

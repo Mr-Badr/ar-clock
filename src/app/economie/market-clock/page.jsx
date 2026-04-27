@@ -1,100 +1,82 @@
-import { buildCanonicalMetadata } from '@/lib/seo/metadata';
+import { Suspense } from 'react';
+import { JsonLd } from '@/components/seo/JsonLd';
 import {
-  buildEconomyBreadcrumbSchema,
-  buildEconomyDatasetSchema,
-  buildEconomyFaqSchema,
-  buildEconomySpeakableSchema,
-  buildEconomyToolSchema,
-  getInitialEconomyPageState,
+  buildEconomyPageSearchCoverage,
+  buildEconomyToolPageMetadata,
+  buildEconomyToolPageSchemas,
 } from '@/lib/economy/page-helpers';
-import { getSiteUrl } from '@/lib/site-config';
+import { getCachedEconomyPageSnapshot } from '@/lib/economy/page-snapshots.server';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
-import { EconomyReadingShelf } from '@/components/economy/common';
+import {
+  EconomyGuide,
+  EconomyIntentCards,
+  EconomyReadingShelf,
+  EconomySectionHeader,
+  EconomySourceLinks,
+} from '@/components/economy/common';
 import { FAQ_ITEMS } from '@/components/economy/data/faqItems';
+import EconomyLivePulse from '@/components/economy/EconomyLivePulse';
 import MarketClockLive from '@/components/economy/MarketClockLive';
 import { getGuideCardsBySlugs } from '@/lib/guides/data';
 import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 
-const SITE_URL = getSiteUrl();
+const PAGE_SCOPE = 'market-clock';
 const RELATED_GUIDES = getGuideCardsBySlugs(TOOL_GUIDE_GROUPS.marketClock);
+const SEARCH_COVERAGE = buildEconomyPageSearchCoverage(PAGE_SCOPE, FAQ_ITEMS.marketClock);
 
-export const metadata = buildCanonicalMetadata({
-  title: 'أين السيولة الأعلى الآن؟ | ساعة السوق وذروة الفوركس والذهب',
-  description:
-    'إذا كان سؤالك: أين السيولة الأعلى الآن؟ فهذه الصفحة تعرض ساعة السوق على مدار 24 ساعة، وتوضح ذروة لندن ونيويورك وخريطة النشاط في الفوركس والذهب من مدينتك.',
-  keywords: [
-    // Short
-    'ساعة التداول', 'مؤشر فوركس', 'سيولة', 'تداخل جلسات', 'تداول 24', 'market clock',
-    // Medium
-    'ساعة السوق الآن', 'خريطة سيولة الأسواق', 'تداخل لندن ونيويورك', 'أوقات سوق الفوركس',
-    'مؤشر حركة الأسواق', 'تتبع سيولة الفوركس', 'حجم التداول اليومي', 'Market clock بالعربي',
-    // Long
-    'ساعة التداول العالمية لمعرفة سيولة الأسواق', 'أداة تتبع جلسات الفوركس على مدار 24 ساعة',
-    'مؤشر تداخل جلسة لندن ونيويورك اللحظي', 'متى تبدأ وتنتهي جلسات التداول العالمية',
-    'خريطة توضيحية لسيولة الفوركس بتوقيتك المحلي', 'أفضل أداة لمتابعة افتتاح وإغلاق البورصات',
-    'تتبع حركة السوق المالي في الوقت الفعلي', 'كيفية قراءة ساعة تداول سوق العملات',
-    'متى تكون ذروة لندن ونيويورك اليوم', 'ساعة سيولة الفوركس بتوقيت السعودية',
-    'أفضل وقت الآن في السوق', 'خريطة نشاط الذهب اليوم', 'مقارنة اليوم وغداً في سيولة التداول',
-  ],
-  url: `${SITE_URL}/economie/market-clock`,
-});
+export const metadata = buildEconomyToolPageMetadata(PAGE_SCOPE, FAQ_ITEMS.marketClock);
 
 export default async function MarketClockPage() {
-  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
-
-  const toolSchema = buildEconomyToolSchema({
-    siteUrl: SITE_URL,
-    path: '/economie/market-clock',
-    name: 'أين السيولة الأعلى الآن؟',
-    description: 'أداة بصرية تجيب مباشرة عن مكان تركز السيولة الآن عبر جلسات الفوركس والذهب على مدار 24 ساعة من توقيت المستخدم المحلي.',
-    about: ['ساعة السوق', 'سيولة الفوركس', 'تداخل لندن ونيويورك', 'خريطة نشاط الذهب'],
-  });
-  const breadcrumbSchema = buildEconomyBreadcrumbSchema(
-    SITE_URL,
-    'أين السيولة الأعلى الآن؟',
-    '/economie/market-clock',
-  );
-  const datasetSchema = buildEconomyDatasetSchema({
-    siteUrl: SITE_URL,
-    path: '/economie/market-clock',
-    name: 'بيانات ساعة التداول العالمية',
-    description: 'بيانات بصرية لحركة الجلسات العالمية عبر 24 ساعة من منظور المنطقة الزمنية للمستخدم.',
-  });
-  const speakableSchema = buildEconomySpeakableSchema({
-    siteUrl: SITE_URL,
-    path: '/economie/market-clock',
-  });
-  const faqSchema = buildEconomyFaqSchema({
-    siteUrl: SITE_URL,
-    path: '/economie/market-clock',
-    items: FAQ_ITEMS.marketClock,
-  });
+  const {
+    initialViewer,
+    initialNowIso,
+    liveSnapshot,
+    serverModel,
+  } = await getCachedEconomyPageSnapshot(PAGE_SCOPE);
+  const schemas = buildEconomyToolPageSchemas({ scope: PAGE_SCOPE, faqItems: FAQ_ITEMS.marketClock });
 
   return (
     <div className="bg-base" dir="rtl">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(speakableSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      <JsonLd data={schemas} />
       <EconomyAdLayout>
-        <MarketClockLive initialViewer={initialViewer} initialNowIso={initialNowIso} />
+        <Suspense fallback={null}>
+          <EconomyLivePulse
+            scope={PAGE_SCOPE}
+            initialSnapshot={liveSnapshot}
+            title="نبض السيولة الآن"
+            lead="هذه الطبقة الحية تجعل ساعة السوق جزءاً من لوحة متابعة عملية: أسعار مرجعية، حالة أسواق أساسية، ثم قراءة بصرية أعمق لليوم."
+          />
+        </Suspense>
+
+        <Suspense fallback={null}>
+          <MarketClockLive initialViewer={initialViewer} initialNowIso={initialNowIso} />
+        </Suspense>
+
+        <section className="economy-section">
+          <EconomySectionHeader
+            title="صيغ بحث ساعة السوق والسيولة"
+            lead="بدلاً من عنوان بصري فقط، تعرض الصفحة هنا العبارات التي تربط ساعة السوق بالسيولة الفعلية وتداخل لندن ونيويورك وخريطة النشاط اليومية."
+          />
+          <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
+        </section>
+
+        <section className="economy-section">
+          <EconomySectionHeader
+            title="كيف تقرأ الساعة كأداة قرار؟"
+            lead="هذا الجزء يشرح الساعة بعبارات عملية ومبنية على النموذج نفسه، حتى يفهم الزائر ومحرك البحث أن الصفحة تفسر اللحظة الحالية ولا تعرض شكلاً فقط."
+          />
+          <EconomyGuide sections={serverModel.guideSections} />
+        </section>
+
+        <section className="economy-section">
+          <EconomySectionHeader
+            title="المراجع التي تدعم قراءة الساعة"
+            lead="ربط المراجع المرجعية داخل HTML يقوي الدلالة على أن الصفحة مبنية على جلسات عالمية واضحة وتوقيتات حقيقية متحركة."
+          />
+          <EconomySourceLinks links={serverModel.sourceLinks} />
+        </section>
+
         <EconomyReadingShelf
           title="كيف تفهم الساعة لا الرقم فقط؟"
           lead="هذه الأدلة تشرح معنى ساعة السوق والسيولة والجلسات، ثم تعيد المستخدم إلى الأداة وهو يفهم القراءة البصرية بشكل أوضح."

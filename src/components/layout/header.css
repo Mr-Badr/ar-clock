@@ -26,8 +26,8 @@
   background: var(--bg-surface-1);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-full);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: var(--shadow-sm);
   transition: box-shadow var(--transition-base), border-color var(--transition-base);
 }
@@ -219,6 +219,35 @@
 
 .header-theme-btn:hover svg { transform: rotate(20deg); }
 
+.header-search-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 36px;
+  padding: 0 0.9rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-1);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+  cursor: pointer;
+  appearance: none;
+  font: inherit;
+}
+
+.header-search-link:hover {
+  background: var(--accent-soft);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.header-search-link__label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+}
+
 /* ── Mobile Menu Button ── */
 .header-mobile-btn {
   display: none;
@@ -355,12 +384,19 @@
   .header-inner { padding: 0 var(--space-4); }
   .header-logo { font-size: var(--text-lg); }
   .header-logo-icon { width: 24px; height: 24px; }
+  .header-search-link {
+    width: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+  .header-search-link__label { display: none; }
 }
 
 @media (max-width: 380px) {
   .header-inner { padding: 0 var(--space-3); }
   .header-theme-btn,
-  .header-mobile-btn { width: 36px; height: 36px; }
+  .header-mobile-btn,
+  .header-search-link { width: 36px; height: 36px; }
 }
 
 @media (min-width: 769px) {
@@ -436,8 +472,8 @@
     0 16px 48px rgba(6, 8, 18, 0.5),
     0 4px 12px rgba(6, 8, 18, 0.3);
   overflow: hidden;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   animation: megaIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
   position: relative;
   z-index: var(--z-max);

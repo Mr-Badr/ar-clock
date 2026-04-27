@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import BuildingCostCalculator from '@/components/calculators/building/BuildingCostCalculator.client';
 import {
@@ -17,6 +18,7 @@ import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
 import { getBuildingKeywords } from '@/lib/calculators/building/seo-keywords';
 import { COUNTRY_DATA, getCountryBySlug, getBuildingCountrySlugs } from '@/lib/calculators/building/country-data';
+import SectionSkeleton from '@/components/shared/SectionSkeleton';
 
 const SITE_URL = getSiteUrl();
 
@@ -92,7 +94,9 @@ export default async function CountryBuildingPage({ params }) {
           `تقدير سريع لكميات الأسمنت والحديد.`,
         ]}
       >
-        <BuildingCostCalculator preSelectedCountrySlug={country.slug} />
+        <Suspense fallback={<SectionSkeleton />}>
+          <BuildingCostCalculator preSelectedCountrySlug={country.slug} />
+        </Suspense>
       </CalculatorHero>
 
       <CalculatorSection

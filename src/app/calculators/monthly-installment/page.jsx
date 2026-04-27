@@ -20,6 +20,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
+import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
+import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
 import { getGuidesBySlugs } from '@/lib/guides/data';
 import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -28,69 +30,14 @@ import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'monthly-installment');
+const CONTENT = getFinancePageContent('monthly-installment');
+const SEARCH_COVERAGE = buildFinancePageSearchCoverage(PAGE, CONTENT);
 const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.monthlyInstallment);
-
-const faqItems = [
-  {
-    question: 'ما الفرق بين الفائدة الثابتة والمتناقصة؟',
-    answer: 'في النموذج المبسط هنا تمثل الفائدة الثابتة صورة مسطحة على أصل القرض، بينما المتناقصة تحسب على الرصيد المتبقي وتظهر أثر السداد المبكر بشكل أوضح.',
-  },
-  {
-    question: 'هل يكفي النظر إلى القسط الشهري فقط؟',
-    answer: 'لا. أحياناً يبدو القسط مريحاً لأن المدة طويلة، لكن إجمالي الفوائد يرتفع كثيراً. لهذا تعرض الصفحة القسط والتكلفة الكلية معاً.',
-  },
-  {
-    question: 'كيف تؤثر الدفعة المقدمة؟',
-    answer: 'كلما زادت الدفعة المقدمة انخفض أصل القرض، وبالتالي ينخفض القسط الشهري وإجمالي الفوائد. الحاسبة تخصمها مباشرة من مبلغ التمويل.',
-  },
-  {
-    question: 'هل رسوم الإدارة والتأمين مهمة؟',
-    answer: 'نعم، لأنها قد تغيّر ترتيب العروض حتى لو بدت الفائدة متقاربة. لذلك أضفنا الرسوم كمدخل مستقل لتقارن العروض بصورة أكثر واقعية.',
-  },
-  {
-    question: 'هل السداد المبكر يوفّر دائماً؟',
-    answer: 'في التمويل المتناقص يظهر التوفير بشكل واضح لأن الفائدة تقل مع انخفاض الرصيد. أما في التمويل الثابت فقد يختلف الأثر باختلاف عقد الجهة الممولة.',
-  },
-];
-
-const sectionNavItems = [
-  { href: '#calculator-hero', label: 'الحاسبة', description: 'إعداد القرض والرسوم ونوع الفائدة' },
-  { href: '#loan-overview', label: 'خريطة الصفحة', description: 'تنقل سريع إلى أهم الأقسام' },
-  { href: '#loan-intents', label: 'نية البحث', description: 'الأسئلة والكلمات المفتاحية المغطاة' },
-  { href: '#loan-tabs', label: 'شرح القرض', description: 'المكونات والفوائد والنصائح' },
-  { href: '#loan-answers', label: 'إجابات مباشرة', description: 'أسئلة مثل كم قسط 100 ألف؟' },
-  { href: '#loan-content', label: 'شرح أعمق', description: 'كيف تستخدم الحاسبة للمقارنة فعلاً' },
-  { href: '#loan-playbook', label: 'خطة قرار', description: 'كيف تختار عرضاً أقوى' },
-  { href: '#loan-faq', label: 'FAQ', description: 'الأسئلة الشائعة' },
-];
-
-const quickAnswers = [
-  {
-    question: 'كم قسط قرض 100 ألف على 5 سنوات؟',
-    description: 'من أشهر عمليات البحث طويلة الذيل.',
-    answer: 'النتيجة تتغير بحسب الفائدة ونوعها والرسوم والدفعة المقدمة. لهذا لا نعرض رقماً ثابتاً مضللاً، بل نجعل الحاسبة نفسها تعطيك القسط وإجمالي الفوائد وجدول السداد على نفس المدخلات التي تختارها.',
-  },
-  {
-    question: 'هل الفائدة المتناقصة أوفر من الثابتة؟',
-    description: 'غالباً نعم في التكلفة الفعلية، لكن بشرط المقارنة الصحيحة.',
-    answer: 'في كثير من السيناريوهات تكون الفائدة المتناقصة أوضح وأقرب للتكلفة الفعلية على الرصيد المتبقي، خصوصاً إذا كنت تفكر في سداد مبكر. لكن المقارنة يجب أن تشمل الرسوم والمدة لا النسبة المعلنة فقط.',
-  },
-  {
-    question: 'كم يمكنني اقتراضه بناءً على راتبي؟',
-    description: 'سؤال قرار لا سؤال فضول.',
-    answer: 'تبويب القدرة على الاقتراض داخل الحاسبة يبدأ من القسط الشهري المريح ثم يحول الرقم إلى أصل تقريبي للقرض، مع قراءة نسبة الدين إلى الدخل حتى لا تنظر فقط إلى الحد الأقصى المتاح.',
-  },
-  {
-    question: 'متى يفيد السداد المبكر؟',
-    description: 'أهم نقطة بعد اختيار العرض.',
-    answer: 'يفيد السداد المبكر عندما يختصر مدة القرض أو يخفّض الفوائد الكلية بشكل ملموس. في التمويل المتناقص يظهر الأثر مباشرة داخل الصفحة، بينما في الثابتة يجب قراءة شروط العقد بعناية أيضاً.',
-  },
-];
 
 export const metadata = buildCanonicalMetadata({
   title: PAGE.heroTitle,
   description: PAGE.description,
-  keywords: PAGE.keywords,
+  keywords: SEARCH_COVERAGE.metadataKeywords,
   url: `${SITE_URL}${PAGE.href}`,
 });
 
@@ -109,12 +56,13 @@ export default function MonthlyInstallmentPage() {
     path: PAGE.href,
     name: PAGE.title,
     description: PAGE.description,
-    about: PAGE.keywords.slice(0, 8),
+    about: SEARCH_COVERAGE.schemaAbout,
+    keywords: SEARCH_COVERAGE.metadataKeywords,
   });
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqItems.map((item) => ({
+    mainEntity: CONTENT.faqItems.map((item) => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: { '@type': 'Answer', text: item.answer },
@@ -123,14 +71,13 @@ export default function MonthlyInstallmentPage() {
   const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: 'كيفية حساب القسط الشهري للقرض',
-    description: 'خطوات سريعة لمعرفة القسط الشهري وإجمالي الفوائد وتأثير السداد المبكر.',
-    step: [
-      { '@type': 'HowToStep', name: 'حدد مبلغ القرض', text: 'أدخل إجمالي التمويل ثم اطرح الدفعة المقدمة داخل الحاسبة.' },
-      { '@type': 'HowToStep', name: 'اختر المدة ونوع الفائدة', text: 'المدة ونوع الفائدة هما أكبر عاملين في تكلفة القرض.' },
-      { '@type': 'HowToStep', name: 'أضف الرسوم الأساسية', text: 'أدخل الرسوم الإدارية أو التأمين حتى تصبح المقارنة أقرب للواقع.' },
-      { '@type': 'HowToStep', name: 'راجع القسط والإجمالي والسداد المبكر', text: 'لا تكتف بالقسط الشهري وحده؛ راقب إجمالي الفوائد وعدد الأشهر المختصرة عند السداد المبكر.' },
-    ],
+    name: CONTENT.howTo.name,
+    description: CONTENT.howTo.description,
+    step: CONTENT.howTo.steps.map((item) => ({
+      '@type': 'HowToStep',
+      name: item.name,
+      text: item.text,
+    })),
   };
 
   return (
@@ -141,15 +88,11 @@ export default function MonthlyInstallmentPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
       <CalculatorHero
-        badge="تمويل شخصي وعقاري"
+        badge={CONTENT.hero.badge}
         title={PAGE.heroTitle}
-        description="إذا كنت تبحث: كم قسط قرض 100 ألف؟ فهذه الصفحة لا تعطيك رقماً عشوائياً، بل تحسب القسط الحقيقي بحسب المدة والفائدة والدفعة المقدمة، ثم تعرض إجمالي الفوائد وجدول السداد وأثر السداد المبكر."
+        description={CONTENT.hero.description}
         accent={PAGE.accent}
-        highlights={[
-          'نتيجة شهرية مع إجمالي الفوائد والرسوم.',
-          'جدول استهلاك ورسوم بيانية داخل الصفحة.',
-          'تبويبات إضافية للسداد المبكر والقدرة على الاقتراض.',
-        ]}
+        highlights={CONTENT.hero.highlights}
       >
         <MonthlyInstallmentCalculator />
       </CalculatorHero>
@@ -160,7 +103,7 @@ export default function MonthlyInstallmentPage() {
         title="صفحة تمويل كاملة وليست مجرد حاسبة قسط"
         description="استخدم هذه الخريطة للوصول بسرعة إلى الجزء الذي تحتاجه: الحساب، المقارنة، فهم الفائدة، الأسئلة المباشرة، أو خطوات اختيار العرض الأقوى."
       >
-        <CalculatorSectionNav items={sectionNavItems} />
+        <CalculatorSectionNav items={CONTENT.sectionNavItems} />
       </CalculatorSection>
 
       <CalculatorSection
@@ -171,7 +114,7 @@ export default function MonthlyInstallmentPage() {
         subtle
       >
         <div className="calc-grid-2">
-          <CalculatorIntentCloud items={PAGE.keywords.slice(0, 10)} />
+          <CalculatorIntentCloud items={SEARCH_COVERAGE.intentChips} />
           <CalculatorStoryBand
             title="ما الذي يجعل هذه الصفحة أقوى SEO وUX من الحاسبات البسيطة؟"
             description="بدلاً من نموذج واحد وصف صغير، تجمع الصفحة بين الحاسبة والجداول والرسوم والمقارنة والشرح، وهذا يزيد من عمق التغطية ونية المستخدم التي تخدمها الصفحة."
@@ -296,7 +239,7 @@ export default function MonthlyInstallmentPage() {
         title="إذا كتبت في Google: كم قسط قرض 100 ألف؟"
         description="هذا القسم يخاطب نية البحث الطويلة مثل: كم قسط قرض 100 ألف؟ وهل الفائدة المتناقصة أوفر؟ ومتى يفيد السداد المبكر؟"
       >
-        <CalculatorQuickAnswerGrid items={quickAnswers} />
+        <CalculatorQuickAnswerGrid items={CONTENT.quickAnswers} />
       </CalculatorSection>
 
       <CalculatorSection
@@ -383,7 +326,7 @@ export default function MonthlyInstallmentPage() {
         eyebrow="الأسئلة الشائعة"
         title="أسئلة متكررة قبل اختيار التمويل"
       >
-        <CalculatorFaqSection items={faqItems} />
+        <CalculatorFaqSection items={CONTENT.faqItems} />
       </CalculatorSection>
 
       <CalculatorSection
