@@ -5,7 +5,7 @@ import { Command as CommandPrimitive } from "cmdk"
 import { Search } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog"
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
@@ -29,6 +29,8 @@ interface CommandDialogProps extends React.ComponentProps<typeof Dialog> {
   overlayClassName?: string;
   contentClassName?: string;
   showCloseButton?: boolean;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
 }
 
 const CommandDialog = ({
@@ -38,6 +40,8 @@ const CommandDialog = ({
   overlayClassName,
   contentClassName,
   showCloseButton = false,
+  title,
+  description,
   ...props
 }: CommandDialogProps) => {
   return (
@@ -47,6 +51,8 @@ const CommandDialog = ({
         overlayClassName={overlayClassName}
         showCloseButton={showCloseButton}
       >
+        {title ? <DialogTitle className="sr-only">{title}</DialogTitle> : null}
+        {description ? <DialogDescription className="sr-only">{description}</DialogDescription> : null}
         <Command shouldFilter={shouldFilter} className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
           {children}
         </Command>

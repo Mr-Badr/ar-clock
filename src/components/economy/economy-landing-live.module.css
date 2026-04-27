@@ -1,0 +1,459 @@
+@keyframes el-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes el-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.elShell {
+  display: grid;
+  gap: 1.6rem;
+}
+
+.elStrip {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 1.6rem;
+  border: 1px solid color-mix(in srgb, var(--border-accent) 36%, var(--border-default));
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--accent-alt) 18%, transparent) 0%, transparent 42%),
+    linear-gradient(160deg, color-mix(in srgb, var(--accent-soft) 55%, var(--bg-surface-2)) 0%, var(--bg-surface-2) 52%, var(--bg-surface-1) 100%);
+  box-shadow: var(--shadow-card);
+}
+
+.elStrip::after {
+  content: '';
+  position: absolute;
+  inset: auto -10% -45% auto;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--success) 10%, transparent);
+  filter: blur(26px);
+  pointer-events: none;
+}
+
+.elStripHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.elStripEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-soft) 72%, transparent);
+  color: var(--accent-alt);
+  border: 1px solid color-mix(in srgb, var(--accent-alt) 22%, transparent);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.elStripTitle {
+  margin: 0.45rem 0 0;
+  font-size: clamp(1.4rem, 2.8vw, 2.15rem);
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1.08;
+}
+
+.elStripLead {
+  margin: 0.55rem 0 0;
+  max-width: 58rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+
+.elNow {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 11.5rem;
+  padding: 0.9rem 1rem;
+  border-radius: 1.15rem;
+  border: 1px solid var(--border-default);
+  background: color-mix(in srgb, var(--bg-surface-1) 82%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 5%, transparent);
+}
+
+.elNowLabel {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.elNowValue {
+  font-size: 1.35rem;
+  font-weight: 900;
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+}
+
+.elNowMeta {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+}
+
+.elStripGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.85rem;
+}
+
+.elStripCard {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1rem;
+  border-radius: 1.15rem;
+  border: 1px solid var(--border-default);
+  background: color-mix(in srgb, var(--bg-surface-1) 88%, transparent);
+  text-decoration: none;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.elStripCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
+}
+
+.elStripCard[data-tone='success'] {
+  border-color: var(--success-border);
+  background: color-mix(in srgb, var(--success-soft) 52%, var(--bg-surface-1));
+}
+
+.elStripCard[data-tone='warning'] {
+  border-color: var(--warning-border);
+  background: color-mix(in srgb, var(--warning-soft) 56%, var(--bg-surface-1));
+}
+
+.elStripCard[data-tone='danger'] {
+  border-color: var(--danger-border);
+  background: color-mix(in srgb, var(--danger-soft) 50%, var(--bg-surface-1));
+}
+
+.elStripCard[data-tone='info'] {
+  border-color: var(--info-border);
+  background: color-mix(in srgb, var(--info-soft) 56%, var(--bg-surface-1));
+}
+
+.elStripCard[data-tone='brand'] {
+  border-color: color-mix(in srgb, var(--accent-alt) 28%, var(--border-default));
+  background: color-mix(in srgb, var(--accent-soft) 66%, var(--bg-surface-1));
+}
+
+.elStripCardLabel {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.elStripCardValue {
+  color: var(--text-primary);
+  font-size: 1.02rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.elStripCardDetail {
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+.elZoneGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.9rem;
+}
+
+.elZoneCard {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 0.8rem;
+  padding: 1rem 1.05rem;
+  border-radius: 1.25rem;
+  border: 1px solid var(--border-default);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg-surface-2) 88%, transparent) 0%, var(--bg-surface-1) 100%);
+}
+
+.elZoneCard[data-tone='success'] {
+  border-color: var(--success-border);
+}
+
+.elZoneCard[data-tone='warning'] {
+  border-color: var(--warning-border);
+}
+
+.elZoneCard[data-tone='info'] {
+  border-color: var(--info-border);
+}
+
+.elZoneHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.elZoneTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 850;
+}
+
+.elZoneSubtitle {
+  margin: 0.2rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.elZonePulse {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+  background: var(--success);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--success) 22%, transparent);
+  animation: el-pulse 2.4s ease-in-out infinite;
+}
+
+.elZoneCard[data-tone='warning'] .elZonePulse {
+  background: var(--warning);
+}
+
+.elZoneCard[data-tone='info'] .elZonePulse {
+  background: var(--info);
+}
+
+.elZoneStatus {
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 850;
+}
+
+.elZoneDetail {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.elZonePairs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.elZonePairs span {
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--bg-surface-1) 85%, transparent);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.elTicker {
+  overflow: hidden;
+  display: grid;
+  gap: 0.95rem;
+  padding: 1rem 1rem 0.9rem;
+  border-radius: 1.35rem;
+  border: 1px solid color-mix(in srgb, var(--warning-border) 60%, var(--border-default));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--warning-soft) 18%, var(--bg-surface-2)) 0%, var(--bg-surface-1) 100%);
+}
+
+.elTickerHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.elTickerHead h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 850;
+}
+
+.elTickerHead p {
+  margin: 0.3rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+}
+
+.elTickerViewport {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+}
+
+.elTickerTrack {
+  display: flex;
+  gap: 0.85rem;
+  width: max-content;
+  animation: el-scroll 24s linear infinite;
+}
+
+.elTicker:hover .elTickerTrack {
+  animation-play-state: paused;
+}
+
+.elTickerItem {
+  min-width: 220px;
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.8rem 0.9rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border-default);
+  background: color-mix(in srgb, var(--bg-surface-1) 88%, transparent);
+}
+
+.elTickerItem[data-tone='success'] {
+  border-color: var(--success-border);
+}
+
+.elTickerItem[data-tone='warning'] {
+  border-color: var(--warning-border);
+}
+
+.elTickerItem[data-tone='danger'] {
+  border-color: var(--danger-border);
+}
+
+.elTickerItem[data-tone='info'] {
+  border-color: var(--info-border);
+}
+
+.elTickerSymbol {
+  color: var(--text-muted);
+  font-size: 0.73rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.elTickerName {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 850;
+}
+
+.elTickerState {
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.elTickerDetail {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+
+.elDashboardGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.elDashboardCard {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+  border-radius: 1.25rem;
+  border: 1px solid var(--border-default);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg-surface-2) 88%, transparent) 0%, var(--bg-surface-1) 100%);
+}
+
+.elDashboardEyebrow {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.elDashboardTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 850;
+}
+
+.elDashboardBody {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.elDashboardList {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.elDashboardListItem {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.8rem 0.85rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--bg-surface-1) 92%, transparent);
+}
+
+.elDashboardListItem strong {
+  color: var(--text-primary);
+  font-size: 0.92rem;
+}
+
+.elDashboardListItem span {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 960px) {
+  .elDashboardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .elStrip {
+    padding: 1rem;
+  }
+
+  .elTickerItem {
+    min-width: 190px;
+  }
+
+  .elStripGrid,
+  .elZoneGrid {
+    grid-template-columns: 1fr;
+  }
+}

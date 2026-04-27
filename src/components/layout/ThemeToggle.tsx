@@ -1,9 +1,28 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { SunIcon, MoonIcon } from "@phosphor-icons/react";
 import { useState, useEffect, useCallback } from "react";
 import { flushSync } from "react-dom";
+
+const THEME_STORAGE_KEY = "theme";
+
+function readThemeFromDom(): "dark" | "light" {
+  if (typeof document === "undefined") return "dark";
+  return document.documentElement.classList.contains("light") ? "light" : "dark";
+}
+
+function applyTheme(nextTheme: "dark" | "light") {
+  const root = document.documentElement;
+  root.classList.remove("dark", "light");
+  root.classList.add(nextTheme);
+  root.style.colorScheme = nextTheme;
+
+  try {
+    window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+  } catch {
+    // Ignore storage failures and keep the visual change.
+  }
+}
 
 // Safely detect View Transition API support
 function supportsViewTransition(): boolean {
@@ -14,17 +33,43 @@ function supportsViewTransition(): boolean {
 }
 
 export default function ThemeToggle() {
-  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+    setTheme(readThemeFromDom());
 
-  const isDark = mounted ? (resolvedTheme ?? theme) === "dark" : true;
+    const observer = new MutationObserver(() => {
+      setTheme(readThemeFromDom());
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key === null || event.key === THEME_STORAGE_KEY) {
+        setTheme(readThemeFromDom());
+      }
+    };
+
+    window.addEventListener("storage", handleStorage);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("storage", handleStorage);
+    };
+  }, []);
+
+  const isDark = mounted ? theme === "dark" : true;
   const nextTheme = isDark ? "light" : "dark";  
 
 const handleToggle = useCallback(
   (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!supportsViewTransition()) {
+      applyTheme(nextTheme);
       setTheme(nextTheme);
       return;
     }
@@ -40,6 +85,7 @@ const handleToggle = useCallback(
       // flushSync forces React to commit the DOM update immediately,
       // eliminating the gap between before/after snapshots → no blink
       flushSync(() => {
+        applyTheme(nextTheme);
         setTheme(nextTheme);
       });
     });
@@ -60,7 +106,7 @@ const handleToggle = useCallback(
       );
     });
   },
-  [isDark, nextTheme, setTheme]
+  [nextTheme]
 );
   return (
     <button

@@ -1,0 +1,232 @@
+.page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--accent-soft) 72%, transparent) 0%, transparent 28%),
+    linear-gradient(180deg, var(--bg-base) 0%, var(--bg-surface-2) 100%);
+}
+
+.shell {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding: 6.5rem 1rem 4rem;
+}
+
+.hero {
+  display: grid;
+  gap: 1rem;
+  max-width: 76ch;
+  margin-bottom: 1.75rem;
+}
+
+.eyebrow {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-accent);
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.eyebrowWarning {
+  background: var(--warning-soft);
+  border-color: var(--warning-border);
+  color: var(--warning);
+}
+
+.title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.12;
+  font-weight: 950;
+}
+
+.lead {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 1.02rem;
+  line-height: 1.95;
+}
+
+.layout {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.content {
+  display: grid;
+  gap: 1rem;
+}
+
+.section {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1.3rem;
+  border-radius: 1.5rem;
+  border: 1px solid var(--border-default);
+  background: linear-gradient(180deg, var(--bg-surface-1) 0%, color-mix(in srgb, var(--bg-surface-1) 86%, transparent) 100%);
+  box-shadow: var(--shadow-card);
+}
+
+.sectionTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.28rem;
+  font-weight: 900;
+}
+
+.sectionBody {
+  display: grid;
+  gap: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.9;
+}
+
+.sectionBody p {
+  margin: 0;
+}
+
+.sectionBody a {
+  color: var(--accent-alt);
+}
+
+.aside {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+}
+
+.spotlight,
+.quickLinks,
+.support {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1.2rem;
+  border-radius: 1.4rem;
+  border: 1px solid var(--border-default);
+  background: linear-gradient(180deg, var(--bg-surface-2) 0%, var(--bg-surface-1) 100%);
+  box-shadow: var(--shadow-card);
+}
+
+.spotlightEyebrow,
+.supportEyebrow {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-accent);
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.supportTitle,
+.quickLinksTitle,
+.spotlightTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.02rem;
+  font-weight: 900;
+}
+
+.spotlightBody,
+.supportBody {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.85;
+  font-size: 0.92rem;
+}
+
+.spotlightAction {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--accent-alt);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.quickList {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.quickLink {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.95rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--bg-surface-1) 88%, transparent);
+  text-decoration: none;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.quickLink:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.quickLinkLabel {
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  font-weight: 850;
+}
+
+.quickLinkBody {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  line-height: 1.75;
+}
+
+.supportBody a {
+  color: var(--accent-alt);
+}
+
+.note {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.8;
+}
+
+@media (min-width: 960px) {
+  .layout {
+    grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.9fr);
+    align-items: start;
+  }
+
+  .aside {
+    position: sticky;
+    top: 5.8rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .shell {
+    padding: 6rem 0.95rem 3.5rem;
+  }
+
+  .hero {
+    gap: 0.85rem;
+  }
+
+  .section,
+  .spotlight,
+  .quickLinks,
+  .support {
+    padding: 1rem;
+    border-radius: 1.2rem;
+  }
+}

@@ -3,14 +3,18 @@
  * All country-specific Date pages.
  */
 import { getAllCountrySlugs } from '@/lib/db/queries/countries';
-import { filterSeoPriorityCountrySlugs } from '@/lib/seo/country-indexing';
+import {
+  GEO_ROUTE_INDEXING_POLICIES,
+  selectSeoCountrySlugs,
+} from '@/lib/seo/country-indexing';
 import { getSiteUrl } from '@/lib/site-config';
 import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
 const BASE = getSiteUrl();
 
 export async function GET() {
-  const slugs = filterSeoPriorityCountrySlugs(await getAllCountrySlugs());
+  const policy = GEO_ROUTE_INDEXING_POLICIES.dateCountry;
+  const slugs = selectSeoCountrySlugs(await getAllCountrySlugs(), { scope: policy.countryScope });
   const lastmod = getSitemapLastModifiedDate();
 
   const entries = slugs.map(

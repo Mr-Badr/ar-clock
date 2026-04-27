@@ -1,8 +1,13 @@
 // lib/economy/page-helpers.js
 import { getCachedNowIso } from '@/lib/date-utils';
+import { getEconomySeoEntry } from '@/lib/economy/seo-content';
+import { buildCanonicalMetadata } from '@/lib/seo/metadata';
+import { buildPrincipalPageSearchCoverage } from '@/lib/seo/page-search-coverage';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
+import { getSiteUrl } from '@/lib/site-config';
 
-const CURRENT_YEAR = new Date().getUTCFullYear();
+export const ECONOMY_FALLBACK_NOW_ISO = '2026-01-01T00:00:00.000Z';
+const CURRENT_YEAR = Number.parseInt(ECONOMY_FALLBACK_NOW_ISO.slice(0, 4), 10);
 
 export const DEFAULT_ECONOMY_VIEWER = {
   timezone: 'UTC',
@@ -26,12 +31,12 @@ export async function getInitialEconomyPageState() {
   } catch {
     return {
       initialViewer: DEFAULT_ECONOMY_VIEWER,
-      initialNowIso: new Date().toISOString(),
+      initialNowIso: ECONOMY_FALLBACK_NOW_ISO,
     };
   }
 }
 
-export function buildEconomyToolSchema({ siteUrl, path, name, description, about = [] }) {
+export function buildEconomyToolSchema({ siteUrl, path, name, description, about = [], keywords = [] }) {
   return buildFreeToolPageSchema({
     siteUrl,
     path,
@@ -46,6 +51,7 @@ export function buildEconomyToolSchema({ siteUrl, path, name, description, about
       name,
       ...about,
     ],
+    keywords,
   });
 }
 
@@ -60,6 +66,18 @@ export function buildEconomyDatasetSchema({ siteUrl, path, name, description }) 
     license: 'https://creativecommons.org/licenses/by/4.0/',
     temporalCoverage: `${CURRENT_YEAR}/..`,
   };
+}
+
+export function buildEconomyPageSearchCoverage(scope, faqItems = []) {
+  const pageSeo = getEconomySeoEntry(scope);
+
+  return buildPrincipalPageSearchCoverage({
+    title: pageSeo?.metadata?.title,
+    description: pageSeo?.metadata?.description,
+    keywords: pageSeo?.metadata?.keywords || [],
+    faqItems,
+    searchProfile: pageSeo?.searchProfile || {},
+  });
 }
 
 export function buildEconomySpeakableSchema({ siteUrl, path }) {
@@ -101,4 +119,52 @@ export function buildEconomyBreadcrumbSchema(siteUrl, pageName, path = '/economi
       { '@type': 'ListItem', position: 3, name: pageName, item: `${siteUrl}${path}` },
     ],
   };
+}
+
+export function buildEconomyToolPageMetadata(scope, faqItems = []) {
+  const pageSeo = getEconomySeoEntry(scope);
+  const siteUrl = getSiteUrl();
+  const searchCoverage = buildEconomyPageSearchCoverage(scope, faqItems);
+
+  return buildCanonicalMetadata({
+    title: pageSeo.metadata.title,
+    description: pageSeo.metadata.description,
+    keywords: searchCoverage.metadataKeywords,
+    url: `${siteUrl}${pageSeo.path}`,
+  });
+}
+
+export function buildEconomyToolPageSchemas({ scope, faqItems = [] }) {
+  const siteUrl = getSiteUrl();
+  const pageSeo = getEconomySeoEntry(scope);
+  const searchCoverage = buildEconomyPageSearchCoverage(scope, faqItems);
+
+  return [
+    buildEconomyToolSchema({
+      siteUrl,
+      path: pageSeo.path,
+      ...pageSeo.tool,
+      about: searchCoverage.schemaAbout,
+      keywords: searchCoverage.metadataKeywords,
+    }),
+    buildEconomyBreadcrumbSchema(
+      siteUrl,
+      pageSeo.breadcrumbName,
+      pageSeo.path,
+    ),
+    buildEconomyDatasetSchema({
+      siteUrl,
+      path: pageSeo.path,
+      ...pageSeo.dataset,
+    }),
+    buildEconomySpeakableSchema({
+      siteUrl,
+      path: pageSeo.path,
+    }),
+    buildEconomyFaqSchema({
+      siteUrl,
+      path: pageSeo.path,
+      items: faqItems,
+    }),
+  ];
 }

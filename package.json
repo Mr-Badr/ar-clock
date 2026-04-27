@@ -18,6 +18,7 @@
     "lint": "eslint . --ext .js,.jsx",
     "typecheck": "tsc --noEmit",
     "test:unit": "tsx --test tests/*.test.ts",
+    "seo:validate": "node --import tsx scripts/validate-seo-architecture.ts",
     "seo:audit": "node --import tsx scripts/seo-audit.ts",
     "seo:audit:live": "node --import tsx scripts/seo-audit.ts --base=https://miqatona.com",
     "events:migrate-packages": "tsx --env-file=.env.local scripts/migrate-events-to-packages.ts",
@@ -39,7 +40,7 @@
     "validate:holidays:changed": "tsx --env-file=.env.local scripts/validate-holiday-content.ts --strict --changed --json",
     "validate:holidays:tier1": "tsx --env-file=.env.local scripts/validate-holiday-content.ts --strict --tier=tier1 --json",
     "build:smoke": "next build",
-    "ci:check": "npm run lint && npm run typecheck && npm run test:unit && npm run validate:holidays"
+    "ci:check": "npm run lint && npm run typecheck && npm run test:unit && npm run seo:validate && npm run validate:holidays"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -99,7 +100,6 @@
     "luxon": "^3.7.2",
     "motion": "^12.38.0",
     "next": "16.1.6",
-    "next-themes": "^0.4.6",
     "pg": "^8.20.0",
     "postcss": "8.5.6",
     "puppeteer": "^24.39.1",

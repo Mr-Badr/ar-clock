@@ -20,6 +20,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
+import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
+import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
 import { getGuidesBySlugs } from '@/lib/guides/data';
 import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -28,70 +30,14 @@ import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'vat');
+const CONTENT = getFinancePageContent('vat');
+const SEARCH_COVERAGE = buildFinancePageSearchCoverage(PAGE, CONTENT);
 const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.vat);
-
-const faqItems = [
-  {
-    question: 'ما الفرق بين السعر الشامل وغير الشامل؟',
-    answer: 'السعر غير الشامل يعني أن الضريبة ستضاف فوقه، بينما السعر الشامل يتضمن الضريبة داخله ويحتاج استخراجاً لمعرفة الجزء الأصلي وقيمة الضريبة.',
-  },
-  {
-    question: 'هل نسبة الضريبة واحدة لكل السلع؟',
-    answer: 'لا دائماً. الصفحة تستخدم المعدل العام الشائع في كل دولة، لكن بعض السلع والخدمات قد تكون معفاة أو صفرية أو خاضعة لنسب مختلفة.',
-  },
-  {
-    question: 'كيف أتعامل مع ضريبة الشهر؟',
-    answer: 'اجمع ضريبة المخرجات على المبيعات ثم اطرح منها ضريبة المدخلات على المشتريات القابلة للخصم. الحاسبة تعرض الفرق مباشرة وتوضح إن كان صافي المبلغ مستحقاً أو قابلاً للاسترداد.',
-  },
-  {
-    question: 'هل هذه الصفحة بديل عن الإقرار الضريبي؟',
-    answer: 'لا، هي أداة تقديرية سريعة. الإقرار الضريبي الفعلي يعتمد على قيود محاسبية وفواتير صحيحة وحالات استثناء وتعليمات تنفيذية محلية.',
-  },
-  {
-    question: 'ما حد التسجيل الإلزامي في السعودية؟',
-    answer: 'المرجع الرسمي لدى هيئة الزكاة والضريبة والجمارك يذكر حد التسجيل الإلزامي عند 375,000 ريال للتوريدات الخاضعة خلال 12 شهراً في القاعدة العامة.',
-  },
-];
-
-const sectionNavItems = [
-  { href: '#calculator-hero', label: 'الحاسبة', description: 'إضافة الضريبة واستخراجها وصافي الشهر' },
-  { href: '#vat-overview', label: 'خريطة الصفحة', description: 'اختصر الوصول إلى القسم المطلوب' },
-  { href: '#vat-intents', label: 'نية البحث', description: 'الأسئلة والكلمات الطويلة المغطاة' },
-  { href: '#vat-rates', label: 'الجدول التفاعلي', description: 'مقارنة النسب العامة بين الدول' },
-  { href: '#vat-answers', label: 'إجابات مباشرة', description: 'مثل كم ضريبة 1000 ريال؟' },
-  { href: '#vat-learning', label: 'فهم الأساس', description: 'متى تضيف ومتى تستخرج' },
-  { href: '#vat-details', label: 'تفاصيل عملية', description: 'معادلات وملاحظات مهمة' },
-  { href: '#vat-playbook', label: 'دليل التحقق', description: 'قبل اعتماد أي رقم محاسبياً' },
-  { href: '#vat-faq', label: 'FAQ', description: 'الأسئلة الشائعة' },
-];
-
-const quickAnswers = [
-  {
-    question: 'كم ضريبة 1000 ريال عند 15%؟',
-    description: 'من أكثر الأسئلة المباشرة شيوعاً.',
-    answer: 'الضريبة في هذا المثال تساوي 150 ريالاً، والإجمالي 1150 ريالاً. لكن الصفحة لا تتوقف هنا؛ فهي تسمح لك أيضاً باستخراج الضريبة إذا كان 1150 هو الرقم الذي تملكه أصلاً.',
-  },
-  {
-    question: 'كيف أحسب الضريبة من مبلغ شامل؟',
-    description: 'الخطأ الشائع هو ضرب الإجمالي مباشرة في النسبة.',
-    answer: 'إذا كان السعر شاملاً للضريبة فلا يكفي أن تضربه في 15% أو 5%. يجب أولاً استخراج الأساس بقسمة المبلغ على 1 + نسبة الضريبة، ثم يظهر لك الجزء الضريبي الصحيح تلقائياً داخل الصفحة.',
-  },
-  {
-    question: 'ما الفرق بين شامل وغير شامل الضريبة؟',
-    description: 'فهم هذا الفرق يزيل أغلب الالتباس.',
-    answer: 'غير شامل يعني أن الضريبة ستضاف فوق السعر الأصلي، بينما شامل يعني أن الضريبة متضمنة داخل الرقم النهائي. الحاسبة تفصل بين الحالتين حتى لا تختلط المعادلتان على المستخدم.',
-  },
-  {
-    question: 'كيف أحسب صافي ضريبة الشهر؟',
-    description: 'مفيد للتجار والمنشآت الصغيرة.',
-    answer: 'ابدأ بضريبة المخرجات على المبيعات ثم اطرح منها ضريبة المدخلات على المشتريات. إذا كان الناتج موجباً فهو مستحق، وإذا كان سالباً فهو رصيد قابل للاسترداد أو الترحيل بحسب الحالة والتنظيم المحلي.',
-  },
-];
 
 export const metadata = buildCanonicalMetadata({
   title: PAGE.heroTitle,
   description: PAGE.description,
-  keywords: PAGE.keywords,
+  keywords: SEARCH_COVERAGE.metadataKeywords,
   url: `${SITE_URL}${PAGE.href}`,
 });
 
@@ -110,12 +56,13 @@ export default function VatPage() {
     path: PAGE.href,
     name: PAGE.title,
     description: PAGE.description,
-    about: PAGE.keywords.slice(0, 8),
+    about: SEARCH_COVERAGE.schemaAbout,
+    keywords: SEARCH_COVERAGE.metadataKeywords,
   });
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqItems.map((item) => ({
+    mainEntity: CONTENT.faqItems.map((item) => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: { '@type': 'Answer', text: item.answer },
@@ -124,14 +71,13 @@ export default function VatPage() {
   const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: 'كيفية حساب ضريبة القيمة المضافة',
-    description: 'خطوات سريعة لإضافة ضريبة القيمة المضافة أو استخراجها أو معرفة صافي ضريبة الشهر.',
-    step: [
-      { '@type': 'HowToStep', name: 'اختر الدولة أو النسبة', text: 'ابدأ بالمعدل العام الذي تنطبق عليه العملية الحسابية.' },
-      { '@type': 'HowToStep', name: 'اختر نوع العملية', text: 'حدد إن كنت تريد إضافة الضريبة أو استخراجها أو احتساب صافي الفترة.' },
-      { '@type': 'HowToStep', name: 'أدخل المبلغ بالشكل الصحيح', text: 'انتبه هل الرقم شامل الضريبة أم غير شامل حتى تستخدم المعادلة المناسبة.' },
-      { '@type': 'HowToStep', name: 'راجع التفصيل وليس الرقم النهائي فقط', text: 'الصفحة تعرض الأساس والضريبة والإجمالي حتى تعرف كيف وصلت النتيجة.' },
-    ],
+    name: CONTENT.howTo.name,
+    description: CONTENT.howTo.description,
+    step: CONTENT.howTo.steps.map((item) => ({
+      '@type': 'HowToStep',
+      name: item.name,
+      text: item.text,
+    })),
   };
 
   return (
@@ -142,15 +88,11 @@ export default function VatPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
       <CalculatorHero
-        badge="VAT / TVA"
+        badge={CONTENT.hero.badge}
         title={PAGE.heroTitle}
-        description="إذا كنت تبحث: كم ضريبة 1000 ريال عند 15%؟ فالجواب 150 ريالاً والإجمالي 1150. ثم تساعدك الصفحة على إضافة الضريبة أو استخراجها من الفاتورة وحساب صافي ضريبة الشهر بسرعة."
+        description={CONTENT.hero.description}
         accent={PAGE.accent}
-        highlights={[
-          '3 أوضاع: إضافة، استخراج، وصافي ضريبة الشهر.',
-          'أداتان إضافيتان: خصم ثم ضريبة، وهامش ربح ثم ضريبة.',
-          'جدول مقارنة تفاعلي للنسب العامة في عدة دول عربية.',
-        ]}
+        highlights={CONTENT.hero.highlights}
       >
         <VatCalculator />
       </CalculatorHero>
@@ -161,7 +103,7 @@ export default function VatPage() {
         title="صفحة ضريبة متقدمة تخدم الفاتورة والتسعير والالتزام الشهري"
         description="هذه الخريطة تساعدك على الوصول مباشرة إلى الحاسبة أو مقارنة الدول أو الإجابات السريعة أو قائمة التحقق قبل استخدام الرقم في التسعير أو المراجعة المحاسبية."
       >
-        <CalculatorSectionNav items={sectionNavItems} />
+        <CalculatorSectionNav items={CONTENT.sectionNavItems} />
       </CalculatorSection>
 
       <CalculatorSection
@@ -172,7 +114,7 @@ export default function VatPage() {
         subtle
       >
         <div className="calc-grid-2">
-          <CalculatorIntentCloud items={PAGE.keywords.slice(0, 10)} />
+          <CalculatorIntentCloud items={SEARCH_COVERAGE.intentChips} />
           <CalculatorStoryBand
             title="لماذا تحتاج هذه الصفحة أكثر من آلة حاسبة عادية؟"
             description="لأن المستخدم الضريبي ليس نوعاً واحداً: هناك من يسعّر منتجاً، ومن يراجع فاتورة، ومن يغلق فترة شهرية. لهذا صممت الصفحة لتخدم أكثر من مهمة حقيقية داخل نفس التجربة."
@@ -200,7 +142,7 @@ export default function VatPage() {
         title="إذا كتبت في Google: كم ضريبة 1000 ريال عند 15%؟"
         description="إجابات مكتوبة بلغة واضحة على الأسئلة التي يدخل بها المستخدم مباشرة إلى محركات البحث."
       >
-        <CalculatorQuickAnswerGrid items={quickAnswers} />
+        <CalculatorQuickAnswerGrid items={CONTENT.quickAnswers} />
       </CalculatorSection>
 
       <CalculatorSection
@@ -347,7 +289,7 @@ export default function VatPage() {
         eyebrow="الأسئلة الشائعة"
         title="أسئلة متكررة حول الضريبة والفواتير"
       >
-        <CalculatorFaqSection items={faqItems} />
+        <CalculatorFaqSection items={CONTENT.faqItems} />
       </CalculatorSection>
 
       <CalculatorSection

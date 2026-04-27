@@ -11,7 +11,7 @@
 //
 // Adding .dark on a light-background hero makes light-palette text
 // (--text-secondary: #A8B2CB) invisible against the near-white canvas.
-// Removing it lets next-themes resolve the correct value per mode:
+// Removing it lets the app theme class resolve the correct value per mode:
 //   dark  → --text-secondary: #A8B2CB  ✓ readable on dark hero
 //   light → --text-secondary: #536080  ✓ readable on light hero
 // ─────────────────────────────────────────────────────────────────────────────

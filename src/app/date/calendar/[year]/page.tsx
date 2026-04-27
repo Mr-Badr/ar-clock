@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { JsonLd } from '@/components/date/JsonLd';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { YearlyCalendar } from '@/components/date/YearlyCalendar';
 import { DateCalendarGridSkeleton } from '@/components/date/DateRouteLoading';

@@ -36,6 +36,10 @@ import AdInArticle from '@/components/ads/AdInArticle';
 import { getSiteUrl } from '@/lib/site-config';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { formatGregorianLabel, getHijriMonthSpanFromDate } from '@/lib/hijri-utils';
+import {
+  GEO_ROUTE_INDEXING_POLICIES,
+  isSeoIndexableCityParams,
+} from '@/lib/seo/country-indexing';
 import { buildPrayerKeywords } from '@/lib/seo/section-search-intent';
 // ─── ISR: pre-build bridge-priority cities, revalidate hourly ───────────────
 
@@ -66,6 +70,11 @@ export async function generateMetadata({ params }) {
   const cityNameAr    = cityData.name_ar || cityData.name_en;
   const countryNameAr = country.name_ar  || country.name_en;
   const methodInfo    = getMethodByCountry(country.country_code);
+  const policy = GEO_ROUTE_INDEXING_POLICIES.prayerTimes;
+  const isIndexableCity = isSeoIndexableCityParams(
+    { country: countrySlug, city: citySlug },
+    { countryScope: policy.countryScope, cityScope: policy.cityScope },
+  );
 
   // Fixed date for SEO — Fajr/Maghrib hint shows real-looking times without headers()
   const seoDate = new Date('2025-06-01T12:00:00Z');
@@ -102,10 +111,10 @@ export async function generateMetadata({ params }) {
     },
     twitter: { card: 'summary', title, description },
     robots: {
-      index: true,
+      index: isIndexableCity,
       follow: true,
       googleBot: {
-        index: true,
+        index: isIndexableCity,
         follow: true,
         'max-snippet': -1,
         'max-image-preview': 'large',

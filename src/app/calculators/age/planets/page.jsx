@@ -1,6 +1,7 @@
 import AgePlanetsCalculator from '@/components/calculators/age/AgePlanetsCalculator.client';
-import { CalculatorHero, CalculatorSection } from '@/components/calculators/common';
+import { CalculatorHero } from '@/components/calculators/common';
 import { buildAgeMetadata, buildBreadcrumbSchema, buildSoftwareSchema } from '../page-helpers';
+import { AgeToolSections } from '../tool-sections';
 import { Suspense } from 'react';
 import SectionSkeleton from '@/components/shared/SectionSkeleton'
 
@@ -54,12 +55,7 @@ export default function AgePlanetsPage() {
         </Suspense>
       </CalculatorHero>
 
-      <CalculatorSection
-        id="planets-content"
-        eyebrow="كيف تُقرأ النتيجة؟"
-        title="السنة ليست واحدة في كل مكان"
-        description="كل كوكب يحتاج زمناً مختلفاً ليكمل دورة حول الشمس، لذلك يختلف العمر المقاس بسنواته حتى لو بقيت نفس الفترة الأرضية."
-      />
+      <AgeToolSections toolId="planets" />
     </main>
   );
 }

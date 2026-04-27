@@ -1,5 +1,7 @@
 import 'server-only'
 
+import { cacheLife, cacheTag } from 'next/cache'
+
 import type { City, Country } from '@/lib/db/types'
 
 type LiveGeoProvider = 'supabase' | 'postgres'
@@ -21,6 +23,12 @@ type SearchResultCountryMeta = {
   country_slug: string | null
   name_ar: string | null
   name_en: string | null
+}
+
+type SupabaseCityCountryJoin = SearchResultCountryMeta | SearchResultCountryMeta[] | null
+
+type SupabaseCityRow = City & {
+  countries?: SupabaseCityCountryJoin
 }
 
 type PrismaCountryRow = {
@@ -61,6 +69,38 @@ export type LiveSearchableCity = City & {
 }
 
 type NearestCityRow = Partial<LiveSearchableCity>
+
+const COUNTRY_SELECT_COLUMNS = 'id, country_code, country_slug, name_ar, name_en, timezone'
+const CITY_SELECT_COLUMNS = 'id, country_code, city_slug, name_ar, name_en, lat, lon, timezone, population, priority, is_capital, countries!inner(country_slug, name_ar, name_en)'
+const PRISMA_COUNTRY_SELECT = {
+  id: true,
+  countryCode: true,
+  countrySlug: true,
+  nameAr: true,
+  nameEn: true,
+  timezone: true,
+} as const
+const PRISMA_CITY_COUNTRY_SELECT = {
+  countrySlug: true,
+  nameAr: true,
+  nameEn: true,
+} as const
+const PRISMA_CITY_SELECT = {
+  id: true,
+  countryCode: true,
+  citySlug: true,
+  nameAr: true,
+  nameEn: true,
+  lat: true,
+  lon: true,
+  timezone: true,
+  population: true,
+  priority: true,
+  isCapital: true,
+  country: {
+    select: PRISMA_CITY_COUNTRY_SELECT,
+  },
+} as const
 
 export function isLiveGeoDbEnabled() {
   return process.env.ENABLE_LIVE_GEO_DB === 'true'
@@ -103,6 +143,18 @@ function normalizeCountryMeta(country?: PrismaCityCountryRow | null): SearchResu
   }
 }
 
+function normalizeSupabaseCountryMeta(country?: SupabaseCityCountryJoin): SearchResultCountryMeta {
+  const row = Array.isArray(country)
+    ? country[0]
+    : country
+
+  return {
+    country_slug: row?.country_slug ?? null,
+    name_ar: row?.name_ar ?? null,
+    name_en: row?.name_en ?? null,
+  }
+}
+
 function normalizeCityFromPrisma(row: PrismaCityRow): LiveSearchableCity {
   const countryMeta = normalizeCountryMeta(row.country)
 
@@ -125,6 +177,18 @@ function normalizeCityFromPrisma(row: PrismaCityRow): LiveSearchableCity {
   }
 }
 
+function normalizeCityFromSupabase(row: SupabaseCityRow): LiveSearchableCity {
+  const countryMeta = normalizeSupabaseCountryMeta(row.countries)
+
+  return {
+    ...row,
+    countries: countryMeta,
+    country_slug: countryMeta.country_slug,
+    country_name_ar: countryMeta.name_ar,
+    country_name_en: countryMeta.name_en,
+  }
+}
+
 async function getSupabaseClient() {
   const mod = await import('@/lib/supabase/server')
   return mod.getSupabase()
@@ -136,6 +200,10 @@ async function getPrismaClient() {
 }
 
 export async function loadCountryBySlug(slug: string): Promise<Country | null> {
+  'use cache'
+  cacheTag('live-geo', `live-geo-country-slug-${slug}`)
+  cacheLife('hours')
+
   if (!isLiveGeoDbEnabled()) return null
 
   const provider = assertLiveGeoProvider(getLiveGeoProviderName())
@@ -144,7 +212,7 @@ export async function loadCountryBySlug(slug: string): Promise<Country | null> {
     const supabase = await getSupabaseClient()
     const { data, error } = await supabase
       .from('countries')
-      .select('*')
+      .select(COUNTRY_SELECT_COLUMNS)
       .eq('country_slug', slug)
       .single()
 
@@ -158,6 +226,7 @@ export async function loadCountryBySlug(slug: string): Promise<Country | null> {
   const prisma = await getPrismaClient()
   const data = await prisma.country.findUnique({
     where: { countrySlug: slug },
+    select: PRISMA_COUNTRY_SELECT,
   })
 
   if (!data) {
@@ -168,6 +237,10 @@ export async function loadCountryBySlug(slug: string): Promise<Country | null> {
 }
 
 export async function loadCountryByCode(code: string): Promise<Country | null> {
+  'use cache'
+  cacheTag('live-geo', `live-geo-country-code-${code.toUpperCase()}`)
+  cacheLife('hours')
+
   if (!isLiveGeoDbEnabled()) return null
 
   const provider = assertLiveGeoProvider(getLiveGeoProviderName())
@@ -177,7 +250,7 @@ export async function loadCountryByCode(code: string): Promise<Country | null> {
     const supabase = await getSupabaseClient()
     const { data, error } = await supabase
       .from('countries')
-      .select('*')
+      .select(COUNTRY_SELECT_COLUMNS)
       .eq('country_code', normalizedCode)
       .single()
 
@@ -191,6 +264,7 @@ export async function loadCountryByCode(code: string): Promise<Country | null> {
   const prisma = await getPrismaClient()
   const data = await prisma.country.findUnique({
     where: { countryCode: normalizedCode },
+    select: PRISMA_COUNTRY_SELECT,
   })
 
   if (!data) {
@@ -201,6 +275,10 @@ export async function loadCountryByCode(code: string): Promise<Country | null> {
 }
 
 export async function loadAllCountrySlugs(): Promise<string[]> {
+  'use cache'
+  cacheTag('live-geo', 'live-geo-country-slugs')
+  cacheLife('days')
+
   if (!isLiveGeoDbEnabled()) return []
 
   const provider = assertLiveGeoProvider(getLiveGeoProviderName())
@@ -232,6 +310,10 @@ export async function loadAllCountrySlugs(): Promise<string[]> {
 }
 
 export async function loadCitiesByCountry(countryCode: string): Promise<LiveSearchableCity[]> {
+  'use cache'
+  cacheTag('live-geo', `live-geo-country-cities-${countryCode.toUpperCase()}`)
+  cacheLife('days')
+
   if (!isLiveGeoDbEnabled()) return []
 
   const provider = assertLiveGeoProvider(getLiveGeoProviderName())
@@ -241,7 +323,7 @@ export async function loadCitiesByCountry(countryCode: string): Promise<LiveSear
     const supabase = await getSupabaseClient()
     const { data, error } = await supabase
       .from('cities')
-      .select('*')
+      .select(CITY_SELECT_COLUMNS)
       .eq('country_code', normalizedCode)
       .order('priority', { ascending: false })
       .order('population', { ascending: false })
@@ -250,21 +332,13 @@ export async function loadCitiesByCountry(countryCode: string): Promise<LiveSear
       throw new Error(error?.message ?? 'empty')
     }
 
-    return data as LiveSearchableCity[]
+    return (data as SupabaseCityRow[]).map(normalizeCityFromSupabase)
   }
 
   const prisma = await getPrismaClient()
   const data = await prisma.city.findMany({
     where: { countryCode: normalizedCode },
-    include: {
-      country: {
-        select: {
-          countrySlug: true,
-          nameAr: true,
-          nameEn: true,
-        },
-      },
-    },
+    select: PRISMA_CITY_SELECT,
     orderBy: [
       { isCapital: 'desc' },
       { priority: 'desc' },
@@ -281,6 +355,10 @@ export async function loadCitiesByCountry(countryCode: string): Promise<LiveSear
 }
 
 export async function loadCityBySlug(countryCode: string, citySlug: string): Promise<LiveSearchableCity | null> {
+  'use cache'
+  cacheTag('live-geo', `live-geo-city-${countryCode.toUpperCase()}-${citySlug}`)
+  cacheLife('days')
+
   if (!isLiveGeoDbEnabled()) return null
 
   const provider = assertLiveGeoProvider(getLiveGeoProviderName())
@@ -290,7 +368,7 @@ export async function loadCityBySlug(countryCode: string, citySlug: string): Pro
     const supabase = await getSupabaseClient()
     const { data, error } = await supabase
       .from('cities')
-      .select('*')
+      .select(CITY_SELECT_COLUMNS)
       .eq('country_code', normalizedCode)
       .eq('city_slug', citySlug)
       .single()
@@ -299,7 +377,7 @@ export async function loadCityBySlug(countryCode: string, citySlug: string): Pro
       throw new Error(error?.message ?? 'not found')
     }
 
-    return data as LiveSearchableCity
+    return normalizeCityFromSupabase(data as SupabaseCityRow)
   }
 
   const prisma = await getPrismaClient()
@@ -308,15 +386,7 @@ export async function loadCityBySlug(countryCode: string, citySlug: string): Pro
       countryCode: normalizedCode,
       citySlug,
     },
-    include: {
-      country: {
-        select: {
-          countrySlug: true,
-          nameAr: true,
-          nameEn: true,
-        },
-      },
-    },
+    select: PRISMA_CITY_SELECT,
   })
 
   if (!data) {
@@ -327,6 +397,10 @@ export async function loadCityBySlug(countryCode: string, citySlug: string): Pro
 }
 
 export async function loadAllCityParams(): Promise<Array<{ country: string; city: string }>> {
+  'use cache'
+  cacheTag('live-geo', 'live-geo-city-params')
+  cacheLife('days')
+
   if (!isLiveGeoDbEnabled()) return []
 
   const provider = assertLiveGeoProvider(getLiveGeoProviderName())
@@ -385,6 +459,10 @@ export async function searchCitiesViaLiveSource(
   strippedArabicQuery: string,
   limit: number,
 ): Promise<LiveSearchableCity[]> {
+  'use cache'
+  cacheTag('live-geo', 'live-geo-city-search')
+  cacheLife('minutes')
+
   if (!isLiveGeoDbEnabled()) return []
 
   const provider = assertLiveGeoProvider(getLiveGeoProviderName())
@@ -396,14 +474,14 @@ export async function searchCitiesViaLiveSource(
     const [arResult, enResult] = await Promise.all([
       supabase
         .from('cities')
-        .select('*, countries!inner(country_slug, name_ar, name_en)')
+        .select(CITY_SELECT_COLUMNS)
         .or(arOrFilter)
         .order('priority', { ascending: false })
         .order('population', { ascending: false })
         .limit(limit),
       supabase
         .from('cities')
-        .select('*, countries!inner(country_slug, name_ar, name_en)')
+        .select(CITY_SELECT_COLUMNS)
         .ilike('name_en', `%${normalizedQuery}%`)
         .order('priority', { ascending: false })
         .order('population', { ascending: false })
@@ -418,7 +496,8 @@ export async function searchCitiesViaLiveSource(
       throw enResult.error
     }
 
-    return [...(arResult.data ?? []), ...(enResult.data ?? [])] as LiveSearchableCity[]
+    return [...(arResult.data ?? []), ...(enResult.data ?? [])]
+      .map((row) => normalizeCityFromSupabase(row as SupabaseCityRow))
   }
 
   const prisma = await getPrismaClient()
@@ -442,15 +521,7 @@ export async function searchCitiesViaLiveSource(
         },
       ],
     },
-    include: {
-      country: {
-        select: {
-          countrySlug: true,
-          nameAr: true,
-          nameEn: true,
-        },
-      },
-    },
+    select: PRISMA_CITY_SELECT,
     orderBy: [
       { isCapital: 'desc' },
       { priority: 'desc' },

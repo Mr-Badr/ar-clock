@@ -1,0 +1,1271 @@
+.stylesAnchor {
+  display: contents;
+}
+
+.page {
+  min-height: 100dvh;
+  background: linear-gradient(180deg, var(--bg-base) 0%, var(--bg-base) 56%, var(--bg-surface-2) 100%);
+  background:
+    radial-gradient(circle at top right, rgba(14, 165, 233, 0.14), transparent 22%),
+    radial-gradient(circle at top left, rgba(16, 185, 129, 0.14), transparent 18%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-base) 95%, white 5%) 0%, var(--bg-base) 50%, color-mix(in srgb, var(--bg-base) 90%, black 10%) 100%);
+}
+
+.shell {
+  width: min(1580px, calc(100vw - 24px));
+  margin: 0 auto;
+  padding: 6.5rem 0 3rem;
+  display: grid;
+  gap: 1.1rem;
+}
+
+.breadcrumb,
+.hero,
+.recentStrip,
+.controlBar,
+.sectionOverview,
+.resultsZone,
+.sidebarCard,
+.sectionItem,
+.metricCard,
+.featuredPanel {
+  border: 1px solid var(--border-default);
+  border: 1px solid color-mix(in srgb, var(--border-default) 76%, transparent);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.07);
+}
+
+.breadcrumb,
+.hero,
+.recentStrip,
+.controlBar,
+.sectionOverview,
+.resultsZone,
+.sidebarCard,
+.sectionItem {
+  border-radius: 30px;
+  background: var(--bg-surface-1);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.05), transparent 42%),
+    color-mix(in srgb, var(--bg-surface-1) 90%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.breadcrumbItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.breadcrumbItem a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.breadcrumbItem a:hover {
+  color: var(--text-primary);
+}
+
+.breadcrumbDivider {
+  color: var(--text-muted);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(340px, 0.78fr);
+  gap: 1rem;
+  padding: clamp(1rem, 2vw, 1.7rem);
+}
+
+.heroCopy,
+.heroAside,
+.panelBody,
+.metricsGrid,
+.stripHeader,
+.controlHeader,
+.sidebarHead {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.eyebrow,
+.stripEyebrow,
+.sectionBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: fit-content;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  background: color-mix(in srgb, var(--accent-soft) 82%, transparent);
+  border: 1px solid var(--border-accent);
+  border: 1px solid color-mix(in srgb, var(--border-accent) 76%, transparent);
+  color: var(--accent-alt);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.4rem, 4.9vw, 4.9rem);
+  line-height: 0.96;
+  font-weight: 900;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+
+.lead,
+.controlLead,
+.sectionDescription,
+.sidebarLead {
+  color: var(--text-secondary);
+  line-height: 1.85;
+}
+
+.lead {
+  max-width: 70ch;
+  font-size: 1rem;
+}
+
+.searchTrigger {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.9rem;
+  width: 100%;
+  min-height: 76px;
+  padding: 1rem 1.15rem;
+  border-radius: 24px;
+  background: var(--bg-surface-2);
+  background: color-mix(in srgb, var(--bg-base) 78%, var(--bg-surface-1) 22%);
+  border: 1px solid var(--border-default);
+  border: 1px solid color-mix(in srgb, var(--border-default) 78%, transparent);
+  color: inherit;
+  text-align: right;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.searchTrigger:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent-alt) 42%, var(--border-default) 58%);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+}
+
+.searchTriggerIcon,
+.searchTriggerHint {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchTriggerIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  background: color-mix(in srgb, var(--accent-soft) 86%, transparent);
+  color: var(--accent-alt);
+}
+
+.searchTriggerCopy {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.searchTriggerCopy strong {
+  color: var(--text-primary);
+  font-size: 1.02rem;
+  font-weight: 900;
+}
+
+.searchTriggerCopy span,
+.searchTriggerHint,
+.stripMeta,
+.zoneMeta,
+.compactRowMeta,
+.directoryCardCopy span,
+.recentChip,
+.sectionOverviewCard span,
+.tabCount {
+  color: var(--text-muted);
+  font-size: 0.84rem;
+}
+
+.searchTriggerHint {
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: var(--bg-surface-2);
+  background: color-mix(in srgb, var(--bg-surface-2) 78%, transparent);
+  border: 1px solid var(--border-subtle);
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 82%, transparent);
+  font-weight: 800;
+}
+
+.heroLinks,
+.recentChips,
+.sectionOverviewGrid,
+.resultsGrid,
+.intentChipRow,
+.commandPillRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.queryChip,
+.recentChip,
+.intentChip,
+.commandPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 40px;
+  padding: 0.6rem 0.95rem;
+  border-radius: 999px;
+  text-decoration: none;
+  background: var(--bg-surface-1);
+  background: color-mix(in srgb, var(--bg-surface-1) 88%, transparent);
+  border: 1px solid var(--border-subtle);
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 82%, transparent);
+  color: var(--text-secondary);
+  font-weight: 700;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.queryChip:hover,
+.recentChip:hover,
+.intentChip:hover,
+.commandPill:hover {
+  transform: translateY(-1px);
+  color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--accent-alt) 32%, var(--border-subtle) 68%);
+}
+
+.heroAside {
+  align-content: start;
+}
+
+.metricsGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.metricCard,
+.featuredPanel {
+  border-radius: 24px;
+  background: var(--bg-surface-2);
+  background: color-mix(in srgb, var(--bg-base) 68%, var(--bg-surface-1) 32%);
+}
+
+.metricBody {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem !important;
+}
+
+.metricBody span {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.metricBody strong {
+  color: var(--text-primary);
+  font-size: clamp(1.4rem, 2.6vw, 1.95rem);
+  font-weight: 900;
+}
+
+.featuredPanel {
+  padding: 0.35rem;
+}
+
+.panelHeader {
+  padding-bottom: 0 !important;
+}
+
+.panelTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.panelBody {
+  padding-top: 0 !important;
+}
+
+.recentStrip,
+.controlBar,
+.sectionOverview,
+.resultsZone {
+  padding: 1rem;
+}
+
+.stripHeader {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+}
+
+.controlHeader {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 1rem;
+}
+
+.controlHeaderMain {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.controlTitle {
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 2.4vw, 2.15rem);
+  line-height: 1.04;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.controlLead {
+  max-width: 68ch;
+}
+
+.controlHeaderStat {
+  --tab-accent: #2563eb;
+  --tab-soft: rgba(37, 99, 235, 0.12);
+  min-width: min(100%, 240px);
+  display: grid;
+  gap: 0.3rem;
+  padding: 1rem 1.05rem;
+  border-radius: 24px;
+  border: 1px solid color-mix(in srgb, var(--tab-accent) 24%, var(--border-default) 76%);
+  background:
+    linear-gradient(155deg, color-mix(in srgb, white 18%, transparent), transparent 55%),
+    color-mix(in srgb, var(--tab-soft) 84%, var(--bg-surface-1) 16%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.26);
+}
+
+.controlHeaderStatLabel,
+.controlHeaderStatHint {
+  color: var(--text-muted);
+}
+
+.controlHeaderStatLabel {
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.controlHeaderStatValue {
+  color: var(--text-primary);
+  font-size: 1.18rem;
+  font-weight: 900;
+}
+
+.controlHeaderStatHint {
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+.tabsFrame {
+  margin-top: 1rem;
+}
+
+.tabsRoot {
+  width: 100%;
+}
+
+.tabsList {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.8rem;
+  width: 100% !important;
+  height: auto !important;
+  padding: 0 !important;
+  border-radius: 0;
+  background: transparent !important;
+  align-items: stretch;
+}
+
+.tabTrigger {
+  --tab-accent: #2563eb;
+  --tab-soft: rgba(37, 99, 235, 0.12);
+  display: block !important;
+  min-height: 0;
+  height: auto !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  text-align: right !important;
+  white-space: normal !important;
+  box-shadow: none !important;
+  align-self: stretch;
+}
+
+.tabTrigger::after {
+  display: none !important;
+}
+
+.tabTrigger[data-state='active'] {
+  transform: none !important;
+}
+
+.tabTrigger[data-state='active'] .tabTriggerInner {
+  border-color: color-mix(in srgb, var(--tab-accent) 38%, var(--border-default) 62%);
+  background:
+    linear-gradient(160deg, color-mix(in srgb, white 28%, transparent), transparent 52%),
+    color-mix(in srgb, var(--tab-soft) 76%, var(--bg-surface-1) 24%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 18px 34px rgba(15, 23, 42, 0.1);
+  transform: translateY(-2px);
+}
+
+.tabTrigger[data-state='active'] .tabCount,
+.tabTrigger[data-state='active'] .tabLabelGroup strong {
+  color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--tab-accent) 34%, var(--border-default) 66%);
+}
+
+.tabCount {
+  min-width: 40px;
+  padding-inline: 0.75rem;
+  padding-block: 0.34rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-surface-1) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 80%, transparent);
+  font-weight: 800;
+  font-size: 0.86rem;
+}
+
+.tabTriggerInner,
+.tabLabelGroup,
+.tabSummary,
+.tabSummaryCopy {
+  display: grid;
+}
+
+.tabTriggerInner {
+  min-width: 0;
+  min-height: 122px;
+  height: 100%;
+  padding: 1rem;
+  border-radius: 26px;
+  border: 1px solid color-mix(in srgb, var(--tab-accent) 16%, var(--border-default) 84%);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.06), transparent 52%),
+    color-mix(in srgb, var(--bg-surface-1) 90%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 10px 24px rgba(15, 23, 42, 0.05);
+  gap: 0.9rem;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.tabTrigger:hover .tabTriggerInner {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--tab-accent) 28%, var(--border-default) 72%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 16px 28px rgba(15, 23, 42, 0.08);
+}
+
+.tabTriggerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+}
+
+.tabIcon,
+.tabSummaryIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--tab-soft) 88%, transparent);
+  color: var(--tab-accent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.tabLabelGroup {
+  gap: 0.18rem;
+  min-width: 0;
+}
+
+.tabLabelGroup strong,
+.tabSummaryCopy strong {
+  color: var(--text-primary);
+  font-size: 0.94rem;
+  font-weight: 900;
+}
+
+.tabLabelGroup span,
+.tabSummaryCopy span,
+.tabSummaryCount {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.tabSummary {
+  --tab-accent: #2563eb;
+  --tab-soft: rgba(37, 99, 235, 0.12);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 1rem;
+  padding: 1rem 1.05rem;
+  border-radius: 28px;
+  border: 1px solid color-mix(in srgb, var(--tab-accent) 24%, var(--border-default) 76%);
+  background:
+    linear-gradient(155deg, color-mix(in srgb, white 20%, transparent), transparent 56%),
+    color-mix(in srgb, var(--tab-soft) 72%, var(--bg-surface-1) 28%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.tabSummaryCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  font-weight: 800;
+}
+
+.tabSummaryMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.5rem;
+}
+
+.tabSummaryBadge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-surface-1) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tab-accent) 18%, var(--border-subtle) 82%);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.tabTrigger[data-tab='all'],
+.tabSummary[data-tab='all'],
+.controlHeaderStat[data-tab='all'] {
+  --tab-accent: #2563eb;
+  --tab-soft: rgba(37, 99, 235, 0.12);
+}
+
+.tabTrigger[data-tab='tools'],
+.tabSummary[data-tab='tools'],
+.controlHeaderStat[data-tab='tools'] {
+  --tab-accent: #0ea5e9;
+  --tab-soft: rgba(14, 165, 233, 0.13);
+}
+
+.tabTrigger[data-tab='articles'],
+.tabSummary[data-tab='articles'],
+.controlHeaderStat[data-tab='articles'] {
+  --tab-accent: #16a34a;
+  --tab-soft: rgba(22, 163, 74, 0.13);
+}
+
+.tabTrigger[data-tab='sections'],
+.tabSummary[data-tab='sections'],
+.controlHeaderStat[data-tab='sections'] {
+  --tab-accent: #7c3aed;
+  --tab-soft: rgba(124, 58, 237, 0.13);
+}
+
+.tabTrigger[data-tab='featured'],
+.tabSummary[data-tab='featured'],
+.controlHeaderStat[data-tab='featured'] {
+  --tab-accent: #f59e0b;
+  --tab-soft: rgba(245, 158, 11, 0.14);
+}
+
+.sectionOverviewHead,
+.zoneHead {
+  display: grid;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.sectionOverviewTitle,
+.zoneTitle,
+.sectionTitle {
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.sectionOverviewTitle,
+.zoneTitle {
+  font-size: clamp(1.5rem, 2.8vw, 2.35rem);
+}
+
+.sectionOverviewGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.sectionOverviewCard {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1rem;
+  border-radius: 22px;
+  text-decoration: none;
+  color: inherit;
+  background: var(--bg-surface-2);
+  background: color-mix(in srgb, var(--bg-base) 72%, var(--bg-surface-2) 28%);
+  border: 1px solid var(--border-default);
+  border: 1px solid color-mix(in srgb, var(--border-default) 78%, transparent);
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.sectionOverviewCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.07);
+}
+
+.sectionOverviewCard strong {
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.sectionOverviewIcon,
+.directoryCardIcon,
+.compactRowIcon,
+.commandResultIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  transition: transform 150ms ease;
+}
+
+.sectionOverviewIcon {
+  width: 42px;
+  height: 42px;
+  background: var(--accent-soft);
+  background: color-mix(in srgb, var(--accent-soft) 88%, transparent);
+  color: var(--accent-alt);
+}
+
+.resultsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.contentLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 1rem;
+  align-items: start;
+}
+
+.contentMain {
+  min-width: 0;
+}
+
+.sectionAccordion {
+  display: grid;
+  gap: 1rem;
+}
+
+.sectionItem {
+  overflow: hidden;
+}
+
+.sectionTrigger {
+  position: sticky;
+  top: 6.4rem;
+  z-index: 4;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.9rem;
+  align-items: start;
+  padding: 1rem 1.1rem !important;
+  background: var(--bg-surface-1);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-surface-1) 96%, transparent), color-mix(in srgb, var(--bg-surface-1) 90%, transparent));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.sectionTrigger:hover {
+  text-decoration: none !important;
+}
+
+.sectionTriggerCopy {
+  display: grid;
+  gap: 0.75rem;
+  text-align: right;
+}
+
+.sectionBadge {
+  color: var(--text-primary);
+}
+
+.sectionTitle {
+  font-size: clamp(1.22rem, 2vw, 1.65rem);
+  margin-bottom: 0.35rem;
+}
+
+.sectionCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 36px;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: var(--bg-base);
+  background: color-mix(in srgb, var(--bg-base) 82%, transparent);
+  border: 1px solid var(--border-subtle);
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 84%, transparent);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.sectionContent {
+  padding: 0 1.1rem 1.1rem;
+}
+
+.primaryCardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 0.9rem;
+}
+
+.compactGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.directoryCard,
+.compactRow,
+.tocLink,
+.commandShortcutCard {
+  transition:
+    transform 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    color 150ms ease;
+}
+
+.directoryCard {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem;
+  border-radius: 22px;
+  color: inherit;
+  text-decoration: none;
+  background: var(--bg-surface-2);
+  background: color-mix(in srgb, var(--bg-base) 70%, var(--bg-surface-1) 30%);
+  border: 1px solid var(--border-default);
+  border: 1px solid color-mix(in srgb, var(--border-default) 78%, transparent);
+}
+
+.directoryCard:hover,
+.compactRow:hover,
+.commandShortcutCard:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent-alt) 34%, var(--border-default) 66%);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.07);
+}
+
+.directoryCard:hover .directoryCardIcon,
+.compactRow:hover .compactRowIcon,
+.sectionOverviewCard:hover .sectionOverviewIcon {
+  transform: scale(1.05);
+}
+
+.directoryCardIcon,
+.compactRowIcon {
+  width: 42px;
+  height: 42px;
+  background: var(--accent-soft);
+  background: color-mix(in srgb, var(--accent-soft) 86%, transparent);
+  color: var(--accent-alt);
+}
+
+.directoryCardCopy,
+.commandResultCopy {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.directoryCardCopy strong,
+.compactRowTitle,
+.commandResultCopy strong {
+  color: var(--text-primary);
+  font-weight: 900;
+}
+
+.directoryArrow,
+.compactRowArrow {
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.directoryCard:hover .directoryArrow,
+.compactRow:hover .compactRowArrow {
+  opacity: 1;
+}
+
+.compactRow {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 18px;
+  color: inherit;
+  text-decoration: none;
+  background: var(--bg-surface-2);
+  background: color-mix(in srgb, var(--bg-base) 72%, var(--bg-surface-2) 28%);
+  border: 1px solid var(--border-subtle);
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 82%, transparent);
+}
+
+.compactRowTitle {
+  line-height: 1.5;
+}
+
+.sidebar {
+  display: block;
+}
+
+.sidebarCard {
+  position: sticky;
+  top: 6.5rem;
+  padding: 1rem;
+}
+
+.tocList {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.tocLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 0.8rem 0.9rem;
+  border-radius: 16px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  background: var(--bg-surface-2);
+  background: color-mix(in srgb, var(--bg-base) 74%, transparent);
+  border: 1px solid var(--border-subtle);
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 82%, transparent);
+}
+
+.tocLink:hover,
+.tocLinkActive {
+  color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--accent-alt) 36%, var(--border-default) 64%);
+}
+
+.tocLinkActive {
+  background: var(--bg-surface-3);
+  background: color-mix(in srgb, var(--accent-soft) 76%, transparent);
+}
+
+.commandDialog {
+  max-width: min(860px, calc(100vw - 24px)) !important;
+  border-radius: 28px !important;
+  background: var(--bg-base) !important;
+  background: color-mix(in srgb, var(--bg-base) 94%, transparent) !important;
+  border-color: var(--border-default) !important;
+  border-color: color-mix(in srgb, var(--border-default) 76%, transparent) !important;
+}
+
+.commandInputWrap {
+  border-bottom-color: var(--border-subtle) !important;
+  border-bottom-color: color-mix(in srgb, var(--border-subtle) 84%, transparent) !important;
+  min-height: 72px;
+  padding-inline: 1rem !important;
+}
+
+.commandInput {
+  height: 64px !important;
+  font-size: 1rem !important;
+}
+
+.commandList {
+  max-height: min(72vh, 720px);
+  padding: 0.5rem 0.5rem 1rem;
+}
+
+.commandActionItem,
+.commandResultItem {
+  min-height: 58px;
+  border-radius: 16px;
+  gap: 0.8rem;
+}
+
+.commandResultIcon {
+  width: 36px;
+  height: 36px;
+  background: var(--accent-soft);
+  background: color-mix(in srgb, var(--accent-soft) 86%, transparent);
+  color: var(--accent-alt);
+}
+
+.commandResultCopy span {
+  color: var(--text-muted);
+  font-size: 0.84rem;
+}
+
+.commandEmptyState {
+  display: grid;
+  gap: 1rem;
+  padding: 0.75rem 0.25rem 0.25rem;
+}
+
+.commandBlock {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.commandBlock h3 {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
+.commandPill {
+  cursor: pointer;
+}
+
+.commandShortcutList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.commandShortcutCard {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 50px;
+  padding: 0.8rem 0.9rem;
+  border-radius: 18px;
+  background: var(--bg-surface-2);
+  background: color-mix(in srgb, var(--bg-base) 70%, var(--bg-surface-1) 30%);
+  border: 1px solid var(--border-subtle);
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 82%, transparent);
+  color: var(--text-primary);
+  font-weight: 800;
+  text-align: right;
+  cursor: pointer;
+}
+
+.tooltipContent {
+  max-width: 34ch;
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+
+.sectionOverviewCard[data-tone='time'],
+.directoryCard[data-tone='time'],
+.compactRow[data-tone='time'],
+.sectionItem[data-tone='time'] {
+  border-color: color-mix(in srgb, #38bdf8 32%, var(--border-default) 68%);
+}
+
+.sectionOverviewCard[data-tone='calculators-hubs'],
+.directoryCard[data-tone='calculators-hubs'],
+.compactRow[data-tone='calculators-hubs'],
+.sectionItem[data-tone='calculators-hubs'] {
+  border-color: color-mix(in srgb, #6366f1 32%, var(--border-default) 68%);
+}
+
+.sectionOverviewCard[data-tone='calculators-tools'],
+.directoryCard[data-tone='calculators-tools'],
+.compactRow[data-tone='calculators-tools'],
+.sectionItem[data-tone='calculators-tools'] {
+  border-color: color-mix(in srgb, #10b981 32%, var(--border-default) 68%);
+}
+
+.sectionOverviewCard[data-tone='economy'],
+.directoryCard[data-tone='economy'],
+.compactRow[data-tone='economy'],
+.sectionItem[data-tone='economy'] {
+  border-color: color-mix(in srgb, #f59e0b 32%, var(--border-default) 68%);
+}
+
+.sectionOverviewCard[data-tone='guides'],
+.directoryCard[data-tone='guides'],
+.compactRow[data-tone='guides'],
+.sectionItem[data-tone='guides'] {
+  border-color: color-mix(in srgb, #22c55e 32%, var(--border-default) 68%);
+}
+
+.sectionOverviewCard[data-tone='holidays'],
+.directoryCard[data-tone='holidays'],
+.compactRow[data-tone='holidays'],
+.sectionItem[data-tone='holidays'] {
+  border-color: color-mix(in srgb, #ec4899 30%, var(--border-default) 70%);
+}
+
+.sectionOverviewCard[data-tone='company'],
+.directoryCard[data-tone='company'],
+.compactRow[data-tone='company'],
+.sectionItem[data-tone='company'] {
+  border-color: color-mix(in srgb, #64748b 28%, var(--border-default) 72%);
+}
+
+@media (max-width: 1280px) {
+  .hero,
+  .contentLayout,
+  .resultsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionTrigger {
+    position: static;
+  }
+
+  .sidebar {
+    display: none;
+  }
+}
+
+@media (max-width: 980px) {
+  .sectionOverviewGrid,
+  .primaryCardGrid,
+  .compactGrid,
+  .commandShortcutList {
+    grid-template-columns: 1fr;
+  }
+
+  .controlHeader {
+    grid-template-columns: 1fr;
+  }
+
+  .tabsList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tabSummary {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .tabSummaryCount {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 768px) {
+  .shell {
+    width: min(100vw - 16px, 100%);
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .hero,
+  .recentStrip,
+  .controlBar,
+  .sectionOverview,
+  .resultsZone,
+  .sectionItem {
+    border-radius: 24px;
+    padding: 0.95rem;
+  }
+
+  .title {
+    font-size: clamp(2rem, 9vw, 3.2rem);
+  }
+
+  .searchTrigger {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .searchTriggerHint {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .metricsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stripHeader {
+    grid-template-columns: 1fr;
+  }
+
+  .controlTitle {
+    font-size: clamp(1.25rem, 6vw, 1.8rem);
+  }
+
+  .sectionTrigger {
+    top: 5.8rem;
+    grid-template-columns: 1fr;
+  }
+
+  .tabsList {
+    width: 100% !important;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .breadcrumb,
+  .hero,
+  .recentStrip,
+  .controlBar,
+  .sectionOverview,
+  .resultsZone,
+  .sidebarCard,
+  .sectionItem,
+  .sectionTrigger,
+  .commandDialog {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .searchTrigger,
+  .queryChip,
+  .recentChip,
+  .intentChip,
+  .commandPill,
+  .sectionOverviewCard,
+  .directoryCard,
+  .compactRow,
+  .commandShortcutCard,
+  .tocLink {
+    transition: border-color 120ms ease, color 120ms ease;
+  }
+
+  .searchTrigger:hover,
+  .queryChip:hover,
+  .recentChip:hover,
+  .intentChip:hover,
+  .commandPill:hover,
+  .sectionOverviewCard:hover,
+  .directoryCard:hover,
+  .compactRow:hover,
+  .commandShortcutCard:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@supports not (color: color-mix(in srgb, black 50%, white 50%)) {
+  .page {
+    background:
+      radial-gradient(circle at top right, rgba(14, 165, 233, 0.14), transparent 22%),
+      radial-gradient(circle at top left, rgba(16, 185, 129, 0.14), transparent 18%),
+      linear-gradient(180deg, var(--bg-base) 0%, var(--bg-base) 54%, var(--bg-surface-2) 100%);
+  }
+
+  .breadcrumb,
+  .hero,
+  .recentStrip,
+  .controlBar,
+  .sectionOverview,
+  .resultsZone,
+  .sidebarCard,
+  .sectionItem,
+  .metricCard,
+  .featuredPanel,
+  .tabSummary,
+  .commandDialog {
+    border-color: var(--border-default) !important;
+    background: var(--bg-surface-1) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .searchTrigger,
+  .queryChip,
+  .recentChip,
+  .intentChip,
+  .commandPill,
+  .sectionOverviewCard,
+  .directoryCard,
+  .compactRow,
+  .tocLink,
+  .commandShortcutCard,
+  .tabsList,
+  .searchTriggerHint,
+  .tabCount,
+  .sectionCount {
+    border-color: var(--border-subtle) !important;
+    background: var(--bg-surface-2) !important;
+  }
+
+  .searchTriggerIcon,
+  .sectionOverviewIcon,
+  .directoryCardIcon,
+  .compactRowIcon,
+  .commandResultIcon,
+  .tabIcon,
+  .tabSummaryIcon,
+  .eyebrow,
+  .stripEyebrow,
+  .sectionBadge {
+    background: var(--accent-soft) !important;
+    border-color: var(--border-accent) !important;
+    color: var(--accent-alt) !important;
+  }
+
+  .tabTriggerInner,
+  .controlHeaderStat,
+  .tabSummary {
+    border-color: var(--border-default) !important;
+    background: var(--bg-surface-1) !important;
+    box-shadow: none !important;
+  }
+
+  .tocLinkActive {
+    background: var(--bg-surface-3) !important;
+  }
+}

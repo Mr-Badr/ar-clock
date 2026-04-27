@@ -6,6 +6,7 @@ import ThemeToggle from "./ThemeToggle";
 import MobileMenu from "./MobileMenu";
 import HeaderScrollEffect from "./HeaderScrollEffect";
 import HeaderRouteWarmup from "./HeaderRouteWarmup";
+import GlobalDiscoverySearch from "@/components/site/GlobalDiscoverySearch.client";
 import { SITE_BRAND } from "@/lib/site-config";
 import "./header.css";
 
@@ -169,6 +170,7 @@ export default function Header() {
           </nav>
 
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <GlobalDiscoverySearch />
             <ThemeToggle />
             <MobileMenu links={NAV_LINKS} />
           </div>

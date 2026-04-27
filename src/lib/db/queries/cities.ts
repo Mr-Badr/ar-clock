@@ -353,6 +353,10 @@ export async function searchCities(query: string, limit = 10): Promise<City[]> {
   }
 
   const q = normalizeSearchQuery(query)
+  if (q.length < 4 || localMatches.length >= Math.min(limit, 4)) {
+    return localMatches as City[]
+  }
+
   const qStripped = q.replace(/(^|\s)\u0627\u0644/g, '$1').trim()
 
   try {

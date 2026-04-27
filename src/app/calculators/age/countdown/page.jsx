@@ -1,6 +1,7 @@
 import AgeCountdownCalculator from '@/components/calculators/age/AgeCountdownCalculator.client';
-import { CalculatorHero, CalculatorSection } from '@/components/calculators/common';
+import { CalculatorHero } from '@/components/calculators/common';
 import { buildAgeMetadata, buildBreadcrumbSchema, buildSoftwareSchema } from '../page-helpers';
+import { AgeToolSections } from '../tool-sections';
 import { Suspense } from 'react';
 import SectionSkeleton from '@/components/shared/SectionSkeleton'
 
@@ -54,12 +55,7 @@ export default function AgeCountdownPage() {
         </Suspense>
       </CalculatorHero>
 
-      <CalculatorSection
-        id="countdown-content"
-        eyebrow="مناسب للمشاركة"
-        title="صفحة خفيفة ومباشرة"
-        description="إذا كان هدفك الوحيد معرفة كم بقي على عيد الميلاد القادم، فهذه الصفحة تعطيك النتيجة فوراً دون تشتيت ببقية حسابات العمر."
-      />
+      <AgeToolSections toolId="countdown" />
     </main>
   );
 }

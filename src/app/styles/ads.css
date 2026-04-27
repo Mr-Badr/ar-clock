@@ -326,8 +326,8 @@
     border-bottom: none;
     border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
     box-shadow: 0 -14px 34px rgba(6, 8, 18, 0.28);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     transition: opacity var(--transition-base), transform var(--transition-base);
   }
 

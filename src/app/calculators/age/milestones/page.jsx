@@ -1,6 +1,7 @@
 import AgeMilestonesCalculator from '@/components/calculators/age/AgeMilestonesCalculator.client';
-import { CalculatorHero, CalculatorSection } from '@/components/calculators/common';
+import { CalculatorHero } from '@/components/calculators/common';
 import { buildAgeMetadata, buildBreadcrumbSchema, buildSoftwareSchema } from '../page-helpers';
+import { AgeToolSections } from '../tool-sections';
 import { Suspense } from 'react';
 import SectionSkeleton from '@/components/shared/SectionSkeleton'
 
@@ -54,12 +55,7 @@ export default function AgeMilestonesPage() {
         </Suspense>
       </CalculatorHero>
 
-      <CalculatorSection
-        id="milestones-content"
-        eyebrow="فكرة الصفحة"
-        title="لماذا يحب الناس هذه الحاسبة؟"
-        description="لأنها تحول العمر إلى محطات قابلة للقياس والانتظار، فتجعل الزمن محسوساً أكثر من مجرد رقم سنوي ثابت."
-      />
+      <AgeToolSections toolId="milestones" />
     </main>
   );
 }

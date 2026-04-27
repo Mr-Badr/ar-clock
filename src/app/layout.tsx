@@ -5,7 +5,6 @@ import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { IBM_Plex_Sans_Arabic, Noto_Sans_Arabic } from 'next/font/google';
 import { Toaster } from 'sonner';
-import { ThemeProvider } from '@/components/theme-provider';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/Footer';
 import AdSenseProvider from '@/components/ads/AdSenseProvider';
@@ -14,6 +13,7 @@ import AnalyticsProvider from '@/components/analytics/AnalyticsProvider';
 import SiteWideSchemas from '@/components/seo/SiteWideSchemas';
 import ConsentBanner from '@/components/consent/ConsentBanner';
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
+import SiteVisitTracker from '@/components/site/SiteVisitTracker.client';
 import { Analytics } from '@vercel/analytics/next';
 import { getMetadataEnv } from '@/lib/env.server';
 import {
@@ -26,6 +26,16 @@ import {
 } from '@/lib/site-config';
 
 const env = getMetadataEnv();
+const themeBootScript = `
+  try {
+    var root = document.documentElement;
+    var storedTheme = localStorage.getItem('theme');
+    var nextTheme = storedTheme === 'light' ? 'light' : 'dark';
+    root.classList.remove('dark', 'light');
+    root.classList.add(nextTheme);
+    root.style.colorScheme = nextTheme;
+  } catch (_) {}
+`;
 // Body copy uses Noto Sans Arabic across the app.
 // The heavier weights are still needed by the design system for clocks/heroes.
 const notoSansArabic = Noto_Sans_Arabic({
@@ -59,9 +69,19 @@ export const metadata: Metadata = {
   publisher: SITE_BRAND,
   category: 'utilities',
   classification: 'Public',
+  manifest: '/manifest.webmanifest',
 
   applicationName: SITE_BRAND,
   appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: SITE_BRAND },
+  icons: {
+    icon: [
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+    ],
+  },
 
   // ── Robots ────────────────────────────────────────────────────────────────
   robots: {
@@ -103,14 +123,14 @@ export const viewport = {
   viewportFit: 'cover',
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    // suppressHydrationWarning is required because next-themes writes
-    // class="dark|light|contrast" on <html> after hydration.
+    // suppressHydrationWarning is required because the inline theme bootstrap
+    // may update the <html> class before React hydrates.
     //
     // theme-transition: defined in the CSS (section 30) — enables smooth
     // bg/color/border animations on every element when the theme class changes.
@@ -134,37 +154,41 @@ export default async function RootLayout({
           duplicate or fight the design system's base rules.
           notoSansArabic.className activates the body font family. */}
       <body suppressHydrationWarning className={notoSansArabic.className}>
-        <ThemeProvider>
-          <SiteWideSchemas />
-          <Suspense fallback={<div className="h-16" />}>
-            <Header />
-          </Suspense>
-          {children}
-          <Analytics />
-          <Suspense fallback={<div className="h-24" />}>
-            <Footer />
-          </Suspense>
-          {/* Sonner Toaster — dir and position match RTL layout */}
-          <Toaster
-            dir="rtl"
-            position="top-center"
-            richColors
-            expand={false}
-            toastOptions={{
-              style: {
-                fontFamily: 'var(--font-base)',
-                fontSize: 'var(--text-sm)',
-                borderRadius: 'var(--radius-xl)',
-              },
-            }}
-          />
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+        <SiteWideSchemas />
+        <Suspense fallback={<div className="h-16" />}>
+          <Header />
+        </Suspense>
+        {children}
+        <Analytics />
+        <Suspense fallback={<div className="h-24" />}>
+          <Footer />
+        </Suspense>
+        {/* Sonner Toaster — dir and position match RTL layout */}
+        <Toaster
+          dir="rtl"
+          position="top-center"
+          richColors
+          expand={false}
+          toastOptions={{
+            style: {
+              fontFamily: 'var(--font-base)',
+              fontSize: 'var(--text-sm)',
+              borderRadius: 'var(--radius-xl)',
+            },
+          }}
+        />
 
+        <Suspense fallback={null}>
           <AdStickyAnchor />
-          <ConsentBanner />
+        </Suspense>
+        <ConsentBanner />
+        <SiteVisitTracker />
+        <Suspense fallback={null}>
           <AnalyticsProvider />
-          <AdSenseProvider />
-          <ServiceWorkerRegistration />
-        </ThemeProvider>
+        </Suspense>
+        <AdSenseProvider />
+        <ServiceWorkerRegistration />
       </body>
     </html>
   );

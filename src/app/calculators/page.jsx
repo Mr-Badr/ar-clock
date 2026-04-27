@@ -6,6 +6,8 @@ import {
   CalculatorHero,
   CalculatorHubGrid,
   CalculatorInfoGrid,
+  CalculatorIntentCloud,
+  CalculatorResourceLinks,
   CalculatorSection,
 } from '@/components/calculators/common';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -13,6 +15,42 @@ import { CALCULATOR_HUBS, CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
+const TOP_SEARCH_INTENTS = [
+  'كم عمري الآن بالسنوات والأيام والثواني',
+  'كم قسط قرض 100 ألف على 5 سنوات',
+  'كم ضريبة 1000 ريال عند 15%',
+  'كم يساوي 20% من 500',
+  'كم مكافأة نهاية الخدمة بعد 5 سنوات',
+  'إذا نمت الآن متى أستيقظ',
+  'كم أحتاج صندوق طوارئ',
+  'متى أخلص من ديوني',
+  'كم أوفر شهرياً لهدف معين',
+  'كم تكلفة بناء بيت في السعودية',
+  'كم كيس أسمنت أحتاج',
+  'كم وزن حديد التسليح',
+];
+const DAILY_WORKFLOWS = [
+  {
+    href: '/calculators/finance',
+    title: 'ابدأ من المال والعمل',
+    description: 'إذا كان السؤال عن القرض أو الضريبة أو النسبة أو نهاية الخدمة، فهذه البوابة تختصر الطريق إلى الأداة الصحيحة بسرعة.',
+  },
+  {
+    href: '/calculators/age',
+    title: 'ابدأ من العمر والتواريخ',
+    description: 'مناسب لمن يبحث عن حاسبة العمر، فرق العمر، عيد الميلاد القادم، أو التحويل بين العمر الهجري والميلادي.',
+  },
+  {
+    href: '/calculators/sleep',
+    title: 'ابدأ من النوم الذكي',
+    description: 'يمسك مسار النوم بالكامل: متى تنام، متى تستيقظ، القيلولة، دين النوم، واحتياج النوم حسب العمر.',
+  },
+  {
+    href: '/calculators/personal-finance',
+    title: 'ابدأ من التخطيط المالي الشخصي',
+    description: 'بوابة للادخار والديون وصندوق الطوارئ وصافي الثروة لمن يريد العودة إلى أدواته المالية باستمرار.',
+  },
+];
 
 export const metadata = buildCanonicalMetadata({
   title: 'كم عمري؟ كم القسط؟ كم الضريبة؟ | أشهر الحاسبات العربية',
@@ -92,6 +130,22 @@ export default function CalculatorsPage() {
               </div>
             </div>
           ))}
+        </div>
+      </CalculatorSection>
+
+      <CalculatorSection
+        id="calculator-search-intents"
+        eyebrow="عبارات البحث"
+        title="أسئلة يكتبها الناس فعلاً قبل أن يصلوا إلى أي حاسبة"
+        description="هذا القسم موجود كجزء مرئي من الصفحة نفسها حتى تفهم محركات البحث والزائر معاً ما الذي يغطيه القسم، وليس فقط من خلال الكلمات المفتاحية داخل metadata."
+        subtle
+      >
+        <div className="calc-grid-2">
+          <CalculatorIntentCloud title="أقوى نيات البحث اليومية" items={TOP_SEARCH_INTENTS} />
+          <CalculatorResourceLinks
+            items={DAILY_WORKFLOWS}
+            buttonLabel="ابدأ من هذا المسار"
+          />
         </div>
       </CalculatorSection>
 

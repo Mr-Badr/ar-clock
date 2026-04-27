@@ -15,11 +15,11 @@
 @layer base, theme, components, utilities;
 /* =============================================================================
 
-   Engine : next-themes → writes class="dark|light" on <html>
+   Engine : theme class on <html> via the app bootstrap script
 
    HOW THEMES WORK
    ───────────────
-   next-themes sets a class on <html>:
+   The app sets a class on <html>:
      class="dark"      → slate-blue night mode  (default / SSR fallback)
      class="light"     → warm-white day mode
 
@@ -148,7 +148,7 @@
 
 /* ─── 03. THEME: DARK (DEFAULT) ──────────────────────────────────────────── */
 /* :root gives dark values before JS hydrates (prevents flash)                */
-/* next-themes then adds class="dark" which re-confirms the same values        */
+/* The theme bootstrap then confirms the same class during hydration            */
 /*                                                                            */
 /* WHY THE NEW SURFACES:                                                      */
 /* Old surfaces had S:26-29% — same hue AND high saturation as the accent.   */
@@ -896,4 +896,3 @@
   --z-toast: 600;
   --z-max: 9999;
 }
-

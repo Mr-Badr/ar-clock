@@ -1,6 +1,7 @@
 import BirthdayDetailsCalculator from '@/components/calculators/age/BirthdayDetailsCalculator.client';
-import { CalculatorHero, CalculatorSection } from '@/components/calculators/common';
+import { CalculatorHero } from '@/components/calculators/common';
 import { buildAgeMetadata, buildBreadcrumbSchema, buildSoftwareSchema } from '../page-helpers';
+import { AgeToolSections } from '../tool-sections';
 import { Suspense } from 'react';
 import SectionSkeleton from '@/components/shared/SectionSkeleton'
 
@@ -54,12 +55,7 @@ export default function BirthdayPage() {
         </Suspense>
       </CalculatorHero>
 
-      <CalculatorSection
-        id="birth-day-content"
-        eyebrow="ملاحظة"
-        title="هذه الصفحة خالية من أي محتوى فلكي أو أبراج"
-        description="المحتوى هنا عملي فقط: يوم الأسبوع، التقويم الموازي، الجيل، والفترة الزمنية المرتبطة بيوم الميلاد."
-      />
+      <AgeToolSections toolId="birth-day" />
     </main>
   );
 }

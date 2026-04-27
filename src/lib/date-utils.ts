@@ -4,9 +4,9 @@ import { cacheTag, cacheLife } from 'next/cache';
 export async function getCachedNowIso() {
   'use cache';
   cacheTag('current-time');
-  // "Current time" powers live prayer/economy pages, so it must stay fresh.
-  // A second-level cache still keeps the function cacheable without freezing
-  // the clock for an entire day.
-  cacheLife('seconds');
+  // A minute-level cache keeps server HTML fresh enough for SEO/date labels
+  // while still allowing prerendering under Next.js cache components.
+  // The truly live experiences update on the client after first paint.
+  cacheLife('minutes');
   return new Date().toISOString();
 }

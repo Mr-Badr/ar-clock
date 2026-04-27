@@ -4,6 +4,7 @@ import { SITE_BRAND } from '@/lib/site-config';
 
 const VIEWER_LOCALE = 'ar-SA-u-nu-latn';
 const DATE_LABEL_LOCALE = 'ar-SA-u-nu-latn';
+const ECONOMY_FALLBACK_NOW_ISO = '2026-01-01T00:00:00.000Z';
 
 const FOREX_SESSION_DEFS = [
   {
@@ -763,7 +764,8 @@ function parseClock(clock) {
 function toUtc(dateLike) {
   if (DateTime.isDateTime(dateLike)) return dateLike.toUTC();
   if (typeof dateLike === 'string') return DateTime.fromISO(dateLike, { zone: 'utc' }).toUTC();
-  return DateTime.fromJSDate(dateLike instanceof Date ? dateLike : new Date(), { zone: 'utc' }).toUTC();
+  if (dateLike instanceof Date) return DateTime.fromJSDate(dateLike, { zone: 'utc' }).toUTC();
+  return DateTime.fromISO(ECONOMY_FALLBACK_NOW_ISO, { zone: 'utc' }).toUTC();
 }
 
 function formatDuration(totalMinutesRaw) {
@@ -1165,8 +1167,17 @@ function buildForexCard(nowUtc, viewerTimezone, sessionDef) {
   });
   const isOpen = Boolean(state.active);
   const relevantInterval = state.active || state.next;
+  const activeDurationMinutes = state.active
+    ? Math.max(diffMinutes(state.active.endUtc, state.active.startUtc), 1)
+    : 0;
+  const elapsedActiveMinutes = state.active
+    ? Math.max(diffMinutes(nowUtc, state.active.startUtc), 0)
+    : 0;
   const minutesUntil = relevantInterval
     ? diffMinutes(isOpen ? relevantInterval.endUtc : relevantInterval.startUtc, nowUtc)
+    : 0;
+  const progressPct = isOpen
+    ? Math.min(100, Math.max(0, (elapsedActiveMinutes / activeDurationMinutes) * 100))
     : 0;
 
   const statusLabel = isOpen
@@ -1188,6 +1199,8 @@ function buildForexCard(nowUtc, viewerTimezone, sessionDef) {
     countdownLabel: formatDuration(minutesUntil),
     nextStartMinutes: state.next ? diffMinutes(state.next.startUtc, nowUtc) : minutesUntil,
     pairsLabel: sessionDef.pairs.join('، '),
+    marketTimeLabel: `${formatTime(nowUtc, sessionDef.timezone)} · ${formatWeekday(nowUtc, sessionDef.timezone)}`,
+    progressPct,
     cityNameAr: intelligence.cityNameAr || sessionDef.nameAr,
     liquidityLabel: intelligence.liquidityLabel || 'سيولة متوسطة',
     volatilityLabel: intelligence.volatilityLabel || 'تقلب متوسط',
@@ -1380,12 +1393,32 @@ function buildPreferredWindow(nowUtc, viewerTimezone) {
   const current = overlaps.find((interval) => nowUtc >= interval.startUtc && nowUtc < interval.endUtc);
   const next = overlaps.find((interval) => interval.startUtc > nowUtc);
   const target = current || next || overlaps[0];
+  const viewerDayStart = nowUtc.setZone(viewerTimezone).startOf('day');
+  const viewerDayEnd = viewerDayStart.plus({ days: 1 });
+  const targetStartViewer = target ? target.startUtc.setZone(viewerTimezone) : null;
+  const targetEndViewer = target ? target.endUtc.setZone(viewerTimezone) : null;
+  const clippedStart = targetStartViewer
+    ? (targetStartViewer < viewerDayStart ? viewerDayStart : targetStartViewer)
+    : null;
+  const clippedEnd = targetEndViewer
+    ? (targetEndViewer > viewerDayEnd ? viewerDayEnd : targetEndViewer)
+    : null;
+  const startPct = clippedStart
+    ? ((clippedStart.toMillis() - viewerDayStart.toMillis()) / (24 * 60 * 60 * 1000)) * 100
+    : undefined;
+  const widthPct = clippedStart && clippedEnd && clippedEnd > clippedStart
+    ? ((clippedEnd.toMillis() - clippedStart.toMillis()) / (24 * 60 * 60 * 1000)) * 100
+    : undefined;
+  const nowPct = ((nowUtc.setZone(viewerTimezone).toMillis() - viewerDayStart.toMillis()) / (24 * 60 * 60 * 1000)) * 100;
 
   return {
     isActive: Boolean(current),
     startLabel: target ? formatTime(target.startUtc, viewerTimezone) : '--',
     endLabel: target ? formatTime(target.endUtc, viewerTimezone) : '--',
     durationMinutes: target ? diffMinutes(target.endUtc, target.startUtc) : 0,
+    startPct,
+    widthPct,
+    nowPct,
     statusLabel: current
       ? 'نشطة الآن'
       : next
@@ -1946,6 +1979,192 @@ function buildLandingPremiumSections() {
   ];
 }
 
+function toneFromBand(band) {
+  if (band === 'peak') return 'success';
+  if (band === 'active') return 'warning';
+  if (band === 'warm') return 'info';
+  return 'default';
+}
+
+function buildLandingWatchlist(nowUtc, viewerTimezone, bestWindow, gold, nextEvent, currentPoint) {
+  const londonCard = buildForexCard(nowUtc, viewerTimezone, getSessionById('london'));
+  const newYorkCard = buildForexCard(nowUtc, viewerTimezone, getSessionById('newyork'));
+  const tokyoCard = buildForexCard(nowUtc, viewerTimezone, getSessionById('tokyo'));
+  const usCard = buildExchangeCard(nowUtc, viewerTimezone, getMarketById('us'));
+
+  return [
+    {
+      id: 'eurusd',
+      symbol: 'EUR/USD',
+      nameAr: 'اليورو / الدولار',
+      stateLabel: bestWindow.isActive ? 'نافذة قوية الآن' : londonCard.isOpen ? 'لندن تقود الحركة' : 'ترقب التداخل',
+      detail: bestWindow.isActive
+        ? `${bestWindow.startLabel} - ${bestWindow.endLabel}`
+        : `${londonCard.openLabel} - ${londonCard.closeLabel}`,
+      tone: bestWindow.isActive ? 'success' : londonCard.isOpen ? 'warning' : 'default',
+    },
+    {
+      id: 'xauusd',
+      symbol: 'XAU/USD',
+      nameAr: 'الذهب / الدولار',
+      stateLabel: gold.isActive ? 'يتداول الآن' : gold.statusLabel,
+      detail: `أفضل نافذة ${gold.bestWindowLabel}`,
+      tone: gold.tone,
+    },
+    {
+      id: 'usdjpy',
+      symbol: 'USD/JPY',
+      nameAr: 'الدولار / الين',
+      stateLabel: tokyoCard.isOpen ? 'طوكيو تقود الحركة' : newYorkCard.isOpen ? 'الدولار نشط' : 'متابعة أهدأ',
+      detail: tokyoCard.isOpen ? tokyoCard.countdownPrefix : 'أفضل مع طوكيو أو أول نيويورك',
+      tone: tokyoCard.isOpen ? 'info' : newYorkCard.isOpen ? 'warning' : 'default',
+    },
+    {
+      id: 'us500',
+      symbol: 'US500',
+      nameAr: 'العقود الأمريكية',
+      stateLabel: usCard.statusLabel,
+      detail: usCard.isOpen ? usCard.countdownPrefix : `الافتتاح ${usCard.openLabel}`,
+      tone: usCard.statusTone,
+    },
+    {
+      id: 'calendar',
+      symbol: nextEvent ? nextEvent.currency : 'CAL',
+      nameAr: nextEvent ? nextEvent.nameAr : 'المفكرة الاقتصادية',
+      stateLabel: nextEvent ? nextEvent.impactLabel : currentPoint.hint,
+      detail: nextEvent ? `${nextEvent.timeLocal} · ${nextEvent.sessionLabel}` : currentPoint.sessionsLabel,
+      tone: nextEvent ? (nextEvent.impact === 'critical' ? 'danger' : 'warning') : toneFromBand(currentPoint.band),
+    },
+  ];
+}
+
+function buildLandingZoneCards(nowUtc, viewerTimezone, usCard) {
+  const sydneyCard = buildForexCard(nowUtc, viewerTimezone, getSessionById('sydney'));
+  const tokyoCard = buildForexCard(nowUtc, viewerTimezone, getSessionById('tokyo'));
+  const londonCard = buildForexCard(nowUtc, viewerTimezone, getSessionById('london'));
+  const newYorkCard = buildForexCard(nowUtc, viewerTimezone, getSessionById('newyork'));
+
+  return [
+    {
+      id: 'asia',
+      title: 'آسيا',
+      subtitle: 'سيدني + طوكيو',
+      statusLabel: tokyoCard.isOpen || sydneyCard.isOpen ? 'نشطة الآن' : tokyoCard.statusLabel,
+      detail: `${tokyoCard.openLabel} - ${tokyoCard.closeLabel}`,
+      pairsLabel: 'USD/JPY · AUD/USD · AUD/JPY',
+      tone: tokyoCard.isOpen || sydneyCard.isOpen ? 'info' : toneFromBand(tokyoCard.statusTone === 'warning' ? 'active' : 'quiet'),
+    },
+    {
+      id: 'europe',
+      title: 'أوروبا',
+      subtitle: 'لندن',
+      statusLabel: londonCard.statusLabel,
+      detail: `${londonCard.openLabel} - ${londonCard.closeLabel}`,
+      pairsLabel: 'EUR/USD · GBP/USD · XAU/USD',
+      tone: londonCard.statusTone,
+    },
+    {
+      id: 'america',
+      title: 'أمريكا',
+      subtitle: 'نيويورك + وول ستريت',
+      statusLabel: newYorkCard.isOpen || usCard.isOpen ? 'في قلب الحركة' : usCard.statusLabel,
+      detail: `${newYorkCard.openLabel} - ${newYorkCard.closeLabel}`,
+      pairsLabel: 'USD/CAD · XAU/USD · US500',
+      tone: newYorkCard.isOpen || usCard.isOpen ? 'warning' : usCard.statusTone,
+    },
+  ];
+}
+
+export function buildEconomyLandingLiveModel(viewer, nowInput = ECONOMY_FALLBACK_NOW_ISO) {
+  const nowUtc = toUtc(nowInput);
+  const forex = buildForexPageModel(viewer, nowInput);
+  const gold = buildGoldState(nowUtc, viewer.timezone);
+  const goldActivity = buildGoldActivityScore(nowUtc, viewer.timezone);
+  const usCard = buildExchangeCard(nowUtc, viewer.timezone, getMarketById('us'));
+  const usCountdownHero = buildUsCountdownHero(nowUtc, viewer.timezone);
+  const currentPoint = forex.activityChart.points.find((point) => point.isCurrent) || forex.activityChart.points[0];
+  const nextEvent = getNextHighImpactEvent(nowUtc, viewer.timezone, forex.weeklyEvents);
+
+  return {
+    viewer: forex.viewer,
+    nowLabel: forex.nowLabel,
+    todayLabel: forex.todayLabel,
+    stats: buildLandingStatCards(),
+    premiumSections: buildLandingPremiumSections(),
+    cards: TOOL_CARDS,
+    heroCards: [
+      {
+        id: 'us',
+        label: 'وول ستريت',
+        value: usCard.statusLabel,
+        detail: usCountdownHero.detail,
+        tone: usCountdownHero.tone,
+        href: '/economie/us-market-open',
+      },
+      {
+        id: 'gold',
+        label: 'الذهب',
+        value: gold.statusLabel,
+        detail: `أفضل نافذة ${gold.bestWindowLabel}`,
+        tone: gold.tone,
+        href: '/economie/gold-market-hours',
+      },
+      {
+        id: 'forex',
+        label: 'الفوركس',
+        value: forex.hero.label,
+        detail: forex.hero.detail,
+        tone: forex.hero.tone,
+        href: '/economie/forex-sessions',
+      },
+      {
+        id: 'best-now',
+        label: 'أفضل وقت الآن',
+        value: currentPoint.hint,
+        detail: currentPoint.sessionsLabel,
+        tone: toneFromBand(currentPoint.band),
+        href: '/economie/best-trading-time',
+      },
+    ],
+    zoneCards: buildLandingZoneCards(nowUtc, viewer.timezone, usCard),
+    watchlist: buildLandingWatchlist(nowUtc, viewer.timezone, forex.bestWindow, gold, nextEvent, currentPoint),
+    activityChart: forex.activityChart,
+    insightCards: [
+      {
+        title: 'الآن',
+        body: currentPoint.note,
+        href: '/economie/market-clock',
+        cta: 'افتح ساعة السوق',
+      },
+      {
+        title: nextEvent ? nextEvent.nameAr : 'لا حدث قوي قريب',
+        body: nextEvent
+          ? `${nextEvent.descriptionAr} — ${nextEvent.timeLocal} ضمن ${nextEvent.sessionLabel}.`
+          : 'هدوء نسبي في جدول الأحداث القريبة، لذا يبقى توقيت الجلسات هو المحرك الأوضح الآن.',
+        href: '/economie/forex-sessions',
+        cta: 'راقب الجلسات',
+      },
+      {
+        title: `مؤشر الذهب ${goldActivity.score}/100`,
+        body: goldActivity.label,
+        href: '/economie/gold-market-hours',
+        cta: 'تابع الذهب',
+      },
+    ],
+    spotlight: nextEvent ? {
+      eyebrow: 'الحدث الأقرب',
+      title: nextEvent.nameAr,
+      body: `${nextEvent.descriptionAr} — التوقيت المحلي ${nextEvent.timeLocal} والأكثر حساسية له ${nextEvent.affectedPairsLabel}.`,
+      tone: nextEvent.impact === 'critical' ? 'danger' : 'warning',
+    } : {
+      eyebrow: 'لقطة سريعة',
+      title: currentPoint.hint,
+      body: currentPoint.note,
+      tone: toneFromBand(currentPoint.band),
+    },
+  };
+}
+
 function buildForexSignalCards(nowUtc, viewerTimezone, cards, bestWindow, weeklyEvents, hero) {
   const nextEvent = getNextHighImpactEvent(nowUtc, viewerTimezone, weeklyEvents);
   return [
@@ -2116,12 +2335,13 @@ function buildReferenceViewer(viewerPreset) {
   };
 }
 
-export function buildForexPageModel(viewer, nowInput = new Date()) {
+export function buildForexPageModel(viewer, nowInput = ECONOMY_FALLBACK_NOW_ISO) {
   const nowUtc = toUtc(nowInput);
   const cards = FOREX_SESSION_DEFS.map((session) => buildForexCard(nowUtc, viewer.timezone, session));
   const hero = buildForexHero(cards);
   const bestWindow = buildPreferredWindow(nowUtc, viewer.timezone);
   const gold = buildGoldState(nowUtc, viewer.timezone);
+  const goldActivity = buildGoldActivityScore(nowUtc, viewer.timezone);
   const activityChart = buildForexActivityChart(nowUtc, viewer.timezone);
   const tradingWeek = buildTradingWeekWindows(nowUtc, viewer.timezone);
   const weeklyEvents = buildWeeklyEconomicEvents(nowUtc, viewer.timezone);
@@ -2143,6 +2363,7 @@ export function buildForexPageModel(viewer, nowInput = new Date()) {
     activityChart,
     bestWindow,
     gold,
+    goldActivity,
     tradingWeek,
     signalCards: buildForexSignalCards(nowUtc, viewer.timezone, cards, bestWindow, weeklyEvents, hero),
     spotlight: nextHighImpactEvent ? {
@@ -2246,7 +2467,7 @@ export function buildForexPageModel(viewer, nowInput = new Date()) {
   };
 }
 
-export function buildStockMarketsPageModel(viewer, nowInput = new Date()) {
+export function buildStockMarketsPageModel(viewer, nowInput = ECONOMY_FALLBACK_NOW_ISO) {
   const nowUtc = toUtc(nowInput);
   const cards = STOCK_MARKETS.map((market) => buildExchangeCard(nowUtc, viewer.timezone, market));
   const majorBoards = cards.filter((card) => ['us', 'sa', 'uk'].includes(card.id));
@@ -2331,7 +2552,7 @@ export function buildStockMarketsPageModel(viewer, nowInput = new Date()) {
   };
 }
 
-export function buildUsMarketOpenPageModel(viewer, nowInput = new Date()) {
+export function buildUsMarketOpenPageModel(viewer, nowInput = ECONOMY_FALLBACK_NOW_ISO) {
   const nowUtc = toUtc(nowInput);
   const base = buildStockMarketsPageModel(viewer, nowInput);
   const usCard = base.cards.find((card) => card.id === 'us');
@@ -2423,7 +2644,7 @@ export function buildUsMarketOpenPageModel(viewer, nowInput = new Date()) {
   };
 }
 
-export function buildMarketClockPageModel(viewer, nowInput = new Date()) {
+export function buildMarketClockPageModel(viewer, nowInput = ECONOMY_FALLBACK_NOW_ISO) {
   const nowUtc = toUtc(nowInput);
   const base = buildForexPageModel(viewer, nowInput);
   const signalCards = buildClockSignalCards(base.activityChart, buildNowRecommendation(nowUtc, viewer.timezone));
@@ -2461,7 +2682,7 @@ export function buildMarketClockPageModel(viewer, nowInput = new Date()) {
   };
 }
 
-export function buildBestTradingTimePageModel(viewer, nowInput = new Date()) {
+export function buildBestTradingTimePageModel(viewer, nowInput = ECONOMY_FALLBACK_NOW_ISO) {
   const nowUtc = toUtc(nowInput);
   const base = buildForexPageModel(viewer, nowInput);
   const nextHighImpactEvent = getNextHighImpactEvent(nowUtc, viewer.timezone, base.weeklyEvents);
@@ -2583,7 +2804,7 @@ export function buildBestTradingTimePageModel(viewer, nowInput = new Date()) {
   };
 }
 
-export function buildGoldMarketHoursPageModel(viewer, nowInput = new Date()) {
+export function buildGoldMarketHoursPageModel(viewer, nowInput = ECONOMY_FALLBACK_NOW_ISO) {
   const nowUtc = toUtc(nowInput);
   const base = buildForexPageModel(viewer, nowInput);
   const maintenanceWindow = buildGoldMaintenanceWindow(nowUtc, viewer.timezone);

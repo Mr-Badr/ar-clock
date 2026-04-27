@@ -6,11 +6,16 @@ test('normalizes faq format to faq and faqItems', () => {
   const { content } = parseRichContent('slug', {
     faq: [{ question: 'س', answer: 'ج' }],
   });
-  assert.equal(content.faq.length, 1);
-  assert.equal(content.faqItems.length, 1);
-  assert.equal(content.faqItems[0].q, 'س');
-  assert.equal(content.schemaData.faqSchemaItems.length, 1);
-  assert.equal(content.schemaData.faqSchemaItems[0].question, 'س');
+  const normalizedContent = content as {
+    faq: Array<{ question: string }>;
+    faqItems: Array<{ q: string }>;
+    schemaData: { faqSchemaItems: Array<{ question: string }> };
+  };
+  assert.equal(normalizedContent.faq.length, 1);
+  assert.equal(normalizedContent.faqItems.length, 1);
+  assert.equal(normalizedContent.faqItems[0].q, 'س');
+  assert.equal(normalizedContent.schemaData.faqSchemaItems.length, 1);
+  assert.equal(normalizedContent.schemaData.faqSchemaItems[0].question, 'س');
 });
 
 test('normalizes schemaData faqSchemaItems into faq and faqItems', () => {
@@ -19,10 +24,14 @@ test('normalizes schemaData faqSchemaItems into faq and faqItems', () => {
       faqSchemaItems: [{ question: 'س', answer: 'ج' }],
     },
   });
-  assert.equal(content.faq.length, 1);
-  assert.equal(content.faq[0].question, 'س');
-  assert.equal(content.faqItems.length, 1);
-  assert.equal(content.faqItems[0].a, 'ج');
+  const normalizedContent = content as {
+    faq: Array<{ question: string }>;
+    faqItems: Array<{ a: string }>;
+  };
+  assert.equal(normalizedContent.faq.length, 1);
+  assert.equal(normalizedContent.faq[0].question, 'س');
+  assert.equal(normalizedContent.faqItems.length, 1);
+  assert.equal(normalizedContent.faqItems[0].a, 'ج');
 });
 
 test('detects hardcoded years for strict cleanup', () => {

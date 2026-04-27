@@ -20,6 +20,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
+import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
+import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getGuidesBySlugs } from '@/lib/guides/data';
 import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
@@ -29,74 +31,14 @@ import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'end-of-service-benefits');
+const CONTENT = getFinancePageContent('end-of-service-benefits');
+const SEARCH_COVERAGE = buildFinancePageSearchCoverage(PAGE, CONTENT);
 const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.endOfService);
-
-const faqItems = [
-  {
-    question: 'هل البدلات محسوبة في مكافأة نهاية الخدمة؟',
-    answer: 'هذه الصفحة تبني الحساب على الراتب الأساسي لأنه الأسهل والأكثر شيوعاً في التقدير الأولي. في الواقع العملي قد تختلف بعض العناصر بحسب نص العقد أو سياسة المنشأة أو الحكم القضائي.',
-  },
-  {
-    question: 'هل أستحق شيئاً إذا استقلت قبل سنتين؟',
-    answer: 'في القاعدة العامة للاستقالة تكون النتيجة صفراً قبل بلوغ سنتين كاملتين، بينما يبقى الاستحقاق كاملاً في حالات الإنهاء غير المرتبطة باستقالة العامل ضمن النموذج المبسط هنا.',
-  },
-  {
-    question: 'كيف تحسب الأشهر والأيام الإضافية؟',
-    answer: 'الحاسبة تحول مدة الخدمة إلى كسور سنة حتى لا تضيع الأشهر الأخيرة، ثم توزعها على شريحة السنوات الخمس الأولى وما بعدها بشكل نسبي.',
-  },
-  {
-    question: 'هل هذه النتيجة نهائية؟',
-    answer: 'هي نتيجة إرشادية مبنية على القاعدة العامة. راجع دائماً عقدك، وتسوية الموارد البشرية، وأي حالات خاصة مثل الإجازات غير المدفوعة أو القرارات التأديبية أو التسويات السابقة.',
-  },
-  {
-    question: 'متى يجب صرف مكافأة نهاية الخدمة؟',
-    answer: 'القاعدة الإجرائية العامة أن تتم التصفية خلال مدة قصيرة بعد انتهاء العلاقة التعاقدية. إذا وجدت تأخيراً أو نزاعاً فالمصدر الرسمي والجهة القانونية المختصة هما المرجع النهائي.',
-  },
-  {
-    question: 'ما الفرق بين المادة 84 و85؟',
-    answer: 'المادة 84 تضع أصل معادلة المكافأة، بينما المادة 85 تتناول أثر الاستقالة على نسبة الاستحقاق. لهذا تُظهر الحاسبة الاستحقاق الكامل أولاً ثم تطبق نسبة الاستقالة إن لزم.',
-  },
-];
-
-const sectionNavItems = [
-  { href: '#calculator-hero', label: 'الحاسبة', description: 'أدخل الراتب والمدة وسبب الإنهاء' },
-  { href: '#esb-overview', label: 'خريطة الصفحة', description: 'أهم ما ستجده داخل الصفحة' },
-  { href: '#esb-intents', label: 'نية البحث', description: 'عبارات وأسئلة مرتبطة بالحاسبة' },
-  { href: '#esb-guide', label: 'دليل سريع', description: 'شروط الاستحقاق والحالات الخاصة' },
-  { href: '#esb-answers', label: 'إجابات مباشرة', description: 'أسئلة طويلة الذيل بلغة واضحة' },
-  { href: '#esb-article', label: 'شرح عميق', description: 'كيف تقرأ النتيجة ومتى تنتبه' },
-  { href: '#esb-comparison', label: 'جدول المقارنة', description: 'الفرق بين الاستقالة والإنهاء' },
-  { href: '#esb-rights', label: 'حقوقك عملياً', description: 'خطوات قبل قبول التسوية' },
-  { href: '#esb-faq', label: 'FAQ', description: 'أكثر الأسئلة تكراراً' },
-];
-
-const quickAnswers = [
-  {
-    question: 'كم مكافأة نهاية الخدمة بعد 5 سنوات؟',
-    description: 'السؤال الأكثر شيوعاً في البحث.',
-    answer: 'بعد خمس سنوات تظهر أهمية الفصل بين الشريحة الأولى وما بعدها. إذا انتهت العلاقة دون استقالة فالحساب في هذه الصفحة يبني الاستحقاق الكامل، أما في الاستقالة فيتغير فقط معامل الاستحقاق لا أصل المعادلة.',
-  },
-  {
-    question: 'هل أستحق مكافأة نهاية الخدمة بعد سنتين؟',
-    description: 'يرتبط الجواب بسبب الإنهاء.',
-    answer: 'في نموذج الصفحة، العامل المستقيل قبل إكمال سنتين لا يحصل على مكافأة، بينما في غير الاستقالة يظهر أصل الاستحقاق وفق المدة الفعلية. لهذا من المهم اختيار سبب الإنهاء الصحيح داخل الحاسبة.',
-  },
-  {
-    question: 'ما الفرق بين الاستقالة والفصل في مكافأة نهاية الخدمة؟',
-    description: 'هذه النقطة تغيّر النسبة أكثر من أي حقل آخر.',
-    answer: 'الفصل أو انتهاء العقد في القاعدة العامة يقودان إلى استحقاق كامل، بينما الاستقالة تمر على شرائح 0% ثم 33.33% ثم 66.67% ثم 100%. لهذا تعرض الصفحة الاستحقاق الكامل ثم النسبة المطبقة.',
-  },
-  {
-    question: 'كيف أحسب مكافأة نهاية الخدمة للمقيمين في السعودية؟',
-    description: 'السؤال نفسه يتكرر للمقيمين والمواطنين.',
-    answer: 'في القاعدة العامة المستخدمة هنا لا تختلف المعادلة بسبب الجنسية، بل تتأثر بعناصر مثل الراتب الأساسي ومدة الخدمة وسبب الإنهاء ونصوص العقد. لذلك تعمل الحاسبة بنفس المنطق للمقيمين والمواطنين على حد سواء.',
-  },
-];
 
 export const metadata = buildCanonicalMetadata({
   title: PAGE.heroTitle,
   description: PAGE.description,
-  keywords: PAGE.keywords,
+  keywords: SEARCH_COVERAGE.metadataKeywords,
   url: `${SITE_URL}${PAGE.href}`,
 });
 
@@ -125,12 +67,13 @@ export default async function EndOfServiceBenefitsPage() {
     path: PAGE.href,
     name: PAGE.title,
     description: PAGE.description,
-    about: PAGE.keywords.slice(0, 8),
+    about: SEARCH_COVERAGE.schemaAbout,
+    keywords: SEARCH_COVERAGE.metadataKeywords,
   });
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqItems.map((item) => ({
+    mainEntity: CONTENT.faqItems.map((item) => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: { '@type': 'Answer', text: item.answer },
@@ -139,30 +82,13 @@ export default async function EndOfServiceBenefitsPage() {
   const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: 'كيفية حساب مكافأة نهاية الخدمة',
-    description: 'خطوات سريعة لحساب مكافأة نهاية الخدمة في السعودية باستخدام الراتب الأساسي ومدة الخدمة وسبب إنهاء العلاقة العمالية.',
-    step: [
-      {
-        '@type': 'HowToStep',
-        name: 'أدخل الراتب الأساسي الشهري',
-        text: 'ابدأ بالراتب الأساسي فقط حتى تحسب أصل المكافأة على أساس موحد وواضح.',
-      },
-      {
-        '@type': 'HowToStep',
-        name: 'حدد تاريخ البداية والنهاية',
-        text: 'مدة الخدمة هي أساس الحساب، لذلك تظهر الأشهر والأيام الإضافية داخل التفصيل.',
-      },
-      {
-        '@type': 'HowToStep',
-        name: 'اختر سبب إنهاء العلاقة',
-        text: 'هذا هو العنصر الذي يغيّر نسبة الاستحقاق، خصوصاً في حالات الاستقالة.',
-      },
-      {
-        '@type': 'HowToStep',
-        name: 'راجع الملخص والتفصيل',
-        text: 'شاهد الاستحقاق الكامل ونسبة الاستحقاق ثم استخدم أداة المقارنة لمعرفة أثر الانتظار بضعة أشهر.',
-      },
-    ],
+    name: CONTENT.howTo.name,
+    description: CONTENT.howTo.description,
+    step: CONTENT.howTo.steps.map((item) => ({
+      '@type': 'HowToStep',
+      name: item.name,
+      text: item.text,
+    })),
   };
 
   return (
@@ -173,15 +99,11 @@ export default async function EndOfServiceBenefitsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
       <CalculatorHero
-        badge="نظام العمل السعودي"
+        badge={CONTENT.hero.badge}
         title={PAGE.heroTitle}
-        description="إذا كنت تبحث: كم مكافأة نهاية الخدمة بعد 5 سنوات؟ فهذه الصفحة تحسبها لك بسرعة وفق القاعدة العامة في نظام العمل السعودي، وتوضح فرق الاستحقاق بين نهاية العقد والاستقالة وأثر الانتظار حتى شريحة أفضل."
+        description={CONTENT.hero.description}
         accent={PAGE.accent}
-        highlights={[
-          'تحسب الاستقالة تلقائياً حسب مدة الخدمة الحالية.',
-          'تفصل السنوات الخمس الأولى وما بعدها.',
-          'تضيف أداة مقارنة: هل الانتظار عدة أشهر يستحق؟',
-        ]}
+        highlights={CONTENT.hero.highlights}
       >
         <EndOfServiceCalculator
           initialStartDate={initialStartDate}
@@ -195,7 +117,7 @@ export default async function EndOfServiceBenefitsPage() {
         title="صفحة مبنية لتغطي القرار والحساب معاً"
         description="إذا كنت تبحث عن رقم سريع أو تحاول فهم هل الاستقالة الآن أفضل أم بعد عدة أشهر، فهذه الخريطة تختصر عليك الوصول إلى الجزء المناسب فوراً."
       >
-        <CalculatorSectionNav items={sectionNavItems} />
+        <CalculatorSectionNav items={CONTENT.sectionNavItems} />
       </CalculatorSection>
 
       <CalculatorSection
@@ -206,7 +128,7 @@ export default async function EndOfServiceBenefitsPage() {
         subtle
       >
         <div className="calc-grid-2">
-          <CalculatorIntentCloud items={PAGE.keywords.slice(0, 10)} />
+          <CalculatorIntentCloud items={SEARCH_COVERAGE.intentChips} />
           <CalculatorStoryBand
             title="لماذا هذه الصفحة مختلفة عن الحاسبات البسيطة؟"
             description="معظم الصفحات المنافسة تعطيك رقماً فقط. هنا نعرض الرقم، والنسبة، والتفصيل، وتأثير التوقيت، وما الذي يجب مراجعته قبل قبول التسوية."
@@ -325,7 +247,7 @@ export default async function EndOfServiceBenefitsPage() {
         title="إذا كتبت في Google: كم مكافأة نهاية الخدمة بعد 5 سنوات؟"
         description="هذا القسم مخصص لأسئلة من نوع: كم مكافأة نهاية الخدمة بعد X سنوات؟ وهل أستحق بعد سنتين؟ وما الفرق بين الاستقالة والفصل؟"
       >
-        <CalculatorQuickAnswerGrid items={quickAnswers} />
+        <CalculatorQuickAnswerGrid items={CONTENT.quickAnswers} />
       </CalculatorSection>
 
       <CalculatorSection
@@ -488,7 +410,7 @@ export default async function EndOfServiceBenefitsPage() {
         eyebrow="الأسئلة الشائعة"
         title="أسئلة تتكرر قبل الاستقالة أو عند مراجعة التسوية"
       >
-        <CalculatorFaqSection items={faqItems} />
+        <CalculatorFaqSection items={CONTENT.faqItems} />
       </CalculatorSection>
 
       <CalculatorSection

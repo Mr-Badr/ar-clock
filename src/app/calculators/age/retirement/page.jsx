@@ -1,6 +1,7 @@
 import RetirementAgeCalculator from '@/components/calculators/age/RetirementAgeCalculator.client';
-import { CalculatorHero, CalculatorSection } from '@/components/calculators/common';
+import { CalculatorHero } from '@/components/calculators/common';
 import { buildAgeMetadata, buildBreadcrumbSchema, buildSoftwareSchema } from '../page-helpers';
+import { AgeToolSections } from '../tool-sections';
 import { Suspense } from 'react';
 import SectionSkeleton from '@/components/shared/SectionSkeleton'
 
@@ -54,12 +55,7 @@ export default function RetirementPage() {
         </Suspense>
       </CalculatorHero>
 
-      <CalculatorSection
-        id="retirement-content"
-        eyebrow="تنبيه"
-        title="هذه الصفحة للتقدير الأولي فقط"
-        description="تختلف الأنظمة الفعلية حسب البلد والصندوق والقطاع وسنوات الخدمة والاستثناءات النظامية، لذلك يجب الرجوع للجهة الرسمية قبل أي قرار مالي أو وظيفي."
-      />
+      <AgeToolSections toolId="retirement" />
     </main>
   );
 }

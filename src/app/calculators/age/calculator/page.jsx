@@ -181,7 +181,7 @@ export default function AgeCalculatorPage() {
         title="أكمل من حيث تحتاج"
         description="إذا أردت زاوية أخرى على نفس التاريخ، فهذه الصفحات تكمل بعضها بدلاً من تكرار نفس النتيجة."
       >
-        <RelatedCalculators currentSlug="age" />
+        <RelatedCalculators currentSlug="age-calculator" />
       </CalculatorSection>
     </main>
   );

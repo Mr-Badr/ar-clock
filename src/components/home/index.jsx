@@ -22,10 +22,9 @@
  * ─────────
  * components/home/
  * ├── data/
- * │   ├── cities.js           — 18 city objects (name, flag, UTC offset, slug)
- * │   ├── faqItems.js         — 8 FAQ question/answer pairs
- * │   ├── stats.js            — 5 trust-bar stat objects
- * │   └── whyFeatures.js      — 6 feature card objects
+ * │   ├── faqItems.js         — FAQ question/answer pairs
+ * │   ├── stats.js            — trust-bar stat objects
+ * │   └── whyFeatures.js      — benefit card objects
  * ├── mockups/
  * │   ├── PrayerTimesMockup.jsx   — decorative prayer times UI card
  * │   ├── TimeDifferenceMockup.jsx — decorative time-diff UI card

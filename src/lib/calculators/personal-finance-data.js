@@ -762,7 +762,7 @@ const GUIDE_ENHANCEMENTS = {
     },
   },
   'how-many-months-emergency-fund': {
-    badge: 'Long-tail: الطوارئ',
+    badge: 'سؤال دقيق: الطوارئ',
     accent: '#0EA5E9',
     keywords: [
       'كم شهرًا يجب أن يغطي صندوق الطوارئ',
@@ -777,7 +777,7 @@ const GUIDE_ENHANCEMENTS = {
       'كم يكفي صندوق الطوارئ',
     ],
     highlights: [
-      'صفحة long-tail تلتقط سؤالاً عربياً واضحاً ومتكرراً.',
+      'صفحة تلتقط سؤالاً عربياً دقيقاً وواضحاً ومتكرراً.',
       'تساعد الزائر الذي لا يريد تعريفاً عاماً بل قراراً محدداً.',
       'تقوده في النهاية إلى حاسبة الطوارئ لتطبيق القرار على أرقامه.',
     ],
@@ -829,7 +829,7 @@ const GUIDE_ENHANCEMENTS = {
     },
   },
   'how-to-pay-off-debt-fast': {
-    badge: 'Long-tail: سداد الديون',
+    badge: 'سؤال دقيق: سداد الديون',
     accent: '#EF4444',
     keywords: [
       'كيف أسدد ديوني بسرعة',
@@ -886,7 +886,7 @@ const GUIDE_ENHANCEMENTS = {
     ],
     checklist: {
       title: 'غالباً تحتاج هذا الدليل إذا',
-      description: 'هذا long-tail قوي لأنه يلتقط لحظة الاستعداد للتغيير الفعلي.',
+      description: 'هذا المسار قوي لأنه يلتقط لحظة الاستعداد للتغيير الفعلي.',
       items: [
         'تشعر أن الديون لا تنتهي رغم أنك تدفع كل شهر.',
         'تريد تقليل المدة لا مجرد دفع الحد الأدنى.',
@@ -895,7 +895,7 @@ const GUIDE_ENHANCEMENTS = {
     },
   },
   'save-for-goal': {
-    badge: 'Long-tail: هدف مالي',
+    badge: 'سؤال دقيق: هدف مالي',
     accent: '#10B981',
     keywords: [
       'كيف أوفر لهدف مالي',
@@ -953,7 +953,7 @@ const GUIDE_ENHANCEMENTS = {
     ],
     checklist: {
       title: 'هذه الصفحة تناسبك إذا',
-      description: 'النية هنا عملية جداً ومليئة بفرص long-tail عربية.',
+      description: 'النية هنا عملية جداً ومليئة بفرص بحث عربية دقيقة.',
       items: [
         'لديك هدف محدد لكنك لا تعرف الخطة الشهرية المناسبة.',
         'تحاول الادخار بلا موعد أو دون تقسيم واضح للهدف.',
@@ -962,7 +962,7 @@ const GUIDE_ENHANCEMENTS = {
     },
   },
   'assets-vs-liabilities': {
-    badge: 'Long-tail: الأصول والالتزامات',
+    badge: 'سؤال دقيق: الأصول والالتزامات',
     accent: '#8B5CF6',
     keywords: [
       'ما الفرق بين الأصول والالتزامات',

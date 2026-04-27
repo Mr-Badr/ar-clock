@@ -1,6 +1,7 @@
 import AgeDifferenceCalculator from '@/components/calculators/age/AgeDifferenceCalculator.client';
-import { CalculatorHero, CalculatorSection } from '@/components/calculators/common';
+import { CalculatorHero } from '@/components/calculators/common';
 import { buildAgeMetadata, buildBreadcrumbSchema, buildSoftwareSchema } from '../page-helpers';
+import { AgeToolSections } from '../tool-sections';
 import { Suspense } from 'react';
 import SectionSkeleton from '@/components/shared/SectionSkeleton'
 
@@ -54,12 +55,7 @@ export default function AgeDifferencePage() {
         </Suspense>
       </CalculatorHero>
 
-      <CalculatorSection
-        id="age-difference-content"
-        eyebrow="استخدامات شائعة"
-        title="متى تحتاج هذه الحاسبة؟"
-        description="تفيد للمقارنات العائلية، والأسئلة اليومية من نوع من الأكبر؟ وبكم؟، وكذلك للمحتوى الاجتماعي الذي يحتاج نتيجة مختصرة وواضحة بالأيام والسنوات."
-      />
+      <AgeToolSections toolId="difference" />
     </main>
   );
 }

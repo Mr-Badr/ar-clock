@@ -1,137 +1,85 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { BarChart3, BellRing, Clock3, Coins, Globe2, TrendingUp } from 'lucide-react';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
+import { JsonLd } from '@/components/seo/JsonLd';
 import {
   EconomyFaq,
   EconomyGuide,
   EconomyHero,
+  EconomyIntentCards,
   EconomyReadingShelf,
   EconomySectionHeader,
   InsightCards,
 } from '@/components/economy/common';
+import EconomyLivePulse from '@/components/economy/EconomyLivePulse';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
+  buildEconomyPageSearchCoverage,
   buildEconomyBreadcrumbSchema,
   buildEconomyFaqSchema,
   buildEconomyToolSchema,
 } from '@/lib/economy/page-helpers';
+import { getCachedEconomyPageSnapshot } from '@/lib/economy/page-snapshots.server';
+import { ECONOMY_MARKET_HOURS_TOOLS, getEconomySeoEntry } from '@/lib/economy/seo-content';
 import { getGuideCardsBySlugs } from '@/lib/guides/data';
 import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 const RELATED_GUIDES = getGuideCardsBySlugs(TOOL_GUIDE_GROUPS.marketHours);
-
-const MARKET_HOURS_TOOLS = [
-  {
-    href: '/economie/us-market-open',
-    title: 'متى يفتح السوق الأمريكي اليوم؟',
-    description: 'اعرف وقت الافتتاح من مدينتك، والعد التنازلي، وأول ساعة تداول فعلية.',
-    icon: TrendingUp,
-  },
-  {
-    href: '/economie/gold-market-hours',
-    title: 'هل الذهب مفتوح الآن؟',
-    description: 'تحقق من حالة الذهب الحالية وأقوى نوافذ النشاط خلال اليوم.',
-    icon: Coins,
-  },
-  {
-    href: '/economie/forex-sessions',
-    title: 'متى تبدأ جلسة لندن ونيويورك اليوم؟',
-    description: 'تابع جلسات الفوركس الأربع واعرف التداخل الأعلى والسيولة الأقوى.',
-    icon: Globe2,
-  },
-  {
-    href: '/economie/stock-markets',
-    title: 'هل البورصات العالمية مفتوحة الآن؟',
-    description: 'شاهد البورصات المفتوحة والمغلقة الآن في صفحة عربية واحدة.',
-    icon: BarChart3,
-  },
-  {
-    href: '/economie/market-clock',
-    title: 'أين السيولة الأعلى الآن؟',
-    description: 'فهم بصري للحظة الحالية: أي الأسواق أنشط الآن وأيها يهدأ.',
-    icon: Clock3,
-  },
-  {
-    href: '/economie/best-trading-time',
-    title: 'ما أفضل وقت للتداول اليوم؟',
-    description: 'اعرف نوافذ التداول الأفضل بحسب التداخل والسيولة ومدينة المستخدم.',
-    icon: BellRing,
-  },
-];
-
-const FAQ_ITEMS = [
-  {
-    question: 'ما الفرق بين صفحة ساعات الأسواق وهذه الأدوات الفردية؟',
-    answer: 'هذه الصفحة تجمع نية البحث الواسعة حول ساعات الأسواق والتداول، ثم توجهك إلى الصفحة الأدق حسب سؤالك: السوق الأمريكي، الذهب، الفوركس، البورصات، أو أفضل وقت للتداول.',
-  },
-  {
-    question: 'هل هذه الصفحة مفيدة إذا كنت أبحث فقط عن وقت الذهب أو السوق الأمريكي؟',
-    answer: 'نعم، لأنها تختصر عليك اختيار الأداة الصحيحة بسرعة، وتوضح الفرق بين الأسئلة المتقاربة بدل أن تضيع بين صفحات متفرقة.',
-  },
-  {
-    question: 'هل هذه الأدوات تعطي الوقت المحلي لمدينتي؟',
-    answer: 'الصفحات الفردية داخل القسم مبنية لتعرض الوقت المحلي للمستخدم أو للمدن العربية المستهدفة، وهذا جزء أساسي من قيمة القسم.',
-  },
-  {
-    question: 'من يستفيد أكثر من هذا القسم؟',
-    answer: 'المتداول اليومي، ومتابع الذهب، ومن يبحث عن ساعات السوق الأمريكي أو تداخل جلسات الفوركس، وكل من يريد جواباً سريعاً عن حالة السوق الآن.',
-  },
-];
+const PAGE_SEO = getEconomySeoEntry('market-hours');
+const SEARCH_COVERAGE = buildEconomyPageSearchCoverage('market-hours', PAGE_SEO.faqItems);
+const MARKET_HOURS_TOOLS = ECONOMY_MARKET_HOURS_TOOLS.map((item) => ({
+  ...item,
+  icon:
+    item.href === '/economie/us-market-open'
+      ? TrendingUp
+      : item.href === '/economie/gold-market-hours'
+        ? Coins
+        : item.href === '/economie/forex-sessions'
+          ? Globe2
+          : item.href === '/economie/stock-markets'
+            ? BarChart3
+            : item.href === '/economie/market-clock'
+              ? Clock3
+              : BellRing,
+}));
 
 export const metadata = buildCanonicalMetadata({
-  title: 'ساعات الأسواق والتداول | السوق الأمريكي والذهب والفوركس والبورصات',
-  description:
-    'ابدأ من صفحة واحدة تجمع أهم أسئلة ساعات الأسواق: متى يفتح السوق الأمريكي؟ هل الذهب مفتوح الآن؟ متى تبدأ جلسات الفوركس؟ وهل البورصات العالمية مفتوحة اليوم؟',
-  keywords: [
-    'ساعات الأسواق',
-    'ساعات التداول',
-    'متى يفتح السوق الأمريكي',
-    'هل الذهب مفتوح الآن',
-    'جلسات الفوركس الآن',
-    'هل البورصات العالمية مفتوحة الآن',
-    'ساعة السوق الآن',
-    'أفضل وقت للتداول اليوم',
-    'أوقات الأسواق العالمية',
-    'أوقات تداول الذهب والفوركس',
-  ],
-  url: `${SITE_URL}/economie/market-hours`,
+  title: PAGE_SEO.metadata.title,
+  description: PAGE_SEO.metadata.description,
+  keywords: SEARCH_COVERAGE.metadataKeywords,
+  url: `${SITE_URL}${PAGE_SEO.path}`,
 });
 
-export default function EconomyMarketHoursHubPage() {
+export default async function EconomyMarketHoursHubPage() {
+  const { liveSnapshot } = await getCachedEconomyPageSnapshot('market-hours');
   const pageSchema = buildEconomyToolSchema({
     siteUrl: SITE_URL,
-    path: '/economie/market-hours',
-    name: 'ساعات الأسواق والتداول',
-    description: 'بوابة عربية تجمع أهم أدوات وقت السوق الأمريكي والذهب والفوركس والبورصات العالمية في مكان واحد.',
-    about: [
-      'ساعات الأسواق',
-      'ساعات التداول',
-      'السوق الأمريكي',
-      'الذهب',
-      'الفوركس',
-      'البورصات العالمية',
-    ],
+    path: PAGE_SEO.path,
+    ...PAGE_SEO.tool,
+    about: SEARCH_COVERAGE.schemaAbout,
+    keywords: SEARCH_COVERAGE.metadataKeywords,
   });
   const breadcrumbSchema = buildEconomyBreadcrumbSchema(
     SITE_URL,
-    'ساعات الأسواق والتداول',
-    '/economie/market-hours',
+    PAGE_SEO.breadcrumbName,
+    PAGE_SEO.path,
   );
   const faqSchema = buildEconomyFaqSchema({
     siteUrl: SITE_URL,
-    path: '/economie/market-hours',
-    items: FAQ_ITEMS,
+    path: PAGE_SEO.path,
+    items: PAGE_SEO.faqItems,
   });
   const collectionSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'ساعات الأسواق والتداول',
-    url: `${SITE_URL}/economie/market-hours`,
+    name: PAGE_SEO.breadcrumbName,
+    url: `${SITE_URL}${PAGE_SEO.path}`,
     inLanguage: 'ar',
-    description: 'صفحة تجمع أدوات السوق الأمريكي والذهب والفوركس والبورصات العالمية في مسار واحد مبني على نيات البحث العربية اليومية.',
+    description: PAGE_SEO.collection.description,
   };
   const itemListSchema = {
     '@context': 'https://schema.org',
@@ -146,13 +94,18 @@ export default function EconomyMarketHoursHubPage() {
 
   return (
     <div className="bg-base" dir="rtl">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <JsonLd data={[pageSchema, collectionSchema, itemListSchema, breadcrumbSchema, faqSchema]} />
 
       <EconomyAdLayout>
+        <Suspense fallback={null}>
+          <EconomyLivePulse
+            scope="market-hours"
+            initialSnapshot={liveSnapshot}
+            title="نبض السوق قبل اختيار الأداة"
+            lead="هذا الشريط يقدّم نظرة مرجعية حيّة على الذهب، وول ستريت، والأزواج الرئيسية حتى يختار الزائر الصفحة الأنسب بسرعة من دون قراءة طويلة."
+          />
+        </Suspense>
+
         <div className="economy-stack">
           <EconomyHero
             eyebrow="ساعات الأسواق والتداول"
@@ -165,6 +118,14 @@ export default function EconomyMarketHoursHubPage() {
             ]}
             note="الفكرة هنا تشبه مسارات الحاسبات العليا: نعطي Google والمستخدم صفحة جامعة مفهومة، ثم نمررهما إلى الصفحة الأعمق حسب السؤال الحقيقي."
           />
+
+          <section className="economy-section">
+            <EconomySectionHeader
+              title="صيغ البحث التي يغطيها هذا المسار"
+              lead="هذه الصيغ تعطي الصفحة الجامعة وضوحاً أكبر في الفهرسة، وتختصر للزائر أهم الأسئلة التي سيجد إجاباتها داخل هذا المسار الاقتصادي."
+            />
+            <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
+          </section>
 
           <section className="economy-section">
             <EconomySectionHeader
@@ -240,7 +201,7 @@ export default function EconomyMarketHoursHubPage() {
               title="الأسئلة الشائعة"
               lead="FAQ قصير يساعد الصفحة الجامعة على أن تكون مفهومة للمستخدم ومحركات البحث معاً."
             />
-            <EconomyFaq items={FAQ_ITEMS} />
+            <EconomyFaq items={PAGE_SEO.faqItems} />
           </section>
 
           <EconomyReadingShelf

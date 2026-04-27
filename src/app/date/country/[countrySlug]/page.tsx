@@ -9,12 +9,15 @@ import { getCapitalCity } from '@/lib/db/queries/cities';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { convertDate, GREGORIAN_MONTH_NAMES_AR, type ConversionMethod } from '@/lib/date-adapter';
 import { getFlagEmoji, getSafeTimezone } from '@/lib/country-utils';
-import { JsonLd } from '@/components/date/JsonLd';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { DateShareActions } from '@/components/date/DateShareActions';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { Calendar, Clock, ArrowLeftRight } from "lucide-react"
-import { isSeoPriorityCountrySlug } from '@/lib/seo/country-indexing';
+import {
+  GEO_ROUTE_INDEXING_POLICIES,
+  isSeoIndexableCountrySlug,
+} from '@/lib/seo/country-indexing';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildDateKeywords } from '@/lib/seo/section-search-intent';
 
@@ -98,7 +101,10 @@ export async function generateMetadata({
   if (!country) return { title: 'التاريخ الهجري' };
 
   const countryAr = country.name_ar;
-  const isIndexableCountry = isSeoPriorityCountrySlug(countrySlug);
+  const policy = GEO_ROUTE_INDEXING_POLICIES.dateCountry;
+  const isIndexableCountry = isSeoIndexableCountrySlug(countrySlug, {
+    scope: policy.countryScope,
+  });
   return {
     title: `التاريخ الهجري والميلادي اليوم في ${countryAr}`,
     description: `اعرف التاريخ الهجري والميلادي اليوم في ${countryAr} مع طريقة الحساب المعتمدة لهذه الصفحة وروابط الوقت الآن والتحويل والتقويم.`,
