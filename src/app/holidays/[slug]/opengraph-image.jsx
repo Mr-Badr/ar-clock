@@ -18,6 +18,8 @@ import { getHolidayOgData } from '@/lib/holidays/og-data';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 
 export const contentType = 'image/png';
+export const runtime = 'nodejs';
+export const revalidate = 86400;
 
 // Default size — overridden per-request below
 export const size = { width: 1200, height: 630 };
@@ -48,7 +50,7 @@ function daysColor(days, accent) {
 }
 
 export default async function Image({ params, searchParams }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   /* ── Square variant for Google Discover / Instagram ── */
   const isSquare = searchParams?.sq === '1';

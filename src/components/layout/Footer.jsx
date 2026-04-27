@@ -7,6 +7,7 @@ import { SITE_BRAND, SITE_CONTACT_EMAIL } from "@/lib/site-config";
 
 const PRODUCT_LINKS = [
   { href: '/fahras', label: 'الفهرس الشامل' },
+  { href: '/guides', label: 'الأدلة العملية' },
   { href: '/mwaqit-al-salat', label: 'مواقيت الصلاة' },
   { href: '/time-now', label: 'الوقت الآن' },
   { href: '/time-difference', label: 'فرق التوقيت' },
@@ -76,6 +77,9 @@ const Footer = () => {
               <Link href="/fahras" className="footer-brand-index">
                 افتح الفهرس الشامل
               </Link>
+              <Link href="/guides" className="footer-brand-index">
+                تصفح الأدلة العملية
+              </Link>
             </div>
 
             <div className="footer-brand-badge-wrap">
@@ -141,7 +145,8 @@ const Footer = () => {
               <h3 className="footer-col-heading">لا تبحث في كل مكان</h3>
               <p className="footer-directory-note">
                 افتح صفحة <strong>الفهرس</strong> لترى كل الحاسبات وأدوات الاقتصاد والأدلة
-                والصفحات المهمة في خريطة واحدة نظيفة وسريعة التصفح.
+                والصفحات المهمة في خريطة واحدة نظيفة وسريعة التصفح، ثم انتقل إلى
+                <strong> قسم الأدلة</strong> إذا كنت تريد الشرح قبل استخدام الأداة.
               </p>
               <ul className="footer-directory-list">
                 <li>مسارات عليا أوضح من التشتت بين بطاقات كثيرة</li>
@@ -381,6 +386,8 @@ const Footer = () => {
         .footer-brand-actions {
           margin-top: var(--space-5);
           display: flex;
+          gap: 0.75rem;
+          flex-wrap: wrap;
           justify-content: flex-start;
         }
 

@@ -13,6 +13,7 @@ import "./header.css";
 export const NAV_LINKS = [
   { href: "/", label: "الرئيسية" },
   { href: "/fahras", label: "الفهرس" },
+  { href: "/guides", label: "الأدلة" },
   { href: "/mwaqit-al-salat", label: "مواقيت الصلاة" },
   {
     href: "/date",

@@ -1,5 +1,10 @@
 export const TOP_DISCOVERY_LINKS = [
   {
+    href: '/guides',
+    label: 'قسم الأدلة العملية',
+    description: 'بوابة تجمع المقالات الشارحة مع روابط مباشرة إلى الحاسبات وأدوات الاقتصاد والمسارات اليومية.',
+  },
+  {
     href: '/calculators/sleep',
     label: 'حاسبات النوم الذكي',
     description: 'بوابة تجمع متى تنام ومتى تستيقظ والقيلولة ودين النوم في نظام واحد.',
@@ -78,6 +83,7 @@ export const TOP_DISCOVERY_LINKS = [
 
 export const ROOT_PRIORITY_TOOL_PATHS = [
   '/fahras',
+  '/guides',
   '/calculators/sleep',
   '/calculators/sleep/bedtime',
   '/calculators/sleep/wake-time',

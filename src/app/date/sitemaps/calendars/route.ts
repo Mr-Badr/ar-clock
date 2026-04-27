@@ -2,36 +2,24 @@
  * /date/sitemaps/calendars/route.ts
  * Yearly calendars (Gregorian and Hijri).
  */
-import { convertDate } from '@/lib/date-adapter';
+import {
+  getGregorianCalendarSeoBounds,
+  getHijriCalendarSeoBounds,
+} from '@/lib/seo/date-indexing';
 import { getSiteUrl } from '@/lib/site-config';
 import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
 const BASE = getSiteUrl();
 
-function getCurrentHijriYear() {
-  const now = new Date();
-  const isoDate = [
-    String(now.getUTCFullYear()),
-    String(now.getUTCMonth() + 1).padStart(2, '0'),
-    String(now.getUTCDate()).padStart(2, '0'),
-  ].join('-');
-
-  try {
-    return convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' }).year;
-  } catch {
-    return 1447;
-  }
-}
-
 export async function GET() {
-  const currentYear = new Date().getUTCFullYear();
-  const currentHijriYear = getCurrentHijriYear();
+  const { minYear: gregorianMinYear, maxYear: gregorianMaxYear } = getGregorianCalendarSeoBounds();
+  const { minYear: hijriMinYear, maxYear: hijriMaxYear } = getHijriCalendarSeoBounds();
 
   const entries: string[] = [];
   const lastmod = getSitemapLastModifiedDate();
 
-  // Gregorian calendars (±10 years)
-  for (let y = currentYear - 10; y <= currentYear + 10; y++) {
+  // Gregorian calendars (rolling SEO window around the current year)
+  for (let y = gregorianMinYear; y <= gregorianMaxYear; y++) {
     entries.push(`
   <url>
     <loc>${BASE}/date/calendar/${y}</loc>
@@ -41,8 +29,8 @@ export async function GET() {
   </url>`);
   }
 
-  // Hijri calendars (±10 years)
-  for (let y = currentHijriYear - 10; y <= currentHijriYear + 10; y++) {
+  // Hijri calendars (rolling SEO window around the current Hijri year)
+  for (let y = hijriMinYear; y <= hijriMaxYear; y++) {
     entries.push(`
   <url>
     <loc>${BASE}/date/calendar/hijri/${y}</loc>

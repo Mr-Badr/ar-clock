@@ -10,6 +10,8 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { Calendar } from 'lucide-react';
 import { convertDate } from '@/lib/date-adapter';
 import { GREGORIAN_MONTHS_AR, HIJRI_MONTHS_AR } from '@/lib/constants';
+import { getCachedNowIso } from '@/lib/date-utils';
+import { isSeoIndexableHijriCalendarYear } from '@/lib/seo/date-indexing';
 import { getSiteUrl } from '@/lib/site-config';
 
 const BASE_URL = getSiteUrl();
@@ -55,10 +57,30 @@ export async function generateMetadata({
     return { title: 'تقويم غير صالح' };
   }
 
+  const numericYear = parseInt(year, 10);
+  const isoNow = await getCachedNowIso();
+  const currentGregorianNow = new Date(isoNow);
+  const currentHijriYear = convertDate({
+    date: currentGregorianNow.toISOString().slice(0, 10),
+    toCalendar: 'hijri',
+    method: 'umalqura',
+  }).year;
+  const isIndexableYear = isSeoIndexableHijriCalendarYear(numericYear, currentHijriYear);
+
   return {
     title: `التقويم الهجري لعام ${year} هـ | تقويم أم القرى`,
     description: `التقويم الهجري لعام ${year} هـ كاملًا مع ما يوافقه بالتقويم الميلادي. تصفح الشهور الهجرية وروابط الأيام وتحويل التاريخ بسهولة.`,
     alternates: { canonical: `${BASE_URL}/date/calendar/hijri/${year}` },
+    robots: {
+      index: isIndexableYear,
+      follow: true,
+      googleBot: {
+        index: isIndexableYear,
+        follow: true,
+        'max-snippet': -1,
+        'max-image-preview': 'large',
+      },
+    },
     openGraph: {
       title: `تقويم عام ${year} هجري | ميقاتنا`,
       description: `تصفح التقويم الهجري لعام ${year} هـ وما يوافقه من الميلادي مع روابط الأيام`,

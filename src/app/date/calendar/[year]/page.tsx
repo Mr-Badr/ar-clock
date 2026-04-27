@@ -11,6 +11,7 @@ import { Calendar, ArrowLeftRight, CalendarDays } from 'lucide-react';
 import { convertDate } from '@/lib/date-adapter';
 import { DAY_NAMES_AR, GREGORIAN_MONTHS_AR } from '@/lib/constants';
 import { getCachedNowIso } from '@/lib/date-utils';
+import { isSeoIndexableGregorianCalendarYear } from '@/lib/seo/date-indexing';
 import { getSiteUrl } from '@/lib/site-config';
 
 const BASE_URL = getSiteUrl();
@@ -35,10 +36,24 @@ export async function generateMetadata({
     return { title: 'تقويم غير صالح' };
   }
 
+  const numericYear = parseInt(year, 10);
+  const currentYear = new Date(await getCachedNowIso()).getUTCFullYear();
+  const isIndexableYear = isSeoIndexableGregorianCalendarYear(numericYear, currentYear);
+
   return {
     title: `تقويم عام ${year} ميلادي | التقويم الميلادي والهجري`,
     description: `تقويم عام ${year} ميلادي كامل مع الشهور والأيام وما يوافقها بالتقويم الهجري. تصفح السنة كلها مع روابط كل يوم وتحويل التاريخ بسرعة.`,
     alternates: { canonical: `${BASE_URL}/date/calendar/${year}` },
+    robots: {
+      index: isIndexableYear,
+      follow: true,
+      googleBot: {
+        index: isIndexableYear,
+        follow: true,
+        'max-snippet': -1,
+        'max-image-preview': 'large',
+      },
+    },
     openGraph: {
       title: `تقويم عام ${year} ميلادي | ميقاتنا`,
       description: `تصفح التقويم الميلادي لعام ${year} وما يوافقه من الهجري مع روابط كل يوم`,

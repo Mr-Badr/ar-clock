@@ -10,6 +10,8 @@ import {
 } from 'lucide-react';
 
 import { JsonLd } from '@/components/seo/JsonLd';
+import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
+import { ECONOMY_MARKET_HOURS_TOOLS } from '@/lib/economy/seo-content';
 import { ALL_GUIDES } from '@/lib/guides/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
@@ -59,6 +61,171 @@ const GUIDE_GROUP_META = [
 ];
 
 const GROUP_META_BY_HREF = new Map(GUIDE_GROUP_META.map((group) => [group.href, group]));
+const CALCULATOR_ROUTE_META = new Map(
+  CALCULATOR_ROUTES.map((route) => [
+    route.href,
+    {
+      href: route.href,
+      title: route.shortLabel || route.title,
+      description: route.description,
+      badge: route.badge || 'أداة عملية',
+    },
+  ]),
+);
+const GENERIC_SUPPORT_META = new Map([
+  [
+    '/fahras',
+    {
+      href: '/fahras',
+      title: 'الفهرس الشامل',
+      description: 'خريطة سريعة تربط بين الأدلة والأدوات والصفحات العليا في واجهة واحدة سهلة التصفح.',
+      badge: 'خريطة الموقع',
+    },
+  ],
+  [
+    '/calculators',
+    {
+      href: '/calculators',
+      title: 'قسم الحاسبات',
+      description: 'بوابة تجمع أشهر الحاسبات اليومية حتى تنتقل من الدليل إلى الأداة المناسبة فوراً.',
+      badge: 'المسار الأعلى',
+    },
+  ],
+  [
+    '/economie',
+    {
+      href: '/economie',
+      title: 'الاقتصاد الحي',
+      description: 'مدخل موحد لأسئلة الذهب والسوق الأمريكي والفوركس والبورصات العالمية.',
+      badge: 'المسار الأعلى',
+    },
+  ],
+  [
+    '/time-now',
+    {
+      href: '/time-now',
+      title: 'الوقت الآن',
+      description: 'صفحات الوقت المحلي والمدن القابلة للفهرسة عندما يحتاج المستخدم خطوة يومية سريعة.',
+      badge: 'صفحة يومية',
+    },
+  ],
+  [
+    '/date/converter',
+    {
+      href: '/date/converter',
+      title: 'محول التاريخ',
+      description: 'صفحة مساندة مفيدة عندما تتقاطع الأدلة مع التواريخ الهجرية والميلادية والتحويل بينهما.',
+      badge: 'تحويل سريع',
+    },
+  ],
+  [
+    '/mwaqit-al-salat',
+    {
+      href: '/mwaqit-al-salat',
+      title: 'مواقيت الصلاة',
+      description: 'واحدة من أكثر المسارات اليومية تكراراً، وتستحق الظهور ضمن الصفحات التي تعرّف بقيمة الموقع.',
+      badge: 'صفحة يومية',
+    },
+  ],
+]);
+const ECONOMY_ROUTE_META = new Map([
+  [
+    '/economie/market-hours',
+    {
+      href: '/economie/market-hours',
+      title: 'ساعات الأسواق والتداول',
+      description: 'الصفحة الجامعة التي ترتب أسئلة السوق الأمريكي والذهب والفوركس والبورصات من مكان واحد.',
+      badge: 'بوابة الأسواق',
+    },
+  ],
+  ...ECONOMY_MARKET_HOURS_TOOLS.map((tool) => [
+    tool.href,
+    {
+      ...tool,
+      badge: 'أداة اقتصاد حي',
+    },
+  ]),
+]);
+
+function getSupportCard(href, overrides = {}) {
+  const base =
+    CALCULATOR_ROUTE_META.get(href)
+    || ECONOMY_ROUTE_META.get(href)
+    || GENERIC_SUPPORT_META.get(href);
+
+  if (!base) return null;
+
+  return {
+    ...base,
+    ...overrides,
+    href,
+  };
+}
+
+const GUIDE_SHORTCUTS = [
+  '/fahras',
+  '/calculators',
+  '/economie',
+  '/time-now',
+  '/date/converter',
+  '/mwaqit-al-salat',
+].map((href) => getSupportCard(href)).filter(Boolean);
+
+const GUIDE_SUPPORT_LINKS_BY_HREF = new Map([
+  [
+    '/calculators/finance',
+    [
+      '/calculators/finance',
+      '/calculators/monthly-installment',
+      '/calculators/vat',
+      '/calculators/percentage',
+      '/calculators/end-of-service-benefits',
+    ].map((href) => getSupportCard(href)).filter(Boolean),
+  ],
+  [
+    '/calculators/personal-finance',
+    [
+      '/calculators/personal-finance',
+      '/calculators/personal-finance/emergency-fund',
+      '/calculators/personal-finance/debt-payoff',
+      '/calculators/personal-finance/savings-goal',
+      '/calculators/personal-finance/net-worth',
+    ].map((href) => getSupportCard(href)).filter(Boolean),
+  ],
+  [
+    '/calculators/sleep',
+    [
+      '/calculators/sleep',
+      '/calculators/sleep/bedtime',
+      '/calculators/sleep/wake-time',
+      '/calculators/sleep/nap-calculator',
+      '/calculators/sleep/sleep-debt',
+      '/calculators/sleep/sleep-needs-by-age',
+    ].map((href) => getSupportCard(href)).filter(Boolean),
+  ],
+  [
+    '/calculators/building',
+    [
+      '/calculators/building',
+      '/calculators/building/cement',
+      '/calculators/building/rebar',
+      '/calculators/building/tiles',
+    ].map((href) => getSupportCard(href)).filter(Boolean),
+  ],
+  [
+    '/economie/market-hours',
+    [
+      '/economie',
+      '/economie/market-hours',
+      '/economie/us-market-open',
+      '/economie/gold-market-hours',
+      '/economie/forex-sessions',
+      '/economie/stock-markets',
+      '/economie/market-clock',
+      '/economie/best-trading-time',
+    ].map((href) => getSupportCard(href)).filter(Boolean),
+  ],
+]);
 
 function buildGuideGroups() {
   const buckets = new Map();
@@ -204,8 +371,56 @@ export default function GuidesPage() {
         </div>
 
         <div className="mt-8 space-y-10">
+          <section className="rounded-[28px] border border-border/70 bg-background/90 p-6 shadow-sm">
+            <div className="flex flex-col gap-4 border-b border-border/60 pb-5 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-3xl">
+                <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-border/70 bg-surface px-3 py-1 text-xs font-semibold text-secondary">
+                  <BookOpenText size={14} />
+                  وصول أسرع للمستخدم
+                </div>
+                <h2 className="text-2xl font-black tracking-tight text-primary">
+                  صفحات تكمل الأدلة ولا تتركها معزولة
+                </h2>
+                <p className="mt-2 text-sm leading-7 text-secondary">
+                  هذه الروابط تعطي الزائر طبقة عملية فوق المقالات نفسها: صفحة الفهرس، أقسام
+                  الأدوات، وبعض الصفحات اليومية التي تكمل الرحلة داخل الموقع.
+                </p>
+              </div>
+              <span className="rounded-full border border-border/70 px-3 py-1 text-sm text-secondary">
+                {GUIDE_SHORTCUTS.length} صفحات مساندة
+              </span>
+            </div>
+
+            <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {GUIDE_SHORTCUTS.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="group rounded-3xl border border-border/70 bg-surface/70 p-5 transition-all duration-150 hover:-translate-y-0.5 hover:border-border hover:shadow-sm"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="rounded-full bg-accent/10 px-3 py-1 text-xs font-semibold text-primary">
+                      {item.badge}
+                    </div>
+                    <ArrowLeft
+                      size={16}
+                      className="opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+                    />
+                  </div>
+                  <h3 className="mt-4 text-lg font-bold leading-8 text-primary">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-7 text-secondary">
+                    {item.description}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </section>
+
           {GUIDE_GROUPS.map((group) => {
             const Icon = group.Icon || BookOpenText;
+            const supportLinks = GUIDE_SUPPORT_LINKS_BY_HREF.get(group.href) || [];
 
             return (
               <section
@@ -277,6 +492,51 @@ export default function GuidesPage() {
                     </Link>
                   ))}
                 </div>
+
+                {supportLinks.length > 0 && (
+                  <div className="mt-8 border-t border-border/60 pt-6">
+                    <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                      <div className="max-w-3xl">
+                        <h3 className="text-lg font-black text-primary">
+                          أدوات وصفحات مرتبطة بهذا المسار
+                        </h3>
+                        <p className="mt-2 text-sm leading-7 text-secondary">
+                          لمن يريد الانتقال مباشرة من الشرح إلى التطبيق أو إلى الصفحة الأعلى
+                          التي تجمع هذا النوع من الأدوات.
+                        </p>
+                      </div>
+                      <span className="rounded-full border border-border/70 px-3 py-1 text-sm text-secondary">
+                        {supportLinks.length} روابط عملية
+                      </span>
+                    </div>
+
+                    <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                      {supportLinks.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className="group rounded-3xl border border-dashed border-border/70 bg-background/90 p-5 transition-all duration-150 hover:-translate-y-0.5 hover:border-border hover:shadow-sm"
+                        >
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="rounded-full bg-background px-3 py-1 text-xs font-semibold text-secondary">
+                              {item.badge}
+                            </div>
+                            <ArrowLeft
+                              size={16}
+                              className="opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+                            />
+                          </div>
+                          <h4 className="mt-4 text-base font-bold leading-8 text-primary">
+                            {item.title}
+                          </h4>
+                          <p className="mt-2 text-sm leading-7 text-secondary">
+                            {item.description}
+                          </p>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </section>
             );
           })}

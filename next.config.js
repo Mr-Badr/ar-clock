@@ -8,6 +8,11 @@ const SHARED_XML_CACHE_HEADERS = [
   { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=86400, stale-while-revalidate=86400' },
 ];
 
+const SHARED_OG_IMAGE_HEADERS = [
+  { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=86400, stale-while-revalidate=86400' },
+  { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive, noimageindex' },
+];
+
 const nextConfig = {
   // ── Server ───────────────────────────────────────────────────────────────────
   // Keep Drizzle/Postgres out of the Edge runtime bundle (they are Node-only)
@@ -109,6 +114,23 @@ const nextConfig = {
         headers: SHARED_HTML_CACHE_HEADERS,
       },
       {
+        // Metadata image routes are useful for sharing previews but should not become indexed pages.
+        source: '/time-now/:path*/opengraph-image',
+        headers: SHARED_OG_IMAGE_HEADERS,
+      },
+      {
+        source: '/mwaqit-al-salat/:path*/opengraph-image',
+        headers: SHARED_OG_IMAGE_HEADERS,
+      },
+      {
+        source: '/holidays/:path*/opengraph-image',
+        headers: SHARED_OG_IMAGE_HEADERS,
+      },
+      {
+        source: '/api/og/:path*',
+        headers: SHARED_OG_IMAGE_HEADERS,
+      },
+      {
         // robots.txt should stay cacheable but easy to refresh.
         source: '/robots.txt',
         headers: SHARED_XML_CACHE_HEADERS,
@@ -161,6 +183,17 @@ const nextConfig = {
       {
         source: '/&',
         destination: '/',
+        permanent: true,
+      },
+      // Keep a single canonical guides section while still accepting the singular alias users may type.
+      {
+        source: '/guide',
+        destination: '/guides',
+        permanent: true,
+      },
+      {
+        source: '/guide/:slug*',
+        destination: '/guides/:slug*',
         permanent: true,
       },
       // Support common alternative URL formats
