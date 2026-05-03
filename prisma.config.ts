@@ -24,7 +24,7 @@ for (const candidate of envCandidates) {
   })
 }
 
-const datasourceUrl = process.env.PRISMA_DATABASE_URL || process.env.DATABASE_URL
+const datasourceUrl = process.env.DATABASE_URL
 
 export default defineConfig({
   schema: 'prisma/schema.prisma',

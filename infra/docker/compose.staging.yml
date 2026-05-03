@@ -1,7 +1,6 @@
 services:
   app:
     image: ${APP_IMAGE:-ghcr.io/mr-badr/ar-clock}:${APP_TAG:-staging}
-
     env_file:
       - /opt/miqatona/env/staging.env
 

@@ -1,159 +1,142 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 const emptyToUndefined = (schema) =>
   z.preprocess((value) => {
-    if (typeof value !== 'string') return value;
-    const trimmed = value.trim();
-    return trimmed === '' ? undefined : trimmed;
-  }, schema);
+    if (typeof value !== 'string') return value
+    const trimmed = value.trim()
+    return trimmed === '' ? undefined : trimmed
+  }, schema)
 
-const optionalBooleanString = emptyToUndefined(z.enum(['true', 'false']).optional());
-const optionalShortString = emptyToUndefined(z.string().min(1).optional());
-const optionalAdsenseClientId = emptyToUndefined(
-  z.string().regex(/^ca-pub-[\w-]+$/, 'Must start with ca-pub-').optional(),
-);
+const optionalString = emptyToUndefined(z.string().optional())
+const optionalBoolean = emptyToUndefined(z.enum(['true', 'false']).optional())
 
-const siteEnvShape = {
+/* -------------------------------------------------------------------------- */
+/* SITE ENV                                                                   */
+/* -------------------------------------------------------------------------- */
+
+const siteSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   NEXT_PUBLIC_SITE_URL: emptyToUndefined(z.string().url().optional()),
   NEXT_PUBLIC_BASE_URL: emptyToUndefined(z.string().url().optional()),
-  VERCEL_PROJECT_PRODUCTION_URL: emptyToUndefined(z.string().min(1).optional()),
-  VERCEL_URL: emptyToUndefined(z.string().min(1).optional()),
-};
+})
 
-const siteSchema = z.object(siteEnvShape);
+/* -------------------------------------------------------------------------- */
+/* METADATA                                                                   */
+/* -------------------------------------------------------------------------- */
 
 const metadataSchema = z.object({
-  GOOGLE_SITE_VERIFICATION: emptyToUndefined(z.string().min(6).optional()),
-});
+  GOOGLE_SITE_VERIFICATION: optionalString,
+})
+
+/* -------------------------------------------------------------------------- */
+/* RUNTIME (POSTGRES ONLY)                                                   */
+/* -------------------------------------------------------------------------- */
 
 const runtimeSchema = z
   .object({
-    ...siteEnvShape,
-    GOOGLE_SITE_VERIFICATION: emptyToUndefined(z.string().min(6).optional()),
-    REVALIDATE_SECRET: emptyToUndefined(z.string().min(12).optional()),
-    SUPABASE_URL: emptyToUndefined(z.string().url().optional()),
-    SUPABASE_ANON_KEY: emptyToUndefined(z.string().min(20).optional()),
-    SUPABASE_SERVICE_ROLE_KEY: emptyToUndefined(z.string().min(20).optional()),
-    NEXT_PUBLIC_SUPABASE_URL: emptyToUndefined(z.string().url().optional()),
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: emptyToUndefined(z.string().min(20).optional()),
-    DATABASE_URL: emptyToUndefined(z.string().min(1).optional()),
-    APP_VERSION: optionalShortString,
-    ENABLE_LIVE_GEO_DB: optionalBooleanString,
-    ENABLE_PDF_CALENDAR: optionalBooleanString,
-    ENABLE_NEW_PRAYER_ENGINE: optionalBooleanString,
-    LIVE_GEO_PROVIDER: emptyToUndefined(z.enum(['supabase', 'postgres']).optional()),
+    ...siteSchema.shape,
+
+    /* security */
+    REVALIDATE_SECRET: optionalString,
+
+    /* database (ONLY POSTGRES) */
+    DATABASE_URL: optionalString,
+
+    /* geo system (NO SUPABASE ANYMORE) */
+    ENABLE_LIVE_GEO_DB: optionalBoolean,
+
+    /* keep only postgres */
+    LIVE_GEO_PROVIDER: z.literal('postgres').default('postgres'),
+
+    /* optional infrastructure */
     IP_API_BASE_URL: emptyToUndefined(z.string().url().optional()),
-    PDF_BROWSER_MODE: emptyToUndefined(z.enum(['serverless', 'bundled']).optional()),
-    ECONOMY_LIVE_DATA_PROVIDER: emptyToUndefined(z.enum(['auto', 'alphavantage', 'twelvedata', 'yahoo']).optional()),
-    ALPHA_VANTAGE_API_KEY: emptyToUndefined(z.string().min(8).optional()),
-    TWELVE_DATA_API_KEY: emptyToUndefined(z.string().min(8).optional()),
-    FRED_API_KEY: emptyToUndefined(z.string().min(8).optional()),
-    NEWSAPI_API_KEY: emptyToUndefined(z.string().min(8).optional()),
-    GNEWS_API_KEY: emptyToUndefined(z.string().min(8).optional()),
-    ADSENSE_CLIENT_ID: optionalAdsenseClientId,
-    NEXT_PUBLIC_ADSENSE_CLIENT_ID: optionalAdsenseClientId,
-    ENABLE_ANALYTICS: optionalBooleanString,
-    GA_MEASUREMENT_ID: optionalShortString,
-    GTM_ID: optionalShortString,
-    ENABLE_CONSENT_BANNER: optionalBooleanString,
-    ENABLE_SW: optionalBooleanString,
-    NEXT_PUBLIC_ENABLE_ANALYTICS: optionalBooleanString,
-    NEXT_PUBLIC_ENABLE_CONSENT_BANNER: optionalBooleanString,
-    NEXT_PUBLIC_GA_MEASUREMENT_ID: optionalShortString,
-    NEXT_PUBLIC_GTM_ID: optionalShortString,
-    NEXT_PUBLIC_ENABLE_SW: optionalBooleanString,
-    FF_HOLIDAYS_NEW_METADATA: optionalBooleanString,
-    FF_HOLIDAYS_CONTENT_RESOLVER: optionalBooleanString,
-    FF_HOLIDAYS_SECTIONIZED_UI: optionalBooleanString,
-    FF_SEO_STRICT_CLEANUP: optionalBooleanString,
-    FF_OBSERVABILITY_LOGS: optionalBooleanString,
-    FF_EVENTS_SHARD_INDEX: optionalBooleanString,
-    FF_EVENTS_PUBLISHED_ONLY: optionalBooleanString,
+
+    /* pdf */
+    ENABLE_PDF_CALENDAR: optionalBoolean,
+    PDF_BROWSER_MODE: emptyToUndefined(z.enum(['bundled', 'serverless']).optional()),
+
+    /* analytics */
+    ENABLE_ANALYTICS: optionalBoolean,
+    GA_MEASUREMENT_ID: optionalString,
+    GTM_ID: optionalString,
+    ENABLE_CONSENT_BANNER: optionalBoolean,
+
+    /* ads */
+    ADSENSE_CLIENT_ID: optionalString,
+
+    /* PWA */
+    ENABLE_SW: optionalBoolean,
   })
   .superRefine((value, ctx) => {
-    const liveGeoUsesPostgres =
-      value.ENABLE_LIVE_GEO_DB === 'true' &&
-      value.LIVE_GEO_PROVIDER === 'postgres';
+    const isProd = value.NODE_ENV === 'production'
 
-    if (value.NODE_ENV === 'production' && !value.REVALIDATE_SECRET) {
+    if (isProd && !value.REVALIDATE_SECRET) {
       ctx.addIssue({
         code: 'custom',
-        message: 'Missing required env var in production.',
         path: ['REVALIDATE_SECRET'],
-      });
+        message: 'REVALIDATE_SECRET is required in production',
+      })
     }
 
-    if (value.ENABLE_LIVE_GEO_DB === 'true' && !value.LIVE_GEO_PROVIDER) {
+    if (value.ENABLE_LIVE_GEO_DB === 'true' && !value.DATABASE_URL) {
       ctx.addIssue({
         code: 'custom',
-        message: 'LIVE_GEO_PROVIDER is required when ENABLE_LIVE_GEO_DB=true.',
-        path: ['LIVE_GEO_PROVIDER'],
-      });
-    }
-
-    if (value.NODE_ENV === 'production' && liveGeoUsesPostgres && !value.DATABASE_URL) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'Missing required env var when LIVE_GEO_PROVIDER=postgres.',
         path: ['DATABASE_URL'],
-      });
+        message: 'DATABASE_URL required when LIVE GEO is enabled',
+      })
     }
 
-    if (value.NODE_ENV === 'production' && !liveGeoUsesPostgres && !value.SUPABASE_URL) {
+    if (isProd && !value.DATABASE_URL) {
       ctx.addIssue({
         code: 'custom',
-        message: 'Missing required env var in production.',
-        path: ['SUPABASE_URL'],
-      });
+        path: ['DATABASE_URL'],
+        message: 'DATABASE_URL required in production',
+      })
     }
+  })
 
-    if (value.NODE_ENV === 'production' && !liveGeoUsesPostgres && !value.SUPABASE_ANON_KEY) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'Missing required env var in production.',
-        path: ['SUPABASE_ANON_KEY'],
-      });
-    }
-  });
+/* -------------------------------------------------------------------------- */
+/* INTERNAL HELPERS                                                           */
+/* -------------------------------------------------------------------------- */
 
 function formatIssues(issues) {
-  return issues
-    .map((issue) => {
-      const path = issue.path.join('.') || 'env';
-      return `- ${path}: ${issue.message}`;
-    })
-    .join('\n');
+  return issues.map((i) => `- ${i.path.join('.')}: ${i.message}`).join('\n')
 }
 
 function parseEnv(schema, label) {
-  const parsed = schema.safeParse(process.env);
+  const parsed = schema.safeParse(process.env)
+
   if (!parsed.success) {
     throw new Error(
-      `Application failed to start.\nInvalid ${label} environment configuration:\n${formatIssues(parsed.error.issues)}`,
-    );
+      `❌ Invalid ${label} environment:\n${formatIssues(parsed.error.issues)}`
+    )
   }
-  return parsed.data;
+
+  return parsed.data
 }
 
-let _siteEnv = null;
-let _metadataEnv = null;
-let _runtimeEnv = null;
+/* -------------------------------------------------------------------------- */
+/* CACHING                                                                    */
+/* -------------------------------------------------------------------------- */
+
+let siteEnv
+let metadataEnv
+let runtimeEnv
 
 export function getSiteEnv() {
-  if (_siteEnv) return _siteEnv;
-  _siteEnv = parseEnv(siteSchema, 'site');
-  return _siteEnv;
+  if (siteEnv) return siteEnv
+  siteEnv = parseEnv(siteSchema, 'site')
+  return siteEnv
 }
 
 export function getMetadataEnv() {
-  if (_metadataEnv) return _metadataEnv;
-  _metadataEnv = parseEnv(metadataSchema, 'metadata');
-  return _metadataEnv;
+  if (metadataEnv) return metadataEnv
+  metadataEnv = parseEnv(metadataSchema, 'metadata')
+  return metadataEnv
 }
 
 export function getEnv() {
-  if (_runtimeEnv) return _runtimeEnv;
-  _runtimeEnv = parseEnv(runtimeSchema, 'runtime');
-  return _runtimeEnv;
+  if (runtimeEnv) return runtimeEnv
+  runtimeEnv = parseEnv(runtimeSchema, 'runtime')
+  return runtimeEnv
 }
