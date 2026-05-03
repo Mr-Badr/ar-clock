@@ -1,6 +1,7 @@
 import { VAT_COUNTRIES } from '@/lib/calculators/data';
+import { DEFAULT_GLOBAL_CURRENCY } from '@/lib/calculators/currency-options';
 
-const ARABIC_LATIN_LOCALE = 'ar-SA-u-nu-latn';
+const ARABIC_LATIN_LOCALE = 'ar-u-nu-latn';
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 function toNumber(value) {
@@ -96,7 +97,7 @@ export function formatNumber(value, options = {}) {
   }).format(toNumber(value));
 }
 
-export function formatCurrency(value, currency = 'SAR') {
+export function formatCurrency(value, currency = DEFAULT_GLOBAL_CURRENCY) {
   return new Intl.NumberFormat(ARABIC_LATIN_LOCALE, {
     style: 'currency',
     currency,

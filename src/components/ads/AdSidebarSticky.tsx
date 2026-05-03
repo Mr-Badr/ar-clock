@@ -2,10 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import {
-  isPublicEnvEnabled,
-  useMarketingPermission,
-} from "@/lib/client/marketing";
+import { useMarketingPermission } from "@/lib/client/marketing";
+import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
+import { logger, serializeError } from "@/lib/logger";
 
 interface AdSidebarStickyProps {
   slotId?: string;
@@ -14,24 +13,26 @@ interface AdSidebarStickyProps {
   sticky?: boolean;
 }
 
-function resolveSidebarSlot(side: "right" | "left", slotId: string) {
+type ManualSidebarSlots = {
+  sidebar?: string | null;
+  sidebarRight?: string | null;
+  sidebarLeft?: string | null;
+};
+
+function resolveSidebarSlot(
+  side: "right" | "left",
+  slotId: string,
+  manualSlots: ManualSidebarSlots,
+) {
   if (side === "right" || slotId.includes("right")) {
-    return (
-      process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_RIGHT_SLOT ||
-      process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT ||
-      ""
-    ).trim();
+    return manualSlots.sidebarRight || manualSlots.sidebar || "";
   }
 
   if (side === "left" || slotId.includes("left")) {
-    return (
-      process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_LEFT_SLOT ||
-      process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT ||
-      ""
-    ).trim();
+    return manualSlots.sidebarLeft || manualSlots.sidebar || "";
   }
 
-  return (process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT || "").trim();
+  return manualSlots.sidebar || "";
 }
 
 export default function AdSidebarSticky({
@@ -40,10 +41,9 @@ export default function AdSidebarSticky({
   side = "right",
   sticky = true,
 }: AdSidebarStickyProps) {
-  const adsEnabled = isPublicEnvEnabled(process.env.NEXT_PUBLIC_ENABLE_ADS);
-  const clientId = (process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "").trim();
-  const adSlot = resolveSidebarSlot(side, slotId);
-  const shouldRenderAds = adsEnabled && clientId.startsWith("ca-pub-") && Boolean(adSlot);
+  const { clientId, manualSlots } = useAdsRuntimeConfig();
+  const adSlot = resolveSidebarSlot(side, slotId, manualSlots);
+  const shouldRenderAds = Boolean(clientId && adSlot);
   const canLoadAds = useMarketingPermission(shouldRenderAds);
   const ref = useRef<HTMLElement>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -68,7 +68,12 @@ export default function AdSidebarSticky({
               const adsWindow = window as Window & { adsbygoogle?: unknown[] };
               (adsWindow.adsbygoogle = adsWindow.adsbygoogle || []).push({});
             } catch (error) {
-              console.warn("AdSense sidebar slot failed to initialize:", error);
+              logger.warn("adsense-sidebar-init-failed", {
+                component: "AdSidebarSticky",
+                slotId,
+                side,
+                error: serializeError(error),
+              });
             }
 
             observer.disconnect();
@@ -105,7 +110,7 @@ export default function AdSidebarSticky({
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}
-        data-ad-client={clientId}
+        data-ad-client={clientId || undefined}
         data-ad-slot={adSlot}
         data-ad-format="auto"
         data-full-width-responsive="true"

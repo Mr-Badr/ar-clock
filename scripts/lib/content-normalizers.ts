@@ -43,8 +43,9 @@ const CATEGORY_LABELS: Record<EventCategory, string> = {
   school: 'المناسبات المدرسية',
   holidays: 'الإجازات الرسمية',
   astronomy: 'فلكية وطبيعية',
+  social: 'المناسبات الاجتماعية والعالمية',
   business: 'مناسبات الأعمال',
-  support: 'الدعم الاجتماعي',
+  support: 'برامج ومواعيد الدعم',
 };
 
 const EVENT_CONTEXT: Record<string, { descriptor: string; importance: string; practice: string; history: string }> = {

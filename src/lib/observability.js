@@ -1,4 +1,5 @@
 import { featureFlags } from '@/lib/feature-flags';
+import { logger } from '@/lib/logger';
 
 function nowIso() {
   return new Date().toISOString();
@@ -6,10 +7,17 @@ function nowIso() {
 
 export function logEvent(message, context = {}) {
   if (!featureFlags.observabilityLogs) return;
-  console.info(`[obs ${nowIso()}] ${message}`, context);
+  logger.info(message, {
+    channel: 'observability',
+    observedAt: nowIso(),
+    ...context,
+  });
 }
 
 export function logError(message, context = {}) {
-  console.error(`[obs ${nowIso()}] ${message}`, context);
+  logger.error(message, {
+    channel: 'observability',
+    observedAt: nowIso(),
+    ...context,
+  });
 }
-

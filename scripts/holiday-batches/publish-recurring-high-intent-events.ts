@@ -34,7 +34,6 @@ type EventConfig = {
   month?: number;
   day: number;
   countryCode?: string;
-  tier: 'tier1' | 'tier2' | 'tier3';
   queueOrder: number;
   countryScope?: 'none' | 'all' | 'custom';
   sourceAuthority: string;
@@ -341,7 +340,6 @@ function buildPackage(config: EventConfig, current: any) {
           ]
         : [],
     },
-    tier: config.tier,
     publishStatus: 'published',
     canonicalPath: `/holidays/${config.slug}`,
     canonicalSource: 'internal',
@@ -369,7 +367,6 @@ function buildResearch(config: EventConfig) {
 function buildQa(config: EventConfig) {
   return {
     slug: config.slug,
-    tier: config.tier,
     publishStatus: 'published',
     checks: {
       contentReady: true,
@@ -393,7 +390,6 @@ const configs: EventConfig[] = [
     category: 'business',
     day: 27,
     countryCode: 'sa',
-    tier: 'tier1',
     queueOrder: 24,
     sourceAuthority: 'saudi-public-finance',
     seoTitle: 'موعد راتب السعودية {{year}} — 27 ميلادي وجدول الرواتب الرسمي',
@@ -576,7 +572,6 @@ const configs: EventConfig[] = [
     category: 'support',
     day: 10,
     countryCode: 'sa',
-    tier: 'tier1',
     queueOrder: 25,
     sourceAuthority: 'citizen-account-official',
     seoTitle: 'موعد حساب المواطن {{year}} — 10 ميلادي وشرح الإيداع الرسمي',
@@ -759,7 +754,6 @@ const configs: EventConfig[] = [
     category: 'holidays',
     month: 1,
     day: 1,
-    tier: 'tier1',
     queueOrder: 13,
     sourceAuthority: 'gregorian-fixed-date',
     seoTitle: 'رأس السنة الميلادية {{nextYear}} — 1 يناير والعد التنازلي للسنة الجديدة',
@@ -943,7 +937,6 @@ const configs: EventConfig[] = [
     month: 12,
     day: 2,
     countryCode: 'ae',
-    tier: 'tier2',
     queueOrder: 48,
     sourceAuthority: 'uae-official',
     seoTitle: 'اليوم الوطني الإماراتي {{year}} — 2 ديسمبر وشرح عيد الاتحاد',
@@ -1127,7 +1120,6 @@ const configs: EventConfig[] = [
     month: 12,
     day: 18,
     countryCode: 'qa',
-    tier: 'tier2',
     queueOrder: 58,
     sourceAuthority: 'qatar-official',
     seoTitle: 'اليوم الوطني القطري {{year}} — 18 ديسمبر وشرح يوم المؤسس',
@@ -1311,7 +1303,6 @@ const configs: EventConfig[] = [
     category: 'support',
     day: 1,
     countryCode: 'sa',
-    tier: 'tier1',
     queueOrder: 61,
     countryScope: 'custom',
     sourceAuthority: 'gosi-official',
@@ -1500,7 +1491,6 @@ const configs: EventConfig[] = [
     category: 'support',
     day: 1,
     countryCode: 'sa',
-    tier: 'tier1',
     queueOrder: 62,
     countryScope: 'custom',
     sourceAuthority: 'gosi-official',
@@ -1688,7 +1678,6 @@ const configs: EventConfig[] = [
     category: 'support',
     day: 15,
     countryCode: 'eg',
-    tier: 'tier1',
     queueOrder: 63,
     countryScope: 'custom',
     sourceAuthority: 'moss-eg-official',
@@ -1876,7 +1865,6 @@ const configs: EventConfig[] = [
     category: 'support',
     day: 1,
     countryCode: 'eg',
-    tier: 'tier1',
     queueOrder: 64,
     countryScope: 'custom',
     sourceAuthority: 'nosi-eg-official',
@@ -2060,7 +2048,6 @@ const configs: EventConfig[] = [
     category: 'support',
     month: 3,
     day: 8,
-    tier: 'tier1',
     queueOrder: 65,
     countryScope: 'none',
     sourceAuthority: 'un-observance',

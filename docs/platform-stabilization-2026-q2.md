@@ -20,7 +20,7 @@
   - Keep country city loading only after explicit country selection
   - Keep global search only after the user types
 - Freeze heavy optional runtime features for the bridge:
-  - Keep `NEXT_PUBLIC_ENABLE_ADS=false`
+  - Keep `ADSENSE_CLIENT_ID` empty
   - Gate `src/app/api/pdf-calendar/route.js` behind an env flag defaulting to off
   - Change `src/components/hero/HeroVideoPanel.jsx` from `preload="auto"` to metadata/poster-first loading
   - Simplify `public/sw.js` so it stops caching dynamic search/location APIs

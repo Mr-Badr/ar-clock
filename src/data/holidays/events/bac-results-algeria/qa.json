@@ -1,6 +1,5 @@
 {
   "slug": "bac-results-algeria",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": false,

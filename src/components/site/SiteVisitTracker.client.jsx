@@ -8,6 +8,7 @@ import {
   pushDiscoveryHistory,
   trimDiscoveryTitle,
 } from '@/lib/site/discovery-history';
+import { logger, serializeError } from '@/lib/logger';
 
 const IGNORED_PATHS = new Set(['/fahras', '/search', '/offline']);
 
@@ -20,16 +21,25 @@ export default function SiteVisitTracker() {
     }
 
     const timer = window.setTimeout(() => {
-      const title = trimDiscoveryTitle(document.title);
-      pushDiscoveryHistory(
-        DISCOVERY_RECENT_VISITS_KEY,
-        {
-          href: pathname,
-          title,
-          visitedAt: String(Date.now()),
-        },
-        { max: 8, idKey: 'href' },
-      );
+      try {
+        const title = trimDiscoveryTitle(document.title);
+        pushDiscoveryHistory(
+          DISCOVERY_RECENT_VISITS_KEY,
+          {
+            href: pathname,
+            title,
+            visitedAt: String(Date.now()),
+          },
+          { max: 8, idKey: 'href' },
+        );
+      } catch (error) {
+        logger.warn('site-visit-tracker-write-failed', {
+          component: 'SiteVisitTracker',
+          pathname,
+          error: serializeError(error),
+          handled: true,
+        });
+      }
     }, 120);
 
     return () => window.clearTimeout(timer);

@@ -1,6 +1,5 @@
 {
   "slug": "islamic-new-year",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

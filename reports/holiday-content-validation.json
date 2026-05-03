@@ -1,263 +1,378 @@
 {
-  "generatedAt": "2026-03-31T01:16:51.965Z",
+  "generatedAt": "2026-04-30T19:38:07.262Z",
   "strict": false,
   "changedOnly": false,
-  "tiers": [
-    "tier1",
-    "tier2",
-    "tier3"
-  ],
+  "liveOnly": false,
+  "publishStatuses": null,
   "totals": {
-    "checked": 50,
-    "withIssues": 34,
-    "errors": 0,
-    "warnings": 106
+    "checked": 78,
+    "withIssues": 39,
+    "errors": 13,
+    "warnings": 65
   },
   "byCode": {
-    "faq_below_minimum:4": 4,
-    "seo_meta_description_length_out_of_range:84": 1,
-    "related_not_reciprocal:ramadan": 2,
-    "related_not_reciprocal:laylat-al-qadr": 1,
-    "faq_below_minimum:2": 10,
-    "seo_meta_description_length_out_of_range:89": 3,
-    "content_similarity_high:spring-season:0.85": 1,
-    "faq_below_minimum:3": 9,
-    "seo_meta_description_length_out_of_range:97": 2,
-    "seo_meta_description_length_out_of_range:99": 1,
-    "direct_answer_missing:faq:كيف أتحقق من نتيجتي؟": 2,
-    "seo_meta_description_length_out_of_range:92": 5,
-    "faq_below_minimum:1": 9,
-    "seo_meta_description_length_out_of_range:87": 1,
-    "direct_answer_missing:faq:كم باقي على الدراسة {{year}}؟": 1,
-    "seo_meta_description_length_out_of_range:96": 1,
-    "seo_meta_description_length_out_of_range:85": 1,
-    "seo_meta_description_length_out_of_range:95": 2,
-    "direct_answer_missing:faq:كم عدد شهداء الثورة؟": 1,
-    "related_not_reciprocal:uae-national-day": 2,
-    "seo_meta_description_length_out_of_range:94": 4,
-    "direct_answer_missing:faq:متى استقل المغرب؟": 1,
-    "direct_answer_missing:faq:متى عيد الاستقلال التونسي {{ye": 1,
+    "related_not_reciprocal:school-start-egypt": 4,
+    "related_not_reciprocal:new-year": 5,
+    "related_not_reciprocal:green-march-morocco": 1,
+    "related_not_reciprocal:summer-vacation": 5,
+    "related_not_reciprocal:back-to-school": 3,
+    "related_not_reciprocal:school-start-algeria": 2,
+    "hardcoded_year_detected": 9,
+    "placeholder_text_detected": 2,
     "related_not_reciprocal:independence-day-morocco": 2,
-    "seo_meta_description_length_out_of_range:90": 2,
-    "seo_meta_description_length_out_of_range:93": 3,
-    "related_not_reciprocal:first-dhul-hijjah": 1,
-    "direct_answer_missing:faq:هل يُحتفل بالنصف من شعبان؟": 1,
-    "related_not_reciprocal:new-year": 1,
-    "direct_answer_missing:faq:متى اليوم الوطني القطري {{year": 1,
-    "direct_answer_missing:faq:متى عيد الثورة الجزائرية {{yea": 1,
-    "direct_answer_missing:faq:متى بدأت ثورة التحرير؟": 1,
-    "related_not_reciprocal:bac-results-algeria": 2,
-    "seo_meta_description_length_out_of_range:100": 1,
-    "related_not_reciprocal:thanaweya-results": 3,
-    "related_not_reciprocal:school-start-egypt": 1,
-    "seo_meta_description_length_out_of_range:104": 1,
-    "related_not_reciprocal:school-start-saudi": 1,
-    "related_not_reciprocal:saudi-founding-day": 1,
-    "direct_answer_missing:faq:متى يوم التأسيس السعودي {{year": 1,
-    "related_not_reciprocal:independence-day-algeria": 1,
-    "related_not_reciprocal:revolution-day-algeria": 1,
-    "related_not_reciprocal:throne-day-morocco": 1,
-    "related_not_reciprocal:school-start-uae": 1,
-    "seo_meta_description_length_out_of_range:82": 1,
-    "seo_meta_description_length_out_of_range:107": 1,
-    "content_similarity_high:autumn-season:0.85": 1,
-    "direct_answer_missing:faq:كم باقي على عطلة الربيع {{year": 1,
-    "seo_meta_description_length_out_of_range:88": 1,
-    "content_similarity_high:winter-season:0.83": 1,
-    "direct_answer_missing:faq:كم باقي على الإجازة الصيفية {{": 1,
-    "seo_meta_description_length_out_of_range:103": 1,
-    "direct_answer_missing:faq:كم تدوم الامتحانات؟": 1,
-    "related_not_reciprocal:bac-exams-algeria": 1,
-    "direct_answer_missing:faq:متى عيد العرش المغربي {{year}}": 1,
-    "direct_answer_missing:faq:متى تولى الملك محمد السادس الح": 1,
-    "content_similarity_high:summer-season:0.83": 1
+    "related_not_reciprocal:bac-results-morocco": 2,
+    "related_not_reciprocal:bac-exams-algeria": 2,
+    "related_not_reciprocal:school-start-morocco": 1,
+    "related_not_reciprocal:kuwait-national-day": 3,
+    "related_not_reciprocal:summer-season": 2,
+    "related_not_reciprocal:ashura": 1,
+    "related_not_reciprocal:citizen-account-saudi": 3,
+    "related_not_reciprocal:sand-payment-saudi": 1,
+    "related_not_reciprocal:salary-day-saudi": 3,
+    "related_not_reciprocal:pension-day-saudi": 1,
+    "related_not_reciprocal:saudi-national-day": 4,
+    "related_not_reciprocal:uae-national-day": 2,
+    "related_not_reciprocal:mothers-day": 2,
+    "related_not_reciprocal:world-health-day": 2,
+    "related_not_reciprocal:world-teachers-day": 1,
+    "related_not_reciprocal:earth-day": 1,
+    "related_not_reciprocal:bahrain-national-day": 1,
+    "related_not_reciprocal:labor-day": 2,
+    "missing_date_confidence_disclaimer": 2,
+    "related_not_reciprocal:thanaweya-exams": 1,
+    "related_not_reciprocal:islamic-new-year": 1,
+    "related_not_reciprocal:sham-nessim": 1,
+    "related_not_reciprocal:housing-support-saudi": 1,
+    "related_not_reciprocal:social-security-saudi": 2,
+    "related_not_reciprocal:ramadan": 1,
+    "related_not_reciprocal:bac-results-tunisia": 2
   },
   "events": [
     {
-      "slug": "ashura",
-      "tier": "tier2",
+      "slug": "arabic-language-day",
       "publishStatus": "published",
+      "distribution": "shared",
+      "countryCodes": [
+        "sa",
+        "eg",
+        "ma",
+        "dz",
+        "ae",
+        "tn",
+        "kw",
+        "qa",
+        "iq",
+        "sy",
+        "ye",
+        "jo",
+        "ly",
+        "om",
+        "ps",
+        "ca",
+        "fr",
+        "tr",
+        "us"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:4",
+          "code": "related_not_reciprocal:school-start-egypt",
           "severity": "warn",
-          "message": "FAQ count 4 is below category minimum 6."
+          "message": "Related link \"school-start-egypt\" does not reciprocate link back to \"arabic-language-day\"."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:84",
+          "code": "related_not_reciprocal:new-year",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
+          "message": "Related link \"new-year\" does not reciprocate link back to \"arabic-language-day\"."
+        }
+      ]
+    },
+    {
+      "slug": "armed-forces-day-egypt",
+      "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "eg"
+      ],
+      "issues": [
         {
-          "code": "related_not_reciprocal:ramadan",
+          "code": "related_not_reciprocal:green-march-morocco",
           "severity": "warn",
-          "message": "Related link \"ramadan\" does not reciprocate link back to \"ashura\"."
-        },
-        {
-          "code": "related_not_reciprocal:laylat-al-qadr",
-          "severity": "warn",
-          "message": "Related link \"laylat-al-qadr\" does not reciprocate link back to \"ashura\"."
+          "message": "Related link \"green-march-morocco\" does not reciprocate link back to \"armed-forces-day-egypt\"."
         }
       ]
     },
     {
       "slug": "autumn-season",
-      "tier": "tier3",
       "publishStatus": "published",
+      "distribution": "standalone",
+      "countryCodes": [],
       "issues": [
         {
-          "code": "faq_below_minimum:2",
+          "code": "related_not_reciprocal:summer-vacation",
           "severity": "warn",
-          "message": "FAQ count 2 is below category minimum 6."
+          "message": "Related link \"summer-vacation\" does not reciprocate link back to \"autumn-season\"."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:89",
+          "code": "related_not_reciprocal:back-to-school",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+          "message": "Related link \"back-to-school\" does not reciprocate link back to \"autumn-season\"."
         },
         {
-          "code": "content_similarity_high:spring-season:0.85",
+          "code": "related_not_reciprocal:school-start-algeria",
           "severity": "warn",
-          "message": "Content similarity with \"spring-season\" is high (0.85)."
+          "message": "Related link \"school-start-algeria\" does not reciprocate link back to \"autumn-season\"."
         }
       ]
     },
     {
       "slug": "bac-exams-algeria",
-      "tier": "tier2",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "dz"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:3",
-          "severity": "warn",
-          "message": "FAQ count 3 is below category minimum 6."
-        },
-        {
-          "code": "seo_meta_description_length_out_of_range:97",
-          "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+          "code": "hardcoded_year_detected",
+          "severity": "error",
+          "message": "Hardcoded year detected in content."
         }
       ]
     },
     {
       "slug": "bac-results-morocco",
-      "tier": "tier2",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "ma"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:3",
-          "severity": "warn",
-          "message": "FAQ count 3 is below category minimum 6."
+          "code": "placeholder_text_detected",
+          "severity": "error",
+          "message": "Placeholder text is present."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:99",
-          "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+          "code": "hardcoded_year_detected",
+          "severity": "error",
+          "message": "Hardcoded year detected in content."
         },
         {
-          "code": "direct_answer_missing:faq:كيف أتحقق من نتيجتي؟",
+          "code": "related_not_reciprocal:independence-day-morocco",
           "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
+          "message": "Related link \"independence-day-morocco\" does not reciprocate link back to \"bac-results-morocco\"."
         }
       ]
     },
     {
       "slug": "bac-results-tunisia",
-      "tier": "tier2",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "tn"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:2",
-          "severity": "warn",
-          "message": "FAQ count 2 is below category minimum 6."
+          "code": "placeholder_text_detected",
+          "severity": "error",
+          "message": "Placeholder text is present."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:92",
-          "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+          "code": "hardcoded_year_detected",
+          "severity": "error",
+          "message": "Hardcoded year detected in content."
         },
         {
-          "code": "direct_answer_missing:faq:كيف أتحقق من نتيجتي؟",
+          "code": "related_not_reciprocal:bac-results-morocco",
           "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
+          "message": "Related link \"bac-results-morocco\" does not reciprocate link back to \"bac-results-tunisia\"."
+        },
+        {
+          "code": "related_not_reciprocal:bac-exams-algeria",
+          "severity": "warn",
+          "message": "Related link \"bac-exams-algeria\" does not reciprocate link back to \"bac-results-tunisia\"."
+        },
+        {
+          "code": "related_not_reciprocal:school-start-algeria",
+          "severity": "warn",
+          "message": "Related link \"school-start-algeria\" does not reciprocate link back to \"bac-results-tunisia\"."
+        },
+        {
+          "code": "related_not_reciprocal:back-to-school",
+          "severity": "warn",
+          "message": "Related link \"back-to-school\" does not reciprocate link back to \"bac-results-tunisia\"."
         }
       ]
     },
     {
       "slug": "back-to-school",
-      "tier": "tier3",
       "publishStatus": "published",
+      "distribution": "standalone",
+      "countryCodes": [],
       "issues": [
         {
-          "code": "faq_below_minimum:1",
+          "code": "related_not_reciprocal:school-start-morocco",
           "severity": "warn",
-          "message": "FAQ count 1 is below category minimum 6."
-        },
-        {
-          "code": "seo_meta_description_length_out_of_range:87",
-          "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "direct_answer_missing:faq:كم باقي على الدراسة {{year}}؟",
-          "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
+          "message": "Related link \"school-start-morocco\" does not reciprocate link back to \"back-to-school\"."
         }
       ]
     },
     {
-      "slug": "citizen-account-saudi",
-      "tier": "tier2",
+      "slug": "bahrain-national-day",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [],
       "issues": [
         {
-          "code": "faq_below_minimum:2",
+          "code": "related_not_reciprocal:kuwait-national-day",
           "severity": "warn",
-          "message": "FAQ count 2 is below category minimum 4."
-        },
+          "message": "Related link \"kuwait-national-day\" does not reciprocate link back to \"bahrain-national-day\"."
+        }
+      ]
+    },
+    {
+      "slug": "earth-day",
+      "publishStatus": "published",
+      "distribution": "shared",
+      "countryCodes": [
+        "sa",
+        "eg",
+        "ma",
+        "dz",
+        "ae",
+        "tn",
+        "kw",
+        "qa",
+        "iq",
+        "sy",
+        "ye",
+        "jo",
+        "ly",
+        "om",
+        "ps",
+        "ca",
+        "fr",
+        "tr",
+        "us"
+      ],
+      "issues": [
         {
-          "code": "seo_meta_description_length_out_of_range:96",
+          "code": "related_not_reciprocal:summer-season",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+          "message": "Related link \"summer-season\" does not reciprocate link back to \"earth-day\"."
         }
       ]
     },
     {
       "slug": "first-dhul-hijjah",
-      "tier": "tier2",
       "publishStatus": "published",
+      "distribution": "shared",
+      "countryCodes": [
+        "sa",
+        "eg",
+        "ma",
+        "dz",
+        "ae",
+        "tn",
+        "kw",
+        "qa",
+        "iq",
+        "sy",
+        "ye",
+        "jo",
+        "ly",
+        "om",
+        "ps",
+        "ca",
+        "fr",
+        "tr",
+        "us"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:4",
+          "code": "related_not_reciprocal:ashura",
           "severity": "warn",
-          "message": "FAQ count 4 is below category minimum 6."
+          "message": "Related link \"ashura\" does not reciprocate link back to \"first-dhul-hijjah\"."
+        }
+      ]
+    },
+    {
+      "slug": "hafez-saudi",
+      "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "sa"
+      ],
+      "issues": [
+        {
+          "code": "related_not_reciprocal:citizen-account-saudi",
+          "severity": "warn",
+          "message": "Related link \"citizen-account-saudi\" does not reciprocate link back to \"hafez-saudi\"."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:85",
+          "code": "related_not_reciprocal:sand-payment-saudi",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+          "message": "Related link \"sand-payment-saudi\" does not reciprocate link back to \"hafez-saudi\"."
+        },
+        {
+          "code": "related_not_reciprocal:salary-day-saudi",
+          "severity": "warn",
+          "message": "Related link \"salary-day-saudi\" does not reciprocate link back to \"hafez-saudi\"."
+        },
+        {
+          "code": "related_not_reciprocal:pension-day-saudi",
+          "severity": "warn",
+          "message": "Related link \"pension-day-saudi\" does not reciprocate link back to \"hafez-saudi\"."
+        },
+        {
+          "code": "related_not_reciprocal:saudi-national-day",
+          "severity": "warn",
+          "message": "Related link \"saudi-national-day\" does not reciprocate link back to \"hafez-saudi\"."
+        }
+      ]
+    },
+    {
+      "slug": "housing-support-saudi",
+      "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "sa"
+      ],
+      "issues": [
+        {
+          "code": "hardcoded_year_detected",
+          "severity": "error",
+          "message": "Hardcoded year detected in content."
+        },
+        {
+          "code": "related_not_reciprocal:salary-day-saudi",
+          "severity": "warn",
+          "message": "Related link \"salary-day-saudi\" does not reciprocate link back to \"housing-support-saudi\"."
+        },
+        {
+          "code": "related_not_reciprocal:citizen-account-saudi",
+          "severity": "warn",
+          "message": "Related link \"citizen-account-saudi\" does not reciprocate link back to \"housing-support-saudi\"."
         }
       ]
     },
     {
       "slug": "independence-day-algeria",
-      "tier": "tier2",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "dz"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:3",
-          "severity": "warn",
-          "message": "FAQ count 3 is below category minimum 6."
+          "code": "hardcoded_year_detected",
+          "severity": "error",
+          "message": "Hardcoded year detected in content."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:95",
+          "code": "related_not_reciprocal:independence-day-morocco",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "direct_answer_missing:faq:كم عدد شهداء الثورة؟",
-          "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
+          "message": "Related link \"independence-day-morocco\" does not reciprocate link back to \"independence-day-algeria\"."
         },
         {
           "code": "related_not_reciprocal:uae-national-day",
@@ -268,576 +383,503 @@
     },
     {
       "slug": "independence-day-morocco",
-      "tier": "tier2",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "ma"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:2",
-          "severity": "warn",
-          "message": "FAQ count 2 is below category minimum 6."
-        },
-        {
-          "code": "seo_meta_description_length_out_of_range:94",
-          "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "direct_answer_missing:faq:متى استقل المغرب؟",
-          "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
+          "code": "hardcoded_year_detected",
+          "severity": "error",
+          "message": "Hardcoded year detected in content."
         }
       ]
     },
     {
-      "slug": "independence-day-tunisia",
-      "tier": "tier3",
+      "slug": "international-womens-day",
       "publishStatus": "published",
+      "distribution": "selective",
+      "countryCodes": [
+        "ma",
+        "tn"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:1",
+          "code": "related_not_reciprocal:mothers-day",
           "severity": "warn",
-          "message": "FAQ count 1 is below category minimum 6."
+          "message": "Related link \"mothers-day\" does not reciprocate link back to \"international-womens-day\"."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:94",
+          "code": "related_not_reciprocal:world-health-day",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+          "message": "Related link \"world-health-day\" does not reciprocate link back to \"international-womens-day\"."
         },
         {
-          "code": "direct_answer_missing:faq:متى عيد الاستقلال التونسي {{ye",
+          "code": "related_not_reciprocal:world-teachers-day",
           "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
+          "message": "Related link \"world-teachers-day\" does not reciprocate link back to \"international-womens-day\"."
         },
         {
-          "code": "related_not_reciprocal:independence-day-morocco",
+          "code": "related_not_reciprocal:earth-day",
           "severity": "warn",
-          "message": "Related link \"independence-day-morocco\" does not reciprocate link back to \"independence-day-tunisia\"."
+          "message": "Related link \"earth-day\" does not reciprocate link back to \"international-womens-day\"."
         }
       ]
     },
     {
-      "slug": "islamic-new-year",
-      "tier": "tier2",
+      "slug": "jordan-independence-day",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "jo"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:4",
+          "code": "related_not_reciprocal:kuwait-national-day",
           "severity": "warn",
-          "message": "FAQ count 4 is below category minimum 6."
+          "message": "Related link \"kuwait-national-day\" does not reciprocate link back to \"jordan-independence-day\"."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:90",
+          "code": "related_not_reciprocal:uae-national-day",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "related_not_reciprocal:ramadan",
-          "severity": "warn",
-          "message": "Related link \"ramadan\" does not reciprocate link back to \"islamic-new-year\"."
+          "message": "Related link \"uae-national-day\" does not reciprocate link back to \"jordan-independence-day\"."
         }
       ]
     },
     {
-      "slug": "isra-miraj",
-      "tier": "tier2",
+      "slug": "labor-day",
       "publishStatus": "published",
+      "distribution": "standalone",
+      "countryCodes": [],
       "issues": [
         {
-          "code": "faq_below_minimum:4",
+          "code": "related_not_reciprocal:new-year",
           "severity": "warn",
-          "message": "FAQ count 4 is below category minimum 6."
+          "message": "Related link \"new-year\" does not reciprocate link back to \"labor-day\"."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:94",
+          "code": "related_not_reciprocal:summer-vacation",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+          "message": "Related link \"summer-vacation\" does not reciprocate link back to \"labor-day\"."
         }
       ]
     },
     {
-      "slug": "kuwait-national-day",
-      "tier": "tier2",
+      "slug": "liberation-day-kuwait",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "kw"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:3",
+          "code": "related_not_reciprocal:bahrain-national-day",
           "severity": "warn",
-          "message": "FAQ count 3 is below category minimum 6."
+          "message": "Related link \"bahrain-national-day\" does not reciprocate link back to \"liberation-day-kuwait\"."
+        }
+      ]
+    },
+    {
+      "slug": "mothers-day",
+      "publishStatus": "published",
+      "distribution": "standalone",
+      "countryCodes": [],
+      "issues": [
+        {
+          "code": "related_not_reciprocal:summer-vacation",
+          "severity": "warn",
+          "message": "Related link \"summer-vacation\" does not reciprocate link back to \"mothers-day\"."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:93",
+          "code": "related_not_reciprocal:labor-day",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "related_not_reciprocal:independence-day-morocco",
-          "severity": "warn",
-          "message": "Related link \"independence-day-morocco\" does not reciprocate link back to \"kuwait-national-day\"."
+          "message": "Related link \"labor-day\" does not reciprocate link back to \"mothers-day\"."
         }
       ]
     },
     {
       "slug": "national-exams-morocco",
-      "tier": "tier3",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "ma"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:1",
-          "severity": "warn",
-          "message": "FAQ count 1 is below category minimum 6."
+          "code": "hardcoded_year_detected",
+          "severity": "error",
+          "message": "Hardcoded year detected in content."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:97",
+          "code": "missing_date_confidence_disclaimer",
+          "severity": "error",
+          "message": "Calculated-date events must include date confidence/disclaimer text."
+        },
+        {
+          "code": "related_not_reciprocal:thanaweya-exams",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+          "message": "Related link \"thanaweya-exams\" does not reciprocate link back to \"national-exams-morocco\"."
         }
       ]
     },
     {
       "slug": "new-year",
-      "tier": "tier2",
       "publishStatus": "published",
+      "distribution": "standalone",
+      "countryCodes": [],
       "issues": [
         {
-          "code": "faq_below_minimum:3",
+          "code": "related_not_reciprocal:islamic-new-year",
           "severity": "warn",
-          "message": "FAQ count 3 is below category minimum 6."
+          "message": "Related link \"islamic-new-year\" does not reciprocate link back to \"new-year\"."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:92",
+          "code": "related_not_reciprocal:summer-vacation",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "related_not_reciprocal:first-dhul-hijjah",
-          "severity": "warn",
-          "message": "Related link \"first-dhul-hijjah\" does not reciprocate link back to \"new-year\"."
+          "message": "Related link \"summer-vacation\" does not reciprocate link back to \"new-year\"."
         }
       ]
     },
     {
-      "slug": "nisf-shaban",
-      "tier": "tier2",
+      "slug": "pension-day-egypt",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "eg"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:3",
+          "code": "related_not_reciprocal:mothers-day",
           "severity": "warn",
-          "message": "FAQ count 3 is below category minimum 6."
+          "message": "Related link \"mothers-day\" does not reciprocate link back to \"pension-day-egypt\"."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:92",
+          "code": "related_not_reciprocal:sham-nessim",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+          "message": "Related link \"sham-nessim\" does not reciprocate link back to \"pension-day-egypt\"."
         },
         {
-          "code": "direct_answer_missing:faq:هل يُحتفل بالنصف من شعبان؟",
+          "code": "related_not_reciprocal:world-health-day",
           "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
-        },
+          "message": "Related link \"world-health-day\" does not reciprocate link back to \"pension-day-egypt\"."
+        }
+      ]
+    },
+    {
+      "slug": "pension-day-saudi",
+      "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "sa"
+      ],
+      "issues": [
         {
-          "code": "related_not_reciprocal:new-year",
+          "code": "related_not_reciprocal:saudi-national-day",
           "severity": "warn",
-          "message": "Related link \"new-year\" does not reciprocate link back to \"nisf-shaban\"."
+          "message": "Related link \"saudi-national-day\" does not reciprocate link back to \"pension-day-saudi\"."
         }
       ]
     },
     {
       "slug": "qatar-national-day",
-      "tier": "tier3",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "qa"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:1",
+          "code": "related_not_reciprocal:kuwait-national-day",
           "severity": "warn",
-          "message": "FAQ count 1 is below category minimum 6."
+          "message": "Related link \"kuwait-national-day\" does not reciprocate link back to \"qatar-national-day\"."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:92",
+          "code": "related_not_reciprocal:saudi-national-day",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "direct_answer_missing:faq:متى اليوم الوطني القطري {{year",
-          "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
-        },
-        {
-          "code": "related_not_reciprocal:uae-national-day",
-          "severity": "warn",
-          "message": "Related link \"uae-national-day\" does not reciprocate link back to \"qatar-national-day\"."
-        }
-      ]
-    },
-    {
-      "slug": "revolution-day-algeria",
-      "tier": "tier2",
-      "publishStatus": "published",
-      "issues": [
-        {
-          "code": "faq_below_minimum:2",
-          "severity": "warn",
-          "message": "FAQ count 2 is below category minimum 6."
-        },
-        {
-          "code": "seo_meta_description_length_out_of_range:93",
-          "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "direct_answer_missing:faq:متى عيد الثورة الجزائرية {{yea",
-          "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
-        },
-        {
-          "code": "direct_answer_missing:faq:متى بدأت ثورة التحرير؟",
-          "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
-        },
-        {
-          "code": "related_not_reciprocal:bac-results-algeria",
-          "severity": "warn",
-          "message": "Related link \"bac-results-algeria\" does not reciprocate link back to \"revolution-day-algeria\"."
+          "message": "Related link \"saudi-national-day\" does not reciprocate link back to \"qatar-national-day\"."
         }
       ]
     },
     {
       "slug": "salary-day-egypt",
-      "tier": "tier2",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "eg"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:1",
+          "code": "related_not_reciprocal:salary-day-saudi",
           "severity": "warn",
-          "message": "FAQ count 1 is below category minimum 4."
+          "message": "Related link \"salary-day-saudi\" does not reciprocate link back to \"salary-day-egypt\"."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:100",
+          "code": "related_not_reciprocal:housing-support-saudi",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "related_not_reciprocal:thanaweya-results",
-          "severity": "warn",
-          "message": "Related link \"thanaweya-results\" does not reciprocate link back to \"salary-day-egypt\"."
-        },
-        {
-          "code": "related_not_reciprocal:school-start-egypt",
-          "severity": "warn",
-          "message": "Related link \"school-start-egypt\" does not reciprocate link back to \"salary-day-egypt\"."
+          "message": "Related link \"housing-support-saudi\" does not reciprocate link back to \"salary-day-egypt\"."
         }
       ]
     },
     {
-      "slug": "salary-day-saudi",
-      "tier": "tier2",
+      "slug": "sand-payment-saudi",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "sa"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:3",
+          "code": "related_not_reciprocal:social-security-saudi",
           "severity": "warn",
-          "message": "FAQ count 3 is below category minimum 4."
+          "message": "Related link \"social-security-saudi\" does not reciprocate link back to \"sand-payment-saudi\"."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:104",
+          "code": "related_not_reciprocal:saudi-national-day",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+          "message": "Related link \"saudi-national-day\" does not reciprocate link back to \"sand-payment-saudi\"."
+        }
+      ]
+    },
+    {
+      "slug": "saudi-flag-day",
+      "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "sa"
+      ],
+      "issues": [
+        {
+          "code": "related_not_reciprocal:citizen-account-saudi",
+          "severity": "warn",
+          "message": "Related link \"citizen-account-saudi\" does not reciprocate link back to \"saudi-flag-day\"."
         },
         {
-          "code": "related_not_reciprocal:school-start-saudi",
+          "code": "related_not_reciprocal:ramadan",
           "severity": "warn",
-          "message": "Related link \"school-start-saudi\" does not reciprocate link back to \"salary-day-saudi\"."
+          "message": "Related link \"ramadan\" does not reciprocate link back to \"saudi-flag-day\"."
         },
         {
-          "code": "related_not_reciprocal:saudi-founding-day",
+          "code": "related_not_reciprocal:new-year",
           "severity": "warn",
-          "message": "Related link \"saudi-founding-day\" does not reciprocate link back to \"salary-day-saudi\"."
+          "message": "Related link \"new-year\" does not reciprocate link back to \"saudi-flag-day\"."
         }
       ]
     },
     {
       "slug": "saudi-founding-day",
-      "tier": "tier3",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "sa"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:1",
+          "code": "related_not_reciprocal:social-security-saudi",
           "severity": "warn",
-          "message": "FAQ count 1 is below category minimum 6."
+          "message": "Related link \"social-security-saudi\" does not reciprocate link back to \"saudi-founding-day\"."
+        }
+      ]
+    },
+    {
+      "slug": "school-start-algeria",
+      "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "dz"
+      ],
+      "issues": [
+        {
+          "code": "related_not_reciprocal:bac-results-morocco",
+          "severity": "warn",
+          "message": "Related link \"bac-results-morocco\" does not reciprocate link back to \"school-start-algeria\"."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:92",
+          "code": "related_not_reciprocal:back-to-school",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
+          "message": "Related link \"back-to-school\" does not reciprocate link back to \"school-start-algeria\"."
+        }
+      ]
+    },
+    {
+      "slug": "school-start-egypt",
+      "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "eg"
+      ],
+      "issues": [
         {
-          "code": "direct_answer_missing:faq:متى يوم التأسيس السعودي {{year",
+          "code": "related_not_reciprocal:bac-exams-algeria",
           "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
-        },
-        {
-          "code": "related_not_reciprocal:independence-day-algeria",
-          "severity": "warn",
-          "message": "Related link \"independence-day-algeria\" does not reciprocate link back to \"saudi-founding-day\"."
-        },
-        {
-          "code": "related_not_reciprocal:revolution-day-algeria",
-          "severity": "warn",
-          "message": "Related link \"revolution-day-algeria\" does not reciprocate link back to \"saudi-founding-day\"."
-        },
-        {
-          "code": "related_not_reciprocal:throne-day-morocco",
-          "severity": "warn",
-          "message": "Related link \"throne-day-morocco\" does not reciprocate link back to \"saudi-founding-day\"."
+          "message": "Related link \"bac-exams-algeria\" does not reciprocate link back to \"school-start-egypt\"."
         }
       ]
     },
     {
       "slug": "school-start-kuwait",
-      "tier": "tier3",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "kw"
+      ],
       "issues": [
         {
-          "code": "related_not_reciprocal:school-start-uae",
+          "code": "related_not_reciprocal:bac-results-tunisia",
           "severity": "warn",
-          "message": "Related link \"school-start-uae\" does not reciprocate link back to \"school-start-kuwait\"."
+          "message": "Related link \"bac-results-tunisia\" does not reciprocate link back to \"school-start-kuwait\"."
+        }
+      ]
+    },
+    {
+      "slug": "school-start-morocco",
+      "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "ma"
+      ],
+      "issues": [
+        {
+          "code": "related_not_reciprocal:bac-results-tunisia",
+          "severity": "warn",
+          "message": "Related link \"bac-results-tunisia\" does not reciprocate link back to \"school-start-morocco\"."
         }
       ]
     },
     {
       "slug": "school-start-saudi",
-      "tier": "tier3",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "sa"
+      ],
       "issues": [
         {
-          "code": "related_not_reciprocal:thanaweya-results",
+          "code": "missing_date_confidence_disclaimer",
+          "severity": "error",
+          "message": "Calculated-date events must include date confidence/disclaimer text."
+        },
+        {
+          "code": "related_not_reciprocal:school-start-egypt",
           "severity": "warn",
-          "message": "Related link \"thanaweya-results\" does not reciprocate link back to \"school-start-saudi\"."
+          "message": "Related link \"school-start-egypt\" does not reciprocate link back to \"school-start-saudi\"."
         }
       ]
     },
     {
       "slug": "sham-nessim",
-      "tier": "tier2",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "eg"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:3",
-          "severity": "warn",
-          "message": "FAQ count 3 is below category minimum 6."
+          "code": "hardcoded_year_detected",
+          "severity": "error",
+          "message": "Hardcoded year detected in content."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:82",
+          "code": "related_not_reciprocal:labor-day",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
+          "message": "Related link \"labor-day\" does not reciprocate link back to \"sham-nessim\"."
         },
         {
-          "code": "related_not_reciprocal:bac-results-algeria",
+          "code": "related_not_reciprocal:summer-season",
           "severity": "warn",
-          "message": "Related link \"bac-results-algeria\" does not reciprocate link back to \"sham-nessim\"."
-        }
-      ]
-    },
-    {
-      "slug": "social-security-saudi",
-      "tier": "tier3",
-      "publishStatus": "published",
-      "issues": [
-        {
-          "code": "faq_below_minimum:1",
-          "severity": "warn",
-          "message": "FAQ count 1 is below category minimum 4."
+          "message": "Related link \"summer-season\" does not reciprocate link back to \"sham-nessim\"."
         },
         {
-          "code": "seo_meta_description_length_out_of_range:107",
+          "code": "related_not_reciprocal:school-start-egypt",
           "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        }
-      ]
-    },
-    {
-      "slug": "spring-season",
-      "tier": "tier3",
-      "publishStatus": "published",
-      "issues": [
-        {
-          "code": "faq_below_minimum:2",
-          "severity": "warn",
-          "message": "FAQ count 2 is below category minimum 6."
-        },
-        {
-          "code": "seo_meta_description_length_out_of_range:89",
-          "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "content_similarity_high:autumn-season:0.85",
-          "severity": "warn",
-          "message": "Content similarity with \"autumn-season\" is high (0.85)."
+          "message": "Related link \"school-start-egypt\" does not reciprocate link back to \"sham-nessim\"."
         }
       ]
     },
     {
       "slug": "spring-vacation",
-      "tier": "tier3",
       "publishStatus": "published",
+      "distribution": "standalone",
+      "countryCodes": [],
       "issues": [
         {
-          "code": "faq_below_minimum:1",
+          "code": "related_not_reciprocal:summer-vacation",
           "severity": "warn",
-          "message": "FAQ count 1 is below category minimum 6."
-        },
-        {
-          "code": "seo_meta_description_length_out_of_range:93",
-          "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "direct_answer_missing:faq:كم باقي على عطلة الربيع {{year",
-          "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
-        },
-        {
-          "code": "related_not_reciprocal:thanaweya-results",
-          "severity": "warn",
-          "message": "Related link \"thanaweya-results\" does not reciprocate link back to \"spring-vacation\"."
+          "message": "Related link \"summer-vacation\" does not reciprocate link back to \"spring-vacation\"."
         }
       ]
     },
     {
       "slug": "summer-season",
-      "tier": "tier3",
       "publishStatus": "published",
+      "distribution": "standalone",
+      "countryCodes": [],
       "issues": [
         {
-          "code": "faq_below_minimum:2",
+          "code": "related_not_reciprocal:new-year",
           "severity": "warn",
-          "message": "FAQ count 2 is below category minimum 6."
-        },
-        {
-          "code": "seo_meta_description_length_out_of_range:88",
-          "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "content_similarity_high:winter-season:0.83",
-          "severity": "warn",
-          "message": "Content similarity with \"winter-season\" is high (0.83)."
+          "message": "Related link \"new-year\" does not reciprocate link back to \"summer-season\"."
         }
       ]
     },
     {
       "slug": "summer-vacation",
-      "tier": "tier3",
       "publishStatus": "published",
+      "distribution": "standalone",
+      "countryCodes": [],
       "issues": [
         {
-          "code": "faq_below_minimum:1",
+          "code": "related_not_reciprocal:school-start-egypt",
           "severity": "warn",
-          "message": "FAQ count 1 is below category minimum 6."
-        },
-        {
-          "code": "seo_meta_description_length_out_of_range:94",
-          "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "direct_answer_missing:faq:كم باقي على الإجازة الصيفية {{",
-          "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
+          "message": "Related link \"school-start-egypt\" does not reciprocate link back to \"summer-vacation\"."
         }
       ]
     },
     {
       "slug": "thanaweya-exams",
-      "tier": "tier2",
       "publishStatus": "published",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "eg"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:2",
-          "severity": "warn",
-          "message": "FAQ count 2 is below category minimum 6."
-        },
-        {
-          "code": "seo_meta_description_length_out_of_range:103",
-          "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "direct_answer_missing:faq:كم تدوم الامتحانات؟",
-          "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
-        },
-        {
-          "code": "related_not_reciprocal:bac-exams-algeria",
-          "severity": "warn",
-          "message": "Related link \"bac-exams-algeria\" does not reciprocate link back to \"thanaweya-exams\"."
+          "code": "hardcoded_year_detected",
+          "severity": "error",
+          "message": "Hardcoded year detected in content."
         }
       ]
     },
     {
-      "slug": "throne-day-morocco",
-      "tier": "tier2",
+      "slug": "world-health-day",
       "publishStatus": "published",
+      "distribution": "shared",
+      "countryCodes": [
+        "sa",
+        "eg",
+        "ma",
+        "dz",
+        "ae",
+        "tn",
+        "kw",
+        "qa",
+        "iq",
+        "sy",
+        "ye",
+        "jo",
+        "ly",
+        "om",
+        "ps",
+        "ca",
+        "fr",
+        "tr",
+        "us"
+      ],
       "issues": [
         {
-          "code": "faq_below_minimum:2",
+          "code": "related_not_reciprocal:new-year",
           "severity": "warn",
-          "message": "FAQ count 2 is below category minimum 6."
-        },
-        {
-          "code": "seo_meta_description_length_out_of_range:90",
-          "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "direct_answer_missing:faq:متى عيد العرش المغربي {{year}}",
-          "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
-        },
-        {
-          "code": "direct_answer_missing:faq:متى تولى الملك محمد السادس الح",
-          "severity": "warn",
-          "message": "FAQ answer should start with a direct-answer sentence."
-        }
-      ]
-    },
-    {
-      "slug": "uae-national-day",
-      "tier": "tier2",
-      "publishStatus": "published",
-      "issues": [
-        {
-          "code": "faq_below_minimum:3",
-          "severity": "warn",
-          "message": "FAQ count 3 is below category minimum 6."
-        },
-        {
-          "code": "seo_meta_description_length_out_of_range:95",
-          "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        }
-      ]
-    },
-    {
-      "slug": "winter-season",
-      "tier": "tier3",
-      "publishStatus": "published",
-      "issues": [
-        {
-          "code": "faq_below_minimum:2",
-          "severity": "warn",
-          "message": "FAQ count 2 is below category minimum 6."
-        },
-        {
-          "code": "seo_meta_description_length_out_of_range:89",
-          "severity": "warn",
-          "message": "seoMeta.metaDescription should usually stay between 110 and 170 characters."
-        },
-        {
-          "code": "content_similarity_high:summer-season:0.83",
-          "severity": "warn",
-          "message": "Content similarity with \"summer-season\" is high (0.83)."
+          "message": "Related link \"new-year\" does not reciprocate link back to \"world-health-day\"."
         }
       ]
     }

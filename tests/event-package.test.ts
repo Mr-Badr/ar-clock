@@ -18,11 +18,11 @@ test('parses a valid minimal event package', () => {
       relatedSlugs: [],
     },
     publishStatus: 'drafted',
-    tier: 'tier3',
     canonicalPath: '/holidays/demo',
   });
   assert.equal(pkg.core.slug, 'demo');
   assert.equal(pkg.publishStatus, 'drafted');
+  assert.equal(pkg.countryScope, 'none');
 });
 
 test('rejects wrong canonical path', () => {

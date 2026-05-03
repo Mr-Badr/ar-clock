@@ -1,6 +1,5 @@
 {
   "slug": "hafez-saudi",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

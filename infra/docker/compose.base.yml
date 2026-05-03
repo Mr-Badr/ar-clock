@@ -4,12 +4,22 @@ x-default-logging: &default-logging
     max-size: "10m"
     max-file: "3"
 
+x-app-common: &app-common
+  restart: unless-stopped
+  init: true
+  security_opt:
+    - no-new-privileges:true
+  logging: *default-logging
+
 services:
   app:
+    <<: *app-common
+
     build:
       context: ../..
       dockerfile: Dockerfile
       args:
+        APP_VERSION: ${APP_VERSION:-dev}
         NEXT_OUTPUT_MODE: ${NEXT_OUTPUT_MODE:-standalone}
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-}
         NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-}
@@ -18,78 +28,80 @@ services:
         GOOGLE_SITE_VERIFICATION: ${GOOGLE_SITE_VERIFICATION:-}
         ENABLE_LIVE_GEO_DB: ${ENABLE_LIVE_GEO_DB:-false}
         LIVE_GEO_PROVIDER: ${LIVE_GEO_PROVIDER:-supabase}
-        NEXT_PUBLIC_ENABLE_ANALYTICS: ${NEXT_PUBLIC_ENABLE_ANALYTICS:-false}
-        NEXT_PUBLIC_GA_MEASUREMENT_ID: ${NEXT_PUBLIC_GA_MEASUREMENT_ID:-}
-        NEXT_PUBLIC_GTM_ID: ${NEXT_PUBLIC_GTM_ID:-}
-        NEXT_PUBLIC_ENABLE_ADS: ${NEXT_PUBLIC_ENABLE_ADS:-false}
-        NEXT_PUBLIC_ADSENSE_CLIENT_ID: ${NEXT_PUBLIC_ADSENSE_CLIENT_ID:-}
-        NEXT_PUBLIC_ADSENSE_TOP_BANNER_SLOT: ${NEXT_PUBLIC_ADSENSE_TOP_BANNER_SLOT:-}
-        NEXT_PUBLIC_ADSENSE_STICKY_ANCHOR_SLOT: ${NEXT_PUBLIC_ADSENSE_STICKY_ANCHOR_SLOT:-}
-        NEXT_PUBLIC_ADSENSE_IN_ARTICLE_SLOT: ${NEXT_PUBLIC_ADSENSE_IN_ARTICLE_SLOT:-}
-        NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT: ${NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT:-}
-        NEXT_PUBLIC_ADSENSE_SIDEBAR_LEFT_SLOT: ${NEXT_PUBLIC_ADSENSE_SIDEBAR_LEFT_SLOT:-}
-        NEXT_PUBLIC_ADSENSE_SIDEBAR_RIGHT_SLOT: ${NEXT_PUBLIC_ADSENSE_SIDEBAR_RIGHT_SLOT:-}
-        NEXT_PUBLIC_ENABLE_CONSENT_BANNER: ${NEXT_PUBLIC_ENABLE_CONSENT_BANNER:-false}
-        NEXT_PUBLIC_ENABLE_SW: ${NEXT_PUBLIC_ENABLE_SW:-false}
         NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:-}
         NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:-}
+
     image: ${APP_IMAGE:-ghcr.io/mr-badr/ar-clock}:${APP_TAG:-latest}
-    restart: unless-stopped
-    init: true
+
     expose:
       - "3000"
+
     environment:
       NODE_ENV: production
+      APP_VERSION: ${APP_VERSION:-dev}
       NEXT_OUTPUT_MODE: ${NEXT_OUTPUT_MODE:-standalone}
       HOSTNAME: 0.0.0.0
       PORT: 3000
+
     healthcheck:
-      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then((res)=>{if(!res.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
+        ]
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 40s
+
     stop_grace_period: 30s
+
     networks:
       - backend
-    security_opt:
-      - no-new-privileges:true
-    logging: *default-logging
 
   nginx:
+    <<: *app-common
+
     image: nginx:1.27-alpine
-    restart: unless-stopped
-    ports:
-     - "80:80"
-     - "443:443"
+
     depends_on:
       app:
         condition: service_healthy
+
     volumes:
       - ../nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ../nginx/conf.d:/etc/nginx/conf.d:ro
       - ../nginx/snippets:/etc/nginx/snippets:ro
       - /opt/miqatona/ssl:/etc/nginx/ssl:ro
+
     healthcheck:
-      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1/nginx-health | grep -q ok"]
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q -O - http://127.0.0.1/nginx-health | grep -q ok"
+        ]
       interval: 30s
       timeout: 5s
       retries: 5
       start_period: 10s
+
     read_only: true
+
     tmpfs:
       - /tmp
       - /var/cache/nginx
+      - /var/run
+
     networks:
       - edge
       - backend
-    security_opt:
-      - no-new-privileges:true
-    logging: *default-logging
 
 networks:
   edge:
     driver: bridge
+
   backend:
     driver: bridge
     internal: true

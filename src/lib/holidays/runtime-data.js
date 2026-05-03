@@ -1,6 +1,5 @@
 import {
   formatGregorianAr,
-  getEventBySlug,
   getEventState,
   getNextEventDate,
   getTimeRemaining,
@@ -8,7 +7,7 @@ import {
 } from '@/lib/holidays-engine';
 import { resolveAllHijriEvents } from '@/lib/hijri-resolver';
 import { getCachedNowIso } from '@/lib/date-utils';
-import { getRichContent } from '@/lib/event-content';
+import { getHolidayRuntimeRecord } from '@/lib/holidays/repository';
 
 export function buildHolidayTokenContext({ event, seo, remaining, gregStr, hijriStr }) {
   return {
@@ -22,20 +21,27 @@ export function buildHolidayTokenContext({ event, seo, remaining, gregStr, hijri
 }
 
 export async function resolveHolidayRuntimeData(slug, options = {}) {
-  const baseEvent = getEventBySlug(slug);
-  if (!baseEvent) return null;
+  const runtimeRecord = getHolidayRuntimeRecord(slug);
+  if (!runtimeRecord?.core) return null;
 
-  const requestedSlug = slug;
-  const canonicalSlug = baseEvent.__canonicalSlug || baseEvent.slug;
-  const isAlias = Boolean(baseEvent.__isAlias);
-  const aliasCountryCode = baseEvent.__aliasCountryCode || null;
+  const baseEvent = {
+    ...runtimeRecord.core,
+    __requestedSlug: runtimeRecord.requestedSlug,
+    __canonicalSlug: runtimeRecord.canonicalSlug,
+    __isAlias: runtimeRecord.isAlias,
+    __aliasCountryCode: runtimeRecord.countryCode,
+  };
+
+  const requestedSlug = runtimeRecord.requestedSlug || slug;
+  const canonicalSlug = runtimeRecord.canonicalSlug || baseEvent.slug;
+  const isAlias = Boolean(runtimeRecord.isAlias);
+  const aliasCountryCode = runtimeRecord.countryCode || null;
   const redirectTo = null;
 
-  const richContent = getRichContent(requestedSlug);
   const event = {
     ...baseEvent,
     slug: requestedSlug,
-    ...richContent,
+    ...(runtimeRecord.content || {}),
     _countryCode: aliasCountryCode || baseEvent._countryCode || null,
   };
 

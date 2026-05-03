@@ -1,6 +1,5 @@
 {
   "slug": "nisf-shaban",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

@@ -35,7 +35,9 @@ import {
   pushDiscoveryHistory,
   readDiscoveryHistory,
 } from '@/lib/site/discovery-history';
+import { navigateToDiscoveryHref } from '@/lib/site/discovery-navigation';
 import { OPEN_DISCOVERY_SEARCH_EVENT } from '@/lib/site/discovery-events';
+import { logger, serializeError } from '@/lib/logger';
 
 import styles from './DiscoveryWorkspace.module.css';
 
@@ -152,11 +154,15 @@ export default function GlobalDiscoverySearch() {
       setTopSearches(Array.isArray(data?.topSearches) ? data.topSearches : []);
     } catch (error) {
       hasPrimedRef.current = false;
-      console.error('[global-discovery-search] prime failed', error);
+      logger.warn('global-discovery-search-prime-failed', {
+        component: 'GlobalDiscoverySearch',
+        pathname,
+        error: serializeError(error),
+      });
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     if (!open) {
@@ -199,7 +205,12 @@ export default function GlobalDiscoverySearch() {
       })
       .catch((error) => {
         if (controller.signal.aborted) return;
-        console.error('[global-discovery-search] search failed', error);
+        logger.warn('global-discovery-search-query-failed', {
+          component: 'GlobalDiscoverySearch',
+          pathname,
+          query: trimmedQuery,
+          error: serializeError(error),
+        });
         setSearchResults([]);
         setResolvedQuery(trimmedQuery);
       })
@@ -236,12 +247,16 @@ export default function GlobalDiscoverySearch() {
     if (searchValue) rememberSearch(searchValue);
     setOpen(false);
 
-    if (typeof window !== 'undefined') {
-      const currentHref = `${window.location.pathname}${window.location.search}`;
-      if (currentHref === href) return;
-    }
-
-    router.push(href);
+    navigateToDiscoveryHref({
+      router,
+      rawHref: href,
+      source: 'header-global-discovery-search',
+      context: {
+        title: title || null,
+        pathname,
+        searchValue: searchValue || null,
+      },
+    });
 
     if (title) {
       refreshRecentVisits();

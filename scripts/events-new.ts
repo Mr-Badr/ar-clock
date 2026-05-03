@@ -107,7 +107,6 @@ function main() {
     aliasSlugs: [],
     countryScope,
     keywordTemplateSet: buildKeywordTemplateSet(name),
-    tier: 'tier3',
     publishStatus,
     canonicalPath: `/holidays/${slug}`,
     canonicalSource: 'internal',
@@ -122,7 +121,6 @@ function main() {
 
   const qa = buildEmptyQaRecord({
     slug,
-    tier: 'tier3',
     publishStatus,
     updatedAt: createdAt,
   });
@@ -143,9 +141,9 @@ function main() {
   }
 
   console.log(`[events:new] Created event folder: ${eventDir}`);
-  console.log('[events:new] Next steps: update package.json, research.json, qa.json, then run npm run validate:holidays:slug -- --slug <slug>.');
-  console.log('[events:new] You do not need to edit src/lib/events/index.js or src/lib/event-content/index.js. Dev/build regenerate the event indexes automatically.');
-  console.log('[events:new] New events now default to publishStatus="drafted". Pass --publish true or --status published only after the content is ready.');
+  console.log('[events:new] Edit only package.json, research.json, and qa.json inside this folder.');
+  console.log('[events:new] You do not need to edit src/lib/events/index.js, src/lib/event-content/index.js, or generated files.');
+  console.log('[events:new] When the content is ready, run npm run events:sync -- --slug <slug> to validate, build, and make the event live automatically.');
 }
 
 main();

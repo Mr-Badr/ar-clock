@@ -1,6 +1,5 @@
 {
   "slug": "summer-vacation",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

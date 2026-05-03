@@ -96,6 +96,126 @@
     "order": 8
   },
   {
+    "code": "iq",
+    "aliasSlugToken": "iraq",
+    "nameAr": "العراق",
+    "officialNameAr": "جمهورية العراق",
+    "authority": "الجهات الشرعية العراقية",
+    "dateVarianceLabel": "رؤية هلال محلية",
+    "localTerms": ["العراق", "العراقي"],
+    "flag": "🇮🇶",
+    "timezone": "Asia/Baghdad",
+    "order": 9
+  },
+  {
+    "code": "sy",
+    "aliasSlugToken": "syria",
+    "nameAr": "سوريا",
+    "officialNameAr": "الجمهورية العربية السورية",
+    "authority": "وزارة الأوقاف السورية",
+    "dateVarianceLabel": "رؤية هلال محلية",
+    "localTerms": ["سوريا", "سورية"],
+    "flag": "🇸🇾",
+    "timezone": "Asia/Damascus",
+    "order": 10
+  },
+  {
+    "code": "ye",
+    "aliasSlugToken": "yemen",
+    "nameAr": "اليمن",
+    "officialNameAr": "الجمهورية اليمنية",
+    "authority": "وزارة الأوقاف والإرشاد",
+    "dateVarianceLabel": "رؤية هلال محلية",
+    "localTerms": ["اليمن", "اليمني"],
+    "flag": "🇾🇪",
+    "timezone": "Asia/Aden",
+    "order": 11
+  },
+  {
+    "code": "jo",
+    "aliasSlugToken": "jordan",
+    "nameAr": "الأردن",
+    "officialNameAr": "المملكة الأردنية الهاشمية",
+    "authority": "دائرة الإفتاء العام",
+    "dateVarianceLabel": "رؤية هلال محلية",
+    "localTerms": ["الأردن", "الاردن", "الأردنية"],
+    "flag": "🇯🇴",
+    "timezone": "Asia/Amman",
+    "order": 12
+  },
+  {
+    "code": "ly",
+    "aliasSlugToken": "libya",
+    "nameAr": "ليبيا",
+    "officialNameAr": "دولة ليبيا",
+    "authority": "دار الإفتاء الليبية",
+    "dateVarianceLabel": "رؤية هلال محلية",
+    "localTerms": ["ليبيا", "الليبية"],
+    "flag": "🇱🇾",
+    "timezone": "Africa/Tripoli",
+    "order": 13
+  },
+  {
+    "code": "om",
+    "aliasSlugToken": "oman",
+    "nameAr": "عمان",
+    "officialNameAr": "سلطنة عمان",
+    "authority": "وزارة الأوقاف والشؤون الدينية",
+    "dateVarianceLabel": "رؤية هلال محلية",
+    "localTerms": ["عمان", "سلطنة عمان"],
+    "flag": "🇴🇲",
+    "timezone": "Asia/Muscat",
+    "order": 14
+  },
+  {
+    "code": "ps",
+    "aliasSlugToken": "palestine",
+    "nameAr": "فلسطين",
+    "officialNameAr": "دولة فلسطين",
+    "authority": "دار الإفتاء الفلسطينية",
+    "dateVarianceLabel": "رؤية هلال محلية",
+    "localTerms": ["فلسطين", "فلسطينية"],
+    "flag": "🇵🇸",
+    "timezone": "Asia/Gaza",
+    "order": 15
+  },
+  {
+    "code": "ca",
+    "aliasSlugToken": "canada",
+    "nameAr": "كندا",
+    "officialNameAr": "كندا",
+    "authority": "المجالس الإسلامية المحلية",
+    "dateVarianceLabel": "إعلان محلي / حسابات فلكية",
+    "localTerms": ["كندا", "الكندية"],
+    "flag": "🇨🇦",
+    "timezone": "America/Toronto",
+    "order": 16
+  },
+  {
+    "code": "fr",
+    "aliasSlugToken": "france",
+    "nameAr": "فرنسا",
+    "officialNameAr": "الجمهورية الفرنسية",
+    "authority": "المجلس الفرنسي للديانة الإسلامية",
+    "dateVarianceLabel": "إعلان محلي / حسابات فلكية",
+    "localTerms": ["فرنسا", "الفرنسية"],
+    "flag": "🇫🇷",
+    "timezone": "Europe/Paris",
+    "order": 17
+  },
+  {
+    "code": "tr",
+    "aliasSlugToken": "turkey",
+    "nameAr": "تركيا",
+    "officialNameAr": "الجمهورية التركية",
+    "authority": "رئاسة الشؤون الدينية",
+    "dateVarianceLabel": "حسابات فلكية رسمية",
+    "localTerms": ["تركيا", "التركية"],
+    "flag": "🇹🇷",
+    "timezone": "Europe/Istanbul",
+    "order": 18
+  },
+  {
     "code": "us",
     "aliasSlugToken": "usa",
     "nameAr": "أمريكا",
@@ -105,6 +225,6 @@
     "localTerms": ["أمريكا", "أميركا", "الولايات المتحدة", "الولايات المتحدة الأمريكية"],
     "flag": "🇺🇸",
     "timezone": "America/New_York",
-    "order": 9
+    "order": 19
   }
 ]

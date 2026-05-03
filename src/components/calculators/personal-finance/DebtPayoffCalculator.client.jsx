@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 
+import CalculatorCurrencyField, { usePreferredCurrency } from '@/components/calculators/CurrencyField.client';
 import { CalcButton as Button, CalcInput as Input } from '@/components/calculators/controls.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,9 +16,11 @@ const DEFAULT_DEBTS = [
 ];
 
 export default function DebtPayoffCalculator() {
+  const { currency, setCurrency, options: currencyOptions } = usePreferredCurrency();
   const [debts, setDebts] = useState(DEFAULT_DEBTS);
   const [extraPayment, setExtraPayment] = useState('500');
   const [referenceDateIso, setReferenceDateIso] = useState(null);
+  const formatMoney = (value) => formatCurrency(value, currency);
 
   useEffect(() => {
     setReferenceDateIso(new Date().toISOString());
@@ -52,9 +55,9 @@ export default function DebtPayoffCalculator() {
   }
 
   const shareText = result.isValid ? [
-    `طريقة كرة الثلج: ${result.snowball.months} شهر | فائدة ${formatCurrency(result.snowball.totalInterest)}`,
-    `طريقة الانهيار: ${result.avalanche.months} شهر | فائدة ${formatCurrency(result.avalanche.totalInterest)}`,
-    `الوفر عند الانهيار: ${formatCurrency(result.interestSavedWithAvalanche)}`,
+    `طريقة كرة الثلج: ${result.snowball.months} شهر | فائدة ${formatMoney(result.snowball.totalInterest)}`,
+    `طريقة الانهيار: ${result.avalanche.months} شهر | فائدة ${formatMoney(result.avalanche.totalInterest)}`,
+    `الوفر عند الانهيار: ${formatMoney(result.interestSavedWithAvalanche)}`,
   ].join('\n') : '';
 
   return (
@@ -65,6 +68,13 @@ export default function DebtPayoffCalculator() {
             <CardTitle className="calc-card-title">أدخل ديونك الحالية</CardTitle>
           </CardHeader>
           <CardContent className="calc-form-grid">
+            <CalculatorCurrencyField
+              currency={currency}
+              onChange={setCurrency}
+              options={currencyOptions}
+              hint="تُستخدم هذه العملة في الرصيد والفائدة والوفر بين طريقتي السداد."
+              id="debt-payoff-currency"
+            />
             {debts.map((debt, index) => (
               <div key={debt.id} className="card-nested p-4">
                 <div className="calc-field-row mb-3">
@@ -121,17 +131,17 @@ export default function DebtPayoffCalculator() {
                 <div className="calc-metric-card">
                   <div className="calc-metric-card__label">كرة الثلج</div>
                   <div className="calc-metric-card__value">{result.snowball.isValid ? `${result.snowball.months} شهر` : 'أدخل الديون'}</div>
-                  <div className="calc-metric-card__note">إجمالي الفائدة: {formatCurrency(result.snowball.totalInterest)}</div>
+                  <div className="calc-metric-card__note">إجمالي الفائدة: {formatMoney(result.snowball.totalInterest)}</div>
                 </div>
                 <div className="calc-metric-card">
                   <div className="calc-metric-card__label">الانهيار</div>
                   <div className="calc-metric-card__value">{result.avalanche.isValid ? `${result.avalanche.months} شهر` : 'أدخل الديون'}</div>
-                  <div className="calc-metric-card__note">إجمالي الفائدة: {formatCurrency(result.avalanche.totalInterest)}</div>
+                  <div className="calc-metric-card__note">إجمالي الفائدة: {formatMoney(result.avalanche.totalInterest)}</div>
                 </div>
               </div>
               <div className="calc-metric-card">
                 <div className="calc-metric-card__label">الوفر عند استخدام الانهيار</div>
-                <div className="calc-metric-card__value">{formatCurrency(result.interestSavedWithAvalanche)}</div>
+                <div className="calc-metric-card__value">{formatMoney(result.interestSavedWithAvalanche)}</div>
                 <div className="calc-metric-card__note">فرق الفائدة التقريبي بين الطريقتين عند نفس الدفعة الإضافية</div>
               </div>
               <div className="calc-metric-card">

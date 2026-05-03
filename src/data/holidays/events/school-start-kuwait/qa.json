@@ -1,6 +1,5 @@
 {
   "slug": "school-start-kuwait",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

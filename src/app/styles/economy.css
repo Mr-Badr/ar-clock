@@ -928,64 +928,213 @@
 
 .economy-activity-card {
   display: grid;
-  gap: var(--space-4);
-  padding: var(--space-5);
+  gap: var(--space-5);
+  padding: clamp(1.1rem, 2vw, 1.4rem);
   border-radius: var(--radius-2xl);
   border: 1px solid var(--border-default);
-  background: linear-gradient(180deg, var(--bg-surface-2) 0%, var(--bg-surface-1) 100%);
-  box-shadow: var(--shadow-card);
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--warning) 12%, transparent) 0%, transparent 34%),
+    radial-gradient(circle at top left, color-mix(in srgb, var(--info) 10%, transparent) 0%, transparent 38%),
+    linear-gradient(180deg, var(--bg-surface-2) 0%, var(--bg-surface-1) 100%);
+  box-shadow: var(--shadow-card), inset 0 1px 0 color-mix(in srgb, var(--border-default) 35%, transparent);
 }
 
-.economy-activity-chart {
+.economy-activity-card__body {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.economy-activity-card__summary {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.economy-activity-card__summary-card {
+  display: grid;
+  gap: 0.45rem;
+  padding: var(--space-4);
+  border-radius: var(--radius-xl);
+  border: 1px solid color-mix(in srgb, var(--border-default) 80%, transparent);
+  background: color-mix(in srgb, var(--bg-surface-2) 72%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 6%, transparent);
+}
+
+.economy-activity-card__summary-card[data-band='warm'] {
+  border-color: color-mix(in srgb, var(--info) 34%, var(--border-default));
+}
+
+.economy-activity-card__summary-card[data-band='active'] {
+  border-color: color-mix(in srgb, var(--success) 34%, var(--border-default));
+}
+
+.economy-activity-card__summary-card[data-band='peak'] {
+  border-color: color-mix(in srgb, var(--warning) 38%, var(--border-default));
+}
+
+.economy-activity-card__summary-label {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.economy-activity-card__summary-value {
+  color: var(--text-primary);
+  font-size: clamp(1.05rem, 1.8vw, 1.28rem);
+  line-height: 1.4;
+}
+
+.economy-activity-card__summary-detail {
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.economy-activity-card__visual {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.economy-activity-chart-shell {
+  position: relative;
+  min-height: 320px;
+  min-width: 640px;
+  border-radius: calc(var(--radius-2xl) - 0.15rem);
+  border: 1px solid color-mix(in srgb, var(--border-default) 80%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-surface-3) 72%, transparent) 0%, color-mix(in srgb, var(--bg-surface-1) 92%, transparent) 100%);
+  overflow: hidden;
+}
+
+.economy-activity-chart__svg {
+  width: 100%;
+  height: 280px;
+  display: block;
+}
+
+.economy-activity-chart__grid-line {
+  stroke: color-mix(in srgb, var(--border-default) 74%, transparent);
+  stroke-width: 1;
+}
+
+.economy-activity-chart__grid-label {
+  fill: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.economy-activity-chart__area {
+  opacity: 0.95;
+}
+
+.economy-activity-chart__line {
+  stroke-width: 4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  filter: drop-shadow(0 6px 16px color-mix(in srgb, var(--info) 18%, transparent));
+}
+
+.economy-activity-chart__stem {
+  stroke: color-mix(in srgb, var(--border-default) 42%, transparent);
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+}
+
+.economy-activity-chart__stem[data-current='true'] {
+  stroke: color-mix(in srgb, var(--warning) 46%, transparent);
+}
+
+.economy-activity-chart__point {
+  fill: var(--text-muted);
+  stroke: color-mix(in srgb, var(--bg-surface-1) 90%, transparent);
+  stroke-width: 3;
+}
+
+.economy-activity-chart__point[data-band='warm'] {
+  fill: var(--info);
+}
+
+.economy-activity-chart__point[data-band='active'] {
+  fill: var(--success);
+}
+
+.economy-activity-chart__point[data-band='peak'] {
+  fill: var(--warning);
+}
+
+.economy-activity-chart__point[data-current='true'] {
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--warning) 42%, transparent));
+}
+
+.economy-activity-chart__point-ring {
+  fill: transparent;
+  stroke: color-mix(in srgb, var(--warning) 50%, transparent);
+  stroke-width: 2;
+}
+
+.economy-activity-chart__xlabels {
   display: grid;
   grid-template-columns: repeat(24, minmax(0, 1fr));
-  gap: 0.45rem;
-  align-items: end;
-  min-height: 240px;
+  gap: 0;
+  padding: 0 0.75rem 0.85rem;
 }
 
-.economy-activity-chart__column {
+.economy-activity-chart__xlabel {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  text-align: center;
+  min-height: 1rem;
+}
+
+.economy-activity-chart__xlabel[data-current='true'] {
+  color: var(--text-primary);
+  font-weight: 800;
+}
+
+.economy-activity-card__insight {
   display: grid;
-  gap: 0.5rem;
-  align-items: end;
+  gap: 0.7rem;
+  padding: var(--space-4);
+  border-radius: var(--radius-xl);
+  border: 1px solid color-mix(in srgb, var(--border-default) 75%, transparent);
+  background: color-mix(in srgb, var(--bg-surface-2) 74%, transparent);
 }
 
-.economy-activity-chart__value {
-  color: var(--text-muted);
-  font-size: 0.72rem;
-  text-align: center;
+.economy-activity-card__insight-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
 }
 
-.economy-activity-chart__bar {
-  height: var(--bar-height);
-  min-height: 12px;
-  border-radius: var(--radius-md);
-  background: linear-gradient(180deg, color-mix(in srgb, var(--text-muted) 60%, transparent) 0%, var(--text-secondary) 100%);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border-default) 80%, transparent);
+.economy-activity-card__insight-head strong {
+  color: var(--text-primary);
+  font-size: 1rem;
 }
 
-.economy-activity-chart__bar[data-band='warm'] {
-  background: linear-gradient(180deg, color-mix(in srgb, var(--info) 55%, transparent) 0%, var(--info) 100%);
+.economy-activity-card__insight-head span {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
 }
 
-.economy-activity-chart__bar[data-band='active'] {
-  background: linear-gradient(180deg, color-mix(in srgb, var(--success) 55%, transparent) 0%, var(--success) 100%);
+.economy-activity-card__insight-body {
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  margin: 0;
 }
 
-.economy-activity-chart__bar[data-band='peak'] {
-  background: linear-gradient(180deg, color-mix(in srgb, var(--warning) 45%, transparent) 0%, var(--warning) 100%);
-}
-
-.economy-activity-chart__hour {
-  color: var(--text-muted);
-  font-size: 0.72rem;
-  text-align: center;
+.economy-activity-card__insight-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
 }
 
 .economy-activity-chart__legend {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .economy-activity-chart__legend span {
@@ -994,12 +1143,16 @@
   gap: 0.45rem;
   color: var(--text-secondary);
   font-size: var(--text-sm);
+  padding: 0.4rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--border-default) 80%, transparent);
+  background: color-mix(in srgb, var(--bg-surface-2) 72%, transparent);
 }
 
 .economy-activity-chart__legend span::before {
   content: '';
-  width: 0.85rem;
-  height: 0.85rem;
+  width: 0.7rem;
+  height: 0.7rem;
   border-radius: 999px;
   background: var(--text-secondary);
 }
@@ -1023,6 +1176,10 @@
   }
 
   .economy-meter {
+    grid-template-columns: 1fr;
+  }
+
+  .economy-activity-card__summary {
     grid-template-columns: 1fr;
   }
 
@@ -3364,9 +3521,9 @@
     min-width: 480px; /* preserve legibility; container scrolls */
   }
 
-  .economy-activity-chart-scroll .economy-activity-chart__hour,
+  .economy-activity-chart-scroll .economy-activity-chart__xlabel,
   .economy-activity-chart-scroll .economy-activity-hours span,
-  .economy-activity-chart-scroll .economy-activity-chart__value {
+  .economy-activity-chart-scroll .economy-activity-chart__grid-label {
     display: block; /* restore labels when inside scroll container */
     font-size: 0.62rem;
   }

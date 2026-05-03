@@ -1,6 +1,5 @@
 {
   "slug": "pension-day-egypt",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

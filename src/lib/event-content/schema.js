@@ -48,6 +48,7 @@ const richContentSchema = z
 const CURRENT_YEAR = new Date().getUTCFullYear();
 const LIKELY_DYNAMIC_YEAR_RE = /\b20\d{2}\b/g;
 const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}(T.*)?$/;
+const URL_RE = /^https?:\/\//i;
 const META_DATE_KEYS = new Set(['datePublished', 'dateModified', 'updatedAt', 'generatedAt', 'lastModified']);
 
 function normalizeFaq(content) {
@@ -64,6 +65,7 @@ function hasHardcodedYear(content) {
       !next.value.includes('{{year}}') &&
       !next.value.includes('{{nextYear}}') &&
       !ISO_DATE_RE.test(next.value) &&
+      !URL_RE.test(next.value) &&
       !META_DATE_KEYS.has(next.key)
     ) {
       const matches = next.value.match(LIKELY_DYNAMIC_YEAR_RE) || [];

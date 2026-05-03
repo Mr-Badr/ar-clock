@@ -491,7 +491,7 @@
     "slug": "mothers-day",
     "name": "عيد الأم",
     "type": "fixed",
-    "category": "holidays",
+    "category": "social",
     "month": 3,
     "day": 21
   },
@@ -545,7 +545,7 @@
     "slug": "world-health-day",
     "name": "يوم الصحة العالمي",
     "type": "fixed",
-    "category": "support",
+    "category": "social",
     "month": 4,
     "day": 7
   },
@@ -554,7 +554,7 @@
     "slug": "earth-day",
     "name": "يوم الأرض",
     "type": "fixed",
-    "category": "support",
+    "category": "social",
     "month": 4,
     "day": 22
   },
@@ -572,7 +572,7 @@
     "slug": "international-womens-day",
     "name": "اليوم الدولي للمرأة",
     "type": "fixed",
-    "category": "support",
+    "category": "social",
     "month": 3,
     "day": 8
   },
@@ -590,7 +590,7 @@
     "slug": "arabic-language-day",
     "name": "اليوم العالمي للغة العربية",
     "type": "fixed",
-    "category": "support",
+    "category": "social",
     "month": 12,
     "day": 18
   },
@@ -739,5 +739,15 @@
     "_countryCode": "us",
     "month": 12,
     "day": 31
+  },
+  {
+    "id": "world-fathers-day",
+    "slug": "world-fathers-day",
+    "name": "يوم الأب العالمي",
+    "type": "floating",
+    "category": "social",
+    "month": 6,
+    "weekday": 0,
+    "nth": 3
   }
 ]

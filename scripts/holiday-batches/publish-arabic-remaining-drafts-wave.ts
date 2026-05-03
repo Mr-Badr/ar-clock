@@ -7,8 +7,6 @@ import {
 
 type EventCategory = 'islamic' | 'astronomy' | 'school' | 'business';
 type EventType = 'fixed' | 'estimated' | 'hijri' | 'monthly';
-type Tier = 'tier1' | 'tier2' | 'tier3';
-
 type Source = {
   label: string;
   url: string;
@@ -43,7 +41,6 @@ type EventCore = {
 
 type EventConfig = {
   core: EventCore;
-  tier: Tier;
   queueOrder: number;
   sourceAuthority: string;
   seoTitle: string;
@@ -364,7 +361,6 @@ function buildPackage(config: EventConfig, current: any) {
               `كم باقي على ${config.core.name} في {{countryName}}`,
             ],
       },
-    tier: config.tier,
     publishStatus: 'published',
     canonicalPath: `/holidays/${config.core.slug}`,
     canonicalSource: 'internal',
@@ -399,13 +395,11 @@ function buildQa(config: EventConfig, current: any) {
   return {
     ...(buildEmptyQaRecord({
       slug: config.core.slug,
-      tier: config.tier,
       publishStatus: 'published',
       updatedAt: NOW_ISO,
     }) as any),
     ...(current || {}),
     slug: config.core.slug,
-    tier: config.tier,
     publishStatus: 'published',
     checks: {
       contentReady: true,
@@ -430,7 +424,6 @@ const configs: EventConfig[] = [
       hijriMonth: 8,
       hijriDay: 15,
     },
-    tier: 'tier1',
     queueOrder: 11,
     sourceAuthority: 'hijri-authority',
     seoTitle: 'ليلة النصف من شعبان {{year}} — كم باقي وفضل 15 شعبان',
@@ -666,7 +659,6 @@ const configs: EventConfig[] = [
       hijriMonth: 7,
       hijriDay: 27,
     },
-    tier: 'tier1',
     queueOrder: 10,
     sourceAuthority: 'hijri-authority',
     seoTitle: 'ليلة الإسراء والمعراج {{year}} — كم باقي وموعد 27 رجب',
@@ -901,7 +893,6 @@ const configs: EventConfig[] = [
       month: 12,
       day: 21,
     },
-    tier: 'tier1',
     queueOrder: 15,
     sourceAuthority: 'seasonal-astronomy',
     seoTitle: 'بداية فصل الشتاء {{year}} — كم باقي والانقلاب الشتوي',
@@ -1136,7 +1127,6 @@ const configs: EventConfig[] = [
       month: 3,
       day: 20,
     },
-    tier: 'tier1',
     queueOrder: 16,
     sourceAuthority: 'seasonal-astronomy',
     seoTitle: 'بداية فصل الربيع {{year}} — كم باقي والاعتدال الربيعي',
@@ -1373,7 +1363,6 @@ const configs: EventConfig[] = [
       _countryCode: 'eg',
       day: 24,
     },
-    tier: 'tier2',
     queueOrder: 33,
     sourceAuthority: 'egypt-mof-announcements',
     seoTitle: 'موعد صرف مرتبات مصر الحكومية {{year}} — كم باقي والموعد المرجعي',
@@ -1598,7 +1587,6 @@ const configs: EventConfig[] = [
       category: 'school',
       date: '{{year}}-09-20',
     },
-    tier: 'tier1',
     queueOrder: 20,
     sourceAuthority: 'official-announcement',
     seoTitle: 'الدخول المدرسي {{year}} — كم باقي ومواعيد الدراسة عربياً',
@@ -1838,7 +1826,6 @@ const configs: EventConfig[] = [
       category: 'school',
       date: '{{year}}-03-29',
     },
-    tier: 'tier1',
     queueOrder: 18,
     sourceAuthority: 'official-announcement',
     seoTitle: 'عطلة الربيع المدرسية {{year}} — كم باقي ومتى تبدأ',
@@ -2074,7 +2061,6 @@ const configs: EventConfig[] = [
       month: 9,
       day: 15,
     },
-    tier: 'tier2',
     queueOrder: 56,
     sourceAuthority: 'kuwait-moe-calendar',
     seoTitle: 'بدء الدراسة في الكويت {{year}} — كم باقي والرزنامة المدرسية',

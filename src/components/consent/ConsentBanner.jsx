@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import {
-  isConsentBannerEnabled,
   readMarketingConsent,
   writeMarketingConsent,
 } from "@/lib/client/marketing";
+import { useConsentBannerEnabled } from "@/lib/client/public-runtime";
 
 export default function ConsentBanner() {
-  const enabled = isConsentBannerEnabled();
+  const enabled = useConsentBannerEnabled();
   const [ready, setReady] = useState(false);
   const [choice, setChoice] = useState(null);
 

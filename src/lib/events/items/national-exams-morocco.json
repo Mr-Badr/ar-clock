@@ -1,9 +1,0 @@
-{
-  "id": "national-exam-ma",
-  "slug": "national-exams-morocco",
-  "name": "الامتحان الوطني للبكالوريا في المغرب",
-  "type": "estimated",
-  "category": "school",
-  "_countryCode": "ma",
-  "date": "{{year}}-06-04"
-}

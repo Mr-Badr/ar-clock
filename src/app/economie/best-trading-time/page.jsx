@@ -5,7 +5,10 @@ import {
   buildEconomyToolPageMetadata,
   buildEconomyToolPageSchemas,
 } from '@/lib/economy/page-helpers';
-import { getCachedEconomyPageSnapshot } from '@/lib/economy/page-snapshots.server';
+import {
+  getCachedEconomyPageSnapshot,
+  getEconomyPageServerState,
+} from '@/lib/economy/page-snapshots.server';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
 import {
@@ -27,12 +30,43 @@ const SEARCH_COVERAGE = buildEconomyPageSearchCoverage(PAGE_SCOPE, FAQ_ITEMS.bes
 
 export const metadata = buildEconomyToolPageMetadata(PAGE_SCOPE, FAQ_ITEMS.bestTradingTime);
 
+async function BestTradingTimeServerSections() {
+  const { serverModel } = await getEconomyPageServerState(PAGE_SCOPE);
+
+  return (
+    <>
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="كيف تستخدم الصفحة بشكل صحيح؟"
+          lead="بدلاً من صياغة عامة عن أفضل وقت، تشرح هذه الطبقة الثابتة متى تساعدك الصفحة فعلاً، ومتى لا تكفي وحدها، وكيف تربطها بسياقك الفعلي."
+        />
+        <EconomyGuide sections={serverModel.helpSections} />
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="توصيات عملية قبل اتخاذ أي قرار"
+          lead="هذه ليست إشارات شراء أو بيع، بل طريقة لترجمة الوقت إلى استخدام أكثر ذكاءً بحسب أسلوب المتابعة والسوق الذي تراقبه."
+        />
+        <InsightCards cards={serverModel.recommendationCards} />
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="الاستخدام المسؤول لهذه الصفحة"
+          lead="هذا الجزء مهم للثقة والوضوح: أفضل وقت لا يساوي قراراً جاهزاً، والصفحة هنا للتصفية والتنظيم لا لاستبدال التحقق والسوق والوسيط."
+        />
+        <EconomyGuide sections={serverModel.responsibleUseSections} />
+      </section>
+    </>
+  );
+}
+
 export default async function BestTradingTimePage() {
   const {
     initialViewer,
     initialNowIso,
     liveSnapshot,
-    serverModel,
   } = await getCachedEconomyPageSnapshot(PAGE_SCOPE);
   const schemas = buildEconomyToolPageSchemas({ scope: PAGE_SCOPE, faqItems: FAQ_ITEMS.bestTradingTime });
 
@@ -61,29 +95,9 @@ export default async function BestTradingTimePage() {
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>
 
-        <section className="economy-section">
-          <EconomySectionHeader
-            title="كيف تستخدم الصفحة بشكل صحيح؟"
-            lead="بدلاً من صياغة عامة عن أفضل وقت، تشرح هذه الطبقة الثابتة متى تساعدك الصفحة فعلاً، ومتى لا تكفي وحدها، وكيف تربطها بسياقك الفعلي."
-          />
-          <EconomyGuide sections={serverModel.helpSections} />
-        </section>
-
-        <section className="economy-section">
-          <EconomySectionHeader
-            title="توصيات عملية قبل اتخاذ أي قرار"
-            lead="هذه ليست إشارات شراء أو بيع، بل طريقة لترجمة الوقت إلى استخدام أكثر ذكاءً بحسب أسلوب المتابعة والسوق الذي تراقبه."
-          />
-          <InsightCards cards={serverModel.recommendationCards} />
-        </section>
-
-        <section className="economy-section">
-          <EconomySectionHeader
-            title="الاستخدام المسؤول لهذه الصفحة"
-            lead="هذا الجزء مهم للثقة والوضوح: أفضل وقت لا يساوي قراراً جاهزاً، والصفحة هنا للتصفية والتنظيم لا لاستبدال التحقق والسوق والوسيط."
-          />
-          <EconomyGuide sections={serverModel.responsibleUseSections} />
-        </section>
+        <Suspense fallback={null}>
+          <BestTradingTimeServerSections />
+        </Suspense>
 
         <EconomyReadingShelf
           title="أدلة تساعدك على قراءة التوقيت"

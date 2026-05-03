@@ -58,6 +58,14 @@ const CATEGORY_CONFIG = {
     glowCssVar: '--info-soft',
     urgencyThresholds: { critical: 1, high: 3, medium: 7 },
   },
+  social: {
+    emoji: '🎗️',
+    label: 'مناسبة اجتماعية',
+    pattern: 'wave',
+    accentCssVar: '--accent-alt',
+    glowCssVar: '--accent-alt-soft',
+    urgencyThresholds: { critical: 3, high: 10, medium: 30 },
+  },
   business: {
     emoji: '💼',
     label: 'مناسبة أعمال',
@@ -68,7 +76,7 @@ const CATEGORY_CONFIG = {
   },
   support: {
     emoji: '💰',
-    label: 'دعم اجتماعي',
+    label: 'برنامج أو استحقاق',
     pattern: 'wave',
     accentCssVar: '--success',
     glowCssVar: '--success-soft',
@@ -138,6 +146,7 @@ const CATEGORY_HEADLINE_FALLBACKS = {
   school: (name, days) => days <= 14 ? `${name} — انتبه!` : `${days} يوماً على ${name}`,
   holidays: (name, days) => days <= 7 ? `الإجازة قريبة — ${days} أيام!` : `${days} يوماً على ${name}`,
   astronomy: (name, days) => `${name} — موعد فلكي دقيق بعد ${days} يوم`,
+  social: (name, days) => days <= 7 ? `${name} قريب — استعد له من الآن` : `${days} يوماً على ${name}`,
   business: (name, days) => `${days} يوماً على ${name}`,
   support: (name, days) => days <= 5 ? `${name} — الإيداع قريب!` : `${days} يوماً على ${name}`,
 }
@@ -176,6 +185,7 @@ export function getEventSubtext(slug, categoryId, countryCode) {
     school: 'تابع الجهات الرسمية للتأكيد النهائي.',
     holidays: 'إجازة رسمية — تحقق من تقويم جهة عملك.',
     astronomy: 'موعد فلكي محسوب بدقة — لا يتغير.',
+    social: 'مناسبة عامة أو عالمية — افهم معناها وموعدها من مصدر موثوق.',
     business: 'تاريخ تقديري — تحقق من الجهات الرسمية.',
     support: 'يُحدَّث شهرياً — قد يتقدم إذا وافق إجازة.',
   }
@@ -196,6 +206,7 @@ export function getArcData(categoryId, daysLeft) {
     school: 365,
     holidays: 365,
     astronomy: 365,
+    social: 365,
     business: 30,
     support: 30,
   }
@@ -237,6 +248,13 @@ export function getVibeStats(categoryId, daysLeft, slug) {
         { label: 'أيام الانتظار', value: `${daysLeft} يوم` },
         { label: 'بالأسابيع', value: weeks > 0 ? `${weeks} أسبوع` : 'هذا الأسبوع' },
         { label: 'بالساعات', value: hours < 1000 ? `${hours} ساعة` : `${(hours / 24).toFixed(0)} يوم` },
+      ]
+
+    case 'social':
+      return [
+        { label: 'حتى الموعد', value: `${daysLeft} يوم` },
+        { label: 'بالأسابيع', value: weeks > 0 ? `${weeks} أسبوع` : 'هذا الأسبوع' },
+        { label: 'طبيعة الحدث', value: 'مناسبة عامة' },
       ]
 
     case 'national':

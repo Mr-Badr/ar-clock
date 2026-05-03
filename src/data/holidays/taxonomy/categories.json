@@ -41,6 +41,13 @@
     "intentHeading": "شاهد {{eventName}}"
   },
   {
+    "id": "social",
+    "label": "المناسبات الاجتماعية والعالمية",
+    "icon": "🎗",
+    "color": "badge-default",
+    "intentHeading": "تعرّف إلى {{eventName}}"
+  },
+  {
     "id": "business",
     "label": "مناسبات الأعمال",
     "icon": "💼",
@@ -49,9 +56,9 @@
   },
   {
     "id": "support",
-    "label": "الدعم الاجتماعي",
+    "label": "برامج ومواعيد الدعم",
     "icon": "💰",
     "color": "badge-success",
-    "intentHeading": "شارك في {{eventName}}"
+    "intentHeading": "تابع {{eventName}}"
   }
 ]

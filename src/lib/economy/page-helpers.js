@@ -1,5 +1,4 @@
 // lib/economy/page-helpers.js
-import { getCachedNowIso } from '@/lib/date-utils';
 import { getEconomySeoEntry } from '@/lib/economy/seo-content';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildPrincipalPageSearchCoverage } from '@/lib/seo/page-search-coverage';
@@ -23,17 +22,7 @@ export const STATIC_ECONOMY_PAGE_STATE = {
 };
 
 export async function getInitialEconomyPageState() {
-  try {
-    return {
-      initialViewer: DEFAULT_ECONOMY_VIEWER,
-      initialNowIso: await getCachedNowIso(),
-    };
-  } catch {
-    return {
-      initialViewer: DEFAULT_ECONOMY_VIEWER,
-      initialNowIso: ECONOMY_FALLBACK_NOW_ISO,
-    };
-  }
+  return STATIC_ECONOMY_PAGE_STATE;
 }
 
 export function buildEconomyToolSchema({ siteUrl, path, name, description, about = [], keywords = [] }) {

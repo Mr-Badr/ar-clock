@@ -5,7 +5,10 @@ import {
   buildEconomyToolPageMetadata,
   buildEconomyToolPageSchemas,
 } from '@/lib/economy/page-helpers';
-import { getCachedEconomyPageSnapshot } from '@/lib/economy/page-snapshots.server';
+import {
+  getCachedEconomyPageSnapshot,
+  getEconomyPageServerState,
+} from '@/lib/economy/page-snapshots.server';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
 import {
@@ -28,12 +31,53 @@ const SEARCH_COVERAGE = buildEconomyPageSearchCoverage(PAGE_SCOPE, FAQ_ITEMS.gol
 
 export const metadata = buildEconomyToolPageMetadata(PAGE_SCOPE, FAQ_ITEMS.goldMarketHours);
 
+async function GoldMarketHoursServerSections() {
+  const { serverModel } = await getEconomyPageServerState(PAGE_SCOPE);
+
+  return (
+    <>
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="كيف تجيب الصفحة عن سؤال الذهب بشكل أفضل؟"
+          lead="هذا المحتوى يولّد من نموذج الذهب نفسه، لذلك يربط بين الحالة الحالية، أفضل نافذة، والفرق بين السوق العالمي والسوق المحلي بشكل أوضح."
+        />
+        <EconomyGuide sections={serverModel.guideSections} />
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="المراجع التي تستند إليها طبقة الذهب"
+          lead="إظهار المراجع المرجعية داخل الصفحة يعزز الثقة ويقوي دلالة أن هذه الأداة مبنية على ساعات سوق معروفة لا على وصف تسويقي عام."
+        />
+        <EconomySourceLinks links={serverModel.sourceLinks} />
+      </section>
+
+      {serverModel.ramadanSection ? (
+        <section className="economy-section">
+          <EconomySectionHeader
+            title={serverModel.ramadanSection.title}
+            lead="نضيف هذا السياق عندما يكون الموسم نفسه مؤثراً في نمط المتابعة المحلي، حتى تبقى الصفحة أقرب لاستخدام الزائر العربي الحقيقي."
+          />
+          <EconomyGuide sections={[serverModel.ramadanSection]} />
+        </section>
+      ) : null}
+
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="إذا كان الزائر يتابع الذهب يومياً، إلى أين يذهب بعد ذلك؟"
+          lead="هذه الروابط تبني رحلة استخدام حقيقية بين الذهب والسوق الأمريكي وساعة السوق وأفضل وقت للتداول."
+        />
+        <InsightCards cards={serverModel.relatedTools} />
+      </section>
+    </>
+  );
+}
+
 export default async function GoldMarketHoursPage() {
   const {
     initialViewer,
     initialNowIso,
     liveSnapshot,
-    serverModel,
   } = await getCachedEconomyPageSnapshot(PAGE_SCOPE);
   const schemas = buildEconomyToolPageSchemas({ scope: PAGE_SCOPE, faqItems: FAQ_ITEMS.goldMarketHours });
 
@@ -63,39 +107,9 @@ export default async function GoldMarketHoursPage() {
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>
 
-        <section className="economy-section">
-          <EconomySectionHeader
-            title="كيف تجيب الصفحة عن سؤال الذهب بشكل أفضل؟"
-            lead="هذا المحتوى يولّد من نموذج الذهب نفسه، لذلك يربط بين الحالة الحالية، أفضل نافذة، والفرق بين السوق العالمي والسوق المحلي بشكل أوضح."
-          />
-          <EconomyGuide sections={serverModel.guideSections} />
-        </section>
-
-        <section className="economy-section">
-          <EconomySectionHeader
-            title="المراجع التي تستند إليها طبقة الذهب"
-            lead="إظهار المراجع المرجعية داخل الصفحة يعزز الثقة ويقوي دلالة أن هذه الأداة مبنية على ساعات سوق معروفة لا على وصف تسويقي عام."
-          />
-          <EconomySourceLinks links={serverModel.sourceLinks} />
-        </section>
-
-        {serverModel.ramadanSection ? (
-          <section className="economy-section">
-            <EconomySectionHeader
-              title={serverModel.ramadanSection.title}
-              lead="نضيف هذا السياق عندما يكون الموسم نفسه مؤثراً في نمط المتابعة المحلي، حتى تبقى الصفحة أقرب لاستخدام الزائر العربي الحقيقي."
-            />
-            <EconomyGuide sections={[serverModel.ramadanSection]} />
-          </section>
-        ) : null}
-
-        <section className="economy-section">
-          <EconomySectionHeader
-            title="إذا كان الزائر يتابع الذهب يومياً، إلى أين يذهب بعد ذلك؟"
-            lead="هذه الروابط تبني رحلة استخدام حقيقية بين الذهب والسوق الأمريكي وساعة السوق وأفضل وقت للتداول."
-          />
-          <InsightCards cards={serverModel.relatedTools} />
-        </section>
+        <Suspense fallback={null}>
+          <GoldMarketHoursServerSections />
+        </Suspense>
 
         <EconomyReadingShelf
           title="اقرأ قبل متابعة الذهب"

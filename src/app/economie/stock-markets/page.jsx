@@ -5,7 +5,10 @@ import {
   buildEconomyToolPageMetadata,
   buildEconomyToolPageSchemas,
 } from '@/lib/economy/page-helpers';
-import { getCachedEconomyPageSnapshot } from '@/lib/economy/page-snapshots.server';
+import {
+  getCachedEconomyPageSnapshot,
+  getEconomyPageServerState,
+} from '@/lib/economy/page-snapshots.server';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
 import EconomyLivePulse from '@/components/economy/EconomyLivePulse';
@@ -26,12 +29,35 @@ const SEARCH_COVERAGE = buildEconomyPageSearchCoverage(PAGE_SCOPE, FAQ_ITEMS.sto
 
 export const metadata = buildEconomyToolPageMetadata(PAGE_SCOPE, FAQ_ITEMS.stockMarkets);
 
+async function StockMarketsServerSections() {
+  const { serverModel } = await getEconomyPageServerState(PAGE_SCOPE);
+
+  return (
+    <>
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="كيف تشرح الصفحة حالة البورصات بشكل قابل للفهرسة؟"
+          lead="هذه الفقرات تبني طبقة HTML واضحة حول افتتاح السوق الأمريكي، فروق الأيام بين الأسواق العربية والعالمية، والجلسات الموسعة."
+        />
+        <EconomyGuide sections={serverModel.guideSections} />
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="ما الذي نعد به وما الذي يحتاج تحققاً إضافياً؟"
+          lead="إظهار منهج الدقة وحدود الاستخدام هنا يساعد المستخدم ومحركات البحث على فهم قيمة الصفحة وحدودها بوضوح."
+        />
+        <EconomyGuide sections={serverModel.trustPoints} />
+      </section>
+    </>
+  );
+}
+
 export default async function StockMarketsPage() {
   const {
     initialViewer,
     initialNowIso,
     liveSnapshot,
-    serverModel,
   } = await getCachedEconomyPageSnapshot(PAGE_SCOPE);
   const schemas = buildEconomyToolPageSchemas({ scope: PAGE_SCOPE, faqItems: FAQ_ITEMS.stockMarkets });
 
@@ -60,21 +86,9 @@ export default async function StockMarketsPage() {
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>
 
-        <section className="economy-section">
-          <EconomySectionHeader
-            title="كيف تشرح الصفحة حالة البورصات بشكل قابل للفهرسة؟"
-            lead="هذه الفقرات تبني طبقة HTML واضحة حول افتتاح السوق الأمريكي، فروق الأيام بين الأسواق العربية والعالمية، والجلسات الموسعة."
-          />
-          <EconomyGuide sections={serverModel.guideSections} />
-        </section>
-
-        <section className="economy-section">
-          <EconomySectionHeader
-            title="ما الذي نعد به وما الذي يحتاج تحققاً إضافياً؟"
-            lead="إظهار منهج الدقة وحدود الاستخدام هنا يساعد المستخدم ومحركات البحث على فهم قيمة الصفحة وحدودها بوضوح."
-          />
-          <EconomyGuide sections={serverModel.trustPoints} />
-        </section>
+        <Suspense fallback={null}>
+          <StockMarketsServerSections />
+        </Suspense>
 
         <EconomyReadingShelf
           title="اقرأ لفهم السوق قبل الشاشة"

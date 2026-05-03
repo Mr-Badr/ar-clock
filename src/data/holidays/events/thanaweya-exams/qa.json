@@ -1,6 +1,5 @@
 {
   "slug": "thanaweya-exams",
-  "tier": "tier2",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

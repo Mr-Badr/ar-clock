@@ -1,9 +1,0 @@
-{
-  "id": "pension-eg",
-  "slug": "pension-day-egypt",
-  "name": "صرف المعاشات (مصر)",
-  "type": "monthly",
-  "category": "support",
-  "_countryCode": "eg",
-  "day": 1
-}

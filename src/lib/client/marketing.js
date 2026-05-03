@@ -1,16 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useConsentBannerEnabled } from "@/lib/client/public-runtime";
 
 export const MARKETING_CONSENT_KEY = "miqat-marketing-consent";
 export const MARKETING_CONSENT_EVENT = "miqat-consent-changed";
 
 export function isPublicEnvEnabled(value) {
-  return String(value).trim().toLowerCase() === "true";
+  const normalized = String(value ?? "").trim().toLowerCase();
+  return normalized === "true" || normalized === "1" || normalized === "yes" || normalized === "on";
 }
 
 export function isConsentBannerEnabled() {
   return isPublicEnvEnabled(process.env.NEXT_PUBLIC_ENABLE_CONSENT_BANNER);
+}
+
+function resolveConsentBannerEnabled(consentBannerEnabled) {
+  if (typeof consentBannerEnabled === "boolean") {
+    return consentBannerEnabled;
+  }
+
+  // Backward compatibility for older client chunks that still resolve
+  // marketing permission from public env flags instead of runtime config.
+  return isConsentBannerEnabled();
 }
 
 export function readMarketingConsent() {
@@ -29,14 +41,16 @@ export function writeMarketingConsent(status) {
   );
 }
 
-export function canLoadMarketing() {
-  if (!isConsentBannerEnabled()) return true;
+export function canLoadMarketing(consentBannerEnabled) {
+  if (!resolveConsentBannerEnabled(consentBannerEnabled)) return true;
   return readMarketingConsent() === "granted";
 }
 
 export function useMarketingPermission(featureEnabled) {
+  const runtimeConsentBannerEnabled = useConsentBannerEnabled();
+  const consentBannerEnabled = resolveConsentBannerEnabled(runtimeConsentBannerEnabled);
   const [allowed, setAllowed] = useState(() =>
-    featureEnabled ? canLoadMarketing() : false,
+    featureEnabled ? canLoadMarketing(consentBannerEnabled) : false,
   );
 
   useEffect(() => {
@@ -46,7 +60,7 @@ export function useMarketingPermission(featureEnabled) {
     }
 
     const sync = () => {
-      setAllowed(canLoadMarketing());
+      setAllowed(canLoadMarketing(consentBannerEnabled));
     };
 
     sync();
@@ -57,7 +71,7 @@ export function useMarketingPermission(featureEnabled) {
       window.removeEventListener(MARKETING_CONSENT_EVENT, sync);
       window.removeEventListener("storage", sync);
     };
-  }, [featureEnabled]);
+  }, [consentBannerEnabled, featureEnabled]);
 
   return allowed;
 }

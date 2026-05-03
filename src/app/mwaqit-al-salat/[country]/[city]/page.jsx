@@ -108,8 +108,19 @@ export async function generateMetadata({ params }) {
     alternates: { canonical },
     openGraph: {
       title, description, type: 'website', locale: 'ar_SA', url: canonical,
+      images: [{
+        url: `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: `مواقيت الصلاة في ${cityNameAr}`,
+      }],
     },
-    twitter: { card: 'summary', title, description },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}/opengraph-image`],
+    },
     robots: {
       index: isIndexableCity,
       follow: true,

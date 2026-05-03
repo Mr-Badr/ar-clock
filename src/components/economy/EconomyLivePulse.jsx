@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { startTransition, useEffect, useRef, useState } from 'react';
 import { Activity, ArrowLeft, Clock3, RefreshCcw, WifiOff } from 'lucide-react';
 
+import { logger, serializeError } from '@/lib/logger';
+
 import styles from './economy-live-pulse.module.css';
 
 function Sparkline({ points, tone = 'default' }) {
@@ -93,16 +95,35 @@ export default function EconomyLivePulse({
         const response = await fetch(`/api/economie/live?scope=${encodeURIComponent(scope)}`, {
           cache: 'no-store',
         });
-        if (!response.ok) return;
+        if (!response.ok) {
+          logger.warn('economy-live-pulse-refresh-failed', {
+            scope,
+            status: response.status,
+            statusText: response.statusText,
+          });
+          return;
+        }
 
         const payload = await response.json();
-        if (cancelled) return;
+        if (cancelled || !payload || !Array.isArray(payload.cards)) {
+          if (!cancelled) {
+            logger.warn('economy-live-pulse-invalid-payload', {
+              scope,
+              payloadType: payload == null ? 'nullish' : typeof payload,
+              cardCount: Array.isArray(payload?.cards) ? payload.cards.length : null,
+            });
+          }
+          return;
+        }
 
         startTransition(() => {
           setSnapshot(payload);
         });
-      } catch {
-        // Ignore feed refresh errors and keep the last successful snapshot on screen.
+      } catch (error) {
+        logger.warn('economy-live-pulse-refresh-threw', {
+          scope,
+          error: serializeError(error),
+        });
       }
     }
 

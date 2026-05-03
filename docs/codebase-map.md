@@ -23,8 +23,6 @@ This file is the quick ownership map for the app so you know what to edit, what 
   Deployment and server infrastructure. Keep if you deploy with nginx/docker/postgres.
 - `scripts`
   Content/build/validation scripts. Keep.
-- `content-ops`
-  Authoring workflow support for events and research scaffolding. Keep if you still use `npm run contentops:scaffold` or `npm run events:sync`.
 - `docs`
   Project docs and architecture notes.
 
@@ -88,4 +86,4 @@ This file is the quick ownership map for the app so you know what to edit, what 
 1. Change shared domain copy/data helpers in `src/lib/...` first when a group of pages should stay aligned.
 2. Change route-level SEO and page intent in `src/app/.../page.*` when a single route is truly unique.
 3. Change visual behavior in `src/components/...`.
-4. Only touch `infra`, `scripts`, and `content-ops` when you are working on deployment or content operations.
+4. Only touch `infra` and `scripts` when you are working on deployment, data pipelines, or tooling.

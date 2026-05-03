@@ -1,6 +1,5 @@
 {
   "slug": "day-of-arafa",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": false,

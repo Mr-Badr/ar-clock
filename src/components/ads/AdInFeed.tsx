@@ -32,6 +32,9 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import { useMarketingPermission } from "@/lib/client/marketing";
+import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
+import { logger, serializeError } from "@/lib/logger";
 
 interface AdInFeedProps {
   slotId?: string;
@@ -42,11 +45,16 @@ export default function AdInFeed({
   slotId = "in-feed",
   className = "",
 }: AdInFeedProps) {
+  const { clientId, manualSlots } = useAdsRuntimeConfig();
+  const adSlot = manualSlots.inFeed || "";
+  const shouldRenderAds = Boolean(clientId && adSlot);
+  const canLoadAds = useMarketingPermission(shouldRenderAds);
   const ref = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const loaded = useRef(false);
 
   useEffect(() => {
+    if (!canLoadAds) return;
     if (!ref.current || loaded.current) return;
 
     const observer = new IntersectionObserver(
@@ -55,15 +63,16 @@ export default function AdInFeed({
           if (entry.isIntersecting && !loaded.current) {
             loaded.current = true;
             setIsLoading(false);
-
-            // ─────────────────────────────────────────────────────────────────
-            // TODO: Replace with your AdSense code when ready:
-            //
-            //   try {
-            //     (window.adsbygoogle = window.adsbygoogle || []).push({});
-            //   } catch (e) {}
-            //
-            // ─────────────────────────────────────────────────────────────────
+            try {
+              const adsWindow = window as Window & { adsbygoogle?: unknown[] };
+              (adsWindow.adsbygoogle = adsWindow.adsbygoogle || []).push({});
+            } catch (error) {
+              logger.warn("adsense-in-feed-init-failed", {
+                component: "AdInFeed",
+                slotId,
+                error: serializeError(error),
+              });
+            }
 
             observer.disconnect();
           }
@@ -74,10 +83,11 @@ export default function AdInFeed({
 
     observer.observe(ref.current);
     return () => observer.disconnect();
-  }, []);
+  }, [canLoadAds, slotId]);
+
+  if (!shouldRenderAds || !canLoadAds) return null;
 
   return (
-    // Uses .card so the ad slot visually blends into the surrounding grid
     <div
       id={slotId}
       ref={ref}
@@ -86,20 +96,14 @@ export default function AdInFeed({
       aria-label="إعلانات"
     >
       <span className="ad-slot__label">إعلانات</span>
-
-      {/* ─────────────────────────────────────────────────────────────────────
-          TODO: Paste your AdSense <ins> tag here when ready.
-          Use "fluid" format for native in-feed:
-
-          <ins
-            className="adsbygoogle"
-            style={{ display: "block" }}
-            data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-            data-ad-slot="XXXXXXXXXX"
-            data-ad-format="fluid"
-            data-ad-layout-key="-fb+5w+4e-db+86"
-          />
-          ───────────────────────────────────────────────────────────────────── */}
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-client={clientId || undefined}
+        data-ad-slot={adSlot}
+        data-ad-format="fluid"
+        data-ad-layout-key={manualSlots.inFeedLayoutKey || undefined}
+      />
     </div>
   );
 }

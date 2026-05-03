@@ -1,8 +1,7 @@
-const truthy = new Set(['1', 'true', 'yes', 'on']);
+import { normalizeBooleanEnv } from '@/lib/runtime-config';
 
 function flag(value, fallback = false) {
-  if (!value) return fallback;
-  return truthy.has(value.toLowerCase());
+  return normalizeBooleanEnv(value, fallback);
 }
 
 export const featureFlags = {
@@ -13,4 +12,5 @@ export const featureFlags = {
   observabilityLogs: flag(process.env.FF_OBSERVABILITY_LOGS, false),
   eventsShardIndex: flag(process.env.FF_EVENTS_SHARD_INDEX, true),
   eventsPublishedOnly: flag(process.env.FF_EVENTS_PUBLISHED_ONLY, true),
+  newPrayerEngine: flag(process.env.ENABLE_NEW_PRAYER_ENGINE, false),
 };

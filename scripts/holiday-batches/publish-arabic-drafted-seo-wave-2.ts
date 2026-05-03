@@ -25,7 +25,6 @@ type CoverageItem = {
 
 type BatchConfig = {
   slug: string;
-  tier: Tier;
   theme: IntentTheme;
   sourceAuthority?: string;
   corePatch?: Record<string, any>;
@@ -323,7 +322,6 @@ function buildPackage(config: BatchConfig, current: any) {
     countryScope: current?.countryScope || 'custom',
     countryAliasTemplate: current?.countryAliasTemplate || '{{slug}}-in-{{countrySlug}}',
     keywordTemplateSet: config.keywordTemplateSet || current?.keywordTemplateSet || {},
-    tier: config.tier,
     publishStatus: 'published',
     canonicalPath: `/holidays/${config.slug}`,
     canonicalSource: 'internal',
@@ -360,13 +358,11 @@ function buildQa(config: BatchConfig, current: any) {
   return {
     ...(buildEmptyQaRecord({
       slug: config.slug,
-      tier: config.tier,
       publishStatus: 'published',
       updatedAt: NOW_ISO,
     }) as any),
     ...(current || {}),
     slug: config.slug,
-    tier: config.tier,
     publishStatus: 'published',
     checks: {
       contentReady: true,
@@ -397,7 +393,6 @@ function patchRelatedSlugs(current: any, relatedSlugs: string[]) {
 const configs: BatchConfig[] = [
   {
     slug: 'nisf-shaban',
-    tier: 'tier1',
     theme: 'islamic',
     sourceAuthority: 'islamic-reference',
     seoTitle: 'متى ليلة النصف من شعبان {{year}} | 15 شعبان والعد التنازلي',
@@ -587,7 +582,6 @@ const configs: BatchConfig[] = [
   },
   {
     slug: 'isra-miraj',
-    tier: 'tier1',
     theme: 'islamic',
     sourceAuthority: 'islamic-reference',
     seoTitle: 'متى ليلة الإسراء والمعراج {{year}} | 27 رجب والعد التنازلي',
@@ -777,7 +771,6 @@ const configs: BatchConfig[] = [
   },
   {
     slug: 'winter-season',
-    tier: 'tier1',
     theme: 'astronomy',
     sourceAuthority: 'astronomy-reference',
     corePatch: {
@@ -963,7 +956,6 @@ const configs: BatchConfig[] = [
   },
   {
     slug: 'spring-season',
-    tier: 'tier1',
     theme: 'astronomy',
     sourceAuthority: 'astronomy-reference',
     corePatch: {
@@ -1149,7 +1141,6 @@ const configs: BatchConfig[] = [
   },
   {
     slug: 'back-to-school',
-    tier: 'tier1',
     theme: 'school',
     sourceAuthority: 'official-announcement',
     seoTitle: 'متى الدخول المدرسي {{year}} | العودة إلى المدرسة في الدول العربية',
@@ -1351,7 +1342,6 @@ const configs: BatchConfig[] = [
   },
   {
     slug: 'spring-vacation',
-    tier: 'tier1',
     theme: 'school',
     sourceAuthority: 'official-announcement',
     seoTitle: 'متى عطلة الربيع {{year}} | الإجازة المدرسية والعد التنازلي',
@@ -1536,7 +1526,6 @@ const configs: BatchConfig[] = [
   },
   {
     slug: 'school-start-kuwait',
-    tier: 'tier1',
     theme: 'school',
     sourceAuthority: 'official-announcement',
     corePatch: {
@@ -1717,7 +1706,6 @@ const configs: BatchConfig[] = [
   },
   {
     slug: 'salary-day-egypt',
-    tier: 'tier1',
     theme: 'budget',
     sourceAuthority: 'monthly-announcement',
     seoTitle: 'متى صرف المرتبات في مصر {{year}} | الموعد المرجعي والتنبيه الشهري',

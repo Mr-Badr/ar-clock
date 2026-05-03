@@ -20,7 +20,6 @@ type ResearchCompetitor = {
 
 type EventUpdate = {
   slug: string;
-  tier: 'tier1' | 'tier2' | 'tier3';
   sourceAuthority: string;
   keywordTemplateSet: {
     base: string[];
@@ -42,7 +41,6 @@ type EventUpdate = {
   };
   qa: {
     slug: string;
-    tier: 'tier1' | 'tier2' | 'tier3';
     publishStatus: 'published';
     checks: {
       contentReady: true;
@@ -151,7 +149,6 @@ const foundingDayFaq: FaqItem[] = [
 const updates: EventUpdate[] = [
   {
     slug: 'saudi-national-day',
-    tier: 'tier1',
     sourceAuthority: 'saudi-official-history',
     keywordTemplateSet: {
       base: [
@@ -486,7 +483,6 @@ const updates: EventUpdate[] = [
     },
     qa: {
       slug: 'saudi-national-day',
-      tier: 'tier1',
       publishStatus: 'published',
       checks: {
         contentReady: true,
@@ -505,7 +501,6 @@ const updates: EventUpdate[] = [
   },
   {
     slug: 'saudi-founding-day',
-    tier: 'tier1',
     sourceAuthority: 'foundingday-official',
     keywordTemplateSet: {
       base: [
@@ -839,7 +834,6 @@ const updates: EventUpdate[] = [
     },
     qa: {
       slug: 'saudi-founding-day',
-      tier: 'tier1',
       publishStatus: 'published',
       checks: {
         contentReady: true,
@@ -871,7 +865,6 @@ export default defineEventBatch(
           },
           countryScope: 'none',
           keywordTemplateSet: update.keywordTemplateSet,
-          tier: update.tier,
           publishStatus: 'published',
           canonicalPath: `/holidays/${update.slug}`,
           canonicalSource: 'internal',

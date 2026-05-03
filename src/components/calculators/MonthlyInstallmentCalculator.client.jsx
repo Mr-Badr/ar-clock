@@ -22,6 +22,7 @@ import {
   CalcTabsList as TabsList,
   CalcTabsTrigger as TabsTrigger,
 } from '@/components/calculators/controls.client';
+import CalculatorCurrencyField, { usePreferredCurrency } from '@/components/calculators/CurrencyField.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -47,6 +48,7 @@ const offerMeta = [
 ];
 
 export default function MonthlyInstallmentCalculator() {
+  const { currency, setCurrency, options: currencyOptions } = usePreferredCurrency();
   const [loanType, setLoanType] = useState('personal');
   const [loanAmount, setLoanAmount] = useState(String(LOAN_PRESETS.personal.amount));
   const [years, setYears] = useState([LOAN_PRESETS.personal.years]);
@@ -60,6 +62,7 @@ export default function MonthlyInstallmentCalculator() {
   const [monthlyBudget, setMonthlyBudget] = useState('3000');
   const [monthlyIncome, setMonthlyIncome] = useState('12000');
   const [showRows, setShowRows] = useState(12);
+  const formatMoney = (value) => formatCurrency(value, currency);
 
   const baseInput = {
     loanAmount,
@@ -146,7 +149,7 @@ export default function MonthlyInstallmentCalculator() {
   }, [annualRate, years, loanAmount, downPayment, adminFee, insuranceFee, appraisalFee, interestType]);
 
   const shareText = result.isValid
-    ? `القرض الصافي: ${formatCurrency(result.principal)}\nالقسط الشهري: ${formatCurrency(result.monthlyOutflow)}\nإجمالي الفوائد: ${formatCurrency(result.totalInterest)}`
+    ? `القرض الصافي: ${formatMoney(result.principal)}\nالقسط الشهري: ${formatMoney(result.monthlyOutflow)}\nإجمالي الفوائد: ${formatMoney(result.totalInterest)}`
     : '';
 
   function applyPreset(key) {
@@ -187,6 +190,14 @@ export default function MonthlyInstallmentCalculator() {
                 ))}
               </div>
             </div>
+
+            <CalculatorCurrencyField
+              currency={currency}
+              onChange={setCurrency}
+              options={currencyOptions}
+              hint="هذه العملة تؤثر على كل النتائج والجداول والمقارنات داخل الحاسبة."
+              id="monthly-installment-currency"
+            />
 
             <div className="calc-field">
               <Label className="calc-label" htmlFor="loan-amount">
@@ -307,7 +318,7 @@ export default function MonthlyInstallmentCalculator() {
                     <div className="card-nested calc-metric-card">
                       <div className="calc-metric-card__label">القسط الشهري</div>
                       <div className="calc-metric-card__value">
-                        {formatCurrency(result.monthlyOutflow)}
+                        {formatMoney(result.monthlyOutflow)}
                       </div>
                       <div className="calc-metric-card__note">
                         المدة {formatNumber(result.months)} شهر
@@ -316,7 +327,7 @@ export default function MonthlyInstallmentCalculator() {
                     <div className="card-nested calc-metric-card">
                       <div className="calc-metric-card__label">إجمالي الفوائد</div>
                       <div className="calc-metric-card__value">
-                        {formatCurrency(result.totalInterest)}
+                        {formatMoney(result.totalInterest)}
                       </div>
                       <div className="calc-metric-card__note">
                         تشكل {formatPercent(result.interestShare)} من أصل القرض
@@ -327,15 +338,15 @@ export default function MonthlyInstallmentCalculator() {
                   <div className="calc-breakdown-list">
                     <div className="calc-breakdown-item">
                       <span>أصل القرض بعد الدفعة المقدمة</span>
-                      <strong>{formatCurrency(result.principal)}</strong>
+                      <strong>{formatMoney(result.principal)}</strong>
                     </div>
                     <div className="calc-breakdown-item">
                       <span>إجمالي الرسوم</span>
-                      <strong>{formatCurrency(result.totalFees)}</strong>
+                      <strong>{formatMoney(result.totalFees)}</strong>
                     </div>
                     <div className="calc-breakdown-item">
                       <span>إجمالي المبلغ المدفوع</span>
-                      <strong>{formatCurrency(result.totalPaid)}</strong>
+                      <strong>{formatMoney(result.totalPaid)}</strong>
                     </div>
                   </div>
 
@@ -381,7 +392,7 @@ export default function MonthlyInstallmentCalculator() {
                         <Cell key={entry.name} fill={entry.color} />
                       ))}
                     </Pie>
-                    <RechartsTooltip formatter={(value) => formatCurrency(value)} />
+                    <RechartsTooltip formatter={(value) => formatMoney(value)} />
                   </PieChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -403,7 +414,7 @@ export default function MonthlyInstallmentCalculator() {
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
                     <XAxis dataKey="month" />
                     <YAxis />
-                    <RechartsTooltip formatter={(value) => formatCurrency(value)} />
+                    <RechartsTooltip formatter={(value) => formatMoney(value)} />
                     <Area
                       type="monotone"
                       dataKey="balance"
@@ -443,10 +454,10 @@ export default function MonthlyInstallmentCalculator() {
                     {(result.schedule || []).slice(0, showRows).map((row) => (
                       <TableRow key={row.month}>
                         <TableCell>{row.month}</TableCell>
-                        <TableCell>{formatCurrency(row.payment)}</TableCell>
-                        <TableCell>{formatCurrency(row.principalPaid)}</TableCell>
-                        <TableCell>{formatCurrency(row.interestPaid)}</TableCell>
-                        <TableCell>{formatCurrency(row.balance)}</TableCell>
+                        <TableCell>{formatMoney(row.payment)}</TableCell>
+                        <TableCell>{formatMoney(row.principalPaid)}</TableCell>
+                        <TableCell>{formatMoney(row.interestPaid)}</TableCell>
+                        <TableCell>{formatMoney(row.balance)}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -494,8 +505,8 @@ export default function MonthlyInstallmentCalculator() {
                   </div>
                   <div className="card-nested calc-metric-card">
                     <div className="calc-metric-card__label">التوفير في الفوائد</div>
-                    <div className="calc-metric-card__value">{formatCurrency(earlyPlan.interestSaved)}</div>
-                    <div className="calc-metric-card__note">التوفير الإجمالي {formatCurrency(earlyPlan.totalSaved)}</div>
+                    <div className="calc-metric-card__value">{formatMoney(earlyPlan.interestSaved)}</div>
+                    <div className="calc-metric-card__note">التوفير الإجمالي {formatMoney(earlyPlan.totalSaved)}</div>
                   </div>
                 </div>
               </CardContent>
@@ -531,7 +542,7 @@ export default function MonthlyInstallmentCalculator() {
                   </div>
                 </div>
                 <div className="calc-note">
-                  وفق هذه الفرضيات يمكنك تمويل أصل يقارب {formatCurrency(capacity.principal || 0)}.
+                  وفق هذه الفرضيات يمكنك تمويل أصل يقارب {formatMoney(capacity.principal || 0)}.
                 </div>
               </CardContent>
             </Card>
@@ -579,8 +590,8 @@ export default function MonthlyInstallmentCalculator() {
                       <TableCell>{offerMeta[index].label}</TableCell>
                       <TableCell>{formatPercent(index === 0 ? Number(annualRate) - 0.4 : index === 1 ? Number(annualRate) : Number(annualRate) - 0.2)}</TableCell>
                       <TableCell>{formatNumber(index === 0 ? years[0] + 2 : index === 1 ? years[0] : Math.max(1, years[0] - 2))} سنة</TableCell>
-                      <TableCell>{formatCurrency(offer.monthlyOutflow || 0)}</TableCell>
-                      <TableCell>{formatCurrency(offer.totalPaid || 0)}</TableCell>
+                      <TableCell>{formatMoney(offer.monthlyOutflow || 0)}</TableCell>
+                      <TableCell>{formatMoney(offer.totalPaid || 0)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -597,22 +608,22 @@ export default function MonthlyInstallmentCalculator() {
         <CardContent className="calc-grid-4">
           <div className="card-nested calc-metric-card">
             <div className="calc-metric-card__label">الأصل</div>
-            <div className="calc-metric-card__value">{formatCurrency(result.principal || 0)}</div>
+            <div className="calc-metric-card__value">{formatMoney(result.principal || 0)}</div>
             <div className="calc-metric-card__note">بعد خصم الدفعة المقدمة</div>
           </div>
           <div className="card-nested calc-metric-card">
             <div className="calc-metric-card__label">الفوائد</div>
-            <div className="calc-metric-card__value">{formatCurrency(result.totalInterest || 0)}</div>
+            <div className="calc-metric-card__value">{formatMoney(result.totalInterest || 0)}</div>
             <div className="calc-metric-card__note">تتغير بوضوح مع المدة والنوع</div>
           </div>
           <div className="card-nested calc-metric-card">
             <div className="calc-metric-card__label">الرسوم</div>
-            <div className="calc-metric-card__value">{formatCurrency(result.totalFees || 0)}</div>
+            <div className="calc-metric-card__value">{formatMoney(result.totalFees || 0)}</div>
             <div className="calc-metric-card__note">لا تنس إضافتها عند المقارنة</div>
           </div>
           <div className="card-nested calc-metric-card">
             <div className="calc-metric-card__label">إجمالي السداد</div>
-            <div className="calc-metric-card__value">{formatCurrency(result.totalPaid || 0)}</div>
+            <div className="calc-metric-card__value">{formatMoney(result.totalPaid || 0)}</div>
             <div className="calc-metric-card__note">التكلفة النهائية للقرض</div>
           </div>
         </CardContent>

@@ -3,19 +3,8 @@
 import { Suspense, useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
-import {
-  isPublicEnvEnabled,
-  useMarketingPermission,
-} from "@/lib/client/marketing";
-
-const gaMeasurementId = (process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "").trim();
-const gtmId = (process.env.NEXT_PUBLIC_GTM_ID || "").trim();
-const hasTrackingId = Boolean(gtmId || gaMeasurementId);
-const analyticsFlag = String(
-  process.env.NEXT_PUBLIC_ENABLE_ANALYTICS || "",
-).trim().toLowerCase();
-const analyticsEnabled =
-  analyticsFlag === "true" || (analyticsFlag !== "false" && hasTrackingId);
+import { useMarketingPermission } from "@/lib/client/marketing";
+import { useAnalyticsRuntimeConfig } from "@/lib/client/public-runtime";
 
 function RouteChangeTracker({ activeMode, measurementId }) {
   const pathname = usePathname();
@@ -53,12 +42,13 @@ function RouteChangeTracker({ activeMode, measurementId }) {
 }
 
 export default function AnalyticsProvider() {
-  const shouldLoadAnalytics = analyticsEnabled && hasTrackingId;
+  const { enabled, gaMeasurementId, gtmId, mode } = useAnalyticsRuntimeConfig();
+  const shouldLoadAnalytics = enabled && (Boolean(gtmId) || Boolean(gaMeasurementId));
   const canLoad = useMarketingPermission(shouldLoadAnalytics);
 
   if (!shouldLoadAnalytics || !canLoad) return null;
 
-  const useGtm = Boolean(gtmId);
+  const useGtm = mode === "gtm" && Boolean(gtmId);
 
   if (useGtm) {
     return (

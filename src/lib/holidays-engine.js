@@ -506,6 +506,7 @@ function getSchemaLocationName(ev) {
 
   if (ev.category === 'islamic') return 'العالم الإسلامي';
   if (ev.category === 'astronomy') return 'العالم';
+  if (ev.category === 'social') return 'العالم';
   if (ev.category === 'business') return 'الأسواق العالمية';
   if (ev.category === 'school') return 'العالم العربي';
   return 'العالم العربي';
@@ -518,6 +519,7 @@ function getSchemaAudience(ev) {
     school: { type: 'الطلاب وأولياء الأمور', area: 'العالم العربي' },
     holidays: { type: 'الجمهور العام', area: 'العالم العربي' },
     astronomy: { type: 'الجمهور العام', area: 'العالم' },
+    social: { type: 'الجمهور العام', area: 'العالم' },
     business: { type: 'المتداولون والمستثمرون', area: 'الأسواق العالمية' },
     support: { type: 'المستفيدون', area: 'العالم العربي' },
   };

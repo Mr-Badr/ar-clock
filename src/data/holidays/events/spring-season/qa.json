@@ -1,6 +1,5 @@
 {
   "slug": "spring-season",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

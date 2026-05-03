@@ -50,30 +50,44 @@
  */
 
 import Script from "next/script";
-import {
-  isPublicEnvEnabled,
-  useMarketingPermission,
-} from "@/lib/client/marketing";
+import { useMarketingPermission } from "@/lib/client/marketing";
+import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
+import { logger, serializeError } from "@/lib/logger";
 
 export default function AdSenseProvider() {
-  const adsEnabled = isPublicEnvEnabled(process.env.NEXT_PUBLIC_ENABLE_ADS);
-  const publisherId = (process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "").trim();
-  const shouldLoadAds = adsEnabled && publisherId.startsWith("ca-pub-");
+  const { autoAdsEnabled, clientId } = useAdsRuntimeConfig();
+  const shouldLoadAds = Boolean(clientId);
   const canLoad = useMarketingPermission(shouldLoadAds);
 
   if (!shouldLoadAds || !canLoad) return null;
 
   return (
-    <Script
-      id="adsense-script"
-      async
-      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${publisherId}`}
-      crossOrigin="anonymous"
-      strategy="afterInteractive"
-      // onError: don't let AdSense script errors crash the page
-      onError={(e) => {
-        console.warn("AdSense script failed to load:", e);
-      }}
-    />
+    <>
+      <Script
+        id="adsense-script"
+        async
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`}
+        crossOrigin="anonymous"
+        strategy="afterInteractive"
+        onError={(e) => {
+          logger.warn("adsense-script-load-failed", {
+            component: "AdSenseProvider",
+            error: serializeError(e),
+          });
+        }}
+      />
+      {autoAdsEnabled ? (
+        <Script id="adsense-auto-ads" strategy="afterInteractive">
+          {`
+            try {
+              (window.adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: '${clientId}',
+                enable_page_level_ads: true
+              });
+            } catch (_) {}
+          `}
+        </Script>
+      ) : null}
+    </>
   );
 }

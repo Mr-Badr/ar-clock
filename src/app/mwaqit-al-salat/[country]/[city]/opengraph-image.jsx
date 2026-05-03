@@ -25,11 +25,24 @@ export const revalidate = 86400;
 
 const PRAYER_AR = { fajr: 'الفجر', sunrise: 'الشروق', dhuhr: 'الظهر', asr: 'العصر', maghrib: 'المغرب', isha: 'العشاء' };
 
-function renderFallbackImage(label = 'مواقيت الصلاة') {
+function humanizeSlug(value) {
+  try {
+    return decodeURIComponent(String(value || ''))
+      .replace(/[-_]+/g, ' ')
+      .trim();
+  } catch {
+    return String(value || '')
+      .replace(/[-_]+/g, ' ')
+      .trim();
+  }
+}
+
+function renderFallbackImage(label = 'مواقيت الصلاة', sublabel = '') {
   return new ImageResponse(
     (
-      <div style={{ width: '100%', height: '100%', background: '#181C2A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ width: '100%', height: '100%', background: '#181C2A', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14 }}>
         <span style={{ color: '#4ECDC4', fontSize: 48, fontWeight: 900 }}>{label}</span>
+        {sublabel ? <span style={{ color: '#A8AFCC', fontSize: 28, fontWeight: 600 }}>{sublabel}</span> : null}
       </div>
     ),
     { ...size },
@@ -38,13 +51,15 @@ function renderFallbackImage(label = 'مواقيت الصلاة') {
 
 export default async function OgImage({ params }) {
   const { country: countrySlug, city: citySlug } = await params;
+  const fallbackCityLabel = humanizeSlug(citySlug) || 'المدينة';
+  const fallbackCountryLabel = humanizeSlug(countrySlug) || 'البلد';
 
   try {
     const country = await getCountryBySlug(countrySlug).catch(() => null);
     const cityData = country ? await getCityBySlug(country.country_code, citySlug).catch(() => null) : null;
 
     if (!cityData || !country) {
-      return renderFallbackImage('مواقيت الصلاة');
+      return renderFallbackImage(fallbackCityLabel, fallbackCountryLabel);
     }
 
     const nowIso = await getCachedNowIso();
@@ -67,8 +82,8 @@ export default async function OgImage({ params }) {
         }))
       : [];
 
-    const cityNameAr = cityData.name_ar || cityData.name_en;
-    const countryNameAr = country.name_ar || country.name_en;
+    const cityNameAr = cityData.name_ar || cityData.name_en || fallbackCityLabel;
+    const countryNameAr = country.name_ar || country.name_en || fallbackCountryLabel;
 
     return new ImageResponse(
       <div
@@ -140,6 +155,6 @@ export default async function OgImage({ params }) {
       { ...size },
     );
   } catch {
-    return renderFallbackImage('مواقيت الصلاة');
+    return renderFallbackImage(fallbackCityLabel, fallbackCountryLabel);
   }
 }

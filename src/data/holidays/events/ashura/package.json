@@ -157,7 +157,12 @@
         "موعد عاشوراء {{year}}",
         "صيام عاشوراء",
         "تاسوعاء وعاشوراء",
-        "10 محرم {{hijriYear}}"
+        "10 محرم {{hijriYear}}",
+        "عاشوراء {{year}}",
+        "تاريخ عاشوراء {{year}}",
+        "متى عاشوراء {{nextYear}}",
+        "عاشوراء العد التنازلي",
+        "عاشوراء متى"
       ],
       "longTailKeywords": [
         "هل يجوز صيام عاشوراء فقط",
@@ -167,10 +172,21 @@
         "مراتب صوم عاشوراء",
         "متى 10 محرم {{year}}",
         "عاشوراء {{nextYear}}",
-        "هل كان صيام عاشوراء واجباً"
+        "هل كان صيام عاشوراء واجباً",
+        "متى عاشوراء {{year}}",
+        "كم باقي على عاشوراء {{year}}",
+        "موعد عاشوراء {{year}}",
+        "تاريخ عاشوراء {{year}}",
+        "ما هو عاشوراء",
+        "كيف أستعد لـعاشوراء",
+        "هل عاشوراء إجازة رسمية",
+        "أهمية عاشوراء",
+        "لماذا يبحث الناس عن عاشوراء",
+        "عاشوراء التاريخ والموعد",
+        "عاشوراء العد التنازلي"
       ],
       "datePublished": "2026-04-09T00:00:00.000Z",
-      "dateModified": "2026-04-09T00:00:00.000Z",
+      "dateModified": "2026-04-30T22:24:22.716Z",
       "inLanguage": "ar",
       "eventCategory": "islamic"
     },
@@ -211,7 +227,8 @@
       "ramadan",
       "laylat-al-qadr",
       "mawlid",
-      "hajj-season"
+      "hajj-season",
+      "first-dhul-hijjah"
     ],
     "about": {
       "heading": "عن عاشوراء",
@@ -241,23 +258,26 @@
   },
   "countryOverrides": {},
   "aliasSlugs": [],
-  "countryScope": "custom",
+  "countryScope": "all",
   "countryAliasTemplate": "{{slug}}-in-{{countrySlug}}",
   "keywordTemplateSet": {
     "base": [
       "متى عاشوراء {{year}}",
       "كم باقي على عاشوراء {{year}}",
       "موعد عاشوراء {{year}}",
+      "تاريخ عاشوراء {{year}}",
       "10 محرم {{hijriYear}}",
       "صيام عاشوراء"
     ],
     "country": [
       "متى عاشوراء في {{countryName}} {{year}}",
+      "عاشوراء في {{countryName}} {{year}}",
+      "كم باقي على عاشوراء في {{countryName}} {{year}}",
+      "موعد عاشوراء في {{countryName}} {{year}}",
       "عاشوراء {{countryName}} {{year}}",
       "كم باقي على عاشوراء في {{countryName}}"
     ]
   },
-  "tier": "tier1",
   "publishStatus": "published",
   "canonicalPath": "/holidays/ashura",
   "canonicalSource": "internal",

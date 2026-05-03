@@ -1,8 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useServiceWorkerEnabled } from '@/lib/client/public-runtime';
+import { logger, serializeError } from '@/lib/logger';
 
 export default function ServiceWorkerRegistration() {
+  const swEnabled = useServiceWorkerEnabled();
+
   useEffect(() => {
     if (
       typeof window === 'undefined' ||
@@ -12,7 +16,6 @@ export default function ServiceWorkerRegistration() {
       return undefined;
     }
 
-    const swEnabled = process.env.NEXT_PUBLIC_ENABLE_SW === 'true';
     const hostname = window.location.hostname;
     const isLocalhost =
       hostname === 'localhost' ||
@@ -35,7 +38,10 @@ export default function ServiceWorkerRegistration() {
           );
         }
       } catch (error) {
-        console.warn('[PWA] Service Worker cleanup skipped:', error);
+        logger.warn('service-worker-cleanup-skipped', {
+          component: 'ServiceWorkerRegistration',
+          error: serializeError(error),
+        });
       }
     };
 
@@ -58,13 +64,19 @@ export default function ServiceWorkerRegistration() {
                 newWorker.state === 'installed' &&
                 navigator.serviceWorker.controller
               ) {
-                console.info('[PWA] New content is available; please refresh.');
+                logger.info('service-worker-update-ready', {
+                  component: 'ServiceWorkerRegistration',
+                });
               }
             });
           }
         });
       } catch (error) {
-        console.error('[PWA] Service Worker registration failed:', error);
+        logger.warn('service-worker-registration-failed', {
+          component: 'ServiceWorkerRegistration',
+          error: serializeError(error),
+          handled: true,
+        });
       }
     };
 
@@ -100,7 +112,7 @@ export default function ServiceWorkerRegistration() {
       cleanupScheduledRegistration();
       window.removeEventListener('load', onLoad);
     };
-  }, []);
+  }, [swEnabled]);
 
   return null;
 }

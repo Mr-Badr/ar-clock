@@ -748,11 +748,12 @@ function formatWeekday(dateTime, timeZone, width = 'short') {
   }).format(dateTime.toJSDate());
 }
 
-function formatOffset(timeZone, at = DateTime.utc()) {
+function formatOffset(timeZone, at = ECONOMY_FALLBACK_NOW_ISO) {
+  const referenceTime = toUtc(at);
   const value = new Intl.DateTimeFormat('en', {
     timeZone,
     timeZoneName: 'shortOffset',
-  }).formatToParts(at.toJSDate()).find((part) => part.type === 'timeZoneName')?.value;
+  }).formatToParts(referenceTime.toJSDate()).find((part) => part.type === 'timeZoneName')?.value;
   return value || 'UTC';
 }
 

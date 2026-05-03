@@ -10,12 +10,15 @@ import Footer from '@/components/layout/Footer';
 import AdSenseProvider from '@/components/ads/AdSenseProvider';
 import AdStickyAnchor from '@/components/ads/AdStickyAnchor';
 import AnalyticsProvider from '@/components/analytics/AnalyticsProvider';
+import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import SiteWideSchemas from '@/components/seo/SiteWideSchemas';
 import ConsentBanner from '@/components/consent/ConsentBanner';
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
 import SiteVisitTracker from '@/components/site/SiteVisitTracker.client';
 import { Analytics } from '@vercel/analytics/next';
 import { getMetadataEnv } from '@/lib/env.server';
+import { PublicRuntimeProvider } from '@/lib/client/public-runtime';
+import { getPublicRuntimeConfig } from '@/lib/runtime-config';
 import {
   SITE_BRAND,
   SITE_BRAND_EN,
@@ -26,6 +29,7 @@ import {
 } from '@/lib/site-config';
 
 const env = getMetadataEnv();
+const publicRuntimeConfig = getPublicRuntimeConfig();
 const themeBootScript = `
   try {
     var root = document.documentElement;
@@ -144,6 +148,27 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`dark ${notoSansArabic.variable} ${ibmPlexSansArabic.variable}`}
     >
+      <head>
+        {publicRuntimeConfig.ads.enabled ? (
+          <>
+            <meta
+              name="google-adsense-account"
+              content={publicRuntimeConfig.ads.clientId || undefined}
+            />
+            <link
+              rel="preconnect"
+              href="https://pagead2.googlesyndication.com"
+              crossOrigin="anonymous"
+            />
+            <link
+              rel="preconnect"
+              href="https://googleads.g.doubleclick.net"
+              crossOrigin="anonymous"
+            />
+            <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
+          </>
+        ) : null}
+      </head>
       {/* The CSS @layer base already sets body styles:
             background-color: var(--bg-base)
             color:            var(--text-primary)
@@ -154,41 +179,47 @@ export default function RootLayout({
           duplicate or fight the design system's base rules.
           notoSansArabic.className activates the body font family. */}
       <body suppressHydrationWarning className={notoSansArabic.className}>
-        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
-        <SiteWideSchemas />
-        <Suspense fallback={<div className="h-16" />}>
-          <Header />
-        </Suspense>
-        {children}
-        <Analytics />
-        <Suspense fallback={<div className="h-24" />}>
-          <Footer />
-        </Suspense>
-        {/* Sonner Toaster — dir and position match RTL layout */}
-        <Toaster
-          dir="rtl"
-          position="top-center"
-          richColors
-          expand={false}
-          toastOptions={{
-            style: {
-              fontFamily: 'var(--font-base)',
-              fontSize: 'var(--text-sm)',
-              borderRadius: 'var(--radius-xl)',
-            },
-          }}
-        />
+        <PublicRuntimeProvider value={publicRuntimeConfig}>
+          <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+          <SiteWideSchemas />
+          <Suspense fallback={<div className="h-16" />}>
+            <Header />
+          </Suspense>
+          <ErrorBoundary name="AppContent">
+            {children}
+          </ErrorBoundary>
+          <Analytics />
+          <Suspense fallback={<div className="h-24" />}>
+            <Footer />
+          </Suspense>
+          {/* Sonner Toaster — dir and position match RTL layout */}
+          <Toaster
+            dir="rtl"
+            position="top-center"
+            richColors
+            expand={false}
+            toastOptions={{
+              style: {
+                fontFamily: 'var(--font-base)',
+                fontSize: 'var(--text-sm)',
+                borderRadius: 'var(--radius-xl)',
+              },
+            }}
+          />
 
-        <Suspense fallback={null}>
-          <AdStickyAnchor />
-        </Suspense>
-        <ConsentBanner />
-        <SiteVisitTracker />
-        <Suspense fallback={null}>
-          <AnalyticsProvider />
-        </Suspense>
-        <AdSenseProvider />
-        <ServiceWorkerRegistration />
+          <Suspense fallback={null}>
+            <ErrorBoundary name="ClientProviders">
+              <AdStickyAnchor />
+              <ConsentBanner />
+              <SiteVisitTracker />
+              <Suspense fallback={null}>
+                <AnalyticsProvider />
+              </Suspense>
+              <AdSenseProvider />
+              <ServiceWorkerRegistration />
+            </ErrorBoundary>
+          </Suspense>
+        </PublicRuntimeProvider>
       </body>
     </html>
   );

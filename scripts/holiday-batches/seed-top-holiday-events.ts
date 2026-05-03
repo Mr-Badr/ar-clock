@@ -1697,7 +1697,6 @@ function packageFor(seed: EventSeed) {
     countryScope: seed.countryScope,
     countryAliasTemplate: '{{slug}}-in-{{countrySlug}}',
     keywordTemplateSet: keywordTemplateSet(seed.name),
-    tier: 'tier1',
     publishStatus: 'published',
     canonicalPath: `/holidays/${seed.slug}`,
     canonicalSource: 'internal',
@@ -1742,7 +1741,6 @@ function researchFor(seed: EventSeed) {
 function qaFor(seed: EventSeed) {
   return {
     slug: seed.slug,
-    tier: 'tier1',
     publishStatus: 'published',
     checks: {
       contentReady: true,

@@ -63,6 +63,7 @@
  */
 
 import AdSidebarSticky from "./AdSidebarSticky";
+import { getServerAdsConfig } from "@/lib/runtime-config";
 
 interface AdLayoutWrapperProps {
   children: React.ReactNode;
@@ -80,7 +81,10 @@ export default function AdLayoutWrapper({
   layout = "standard",
   sidebarMode = "single",
 }: AdLayoutWrapperProps) {
-  const adsEnabled = process.env.NEXT_PUBLIC_ENABLE_ADS === "true";
+  const { enabled, manualSlots } = getServerAdsConfig();
+  const adsEnabled = enabled && Boolean(
+    manualSlots.sidebar || manualSlots.sidebarRight || manualSlots.sidebarLeft,
+  );
   const resolvedSidebarMode = hideSidebars ? "none" : sidebarMode;
 
   if (!adsEnabled || resolvedSidebarMode === "none") {

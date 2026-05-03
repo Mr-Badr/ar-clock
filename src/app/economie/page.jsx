@@ -5,7 +5,10 @@ import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { ECONOMY_SERVER_CONTENT } from '@/lib/economy/discovery-content';
 import { buildEconomyPageSearchCoverage } from '@/lib/economy/page-helpers';
 import { getEconomySeoEntry } from '@/lib/economy/seo-content';
-import { getCachedEconomyPageSnapshot } from '@/lib/economy/page-snapshots.server';
+import {
+  getCachedEconomyPageSnapshot,
+  getEconomyPageServerState,
+} from '@/lib/economy/page-snapshots.server';
 import { SITE_BRAND, SITE_ECONOMY_KEYWORDS, getSiteUrl } from '@/lib/site-config';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
@@ -29,12 +32,25 @@ export const metadata = buildCanonicalMetadata({
   url: `${SITE_URL}${PAGE_SEO.path}`,
 });
 
+async function EconomyLandingServerSections() {
+  const { serverModel: landingModel } = await getEconomyPageServerState('landing');
+
+  return (
+    <section className="economy-section">
+      <EconomySectionHeader
+        title="لماذا يعود المستخدم إلى هذا القسم يومياً؟"
+        lead="بدلاً من الاكتفاء بالوصف العام، تعرض هذه الطبقة الثابتة ما يجعل التجربة عملية: إيقاع السوق، المسار التالي، واللوحة التي تختصر اليوم."
+      />
+      <EconomyGuide sections={landingModel.premiumSections} />
+    </section>
+  );
+}
+
 export default async function EconomyPage() {
   const {
     initialViewer,
     initialNowIso,
     liveSnapshot,
-    serverModel: landingModel,
   } = await getCachedEconomyPageSnapshot('landing');
   const collectionSchema = {
     '@context': 'https://schema.org',
@@ -108,13 +124,9 @@ export default async function EconomyPage() {
           <InsightCards cards={PAGE_CONTENT.journeyCards} />
         </section>
 
-        <section className="economy-section">
-          <EconomySectionHeader
-            title="لماذا يعود المستخدم إلى هذا القسم يومياً؟"
-            lead="بدلاً من الاكتفاء بالوصف العام، تعرض هذه الطبقة الثابتة ما يجعل التجربة عملية: إيقاع السوق، المسار التالي، واللوحة التي تختصر اليوم."
-          />
-          <EconomyGuide sections={landingModel.premiumSections} />
-        </section>
+        <Suspense fallback={null}>
+          <EconomyLandingServerSections />
+        </Suspense>
       </EconomyAdLayout>
     </div>
   );

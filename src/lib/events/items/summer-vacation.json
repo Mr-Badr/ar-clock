@@ -1,8 +1,0 @@
-{
-  "id": "summer-vac",
-  "slug": "summer-vacation",
-  "name": "بداية الإجازة الصيفية",
-  "type": "estimated",
-  "category": "school",
-  "date": "{{year}}-06-25"
-}

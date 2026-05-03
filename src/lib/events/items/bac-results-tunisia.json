@@ -1,9 +1,0 @@
-{
-  "id": "results-bac-tn",
-  "slug": "bac-results-tunisia",
-  "name": "نتائج بكالوريا تونس",
-  "type": "estimated",
-  "category": "school",
-  "_countryCode": "tn",
-  "date": "{{year}}-06-23"
-}

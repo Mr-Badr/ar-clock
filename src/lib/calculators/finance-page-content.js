@@ -82,7 +82,7 @@ const FINANCE_PAGE_CONTENT = {
     quickAnswers: [
       {
         question: 'كم قسط قرض 100 ألف على 5 سنوات؟',
-        description: 'من أشهر عمليات البحث طويلة الذيل.',
+        description: 'من أشهر عمليات البحث التفصيلية.',
         answer: 'النتيجة تتغير بحسب الفائدة ونوعها والرسوم والدفعة المقدمة. لهذا لا نعرض رقماً ثابتاً مضللاً، بل نجعل الحاسبة نفسها تعطيك القسط وإجمالي الفوائد وجدول السداد على نفس المدخلات التي تختارها.',
       },
       {
@@ -296,7 +296,7 @@ const FINANCE_PAGE_CONTENT = {
     sectionNavItems: [
       { href: '#calculator-hero', label: 'الحاسبة', description: 'أربع حاسبات في تبويبات منفصلة' },
       { href: '#percent-overview', label: 'خريطة الصفحة', description: 'كل ما ستجده داخل الصفحة' },
-      { href: '#percent-intents', label: 'نية البحث', description: 'أسئلة وكلمات طويلة الذيل' },
+      { href: '#percent-intents', label: 'نية البحث', description: 'أسئلة وعبارات بحث تفصيلية' },
       { href: '#percent-examples', label: 'الاستخدامات', description: 'مجالات الحياة اليومية التي تخدمها الصفحة' },
       { href: '#percent-answers', label: 'إجابات مباشرة', description: 'كم يساوي X%؟ وكم نسبة X من Y؟' },
       { href: '#percent-content', label: 'الفهم العميق', description: 'الأخطاء الشائعة والحيل الذهنية' },
@@ -412,7 +412,7 @@ const FINANCE_PAGE_CONTENT = {
       { href: '#esb-overview', label: 'خريطة الصفحة', description: 'أهم ما ستجده داخل الصفحة' },
       { href: '#esb-intents', label: 'نية البحث', description: 'عبارات وأسئلة مرتبطة بالحاسبة' },
       { href: '#esb-guide', label: 'دليل سريع', description: 'شروط الاستحقاق والحالات الخاصة' },
-      { href: '#esb-answers', label: 'إجابات مباشرة', description: 'أسئلة طويلة الذيل بلغة واضحة' },
+      { href: '#esb-answers', label: 'إجابات مباشرة', description: 'أسئلة تفصيلية بلغة واضحة' },
       { href: '#esb-article', label: 'شرح عميق', description: 'كيف تقرأ النتيجة ومتى تنتبه' },
       { href: '#esb-comparison', label: 'جدول المقارنة', description: 'الفرق بين الاستقالة والإنهاء' },
       { href: '#esb-rights', label: 'حقوقك عملياً', description: 'خطوات قبل قبول التسوية' },

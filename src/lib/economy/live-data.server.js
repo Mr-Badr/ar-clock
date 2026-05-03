@@ -96,6 +96,11 @@ const PROVIDER_LABELS = {
   alphavantage: 'Alpha Vantage Free',
   twelvedata: 'Twelve Data Free',
 };
+const MARKET_ROW_LABELS = {
+  nyse: 'NYSE',
+  nasdaq: 'NASDAQ',
+  lse: 'بورصة لندن',
+};
 
 export const LIVE_DATA_SCOPES = Object.keys(SCOPE_MARKET_ROWS);
 
@@ -304,6 +309,23 @@ async function buildLocalMarketRows(scope) {
   return requestedIds.map((id) => rowMap[id]).filter(Boolean);
 }
 
+function buildPreviewMarketRows(scope) {
+  const requestedIds = SCOPE_MARKET_ROWS[scope] || [];
+
+  return requestedIds.map((id) => {
+    const label = MARKET_ROW_LABELS[id];
+    if (!label) return null;
+
+    return {
+      id,
+      label,
+      status: 'تحديث بعد الفتح',
+      detail: 'نعرض الحالة الحالية لهذه السوق فور فتح الصفحة وبدء المزامنة الحية.',
+      tone: 'default',
+    };
+  }).filter(Boolean);
+}
+
 async function fetchYahooCards(symbolDefs) {
   const yahooDefs = symbolDefs.filter((item) => item.yahooSymbol);
   if (!yahooDefs.length) return [];
@@ -495,7 +517,7 @@ async function fetchCardsFromProvider(provider, symbolDefs) {
   return { provider, label: provider, cards: [] };
 }
 
-async function buildFallbackSnapshot(scope) {
+export async function getEconomyFallbackSnapshot(scope = 'landing') {
   return {
     scope,
     mode: 'fallback',
@@ -503,8 +525,8 @@ async function buildFallbackSnapshot(scope) {
     updateLabel: 'الأسعار الحية غير مفعلة أو لم تصل من المصادر المجانية بعد',
     coverageNote: 'نستمر في عرض توقيت السوق والسيولة المرجعية حتى إذا لم تصل الأسعار الحية من المصادر المجانية في هذه اللحظة.',
     noticeTitle: 'الأسعار الحية غير متاحة الآن',
-    noticeText: 'إذا لم تظهر الأسعار أو المخططات الآن فهذا يعني أن المصادر المجانية لم ترجع بيانات في هذه اللحظة. ارجع بعد قليل أو أعد فتح الصفحة لاحقاً.',
-    retryLabel: 'جرّب لاحقاً خلال 10 إلى 15 دقيقة',
+    noticeText: 'إذا لم تظهر الأسعار أو المخططات الآن فهذا يعني أن المصادر المجانية لم ترجع بيانات كافية في هذه اللحظة. سنعرض التوقيت والسيولة المرجعية الآن، وسنوفر التحديثات الجديدة حالما تعود البيانات.',
+    retryLabel: 'جرّب لاحقاً خلال 10 إلى 15 دقيقة أو أعد فتح الصفحة',
     cards: buildPlaceholderCards(scope),
     rows: await buildLocalMarketRows(scope),
   };
@@ -521,7 +543,7 @@ export async function getEconomyPreviewSnapshot(scope = 'landing') {
     noticeText: 'عند دخول المستخدم إلى هذه الصفحة نبدأ محاولة جلب الأسعار والمخططات من المصادر المجانية المتاحة. إذا لم تصل البيانات سنبقي طبقة التوقيت والسيولة ونطلب منك العودة لاحقاً.',
     retryLabel: 'افتح الصفحة وانتظر لحظات لبدء المزامنة',
     cards: buildPlaceholderCards(scope),
-    rows: await buildLocalMarketRows(scope),
+    rows: buildPreviewMarketRows(scope),
   };
 }
 
@@ -558,7 +580,7 @@ export async function getEconomyLiveSnapshot(scope = 'landing') {
   const liveCount = cards.filter((card) => card && card.value !== '—').length;
 
   if (!liveCount) {
-    return buildFallbackSnapshot(scope);
+    return getEconomyFallbackSnapshot(scope);
   }
 
   return {

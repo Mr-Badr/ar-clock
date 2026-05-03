@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 
 import {
@@ -7,6 +7,10 @@ import {
   getCountryByCode,
 } from '../src/lib/events/country-dictionary.js';
 import { buildCompiledFaqContent } from '../src/lib/holidays/faq-normalizer.js';
+import {
+  describeHolidayDistribution,
+  shouldAutoExpandHolidayCountries,
+} from '../src/lib/holidays/distribution.js';
 import { normalizeIslamicRichContentYears } from '../src/lib/islamic-year-format.js';
 import { inferSourceAuthority, parseEventPackage } from '../src/lib/events/package-schema.js';
 
@@ -23,9 +27,6 @@ type EventFolderEntry = {
 const ROOT = process.cwd();
 const EVENTS_SOURCE_DIR = join(ROOT, 'src/data/holidays/events');
 const GENERATED_DATA_DIR = join(ROOT, 'src/data/holidays/generated');
-const LEGACY_EVENTS_ITEMS_DIR = join(ROOT, 'src/lib/events/items');
-const LEGACY_CONTENT_ITEMS_DIR = join(ROOT, 'src/lib/event-content/items');
-const LEGACY_MANIFEST_PATH = join(ROOT, 'src/lib/events/manifest.json');
 
 const GENERATED_MANIFEST_PATH = join(GENERATED_DATA_DIR, 'manifest.json');
 const GENERATED_ALL_EVENTS_LIST_PATH = join(GENERATED_DATA_DIR, 'all-events-list.json');
@@ -34,6 +35,7 @@ const GENERATED_EVENTS_BY_SLUG_PATH = join(GENERATED_DATA_DIR, 'events-by-slug.j
 const GENERATED_PUBLISHED_EVENTS_BY_SLUG_PATH = join(GENERATED_DATA_DIR, 'published-events-by-slug.json');
 const GENERATED_CONTENT_BY_SLUG_PATH = join(GENERATED_DATA_DIR, 'content-by-slug.json');
 const GENERATED_EVENT_META_BY_SLUG_PATH = join(GENERATED_DATA_DIR, 'event-meta-by-slug.json');
+const GENERATED_RUNTIME_RECORDS_BY_SLUG_PATH = join(GENERATED_DATA_DIR, 'runtime-records-by-slug.json');
 const GENERATED_ALIASES_PATH = join(GENERATED_DATA_DIR, 'aliases.json');
 const GENERATED_ALIAS_META_PATH = join(GENERATED_DATA_DIR, 'alias-meta.json');
 const GENERATED_CANONICAL_TO_ALIASES_PATH = join(GENERATED_DATA_DIR, 'canonical-to-aliases.json');
@@ -105,13 +107,7 @@ function getEventFolderEntries(): EventFolderEntry[] {
 }
 
 function shouldAutoExpandCountries(pkg: EventPackage) {
-  if (pkg.countryScope === 'none') return false;
-  if (pkg.countryScope === 'all') return true;
-  if (pkg.countryScope === 'custom') {
-    if (pkg.core?._countryCode) return false;
-    return pkg.core?.category === 'islamic' && pkg.core?.type === 'hijri';
-  }
-  return false;
+  return shouldAutoExpandHolidayCountries(pkg);
 }
 
 function buildCountryKeywordVariants(pkg: EventPackage, includeCountryTemplates = true) {
@@ -323,8 +319,6 @@ function loadPackages() {
 }
 
 function main() {
-  ensureDir(LEGACY_EVENTS_ITEMS_DIR);
-  ensureDir(LEGACY_CONTENT_ITEMS_DIR);
   ensureDir(GENERATED_DATA_DIR);
 
   const generatedAt = new Date().toISOString();
@@ -333,6 +327,7 @@ function main() {
   const eventsBySlug: Record<string, any> = {};
   const contentBySlug: Record<string, any> = {};
   const eventMetaBySlug: Record<string, any> = {};
+  const runtimeRecordsBySlug: Record<string, any> = {};
   const allEventsList: any[] = [];
   const publishedEventsList: any[] = [];
   const aliasToCanonical: Record<string, string> = {};
@@ -352,8 +347,6 @@ function main() {
     .sort((a, b) => (a.pkg.queueOrder || Number.MAX_SAFE_INTEGER) - (b.pkg.queueOrder || Number.MAX_SAFE_INTEGER))
     .map(({ entry, pkg }, index) => {
       const slug = pkg.core.slug;
-      const eventPath = join(LEGACY_EVENTS_ITEMS_DIR, `${slug}.json`);
-      const contentPath = join(LEGACY_CONTENT_ITEMS_DIR, `${slug}.json`);
       const aliases = collectAliases(pkg);
       const aliasSlugs = Array.from(aliases.keys());
 
@@ -371,6 +364,7 @@ function main() {
             ),
           )
         : [];
+      const distribution = describeHolidayDistribution(pkg);
       const autoExpandCountries = shouldAutoExpandCountries(pkg);
       const shouldGenerateCountryVariants =
         autoExpandCountries || aliasSlugs.length > 0 || Object.keys(pkg.countryOverrides || {}).length > 0;
@@ -385,17 +379,45 @@ function main() {
         ...(relatedSlugs.length > 0 ? { relatedSlugs } : {}),
       });
 
-      writeJson(eventPath, coreRecord);
-      writeJson(contentPath, contentRecord);
+      const metaRecord = {
+        publishStatus: pkg.publishStatus,
+        countryScope: pkg.countryScope,
+        distribution: distribution.kind,
+        countryCodes: distribution.countryCodes,
+        autoExpandCountries: distribution.autoExpandCountries,
+        canonicalPath: pkg.canonicalPath || `/holidays/${slug}`,
+        aliases: aliasSlugs,
+      };
+      const sourceRecord = {
+        canonicalPath: pkg.canonicalPath || `/holidays/${slug}`,
+        canonicalSource: pkg.canonicalSource || 'internal',
+        sourceAuthority: pkg.sourceAuthority || inferSourceAuthority(coreRecord),
+        queueOrder: pkg.queueOrder || index + 1,
+        authoring: {
+          eventDir: `src/data/holidays/events/${slug}`,
+          packageFile: `src/data/holidays/events/${slug}/package.json`,
+          researchFile: `src/data/holidays/events/${slug}/research.json`,
+          qaFile: `src/data/holidays/events/${slug}/qa.json`,
+        },
+        generated: {
+          coreBundle: 'src/data/holidays/generated/events-by-slug.json',
+          contentBundle: 'src/data/holidays/generated/content-by-slug.json',
+          runtimeBundle: 'src/data/holidays/generated/runtime-records-by-slug.json',
+        },
+        hasResearch: existsSync(entry.researchPath),
+        hasQa: existsSync(entry.qaPath),
+        lastModified: generatedAt,
+      };
 
       eventsBySlug[slug] = coreRecord;
       contentBySlug[slug] = contentRecord;
-      eventMetaBySlug[slug] = {
-        tier: pkg.tier,
-        publishStatus: pkg.publishStatus,
-        countryScope: pkg.countryScope,
-        canonicalPath: pkg.canonicalPath || `/holidays/${slug}`,
-        aliases: aliasSlugs,
+      eventMetaBySlug[slug] = metaRecord;
+      runtimeRecordsBySlug[slug] = {
+        slug,
+        core: coreRecord,
+        content: contentRecord,
+        meta: metaRecord,
+        source: sourceRecord,
       };
 
       allEventsList.push(coreRecord);
@@ -422,41 +444,49 @@ function main() {
         id: coreRecord.id,
         slug,
         category: coreRecord.category,
-        tier: pkg.tier,
-        publishStatus: pkg.publishStatus,
-        canonicalPath: pkg.canonicalPath || `/holidays/${slug}`,
-        canonicalSource: pkg.canonicalSource || 'internal',
-        sourceAuthority: pkg.sourceAuthority || inferSourceAuthority(coreRecord),
-        queueOrder: pkg.queueOrder || index + 1,
-        eventDir: `src/data/holidays/events/${slug}`,
-        packageFile: `src/data/holidays/events/${slug}/package.json`,
-        researchFile: `src/data/holidays/events/${slug}/research.json`,
-        qaFile: `src/data/holidays/events/${slug}/qa.json`,
-        generatedEventFile: `src/lib/events/items/${slug}.json`,
-        generatedContentFile: `src/lib/event-content/items/${slug}.json`,
+        publishStatus: metaRecord.publishStatus,
+        countryScope: metaRecord.countryScope,
+        distribution: metaRecord.distribution,
+        countryCodes: metaRecord.countryCodes,
+        autoExpandCountries: metaRecord.autoExpandCountries,
+        canonicalPath: sourceRecord.canonicalPath,
+        canonicalSource: sourceRecord.canonicalSource,
+        sourceAuthority: sourceRecord.sourceAuthority,
+        queueOrder: sourceRecord.queueOrder,
+        eventDir: sourceRecord.authoring.eventDir,
+        packageFile: sourceRecord.authoring.packageFile,
+        researchFile: sourceRecord.authoring.researchFile,
+        qaFile: sourceRecord.authoring.qaFile,
+        generatedCoreBundle: sourceRecord.generated.coreBundle,
+        generatedContentBundle: sourceRecord.generated.contentBundle,
+        generatedRuntimeBundle: sourceRecord.generated.runtimeBundle,
         aliasSlugs,
-        hasResearch: existsSync(entry.researchPath),
-        hasQa: existsSync(entry.qaPath),
-        lastModified: generatedAt,
+        hasResearch: sourceRecord.hasResearch,
+        hasQa: sourceRecord.hasQa,
+        lastModified: sourceRecord.lastModified,
       };
     });
 
-  const canonicalSlugSet = new Set(manifestEvents.map((event) => event.slug));
-  const staleEventFiles = readdirSync(LEGACY_EVENTS_ITEMS_DIR)
-    .filter((file) => file.endsWith('.json'))
-    .filter((file) => !canonicalSlugSet.has(file.replace(/\.json$/, '')));
-  const staleContentFiles = readdirSync(LEGACY_CONTENT_ITEMS_DIR)
-    .filter((file) => file.endsWith('.json'))
-    .filter((file) => !canonicalSlugSet.has(file.replace(/\.json$/, '')));
-  for (const file of staleEventFiles) unlinkSync(join(LEGACY_EVENTS_ITEMS_DIR, file));
-  for (const file of staleContentFiles) unlinkSync(join(LEGACY_CONTENT_ITEMS_DIR, file));
-
   const manifest = {
-    schemaVersion: 3,
+    schemaVersion: 6,
     generatedAt,
     totalEvents: manifestEvents.length,
     totalPublished: manifestEvents.filter((event) => event.publishStatus === 'published').length,
     totalAliases: Object.keys(aliasToCanonical).length,
+    supportedCountryCount: COUNTRY_CODES.length,
+    supportedCountryCodes: COUNTRY_CODES,
+    generatedArtifacts: {
+      allEventsList: 'src/data/holidays/generated/all-events-list.json',
+      publishedEventsList: 'src/data/holidays/generated/published-events-list.json',
+      eventsBySlug: 'src/data/holidays/generated/events-by-slug.json',
+      publishedEventsBySlug: 'src/data/holidays/generated/published-events-by-slug.json',
+      contentBySlug: 'src/data/holidays/generated/content-by-slug.json',
+      eventMetaBySlug: 'src/data/holidays/generated/event-meta-by-slug.json',
+      runtimeRecordsBySlug: 'src/data/holidays/generated/runtime-records-by-slug.json',
+      aliases: 'src/data/holidays/generated/aliases.json',
+      aliasMeta: 'src/data/holidays/generated/alias-meta.json',
+      canonicalToAliases: 'src/data/holidays/generated/canonical-to-aliases.json',
+    },
     events: manifestEvents,
   };
 
@@ -465,19 +495,19 @@ function main() {
   );
 
   writeJson(GENERATED_MANIFEST_PATH, manifest);
-  writeJson(LEGACY_MANIFEST_PATH, manifest);
   writeJson(GENERATED_ALL_EVENTS_LIST_PATH, allEventsList);
   writeJson(GENERATED_PUBLISHED_EVENTS_LIST_PATH, publishedEventsList);
   writeJson(GENERATED_EVENTS_BY_SLUG_PATH, eventsBySlug);
   writeJson(GENERATED_PUBLISHED_EVENTS_BY_SLUG_PATH, publishedEventsBySlug);
   writeJson(GENERATED_CONTENT_BY_SLUG_PATH, contentBySlug);
   writeJson(GENERATED_EVENT_META_BY_SLUG_PATH, eventMetaBySlug);
+  writeJson(GENERATED_RUNTIME_RECORDS_BY_SLUG_PATH, runtimeRecordsBySlug);
   writeJson(GENERATED_ALIASES_PATH, aliasToCanonical);
   writeJson(GENERATED_ALIAS_META_PATH, aliasMetaBySlug);
   writeJson(GENERATED_CANONICAL_TO_ALIASES_PATH, canonicalToAliases);
 
   console.log(
-    `[generate-events-index] Built ${manifestEvents.length} canonical events (${manifest.totalAliases} aliases, ${manifest.totalPublished} published, data source: src/data/holidays/events).`,
+    `[generate-events-index] Built ${manifestEvents.length} canonical events (${manifest.totalAliases} aliases, ${manifest.totalPublished} live, data source: src/data/holidays/events).`,
   );
 }
 

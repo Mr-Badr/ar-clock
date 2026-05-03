@@ -1,45 +1,72 @@
 services:
   app:
-    image: ghcr.io/mr-badr/ar-clock:staging
+    image: ${APP_IMAGE:-ghcr.io/mr-badr/ar-clock}:${APP_TAG:-staging}
+
     env_file:
       - /opt/miqatona/env/staging.env
+
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - backend
 
   postgres:
     image: postgres:16-bookworm
+
     restart: unless-stopped
+
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-miqatona_staging}
       POSTGRES_USER: ${POSTGRES_USER:-miqatona}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
       PGDATA: /var/lib/postgresql/data/pgdata
+
+    command:
+      [
+        "postgres",
+        "-c", "shared_buffers=256MB",
+        "-c", "effective_cache_size=768MB",
+        "-c", "maintenance_work_mem=64MB",
+        "-c", "work_mem=4MB",
+        "-c", "wal_buffers=16MB",
+        "-c", "random_page_cost=1.1",
+        "-c", "effective_io_concurrency=200"
+      ]
+
     ports:
       - "127.0.0.1:${POSTGRES_HOST_PORT:-5433}:5432"
+
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - pgdata-staging:/var/lib/postgresql/data
       - ../postgres/init:/docker-entrypoint-initdb.d:ro
+
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-miqatona} -d ${POSTGRES_DB:-miqatona_staging}"]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-miqatona} -d ${POSTGRES_DB:-miqatona_staging}"
+        ]
       interval: 10s
       timeout: 5s
       retries: 10
       start_period: 20s
+
     shm_size: 256mb
+
+    security_opt:
+      - no-new-privileges:true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
     networks:
       - backend
 
   nginx:
-   ports:
-      - "80:80"
+    ports:
+      - "127.0.0.1:${NGINX_HTTP_PORT:-8081}:80"
 
 volumes:
-  postgres-data:
-
-networks:
-  backend:
-    driver: bridge
-
+  pgdata-staging:

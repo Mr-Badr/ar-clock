@@ -1,6 +1,5 @@
 {
   "slug": "saudi-flag-day",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

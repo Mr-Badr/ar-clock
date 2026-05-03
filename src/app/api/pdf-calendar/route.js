@@ -3,7 +3,35 @@
  */
 
 import { NextResponse } from 'next/server';
+import { z } from 'zod';
+
 import { getSiteUrl } from '@/lib/site-config';
+import { logger, serializeError } from '@/lib/logger';
+import { parseJsonBody, withApiHandler } from '@/lib/api/route-utils';
+
+const scheduleRowSchema = z.object({
+  dayName: z.string().trim().min(1).max(40),
+  hijriDay: z.string().trim().min(1).max(20),
+  dayNumber: z.string().trim().min(1).max(20),
+  fajr: z.string().trim().min(1).max(20),
+  sunrise: z.string().trim().min(1).max(20),
+  dhuhr: z.string().trim().min(1).max(20),
+  asr: z.string().trim().min(1).max(20),
+  maghrib: z.string().trim().min(1).max(20),
+  isha: z.string().trim().min(1).max(20),
+  isFriday: z.boolean().optional().default(false),
+  isNewHijriMonth: z.boolean().optional().default(false),
+  hijriMonthName: z.string().trim().max(40).optional().default(''),
+});
+
+const bodySchema = z.object({
+  schedule: z.array(scheduleRowSchema).min(1).max(31),
+  cityNameAr: z.string().trim().min(1).max(120),
+  gregorianLabel: z.string().trim().min(1).max(80),
+  hijriLabel: z.string().trim().max(80).optional().default(''),
+  countryCode: z.string().trim().max(4).optional().default(''),
+  theme: z.enum(['light', 'dark']).optional().default('light'),
+});
 
 // ─── Light palette ────────────────────────────────────────────────────────────
 const BL = {
@@ -81,7 +109,10 @@ async function launchBrowser() {
         headless: chromium.headless,
       });
     } catch (error) {
-      console.warn('[pdf-calendar] Falling back to bundled puppeteer:', error);
+      logger.warn('pdf-calendar-chromium-fallback', {
+        route: '/api/pdf-calendar',
+        error: serializeError(error),
+      });
     }
   }
 
@@ -360,67 +391,82 @@ function generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, theme 
 
 // ─── Route handler ────────────────────────────────────────────────────────────
 
-export async function POST(request) {
-  const pdfCalendarEnabled = process.env.ENABLE_PDF_CALENDAR === 'true';
+export const POST = withApiHandler(
+  '/api/pdf-calendar',
+  async ({ request, requestId }) => {
+    const pdfCalendarEnabled = process.env.ENABLE_PDF_CALENDAR === 'true';
 
-  if (!pdfCalendarEnabled) {
-    return NextResponse.json(
-      { error: 'PDF calendar generation is temporarily disabled during the bridge stabilization period.' },
-      { status: 503 },
-    );
-  }
-
-  let browser;
-  try {
-    const body = await request.json();
-    const { schedule, cityNameAr, gregorianLabel, hijriLabel, countryCode, theme = 'light' } = body;
-
-    if (!Array.isArray(schedule) || !schedule.length) {
-      return NextResponse.json({ error: 'البيانات غير صحيحة' }, { status: 400 });
+    if (!pdfCalendarEnabled) {
+      return NextResponse.json(
+        { error: 'PDF calendar generation is temporarily disabled during the bridge stabilization period.' },
+        { status: 503 },
+      );
     }
 
-    const safeTheme = theme === 'dark' ? 'dark' : 'light';
-    const html = generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, countryCode, theme: safeTheme });
+    const {
+      schedule,
+      cityNameAr,
+      gregorianLabel,
+      hijriLabel,
+      countryCode,
+      theme,
+    } = await parseJsonBody(request, bodySchema);
 
-    browser = await launchBrowser();
-    const page = await browser.newPage();
+    let browser;
 
-    // A4 portrait: 210mm × 297mm at 96dpi = 794 × 1122px
-    await page.setViewport({ width: 794, height: 1122, deviceScaleFactor: 2 });
+    try {
+      const html = generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, countryCode, theme });
 
-    await page.setContent(html, { waitUntil: 'networkidle0' });
-    await page.evaluate(() => document.fonts.ready);
-    await page.emulateMediaType('print');
+      browser = await launchBrowser();
+      const page = await browser.newPage();
 
-    const pdfBuffer = await page.pdf({
-      width:            '210mm',
-      height:           '297mm',
-      printBackground:   true,
-      preferCSSPageSize: false,
-    });
+      await page.setViewport({ width: 794, height: 1122, deviceScaleFactor: 2 });
+      await page.setContent(html, { waitUntil: 'networkidle0' });
+      await page.evaluate(() => document.fonts.ready);
+      await page.emulateMediaType('print');
 
-    await browser.close();
-    browser = null;
+      const pdfBuffer = await page.pdf({
+        width: '210mm',
+        height: '297mm',
+        printBackground: true,
+        preferCSSPageSize: false,
+      });
 
-    const safeCity  = (cityNameAr    || 'city').replace(/\s+/g, '-').replace(/[^\w\u0600-\u06FF-]/g, '');
-    const safeMonth = (gregorianLabel || 'calendar').replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-    const filename  = `taqwim-salat-${safeCity}-${safeMonth}-${safeTheme}.pdf`;
+      await browser.close();
+      browser = null;
 
-    return new Response(pdfBuffer, {
-      status: 200,
-      headers: {
-        'Content-Type':        'application/pdf',
-        'Content-Disposition': `attachment; filename*=UTF-8''${encodeURIComponent(filename)}`,
-        'Cache-Control':       'no-store',
-      },
-    });
+      const safeCity = (cityNameAr || 'city').replace(/\s+/g, '-').replace(/[^\w\u0600-\u06FF-]/g, '');
+      const safeMonth = (gregorianLabel || 'calendar').replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+      const filename = `taqwim-salat-${safeCity}-${safeMonth}-${theme}.pdf`;
 
-  } catch (err) {
-    if (browser) await browser.close().catch(() => {});
-    console.error('[pdf-calendar]', err);
-    return NextResponse.json(
-      { error: 'فشل إنشاء ملف تقويم الصلاة. يرجى المحاولة مرة أخرى.' },
-      { status: 500 },
-    );
-  }
-}
+      return new Response(pdfBuffer, {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/pdf',
+          'Content-Disposition': `attachment; filename*=UTF-8''${encodeURIComponent(filename)}`,
+          'Cache-Control': 'no-store',
+        },
+      });
+    } catch (err) {
+      if (browser) await browser.close().catch(() => {});
+
+      logger.error('pdf-calendar-generation-failed', {
+        route: '/api/pdf-calendar',
+        requestId,
+        error: serializeError(err),
+      });
+
+      return NextResponse.json(
+        { error: 'فشل إنشاء ملف تقويم الصلاة. يرجى المحاولة مرة أخرى.' },
+        { status: 500 },
+      );
+    }
+  },
+  {
+    rateLimit: {
+      key: 'pdf-calendar',
+      limit: 12,
+      windowMs: 60_000,
+    },
+  },
+);

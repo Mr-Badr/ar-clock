@@ -1,8 +1,9 @@
 // components/economy/useEconomyLiveModel.jsx
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
+import { logger, serializeError } from '@/lib/logger';
 import { resolveCurrentUserCity } from '@/lib/user-location.client';
 
 function mergeViewerWithDetection(currentViewer, detection) {
@@ -27,6 +28,16 @@ function mergeViewerWithDetection(currentViewer, detection) {
 export function useEconomyLiveModel(buildModel, initialViewer, initialNowIso, getDocumentTitle = null) {
   const [viewer, setViewer] = useState(initialViewer);
   const [nowIso, setNowIso] = useState(initialNowIso || null);
+  const [model, setModel] = useState(() => {
+    if (!initialNowIso) return null;
+
+    try {
+      return buildModel(initialViewer, initialNowIso);
+    } catch {
+      return null;
+    }
+  });
+  const loggedModelErrorRef = useRef('');
 
   useEffect(() => {
     setNowIso(new Date().toISOString());
@@ -65,9 +76,25 @@ export function useEconomyLiveModel(buildModel, initialViewer, initialNowIso, ge
     };
   }, []);
 
-  const model = useMemo(() => {
-    if (!nowIso) return null;
-    return buildModel(viewer, nowIso);
+  useEffect(() => {
+    if (!nowIso) return;
+
+    try {
+      const nextModel = buildModel(viewer, nowIso);
+      loggedModelErrorRef.current = '';
+      setModel(nextModel);
+    } catch (error) {
+      const signature = `${error?.name || 'Error'}:${error?.message || 'unknown'}`;
+
+      if (loggedModelErrorRef.current !== signature) {
+        loggedModelErrorRef.current = signature;
+        logger.warn('economy-live-model-build-failed', {
+          viewerTimezone: viewer?.timezone || null,
+          nowIso,
+          error: serializeError(error),
+        });
+      }
+    }
   }, [buildModel, nowIso, viewer]);
 
   useEffect(() => {

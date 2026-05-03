@@ -1,9 +1,0 @@
-{
-  "id": "citizen-account-sa",
-  "slug": "citizen-account-saudi",
-  "name": "حساب المواطن",
-  "type": "monthly",
-  "category": "support",
-  "_countryCode": "sa",
-  "day": 10
-}

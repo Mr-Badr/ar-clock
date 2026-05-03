@@ -1,6 +1,5 @@
 {
   "slug": "school-start-morocco",
-  "tier": "tier2",
   "publishStatus": "published",
   "checks": {
     "contentReady": false,

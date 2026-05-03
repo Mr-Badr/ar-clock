@@ -7,6 +7,12 @@ const emptyToUndefined = (schema) =>
     return trimmed === '' ? undefined : trimmed;
   }, schema);
 
+const optionalBooleanString = emptyToUndefined(z.enum(['true', 'false']).optional());
+const optionalShortString = emptyToUndefined(z.string().min(1).optional());
+const optionalAdsenseClientId = emptyToUndefined(
+  z.string().regex(/^ca-pub-[\w-]+$/, 'Must start with ca-pub-').optional(),
+);
+
 const siteEnvShape = {
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   NEXT_PUBLIC_SITE_URL: emptyToUndefined(z.string().url().optional()),
@@ -32,14 +38,38 @@ const runtimeSchema = z
     NEXT_PUBLIC_SUPABASE_URL: emptyToUndefined(z.string().url().optional()),
     NEXT_PUBLIC_SUPABASE_ANON_KEY: emptyToUndefined(z.string().min(20).optional()),
     DATABASE_URL: emptyToUndefined(z.string().min(1).optional()),
-    ENABLE_LIVE_GEO_DB: z.enum(['true', 'false']).optional(),
+    APP_VERSION: optionalShortString,
+    ENABLE_LIVE_GEO_DB: optionalBooleanString,
+    ENABLE_PDF_CALENDAR: optionalBooleanString,
+    ENABLE_NEW_PRAYER_ENGINE: optionalBooleanString,
     LIVE_GEO_PROVIDER: emptyToUndefined(z.enum(['supabase', 'postgres']).optional()),
+    IP_API_BASE_URL: emptyToUndefined(z.string().url().optional()),
+    PDF_BROWSER_MODE: emptyToUndefined(z.enum(['serverless', 'bundled']).optional()),
     ECONOMY_LIVE_DATA_PROVIDER: emptyToUndefined(z.enum(['auto', 'alphavantage', 'twelvedata', 'yahoo']).optional()),
     ALPHA_VANTAGE_API_KEY: emptyToUndefined(z.string().min(8).optional()),
     TWELVE_DATA_API_KEY: emptyToUndefined(z.string().min(8).optional()),
     FRED_API_KEY: emptyToUndefined(z.string().min(8).optional()),
     NEWSAPI_API_KEY: emptyToUndefined(z.string().min(8).optional()),
     GNEWS_API_KEY: emptyToUndefined(z.string().min(8).optional()),
+    ADSENSE_CLIENT_ID: optionalAdsenseClientId,
+    NEXT_PUBLIC_ADSENSE_CLIENT_ID: optionalAdsenseClientId,
+    ENABLE_ANALYTICS: optionalBooleanString,
+    GA_MEASUREMENT_ID: optionalShortString,
+    GTM_ID: optionalShortString,
+    ENABLE_CONSENT_BANNER: optionalBooleanString,
+    ENABLE_SW: optionalBooleanString,
+    NEXT_PUBLIC_ENABLE_ANALYTICS: optionalBooleanString,
+    NEXT_PUBLIC_ENABLE_CONSENT_BANNER: optionalBooleanString,
+    NEXT_PUBLIC_GA_MEASUREMENT_ID: optionalShortString,
+    NEXT_PUBLIC_GTM_ID: optionalShortString,
+    NEXT_PUBLIC_ENABLE_SW: optionalBooleanString,
+    FF_HOLIDAYS_NEW_METADATA: optionalBooleanString,
+    FF_HOLIDAYS_CONTENT_RESOLVER: optionalBooleanString,
+    FF_HOLIDAYS_SECTIONIZED_UI: optionalBooleanString,
+    FF_SEO_STRICT_CLEANUP: optionalBooleanString,
+    FF_OBSERVABILITY_LOGS: optionalBooleanString,
+    FF_EVENTS_SHARD_INDEX: optionalBooleanString,
+    FF_EVENTS_PUBLISHED_ONLY: optionalBooleanString,
   })
   .superRefine((value, ctx) => {
     const liveGeoUsesPostgres =
@@ -49,15 +79,23 @@ const runtimeSchema = z
     if (value.NODE_ENV === 'production' && !value.REVALIDATE_SECRET) {
       ctx.addIssue({
         code: 'custom',
-        message: 'REVALIDATE_SECRET is required in production',
+        message: 'Missing required env var in production.',
         path: ['REVALIDATE_SECRET'],
+      });
+    }
+
+    if (value.ENABLE_LIVE_GEO_DB === 'true' && !value.LIVE_GEO_PROVIDER) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'LIVE_GEO_PROVIDER is required when ENABLE_LIVE_GEO_DB=true.',
+        path: ['LIVE_GEO_PROVIDER'],
       });
     }
 
     if (value.NODE_ENV === 'production' && liveGeoUsesPostgres && !value.DATABASE_URL) {
       ctx.addIssue({
         code: 'custom',
-        message: 'DATABASE_URL is required when LIVE_GEO_PROVIDER=postgres',
+        message: 'Missing required env var when LIVE_GEO_PROVIDER=postgres.',
         path: ['DATABASE_URL'],
       });
     }
@@ -65,7 +103,7 @@ const runtimeSchema = z
     if (value.NODE_ENV === 'production' && !liveGeoUsesPostgres && !value.SUPABASE_URL) {
       ctx.addIssue({
         code: 'custom',
-        message: 'SUPABASE_URL is required in production',
+        message: 'Missing required env var in production.',
         path: ['SUPABASE_URL'],
       });
     }
@@ -73,7 +111,7 @@ const runtimeSchema = z
     if (value.NODE_ENV === 'production' && !liveGeoUsesPostgres && !value.SUPABASE_ANON_KEY) {
       ctx.addIssue({
         code: 'custom',
-        message: 'SUPABASE_ANON_KEY is required in production',
+        message: 'Missing required env var in production.',
         path: ['SUPABASE_ANON_KEY'],
       });
     }
@@ -81,14 +119,19 @@ const runtimeSchema = z
 
 function formatIssues(issues) {
   return issues
-    .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
-    .join('; ');
+    .map((issue) => {
+      const path = issue.path.join('.') || 'env';
+      return `- ${path}: ${issue.message}`;
+    })
+    .join('\n');
 }
 
 function parseEnv(schema, label) {
   const parsed = schema.safeParse(process.env);
   if (!parsed.success) {
-    throw new Error(`[env] Invalid ${label} environment configuration: ${formatIssues(parsed.error.issues)}`);
+    throw new Error(
+      `Application failed to start.\nInvalid ${label} environment configuration:\n${formatIssues(parsed.error.issues)}`,
+    );
   }
   return parsed.data;
 }

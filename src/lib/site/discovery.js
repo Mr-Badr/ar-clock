@@ -850,7 +850,7 @@ export const SITE_DIRECTORY_SECTIONS = [
   {
     id: 'guides',
     title: 'الأدلة العملية',
-    description: 'صفحات شرح وتوجيه تدعم الحاسبات وتلتقط أسئلة long-tail التعليمية.',
+    description: 'صفحات شرح وتوجيه تدعم الحاسبات وتلتقط الأسئلة التعليمية التفصيلية.',
     items: GUIDE_ITEMS,
   },
   {

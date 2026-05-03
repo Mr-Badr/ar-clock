@@ -1,6 +1,5 @@
 {
   "slug": "school-start-saudi",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

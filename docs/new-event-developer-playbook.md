@@ -25,10 +25,8 @@ There is only one authoring source:
 
 Everything else is runtime or generated output:
 - `src/data/holidays/generated/*.json`
-- `src/lib/events/generated-index.js`
-- `src/lib/event-content/generated-index.js`
-- `src/lib/events/items/*.json`
-- `src/lib/event-content/items/*.json`
+- `src/lib/events/generated-aliases.js`
+- `out/holidays-delivery/*`
 
 Do not add authored event data under:
 - `src/lib/events/`
@@ -80,7 +78,7 @@ Rules:
 Example global event:
 
 ```bash
-npm run events:new -- --slug world-poetry-day --name "اليوم العالمي للشعر" --type fixed --category support --build true
+npm run events:new -- --slug world-poetry-day --name "اليوم العالمي للشعر" --type fixed --category social --build true
 ```
 
 Example multi-country Islamic event:
@@ -115,7 +113,7 @@ Good examples:
 Scaffold example:
 
 ```bash
-npm run events:new -- --slug earth-day --name "يوم الأرض" --type fixed --category support --countryScope all --build true
+npm run events:new -- --slug earth-day --name "يوم الأرض" --type fixed --category social --countryScope all --build true
 ```
 
 Authoring example inside `src/data/holidays/events/earth-day/package.json`:
@@ -127,7 +125,7 @@ Authoring example inside `src/data/holidays/events/earth-day/package.json`:
     "slug": "earth-day",
     "name": "يوم الأرض",
     "type": "fixed",
-    "category": "support",
+    "category": "social",
     "month": 4,
     "day": 22
   },
@@ -215,7 +213,6 @@ It contains:
 - `countryOverrides`: country-specific overlays
 - `aliasSlugs`: additional legacy or alternate query slugs
 - `keywordTemplateSet`: keyword generation templates
-- `tier`: content/SEO priority
 - `publishStatus`: visibility and release state
 
 ### `research.json`
@@ -274,7 +271,7 @@ Minimum required fields:
   "slug": "world-poetry-day",
   "name": "اليوم العالمي للشعر",
   "type": "fixed",
-  "category": "support",
+  "category": "social",
   "month": 3,
   "day": 21
 }
@@ -302,66 +299,7 @@ Important sections:
 - `schemaData`
 - `relatedSlugs`
 
-If the event is `tier1`, all of these should be present and strong.
-
-## Tier Priority
-
-The `tier` field is a content and SEO priority marker.
-
-It does not directly publish or hide the page, but it tells us how complete the event should be before we consider it high quality.
-
-### `tier1`
-Use for the most important pages in the project.
-
-Examples:
-- Ramadan
-- Eid al-Fitr
-- Eid al-Adha
-- the strongest country school-start pages
-
-Expectations:
-- full rich content model
-- strong `answerSummary`
-- strong `aboutEvent`
-- complete FAQ
-- strong `seoMeta`
-- strong `schemaData`
-- polished related links
-- fact-checking and editorial review should happen first here before lower tiers
-
-### `tier2`
-Use for medium-priority pages that still matter for traffic, but are not the first ranking battleground.
-
-Examples:
-- important national days
-- mid-priority school pages
-- seasonal pages with steady demand
-
-Expectations:
-- good SEO metadata
-- useful FAQ
-- quick facts
-- related links
-- enough content to be publishable, but not necessarily as deep as `tier1`
-
-### `tier3`
-Use for lower-priority or long-tail pages.
-
-Examples:
-- experimental topics
-- low-demand pages
-- pages we want in the system architecture before investing heavily in content
-
-Expectations:
-- basic but valid content
-- minimum usable quick facts
-- minimum usable FAQ
-- can stay drafted until we improve them later
-
-Simple rule:
-- `tier1` = must be excellent
-- `tier2` = should be solid
-- `tier3` = can start lean, then improve later
+For every event that is meant to be live, all of these should be present and strong enough to stand on their own. The holidays architecture now uses one quality model for all live events.
 
 ## Keyword Strategy
 

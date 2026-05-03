@@ -1,28 +1,32 @@
-import { NextResponse } from 'next/server'
-import { searchCities } from '@/lib/db/queries/cities'
+import { z } from 'zod';
 
-export async function GET(request) {
-  const { searchParams } = new URL(request.url)
-  const query = String(searchParams.get('q') || '').trim()
+import { searchCities } from '@/lib/db/queries/cities';
+import { json, parseSearchParams, withApiHandler } from '@/lib/api/route-utils';
 
-  if (!query || query.length < 2) {
-    return NextResponse.json([])
-  }
+const querySchema = z.object({
+  q: z.string().trim().max(80).optional().default(''),
+  limit: z.coerce.number().int().min(1).max(10).optional().default(10),
+});
 
-  // Short queries are served well enough from the local city indexes on the client.
-  // Keeping the live API for longer-tail searches reduces database pressure.
-  if (query.length < 4) {
-    return NextResponse.json([], {
-      headers: {
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400'
-      }
-    })
-  }
+export const GET = withApiHandler(
+  '/api/search-city',
+  async ({ request }) => {
+    const { q: query, limit } = parseSearchParams(request, querySchema);
 
-  try {
-    const cities = await searchCities(query, 10)
+    if (!query || query.length < 2) {
+      return json([]);
+    }
 
-    // Map to the shape expected by SearchCity.client.jsx
+    if (query.length < 4) {
+      return json([], {
+        headers: {
+          'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+        },
+      });
+    }
+
+    const cities = await searchCities(query, limit);
+
     const formattedCities = cities.map(city => ({
       city_slug: city.city_slug,
       city_name_ar: city.name_ar,
@@ -34,15 +38,20 @@ export async function GET(request) {
       lat: city.lat,
       lon: city.lon,
       is_capital: city.is_capital,
-      population: city.population
-    }))
-    return NextResponse.json(formattedCities, {
+      population: city.population,
+    }));
+
+    return json(formattedCities, {
       headers: {
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400'
-      }
-    })
-  } catch (error) {
-    console.error('[API] search-city error:', error)
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
-  }
-}
+        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+      },
+    });
+  },
+  {
+    rateLimit: {
+      key: 'search-city',
+      limit: 120,
+      windowMs: 60_000,
+    },
+  },
+);

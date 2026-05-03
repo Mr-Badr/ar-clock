@@ -46,11 +46,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import {
-  isPublicEnvEnabled,
-  useMarketingPermission,
-} from "@/lib/client/marketing";
+import { useMarketingPermission } from "@/lib/client/marketing";
+import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
 import { getAdRoutePolicy } from "@/lib/ads/route-policy";
+import { logger, serializeError } from "@/lib/logger";
 
 interface AdStickyAnchorProps {
   className?: string;
@@ -59,10 +58,9 @@ interface AdStickyAnchorProps {
 export default function AdStickyAnchor({
   className = "",
 }: AdStickyAnchorProps) {
-  const adsEnabled = isPublicEnvEnabled(process.env.NEXT_PUBLIC_ENABLE_ADS);
-  const clientId = (process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "").trim();
-  const adSlot = (process.env.NEXT_PUBLIC_ADSENSE_STICKY_ANCHOR_SLOT || "").trim();
-  const shouldRenderAds = adsEnabled && clientId.startsWith("ca-pub-") && Boolean(adSlot);
+  const { clientId, manualSlots } = useAdsRuntimeConfig();
+  const adSlot = manualSlots.stickyAnchor || "";
+  const shouldRenderAds = Boolean(clientId && adSlot);
   const canLoadAds = useMarketingPermission(shouldRenderAds);
   const pathname = usePathname();
   const routePolicy = getAdRoutePolicy(pathname || "/");
@@ -104,7 +102,11 @@ export default function AdStickyAnchor({
       const adsWindow = window as Window & { adsbygoogle?: unknown[] };
       (adsWindow.adsbygoogle = adsWindow.adsbygoogle || []).push({});
     } catch (error) {
-      console.warn("AdSense sticky anchor failed to initialize:", error);
+      logger.warn("adsense-sticky-anchor-init-failed", {
+        component: "AdStickyAnchor",
+        slotId: "sticky-anchor",
+        error: serializeError(error),
+      });
     }
   }, [canLoadAds, dismissed, fullscreenActive, routePolicy.enableFullscreenCompanion, visible]);
 
@@ -152,7 +154,7 @@ export default function AdStickyAnchor({
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}
-        data-ad-client={clientId}
+        data-ad-client={clientId || undefined}
         data-ad-slot={adSlot}
         data-ad-format="horizontal"
         data-full-width-responsive="true"

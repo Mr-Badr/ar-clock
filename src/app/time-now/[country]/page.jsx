@@ -122,6 +122,8 @@ export async function generateMetadata({ params }) {
     twitter: {
       card: 'summary_large_image',
       title: `كم الساعة الآن في ${countryAr}؟ | ${cityAr} الآن`,
+      description: `اعرف الوقت الحالي في ${countryAr} مع توقيت ${cityAr} المباشر والتاريخ اليوم والمنطقة الزمنية ${offset}.`,
+      images: [`${BASE}/time-now/${countrySlug}/opengraph-image`],
     },
     robots: {
       index: isIndexableCountry,

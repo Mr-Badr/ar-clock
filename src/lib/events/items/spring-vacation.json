@@ -1,8 +1,0 @@
-{
-  "id": "spring-vac",
-  "slug": "spring-vacation",
-  "name": "عطلة الربيع المدرسية",
-  "type": "estimated",
-  "category": "school",
-  "date": "{{year}}-03-29"
-}

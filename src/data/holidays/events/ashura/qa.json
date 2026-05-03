@@ -1,6 +1,5 @@
 {
   "slug": "ashura",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

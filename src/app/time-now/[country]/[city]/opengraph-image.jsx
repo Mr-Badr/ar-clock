@@ -10,6 +10,18 @@ export const contentType = 'image/png';
 export const runtime = 'nodejs';
 export const revalidate = 86400;
 
+function humanizeSlug(value) {
+  try {
+    return decodeURIComponent(String(value || ''))
+      .replace(/[-_]+/g, ' ')
+      .trim();
+  } catch {
+    return String(value || '')
+      .replace(/[-_]+/g, ' ')
+      .trim();
+  }
+}
+
 function renderFallbackImage(cityLabel = 'المدينة', countryLabel = 'البلد') {
   return new ImageResponse(
     (
@@ -44,13 +56,15 @@ function renderFallbackImage(cityLabel = 'المدينة', countryLabel = 'ال�
 
 export default async function Image({ params }) {
   const { country, city } = await params;
+  const fallbackCityLabel = humanizeSlug(city) || 'المدينة';
+  const fallbackCountryLabel = humanizeSlug(country) || 'البلد';
 
   try {
     const countryObj = await getCountryBySlug(country).catch(() => null);
     const cityData = await getCityBySlug(countryObj?.country_code || '', city).catch(() => null);
 
-    const cityNameAr = cityData?.name_ar || cityData?.name_en || decodeURIComponent(city);
-    const countryNameAr = countryObj?.name_ar || countryObj?.name_en || decodeURIComponent(country);
+    const cityNameAr = cityData?.name_ar || cityData?.name_en || fallbackCityLabel;
+    const countryNameAr = countryObj?.name_ar || countryObj?.name_en || fallbackCountryLabel;
 
     return new ImageResponse(
       (
@@ -153,6 +167,6 @@ export default async function Image({ params }) {
       { ...size },
     );
   } catch {
-    return renderFallbackImage(decodeURIComponent(city), decodeURIComponent(country));
+    return renderFallbackImage(fallbackCityLabel, fallbackCountryLabel);
   }
 }

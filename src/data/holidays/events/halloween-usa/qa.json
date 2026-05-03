@@ -1,6 +1,5 @@
 {
   "slug": "halloween-usa",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

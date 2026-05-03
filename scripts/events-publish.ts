@@ -47,6 +47,19 @@ function runStep(command: string, args: string[]) {
   }
 }
 
+function runNodeTsxScript(scriptPath: string, args: string[] = [], options?: { envFile?: string }) {
+  const nodeArgs = [] as string[];
+  if (options?.envFile) {
+    nodeArgs.push(`--env-file=${options.envFile}`);
+  }
+  nodeArgs.push('--import', 'tsx', scriptPath, ...args);
+  runStep('node', nodeArgs);
+}
+
+function isPlaceholderSlug(slug: string) {
+  return slug === 'your-slug' || slug === '<slug>' || slug.includes('<') || slug.includes('>');
+}
+
 function assertValidTransition(current: PublishStatus, next: PublishStatus, force: boolean) {
   if (force || current === next) return;
   const currentIndex = STATUS_ORDER.indexOf(current);
@@ -60,8 +73,9 @@ function assertValidTransition(current: PublishStatus, next: PublishStatus, forc
     );
   }
   if (nextIndex > currentIndex + 1) {
+    const suggestedNext = STATUS_ORDER[currentIndex + 1];
     throw new Error(
-      `[events:publish] Refusing skip transition "${current}" -> "${next}". Move sequentially or use --force.`,
+      `[events:publish] Refusing skip transition "${current}" -> "${next}". Move sequentially to "${suggestedNext}" first or use --force.`,
     );
   }
 }
@@ -72,10 +86,17 @@ function main() {
   if (!slug) {
     throw new Error('[events:publish] Missing required argument --slug');
   }
+  if (isPlaceholderSlug(slug)) {
+    throw new Error(
+      '[events:publish] Replace the example placeholder with the real event slug, for example: --slug world-fathers-day',
+    );
+  }
 
   const path = join(EVENTS_SOURCE_DIR, slug, 'package.json');
   if (!existsSync(path)) {
-    throw new Error(`[events:publish] Package not found: ${path}`);
+    throw new Error(
+      `[events:publish] Package not found for slug "${slug}". Expected: ${path}. Create the event folder first or run npm run events:new -- --slug ${slug} --name "اسم المناسبة" --type fixed --category holidays`,
+    );
   }
 
   const raw = JSON.parse(readFileSync(path, 'utf8'));
@@ -89,10 +110,12 @@ function main() {
 
   assertValidTransition(pkg.publishStatus as PublishStatus, nextStatus, force);
 
-  runStep('npm', ['run', 'events:build']);
+  runNodeTsxScript('scripts/generate-events-index.ts');
 
   if (STRICT_GATE_STATUSES.has(nextStatus)) {
-    runStep('npm', ['run', 'validate:holidays:slug', '--', '--slug', slug]);
+    runNodeTsxScript('scripts/validate-holiday-content.ts', ['--strict', '--slug', slug], {
+      envFile: '.env.local',
+    });
   }
 
   const updated = {
@@ -101,7 +124,7 @@ function main() {
   };
 
   writeFileSync(path, `${JSON.stringify(updated, null, 2)}\n`, 'utf8');
-  runStep('npm', ['run', 'events:build']);
+  runNodeTsxScript('scripts/generate-events-index.ts');
 
   console.log(`[events:publish] Updated ${slug}: ${pkg.publishStatus} -> ${nextStatus}`);
 }

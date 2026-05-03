@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { z } from 'zod';
 
 import {
   getFeaturedSiteItems,
@@ -6,6 +6,14 @@ import {
   POPULAR_SITE_SEARCHES,
   searchSiteIndex,
 } from '@/lib/site/discovery';
+import { json, parseSearchParams, withApiHandler } from '@/lib/api/route-utils';
+import { featureFlags } from '@/lib/feature-flags';
+import { logger } from '@/lib/logger';
+
+const querySchema = z.object({
+  q: z.string().trim().max(120).optional().default(''),
+  limit: z.coerce.number().int().min(1).max(24).optional().default(24),
+});
 
 function serializeDiscoveryItem(item) {
   return {
@@ -18,38 +26,65 @@ function serializeDiscoveryItem(item) {
   };
 }
 
-export async function GET(request) {
-  const { searchParams } = new URL(request.url);
-  const rawQuery = String(searchParams.get('q') || '');
-  const normalizedQuery = normalizeDiscoveryQueryValue(rawQuery);
-  const limit = Math.max(1, Math.min(24, Number(searchParams.get('limit') || 24)));
+export const GET = withApiHandler(
+  '/api/discovery-search',
+  async ({ requestId, request }) => {
+    const { q: rawQuery, limit } = parseSearchParams(request, querySchema);
+    const normalizedQuery = normalizeDiscoveryQueryValue(rawQuery);
 
-  if (!normalizedQuery) {
-    return NextResponse.json(
+    if (!normalizedQuery) {
+      if (featureFlags.observabilityLogs) {
+        logger.info('discovery-search-featured-served', {
+          route: '/api/discovery-search',
+          requestId,
+          featuredCount: 6,
+          topSearchCount: 8,
+        });
+      }
+
+      return json(
+        {
+          featuredItems: getFeaturedSiteItems(6).map(serializeDiscoveryItem),
+          topSearches: POPULAR_SITE_SEARCHES.slice(0, 8),
+        },
+        {
+          headers: {
+            'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+          },
+        },
+      );
+    }
+
+    const searchModel = searchSiteIndex(normalizedQuery, { limit });
+
+    if (featureFlags.observabilityLogs) {
+      logger.info('discovery-search-query-served', {
+        route: '/api/discovery-search',
+        requestId,
+        query: normalizedQuery,
+        limit,
+        total: searchModel.total,
+      });
+    }
+
+    return json(
       {
-        featuredItems: getFeaturedSiteItems(6).map(serializeDiscoveryItem),
-        topSearches: POPULAR_SITE_SEARCHES.slice(0, 8),
+        normalizedQuery: searchModel.normalizedQuery,
+        total: searchModel.total,
+        results: searchModel.results.map(serializeDiscoveryItem),
       },
       {
         headers: {
-          'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+          'Cache-Control': 'public, s-maxage=900, stale-while-revalidate=86400',
         },
       },
     );
-  }
-
-  const searchModel = searchSiteIndex(normalizedQuery, { limit });
-
-  return NextResponse.json(
-    {
-      normalizedQuery: searchModel.normalizedQuery,
-      total: searchModel.total,
-      results: searchModel.results.map(serializeDiscoveryItem),
+  },
+  {
+    rateLimit: {
+      key: 'discovery-search',
+      limit: 180,
+      windowMs: 60_000,
     },
-    {
-      headers: {
-        'Cache-Control': 'public, s-maxage=900, stale-while-revalidate=86400',
-      },
-    },
-  );
-}
+  },
+);

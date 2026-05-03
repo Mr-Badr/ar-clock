@@ -1,6 +1,5 @@
 {
   "slug": "social-security-saudi",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

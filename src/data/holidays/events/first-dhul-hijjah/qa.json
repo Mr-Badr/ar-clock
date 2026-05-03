@@ -1,6 +1,5 @@
 {
   "slug": "first-dhul-hijjah",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

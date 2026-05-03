@@ -10,6 +10,7 @@ import {
   CalcTabsList as TabsList,
   CalcTabsTrigger as TabsTrigger,
 } from '@/components/calculators/controls.client';
+import CalculatorCurrencyField, { usePreferredCurrency } from '@/components/calculators/CurrencyField.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -50,6 +51,7 @@ const TAB_GUIDES = {
 };
 
 export default function PercentageCalculator() {
+  const { currency, setCurrency, options: currencyOptions } = usePreferredCurrency();
   const [activeTab, setActiveTab] = useState('amount');
   const [amountPercent, setAmountPercent] = useState('15');
   const [amountValue, setAmountValue] = useState('500');
@@ -73,6 +75,7 @@ export default function PercentageCalculator() {
   const [multiB, setMultiB] = useState('-5');
   const [multiC, setMultiC] = useState('12');
   const [history, setHistory] = useState([]);
+  const formatMoney = (value) => formatCurrency(value, currency);
 
   useEffect(() => {
     try {
@@ -549,6 +552,21 @@ export default function PercentageCalculator() {
       <div className="calc-grid-3">
         <Card className="calc-surface-card">
           <CardHeader>
+            <CardTitle className="calc-card-title">عملة النتائج المالية</CardTitle>
+          </CardHeader>
+          <CardContent className="calc-form-grid">
+            <CalculatorCurrencyField
+              currency={currency}
+              onChange={setCurrency}
+              options={currencyOptions}
+              hint="تؤثر على أقسام الخصومات وتقسيم المبالغ والتغيرات المتتابعة."
+              id="percentage-currency"
+            />
+          </CardContent>
+        </Card>
+
+        <Card className="calc-surface-card">
+          <CardHeader>
             <CardTitle className="calc-card-title">ماذا لو كان عندي خصمان متتاليان؟</CardTitle>
           </CardHeader>
           <CardContent className="calc-form-grid">
@@ -577,7 +595,7 @@ export default function PercentageCalculator() {
             <div className="calc-breakdown-list">
               <div className="calc-breakdown-item">
                 <span>السعر النهائي</span>
-                <strong>{formatCurrency(discountResult.finalAmount, 'SAR')}</strong>
+                <strong>{formatMoney(discountResult.finalAmount)}</strong>
               </div>
               <div className="calc-breakdown-item">
                 <span>الخصم الفعلي</span>
@@ -618,12 +636,12 @@ export default function PercentageCalculator() {
               {splitResult.allocations.map((item) => (
                 <div key={item.index} className="calc-breakdown-item">
                   <span>الحصة {item.index + 1}</span>
-                  <strong>{formatCurrency(item.amount, 'SAR')}</strong>
+                  <strong>{formatMoney(item.amount)}</strong>
                 </div>
               ))}
               <div className="calc-breakdown-item">
                 <span>المتبقي</span>
-                <strong>{formatCurrency(splitResult.remainingAmount, 'SAR')}</strong>
+                <strong>{formatMoney(splitResult.remainingAmount)}</strong>
               </div>
             </div>
           </CardContent>
@@ -659,7 +677,7 @@ export default function PercentageCalculator() {
             <div className="calc-breakdown-list">
               <div className="calc-breakdown-item">
                 <span>القيمة النهائية</span>
-                <strong>{formatCurrency(multiResult.finalValue, 'SAR')}</strong>
+                <strong>{formatMoney(multiResult.finalValue)}</strong>
               </div>
               <div className="calc-breakdown-item">
                 <span>التغير الكلي</span>

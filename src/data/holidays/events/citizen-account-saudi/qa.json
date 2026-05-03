@@ -1,6 +1,5 @@
 {
   "slug": "citizen-account-saudi",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

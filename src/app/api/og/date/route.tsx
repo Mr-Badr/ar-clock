@@ -1,6 +1,15 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
 import { connection } from 'next/server';
+import { z } from 'zod';
+
+import { logger, serializeError } from '@/lib/logger';
+
+const querySchema = z.object({
+  g: z.string().trim().max(80).optional().default('التاريخ الميلادي'),
+  h: z.string().trim().max(80).optional().default('التاريخ الهجري'),
+  t: z.string().trim().max(120).optional().default('التاريخ اليوم — هجري وميلادي'),
+});
 
 // We attempt to load the custom font from the deployment URL if possible, or fallback
 export async function GET(req: NextRequest) {
@@ -8,11 +17,13 @@ export async function GET(req: NextRequest) {
 
   try {
     const { searchParams } = new URL(req.url);
+    const parsed = querySchema.safeParse(Object.fromEntries(searchParams.entries()));
 
-    // ?g=19 March 2026&h=١٤ رمضان ١٤٤٧
-    const gregorian = searchParams.get('g') || 'التاريخ الميلادي';
-    const hijri = searchParams.get('h') || 'التاريخ الهجري';
-    const title = searchParams.get('t') || 'التاريخ اليوم — هجري وميلادي';
+    if (!parsed.success) {
+      return new Response('Invalid OG image query.', { status: 400 });
+    }
+
+    const { g: gregorian, h: hijri, t: title } = parsed.data;
 
     return new ImageResponse(
       (
@@ -95,7 +106,10 @@ export async function GET(req: NextRequest) {
       }
     );
   } catch (e: any) {
-    console.error(e);
+    logger.error('date-og-image-generation-failed', {
+      route: '/api/og/date',
+      error: serializeError(e),
+    });
     return new Response('Failed to generate OG image', { status: 500 });
   }
 }

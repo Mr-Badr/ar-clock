@@ -45,6 +45,7 @@ import {
   pushDiscoveryHistory,
   readDiscoveryHistory,
 } from '@/lib/site/discovery-history';
+import { navigateToDiscoveryHref } from '@/lib/site/discovery-navigation';
 import { OPEN_DISCOVERY_SEARCH_EVENT } from '@/lib/site/discovery-events';
 
 import styles from './DiscoveryWorkspace.module.css';
@@ -465,13 +466,19 @@ export default function DiscoveryWorkspaceClient({
     }
     setPaletteOpen(false);
 
-    if (typeof window !== 'undefined') {
-      const currentHref = `${window.location.pathname}${window.location.search}`;
-      if (currentHref === href) return;
-    }
+    const didNavigate = navigateToDiscoveryHref({
+      router,
+      rawHref: href,
+      source: 'discovery-workspace-palette',
+      context: {
+        title: title || null,
+        discoveryPath,
+        activeTab,
+        deferredPaletteQuery: deferredPaletteQuery || null,
+      },
+    });
 
-    router.push(href);
-    if (title) {
+    if (didNavigate && title) {
       handleVisit({ href, title });
     }
   }
@@ -482,12 +489,16 @@ export default function DiscoveryWorkspaceClient({
     setPaletteOpen(false);
 
     const nextHref = buildDiscoveryHref(discoveryPath, normalized, activeTab);
-    if (typeof window !== 'undefined') {
-      const currentHref = `${window.location.pathname}${window.location.search}`;
-      if (currentHref === nextHref) return;
-    }
-
-    router.push(nextHref);
+    navigateToDiscoveryHref({
+      router,
+      rawHref: nextHref,
+      source: 'discovery-workspace-search-view',
+      context: {
+        discoveryPath,
+        activeTab,
+        query: normalized,
+      },
+    });
   }
 
   const tabCounts = {

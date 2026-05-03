@@ -118,6 +118,7 @@ export async function generateMetadata({ params }) {
       card: 'summary_large_image',
       title: `كم الساعة الآن في ${cityAr}؟ | التوقيت المحلي`,
       description: `اعرف الساعة الحالية في ${cityAr} مع تاريخ اليوم والمنطقة الزمنية ${offset}.`,
+      images: [`${BASE}/time-now/${countrySlug}/${citySlug}/opengraph-image`],
     },
     robots: {
       index: isIndexableCity,

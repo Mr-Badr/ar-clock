@@ -54,7 +54,7 @@ const GUIDE_GROUP_META = [
   {
     href: '/economie/market-hours',
     title: 'الاقتصاد الحي',
-    description: 'أدلة long-tail حول افتتاح الأسواق والذهب والفوركس وأفضل وقت للتداول للمستخدم العربي.',
+    description: 'أدلة تفصيلية حول افتتاح الأسواق والذهب والفوركس وأفضل وقت للتداول للمستخدم العربي.',
     accent: '#1D4ED8',
     Icon: ChartColumnIncreasing,
   },
@@ -335,7 +335,7 @@ export default function GuidesPage() {
             <div className="rounded-3xl border border-border/70 bg-background/90 p-5 shadow-sm">
               <div className="text-xs font-semibold text-secondary">إجمالي الأدلة</div>
               <div className="mt-2 text-3xl font-black text-primary">{ALL_GUIDES.length}</div>
-              <div className="mt-2 text-sm text-secondary">صفحة تربط long-tail بالأدوات والمسارات اليومية</div>
+              <div className="mt-2 text-sm text-secondary">صفحة تربط الأسئلة التفصيلية بالأدوات والمسارات اليومية</div>
             </div>
             <div className="rounded-3xl border border-border/70 bg-background/90 p-5 shadow-sm">
               <div className="text-xs font-semibold text-secondary">المسارات الرئيسية</div>

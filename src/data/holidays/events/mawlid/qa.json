@@ -1,6 +1,5 @@
 {
   "slug": "mawlid",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": false,

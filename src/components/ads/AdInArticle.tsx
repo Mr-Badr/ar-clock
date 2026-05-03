@@ -34,10 +34,9 @@
  */
 
 import { useEffect, useRef, useState } from "react";
-import {
-  isPublicEnvEnabled,
-  useMarketingPermission,
-} from "@/lib/client/marketing";
+import { useMarketingPermission } from "@/lib/client/marketing";
+import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
+import { logger, serializeError } from "@/lib/logger";
 
 interface AdInArticleProps {
   slotId?: string;
@@ -48,10 +47,9 @@ export default function AdInArticle({
   slotId = "in-article",
   className = "",
 }: AdInArticleProps) {
-  const adsEnabled = isPublicEnvEnabled(process.env.NEXT_PUBLIC_ENABLE_ADS);
-  const clientId = (process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "").trim();
-  const adSlot = (process.env.NEXT_PUBLIC_ADSENSE_IN_ARTICLE_SLOT || "").trim();
-  const shouldRenderAds = adsEnabled && clientId.startsWith("ca-pub-") && Boolean(adSlot);
+  const { clientId, manualSlots } = useAdsRuntimeConfig();
+  const adSlot = manualSlots.inArticle || "";
+  const shouldRenderAds = Boolean(clientId && adSlot);
   const canLoadAds = useMarketingPermission(shouldRenderAds);
   const ref = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -71,7 +69,11 @@ export default function AdInArticle({
               const adsWindow = window as Window & { adsbygoogle?: unknown[] };
               (adsWindow.adsbygoogle = adsWindow.adsbygoogle || []).push({});
             } catch (error) {
-              console.warn("AdSense in-article slot failed to initialize:", error);
+              logger.warn("adsense-in-article-init-failed", {
+                component: "AdInArticle",
+                slotId,
+                error: serializeError(error),
+              });
             }
 
             observer.disconnect();
@@ -99,7 +101,7 @@ export default function AdInArticle({
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}
-        data-ad-client={clientId}
+        data-ad-client={clientId || undefined}
         data-ad-slot={adSlot}
         data-ad-format="auto"
         data-full-width-responsive="true"

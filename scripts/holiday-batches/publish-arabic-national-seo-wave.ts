@@ -5,8 +5,6 @@ import {
   mirrorFaq,
 } from '../lib/event-authoring';
 
-type Tier = 'tier1' | 'tier2' | 'tier3';
-
 type Source = {
   label: string;
   url: string;
@@ -38,7 +36,6 @@ type NationalEventConfig = {
   countryCode: string;
   month: number;
   day: number;
-  tier: Tier;
   queueOrder: number;
   sourceAuthority: string;
   seoTitle: string;
@@ -230,7 +227,6 @@ function buildPackage(config: NationalEventConfig, current: any) {
         `${config.name} {{countryName}} {{year}}`,
       ],
     },
-    tier: config.tier,
     publishStatus: 'published',
     canonicalPath: `/holidays/${config.slug}`,
     canonicalSource: 'internal',
@@ -265,13 +261,11 @@ function buildQa(config: NationalEventConfig, current: any) {
   return {
     ...(buildEmptyQaRecord({
       slug: config.slug,
-      tier: config.tier,
       publishStatus: 'published',
       updatedAt: NOW_ISO,
     }) as any),
     ...(current || {}),
     slug: config.slug,
-    tier: config.tier,
     publishStatus: 'published',
     checks: {
       contentReady: true,
@@ -294,7 +288,6 @@ const configs: NationalEventConfig[] = [
     countryCode: 'ma',
     month: 11,
     day: 18,
-    tier: 'tier1',
     queueOrder: 46,
     sourceAuthority: 'morocco-national-memory',
     seoTitle: 'عيد الاستقلال المغربي {{year}} — 18 نونبر | كم باقي وما معنى المناسبة؟',
@@ -518,7 +511,6 @@ const configs: NationalEventConfig[] = [
     countryCode: 'tn',
     month: 3,
     day: 20,
-    tier: 'tier1',
     queueOrder: 53,
     sourceAuthority: 'tunisia-national-calendar',
     seoTitle: 'عيد الاستقلال التونسي {{year}} — 20 مارس | كم باقي ولماذا يحتفل التونسيون؟',
@@ -741,7 +733,6 @@ const configs: NationalEventConfig[] = [
     countryCode: 'dz',
     month: 11,
     day: 1,
-    tier: 'tier1',
     queueOrder: 40,
     sourceAuthority: 'algeria-national-memory',
     seoTitle: 'يوم الثورة الجزائرية {{year}} — 1 نوفمبر | أول نوفمبر والعد التنازلي',
@@ -964,7 +955,6 @@ const configs: NationalEventConfig[] = [
     countryCode: 'kw',
     month: 2,
     day: 25,
-    tier: 'tier1',
     queueOrder: 55,
     sourceAuthority: 'kuwait-national-calendar',
     seoTitle: 'اليوم الوطني الكويتي {{year}} — 25 فبراير | كم باقي وما الفرق عن عيد التحرير؟',
@@ -1187,7 +1177,6 @@ const configs: NationalEventConfig[] = [
     countryCode: 'kw',
     month: 2,
     day: 26,
-    tier: 'tier1',
     queueOrder: 70,
     sourceAuthority: 'kuwait-national-calendar',
     seoTitle: 'عيد التحرير الكويتي {{year}} — 26 فبراير | كم باقي والفرق عن اليوم الوطني',
@@ -1410,7 +1399,6 @@ const configs: NationalEventConfig[] = [
     countryCode: 'eg',
     month: 7,
     day: 23,
-    tier: 'tier1',
     queueOrder: 71,
     sourceAuthority: 'egypt-state-information',
     seoTitle: 'ثورة 23 يوليو {{year}} في مصر — كم باقي وهل هي إجازة رسمية؟',
@@ -1633,7 +1621,6 @@ const configs: NationalEventConfig[] = [
     countryCode: 'eg',
     month: 10,
     day: 6,
-    tier: 'tier1',
     queueOrder: 72,
     sourceAuthority: 'egypt-state-information',
     seoTitle: 'يوم القوات المسلحة المصرية {{year}} — 6 أكتوبر | كم باقي وهل هو إجازة؟',
@@ -1856,7 +1843,6 @@ const configs: NationalEventConfig[] = [
     countryCode: 'ma',
     month: 11,
     day: 6,
-    tier: 'tier1',
     queueOrder: 73,
     sourceAuthority: 'morocco-national-memory',
     seoTitle: 'المسيرة الخضراء المغربية {{year}} — 6 نونبر | كم باقي وما معنى المناسبة؟',
@@ -2080,7 +2066,6 @@ const configs: NationalEventConfig[] = [
     countryCode: 'ae',
     month: 11,
     day: 30,
-    tier: 'tier1',
     queueOrder: 74,
     sourceAuthority: 'uae-official',
     seoTitle: 'يوم الشهيد الإماراتي {{year}} — 30 نوفمبر | كم باقي وهل هو إجازة؟',

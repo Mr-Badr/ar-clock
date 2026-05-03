@@ -16,9 +16,16 @@ export default async function sitemap() {
     .map(([slug, meta]) => ({
       slug,
       canonicalSlug: meta.canonicalSlug,
-      tier: metaBySlug.get(meta.canonicalSlug)?.tier || 'tier3',
+      publishStatus: metaBySlug.get(meta.canonicalSlug)?.publishStatus || 'published',
     }))
     .sort((a, b) => String(a.slug).localeCompare(String(b.slug)));
+
+  const getPriority = (publishStatus, { isAlias = false } = {}) => {
+    if (publishStatus === 'monitored') {
+      return isAlias ? 0.7 : 0.9;
+    }
+    return isAlias ? 0.6 : 0.8;
+  };
 
   const resolveLastModified = (slug) => {
     const richDate = getRichContent(slug)?.seoMeta?.dateModified;
@@ -35,28 +42,21 @@ export default async function sitemap() {
 
   const canonicalEntries = rows.map((row) => {
     const slug = row.slug;
-    const tier = metaBySlug.get(slug)?.tier || 'tier3';
-    const priority = tier === 'tier1' ? 1.0
-      : tier === 'tier2' ? 0.8
-      : 0.5;
 
     return {
       url: `${BASE}/holidays/${slug}`,
       lastModified: resolveLastModified(slug),
       changeFrequency: 'daily',
-      priority,
+      priority: getPriority(row.publishStatus),
     };
   });
 
   const aliasEntries = aliasRows.map((row) => {
-    const priority = row.tier === 'tier1' ? 0.9
-      : row.tier === 'tier2' ? 0.7
-      : 0.4;
     return {
       url: `${BASE}/holidays/${row.slug}`,
       lastModified: resolveLastModified(row.slug),
       changeFrequency: 'daily',
-      priority,
+      priority: getPriority(row.publishStatus, { isAlias: true }),
     };
   });
 

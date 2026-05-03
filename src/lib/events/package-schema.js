@@ -10,7 +10,6 @@ const publishStatusSchema = z.enum([
   'monitored',
 ]);
 
-const tierSchema = z.enum(['tier1', 'tier2', 'tier3']);
 const countryScopeSchema = z.enum(['none', 'all', 'custom']);
 
 const eventCoreSchema = z.object({
@@ -18,7 +17,7 @@ const eventCoreSchema = z.object({
   slug: z.string().min(1),
   name: z.string().min(1),
   type: z.enum(['hijri', 'fixed', 'estimated', 'monthly', 'easter', 'floating']),
-  category: z.enum(['islamic', 'national', 'school', 'holidays', 'astronomy', 'business', 'support']),
+  category: z.enum(['islamic', 'national', 'school', 'holidays', 'astronomy', 'social', 'business', 'support']),
   _countryCode: z.string().nullable().optional(),
   month: z.number().int().min(1).max(12).optional(),
   day: z.number().int().min(1).max(31).optional(),
@@ -57,10 +56,9 @@ export const eventPackageSchema = z.object({
   richContent: richContentSchema.default({}),
   countryOverrides: z.record(z.string(), countryOverlaySchema).default({}),
   aliasSlugs: z.array(z.string().min(1)).default([]),
-  countryScope: countryScopeSchema.default('custom'),
+  countryScope: countryScopeSchema.default('none'),
   countryAliasTemplate: z.string().default('{{slug}}-in-{{countrySlug}}'),
   keywordTemplateSet: keywordTemplateSetSchema,
-  tier: tierSchema.default('tier3'),
   publishStatus: publishStatusSchema.default('drafted'),
   canonicalPath: z.string().optional(),
   canonicalSource: z.string().default('internal'),

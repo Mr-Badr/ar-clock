@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { Landmark, Scale } from 'lucide-react';
 
+import CalculatorCurrencyField, { usePreferredCurrency } from '@/components/calculators/CurrencyField.client';
 import { CalcInput as Input } from '@/components/calculators/controls.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { calculateNetWorth, formatCurrency, formatNumber } from '@/lib/calculators/engine';
 
 export default function NetWorthCalculator() {
+  const { currency, setCurrency, options: currencyOptions } = usePreferredCurrency();
   const [cash, setCash] = useState('25000');
   const [investments, setInvestments] = useState('30000');
   const [properties, setProperties] = useState('120000');
@@ -17,6 +19,7 @@ export default function NetWorthCalculator() {
   const [loans, setLoans] = useState('80000');
   const [creditCards, setCreditCards] = useState('5000');
   const [otherLiabilities, setOtherLiabilities] = useState('0');
+  const formatMoney = (value) => formatCurrency(value, currency);
 
   const result = useMemo(
     () => calculateNetWorth({
@@ -32,9 +35,9 @@ export default function NetWorthCalculator() {
   );
 
   const shareText = result.isValid ? [
-    `إجمالي الأصول: ${formatCurrency(result.totalAssets)}`,
-    `إجمالي الالتزامات: ${formatCurrency(result.totalLiabilities)}`,
-    `صافي الثروة: ${formatCurrency(result.netWorth)}`,
+    `إجمالي الأصول: ${formatMoney(result.totalAssets)}`,
+    `إجمالي الالتزامات: ${formatMoney(result.totalLiabilities)}`,
+    `صافي الثروة: ${formatMoney(result.netWorth)}`,
     `التقييم: ${result.status}`,
   ].join('\n') : '';
 
@@ -46,6 +49,13 @@ export default function NetWorthCalculator() {
             <CardTitle className="calc-card-title">بيانات الأصول والالتزامات</CardTitle>
           </CardHeader>
           <CardContent className="calc-form-grid">
+            <CalculatorCurrencyField
+              currency={currency}
+              onChange={setCurrency}
+              options={currencyOptions}
+              hint="تُستخدم هذه العملة في صافي الثروة وإجمالي الأصول والالتزامات."
+              id="net-worth-currency"
+            />
             <div className="calc-grid-2">
               <div className="calc-field">
                 <Label className="calc-label" htmlFor="net-cash">النقد والمدخرات</Label>
@@ -91,18 +101,18 @@ export default function NetWorthCalculator() {
             <CardContent className="calc-metric-grid">
               <div className="calc-metric-card">
                 <div className="calc-metric-card__label"><Landmark size={16} /> صافي الثروة</div>
-                <div className="calc-metric-card__value">{formatCurrency(result.netWorth)}</div>
+                <div className="calc-metric-card__value">{formatMoney(result.netWorth)}</div>
                 <div className="calc-metric-card__note">{result.status}</div>
               </div>
               <div className="calc-grid-2">
                 <div className="calc-metric-card">
                   <div className="calc-metric-card__label">إجمالي الأصول</div>
-                  <div className="calc-metric-card__value">{formatCurrency(result.totalAssets)}</div>
+                  <div className="calc-metric-card__value">{formatMoney(result.totalAssets)}</div>
                   <div className="calc-metric-card__note">ما تملكه فعلاً من قيمة مالية</div>
                 </div>
                 <div className="calc-metric-card">
                   <div className="calc-metric-card__label"><Scale size={16} /> إجمالي الالتزامات</div>
-                  <div className="calc-metric-card__value">{formatCurrency(result.totalLiabilities)}</div>
+                  <div className="calc-metric-card__value">{formatMoney(result.totalLiabilities)}</div>
                   <div className="calc-metric-card__note">ما عليك من ديون وقروض والتزامات</div>
                 </div>
               </div>

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ShieldCheck, Wallet } from 'lucide-react';
 
+import CalculatorCurrencyField, { usePreferredCurrency } from '@/components/calculators/CurrencyField.client';
 import {
   CalcInput as Input,
   CalcProgress as Progress,
@@ -13,11 +14,13 @@ import { Label } from '@/components/ui/label';
 import { calculateEmergencyFund, formatCurrency, formatNumber } from '@/lib/calculators/engine';
 
 export default function EmergencyFundCalculator() {
+  const { currency, setCurrency, options: currencyOptions } = usePreferredCurrency();
   const [monthlyExpenses, setMonthlyExpenses] = useState('5000');
   const [targetMonths, setTargetMonths] = useState('6');
   const [currentSavings, setCurrentSavings] = useState('8000');
   const [monthlyContribution, setMonthlyContribution] = useState('1500');
   const [referenceDateIso, setReferenceDateIso] = useState(null);
+  const formatMoney = (value) => formatCurrency(value, currency);
 
   useEffect(() => {
     setReferenceDateIso(new Date().toISOString());
@@ -35,8 +38,8 @@ export default function EmergencyFundCalculator() {
   );
 
   const shareText = result.isValid ? [
-    `هدف صندوق الطوارئ: ${formatCurrency(result.targetAmount)}`,
-    `المتبقي: ${formatCurrency(result.remainingAmount)}`,
+    `هدف صندوق الطوارئ: ${formatMoney(result.targetAmount)}`,
+    `المتبقي: ${formatMoney(result.remainingAmount)}`,
     `التغطية الحالية: ${formatNumber(result.coverageMonths)} شهر`,
     result.monthsToGoal === null ? 'لا يوجد موعد وصول لأن الادخار الشهري = 0' : `المدة المتوقعة: ${result.monthsToGoal} شهر`,
   ].join('\n') : '';
@@ -49,6 +52,13 @@ export default function EmergencyFundCalculator() {
             <CardTitle className="calc-card-title">إعدادات صندوق الطوارئ</CardTitle>
           </CardHeader>
           <CardContent className="calc-form-grid">
+            <CalculatorCurrencyField
+              currency={currency}
+              onChange={setCurrency}
+              options={currencyOptions}
+              hint="تُستخدم هذه العملة في الهدف الكلي والمبلغ المتبقي وخطة الادخار الشهرية."
+              id="emergency-fund-currency"
+            />
             <div className="calc-field">
               <Label className="calc-label" htmlFor="emergency-expenses">المصاريف الشهرية</Label>
               <Input id="emergency-expenses" inputMode="decimal" value={monthlyExpenses} onChange={(e) => setMonthlyExpenses(e.target.value)} />
@@ -76,13 +86,13 @@ export default function EmergencyFundCalculator() {
             <CardContent className="calc-metric-grid">
               <div className="calc-metric-card">
                 <div className="calc-metric-card__label"><ShieldCheck size={16} /> الهدف الكلي</div>
-                <div className="calc-metric-card__value">{formatCurrency(result.targetAmount)}</div>
+                <div className="calc-metric-card__value">{formatMoney(result.targetAmount)}</div>
                 <div className="calc-metric-card__note">{result.recommendedRange}</div>
               </div>
               <div className="calc-grid-2">
                 <div className="calc-metric-card">
                   <div className="calc-metric-card__label">المبلغ المتبقي</div>
-                  <div className="calc-metric-card__value">{formatCurrency(result.remainingAmount)}</div>
+                  <div className="calc-metric-card__value">{formatMoney(result.remainingAmount)}</div>
                   <div className="calc-metric-card__note">الفجوة بين المدخر الحالي والهدف</div>
                 </div>
                 <div className="calc-metric-card">

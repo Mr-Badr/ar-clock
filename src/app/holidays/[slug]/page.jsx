@@ -22,20 +22,24 @@ import HolidayDetailsSections from './HolidayDetailsSections';
 import { featureFlags } from '@/lib/feature-flags';
 import { getHolidayMetadata } from '@/lib/holidays/metadata';
 import { getHolidayPageData } from '@/lib/holidays/page-data';
+import { getHolidaySource } from '@/lib/holidays/repository';
 import { getHolidaySearchQueries } from '@/lib/holidays/search-intent';
 
-const PRIORITY_HOLIDAY_TIERS = new Set(['tier1', 'tier2']);
-
 function getPriorityHolidayStaticSlugs(limit = 48) {
-  const prioritized = ALL_EVENT_SLUGS.filter((slug) => (
-    PRIORITY_HOLIDAY_TIERS.has(getEventMeta(slug)?.tier || '')
-  ));
+  return ALL_EVENT_SLUGS
+    .slice()
+    .sort((left, right) => {
+      const leftOrder = getHolidaySource(left)?.queueOrder || Number.MAX_SAFE_INTEGER;
+      const rightOrder = getHolidaySource(right)?.queueOrder || Number.MAX_SAFE_INTEGER;
+      if (leftOrder !== rightOrder) return leftOrder - rightOrder;
 
-  if (prioritized.length > 0) {
-    return prioritized.slice(0, limit);
-  }
+      const leftStatus = getEventMeta(left)?.publishStatus || '';
+      const rightStatus = getEventMeta(right)?.publishStatus || '';
+      if (leftStatus !== rightStatus) return leftStatus.localeCompare(rightStatus);
 
-  return ALL_EVENT_SLUGS.slice(0, Math.min(limit, 24));
+      return left.localeCompare(right);
+    })
+    .slice(0, Math.min(limit, ALL_EVENT_SLUGS.length));
 }
 
 /* ── Static params (seed top holidays, render the rest on demand) ───────── */

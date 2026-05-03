@@ -5,7 +5,10 @@ import {
   buildEconomyToolPageMetadata,
   buildEconomyToolPageSchemas,
 } from '@/lib/economy/page-helpers';
-import { getCachedEconomyPageSnapshot } from '@/lib/economy/page-snapshots.server';
+import {
+  getCachedEconomyPageSnapshot,
+  getEconomyPageServerState,
+} from '@/lib/economy/page-snapshots.server';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
 import {
@@ -28,12 +31,43 @@ const SEARCH_COVERAGE = buildEconomyPageSearchCoverage(PAGE_SCOPE, FAQ_ITEMS.usM
 
 export const metadata = buildEconomyToolPageMetadata(PAGE_SCOPE, FAQ_ITEMS.usMarketOpen);
 
+async function UsMarketOpenServerSections() {
+  const { serverModel } = await getEconomyPageServerState(PAGE_SCOPE);
+
+  return (
+    <>
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="الجواب المباشر ثم السياق الصحيح"
+          lead="هذا الجزء يلتقط سؤال الافتتاح الأمريكي كما يبحث عنه الناس فعلاً، ثم يضيف فرق التوقيت والساعة الأولى والجلسات الموسعة داخل HTML نفسه."
+        />
+        <EconomyGuide sections={serverModel.guideSections} />
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="المراجع الرسمية والمرجعية"
+          lead="نربط مصادر السوق الأمريكي بوضوح حتى يعرف الزائر ومحرك البحث أن الصفحة لا تعتمد على صياغة عامة فقط، بل على منهج معروف ومراجع معلنة."
+        />
+        <EconomySourceLinks links={serverModel.sourceLinks} />
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="بعد معرفة الافتتاح، ما الخطوة الطبيعية التالية؟"
+          lead="هذا الربط الداخلي يخفف الارتداد ويحوّل صفحة الافتتاح إلى بوابة استخدام يومي داخل قسم الاقتصاد كله."
+        />
+        <InsightCards cards={serverModel.relatedTools} />
+      </section>
+    </>
+  );
+}
+
 export default async function UsMarketOpenPage() {
   const {
     initialViewer,
     initialNowIso,
     liveSnapshot,
-    serverModel,
   } = await getCachedEconomyPageSnapshot(PAGE_SCOPE);
   const schemas = buildEconomyToolPageSchemas({ scope: PAGE_SCOPE, faqItems: FAQ_ITEMS.usMarketOpen });
 
@@ -63,29 +97,9 @@ export default async function UsMarketOpenPage() {
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>
 
-        <section className="economy-section">
-          <EconomySectionHeader
-            title="الجواب المباشر ثم السياق الصحيح"
-            lead="هذا الجزء يلتقط سؤال الافتتاح الأمريكي كما يبحث عنه الناس فعلاً، ثم يضيف فرق التوقيت والساعة الأولى والجلسات الموسعة داخل HTML نفسه."
-          />
-          <EconomyGuide sections={serverModel.guideSections} />
-        </section>
-
-        <section className="economy-section">
-          <EconomySectionHeader
-            title="المراجع الرسمية والمرجعية"
-            lead="نربط مصادر السوق الأمريكي بوضوح حتى يعرف الزائر ومحرك البحث أن الصفحة لا تعتمد على صياغة عامة فقط، بل على منهج معروف ومراجع معلنة."
-          />
-          <EconomySourceLinks links={serverModel.sourceLinks} />
-        </section>
-
-        <section className="economy-section">
-          <EconomySectionHeader
-            title="بعد معرفة الافتتاح، ما الخطوة الطبيعية التالية؟"
-            lead="هذا الربط الداخلي يخفف الارتداد ويحوّل صفحة الافتتاح إلى بوابة استخدام يومي داخل قسم الاقتصاد كله."
-          />
-          <InsightCards cards={serverModel.relatedTools} />
-        </section>
+        <Suspense fallback={null}>
+          <UsMarketOpenServerSections />
+        </Suspense>
 
         <EconomyReadingShelf
           title="اقرأ قبل متابعة الافتتاح"

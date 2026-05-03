@@ -8,10 +8,12 @@ import {
   resolveEventMeta,
 } from '@/lib/holidays-engine';
 import { getCountryByCode } from '@/lib/events/country-dictionary';
-import { getListableEvents } from '@/lib/events';
+import {
+  getHolidayRuntimeRecord,
+  getListableHolidayEvents,
+} from '@/lib/holidays/repository';
 import { resolveAllHijriEvents } from '@/lib/hijri-resolver';
 import { getCachedNowIso } from '@/lib/date-utils';
-import { getRichContent } from '@/lib/event-content';
 
 import { PAGE_SIZE } from './constants';
 import { normalizeHolidayFilter } from './holidays-filter-utils';
@@ -21,10 +23,11 @@ function annotate(raw, resolvedMap, nowMs) {
   const routeSlug = base.__requestedSlug || base.slug;
   const countryCode = base.__aliasCountryCode || base._countryCode || null;
   const country = getCountryByCode(countryCode);
+  const runtimeRecord = getHolidayRuntimeRecord(routeSlug);
   const ev = {
     ...base,
     slug: routeSlug,
-    ...getRichContent(routeSlug),
+    ...(runtimeRecord?.content || {}),
     _countryCode: countryCode,
   };
   const target = getNextEventDate(ev, resolvedMap, nowMs);
@@ -86,7 +89,7 @@ async function buildEventsPage(cursor = 0, filter = {}) {
   const normalizedFilter = normalizeHolidayFilter(filter);
 
   let pool = normalizedFilter.countryCode !== 'all'
-    ? getListableEvents({ countryCode: normalizedFilter.countryCode }).map(enrichEvent)
+    ? getListableHolidayEvents({ countryCode: normalizedFilter.countryCode }).map(enrichEvent)
     : ALL_EVENTS.map(enrichEvent);
 
   if (normalizedFilter.category !== 'all') {

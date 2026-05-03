@@ -1,6 +1,5 @@
 {
   "slug": "world-teachers-day",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

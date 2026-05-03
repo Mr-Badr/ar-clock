@@ -1,9 +1,0 @@
-{
-  "id": "results-bac-ma",
-  "slug": "bac-results-morocco",
-  "name": "نتائج البكالوريا في المغرب",
-  "type": "estimated",
-  "category": "school",
-  "_countryCode": "ma",
-  "date": "{{year}}-06-17"
-}

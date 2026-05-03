@@ -1,9 +1,0 @@
-{
-  "id": "school-start-sa",
-  "slug": "school-start-saudi",
-  "name": "بداية الدراسة في السعودية",
-  "type": "estimated",
-  "category": "school",
-  "_countryCode": "sa",
-  "date": "{{year}}-08-23"
-}

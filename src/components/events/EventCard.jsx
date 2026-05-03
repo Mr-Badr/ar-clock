@@ -22,11 +22,11 @@ import Link from 'next/link';
 /* ── Static maps ──────────────────────────────────────────────────────────── */
 const CAT_ICON = {
   islamic: '🌙', national: '🏳', school: '📚',
-  holidays: '🏖', astronomy: '🌍', business: '💼', support: '💰',
+  holidays: '🏖', astronomy: '🌍', social: '🎗', business: '💼', support: '💰',
 };
 const CAT_LABEL = {
   islamic: 'إسلامي', national: 'وطني', school: 'مدرسي',
-  holidays: 'إجازة', astronomy: 'فلكي', business: 'أعمال', support: 'دعم',
+  holidays: 'إجازة', astronomy: 'فلكي', social: 'اجتماعي', business: 'أعمال', support: 'استحقاق',
 };
 const COUNTRY_FLAGS = {
   sa: '🇸🇦', eg: '🇪🇬', ma: '🇲🇦', dz: '🇩🇿',

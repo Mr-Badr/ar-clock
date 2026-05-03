@@ -5,7 +5,10 @@ import {
   buildEconomyToolPageMetadata,
   buildEconomyToolPageSchemas,
 } from '@/lib/economy/page-helpers';
-import { getCachedEconomyPageSnapshot } from '@/lib/economy/page-snapshots.server';
+import {
+  getCachedEconomyPageSnapshot,
+  getEconomyPageServerState,
+} from '@/lib/economy/page-snapshots.server';
 
 import EconomyAdLayout from '@/components/ads/EconomyAdLayout';
 import {
@@ -27,12 +30,35 @@ const SEARCH_COVERAGE = buildEconomyPageSearchCoverage(PAGE_SCOPE, FAQ_ITEMS.mar
 
 export const metadata = buildEconomyToolPageMetadata(PAGE_SCOPE, FAQ_ITEMS.marketClock);
 
+async function MarketClockServerSections() {
+  const { serverModel } = await getEconomyPageServerState(PAGE_SCOPE);
+
+  return (
+    <>
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="كيف تقرأ الساعة كأداة قرار؟"
+          lead="هذا الجزء يشرح الساعة بعبارات عملية ومبنية على النموذج نفسه، حتى يفهم الزائر ومحرك البحث أن الصفحة تفسر اللحظة الحالية ولا تعرض شكلاً فقط."
+        />
+        <EconomyGuide sections={serverModel.guideSections} />
+      </section>
+
+      <section className="economy-section">
+        <EconomySectionHeader
+          title="المراجع التي تدعم قراءة الساعة"
+          lead="ربط المراجع المرجعية داخل HTML يقوي الدلالة على أن الصفحة مبنية على جلسات عالمية واضحة وتوقيتات حقيقية متحركة."
+        />
+        <EconomySourceLinks links={serverModel.sourceLinks} />
+      </section>
+    </>
+  );
+}
+
 export default async function MarketClockPage() {
   const {
     initialViewer,
     initialNowIso,
     liveSnapshot,
-    serverModel,
   } = await getCachedEconomyPageSnapshot(PAGE_SCOPE);
   const schemas = buildEconomyToolPageSchemas({ scope: PAGE_SCOPE, faqItems: FAQ_ITEMS.marketClock });
 
@@ -61,21 +87,9 @@ export default async function MarketClockPage() {
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>
 
-        <section className="economy-section">
-          <EconomySectionHeader
-            title="كيف تقرأ الساعة كأداة قرار؟"
-            lead="هذا الجزء يشرح الساعة بعبارات عملية ومبنية على النموذج نفسه، حتى يفهم الزائر ومحرك البحث أن الصفحة تفسر اللحظة الحالية ولا تعرض شكلاً فقط."
-          />
-          <EconomyGuide sections={serverModel.guideSections} />
-        </section>
-
-        <section className="economy-section">
-          <EconomySectionHeader
-            title="المراجع التي تدعم قراءة الساعة"
-            lead="ربط المراجع المرجعية داخل HTML يقوي الدلالة على أن الصفحة مبنية على جلسات عالمية واضحة وتوقيتات حقيقية متحركة."
-          />
-          <EconomySourceLinks links={serverModel.sourceLinks} />
-        </section>
+        <Suspense fallback={null}>
+          <MarketClockServerSections />
+        </Suspense>
 
         <EconomyReadingShelf
           title="كيف تفهم الساعة لا الرقم فقط؟"

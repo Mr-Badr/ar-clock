@@ -94,7 +94,7 @@ export default function PersonalFinanceHubPage() {
           items={[
             { href: '#pf-tools', label: 'الأدوات الأربع', description: 'الأكثر استخداماً في المرحلة الأولى' },
             { href: '#pf-guides', label: 'الأدلة الأساسية', description: 'صفحات داعمة تلتقط نيات البحث التعليمية' },
-            { href: '#pf-longtail', label: 'أسئلة long-tail', description: 'صفحات أقرب للأسئلة الفعلية في Google' },
+            { href: '#pf-longtail', label: 'أسئلة تفصيلية', description: 'صفحات أقرب للأسئلة الفعلية في Google' },
             { href: '#pf-faq', label: 'FAQ', description: 'أسئلة شائعة قبل فتح الأدوات' },
           ]}
         />
@@ -153,9 +153,9 @@ export default function PersonalFinanceHubPage() {
 
       <CalculatorSection
         id="pf-longtail"
-        eyebrow="Long-tail"
+        eyebrow="أسئلة تفصيلية"
         title="أسئلة أقرب لما يكتبه الباحث فعلاً"
-        description="هذه الصفحات الطويلة الذيل مهمة لالتقاط أسئلة مثل: كم شهرًا يجب أن يغطي صندوق الطوارئ؟ وكيف أسدد ديوني بسرعة؟ ثم تمرير الزائر إلى الحاسبة المناسبة."
+        description="هذه الصفحات التفصيلية مهمة لالتقاط أسئلة مثل: كم شهرًا يجب أن يغطي صندوق الطوارئ؟ وكيف أسدد ديوني بسرعة؟ ثم تمرير الزائر إلى الحاسبة المناسبة."
         subtle
       >
         <div className="calc-related-grid">

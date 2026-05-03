@@ -8,6 +8,7 @@ export type EventCategory =
   | 'school'
   | 'holidays'
   | 'astronomy'
+  | 'social'
   | 'business'
   | 'support';
 
@@ -52,8 +53,9 @@ const CATEGORY_LABELS: Record<EventCategory, string> = {
   school: 'المناسبات المدرسية',
   holidays: 'الإجازات الرسمية',
   astronomy: 'فلكية وطبيعية',
+  social: 'المناسبات الاجتماعية والعالمية',
   business: 'مناسبات الأعمال',
-  support: 'الدعم الاجتماعي',
+  support: 'برامج ومواعيد الدعم',
 };
 
 const CATEGORY_TITLE_MODIFIERS: Record<EventCategory, string> = {
@@ -62,8 +64,9 @@ const CATEGORY_TITLE_MODIFIERS: Record<EventCategory, string> = {
   school: 'متى يبدأ؟',
   holidays: 'خطط لإجازتك',
   astronomy: 'متى وكيف؟',
+  social: 'الموعد والمعنى',
   business: 'العد التنازلي',
-  support: 'كم باقي؟',
+  support: 'موعد الاستحقاق',
 };
 
 const CATEGORY_INTENT_CARDS: Record<EventCategory, [string, string, string][]> = {
@@ -97,6 +100,12 @@ const CATEGORY_INTENT_CARDS: Record<EventCategory, [string, string, string][]> =
     ['🧪', 'حقيقة علمية', 'تابع الحقائق العلمية الأساسية حول الحدث.'],
     ['📸', 'تصوير الحدث', 'استفد من نصائح الرصد أو التصوير.'],
   ],
+  social: [
+    ['🌍', 'خلفية ومعنى', 'افهم أصل المناسبة ومعناها قبل مشاركتها.'],
+    ['💡', 'أفكار مشاركة', 'حوّل المناسبة إلى مشاركة مفيدة أو نشاط بسيط.'],
+    ['📚', 'معلومة موثوقة', 'ابن المحتوى على مصدر واضح وسياق مفهوم.'],
+    ['🗓️', 'استعداد مبكر', 'جهّز الرسالة أو النشاط قبل الموعد بوقت مناسب.'],
+  ],
   business: [
     ['📊', 'خطة تنفيذ', 'حوّل الموعد إلى خطة عملية قابلة للتنفيذ.'],
     ['🧰', 'أدوات العمل', 'أضف الأدوات أو القوالب أو المستندات المناسبة.'],
@@ -104,10 +113,10 @@ const CATEGORY_INTENT_CARDS: Record<EventCategory, [string, string, string][]> =
     ['✅', 'قائمة إنجاز', 'تابع الخطوات الأساسية على شكل checklist.'],
   ],
   support: [
-    ['🤝', 'طرق المساهمة', 'استكشف كيف يمكن المشاركة أو المساهمة بفعالية.'],
-    ['📣', 'نشر الوعي', 'اكتب نقاطاً قابلة للمشاركة والتوعية.'],
-    ['🎯', 'أثر المبادرة', 'اشرح القيمة العملية للمناسبة أو الحملة.'],
-    ['📝', 'خطوات سريعة', 'حوّل الرسالة إلى خطوات واضحة قابلة للتنفيذ.'],
+    ['✅', 'تحقق من الاستحقاق', 'راجع الشرط أو الأهلية أو الموعد الرسمي بوضوح.'],
+    ['🏦', 'متابعة الإيداع', 'اعرف أين تتحقق من وصول المبلغ أو التحديث الرسمي.'],
+    ['📣', 'مصدر موثوق', 'فرّق بين الموعد الصحيح والإشاعات المتداولة.'],
+    ['🧾', 'خطوات سريعة', 'احتفظ بخطوات الاستعلام أو الشكوى أو التحديث في مكان واحد.'],
   ],
 };
 
@@ -143,8 +152,9 @@ export function buildQuickFacts(category: EventCategory, type: EventType) {
   if (category === 'national') facts['إجازة رسمية في'] = 'يُراجع القرار الرسمي حسب الجهة أو الدولة';
   if (category === 'school') facts['التقويم الدراسي'] = 'بحسب إعلان الجهة التعليمية المعتمدة';
   if (category === 'astronomy') facts['مناطق الرؤية'] = 'تختلف بحسب الموقع والظروف الفلكية';
+  if (category === 'social') facts['المرجعية'] = 'تُراجع الجهة الدولية أو الثقافية المرتبطة بالمناسبة';
   if (category === 'business') facts['يتكرر كل'] = 'بحسب الدورة الزمنية أو التنظيمية';
-  if (category === 'support') facts['الجهة المنظمة'] = 'بحسب الجهة الرسمية أو الحملة المعتمدة';
+  if (category === 'support') facts['الجهة المسؤولة'] = 'بحسب الجهة الرسمية أو البرنامج المعتمد';
 
   return facts;
 }
@@ -225,24 +235,32 @@ export function buildFaq(name: string) {
       answer: `${name} {{year}} يوافق {{formattedDate}} تقريباً. يعتمد الموعد النهائي على نوع المناسبة والجهة التي تُعلنها أو تعتمدها.`,
     },
     {
-      question: `كم باقي على ${name}؟`,
-      answer: `يتبقى على ${name} {{daysRemaining}} يوماً. يساعدك العداد التنازلي على متابعة الوقت المتبقي بدقة.`,
+      question: `كم باقي على ${name} {{year}}؟`,
+      answer: `يتبقى على ${name} {{year}} {{daysRemaining}} يوماً. يساعدك العداد التنازلي على متابعة الوقت المتبقي بدقة قبل الموعد.`,
     },
     {
       question: `ما هو ${name}؟`,
       answer: `${name} مناسبة أو حدث يتابع الناس موعده لمعرفة توقيته وما يرتبط به من معلومات أساسية. تختلف طبيعته وأهميته بحسب سياقه الديني أو الوطني أو العملي.`,
     },
     {
+      question: `تاريخ ${name} {{year}}؟`,
+      answer: `تاريخ ${name} {{year}} يظهر هنا بصيغة واضحة مع اليوم المقابل والعد التنازلي حتى لا يضطر القارئ للعودة إلى نتائج البحث.`,
+    },
+    {
       question: `كيف أستعد لـ${name}؟`,
-      answer: `الاستعداد لـ${name} يبدأ بمعرفة الموعد الرسمي بدقة. بعد ذلك يمكن تجهيز المتطلبات العملية أو التنظيمية المرتبطة بالمناسبة.`,
+      answer: `الاستعداد لـ${name} يبدأ بمعرفة الموعد الرسمي بدقة، ثم تجهيز الخطوات العملية أو التنظيمية أو التعبدية المرتبطة بالمناسبة بحسب طبيعتها.`,
+    },
+    {
+      question: `هل ${name} إجازة رسمية؟`,
+      answer: `تعتمد صفة الإجازة الرسمية في ${name} على الدولة أو الجهة أو القطاع. لذلك من الأفضل مراجعة الإعلان الرسمي عندما تكون الإجازة جزءاً مهماً من قرارك أو خطتك.`,
     },
     {
       question: `متى ${name} {{nextYear}}؟`,
-      answer: `موعد ${name} {{nextYear}} يعتمد على النمط الزمني نفسه للمناسبة. ويظل التأكيد النهائي مرتبطاً بالتقويم أو الإعلان الرسمي.`,
+      answer: `موعد ${name} {{nextYear}} يعتمد على النمط الزمني نفسه للمناسبة، مع بقاء التأكيد النهائي مرتبطاً بالتقويم أو الإعلان الرسمي عند الحاجة.`,
     },
     {
       question: `ما أهمية ${name}؟`,
-      answer: `تنبع أهمية ${name} من ارتباطه بموعد يتكرر ويهم جمهوراً واضحاً. كما تساعد معرفة تفاصيله على التخطيط الصحيح والاستفادة من المناسبة بشكل أفضل.`,
+      answer: `تنبع أهمية ${name} من ارتباطه بموعد يتكرر ويهم جمهوراً واضحاً، كما تساعد معرفة تفاصيله على التخطيط الصحيح والاستفادة من المناسبة بشكل أفضل.`,
     },
   ];
 }
@@ -259,19 +277,25 @@ export function buildSeoMeta(core: EventCoreLike, nowIso: string) {
     ogImageAlt: `${core.name} {{year}} — {{formattedDate}}`,
     primaryKeyword: `متى ${core.name} {{year}}`,
     secondaryKeywords: [
+      `${core.name} {{year}}`,
       `كم باقي على ${core.name} {{year}}`,
       `موعد ${core.name} {{year}}`,
-      `${core.name} {{year}}`,
+      `تاريخ ${core.name} {{year}}`,
+      `متى ${core.name} {{nextYear}}`,
       `${core.name} العد التنازلي`,
       `${core.name} متى`,
     ],
     longTailKeywords: [
       `متى ${core.name} {{year}}`,
-      `كم باقي على ${core.name}`,
+      `كم باقي على ${core.name} {{year}}`,
+      `تاريخ ${core.name} {{year}}`,
+      `موعد ${core.name} {{year}}`,
       `${core.name} {{nextYear}}`,
+      `هل ${core.name} إجازة رسمية`,
       `كيف أستعد لـ${core.name}`,
       `ما هو ${core.name}`,
       `أهمية ${core.name}`,
+      `لماذا يبحث الناس عن ${core.name}`,
       `${core.name} التاريخ والموعد`,
       `${core.name} العد التنازلي`,
     ],
@@ -300,8 +324,18 @@ export function buildSchemaData(core: EventCoreLike) {
 
 export function buildKeywordTemplateSet(name: string) {
   return {
-    base: [`متى ${name} {{year}}`, `كم باقي على ${name} {{year}}`],
-    country: [`متى ${name} في {{countryName}} {{year}}`, `${name} {{countryName}} {{year}}`],
+    base: [
+      `متى ${name} {{year}}`,
+      `كم باقي على ${name} {{year}}`,
+      `موعد ${name} {{year}}`,
+      `تاريخ ${name} {{year}}`,
+    ],
+    country: [
+      `متى ${name} في {{countryName}} {{year}}`,
+      `${name} في {{countryName}} {{year}}`,
+      `كم باقي على ${name} في {{countryName}} {{year}}`,
+      `موعد ${name} في {{countryName}} {{year}}`,
+    ],
   };
 }
 
@@ -311,6 +345,8 @@ export function buildBaseKeywords(core: EventCoreLike) {
     `كم باقي على ${core.name} {{year}}`,
     `موعد ${core.name} {{year}}`,
     `${core.name} {{year}}`,
+    `تاريخ ${core.name} {{year}}`,
+    `متى ${core.name} {{nextYear}}`,
   ];
 }
 

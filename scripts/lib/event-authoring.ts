@@ -45,18 +45,18 @@ export function buildEmptyResearchRecord(input: {
     keywordGaps: [],
     unansweredQuestions: [],
     differentiationIdeas: [],
+    factSources: [],
+    notes: '',
   };
 }
 
 export function buildEmptyQaRecord(input: {
   slug: string;
-  tier?: 'tier1' | 'tier2' | 'tier3';
   publishStatus?: string;
   updatedAt?: string;
 }) {
   return {
     slug: input.slug,
-    tier: input.tier || 'tier3',
     publishStatus: input.publishStatus || 'drafted',
     checks: {
       contentReady: false,

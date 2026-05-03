@@ -1,6 +1,5 @@
 {
   "slug": "national-exams-morocco",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

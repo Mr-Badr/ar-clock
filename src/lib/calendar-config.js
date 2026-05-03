@@ -27,6 +27,56 @@ export const COUNTRY_CALENDAR_CONFIG = {
     variance: 1, localSighting: true, accuracy: 'high',
     note: 'قطر تتبع أم القرى مع احتمال اختلاف يوم.',
   },
+  iq: {
+    method: 1, label: 'الجهات الشرعية العراقية', labelShort: 'رؤية محلية',
+    variance: 1, localSighting: true, accuracy: 'medium',
+    note: 'العراق يعتمد الإعلان المحلي والجهات الشرعية المختصة، وقد يختلف الموعد بيوم.',
+  },
+  sy: {
+    method: 1, label: 'وزارة الأوقاف السورية', labelShort: 'رؤية محلية',
+    variance: 1, localSighting: true, accuracy: 'medium',
+    note: 'سوريا تعتمد الإعلان المحلي للجهة الشرعية المختصة، وقد يختلف الموعد بيوم.',
+  },
+  ye: {
+    method: 1, label: 'وزارة الأوقاف والإرشاد', labelShort: 'رؤية محلية',
+    variance: 1, localSighting: true, accuracy: 'medium',
+    note: 'اليمن يعتمد الإعلان المحلي للجهة الشرعية المختصة، وقد يختلف الموعد بيوم.',
+  },
+  jo: {
+    method: 1, label: 'دائرة الإفتاء العام (الأردن)', labelShort: 'دائرة الإفتاء',
+    variance: 1, localSighting: true, accuracy: 'high',
+    note: 'الأردن يعتمد الإعلان الرسمي لدائرة الإفتاء العام مع احتمال اختلاف يوم.',
+  },
+  ly: {
+    method: 1, label: 'دار الإفتاء الليبية', labelShort: 'دار الإفتاء',
+    variance: 1, localSighting: true, accuracy: 'medium',
+    note: 'ليبيا تعتمد الإعلان المحلي لدار الإفتاء، وقد يختلف الموعد بيوم.',
+  },
+  om: {
+    method: 1, label: 'وزارة الأوقاف والشؤون الدينية (عمان)', labelShort: 'رؤية محلية',
+    variance: 1, localSighting: true, accuracy: 'high',
+    note: 'عمان تعتمد الإعلان المحلي لوزارة الأوقاف والشؤون الدينية مع احتمال اختلاف يوم.',
+  },
+  ps: {
+    method: 1, label: 'دار الإفتاء الفلسطينية', labelShort: 'دار الإفتاء',
+    variance: 1, localSighting: true, accuracy: 'medium',
+    note: 'فلسطين تعتمد الإعلان المحلي للجهة الشرعية المختصة، وقد يختلف الموعد بيوم.',
+  },
+  ca: {
+    method: 1, label: 'المجالس الإسلامية المحلية (كندا)', labelShort: 'إعلان محلي',
+    variance: 1, localSighting: true, accuracy: 'medium',
+    note: 'كندا قد تعتمد الإعلان المحلي أو الحسابات الفلكية بحسب المجلس أو المدينة.',
+  },
+  fr: {
+    method: 1, label: 'المجلس الفرنسي للديانة الإسلامية', labelShort: 'إعلان محلي',
+    variance: 1, localSighting: true, accuracy: 'medium',
+    note: 'فرنسا قد تعتمد الإعلان المحلي أو الحسابات الفلكية بحسب الجهة المرجعية المعتمدة.',
+  },
+  tr: {
+    method: 1, label: 'رئاسة الشؤون الدينية (تركيا)', labelShort: 'حسابات فلكية',
+    variance: 0, localSighting: false, accuracy: 'high',
+    note: 'تركيا تعتمد الحسابات الفلكية الرسمية في إعلان المواقيت والمناسبات الهجرية.',
+  },
   eg: {
     method: 1, label: 'دار الإفتاء المصرية', labelShort: 'دار الإفتاء',
     variance: 1, localSighting: true, accuracy: 'high',

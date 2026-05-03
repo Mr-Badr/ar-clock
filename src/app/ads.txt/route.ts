@@ -1,13 +1,7 @@
-function normalizePublisherId(rawValue: string | undefined) {
-  const trimmed = String(rawValue || "").trim();
-  if (!trimmed.startsWith("ca-pub-")) return null;
-  return trimmed.replace(/^ca-/, "");
-}
+import { getServerAdsConfig } from '@/lib/runtime-config';
 
 function getAdsTxtLines() {
-  const publisherId =
-    normalizePublisherId(process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID)
-    || normalizePublisherId(process.env.ADSENSE_CLIENT_ID);
+  const publisherId = getServerAdsConfig().clientId?.replace(/^ca-/, '') || null;
   const extraLines = String(process.env.ADS_TXT_EXTRA_LINES || "")
     .split(/\r?\n/)
     .map((line) => line.trim())
@@ -22,7 +16,7 @@ function getAdsTxtLines() {
   lines.push(...extraLines);
 
   if (lines.length === 0) {
-    lines.push("# Configure NEXT_PUBLIC_ADSENSE_CLIENT_ID or ADSENSE_CLIENT_ID to publish ads.txt.");
+    lines.push("# Configure ADSENSE_CLIENT_ID to publish ads.txt.");
   }
 
   return lines;

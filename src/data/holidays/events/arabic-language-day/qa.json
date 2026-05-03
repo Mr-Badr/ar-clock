@@ -1,6 +1,5 @@
 {
   "slug": "arabic-language-day",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

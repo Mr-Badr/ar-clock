@@ -157,7 +157,12 @@
         "متى تبدأ عشر ذي الحجة",
         "بداية عشر ذي الحجة {{year}}",
         "العشر من ذي الحجة",
-        "أول ذي الحجة {{year}}"
+        "أول ذي الحجة {{year}}",
+        "موعد أول ذي الحجة {{year}}",
+        "تاريخ أول ذي الحجة {{year}}",
+        "متى أول ذي الحجة {{nextYear}}",
+        "أول ذي الحجة العد التنازلي",
+        "أول ذي الحجة متى"
       ],
       "longTailKeywords": [
         "أفضل أعمال عشر ذي الحجة",
@@ -167,10 +172,21 @@
         "متى عيد الأضحى {{year}}",
         "هل يصام يوم العيد",
         "أول ذي الحجة {{nextYear}}",
-        "متى يبدأ التكبير في عشر ذي الحجة"
+        "متى يبدأ التكبير في عشر ذي الحجة",
+        "متى أول ذي الحجة {{year}}",
+        "كم باقي على أول ذي الحجة {{year}}",
+        "موعد أول ذي الحجة {{year}}",
+        "تاريخ أول ذي الحجة {{year}}",
+        "ما هو أول ذي الحجة",
+        "كيف أستعد لـأول ذي الحجة",
+        "هل أول ذي الحجة إجازة رسمية",
+        "أهمية أول ذي الحجة",
+        "لماذا يبحث الناس عن أول ذي الحجة",
+        "أول ذي الحجة التاريخ والموعد",
+        "أول ذي الحجة العد التنازلي"
       ],
       "datePublished": "2026-04-09T00:00:00.000Z",
-      "dateModified": "2026-04-09T00:00:00.000Z",
+      "dateModified": "2026-04-30T22:24:22.716Z",
       "inLanguage": "ar",
       "eventCategory": "islamic"
     },
@@ -212,7 +228,7 @@
       "eid-al-adha",
       "islamic-new-year",
       "nisf-shaban",
-      "ashura"
+      "isra-miraj"
     ],
     "about": {
       "heading": "عن أول ذي الحجة",
@@ -242,23 +258,26 @@
   },
   "countryOverrides": {},
   "aliasSlugs": [],
-  "countryScope": "custom",
+  "countryScope": "all",
   "countryAliasTemplate": "{{slug}}-in-{{countrySlug}}",
   "keywordTemplateSet": {
     "base": [
       "متى أول ذي الحجة {{year}}",
       "كم باقي على أول ذي الحجة {{year}}",
       "موعد أول ذي الحجة {{year}}",
+      "تاريخ أول ذي الحجة {{year}}",
       "متى تبدأ عشر ذي الحجة",
       "بداية عشر ذي الحجة {{year}}"
     ],
     "country": [
       "متى أول ذي الحجة في {{countryName}} {{year}}",
+      "أول ذي الحجة في {{countryName}} {{year}}",
+      "كم باقي على أول ذي الحجة في {{countryName}} {{year}}",
+      "موعد أول ذي الحجة في {{countryName}} {{year}}",
       "أول ذي الحجة {{countryName}} {{year}}",
       "كم باقي على أول ذي الحجة في {{countryName}}"
     ]
   },
-  "tier": "tier1",
   "publishStatus": "published",
   "canonicalPath": "/holidays/first-dhul-hijjah",
   "canonicalSource": "internal",

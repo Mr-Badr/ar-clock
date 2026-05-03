@@ -1,6 +1,5 @@
 {
   "slug": "jordan-independence-day",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

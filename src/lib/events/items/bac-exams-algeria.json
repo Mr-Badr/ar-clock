@@ -1,9 +1,0 @@
-{
-  "id": "exams-bac-dz",
-  "slug": "bac-exams-algeria",
-  "name": "بكالوريا الجزائر",
-  "type": "estimated",
-  "category": "school",
-  "_countryCode": "dz",
-  "date": "{{year}}-06-07"
-}

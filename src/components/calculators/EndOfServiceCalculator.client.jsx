@@ -48,6 +48,7 @@ export default function EndOfServiceCalculator({
   initialStartDate,
   initialEndDate,
 }) {
+  const formatMoney = (value) => formatCurrency(value, 'SAR');
   const [contractType, setContractType] = useState('open');
   const [salary, setSalary] = useState('8000');
   const [startDate, setStartDate] = useState(initialStartDate);
@@ -75,7 +76,7 @@ export default function EndOfServiceCalculator({
   );
 
   const shareText = result.isValid
-    ? `مدة الخدمة: ${result.serviceLabel}\nمكافأة نهاية الخدمة: ${formatCurrency(result.award)}\nنسبة الاستحقاق: ${formatPercent(result.entitlementPercent)}`
+    ? `مدة الخدمة: ${result.serviceLabel}\nمكافأة نهاية الخدمة: ${formatMoney(result.award)}\nنسبة الاستحقاق: ${formatPercent(result.entitlementPercent)}`
     : '';
 
   return (
@@ -186,9 +187,9 @@ export default function EndOfServiceCalculator({
                     </div>
                     <div className="card-nested calc-metric-card">
                       <div className="calc-metric-card__label">المكافأة المستحقة</div>
-                      <div className="calc-metric-card__value">{formatCurrency(result.award)}</div>
+                      <div className="calc-metric-card__value">{formatMoney(result.award)}</div>
                       <div className="calc-metric-card__note">
-                        كامل الاستحقاق قبل التعديل: {formatCurrency(result.fullAward)}
+                        كامل الاستحقاق قبل التعديل: {formatMoney(result.fullAward)}
                       </div>
                     </div>
                   </div>
@@ -209,15 +210,15 @@ export default function EndOfServiceCalculator({
                   <div className="calc-breakdown-list">
                     <div className="calc-breakdown-item">
                       <span>السنوات الخمس الأولى</span>
-                      <strong>{formatCurrency(result.firstFiveAmount)}</strong>
+                      <strong>{formatMoney(result.firstFiveAmount)}</strong>
                     </div>
                     <div className="calc-breakdown-item">
                       <span>ما بعد خمس سنوات</span>
-                      <strong>{formatCurrency(result.remainingAmount)}</strong>
+                      <strong>{formatMoney(result.remainingAmount)}</strong>
                     </div>
                     <div className="calc-breakdown-item">
                       <span>الأشهر والأيام الإضافية</span>
-                      <strong>{formatCurrency(result.partialAmount)}</strong>
+                      <strong>{formatMoney(result.partialAmount)}</strong>
                     </div>
                   </div>
 
@@ -258,8 +259,8 @@ export default function EndOfServiceCalculator({
               {comparison.projected?.isValid ? (
                 <div className={comparison.difference >= 0 ? 'calc-success' : 'calc-warning'}>
                   إذا تغيّر تاريخ النهاية إلى {formatDateArabic(comparison.projectedEndDate)} فسيصبح
-                  الاستحقاق {formatCurrency(comparison.projected.award)}، أي فرق{' '}
-                  {formatCurrency(comparison.difference)} عن الحساب الحالي.
+                  الاستحقاق {formatMoney(comparison.projected.award)}، أي فرق{' '}
+                  {formatMoney(comparison.difference)} عن الحساب الحالي.
                 </div>
               ) : null}
             </CardContent>
@@ -294,7 +295,7 @@ export default function EndOfServiceCalculator({
           <div className="calc-metric-card__label">
             <Wallet size={16} />
           </div>
-          <div className="calc-metric-card__value">{formatCurrency(result.salary || 0)}</div>
+          <div className="calc-metric-card__value">{formatMoney(result.salary || 0)}</div>
           <div className="calc-metric-card__note">الراتب المعتمد للحساب</div>
         </div>
         <div className="card-nested calc-metric-card">
@@ -310,7 +311,7 @@ export default function EndOfServiceCalculator({
           <div className="calc-metric-card__label">
             <Landmark size={16} />
           </div>
-          <div className="calc-metric-card__value">{formatCurrency(result.fullAward || 0)}</div>
+          <div className="calc-metric-card__value">{formatMoney(result.fullAward || 0)}</div>
           <div className="calc-metric-card__note">الاستحقاق الكامل قبل التعديل</div>
         </div>
         <div className="card-nested calc-metric-card">

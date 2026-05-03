@@ -4,6 +4,7 @@ export type EventCategory =
   | 'school'
   | 'holidays'
   | 'astronomy'
+  | 'social'
   | 'business'
   | 'support';
 
@@ -98,9 +99,12 @@ export interface EventPackage {
   countryScope?: 'none' | 'all' | 'custom';
   countryAliasTemplate?: string;
   keywordTemplateSet?: KeywordTemplateSet;
-  tier: 'tier1' | 'tier2' | 'tier3';
   publishStatus: EventPublishStatus;
   canonicalPath?: string;
+  canonicalSource?: string;
+  sourceAuthority?: string;
+  queueOrder?: number;
+  notes?: string;
 }
 
 export type EventPublishStatus =

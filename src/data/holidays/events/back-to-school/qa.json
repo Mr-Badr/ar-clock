@@ -1,6 +1,5 @@
 {
   "slug": "back-to-school",
-  "tier": "tier1",
   "publishStatus": "published",
   "checks": {
     "contentReady": true,

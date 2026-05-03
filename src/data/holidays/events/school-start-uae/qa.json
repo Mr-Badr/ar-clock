@@ -1,6 +1,5 @@
 {
   "slug": "school-start-uae",
-  "tier": "tier3",
   "publishStatus": "published",
   "checks": {
     "contentReady": false,
