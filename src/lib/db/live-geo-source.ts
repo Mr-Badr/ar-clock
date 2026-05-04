@@ -276,3 +276,11 @@ export async function findNearestCitiesViaLiveSource(
 
   return rows.map(normalizeCity)
 }
+
+/* -------------------------------------------------------------------------- */
+/* BACKWARD COMPATIBILITY (CI FIX)                                            */
+/* -------------------------------------------------------------------------- */
+
+export function isLiveGeoDbEnabled() {
+  return isLiveGeoEnabled()
+}
