@@ -284,3 +284,8 @@ export async function findNearestCitiesViaLiveSource(
 export function isLiveGeoDbEnabled() {
   return isLiveGeoEnabled()
 }
+
+export function getLiveGeoProviderName() {
+  if (!isLiveGeoEnabled()) return 'disabled'
+  return 'postgres'
+}
