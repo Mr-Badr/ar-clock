@@ -6,13 +6,14 @@ export default function HolidaysEventsGrid({
   eventsCount,
   total,
   displayEvents,
-  isPending,
+  isFiltering,
+  isLoadingMore,
   cursor,
   onLoadMore,
 }) {
   return (
     <>
-      {isPending && eventsCount === 0 ? (
+      {isFiltering && eventsCount === 0 ? (
         <EventGridSkeleton count={PAGE_SIZE} />
       ) : displayEvents.length === 0 ? (
         <div className="waqt-empty">
@@ -37,8 +38,8 @@ export default function HolidaysEventsGrid({
       ) : (
         <div
           className="waqt-grid"
-          aria-busy={isPending}
-          style={{ opacity: isPending ? 0.6 : 1, transition: 'opacity var(--transition-base)' }}
+          aria-busy={isFiltering || isLoadingMore}
+          style={{ opacity: isFiltering ? 0.6 : 1, transition: 'opacity var(--transition-base)' }}
         >
           {displayEvents.map((event, index) => (
             <EventCard key={event.slug} event={event} priority={index < 6} index={index} />
@@ -46,14 +47,14 @@ export default function HolidaysEventsGrid({
         </div>
       )}
 
-      {cursor !== null && !isPending && (
+      {cursor !== null && !isFiltering && !isLoadingMore && (
         <div
           className="flex flex-col items-center"
           style={{ marginTop: 'var(--space-8)', gap: 'var(--space-2)' }}
         >
           <button
             onClick={onLoadMore}
-            disabled={isPending}
+            disabled={isFiltering || isLoadingMore}
             className="waqt-btn waqt-btn-surface"
           >
             تحميل المزيد
@@ -73,7 +74,7 @@ export default function HolidaysEventsGrid({
         </div>
       )}
 
-      {isPending && cursor !== null && (
+      {isLoadingMore && cursor !== null && (
         <div className="waqt-grid" style={{ marginTop: 'var(--space-4)' }}>
           {Array.from({ length: 6 }).map((_, index) => (
             <div

@@ -17,6 +17,10 @@ import { getCachedNowIso } from '@/lib/date-utils';
 
 import { PAGE_SIZE } from './constants';
 import { normalizeHolidayFilter } from './holidays-filter-utils';
+import {
+  compareHolidayEventsByTargetDate,
+  scoreHolidaySearchMatch,
+} from './search-utils';
 
 function annotate(raw, resolvedMap, nowMs) {
   const base = enrichEvent(raw);
@@ -62,29 +66,6 @@ function annotate(raw, resolvedMap, nowMs) {
   };
 }
 
-function matchesSearch(raw, query) {
-  if (!query) return true;
-  const normalizedQuery = query.trim().toLowerCase();
-  if (!normalizedQuery) return true;
-
-  const country = getCountryByCode(raw.__aliasCountryCode || raw._countryCode || null);
-  const displayName = raw.__isAlias && country?.nameAr
-    ? `${raw.name} في ${country.nameAr}`
-    : raw.name;
-
-  const haystack = [
-    displayName,
-    raw.name,
-    country?.nameAr,
-    raw.description,
-    ...(Array.isArray(raw.keywords) ? raw.keywords : []),
-  ]
-    .map((value) => String(value || '').toLowerCase())
-    .join(' ');
-
-  return haystack.includes(normalizedQuery);
-}
-
 async function buildEventsPage(cursor = 0, filter = {}) {
   const normalizedFilter = normalizeHolidayFilter(filter);
 
@@ -96,19 +77,19 @@ async function buildEventsPage(cursor = 0, filter = {}) {
     pool = pool.filter((event) => event.category === normalizedFilter.category);
   }
 
-  if (normalizedFilter.search.trim()) {
-    pool = pool.filter((event) => matchesSearch(event, normalizedFilter.search));
-  }
-
   const nowMs = new Date(await getCachedNowIso()).getTime();
   const today = new Date(nowMs);
   today.setHours(0, 0, 0, 0);
+  const resolvedAll = await resolveAllHijriEvents(pool);
+  const targetTimeBySlug = new Map(
+    pool.map((event) => [event.slug, getNextEventDate(event, resolvedAll, nowMs).getTime()]),
+  );
 
   if (normalizedFilter.timeRange !== 'all') {
-    const resolvedAll = await resolveAllHijriEvents(pool);
     pool = pool.filter((event) => {
-      const target = getNextEventDate(event, resolvedAll, nowMs);
-      const diffDays = Math.ceil((target.getTime() - today.getTime()) / 86_400_000);
+      const targetTime = targetTimeBySlug.get(event.slug);
+      if (!targetTime) return false;
+      const diffDays = Math.ceil((targetTime - today.getTime()) / 86_400_000);
       if (normalizedFilter.timeRange === 'week') return diffDays <= 7;
       if (normalizedFilter.timeRange === 'month') return diffDays <= 30;
       if (normalizedFilter.timeRange === '3months') return diffDays <= 90;
@@ -116,10 +97,27 @@ async function buildEventsPage(cursor = 0, filter = {}) {
     });
   }
 
+  if (normalizedFilter.search.trim()) {
+    pool = pool
+      .map((event) => ({
+        event,
+        score: scoreHolidaySearchMatch(event, normalizedFilter.search),
+      }))
+      .filter(({ score }) => score > 0)
+      .sort((left, right) => {
+        if (right.score !== left.score) return right.score - left.score;
+        return compareHolidayEventsByTargetDate(left.event, right.event, targetTimeBySlug);
+      })
+      .map(({ event }) => event);
+  } else {
+    pool = pool
+      .slice()
+      .sort((left, right) => compareHolidayEventsByTargetDate(left, right, targetTimeBySlug));
+  }
+
   const total = pool.length;
   const slice = pool.slice(cursor, cursor + PAGE_SIZE);
-  const resolved = await resolveAllHijriEvents(slice);
-  const events = slice.map((event) => annotate(event, resolved, nowMs));
+  const events = slice.map((event) => annotate(event, resolvedAll, nowMs));
 
   return {
     events,

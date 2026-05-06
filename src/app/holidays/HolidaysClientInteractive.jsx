@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, useTransition, useCallback, useDeferredValue } from 'react';
+import { useEffect, useRef, useState, useCallback, useDeferredValue } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { loadMoreEvents } from './actions';
@@ -9,10 +9,13 @@ import HolidaysResultsSummary from './HolidaysResultsSummary';
 import HolidaysEventsGrid from './HolidaysEventsGrid';
 import {
   buildHolidayQueryString,
+  normalizeHolidayFilter,
   readFiltersFromSearchParams,
   sameHolidayFilters,
   sortHolidayEvents,
 } from './holidays-filter-utils';
+
+const SEARCH_DEBOUNCE_MS = 180;
 
 export default function HolidaysClientInteractive({
   initialEvents,
@@ -28,6 +31,9 @@ export default function HolidaysClientInteractive({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const pendingQueryRef = useRef(null);
+  const latestFilterRequestRef = useRef(0);
+  const filtersRef = useRef(normalizeHolidayFilter(initialFilters));
+  const lastAppliedFiltersRef = useRef(normalizeHolidayFilter(initialFilters));
 
   const [events, setEvents] = useState(initialEvents);
   const [cursor, setCursor] = useState(initialNextCursor);
@@ -39,8 +45,9 @@ export default function HolidaysClientInteractive({
   const [timeRange, setTimeRange] = useState(initialFilters?.timeRange || 'all');
 
   const [sortMode, setSortMode] = useState('daysLeft');
+  const [isFiltering, setIsFiltering] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  const [isPending, startTransition] = useTransition();
   const deferredSearch = useDeferredValue(search);
 
   const syncUrl = useCallback((filters) => {
@@ -49,55 +56,91 @@ export default function HolidaysClientInteractive({
     router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
   }, [pathname, router]);
 
-  const applyFilter = useCallback((nextFilters) => {
-    syncUrl(nextFilters);
-    startTransition(async () => {
-      const result = await loadMoreEvents(0, nextFilters);
+  const applyFilter = useCallback(async (nextFilters, options = {}) => {
+    const normalized = normalizeHolidayFilter(nextFilters);
+    const requestId = latestFilterRequestRef.current + 1;
+    latestFilterRequestRef.current = requestId;
+    lastAppliedFiltersRef.current = normalized;
+
+    if (options.syncUrl !== false) {
+      syncUrl(normalized);
+    }
+
+    setIsFiltering(true);
+    try {
+      const result = await loadMoreEvents(0, normalized);
+      if (latestFilterRequestRef.current !== requestId) return;
       setEvents(result.events);
       setCursor(result.nextCursor);
       setTotal(result.total);
-    });
+    } catch (error) {
+      if (latestFilterRequestRef.current === requestId) {
+        console.error('[holidays] failed to refresh filtered events', error);
+      }
+    } finally {
+      if (latestFilterRequestRef.current === requestId) {
+        setIsFiltering(false);
+      }
+    }
   }, [syncUrl]);
 
   const handleCategory = useCallback((value) => {
     setCategory(value);
+    filtersRef.current = normalizeHolidayFilter({
+      category: value,
+      countryCode: country,
+      search,
+      timeRange,
+    });
     applyFilter({
       category: value,
       countryCode: country,
-      search: deferredSearch,
+      search,
       timeRange,
     });
-  }, [applyFilter, country, deferredSearch, timeRange]);
+  }, [applyFilter, country, search, timeRange]);
 
   const handleCountry = useCallback((value) => {
     setCountry(value);
+    filtersRef.current = normalizeHolidayFilter({
+      category,
+      countryCode: value,
+      search,
+      timeRange,
+    });
     applyFilter({
       category,
       countryCode: value,
-      search: deferredSearch,
+      search,
       timeRange,
     });
-  }, [applyFilter, category, deferredSearch, timeRange]);
+  }, [applyFilter, category, search, timeRange]);
 
   const handleSearch = useCallback((value) => {
     setSearch(value);
-    applyFilter({
+    filtersRef.current = normalizeHolidayFilter({
       category,
       countryCode: country,
       search: value,
       timeRange,
     });
-  }, [applyFilter, category, country, timeRange]);
+  }, [category, country, timeRange]);
 
   const handleTimeRange = useCallback((value) => {
     setTimeRange(value);
+    filtersRef.current = normalizeHolidayFilter({
+      category,
+      countryCode: country,
+      search,
+      timeRange: value,
+    });
     applyFilter({
       category,
       countryCode: country,
-      search: deferredSearch,
+      search,
       timeRange: value,
     });
-  }, [applyFilter, category, country, deferredSearch]);
+  }, [applyFilter, category, country, search]);
 
   const clearAll = useCallback(() => {
     setCategory('all');
@@ -105,6 +148,12 @@ export default function HolidaysClientInteractive({
     setSearch('');
     setTimeRange('all');
     setSortMode('daysLeft');
+    filtersRef.current = normalizeHolidayFilter({
+      category: 'all',
+      countryCode: 'all',
+      search: '',
+      timeRange: 'all',
+    });
     applyFilter({
       category: 'all',
       countryCode: 'all',
@@ -113,20 +162,21 @@ export default function HolidaysClientInteractive({
     });
   }, [applyFilter]);
 
-  const handleLoadMore = useCallback(() => {
-    if (!cursor) return;
+  const handleLoadMore = useCallback(async () => {
+    if (!cursor || isFiltering || isLoadingMore) return;
 
-    startTransition(async () => {
-      const result = await loadMoreEvents(cursor, {
-        category,
-        countryCode: country,
-        search: deferredSearch,
-        timeRange,
-      });
+    setIsLoadingMore(true);
+    try {
+      const result = await loadMoreEvents(cursor, lastAppliedFiltersRef.current);
       setEvents((prev) => [...prev, ...result.events]);
       setCursor(result.nextCursor);
-    });
-  }, [category, country, cursor, deferredSearch, timeRange]);
+      setTotal(result.total);
+    } catch (error) {
+      console.error('[holidays] failed to load more events', error);
+    } finally {
+      setIsLoadingMore(false);
+    }
+  }, [cursor, isFiltering, isLoadingMore]);
 
   useEffect(() => {
     const currentQuery = searchParams?.toString() || '';
@@ -138,27 +188,37 @@ export default function HolidaysClientInteractive({
     }
 
     const urlFilters = readFiltersFromSearchParams(searchParams);
-    const currentFilters = {
-      category,
-      countryCode: country,
-      search,
-      timeRange,
-    };
-
+    const currentFilters = filtersRef.current;
     if (sameHolidayFilters(urlFilters, currentFilters)) return;
 
     setCategory(urlFilters.category);
     setCountry(urlFilters.countryCode);
     setSearch(urlFilters.search);
     setTimeRange(urlFilters.timeRange);
+    filtersRef.current = urlFilters;
 
-    startTransition(async () => {
-      const result = await loadMoreEvents(0, urlFilters);
-      setEvents(result.events);
-      setCursor(result.nextCursor);
-      setTotal(result.total);
+    if (sameHolidayFilters(urlFilters, lastAppliedFiltersRef.current)) return;
+    applyFilter(urlFilters, { syncUrl: false });
+  }, [applyFilter, searchParams]);
+
+  useEffect(() => {
+    const nextFilters = normalizeHolidayFilter({
+      category,
+      countryCode: country,
+      search: deferredSearch,
+      timeRange,
     });
-  }, [category, country, search, searchParams, timeRange]);
+    filtersRef.current = nextFilters;
+
+    if (sameHolidayFilters(nextFilters, lastAppliedFiltersRef.current)) return;
+
+    const delay = deferredSearch.trim() ? SEARCH_DEBOUNCE_MS : 0;
+    const timeoutId = window.setTimeout(() => {
+      applyFilter(nextFilters);
+    }, delay);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [applyFilter, category, country, deferredSearch, timeRange]);
 
   const displayEvents = sortHolidayEvents(events, sortMode);
   const hasActiveFilters = category !== 'all' || country !== 'all' || search !== '' || timeRange !== 'all';
@@ -185,7 +245,7 @@ export default function HolidaysClientInteractive({
       <HolidaysResultsSummary
         eventsCount={events.length}
         total={total}
-        isPending={isPending}
+        isPending={isFiltering}
         hasActiveFilters={hasActiveFilters}
         category={category}
         country={country}
@@ -205,7 +265,8 @@ export default function HolidaysClientInteractive({
         eventsCount={events.length}
         total={total}
         displayEvents={displayEvents}
-        isPending={isPending}
+        isFiltering={isFiltering}
+        isLoadingMore={isLoadingMore}
         cursor={cursor}
         onLoadMore={handleLoadMore}
       />

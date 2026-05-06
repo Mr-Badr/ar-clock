@@ -95,6 +95,42 @@ export default async function HolidaysPage() {
       description: 'راجع الوقت الحالي في مدينتك أو دولة أخرى عند متابعة العدادات المباشرة والمناسبات الدولية.',
     },
   ]);
+  const featuredEventLinks = defaultData.events.slice(0, 12).map((event, index) => ({
+    position: index + 1,
+    href: `/holidays/${event.slug}`,
+    title: event.name,
+    description: `${event._formatted} — متبقي ${event._daysLeft} يوم`,
+  }));
+  const holidaysCollectionSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `المناسبات القادمة ${gr}`,
+    url: `${SITE}/holidays`,
+    inLanguage: 'ar',
+    description: 'صفحة تجمع المناسبات القادمة مع عد تنازلي مباشر وروابط داخلية إلى صفحات الأحداث القابلة للفهرسة.',
+    mainEntity: {
+      '@type': 'ItemList',
+      name: 'أقرب المناسبات القادمة',
+      numberOfItems: featuredEventLinks.length,
+      itemListElement: featuredEventLinks.map((item) => ({
+        '@type': 'ListItem',
+        position: item.position,
+        name: item.title,
+        url: `${SITE}${item.href}`,
+      })),
+    },
+  };
+  const upcomingEventsSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'أقرب المناسبات القادمة',
+    itemListElement: featuredEventLinks.map((item) => ({
+      '@type': 'ListItem',
+      position: item.position,
+      name: item.title,
+      url: `${SITE}${item.href}`,
+    })),
+  };
 
   // NOTE: FAQPage schema is emitted by HolidaysGlobalSchemas (via HolidaysSections below).
   // Do NOT add a second FAQPage here — Google flags "Duplicate field FAQPage" and
@@ -107,6 +143,8 @@ export default async function HolidaysPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(holidaysCollectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(upcomingEventsSchema) }} />
 
       
       <main
@@ -176,6 +214,88 @@ export default async function HolidaysPage() {
 
         <AdTopBanner slotId="top-holidays" />
 
+        <section
+          aria-labelledby="featured-holidays-heading"
+          style={{ marginBottom: 'var(--space-10)' }}
+        >
+          <div
+            className="card-nested"
+            style={{
+              padding: 'var(--space-5)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'var(--space-4)',
+            }}
+          >
+            <div>
+              <h2
+                id="featured-holidays-heading"
+                style={{
+                  fontSize: 'var(--text-xl)',
+                  fontWeight: 'var(--font-bold)',
+                  color: 'var(--text-primary)',
+                  marginBottom: 'var(--space-2)',
+                }}
+              >
+                مناسبات قريبة يمكنك متابعتها الآن
+              </h2>
+              <p
+                style={{
+                  color: 'var(--text-secondary)',
+                  lineHeight: 'var(--leading-relaxed)',
+                  maxWidth: '72ch',
+                }}
+              >
+                اختر من هذه المناسبات القريبة لتصل بسرعة إلى صفحة كل مناسبة، ومعرفة
+                التاريخ والمدة المتبقية والتفاصيل المهمة من دون الحاجة إلى البحث من جديد.
+              </p>
+            </div>
+
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                gap: 'var(--space-3)',
+              }}
+            >
+              {featuredEventLinks.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  style={{
+                    display: 'block',
+                    padding: 'var(--space-4)',
+                    borderRadius: 'var(--radius-xl)',
+                    background: 'var(--bg-surface-3)',
+                    border: '1px solid var(--border-subtle)',
+                    textDecoration: 'none',
+                  }}
+                >
+                  <strong
+                    style={{
+                      display: 'block',
+                      color: 'var(--text-primary)',
+                      marginBottom: 'var(--space-2)',
+                    }}
+                  >
+                    {item.title}
+                  </strong>
+                  <span
+                    style={{
+                      display: 'block',
+                      color: 'var(--text-secondary)',
+                      fontSize: 'var(--text-sm)',
+                      lineHeight: 'var(--leading-relaxed)',
+                    }}
+                  >
+                    {item.description}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ── All events ─────────────────────────────────────────────── */}
         <section aria-labelledby="events-heading">
           <HolidaysClient
@@ -188,8 +308,8 @@ export default async function HolidaysPage() {
         <AdInArticle slotId="mid-holidays-1" />
         <section className="mt-12">
           <GeoInternalLinks
-            title="أدوات يومية يبحث عنها زوار المناسبات أيضاً"
-            description="الزائر الذي يبحث عن رمضان أو العيد أو مناسبة قادمة يحتاج غالباً أدوات مكمّلة مثل تاريخ اليوم، الصلاة، الوقت الآن، وحاسبات وأدوات اقتصادية سريعة. لهذا ربطنا هذه الصفحات داخلياً بشكل أوضح."
+            title="أدوات يومية مفيدة مع صفحة المناسبات"
+            description="من يتابع رمضان أو العيد أو مناسبة قادمة يحتاج غالباً إلى أدوات مكمّلة مثل تاريخ اليوم، مواقيت الصلاة، والوقت الآن. جمعناها هنا لتصل إليها بسرعة."
             links={utilityLinks}
             ariaLabel="أدوات يومية مرتبطة بالمناسبات"
           />

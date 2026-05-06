@@ -297,7 +297,7 @@ export default async function PrayerTimesPage({ params }) {
         <section className="mb-6">
           <GeoInternalLinks
             title={`روابط مفيدة لمدينة ${cityNameAr}`}
-            description={`هذه الروابط تقرّب بين صفحة الصلاة في ${cityNameAr} وصفحات الوقت والتاريخ المرتبطة بها، وهو ما يساعد المستخدم ومحركات البحث على الوصول إلى الصفحات المكملة بسرعة.`}
+            description={`إذا كنت تتابع مواقيت الصلاة في ${cityNameAr} فقد تحتاج أيضاً إلى الوقت الآن أو تاريخ اليوم أو الصفحات الزمنية المرتبطة بهذه المدينة.`}
             links={utilityLinks}
             ariaLabel={`روابط مفيدة لمدينة ${cityNameAr}`}
           />

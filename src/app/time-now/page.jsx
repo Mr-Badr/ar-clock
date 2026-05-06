@@ -14,6 +14,7 @@ import {
 } from '@/lib/seo/popular-links';
 import { buildTimeNowKeywords } from '@/lib/seo/section-search-intent';
 import { getSiteUrl } from '@/lib/site-config';
+import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 
 import TimeNowClient from './TimeNowClient';
 
@@ -22,12 +23,12 @@ const TIME_NOW_FAQ_ITEMS = [
   {
     question: 'كيف أعرف الوقت الآن في مدينتي؟',
     answer:
-      'استخدم مربع البحث في أعلى الصفحة ثم اختر مدينتك أو دولتك. ستنتقل مباشرة إلى صفحة مخصصة تعرض الساعة الحالية، التاريخ اليوم، والمنطقة الزمنية بشكل قابل للفهرسة.',
+      'استخدم مربع البحث في أعلى الصفحة ثم اختر مدينتك أو دولتك. ستنتقل مباشرة إلى صفحة مخصصة تعرض الساعة الحالية، التاريخ اليوم، والمنطقة الزمنية بوضوح.',
   },
   {
     question: 'هل صفحات الوقت الآن تشمل الدول والمدن العربية؟',
     answer:
-      'نعم، القسم يغطي الدول العربية والعواصم والمدن الأكثر بحثاً مع روابط داخلية بين صفحة الدولة وصفحات المدن الرئيسية لتسهيل الوصول والزحف.',
+      'نعم، القسم يغطي الدول العربية والعواصم والمدن الأكثر زيارة مع روابط واضحة بين صفحة الدولة وصفحات المدن الرئيسية لتسهيل الوصول.',
   },
   {
     question: 'هل تعرض الصفحة التوقيت المحلي بدقة؟',
@@ -73,6 +74,21 @@ export default async function TimeNowPage() {
       url: SITE_URL,
     },
   };
+  const softwareSchema = buildFreeToolPageSchema({
+    siteUrl: SITE_URL,
+    path: '/time-now',
+    name: 'أداة الوقت الآن في المدن والدول',
+    description:
+      'أداة عربية مجانية لمعرفة الوقت الآن في أي مدينة أو دولة، مع التاريخ المحلي والمنطقة الزمنية وروابط فورية إلى فرق التوقيت ومواقيت الصلاة.',
+    about: [
+      'الوقت الآن',
+      'الساعة الآن',
+      'التوقيت المحلي',
+      'المنطقة الزمنية',
+      'الوقت في المدن والدول',
+    ],
+    keywords: buildTimeNowKeywords(),
+  });
   const cityItemListSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -133,6 +149,7 @@ export default async function TimeNowPage() {
   return (
     <div className="min-h-screen bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(cityItemListSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(countryItemListSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
@@ -226,9 +243,9 @@ export default async function TimeNowPage() {
                 maxWidth: '72ch',
               }}
             >
-              هذه الروابط مبنية لتجيب مباشرة عن عمليات البحث من نوع "الوقت الآن في
-              [مدينة]" و"الساعة الآن في [مدينة]"، مع صفحات داخلية تعرض الوقت الحالي،
-              التاريخ اليوم، والمنطقة الزمنية في HTML يمكن لمحركات البحث قراءته فوراً.
+              إذا كنت تبحث عن الوقت الآن في مدينة محددة، فهذه الروابط تنقلك مباشرة
+              إلى أشهر الصفحات التي تعرض الساعة الحالية والتاريخ والمنطقة الزمنية
+              بشكل مباشر وسهل القراءة.
             </p>
 
             <nav aria-label="روابط المدن الأكثر بحثاً">
@@ -297,7 +314,7 @@ export default async function TimeNowPage() {
             >
               إذا كان المستخدم يبحث عن الوقت الآن في دولة كاملة ثم ينتقل إلى مدينة
               بعينها، فهذه الصفحات تمنح مساراً واضحاً بين الدولة والعاصمة والمدن
-              الكبرى، وهذا يساعد على الزحف والفهم الموضوعي لصفحات التوقيت في الموقع.
+              الكبرى، حتى يصل إلى الصفحة الأنسب له بسرعة ومن دون تشتت.
             </p>
             <div
               style={{
@@ -382,7 +399,7 @@ export default async function TimeNowPage() {
         <section style={{ marginBottom: '2rem' }}>
           <GeoInternalLinks
             title="روابط مهمة مرتبطة بالوقت الآن"
-            description="ربطنا هذا القسم بصفحات فرق التوقيت والصلاة والتاريخ والمناسبات حتى تبقى الصفحات الأساسية قريبة من بعضها، وهو ما يساعد المستخدم ومحركات البحث على فهم هيكل الموقع بشكل أوضح."
+            description="قد تحتاج بعد معرفة الوقت الآن إلى فرق التوقيت أو مواقيت الصلاة أو تاريخ اليوم، لذلك وضعنا هذه الروابط المهمة قريباً منك."
             links={utilityLinks}
             ariaLabel="روابط مهمة مرتبطة بالوقت الآن"
           />

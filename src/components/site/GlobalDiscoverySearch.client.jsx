@@ -294,7 +294,6 @@ export default function GlobalDiscoverySearch() {
         onFocus={() => void primeDiscoveryData()}
       >
         <Search size={16} />
-        <span className="header-search-link__label">البحث الذكي</span>
       </button>
 
       <CommandDialog

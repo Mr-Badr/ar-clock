@@ -38,7 +38,7 @@ async function ForexSessionsServerSections() {
       <section className="economy-section">
         <EconomySectionHeader
           title="كيف تقرأ الجلسات من مدينتك فعلياً؟"
-          lead="هذه الفقرة مبنية من نموذج الصفحة نفسه، لذلك تتغير صيغتها مع اليوم والمنطقة الزمنية وتبقى مفهومة لمحركات البحث والزائر معاً."
+          lead="هذا الجزء يشرح الجلسات بحسب يومك ومنطقتك الزمنية حتى تعرف متى تبدأ الحركة فعلاً بالنسبة لك، لا بحسب جدول عام فقط."
         />
         <EconomyGuide sections={serverModel.guideSections} />
       </section>
@@ -54,7 +54,7 @@ async function ForexSessionsServerSections() {
       <section className="economy-section">
         <EconomySectionHeader
           title="المراجع التي بُنيت عليها طبقة الجلسات"
-          lead="ربط المصادر المرجعية مباشرة داخل HTML يساعد على فهم أعمق للصفحة ويقوي الإشارة إلى أنها صفحة أدوات مبنية على منهج واضح."
+          lead="هذه المراجع توضح الأساس الذي نعتمد عليه في قراءة الجلسات والتوقيتات حتى تكون الصورة أوضح عند المتابعة."
         />
         <EconomySourceLinks links={serverModel.sourceLinks} />
       </section>
@@ -89,8 +89,8 @@ export default async function ForexSessionsPage() {
 
         <section className="economy-section">
           <EconomySectionHeader
-            title="كيف يكتب الناس هذا السؤال في البحث؟"
-            lead="هذه الصيغ تجمع بين الجلسات والتوقيت المحلي والسيولة والتداخل، حتى لا تبقى الصفحة محصورة في عبارة واحدة فقط مثل جلسات الفوركس."
+            title="أسئلة تغطيها الصفحة خلال اليوم"
+            lead="هنا ستجد أكثر الأسئلة المتكررة حول الجلسات والتوقيت المحلي والسيولة والتداخل بين لندن ونيويورك."
           />
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>

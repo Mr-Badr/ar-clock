@@ -38,7 +38,7 @@ async function MarketClockServerSections() {
       <section className="economy-section">
         <EconomySectionHeader
           title="كيف تقرأ الساعة كأداة قرار؟"
-          lead="هذا الجزء يشرح الساعة بعبارات عملية ومبنية على النموذج نفسه، حتى يفهم الزائر ومحرك البحث أن الصفحة تفسر اللحظة الحالية ولا تعرض شكلاً فقط."
+          lead="هذا الجزء يشرح كيف تقرأ ساعة السوق عملياً، وما الذي تعنيه اللحظة الحالية بالنسبة للسيولة والجلسات النشطة."
         />
         <EconomyGuide sections={serverModel.guideSections} />
       </section>
@@ -46,7 +46,7 @@ async function MarketClockServerSections() {
       <section className="economy-section">
         <EconomySectionHeader
           title="المراجع التي تدعم قراءة الساعة"
-          lead="ربط المراجع المرجعية داخل HTML يقوي الدلالة على أن الصفحة مبنية على جلسات عالمية واضحة وتوقيتات حقيقية متحركة."
+          lead="هذه المراجع تساعدك على فهم الأساس الذي بُنيت عليه ساعة السوق والتوقيتات الظاهرة في الصفحة."
         />
         <EconomySourceLinks links={serverModel.sourceLinks} />
       </section>
@@ -81,8 +81,8 @@ export default async function MarketClockPage() {
 
         <section className="economy-section">
           <EconomySectionHeader
-            title="صيغ بحث ساعة السوق والسيولة"
-            lead="بدلاً من عنوان بصري فقط، تعرض الصفحة هنا العبارات التي تربط ساعة السوق بالسيولة الفعلية وتداخل لندن ونيويورك وخريطة النشاط اليومية."
+            title="أسئلة تساعدك ساعة السوق على حسمها"
+            lead="من فهم السيولة الحالية إلى تداخل لندن ونيويورك وخريطة النشاط اليومي، هذه هي الأسئلة التي تجيب عنها الصفحة."
           />
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>

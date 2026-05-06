@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-import styles from './market-card-v2.module.css';
+import rawStyles from './market-card-v2.module.css';
 
 import { ChartLineUp, ClockCountdown, Lightning, Sparkle } from '@phosphor-icons/react';
 
@@ -30,6 +30,27 @@ import {
   EconomyToolCards,
   LiveSessionsStrip,
 } from './common';
+
+function toModuleKey(prop) {
+  const kebab = prop.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
+
+  if (kebab.startsWith('mc-session-')) {
+    return kebab.replace('mc-session-', 'mc-session__');
+  }
+
+  if (kebab.startsWith('mc-instrument-')) {
+    return kebab.replace('mc-instrument-', 'mc-instrument__');
+  }
+
+  return kebab;
+}
+
+const styles = new Proxy(rawStyles, {
+  get(target, prop) {
+    if (typeof prop !== 'string') return target[prop];
+    return target[prop] || target[toModuleKey(prop)] || '';
+  },
+});
 
 function SessionTrack({ timelineBar, nowPercent, tone }) {
   if (!timelineBar) return null;
@@ -370,7 +391,7 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
               <div className={styles.mcInstrumentStripe} />
               <div className={styles.mcInstrumentHead}>
                 <div className={styles.mcInstrumentTitleWrap}>
-                  <h2 className={`${styles.mcInstrumentTitle} ${styles.mcInstrumentTitleGold}`}>تداول الذهب الآن</h2>
+                  <h2 className={styles.mcInstrumentTitle}>تداول الذهب الآن</h2>
                   <p className={styles.mcInstrumentSubtitle}>XAU/USD · توقيتك المحلي</p>
                 </div>
                 <span className={styles.mcInstrumentBadge} data-tone={model.gold.tone || 'default'}>

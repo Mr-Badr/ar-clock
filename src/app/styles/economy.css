@@ -6,7 +6,7 @@
 
 .economy-stack {
   display: grid;
-  gap: var(--space-6);
+  gap: var(--space-8);
 }
 
 .economy-hero {
@@ -563,7 +563,7 @@
 
 .economy-section {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 
 .economy-feature-frame {

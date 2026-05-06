@@ -101,8 +101,8 @@ export default async function GoldMarketHoursPage() {
 
         <section className="economy-section">
           <EconomySectionHeader
-            title="صيغ بحث الذهب التي تخدمها الصفحة"
-            lead="هذه الطبقة تترجم نيات البحث الفعلية حول فتح الذهب والسيولة والـ XAUUSD إلى محتوى مرئي واضح وقابل للفهرسة."
+            title="أسئلة الذهب التي تجيب عنها الصفحة"
+            lead="هنا ستجد أكثر الأسئلة المتكررة حول فتح الذهب والسيولة وحركة XAU/USD في صياغة واضحة ومباشرة."
           />
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>

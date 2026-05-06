@@ -36,8 +36,8 @@ async function StockMarketsServerSections() {
     <>
       <section className="economy-section">
         <EconomySectionHeader
-          title="كيف تشرح الصفحة حالة البورصات بشكل قابل للفهرسة؟"
-          lead="هذه الفقرات تبني طبقة HTML واضحة حول افتتاح السوق الأمريكي، فروق الأيام بين الأسواق العربية والعالمية، والجلسات الموسعة."
+          title="كيف تقرأ حالة البورصات من يومك الحالي؟"
+          lead="هذه الفقرات تربط بين افتتاح السوق الأمريكي وفروق الأيام بين الأسواق العربية والعالمية والجلسات الموسعة بطريقة أوضح للمتابعة اليومية."
         />
         <EconomyGuide sections={serverModel.guideSections} />
       </section>
@@ -45,7 +45,7 @@ async function StockMarketsServerSections() {
       <section className="economy-section">
         <EconomySectionHeader
           title="ما الذي نعد به وما الذي يحتاج تحققاً إضافياً؟"
-          lead="إظهار منهج الدقة وحدود الاستخدام هنا يساعد المستخدم ومحركات البحث على فهم قيمة الصفحة وحدودها بوضوح."
+          lead="نوضح هنا حدود الصفحة وما الذي يحتاج إلى تحقق إضافي حتى تستخدمها بثقة وبصورة واقعية."
         />
         <EconomyGuide sections={serverModel.trustPoints} />
       </section>
@@ -80,8 +80,8 @@ export default async function StockMarketsPage() {
 
         <section className="economy-section">
           <EconomySectionHeader
-            title="صيغ البحث الأساسية حول البورصات"
-            lead="نغطي هنا أسئلة البورصات العالمية والعربية كما يبحث بها الناس فعلياً: هل السوق مفتوح الآن، متى يفتح تاسي، وهل بورصة دبي أو القاهرة مفتوحة اليوم."
+            title="أسئلة البورصات التي تغطيها الصفحة"
+            lead="نغطي هنا أكثر الأسئلة شيوعاً حول البورصات العالمية والعربية: هل السوق مفتوح الآن، متى يفتح تاسي، وهل بورصة دبي أو القاهرة مفتوحة اليوم."
           />
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>

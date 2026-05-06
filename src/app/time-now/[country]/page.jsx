@@ -356,7 +356,7 @@ export default async function CountryTimePage({ params }) {
         <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
           <GeoInternalLinks
             title={`روابط مهمة عن ${countryAr}`}
-            description={`هذه الروابط تقوي الربط الداخلي بين صفحات الوقت، الصلاة، والتاريخ الخاصة بـ${countryAr} وتساعد المستخدم ومحركات البحث على اكتشاف الصفحات الأقرب للنية البحثية.`}
+            description={`إذا كنت تتابع الوقت في ${countryAr} فقد تحتاج أيضاً إلى مواقيت الصلاة أو تاريخ اليوم أو الصفحات الزمنية المرتبطة، لذلك وضعناها هنا بشكل واضح.`}
             links={countryUtilityLinks}
             ariaLabel={`روابط مهمة عن ${countryAr}`}
           />
@@ -381,17 +381,9 @@ export default async function CountryTimePage({ params }) {
               الدول الأخرى.
             </p>
             <p>
-              صُممت هذه الصفحة لتجيب مباشرة عن صيغ البحث الشائعة مثل
-              {' '}
-              <strong>الوقت الان في {countryAr}</strong>
-              {' '}و
-              {' '}
-              <strong>كم الساعة في {countryAr}</strong>
-              {' '}و
-              {' '}
-              <strong>التاريخ اليوم في {countryAr}</strong>
-              ، مع محتوى ظاهر يربط بين الدولة والعاصمة والمدن الكبرى ليسهّل الفهم
-              والفهرسة والزحف الداخلي.
+              ستجد هنا الوقت الحالي في <strong>{countryAr}</strong> مع روابط مفيدة
+              إلى العاصمة والمدن الكبرى، بحيث تنتقل بسهولة بين الدولة والمدينة
+              وتصل إلى المعلومة الأقرب لما تحتاجه الآن.
             </p>
           </div>
         </section>

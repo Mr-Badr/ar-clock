@@ -89,8 +89,8 @@ export default async function BestTradingTimePage() {
 
         <section className="economy-section">
           <EconomySectionHeader
-            title="صيغ البحث التي تلتقطها الصفحة"
-            lead="هذه الصيغ تغطي نية القرار الفعلية: أفضل وقت لتداول الذهب أو الفوركس، الوقت الذي يجب تجنبه، والفرق بين أفضل وأسوأ النوافذ اليومية."
+            title="أسئلة تساعدك الصفحة على حسمها"
+            lead="من أفضل وقت لتداول الذهب أو الفوركس إلى الأوقات التي يُفضّل تجنبها، ستجد هنا الأسئلة الأهم في قرار المتابعة اليومي."
           />
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>

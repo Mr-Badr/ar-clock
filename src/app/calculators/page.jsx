@@ -13,6 +13,7 @@ import {
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { CALCULATOR_HUBS, CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getSiteUrl } from '@/lib/site-config';
+import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
 
 const SITE_URL = getSiteUrl();
 const TOP_SEARCH_INTENTS = [
@@ -64,6 +65,37 @@ export const metadata = buildCanonicalMetadata({
 });
 
 export default function CalculatorsPage() {
+  const platformUtilityLinks = appendToolDiscoveryLinks([
+    {
+      href: '/economie',
+      label: 'الأدوات الاقتصادية الحية',
+      description: 'انتقل من الحاسبات إلى ساعات السوق والذهب والفوركس عندما تكون نية البحث مرتبطة بالتداول أو التوقيت المالي.',
+    },
+    {
+      href: '/time-now',
+      label: 'الوقت الآن في المدن والدول',
+      description: 'راجع الوقت المحلي الحالي إذا كانت الحاسبة مرتبطة بساعات العمل أو المواعيد أو السفر.',
+    },
+    {
+      href: '/time-difference',
+      label: 'حاسبة فرق التوقيت',
+      description: 'أداة مكملة مهمة لمن يربط الحاسبات المالية أو الاجتماعات أو العمل الحر بمدن ودول مختلفة.',
+    },
+    {
+      href: '/date',
+      label: 'التاريخ اليوم والتحويل',
+      description: 'ادخل إلى قسم التاريخ الهجري والميلادي إذا كنت تحتاج مرجعاً زمنياً قبل استخدام العمر أو التقاعد أو المناسبات.',
+    },
+    {
+      href: '/holidays',
+      label: 'المناسبات والعدادات القادمة',
+      description: 'المستخدم الذي يبحث عن تاريخ أو عمر أو تخطيط شهري يحتاج أحياناً متابعة المواسم والإجازات والمناسبات القادمة.',
+    },
+  ]).map((link) => ({
+    href: link.href,
+    title: link.title || link.label,
+    description: link.description,
+  }));
   const collectionSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
@@ -215,6 +247,19 @@ export default function CalculatorsPage() {
             <div className="calc-metric-card__note">ميزة صفحة النسبة المئوية</div>
           </div>
         </div>
+      </CalculatorSection>
+
+      <CalculatorSection
+        id="calculator-platform-links"
+        eyebrow="روابط رئيسية"
+        title="أدوات رئيسية مرتبطة يبحث عنها مستخدم الحاسبات أيضاً"
+        description="هذه الروابط تقوي التنقل بين الحاسبات والأقسام اليومية الأخرى داخل الموقع، وتدعم اكتشاف الصفحات المهمة من أكثر قسم تجاري قابل للنمو."
+        subtle
+      >
+        <CalculatorResourceLinks
+          items={platformUtilityLinks}
+          buttonLabel="افتح الأداة"
+        />
       </CalculatorSection>
 
       <CalculatorFooterCta />

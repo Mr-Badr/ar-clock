@@ -102,24 +102,24 @@ export default async function EconomyPage() {
 
         <section className="economy-section">
           <EconomySectionHeader
-            title="صيغ البحث الرئيسية التي يجمعها القسم"
-            lead="هذه الطبقة تحوّل قسم الاقتصاد إلى صفحة نية بحث واضحة: أسئلة مباشرة، صيغ مقارنة، وصيغ محلية وزمنية يكتبها المستخدم العربي فعلاً."
+            title="الأسئلة الأساسية التي يغطيها القسم"
+            lead="هنا ستجد أكثر الأسئلة اليومية شيوعاً حول السوق الأمريكي والذهب والجلسات والساعة البصرية في مكان واحد واضح."
           />
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>
 
         <section className="economy-section">
           <EconomySectionHeader
-            title="أسئلة يغطيها القسم قبل أن يفتح الزائر أي صفحة فرعية"
-            lead="هذه الفقرة موجودة في HTML نفسه لتوضيح نية القسم بعبارات يبحث بها الناس فعلاً، وليس فقط عبر بطاقات تفاعلية أو عناوين عامة."
+            title="قبل أن تختار الأداة المناسبة"
+            lead="هذه البطاقات تختصر لك ما يقدمه كل مسار حتى تعرف بسرعة أين تبدأ بحسب السؤال الذي يشغلك الآن."
           />
           <EconomyGuide sections={PAGE_CONTENT.intentCards} />
         </section>
 
         <section className="economy-section">
           <EconomySectionHeader
-            title="مسارات تجعل الزائر يعود يومياً بدل زيارة واحدة"
-            lead="بدلاً من أن تنتهي الرحلة بعد سؤال واحد، هذه الروابط تبني سلوك متابعة يومية بين افتتاح السوق الأمريكي والذهب والجلسات وأفضل وقت للتداول."
+            title="مسارات متابعة يومية"
+            lead="إذا كنت تتابع السوق كل يوم، فهذه الروابط تساعدك على الانتقال بسرعة بين الافتتاح الأمريكي والذهب والجلسات وأفضل وقت للتداول."
           />
           <InsightCards cards={PAGE_CONTENT.journeyCards} />
         </section>

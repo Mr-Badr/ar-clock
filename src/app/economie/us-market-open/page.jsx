@@ -39,7 +39,7 @@ async function UsMarketOpenServerSections() {
       <section className="economy-section">
         <EconomySectionHeader
           title="الجواب المباشر ثم السياق الصحيح"
-          lead="هذا الجزء يلتقط سؤال الافتتاح الأمريكي كما يبحث عنه الناس فعلاً، ثم يضيف فرق التوقيت والساعة الأولى والجلسات الموسعة داخل HTML نفسه."
+          lead="هذا الجزء يجيب أولاً عن موعد الافتتاح الأمريكي، ثم يضيف ما تحتاجه لفهم فرق التوقيت والساعة الأولى والجلسات الموسعة بشكل أوضح."
         />
         <EconomyGuide sections={serverModel.guideSections} />
       </section>
@@ -47,7 +47,7 @@ async function UsMarketOpenServerSections() {
       <section className="economy-section">
         <EconomySectionHeader
           title="المراجع الرسمية والمرجعية"
-          lead="نربط مصادر السوق الأمريكي بوضوح حتى يعرف الزائر ومحرك البحث أن الصفحة لا تعتمد على صياغة عامة فقط، بل على منهج معروف ومراجع معلنة."
+          lead="نعرض مصادر السوق الأمريكي بوضوح حتى تعرف من أين جاءت التوقيتات والمعلومات الأساسية في الصفحة."
         />
         <EconomySourceLinks links={serverModel.sourceLinks} />
       </section>
@@ -55,7 +55,7 @@ async function UsMarketOpenServerSections() {
       <section className="economy-section">
         <EconomySectionHeader
           title="بعد معرفة الافتتاح، ما الخطوة الطبيعية التالية؟"
-          lead="هذا الربط الداخلي يخفف الارتداد ويحوّل صفحة الافتتاح إلى بوابة استخدام يومي داخل قسم الاقتصاد كله."
+          lead="بعد معرفة موعد الافتتاح قد تحتاج إلى الذهب أو ساعة السوق أو أفضل وقت للتداول، لذلك وضعنا لك الخطوات التالية بشكل واضح."
         />
         <InsightCards cards={serverModel.relatedTools} />
       </section>
@@ -91,8 +91,8 @@ export default async function UsMarketOpenPage() {
 
         <section className="economy-section">
           <EconomySectionHeader
-            title="صيغ بحث تغطيها الصفحة فعلياً"
-            lead="هذه العبارات مبنية من نية المستخدم العربي الشائعة حول افتتاح وول ستريت، وتظهر داخل HTML نفسه حتى تكون الإشارة أوضح للزائر ومحركات البحث."
+            title="أسئلة تجيب عنها الصفحة مباشرة"
+            lead="من موعد افتتاح وول ستريت إلى فرق التوقيت والساعة الأولى، ستجد هنا أبرز الأسئلة التي يحتاجها المتابع اليومي."
           />
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>

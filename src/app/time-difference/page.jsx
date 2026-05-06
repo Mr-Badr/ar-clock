@@ -1,4 +1,5 @@
 // app/time-difference/page.tsx
+import Link from 'next/link';
 import TimeDiffCalculator from "@/components/TimeDifference/TimeDiffCalculatorV2.client";
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import TimeDiffSections from '@/components/time-diff/index';
@@ -9,6 +10,7 @@ import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildTimeDifferenceHubKeywords } from '@/lib/seo/section-search-intent';
+import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 /**
  * Metadata (Next.js App Router)
  * - extend this object if you use dynamic city-pair pages later
@@ -25,6 +27,7 @@ export const metadata = buildCanonicalMetadata({
 });
 
 export default async function TimeDifferencePage() {
+  const hubKeywords = buildTimeDifferenceHubKeywords(POPULAR_PAIRS);
   const collectionSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -45,6 +48,26 @@ export default async function TimeDifferencePage() {
       url: `${SITE_URL}/time-difference/${pair.from.slug}/${pair.to.slug}`,
     })),
   };
+  const softwareSchema = buildFreeToolPageSchema({
+    siteUrl: SITE_URL,
+    path: '/time-difference',
+    name: 'حاسبة فرق التوقيت بين بلدين أو مدينتين',
+    description:
+      'أداة عربية مجانية لحساب فرق التوقيت بين بلدين أو مدينتين الآن، مع التحويل المباشر وأفضل وقت للاتصال ومراعاة التوقيت الصيفي.',
+    about: [
+      'فرق التوقيت',
+      'تحويل الوقت بين المدن',
+      'الوقت الآن',
+      'التوقيت الصيفي',
+      'الاجتماعات الدولية',
+    ],
+    keywords: hubKeywords,
+  });
+  const popularPairQuickLinks = POPULAR_PAIRS.slice(0, 8).map((pair) => ({
+    href: `/time-difference/${pair.from.slug}/${pair.to.slug}`,
+    title: `فرق التوقيت بين ${pair.from.nameAr} و${pair.to.nameAr}`,
+    description: `اعرف الفرق الآن بين ${pair.from.nameAr} و${pair.to.nameAr} مع التحويل المباشر.`,
+  }));
   const utilityLinks = appendToolDiscoveryLinks([
     {
       href: "/time-now",
@@ -110,6 +133,10 @@ export default async function TimeDifferencePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(popularPairsSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+      />
       <main className="content-col pt-24 mt-12">
 
         {/* JSON-LD structured data (HowTo) */}
@@ -147,6 +174,88 @@ export default async function TimeDifferencePage() {
         </header>
 
         <AdTopBanner slotId="top-time-diff-list" />
+
+        <section
+          aria-labelledby="popular-time-difference-links-heading"
+          style={{ marginBottom: 'var(--space-10)' }}
+        >
+          <div
+            className="card-nested"
+            style={{
+              padding: 'var(--space-5)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'var(--space-4)',
+            }}
+          >
+            <div>
+              <h2
+                id="popular-time-difference-links-heading"
+                style={{
+                  fontSize: 'var(--text-xl)',
+                  fontWeight: 'var(--font-bold)',
+                  color: 'var(--text-primary)',
+                  marginBottom: 'var(--space-2)',
+                }}
+              >
+                ابدأ من المقارنات الأكثر بحثاً
+              </h2>
+              <p
+                style={{
+                  color: 'var(--text-secondary)',
+                  lineHeight: 'var(--leading-relaxed)',
+                  maxWidth: '72ch',
+                }}
+              >
+                ابدأ من هذه المقارنات الشائعة لتصل بسرعة إلى أشهر صفحات فرق التوقيت
+                قبل البدء بالمقارنة اليدوية بين أي مدينتين أو دولتين.
+              </p>
+            </div>
+
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                gap: 'var(--space-3)',
+              }}
+            >
+              {popularPairQuickLinks.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  style={{
+                    display: 'block',
+                    padding: 'var(--space-4)',
+                    borderRadius: 'var(--radius-xl)',
+                    background: 'var(--bg-surface-3)',
+                    border: '1px solid var(--border-subtle)',
+                    textDecoration: 'none',
+                  }}
+                >
+                  <strong
+                    style={{
+                      display: 'block',
+                      color: 'var(--text-primary)',
+                      marginBottom: 'var(--space-2)',
+                    }}
+                  >
+                    {item.title}
+                  </strong>
+                  <span
+                    style={{
+                      display: 'block',
+                      color: 'var(--text-secondary)',
+                      fontSize: 'var(--text-sm)',
+                      lineHeight: 'var(--leading-relaxed)',
+                    }}
+                  >
+                    {item.description}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* Calculator */}
         <section aria-label="حاسبة فرق التوقيت">
