@@ -1,8 +1,3 @@
-upstream next_app {
-  server app:3000;
-  keepalive 32;
-}
-
 map $host $redirect_to_canonical {
   default 1;
   ${NGINX_CANONICAL_HOST} 0;
@@ -34,23 +29,19 @@ server {
     return 301 https://${NGINX_CANONICAL_HOST}$request_uri;
   }
 
-  location = /& {
-    return 301 https://${NGINX_CANONICAL_HOST}/;
-  }
-
   location = /api/health {
     include /etc/nginx/snippets/proxy-common.conf;
-    proxy_pass http://next_app;
+    proxy_pass http://app:3000;
   }
 
   location /_next/static/ {
     include /etc/nginx/snippets/static-cache.conf;
     include /etc/nginx/snippets/proxy-common.conf;
-    proxy_pass http://next_app;
+    proxy_pass http://app:3000;
   }
 
   location / {
     include /etc/nginx/snippets/proxy-common.conf;
-    proxy_pass http://next_app;
+    proxy_pass http://app:3000;
   }
 }

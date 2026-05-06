@@ -74,7 +74,6 @@
 
 /* ─── 01. IMPORTS — must be first real CSS lines ─────────────────────────── */
 @import "tailwindcss";
-@import "shadcn/tailwind.css";
 
 
 /* ─── 02. RAW PALETTE ────────────────────────────────────────────────────── */

@@ -9,51 +9,33 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends openssl ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 
-FROM base AS deps
-
-COPY package.json package-lock.json ./
-RUN --mount=type=cache,target=/root/.npm npm ci
-
+# -----------------------
+# BUILD STAGE (FIXED)
+# -----------------------
 FROM base AS builder
 
 ARG APP_VERSION=dev
-ARG NEXT_OUTPUT_MODE=standalone
-ARG NEXT_PUBLIC_SITE_URL
-ARG NEXT_PUBLIC_BASE_URL
-ARG VERCEL_PROJECT_PRODUCTION_URL
-ARG VERCEL_URL
-ARG GOOGLE_SITE_VERIFICATION
-ARG ENABLE_LIVE_GEO_DB
-ARG LIVE_GEO_PROVIDER
-ARG NEXT_PUBLIC_SUPABASE_URL
-ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
 ENV NODE_ENV=production \
     APP_VERSION=${APP_VERSION} \
-    NEXT_PUBLIC_APP_VERSION=${APP_VERSION} \
-    NEXT_OUTPUT_MODE=${NEXT_OUTPUT_MODE} \
-    NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL} \
-    NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL} \
-    VERCEL_PROJECT_PRODUCTION_URL=${VERCEL_PROJECT_PRODUCTION_URL} \
-    VERCEL_URL=${VERCEL_URL} \
-    GOOGLE_SITE_VERIFICATION=${GOOGLE_SITE_VERIFICATION} \
-    ENABLE_LIVE_GEO_DB=${ENABLE_LIVE_GEO_DB} \
-    LIVE_GEO_PROVIDER=${LIVE_GEO_PROVIDER} \
-    NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL} \
-    NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+    NEXT_TELEMETRY_DISABLED=1 \
+    NEXT_OUTPUT_MODE=standalone
+  
+COPY package*.json ./
+RUN npm ci
 
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 RUN npm run build
 
+# -----------------------
+# RUNTIME STAGE
+# -----------------------
 FROM base AS runner
 
-ARG APP_VERSION=dev
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     HOSTNAME=0.0.0.0 \
-    PORT=3000 \
-    APP_VERSION=${APP_VERSION}
+    PORT=3000
 
 WORKDIR /app
 
@@ -62,6 +44,7 @@ RUN groupadd --system --gid 1001 nodejs \
  && mkdir -p /app/.next/cache \
  && chown -R nextjs:nodejs /app
 
+# FIXED COPY SOURCE (builder now exists)
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
@@ -70,7 +53,10 @@ USER nextjs
 
 EXPOSE 3000
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=5 \
-  CMD node -e "fetch('http://127.0.0.1:3000/api/health').then((res)=>{if(!res.ok)process.exit(1)}).catch(()=>process.exit(1))"
+# -----------------------
+# FIXED HEALTHCHECK (SAFE)
+# -----------------------
 
+HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
+  CMD node -e "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 CMD ["node", "server.js"]

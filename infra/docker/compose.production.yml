@@ -1,6 +1,43 @@
-name: miqatona-production
-
 services:
-  app:
-    env_file:
-      - /opt/miqatona/env/production.env
+  app_blue:
+    image: ghcr.io/mr-badr/ar-clock:prod
+    container_name: app_blue
+    restart: always
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+    expose:
+      - "3000"
+    networks:
+      - backend
+
+  app_green:
+    image: ghcr.io/mr-badr/ar-clock:prod
+    container_name: app_green
+    restart: always
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+    expose:
+      - "3000"
+    networks:
+      - backend
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_prod
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./../nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app_blue
+      - app_green
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

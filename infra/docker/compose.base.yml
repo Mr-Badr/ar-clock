@@ -18,18 +18,6 @@ services:
     build:
       context: ../..
       dockerfile: Dockerfile
-      args:
-        APP_VERSION: ${APP_VERSION:-dev}
-        NEXT_OUTPUT_MODE: ${NEXT_OUTPUT_MODE:-standalone}
-        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-}
-        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-}
-        VERCEL_PROJECT_PRODUCTION_URL: ${VERCEL_PROJECT_PRODUCTION_URL:-}
-        VERCEL_URL: ${VERCEL_URL:-}
-        GOOGLE_SITE_VERIFICATION: ${GOOGLE_SITE_VERIFICATION:-}
-        ENABLE_LIVE_GEO_DB: ${ENABLE_LIVE_GEO_DB:-false}
-        LIVE_GEO_PROVIDER: ${LIVE_GEO_PROVIDER:-supabase}
-        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:-}
-        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:-}
 
     image: ${APP_IMAGE:-ghcr.io/mr-badr/ar-clock}:${APP_TAG:-latest}
 
@@ -38,23 +26,15 @@ services:
 
     environment:
       NODE_ENV: production
-      APP_VERSION: ${APP_VERSION:-dev}
-      NEXT_OUTPUT_MODE: ${NEXT_OUTPUT_MODE:-standalone}
       HOSTNAME: 0.0.0.0
       PORT: 3000
 
     healthcheck:
-      test:
-        [
-          "CMD",
-          "node",
-          "-e",
-          "fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
-        ]
-      interval: 30s
-      timeout: 10s
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3000/api/health', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 20s
+      timeout: 5s
       retries: 5
-      start_period: 40s
+      start_period: 90s
 
     stop_grace_period: 30s
 
@@ -62,46 +42,35 @@ services:
       - backend
 
   nginx:
-    <<: *app-common
-
+    restart: unless-stopped
     image: nginx:1.27-alpine
 
     depends_on:
       app:
         condition: service_healthy
 
+    ports:
+      - "80:80"
+      - "443:443"
+
     volumes:
       - ../nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ../nginx/conf.d:/etc/nginx/conf.d:ro
       - ../nginx/snippets:/etc/nginx/snippets:ro
-      - /opt/miqatona/ssl:/etc/nginx/ssl:ro
-
-    healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "wget -q -O - http://127.0.0.1/nginx-health | grep -q ok"
-        ]
-      interval: 30s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
+      - /etc/letsencrypt/live/staging.miqatona.com:/etc/nginx/ssl:ro
+      - /opt/miqatona/logs/nginx:/var/log/nginx
+      - /opt/miqatona/certbot:/var/www/certbot
 
     read_only: true
 
     tmpfs:
       - /tmp
       - /var/cache/nginx
-      - /var/run
+      - /run
 
     networks:
-      - edge
       - backend
 
 networks:
-  edge:
-    driver: bridge
-
   backend:
     driver: bridge
-    internal: true

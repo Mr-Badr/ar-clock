@@ -56,6 +56,14 @@ jobs:
           script: |
             cd /opt/miqatona/apps/staging/current
 
-            docker compose -f infra/docker/compose.base.yml -f infra/docker/compose.staging.yml pull
+            docker compose \
+              --env-file /opt/miqatona/env/staging.env \
+              -f infra/docker/compose.base.yml \
+              -f infra/docker/compose.staging.yml \
+              pull
 
-            docker compose -f infra/docker/compose.base.yml -f infra/docker/compose.staging.yml up -d --remove-orphans
+            docker compose \
+              --env-file /opt/miqatona/env/staging.env \
+              -f infra/docker/compose.base.yml \
+              -f infra/docker/compose.staging.yml \
+              up -d --remove-orphans
