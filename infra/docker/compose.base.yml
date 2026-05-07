@@ -41,36 +41,6 @@ services:
     networks:
       - backend
 
-  nginx:
-    restart: unless-stopped
-    image: nginx:1.27-alpine
-
-    depends_on:
-      app:
-        condition: service_healthy
-
-    ports:
-      - "80:80"
-      - "443:443"
-
-    volumes:
-      - ../nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ../nginx/conf.d:/etc/nginx/conf.d:ro
-      - ../nginx/snippets:/etc/nginx/snippets:ro
-      - /etc/letsencrypt/live/staging.miqatona.com:/etc/nginx/ssl:ro
-      - /opt/miqatona/logs/nginx:/var/log/nginx
-      - /opt/miqatona/certbot:/var/www/certbot
-
-    read_only: true
-
-    tmpfs:
-      - /tmp
-      - /var/cache/nginx
-      - /run
-
-    networks:
-      - backend
-
 networks:
   backend:
     driver: bridge
