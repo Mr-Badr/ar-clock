@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { createClient } from '@supabase/supabase-js';
+import { prisma } from '../src/lib/db/prisma';
 
 import fallbackCountries from '../src/lib/db/fallback/countries.json';
 import fallbackCities from '../src/lib/db/fallback/cities-index.json';
@@ -113,64 +113,79 @@ function normalizeCityRow(city: CityRow, countriesByCode: Map<string, CountryRow
   };
 }
 
-async function fetchCountriesFromSupabase(): Promise<CountryRow[] | null> {
-  const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  if (!supabaseUrl || !serviceRoleKey) {
-    return null;
-  }
-
+async function fetchCountriesFromDb(): Promise<CountryRow[] | null> {
   try {
-    const supabase = createClient(supabaseUrl, serviceRoleKey, {
-      auth: { persistSession: false },
+
+    const data = await prisma.country.findMany({
+      orderBy: { nameAr: 'asc' },
     });
 
-    const { data, error } = await supabase
-      .from('countries')
-      .select('*')
-      .order('name_ar');
-
-    if (error || !data?.length) {
-      throw new Error(error?.message || 'Empty countries dataset');
+    if (!data?.length) {
+      throw new Error('Empty countries dataset');
     }
 
-    return data as CountryRow[];
+    const formattedData = data.map((c) => ({
+      id: Number(c.id),
+      country_code: c.countryCode,
+      country_slug: c.countrySlug,
+      name_en: c.nameEn,
+      name_ar: c.nameAr,
+      timezone: c.timezone
+    }));
+
+    await prisma.$disconnect();
+    return formattedData as CountryRow[];
   } catch (error) {
     console.warn('[geo:snapshot] Falling back to bundled countries:', error);
     return null;
   }
 }
 
-async function fetchCitiesFromSupabase(countriesByCode: Map<string, CountryRow>): Promise<CityRow[] | null> {
-  const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  if (!supabaseUrl || !serviceRoleKey) {
-    return null;
-  }
-
+async function fetchCitiesFromDb(countriesByCode: Map<string, CountryRow>): Promise<CityRow[] | null> {
   try {
-    const supabase = createClient(supabaseUrl, serviceRoleKey, {
-      auth: { persistSession: false },
+
+    const data = await prisma.city.findMany({
+      orderBy: [
+        { isCapital: 'desc' },
+        { priority: 'desc' },
+        { population: 'desc' }
+      ],
+      include: {
+        country: {
+          select: { countrySlug: true, nameAr: true, nameEn: true }
+        }
+      }
     });
 
-    const { data, error } = await supabase
-      .from('cities')
-      .select('id, city_slug, country_code, name_ar, name_en, timezone, is_capital, lat, lon, priority, population, countries!inner(country_slug, name_ar, name_en)')
-      .order('is_capital', { ascending: false })
-      .order('priority', { ascending: false })
-      .order('population', { ascending: false });
-
-    if (error || !data?.length) {
-      throw new Error(error?.message || 'Empty cities dataset');
+    if (!data?.length) {
+      throw new Error('Empty cities dataset');
     }
 
-    return (data as any[]).map((row) => normalizeCityRow({
+    const formattedData = data.map((row) => ({
+      id: Number(row.id),
+      city_slug: row.citySlug,
+      country_code: row.countryCode,
+      name_ar: row.nameAr,
+      name_en: row.nameEn,
+      timezone: row.timezone,
+      is_capital: row.isCapital,
+      lat: row.lat,
+      lon: row.lon,
+      priority: row.priority,
+      population: row.population,
+      countries: {
+        country_slug: row.country?.countrySlug,
+        name_ar: row.country?.nameAr,
+        name_en: row.country?.nameEn
+      }
+    }));
+
+    await prisma.$disconnect();
+    return formattedData.map((row) => normalizeCityRow({
       ...row,
       country_slug: row.countries?.country_slug,
       country_name_ar: row.countries?.name_ar,
-      country_name_en: row.countries?.name_en,
+      country_name_en: row.countries?.name_en || undefined,
     }, countriesByCode));
   } catch (error) {
     console.warn('[geo:snapshot] Falling back to bundled cities:', error);
@@ -184,7 +199,7 @@ async function main() {
     (country) => country.country_slug || country.country_code,
   ).sort(sortCountries);
 
-  const countriesFromDb = await fetchCountriesFromSupabase();
+  const countriesFromDb = await fetchCountriesFromDb();
   const countries = uniqueBy(
     [...fallbackCountryRows, ...((countriesFromDb || []).map(normalizeCountryRow))],
     (country) => country.country_slug || country.country_code,
@@ -199,7 +214,7 @@ async function main() {
     (city) => `${city.country_slug}::${city.city_slug}`,
   ).sort(sortCities);
 
-  const citiesFromDb = await fetchCitiesFromSupabase(countriesByCode);
+  const citiesFromDb = await fetchCitiesFromDb(countriesByCode);
   const cities = uniqueBy(
     [...fallbackCityRows, ...((citiesFromDb || []).map((city) => normalizeCityRow(city, countriesByCode)))],
     (city) => `${city.country_slug}::${city.city_slug}`,
