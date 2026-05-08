@@ -79,7 +79,7 @@ export default async function ForexSessionsPage() {
             scope={PAGE_SCOPE}
             initialSnapshot={liveSnapshot}
             title="نبض جلسات الفوركس الآن"
-            lead="تعرض هذه الطبقة قبل اللوحة التفاعلية أسعاراً مرجعية وحالة السوق المرجعية حتى تبدأ الصفحة بإشارة حيّة واضحة، لا بعنوان فقط."
+            lead="تعرض هذه الطبقة لقطة مرجعية سريعة حتى تبدأ الصفحة بإشارة حيّة واضحة قبل الدخول إلى اللوحة التفاعلية."
           />
         </Suspense>
 
@@ -90,7 +90,7 @@ export default async function ForexSessionsPage() {
         <section className="economy-section">
           <EconomySectionHeader
             title="أسئلة تغطيها الصفحة خلال اليوم"
-            lead="هنا ستجد أكثر الأسئلة المتكررة حول الجلسات والتوقيت المحلي والسيولة والتداخل بين لندن ونيويورك."
+            lead="إذا كان سؤالك عن الجلسات أو التوقيت المحلي أو التداخل بين لندن ونيويورك، فهذه هي نقاط البداية الأسرع."
           />
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>
@@ -101,7 +101,7 @@ export default async function ForexSessionsPage() {
 
         <EconomyReadingShelf
           title="اقرأ قبل الاعتماد على الجلسات"
-          lead="هذه الأدلة تشرح معنى الجلسات والتداخل والسيولة وساعة السوق، ثم تعيد الزائر إلى الأداة الحية وهو يفهم ما يراه بشكل أفضل."
+          lead="هذه الأدلة تشرح معنى الجلسات والتداخل والسيولة وساعة السوق بلغة أوضح، ثم تترك لك الرجوع إلى الأداة عندما تحتاجها."
           items={RELATED_GUIDES}
         />
       </EconomyAdLayout>

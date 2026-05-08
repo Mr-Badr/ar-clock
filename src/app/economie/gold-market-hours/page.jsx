@@ -38,8 +38,8 @@ async function GoldMarketHoursServerSections() {
     <>
       <section className="economy-section">
         <EconomySectionHeader
-          title="كيف تجيب الصفحة عن سؤال الذهب بشكل أفضل؟"
-          lead="هذا المحتوى يولّد من نموذج الذهب نفسه، لذلك يربط بين الحالة الحالية، أفضل نافذة، والفرق بين السوق العالمي والسوق المحلي بشكل أوضح."
+          title="كيف تساعدك الصفحة على قراءة الذهب؟"
+          lead="هذا الجزء يجمع بين الحالة الحالية وأفضل نافذة والفرق بين السوق العالمي والسوق المحلي حتى تبقى الصورة واضحة."
         />
         <EconomyGuide sections={serverModel.guideSections} />
       </section>
@@ -47,7 +47,7 @@ async function GoldMarketHoursServerSections() {
       <section className="economy-section">
         <EconomySectionHeader
           title="المراجع التي تستند إليها طبقة الذهب"
-          lead="إظهار المراجع المرجعية داخل الصفحة يعزز الثقة ويقوي دلالة أن هذه الأداة مبنية على ساعات سوق معروفة لا على وصف تسويقي عام."
+          lead="نعرض هذه المراجع بوضوح حتى تعرف من أين جاءت أوقات السوق والمعلومات الأساسية المعروضة هنا."
         />
         <EconomySourceLinks links={serverModel.sourceLinks} />
       </section>
@@ -56,7 +56,7 @@ async function GoldMarketHoursServerSections() {
         <section className="economy-section">
           <EconomySectionHeader
             title={serverModel.ramadanSection.title}
-            lead="نضيف هذا السياق عندما يكون الموسم نفسه مؤثراً في نمط المتابعة المحلي، حتى تبقى الصفحة أقرب لاستخدام الزائر العربي الحقيقي."
+            lead="نضيف هذا السياق عندما يؤثر الموسم نفسه في نمط المتابعة المحلي أو في أوقات النشاط المعتادة."
           />
           <EconomyGuide sections={[serverModel.ramadanSection]} />
         </section>
@@ -64,8 +64,8 @@ async function GoldMarketHoursServerSections() {
 
       <section className="economy-section">
         <EconomySectionHeader
-          title="إذا كان الزائر يتابع الذهب يومياً، إلى أين يذهب بعد ذلك؟"
-          lead="هذه الروابط تبني رحلة استخدام حقيقية بين الذهب والسوق الأمريكي وساعة السوق وأفضل وقت للتداول."
+          title="إذا كنت تتابع الذهب يومياً، ما الخطوة التالية؟"
+          lead="هذه الروابط تساعدك على الانتقال بسرعة بين الذهب والسوق الأمريكي وساعة السوق وأفضل وقت للتداول."
         />
         <InsightCards cards={serverModel.relatedTools} />
       </section>
@@ -91,7 +91,7 @@ export default async function GoldMarketHoursPage() {
             scope={PAGE_SCOPE}
             initialSnapshot={liveSnapshot}
             title="نبض الذهب والدولار الآن"
-            lead="وجود شريط حي في أعلى الصفحة يجعل سؤال الذهب يبدأ بإحساس السوق الفعلي، ثم ينتقل إلى نافذة السيولة والشرح المحلي الأكثر عمقاً."
+            lead="هذا الشريط يضع حالة الذهب والدولار أمامك بسرعة قبل أن تنتقل إلى نافذة السيولة أو الشرح المحلي الأعمق."
           />
         </Suspense>
 
@@ -102,7 +102,7 @@ export default async function GoldMarketHoursPage() {
         <section className="economy-section">
           <EconomySectionHeader
             title="أسئلة الذهب التي تجيب عنها الصفحة"
-            lead="هنا ستجد أكثر الأسئلة المتكررة حول فتح الذهب والسيولة وحركة XAU/USD في صياغة واضحة ومباشرة."
+            lead="إذا كان سؤالك عن فتح الذهب أو السيولة أو حركة XAU/USD، فهذه هي أسرع نقاط البداية داخل الصفحة."
           />
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>

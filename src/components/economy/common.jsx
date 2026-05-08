@@ -107,10 +107,10 @@ export function EconomyIntentCards({ groups = [] }) {
   if (!groups.length) return null;
 
   return (
-    <div className="economy-guide-grid">
+    <div className="economy-intent-list">
       {groups.map((group) => (
-        <article key={group.title} className="economy-copy-card economy-intent-card">
-          <h3 className="economy-copy-card__title">{group.title}</h3>
+        <article key={group.title} className="economy-intent-group">
+          <h3 className="economy-intent-group__title">{group.title}</h3>
           <div className="economy-intent-card__chips">
             {group.items.map((item) => (
               <span key={item} className="economy-intent-chip">{item}</span>
@@ -208,7 +208,7 @@ export function EconomyReadingShelf({ title, lead, items = [] }) {
   if (!items.length) return null;
 
   return (
-    <section className="economy-section">
+    <section className="economy-section economy-reading-shelf">
       <EconomySectionHeader title={title} lead={lead} />
       <InsightCards
         cards={items.map((item) => ({

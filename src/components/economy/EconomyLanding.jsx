@@ -5,7 +5,6 @@ import { ActivityIcon, ChartLineUp, GlobeHemisphereEast } from '@phosphor-icons/
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import { buildEconomyLandingLiveModel } from '@/lib/economy/engine';
-import { SITE_BRAND } from '@/lib/site-config';
 
 import styles from './economy-landing-live.module.css';
 import HourlyActivityChart from './HourlyActivityChart';
@@ -14,8 +13,8 @@ import {
   EconomySectionHeader,
   EconomySpotlight,
   EconomyStatCards,
-  EconomyToolCards,
   EconomyGuide,
+  EconomyToolCards,
   InsightCards,
 } from './common';
 import { useEconomyLiveModel } from './useEconomyLiveModel';
@@ -69,7 +68,7 @@ export default function EconomyLanding({ initialViewer, initialNowIso }) {
           { label: `الآن: ${model.nowLabel}` },
           { label: model.todayLabel },
         ]}
-        note={`هذا القسم مبني ليشعر كأداة تداول عربية سريعة لا كمقالة ثابتة: تحديث لحظي بالوقت، مؤشرات واضحة، ورسوم تختصر اليوم قبل أن يضطر الزائر إلى القراءة الطويلة داخل ${SITE_BRAND}.`}
+        note="ابدأ من هذه اللوحة عندما تريد قراءة سريعة: حالة السوق الآن، نافذة النشاط التالية، ثم الصفحة الأقرب لما تريد متابعته من مدينتك."
       />
 
       <section className={styles.elStrip}>
@@ -102,7 +101,7 @@ export default function EconomyLanding({ initialViewer, initialNowIso }) {
       <EconomyStatCards cards={model.stats} />
       <EconomySpotlight model={model.spotlight} />
 
-      <AdTopBanner slotId="top-economy-landing" />
+      <AdTopBanner slotId="top-economy-landing" className="economy-ad-slot" />
 
       <section className="economy-section">
         <EconomySectionHeader
@@ -135,9 +134,9 @@ export default function EconomyLanding({ initialViewer, initialNowIso }) {
         <div className={styles.elTickerHead}>
           <div>
             <h2>لوحة المتابعة الحية</h2>
-            <p>لا نعرض أسعاراً وهمية. هذه الشريط يوضح ما الذي يستحق المراقبة الآن ولماذا.</p>
+            <p>هذا الشريط يلفت انتباهك إلى ما يستحق المتابعة الآن بلغة مختصرة وواضحة.</p>
           </div>
-          <span className="economy-meta-pill">Session-driven live board</span>
+          <span className="economy-meta-pill">ملخص سريع قابل للتحديث</span>
         </div>
         <div className={styles.elTickerViewport}>
           <div className={styles.elTickerTrack}>
@@ -184,40 +183,40 @@ export default function EconomyLanding({ initialViewer, initialNowIso }) {
 
       <section className="economy-section">
         <EconomySectionHeader
-          title="ابدأ من السؤال الذي تبحث عنه"
-          lead="الصفحات التالية لا تعمل كمدونات، بل كأدوات قرار حي: لكل سؤال صفحة سريعة، بيانات واضحة، ورسوم مرتبطة بالتوقيت الفعلي."
+          title="ابدأ من السؤال الذي تريد حسمه الآن"
+          lead="لكل سؤال صفحة مختصرة تعطيك الحالة أولاً، ثم تفتح لك الشرح والتفاصيل فقط عندما تحتاجها."
         />
         <EconomyToolCards cards={model.cards} />
       </section>
 
-      <AdInArticle slotId="mid-economy-landing" />
+      <AdInArticle slotId="mid-economy-landing" className="economy-ad-slot" />
 
       <section className="economy-section">
         <EconomySectionHeader
-          title="ما الذي يجعل التجربة أقرب إلى تطبيق اقتصادي حي؟"
-          lead="هذا ليس مجرد تجميل. رفعنا طبقة الإحساس بالوقت الحقيقي والاختصار البصري حتى يشعر الزائر أنه في لوحة مراقبة يومية، لا في صفحة شرح ثابتة."
+          title="كيف تجعل هذه اللوحة جزءاً من متابعتك اليومية؟"
+          lead="استخدمها كبداية سريعة: اقرأ الحالة الحالية، افتح السوق الأقرب لك، ثم عد عندما تتغير نافذة النشاط أو المدينة التي تتابع منها."
         />
         <EconomyGuide sections={model.premiumSections} />
       </section>
 
       <section className="economy-section">
         <EconomySectionHeader
-          title={`لماذا هذا مناسب لـ${SITE_BRAND}؟`}
-          lead="لأن قوة الموقع أصلاً في التوقيت والمناطق الزمنية. نحن فقط حوّلنا هذه القوة إلى اقتصاد حي يجيب بالعربية وبساطة أعلى."
+          title="ثلاث طرق للاستفادة منها بشكل أفضل"
+          lead="هذه ليست قواعد تداول، بل عادات بسيطة تجعل الانتقال بين الصفحات أسرع وأوضح وأقرب لما تحتاجه فعلاً."
         />
         <InsightCards
           cards={[
             {
-              title: 'بنية الوقت موجودة بالفعل',
-              body: 'لدينا تحويل مناطق زمنية واكتشاف موقع وتحديث زمني حي. هذا يجعل الاقتصاد الحي امتداداً طبيعياً بدلاً من منتج منفصل.',
+              title: 'ابدأ من الحالة الحالية',
+              body: 'انظر أولاً إلى ملخص السوق والذهب والفوركس، ثم افتح فقط الصفحة التي تحتاج مزيداً من التفصيل فيها.',
             },
             {
-              title: 'التجربة عربية أولاً',
-              body: 'المستخدم العربي لا يريد أن يترجم جداول نيويورك أو لندن بنفسه. كل شيء هنا يبدأ من مدينته وساعته الحالية.',
+              title: 'قارن الوقت من مدينتك',
+              body: 'إذا كنت تتابع من مدينة عربية مختلفة أو تغيّر موقعك، اعتمد دائماً على الوقت المحلي الظاهر هنا قبل أي خطوة.',
             },
             {
-              title: 'جاهز للتوسع',
-              body: 'يمكن إضافة مفكرة اقتصادية أعمق أو أسعار حية لاحقاً فوق نفس البنية من دون إعادة بناء الواجهة من الصفر.',
+              title: 'افصل بين المتابعة والقرار',
+              body: 'استخدم هذه اللوحة لتنظيم يومك وفهم الإيقاع، ثم ارجع إلى المصدر المباشر إذا كان قرارك حساساً للأخبار أو الأسعار اللحظية.',
             },
           ]}
         />
@@ -226,17 +225,16 @@ export default function EconomyLanding({ initialViewer, initialNowIso }) {
       <section className="economy-banner" data-tone="default">
         <div className="market-card__top">
           <div className="market-card__title-wrap">
-            <h2 className="market-card__title">ماذا بقي للمرحلة التالية؟</h2>
-            <p className="market-card__subtitle">تغذية سعرية حقيقية وتنبيهات شخصية</p>
+            <h2 className="market-card__title">قبل الاعتماد على أي قراءة</h2>
+            <p className="market-card__subtitle">الصفحة تنظّم المشهد ولا تستبدل المصدر المباشر</p>
           </div>
           <GlobeHemisphereEast size={18} weight="duotone" />
         </div>
         <p className="economy-banner__detail">
-          الواجهة الآن تعطي إحساساً حياً وحقيقياً مبنياً على الوقت والجلسات والأحداث. الخطوة الطبيعية التالية
-          لاحقاً هي ربطها بمزود أسعار أو مفكرة اقتصادية أعمق لإضافة الأسعار الفعلية والتنبيهات.
+          ابدأ من هذه اللوحة عندما تريد معرفة أين يقف السوق الآن، ثم انتقل إلى الصفحة المتخصصة إذا احتجت تفاصيل أكثر عن الذهب أو وول ستريت أو الجلسات.
         </p>
         <p className="economy-banner__detail">
-          حتى ذلك الحين، ستبقى هذه الصفحة أسرع مدخل بصري داخل القسم كله قبل الانتقال إلى الذهب أو وول ستريت أو جلسات الفوركس.
+          إذا كان توقيت الخبر أو حركة السعر مهماً لقرارك، فاجمع هذه القراءة مع المصدر الرسمي أو منصة الوسيط قبل التصرف.
         </p>
       </section>
     </div>

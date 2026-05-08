@@ -102,7 +102,7 @@ export default async function EconomyMarketHoursHubPage() {
             scope="market-hours"
             initialSnapshot={liveSnapshot}
             title="نبض السوق قبل اختيار الأداة"
-            lead="هذا الشريط يقدّم نظرة مرجعية حيّة على الذهب، وول ستريت، والأزواج الرئيسية حتى يختار الزائر الصفحة الأنسب بسرعة من دون قراءة طويلة."
+            lead="هذا الشريط يعطيك لقطة سريعة عن الذهب ووول ستريت والأزواج الرئيسية حتى تختار الصفحة المناسبة من دون تشتت."
           />
         </Suspense>
 
@@ -121,8 +121,8 @@ export default async function EconomyMarketHoursHubPage() {
 
           <section className="economy-section">
             <EconomySectionHeader
-              title="أشهر الأسئلة التي يبدأ منها الزوار"
-              lead="هذه العبارات تختصر لك أكثر الأسئلة المتكررة التي ستجد إجاباتها داخل هذا المسار الاقتصادي."
+              title="من أين تبدأ؟"
+              lead="إذا كان سؤالك يشبه إحدى هذه العبارات، فستعرف من هنا أي صفحة تفتح أولاً."
             />
             <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
           </section>
@@ -189,7 +189,7 @@ export default async function EconomyMarketHoursHubPage() {
               <article className="economy-copy-card">
                 <h3 className="economy-copy-card__title">الأدوات الزمنية المرتبطة</h3>
                 <p className="economy-copy-card__body">
-                  البنية الزمنية في الموقع تعطي هذه الصفحات ميزة حقيقية، لذلك من الطبيعي أن ترتبط أيضاً بصفحات الوقت وفروق التوقيت عندما يريد المستخدم التحقق من منطق التوقيت نفسه.
+                  إذا احتجت إلى التحقق من الوقت المحلي أو فرق التوقيت بين المدن، فهذه الصفحات تكمل الصورة وتساعدك على فهم التوقيت بشكل أبسط.
                 </p>
                 <Link href="/time-difference" className="economy-tool-card__cta">افتح فرق التوقيت</Link>
               </article>
@@ -206,7 +206,7 @@ export default async function EconomyMarketHoursHubPage() {
 
           <EconomyReadingShelf
             title="أدلة مرتبطة داخل هذا المسار"
-            lead="هذه الصفحات التعليمية تشرح معنى الافتتاح والجلسات والذهب والساعة البصرية، ثم تعيد المستخدم إلى الأداة الأقرب لنيته اليومية."
+            lead="هذه الأدلة تشرح معنى الافتتاح والجلسات والذهب والساعة البصرية بلغة أوضح، ثم تترك لك اختيار الصفحة المناسبة للمتابعة."
             items={RELATED_GUIDES}
           />
         </div>

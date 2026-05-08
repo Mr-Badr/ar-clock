@@ -11,7 +11,9 @@ export default function EconomyAdLayout({ children }: EconomyAdLayoutProps) {
       <div className="layout-content-shell">
         <main className="economy-shell content-col">
           {children}
-          <SiteTrustPanel panel="economy" />
+          <div className="economy-trust-panel">
+            <SiteTrustPanel panel="economy" />
+          </div>
         </main>
       </div>
     </AdLayoutWrapper>

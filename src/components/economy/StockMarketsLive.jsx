@@ -805,7 +805,7 @@ export default function StockMarketsLive({ initialViewer, initialNowIso }) {
       {model.spotlight && <EconomySpotlight model={model.spotlight} />}
 
       {/* ── AD ───────────────────────────────────────────────────── */}
-      <AdTopBanner slotId="top-economy-stock-markets" />
+      <AdTopBanner slotId="top-economy-stock-markets" className="economy-ad-slot" />
 
       {/* ── SESSIONS CHART ───────────────────────────────────────── */}
       <section className="economy-section">
@@ -863,7 +863,7 @@ export default function StockMarketsLive({ initialViewer, initialNowIso }) {
       )}
 
       {/* ── AD MID ───────────────────────────────────────────────── */}
-      <AdInArticle slotId="mid-economy-stock-markets" />
+      <AdInArticle slotId="mid-economy-stock-markets" className="economy-ad-slot" />
 
       {/* ── ACTIVITY CHART ───────────────────────────────────────── */}
       <section className="economy-section">
@@ -929,7 +929,7 @@ export default function StockMarketsLive({ initialViewer, initialNowIso }) {
       <section className="economy-section">
         <EconomySectionHeader
           title="أدوات مرتبطة"
-          lead="للمستخدم الذي يريد أكثر من جواب نعم أو لا، أضفنا أدوات مرتبطة تساعده على قراءة السوق بصرياً."
+          lead="إذا كنت تريد أكثر من جواب نعم أو لا، فهذه الأدوات تساعدك على قراءة السوق بصرياً والانتقال إلى الصفحة الأقرب لحاجتك."
         />
         <EconomyToolCards cards={model.relatedTools} />
       </section>

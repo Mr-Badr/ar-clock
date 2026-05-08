@@ -239,14 +239,16 @@ function IconBtn({ onClick, label, title, children, disabled = false, variant = 
       style={{
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'center',
         gap: '0.4rem',
-        padding: '0.5rem 0.85rem',
-        borderRadius: '0.625rem',
+        minHeight: '44px',
+        padding: '0.65rem 1rem',
+        borderRadius: '0.875rem',
         border: variant === 'ghost' ? '1px solid var(--border-default)' : 'none',
         background: 'transparent',
         cursor: disabled ? 'not-allowed' : 'pointer',
         color: disabled ? 'var(--text-muted)' : 'var(--text-secondary)',
-        fontSize: '0.82rem',
+        fontSize: '0.88rem',
         fontWeight: '600',
         opacity: disabled ? 0.4 : 1,
         transition: 'background 0.15s, color 0.15s, border-color 0.15s',
@@ -677,6 +679,7 @@ export default function CountdownTicker({
 
           <div
             className="ct-clock-card"
+            data-clock-variant="four-unit"
             style={{
               borderRadius: '1rem',
               border: '1px solid var(--border-accent)',
@@ -701,12 +704,12 @@ export default function CountdownTicker({
                 onClick={handleShare}
                 aria-label="مشاركة"
                 style={{
-                  display: 'flex', alignItems: 'center', gap: '0.4rem',
-                  padding: '0.5rem 0.85rem', borderRadius: '0.625rem',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
+                  minHeight: '44px', padding: '0.65rem 1rem', borderRadius: '0.875rem',
                   border: shareCopied ? '1px solid var(--accent)' : '1px solid var(--border-default)',
                   background: shareCopied ? 'var(--accent-soft)' : 'transparent',
                   color: shareCopied ? 'var(--accent)' : 'var(--text-secondary)',
-                  fontSize: '0.82rem', fontWeight: '600',
+                  fontSize: '0.88rem', fontWeight: '600',
                   cursor: 'pointer', transition: 'all 0.18s', whiteSpace: 'nowrap',
                 }}
               >

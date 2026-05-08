@@ -274,7 +274,7 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
 
       <LiveSessionsStrip sessions={model.liveSessionsSummary} nowLabel={model.nowLabel} />
 
-      <AdTopBanner slotId="top-economy-forex-sessions" />
+      <AdTopBanner slotId="top-economy-forex-sessions" className="economy-ad-slot" />
 
       <EconomyBanner
         kicker="الحالة الحالية"
@@ -610,7 +610,7 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
         />
       </section>
 
-      <AdInArticle slotId="mid-economy-forex-sessions" />
+      <AdInArticle slotId="mid-economy-forex-sessions" className="economy-ad-slot" />
 
       <EconomyBanner
         kicker="كيف نعرض الجلسات بمهنية؟"
@@ -659,7 +659,7 @@ export default function ForexSessionsLive({ initialViewer, initialNowIso }) {
       <section className="economy-section">
         <EconomySectionHeader
           title="دليل الجلسات بتوقيتك"
-          lead="المحتوى هنا مكتوب ليشرح ما يحدث للمستخدم العربي نفسه، لا ليكرر جدولاً عالمياً معزولاً عن منطقته الزمنية."
+          lead="هذا الدليل يشرح الجلسات بحسب يومك المحلي بدلاً من تركك مع جدول عالمي جامد يصعب تحويله بنفسك."
         />
         <EconomyGuide sections={model.guideSections} />
       </section>

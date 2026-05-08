@@ -775,7 +775,7 @@ async function ComparisonPageContent({ paramsPromise }) {
         <section className="mb-10">
           <GeoInternalLinks
             title={`روابط مرتبطة بمقارنة ${fromCity.city_name_ar} و${toCity.city_name_ar}`}
-            description={`هذه الروابط توصل مقارنة فرق التوقيت بصفحات الوقت الحالي والصلاة والتاريخ الخاصة بكل مدينة ودولة، وهو ما يقوّي الربط الداخلي حول نفس نية البحث.`}
+            description={`إذا بدأت بمقارنة ${fromCity.city_name_ar} و${toCity.city_name_ar}، فهذه الروابط تساعدك على الانتقال مباشرة إلى الوقت الحالي والصلاة والتاريخ في الصفحات المرتبطة بكل مدينة أو دولة.`}
             links={comparisonUtilityLinks}
             ariaLabel={`روابط مرتبطة بمقارنة ${fromCity.city_name_ar} و${toCity.city_name_ar}`}
           />

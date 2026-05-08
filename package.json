@@ -13,7 +13,7 @@
     "prisma:studio": "prisma studio",
     "geo:snapshot": "sh -c 'if [ -f .env.local ]; then tsx --env-file=.env.local scripts/generate-geo-snapshot.ts; else tsx scripts/generate-geo-snapshot.ts; fi'",
     "export-fallback": "npm run geo:snapshot",
-    "build": "npm run prisma:generate && next build",
+    "build": "npm run events:build && npm run prisma:generate && next build",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx",
     "typecheck": "tsc --noEmit",
@@ -40,7 +40,7 @@
     "validate:holidays:slug": "tsx --env-file=.env.local scripts/validate-holiday-content.ts --strict",
     "validate:holidays:changed": "tsx --env-file=.env.local scripts/validate-holiday-content.ts --strict --changed --json",
     "validate:holidays:live": "tsx --env-file=.env.local scripts/validate-holiday-content.ts --strict --live --json",
-    "build:smoke": "next build",
+    "build:smoke": "npm run events:build && next build",
     "ci:check": "npm run lint && npm run typecheck && npm run test:unit && npm run seo:validate && npm run validate:holidays"
   },
   "dependencies": {

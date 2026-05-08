@@ -88,7 +88,7 @@ export default function MarketClockLive({ initialViewer, initialNowIso }) {
       <EconomyStatCards cards={model.signalCards} />
       <EconomySpotlight model={model.spotlight} />
 
-      <AdTopBanner slotId="top-economy-market-clock" />
+      <AdTopBanner slotId="top-economy-market-clock" className="economy-ad-slot" />
 
       <EconomyBanner
         kicker="قراءة فورية"
@@ -118,7 +118,7 @@ export default function MarketClockLive({ initialViewer, initialNowIso }) {
         <HourlyActivityChart chart={model.activityChart} title="ساعة السيولة على مدار 24 ساعة" />
       </section>
 
-      <AdInArticle slotId="mid-economy-market-clock" />
+      <AdInArticle slotId="mid-economy-market-clock" className="economy-ad-slot" />
 
       <section className="economy-section">
         <EconomySectionHeader

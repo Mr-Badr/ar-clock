@@ -38,8 +38,8 @@ async function EconomyLandingServerSections() {
   return (
     <section className="economy-section">
       <EconomySectionHeader
-        title="لماذا يعود المستخدم إلى هذا القسم يومياً؟"
-        lead="بدلاً من الاكتفاء بالوصف العام، تعرض هذه الطبقة الثابتة ما يجعل التجربة عملية: إيقاع السوق، المسار التالي، واللوحة التي تختصر اليوم."
+        title="كيف يساعدك هذا القسم خلال اليوم؟"
+        lead="هنا ستجد طبقة مختصرة تشرح ماذا تفتح أولاً، وما الصفحة التالية الأنسب، وكيف تبقى القراءة عملية من غير حشو."
       />
       <EconomyGuide sections={landingModel.premiumSections} />
     </section>
@@ -92,7 +92,7 @@ export default async function EconomyPage() {
             scope="landing"
             initialSnapshot={liveSnapshot}
             title="الأسواق المرجعية الآن"
-            lead="شريط حي يضع وول ستريت والذهب والأزواج الرئيسية في أول الصفحة حتى يشعر الزائر من اللحظة الأولى أن قسم الاقتصاد أداة متابعة يومية لا مجرد صفحة تعريفية."
+            lead="شريط حي يضع وول ستريت والذهب والأزواج الرئيسية في البداية حتى ترى حالة السوق بسرعة قبل أن تختار الصفحة التالية."
           />
         </Suspense>
 
@@ -102,16 +102,16 @@ export default async function EconomyPage() {
 
         <section className="economy-section">
           <EconomySectionHeader
-            title="الأسئلة الأساسية التي يغطيها القسم"
-            lead="هنا ستجد أكثر الأسئلة اليومية شيوعاً حول السوق الأمريكي والذهب والجلسات والساعة البصرية في مكان واحد واضح."
+            title="ابدأ من السؤال الأقرب لك"
+            lead="إذا كنت تريد وقت افتتاح السوق الأمريكي أو حالة الذهب أو جلسات الفوركس، فهذه هي نقاط البداية الأسرع داخل القسم."
           />
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>
 
         <section className="economy-section">
           <EconomySectionHeader
-            title="قبل أن تختار الأداة المناسبة"
-            lead="هذه البطاقات تختصر لك ما يقدمه كل مسار حتى تعرف بسرعة أين تبدأ بحسب السؤال الذي يشغلك الآن."
+            title="اختر المسار الأنسب الآن"
+            lead="هذه البطاقات تختصر وظيفة كل صفحة حتى تصل مباشرة إلى الأداة الأقرب لما تريد معرفته."
           />
           <EconomyGuide sections={PAGE_CONTENT.intentCards} />
         </section>

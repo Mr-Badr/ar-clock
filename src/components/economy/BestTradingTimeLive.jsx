@@ -87,7 +87,7 @@ export default function BestTradingTimeLive({ initialViewer, initialNowIso }) {
         ]}
       />
 
-      <AdTopBanner slotId="top-economy-best-trading-time" />
+      <AdTopBanner slotId="top-economy-best-trading-time" className="economy-ad-slot" />
 
       <EconomyBanner
         kicker="الخلاصة العملية"
@@ -152,7 +152,7 @@ export default function BestTradingTimeLive({ initialViewer, initialNowIso }) {
         />
       </section>
 
-      <AdInArticle slotId="mid-economy-best-trading-time" />
+      <AdInArticle slotId="mid-economy-best-trading-time" className="economy-ad-slot" />
 
       <section className="economy-section">
         <EconomySectionHeader

@@ -82,7 +82,7 @@ export default async function MarketClockPage() {
         <section className="economy-section">
           <EconomySectionHeader
             title="أسئلة تساعدك ساعة السوق على حسمها"
-            lead="من فهم السيولة الحالية إلى تداخل لندن ونيويورك وخريطة النشاط اليومي، هذه هي الأسئلة التي تجيب عنها الصفحة."
+            lead="من فهم السيولة الحالية إلى تداخل لندن ونيويورك وخريطة النشاط اليومي، هذه هي أسرع نقاط البداية داخل الصفحة."
           />
           <EconomyIntentCards groups={SEARCH_COVERAGE.queryClusters} />
         </section>
@@ -93,7 +93,7 @@ export default async function MarketClockPage() {
 
         <EconomyReadingShelf
           title="كيف تفهم الساعة لا الرقم فقط؟"
-          lead="هذه الأدلة تشرح معنى ساعة السوق والسيولة والجلسات، ثم تعيد المستخدم إلى الأداة وهو يفهم القراءة البصرية بشكل أوضح."
+          lead="هذه الأدلة تشرح معنى ساعة السوق والسيولة والجلسات بلغة أبسط، ثم تترك لك العودة إلى الأداة عندما تحتاجها."
           items={RELATED_GUIDES}
         />
       </EconomyAdLayout>

@@ -76,7 +76,7 @@ export default function UsMarketOpenLive({ initialViewer, initialNowIso }) {
 
       <CountdownHero model={model.countdownHero} />
 
-      <AdTopBanner slotId="top-economy-us-market-open" />
+      <AdTopBanner slotId="top-economy-us-market-open" className="economy-ad-slot" />
 
       <EconomyBanner
         kicker="الجواب السريع"
@@ -110,7 +110,7 @@ export default function UsMarketOpenLive({ initialViewer, initialNowIso }) {
       <section className="economy-section">
         <EconomySectionHeader
           title="عطل NYSE الرسمية"
-          lead="أضفنا جدولاً سنوياً واضحاً لأن المستخدم العربي يبحث كثيراً عن عمل السوق الأمريكي في العطل، لا عن مواعيد الجلسة اليومية فقط."
+          lead="هذا الجدول يوضح عطل السوق الأمريكي على مدار السنة حتى لا تختلط عليك مواعيد الجلسة اليومية مع أيام الإغلاق الرسمي."
         />
         <EconomyBanner
           kicker="أقرب عطلة"
@@ -132,12 +132,12 @@ export default function UsMarketOpenLive({ initialViewer, initialNowIso }) {
         <CityClockGrid cities={model.cityClockRows} />
       </section>
 
-      <AdInArticle slotId="mid-economy-us-market-open" />
+      <AdInArticle slotId="mid-economy-us-market-open" className="economy-ad-slot" />
 
       <section className="economy-section">
         <EconomySectionHeader
-          title="لماذا هذه الصفحة أقرب لنية البحث؟"
-          lead="المستخدم هنا لا يريد مقدمة استثمارية طويلة، بل يريد جواباً مباشراً ثم شرحاً قصيراً يحل الأسئلة اليومية المرتبطة بموعد الافتتاح."
+          title="ما الذي ستجده هنا بسرعة؟"
+          lead="إذا كان سؤالك عن وقت الافتتاح اليوم، فهذه الصفحة تبدأ بالجواب المباشر ثم تضيف الشرح العملي للأسئلة المرتبطة به."
         />
         <EconomyGuide sections={model.guideSections} />
       </section>

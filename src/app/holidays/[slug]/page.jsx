@@ -298,7 +298,7 @@ export default async function HolidayPage({ params }) {
                     marginBottom: 'var(--space-2)',
                   }}
                 >
-                  هذا الدليل يجيب عن أكثر عمليات البحث حول {pageModel.hero.title || event.name}
+                  أسئلة شائعة قبل {pageModel.hero.title || event.name}
                 </h2>
                 <p
                   style={{
@@ -308,9 +308,9 @@ export default async function HolidayPage({ params }) {
                     margin: 0,
                   }}
                 >
-                  إذا كان المستخدم يبحث عن <strong style={{ color: 'var(--text-primary)' }}>{primarySearchQuery}</strong>
-                  ، أو يريد معرفة الموعد والتاريخ والعد التنازلي وأسئلة العام القادم، فهذه الصفحة
-                  تعرض الجواب مباشرة في HTML مع معلومات محدثة وروابط ذات صلة ومحتوى تفصيلي عن المناسبة.
+                  إذا كنت تبحث عن <strong style={{ color: 'var(--text-primary)' }}>{primarySearchQuery}</strong>
+                  ، أو تريد معرفة الموعد والتاريخ والعد التنازلي وأسئلة العام القادم، فهذه الصفحة
+                  تجمع الجواب المختصر أولاً ثم التفاصيل والروابط المرتبطة في مكان واحد.
                 </p>
               </div>
 

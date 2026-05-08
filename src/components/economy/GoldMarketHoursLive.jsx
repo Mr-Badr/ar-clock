@@ -75,7 +75,7 @@ export default function GoldMarketHoursLive({ initialViewer, initialNowIso }) {
         tone={model.goldActivity.tone}
       />
 
-      <AdTopBanner slotId="top-economy-gold-market-hours" />
+      <AdTopBanner slotId="top-economy-gold-market-hours" className="economy-ad-slot" />
 
       <EconomyBanner
         kicker="الجواب السريع"
@@ -114,7 +114,7 @@ export default function GoldMarketHoursLive({ initialViewer, initialNowIso }) {
       <section className="economy-section">
         <EconomySectionHeader
           title="جلسات الذهب الرئيسية بتوقيتك"
-          lead="معظم المنافسين يكتفون بذكر أن الذهب يعمل 24 ساعة تقريباً، لكن المستخدم يحتاج فعلياً إلى معرفة متى تبدأ كل جلسة ولماذا تهمه."
+          lead="بدلاً من الاكتفاء بعبارة عامة عن عمل الذهب على مدار اليوم، يوضح هذا الجدول متى تبدأ كل جلسة ولماذا تهمك عملياً."
         />
         <EconomyTable
           columns={['الجلسة', 'تبدأ عند', 'تنتهي عند', 'لماذا تهم الذهب؟']}
@@ -125,7 +125,7 @@ export default function GoldMarketHoursLive({ initialViewer, initialNowIso }) {
       <section className="economy-section">
         <EconomySectionHeader
           title="ما الفرق بين LBMA وCOMEX وOTC؟"
-          lead="أضفنا هذا الشرح لأن الفرق بين أسواق الذهب الثلاثة شبه غائب في المحتوى العربي المبسط رغم أنه يفسر سلوك السعر وساعات النشاط."
+          lead="هذا الشرح يوضح الفرق بين أسواق الذهب الثلاثة حتى يصبح سلوك السعر وساعات النشاط أسهل فهماً."
         />
         <EconomyGuide sections={model.marketGuideCards} />
       </section>
@@ -141,12 +141,12 @@ export default function GoldMarketHoursLive({ initialViewer, initialNowIso }) {
         />
       </section>
 
-      <AdInArticle slotId="mid-economy-gold-market-hours" />
+      <AdInArticle slotId="mid-economy-gold-market-hours" className="economy-ad-slot" />
 
       <section className="economy-section">
         <EconomySectionHeader
           title="كيف تستخدم هذه الصفحة بشكل صحيح؟"
-          lead="الهدف هنا أن نجيب عن نية البحث اليومية، ثم نضيف الزوايا التي يغفلها كثير من المنافسين مثل الفرق بين الذهب العالمي والمتاجر المحلية."
+          lead="ابدأ بالجواب السريع عن حالة الذهب الآن، ثم انتقل إلى الفرق بين السوق العالمي والمتاجر المحلية حتى لا تختلط عليك الصورة."
         />
         <EconomyGuide sections={model.guideSections} />
       </section>
@@ -165,7 +165,7 @@ export default function GoldMarketHoursLive({ initialViewer, initialNowIso }) {
       <section className="economy-section">
         <EconomySectionHeader
           title="أسئلة شائعة"
-          lead="الإجابات التالية مكتوبة بصيغة مباشرة قابلة للاقتباس، لأنها تعالج أكثر أسئلة الذهب تكراراً في البحث العربي اليومي."
+          lead="إجابات قصيرة وواضحة على أكثر الأسئلة اليومية حول فتح الذهب والسيولة وحركة XAU/USD."
         />
         <EconomyFaq items={model.faqItems || FAQ_ITEMS.goldMarketHours} />
       </section>

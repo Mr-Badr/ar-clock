@@ -844,15 +844,54 @@
 .ct-clock-card {
   container-type: inline-size;
   container-name: clock-card;
+  --ct-digit-size: clamp(2.6rem, 12cqi, 5rem);
+  --ct-sep-size: clamp(1.5rem, 7cqi, 3rem);
+  --ct-sep-offset: 1em;
+  --ct-unit-label-size: clamp(0.65rem, 2.8cqi, 0.9rem);
+  --ct-unit-label-padding-y: 0.15rem;
+  --ct-unit-label-padding-x: 0.55rem;
+  --ct-mobile-days-size: clamp(3rem, 20cqi, 5.5rem);
+  --ct-mobile-hms-digit-size: clamp(2rem, 8cqi, 2.4rem);
+  --ct-mobile-hms-label-size: clamp(0.55rem, 2.5cqi, 0.75rem);
+  --ct-mobile-hms-sep-size: clamp(1rem, 5cqi, 1.8rem);
+  --ct-mobile-hms-sep-offset: 1.1em;
+}
+
+.ct-clock-card[data-clock-variant='three-unit'] {
+  --ct-digit-size: clamp(3rem, 14.5cqi, 7rem);
+  --ct-sep-size: clamp(1.8rem, 8cqi, 4rem);
+  --ct-sep-offset: 0.9em;
+  --ct-unit-label-size: clamp(0.72rem, 3.1cqi, 1rem);
+  --ct-unit-label-padding-y: 0.2rem;
+  --ct-unit-label-padding-x: 0.7rem;
+  --ct-mobile-days-size: clamp(3.5rem, 23cqi, 6rem);
+  --ct-mobile-hms-digit-size: clamp(2.25rem, 10.5cqi, 3.2rem);
+  --ct-mobile-hms-label-size: clamp(0.62rem, 2.9cqi, 0.84rem);
+  --ct-mobile-hms-sep-size: clamp(1.2rem, 5.8cqi, 2rem);
+  --ct-mobile-hms-sep-offset: 1em;
+}
+
+.ct-clock-card[data-clock-variant='four-unit'] {
+  --ct-digit-size: clamp(2.75rem, 11.75cqi, 5.85rem);
+  --ct-sep-size: clamp(1.55rem, 6.25cqi, 3.2rem);
+  --ct-sep-offset: 0.95em;
+  --ct-unit-label-size: clamp(0.68rem, 2.55cqi, 0.94rem);
+  --ct-unit-label-padding-y: 0.18rem;
+  --ct-unit-label-padding-x: 0.62rem;
+  --ct-mobile-days-size: clamp(3.3rem, 22cqi, 6.15rem);
+  --ct-mobile-hms-digit-size: clamp(2.15rem, 9.5cqi, 2.9rem);
+  --ct-mobile-hms-label-size: clamp(0.6rem, 2.65cqi, 0.82rem);
+  --ct-mobile-hms-sep-size: clamp(1.12rem, 5.5cqi, 1.95rem);
+  --ct-mobile-hms-sep-offset: 1.02em;
 }
 
 /* ── Digit — size in cqi so it tracks the card width exactly ──────────
-   At 320px card → 12cqi = 38px  (comfortable mobile)
-   At 480px card → 12cqi = 58px  (tablet / landscape phone)
-   At 640px card → 12cqi = 77px  → clamped to 5rem = 80px (desktop max)
+   The actual scale now comes from per-variant CSS variables:
+   - three-unit clocks can grow larger by default
+   - four-unit countdowns stay slightly tighter to avoid overflow
    ─────────────────────────────────────────────────────────────────── */
 .ct-digit {
-  font-size: clamp(2.5rem, 12cqi, 5rem);
+  font-size: var(--ct-digit-size);
   font-weight: 800;
   line-height: 1;
   display: block;
@@ -865,11 +904,11 @@
 
 /* ── Colon separator ── */
 .ct-sep-char {
-  font-size: clamp(1.5rem, 7cqi, 3rem);
+  font-size: var(--ct-sep-size);
   color: var(--clock-separator);
   font-weight: 700;
   align-self: center;
-  margin-bottom: 1em;
+  margin-bottom: var(--ct-sep-offset);
   /* aligns with digit baseline, not label */
   flex-shrink: 0;
   user-select: none;
@@ -878,10 +917,10 @@
 
 /* ── Unit label pill ── */
 .ct-unit-label {
-  font-size: clamp(0.65rem, 2.8cqi, 0.9rem);
+  font-size: var(--ct-unit-label-size);
   font-weight: 500;
   color: var(--text-secondary);
-  padding: 0.15rem 0.55rem;
+  padding: var(--ct-unit-label-padding-y) var(--ct-unit-label-padding-x);
   border-radius: 999px;
   background: var(--bg-surface-3);
   border: 1px solid var(--border-subtle);
@@ -914,23 +953,23 @@
 
   /* Days hero — bigger treatment on narrow card */
   .ct-days-val {
-    font-size: clamp(3rem, 20cqi, 5.5rem) !important;
+    font-size: var(--ct-mobile-days-size) !important;
     line-height: 1 !important;
     animation: ct-digit-enter 0.18s ease-out both;
   }
 
   /* H · M · S digits below days */
   .ct-hms-digit {
-    font-size: clamp(2rem, 8cqi, 2.4rem) !important;
+    font-size: var(--ct-mobile-hms-digit-size) !important;
   }
 
   .ct-hms-label {
-    font-size: clamp(0.55rem, 2.5cqi, 0.75rem) !important;
+    font-size: var(--ct-mobile-hms-label-size) !important;
   }
 
   .ct-hms-sep {
-    font-size: clamp(1rem, 5cqi, 1.8rem) !important;
-    margin-bottom: 1.1em !important;
+    font-size: var(--ct-mobile-hms-sep-size) !important;
+    margin-bottom: var(--ct-mobile-hms-sep-offset) !important;
   }
 }
 

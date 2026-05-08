@@ -1,6 +1,6 @@
 export const FULLSCREEN_ZOOM_LEVELS = {
-  threeUnit: [0.86, 1.05, 1.2],
-  fourUnit: [0.78, 1.04, 1.12],
+  threeUnit: [0.82, 1, 1.16],
+  fourUnit: [0.68, 1, 1.18],
 };
 
 export function getFullscreenZoomLabel(level) {
@@ -84,7 +84,7 @@ export const FULLSCREEN_LAYER_STYLE = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: 'max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left))',
+  padding: 'max(clamp(1rem, 2vw, 1.9rem), env(safe-area-inset-top)) max(clamp(1rem, 2vw, 1.9rem), env(safe-area-inset-right)) max(clamp(1rem, 2vw, 1.9rem), env(safe-area-inset-bottom)) max(clamp(1rem, 2vw, 1.9rem), env(safe-area-inset-left))',
   overflow: 'hidden',
   overscrollBehavior: 'none',
   WebkitOverflowScrolling: 'touch',
@@ -93,52 +93,52 @@ export const FULLSCREEN_LAYER_STYLE = {
 
 export const FULLSCREEN_TOOLBAR_STYLE = {
   position: 'absolute',
-  top: 0,
-  right: 0,
-  left: 0,
+  top: 'max(clamp(0.9rem, 1.8vw, 1.5rem), env(safe-area-inset-top))',
+  right: 'max(clamp(0.9rem, 1.8vw, 1.5rem), env(safe-area-inset-right))',
+  left: 'max(clamp(0.9rem, 1.8vw, 1.5rem), env(safe-area-inset-left))',
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'space-between',
   alignItems: 'center',
-  gap: '0.75rem',
+  gap: '0.9rem',
   zIndex: 110,
 };
 
 export const FULLSCREEN_ZOOM_GROUP_STYLE = {
   display: 'flex',
   alignItems: 'center',
-  gap: '0.25rem',
+  gap: '0.35rem',
   background: 'color-mix(in srgb, var(--bg-surface-3) 70%, transparent)',
   backdropFilter: 'blur(12px)',
-  padding: '0.25rem',
-  borderRadius: '0.875rem',
+  padding: '0.35rem',
+  borderRadius: '1rem',
   border: '1px solid var(--border-default)',
   flexShrink: 0,
 };
 
 export const FULLSCREEN_ZOOM_LABEL_STYLE = {
-  padding: '0.4rem 0.75rem',
-  fontSize: '0.72rem',
+  padding: '0.5rem 0.9rem',
+  fontSize: 'clamp(0.76rem, 1.1vw, 0.92rem)',
   fontWeight: '900',
-  minWidth: '80px',
+  minWidth: '96px',
   textAlign: 'center',
   color: 'var(--text-primary)',
 };
 
 export function getFullscreenContentStyle(scaleValue) {
   return {
-    width: 'min(100%, 1700px)',
-    maxWidth: 'calc(100vw - 1.25rem)',
-    maxHeight: 'calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 6.5rem)',
+    width: 'min(100%, 1760px)',
+    maxWidth: 'calc(100vw - clamp(2.25rem, 5vw, 5rem))',
+    maxHeight: 'calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - clamp(7rem, 13vh, 9.5rem))',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '0.85rem 0.75rem',
+    padding: 'clamp(1rem, 2.2vh, 1.65rem) clamp(0.9rem, 2vw, 1.5rem)',
     transform: scaleValue,
     transformOrigin: 'center center',
     transition: 'transform 0.35s ease-in-out',
-    gap: 'clamp(0.85rem, 2.4vh, 2rem)',
+    gap: 'clamp(1rem, 3vh, 2.5rem)',
     overflow: 'hidden',
   };
 }
@@ -148,7 +148,7 @@ export function getFullscreenRowStyle(unitCount = 3) {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: unitCount === 4 ? 'clamp(0.5rem, 2vw, 1.5rem)' : 'clamp(0.75rem, 3vw, 2rem)',
+    gap: unitCount === 4 ? 'clamp(0.4rem, 1.4vw, 1.15rem)' : 'clamp(0.65rem, 2.2vw, 1.75rem)',
     direction: 'ltr',
     flexWrap: 'nowrap',
     width: '100%',
@@ -160,7 +160,7 @@ export function getFullscreenUnitWrapStyle(unitCount = 3) {
   return {
     display: 'flex',
     alignItems: 'center',
-    gap: unitCount === 4 ? 'clamp(0.5rem, 2vw, 1.5rem)' : 'clamp(0.75rem, 3vw, 2rem)',
+    gap: unitCount === 4 ? 'clamp(0.4rem, 1.4vw, 1.15rem)' : 'clamp(0.65rem, 2.2vw, 1.75rem)',
     minWidth: 0,
   };
 }
@@ -169,8 +169,8 @@ export function getFullscreenDigitStyle(unitCount = 3) {
   return {
     display: 'block',
     fontSize: unitCount === 4
-      ? 'clamp(2.5rem, min(8.8vw, 14.5vh), 6.75rem)'
-      : 'clamp(3rem, min(12vw, 18.5vh), 9rem)',
+      ? 'clamp(2.9rem, min(8.4vw, 13.4vh), 6.85rem)'
+      : 'clamp(3.35rem, min(11.4vw, 17.6vh), 9.15rem)',
     fontWeight: '800',
     lineHeight: 1,
     color: 'var(--clock-digit-color)',
@@ -181,10 +181,10 @@ export function getFullscreenDigitStyle(unitCount = 3) {
 }
 
 export const FULLSCREEN_UNIT_LABEL_STYLE = {
-  fontSize: 'clamp(0.72rem, min(1.6vw, 2.1vh), 1rem)',
-  fontWeight: '500',
+  fontSize: 'clamp(0.78rem, min(1.55vw, 2.1vh), 1.02rem)',
+  fontWeight: '600',
   color: 'var(--text-secondary)',
-  padding: '0.2rem 0.65rem',
+  padding: '0.28rem 0.8rem',
   borderRadius: '999px',
   background: 'var(--bg-surface-3)',
   border: '1px solid var(--border-subtle)',
@@ -194,23 +194,23 @@ export const FULLSCREEN_UNIT_LABEL_STYLE = {
 export function getFullscreenSeparatorStyle(unitCount = 3) {
   return {
     fontSize: unitCount === 4
-      ? 'clamp(1.65rem, min(4.5vw, 7.5vh), 3.9rem)'
-      : 'clamp(1.9rem, min(5.4vw, 9.8vh), 4.4rem)',
+      ? 'clamp(1.55rem, min(4vw, 6.4vh), 3.6rem)'
+      : 'clamp(1.9rem, min(5vw, 8.5vh), 4.2rem)',
     color: 'var(--clock-separator)',
     fontWeight: '700',
     alignSelf: 'center',
-    marginBottom: '0.85em',
+    marginBottom: '0.78em',
     flexShrink: 0,
     userSelect: 'none',
   };
 }
 
 export const FULLSCREEN_TITLE_STYLE = {
-  fontSize: 'clamp(1.1rem, 3vw, 2.25rem)',
+  fontSize: 'clamp(1.25rem, 3.4vw, 2.85rem)',
   fontWeight: '800',
   color: 'var(--accent)',
   textAlign: 'center',
   margin: 0,
-  maxWidth: 'min(90vw, 900px)',
-  lineHeight: 1.2,
+  maxWidth: 'min(90vw, 1080px)',
+  lineHeight: 1.15,
 };

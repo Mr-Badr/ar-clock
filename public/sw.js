@@ -3,9 +3,8 @@
  * Provides offline support and caching for Arabic clock app
  */
 
-const CACHE_VERSION = 'v5'; // Bump this when deploying major updates
+const CACHE_VERSION = 'v6'; // Bump this when deploying major updates
 const STATIC_CACHE = `miqat-static-${CACHE_VERSION}`;
-const DYNAMIC_CACHE = `miqat-dynamic-${CACHE_VERSION}`;
 const IS_LOCALHOST =
   self.location.hostname === 'localhost' ||
   self.location.hostname === '127.0.0.1' ||
@@ -64,7 +63,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE) {
+          if (cacheName !== STATIC_CACHE) {
             console.log('[SW] Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
@@ -104,9 +103,11 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Navigations: network-first + offline fallback.
+  // Navigations: network-only + offline fallback.
+  // This prevents a transient fallback or redirected HTML response from being
+  // cached under a specific slug and later replayed as the wrong page.
   if (request.mode === 'navigate') {
-    event.respondWith(networkFirstPage(request));
+    event.respondWith(networkOnlyPage(request));
     return;
   }
 
@@ -116,8 +117,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Strategy 2: Stale-while-revalidate for safe same-origin GET requests
-  event.respondWith(staleWhileRevalidate(request));
+  // Let the network handle other dynamic GET requests directly.
 });
 
 // Cache-first strategy
@@ -139,61 +139,10 @@ async function cacheFirst(request) {
   }
 }
 
-// Network-first strategy
-async function networkFirst(request) {
+async function networkOnlyPage(request) {
   try {
-    const networkResponse = await fetch(request);
-    if (networkResponse.ok) {
-      const cache = await caches.open(DYNAMIC_CACHE);
-      cache.put(request, networkResponse.clone());
-    }
-    return networkResponse;
-  } catch (error) {
-    const cachedResponse = await caches.match(request);
-    if (cachedResponse) {
-      return cachedResponse;
-    }
-    return new Response(JSON.stringify({ error: 'Offline' }), {
-      status: 503,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-}
-
-// Stale-while-revalidate strategy
-async function staleWhileRevalidate(request) {
-  const cachedResponse = await caches.match(request);
-  const fetchPromise = fetch(request).then((networkResponse) => {
-    if (networkResponse.ok) {
-      const cache = caches.open(DYNAMIC_CACHE);
-      cache.then((c) => c.put(request, networkResponse.clone()));
-    }
-    return networkResponse;
-  }).catch(() => {
-    // If navigation request fails, return offline page
-    if (request.mode === 'navigate') {
-      return caches.match('/offline');
-    }
-    return cachedResponse;
-  });
-
-  return cachedResponse || fetchPromise;
-}
-
-async function networkFirstPage(request) {
-  try {
-    const networkResponse = await fetch(request);
-    if (networkResponse.ok) {
-      const cache = await caches.open(DYNAMIC_CACHE);
-      cache.put(request, networkResponse.clone());
-    }
-    return networkResponse;
+    return await fetch(request);
   } catch {
-    const cachedResponse = await caches.match(request);
-    if (cachedResponse) {
-      return cachedResponse;
-    }
-
     return caches.match('/offline');
   }
 }

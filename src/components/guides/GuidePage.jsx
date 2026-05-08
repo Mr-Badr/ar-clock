@@ -14,7 +14,7 @@ import {
 export default function GuidePage({ guide, relatedCalculators = [], relatedGuides = [], relatedPages = [] }) {
   const navItems = [
     guide.intentKeywords?.length
-      ? { href: '#guide-intents', label: 'نية البحث', description: 'السؤال الذي جاءت الصفحة لالتقاطه' }
+      ? { href: '#guide-intents', label: 'من أين تبدأ؟', description: 'السؤال الأقرب لما تريد فهمه' }
       : null,
     guide.quickAnswers?.length
       ? { href: '#guide-answers', label: 'إجابات سريعة', description: 'جواب مختصر قبل الدخول في التفاصيل' }
@@ -41,8 +41,8 @@ export default function GuidePage({ guide, relatedCalculators = [], relatedGuide
         description={guide.description}
         accent={guide.accent || '#2563EB'}
         highlights={guide.highlights || [
-          'صفحة تعليمية تدعم أداة عملية وليست مقالاً معزولاً.',
-          'مكتوبة بلغة عربية مباشرة لتناسب نية الباحث لا مجرد أرشفة المحتوى.',
+          'شرح مباشر يوصلك إلى الفكرة بسرعة قبل الدخول في التفاصيل.',
+          'مكتوبة بالعربية بشكل بسيط لتسهيل القرار لا لإرباكك بمصطلحات كثيرة.',
           'تنتهي دائماً بخطوة واضحة: افتح الحاسبة المناسبة أو انتقل إلى الدليل التالي.',
         ]}
       >
@@ -51,7 +51,7 @@ export default function GuidePage({ guide, relatedCalculators = [], relatedGuide
             <div className="calc-metric-card__label">{guide.summary?.label || 'ابدأ من هنا'}</div>
             <div className="calc-metric-card__value">{guide.summary?.value || 'اقرأ الفكرة ثم انتقل إلى الأداة'}</div>
             <div className="calc-metric-card__note">
-              {guide.summary?.note || 'الهدف من هذه الصفحة هو اختصار الشرح النظري ثم دفع المستخدم إلى الإجراء المناسب داخل القسم.'}
+              {guide.summary?.note || 'الهدف من هذه الصفحة هو اختصار الفكرة ثم توجيهك إلى الخطوة العملية المناسبة داخل القسم.'}
             </div>
           </div>
         </div>
@@ -61,7 +61,7 @@ export default function GuidePage({ guide, relatedCalculators = [], relatedGuide
         id="guide-map"
         eyebrow="خريطة الدليل"
         title="افهم الفكرة ثم خذ القرار"
-        description="هذا الدليل ليس مقالاً طويلًا بلا اتجاه. هو مبني كصفحة تشرح بسرعة، ثم تقارن، ثم تدفعك إلى الأداة المناسبة."
+        description="هذه الصفحة مبنية لتشرح بسرعة، ثم تقارن، ثم تفتح لك الطريق إلى الخطوة العملية التالية."
       >
         <CalculatorSectionNav items={navItems} />
       </CalculatorSection>
@@ -69,12 +69,12 @@ export default function GuidePage({ guide, relatedCalculators = [], relatedGuide
       {guide.intentKeywords?.length ? (
         <CalculatorSection
           id="guide-intents"
-          eyebrow="نية البحث"
-          title="الأسئلة والعبارات التي تستهدفها الصفحة"
-          description="هذه العبارات هي الصيغة التي يكتب بها الزائر سؤاله غالباً، ولهذا تظهر هنا بوضوح داخل الصفحة نفسها."
+          eyebrow="من أين تبدأ؟"
+          title="أسئلة يبدأ منها الناس عادة"
+          description="إذا كان سؤالك يشبه إحدى هذه العبارات، فستجد في هذه الصفحة مدخلاً سريعاً قبل التفاصيل."
           subtle
         >
-          <CalculatorIntentCloud title="عبارات بحث عربية مباشرة" items={guide.intentKeywords} />
+          <CalculatorIntentCloud title="أسئلة شائعة بصياغة مباشرة" items={guide.intentKeywords} />
         </CalculatorSection>
       ) : null}
 
@@ -147,7 +147,7 @@ export default function GuidePage({ guide, relatedCalculators = [], relatedGuide
         id="guide-content"
         eyebrow="الشرح"
         title="المعلومة العملية أولاً"
-        description="كل قسم هنا مكتوب لدعم قرار مالي أو فهم سؤال محدد، لا لإطالة المحتوى دون فائدة."
+        description="كل قسم هنا مكتوب ليعطيك فائدة عملية واضحة، لا ليطيل الشرح أكثر مما تحتاج."
       >
         <div className="calc-info-grid">
           {guide.sections.map((section) => (
@@ -181,7 +181,7 @@ export default function GuidePage({ guide, relatedCalculators = [], relatedGuide
         id="guide-next"
         eyebrow="الخطوة التالية"
         title="انتقل من الشرح إلى الأداة أو الدليل الأقرب"
-        description="هذا الربط الداخلي جزء أساسي من قيمة القسم، لأنه يربط التعلم بالفعل العملي."
+        description="إذا انتهى دور الشرح هنا، فهذه هي الصفحات الأقرب لما قد تحتاجه بعده."
         subtle
       >
         <div className="calc-related-grid">

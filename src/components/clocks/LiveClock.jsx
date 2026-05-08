@@ -140,14 +140,16 @@ function IconBtn({ onClick, label, title, children, disabled = false }) {
       style={{
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'center',
         gap: '0.4rem',
-        padding: '0.5rem 0.85rem',
-        borderRadius: '0.625rem',
+        minHeight: '44px',
+        padding: '0.65rem 1rem',
+        borderRadius: '0.875rem',
         border: '1px solid var(--border-default)',
         background: 'transparent',
         cursor: disabled ? 'not-allowed' : 'pointer',
         color: disabled ? 'var(--text-muted)' : 'var(--text-secondary)',
-        fontSize: '0.82rem',
+        fontSize: '0.88rem',
         fontWeight: '600',
         opacity: disabled ? 0.4 : 1,
         transition: 'background 0.15s, color 0.15s, border-color 0.15s',
@@ -203,6 +205,7 @@ export function LiveClockSkeleton() {
     <div style={CLOCK_WRAPPER_STYLE}>
       <div
         className="ct-clock-card"
+        data-clock-variant="three-unit"
         style={{
           ...CLOCK_CARD_STYLE,
           opacity: 0.6,
@@ -382,6 +385,7 @@ export default function LiveClock({ timezone = null, cityLabel = null }) {
     <div ref={containerRef} style={CLOCK_WRAPPER_STYLE}>
       <div
         className="ct-clock-card"
+        data-clock-variant="three-unit"
         style={{
           ...CLOCK_CARD_STYLE,
           animation: 'ct-card-enter 0.8s cubic-bezier(0.175,0.885,0.32,1.275) both',
