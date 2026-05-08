@@ -37,7 +37,7 @@ async function checkDatabase(env) {
   const startedAt = Date.now();
 
   try {
-    if (env.DATABASE_URL && (!isLiveGeoDbEnabled() || getLiveGeoProviderName() === 'postgres')) {
+    if (env.DATABASE_URL) {
       const { prisma } = await import('@/lib/db/prisma');
       await prisma.$queryRawUnsafe('SELECT 1');
 
@@ -48,46 +48,20 @@ async function checkDatabase(env) {
       };
     }
 
-    if (
-      (env.SUPABASE_URL || env.NEXT_PUBLIC_SUPABASE_URL)
-      && (env.SUPABASE_ANON_KEY || env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
-    ) {
-      const { getSupabase } = await import('@/lib/supabase/server');
-      const supabase = getSupabase();
-      const { error } = await supabase
-        .from('countries')
-        .select('id', { head: true, count: 'exact' })
-        .limit(1);
-
-      if (error) {
-        return {
-          status: 'fail',
-          provider: 'supabase',
-          latencyMs: Date.now() - startedAt,
-          error: error.message,
-        };
-      }
-
-      return {
-        status: 'ok',
-        provider: 'supabase',
-        latencyMs: Date.now() - startedAt,
-      };
-    }
-
     return {
       status: 'skipped',
-      reason: 'No database provider is configured for runtime checks.',
+      reason: 'DATABASE_URL is not configured.',
     };
   } catch (error) {
     return {
       status: 'fail',
-      provider: getLiveGeoProviderName(),
+      provider: 'postgres',
       latencyMs: Date.now() - startedAt,
       error: error instanceof Error ? error.message : String(error),
     };
   }
 }
+
 
 async function checkUpstream(name, url) {
   const controller = new AbortController();

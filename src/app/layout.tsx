@@ -15,7 +15,7 @@ import SiteWideSchemas from '@/components/seo/SiteWideSchemas';
 import ConsentBanner from '@/components/consent/ConsentBanner';
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
 import SiteVisitTracker from '@/components/site/SiteVisitTracker.client';
-import { Analytics } from '@vercel/analytics/next';
+// @vercel/analytics removed — not compatible with self-hosted VPS
 import { getMetadataEnv } from '@/lib/env.server';
 import { PublicRuntimeProvider } from '@/lib/client/public-runtime';
 import { getPublicRuntimeConfig } from '@/lib/runtime-config';
@@ -44,7 +44,7 @@ const themeBootScript = `
 // The heavier weights are still needed by the design system for clocks/heroes.
 const notoSansArabic = Noto_Sans_Arabic({
   subsets: ['arabic'],
-  weight: ['400', '500', '600', '700', '800', '900'],
+  weight: ['400', '700'],
   variable: '--font-noto-sans-arabic',
   display: 'swap',
   preload: true,
@@ -53,10 +53,10 @@ const notoSansArabic = Noto_Sans_Arabic({
 // Headings use IBM Plex Sans Arabic for a clearer visual hierarchy.
 const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
   subsets: ['arabic'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['600', '700'],
   variable: '--font-ibm-plex-sans-arabic',
-  display: 'swap',
-  preload: true,
+  display: 'optional',
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -188,7 +188,7 @@ export default function RootLayout({
           <ErrorBoundary name="AppContent">
             {children}
           </ErrorBoundary>
-          <Analytics />
+          {/* Vercel Analytics removed — use GTM/GA4 instead on self-hosted VPS */}
           <Suspense fallback={<div className="h-24" />}>
             <Footer />
           </Suspense>
