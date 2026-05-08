@@ -36,9 +36,13 @@ async function fetchMonth(year, month, method = 1) {
   const requestPromise = (async () => {
     while (retries < maxRetries) {
       try {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 5000); // 5s timeout
         const r = await fetch(url, {
+          signal: controller.signal,
           next: { revalidate: 86_400, tags: ['hijri', `hijri-${year}-${month}`] },
         });
+        clearTimeout(timer);
 
         if (r.status === 429) {
           retries++;
@@ -97,7 +101,13 @@ async function todayHijriYear() {
   // 1. Try API
   const str = `${String(d.getDate()).padStart(2, '0')}-${String(d.getMonth() + 1).padStart(2, '0')}-${d.getFullYear()}`;
   try {
-    const r = await fetch(`${ALADHAN}/gToH?date=${str}`, { next: { revalidate: 86_400, tags: ['hijri-today'] } });
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 5000); // 5s timeout
+    const r = await fetch(`${ALADHAN}/gToH?date=${str}`, {
+      signal: controller.signal,
+      next: { revalidate: 86_400, tags: ['hijri-today'] },
+    });
+    clearTimeout(timer);
     const j = await r.json();
     const y = parseInt(j?.data?.hijri?.year, 10);
     if (y) { _yr = y; _yrAt = getSafeNowMs(); return y; }

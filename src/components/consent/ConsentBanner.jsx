@@ -27,7 +27,7 @@ export default function ConsentBanner() {
 
   return (
     <div
-      role="dialog"
+      role="region"
       aria-live="polite"
       aria-label="خيارات الخصوصية"
       style={{

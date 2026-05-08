@@ -55,8 +55,9 @@ const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
   subsets: ['arabic'],
   weight: ['600', '700'],
   variable: '--font-ibm-plex-sans-arabic',
-  display: 'optional',
-  preload: false,
+  display: 'swap',   // Show fallback font immediately, swap when loaded — no invisible text
+  preload: true,     // Preload the heading font to minimise swap flash
+  adjustFontFallback: false,  // Suppress Next.js metric-adjusted fallback that causes CLS
 });
 
 export const metadata: Metadata = {
@@ -101,6 +102,16 @@ export const metadata: Metadata = {
     locale: 'ar_SA',
     alternateLocale: ['ar_EG', 'ar_MA', 'ar_AE', 'ar_IQ', 'ar_JO'],
     type: 'website',
+    // Default fallback OG image — overridden per-page by opengraph-image.jsx
+    images: [
+      {
+        url: '/og-default.png',
+        width: 1024,
+        height: 1024,
+        alt: 'ميقاتنا — الوقت والصلاة والتاريخ والحاسبات',
+        type: 'image/png',
+      },
+    ],
   },
 
   // ── Twitter / X ───────────────────────────────────────────────────────────
@@ -108,6 +119,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
+    images: ['/og-default.png'],
   },
   verification: env.GOOGLE_SITE_VERIFICATION
     ? {

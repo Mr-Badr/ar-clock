@@ -505,7 +505,9 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth removed — causes page to jump to bottom when Radix UI
+       accordion items expand during hydration. Use scroll-margin-top on anchor
+       targets instead, and add smooth scroll per-element only where needed. */
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }

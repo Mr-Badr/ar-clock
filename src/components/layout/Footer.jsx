@@ -1,9 +1,18 @@
 // Footer.jsx
+'use client';
+
 import Link from "next/link";
 import { Clock } from "lucide-react";
+import dynamic from "next/dynamic";
 import { SectionDivider } from "@/components/shared/primitives";
-import { Globe } from "@/components/ui/globe";
 import { SITE_BRAND, SITE_CONTACT_EMAIL } from "@/lib/site-config";
+
+// Lazy-load the WebGL globe — deferred until after first paint so it never
+// blocks LCP or FCP. The footer text/links render instantly.
+const Globe = dynamic(
+  () => import("@/components/ui/globe").then((m) => m.Globe),
+  { ssr: false, loading: () => <div style={{ height: 'clamp(260px, 32vw, 400px)' }} /> }
+);
 
 const PRODUCT_LINKS = [
   { href: '/fahras', label: 'الفهرس الشامل' },

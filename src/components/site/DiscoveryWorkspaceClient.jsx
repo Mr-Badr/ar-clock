@@ -228,9 +228,8 @@ function buildFilteredSections(sectionMap, activeTab, featuredItems) {
     .filter((section) => section.filteredItems.length);
 }
 
-function getDefaultOpenSections(sections, { limit = 2 } = {}) {
-  return sections.slice(0, limit).map((section) => section.id);
-}
+// getDefaultOpenSections removed — accordion starts closed on mount to prevent
+// hydration mismatch and scroll-to-bottom during Radix animation.
 
 function getActiveTabConfig(activeTab) {
   return FILTER_TABS.find((tab) => tab.id === activeTab) || FILTER_TABS[0];
@@ -321,7 +320,7 @@ export default function DiscoveryWorkspaceClient({
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [paletteQuery, setPaletteQuery] = useState(viewModel.query || '');
   const [activeTab, setActiveTab] = useState(normalizeTab(initialTab));
-  const [openSections, setOpenSections] = useState(() => getDefaultOpenSections(viewModel.sectionMap));
+  const [openSections, setOpenSections] = useState([]);
   const [activeSectionId, setActiveSectionId] = useState(viewModel.sectionMap[0]?.id || '');
   const [recentSearches, setRecentSearches] = useState([]);
   const [recentVisits, setRecentVisits] = useState([]);
@@ -370,7 +369,8 @@ export default function DiscoveryWorkspaceClient({
   }, [discoveryPath, activeTab, paletteOpen, viewModel.query]);
 
   useEffect(() => {
-    setOpenSections(getDefaultOpenSections(filteredSections));
+    // Only track which section is active for TOC highlight — do NOT auto-open
+    // accordion items here. Opening items on mount caused scroll-to-bottom.
     setActiveSectionId(filteredSections[0]?.id || '');
   }, [filteredSections]);
 

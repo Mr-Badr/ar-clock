@@ -30,9 +30,7 @@ export const ROOT_SITEMAP_ROUTES = Object.freeze(dedupeRoutes([
   { path: '/date/converter', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
   { path: '/date/gregorian-to-hijri', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
   { path: '/date/hijri-to-gregorian', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
-  { path: '/date/calendar', priority: 0.82, changeFrequency: 'weekly', websitePart: true },
-  { path: '/date/calendar/hijri', priority: 0.82, changeFrequency: 'weekly', websitePart: true },
-  { path: '/date/country', priority: 0.8, changeFrequency: 'weekly', websitePart: true },
+  // Note: /date/calendar and /date/calendar/hijri are redirect pages (noindex) — omitted from sitemap
   { path: '/calculators', priority: 0.9, changeFrequency: 'weekly', websitePart: true },
   { path: '/calculators/finance', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
   { path: '/calculators/age', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
