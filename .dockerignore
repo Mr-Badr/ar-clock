@@ -8,8 +8,6 @@ build
 dist
 docs
 tests
-scripts
-content-ops
 playwright-report
 test-results
 *.log

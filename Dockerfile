@@ -15,14 +15,16 @@ RUN apt-get update \
 FROM base AS builder
 
 ARG APP_VERSION=dev
-ENV NODE_ENV=production \
-    APP_VERSION=${APP_VERSION} \
+
+ENV APP_VERSION=${APP_VERSION} \
     NEXT_TELEMETRY_DISABLED=1 \
     NEXT_OUTPUT_MODE=standalone
-  
+
 COPY package*.json ./
+
 RUN npm ci
 
+ENV NODE_ENV=production
 COPY . .
 
 RUN npm run build
