@@ -33,13 +33,14 @@
   },
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
+    "src/**/*",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
 , "src/lib/holidays-engine.js"  ],
   "exclude": [
     "node_modules",
+    "scripts",
+    "scripts/**/*",
     "scripts/holiday-batches/**/*",
     "src/data/holidays/batches/**/*"
   ]
