@@ -3,6 +3,8 @@ services:
     image: ghcr.io/mr-badr/ar-clock:prod
     container_name: app_blue
     restart: always
+    env_file:
+      - /opt/miqatona/env/production.env
     environment:
       NODE_ENV: production
       PORT: 3000
@@ -15,6 +17,8 @@ services:
     image: ghcr.io/mr-badr/ar-clock:prod
     container_name: app_green
     restart: always
+    env_file:
+      - /opt/miqatona/env/production.env
     environment:
       NODE_ENV: production
       PORT: 3000
