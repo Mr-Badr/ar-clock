@@ -67,6 +67,57 @@ let citySearchIndexCache = [];
 let citySearchIndexLoaded = false;
 let citySearchIndexPromise = null;
 
+function normalizeCityRecord(city = {}) {
+  const citySlug = String(city.city_slug || city.slug || '').trim();
+  const countrySlug = String(city.country_slug || city.country_code || '').trim();
+
+  return {
+    ...city,
+    city_slug: citySlug,
+    country_slug: countrySlug,
+    city_name_ar: String(city.city_name_ar || city.name_ar || city.city_name_en || city.name_en || citySlug).trim(),
+    city_name_en: String(city.city_name_en || city.name_en || '').trim() || null,
+    country_name_ar: String(city.country_name_ar || '').trim() || null,
+    country_name_en: String(city.country_name_en || '').trim() || null,
+    country_code: String(city.country_code || '').trim().toUpperCase(),
+    timezone: city.timezone || '',
+    lat: city.lat,
+    lon: city.lon,
+    is_capital: Boolean(city.is_capital),
+    priority: Number(city.priority || 0),
+    population: Number(city.population || 0),
+  };
+}
+
+function sortCities(a, b) {
+  return Number(Boolean(b.is_capital)) - Number(Boolean(a.is_capital))
+    || (b.priority || 0) - (a.priority || 0)
+    || (b.population || 0) - (a.population || 0)
+    || String(a.city_name_ar || a.city_name_en || a.city_slug).localeCompare(
+      String(b.city_name_ar || b.city_name_en || b.city_slug),
+      'ar',
+    );
+}
+
+function mergeCities(...cityLists) {
+  const merged = new Map();
+
+  for (const list of cityLists) {
+    for (const city of list || []) {
+      const normalized = normalizeCityRecord(city);
+      const key = `${normalized.country_slug || normalized.country_code}:${normalized.city_slug}`;
+      if (!normalized.city_slug || (!normalized.country_slug && !normalized.country_code)) continue;
+
+      merged.set(key, {
+        ...(merged.get(key) || {}),
+        ...normalized,
+      });
+    }
+  }
+
+  return Array.from(merged.values()).sort(sortCities);
+}
+
 export function getInitialCountries(preloadedCountries = []) {
   countriesCache = mergeCountries(countriesCache, preloadedCountries);
   return countriesCache;
@@ -114,34 +165,38 @@ export async function loadCountryCities(countrySlug) {
   }
 
   if (!countryCitiesPromiseCache.has(normalizedCountrySlug)) {
-    const request = fetch(`/geo/cities/${encodeURIComponent(normalizedCountrySlug)}.json`, {
-      headers: { Accept: 'application/json' },
-      cache: 'force-cache',
-    })
-      .then(async (response) => {
-        if (response.ok) {
+    const request = Promise.all([
+      fetch(`/geo/cities/${encodeURIComponent(normalizedCountrySlug)}.json`, {
+        headers: { Accept: 'application/json' },
+        cache: 'force-cache',
+      })
+        .then(async (response) => {
+          if (!response.ok) {
+            if (response.status === 404) return [];
+            throw new Error(`HTTP ${response.status}`);
+          }
+
           const cities = await response.json();
-          countryCitiesCache.set(normalizedCountrySlug, Array.isArray(cities) ? cities : []);
-          return countryCitiesCache.get(normalizedCountrySlug);
-        }
+          return Array.isArray(cities) ? cities : [];
+        }),
+      fetch(`/api/cities-by-country?country=${encodeURIComponent(normalizedCountrySlug)}`, {
+        headers: { Accept: 'application/json' },
+        cache: 'no-store',
+      })
+        .then(async (response) => {
+          if (!response.ok) {
+            if (response.status === 404) return [];
+            throw new Error(`HTTP ${response.status}`);
+          }
 
-        if (response.status !== 404) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-
-        const fallbackResponse = await fetch(`/api/cities-by-country?country=${encodeURIComponent(normalizedCountrySlug)}`);
-        if (fallbackResponse.status === 404) {
-          countryCitiesCache.set(normalizedCountrySlug, []);
-          return [];
-        }
-
-        if (!fallbackResponse.ok) {
-          throw new Error(`HTTP ${fallbackResponse.status}`);
-        }
-
-        const fallbackCities = await fallbackResponse.json();
-        countryCitiesCache.set(normalizedCountrySlug, Array.isArray(fallbackCities) ? fallbackCities : []);
-        return countryCitiesCache.get(normalizedCountrySlug);
+          const cities = await response.json();
+          return Array.isArray(cities) ? cities : [];
+        }),
+    ])
+      .then(([staticCities, dbCities]) => {
+        const mergedCities = mergeCities(staticCities, dbCities);
+        countryCitiesCache.set(normalizedCountrySlug, mergedCities);
+        return mergedCities;
       })
       .catch((error) => {
         console.warn(`[location-picker] Could not load cities for "${normalizedCountrySlug}":`, error.message);
@@ -173,7 +228,7 @@ export async function loadCitySearchIndex() {
         }
 
         const index = await response.json();
-        citySearchIndexCache = Array.isArray(index) ? index : [];
+        citySearchIndexCache = mergeCities(index);
         citySearchIndexLoaded = true;
         return citySearchIndexCache;
       })

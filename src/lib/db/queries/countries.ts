@@ -4,6 +4,7 @@ import type { Country } from '@/lib/db/types'
 import fallback from '@/lib/db/fallback/countries.json'
 import snapshot from '../../../../public/geo/countries.json'
 import { PRIORITY_COUNTRY_SLUGS, GLOBAL_POPULAR_COUNTRIES } from '@/lib/db/constants'
+import { logger } from '@/lib/logger'
 import {
   isLiveGeoDbEnabled,
   loadAllCountries,
@@ -96,7 +97,7 @@ async function fetchAllCountriesFromDb() {
 }
 
 function warnCountryQueryFallback(reason: string, context: Record<string, unknown>) {
-  console.warn('[DB] country-query-fallback', {
+  logger.warn('country-query-fallback', {
     reason,
     ...context,
   })

@@ -13,6 +13,11 @@ export type LiveSearchableCity = City & {
   country_name_en?: string | null
 }
 
+export type LiveCityParams = {
+  country: string
+  city: string
+}
+
 /* -------------------------------------------------------------------------- */
 /* ENV CONTROL                                                                */
 /* -------------------------------------------------------------------------- */
@@ -70,6 +75,13 @@ function normalizeCity(row: any): LiveSearchableCity {
     country_slug: row.country?.countrySlug ?? null,
     country_name_ar: row.country?.nameAr ?? null,
     country_name_en: row.country?.nameEn ?? null,
+  }
+}
+
+function normalizeCityParams(row: any): LiveCityParams {
+  return {
+    country: row.country?.countrySlug || row.countryCode.toLowerCase(),
+    city: row.citySlug,
   }
 }
 
@@ -197,7 +209,7 @@ export async function loadCityBySlug(
 /* -------------------------------------------------------------------------- */
 
 export async function loadAllCityParams(): Promise<
-  Array<{ country: string; city: string }>
+  LiveCityParams[]
 > {
   if (!isLiveGeoEnabled()) return []
 
@@ -215,10 +227,84 @@ export async function loadAllCityParams(): Promise<
     },
   })
 
-  return rows.map((row) => ({
-    country: row.country?.countrySlug || row.countryCode.toLowerCase(),
-    city: row.citySlug,
-  }))
+  return rows.map(normalizeCityParams)
+}
+
+export async function loadPriorityCityParams(limit: number): Promise<LiveCityParams[]> {
+  if (!isLiveGeoEnabled()) return []
+
+  const prisma = await getPrisma()
+
+  const rows = await prisma.city.findMany({
+    select: {
+      citySlug: true,
+      countryCode: true,
+      country: {
+        select: {
+          countrySlug: true,
+        },
+      },
+    },
+    orderBy: [
+      { isCapital: 'desc' },
+      { priority: 'desc' },
+      { population: 'desc' },
+      { citySlug: 'asc' },
+    ],
+    take: limit,
+  })
+
+  return rows.map(normalizeCityParams)
+}
+
+export async function loadBridgeCityParams(extraLimit: number): Promise<LiveCityParams[]> {
+  if (!isLiveGeoEnabled()) return []
+
+  const prisma = await getPrisma()
+
+  const [capitalRows, extraRows] = await Promise.all([
+    prisma.city.findMany({
+      where: {
+        isCapital: true,
+      },
+      select: {
+        citySlug: true,
+        countryCode: true,
+        country: {
+          select: {
+            countrySlug: true,
+          },
+        },
+      },
+      orderBy: [
+        { priority: 'desc' },
+        { population: 'desc' },
+        { citySlug: 'asc' },
+      ],
+    }),
+    prisma.city.findMany({
+      where: {
+        isCapital: false,
+      },
+      select: {
+        citySlug: true,
+        countryCode: true,
+        country: {
+          select: {
+            countrySlug: true,
+          },
+        },
+      },
+      orderBy: [
+        { priority: 'desc' },
+        { population: 'desc' },
+        { citySlug: 'asc' },
+      ],
+      take: extraLimit,
+    }),
+  ])
+
+  return [...capitalRows, ...extraRows].map(normalizeCityParams)
 }
 
 /* -------------------------------------------------------------------------- */

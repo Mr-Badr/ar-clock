@@ -3,11 +3,14 @@ import { cacheTag, cacheLife } from 'next/cache'
 import type { City, CityParams } from '@/lib/db/types'
 import fallback from '@/lib/db/fallback/cities-index.json'
 import snapshot from '../../../../public/geo/city-search-index.json'
+import { logger } from '@/lib/logger'
 import {
   isLiveGeoDbEnabled,
   loadAllCityParams,
+  loadBridgeCityParams,
   loadCitiesByCountry,
   loadCityBySlug,
+  loadPriorityCityParams,
   searchCitiesViaLiveSource,
   type LiveSearchableCity,
 } from '@/lib/db/live-geo-source'
@@ -181,7 +184,7 @@ async function fetchAllCityParamsFromDb(): Promise<CityParams[]> {
 }
 
 function warnCityQueryFallback(reason: string, context: Record<string, unknown>) {
-  console.warn('[DB] city-query-fallback', {
+  logger.warn('city-query-fallback', {
     reason,
     ...context,
   })
@@ -302,6 +305,20 @@ export async function getPriorityCityParams(limit = 10): Promise<CityParams[]> {
   cacheTag('cities', 'priority-city-params')
   cacheLife('days')
 
+  if (GEO_DB_FALLBACK_ENABLED) {
+    try {
+      const dbParams = await loadPriorityCityParams(limit)
+      if (dbParams.length > 0) {
+        return mergeCityParams(dbParams)
+      }
+    } catch (error) {
+      warnCityQueryFallback('getPriorityCityParams-error', {
+        limit,
+        error: error instanceof Error ? error.message : String(error),
+      })
+    }
+  }
+
   const fallbackParams = [...fallbackCities]
     .sort(sortCities)
     .map((city) => ({
@@ -316,6 +333,20 @@ export async function getBridgeCityParams(extraLimit = 100): Promise<CityParams[
   'use cache'
   cacheTag('cities', 'bridge-city-params')
   cacheLife('days')
+
+  if (GEO_DB_FALLBACK_ENABLED) {
+    try {
+      const dbParams = await loadBridgeCityParams(extraLimit)
+      if (dbParams.length > 0) {
+        return mergeCityParams(dbParams)
+      }
+    } catch (error) {
+      warnCityQueryFallback('getBridgeCityParams-error', {
+        extraLimit,
+        error: error instanceof Error ? error.message : String(error),
+      })
+    }
+  }
 
   const capitals = fallbackCities
     .filter((city) => city.is_capital)
@@ -371,42 +402,61 @@ function searchFallbackCities(query: string) {
     }))
 }
 
-// Dynamic search — local-first, DB only as a long-tail fallback.
+function mergeSearchCityResults(
+  primaryRows: SearchableCity[],
+  supplementalRows: SearchableCity[],
+  limit: number,
+) {
+  const merged: SearchableCity[] = []
+  const seen = new Set<string>()
+
+  for (const row of [...primaryRows, ...supplementalRows]) {
+    const key = `${row.country_code}:${row.city_slug}`
+    if (!row.city_slug || !row.country_code || seen.has(key)) continue
+    seen.add(key)
+    merged.push(row)
+    if (merged.length >= limit) break
+  }
+
+  return merged
+}
+
+// Dynamic search — DB-first, with local snapshot support only as a supplement or explicit fallback.
 export async function searchCities(query: string, limit = 10): Promise<City[]> {
   'use cache'
   cacheTag('cities', 'search-cities')
   cacheLife('hours')
 
-  const localMatches = searchFallbackCities(query).slice(0, limit)
+  const localMatches = searchFallbackCities(query)
 
-  if (localMatches.length >= limit || !GEO_DB_FALLBACK_ENABLED) {
-    return localMatches as City[]
+  if (!GEO_DB_FALLBACK_ENABLED) {
+    return localMatches.slice(0, limit) as City[]
   }
 
   const q = normalizeSearchQuery(query)
-  if (q.length < 4 || localMatches.length >= Math.min(limit, 4)) {
-    return localMatches as City[]
+  if (q.length < 4) {
+    return localMatches.slice(0, limit) as City[]
   }
 
   const qStripped = q.replace(/(^|\s)\u0627\u0644/g, '$1').trim()
 
   try {
     const liveRows = await searchCitiesViaLiveSource(q, qStripped, limit)
-
-    const merged: SearchableCity[] = [...localMatches]
-    const seen = new Set(merged.map((city) => `${city.country_code}:${city.city_slug}`))
-
-    for (const row of liveRows) {
-      const key = `${row.country_code}:${row.city_slug}`
-      if (seen.has(key)) continue
-
-      seen.add(key)
-      merged.push(row as SearchableCity)
+    if (liveRows.length > 0) {
+      return mergeSearchCityResults(
+        liveRows as SearchableCity[],
+        localMatches,
+        limit,
+      ) as City[]
     }
-
-    return merged.slice(0, limit) as City[]
-  } catch (err) {
-    console.error('[DB] searchCities query failed:', err)
-    return localMatches as City[]
+  } catch (error) {
+    warnCityQueryFallback('searchCities-error', {
+      query,
+      normalizedQuery: q,
+      limit,
+      error: error instanceof Error ? error.message : String(error),
+    })
   }
+
+  return localMatches.slice(0, limit) as City[]
 }

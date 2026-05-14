@@ -12,30 +12,14 @@
  */
 
 import { ImageResponse } from 'next/og';
-import { getCityBySlug } from '@/lib/db/queries/cities';
-import { getCountryBySlug } from '@/lib/db/queries/countries';
-import { calculatePrayerTimes, formatTime } from '@/lib/prayerEngine';
-import { getCachedNowIso } from '@/lib/date-utils';
+import { logError } from '@/lib/observability';
+import { getOgCityLabels } from '@/lib/geo-og-labels';
 
 export const size = { width: 1200, height: 630 };
 export const alt = 'مواقيت الصلاة';
 export const contentType = 'image/png';
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 export const revalidate = 86400;
-
-const PRAYER_AR = { fajr: 'الفجر', sunrise: 'الشروق', dhuhr: 'الظهر', asr: 'العصر', maghrib: 'المغرب', isha: 'العشاء' };
-
-function humanizeSlug(value) {
-  try {
-    return decodeURIComponent(String(value || ''))
-      .replace(/[-_]+/g, ' ')
-      .trim();
-  } catch {
-    return String(value || '')
-      .replace(/[-_]+/g, ' ')
-      .trim();
-  }
-}
 
 function renderFallbackImage(label = 'مواقيت الصلاة', sublabel = '') {
   return new ImageResponse(
@@ -51,40 +35,14 @@ function renderFallbackImage(label = 'مواقيت الصلاة', sublabel = '')
 
 export default async function OgImage({ params }) {
   const { country: countrySlug, city: citySlug } = await params;
-  const fallbackCityLabel = humanizeSlug(citySlug) || 'المدينة';
-  const fallbackCountryLabel = humanizeSlug(countrySlug) || 'البلد';
+  const {
+    cityLabel,
+    countryLabel,
+    fallbackCityLabel,
+    fallbackCountryLabel,
+  } = getOgCityLabels(countrySlug, citySlug);
 
   try {
-    const country = await getCountryBySlug(countrySlug).catch(() => null);
-    const cityData = country ? await getCityBySlug(country.country_code, citySlug).catch(() => null) : null;
-
-    if (!cityData || !country) {
-      return renderFallbackImage(fallbackCityLabel, fallbackCountryLabel);
-    }
-
-    const nowIso = await getCachedNowIso();
-    const now = new Date(nowIso);
-
-    const times = calculatePrayerTimes({
-      lat: cityData.lat,
-      lon: cityData.lon,
-      timezone: cityData.timezone,
-      date: now,
-      cacheKey: `${countrySlug}::${citySlug}`,
-    });
-
-    const prayerRows = times
-      ? Object.entries(times)
-        .filter(([key]) => PRAYER_AR[key])
-        .map(([key, iso]) => ({
-          name: PRAYER_AR[key],
-          time: formatTime(iso, cityData.timezone, false),
-        }))
-      : [];
-
-    const cityNameAr = cityData.name_ar || cityData.name_en || fallbackCityLabel;
-    const countryNameAr = country.name_ar || country.name_en || fallbackCountryLabel;
-
     return new ImageResponse(
       <div
         style={{
@@ -95,13 +53,13 @@ export default async function OgImage({ params }) {
           direction: 'rtl',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 40 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 40 }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ color: '#4ECDC4', fontSize: 52, fontWeight: 900, lineHeight: 1.1 }}>
-              {cityNameAr}
+              {cityLabel}
             </span>
             <span style={{ color: '#7880AA', fontSize: 28, marginTop: 8 }}>
-              {countryNameAr}
+              {countryLabel}
             </span>
           </div>
           <div style={{
@@ -114,7 +72,7 @@ export default async function OgImage({ params }) {
         </div>
 
         <div style={{ display: 'flex', gap: 16, flex: 1, flexWrap: 'wrap' }}>
-          {prayerRows.length > 0 ? prayerRows.map(({ name, time }) => (
+          {['الفجر', 'الظهر', 'العصر', 'المغرب', 'العشاء'].map((name) => (
             <div
               key={name}
               style={{
@@ -125,36 +83,24 @@ export default async function OgImage({ params }) {
               }}
             >
               <span style={{ color: '#A8AFCC', fontSize: 22 }}>{name}</span>
-              <span style={{ color: '#E8EAFF', fontSize: 32, fontWeight: 800 }}>{time}</span>
+              <span style={{ color: '#E8EAFF', fontSize: 26, fontWeight: 800 }}>محدثة يومياً</span>
             </div>
-          )) : (
-            <div
-              style={{
-                width: '100%',
-                background: 'rgba(31,36,56,0.8)',
-                border: '1px solid #363D5C',
-                borderRadius: 16,
-                padding: '32px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#E8EAFF',
-                fontSize: 30,
-                fontWeight: 800,
-              }}
-            >
-              مواقيت الصلاة متاحة داخل الصفحة الرئيسية للمدينة
-            </div>
-          )}
+          ))}
         </div>
 
         <div style={{ color: '#454D70', fontSize: 20, marginTop: 32, textAlign: 'center' }}>
-          {cityData.timezone} — حسابات فلكية دقيقة
+          {cityLabel} — {countryLabel}
         </div>
       </div>,
       { ...size },
     );
-  } catch {
+  } catch (error) {
+    logError('prayer-city-og-image-failed', {
+      routePath: `/mwaqit-al-salat/${countrySlug}/${citySlug}/opengraph-image`,
+      countrySlug,
+      citySlug,
+      error: error instanceof Error ? { name: error.name, message: error.message } : { message: String(error) },
+    });
     return renderFallbackImage(fallbackCityLabel, fallbackCountryLabel);
   }
 }

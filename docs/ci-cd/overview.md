@@ -31,3 +31,8 @@
 ---
 
 ## CI/CD Flow (v1 - Staging Deployment)
+
+## Production runbook
+
+- Safe blue/green production deploy steps now live here:
+  - `docs/ci-cd/production-blue-green-runbook.md`

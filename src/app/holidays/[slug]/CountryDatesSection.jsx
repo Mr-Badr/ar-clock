@@ -1,6 +1,6 @@
 import CountryTable from './CountryTable';
 import { getHolidayPageCountryDates } from '@/lib/holidays/page-data';
-import { logError } from '@/lib/observability';
+import { logHolidayFailure } from '@/lib/holidays/observability';
 
 function SectionCard({ title, description, children }) {
   return (
@@ -91,10 +91,12 @@ export default async function CountryDatesSection({ slug, title, event }) {
 
     return <CountryTable title={title} event={event} countryDates={countryDates} />;
   } catch (error) {
-    logError('holiday-country-dates-section-failed', {
+    logHolidayFailure('holiday-country-dates-section-failed', {
       slug,
       canonicalSlug: event?.__canonicalSlug || event?.slug || null,
-      message: error?.message || String(error),
+      section: 'country-dates',
+      degraded: true,
+      error,
     });
     return <CountryDatesSectionError title={title || event?.name || 'المناسبة'} />;
   }

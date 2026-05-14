@@ -1,25 +1,13 @@
 import { ImageResponse } from 'next/og';
-import { getCountryBySlug } from '@/lib/db/queries/countries';
-import { getCapitalCity } from '@/lib/db/queries/cities';
+import { logError } from '@/lib/observability';
+import { getOgCountryCapitalLabels } from '@/lib/geo-og-labels';
 import { SITE_BRAND } from '@/lib/site-config';
 
 export const alt = `${SITE_BRAND} - الوقت الآن`;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 export const revalidate = 86400;
-
-function humanizeSlug(value) {
-  try {
-    return decodeURIComponent(String(value || ''))
-      .replace(/[-_]+/g, ' ')
-      .trim();
-  } catch {
-    return String(value || '')
-      .replace(/[-_]+/g, ' ')
-      .trim();
-  }
-}
 
 function renderFallbackImage(countryLabel = 'البلد') {
   return new ImageResponse(
@@ -53,15 +41,9 @@ function renderFallbackImage(countryLabel = 'البلد') {
 
 export default async function Image({ params }) {
   const { country } = await params;
-  const fallbackCountryLabel = humanizeSlug(country) || 'البلد';
+  const { countryLabel, capitalLabel, fallbackCountryLabel } = getOgCountryCapitalLabels(country);
 
   try {
-    const countryObj = await getCountryBySlug(country).catch(() => null);
-    const capital = countryObj ? await getCapitalCity(countryObj.country_code).catch(() => null) : null;
-
-    const countryNameAr = countryObj?.name_ar || countryObj?.name_en || fallbackCountryLabel;
-    const capitalNameAr = capital?.name_ar || capital?.name_en || countryNameAr;
-
     return new ImageResponse(
       (
         <div
@@ -117,7 +99,7 @@ export default async function Image({ params }) {
                 lineHeight: 1.1,
               }}
             >
-              الوقت الان في {countryNameAr}
+              الوقت الان في {countryLabel}
             </div>
 
             <div
@@ -128,14 +110,19 @@ export default async function Image({ params }) {
                 color: '#99f6e4',
               }}
             >
-              العاصمة: {capitalNameAr}
+              العاصمة: {capitalLabel}
             </div>
           </div>
         </div>
       ),
       { ...size },
     );
-  } catch {
+  } catch (error) {
+    logError('time-now-country-og-image-failed', {
+      routePath: `/time-now/${country}/opengraph-image`,
+      countrySlug: country,
+      error: error instanceof Error ? { name: error.name, message: error.message } : { message: String(error) },
+    });
     return renderFallbackImage(fallbackCountryLabel);
   }
 }

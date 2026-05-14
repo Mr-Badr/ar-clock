@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { ALL_EVENTS, getRelatedEvents } from '@/lib/holidays-engine';
 import { getHolidayCategoryById } from '@/lib/holidays/taxonomy';
 import { resolveHolidayRuntimeData } from '@/lib/holidays/runtime-data';
-import { logError } from '@/lib/observability';
+import { logHolidayFailure } from '@/lib/holidays/observability';
 
 function toPlainText(value) {
   if (!value) return '';
@@ -126,10 +126,15 @@ export default async function RelatedEvents({ relatedSlugs = [], currentSlug }) 
       </section>
     );
   } catch (error) {
-    logError('holiday-related-events-section-failed', {
+    logHolidayFailure('holiday-related-events-section-failed', {
       currentSlug,
-      relatedSlugs,
-      message: error?.message || String(error),
+      slug: currentSlug,
+      section: 'related-events',
+      degraded: true,
+      error,
+      extraContext: {
+        relatedSlugs,
+      },
     });
     return null;
   }

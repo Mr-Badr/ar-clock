@@ -1064,3 +1064,68 @@ Practical staging DB repair direction:
 - `src/lib/holidays/page-data.js`
 - `src/lib/hijri-resolver.js`
 - `src/lib/db/queries/countries.ts`
+
+## Production deploy status on 2026-05-14
+
+- safe green cutover completed
+- staging image on VPS was healthy before promotion:
+  - image: `ghcr.io/mr-badr/ar-clock:staging`
+  - health: `ok: true`, `readiness: ready`
+- GHCR did not provide `ghcr.io/mr-badr/ar-clock:prod`, so VPS used a safe local image promotion:
+  - `docker tag ghcr.io/mr-badr/ar-clock:staging ghcr.io/mr-badr/ar-clock:prod`
+- green was created successfully:
+  - container: `miqatona-prod-green`
+  - port: `3020`
+- direct green smoke tests passed before public cutover:
+  - `http://127.0.0.1:3020/api/health?full=1`
+  - `http://127.0.0.1:3020/holidays/kuwait-national-day`
+  - `http://127.0.0.1:3020/time-now/libya`
+- nginx was updated so production upstream `miqatona_active` now points to `127.0.0.1:3020`
+- public production smoke tests passed after cutover:
+  - `https://miqatona.com/`
+  - `https://miqatona.com/holidays/kuwait-national-day`
+- important header improvement:
+  - the repeated Open-Meteo `Link` header no longer appeared in the shown post-cutover public responses
+  - remaining `link` headers were font preload headers, which are expected
+- the shown nginx error log after cutover still mostly referenced upstream `127.0.0.1:3010`
+  - treat those lines as historical blue-era errors, not proof that green is failing
+
+### Immediate follow-up after cutover
+
+- keep blue on `3010` temporarily as rollback target
+- re-check nginx error logs after the cutover timestamp to confirm new `3020` traffic stays clean
+- if green remains stable, blue can later be stopped or recreated cleanly
+- one fresh green-era nginx error was already observed after cutover:
+  - timestamp: `2026/05/14 15:46:53`
+  - upstream: `http://127.0.0.1:3020`
+  - route: `/time-now/yemen/aden/opengraph-image`
+  - error: `upstream prematurely closed connection while reading response header from upstream`
+  - practical meaning:
+    - the large repeated HTML header problem improved
+    - OG-image stability still needs continued monitoring on green
+
+## New deploy documentation
+
+- safe production steps are now documented in:
+  - `docs/ci-cd/production-blue-green-runbook.md`
+
+## OG-image hardening after green cutover
+
+- fresh green-era failure confirmed after cutover:
+  - `/time-now/yemen/aden/opengraph-image`
+  - upstream `127.0.0.1:3020`
+  - error: `upstream prematurely closed connection while reading response header from upstream`
+- mitigation chosen in code:
+  - move the riskiest OG-image routes away from live DB and live calculation work
+  - use snapshot-based country/city labels instead
+  - use edge runtime for the lightweight time/prayer OG-image routes
+- new shared label source:
+  - `src/lib/geo-og-labels.js`
+- updated routes:
+  - `src/app/time-now/[country]/opengraph-image.jsx`
+  - `src/app/time-now/[country]/[city]/opengraph-image.jsx`
+  - `src/app/mwaqit-al-salat/[country]/[city]/opengraph-image.jsx`
+- practical meaning:
+  - OG images for time-now and prayer pages are now much less likely to fail under crawler bursts
+  - page SEO value stays on the page itself
+  - social image generation no longer depends on Postgres lookups or live prayer-time calculation

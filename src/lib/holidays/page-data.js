@@ -20,7 +20,7 @@ import {
   localizeEventLabel,
 } from '@/lib/holidays/display';
 import { buildCountryDateRows } from '@/lib/holidays/country-dates';
-import { logError } from '@/lib/observability';
+import { logHolidayFailure } from '@/lib/holidays/observability';
 
 function resolveFaqItems(faqItems, tokenContext) {
   return (faqItems || []).map((item) => {
@@ -267,9 +267,11 @@ export async function getHolidayPageCriticalData(slug) {
     applyHolidayPageCache(runtime);
     return buildHolidayPagePayload(runtime, runtime.seo);
   } catch (error) {
-    logError('holiday-page-critical-data-failed', {
+    logHolidayFailure('holiday-page-critical-data-failed', {
       slug,
-      message: error?.message || String(error),
+      section: 'critical-data',
+      degraded: false,
+      error,
     });
     throw error;
   }
@@ -292,9 +294,11 @@ export async function getHolidayPageCountryDates(slug) {
       ? dynamicCountryDates
       : (runtime.seo.countryDates || []);
   } catch (error) {
-    logError('holiday-page-country-dates-data-failed', {
+    logHolidayFailure('holiday-page-country-dates-data-failed', {
       slug,
-      message: error?.message || String(error),
+      section: 'country-dates-data',
+      degraded: false,
+      error,
     });
     throw error;
   }
