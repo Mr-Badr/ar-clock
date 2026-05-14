@@ -21,11 +21,11 @@
  *   while remaining neutral across all nationalities.
  *
  * DATA FLOW:
- *   resolveAllHijriEvents (hijri-resolver.js) → AlAdhan API → cached 24h
+ *   resolveAllHijriEvents (hijri-resolver.js) → local calendar conversion → cached 24h
  *   → serialisable props → HolidaysLiveCard (Client Component)
  *   → days-remaining computed in browser via JS arithmetic
  *
- * FALLBACK: API failure → static far-future dates (section never breaks).
+ * FALLBACK: local resolution failure → static far-future dates (section never breaks).
  */
 
 import { Moon, Star, Calendar, Bell } from 'lucide-react'
@@ -48,8 +48,8 @@ const H2_ID = 'h2-holidays'
  * and is the internationally accepted reference for Islamic calendars.
  *
  * Note on `accuracy`:
- *   The AlAdhan API returns accuracy metadata. For countries that use local
- *   moon sighting instead of Umm al-Qura, dates may differ by ±1 day.
+ *   Country calendar metadata drives the accuracy badge. For countries that
+ *   use local moon sighting instead of Umm al-Qura, dates may differ by ±1 day.
  *   The HolidaysLiveCard shows a note for 'medium' accuracy dates.
  */
 const OCCASION_DEFS = [
@@ -120,7 +120,7 @@ const OCCASION_DEFS = [
   },
 ]
 
-/* Static fallback — rendered if AlAdhan API is unreachable */
+/* Static fallback — rendered if local holiday resolution returns no result */
 const FALLBACK_OCCASIONS = OCCASION_DEFS.map((def) => ({
   slug:      def.slug,
   name:      def.name,
@@ -140,8 +140,8 @@ export default async function SectionHolidays() {
   let occasions = FALLBACK_OCCASIONS
 
   try {
-    /* resolveAllHijriEvents is cached 24h via cacheTag('hijri-events')
-     * in hijri-resolver.js — no redundant API calls on every request. */
+    /* resolveAllHijriEvents is cached via cacheTag('hijri-events')
+     * in hijri-resolver.js — no redundant holiday recomputation on every request. */
     const resolved = await resolveAllHijriEvents(OCCASION_DEFS)
 
     const built = OCCASION_DEFS.map((def) => {
@@ -178,7 +178,7 @@ export default async function SectionHolidays() {
 
     if (built.length > 0) occasions = built
   } catch {
-    /* API unavailable — fallback already set */
+    /* Resolution failed — fallback already set */
   }
 
   /* ─────────────────────────────────────────────────────────────────────── */

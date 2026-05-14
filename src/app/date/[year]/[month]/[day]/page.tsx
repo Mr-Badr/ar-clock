@@ -115,25 +115,28 @@ export default async function ProgrammaticDatePage({
     { label: `${d} ${MONTHS_AR[m - 1]}` },
   ];
 
-  const jsonLd = {
+  const breadcrumbSchema = buildBreadcrumbJsonLd(breadcrumb, BASE_URL);
+  const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: `${d} ${MONTHS_AR[m - 1]} ${y} — ${hijri.formatted.ar}`,
     description: `تاريخ ${d} ${MONTHS_AR[m - 1]} ${y} يوافق ${hijri.formatted.ar} هجري.`,
     url: `${BASE_URL}/date/${year}/${month}/${day}`,
-    breadcrumb: buildBreadcrumbJsonLd(breadcrumb, BASE_URL),
-    mainEntity: {
-      '@type': 'FAQPage',
-      mainEntity: [
-        { '@type': 'Question', name: `كم يوافق ${d} ${MONTHS_AR[m - 1]} ${y} بالهجري؟`, acceptedAnswer: { '@type': 'Answer', text: `${d} ${MONTHS_AR[m - 1]} ${y} يوافق ${hijri.formatted.ar} وفق حساب أم القرى.` } },
-        { '@type': 'Question', name: `ما هو اليوم الموافق ${hijri.day} ${hijri.monthNameAr} ${hijri.year}؟`, acceptedAnswer: { '@type': 'Answer', text: `${hijri.day} ${hijri.monthNameAr} ${hijri.year} هجري يوافق ${d} ${MONTHS_AR[m - 1]} ${y} ميلادي.` } },
-      ],
-    },
+  };
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      { '@type': 'Question', name: `كم يوافق ${d} ${MONTHS_AR[m - 1]} ${y} بالهجري؟`, acceptedAnswer: { '@type': 'Answer', text: `${d} ${MONTHS_AR[m - 1]} ${y} يوافق ${hijri.formatted.ar} وفق حساب أم القرى.` } },
+      { '@type': 'Question', name: `ما هو اليوم الموافق ${hijri.day} ${hijri.monthNameAr} ${hijri.year}؟`, acceptedAnswer: { '@type': 'Answer', text: `${hijri.day} ${hijri.monthNameAr} ${hijri.year} هجري يوافق ${d} ${MONTHS_AR[m - 1]} ${y} ميلادي.` } },
+    ],
   };
 
   return (
     <>
-      <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={webPageSchema} />
+      <JsonLd data={faqSchema} />
       {/* <AdLayoutWrapper> */}
         <main className="content-col pt-24 pb-20 mt-12">
           <DateBreadcrumb items={breadcrumb} />

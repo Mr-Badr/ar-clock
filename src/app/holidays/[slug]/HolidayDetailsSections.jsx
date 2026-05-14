@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
-import CountryTable from './CountryTable';
 import HistoricalTable from './HistoricalTable';
 import RelatedEvents from './RelatedEvents';
 import HolidayInternalLinks from './HolidayInternalLinks';
@@ -32,6 +31,7 @@ export default function HolidayDetailsSections({
   pageModel,
   hijriYearNum,
   currentYear,
+  countryDatesSlot = null,
 }) {
   const {
     meta,
@@ -108,7 +108,7 @@ export default function HolidayDetailsSections({
         </div>
       </div>
 
-      <CountryTable title={displayTitle} event={event} countryDates={seo.countryDates} />
+      {countryDatesSlot}
       <HistoricalTable event={event} hijriYear={hijriYearNum} currentYear={currentYear} />
 
       {recurringYears && (

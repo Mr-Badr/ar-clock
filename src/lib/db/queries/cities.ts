@@ -180,25 +180,37 @@ async function fetchAllCityParamsFromDb(): Promise<CityParams[]> {
   return loadAllCityParams()
 }
 
+function warnCityQueryFallback(reason: string, context: Record<string, unknown>) {
+  console.warn('[DB] city-query-fallback', {
+    reason,
+    ...context,
+  })
+}
+
 export async function getCitiesByCountry(countryCode: string): Promise<City[]> {
   'use cache'
   cacheTag('cities', `cities-${countryCode}`)
   cacheLife('days')
 
   const fallbackRows = getFallbackCitiesByCountry(countryCode)
-  if (fallbackRows.length > 0) {
+
+  if (!GEO_DB_FALLBACK_ENABLED) {
     return fallbackRows as City[]
   }
 
   try {
     const dbRows = await fetchCitiesByCountryFromDb(countryCode)
-    return mergeCities(dbRows, countryCode) as City[]
-  } catch (err: any) {
-    if (err?.message && err.message !== 'empty') {
-      console.warn(`[DB] getCitiesByCountry(${countryCode}) → fallback:`, err.message)
+    if (dbRows.length > 0) {
+      return mergeCities(dbRows, countryCode) as City[]
     }
-    return []
+  } catch (error) {
+    warnCityQueryFallback('getCitiesByCountry-error', {
+      countryCode,
+      error: error instanceof Error ? error.message : String(error),
+    })
   }
+
+  return fallbackRows as City[]
 }
 
 export async function getTopCitiesByCountry(countryCode: string, limit = 20): Promise<City[]> {
@@ -215,15 +227,20 @@ export async function getCityBySlug(countryCode: string, citySlug: string): Prom
   cacheTag('cities', `city-${countryCode}-${citySlug}`)
   cacheLife('days')
 
-  const fromFallback = getFallbackCityBySlug(countryCode, citySlug)
-  if (fromFallback) return fromFallback as City
-
-  try {
-    const city = await fetchCityBySlugFromDb(countryCode, citySlug)
-    return city as City
-  } catch {
-    return null
+  if (GEO_DB_FALLBACK_ENABLED) {
+    try {
+      const city = await fetchCityBySlugFromDb(countryCode, citySlug)
+      if (city) return city as City
+    } catch (error) {
+      warnCityQueryFallback('getCityBySlug-error', {
+        countryCode,
+        citySlug,
+        error: error instanceof Error ? error.message : String(error),
+      })
+    }
   }
+
+  return getFallbackCityBySlug(countryCode, citySlug) as City | null
 }
 
 export async function getCapitalCity(countryCode: string): Promise<City | null> {
@@ -231,18 +248,25 @@ export async function getCapitalCity(countryCode: string): Promise<City | null> 
   cacheTag('cities', `capital-${countryCode}`)
   cacheLife('days')
 
+  if (GEO_DB_FALLBACK_ENABLED) {
+    try {
+      const dbCities = await fetchCitiesByCountryFromDb(countryCode)
+      if (dbCities.length > 0) {
+        return mergeCities(dbCities, countryCode).find((city) => city.is_capital) as City ?? dbCities[0] as City ?? null
+      }
+    } catch (error) {
+      warnCityQueryFallback('getCapitalCity-error', {
+        countryCode,
+        error: error instanceof Error ? error.message : String(error),
+      })
+    }
+  }
+
   const fallbackCapital = getFallbackCitiesByCountry(countryCode).find((city) => city.is_capital)
   if (fallbackCapital) return fallbackCapital as City
-
   const fallbackFirst = getFallbackCitiesByCountry(countryCode)[0]
   if (fallbackFirst) return fallbackFirst as City
-
-  try {
-    const dbCities = await fetchCitiesByCountryFromDb(countryCode)
-    return mergeCities(dbCities, countryCode).find((city) => city.is_capital) as City ?? dbCities[0] as City ?? null
-  } catch {
-    return null
-  }
+  return null
 }
 
 export async function getAllCityParams(): Promise<CityParams[]> {
@@ -255,15 +279,22 @@ export async function getAllCityParams(): Promise<CityParams[]> {
     city: city.city_slug,
   }))
 
-  try {
-    const dbParams = await fetchAllCityParamsFromDb()
-    return mergeCityParams([...fallbackParams, ...dbParams])
-  } catch (err: any) {
-    if (err?.message) {
-      console.warn('[DB] getAllCityParams() → fallback:', err.message)
-    }
+  if (!GEO_DB_FALLBACK_ENABLED) {
     return mergeCityParams(fallbackParams)
   }
+
+  try {
+    const dbParams = await fetchAllCityParamsFromDb()
+    if (dbParams.length > 0) {
+      return mergeCityParams(dbParams)
+    }
+  } catch (error) {
+    warnCityQueryFallback('getAllCityParams-error', {
+      error: error instanceof Error ? error.message : String(error),
+    })
+  }
+
+  return mergeCityParams(fallbackParams)
 }
 
 export async function getPriorityCityParams(limit = 10): Promise<CityParams[]> {

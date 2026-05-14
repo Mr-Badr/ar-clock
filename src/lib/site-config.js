@@ -6,11 +6,11 @@ export const SITE_BRAND_EN = 'Miqatona';
 export const SITE_CONTACT_EMAIL = 'contact@miqatona.com';
 export const SITE_LEGACY_BRANDS = ['ميقاتنا', 'Miqatona'];
 export const SITE_PRIMARY_DOMAIN = 'https://miqatona.com';
-export const SITE_APP_NAME = `${SITE_BRAND} | دليلك الشامل للوقت والمواعيد`;
-export const SITE_HOME_TITLE = 'كم الساعة الآن في مدينتك؟ | الوقت الآن ومواقيت الصلاة والتاريخ';
+export const SITE_APP_NAME = `${SITE_BRAND} | منصة عربية للوقت والصلاة والتاريخ والحاسبات والاقتصاد`;
+export const SITE_HOME_TITLE = 'ميقاتنا | الوقت والصلاة والتاريخ والحاسبات وأدوات الاقتصاد';
 export const SITE_TITLE = `${SITE_HOME_TITLE} | ${SITE_BRAND}`;
 export const SITE_DESCRIPTION =
-  'اعرف فوراً كم الساعة الآن في مدينتك، ومواقيت الصلاة اليوم، وفرق التوقيت بين الدول، وتاريخ اليوم الهجري والميلادي، مع حاسبة العمر والضريبة والقسط الشهري وأدوات الاقتصاد الحي للذهب والفوركس والأسواق.';
+  'ميقاتنا منصة عربية تجمع الوقت الآن، مواقيت الصلاة، التاريخ الهجري والميلادي، المناسبات والعد التنازلي، الحاسبات اليومية، وأدوات الاقتصاد الحي والأسواق، مع أدلة عملية وروابط واضحة بين الأقسام.';
 
 const CURRENT_GREGORIAN_YEAR = new Date().getFullYear();
 const NEXT_GREGORIAN_YEAR = CURRENT_GREGORIAN_YEAR + 1;
@@ -209,12 +209,17 @@ export const SITE_SCHEMA_TOPICS = [
   'مكافأة نهاية الخدمة',
   'ضريبة القيمة المضافة',
   'النسبة المئوية',
+  'الحاسبات اليومية',
+  'الأدوات المالية',
   'الأسواق العالمية',
   'السوق الأمريكي',
   'جلسات الفوركس',
   'الذهب',
+  'المناسبات والإجازات',
   'عداد المناسبات',
   'العد التنازلي للمناسبات',
+  'الأدلة العملية',
+  'فهرس الأدوات',
   'اتجاه القبلة',
 ];
 

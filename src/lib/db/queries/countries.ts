@@ -6,6 +6,7 @@ import snapshot from '../../../../public/geo/countries.json'
 import { PRIORITY_COUNTRY_SLUGS, GLOBAL_POPULAR_COUNTRIES } from '@/lib/db/constants'
 import {
   isLiveGeoDbEnabled,
+  loadAllCountries,
   loadAllCountrySlugs,
   loadCountryByCode,
   loadCountryBySlug,
@@ -90,10 +91,37 @@ async function fetchAllCountrySlugsFromDb() {
   return loadAllCountrySlugs()
 }
 
+async function fetchAllCountriesFromDb() {
+  return loadAllCountries()
+}
+
+function warnCountryQueryFallback(reason: string, context: Record<string, unknown>) {
+  console.warn('[DB] country-query-fallback', {
+    reason,
+    ...context,
+  })
+}
+
 export async function getAllCountries(): Promise<Country[]> {
   'use cache'
   cacheTag('countries')
   cacheLife('days')
+
+  if (!GEO_DB_FALLBACK_ENABLED) {
+    return mergeCountries([])
+  }
+
+  try {
+    const dbRows = await fetchAllCountriesFromDb()
+    if (dbRows.length > 0) {
+      return mergeCountries(dbRows)
+    }
+  } catch (error) {
+    warnCountryQueryFallback('getAllCountries-error', {
+      error: error instanceof Error ? error.message : String(error),
+    })
+  }
+
   return mergeCountries([])
 }
 
@@ -102,14 +130,19 @@ export async function getCountryBySlug(slug: string): Promise<Country | null> {
   cacheTag('countries', `country-${slug}`)
   cacheLife('days')
 
-  const fromFallback = findFallbackCountryBySlug(slug)
-  if (fromFallback) return fromFallback
-
-  try {
-    return await fetchCountryBySlugFromDb(slug)
-  } catch {
-    throw new Error(`Country not found: ${slug}`)
+  if (GEO_DB_FALLBACK_ENABLED) {
+    try {
+      const country = await fetchCountryBySlugFromDb(slug)
+      if (country) return country
+    } catch (error) {
+      warnCountryQueryFallback('getCountryBySlug-error', {
+        slug,
+        error: error instanceof Error ? error.message : String(error),
+      })
+    }
   }
+
+  return findFallbackCountryBySlug(slug)
 }
 
 export async function getCountryByCode(code: string): Promise<Country | null> {
@@ -117,14 +150,19 @@ export async function getCountryByCode(code: string): Promise<Country | null> {
   cacheTag('countries', `country-code-${code}`)
   cacheLife('days')
 
-  const fromFallback = findFallbackCountryByCode(code)
-  if (fromFallback) return fromFallback
-
-  try {
-    return await fetchCountryByCodeFromDb(code)
-  } catch {
-    return null
+  if (GEO_DB_FALLBACK_ENABLED) {
+    try {
+      const country = await fetchCountryByCodeFromDb(code)
+      if (country) return country
+    } catch (error) {
+      warnCountryQueryFallback('getCountryByCode-error', {
+        code,
+        error: error instanceof Error ? error.message : String(error),
+      })
+    }
   }
+
+  return findFallbackCountryByCode(code)
 }
 
 export async function getAllCountrySlugs(): Promise<string[]> {
@@ -136,15 +174,22 @@ export async function getAllCountrySlugs(): Promise<string[]> {
     .map((country) => country.country_slug)
     .filter(Boolean)
 
-  try {
-    const dbSlugs = await fetchAllCountrySlugsFromDb()
-    return Array.from(new Set([...fallbackSlugs, ...dbSlugs]))
-  } catch (err: any) {
-    if (err?.message) {
-      console.warn('[DB] getAllCountrySlugs() → fallback:', err.message)
-    }
+  if (!GEO_DB_FALLBACK_ENABLED) {
     return Array.from(new Set(fallbackSlugs))
   }
+
+  try {
+    const dbSlugs = await fetchAllCountrySlugsFromDb()
+    if (dbSlugs.length > 0) {
+      return Array.from(new Set(dbSlugs))
+    }
+  } catch (error) {
+    warnCountryQueryFallback('getAllCountrySlugs-error', {
+      error: error instanceof Error ? error.message : String(error),
+    })
+  }
+
+  return Array.from(new Set(fallbackSlugs))
 }
 
 export async function getPriorityCountrySlugs(limit = 60): Promise<string[]> {

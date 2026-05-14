@@ -9,6 +9,7 @@ import {
   buildUsMarketOpenPageModel,
   getEconomyToolCards,
 } from '@/lib/economy/engine';
+import { getInitialEconomyPageState } from '@/lib/economy/page-helpers';
 
 const viewer = {
   timezone: 'Asia/Riyadh',
@@ -93,4 +94,11 @@ test('gold market hours model exposes country rows and maintenance window', () =
   assert.equal(model.sourceLinks.length >= 3, true);
   assert.equal(model.signalCards.length >= 3, true);
   assert.equal(model.weeklyEvents.every((event) => typeof event.descriptionAr === 'string'), true);
+});
+
+test('economy initial page state seeds a fallback timestamp for first-render SEO output', async () => {
+  const snapshot = await getInitialEconomyPageState();
+
+  assert.equal(typeof snapshot.initialNowIso, 'string');
+  assert.equal(snapshot.initialNowIso.length > 10, true);
 });

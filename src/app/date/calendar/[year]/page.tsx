@@ -131,29 +131,32 @@ export default async function GregorianCalendarPage({
     { label: `عام ${year}` },
   ];
 
-  const jsonLd = {
+  const breadcrumbSchema = buildBreadcrumbJsonLd(breadcrumb, BASE_URL);
+  const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: `التقويم الميلادي لعام ${year}`,
     description: `تقويم عام ${year} ميلادي كامل مع تحويل هجري يومي وروابط مباشرة لكل يوم من السنة.`,
     url: `${BASE_URL}/date/calendar/${year}`,
-    breadcrumb: buildBreadcrumbJsonLd(breadcrumb, BASE_URL),
-    mainEntity: {
-      '@type': 'FAQPage',
-      mainEntity: faqItems.map((item) => ({
-        '@type': 'Question',
-        name: item.question,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: item.answer,
-        },
-      })),
-    },
+  };
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
   };
 
   return (
     <>
-      <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={webPageSchema} />
+      <JsonLd data={faqSchema} />
       <main className="content-col pt-24 pb-20 mt-12">
         <DateBreadcrumb items={breadcrumb} />
 
@@ -224,7 +227,7 @@ export default async function GregorianCalendarPage({
           </p>
           <div className="flex flex-wrap" style={{ gap: '8px' }}>
             {monthLinks.map((month) => (
-              <Link key={month.href} href={month.href} rel="nofollow" className="chip">
+              <Link key={month.href} href={month.href} className="chip">
                 {month.label}
               </Link>
             ))}

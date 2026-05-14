@@ -25,7 +25,7 @@
  */
 
 import { Info } from 'lucide-react'
-import { RELIGIOUS_HOLIDAYS, buildHistoricalDates, replaceTokens, approxHijriYear, HIJRI_MONTHS_AR, getNextEventDate } from '@/lib/holidays-engine'
+import { RELIGIOUS_HOLIDAYS, buildHistoricalDates, replaceTokens, approxHijriYear, HIJRI_MONTHS_AR, getNextEventDate, formatGregorianAr } from '@/lib/holidays-engine'
 import { SectionWrapper } from '@/components/shared/primitives'
 import { SectionBadge } from '@/components/shared/primitives'
 
@@ -48,7 +48,7 @@ const resolveEvent = (ev) => {
       let value = replaceTokens(f.value || '', gr, hi);
       if (f._dynamic === 'gregorian') {
         const d = getNextEventDate(ev);
-        value = d ? d.toLocaleDateString('ar-SA-u-nu-latn', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+        value = d ? formatGregorianAr(d) : '';
       }
       if (f._dynamic === 'hijri') value = `${ev.hijriDay || 1} ${HIJRI_MONTHS_AR[ev.hijriMonth] || ''} ${hi} هـ`;
       return { label: replaceTokens(f.label || '', gr, hi), value };

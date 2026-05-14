@@ -345,7 +345,6 @@ async function TodayHijriDynamicContent() {
               {hijri && (
                 <Link
                   href={`/date/hijri/${hijri.year}/${String(hijri.month).padStart(2, '0')}/${String(hijri.day).padStart(2, '0')}`}
-                  rel="nofollow"
                   className="related-link-card"
                 >
                   <span className="related-link-card__icon" aria-hidden="true">

@@ -27,7 +27,9 @@ const nextConfig = {
   output: 'standalone',
 
   // ── HTTP ─────────────────────────────────────────────────────────────────────
-  compress: true,
+  // Disable Node-level compression. This app is served behind nginx, and
+  // uncompressed streaming from Next.js is more reliable for Safari/WebKit.
+  compress: false,
   poweredByHeader: false,
 
   // ── Images ──────────────────────────────────────────────────────────────────
@@ -59,7 +61,6 @@ const nextConfig = {
 
   // ── Experiments ──────────────────────────────────────────────────────────────
   experimental: {
-    dynamicIO: true,
     optimizeCss: true,
 
     optimizePackageImports: [
@@ -82,7 +83,6 @@ const nextConfig = {
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(self)' },
-          { key: 'Link', value: '<https://api.open-meteo.com>; rel=preconnect' },
         ],
       },
       {
@@ -180,6 +180,11 @@ const nextConfig = {
       },
       {
         source: '/&',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/%26',
         destination: '/',
         permanent: true,
       },

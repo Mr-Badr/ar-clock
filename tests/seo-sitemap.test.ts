@@ -11,6 +11,8 @@ import guidesSitemap from '@/app/guides/sitemap';
 import holidaysSitemap from '@/app/holidays/sitemap';
 import rootSitemap from '@/app/sitemap';
 import { GET as sitemapIndexRoute } from '@/app/sitemap-index.xml/route';
+import { GET as gregorianDateSitemapRoute } from '@/app/date/gregorian/sitemap.xml/route';
+import { GET as hijriDateSitemapRoute } from '@/app/date/hijri/sitemap.xml/route';
 import robots from '@/app/robots';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { ALL_CALCULATOR_SEO_ROUTES } from '@/lib/seo/calculator-route-manifest';
@@ -227,6 +229,18 @@ test('sitemap index includes economy sitemap entry', async () => {
   assert.match(xml, new RegExp(`${base}/date/sitemaps/static`));
   assert.match(xml, new RegExp(`${base}/date/sitemaps/countries`));
   assert.match(xml, new RegExp(`${base}/date/sitemaps/calendars`));
+  assert.match(xml, new RegExp(`${base}/date/gregorian/sitemap\\.xml`));
+  assert.match(xml, new RegExp(`${base}/date/hijri/sitemap\\.xml`));
+});
+
+test('date daily sitemaps publish canonical Gregorian and Hijri day pages', async () => {
+  const base = getSiteUrl();
+
+  const gregorianXml = await (await gregorianDateSitemapRoute()).text();
+  const hijriXml = await (await hijriDateSitemapRoute()).text();
+
+  assert.match(gregorianXml, new RegExp(`${base}/date/\\d{4}/\\d{2}/\\d{2}`));
+  assert.match(hijriXml, new RegExp(`${base}/date/hijri/\\d{4}/\\d{2}/\\d{2}`));
 });
 
 test('robots points crawlers to sitemap index', () => {

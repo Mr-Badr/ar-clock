@@ -31,10 +31,11 @@ import SearchCity from '@/components/SearchCityWrapper.client';
 import CountryCitiesGrid from '@/components/time-now/CountryCitiesGrid';
 import TimezoneInfoCard from '@/components/time-now/TimezoneInfoCard';
 import SameTimezoneCountries from '@/components/time-now/SameTimezoneCountries';
+import TimeNowFAQ from '@/components/time-now/TimeNowFAQ';
 import RelatedSearches from '@/components/time-now/RelatedSearches';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 
-import { getCountryBySlug } from '@/lib/db/queries/countries';
+import { getAllCountries, getCountryBySlug } from '@/lib/db/queries/countries';
 import { getPriorityCityParams, getCityBySlug, getTopCitiesByCountry } from '@/lib/db/queries/cities';
 import { getCachedNowIso } from '@/lib/date-utils';
 import {
@@ -43,6 +44,11 @@ import {
 } from '@/lib/seo/country-indexing';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 import { buildTimeNowKeywords } from '@/lib/seo/section-search-intent';
+import {
+  buildCityTimeNowFaqItems,
+  getCountriesSharingCurrentOffset,
+  getTimeNowSeoFacts,
+} from '@/lib/time-now-content';
 
 const BASE = getSiteUrl();
 
@@ -143,15 +149,38 @@ export default async function CityTimePage({ params }) {
   if (!city) notFound();
 
   /* Parallel data fetching — all cached */
-  const [nowIso, siblingCities] = await Promise.all([
+  const [nowIso, siblingCities, allCountries] = await Promise.all([
     getCachedNowIso(),
     getTopCitiesByCountry(country.country_code, 8),
+    getAllCountries(),
   ]);
-  const sameOffsetCountries = []; // Skipped
 
   const cityAr = city.name_ar || city.name_en;
   const countryAr = country.name_ar || country.name_en;
   const offset = getUtcOffsetStr(city.timezone);
+  const timeFacts = getTimeNowSeoFacts({
+    timezone: city.timezone,
+    utcOffset: offset,
+    referenceDateOrIso: nowIso,
+    placeAr: cityAr,
+  });
+  const sameOffsetCountries = getCountriesSharingCurrentOffset(allCountries, {
+    referenceTimezone: city.timezone,
+    referenceDateOrIso: nowIso,
+    excludeCountrySlug: countrySlug,
+  });
+  const faqItems = buildCityTimeNowFaqItems({
+    countryAr,
+    cityAr,
+    timezone: city.timezone,
+    utcOffset: offset,
+    referenceDateOrIso: nowIso,
+  });
+  const relatedOffsetCountriesText = sameOffsetCountries
+    .slice(0, 3)
+    .map((entry) => entry.country_name_ar || entry.country_name_en)
+    .filter(Boolean)
+    .join('، ');
   const cityUtilityLinks = [
     {
       href: `/mwaqit-al-salat/${countrySlug}/${citySlug}`,
@@ -211,40 +240,14 @@ export default async function CityTimePage({ params }) {
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: `ما هو الوقت الان في ${cityAr}؟`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: `يُعرض الوقت الحالي في ${cityAr}، ${countryAr} في أعلى هذه الصفحة بدقة حتى الثانية. ${cityAr} تتبع المنطقة الزمنية ${city.timezone} وهي ${offset}.`,
-        },
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
       },
-      {
-        '@type': 'Question',
-        name: `ما هي المنطقة الزمنية في ${cityAr}؟`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: `${cityAr} تتبع المنطقة الزمنية ${city.timezone}، بتوقيت ${offset} من التوقيت العالمي المنسق (UTC).`,
-        },
-      },
-      {
-        '@type': 'Question',
-        name: `كم الساعة الان في ${cityAr}؟`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: `الساعة الحالية في ${cityAr} تظهر في أعلى الصفحة محدَّثةً تلقائياً كل ثانية. ${cityAr} تتبع ${offset}.`,
-        },
-      },
-      {
-        '@type': 'Question',
-        name: `ما هو التاريخ اليوم في ${cityAr}؟`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: `تعرض هذه الصفحة التاريخ اليوم في ${cityAr} بالتقويم الميلادي والهجري معاً، وفق المنطقة الزمنية ${city.timezone}.`,
-        },
-      },
-    ],
+    })),
   };
 
   /* ── RENDER ──────────────────────────────────────────────────── */
@@ -361,11 +364,21 @@ export default async function CityTimePage({ params }) {
           <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
             <SameTimezoneCountries
               countries={sameOffsetCountries}
-              utcOffset={offset}
+              utcOffset={timeFacts.offsetLabel}
               currentCityAr={cityAr}
             />
           </section>
         )}
+
+        <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
+          <div className="max-w-4xl mx-auto">
+            <TimeNowFAQ
+              placeLabelAr={cityAr}
+              introText={`إجابات عملية حول الوقت المحلي في ${cityAr}، التاريخ اليوم، والتوقيت الصيفي داخل ${countryAr}.`}
+              items={faqItems}
+            />
+          </div>
+        </section>
 
         {/* ══ RELATED SEARCHES ═════════════════════════════════════ */}
         <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
@@ -378,7 +391,7 @@ export default async function CityTimePage({ params }) {
         <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
           <GeoInternalLinks
             title={`روابط مفيدة لمدينة ${cityAr}`}
-            description={`أضفنا هذه الروابط حتى لا تبقى صفحة ${cityAr} معزولة داخل السايت ماب فقط، بل مرتبطة بصفحات الصلاة والتاريخ وصفحة الدولة نفسها.`}
+            description={`إذا كنت تتابع الوقت في ${cityAr} فهذه الروابط تقودك مباشرة إلى الصلاة والتاريخ وصفحة ${countryAr} وأداة فرق التوقيت دون بحث إضافي.`}
             links={cityUtilityLinks}
             ariaLabel={`روابط مفيدة لمدينة ${cityAr}`}
           />
@@ -398,27 +411,33 @@ export default async function CityTimePage({ params }) {
               <Link href={`/time-now/${countrySlug}`} className="text-accent hover:underline">{countryAr}</Link>،
               وتتبع المنطقة الزمنية <strong style={{ color: 'var(--text-primary)' }}>{city.timezone}</strong> وهي{' '}
               <strong style={{ color: 'var(--text-primary)' }}>{offset}</strong> من التوقيت العالمي المنسق (UTC).
-              يعرض هذا الموقع الوقت الحالي في {cityAr} بدقة حتى الثانية دون الحاجة إلى تحديث الصفحة.
+              {` ${timeFacts.utcRelationSentence}`} ويعرض هذا الموقع الوقت الحالي في {cityAr} بدقة حتى الثانية دون الحاجة إلى تحديث الصفحة.
             </p>
 
             <p>
-              يتضمن عرض الوقت <strong style={{ color: 'var(--text-primary)' }}>التاريخ اليوم</strong> بالتقويم
-              الميلادي والهجري (تقويم أم القرى)، فضلاً عن اسم اليوم بالعربية ورقم الأسبوع من السنة.
-              يمكنك أيضاً تبديل المدينة بسهولة باستخدام خاصية البحث العالمي للحصول على وقت أي مدينة
-              في العالم فوراً.
+              {timeFacts.gregorianDateAr ? (
+                <>
+                  التاريخ المحلي اليوم في {cityAr} هو{' '}
+                  <strong style={{ color: 'var(--text-primary)' }}>{timeFacts.gregorianDateAr}</strong>
+                  {timeFacts.hijriDateAr ? (
+                    <>
+                      {' '}وبالهجري{' '}
+                      <strong style={{ color: 'var(--text-primary)' }}>{timeFacts.hijriDateAr}</strong>.
+                    </>
+                  ) : '.'}
+                </>
+              ) : (
+                <>
+                  يتضمن عرض الوقت <strong style={{ color: 'var(--text-primary)' }}>التاريخ اليوم</strong> بالتقويم
+                  الميلادي والهجري (تقويم أم القرى) وفق المنطقة الزمنية المحلية.
+                </>
+              )}{' '}
+              كما يوضح قسم معلومات المنطقة الزمنية ما إذا كانت الإزاحة ثابتة طوال السنة أو تتغير بين الشتاء والصيف.
             </p>
             <p>
-              تغطي الصفحة كذلك أكثر العبارات التي يكتبها المستخدمون عند البحث مثل
-              {' '}
-              <strong style={{ color: 'var(--text-primary)' }}>الوقت الان في {cityAr}</strong>
-              {' '}و
-              {' '}
-              <strong style={{ color: 'var(--text-primary)' }}>كم الساعة في {cityAr}</strong>
-              {' '}و
-              {' '}
-              <strong style={{ color: 'var(--text-primary)' }}>التاريخ اليوم في {cityAr}</strong>
-              ، لكن بصياغة طبيعية ومحتوى ظاهر يشرح الوقت الفعلي والمنطقة الزمنية
-              والروابط ذات الصلة داخل الموقع.
+              تجد في الصفحة أيضاً روابط إلى مدن أخرى داخل {countryAr}
+              {relatedOffsetCountriesText ? `، وإلى دول تشترك اليوم في نفس الإزاحة مثل ${relatedOffsetCountriesText}` : ''}
+              . هذا يجعل الصفحة مفيدة للتخطيط للمكالمات والسفر ومتابعة الوقت المحلي، لا مجرد سطر ساعة معزول.
             </p>
           </div>
         </section>

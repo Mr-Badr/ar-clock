@@ -49,52 +49,65 @@ function daysColor(days, accent) {
   return accent;
 }
 
+function renderFallbackImage({ width, height }) {
+  return new ImageResponse(
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        background: '#0F1117',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <span style={{ color: '#4ECDC4', fontSize: 48, fontWeight: 800 }}>
+        {SITE_BRAND} — عداد المواعيد
+      </span>
+    </div>,
+    { width, height },
+  );
+}
+
 export default async function Image({ params, searchParams }) {
   const { slug } = await params;
 
   /* ── Square variant for Google Discover / Instagram ── */
-  const isSquare = searchParams?.sq === '1';
+  const sp = (await searchParams) || {};
+  const isSquare = sp.sq === '1';
   const W = 1200;
   const H = isSquare ? 1200 : 630;
 
-  /* ── Unknown slug fallback ── */
-  const ogData = await getHolidayOgData(slug);
-  if (!ogData) {
-    return new ImageResponse(
-      <div style={{
-        width: '100%', height: '100%',
-        background: '#0F1117',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-      }}>
-        <span style={{ color: '#4ECDC4', fontSize: 48, fontWeight: 800 }}>{SITE_BRAND} — عداد المواعيد</span>
-      </div>,
-      { width: W, height: H },
-    );
-  }
+  try {
+    /* ── Unknown slug fallback ── */
+    const ogData = await getHolidayOgData(slug);
+    if (!ogData) {
+      return renderFallbackImage({ width: W, height: H });
+    }
 
-  /* ── Data ── */
-  const { event, remaining: rem, seo, dateStr } = ogData;
-  const accent = CAT_COLOR[event.category] || '#4ECDC4';
-  const emoji = CAT_EMOJI[event.category] || '📅';
-  const daysFg = daysColor(rem.days, accent);
+    /* ── Data ── */
+    const { event, remaining: rem, seo, dateStr } = ogData;
+    const accent = CAT_COLOR[event.category] || '#4ECDC4';
+    const emoji = CAT_EMOJI[event.category] || '📅';
+    const daysFg = daysColor(rem.days, accent);
 
-  /* ── Title — prefer short name; fall back to event.name ── */
-  const ogTitle = seo?.seoMeta?.ogTitle || seo?.seoMeta?.titleTag || seo.seoTitle;
-  const titleText = ogTitle.length > 52 ? event.name : ogTitle;
+    /* ── Title — prefer short name; fall back to event.name ── */
+    const ogTitle = seo?.seoMeta?.ogTitle || seo?.seoMeta?.titleTag || seo?.seoTitle || event.name;
+    const titleText = ogTitle.length > 52 ? event.name : ogTitle;
 
-  /* ══════════════════════════════════════════════════════════════════════
+    /* ══════════════════════════════════════════════════════════════════════
      WIDE (1200×630) — optimised for Twitter, Facebook, WhatsApp, Telegram
      ══════════════════════════════════════════════════════════════════════ */
-  if (!isSquare) {
-    return new ImageResponse(
-      <div style={{
-        width: '100%', height: '100%',
-        background: 'linear-gradient(135deg,#0F1117 0%,#1A1F2E 55%,#0F1117 100%)',
-        display: 'flex', flexDirection: 'column',
-        fontFamily: 'system-ui,-apple-system,sans-serif',
-        position: 'relative', overflow: 'hidden',
-        direction: 'rtl',
-      }}>
+    if (!isSquare) {
+      return new ImageResponse(
+        <div style={{
+          width: '100%', height: '100%',
+          background: 'linear-gradient(135deg,#0F1117 0%,#1A1F2E 55%,#0F1117 100%)',
+          display: 'flex', flexDirection: 'column',
+          fontFamily: 'system-ui,-apple-system,sans-serif',
+          position: 'relative', overflow: 'hidden',
+          direction: 'rtl',
+        }}>
         {/* Right accent strip */}
         <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: 8, background: accent }} />
 
@@ -185,25 +198,25 @@ export default async function Image({ params, searchParams }) {
             </div>
           </div>
         </div>
-      </div>,
-      { width: W, height: H },
-    );
-  }
+        </div>,
+        { width: W, height: H },
+      );
+    }
 
-  /* ══════════════════════════════════════════════════════════════════════
+    /* ══════════════════════════════════════════════════════════════════════
      SQUARE (1200×1200) — Google Discover cards, Instagram link preview
      Centred layout with larger days number
      ══════════════════════════════════════════════════════════════════════ */
-  return new ImageResponse(
-    <div style={{
-      width: '100%', height: '100%',
-      background: 'linear-gradient(160deg,#0F1117 0%,#1A1F2E 60%,#0F1117 100%)',
-      display: 'flex', flexDirection: 'column',
-      fontFamily: 'system-ui,-apple-system,sans-serif',
-      alignItems: 'center', justifyContent: 'center',
-      position: 'relative', overflow: 'hidden',
-      gap: 36, direction: 'rtl', padding: '64px 72px',
-    }}>
+    return new ImageResponse(
+      <div style={{
+        width: '100%', height: '100%',
+        background: 'linear-gradient(160deg,#0F1117 0%,#1A1F2E 60%,#0F1117 100%)',
+        display: 'flex', flexDirection: 'column',
+        fontFamily: 'system-ui,-apple-system,sans-serif',
+        alignItems: 'center', justifyContent: 'center',
+        position: 'relative', overflow: 'hidden',
+        gap: 36, direction: 'rtl', padding: '64px 72px',
+      }}>
       {/* Accent glow */}
       <div style={{
         position: 'absolute', top: 80, right: 80,
@@ -255,7 +268,10 @@ export default async function Image({ params, searchParams }) {
       <span style={{ position: 'absolute', bottom: 24, left: '50%', transform: 'translateX(-50%)', color: '#4A5568', fontSize: 16, opacity: 0.5 }}>
         {new URL(getSiteUrl()).host}
       </span>
-    </div>,
-    { width: W, height: H },
-  );
+      </div>,
+      { width: W, height: H },
+    );
+  } catch {
+    return renderFallbackImage({ width: W, height: H });
+  }
 }

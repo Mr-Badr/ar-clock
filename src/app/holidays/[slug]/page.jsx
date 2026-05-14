@@ -9,6 +9,7 @@
  */
 import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 import {
   ALL_EVENT_SLUGS,
@@ -19,9 +20,10 @@ import CountdownTicker, { ShareBar } from '@/components/clocks/CountdownTicker';
 import EventVibeCard from '@/components/holidays/EventVibeCard';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import HolidayDetailsSections from './HolidayDetailsSections';
+import CountryDatesSection, { CountryDatesSectionFallback } from './CountryDatesSection';
 import { featureFlags } from '@/lib/feature-flags';
 import { getHolidayMetadata } from '@/lib/holidays/metadata';
-import { getHolidayPageData } from '@/lib/holidays/page-data';
+import { getHolidayPageCriticalData } from '@/lib/holidays/page-data';
 import { getHolidaySource } from '@/lib/holidays/repository';
 import { getHolidaySearchQueries } from '@/lib/holidays/search-intent';
 
@@ -71,7 +73,7 @@ function AccuracyBadge({ accuracy, localSighting }) {
    ══════════════════════════════════════════════════════════════════════════ */
 export default async function HolidayPage({ params }) {
   const { slug } = await params;
-  const data = await getHolidayPageData(slug);
+  const data = await getHolidayPageCriticalData(slug);
   if (!data) notFound();
   if (data.redirectTo) permanentRedirect(data.redirectTo);
 
@@ -92,6 +94,7 @@ export default async function HolidayPage({ params }) {
     siteUrl,
     schemas: { evSchema, wpSchema, faqSchema, bcSchema, articleSchema, eventSeriesSchema },
   } = data;
+  const displayTitle = pageModel.meta.displayTitle || pageModel.hero.title || event.name;
   const pageClassName = featureFlags.holidaysSectionizedUi ? 'bg-base holidays-page-v2' : 'bg-base';
   const eventSearchQueries = getHolidaySearchQueries({
     event,
@@ -120,7 +123,7 @@ export default async function HolidayPage({ params }) {
           <span aria-hidden>/</span>
           <Link href="/holidays" style={{ color: 'var(--text-muted)' }}>المناسبات</Link>
           <span aria-hidden>/</span>
-          <span aria-current="page" style={{ color: 'var(--text-secondary)' }}>{pageModel.hero.title || event.name}</span>
+          <span aria-current="page" style={{ color: 'var(--text-secondary)' }}>{displayTitle}</span>
         </nav>
 
         {/* ── HERO ────────────────────────────────────────────────────────── */}
@@ -141,7 +144,7 @@ export default async function HolidayPage({ params }) {
               كم باقي على
             </span>
             <span style={{ fontSize: 'clamp(1.75rem, 5vw, 2.75rem)', fontWeight: 'var(--font-extrabold)', color: 'var(--accent)' }}>
-              {pageModel.hero.title || event.name}
+              {displayTitle}
             </span>
           </h1>
 
@@ -168,7 +171,7 @@ export default async function HolidayPage({ params }) {
                 marginTop: 'var(--space-3)',
               }}
             >
-              <strong style={{ color: 'var(--text-secondary)' }}>{pageModel.hero.title || event.name}</strong>
+              <strong style={{ color: 'var(--text-secondary)' }}>{displayTitle}</strong>
               {hijriStr
                 ? ` يصادف هذا العام ${gregStr} الموافق ${hijriStr}. متبقي ${remaining.days} يوم${remaining.hours > 0 ? ` و${remaining.hours} ساعة` : ''}.`
                 : ` يصادف هذا العام ${gregStr}. متبقي ${remaining.days} يوم.`
@@ -186,7 +189,7 @@ export default async function HolidayPage({ params }) {
           <CountdownTicker
             targetISO={targetDate.toISOString()}
             initialRemaining={remaining}
-            eventName={pageModel.hero.title || event.name}
+            eventName={displayTitle}
             eventDate={hijriStr ? `${gregStr} — ${hijriStr}` : gregStr}
             whatsappUrl={whatsappUrl}
             isDark
@@ -269,7 +272,7 @@ export default async function HolidayPage({ params }) {
         {/* ── SHARE BAR — WhatsApp · Telegram · X · Facebook · Copy ──────── */}
         <ShareBar
           url={`${siteUrl}/holidays/${slug}`}
-          eventName={pageModel.hero.title || event.name}
+          eventName={displayTitle}
           days={remaining.days}
           dateStr={gregStr}
         />
@@ -298,7 +301,7 @@ export default async function HolidayPage({ params }) {
                     marginBottom: 'var(--space-2)',
                   }}
                 >
-                  أسئلة شائعة قبل {pageModel.hero.title || event.name}
+                  أسئلة شائعة قبل {displayTitle}
                 </h2>
                 <p
                   style={{
@@ -338,9 +341,9 @@ export default async function HolidayPage({ params }) {
         )}
 
         {/* ── EVENT VIBE CARD — The "WOW" section ───────────────────────── */}
-        <section style={{ marginBottom: 'var(--space-8)' }} aria-label={`نظرة على ${pageModel.hero.title || event.name}`}>
+        <section style={{ marginBottom: 'var(--space-8)' }} aria-label={`نظرة على ${displayTitle}`}>
           <EventVibeCard
-            eventName={pageModel.hero.title || event.name}
+            eventName={displayTitle}
             daysLeft={remaining.days}
             categoryId={event.category}
             countryCode={event._countryCode || null}
@@ -355,6 +358,11 @@ export default async function HolidayPage({ params }) {
           pageModel={pageModel}
           hijriYearNum={hijriYearNum}
           currentYear={currentYear}
+          countryDatesSlot={(
+            <Suspense fallback={<CountryDatesSectionFallback title={displayTitle} />}>
+              <CountryDatesSection slug={slug} title={displayTitle} event={event} />
+            </Suspense>
+          )}
         />
 
       </main>

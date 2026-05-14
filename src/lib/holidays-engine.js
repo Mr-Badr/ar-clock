@@ -474,7 +474,14 @@ export function getTimeRemaining(target, nowMs) {
 
 export function formatGregorianAr(date) {
   const d = date instanceof Date ? date : new Date(date);
-  try { return new Intl.DateTimeFormat('ar-SA-u-nu-latn', { day: 'numeric', month: 'long', year: 'numeric' }).format(d); }
+  try {
+    return new Intl.DateTimeFormat('ar', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      numberingSystem: 'latn',
+    }).format(d);
+  }
   catch { return `${d.getDate()} ${GREG_MONTHS_AR[d.getMonth() + 1]} ${d.getFullYear()}`; }
 }
 export function formatHijriDisplayAr(hd) {
@@ -574,6 +581,10 @@ export function buildEventSchema(ev, date, siteUrl, eventState = 'upcoming') {
       name: SITE_APP_NAME,
       url: siteUrl,
       logo: `${siteUrl}/icons/icon-512.png`,
+    },
+    performer: {
+      '@type': 'Organization',
+      name: schemaData.eventName || ev.name,
     },
     audience: {
       '@type': 'Audience',

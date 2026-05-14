@@ -85,6 +85,8 @@ export const SITEMAP_INDEX_PATHS = Object.freeze([
   '/date/sitemaps/static',
   '/date/sitemaps/countries',
   '/date/sitemaps/calendars',
+  '/date/gregorian/sitemap.xml',
+  '/date/hijri/sitemap.xml',
 ]);
 
 const FEATURE_ROUTE_FAMILIES = Object.freeze([

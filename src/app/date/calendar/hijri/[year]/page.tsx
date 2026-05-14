@@ -159,29 +159,32 @@ export default async function HijriCalendarPage({
     { label: `عام ${year} هـ` },
   ];
 
-  const jsonLd = {
+  const breadcrumbSchema = buildBreadcrumbJsonLd(breadcrumb, BASE_URL);
+  const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: `التقويم الهجري لعام ${year}`,
     description: `تقويم أم القرى لعام ${year} هـ مع الشهور والأيام والمقابل الميلادي الكامل.`,
     url: `${BASE_URL}/date/calendar/hijri/${year}`,
-    breadcrumb: buildBreadcrumbJsonLd(breadcrumb, BASE_URL),
-    mainEntity: {
-      '@type': 'FAQPage',
-      mainEntity: faqItems.map((item) => ({
-        '@type': 'Question',
-        name: item.question,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: item.answer,
-        },
-      })),
-    },
+  };
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
   };
 
   return (
     <>
-      <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={webPageSchema} />
+      <JsonLd data={faqSchema} />
       <AdLayoutWrapper>
         <main className="content-col pt-24 pb-20 mt-12">
           <DateBreadcrumb items={breadcrumb} />

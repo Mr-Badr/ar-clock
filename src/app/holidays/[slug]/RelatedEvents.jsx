@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { ALL_EVENTS, getRelatedEvents } from '@/lib/holidays-engine';
 import { getHolidayCategoryById } from '@/lib/holidays/taxonomy';
 import { resolveHolidayRuntimeData } from '@/lib/holidays/runtime-data';
+import { logError } from '@/lib/observability';
 
 function toPlainText(value) {
   if (!value) return '';
@@ -54,73 +55,82 @@ async function buildRelatedCard(slug) {
 }
 
 export default async function RelatedEvents({ relatedSlugs = [], currentSlug }) {
-  const candidateSlugs = relatedSlugs.length > 0
-    ? relatedSlugs
-    : getRelatedEvents(currentSlug, ALL_EVENTS, 4).map((event) => event.slug);
-  const events = (
-    await Promise.all(
-      candidateSlugs
-        .filter((slug) => slug && slug !== currentSlug)
-        .map(buildRelatedCard),
+  try {
+    const candidateSlugs = relatedSlugs.length > 0
+      ? relatedSlugs
+      : getRelatedEvents(currentSlug, ALL_EVENTS, 4).map((event) => event.slug);
+    const events = (
+      await Promise.all(
+        candidateSlugs
+          .filter((slug) => slug && slug !== currentSlug)
+          .map(buildRelatedCard),
+      )
     )
-  )
-    .filter(Boolean)
-    .slice(0, 6);
+      .filter(Boolean)
+      .slice(0, 6);
 
-  if (!events?.length) return null;
+    if (!events?.length) return null;
   
-  return (
-    <section style={{ marginTop: 'var(--space-8)' }} aria-labelledby="related-h">
-      <h2 id="related-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
-        مناسبات ذات صلة
-      </h2>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>
-        {events.map((event) => (
-          <Link
-            key={event.slug}
-            href={`/holidays/${event.slug}`}
-            style={{
-              display: 'block',
-              padding: 'var(--space-4)',
-              background: 'var(--bg-surface-2)',
-              borderRadius: 'var(--radius-lg)',
-              border: '1px solid var(--border-default)',
-              textDecoration: 'none',
-              color: 'inherit',
-              transition: 'all 0.2s ease',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-2)' }}>
-              <span style={{ fontSize: 'var(--text-2xl)' }}>{event.emoji}</span>
-              <div>
-                <h3 style={{ fontSize: 'var(--text-base)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', marginBottom: 'var(--space-1)' }}>
-                  {event.name}
-                </h3>
-                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
-                  {event.categoryName}
-                </p>
+    return (
+      <section style={{ marginTop: 'var(--space-8)' }} aria-labelledby="related-h">
+        <h2 id="related-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
+          مناسبات ذات صلة
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>
+          {events.map((event) => (
+            <Link
+              key={event.slug}
+              href={`/holidays/${event.slug}`}
+              style={{
+                display: 'block',
+                padding: 'var(--space-4)',
+                background: 'var(--bg-surface-2)',
+                borderRadius: 'var(--radius-lg)',
+                border: '1px solid var(--border-default)',
+                textDecoration: 'none',
+                color: 'inherit',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-2)' }}>
+                <span style={{ fontSize: 'var(--text-2xl)' }}>{event.emoji}</span>
+                <div>
+                  <h3 style={{ fontSize: 'var(--text-base)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', marginBottom: 'var(--space-1)' }}>
+                    {event.name}
+                  </h3>
+                  <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
+                    {event.categoryName}
+                  </p>
+                </div>
               </div>
-            </div>
-            <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', lineHeight: 'var(--leading-relaxed)' }}>
-              {event.description}
-            </p>
-            <div style={{ marginTop: 'var(--space-3)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)' }}>
-              <span
-                style={{
-                  fontSize: 'var(--text-sm)',
-                  fontWeight: 'var(--font-semibold)',
-                  color: 'var(--accent-strong)',
-                }}
-              >
-                {event.hasMore ? 'أكمل القراءة' : 'عرض المناسبة'}
-              </span>
-              <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }} aria-hidden="true">
-                ←
-              </span>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </section>
-  );
+              <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', lineHeight: 'var(--leading-relaxed)' }}>
+                {event.description}
+              </p>
+              <div style={{ marginTop: 'var(--space-3)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)' }}>
+                <span
+                  style={{
+                    fontSize: 'var(--text-sm)',
+                    fontWeight: 'var(--font-semibold)',
+                    color: 'var(--accent-strong)',
+                  }}
+                >
+                  {event.hasMore ? 'أكمل القراءة' : 'عرض المناسبة'}
+                </span>
+                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }} aria-hidden="true">
+                  ←
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+    );
+  } catch (error) {
+    logError('holiday-related-events-section-failed', {
+      currentSlug,
+      relatedSlugs,
+      message: error?.message || String(error),
+    });
+    return null;
+  }
 }

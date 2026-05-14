@@ -49,7 +49,7 @@ export async function resolveHolidayRuntimeData(slug, options = {}) {
   const now = new Date(nowIso);
   const nowMs = now.getTime();
 
-  const resolved = await resolveAllHijriEvents([event]);
+  const resolved = await resolveAllHijriEvents([event], { nowIso });
   const calInfo = resolved[event.slug] || null;
   const targetDate = getNextEventDate(event, resolved, nowMs);
   const remaining = getTimeRemaining(targetDate, nowMs);

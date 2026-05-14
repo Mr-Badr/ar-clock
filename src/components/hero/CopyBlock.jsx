@@ -17,8 +17,17 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import styles from './TimeCinematicHero.module.css';
+import Link from 'next/link';
 import HulyButton from '@/components/HulyButton/HulyButton';
 import { SITE_BRAND } from '@/lib/site-config';
+
+const HERO_QUICK_LINKS = [
+  { href: '/fahras', label: 'الفهرس الشامل' },
+  { href: '/calculators', label: 'الحاسبات' },
+  { href: '/economie', label: 'الاقتصاد' },
+  { href: '/holidays', label: 'المناسبات' },
+  { href: '/guides', label: 'الأدلة' },
+];
 
 function AuroraText({ children }) {
   return (
@@ -32,25 +41,56 @@ export default function CopyBlock({ extraClass = '' }) {
   return (
     <div className={`${styles.copy} ${extraClass}`}>
 
-      <p className={styles.badge}>أخيراً، أداة صُنعت لك</p>
+      <p className={styles.badge}>منصة عربية ليومك كله</p>
 
       <h1 className={styles.title}>
         <AuroraText>{SITE_BRAND}</AuroraText>
         {/* No .dark override — resolves to correct token per active theme */}
         <span className={styles.titleSub}>
-          لكل لحظة، معناها الحقيقي
+          الوقت والصلاة والتاريخ والحاسبات والاقتصاد
         </span>
       </h1>
 
       {/* No .dark override — resolves to correct token per active theme */}
       <p className={styles.desc}>
-        نعرف كم يعني لك وقتك. لذلك بنينا {SITE_BRAND}، منصة عربية تضع كل ما يحتاجه يومك بين يديك، بدقة تشعر معها أن كل أداة صُممت لك وحدك
+        {SITE_BRAND} لا يقتصر على الساعة الآن فقط. هنا تجد الوقت والصلاة والتاريخ والمناسبات والحاسبات وأدوات الاقتصاد والأدلة العملية داخل تجربة عربية واحدة مترابطة وواضحة.
       </p>
 
       <div style={{ marginTop: '32px', padding: '4px' }}>
-        <HulyButton href="/time-now">
-          <span>استكشف الوقت حول العالم</span>
+        <HulyButton href="/fahras">
+          <span>افتح الفهرس الشامل</span>
         </HulyButton>
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '0.65rem',
+          marginTop: '1rem',
+        }}
+      >
+        {HERO_QUICK_LINKS.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.35rem',
+              padding: '0.55rem 0.9rem',
+              borderRadius: '999px',
+              border: '1px solid var(--border-default)',
+              background: 'var(--bg-surface-1)',
+              color: 'var(--text-secondary)',
+              fontSize: '0.92rem',
+              fontWeight: '600',
+              textDecoration: 'none',
+            }}
+          >
+            {link.label}
+          </Link>
+        ))}
       </div>
 
     </div>

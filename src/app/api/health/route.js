@@ -33,7 +33,14 @@ function getMemoryHealth() {
   };
 }
 
-async function checkDatabase(env) {
+async function checkDatabase(env, enabled) {
+  if (!enabled) {
+    return {
+      status: 'skipped',
+      reason: 'Database check disabled for shallow health probes.',
+    };
+  }
+
   const startedAt = Date.now();
 
   try {
@@ -125,7 +132,7 @@ export const GET = withApiHandler('/api/health', async ({ request, requestId }) 
   const { full } = parseSearchParams(request, querySchema);
   const runDeepChecks = isTruthy(full);
   const memory = getMemoryHealth();
-  const database = await checkDatabase(env);
+  const database = await checkDatabase(env, runDeepChecks);
   const upstreams = runDeepChecks
     ? await Promise.all([
         checkUpstream(
@@ -140,7 +147,7 @@ export const GET = withApiHandler('/api/health', async ({ request, requestId }) 
     : [];
 
   const upstreamFailures = upstreams.filter((item) => item.status === 'fail').length;
-  const readiness = database.status === 'fail'
+  const readiness = (runDeepChecks && database.status === 'fail')
     ? 'not-ready'
     : upstreamFailures > 0
       ? 'degraded'

@@ -128,38 +128,41 @@ export default async function ProgrammaticHijriDatePage({
     { label: `${hD} ${monthNameAr} ${hY}` },
   ];
 
-  const jsonLd = {
+  const breadcrumbSchema = buildBreadcrumbJsonLd(breadcrumb, BASE_URL);
+  const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: `${hD} ${monthNameAr} ${hY} هجري — ${gregorian.formatted.ar}`,
     url: `${BASE_URL}/date/hijri/${year}/${month}/${day}`,
-    breadcrumb: buildBreadcrumbJsonLd(breadcrumb, BASE_URL),
-    mainEntity: {
-      '@type': 'FAQPage',
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name: `كم يوافق ${hD} ${monthNameAr} ${hY} هجري ميلادياً؟`,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: `${hD} ${monthNameAr} ${hY} هجري يوافق ${gregorian.formatted.ar} ميلادي وفق حساب أم القرى.`,
-          },
+  };
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: `كم يوافق ${hD} ${monthNameAr} ${hY} هجري ميلادياً؟`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `${hD} ${monthNameAr} ${hY} هجري يوافق ${gregorian.formatted.ar} ميلادي وفق حساب أم القرى.`,
         },
-        {
-          '@type': 'Question',
-          name: `ما هو موافق شهر ${monthNameAr} ${hY} هجري؟`,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: `شهر ${monthNameAr} يبدأ تقريباً في ${gregorian.formatted.ar} ميلادي لعام ${hY} هجري.`,
-          },
+      },
+      {
+        '@type': 'Question',
+        name: `ما هو موافق شهر ${monthNameAr} ${hY} هجري؟`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `شهر ${monthNameAr} يبدأ تقريباً في ${gregorian.formatted.ar} ميلادي لعام ${hY} هجري.`,
         },
-      ],
-    },
+      },
+    ],
   };
 
   return (
     <>
-      <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={webPageSchema} />
+      <JsonLd data={faqSchema} />
       <AdLayoutWrapper>
         <main className="content-col pt-24 pb-20 mt-12">
           <DateBreadcrumb items={breadcrumb} />

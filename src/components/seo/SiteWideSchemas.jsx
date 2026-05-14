@@ -14,6 +14,17 @@ const SITE_URL = getSiteUrl();
 const ORG_ID = `${SITE_URL}#organization`;
 const WEBSITE_ID = `${SITE_URL}#website`;
 const WEBSITE_PARTS = WEBSITE_ARCHITECTURE_PATHS;
+const CORE_SECTION_PAGES = [
+  { path: '/fahras', name: 'الفهرس الشامل' },
+  { path: '/guides', name: 'الأدلة العملية' },
+  { path: '/time-now', name: 'الوقت الآن' },
+  { path: '/mwaqit-al-salat', name: 'مواقيت الصلاة' },
+  { path: '/date', name: 'التاريخ والتحويل' },
+  { path: '/holidays', name: 'المناسبات والعد التنازلي' },
+  { path: '/calculators', name: 'الحاسبات' },
+  { path: '/economie', name: 'أدوات الاقتصاد' },
+  { path: '/time-difference', name: 'فرق التوقيت' },
+];
 
 export default function SiteWideSchemas() {
   const organizationSchema = {
@@ -75,7 +86,20 @@ export default function SiteWideSchemas() {
     })),
   };
 
+  const navigationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${SITE_URL}#site-sections`,
+    name: 'الأقسام الرئيسية في ميقاتنا',
+    itemListElement: CORE_SECTION_PAGES.map((section, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: section.name,
+      url: `${SITE_URL}${section.path}`,
+    })),
+  };
+
   return (
-    <JsonLd data={[organizationSchema, websiteSchema]} />
+    <JsonLd data={[organizationSchema, websiteSchema, navigationSchema]} />
   );
 }

@@ -69,7 +69,7 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   keywords: SITE_KEYWORDS,
-  authors: [{ name: `${SITE_BRAND} (${SITE_BRAND_EN}) — منصة عربية للوقت والتاريخ والمواقيت` }],
+  authors: [{ name: `${SITE_BRAND} (${SITE_BRAND_EN}) — منصة عربية للوقت والصلاة والتاريخ والحاسبات والاقتصاد` }],
   creator: SITE_BRAND,
   publisher: SITE_BRAND,
   category: 'utilities',

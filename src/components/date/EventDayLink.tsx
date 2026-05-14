@@ -37,7 +37,6 @@ export function EventDayLink({
         <TooltipTrigger asChild>
           <Link
             href={href}
-            rel="nofollow"
             className="relative flex flex-col items-center justify-center rounded-md transition-colors group"
             style={{
               minHeight: '34px',

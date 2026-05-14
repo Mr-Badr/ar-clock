@@ -1,6 +1,6 @@
 /**
  * components/time-now/SameTimezoneCountries.jsx
- * Pure server component — same-UTC-offset countries grid with internal links.
+ * Pure server component — current UTC-offset countries grid with internal links.
  * Targets: "الدول في نفس التوقيت" keyword cluster + internal linking.
  */
 import Link from 'next/link';
@@ -16,15 +16,26 @@ export function SameTimezoneCountries({ countries = [], utcOffset, currentCityAr
 
   return (
     <section aria-labelledby="same-tz-heading">
+      <style>{`
+        .same-offset-country-card {
+          transition: border-color 0.15s ease, background 0.15s ease;
+        }
+
+        .same-offset-country-card:hover {
+          border-color: var(--border-accent);
+          background: var(--accent-soft);
+        }
+      `}</style>
+
       <h2 id="same-tz-heading"
         style={{ margin:'0 0 1rem', fontSize:'var(--text-xl)', fontWeight:'800', color:'var(--text-primary)' }}
       >
-        🌍 دول تشترك في نفس التوقيت ({utcOffset})
+        🌍 دول تشترك اليوم في نفس الإزاحة ({utcOffset})
       </h2>
 
       {currentCityAr && (
         <p style={{ margin:'0 0 1rem', fontSize:'var(--text-sm)', color:'var(--text-muted)', lineHeight:'1.7' }}>
-          الدول التالية تتبع نفس المنطقة الزمنية مثل {currentCityAr}، أي {utcOffset} من التوقيت العالمي:
+          الدول التالية تشترك اليوم مع {currentCityAr} في نفس الإزاحة عن التوقيت العالمي، أي {utcOffset}:
         </p>
       )}
 
@@ -51,8 +62,7 @@ export function SameTimezoneCountries({ countries = [], utcOffset, currentCityAr
               transition:   'border-color 0.15s, background 0.15s',
               cursor:       'pointer',
             }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor='var(--border-accent)'; e.currentTarget.style.background='var(--accent-soft)'; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor='var(--border-default)'; e.currentTarget.style.background='var(--bg-surface-2)'; }}
+              className="same-offset-country-card"
             >
               <span style={{ fontSize:'1.1rem', lineHeight:1, flexShrink:0 }} aria-hidden>
                 {flagEmoji(c.country_code)}
@@ -69,7 +79,5 @@ export function SameTimezoneCountries({ countries = [], utcOffset, currentCityAr
 }
 
 export default SameTimezoneCountries;
-
-
 
 

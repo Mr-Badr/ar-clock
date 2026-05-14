@@ -77,10 +77,11 @@ async function buildEventsPage(cursor = 0, filter = {}) {
     pool = pool.filter((event) => event.category === normalizedFilter.category);
   }
 
-  const nowMs = new Date(await getCachedNowIso()).getTime();
+  const nowIso = await getCachedNowIso();
+  const nowMs = new Date(nowIso).getTime();
   const today = new Date(nowMs);
   today.setHours(0, 0, 0, 0);
-  const resolvedAll = await resolveAllHijriEvents(pool);
+  const resolvedAll = await resolveAllHijriEvents(pool, { nowIso });
   const targetTimeBySlug = new Map(
     pool.map((event) => [event.slug, getNextEventDate(event, resolvedAll, nowMs).getTime()]),
   );

@@ -1,4 +1,4 @@
-import { replaceTokens } from '@/lib/holidays-engine';
+import { formatGregorianAr, replaceTokens } from '@/lib/holidays-engine';
 import { getHolidayCategoryById } from '@/lib/holidays/taxonomy';
 import {
   ensureCountryContextSentence,
@@ -54,15 +54,13 @@ function buildAboutNotes({ event, calInfo, nowIso }) {
   if (event.type === 'hijri') {
     notes.push({
       id: 'source',
-      kind: 'link',
-      label: 'المصدر',
-      href: 'https://aladhan.com',
-      text: `AlAdhan API — ${calInfo?.label || 'أم القرى'}`,
+      kind: 'text',
+      text: `المرجع التقويمي: ${calInfo?.label || 'تحويل محلي داخل التطبيق'}.`,
     });
     if (calInfo?.localSighting) {
       notes.push({ id: 'variance', kind: 'text', text: 'قد يختلف الموعد بيوم بناءً على رؤية الهلال في بعض الدول.' });
     }
-    notes.push({ id: 'refresh', kind: 'text', text: 'يُحدَّث تلقائياً كل 12 ساعة من المصدر الرسمي.' });
+    notes.push({ id: 'refresh', kind: 'text', text: 'يُحتسب الموعد محلياً داخل التطبيق ويُحدَّث مع إعادة التوليد الدورية للصفحة.' });
   }
   if (event.type === 'estimated') {
     notes.push({ id: 'estimated', kind: 'text', text: 'هذا التاريخ تقديري وقد يتغير بقرار رسمي.' });
@@ -76,10 +74,16 @@ function buildAboutNotes({ event, calInfo, nowIso }) {
   if (event.type === 'fixed') {
     notes.push({ id: 'fixed', kind: 'text', text: 'هذا التاريخ ثابت في التقويم الميلادي كل عام.' });
   }
+  let updatedAtLabel = '';
+  try {
+    updatedAtLabel = formatGregorianAr(new Date(nowIso));
+  } catch {
+    updatedAtLabel = String(nowIso).slice(0, 10);
+  }
   notes.push({
     id: 'updated-at',
     kind: 'text',
-    text: `آخر تحديث: ${new Date(nowIso).toLocaleDateString('ar-SA-u-nu-latn')}`,
+    text: `آخر تحديث: ${updatedAtLabel}`,
   });
   return notes;
 }

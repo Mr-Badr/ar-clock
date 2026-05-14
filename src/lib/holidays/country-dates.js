@@ -12,7 +12,10 @@ import { getEventMeta } from '@/lib/events';
 
 function formatWeekdayAr(date) {
   try {
-    return new Intl.DateTimeFormat('ar-SA-u-nu-latn', { weekday: 'long' }).format(date);
+    return new Intl.DateTimeFormat('ar', {
+      weekday: 'long',
+      numberingSystem: 'latn',
+    }).format(date);
   } catch {
     return '';
   }

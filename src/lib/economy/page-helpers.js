@@ -18,7 +18,7 @@ export const DEFAULT_ECONOMY_VIEWER = {
 
 export const STATIC_ECONOMY_PAGE_STATE = {
   initialViewer: DEFAULT_ECONOMY_VIEWER,
-  initialNowIso: null,
+  initialNowIso: ECONOMY_FALLBACK_NOW_ISO,
 };
 
 export async function getInitialEconomyPageState() {

@@ -49,7 +49,14 @@ export async function getCachedEconomyPageSnapshot(scope = 'landing') {
   cacheTag('economy-pages', `economy-page-${scope}`);
   cacheLife('minutes');
 
-  const { initialViewer, initialNowIso } = await getInitialEconomyPageState();
+  const { initialViewer } = await getInitialEconomyPageState();
+  let initialNowIso = ECONOMY_FALLBACK_NOW_ISO;
+
+  try {
+    initialNowIso = await getCachedNowIso();
+  } catch {
+    initialNowIso = ECONOMY_FALLBACK_NOW_ISO;
+  }
 
   return {
     initialViewer,
@@ -66,13 +73,7 @@ export async function getEconomyPageServerState(scope = 'landing', options = {})
 
   try {
     const snapshot = await getCachedEconomyPageSnapshot(scope);
-    let initialNowIso = ECONOMY_FALLBACK_NOW_ISO;
-
-    try {
-      initialNowIso = await getCachedNowIso();
-    } catch {
-      initialNowIso = ECONOMY_FALLBACK_NOW_ISO;
-    }
+    const initialNowIso = snapshot.initialNowIso || ECONOMY_FALLBACK_NOW_ISO;
 
     const result = includeServerModel
       ? {

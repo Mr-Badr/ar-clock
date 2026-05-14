@@ -31,7 +31,7 @@ export default function HolidaysSections({ nowIso }) {
   return (
     <>
       {/* WebPage + BreadcrumbList + FAQPage + ItemList JSON-LD (Critical) */}
-      <HolidaysGlobalSchemas nowIso={nowIso} />
+      <HolidaysGlobalSchemas />
 
       {/* 1 — التقويم الهجري: Image RIGHT */}
       <Suspense fallback={<SectionSkeleton />}>

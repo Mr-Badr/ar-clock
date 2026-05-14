@@ -1,43 +1,4 @@
 
-/* ═══════════════════════════════════════════════════════════════════════
-   TimeNowFAQ — pure server component, native <details>/<summary>
-   Generates unique FAQ per city using template strings.
-   FAQPage JSON-LD is rendered in the page file.
-═══════════════════════════════════════════════════════════════════════ */
-
-function buildFAQItems({ countryAr, cityAr, utcOffset, timezone, cityNameEn, countryNameEn }) {
-  return [
-    {
-      q: `ما هو الوقت الان في ${cityAr}؟`,
-      a: `الوقت الحالي في ${cityAr}، ${countryAr} يُعرض في أعلى هذه الصفحة بدقة حتى الثانية. يتم تحديثه تلقائياً وفق المنطقة الزمنية ${timezone} (${utcOffset}).`,
-    },
-    {
-      q: `كم الساعة الان في ${cityAr}؟`,
-      a: `الساعة الان في ${cityAr} تظهر في الساعة الرقمية أعلى الصفحة. ${cityAr} تتبع التوقيت ${utcOffset} وهو ${timezone}.`,
-    },
-    {
-      q: `ما هي المنطقة الزمنية في ${cityAr}؟`,
-      a: `${cityAr} تتبع المنطقة الزمنية ${timezone}، بإزاحة ${utcOffset} عن التوقيت العالمي المنسق (UTC).`,
-    },
-    {
-      q: `ما هو التاريخ اليوم في ${cityAr}؟`,
-      a: `التاريخ اليوم في ${cityAr} يظهر في الساعة الرقمية أعلى الصفحة بالتقويم الميلادي والهجري معاً. يتم تحديثه يومياً وفق المنطقة الزمنية ${timezone}.`,
-    },
-    {
-      q: `هل ${countryAr} تطبق التوقيت الصيفي؟`,
-      a: `يمكنك معرفة ذلك من قسم "معلومات المنطقة الزمنية" في هذه الصفحة. إذا كانت إزاحة يناير تختلف عن إزاحة يوليو فإن ${countryAr} تطبق التوقيت الصيفي، وإلا فلا.`,
-    },
-    {
-      q: `ما الفرق الزمني بين ${cityAr} وتوقيت غرينتش (UTC)؟`,
-      a: `${cityAr} تقع في المنطقة الزمنية ${utcOffset}، أي أنها تسبق / تتأخر عن توقيت غرينتش (UTC±0) بمقدار الإزاحة المذكورة.`,
-    },
-    {
-      q: `كيف أعرف فرق التوقيت بين ${cityAr} ومدينة أخرى؟`,
-      a: `يمكنك استخدام أداة "فرق التوقيت" في منصتنا لمقارنة وقت ${cityAr} مع أي مدينة في العالم بدقة.`,
-    },
-  ];
-}
-
 const SUMMARY_STYLE = {
   padding:        '0.875rem 1rem',
   cursor:         'pointer',
@@ -53,18 +14,18 @@ const SUMMARY_STYLE = {
   userSelect:     'none',
 };
 
-export function TimeNowFAQ({ countryAr, cityAr, utcOffset, timezone, cityNameEn, countryNameEn }) {
-  const items = buildFAQItems({ countryAr, cityAr, utcOffset, timezone, cityNameEn, countryNameEn });
+export function TimeNowFAQ({ placeLabelAr, introText, items = [] }) {
+  if (!items.length) return null;
 
   return (
     <section aria-labelledby="faq-h2">
       <h2 id="faq-h2"
         style={{ margin:'0 0 1rem', fontSize:'var(--text-xl)', fontWeight:'800', color:'var(--text-primary)' }}
       >
-        ❓ أسئلة شائعة — الوقت في {cityAr}
+        ❓ أسئلة شائعة — الوقت في {placeLabelAr}
       </h2>
       <p style={{ margin:'0 0 1rem', fontSize:'var(--text-sm)', color:'var(--text-muted)', lineHeight:'1.7' }}>
-        إجابات سريعة حول الساعة الان في {cityAr}، المنطقة الزمنية، والتاريخ اليوم.
+        {introText || `إجابات سريعة حول الساعة الان في ${placeLabelAr}، المنطقة الزمنية، والتاريخ اليوم.`}
       </p>
 
       <div style={{ display:'flex', flexDirection:'column', gap:'0.4rem' }}>

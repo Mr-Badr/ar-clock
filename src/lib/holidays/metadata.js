@@ -7,12 +7,12 @@ import {
 } from '@/lib/holidays/display';
 import { getSiteUrl, SITE_APP_NAME } from '@/lib/site-config';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
-import { resolveHolidayRuntimeData } from '@/lib/holidays/runtime-data';
+import { getHolidayPageCriticalData } from '@/lib/holidays/page-data';
 import { getHolidayMetadataKeywords } from '@/lib/holidays/search-intent';
 
 export async function getHolidayMetadata(slug) {
-  const runtime = await resolveHolidayRuntimeData(slug);
-  if (!runtime) {
+  const data = await getHolidayPageCriticalData(slug);
+  if (!data) {
     return { title: '404', robots: { index: false } };
   }
   const {
@@ -24,18 +24,18 @@ export async function getHolidayMetadata(slug) {
     currentYear,
     nowIso,
     event,
-  } = runtime;
+  } = data;
   const siteUrl = getSiteUrl();
   const url = `${siteUrl}/holidays/${requestedSlug}`;
 
   const rawTitleTag = seo?.seoMeta?.titleTag || seo.seoTitle;
-  const titleTag = localizeEventLabel(replaceTokens(rawTitleTag, tokenContext), runtime.event);
+  const titleTag = localizeEventLabel(replaceTokens(rawTitleTag, tokenContext), event);
   const rawDescription =
     seo?.seoMeta?.metaDescription ||
     `${rawTitleTag} — ${gregStr}. متبقي ${remaining.days} يوم. ${seo.description}`;
   const description = ensureCountryContextSentence(
     replaceTokens(rawDescription, tokenContext),
-    runtime.event,
+    event,
   );
   const keywords = getHolidayMetadataKeywords({
     event,

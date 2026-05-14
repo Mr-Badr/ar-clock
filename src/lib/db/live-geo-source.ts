@@ -118,6 +118,21 @@ export async function loadAllCountrySlugs(): Promise<string[]> {
   return rows.map((r) => r.countrySlug).filter(Boolean)
 }
 
+export async function loadAllCountries(): Promise<Country[]> {
+  if (!isLiveGeoEnabled()) return []
+
+  const prisma = await getPrisma()
+
+  const rows = await prisma.country.findMany({
+    orderBy: [
+      { nameAr: 'asc' },
+      { countrySlug: 'asc' },
+    ],
+  })
+
+  return rows.map(normalizeCountry)
+}
+
 /* -------------------------------------------------------------------------- */
 /* CITIES                                                                     */
 /* -------------------------------------------------------------------------- */

@@ -3,7 +3,7 @@ import { HOLIDAY_COUNTRIES } from '@/lib/holidays/taxonomy';
 /**
  * lib/calendar-config.js
  * Per-country Islamic calendar method + display metadata.
- * Drives both API method param (AlAdhan) and user-facing UI badges.
+ * Drives local Hijri resolution and user-facing UI badges.
  */
 
 export const COUNTRY_CALENDAR_CONFIG = {

@@ -20,6 +20,7 @@ import {
   localizeEventLabel,
 } from '@/lib/holidays/display';
 import { buildCountryDateRows } from '@/lib/holidays/country-dates';
+import { logError } from '@/lib/observability';
 
 function resolveFaqItems(faqItems, tokenContext) {
   return (faqItems || []).map((item) => {
@@ -42,7 +43,7 @@ function resolveQuickFacts(quickFacts, tokenContext) {
   if (!quickFacts || typeof quickFacts !== 'object') return {};
   return Object.fromEntries(
     Object.entries(quickFacts).map(([label, value]) => [
-      replaceTokens(label, tokenContext),
+      replaceTokens(label || '', tokenContext),
       replaceTokens(String(value || ''), tokenContext),
     ]),
   );
@@ -50,7 +51,10 @@ function resolveQuickFacts(quickFacts, tokenContext) {
 
 function formatWeekdayAr(date) {
   try {
-    return new Intl.DateTimeFormat('ar-SA-u-nu-latn', { weekday: 'long' }).format(date);
+    return new Intl.DateTimeFormat('ar', {
+      weekday: 'long',
+      numberingSystem: 'latn',
+    }).format(date);
   } catch {
     return '';
   }
@@ -96,10 +100,29 @@ function enforceAccurateQuickFacts(quickFacts, event, targetDate, remaining, gre
   return next;
 }
 
-export async function getHolidayPageData(slug) {
-  'use cache';
-  const runtime = await resolveHolidayRuntimeData(slug);
-  if (!runtime) return null;
+function applyHolidayPageCache({ canonicalSlug, event }) {
+  cacheTag(`holiday-page-${canonicalSlug}`);
+  cacheTag(`event:${canonicalSlug}`);
+  cacheTag(`events:${event.category}`);
+  cacheTag('events:all');
+  cacheTag('holidays-page');
+  cacheLife('hours');
+}
+
+function buildTypeLabel(eventType) {
+  return (
+    {
+      hijri: 'هجري',
+      fixed: 'ثابت',
+      estimated: 'تقديري',
+      monthly: 'شهري',
+      floating: 'سنوي متحرك',
+      easter: 'ميلادي',
+    }[eventType] || eventType
+  );
+}
+
+function buildHolidayPagePayload(runtime, seo) {
   const {
     requestedSlug,
     canonicalSlug,
@@ -113,30 +136,14 @@ export async function getHolidayPageData(slug) {
     targetDate,
     remaining,
     eventState,
-    seo: seoBase,
     gregStr,
     hijriStr,
     hijriYearNum,
     tokenContext,
   } = runtime;
-  cacheTag(`holiday-page-${canonicalSlug}`);
-  cacheTag(`event:${canonicalSlug}`);
-  cacheTag(`events:${event.category}`);
-  cacheTag('events:all');
-  cacheTag('holidays-page');
-  cacheLife('hours');
   const siteUrl = getSiteUrl();
   const routePath = `/holidays/${requestedSlug}`;
 
-  const dynamicCountryDates = await buildCountryDateRows({
-    event,
-    targetDate,
-    tokenContext,
-  });
-  const seo = {
-    ...seoBase,
-    countryDates: dynamicCountryDates.length > 0 ? dynamicCountryDates : (seoBase.countryDates || []),
-  };
   const faqItems = resolveFaqItems(seo.faq || seo.faqItems || [], tokenContext);
   const quickFacts = enforceAccurateQuickFacts(
     resolveQuickFacts(seo.quickFacts || {}, tokenContext),
@@ -166,10 +173,7 @@ export async function getHolidayPageData(slug) {
     replaceTokens(seo?.seoMeta?.h1 || event.name, tokenContext),
     event,
   );
-  // Google Event rich results are for actual public event postings with
-  // bookable/attendable venue details. Our holiday countdown/info pages should
-  // only emit Event markup when an entry explicitly opts in with event-ready
-  // structured data.
+
   const shouldEmitEventSchema = pageSchemaEvent?.schemaData?.googleEventRichResult === true;
   const evSchema = shouldEmitEventSchema
     ? {
@@ -193,16 +197,7 @@ export async function getHolidayPageData(slug) {
   const eventSeriesSchema = shouldEmitEventSchema
     ? buildEventSeriesSchema(pageSchemaEvent, siteUrl)
     : null;
-
-  const typeLabel =
-    {
-      hijri: 'هجري',
-      fixed: 'ثابت',
-      estimated: 'تقديري',
-      monthly: 'شهري',
-      floating: 'سنوي متحرك',
-      easter: 'ميلادي',
-    }[event.type] || event.type;
+  const typeLabel = buildTypeLabel(event.type);
 
   const schemaIssues = [
     ...(evSchema ? validateSchemaShape(evSchema).map((issue) => `event:${issue}`) : []),
@@ -260,5 +255,65 @@ export async function getHolidayPageData(slug) {
     siteUrl,
     whatsappUrl: `https://wa.me/?text=${shareText}`,
     countryMeta: COUNTRY_META,
+  };
+}
+
+export async function getHolidayPageCriticalData(slug) {
+  'use cache';
+  try {
+    const runtime = await resolveHolidayRuntimeData(slug);
+    if (!runtime) return null;
+
+    applyHolidayPageCache(runtime);
+    return buildHolidayPagePayload(runtime, runtime.seo);
+  } catch (error) {
+    logError('holiday-page-critical-data-failed', {
+      slug,
+      message: error?.message || String(error),
+    });
+    throw error;
+  }
+}
+
+export async function getHolidayPageCountryDates(slug) {
+  'use cache';
+  try {
+    const runtime = await resolveHolidayRuntimeData(slug);
+    if (!runtime) return [];
+
+    applyHolidayPageCache(runtime);
+    const dynamicCountryDates = await buildCountryDateRows({
+      event: runtime.event,
+      targetDate: runtime.targetDate,
+      tokenContext: runtime.tokenContext,
+    });
+
+    return dynamicCountryDates.length > 0
+      ? dynamicCountryDates
+      : (runtime.seo.countryDates || []);
+  } catch (error) {
+    logError('holiday-page-country-dates-data-failed', {
+      slug,
+      message: error?.message || String(error),
+    });
+    throw error;
+  }
+}
+
+export async function getHolidayPageData(slug) {
+  'use cache';
+  const [criticalData, countryDates] = await Promise.all([
+    getHolidayPageCriticalData(slug),
+    getHolidayPageCountryDates(slug),
+  ]);
+
+  if (!criticalData) return null;
+
+  return {
+    ...criticalData,
+    seo: {
+      ...criticalData.seo,
+      countryDates,
+    },
   };
 }
