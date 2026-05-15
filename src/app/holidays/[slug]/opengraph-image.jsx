@@ -15,6 +15,7 @@
  */
 import { ImageResponse } from 'next/og';
 import { getHolidayOgData } from '@/lib/holidays/og-data';
+import { getOgArabicFonts } from '@/lib/og-fonts';
 import { logError } from '@/lib/observability';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 
@@ -50,7 +51,7 @@ function daysColor(days, accent) {
   return accent;
 }
 
-function renderFallbackImage({ width, height }) {
+function renderFallbackImage({ width, height, fonts }) {
   return new ImageResponse(
     <div
       style={{
@@ -60,18 +61,20 @@ function renderFallbackImage({ width, height }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        fontFamily: 'Noto Sans Arabic, Noto Sans',
       }}
     >
       <span style={{ color: '#4ECDC4', fontSize: 48, fontWeight: 800 }}>
         {SITE_BRAND} — عداد المواعيد
       </span>
     </div>,
-    { width, height },
+    { width, height, fonts },
   );
 }
 
 export default async function Image({ params, searchParams }) {
   const { slug } = await params;
+  const fonts = await getOgArabicFonts();
 
   /* ── Square variant for Google Discover / Instagram ── */
   const sp = (await searchParams) || {};
@@ -83,7 +86,7 @@ export default async function Image({ params, searchParams }) {
     /* ── Unknown slug fallback ── */
     const ogData = await getHolidayOgData(slug);
     if (!ogData) {
-      return renderFallbackImage({ width: W, height: H });
+      return renderFallbackImage({ width: W, height: H, fonts });
     }
 
     /* ── Data ── */
@@ -105,7 +108,7 @@ export default async function Image({ params, searchParams }) {
           width: '100%', height: '100%',
           background: 'linear-gradient(135deg,#0F1117 0%,#1A1F2E 55%,#0F1117 100%)',
           display: 'flex', flexDirection: 'column',
-          fontFamily: 'system-ui,-apple-system,sans-serif',
+          fontFamily: 'Noto Sans Arabic, Noto Sans',
           position: 'relative', overflow: 'hidden',
           direction: 'rtl',
         }}>
@@ -200,7 +203,7 @@ export default async function Image({ params, searchParams }) {
           </div>
         </div>
         </div>,
-        { width: W, height: H },
+        { width: W, height: H, fonts },
       );
     }
 
@@ -213,7 +216,7 @@ export default async function Image({ params, searchParams }) {
         width: '100%', height: '100%',
         background: 'linear-gradient(160deg,#0F1117 0%,#1A1F2E 60%,#0F1117 100%)',
         display: 'flex', flexDirection: 'column',
-        fontFamily: 'system-ui,-apple-system,sans-serif',
+        fontFamily: 'Noto Sans Arabic, Noto Sans',
         alignItems: 'center', justifyContent: 'center',
         position: 'relative', overflow: 'hidden',
         gap: 36, direction: 'rtl', padding: '64px 72px',
@@ -270,7 +273,7 @@ export default async function Image({ params, searchParams }) {
         {new URL(getSiteUrl()).host}
       </span>
       </div>,
-      { width: W, height: H },
+      { width: W, height: H, fonts },
     );
   } catch (error) {
     logError('holiday-og-image-failed', {
@@ -279,6 +282,6 @@ export default async function Image({ params, searchParams }) {
       isSquare,
       error: error instanceof Error ? { name: error.name, message: error.message } : { message: String(error) },
     });
-    return renderFallbackImage({ width: W, height: H });
+    return renderFallbackImage({ width: W, height: H, fonts });
   }
 }

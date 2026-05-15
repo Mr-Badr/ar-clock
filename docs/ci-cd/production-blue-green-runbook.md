@@ -252,6 +252,11 @@ What we want to see:
 - no fresh `upstream sent too big header` for the tested routes
 - no fresh `upstream prematurely closed connection` for the tested OG-image routes
 
+Important:
+- `curl -I` only validates headers
+- OG-image regressions can still hide behind a healthy `HEAD` response
+- for image routes, always follow with at least one real `GET` smoke check that downloads the PNG body
+
 Important log reading rule:
 - old error lines can stay in the file
 - focus on new timestamps after the cutover
@@ -367,6 +372,19 @@ What we want to see:
 - `HTTP/1.1 200 OK`
 - `Content-Type: image/png`
 - `X-Robots-Tag: noindex, nofollow, noarchive`
+
+And for real body verification, also run:
+
+```bash
+curl -sS -o /tmp/og-check.png https://miqatona.com/time-now/egypt/suez/opengraph-image
+file /tmp/og-check.png
+wc -c /tmp/og-check.png
+```
+
+What we want to see:
+
+- `file` reports a PNG image
+- byte size is greater than zero
 
 ## Known lessons from the May 14, 2026 cutover
 

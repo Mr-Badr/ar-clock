@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { logError } from '@/lib/observability';
 import { getOgCityLabels } from '@/lib/geo-og-labels';
+import { getOgArabicFonts } from '@/lib/og-fonts';
 import { SITE_BRAND } from '@/lib/site-config';
 
 // We specify standard OG dimensions
@@ -10,7 +11,7 @@ export const contentType = 'image/png';
 export const runtime = 'nodejs';
 export const revalidate = 86400;
 
-function renderFallbackImage(cityLabel = 'المدينة', countryLabel = 'البلد') {
+function renderFallbackImage(cityLabel = 'المدينة', countryLabel = 'البلد', fonts) {
   return new ImageResponse(
     (
       <div
@@ -25,6 +26,7 @@ function renderFallbackImage(cityLabel = 'المدينة', countryLabel = 'ال�
           color: 'white',
           textAlign: 'center',
           padding: '48px',
+          fontFamily: 'Noto Sans Arabic, Noto Sans',
         }}
       >
         <div style={{ fontSize: '34px', color: '#9ca3af', fontWeight: 700, display: 'flex' }}>
@@ -38,12 +40,13 @@ function renderFallbackImage(cityLabel = 'المدينة', countryLabel = 'ال�
         </div>
       </div>
     ),
-    { ...size },
+    { ...size, fonts },
   );
 }
 
 export default async function Image({ params }) {
   const { country, city } = await params;
+  const fonts = await getOgArabicFonts();
   const {
     cityLabel,
     countryLabel,
@@ -63,10 +66,11 @@ export default async function Image({ params }) {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            color: 'white',
-            position: 'relative',
-          }}
-        >
+          color: 'white',
+          position: 'relative',
+            fontFamily: 'Noto Sans Arabic, Noto Sans',
+        }}
+      >
           <div
             style={{
               position: 'absolute',
@@ -150,7 +154,7 @@ export default async function Image({ params }) {
           </div>
         </div>
       ),
-      { ...size },
+      { ...size, fonts },
     );
   } catch (error) {
     logError('time-now-city-og-image-failed', {
@@ -159,6 +163,6 @@ export default async function Image({ params }) {
       citySlug: city,
       error: error instanceof Error ? { name: error.name, message: error.message } : { message: String(error) },
     });
-    return renderFallbackImage(fallbackCityLabel, fallbackCountryLabel);
+    return renderFallbackImage(fallbackCityLabel, fallbackCountryLabel, fonts);
   }
 }

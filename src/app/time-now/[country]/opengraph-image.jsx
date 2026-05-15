@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { logError } from '@/lib/observability';
 import { getOgCountryCapitalLabels } from '@/lib/geo-og-labels';
+import { getOgArabicFonts } from '@/lib/og-fonts';
 import { SITE_BRAND } from '@/lib/site-config';
 
 export const alt = `${SITE_BRAND} - الوقت الآن`;
@@ -9,7 +10,7 @@ export const contentType = 'image/png';
 export const runtime = 'nodejs';
 export const revalidate = 86400;
 
-function renderFallbackImage(countryLabel = 'البلد') {
+function renderFallbackImage(countryLabel = 'البلد', fonts) {
   return new ImageResponse(
     (
       <div
@@ -23,6 +24,7 @@ function renderFallbackImage(countryLabel = 'البلد') {
           color: '#fff',
           textAlign: 'center',
           padding: '48px',
+          fontFamily: 'Noto Sans Arabic, Noto Sans',
         }}
       >
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '18px' }}>
@@ -35,12 +37,13 @@ function renderFallbackImage(countryLabel = 'البلد') {
         </div>
       </div>
     ),
-    { ...size },
+    { ...size, fonts },
   );
 }
 
 export default async function Image({ params }) {
   const { country } = await params;
+  const fonts = await getOgArabicFonts();
   const { countryLabel, capitalLabel, fallbackCountryLabel } = getOgCountryCapitalLabels(country);
 
   try {
@@ -57,6 +60,7 @@ export default async function Image({ params }) {
             color: '#fff',
             position: 'relative',
             overflow: 'hidden',
+            fontFamily: 'Noto Sans Arabic, Noto Sans',
           }}
         >
           <div
@@ -77,7 +81,6 @@ export default async function Image({ params }) {
               gap: '16px',
               textAlign: 'center',
               padding: '48px',
-              zIndex: 1,
             }}
           >
             <div
@@ -115,7 +118,7 @@ export default async function Image({ params }) {
           </div>
         </div>
       ),
-      { ...size },
+      { ...size, fonts },
     );
   } catch (error) {
     logError('time-now-country-og-image-failed', {
@@ -123,6 +126,6 @@ export default async function Image({ params }) {
       countrySlug: country,
       error: error instanceof Error ? { name: error.name, message: error.message } : { message: String(error) },
     });
-    return renderFallbackImage(fallbackCountryLabel);
+    return renderFallbackImage(fallbackCountryLabel, fonts);
   }
 }

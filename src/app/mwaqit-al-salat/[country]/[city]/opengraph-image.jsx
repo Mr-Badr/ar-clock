@@ -14,6 +14,7 @@
 import { ImageResponse } from 'next/og';
 import { logError } from '@/lib/observability';
 import { getOgCityLabels } from '@/lib/geo-og-labels';
+import { getOgArabicFonts } from '@/lib/og-fonts';
 
 export const size = { width: 1200, height: 630 };
 export const alt = 'مواقيت الصلاة';
@@ -21,20 +22,21 @@ export const contentType = 'image/png';
 export const runtime = 'nodejs';
 export const revalidate = 86400;
 
-function renderFallbackImage(label = 'مواقيت الصلاة', sublabel = '') {
+function renderFallbackImage(label = 'مواقيت الصلاة', sublabel = '', fonts) {
   return new ImageResponse(
     (
-      <div style={{ width: '100%', height: '100%', background: '#181C2A', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14 }}>
+      <div style={{ width: '100%', height: '100%', background: '#181C2A', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14, fontFamily: 'Noto Sans Arabic, Noto Sans' }}>
         <span style={{ color: '#4ECDC4', fontSize: 48, fontWeight: 900 }}>{label}</span>
         {sublabel ? <span style={{ color: '#A8AFCC', fontSize: 28, fontWeight: 600 }}>{sublabel}</span> : null}
       </div>
     ),
-    { ...size },
+    { ...size, fonts },
   );
 }
 
 export default async function OgImage({ params }) {
   const { country: countrySlug, city: citySlug } = await params;
+  const fonts = await getOgArabicFonts();
   const {
     cityLabel,
     countryLabel,
@@ -49,7 +51,7 @@ export default async function OgImage({ params }) {
           width: '100%', height: '100%',
           background: 'linear-gradient(135deg, #0E1120 0%, #181C2A 60%, #1F2438 100%)',
           display: 'flex', flexDirection: 'column',
-          padding: '60px 80px', fontFamily: 'sans-serif',
+          padding: '60px 80px', fontFamily: 'Noto Sans Arabic, Noto Sans',
           direction: 'rtl',
         }}
       >
@@ -88,11 +90,11 @@ export default async function OgImage({ params }) {
           ))}
         </div>
 
-        <div style={{ color: '#454D70', fontSize: 20, marginTop: 32, textAlign: 'center' }}>
+        <div style={{ color: '#454D70', fontSize: 20, marginTop: 32, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           {cityLabel} — {countryLabel}
         </div>
       </div>,
-      { ...size },
+      { ...size, fonts },
     );
   } catch (error) {
     logError('prayer-city-og-image-failed', {
@@ -101,6 +103,6 @@ export default async function OgImage({ params }) {
       citySlug,
       error: error instanceof Error ? { name: error.name, message: error.message } : { message: String(error) },
     });
-    return renderFallbackImage(fallbackCityLabel, fallbackCountryLabel);
+    return renderFallbackImage(fallbackCityLabel, fallbackCountryLabel, fonts);
   }
 }
