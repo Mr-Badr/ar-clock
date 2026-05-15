@@ -15,6 +15,7 @@
  */
 import { ImageResponse } from 'next/og';
 import { getHolidayOgData } from '@/lib/holidays/og-data';
+import { logError } from '@/lib/observability';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 
 export const contentType = 'image/png';
@@ -271,7 +272,13 @@ export default async function Image({ params, searchParams }) {
       </div>,
       { width: W, height: H },
     );
-  } catch {
+  } catch (error) {
+    logError('holiday-og-image-failed', {
+      routePath: `/holidays/${slug}/opengraph-image`,
+      slug,
+      isSquare,
+      error: error instanceof Error ? { name: error.name, message: error.message } : { message: String(error) },
+    });
     return renderFallbackImage({ width: W, height: H });
   }
 }

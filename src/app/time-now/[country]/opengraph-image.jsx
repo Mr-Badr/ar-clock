@@ -6,7 +6,7 @@ import { SITE_BRAND } from '@/lib/site-config';
 export const alt = `${SITE_BRAND} - الوقت الآن`;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 export const revalidate = 86400;
 
 function renderFallbackImage(countryLabel = 'البلد') {

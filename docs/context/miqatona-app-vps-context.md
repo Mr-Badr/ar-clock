@@ -1129,3 +1129,44 @@ Practical staging DB repair direction:
   - OG images for time-now and prayer pages are now much less likely to fail under crawler bursts
   - page SEO value stays on the page itself
   - social image generation no longer depends on Postgres lookups or live prayer-time calculation
+
+## 2026-05-15 follow-up: runbook clarity + nginx OG-image policy
+
+- `docs/ci-cd/production-blue-green-runbook.md`
+  - now explains the deploy flow when blue is active and when green is active
+  - now tells operators to identify the active slot first instead of assuming green is always the deploy target
+  - now documents the difference between:
+    - live system nginx under `/etc/nginx/...`
+    - repo reference nginx files under `/opt/miqatona/infra/nginx/...`
+- `infra/nginx/conf.d/default.conf`
+  - OG-image location now actually sends `X-Robots-Tag: noindex, nofollow, noarchive`
+  - OG-image `proxy_send_timeout` now matches the long `120s` timeout policy
+- `src/app/holidays/[slug]/opengraph-image.jsx`
+  - still falls back safely on failure
+  - now logs `holiday-og-image-failed` with route and slug context so future Search Console `5xx` examples can be matched to real runtime failures
+
+## 2026-05-15 follow-up: direct green/staging OG-image regression isolated
+
+- VPS symptom:
+  - direct requests to the newer app builds failed with `curl: (52) Empty reply from server`
+  - examples:
+    - `http://127.0.0.1:3020/time-now/kyrgyzstan/bishkek/opengraph-image`
+    - `http://127.0.0.1:3000/time-now/kyrgyzstan/bishkek/opengraph-image`
+  - old blue on `3010` still returned `200` for the same route
+- likely cause:
+  - the newer OG-image routes had been moved to `runtime = 'edge'`
+  - blue-era working behavior was closer to plain Node runtime
+- mitigation applied in repo:
+  - switched these lightweight snapshot-based OG routes back to `runtime = 'nodejs'`
+  - files:
+    - `src/app/time-now/[country]/opengraph-image.jsx`
+    - `src/app/time-now/[country]/[city]/opengraph-image.jsx`
+    - `src/app/mwaqit-al-salat/[country]/[city]/opengraph-image.jsx`
+- local verification after the runtime rollback:
+  - dev server returned `200` for:
+    - `/time-now/kyrgyzstan/bishkek/opengraph-image`
+    - `/time-now/egypt/suez/opengraph-image`
+    - `/holidays/day-of-arafa-in-usa/opengraph-image`
+- practical meaning:
+  - the regression appears to be tied to the edge runtime path in the newer builds, not to nginx itself
+  - next safe VPS step is to rebuild/redeploy staging and green with the node-runtime OG fix, then retest direct `3000` and `3020` image routes before switching public traffic

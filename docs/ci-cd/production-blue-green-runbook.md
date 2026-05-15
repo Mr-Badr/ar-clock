@@ -28,6 +28,55 @@ Goals:
   - file: `/etc/nginx/sites-available/miqatona.conf`
   - active upstream name: `miqatona_active`
 
+## Important architecture note
+
+There are two nginx worlds on the VPS and they are not the same thing:
+
+- repo-managed docker nginx examples
+  - path: `/opt/miqatona/infra/nginx/...`
+  - these are reference files inside the repo checkout
+  - editing them does not automatically change the live public site
+- live system nginx
+  - path: `/etc/nginx/...`
+  - this is what actually serves `https://miqatona.com`
+  - this is the config that matters for public production cutover
+
+If `nginx -T` shows `/etc/nginx/sites-enabled/...`, treat `/etc/nginx/...` as the real source of truth for the live site.
+
+## Decide the active and inactive slot first
+
+Before every deploy, find which production slot is live right now.
+
+```bash
+sudo grep -n "upstream miqatona_active" -A 2 /etc/nginx/sites-available/miqatona.conf
+curl -sS http://127.0.0.1:3010/api/health
+curl -sS http://127.0.0.1:3020/api/health
+```
+
+How to read it:
+
+- if `miqatona_active` points to `127.0.0.1:3010`
+  - blue is active
+  - green is inactive
+  - deploy the new build to green on `3020`
+- if `miqatona_active` points to `127.0.0.1:3020`
+  - green is active
+  - blue is inactive
+  - deploy the new build to blue on `3010`
+
+Use these names throughout the deploy:
+
+- `ACTIVE_SLOT`
+  - the slot currently receiving public traffic
+- `INACTIVE_SLOT`
+  - the safe slot where we start the new build first
+- `ACTIVE_PORT`
+  - `3010` or `3020`
+- `INACTIVE_PORT`
+  - the other production port
+
+This runbook is about switching traffic from `ACTIVE_SLOT` to `INACTIVE_SLOT` only after direct smoke tests pass.
+
 ## Before every deploy
 
 Check these first:
@@ -77,18 +126,31 @@ docker image ls ghcr.io/mr-badr/ar-clock
 What we want to see:
 - `:prod` and `:staging` point to the same image ID when we intentionally promote staging
 
-## Step 3: start green
+## Step 3: start the inactive slot
+
+Choose the right compose file based on which slot is inactive.
+
+If green is inactive:
 
 ```bash
 cd /opt/miqatona/infra/docker/production
 docker compose --env-file /opt/miqatona/env/production.env -f compose.base.yml -f compose.green.yml up -d app_green
 ```
 
+If blue is inactive:
+
+```bash
+cd /opt/miqatona/infra/docker/production
+docker compose --env-file /opt/miqatona/env/production.env -f compose.base.yml -f compose.blue.yml up -d app_blue
+```
+
 What we want to see:
-- `miqatona-prod-green` starts
+- the inactive container starts
 - production Postgres stays healthy
 
-## Step 4: verify green before public cutover
+## Step 4: verify the inactive slot before public cutover
+
+If green is inactive, test `3020`:
 
 ```bash
 docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Ports}}\t{{.Status}}" | grep miqatona-prod-green
@@ -101,6 +163,19 @@ curl -I -sS http://127.0.0.1:3020/time-now/libya
 curl -I -sS http://127.0.0.1:3020/time-now/egypt/suez/opengraph-image
 ```
 
+If blue is inactive, test `3010`:
+
+```bash
+docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Ports}}\t{{.Status}}" | grep miqatona-prod-blue
+docker logs --tail 100 miqatona-prod-blue
+curl -sS http://127.0.0.1:3010/api/health?full=1
+curl -I -sS http://127.0.0.1:3010/
+curl -I -sS http://127.0.0.1:3010/holidays/kuwait-national-day
+curl -I -sS http://127.0.0.1:3010/holidays/hajj-season
+curl -I -sS http://127.0.0.1:3010/time-now/libya
+curl -I -sS http://127.0.0.1:3010/time-now/egypt/suez/opengraph-image
+```
+
 What we want to see:
 - health returns `ok: true`
 - event page returns `200`
@@ -110,7 +185,7 @@ What we want to see:
 
 Stop here if any of these fail.
 
-## Step 5: switch nginx to green
+## Step 5: switch nginx to the inactive slot
 
 Edit the active upstream:
 
@@ -118,7 +193,7 @@ Edit the active upstream:
 sudo nano /etc/nginx/sites-available/miqatona.conf
 ```
 
-Change:
+If blue is active and green is ready, change:
 
 ```nginx
 upstream miqatona_active {
@@ -131,6 +206,22 @@ To:
 ```nginx
 upstream miqatona_active {
     server 127.0.0.1:3020;
+}
+```
+
+If green is active and blue is ready, change the other direction:
+
+```nginx
+upstream miqatona_active {
+    server 127.0.0.1:3020;
+}
+```
+
+To:
+
+```nginx
+upstream miqatona_active {
+    server 127.0.0.1:3010;
 }
 ```
 
@@ -173,7 +264,7 @@ Important log reading rule:
 If public verification fails:
 
 1. edit nginx again
-2. point `miqatona_active` back to `127.0.0.1:3010`
+2. point `miqatona_active` back to the previously active port
 3. validate nginx
 4. reload nginx
 
@@ -183,7 +274,7 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-Blue should stay alive until green has proven stable.
+The previously active slot should stay alive until the new slot has proven stable.
 
 ## After a stable cutover
 
@@ -210,6 +301,72 @@ curl -I -sS https://miqatona.com/time-now/libya
 curl -I -sS https://miqatona.com/time-now/egypt/suez/opengraph-image
 curl -I -sS https://miqatona.com/holidays/kuwait-national-day/opengraph-image
 ```
+
+## OG-image rules for production nginx
+
+These URLs are crawled by Google because they are declared in page metadata:
+
+- `openGraph.images`
+- `twitter.images`
+
+So Google did not invent those image URLs randomly. We published them, and Google later retried them after earlier `5xx` responses.
+
+Production nginx should treat OG-image routes specially:
+
+- long read timeout
+- no indexing
+- same upstream slot as the parent page
+- never route staging OG traffic into production
+
+Target shape for the live nginx `location ~* /opengraph-image` block:
+
+If your live config includes `/etc/nginx/snippets/proxy-common.conf` and that snippet already sets `proxy_read_timeout` / `proxy_send_timeout`, do not repeat those directives in the same `location` block or `nginx -t` will fail with a duplicate-directive error.
+
+In that common setup, the safest production OG block is a dedicated inline block like this:
+
+```nginx
+location ~* /opengraph-image {
+    proxy_pass http://miqatona_active;
+
+    proxy_http_version 1.1;
+
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Host $host;
+
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+
+    proxy_buffer_size 128k;
+    proxy_buffers 8 128k;
+    proxy_connect_timeout 10s;
+    proxy_buffering off;
+    proxy_request_buffering off;
+    proxy_redirect off;
+    gzip off;
+
+    add_header X-Robots-Tag "noindex, nofollow, noarchive" always;
+
+    proxy_read_timeout 120s;
+    proxy_send_timeout 120s;
+}
+```
+
+After changing production nginx, always run:
+
+```bash
+sudo nginx -t
+sudo systemctl reload nginx
+curl -I -sS https://miqatona.com/time-now/egypt/suez/opengraph-image
+```
+
+What we want to see:
+
+- `HTTP/1.1 200 OK`
+- `Content-Type: image/png`
+- `X-Robots-Tag: noindex, nofollow, noarchive`
 
 ## Known lessons from the May 14, 2026 cutover
 
