@@ -2,12 +2,16 @@
   "slug": "hajj-season",
   "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:36.998Z"
+  "notes": [
+    "fact-source: تقويم أم القرى",
+    "fact-source: وزارة الحج والعمرة السعودية",
+    "fact-source: بوابة نسك"
+  ],
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

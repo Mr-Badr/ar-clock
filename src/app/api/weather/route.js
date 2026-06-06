@@ -43,13 +43,24 @@ function parseCoordinates(values, min, max, label) {
   });
 }
 
+function weatherErrorJson(message, status, requestId) {
+  return json(
+    {
+      ok: false,
+      error: message,
+      requestId,
+    },
+    { status },
+  );
+}
+
 export const GET = withApiHandler(
   '/api/weather',
   async ({ request, requestId }) => {
     const { latitudes: latitudeValues, longitudes: longitudeValues } = parseSearchParams(request, querySchema);
 
     if (latitudeValues.length !== longitudeValues.length) {
-      return json({ error: 'Latitude/longitude counts must match.' }, { status: 400 });
+      return weatherErrorJson('عدد خطوط العرض يجب أن يساوي عدد خطوط الطول.', 400, requestId);
     }
 
     const latitudes = parseCoordinates(latitudeValues, -90, 90, 'Latitude');
@@ -106,7 +117,7 @@ export const GET = withApiHandler(
         );
       }
 
-      return json({ error: 'Weather request failed.' }, { status: 502 });
+      return weatherErrorJson('تعذر جلب حالة الطقس الآن. ستبقى أوقات المدن والصلاة متاحة بدون درجة الحرارة.', 502, requestId);
     } finally {
       clearTimeout(timeout);
     }

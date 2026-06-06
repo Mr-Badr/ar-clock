@@ -342,55 +342,6 @@
       "ashura-in-usa"
     ]
   },
-  "mawlid": {
-    "publishStatus": "published",
-    "countryScope": "all",
-    "distribution": "shared",
-    "countryCodes": [
-      "sa",
-      "eg",
-      "ma",
-      "dz",
-      "ae",
-      "tn",
-      "kw",
-      "qa",
-      "iq",
-      "sy",
-      "ye",
-      "jo",
-      "ly",
-      "om",
-      "ps",
-      "ca",
-      "fr",
-      "tr",
-      "us"
-    ],
-    "autoExpandCountries": true,
-    "canonicalPath": "/holidays/mawlid",
-    "aliases": [
-      "mawlid-in-saudi",
-      "mawlid-in-egypt",
-      "mawlid-in-morocco",
-      "mawlid-in-algeria",
-      "mawlid-in-uae",
-      "mawlid-in-tunisia",
-      "mawlid-in-kuwait",
-      "mawlid-in-qatar",
-      "mawlid-in-iraq",
-      "mawlid-in-syria",
-      "mawlid-in-yemen",
-      "mawlid-in-jordan",
-      "mawlid-in-libya",
-      "mawlid-in-oman",
-      "mawlid-in-palestine",
-      "mawlid-in-canada",
-      "mawlid-in-france",
-      "mawlid-in-turkey",
-      "mawlid-in-usa"
-    ]
-  },
   "laylat-al-qadr": {
     "publishStatus": "published",
     "countryScope": "all",
@@ -440,6 +391,17 @@
       "laylat-al-qadr-in-usa"
     ]
   },
+  "social-security-saudi": {
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "sa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/social-security-saudi",
+    "aliases": []
+  },
   "isra-miraj": {
     "publishStatus": "published",
     "countryScope": "all",
@@ -487,55 +449,6 @@
       "isra-miraj-in-france",
       "isra-miraj-in-turkey",
       "isra-miraj-in-usa"
-    ]
-  },
-  "nisf-shaban": {
-    "publishStatus": "published",
-    "countryScope": "all",
-    "distribution": "shared",
-    "countryCodes": [
-      "sa",
-      "eg",
-      "ma",
-      "dz",
-      "ae",
-      "tn",
-      "kw",
-      "qa",
-      "iq",
-      "sy",
-      "ye",
-      "jo",
-      "ly",
-      "om",
-      "ps",
-      "ca",
-      "fr",
-      "tr",
-      "us"
-    ],
-    "autoExpandCountries": true,
-    "canonicalPath": "/holidays/nisf-shaban",
-    "aliases": [
-      "nisf-shaban-in-saudi",
-      "nisf-shaban-in-egypt",
-      "nisf-shaban-in-morocco",
-      "nisf-shaban-in-algeria",
-      "nisf-shaban-in-uae",
-      "nisf-shaban-in-tunisia",
-      "nisf-shaban-in-kuwait",
-      "nisf-shaban-in-qatar",
-      "nisf-shaban-in-iraq",
-      "nisf-shaban-in-syria",
-      "nisf-shaban-in-yemen",
-      "nisf-shaban-in-jordan",
-      "nisf-shaban-in-libya",
-      "nisf-shaban-in-oman",
-      "nisf-shaban-in-palestine",
-      "nisf-shaban-in-canada",
-      "nisf-shaban-in-france",
-      "nisf-shaban-in-turkey",
-      "nisf-shaban-in-usa"
     ]
   },
   "first-dhul-hijjah": {
@@ -587,24 +500,6 @@
       "first-dhul-hijjah-in-usa"
     ]
   },
-  "new-year": {
-    "publishStatus": "published",
-    "countryScope": "custom",
-    "distribution": "standalone",
-    "countryCodes": [],
-    "autoExpandCountries": false,
-    "canonicalPath": "/holidays/new-year",
-    "aliases": []
-  },
-  "summer-season": {
-    "publishStatus": "published",
-    "countryScope": "custom",
-    "distribution": "standalone",
-    "countryCodes": [],
-    "autoExpandCountries": false,
-    "canonicalPath": "/holidays/summer-season",
-    "aliases": []
-  },
   "winter-season": {
     "publishStatus": "published",
     "countryScope": "custom",
@@ -630,6 +525,15 @@
     "countryCodes": [],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/spring-vacation",
+    "aliases": []
+  },
+  "summer-season": {
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "distribution": "standalone",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/summer-season",
     "aliases": []
   },
   "summer-vacation": {
@@ -705,17 +609,6 @@
     "canonicalPath": "/holidays/citizen-account-saudi",
     "aliases": []
   },
-  "social-security-saudi": {
-    "publishStatus": "published",
-    "countryScope": "custom",
-    "distribution": "country_specific",
-    "countryCodes": [
-      "sa"
-    ],
-    "autoExpandCountries": false,
-    "canonicalPath": "/holidays/social-security-saudi",
-    "aliases": []
-  },
   "thanaweya-results": {
     "publishStatus": "published",
     "countryScope": "custom",
@@ -782,28 +675,6 @@
     "canonicalPath": "/holidays/salary-day-egypt",
     "aliases": []
   },
-  "sham-nessim": {
-    "publishStatus": "published",
-    "countryScope": "custom",
-    "distribution": "country_specific",
-    "countryCodes": [
-      "eg"
-    ],
-    "autoExpandCountries": false,
-    "canonicalPath": "/holidays/sham-nessim",
-    "aliases": []
-  },
-  "bac-results-algeria": {
-    "publishStatus": "published",
-    "countryScope": "custom",
-    "distribution": "country_specific",
-    "countryCodes": [
-      "dz"
-    ],
-    "autoExpandCountries": false,
-    "canonicalPath": "/holidays/bac-results-algeria",
-    "aliases": []
-  },
   "bac-exams-algeria": {
     "publishStatus": "published",
     "countryScope": "custom",
@@ -835,6 +706,17 @@
     "canonicalPath": "/holidays/school-start-algeria",
     "aliases": []
   },
+  "sham-nessim": {
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "eg"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/sham-nessim",
+    "aliases": []
+  },
   "revolution-day-algeria": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -844,28 +726,6 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/revolution-day-algeria",
-    "aliases": []
-  },
-  "bac-results-morocco": {
-    "publishStatus": "published",
-    "countryScope": "custom",
-    "distribution": "country_specific",
-    "countryCodes": [
-      "ma"
-    ],
-    "autoExpandCountries": false,
-    "canonicalPath": "/holidays/bac-results-morocco",
-    "aliases": []
-  },
-  "national-exams-morocco": {
-    "publishStatus": "published",
-    "countryScope": "custom",
-    "distribution": "country_specific",
-    "countryCodes": [
-      "ma"
-    ],
-    "autoExpandCountries": false,
-    "canonicalPath": "/holidays/national-exams-morocco",
     "aliases": []
   },
   "school-start-morocco": {
@@ -934,17 +794,6 @@
     "canonicalPath": "/holidays/school-start-uae",
     "aliases": []
   },
-  "bac-results-tunisia": {
-    "publishStatus": "published",
-    "countryScope": "custom",
-    "distribution": "country_specific",
-    "countryCodes": [
-      "tn"
-    ],
-    "autoExpandCountries": false,
-    "canonicalPath": "/holidays/bac-results-tunisia",
-    "aliases": []
-  },
   "school-start-tunisia": {
     "publishStatus": "published",
     "countryScope": "custom",
@@ -1009,26 +858,6 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/school-start-qatar",
-    "aliases": []
-  },
-  "mothers-day": {
-    "publishStatus": "published",
-    "countryScope": "none",
-    "distribution": "standalone",
-    "countryCodes": [],
-    "autoExpandCountries": false,
-    "canonicalPath": "/holidays/mothers-day",
-    "aliases": []
-  },
-  "pension-day-saudi": {
-    "publishStatus": "published",
-    "countryScope": "custom",
-    "distribution": "country_specific",
-    "countryCodes": [
-      "sa"
-    ],
-    "autoExpandCountries": false,
-    "canonicalPath": "/holidays/pension-day-saudi",
     "aliases": []
   },
   "valentines-day": {
@@ -1209,17 +1038,6 @@
       "earth-day-in-usa"
     ]
   },
-  "pension-day-egypt": {
-    "publishStatus": "published",
-    "countryScope": "custom",
-    "distribution": "country_specific",
-    "countryCodes": [
-      "eg"
-    ],
-    "autoExpandCountries": false,
-    "canonicalPath": "/holidays/pension-day-egypt",
-    "aliases": []
-  },
   "international-womens-day": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -1375,6 +1193,17 @@
     "canonicalPath": "/holidays/liberation-day-kuwait",
     "aliases": []
   },
+  "martyrs-day-uae": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ae"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/martyrs-day-uae",
+    "aliases": []
+  },
   "revolution-day-egypt": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -1406,17 +1235,6 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/green-march-morocco",
-    "aliases": []
-  },
-  "martyrs-day-uae": {
-    "publishStatus": "published",
-    "countryScope": "none",
-    "distribution": "country_specific",
-    "countryCodes": [
-      "ae"
-    ],
-    "autoExpandCountries": false,
-    "canonicalPath": "/holidays/martyrs-day-uae",
     "aliases": []
   },
   "thanksgiving-usa": {
@@ -1452,6 +1270,55 @@
     "canonicalPath": "/holidays/cyber-monday-usa",
     "aliases": []
   },
+  "mawlid": {
+    "publishStatus": "published",
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/mawlid",
+    "aliases": [
+      "mawlid-in-saudi",
+      "mawlid-in-egypt",
+      "mawlid-in-morocco",
+      "mawlid-in-algeria",
+      "mawlid-in-uae",
+      "mawlid-in-tunisia",
+      "mawlid-in-kuwait",
+      "mawlid-in-qatar",
+      "mawlid-in-iraq",
+      "mawlid-in-syria",
+      "mawlid-in-yemen",
+      "mawlid-in-jordan",
+      "mawlid-in-libya",
+      "mawlid-in-oman",
+      "mawlid-in-palestine",
+      "mawlid-in-canada",
+      "mawlid-in-france",
+      "mawlid-in-turkey",
+      "mawlid-in-usa"
+    ]
+  },
   "halloween-usa": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -1461,6 +1328,15 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/halloween-usa",
+    "aliases": []
+  },
+  "mothers-day": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "standalone",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/mothers-day",
     "aliases": []
   },
   "christmas-usa": {
@@ -1474,6 +1350,26 @@
     "canonicalPath": "/holidays/christmas-usa",
     "aliases": []
   },
+  "national-exams-morocco": {
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ma"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/national-exams-morocco",
+    "aliases": []
+  },
+  "new-year": {
+    "publishStatus": "published",
+    "countryScope": "custom",
+    "distribution": "standalone",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/new-year",
+    "aliases": []
+  },
   "new-years-eve-new-york": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -1483,6 +1379,77 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/new-years-eve-new-york",
+    "aliases": []
+  },
+  "nisf-shaban": {
+    "publishStatus": "published",
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/nisf-shaban",
+    "aliases": [
+      "nisf-shaban-in-saudi",
+      "nisf-shaban-in-egypt",
+      "nisf-shaban-in-morocco",
+      "nisf-shaban-in-algeria",
+      "nisf-shaban-in-uae",
+      "nisf-shaban-in-tunisia",
+      "nisf-shaban-in-kuwait",
+      "nisf-shaban-in-qatar",
+      "nisf-shaban-in-iraq",
+      "nisf-shaban-in-syria",
+      "nisf-shaban-in-yemen",
+      "nisf-shaban-in-jordan",
+      "nisf-shaban-in-libya",
+      "nisf-shaban-in-oman",
+      "nisf-shaban-in-palestine",
+      "nisf-shaban-in-canada",
+      "nisf-shaban-in-france",
+      "nisf-shaban-in-turkey",
+      "nisf-shaban-in-usa"
+    ]
+  },
+  "pension-day-egypt": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "eg"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/pension-day-egypt",
+    "aliases": []
+  },
+  "pension-day-saudi": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "sa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/pension-day-saudi",
     "aliases": []
   },
   "world-fathers-day": {

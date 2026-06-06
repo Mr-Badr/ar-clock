@@ -2,12 +2,18 @@
   "slug": "school-start-egypt",
   "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:37.041Z"
+  "notes": [
+    "Refined the page around the natural Arabic question form: متى تبدأ الدراسة in core SEO-facing copy while preserving keyword coverage for weaker query variants.",
+    "Strengthened the family-facing timeline with the Saturday 12 September {{year}} start, the 6 September {{year}} international-school start, the 24 June {{nextYear}} year-end, and the gradual student-entry context.",
+    "Added clearer practical planning signals so the page answers the date question and the what-do-I-do-next question together.",
+    "Focused validation passed with validate-holiday-content, ESLint, typecheck, and seo:validate.",
+    "Generated holiday bundles were not regenerated because events:build was intentionally not run, so the rendered route can still lag behind the authored package."
+  ],
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

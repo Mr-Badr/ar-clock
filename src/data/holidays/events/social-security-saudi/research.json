@@ -1,179 +1,347 @@
 {
   "slug": "social-security-saudi",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.169Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
-    "متى ينزل الضمان الاجتماعي المطور",
-    "كم باقي على الضمان الاجتماعي المطور",
-    "موعد الضمان الاجتماعي المطور {{year}}",
-    "الأهلية 27 الضمان الاجتماعي",
-    "صرف الضمان الاجتماعي 1 ميلادي",
     "متى ينزل الضمان الاجتماعي المطور {{year}}",
     "كم باقي على الضمان الاجتماعي المطور {{year}}",
+    "موعد الضمان الاجتماعي المطور {{year}}",
     "الضمان الاجتماعي المطور السعودية",
-    "الضمان الاجتماعي المطور {{year}}",
-    "تاريخ الضمان الاجتماعي المطور {{year}}",
-    "متى الضمان الاجتماعي المطور {{nextYear}}",
-    "الضمان الاجتماعي المطور العد التنازلي"
+    "الأهلية 27 الضمان الاجتماعي",
+    "صرف الضمان الاجتماعي 1 ميلادي",
+    "متى ينزل الضمان المطور هذا الشهر",
+    "الاعتراض على أهلية الضمان المطور",
+    "موعد الضمان المطور بعد القبول",
+    "تاريخ نزول الضمان الاجتماعي المطور"
   ],
   "competitors": [
     {
       "site": "hrsd.gov.sa",
-      "type": "official",
+      "type": "official_reference",
+      "url": "https://www.hrsd.gov.sa/media-center/news/%D9%85%D8%B9%D8%A7%D9%8A%D9%8A%D8%B1%C2%A0%D9%88%D8%AE%D8%B7%D9%88%D8%A7%D8%AA-%D9%84%D9%84%D8%A3%D9%87%D9%84%D9%8A%D8%A9"
+    },
+    {
+      "site": "hrsd.gov.sa",
+      "type": "official_system_reference",
+      "url": "https://www.hrsd.gov.sa/node/69888"
+    },
+    {
+      "site": "hrsd.gov.sa",
+      "type": "official_launch_reference",
+      "url": "https://www.hrsd.gov.sa/media-center/news/950786"
+    },
+    {
+      "site": "sabq.org",
+      "type": "arabic_news_competitor",
+      "url": "https://sabq.org/saudia/27-social-security-eligibility"
+    },
+    {
+      "site": "hrsd.gov.sa",
+      "type": "english_comparison",
+      "url": "https://www.hrsd.gov.sa/en/media-center/news/%D9%85%D8%B9%D8%A7%D9%8A%D9%8A%D8%B1%C2%A0%D9%88%D8%AE%D8%B7%D9%88%D8%A7%D8%AA-%D9%84%D9%84%D8%A3%D9%87%D9%84%D9%8A%D8%A9"
+    }
+  ],
+  "arabicCompetitors": [
+    {
+      "site": "hrsd.gov.sa",
+      "status": "usable",
       "url": "https://www.hrsd.gov.sa/media-center/news/%D9%85%D8%B9%D8%A7%D9%8A%D9%8A%D8%B1%C2%A0%D9%88%D8%AE%D8%B7%D9%88%D8%A7%D8%AA-%D9%84%D9%84%D8%A3%D9%87%D9%84%D9%8A%D8%A9",
-      "focus": [
-        "يوم 27 لإعلان الأهلية",
-        "اليوم الأول للصرف",
-        "آلية الاعتراض",
-        "المستندات المطلوبة"
+      "title": "الضمان الاجتماعي: معايير وخطوات واضحة للأهلية والاعتراض والاستحقاق",
+      "metaDescription": "توضيح رسمي لمعايير الأهلية والاعتراض والاستحقاق.",
+      "h1": "الضمان الاجتماعي: معايير وخطوات واضحة للأهلية والاعتراض والاستحقاق",
+      "headings": [
+        "معايير وخطوات واضحة للأهلية والاعتراض والاستحقاق"
       ],
-      "gaps": [
-        "ليست صفحة بحثية SEO مبنية على عبارة متى ينزل الضمان",
-        "لا تعرض عداداً زمنياً مباشراً",
-        "تتطلب تنقلاً بين أكثر من صفحة لفهم الصورة كاملة"
-      ]
-    },
-    {
-      "site": "mountada.net",
-      "type": "news",
-      "url": "https://mountada.net/article/when-will-the-new-upgraded-social-security-come-/",
-      "focus": [
-        "عنوان متى ينزل الضمان",
-        "جواب سريع عن الدفعة الحالية",
-        "جدول مختصر"
+      "bodySummary": "هذه الصفحة هي أقوى مرجع عملي في البحث الحالي لأنها لا تكتفي بشرح النظام، بل تذكر القاعدتين اللتين يحتاجهما المستفيد فعلاً: إعلان الأهلية يوم 27 ميلادي وصرف المعاش يوم 1 ميلادي، مع تأكيد أن الاعتراض متاح خلال 30 يوماً من ظهور النتيجة. قوتها في الوضوح النظامي، لكنها ليست صفحة SEO مباشرة على سؤال متى ينزل الضمان.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "الأهلية 27 ميلادي",
+        "الصرف 1 ميلادي",
+        "الاعتراض خلال 30 يوماً"
       ],
-      "gaps": [
-        "تقادم سريع",
-        "ضعف الربط بالنظام المطور نفسه",
-        "قلة التفريق بين الأهلية والصرف والاعتراض"
-      ]
-    },
-    {
-      "site": "المواقع الخدمية الإخبارية",
-      "type": "countdown",
-      "focus": [
-        "كم باقي على الضمان",
-        "خبر شهري",
-        "التاريخ الحالي"
+      "keywords": [
+        "الأهلية",
+        "الاعتراض",
+        "الاستحقاق"
       ],
-      "gaps": [
-        "تكرار محتوى متشابه",
-        "ضعف الشرح النظامي",
-        "إهمال يوم 27 ودور الأهلية"
-      ]
-    },
-    {
-      "site": "prod.hrsd.gov.sa",
-      "type": "reference",
-      "url": "https://prod.hrsd.gov.sa/si/node/1170297",
-      "focus": [
-        "التاريخ الرسمي لـ الضمان الاجتماعي المطور",
-        "سياق الضمان الاجتماعي المطور"
+      "schemaHints": [
+        "NewsArticle",
+        "GovernmentOrganization"
       ],
-      "gaps": [
-        "غالباً لا تقدم صفحة عربية تجمع الموعد والشرح والعد التنازلي في مكان واحد."
+      "sources": [
+        "https://www.hrsd.gov.sa/media-center/news/%D9%85%D8%B9%D8%A7%D9%8A%D9%8A%D8%B1%C2%A0%D9%88%D8%AE%D8%B7%D9%88%D8%A7%D8%AA-%D9%84%D9%84%D8%A3%D9%87%D9%84%D9%8A%D8%A9"
+      ],
+      "wordCount": 260,
+      "strengths": [
+        "مرجع رسمي مباشر",
+        "أوضح صفحة عن 27 و1 ميلادي"
+      ],
+      "weaknesses": [
+        "ليست مبنية على نية البحث الشهرية مباشرة",
+        "لا تقدم عداداً أو رحلة مستخدم"
       ]
     },
     {
       "site": "hrsd.gov.sa",
-      "type": "reference",
-      "url": "https://www.hrsd.gov.sa/node/69888",
-      "focus": [
-        "التاريخ الرسمي لـ الضمان الاجتماعي المطور",
-        "سياق الضمان الاجتماعي المطور"
+      "status": "usable",
+      "url": "https://www.hrsd.gov.sa/media-center/news/950786",
+      "title": "وزارة الموارد البشرية والتنمية الاجتماعية تبدأ تفعيل نظام الضمان الاجتماعي المطور",
+      "metaDescription": "إطلاق وتفعيل النظام المطور.",
+      "h1": "تبدأ تفعيل نظام الضمان الاجتماعي المطور",
+      "headings": [
+        "تبدأ تفعيل نظام الضمان الاجتماعي المطور"
       ],
-      "gaps": [
-        "غالباً لا تقدم صفحة عربية تجمع الموعد والشرح والعد التنازلي في مكان واحد."
+      "bodySummary": "هذه الصفحة ضرورية لأنها تمنح الخلفية النظامية التي تفتقدها الأخبار الشهرية: متى بدأ تفعيل الضمان المطور، ومتى بدأ استقبال الطلبات، وما علاقته بالنظام المطور لا القديم. فائدتها أنها تمنح الصفحة عمقاً وثقة، لكنها ليست الصفحة التي يعود إليها المستفيد كل شهر لمعرفة الصرف.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "بدء التفعيل في 20 نوفمبر 2021"
+      ],
+      "keywords": [
+        "الضمان المطور",
+        "بدء التفعيل"
+      ],
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sources": [
+        "https://www.hrsd.gov.sa/media-center/news/950786"
+      ],
+      "wordCount": 210,
+      "strengths": [
+        "خلفية رسمية قوية",
+        "يشرح أصل النظام المطور"
+      ],
+      "weaknesses": [
+        "ليس صفحة شهرية عملية",
+        "لا يشرح 27 و1 بشكل كافٍ وحده"
       ]
+    },
+    {
+      "site": "sabq.org",
+      "status": "usable",
+      "url": "https://sabq.org/saudia/27-social-security-eligibility",
+      "title": "متى تظهر أهلية الضمان المطور؟",
+      "metaDescription": "خبر سريع عن الأهلية والصرف.",
+      "h1": "متى تظهر أهلية الضمان المطور؟",
+      "headings": [
+        "متى تظهر أهلية الضمان المطور؟"
+      ],
+      "bodySummary": "هذه الصفحة تمثل نمط المنافس العربي الإخباري السريع: تجيب بسرعة عن يوم الأهلية أو الصرف، لكنها لا تربط ذلك دائماً بمهلة الاعتراض أو بمتى يبدأ الصرف بعد قبول الطلب. قوتها في السرعة، وضعفها في أنها تتقادم بسرعة وتفقد قيمة المرجع الدائم.",
+      "faq": [],
+      "tables": [],
+      "examples": [],
+      "keywords": [
+        "أهلية الضمان المطور",
+        "موعد الصرف"
+      ],
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sources": [
+        "https://sabq.org/saudia/27-social-security-eligibility"
+      ],
+      "wordCount": 180,
+      "strengths": [
+        "سريع",
+        "قريب من نية البحث"
+      ],
+      "weaknesses": [
+        "خبر شهري سريع",
+        "ضعيف في الشرح النظامي"
+      ]
+    }
+  ],
+  "englishCompetitors": [
+    {
+      "site": "hrsd.gov.sa",
+      "status": "usable_for_comparison",
+      "url": "https://www.hrsd.gov.sa/en/media-center/news/%D9%85%D8%B9%D8%A7%D9%8A%D9%8A%D8%B1%C2%A0%D9%88%D8%AE%D8%B7%D9%88%D8%A7%D8%AA-%D9%84%D9%84%D8%A3%D9%87%D9%84%D9%8A%D8%A9",
+      "title": "Social Security: Clear criteria and steps for eligibility and objection",
+      "metaDescription": "Official English explanation of eligibility and objection steps.",
+      "h1": "Social Security: Clear criteria and steps for eligibility and objection",
+      "headings": [],
+      "bodySummary": "Useful as an English comparison because it confirms the same official monthly cycle: eligibility on the 27th and pension disbursement on the 1st. It is ideal for fact verification, but the Arabic user still needs a more direct page built around practical questions.",
+      "faq": [],
+      "tables": [],
+      "examples": [],
+      "keywords": [
+        "eligibility",
+        "pension disbursement"
+      ],
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sources": [
+        "https://www.hrsd.gov.sa/en/media-center/news/%D9%85%D8%B9%D8%A7%D9%8A%D9%8A%D8%B1%C2%A0%D9%88%D8%AE%D8%B7%D9%88%D8%A7%D8%AA-%D9%84%D9%84%D8%A3%D9%87%D9%84%D9%8A%D8%A9"
+      ],
+      "wordCount": 170,
+      "strengths": [
+        "Verifies official rule in English"
+      ],
+      "weaknesses": [
+        "Not Arabic-first"
+      ]
+    },
+    {
+      "site": "hrsd.gov.sa",
+      "status": "usable_for_comparison",
+      "url": "https://www.hrsd.gov.sa/en/ministry-services/services/%D9%86%D8%B8%D8%A7%D9%85-%D8%A7%D9%84%D8%B6%D9%85%D8%A7%D9%86-%D8%A7%D9%84%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9%D9%8A-%D8%A7%D9%84%D9%85%D8%B7%D9%88%D8%B1",
+      "title": "Developed Social Security System",
+      "metaDescription": "Official English service page for the developed social security system.",
+      "h1": "Developed Social Security System",
+      "headings": [
+        "What is the difference between the previous system and the developer?"
+      ],
+      "bodySummary": "Useful for comparison because it frames the developed system in a service-oriented way, especially around target groups and system goals. It is less useful than Arabic pages for the monthly disbursement intent, but it strengthens the explanatory layer.",
+      "faq": [],
+      "tables": [],
+      "examples": [],
+      "keywords": [
+        "developed social security system"
+      ],
+      "schemaHints": [
+        "Service",
+        "FAQ-like content"
+      ],
+      "sources": [
+        "https://www.hrsd.gov.sa/en/ministry-services/services/%D9%86%D8%B8%D8%A7%D9%85-%D8%A7%D9%84%D8%B6%D9%85%D8%A7%D9%86-%D8%A7%D9%84%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9%D9%8A-%D8%A7%D9%84%D9%85%D8%B7%D9%88%D8%B1"
+      ],
+      "wordCount": 320,
+      "strengths": [
+        "Good system explanation"
+      ],
+      "weaknesses": [
+        "Not optimized for monthly payout intent"
+      ]
+    },
+    {
+      "site": "mountada.net",
+      "status": "replaced",
+      "url": "https://mountada.net/article/when-will-the-new-upgraded-social-security-come-/",
+      "replacementReason": "Useful as a low-authority trend page, but official HRSD English pages gave stronger comparison value."
+    }
+  ],
+  "replacedOrBlockedCompetitors": [
+    {
+      "site": "countdown-only pages",
+      "status": "replaced",
+      "reason": "They answered the date but ignored eligibility, objection, and first-time approval flow."
+    },
+    {
+      "site": "generic news repeats",
+      "status": "replaced",
+      "reason": "They decayed quickly and added less value than the official HRSD pages."
     }
   ],
   "coverageMatrix": [
     {
-      "keyword": "متى ينزل الضمان الاجتماعي المطور",
-      "whyItMatters": "الاستعلام الشهري الأوضح بنية مالية مباشرة."
+      "topic": "الجواب المباشر عن موعد الصرف",
+      "arabicCoverage": "جيد",
+      "englishCoverage": "متوسط",
+      "opportunity": "البدء بيوم 1 ميلادي مع ربطه بيوم الأهلية"
     },
     {
-      "keyword": "كم باقي على الضمان الاجتماعي المطور",
-      "whyItMatters": "يتطابق مع بنية العداد ويزيد قيمة الصفحة قبل موعد الصرف."
+      "topic": "الفرق بين يوم الأهلية ويوم الصرف",
+      "arabicCoverage": "متوسط",
+      "englishCoverage": "جيد",
+      "opportunity": "تحويله إلى الرسالة الأساسية في الصفحة"
     },
     {
-      "keyword": "الأهلية 27 الضمان الاجتماعي",
-      "whyItMatters": "يلتقط الفجوة الأهم بين الخبر الشهري والقاعدة الرسمية."
+      "topic": "مدة الاعتراض 30 يوماً",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "متوسط",
+      "opportunity": "إضافة قيمة عملية مهمة للمستفيد"
     },
     {
-      "keyword": "صرف الضمان الاجتماعي 1 ميلادي",
-      "whyItMatters": "صيغة عملية يكتبها المستخدم عندما يريد تثبيت القاعدة لا متابعة خبر قديم."
+      "topic": "متى يبدأ الصرف بعد القبول الأول",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "ضعيف",
+      "opportunity": "سد فجوة كبيرة في نية البحث"
     },
     {
-      "keyword": "موعد الضمان الاجتماعي المطور {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "تاريخ بداية النظام المطور",
+      "arabicCoverage": "جيد",
+      "englishCoverage": "جيد",
+      "opportunity": "ربط البحث الشهري بالخلفية الرسمية للنظام"
     },
     {
-      "keyword": "متى ينزل الضمان الاجتماعي المطور {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "خطة المستفيد بين 27 و1",
+      "arabicCoverage": "غائب تقريباً",
+      "englishCoverage": "غائب",
+      "opportunity": "تحويل الصفحة إلى أداة متابعة شهرية"
     },
     {
-      "keyword": "كم باقي على الضمان الاجتماعي المطور {{year}}",
-      "whyItMatters": "نية عد تنازلي مباشرة تناسب الباحث الذي يريد معرفة المدة المتبقية بسرعة."
+      "topic": "الخدمات التي يحتاجها المستفيد بعد عدم الأهلية",
+      "arabicCoverage": "متوسط",
+      "englishCoverage": "متوسط",
+      "opportunity": "ربط الموعد بالتصرف المطلوب"
     },
     {
-      "keyword": "الضمان الاجتماعي المطور السعودية",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "topic": "العد التنازلي مع الشرح النظامي",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "غائب",
+      "opportunity": "جمع العداد مع الفهم العملي في صفحة واحدة"
     }
   ],
   "keywordGaps": [
-    "التفريق الواضح بين يوم الأهلية ويوم الصرف",
-    "شرح متى يبدأ الصرف بعد قبول الطلب لأول مرة",
-    "ربط النظام المطور بخلفيته الرسمية منذ 20 نوفمبر 2021",
-    "جواب عربي مباشر يوضح معنى الضمان الاجتماعي المطور وموعده في صفحة واحدة.",
-    "شرح سبب أهمية الضمان الاجتماعي المطور ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
-    "تغطية الأسئلة العملية التي يطرحها القارئ قبل الضمان الاجتماعي المطور أو أثناءه.",
-    "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط.",
-    "دمج العد التنازلي مع الشرح والسياق بدل صفحة موعد قصيرة وضعيفة."
+    "ما الفرق بين الأهلية والصرف في الضمان المطور",
+    "متى تبدأ أهلية الضمان الاجتماعي المطور",
+    "متى يبدأ الصرف بعد قبول الطلب",
+    "كم مدة الاعتراض على أهلية الضمان المطور",
+    "كيف أعرف أهلية الضمان الاجتماعي المطور",
+    "كم باقي على الضمان الاجتماعي المطور {{year}}",
+    "موعد الضمان الاجتماعي المطور في السعودية {{year}}",
+    "متى ينزل الضمان المطور هذا الشهر"
   ],
   "unansweredQuestions": [
-    "لماذا يهمني يوم 27 ميلادي في الضمان المطور؟",
+    "هل 27 هو يوم نزول الضمان أم يوم الأهلية؟",
     "متى يبدأ الصرف بعد قبول الطلب لأول مرة؟",
-    "ما الفرق بين الاعتراض على الأهلية والشكوى المالية؟",
-    "متى ينزل الضمان الاجتماعي المطور {{year}}؟",
-    "كم باقي على الضمان الاجتماعي المطور؟",
-    "ما هو الضمان الاجتماعي المطور؟",
-    "كيف أعرف أهلية الضمان الاجتماعي المطور؟",
-    "متى الضمان الاجتماعي المطور {{nextYear}}؟"
+    "كم مدة الاعتراض على الأهلية؟",
+    "كيف أعرف الأهلية الرسمية؟",
+    "ماذا أفعل إذا ظهرت النتيجة غير مستحقة؟",
+    "هل القاعدة ثابتة كل شهر أم تتغير؟"
   ],
-  "differentiationIdeas": [
-    "جمع العداد الشهري مع القاعدة الرسمية للأهلية والصرف في مرجع واحد",
-    "ربط الاستعلام الشعبي بالنص الرسمي للوزارة لا بخبر شهري عابر",
-    "تحويل الصفحة إلى مرجع شهري دائم بدلاً من إعادة كتابة خبر جديد كل شهر",
-    "جواب مباشر عن موعد الضمان الاجتماعي المطور في بداية الصفحة قبل أي شرح إضافي.",
-    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر.",
-    "أسئلة شائعة عملية تساعد القارئ على فهم الضمان الاجتماعي المطور والتصرف بناءً عليه."
-  ],
+  "competitorMatrix": {
+    "strengths": [
+      "وجود مرجع رسمي مباشر وحديث",
+      "توفر قاعدة شهرية واضحة 27 و1",
+      "وجود خلفية نظامية موثقة"
+    ],
+    "weaknesses": [
+      "قلة الصفحات التي تجمع كل المسار العملي في مكان واحد",
+      "الخبر الشهري يتقادم بسرعة",
+      "ضعف الشرح حول ما بعد القبول أو الاعتراض"
+    ],
+    "missingTopics": [
+      "متى يبدأ الصرف بعد القبول الأول",
+      "مهلة الاعتراض وكيفية التصرف",
+      "خطة المستفيد العملية بين الأهلية والصرف"
+    ],
+    "uniqueOpportunities": [
+      "تحويل الصفحة إلى مرجع شهري دائم",
+      "الجمع بين القاعدة الرسمية والعداد والتصرف العملي",
+      "تخفيف الخلط بين يوم 27 ويوم 1 ميلادي"
+    ]
+  },
   "factSources": [
     {
-      "label": "وزارة الموارد البشرية: شروط الاستحقاق في نظام الضمان الاجتماعي المطور",
-      "url": "https://prod.hrsd.gov.sa/si/node/1170297"
-    },
-    {
-      "label": "وزارة الموارد البشرية: نظام الضمان الاجتماعي المطور",
-      "url": "https://www.hrsd.gov.sa/node/69888"
+      "label": "وزارة الموارد البشرية: معايير وخطوات واضحة للأهلية والاعتراض والاستحقاق",
+      "url": "https://www.hrsd.gov.sa/media-center/news/%D9%85%D8%B9%D8%A7%D9%8A%D9%8A%D8%B1%C2%A0%D9%88%D8%AE%D8%B7%D9%88%D8%A7%D8%AA-%D9%84%D9%84%D8%A3%D9%87%D9%84%D9%8A%D8%A9"
     },
     {
       "label": "وزارة الموارد البشرية: تبدأ تفعيل نظام الضمان الاجتماعي المطور",
       "url": "https://www.hrsd.gov.sa/media-center/news/950786"
     },
     {
-      "label": "نظام الضمان الاجتماعي",
-      "url": "https://www.hrsd.gov.sa/en/node/841045"
+      "label": "وزارة الموارد البشرية: نظام الضمان الاجتماعي المطور",
+      "url": "https://www.hrsd.gov.sa/node/69888"
     },
     {
-      "label": "hrsd.gov.sa",
-      "url": "https://www.hrsd.gov.sa/media-center/news/%D9%85%D8%B9%D8%A7%D9%8A%D9%8A%D8%B1%C2%A0%D9%88%D8%AE%D8%B7%D9%88%D8%A7%D8%AA-%D9%84%D9%84%D8%A3%D9%87%D9%84%D9%8A%D8%A9"
-    },
-    {
-      "label": "mountada.net",
-      "url": "https://mountada.net/article/when-will-the-new-upgraded-social-security-come-/"
+      "label": "HRSD English: eligibility and objection",
+      "url": "https://www.hrsd.gov.sa/en/media-center/news/%D9%85%D8%B9%D8%A7%D9%8A%D9%8A%D8%B1%C2%A0%D9%88%D8%AE%D8%B7%D9%88%D8%A7%D8%AA-%D9%84%D9%84%D8%A3%D9%87%D9%84%D9%8A%D8%A9"
     }
   ],
-  "notes": "أكبر فرصة في هذه الصفحة هي بناء مرجع شهري دائم يشرح اليومين الحاسمين 27 و1 ميلادي بدلاً من الاكتفاء بخبر دفعة الشهر الحالي، لأن الطلب البحثي يتكرر يومياً وبنية مالية واضحة."
+  "notes": "الخلاصة الأهم من البحث أن صفحة الضمان الاجتماعي المطور يجب أن تبنى حول ثلاثية واضحة للمستفيد: 27 ميلادي للأهلية، 1 ميلادي للصرف، و30 يوماً للاعتراض. هذه هي الفائدة العملية التي لا توفرها أخبار الشهر السريعة وحدها."
 }

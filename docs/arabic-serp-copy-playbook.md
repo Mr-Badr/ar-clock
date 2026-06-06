@@ -398,27 +398,3 @@ Description alternatives:
 
 Chosen:
 - Use material-specific description that promises the needed quantity, the key result, and related building tools.
-
-## `/economie/*`
-
-Intent: users want a market hour, forex session, or clock answer fast.
-
-Title alternatives:
-1. متى يفتح `{market}` اليوم؟ | الوقت الآن وساعات التداول
-2. ساعات `{market}` اليوم | التوقيت الحالي والافتتاح والإغلاق
-3. كم باقي على افتتاح `{market}`؟ | الوقت المباشر
-4. هل `{market}` مفتوح الآن؟ | ساعات السوق والتوقيت
-5. موعد `{market}` اليوم | ساعات التداول الحالية
-
-Chosen:
-- Use tool-specific direct intent such as `هل السوق الأمريكي مفتوح الآن؟` or `متى يفتح سوق الذهب اليوم؟`
-
-Description alternatives:
-1. اعرف فوراً هل `{market}` مفتوح الآن، ومتى يبدأ ومتى يغلق، مع الوقت المحلي الحالي وروابط الأدوات الاقتصادية المرتبطة.
-2. صفحة مباشرة لمعرفة ساعات `{market}` اليوم مع التوقيت الحالي والعد التنازلي حتى الافتتاح أو الإغلاق.
-3. إذا كنت تبحث عن وقت `{market}` الآن، فستجد هنا حالة السوق وساعات التداول بوضوح.
-4. اكتشف مواعيد `{market}` اليوم مع التوقيت المحلي والروابط المفيدة للمتابعة.
-5. أداة اقتصادية سريعة لمعرفة حالة `{market}` الآن وساعات العمل والوقت المتبقي.
-
-Chosen:
-- Use market-specific description that answers open/close state first, then adds current time and related tools.

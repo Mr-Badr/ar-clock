@@ -16,27 +16,19 @@ function SectionCard({ title, description, children }) {
       >
         مواعيد {title} حسب الدولة
       </h2>
-      <div
-        className="card-nested"
+      <p
         style={{
-          padding: 'var(--space-5)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 'var(--space-3)',
+          margin: 0,
+          marginBottom: 'var(--space-4)',
+          fontSize: 'var(--text-sm)',
+          color: 'var(--text-secondary)',
+          lineHeight: 'var(--leading-relaxed)',
+          maxWidth: '72ch',
         }}
       >
-        <p
-          style={{
-            margin: 0,
-            fontSize: 'var(--text-sm)',
-            color: 'var(--text-secondary)',
-            lineHeight: 'var(--leading-relaxed)',
-          }}
-        >
-          {description}
-        </p>
-        {children}
-      </div>
+        {description}
+      </p>
+      {children}
     </section>
   );
 }

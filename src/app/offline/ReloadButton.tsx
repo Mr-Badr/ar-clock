@@ -3,13 +3,15 @@
 export default function ReloadButton() {
   return (
     <button
+      type="button"
+      aria-label="إعادة تحميل الصفحة بعد عودة الاتصال"
       onClick={() => window.location.reload()}
       className="btn"
       style={{
         width: '100%',
         padding: 'var(--space-3) var(--space-4)',
         background: 'var(--accent)',
-        color: '#fff',
+        color: 'var(--text-on-accent)',
         borderRadius: 'var(--radius-lg)',
         fontWeight: 'var(--font-semibold)',
         fontSize: 'var(--text-base)',

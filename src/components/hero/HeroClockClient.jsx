@@ -75,24 +75,8 @@ function getTimeData(tz) {
  *   position: relative
  *   overflow: hidden
  */
-function ShineBorder({
-  color = ['#A07CFE', '#FE8FB5', '#FFBE7B'],
-  borderWidth = 1,
-  duration = 14,
-}) {
-  const colors = Array.isArray(color) ? color.join(',') : color;
-  return (
-    <span
-      aria-hidden="true"
-      className={styles.shineBorder}
-      style={{
-        '--shine-border-width': `${borderWidth}px`,
-        '--shine-duration':     `${duration}s`,
-        '--shine-mask':         'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-        '--shine-gradient':     `radial-gradient(transparent, transparent, ${colors}, transparent, transparent)`,
-      }}
-    />
-  );
+function ShineBorder() {
+  return null;
 }
 
 /** Single time unit: two digits + an Arabic label pill underneath. */
@@ -303,7 +287,6 @@ export default function HeroClockClient({
           onClick={handleShare}
           aria-label="مشاركة الوقت"
         >
-          <ShineBorder color={['#A07CFE', '#FE8FB5', '#FFBE7B']} borderWidth={1} duration={10} />
           <Share2 size={14} />
           <span className={styles.btnLabel}>{copied ? '✓ تم النسخ' : 'مشاركة'}</span>
         </button>
@@ -319,7 +302,6 @@ export default function HeroClockClient({
           onClick={toggleFullscreen}
           aria-label={isFS ? 'إغلاق ملء الشاشة' : 'ملء الشاشة'}
         >
-          <ShineBorder color={['#A07CFE', '#FE8FB5', '#FFBE7B']} borderWidth={1} duration={10} />
           {isFS ? <Minimize2 size={14} /> : <Fullscreen size={14} />}
           <span className={styles.btnLabel}>{isFS ? 'إغلاق' : 'ملء الشاشة'}</span>
         </button>
@@ -348,7 +330,7 @@ export default function HeroClockClient({
                       className={styles.clockLine}
                       role="timer"
                       aria-live="off"
-                      aria-label={`الوقت الآن في ${safeCityName}: ${pad2(t.h)}:${pad2(t.m)}:${pad2(t.s)}`}
+                      aria-label={`الوقت الان في ${safeCityName}: ${pad2(t.h)}:${pad2(t.m)}:${pad2(t.s)}`}
                     >
                       <Unit value={t.h} label="ساعة"  />
                       <span className={styles.sep} aria-hidden="true">:</span>
@@ -364,11 +346,6 @@ export default function HeroClockClient({
 
 
           <div className={styles.dateLine}>
-            <ShineBorder
-              color={['#8CAEFF', '#A07CFE', '#FE8FB5']}
-              borderWidth={1}
-              duration={16}
-            />
             <span className={styles.dateAr}>{t.dateAr}</span>
             <span className={styles.dateDivider} aria-hidden="true">·</span>
             <span className={styles.dateHijri}>{t.dateHijri}</span>

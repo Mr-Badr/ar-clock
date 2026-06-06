@@ -48,6 +48,28 @@ function addMonths(dateValue, monthsToAdd) {
   return result.toISOString().slice(0, 10);
 }
 
+function formatArabicDurationUnit(value, singularLabel, dualLabel, pluralLabel) {
+  if (!value) return null;
+  if (value === 1) return `${formatNumber(value)} ${singularLabel}`;
+  if (value === 2) return `${formatNumber(value)} ${dualLabel}`;
+  return `${formatNumber(value)} ${pluralLabel}`;
+}
+
+function formatServiceDuration(service) {
+  if (!service?.isValid) return '';
+
+  const parts = [
+    formatArabicDurationUnit(service.years, 'سنة', 'سنتان', 'سنوات'),
+    formatArabicDurationUnit(service.months, 'شهر', 'شهران', 'أشهر'),
+    formatArabicDurationUnit(service.days, 'يوم', 'يومان', 'أيام'),
+  ].filter(Boolean);
+
+  if (!parts.length) return 'أقل من يوم';
+  if (parts.length === 1) return parts[0];
+
+  return `${parts.slice(0, -1).join(' و')} و${parts[parts.length - 1]}`;
+}
+
 function diffDates(startValue, endValue) {
   const start = parseDateInput(startValue);
   const end = parseDateInput(endValue);
@@ -180,9 +202,7 @@ export function calculateEndOfServiceBenefit({
     salary: basicSalary,
     reason,
     service,
-    serviceLabel:
-      `${service.years} سنة و${service.months} شهر` +
-      (service.days ? ` و${service.days} يوم` : ''),
+    serviceLabel: formatServiceDuration(service),
     firstFiveYears,
     remainingYears,
     firstFiveAmount: round(firstFiveAmount),

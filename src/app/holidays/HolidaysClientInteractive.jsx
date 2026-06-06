@@ -7,6 +7,7 @@ import { loadMoreEvents } from './actions';
 import HolidaysFiltersPanel from './HolidaysFiltersPanel';
 import HolidaysResultsSummary from './HolidaysResultsSummary';
 import HolidaysEventsGrid from './HolidaysEventsGrid';
+import styles from './HolidaysV4.module.css';
 import {
   buildHolidayQueryString,
   normalizeHolidayFilter,
@@ -224,7 +225,7 @@ export default function HolidaysClientInteractive({
   const hasActiveFilters = category !== 'all' || country !== 'all' || search !== '' || timeRange !== 'all';
 
   return (
-    <div className="flex flex-col" style={{ gap: 'var(--space-6)' }}>
+    <div className={styles.interactiveShell}>
       <HolidaysFiltersPanel
         search={search}
         category={category}
@@ -269,6 +270,7 @@ export default function HolidaysClientInteractive({
         isLoadingMore={isLoadingMore}
         cursor={cursor}
         onLoadMore={handleLoadMore}
+        onResetFilters={clearAll}
       />
     </div>
   );

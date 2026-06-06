@@ -9,9 +9,11 @@
     "hasHardcodedYear": false
   },
   "notes": [
-    "fact-source: وزارة التضامن الاجتماعي: صرف تكافل وكرامة عن شهر يناير",
-    "fact-source: وزارة التضامن الاجتماعي: صرف تكافل وكرامة عن شهر فبراير",
-    "fact-source: وزارة التضامن الاجتماعي: صرف تكافل وكرامة عن شهر مارس"
+    "fact-source: وزارة التضامن الاجتماعي: الصفحة الرسمية وروابط الاستعلام",
+    "fact-source: وزارة التضامن الاجتماعي: بوابة الاستعلام والشكاوى",
+    "fact-source: وزارة التضامن الاجتماعي: أخبار صرف تكافل وكرامة الشهرية",
+    "2026-06-01: Full authored rewrite completed. The page now answers the 15th-of-month payout intent first, then explains official inquiry, complaints, hotline, payout versus increase confusion, and what the user should do before payment day.",
+    "2026-06-01: Research refreshed with official MOSS sources, current Arabic news competitors, and English/background comparison. Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. events:build and rendered-route confirmation were intentionally skipped per instruction."
   ],
-  "updatedAt": "2026-04-06T00:00:00.000Z"
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

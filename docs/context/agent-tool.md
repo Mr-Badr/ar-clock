@@ -307,7 +307,6 @@ Touch these files:
 - `src/app/mwaqit-al-salat/sitemap.js`
 - `src/app/time-difference/sitemap.js`
 - `src/app/calculators/sitemap.js`
-- `src/app/economie/sitemap.js`
 - `src/app/date/sitemap.xml/route.ts`
 - `src/app/date/sitemaps/calendars/route.ts`
 - `src/app/date/sitemaps/countries/route.ts`
@@ -602,7 +601,6 @@ src/app/time-now/sitemap.js                   (P3.1) filter
 src/app/mwaqit-al-salat/sitemap.js            (P3.1) filter
 src/app/time-difference/sitemap.js            (P3.1) filter
 src/app/calculators/sitemap.js                (P3.1) filter
-src/app/economie/sitemap.js                   (P3.1) filter
 src/app/date/sitemap.xml/route.ts             (P3.1) filter
 src/app/date/sitemaps/calendars/route.ts      (P3.1) filter
 src/app/date/sitemaps/countries/route.ts      (P3.1) filter

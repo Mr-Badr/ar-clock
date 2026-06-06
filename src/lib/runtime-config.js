@@ -2,6 +2,7 @@ import { getManualAdsConfig } from '@/lib/ads/manual-config';
 
 const TRUTHY_VALUES = new Set(['1', 'true', 'yes', 'on']);
 const ADSENSE_CLIENT_PREFIX = 'ca-pub-';
+const DEFAULT_GA_MEASUREMENT_ID = 'G-N25LF6BM0K';
 
 function resolveEnvValue(...values) {
   for (const value of values) {
@@ -73,6 +74,7 @@ export function getPublicRuntimeConfig() {
   const gaMeasurementId = resolveEnvValue(
     process.env.GA_MEASUREMENT_ID,
     process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
+    DEFAULT_GA_MEASUREMENT_ID,
   );
   const gtmId = resolveEnvValue(
     process.env.GTM_ID,

@@ -1,7 +1,15 @@
 "use client";
 
 import { useMemo, useState } from 'react';
-import { BriefcaseBusiness, CalendarClock, Landmark, Wallet } from 'lucide-react';
+import {
+  AlertTriangle,
+  BriefcaseBusiness,
+  CalendarClock,
+  CheckCircle2,
+  Landmark,
+  TrendingUp,
+  Wallet,
+} from 'lucide-react';
 
 import {
   CalcInput as Input,
@@ -74,23 +82,76 @@ export default function EndOfServiceCalculator({
     () => buildEndOfServiceMilestones(startDate),
     [startDate],
   );
+  const selectedTermination = terminationOptions.find((option) => option.value === reason);
+  const nextMilestone = reason === 'resignation'
+    ? milestones.find((item) => item.date && item.date > endDate)
+    : null;
+  const contractLabel = contractOptions.find((option) => option.value === contractType)?.title;
+  const resultContext = reason === 'resignation'
+    ? `استقالة: ${result.resignationBracket?.label || 'تحتاج مدة صحيحة'}`
+    : selectedTermination?.label || 'سبب الإنهاء';
+  const nextMilestoneText = nextMilestone
+    ? `إذا كنت قريباً من ${formatDateArabic(nextMilestone.date)} فراجع أثر الانتظار قبل تقديم الاستقالة.`
+    : 'راجع السبب المكتوب في الخطاب قبل الاعتماد على النتيجة.';
+  const summaryCards = [
+    {
+      key: 'salary',
+      tone: 'salary',
+      icon: Wallet,
+      value: formatMoney(result.salary || 0),
+      label: 'الأجر المرجعي للحساب',
+      tag: 'مدخل أساسي',
+      note: 'تأكد هل المقصود الأجر الأخير أم الأساسي فقط.',
+    },
+    {
+      key: 'service',
+      tone: 'service',
+      icon: CalendarClock,
+      value: result.serviceLabel || 'أقل من يوم',
+      label: result.service?.totalDays ? `${formatNumber(result.service.totalDays)} يوم فعلي` : 'مدة الخدمة غير مكتملة',
+      tag: 'مدة الخدمة',
+      note: 'طابقها مع سجل التأمينات أو عقد العمل.',
+    },
+    {
+      key: 'full-award',
+      tone: 'award',
+      icon: Landmark,
+      value: formatMoney(result.fullAward || 0),
+      label: 'الاستحقاق الكامل قبل التعديل',
+      tag: 'قبل سبب الإنهاء',
+      note: 'هذا الرقم قبل تطبيق نسبة الاستقالة.',
+    },
+    {
+      key: 'percent',
+      tone: 'percent',
+      icon: BriefcaseBusiness,
+      value: formatPercent(result.entitlementPercent || 0),
+      label: 'نسبة الاستحقاق الحالية',
+      tag: reason === 'resignation' ? 'استقالة' : 'استحقاق كامل',
+      note: resultContext,
+    },
+  ];
 
   const shareText = result.isValid
-    ? `مدة الخدمة: ${result.serviceLabel}\nمكافأة نهاية الخدمة: ${formatMoney(result.award)}\nنسبة الاستحقاق: ${formatPercent(result.entitlementPercent)}`
+    ? `الأجر المرجعي: ${formatMoney(result.salary)}\nمدة الخدمة: ${result.serviceLabel}\nمكافأة نهاية الخدمة: ${formatMoney(result.award)}\nنسبة الاستحقاق: ${formatPercent(result.entitlementPercent)}`
     : '';
 
   return (
-    <div className="calc-app">
+    <div className="calc-app end-service-tool" aria-label="حاسبة مكافأة نهاية الخدمة">
       <div className="calc-app-grid">
-        <Card className="calc-surface-card calc-app-panel">
+        <Card className="calc-surface-card calc-app-panel calc-esb-form-card">
           <CardHeader>
-            <CardTitle className="calc-card-title">بيانات الحساب</CardTitle>
+            <div className="calc-esb-panel-heading">
+              <span className="calc-esb-panel-kicker">المدخلات</span>
+              <CardTitle className="calc-card-title">أدخل بيانات التسوية بترتيب واضح</CardTitle>
+              <p>غيّر أي رقم وستتحدث النتيجة فوراً. ابدأ بالراتب والتواريخ، ثم اختر سبب الإنهاء كما هو مكتوب في المستند.</p>
+            </div>
           </CardHeader>
           <CardContent className="calc-form-grid">
-            <div className="calc-field">
+            <div className="calc-field calc-esb-step-field">
               <div className="calc-field-row">
                 <Label className="calc-label">نوع العقد</Label>
-                <span className="calc-hint">يظهر في الملخص للمراجعة السريعة</span>
+                <span className="calc-esb-step-number">01</span>
               </div>
               <RadioGroup
                 value={contractType}
@@ -98,7 +159,7 @@ export default function EndOfServiceCalculator({
                 className="calc-radio-grid"
               >
                 {contractOptions.map((option) => (
-                  <label key={option.value} className="card-nested calc-radio-card">
+                  <label key={option.value} className="calc-radio-card">
                     <RadioGroupItem value={option.value} />
                     <span className="calc-radio-copy">
                       <strong>{option.title}</strong>
@@ -109,21 +170,29 @@ export default function EndOfServiceCalculator({
               </RadioGroup>
             </div>
 
-            <div className="calc-field">
-              <Label className="calc-label" htmlFor="salary">
-                الراتب الأساسي الشهري
-              </Label>
-              <Input
-                id="salary"
-                inputMode="decimal"
-                value={salary}
-                onChange={(event) => setSalary(event.target.value)}
-                placeholder="8000"
-              />
-              <p className="calc-hint">استخدم الراتب الأساسي فقط بدون البدلات.</p>
+            <div className="calc-field calc-esb-step-field">
+              <div className="calc-field-row">
+                <Label className="calc-label" htmlFor="salary">
+                  الأجر أو الراتب المرجعي الشهري
+                </Label>
+                <span className="calc-esb-step-number">02</span>
+              </div>
+              <div className="calc-esb-money-field">
+                <Input
+                  id="salary"
+                  inputMode="decimal"
+                  value={salary}
+                  onChange={(event) => setSalary(event.target.value)}
+                  placeholder="8000"
+                />
+                <span>ر.س</span>
+              </div>
+              <p className="calc-hint">
+                أدخل الرقم الذي ستُبنى عليه التسوية. إن لم تكن متأكداً، استخدم الراتب الأساسي كتقدير أولي ثم راجع الأجر الأخير والعناصر المتغيرة.
+              </p>
             </div>
 
-            <div className="calc-grid-2">
+            <div className="calc-grid-2 calc-esb-date-grid">
               <div className="calc-field">
                 <Label className="calc-label" htmlFor="start-date">
                   تاريخ بداية العمل
@@ -148,8 +217,11 @@ export default function EndOfServiceCalculator({
               </div>
             </div>
 
-            <div className="calc-field">
-              <Label className="calc-label">سبب إنهاء العلاقة التعاقدية</Label>
+            <div className="calc-field calc-esb-step-field">
+              <div className="calc-field-row">
+                <Label className="calc-label">سبب إنهاء العلاقة التعاقدية</Label>
+                <span className="calc-esb-step-number">03</span>
+              </div>
               <Select value={reason} onValueChange={setReason}>
                 <SelectTrigger className="w-full">
                   <SelectValue />
@@ -162,83 +234,96 @@ export default function EndOfServiceCalculator({
                   ))}
                 </SelectContent>
               </Select>
-              <p className="calc-hint">
-                {terminationOptions.find((option) => option.value === reason)?.hint}
-              </p>
+              <div className="calc-esb-reason-note">
+                <AlertTriangle size={16} aria-hidden="true" />
+                <span>{selectedTermination?.hint}</span>
+              </div>
             </div>
           </CardContent>
         </Card>
 
         <div className="calc-results-panel">
-          <Card className="calc-surface-card calc-results-panel">
+          <Card className="calc-surface-card calc-results-panel calc-esb-result-card">
             <CardHeader>
-              <CardTitle className="calc-card-title">ملخص الاستحقاق</CardTitle>
+              <div className="calc-esb-panel-heading">
+                <span className="calc-esb-panel-kicker">النتيجة المباشرة</span>
+                <CardTitle className="calc-card-title">المبلغ الذي ستراجعه الآن</CardTitle>
+              </div>
             </CardHeader>
-            <CardContent className="calc-form-grid">
+            <CardContent className="calc-form-grid" aria-live="polite">
               {result.isValid ? (
                 <>
-                  <div className="calc-metric-grid">
-                    <div className="card-nested calc-metric-card">
-                      <div className="calc-metric-card__label">مدة الخدمة</div>
-                      <div className="calc-metric-card__value">{result.serviceLabel}</div>
-                      <div className="calc-metric-card__note">
-                        {contractType === 'fixed' ? 'عقد محدد المدة' : 'عقد غير محدد المدة'}
-                      </div>
+                  <div className="calc-esb-answer">
+                    <div className="calc-esb-answer__copy">
+                      <span>مكافأة نهاية الخدمة المقدرة</span>
+                      <strong>{formatMoney(result.award)}</strong>
+                      <p>
+                        {resultContext}. أصل المكافأة قبل التعديل هو {formatMoney(result.fullAward)}.
+                      </p>
                     </div>
-                    <div className="card-nested calc-metric-card">
-                      <div className="calc-metric-card__label">المكافأة المستحقة</div>
-                      <div className="calc-metric-card__value">{formatMoney(result.award)}</div>
-                      <div className="calc-metric-card__note">
-                        كامل الاستحقاق قبل التعديل: {formatMoney(result.fullAward)}
-                      </div>
+                    <ResultActions
+                      copyText={shareText}
+                      shareTitle="حاسبة مكافأة نهاية الخدمة"
+                      shareText={shareText}
+                    />
+                  </div>
+
+                  <div className="calc-esb-result-context">
+                    <div>
+                      <span>مدة الخدمة</span>
+                      <strong>{result.serviceLabel}</strong>
+                      <small>{contractLabel}</small>
+                    </div>
+                    <div>
+                      <span>نسبة الاستحقاق</span>
+                      <strong>{formatPercent(result.entitlementPercent)}</strong>
+                      <small>{reason === 'resignation' ? result.resignationBracket.label : 'القاعدة العامة'}</small>
+                    </div>
+                    <div>
+                      <span>الأيام المحتسبة</span>
+                      <strong>{formatNumber(result.service.totalDays)}</strong>
+                      <small>يوم فعلي بين التاريخين</small>
                     </div>
                   </div>
 
-                  <div className="calc-field">
+                  <div className="calc-field calc-esb-progress-block">
                     <div className="calc-field-row">
-                      <span className="calc-label">نسبة الاستحقاق</span>
+                      <span className="calc-label">نسبة الاستحقاق المطبقة على أصل المكافأة</span>
                       <strong>{formatPercent(result.entitlementPercent)}</strong>
                     </div>
                     <Progress value={result.entitlementPercent} />
-                    {reason === 'resignation' ? (
-                      <p className="calc-hint">
-                        الفئة الحالية: {result.resignationBracket.label}
-                      </p>
-                    ) : null}
                   </div>
 
-                  <div className="calc-breakdown-list">
+                  <div className="calc-breakdown-list calc-esb-breakdown">
                     <div className="calc-breakdown-item">
-                      <span>السنوات الخمس الأولى</span>
+                      <span>نصف شهر عن السنوات الخمس الأولى</span>
                       <strong>{formatMoney(result.firstFiveAmount)}</strong>
                     </div>
                     <div className="calc-breakdown-item">
-                      <span>ما بعد خمس سنوات</span>
+                      <span>شهر كامل عن السنوات بعد الخامسة</span>
                       <strong>{formatMoney(result.remainingAmount)}</strong>
                     </div>
                     <div className="calc-breakdown-item">
-                      <span>الأشهر والأيام الإضافية</span>
+                      <span>كسور السنة من الأشهر والأيام</span>
                       <strong>{formatMoney(result.partialAmount)}</strong>
                     </div>
                   </div>
-
-                  <ResultActions
-                    copyText={shareText}
-                    shareTitle="حاسبة مكافأة نهاية الخدمة"
-                    shareText={shareText}
-                  />
                 </>
               ) : (
-                <div className="calc-warning">
-                  أدخل راتباً صحيحاً وتأكد أن تاريخ نهاية الخدمة بعد تاريخ البداية.
+                <div className="calc-warning calc-esb-empty-result">
+                  <AlertTriangle size={18} aria-hidden="true" />
+                  <span>أدخل راتباً صحيحاً وتأكد أن تاريخ نهاية الخدمة بعد تاريخ البداية.</span>
                 </div>
               )}
             </CardContent>
           </Card>
 
-          <Card className="calc-surface-card calc-support-panel">
+          <Card className="calc-surface-card calc-support-panel calc-esb-support-card">
             <CardHeader>
-              <CardTitle className="calc-card-title">هل الانتظار يفيدك؟</CardTitle>
+              <CardTitle className="calc-card-title">
+                <TrendingUp size={18} aria-hidden="true" />
+                هل الانتظار يفيدك؟
+              </CardTitle>
             </CardHeader>
             <CardContent className="calc-form-grid">
               <div className="calc-field">
@@ -266,9 +351,12 @@ export default function EndOfServiceCalculator({
             </CardContent>
           </Card>
 
-          <Card className="calc-surface-card calc-support-panel">
+          <Card className="calc-surface-card calc-support-panel calc-esb-support-card">
             <CardHeader>
-              <CardTitle className="calc-card-title">خط زمني للاستحقاق</CardTitle>
+              <CardTitle className="calc-card-title">
+                <CalendarClock size={18} aria-hidden="true" />
+                خط زمني للاستحقاق
+              </CardTitle>
             </CardHeader>
             <CardContent className="calc-mini-list">
               {milestones.map((item) => (
@@ -282,45 +370,38 @@ export default function EndOfServiceCalculator({
                 </div>
               ))}
               <div className="calc-note">
-                الحاسبة تقديرية لتوضيح القاعدة العامة، وقد تتأثر النتيجة بعناصر عقدية أو قضائية
-                خاصة مثل الإجازات غير المدفوعة أو أي تسويات مكتوبة.
+                {nextMilestoneText}
               </div>
             </CardContent>
           </Card>
         </div>
       </div>
 
-      <div className="calc-grid-4">
-        <div className="card-nested calc-metric-card">
-          <div className="calc-metric-card__label">
-            <Wallet size={16} />
-          </div>
-          <div className="calc-metric-card__value">{formatMoney(result.salary || 0)}</div>
-          <div className="calc-metric-card__note">الراتب المعتمد للحساب</div>
+      <div className="end-service-summary-strip" aria-label="مراجعة سريعة قبل الاعتماد على النتيجة">
+        <div className="end-service-summary-strip__head">
+          <span>راجع قبل الاعتماد</span>
+          <strong>أربع نقاط تمنع أغلب أخطاء التسوية</strong>
         </div>
-        <div className="card-nested calc-metric-card">
-          <div className="calc-metric-card__label">
-            <CalendarClock size={16} />
-          </div>
-          <div className="calc-metric-card__value">
-            {result.service?.totalDays ? formatNumber(result.service.totalDays) : '0'}
-          </div>
-          <div className="calc-metric-card__note">إجمالي أيام الخدمة</div>
-        </div>
-        <div className="card-nested calc-metric-card">
-          <div className="calc-metric-card__label">
-            <Landmark size={16} />
-          </div>
-          <div className="calc-metric-card__value">{formatMoney(result.fullAward || 0)}</div>
-          <div className="calc-metric-card__note">الاستحقاق الكامل قبل التعديل</div>
-        </div>
-        <div className="card-nested calc-metric-card">
-          <div className="calc-metric-card__label">
-            <BriefcaseBusiness size={16} />
-          </div>
-          <div className="calc-metric-card__value">{formatPercent(result.entitlementPercent || 0)}</div>
-          <div className="calc-metric-card__note">نسبة الاستحقاق الحالية</div>
-        </div>
+        {summaryCards.map((card) => {
+          const Icon = card.icon;
+
+          return (
+            <div key={card.key} className={`end-service-summary-card end-service-summary-card--${card.tone}`}>
+              <div className="end-service-summary-card__top">
+                <span className="end-service-summary-card__icon" aria-hidden="true">
+                  <Icon size={18} />
+                </span>
+                <span className="end-service-summary-card__tag">
+                  <CheckCircle2 size={14} aria-hidden="true" />
+                  {card.tag}
+                </span>
+              </div>
+              <div className="end-service-summary-card__value">{card.value}</div>
+              <div className="end-service-summary-card__label">{card.label}</div>
+              <p>{card.note}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

@@ -2,21 +2,16 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import BuildingCostCalculator from '@/components/calculators/building/BuildingCostCalculator.client';
 import {
+  CalculatorDecisionTable,
   CalculatorHero,
+  CalculatorInfoGrid,
   CalculatorSection,
-  CalculatorSectionNav,
-  CalculatorStoryBand,
-  CalculatorQuickAnswerGrid,
   CalculatorFaqSection,
   CalculatorResourceLinks,
-  CalculatorFooterCta,
-  RelatedCalculators,
 } from '@/components/calculators/common';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getGuidesBySlugs } from '@/lib/guides/data';
-import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
+import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tool-guides';
 import { getSiteUrl } from '@/lib/site-config';
 import { getBuildingKeywords } from '@/lib/calculators/building/seo-keywords';
 import { COUNTRY_LIST } from '@/lib/calculators/building/country-data';
@@ -24,15 +19,126 @@ import SectionSkeleton from '@/components/shared/SectionSkeleton';
 
 const SITE_URL = getSiteUrl();
 const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.building);
+const BUILDING_MATERIAL_LINKS = [
+  {
+    href: '/calculators/building/cement',
+    title: 'احسب أكياس الأسمنت قبل طلب الكمية',
+    description: 'استخدمها للخرسانة والمونة عندما تريد معرفة الأسمنت والرمل والحصى والماء بدل الاكتفاء بتقدير عام.',
+    ctaLabel: 'افتح حاسبة الأسمنت',
+  },
+  {
+    href: '/calculators/building/rebar',
+    title: 'حوّل الحديد من أطوال وأقطار إلى وزن',
+    description: 'مفيدة عندما تريد تقدير وزن الحديد أو عدد الأسياخ قبل مقارنة عروض الموردين أو المقاولين.',
+    ctaLabel: 'افتح حاسبة الحديد',
+  },
+  {
+    href: '/calculators/building/tiles',
+    title: 'اعرف كراتين البلاط مع نسبة الهدر',
+    description: 'ابدأ بها عندما تكون مساحة الغرف والمقاسات واضحة وتريد كمية أقرب للشراء الفعلي.',
+    ctaLabel: 'افتح حاسبة البلاط',
+  },
+];
+const BUILDING_SOURCE_LINKS = [
+  {
+    href: 'https://www.cement.org/cement-concrete/cement-concrete-faq/',
+    title: 'Portland Cement Association: أسئلة الأسمنت والخرسانة',
+    description: 'مرجع فني لفهم علاقة الأسمنت بالخرسانة ولماذا لا تكفي أكياس الأسمنت وحدها لتسعير المشروع.',
+    ctaLabel: 'افتح المصدر',
+  },
+  {
+    href: 'https://www.crsi.org/reinforcing-basics/reinforcing-steel/rebar-properties/',
+    title: 'CRSI: خصائص حديد التسليح',
+    description: 'مرجع لفهم أقطار حديد التسليح وخصائصه قبل تحويل الأطوال والكميات إلى وزن تقريبي.',
+    ctaLabel: 'افتح المصدر',
+  },
+  {
+    href: '/blog/how-many-cement-bags-do-i-need',
+    title: 'شرح عربي: كم كيس أسمنت أحتاج؟',
+    description: 'دليل مبسط يساعدك على فصل كمية الخرسانة والمونة عن تكلفة مشروع البناء بالكامل.',
+    ctaLabel: 'اقرأ الشرح',
+  },
+  {
+    href: '/blog/how-to-estimate-rebar-weight',
+    title: 'شرح عربي: كيف تقدّر وزن الحديد؟',
+    description: 'طريقة عملية لفهم وزن الأسياخ، قطر الحديد، والهدر قبل مقارنة عرض المورد.',
+    ctaLabel: 'اقرأ الشرح',
+  },
+];
+const BUILDING_DECISION_ROWS = [
+  {
+    key: 'budget',
+    cells: [
+      'أريد ميزانية أولية للمشروع',
+      'حاسبة تكلفة البناء',
+      'ابدأ بالمساحة والدولة ومستوى التشطيب، ثم اقرأ الناتج كنطاق لا كسعر مقاول نهائي.',
+    ],
+  },
+  {
+    key: 'cement',
+    cells: [
+      'أريد كمية خرسانة أو مونة',
+      'حاسبة الأسمنت',
+      'استخدمها عندما تعرف نوع الخلطة أو المساحة، وأضف هامش هدر قبل الشراء.',
+    ],
+  },
+  {
+    key: 'rebar',
+    cells: [
+      'أريد وزن الحديد أو عدد الأسياخ',
+      'حاسبة الحديد',
+      'تحتاج القطر والطول والعدد. النتيجة تساعد في المقارنة، ولا تغني عن المخطط الإنشائي.',
+    ],
+  },
+  {
+    key: 'tiles',
+    cells: [
+      'أريد كراتين بلاط',
+      'حاسبة البلاط',
+      'أدخل مقاس البلاطة والمساحة، ثم أضف هدر القص والكسر حسب شكل المكان.',
+    ],
+  },
+];
+const BUILDING_METHOD_ITEMS = [
+  {
+    title: 'اقرأ التكلفة كنطاق لا كحكم نهائي',
+    description: 'الأسعار في البناء تتحرك بسرعة حسب المدينة والموسم والتوفر.',
+    content: (
+      <p>
+        الناتج الأوسط يخبرك بالتصور الأقرب، أما الحد الأدنى والأعلى فيحميانك من وهم الدقة. إذا كان عرض المقاول خارج النطاق بكثير، لا ترفضه فوراً؛ اطلب تفصيل البنود، ثم قارن السبب: هل يشمل الحفر؟ هل يشمل السور؟ هل التشطيب مختلف؟ هل السعر يتضمن الضريبة أو الرسوم؟
+      </p>
+    ),
+  },
+  {
+    title: 'افصل العظم عن التشطيب',
+    description: 'كثير من المشاريع لا تتعثر في الخرسانة، بل في التشطيبات المتأخرة.',
+    content: (
+      <p>
+        الهيكل يعطيك شكل البيت، لكن التشطيب هو المكان الذي تظهر فيه الاختيارات الكثيرة: أرضيات، أبواب، نوافذ، دهانات، مطابخ، دورات مياه، إنارة، وتكييف. لذلك لا تجعل كل ميزانيتك تذهب إلى بداية المشروع ثم تكتشف أن المتبقي لا يكفي للسكن المريح.
+      </p>
+    ),
+  },
+  {
+    title: 'اجعل كميات المواد خطوة ثانية',
+    description: 'الكمية الدقيقة تحتاج مخططاً أو مقاسات أوضح من مجرد فكرة عامة.',
+    content: (
+      <p>
+        الأسمنت والحديد والبلاط لا تُحسب بالطريقة نفسها. الأسمنت مرتبط بحجم الصبة أو المونة، الحديد مرتبط بالأقطار والأطوال والتفاصيل الإنشائية، والبلاط مرتبط بمقاس البلاطة والهدر والقص. لذلك خصص لكل بند حاسبته بدلاً من محاولة ضغط كل شيء في رقم واحد.
+      </p>
+    ),
+  },
+];
+const FEATURED_BUILDING_COUNTRY_KEYS = ['sa', 'eg', 'ae', 'ma'];
 
 export const metadata = buildCanonicalMetadata({
-  title: 'كم تكلفة بناء بيت؟ | حاسبة تكلفة البناء والمواد',
-  description: 'احسب تكلفة بناء البيت والعظم والتشطيب بسرعة، مع تقديرات فورية لكمية الحديد والأسمنت والبلاط لـ 12 دولة عربية.',
+  title: 'حاسبة تكلفة البناء | احسب تكلفة بناء بيت والمواد',
+  description: 'احسب تكلفة بناء بيت حسب المساحة والدولة والتشطيب، وافهم متى تستخدم تقدير المشروع أو حاسبات الأسمنت والحديد والبلاط قبل طلب عرض سعر.',
   keywords: getBuildingKeywords('global'),
   url: `${SITE_URL}/calculators/building`,
 });
 
 export default function BuildingHubPage() {
+  const safeCountries = Array.isArray(COUNTRY_LIST) ? COUNTRY_LIST : [];
   const collectionSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
@@ -54,51 +160,72 @@ export default function BuildingHubPage() {
   const faqItems = [
     {
       question: 'كيف تحسب هذه الأداة تكلفة البناء؟',
-      answer: 'تعتمد الحاسبة على معادلات هندسية لحساب المساحة الإجمالية المبنية، ثم تضربها في متوسط تكلفة المتر المربع للتشطيب الذي تختاره، مع مراعاة نوع المبنى والدولة المحددة.',
+      answer: 'تعتمد الحاسبة على مساحة الأرض وعدد الأدوار ونوع المبنى ومستوى التشطيب، ثم تطبق متوسط تكلفة المتر في الدولة التي تختارها. النتيجة ليست عرض مقاول نهائياً، لكنها تعطيك نطاقاً عملياً قبل أن تطلب تسعيراً محلياً. إذا كان لديك سعر متر أو سعر مادة من موردك، عدّل المدخلات داخل الحاسبة حتى تصبح النتيجة أقرب لسوقك.',
     },
     {
       question: 'هل نسبة المقاول (الربح) مشمولة في النتيجة؟',
-      answer: 'نعم، التقدير المعروض يمثل (سعر المتر تسليم مفتاح للمقاول أو المطور)، وليس فقط سعر الشراء الصافي للمواد الخام.',
+      answer: 'النطاق المعروض يحاول تمثيل تكلفة تنفيذ واقعية تشمل المواد والعمالة وهامش التنفيذ العام، لا سعر المواد الخام وحدها. مع ذلك يختلف هامش المقاول حسب المدينة، حجم المشروع، طريقة التعاقد، ومستوى الإشراف. لذلك استخدم النتيجة كبداية تفاوض، ثم قارنها مع عرضين أو ثلاثة بنفس المواصفات.',
     },
     {
       question: 'هل يمكنني تغيير أسعار المواد (الأسمنت، الحديد)؟',
-      answer: 'للحصول على دقة أعلى، يمكنك استخدام "حاسبة الأسمنت" أو "حاسبة الحديد" المنفصلتين ضمن قسم حاسبات البناء وضخ الأسعار المحلية الدقيقة الخاصة بك فيها.',
+      answer: 'نعم. للحصول على دقة أعلى، استخدم حاسبة الأسمنت أو حاسبة الحديد أو حاسبة البلاط، ثم أدخل الأسعار المحلية التي حصلت عليها من المورد. هذا مهم خصوصاً في المدن التي تتغير فيها تكلفة النقل أو العمالة أو توفر المواد بسرعة.',
+    },
+    {
+      question: 'ما الفرق بين تكلفة العظم وتكلفة تسليم المفتاح؟',
+      answer: 'العظم يركّز على الهيكل الإنشائي والأعمال الأساسية قبل التشطيب، بينما تسليم المفتاح يحاول تغطية المشروع حتى يصبح قابلاً للاستخدام. لذلك يكون رقم تسليم المفتاح أعلى وأقرب لقرار السكن، لكنه يحتاج مواصفات مكتوبة حتى لا تختلف جودة التشطيب من عرض إلى آخر.',
+    },
+    {
+      question: 'كم احتياطياً أترك فوق تقدير البناء؟',
+      answer: 'لا توجد نسبة واحدة تصلح للجميع، لكن من الحكمة أن تترك احتياطياً واضحاً للمفاجآت، خصوصاً إذا كان المخطط غير نهائي أو الأسعار متقلبة أو المشروع في مدينة ذات نقل ويد عاملة أعلى. إذا كان كل ما لديك يساوي تكلفة الحاسبة تقريباً، فالقرار يحتاج تهدئة قبل البدء.',
     },
     {
       question: 'ما هو التشطيب الاقتصادي؟',
-      answer: 'التشطيب الاقتصادي يستخدم مواد محلية أساسية: سيراميك عادي، دهانات قياسية، وأبواب خشبية بسيطة. ممتاز للفيلا الاستثمارية.',
+      answer: 'التشطيب الاقتصادي يعني استخدام مواد عملية وأساسية مثل سيراميك متوسط، دهانات قياسية، أبواب بسيطة، وتجهيزات صحية غير فاخرة. يناسب بيتاً استثمارياً أو مشروعاً تريد فيه ضبط الميزانية قبل الجماليات. إذا كان هدفك بيتاً للسكن الطويل، قارن الاقتصادي مع القياسي لأن فرق التكلفة قد يوفر عليك صيانة مبكرة لاحقاً.',
     },
   ];
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
+  const howToSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'كيف تقدّر تكلفة بناء بيت قبل طلب عرض سعر؟',
+    inLanguage: 'ar',
+    description: 'خطوات عملية لاستخدام حاسبة تكلفة البناء وفصل ميزانية المشروع عن كميات المواد.',
+    step: [
+      { '@type': 'HowToStep', name: 'حدد المساحة والدولة', text: 'أدخل مساحة الطابق وعدد الطوابق واختر الدولة أو المدينة الأقرب لسوقك.' },
+      { '@type': 'HowToStep', name: 'اختر نوع المبنى والتشطيب', text: 'ميّز بين فيلا أو عمارة أو مبنى تجاري، ثم اختر مستوى التشطيب الأقرب لما تريد.' },
+      { '@type': 'HowToStep', name: 'اقرأ النطاق لا الرقم الأوسط فقط', text: 'راجع الحد الأدنى والأعلى ومتوسط تكلفة المتر قبل مقارنة أي عرض مقاول.' },
+      { '@type': 'HowToStep', name: 'انتقل إلى المواد عند الحاجة', text: 'استخدم حاسبات الأسمنت والحديد والبلاط عندما يصبح سؤالك عن كمية شراء محددة.' },
+    ],
+  };
 
-  const quickAnswers = [
-    {
-      question: 'كم متر يكفي لبناء عائلة 5 أشخاص؟',
-      description: 'سؤال تخطيطي ممتاز',
-      answer: 'فيلا بمسطح بناء 350 إلى 400 متر مربع (طابقين) تعتبر قياسية جداً ومثالية لعائلة من 5 أشخاص.',
-    },
-  ];
-
-  const sectionNavItems = [
-    { href: '#calculator-hero', label: 'الحاسبة الإجمالية', description: 'تكلفة البناء كاملة' },
-    { href: '#tools-grid', label: 'حاسبات المواد', description: 'أسمنت، حديد، بلاط' },
-    { href: '#country-hub', label: 'حسب دولتك', description: 'اذهب لصفحة دولتك المخصصة' },
-    { href: '#building-story', label: 'دليل شامل', description: 'مفاهيم مهمة في البناء' },
-    { href: '#building-faq', label: 'الأسئلة الشائعة', description: 'إجابات على أهم الأسئلة' },
-  ];
+  const featuredCountries = safeCountries.filter((country) => FEATURED_BUILDING_COUNTRY_KEYS.includes(country.countryKey));
+  const secondaryCountries = safeCountries.filter((country) => !FEATURED_BUILDING_COUNTRY_KEYS.includes(country.countryKey));
 
   return (
-    <main className="bg-base text-primary">
+    <main className="calc-product-page calc-building-page bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       <CalculatorHero
         badge="هندسة / بناء"
-        title="كم تكلفة بناء بيتك؟ احسبها قبل أن تبدأ"
-        description="خطط لمشروعك بذكاء عبر حاسبة عربية تقدّر تكلفة البناء والعظم والتشطيب، ثم انتقل إلى أدوات الأسمنت والحديد والبلاط لفهم المواد بشكل أدق."
-        accent="#10B981"
+        title="حاسبة تكلفة البناء: اعرف كم قد يكلف بيتك قبل طلب عرض"
+        description="إذا كنت تسأل كم تكلفة بناء بيت، ابدأ من المساحة والدولة ومستوى التشطيب. هذه الحاسبة تعطيك نطاق تكلفة واضحاً، ثم تقودك إلى حساب الأسمنت والحديد والبلاط عندما تحتاج تفصيل المواد قبل الشراء أو التفاوض."
         highlights={[
-          'حاسبات للحديد والأسمنت والمواد الأساسية.',
-          'تحديثات لأسعار 12 دولة عربية.',
-          'واجهة صديقة لغير المهندسين.',
+          'تقدير تكلفة المتر والمشروع حسب الدولة والتشطيب.',
+          'روابط مباشرة لحساب الأسمنت والحديد والبلاط عندما تحتاج كمية مادة محددة.',
+          'شرح عربي واضح يعلّمك كيف تقرأ العرض ولا تعتمد على رقم واحد.',
         ]}
       >
         <Suspense fallback={<SectionSkeleton />}>
@@ -107,138 +234,106 @@ export default function BuildingHubPage() {
       </CalculatorHero>
 
       <CalculatorSection
-        id="building-overview"
-        eyebrow="خريطة القسم"
-        title="دليلك الكامل للبناء"
-      >
-        <CalculatorSectionNav items={sectionNavItems} />
-      </CalculatorSection>
-
-      <CalculatorSection
         id="tools-grid"
         eyebrow="حاسبات المواد"
         title="حاسبات تفصيلية للكميات"
-        description="انتقل من التقدير الإجمالي إلى التقدير الكمي الدقيق. استخدم حاسبات المواد لحساب الكميات المطلوبة لكل بند على حدة."
+        description="بعد معرفة التكلفة العامة، افتح أداة واحدة فقط بحسب البند الذي تريد ضبطه الان: الأسمنت، الحديد، أو البلاط."
       >
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-           <Card className="calc-surface-card hover:border-primary transition-colors hover:shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-xl">حاسبة الأسمنت</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-sm text-text-secondary">
-                احسب أكياس الأسمنت للخرسانة والمونة بكل دقة (عيار 150 لـ 300). كم رمل وحصى وماء؟
-              </p>
-              <Button asChild className="w-full btn btn-primary--flat calc-button">
-                <Link href="/calculators/building/cement">حاسبة الأسمنت</Link>
-              </Button>
-            </CardContent>
-          </Card>
+        <CalculatorResourceLinks items={BUILDING_MATERIAL_LINKS} buttonLabel="افتح الحاسبة" />
+      </CalculatorSection>
 
-          <Card className="calc-surface-card hover:border-primary transition-colors hover:shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-xl">حاسبة الحديد</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-sm text-text-secondary">
-                حوّل الأطوال والأقطار (⌀8 إلى ⌀32) إلى أوزان (كجم أو طن) بشكل فوري.
-              </p>
-              <Button asChild className="w-full btn btn-primary--flat calc-button">
-                <Link href="/calculators/building/rebar">حاسبة الحديد</Link>
-              </Button>
-            </CardContent>
-          </Card>
+      <CalculatorSection
+        id="building-decision-table"
+        eyebrow="قبل التفاصيل"
+        title="متى تستخدم كل حاسبة بناء؟"
+        description="افصل بين ميزانية المشروع كله وبين كمية مادة محددة. هذا الترتيب يمنعك من الغرق في تفاصيل لا تغيّر القرار الحالي."
+        subtle
+      >
+        <CalculatorDecisionTable
+          columns={['سؤالك الان', 'الأداة المناسبة', 'ملاحظة مهمة']}
+          rows={BUILDING_DECISION_ROWS}
+        />
+      </CalculatorSection>
 
-          <Card className="calc-surface-card hover:border-primary transition-colors hover:shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-xl">حاسبة البلاط</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-sm text-text-secondary">
-                احسب كراتين البلاط المطلوبة لغرفك مع حساب الهدر وتوزيع المقاسات الشائعة.
-              </p>
-              <Button asChild className="w-full btn btn-primary--flat calc-button">
-                <Link href="/calculators/building/tiles">حاسبة البلاط</Link>
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
+      <CalculatorSection
+        id="building-method"
+        eyebrow="طريقة الحساب"
+        title="كيف تقرأ رقم تكلفة البناء دون أن تنخدع بالدقة الزائفة؟"
+        description="أقوى تقدير هو الذي يريك حدود الرقم. اقرأ النطاق، ثم اسأل: ماذا شمل؟ ماذا استثنى؟ وما الذي يحتاج مخططاً أو عرضاً محلياً؟"
+      >
+        <CalculatorInfoGrid items={BUILDING_METHOD_ITEMS} />
       </CalculatorSection>
 
       <CalculatorSection
         id="country-hub"
         eyebrow="حسب دولتك"
-        title="الحاسبة المخصصة لدولتك"
-        description="نحن ندعم 12 دولة عربية بأسعار وعملات ولغة تناسبك."
+        title="اختر السوق الأقرب قبل مقارنة تكلفة البناء"
+        description="السعر لا يتغير بالعملة فقط، بل يتغير بسبب العمالة والمواد والمدينة. ابدأ بأقرب سوق، ثم عدّل المدخلات داخل الحاسبة إذا كان لديك عرض محلي أدق."
         subtle
       >
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {COUNTRY_LIST.map(country => (
-            <Link
-              key={country.slug}
-              href={`/calculators/building/${country.slug}`}
-              className="flex items-center gap-3 p-4 bg-base border border-accent/10 rounded-xl hover:bg-accent/5 hover:border-primary/50 transition-all font-bold"
-            >
-              <span className="text-2xl">{country.flag}</span>
-              <span>{country.nameShort}</span>
-            </Link>
-          ))}
+        <div className="calc-country-selector">
+          <div className="calc-country-selector__featured" aria-label="أسواق بناء رئيسية">
+            {featuredCountries.map((country) => (
+              <Link
+                key={country.slug}
+                href={`/calculators/building/${country.slug}`}
+                className="calc-country-card"
+              >
+                <span className="calc-country-card__flag" aria-hidden="true">{country.flag}</span>
+                <span className="calc-country-card__copy">
+                  <strong>{country.nameShort}</strong>
+                  <span>{country.currency} · سعر متر وتكلفة مواد محلية</span>
+                </span>
+                <span className="calc-country-card__cta">افتح الحاسبة</span>
+              </Link>
+            ))}
+          </div>
+
+          <div className="calc-country-selector__compact" aria-label="كل الدول المدعومة في حاسبة البناء">
+            <span className="calc-country-selector__label">كل الدول المدعومة</span>
+            <div className="calc-country-chip-list">
+              {secondaryCountries.map((country) => (
+                <Link
+                  key={country.slug}
+                  href={`/calculators/building/${country.slug}`}
+                  className="calc-country-chip"
+                >
+                  <span aria-hidden="true">{country.flag}</span>
+                  <span>{country.nameShort}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </CalculatorSection>
 
       <CalculatorSection
-        id="building-story"
-        eyebrow="توزيع الميزانية"
-        title="أين يذهب مالك أثناء البناء؟"
-        description="البناء ليس مجرد حديد وأسمنت، التخطيط المالي يمنع تعثر المشروع."
-        subtle
-      >
-        <CalculatorStoryBand
-          title="التشطيب يستهلك الجزء الأكبر"
-          description="الكثيرون يخطئون ويبدأون البناء بـ 40% من الميزانية معتقدين أنها كافية. الحقيقة أن الهيكل الإنشائي هو الجزء الأصغر من التكلفة."
-          items={[
-            { label: 'الهيكل (العظم)', value: 'يستهلك عادة 30% إلى 35% من الميزانية الإجمالية.' },
-            { label: 'الأعمال الإلكتروميكانيكية', value: 'تأسيس وتشطيب الكهرباء والسباكة، تستهلك بين 15% إلى 20%.' },
-            { label: 'التشطيبات المعمارية', value: 'أرضيات، دهانات، أبواب، ونوافذ، تأخذ بين 40% إلى 50%.' },
-          ]}
-        />
-      </CalculatorSection>
-
-      <CalculatorSection
-        id="building-answers"
-        eyebrow="إجابات مباشرة"
-        title="تساؤلات معمارية"
-      >
-        <CalculatorQuickAnswerGrid items={quickAnswers} />
-      </CalculatorSection>
-
-      <CalculatorSection
         id="building-guides"
-        eyebrow="أدلة مرتبطة"
+        eyebrow="قبل شراء المواد"
         title="اقرأ قبل شراء المواد أو طلب التسعير"
-        description="هذه الأدلة تساعد الزائر على فهم سؤال الأسمنت والحديد نفسه قبل الانتقال إلى الأداة المناسبة، وهو ما يقوّي فائدة القسم للمستخدم ووضوحه لمحركات البحث."
+        description="هذه الشروحات تساعدك على فهم سؤال الأسمنت أو الحديد أو التكلفة قبل الانتقال إلى الأداة المناسبة."
         subtle
       >
-        <CalculatorResourceLinks items={RELATED_GUIDES} />
+        <CalculatorResourceLinks items={RELATED_GUIDES} buttonLabel="اقرأ التفسير" />
+      </CalculatorSection>
+
+      <CalculatorSection
+        id="building-sources"
+        eyebrow="مصادر وفهم أعمق"
+        title="مصادر تساعدك على فهم المواد قبل الشراء"
+        description="استخدم المصادر لفهم المفاهيم، ثم اعتمد في السعر النهائي على عروض محلية مكتوبة لأن أسعار البناء تتغير حسب المدينة والمورد والموسم."
+      >
+        <CalculatorResourceLinks items={BUILDING_SOURCE_LINKS} buttonLabel="افتح المصدر" />
       </CalculatorSection>
 
       <CalculatorSection
         id="building-faq"
-        eyebrow="الأسئلة الشائعة"
-        title="أسئلة متكررة حول تكلفة البناء"
+        eyebrow="قبل الاعتماد على التقدير"
+        title="أسئلة قبل تحويل تقدير البناء إلى ميزانية"
       >
         <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>
 
-      <CalculatorSection
-        id="building-related"
-        eyebrow="روابط داخلية"
-        title="حاسبات مشابهة قد تهمك"
-      >
-        <RelatedCalculators currentSlug="building" />
-      </CalculatorSection>
-
-      <CalculatorFooterCta />
     </main>
   );
 }

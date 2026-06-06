@@ -9,31 +9,30 @@ import {
 import { getSiteUrl } from '@/lib/site-config';
 import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
-const BASE = getSiteUrl();
-
 export async function GET() {
+  const base = getSiteUrl();
   const { minYear: gregorianMinYear, maxYear: gregorianMaxYear } = getGregorianCalendarSeoBounds();
   const { minYear: hijriMinYear, maxYear: hijriMaxYear } = getHijriCalendarSeoBounds();
 
   const entries: string[] = [];
   const lastmod = getSitemapLastModifiedDate();
 
-  // Gregorian calendars (rolling SEO window around the current year)
+  // Gregorian calendars within the approved indexable range.
   for (let y = gregorianMinYear; y <= gregorianMaxYear; y++) {
     entries.push(`
   <url>
-    <loc>${BASE}/date/calendar/${y}</loc>
+    <loc>${base}/date/calendar/${y}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>`);
   }
 
-  // Hijri calendars (rolling SEO window around the current Hijri year)
+  // Hijri calendars within the approved indexable range.
   for (let y = hijriMinYear; y <= hijriMaxYear; y++) {
     entries.push(`
   <url>
-    <loc>${BASE}/date/calendar/hijri/${y}</loc>
+    <loc>${base}/date/calendar/hijri/${y}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

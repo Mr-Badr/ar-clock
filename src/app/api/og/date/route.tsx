@@ -8,7 +8,7 @@ import { logger, serializeError } from '@/lib/logger';
 const querySchema = z.object({
   g: z.string().trim().max(80).optional().default('التاريخ الميلادي'),
   h: z.string().trim().max(80).optional().default('التاريخ الهجري'),
-  t: z.string().trim().max(120).optional().default('التاريخ اليوم — هجري وميلادي'),
+  t: z.string().trim().max(120).optional().default('التاريخ اليوم: هجري وميلادي'),
 });
 
 // We attempt to load the custom font from the deployment URL if possible, or fallback
@@ -64,9 +64,7 @@ export async function GET(req: NextRequest) {
             style={{
               fontSize: '64px',
               fontWeight: 900,
-              background: 'linear-gradient(to right, #38bdf8, #818cf8)',
-              backgroundClip: 'text',
-              color: 'transparent',
+              color: '#f8fafc',
               marginBottom: '20px',
               lineHeight: 1.2,
             }}

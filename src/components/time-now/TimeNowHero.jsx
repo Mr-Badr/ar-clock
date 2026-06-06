@@ -72,7 +72,7 @@ function Unit({ value, label, staggerIndex, visible }) {
   return (
     <div style={{
       display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.55rem',
-      animation: `ct-unit-enter 0.6s cubic-bezier(0.175,0.885,0.32,1.275) ${staggerIndex * 0.1}s both`,
+      animation: `ct-unit-enter 0.36s cubic-bezier(0.22,1,0.36,1) ${staggerIndex * 0.06}s both`,
       opacity: visible ? undefined : 0,
     }}>
       <div style={{ display: 'flex', lineHeight: 1 }}>
@@ -130,12 +130,10 @@ function IconBtn({ onClick, label, children, disabled, variant = 'ghost' }) {
 /* Shared styles for hydration parity */
 const HERO_WRAPPER_STYLE = { position: 'relative', width: '100%' };
 const HERO_CARD_STYLE = {
-  borderRadius: '1rem',
+  borderRadius: 'var(--radius-lg)',
   border: '1px solid var(--border-accent)',
   background: 'var(--clock-bg)',
-  backdropFilter: 'blur(20px)',
-  WebkitBackdropFilter: 'blur(20px)',
-  boxShadow: 'var(--shadow-accent)',
+  boxShadow: 'none',
   padding: 'clamp(1.25rem, 3.5vh, 2rem) clamp(1.5rem, 4vw, 3rem)',
   display: 'flex',
   flexDirection: 'column',
@@ -256,8 +254,28 @@ export default function TimeNowHero({
         <div
           className="ct-clock-card"
           data-clock-variant="three-unit"
-          style={{ ...HERO_CARD_STYLE, height: '320px', opacity: 0.5, animation: 'none' }}
-        />
+          style={{ ...HERO_CARD_STYLE, minHeight: '320px', animation: 'none' }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ minHeight: '44px', display: 'inline-flex', alignItems: 'center', color: 'var(--text-muted)', fontSize: 'var(--text-sm)', fontWeight: 700 }}>
+              يتم ضبط الساعة الان
+            </span>
+            <span style={{ minHeight: '44px', display: 'inline-flex', alignItems: 'center', color: 'var(--accent-alt)', fontSize: 'var(--text-sm)', fontWeight: 700 }}>
+              {cityNameAr || 'توقيتك المحلي'}
+            </span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(0.5rem, 3cqi, 2.5rem)', direction: 'ltr', opacity: 0.72 }}>
+            {UNITS.map(({ key, label }, index) => (
+              <div key={`placeholder-${key}`} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(0.5rem, 3cqi, 2.5rem)' }}>
+                <Unit value={0} label={label} staggerIndex={index} visible />
+                {index < UNITS.length - 1 && <Colon visible />}
+              </div>
+            ))}
+          </div>
+          <p style={{ margin: 0, textAlign: 'center', color: 'var(--text-secondary)', fontSize: 'var(--text-sm)', lineHeight: 1.8 }}>
+            ستظهر الساعة الحية والتاريخ المحلي خلال لحظات، حسب المنطقة الزمنية المرتبطة بالمدينة.
+          </p>
+        </div>
       </div>
     );
   }
@@ -311,7 +329,7 @@ export default function TimeNowHero({
         data-clock-variant="three-unit"
         style={{
           ...HERO_CARD_STYLE,
-          animation: 'ct-card-enter 0.8s cubic-bezier(0.175,0.885,0.32,1.275) both'
+          animation: 'ct-card-enter 0.42s cubic-bezier(0.22,1,0.36,1) both'
         }}
         suppressHydrationWarning
       >

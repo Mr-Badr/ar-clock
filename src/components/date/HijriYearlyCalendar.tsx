@@ -1,14 +1,3 @@
-// src/components/date/HijriYearlyCalendar.tsx
-// ─────────────────────────────────────────────────────────────────────────────
-// COMPLETE REWRITE — pre-computes ALL gregorian crossovers in one pass
-//
-// DESIGN:
-//   • Special months (Ramadan, Eid, Hajj, Sacred) get colored headers
-//   • Each day shows: Hijri day (large) + Gregorian day/month (tiny sub-label)
-//   • Islamic event days get a 1px solid colored border + shadcn Tooltip
-//   • Uses .card CSS class + new.css tokens
-// ─────────────────────────────────────────────────────────────────────────────
-
 import Link from 'next/link';
 import { cacheLife, cacheTag } from 'next/cache';
 import { convertDate } from '@/lib/date-adapter';
@@ -26,14 +15,20 @@ const HIJRI_MONTHS = [
   'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة',
 ];
 
-// Special months: accent color + badge
-const SPECIAL_MONTHS: Record<number, { badge: string; color: string; softBg: string; border: string }> = {
-  1: { badge: 'حرام', color: 'var(--danger)', softBg: 'var(--danger-soft)', border: 'var(--danger-border)' },
-  7: { badge: 'حرام', color: 'var(--info)', softBg: 'var(--info-soft)', border: 'var(--info-border)' },
-  9: { badge: 'رمضان', color: 'var(--warning)', softBg: 'var(--warning-soft)', border: 'var(--warning-border)' },
-  10: { badge: 'عيد', color: 'var(--success)', softBg: 'var(--success-soft)', border: 'var(--success-border)' },
-  11: { badge: 'حرام', color: 'var(--accent-alt)', softBg: 'var(--accent-soft)', border: 'var(--border-accent)' },
-  12: { badge: 'الحج', color: 'var(--success)', softBg: 'var(--success-soft)', border: 'var(--success-border)' },
+type CalendarTone = 'danger' | 'info' | 'warning' | 'success' | 'accent';
+
+interface SpecialMonth {
+  badge: string;
+  tone: CalendarTone;
+}
+
+const SPECIAL_MONTHS: Record<number, SpecialMonth> = {
+  1: { badge: 'حرام', tone: 'danger' },
+  7: { badge: 'حرام', tone: 'info' },
+  9: { badge: 'رمضان', tone: 'warning' },
+  10: { badge: 'عيد', tone: 'success' },
+  11: { badge: 'حرام', tone: 'accent' },
+  12: { badge: 'الحج', tone: 'success' },
 };
 
 const WEEKDAYS_AR = ['أح', 'إث', 'ثل', 'أر', 'خم', 'جم', 'سب'];
@@ -67,7 +62,30 @@ interface HijriDayData {
   eventName?: string;
 }
 
-async function getHijriCalendarDayLookup(year: number) {
+function getMonthPanelClass(special: SpecialMonth | undefined): string {
+  return ['date-month-panel', special ? `date-month-panel--${special.tone}` : ''].filter(Boolean).join(' ');
+}
+
+function getMonthHeaderClass(special: SpecialMonth | undefined): string {
+  return [
+    'date-month-header',
+    special ? `date-month-header--${special.tone}` : 'date-month-header--neutral',
+  ].join(' ');
+}
+
+function getMonthTitleClass(special: SpecialMonth | undefined): string {
+  return ['date-month-title', special ? `date-month-title--${special.tone}` : ''].filter(Boolean).join(' ');
+}
+
+function getDayLinkClass(data: HijriDayData | undefined, special: SpecialMonth | undefined): string {
+  return [
+    'date-day-link',
+    data?.hasEvent ? 'date-day-link--event' : '',
+    data?.hasEvent && special ? `date-day-link--event-${special.tone}` : '',
+  ].filter(Boolean).join(' ');
+}
+
+async function getHijriCalendarDayLookup(year: number): Promise<Record<string, HijriDayData>> {
   'use cache';
   cacheTag('date-calendar-hijri', `date-calendar-hijri-${year}`);
   cacheLife('days');
@@ -99,132 +117,69 @@ async function getHijriCalendarDayLookup(year: number) {
 export async function HijriYearlyCalendar({ year }: { year: number }) {
   const dayLookup = await getHijriCalendarDayLookup(year);
 
-  // ── RENDER ────────────────────────────────────────────────────────────────
   return (
     <TooltipProvider>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3" style={{ gap: '20px' }}>
+      <div className="date-calendar-grid">
         {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => {
           const days = getHijriMonthDays(year, month);
           const firstDay = getHijriFirstWeekday(year, month);
           const monthStr = String(month).padStart(2, '0');
           const special = SPECIAL_MONTHS[month];
-          const headerBg = special
-            ? `linear-gradient(135deg, ${special.color}22, ${special.color}10)`
-            : 'var(--bg-surface-2)';
 
           return (
             <div
               key={month}
-              className="card"
-              style={{
-                padding: 0,
-                overflow: 'hidden',
-                border: special
-                  ? `1px solid ${special.border}`
-                  : '1px solid var(--border-default)',
-              }}
+              className={getMonthPanelClass(special)}
             >
-              {/* Month header */}
-              <div
-                className="flex items-center justify-between px-4 py-3"
-                style={{
-                  background: headerBg,
-                  borderBottom: `1px solid ${special ? special.border : 'var(--border-subtle)'}`,
-                }}
-              >
-                <h3
-                  className="text-sm font-bold"
-                  style={{ color: special ? special.color : 'var(--text-primary)', margin: 0 }}
-                >
+              <div className={getMonthHeaderClass(special)}>
+                <h3 className={getMonthTitleClass(special)}>
                   {HIJRI_MONTHS[month - 1]}
                 </h3>
                 {special && (
-                  <span
-                    className="text-2xs font-bold rounded-full"
-                    style={{
-                      background: special.softBg,
-                      color: special.color,
-                      padding: '2px 8px',
-                    }}
-                  >
+                  <span className={`date-month-badge date-month-badge--${special.tone}`}>
                     {special.badge}
                   </span>
                 )}
               </div>
 
-              {/* Weekday headers */}
-              <div
-                className="grid"
-                style={{
-                  gridTemplateColumns: 'repeat(7, 1fr)',
-                  borderBottom: '1px solid var(--border-subtle)',
-                }}
-              >
+              <div className="date-weekday-row">
                 {WEEKDAYS_AR.map((d, i) => (
                   <div
                     key={d}
-                    className="text-center text-2xs font-bold py-2"
-                    style={{ color: i === 5 ? 'var(--success)' : 'var(--text-muted)' }}
+                    className={i === 5 ? 'date-weekday date-weekday--friday' : 'date-weekday'}
                   >
                     {d}
                   </div>
                 ))}
               </div>
 
-              {/* Day grid */}
-              <div
-                className="grid p-2"
-                style={{ gridTemplateColumns: 'repeat(7, 1fr)', gap: '3px' }}
-              >
+              <div className="date-day-grid">
                 {Array.from({ length: firstDay }).map((_, i) => (
-                  <div key={`b-${i}`} style={{ minHeight: '34px' }} />
+                  <div key={`b-${i}`} className="date-day-spacer" />
                 ))}
 
                 {Array.from({ length: days }, (_, i) => i + 1).map((day) => {
                   const isoH = `${year}-${monthStr}-${String(day).padStart(2, '0')}`;
                   const data = dayLookup[isoH];
-
-                  const eventBorderColor = special?.color ?? 'var(--success)';
-                  const eventSoftBg = special?.softBg ?? 'var(--success-soft)';
+                  const className = getDayLinkClass(data, special);
 
                   const linkNode = (
                     <Link
                       key={day}
                       href={`/date/hijri/${year}/${monthStr}/${String(day).padStart(2, '0')}`}
-                      className="relative flex flex-col items-center justify-center rounded-md transition-colors"
-                      style={{
-                        minHeight: '40px',
-                        background: data?.hasEvent ? eventSoftBg : 'transparent',
-                        border: data?.hasEvent
-                          ? `1px solid ${eventBorderColor}`
-                          : '1px solid transparent',
-                      }}
+                      className={className}
                     >
-                      {/* Hijri day */}
-                      <span
-                        className="text-sm font-bold leading-none tabular-nums"
-                        style={{
-                          color: data?.hasEvent
-                            ? (special?.color ?? 'var(--success)')
-                            : 'var(--text-primary)',
-                        }}
-                      >
+                      <span className="date-day-main">
                         {day}
                       </span>
-
-                      {/* Gregorian crossover sub-label */}
                       {data && (
-                        <span
-                          className="text-2xs leading-none tabular-nums"
-                          style={{ color: 'var(--text-muted)', marginTop: '1px' }}
-                        >
+                        <span className="date-day-sub">
                           {data.gregDay}/{data.gregMonth}
                         </span>
                       )}
                     </Link>
                   );
 
-                  // Wrap event days with a Tooltip, plain Link otherwise
                   if (data?.hasEvent && data.eventName) {
                     return (
                       <Tooltip key={day}>
@@ -241,7 +196,6 @@ export async function HijriYearlyCalendar({ year }: { year: number }) {
                   return linkNode;
                 })}
               </div>
-
             </div>
           );
         })}

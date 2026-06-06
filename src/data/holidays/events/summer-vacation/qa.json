@@ -9,8 +9,11 @@
     "hasHardcodedYear": false
   },
   "notes": [
-    "fact-source: موقع كبسولة: نهاية العام الدراسي في السعودية 25 يونيو 2026",
-    "fact-source: حاسبة السعودية: بداية العام الدراسي 1448"
+    "fact-source: وزارة التربية والتعليم الإماراتية — التقويم الأكاديمي ونهاية العام",
+    "fact-source: وزارة التعليم السعودية — التقويم الدراسي",
+    "fact-source: وزارة التربية والتعليم والتعليم العالي في قطر — التقويم السنوي",
+    "2026-06-01: Full authored rewrite completed. The page now treats {{formattedDate}} as a planning anchor, not a pan-Arab official date, and explains country, phase, school, and exam differences before travel or booking decisions.",
+    "2026-06-01: Research refreshed with official education calendars and competitor gaps. Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. events:build and rendered-route confirmation were intentionally skipped per instruction."
   ],
-  "updatedAt": "2026-04-09T00:00:00.000Z"
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

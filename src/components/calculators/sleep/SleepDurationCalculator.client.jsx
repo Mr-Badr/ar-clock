@@ -70,7 +70,7 @@ export default function SleepDurationCalculator() {
             <CardHeader>
               <CardTitle className="calc-card-title">قراءة سريعة لليلتك</CardTitle>
             </CardHeader>
-            <CardContent className="calc-metric-grid">
+            <CardContent className="calc-metric-grid" aria-live="polite">
               <div className="calc-grid-2">
                 <div className="calc-metric-card">
                   <div className="calc-metric-card__label"><BedDouble size={16} /> الوقت في السرير</div>

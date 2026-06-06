@@ -14,10 +14,12 @@ export function buildAgeMetadata({ title, description, keywords, path }) {
 }
 
 export function buildBreadcrumbSchema(items) {
+  const safeItems = Array.isArray(items) ? items : [];
+
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => ({
+    itemListElement: safeItems.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,

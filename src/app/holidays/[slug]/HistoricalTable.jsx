@@ -15,9 +15,9 @@ export default function HistoricalTable({ event, hijriYear, currentYear }) {
   return (
     <section style={{ marginTop: 'var(--space-8)' }} aria-labelledby="hist-h">
       <h2 id="hist-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
-        {event.name} — مواعيد السنوات المتعاقبة
+        مواعيد السنوات المتعاقبة: {event.name}
       </h2>
-      <div style={{ overflowX: 'auto', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-default)' }}>
+      <div style={{ overflowX: 'auto', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-default)' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }} dir="rtl">
           <caption className="sr-only">تواريخ {event.name} لعدة سنوات</caption>
           <thead>

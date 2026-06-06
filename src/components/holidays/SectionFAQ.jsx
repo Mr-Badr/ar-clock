@@ -21,8 +21,7 @@
  */
 
 import { ChevronDown, CheckCircle2 } from 'lucide-react'
-import { SectionWrapper } from '@/components/shared/primitives'
-import { SectionBadge } from '@/components/shared/primitives'
+import { SectionBadge, SectionWrapper } from '@/components/shared/primitives'
 import { getFaqItems } from './data/faqItems'
 
 const H2_ID = 'h2-holidays-faq'
@@ -34,77 +33,48 @@ export default async function SectionFAQ() {
   return (
     <SectionWrapper id="section-holidays-faq" headingId={H2_ID} subtle>
 
-      {/* Header */}
-      <header className="max-w-2xl mx-auto text-center mb-10 space-y-3">
-        <div className="flex justify-center">
-          <SectionBadge><CheckCircle2 size={11} />الأسئلة الشائعة</SectionBadge>
-        </div>
+      <header className="section-head section-head--center">
+        <SectionBadge><CheckCircle2 size={11} />قبل التخطيط</SectionBadge>
 
         <h2
           id={H2_ID}
-          className="text-2xl sm:text-3xl font-extrabold"
-          style={{ color: 'var(--text-primary)' }}
+          className="section-title"
         >
-          إجابات عن أكثر الأسئلة شيوعاً
-          <span
-            className="block text-xl sm:text-2xl mt-1"
-            style={{
-              background: 'var(--accent-gradient)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
-          >
-            حول الأعياد والمناسبات الإسلامية
-          </span>
+          أسئلة تحتاج جواباً
+          <span className="text-accent"> قبل أن تعتمد على موعد مناسبة</span>
         </h2>
 
-        <p className="text-sm sm:text-base mx-auto" style={{ color: 'var(--text-secondary)' }}>
-          إجابات دقيقة وموثوقة عن المواعيد المتوقعة للأعياد، كيفية حسابها، وما يتعلق
-          بها من أحكام وفضائل
+        <p className="section-copy">
+          هنا نجيب عن الأسئلة التي تظهر عادة قبل رمضان والأعياد والمواعيد الهجرية:
+          متى يبدأ الموعد، لماذا قد يختلف، وما الذي يجب مراجعته قبل السفر أو ترتيب الإجازة.
         </p>
       </header>
 
-      {/* Accordion — visible UI only, schema stays in JSON-LD above */}
-      <div className="max-w-3xl mx-auto space-y-2">
+      <div className="faq-list">
         {faqItems.map((item, idx) => (
           <details
             key={idx}
-            className="group rounded-2xl overflow-hidden"
-            style={{
-              background: 'var(--bg-surface-1)',
-              border: '1px solid var(--border-subtle)',
-            }}
+            className="faq-item"
             aria-label={item.q}
           >
             <summary
-              className="flex cursor-pointer list-none select-none items-center justify-between gap-4 px-5 py-4
-                         [&::-webkit-details-marker]:hidden hover:bg-[color:var(--accent-soft)] transition-colors"
+              className="faq-item__summary"
             >
-              {/* Plain <span> — NOT <h3>. Heading inside interactive = invalid HTML spec */}
               <span
-                className="text-sm sm:text-base font-semibold leading-snug"
-                style={{ color: 'var(--text-primary)' }}
+                className="faq-item__question"
               >
                 {item.q}
               </span>
-              {/*
-                ChevronDown + group-open:rotate-180 — RTL-safe:
-                ↓ = closed  |  ↑ = open
-                Pure rotation = same visual in both LTR and RTL.
-              */}
               <ChevronDown
                 size={18}
-                className="shrink-0 transition-transform duration-200 group-open:rotate-180"
-                style={{ color: 'var(--text-muted)' }}
+                className="faq-item__chevron"
                 aria-hidden="true"
               />
             </summary>
 
-            <div className="px-5 pb-5 pt-2">
+            <div className="faq-item__body">
               <p
-                className="text-sm sm:text-base leading-relaxed"
-                style={{ color: 'var(--text-secondary)' }}
+                className="feature-tile__copy"
               >
                 {item.a}
               </p>

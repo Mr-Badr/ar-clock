@@ -21,7 +21,7 @@
  * Exports: default CountdownTicker · CountdownTickerSkeleton · ShareBar
  */
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Fullscreen, Minimize2, ZoomIn, ZoomOut, Share2, Link2 } from 'lucide-react';
+import { CalendarDays, CheckCircle2, Fullscreen, Minimize2, ZoomIn, ZoomOut, Share2, Link2 } from 'lucide-react';
 import DatePill from './DatePill';
 import {
   exitActiveFullscreen,
@@ -278,7 +278,7 @@ function IconBtn({ onClick, label, title, children, disabled = false, variant = 
 const PLATFORMS = [
   {
     id: 'whatsapp', label: 'واتساب',
-    color: '#25D366', bg: 'rgba(37,211,102,0.10)', border: 'rgba(37,211,102,0.30)',
+    color: 'var(--success)', bg: 'var(--success-soft)', border: 'var(--success-border)',
     href: (u, t) => `https://wa.me/?text=${encodeURIComponent(t + '\n' + u)}`,
     Icon: () => (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -288,7 +288,7 @@ const PLATFORMS = [
   },
   {
     id: 'telegram', label: 'تيليغرام',
-    color: '#229ED9', bg: 'rgba(34,158,217,0.10)', border: 'rgba(34,158,217,0.30)',
+    color: 'var(--blue)', bg: 'var(--blue-subtle)', border: 'var(--border-accent)',
     href: (u, t) => `https://t.me/share/url?url=${encodeURIComponent(u)}&text=${encodeURIComponent(t)}`,
     Icon: () => (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -308,7 +308,7 @@ const PLATFORMS = [
   },
   {
     id: 'facebook', label: 'فيسبوك',
-    color: '#1877F2', bg: 'rgba(24,119,242,0.10)', border: 'rgba(24,119,242,0.30)',
+    color: 'var(--blue)', bg: 'var(--blue-subtle)', border: 'var(--border-accent)',
     href: (u) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(u)}`,
     Icon: () => (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -330,7 +330,7 @@ export function ShareBar({ url, eventName, days, dateStr }) {
     if (!url) setPageUrl(getCurrentPageUrl());
   }, [url]);
 
-  const shareText = `${eventName} — متبقي ${days} يوم (${dateStr}) 🗓`;
+  const shareText = `${eventName}: متبقي ${days} يوم (${dateStr})`;
 
   const handleCopy = async () => {
     await copy(pageUrl);
@@ -342,7 +342,7 @@ export function ShareBar({ url, eventName, days, dateStr }) {
         marginBottom: 'var(--space-8)',
         background: 'var(--bg-surface-2)',
         border: '1px solid var(--border-subtle)',
-        borderRadius: 'var(--radius-2xl)',
+        borderRadius: 'var(--radius-lg)',
         padding: 'var(--space-5)',
       }}
       dir="rtl"
@@ -377,7 +377,7 @@ export function ShareBar({ url, eventName, days, dateStr }) {
               justifyContent: 'center',
               gap: '0.45rem',
               padding: 'var(--space-3) var(--space-2)',
-              borderRadius: 'var(--radius-xl)',
+              borderRadius: 'var(--radius-lg)',
               border: `1px solid ${border}`,
               background: bg,
               color,
@@ -406,7 +406,7 @@ export function ShareBar({ url, eventName, days, dateStr }) {
           gap: '0.5rem',
           width: '100%',
           padding: 'var(--space-3)',
-          borderRadius: 'var(--radius-xl)',
+          borderRadius: 'var(--radius-lg)',
           border: copied ? '1px solid var(--accent)' : '1px solid var(--border-default)',
           background: copied ? 'var(--accent-soft)' : 'var(--bg-surface-3)',
           color: copied ? 'var(--accent)' : 'var(--text-secondary)',
@@ -418,7 +418,7 @@ export function ShareBar({ url, eventName, days, dateStr }) {
       >
         <Link2 size={15} />
         {copied
-          ? <span className="ct-copied-badge">✓ تم نسخ الرابط</span>
+          ? <span className="ct-copied-badge"><CheckCircle2 size={15} aria-hidden="true" /> تم نسخ الرابط</span>
           : <span>نسخ الرابط</span>
         }
       </button>
@@ -436,8 +436,7 @@ export function CountdownTickerSkeleton() {
         borderRadius: '1rem',
         border: '1px solid var(--border-accent)',
         background: 'var(--clock-bg)',
-        backdropFilter: 'blur(20px)',
-        boxShadow: 'var(--shadow-accent)',
+        boxShadow: 'none',
         padding: 'clamp(1.25rem, 4vw, 2.5rem)',
         display: 'flex',
         flexDirection: 'column',
@@ -607,11 +606,16 @@ export default function CountdownTicker({
       <div style={{
         textAlign: 'center', padding: '3rem', borderRadius: '1rem',
         border: '1px solid var(--border-accent)', background: 'var(--clock-bg)',
-        boxShadow: 'var(--shadow-accent)', animation: 'ct-scale-in 0.5s ease both',
+        boxShadow: 'none', animation: 'ct-scale-in 0.5s ease both',
       }}>
-        <p style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>🎉</p>
+        <CalendarDays
+          size={44}
+          strokeWidth={1.6}
+          aria-hidden="true"
+          style={{ color: 'var(--accent)', marginBottom: '0.5rem' }}
+        />
         <p style={{ fontSize: 'var(--text-xl)', fontWeight: '800', color: 'var(--text-primary)' }}>المناسبة اليوم!</p>
-        <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>سيتحدث العداد تلقائياً بموعد السنة القادمة.</p>
+        <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>سيعرض العداد موعد السنة القادمة عند تحديث بيانات المناسبة.</p>
       </div>
     );
   }
@@ -623,7 +627,7 @@ export default function CountdownTicker({
       {isFS && (
         <div
           className="fullscreen-mode"
-          style={{ ...FULLSCREEN_LAYER_STYLE, background: 'var(--clock-bg)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
+          style={{ ...FULLSCREEN_LAYER_STYLE, background: 'var(--clock-bg)' }}
           dir="rtl"
         >
           <div className="fullscreen-exit" style={FULLSCREEN_TOOLBAR_STYLE}>
@@ -684,9 +688,7 @@ export default function CountdownTicker({
               borderRadius: '1rem',
               border: '1px solid var(--border-accent)',
               background: 'var(--clock-bg)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              boxShadow: 'var(--shadow-accent)',
+              boxShadow: 'none',
               padding: 'clamp(1.25rem, 3.5vh, 2rem) clamp(1.5rem, 4vw, 3rem)',
               display: 'flex',
               flexDirection: 'column',
@@ -714,7 +716,10 @@ export default function CountdownTicker({
                 }}
               >
                 <Share2 size={15} />
-                <span>{shareCopied ? '✓ تم النسخ' : 'مشاركة'}</span>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                  {shareCopied ? <CheckCircle2 size={15} aria-hidden="true" /> : null}
+                  {shareCopied ? 'تم النسخ' : 'مشاركة'}
+                </span>
               </button>
             </div>
 

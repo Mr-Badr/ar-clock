@@ -5,7 +5,7 @@
 .accent-dot {
   width: 8px;
   height: 8px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background-color: var(--accent-alt);
   flex-shrink: 0;
 }
@@ -33,8 +33,9 @@
 }
 
 .active-indicator {
-  border-right: 3px solid var(--accent-alt);
-  padding-right: var(--space-4);
+  border-inline-start: 1px solid var(--border-accent);
+  padding-inline-start: var(--space-4);
+  background-color: var(--accent-soft);
 }
 
 
@@ -140,12 +141,6 @@
   background-color: var(--danger-soft);
 }
 
-.bg-glass {
-  background-color: var(--bg-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
 /* ── Border ───────────────────────────────────────────────────────────────── */
 .border-subtle {
   border: 1px solid var(--border-subtle);
@@ -194,14 +189,6 @@
 
 .rounded-xl {
   border-radius: var(--radius-xl);
-}
-
-.rounded-2xl {
-  border-radius: var(--radius-2xl);
-}
-
-.rounded-3xl {
-  border-radius: var(--radius-3xl);
 }
 
 .rounded-full {
@@ -362,7 +349,7 @@
   width: 100%;
   overflow-x: auto;
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xs);
 }
 
@@ -385,9 +372,7 @@
   font-weight: var(--font-semibold);
   font-size: var(--text-xs);
   color: var(--text-secondary);
-  text-align: right;
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
+  text-align: start;
   white-space: nowrap;
   user-select: none;
 }
@@ -426,10 +411,9 @@
 /* Column alignment helpers */
 .table td.numeric,
 .table th.numeric {
-  text-align: left;
+  text-align: end;
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
-  letter-spacing: var(--tracking-clock);
 }
 
 /* Cell status variants */
@@ -477,4 +461,3 @@
 .animate-spin-slow {
   animation: spin-slow 8s linear infinite;
 }
-

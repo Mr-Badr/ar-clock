@@ -84,7 +84,7 @@ export const SLEEP_MODES = [
   {
     slug: 'travel-mode',
     title: 'وضع السفر',
-    description: 'إذا كنت متعباً الآن وتريد فقط أن تعرف متى تستيقظ، فابدأ من أداة النوم الآن.',
+    description: 'إذا كنت متعباً الان وتريد فقط أن تعرف متى تستيقظ، فابدأ من أداة النوم الان.',
     href: '/calculators/sleep/wake-time',
   },
   {

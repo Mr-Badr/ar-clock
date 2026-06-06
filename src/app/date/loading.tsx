@@ -5,7 +5,7 @@ export default function Loading() {
     <DateRouteLoading
       kind="hub"
       title="جاري تحميل مركز التاريخ"
-      description="نجهز لك تاريخ اليوم وأدوات التحويل وروابط التقاويم الآن."
+      description="نجهز لك تاريخ اليوم وأدوات التحويل ومسارات التقاويم الآن."
     />
   );
 }

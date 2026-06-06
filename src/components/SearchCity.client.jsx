@@ -21,6 +21,7 @@ import React, {
   useTransition,
   memo,
 } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   Search,
@@ -70,7 +71,7 @@ const API_FALLBACK_MIN_QUERY_LENGTH = 2;
 
 /* ── Arabic Normalization & Flag Helper ─────────────────────────────────── */
 function getFlagEmoji(countryCode) {
-  if (!countryCode || countryCode === 'unknown') return '🏳️';
+  if (!countryCode || countryCode === 'unknown') return '';
   const codePoints = countryCode
     .toUpperCase()
     .split('')
@@ -244,11 +245,11 @@ const CityRow = memo(function CityRow({ city, query, showCountry, onSelect, mode
       className="sc-item"
       aria-label={`${city.city_name_ar}${city.country_name_ar ? `، ${city.country_name_ar}` : ''}`}
     >
-      <a
+      <Link
         href={href}
         onClick={handleClick}
         lang="ar"
-        title={`${city.city_name_ar}${city.country_name_ar ? ` — ${city.country_name_ar}` : ''}`}
+        title={`${city.city_name_ar}${city.country_name_ar ? `، ${city.country_name_ar}` : ''}`}
       >
         <span className="sc-item__icon" aria-hidden="true"><MapPin size={13} /></span>
 
@@ -274,7 +275,7 @@ const CityRow = memo(function CityRow({ city, query, showCountry, onSelect, mode
             </span>
           )}
         </span>
-      </a>
+      </Link>
     </CommandItem>
   );
 });
@@ -541,7 +542,7 @@ export default function SearchCity({
         return;
       }
 
-      toast.error('تعذّر تحديد الموقع — تأكد من منح إذن الوصول أو ابحث يدوياً');
+      toast.error('تعذّر تحديد الموقع، تأكد من منح إذن الوصول أو ابحث يدوياً');
     };
 
     detectWithFallbacks().finally(() => {
@@ -806,9 +807,9 @@ export default function SearchCity({
                     type="button"
                     className="sc-chip sc-chip--more"
                     onClick={() => setShowAllCountries(true)}
-                    aria-label="عرض المزيد من الدول"
+                    aria-label="عرض كل الدول المتاحة"
                   >
-                    المزيد...
+                    كل الدول
                   </button>
                 )}
               </div>
@@ -854,7 +855,7 @@ export default function SearchCity({
           {showEmpty && (
             <CommandEmpty>
               <div className="sc-empty" role="status" aria-live="polite">
-                <span className="sc-empty__icon" aria-hidden="true">📍</span>
+                <MapPin className="sc-empty__icon" size={32} strokeWidth={1.6} aria-hidden="true" />
                 <p className="sc-empty__text">
                   {selectedCountry
                     ? `عذراً، لم نجد نتائج في ${selectedCountry.name_ar}.`
@@ -945,10 +946,10 @@ export default function SearchCity({
                   onClick={() => setShowAllCountries(true)}
                   onKeyDown={(e) => e.key === 'Enter' && setShowAllCountries(true)}
                   className="sc-browse-all-btn"
-                  aria-label="تصفح جميع دول العالم"
+                  aria-label="عرض جميع دول العالم"
                 >
                   <Globe size={15} style={{ marginLeft: '0.4rem', flexShrink: 0 }} />
-                  <span>تصفح جميع دول العالم ({countries.length})</span>
+                  <span>عرض جميع دول العالم ({countries.length})</span>
                 </div>
               )}
             </CommandGroup>
@@ -980,14 +981,14 @@ export default function SearchCity({
           <input type="search" name="q" placeholder="ابحث عن مدينة…" dir="rtl" lang="ar"
             style={{
               flex: 1, padding: '0.75rem 1rem', borderRadius: '0.75rem',
-              border: '1px solid #363D5C', background: '#1F2438', color: '#F0F4FF',
+              border: '1px solid var(--border-default)', background: 'var(--bg-surface-1)', color: 'var(--text-primary)',
               fontFamily: 'var(--font-base)', direction: 'rtl', fontSize: '1rem'
             }}
           />
           <button type="submit"
             style={{
-              padding: '0.75rem 1.5rem', borderRadius: '0.75rem', background: '#1D4ED8',
-              color: '#fff', border: 'none', cursor: 'pointer',
+              padding: '0.75rem 1.5rem', borderRadius: 'var(--radius-md)', background: 'var(--blue)',
+              color: 'var(--text-on-accent)', border: 'none', cursor: 'pointer',
               fontFamily: 'var(--font-base)', fontWeight: 600
             }}
           >بحث</button>

@@ -26,7 +26,7 @@ export default function SleepNeedsByAgeCalculator() {
           <CardHeader>
             <CardTitle className="calc-card-title">اختر العمر لمعرفة النطاق المناسب</CardTitle>
           </CardHeader>
-          <CardContent className="calc-form-grid">
+            <CardContent className="calc-form-grid" aria-live="polite">
             <div className="calc-field">
               <Label className="calc-label" htmlFor="sleep-needs-age">العمر بالسنوات</Label>
               <Input id="sleep-needs-age" inputMode="numeric" value={age} onChange={(e) => setAge(e.target.value)} />
@@ -55,7 +55,7 @@ export default function SleepNeedsByAgeCalculator() {
             <CardHeader>
               <CardTitle className="calc-card-title">جدول النوم حسب العمر</CardTitle>
             </CardHeader>
-            <CardContent className="calc-metric-grid">
+            <CardContent className="calc-metric-grid" aria-live="polite">
               <div className="calc-query-grid">
                 {SLEEP_NEED_RANGES.map((item) => (
                   <Card key={item.id} className="calc-surface-card calc-query-card">

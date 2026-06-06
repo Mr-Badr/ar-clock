@@ -9,10 +9,13 @@ import { resolveAllHijriEvents } from '@/lib/hijri-resolver';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getHolidayRuntimeRecord } from '@/lib/holidays/repository';
 
-export function buildHolidayTokenContext({ event, seo, remaining, gregStr, hijriStr }) {
+export function buildHolidayTokenContext({ event, seo, remaining, gregStr, hijriStr, year, hijriYear }) {
   return {
     ...event,
     ...seo,
+    year,
+    hijriYear,
+    nextYear: year + 1,
     daysRemaining: remaining.days,
     eventName: event.name,
     formattedDate: gregStr,
@@ -72,6 +75,8 @@ export async function resolveHolidayRuntimeData(slug, options = {}) {
     remaining,
     gregStr,
     hijriStr,
+    year: targetDate.getFullYear(),
+    hijriYear: hijriYearNum,
   });
 
   return {

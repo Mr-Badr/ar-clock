@@ -1,108 +1,240 @@
 {
   "slug": "summer-season",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.173Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
-    "متى يبدأ فصل الصيف 2026",
-    "كم باقي على الصيف 2026",
-    "بداية فصل الصيف 2026",
-    "الانقلاب الصيفي 2026",
-    "متى يبدأ فصل الصيف {{year}}",
-    "كم باقي على الصيف {{year}}",
+    "متى يبدأ الصيف {{year}}",
+    "بداية فصل الصيف {{year}}",
+    "كم باقي على الصيف",
     "الانقلاب الصيفي {{year}}",
-    "موعد بداية الصيف {{year}}",
-    "بداية الصيف {{year}}",
-    "أطول نهار في السنة {{year}}",
     "هل الصيف يبدأ 20 أم 21 يونيو",
-    "بداية فصل الصيف {{year}}"
+    "الصيف المناخي يبدأ متى",
+    "ما الفرق بين الصيف الفلكي والصيف المناخي",
+    "هل بداية الصيف تعني أشد الحر",
+    "متى يبدأ فصل الصيف فلكيا",
+    "تاريخ بداية الصيف {{year}}",
+    "موعد بداية الصيف {{year}}",
+    "أطول نهار في السنة {{year}}"
   ],
   "competitors": [
     {
-      "url": "https://www.timeanddate.com/calendar/june-solstice.html?_kx=Cmu1xRyNItMvaq8RVSi38pmN-Z414JVhgz10eZPQB_W-uBwea8Y87MK7lLDnRiXr.QrUXt3",
-      "site": "timeanddate",
-      "strengths": [
-        "يعطي لحظة الانقلاب الصيفي بدقة: 21 يونيو 2026 عند 08:24 UTC",
-        "يوضح أن اليوم يمثل أطول نهار في النصف الشمالي"
+      "site": "mawdoo3.com",
+      "language": "ar",
+      "type": "article",
+      "url": "https://mawdoo3.com/%D9%85%D8%AA%D9%89_%D9%8A%D8%A8%D8%AF%D8%A3_%D9%81%D8%B5%D9%84_%D8%A7%D9%84%D8%B5%D9%8A%D9%81",
+      "status": "used",
+      "reason": "Direct Arabic intent match and useful as a baseline explanation for when summer starts, but it is thinner on the 20 versus 21 June confusion and the meteorological definition."
+    },
+    {
+      "site": "aljazeera.net",
+      "language": "ar",
+      "type": "science-article",
+      "url": "https://www.aljazeera.net/science/2024/7/3/%D9%84%D9%85%D8%A7%D8%B0%D8%A7-%D9%8A%D8%B9%D8%AF-%D9%8A%D9%88%D9%84%D9%8A%D9%88-%D8%AA%D9%85%D9%88%D8%B2-%D8%A3%D9%83%D8%AB%D8%B1-%D8%A7%D9%84%D8%B4%D9%87%D9%88%D8%B1",
+      "status": "used",
+      "reason": "Useful Arabic comparison for the heat-lag angle and the explanation that the hottest period often comes after the solstice, not on the same day."
+    },
+    {
+      "site": "aljazeera.net",
+      "language": "ar",
+      "type": "encyclopedia",
+      "url": "https://www.aljazeera.net/amp/encyclopedia/2016/6/21/21-%D9%8A%D9%88%D9%86%D9%8A%D9%88-%D8%A3%D8%B7%D9%88%D9%84-%D9%86%D9%87%D8%A7%D8%B1-%D9%88%D8%A3%D9%82%D8%B5%D8%B1-%D9%84%D9%8A%D9%84",
+      "status": "used",
+      "reason": "Useful Arabic explainer for the longest-day framing and for grounding the broad public understanding of the June solstice."
+    },
+    {
+      "site": "timeanddate.com",
+      "language": "en",
+      "type": "reference",
+      "url": "https://www.timeanddate.com/calendar/june-solstice.html",
+      "status": "used",
+      "reason": "Strongest factual source for the exact June 2026 solstice timing and for the clarification that local dates can vary by time zone."
+    },
+    {
+      "site": "metoffice.gov.uk",
+      "language": "en",
+      "type": "reference",
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/seasons/summer",
+      "status": "used",
+      "reason": "Useful for distinguishing astronomical summer from meteorological summer in clear weather-focused language."
+    },
+    {
+      "site": "science.nasa.gov",
+      "language": "en",
+      "type": "reference",
+      "url": "https://science.nasa.gov/resource/seeing-equinoxes-and-solstices-from-space/",
+      "status": "used",
+      "reason": "Useful for the explanatory science angle around why solstices happen and how to teach them simply."
+    }
+  ],
+  "replacedCompetitors": [
+    {
+      "site": "britannica.com",
+      "language": "en",
+      "status": "replaced",
+      "reason": "Accurate but less practical for the exact search intent than Timeanddate plus Met Office and NASA."
+    },
+    {
+      "site": "sayidaty.net",
+      "language": "ar",
+      "status": "replaced",
+      "reason": "Lighter lifestyle framing and weaker educational value for the core timing question."
+    },
+    {
+      "site": "ibelieveinsci.com",
+      "language": "ar",
+      "status": "replaced",
+      "reason": "No stronger directly usable evergreen result was available for the exact start-of-summer intent."
+    }
+  ],
+  "competitorFindings": [
+    {
+      "site": "mawdoo3.com",
+      "title": "متى يبدأ فصل الصيف",
+      "contentSignals": [
+        "Direct title match for the primary Arabic query",
+        "Basic explanation of the season start",
+        "Accessible baseline wording"
       ],
       "weaknesses": [
-        "ليس موجهاً للعربية أو للنية البحثية الشائعة: كم باقي على الصيف",
-        "لا يشرح للقارئ العربي لماذا تختلف الصفحات بين 20 و21 يونيو"
+        "Does not strongly resolve the 20 versus 21 June confusion",
+        "Does not clarify the 1 June meteorological definition well enough",
+        "Weaker on countdown and practical user intent"
+      ]
+    },
+    {
+      "site": "aljazeera.net",
+      "title": "لماذا يُعد يوليو/تموز أكثر الشهور حرارة كل عام؟",
+      "contentSignals": [
+        "Useful Arabic science framing",
+        "Explains why heat peaks after the summer solstice",
+        "Mentions that astronomical summer starts around 20 or 21 June"
+      ],
+      "weaknesses": [
+        "Not built directly around the core query",
+        "More climate-explainer than date-answer page"
+      ]
+    },
+    {
+      "site": "aljazeera.net",
+      "title": "21 يونيو.. أطول نهار وأقصر ليل",
+      "contentSignals": [
+        "Clear Arabic public explainer for the longest-day idea",
+        "Useful solstice framing"
+      ],
+      "weaknesses": [
+        "Older piece",
+        "Not optimized for current SEO phrasing"
+      ]
+    },
+    {
+      "site": "timeanddate.com",
+      "title": "June Solstice 2026: Shortest & Longest Day of the Year",
+      "contentSignals": [
+        "Exact 2026 timing: 21 June 2026 at 08:24 UTC",
+        "Explains date variation across time zones",
+        "Clarifies that the event marks the longest day north of the equator"
+      ],
+      "weaknesses": [
+        "English only",
+        "Technical rather than Arabic intent-focused"
+      ]
+    },
+    {
+      "site": "metoffice.gov.uk",
+      "title": "Summer: the warmest season",
+      "contentSignals": [
+        "Clear distinction between astronomical and meteorological summer",
+        "Weather-oriented explanation"
+      ],
+      "weaknesses": [
+        "UK-oriented examples",
+        "Not built as a direct answer page"
+      ]
+    },
+    {
+      "site": "science.nasa.gov",
+      "title": "Seeing Equinoxes and Solstices from Space",
+      "contentSignals": [
+        "Accessible explanation of why solstices happen",
+        "Strong authority for the science angle"
+      ],
+      "weaknesses": [
+        "Not directly optimized for the query 'when does summer start'",
+        "Not Arabic"
       ]
     }
   ],
   "coverageMatrix": [
     {
-      "keyword": "بداية فصل الصيف 2026",
-      "competitorCoverage": [
-        "timeanddate"
-      ],
-      "ourGap": false
+      "keyword": "متى يبدأ الصيف {{year}}",
+      "whyItMatters": "This is the clearest Arabic head term and needs a direct answer in the first lines."
     },
     {
-      "keyword": "لماذا بداية الصيف 20 أو 21 يونيو",
-      "competitorCoverage": [],
-      "ourGap": true
+      "keyword": "كم باقي على الصيف",
+      "whyItMatters": "This captures the countdown intent and supports the live counter experience."
     },
     {
-      "keyword": "متى يبدأ الصيف في السعودية والمغرب",
-      "competitorCoverage": [],
-      "ourGap": true
+      "keyword": "هل الصيف يبدأ 20 أم 21 يونيو",
+      "whyItMatters": "This is the biggest confusion gap across Arabic results and a strong differentiation opportunity."
+    },
+    {
+      "keyword": "الصيف المناخي يبدأ متى",
+      "whyItMatters": "This explains why some weather pages show 1 June and prevents the user from thinking one side is wrong."
+    },
+    {
+      "keyword": "هل بداية الصيف تعني أشد الحر",
+      "whyItMatters": "This is a high-value explanatory question that makes the page more useful than a thin date page."
     },
     {
       "keyword": "ما الفرق بين الصيف الفلكي والصيف المناخي",
-      "competitorCoverage": [],
-      "ourGap": true
+      "whyItMatters": "This captures users who already noticed the two definitions and want them explained plainly."
     },
     {
-      "keyword": "متى يبدأ فصل الصيف 2026",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "keyword": "متى يبدأ فصل الصيف فلكيا",
+      "whyItMatters": "This supports the science-first search phrasing."
     },
     {
-      "keyword": "كم باقي على الصيف 2026",
-      "whyItMatters": "نية عد تنازلي مباشرة تناسب الباحث الذي يريد معرفة المدة المتبقية بسرعة."
-    },
-    {
-      "keyword": "الانقلاب الصيفي 2026",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
-    },
-    {
-      "keyword": "متى يبدأ فصل الصيف {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "keyword": "أطول نهار في السنة {{year}}",
+      "whyItMatters": "This connects the summer-start query to the public-facing longest-day intent."
     }
   ],
   "keywordGaps": [
-    "هل الصيف يبدأ 20 أم 21 يونيو",
-    "وقت الانقلاب الصيفي 2026 UTC",
-    "بداية فصل الصيف في السعودية",
-    "بداية فصل الصيف في المغرب",
-    "الفرق بين الصيف الفلكي والصيف المناخي",
-    "جواب عربي مباشر يوضح معنى بداية فصل الصيف وموعده في صفحة واحدة.",
-    "شرح سبب أهمية بداية فصل الصيف ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
-    "تغطية الأسئلة العملية التي يطرحها القارئ قبل بداية فصل الصيف أو أثناءه."
+    "جواب عربي واضح يشرح الفرق بين 1 يونيو و20 أو 21 يونيو في نفس الصفحة",
+    "شرح لماذا لا يكون أطول نهار هو أشد أيام الحر",
+    "توضيح كيف تغيّر المنطقة الزمنية يوم العرض بين 20 و21 يونيو",
+    "ربط العد التنازلي بالشرح العلمي بدل الاكتفاء بتاريخ جامد",
+    "مقدمة تجيب عن سؤال متى يبدأ الصيف خلال أول 100 كلمة من دون تأخير",
+    "زاوية عربية تشرح سبب شيوع 1 يونيو في تقارير الطقس",
+    "تبسيط معنى الانقلاب الصيفي من غير لغة مدرسية جافة",
+    "تفريق أوضح بين بداية الفصل فلكياً والطقس الفعلي الذي يشعر به المستخدم"
   ],
   "unansweredQuestions": [
-    "لماذا يختلف تاريخ بداية الصيف بين بعض المواقع؟",
-    "هل يوم بداية الصيف هو أشد الأيام حرارة؟",
-    "متى يبدأ النهار في التناقص بعد الانقلاب الصيفي؟",
     "متى يبدأ فصل الصيف {{year}}؟",
-    "كم باقي على الصيف؟",
-    "ما هو الانقلاب الصيفي؟",
-    "لماذا تقول بعض المواقع إن الصيف يبدأ في 20 يونيو وأخرى تقول 21 يونيو؟",
-    "هل يوم بداية الصيف هو أطول نهار في السنة؟"
+    "هل الصيف يبدأ 20 يونيو أم 21 يونيو؟",
+    "لماذا تقول بعض الصفحات إن الصيف يبدأ في 1 يونيو؟",
+    "هل يوم بداية الصيف هو أطول نهار في السنة؟",
+    "هل بداية الصيف تعني أشد الحر فوراً؟",
+    "ما الفرق بين الصيف الفلكي والصيف المناخي؟"
   ],
   "differentiationIdeas": [
-    "تفسير عربي مباشر لفارق 20 و21 يونيو بدل الاكتفاء بعداد",
-    "ربط الحدث بلحظة الانقلاب العالمية مع أمثلة محلية عربية",
-    "إضافة FAQ علمي بسيط يشرح الفرق بين الصيف الفلكي والصيف المناخي",
-    "جواب مباشر عن موعد بداية فصل الصيف في بداية الصفحة قبل أي شرح إضافي.",
-    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر.",
-    "أسئلة شائعة عملية تساعد القارئ على فهم بداية فصل الصيف والتصرف بناءً عليه."
+    "ابدأ الصفحة بجواب سريع ثم انتقل مباشرة إلى حل الالتباس بين الصيف الفلكي والمناخي.",
+    "اجعل زاوية الصفحة تعليمية وعملية معاً: متى يبدأ الصيف، ولماذا تختلف الصفحات، وماذا يعني ذلك فعلياً للحرارة والطقس.",
+    "استبدل الربط السطحي بين بداية الصيف وأشد الحر بشرح أبسط عن تأخر ذروة الحرارة.",
+    "استخدم لغة عربية مبسطة تشبه شرح معلم جيد، لا مقالة فلكية جافة."
   ],
   "factSources": [
     {
-      "label": "timeanddate",
-      "url": "https://www.timeanddate.com/calendar/june-solstice.html?_kx=Cmu1xRyNItMvaq8RVSi38pmN-Z414JVhgz10eZPQB_W-uBwea8Y87MK7lLDnRiXr.QrUXt3"
+      "label": "Timeanddate: June Solstice",
+      "url": "https://www.timeanddate.com/calendar/june-solstice.html"
+    },
+    {
+      "label": "Met Office: Summer season guide",
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/seasons/summer"
+    },
+    {
+      "label": "NASA Science: Seeing Equinoxes and Solstices from Space",
+      "url": "https://science.nasa.gov/resource/seeing-equinoxes-and-solstices-from-space/"
     }
   ],
-  "notes": "تم تعزيز خريطة البحث العربية لـ بداية فصل الصيف اعتماداً على الكلمات المفتاحية الحالية، والأسئلة الشائعة، والمصادر الموجودة داخل الحزمة نفسها."
+  "notes": "The strongest opportunity is not just the date. It is resolving three recurring Arabic confusions in one page: 1 June versus 20 or 21 June, time-zone shifts between 20 and 21 June, and the assumption that the longest day must also be the hottest."
 }

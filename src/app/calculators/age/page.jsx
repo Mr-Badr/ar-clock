@@ -1,36 +1,150 @@
 import Link from 'next/link';
-import { ArrowLeft, Hourglass, MoonStar, Orbit, TimerReset } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Suspense } from 'react';
-import SectionSkeleton from '@/components/shared/SectionSkeleton'
+
 import AgeCalculator from '@/components/calculators/age/AgeCalculator.client';
 import {
+  CalculatorDecisionTable,
   CalculatorFaqSection,
-  CalculatorFooterCta,
   CalculatorHero,
   CalculatorInfoGrid,
+  CalculatorResourceLinks,
   CalculatorSection,
-  CalculatorSectionNav,
 } from '@/components/calculators/common';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { AGE_CALCULATOR_ROUTES, AGE_COMMON_FAQ, AGE_HUB_QUICK_LINKS, AGE_ROUTE } from '@/lib/calculators/age-data';
+import {
+  AGE_CALCULATOR_ROUTES,
+  AGE_COMMON_FAQ,
+  AGE_ROUTE,
+} from '@/lib/calculators/age-data';
 import { buildBreadcrumbSchema, buildSoftwareSchema, buildAgeMetadata } from './page-helpers';
 import { getSiteUrl } from '@/lib/site-config';
+import SectionSkeleton from '@/components/shared/SectionSkeleton';
 
 const SITE_URL = getSiteUrl();
+const AGE_EXPLAINER_ITEMS = [
+  {
+    title: 'ما المقصود بحاسبة العمر؟',
+    description: 'هي أداة تقيس الزمن بين تاريخ ميلادك وتاريخ المقارنة.',
+    content:
+      'بدلاً من طرح سنة الميلاد من السنة الحالية فقط، تحسب الصفحة السنوات الكاملة أولاً، ثم الأشهر، ثم الأيام. لذلك تحصل على جواب أقرب للسؤال الحقيقي: كم عمري اليوم بالتفصيل؟',
+  },
+  {
+    title: 'لماذا لا تكفي السنوات وحدها؟',
+    description: 'لأن يوم وشهر الميلاد يغيران النتيجة.',
+    content:
+      'شخصان وُلدا في السنة نفسها قد لا يملكان العمر نفسه اليوم. إذا كان عيد ميلاد أحدهما مرّ هذا العام والآخر لم يأتِ بعد، فالفرق قد يكون أشهراً وأياماً لا تظهر في الحساب السريع.',
+  },
+  {
+    title: 'متى تستخدم تاريخ مقارنة؟',
+    description: 'عندما تريد العمر في يوم محدد لا العمر اليوم.',
+    content:
+      'استخدم تاريخ المقارنة لمعرفة عمرك في يوم صورة قديمة، موعد دراسة، تاريخ وثيقة، مناسبة قادمة، أو يوم تقاعد محتمل. هذا يحول الحاسبة من فضول سريع إلى أداة تخطيط.',
+  },
+  {
+    title: 'ما حدود النتيجة؟',
+    description: 'الحاسبة دقيقة زمنياً لكنها ليست مرجعاً قانونياً وحدها.',
+    content:
+      'إذا كان القرار متعلقاً بوثيقة، أهلية دراسة، عقد، تأمين، أو تقاعد، استخدم النتيجة كقراءة واضحة ثم راجع الجهة الرسمية التي تعتمد التقويم والقواعد في بلدك.',
+  },
+];
+
+const AGE_DECISION_ROWS = [
+  {
+    key: 'basic',
+    cells: [
+      'كم عمري الان؟',
+      'حاسبة العمر الأساسية',
+      'تعطي العمر بالسنوات والأشهر والأيام مع إجمالي الأيام والساعات وعيد الميلاد القادم.',
+    ],
+  },
+  {
+    key: 'hijri',
+    cells: [
+      'أريد العمر الهجري أو مقارنة التقويمين',
+      'حاسبة العمر الهجري',
+      'مناسبة عندما يكون تاريخ الميلاد هجرياً أو عندما تحتاج مقارنة التقويمين في سياق خليجي أو ديني.',
+    ],
+  },
+  {
+    key: 'difference',
+    cells: [
+      'أقارن عمر شخصين',
+      'حاسبة فرق العمر',
+      'استخدمها للأزواج أو الإخوة أو الأصدقاء عندما تريد الفرق الحقيقي لا الفرق التقريبي.',
+    ],
+  },
+  {
+    key: 'birthday',
+    cells: [
+      'أريد عيد الميلاد أو يوم الولادة',
+      'يوم الميلاد أو عداد عيد الميلاد',
+      'مفيدة عندما تريد اليوم، الفصل، نصف عيد الميلاد، أو الوقت المتبقي للمناسبة القادمة.',
+    ],
+  },
+  {
+    key: 'planning',
+    cells: [
+      'أريد محطة عمرية أو تقاعداً',
+      'محطات العمر أو حاسبة التقاعد',
+      'استخدمها للمتعة أو التخطيط الأولي، ولا تعتمد نتيجة التقاعد رسمياً قبل مراجعة نظام بلدك.',
+    ],
+  },
+];
+
+const AGE_SOURCE_LINKS = [
+  {
+    href: 'https://aa.usno.navy.mil/faq/leap_years',
+    title: 'US Naval Observatory: قاعدة السنوات الكبيسة',
+    description: 'مرجع يوضح لماذا لا تكون السنة الميلادية دائماً 365 يوماً وكيف تعمل قاعدة 400 سنة.',
+    ctaLabel: 'راجع المصدر',
+  },
+  {
+    href: 'https://praycalc.org/hijri',
+    title: 'PrayCalc: أنظمة التقويم الهجري',
+    description: 'شرح مبسط للتقويم الهجري القمري، أشهر 29/30 يوماً، وسنة 354/355 يوماً تقريباً.',
+    ctaLabel: 'راجع المصدر',
+  },
+  {
+    href: 'https://science.nasa.gov/solar-system/planets/',
+    title: 'NASA: كواكب المجموعة الشمسية',
+    description: 'مرجع تعليمي عند قراءة العمر على الكواكب وفهم اختلاف السنة من كوكب لآخر.',
+    ctaLabel: 'راجع المصدر',
+  },
+];
+
+const AGE_RELATED_GUIDES = [
+  {
+    href: '/date/today',
+    title: 'تاريخ اليوم',
+    description: 'راجع تاريخ اليوم بالميلادي والهجري قبل مشاركة نتيجة مرتبطة بموعد.',
+  },
+  {
+    href: '/date/converter',
+    title: 'تحويل التاريخ',
+    description: 'حوّل التاريخ بين التقويمين عندما تكون الوثيقة مكتوبة بصيغة مختلفة.',
+  },
+  {
+    href: '/calculators/sleep/sleep-needs-by-age',
+    title: 'احتياج النوم حسب العمر',
+    description: 'بعد معرفة العمر، قارنه بنطاق النوم المناسب للأطفال أو البالغين.',
+  },
+];
 
 export const metadata = buildAgeMetadata({
-  title: 'كم عمري الآن؟ | حاسبات العمر بالهجري والميلادي وفرق العمر',
+  title: 'حاسبة العمر | احسب عمرك بالهجري والميلادي وفرق العمر',
   description:
-    'ابدأ من السؤال الأكثر بحثاً: كم عمري الآن؟ ثم انتقل إلى العمر بالهجري والميلادي، فرق العمر، يوم الميلاد، الإنجازات الزمنية، وعدّاد عيد الميلاد.',
+    'احسب عمرك الان بالسنوات والأشهر والأيام، واعرف العمر الهجري والميلادي وفرق العمر وكم باقي على عيد ميلادك من صفحة عربية واضحة.',
   keywords: AGE_ROUTE.keywords,
   path: AGE_ROUTE.href,
 });
 
 export default function AgeHubPage() {
+  const safeRoutes = Array.isArray(AGE_CALCULATOR_ROUTES) ? AGE_CALCULATOR_ROUTES : [];
+  const safeFaqItems = Array.isArray(AGE_COMMON_FAQ) ? AGE_COMMON_FAQ : [];
   const itemListSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    itemListElement: AGE_CALCULATOR_ROUTES.map((item, index) => ({
+    itemListElement: safeRoutes.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       name: item.title,
@@ -47,146 +161,130 @@ export default function AgeHubPage() {
     description: metadata.description,
     path: '/calculators/age',
   });
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: safeFaqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
+  const primaryRoute = safeRoutes[0];
+  const secondaryRoutes = safeRoutes.slice(1);
 
   return (
-    <main className="bg-base text-primary">
+    <main className="calc-product-page bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <CalculatorHero
-        badge="قسم جديد داخل الحاسبات"
-        title="كم عمري الآن؟ ابدأ من أشهر حاسبات العمر"
-        description="هذا القسم يجمع أهم ما يحتاجه المستخدم عندما يبحث عن حاسبة العمر: الحساب الدقيق بالسنوات والأيام، المقارنة بين الهجري والميلادي، فرق العمر، تفاصيل يوم الميلاد، الإنجازات الزمنية، العد التنازلي، وعمرك على الكواكب."
-        accent={AGE_ROUTE.accent}
+        badge="حاسبة العمر العربية"
+        title="حاسبة العمر: احسب عمرك الان بالسنوات والأشهر والأيام"
+        description="أدخل تاريخ ميلادك لتعرف عمرك الان بدقة: سنوات، أشهر، أيام، إجمالي الأيام والساعات، عيد الميلاد القادم، والعمر الهجري التقريبي. ثم اختر أداة العمر المناسبة إذا كنت تريد فرق العمر، يوم الولادة، العد التنازلي، محطات العمر، أو التقاعد."
         highlights={[
-          'التركيز هنا على أدوات عمر عملية مبنية على صيَغ البحث العربية المباشرة.',
-          'لا يوجد تكرار لمحوّل التاريخ لأن التطبيق يملكه بالفعل في قسم التاريخ.',
-          'تم استبعاد أي محتوى متعلق بالأبراج من هذا القسم بالكامل.',
+          'يجيب مباشرة عن: كم عمري الان؟ كم يوم عشت؟ وكم باقي على عيد ميلادي؟',
+          'يدعم الميلادي والهجري ويشرح سبب اختلاف النتيجة بين التقويمين بلغة بسيطة.',
+          'يحافظ على النتيجة كحساب زمني واضح، بلا تنبؤات أو وعود شخصية غير قابلة للتحقق.',
         ]}
       >
         <Suspense fallback={<SectionSkeleton />}>
           <AgeCalculator compact />
         </Suspense>
-        
       </CalculatorHero>
 
       <CalculatorSection
+        id="age-hub-explainer"
+        eyebrow="الجواب أولاً"
+        title="كيف تقرأ نتيجة حاسبة العمر دون أن تخلط بين التقويمات؟"
+        description="حاسبة العمر لا تسأل عن رقم السنوات فقط. هي تقيس الفترة الكاملة بين تاريخين، ثم تعرضها بطريقة تفهمها أنت وتستطيع استخدامها في الحياة اليومية."
+      >
+        <CalculatorInfoGrid items={AGE_EXPLAINER_ITEMS} />
+      </CalculatorSection>
+
+      <CalculatorSection
         id="age-hub-tools"
-        eyebrow="خريطة القسم"
-        title="أدوات متخصصة بدلاً من صفحة واحدة مزدحمة"
-        description="كل أداة في هذا القسم تخدم نية مختلفة: أحياناً تريد العمر الكامل، وأحياناً تريد فرق العمر، أو فقط كم بقي على عيد الميلاد القادم."
+        eyebrow="ابدأ من السؤال"
+        title="اختر حاسبة العمر بحسب ما تريد معرفته الآن"
+        description="ابدأ بالحاسبة الأساسية إذا كان سؤالك هو: كم عمري الان؟ ثم انتقل للمسارات الأخرى عندما تحتاج الهجري، فرق العمر، عيد الميلاد، أو التقاعد."
       >
-        <CalculatorSectionNav items={AGE_HUB_QUICK_LINKS} />
-
-        <div className="age-bento-grid">
-          {AGE_CALCULATOR_ROUTES.map((item) => (
-            <Card key={item.slug} className={`calc-surface-card age-bento-card age-bento-card--${item.slug}`}>
-              <CardHeader>
-                <CardTitle className="calc-card-title">{item.title}</CardTitle>
-                <CardDescription className="calc-card-description">{item.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="calc-hub-card__actions">
-                <Link href={item.href} className="btn btn-primary--flat calc-button calc-inline-button">
-                  افتح الصفحة
-                  <ArrowLeft size={16} />
-                </Link>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </CalculatorSection>
-
-      <CalculatorSection
-        id="age-hub-demo"
-        eyebrow="تجربة فورية"
-        title="احسب عمرك سريعاً من صفحة القسم"
-        description="إذا كنت تريد إجابة سريعة بدون دخول صفحة فرعية، فهذه المعاينة تعطيك العمر الحالي وموعد عيد الميلاد القادم مباشرة."
-        subtle
-      >
-        <Suspense fallback={<SectionSkeleton />}>
-          <AgeCalculator />
-        </Suspense>
-      </CalculatorSection>
-
-      <CalculatorSection
-        id="age-hub-compare"
-        eyebrow="تعليم سريع"
-        title="لماذا يبدو العمر الهجري أكبر قليلاً؟"
-        description="السنة الهجرية قمرية وأقصر من السنة الميلادية، لذلك يتراكم فرق صغير مع مرور الوقت ويظهر في النتائج."
-      >
-        <div className="calc-grid-3">
-          <div className="calc-metric-card">
-            <div className="calc-metric-card__label"><Hourglass size={16} /> السنة الميلادية</div>
-            <div className="calc-metric-card__value">365.25 يوم</div>
-            <div className="calc-metric-card__note">تقويم شمسي وهو المرجع الأكثر شيوعاً في الحياة اليومية.</div>
-          </div>
-          <div className="calc-metric-card">
-            <div className="calc-metric-card__label"><MoonStar size={16} /> السنة الهجرية</div>
-            <div className="calc-metric-card__value">354 يوماً تقريباً</div>
-            <div className="calc-metric-card__note">تقويم قمري ولذلك يدور أسرع قليلاً من الميلادي.</div>
-          </div>
-          <div className="calc-metric-card">
-            <div className="calc-metric-card__label"><TimerReset size={16} /> الفرق السنوي</div>
-            <div className="calc-metric-card__value">10-11 أيام</div>
-            <div className="calc-metric-card__note">بعد 30 سنة مثلاً يصبح الفرق ملحوظاً في العمر المعروض.</div>
+        <div className="calc-decision-layout">
+          {primaryRoute ? (
+            <Link href={primaryRoute.href} className="calc-decision-primary">
+              <span className="calc-decision-primary__label">البداية الأسرع</span>
+              <strong className="calc-decision-primary__title">{primaryRoute.title}</strong>
+              <span className="calc-decision-primary__body">{primaryRoute.description}</span>
+              <span className="calc-decision-primary__cta">
+                ابدأ حساب العمر
+                <ArrowLeft size={16} aria-hidden="true" />
+              </span>
+            </Link>
+          ) : null}
+          <div className="calc-decision-list" aria-label="حاسبات عمر متخصصة">
+            {secondaryRoutes.map((item, index) => (
+              <Link key={item.slug} href={item.href} className="calc-decision-link">
+                <span className="calc-resource-link__index">{String(index + 2).padStart(2, '0')}</span>
+                <span className="calc-decision-link__copy">
+                  <strong className="calc-card-title">{item.title}</strong>
+                  <span className="calc-card-description">{item.description}</span>
+                </span>
+                <span className="calc-decision-link__arrow">
+                  <ArrowLeft size={16} aria-hidden="true" />
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
+        <p className="calc-section-note">
+          لا تحتاج كل هذه الأدوات في الزيارة نفسها. اختر المسار الذي يطابق سؤالك الان، ثم ارجع إلى هذا القسم عندما يتغير السؤال من “كم عمري؟” إلى “كم الفرق؟” أو “كم بقي؟” أو “ما معنى النتيجة؟”.
+        </p>
       </CalculatorSection>
 
       <CalculatorSection
-        id="age-hub-more"
-        eyebrow="ما الذي ستجده أيضاً؟"
-        title="القسم يغطي أكثر من مجرد رقم العمر"
-        description="إلى جانب الحاسبة الأساسية، أضفنا أدوات تمنح النتيجة سياقاً مفيداً أو جانباً مرحاً مقنعاً للمشاركة."
-        subtle
+        id="age-decision-table"
+        eyebrow="اختيار أدق"
+        title="اختر حاسبة العمر حسب السؤال، لا حسب الفضول"
+        description="كل أداة في قسم العمر لها وظيفة مختلفة. ابدأ بالعمر الآن، ثم انتقل إلى الهجري أو الفرق أو العد التنازلي عندما يصبح هذا هو السؤال الحقيقي."
       >
-        <CalculatorInfoGrid
-          items={[
-            {
-              title: 'فرق العمر',
-              description: 'مفيد للأزواج والأصدقاء والإخوة.',
-              content: 'يعرض الفرق الحقيقي بالسنوات والأشهر والأيام مع توضيح من الأكبر سناً وهل الشخصان من الجيل نفسه أم لا.',
-            },
-            {
-              title: 'يوم الميلاد',
-              description: 'صفحة خفيفة لفهم تاريخك أكثر.',
-              content: 'تعرض يوم الأسبوع الذي وُلدت فيه، تاريخك الهجري، فصلك، جيلك، ونصف عيد ميلادك دون أي محتوى متعلق بالأبراج.',
-            },
-            {
-              title: 'الإنجازات الزمنية',
-              description: 'من 10,000 يوم إلى مليار ثانية.',
-              content: 'إذا كنت تحب المحطات الكبيرة، فهذه الصفحة تريك ما تجاوزته وما ينتظرك مع تواريخ واضحة ونِسَب تقدّم سهلة.',
-            },
-            {
-              title: 'الكواكب والعد التنازلي',
-              description: 'زاوية بصرية وممتعة قابلة للمشاركة.',
-              content: 'شاهد عمرك على المريخ وعطارد وزحل، أو افتح العداد الحي لعيد الميلاد القادم إذا كنت تريد تجربة خفيفة ومباشرة.',
-            },
-            {
-              title: 'سن التقاعد',
-              description: 'مرجع أولي لا نهائي.',
-              content: 'أضفنا حاسبة تقديرية للتقاعد مع تنبيه واضح بأن المرجع النهائي دائماً هو الجهة الرسمية أو نظام الخدمة/التأمينات في بلدك.',
-            },
-            {
-              title: 'تكامل مع قسم التاريخ',
-              description: 'منعنا التكرار داخل المشروع.',
-              content: 'لم نكرر محوّل التاريخ داخل هذا القسم لأن التطبيق يملك بالفعل محوّلاً مستقلاً ومتكاملاً ضمن قسم التاريخ والتحويل.',
-            },
-          ]}
+        <CalculatorDecisionTable
+          columns={['السؤال', 'الأداة المناسبة', 'ما الذي تضيفه؟']}
+          rows={AGE_DECISION_ROWS}
         />
       </CalculatorSection>
 
       <CalculatorSection
-        id="age-hub-faq"
-        eyebrow="الأسئلة الشائعة"
-        title="FAQ سريع حول حساب العمر"
-        description="هذه الصفحة تُمهّد لكل الأدوات داخل القسم وتجيب عن أكثر الأسئلة تكراراً قبل الدخول إلى الحاسبات الفرعية."
+        id="age-sources"
+        eyebrow="مصادر ومنهج"
+        title="مصادر تساعدك على فهم التقويم لا حفظ الأرقام"
+        description="نستخدم هذه المراجع لتفسير السنوات الكبيسة، الفرق بين الهجري والميلادي، وفكرة العمر على الكواكب. النتيجة داخل الحاسبة تبقى حساباً زمنياً لا حكماً رسمياً."
       >
-        <CalculatorFaqSection items={AGE_COMMON_FAQ} />
+        <CalculatorResourceLinks items={AGE_SOURCE_LINKS} buttonLabel="راجع المصدر" />
       </CalculatorSection>
 
-      <CalculatorFooterCta />
+      <CalculatorSection
+        id="age-related"
+        eyebrow="مسارات تكمل الحساب"
+        title="بعد حساب العمر: صفحات قد تحتاجها مباشرة"
+        description="إذا كان سبب الحساب مرتبطاً بتاريخ أو وثيقة أو نمط حياة، فهذه الصفحات تكمل السؤال دون أن تعيد البداية."
+        subtle
+      >
+        <CalculatorResourceLinks items={AGE_RELATED_GUIDES} buttonLabel="افتح المسار" />
+      </CalculatorSection>
+
+      <CalculatorSection
+        id="age-hub-faq"
+        eyebrow="قبل اختيار أداة العمر"
+        title="أسئلة قبل حساب العمر أو مقارنة التواريخ"
+        description="هذه الصفحة تمهّد لكل الأدوات داخل القسم وتوضح متى تكفي حاسبة العمر، ومتى تحتاج فرق العمر أو العد التنازلي أو التاريخ الموازي."
+      >
+        <CalculatorFaqSection items={safeFaqItems} />
+      </CalculatorSection>
+
     </main>
   );
 }

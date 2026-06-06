@@ -1,7 +1,7 @@
 {
   "slug": "bahrain-national-day",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.087Z",
+  "capturedAt": "2026-05-31T17:49:47.803Z",
   "primaryQueries": [
     "كم باقي على اليوم الوطني البحريني",
     "متى اليوم الوطني البحريني {{year}}",
@@ -18,71 +18,105 @@
   ],
   "competitors": [
     {
-      "site": "calendarz.com",
-      "type": "calendar",
-      "url": "https://www.calendarz.com/ar/when-is/bahrain-holidays/national-day/2025",
-      "focus": [
-        "التاريخ",
-        "مدة الإجازة",
-        "متى يبدأ اليوم الوطني"
-      ],
-      "gaps": [
-        "لا يشرح الفرق بين اليوم الوطني والاستقلال بدقة كافية",
-        "لغة عامة",
-        "ضعف في البعد الوطني المحلي"
-      ]
-    },
-    {
       "site": "البوابة الوطنية البحرينية",
-      "type": "official",
+      "type": "official-ar",
       "url": "https://www.bahrain.bh/wps/portal/ar/BNP/BahrainAtAGlance/AboutBahrain",
       "focus": [
         "اليوم الوطني 16 ديسمبر",
-        "بيانات الدولة الرسمية",
-        "الإجازات المرتبطة بالمناسبة"
+        "الاستقلال في 15 أغسطس 1971",
+        "الإطار الرسمي للدولة"
       ],
       "gaps": [
-        "لا يخدم نية كم باقي",
-        "ليس مبنياً كصفحة SEO للأسئلة الشائعة",
-        "لا يقدم عداداً أو محتوى استعدادياً"
+        "لا يخدم نية العد التنازلي",
+        "لا يشرح للمستخدم كيف يقرأ الفرق بين التاريخين عملياً",
+        "ليس مبنياً كصفحة FAQ أو صفحة قرار"
       ]
     },
     {
-      "site": "بوابات العطلات",
-      "type": "countdown",
+      "site": "PublicHolidays Arabia",
+      "type": "competitor-ar",
+      "url": "https://publicholidays.me/bahrain/ar/national-day/",
       "focus": [
-        "التاريخ والإجازة",
-        "مدة العطلة",
-        "سؤال ما هو الموعد"
+        "التاريخ",
+        "العطلة يومان",
+        "جدول السنوات"
       ],
       "gaps": [
-        "ضعف في التوثيق الرسمي العربي",
-        "قلة التوضيح التاريخي",
-        "خلط محتمل بين الاستقلال واليوم الوطني"
+        "يربط اليوم الوطني بالاستقلال وتنصيب الحاكم لكن من دون شرح واضح للفارق",
+        "محتوى قصير",
+        "ضعف في الأسئلة العملية قبل الإجازة"
       ]
     },
     {
-      "site": "beta.bna.bh",
-      "type": "reference",
+      "site": "CalendarZ Arabic",
+      "type": "competitor-ar",
+      "url": "https://www.calendarz.com/ar/when-is/bahrain-holidays/national-day/2025",
+      "focus": [
+        "موعد البداية والنهاية",
+        "خلفية تاريخية",
+        "عطلة 16 و17 ديسمبر"
+      ],
+      "gaps": [
+        "شرح طويل لكنه ليس موجهاً لنية المستخدم العربية المباشرة",
+        "ضعف في CTA والخطوات العملية",
+        "لا يوضح متى تحتاج الرجوع إلى إعلان حكومي"
+      ]
+    },
+    {
+      "site": "Twinkl Arabic",
+      "type": "competitor-ar",
+      "url": "https://www.twinkl.com/event/bahrain-national-day",
+      "focus": [
+        "فكرة المناسبة",
+        "سبب امتداد الاحتفال إلى 17 ديسمبر",
+        "أنشطة واحتفاء"
+      ],
+      "gaps": [
+        "موجه أكثر للتعليم والأنشطة",
+        "ليس مرجعاً عملياً للإجازة أو العد التنازلي",
+        "لا يربط بوضوح بين سؤال الموعد وسؤال الدوام"
+      ]
+    },
+    {
+      "site": "PublicHolidays English",
+      "type": "comparison-en",
+      "url": "https://publicholidays.me/bahrain/national-day/",
+      "focus": [
+        "date range",
+        "holiday schedule",
+        "public celebration patterns"
+      ],
+      "gaps": [
+        "ليس عربياً",
+        "لا يخدم صياغات البحث العربية مباشرة"
+      ]
+    },
+    {
+      "site": "Edarabia",
+      "type": "comparison-en",
+      "url": "https://www.edarabia.com/bahrain/national-day/",
+      "focus": [
+        "two-day holiday",
+        "formal observance",
+        "education-friendly summary"
+      ],
+      "gaps": [
+        "مختصر جداً",
+        "لا يجيب عن لبس الاستقلال مقابل اليوم الوطني"
+      ]
+    },
+    {
+      "site": "Bahrain News Agency",
+      "type": "comparison-en",
       "url": "https://beta.bna.bh/en/article/JHTiuWKqWE4lNELb",
       "focus": [
-        "التاريخ الرسمي لـ اليوم الوطني البحريني",
-        "سياق اليوم الوطني البحريني"
+        "official coverage",
+        "national-day framing",
+        "institutional language"
       ],
       "gaps": [
-        "غالباً لا تقدم صفحة عربية تجمع الموعد والشرح والعد التنازلي في مكان واحد."
-      ]
-    },
-    {
-      "site": "bahrain.bh",
-      "type": "reference",
-      "url": "https://bahrain.bh/wps/portal/en/BNP/HomeNationalPortal/ContentDetailsPage/%21ut/p/z1/nVRdd6IwFPwr7IOPnNyEEMIjtgp-FcXiVl56CKSVroJFquv--k337McB1NbNW8IMM5l7b1CEHlCUx_vsOa6yIo_Xar-M2CMemODxG4DpLSUwW9gB604wTFwDfa0D8H0ICjBwAr9_i4FiFH2GD2eWA5_j_wXY9zYDRohDydw1wL-W3wZEl-01-N54bgKb3M27OHTHdGE09G-myp6J-4NZYOLANC7ysTdgdX77ek3_LYF3voF5zx2OAE_ZnAKb2qPhaBIS8K3f_AuAun4Y9oFxt08p45bDrFb-LUCDzwCYG2KMh6pROGnzm4Aa35uFXN1_PPQZ6Rp-D7fyawHq-YdExevgCZ75qj0JQwsUoWibZClaUouaPCVMTxIbdMqZpYuUEj2RBsYpZSIm8I5O8mpbrdBS5NvHuOxALIq3SqtWUvuW5c9psflzJOJVGWd5Y9sqWctTdLkjhh_1tBra7OX1NXKU1yKv5PcKPfy_2ejECDjQDVS-AK5PTgLqI1w3fOKNuNBlgWVaH_xh1JJojiFBSxW6dTa0gRrEfSYPKMyLcqPevfmVbeFBU6FuYQTkvMKTMJnEPNFtYhk6jYXQuWRPuim4oJwLRixoVr390FxZ9V223svy5U1kayk7sFHF1n7x8qoDpVzHlUy1qthmya4Dci2TqsySrDpqcZ5qB_W11HbqsCjRdhP-WxtuHPVIsKAXeD-6d7p7I_jx8OUnxw-v7g%21%21/dz/d5/L0lDUmlTV0EhL3dPa0FKRnRnLzROV3FpQSEhL2Vu/",
-      "focus": [
-        "التاريخ الرسمي لـ اليوم الوطني البحريني",
-        "سياق اليوم الوطني البحريني"
-      ],
-      "gaps": [
-        "غالباً لا تقدم صفحة عربية تجمع الموعد والشرح والعد التنازلي في مكان واحد."
+        "ليس صفحة intent search",
+        "لا يقدم FAQ أو تاريخاً سنوياً أو زاوية قرار للمستخدم"
       ]
     }
   ],
@@ -104,31 +138,31 @@
       "whyItMatters": "يغلق فجوة تفسيرية لا تجيب عنها معظم صفحات العدّاد القصيرة."
     },
     {
-      "keyword": "كم باقي على اليوم الوطني البحريني",
-      "whyItMatters": "نية عد تنازلي مباشرة تناسب الباحث الذي يريد معرفة المدة المتبقية بسرعة."
+      "keyword": "هل اليوم الوطني البحريني إجازة",
+      "whyItMatters": "يسحب الصفحة إلى نية عملية أقوى من مجرد معرفة التاريخ."
+    },
+    {
+      "keyword": "هل اليوم الوطني البحريني يومان",
+      "whyItMatters": "يغطي سؤالاً عالي الفائدة قبل الدوام والسفر والتخطيط."
     },
     {
       "keyword": "16 ديسمبر البحرين",
       "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
     },
     {
-      "keyword": "هل اليوم الوطني البحريني إجازة",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
-    },
-    {
       "keyword": "الفرق بين اليوم الوطني البحريني والاستقلال",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "whyItMatters": "يعالج أكبر لبس وجد في الصفحات المنافسة."
     }
   ],
   "keywordGaps": [
     "الفرق بين 16 ديسمبر و15 أغسطس في المصادر البحرينية",
-    "مدة الإجازة الفعلية المرتبطة بالمناسبة",
-    "خدمة الباحث المحلي بالمعلومة الرسمية والعداد معاً",
-    "جواب عربي مباشر يوضح معنى اليوم الوطني البحريني وموعده في صفحة واحدة.",
-    "شرح سبب أهمية اليوم الوطني البحريني ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
-    "تغطية الأسئلة العملية التي يطرحها القارئ قبل اليوم الوطني البحريني أو أثناءه.",
-    "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط.",
-    "دمج العد التنازلي مع الشرح والسياق بدل صفحة موعد قصيرة وضعيفة."
+    "هل العطلة يوم واحد أم يومان ومتى تحتاج إعلاناً حكومياً",
+    "ربط نية العد التنازلي بقرار عملي مثل الدوام أو السفر أو الفعالية",
+    "جواب عربي مباشر يوضح معنى اليوم الوطني البحريني وموعده في صفحة واحدة",
+    "شرح سبب ظهور تاريخين مختلفين في نتائج البحث",
+    "تغطية الأسئلة العملية التي يطرحها القارئ قبل اليوم الوطني البحريني أو أثناءه",
+    "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط",
+    "دمج العد التنازلي مع الشرح والسياق والمصادر بدل صفحة موعد قصيرة وضعيفة"
   ],
   "unansweredQuestions": [
     "هل اليوم الوطني البحريني يوم واحد أم يومان؟",
@@ -142,11 +176,11 @@
   ],
   "differentiationIdeas": [
     "إزالة الالتباس التاريخي بين اليوم الوطني والاستقلال",
-    "إظهار المصدر البحريني الرسمي داخل الصفحة",
+    "إظهار المصدر البحريني الرسمي داخل الصفحة مع مصادر مقارنة مرئية",
     "دمج التاريخ والإجازة والFAQ في بنية واضحة عالية النية",
-    "جواب مباشر عن موعد اليوم الوطني البحريني في بداية الصفحة قبل أي شرح إضافي.",
-    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر.",
-    "أسئلة شائعة عملية تساعد القارئ على فهم اليوم الوطني البحريني والتصرف بناءً عليه."
+    "جواب مباشر عن موعد اليوم الوطني البحريني في بداية الصفحة قبل أي شرح إضافي",
+    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر",
+    "أسئلة شائعة عملية تساعد القارئ على فهم اليوم الوطني البحريني والتصرف بناءً عليه"
   ],
   "factSources": [
     {
@@ -158,13 +192,13 @@
       "url": "https://beta.bna.bh/en/article/JHTiuWKqWE4lNELb"
     },
     {
-      "label": "البوابة الوطنية للبحرين: عن البحرين (إنجليزي)",
-      "url": "https://bahrain.bh/wps/portal/en/BNP/HomeNationalPortal/ContentDetailsPage/%21ut/p/z1/nVRdd6IwFPwr7IOPnNyEEMIjtgp-FcXiVl56CKSVroJFquv--k337McB1NbNW8IMM5l7b1CEHlCUx_vsOa6yIo_Xar-M2CMemODxG4DpLSUwW9gB604wTFwDfa0D8H0ICjBwAr9_i4FiFH2GD2eWA5_j_wXY9zYDRohDydw1wL-W3wZEl-01-N54bgKb3M27OHTHdGE09G-myp6J-4NZYOLANC7ysTdgdX77ek3_LYF3voF5zx2OAE_ZnAKb2qPhaBIS8K3f_AuAun4Y9oFxt08p45bDrFb-LUCDzwCYG2KMh6pROGnzm4Aa35uFXN1_PPQZ6Rp-D7fyawHq-YdExevgCZ75qj0JQwsUoWibZClaUouaPCVMTxIbdMqZpYuUEj2RBsYpZSIm8I5O8mpbrdBS5NvHuOxALIq3SqtWUvuW5c9psflzJOJVGWd5Y9sqWctTdLkjhh_1tBra7OX1NXKU1yKv5PcKPfy_2ejECDjQDVS-AK5PTgLqI1w3fOKNuNBlgWVaH_xh1JJojiFBSxW6dTa0gRrEfSYPKMyLcqPevfmVbeFBU6FuYQTkvMKTMJnEPNFtYhk6jYXQuWRPuim4oJwLRixoVr390FxZ9V223svy5U1kayk7sFHF1n7x8qoDpVzHlUy1qthmya4Dci2TqsySrDpqcZ5qB_W11HbqsCjRdhP-WxtuHPVIsKAXeD-6d7p7I_jx8OUnxw-v7g%21%21/dz/d5/L0lDUmlTV0EhL3dPa0FKRnRnLzROV3FpQSEhL2Vu/"
+      "label": "PublicHolidays البحرين: العيد الوطني",
+      "url": "https://publicholidays.me/bahrain/ar/national-day/"
     },
     {
-      "label": "calendarz.com",
+      "label": "CalendarZ: اليوم الوطني البحريني",
       "url": "https://www.calendarz.com/ar/when-is/bahrain-holidays/national-day/2025"
     }
   ],
-  "notes": "المعاينة اعتمدت على أنماط SERP العربي لصفحات العدّادات المختصرة والمقالات الإخبارية/الإرشادية، مع ترجيح المصادر الرسمية والمرجعية في الحقائق الأساسية."
+  "notes": "المراجعة اعتمدت على 4 مراجع ومنافسين عرب و3 صفحات إنجليزية للمقارنة. تم استبعاد صفحات خبرية وتعبيرية ضعيفة لأنها تكرر التاريخ من دون حسم الفرق بين اليوم الوطني والاستقلال أو توضيح سؤال الإجازة العملية."
 }

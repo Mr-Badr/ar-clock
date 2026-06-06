@@ -12,14 +12,21 @@ import { getFlagEmoji, getSafeTimezone } from '@/lib/country-utils';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { DateShareActions } from '@/components/date/DateShareActions';
+import DateRouteLoading from '@/components/date/DateRouteLoading';
+import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
-import { Calendar, Clock, ArrowLeftRight } from "lucide-react"
+import AdInArticle from '@/components/ads/AdInArticle';
+import SiteTrustPanel from '@/components/site/SiteTrustPanel';
+import { Calendar, Clock, ArrowLeftRight, type LucideIcon } from 'lucide-react';
+import styles from '@/app/date/DateRoutePage.module.css';
 import {
   GEO_ROUTE_INDEXING_POLICIES,
   isSeoIndexableCountrySlug,
 } from '@/lib/seo/country-indexing';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildDateKeywords } from '@/lib/seo/section-search-intent';
+import { ErrorBoundary } from '@/components/ErrorBoundary.client';
+import { logger, serializeError } from '@/lib/logger';
 
 const BASE_URL = getSiteUrl();
 
@@ -34,7 +41,53 @@ const COUNTRY_HIJRI_METHOD_OVERRIDES: Partial<Record<string, ConversionMethod>> 
   'OM': 'umalqura',      // Oman
 };
 
-function getHijriMethodNameAr(method: ConversionMethod) {
+interface RelatedLink {
+  href: string;
+  label: string;
+  description: string;
+  icon: LucideIcon;
+}
+
+interface CountryDateDecisionRow {
+  label: string;
+  value: string;
+}
+
+interface CountryDateFaqItem {
+  question: string;
+  answer: string;
+}
+
+interface CountryDateSourceLink {
+  href: string;
+  label: string;
+  description: string;
+}
+
+const COUNTRY_DATE_SOURCE_LINKS: readonly CountryDateSourceLink[] = [
+  {
+    href: 'https://www.iana.org/time-zones',
+    label: 'IANA Time Zone Database',
+    description: 'مرجع المناطق الزمنية وتغيرات التوقيت المحلي التي تؤثر في بداية اليوم بين الدول.',
+  },
+  {
+    href: 'https://cldr.unicode.org/development/development-process/design-proposals/islamic-calendar-types',
+    label: 'Unicode CLDR: أنواع التقويم الإسلامي',
+    description: 'مرجع تقني يوضح اختلاف أم القرى، المدني، والحسابات الإسلامية الأخرى.',
+  },
+  {
+    href: 'https://www.ummulqura.org.sa/Index.aspx',
+    label: 'تقويم أم القرى',
+    description: 'مرجع سعودي للتقويم الهجري وأدوات التحويل والصلاة، ويهم خصوصاً دول الخليج والسعودية.',
+  },
+  {
+    href: 'https://www.britannica.com/topic/Gregorian-calendar',
+    label: 'Britannica: التقويم الميلادي',
+    description: 'خلفية موثوقة عن التقويم الميلادي الشمسي المستخدم في أغلب المعاملات المدنية.',
+  },
+];
+
+function getHijriMethodNameAr(method: ConversionMethod): string {
   if (method === 'umalqura') return 'تقويم أم القرى';
   if (method === 'civil') return 'التقويم المدني';
   return 'الحساب الفلكي';
@@ -59,32 +112,79 @@ function resolveCountryHijriMethod(countryCode: string) {
     isGlobalDefault,
   };
 }
-
-interface RelatedLinksProps {
-  countrySlug: string
-  countryNameAr: string
-}
  
-const links = (countrySlug: string, countryNameAr: string) => [
+function buildCountryDateDecisionRows(countryNameAr: string, methodNameAr: string): CountryDateDecisionRow[] {
+  return [
+    {
+      label: 'تريد مشاركة التاريخ اليوم',
+      value: `اكتب الهجري والميلادي معاً، واذكر أن النتيجة تخص ${countryNameAr} حتى لا يقرأها شخص في بلد آخر كسياق عام.`,
+    },
+    {
+      label: 'الموعد قريب من منتصف الليل',
+      value: 'افتح صفحة الوقت الان أولاً، لأن فرق ساعة أو ساعتين قد يعني أن اليوم المحلي لم يبدأ بعد في بلد المقارنة.',
+    },
+    {
+      label: 'الموعد ديني أو حكومي',
+      value: `استخدم ${methodNameAr} للفهم السريع، ثم راجع إعلان الجهة الرسمية في ${countryNameAr} قبل الاعتماد النهائي.`,
+    },
+    {
+      label: 'لديك تاريخ قديم أو تاريخ ميلاد',
+      value: 'استخدم محول التاريخ بدلاً من صفحة اليوم، ثم احتفظ بالتاريخ الأصلي كما ورد في الوثيقة.',
+    },
+  ];
+}
+
+function buildCountryDateFaqItems(
+  countryNameAr: string,
+  methodNameAr: string,
+  timezone: string,
+  hijriFormatted: string,
+  gregorianFormatted: string,
+): CountryDateFaqItem[] {
+  return [
+    {
+      question: `كم التاريخ الهجري اليوم في ${countryNameAr}؟`,
+      answer: `التاريخ الهجري اليوم في ${countryNameAr} هو ${hijriFormatted} حسب ${methodNameAr}. اقرأ النتيجة مع التاريخ الميلادي لأن بعض النماذج والرسائل تحتاج الصيغتين معاً.`,
+    },
+    {
+      question: `كم التاريخ الميلادي اليوم في ${countryNameAr}؟`,
+      answer: `التاريخ الميلادي اليوم في ${countryNameAr} هو ${gregorianFormatted}م حسب اليوم المحلي للمنطقة الزمنية ${timezone}.`,
+    },
+    {
+      question: `هل التاريخ في ${countryNameAr} يطابق تاريخ جهازي؟`,
+      answer: `ليس دائماً. إذا كان جهازك مضبوطاً على منطقة زمنية مختلفة، فقد ترى يوماً مختلفاً عند منتصف الليل أو قبل الفجر. لذلك تعرض هذه الصفحة التاريخ وفق سياق ${countryNameAr}.`,
+    },
+    {
+      question: `لماذا قد يختلف التاريخ الهجري في ${countryNameAr} عن بلد آخر؟`,
+      answer: 'قد يظهر فرق يوم واحد بسبب إعلان بداية الشهر، أو طريقة الحساب، أو اختلاف المنطقة الزمنية. هذا شائع قرب أول الشهر وآخره، خصوصاً في رمضان وشوال وذي الحجة.',
+    },
+    {
+      question: `هل أستطيع اعتماد هذه النتيجة للمعاملات الرسمية في ${countryNameAr}؟`,
+      answer: 'استخدمها كمرجع سريع ومفيد، لكن المعاملات القانونية أو الحكومية أو المواعيد الدينية الحساسة تحتاج دائماً مراجعة الجهة المختصة أو الوثيقة الرسمية.',
+    },
+  ];
+}
+
+const links = (countrySlug: string, countryNameAr: string): RelatedLink[] => [
   {
-    href: "/date",
-    label: "صفحة التاريخ الرئيسية",
-    description: "عرض التاريخ الهجري والميلادي",
+    href: '/date',
+    label: 'صفحة التاريخ الرئيسية',
+    description: 'عرض التاريخ الهجري والميلادي',
     icon: Calendar,
   },
   {
     href: `/time-now/${countrySlug}`,
-    label: `الوقت الآن في ${countryNameAr}`,
-    description: "الساعة الحالية وفق التوقيت المحلي",
+    label: `الوقت الان في ${countryNameAr}`,
+    description: 'الساعة الحالية وفق التوقيت المحلي',
     icon: Clock,
   },
   {
-    href: "/date/converter",
-    label: "تحويل تاريخ آخر",
-    description: "أداة تحويل التواريخ الهجرية والميلادية",
+    href: '/date/converter',
+    label: 'تحويل تاريخ آخر',
+    description: 'أداة تحويل التواريخ الهجرية والميلادية',
     icon: ArrowLeftRight,
   },
-]
+];
 
 export async function generateStaticParams() {
   const slugs = await getPriorityCountrySlugs(24);
@@ -97,41 +197,60 @@ export async function generateMetadata({
   params: Promise<{ countrySlug: string }>;
 }): Promise<Metadata> {
   const { countrySlug } = await params;
-  const country = await getCountryBySlug(countrySlug);
-  if (!country) return { title: 'التاريخ الهجري' };
+  try {
+    const country = await getCountryBySlug(countrySlug);
+    if (!country) return { title: 'التاريخ الهجري' };
 
-  const countryAr = country.name_ar;
-  const policy = GEO_ROUTE_INDEXING_POLICIES.dateCountry;
-  const isIndexableCountry = isSeoIndexableCountrySlug(countrySlug, {
-    scope: policy.countryScope,
-  });
-  return {
-    title: `التاريخ الهجري والميلادي اليوم في ${countryAr}`,
-    description: `اعرف التاريخ الهجري والميلادي اليوم في ${countryAr} مع طريقة الحساب المعتمدة لهذه الصفحة وروابط الوقت الآن والتحويل والتقويم.`,
-    keywords: buildDateKeywords({ countryNameAr: countryAr }),
-    alternates: { canonical: `${BASE_URL}/date/country/${countrySlug}` },
-    robots: {
-      index: isIndexableCountry,
-      follow: true,
-      googleBot: {
+    const countryAr = country.name_ar;
+    const policy = GEO_ROUTE_INDEXING_POLICIES.dateCountry;
+    const isIndexableCountry = isSeoIndexableCountrySlug(countrySlug, {
+      scope: policy.countryScope,
+    });
+    return {
+      title: `التاريخ اليوم في ${countryAr} | هجري وميلادي حسب الدولة`,
+      description: `اعرف التاريخ الهجري والميلادي اليوم في ${countryAr} حسب التوقيت المحلي، وافهم طريقة الحساب ومتى تراجع الوقت أو المحول أو الجهة الرسمية.`,
+      keywords: [
+        ...buildDateKeywords({ countryNameAr: countryAr }),
+        `التاريخ اليوم في ${countryAr}`,
+        `كم التاريخ اليوم في ${countryAr}`,
+        `التاريخ المحلي في ${countryAr}`,
+        `التاريخ حسب الدولة ${countryAr}`,
+      ],
+      alternates: { canonical: `${BASE_URL}/date/country/${countrySlug}` },
+      robots: {
         index: isIndexableCountry,
         follow: true,
-        'max-snippet': -1,
-        'max-image-preview': 'large',
+        googleBot: {
+          index: isIndexableCountry,
+          follow: true,
+          'max-snippet': -1,
+          'max-image-preview': 'large',
+        },
       },
-    },
-    openGraph: {
-      title: `التاريخ الهجري والميلادي اليوم في ${countryAr} | ميقاتنا`,
-      description: `التاريخ اليوم في ${countryAr} مع التقويم الهجري والميلادي.`,
-      url: `${BASE_URL}/date/country/${countrySlug}`,
-      locale: 'ar_SA',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `التاريخ الهجري والميلادي اليوم في ${countryAr} | ميقاتنا`,
-      description: `اعرف التاريخ اليوم في ${countryAr} مع التقويم الهجري والميلادي والروابط المرتبطة به.`,
-    },
-  };
+      openGraph: {
+        title: `التاريخ اليوم في ${countryAr} | هجري وميلادي`,
+        description: `اقرأ التاريخ المحلي في ${countryAr} بصيغتيه الهجرية والميلادية مع روابط الوقت والتحويل والصلاة.`,
+        url: `${BASE_URL}/date/country/${countrySlug}`,
+        locale: 'ar_SA',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `التاريخ اليوم في ${countryAr} | ميقاتنا`,
+        description: `تاريخ اليوم في ${countryAr} حسب التوقيت المحلي مع الهجري والميلادي في صفحة واحدة.`,
+      },
+    };
+  } catch (error) {
+    logger.error('date-country-metadata-failed', {
+      routePath: `/date/country/${countrySlug}`,
+      countrySlug,
+      error: serializeError(error),
+    });
+    return {
+      title: 'التاريخ اليوم حسب الدولة',
+      description: 'اعرف التاريخ الهجري والميلادي حسب الدولة مع الوقت الان والتحويل والتقويم من صفحات ميقاتنا.',
+      alternates: { canonical: `${BASE_URL}/date/country/${countrySlug}` },
+    };
+  }
 }
 
 export default function CountryDatePage({
@@ -140,7 +259,15 @@ export default function CountryDatePage({
   params: Promise<{ countrySlug: string }>;
 }) {
   return (
-    <Suspense fallback={<div className="h-screen animate-pulse bg-surface-1" />}>
+    <Suspense
+      fallback={(
+        <DateRouteLoading
+          kind="hub"
+          title="جاري تحميل صفحة التاريخ"
+          description="نجهز التاريخ اليومي ومسارات المتابعة الخاصة بهذه الدولة الآن."
+        />
+      )}
+    >
       <CountryDateDynamicContent params={params} />
     </Suspense>
   );
@@ -153,15 +280,62 @@ async function CountryDateDynamicContent({
 }) {
   const { countrySlug } = await params;
   let countryRaw;
+  let countryLookupFailed = false;
   try {
     countryRaw = await getCountryBySlug(countrySlug);
-  } catch {
-    notFound();
+  } catch (error) {
+    countryLookupFailed = true;
+    logger.error('date-country-page-data-failed', {
+      routePath: `/date/country/${countrySlug}`,
+      countrySlug,
+      error: serializeError(error),
+    });
+  }
+  if (countryLookupFailed) {
+    return (
+      <RouteUnavailableState
+        eyebrow="تعذر الوصول إلى بيانات الدولة الآن"
+        title="صفحة التاريخ حسب الدولة متوقفة مؤقتاً"
+        description="تعذر تحميل بيانات الدولة في هذه اللحظة، لذلك أظهرنا لك بديلاً واضحاً يمنع تحوّل الصفحة إلى 5xx أو صفحة فارغة، مع إبقاء المسارات الأساسية متاحة."
+        primaryLink={{
+          href: '/date',
+          label: 'افتح قسم التاريخ',
+          description: 'انتقل إلى صفحة التاريخ الرئيسية ثم اختر أداة أو دولة أخرى من المسارات المتاحة.',
+        }}
+        secondaryLinks={[
+          {
+            href: '/date/calendar',
+            label: 'افتح التقويم الميلادي',
+            description: 'راجع التقويم السنوي ومسارات الأيام من صفحة التقويم الرئيسية.',
+          },
+          {
+            href: '/date/converter',
+            label: 'افتح محوّل التاريخ',
+            description: 'استخدم تحويل التاريخ مباشرة إذا كان هدفك الوصول إلى تاريخ محدد.',
+          },
+          {
+            href: '/fahras',
+            label: 'استكشف الصفحات',
+            description: 'استخدم فهرس الصفحات للوصول السريع إلى أقرب مسار يفيدك الآن.',
+          },
+        ]}
+      />
+    );
   }
   if (!countryRaw) notFound();
   const country = countryRaw as NonNullable<typeof countryRaw>;
 
-  const capital = await getCapitalCity(country.country_code);
+  let capital = null;
+  try {
+    capital = await getCapitalCity(country.country_code);
+  } catch (error) {
+    logger.warn('date-country-capital-lookup-failed', {
+      route: `/date/country/${countrySlug}`,
+      countrySlug,
+      countryCode: country.country_code,
+      error: serializeError(error),
+    });
+  }
   const _tzRaw = capital?.timezone ?? (country.timezone ? getSafeTimezone(country.timezone) : undefined);
   const timezone = _tzRaw ?? 'UTC';
 
@@ -175,14 +349,28 @@ async function CountryDateDynamicContent({
     const m = parts.find(p => p.type === 'month')?.value;
     const d = parts.find(p => p.type === 'day')?.value;
     if (y && m && d) localDateIso = `${y}-${m}-${d}`;
-  } catch { }
+  } catch (error) {
+    logger.warn('date-country-local-date-format-failed', {
+      routePath: `/date/country/${countrySlug}`,
+      countrySlug,
+      timezone,
+      error: serializeError(error),
+    });
+  }
 
   const { method, methodNameAr, methodNoteAr, isGlobalDefault } = resolveCountryHijriMethod(country.country_code);
 
   let hijri;
   try {
     hijri = convertDate({ date: localDateIso, toCalendar: 'hijri', method });
-  } catch {
+  } catch (error) {
+    logger.error('date-country-hijri-conversion-failed', {
+      routePath: `/date/country/${countrySlug}`,
+      countrySlug,
+      localDateIso,
+      method,
+      error: serializeError(error),
+    });
     notFound();
   }
 
@@ -205,122 +393,230 @@ async function CountryDateDynamicContent({
     { label: `التاريخ في ${country.name_ar}` },
   ];
 
-  const jsonLd = {
+  const decisionRows = buildCountryDateDecisionRows(country.name_ar, methodNameAr);
+  const faqItems = buildCountryDateFaqItems(
+    country.name_ar,
+    methodNameAr,
+    timezone,
+    hijri.formatted.ar,
+    gregorian.formatted.ar,
+  );
+  const breadcrumbSchema = buildBreadcrumbJsonLd(breadcrumb, BASE_URL);
+  const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: `التاريخ في ${country.name_ar}`,
+    name: `التاريخ اليوم في ${country.name_ar}`,
     url: `${BASE_URL}/date/country/${countrySlug}`,
-    breadcrumb: buildBreadcrumbJsonLd(breadcrumb, BASE_URL),
-    mainEntity: {
-      '@type': 'FAQPage',
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name: `كم التاريخ الهجري اليوم في ${country.name_ar}؟`,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: `التاريخ الهجري اليوم في ${country.name_ar} هو ${hijri.formatted.ar} بناءً على ${methodNameAr}.`,
-          },
-        },
-        {
-          '@type': 'Question',
-          name: `كم التاريخ الميلادي اليوم في ${country.name_ar}؟`,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: `التاريخ الميلادي اليوم في ${country.name_ar} هو ${gregorian.formatted.ar}.`,
-          },
-        },
-      ],
-    },
+    inLanguage: 'ar',
+    dateModified: nowIso,
+    description: `التاريخ الهجري اليوم في ${country.name_ar} هو ${hijri.formatted.ar}، ويوافق ${gregorian.formatted.ar}م حسب ${timezone}.`,
+    about: ['تاريخ اليوم', 'التاريخ الهجري', 'التاريخ الميلادي', country.name_ar, methodNameAr],
+  };
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
   };
 
   const flag = getFlagEmoji(country.country_code);
 
   return (
     <>
-      <JsonLd data={jsonLd} />
+      <JsonLd data={[breadcrumbSchema, webPageSchema, faqSchema]} />
       <AdLayoutWrapper>
         <main className="content-col pt-24 pb-20 mt-12">
           <DateBreadcrumb items={breadcrumb} />
 
-          {/* COUNTRY HEADER */}
-          <div className="flex flex-col items-center justify-center text-center mb-8 border-b border-border pb-8">
-            <div className="text-5xl mb-4">{flag}</div>
-            <h1 className="text-3xl md:text-4xl font-black text-primary mb-3">
-              التاريخ اليوم في <span className="text-accent">{country.name_ar}</span>
-            </h1>
-            <p className="text-secondary font-medium">
-              تحديث مباشر للتاريخ الهجري والميلادي حسب التوقيت المحلي ({timezone})
-            </p>
-          </div>
-
-          {/* MAIN DISPLAY */}
-          <section className="bg-surface-1 border border-border rounded-[var(--radius)] overflow-hidden shadow-sm mb-8">
-            <div className="bg-accent-gradient px-6 py-3 flex justify-between items-center text-white/90">
-              <span className="text-sm font-semibold">{hijri.dayNameAr}</span>
-              <span className="text-sm font-semibold">{localDateIso}</span>
+          <section className="date-hero-panel mb-6">
+            <div className="date-hero-main">
+              <p className="date-kicker m-0">
+                <span aria-hidden="true">{flag}</span> تاريخ محلي حسب الدولة
+              </p>
+              <h1 className="date-hero-title">
+                التاريخ اليوم في <span className="text-accent">{country.name_ar}</span>
+              </h1>
+              <p className="date-hero-copy">
+                التاريخ الهجري اليوم في {country.name_ar} هو {hijri.formatted.ar}، ويوافق {gregorian.formatted.ar}م
+                حسب المنطقة الزمنية <span dir="ltr">{timezone}</span>. اقرأ التاريخين معاً قبل المشاركة، لأن فرق التوقيت
+                أو طريقة اعتماد بداية الشهر قد يغيّران فهم الموعد.
+              </p>
             </div>
-            <div className="p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="flex-1 text-center md:text-right border-b md:border-b-0 md:border-l border-border pb-6 md:pb-0 md:pl-6">
-                <div className="text-sm font-bold text-accent-alt mb-2 flex items-center justify-center md:justify-start gap-2">
-                  <span className="w-2 h-2 rounded-full bg-accent-alt"></span>
-                  التاريخ الهجري
-                </div>
-                <div className="text-3xl lg:text-4xl font-black text-primary mb-2 leading-tight">
-                  {hijri.formatted.ar}
-                </div>
-                <div className="text-sm text-muted font-medium bg-surface-2 inline-block px-3 py-1 rounded-md">
-                  طريقة الحساب: {methodNameAr}
-                </div>
+            <aside className="date-hero-rail" aria-label={`ملخص التاريخ اليوم في ${country.name_ar}`}>
+              <p className="date-hero-answer">{hijri.formatted.ar}</p>
+              <p className="date-hero-note">
+                يوافق {gregorian.formatted.ar}م، يوم {hijri.dayNameAr}. طريقة الحساب: {methodNameAr}.
+              </p>
+              <div className="date-hero-actions">
+                <Link href={`/time-now/${countrySlug}`} className="date-hero-link date-hero-link--primary">
+                  الوقت الان في {country.name_ar}
+                </Link>
+                <Link href="/date/converter" className="date-hero-link">
+                  تحويل تاريخ آخر
+                </Link>
               </div>
-
-              <div className="flex-1 text-center md:text-right">
-                <div className="text-sm font-bold text-success mb-2 flex items-center justify-center md:justify-start gap-2">
-                  <span className="w-2 h-2 rounded-full bg-success"></span>
-                  التاريخ الميلادي
-                </div>
-                <div className="text-3xl lg:text-4xl font-black text-primary mb-2 leading-tight">
-                  {gregorian.formatted.ar}م
-                </div>
-                <div className="text-sm text-muted font-medium bg-surface-2 inline-block px-3 py-1 rounded-md">
-                  السنة الميلادية
-                </div>
-              </div>
-            </div>
+            </aside>
           </section>
 
-          {/* NOTE CARD */}
-          <section className="bg-surface-2 border border-border rounded-[var(--radius)] p-5 mb-8 flex gap-4 items-start shadow-sm">
-            <div className="text-2xl mt-0.5">💡</div>
-            <div>
-              <h3 className="text-base font-bold text-primary mb-1.5">معلومة تهمك</h3>
-              <p className="text-sm text-secondary leading-relaxed">
-                وفقاً لقاعدة البيانات، فإن التوقيت في {country.name_ar} حالياً يتوافق مع يوم {hijri.dayNameAr}.
-                يتم عرض التاريخ الهجري باستخدام {methodNameAr}. {methodNoteAr}
-                {!isGlobalDefault ? ' قد تختلف رؤية الهلال في بعض الدول المجاورة.' : ' قد تختلف النتائج عن التقاويم المحلية إذا اعتمدت الدولة إعلاناً رسمياً مختلفاً.'}
+          <section className="date-detail-panel mb-8" aria-label="مشاركة تاريخ اليوم في الدولة">
+              <ErrorBoundary name="DateCountryShareActions">
+                <DateShareActions
+                  hijriFormatted={hijri.formatted.ar}
+                  gregorianFormatted={`${gregorian.day} ${gregorian.monthNameAr} ${gregorian.year}`}
+                  hijriIso={hijri.formatted.iso}
+                  gregorianIso={gregorian.formatted.iso}
+                  pageUrl={`${BASE_URL}/date/country/${countrySlug}`}
+                />
+              </ErrorBoundary>
+          </section>
+
+          <section className={styles.sectionPanel} aria-labelledby="country-date-method">
+            <div className={styles.sectionHead}>
+              <h2 id="country-date-method" className={styles.sectionTitle}>
+                كيف حُسب تاريخ اليوم؟
+              </h2>
+              <p className={styles.sectionCopy}>
+                بدأنا من التاريخ المحلي <span dir="ltr">{localDateIso}</span> في المنطقة الزمنية <span dir="ltr">{timezone}</span>،
+                ثم حوّلناه إلى هجري باستخدام {methodNameAr}. {methodNoteAr}
+                {!isGlobalDefault ? ' قد تختلف رؤية الهلال في بعض الدول المجاورة أو عند أول الشهر.' : ' قد تختلف النتائج عن التقاويم المحلية إذا اعتمدت الدولة إعلاناً رسمياً مختلفاً.'}
               </p>
             </div>
           </section>
 
-          {/* ACTIONS */}
-          <section className="mb-8">
-            <DateShareActions
-              hijriFormatted={hijri.formatted.ar}
-              gregorianFormatted={`${gregorian.day} ${gregorian.monthNameAr} ${gregorian.year}`}
-              hijriIso={hijri.formatted.iso}
-              gregorianIso={gregorian.formatted.iso}
-              pageUrl={`${BASE_URL}/date/country/${countrySlug}`}
-            />
+          <section className="date-detail-panel mb-8" aria-labelledby="country-date-decision">
+            <h2 id="country-date-decision" className="date-section-title">
+              قبل أن تعتمد التاريخ في {country.name_ar}
+            </h2>
+            <div className="date-detail-list">
+              {decisionRows.map((row) => (
+                <div key={row.label} className="date-detail-row">
+                  <span className="date-detail-label">{row.label}</span>
+                  <span className="date-detail-value">{row.value}</span>
+                </div>
+              ))}
+            </div>
           </section>
 
-          {/* LINKS */}
+          <section className={styles.prosePanel} aria-labelledby="country-date-reading">
+            <div className={styles.sectionHead}>
+              <h2 id="country-date-reading" className={styles.sectionTitle}>
+                كيف تقرأ التاريخ اليوم في {country.name_ar}؟
+              </h2>
+              <p className={styles.sectionCopy}>
+                هذه الملاحظات تساعدك على استخدام النتيجة في المواعيد، الرسائل، والمقارنات
+                بين الدول دون الخلط بين اليوم المحلي وتوقيت جهازك.
+              </p>
+            </div>
+            <div className={styles.proseBody}>
+              <p>
+                فكر في التاريخ كأنه بطاقة لها وجهان: وجه ميلادي تستخدمه أغلب التطبيقات والحجوزات، ووجه هجري تحتاجه
+                للمناسبات الدينية والعائلية وبعض السياقات الرسمية. في {country.name_ar}، تعرض هذه الصفحة الوجهين معاً
+                حتى لا تختار صيغة واحدة وتنسى أن الطرف الآخر قد يقرأ التاريخ بطريقة مختلفة.
+              </p>
+              <p>
+                الصفحة لا تعتمد على توقيت جهازك فقط؛ بل تقرأ اليوم المحلي في {country.name_ar}. هذا مهم عند متابعة بداية
+                اليوم في دولة أخرى، أو عند تنسيق موعد عائلي أو عملي أو مناسبة مرتبطة بالتاريخ الهجري. إذا كنت تقارن
+                بين بلدين، فابدأ من الوقت الان ثم عد إلى صفحة التاريخ حتى تفهم هل تغيّر اليوم محلياً أم لا.
+              </p>
+              <p>
+                التاريخ الهجري قد يختلف يوماً واحداً بين الدول إذا اعتمدت جهة رسمية رؤية محلية للهلال أو إعلاناً خاصاً
+                ببداية الشهر. لذلك نعرض طريقة الحساب المستخدمة بوضوح، ونربط الصفحة بمحوّل التاريخ والتقويم حتى تستطيع
+                مراجعة تاريخ آخر أو فتح سنة كاملة عند الحاجة.
+              </p>
+              <p>
+                عند استخدام الصفحة لتنسيق موعد بين بلدك و{country.name_ar}، لا تنظر إلى التاريخ منفصلاً عن الساعة.
+                قد يكون يومك المحلي بدأ فعلاً بينما ما زالت الدولة الأخرى في اليوم السابق، أو العكس. لهذا تربط الصفحة
+                بين التاريخ والوقت الان، لأن فرق المنطقة الزمنية هو السبب العملي الأكثر شيوعاً وراء الالتباس في الرسائل
+                والحجوزات والاجتماعات.
+              </p>
+              <p>
+                إذا كان الموعد دينياً أو حكومياً، تعامل مع التاريخ هنا كمرجع حسابي واضح، ثم قارنه مع الإعلان الرسمي
+                داخل {country.name_ar}. أما عند الاستخدام اليومي مثل مشاركة التاريخ، كتابة تذكير، أو مراجعة التقويم،
+                فوجود الهجري والميلادي معاً يكفي غالباً لتجنب سوء الفهم.
+              </p>
+              <p>
+                من الأفضل أيضاً فتح التقويم أو محوّل التاريخ عندما يكون الموعد بعد عدة أسابيع، لأن تاريخ اليوم وحده
+                لا يشرح لك كيف ينتقل الشهر الهجري خلال الفترة القادمة. الربط بين صفحة الدولة والوقت الان والتحويل يجعل
+                المسار أوضح: تعرف اليوم المحلي أولاً، ثم تفحص التاريخ المطلوب، ثم تشارك الصيغة المناسبة.
+              </p>
+            </div>
+            <div className={styles.methodGrid}>
+              <article className={styles.infoCard}>
+                <h3 className={styles.cardTitle}>للمواعيد اليومية</h3>
+                <p className={styles.cardBody}>استخدم التاريخ المحلي عندما يكون الموعد مرتبطاً بـ {country.name_ar} لا بجهازك الحالي.</p>
+              </article>
+              <article className={styles.infoCard}>
+                <h3 className={styles.cardTitle}>للهجري</h3>
+                <p className={styles.cardBody}>راجع طريقة الحساب والتنبيه لأن الإعلان الرسمي قد يغيّر بداية الشهر عند الحالات الحساسة.</p>
+              </article>
+              <article className={styles.infoCard}>
+                <h3 className={styles.cardTitle}>للمقارنة</h3>
+                <p className={styles.cardBody}>افتح محوّل التاريخ إذا كنت تريد مقارنة يوم سابق أو لاحق لا تاريخ اليوم فقط.</p>
+              </article>
+            </div>
+          </section>
+
+          <section className="date-section mb-8" aria-labelledby="country-date-faq-heading">
+            <div className="date-section-head">
+              <h2 id="country-date-faq-heading" className="date-section-title">
+                أسئلة شائعة عن تاريخ اليوم في {country.name_ar}
+              </h2>
+              <p className="date-section-copy">
+                هذه الأسئلة تختصر أكثر مواضع الالتباس: فرق التوقيت، اختلاف الهجري، وحدود الاعتماد الرسمي.
+              </p>
+            </div>
+            <div className="date-faq-grid">
+              {faqItems.map((item) => (
+                <article key={item.question} className="date-faq-item">
+                  <h3 className="date-faq-question">{item.question}</h3>
+                  <p className="date-faq-copy m-0">{item.answer}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="mt-8">
+            <SiteTrustPanel panel="date" />
+          </section>
+
+          <AdInArticle slotId={`mid-date-country-${countrySlug}-1`} />
+
+          <section className="related-links mb-8" dir="rtl" aria-labelledby="country-date-sources-heading">
+            <p id="country-date-sources-heading" className="related-links__heading">
+              مصادر تساعدك على فهم التاريخ المحلي
+            </p>
+            <div className="related-links__grid">
+              {COUNTRY_DATE_SOURCE_LINKS.map((source) => (
+                <a
+                  key={source.href}
+                  href={source.href}
+                  className="related-link-card"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="related-link-card__body">
+                    <span className="related-link-card__label">{source.label}</span>
+                    <span className="related-link-card__desc">{source.description}</span>
+                  </span>
+                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
+                </a>
+              ))}
+            </div>
+          </section>
+
           <nav
-            aria-label="روابط ذات صلة"
+            aria-label={`مسارات متابعة التاريخ المحلي في ${country.name_ar}`}
             className="related-links"
             dir="rtl"
           >
             <p className="related-links__heading">
-              صفحات ذات صلة
+              إذا كنت تتابع الوقت أو الصلاة في {country.name_ar}
             </p>
       
             <div className="related-links__grid">
@@ -337,7 +633,6 @@ async function CountryDateDynamicContent({
                     <span className="related-link-card__desc">{description}</span>
                   </span>
       
-                  {/* Arrow — flips to → in RTL */}
                   <span className="related-link-card__arrow" aria-hidden="true">←</span>
                 </Link>
               ))}

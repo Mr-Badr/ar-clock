@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import { getCountryByCode } from '@/lib/events/country-dictionary';
 
 function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
@@ -7,22 +8,12 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
     {
       href: '/holidays',
       title: 'كل المناسبات',
-      description: 'استكشف جميع صفحات العد التنازلي والمناسبات القادمة من مكان واحد.',
-    },
-    {
-      href: '/date/today',
-      title: 'تاريخ اليوم',
-      description: 'اعرف التاريخ الميلادي والهجري اليوم مع أدوات التاريخ والعدّاد.',
+      description: 'ارجع إلى قائمة المناسبات عندما تريد مقارنة هذا الموعد بمناسبة قريبة.',
     },
     {
       href: '/date/converter',
       title: 'تحويل التاريخ',
       description: 'حوّل بين التاريخ الهجري والميلادي إذا كنت تقارن المواعيد بين التقويمين.',
-    },
-    {
-      href: '/time-now',
-      title: 'الوقت الآن',
-      description: `تابع الوقت الحالي في الدول والمدن إذا كنت تربط ${displayTitle} بموعد محلي أو منطقة زمنية.`,
     },
   ];
 
@@ -30,7 +21,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
     links.push({
       href: '/date/today/hijri',
       title: 'التاريخ الهجري اليوم',
-      description: 'صفحة مخصصة لمتابعة التاريخ الهجري اليومي وأشهر السنة الهجرية.',
+      description: `صفحة مفيدة إذا كنت تتابع ${displayTitle} مع بداية الشهر الهجري أو نهايته.`,
     });
     if (hijriYearNum) {
       links.push({
@@ -39,11 +30,6 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
         description: 'راجع الأشهر والأيام الهجرية للسنة الحالية في تقويم كامل.',
       });
     }
-    links.push({
-      href: '/mwaqit-al-salat',
-      title: 'مواقيت الصلاة',
-      description: 'صفحة مناسبة للمستخدم الذي يتابع الأحداث الإسلامية إلى جانب الوقت والصلاة والتقويم الهجري.',
-    });
   } else if (currentYear) {
     links.push({
       href: `/date/calendar/${currentYear}`,
@@ -56,11 +42,11 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
     links.push({
       href: '/holidays',
       title: `مناسبات ${country.nameAr}`,
-      description: `ابدأ من صفحة المناسبات الرئيسية ثم تابع الأحداث الأقرب إلى ${country.officialNameAr || country.nameAr}.`,
+      description: `تابع المناسبات الأقرب إلى ${country.officialNameAr || country.nameAr} من نفس القسم.`,
     });
   }
 
-  return links.slice(0, 6);
+  return links.slice(0, 3);
 }
 
 export default function HolidayInternalLinks({
@@ -83,7 +69,7 @@ export default function HolidayInternalLinks({
           marginBottom: 'var(--space-4)',
         }}
       >
-        روابط داخلية مفيدة حول {displayTitle}
+        ماذا تفتح بعد موعد {displayTitle}؟
       </h2>
       <p
         style={{
@@ -93,22 +79,23 @@ export default function HolidayInternalLinks({
           marginBottom: 'var(--space-4)',
         }}
       >
-        هذه الروابط تساعدك على استكشاف الصفحات الأقرب لهذا الموضوع داخل الموقع، وتربط صفحة
-        الحدث بأدوات التاريخ والمناسبة والفئة والبلد بطريقة أوضح لمحركات البحث والزوار.
+        اختر رابطاً واحداً بحسب حاجتك الآن: مقارنة الموعد، تحويل التاريخ، أو الرجوع إلى تقويم السنة.
       </p>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-3)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 'var(--space-3)' }}>
         {links.map((link) => (
           <Link
             key={`${link.href}-${link.title}`}
             href={link.href}
-            className="card-nested"
             style={{
-              padding: 'var(--space-4)',
+              padding: 'var(--space-3)',
               textDecoration: 'none',
               display: 'flex',
               flexDirection: 'column',
               gap: 'var(--space-2)',
               color: 'inherit',
+              background: 'var(--bg-surface-2)',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--radius-lg)',
             }}
           >
             <h3
@@ -131,6 +118,20 @@ export default function HolidayInternalLinks({
             >
               {link.description}
             </p>
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 'var(--space-2)',
+                color: 'var(--accent-alt)',
+                fontSize: 'var(--text-sm)',
+                fontWeight: 'var(--font-semibold)',
+                marginTop: 'auto',
+              }}
+            >
+              راجع المناسبة
+              <ArrowLeft size={14} aria-hidden="true" />
+            </span>
           </Link>
         ))}
       </div>

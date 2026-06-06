@@ -10,6 +10,7 @@
 import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { AlertTriangle, CalendarDays, Moon } from 'lucide-react';
 
 import {
   ALL_EVENT_SLUGS,
@@ -18,6 +19,7 @@ import { getEventMeta } from '@/lib/events';
 import { COUNTRY_META } from '@/lib/calendar-config';
 import CountdownTicker, { ShareBar } from '@/components/clocks/CountdownTicker';
 import EventVibeCard from '@/components/holidays/EventVibeCard';
+import AdInArticle from '@/components/ads/AdInArticle';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import HolidayDetailsSections from './HolidayDetailsSections';
 import CountryDatesSection, { CountryDatesSectionFallback } from './CountryDatesSection';
@@ -25,10 +27,12 @@ import { featureFlags } from '@/lib/feature-flags';
 import { getHolidayMetadata } from '@/lib/holidays/metadata';
 import { getHolidayPageCriticalData } from '@/lib/holidays/page-data';
 import { getHolidaySource } from '@/lib/holidays/repository';
-import { getHolidaySearchQueries } from '@/lib/holidays/search-intent';
+import styles from '../HolidaysV4.module.css';
 
-function getPriorityHolidayStaticSlugs(limit = 48) {
-  return ALL_EVENT_SLUGS
+function getPriorityHolidayStaticSlugs(limit) {
+  const safeSlugs = Array.isArray(ALL_EVENT_SLUGS) ? ALL_EVENT_SLUGS.filter((slug) => typeof slug === 'string' && slug.trim().length > 0) : [];
+
+  return safeSlugs
     .slice()
     .sort((left, right) => {
       const leftOrder = getHolidaySource(left)?.queueOrder || Number.MAX_SAFE_INTEGER;
@@ -41,12 +45,12 @@ function getPriorityHolidayStaticSlugs(limit = 48) {
 
       return left.localeCompare(right);
     })
-    .slice(0, Math.min(limit, ALL_EVENT_SLUGS.length));
+    .slice(0, Math.min(limit, safeSlugs.length));
 }
 
 /* ── Static params (seed top holidays, render the rest on demand) ───────── */
 export async function generateStaticParams() {
-  return getPriorityHolidayStaticSlugs().map((slug) => ({ slug }));
+  return getPriorityHolidayStaticSlugs(48).map((slug) => ({ slug }));
 }
 
 /* ── Metadata ─────────────────────────────────────────────────────────────── */
@@ -62,7 +66,11 @@ function AccuracyBadge({ accuracy, localSighting }) {
   const lbl = { high: 'دقيق', medium: 'تقريبي', low: 'تقديري' }[accuracy] || '';
   return (
     <span className={`badge ${cls}`}>
-      {localSighting && <span title="قد يختلف بيوم">⚠ </span>}
+      {localSighting && (
+        <span title="قد يختلف بيوم" className="inline-flex" aria-hidden="true">
+          <AlertTriangle size={12} strokeWidth={1.75} />
+        </span>
+      )}
       {lbl}
     </span>
   );
@@ -96,13 +104,23 @@ export default async function HolidayPage({ params }) {
   } = data;
   const displayTitle = pageModel.meta.displayTitle || pageModel.hero.title || event.name;
   const pageClassName = featureFlags.holidaysSectionizedUi ? 'bg-base holidays-page-v2' : 'bg-base';
-  const eventSearchQueries = getHolidaySearchQueries({
-    event,
-    seo,
-    tokenContext,
-    currentYear,
-  });
-  const primarySearchQuery = eventSearchQueries[0] || `كم باقي على ${pageModel.hero.title || event.name}`;
+  const eventGuideSteps = [
+    {
+      label: 'الإجابة',
+      title: 'العدّاد والتاريخ أولاً',
+      description: `ابدأ من الوقت المتبقي على ${displayTitle} ثم راجع التاريخ الميلادي والهجري قبل أي ترتيب عملي.`,
+    },
+    {
+      label: 'الدقة',
+      title: 'افهم طريقة تحديد الموعد',
+      description: 'شارة الدقة والملاحظة المختصرة تخبرك هل الموعد ثابت، تقديري، أو قابل للاختلاف حسب الرؤية المحلية.',
+    },
+    {
+      label: 'الخطوة التالية',
+      title: 'اختر ما تحتاجه بعد الموعد',
+      description: 'بعد فهم التاريخ، انتقل إلى التحويل، مقارنة الدول، أو مناسبة قريبة بدلاً من التنقل في مسارات كثيرة بلا سبب.',
+    },
+  ];
 
   return (
     <div className={pageClassName} style={{ minHeight: '100dvh' }} dir="rtl">
@@ -139,9 +157,12 @@ export default async function HolidayPage({ params }) {
           </div>
 
           {/* Event name — big, clean, accent on the name itself */}
-          <h1 style={{ lineHeight: 'var(--leading-tight)', marginBottom: 'var(--space-2)' }}>
-            <span style={{ display: 'block', fontSize: 'var(--text-sm)', fontWeight: 'var(--font-medium)', color: 'var(--text-muted)', marginBottom: 'var(--space-1)', letterSpacing: 'var(--tracking-wide)' }}>
-              كم باقي على
+          <h1
+            aria-label={`كم باقي على ${displayTitle}`}
+            style={{ lineHeight: 'var(--leading-tight)', marginBottom: 'var(--space-2)' }}
+          >
+            <span style={{ display: 'block', fontSize: 'var(--text-sm)', fontWeight: 'var(--font-medium)', color: 'var(--text-muted)', marginBottom: 'var(--space-1)' }}>
+              كم باقي على{' '}
             </span>
             <span style={{ fontSize: 'clamp(1.75rem, 5vw, 2.75rem)', fontWeight: 'var(--font-extrabold)', color: 'var(--accent)' }}>
               {displayTitle}
@@ -190,13 +211,11 @@ export default async function HolidayPage({ params }) {
             targetISO={targetDate.toISOString()}
             initialRemaining={remaining}
             eventName={displayTitle}
-            eventDate={hijriStr ? `${gregStr} — ${hijriStr}` : gregStr}
+            eventDate={hijriStr ? `${gregStr}، ${hijriStr}` : gregStr}
             whatsappUrl={whatsappUrl}
             isDark
           />
         </section>
-
-        <AdTopBanner slotId="top-holiday-slug" />
 
         {/* ── DATE INFO ROW — below the counter, clean pill style ──────────── */}
         <div
@@ -217,13 +236,13 @@ export default async function HolidayPage({ params }) {
               padding: 'var(--space-2) var(--space-4)',
               background: 'var(--bg-surface-3)',
               border: '1px solid var(--border-default)',
-              borderRadius: '999px',
+              borderRadius: 'var(--radius-md)',
               fontSize: 'var(--text-sm)',
               fontWeight: 'var(--font-semibold)',
               color: 'var(--text-primary)',
             }}
           >
-            <span aria-hidden style={{ opacity: 0.6 }}>📅</span>
+            <CalendarDays size={14} strokeWidth={1.75} aria-hidden="true" />
             {gregStr}
           </time>
 
@@ -233,12 +252,12 @@ export default async function HolidayPage({ params }) {
               padding: 'var(--space-2) var(--space-4)',
               background: 'var(--accent-soft)',
               border: '1px solid var(--border-accent)',
-              borderRadius: '999px',
+              borderRadius: 'var(--radius-md)',
               fontSize: 'var(--text-sm)',
               fontWeight: 'var(--font-semibold)',
               color: 'var(--accent)',
             }}>
-              <span aria-hidden style={{ opacity: 0.7 }}>☽</span>
+              <Moon size={14} strokeWidth={1.75} aria-hidden="true" />
               {hijriStr}
             </span>
           )}
@@ -248,7 +267,7 @@ export default async function HolidayPage({ params }) {
             padding: 'var(--space-2) var(--space-4)',
             background: 'var(--bg-surface-3)',
             border: '1px solid var(--border-default)',
-            borderRadius: '999px',
+            borderRadius: 'var(--radius-md)',
             fontSize: 'var(--text-sm)',
             color: 'var(--text-secondary)',
           }}>
@@ -263,7 +282,7 @@ export default async function HolidayPage({ params }) {
               fontSize: 'var(--text-xs)',
               color: 'var(--text-muted)',
             }}>
-              {calInfo.localSighting && <span style={{ color: 'var(--warning)' }}>⚠</span>}
+              {calInfo.localSighting && <AlertTriangle size={12} strokeWidth={1.75} style={{ color: 'var(--warning)' }} aria-hidden="true" />}
               {calInfo.note}
             </span>
           )}
@@ -277,68 +296,35 @@ export default async function HolidayPage({ params }) {
           dateStr={gregStr}
         />
 
-        {eventSearchQueries.length > 0 && (
-          <section
-            style={{ marginTop: 'var(--space-8)', marginBottom: 'var(--space-8)' }}
-            aria-labelledby="event-search-intent-heading"
-          >
-            <div
-              className="card-nested"
-              style={{
-                padding: 'var(--space-5)',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 'var(--space-4)',
-              }}
-            >
-              <div>
-                <h2
-                  id="event-search-intent-heading"
-                  style={{
-                    fontSize: 'var(--text-lg)',
-                    fontWeight: 'var(--font-bold)',
-                    color: 'var(--text-primary)',
-                    marginBottom: 'var(--space-2)',
-                  }}
-                >
-                  أسئلة شائعة قبل {displayTitle}
-                </h2>
-                <p
-                  style={{
-                    fontSize: 'var(--text-sm)',
-                    color: 'var(--text-secondary)',
-                    lineHeight: 'var(--leading-relaxed)',
-                    margin: 0,
-                  }}
-                >
-                  إذا كنت تبحث عن <strong style={{ color: 'var(--text-primary)' }}>{primarySearchQuery}</strong>
-                  ، أو تريد معرفة الموعد والتاريخ والعد التنازلي وأسئلة العام القادم، فهذه الصفحة
-                  تجمع الجواب المختصر أولاً ثم التفاصيل والروابط المرتبطة في مكان واحد.
-                </p>
-              </div>
-
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
-                {eventSearchQueries.map((query) => (
-                  <span
-                    key={query}
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      padding: 'var(--space-2) var(--space-3)',
-                      borderRadius: '999px',
-                      background: 'var(--bg-surface-3)',
-                      border: '1px solid var(--border-subtle)',
-                      color: 'var(--text-secondary)',
-                      fontSize: 'var(--text-sm)',
-                    }}
-                  >
-                    {query}
-                  </span>
-                ))}
-              </div>
+        <section
+          className={styles.journeySection}
+          aria-labelledby="event-guide-heading"
+        >
+          <div className={styles.answerGuide}>
+            <div className={styles.sectionHead}>
+              <h2 id="event-guide-heading" className={styles.sectionTitle}>
+                كيف تستفيد من صفحة {displayTitle}؟
+              </h2>
+              <p className={styles.sectionLead}>
+                لا تحتاج قراءة الصفحة كلها دفعة واحدة. خذ الإجابة من العدّاد، افهم درجة دقة الموعد،
+                ثم اختر الخطوة التالية المناسبة لقرارك.
+              </p>
             </div>
-          </section>
-        )}
+            <div className={styles.answerSteps}>
+              {eventGuideSteps.map((step) => (
+                <article key={step.label} className={styles.answerStep}>
+                  <span className={styles.answerStepIcon}>{step.label}</span>
+                  <div>
+                    <h3 className={styles.compactTitle}>{step.title}</h3>
+                    <p className={styles.compactCopy}>{step.description}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <AdTopBanner slotId="top-holiday-slug" />
 
         {/* ── EVENT VIBE CARD — The "WOW" section ───────────────────────── */}
         <section style={{ marginBottom: 'var(--space-8)' }} aria-label={`نظرة على ${displayTitle}`}>
@@ -351,6 +337,7 @@ export default async function HolidayPage({ params }) {
             eventType={event.type}
           />
         </section>
+        <AdInArticle slotId={`mid-holiday-${slug}-1`} />
         <HolidayDetailsSections
           slug={slug}
           event={event}

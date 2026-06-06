@@ -98,7 +98,7 @@ export default function NetWorthCalculator() {
             <CardHeader>
               <CardTitle className="calc-card-title">ملخص الوضع المالي</CardTitle>
             </CardHeader>
-            <CardContent className="calc-metric-grid">
+            <CardContent className="calc-metric-grid" aria-live="polite">
               <div className="calc-metric-card">
                 <div className="calc-metric-card__label"><Landmark size={16} /> صافي الثروة</div>
                 <div className="calc-metric-card__value">{formatMoney(result.netWorth)}</div>

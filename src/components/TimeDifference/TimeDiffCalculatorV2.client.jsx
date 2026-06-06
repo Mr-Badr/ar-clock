@@ -17,6 +17,9 @@ import {
   Sun,
   Moon,
   Check,
+  CheckCircle2,
+  AlertTriangle,
+  Globe2,
   MapPin,
   ChevronUp,
   ChevronDown,
@@ -45,12 +48,17 @@ function fmtTime(totalMins) {
   return `${h12}:${String(m).padStart(2, '0')} ${period}`;
 }
 
-export default function TimeDiffCalculator({ initialFrom = null, initialTo = null, initialDiffData = null }) {
+export default function TimeDiffCalculator(props) {
+  const initialFrom = props.initialFrom ?? null;
+  const initialTo = props.initialTo ?? null;
+  const initialDiffData = props.initialDiffData ?? null;
   const router = useRouter();
   const [fromCity, setFromCity] = useState(initialFrom);
   const [toCity, setToCity] = useState(initialTo);
   const [diffData, setDiffData] = useState(initialDiffData);
   const [loading, setLoading] = useState(false);
+  const [loadError, setLoadError] = useState(null);
+  const [requestVersion, setRequestVersion] = useState(0);
   const [bizStart, setBizStart] = useState(9);
   const [bizEnd, setBizEnd] = useState(17);
   const { copied, copy } = useCopyFeedback();
@@ -74,13 +82,33 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
 
     async function loadDiff() {
       setLoading(true);
+      setLoadError(null);
       try {
         const data = await getTimeDiffAction(fromCity.timezone, toCity.timezone);
         if (!cancelled && data) {
           setDiffData(data);
+          setLoadError(null);
         }
       } catch (e) {
-        console.error(e);
+        const serializedError = e instanceof Error
+          ? { name: e.name, message: e.message }
+          : { message: String(e) };
+
+        console.error('time-difference-load-failed', {
+          fromTimezone: fromCity.timezone,
+          toTimezone: toCity.timezone,
+          fromCitySlug: fromCity.city_slug,
+          toCitySlug: toCity.city_slug,
+          error: serializedError,
+        });
+
+        if (!cancelled) {
+          setDiffData(null);
+          setLoadError({
+            title: 'تعذر تحميل فرق التوقيت الآن',
+            detail: 'حدثت مشكلة أثناء جلب المقارنة بين المدينتين. حاول التحديث مرة أخرى خلال لحظات.',
+          });
+        }
       } finally {
         if (!cancelled) {
           setLoading(false);
@@ -93,7 +121,7 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
     return () => {
       cancelled = true;
     };
-  }, [fromCity, toCity, diffData]);
+  }, [fromCity, toCity, diffData, requestVersion]);
 
   const url = (f, t) =>
     `/time-difference/${f.country_slug}-${f.city_slug}/${t.country_slug}-${t.city_slug}`;
@@ -144,6 +172,37 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
     );
   }
 
+  if (loadError && !diffData) {
+    return (
+      <div className="card" role="alert" style={{ borderColor: 'var(--warning-border)', background: 'var(--warning-soft)' }}>
+        <div style={{ display: 'grid', gap: '0.85rem' }}>
+          <div>
+            <strong style={{ display: 'block', color: 'var(--text-primary)', marginBottom: '0.35rem' }}>
+              {loadError.title}
+            </strong>
+            <p style={{ margin: 0, color: 'var(--text-secondary)', lineHeight: 1.8 }}>
+              {loadError.detail}
+            </p>
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+            <button
+              type="button"
+              className="btn btn-primary--flat"
+              onClick={() => setRequestVersion((value) => value + 1)}
+            >
+              أعد المحاولة
+            </button>
+            <span style={{ color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>
+              {fromCity?.city_name_ar && toCity?.city_name_ar
+                ? `المقارنة الحالية: ${fromCity.city_name_ar} ↔ ${toCity.city_name_ar}`
+                : 'اختر المدينتين ثم أعد المحاولة.'}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4">
 
@@ -172,7 +231,7 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
               onClick={handleSwap}
               disabled={!fromCity || !toCity}
               aria-label="تبديل المدينتين"
-              className="flex justify-center items-center w-10 h-10 shrink-0 rounded-full border border-[var(--border-strong)] bg-[var(--bg-surface-3)] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--bg-surface-4)] hover:border-[var(--border-accent)] transition-all shadow-sm"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-[var(--border-strong)] bg-[var(--bg-surface-3)] transition-colors hover:border-[var(--border-accent)] hover:bg-[var(--bg-surface-4)] disabled:cursor-not-allowed disabled:opacity-40"
             >
               <ArrowUpDown size={18} className="text-accent-alt opacity-90" />
             </button>
@@ -203,19 +262,19 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
 
             <div style={{
               background: 'var(--bg-surface-2)',
-              borderRadius: 'var(--radius-xl)',
-              boxShadow: 'var(--shadow-card)',
-              transition: 'background-color var(--transition-theme), border-color var(--transition-theme), box-shadow var(--transition-base), transform var(--transition-base)',
+              borderRadius: 'var(--radius-lg)',
+              border: '1px solid var(--border-default)',
+              transition: 'background-color var(--transition-theme), border-color var(--transition-theme)',
               overflow: 'hidden',
             }}>
               {/* Diff header */}
               <div
                 className="px-4 py-3 flex items-center justify-between"
-                style={{ background: 'var(--accent-gradient)' }}
+                style={{ background: 'var(--blue)' }}
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-white text-xs font-semibold opacity-80">فارق التوقيت</span>
-                  <div dir="ltr" className="text-white font-black tabular-nums">
+                  <span className="text-xs font-semibold text-[var(--text-on-accent)] opacity-80">فارق التوقيت</span>
+                  <div dir="ltr" className="font-black tabular-nums text-[var(--text-on-accent)]">
                     {diffData.totalMinutes === 0 ? (
                       <span className="text-base">متطابق</span>
                     ) : (
@@ -232,7 +291,7 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                   <SmartBadge totalMinutes={diffData.totalMinutes} />
                   <button
                     onClick={handleShare}
-                    className="btn btn-xs rounded-full bg-white/20 text-white border-white/30 hover:bg-white/30 font-semibold gap-1"
+                    className="btn btn-xs gap-1 rounded-[var(--radius-md)] border border-[var(--border-default)] bg-[var(--bg-surface-1)] font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-surface-2)]"
                     aria-label={copied ? 'تم النسخ' : 'مشاركة'}
                   >
                     {copied ? <><Check size={12} /> تم النسخ</> : <><Share2 size={12} /> مشاركة</>}
@@ -315,11 +374,12 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
               {biz && (
                 biz.hasOverlap ? (
                   <div
-                    className="rounded-xl p-3 text-center"
+                    className="rounded-[var(--radius-lg)] p-3 text-center"
                     style={{ background: 'var(--success-soft)', border: '1px solid var(--success-border)' }}
                   >
-                    <p className="text-xs text-success font-semibold mb-2">
-                      ✅ <strong className="tabular-nums">{biz.ovHours}</strong> ساعة مشتركة — مثالي للاجتماعات
+                    <p className="text-xs text-success font-semibold mb-2 flex items-center justify-center gap-1.5">
+                      <CheckCircle2 size={13} aria-hidden="true" />
+                      <span><strong className="tabular-nums">{biz.ovHours}</strong> ساعة مشتركة، مناسبة للاجتماعات</span>
                     </p>
                     <div className="grid grid-cols-2 gap-3">
                       <div>
@@ -338,10 +398,13 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                   </div>
                 ) : (
                   <div
-                    className="rounded-xl p-3 text-center"
+                    className="rounded-[var(--radius-lg)] p-3 text-center"
                     style={{ background: 'var(--danger-soft)', border: '1px solid var(--danger-border)' }}
                   >
-                    <p className="text-sm font-semibold text-danger">⚠️ لا يوجد وقت عمل مشترك</p>
+                    <p className="text-sm font-semibold text-danger flex items-center justify-center gap-1.5">
+                      <AlertTriangle size={14} aria-hidden="true" />
+                      <span>لا يوجد وقت عمل مشترك</span>
+                    </p>
                     <p className="text-xs text-secondary mt-1">عدّل وقت الدوام أدناه لإيجاد توقيت مناسب.</p>
                   </div>
                 )
@@ -369,7 +432,14 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                 ].map(ctrl => (
                   <div key={ctrl.label} className="input-group">
                     <span className="input-label">{ctrl.label}</span>
-                    <div className="card-nested flex items-center justify-between px-2 py-2">
+                    <div
+                      className="flex items-center justify-between px-2 py-2"
+                      style={{
+                        border: '1px solid var(--border-subtle)',
+                        borderRadius: 'var(--radius-md)',
+                        background: 'var(--bg-surface-2)',
+                      }}
+                    >
                       <button
                         onClick={ctrl.onDec}
                         aria-label={ctrl.decLabel}
@@ -415,7 +485,7 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                           <div
                             key={h}
                             title={`${h}:00`}
-                            className="flex-1 border-r border-[var(--border-subtle)] last:border-r-0"
+                            className="flex-1 border-e border-[var(--border-subtle)] last:border-e-0"
                             style={{
                               backgroundColor: isOv
                                 ? 'var(--success-soft)'
@@ -449,7 +519,7 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
                           <div
                             key={h}
                             title={`${h}:00`}
-                            className="flex-1 border-r border-[var(--border-subtle)] last:border-r-0"
+                            className="flex-1 border-e border-[var(--border-subtle)] last:border-e-0"
                             style={{
                               backgroundColor: isOv
                                 ? 'var(--success-soft)'
@@ -504,7 +574,9 @@ export default function TimeDiffCalculator({ initialFrom = null, initialTo = nul
       {/* ── Empty State ─────────────────────────────────────────── */}
       {!loading && !diffData && (
         <div className="empty-state">
-          <span className="empty-state__icon">🌍</span>
+          <span className="empty-state__icon" aria-hidden="true">
+            <Globe2 size={24} />
+          </span>
           <p className="empty-state__title">اختر مدينتين للمقارنة</p>
           <p className="empty-state__description">
             ابحث عن أي مدينتين لمعرفة فرق التوقيت الدقيق وأفضل وقت للاجتماعات.

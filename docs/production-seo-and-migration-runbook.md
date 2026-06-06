@@ -70,7 +70,6 @@ Recommended long-term submission:
 Temporary diagnostic submissions only if needed:
 - `https://miqatona.com/sitemap.xml`
 - `https://miqatona.com/calculators/sitemap.xml`
-- `https://miqatona.com/economie/sitemap.xml`
 - `https://miqatona.com/holidays/sitemap.xml`
 - `https://miqatona.com/time-difference/sitemap.xml`
 - `https://miqatona.com/time-now/sitemap.xml`

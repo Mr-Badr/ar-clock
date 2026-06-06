@@ -2,12 +2,17 @@
   "slug": "eid-al-fitr",
   "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:36.995Z"
+  "notes": [
+    "fact-source: تقويم أم القرى",
+    "fact-source: دائرة الشؤون الإسلامية والعمل الخيري بدبي",
+    "fact-source: صحيح البخاري: فرض زكاة الفطر",
+    "fact-source: الإسلام سؤال وجواب"
+  ],
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

@@ -1,0 +1,251 @@
+{
+  "slug": "best-nap-length",
+  "route": "/blog/best-nap-length",
+  "capturedAt": "2026-05-26",
+  "method": "SERP-guided scrape with web search discovery, Node fetch and cheerio readable-content extraction, competitor replacement notes, matrix analysis, then original Arabic-first rewrite.",
+  "brief": {
+    "topic": "أفضل مدة للقيلولة للبالغين",
+    "pageType": "blog article",
+    "targetCountry": "عموم العالم العربي مع أمثلة يومية للعمل والدراسة والمناوبات",
+    "searchIntent": "informational with practical sleep-planning intent",
+    "primaryKeyword": "أفضل مدة للقيلولة",
+    "secondaryKeywords": [
+      "قيلولة 20 دقيقة",
+      "قيلولة 90 دقيقة",
+      "مدة القيلولة الصحية",
+      "أفضل وقت للقيلولة",
+      "خمول بعد القيلولة",
+      "قيلولة الطاقة",
+      "هل القيلولة مفيدة"
+    ],
+    "targetWordCount": "1500-2300 words after rendered model expansion",
+    "cta": "استخدام حاسبة القيلولة ثم مراجعة مدة النوم الفعلية إذا كانت القيلولة ضرورة يومية",
+    "relatedTools": [
+      "/calculators/sleep/nap-calculator",
+      "/calculators/sleep/sleep-duration",
+      "/blog/sleep-hygiene-basics",
+      "/blog/sleep-debt-explained"
+    ]
+  },
+  "selectedArabicCompetitors": [
+    {
+      "url": "https://www.mayoclinic.org/ar/healthy-lifestyle/adult-health/in-depth/napping/art-20048319",
+      "title": "القيلولة: محاذير ونصائح للبالغين الأصحاء - مايو كلينك",
+      "h1": "القيلولة: محاذير ونصائح للبالغين الأصحاء",
+      "wordCount": 634,
+      "confidence": "high",
+      "strengths": [
+        "مصدر عربي طبي موثوق يشرح فوائد القيلولة وعيوبها.",
+        "يقدم نصائح واضحة: قيلولة 20 إلى 30 دقيقة، وقت مبكر بعد الظهر، ومكان هادئ.",
+        "ينبه إلى خمول النوم وصعوبة النوم ليلاً والحاجة المفاجئة للقيلولة."
+      ],
+      "weaknesses": [
+        "لا يبني جدول قرار بين 20 و30 و45 و90 دقيقة.",
+        "لا يشرح للقارئ العربي كيف يضبط المنبه ويضيف وقت الغفو.",
+        "لا يربط الموضوع بأداة عملية أو مسار داخلي لمراجعة دين النوم."
+      ]
+    },
+    {
+      "url": "https://www.webteb.com/articles/%D9%82%D9%8A%D9%84%D9%88%D9%84%D8%A9-%D8%A7%D9%84%D8%B8%D9%87%D9%8A%D8%B1%D8%A9-%D9%85%D9%81%D9%8A%D8%AF%D8%A9-%D9%84%D9%83%D9%86-%D8%A8%D8%B4%D8%B1%D9%88%D8%B7_18394",
+      "title": "قيلولة الظهر: مفيدة لكن بشروط - ويب طب",
+      "h1": "",
+      "wordCount": 680,
+      "confidence": "medium",
+      "strengths": [
+        "يغطي شروط القيلولة الصحية: الوقت، المدة، والمكان.",
+        "يذكر نطاق 10 إلى 30 دقيقة ويشرح فوائد وأضرار القيلولة.",
+        "يتناول القصور الذاتي الناتج عن النوم واضطرابات النوم ليلاً."
+      ],
+      "weaknesses": [
+        "H1 لم يستخرج بوضوح من الصفحة.",
+        "يوجد جزء افتتاحي وإعلاني قبل المحتوى الفعلي.",
+        "لا يوضح متى تكون 90 دقيقة خياراً صحيحاً ولا يقدم مثال قرار عملي."
+      ]
+    },
+    {
+      "url": "https://aawsat.com/%D8%B5%D8%AD%D8%AA%D9%83/5211354-%D9%84%D8%A5%D8%B9%D8%A7%D8%AF%D8%A9-%D8%B4%D8%AD%D9%86-%D8%A7%D9%84%D8%B9%D9%82%D9%84-%D9%88%D8%A7%D9%84%D8%AC%D8%B3%D9%85-%D9%83%D9%8A%D9%81-%D8%AA%D9%83%D9%88%D9%86-%D8%A7%D9%84%D9%82%D9%8A%D9%84%D9%88%D9%84%D8%A9-%D8%A7%D9%84%D9%85%D8%AB%D8%A7%D9%84%D9%8A%D8%A9%D8%9F",
+      "title": "لإعادة شحن العقل والجسم... كيف تكون القيلولة المثالية؟",
+      "h1": "لإعادة شحن العقل والجسم... كيف تكون القيلولة المثالية؟",
+      "wordCount": 2401,
+      "confidence": "medium",
+      "strengths": [
+        "يغطي تعريف القيلولة القصيرة وفوائدها ونصائحها وسلبياتها.",
+        "يعالج متى تتجنب القيلولة ومتى تراجع الطبيب.",
+        "يمتلك بنية عناوين قريبة من نية المستخدم."
+      ],
+      "weaknesses": [
+        "الاستخراج يحتوي على ضجيج أخبار وروابط جانبية كثيرة.",
+        "النبرة خبرية عامة وليست مسار قرار مركز.",
+        "لا يعطي تجربة عربية تفاعلية أو ربطاً بحاسبة توقيت القيلولة."
+      ]
+    }
+  ],
+  "selectedEnglishCompetitors": [
+    {
+      "url": "https://www.cdc.gov/niosh/work-hour-training-for-nurses/longhours/mod7/05.html",
+      "title": "Module 7. Napping, an Important Fatigue Countermeasure, Nap Duration | NIOSH | CDC",
+      "h1": "NIOSH Training for Nurses on Shift Work and Long Work Hours",
+      "wordCount": 407,
+      "confidence": "high",
+      "strengths": [
+        "مصدر رسمي يشرح 15 إلى 30 دقيقة و20 أو 90 دقيقة بوضوح.",
+        "يفسر sleep inertia وعلاقة النوم العميق بالخمول.",
+        "مفيد للمناوبات وسياقات التعب العملي."
+      ],
+      "weaknesses": [
+        "موجه للممرضين والمناوبات وليس للقارئ العام مباشرة.",
+        "قصير وموجود داخل تدريب طويل.",
+        "لا يحتوي على صياغة عربية أو أمثلة من الحياة اليومية العربية."
+      ]
+    },
+    {
+      "url": "https://www.sleepfoundation.org/napping",
+      "title": "Napping: Benefits and Tips",
+      "h1": "",
+      "wordCount": 3520,
+      "confidence": "high",
+      "strengths": [
+        "تغطية واسعة للفوائد والعيوب والتوقيت والمكان والمنبه والأسئلة الشائعة.",
+        "يعطي خلاصة واضحة بأن 20 إلى 30 دقيقة مناسبة للبالغين.",
+        "يذكر قيلولة 90 دقيقة كخيار في حالات معينة."
+      ],
+      "weaknesses": [
+        "طويل جداً ومليء بروابط ومراجع تجعل القراءة أثقل.",
+        "جزء من تجربة تجارية أوسع حول منتجات النوم.",
+        "لا يركز على قرار عربي مباشر داخل أول 100 كلمة."
+      ]
+    },
+    {
+      "url": "https://health.clevelandclinic.org/are-long-naps-bad-for-you-and-if-so-why",
+      "title": "How Long Should a Nap Be?",
+      "h1": "What’s the Ideal Length for a Nap?",
+      "wordCount": 1214,
+      "confidence": "high",
+      "strengths": [
+        "يفتتح بإجابة قوية: 15 إلى 20 دقيقة.",
+        "يفرق بين power nap وrecovery nap وextended nap.",
+        "يشرح أثر القيلولة الطويلة والمتأخرة على sleep inertia والإيقاع اليومي."
+      ],
+      "weaknesses": [
+        "موجه للسوق الإنجليزي ولا يربط بحاسبة أو أدوات عربية.",
+        "لا يشرح بشكل كاف كيف تضيف وقت الغفو إلى المنبه.",
+        "لا يغطي أسئلة القارئ العربي حول بعد الظهر، الدراسة، والدوام اليومي."
+      ]
+    }
+  ],
+  "officialSources": [
+    {
+      "url": "https://www.cdc.gov/niosh/work-hour-training-for-nurses/longhours/mod7/05.html",
+      "title": "CDC/NIOSH Nap Duration",
+      "note": "يوضح أن القيلولة القصيرة 15 إلى 30 دقيقة قد ترفع اليقظة، وأن 20 أو 90 دقيقة قد تقلل خمول الاستيقاظ مقارنة بالاستيقاظ من النوم العميق."
+    },
+    {
+      "url": "https://www.mayoclinic.org/ar/healthy-lifestyle/adult-health/in-depth/napping/art-20048319",
+      "title": "Mayo Clinic Arabic: القيلولة للبالغين الأصحاء",
+      "note": "مصدر عربي طبي يوصي بقيلولة 20 إلى 30 دقيقة، وبوقت مبكر بعد الظهر، ويشرح خمول النوم وتأثير القيلولة الطويلة أو المتكررة."
+    },
+    {
+      "url": "https://www.nhlbi.nih.gov/health/sleep-deprivation/healthy-sleep-habits",
+      "title": "NHLBI Healthy Sleep Habits",
+      "note": "يدعم ربط القيلولة بعادات النوم العامة وتنظيم الكافيين والجدول."
+    }
+  ],
+  "replacements": [
+    {
+      "rejectedUrl": "https://www.annajah.net/%D9%85%D8%A7-%D9%87%D9%8A-%D9%81%D9%88%D8%A7%D8%A6%D8%AF-%D8%A7%D9%84%D9%82%D9%8A%D9%84%D9%88%D9%84%D8%A9-article-32424",
+      "replacementUrl": "https://www.webteb.com/articles/%D9%82%D9%8A%D9%84%D9%88%D9%84%D8%A9-%D8%A7%D9%84%D8%B8%D9%87%D9%8A%D8%B1%D8%A9-%D9%85%D9%81%D9%8A%D8%AF%D8%A9-%D9%84%D9%83%D9%86-%D8%A8%D8%B4%D8%B1%D9%88%D8%B7_18394",
+      "reason": "Annajah فشل في fetch أثناء الاستخراج، فاستُبدل بويب طب لأنه قابل للسحب ويغطي المدة والتوقيت وخمول النوم."
+    },
+    {
+      "rejectedUrl": "https://altibbi.com/%D8%A7%D8%AE%D8%A8%D8%A7%D8%B1-%D8%B7%D8%A8%D9%8A%D8%A9/%D8%A7%D9%84%D8%A7%D9%85%D8%B1%D8%A7%D8%B6-%D8%A7%D9%84%D8%B9%D8%B5%D8%A8%D9%8A%D8%A9/%D8%A7%D9%84%D9%82%D9%8A%D9%84%D9%88%D9%84%D8%A9-%D9%88%D8%AE%D8%B7%D8%B1-%D8%A7%D9%84%D8%A7%D8%B5%D8%A7%D8%A8%D8%A9-%D8%A8%D8%A7%D9%84%D8%AE%D8%B1%D9%81-%D9%85%D8%A7-%D8%A7%D9%84%D8%B9%D9%84%D8%A7%D9%82%D8%A9-8966",
+      "replacementUrl": "https://aawsat.com/%D8%B5%D8%AD%D8%AA%D9%83/5211354-%D9%84%D8%A5%D8%B9%D8%A7%D8%AF%D8%A9-%D8%B4%D8%AD%D9%86-%D8%A7%D9%84%D8%B9%D9%82%D9%84-%D9%88%D8%A7%D9%84%D8%AC%D8%B3%D9%85-%D9%83%D9%8A%D9%81-%D8%AA%D9%83%D9%88%D9%86-%D8%A7%D9%84%D9%82%D9%8A%D9%84%D9%88%D9%84%D8%A9-%D8%A7%D9%84%D9%85%D8%AB%D8%A7%D9%84%D9%8A%D8%A9%D8%9F",
+      "reason": "الطبي كان أقرب إلى خبر عن الخرف لا نية أفضل مدة للقيلولة. الشرق الأوسط يطابق نية القيلولة المثالية رغم وجود ضجيج جانبي في الاستخراج."
+    },
+    {
+      "rejectedUrl": "https://www.medicalnewstoday.com/articles/326803",
+      "replacementUrl": "https://health.clevelandclinic.org/are-long-naps-bad-for-you-and-if-so-why",
+      "reason": "Medical News Today مباشر ومفيد، لكن Cleveland Clinic أحدث وأوضح في تقسيم 15-20 و20-60 و60+ وتأثير القيلولة الطويلة."
+    }
+  ],
+  "competitorMatrix": {
+    "commonStrengths": [
+      "إجابة مبكرة حول القيلولة القصيرة 10 أو 15 أو 20 إلى 30 دقيقة.",
+      "تحذير متكرر من القيلولة الطويلة أو المتأخرة.",
+      "شرح فوائد القيلولة مثل اليقظة وتقليل التعب وتحسين المزاج.",
+      "ذكر خمول النوم أو sleep inertia كسبب للتعب بعد الاستيقاظ.",
+      "اقتراح مكان هادئ ومظلم وضبط المنبه."
+    ],
+    "commonWeaknesses": [
+      "قلة الصفحات العربية التي تبني قراراً واضحاً بين 20 و90 دقيقة.",
+      "ضعف شرح المنطقة المربكة 30 إلى 45 دقيقة للقارئ غير المتخصص.",
+      "قلة الربط بين القيلولة المتكررة ودين النوم أو صافي النوم الليلي.",
+      "ضعف تجربة التطبيق: لا توجد حاسبة أو خطوة عملية تضبط وقت الاستيقاظ.",
+      "بعض المنافسين يخلطون المحتوى بضجيج إعلانات أو أخبار جانبية."
+    ],
+    "keywordGaps": [
+      "قيلولة 20 دقيقة أم 90 دقيقة",
+      "لماذا أستيقظ متعباً بعد القيلولة",
+      "كيف أضبط منبه القيلولة",
+      "هل قيلولة 45 دقيقة جيدة",
+      "القيلولة ودين النوم",
+      "أفضل مدة للقيلولة للطلاب",
+      "أفضل مدة للقيلولة للدوام"
+    ],
+    "unansweredQuestions": [
+      "هل أضيف وقت الغفو إلى مدة المنبه؟",
+      "ماذا أفعل إذا كانت 30 دقيقة تجعلني أكثر تعباً؟",
+      "متى أختار 90 دقيقة ولا أكتفي بـ20 دقيقة؟",
+      "كيف أعرف أن القيلولة تخفي نقص نوم ليلي؟",
+      "هل قيلولة القهوة مناسبة للجميع؟",
+      "كيف أستخدم أداة لحساب وقت الاستيقاظ من القيلولة؟"
+    ],
+    "uniqueOpportunitiesForMiqatona": [
+      "إجابة عربية مباشرة في أول 100 كلمة: 10-20 دقيقة غالباً و90 دقيقة عند الحاجة لدورة كاملة.",
+      "جدول قرار يشرح 10-20 و30-45 و90 دقيقة مع الحالة المناسبة والتحذير العملي.",
+      "ربط مفهوم خمول النوم بمنبه القيلولة بطريقة فeynman-style بسيطة.",
+      "خطوات عملية تضيف وقت الغفو وتمنع زر الغفوة وتراقب أثر القيلولة على الليل.",
+      "روابط داخلية إلى حاسبة القيلولة ومدة النوم الفعلية ودين النوم.",
+      "مصادر رسمية ومراجع صحية في نهاية الصفحة."
+    ]
+  },
+  "rewriteActions": {
+    "deletedOrReplaced": [
+      "استبدال المقال القصير الذي كان يشرح 20 و90 فقط بمسار كامل يبدأ بتعريف القيلولة وهدفها.",
+      "استبدال الأقسام العامة بقرار عملي حول 10-20 و30-45 و90 دقيقة.",
+      "توسيع FAQ من 3 أسئلة عامة إلى 7 أسئلة تغطي القيلولة اليومية، after-nap grogginess، قيلولة القهوة، الأطفال، والحاسبة."
+    ],
+    "added": [
+      "تعريف مبكر للقيلولة كأداة قصيرة لهدف محدد.",
+      "خطوات عملية لضبط المنبه وإضافة وقت الغفو واختيار توقيت مبكر.",
+      "جدول مقارنة مرئي للمدة والهدف والتحذير.",
+      "روابط داخلية إلى حاسبة القيلولة ومدة النوم الفعلية.",
+      "مصدر CDC/NIOSH جديد داخل قاموس مصادر النوم."
+    ],
+    "seoMetadata": [
+      "تحديث metaTitle حول 20 دقيقة أم 90 دقيقة.",
+      "تحديث description لتغطي 10-20 دقيقة، 90 دقيقة، وخمول الاستيقاظ.",
+      "إضافة intent keywords مثل مدة القيلولة الصحية، خمول بعد القيلولة، أفضل وقت للقيلولة، وقيلولة الطاقة."
+    ]
+  },
+  "validation": {
+    "status": "passed-with-no-build-or-dev-per-user-instruction",
+    "commands": [
+      {
+        "command": "node --import tsx guide model validation",
+        "result": "passed: found guide, description length 126, 10 keywords, 8 intent keywords, 4 quick answers, 7 sections, 5 steps, 7 FAQ items, 4 source links, 2 related page links, 3 comparison rows, 2013 counted model words, no degraded content sections"
+      },
+      {
+        "command": "npx eslint src/lib/sleep/content.js src/data/blog/research/best-nap-length.json",
+        "result": "passed for JS file; JSON research file ignored by ESLint config with a warning"
+      },
+      {
+        "command": "npm run typecheck",
+        "result": "passed"
+      },
+      {
+        "command": "build/dev/rendered browser check",
+        "result": "not run per user instruction: do not run build or dev"
+      }
+    ]
+  }
+}

@@ -1,117 +1,244 @@
 {
   "slug": "spring-season",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.171Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
     "متى يبدأ الربيع {{year}}",
-    "كم باقي على الربيع",
-    "الاعتدال الربيعي",
-    "هل الربيع يبدأ 20 أم 21 مارس",
-    "تساوي الليل والنهار",
     "بداية فصل الربيع {{year}}",
-    "كم باقي على بداية فصل الربيع {{year}}",
-    "موعد بداية فصل الربيع {{year}}",
-    "تاريخ بداية فصل الربيع {{year}}",
-    "متى بداية فصل الربيع {{nextYear}}",
-    "بداية فصل الربيع العد التنازلي",
-    "بداية فصل الربيع متى"
+    "كم باقي على الربيع",
+    "الاعتدال الربيعي {{year}}",
+    "هل الربيع يبدأ 20 أم 21 مارس",
+    "الربيع المناخي يبدأ متى",
+    "ما الفرق بين الربيع الفلكي والربيع المناخي",
+    "هل يتساوى الليل والنهار في الاعتدال الربيعي",
+    "متى يبدأ فصل الربيع فلكيا",
+    "تاريخ بداية الربيع {{year}}",
+    "موعد بداية الربيع {{year}}",
+    "كم باقي على بداية فصل الربيع {{year}}"
   ],
   "competitors": [
     {
+      "site": "mawdoo3.com",
+      "language": "ar",
+      "type": "article",
+      "url": "https://mawdoo3.com/%D9%85%D8%AA%D9%89_%D9%8A%D8%A8%D8%AF%D8%A3_%D9%81%D8%B5%D9%84_%D8%A7%D9%84%D8%B1%D8%A8%D9%8A%D8%B9",
+      "status": "used",
+      "reason": "Direct Arabic intent match. Useful because it mentions both the astronomical and meteorological definitions in one page, but the explanation remains short and does not fully resolve the 20 vs 21 March question."
+    },
+    {
+      "site": "aljazeera.net",
+      "language": "ar",
+      "type": "science-article",
+      "url": "https://www.aljazeera.net/amp/science/2026/3/17/195-%D8%AF%D9%88%D9%84%D8%A9-%D8%AA%D8%AD%D8%AA-%D8%B3%D9%85%D8%A7%D8%A1-%D9%88%D8%A7%D8%AD%D8%AF%D8%A9-%D9%83%D9%8A%D9%81-%D9%8A%D9%88%D8%AD%D8%AF-%D8%B9%D9%84%D9%85-%D8%A7%D9%84%D9%81%D9%84%D9%83",
+      "status": "used",
+      "reason": "Useful Arabic comparison for the cultural and educational framing around the spring equinox in 2026, but it is not a direct countdown or practical date-answer page."
+    },
+    {
+      "site": "dostor.org",
+      "language": "ar",
+      "type": "news-explainer",
+      "url": "https://www.dostor.org/5505363",
+      "status": "used",
+      "reason": "Useful because it states the difference between astronomical spring and meteorological spring in Arabic, but it is a short seasonal news page and weaker than evergreen explanatory content."
+    },
+    {
       "site": "timeanddate.com",
+      "language": "en",
       "type": "reference",
-      "url": "https://www.timeanddate.com/calendar/seasons.html",
-      "focus": [
-        "التاريخ الرسمي لـ بداية فصل الربيع",
-        "سياق بداية فصل الربيع"
+      "url": "https://www.timeanddate.com/calendar/march-equinox.html",
+      "status": "used",
+      "reason": "Strongest factual source for the exact 2026 equinox timing, the local-time variation, and the clarification that equinox does not mean exactly 12 hours of day and night everywhere."
+    },
+    {
+      "site": "metoffice.gov.uk",
+      "language": "en",
+      "type": "reference",
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/seasons/spring/index",
+      "status": "used",
+      "reason": "Useful for the distinction between astronomical spring and meteorological spring, and for clearer weather-oriented terminology."
+    },
+    {
+      "site": "science.nasa.gov",
+      "language": "en",
+      "type": "reference",
+      "url": "https://science.nasa.gov/solar-system/skywatching/night-sky-network/embracing-the-equinox/",
+      "status": "used",
+      "reason": "Useful for the explanatory angle around equinoxes, why they happen, and how to frame the event for non-specialist readers."
+    }
+  ],
+  "replacedCompetitors": [
+    {
+      "site": "britannica.com",
+      "language": "en",
+      "status": "replaced",
+      "reason": "Accurate but less practical for the exact user query than Timeanddate plus NASA and Met Office."
+    },
+    {
+      "site": "twinkl.com",
+      "language": "en",
+      "status": "replaced",
+      "reason": "Useful as a teaching explainer, but weaker than the chosen factual and meteorological sources for an evergreen SEO page."
+    },
+    {
+      "site": "tuniscope.com",
+      "language": "ar",
+      "status": "replaced",
+      "reason": "Country-specific and based on an agricultural calendar framing, so it does not cleanly match the broad Arabic search intent for the spring equinox."
+    }
+  ],
+  "competitorFindings": [
+    {
+      "site": "mawdoo3.com",
+      "title": "متى يبدأ فصل الربيع",
+      "contentSignals": [
+        "Direct title match for the primary Arabic query",
+        "Mentions that meteorological spring begins on 1 March",
+        "Gives basic seasonal characteristics"
       ],
-      "gaps": [
-        "غالباً لا تقدم صفحة عربية تجمع الموعد والشرح والعد التنازلي في مكان واحد."
+      "weaknesses": [
+        "Does not deeply explain why some sources say 20 March and others 21 March",
+        "Does not clarify that equal day and night is approximate rather than exact in every city",
+        "Less useful for countdown intent"
       ]
     },
     {
-      "site": "britannica.com",
-      "type": "reference",
-      "url": "https://www.britannica.com/science/vernal-equinox",
-      "focus": [
-        "التاريخ الرسمي لـ بداية فصل الربيع",
-        "سياق بداية فصل الربيع"
+      "site": "aljazeera.net",
+      "title": "195 دولة تحت سماء واحدة.. كيف يوحد علم الفلك العالم؟",
+      "contentSignals": [
+        "2026 Arabic science context around the spring equinox",
+        "Educational framing for equal day and night",
+        "Useful cultural/science bridge for Arabic readers"
       ],
-      "gaps": [
-        "غالباً لا تقدم صفحة عربية تجمع الموعد والشرح والعد التنازلي في مكان واحد."
+      "weaknesses": [
+        "Not built around the direct query of when spring starts",
+        "More feature-like than practical",
+        "Does not answer countdown intent"
+      ]
+    },
+    {
+      "site": "dostor.org",
+      "title": "موعد انتهاء فصل الربيع 2026.. متى يبدأ فصل الصيف رسميًا؟",
+      "contentSignals": [
+        "Short Arabic explanation that distinguishes astronomical spring from meteorological spring",
+        "Seasonal freshness"
+      ],
+      "weaknesses": [
+        "Built around summer-start intent, not spring-start intent",
+        "Newsy and short-lived",
+        "Weak evergreen structure"
+      ]
+    },
+    {
+      "site": "timeanddate.com",
+      "title": "March Equinox 2026",
+      "contentSignals": [
+        "Exact 2026 timing: 20 March 2026 at 14:46 UTC",
+        "Explains date variation across years and locations",
+        "Clarifies that equinox does not create exactly 12 hours of daylight and darkness everywhere"
+      ],
+      "weaknesses": [
+        "English-only",
+        "Technical and broad rather than tailored to Arabic search phrasing"
+      ]
+    },
+    {
+      "site": "metoffice.gov.uk",
+      "title": "Spring: a season of change",
+      "contentSignals": [
+        "Clear statement that astronomical spring starts around 20 March",
+        "Useful meteorological framing",
+        "Good distinction between seasonal definitions"
+      ],
+      "weaknesses": [
+        "Weather-education page rather than direct date-answer page",
+        "UK-specific examples in the broader article"
+      ]
+    },
+    {
+      "site": "science.nasa.gov",
+      "title": "Embracing the Equinox",
+      "contentSignals": [
+        "Accessible explanation of what equinoxes are and why they occur",
+        "Good non-specialist teaching language",
+        "Strong authority for the science angle"
+      ],
+      "weaknesses": [
+        "Not directly optimized for the query 'when does spring start'",
+        "Not Arabic"
       ]
     }
   ],
   "coverageMatrix": [
     {
       "keyword": "متى يبدأ الربيع {{year}}",
-      "whyItMatters": "الطلب المباشر على معرفة الموعد هو المدخل الأول للترتيب."
+      "whyItMatters": "This is the clearest Arabic head term and needs a direct answer in the first lines."
     },
     {
       "keyword": "كم باقي على الربيع",
-      "whyItMatters": "يغطي صياغات قريبة يستعملها الباحث العربي قبل المناسبة وأثناءها."
-    },
-    {
-      "keyword": "الاعتدال الربيعي",
-      "whyItMatters": "يغطي صياغات قريبة يستعملها الباحث العربي قبل المناسبة وأثناءها."
+      "whyItMatters": "This captures the countdown intent and supports the live counter experience."
     },
     {
       "keyword": "هل الربيع يبدأ 20 أم 21 مارس",
-      "whyItMatters": "يغطي صياغات قريبة يستعملها الباحث العربي قبل المناسبة وأثناءها."
+      "whyItMatters": "This is the biggest confusion gap across Arabic results and a strong opportunity for differentiation."
     },
     {
-      "keyword": "تساوي الليل والنهار",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "keyword": "الربيع المناخي يبدأ متى",
+      "whyItMatters": "This unlocks the 1 March angle that many users see in weather content and do not understand."
     },
     {
-      "keyword": "بداية فصل الربيع {{year}}",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "keyword": "هل يتساوى الليل والنهار في الاعتدال الربيعي",
+      "whyItMatters": "This helps move the page from a thin date page to a useful teaching page with stronger dwell value."
+    },
+    {
+      "keyword": "ما الفرق بين الربيع الفلكي والربيع المناخي",
+      "whyItMatters": "This captures users who already noticed the two definitions and want the distinction explained plainly."
+    },
+    {
+      "keyword": "متى يبدأ فصل الربيع فلكيا",
+      "whyItMatters": "This targets a more explicit educational phrasing and supports the science-first angle."
     },
     {
       "keyword": "كم باقي على بداية فصل الربيع {{year}}",
-      "whyItMatters": "نية عد تنازلي مباشرة تناسب الباحث الذي يريد معرفة المدة المتبقية بسرعة."
-    },
-    {
-      "keyword": "موعد بداية فصل الربيع {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "whyItMatters": "This is a longer countdown phrasing that fits Arabic search behavior close to the event date."
     }
   ],
   "keywordGaps": [
-    "لماذا يختلف موعد بداية الربيع",
-    "متى يبدأ فصل الربيع فلكياً",
-    "ما هو الاعتدال الربيعي",
-    "هل يبدأ الربيع 20 مارس",
-    "جواب عربي مباشر يوضح معنى بداية فصل الربيع وموعده في صفحة واحدة.",
-    "شرح سبب أهمية بداية فصل الربيع ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
-    "تغطية الأسئلة العملية التي يطرحها القارئ قبل بداية فصل الربيع أو أثناءه.",
-    "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط."
+    "جواب عربي واضح يشرح الفرق بين 1 مارس و20 أو 21 مارس في نفس الصفحة",
+    "شرح أن تساوي الليل والنهار تقريبي لا حرفي في كل مدينة",
+    "توضيح كيف تغيّر المنطقة الزمنية يوم العرض بين 20 و21 مارس",
+    "ربط العد التنازلي بالشرح العلمي بدل الاكتفاء بتاريخ جامد",
+    "مقدمة تجيب عن سؤال متى يبدأ الربيع خلال أول 100 كلمة من دون تأخير",
+    "FAQ أوضح حول ما إذا كان الربيع الفلكي يعني اعتدال الطقس فوراً",
+    "زاوية عربية تشرح سبب شيوع 1 مارس في تقارير الطقس",
+    "تبسيط معنى الاعتدال الربيعي من غير لغة مدرسية جافة"
   ],
   "unansweredQuestions": [
     "متى يبدأ فصل الربيع {{year}}؟",
-    "كم باقي على الربيع؟",
-    "ما هو الاعتدال الربيعي؟",
-    "هل الربيع يبدأ 20 أم 21 مارس؟",
-    "ما معنى تساوي الليل والنهار؟",
+    "لماذا تقول بعض الصفحات إن الربيع يبدأ في 1 مارس؟",
+    "هل الربيع يبدأ 20 مارس أم 21 مارس؟",
+    "هل يتساوى الليل والنهار تماماً في يوم الاعتدال؟",
     "هل بداية الربيع تعني اعتدال الطقس فوراً؟",
-    "متى يبدأ الربيع {{nextYear}}؟",
-    "متى بداية فصل الربيع {{year}}؟"
+    "ما الفرق بين الربيع الفلكي والربيع المناخي؟"
   ],
   "differentiationIdeas": [
-    "الجمع بين العد التنازلي والإجابة التفسيرية في صفحة واحدة بدلاً من المحتوى الخبري العابر.",
-    "جواب مباشر عن موعد بداية فصل الربيع في بداية الصفحة قبل أي شرح إضافي.",
-    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر.",
-    "أسئلة شائعة عملية تساعد القارئ على فهم بداية فصل الربيع والتصرف بناءً عليه.",
-    "ربط الصفحة بطريقة البحث العربية الشائعة عن بداية فصل الربيع دون حشو أو تكرار."
+    "ابدأ الصفحة بجواب سريع ثم انتقل مباشرة إلى حل الالتباس بين الربيع الفلكي والمناخي.",
+    "اجعل زاوية الصفحة تعليمية وعملية في الوقت نفسه: متى يبدأ الربيع، ولماذا تختلف الصفحات، وماذا يعني ذلك لك فعلاً.",
+    "استبدل عبارة تساوي الليل والنهار المكررة بشرح أدق يوضح أنها فكرة تقريبية وليست 12 ساعة حرفية في كل مكان.",
+    "استخدم لغة عربية مبسطة تشبه شرح معلم جيد، لا قاموساً مدرسياً ولا مقالة علمية جافة."
   ],
   "factSources": [
     {
-      "label": "timeanddate - Seasons",
-      "url": "https://www.timeanddate.com/calendar/seasons.html"
+      "label": "Timeanddate: March Equinox",
+      "url": "https://www.timeanddate.com/calendar/march-equinox.html"
     },
     {
-      "label": "Encyclopaedia Britannica - Spring equinox",
-      "url": "https://www.britannica.com/science/vernal-equinox"
+      "label": "Met Office: Spring season guide",
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/seasons/spring/index"
+    },
+    {
+      "label": "NASA Science: Embracing the Equinox",
+      "url": "https://science.nasa.gov/solar-system/skywatching/night-sky-network/embracing-the-equinox/"
     }
   ],
-  "notes": "أفضل فرصة ترتيب هنا تأتي من شرح اختلاف 20 و21 مارس وربط ذلك بالاعتدال الربيعي بلغة عربية سهلة، لأن كثيراً من النتائج الحالية تكرر التاريخ دون تفسير."
+  "notes": "The strongest opportunity is not the date alone. It is resolving three recurring Arabic confusions in one page: 1 March versus 20 or 21 March, local-time shifts between 20 and 21 March, and the myth that equinox means exactly 12 hours of day and night everywhere."
 }

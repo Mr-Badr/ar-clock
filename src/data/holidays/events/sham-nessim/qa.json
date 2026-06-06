@@ -10,7 +10,9 @@
   },
   "notes": [
     "fact-source: المصري اليوم — قرار الإجازة الرسمية لشم النسيم 2026",
-    "fact-source: اليوم السابع — الاثنين 13 أبريل 2026 إجازة رسمية بمناسبة شم النسيم"
+    "fact-source: اليوم السابع — الاثنين 13 أبريل 2026 إجازة رسمية بمناسبة شم النسيم",
+    "2026-06-01: Revalidated authored package against current Egypt holiday coverage. The page still correctly leads with 13 April 2026, explains the Monday-after-Coptic-Easter rule early, and keeps the practical Egypt-first family guidance that competitors usually miss.",
+    "2026-06-01: Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. Not marked done in the rollout checklist because generated holiday bundles were intentionally not rebuilt."
   ],
-  "updatedAt": "2026-04-09T00:00:00.000Z"
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

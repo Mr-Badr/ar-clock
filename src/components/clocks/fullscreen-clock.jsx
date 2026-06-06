@@ -87,7 +87,7 @@ export default function FullscreenClock({ children, overlayContent, showExpandBu
             <div className="flex gap-2">
               <button
                 onClick={toggleFullscreen}
-                className="p-3 hover:bg-surface-3 rounded-xl transition-all text-muted hover:text-primary shadow-lg backdrop-blur-md border border-border flex items-center gap-2"
+                className="p-3 hover:bg-surface-3 rounded-[var(--radius-lg)] transition-colors text-muted hover:text-primary border border-border flex items-center gap-2"
                 title="إغلاق ملء الشاشة"
               >
                 <Minimize2 className="w-6 h-6" />
@@ -95,24 +95,24 @@ export default function FullscreenClock({ children, overlayContent, showExpandBu
               </button>
             </div>
 
-            <div className="flex items-center gap-2 bg-surface-3/30 backdrop-blur-md p-1.5 rounded-2xl border border-border shadow-2xl">
+            <div className="flex items-center gap-2 bg-surface-3 p-1.5 rounded-[var(--radius-lg)] border border-border shadow-none">
               <button
                 onClick={zoomOut}
                 disabled={zoomLevel === 0}
-                className={`p-3 rounded-xl transition-all ${zoomLevel === 0 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-surface-3 text-accent hover:text-accent-hover'}`}
+                className={`p-3 rounded-[var(--radius-lg)] transition-colors ${zoomLevel === 0 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-surface-3 text-accent hover:text-accent-hover'}`}
                 title="تصغير"
               >
                 <ZoomOut className="w-6 h-6" />
               </button>
 
-              <div className="px-4 py-2 bg-base/50 rounded-lg border border-border/50 text-xs font-black min-w-[100px] text-center">
+              <div className="px-4 py-2 bg-base rounded-[var(--radius-md)] border border-border text-xs font-black min-w-[100px] text-center">
                 {getZoomLabel()}
               </div>
 
               <button
                 onClick={zoomIn}
                 disabled={zoomLevel === 2}
-                className={`p-3 rounded-xl transition-all ${zoomLevel === 2 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-surface-3 text-accent hover:text-accent-hover'}`}
+                className={`p-3 rounded-[var(--radius-lg)] transition-colors ${zoomLevel === 2 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-surface-3 text-accent hover:text-accent-hover'}`}
                 title="تكبير"
               >
                 <ZoomIn className="w-6 h-6" />
@@ -131,7 +131,7 @@ export default function FullscreenClock({ children, overlayContent, showExpandBu
         <div className="absolute top-2 right-2 z-10">
           <button
             onClick={toggleFullscreen}
-            className="p-2 hover:bg-surface-3 rounded-lg transition-colors text-muted hover:text-primary"
+            className="p-2 hover:bg-surface-3 rounded-[var(--radius-md)] transition-colors text-muted hover:text-primary"
             title="ملء الشاشة"
           >
             <Fullscreen className="w-4 h-4" />

@@ -1,135 +1,315 @@
 {
   "slug": "school-start-algeria",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.155Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
     "متى الدخول المدرسي في الجزائر {{year}}",
-    "كم باقي على الدخول المدرسي في الجزائر {{year}}",
     "موعد الدخول المدرسي في الجزائر {{year}}",
-    "الدخول المدرسي في الجزائر {{year}}",
-    "الدخول المدرسي في الجزائر العد التنازلي",
-    "الدخول المدرسي في الجزائر متى",
+    "كم باقي على الدخول المدرسي في الجزائر {{year}}",
     "تاريخ الدخول المدرسي في الجزائر {{year}}",
-    "متى الدخول المدرسي في الجزائر {{nextYear}}",
-    "كم باقي على الدخول المدرسي في الجزائر",
-    "الدخول المدرسي في الجزائر {{nextYear}}",
-    "كيف أستعد لـالدخول المدرسي في الجزائر",
-    "ما هو الدخول المدرسي في الجزائر"
+    "هل أعلن الدخول المدرسي في الجزائر {{year}}",
+    "الدخول المدرسي 2026 2027 الجزائر",
+    "رزنامة الدخول المدرسي الجزائر {{year}}",
+    "متى تعلن وزارة التربية الدخول المدرسي في الجزائر",
+    "تسجيل السنة الأولى ابتدائي 2026 2027 الجزائر",
+    "الدخول المدرسي في الجزائر للمعلمين والإداريين والتلاميذ"
   ],
   "competitors": [
     {
       "site": "education.gov.dz",
+      "language": "ar",
       "type": "official",
-      "url": "https://www.education.gov.dz",
-      "focus": [
-        "الدخول المدرسي",
-        "التقويم المدرسي",
-        "البيانات الرسمية"
+      "url": "https://www.education.gov.dz/2026/02/01/%D9%88%D8%B2%D9%8A%D8%B1-%D8%A7%D9%84%D8%AA%D8%B1%D8%A8%D9%8A%D8%A9-%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A%D8%A9-%D9%8A%D8%B4%D8%B1%D9%81-%D8%B9%D9%84%D9%89-%D8%A7%D9%86%D8%B7%D9%84%D8%A7%D9%82-%D8%AC-2/",
+      "title": "وزير التربية الوطنية يشرف على انطلاق جلسات التحضير للدخول المدرسي 2026-2027",
+      "metaDescription": "خبر رسمي عن انطلاق جلسات التحضير للموسم 2026-2027 مع أرقام الهياكل والتوظيف والتحضيرات التنظيمية.",
+      "h1": "وزير التربية الوطنية يشرف على انطلاق جلسات التحضير للدخول المدرسي 2026-2027",
+      "headings": [
+        "التحضير الاستباقي",
+        "جاهزية المؤسسات",
+        "النقل والوجبات",
+        "الإحصاءات والتوظيف"
       ],
-      "gaps": [
-        "لا يترجم نية البحث العربية المختصرة مباشرة",
-        "لا يقدّم عداداً تنازلياً أو خطوات استعداد"
+      "bodySummary": "المحتوى يثبت أن التحضير للموسم 2026-2027 بدأ مبكراً، ويركز على الجاهزية والإحصاءات والتوظيف والبنية التحتية، لكنه لا يجيب مباشرة عن سؤال الباحث: هل أُعلن يوم دخول التلاميذ النهائي؟",
+      "faqCount": 0,
+      "tableCount": 0,
+      "estimatedWordCount": 470,
+      "schemaHints": [
+        "Article"
+      ],
+      "sourceLinks": [
+        "https://www.education.gov.dz/"
+      ],
+      "confidence": "high",
+      "strengths": [
+        "أعلى سلطة رسمية",
+        "يؤكد أن التحضيرات بدأت فعلاً",
+        "يمنح أرقاماً وسياقاً مؤسسياً"
+      ],
+      "weaknesses": [
+        "لا يذكر اليوم النهائي لدخول التلاميذ",
+        "ليس مكتوباً وفق نية البحث المباشرة",
+        "يفتقد خطوات عملية للأولياء والطلاب"
       ]
     },
     {
-      "site": "الصحافة الجزائرية",
+      "site": "news.radioalgerie.dz",
+      "language": "ar",
       "type": "news",
-      "focus": [
-        "الدخول المدرسي",
-        "الكتب المدرسية",
-        "النقل والتنظيم"
+      "url": "https://news.radioalgerie.dz/ar/node/69243",
+      "title": "وزارة التربية تعلن عن تعديل تاريخ الدخول المدرسي",
+      "metaDescription": "خبر ينقل تعديل تاريخ الدخول المدرسي 2025-2026 مع تفصيل عودة الإداريين والأساتذة والتلاميذ.",
+      "h1": "وزارة التربية تعلن عن تعديل تاريخ الدخول المدرسي",
+      "headings": [
+        "تعديل التاريخ",
+        "عودة الإداريين",
+        "عودة الأساتذة",
+        "عودة التلاميذ"
       ],
-      "gaps": [
-        "تغطي الخبر ثم تختفي",
-        "ضعف في البنية المرجعية طويلة الأجل"
+      "bodySummary": "المحتوى يجيب بوضوح عن تاريخ موسم 2025-2026، ويكشف فرق العودة بين الفئات الثلاث. هذا مفيد جداً لبناء فقرة تشرح أن العودة المدرسية ليست يوماً واحداً للجميع.",
+      "faqCount": 0,
+      "tableCount": 0,
+      "estimatedWordCount": 140,
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sourceLinks": [
+        "https://news.radioalgerie.dz/ar/node/69243"
+      ],
+      "confidence": "high",
+      "strengths": [
+        "جواب مباشر",
+        "ينقل نصاً عملياً",
+        "يفيد في التفريق بين الفئات"
+      ],
+      "weaknesses": [
+        "مرتبط بموسم 2025-2026 فقط",
+        "لا يخدم القارئ الذي يريد معرفة ما المؤكد الآن في 2026",
+        "لا يشرح ماذا يفعل القارئ قبل إعلان الموسم الجديد"
       ]
     },
     {
-      "site": "صفحات العد التنازلي العربية",
-      "type": "countdown",
-      "focus": [
-        "كم باقي",
-        "متى تبدأ الدراسة"
+      "site": "al-ain.com",
+      "language": "ar",
+      "type": "news-explainer",
+      "url": "https://al-ain.com/article/school-entry-date-2026-algeria",
+      "title": "رسميا من وزارة التربية.. موعد الدخول المدرسي 2026 في الجرائر وخريطة الإجازات",
+      "metaDescription": "شرح صحفي موجز لموعد دخول موسم 2025-2026 والعطل والاختبارات.",
+      "h1": "رسميا من وزارة التربية.. موعد الدخول المدرسي 2026 في الجرائر وخريطة الإجازات",
+      "headings": [
+        "تقويم الامتحانات الفصلية",
+        "روزنامة العطل المدرسية"
       ],
-      "gaps": [
-        "تعاني من عمومية زائدة",
-        "لا توضح القنوات الرسمية في الجزائر"
+      "bodySummary": "المحتوى أفضل من الخبر القصير لأنه يضيف العطل والاختبارات، لكنه يبقى موسمياً ولا يشرح للقارئ الحالي أن موسم 2026-2027 لم يُعلن نهائياً بعد.",
+      "faqCount": 0,
+      "tableCount": 0,
+      "estimatedWordCount": 220,
+      "schemaHints": [
+        "Article"
+      ],
+      "sourceLinks": [
+        "https://al-ain.com/article/school-entry-date-2026-algeria"
+      ],
+      "confidence": "medium",
+      "strengths": [
+        "ينظم المعلومات في فقرات سهلة",
+        "يغطي العطل والاختبارات",
+        "قريب من نية الباحث العامة"
+      ],
+      "weaknesses": [
+        "يعتمد على موسم سابق",
+        "لا يميّز بوضوح بين المتوقع والرسمي",
+        "لا يقدم مساراً عملياً بعد قراءة التاريخ"
+      ]
+    },
+    {
+      "site": "news.radioalgerie.dz",
+      "language": "en",
+      "type": "news",
+      "url": "https://news.radioalgerie.dz/en/node/84255",
+      "title": "Ministry of Education: 1st-Year Primary School Registration to Be Conducted Exclusively via Parents' Platform",
+      "metaDescription": "English coverage of first-year primary registration for the 2026-2027 school year in Algeria.",
+      "h1": "Ministry of Education: 1st-Year Primary School Registration to Be Conducted Exclusively via Parents' Platform",
+      "headings": [
+        "Registration period",
+        "Parents' platform",
+        "Required documents",
+        "Results date"
+      ],
+      "bodySummary": "This page does not answer the school-start date question directly, but it proves that the 2026-2027 school year is already active in official workflows and gives practical details parents care about.",
+      "faqCount": 0,
+      "tableCount": 0,
+      "estimatedWordCount": 420,
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sourceLinks": [
+        "https://awlyaa.education.dz"
+      ],
+      "confidence": "high",
+      "strengths": [
+        "Useful practical detail",
+        "Strong official signal",
+        "Good parent-focused extraction"
+      ],
+      "weaknesses": [
+        "Not a direct school-start answer page",
+        "No countdown or context around expected return date",
+        "Focused on one grade only"
+      ]
+    },
+    {
+      "site": "news.radioalgerie.dz",
+      "language": "fr",
+      "type": "replacement-for-weak-english",
+      "url": "https://news.radioalgerie.dz/fr/node/68833",
+      "title": "Le ministère de l'Education nationale annonce la date de la rentrée scolaire et le calendrier des examens trimestriels et des vacances",
+      "metaDescription": "French summary of the initial 2025-2026 school calendar, exams, and vacations.",
+      "h1": "Le ministère de l'Education nationale annonce la date de la rentrée scolaire et le calendrier des examens trimestriels et des vacances",
+      "headings": [
+        "Administrative return",
+        "Teachers return",
+        "Students return",
+        "Exams and vacations"
+      ],
+      "bodySummary": "This was kept as a replacement because usable English pages on the same intent were sparse or blocked. It adds the original August 2025 schedule before the later correction and helps explain why readers must watch for updates.",
+      "faqCount": 0,
+      "tableCount": 0,
+      "estimatedWordCount": 310,
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sourceLinks": [
+        "https://news.radioalgerie.dz/fr/node/68833"
+      ],
+      "confidence": "high",
+      "replacementReason": "English SERP results were sparse and low-fit; this French version preserved the same official informational value.",
+      "strengths": [
+        "Captures the first announced timeline",
+        "Useful for explaining that dates can change",
+        "Structured by category and calendar"
+      ],
+      "weaknesses": [
+        "French, not English",
+        "Season-specific",
+        "Still lacks reader-facing guidance"
+      ]
+    },
+    {
+      "site": "news.radioalgerie.dz",
+      "language": "fr",
+      "type": "replacement-for-weak-english",
+      "url": "https://news.radioalgerie.dz/fr/node/71133",
+      "title": "Rentrée scolaire: 12 millions d'élèves rejoignent les bancs de l'école",
+      "metaDescription": "French report on the official start of the 2025-2026 school year and first-week priorities.",
+      "h1": "Rentrée scolaire: 12 millions d'élèves rejoignent les bancs de l'école",
+      "headings": [
+        "Official launch",
+        "School health week",
+        "Pedagogical measures"
+      ],
+      "bodySummary": "This replacement page adds context about what happens on the first week of school, which competitors in Arabic often skip. It helped identify a missed angle: readers do not only ask when school starts, but what that first week usually looks like.",
+      "faqCount": 0,
+      "tableCount": 0,
+      "estimatedWordCount": 260,
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sourceLinks": [
+        "https://news.radioalgerie.dz/fr/node/71133"
+      ],
+      "confidence": "high",
+      "replacementReason": "Usable English long-form comparison pages on this Algerian school-start intent were not available; this French official-news variant provided practical first-week context instead.",
+      "strengths": [
+        "Explains what accompanies the school return",
+        "Adds first-week context",
+        "Official-news tone with concrete details"
+      ],
+      "weaknesses": [
+        "French, not English",
+        "No FAQ or structured planning",
+        "Season-bound coverage"
       ]
     }
   ],
   "coverageMatrix": [
     {
       "keyword": "متى الدخول المدرسي في الجزائر {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "whyItMatters": "هذه هي النية الأساسية: يريد القارئ جواباً سريعاً ومباشراً."
+    },
+    {
+      "keyword": "هل أعلن الدخول المدرسي في الجزائر {{year}}",
+      "whyItMatters": "تكشف ارتباكاً شائعاً بين التاريخ المتوقع والتاريخ المؤكد رسمياً."
     },
     {
       "keyword": "كم باقي على الدخول المدرسي في الجزائر {{year}}",
-      "whyItMatters": "نية عد تنازلي مباشرة تناسب الباحث الذي يريد معرفة المدة المتبقية بسرعة."
+      "whyItMatters": "تعكس نية تخطيطية لا تكتفي بالتاريخ بل تحتاج عداداً زمنياً."
     },
     {
-      "keyword": "موعد الدخول المدرسي في الجزائر {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "keyword": "رزنامة الدخول المدرسي الجزائر {{year}}",
+      "whyItMatters": "تدل على أن بعض الباحثين يريدون الصورة الأوسع: عودة الفئات والاختبارات والعطل."
     },
     {
-      "keyword": "الدخول المدرسي في الجزائر {{year}}",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "keyword": "تسجيل السنة الأولى ابتدائي 2026 2027 الجزائر",
+      "whyItMatters": "يكشف سؤالاً عملياً بدأ رسمياً قبل إعلان يوم العودة النهائي."
     },
     {
-      "keyword": "الدخول المدرسي في الجزائر العد التنازلي",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "keyword": "الدخول المدرسي في الجزائر للمعلمين",
+      "whyItMatters": "يظهر أن بعض الباحثين لا يقصدون التلاميذ فقط بل يريدون معرفة عودة الأساتذة."
     },
     {
-      "keyword": "الدخول المدرسي في الجزائر متى",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "keyword": "الدخول المدرسي في الجزائر للإداريين",
+      "whyItMatters": "يفيد في توسيع الصفحة من سؤال عام إلى تفسير الفروق بين الفئات."
     },
     {
-      "keyword": "تاريخ الدخول المدرسي في الجزائر {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "keyword": "هل أُعلن الدخول المدرسي في الجزائر",
+      "whyItMatters": "يعكس نية تحقق وثقة، لا نية معرفة تاريخ مجرد."
     },
     {
-      "keyword": "متى الدخول المدرسي في الجزائر {{nextYear}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "keyword": "فضاء الأولياء الجزائر تسجيل السنة الأولى ابتدائي",
+      "whyItMatters": "يدمج الصفحة مع الإجراء الرسمي الجاري الذي يحتاجه الأولياء فعلاً."
     }
   ],
   "keywordGaps": [
-    "جواب عربي مباشر يوضح معنى الدخول المدرسي في الجزائر وموعده في صفحة واحدة.",
-    "شرح سبب أهمية الدخول المدرسي في الجزائر ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
-    "تغطية الأسئلة العملية التي يطرحها القارئ قبل الدخول المدرسي في الجزائر أو أثناءه.",
-    "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط.",
-    "دمج العد التنازلي مع الشرح والسياق بدل صفحة موعد قصيرة وضعيفة.",
-    "ربط الموعد بالقيمة العملية للقارئ: إجازة، استعداد، تهنئة، أو تنظيم مسبق.",
-    "شرح الفروقات المحلية أو الرسمية عند الحاجة بدلاً من الاكتفاء بموعد عام مبهم.",
-    "لغة عربية طبيعية لا تبدو كأنها قائمة كلمات أو نص مولد آلياً."
+    "التمييز الصريح بين الموعد المتوقع والموعد الرسمي النهائي.",
+    "توضيح أن السؤال لا يخص التلاميذ وحدهم دائماً، بل قد يشمل الأساتذة والإداريين أيضاً.",
+    "إدخال الخدمات المعلنة فعلاً للموسم الجديد مثل تسجيل السنة الأولى ابتدائي.",
+    "ربط سؤال الموعد بسؤال الثقة في المصدر، لا بالتاريخ وحده.",
+    "منح القارئ خطوات يمكنه تنفيذها الآن قبل إعلان الرزنامة النهائية.",
+    "شرح لماذا قد تتغير الرزنامة بعد إعلان أولي.",
+    "استخدام لغة عربية جزائرية مفهومة على مستوى المصطلحات من دون هبوط إلى لهجة محلية ضيقة.",
+    "إعطاء قيمة بعد العد التنازلي: ما الذي ينبغي فعله بناءً على هذا الوقت؟"
   ],
   "unansweredQuestions": [
-    "متى الدخول المدرسي في الجزائر {{year}}؟",
-    "كم باقي على الدخول المدرسي في الجزائر؟",
-    "ما هو الدخول المدرسي في الجزائر؟",
-    "كيف أستعد لـالدخول المدرسي في الجزائر؟",
-    "متى الدخول المدرسي في الجزائر {{nextYear}}؟",
-    "ما أهمية الدخول المدرسي في الجزائر؟",
-    "كم باقي على الدخول المدرسي في الجزائر {{year}}؟",
-    "تاريخ الدخول المدرسي في الجزائر {{year}}؟"
+    "هل أُعلن الدخول المدرسي في الجزائر {{year}} رسمياً أم لا؟",
+    "هل التاريخ المعروض نهائي أم فقط للتخطيط؟",
+    "متى يعود الإداريون والأساتذة مقارنة بالتلاميذ؟",
+    "ما الذي بدأ فعلاً للموسم {{year}}-{{nextYear}} في المصادر الرسمية؟",
+    "ما الذي يجب أن ينجزه ولي الأمر الآن قبل إعلان الرزنامة؟",
+    "متى تُراقب بلاغات الوزارة عادة إذا كنت تنتظر اليوم النهائي؟"
   ],
   "differentiationIdeas": [
-    "جواب مباشر عن موعد الدخول المدرسي في الجزائر في بداية الصفحة قبل أي شرح إضافي.",
-    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر.",
-    "أسئلة شائعة عملية تساعد القارئ على فهم الدخول المدرسي في الجزائر والتصرف بناءً عليه.",
-    "ربط الصفحة بطريقة البحث الشائعة عن الدخول المدرسي في الجزائر دون فقدان الوضوح العام."
+    "افتتاح الصفحة بجواب ثنائي واضح: غير معلن رسمياً بعد، لكن التاريخ التخطيطي الحالي هو {{formattedDate}}.",
+    "إضافة شرح مبكر يفرق بين المتوقع والرسمي بدل دفن هذه النقطة داخل التفاصيل.",
+    "استثمار الأخبار الرسمية الجارية عن تسجيلات الموسم 2026-2027 لتقديم قيمة عملية حالية لا موسمية فقط.",
+    "بناء FAQ يجيب عن الثقة في التاريخ، لا عن التاريخ فقط."
   ],
   "factSources": [
     {
-      "label": "وزارة التربية الوطنية - الجزائر",
-      "url": "https://www.education.gov.dz"
+      "label": "وزارة التربية الوطنية الجزائرية",
+      "url": "https://www.education.gov.dz/"
     },
     {
-      "label": "الديوان الوطني للمطبوعات المدرسية - الجزائر",
-      "url": "https://www.onps.dz"
+      "label": "الإذاعة الجزائرية",
+      "url": "https://news.radioalgerie.dz/ar/node/69243"
     },
     {
-      "label": "الوكالة الرسمية للأنباء الجزائرية",
-      "url": "https://www.aps.dz"
+      "label": "الإذاعة الجزائرية - تسجيلات السنة الأولى ابتدائي",
+      "url": "https://news.radioalgerie.dz/ar/node/84190"
+    },
+    {
+      "label": "الإذاعة الجزائرية - تمديد التسجيلات",
+      "url": "https://news.radioalgerie.dz/ar/node/87252"
     }
   ],
-  "notes": "تم تعزيز خريطة البحث العربية لـ الدخول المدرسي في الجزائر اعتماداً على الكلمات المفتاحية الحالية، والأسئلة الشائعة، والمصادر الموجودة داخل الحزمة نفسها."
+  "notes": "أظهرت المراجعة أن أفضل زاوية للصفحة ليست الادعاء بموعد نهائي مبكر، بل شرح ما هو مؤكد الآن وما يزال منتظراً، مع استخدام 21 سبتمبر كتقدير تخطيطي فقط إلى أن يصدر البيان الرسمي."
 }

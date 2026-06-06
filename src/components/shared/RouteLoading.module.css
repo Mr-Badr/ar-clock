@@ -1,0 +1,229 @@
+.page {
+  min-height: 100dvh;
+  background: var(--bg-base);
+  color: var(--text-primary);
+}
+
+.main {
+  width: min(100% - var(--space-8), var(--content-reading-max));
+  margin-inline: auto;
+  padding-block: calc(var(--app-header-height) + var(--space-8)) var(--space-20);
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block-end: var(--space-6);
+}
+
+.panel {
+  border: var(--space-px) solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-1);
+  padding: var(--space-6);
+}
+
+.panelTight {
+  border: var(--space-px) solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-1);
+  padding: var(--space-4);
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--space-11);
+  margin-block-end: var(--space-4);
+  color: var(--accent-alt);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+}
+
+.titleLine,
+.titleLineWide,
+.bodyLine,
+.bodyLineWide,
+.bodyLineShort,
+.metaLine,
+.tinyLine,
+.square,
+.tile,
+.largeTile,
+.chart,
+.monthTitle,
+.monthMeta,
+.calendarCell {
+  background: var(--bg-surface-2);
+}
+
+.titleLine {
+  height: var(--space-8);
+  width: 68%;
+  margin-block-end: var(--space-3);
+}
+
+.titleLineWide {
+  height: var(--space-12);
+  width: 84%;
+  margin-block-end: var(--space-4);
+}
+
+.bodyLine {
+  height: var(--space-4);
+  width: 100%;
+  margin-block-end: var(--space-2);
+}
+
+.bodyLineWide {
+  height: var(--space-4);
+  width: 88%;
+  margin-block-end: var(--space-2);
+}
+
+.bodyLineShort {
+  height: var(--space-4);
+  width: 64%;
+}
+
+.metaLine {
+  height: var(--space-3);
+  width: var(--space-20);
+}
+
+.tinyLine {
+  height: var(--space-3);
+  width: var(--space-3);
+}
+
+.helperText {
+  margin: var(--space-4) 0 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+.helperTextSmall {
+  margin: var(--space-2) 0 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-relaxed);
+}
+
+.gridTwo,
+.gridThree,
+.gridFour,
+.gridCalendar,
+.featureGrid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.gridTwo {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--space-32) + var(--space-24))), 1fr));
+}
+
+.gridThree {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--space-32) + var(--space-16))), 1fr));
+}
+
+.gridFour {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--space-32) + var(--space-4))), 1fr));
+}
+
+.gridCalendar {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--space-32) + var(--space-20))), 1fr));
+}
+
+.featureGrid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--space-32) + var(--space-24))), 1fr));
+}
+
+.tile {
+  height: calc(var(--space-20) + var(--space-12));
+  border-radius: var(--radius-lg);
+}
+
+.largeTile {
+  height: calc(var(--space-32) + var(--space-24));
+  border-radius: var(--radius-lg);
+}
+
+.chart {
+  height: calc(var(--space-32) + var(--space-12));
+  border-radius: var(--radius-lg);
+}
+
+.square {
+  height: var(--space-12);
+  border-radius: var(--radius-md);
+}
+
+.monthCard {
+  overflow: hidden;
+  border: var(--space-px) solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-1);
+}
+
+.monthHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-surface-2);
+  border-block-end: var(--space-px) solid var(--border-subtle);
+}
+
+.monthTitle {
+  height: var(--space-4);
+  width: var(--space-24);
+}
+
+.monthMeta {
+  height: var(--space-3);
+  width: var(--space-16);
+}
+
+.weekdayGrid,
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.weekdayGrid {
+  border-block-end: var(--space-px) solid var(--border-subtle);
+}
+
+.weekdayCell {
+  padding: var(--space-2) var(--space-1);
+}
+
+.calendarGrid {
+  gap: var(--space-1);
+  padding: var(--space-2);
+}
+
+.calendarCell {
+  height: var(--space-9);
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 640px) {
+  .main {
+    width: min(100% - var(--space-4), var(--content-reading-max));
+    padding-block-start: calc(var(--app-header-height) + var(--space-6));
+  }
+
+  .panel {
+    padding: var(--space-4);
+  }
+}

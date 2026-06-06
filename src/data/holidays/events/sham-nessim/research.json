@@ -1,129 +1,339 @@
 {
   "slug": "sham-nessim",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.168Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
-    "موعد شم النسيم 2026",
-    "متى شم النسيم 2026 في مصر",
-    "كم باقي على شم النسيم 2026",
-    "إجازة شم النسيم 2026",
+    "متى شم النسيم {{year}}",
     "موعد شم النسيم {{year}}",
     "كم باقي على شم النسيم {{year}}",
-    "متى شم النسيم {{year}} في مصر",
     "إجازة شم النسيم {{year}}",
-    "شم النسيم مصر",
+    "شم النسيم مصر {{year}}",
     "هل شم النسيم إجازة رسمية",
-    "شم النسيم {{year}}",
-    "تاريخ شم النسيم {{year}}"
+    "لماذا يأتي شم النسيم يوم الاثنين",
+    "متى شم النسيم في مصر {{year}}",
+    "تاريخ شم النسيم {{year}}",
+    "الفسيخ والرنجة شم النسيم"
   ],
   "competitors": [
     {
-      "site": "المصري اليوم",
-      "url": "https://www.almasryalyoum.com/news/details/4239214",
+      "site": "gate.ahram.org.eg",
+      "type": "official_coverage_reference",
+      "url": "https://gate.ahram.org.eg/News/5592349.aspx"
+    },
+    {
+      "site": "youm7.com",
+      "type": "arabic_news_competitor",
+      "url": "https://m2.youm7.com/story/2026/4/6/%D9%85%D8%AC%D9%84%D8%B3-%D8%A7%D9%84%D9%88%D8%B2%D8%B1%D8%A7%D8%A1-%D8%A7%D9%84%D8%A7%D8%AB%D9%86%D9%8A%D9%86-%D8%A7%D9%84%D9%85%D9%82%D8%A8%D9%84-%D8%A5%D8%AC%D8%A7%D8%B2%D8%A9-%D8%B1%D8%B3%D9%85%D9%8A%D8%A9-%D8%A8%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A9-%D8%B9%D9%8A%D8%AF-%D8%B4%D9%85-%D8%A7%D9%84%D9%86%D8%B3%D9%8A%D9%85/7368567"
+    },
+    {
+      "site": "almasryalyoum.com",
+      "type": "arabic_news_competitor",
+      "url": "https://www.almasryalyoum.com/news/details/4239214"
+    },
+    {
+      "site": "english.ahram.org.eg",
+      "type": "english_comparison",
+      "url": "https://english.ahram.org.eg/News/565555.aspx"
+    },
+    {
+      "site": "britannica.com",
+      "type": "english_background_reference",
+      "url": "https://www.britannica.com/topic/Sham-al-Nassim"
+    }
+  ],
+  "arabicCompetitors": [
+    {
+      "site": "gate.ahram.org.eg",
+      "status": "usable",
+      "url": "https://gate.ahram.org.eg/News/5592349.aspx",
+      "title": "رئيس الوزراء يصدر قرار إجازة شم النسيم",
+      "metaDescription": "خبر عن قرار الإجازة الرسمية لشم النسيم.",
+      "h1": "رئيس الوزراء يصدر قرار إجازة شم النسيم",
+      "headings": [
+        "رئيس الوزراء يصدر قرار إجازة شم النسيم"
+      ],
+      "bodySummary": "هذه الصفحة مهمة لأنها تربط الموعد بالقرار الرسمي الحكومي، لا بمجرد التاريخ الشعبي للمناسبة. قوتها في الثقة العالية، لكنها لا تشرح لماذا يتغير موعد شم النسيم ولا ماذا يفعل الناس عادة في هذا اليوم.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "تأكيد الإجازة الرسمية"
+      ],
+      "keywords": [
+        "إجازة شم النسيم",
+        "قرار رئيس الوزراء"
+      ],
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sources": [
+        "https://gate.ahram.org.eg/News/5592349.aspx"
+      ],
+      "wordCount": 180,
       "strengths": [
-        "ينقل قرار الإجازة الرسمية وتاريخ 13 أبريل 2026",
-        "يلتقط نية البحث الإخبارية السريعة"
+        "مرجع رسمي عالي الثقة",
+        "يثبت صفة الإجازة"
       ],
       "weaknesses": [
-        "محتوى خبري قصير لا يبني مرجعاً دائماً",
-        "لا يشرح لماذا يتغير تاريخ شم النسيم",
-        "لا يقدم FAQ أو عداداً تنازلياً"
+        "لا يشرح الخلفية الزمنية",
+        "لا يخدم نية العد التنازلي أو العادات"
       ]
     },
     {
-      "site": "اليوم السابع",
+      "site": "youm7.com",
+      "status": "usable",
       "url": "https://m2.youm7.com/story/2026/4/6/%D9%85%D8%AC%D9%84%D8%B3-%D8%A7%D9%84%D9%88%D8%B2%D8%B1%D8%A7%D8%A1-%D8%A7%D9%84%D8%A7%D8%AB%D9%86%D9%8A%D9%86-%D8%A7%D9%84%D9%85%D9%82%D8%A8%D9%84-%D8%A5%D8%AC%D8%A7%D8%B2%D8%A9-%D8%B1%D8%B3%D9%85%D9%8A%D8%A9-%D8%A8%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A9-%D8%B9%D9%8A%D8%AF-%D8%B4%D9%85-%D8%A7%D9%84%D9%86%D8%B3%D9%8A%D9%85/7368567",
+      "title": "إجازة رسمية بمناسبة عيد شم النسيم",
+      "metaDescription": "خبر عن الإجازة الرسمية لشم النسيم.",
+      "h1": "مجلس الوزراء: الاثنين المقبل إجازة رسمية بمناسبة عيد شم النسيم",
+      "headings": [
+        "إجازة رسمية بمناسبة عيد شم النسيم"
+      ],
+      "bodySummary": "يعطي الخبر جواباً سريعاً يخدم نية المستخدم المصري الذي يسأل: هل اليوم إجازة؟ ومتى؟ لكنه يبقى خبراً قصيراً لا يشرح لماذا يأتي شم النسيم دائماً يوم الاثنين، ولا يعالج نية البحث التعليمية حول أصل المناسبة وعاداتها.",
+      "faq": [],
+      "tables": [],
+      "examples": [],
+      "keywords": [
+        "عيد شم النسيم",
+        "إجازة رسمية"
+      ],
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sources": [
+        "https://m2.youm7.com/story/2026/4/6/%D9%85%D8%AC%D9%84%D8%B3-%D8%A7%D9%84%D9%88%D8%B2%D8%B1%D8%A7%D8%A1-%D8%A7%D9%84%D8%A7%D8%AB%D9%86%D9%8A%D9%86-%D8%A7%D9%84%D9%85%D9%82%D8%A8%D9%84-%D8%A5%D8%AC%D8%A7%D8%B2%D8%A9-%D8%B1%D8%B3%D9%85%D9%8A%D8%A9-%D8%A8%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A9-%D8%B9%D9%8A%D8%AF-%D8%B4%D9%85-%D8%A7%D9%84%D9%86%D8%B3%D9%8A%D9%85/7368567"
+      ],
+      "wordCount": 170,
       "strengths": [
-        "يؤكد قرار الإجازة الرسمية",
-        "يستهدف الباحث المصري مباشرة"
+        "جواب مباشر",
+        "مرتبط بالبحث الإخباري السريع"
       ],
       "weaknesses": [
-        "لا يتوسع في العادات أو الخلفية",
-        "لا يجيب عن سؤال لماذا يأتي شم النسيم يوم الاثنين"
+        "قصير جداً",
+        "ضعيف في الشرح والسياق"
       ]
+    },
+    {
+      "site": "almasryalyoum.com",
+      "status": "usable",
+      "url": "https://www.almasryalyoum.com/news/details/4239214",
+      "title": "إجازة شم النسيم 2026",
+      "metaDescription": "تغطية سريعة لقرار الإجازة الرسمية.",
+      "h1": "إجازة شم النسيم 2026",
+      "headings": [
+        "إجازة شم النسيم"
+      ],
+      "bodySummary": "تساعد هذه الصفحة في تثبيت اليوم بصيغة يفهمها المستخدم بسرعة: هل هناك إجازة؟ وما التاريخ؟ لكن قوتها تتوقف عند هذا الحد، لأنها لا تعطي قيمة مستمرة لصفحة سنوية عن شم النسيم بعد انتهاء الخبر.",
+      "faq": [],
+      "tables": [],
+      "examples": [],
+      "keywords": [
+        "شم النسيم 2026",
+        "موعد الإجازة"
+      ],
+      "schemaHints": [
+        "Article"
+      ],
+      "sources": [
+        "https://www.almasryalyoum.com/news/details/4239214"
+      ],
+      "wordCount": 160,
+      "strengths": [
+        "يخدم نية الموعد والإجازة",
+        "سهل القراءة"
+      ],
+      "weaknesses": [
+        "لا يشرح أصل المناسبة",
+        "لا يجيب عن سبب تغيّر التاريخ"
+      ]
+    }
+  ],
+  "englishCompetitors": [
+    {
+      "site": "english.ahram.org.eg",
+      "status": "usable_for_comparison",
+      "url": "https://english.ahram.org.eg/News/565555.aspx",
+      "title": "Egypt grants paid holiday for Sham El-Nessim",
+      "metaDescription": "English coverage of the public holiday announcement.",
+      "h1": "Egypt grants paid holiday for Sham El-Nessim",
+      "headings": [],
+      "bodySummary": "Useful for comparison because it frames the holiday as a practical labor/public-holiday event. It is less useful than Arabic sources for cultural context, but it helps verify the public-holiday angle and private-sector framing.",
+      "faq": [],
+      "tables": [],
+      "examples": [],
+      "keywords": [
+        "Sham El-Nessim holiday Egypt"
+      ],
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sources": [
+        "https://english.ahram.org.eg/News/565555.aspx"
+      ],
+      "wordCount": 180,
+      "strengths": [
+        "Practical public-holiday framing"
+      ],
+      "weaknesses": [
+        "Less cultural explanation"
+      ]
+    },
+    {
+      "site": "britannica.com",
+      "status": "usable_for_comparison",
+      "url": "https://www.britannica.com/topic/Sham-al-Nassim",
+      "title": "Sham al-Nassim | Egyptian holiday",
+      "metaDescription": "Background on the Egyptian spring festival.",
+      "h1": "Sham al-Nassim",
+      "headings": [
+        "Sham al-Nassim"
+      ],
+      "bodySummary": "Useful as an English background comparison because it explains the ancient spring-festival roots of Sham El-Nessim, which helps strengthen the educational layer of the Arabic page without relying on news-only framing.",
+      "faq": [],
+      "tables": [],
+      "examples": [],
+      "keywords": [
+        "Egyptian spring festival"
+      ],
+      "schemaHints": [
+        "EncyclopediaArticle"
+      ],
+      "sources": [
+        "https://www.britannica.com/topic/Sham-al-Nassim"
+      ],
+      "wordCount": 260,
+      "strengths": [
+        "Historical background"
+      ],
+      "weaknesses": [
+        "Not year-specific"
+      ]
+    },
+    {
+      "site": "officeholidays.com",
+      "status": "replaced",
+      "url": "https://www.officeholidays.com/holidays/egypt/sham-el-nessim",
+      "replacementReason": "Useful as a date reference, but Ahram English and Britannica provided a stronger pair for the public-holiday and cultural-background comparison."
+    }
+  ],
+  "replacedOrBlockedCompetitors": [
+    {
+      "site": "countdown-only pages",
+      "status": "replaced",
+      "reason": "They repeated the date without explaining why Sham El-Nessim moves each year."
+    },
+    {
+      "site": "short greeting pages",
+      "status": "replaced",
+      "reason": "They were useful for messages, but too weak for the main search intent around date, holiday status, and explanation."
     }
   ],
   "coverageMatrix": [
     {
-      "keyword": "موعد شم النسيم 2026",
-      "competitorCoverage": [
-        "المصري اليوم",
-        "اليوم السابع"
-      ],
-      "ourGap": false
+      "topic": "الجواب المباشر عن الموعد",
+      "arabicCoverage": "قوي",
+      "englishCoverage": "متوسط",
+      "opportunity": "البدء بالتاريخ والإجازة في أول سطر"
     },
     {
-      "keyword": "لماذا يتغير موعد شم النسيم",
-      "competitorCoverage": [],
-      "ourGap": true
+      "topic": "هل شم النسيم إجازة رسمية",
+      "arabicCoverage": "قوي",
+      "englishCoverage": "جيد",
+      "opportunity": "ربط الجواب بالمصدر الحكومي لا بالخبر فقط"
     },
     {
-      "keyword": "هل شم النسيم إجازة رسمية",
-      "competitorCoverage": [
-        "المصري اليوم",
-        "اليوم السابع"
-      ],
-      "ourGap": false
+      "topic": "لماذا يتغير موعد شم النسيم",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "متوسط",
+      "opportunity": "تغطية أهم فجوة تفسيرية في SERP"
     },
     {
-      "keyword": "ماذا يفعل الناس في شم النسيم",
-      "competitorCoverage": [],
-      "ourGap": true
+      "topic": "العادات الشعبية وما يفعله الناس",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "متوسط",
+      "opportunity": "إضافة قيمة اجتماعية عملية للصفحة"
     },
     {
-      "keyword": "متى شم النسيم 2026 في مصر",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "سلامة الطعام المرتبط بالمناسبة",
+      "arabicCoverage": "غائب تقريباً",
+      "englishCoverage": "غائب",
+      "opportunity": "إضافة تنبيه عملي مفيد لا يوجد في المنافسين"
     },
     {
-      "keyword": "كم باقي على شم النسيم 2026",
-      "whyItMatters": "نية عد تنازلي مباشرة تناسب الباحث الذي يريد معرفة المدة المتبقية بسرعة."
+      "topic": "هل شم النسيم يوم ثابت في أبريل",
+      "arabicCoverage": "غائب",
+      "englishCoverage": "متوسط",
+      "opportunity": "فك الخلط الشائع بسرعة"
     },
     {
-      "keyword": "إجازة شم النسيم 2026",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "topic": "خطوات الاستعداد للخروجة",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "ضعيف",
+      "opportunity": "ربط الإجازة بالتخطيط العائلي"
     },
     {
-      "keyword": "موعد شم النسيم {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "العد التنازلي مع شرح المعنى",
+      "arabicCoverage": "شبه غائب",
+      "englishCoverage": "غائب",
+      "opportunity": "جمع العدّاد والتفسير في صفحة واحدة"
     }
   ],
   "keywordGaps": [
     "لماذا يأتي شم النسيم يوم الاثنين",
-    "ما أصل شم النسيم الشعبي",
-    "أشهر عادات شم النسيم في مصر",
-    "كم باقي على شم النسيم",
-    "جواب عربي مباشر يوضح معنى شم النسيم وموعده في صفحة واحدة.",
-    "شرح سبب أهمية شم النسيم ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
-    "تغطية الأسئلة العملية التي يطرحها القارئ قبل شم النسيم أو أثناءه.",
-    "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط."
+    "لماذا يتغير موعد شم النسيم من سنة إلى أخرى",
+    "ماذا يفعل الناس في شم النسيم",
+    "الفسيخ والرنجة شم النسيم",
+    "هل شم النسيم يوم ثابت في أبريل",
+    "كيف أستعد لشم النسيم {{year}}",
+    "كم باقي على شم النسيم في مصر {{year}}",
+    "هل شم النسيم {{year}} إجازة رسمية في مصر"
   ],
   "unansweredQuestions": [
-    "لماذا يتغير تاريخ شم النسيم من سنة إلى أخرى؟",
+    "هل شم النسيم إجازة رسمية فعلاً؟",
+    "لماذا يأتي شم النسيم يوم الاثنين؟",
     "هل شم النسيم يوم ثابت في أبريل؟",
-    "ما الذي يفعله الناس عادة في شم النسيم؟",
-    "متى شم النسيم {{year}} في مصر؟",
-    "كم باقي على شم النسيم؟",
-    "ما هو شم النسيم؟",
-    "هل شم النسيم إجازة رسمية في مصر؟",
-    "لماذا يأتي شم النسيم يوم الاثنين؟"
+    "ماذا يفعل الناس عادة في شم النسيم؟",
+    "كيف أستعد لليوم عملياً؟",
+    "هل هناك تنبيه مهم بخصوص الطعام المرتبط بالمناسبة؟"
   ],
-  "differentiationIdeas": [
-    "تحويل الصفحة من خبر إجازة إلى مرجع سنوي مع عداد مباشر",
-    "شرح العلاقة بين شم النسيم والاثنين التالي لعيد القيامة الشرقي",
-    "جمع الموعد والعادات والنية الخدمية في صفحة واحدة",
-    "جواب مباشر عن موعد شم النسيم في بداية الصفحة قبل أي شرح إضافي.",
-    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر.",
-    "أسئلة شائعة عملية تساعد القارئ على فهم شم النسيم والتصرف بناءً عليه."
-  ],
+  "competitorMatrix": {
+    "strengths": [
+      "الخبر العربي السريع يثبت الموعد والإجازة",
+      "وجود مراجع عالية الثقة للقرار الحكومي",
+      "توفر خلفية إنجليزية جيدة عن الأصل التاريخي"
+    ],
+    "weaknesses": [
+      "ضعف الشرح التفسيري",
+      "قلة القيمة الاجتماعية العملية",
+      "تحول كثير من النتائج إلى خبر يذبل سريعاً"
+    ],
+    "missingTopics": [
+      "لماذا يتغير الموعد",
+      "خطوات التخطيط للخروجة",
+      "سلامة شراء الطعام المرتبط بالمناسبة"
+    ],
+    "uniqueOpportunities": [
+      "تحويل الصفحة من خبر إلى مرجع سنوي",
+      "الجمع بين التاريخ والإجازة والشرح الثقافي",
+      "تقديم تنبيه عملي يفيد الأسرة المصرية فعلاً"
+    ]
+  },
   "factSources": [
     {
-      "label": "المصري اليوم: قرار الإجازة الرسمية لشم النسيم 2026",
-      "url": "https://www.almasryalyoum.com/news/details/4239214"
+      "label": "بوابة الأهرام: نشر قرار إجازة شم النسيم",
+      "url": "https://gate.ahram.org.eg/News/5592349.aspx"
     },
     {
-      "label": "اليوم السابع: الاثنين 13 أبريل 2026 إجازة رسمية بمناسبة شم النسيم",
+      "label": "Ahram Online: إجازة شم النسيم للقطاع الخاص",
+      "url": "https://english.ahram.org.eg/News/565555.aspx"
+    },
+    {
+      "label": "اليوم السابع: إعلان الإجازة الرسمية",
       "url": "https://m2.youm7.com/story/2026/4/6/%D9%85%D8%AC%D9%84%D8%B3-%D8%A7%D9%84%D9%88%D8%B2%D8%B1%D8%A7%D8%A1-%D8%A7%D9%84%D8%A7%D8%AB%D9%86%D9%8A%D9%86-%D8%A7%D9%84%D9%85%D9%82%D8%A8%D9%84-%D8%A5%D8%AC%D8%A7%D8%B2%D8%A9-%D8%B1%D8%B3%D9%85%D9%8A%D8%A9-%D8%A8%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A9-%D8%B9%D9%8A%D8%AF-%D8%B4%D9%85-%D8%A7%D9%84%D9%86%D8%B3%D9%8A%D9%85/7368567"
+    },
+    {
+      "label": "Britannica: Sham al-Nassim background",
+      "url": "https://www.britannica.com/topic/Sham-al-Nassim"
     }
   ],
-  "notes": "الفرصة هنا ليست مجرد تكرار خبر الإجازة، بل بناء صفحة عربية تشرح الموعد ولماذا يتغير وتربطه بالعادات الأكثر بحثاً حول شم النسيم."
+  "notes": "الخلاصة الأهم من البحث أن صفحة شم النسيم يجب ألا تكون مجرد خبر عن الإجازة. الصفحة الأقوى هي التي تبدأ بالتاريخ الرسمي، ثم تشرح لماذا يتغير الموعد، ثم تمنح القارئ قيمة اجتماعية وعملية مرتبطة بالخروجة والطعام والعادات."
 }

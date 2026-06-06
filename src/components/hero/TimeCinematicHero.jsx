@@ -2,7 +2,7 @@
 //
 // Renders a clean two-column RTL grid:
 //   col-1 (RTL RIGHT) — CopyBlock: badge, title, description, CTA
-//   col-2 (RTL LEFT)  — HeroEmbeddedClock inside a glass card
+//   col-2 (RTL LEFT)  — HeroEmbeddedClock inside a tokenized panel
 //
 // The .clockColumn wrapper centers the card both axes within its grid cell.
 // Mobile (≤ 768px): single column, copy on top, clock below.
@@ -20,19 +20,15 @@ export default function TimeCinematicHero({
   const safeCountryName = safeCityName === 'توقيتك المحلي' ? '' : (countryNameAr || '');
 
   return (
-    <main className={`${styles.heroRoot} mb-16 lg:mb-24`} dir="rtl">
-
-      {/* Decorative ambient orbs */}
-      <div className={styles.orbLeft}  aria-hidden="true" />
-      <div className={styles.orbRight} aria-hidden="true" />
+    <section className={styles.heroRoot} dir="rtl" aria-labelledby="home-hero-title">
 
       <div className="container">
         <div className={styles.heroGrid}>
 
           {/* ── Col 1 → RIGHT in RTL — copy ─────────────────────── */}
-          <CopyBlock />
+          <CopyBlock titleId="home-hero-title" />
 
-          {/* ── Col 2 → LEFT in RTL — centered glass clock card ─── */}
+          {/* ── Col 2 → LEFT in RTL — centered clock panel ─── */}
           <div className={styles.clockColumn}>
             <div className={styles.clockPanel}>
               <HeroEmbeddedClock
@@ -46,6 +42,6 @@ export default function TimeCinematicHero({
         </div>
       </div>
 
-    </main>
+    </section>
   );
 }

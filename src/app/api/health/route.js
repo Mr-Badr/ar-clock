@@ -2,12 +2,21 @@ import { connection } from 'next/server';
 import { z } from 'zod';
 
 import { getLiveGeoProviderName, isLiveGeoDbEnabled } from '@/lib/db/live-geo-source';
-import { getEnv } from '@/lib/env.server';
+import { getRuntimeEnvHealthSnapshot } from '@/lib/env.server';
+import { logger } from '@/lib/logger';
+import {
+  CRITICAL_ROUTE_PROBES,
+  buildRouteProbeUrl,
+  evaluateRouteProbeResponse,
+} from '@/lib/route-health/critical-routes';
 import { getAppVersion } from '@/lib/runtime-config';
 import { json, parseSearchParams, withApiHandler } from '@/lib/api/route-utils';
 
 const querySchema = z.object({
   full: z.string().trim().optional().default('0'),
+  routes: z.string().trim().optional().default('0'),
+  routeTimeoutMs: z.string().trim().optional(),
+  routeConcurrency: z.string().trim().optional(),
 });
 
 function isTruthy(value) {
@@ -31,6 +40,39 @@ function getMemoryHealth() {
     externalMb: Math.round(usage.external / 1024 / 1024),
     heapUsageRatio: Number(heapUsageRatio.toFixed(2)),
   };
+}
+
+function getNodeEnv() {
+  return String(process.env.NODE_ENV || 'development');
+}
+
+function getRouteProbeTimeoutMs() {
+  const nodeEnv = getNodeEnv();
+  return nodeEnv === 'development' ? 12000 : 8000;
+}
+
+function parsePositiveInteger(value, fallback) {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed) || parsed <= 0) return fallback;
+  return Math.floor(parsed);
+}
+
+function resolveRouteProbeTimeoutMs(value) {
+  return parsePositiveInteger(value, getRouteProbeTimeoutMs());
+}
+
+function getRouteProbeConcurrency() {
+  const nodeEnv = getNodeEnv();
+  return nodeEnv === 'development' ? 2 : 4;
+}
+
+function resolveRouteProbeConcurrency(value) {
+  return parsePositiveInteger(value, getRouteProbeConcurrency());
+}
+
+function getIpApiBaseUrl(env) {
+  const configuredBaseUrl = String(env?.IP_API_BASE_URL || 'http://ip-api.com').replace(/\/$/, '');
+  return `${configuredBaseUrl}/json/8.8.8.8?fields=status`;
 }
 
 async function checkDatabase(env, enabled) {
@@ -102,6 +144,75 @@ async function checkUpstream(name, url) {
   }
 }
 
+async function checkCriticalRoute(origin, probe, timeoutMs) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  const startedAt = Date.now();
+  const probeUrl = buildRouteProbeUrl(origin, probe.path);
+
+  try {
+    const response = await fetch(probeUrl, {
+      signal: controller.signal,
+      cache: 'no-store',
+      headers: {
+        Accept: 'text/html',
+        'User-Agent': 'miqat-healthcheck/1.0',
+        'x-route-health-probe': '1',
+      },
+    });
+    const body = await response.text();
+    const evaluation = evaluateRouteProbeResponse({
+      status: response.status,
+      body,
+      expectedStatus: probe.expectedStatus,
+    });
+
+    return {
+      id: probe.id,
+      label: probe.label,
+      path: probe.path,
+      status: evaluation.status,
+      reason: evaluation.reason,
+      marker: evaluation.marker || null,
+      httpStatus: response.status,
+      latencyMs: Date.now() - startedAt,
+    };
+  } catch (error) {
+    return {
+      id: probe.id,
+      label: probe.label,
+      path: probe.path,
+      status: 'fail',
+      reason: 'route-probe-threw',
+      httpStatus: null,
+      latencyMs: Date.now() - startedAt,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function runWithConcurrency(items, concurrency, handler) {
+  const results = new Array(items.length);
+  const safeConcurrency = Math.max(1, Math.min(concurrency, items.length || 1));
+  let currentIndex = 0;
+
+  async function worker() {
+    while (currentIndex < items.length) {
+      const itemIndex = currentIndex;
+      currentIndex += 1;
+      results[itemIndex] = await handler(items[itemIndex], itemIndex);
+    }
+  }
+
+  await Promise.all(
+    Array.from({ length: safeConcurrency }, () => worker()),
+  );
+
+  return results;
+}
+
 export const GET = withApiHandler('/api/health', async ({ request, requestId }) => {
   try {
     await connection();
@@ -128,12 +239,27 @@ export const GET = withApiHandler('/api/health', async ({ request, requestId }) 
     throw error;
   }
 
-  const env = getEnv();
-  const { full } = parseSearchParams(request, querySchema);
+  const { full, routes, routeTimeoutMs, routeConcurrency } = parseSearchParams(request, querySchema);
+  const runtimeEnv = getRuntimeEnvHealthSnapshot();
   const runDeepChecks = isTruthy(full);
+  const runRouteChecks = runDeepChecks || isTruthy(routes);
   const memory = getMemoryHealth();
-  const database = await checkDatabase(env, runDeepChecks);
-  const upstreams = runDeepChecks
+  const database = runtimeEnv.status === 'ok'
+    ? await checkDatabase(runtimeEnv.env, runDeepChecks)
+    : {
+        status: 'skipped',
+        reason: 'Runtime environment is invalid, so database checks were skipped.',
+      };
+  const routeProbeTimeoutMs = resolveRouteProbeTimeoutMs(routeTimeoutMs);
+  const routeProbeConcurrency = resolveRouteProbeConcurrency(routeConcurrency);
+  const routeChecks = runRouteChecks
+    ? await runWithConcurrency(
+        CRITICAL_ROUTE_PROBES,
+        routeProbeConcurrency,
+        (probe) => checkCriticalRoute(new URL(request.url).origin, probe, routeProbeTimeoutMs),
+      )
+    : [];
+  const upstreams = runDeepChecks && runtimeEnv.status === 'ok'
     ? await Promise.all([
         checkUpstream(
           'open-meteo',
@@ -141,17 +267,69 @@ export const GET = withApiHandler('/api/health', async ({ request, requestId }) 
         ),
         checkUpstream(
           'ip-api',
-          `${String(env.IP_API_BASE_URL || 'http://ip-api.com').replace(/\/$/, '')}/json/8.8.8.8?fields=status`,
+          getIpApiBaseUrl(runtimeEnv.env),
         ),
       ])
     : [];
+  const environment = runtimeEnv.status === 'ok'
+    ? {
+        status: 'ok',
+        issues: [],
+      }
+    : {
+        status: 'fail',
+        issues: runtimeEnv.issues,
+      };
 
   const upstreamFailures = upstreams.filter((item) => item.status === 'fail').length;
-  const readiness = (runDeepChecks && database.status === 'fail')
+  const routeFailures = routeChecks.filter((item) => item.status === 'fail').length;
+  const routeWarnings = routeChecks.filter((item) => item.status === 'warn').length;
+  if (environment.status === 'fail') {
+    logger.error('health-runtime-env-invalid', {
+      channel: 'observability',
+      surface: 'health',
+      requestId,
+      issues: environment.issues,
+    });
+  }
+  if (routeFailures > 0) {
+    logger.error('health-critical-route-probes-failed', {
+      channel: 'observability',
+      surface: 'health',
+      requestId,
+      failedRoutes: routeChecks.filter((item) => item.status === 'fail'),
+    });
+  } else if (routeWarnings > 0) {
+    logger.warn('health-critical-route-probes-warn', {
+      channel: 'observability',
+      surface: 'health',
+      requestId,
+      warnedRoutes: routeChecks.filter((item) => item.status === 'warn'),
+    });
+  }
+  const readiness = environment.status === 'fail'
     ? 'not-ready'
+    : (runDeepChecks && database.status === 'fail')
+    ? 'not-ready'
+    : routeFailures > 0
+      ? 'not-ready'
     : upstreamFailures > 0
       ? 'degraded'
       : 'ready';
+  const externalApis = runDeepChecks && runtimeEnv.status === 'ok'
+    ? {
+        status: upstreamFailures > 0 ? 'degraded' : 'ok',
+        checks: upstreams,
+      }
+    : runDeepChecks
+      ? {
+          status: 'skipped',
+          reason: 'Runtime environment is invalid, so external API checks were skipped.',
+        }
+      : {
+          status: 'skipped',
+          reason: 'Pass ?full=1 to run upstream dependency checks.',
+        };
 
   return json(
     {
@@ -163,22 +341,24 @@ export const GET = withApiHandler('/api/health', async ({ request, requestId }) 
       requestId,
       uptimeSeconds: Math.round(process.uptime()),
       runtime: {
-        nodeEnv: env.NODE_ENV,
+        nodeEnv: runtimeEnv.status === 'ok' ? runtimeEnv.env.NODE_ENV : getNodeEnv(),
         liveGeoDbEnabled: isLiveGeoDbEnabled(),
         liveGeoProvider: getLiveGeoProviderName(),
       },
       checks: {
+        environment,
         database,
         memory,
-        externalApis: runDeepChecks
+        routes: runRouteChecks
           ? {
-              status: upstreamFailures > 0 ? 'degraded' : 'ok',
-              checks: upstreams,
+              status: routeFailures > 0 ? 'fail' : routeWarnings > 0 ? 'degraded' : 'ok',
+              checks: routeChecks,
             }
           : {
               status: 'skipped',
-              reason: 'Pass ?full=1 to run upstream dependency checks.',
+              reason: 'Pass ?routes=1 or ?full=1 to run critical route probes.',
             },
+        externalApis,
       },
     },
     {

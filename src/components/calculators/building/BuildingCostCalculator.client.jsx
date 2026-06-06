@@ -22,9 +22,11 @@ import {
  * Total Building Cost Calculator Client Component
  * Used in /calculators/building and /calculators/building/[country]
  */
-export default function BuildingCostCalculator({ preSelectedCountrySlug = 'saudi-arabia' }) {
+export default function BuildingCostCalculator({ preSelectedCountrySlug }) {
+  const safeCountries = Array.isArray(COUNTRY_LIST) ? COUNTRY_LIST : [];
+  const resolvedCountrySlug = preSelectedCountrySlug ?? 'saudi-arabia';
   // State
-  const [countrySlug, setCountrySlug] = useState(preSelectedCountrySlug);
+  const [countrySlug, setCountrySlug] = useState(resolvedCountrySlug);
   const [areaM2, setAreaM2] = useState(250);
   const [floors, setFloors] = useState(2);
   const [finishLevel, setFinishLevel] = useState('standard');
@@ -32,7 +34,15 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug = 'saudi
   const [regionMultiplier, setRegionMultiplier] = useState(1.0);
 
   // Derived Data
-  const currentCountry = getCountryBySlug(countrySlug) || COUNTRY_LIST[0];
+  const currentCountry = getCountryBySlug(countrySlug) || safeCountries[0];
+
+  if (!currentCountry) {
+    return (
+      <div className="calc-warning" role="status">
+        لا توجد بيانات دول كافية لتشغيل حاسبة تكلفة البناء الآن. يمكنك الرجوع إلى شرح الصفحة، ثم إعادة المحاولة عند اكتمال بيانات السوق.
+      </div>
+    );
+  }
 
   const results = calcBuildingCost(
     areaM2,
@@ -42,11 +52,12 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug = 'saudi
     buildingType,
     regionMultiplier
   );
+  const safeBreakdown = Array.isArray(results?.breakdown) ? results.breakdown : [];
 
   return (
-    <div className="grid gap-8 lg:grid-cols-12">
+    <div className="calc-app-grid grid gap-8">
       {/* ─── Controls Panel (Left/Top) ─────────────── */}
-      <div className="lg:col-span-5 space-y-6">
+      <div className="space-y-6">
         <Card className="calc-surface-card">
           <CardHeader>
             <CardTitle className="calc-card-title text-xl">مواصفات المبنى</CardTitle>
@@ -66,7 +77,7 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug = 'saudi
                     <SelectValue placeholder="اختر الدولة" />
                   </SelectTrigger>
                   <SelectContent dir="rtl">
-                    {COUNTRY_LIST.map((c) => (
+                    {safeCountries.map((c) => (
                       <SelectItem key={c.slug} value={c.slug}>
                         {c.flag} {c.nameShort}
                       </SelectItem>
@@ -98,10 +109,11 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug = 'saudi
             {/* Area Slider */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label>مساحة الطابق (م²)</Label>
+                <Label id="building-area-label">مساحة الطابق (م²)</Label>
                 <span className="font-bold text-primary">{fmt(areaM2)} م²</span>
               </div>
               <Slider
+                aria-labelledby="building-area-label"
                 min={50}
                 max={2000}
                 step={10}
@@ -113,9 +125,10 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug = 'saudi
 
             {/* Floors */}
             <div className="space-y-2">
-              <Label>عدد الطوابق</Label>
+              <Label htmlFor="building-floors">عدد الطوابق</Label>
               <div className="flex items-center gap-4">
                 <Input
+                  id="building-floors"
                   type="number"
                   min="1"
                   max="20"
@@ -134,11 +147,13 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug = 'saudi
                 {BUILDING_TYPES.map((type) => (
                   <button
                     key={type.key}
+                    type="button"
+                    aria-pressed={buildingType === type.key}
                     onClick={() => setBuildingType(type.key)}
-                    className={`flex-1 min-w-[80px] py-2 px-3 rounded-xl text-sm font-medium transition-all ${
+                    className={`flex-1 min-w-[80px] py-2 px-3 rounded-[var(--radius-md)] text-sm font-medium transition-colors ${
                       buildingType === type.key
-                        ? 'bg-primary text-base font-bold shadow-sm'
-                        : 'bg-accent/5 hover:bg-accent/10'
+                        ? 'bg-[var(--blue)] text-[var(--text-on-accent)] font-bold'
+                        : 'bg-[var(--bg-surface-2)] hover:bg-[var(--bg-surface-3)]'
                     }`}
                   >
                     {type.label}
@@ -154,14 +169,15 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug = 'saudi
                 {FINISH_LEVELS.map((level) => (
                   <button
                     key={level.key}
+                    type="button"
+                    aria-pressed={finishLevel === level.key}
                     onClick={() => setFinishLevel(level.key)}
-                    className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
+                    className={`flex flex-col items-center justify-center p-3 rounded-[var(--radius-lg)] border transition-colors ${
                       finishLevel === level.key
-                        ? 'border-primary bg-primary/5'
-                        : 'border-transparent bg-accent/5 hover:bg-accent/10'
+                        ? 'border-[var(--border-accent)] bg-[var(--bg-surface-1)]'
+                        : 'border-[var(--border-subtle)] bg-[var(--bg-surface-2)] hover:bg-[var(--bg-surface-3)]'
                     }`}
                   >
-                    <span className="text-2xl mb-1">{level.emoji}</span>
                     <span className="text-sm font-bold">{level.label}</span>
                     <span className="text-xs text-text-secondary">{level.subLabel}</span>
                   </button>
@@ -174,22 +190,20 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug = 'saudi
       </div>
 
       {/* ─── Results Panel (Right/Bottom) ──────────── */}
-      <div className="lg:col-span-7 space-y-6">
+      <div className="space-y-6">
 
         {/* Main Cost Highlight */}
         <Card className="calc-result-card relative overflow-hidden">
           {/* Subtle background glow based on finish level */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10" />
-          
-          <CardContent className="p-8 text-center space-y-4">
+          <CardContent className="p-8 text-center space-y-4" aria-live="polite">
             <h3 className="text-lg font-medium text-text-secondary">التكلفة الإجمالية التقديرية</h3>
             
             <div className="flex flex-col items-center justify-center">
-              <div className="text-4xl lg:text-5xl font-black text-primary" style={{ fontFamily: 'var(--font-ibm-plex-sans-arabic)' }}>
+              <div className="calc-result-value">
                 {formatCurrency(results.midCost, currentCountry.symbol)}
               </div>
               
-              <div className="mt-4 flex items-center justify-center gap-3 text-sm text-text-secondary font-medium px-4 py-2 bg-base rounded-full">
+              <div className="mt-4 flex items-center justify-center gap-3 rounded-[var(--radius-md)] border border-[var(--border-default)] bg-base px-4 py-2 text-sm font-medium text-text-secondary">
                 <span>تتراوح بين</span>
                 <span className="font-bold text-text-primary">{fmt(results.minCost)}</span>
                 <span>إلى</span>
@@ -197,14 +211,14 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug = 'saudi
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-accent/10">
-              <div className="flex flex-col items-center">
-                <span className="text-sm text-text-secondary">إجمالي المساحة المبنية</span>
-                <span className="text-xl font-bold">{fmt(results.totalArea)} م²</span>
+            <div className="calc-metric-grid calc-grid-2 calc-result-metrics">
+              <div className="calc-metric-card text-center">
+                <span className="calc-metric-card__label justify-center">إجمالي المساحة المبنية</span>
+                <span className="calc-metric-card__value">{fmt(results.totalArea)} م²</span>
               </div>
-              <div className="flex flex-col items-center">
-                <span className="text-sm text-text-secondary">متوسط تكلفة المتر</span>
-                <span className="text-xl font-bold">{formatCurrency(results.costPerM2Mid, currentCountry.symbol)}</span>
+              <div className="calc-metric-card text-center">
+                <span className="calc-metric-card__label justify-center">متوسط تكلفة المتر</span>
+                <span className="calc-metric-card__value">{formatCurrency(results.costPerM2Mid, currentCountry.symbol)}</span>
               </div>
             </div>
           </CardContent>
@@ -220,7 +234,7 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug = 'saudi
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
-                    data={results.breakdown}
+                    data={safeBreakdown}
                     cx="50%"
                     cy="50%"
                     innerRadius={60}
@@ -229,13 +243,19 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug = 'saudi
                     dataKey="value"
                     stroke="none"
                   >
-                    {results.breakdown.map((entry, index) => (
+                    {safeBreakdown.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={`var(--chart-${(index % 5) + 1})`} />
                     ))}
                   </Pie>
                   <Tooltip
                     formatter={(value) => formatCurrency(value, currentCountry.symbol)}
-                    contentStyle={{ borderRadius: '8px', border: 'none', backgroundColor: 'white', color: 'black', boxShadow: 'var(--shadow-md)' }}
+                    contentStyle={{
+                      borderRadius: 'var(--radius-md)',
+                      border: '1px solid var(--border-default)',
+                      backgroundColor: 'var(--bg-surface-1)',
+                      color: 'var(--text-primary)',
+                      boxShadow: 'none',
+                    }}
                   />
                 </PieChart>
               </ResponsiveContainer>
@@ -248,10 +268,10 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug = 'saudi
             </CardHeader>
             <CardContent>
               <div className="space-y-4 pt-2">
-                {results.breakdown.map((item, index) => (
+                {safeBreakdown.map((item, index) => (
                   <div key={item.key} className="flex justify-between items-center text-sm">
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: `var(--chart-${(index % 5) + 1})` }} />
+                      <div className={`calc-chart-swatch calc-chart-swatch--${(index % 5) + 1}`} />
                       <span className="font-medium">{item.name}</span>
                     </div>
                     <div className="flex flex-col items-end">
@@ -267,17 +287,15 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug = 'saudi
 
         {/* Quick Estimates (Cement & Rebar) */}
         <div className="grid grid-cols-2 gap-4">
-          <Card className="calc-surface-card bg-accent/5 border-none">
+          <Card className="calc-surface-card bg-[var(--bg-surface-2)] border-none">
             <CardContent className="p-4 flex flex-col items-center justify-center text-center">
-              <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-xl mb-2">🧱</div>
               <span className="text-sm text-text-secondary mb-1">الأسمنت (تقديري)</span>
               <span className="text-xl font-bold">{fmt(results.cementBags)} {currentCountry.cementUnit}</span>
             </CardContent>
           </Card>
           
-          <Card className="calc-surface-card bg-accent/5 border-none">
+          <Card className="calc-surface-card bg-[var(--bg-surface-2)] border-none">
             <CardContent className="p-4 flex flex-col items-center justify-center text-center">
-              <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-xl mb-2">🏗️</div>
               <span className="text-sm text-text-secondary mb-1">الحديد (تقديري)</span>
               <span className="text-xl font-bold">{fmt(results.rebarTons, 1)} {currentCountry.rebarUnit}</span>
             </CardContent>

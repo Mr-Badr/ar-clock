@@ -30,7 +30,7 @@ function renderFallbackImage(cityLabel = 'المدينة', countryLabel = 'ال�
         }}
       >
         <div style={{ fontSize: '34px', color: '#9ca3af', fontWeight: 700, display: 'flex' }}>
-          {SITE_BRAND} | الوقت الآن
+          {SITE_BRAND} | الوقت الان
         </div>
         <div style={{ fontSize: '76px', fontWeight: 900, marginTop: '24px', display: 'flex' }}>
           {cityLabel}
@@ -118,7 +118,7 @@ export default async function Image({ params }) {
                 justifyContent: 'center',
               }}
             >
-              الوقت الآن في
+              الوقت الان في
             </h1>
             <h2
               style={{

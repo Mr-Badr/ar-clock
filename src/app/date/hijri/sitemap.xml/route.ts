@@ -1,49 +1,29 @@
 /**
- * /date/hijri/sitemap.xml — Hijri date pages
- * Publish a rolling SEO window of canonical Hijri day pages so Search Console
- * receives direct discovery signals for the pages we expect to index.
+ * /date/hijri/sitemap.xml: Hijri date pages
+ * Publish a narrow rolling SEO window of canonical Hijri day pages. The full
+ * historical Hijri archive remains available through valid routes, but it is
+ * not submitted wholesale because that creates thousands of low-demand URLs in
+ * Search Console.
  */
-import { convertDate } from '@/lib/date-adapter';
-import { getHijriCalendarSeoBounds } from '@/lib/seo/date-indexing';
+import { getHijriDailySitemapDays } from '@/lib/seo/date-indexing';
 import { getSiteUrl } from '@/lib/site-config';
 import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
-const BASE = getSiteUrl();
-
-function daysInHijriMonth(year: number, month: number) {
-  try {
-    convertDate({
-      date: `${year}-${String(month).padStart(2, '0')}-30`,
-      toCalendar: 'gregorian',
-      method: 'umalqura',
-    });
-    return 30;
-  } catch {
-    return 29;
-  }
-}
-
 export async function GET() {
-  const { minYear, maxYear } = getHijriCalendarSeoBounds();
+  const base = getSiteUrl();
   const lastmod = getSitemapLastModifiedDate();
-  const entries: string[] = [];
+  const entries = getHijriDailySitemapDays().map(({ year, month, day }) => {
+    const monthStr = String(month).padStart(2, '0');
+    const dayStr = String(day).padStart(2, '0');
 
-  for (let year = minYear; year <= maxYear; year++) {
-    for (let month = 1; month <= 12; month++) {
-      const days = daysInHijriMonth(year, month);
-      for (let day = 1; day <= days; day++) {
-        const monthStr = String(month).padStart(2, '0');
-        const dayStr = String(day).padStart(2, '0');
-        entries.push(`
+    return `
   <url>
-    <loc>${BASE}/date/hijri/${year}/${monthStr}/${dayStr}</loc>
+    <loc>${base}/date/hijri/${year}/${monthStr}/${dayStr}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
-  </url>`);
-      }
-    }
-  }
+  </url>`;
+  });
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

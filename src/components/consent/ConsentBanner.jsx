@@ -39,8 +39,8 @@ export default function ConsentBanner() {
         marginInline: "auto",
         background: "var(--bg-surface-2)",
         border: "1px solid var(--border-default)",
-        borderRadius: "var(--radius-xl)",
-        boxShadow: "var(--shadow-lg)",
+        borderRadius: "var(--radius-lg)",
+        boxShadow: 'none',
         padding: "var(--space-4)",
       }}
     >

@@ -1,16 +1,4 @@
 'use client';
-// src/app/date/converter/ConverterForm.tsx
-// ─────────────────────────────────────────────────────────────────────────────
-// REDESIGNED v2:
-//   • All icons from @phosphor-icons/react — no emoji icons
-//   • Custom NumberSpinner: up/down carets, direct editing, inline validation
-//   • Auto-scroll to result panel on mobile after conversion
-//   • Both panels locked to equal height via CSS grid align-items: stretch
-//   • Method cards with phosphor icon + flag context
-//   • Result panel: premium gradient header, animated entry, permalink chip
-//   • Full RTL + WCAG AA — all colours via design-system tokens
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { useState, useTransition, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import {
@@ -30,11 +18,12 @@ import {
   Calculator,
   ArrowDown,
 } from '@phosphor-icons/react';
-import { getHijriParts, HIJRI_MONTHS_AR } from '@/lib/hijri-utils';
+import { HIJRI_MONTHS_AR } from '@/lib/hijri-utils';
 import { convertDateAction } from './actions';
 import type { ConvertDateResult, ConversionMethod } from '@/lib/date-adapter';
 import { GREGORIAN_MONTHS_AR } from '@/lib/constants';
 import { cn } from '@/lib/utils';
+import styles from './ConverterForm.module.css';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -49,21 +38,21 @@ const METHODS: {
     value: 'umalqura',
     label: 'أم القرى',
     sub: 'السعودية والخليج',
-    countries: '🇸🇦🇦🇪🇰🇼🇶🇦🇧🇭🇴🇲',
+    countries: 'السعودية ودول الخليج',
     Icon: Globe,
   },
   {
     value: 'astronomical',
     label: 'الرصد الفلكي',
     sub: 'المغرب، مصر، الشام',
-    countries: '🇲🇦🇪🇬🇯🇴🇩🇿🇹🇳🇱🇧',
+    countries: 'المغرب ومصر والشام',
     Icon: Compass,
   },
   {
     value: 'civil',
     label: 'مدني / حسابي',
     sub: 'للحسابات الأكاديمية',
-    countries: '📐',
+    countries: 'أكاديمي',
     Icon: Calculator,
   },
 ];
@@ -113,78 +102,31 @@ function NumberSpinner({ value, min, max, onChange, label, placeholder }: Spinne
   };
 
   return (
-    <div className="input-group" style={{ alignItems: 'center' }}>
-      <span className="input-label" style={{ textAlign: 'center', fontSize: 'var(--text-xs)' }}>
+    <div className={`input-group ${styles.spinnerRoot}`}>
+      <span className={`input-label ${styles.spinnerLabel}`}>
         {label}
       </span>
 
-      {/* Spinner container */}
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          background: 'var(--bg-surface-3)',
-          border: `1px solid ${isInvalid ? 'var(--danger-border)' : 'var(--border-default)'}`,
-          borderRadius: 'var(--radius-lg)',
-          overflow: 'hidden',
-          boxShadow: isInvalid ? '0 0 0 3px var(--danger-soft)' : 'var(--shadow-inner)',
-          transition: 'border-color var(--transition-fast), box-shadow var(--transition-fast)',
-          minWidth: '72px',
-        }}
-      >
-        {/* Up button */}
+      <div className={`${styles.spinnerShell} ${isInvalid ? styles.spinnerShellInvalid : ''}`}>
         <button
           type="button"
           onClick={increment}
           aria-label={`زيادة ${label}`}
-          style={{
-            width: '100%',
-            padding: '6px 0',
-            background: 'transparent',
-            border: 'none',
-            borderBottom: '1px solid var(--border-subtle)',
-            color: 'var(--text-muted)',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'background var(--transition-fast), color var(--transition-fast)',
-          }}
-          onMouseEnter={e => {
-            (e.currentTarget as HTMLElement).style.background = 'var(--bg-surface-4)';
-            (e.currentTarget as HTMLElement).style.color = 'var(--accent-alt)';
-          }}
-          onMouseLeave={e => {
-            (e.currentTarget as HTMLElement).style.background = 'transparent';
-            (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)';
-          }}
+          className={`${styles.spinnerButton} ${styles.spinnerButtonTop}`}
         >
           <CaretUp weight="bold" size={14} />
         </button>
 
-        {/* Value display / edit */}
         {editing ? (
           <input
             ref={inputRef}
             type="number"
             value={raw}
+            aria-label={label}
             onChange={e => setRaw(e.target.value)}
             onBlur={commitEdit}
             onKeyDown={handleKey}
-            style={{
-              width: '100%',
-              background: 'transparent',
-              border: 'none',
-              outline: 'none',
-              textAlign: 'center',
-              fontFamily: 'inherit',
-              fontSize: 'var(--text-md)',
-              fontWeight: 'var(--font-bold)',
-              color: 'var(--text-primary)',
-              padding: '10px 4px',
-              fontVariantNumeric: 'tabular-nums',
-            }}
+            className={styles.spinnerInput}
           />
         ) : (
           <div
@@ -192,69 +134,28 @@ function NumberSpinner({ value, min, max, onChange, label, placeholder }: Spinne
             aria-valuenow={value}
             aria-valuemin={min}
             aria-valuemax={max}
+            aria-label={label}
             tabIndex={0}
             onClick={startEdit}
             onFocus={startEdit}
-            style={{
-              width: '100%',
-              textAlign: 'center',
-              fontSize: 'var(--text-md)',
-              fontWeight: 'var(--font-bold)',
-              color: isInvalid ? 'var(--danger)' : 'var(--text-primary)',
-              padding: '10px 4px',
-              cursor: 'text',
-              userSelect: 'none',
-              fontVariantNumeric: 'tabular-nums',
-              letterSpacing: 'var(--tracking-clock)',
-            }}
+            className={`${styles.spinnerValue} ${isInvalid ? styles.spinnerValueInvalid : ''}`}
           >
             {placeholder && !value ? placeholder : value}
           </div>
         )}
 
-        {/* Down button */}
         <button
           type="button"
           onClick={decrement}
           aria-label={`تقليل ${label}`}
-          style={{
-            width: '100%',
-            padding: '6px 0',
-            background: 'transparent',
-            border: 'none',
-            borderTop: '1px solid var(--border-subtle)',
-            color: 'var(--text-muted)',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'background var(--transition-fast), color var(--transition-fast)',
-          }}
-          onMouseEnter={e => {
-            (e.currentTarget as HTMLElement).style.background = 'var(--bg-surface-4)';
-            (e.currentTarget as HTMLElement).style.color = 'var(--accent-alt)';
-          }}
-          onMouseLeave={e => {
-            (e.currentTarget as HTMLElement).style.background = 'transparent';
-            (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)';
-          }}
+          className={`${styles.spinnerButton} ${styles.spinnerButtonBottom}`}
         >
           <CaretDown weight="bold" size={14} />
         </button>
       </div>
 
-      {/* Inline validation hint */}
       {isInvalid && (
-        <span
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '4px',
-            fontSize: 'var(--text-2xs)',
-            color: 'var(--danger)',
-            textAlign: 'center',
-          }}
-        >
+        <span className={styles.spinnerHint}>
           <Warning size={11} weight="fill" />
           {min}–{max}
         </span>
@@ -276,13 +177,15 @@ interface Props {
 // ─── ConverterForm ─────────────────────────────────────────────────────────────
 
 export function ConverterForm({
-  defaultDirection = 'gregorian-to-hijri',
-  lockedDirection = false,
   defaultYear,
   defaultMonth,
   defaultDay,
+  defaultDirection,
+  lockedDirection,
 }: Props) {
-  const [direction, setDirection] = useState<Direction>(defaultDirection);
+  const resolvedDefaultDirection = defaultDirection ?? 'gregorian-to-hijri';
+  const resolvedLockedDirection = lockedDirection ?? false;
+  const [direction, setDirection] = useState<Direction>(resolvedDefaultDirection);
   const [method, setMethod] = useState<ConversionMethod>('umalqura');
   const [year, setYear] = useState(defaultYear ?? 2026);
   const [month, setMonth] = useState(defaultMonth ?? 1);
@@ -323,26 +226,33 @@ export function ConverterForm({
     setResult(null);
 
     startTransition(async () => {
-      const res = await convertDateAction(direction, year, month, day, method);
-      if (res.success && res.result) {
-        setResult(res.result);
-        // Auto-scroll to result panel on mobile
-        setTimeout(() => {
-          if (window.innerWidth < 1024) {
-            resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }, 100);
-      } else {
-        setError(res.error ?? 'خطأ غير معروف');
+      try {
+        const res = await convertDateAction(direction, year, month, day, method);
+        if (res.success && res.result) {
+          setResult(res.result);
+          setTimeout(() => {
+            if (window.innerWidth < 1024) {
+              resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }, 100);
+        } else {
+          setError(res.error ?? 'تعذر تحويل التاريخ. راجع اليوم والشهر والسنة ثم أعد المحاولة.');
+        }
+      } catch (error) {
+        setError(error instanceof Error ? error.message : 'تعذر تحويل التاريخ بسبب خطأ غير متوقع.');
       }
     });
   }
 
   async function handleCopy() {
     if (!result) return;
-    await navigator.clipboard.writeText(result.formatted.ar);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(result.formatted.ar);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'تعذر نسخ النتيجة من المتصفح.');
+    }
   }
 
   function buildPermalink(): string {
@@ -360,124 +270,63 @@ export function ConverterForm({
   }, []);
 
   return (
-    <div
-      className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr]"
-      style={{ gap: 'var(--space-5)', alignItems: 'stretch' }}
-    >
-      {/* ── INPUT PANEL ───────────────────────────────────────────────── */}
-      <form onSubmit={handleSubmit} className="card flex flex-col" style={{ gap: 'var(--space-6)' }}>
-
-        {/* Panel header */}
-        <div className="card__header" style={{ marginBottom: 0, paddingBottom: 'var(--space-4)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
-            <div
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 'var(--radius-md)',
-                background: 'var(--accent-soft)',
-                border: '1px solid var(--border-accent)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}
-            >
-              <ArrowsLeftRight weight="duotone" size={18} color="var(--accent-alt)" />
-            </div>
-            <div>
-              <div className="card__title" style={{ fontSize: 'var(--text-base)' }}>محوّل التاريخ</div>
-              <div className="card__subtitle">هجري ↔ ميلادي</div>
-            </div>
+    <div className={styles.layout}>
+      <form onSubmit={handleSubmit} className={styles.panel}>
+        <div className={styles.panelHeader}>
+          <div className={styles.panelIcon}>
+            <ArrowsLeftRight weight="duotone" size={18} color="var(--accent-alt)" />
+          </div>
+          <div>
+            <div className={styles.panelTitle}>محوّل التاريخ</div>
+            <div className={styles.panelSubtitle}>هجري ↔ ميلادي</div>
           </div>
         </div>
 
-        {/* Direction toggle */}
-        {!lockedDirection && (
-          <div className="input-group">
-            <span className="input-label">اتجاه التحويل</span>
-            <div
-              className="card-nested"
-              style={{
-                padding: 'var(--space-2)',
-                display: 'flex',
-                gap: 'var(--space-2)',
-                position: 'relative',
-              }}
-            >
-              {/* Gregorian → Hijri */}
+        {!resolvedLockedDirection && (
+          <div className={styles.fieldGroup}>
+            <span className={styles.inputLabel}>اتجاه التحويل</span>
+            <div className={styles.directionGroup}>
               <button
                 type="button"
                 onClick={() => { setDirection('gregorian-to-hijri'); setResult(null); setError(null); }}
-                className={cn('tab flex-1', direction === 'gregorian-to-hijri' && 'tab--active')}
-                style={{
-                  flexDirection: 'column',
-                  height: 'auto',
-                  gap: 'var(--space-1-5)',
-                  padding: 'var(--space-3) var(--space-2)',
-                  borderRadius: 'var(--radius-md)',
-                }}
+                aria-pressed={direction === 'gregorian-to-hijri'}
+                aria-label="تحويل من ميلادي إلى هجري"
+                className={`${styles.directionButton} ${direction === 'gregorian-to-hijri' ? styles.directionButtonActive : ''}`}
               >
-                <CalendarBlank className='mx-auto' weight={direction === 'gregorian-to-hijri' ? 'duotone' : 'regular'} size={20} />
-                <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--font-semibold)' }}>
-                  ميلادي → هجري
-                </span>
+                <CalendarBlank className="mx-auto" weight={direction === 'gregorian-to-hijri' ? 'duotone' : 'regular'} size={20} />
+                <span>ميلادي → هجري</span>
               </button>
 
-              {/* Swap icon in between */}
               <button
                 type="button"
                 onClick={switchDirection}
                 title="تبديل الاتجاه"
-                className="btn btn-ghost btn-icon btn-sm"
-                style={{
-                  alignSelf: 'center',
-                  borderRadius: 'var(--radius-full)',
-                  flexShrink: 0,
-                  color: 'var(--text-muted)',
-                }}
+                aria-label="تبديل اتجاه التحويل"
+                className={`btn btn-ghost btn-icon btn-sm ${styles.swapButton}`}
               >
                 <ArrowsDownUp size={14} weight="bold" />
               </button>
 
-              {/* Hijri → Gregorian */}
               <button
                 type="button"
                 onClick={() => { setDirection('hijri-to-gregorian'); setResult(null); setError(null); }}
-                className={cn('tab flex-1', direction === 'hijri-to-gregorian' && 'tab--active')}
-                style={{
-                  flexDirection: 'column',
-                  height: 'auto',
-                  gap: 'var(--space-1-5)',
-                  padding: 'var(--space-3) var(--space-2)',
-                  borderRadius: 'var(--radius-md)',
-                }}
+                aria-pressed={direction === 'hijri-to-gregorian'}
+                aria-label="تحويل من هجري إلى ميلادي"
+                className={`${styles.directionButton} ${direction === 'hijri-to-gregorian' ? styles.directionButtonActive : ''}`}
               >
-                <Moon className='mx-auto' weight={direction === 'hijri-to-gregorian' ? 'duotone' : 'regular'} size={20} />
-                <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--font-semibold)' }}>
-                  هجري → ميلادي
-                </span>
+                <Moon className="mx-auto" weight={direction === 'hijri-to-gregorian' ? 'duotone' : 'regular'} size={20} />
+                <span>هجري → ميلادي</span>
               </button>
             </div>
           </div>
         )}
 
-        {/* ── Date input row — Spinners + Month select ───────────────── */}
-        <div className="input-group">
-          <span className="input-label">
+        <div className={styles.fieldGroup}>
+          <span className={styles.inputLabel}>
             {isHijriInput ? 'أدخل التاريخ الهجري' : 'أدخل التاريخ الميلادي'}
           </span>
 
-          {/* Three columns: Day spinner | Month select | Year spinner */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '80px 1fr 96px',
-              gap: 'var(--space-3)',
-              alignItems: 'start',
-            }}
-          >
-            {/* Day spinner */}
+          <div className={styles.dateGrid}>
             <NumberSpinner
               value={day}
               min={1}
@@ -486,25 +335,22 @@ export function ConverterForm({
               label="اليوم"
             />
 
-            {/* Month select */}
-            <div className="input-group" style={{ flex: 1 }}>
-              <span className="input-label" style={{ textAlign: 'center', fontSize: 'var(--text-xs)' }}>
+            <div className={styles.monthGroup}>
+              <span className={styles.spinnerLabel}>
                 الشهر
               </span>
               <select
                 value={month}
                 onChange={e => setMonth(Number(e.target.value))}
-                className="select"
-                style={{ height: '100%', minHeight: '88px', textAlign: 'center' }}
+                className={`select ${styles.monthSelect}`}
                 aria-label="الشهر"
               >
                 {monthNames.map((mn, i) => (
-                  <option key={i} value={i + 1}>{mn}</option>
+                  <option key={mn} value={i + 1}>{mn}</option>
                 ))}
               </select>
             </div>
 
-            {/* Year spinner */}
             <NumberSpinner
               value={year}
               min={minYear}
@@ -514,59 +360,29 @@ export function ConverterForm({
             />
           </div>
 
-          {/* Range hint */}
-          <p className="input-hint" style={{ marginTop: 'var(--space-1)', textAlign: 'center' }}>
+          <p className={styles.rangeHint}>
             النطاق المدعوم: {minYear}–{maxYear}
           </p>
 
-          {/* Year out-of-range warning */}
           {!yearValid && (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 'var(--space-2)',
-                padding: 'var(--space-2) var(--space-3)',
-                background: 'var(--danger-soft)',
-                border: '1px solid var(--danger-border)',
-                borderRadius: 'var(--radius-md)',
-              }}
-            >
+            <div className={styles.fieldWarning}>
               <Warning size={14} weight="fill" color="var(--danger)" />
-              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--danger)', fontWeight: 'var(--font-medium)' }}>
+              <span className={styles.fieldWarningText}>
                 السنة يجب أن تكون بين {minYear} و {maxYear}
               </span>
             </div>
           )}
         </div>
 
-        {/* ── Calculation method ────────────────────────────────────── */}
-        <div className="input-group">
-          <span className="input-label">طريقة الحساب</span>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+        <div className={styles.fieldGroup}>
+          <span className={styles.inputLabel}>طريقة الحساب</span>
+          <div className={styles.methodList}>
             {METHODS.map((meth) => {
               const active = method === meth.value;
               return (
                 <label
                   key={meth.value}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 'var(--space-3)',
-                    padding: 'var(--space-3) var(--space-4)',
-                    borderRadius: 'var(--radius-lg)',
-                    border: `1px solid ${active ? 'var(--border-accent-strong)' : 'var(--border-subtle)'}`,
-                    background: active ? 'var(--accent-soft)' : 'var(--bg-surface-3)',
-                    cursor: 'pointer',
-                    transition: 'all var(--transition-fast)',
-                    boxShadow: active ? '0 0 0 1px var(--border-accent)' : 'none',
-                  }}
-                  onMouseEnter={e => {
-                    if (!active) (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-default)';
-                  }}
-                  onMouseLeave={e => {
-                    if (!active) (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-subtle)';
-                  }}
+                  className={`${styles.methodOption} ${active ? styles.methodOptionActive : ''}`}
                 >
                   <input
                     type="radio"
@@ -577,73 +393,30 @@ export function ConverterForm({
                     className="sr-only"
                   />
 
-                  {/* Method icon */}
-                  <div
-                    style={{
-                      width: 32,
-                      height: 32,
-                      borderRadius: 'var(--radius-sm)',
-                      background: active ? 'var(--accent-gradient)' : 'var(--bg-surface-4)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0,
-                      transition: 'all var(--transition-fast)',
-                    }}
-                  >
+                  <div className={styles.methodIcon}>
                     <meth.Icon
                       weight="duotone"
                       size={16}
-                      color={active ? '#fff' : 'var(--text-muted)'}
+                      color="currentColor"
                     />
                   </div>
 
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div
-                      style={{
-                        fontSize: 'var(--text-sm)',
-                        fontWeight: 'var(--font-semibold)',
-                        color: active ? 'var(--accent-alt)' : 'var(--text-primary)',
-                        lineHeight: 'var(--leading-tight)',
-                      }}
-                    >
+                  <div className={styles.methodBody}>
+                    <div className={styles.methodTitle}>
                       {meth.label}
                     </div>
-                    <div
-                      style={{
-                        fontSize: 'var(--text-xs)',
-                        color: 'var(--text-muted)',
-                        marginTop: '2px',
-                        lineHeight: 'var(--leading-snug)',
-                      }}
-                    >
+                    <div className={styles.methodSubtitle}>
                       {meth.sub}
                     </div>
                   </div>
 
-                  {/* Country flags */}
-                  <span
-                    style={{ fontSize: '0.75rem', letterSpacing: '1px', flexShrink: 0, opacity: 0.85 }}
-                    aria-hidden="true"
-                  >
+                  <span className={styles.methodCountry}>
                     {meth.countries}
                   </span>
 
-                  {/* Active check */}
                   {active && (
-                    <div
-                      style={{
-                        width: 18,
-                        height: 18,
-                        borderRadius: 'var(--radius-full)',
-                        background: 'var(--accent-gradient)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexShrink: 0,
-                      }}
-                    >
-                      <Check size={10} weight="bold" color="#fff" />
+                    <div className={styles.activeCheck}>
+                      <Check size={10} weight="bold" color="currentColor" />
                     </div>
                   )}
                 </label>
@@ -652,16 +425,10 @@ export function ConverterForm({
           </div>
         </div>
 
-        {/* ── Submit button ─────────────────────────────────────────── */}
         <button
           type="submit"
           disabled={isPending || !formValid}
-          className="btn btn-primary btn-block btn-lg"
-          style={{
-            marginTop: 'auto',
-            gap: 'var(--space-3)',
-            letterSpacing: 0,
-          }}
+          className={`btn btn-primary btn-block btn-lg ${styles.submitButton}`}
         >
           {isPending ? (
             <>
@@ -676,185 +443,76 @@ export function ConverterForm({
           )}
         </button>
 
-        {/* Mobile nudge — shown only below lg */}
         {(result || isPending) && (
-          <div
-            className="lg:hidden"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 'var(--space-2)',
-              fontSize: 'var(--text-xs)',
-              color: 'var(--text-muted)',
-              marginTop: 'calc(-1 * var(--space-3))',
-            }}
-          >
+          <div className={`lg:hidden ${styles.mobileNudge}`}>
             <ArrowDown size={12} weight="bold" />
             انتقل لأسفل لرؤية النتيجة
           </div>
         )}
       </form>
 
-      {/* ── RESULT PANEL ──────────────────────────────────────────────── */}
       <div
         ref={resultRef}
+        aria-live="polite"
         className={cn(
-          'card flex flex-col',
-          result && 'card--accent',
+          styles.resultPanel,
+          result && styles.resultPanelAccent,
+          !result && !error && styles.emptyResultPanel,
         )}
-        style={{
-          minHeight: 320,
-          ...((!result && !error) && { justifyContent: 'center', alignItems: 'center' }),
-        }}
       >
-        {/* ── Empty state ── */}
         {!result && !error && (
-          <div
-            className="empty-state"
-            style={{ gap: 'var(--space-4)', padding: 'var(--space-10) var(--space-6)' }}
-          >
-            <div
-              style={{
-                width: 64,
-                height: 64,
-                borderRadius: 'var(--radius-2xl)',
-                background: 'var(--bg-surface-3)',
-                border: '1px solid var(--border-subtle)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                opacity: 0.5,
-              }}
-            >
-              <ArrowsLeftRight weight="duotone" size={28} color="var(--text-muted)" />
+          <div className={styles.emptyState}>
+            <div className={styles.emptyIcon}>
+              <ArrowsLeftRight weight="duotone" size={28} color="currentColor" />
             </div>
             <div>
-              <p className="empty-state__title" style={{ fontSize: 'var(--text-base)' }}>
+              <p className={styles.emptyTitle}>
                 أدخل تاريخاً وابدأ التحويل
               </p>
-              <p className="empty-state__description" style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)' }}>
+              <p className={styles.emptyDescription}>
                 ستظهر النتيجة المفصّلة هنا فوراً بعد الضغط على زر التحويل
               </p>
             </div>
           </div>
         )}
 
-        {/* ── Error state ── */}
         {error && (
-          <div
-            className="card--danger card-nested"
-            style={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: 'var(--space-3)',
-              padding: 'var(--space-4)',
-            }}
-          >
-            <Warning size={20} weight="fill" color="var(--danger)" style={{ flexShrink: 0, marginTop: 2 }} />
+          <div className={styles.errorBox} role="alert">
+            <Warning size={20} weight="fill" color="var(--danger)" />
             <div>
-              <div
-                style={{
-                  fontSize: 'var(--text-sm)',
-                  fontWeight: 'var(--font-semibold)',
-                  color: 'var(--danger)',
-                  marginBottom: 'var(--space-1)',
-                }}
-              >
+              <p className={styles.errorTitle}>
                 خطأ في التحويل
-              </div>
-              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)' }}>{error}</div>
+              </p>
+              <p className={styles.errorText}>{error}</p>
             </div>
           </div>
         )}
 
-        {/* ── Result ── */}
         {result && (
           <>
-            {/* Gradient header */}
-            <div
-              style={{
-                background: 'var(--accent-gradient)',
-                margin: 'calc(-1 * var(--space-6)) calc(-1 * var(--space-6)) var(--space-6)',
-                padding: 'var(--space-3) var(--space-5)',
-                borderRadius: 'var(--radius-xl) var(--radius-xl) 0 0',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
-            >
-              <span
-                style={{
-                  fontSize: 'var(--text-xs)',
-                  fontWeight: 'var(--font-bold)',
-                  color: 'rgba(255,255,255,0.75)',
-                  letterSpacing: 'var(--tracking-wide)',
-                  textTransform: 'uppercase',
-                }}
-              >
+            <div className={styles.resultHeader}>
+              <span className={styles.resultHeaderLabel}>
                 نتيجة التحويل
               </span>
               <Link
                 href={buildPermalink()}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 'var(--space-1-5)',
-                  fontSize: 'var(--text-xs)',
-                  fontWeight: 'var(--font-medium)',
-                  color: 'rgba(255,255,255,0.65)',
-                  textDecoration: 'none',
-                  padding: '4px 10px',
-                  borderRadius: 'var(--radius-full)',
-                  background: 'rgba(255,255,255,0.12)',
-                  backdropFilter: 'blur(8px)',
-                  transition: 'background var(--transition-fast)',
-                }}
-                onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.20)'}
-                onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.12)'}
+                className={styles.permalink}
               >
                 <LinkIcon size={11} weight="bold" />
                 صفحة دائمة
               </Link>
             </div>
 
-            {/* Main result */}
-            <div
-              style={{
-                textAlign: 'center',
-                marginBottom: 'var(--space-6)',
-                flex: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 'clamp(1.6rem, 5vw, 2.5rem)',
-                  fontWeight: 'var(--font-black)',
-                  color: 'var(--accent-alt)',
-                  lineHeight: 'var(--leading-tight)',
-                  marginBottom: 'var(--space-2)',
-                  letterSpacing: 0,
-                }}
-              >
+            <div className={styles.resultMain}>
+              <p className={styles.resultPrimary}>
                 {result.formatted.ar}
-              </div>
-              <div
-                style={{
-                  fontSize: 'var(--text-base)',
-                  fontWeight: 'var(--font-semibold)',
-                  color: 'var(--text-secondary)',
-                  letterSpacing: 'var(--tracking-wide)',
-                }}
-              >
+              </p>
+              <p className={styles.resultSecondary}>
                 {result.formatted.en}
-              </div>
+              </p>
             </div>
 
-            {/* Details */}
-            <div className="card-nested" style={{ marginBottom: 'var(--space-5)', marginTop: 'auto' }}>
+            <div className={styles.detailList}>
               {[
                 {
                   label: 'اليوم',
@@ -871,49 +529,26 @@ export function ConverterForm({
                   value: Math.floor(result.julianDay).toLocaleString('en'),
                   icon: <Compass size={13} weight="duotone" />,
                 },
-              ].map(({ label, value, icon }, i, arr) => (
+              ].map(({ label, value, icon }) => (
                 <div
-                  key={i}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    padding: 'var(--space-2-5) 0',
-                    borderBottom: i < arr.length - 1 ? '1px solid var(--border-subtle)' : 'none',
-                  }}
+                  key={label}
+                  className={styles.detailRow}
                 >
-                  <span
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 'var(--space-1-5)',
-                      fontSize: 'var(--text-xs)',
-                      color: 'var(--text-muted)',
-                    }}
-                  >
+                  <span className={styles.detailLabel}>
                     {icon}
                     {label}
                   </span>
-                  <span
-                    style={{
-                      fontSize: 'var(--text-sm)',
-                      fontWeight: 'var(--font-bold)',
-                      color: 'var(--text-primary)',
-                      fontVariantNumeric: 'tabular-nums',
-                    }}
-                  >
+                  <span className={styles.detailValue}>
                     {value}
                   </span>
                 </div>
               ))}
             </div>
 
-            {/* Copy button */}
             <button
               type="button"
               onClick={handleCopy}
-              className={`btn btn-block ${copied ? 'btn-secondary' : 'btn-surface'}`}
-              style={{ gap: 'var(--space-2)' }}
+              className={`btn btn-block ${styles.copyButton} ${copied ? 'btn-secondary' : 'btn-surface'}`}
             >
               {copied ? (
                 <>

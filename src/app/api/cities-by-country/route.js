@@ -14,22 +14,34 @@ export const GET = withApiHandler(
   async ({ request, requestId }) => {
     const { country: countrySlug } = parseSearchParams(request, querySchema);
 
-    const country = await getCountryBySlug(countrySlug)
+    const country = await getCountryBySlug(countrySlug);
     if (!country) {
-      return json({ error: 'Country not found.' }, { status: 404 });
+      logger.warn('cities-by-country-country-not-found', {
+        route: '/api/cities-by-country',
+        requestId,
+        countrySlug,
+      });
+
+      return json({
+        ok: false,
+        error: 'Country not found.',
+        country: countrySlug,
+        requestId,
+      }, { status: 404 });
     }
 
     const cities = await getCitiesByCountry(country.country_code);
+    const safeCities = Array.isArray(cities) ? cities : [];
 
     logger.info('cities-by-country-served', {
       route: '/api/cities-by-country',
       requestId,
       countrySlug,
       countryCode: country.country_code,
-      cityCount: cities?.length || 0,
+      cityCount: safeCities.length,
     });
 
-    const formattedCities = (cities || []).map(city => ({
+    const formattedCities = safeCities.map((city) => ({
       city_slug: city.city_slug,
       city_name_ar: city.name_ar,
       city_name_en: city.name_en,

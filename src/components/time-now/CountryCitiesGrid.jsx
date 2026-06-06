@@ -1,34 +1,82 @@
 'use client';
-import { useState, useEffect, useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
-import { MapPin, Thermometer, CloudSun } from 'lucide-react';
+import {
+  Cloud,
+  CloudFog,
+  CloudLightning,
+  CloudMoon,
+  CloudRain,
+  CloudSnow,
+  CloudSun,
+  MapPin,
+  Moon,
+  Sun,
+  Thermometer,
+} from 'lucide-react';
 
-const getWeatherInfo = (wCode, isDay = 1) => {
+const getWeatherInfo = (wCode, isDay) => {
   const map = {
-    0: { label: 'صافي', icon: isDay ? '☀️' : '🌙' },
-    1: { label: 'صافي غالباً', icon: isDay ? '🌤️' : '🌑' },
-    2: { label: 'غائم جزئياً', icon: isDay ? '⛅' : '☁️' },
-    3: { label: 'غائم', icon: '☁️' },
-    45: { label: 'ضباب', icon: '🌫️' },
-    48: { label: 'ضباب جليدي', icon: '🌫️' },
-    51: { label: 'رذاذ خفيف', icon: '🌦️' },
-    53: { label: 'رذاذ متوسط', icon: '🌦️' },
-    55: { label: 'رذاذ كثيف', icon: '🌦️' },
-    61: { label: 'مطر خفيف', icon: '🌧️' },
-    63: { label: 'مطر متوسط', icon: '🌧️' },
-    65: { label: 'مطر غزير', icon: '🌧️' },
-    71: { label: 'ثلوج خفيفة', icon: '❄️' },
-    73: { label: 'ثلوج متوسطة', icon: '❄️' },
-    75: { label: 'ثلوج كثيفة', icon: '❄️' },
-    80: { label: 'زخات خفيفة', icon: '🌦️' },
-    81: { label: 'زخات متوسطة', icon: '🌦️' },
-    82: { label: 'زخات عنيفة', icon: '🌧️' },
-    95: { label: 'عواصف رعدية', icon: '⚡' },
+    0: { label: 'صافي', Icon: isDay ? Sun : Moon },
+    1: { label: 'صافي غالباً', Icon: isDay ? CloudSun : CloudMoon },
+    2: { label: 'غائم جزئياً', Icon: isDay ? CloudSun : CloudMoon },
+    3: { label: 'غائم', Icon: Cloud },
+    45: { label: 'ضباب', Icon: CloudFog },
+    48: { label: 'ضباب جليدي', Icon: CloudFog },
+    51: { label: 'رذاذ خفيف', Icon: CloudRain },
+    53: { label: 'رذاذ متوسط', Icon: CloudRain },
+    55: { label: 'رذاذ كثيف', Icon: CloudRain },
+    61: { label: 'مطر خفيف', Icon: CloudRain },
+    63: { label: 'مطر متوسط', Icon: CloudRain },
+    65: { label: 'مطر غزير', Icon: CloudRain },
+    71: { label: 'ثلوج خفيفة', Icon: CloudSnow },
+    73: { label: 'ثلوج متوسطة', Icon: CloudSnow },
+    75: { label: 'ثلوج كثيفة', Icon: CloudSnow },
+    80: { label: 'زخات خفيفة', Icon: CloudRain },
+    81: { label: 'زخات متوسطة', Icon: CloudRain },
+    82: { label: 'زخات عنيفة', Icon: CloudRain },
+    95: { label: 'عواصف رعدية', Icon: CloudLightning },
   };
-  return map[wCode] || { label: 'غير معروف', icon: '🌡️' };
+  return map[wCode] || { label: 'غير معروف', Icon: Thermometer };
 };
 
 function pad2(n) { return String(Math.max(0, n)).padStart(2, '0'); }
+
+function parseCachedWeatherEntry(rawValue) {
+  if (!rawValue) {
+    return null;
+  }
+
+  try {
+    const parsedValue = JSON.parse(rawValue);
+    const timestamp = parsedValue?.ts;
+    const data = parsedValue?.data;
+
+    if (!Number.isFinite(timestamp) || !data || typeof data !== 'object') {
+      return null;
+    }
+
+    return {
+      ts: timestamp,
+      data,
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function parseWeatherResponse(response) {
+  const body = await response.text();
+  if (!body.trim()) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(body);
+  } catch {
+    return null;
+  }
+}
 
 function getCityDisplayTimeShort(tz) {
   try {
@@ -44,15 +92,37 @@ function getCityDisplayTimeShort(tz) {
   } catch { return '--:--'; }
 }
 
+function getCityKey(city, fallbackIndex) {
+  return city?.city_slug ?? city?.slug ?? city?.city_name_en ?? city?.name_en ?? `city-${fallbackIndex}`;
+}
+
+function getCityDisplayName(city, fallbackKey) {
+  return city?.city_name_ar ?? city?.name_ar ?? city?.name_en ?? fallbackKey;
+}
+
+function isValidCity(city) {
+  return Boolean(
+    city
+      && typeof city === 'object'
+      && (city.city_slug || city.slug || city.city_name_en || city.name_en)
+      && (city.city_name_ar || city.name_ar || city.name_en || city.city_slug || city.slug),
+  );
+}
+
+function hasValidCoordinates(city) {
+  return Number.isFinite(Number(city?.lat)) && Number.isFinite(Number(city?.lon));
+}
+
 /* ─── CITY CARD ─────────────────────────────────────────────────── */
 function CityCard({ city, time, weather, countrySlug, isActive }) {
   const slug = city.city_slug ?? city.slug;
-  const cityAr = city.city_name_ar ?? city.name_ar ?? city.name_en ?? slug;
+  const cityAr = getCityDisplayName(city, slug);
 
   const temp = weather?.temperature_2m;
   const wCode = weather?.weather_code ?? 0;
   const isDay = weather?.is_day ?? 1;
   const wInfo = getWeatherInfo(wCode, isDay);
+  const WeatherIcon = wInfo.Icon;
 
   return (
     <Link
@@ -64,28 +134,18 @@ function CityCard({ city, time, weather, countrySlug, isActive }) {
       <div
         itemScope itemType="http://schema.org/Place"
         style={{
-          padding: '1rem',
-          borderRadius: '1rem',
+          padding: 'var(--space-4)',
+          borderRadius: 'var(--radius-lg)',
           background: isActive ? 'var(--accent-soft)' : 'var(--bg-surface-2)',
           border: isActive ? '1px solid var(--border-accent-strong)' : '1px solid var(--border-default)',
           display: 'flex',
           flexDirection: 'column',
-          gap: '0.5rem',
+          gap: 'var(--space-2)',
           cursor: 'pointer',
-          transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+          transition: 'background-color var(--transition-fast), border-color var(--transition-fast)',
           position: 'relative',
           overflow: 'hidden',
           minHeight: '110px',
-        }}
-        onMouseEnter={e => {
-          e.currentTarget.style.transform = 'translateY(-3px)';
-          e.currentTarget.style.borderColor = 'var(--accent)';
-          e.currentTarget.style.boxShadow = '0 10px 20px -5px rgba(0,0,0,0.1)';
-        }}
-        onMouseLeave={e => {
-          e.currentTarget.style.transform = 'translateY(0)';
-          e.currentTarget.style.borderColor = isActive ? 'var(--border-accent-strong)' : 'var(--border-default)';
-          e.currentTarget.style.boxShadow = 'none';
         }}
       >
         {/* SEO Props */}
@@ -133,37 +193,35 @@ function CityCard({ city, time, weather, countrySlug, isActive }) {
           </div>
 
           <div style={{
-            fontSize: '1.8rem', opacity: weather ? 1 : 0.3,
-            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+            opacity: weather ? 1 : 0.3,
+            color: 'var(--accent-alt)',
+            filter: 'none',
           }}>
-            {wInfo.icon}
+            <WeatherIcon size={28} strokeWidth={1.75} aria-hidden="true" />
           </div>
         </div>
 
-        {/* Decorative glass highlight */}
-        <div style={{
-          position: 'absolute', top: '-20%', right: '-20%',
-          width: '60%', height: '60%',
-          background: 'radial-gradient(circle, var(--accent-soft) 0%, transparent 70%)',
-          opacity: 0.15, pointerEvents: 'none'
-        }} />
       </div>
     </Link>
   );
 }
 
 /* ─── GRID ───────────────────────────────────────────────────────── */
-export default function CountryCitiesGrid({ cities = [], countrySlug, activeCitySlug = null }) {
+export default function CountryCitiesGrid({ cities, countrySlug, activeCitySlug }) {
   const [times, setTimes] = useState({});
   const [weather, setWeather] = useState({});
+  const safeCities = useMemo(
+    () => (Array.isArray(cities) ? cities.filter(isValidCity) : []),
+    [cities],
+  );
 
   // 1. Time ticking (limited to HH:mm for performance and UX focus)
   useEffect(() => {
-    if (!cities.length) return;
+    if (safeCities.length === 0) return;
     const tick = () => {
       const next = {};
-      for (const c of cities) {
-        const key = c.city_slug ?? c.slug ?? c.city_name_en;
+      for (const c of safeCities) {
+        const key = getCityKey(c, 0);
         if (c.timezone) next[key] = getCityDisplayTimeShort(c.timezone);
       }
       setTimes(next);
@@ -171,16 +229,16 @@ export default function CountryCitiesGrid({ cities = [], countrySlug, activeCity
     tick();
     const id = setInterval(tick, 60_000); // Only need to update every minute now
     return () => clearInterval(id);
-  }, [cities]);
+  }, [safeCities]);
 
   // 2. Weather Fetching (Batch) with sessionStorage cache (10 min TTL)
   useEffect(() => {
-    if (!cities.length) return;
+    if (safeCities.length === 0) return;
 
     let isMounted = true;
     const fetchWeather = async () => {
       // Filter cities that have valid lat/lon
-      const validCities = cities.filter(c => c.lat != null && c.lon != null);
+      const validCities = safeCities.filter(hasValidCoordinates);
       if (validCities.length === 0) return;
 
       /* ── Cache check ── */
@@ -189,15 +247,16 @@ export default function CountryCitiesGrid({ cities = [], countrySlug, activeCity
       const mapping = {};
       const citiesToFetch = [];
 
-      for (const c of validCities) {
-        const key = c.city_slug ?? c.slug;
+      for (const [index, c] of validCities.entries()) {
+        const key = getCityKey(c, index);
         const cacheKey = `meteo_${key}`;
         let found = false;
         try {
           if (typeof sessionStorage !== 'undefined') {
             const cached = sessionStorage.getItem(cacheKey);
-            if (cached) {
-              const { ts, data } = JSON.parse(cached);
+            const parsedCacheEntry = parseCachedWeatherEntry(cached);
+            if (parsedCacheEntry) {
+              const { ts, data } = parsedCacheEntry;
               if (now - ts < CACHE_TTL) {
                 mapping[key] = data;
                 found = true;
@@ -205,7 +264,7 @@ export default function CountryCitiesGrid({ cities = [], countrySlug, activeCity
             }
           }
         } catch { /* ignore */ }
-        
+
         if (!found) {
           citiesToFetch.push(c);
         }
@@ -222,12 +281,24 @@ export default function CountryCitiesGrid({ cities = [], countrySlug, activeCity
         const lons = citiesToFetch.map(c => c.lon).join(',');
         const url = `/api/weather?latitudes=${encodeURIComponent(lats)}&longitudes=${encodeURIComponent(lons)}`;
         const res = await fetch(url);
-        if (!res.ok) return;
-        const responseData = await res.json();
+        if (!res.ok) {
+          console.warn('[Meteo] Fetch failed', {
+            status: res.status,
+            cityCount: citiesToFetch.length,
+          });
+          return;
+        }
+        const responseData = await parseWeatherResponse(res);
+        if (!responseData) {
+          console.warn('[Meteo] Empty weather response', {
+            cityCount: citiesToFetch.length,
+          });
+          return;
+        }
 
         const results = Array.isArray(responseData) ? responseData : [responseData];
         citiesToFetch.forEach((c, i) => {
-          const key = c.city_slug ?? c.slug;
+          const key = getCityKey(c, i);
           if (results[i]?.current) {
             mapping[key] = results[i].current;
             try {
@@ -240,15 +311,35 @@ export default function CountryCitiesGrid({ cities = [], countrySlug, activeCity
 
         if (isMounted) setWeather(mapping);
       } catch (err) {
-        console.warn('[Meteo] Fetch failed:', err);
+        console.warn('[Meteo] Fetch failed', {
+          countrySlug,
+          cityCount: citiesToFetch.length,
+          error: err,
+        });
       }
     };
 
     fetchWeather();
     return () => { isMounted = false; };
-  }, [cities, countrySlug]);
+  }, [safeCities, countrySlug]);
 
-  if (!cities.length) return null;
+  if (safeCities.length === 0) {
+    return (
+      <div
+        role="status"
+        style={{
+          padding: 'var(--space-5)',
+          border: '1px solid var(--border-default)',
+          borderRadius: 'var(--radius-lg)',
+          background: 'var(--bg-surface-2)',
+          color: 'var(--text-secondary)',
+          lineHeight: 1.8,
+        }}
+      >
+        لم تتوفر قائمة مدن قابلة للعرض الآن. استخدم البحث أعلى الصفحة للوصول إلى المدينة مباشرة، أو افتح صفحة الدولة لاحقاً بعد تحديث البيانات.
+      </div>
+    );
+  }
 
   return (
     <div style={{
@@ -259,14 +350,14 @@ export default function CountryCitiesGrid({ cities = [], countrySlug, activeCity
       role="list"
       aria-label="قائمة المدن وحالة الطقس فيها"
     >
-      {cities.map((city, idx) => {
-        const key = city.city_slug ?? city.slug ?? idx;
+      {safeCities.map((city, idx) => {
+        const key = getCityKey(city, idx);
         return (
           <div key={key} role="listitem">
             <CityCard
               city={city}
-              time={times[city.city_slug ?? city.slug] ?? '--:--'}
-              weather={weather[city.city_slug ?? city.slug]}
+              time={times[key] ?? '--:--'}
+              weather={weather[key]}
               countrySlug={countrySlug}
               isActive={activeCitySlug === (city.city_slug ?? city.slug)}
             />

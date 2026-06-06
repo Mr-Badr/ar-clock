@@ -198,6 +198,7 @@ export default function EventVibeCard({
   const subtext  = getEventSubtext(slug, categoryId, countryCode)
   const arcData  = getArcData(categoryId, daysLeft)
   const stats    = getVibeStats(categoryId, daysLeft, slug)
+  const CategoryIcon = config.Icon
 
   // ── SVG pattern component ─────────────────────────────────────────
   const Pattern = PATTERN_MAP[config.pattern] ?? MoonPattern
@@ -241,8 +242,8 @@ export default function EventVibeCard({
         {/* Top row: category chip + urgency badge */}
         <div className="evibe-top-row">
           <div className="evibe-category-chip">
-            <span role="img" aria-hidden="true" style={{ fontSize: 'var(--text-lg)' }}>
-              {config.emoji}
+            <span aria-hidden="true" style={{ display: 'inline-flex', color: `var(${config.accentCssVar})` }}>
+              <CategoryIcon size={18} strokeWidth={1.75} />
             </span>
             <span>{config.label}</span>
           </div>

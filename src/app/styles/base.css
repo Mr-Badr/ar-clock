@@ -1,9 +1,9 @@
 /* =============================================================================
-   WAQT — Arabic Clock App — Design System v4.1
+   Miqatona — Design System v3.1
    Stack  : Next.js + Tailwind CSS 4.1 + shadcn/ui
    Font   : Noto Sans Arabic for body + IBM Plex Sans Arabic for headings
    Dir    : RTL  |  Themes: dark (default) · light
-   Theme  : Blue brand system — WCAG AA verified — gradient accent
+   Theme  : DESIGN.md source of truth — restrained blue system
 
    @layer declaration: pins cascade order regardless of which CSS chunk
    Next.js loads first (dev vs prod load order is non-deterministic —
@@ -34,7 +34,7 @@
      text-accent-alt  text-danger    text-warning    text-success
      text-info      text-clock
      bg-base        bg-surface-1     bg-surface-2    bg-surface-3
-     bg-surface-4   bg-subtle        bg-accent-soft  bg-glass
+     bg-surface-4   bg-subtle        bg-accent-soft
      border-subtle  border-default   border-strong   border-accent
      shadow-sm      shadow-md        shadow-accent   (see section 30)
 
@@ -81,7 +81,7 @@
 /* Only the theme blocks below may reference them.                             */
 :root {
   /* Slate blue scale */
-  --raw-slate-980: #0A0C18;
+  --raw-slate-980: #05080F;
   --raw-slate-950: #0D1117;
   --raw-slate-900: #111827;
   --raw-slate-850: #161D2E;
@@ -100,13 +100,13 @@
   --raw-slate-25: #F2F4FF;
 
   /* Blue — primary brand scale */
-  --raw-blue-900: #1E3A8A;
+  --raw-blue-900: #003F80;
   /* deepest — active/pressed                  */
-  --raw-blue-800: #1D4ED8;
+  --raw-blue-800: #0052A3;
   /* brand primary — buttons in BOTH themes    */
-  --raw-blue-700: #2563EB;
+  --raw-blue-700: #0066CC;
   /* button hover                              */
-  --raw-blue-600: #3B82F6;
+  --raw-blue-600: #5AADFF;
   /* links on dark (bright context)            */
   --raw-blue-500: #60A5FA;
   /* links on dark                             */
@@ -124,10 +124,10 @@
   /* clock digits dark: pure white = precision instrument */
 
   /* Indigo — gradient pair for buttons (same blue family, slight shift) */
-  --raw-indigo-700: #4338CA;
-  /* gradient end — blue→indigo depth         */
-  --raw-indigo-600: #4F46E5;
-  /* indigo accent                            */
+  --raw-indigo-700: #0066CC;
+  /* legacy alias — DESIGN.md keeps one blue accent */
+  --raw-indigo-600: #0066CC;
+  /* legacy alias — DESIGN.md keeps one blue accent */
 
   /* Semantic state palette */
   --raw-danger-dark: #FF6B6B;
@@ -159,91 +159,124 @@
 .dark {
   color-scheme: dark;
 
-  /* Backgrounds — dramatic depth, surfaces float above a deep base */
-  --bg-base: #0D1117;
-  /* deep midnight — sets the dramatic stage    */
-  --bg-subtle: #111827;
-  /* nav bars, sidebar tray                     */
-  --bg-surface-1: #161D2E;
-  /* default card/section background            */
-  --bg-surface-2: #1E2640;
-  /* raised card, modal body                   */
-  --bg-surface-3: #252F50;
-  /* nested card, input backgrounds             */
-  --bg-surface-4: #2E3A60;
-  /* deepest inset, selected items              */
-  --bg-overlay: rgba(6, 8, 18, 0.88);
-  --bg-glass: rgba(22, 29, 46, 0.70);
+  /* DESIGN.md canonical tokens */
+  --blue: #5AADFF;
+  --blue-hover: #7ABDFF;
+  --blue-press: #99CEFF;
+  --blue-subtle: #031830;
+  --blue-muted: #0A2B55;
+  --blue-text: #99CEFF;
 
-  /* Borders — decorative only (no WCAG req); only --border-strong is UI  */
-  --border-subtle: #1A2035;
-  --border-default: #222C45;
-  --border-strong: #7090B8;
-  /* form input borders — 3.04:1 vs surf3 ✅ */
-  --border-accent: rgba(59, 130, 246, 0.25);
-  --border-accent-strong: rgba(59, 130, 246, 0.55);
+  --bg: #05080F;
+  --surface: #0C1020;
+  --elevated: #131928;
+  --recessed: #04070C;
+  --muted: #090D18;
 
-  /* Text — WCAG AA verified across all surfaces */
-  --text-primary: #F0F4FF;
-  /* 10.1:1 on surf4 ✅ AAA              */
-  --text-secondary: #A8B2CB;
-  /* 5.23:1 on surf4 ✅ AA               */
-  --text-muted: #90AACC;
-  /* 4.66:1 on surf4 ✅ AA               */
-  --text-disabled: #3A4A62;
-  --text-on-accent: #FFFFFF;
-  /* 6.70:1 on #1D4ED8 ✅ AA             */
-  --text-on-clock: #FFFFFF;
-  /* matches --clock-digit-color = white */
-  --text-link: #8CAEFF;
-  /* 5.09:1 on surf4 ✅ AA               */
-  --text-link-hover: #B0C8FF;
+  --text-1: #E8EDF8;
+  --text-2: #7A88A4;
+  --text-3: #7080A0;
+  --text-4: #2D3A50;
 
-  /* Accent — brand blue + indigo gradient pair
-     --accent       = button fill (solid, with --accent-gradient as upgrade)
-     --accent-alt   = bright decorative use on dark surfaces              */
-  --accent: #1D4ED8;
-  --accent-hover: #2563EB;
-  --accent-active: #1E3A8A;
-  --accent-gradient: linear-gradient(135deg, #1D4ED8 0%, #4338CA 100%);
-  --accent-gradient-hover: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%);
-  --accent-soft: rgba(59, 130, 246, 0.14);
-  --accent-soft-hover: rgba(59, 130, 246, 0.22);
-  --accent-glow: rgba(59, 130, 246, 0.20);
-  --accent-glow-strong: rgba(59, 130, 246, 0.38);
+  --border: #1A2135;
+  --border-strong: #263048;
+  --border-focus: #5AADFF;
+  --border-error: #FF4558;
 
-  /* Accent alt — electric blue-indigo for links and decorative elements */
-  --accent-alt: #8CAEFF;
-  --accent-alt-hover: #B0C8FF;
-  --accent-alt-soft: rgba(140, 174, 255, 0.12);
+  --green: #1DBB6A;
+  --green-hover: #27CC78;
+  --green-subtle: #031A0C;
+  --green-muted: #064C24;
+  --green-border: #0A6A2D;
+  --green-text: #52E090;
+  --amber: #FBB63C;
+  --amber-hover: #FFD080;
+  --amber-subtle: #1A0E00;
+  --amber-muted: #5C3600;
+  --amber-border: #7A4800;
+  --amber-text: #FFD080;
+  --red: #FF4558;
+  --red-hover: #FF7080;
+  --red-subtle: #1A0306;
+  --red-muted: #5A0710;
+  --red-border: #7A101D;
+  --red-text: #FF8090;
+  --info-subtle: var(--blue-subtle);
+  --info-muted: var(--blue-muted);
+  --info-border: #0F4F93;
+  --info-text: var(--blue-text);
 
-  /* States */
-  --danger: #FF6B6B;
-  --danger-hover: #FF4D4D;
-  --danger-soft: rgba(255, 107, 107, 0.12);
-  --danger-border: rgba(255, 107, 107, 0.30);
-  --warning: #FFD166;
-  --warning-hover: #FFC233;
-  --warning-soft: rgba(255, 209, 102, 0.12);
-  --warning-border: rgba(255, 209, 102, 0.30);
-  --success: #06D6A0;
-  --success-hover: #04B888;
-  --success-soft: rgba(6, 214, 160, 0.12);
-  --success-border: rgba(6, 214, 160, 0.30);
-  --info: #74B9FF;
-  --info-hover: #4DA3FF;
-  --info-soft: rgba(116, 185, 255, 0.12);
-  --info-border: rgba(116, 185, 255, 0.30);
+  --nav-bg: #050C18;
+  --nav-border: rgba(255, 255, 255, .06);
+  --nav-text-rest: rgba(255, 255, 255, .45);
+  --nav-text-hover: rgba(255, 255, 255, .80);
+  --nav-text-active: rgba(255, 255, 255, .95);
+  --nav-bg-hover: rgba(255, 255, 255, .07);
+  --nav-bg-active: rgba(0, 102, 204, .18);
+  --nav-accent-bar: #0066CC;
+  --nav-label: rgba(255, 255, 255, .22);
 
-  /* Shadows — depth replaces shadow in dark mode; only hero elements glow */
-  --shadow-xs: 0 1px 2px rgba(6, 8, 18, 0.40);
-  --shadow-sm: 0 2px 8px rgba(6, 8, 18, 0.50);
-  --shadow-md: 0 4px 16px rgba(6, 8, 18, 0.55);
-  --shadow-lg: 0 8px 32px rgba(6, 8, 18, 0.60);
-  --shadow-xl: 0 16px 48px rgba(6, 8, 18, 0.70);
-  --shadow-card: 0 2px 8px rgba(6, 8, 18, 0.50), 0 1px 3px rgba(6, 8, 18, 0.35);
-  --shadow-accent: 0 2px 24px rgba(67, 56, 202, 0.30), 0 0 8px rgba(29, 78, 216, 0.18);
-  --shadow-accent-strong: 0 4px 40px rgba(67, 56, 202, 0.45), 0 0 16px rgba(29, 78, 216, 0.28);
+  /* Legacy app aliases — keep existing pages working while adopting DESIGN.md. */
+  --bg-base: var(--bg);
+  --bg-subtle: var(--muted);
+  --bg-surface-1: var(--surface);
+  --bg-surface-2: var(--elevated);
+  --bg-surface-3: var(--muted);
+  --bg-surface-4: var(--recessed);
+  --bg-overlay: rgba(4, 7, 12, 0.88);
+
+  --border-subtle: var(--border);
+  --border-default: var(--border);
+  --border-accent: var(--blue-muted);
+  --border-accent-strong: var(--border-focus);
+
+  --text-primary: var(--text-1);
+  --text-secondary: var(--text-2);
+  --text-muted: var(--text-3);
+  --text-disabled: var(--text-4);
+  --text-on-accent: var(--bg);
+  --text-on-clock: var(--text-1);
+  --text-link: var(--blue-text);
+  --text-link-hover: var(--blue-hover);
+
+  --accent: var(--blue);
+  --accent-hover: var(--blue-hover);
+  --accent-active: var(--blue-press);
+  --accent-gradient: var(--blue);
+  --accent-gradient-hover: var(--blue-hover);
+  --accent-soft: var(--blue-subtle);
+  --accent-soft-hover: var(--blue-muted);
+  --accent-glow: rgba(90, 173, 255, 0.20);
+  --accent-glow-strong: rgba(90, 173, 255, 0.30);
+  --accent-alt: var(--blue-text);
+  --accent-alt-hover: var(--blue-hover);
+  --accent-alt-soft: var(--blue-subtle);
+
+  --danger: var(--red);
+  --danger-hover: var(--red-hover);
+  --danger-soft: var(--red-subtle);
+  --danger-border: var(--red-border);
+  --warning: var(--amber);
+  --warning-hover: var(--amber-hover);
+  --warning-soft: var(--amber-subtle);
+  --warning-border: var(--amber-border);
+  --success: var(--green);
+  --success-hover: var(--green-hover);
+  --success-soft: var(--green-subtle);
+  --success-border: var(--green-border);
+  --info: var(--blue);
+  --info-hover: var(--blue-hover);
+  --info-soft: var(--info-subtle);
+  --info-border: #0F4F93;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.10);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.10);
+  --shadow-md: 0 3px 8px rgba(0, 0, 0, 0.16);
+  --shadow-lg: 0 6px 22px rgba(0, 0, 0, 0.20);
+  --shadow-xl: 0 13px 45px rgba(0, 0, 0, 0.22);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.10);
+  --shadow-accent: 0 2px 5px rgba(0, 0, 0, 0.13), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-accent-strong: 0 4px 14px rgba(0, 0, 0, 0.16), 0 2px 4px rgba(0, 0, 0, 0.08);
 
   /* Clock — pure white digits = PRECISION INSTRUMENT, not interactive element.
      Design rationale:
@@ -252,20 +285,20 @@
      ─ White (21:1) vs headings #F0F4FF (17.2:1) → clear visual hierarchy
      ─ Clock is the BRIGHTEST element on screen; headings are secondary
      ─ Separator neutral rgba white → no color competition with digits       */
-  --clock-digit-color: #FFFFFF;
+  --clock-digit-color: var(--text-1);
   /* 21:1 on base ✅ AAA — luminous, premium */
   --clock-digit-glow: none;
   /* explicitly removed */
-  --clock-separator: rgba(255, 255, 255, 0.22);
+  --clock-separator: rgba(232, 237, 248, 0.22);
   /* neutral fade, no blue cast */
-  --clock-label: #7E9BBF;
+  --clock-label: var(--text-3);
   /* 5.87:1 on surf1 ✅ AA — clearly below white */
-  --clock-bg: rgba(22, 29, 46, 0.90);
+  --clock-bg: var(--surface);
 
   /* Scrollbar */
-  --scrollbar-track: #161D2E;
-  --scrollbar-thumb: #2E3A60;
-  --scrollbar-hover: #5C7A9A;
+  --scrollbar-track: var(--muted);
+  --scrollbar-thumb: var(--border-strong);
+  --scrollbar-hover: var(--blue-muted);
 
   /* ── shadcn compatibility layer ──────────────────────────────────────── */
   --background: var(--bg-base);
@@ -278,13 +311,11 @@
   --primary-foreground: var(--text-on-accent);
   --secondary: var(--bg-surface-3);
   --secondary-foreground: var(--text-primary);
-  --muted: var(--bg-surface-3);
   --muted-foreground: var(--text-muted);
   --accent-shadcn: var(--accent-soft);
   --accent-foreground: var(--accent-alt);
   --destructive: var(--danger);
-  --destructive-foreground: #ffffff;
-  --border: var(--border-default);
+  --destructive-foreground: var(--bg);
   --input: var(--border-default);
   --ring: var(--accent-alt);
   --radius: 0.625rem;
@@ -301,114 +332,137 @@
 .light {
   color-scheme: light;
 
-  /* Backgrounds — near-neutral warm canvas, blue accent now pops */
-  --bg-base: #F8F9FC;
-  /* H:225 S:40% L:98 — near-neutral, barely cool */
-  --bg-subtle: #F0F2FA;
-  /* slight brand tint for nav/sidebar             */
-  --bg-surface-1: #FFFFFF;
-  /* cards — pure white for max clarity            */
-  --bg-surface-2: #EAEFF9;
-  /* elevated cards — more distinct from white (was #F4F6FC) */
-  --bg-surface-3: #E0E8F4;
-  /* nested surfaces, input bg                    */
-  --bg-surface-4: #D4DFF0;
-  /* deepest inset, selected state                 */
-  --bg-overlay: rgba(14, 18, 38, 0.50);
-  --bg-glass: rgba(255, 255, 255, 0.85);
+  /* DESIGN.md canonical tokens */
+  --blue: #0066CC;
+  --blue-hover: #0052A3;
+  --blue-press: #003F80;
+  --blue-subtle: #E8F2FF;
+  --blue-muted: #B3D4FF;
+  --blue-text: #00428A;
 
-  /* Borders — updated to remain visible on the new deeper surface stack */
-  --border-subtle: #B8CAE4;
-  /* visible on s2/s3 (was #E0E6F2 = invisible on new s3) */
-  --border-default: #A8BCDE;
-  /* standard card/section borders                        */
-  --border-strong: #6B7591;
-  /* 3.25:1 on s4 ✅ — form inputs                        */
-  --border-accent: rgba(29, 78, 216, 0.28);
-  --border-accent-strong: rgba(29, 78, 216, 0.55);
+  --bg: #F5F7FB;
+  --surface: #FFFFFF;
+  --elevated: #FFFFFF;
+  --recessed: #EEF1F7;
+  --muted: #F0F2F7;
 
-  /* Text */
-  --text-primary: #0E1220;
-  /* 17.8:1 on #FFFFFF ✅ AAA                  */
-  --text-secondary: #3D4668;
-  /* 7.8:1 on #FFFFFF ✅ AAA                   */
-  --text-muted: #536080;
-  /* 5.52:1 on #E8EDF8 ✅ AA                   */
-  --text-disabled: #A8B4C8;
+  --text-1: #0B1120;
+  --text-2: #445060;
+  --text-3: #616E82;
+  --text-4: #9099A8;
+
+  --border: #E2E7F0;
+  --border-strong: #C8D0E0;
+  --border-focus: #0066CC;
+  --border-error: #D41323;
+
+  --green: #007A3D;
+  --green-hover: #006030;
+  --green-subtle: #F0FBF5;
+  --green-muted: #A3E6C2;
+  --green-border: #5DC99A;
+  --green-text: #004F27;
+  --amber: #C96900;
+  --amber-hover: #A35500;
+  --amber-subtle: #FFFAEB;
+  --amber-muted: #FBDC8A;
+  --amber-border: #F5C842;
+  --amber-text: #6D3A00;
+  --red: #CC1122;
+  --red-hover: #A80E1C;
+  --red-subtle: #FFF1F2;
+  --red-muted: #FFB3BB;
+  --red-border: #FF7080;
+  --red-text: #7A0010;
+  --info-subtle: var(--blue-subtle);
+  --info-muted: var(--blue-muted);
+  --info-border: #7AB8FF;
+  --info-text: var(--blue-text);
+
+  --nav-bg: #050C18;
+  --nav-border: rgba(255, 255, 255, .06);
+  --nav-text-rest: rgba(255, 255, 255, .45);
+  --nav-text-hover: rgba(255, 255, 255, .80);
+  --nav-text-active: rgba(255, 255, 255, .95);
+  --nav-bg-hover: rgba(255, 255, 255, .07);
+  --nav-bg-active: rgba(0, 102, 204, .18);
+  --nav-accent-bar: #0066CC;
+  --nav-label: rgba(255, 255, 255, .22);
+
+  --bg-base: var(--bg);
+  --bg-subtle: var(--muted);
+  --bg-surface-1: var(--surface);
+  --bg-surface-2: var(--elevated);
+  --bg-surface-3: var(--muted);
+  --bg-surface-4: var(--recessed);
+  --bg-overlay: rgba(11, 17, 32, 0.46);
+
+  --border-subtle: var(--border);
+  --border-default: var(--border);
+  --border-accent: var(--blue-muted);
+  --border-accent-strong: var(--border-focus);
+
+  --text-primary: var(--text-1);
+  --text-secondary: var(--text-2);
+  --text-muted: var(--text-3);
+  --text-disabled: var(--text-4);
   --text-on-accent: #FFFFFF;
-  /* 6.70:1 on #1D4ED8 ✅ AA                   */
-  --text-on-clock: #1D4ED8;
-  --text-link: #1D4ED8;
-  /* 6.70:1 on #FFFFFF ✅ AA                   */
-  --text-link-hover: #1E3A8A;
+  --text-on-clock: var(--text-1);
+  --text-link: var(--blue);
+  --text-link-hover: var(--blue-hover);
 
-  /* Accent — identical anchor as dark: #1D4ED8 + indigo gradient */
-  --accent: #1D4ED8;
-  --accent-hover: #1E40AF;
-  --accent-active: #1E3A8A;
-  --accent-gradient: linear-gradient(135deg, #1D4ED8 0%, #4338CA 100%);
-  --accent-gradient-hover: linear-gradient(135deg, #1E40AF 0%, #3730A3 100%);
-  --accent-soft: rgba(29, 78, 216, 0.08);
-  --accent-soft-hover: rgba(29, 78, 216, 0.14);
-  --accent-glow: rgba(29, 78, 216, 0.10);
-  --accent-glow-strong: rgba(29, 78, 216, 0.22);
+  --accent: var(--blue);
+  --accent-hover: var(--blue-hover);
+  --accent-active: var(--blue-press);
+  --accent-gradient: var(--blue);
+  --accent-gradient-hover: var(--blue-hover);
+  --accent-soft: var(--blue-subtle);
+  --accent-soft-hover: var(--blue-muted);
+  --accent-glow: rgba(0, 102, 204, 0.16);
+  --accent-glow-strong: rgba(0, 102, 204, 0.24);
+  --accent-alt: var(--blue);
+  --accent-alt-hover: var(--blue-hover);
+  --accent-alt-soft: var(--blue-subtle);
 
-  /* Accent alt */
-  --accent-alt: #1D4ED8;
-  --accent-alt-hover: #1E3A8A;
-  --accent-alt-soft: rgba(29, 78, 216, 0.08);
+  --danger: var(--red);
+  --danger-hover: var(--red-hover);
+  --danger-soft: var(--red-subtle);
+  --danger-border: var(--red-border);
+  --warning: var(--amber);
+  --warning-hover: var(--amber-hover);
+  --warning-soft: var(--amber-subtle);
+  --warning-border: var(--amber-border);
+  --success: var(--green);
+  --success-hover: var(--green-hover);
+  --success-soft: var(--green-subtle);
+  --success-border: var(--green-border);
+  --info: var(--blue);
+  --info-hover: var(--blue-hover);
+  --info-soft: var(--info-subtle);
+  --info-border: #7AB8FF;
 
-  /* States — green is SEMANTIC ONLY, never brand/accent */
-  --danger: #B91C1C;
-  --danger-hover: #991414;
-  /* #B91C1C = 4.84:1 on s4 ✅ AA — was #C41A1A (4.43:1 ❌) */
-  --danger-soft: rgba(185, 28, 28, 0.08);
-  --danger-border: rgba(185, 28, 28, 0.25);
-  --warning: #92400E;
-  --warning-hover: #78350F;
-  /* 6.47:1 ✅ AA */
-  --warning-soft: rgba(146, 64, 14, 0.08);
-  --warning-border: rgba(146, 64, 14, 0.25);
-  --success: #046645;
-  --success-hover: #035535;
-  /* #046645 = 5.46:1 on s3 ✅ AA — was #047857 (4.44:1 ❌) */
-  --success-soft: rgba(4, 102, 69, 0.08);
-  --success-border: rgba(4, 102, 69, 0.25);
-  --info: #0369A1;
-  --info-hover: #075985;
-  --info-soft: rgba(3, 105, 161, 0.08);
-  --info-border: rgba(3, 105, 161, 0.25);
-
-  /* Shadows — blue-navy tinted, two-layer system */
-  --shadow-xs: 0 1px 2px rgba(15, 30, 60, 0.06);
-  --shadow-sm: 0 2px 4px -1px rgba(15, 30, 60, 0.08),
-    0 1px 2px -1px rgba(15, 30, 60, 0.04);
-  --shadow-md: 0 4px 8px -2px rgba(15, 30, 60, 0.10),
-    0 2px 4px -2px rgba(15, 30, 60, 0.06);
-  --shadow-lg: 0 8px 16px -4px rgba(15, 30, 60, 0.12),
-    0 4px 8px -4px rgba(15, 30, 60, 0.07);
-  --shadow-xl: 0 16px 32px -8px rgba(15, 30, 60, 0.14),
-    0 6px 12px -6px rgba(15, 30, 60, 0.08);
-  --shadow-card: 0 1px 4px rgba(15, 30, 60, 0.06),
-    0 4px 12px rgba(15, 30, 60, 0.07);
-  --shadow-accent: 0 4px 20px rgba(29, 78, 216, 0.14),
-    0 1px 4px rgba(29, 78, 216, 0.09);
-  --shadow-accent-strong: 0 4px 32px rgba(67, 56, 202, 0.22),
-    0 2px 8px rgba(29, 78, 216, 0.14);
+  --shadow-xs: 0 1px 2px rgba(11, 17, 32, .06);
+  --shadow-sm: 0 1px 2px rgba(11, 17, 32, .06);
+  --shadow-md: 0 2px 5px rgba(11, 17, 32, .08), 0 1px 2px rgba(11, 17, 32, .04);
+  --shadow-lg: 0 4px 14px rgba(11, 17, 32, .10), 0 2px 4px rgba(11, 17, 32, .05);
+  --shadow-xl: 0 8px 28px rgba(11, 17, 32, .12), 0 4px 8px rgba(11, 17, 32, .07);
+  --shadow-card: var(--shadow-xs);
+  --shadow-accent: var(--shadow-md);
+  --shadow-accent-strong: var(--shadow-lg);
 
   /* Clock */
-  --clock-digit-color: #000;
+  --clock-digit-color: var(--text-1);
   /* 6.70:1 on #FFFFFF ✅ AA */
   --clock-digit-glow: none;
-  --clock-separator: rgba(29, 78, 216, 0.28);
-  --clock-label: #536080;
+  --clock-separator: rgba(11, 17, 32, 0.22);
+  --clock-label: var(--text-3);
   /* 6.26:1 on #FFFFFF ✅ AA */
-  --clock-bg: rgba(255, 255, 255, 0.96);
+  --clock-bg: var(--surface);
 
   /* Scrollbar */
-  --scrollbar-track: #EEF1FA;
-  --scrollbar-thumb: #C0CCE8;
-  --scrollbar-hover: #8898C8;
+  --scrollbar-track: var(--muted);
+  --scrollbar-thumb: var(--border-strong);
+  --scrollbar-hover: var(--blue-muted);
 
   /* shadcn compatibility */
   --background: var(--bg-base);
@@ -421,14 +475,12 @@
   --primary-foreground: var(--text-on-accent);
   --secondary: var(--bg-surface-3);
   --secondary-foreground: var(--text-primary);
-  --muted: var(--bg-surface-3);
   --muted-foreground: var(--text-muted);
   --accent-shadcn: var(--accent-soft);
   --accent-foreground: var(--accent-alt);
   /* accent-alt = #1D4ED8 in light — identical value, consistent API */
   --destructive: var(--danger);
   --destructive-foreground: #ffffff;
-  --border: var(--border-default);
   --input: var(--border-default);
   --ring: var(--accent-alt);
   /* matches dark — uses accent-alt consistently */
@@ -453,9 +505,17 @@
 @theme inline {
 
   /* ── Text colours ── */
-  --color-primary: var(--text-primary);
-  --color-secondary: var(--text-secondary);
-  --color-muted: var(--text-muted);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-foreground: var(--foreground);
   --color-disabled: var(--text-disabled);
   --color-on-accent: var(--text-on-accent);
   --color-clock: var(--clock-digit-color);
@@ -477,6 +537,8 @@
   /* ── Borders ── */
   /* --color-border powers the Tailwind border-border class used by shadcn   */
   --color-border: var(--border-default);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   --color-border-subtle: var(--border-subtle);
   --color-border-strong: var(--border-strong);
   --color-border-accent: var(--border-accent);
@@ -484,6 +546,8 @@
   /* ── Semantic states ── */
   --color-danger: var(--danger);
   --color-danger-soft: var(--danger-soft);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-warning: var(--warning);
   --color-warning-soft: var(--warning-soft);
   --color-success: var(--success);
@@ -510,6 +574,7 @@
        targets instead, and add smooth scroll per-element only where needed. */
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--app-header-height) + var(--space-4));
   }
 
   body {
@@ -520,7 +585,7 @@
     background-color: var(--bg-base);
     color: var(--text-primary);
     direction: rtl;
-    text-align: right;
+    text-align: start;
     transition:
       background-color var(--transition-theme),
       color var(--transition-theme);
@@ -528,6 +593,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "kern" 1, "liga" 1;
+    overflow-wrap: break-word;
+    hyphens: none;
   }
 
   a {
@@ -538,6 +605,35 @@
 
   a:hover {
     color: var(--text-link-hover);
+  }
+
+  .skip-link {
+    position: fixed;
+    inset-block-start: var(--space-3);
+    inset-inline-start: var(--space-3);
+    z-index: var(--z-tooltip);
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: var(--space-4);
+    border: 1px solid var(--border-focus);
+    border-radius: var(--radius-md);
+    background: var(--accent);
+    color: var(--text-on-accent);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(calc(-100% - var(--space-6)));
+    transition: transform var(--transition-fast);
+  }
+
+  .skip-link:focus-visible {
+    color: var(--text-on-accent);
+    transform: translateY(0);
+  }
+
+  #main-content:focus {
+    outline: none;
+    box-shadow: none;
   }
 
   img,
@@ -568,6 +664,8 @@
     line-height: var(--leading-tight);
     letter-spacing: var(--tracking-tight);
     color: var(--text-primary);
+    text-wrap: balance;
+    overflow-wrap: break-word;
   }
 
   h2 {
@@ -576,6 +674,8 @@
     font-weight: var(--font-semibold);
     line-height: var(--leading-tight);
     color: var(--text-primary);
+    text-wrap: balance;
+    overflow-wrap: break-word;
   }
 
   h3 {
@@ -584,6 +684,8 @@
     font-weight: var(--font-semibold);
     line-height: var(--leading-snug);
     color: var(--text-primary);
+    text-wrap: balance;
+    overflow-wrap: break-word;
   }
 
   h4 {
@@ -606,15 +708,18 @@
     line-height: var(--leading-normal);
     color: var(--text-primary);
     max-width: var(--measure-normal);
+    text-wrap: pretty;
+    overflow-wrap: break-word;
   }
 
   /* Focus ring — accent-alt ensures visibility in dark mode (#8CAEFF)
      and stays #1D4ED8 in light mode. Never use --accent here directly:
      in dark mode --accent=#1D4ED8 (dark blue) is invisible on dark surfaces. */
   :focus-visible {
-    outline: 2px solid var(--accent-alt);
-    outline-offset: 3px;
-    border-radius: 4px;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-focus);
   }
 
   /* Text selection — background is accent-soft, text must stay primary
@@ -666,27 +771,27 @@
   --font-base: var(--font-noto-sans-arabic), system-ui, sans-serif;
   --font-heading: var(--font-ibm-plex-sans-arabic), var(--font-base);
 
-  /* Type scale (base = 16px) */
-  --text-2xs: 0.65rem;
-  /* 10.4px — tiny labels   */
-  --text-xs: 0.72rem;
-  /* 11.5px — captions       */
-  --text-sm: 0.82rem;
-  /* 13.1px — supporting     */
-  --text-base: 0.94rem;
-  /* 15.0px — body ← default */
-  --text-md: 1.00rem;
-  /* 16.0px                  */
-  --text-lg: 1.13rem;
-  /* 18.0px — card titles    */
-  --text-xl: 1.31rem;
-  /* 21.0px — section heads  */
-  --text-2xl: 1.50rem;
-  /* 24.0px — page headings  */
-  --text-3xl: 1.88rem;
-  /* 30.0px — hero           */
-  --text-4xl: 2.25rem;
-  /* 36.0px — display        */
+  /* Arabic type scale from DESIGN.md */
+  --text-2xs: 0.625rem;
+  /* 10px — Latin overlines only */
+  --text-xs: 0.875rem;
+  /* 14px — Arabic captions */
+  --text-sm: 0.9375rem;
+  /* 15px — Arabic small body */
+  --text-base: 1.0625rem;
+  /* 17px — Arabic body */
+  --text-md: 1.0625rem;
+  /* 17px */
+  --text-lg: 1.25rem;
+  /* 20px — card titles */
+  --text-xl: 1.6875rem;
+  /* 27px — section heads */
+  --text-2xl: 2.5rem;
+  /* 40px — page headings */
+  --text-3xl: 2.5rem;
+  /* 40px — H1 */
+  --text-4xl: 3rem;
+  /* 48px — display */
 
   /* Clock sizes — only for .clock-display elements */
   --text-clock-xs: 3.5rem;
@@ -714,29 +819,29 @@
   /* Line heights */
   --leading-none: 1.00;
   /* clock digits only       */
-  --leading-tight: 1.25;
+  --leading-tight: 1.15;
   /* headings                */
   --leading-snug: 1.40;
   /* subheadings             */
-  --leading-normal: 1.60;
+  --leading-normal: 1.85;
   /* body — Arabic standard  */
-  --leading-relaxed: 1.75;
+  --leading-relaxed: 1.90;
   /* descriptions            */
   --leading-loose: 2.00;
   /* open / accessible       */
 
   /* Letter spacing */
-  --tracking-tight: -0.01em;
+  --tracking-tight: 0em;
   --tracking-normal: 0em;
   /* Arabic body — ALWAYS zero */
-  --tracking-wide: 0.06em;
+  --tracking-wide: 0em;
   /* numbers & EN labels only  */
   --tracking-clock: 0.04em;
   /* clock digit spacing        */
 
   /* Measure (max line width) */
   --measure-narrow: 45ch;
-  --measure-normal: 65ch;
+  --measure-normal: 62ch;
   --measure-wide: 80ch;
 }
 
@@ -810,6 +915,20 @@
 
 /* ─── 09. SPACING TOKENS (8 px grid) ─────────────────────────────────────── */
 :root {
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 20px;
+  --s6: 24px;
+  --s7: 28px;
+  --s8: 32px;
+  --s10: 40px;
+  --s12: 48px;
+  --s16: 64px;
+  --s20: 80px;
+  --s24: 96px;
+
   --space-px: 1px;
   --space-0-5: 2px;
   --space-1: 4px;
@@ -825,6 +944,7 @@
   --space-8: 32px;
   --space-9: 36px;
   --space-10: 40px;
+  --space-11: 44px;
   --space-12: 48px;
   --space-14: 56px;
   --space-16: 64px;
@@ -837,13 +957,21 @@
 /* ─── 10. BORDER RADIUS ──────────────────────────────────────────────────── */
 :root {
   --radius-none: 0;
-  --radius-xs: 3px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
-  --radius-2xl: 24px;
-  --radius-3xl: 32px;
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --r-2xl: 20px;
+  --r-pill: 9999px;
+
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --radius-2xl: 28px;
+  --radius-3xl: 28px;
   --radius-full: 9999px;
 }
 
@@ -855,29 +983,59 @@
   --shadow-inner: inset 0 1px 3px rgba(10, 15, 30, 0.20);
   --shadow-inner-strong: inset 0 1px 5px rgba(10, 15, 30, 0.40);
   /* Focus rings use accent-soft glow — readable in both themes             */
-  --shadow-focus: 0 0 0 3px var(--accent-soft);
-  --shadow-focus-danger: 0 0 0 3px var(--danger-soft);
+  --shadow-focus: 0 0 0 3px rgba(0, 102, 204, .28);
+  --shadow-focus-danger: 0 0 0 3px rgba(204, 17, 34, .24);
+}
+
+.dark {
+  --shadow-focus: 0 0 0 3px rgba(90, 173, 255, .30);
 }
 
 
 /* ─── 12. MOTION TOKENS ──────────────────────────────────────────────────── */
 :root {
-  --duration-instant: 80ms;
-  --duration-fast: 150ms;
-  --duration-base: 250ms;
-  --duration-slow: 400ms;
-  --duration-slower: 600ms;
+  --duration-instant: 0ms;
+  --duration-fast: 90ms;
+  --duration-base: 160ms;
+  --duration-enter: 220ms;
+  --duration-exit: 140ms;
+  --duration-slow: 300ms;
+  --duration-slower: 700ms;
 
-  --ease-out: cubic-bezier(0, 0, 0.2, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-default: cubic-bezier(.16, 1, .3, 1);
+  --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: var(--ease-default);
+  --ease-bounce: var(--ease-default);
 
   --transition-fast: var(--duration-fast) var(--ease-out);
-  --transition-base: var(--duration-base) var(--ease-in-out);
+  --transition-base: var(--duration-base) var(--ease-default);
   --transition-slow: var(--duration-slow) var(--ease-in-out);
   --transition-theme: var(--duration-slow) var(--ease-in-out);
-  --transition-spring: var(--duration-slow) var(--ease-spring);
+  --transition-spring: var(--duration-enter) var(--ease-spring);
+}
+
+
+/* ─── 12b. SECTION RHYTHM TOKENS ─────────────────────────────────────────── */
+:root {
+  --section-gap-compact: var(--space-12);
+  --section-gap-comfortable: var(--space-20);
+  --section-gap-airy: var(--space-24);
+  --section-padding-compact: var(--space-5);
+  --section-padding-comfortable: var(--space-6);
+  --section-padding-airy: var(--space-8);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --section-gap-compact: var(--space-10);
+    --section-gap-comfortable: var(--space-16);
+    --section-gap-airy: var(--space-20);
+    --section-padding-compact: var(--space-4);
+    --section-padding-comfortable: var(--space-5);
+    --section-padding-airy: var(--space-6);
+  }
 }
 
 
@@ -896,4 +1054,5 @@
   --z-tooltip: 500;
   --z-toast: 600;
   --z-max: 9999;
+  --app-header-height: var(--space-16);
 }

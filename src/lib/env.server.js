@@ -103,6 +103,13 @@ function formatIssues(issues) {
   return issues.map((i) => `- ${i.path.join('.')}: ${i.message}`).join('\n')
 }
 
+function mapIssues(issues) {
+  return issues.map((issue) => ({
+    path: issue.path.length ? issue.path.join('.') : 'environment',
+    message: issue.message,
+  }))
+}
+
 function parseEnv(schema, label) {
   const parsed = schema.safeParse(process.env)
 
@@ -139,4 +146,21 @@ export function getEnv() {
   if (runtimeEnv) return runtimeEnv
   runtimeEnv = parseEnv(runtimeSchema, 'runtime')
   return runtimeEnv
+}
+
+export function getRuntimeEnvHealthSnapshot() {
+  const parsed = runtimeSchema.safeParse(process.env)
+
+  if (!parsed.success) {
+    return {
+      status: 'fail',
+      issues: mapIssues(parsed.error.issues),
+    }
+  }
+
+  return {
+    status: 'ok',
+    issues: [],
+    env: parsed.data,
+  }
 }

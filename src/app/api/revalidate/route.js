@@ -15,6 +15,10 @@ const querySchema = z.object({
   category: z.string().trim().max(120).optional(),
 });
 
+function isValidRevalidatePath(path) {
+  return path.startsWith('/') && !path.startsWith('//') && !path.includes('\\');
+}
+
 /**
  * API Route to trigger on-demand ISR revalidation globally across edge nodes.
  * 
@@ -28,7 +32,7 @@ const querySchema = z.object({
  */
 export const POST = withApiHandler(
   '/api/revalidate',
-  async ({ request }) => {
+  async ({ request, requestId }) => {
     const env = getEnv();
     const { secret, path, tag, scope, slug, category } = parseSearchParams(request, querySchema);
     const allowDevSecret = env.NODE_ENV !== 'production' && secret === 'dev_secret';
@@ -43,18 +47,36 @@ export const POST = withApiHandler(
       : [];
 
     if (secret !== env.REVALIDATE_SECRET && !allowDevSecret) {
-      return json({ message: 'Invalid token.' }, { status: 401 });
+      return json(
+        {
+          ok: false,
+          message: 'رمز إعادة التحقق غير صحيح.',
+          requestId,
+        },
+        { status: 401 },
+      );
     }
 
     if (!path && tags.length === 0 && !scope && !slug && !category) {
       return json(
-        { message: 'Missing path/tag/scope/slug/category parameter.' },
+        {
+          ok: false,
+          message: 'أرسل مسارًا أو وسمًا أو نطاقًا أو slug أو تصنيفًا لإعادة التحقق.',
+          requestId,
+        },
         { status: 400 },
       );
     }
 
-    if (path && !path.startsWith('/')) {
-      return json({ message: 'Path must start with /.' }, { status: 400 });
+    if (path && !isValidRevalidatePath(path)) {
+      return json(
+        {
+          ok: false,
+          message: 'المسار يجب أن يبدأ بشرطة مائلة واحدة مثل /holidays وأن يخلو من الشرطة العكسية.',
+          requestId,
+        },
+        { status: 400 },
+      );
     }
 
     try {
@@ -91,6 +113,7 @@ export const POST = withApiHandler(
       logEvent('on-demand-revalidate', { path, tags, scope, slug, canonicalSlug, category });
 
       return json({
+        ok: true,
         revalidated: true,
         path,
         tags,
@@ -99,6 +122,7 @@ export const POST = withApiHandler(
         canonicalSlug,
         category,
         now: Date.now(),
+        requestId,
       });
     } catch (err) {
       logError('on-demand-revalidate-error', {
@@ -110,7 +134,14 @@ export const POST = withApiHandler(
         category,
       });
 
-      return json({ message: 'Error revalidating path cache.' }, { status: 500 });
+      return json(
+        {
+          ok: false,
+          message: 'تعذرت إعادة التحقق من الكاش. راجع السجلات باستخدام requestId.',
+          requestId,
+        },
+        { status: 500 },
+      );
     }
   },
   {

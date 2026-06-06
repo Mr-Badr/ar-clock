@@ -53,7 +53,7 @@ export default function VatRatesTable() {
         </div>
 
         <div className="calc-table-wrap">
-          <Table className="economy-table">
+          <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>الدولة</TableHead>

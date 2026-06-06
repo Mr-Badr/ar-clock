@@ -2,29 +2,19 @@ import Link from 'next/link';
 
 import EndOfServiceCalculator from '@/components/calculators/EndOfServiceCalculator.client';
 import {
-  CalculatorChecklist,
   CalculatorFaqSection,
-  CalculatorFooterCta,
   CalculatorHero,
   CalculatorInfoGrid,
-  CalculatorIntentCloud,
-  CalculatorQuickAnswerGrid,
-  CalculatorResourceLinks,
   CalculatorSection,
-  CalculatorSectionNav,
-  CalculatorStoryBand,
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
 import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
 import { getCachedNowIso } from '@/lib/date-utils';
-import { getGuidesBySlugs } from '@/lib/guides/data';
-import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
@@ -33,7 +23,6 @@ const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'end-of-service-benefits');
 const CONTENT = getFinancePageContent('end-of-service-benefits');
 const SEARCH_COVERAGE = buildFinancePageSearchCoverage(PAGE, CONTENT);
-const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.endOfService);
 
 export const metadata = buildCanonicalMetadata({
   title: PAGE.heroTitle,
@@ -49,6 +38,8 @@ function shiftYears(isoDate, years) {
 }
 
 export default async function EndOfServiceBenefitsPage() {
+  const faqItems = Array.isArray(CONTENT.faqItems) ? CONTENT.faqItems : [];
+  const howToSteps = Array.isArray(CONTENT.howTo?.steps) ? CONTENT.howTo.steps : [];
   const nowIso = await getCachedNowIso();
   const initialEndDate = nowIso.slice(0, 10);
   const initialStartDate = shiftYears(initialEndDate, -5);
@@ -73,7 +64,7 @@ export default async function EndOfServiceBenefitsPage() {
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: CONTENT.faqItems.map((item) => ({
+    mainEntity: faqItems.map((item) => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: { '@type': 'Answer', text: item.answer },
@@ -82,9 +73,9 @@ export default async function EndOfServiceBenefitsPage() {
   const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: CONTENT.howTo.name,
-    description: CONTENT.howTo.description,
-    step: CONTENT.howTo.steps.map((item) => ({
+    name: CONTENT.howTo?.name || 'كيفية استخدام حاسبة مكافأة نهاية الخدمة',
+    description: CONTENT.howTo?.description || PAGE.description,
+    step: howToSteps.map((item) => ({
       '@type': 'HowToStep',
       name: item.name,
       text: item.text,
@@ -92,7 +83,7 @@ export default async function EndOfServiceBenefitsPage() {
   };
 
   return (
-    <main className="bg-base text-primary">
+    <main className="calc-product-page calc-esb-page bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
@@ -102,7 +93,6 @@ export default async function EndOfServiceBenefitsPage() {
         badge={CONTENT.hero.badge}
         title={PAGE.heroTitle}
         description={CONTENT.hero.description}
-        accent={PAGE.accent}
         highlights={CONTENT.hero.highlights}
       >
         <EndOfServiceCalculator
@@ -112,47 +102,17 @@ export default async function EndOfServiceBenefitsPage() {
       </CalculatorHero>
 
       <CalculatorSection
-        id="esb-overview"
-        eyebrow="خريطة الصفحة"
-        title="صفحة مبنية لتغطي القرار والحساب معاً"
-        description="إذا كنت تبحث عن رقم سريع أو تحاول فهم هل الاستقالة الآن أفضل أم بعد عدة أشهر، فهذه الخريطة تختصر عليك الوصول إلى الجزء المناسب فوراً."
-      >
-        <CalculatorSectionNav items={CONTENT.sectionNavItems} />
-      </CalculatorSection>
-
-      <CalculatorSection
-        id="esb-intents"
-        eyebrow="تغطية بحثية"
-        title="عبارات يبحث بها المستخدمون قبل كتابة خطاب الاستقالة أو مراجعة التسوية"
-        description="أدرجنا الكلمات المفتاحية الطويلة داخل بنية الصفحة نفسها، حتى يكون المحتوى مفيداً فعلاً لا مجرد meta keywords."
-        subtle
-      >
-        <div className="calc-grid-2">
-          <CalculatorIntentCloud items={SEARCH_COVERAGE.intentChips} />
-          <CalculatorStoryBand
-            title="لماذا هذه الصفحة مختلفة عن الحاسبات البسيطة؟"
-            description="معظم الصفحات المنافسة تعطيك رقماً فقط. هنا نعرض الرقم، والنسبة، والتفصيل، وتأثير التوقيت، وما الذي يجب مراجعته قبل قبول التسوية."
-            items={[
-              { label: 'استحقاق كامل', value: 'يظهر دائماً قبل تطبيق نسبة الاستقالة حتى تفهم الفرق الحقيقي.' },
-              { label: 'أثر الانتظار', value: 'أداة مدمجة تقارن بين الاستقالة الآن أو بعد عدة أشهر.' },
-              { label: 'لغة مباشرة', value: 'المواد القانونية والمفاهيم معروضة بلغة عربية سهلة لا بنص جامد فقط.' },
-            ]}
-          />
-        </div>
-      </CalculatorSection>
-
-      <CalculatorSection
         id="esb-guide"
         eyebrow="دليل سريع"
-        title="متى أستحق المكافأة؟ وماذا يغيّر النسبة؟"
-        description="بدل قراءة نصوص متفرقة، استخدم التبويبات التالية لفهم منطق الاستحقاق والحالات الشائعة والأمثلة العملية."
+        title="احسب مكافأة نهاية الخدمة، ثم افهم سبب الرقم"
+        description="إذا كنت تستقيل، فالمدة تغيّر نسبة الاستحقاق. وإذا انتهى العقد، فسبب الإنهاء يغيّر القراءة. هذا القسم يضع السبب والمدة في مكان واحد حتى لا تعتمد على رقم بلا سياق."
       >
-        <Tabs defaultValue="eligibility" className="calc-app">
-          <TabsList className="tabs calc-tabs-list">
-            <TabsTrigger value="eligibility" className="tab calc-tabs-trigger">الاستحقاق</TabsTrigger>
-            <TabsTrigger value="cases" className="tab calc-tabs-trigger">حالات خاصة</TabsTrigger>
-            <TabsTrigger value="law" className="tab calc-tabs-trigger">المواد القانونية</TabsTrigger>
-            <TabsTrigger value="examples" className="tab calc-tabs-trigger">أمثلة واقعية</TabsTrigger>
+        <Tabs defaultValue="eligibility" className="calc-app calc-esb-tabs" dir="rtl">
+          <TabsList className="tabs calc-tabs-list" aria-label="شرح نتيجة مكافأة نهاية الخدمة">
+            <TabsTrigger value="eligibility" className="tab calc-tabs-trigger">سبب الإنهاء</TabsTrigger>
+            <TabsTrigger value="cases" className="tab calc-tabs-trigger">حالات تحتاج انتباه</TabsTrigger>
+            <TabsTrigger value="law" className="tab calc-tabs-trigger">النظام باختصار</TabsTrigger>
+            <TabsTrigger value="examples" className="tab calc-tabs-trigger">أمثلة سريعة</TabsTrigger>
           </TabsList>
 
           <TabsContent value="eligibility" className="calc-tabs-panel">
@@ -160,13 +120,18 @@ export default async function EndOfServiceBenefitsPage() {
               items={[
                 {
                   title: 'انتهاء العقد أو الإنهاء من صاحب العمل',
-                  description: 'القاعدة العامة هنا هي الاستحقاق الكامل.',
-                  content: 'تبدأ الحاسبة بإظهار كامل المكافأة أولاً، ثم تطبق أي نسبة مخفضة فقط إذا اخترت الاستقالة. هذا يساعدك على رؤية الفرق الحقيقي بين المسارين.',
+                  description: 'القاعدة العامة تبدأ من الاستحقاق الكامل.',
+                  content: 'عندما تنتهي العلاقة بانتهاء العقد أو بإنهاء من صاحب العمل، تبدأ القراءة من أصل المكافأة في المادة 84. الاستثناءات مثل الفصل بسبب مخالفة جسيمة لا تختصرها الحاسبة ويجب مراجعتها من المصدر الرسمي.',
                 },
                 {
                   title: 'الاستقالة',
                   description: 'ترتبط النسبة بمدة الخدمة.',
-                  content: 'أقل من سنتين = صفر، من سنتين إلى أقل من 5 سنوات = ثلث، من 5 إلى أقل من 10 سنوات = ثلثان، و10 سنوات فأكثر = كامل المكافأة.',
+                  content: 'في الاستقالة العادية لا تنظر إلى الراتب وحده: أقل من سنتين = صفر، من سنتين إلى أقل من 5 سنوات = ثلث، من 5 إلى أقل من 10 سنوات = ثلثان، و10 سنوات فأكثر = كامل المكافأة.',
+                },
+                {
+                  title: 'الاتفاق أو المخالصة',
+                  description: 'اقرأ السبب المكتوب قبل إدخال الحالة.',
+                  content: 'قد تبدو المخالصة كإنهاء بسيط، لكنها تعتمد على الصياغة والمستندات. قبل اختيار سبب الإنهاء في الحاسبة، طابقه مع خطاب الإنهاء أو الاستقالة أو عدم التجديد.',
                 },
               ]}
             />
@@ -176,12 +141,16 @@ export default async function EndOfServiceBenefitsPage() {
             <CalculatorInfoGrid
               items={[
                 {
-                  title: 'العمل الجزئي أو المتغير',
-                  content: 'إذا كان الراتب الأساسي أو نمط العمل متغيراً خلال المدة، فالحاسبة الحالية تمنحك تقديراً عاماً، لكن التسوية الفعلية قد تحتاج متوسطاً أو مرجعاً عقدياً أو قانونياً أدق.',
+                  title: 'الأجر المتغير والعمولات',
+                  content: 'إذا كان دخلك يتضمن عمولات أو نسباً متغيرة أو بدلات تختلف من شهر إلى شهر، فلا تضفها أو تستبعدها آلياً. المادة 86 تفتح باب الاتفاق المكتوب على بعض العناصر القابلة للزيادة والنقص.',
                 },
                 {
                   title: 'الإجازات غير المدفوعة',
-                  content: 'قد تؤثر الإجازات غير المدفوعة أو الانقطاعات الطويلة على المدة المحتسبة أو على الأجر المرجعي في بعض الحالات، لذلك اعتبر النتيجة هنا نقطة بداية للمراجعة لا بديلاً عن المستندات.',
+                  content: 'قد تؤثر الإجازات غير المدفوعة أو الانقطاعات الطويلة على المدة المحتسبة. إذا تغيّرت مدة الخدمة في سجلات الشركة عن حسابك الشخصي، اطلب تفصيلاً يوضح الأيام المستبعدة.',
+                },
+                {
+                  title: 'فترة التجربة أو المادة 80',
+                  content: 'الإنهاء أثناء فترة التجربة أو بسبب مخالفة جسيمة يحتاج قراءة مختلفة، ولا يصح أن تحوّله إلى اختيار عام داخل الحاسبة دون التحقق من المستندات والإجراءات.',
                 },
               ]}
             />
@@ -189,28 +158,36 @@ export default async function EndOfServiceBenefitsPage() {
 
           <TabsContent value="law" className="calc-tabs-panel">
             <div className="calc-grid-2">
-              <Card className="calc-surface-card">
-                <CardHeader>
-                  <CardTitle className="calc-card-title">المادة 84 باختصار</CardTitle>
-                </CardHeader>
-                <CardContent className="calc-card-copy">
-                  الأصل الحسابي يبدأ بنصف شهر عن كل سنة من السنوات الخمس الأولى، ثم أجر شهر عن كل سنة بعد ذلك، مع احتساب كسور السنة بنسبة ما أمضاه العامل.
-                </CardContent>
-              </Card>
-              <Card className="calc-surface-card">
-                <CardHeader>
-                  <CardTitle className="calc-card-title">المادة 85 باختصار</CardTitle>
-                </CardHeader>
-                <CardContent className="calc-card-copy">
+              <article className="calc-article-block">
+                <h3>المادة 84 باختصار</h3>
+                <p>
+                  هي أصل المعادلة: نصف شهر عن كل سنة من السنوات الخمس الأولى، ثم أجر شهر عن كل سنة بعد ذلك، مع احتساب كسور السنة بنسبة ما أمضاه العامل.
+                </p>
+              </article>
+              <article className="calc-article-block">
+                <h3>المادة 85 باختصار</h3>
+                <p>
                   عند الاستقالة لا يتغير أصل المعادلة، بل تتغير نسبة الاستحقاق بحسب مدة الخدمة. لذلك ترى في الحاسبة الاستحقاق الكامل ثم النسبة المطبقة على الاستقالة.
-                </CardContent>
-              </Card>
+                </p>
+              </article>
+              <article className="calc-article-block">
+                <h3>المادة 86 باختصار</h3>
+                <p>
+                  تفيدك عند وجود عمولات أو نسب مبيعات أو عناصر أجر تزيد وتنقص. لا تجعل حقل الأجر المرجعي قراراً عشوائياً إذا كانت هذه العناصر جزءاً كبيراً من دخلك.
+                </p>
+              </article>
+              <article className="calc-article-block">
+                <h3>المادتان 87 و88 باختصار</h3>
+                <p>
+                  المادة 87 تذكر حالات استحقاق كامل رغم الاستقالة، مثل القوة القاهرة وبعض حالات العاملة بعد الزواج أو الوضع. المادة 88 مهمة لتوقيت تصفية المستحقات بعد انتهاء العلاقة.
+                </p>
+              </article>
             </div>
           </TabsContent>
 
           <TabsContent value="examples" className="calc-tabs-panel">
             <div className="calc-table-wrap">
-              <Table className="economy-table">
+              <Table>
                 <TableHeader>
                   <TableRow>
                     <TableHead>السيناريو</TableHead>
@@ -222,17 +199,22 @@ export default async function EndOfServiceBenefitsPage() {
                   <TableRow>
                     <TableCell>استقالة بعد 3 سنوات</TableCell>
                     <TableCell>3 سنوات</TableCell>
-                    <TableCell>يحسب ثلث المكافأة الكاملة.</TableCell>
+                    <TableCell>تبدأ من المكافأة الكاملة ثم تأخذ ثلثها فقط.</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>فصل بعد 7 سنوات</TableCell>
+                    <TableCell>انتهاء عقد بعد 7 سنوات</TableCell>
                     <TableCell>7 سنوات</TableCell>
-                    <TableCell>يحسب كامل الاستحقاق مع شريحة ما بعد 5 سنوات.</TableCell>
+                    <TableCell>تأخذ كامل الاستحقاق: نصف شهر لكل سنة من أول 5 سنوات، وشهر لكل سنة بعدها.</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>استقالة بعد 12 سنة</TableCell>
                     <TableCell>12 سنة</TableCell>
                     <TableCell>تعود النسبة إلى 100% لأن العامل تجاوز 10 سنوات.</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>عمولات شهرية متغيرة</TableCell>
+                    <TableCell>أي مدة</TableCell>
+                    <TableCell>لا يكفي إدخال الراتب الأساسي فقط قبل مراجعة الاتفاق المكتوب على الأجر المرجعي.</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -242,54 +224,41 @@ export default async function EndOfServiceBenefitsPage() {
       </CalculatorSection>
 
       <CalculatorSection
-        id="esb-answers"
-        eyebrow="إجابات مباشرة"
-        title="إذا كتبت في Google: كم مكافأة نهاية الخدمة بعد 5 سنوات؟"
-        description="هذا القسم مخصص لأسئلة من نوع: كم مكافأة نهاية الخدمة بعد X سنوات؟ وهل أستحق بعد سنتين؟ وما الفرق بين الاستقالة والفصل؟"
-      >
-        <CalculatorQuickAnswerGrid items={CONTENT.quickAnswers} />
-      </CalculatorSection>
-
-      <CalculatorSection
         id="esb-article"
         eyebrow="فهم أعمق"
         title="كيف تقرأ نتيجة الحاسبة بطريقة صحيحة؟"
         description="هذه الصفحة لا تعطيك رقماً فقط؛ بل تشرح ماذا يعني الرقم ومتى يجب أن تتوقف وتراجع مستنداتك."
         subtle
       >
-        <div className="calc-article-grid">
-          <article className="calc-article-block">
-            <h3>1. ما هي مكافأة نهاية الخدمة؟</h3>
-            <p>
-              هي مقابل مالي يرتبط بمدة خدمة العامل وأجره الأخير وفق القاعدة النظامية العامة.
-              أهم ما يربك المستخدم عادة هو الخلط بين أصل المكافأة وبين نسبة الاستحقاق عند
-              الاستقالة، ولهذا تعرض الحاسبة الرقمين منفصلين.
+        <article className="calc-editorial-article">
+          <div className="calc-editorial-article__head">
+            <h3 className="calc-card-title">اقرأ النتيجة كمسار مراجعة لا كحكم نهائي</h3>
+            <p className="calc-section-description">
+              مكافأة نهاية الخدمة ترتبط بسنوات العمل، الأجر المرجعي، وسبب انتهاء العلاقة.
+              لذلك تعرض الحاسبة أصل المكافأة ونسبة الاستحقاق منفصلين حتى ترى أين تغيّر الرقم.
             </p>
-          </article>
-          <article className="calc-article-block">
-            <h3>2. لماذا تظهر السنوات الخمس الأولى منفصلة؟</h3>
+          </div>
+          <div className="calc-editorial-article__body">
             <p>
-              لأن هذه الشريحة تحسب بنصف أجر شهر عن كل سنة، بينما ما بعدها يحسب بأجر شهر كامل.
-              هذا الفصل مهم جداً خصوصاً لمن تجاوز خمس سنوات ويعتقد أن كل السنوات تعامل بنفس
-              الطريقة.
+              ابدأ من أصل المكافأة: نصف شهر عن كل سنة من السنوات الخمس الأولى، ثم أجر شهر عن كل سنة بعدها.
+              إذا تجاوزت خمس سنوات، فهذا الفصل يفسر لماذا لا تعامل كل سنوات الخدمة بالطريقة نفسها.
             </p>
-          </article>
-          <article className="calc-article-block">
-            <h3>3. متى يفيد الانتظار؟</h3>
             <p>
-              غالباً عند الاقتراب من حد السنتين أو الخمس أو العشر سنوات. لهذا أضفنا أداة
-              مقارنة مباشرة داخل الحاسبة تساعدك على رؤية أثر التأجيل قبل اتخاذ قرار نهائي.
+              بعد ذلك راجع سبب الإنهاء. الاستقالة العادية تخضع لنسب مختلفة حسب مدة الخدمة،
+              بينما انتهاء العقد أو الإنهاء من صاحب العمل يبدأ عادة من الاستحقاق الكامل ما لم توجد حالة خاصة تحتاج مراجعة رسمية.
             </p>
-          </article>
-          <article className="calc-article-block">
-            <h3>4. ماذا تفعل إذا اختلفت الحاسبة مع التسوية؟</h3>
-            <ul>
-              <li>راجع الراتب الأساسي المعتمد في عقدك أو مسير الرواتب.</li>
-              <li>تحقق من تاريخ البداية والنهاية وأي انقطاع غير مدفوع.</li>
-              <li>اطلب تفصيلاً مكتوباً من جهة العمل قبل الموافقة على التسوية.</li>
-            </ul>
-          </article>
-        </div>
+            <p>
+              يفيد الانتظار غالباً عندما تكون قريباً من حد السنتين أو الخمس أو العشر سنوات.
+              شهران إضافيان قد لا يغيران أصل المعادلة كثيراً، لكنهما قد ينقلان الاستقالة إلى نسبة أعلى.
+            </p>
+          </div>
+          <ul className="calc-editorial-article__points">
+            <li>راجع الأجر المرجعي المستخدم في عقدك أو مسير الرواتب أو خطاب التسوية.</li>
+            <li>تحقق من تاريخ البداية والنهاية وأي انقطاع غير مدفوع.</li>
+            <li>افصل مكافأة نهاية الخدمة عن الإجازات والرواتب المتأخرة والتعويضات الأخرى.</li>
+            <li>اطلب تفصيلاً مكتوباً للمعادلة إذا ظهر فرق واضح بين الحاسبة وتسوية الشركة.</li>
+          </ul>
+        </article>
       </CalculatorSection>
 
       <CalculatorSection
@@ -299,12 +268,13 @@ export default async function EndOfServiceBenefitsPage() {
         description="هذا الجدول يلخّص القاعدة المبسطة التي تعتمد عليها الحاسبة عند اختيار سبب الإنهاء."
       >
         <div className="calc-table-wrap">
-          <Table className="economy-table">
+          <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>السبب</TableHead>
                 <TableHead>المدة</TableHead>
                 <TableHead>نسبة الاستحقاق</TableHead>
+                <TableHead>ما الذي تراجعه؟</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -312,65 +282,40 @@ export default async function EndOfServiceBenefitsPage() {
                 <TableCell>انتهاء العقد</TableCell>
                 <TableCell>أي مدة</TableCell>
                 <TableCell>100%</TableCell>
+                <TableCell>تأكد أن سبب الانتهاء في الخطاب ليس استقالة أو مخالصة بصياغة مختلفة.</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>فصل أو إنهاء من صاحب العمل</TableCell>
                 <TableCell>أي مدة</TableCell>
                 <TableCell>100%</TableCell>
+                <TableCell>راجع إن كان الإنهاء عاماً أم مرتبطاً بمادة خاصة مثل المادة 80.</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>استقالة</TableCell>
                 <TableCell>أقل من سنتين</TableCell>
                 <TableCell>0%</TableCell>
+                <TableCell>تأكد من تاريخ البداية الفعلي وهل الخدمة متصلة.</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>استقالة</TableCell>
                 <TableCell>من سنتين إلى أقل من 5 سنوات</TableCell>
                 <TableCell>33.33%</TableCell>
+                <TableCell>قارن أثر الانتظار إذا كنت قريباً من خمس سنوات.</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>استقالة</TableCell>
                 <TableCell>من 5 إلى أقل من 10 سنوات</TableCell>
                 <TableCell>66.67%</TableCell>
+                <TableCell>قارن أثر الانتظار إذا كنت قريباً من عشر سنوات.</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>استقالة</TableCell>
                 <TableCell>10 سنوات فأكثر</TableCell>
                 <TableCell>100%</TableCell>
+                <TableCell>يبقى الأجر المرجعي والتواريخ هما مصدر الفروق الأكبر.</TableCell>
               </TableRow>
             </TableBody>
           </Table>
-        </div>
-      </CalculatorSection>
-
-      <CalculatorSection
-        id="esb-rights"
-        eyebrow="قبل التوقيع"
-        title="خطوات عملية قبل قبول تسوية نهاية الخدمة"
-        description="حتى لو بدا الرقم قريباً من توقعك، لا تتعامل مع التسوية كرقم فقط. هذه القائمة السريعة تقلل احتمال الخطأ أو التنازل غير المقصود."
-        subtle
-      >
-        <div className="calc-grid-2">
-          <CalculatorChecklist
-            title="راجع هذه النقاط أولاً"
-            description="قائمة مفيدة للموظف أو مسؤول الموارد البشرية عند المراجعة الأولية."
-            items={[
-              'قارن الراتب الأساسي المستخدم في الحاسبة مع عقد العمل أو آخر مسير راتب.',
-              'تحقق من تواريخ البداية والنهاية وأي فترة انقطاع أو إجازة غير مدفوعة.',
-              'افصل بين مكافأة نهاية الخدمة وأي مستحقات أخرى مثل الإجازات أو البدلات أو العمولات.',
-              'اطلب تفصيلاً مكتوباً للمعادلة إذا ظهر فرق واضح بين الحاسبة وتسوية الشركة.',
-              'لا تعتمد على الذاكرة وحدها إذا كانت مدة الخدمة طويلة أو مرت عبر أكثر من تعديل عقدي.',
-            ]}
-          />
-          <CalculatorInfoGrid
-            items={[
-              {
-                title: 'متى تحتاج تصعيداً أو مراجعة أعمق؟',
-                description: 'إذا كان الفرق مادياً أو في الحالة سبب خاص.',
-                content: 'عند وجود اختلاف كبير في الراتب المرجعي، أو نزاع حول مدة الخدمة، أو إجازات غير مدفوعة، أو إنهاء في ظروف استثنائية، فمن الأفضل العودة إلى المصدر الرسمي أو الاستشارة القانونية المتخصصة.',
-              },
-            ]}
-          />
         </div>
       </CalculatorSection>
 
@@ -381,47 +326,46 @@ export default async function EndOfServiceBenefitsPage() {
         description="الحاسبة مصممة للسرعة والفهم الأولي، لكن النص الرسمي هو المرجع النهائي في أي نزاع أو حالة استثنائية."
         subtle
       >
-        <Card className="calc-surface-card">
-          <CardContent className="calc-cta-actions pt-6">
+        <div className="calc-cta-card">
+          <div className="calc-cta-card__copy">
+            <p className="calc-card-description">
+              إذا كانت النتيجة مرتبطة بتسوية فعلية أو خلاف على مدة الخدمة أو الأجر، فابدأ بحاسبة الوزارة ونص نظام العمل، ثم استخدم الحاسبات المالية الأخرى للتخطيط بعد نهاية العمل.
+            </p>
+          </div>
+          <div className="calc-cta-actions">
             <Button asChild className="btn btn-primary--flat calc-button">
-              <a href="https://www.hrsd.gov.sa/" target="_blank" rel="noreferrer">
-                وزارة الموارد البشرية والتنمية الاجتماعية
+              <a href="https://www.hrsd.gov.sa/en/ministry-services/services/end-service-benefit-calculator" target="_blank" rel="noreferrer">
+                حاسبة وزارة الموارد البشرية
+              </a>
+            </Button>
+            <Button asChild variant="outline" className="btn btn-surface calc-button">
+              <a href="https://www.hrsd.gov.sa/en/knowledge-centre/%D9%86%D8%B8%D8%A7%D9%85-%D8%A7%D9%84%D8%B9%D9%85%D9%84" target="_blank" rel="noreferrer">
+                نظام العمل السعودي
               </a>
             </Button>
             <Button asChild variant="outline" className="btn btn-surface calc-button">
               <Link href="/calculators/monthly-installment">انتقل إلى حاسبة القسط الشهري</Link>
             </Button>
-          </CardContent>
-        </Card>
-      </CalculatorSection>
-
-      <CalculatorSection
-        id="esb-guides"
-        eyebrow="أدلة مرتبطة"
-        title="افهم الاستحقاق قبل أن تعتمد النتيجة"
-        description="هذه الأدلة تشرح منطق المكافأة وفرق الاستقالة ونهاية العقد، ثم تعيدك إلى الحاسبة لمقارنة سيناريوهاتك الفعلية."
-        subtle
-      >
-        <CalculatorResourceLinks items={RELATED_GUIDES} />
+          </div>
+        </div>
       </CalculatorSection>
 
       <CalculatorSection
         id="esb-faq"
-        eyebrow="الأسئلة الشائعة"
+        eyebrow="قبل مراجعة التسوية"
         title="أسئلة تتكرر قبل الاستقالة أو عند مراجعة التسوية"
       >
-        <CalculatorFaqSection items={CONTENT.faqItems} />
+        <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>
 
       <CalculatorSection
         id="esb-related"
-        eyebrow="روابط داخلية"
+        eyebrow="بعد التسوية"
         title="حاسبات مرتبطة بالتخطيط بعد نهاية الخدمة"
+        description="بعد معرفة المستحقات، قد تحتاج تقدير قسط أو ضريبة أو نسبة تغير في الدخل. اختر أداة واحدة تكمل خطوتك التالية ولا تنتقل بين الأقسام بلا هدف."
       >
         <RelatedCalculators currentSlug="end-of-service-benefits" />
       </CalculatorSection>
-
-      <CalculatorFooterCta />
     </main>
   );
 }

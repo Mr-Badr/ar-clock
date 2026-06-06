@@ -48,12 +48,12 @@ export default function AgeDifferenceCalculator() {
           <CardContent className="calc-form-grid">
             <div className="calc-grid-2">
               <div className="calc-field">
-                <label className="calc-label">اسم الشخص الأول</label>
-                <input className="input calc-input" value={firstName} onChange={(event) => setFirstName(event.target.value)} />
+                <label className="calc-label" htmlFor="age-difference-first-name">اسم الشخص الأول</label>
+                <input id="age-difference-first-name" className="input calc-input" value={firstName} onChange={(event) => setFirstName(event.target.value)} />
               </div>
               <div className="calc-field">
-                <label className="calc-label">اسم الشخص الثاني</label>
-                <input className="input calc-input" value={secondName} onChange={(event) => setSecondName(event.target.value)} />
+                <label className="calc-label" htmlFor="age-difference-second-name">اسم الشخص الثاني</label>
+                <input id="age-difference-second-name" className="input calc-input" value={secondName} onChange={(event) => setSecondName(event.target.value)} />
               </div>
             </div>
 
@@ -79,7 +79,7 @@ export default function AgeDifferenceCalculator() {
           </CardContent>
         </Card>
 
-        <div className="calc-results-panel">
+        <div className="calc-results-panel" aria-live="polite">
           <ResultState result={result} />
 
           {result?.isValid ? (
@@ -109,12 +109,12 @@ export default function AgeDifferenceCalculator() {
                   <CardTitle className="calc-card-title">العمر الحالي لكل شخص</CardTitle>
                 </CardHeader>
                 <CardContent className="calc-grid-2">
-                  <div className="calc-metric-card card-nested">
+                  <div className="calc-metric-card">
                     <div className="calc-metric-card__label">{firstName || 'الشخص الأول'}</div>
                     <div className="calc-metric-card__value">{result.firstAge.ageLabel}</div>
                     <div className="calc-metric-card__note">{result.firstAge.birthDateLabel}</div>
                   </div>
-                  <div className="calc-metric-card card-nested">
+                  <div className="calc-metric-card">
                     <div className="calc-metric-card__label">{secondName || 'الشخص الثاني'}</div>
                     <div className="calc-metric-card__value">{result.secondAge.ageLabel}</div>
                     <div className="calc-metric-card__note">{result.secondAge.birthDateLabel}</div>

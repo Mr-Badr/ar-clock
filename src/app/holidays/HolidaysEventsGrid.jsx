@@ -1,6 +1,16 @@
+import { Search } from 'lucide-react';
 import EventCard, { EventGridSkeleton } from '@/components/events/EventCard';
 
 import { PAGE_SIZE } from './constants';
+
+function isValidEvent(event) {
+  return Boolean(
+    event
+      && typeof event === 'object'
+      && typeof event.slug === 'string'
+      && event.slug.trim().length > 0,
+  );
+}
 
 export default function HolidaysEventsGrid({
   eventsCount,
@@ -10,30 +20,55 @@ export default function HolidaysEventsGrid({
   isLoadingMore,
   cursor,
   onLoadMore,
+  onResetFilters,
 }) {
+  const safeDisplayEvents = Array.isArray(displayEvents) ? displayEvents.filter(isValidEvent) : [];
+  const safeEventsCount = Number.isFinite(eventsCount) ? eventsCount : safeDisplayEvents.length;
+  const safeTotal = Number.isFinite(total) ? total : safeEventsCount;
+  const remainingCount = Math.max(0, safeTotal - safeEventsCount);
+
   return (
     <>
-      {isFiltering && eventsCount === 0 ? (
+      {isFiltering && safeEventsCount === 0 ? (
         <EventGridSkeleton count={PAGE_SIZE} />
-      ) : displayEvents.length === 0 ? (
+      ) : safeDisplayEvents.length === 0 ? (
         <div className="waqt-empty">
-          <p style={{ fontSize: '3rem', opacity: 0.28 }}>🔍</p>
+          <span
+            aria-hidden="true"
+            style={{
+              color: 'var(--text-muted)',
+              display: 'inline-flex',
+              opacity: 0.45,
+            }}
+          >
+            <Search size={42} strokeWidth={1.6} />
+          </span>
           <p
             className="font-semibold"
             style={{ fontSize: 'var(--text-lg)', color: 'var(--text-secondary)' }}
           >
-            لا توجد نتائج
+            لم نعثر على مناسبة بهذه المواصفات
           </p>
           <p
             style={{
               fontSize: 'var(--text-sm)',
               color: 'var(--text-muted)',
-              maxWidth: '300px',
+              maxWidth: '340px',
               lineHeight: 1.75,
             }}
           >
-            جرّب البحث بكلمة مختلفة أو تغيير الفلاتر.
+            جرّب اسم مناسبة أو دولة أخرى، أو وسّع مدة العرض لتظهر لك نتائج أكثر.
+            إذا كنت تبحث عن إجازة رسمية، امسح البحث أولاً ثم اختر الدولة والتصنيف.
           </p>
+          {onResetFilters ? (
+            <button
+              type="button"
+              className="waqt-btn waqt-btn-surface"
+              onClick={onResetFilters}
+            >
+              اعرض كل المناسبات من جديد
+            </button>
+          ) : null}
         </div>
       ) : (
         <div
@@ -41,7 +76,7 @@ export default function HolidaysEventsGrid({
           aria-busy={isFiltering || isLoadingMore}
           style={{ opacity: isFiltering ? 0.6 : 1, transition: 'opacity var(--transition-base)' }}
         >
-          {displayEvents.map((event, index) => (
+          {safeDisplayEvents.map((event, index) => (
             <EventCard key={event.slug} event={event} priority={index < 6} index={index} />
           ))}
         </div>
@@ -56,20 +91,20 @@ export default function HolidaysEventsGrid({
             onClick={onLoadMore}
             disabled={isFiltering || isLoadingMore}
             className="waqt-btn waqt-btn-surface"
-          >
-            تحميل المزيد
-            <span
+            >
+              اعرض مناسبات أخرى
+              <span
               style={{
                 color: 'var(--text-muted)',
                 fontWeight: 'var(--font-regular)',
                 marginRight: 'var(--space-1)',
               }}
             >
-              ({total - eventsCount} مناسبة أخرى)
+              (باقي {remainingCount} مناسبة)
             </span>
           </button>
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
-            يُحمَّل من الخادم مباشرةً بدون إعادة تحميل الصفحة
+            افتح أقرب مناسبة أولاً، ثم عد لاحقًا إذا احتجت إلى نتائج أبعد أو دولة مختلفة
           </p>
         </div>
       )}

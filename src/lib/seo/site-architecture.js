@@ -1,6 +1,5 @@
 import { getSiteUrl } from '@/lib/site-config';
 import { ALL_CALCULATOR_SEO_ROUTES } from '@/lib/seo/calculator-route-manifest';
-import { ECONOMY_SEO_ROUTES } from '@/lib/seo/economy-route-manifest';
 
 function normalizePath(path) {
   const value = String(path || '').trim();
@@ -30,7 +29,9 @@ export const ROOT_SITEMAP_ROUTES = Object.freeze(dedupeRoutes([
   { path: '/date/converter', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
   { path: '/date/gregorian-to-hijri', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
   { path: '/date/hijri-to-gregorian', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
-  // Note: /date/calendar and /date/calendar/hijri are redirect pages (noindex) — omitted from sitemap
+  { path: '/date/calendar', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
+  { path: '/date/calendar/hijri', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
+  { path: '/date/country', priority: 0.84, changeFrequency: 'weekly', websitePart: true },
   { path: '/calculators', priority: 0.9, changeFrequency: 'weekly', websitePart: true },
   { path: '/calculators/finance', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
   { path: '/calculators/age', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
@@ -41,19 +42,7 @@ export const ROOT_SITEMAP_ROUTES = Object.freeze(dedupeRoutes([
     ...route,
     websitePart: route.websitePart ?? true,
   })),
-  { path: '/economie', priority: 0.88, changeFrequency: 'daily', websitePart: true },
-  { path: '/economie/market-hours', priority: 0.88, changeFrequency: 'daily', websitePart: true },
-  { path: '/economie/us-market-open', priority: 0.87, changeFrequency: 'daily', websitePart: true },
-  { path: '/economie/gold-market-hours', priority: 0.87, changeFrequency: 'daily', websitePart: true },
-  { path: '/economie/forex-sessions', priority: 0.87, changeFrequency: 'daily', websitePart: true },
-  { path: '/economie/stock-markets', priority: 0.86, changeFrequency: 'daily', websitePart: true },
-  { path: '/economie/market-clock', priority: 0.86, changeFrequency: 'daily', websitePart: true },
-  { path: '/economie/best-trading-time', priority: 0.85, changeFrequency: 'daily', websitePart: true },
-  ...ECONOMY_SEO_ROUTES.map((route) => ({
-    ...route,
-    websitePart: route.websitePart ?? true,
-  })),
-  { path: '/guides', priority: 0.82, changeFrequency: 'weekly', websitePart: true },
+  { path: '/blog', priority: 0.82, changeFrequency: 'weekly', websitePart: true },
   { path: '/about', priority: 0.44, changeFrequency: 'monthly', websitePart: true },
   { path: '/editorial-policy', priority: 0.44, changeFrequency: 'monthly', websitePart: true },
   { path: '/contact', priority: 0.38, changeFrequency: 'monthly', websitePart: true },
@@ -76,8 +65,7 @@ export const WEBSITE_ARCHITECTURE_PATHS = Object.freeze(
 export const SITEMAP_INDEX_PATHS = Object.freeze([
   '/sitemap.xml',
   '/calculators/sitemap.xml',
-  '/economie/sitemap.xml',
-  '/guides/sitemap.xml',
+  '/blog/sitemap.xml',
   '/holidays/sitemap.xml',
   '/time-difference/sitemap.xml',
   '/time-now/sitemap.xml',
@@ -98,10 +86,10 @@ const FEATURE_ROUTE_FAMILIES = Object.freeze([
     crawlScope: 'architecture',
   },
   {
-    id: 'guides',
-    label: 'Guides',
-    exactPaths: ['/guides'],
-    prefixPaths: ['/guides/'],
+    id: 'blog',
+    label: 'Blog and articles',
+    exactPaths: ['/blog'],
+    prefixPaths: ['/blog/'],
     crawlScope: 'full',
   },
   {
@@ -144,13 +132,6 @@ const FEATURE_ROUTE_FAMILIES = Object.freeze([
     label: 'Calculators',
     exactPaths: ['/calculators'],
     prefixPaths: ['/calculators/'],
-    crawlScope: 'full',
-  },
-  {
-    id: 'economy',
-    label: 'Economy',
-    exactPaths: ['/economie'],
-    prefixPaths: ['/economie/'],
     crawlScope: 'full',
   },
 ]);

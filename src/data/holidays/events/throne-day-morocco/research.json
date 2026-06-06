@@ -1,7 +1,7 @@
 {
   "slug": "throne-day-morocco",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.183Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
     "عيد العرش المغربي 2026",
     "متى عيد العرش المغربي 2026",
@@ -17,6 +17,20 @@
     "تاريخ عيد العرش المغربي {{year}}"
   ],
   "competitors": [
+    {
+      "site": "maroc.ma",
+      "type": "official_reference",
+      "url": "https://www.maroc.ma/en/news/throne-day-celebrating-forward-looking-royal-vision-emerging-modern-prosperous-morocco",
+      "focus": [
+        "مرجع رسمي",
+        "30 يوليو",
+        "رؤية ملكية ومناسبة وطنية"
+      ],
+      "gaps": [
+        "ليس صفحة عد تنازلي",
+        "لا يجيب مباشرة عن أسئلة الإجازة وكم باقي"
+      ]
+    },
     {
       "site": "هسبريس",
       "url": "https://www.hespress.com/%D8%B9%D9%8A%D8%AF-%D8%A7%D9%84%D8%B9%D8%B1%D8%B4-%D8%A8%D8%A7%D9%84%D9%85%D8%BA%D8%B1%D8%A8-%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE%D9%87-%D9%88%D8%B1%D9%85%D8%B2%D9%8A%D8%AA%D9%87-508635.html",
@@ -77,8 +91,11 @@
     },
     {
       "keyword": "هل عيد العرش المغربي إجازة رسمية",
-      "competitorCoverage": [],
-      "ourGap": true
+      "competitorCoverage": [
+        "PublicHolidays Africa",
+        "مراجع الإجازات"
+      ],
+      "ourGap": false
     },
     {
       "keyword": "متى اعتلى الملك محمد السادس العرش",
@@ -107,6 +124,14 @@
     {
       "keyword": "متى عيد العرش المغربي {{year}}",
       "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+    },
+    {
+      "keyword": "هل عيد العرش هو عيد الاستقلال المغربي",
+      "whyItMatters": "يسد فجوة الخلط بين المناسبات الوطنية المغربية ذات التواريخ الثابتة."
+    },
+    {
+      "keyword": "عيد العرش المغربي إجازة رسمية",
+      "whyItMatters": "يغطي سؤالاً عملياً شائعاً للموظفين والطلاب والمسافرين."
     }
   ],
   "keywordGaps": [
@@ -118,6 +143,9 @@
     "شرح سبب أهمية عيد العرش المغربي ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
     "تغطية الأسئلة العملية التي يطرحها القارئ قبل عيد العرش المغربي أو أثناءه.",
     "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط."
+    ,
+    "التفريق بين عيد العرش وعيد الاستقلال والمسيرة الخضراء.",
+    "إضافة مصادر رسمية ظاهرة داخل الصفحة لا الاعتماد على مقالات تحليلية فقط."
   ],
   "unansweredQuestions": [
     "ما الفرق بين معنى عيد العرش وموعده في التقويم؟",
@@ -128,6 +156,9 @@
     "ما هو عيد العرش المغربي؟",
     "هل عيد العرش المغربي إجازة رسمية؟",
     "متى اعتلى الملك محمد السادس العرش؟"
+    ,
+    "هل عيد العرش هو عيد الاستقلال المغربي؟",
+    "ما الفرق بين عيد العرش والمسيرة الخضراء؟"
   ],
   "differentiationIdeas": [
     "دمج العد التنازلي مع الخلفية الوطنية في صفحة واحدة",
@@ -138,6 +169,10 @@
     "أسئلة شائعة عملية تساعد القارئ على فهم عيد العرش المغربي والتصرف بناءً عليه."
   ],
   "factSources": [
+    {
+      "label": "Maroc.ma: Throne Day royal vision",
+      "url": "https://www.maroc.ma/en/news/throne-day-celebrating-forward-looking-royal-vision-emerging-modern-prosperous-morocco"
+    },
     {
       "label": "Maroc.ma: نص الخطاب السامي بمناسبة الذكرى 16 لعيد العرش المجيد",
       "url": "https://www.maroc.ma/ar/%D8%A7%D9%84%D8%AE%D8%B7%D8%A8-%D9%88%D8%A7%D9%84%D8%B1%D8%B3%D8%A7%D8%A6%D9%84-%D8%A7%D9%84%D9%85%D9%84%D9%83%D9%8A%D8%A9/%D8%A7%D9%84%D8%AE%D8%B7%D8%A8-%D8%A7%D9%84%D9%85%D9%84%D9%83%D9%8A%D8%A9/%D9%86%D8%B5-%D8%A7%D9%84%D8%AE%D8%B7%D8%A7%D8%A8-%D8%A7%D9%84%D8%B3%D8%A7%D9%85%D9%8A-%D8%A7%D9%84%D8%B0%D9%8A-%D9%88%D8%AC%D9%87%D9%87-%D8%AC%D9%84%D8%A7%D9%84%D8%A9-%D8%A7%D9%84%D9%85%D9%84%D9%83-%D9%85%D8%AD%D9%85%D8%AF-%D8%A7%D9%84%D8%B3%D8%A7%D8%AF%D8%B3-%D8%A5%D9%84%D9%89-%D8%A7%D9%84%D8%A3%D9%85%D8%A9-%D8%A8%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A9-%D8%A7%D9%84%D8%B0%D9%83%D8%B1%D9%89-16-%D9%84%D8%B9%D9%8A%D8%AF-%D8%A7%D9%84%D8%B9%D8%B1%D8%B4-%D8%A7%D9%84%D9%85%D8%AC%D9%8A%D8%AF"
@@ -151,5 +186,5 @@
       "url": "https://www.hespress.com/%D8%B9%D9%8A%D8%AF-%D8%A7%D9%84%D8%B9%D8%B1%D8%B4-%D8%A8%D8%A7%D9%84%D9%85%D8%BA%D8%B1%D8%A8-%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE%D9%87-%D9%88%D8%B1%D9%85%D8%B2%D9%8A%D8%AA%D9%87-508635.html"
     }
   ],
-  "notes": "فرصة الصفحة هنا أن معظم المحتوى الحالي عن عيد العرش إما مقالات تحليلية أو أخبار متفرقة، وليس صفحة خدمة مباشرة تجيب عن متى وكم باقي ولماذا يحتفل المغاربة بهذا اليوم، مع ربط واضح بين 30 يوليو واعتلاء الملك محمد السادس العرش سنة 1999."
+  "notes": "Updated on 2026-06-01 with stronger official source coverage. The page opportunity is a service-first Arabic answer: fixed date, public-holiday status, official meaning, and distinction from Independence Day and Green March."
 }

@@ -531,82 +531,6 @@
     "canonicalSlug": "ashura",
     "countryCode": "us"
   },
-  "mawlid-in-saudi": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "sa"
-  },
-  "mawlid-in-egypt": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "eg"
-  },
-  "mawlid-in-morocco": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "ma"
-  },
-  "mawlid-in-algeria": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "dz"
-  },
-  "mawlid-in-uae": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "ae"
-  },
-  "mawlid-in-tunisia": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "tn"
-  },
-  "mawlid-in-kuwait": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "kw"
-  },
-  "mawlid-in-qatar": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "qa"
-  },
-  "mawlid-in-iraq": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "iq"
-  },
-  "mawlid-in-syria": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "sy"
-  },
-  "mawlid-in-yemen": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "ye"
-  },
-  "mawlid-in-jordan": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "jo"
-  },
-  "mawlid-in-libya": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "ly"
-  },
-  "mawlid-in-oman": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "om"
-  },
-  "mawlid-in-palestine": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "ps"
-  },
-  "mawlid-in-canada": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "ca"
-  },
-  "mawlid-in-france": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "fr"
-  },
-  "mawlid-in-turkey": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "tr"
-  },
-  "mawlid-in-usa": {
-    "canonicalSlug": "mawlid",
-    "countryCode": "us"
-  },
   "laylat-al-qadr-in-saudi": {
     "canonicalSlug": "laylat-al-qadr",
     "countryCode": "sa"
@@ -757,82 +681,6 @@
   },
   "isra-miraj-in-usa": {
     "canonicalSlug": "isra-miraj",
-    "countryCode": "us"
-  },
-  "nisf-shaban-in-saudi": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "sa"
-  },
-  "nisf-shaban-in-egypt": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "eg"
-  },
-  "nisf-shaban-in-morocco": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "ma"
-  },
-  "nisf-shaban-in-algeria": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "dz"
-  },
-  "nisf-shaban-in-uae": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "ae"
-  },
-  "nisf-shaban-in-tunisia": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "tn"
-  },
-  "nisf-shaban-in-kuwait": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "kw"
-  },
-  "nisf-shaban-in-qatar": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "qa"
-  },
-  "nisf-shaban-in-iraq": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "iq"
-  },
-  "nisf-shaban-in-syria": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "sy"
-  },
-  "nisf-shaban-in-yemen": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "ye"
-  },
-  "nisf-shaban-in-jordan": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "jo"
-  },
-  "nisf-shaban-in-libya": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "ly"
-  },
-  "nisf-shaban-in-oman": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "om"
-  },
-  "nisf-shaban-in-palestine": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "ps"
-  },
-  "nisf-shaban-in-canada": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "ca"
-  },
-  "nisf-shaban-in-france": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "fr"
-  },
-  "nisf-shaban-in-turkey": {
-    "canonicalSlug": "nisf-shaban",
-    "countryCode": "tr"
-  },
-  "nisf-shaban-in-usa": {
-    "canonicalSlug": "nisf-shaban",
     "countryCode": "us"
   },
   "first-dhul-hijjah-in-saudi": {
@@ -1297,6 +1145,158 @@
   },
   "arabic-language-day-in-usa": {
     "canonicalSlug": "arabic-language-day",
+    "countryCode": "us"
+  },
+  "mawlid-in-saudi": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "sa"
+  },
+  "mawlid-in-egypt": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "eg"
+  },
+  "mawlid-in-morocco": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "ma"
+  },
+  "mawlid-in-algeria": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "dz"
+  },
+  "mawlid-in-uae": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "ae"
+  },
+  "mawlid-in-tunisia": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "tn"
+  },
+  "mawlid-in-kuwait": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "kw"
+  },
+  "mawlid-in-qatar": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "qa"
+  },
+  "mawlid-in-iraq": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "iq"
+  },
+  "mawlid-in-syria": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "sy"
+  },
+  "mawlid-in-yemen": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "ye"
+  },
+  "mawlid-in-jordan": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "jo"
+  },
+  "mawlid-in-libya": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "ly"
+  },
+  "mawlid-in-oman": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "om"
+  },
+  "mawlid-in-palestine": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "ps"
+  },
+  "mawlid-in-canada": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "ca"
+  },
+  "mawlid-in-france": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "fr"
+  },
+  "mawlid-in-turkey": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "tr"
+  },
+  "mawlid-in-usa": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "us"
+  },
+  "nisf-shaban-in-saudi": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "sa"
+  },
+  "nisf-shaban-in-egypt": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "eg"
+  },
+  "nisf-shaban-in-morocco": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "ma"
+  },
+  "nisf-shaban-in-algeria": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "dz"
+  },
+  "nisf-shaban-in-uae": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "ae"
+  },
+  "nisf-shaban-in-tunisia": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "tn"
+  },
+  "nisf-shaban-in-kuwait": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "kw"
+  },
+  "nisf-shaban-in-qatar": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "qa"
+  },
+  "nisf-shaban-in-iraq": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "iq"
+  },
+  "nisf-shaban-in-syria": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "sy"
+  },
+  "nisf-shaban-in-yemen": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "ye"
+  },
+  "nisf-shaban-in-jordan": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "jo"
+  },
+  "nisf-shaban-in-libya": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "ly"
+  },
+  "nisf-shaban-in-oman": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "om"
+  },
+  "nisf-shaban-in-palestine": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "ps"
+  },
+  "nisf-shaban-in-canada": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "ca"
+  },
+  "nisf-shaban-in-france": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "fr"
+  },
+  "nisf-shaban-in-turkey": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "tr"
+  },
+  "nisf-shaban-in-usa": {
+    "canonicalSlug": "nisf-shaban",
     "countryCode": "us"
   },
   "world-fathers-day-in-saudi": {

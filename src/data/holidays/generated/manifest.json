@@ -1,8 +1,8 @@
 {
   "schemaVersion": 6,
-  "generatedAt": "2026-05-15T09:23:06.450Z",
-  "totalEvents": 79,
-  "totalPublished": 79,
+  "generatedAt": "2026-06-05T23:33:38.718Z",
+  "totalEvents": 76,
+  "totalPublished": 76,
   "totalAliases": 345,
   "supportedCountryCount": 19,
   "supportedCountryCodes": [
@@ -102,7 +102,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "eid-al-fitr",
@@ -167,7 +167,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "eid-al-adha",
@@ -232,7 +232,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "day-of-arafa",
@@ -297,7 +297,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "hajj-start",
@@ -362,7 +362,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "islamic-new-year",
@@ -427,7 +427,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "ashura",
@@ -492,72 +492,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
-    },
-    {
-      "id": "mawlid",
-      "slug": "mawlid",
-      "category": "islamic",
-      "publishStatus": "published",
-      "countryScope": "all",
-      "distribution": "shared",
-      "countryCodes": [
-        "sa",
-        "eg",
-        "ma",
-        "dz",
-        "ae",
-        "tn",
-        "kw",
-        "qa",
-        "iq",
-        "sy",
-        "ye",
-        "jo",
-        "ly",
-        "om",
-        "ps",
-        "ca",
-        "fr",
-        "tr",
-        "us"
-      ],
-      "autoExpandCountries": true,
-      "canonicalPath": "/holidays/mawlid",
-      "canonicalSource": "internal",
-      "sourceAuthority": "hijri-authority",
-      "queueOrder": 8,
-      "eventDir": "src/data/holidays/events/mawlid",
-      "packageFile": "src/data/holidays/events/mawlid/package.json",
-      "researchFile": "src/data/holidays/events/mawlid/research.json",
-      "qaFile": "src/data/holidays/events/mawlid/qa.json",
-      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
-      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
-      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
-      "aliasSlugs": [
-        "mawlid-in-saudi",
-        "mawlid-in-egypt",
-        "mawlid-in-morocco",
-        "mawlid-in-algeria",
-        "mawlid-in-uae",
-        "mawlid-in-tunisia",
-        "mawlid-in-kuwait",
-        "mawlid-in-qatar",
-        "mawlid-in-iraq",
-        "mawlid-in-syria",
-        "mawlid-in-yemen",
-        "mawlid-in-jordan",
-        "mawlid-in-libya",
-        "mawlid-in-oman",
-        "mawlid-in-palestine",
-        "mawlid-in-canada",
-        "mawlid-in-france",
-        "mawlid-in-turkey",
-        "mawlid-in-usa"
-      ],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "laylat-al-qadr",
@@ -622,7 +557,34 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
+    },
+    {
+      "id": "social-security-sa",
+      "slug": "social-security-saudi",
+      "category": "support",
+      "publishStatus": "published",
+      "countryScope": "custom",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "sa"
+      ],
+      "autoExpandCountries": false,
+      "canonicalPath": "/holidays/social-security-saudi",
+      "canonicalSource": "internal",
+      "sourceAuthority": "hrsd-social-security",
+      "queueOrder": 9,
+      "eventDir": "src/data/holidays/events/social-security-saudi",
+      "packageFile": "src/data/holidays/events/social-security-saudi/package.json",
+      "researchFile": "src/data/holidays/events/social-security-saudi/research.json",
+      "qaFile": "src/data/holidays/events/social-security-saudi/qa.json",
+      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
+      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
+      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
+      "aliasSlugs": [],
+      "hasResearch": true,
+      "hasQa": true,
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "isra-miraj",
@@ -687,72 +649,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
-    },
-    {
-      "id": "nisf-shaban",
-      "slug": "nisf-shaban",
-      "category": "islamic",
-      "publishStatus": "published",
-      "countryScope": "all",
-      "distribution": "shared",
-      "countryCodes": [
-        "sa",
-        "eg",
-        "ma",
-        "dz",
-        "ae",
-        "tn",
-        "kw",
-        "qa",
-        "iq",
-        "sy",
-        "ye",
-        "jo",
-        "ly",
-        "om",
-        "ps",
-        "ca",
-        "fr",
-        "tr",
-        "us"
-      ],
-      "autoExpandCountries": true,
-      "canonicalPath": "/holidays/nisf-shaban",
-      "canonicalSource": "internal",
-      "sourceAuthority": "islamic-reference",
-      "queueOrder": 11,
-      "eventDir": "src/data/holidays/events/nisf-shaban",
-      "packageFile": "src/data/holidays/events/nisf-shaban/package.json",
-      "researchFile": "src/data/holidays/events/nisf-shaban/research.json",
-      "qaFile": "src/data/holidays/events/nisf-shaban/qa.json",
-      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
-      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
-      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
-      "aliasSlugs": [
-        "nisf-shaban-in-saudi",
-        "nisf-shaban-in-egypt",
-        "nisf-shaban-in-morocco",
-        "nisf-shaban-in-algeria",
-        "nisf-shaban-in-uae",
-        "nisf-shaban-in-tunisia",
-        "nisf-shaban-in-kuwait",
-        "nisf-shaban-in-qatar",
-        "nisf-shaban-in-iraq",
-        "nisf-shaban-in-syria",
-        "nisf-shaban-in-yemen",
-        "nisf-shaban-in-jordan",
-        "nisf-shaban-in-libya",
-        "nisf-shaban-in-oman",
-        "nisf-shaban-in-palestine",
-        "nisf-shaban-in-canada",
-        "nisf-shaban-in-france",
-        "nisf-shaban-in-turkey",
-        "nisf-shaban-in-usa"
-      ],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "first-dhul-hijjah",
@@ -817,57 +714,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
-    },
-    {
-      "id": "new-year",
-      "slug": "new-year",
-      "category": "holidays",
-      "publishStatus": "published",
-      "countryScope": "custom",
-      "distribution": "standalone",
-      "countryCodes": [],
-      "autoExpandCountries": false,
-      "canonicalPath": "/holidays/new-year",
-      "canonicalSource": "internal",
-      "sourceAuthority": "gregorian-fixed-date",
-      "queueOrder": 13,
-      "eventDir": "src/data/holidays/events/new-year",
-      "packageFile": "src/data/holidays/events/new-year/package.json",
-      "researchFile": "src/data/holidays/events/new-year/research.json",
-      "qaFile": "src/data/holidays/events/new-year/qa.json",
-      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
-      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
-      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
-      "aliasSlugs": [],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
-    },
-    {
-      "id": "summer",
-      "slug": "summer-season",
-      "category": "astronomy",
-      "publishStatus": "published",
-      "countryScope": "custom",
-      "distribution": "standalone",
-      "countryCodes": [],
-      "autoExpandCountries": false,
-      "canonicalPath": "/holidays/summer-season",
-      "canonicalSource": "internal",
-      "sourceAuthority": "astronomical-calendar",
-      "queueOrder": 14,
-      "eventDir": "src/data/holidays/events/summer-season",
-      "packageFile": "src/data/holidays/events/summer-season/package.json",
-      "researchFile": "src/data/holidays/events/summer-season/research.json",
-      "qaFile": "src/data/holidays/events/summer-season/qa.json",
-      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
-      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
-      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
-      "aliasSlugs": [],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "winter",
@@ -892,7 +739,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "spring",
@@ -917,7 +764,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "spring-vac",
@@ -930,8 +777,8 @@
       "autoExpandCountries": false,
       "canonicalPath": "/holidays/spring-vacation",
       "canonicalSource": "internal",
-      "sourceAuthority": "official-announcement",
-      "queueOrder": 18,
+      "sourceAuthority": "education-calendar-reference",
+      "queueOrder": 17,
       "eventDir": "src/data/holidays/events/spring-vacation",
       "packageFile": "src/data/holidays/events/spring-vacation/package.json",
       "researchFile": "src/data/holidays/events/spring-vacation/research.json",
@@ -942,7 +789,32 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
+    },
+    {
+      "id": "summer",
+      "slug": "summer-season",
+      "category": "astronomy",
+      "publishStatus": "published",
+      "countryScope": "custom",
+      "distribution": "standalone",
+      "countryCodes": [],
+      "autoExpandCountries": false,
+      "canonicalPath": "/holidays/summer-season",
+      "canonicalSource": "internal",
+      "sourceAuthority": "astronomy-reference",
+      "queueOrder": 18,
+      "eventDir": "src/data/holidays/events/summer-season",
+      "packageFile": "src/data/holidays/events/summer-season/package.json",
+      "researchFile": "src/data/holidays/events/summer-season/research.json",
+      "qaFile": "src/data/holidays/events/summer-season/qa.json",
+      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
+      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
+      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
+      "aliasSlugs": [],
+      "hasResearch": true,
+      "hasQa": true,
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "summer-vac",
@@ -967,7 +839,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "back-to-school",
@@ -992,7 +864,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "national-day-sa",
@@ -1019,7 +891,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "founding-day-sa",
@@ -1046,7 +918,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "school-start-sa",
@@ -1073,7 +945,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "salary-sa",
@@ -1100,7 +972,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "citizen-account-sa",
@@ -1127,34 +999,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
-    },
-    {
-      "id": "social-security-sa",
-      "slug": "social-security-saudi",
-      "category": "support",
-      "publishStatus": "published",
-      "countryScope": "custom",
-      "distribution": "country_specific",
-      "countryCodes": [
-        "sa"
-      ],
-      "autoExpandCountries": false,
-      "canonicalPath": "/holidays/social-security-saudi",
-      "canonicalSource": "internal",
-      "sourceAuthority": "official-announcement",
-      "queueOrder": 26,
-      "eventDir": "src/data/holidays/events/social-security-saudi",
-      "packageFile": "src/data/holidays/events/social-security-saudi/package.json",
-      "researchFile": "src/data/holidays/events/social-security-saudi/research.json",
-      "qaFile": "src/data/holidays/events/social-security-saudi/qa.json",
-      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
-      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
-      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
-      "aliasSlugs": [],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "results-th-eg",
@@ -1181,7 +1026,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "hafez-sa",
@@ -1208,7 +1053,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "exams-th-eg",
@@ -1235,7 +1080,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "housing-support-sa",
@@ -1262,7 +1107,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "school-start-eg",
@@ -1277,7 +1122,7 @@
       "autoExpandCountries": false,
       "canonicalPath": "/holidays/school-start-egypt",
       "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
+      "sourceAuthority": "egypt-school-calendar",
       "queueOrder": 32,
       "eventDir": "src/data/holidays/events/school-start-egypt",
       "packageFile": "src/data/holidays/events/school-start-egypt/package.json",
@@ -1289,7 +1134,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "salary-eg",
@@ -1316,61 +1161,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
-    },
-    {
-      "id": "sham-nessim",
-      "slug": "sham-nessim",
-      "category": "holidays",
-      "publishStatus": "published",
-      "countryScope": "custom",
-      "distribution": "country_specific",
-      "countryCodes": [
-        "eg"
-      ],
-      "autoExpandCountries": false,
-      "canonicalPath": "/holidays/sham-nessim",
-      "canonicalSource": "internal",
-      "sourceAuthority": "official-announcement",
-      "queueOrder": 35,
-      "eventDir": "src/data/holidays/events/sham-nessim",
-      "packageFile": "src/data/holidays/events/sham-nessim/package.json",
-      "researchFile": "src/data/holidays/events/sham-nessim/research.json",
-      "qaFile": "src/data/holidays/events/sham-nessim/qa.json",
-      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
-      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
-      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
-      "aliasSlugs": [],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
-    },
-    {
-      "id": "results-bac-dz",
-      "slug": "bac-results-algeria",
-      "category": "school",
-      "publishStatus": "published",
-      "countryScope": "custom",
-      "distribution": "country_specific",
-      "countryCodes": [
-        "dz"
-      ],
-      "autoExpandCountries": false,
-      "canonicalPath": "/holidays/bac-results-algeria",
-      "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
-      "queueOrder": 36,
-      "eventDir": "src/data/holidays/events/bac-results-algeria",
-      "packageFile": "src/data/holidays/events/bac-results-algeria/package.json",
-      "researchFile": "src/data/holidays/events/bac-results-algeria/research.json",
-      "qaFile": "src/data/holidays/events/bac-results-algeria/qa.json",
-      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
-      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
-      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
-      "aliasSlugs": [],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "exams-bac-dz",
@@ -1397,7 +1188,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "autumn",
@@ -1422,7 +1213,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "school-start-dz",
@@ -1437,7 +1228,7 @@
       "autoExpandCountries": false,
       "canonicalPath": "/holidays/school-start-algeria",
       "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
+      "sourceAuthority": "algeria-school-calendar-estimated",
       "queueOrder": 38,
       "eventDir": "src/data/holidays/events/school-start-algeria",
       "packageFile": "src/data/holidays/events/school-start-algeria/package.json",
@@ -1449,7 +1240,34 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
+    },
+    {
+      "id": "sham-nessim",
+      "slug": "sham-nessim",
+      "category": "holidays",
+      "publishStatus": "published",
+      "countryScope": "custom",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "eg"
+      ],
+      "autoExpandCountries": false,
+      "canonicalPath": "/holidays/sham-nessim",
+      "canonicalSource": "internal",
+      "sourceAuthority": "official-holiday-decree",
+      "queueOrder": 38,
+      "eventDir": "src/data/holidays/events/sham-nessim",
+      "packageFile": "src/data/holidays/events/sham-nessim/package.json",
+      "researchFile": "src/data/holidays/events/sham-nessim/research.json",
+      "qaFile": "src/data/holidays/events/sham-nessim/qa.json",
+      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
+      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
+      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
+      "aliasSlugs": [],
+      "hasResearch": true,
+      "hasQa": true,
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "revolution-dz",
@@ -1476,61 +1294,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
-    },
-    {
-      "id": "results-bac-ma",
-      "slug": "bac-results-morocco",
-      "category": "school",
-      "publishStatus": "published",
-      "countryScope": "custom",
-      "distribution": "country_specific",
-      "countryCodes": [
-        "ma"
-      ],
-      "autoExpandCountries": false,
-      "canonicalPath": "/holidays/bac-results-morocco",
-      "canonicalSource": "internal",
-      "sourceAuthority": "official-announcement",
-      "queueOrder": 42,
-      "eventDir": "src/data/holidays/events/bac-results-morocco",
-      "packageFile": "src/data/holidays/events/bac-results-morocco/package.json",
-      "researchFile": "src/data/holidays/events/bac-results-morocco/research.json",
-      "qaFile": "src/data/holidays/events/bac-results-morocco/qa.json",
-      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
-      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
-      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
-      "aliasSlugs": [],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
-    },
-    {
-      "id": "national-exam-ma",
-      "slug": "national-exams-morocco",
-      "category": "school",
-      "publishStatus": "published",
-      "countryScope": "custom",
-      "distribution": "country_specific",
-      "countryCodes": [
-        "ma"
-      ],
-      "autoExpandCountries": false,
-      "canonicalPath": "/holidays/national-exams-morocco",
-      "canonicalSource": "internal",
-      "sourceAuthority": "official-announcement",
-      "queueOrder": 43,
-      "eventDir": "src/data/holidays/events/national-exams-morocco",
-      "packageFile": "src/data/holidays/events/national-exams-morocco/package.json",
-      "researchFile": "src/data/holidays/events/national-exams-morocco/research.json",
-      "qaFile": "src/data/holidays/events/national-exams-morocco/qa.json",
-      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
-      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
-      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
-      "aliasSlugs": [],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "school-start-ma",
@@ -1545,7 +1309,7 @@
       "autoExpandCountries": false,
       "canonicalPath": "/holidays/school-start-morocco",
       "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
+      "sourceAuthority": "morocco-school-calendar",
       "queueOrder": 44,
       "eventDir": "src/data/holidays/events/school-start-morocco",
       "packageFile": "src/data/holidays/events/school-start-morocco/package.json",
@@ -1557,7 +1321,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "throne-day",
@@ -1584,7 +1348,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "independence-ma",
@@ -1611,7 +1375,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "independence-dz",
@@ -1638,7 +1402,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "national-day-ae",
@@ -1665,7 +1429,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "school-start-ae",
@@ -1680,7 +1444,7 @@
       "autoExpandCountries": false,
       "canonicalPath": "/holidays/school-start-uae",
       "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
+      "sourceAuthority": "uae-academic-calendar",
       "queueOrder": 49,
       "eventDir": "src/data/holidays/events/school-start-uae",
       "packageFile": "src/data/holidays/events/school-start-uae/package.json",
@@ -1692,34 +1456,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
-    },
-    {
-      "id": "results-bac-tn",
-      "slug": "bac-results-tunisia",
-      "category": "school",
-      "publishStatus": "published",
-      "countryScope": "custom",
-      "distribution": "country_specific",
-      "countryCodes": [
-        "tn"
-      ],
-      "autoExpandCountries": false,
-      "canonicalPath": "/holidays/bac-results-tunisia",
-      "canonicalSource": "internal",
-      "sourceAuthority": "official-announcement",
-      "queueOrder": 51,
-      "eventDir": "src/data/holidays/events/bac-results-tunisia",
-      "packageFile": "src/data/holidays/events/bac-results-tunisia/package.json",
-      "researchFile": "src/data/holidays/events/bac-results-tunisia/research.json",
-      "qaFile": "src/data/holidays/events/bac-results-tunisia/qa.json",
-      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
-      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
-      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
-      "aliasSlugs": [],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "school-start-tn",
@@ -1734,7 +1471,7 @@
       "autoExpandCountries": false,
       "canonicalPath": "/holidays/school-start-tunisia",
       "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
+      "sourceAuthority": "tunisia-school-calendar",
       "queueOrder": 52,
       "eventDir": "src/data/holidays/events/school-start-tunisia",
       "packageFile": "src/data/holidays/events/school-start-tunisia/package.json",
@@ -1746,7 +1483,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "independence-tn",
@@ -1773,7 +1510,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "national-day-kw",
@@ -1800,7 +1537,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "school-start-kw",
@@ -1827,7 +1564,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "national-day-qa",
@@ -1854,7 +1591,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "school-start-qa",
@@ -1869,7 +1606,7 @@
       "autoExpandCountries": false,
       "canonicalPath": "/holidays/school-start-qatar",
       "canonicalSource": "internal",
-      "sourceAuthority": "fixed-calendar",
+      "sourceAuthority": "qatar-academic-calendar",
       "queueOrder": 59,
       "eventDir": "src/data/holidays/events/school-start-qatar",
       "packageFile": "src/data/holidays/events/school-start-qatar/package.json",
@@ -1881,59 +1618,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
-    },
-    {
-      "id": "mothers-day",
-      "slug": "mothers-day",
-      "category": "social",
-      "publishStatus": "published",
-      "countryScope": "none",
-      "distribution": "standalone",
-      "countryCodes": [],
-      "autoExpandCountries": false,
-      "canonicalPath": "/holidays/mothers-day",
-      "canonicalSource": "internal",
-      "sourceAuthority": "regional-cultural-observance",
-      "queueOrder": 60,
-      "eventDir": "src/data/holidays/events/mothers-day",
-      "packageFile": "src/data/holidays/events/mothers-day/package.json",
-      "researchFile": "src/data/holidays/events/mothers-day/research.json",
-      "qaFile": "src/data/holidays/events/mothers-day/qa.json",
-      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
-      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
-      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
-      "aliasSlugs": [],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
-    },
-    {
-      "id": "pension-sa",
-      "slug": "pension-day-saudi",
-      "category": "support",
-      "publishStatus": "published",
-      "countryScope": "custom",
-      "distribution": "country_specific",
-      "countryCodes": [
-        "sa"
-      ],
-      "autoExpandCountries": false,
-      "canonicalPath": "/holidays/pension-day-saudi",
-      "canonicalSource": "internal",
-      "sourceAuthority": "gosi-official",
-      "queueOrder": 61,
-      "eventDir": "src/data/holidays/events/pension-day-saudi",
-      "packageFile": "src/data/holidays/events/pension-day-saudi/package.json",
-      "researchFile": "src/data/holidays/events/pension-day-saudi/research.json",
-      "qaFile": "src/data/holidays/events/pension-day-saudi/qa.json",
-      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
-      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
-      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
-      "aliasSlugs": [],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "valentines-day",
@@ -1998,7 +1683,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "labor-day",
@@ -2023,7 +1708,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "sand-sa",
@@ -2050,7 +1735,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "takaful-karama-eg",
@@ -2077,7 +1762,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "world-health-day",
@@ -2142,7 +1827,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "earth-day",
@@ -2207,34 +1892,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
-    },
-    {
-      "id": "pension-eg",
-      "slug": "pension-day-egypt",
-      "category": "support",
-      "publishStatus": "published",
-      "countryScope": "custom",
-      "distribution": "country_specific",
-      "countryCodes": [
-        "eg"
-      ],
-      "autoExpandCountries": false,
-      "canonicalPath": "/holidays/pension-day-egypt",
-      "canonicalSource": "internal",
-      "sourceAuthority": "nosi-eg-official",
-      "queueOrder": 64,
-      "eventDir": "src/data/holidays/events/pension-day-egypt",
-      "packageFile": "src/data/holidays/events/pension-day-egypt/package.json",
-      "researchFile": "src/data/holidays/events/pension-day-egypt/research.json",
-      "qaFile": "src/data/holidays/events/pension-day-egypt/qa.json",
-      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
-      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
-      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
-      "aliasSlugs": [],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "international-womens-day",
@@ -2265,7 +1923,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "world-teachers-day",
@@ -2330,7 +1988,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "arabic-language-day",
@@ -2395,7 +2053,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "saudi-flag-day",
@@ -2422,7 +2080,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "jordan-independence-day",
@@ -2449,7 +2107,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "bahrain-national-day",
@@ -2474,7 +2132,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "liberation-day-kw",
@@ -2501,7 +2159,34 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
+    },
+    {
+      "id": "martyrs-day-ae",
+      "slug": "martyrs-day-uae",
+      "category": "national",
+      "publishStatus": "published",
+      "countryScope": "none",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "ae"
+      ],
+      "autoExpandCountries": false,
+      "canonicalPath": "/holidays/martyrs-day-uae",
+      "canonicalSource": "internal",
+      "sourceAuthority": "uae-national-calendar",
+      "queueOrder": 71,
+      "eventDir": "src/data/holidays/events/martyrs-day-uae",
+      "packageFile": "src/data/holidays/events/martyrs-day-uae/package.json",
+      "researchFile": "src/data/holidays/events/martyrs-day-uae/research.json",
+      "qaFile": "src/data/holidays/events/martyrs-day-uae/qa.json",
+      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
+      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
+      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
+      "aliasSlugs": [],
+      "hasResearch": true,
+      "hasQa": true,
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "revolution-day-eg",
@@ -2528,7 +2213,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "armed-forces-day-eg",
@@ -2555,7 +2240,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "green-march-ma",
@@ -2582,34 +2267,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
-    },
-    {
-      "id": "martyrs-day-ae",
-      "slug": "martyrs-day-uae",
-      "category": "national",
-      "publishStatus": "published",
-      "countryScope": "none",
-      "distribution": "country_specific",
-      "countryCodes": [
-        "ae"
-      ],
-      "autoExpandCountries": false,
-      "canonicalPath": "/holidays/martyrs-day-uae",
-      "canonicalSource": "internal",
-      "sourceAuthority": "uae-official",
-      "queueOrder": 74,
-      "eventDir": "src/data/holidays/events/martyrs-day-uae",
-      "packageFile": "src/data/holidays/events/martyrs-day-uae/package.json",
-      "researchFile": "src/data/holidays/events/martyrs-day-uae/research.json",
-      "qaFile": "src/data/holidays/events/martyrs-day-uae/qa.json",
-      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
-      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
-      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
-      "aliasSlugs": [],
-      "hasResearch": true,
-      "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "thanksgiving-usa",
@@ -2636,7 +2294,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "black-friday-usa",
@@ -2663,7 +2321,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "cyber-monday-usa",
@@ -2690,7 +2348,72 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
+    },
+    {
+      "id": "mawlid",
+      "slug": "mawlid",
+      "category": "islamic",
+      "publishStatus": "published",
+      "countryScope": "all",
+      "distribution": "shared",
+      "countryCodes": [
+        "sa",
+        "eg",
+        "ma",
+        "dz",
+        "ae",
+        "tn",
+        "kw",
+        "qa",
+        "iq",
+        "sy",
+        "ye",
+        "jo",
+        "ly",
+        "om",
+        "ps",
+        "ca",
+        "fr",
+        "tr",
+        "us"
+      ],
+      "autoExpandCountries": true,
+      "canonicalPath": "/holidays/mawlid",
+      "canonicalSource": "internal",
+      "sourceAuthority": "hijri-authority",
+      "queueOrder": 77,
+      "eventDir": "src/data/holidays/events/mawlid",
+      "packageFile": "src/data/holidays/events/mawlid/package.json",
+      "researchFile": "src/data/holidays/events/mawlid/research.json",
+      "qaFile": "src/data/holidays/events/mawlid/qa.json",
+      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
+      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
+      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
+      "aliasSlugs": [
+        "mawlid-in-saudi",
+        "mawlid-in-egypt",
+        "mawlid-in-morocco",
+        "mawlid-in-algeria",
+        "mawlid-in-uae",
+        "mawlid-in-tunisia",
+        "mawlid-in-kuwait",
+        "mawlid-in-qatar",
+        "mawlid-in-iraq",
+        "mawlid-in-syria",
+        "mawlid-in-yemen",
+        "mawlid-in-jordan",
+        "mawlid-in-libya",
+        "mawlid-in-oman",
+        "mawlid-in-palestine",
+        "mawlid-in-canada",
+        "mawlid-in-france",
+        "mawlid-in-turkey",
+        "mawlid-in-usa"
+      ],
+      "hasResearch": true,
+      "hasQa": true,
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "halloween-usa",
@@ -2717,7 +2440,32 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
+    },
+    {
+      "id": "mothers-day",
+      "slug": "mothers-day",
+      "category": "social",
+      "publishStatus": "published",
+      "countryScope": "none",
+      "distribution": "standalone",
+      "countryCodes": [],
+      "autoExpandCountries": false,
+      "canonicalPath": "/holidays/mothers-day",
+      "canonicalSource": "internal",
+      "sourceAuthority": "arab-social-calendar",
+      "queueOrder": 78,
+      "eventDir": "src/data/holidays/events/mothers-day",
+      "packageFile": "src/data/holidays/events/mothers-day/package.json",
+      "researchFile": "src/data/holidays/events/mothers-day/research.json",
+      "qaFile": "src/data/holidays/events/mothers-day/qa.json",
+      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
+      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
+      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
+      "aliasSlugs": [],
+      "hasResearch": true,
+      "hasQa": true,
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "christmas-usa",
@@ -2744,7 +2492,59 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
+    },
+    {
+      "id": "national-exam-ma",
+      "slug": "national-exams-morocco",
+      "category": "school",
+      "publishStatus": "published",
+      "countryScope": "custom",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "ma"
+      ],
+      "autoExpandCountries": false,
+      "canonicalPath": "/holidays/national-exams-morocco",
+      "canonicalSource": "internal",
+      "sourceAuthority": "morocco-school-calendar",
+      "queueOrder": 79,
+      "eventDir": "src/data/holidays/events/national-exams-morocco",
+      "packageFile": "src/data/holidays/events/national-exams-morocco/package.json",
+      "researchFile": "src/data/holidays/events/national-exams-morocco/research.json",
+      "qaFile": "src/data/holidays/events/national-exams-morocco/qa.json",
+      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
+      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
+      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
+      "aliasSlugs": [],
+      "hasResearch": true,
+      "hasQa": true,
+      "lastModified": "2026-06-05T23:33:38.718Z"
+    },
+    {
+      "id": "new-year",
+      "slug": "new-year",
+      "category": "holidays",
+      "publishStatus": "published",
+      "countryScope": "custom",
+      "distribution": "standalone",
+      "countryCodes": [],
+      "autoExpandCountries": false,
+      "canonicalPath": "/holidays/new-year",
+      "canonicalSource": "internal",
+      "sourceAuthority": "global-civil-calendar",
+      "queueOrder": 80,
+      "eventDir": "src/data/holidays/events/new-year",
+      "packageFile": "src/data/holidays/events/new-year/package.json",
+      "researchFile": "src/data/holidays/events/new-year/research.json",
+      "qaFile": "src/data/holidays/events/new-year/qa.json",
+      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
+      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
+      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
+      "aliasSlugs": [],
+      "hasResearch": true,
+      "hasQa": true,
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "new-years-eve-new-york",
@@ -2759,8 +2559,8 @@
       "autoExpandCountries": false,
       "canonicalPath": "/holidays/new-years-eve-new-york",
       "canonicalSource": "internal",
-      "sourceAuthority": "times-square-official",
-      "queueOrder": 80,
+      "sourceAuthority": "times-square-event",
+      "queueOrder": 81,
       "eventDir": "src/data/holidays/events/new-years-eve-new-york",
       "packageFile": "src/data/holidays/events/new-years-eve-new-york/package.json",
       "researchFile": "src/data/holidays/events/new-years-eve-new-york/research.json",
@@ -2771,7 +2571,126 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
+    },
+    {
+      "id": "nisf-shaban",
+      "slug": "nisf-shaban",
+      "category": "islamic",
+      "publishStatus": "published",
+      "countryScope": "all",
+      "distribution": "shared",
+      "countryCodes": [
+        "sa",
+        "eg",
+        "ma",
+        "dz",
+        "ae",
+        "tn",
+        "kw",
+        "qa",
+        "iq",
+        "sy",
+        "ye",
+        "jo",
+        "ly",
+        "om",
+        "ps",
+        "ca",
+        "fr",
+        "tr",
+        "us"
+      ],
+      "autoExpandCountries": true,
+      "canonicalPath": "/holidays/nisf-shaban",
+      "canonicalSource": "internal",
+      "sourceAuthority": "hijri-authority",
+      "queueOrder": 82,
+      "eventDir": "src/data/holidays/events/nisf-shaban",
+      "packageFile": "src/data/holidays/events/nisf-shaban/package.json",
+      "researchFile": "src/data/holidays/events/nisf-shaban/research.json",
+      "qaFile": "src/data/holidays/events/nisf-shaban/qa.json",
+      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
+      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
+      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
+      "aliasSlugs": [
+        "nisf-shaban-in-saudi",
+        "nisf-shaban-in-egypt",
+        "nisf-shaban-in-morocco",
+        "nisf-shaban-in-algeria",
+        "nisf-shaban-in-uae",
+        "nisf-shaban-in-tunisia",
+        "nisf-shaban-in-kuwait",
+        "nisf-shaban-in-qatar",
+        "nisf-shaban-in-iraq",
+        "nisf-shaban-in-syria",
+        "nisf-shaban-in-yemen",
+        "nisf-shaban-in-jordan",
+        "nisf-shaban-in-libya",
+        "nisf-shaban-in-oman",
+        "nisf-shaban-in-palestine",
+        "nisf-shaban-in-canada",
+        "nisf-shaban-in-france",
+        "nisf-shaban-in-turkey",
+        "nisf-shaban-in-usa"
+      ],
+      "hasResearch": true,
+      "hasQa": true,
+      "lastModified": "2026-06-05T23:33:38.718Z"
+    },
+    {
+      "id": "pension-eg",
+      "slug": "pension-day-egypt",
+      "category": "support",
+      "publishStatus": "published",
+      "countryScope": "none",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "eg"
+      ],
+      "autoExpandCountries": false,
+      "canonicalPath": "/holidays/pension-day-egypt",
+      "canonicalSource": "internal",
+      "sourceAuthority": "egypt-pension-authority",
+      "queueOrder": 83,
+      "eventDir": "src/data/holidays/events/pension-day-egypt",
+      "packageFile": "src/data/holidays/events/pension-day-egypt/package.json",
+      "researchFile": "src/data/holidays/events/pension-day-egypt/research.json",
+      "qaFile": "src/data/holidays/events/pension-day-egypt/qa.json",
+      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
+      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
+      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
+      "aliasSlugs": [],
+      "hasResearch": true,
+      "hasQa": true,
+      "lastModified": "2026-06-05T23:33:38.718Z"
+    },
+    {
+      "id": "pension-sa",
+      "slug": "pension-day-saudi",
+      "category": "support",
+      "publishStatus": "published",
+      "countryScope": "none",
+      "distribution": "country_specific",
+      "countryCodes": [
+        "sa"
+      ],
+      "autoExpandCountries": false,
+      "canonicalPath": "/holidays/pension-day-saudi",
+      "canonicalSource": "internal",
+      "sourceAuthority": "saudi-pension-authority",
+      "queueOrder": 84,
+      "eventDir": "src/data/holidays/events/pension-day-saudi",
+      "packageFile": "src/data/holidays/events/pension-day-saudi/package.json",
+      "researchFile": "src/data/holidays/events/pension-day-saudi/research.json",
+      "qaFile": "src/data/holidays/events/pension-day-saudi/qa.json",
+      "generatedCoreBundle": "src/data/holidays/generated/events-by-slug.json",
+      "generatedContentBundle": "src/data/holidays/generated/content-by-slug.json",
+      "generatedRuntimeBundle": "src/data/holidays/generated/runtime-records-by-slug.json",
+      "aliasSlugs": [],
+      "hasResearch": true,
+      "hasQa": true,
+      "lastModified": "2026-06-05T23:33:38.718Z"
     },
     {
       "id": "world-fathers-day",
@@ -2805,7 +2724,7 @@
       "canonicalPath": "/holidays/world-fathers-day",
       "canonicalSource": "internal",
       "sourceAuthority": "rule-based-calendar",
-      "queueOrder": 79,
+      "queueOrder": 76,
       "eventDir": "src/data/holidays/events/world-fathers-day",
       "packageFile": "src/data/holidays/events/world-fathers-day/package.json",
       "researchFile": "src/data/holidays/events/world-fathers-day/research.json",
@@ -2837,7 +2756,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-05-15T09:23:06.450Z"
+      "lastModified": "2026-06-05T23:33:38.718Z"
     }
   ]
 }

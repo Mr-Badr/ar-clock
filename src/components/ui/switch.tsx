@@ -5,19 +5,23 @@ import { Switch as SwitchPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
+type SwitchProps = React.ComponentProps<typeof SwitchPrimitive.Root> & {
+  size?: "sm" | "default"
+}
+
 function Switch({
   className,
-  size = "default",
+  size,
   ...props
-}: React.ComponentProps<typeof SwitchPrimitive.Root> & {
-  size?: "sm" | "default"
-}) {
+}: SwitchProps): React.JSX.Element {
+  const resolvedSize = size ?? "default"
+
   return (
     <SwitchPrimitive.Root
       data-slot="switch"
-      data-size={size}
+      data-size={resolvedSize}
       className={cn(
-        "peer data-[state=checked]:bg-primary data-[state=unchecked]:bg-input focus-visible:border-ring focus-visible:ring-ring/50 dark:data-[state=unchecked]:bg-input/80 group/switch inline-flex shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-[1.15rem] data-[size=default]:w-8 data-[size=sm]:h-3.5 data-[size=sm]:w-6",
+        "peer group/switch inline-flex shrink-0 items-center rounded-[var(--radius-full)] border border-[var(--border)] bg-[var(--muted)] shadow-none outline-none transition-[background-color,border-color,box-shadow] data-[state=checked]:border-[var(--blue)] data-[state=checked]:bg-[var(--blue)] focus-visible:border-[var(--border-focus)] focus-visible:shadow-[var(--shadow-focus)] disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-[var(--space-6)] data-[size=default]:w-[var(--space-11)] data-[size=sm]:h-[var(--space-5)] data-[size=sm]:w-[var(--space-8)]",
         className
       )}
       {...props}
@@ -25,7 +29,7 @@ function Switch({
       <SwitchPrimitive.Thumb
         data-slot="switch-thumb"
         className={cn(
-          "bg-base dark:data-[state=unchecked]:bg-foreground dark:data-[state=checked]:bg-primary-foreground pointer-events-none block rounded-full ring-0 transition-transform group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0"
+          "pointer-events-none block rounded-[var(--radius-full)] bg-[var(--surface)] ring-0 transition-transform group-data-[size=default]/switch:size-[var(--space-5)] group-data-[size=sm]/switch:size-[var(--space-4)] data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0 rtl:data-[state=checked]:-translate-x-[calc(100%-2px)]"
         )}
       />
     </SwitchPrimitive.Root>

@@ -15,13 +15,8 @@ import {
   Percent,
   Receipt,
   Wallet,
+  Buildings,
   List, X,
-  // Economie — must be explicit imports, namespace fallback is unreliable
-  Bank,
-  Sparkle,
-  ChartLineUp,
-  ClockCountdown,
-  Target,
 } from "@phosphor-icons/react";
 import {
   Accordion,
@@ -49,12 +44,9 @@ function getPhosphorIcon(name?: string): React.ElementType | null {
   if (!name) return null;
 
   const iconMap: Record<string, React.ElementType> = {
-    // date
     Moon, Sun, ArrowsCounterClockwise, Calendar, CalendarDots,
     ArrowRight, ArrowLeft, ArrowsLeftRight, Clock, Timer, Hourglass,
-    Globe, Calculator, Percent, Receipt, Wallet, List, X,
-    // economie
-    Bank, Sparkle, ChartLineUp, ClockCountdown, Target,
+    Globe, Calculator, Percent, Receipt, Wallet, Buildings, List, X,
   };
 
   return iconMap[name] ?? null;
@@ -81,8 +73,8 @@ export default function MobileMenu({ links }: { links: NavLink[] }) {
         aria-expanded={open}
       >
         {open
-          ? <X size={20} weight="bold" />
-          : <List size={20} weight="bold" />
+          ? <X size={20} weight="bold" aria-hidden="true" />
+          : <List size={20} weight="bold" aria-hidden="true" />
         }
       </button>
 
@@ -106,14 +98,15 @@ export default function MobileMenu({ links }: { links: NavLink[] }) {
                           prefetchMany([link.href, ...sublinkHrefs])
                         }
                         className={cn(
-                          "header-mobile-link hover:no-underline py-3 px-4 w-full justify-between flex [&>svg]:order-last border-none shadow-none",
+                          "header-mobile-link header-mobile-link--accordion",
                           isActive(link.href) && "active"
                         )}
+                        aria-current={isActive(link.href) ? "page" : undefined}
                       >
                         <span>{link.label}</span>
                       </AccordionTrigger>
 
-                      <AccordionContent className="pb-2 px-6 flex flex-col gap-1">
+                      <AccordionContent className="header-mobile-sublist">
                         {link.sublinks.map((sublink) => {
                           const SubIcon = getPhosphorIcon(sublink.icon);
                           const active = pathname === sublink.href;
@@ -122,33 +115,27 @@ export default function MobileMenu({ links }: { links: NavLink[] }) {
                               key={sublink.href}
                               href={sublink.href}
                               prefetch
+                              aria-current={active ? "page" : undefined}
                               className={cn(
-                                "flex items-center gap-3 p-3 rounded-md text-sm transition-colors",
-                                "text-[var(--text-secondary)] hover:bg-[var(--accent-soft)] hover:text-[var(--text-primary)]",
-                                active && "text-[var(--text-primary)] font-bold bg-[var(--accent-soft)]"
+                                "header-mobile-sublink",
+                                active && "active"
                               )}
                               {...getPrefetchHandlers(sublink.href)}
                             >
                               {SubIcon && (
-                                <span
-                                  className="flex items-center justify-center w-7 h-7 rounded-md flex-shrink-0"
-                                  style={{
-                                    background: active
-                                      ? "var(--accent)"
-                                      : "var(--bg-surface-2)",
-                                    border: "1px solid var(--border-default)",
-                                    color: active
-                                      ? "#fff"
-                                      : "var(--accent-alt)",
-                                  }}
-                                >
+                                <span className="header-mobile-sublink-icon" aria-hidden="true">
                                   <SubIcon
                                     size={15}
                                     weight={active ? "duotone" : "regular"}
                                   />
                                 </span>
                               )}
-                              <span>{sublink.label}</span>
+                              <span className="header-mobile-sublink-copy">
+                                <span>{sublink.label}</span>
+                                {sublink.description && (
+                                  <small>{sublink.description}</small>
+                                )}
+                              </span>
                             </Link>
                           );
                         })}

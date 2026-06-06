@@ -83,7 +83,7 @@ export default function EmergencyFundCalculator() {
             <CardHeader>
               <CardTitle className="calc-card-title">النتيجة الحالية</CardTitle>
             </CardHeader>
-            <CardContent className="calc-metric-grid">
+            <CardContent className="calc-metric-grid" aria-live="polite">
               <div className="calc-metric-card">
                 <div className="calc-metric-card__label"><ShieldCheck size={16} /> الهدف الكلي</div>
                 <div className="calc-metric-card__value">{formatMoney(result.targetAmount)}</div>

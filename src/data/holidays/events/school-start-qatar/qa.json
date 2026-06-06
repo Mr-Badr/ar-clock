@@ -2,12 +2,17 @@
   "slug": "school-start-qatar",
   "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:37.045Z"
+  "notes": [
+    "Validated the authored package built around the approved Qatar academic calendar with 30 August {{year}} for students, 23 August {{year}} for staff, and the 25 August {{year}} to 1 October {{year}} registration-transfer window.",
+    "The page already answers the family-facing query well by separating the student date from staff and service dates instead of flattening them into one late-August label.",
+    "Focused validation passed with validate-holiday-content, ESLint, typecheck, and seo:validate.",
+    "Generated holiday bundles were not regenerated because events:build was intentionally not run, so the rendered route can still lag behind the authored package."
+  ],
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

@@ -94,6 +94,7 @@ export default function AgeCalculator({ compact = false }) {
                   <button
                     type="button"
                     className={`calc-chip-button ${compareMode === 'today' ? 'is-active' : ''}`}
+                    aria-pressed={compareMode === 'today'}
                     onClick={() => setCompareMode('today')}
                   >
                     اليوم
@@ -101,6 +102,7 @@ export default function AgeCalculator({ compact = false }) {
                   <button
                     type="button"
                     className={`calc-chip-button ${compareMode === 'custom' ? 'is-active' : ''}`}
+                    aria-pressed={compareMode === 'custom'}
                     onClick={() => setCompareMode('custom')}
                   >
                     تاريخ محدد
@@ -109,9 +111,11 @@ export default function AgeCalculator({ compact = false }) {
               </div>
               {compareMode === 'custom' ? (
                 <input
+                  id="age-compare-date"
                   className="input calc-input"
                   type="date"
                   value={targetIso}
+                  aria-label="تاريخ المقارنة لحساب العمر"
                   onChange={(event) => setTargetIso(event.target.value)}
                 />
               ) : (
@@ -134,7 +138,7 @@ export default function AgeCalculator({ compact = false }) {
           </CardContent>
         </Card>
 
-        <div className="calc-results-panel">
+        <div className="calc-results-panel" aria-live="polite">
           <HeroSummaryCard
             title="العمر الحالي"
             result={result}
@@ -284,7 +288,7 @@ export default function AgeCalculator({ compact = false }) {
           <Card className="calc-surface-card">
             <CardHeader>
               <CardTitle className="calc-card-title">
-                <Hourglass size={16} style={{ marginLeft: '5px' }} />
+                <Hourglass size={16} />
                 بين الميلادي والهجري
               </CardTitle>
             </CardHeader>
@@ -295,7 +299,7 @@ export default function AgeCalculator({ compact = false }) {
           <Card className="calc-surface-card">
             <CardHeader>
               <CardTitle className="calc-card-title">
-                <MoonStar size={16} style={{ marginLeft: '5px' }} />
+                <MoonStar size={16} />
                 تاريخك الهجري
               </CardTitle>
             </CardHeader>
@@ -306,7 +310,7 @@ export default function AgeCalculator({ compact = false }) {
           <Card className="calc-surface-card">
             <CardHeader>
               <CardTitle className="calc-card-title">
-                <Timer size={16} style={{ marginLeft: '5px' }} />
+                <Timer size={16} />
                 علامة زمنية مميزة
               </CardTitle>
             </CardHeader>
@@ -321,7 +325,7 @@ export default function AgeCalculator({ compact = false }) {
         <Card className="calc-surface-card">
           <CardHeader>
             <CardTitle className="calc-card-title">
-              <Milestone size={16} style={{ marginLeft: '5px' }} />
+              <Milestone size={16} />
               كيف نقرأ هذه النتيجة؟
             </CardTitle>
           </CardHeader>
@@ -335,7 +339,7 @@ export default function AgeCalculator({ compact = false }) {
         <Card className="calc-surface-card">
           <CardHeader>
             <CardTitle className="calc-card-title">
-              <Waves size={16} style={{ marginLeft: '5px' }} />
+              <Waves size={16} />
               ماذا ستجد هنا؟
             </CardTitle>
           </CardHeader>

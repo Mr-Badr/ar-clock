@@ -1,7 +1,4 @@
 // src/components/date/EventDayLink.tsx
-// Client component — isolated so YearlyCalendar stays a server component.
-// Renders an event day cell: success-colored border + shadcn Tooltip on hover.
-
 'use client';
 
 import Link from 'next/link';
@@ -16,20 +13,16 @@ interface EventDayLinkProps {
   href: string;
   day: number;
   eventName?: string;
-  cellBg: string;
-  dayColor: string;
-  hijriColor: string;
   hijriLabel?: string;
+  className: string;
 }
 
 export function EventDayLink({
   href,
   day,
   eventName,
-  cellBg,
-  dayColor,
-  hijriColor,
   hijriLabel,
+  className,
 }: EventDayLinkProps) {
   return (
     <TooltipProvider>
@@ -37,27 +30,13 @@ export function EventDayLink({
         <TooltipTrigger asChild>
           <Link
             href={href}
-            className="relative flex flex-col items-center justify-center rounded-md transition-colors group"
-            style={{
-              minHeight: '34px',
-              background: cellBg,
-              border: '1px solid var(--success)',
-            }}
+            className={className}
           >
-            {/* Gregorian day number */}
-            <span
-              className="text-sm font-bold leading-none tabular-nums"
-              style={{ color: dayColor }}
-            >
+            <span className="date-day-main">
               {day}
             </span>
-
-            {/* Hijri day sub-label */}
             {hijriLabel && (
-              <span
-                className="text-2xs leading-none mt-0.5 tabular-nums"
-                style={{ color: hijriColor, fontWeight: '700' }}
-              >
+              <span className="date-day-sub">
                 {hijriLabel}
               </span>
             )}

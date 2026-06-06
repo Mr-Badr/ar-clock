@@ -7,6 +7,8 @@ import { useMotionValue, useSpring } from "motion/react"
 import { cn } from "@/lib/utils"
 
 const MOVEMENT_DAMPING = 1400
+const BLUE_MARKER_COLOR: [number, number, number] = [0, 102 / 255, 204 / 255]
+const WHITE_COLOR: [number, number, number] = [1, 1, 1]
 
 const GLOBE_CONFIG: COBEOptions = {
   width: 800,
@@ -19,9 +21,9 @@ const GLOBE_CONFIG: COBEOptions = {
   diffuse: 0.4,
   mapSamples: 16000,
   mapBrightness: 1.2,
-  baseColor: [1, 1, 1],
-  markerColor: [251 / 255, 100 / 255, 21 / 255],
-  glowColor: [1, 1, 1],
+  baseColor: WHITE_COLOR,
+  markerColor: BLUE_MARKER_COLOR,
+  glowColor: WHITE_COLOR,
   markers: [
     { location: [14.5995, 120.9842], size: 0.03 },
     { location: [19.076, 72.8777], size: 0.1 },
@@ -38,11 +40,12 @@ const GLOBE_CONFIG: COBEOptions = {
 
 export function Globe({
   className,
-  config = GLOBE_CONFIG,
+  config,
 }: {
   className?: string
   config?: COBEOptions
-}) {
+}): React.JSX.Element {
+  const resolvedConfig = config ?? GLOBE_CONFIG
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const phiRef = useRef(0)
   const widthRef = useRef(0)
@@ -81,8 +84,13 @@ export function Globe({
     window.addEventListener("resize", onResize)
     onResize()
 
-    const globe = createGlobe(canvasRef.current!, {
-      ...config,
+    if (!canvasRef.current) {
+      window.removeEventListener("resize", onResize)
+      return undefined
+    }
+
+    const globe = createGlobe(canvasRef.current, {
+      ...resolvedConfig,
       width: widthRef.current * 2,
       height: widthRef.current * 2,
       onRender: (state) => {
@@ -93,12 +101,18 @@ export function Globe({
       },
     })
 
-    setTimeout(() => (canvasRef.current!.style.opacity = "1"), 0)
+    const opacityTimer = window.setTimeout(() => {
+      if (canvasRef.current) {
+        canvasRef.current.style.opacity = "1"
+      }
+    }, 0)
+
     return () => {
+      window.clearTimeout(opacityTimer)
       globe.destroy()
       window.removeEventListener("resize", onResize)
     }
-  }, [rs, config])
+  }, [rs, resolvedConfig])
 
   return (
     <div

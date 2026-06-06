@@ -13,17 +13,19 @@ export function CalendarToggle({ value, onChange }) {
       <button
         type="button"
         className={`calc-chip-button ${value === 'gregorian' ? 'is-active' : ''}`}
+        aria-pressed={value === 'gregorian'}
         onClick={() => onChange('gregorian')}
       >
-        <CalendarDays size={15} style={{ marginLeft: '5px' }} />
+        <CalendarDays size={15} />
         ميلادي
       </button>
       <button
         type="button"
         className={`calc-chip-button ${value === 'hijri' ? 'is-active' : ''}`}
+        aria-pressed={value === 'hijri'}
         onClick={() => onChange('hijri')}
       >
-        <MoonStar size={15} style={{ marginLeft: '5px' }} />
+        <MoonStar size={15} />
         هجري
       </button>
     </div>
@@ -95,7 +97,7 @@ export function BirthInputBlock({
   onGregorianChange,
   hijriValue,
   onHijriChange,
-  label = 'أحسن تاريخ ميلادك بدقة',
+  label = 'أدخل تاريخ ميلادك بدقة',
 }) {
   return (
     <div className="calc-field">
@@ -133,10 +135,12 @@ export function ResultState({ result, emptyText = 'أدخل البيانات ل�
 }
 
 export function MetricGrid({ items = [] }) {
+  const safeItems = Array.isArray(items) ? items : [];
+
   return (
     <div className="calc-grid-3">
-      {items.map((item) => (
-        <div key={item.label} className="calc-metric-card card-nested">
+      {safeItems.map((item) => (
+        <div key={item.label} className="calc-metric-card">
           <div className="calc-metric-card__label">{item.label}</div>
           <div className="calc-metric-card__value">{item.value}</div>
           {item.note ? <div className="calc-metric-card__note">{item.note}</div> : null}
@@ -164,10 +168,12 @@ export function ProgressCard({ title, value, note }) {
 }
 
 export function MilestoneList({ items = [] }) {
+  const safeItems = Array.isArray(items) ? items : [];
+
   return (
     <div className="calc-breakdown-list">
-      {items.map((item) => (
-        <div key={item.key} className="calc-history-item card-nested">
+      {safeItems.map((item) => (
+        <div key={item.key} className="calc-history-item">
           <div className="calc-history-item__copy">
             <strong>{item.label}</strong>
             <span>
@@ -191,7 +197,7 @@ export function HeroSummaryCard({ title, result, footer }) {
       <CardHeader>
         <CardTitle className="calc-card-title">{title}</CardTitle>
       </CardHeader>
-      <CardContent className="age-hero-summary__body">
+      <CardContent className="age-hero-summary__body" aria-live="polite">
         {result?.isValid ? (
           <>
             <div className="age-hero-summary__value">{result.ageLabel || result.gapLabel || '—'}</div>
@@ -208,9 +214,11 @@ export function HeroSummaryCard({ title, result, footer }) {
 }
 
 export function InlineFacts({ items = [] }) {
+  const safeItems = Array.isArray(items) ? items : [];
+
   return (
     <div className="calc-kbd-row">
-      {items.map((item) => (
+      {safeItems.map((item) => (
         <div key={item.label} className="calc-search-chip">
           <Sparkles size={14} />
           <strong>{item.label}</strong>
@@ -236,6 +244,8 @@ export function BirthdayHeadline({ result }) {
 }
 
 export function CheckListCard({ title, items = [] }) {
+  const safeItems = Array.isArray(items) ? items : [];
+
   return (
     <Card className="calc-surface-card">
       <CardHeader>
@@ -243,7 +253,7 @@ export function CheckListCard({ title, items = [] }) {
       </CardHeader>
       <CardContent>
         <ul className="calc-checklist">
-          {items.map((item) => (
+          {safeItems.map((item) => (
             <li key={item}>
               <CheckCircle2 size={16} />
               <span>{item}</span>

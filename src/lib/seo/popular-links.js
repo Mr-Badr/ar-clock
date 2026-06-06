@@ -123,8 +123,8 @@ function buildTimeNowCityLink(country, city) {
     href: `/time-now/${country.country_slug}/${city.city_slug}`,
     countrySlug: country.country_slug,
     citySlug: city.city_slug,
-    label: `الوقت الآن في ${cityName}`,
-    description: `اعرف الساعة الآن في ${cityName}، ${countryName} مع التاريخ اليوم والمنطقة الزمنية الدقيقة.`,
+    label: `الوقت الان في ${cityName}`,
+    description: `اعرف الساعة الان في ${cityName}، ${countryName} مع التاريخ اليوم والمنطقة الزمنية الدقيقة.`,
   };
 }
 
@@ -137,8 +137,8 @@ function buildTimeNowCountryLink(country) {
   return {
     href: `/time-now/${country.country_slug}`,
     countrySlug: country.country_slug,
-    label: `الوقت الآن في ${countryName}`,
-    description: `صفحة الوقت الآن في ${countryName} مع المدن الرئيسية والتوقيت المحلي والروابط الداخلية.`,
+    label: `الوقت الان في ${countryName}`,
+    description: `اعرف الوقت الحالي في ${countryName} ثم انتقل بسهولة إلى العاصمة والمدن الرئيسية من نفس الصفحة.`,
   };
 }
 
@@ -168,8 +168,9 @@ function buildPrayerCountryLink(country) {
   return {
     href: `/mwaqit-al-salat/${country.country_slug}`,
     countrySlug: country.country_slug,
+    countryCode: country.country_code,
     label: `مواقيت الصلاة في ${countryName}`,
-    description: `صفحة مواقيت الصلاة في ${countryName} مع العاصمة وأبرز المدن وروابط داخلية قابلة للفهرسة.`,
+    description: `اعرف مواقيت الصلاة في ${countryName} مع العاصمة وأشهر المدن ومسارات واضحة للمتابعة اليومية.`,
   };
 }
 

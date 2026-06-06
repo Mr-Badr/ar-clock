@@ -33,12 +33,6 @@ import {
   Receipt,
   Wallet,
   Buildings,
-  // Economie submenu — MUST be explicit; namespace fallback fails with Turbopack
-  Bank,
-  Sparkle,
-  ChartLineUp,
-  ClockCountdown,
-  Target,
 } from "@phosphor-icons/react";
 import { useIntentPrefetch } from "./useIntentPrefetch";
 
@@ -82,15 +76,19 @@ function getPhosphorIcon(name?: string): React.ElementType | null {
     Receipt,
     Wallet,
     Buildings,
-    // economie
-    Bank,
-    Sparkle,
-    ChartLineUp,
-    ClockCountdown,
-    Target,
   };
 
   return iconMap[name] ?? null;
+}
+
+function getMegaMenuAlignment(href: string): "right" | "center" | "left" {
+  if (href === "/date") return "right";
+  return "center";
+}
+
+function getMegaMenuVariant(href: string): "calculators" | "default" {
+  if (href === "/calculators") return "calculators";
+  return "default";
 }
 
 export default function NavLinks({ links }: { links: NavLink[] }) {
@@ -101,10 +99,10 @@ export default function NavLinks({ links }: { links: NavLink[] }) {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <NavigationMenu dir="rtl" className="max-w-none justify-start">
+    <NavigationMenu dir="rtl" viewport={false} className="max-w-none justify-start">
       <NavigationMenuList className="gap-1 flex-row">
         {links.map((link) => (
-          <NavigationMenuItem key={link.href} className="flex">
+          <NavigationMenuItem key={link.href} className="relative flex">
             {link.sublinks
               ? (() => {
                   const sublinkHrefs = link.sublinks.map((s) => s.href);
@@ -119,16 +117,26 @@ export default function NavLinks({ links }: { links: NavLink[] }) {
                           prefetchMany([link.href, ...sublinkHrefs])
                         }
                         className={cn(
-                          "header-nav-link h-9 bg-transparent hover:bg-accent-soft hover:text-primary focus:bg-accent-soft data-[state=open]:bg-accent-soft data-[state=open]:text-primary transition-all rounded-full px-4 border-none shadow-none",
-                          isActive(link.href) &&
-                            "bg-accent text-on-accent font-semibold shadow-sm hover:text-on-accent hover:bg-accent focus:bg-accent"
+                          "header-nav-link header-nav-link--trigger",
+                          isActive(link.href) && "active"
                         )}
+                        aria-current={isActive(link.href) ? "page" : undefined}
                       >
                         {link.label}
                       </NavigationMenuTrigger>
 
-                      <NavigationMenuContent className="bg-transparent border-none shadow-none p-0 outline-none !overflow-visible">
-                        <div className="nav-mega-menu">
+                      <NavigationMenuContent
+                        className={cn(
+                          "nav-mega-content bg-transparent border-none shadow-none p-0 outline-none !overflow-visible",
+                          `nav-mega-content--${getMegaMenuAlignment(link.href)}`
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            "nav-mega-menu",
+                            `nav-mega-menu--${getMegaMenuVariant(link.href)}`
+                          )}
+                        >
 
                           {/* ── Side panel ── */}
                           <div className="nav-mega-panel">
@@ -140,7 +148,7 @@ export default function NavLinks({ links }: { links: NavLink[] }) {
                                     "CalendarDots"
                                 );
                                 return (
-                                  <div className="nav-mega-panel-icon">
+                                  <div className="nav-mega-panel-icon" aria-hidden="true">
                                     {PanelIcon && (
                                       <PanelIcon size={22} weight="duotone" />
                                     )}
@@ -152,7 +160,7 @@ export default function NavLinks({ links }: { links: NavLink[] }) {
                               </p>
                               <p className="nav-mega-panel-desc">
                                 {link.panelDescription ??
-                                  `تصفح جميع أدوات ${link.label}`}
+                                  `اختر من أدوات ${link.label}`}
                               </p>
                               <Link
                                 href={link.href}
@@ -187,7 +195,7 @@ export default function NavLinks({ links }: { links: NavLink[] }) {
                                       {/* Icon wrapper — .nav-mega-icon handles
                                           all colour/bg via CSS; never set color
                                           inline here or shadcn will win */}
-                                      <span className="nav-mega-icon">
+                                      <span className="nav-mega-icon" aria-hidden="true">
                                         {Icon && (
                                           <Icon
                                             size={18}
@@ -197,7 +205,7 @@ export default function NavLinks({ links }: { links: NavLink[] }) {
                                           />
                                         )}
                                       </span>
-                                      <span className="nav-mega-arrow">
+                                      <span className="nav-mega-arrow" aria-hidden="true">
                                         <CaretLeft size={14} weight="bold" />
                                       </span>
                                     </div>

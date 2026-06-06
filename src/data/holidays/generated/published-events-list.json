@@ -63,15 +63,6 @@
     "hijriDay": 10
   },
   {
-    "id": "mawlid",
-    "slug": "mawlid",
-    "name": "المولد النبوي الشريف",
-    "type": "hijri",
-    "category": "islamic",
-    "hijriMonth": 3,
-    "hijriDay": 12
-  },
-  {
     "id": "laylat-al-qadr",
     "slug": "laylat-al-qadr",
     "name": "ليلة القدر",
@@ -79,6 +70,15 @@
     "category": "islamic",
     "hijriMonth": 9,
     "hijriDay": 27
+  },
+  {
+    "id": "social-security-sa",
+    "slug": "social-security-saudi",
+    "name": "الضمان الاجتماعي المطور",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "sa",
+    "day": 1
   },
   {
     "id": "isra-miraj",
@@ -90,15 +90,6 @@
     "hijriDay": 27
   },
   {
-    "id": "nisf-shaban",
-    "slug": "nisf-shaban",
-    "name": "ليلة النصف من شعبان",
-    "type": "hijri",
-    "category": "islamic",
-    "hijriMonth": 8,
-    "hijriDay": 15
-  },
-  {
     "id": "first-dhul-hijjah",
     "slug": "first-dhul-hijjah",
     "name": "أول ذي الحجة",
@@ -106,24 +97,6 @@
     "category": "islamic",
     "hijriMonth": 12,
     "hijriDay": 1
-  },
-  {
-    "id": "new-year",
-    "slug": "new-year",
-    "name": "رأس السنة الميلادية",
-    "type": "fixed",
-    "category": "holidays",
-    "month": 1,
-    "day": 1
-  },
-  {
-    "id": "summer",
-    "slug": "summer-season",
-    "name": "بداية فصل الصيف",
-    "type": "fixed",
-    "category": "astronomy",
-    "month": 6,
-    "day": 21
   },
   {
     "id": "winter",
@@ -151,7 +124,16 @@
     "name": "عطلة الربيع المدرسية",
     "type": "estimated",
     "category": "school",
-    "date": "{{year}}-03-29"
+    "date": "{{year}}-03-16"
+  },
+  {
+    "id": "summer",
+    "slug": "summer-season",
+    "name": "بداية فصل الصيف",
+    "type": "fixed",
+    "category": "astronomy",
+    "month": 6,
+    "day": 21
   },
   {
     "id": "summer-vac",
@@ -167,7 +149,7 @@
     "name": "الدخول المدرسي",
     "type": "estimated",
     "category": "school",
-    "date": "{{year}}-09-20"
+    "date": "{{year}}-09-01"
   },
   {
     "id": "national-day-sa",
@@ -217,19 +199,10 @@
     "day": 10
   },
   {
-    "id": "social-security-sa",
-    "slug": "social-security-saudi",
-    "name": "الضمان الاجتماعي المطور",
-    "type": "monthly",
-    "category": "support",
-    "_countryCode": "sa",
-    "day": 1
-  },
-  {
     "id": "results-th-eg",
     "slug": "thanaweya-results",
     "name": "نتيجة الثانوية العامة (مصر)",
-    "type": "fixed",
+    "type": "estimated",
     "category": "school",
     "_countryCode": "eg",
     "month": 7,
@@ -252,7 +225,7 @@
     "category": "school",
     "_countryCode": "eg",
     "month": 6,
-    "day": 20
+    "day": 21
   },
   {
     "id": "housing-support-sa",
@@ -267,39 +240,19 @@
     "id": "school-start-eg",
     "slug": "school-start-egypt",
     "name": "بدء الدراسة في مصر",
-    "type": "fixed",
+    "type": "estimated",
     "category": "school",
     "_countryCode": "eg",
-    "month": 9,
-    "day": 20
+    "date": "{{year}}-09-12"
   },
   {
     "id": "salary-eg",
     "slug": "salary-day-egypt",
-    "name": "صرف المرتبات الحكومية (مصر)",
+    "name": "صرف المرتبات الحكومية في مصر",
     "type": "monthly",
     "category": "business",
     "_countryCode": "eg",
-    "day": 24
-  },
-  {
-    "id": "sham-nessim",
-    "slug": "sham-nessim",
-    "name": "شم النسيم",
-    "type": "estimated",
-    "category": "holidays",
-    "_countryCode": "eg",
-    "date": "{{year}}-04-13"
-  },
-  {
-    "id": "results-bac-dz",
-    "slug": "bac-results-algeria",
-    "name": "نتائج بكالوريا الجزائر",
-    "type": "fixed",
-    "category": "school",
-    "_countryCode": "dz",
-    "month": 7,
-    "day": 15
+    "day": 19
   },
   {
     "id": "exams-bac-dz",
@@ -322,16 +275,24 @@
     "id": "school-start-dz",
     "slug": "school-start-algeria",
     "name": "الدخول المدرسي في الجزائر",
-    "type": "fixed",
+    "type": "estimated",
     "category": "school",
     "_countryCode": "dz",
-    "month": 9,
-    "day": 21
+    "date": "{{year}}-09-20"
+  },
+  {
+    "id": "sham-nessim",
+    "slug": "sham-nessim",
+    "name": "شم النسيم",
+    "type": "estimated",
+    "category": "holidays",
+    "_countryCode": "eg",
+    "date": "{{year}}-04-13"
   },
   {
     "id": "revolution-dz",
     "slug": "revolution-day-algeria",
-    "name": "يوم الثورة الجزائرية",
+    "name": "عيد الثورة الجزائرية",
     "type": "fixed",
     "category": "national",
     "_countryCode": "dz",
@@ -339,32 +300,15 @@
     "day": 1
   },
   {
-    "id": "results-bac-ma",
-    "slug": "bac-results-morocco",
-    "name": "نتائج البكالوريا في المغرب",
-    "type": "estimated",
-    "category": "school",
-    "_countryCode": "ma",
-    "date": "{{year}}-06-17"
-  },
-  {
-    "id": "national-exam-ma",
-    "slug": "national-exams-morocco",
-    "name": "الامتحان الوطني للبكالوريا في المغرب",
-    "type": "estimated",
-    "category": "school",
-    "_countryCode": "ma",
-    "date": "{{year}}-06-04"
-  },
-  {
     "id": "school-start-ma",
     "slug": "school-start-morocco",
     "name": "الدخول المدرسي في المغرب",
-    "type": "fixed",
+    "type": "estimated",
     "category": "school",
     "_countryCode": "ma",
     "month": 9,
-    "day": 8
+    "day": 7,
+    "date": "{{year}}-09-07"
   },
   {
     "id": "throne-day",
@@ -414,26 +358,19 @@
     "category": "school",
     "_countryCode": "ae",
     "month": 8,
-    "day": 30
-  },
-  {
-    "id": "results-bac-tn",
-    "slug": "bac-results-tunisia",
-    "name": "نتائج بكالوريا تونس",
-    "type": "estimated",
-    "category": "school",
-    "_countryCode": "tn",
-    "date": "{{year}}-06-23"
+    "day": 31,
+    "date": "{{year}}-08-31"
   },
   {
     "id": "school-start-tn",
     "slug": "school-start-tunisia",
     "name": "الدخول المدرسي في تونس",
-    "type": "fixed",
+    "type": "estimated",
     "category": "school",
     "_countryCode": "tn",
     "month": 9,
-    "day": 15
+    "day": 15,
+    "date": "{{year}}-09-15"
   },
   {
     "id": "independence-tn",
@@ -462,9 +399,9 @@
     "type": "estimated",
     "category": "school",
     "_countryCode": "kw",
-    "month": 9,
-    "day": 15,
-    "date": "{{year}}-09-15"
+    "month": 8,
+    "day": 24,
+    "date": "{{year}}-08-24"
   },
   {
     "id": "national-day-qa",
@@ -484,25 +421,8 @@
     "category": "school",
     "_countryCode": "qa",
     "month": 8,
-    "day": 30
-  },
-  {
-    "id": "mothers-day",
-    "slug": "mothers-day",
-    "name": "عيد الأم",
-    "type": "fixed",
-    "category": "social",
-    "month": 3,
-    "day": 21
-  },
-  {
-    "id": "pension-sa",
-    "slug": "pension-day-saudi",
-    "name": "راتب التقاعد (السعودية)",
-    "type": "monthly",
-    "category": "support",
-    "_countryCode": "sa",
-    "day": 1
+    "day": 30,
+    "date": "{{year}}-08-30"
   },
   {
     "id": "valentines-day",
@@ -557,15 +477,6 @@
     "category": "social",
     "month": 4,
     "day": 22
-  },
-  {
-    "id": "pension-eg",
-    "slug": "pension-day-egypt",
-    "name": "صرف المعاشات (مصر)",
-    "type": "monthly",
-    "category": "support",
-    "_countryCode": "eg",
-    "day": 1
   },
   {
     "id": "international-womens-day",
@@ -635,6 +546,16 @@
     "day": 26
   },
   {
+    "id": "martyrs-day-ae",
+    "slug": "martyrs-day-uae",
+    "name": "يوم الشهيد الإماراتي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ae",
+    "month": 11,
+    "day": 30
+  },
+  {
     "id": "revolution-day-eg",
     "slug": "revolution-day-egypt",
     "name": "ذكرى ثورة 23 يوليو في مصر",
@@ -663,16 +584,6 @@
     "_countryCode": "ma",
     "month": 11,
     "day": 6
-  },
-  {
-    "id": "martyrs-day-ae",
-    "slug": "martyrs-day-uae",
-    "name": "يوم الشهيد الإماراتي",
-    "type": "fixed",
-    "category": "national",
-    "_countryCode": "ae",
-    "month": 11,
-    "day": 30
   },
   {
     "id": "thanksgiving-usa",
@@ -711,6 +622,15 @@
     "offsetDays": 4
   },
   {
+    "id": "mawlid",
+    "slug": "mawlid",
+    "name": "المولد النبوي الشريف",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 3,
+    "hijriDay": 12
+  },
+  {
     "id": "halloween-usa",
     "slug": "halloween-usa",
     "name": "الهالوين في أمريكا",
@@ -719,6 +639,15 @@
     "_countryCode": "us",
     "month": 10,
     "day": 31
+  },
+  {
+    "id": "mothers-day",
+    "slug": "mothers-day",
+    "name": "عيد الأم",
+    "type": "fixed",
+    "category": "social",
+    "month": 3,
+    "day": 21
   },
   {
     "id": "christmas-usa",
@@ -731,6 +660,24 @@
     "day": 25
   },
   {
+    "id": "national-exam-ma",
+    "slug": "national-exams-morocco",
+    "name": "الامتحان الوطني للبكالوريا في المغرب",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "ma",
+    "date": "{{year}}-06-04"
+  },
+  {
+    "id": "new-year",
+    "slug": "new-year",
+    "name": "رأس السنة الميلادية",
+    "type": "fixed",
+    "category": "holidays",
+    "month": 1,
+    "day": 1
+  },
+  {
     "id": "new-years-eve-new-york",
     "slug": "new-years-eve-new-york",
     "name": "ليلة رأس السنة في نيويورك",
@@ -739,6 +686,33 @@
     "_countryCode": "us",
     "month": 12,
     "day": 31
+  },
+  {
+    "id": "nisf-shaban",
+    "slug": "nisf-shaban",
+    "name": "ليلة النصف من شعبان",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 8,
+    "hijriDay": 15
+  },
+  {
+    "id": "pension-eg",
+    "slug": "pension-day-egypt",
+    "name": "صرف المعاشات في مصر",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "eg",
+    "day": 1
+  },
+  {
+    "id": "pension-sa",
+    "slug": "pension-day-saudi",
+    "name": "راتب التقاعد في السعودية",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "sa",
+    "day": 1
   },
   {
     "id": "world-fathers-day",

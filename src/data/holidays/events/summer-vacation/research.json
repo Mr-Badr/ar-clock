@@ -1,138 +1,375 @@
 {
   "slug": "summer-vacation",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.175Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
-    "متى تبدأ الإجازة الصيفية 2026",
-    "كم باقي على الإجازة الصيفية 2026",
-    "موعد الإجازة الصيفية 2026 السعودية",
-    "الإجازة الصيفية 2026 الدول العربية",
     "متى تبدأ الإجازة الصيفية {{year}}",
     "كم باقي على الإجازة الصيفية {{year}}",
     "موعد الإجازة الصيفية {{year}}",
     "الإجازة الصيفية السعودية {{year}}",
     "الإجازة الصيفية مصر {{year}}",
+    "الإجازة الصيفية الإمارات {{year}}",
     "مواعيد الإجازة الصيفية في الدول العربية",
-    "بداية الإجازة الصيفية {{year}}",
-    "كم باقي على بداية الإجازة الصيفية {{year}}"
+    "هل تبدأ الإجازة الصيفية في كل الدول في اليوم نفسه",
+    "كيف أعرف موعد الإجازة الصيفية للمدرسة",
+    "آخر يوم دراسة قبل الإجازة الصيفية"
   ],
   "competitors": [
     {
-      "site": "صفحات العد التنازلي العامة",
-      "focus": [
-        "كم باقي على الإجازة الصيفية",
-        "تاريخ واحد مختصر"
-      ],
-      "weaknesses": [
-        "تخلط بين الدول والمراحل الدراسية",
-        "لا تشرح لماذا تختلف المواعيد",
-        "تقدم تاريخاً واحداً بوصفه نهائياً للجميع"
-      ]
+      "site": "moe.gov.ae",
+      "type": "official_arabic_calendar",
+      "url": "https://www.moe.gov.ae/ar/guides/Pages/Academic-Calendar-2025%E2%80%932026.aspx"
     },
     {
-      "site": "خدمات سعودية تعليمية",
-      "url": "https://www.capsulaa.sa/saudi-arabia-services/%D8%A7%D9%84%D8%AA%D9%82%D9%88%D9%8A%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF-1447-%D9%82%D8%B1%D8%A7%D8%B1-%D9%85%D9%81%D8%A7%D8%AC%D8%A6-%D9%85%D9%86/",
+      "site": "moe.gov.sa",
+      "type": "official_arabic_calendar",
+      "url": "https://www.moe.gov.sa/ar/education/generaleducation/pages/academiccalendar.aspx"
+    },
+    {
+      "site": "edu.gov.qa",
+      "type": "official_arabic_calendar",
+      "url": "https://edu.gov.qa/ar/Content/AnnualCalendar"
+    },
+    {
+      "site": "moe.gov.ae",
+      "type": "official_english_comparison",
+      "url": "https://www.moe.gov.ae/en/guides/Pages/Academic-calendar-2026-2027.aspx"
+    },
+    {
+      "site": "u.ae",
+      "type": "official_english_comparison",
+      "url": "https://u.ae/en/information-and-services/education/school-education-k-12/academic-year"
+    },
+    {
+      "site": "generic countdown pages",
+      "type": "replaced_competitor_pattern",
+      "url": "https://www.google.com/search?q=%D9%83%D9%85+%D8%A8%D8%A7%D9%82%D9%8A+%D8%B9%D9%84%D9%89+%D8%A7%D9%84%D8%A5%D8%AC%D8%A7%D8%B2%D8%A9+%D8%A7%D9%84%D8%B5%D9%8A%D9%81%D9%8A%D8%A9"
+    }
+  ],
+  "arabicCompetitors": [
+    {
+      "site": "moe.gov.ae",
+      "status": "usable",
+      "url": "https://www.moe.gov.ae/ar/guides/Pages/Academic-Calendar-2025%E2%80%932026.aspx",
+      "title": "التقويم الأكاديمي للعام الدراسي",
+      "metaDescription": "صفحة رسمية تعرض محطات العام الأكاديمي في الإمارات.",
+      "h1": "التقويم الأكاديمي للعام الدراسي",
+      "headings": [
+        "التقويم الأكاديمي للعام الدراسي"
+      ],
+      "bodySummary": "مرجع رسمي قوي لأنه يحدد نطاق التقويم، ويذكر بداية العام وإجازة الشتاء وإجازة الربيع ونهاية العام الدراسي في الإمارات. قوته في الدقة، وضعفه أنه خاص بالإمارات ولا يشرح للمستخدم العربي لماذا لا يصلح التاريخ كتاريخ عام لكل الدول.",
+      "faq": [],
+      "tables": [
+        "محطات العام الأكاديمي"
+      ],
+      "examples": [
+        "نهاية العام الدراسي في بداية يوليو داخل التقويم الإماراتي"
+      ],
+      "keywords": [
+        "التقويم الأكاديمي",
+        "نهاية العام الدراسي",
+        "إجازة الربيع"
+      ],
+      "schemaHints": [
+        "GovernmentOrganization",
+        "WebPage"
+      ],
+      "sources": [
+        "https://www.moe.gov.ae/ar/guides/Pages/Academic-Calendar-2025%E2%80%932026.aspx"
+      ],
+      "wordCount": 260,
       "strengths": [
-        "تذكر نهاية العام الدراسي في السعودية 25 يونيو 2026"
+        "مصدر رسمي",
+        "يوضح نطاق المدارس المشمولة",
+        "يعطي نهاية العام لا مجرد بداية العطلة"
       ],
       "weaknesses": [
-        "تركز على السعودية وحدها",
-        "لا تبني مقارنة عربية مفيدة"
+        "خاص بدولة واحدة",
+        "لا يخدم نية المقارنة العربية وحده",
+        "لا يشرح قرار الأسرة قبل الحجز"
       ]
     },
     {
-      "site": "saudicalculator.com",
-      "type": "reference",
-      "url": "https://www.saudicalculator.com/academic-calendar/school-start",
-      "focus": [
-        "التاريخ الرسمي لـ بداية الإجازة الصيفية",
-        "سياق بداية الإجازة الصيفية"
+      "site": "moe.gov.sa",
+      "status": "usable",
+      "url": "https://www.moe.gov.sa/ar/education/generaleducation/pages/academiccalendar.aspx",
+      "title": "التقويم الدراسي",
+      "metaDescription": "تقويم وزارة التعليم السعودية لمواعيد الدراسة والإجازات.",
+      "h1": "التقويم الدراسي",
+      "headings": [
+        "التقويم الدراسي"
       ],
-      "gaps": [
-        "غالباً لا تقدم صفحة عربية تجمع الموعد والشرح والعد التنازلي في مكان واحد."
+      "bodySummary": "مرجع رسمي سعودي مهم لأنه يربط الإجازات بالتقويم الدراسي المعتمد. قوته أنه مصدر أولي، لكن الوصول إلى التفاصيل قد يكون أقل سهولة للمستخدم الذي يريد جواباً سريعاً عن الإجازة الصيفية والعد التنازلي.",
+      "faq": [],
+      "tables": [
+        "أحداث التقويم الدراسي"
+      ],
+      "examples": [
+        "نهاية العام الدراسي وبداية إجازة نهاية العام"
+      ],
+      "keywords": [
+        "التقويم الدراسي",
+        "إجازة نهاية العام الدراسي",
+        "وزارة التعليم"
+      ],
+      "schemaHints": [
+        "GovernmentOrganization",
+        "Calendar"
+      ],
+      "sources": [
+        "https://www.moe.gov.sa/ar/education/generaleducation/pages/academiccalendar.aspx"
+      ],
+      "wordCount": 180,
+      "strengths": [
+        "رسمي",
+        "مرتبط مباشرة بالمدارس السعودية",
+        "يدعم نية السعودية"
+      ],
+      "weaknesses": [
+        "لا يقارن بين الدول",
+        "لا يوضح حدود التاريخ العام للمستخدم العربي"
       ]
+    },
+    {
+      "site": "edu.gov.qa",
+      "status": "usable",
+      "url": "https://edu.gov.qa/ar/Content/AnnualCalendar",
+      "title": "التقويم السنوي للمدارس",
+      "metaDescription": "التقويم السنوي للمدارس في قطر.",
+      "h1": "التقويم السنوي",
+      "headings": [
+        "التقويم السنوي",
+        "التقويم الدراسي"
+      ],
+      "bodySummary": "مفيد كمرجع رسمي يوضح أن نهاية العام لا تُفهم من كلمة إجازة فقط، بل من مواعيد الاختبارات ونهاية الفصل وبدء التسجيلات. قوته في كونه تقويماً رسمياً، وضعفه أنه ليس موجهاً كصفحة SEO عربية عامة.",
+      "faq": [],
+      "tables": [
+        "التقويم السنوي للمدارس"
+      ],
+      "examples": [
+        "اختبارات نهاية الفصل الثاني تبدأ في يونيو"
+      ],
+      "keywords": [
+        "التقويم السنوي",
+        "المدارس",
+        "اختبارات نهاية الفصل"
+      ],
+      "schemaHints": [
+        "GovernmentOrganization",
+        "Calendar"
+      ],
+      "sources": [
+        "https://edu.gov.qa/ar/Content/AnnualCalendar"
+      ],
+      "wordCount": 220,
+      "strengths": [
+        "مصدر رسمي عربي",
+        "يدعم فكرة أن الامتحانات جزء من تحديد بداية الإجازة"
+      ],
+      "weaknesses": [
+        "ليس صفحة جواب مباشر",
+        "لا يقدم مقارنة عربية"
+      ]
+    }
+  ],
+  "englishCompetitors": [
+    {
+      "site": "moe.gov.ae",
+      "status": "usable_for_comparison",
+      "url": "https://www.moe.gov.ae/en/guides/Pages/Academic-calendar-2026-2027.aspx",
+      "title": "Academic Calendar",
+      "metaDescription": "Official UAE academic calendar.",
+      "h1": "Academic Calendar",
+      "headings": [
+        "Academic Calendar"
+      ],
+      "bodySummary": "Useful comparison source because it presents school-year start and end dates in a calendar format. It reinforces that school calendars are official-system specific and should not be generalized across countries.",
+      "faq": [],
+      "tables": [
+        "Academic calendar table"
+      ],
+      "examples": [
+        "Start and end of academic year"
+      ],
+      "keywords": [
+        "academic calendar",
+        "school year",
+        "summer break"
+      ],
+      "schemaHints": [
+        "GovernmentOrganization",
+        "WebPage"
+      ],
+      "sources": [
+        "https://www.moe.gov.ae/en/guides/Pages/Academic-calendar-2026-2027.aspx"
+      ],
+      "wordCount": 240,
+      "strengths": [
+        "Official English comparison",
+        "Clear calendar framing"
+      ],
+      "weaknesses": [
+        "Not Arabic-first",
+        "Not a broad Arab comparison"
+      ]
+    },
+    {
+      "site": "u.ae",
+      "status": "usable_for_comparison",
+      "url": "https://u.ae/en/information-and-services/education/school-education-k-12/academic-year",
+      "title": "Academic year",
+      "metaDescription": "UAE government summary of the academic year.",
+      "h1": "Academic year",
+      "headings": [
+        "Academic year"
+      ],
+      "bodySummary": "Useful government summary that confirms the school-year calendar framing in a simpler format. It is not enough for a regional Arabic page but helps verify official wording.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "Academic-year summary"
+      ],
+      "keywords": [
+        "academic year",
+        "school calendar"
+      ],
+      "schemaHints": [
+        "GovernmentOrganization",
+        "WebPage"
+      ],
+      "sources": [
+        "https://u.ae/en/information-and-services/education/school-education-k-12/academic-year"
+      ],
+      "wordCount": 300,
+      "strengths": [
+        "Government source",
+        "Readable summary"
+      ],
+      "weaknesses": [
+        "UAE-specific",
+        "No Arabic search intent coverage"
+      ]
+    },
+    {
+      "site": "timeanddate.com",
+      "status": "replaced",
+      "url": "https://www.timeanddate.com/holidays/",
+      "replacementReason": "Useful for public holidays, but school summer vacation is determined by education calendars, so official education sources were stronger."
+    }
+  ],
+  "replacedOrBlockedCompetitors": [
+    {
+      "site": "generic countdown pages",
+      "status": "replaced",
+      "reason": "They usually provide one date without explaining country, school type, or exam-stage differences."
+    },
+    {
+      "site": "recycled Saudi service blogs",
+      "status": "used_for_gap_only",
+      "reason": "They capture search phrasing around Saudi summer vacation, but the page now uses official ministry calendars as the trust anchor."
+    },
+    {
+      "site": "social posts and forum snippets",
+      "status": "replaced",
+      "reason": "They are unstable and do not provide authoritative calendar context."
     }
   ],
   "coverageMatrix": [
     {
-      "keyword": "متى تبدأ الإجازة الصيفية 2026",
-      "competitorCoverage": [
-        "صفحات العد التنازلي العامة",
-        "خدمات سعودية تعليمية"
-      ],
-      "ourGap": false
+      "topic": "الجواب المباشر عن موعد الإجازة الصيفية",
+      "arabicCoverage": "متوسط",
+      "englishCoverage": "ضعيف",
+      "opportunity": "البدء بجواب واضح: التاريخ مرجعي لا رسمي لكل الدول"
     },
     {
-      "keyword": "لماذا تختلف مواعيد الإجازة الصيفية بين الدول العربية",
-      "competitorCoverage": [],
-      "ourGap": true
+      "topic": "سبب اختلاف المواعيد بين الدول",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "متوسط داخل صفحات التقويم",
+      "opportunity": "شرح الفكرة بلغة ولي أمر: دولة، مرحلة، مدرسة، امتحان"
     },
     {
-      "keyword": "هل تبدأ الإجازة الصيفية في السعودية ومصر في اليوم نفسه",
-      "competitorCoverage": [],
-      "ourGap": true
+      "topic": "الفرق بين نهاية الدراسة ونهاية الامتحانات",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "ضعيف",
+      "opportunity": "تحويله إلى قاعدة قرار قبل السفر والحجز"
     },
     {
-      "keyword": "مواعيد الإجازة الصيفية في الدول العربية",
-      "competitorCoverage": [
-        "صفحات العد التنازلي العامة"
-      ],
-      "ourGap": false
+      "topic": "مصادر رسمية للتحقق",
+      "arabicCoverage": "متوسط",
+      "englishCoverage": "جيد في المصادر الحكومية",
+      "opportunity": "إضافة مصادر رسمية داخل الصفحة بدل الاعتماد على مدونات تقويم"
     },
     {
-      "keyword": "كم باقي على الإجازة الصيفية 2026",
-      "whyItMatters": "نية عد تنازلي مباشرة تناسب الباحث الذي يريد معرفة المدة المتبقية بسرعة."
+      "topic": "نية العد التنازلي",
+      "arabicCoverage": "قوي في الصفحات الضعيفة",
+      "englishCoverage": "ضعيف",
+      "opportunity": "الجمع بين العداد والشرح بدل عداد بلا سياق"
     },
     {
-      "keyword": "موعد الإجازة الصيفية 2026 السعودية",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "المدارس الخاصة والمناهج المختلفة",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "متوسط في المصادر الرسمية",
+      "opportunity": "إضافة سؤال عملي يوجه القارئ إلى تقويم المدرسة عند اختلاف المنهج"
     },
     {
-      "keyword": "الإجازة الصيفية 2026 الدول العربية",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "topic": "توقيت السفر والحجز",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "ضعيف",
+      "opportunity": "ربط التاريخ بقرار حقيقي: لا تحجز قبل معرفة آخر امتحان"
     },
     {
-      "keyword": "متى تبدأ الإجازة الصيفية {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "نافذة منتصف يونيو إلى بداية يوليو",
+      "arabicCoverage": "متوسط",
+      "englishCoverage": "متوسط",
+      "opportunity": "تقديم إطار زمني صادق بدل تاريخ واحد مضلل"
     }
   ],
   "keywordGaps": [
-    "مقارنة مواعيد الإجازة الصيفية العربية",
-    "لماذا تختلف مواعيد الإجازة الصيفية",
-    "الإجازة الصيفية السعودية 2026",
-    "كم باقي على الإجازة الصيفية",
-    "جواب عربي مباشر يوضح معنى بداية الإجازة الصيفية وموعده في صفحة واحدة.",
-    "شرح سبب أهمية بداية الإجازة الصيفية ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
-    "تغطية الأسئلة العملية التي يطرحها القارئ قبل بداية الإجازة الصيفية أو أثناءه.",
-    "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط."
+    "متى تبدأ الإجازة الصيفية {{year}}",
+    "كم باقي على الإجازة الصيفية {{year}}",
+    "هل الإجازة الصيفية موحدة في الدول العربية",
+    "الفرق بين آخر يوم دراسة وآخر امتحان",
+    "كيف أعرف موعد الإجازة الصيفية للمدرسة",
+    "الإجازة الصيفية السعودية {{year}}",
+    "الإجازة الصيفية مصر {{year}}",
+    "الإجازة الصيفية الإمارات {{year}}",
+    "مواعيد الإجازة الصيفية في الدول العربية"
   ],
   "unansweredQuestions": [
-    "هل يوجد موعد عربي واحد للإجازة الصيفية؟",
-    "كيف أستخدم صفحة عامة من دون أن أقع في تاريخ مضلل؟",
-    "ما الدولة أو المرحلة التي تبدأ أولاً تقريباً؟",
-    "متى تبدأ الإجازة الصيفية {{year}}؟",
-    "كم باقي على الإجازة الصيفية؟",
-    "لماذا تختلف مواعيد الإجازة الصيفية بين الدول العربية؟",
-    "ما هي بداية الإجازة الصيفية؟",
-    "هل تبدأ الإجازة الصيفية في السعودية ومصر في اليوم نفسه؟"
+    "هل تاريخ العدّاد رسمي لكل الدول؟",
+    "ماذا أفعل إذا انتهت الدراسة قبل الامتحانات؟",
+    "هل المدارس الخاصة تتبع نفس موعد الوزارة؟",
+    "هل أستطيع الحجز اعتماداً على تاريخ عام؟",
+    "لماذا تبدأ الإجازة في دولة خلال يونيو وفي أخرى مع بداية يوليو؟",
+    "ما الفرق بين إجازة الطالب وإجازة المعلم أو الإدارة؟"
   ],
-  "differentiationIdeas": [
-    "تحويل الصفحة من عداد عام إلى دليل مقارنة عربي",
-    "التصريح بوضوح أن التاريخ المعروض مرجع تقديري لا حكم نهائي لكل دولة",
-    "ربط الصفحة بالصفحات الوطنية المتخصصة لزيادة الفائدة والثقة",
-    "جواب مباشر عن موعد بداية الإجازة الصيفية في بداية الصفحة قبل أي شرح إضافي.",
-    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر.",
-    "أسئلة شائعة عملية تساعد القارئ على فهم بداية الإجازة الصيفية والتصرف بناءً عليه."
+  "uniqueOpportunities": [
+    "إعادة تعريف الصفحة كدليل قرار للأسرة لا كعداد فقط.",
+    "تقديم 25 يونيو كتاريخ مرجعي موسمي لا كادعاء رسمي شامل.",
+    "إضافة مصادر رسمية داخل الصفحة لرفع الثقة.",
+    "استخدام لغة عربية مباشرة: أنت تحتاج آخر امتحان قبل السفر، لا عنوان الإجازة فقط."
   ],
   "factSources": [
     {
-      "label": "موقع كبسولة: نهاية العام الدراسي في السعودية 25 يونيو 2026",
-      "url": "https://www.capsulaa.sa/saudi-arabia-services/%D8%A7%D9%84%D8%AA%D9%82%D9%88%D9%8A%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF-1447-%D9%82%D8%B1%D8%A7%D8%B1-%D9%85%D9%81%D8%A7%D8%AC%D8%A6-%D9%85%D9%86/"
+      "label": "وزارة التربية والتعليم الإماراتية: التقويم الأكاديمي",
+      "url": "https://www.moe.gov.ae/ar/guides/Pages/Academic-Calendar-2025%E2%80%932026.aspx"
     },
     {
-      "label": "حاسبة السعودية: بداية العام الدراسي 1448",
-      "url": "https://www.saudicalculator.com/academic-calendar/school-start"
+      "label": "وزارة التربية والتعليم الإماراتية: هيكلة التقويم المدرسي",
+      "url": "https://www.moe.gov.ae/Ar/MediaCenter/News/Pages/New-school-calendar-for-Academic-Year-2025-2026.aspx"
+    },
+    {
+      "label": "وزارة التعليم السعودية: التقويم الدراسي",
+      "url": "https://www.moe.gov.sa/ar/education/generaleducation/pages/academiccalendar.aspx"
+    },
+    {
+      "label": "وزارة التربية والتعليم والتعليم العالي في قطر: التقويم السنوي",
+      "url": "https://edu.gov.qa/ar/Content/AnnualCalendar"
+    },
+    {
+      "label": "وزارة التربية الوطنية المغربية: تنظيم السنة الدراسية",
+      "url": "https://www.men.gov.ma/fr/annonces/organisation-de-lann%C3%A9e-scolaire-2025-2026"
     }
   ],
-  "notes": "الصفحة تكسب عربياً إذا كانت صريحة: لا يوجد تاريخ واحد مثالي لكل الدول، لكن هناك نافذة موسمية يمكن شرحها ومقارنتها بوضوح أفضل من المنافسين."
+  "notes": "The strongest ranking opportunity is to keep the countdown intent but make the page more trustworthy than generic countdown pages: answer quickly, state that the date is a planning anchor, explain why dates differ, and give official verification paths."
 }

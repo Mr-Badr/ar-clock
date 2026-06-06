@@ -5,7 +5,7 @@ export default function Loading() {
     <DateRouteLoading
       kind="calendar"
       title="جاري تحميل التقويم الميلادي"
-      description="نجهز لك شهور السنة وروابط الأيام والمقابل الهجري الآن."
+      description="نجهز لك شهور السنة ومسارات الأيام والمقابل الهجري الآن."
     />
   );
 }

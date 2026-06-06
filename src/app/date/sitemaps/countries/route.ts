@@ -10,9 +10,8 @@ import {
 import { getSiteUrl } from '@/lib/site-config';
 import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
-const BASE = getSiteUrl();
-
 export async function GET() {
+  const base = getSiteUrl();
   const policy = GEO_ROUTE_INDEXING_POLICIES.dateCountry;
   const slugs = selectSeoCountrySlugs(await getAllCountrySlugs(), { scope: policy.countryScope });
   const lastmod = getSitemapLastModifiedDate();
@@ -20,7 +19,7 @@ export async function GET() {
   const entries = slugs.map(
     slug => `
   <url>
-    <loc>${BASE}/date/country/${slug}</loc>
+    <loc>${base}/date/country/${slug}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>

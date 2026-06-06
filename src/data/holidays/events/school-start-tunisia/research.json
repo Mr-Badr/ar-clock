@@ -1,135 +1,345 @@
 {
   "slug": "school-start-tunisia",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.163Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
     "متى الدخول المدرسي في تونس {{year}}",
-    "كم باقي على الدخول المدرسي في تونس {{year}}",
     "موعد الدخول المدرسي في تونس {{year}}",
-    "الدخول المدرسي في تونس {{year}}",
-    "الدخول المدرسي في تونس العد التنازلي",
-    "الدخول المدرسي في تونس متى",
+    "كم باقي على الدخول المدرسي في تونس {{year}}",
     "تاريخ الدخول المدرسي في تونس {{year}}",
-    "متى الدخول المدرسي في تونس {{nextYear}}",
-    "كم باقي على الدخول المدرسي في تونس",
-    "الدخول المدرسي في تونس {{nextYear}}",
-    "كيف أستعد لـالدخول المدرسي في تونس",
-    "ما هو الدخول المدرسي في تونس"
+    "الدخول المدرسي في تونس {{year}}",
+    "الدخول المدرسي 2026 2027 تونس",
+    "تسجيل السنة الأولى ابتدائي تونس {{year}}",
+    "رزنامة السنة الدراسية تونس {{year}} {{nextYear}}",
+    "متى ترجع الدراسة في تونس {{year}}",
+    "الدخول المدرسي في تونس سبتمبر {{year}}"
   ],
   "competitors": [
     {
       "site": "education.gov.tn",
-      "type": "official",
-      "url": "https://www.education.gov.tn",
-      "focus": [
-        "الدخول المدرسي",
-        "الرزنامة المدرسية",
-        "المذكرات الرسمية"
+      "type": "official_arabic_reference",
+      "url": "https://education.gov.tn/"
+    },
+    {
+      "site": "lapresse.tn",
+      "type": "arabic_french_news_competitor",
+      "url": "https://www.lapresse.tn/2026/04/27/tunisie-cest-parti-pour-les-inscriptions-en-premiere-annee-primaire/"
+    },
+    {
+      "site": "tap.info.tn",
+      "type": "official_news_agency_reference",
+      "url": "https://www.tap.info.tn/fr/Portail-Titres-de-l-actualit%C3%A9/20119641-le-minist%C3%A8re-de"
+    },
+    {
+      "site": "ecoles.com.tn",
+      "type": "supporting_competitor",
+      "url": "https://www.ecoles.com.tn/actualites/tunisie-rentree-scolaire-2026-2027-lancement-des-inscriptions-en-premiere-annee-primaire"
+    },
+    {
+      "site": "ert.tn",
+      "type": "comparison_calendar_reference",
+      "url": "https://www.ert.tn/pmf/2026/05/22/calendrier-scolaire/"
+    }
+  ],
+  "arabicCompetitors": [
+    {
+      "site": "education.gov.tn",
+      "status": "usable",
+      "url": "https://education.gov.tn/",
+      "title": "الموقع الرسمي لوزارة التربية",
+      "metaDescription": "البوابة الرسمية لوزارة التربية في تونس.",
+      "h1": "الموقع الرسمي لوزارة التربية",
+      "headings": [
+        "الموقع الرسمي لوزارة التربية"
       ],
-      "gaps": [
-        "لا يقدّم عداداً مباشراً",
-        "لا يشرح نية البحث الأسرية بلغة خدمية"
+      "bodySummary": "الموقع الرسمي هو المرجع الأعلى ثقة، وقد ظهر فيه وجود مواد وتنظيمات خاصة بالسنة الدراسية 2026-2027، لكنه لم يقدّم في الفحص المفتوح الذي أُجري هنا صفحة واضحة ومباشرة تثبت يوم العودة المدرسية العامة بصياغة سهلة للمستخدم.",
+      "faq": [],
+      "tables": [],
+      "examples": [],
+      "keywords": [
+        "وزارة التربية تونس",
+        "السنة الدراسية"
+      ],
+      "schemaHints": [
+        "GovernmentOrganization",
+        "WebPage"
+      ],
+      "sources": [
+        "https://education.gov.tn/"
+      ],
+      "wordCount": 170,
+      "strengths": [
+        "أعلى ثقة",
+        "مرجع رسمي مباشر"
+      ],
+      "weaknesses": [
+        "لا يجيب على سؤال المستخدم بصيغة جاهزة",
+        "غياب صفحة مفتوحة واضحة لتاريخ العودة العامة في الفحص الحالي"
       ]
     },
     {
-      "site": "المواقع الإخبارية التونسية",
-      "type": "news",
-      "focus": [
-        "الدخول المدرسي",
-        "التقويم",
-        "الدروس والنقل"
+      "site": "lapresse.tn",
+      "status": "usable",
+      "url": "https://www.lapresse.tn/2026/04/27/tunisie-cest-parti-pour-les-inscriptions-en-premiere-annee-primaire/",
+      "title": "Tunisie : C’est parti pour les inscriptions en première année primaire",
+      "metaDescription": "خبر عن انطلاق التسجيلات للموسم الدراسي الجديد.",
+      "h1": "Tunisie : C’est parti pour les inscriptions en première année primaire",
+      "headings": [
+        "Tunisie : C’est parti pour les inscriptions en première année primaire"
       ],
-      "gaps": [
-        "أقرب إلى الخبر من المرجع الدائم",
-        "تتبدد فائدتها بعد يوم النشر"
+      "bodySummary": "هذه الصفحة مهمة لأنها تؤكد أن التحضير للموسم 2026-2027 بدأ رسمياً عبر التسجيل عن بعد للسنة الأولى ابتدائي من 27 أفريل إلى 17 ماي 2026. قوتها في إثبات أن الموسم الجديد دخل طور التنفيذ الإداري، لكنها لا تجيب وحدها عن يوم الدخول المدرسي العام.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "تاريخ واضح لبداية التسجيلات"
+      ],
+      "keywords": [
+        "inscriptions première année primaire",
+        "année scolaire 2026-2027"
+      ],
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sources": [
+        "https://www.lapresse.tn/2026/04/27/tunisie-cest-parti-pour-les-inscriptions-en-premiere-annee-primaire/"
+      ],
+      "wordCount": 180,
+      "strengths": [
+        "دليل تحضيري قوي",
+        "يوضح أن الموسم الجديد قيد الإطلاق"
+      ],
+      "weaknesses": [
+        "لا يثبت يوم العودة العامة",
+        "خبر جزئي لا يكفي وحده"
       ]
     },
     {
-      "site": "صفحات العد التنازلي العربية",
-      "type": "countdown",
-      "focus": [
-        "كم باقي على الدخول المدرسي",
-        "موعد العودة"
+      "site": "ecoles.com.tn",
+      "status": "usable",
+      "url": "https://www.ecoles.com.tn/actualites/tunisie-rentree-scolaire-2026-2027-lancement-des-inscriptions-en-premiere-annee-primaire",
+      "title": "Tunisie - Rentrée scolaire 2026-2027 : lancement des inscriptions en première année primaire",
+      "metaDescription": "تلخيص موجز لتحضيرات الدخول المدرسي 2026-2027.",
+      "h1": "Rentrée scolaire 2026-2027",
+      "headings": [
+        "lancement des inscriptions"
       ],
-      "gaps": [
-        "ضعف في التفاصيل المحلية",
-        "لا تربط الموعد بما يحتاجه ولي الأمر عملياً"
+      "bodySummary": "هذه الصفحة تكمل السياق نفسه: الموسم الجديد بدأ تحضيره فعلاً، لكن الجواب السهل حول يوم الدخول المدرسي بقي ضعيفاً أو غير مثبت نهائياً. فائدتها أنها تعكس نية البحث وتؤكد أن الأسر تبحث عن الدخول المدرسي من بوابة التسجيلات لا من بوابة التاريخ فقط.",
+      "faq": [],
+      "tables": [],
+      "examples": [],
+      "keywords": [
+        "rentrée scolaire Tunisie",
+        "inscriptions"
+      ],
+      "schemaHints": [
+        "Article"
+      ],
+      "sources": [
+        "https://www.ecoles.com.tn/actualites/tunisie-rentree-scolaire-2026-2027-lancement-des-inscriptions-en-premiere-annee-primaire"
+      ],
+      "wordCount": 220,
+      "strengths": [
+        "نية مستخدم قريبة",
+        "يبرز البعد الأسري"
+      ],
+      "weaknesses": [
+        "ليس مصدراً رسمياً أعلى",
+        "لا يحسم التاريخ العام"
       ]
+    }
+  ],
+  "englishCompetitors": [
+    {
+      "site": "tap.info.tn",
+      "status": "usable_for_comparison",
+      "url": "https://www.tap.info.tn/fr/Portail-Titres-de-l-actualit%C3%A9/20119641-le-minist%C3%A8re-de",
+      "title": "Le ministère de l'éducation annonce l'ouverture des inscriptions en ligne pour la première année primaire",
+      "metaDescription": "Dépêche sur l'ouverture des inscriptions pour l'année scolaire 2026-2027.",
+      "h1": "Le ministère de l'éducation annonce l'ouverture des inscriptions en ligne pour la première année primaire",
+      "headings": [],
+      "bodySummary": "Useful as a formal comparison source because it relays the ministry announcement in a structured agency format. It is still about enrollment rather than the exact return-to-school date, which reinforces the need to distinguish what is confirmed from what remains pending.",
+      "faq": [],
+      "tables": [],
+      "examples": [],
+      "keywords": [
+        "année scolaire 2026-2027 Tunisie"
+      ],
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sources": [
+        "https://www.tap.info.tn/fr/Portail-Titres-de-l-actualit%C3%A9/20119641-le-minist%C3%A8re-de"
+      ],
+      "wordCount": 170,
+      "strengths": [
+        "وكالة موثوقة",
+        "صياغة إخبارية دقيقة"
+      ],
+      "weaknesses": [
+        "لا تقدم يوم العودة العامة"
+      ]
+    },
+    {
+      "site": "ert.tn",
+      "status": "usable_for_comparison",
+      "url": "https://www.ert.tn/pmf/2026/05/22/calendrier-scolaire/",
+      "title": "Calendrier scolaire",
+      "metaDescription": "Calendar page for the Etablissement Régional de Tunis.",
+      "h1": "Calendrier scolaire",
+      "headings": [
+        "Calendrier scolaire"
+      ],
+      "bodySummary": "This is not the national Tunisian school-start answer, but it is useful as a comparison because it shows how a school-facing page exposes the 2026-2027 calendar to families while separating current-year and next-year resources.",
+      "faq": [],
+      "tables": [
+        "2026-2027 calendar download"
+      ],
+      "examples": [
+        "family-facing calendar download"
+      ],
+      "keywords": [
+        "school calendar Tunisia"
+      ],
+      "schemaHints": [
+        "WebPage"
+      ],
+      "sources": [
+        "https://www.ert.tn/pmf/2026/05/22/calendrier-scolaire/"
+      ],
+      "wordCount": 140,
+      "strengths": [
+        "يوضح عرض الجدول للأسر"
+      ],
+      "weaknesses": [
+        "ليس رزنامة التعليم التونسي الوطني"
+      ]
+    },
+    {
+      "site": "international-school pages",
+      "status": "replaced",
+      "url": "https://www.eiftunis.com.tn/",
+      "replacementReason": "Private international school pages were found, but they were less useful than TAP and ERT for explaining what is confirmed for the national Tunisian intent."
+    }
+  ],
+  "replacedOrBlockedCompetitors": [
+    {
+      "site": "countdown-only pages",
+      "status": "replaced",
+      "reason": "They repeated a date without proving whether the new-season announcement existed openly."
+    },
+    {
+      "site": "official final back-to-school decree",
+      "status": "blocked",
+      "reason": "No clearly readable open-source page confirming the final general start date for the 2026-2027 Tunisian school year was found during this pass."
     }
   ],
   "coverageMatrix": [
     {
-      "keyword": "متى الدخول المدرسي في تونس {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "هل أُعلن يوم الدخول المدرسي العام؟",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "ضعيف",
+      "opportunity": "بدء الصفحة بحالة الإعلان قبل التاريخ"
     },
     {
-      "keyword": "كم باقي على الدخول المدرسي في تونس {{year}}",
-      "whyItMatters": "نية عد تنازلي مباشرة تناسب الباحث الذي يريد معرفة المدة المتبقية بسرعة."
+      "topic": "التسجيلات والتحضير للموسم الجديد",
+      "arabicCoverage": "جيد",
+      "englishCoverage": "متوسط",
+      "opportunity": "شرح ما الذي تأكد الآن فعلاً"
     },
     {
-      "keyword": "موعد الدخول المدرسي في تونس {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "الفرق بين المؤكد والتخطيطي",
+      "arabicCoverage": "شبه غائب",
+      "englishCoverage": "غائب",
+      "opportunity": "تحويل الصفحة من تاريخ جامد إلى مرجع واضح"
     },
     {
-      "keyword": "الدخول المدرسي في تونس {{year}}",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "topic": "خطوات الأسرة قبل صدور التاريخ النهائي",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "ضعيف",
+      "opportunity": "إضافة قيمة عملية حقيقية"
     },
     {
-      "keyword": "الدخول المدرسي في تونس العد التنازلي",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "topic": "هل المدارس الخاصة تتبع التاريخ نفسه",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "متوسط في المقارنات",
+      "opportunity": "منع التعميم غير الدقيق"
     },
     {
-      "keyword": "الدخول المدرسي في تونس متى",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "ربط العد التنازلي بحالة اليقين",
+      "arabicCoverage": "غائب تقريباً",
+      "englishCoverage": "غائب",
+      "opportunity": "توضيح أن العداد على تاريخ تخطيطي"
     },
     {
-      "keyword": "تاريخ الدخول المدرسي في تونس {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "ماذا نعرف من رزنامة السنة الجديدة",
+      "arabicCoverage": "متوسط",
+      "englishCoverage": "متوسط",
+      "opportunity": "تجميع الإشارات الإدارية في جواب واحد"
     },
     {
-      "keyword": "متى الدخول المدرسي في تونس {{nextYear}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "هل الدخول المدرسي إجازة أم عودة",
+      "arabicCoverage": "غائب",
+      "englishCoverage": "غائب",
+      "opportunity": "معالجة سؤال بسيط لكنه شائع"
     }
   ],
   "keywordGaps": [
-    "جواب عربي مباشر يوضح معنى الدخول المدرسي في تونس وموعده في صفحة واحدة.",
-    "شرح سبب أهمية الدخول المدرسي في تونس ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
-    "تغطية الأسئلة العملية التي يطرحها القارئ قبل الدخول المدرسي في تونس أو أثناءه.",
-    "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط.",
-    "دمج العد التنازلي مع الشرح والسياق بدل صفحة موعد قصيرة وضعيفة.",
-    "ربط الموعد بالقيمة العملية للقارئ: إجازة، استعداد، تهنئة، أو تنظيم مسبق.",
-    "شرح الفروقات المحلية أو الرسمية عند الحاجة بدلاً من الاكتفاء بموعد عام مبهم.",
-    "لغة عربية طبيعية لا تبدو كأنها قائمة كلمات أو نص مولد آلياً."
+    "هل أُعلن الدخول المدرسي في تونس {{year}}",
+    "الدخول المدرسي 2026 2027 تونس",
+    "رزنامة السنة الدراسية تونس {{year}} {{nextYear}}",
+    "تسجيل السنة الأولى ابتدائي تونس {{year}}",
+    "متى ترجع الدراسة في تونس {{year}}",
+    "هل المدارس الخاصة في تونس تتبع التاريخ نفسه",
+    "كيف أستعد للدخول المدرسي في تونس {{year}}",
+    "الدخول المدرسي في تونس سبتمبر {{year}}"
   ],
   "unansweredQuestions": [
-    "متى الدخول المدرسي في تونس {{year}}؟",
-    "كم باقي على الدخول المدرسي في تونس؟",
-    "ما هو الدخول المدرسي في تونس؟",
-    "كيف أستعد لـالدخول المدرسي في تونس؟",
-    "متى الدخول المدرسي في تونس {{nextYear}}؟",
-    "ما أهمية الدخول المدرسي في تونس؟",
-    "كم باقي على الدخول المدرسي في تونس {{year}}؟",
-    "تاريخ الدخول المدرسي في تونس {{year}}؟"
+    "هل أعلنت الوزارة يوم الدخول المدرسي العام للموسم الجديد؟",
+    "ما الذي تأكد فعلاً للموسم 2026-2027؟",
+    "هل أستطيع الاعتماد على 15 سبتمبر كتاريخ نهائي؟",
+    "كيف تستعد الأسرة قبل صدور البلاغ النهائي؟",
+    "هل المدارس الخاصة أو المسارات المختلفة تتبع التاريخ نفسه؟",
+    "أين أتحقق رسمياً عندما يقترب موعد العودة؟"
   ],
-  "differentiationIdeas": [
-    "جواب مباشر عن موعد الدخول المدرسي في تونس في بداية الصفحة قبل أي شرح إضافي.",
-    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر.",
-    "أسئلة شائعة عملية تساعد القارئ على فهم الدخول المدرسي في تونس والتصرف بناءً عليه.",
-    "ربط الصفحة بطريقة البحث الشائعة عن الدخول المدرسي في تونس دون فقدان الوضوح العام."
-  ],
+  "competitorMatrix": {
+    "strengths": [
+      "وجود إشارات رسمية على بدء التحضير للموسم الجديد",
+      "توفر مصادر إخبارية موثوقة حول التسجيلات",
+      "وجود مراجع مقارنة لعرض التقويم للأسر"
+    ],
+    "weaknesses": [
+      "ضعف في إثبات يوم العودة العامة بصيغة مفتوحة وواضحة",
+      "غياب التمييز بين المؤكد والتخطيطي",
+      "قلة الإرشاد العملي للأسرة"
+    ],
+    "missingTopics": [
+      "توضيح حالة الإعلان الفعلية",
+      "كيف تتصرف الأسرة قبل التحديد النهائي",
+      "تمييز المدارس الخاصة أو المسارات المختلفة"
+    ],
+    "uniqueOpportunities": [
+      "بناء صفحة صادقة لا تدّعي يقيناً غير متاح",
+      "شرح ما الذي نعرفه الآن فعلاً عن الموسم الجديد",
+      "ربط العد التنازلي بقرار تخطيطي لا بموعد نهائي مزعوم"
+    ]
+  },
   "factSources": [
     {
-      "label": "وزارة التربية - تونس",
-      "url": "https://www.education.gov.tn"
+      "label": "الموقع الرسمي لوزارة التربية في تونس",
+      "url": "https://education.gov.tn/"
     },
     {
-      "label": "المركز الوطني البيداغوجي - تونس",
-      "url": "https://www.cnp.com.tn"
+      "label": "La Presse: انطلاق تسجيلات السنة الأولى ابتدائي",
+      "url": "https://www.lapresse.tn/2026/04/27/tunisie-cest-parti-pour-les-inscriptions-en-premiere-annee-primaire/"
     },
     {
-      "label": "البوابة الوطنية للجمهورية التونسية",
-      "url": "https://www.tunisie.gov.tn"
+      "label": "TAP: فتح التسجيلات للموسم الدراسي الجديد",
+      "url": "https://www.tap.info.tn/fr/Portail-Titres-de-l-actualit%C3%A9/20119641-le-minist%C3%A8re-de"
+    },
+    {
+      "label": "ERT: calendrier scolaire 2026-2027",
+      "url": "https://www.ert.tn/pmf/2026/05/22/calendrier-scolaire/"
     }
   ],
-  "notes": "تم تعزيز خريطة البحث العربية لـ الدخول المدرسي في تونس اعتماداً على الكلمات المفتاحية الحالية، والأسئلة الشائعة، والمصادر الموجودة داخل الحزمة نفسها."
+  "notes": "الخلاصة الأهم من البحث أن الصفحة التونسية لا يجب أن تقدم 15 سبتمبر كتاريخ نهائي ثابت من دون تمييز. ما يمكن إثباته بوضوح الآن هو أن الموسم 2026-2027 دخل طور التحضير عبر التسجيلات وغيرها، بينما يوم العودة العامة يحتاج إعلاناً رسمياً مفتوحاً أكثر وضوحاً من المتاح في هذا التمرير."
 }

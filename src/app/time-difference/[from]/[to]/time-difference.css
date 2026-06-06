@@ -45,9 +45,9 @@
 .td-snapshot {
   background-color: var(--bg-surface-2);
   border:           1px solid var(--border-default);
-  border-radius:    var(--radius-xl);
+  border-radius:    var(--radius-lg);
   padding:          var(--space-4) var(--space-6);
-  box-shadow:       var(--shadow-xs);
+  box-shadow: none;
 }
 
 
@@ -66,15 +66,14 @@
 }
 
 
-/* ── 3. Suppress hover lift on data-only cards ────────────────────────────────
- * new.css .card:hover → transform: translateY(-1px); shadow-md (lift).
- * Lift implies "clickable". Data panels must NOT lift.
+/* ── 3. Keep data-only cards visually static ─────────────────────────────────
+ * Data panels are not interactive controls, so their hover state stays flat.
  * !important: .card:hover and .td-static:hover share specificity 0,2,0.
  */
 .td-static,
 .td-static:hover {
   transform:    none !important;
-  box-shadow:   var(--shadow-xs) !important;
+  box-shadow: none !important;
   border-color: var(--border-default) !important;
   cursor:       default;
 }
@@ -83,7 +82,7 @@
 /* ── 4. FAQ accordion item ────────────────────────────────────────────────────
  * shadcn AccordionItem default: border-b only, no radius.
  * Override to full card-style border + rounded corners.
- * Open state: accent border + shadow-accent glow.
+ * Open state: accent border + glow.
  */
 .td-faq-item {
   background:    var(--bg-surface-2);
@@ -96,7 +95,7 @@
 }
 .td-faq-item[data-state='open'] {
   border-color: var(--border-accent-strong) !important;
-  box-shadow:   var(--shadow-accent) !important;
+  box-shadow: none !important;
 }
 
 
@@ -187,7 +186,7 @@
  */
 @media print {
   [aria-label="حاسبة فرق التوقيت التفاعلية"] { display: none !important; }
-  .card, .card-nested { box-shadow: none !important; border: 1px solid #ccc !important; }
+  .card, .card-nested { box-shadow: none !important; border: 1px solid var(--border-default) !important; }
   .td-snapshot        { box-shadow: none !important; }
 }
 

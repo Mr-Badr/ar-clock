@@ -2,7 +2,6 @@ import { CALCULATOR_HUBS, CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { COUNTRY_LIST } from '@/lib/calculators/building/country-data';
 import { PERSONAL_FINANCE_HUB, PERSONAL_FINANCE_TOOLS } from '@/lib/calculators/personal-finance-data';
 import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
-import { getEconomySeoEntry } from '@/lib/economy/seo-content';
 import { ALL_RAW_EVENTS } from '@/lib/events';
 import { ALL_GUIDES } from '@/lib/guides/data';
 import { FEATURED_COUNTDOWN_LINKS } from '@/lib/seo/popular-links';
@@ -22,23 +21,6 @@ const financeToolEnrichmentByHref = new Map(
     .filter(Boolean),
 );
 const buildingCalculatorRoute = CALCULATOR_ROUTES.find((route) => route.href === '/calculators/building') || null;
-const ECONOMY_DISCOVERY_KEYS = [
-  'landing',
-  'market-hours',
-  'us-market-open',
-  'gold-market-hours',
-  'forex-sessions',
-  'stock-markets',
-  'market-clock',
-  'best-trading-time',
-];
-const economySearchEnrichmentByHref = new Map(
-  ECONOMY_DISCOVERY_KEYS
-    .map((key) => getEconomySeoEntry(key))
-    .filter((entry) => entry?.path)
-    .map((entry) => [entry.path, entry]),
-);
-
 const SEARCH_PRIORITY_BY_HREF = new Map([
   ['/time-now', 100],
   ['/mwaqit-al-salat', 98],
@@ -71,15 +53,7 @@ const SEARCH_PRIORITY_BY_HREF = new Map([
   ['/calculators/personal-finance', 88],
   ['/calculators/sleep', 86],
   ['/calculators/building', 82],
-  ['/economie', 90],
-  ['/economie/market-hours', 86],
-  ['/economie/us-market-open', 98],
-  ['/economie/gold-market-hours', 97],
-  ['/economie/forex-sessions', 96],
-  ['/economie/stock-markets', 88],
-  ['/economie/market-clock', 90],
-  ['/economie/best-trading-time', 94],
-  ['/guides', 76],
+  ['/blog', 76],
   ['/holidays', 84],
 ]);
 
@@ -87,9 +61,8 @@ const POPULAR_SEARCH_SECTION_LIMITS = {
   time: 4,
   'calculators-hubs': 3,
   'calculators-tools': 5,
-  economy: 4,
   holidays: 2,
-  guides: 2,
+  blog: 2,
 };
 
 const QUERY_PREFIX_TOKENS = new Set([
@@ -183,7 +156,6 @@ function getSearchPriority(href, fallback = 64) {
   if (href.startsWith('/calculators/sleep/')) return 87;
   if (href.startsWith('/calculators/building/')) return 86;
   if (href.startsWith('/calculators/')) return 86;
-  if (href.startsWith('/economie/')) return 86;
   if (href.startsWith('/holidays/')) return 72;
   if (href.startsWith('/date/')) return 78;
   if (href.startsWith('/time-now') || href.startsWith('/mwaqit-al-salat')) return 80;
@@ -335,46 +307,14 @@ function pluckText(items, key) {
   return (items || []).map((item) => item?.[key]).filter(Boolean);
 }
 
-function buildEconomyDirectoryItem(baseItem, { queries = [], defaultPriority = 64 } = {}) {
-  const enrichment = economySearchEnrichmentByHref.get(baseItem.href);
-
-  return buildDirectoryItem(
-    {
-      ...baseItem,
-      heroTitle: enrichment?.metadata?.title || baseItem.heroTitle,
-      badge: enrichment?.breadcrumbName || baseItem.badge,
-    },
-    {
-      queries: [
-        ...queries,
-        ...(enrichment?.metadata?.keywords || []),
-        ...(enrichment?.tool?.about || []),
-        ...(enrichment?.searchProfile?.priorityQueries || []),
-        ...(enrichment?.searchProfile?.questionQueries || []),
-        ...(enrichment?.searchProfile?.comparisonQueries || []),
-        ...(enrichment?.searchProfile?.regionalQueries || []),
-        ...(enrichment?.searchProfile?.temporalQueries || []),
-      ],
-      supportQueries: [
-        enrichment?.tool?.description,
-        enrichment?.dataset?.name,
-        enrichment?.dataset?.description,
-        enrichment?.collection?.description,
-        ...pluckText(enrichment?.faqItems, 'question'),
-      ],
-      defaultPriority,
-    },
-  );
-}
-
 const TIME_AND_DATE_ITEMS = [
   buildDirectoryItem({
     href: '/time-now',
     kind: 'tool',
-    title: 'كم الساعة الآن في مدينتك؟',
+    title: 'كم الساعة الان في مدينتك؟',
     description: 'الوقت الحالي حسب المدينة والدولة مع صفحات محلية قابلة للفهرسة.',
   }, {
-    queries: ['كم الساعة الآن', 'الوقت الآن', 'الساعة الآن', 'الوقت الحالي في مدينتي'],
+    queries: ['كم الساعة الان', 'الوقت الان', 'الساعة الان', 'الوقت الحالي في مدينتي'],
   }),
   buildDirectoryItem({
     href: '/mwaqit-al-salat',
@@ -474,79 +414,12 @@ const TIME_AND_DATE_ITEMS = [
   }),
 ];
 
-const ECONOMY_ITEMS = [
-  buildEconomyDirectoryItem({
-    href: '/economie',
-    kind: 'section',
-    title: 'الاقتصاد الحي',
-    description: 'مدخل موحد لأوقات الأسواق والذهب والفوركس والبورصات العالمية.',
-  }, {
-    queries: ['الاقتصاد الحي', 'أوقات التداول العالمية', 'هل الأسواق مفتوحة الآن', 'أدوات الاقتصاد والتداول بالعربي'],
-  }),
-  buildEconomyDirectoryItem({
-    href: '/economie/market-hours',
-    kind: 'section',
-    title: 'ساعات الأسواق والتداول',
-    description: 'بوابة تجمع أدوات السوق الأمريكي والذهب والفوركس والبورصات.',
-  }, {
-    queries: ['ساعات الأسواق والتداول', 'أوقات الأسواق العالمية', 'مواعيد فتح وإغلاق الأسواق العالمية'],
-  }),
-  buildEconomyDirectoryItem({
-    href: '/economie/us-market-open',
-    kind: 'tool',
-    title: 'متى يفتح السوق الأمريكي اليوم؟',
-    description: 'جواب مباشر بالعربية مع العد التنازلي ووقت الافتتاح بتوقيتك.',
-  }, {
-    queries: ['متى يفتح السوق الأمريكي اليوم', 'هل السوق الأمريكي مفتوح الآن', 'كم باقي على افتتاح السوق الأمريكي'],
-  }),
-  buildEconomyDirectoryItem({
-    href: '/economie/gold-market-hours',
-    kind: 'tool',
-    title: 'هل الذهب مفتوح الآن؟',
-    description: 'أوقات تداول الذهب من مدينتك مع أفضل نافذة للسيولة.',
-  }, {
-    queries: ['هل الذهب مفتوح الآن', 'متى يفتح سوق الذهب اليوم', 'أوقات تداول الذهب اليوم'],
-  }),
-  buildEconomyDirectoryItem({
-    href: '/economie/forex-sessions',
-    kind: 'tool',
-    title: 'متى تبدأ جلسة لندن ونيويورك اليوم؟',
-    description: 'جلسات الفوركس الأربع والنافذة الذهبية بتوقيتك المحلي.',
-  }, {
-    queries: ['جلسات الفوركس', 'متى تبدأ جلسة لندن اليوم', 'متى تبدأ جلسة نيويورك اليوم', 'هل سوق الفوركس مفتوح الآن'],
-  }),
-  buildEconomyDirectoryItem({
-    href: '/economie/stock-markets',
-    kind: 'tool',
-    title: 'هل البورصات العالمية مفتوحة الآن؟',
-    description: 'أمريكا ولندن والخليج في صفحة واحدة مع أوقات الفتح والإغلاق.',
-  }, {
-    queries: ['هل البورصات العالمية مفتوحة الآن', 'البورصات العالمية الآن', 'هل الأسواق العالمية مفتوحة'],
-  }),
-  buildEconomyDirectoryItem({
-    href: '/economie/market-clock',
-    kind: 'tool',
-    title: 'أين السيولة الأعلى الآن؟',
-    description: 'ساعة سوق بصرية تكشف النشاط والسيولة داخل يومك المحلي.',
-  }, {
-    queries: ['ساعة السوق', 'أين السيولة الأعلى الآن', 'خريطة سيولة السوق اليومية'],
-  }),
-  buildEconomyDirectoryItem({
-    href: '/economie/best-trading-time',
-    kind: 'tool',
-    title: 'ما أفضل وقت للتداول اليوم؟',
-    description: 'أفضل نافذة اليوم لتداول الفوركس والذهب بحسب مدينتك.',
-  }, {
-    queries: ['أفضل وقت للتداول اليوم', 'أفضل وقت لتداول الفوركس', 'أفضل وقت لتداول الذهب'],
-  }),
-];
-
 const CALCULATORS_ROOT_ITEM = buildDirectoryItem({
   href: '/calculators',
   kind: 'section',
   title: 'قسم الحاسبات',
   heroTitle: 'أشهر الحاسبات العربية اليومية',
-  description: 'بوابة تجمع أشهر الحاسبات العربية: العمر، النوم، المال، البناء، الضريبة، والنسب المئوية.',
+  description: 'احسب العمر، النوم، المال، البناء، الضريبة، والنسب المئوية من صفحات عربية واضحة.',
   badge: 'الحاسبات',
 }, {
   queries: [
@@ -661,23 +534,23 @@ const CALCULATOR_TOOL_ITEMS = dedupeDirectoryItemsByHref([
   ...BUILDING_COUNTRY_TOOL_ITEMS,
 ]);
 
-const GUIDE_ITEMS = [
+const BLOG_ITEMS = [
   buildDirectoryItem({
-    href: '/guides',
+    href: '/blog',
     kind: 'section',
-    title: 'قسم الأدلة العملية',
-    heroTitle: 'أدلة عربية تربط الشرح بالأداة الصحيحة',
-    description: 'بوابة تجمع المقالات الشارحة التي تدعم الحاسبات والاقتصاد والنوم والتخطيط المالي داخل الموقع.',
-    badge: 'الأدلة',
+    title: 'مدونة ميقاتنا',
+    heroTitle: 'مقالات عربية تربط الشرح بالأداة الصحيحة',
+    description: 'اقرأ مقالات تشرح الحاسبات والنوم والتخطيط المالي قبل استخدام الأداة.',
+    badge: 'المدونة',
   }, {
     queries: [
-      'قسم الأدلة',
-      'كل الأدلة',
-      'أدلة ميقاتنا',
+      'مدونة ميقاتنا',
+      'مقالات ميقاتنا',
+      'كل المقالات',
       'شروحات الأدوات',
       'مقالات ميقاتنا',
     ],
-    supportQueries: ['الأدلة العملية', 'مقالات تشرح الأدوات', 'روابط بين الأدوات والمقالات'],
+    supportQueries: ['المدونة العربية', 'مقالات تشرح الأدوات', 'مسارات بين الأدوات والمقالات'],
     defaultPriority: 74,
   }),
   ...ALL_GUIDES.map((guide) =>
@@ -720,7 +593,7 @@ const HOLIDAY_ITEMS = [
         kind: 'page',
         title: eventTitle,
         heroTitle: event.name,
-        description: featured?.description || `صفحة عد تنازلي ومعلومة سريعة عن ${event.name} مع التاريخ الهجري والميلادي وروابط ذات صلة.`,
+        description: featured?.description || `صفحة عد تنازلي عن ${event.name} تعرض التاريخ الهجري والميلادي والخطوة التالية المناسبة بعد معرفة الموعد.`,
         badge: 'مناسبة / عداد',
       },
       {
@@ -775,7 +648,7 @@ const COMPANY_ITEMS = [
   buildDirectoryItem({
     href: '/about',
     title: 'من نحن',
-    description: 'تعرف على فكرة ميقاتنا ومنهجه ومن يخدمه هذا المنتج.',
+    description: 'اقرأ لماذا بُنيت ميقاتنا، كيف تخدمك أدواتها، وما المنهج الذي يحكم المحتوى والنتائج.',
   }, {
     queries: ['من نحن', 'عن ميقاتنا'],
     defaultPriority: 18,
@@ -826,13 +699,13 @@ export const SITE_DIRECTORY_SECTIONS = [
   {
     id: 'time',
     title: 'الوقت والتاريخ والمواعيد',
-    description: 'الأدوات الأساسية التي تجيب عن الوقت الآن، الصلاة، فرق التوقيت، والتاريخ اليوم.',
+    description: 'الأدوات الأساسية التي تجيب عن الوقت الان، الصلاة، فرق التوقيت، والتاريخ اليوم.',
     items: TIME_AND_DATE_ITEMS,
   },
   {
     id: 'calculators-hubs',
     title: 'مسارات الحاسبات',
-    description: 'بوابات تجمع الأدوات المتقاربة حسب نية البحث، لا حسب اسم الحاسبة فقط.',
+    description: 'بوابات تجمع الأدوات المتقاربة حسب السؤال الذي يبدأ منه الناس عادة، لا حسب اسم الحاسبة فقط.',
     items: CALCULATOR_HUB_ITEMS,
   },
   {
@@ -842,16 +715,10 @@ export const SITE_DIRECTORY_SECTIONS = [
     items: CALCULATOR_TOOL_ITEMS,
   },
   {
-    id: 'economy',
-    title: 'أدوات الاقتصاد الحي',
-    description: 'الذهب، السوق الأمريكي، جلسات الفوركس، البورصات، وساعة السيولة.',
-    items: ECONOMY_ITEMS,
-  },
-  {
-    id: 'guides',
-    title: 'الأدلة العملية',
-    description: 'صفحات شرح وتوجيه تدعم الحاسبات وتلتقط الأسئلة التعليمية التفصيلية.',
-    items: GUIDE_ITEMS,
+    id: 'blog',
+    title: 'المدونة العربية',
+    description: 'مقالات شرح وتوجيه تدعم الحاسبات وتلتقط الأسئلة التعليمية التفصيلية.',
+    items: BLOG_ITEMS,
   },
   {
     id: 'holidays',
@@ -871,8 +738,7 @@ export const SITE_DIRECTORY_COUNTS = {
   sections: SITE_DIRECTORY_SECTIONS.length,
   items: SITE_DIRECTORY_SECTIONS.reduce((sum, section) => sum + section.items.length, 0),
   calculators: CALCULATOR_HUB_ITEMS.length + CALCULATOR_TOOL_ITEMS.length,
-  economy: ECONOMY_ITEMS.length,
-  guides: GUIDE_ITEMS.length,
+  blog: BLOG_ITEMS.length,
 };
 
 export const SITE_SEARCH_INDEX = SITE_DIRECTORY_SECTIONS.flatMap((section) =>

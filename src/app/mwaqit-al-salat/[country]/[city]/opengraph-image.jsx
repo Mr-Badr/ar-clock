@@ -13,8 +13,11 @@
 
 import { ImageResponse } from 'next/og';
 import { logError } from '@/lib/observability';
+import { getCountryBySlug } from '@/lib/db/queries/countries';
 import { getOgCityLabels } from '@/lib/geo-og-labels';
 import { getOgArabicFonts } from '@/lib/og-fonts';
+import { getMethodByCountry } from '@/lib/prayer-methods';
+import { SITE_BRAND } from '@/lib/site-config';
 
 export const size = { width: 1200, height: 630 };
 export const alt = 'مواقيت الصلاة';
@@ -25,9 +28,24 @@ export const revalidate = 86400;
 function renderFallbackImage(label = 'مواقيت الصلاة', sublabel = '', fonts) {
   return new ImageResponse(
     (
-      <div style={{ width: '100%', height: '100%', background: '#181C2A', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14, fontFamily: 'Noto Sans Arabic, Noto Sans' }}>
-        <span style={{ color: '#4ECDC4', fontSize: 48, fontWeight: 900 }}>{label}</span>
-        {sublabel ? <span style={{ color: '#A8AFCC', fontSize: 28, fontWeight: 600 }}>{sublabel}</span> : null}
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          background: 'linear-gradient(135deg, #0E1120 0%, #181C2A 60%, #1F2438 100%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 18,
+          padding: '48px',
+          textAlign: 'center',
+          fontFamily: 'Noto Sans Arabic, Noto Sans',
+        }}
+      >
+        <span style={{ color: '#9CA3C9', fontSize: 28, fontWeight: 700 }}>{SITE_BRAND} | مواقيت الصلاة</span>
+        <span style={{ color: '#F4F6FF', fontSize: 62, fontWeight: 900 }}>{label}</span>
+        {sublabel ? <span style={{ color: '#A8AFCC', fontSize: 30, fontWeight: 600 }}>{sublabel}</span> : null}
       </div>
     ),
     { ...size, fonts },
@@ -43,6 +61,10 @@ export default async function OgImage({ params }) {
     fallbackCityLabel,
     fallbackCountryLabel,
   } = getOgCityLabels(countrySlug, citySlug);
+  const country = await getCountryBySlug(countrySlug).catch(() => null);
+  const methodLabel = country?.country_code
+    ? getMethodByCountry(country.country_code).label
+    : 'الطريقة المعتمدة محلياً';
 
   try {
     return new ImageResponse(
@@ -55,43 +77,117 @@ export default async function OgImage({ params }) {
           direction: 'rtl',
         }}
       >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 40 }}>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ color: '#4ECDC4', fontSize: 52, fontWeight: 900, lineHeight: 1.1 }}>
+        <div
+          style={{
+            position: 'absolute',
+            width: '520px',
+            height: '520px',
+            borderRadius: '999px',
+            background: 'radial-gradient(circle, rgba(78,205,196,0.12) 0%, rgba(78,205,196,0) 72%)',
+            top: '-18%',
+            left: '-8%',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            width: '380px',
+            height: '380px',
+            borderRadius: '999px',
+            background: 'radial-gradient(circle, rgba(115,120,255,0.14) 0%, rgba(115,120,255,0) 72%)',
+            bottom: '-12%',
+            right: '-4%',
+          }}
+        />
+
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 44 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '66%' }}>
+            <span style={{ color: '#A8AFCC', fontSize: 26, fontWeight: 700 }}>
+              {SITE_BRAND} | مواقيت الصلاة اليوم
+            </span>
+            <span style={{ color: '#F4F6FF', fontSize: 74, fontWeight: 900, lineHeight: 1.08, marginTop: 18 }}>
               {cityLabel}
             </span>
-            <span style={{ color: '#7880AA', fontSize: 28, marginTop: 8 }}>
+            <span style={{ color: '#8E97BE', fontSize: 30, marginTop: 10 }}>
               {countryLabel}
             </span>
           </div>
-          <div style={{
-            background: 'rgba(78,205,196,0.12)', border: '2px solid rgba(78,205,196,0.4)',
-            borderRadius: 20, padding: '16px 32px',
-            color: '#4ECDC4', fontSize: 26, fontWeight: 700,
-          }}>
-            مواقيت الصلاة اليوم
+          <div
+            style={{
+              background: 'rgba(78,205,196,0.12)',
+              border: '2px solid rgba(78,205,196,0.35)',
+              borderRadius: 20,
+              padding: '14px 24px',
+              color: '#62E0D4',
+              fontSize: 24,
+              fontWeight: 800,
+            }}
+          >
+            الفجر والمغرب والصلاة القادمة
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: 16, flex: 1, flexWrap: 'wrap' }}>
-          {['الفجر', 'الظهر', 'العصر', 'المغرب', 'العشاء'].map((name) => (
+        <div style={{ display: 'flex', gap: 16, marginBottom: 22 }}>
+          {[
+            'الجدول اليومي',
+            'طريقة الحساب',
+            'الجدول الشهري',
+          ].map((name) => (
             <div
               key={name}
               style={{
-                flex: '1 1 30%', background: 'rgba(31,36,56,0.8)',
-                border: '1px solid #363D5C', borderRadius: 16,
-                padding: '24px 28px', display: 'flex',
-                flexDirection: 'column', alignItems: 'center', gap: 10,
+                flex: 1,
+                background: 'rgba(31,36,56,0.84)',
+                border: '1px solid #363D5C',
+                borderRadius: 16,
+                padding: '22px 24px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
-              <span style={{ color: '#A8AFCC', fontSize: 22 }}>{name}</span>
-              <span style={{ color: '#E8EAFF', fontSize: 26, fontWeight: 800 }}>محدثة يومياً</span>
+              <span style={{ color: '#E8EAFF', fontSize: 24, fontWeight: 800 }}>{name}</span>
             </div>
           ))}
         </div>
 
-        <div style={{ color: '#454D70', fontSize: 20, marginTop: 32, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          {cityLabel} — {countryLabel}
+        <div
+          style={{
+            display: 'flex',
+            gap: 14,
+            marginTop: 'auto',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '12px 18px',
+              borderRadius: 999,
+              background: 'rgba(255,255,255,0.06)',
+              color: '#C8CEE8',
+              fontSize: 22,
+              fontWeight: 700,
+            }}
+          >
+            الطريقة: {methodLabel}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '12px 18px',
+              borderRadius: 999,
+              background: 'rgba(255,255,255,0.06)',
+              color: '#C8CEE8',
+              fontSize: 22,
+              fontWeight: 700,
+            }}
+          >
+            محدثة يومياً حسب المدينة
+          </div>
         </div>
       </div>,
       { ...size, fonts },

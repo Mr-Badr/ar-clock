@@ -12,9 +12,10 @@ interface AnimatedThemeTogglerProps extends React.ComponentPropsWithoutRef<"butt
 
 export const AnimatedThemeToggler = ({
   className,
-  duration = 400,
+  duration,
   ...props
-}: AnimatedThemeTogglerProps) => {
+}: AnimatedThemeTogglerProps): React.JSX.Element => {
+  const resolvedDuration = duration ?? 400
   const [isDark, setIsDark] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
@@ -75,25 +76,29 @@ export const AnimatedThemeToggler = ({
             ],
           },
           {
-            duration,
+            duration: resolvedDuration,
             easing: "ease-in-out",
             pseudoElement: "::view-transition-new(root)",
           }
         )
       })
     }
-  }, [isDark, duration])
+  }, [isDark, resolvedDuration])
 
   return (
     <button
       type="button"
       ref={buttonRef}
       onClick={toggleTheme}
-      className={cn(className)}
+      aria-label={props["aria-label"] ?? "تبديل المظهر"}
+      className={cn(
+        "inline-flex min-h-[var(--space-11)] min-w-[var(--space-11)] items-center justify-center rounded-[var(--radius-md)] border border-[var(--border-default)] bg-[var(--bg-surface-1)] text-[var(--text-2)] transition-[background-color,border-color,box-shadow,color] duration-100 hover:border-[var(--border-strong)] hover:bg-[var(--bg-surface-2)] hover:text-[var(--text-1)] focus-visible:shadow-[var(--shadow-focus)] focus-visible:outline-none [&>svg]:size-[var(--space-5)]",
+        className
+      )}
       {...props}
     >
       {isDark ? <Sun /> : <Moon />}
-      <span className="sr-only">Toggle theme</span>
+      <span className="sr-only">تبديل المظهر</span>
     </button>
   )
 }

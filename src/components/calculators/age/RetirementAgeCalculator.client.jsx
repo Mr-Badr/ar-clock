@@ -27,24 +27,24 @@ export default function RetirementAgeCalculator() {
         <CardContent className="calc-form-grid">
           <div className="calc-grid-3">
             <div className="calc-field">
-              <label className="calc-label">الدولة</label>
-              <select className="input calc-input" value={countryCode} onChange={(event) => setCountryCode(event.target.value)}>
+              <label className="calc-label" htmlFor="retirement-country">الدولة</label>
+              <select id="retirement-country" className="input calc-input" value={countryCode} onChange={(event) => setCountryCode(event.target.value)}>
                 {RETIREMENT_RULES.map((rule) => (
                   <option key={rule.code} value={rule.code}>{rule.country}</option>
                 ))}
               </select>
             </div>
             <div className="calc-field">
-              <label className="calc-label">القطاع</label>
-              <select className="input calc-input" value={sector} onChange={(event) => setSector(event.target.value)}>
+              <label className="calc-label" htmlFor="retirement-sector">القطاع</label>
+              <select id="retirement-sector" className="input calc-input" value={sector} onChange={(event) => setSector(event.target.value)}>
                 <option value="government">حكومي</option>
                 <option value="private">خاص</option>
                 <option value="military">عسكري</option>
               </select>
             </div>
             <div className="calc-field">
-              <label className="calc-label">الجنس</label>
-              <select className="input calc-input" value={gender} onChange={(event) => setGender(event.target.value)}>
+              <label className="calc-label" htmlFor="retirement-gender">الجنس</label>
+              <select id="retirement-gender" className="input calc-input" value={gender} onChange={(event) => setGender(event.target.value)}>
                 <option value="male">رجل</option>
                 <option value="female">امرأة</option>
               </select>
@@ -59,25 +59,27 @@ export default function RetirementAgeCalculator() {
 
       {result?.isValid ? (
         <>
-          <MetricGrid
-            items={[
-              {
-                label: 'سن التقاعد المستخدم',
-                value: `${result.retirementAge} سنة`,
-                note: `${result.rule.country} · ${sector}`,
-              },
-              {
-                label: 'موعد التقاعد',
-                value: result.retirementDateLabel,
-                note: result.isRetired ? 'بحسب هذه البيانات وصلت إلى سن التقاعد أو تجاوزته.' : result.remainingLabel,
-              },
-              {
-                label: 'العمر الحالي',
-                value: result.currentAge.ageLabel,
-                note: `${result.daysRemaining} يوم متبقية تقريباً`,
-              },
-            ]}
-          />
+          <div aria-live="polite">
+            <MetricGrid
+              items={[
+                {
+                  label: 'سن التقاعد المستخدم',
+                  value: `${result.retirementAge} سنة`,
+                  note: `${result.rule.country} · ${sector}`,
+                },
+                {
+                  label: 'موعد التقاعد',
+                  value: result.retirementDateLabel,
+                  note: result.isRetired ? 'بحسب هذه البيانات وصلت إلى سن التقاعد أو تجاوزته.' : result.remainingLabel,
+                },
+                {
+                  label: 'العمر الحالي',
+                  value: result.currentAge.ageLabel,
+                  note: `${result.daysRemaining} يوم متبقية تقريباً`,
+                },
+              ]}
+            />
+          </div>
 
           <Card className="calc-surface-card">
             <CardHeader>

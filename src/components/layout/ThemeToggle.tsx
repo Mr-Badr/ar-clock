@@ -124,7 +124,7 @@ const handleToggle = useCallback(
         )
       ) : (
         // SSR/hydration placeholder — invisible, same size, no layout shift
-        <span style={{ display: "inline-block", width: 18, height: 18 }} />
+        <span className="header-theme-placeholder" />
       )}
     </button>
   );

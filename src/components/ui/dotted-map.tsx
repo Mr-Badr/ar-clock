@@ -39,26 +39,36 @@ export interface DottedMapProps<
 }
 
 export function DottedMap<M extends Marker = Marker>({
-  width = 150,
-  height = 75,
-  mapSamples = 5000,
-  markers = [],
-  dotColor = "currentColor",
-  markerColor = "#FF6900",
-  dotRadius = 0.2,
-  stagger = true,
-  pulse = false,
+  width,
+  height,
+  mapSamples,
+  markers,
+  dotColor,
+  markerColor,
+  dotRadius,
+  stagger,
+  pulse,
   renderMarkerOverlay,
   className,
   style,
   ...svgProps
-}: DottedMapProps<M>) {
+}: DottedMapProps<M>): React.JSX.Element {
+  const resolvedWidth = width ?? 150
+  const resolvedHeight = height ?? 75
+  const resolvedMapSamples = mapSamples ?? 5000
+  const resolvedMarkers = markers ?? []
+  const resolvedDotColor = dotColor ?? "currentColor"
+  const resolvedMarkerColor = markerColor ?? "var(--blue)"
+  const resolvedDotRadius = dotRadius ?? 0.2
+  const shouldStagger = stagger ?? true
+  const shouldPulseAll = pulse ?? false
+
   const { points, addMarkers } = createMap({
-    width,
-    height,
-    mapSamples,
+    width: resolvedWidth,
+    height: resolvedHeight,
+    mapSamples: resolvedMapSamples,
   })
-  const processedMarkers = addMarkers(markers)
+  const processedMarkers = addMarkers(resolvedMarkers)
 
   // Compute stagger helpers in a single, simple pass
   const { xStep, yToRowIndex } = React.useMemo(() => {
@@ -87,20 +97,20 @@ export function DottedMap<M extends Marker = Marker>({
 
   return (
     <svg
-      viewBox={`0 0 ${width} ${height}`}
-      className={cn("text-gray-500 dark:text-gray-500", className)}
+      viewBox={`0 0 ${resolvedWidth} ${resolvedHeight}`}
+      className={cn("text-[var(--text-3)]", className)}
       style={{ width: "100%", height: "100%", ...style }}
       {...svgProps}
     >
       {points.map((point, index) => {
         const rowIndex = yToRowIndex.get(point.y) ?? 0
-        const offsetX = stagger && rowIndex % 2 === 1 ? xStep / 2 : 0
+        const offsetX = shouldStagger && rowIndex % 2 === 1 ? xStep / 2 : 0
         return (
           <circle
             cx={point.x + offsetX}
             cy={point.y}
-            r={dotRadius}
-            fill={dotColor}
+            r={resolvedDotRadius}
+            fill={resolvedDotColor}
             key={`${point.x}-${point.y}-${index}`}
           />
         )
@@ -108,19 +118,19 @@ export function DottedMap<M extends Marker = Marker>({
 
       {processedMarkers.map((marker, index) => {
         const rowIndex = yToRowIndex.get(marker.y) ?? 0
-        const offsetX = stagger && rowIndex % 2 === 1 ? xStep / 2 : 0
+        const offsetX = shouldStagger && rowIndex % 2 === 1 ? xStep / 2 : 0
 
         const x = marker.x + offsetX
         const y = marker.y
-        const r = marker.size ?? dotRadius
-        const shouldPulse = pulse
+        const r = marker.size ?? resolvedDotRadius
+        const shouldPulse = shouldPulseAll
           ? marker.pulse !== false
           : marker.pulse === true
         const pulseTo = r * 2.8
 
         return (
           <g key={`${marker.x}-${marker.y}-${index}`}>
-            <circle cx={x} cy={y} r={r} fill={markerColor} />
+            <circle cx={x} cy={y} r={r} fill={resolvedMarkerColor} />
 
             {shouldPulse ? (
               <g pointerEvents="none">
@@ -129,7 +139,7 @@ export function DottedMap<M extends Marker = Marker>({
                   cy={y}
                   r={r}
                   fill="none"
-                  stroke={markerColor}
+                  stroke={resolvedMarkerColor}
                   strokeOpacity={1}
                   strokeWidth={0.35}
                 >
@@ -151,7 +161,7 @@ export function DottedMap<M extends Marker = Marker>({
                   cy={y}
                   r={r}
                   fill="none"
-                  stroke={markerColor}
+                  stroke={resolvedMarkerColor}
                   strokeOpacity={0.9}
                   strokeWidth={0.3}
                 >

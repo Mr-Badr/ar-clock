@@ -87,7 +87,7 @@ export default function NapCalculator() {
             <CardHeader>
               <CardTitle className="calc-card-title">نتيجة القيلولة الذكية</CardTitle>
             </CardHeader>
-            <CardContent className="calc-metric-grid">
+            <CardContent className="calc-metric-grid" aria-live="polite">
               <div className="calc-grid-2">
                 <div className="calc-metric-card">
                   <div className="calc-metric-card__label"><MoonStar size={16} /> وقت الاستيقاظ</div>

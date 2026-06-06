@@ -170,7 +170,7 @@ function buildHolidayPagePayload(runtime, seo) {
     schemaData: seo.schemaData || event.schemaData,
   };
   const breadcrumbTitle = localizeEventLabel(
-    replaceTokens(seo?.seoMeta?.h1 || event.name, tokenContext),
+    replaceTokens(event.name || seo?.seoMeta?.h1 || '', tokenContext),
     event,
   );
 

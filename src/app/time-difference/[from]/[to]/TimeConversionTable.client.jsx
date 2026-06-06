@@ -24,7 +24,7 @@ export default function TimeConversionTable({ groups, fromCity, toCity }) {
     <div>
       {/* ── Tab switcher ─────────────────────────────────────────────
        *
-       *  .tabs       — pill container (bg-surface-2, border-subtle, radius-xl)
+       *  .tabs       — segmented container (bg-surface-2, border-subtle, radius-lg)
        *  .tab        — inactive pill (text-secondary, transparent bg)
        *  .tab--active — active pill (bg-surface-4, text accent-alt, border-accent)
        *
@@ -42,8 +42,9 @@ export default function TimeConversionTable({ groups, fromCity, toCity }) {
             onClick={() => setActive(i)}
             type="button"
           >
-            {/* Icon — aria-hidden, purely decorative */}
-            <span aria-hidden="true" className="leading-none">{g.icon}</span>
+            {g.icon && (
+              <span aria-hidden="true" className="leading-none">{g.icon}</span>
+            )}
             {/* Label text — text-sm font-medium from design system */}
             <span className="text-sm font-medium">{g.label}</span>
           </button>
@@ -52,7 +53,7 @@ export default function TimeConversionTable({ groups, fromCity, toCity }) {
 
       {/* ── Table panel ──────────────────────────────────────────────
        *
-       *  .table-wrapper  — overflow-x scroll, border, radius-xl, shadow-xs
+       *  .table-wrapper  — overflow-x scroll, border, radius-lg, flat surface
        *  .table          — bg-surface-1, border-collapse, text-sm, text-primary
        *  .table--compact — tighter padding (space-2 / space-4)
        *

@@ -775,10 +775,10 @@ These assessments are based on:
   - `npm run test:unit` passed with `74/74`
   - sitemap tests now explicitly verify that both Gregorian and Hijri daily date sitemaps publish canonical date URLs
 
-### Calculators / economy impressions audit on 2026-05-14
+### Calculators impressions audit on 2026-05-14
 
 - user concern:
-  - calculator and economy pages were not showing up much in Search Console impressions over recent days
+  - calculator pages were not showing up much in Search Console impressions over recent days
 
 - calculator routes audit result:
   - no major technical indexing blocker was found in the current repo
@@ -790,31 +790,12 @@ These assessments are based on:
   - conclusion:
     - calculator impression weakness currently looks more like crawl lag / ranking / demand, not a clear noindex-style bug
 
-- economy routes audit result:
-  - a real first-render SEO weakness was found
-  - economy pages were using `getCachedEconomyPageSnapshot()` from `src/lib/economy/page-snapshots.server.js`
-  - that helper previously passed `initialNowIso: null` into the main client-rendered economy sections
-  - effect:
-    - on the first server render, major economy surfaces could fall back to generic loading copy before hydration
-    - this weakens the HTML that crawlers see immediately and can reduce relevance / impression opportunity for economy pages
-
-- economy first-render fix added locally:
-  - `src/lib/economy/page-snapshots.server.js`
-    - now seeds `initialNowIso` from `getCachedNowIso()` with `ECONOMY_FALLBACK_NOW_ISO` as fallback
-    - `getEconomyPageServerState()` now reuses the seeded snapshot time instead of recalculating separately
-  - `src/lib/economy/page-helpers.js`
-    - `STATIC_ECONOMY_PAGE_STATE.initialNowIso` now uses `ECONOMY_FALLBACK_NOW_ISO` instead of `null`
-  - `tests/economy-market-engine.test.ts`
-    - now verifies the initial economy page state always includes a usable fallback timestamp
-
-- verification after the economy first-render fix:
   - `npm run typecheck` passed
   - `npm run lint` passed
   - `npm run test:unit` passed with `74/74`
 
 - practical meaning:
   - calculators are mostly waiting on crawl / recrawl / ranking
-  - economy pages had one real SSR SEO weakness and it is now fixed locally, pending deploy
 
 ### Thin-content hardening on 2026-05-14
 
@@ -881,7 +862,6 @@ These assessments are based on:
       - date
       - holidays
       - calculators
-      - economy
       - guides
     - `SITE_SCHEMA_TOPICS` now includes broader non-time sections like calculators, finance tools, holidays, guides, and tool directory
   - `src/app/layout.tsx`
@@ -892,7 +872,6 @@ These assessments are based on:
     - added quick links to:
       - `/fahras`
       - `/calculators`
-      - `/economie`
       - `/holidays`
       - `/guides`
   - `src/components/seo/SiteWideSchemas.jsx`

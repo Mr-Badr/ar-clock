@@ -11,7 +11,7 @@ export default function CountryTable({ title, event, countryDates }) {
       <h2 id="country-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
         مواعيد {displayTitle} حسب الدولة
       </h2>
-      <div style={{ overflowX: 'auto', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-default)' }}>
+      <div style={{ overflowX: 'auto', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-default)' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }} dir="rtl">
           <caption className="sr-only">مقارنة مواعيد {displayTitle}</caption>
           <thead>

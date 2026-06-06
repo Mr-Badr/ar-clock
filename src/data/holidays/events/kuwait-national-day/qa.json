@@ -9,8 +9,11 @@
     "hasHardcodedYear": false
   },
   "notes": [
-    "fact-source: بوابة الكويت الرسمية",
-    "fact-source: Encyclopaedia Britannica: Kuwait"
+    "fact-source: Kuwait Government Online: Today in Kuwait's history",
+    "fact-source: بنك الكويت المركزي: تعطيل يومي 25 و26 فبراير",
+    "fact-source: كونا: مجلس الوزراء يعلن عطلة 25 و26 فبراير بمناسبة العيد الوطني ويوم التحرير",
+    "serp: arabic competitors scraped from CalendarZ Arabic, PublicHolidays Arabic, and official/official-adjacent Kuwaiti pages",
+    "serp: english competitors scraped from Edarabia and comparison pages around National/Liberation Day"
   ],
-  "updatedAt": "2026-04-10T00:00:00.000Z"
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

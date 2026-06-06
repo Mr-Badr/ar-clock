@@ -9,9 +9,10 @@
     "hasHardcodedYear": false
   },
   "notes": [
-    "fact-source: الأمم المتحدة: اليوم الدولي للمرأة",
-    "fact-source: الأمم المتحدة: خلفية اليوم الدولي للمرأة",
-    "fact-source: UN Women: International Women’s Day"
+    "fact-source: اليوم الدولي للمرأة | الأمم المتحدة",
+    "fact-source: Background | International Women's Day | United Nations",
+    "fact-source: International Women's Day | UN Women",
+    "review-note: تم تصحيح خلط 1975 و1977 داخل النص العربي وجعل الفرق بينهما ظاهراً للمستخدم من البداية."
   ],
-  "updatedAt": "2026-04-06T00:00:00.000Z"
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

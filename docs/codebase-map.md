@@ -39,9 +39,6 @@ This file is the quick ownership map for the app so you know what to edit, what 
   Shared metadata builders, schema helpers, discovery links, and SEO utilities.
 - `src/lib/site`
   Site discovery/search models and other whole-site helpers.
-- `src/lib/economy`
-  Economy page models, live snapshot wiring, and economy-specific copy/data helpers.
-  `src/lib/economy/seo-content.js` is now the main shared edit surface for principal economy route titles, descriptions, keywords, and schema copy.
 - `src/lib/calculators`
   Calculator datasets and engines.
   `src/lib/calculators/finance-page-content.js` holds the shared search-facing copy for the strongest finance calculator detail pages.
@@ -54,8 +51,6 @@ This file is the quick ownership map for the app so you know what to edit, what 
 
 ## Main route ownership
 
-- `src/app/economie`
-  Economy landing pages and route-level metadata.
 - `src/app/calculators`
   Calculator hubs and calculator route metadata.
 - `src/app/time-now`
@@ -79,7 +74,6 @@ This file is the quick ownership map for the app so you know what to edit, what 
 - `src/lib/site/discovery.js` now replaces the older split between `site-directory.js` and `site-search.js`.
 - `src/components/seo/JsonLd.tsx` is the shared JSON-LD renderer; avoid creating one-off schema script helpers in feature folders.
 - The old root theme-provider file was removed; the app now uses the simpler local theme bootstrap already wired in `layout.tsx` and `ThemeToggle`.
-- Economy pages now use cached server snapshots plus streamed client widgets instead of each route rebuilding its own live state path.
 
 ## Recommended editing workflow
 

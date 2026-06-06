@@ -52,8 +52,7 @@ export function pushDiscoveryHistory(key, entry, { max = 8, idKey = 'href' } = {
 
 export function getDiscoveryIconKey(pathname = '') {
   if (pathname.startsWith('/calculators')) return 'calculator';
-  if (pathname.startsWith('/economie')) return 'economy';
-  if (pathname.startsWith('/guides')) return 'guide';
+  if (pathname.startsWith('/blog')) return 'blog';
   if (pathname.startsWith('/holidays')) return 'holiday';
   if (pathname.startsWith('/date')) return 'date';
   if (pathname.startsWith('/mwaqit-al-salat')) return 'prayer';

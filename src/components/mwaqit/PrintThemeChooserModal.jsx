@@ -32,8 +32,9 @@ export default function PrintThemeChooserModal({
   isOpen,
   onClose,
   onSelect,
-  actionType = 'download',
+  actionType,
 }) {
+  const resolvedActionType = actionType ?? 'download';
   const [selected, setSelected] = useState(null);
   const dialogRef = useRef(null);
 
@@ -63,12 +64,13 @@ export default function PrintThemeChooserModal({
 
   const hasSelected = Boolean(selected);
 
-  /* Accent colours for confirm button */
+  void resolvedActionType;
+
   const confirmBg     = hasSelected
-    ? 'var(--accent-gradient, linear-gradient(135deg,#1D4ED8,#4338CA))'
+    ? 'var(--blue)'
     : 'var(--bg-surface-3)';
-  const confirmColor  = hasSelected ? '#fff' : 'var(--text-disabled)';
-  const confirmShadow = hasSelected ? 'var(--shadow-accent)' : 'none';
+  const confirmColor  = hasSelected ? 'var(--text-on-accent)' : 'var(--text-disabled)';
+  const confirmShadow = 'none';
 
   return (
     <div

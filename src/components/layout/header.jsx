@@ -12,8 +12,8 @@ import "./header.css";
 
 export const NAV_LINKS = [
   { href: "/", label: "الرئيسية" },
-  { href: "/fahras", label: "الفهرس" },
-  { href: "/guides", label: "الأدلة" },
+  { href: "/fahras", label: "استكشف" },
+  { href: "/blog", label: "المدونة" },
   { href: "/mwaqit-al-salat", label: "مواقيت الصلاة" },
   {
     href: "/date",
@@ -36,13 +36,13 @@ export const NAV_LINKS = [
     href: "/calculators",
     label: "الحاسبات",
     panelIcon: "Calculator",
-    panelDescription: "حاسبات عملية بتجربة عربية مرتبة: النوم الذكي، التخطيط المالي، العمر، القروض، الضريبة، البناء، والنسب المئوية",
+    panelDescription: "احسب النوم، التخطيط المالي، العمر، القروض، الضريبة، البناء، والنسب المئوية من صفحات عربية واضحة",
     sublinks: [
       {
         href: "/calculators/personal-finance",
         label: "التخطيط المالي الشخصي",
         icon: "Wallet",
-        description: "صندوق الطوارئ والديون والادخار وصافي الثروة في مسار واحد",
+        description: "احسب صندوق الطوارئ والديون والادخار وصافي الثروة",
       },
       {
         href: "/calculators/sleep",
@@ -94,58 +94,8 @@ export const NAV_LINKS = [
       },
     ],
   },
-  { href: "/time-now",        label: "الوقت الآن"   },
+  { href: "/time-now",        label: "الوقت الان"   },
   { href: "/holidays",        label: "المناسبات"   },
-  {
-    href: "/economie",
-    label: "الاقتصاد",
-    panelIcon: "ChartLineUp",
-    panelDescription: "أدوات مجانية مبنية على التوقيت المحلي: السوق الأمريكي، الذهب، جلسات الفوركس، والبورصات العالمية",
-    sublinks: [
-      {
-        href: '/economie/market-hours',
-        label: 'ساعات الأسواق والتداول',
-        icon: 'ClockCountdown',
-        description: 'بوابة تجمع السوق الأمريكي والذهب والفوركس والبورصات',
-      },
-      {
-        href: '/economie/us-market-open',
-        label: 'متى يفتح السوق الأمريكي؟',
-        icon: 'Bank',
-        description: 'الافتتاح الرسمي والعد التنازلي بتوقيتك',
-      },
-      {
-        href: '/economie/gold-market-hours',
-        label: 'هل الذهب مفتوح الآن؟',
-        icon: 'Sparkle',
-        description: 'أوقات الذهب وأفضل نافذة سيولة يومية',
-      },
-      {
-        href: '/economie/forex-sessions',
-        label: 'جلسات الفوركس الآن',
-        icon: 'ChartLineUp',
-        description: 'سيدني وطوكيو ولندن ونيويورك بتوقيتك المحلي',
-      },
-      {
-        href: '/economie/stock-markets',
-        label: 'البورصات العالمية الآن',
-        icon: 'Bank',
-        description: 'تتبّع NYSE وتداول ولندن وطوكيو وباريس بتوقيتك',
-      },
-      {
-        href: '/economie/market-clock',
-        label: 'ساعة التداول',
-        icon: 'ClockCountdown',
-        description: 'خريطة بصرية 24 ساعة لجلسات الفوركس والسيولة',
-      },
-      {
-        href: '/economie/best-trading-time',
-        label: 'أفضل وقت للتداول',
-        icon: 'Target',
-        description: 'أفضل نافذة يومية وأسبوعية من مدينتك',
-      },
-    ],
-  },
 ];
 
 export default function Header() {
@@ -162,15 +112,16 @@ export default function Header() {
             aria-label={`${SITE_BRAND} - الصفحة الرئيسية`}
             className="header-logo"
           >
-            {/* ClockIcon from /ssr for Server Component safety */}
-            <ClockIcon className="header-logo-icon" weight="duotone" />
+            <span className="header-logo-mark" aria-hidden="true">
+              <ClockIcon className="header-logo-icon" weight="duotone" />
+            </span>
           </Link>
 
           <nav className="header-center-nav" aria-label="التنقل الرئيسي">
             <NavLinks links={NAV_LINKS} />
           </nav>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <div className="header-actions">
             <GlobalDiscoverySearch />
             <ThemeToggle />
             <MobileMenu links={NAV_LINKS} />

@@ -2,12 +2,15 @@
   "slug": "mawlid",
   "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:37.011Z"
+  "notes": [
+    "أعيدت كتابة الصفحة كاملة حول 12 ربيع الأول مع فصل واضح بين التاريخ العام، والإجازة حسب البلد، وطريقة الإحياء المحلية.",
+    "تم حذف التعميمات الجامدة والأمثلة المؤرخة من المحتوى، واستبدالها بمراجع أدق وصياغة عربية أكثر اتزاناً."
+  ],
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

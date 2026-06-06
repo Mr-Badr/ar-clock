@@ -15,9 +15,8 @@
 .groupCard,
 .emptyState {
   border: 1px solid var(--border-default);
-  border-radius: 1.75rem;
-  background: linear-gradient(180deg, var(--bg-surface-2) 0%, var(--bg-surface-1) 100%);
-  box-shadow: var(--shadow-card);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-1);
 }
 
 .hero {
@@ -32,7 +31,7 @@
   gap: 0.45rem;
   width: fit-content;
   padding: 0.45rem 0.85rem;
-  border-radius: 999px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-accent);
   background: var(--accent-soft);
   color: var(--accent-alt);
@@ -107,19 +106,19 @@
   display: inline-flex;
   align-items: center;
   padding: 0.45rem 0.8rem;
-  border-radius: 999px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
   background: var(--bg-surface-1);
   color: var(--text-secondary);
   text-decoration: none;
   font-size: 0.82rem;
-  transition: transform 160ms ease, border-color 160ms ease, color 160ms ease;
+  transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease;
 }
 
 .chip:hover {
-  transform: translateY(-1px);
   color: var(--text-primary);
   border-color: var(--border-strong);
+  background: var(--bg-surface-2);
 }
 
 .submitButton,
@@ -128,7 +127,7 @@
   align-items: center;
   gap: 0.45rem;
   padding: 0.8rem 1rem;
-  border-radius: 999px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-accent);
   background: var(--accent);
   color: var(--text-on-accent);
@@ -200,13 +199,12 @@
   border: 1px solid var(--border-subtle);
   background: var(--bg-surface-1);
   text-decoration: none;
-  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  transition: border-color 160ms ease, background-color 160ms ease;
 }
 
 .resultLink:hover {
-  transform: translateY(-1px);
   border-color: var(--border-strong);
-  box-shadow: var(--shadow-sm);
+  background: var(--bg-surface-2);
 }
 
 .resultCopy {

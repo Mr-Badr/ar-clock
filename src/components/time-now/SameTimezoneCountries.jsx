@@ -4,73 +4,54 @@
  * Targets: "الدول في نفس التوقيت" keyword cluster + internal linking.
  */
 import Link from 'next/link';
+import styles from './TimeNowSupportSections.module.css';
 
 function flagEmoji(cc) {
-  if (!cc || cc.length !== 2) return '🌐';
+  if (!cc || cc.length !== 2) return '';
   return String.fromCodePoint(0x1F1E6 - 65 + cc.charCodeAt(0)) +
          String.fromCodePoint(0x1F1E6 - 65 + cc.charCodeAt(1));
 }
 
-export function SameTimezoneCountries({ countries = [], utcOffset, currentCityAr }) {
-  if (!countries.length) return null;
+function isValidCountry(country) {
+  return Boolean(
+    country
+      && typeof country === 'object'
+      && typeof country.country_slug === 'string'
+      && country.country_slug.trim().length > 0
+      && (country.country_name_ar || country.country_name_en),
+  );
+}
+
+export function SameTimezoneCountries({ countries, utcOffset, currentCityAr }) {
+  const safeCountries = Array.isArray(countries) ? countries.filter(isValidCountry) : [];
+
+  if (safeCountries.length === 0) {
+    return null;
+  }
+  const offsetLabel = utcOffset || 'الإزاحة الحالية';
 
   return (
-    <section aria-labelledby="same-tz-heading">
-      <style>{`
-        .same-offset-country-card {
-          transition: border-color 0.15s ease, background 0.15s ease;
-        }
-
-        .same-offset-country-card:hover {
-          border-color: var(--border-accent);
-          background: var(--accent-soft);
-        }
-      `}</style>
-
-      <h2 id="same-tz-heading"
-        style={{ margin:'0 0 1rem', fontSize:'var(--text-xl)', fontWeight:'800', color:'var(--text-primary)' }}
-      >
-        🌍 دول تشترك اليوم في نفس الإزاحة ({utcOffset})
+    <section aria-labelledby="same-tz-heading" className={styles.section}>
+      <h2 id="same-tz-heading" className={styles.heading}>
+        دول تشترك اليوم في نفس الإزاحة ({offsetLabel})
       </h2>
 
       {currentCityAr && (
-        <p style={{ margin:'0 0 1rem', fontSize:'var(--text-sm)', color:'var(--text-muted)', lineHeight:'1.7' }}>
-          الدول التالية تشترك اليوم مع {currentCityAr} في نفس الإزاحة عن التوقيت العالمي، أي {utcOffset}:
+        <p className={styles.intro}>
+          الدول التالية تشترك اليوم مع {currentCityAr} في نفس الإزاحة عن التوقيت العالمي. هذا يفيدك كبداية، لكن راجع حاسبة فرق التوقيت إذا كان الموعد بعد عدة أسابيع لأن بعض الدول تغيّر توقيتها موسمياً.
         </p>
       )}
 
-      <div style={{
-        display:             'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
-        gap:                 '0.5rem',
-      }}>
-        {countries.map(c => (
+      <div className={styles.countryGrid}>
+        {safeCountries.map(c => (
           <Link
             key={c.country_slug}
             href={`/time-now/${c.country_slug}`}
-            style={{ textDecoration:'none' }}
+            className={styles.countryCard}
             aria-label={`الوقت في ${c.country_name_ar || c.country_name_en}`}
           >
-            <div style={{
-              display:      'flex',
-              alignItems:   'center',
-              gap:          '0.6rem',
-              padding:      '0.65rem 0.9rem',
-              borderRadius: '0.75rem',
-              background:   'var(--bg-surface-2)',
-              border:       '1px solid var(--border-default)',
-              transition:   'border-color 0.15s, background 0.15s',
-              cursor:       'pointer',
-            }}
-              className="same-offset-country-card"
-            >
-              <span style={{ fontSize:'1.1rem', lineHeight:1, flexShrink:0 }} aria-hidden>
-                {flagEmoji(c.country_code)}
-              </span>
-              <span style={{ fontSize:'var(--text-sm)', fontWeight:'600', color:'var(--text-primary)', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>
-                {c.country_name_ar || c.country_name_en}
-              </span>
-            </div>
+            <span className={styles.flag} aria-hidden>{flagEmoji(c.country_code)}</span>
+            <span className={styles.countryLabel}>{c.country_name_ar || c.country_name_en}</span>
           </Link>
         ))}
       </div>
@@ -79,5 +60,3 @@ export function SameTimezoneCountries({ countries = [], utcOffset, currentCityAr
 }
 
 export default SameTimezoneCountries;
-
-

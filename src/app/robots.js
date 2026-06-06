@@ -5,7 +5,7 @@ import { getSiteUrl } from '@/lib/site-config';
  * Auto-served at /robots.txt
  *
  * SEO STRATEGY:
- *  - Allow all content pages (calculators, economy, prayer times, date, holidays)
+ *  - Allow all content pages (calculators, prayer times, date, holidays)
  *  - Block API routes (no SEO value, wastes crawl budget)
  *  - Block search result pages (duplicate content risk)
  *  - Block PWA/offline pages (no SEO value)
@@ -34,6 +34,26 @@ export default function robots() {
       {
         // Google specifically: ensure full access to all main content
         userAgent: 'Googlebot',
+        allow: '/',
+        disallow: [
+          '/api/',
+          '/search?*',
+          '/offline',
+        ],
+      },
+      {
+        // Google Ads crawler: ad destinations must be reachable for policy review.
+        userAgent: 'AdsBot-Google',
+        allow: '/',
+        disallow: [
+          '/api/',
+          '/search?*',
+          '/offline',
+        ],
+      },
+      {
+        // Google Ads mobile crawler: mirrors mobile landing page review.
+        userAgent: 'AdsBot-Google-Mobile',
         allow: '/',
         disallow: [
           '/api/',

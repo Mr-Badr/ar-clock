@@ -2,12 +2,17 @@
   "slug": "eid-al-adha",
   "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:36.992Z"
+  "notes": [
+    "fact-source: وكالة الأنباء السعودية: خبر يؤكد أن 10 ذو الحجة 1447 يوافق 27 مايو",
+    "fact-source: تقويم أم القرى",
+    "fact-source: الإسلام سؤال وجواب: ملخص أحكام الأضحية",
+    "fact-source: الإسلام سؤال وجواب: شروط الأضحية ووقت الذبح"
+  ],
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

@@ -1,7 +1,7 @@
 {
   "slug": "armed-forces-day-egypt",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.072Z",
+  "capturedAt": "2026-05-31T16:02:31.115Z",
   "primaryQueries": [
     "إجازة 6 أكتوبر 2026",
     "متى إجازة 6 أكتوبر 2026 في مصر",
@@ -137,6 +137,18 @@
     {
       "label": "Encyclopaedia Britannica: October War",
       "url": "https://www.britannica.com/event/October-War"
+    },
+    {
+      "label": "الهيئة العامة للاستعلامات المصرية: إجازة رسمية بمناسبة عيد القوات المسلحة",
+      "url": "https://sis.gov.eg/ar/%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%B2-%D8%A7%D9%84%D8%A5%D8%B9%D9%84%D8%A7%D9%85%D9%8A/%D8%A7%D9%84%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1/%D8%A7%D9%84%D8%A3%D8%AD%D8%AF-%D8%A7%D9%84%D9%85%D9%82%D8%A8%D9%84-%D8%A5%D8%AC%D8%A7%D8%B2%D8%A9-%D8%B1%D8%B3%D9%85%D9%8A%D8%A9-%D8%A8%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A9-%D8%B9%D9%8A%D8%AF-%D8%A7%D9%84%D9%82%D9%88%D8%A7%D8%AA-%D8%A7%D9%84%D9%85%D8%B3%D9%84%D8%AD%D8%A9-%D9%86%D8%B5%D8%B1-6-%D8%A3%D9%83%D8%AA%D9%88%D8%A8%D8%B1/"
+    },
+    {
+      "label": "وزارة الدفاع المصرية: احتفالات انتصارات أكتوبر",
+      "url": "https://www.mod.gov.eg/ModWebSite/NewsDetailsAr.aspx?id=45647"
+    },
+    {
+      "label": "الهيئة العامة للاستعلامات المصرية: الخميس 9 أكتوبر إجازة رسمية بمناسبة عيد القوات المسلحة",
+      "url": "https://mediadr.sis.gov.eg/handle/123456789/110585?locale-attribute=en"
     }
   ],
   "notes": "النتائج الحالية حول 6 أكتوبر في مصر تميل إلى الأخبار الإدارية القصيرة أو الصفحات التاريخية العامة. الصفحة الأقوى هي التي توحد نية الإجازة ونية التفسير في مرجع ثابت واحد."

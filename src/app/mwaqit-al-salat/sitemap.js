@@ -21,13 +21,22 @@ export default async function sitemap() {
     countryScope: policy.countryScope,
     cityScope: policy.cityScope,
   });
-  const urls = [];
+  const urls = [
+    {
+      url: `${base}/mwaqit-al-salat`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
+  ];
 
   for (const countrySlug of indexedCountrySlugs) {
     if (!countrySlug) continue;
     urls.push({
       url: `${base}/mwaqit-al-salat/${countrySlug}`,
       lastModified,
+      changeFrequency: 'daily',
+      priority: 0.8,
     });
   }
 
@@ -36,6 +45,8 @@ export default async function sitemap() {
     urls.push({
       url: `${base}/mwaqit-al-salat/${city.country}/${city.city}`,
       lastModified,
+      changeFrequency: 'daily',
+      priority: 0.7,
     });
   }
 

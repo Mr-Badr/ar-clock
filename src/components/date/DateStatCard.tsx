@@ -1,27 +1,23 @@
-// src/components/date/DateStatCard.tsx
-// Reusable premium stat card — uses new.css design tokens exclusively
-// .card class from new.css for elevation; Tailwind bridge for text/color utilities
+import type { ReactNode } from 'react';
+import styles from './DateStatCard.module.css';
 
 interface DateStatCardProps {
   label:   string;
   value:   string | number;
-  icon?:   string;
+  icon?:   ReactNode;
   accent?: boolean;
 }
 
 export function DateStatCard({ label, value, icon, accent }: DateStatCardProps) {
   return (
-    <div className={`card text-center transition-all hover:-translate-y-0.5 ${accent ? 'card--accent' : ''}`}>
+    <div className={`${styles.card} ${accent ? styles.accent : ''}`}>
       {icon && (
-        <div className="text-2xl mb-2 leading-none" aria-hidden="true">{icon}</div>
+        <div className={styles.icon} aria-hidden="true">{icon}</div>
       )}
-      <div
-        className="text-sm font-black leading-tight tabular-nums mb-1.5"
-        style={{ color: accent ? 'var(--accent-alt)' : 'var(--text-primary)' }}
-      >
+      <div className={`${styles.value} ${accent ? styles.accentValue : ''}`}>
         {value}
       </div>
-      <div className="text-xs text-muted font-semibold leading-tight">{label}</div>
+      <div className={styles.label}>{label}</div>
     </div>
   );
 }

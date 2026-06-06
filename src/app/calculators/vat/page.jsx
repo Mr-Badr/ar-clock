@@ -1,29 +1,17 @@
-import Link from 'next/link';
-
 import VatCalculator from '@/components/calculators/VatCalculator.client';
 import VatRatesTable from '@/components/calculators/VatRatesTable.client';
 import {
-  CalculatorChecklist,
   CalculatorFaqSection,
-  CalculatorFooterCta,
   CalculatorHero,
   CalculatorInfoGrid,
-  CalculatorIntentCloud,
-  CalculatorQuickAnswerGrid,
-  CalculatorResourceLinks,
   CalculatorSection,
-  CalculatorSectionNav,
-  CalculatorStoryBand,
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
 import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
-import { getGuidesBySlugs } from '@/lib/guides/data';
-import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
@@ -32,7 +20,6 @@ const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'vat');
 const CONTENT = getFinancePageContent('vat');
 const SEARCH_COVERAGE = buildFinancePageSearchCoverage(PAGE, CONTENT);
-const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.vat);
 
 export const metadata = buildCanonicalMetadata({
   title: PAGE.heroTitle,
@@ -42,6 +29,8 @@ export const metadata = buildCanonicalMetadata({
 });
 
 export default function VatPage() {
+  const faqItems = Array.isArray(CONTENT.faqItems) ? CONTENT.faqItems : [];
+  const howToSteps = Array.isArray(CONTENT.howTo?.steps) ? CONTENT.howTo.steps : [];
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -62,7 +51,7 @@ export default function VatPage() {
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: CONTENT.faqItems.map((item) => ({
+    mainEntity: faqItems.map((item) => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: { '@type': 'Answer', text: item.answer },
@@ -71,9 +60,9 @@ export default function VatPage() {
   const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: CONTENT.howTo.name,
-    description: CONTENT.howTo.description,
-    step: CONTENT.howTo.steps.map((item) => ({
+    name: CONTENT.howTo?.name || 'كيفية استخدام حاسبة ضريبة القيمة المضافة',
+    description: CONTENT.howTo?.description || PAGE.description,
+    step: howToSteps.map((item) => ({
       '@type': 'HowToStep',
       name: item.name,
       text: item.text,
@@ -81,7 +70,7 @@ export default function VatPage() {
   };
 
   return (
-    <main className="bg-base text-primary">
+    <main className="calc-product-page calc-vat-page bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
@@ -91,64 +80,24 @@ export default function VatPage() {
         badge={CONTENT.hero.badge}
         title={PAGE.heroTitle}
         description={CONTENT.hero.description}
-        accent={PAGE.accent}
         highlights={CONTENT.hero.highlights}
       >
         <VatCalculator />
       </CalculatorHero>
 
       <CalculatorSection
-        id="vat-overview"
-        eyebrow="خريطة الصفحة"
-        title="صفحة ضريبة متقدمة تخدم الفاتورة والتسعير والالتزام الشهري"
-        description="هذه الخريطة تساعدك على الوصول مباشرة إلى الحاسبة أو مقارنة الدول أو الإجابات السريعة أو قائمة التحقق قبل استخدام الرقم في التسعير أو المراجعة المحاسبية."
-      >
-        <CalculatorSectionNav items={CONTENT.sectionNavItems} />
-      </CalculatorSection>
-
-      <CalculatorSection
-        id="vat-intents"
-        eyebrow="تغطية بحثية"
-        title="الكلمات المفتاحية والنية العملية التي تغطيها الصفحة"
-        description="الصفحة لا تستهدف كلمة VAT calculator فقط، بل تغطي أيضاً أسئلة مثل: كم ضريبة 1000 ريال؟ كيف أستخرج الضريبة من فاتورة؟ وما الفرق بين شامل وغير شامل؟"
-        subtle
-      >
-        <div className="calc-grid-2">
-          <CalculatorIntentCloud items={SEARCH_COVERAGE.intentChips} />
-          <CalculatorStoryBand
-            title="لماذا تحتاج هذه الصفحة أكثر من آلة حاسبة عادية؟"
-            description="لأن المستخدم الضريبي ليس نوعاً واحداً: هناك من يسعّر منتجاً، ومن يراجع فاتورة، ومن يغلق فترة شهرية. لهذا صممت الصفحة لتخدم أكثر من مهمة حقيقية داخل نفس التجربة."
-            items={[
-              { label: 'تسعير', value: 'أضف الضريبة على سعر أساسي بسرعة واعرف الإجمالي النهائي.' },
-              { label: 'مراجعة فاتورة', value: 'استخرج الأساس والضريبة من مبلغ شامل دون خطأ شائع.' },
-              { label: 'إغلاق فترة', value: 'احسب صافي ضريبة الشهر بين المخرجات والمدخلات في نفس الصفحة.' },
-            ]}
-          />
-        </div>
-      </CalculatorSection>
-
-      <CalculatorSection
         id="vat-rates"
-        eyebrow="مقارنة سريعة"
-        title="مقارنة النسب العامة الشائعة بين الدول"
-        description="الجدول التالي مفيد عند تجهيز عرض سعر أو مقارنة أسواق متعددة. تذكر دائماً أن بعض القطاعات تخضع لنسب أو إعفاءات مختلفة."
+        eyebrow="النسب والدول"
+        title="اختر النسبة إذا كانت فاتورتك من دولة أخرى"
+        description="ابدأ بالنسبة العامة المعروفة، ثم تحقق من المرجع الرسمي عند الفاتورة الحساسة أو الحالات المعفاة أو المخفضة."
       >
         <VatRatesTable />
       </CalculatorSection>
 
       <CalculatorSection
-        id="vat-answers"
-        eyebrow="إجابات مباشرة"
-        title="إذا كتبت في Google: كم ضريبة 1000 ريال عند 15%؟"
-        description="إجابات مكتوبة بلغة واضحة على الأسئلة التي يدخل بها المستخدم مباشرة إلى محركات البحث."
-      >
-        <CalculatorQuickAnswerGrid items={CONTENT.quickAnswers} />
-      </CalculatorSection>
-
-      <CalculatorSection
         id="vat-learning"
         eyebrow="فهم الأساس"
-        title="كيف تقرأ الضريبة بشكل صحيح؟"
+        title="كيف تختار طريقة الحساب الصحيحة؟"
         description="هذه الصفحة تساعدك على التفريق بين ثلاثة أسئلة مختلفة: إضافة الضريبة على سعر، استخراجها من إجمالي، أو معرفة صافي المستحق في نهاية الفترة."
         subtle
       >
@@ -168,6 +117,11 @@ export default function VatPage() {
               title: 'ضريبة الشهر',
               description: 'للمنشآت الصغيرة والمتاجر',
               content: 'الفكرة الأساسية هي طرح ضريبة المدخلات من ضريبة المخرجات. الحاسبة هنا تختصر الخطوة الأولى قبل الانتقال إلى القيد المحاسبي والإقرار الرسمي.',
+            },
+            {
+              title: 'نسبة مخصصة لأي بلد عربي',
+              description: 'عندما لا تكفي القائمة السريعة',
+              content: 'إذا كنت تحسب لدولة غير ظاهرة في القائمة، أدخل النسبة الرسمية يدوياً واختر العملة. بهذه الطريقة تبقى الحاسبة مفيدة دون أن تعتمد على معدل قديم أو غير مناسب لحالتك.',
             },
           ]}
         />
@@ -198,7 +152,7 @@ export default function VatPage() {
         </div>
 
         <div className="calc-table-wrap">
-          <Table className="economy-table">
+          <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>الحالة</TableHead>
@@ -224,43 +178,19 @@ export default function VatPage() {
       </CalculatorSection>
 
       <CalculatorSection
-        id="vat-playbook"
-        eyebrow="دليل تحقق"
-        title="قبل أن تعتمد الرقم في التسعير أو المراجعة"
-        description="الحساب الصحيح يبدأ بالسؤال الصحيح: هل الرقم شامل أم غير شامل؟ وهل النسبة التي تستخدمها هي النسبة العامة فعلاً على حالتك؟"
-        subtle
-      >
-        <div className="calc-grid-2">
-          <CalculatorChecklist
-            title="قائمة التحقق الضريبية"
-            description="قائمة سريعة مفيدة قبل اعتماد أي نتيجة من الصفحة."
-            items={[
-              'حدد أولاً هل المبلغ الذي لديك شامل الضريبة أم قبل الضريبة.',
-              'تحقق من النسبة العامة المعمول بها في الدولة أو القطاع المستهدف.',
-              'لا تستخدم المعدل العام إذا كانت حالتك تتعلق بإعفاء أو نسبة مختلفة أو معالجة خاصة.',
-              'في صافي ضريبة الشهر، تأكد أن المدخلات قابلة للخصم فعلاً قبل طرحها من المخرجات.',
-              'اعتمد على الجهة الرسمية أو المستشار المحاسبي عند الإقرار أو التسجيل أو الحالات غير القياسية.',
-            ]}
-          />
-          <CalculatorChecklist
-            title="متى تكون هذه الصفحة كافية؟"
-            description="عند التسعير السريع والفهم الأولي والمراجعة الأولية."
-            content="إذا كنت تريد فهم الفاتورة أو حساب رقم سريع أو تجهيز عرض سعر، فالصفحة ممتازة. أما إذا كنت تتعامل مع تسجيل ضريبي أو إقرار رسمي أو استثناءات قطاعية، فانتقل بعد ذلك إلى المرجع الرسمي أو المختص."
-          />
-        </div>
-      </CalculatorSection>
-
-      <CalculatorSection
         id="vat-official-links"
         eyebrow="مصادر مرجعية"
         title="مراجع رسمية مفيدة"
         description="إذا كنت تحتاج رقمًا نهائياً للاعتماد الإداري أو المحاسبي، راجع الجهة المختصة في دولتك."
       >
-        <Card className="calc-surface-card">
-          <CardHeader>
-            <CardTitle className="calc-card-title">روابط مرجعية</CardTitle>
-          </CardHeader>
-          <CardContent className="calc-cta-actions">
+        <div className="calc-cta-card">
+          <div className="calc-cta-card__copy">
+            <h3 className="calc-card-title">مراجع رسمية للتحقق</h3>
+            <p className="calc-card-description">
+              استخدم هذه المراجع عندما تريد التحقق من التسجيل، الإقرار، أو الحالات التي لا يغطيها الحساب السريع.
+            </p>
+          </div>
+          <div className="calc-cta-actions">
             <Button asChild className="btn btn-primary--flat calc-button">
               <a href="https://zatca.gov.sa/" target="_blank" rel="noreferrer">هيئة الزكاة والضريبة والجمارك</a>
             </Button>
@@ -270,54 +200,26 @@ export default function VatPage() {
             <Button asChild variant="outline" className="btn btn-surface calc-button">
               <a href="https://www.nbr.gov.bh/" target="_blank" rel="noreferrer">الجهاز الوطني للإيرادات - البحرين</a>
             </Button>
-          </CardContent>
-        </Card>
-      </CalculatorSection>
-
-      <CalculatorSection
-        id="vat-guides"
-        eyebrow="أدلة مرتبطة"
-        title="افهم الفاتورة قبل أن تعتمد الرقم"
-        description="هذه الصفحات التعليمية تشرح الفرق بين السعر الشامل وغير الشامل، ومعنى ضريبة المدخلات والمخرجات، ثم تعيدك إلى الحاسبة لتطبيق الفكرة فوراً."
-        subtle
-      >
-        <CalculatorResourceLinks items={RELATED_GUIDES} />
+          </div>
+        </div>
       </CalculatorSection>
 
       <CalculatorSection
         id="vat-faq"
-        eyebrow="الأسئلة الشائعة"
-        title="أسئلة متكررة حول الضريبة والفواتير"
+        eyebrow="قبل اعتماد الفاتورة"
+        title="أسئلة قبل اعتماد الضريبة في التسعير أو المراجعة"
       >
-        <CalculatorFaqSection items={CONTENT.faqItems} />
+        <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>
 
       <CalculatorSection
         id="vat-related"
-        eyebrow="روابط داخلية"
+        eyebrow="بعد الضريبة"
         title="حاسبات مرتبطة بالتسعير والربحية"
+        description="استخدم هذه المسارات عندما يكون سؤالك التالي عن الخصم أو القسط أو النسبة نفسها. لا تفتحها كلها؛ اختر المسار الذي يكمل الفاتورة التي تعمل عليها الآن."
       >
         <RelatedCalculators currentSlug="vat" />
       </CalculatorSection>
-
-      <CalculatorSection
-        id="vat-next"
-        eyebrow="التالي"
-        title="أكمل حساباتك"
-      >
-        <Card className="calc-surface-card">
-          <CardContent className="calc-cta-actions pt-6">
-            <Button asChild className="btn btn-primary--flat calc-button">
-              <Link href="/calculators/percentage">احسب النسبة المئوية للضريبة أو الخصم</Link>
-            </Button>
-            <Button asChild variant="outline" className="btn btn-surface calc-button">
-              <Link href="/calculators/monthly-installment">انتقل إلى حاسبة القسط الشهري</Link>
-            </Button>
-          </CardContent>
-        </Card>
-      </CalculatorSection>
-
-      <CalculatorFooterCta />
     </main>
   );
 }

@@ -1,4 +1,5 @@
 import { GLOBAL_POPULAR_COUNTRIES, PRIORITY_COUNTRY_SLUGS } from '@/lib/db/constants';
+import { isRouteSlug } from '@/lib/route-param-validation';
 
 export const SEO_PRIORITY_COUNTRY_SLUGS = Array.from(
   new Set([...PRIORITY_COUNTRY_SLUGS, ...GLOBAL_POPULAR_COUNTRIES]),
@@ -68,6 +69,7 @@ export function selectSeoCountrySlugs(
   return slugs.filter((slug): slug is string => {
     const normalizedSlug = String(slug || '').trim().toLowerCase();
     if (!normalizedSlug || seen.has(normalizedSlug)) return false;
+    if (!isRouteSlug(normalizedSlug)) return false;
     if (!isSeoIndexableCountrySlug(normalizedSlug, { scope })) {
       return false;
     }
@@ -94,6 +96,7 @@ export function selectSeoCityParams<
       const key = `${country}::${city}`;
 
       if (!country || !city || seen.has(key)) return false;
+      if (!isRouteSlug(country) || !isRouteSlug(city)) return false;
       if (!isSeoIndexableCityParams(row, { countryScope, cityScope })) {
         return false;
       }

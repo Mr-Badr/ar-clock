@@ -66,9 +66,9 @@ export default function Timeline24h({ fromCity, toCity, diffData }) {
     <div
       role="region"
       aria-label="مخطط التوقيت على مدار 24 ساعة"
-      className="bg-[var(--bg-surface-1)] border border-[var(--border-default)] rounded-3xl p-6"
+      className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-surface-1)] p-6"
     >
-      <h4 className="font-bold text-lg mb-2">مخطط الوقت — 24 ساعة</h4>
+      <h4 className="font-bold text-lg mb-2">مخطط الوقت خلال 24 ساعة</h4>
       <p className="text-xs text-[var(--text-muted)] mb-6">
         يوضح الوقت الحالي في كلتا المدينتين وساعات العمل المشتركة
       </p>
@@ -85,10 +85,10 @@ export default function Timeline24h({ fromCity, toCity, diffData }) {
       {/* Timeline Bar 1 — From City */}
       <div className="mb-6">
         <p className="text-xs font-bold text-[var(--text-muted)] mb-1">{fromCity?.city_name_ar}</p>
-        <div className="relative h-8 rounded-full overflow-hidden bg-[var(--bg-surface-4)]">
+        <div className="relative h-8 overflow-hidden rounded-[var(--radius-md)] bg-[var(--bg-surface-4)]">
           {/* Day segment */}
           <div
-            className="absolute inset-y-0 bg-yellow-400/10"
+            className="absolute inset-y-0 bg-[var(--warning-soft)]"
             style={{ left: '25%', width: '58.33%' }}
             aria-hidden="true"
           />
@@ -115,14 +115,14 @@ export default function Timeline24h({ fromCity, toCity, diffData }) {
             style={{ left: pct(fromHour) }}
             aria-hidden="true"
           >
-            <div className="absolute -top-1 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-[var(--accent)] shadow-[0_0_6px_var(--accent)]" />
+            <div className="absolute -top-1 h-2.5 w-2.5 -translate-x-1/2 rounded-[var(--radius-sm)] bg-[var(--accent)]" />
           </div>
         </div>
         {/* Hour labels below bar */}
         <div className="flex justify-between mt-1">
           <span className="text-[10px] text-[var(--text-muted)]">منتصف الليل</span>
           <span className="text-[10px] text-[var(--accent)] font-bold">
-            الان: {(() => {
+            الآن: {(() => {
               const h = Math.floor(fromHour);
               const m = Math.round((fromHour % 1) * 60);
               const p = h >= 12 ? 'م' : 'ص';
@@ -137,9 +137,9 @@ export default function Timeline24h({ fromCity, toCity, diffData }) {
       {/* Timeline Bar 2 — To City */}
       <div className="mb-4">
         <p className="text-xs font-bold text-[var(--text-muted)] mb-1">{toCity?.city_name_ar}</p>
-        <div className="relative h-8 rounded-full overflow-hidden bg-[var(--bg-surface-4)]">
+        <div className="relative h-8 overflow-hidden rounded-[var(--radius-md)] bg-[var(--bg-surface-4)]">
           {/* Day segment for to city - shift by diffHours */}
-          <div className="absolute inset-y-0 bg-yellow-400/10"
+          <div className="absolute inset-y-0 bg-[var(--warning-soft)]"
             style={{ left: pct(6 + data.diffHours), width: '58.33%' }}
             aria-hidden="true"
           />
@@ -163,13 +163,13 @@ export default function Timeline24h({ fromCity, toCity, diffData }) {
             className="absolute top-0 bottom-0 w-0.5 bg-[var(--accent-alt)] z-10"
             style={{ left: pct(toHour) }}
           >
-            <div className="absolute -top-1 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-[var(--accent-alt)] shadow-[0_0_6px_var(--accent-alt)]" />
+            <div className="absolute -top-1 h-2.5 w-2.5 -translate-x-1/2 rounded-[var(--radius-sm)] bg-[var(--accent-alt)]" />
           </div>
         </div>
         <div className="flex justify-between mt-1">
           <span className="text-[10px] text-[var(--text-muted)]">منتصف الليل</span>
           <span className="text-[10px] text-[var(--accent-alt)] font-bold">
-            الان: {(() => {
+            الآن: {(() => {
               const h = Math.floor(toHour);
               const m = Math.round((toHour % 1) * 60);
               const p = h >= 12 ? 'م' : 'ص';
@@ -189,19 +189,19 @@ export default function Timeline24h({ fromCity, toCity, diffData }) {
         </div>
         <div className="flex items-center gap-1.5">
           <span className="w-3 h-2 rounded-sm bg-[var(--accent-soft)] border border-[var(--border-accent)]" />
-          <span className="text-[var(--text-muted)]">ساعات العمل (9–17)</span>
+          <span className="text-[var(--text-muted)]">ساعات العمل من 9 إلى 17</span>
         </div>
         <div className="flex items-center gap-1.5">
           <span className="w-3 h-2 rounded-sm bg-[var(--success-soft)] border border-[var(--success-border)]" />
           <span className="text-[var(--text-muted)]">التقاطع</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-[var(--accent)]" />
-          <span className="text-[var(--text-muted)]">{fromCity?.city_name_ar} — الان</span>
+          <span className="h-2 w-2 rounded-[var(--radius-sm)] bg-[var(--accent)]" />
+          <span className="text-[var(--text-muted)]">{fromCity?.city_name_ar}: الآن</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-[var(--accent-alt)]" />
-          <span className="text-[var(--text-muted)]">{toCity?.city_name_ar} — الان</span>
+          <span className="h-2 w-2 rounded-[var(--radius-sm)] bg-[var(--accent-alt)]" />
+          <span className="text-[var(--text-muted)]">{toCity?.city_name_ar}: الآن</span>
         </div>
       </div>
     </div>

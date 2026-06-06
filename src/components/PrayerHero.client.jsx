@@ -331,7 +331,6 @@ function PrayerHeroClient({
             strokeDashoffset={displayOffset}
             style={{
               transition: mounted ? 'stroke-dashoffset 1s linear' : 'none',
-              filter:     'drop-shadow(0 0 8px var(--accent-glow))',
               willChange: 'stroke-dashoffset',
             }}
           />

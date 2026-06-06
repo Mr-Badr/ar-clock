@@ -5,15 +5,19 @@ import { HoverCard as HoverCardPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
+type HoverCardRootProps = React.ComponentProps<typeof HoverCardPrimitive.Root>
+type HoverCardTriggerProps = React.ComponentProps<typeof HoverCardPrimitive.Trigger>
+type HoverCardContentProps = React.ComponentProps<typeof HoverCardPrimitive.Content>
+
 function HoverCard({
   ...props
-}: React.ComponentProps<typeof HoverCardPrimitive.Root>) {
+}: HoverCardRootProps): React.JSX.Element {
   return <HoverCardPrimitive.Root data-slot="hover-card" {...props} />
 }
 
 function HoverCardTrigger({
   ...props
-}: React.ComponentProps<typeof HoverCardPrimitive.Trigger>) {
+}: HoverCardTriggerProps): React.JSX.Element {
   return (
     <HoverCardPrimitive.Trigger data-slot="hover-card-trigger" {...props} />
   )
@@ -21,18 +25,21 @@ function HoverCardTrigger({
 
 function HoverCardContent({
   className,
-  align = "center",
-  sideOffset = 4,
+  align,
+  sideOffset,
   ...props
-}: React.ComponentProps<typeof HoverCardPrimitive.Content>) {
+}: HoverCardContentProps): React.JSX.Element {
+  const resolvedAlign = align ?? "center"
+  const resolvedSideOffset = sideOffset ?? 4
+
   return (
     <HoverCardPrimitive.Portal data-slot="hover-card-portal">
       <HoverCardPrimitive.Content
         data-slot="hover-card-content"
-        align={align}
-        sideOffset={sideOffset}
+        align={resolvedAlign}
+        sideOffset={resolvedSideOffset}
         className={cn(
-          "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-64 origin-(--radix-hover-card-content-transform-origin) rounded-md border p-4 shadow-md outline-hidden",
+          "z-50 w-64 origin-(--radix-hover-card-content-transform-origin) rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--elevated)] p-[var(--space-4)] text-[var(--text-1)] shadow-none outline-none transition-[opacity] duration-100 data-[state=closed]:opacity-0 data-[state=open]:opacity-100 focus-visible:shadow-[var(--shadow-focus)]",
           className
         )}
         {...props}

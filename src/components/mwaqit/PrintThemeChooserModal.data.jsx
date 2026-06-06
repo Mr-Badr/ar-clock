@@ -48,57 +48,57 @@ export const ROWS = Array.from({ length: 30 }, (_, i) => {
 // ─── Palettes — exact match to route.js v9 ───────────────────────────────────
 
 export const L = {
-  page:                    '#FFFFFF',
-  titleText:               '#0E1220',
-  titleAccent:             '#1D4ED8',
-  subtitleText:            '#3D4668',
-  badgeBg:                 'rgba(29,78,216,0.07)',
-  badgeBorder:             'rgba(29,78,216,0.20)',
-  badgeText:               '#1D4ED8',
-  logoBg:                  'rgba(29,78,216,0.06)',
-  logoBorder:              'rgba(29,78,216,0.20)',
-  logoText:                '#1D4ED8',
-  logoPlaceholder:         'rgba(29,78,216,0.07)',
-  logoPlaceholderBorder:   'rgba(29,78,216,0.22)',
-  theadBg:                 '#1E3A8A',
-  theadText:               '#FFFFFF',
-  rowBg:                   '#FFFFFF',
-  rowFridayBg:             'rgba(4,102,69,0.06)',
-  rowBorder:               '#E8EEF8',
-  cellText:                '#0E1220',
-  cellSub:                 '#3D4668',
-  timeText:                '#1D4ED8',
-  fridayText:              '#046645',
-  fridayTime:              '#046645',
-  footerText:              '#7A88A8',
-  footerUrl:               '#1D4ED8',
+  page:                    'var(--surface)',
+  titleText:               'var(--text-primary)',
+  titleAccent:             'var(--blue-text)',
+  subtitleText:            'var(--text-secondary)',
+  badgeBg:                 'color-mix(in srgb, var(--border-default) 35%, transparent)',
+  badgeBorder:             'color-mix(in srgb, var(--border-default) 35%, transparent)',
+  badgeText:               'var(--blue-text)',
+  logoBg:                  'color-mix(in srgb, var(--border-default) 35%, transparent)',
+  logoBorder:              'color-mix(in srgb, var(--border-default) 35%, transparent)',
+  logoText:                'var(--blue-text)',
+  logoPlaceholder:         'color-mix(in srgb, var(--border-default) 35%, transparent)',
+  logoPlaceholderBorder:   'color-mix(in srgb, var(--border-default) 35%, transparent)',
+  theadBg:                 'var(--blue)',
+  theadText:               'var(--text-on-accent)',
+  rowBg:                   'var(--surface)',
+  rowFridayBg:             'color-mix(in srgb, var(--border-default) 35%, transparent)',
+  rowBorder:               'var(--border-default)',
+  cellText:                'var(--text-primary)',
+  cellSub:                 'var(--text-secondary)',
+  timeText:                'var(--blue-text)',
+  fridayText:              'var(--success-text)',
+  fridayTime:              'var(--success-text)',
+  footerText:              'var(--text-muted)',
+  footerUrl:               'var(--blue-text)',
 };
 
 export const D = {
-  page:                    '#0D1117',
-  titleText:               '#F0F4FF',
-  titleAccent:             '#8CAEFF',
-  subtitleText:            '#A8B2CB',
-  badgeBg:                 'rgba(140,174,255,0.12)',
-  badgeBorder:             'rgba(140,174,255,0.25)',
-  badgeText:               '#8CAEFF',
-  logoBg:                  'rgba(140,174,255,0.10)',
-  logoBorder:              'rgba(140,174,255,0.25)',
-  logoText:                '#8CAEFF',
-  logoPlaceholder:         'rgba(140,174,255,0.10)',
-  logoPlaceholderBorder:   'rgba(140,174,255,0.25)',
-  theadBg:                 '#060B14',
-  theadText:               '#E2E8F7',
-  rowBg:                   '#161D2E',
-  rowFridayBg:             'rgba(6,214,160,0.10)',
-  rowBorder:               '#222C45',
-  cellText:                '#F0F4FF',
-  cellSub:                 '#A8B2CB',
-  timeText:                '#8CAEFF',
-  fridayText:              '#06D6A0',
-  fridayTime:              '#06D6A0',
-  footerText:              '#6B7FA0',
-  footerUrl:               '#8CAEFF',
+  page:                    'var(--surface)',
+  titleText:               'var(--text-primary)',
+  titleAccent:             'var(--blue-text)',
+  subtitleText:            'var(--text-secondary)',
+  badgeBg:                 'color-mix(in srgb, var(--border-default) 35%, transparent)',
+  badgeBorder:             'color-mix(in srgb, var(--border-default) 35%, transparent)',
+  badgeText:               'var(--blue-text)',
+  logoBg:                  'color-mix(in srgb, var(--border-default) 35%, transparent)',
+  logoBorder:              'color-mix(in srgb, var(--border-default) 35%, transparent)',
+  logoText:                'var(--blue-text)',
+  logoPlaceholder:         'color-mix(in srgb, var(--border-default) 35%, transparent)',
+  logoPlaceholderBorder:   'color-mix(in srgb, var(--border-default) 35%, transparent)',
+  theadBg:                 'var(--blue)',
+  theadText:               'var(--text-on-accent)',
+  rowBg:                   'var(--bg-surface-1)',
+  rowFridayBg:             'color-mix(in srgb, var(--border-default) 35%, transparent)',
+  rowBorder:               'var(--border-default)',
+  cellText:                'var(--text-primary)',
+  cellSub:                 'var(--text-secondary)',
+  timeText:                'var(--blue-text)',
+  fridayText:              'var(--success-text)',
+  fridayTime:              'var(--success-text)',
+  footerText:              'var(--text-muted)',
+  footerUrl:               'var(--blue-text)',
 };
 
 // ─── A4 Preview ───────────────────────────────────────────────────────────────
@@ -139,7 +139,7 @@ export function A4Preview({ isDark }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 }}>
           <div style={{ fontSize: '8px', fontWeight: 800, color: C.titleText, whiteSpace: 'nowrap', lineHeight: 1.2 }}>
             تقويم مواقيت الصلاة
-            <span style={{ color: C.titleAccent }}> — الرباط</span>
+            <span style={{ color: C.titleAccent }}> : الرباط</span>
           </div>
           <div style={{ fontSize: '4.5px', color: C.subtitleText, whiteSpace: 'nowrap' }}>
             جدول أوقات الصلاة الشهري · الفجر · الشروق · الظهر · العصر · المغرب · العشاء
@@ -149,13 +149,13 @@ export function A4Preview({ isDark }) {
               fontSize: '4px', fontWeight: 700, color: C.badgeText,
               background: C.badgeBg, border: `0.5px solid ${C.badgeBorder}`,
               borderRadius: '999px', padding: '1px 4px',
-            }}>📅 مارس 2026</span>
+            }}>مارس 2026</span>
             <span style={{
               fontSize: '4px', fontWeight: 700, color: C.subtitleText,
-              background: isDark ? 'rgba(255,255,255,0.04)' : '#F0F4FA',
-              border: `0.5px solid ${isDark ? 'rgba(255,255,255,0.08)' : '#C8D4E8'}`,
-              borderRadius: '999px', padding: '1px 4px',
-            }}>🌙 رمضان 1447</span>
+              background: 'var(--bg-surface-2)',
+              border: '0.5px solid var(--border-default)',
+              borderRadius: 'var(--radius-xs)', padding: '1px 4px',
+            }}>رمضان 1447</span>
           </div>
         </div>
 
@@ -189,8 +189,8 @@ export function A4Preview({ isDark }) {
             <div key={i} style={{
               padding: '2.5px 2px',
               fontSize: '4px', fontWeight: 700, color: C.theadText,
-              textAlign: i === 0 ? 'right' : 'center',
-              paddingRight: i === 0 ? '5px' : '2px',
+              textAlign: i === 0 ? 'start' : 'center',
+              paddingInlineEnd: i === 0 ? '5px' : '2px',
               overflow: 'hidden', whiteSpace: 'nowrap',
             }}>{h}</div>
           ))}
@@ -209,7 +209,7 @@ export function A4Preview({ isDark }) {
                 display: 'grid', gridTemplateColumns: cols,
                 alignItems: 'center', overflow: 'hidden',
               }}>
-                <div style={{ fontSize: '5px', fontWeight: 600, color: dayCol, textAlign: 'right', paddingRight: '5px', overflow: 'hidden', whiteSpace: 'nowrap' }}>{row.day}</div>
+                <div style={{ fontSize: '5px', fontWeight: 600, color: dayCol, textAlign: 'start', paddingInlineEnd: '5px', overflow: 'hidden', whiteSpace: 'nowrap' }}>{row.day}</div>
                 <div style={{ fontSize: '4.5px', fontWeight: 600, color: dayCol, textAlign: 'center' }}>{row.h}</div>
                 <div style={{ fontSize: '4.5px', color: C.cellSub, textAlign: 'center', fontWeight: 600 }}>{row.greg}</div>
                 {row.times.map((t, j) => (
@@ -231,7 +231,7 @@ export function A4Preview({ isDark }) {
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
       }}>
         <span style={{ fontSize: '3.5px', color: C.footerText }}>
-          جدول مواقيت الصلاة الشهري لـ الرباط — حسابات فلكية دقيقة
+          جدول مواقيت الصلاة الشهري للرباط: حسابات فلكية دقيقة
         </span>
         <span style={{ fontSize: '4px', color: C.footerUrl, fontWeight: 700 }}>
           MiqaTona.com
@@ -245,10 +245,10 @@ export function A4Preview({ isDark }) {
 // Receives `selected`, `onSelect`, and `isDark` from the client wrapper.
 
 export function ThemeCard({ isDark, selected, onSelect }) {
-  const accent  = isDark ? '#8CAEFF' : '#1D4ED8';
-  const cardBg  = isDark ? 'rgba(13,17,23,0.6)'  : 'rgba(255,255,255,0.7)';
-  const selBg   = isDark ? 'rgba(8,16,34,0.9)'   : 'rgba(238,244,255,0.95)';
-  const unselBd = isDark ? '#1A2540' : '#D0DCF0';
+  const accent  = 'var(--blue-text)';
+  const cardBg  = 'var(--bg-surface-1)';
+  const selBg   = 'var(--blue-subtle)';
+  const unselBd = 'var(--border-default)';
   const label   = isDark ? 'الوضع الليلي' : 'الوضع النهاري';
   const desc    = isDark ? 'خلفية داكنة · موفّر للحبر' : 'خلفية بيضاء · وضوح مثالي';
   const Icon    = isDark ? Moon : Sun;
@@ -262,29 +262,25 @@ export function ThemeCard({ isDark, selected, onSelect }) {
       style={{
         background:  selected ? selBg : cardBg,
         border:      `2px solid ${selected ? accent : unselBd}`,
-        boxShadow:   selected
-          ? `0 0 0 1px ${accent}30, 0 8px 32px ${accent}18`
-          : 'var(--shadow-sm)',
+        boxShadow:   'none',
       }}
     >
       {/* Selection circle */}
       <div
         className={styles.selIndicator}
         style={{
-          background: selected ? accent : (isDark ? '#1A2540' : '#E0E8F4'),
-          border:     selected ? 'none' : `1.5px solid ${isDark ? '#252F50' : '#C8D4E8'}`,
+          background: selected ? 'var(--blue)' : 'var(--bg-surface-2)',
+          border:     selected ? 'none' : '1.5px solid var(--border-default)',
         }}
       >
-        {selected && <Check size={10} color="#fff" weight="bold" />}
+        {selected && <Check size={10} color="var(--text-on-accent)" weight="bold" />}
       </div>
 
       {/* Preview */}
       <div
         className={styles.previewWrap}
         style={{
-          boxShadow: selected
-            ? `0 4px 20px ${accent}30, 0 1px 4px ${accent}15, 0 0 0 1px ${accent}25`
-            : 'var(--shadow-md), 0 0 0 1px rgba(0,0,0,0.06)',
+          boxShadow: 'none',
         }}
       >
         <A4Preview isDark={isDark} />
@@ -294,19 +290,19 @@ export function ThemeCard({ isDark, selected, onSelect }) {
       <div className={styles.cardLabel}>
         <Icon
           size={14}
-          color={selected ? accent : (isDark ? '#6B7FA0' : '#8898C8')}
+          color={selected ? accent : 'var(--text-muted)'}
           style={{ flexShrink: 0, transition: 'color 0.18s' }}
         />
         <div>
           <div
             className={styles.labelName}
-            style={{ color: selected ? accent : (isDark ? '#D0D8F0' : '#2A3560') }}
+            style={{ color: selected ? accent : 'var(--text-primary)' }}
           >
             {label}
           </div>
           <div
             className={styles.labelDesc}
-            style={{ color: isDark ? '#4A5A78' : '#9AAAC8' }}
+            style={{ color: 'var(--text-muted)' }}
           >
             {desc}
           </div>

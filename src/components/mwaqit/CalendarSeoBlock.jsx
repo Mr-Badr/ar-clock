@@ -76,13 +76,12 @@ export default function CalendarSeoBlock({
     : cityNameAr;
 
   return (
-    /*
-      .card-nested: bg-surface-3, border-subtle, radius-lg, shadow-xs, padding-4/5
-      cursor:default suppresses the :hover border-color transition — static block.
-    */
     <div
-      className="card-nested mb-4"
-      style={{ cursor: 'default' }}
+      className="mb-4"
+      style={{
+        cursor: 'default',
+        padding: 'var(--space-4) 0',
+      }}
       aria-label={`تقويم مواقيت الصلاة الشهري في ${locationStr}`}
     >
 
@@ -109,7 +108,7 @@ export default function CalendarSeoBlock({
               fontWeight: 'var(--font-regular)',
             }}
           >
-            {' '}— {gregorianLabel}
+            : {gregorianLabel}
           </span>
         )}
       </h2>
@@ -175,12 +174,13 @@ export default function CalendarSeoBlock({
         <strong style={{ color: 'var(--text-primary)' }}>
           تحميل تقويم الصلاة
         </strong>{' '}
-        بصيغة PDF أو طباعته مباشرةً للاستخدام اليومي والمسجد.
+        بصيغة PDF للاستخدام اليومي أو مشاركته مع الأسرة والعمل والمسجد.
         جميع{' '}
         <strong style={{ color: 'var(--text-primary)' }}>
           مواعيد الأذان
         </strong>{' '}
-        محسوبة فلكياً بدقة عالية وفق الطريقة المعتمدة رسمياً في{' '}
+        محسوبة من الإحداثيات والمنطقة الزمنية وطريقة الحساب المعروضة، مع ضرورة مراجعة
+        جدول المسجد أو الجهة المحلية إذا أعلنت وقتاً مختلفاً في{' '}
         {countryNameAr || cityNameAr}.
       </p>
 

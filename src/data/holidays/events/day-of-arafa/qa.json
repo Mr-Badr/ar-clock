@@ -2,12 +2,17 @@
   "slug": "day-of-arafa",
   "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:36.990Z"
+  "notes": [
+    "fact-source: وكالة الأنباء السعودية: المحكمة العليا تعلن غرة ذي الحجة 1447 ويوم عرفة الثلاثاء 26 مايو 2026",
+    "fact-source: صحيح مسلم 1162d: استحباب صيام يوم عرفة",
+    "fact-source: الإسلام سؤال وجواب: حكم صيام يوم عرفة",
+    "fact-source: الإسلام سؤال وجواب: الدعاء يوم عرفة لغير الحاج"
+  ],
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

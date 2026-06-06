@@ -1,136 +1,311 @@
 {
   "slug": "school-start-egypt",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.157Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
     "متى بدء الدراسة في مصر {{year}}",
-    "كم باقي على بدء الدراسة في مصر {{year}}",
     "موعد بدء الدراسة في مصر {{year}}",
-    "بدء الدراسة في مصر {{year}}",
-    "بدء الدراسة في مصر العد التنازلي",
-    "بدء الدراسة في مصر متى",
+    "كم باقي على بدء الدراسة في مصر {{year}}",
     "تاريخ بدء الدراسة في مصر {{year}}",
-    "متى بدء الدراسة في مصر {{nextYear}}",
-    "كم باقي على بدء الدراسة في مصر",
-    "بدء الدراسة في مصر {{nextYear}}",
-    "كيف أستعد لـبدء الدراسة في مصر",
-    "ما هو بدء الدراسة في مصر"
+    "متى تبدأ المدارس في مصر {{year}}",
+    "الخريطة الزمنية للعام الدراسي {{year}} {{nextYear}} مصر",
+    "موعد الدراسة في المدارس الحكومية {{year}} مصر",
+    "موعد الدراسة في المدارس الخاصة {{year}} مصر",
+    "موعد الدراسة في المدارس الدولية {{year}} مصر",
+    "إجازة نصف العام {{nextYear}} المدارس مصر"
   ],
   "competitors": [
     {
       "site": "moe.gov.eg",
+      "language": "ar",
       "type": "official",
-      "url": "https://moe.gov.eg",
-      "focus": [
-        "التقويم الدراسي",
-        "تاريخ بدء الدراسة",
-        "الإعلانات الرسمية"
+      "url": "https://moe.gov.eg/ar/what-s-on/news/for-pre-2/",
+      "title": "وزير التربية والتعليم يترأس اجتماع المجلس الأعلى للتعليم قبل الجامعى",
+      "metaDescription": "بيان الوزارة حول الخطة الزمنية والتطوير التعليمي للعام الدراسي 2026-2027.",
+      "h1": "وزير التربية والتعليم يترأس اجتماع المجلس الأعلى للتعليم قبل الجامعى",
+      "headings": [
+        "مؤشرات التعليم",
+        "التطوير",
+        "رفع الحضور",
+        "التحول الرقمي"
       ],
-      "gaps": [
-        "لا يقدّم عداداً تنازلياً مباشراً",
-        "لا يجمع نية البحث العربية الخدمية في صفحة واحدة"
+      "bodySummary": "الصفحة رسمية لكنها لا تخاطب نية الباحث بصيغة سؤال مباشر، كما أن النص المفتوح في الأرشفة يركز أكثر على الإصلاحات والمؤشرات من صياغة الخدمة الزمنية السريعة التي يحتاجها ولي الأمر.",
+      "faqCount": 0,
+      "tableCount": 0,
+      "estimatedWordCount": 220,
+      "schemaHints": [
+        "Article"
+      ],
+      "sourceLinks": [
+        "https://moe.gov.eg/ar/what-s-on/news/for-pre-2/"
+      ],
+      "confidence": "medium",
+      "strengths": [
+        "المرجع الأقوى رسمياً",
+        "يثبت اعتماد الخريطة الزمنية",
+        "يمنح سياق الإصلاح وزيادة أيام الدراسة"
+      ],
+      "weaknesses": [
+        "ضعيف في نية البحث الخدمية",
+        "لا يعرض التفاصيل الزمنية في بنية سهلة داخل الصفحة المفتوحة",
+        "لا يقدم توضيحاً عملياً للفروق بين أنواع المدارس"
       ]
     },
     {
-      "site": "البوابات الإخبارية التعليمية المصرية",
+      "site": "youm7.com",
+      "language": "ar",
       "type": "news",
-      "focus": [
-        "موعد بدء الدراسة",
-        "تفاصيل التقويم الدراسي",
-        "تصريحات الوزارة"
+      "url": "https://www.youm7.com/story/2026/3/31/%D9%88%D8%B2%D9%8A%D8%B1-%D8%A7%D9%84%D8%AA%D8%B9%D9%84%D9%8A%D9%85-%D9%8A%D8%B9%D9%84%D9%86-%D9%85%D9%88%D8%A7%D8%B9%D9%8A%D8%AF-%D8%A7%D9%84%D8%B9%D8%A7%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF-%D9%88%D8%AE%D8%B7%D8%A9-%D8%AA%D8%B7%D9%88%D9%8A%D8%B1-%D8%B4%D8%A7%D9%85%D9%84%D8%A9/7360341",
+      "title": "وزير التعليم يعلن مواعيد العام الدراسي الجديد وخطة تطوير شاملة",
+      "metaDescription": "خبر سريع يذكر بداية الدراسة 12 سبتمبر 2026 ونهاية العام 24 يونيو 2027 والمدارس الدولية 6 سبتمبر.",
+      "h1": "وزير التعليم يعلن مواعيد العام الدراسي الجديد وخطة تطوير شاملة",
+      "headings": [
+        "موعد البداية",
+        "نهاية العام",
+        "المدارس الدولية",
+        "الثانوية العامة"
       ],
-      "gaps": [
-        "غالباً تكرر الخبر من دون بنية خدمية ثابتة",
-        "ضعف في العد التنازلي والتحديث المستمر"
+      "bodySummary": "الصفحة ممتازة في الجواب السريع: 12 سبتمبر 2026 لبداية المدارس، و6 سبتمبر للمدارس الدولية. لكنها تبقى خبراً قصيراً لا يشرح للقارئ كيف يستخدم هذا الفرق عملياً.",
+      "faqCount": 0,
+      "tableCount": 0,
+      "estimatedWordCount": 180,
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sourceLinks": [
+        "https://www.youm7.com/story/2026/3/31/%D9%88%D8%B2%D9%8A%D8%B1-%D8%A7%D9%84%D8%AA%D8%B9%D9%84%D9%8A%D9%85-%D9%8A%D8%B9%D9%84%D9%86-%D9%85%D9%88%D8%A7%D8%B9%D9%8A%D8%AF-%D8%A7%D9%84%D8%B9%D8%A7%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF-%D9%88%D8%AE%D8%B7%D8%A9-%D8%AA%D8%B7%D9%88%D9%8A%D8%B1-%D8%B4%D8%A7%D9%85%D9%84%D8%A9/7360341"
+      ],
+      "confidence": "high",
+      "strengths": [
+        "جواب سريع جداً",
+        "يذكر الفرق بين المدارس الدولية وبقية المدارس",
+        "واضح ومناسب لنية البحث"
+      ],
+      "weaknesses": [
+        "سطحي بعد السطر الأول",
+        "لا يقدم FAQ أو خطوات عملية",
+        "لا يجمع الخريطة الزمنية كاملة"
       ]
     },
     {
-      "site": "صفحات العد التنازلي العربية",
-      "type": "countdown",
-      "focus": [
-        "كم باقي",
-        "متى يبدأ العام الدراسي",
-        "تاريخ مختصر"
+      "site": "almasryalyoum.com",
+      "language": "ar",
+      "type": "news-explainer",
+      "url": "https://www.almasryalyoum.com/news/details/4234272",
+      "title": "التفاصيل الكاملة.. مواعيد الدراسة والامتحانات وإجازة نصف العام بالتفصيل بالعام الدراسي الجديد 2026–2027",
+      "metaDescription": "شرح موسع لخريطة 2026-2027 مع بداية الدراسة وإجازة نصف العام والامتحانات.",
+      "h1": "التفاصيل الكاملة..مواعيد الدراسة والامتحانات وإجازة نصف العام بالتفصيل بالعام الدراسي الجديد 2026–2027",
+      "headings": [
+        "موعد بدء الدراسة",
+        "عدد أيام الدراسة",
+        "إجازة نصف العام",
+        "موعد الترم الثاني",
+        "الامتحانات"
       ],
-      "gaps": [
-        "ضعف في التوثيق الرسمي",
-        "لا تشرح ما الذي يجب أن تتابعه الأسرة عملياً"
+      "bodySummary": "هذه الصفحة أوسع من الخبر السريع وتغطي معظم ما تحتاجه الأسرة بعد سؤال البداية: 183 يوم دراسة، إجازة نصف العام، بداية الترم الثاني، ومواعيد الامتحانات. لكنها تبقى تقريراً خبرياً لا صفحة خدمية تتحدث إلى القارئ مباشرة.",
+      "faqCount": 0,
+      "tableCount": 0,
+      "estimatedWordCount": 650,
+      "schemaHints": [
+        "Article"
+      ],
+      "sourceLinks": [
+        "https://www.almasryalyoum.com/news/details/4234272"
+      ],
+      "confidence": "high",
+      "strengths": [
+        "أشمل تغطية عملية",
+        "يحل أسئلة ما بعد البداية",
+        "جيد لفهم الخريطة الزمنية"
+      ],
+      "weaknesses": [
+        "ما يزال أسلوبه خبرياً",
+        "لا يقدم قراراً سريعاً حسب نوع المدرسة",
+        "يفتقد بوصلة مباشرة للأسرة"
+      ]
+    },
+    {
+      "site": "moe.gov.eg",
+      "language": "en",
+      "type": "official-comparison",
+      "url": "https://moe.gov.eg/en/what-s-on/news/for-pre-1/",
+      "title": "Minister of Education Chairs Meeting of the Supreme Council for Pre-University Education",
+      "metaDescription": "Official English summary of the 2025/2026 school year calendar and key timelines.",
+      "h1": "Minister of Education Chairs Meeting of the Supreme Council for Pre-University Education",
+      "headings": [
+        "Academic year timeline",
+        "Mid-year break",
+        "Exam dates",
+        "School categories"
+      ],
+      "bodySummary": "This English official page is for 2025/2026, not 2026/2027, so it was used as a structural comparison and official-language counterpart rather than as the main factual basis for the new school year.",
+      "faqCount": 0,
+      "tableCount": 0,
+      "estimatedWordCount": 360,
+      "schemaHints": [
+        "Article"
+      ],
+      "sourceLinks": [
+        "https://moe.gov.eg/en/what-s-on/news/for-pre-1/"
+      ],
+      "confidence": "high",
+      "replacementReason": "Direct English official coverage for 2026/2027 was weak in open extraction, so this official English 2025/2026 page was kept for structural comparison.",
+      "strengths": [
+        "Official English framing",
+        "Explains category coverage",
+        "Clear academic-year structure"
+      ],
+      "weaknesses": [
+        "Wrong school year for main fact extraction",
+        "No direct 2026/2027 answer",
+        "Not user-facing enough"
+      ]
+    },
+    {
+      "site": "english.ahram.org.eg",
+      "language": "en",
+      "type": "english-context",
+      "url": "https://english.ahram.org.eg/NewsContent/1/2/538612/Egypt/Society/Egypt-to-extend-school-year-to--days-Education-min.aspx",
+      "title": "Egypt to extend school year to 180 days, factor religion subject into overall grade: Education minister",
+      "metaDescription": "English report on extending Egypt's school year and education policy direction.",
+      "h1": "Egypt to extend school year to 180 days, factor religion subject into overall grade: Education minister",
+      "headings": [
+        "School-year length",
+        "Policy changes",
+        "Education reform"
+      ],
+      "bodySummary": "This article is older and not the direct 2026/2027 answer, but it helped identify why wordings around school-day count and reform angle are common in English comparison pages.",
+      "faqCount": 0,
+      "tableCount": 0,
+      "estimatedWordCount": 420,
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sourceLinks": [
+        "https://english.ahram.org.eg/NewsContent/1/2/538612/Egypt/Society/Egypt-to-extend-school-year-to--days-Education-min.aspx"
+      ],
+      "confidence": "medium",
+      "replacementReason": "Direct English pages on the exact 2026/2027 school-start query were sparse, so a strong English education-policy comparison page was used instead.",
+      "strengths": [
+        "Clean English explainer style",
+        "Explains why day count matters",
+        "Provides reform framing"
+      ],
+      "weaknesses": [
+        "Not the same school year",
+        "Indirect for the main search intent",
+        "Less useful for exact date seekers"
+      ]
+    },
+    {
+      "site": "dailynewsegypt.com",
+      "language": "en",
+      "type": "english-context",
+      "url": "https://www.dailynewsegypt.com/2026/05/18/egypt-overhauls-education-system-for-25-million-students-shifting-focus-to-skills-and-new-baccalaureate/",
+      "title": "Egypt overhauls education system for 25 million students, shifting focus to skills and new Baccalaureate",
+      "metaDescription": "English coverage of Egypt's broader pre-university reform drive in 2026.",
+      "h1": "Egypt overhauls education system for 25 million students, shifting focus to skills and new Baccalaureate",
+      "headings": [
+        "Education reform",
+        "Attendance",
+        "School-system changes"
+      ],
+      "bodySummary": "This comparison page helped identify a gap in Arabic competitors: many mention the date but do not explain what changed around attendance, day count, and school-structure expectations for families.",
+      "faqCount": 0,
+      "tableCount": 0,
+      "estimatedWordCount": 780,
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sourceLinks": [
+        "https://www.dailynewsegypt.com/2026/05/18/egypt-overhauls-education-system-for-25-million-students-shifting-focus-to-skills-and-new-baccalaureate/"
+      ],
+      "confidence": "medium",
+      "replacementReason": "Used as English comparison because same-intent English pages were weak, repetitive, or hidden behind low-value snippets.",
+      "strengths": [
+        "Adds broader family context",
+        "Connects schedule with policy changes",
+        "Longer readable English content"
+      ],
+      "weaknesses": [
+        "Not a direct date-answer page",
+        "Too broad for the exact query",
+        "Needs filtering before use"
       ]
     }
   ],
   "coverageMatrix": [
     {
       "keyword": "متى بدء الدراسة في مصر {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
-    },
-    {
-      "keyword": "كم باقي على بدء الدراسة في مصر {{year}}",
-      "whyItMatters": "نية عد تنازلي مباشرة تناسب الباحث الذي يريد معرفة المدة المتبقية بسرعة."
+      "whyItMatters": "النية الأساسية هي معرفة اليوم الرسمي مباشرة."
     },
     {
       "keyword": "موعد بدء الدراسة في مصر {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "whyItMatters": "يعبّر عن نفس النية لكن بصياغة أكثر تقريرية."
     },
     {
-      "keyword": "بدء الدراسة في مصر {{year}}",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "keyword": "كم باقي على بدء الدراسة في مصر {{year}}",
+      "whyItMatters": "يضيف حاجة التخطيط الزمني إلى جانب التاريخ."
     },
     {
-      "keyword": "بدء الدراسة في مصر العد التنازلي",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "keyword": "موعد الدراسة في المدارس الدولية {{year}} مصر",
+      "whyItMatters": "يكشف فجوة مهمة يغفلها كثير من المنافسين."
     },
     {
-      "keyword": "بدء الدراسة في مصر متى",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "keyword": "الخريطة الزمنية للعام الدراسي {{year}} {{nextYear}} مصر",
+      "whyItMatters": "القارئ لا يريد يوم البداية فقط، بل الرزنامة العملية حوله."
     },
     {
-      "keyword": "تاريخ بدء الدراسة في مصر {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "keyword": "إجازة نصف العام {{nextYear}} المدارس مصر",
+      "whyItMatters": "يرتبط مباشرة بتخطيط الأسرة بعد معرفة يوم البداية."
     },
     {
-      "keyword": "متى بدء الدراسة في مصر {{nextYear}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "keyword": "موعد الدراسة في المدارس الحكومية {{year}} مصر",
+      "whyItMatters": "يفصل بين نوع المدرسة ونية الباحث العملية."
+    },
+    {
+      "keyword": "موعد الدراسة في المدارس الخاصة {{year}} مصر",
+      "whyItMatters": "يعالج سؤالاً متكرراً عند أولياء الأمور."
     }
   ],
   "keywordGaps": [
-    "جواب عربي مباشر يوضح معنى بدء الدراسة في مصر وموعده في صفحة واحدة.",
-    "شرح سبب أهمية بدء الدراسة في مصر ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
-    "تغطية الأسئلة العملية التي يطرحها القارئ قبل بدء الدراسة في مصر أو أثناءه.",
-    "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط.",
-    "دمج العد التنازلي مع الشرح والسياق بدل صفحة موعد قصيرة وضعيفة.",
-    "ربط الموعد بالقيمة العملية للقارئ: إجازة، استعداد، تهنئة، أو تنظيم مسبق.",
-    "شرح الفروقات المحلية أو الرسمية عند الحاجة بدلاً من الاكتفاء بموعد عام مبهم.",
-    "لغة عربية طبيعية لا تبدو كأنها قائمة كلمات أو نص مولد آلياً."
+    "توضيح الفرق بين المدارس الدولية وبقية المدارس مبكراً جداً.",
+    "ربط تاريخ البداية بالخريطة الزمنية الكاملة لا بخبر قصير فقط.",
+    "نقل القارئ من سؤال التاريخ إلى سؤال الاستعداد العملي.",
+    "شرح أن نوع المدرسة يغير الجواب الذي تعتمد عليه الأسرة.",
+    "استخدام لغة مخاطِبة مباشرة بدلاً من الأسلوب الخبري الجامد.",
+    "إبراز عدد أيام الدراسة وإجازة نصف العام وبداية الترم الثاني كعناصر مساعدة للقرار.",
+    "تجنب حشو سنوات وأرقام من دون فائدة للقارئ.",
+    "تحويل الصفحة من عدّاد إلى مرجع تخطيطي للأسرة والطالب."
   ],
   "unansweredQuestions": [
-    "متى بدء الدراسة في مصر {{year}}؟",
-    "كم باقي على بدء الدراسة في مصر؟",
-    "ما هو بدء الدراسة في مصر؟",
-    "كيف أستعد لـبدء الدراسة في مصر؟",
-    "متى بدء الدراسة في مصر {{nextYear}}؟",
-    "ما أهمية بدء الدراسة في مصر؟",
+    "متى بدء الدراسة في مصر {{year}} للمدارس الحكومية والخاصة؟",
+    "متى تبدأ المدارس الدولية في مصر {{year}}؟",
     "كم باقي على بدء الدراسة في مصر {{year}}؟",
-    "تاريخ بدء الدراسة في مصر {{year}}؟"
+    "ما عدد أيام الدراسة في العام {{year}}-{{nextYear}}؟",
+    "متى إجازة نصف العام؟",
+    "متى يبدأ الترم الثاني؟",
+    "ما الذي أجهزه قبل اليوم الأول؟"
   ],
   "differentiationIdeas": [
-    "جواب مباشر عن موعد بدء الدراسة في مصر في بداية الصفحة قبل أي شرح إضافي.",
-    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر.",
-    "أسئلة شائعة عملية تساعد القارئ على فهم بدء الدراسة في مصر والتصرف بناءً عليه.",
-    "ربط الصفحة بطريقة البحث الشائعة عن بدء الدراسة في مصر دون فقدان الوضوح العام."
+    "إعطاء الجواب السريع ثم توضيح الفرق حسب نوع المدرسة.",
+    "إضافة ملخص خريطة زمنية قصير للأسرة بدل ترك التفاصيل موزعة في الأخبار.",
+    "ربط العد التنازلي بخطوات استعدادية فعلية.",
+    "شرح لماذا لا يكفي سؤال يوم البداية وحده."
   ],
   "factSources": [
     {
-      "label": "وزارة التربية والتعليم والتعليم الفني - مصر",
-      "url": "https://moe.gov.eg"
+      "label": "وزارة التربية والتعليم والتعليم الفني",
+      "url": "https://moe.gov.eg/ar/what-s-on/news/for-pre-2/"
     },
     {
-      "label": "بوابة مركز المعلومات - وزارة التربية والتعليم مصر",
-      "url": "https://emis.gov.eg"
+      "label": "اليوم السابع",
+      "url": "https://www.youm7.com/story/2026/3/31/%D9%88%D8%B2%D9%8A%D8%B1-%D8%A7%D9%84%D8%AA%D8%B9%D9%84%D9%8A%D9%85-%D9%8A%D8%B9%D9%84%D9%86-%D9%85%D9%88%D8%A7%D8%B9%D9%8A%D8%AF-%D8%A7%D9%84%D8%B9%D8%A7%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF-%D9%88%D8%AE%D8%B7%D8%A9-%D8%AA%D8%B7%D9%88%D9%8A%D8%B1-%D8%B4%D8%A7%D9%85%D9%84%D8%A9/7360341"
     },
     {
-      "label": "بوابة الحكومة المصرية",
-      "url": "https://www.egypt.gov.eg"
+      "label": "المصري اليوم",
+      "url": "https://www.almasryalyoum.com/news/details/4234272"
     }
   ],
-  "notes": "تم تعزيز خريطة البحث العربية لـ بدء الدراسة في مصر اعتماداً على الكلمات المفتاحية الحالية، والأسئلة الشائعة، والمصادر الموجودة داخل الحزمة نفسها."
+  "notes": "النتيجة الأوضح من البحث أن هذه الصفحة يجب أن تُبنى حول موعدين لا موعد واحد: 12 سبتمبر للمدارس الحكومية والخاصة والرسمية للغات، و6 سبتمبر للمدارس الدولية، مع إبراز الخريطة الزمنية العملية للأسر."
 }

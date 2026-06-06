@@ -13,16 +13,34 @@
  * • Country flag top-right, category pill top-left — natural RTL scan path.
  * • A 28 × 2px accent bar under the number replaces any progress bar.
  *   It's purely decorative, NOT a progress indicator.
- * • Hover: translateY(-5px) + shadow only. No border/bg color change ever.
+ * • Hover states stay flat: border and background states only.
  * • Numbers: plain English integers (direction:ltr on the span).
  * • Dates: Arabic month names preserved, only digits are Western.
  */
 import Link from 'next/link';
+import {
+  AlertTriangle,
+  BookOpen,
+  Briefcase,
+  CalendarDays,
+  CircleDollarSign,
+  Flag,
+  Globe2,
+  GraduationCap,
+  Moon,
+  Users,
+} from 'lucide-react';
 
 /* ── Static maps ──────────────────────────────────────────────────────────── */
 const CAT_ICON = {
-  islamic: '🌙', national: '🏳', school: '📚',
-  holidays: '🏖', astronomy: '🌍', social: '🎗', business: '💼', support: '💰',
+  islamic: Moon,
+  national: Flag,
+  school: GraduationCap,
+  holidays: BookOpen,
+  astronomy: Globe2,
+  social: Users,
+  business: Briefcase,
+  support: CircleDollarSign,
 };
 const CAT_LABEL = {
   islamic: 'إسلامي', national: 'وطني', school: 'مدرسي',
@@ -43,8 +61,9 @@ function urgency(days) {
 /* ─────────────────────────────────────────────────────────────────────────── */
 export default function EventCard({ event, priority = false, index = 0 }) {
   const cat = event.category || 'islamic';
-  const categoryIcon = CAT_ICON[cat] || '🗓';
+  const CategoryIcon = CAT_ICON[cat] || CalendarDays;
   const categoryLabel = CAT_LABEL[cat] || 'مناسبة';
+  const routeSlug = event.__canonicalSlug || event.slug;
 
   return (
     /* Stagger wrapper — layout dimensions controlled by .waqt-grid > div CSS */
@@ -58,9 +77,9 @@ export default function EventCard({ event, priority = false, index = 0 }) {
       }}
     >
       <Link
-        href={`/holidays/${event.slug}`}
+        href={`/holidays/${routeSlug}`}
         prefetch={priority}
-        aria-label={`${event.name} — متبقي ${event._daysLeft} يوم`}
+        aria-label={`${event.name}: متبقي ${event._daysLeft} يوم`}
       >
         {/* data-urgency drives number + accent-bar color entirely from CSS */}
         <article className="waqt-ev" data-urgency={urgency(event._daysLeft)}>
@@ -68,7 +87,9 @@ export default function EventCard({ event, priority = false, index = 0 }) {
           {/* ── 1. Card header: category pill + country flag ──────── */}
           <div className="waqt-ev__header">
             <span className="waqt-ev__cat">
-              <span aria-hidden>{categoryIcon}</span>
+              <span aria-hidden className="inline-flex">
+                <CategoryIcon size={14} strokeWidth={1.75} />
+              </span>
               <span className="waqt-ev__cat-label">{categoryLabel}</span>
             </span>
             {event._countryCode && (
@@ -118,7 +139,9 @@ export default function EventCard({ event, priority = false, index = 0 }) {
                 {event._calMethod && (
                   <span className="waqt-ev__method">
                     {event._localSighting && (
-                      <span className="waqt-ev__sighting" title="±1 يوم برؤية الهلال">⚠</span>
+                      <span className="waqt-ev__sighting inline-flex" title="±1 يوم برؤية الهلال" aria-hidden="true">
+                        <AlertTriangle size={12} strokeWidth={1.75} />
+                      </span>
                     )}
                     {event._calMethod}
                   </span>

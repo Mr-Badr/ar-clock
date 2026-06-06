@@ -9,7 +9,6 @@ import {
   BriefcaseBusiness,
   CalendarDays,
   Calculator,
-  ChartNoAxesCombined,
   Clock3,
   Compass,
   FileText,
@@ -21,7 +20,6 @@ import {
   ShieldCheck,
   Sparkles,
   Star,
-  TrendingUp,
 } from 'lucide-react';
 
 import {
@@ -35,7 +33,6 @@ import {
   CommandShortcut,
 } from '@/components/ui/command';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import {
@@ -54,8 +51,7 @@ const SECTION_ICONS = {
   time: Clock3,
   'calculators-hubs': LayoutList,
   'calculators-tools': Calculator,
-  economy: ChartNoAxesCombined,
-  guides: BookOpenText,
+  blog: BookOpenText,
   holidays: PartyPopper,
   company: ShieldCheck,
 };
@@ -69,8 +65,7 @@ const TYPE_ICONS = {
 
 const VISIT_ICONS = {
   calculator: Calculator,
-  economy: ChartNoAxesCombined,
-  guide: BookOpenText,
+  blog: BookOpenText,
   holiday: PartyPopper,
   date: CalendarDays,
   prayer: Landmark,
@@ -83,37 +78,73 @@ const FILTER_TABS = [
   {
     id: 'all',
     label: 'الكل',
-    description: 'عرض خريطة الموقع كاملة بكل المسارات والأدوات والمقالات.',
-    shortDescription: 'كل المسارات',
+    description: 'كل الصفحات والأدوات والمقالات في مكان واحد عندما تريد رؤية المسارات المتاحة قبل تضييق الاختيار.',
+    shortDescription: 'كل شيء معاً',
     Icon: LayoutGrid,
   },
   {
     id: 'tools',
     label: 'أدوات',
-    description: 'الحاسبات والأدوات العملية ذات النية البحثية المباشرة.',
-    shortDescription: 'الأدوات العملية',
+    description: 'حاسبات وأدوات سريعة عندما تريد رقماً أو موعداً أو نتيجة مباشرة قبل قراءة الشرح الطويل.',
+    shortDescription: 'أدوات سريعة',
     Icon: Calculator,
   },
   {
     id: 'articles',
     label: 'مقالات',
-    description: 'الأدلة والمقالات الشارحة التي تدعم القرار قبل استخدام الأداة.',
-    shortDescription: 'الأدلة والمقالات',
+    description: 'مقالات وأدلة تشرح الفكرة بهدوء مع أمثلة وحدود واضحة قبل أن تعتمد على النتيجة.',
+    shortDescription: 'قراءة مفيدة',
     Icon: BookOpenText,
   },
   {
     id: 'sections',
     label: 'أقسام',
-    description: 'الصفحات العليا التي تشرح بنية الموقع وتربط بين المسارات.',
-    shortDescription: 'الصفحات العليا',
+    description: 'صفحات البداية التي تجمع أهم المسارات حسب الموضوع لتصل أسرع.',
+    shortDescription: 'صفحات البداية',
     Icon: LayoutList,
   },
   {
     id: 'featured',
     label: 'الأكثر',
-    description: 'الصفحات الأعلى قيمة في الاكتشاف الداخلي والبحث اليومي.',
-    shortDescription: 'المسارات الأهم',
+    description: 'الصفحات الأكثر نفعاً كبداية عندما لا تعرف أي قسم يطابق سؤالك.',
+    shortDescription: 'الأكثر استخداماً',
     Icon: Star,
+  },
+];
+
+const JOURNEY_STEPS = [
+  {
+    title: 'جواب سريع',
+    description: 'ابدأ بالأدوات عندما تريد رقماً أو موعداً فورياً: فرق توقيت، تحويل تاريخ، موعد صلاة، أو نتيجة حاسبة يمكن قراءتها مباشرة.',
+    Icon: Calculator,
+  },
+  {
+    title: 'فهم قبل القرار',
+    description: 'انتقل إلى المقالات عندما تحتاج خلفية عملية، أمثلة، وحدوداً واضحة قبل الاعتماد على النتيجة في تمويل، سفر، نوم، أو تخطيط يومك.',
+    Icon: BookOpenText,
+  },
+  {
+    title: 'توسيع المسار',
+    description: 'اختر الأقسام عندما تريد رؤية الصورة الكاملة: صفحات البداية تجمع الأدوات والمقالات والمسارات القريبة حتى لا تبدأ من الصفر.',
+    Icon: Compass,
+  },
+];
+
+const DECISION_RULES = [
+  {
+    title: 'اكتب السؤال لا اسم القسم',
+    description: 'قل “كم الساعة في القاهرة؟” أو “حاسبة القسط” بدلاً من محاولة تذكر مكان الصفحة. البحث الداخلي يفهم الكلمات العربية الشائعة ويقربك من النتيجة.',
+    Icon: Search,
+  },
+  {
+    title: 'افتح صفحة واحدة ثم أكمل منها',
+    description: 'لا تحتاج فتح كل البطاقات. ابدأ بأقرب نتيجة، ثم اتبع الروابط الداخلية داخل الصفحة نفسها إذا احتجت محولاً، مقالاً، أو أداة مكملة.',
+    Icon: ArrowLeft,
+  },
+  {
+    title: 'تحقق عند القرارات الحساسة',
+    description: 'الفهرس يوصلك ويشرح لك، لكنه لا يحل محل جهة رسمية لصلاة محلية، تاريخ عطلة، أو قرار قانوني ومالي مهم.',
+    Icon: ShieldCheck,
   },
 ];
 
@@ -140,7 +171,7 @@ function getMetricCount(allItems, featuredItems, tab) {
 }
 
 function getCountLabel(sectionId) {
-  if (sectionId === 'guides') return 'مقال';
+  if (sectionId === 'blog') return 'مقال';
   if (sectionId === 'calculators-hubs') return 'مسار';
   if (sectionId === 'company') return 'صفحة';
   return 'رابط';
@@ -171,43 +202,64 @@ function groupPaletteResults(items = []) {
   ].filter((group) => group.items.length);
 }
 
+function dedupeItemsByHref(items) {
+  const seen = new Set();
+
+  return items.filter((item) => {
+    const href = String(item?.href || '').trim();
+    if (!href || seen.has(href)) return false;
+    seen.add(href);
+    return true;
+  });
+}
+
+function buildVisibleArticleItems(filteredSections, searchResults, hasQuery) {
+  if (hasQuery) {
+    return dedupeItemsByHref(searchResults.filter((item) => item.kind === 'article')).slice(0, 12);
+  }
+
+  return dedupeItemsByHref(
+    filteredSections.flatMap((section) => section.filteredItems.filter((item) => item.kind === 'article')),
+  ).slice(0, 12);
+}
+
 function renderHeroCopy(mode, hasQuery, query) {
   if (mode === 'search' && hasQuery) {
     return {
       eyebrow: 'البحث الذكي داخل ميقاتنا',
-      title: `نتائج أقرب إلى ${query}`,
-      lead: 'هذه الواجهة تجمع بين البحث السريع وخريطة الموقع نفسها، حتى ترى الصفحة الأقرب لسؤالك ثم المسارات المرتبطة بها داخل المنتج.',
+      title: `نتائج قريبة من ${query}`,
+      lead: 'هذه النتائج مرتبة لتبدأ من الصفحة الأقرب إلى نيتك، لا من أول رابط متاح. عدّل العبارة أو غيّر النوع إذا أردت أداة فقط، مقالاً فقط، أو صفحة بداية تجمع المسارات.',
     };
   }
 
   if (mode === 'search') {
     return {
       eyebrow: 'البحث الذكي داخل ميقاتنا',
-      title: 'ابحث عن أي صفحة أو أداة أو دليل من مكان واحد',
-      lead: 'اكتب كما يتحدث الناس فعلاً: كم عمري، هل الذهب مفتوح الآن، أو كيف أحول التاريخ. سنعطيك الصفحة الأقرب ثم الروابط المكملة حولها.',
+      title: 'ابحث بصيغة سؤالك الطبيعي',
+      lead: 'اكتب كما يتحدث الناس فعلاً: كم عمري، كيف أحول التاريخ، كم قسط القرض، أو متى صلاة المغرب. البحث يعرض أدوات ومقالات وأقساماً مترابطة حتى تصل إلى الفعل التالي بسرعة.',
     };
   }
 
   if (hasQuery) {
     return {
-      eyebrow: 'فهرس ميقاتنا + نتائج مترابطة',
-      title: `فهرس الموقع مع نتائج مرتبطة بـ ${query}`,
-      lead: 'النتائج هنا تُبنى على نفس فهرس الصفحات والأدوات، لذلك يبقى المستخدم داخل خريطة واضحة بدل أن ينتهي في صفحة منفصلة ومعزولة.',
+      eyebrow: 'نتائج مرتبة حول سؤالك',
+      title: `صفحات مفيدة مرتبطة بـ ${query}`,
+      lead: 'ابدأ من النتيجة الأقرب ثم أكمل بسهولة إلى الأدوات والمقالات والصفحات التي تساعدك على فهم الموضوع أو إنجازه بسرعة.',
     };
   }
 
   return {
-    eyebrow: 'فهرس ميقاتنا',
-    title: 'لوحة واحدة توضّح بنية الموقع بالكامل خلال ثوانٍ',
-    lead: 'الفهرس هنا ليس قائمة HTML طويلة، بل دليل بصري يربط بين الوقت، الصلاة، التاريخ، الحاسبات، الاقتصاد، المناسبات، والأدلة في تجربة أوضح وأسهل للمستخدم ولمحركات البحث.',
+    eyebrow: 'استكشف ميقاتنا',
+    title: 'فهرس ميقاتنا للوصول إلى الأداة أو المقال من أول مرة',
+    lead: 'ابدأ من نيتك الآن: نتيجة سريعة، شرح قبل القرار، أو قسم يجمع المسارات القريبة. الفهرس يربط الوقت والصلاة والتاريخ والحاسبات والمناسبات والمدونة دون أن يحوّلها إلى قائمة مربكة.',
   };
 }
 
 function buildBreadcrumbItems(activeSectionTitle, hasQuery, basePath) {
   return [
     { label: 'الرئيسية', href: '/' },
-    { label: basePath === '/search' ? 'البحث الذكي' : 'الفهرس', href: basePath },
-    { label: hasQuery ? 'نتائج البحث' : activeSectionTitle || 'خريطة الموقع' },
+    { label: basePath === '/search' ? 'البحث الذكي' : 'استكشف', href: basePath },
+    { label: hasQuery ? 'نتائج البحث' : activeSectionTitle || 'استكشف' },
   ];
 }
 
@@ -226,6 +278,14 @@ function buildFilteredSections(sectionMap, activeTab, featuredItems) {
       };
     })
     .filter((section) => section.filteredItems.length);
+}
+
+function getSearchSuggestionQueries(viewModel) {
+  const relatedQueries = Array.isArray(viewModel.relatedQueries) ? viewModel.relatedQueries : [];
+  const topSearches = Array.isArray(viewModel.topSearches) ? viewModel.topSearches : [];
+  const source = relatedQueries.length ? relatedQueries : topSearches;
+
+  return source.slice(0, 4);
 }
 
 // getDefaultOpenSections removed — accordion starts closed on mount to prevent
@@ -310,25 +370,59 @@ function CompactItemRow({ item, accentId, onVisit }) {
   );
 }
 
+function ArticleResultCard({ item, accentId, onVisit }) {
+  const Icon = getItemIcon(item);
+
+  return (
+    <Link
+      href={item.href}
+      className={styles.articleResultCard}
+      data-tone={accentId}
+      onClick={() => onVisit?.(item)}
+    >
+      <div className={styles.articleResultTop}>
+        <span className={styles.articleResultIcon}>
+          <Icon size={18} />
+        </span>
+        <span className={styles.articleResultBadge}>{getItemMetaLabel(item)}</span>
+      </div>
+
+      <div className={styles.articleResultCopy}>
+        <strong>{item.title}</strong>
+        <p>{item.description}</p>
+      </div>
+
+      <span className={styles.articleResultFooter}>
+        افتح المقال
+        <ArrowLeft size={15} />
+      </span>
+    </Link>
+  );
+}
+
 export default function DiscoveryWorkspaceClient({
-  mode = 'map',
+  mode,
   viewModel,
   routePath,
-  initialTab = 'all',
+  initialTab,
 }) {
   const router = useRouter();
+  const resolvedMode = mode || 'map';
+  const resolvedInitialTab = initialTab || 'all';
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [paletteQuery, setPaletteQuery] = useState(viewModel.query || '');
-  const [activeTab, setActiveTab] = useState(normalizeTab(initialTab));
+  const [activeTab, setActiveTab] = useState(normalizeTab(resolvedInitialTab));
   const [openSections, setOpenSections] = useState([]);
   const [activeSectionId, setActiveSectionId] = useState(viewModel.sectionMap[0]?.id || '');
   const [recentSearches, setRecentSearches] = useState([]);
   const [recentVisits, setRecentVisits] = useState([]);
 
-  const discoveryPath = routePath || (mode === 'search' ? '/search' : '/fahras');
+  const discoveryPath = routePath || (resolvedMode === 'search' ? '/search' : '/fahras');
   const deferredPaletteQuery = useDeferredValue(paletteQuery);
-  const heroCopy = renderHeroCopy(mode, viewModel.hasQuery, viewModel.query);
+  const heroCopy = renderHeroCopy(resolvedMode, viewModel.hasQuery, viewModel.query);
   const calculatorItemsCount = viewModel.allItems.filter((item) => item.href.startsWith('/calculators/')).length;
+  const articleItemsCount = viewModel.allItems.filter((item) => item.kind === 'article').length;
+  const heroIntentLinks = (viewModel.hasQuery ? viewModel.relatedQueries : viewModel.topSearches).slice(0, 4);
   const featuredHrefSet = useMemo(
     () => new Set(viewModel.featuredItems.map((item) => item.href)),
     [viewModel.featuredItems],
@@ -350,14 +444,21 @@ export default function DiscoveryWorkspaceClient({
   const paletteGroups = useMemo(() => groupPaletteResults(paletteModel.results), [paletteModel.results]);
   const activeTabConfig = useMemo(() => getActiveTabConfig(activeTab), [activeTab]);
   const activeSectionTitle = filteredSections.find((section) => section.id === activeSectionId)?.title;
+  const articleFocusItems = useMemo(
+    () => buildVisibleArticleItems(filteredSections, searchResults, viewModel.hasQuery),
+    [filteredSections, searchResults, viewModel.hasQuery],
+  );
+  const emptySearchSuggestions = useMemo(
+    () => getSearchSuggestionQueries(viewModel),
+    [viewModel],
+  );
   const breadcrumbItems = useMemo(
     () => buildBreadcrumbItems(activeSectionTitle, viewModel.hasQuery, discoveryPath),
     [activeSectionTitle, discoveryPath, viewModel.hasQuery],
   );
-
   useEffect(() => {
-    setActiveTab(normalizeTab(initialTab));
-  }, [initialTab]);
+    setActiveTab(normalizeTab(resolvedInitialTab));
+  }, [resolvedInitialTab]);
 
   useEffect(() => {
     setRecentSearches(readDiscoveryHistory(DISCOVERY_RECENT_SEARCHES_KEY));
@@ -508,7 +609,6 @@ export default function DiscoveryWorkspaceClient({
     sections: getMetricCount(viewModel.allItems, viewModel.featuredItems, 'sections'),
     featured: viewModel.featuredItems.length,
   };
-
   return (
     <TooltipProvider delayDuration={160}>
       <main className={styles.page}>
@@ -528,7 +628,7 @@ export default function DiscoveryWorkspaceClient({
                 <Sparkles size={15} />
                 {heroCopy.eyebrow}
               </span>
-              <h1 className={styles.title}>{heroCopy.title}</h1>
+              <p className={styles.title}>{heroCopy.title}</p>
               <p className={styles.lead}>{heroCopy.lead}</p>
 
               <button type="button" className={styles.searchTrigger} onClick={() => setPaletteOpen(true)}>
@@ -536,79 +636,116 @@ export default function DiscoveryWorkspaceClient({
                   <Search size={18} />
                 </span>
                 <span className={styles.searchTriggerCopy}>
-                  <strong>{viewModel.query || 'ابحث عن أي صفحة أو أداة أو دليل...'}</strong>
-                  <span>يفتح بحثاً سريعاً يجمع الصفحات والأدوات والمقالات في نافذة واحدة</span>
+                  <strong>{viewModel.query || 'اكتب سؤالك: وقت، صلاة، تاريخ، حاسبة...'}</strong>
+                  <span>ابحث بسرعة بين الأدوات والمقالات والأقسام، ثم صفّ النتائج حسب النوع</span>
                 </span>
                 <span className={styles.searchTriggerHint}>⌘K / Ctrl K</span>
               </button>
 
+              <div className={styles.heroFacts}>
+                <span className={styles.heroFactChip}>{viewModel.sectionCounts.sections} أقسام رئيسية</span>
+                <span className={styles.heroFactChip}>{calculatorItemsCount} أداة وحاسبة</span>
+                <span className={styles.heroFactChip}>{articleItemsCount} مقالاً جاهزاً للقراءة</span>
+              </div>
+
+              <div className={styles.heroLinks}>
+                {heroIntentLinks.map((query) => (
+                  <Link
+                    key={query}
+                    href={buildDiscoveryHref(discoveryPath, query, activeTab)}
+                    className={styles.intentChip}
+                  >
+                    <Search size={14} />
+                    {query}
+                  </Link>
+                ))}
+              </div>
+
             </div>
 
             <div className={styles.heroAside}>
-              <div className={styles.metricsGrid}>
-                <Card className={styles.metricCard}>
-                  <CardContent className={styles.metricBody}>
-                    <span>المسارات الرئيسية</span>
-                    <strong>{viewModel.sectionCounts.sections}</strong>
-                  </CardContent>
-                </Card>
-                <Card className={styles.metricCard}>
-                  <CardContent className={styles.metricBody}>
-                    <span>صفحات وأدوات مفهرسة</span>
-                    <strong>{viewModel.allItems.length}+</strong>
-                  </CardContent>
-                </Card>
-                <Card className={styles.metricCard}>
-                  <CardContent className={styles.metricBody}>
-                    <span>الحاسبات المغطاة</span>
-                    <strong>{calculatorItemsCount}</strong>
-                  </CardContent>
-                </Card>
-                <Card className={styles.metricCard}>
-                  <CardContent className={styles.metricBody}>
-                    <span>الأدلة والمقالات</span>
-                    <strong>{viewModel.sectionCounts.guides}</strong>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <Card className={styles.featuredPanel}>
-                <CardHeader className={styles.panelHeader}>
-                  <CardTitle className={styles.panelTitle}>
+              <div className={styles.featuredPanel} aria-label={viewModel.bestResult ? 'أفضل نتيجة الآن' : 'مسارات مقترحة'}>
+                <div className={styles.panelHeader}>
+                  <h2 className={styles.panelTitle}>
                     <Star size={16} />
                     {viewModel.bestResult ? 'أفضل نتيجة الآن' : 'ابدأ من هذه المسارات'}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className={styles.panelBody}>
+                  </h2>
+                </div>
+                <div className={styles.panelBody}>
                   {(viewModel.bestResult ? [viewModel.bestResult] : viewModel.featuredItems.slice(0, 4)).map((item) => (
                     <DirectoryCard key={item.href} item={item} accentId={item.sectionId} onVisit={handleVisit} />
                   ))}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
+
             </div>
           </section>
 
-          <section className={styles.recentStrip}>
-            <div className={styles.stripHeader}>
+          <section className={styles.journeyBand} aria-labelledby="discovery-journey-title">
+            <div className={styles.journeyHead}>
               <span className={styles.stripEyebrow}>
-                <TrendingUp size={15} />
-                آخر ما زرت
+                <Compass size={15} />
+                مسار القراءة
               </span>
-              <span className={styles.stripMeta}>{Math.min(recentVisits.length, 5)} من آخر الصفحات</span>
+              <div>
+                <h2 id="discovery-journey-title" className={styles.journeyTitle}>
+                  {viewModel.hasQuery ? 'حوّل البحث إلى خطوة مفهومة' : 'اختر العمق المناسب قبل أن تفتح الصفحة'}
+                </h2>
+                <p className={styles.journeyLead}>
+                  {viewModel.hasQuery
+                    ? 'النتيجة الأولى ليست نهاية الطريق دائماً. أحياناً تحتاج أداة للحساب، وأحياناً تحتاج مقالاً يشرح السبب، وأحياناً يكفيك قسم يجمع البدائل.'
+                    : 'ليست كل الأسئلة تحتاج النوع نفسه من الصفحة. هذه الخريطة تساعدك على اختيار الأداة، المقال، أو القسم بحسب ما تريد إنجازه الآن.'}
+                </p>
+              </div>
             </div>
-            <div className={styles.recentChips}>
-              {(recentVisits.length ? recentVisits.slice(0, 5) : viewModel.featuredItems.slice(0, 5)).map((item) => {
-                const Icon = recentVisits.length ? getVisitIcon(item) : getItemIcon(item);
-                const href = item.href;
-                const label = item.title || item.label || 'صفحة';
 
-                return (
-                  <Link key={`${href}-${label}`} href={href} className={styles.recentChip}>
-                    <Icon size={15} />
-                    {label}
-                  </Link>
-                );
-              })}
+            <ol className={styles.journeyList}>
+              {JOURNEY_STEPS.map((step, index) => (
+                <li key={step.title} className={styles.journeyStep}>
+                  <span className={styles.journeyStepIcon}>
+                    <step.Icon size={17} />
+                  </span>
+                  <span className={styles.journeyStepNumber}>{String(index + 1).padStart(2, '0')}</span>
+                  <span className={styles.journeyStepCopy}>
+                    <strong>{step.title}</strong>
+                    <span>{step.description}</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+            <p className={styles.journeyNote}>
+              إذا لم تكن متأكداً من الباب المناسب، ابدأ من صيغة السؤال لا من اسم القسم: “كم الساعة في مدينة؟” يذهب إلى الوقت، “كم الفرق بين بلدين؟” يذهب إلى فرق التوقيت، و“كم سيكون القسط؟” يذهب إلى الحاسبات. بهذه الطريقة يصبح الفهرس خطوة عمل لا مجرد قائمة طويلة.
+            </p>
+          </section>
+
+          <section className={styles.decisionBand} aria-labelledby="discovery-decision-title">
+            <div className={styles.decisionHead}>
+              <span className={styles.stripEyebrow}>
+                <ShieldCheck size={15} />
+                قواعد اختيار سريعة
+              </span>
+              <div>
+                <h2 id="discovery-decision-title" className={styles.decisionTitle}>
+                  كيف تصل إلى الصفحة الصحيحة بأقل نقرات؟
+                </h2>
+                <p className={styles.decisionLead}>
+                  الفهرس مفيد عندما يحوّل السؤال إلى مسار. استخدم هذه القواعد قبل أن تفتح عدة نتائج في وقت واحد.
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.decisionGrid}>
+              {DECISION_RULES.map((rule) => (
+                <article key={rule.title} className={styles.decisionCard}>
+                  <span className={styles.decisionIcon}>
+                    <rule.Icon size={17} />
+                  </span>
+                  <div className={styles.decisionCopy}>
+                    <h3>{rule.title}</h3>
+                    <p>{rule.description}</p>
+                  </div>
+                </article>
+              ))}
             </div>
           </section>
 
@@ -617,18 +754,18 @@ export default function DiscoveryWorkspaceClient({
               <div className={styles.controlHeaderMain}>
                 <span className={styles.stripEyebrow}>
                   <LayoutGrid size={15} />
-                  تصفح حسب النوع
+                  اختيار حسب النوع
                 </span>
-                <h2 className={styles.controlTitle}>اختر منظور التصفح الأنسب لك ثم ادخل إلى العمق</h2>
+                <h2 className={styles.controlTitle}>اختر ما تريد فتحه أولاً</h2>
                 <p className={styles.controlLead}>
-                  بدلاً من قائمة واحدة طويلة، تستطيع الآن تضييق العرض إلى أدوات أو مقالات أو أقسام أو المسارات الأكثر قيمة.
+                  استخدم التبويبات كمرشح سريع، ثم افتح القسم المناسب من الدليل. لا تحتاج مقارنة كل البطاقات دفعة واحدة.
                 </p>
               </div>
 
               <div className={styles.controlHeaderStat} data-tab={activeTabConfig.id}>
-                <span className={styles.controlHeaderStatLabel}>العرض الحالي</span>
+                <span className={styles.controlHeaderStatLabel}>اختيارك الآن</span>
                 <strong className={styles.controlHeaderStatValue}>{activeTabConfig.label}</strong>
-                <span className={styles.controlHeaderStatHint}>{tabCounts[activeTabConfig.id]} عنصر جاهز للتصفح الآن</span>
+                <span className={styles.controlHeaderStatHint}>{tabCounts[activeTabConfig.id]} نتيجة واضحة أمامك الآن</span>
               </div>
             </div>
 
@@ -667,34 +804,6 @@ export default function DiscoveryWorkspaceClient({
             </div>
           </section>
 
-          <section className={styles.sectionOverview}>
-            <div className={styles.sectionOverviewHead}>
-              <div>
-                <span className={styles.stripEyebrow}>
-                  <Compass size={15} />
-                  خريطة سريعة
-                </span>
-                <h2 className={styles.sectionOverviewTitle}>افهم بنية الموقع قبل أن تدخل إلى التفاصيل</h2>
-              </div>
-            </div>
-
-            <div className={styles.sectionOverviewGrid}>
-              {filteredSections.map((section) => {
-                const Icon = SECTION_ICONS[section.id] || BriefcaseBusiness;
-
-                return (
-                  <a key={section.id} href={`#${section.id}`} className={styles.sectionOverviewCard} data-tone={section.id}>
-                    <span className={styles.sectionOverviewIcon}>
-                      <Icon size={18} />
-                    </span>
-                    <strong>{section.title}</strong>
-                    <span>{section.filteredItems.length} {getCountLabel(section.id)}</span>
-                  </a>
-                );
-              })}
-            </div>
-          </section>
-
           {viewModel.hasQuery ? (
             <section className={styles.resultsZone}>
               <div className={styles.zoneHead}>
@@ -703,14 +812,84 @@ export default function DiscoveryWorkspaceClient({
                     <Search size={15} />
                     نتائج مرتبطة
                   </span>
-                  <h2 className={styles.zoneTitle}>النتائج الأقرب لعبارة البحث الحالية</h2>
+                  <h2 className={styles.zoneTitle}>أقرب الصفحات لعبارة البحث</h2>
                 </div>
                 <span className={styles.zoneMeta}>{searchResults.length} نتيجة مناسبة</span>
               </div>
 
-              <div className={styles.resultsGrid}>
-                {searchResults.slice(0, 9).map((item) => (
-                  <DirectoryCard key={item.href} item={item} accentId={item.sectionId} onVisit={handleVisit} />
+              {searchResults.length > 0 ? (
+                <div className={styles.resultsGrid}>
+                  {searchResults.slice(0, 9).map((item) => (
+                    activeTab === 'articles' ? (
+                      <ArticleResultCard key={item.href} item={item} accentId={item.sectionId} onVisit={handleVisit} />
+                    ) : (
+                      <DirectoryCard key={item.href} item={item} accentId={item.sectionId} onVisit={handleVisit} />
+                    )
+                  ))}
+                </div>
+              ) : (
+                <div className={styles.searchEmptyState}>
+                  <div className={styles.searchEmptyCopy}>
+                  <h3>لم نجد نتيجة مطابقة تماماً، لكن الطريق ليس مغلقاً</h3>
+                  <p>
+                      جرّب عبارة أقصر أو كلمة أقرب لاسم الأداة. اكتب “حاسبة القسط” بدلاً من جملة طويلة، أو “فرق التوقيت” بدلاً من سؤال كامل. وإذا كنت تستكشف ولا تبحث عن شيء محدد، افتح الفهرس الكامل.
+                  </p>
+                </div>
+
+                  <div className={styles.searchEmptyActions}>
+                    <Link href={buildDiscoveryHref(discoveryPath, '', activeTab)} className={styles.searchEmptyPrimary}>
+                      عرض الدليل بدون بحث
+                      <ArrowLeft size={15} />
+                    </Link>
+                    <Link href="/fahras" className={styles.searchEmptySecondary}>
+                      فتح كل المسارات
+                    </Link>
+                  </div>
+
+                  {emptySearchSuggestions.length > 0 ? (
+                    <div className={styles.searchEmptySuggestions} aria-label="اقتراحات بحث بديلة">
+                      {emptySearchSuggestions.map((query) => (
+                        <Link
+                          key={query}
+                          href={buildDiscoveryHref(discoveryPath, query, 'all')}
+                          className={styles.searchEmptyChip}
+                        >
+                          <Search size={14} />
+                          {query}
+                        </Link>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              )}
+            </section>
+          ) : null}
+
+          {activeTab === 'articles' && articleFocusItems.length > 0 ? (
+            <section className={styles.articleSpotlight}>
+              <div className={styles.zoneHead}>
+                <div>
+                  <span className={styles.stripEyebrow}>
+                    <BookOpenText size={15} />
+                    مقالات جاهزة للقراءة
+                  </span>
+                  <h2 className={styles.zoneTitle}>
+                    {viewModel.hasQuery
+                      ? 'المقالات الأقرب لعبارة البحث الحالية'
+                      : 'ابدأ من مقالات واضحة ومفيدة للأسئلة اليومية'}
+                  </h2>
+                </div>
+                <span className={styles.zoneMeta}>{articleFocusItems.length} مقال ظاهر الآن</span>
+              </div>
+
+              <div className={styles.articleResultGrid}>
+                {articleFocusItems.map((item) => (
+                  <ArticleResultCard
+                    key={item.href}
+                    item={item}
+                    accentId={item.sectionId}
+                    onVisit={handleVisit}
+                  />
                 ))}
               </div>
             </section>
@@ -768,11 +947,11 @@ export default function DiscoveryWorkspaceClient({
                 <div className={styles.sidebarHead}>
                   <span className={styles.stripEyebrow}>
                     <Compass size={15} />
-                    جدول المحتوى
+                    تنقل سريع
                   </span>
-                  <p className={styles.sidebarLead}>يتحرك المؤشر معك أثناء التمرير حتى تعرف أين أنت داخل الفهرس الآن.</p>
+                  <p className={styles.sidebarLead}>يتحرك المؤشر مع التمرير حتى تصل إلى القسم الذي تريده بسرعة ومن دون ارتباك.</p>
                 </div>
-                <nav className={styles.tocList} aria-label="أقسام الفهرس">
+                <nav className={styles.tocList} aria-label="أقسام الدليل">
                   {filteredSections.map((section) => (
                     <a
                       key={section.id}
@@ -795,13 +974,13 @@ export default function DiscoveryWorkspaceClient({
           shouldFilter={false}
           showCloseButton={false}
           contentClassName={styles.commandDialog}
-          title="البحث الذكي داخل الفهرس"
-          description="ابحث داخل صفحات ميقاتنا وأدواته ومقالاته من لوحة واحدة."
+          title="البحث داخل ميقاتنا"
+          description="ابحث بين الصفحات والأدوات والمقالات من نافذة واحدة."
         >
           <CommandInput
             value={paletteQuery}
             onValueChange={setPaletteQuery}
-            placeholder="ابحث عن صفحة أو أداة أو دليل..."
+            placeholder="مثال: تاريخ اليوم، حاسبة الضريبة، كم باقي على رمضان..."
             className={styles.commandInput}
             wrapperClassName={styles.commandInputWrap}
           />
@@ -812,7 +991,7 @@ export default function DiscoveryWorkspaceClient({
                 <CommandGroup heading="إجراء سريع">
                   <CommandItem onSelect={() => handleShowSearchView(deferredPaletteQuery)} className={styles.commandActionItem}>
                     <Search size={16} />
-                    <span>اعرض كل النتائج داخل الفهرس</span>
+                    <span>اعرض كل النتائج وعدّلها بالتبويبات</span>
                     <CommandShortcut>Enter</CommandShortcut>
                   </CommandItem>
                 </CommandGroup>
@@ -843,7 +1022,7 @@ export default function DiscoveryWorkspaceClient({
                     })}
                   </CommandGroup>
                 ))}
-                <CommandEmpty>لا توجد نتائج مطابقة. جرّب عبارة أقصر أو افتح أحد الأقسام مباشرة.</CommandEmpty>
+                <CommandEmpty>لا توجد نتائج مطابقة. جرّب كلمة أقصر مثل “القسط” أو “الصلاة”، أو افتح الفهرس لاختيار القسم يدوياً.</CommandEmpty>
               </>
             ) : (
               <div className={styles.commandEmptyState}>
@@ -888,7 +1067,7 @@ export default function DiscoveryWorkspaceClient({
                 </div>
 
                 <div className={styles.commandBlock}>
-                  <h3>تصفح حسب القسم</h3>
+                  <h3>اختر حسب القسم</h3>
                   <div className={styles.commandPillRow}>
                     {FILTER_TABS.filter((tab) => tab.id !== 'all').map((tab) => (
                       <button

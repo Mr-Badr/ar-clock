@@ -113,7 +113,7 @@ export default function BedtimeCalculator() {
             <CardHeader>
               <CardTitle className="calc-card-title">أفضل أوقات النوم المقترحة</CardTitle>
             </CardHeader>
-            <CardContent className="calc-metric-grid">
+            <CardContent className="calc-metric-grid" aria-live="polite">
               <div className="calc-metric-card">
                 <div className="calc-metric-card__label"><MoonStar size={16} /> أفضل وقت لك الآن</div>
                 <div className="calc-metric-card__value">{result.bestOption?.bedtimeLabel || '—'}</div>

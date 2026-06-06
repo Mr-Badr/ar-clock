@@ -1,54 +1,134 @@
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle2, Hash, Sparkles } from 'lucide-react';
+import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { SectionDivider, SectionWrapper } from '@/components/shared/primitives';
-import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
+import { Card, CardContent } from '@/components/ui/card';
+import { SectionWrapper } from '@/components/shared/primitives';
+import { CALCULATOR_HUBS, CALCULATOR_ROUTES } from '@/lib/calculators/data';
 
-const CALCULATOR_DISCOVERY_LINKS = [
-  { href: '/calculators/sleep', title: 'حاسبات النوم الذكي', description: 'ابدأ من متى تنام ومتى تستيقظ والقيلولة ودين النوم.' },
-  { href: '/calculators/sleep/bedtime', title: 'متى أنام لأستيقظ في الوقت المناسب؟', description: 'خطط نومك انطلاقاً من وقت الاستيقاظ.' },
-  { href: '/calculators/personal-finance', title: 'حاسبات التخطيط المالي الشخصي', description: 'ابدأ من صندوق الطوارئ والديون والادخار وصافي الثروة.' },
-  { href: '/calculators/personal-finance/emergency-fund', title: 'كم تحتاج صندوق طوارئ؟', description: 'احسب المبلغ المناسب ومدة الوصول إليه.' },
-  { href: '/calculators/finance', title: 'حاسبات المال والعمل', description: 'ابدأ من مسار يجمع القرض والضريبة والنسبة ومكافأة نهاية الخدمة.' },
-  { href: '/calculators/age/calculator', title: 'كم عمري الآن؟', description: 'حاسبة العمر بالسنوات والأيام والثواني.' },
-  { href: '/calculators/monthly-installment', title: 'كم قسط القرض الشهري؟', description: 'قارن التمويل والقسط وإجمالي الفوائد.' },
-  { href: '/calculators/vat', title: 'كم الضريبة 15%؟', description: 'أضف الضريبة أو استخرجها من السعر الشامل.' },
-  { href: '/calculators/percentage', title: 'كم تساوي النسبة المئوية؟', description: 'احسب الخصم والزيادة ونسبة التغيير.' },
-  { href: '/economie/us-market-open', title: 'متى يفتح السوق الأمريكي اليوم؟', description: 'أداة اقتصادية حية بتوقيتك المحلي.' },
-  { href: '/economie/gold-market-hours', title: 'هل الذهب مفتوح الآن؟', description: 'تحقق من ساعات تداول الذهب الآن.' },
+const CALCULATOR_HERO_STEPS = [
+  'اختر الحالة الأقرب لسؤالك',
+  'أدخل الرقم أو جرّب مثالاً سريعاً',
+  'راجع النتيجة والتفصيل قبل الاعتماد',
 ];
+
+const CALCULATOR_TRUST_ITEMS = [
+  'مجاني بدون تسجيل',
+  'المدخلات لا تحتاج بيانات شخصية',
+  'نوضح حدود النتيجة قبل القرار',
+];
+
+function formatSequenceLabel(index) {
+  return String(index + 1).padStart(2, '0');
+}
+
+function isValidResourceItem(item) {
+  return Boolean(item?.href && item?.title);
+}
+
+function getUniqueCalculatorLinks(items) {
+  const seenHrefs = new Set();
+  return items.filter((item) => {
+    if (!item?.href || !item?.title || seenHrefs.has(item.href)) return false;
+    seenHrefs.add(item.href);
+    return true;
+  });
+}
+
+function getComplementSlugs(cluster) {
+  const complementSlugsByCluster = {
+    finance: ['personal-finance', 'emergency-fund', 'building'],
+    building: ['vat', 'percentage', 'monthly-installment'],
+    age: ['sleep', 'bedtime', 'retirement'],
+    sleep: ['age-calculator', 'sleep', 'time-now'],
+    'personal-finance': ['monthly-installment', 'percentage', 'vat'],
+  };
+
+  return complementSlugsByCluster[cluster] || ['monthly-installment', 'percentage', 'vat'];
+}
+
+function buildRelatedCalculatorLinks(currentSlug) {
+  const currentRoute = CALCULATOR_ROUTES.find((item) => item.slug === currentSlug);
+  const currentCluster = currentRoute?.cluster;
+  const currentHub = currentCluster
+    ? CALCULATOR_HUBS.find((hub) => hub.slug === currentCluster)
+    : null;
+  const hubLink = currentHub && currentHub.href !== currentRoute?.href
+    ? {
+        href: currentHub.href,
+        title: currentHub.title,
+        description: currentHub.description,
+        badge: currentHub.badge,
+      }
+    : null;
+  const clusterRoutes = currentCluster
+    ? CALCULATOR_ROUTES.filter((item) => item.cluster === currentCluster && item.slug !== currentSlug)
+    : [];
+  const complementRoutes = getComplementSlugs(currentCluster)
+    .map((slug) => CALCULATOR_ROUTES.find((item) => item.slug === slug))
+    .filter((item) => item && item.slug !== currentSlug);
+  const fallbackRoutes = CALCULATOR_ROUTES.filter((item) => item.slug !== currentSlug);
+
+  return getUniqueCalculatorLinks([
+    hubLink,
+    ...clusterRoutes,
+    ...complementRoutes,
+    ...fallbackRoutes,
+  ]).slice(0, 4);
+}
+
+function CalculatorEmptyState({ title, description }) {
+  return (
+    <div className="calc-resource-stack" role="status">
+      <div className="calc-resource-link calc-resource-link--soft">
+        <span className="calc-resource-link__copy">
+          <strong className="calc-card-title">{title}</strong>
+          <span className="calc-card-description">{description}</span>
+        </span>
+      </div>
+    </div>
+  );
+}
 
 export function CalculatorHero({
   badge,
   title,
   description,
-  accent,
-  highlights = [],
+  highlights,
   children,
 }) {
+  const safeHighlights = Array.isArray(highlights) ? highlights : [];
+
   return (
     <SectionWrapper
       id="calculator-hero"
       className="calc-shell calc-shell--hero pt-28 sm:pt-32"
-      contentWidth="content-col"
-      glow={<div className="calc-hero-glow" aria-hidden="true" />}
     >
-      <div className="calc-section-frame calc-section-frame--hero" style={{ '--calc-accent': accent }}>
+      <div className="calc-section-frame calc-section-frame--hero">
         <div className="calc-hero-grid">
           <div className="calc-hero-copy">
             <Badge className="calc-pill">
-              <Sparkles size={14} />
               {badge}
             </Badge>
             <h1 className="calc-page-title">{title}</h1>
             <p className="calc-page-description">{description}</p>
-            {highlights.length ? (
+          </div>
+          <div className="calc-hero-panel">
+            <ol className="calc-use-flow" aria-label="طريقة استخدام الحاسبة">
+              {CALCULATOR_HERO_STEPS.map((item, index) => (
+                <li key={item}>
+                  <span>{formatSequenceLabel(index)}</span>
+                  <strong>{item}</strong>
+                </li>
+              ))}
+            </ol>
+            {children}
+          </div>
+          <div className="calc-hero-support">
+            {safeHighlights.length ? (
               <ul className="calc-highlight-list">
-                {highlights.map((item) => (
+                {safeHighlights.map((item) => (
                   <li key={item}>
                     <CheckCircle2 size={16} />
                     <span>{item}</span>
@@ -56,8 +136,13 @@ export function CalculatorHero({
                 ))}
               </ul>
             ) : null}
+            <div className="calc-hero-trust" aria-label="معلومات الثقة والخصوصية">
+              {CALCULATOR_TRUST_ITEMS.map((item) => (
+                <span key={item}>{item}</span>
+              ))}
+              <Link href="/privacy">سياسة الخصوصية</Link>
+            </div>
           </div>
-          <div className="calc-hero-panel">{children}</div>
         </div>
       </div>
     </SectionWrapper>
@@ -69,11 +154,13 @@ export function CalculatorSection({
   eyebrow,
   title,
   description,
-  subtle = false,
+  subtle,
   children,
 }) {
+  const isSubtle = subtle === true;
+
   return (
-    <SectionWrapper id={id} subtle={subtle} className="calc-shell" contentWidth="content-col">
+    <SectionWrapper id={id} subtle={isSubtle} className="calc-shell">
       <div className="calc-section-frame">
         <div className="calc-section-head">
           {eyebrow ? <span className="calc-section-eyebrow">{eyebrow}</span> : null}
@@ -88,143 +175,145 @@ export function CalculatorSection({
   );
 }
 
-export function CalculatorSectionNav({ items = [] }) {
-  return (
-    <div className="calc-anchor-grid">
-      {items.map((item, index) => (
-        <a key={item.href} href={item.href} className="calc-anchor-card card-nested">
-          <span className="calc-anchor-index">{String(index + 1).padStart(2, '0')}</span>
-          <span className="calc-anchor-copy">
-            <strong>{item.label}</strong>
-            {item.description ? <span>{item.description}</span> : null}
-          </span>
-        </a>
-      ))}
-    </div>
-  );
-}
+export function CalculatorDecisionTable({ columns, rows }) {
+  const safeColumns = Array.isArray(columns) ? columns : [];
+  const safeRows = Array.isArray(rows) ? rows : [];
 
-export function CalculatorIntentCloud({ title = 'عبارات البحث المستهدفة', items = [] }) {
+  if (!safeColumns.length || !safeRows.length) {
+    return (
+      <CalculatorEmptyState
+        title="لا توجد مقارنة كافية الآن"
+        description="استخدم الحاسبة الرئيسية أولاً، ثم راجع الشرح الموجود في الصفحة قبل الاعتماد على النتيجة."
+      />
+    );
+  }
+
   return (
-    <Card className="calc-surface-card calc-intent-panel">
-      <CardHeader>
-        <CardTitle className="calc-card-title">{title}</CardTitle>
-      </CardHeader>
-      <CardContent className="calc-chip-list">
-        {items.map((item) => (
-          <span key={item} className="calc-search-chip">
-            <Hash size={14} />
-            {item}
-          </span>
+    <div className="calc-decision-table-wrap">
+      <table className="calc-decision-table">
+        <thead>
+          <tr>
+            {safeColumns.map((column) => (
+              <th key={column}>{column}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {safeRows.map((row, rowIndex) => (
+            <tr key={row.key || `calc-decision-row-${rowIndex}`}>
+              {(Array.isArray(row.cells) ? row.cells : []).map((cell, cellIndex) => (
+                <td key={`${row.key || rowIndex}-${cellIndex}`}>{cell}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="calc-decision-cards" aria-label="ملخص المقارنة">
+        {safeRows.map((row, rowIndex) => (
+          <article key={row.key || `calc-decision-card-${rowIndex}`} className="calc-decision-card">
+            <span className="calc-decision-card__index">{formatSequenceLabel(rowIndex)}</span>
+            {(Array.isArray(row.cells) ? row.cells : []).map((cell, cellIndex) => (
+              <span key={`${row.key || rowIndex}-card-${cellIndex}`} className="calc-decision-card__item">
+                <strong>{safeColumns[cellIndex] || 'الاختيار'}</strong>
+                <span>{cell}</span>
+              </span>
+            ))}
+          </article>
         ))}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 
-export function CalculatorQuickAnswerGrid({ items = [] }) {
+export function CalculatorInfoGrid({ items }) {
+  const safeItems = Array.isArray(items) ? items : [];
+
+  if (!safeItems.length) {
+    return (
+      <CalculatorEmptyState
+        title="لا توجد بطاقات شرح كافية الآن"
+        description="لم تصلنا عناصر تعليمية مناسبة لهذا القسم. لا تعتمد على رقم الحاسبة وحده إذا كان القرار مالياً أو قانونياً أو عالي الأثر."
+      />
+    );
+  }
+
   return (
-    <div className="calc-query-grid">
-      {items.map((item) => (
-        <Card key={item.question} className="calc-surface-card calc-query-card card-hover">
-          <CardHeader>
-            <CardTitle className="calc-card-title">{item.question}</CardTitle>
+    <div className="calc-info-grid calc-info-grid--editorial" role="list" data-count={safeItems.length}>
+      {safeItems.map((item, index) => (
+        <article
+          key={item.title}
+          className={`calc-editorial-card${index === 0 ? ' calc-editorial-card--lead' : ''}`}
+          role="listitem"
+        >
+          <div className="calc-editorial-card__meta">
+            <span className="calc-editorial-card__index">{formatSequenceLabel(index)}</span>
             {item.description ? (
-              <CardDescription className="calc-card-description">
+              <p className="calc-card-description">
                 {item.description}
-              </CardDescription>
+              </p>
             ) : null}
-          </CardHeader>
-          <CardContent className="calc-card-copy">
-            <p>{item.answer}</p>
-          </CardContent>
-        </Card>
+          </div>
+          <div className="calc-editorial-card__copy">
+            <h3 className="calc-card-title">{item.title}</h3>
+            {item.content ? (
+              <div className="calc-card-copy">
+                {item.content}
+              </div>
+            ) : null}
+          </div>
+        </article>
       ))}
     </div>
   );
 }
 
-export function CalculatorChecklist({ title, description, items = [], content = "" }) {
+export function CalculatorEditorialArticle({ eyebrow, title, lead, paragraphs, points }) {
+  const safeParagraphs = Array.isArray(paragraphs) ? paragraphs : [];
+  const safePoints = Array.isArray(points) ? points : [];
+
   return (
-    <Card className="calc-surface-card card-hover">
-      <CardHeader>
-        <CardTitle className="calc-card-title">{title}</CardTitle>
-        {description ? (
-          <CardDescription className="calc-card-description">
-            {description}
-          </CardDescription>
-        ) : null}
-      </CardHeader>
-      <CardContent>
-        {content ? 
-        <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6rem' }}>{content}</p> : null}
-        <ul className="calc-checklist">
-          {items.map((item) => (
-            <li key={item}>
-              <CheckCircle2 size={16} />
-              <span>{item}</span>
-            </li>
+    <article className="calc-editorial-article">
+      <div className="calc-editorial-article__head">
+        {eyebrow ? <span className="calc-section-eyebrow">{eyebrow}</span> : null}
+        <h2 className="calc-section-title">{title}</h2>
+        {lead ? <p className="calc-section-description">{lead}</p> : null}
+      </div>
+
+      <div className="calc-editorial-article__body">
+        {safeParagraphs.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
+      </div>
+
+      {safePoints.length ? (
+        <ul className="calc-editorial-article__points">
+          {safePoints.map((point) => (
+            <li key={point}>{point}</li>
           ))}
         </ul>
-      </CardContent>
-    </Card>
+      ) : null}
+    </article>
   );
 }
 
-export function CalculatorStoryBand({ title, description, items = [] }) {
-  return (
-    <div className="calc-story-band">
-      <div className="calc-story-copy">
-        <h3>{title}</h3>
-        <p>{description}</p>
-      </div>
-      <div className="calc-story-points">
-        {items.map((item) => (
-          <div key={item.label} className="calc-story-point card-nested">
-            <strong>{item.label}</strong>
-            <span>{item.value}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+export function CalculatorFaqSection({ items }) {
+  const safeItems = Array.isArray(items) ? items : [];
 
-export function CalculatorInfoGrid({ items = [] }) {
-  return (
-    <div>
-      {items.map((item) => (
-        <Card 
-            key={item.title} 
-            className="rounded-2xl p-5 sm:p-6" 
-            style={{ height: 'stretch', background: 'var(--bg-surface-1)', border: '1px solid var(--border-subtle)', margin: '1rem 0' }}
-          >
-          <CardHeader>
-            <CardTitle className="calc-card-title">{item.title}</CardTitle>
-            {item.description ? (
-              <CardDescription className="calc-card-description">
-                {item.description}
-              </CardDescription>
-            ) : null}
-          </CardHeader>
-          {item.content ? (
-            <CardContent className="calc-card-copy">
-              {item.content}
-            </CardContent>
-          ) : null}
-        </Card>
-      ))}
-    </div>
-  );
-}
+  if (!safeItems.length) {
+    return (
+      <CalculatorEmptyState
+        title="لا توجد أسئلة شائعة كافية الآن"
+        description="اقرأ وصف الصفحة ونتيجة الحاسبة أولاً، ثم استخدم صفحة التواصل إذا وجدت سؤالاً مهماً يجب إضافته."
+      />
+    );
+  }
 
-export function CalculatorFaqSection({ items = [] }) {
   return (
     <div>
       <Card className="calc-surface-card calc-faq-card">
         <CardContent className="pt-2">
           <Accordion type="single" collapsible>
-            {items.map((item, index) => (
+            {safeItems.map((item, index) => (
               <AccordionItem key={item.question} value={`faq-${index}`}>
                 <AccordionTrigger className="calc-faq-trigger">
                   {item.question}
@@ -242,138 +331,130 @@ export function CalculatorFaqSection({ items = [] }) {
 }
 
 export function RelatedCalculators({ currentSlug }) {
-  const links = CALCULATOR_ROUTES.filter((item) => item.slug !== currentSlug);
+  const currentRoute = CALCULATOR_ROUTES.find((item) => item.slug === currentSlug);
+  const links = buildRelatedCalculatorLinks(currentSlug);
+  const currentHub = currentRoute?.cluster
+    ? CALCULATOR_HUBS.find((hub) => hub.slug === currentRoute.cluster)
+    : null;
+
+  if (!links.length) {
+    return (
+      <CalculatorEmptyState
+        title="لا توجد حاسبات مرتبطة كافية الآن"
+        description="ارجع إلى قسم الحاسبات الرئيسي لاختيار مسار آخر، أو أكمل قراءة الصفحة الحالية قبل الانتقال."
+      />
+    );
+  }
 
   return (
-    <div className="calc-related-grid">
-      {links.map((item) => (
-        <Card key={item.slug} className="calc-surface-card calc-related-card card-hover">
-          <CardHeader>
-            <CardTitle className="calc-card-title">{item.title}</CardTitle>
-            <CardDescription className="calc-card-description">
-              {item.description}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button asChild variant="ghost" className="btn btn-surface btn-sm calc-button calc-inline-button">
-              <Link href={item.href}>
-                افتح الحاسبة
-                <ArrowLeft size={16} />
-              </Link>
-            </Button>
-          </CardContent>
-        </Card>
+    <div className="calc-related-panel">
+      <div className="calc-related-panel__head">
+        <span className="calc-section-eyebrow">لا تتوقف عند رقم واحد</span>
+        <div>
+          <h3 className="calc-card-title">حاسبات تكمل نفس القرار</h3>
+          <p className="calc-card-description">
+            {currentHub
+              ? `هذه روابط من مسار ${currentHub.title} مع أدوات قريبة تساعدك على مقارنة الرقم أو فهمه قبل الاعتماد.`
+              : 'اختر حاسبة قريبة من نفس السؤال حتى لا ترجع إلى الفهرس وتبدأ من الصفر.'}
+          </p>
+        </div>
+        <span className="calc-related-panel__count">{links.length} اختيارات</span>
+      </div>
+      <div className="calc-resource-stack calc-resource-stack--cards calc-related-grid" data-count={links.length}>
+      {links.map((item, index) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          className={`calc-resource-link calc-resource-link--card${index === 0 ? ' calc-resource-link--primary' : ''}`}
+        >
+          <span className="calc-resource-link__index">{formatSequenceLabel(index)}</span>
+          <span className="calc-resource-link__copy">
+            <strong className="calc-card-title">{item.title}</strong>
+            <span className="calc-card-description">{item.description}</span>
+          </span>
+          <span className="calc-resource-link__cta">
+            {item.href === currentHub?.href ? 'افتح المسار الكامل' : 'افتح الحاسبة'}
+            <ArrowLeft size={16} aria-hidden="true" />
+          </span>
+        </Link>
       ))}
+      </div>
     </div>
   );
 }
 
-export function CalculatorResourceLinks({ items = [], buttonLabel = 'افتح الدليل' }) {
-  if (!items.length) return null;
+export function CalculatorResourceLinks({ items, buttonLabel, variant }) {
+  const safeItems = Array.isArray(items) ? items.filter(isValidResourceItem).slice(0, 5) : [];
+  const resolvedButtonLabel = buttonLabel || 'افتح المسار المناسب';
+  const resolvedVariant = variant ?? 'list';
+  if (!safeItems.length) {
+    return (
+      <CalculatorEmptyState
+        title="لا توجد مسارات مناسبة لهذا الجزء الآن"
+        description="لم تصلنا مسارات كافية لعرض اقتراح موثوق. تابع الحاسبة الحالية، ثم ارجع إلى قسم الحاسبات إذا احتجت اختيار أداة أخرى."
+      />
+    );
+  }
+  const isCardVariant = resolvedVariant === 'cards';
 
   return (
-    <div className="calc-related-grid">
-      {items.map((item) => (
-        <Card key={item.href} className="calc-surface-card calc-related-card card-hover">
-          <CardHeader>
-            <CardTitle className="calc-card-title">{item.title}</CardTitle>
-            <CardDescription className="calc-card-description">
-              {item.description}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button asChild variant="ghost" className="btn btn-primary--flat calc-button calc-inline-button">
-              <Link href={item.href}>
-                {item.ctaLabel || buttonLabel}
-                <ArrowLeft size={16} />
-              </Link>
-            </Button>
-          </CardContent>
-        </Card>
+    <div
+      className={`calc-resource-stack${isCardVariant ? ' calc-resource-stack--cards' : ''}`}
+      data-count={safeItems.length}
+    >
+      {safeItems.map((item, index) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          className={`calc-resource-link${isCardVariant ? ' calc-resource-link--card' : ''}${index === 0 ? ' calc-resource-link--primary' : ''}`}
+        >
+          <span className="calc-resource-link__index">{formatSequenceLabel(index)}</span>
+          <span className="calc-resource-link__copy">
+            <strong className="calc-card-title">{item.title}</strong>
+            <span className="calc-card-description">{item.description}</span>
+          </span>
+          <span className="calc-resource-link__cta">
+            {item.ctaLabel || resolvedButtonLabel}
+            <ArrowLeft size={16} aria-hidden="true" />
+          </span>
+        </Link>
       ))}
     </div>
   );
 }
 
 export function CalculatorHubGrid() {
+  const safeRoutes = Array.isArray(CALCULATOR_ROUTES) ? CALCULATOR_ROUTES : [];
+
+  if (!safeRoutes.length) {
+    return (
+      <CalculatorEmptyState
+        title="لا توجد حاسبات جاهزة للعرض الآن"
+        description="لم تصلنا بيانات الأرشيف الكامل. استخدم المسارات الرئيسية في الصفحة أو جرّب لاحقاً عند اكتمال الفهرس."
+      />
+    );
+  }
+
   return (
     <div className="calc-hub-grid">
-      {CALCULATOR_ROUTES.map((item) => (
-        <Card
+      {safeRoutes.map((item) => (
+        <Link
           key={item.slug}
-          className="calc-surface-card calc-hub-card card-hover"
-          style={{ '--calc-accent': item.accent, '--calc-accent-soft': item.accentSoft }}
+          href={item.href}
+          className="calc-hub-link"
         >
-          <CardHeader>
+          <span className="calc-hub-link__head">
             <Badge className="calc-pill calc-pill--subtle">{item.badge}</Badge>
-            <CardTitle className="calc-card-title">{item.title}</CardTitle>
-            <CardDescription className="calc-card-description">
-              {item.description}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="calc-hub-card__actions">
-            <Button asChild variant="ghost" className="btn btn-primary--flat calc-button calc-inline-button">
-              <Link href={item.href}>
-                افتح الحاسبة
-                <ArrowLeft size={16} />
-              </Link>
-            </Button>
-          </CardContent>
-        </Card>
+            <span className="calc-hub-link__eyebrow">{item.shortLabel}</span>
+          </span>
+          <span className="calc-hub-link__title">{item.title}</span>
+          <span className="calc-hub-link__description">{item.description}</span>
+          <span className="calc-hub-link__cta">
+            افتح الحاسبة
+            <ArrowLeft size={16} aria-hidden="true" />
+          </span>
+        </Link>
       ))}
     </div>
-  );
-}
-
-export function CalculatorFooterCta() {
-  return (
-    <>
-      <SectionDivider />
-      <SectionWrapper id="calculator-footer" className="calc-shell" contentWidth="content-col">
-        <div className="calc-section-frame">
-          <Card className="calc-surface-card calc-cta-card">
-            <CardHeader>
-              <CardTitle className="calc-section-title">
-                حاسبات مترابطة بدل صفحات معزولة
-              </CardTitle>
-              <CardDescription className="calc-card-description">
-                هذا القسم بُني كحزمة أدوات عملية: احسب مستحقاتك، ثم قارن القسط، ثم راجع
-                الضريبة أو النسبة المئوية من نفس المكان.
-              </CardDescription>
-          </CardHeader>
-          <CardContent className="calc-cta-actions">
-            <Button asChild variant="ghost" className="btn btn-primary--flat calc-button">
-              <Link href="/calculators">استعرض كل الحاسبات</Link>
-            </Button>
-            <Button asChild variant="ghost" className="btn btn-secondary calc-button">
-              <Link href="/contact">أرسل ملاحظتك أو اقتراحك</Link>
-            </Button>
-          </CardContent>
-          <CardContent>
-            <div className="calc-related-grid">
-              {CALCULATOR_DISCOVERY_LINKS.map((item) => (
-                <Card key={item.href} className="calc-surface-card calc-related-card card-hover">
-                  <CardHeader>
-                    <CardTitle className="calc-card-title">{item.title}</CardTitle>
-                    <CardDescription className="calc-card-description">
-                      {item.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button asChild variant="ghost" className="btn btn-primary--flat calc-button calc-inline-button">
-                      <Link href={item.href}>
-                        افتح الصفحة
-                        <ArrowLeft size={16} />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </CardContent>
-          </Card>
-        </div>
-      </SectionWrapper>
-    </>
   );
 }

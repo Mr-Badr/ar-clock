@@ -26,13 +26,27 @@ interface SpotlightCard {
   label?: string;
 }
 
+interface HeroHighlight {
+  value: string;
+  label: string;
+  detail: string;
+}
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 interface SiteInfoPageProps {
   eyebrow: string;
   title: string;
   lead: string;
   sections: InfoSection[];
+  guidance?: InfoSection;
   quickLinks?: QuickLink[];
   spotlight?: SpotlightCard;
+  highlights?: HeroHighlight[];
+  faqItems?: FaqItem[];
   note?: ReactNode;
   schema?: object | object[];
   tone?: 'accent' | 'warning';
@@ -42,7 +56,7 @@ const DEFAULT_QUICK_LINKS: QuickLink[] = [
   {
     href: '/about',
     label: 'من نحن',
-    description: 'تعرف على المشروع، الرؤية، وكيف بُنيت هذه المنصة العربية.',
+    description: 'اقرأ لماذا وُجدت ميقاتنا وكيف تُبنى صفحات الوقت والصلاة والتاريخ والحاسبات.',
   },
   {
     href: '/editorial-policy',
@@ -51,8 +65,8 @@ const DEFAULT_QUICK_LINKS: QuickLink[] = [
   },
   {
     href: '/fahras',
-    label: 'البحث داخل الموقع',
-    description: 'ابحث مباشرة عن الأداة أو الصفحة الأقرب إلى سؤالك.',
+    label: 'استكشف الصفحات',
+    description: 'اختر الصفحة الأقرب إلى سؤالك أو تنقّل بين المسارات الرئيسية بسهولة.',
   },
   {
     href: '/contact',
@@ -70,14 +84,21 @@ export default function SiteInfoPage({
   title,
   lead,
   sections,
+  guidance,
   quickLinks = DEFAULT_QUICK_LINKS,
   spotlight,
+  highlights = [],
+  faqItems = [],
   note,
   schema,
   tone = 'accent',
 }: SiteInfoPageProps) {
   const eyebrowClassName =
     tone === 'warning' ? `${styles.eyebrow} ${styles.eyebrowWarning}` : styles.eyebrow;
+  const safeSections = Array.isArray(sections) ? sections : [];
+  const safeQuickLinks = Array.isArray(quickLinks) ? quickLinks : [];
+  const safeHighlights = Array.isArray(highlights) ? highlights : [];
+  const safeFaqItems = Array.isArray(faqItems) ? faqItems : [];
 
   return (
     <div className={styles.page} dir="rtl">
@@ -88,11 +109,22 @@ export default function SiteInfoPage({
           <span className={eyebrowClassName}>{eyebrow}</span>
           <h1 className={styles.title}>{title}</h1>
           <p className={styles.lead}>{lead}</p>
+          {safeHighlights.length > 0 ? (
+            <div className={styles.highlights} aria-label="نقاط توضيحية سريعة">
+              {safeHighlights.map((item) => (
+                <article key={`${item.value}-${item.label}`} className={styles.highlightCard}>
+                  <p className={styles.highlightValue}>{item.value}</p>
+                  <p className={styles.highlightLabel}>{item.label}</p>
+                  <p className={styles.highlightDetail}>{item.detail}</p>
+                </article>
+              ))}
+            </div>
+          ) : null}
         </header>
 
         <div className={styles.layout}>
           <div className={styles.content}>
-            {sections.map((section) => (
+            {safeSections.map((section) => (
               <section key={section.title} className={styles.section}>
                 <h2 className={styles.sectionTitle}>{section.title}</h2>
                 <div className={styles.sectionBody}>{section.content}</div>
@@ -123,9 +155,9 @@ export default function SiteInfoPage({
             ) : null}
 
             <section className={styles.quickLinks}>
-              <h2 className={styles.quickLinksTitle}>صفحات مهمة مرتبطة بهذه الصفحة</h2>
+              <h2 className={styles.quickLinksTitle}>مسارات تساعدك على التحقق أو المتابعة</h2>
               <div className={styles.quickList}>
-                {quickLinks.map((item) => (
+                {safeQuickLinks.map((item) => (
                   <Link key={item.href} href={item.href} className={styles.quickLink}>
                     <span className={styles.quickLinkLabel}>{item.label}</span>
                     <span className={styles.quickLinkBody}>{item.description}</span>
@@ -153,6 +185,38 @@ export default function SiteInfoPage({
             </section>
           </aside>
         </div>
+
+        {guidance ? (
+          <div className={styles.content}>
+            <section className={styles.section} aria-labelledby="site-info-use-heading">
+              <h2 id="site-info-use-heading" className={styles.sectionTitle}>
+                {guidance.title}
+              </h2>
+              <div className={styles.sectionBody}>
+                {guidance.content}
+              </div>
+            </section>
+          </div>
+        ) : null}
+
+        {safeFaqItems.length > 0 ? (
+          <section className={styles.faqSection} aria-labelledby="site-info-faq-heading">
+            <div className={styles.faqHead}>
+              <span className={styles.faqEyebrow}>قبل التواصل</span>
+              <h2 id="site-info-faq-heading" className={styles.faqTitle}>
+                إجابات مباشرة قبل أن تراسلنا أو تغادر الصفحة
+              </h2>
+            </div>
+            <div className={styles.faqGrid}>
+              {safeFaqItems.map((item) => (
+                <details key={item.question} className={styles.faqCard}>
+                  <summary className={styles.faqQuestion}>{item.question}</summary>
+                  <p className={styles.faqAnswer}>{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        ) : null}
       </main>
     </div>
   );

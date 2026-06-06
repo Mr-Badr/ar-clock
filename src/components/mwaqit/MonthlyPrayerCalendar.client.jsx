@@ -38,6 +38,19 @@ const PRAYER_META = {
   isha:    { ar: 'العشاء', Icon: Star    },
 };
 
+async function readPdfErrorMessage(response) {
+  try {
+    const payload = await response.json();
+    if (typeof payload?.error === 'string' && payload.error.trim()) {
+      return payload.error.trim();
+    }
+  } catch {
+    return 'فشل إنشاء ملف PDF. يمكنك استخدام الجدول على الشاشة والمحاولة بعد قليل.';
+  }
+
+  return 'فشل إنشاء ملف PDF. يمكنك استخدام الجدول على الشاشة والمحاولة بعد قليل.';
+}
+
 let _timeFmtCache = null;
 function getTimeFmt(timezone) {
   if (!_timeFmtCache || _timeFmtCache.tz !== timezone) {
@@ -117,7 +130,7 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr, 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ schedule, cityNameAr, gregorianLabel, hijriLabel, countryCode, theme }),
       });
-      if (!res.ok) throw new Error('فشل إنشاء الملف');
+      if (!res.ok) throw new Error(await readPdfErrorMessage(res));
       const blob = await res.blob(), url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url; a.download = `taqwim-salat-${cityNameAr}-${gregorianLabel}.pdf`;
@@ -141,9 +154,8 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr, 
 
         /* ── Skeleton ── */
         .mpc-skeleton {
-          width:100%;height:520px;border-radius:var(--radius-xl);
-          background:linear-gradient(90deg,var(--bg-surface-2) 25%,var(--bg-surface-3) 50%,var(--bg-surface-2) 75%);
-          background-size:200% 100%;animation:mpcShimmer 1.6s ease-in-out infinite;
+          width:100%;height:520px;border-radius:var(--radius-lg);
+          background:var(--bg-surface-2);
         }
         @keyframes mpcShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
         @keyframes mpcPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.75)}}
@@ -153,8 +165,8 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr, 
         /* ── Card ── */
         .mpc-card{
           position:relative;background-color:var(--bg-surface-1);
-          border:1px solid var(--border-default);border-radius:var(--radius-xl);
-          box-shadow:var(--shadow-card);overflow:clip;
+          border:1px solid var(--border-default);border-radius:var(--radius-lg);
+          box-shadow: none;overflow:clip;
         }
 
         /* ── Header ── */
@@ -176,7 +188,7 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr, 
         .mpc-badge{
           display:inline-flex;align-items:center;gap:var(--space-1);
           font-size:var(--text-xs);font-weight:var(--font-semibold);
-          border-radius:var(--radius-full);padding:3px 10px;white-space:nowrap;line-height:1.5;
+          border-radius:var(--radius-md);padding:var(--space-1) var(--space-2);white-space:nowrap;line-height:1.5;
         }
         .mpc-badge--greg{color:var(--accent-alt);background:var(--accent-soft);border:1px solid var(--border-accent);}
         .mpc-badge--hijri{color:var(--text-secondary);background:var(--bg-surface-2);border:1px solid var(--border-subtle);}
@@ -186,14 +198,14 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr, 
         .mpc-btn-pdf{
           display:inline-flex;align-items:center;gap:var(--space-1-5);
           font-family:inherit;font-size:var(--text-sm);font-weight:var(--font-semibold);
-          color:var(--text-on-accent);background:var(--accent-gradient);
+          color:var(--text-on-accent);background:var(--blue);
           border:1px solid transparent;border-radius:var(--radius-md);
           padding:var(--space-2) var(--space-5);cursor:pointer;
-          transition:opacity 150ms ease,transform 100ms ease,box-shadow 150ms ease;
-          white-space:nowrap;user-select:none;box-shadow:var(--shadow-accent);
+          transition:opacity 150ms ease,background-color 150ms ease;
+          white-space:nowrap;user-select:none;box-shadow:none;
         }
-        .mpc-btn-pdf:hover:not(:disabled){opacity:.88;box-shadow:var(--shadow-accent-strong);transform:translateY(-1px);}
-        .mpc-btn-pdf:active:not(:disabled){transform:translateY(1px) scale(.99);}
+        .mpc-btn-pdf:hover:not(:disabled){opacity:.88;background:var(--blue-hover);box-shadow:none;}
+        .mpc-btn-pdf:active:not(:disabled){background:var(--blue-press);}
         .mpc-btn-pdf:disabled{opacity:.5;cursor:not-allowed;}
 
         /* ── Error ── */
@@ -207,7 +219,7 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr, 
         .mpc-scroll-outer{position:relative;}
         .mpc-scroll-outer::after{
           content:'';position:absolute;top:0;left:0;bottom:0;width:28px;
-          background:linear-gradient(to right,var(--bg-surface-1),transparent);
+          background:var(--bg-surface-1);
           pointer-events:none;z-index:2;display:none;
         }
         @media(max-width:800px){.mpc-scroll-outer::after{display:block;}}
@@ -271,7 +283,7 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr, 
         .mpc-row-friday td:last-child{
           box-shadow:inset 0px 1px 0px var(--success),inset 0px -1px 0px var(--success),inset 1px 0px 0px var(--success);
         }
-        .mpc-row-friday:hover td{background-color:rgba(6,214,160,.14) !important;}
+        .mpc-row-friday:hover td{background-color:color-mix(in srgb, var(--border-default) 35%, transparent) !important;}
 
         /* ── Cells ── */
         .mpc-td{padding:var(--space-2) var(--space-2);vertical-align:middle;font-size:var(--text-sm);color:var(--text-primary);transition:background-color 120ms ease;}
@@ -310,8 +322,10 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr, 
         /* ── Legend ── */
         .mpc-legend{
           display:flex;align-items:center;justify-content:flex-end;
-          gap:var(--space-5);padding:var(--space-3) var(--space-6) var(--space-4);
-          border-top:1px solid var(--border-subtle);direction:rtl;
+          gap:var(--space-5);padding:var(--space-3) var(--space-4);
+          margin:var(--space-4) var(--space-6);
+          border:1px solid var(--border-subtle);border-radius:var(--radius-md);
+          background:var(--bg-surface-2);direction:rtl;
         }
         .mpc-legend-item{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-xs);color:var(--text-muted);}
         .mpc-legend-swatch{width:24px;height:10px;border-radius:var(--radius-xs);flex-shrink:0;}
@@ -329,7 +343,7 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr, 
           .mpc-header{padding:var(--space-4) var(--space-4) var(--space-3);}
           .mpc-btn-pdf{padding:var(--space-1-5) var(--space-3);font-size:var(--text-xs);}
           .mpc-title{font-size:var(--text-base);}
-          .mpc-legend{padding:var(--space-3) var(--space-4);}
+          .mpc-legend{margin:var(--space-4);padding:var(--space-3) var(--space-4);}
         }
       `}</style>
 

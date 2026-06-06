@@ -1,14 +1,6 @@
-// src/components/date/MethodComparisonTable.tsx
-// ─────────────────────────────────────────────────────────────────────────────
-// REDESIGNED:
-//   • Agreement/disagreement banner tells user at a glance if methods match
-//   • Country context per method (which countries use each method)
-//   • .table-wrapper .table CSS classes from new.css
-//   • Highlights differing rows with warning state
-//   • Educational footer note
-// ─────────────────────────────────────────────────────────────────────────────
-
+import { CheckCircle2, Info, TriangleAlert } from 'lucide-react';
 import type { ConvertDateResult } from '@/lib/date-adapter';
+import styles from './MethodComparisonTable.module.css';
 
 interface Props {
   gregorianDate: string;
@@ -24,7 +16,7 @@ const METHODS = [
     nameEn:   'Umm al-Qura',
     badgeClass: 'badge badge-accent',
     badge:    'رسمي',
-    countries:'🇸🇦🇦🇪🇰🇼🇶🇦🇧🇭🇴🇲 الخليج',
+    countries:'السعودية ودول الخليج',
   },
   {
     key:      'astronomical',
@@ -32,7 +24,7 @@ const METHODS = [
     nameEn:   'Astronomical',
     badgeClass: 'badge badge-info',
     badge:    'فلكي',
-    countries:'🇲🇦🇪🇬🇯🇴🇩🇿🇹🇳🇱🇧 المغرب والشام',
+    countries:'المغرب ومصر والشام وشمال أفريقيا',
   },
   {
     key:      'civil',
@@ -40,40 +32,34 @@ const METHODS = [
     nameEn:   'Civil / Tabular',
     badgeClass: 'badge badge-success',
     badge:    'أكاديمي',
-    countries:'📐 للحسابات الأكاديمية',
+    countries:'للحسابات الأكاديمية والمقارنة',
   },
 ] as const;
 
-export function MethodComparisonTable({ gregorianDate, umalqura, astronomical, civil }: Props) {
+export function MethodComparisonTable({ gregorianDate: _gregorianDate, umalqura, astronomical, civil }: Props) {
   const results = { umalqura, astronomical, civil };
   const allAgree      = umalqura.formatted.ar === astronomical.formatted.ar && astronomical.formatted.ar === civil.formatted.ar;
   const uqMatchAstro  = umalqura.formatted.ar === astronomical.formatted.ar;
+  const NoticeIcon = allAgree ? CheckCircle2 : TriangleAlert;
 
   return (
-    <div>
-      {/* Agreement/disagreement banner */}
+    <div className={styles.root}>
       <div
-        className={`flex items-center gap-3 px-5 py-3 rounded-xl mb-3 ${allAgree ? 'badge-success' : 'badge-warning'}`}
-        style={{
-          background:  allAgree ? 'var(--success-soft)' : 'var(--warning-soft)',
-          border:      `1px solid ${allAgree ? 'var(--success-border)' : 'var(--warning-border)'}`,
-          borderRadius: 'var(--radius-xl)',
-        }}
+        className={`${styles.notice} ${allAgree ? styles.noticeSuccess : styles.noticeWarning}`}
+        role="status"
       >
-        <span className="text-lg leading-none">{allAgree ? '✅' : '⚠️'}</span>
-        <p
-          className="text-xs font-semibold m-0"
-          style={{ color: allAgree ? 'var(--success)' : 'var(--warning)' }}
-        >
+        <span className={styles.noticeIcon} aria-hidden="true">
+          <NoticeIcon size={18} strokeWidth={1.9} />
+        </span>
+        <p className={styles.noticeText}>
           {allAgree
             ? 'جميع طرق الحساب الثلاثة تتفق على نفس التاريخ الهجري هذا اليوم'
             : uqMatchAstro
-            ? 'أم القرى والفلكي يتفقان — الحسابي يختلف بيوم واحد'
-            : 'الطرق الثلاثة تختلف — قد يتفاوت التاريخ بيوم واحد بين الدول'}
+            ? 'أم القرى والفلكي يتفقان، والحسابي يختلف بيوم واحد'
+            : 'الطرق الثلاثة تختلف، وقد يتفاوت التاريخ بيوم واحد بين الدول'}
         </p>
       </div>
 
-      {/* Table */}
       <div className="table-wrapper">
         <table className="table">
           <thead>
@@ -91,24 +77,24 @@ export function MethodComparisonTable({ gregorianDate, umalqura, astronomical, c
               return (
                 <tr
                   key={key}
-                  style={differs ? { background: 'var(--warning-soft)' } : undefined}
+                  className={differs ? styles.differs : undefined}
                 >
                   <td>
-                    <div className="flex items-center gap-2">
+                    <div className={styles.methodCell}>
                       <div>
-                        <div className="font-semibold text-primary text-sm">{label}</div>
-                        <div className="text-xs text-muted">{nameEn}</div>
+                        <div className={styles.methodName}>{label}</div>
+                        <div className={styles.methodMeta}>{nameEn}</div>
                       </div>
                       <span className={badgeClass}>{badge}</span>
                       {differs && <span className="badge badge-warning">يختلف</span>}
                     </div>
                   </td>
                   <td>
-                    <div className="text-xs text-secondary">{countries}</div>
+                    <div className={styles.countries}>{countries}</div>
                   </td>
                   <td className="numeric">
-                    <div className="font-bold text-primary tabular-nums">{result.formatted.ar}</div>
-                    <div className="text-xs text-muted">{result.dayNameAr}</div>
+                    <div className={styles.dateValue}>{result.formatted.ar}</div>
+                    <div className={styles.dayName}>{result.dayNameAr}</div>
                   </td>
                 </tr>
               );
@@ -117,9 +103,8 @@ export function MethodComparisonTable({ gregorianDate, umalqura, astronomical, c
         </table>
       </div>
 
-      {/* Educational footer */}
-      <p className="text-xs text-muted mt-2 leading-relaxed">
-        💡 الاختلاف بين الطرق لا يتجاوز يوماً واحداً، وسببه آلية تحديد بداية الشهر الهجري (حساب مسبق مقابل رؤية الهلال الفعلية).
+      <p className={styles.note}>
+        <Info size={13} aria-hidden="true" /> الاختلاف بين الطرق لا يتجاوز يوماً واحداً غالباً، وسببه آلية تحديد بداية الشهر الهجري بين حساب مسبق ورؤية الهلال.
       </p>
     </div>
   );

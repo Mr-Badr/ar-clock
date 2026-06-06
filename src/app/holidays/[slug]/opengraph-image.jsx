@@ -39,10 +39,6 @@ const CAT_LABEL = {
   islamic: 'إسلامي', national: 'وطني', school: 'مدرسي',
   holidays: 'إجازة', astronomy: 'فلكي', business: 'أعمال',
 };
-const CAT_EMOJI = {
-  islamic: '🌙', national: '🏳️', school: '📚',
-  holidays: '🏖️', astronomy: '🌍', business: '💼',
-};
 
 /* Urgency palette for days number */
 function daysColor(days, accent) {
@@ -65,7 +61,7 @@ function renderFallbackImage({ width, height, fonts }) {
       }}
     >
       <span style={{ color: '#4ECDC4', fontSize: 48, fontWeight: 800 }}>
-        {SITE_BRAND} — عداد المواعيد
+        {SITE_BRAND}: عداد المواعيد
       </span>
     </div>,
     { width, height, fonts },
@@ -92,7 +88,7 @@ export default async function Image({ params, searchParams }) {
     /* ── Data ── */
     const { event, remaining: rem, seo, dateStr } = ogData;
     const accent = CAT_COLOR[event.category] || '#4ECDC4';
-    const emoji = CAT_EMOJI[event.category] || '📅';
+    const categoryLabel = CAT_LABEL[event.category] || 'مناسبة';
     const daysFg = daysColor(rem.days, accent);
 
     /* ── Title — prefer short name; fall back to event.name ── */
@@ -136,12 +132,11 @@ export default async function Image({ params, searchParams }) {
               background: 'rgba(255,255,255,0.06)', borderRadius: 24,
               padding: '8px 18px', border: `1px solid ${accent}44`,
             }}>
-              <span style={{ fontSize: 20 }}>{emoji}</span>
               <span style={{ color: accent, fontSize: 15, fontWeight: 600 }}>
-                {CAT_LABEL[event.category] || 'مناسبة'}
+                {categoryLabel}
               </span>
             </div>
-            <span style={{ color: '#4A5568', fontSize: 14, fontWeight: 500 }}>{SITE_BRAND} — عداد المواعيد</span>
+            <span style={{ color: '#4A5568', fontSize: 14, fontWeight: 500 }}>{SITE_BRAND}: عداد المواعيد</span>
           </div>
 
           {/* Middle: event name + date */}
@@ -237,8 +232,7 @@ export default async function Image({ params, searchParams }) {
         background: 'rgba(255,255,255,0.07)', borderRadius: 32,
         padding: '10px 24px', border: `1px solid ${accent}44`,
       }}>
-        <span style={{ fontSize: 28 }}>{emoji}</span>
-        <span style={{ color: accent, fontSize: 18, fontWeight: 600 }}>{CAT_LABEL[event.category] || 'مناسبة'}</span>
+        <span style={{ color: accent, fontSize: 18, fontWeight: 600 }}>{categoryLabel}</span>
       </div>
 
       {/* Event name */}

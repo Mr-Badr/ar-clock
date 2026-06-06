@@ -110,7 +110,7 @@ export async function TimeSnapshot({ fromCity, toCity }) {
 
 export function SuspendedTimeSnapshot({ fromCity, toCity }) {
   return (
-    <Suspense fallback={<div className="h-24 animate-pulse bg-[var(--bg-surface-2)] rounded-2xl" />}>
+    <Suspense fallback={<div className="h-24 animate-pulse bg-[var(--bg-surface-2)] rounded-[var(--radius-lg)]" />}>
       <TimeSnapshot fromCity={fromCity} toCity={toCity} />
     </Suspense>
   );

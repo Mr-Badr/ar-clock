@@ -45,7 +45,7 @@ export default function AgePlanetsCalculator() {
           <CardHeader>
             <CardTitle className="calc-card-title">عمرك على الكواكب</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent aria-live="polite">
             <MetricGrid
               items={result.planets.map((planet) => ({
                 label: planet.label,

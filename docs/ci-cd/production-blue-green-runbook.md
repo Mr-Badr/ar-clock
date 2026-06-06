@@ -130,6 +130,49 @@ What we want to see:
 
 Choose the right compose file based on which slot is inactive.
 
+If the inactive slot container already exists, replace it first.
+This is normal in blue/green because the old rollback slot often stays on disk with the same container name.
+
+Typical symptom:
+
+```text
+Error response from daemon: Conflict. The container name "/miqatona-prod-blue" is already in use ...
+```
+
+or:
+
+```text
+Error response from daemon: Conflict. The container name "/miqatona-prod-green" is already in use ...
+```
+
+This does not mean production is broken.
+It usually means:
+- the currently inactive rollback slot is still present
+- Docker Compose is trying to recreate that slot with the same fixed container name
+- we must remove only the inactive slot, not the active public one
+
+If green is active and blue is inactive:
+
+```bash
+docker stop miqatona-prod-blue
+docker rm miqatona-prod-blue
+```
+
+If blue is active and green is inactive:
+
+```bash
+docker stop miqatona-prod-green
+docker rm miqatona-prod-green
+```
+
+After removing the inactive slot, rerun the same `docker compose ... up -d` command for that slot.
+
+What we want to see:
+- the old inactive container is removed cleanly
+- the active public slot is untouched
+- nginx still points to the active slot while we replace the inactive one
+- the next `docker compose ... up -d` no longer fails with a container-name conflict
+
 If green is inactive:
 
 ```bash
@@ -147,6 +190,7 @@ docker compose --env-file /opt/miqatona/env/production.env -f compose.base.yml -
 What we want to see:
 - the inactive container starts
 - production Postgres stays healthy
+- the recreated inactive container uses the expected image tag or image ID
 
 ## Step 4: verify the inactive slot before public cutover
 

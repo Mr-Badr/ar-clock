@@ -5,6 +5,8 @@ import {
   ensureCountryContextSentence,
   localizeEventLabel,
 } from '@/lib/holidays/display';
+import { buildHolidayPageModel } from '@/lib/holidays/page-model';
+import { getHolidayDisplayTitle } from '@/lib/holidays/search-intent';
 
 test('localizeEventLabel appends country name for alias-like events when missing', () => {
   const event = { _countryCode: 'eg' };
@@ -26,4 +28,35 @@ test('ensureCountryContextSentence adds a localized fallback sentence once', () 
   const text = ensureCountryContextSentence('عد تنازلي دقيق للحدث.', event);
   assert.match(text, /قطر/);
   assert.match(text, /الموعد والمعلومات/);
+});
+
+test('holiday page model uses a clean event label instead of question-style SEO h1', () => {
+  const model = buildHolidayPageModel({
+    event: { name: 'رمضان', category: 'islamic', type: 'hijri' },
+    seo: {
+      seoMeta: { h1: 'متى رمضان 2027؟' },
+      answerSummary: '',
+    },
+    quickFacts: [],
+    faqItems: [],
+    tokenContext: { eventName: 'رمضان', year: 2027, hijriYear: 1448 },
+    calInfo: null,
+    nowIso: '2026-06-03T00:00:00.000Z',
+  });
+
+  assert.equal(model.meta.displayTitle, 'رمضان');
+  assert.equal(model.hero.title, 'رمضان');
+});
+
+test('holiday search display title does not inherit question-style SEO h1', () => {
+  const title = getHolidayDisplayTitle({
+    event: { name: 'رمضان', category: 'islamic', type: 'hijri' },
+    seo: {
+      seoMeta: { h1: 'متى رمضان 2027؟' },
+      seoTitle: 'متى رمضان 2027؟',
+    },
+    tokenContext: { eventName: 'رمضان', year: 2027, hijriYear: 1448 },
+  });
+
+  assert.equal(title, 'رمضان');
 });

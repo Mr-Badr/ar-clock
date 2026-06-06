@@ -21,7 +21,11 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
 
-
+import AdInArticle from '@/components/ads/AdInArticle';
+import AdTopBanner from '@/components/ads/AdTopBanner';
+import SiteTrustPanel from '@/components/site/SiteTrustPanel';
+import DeferredSectionNotice from '@/components/shared/DeferredSectionNotice';
+import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
 import TimeNowHero from '@/components/time-now/TimeNowHero';
 import SearchCity from '@/components/SearchCityWrapper.client';
 import CountryCitiesGrid from '@/components/time-now/CountryCitiesGrid';
@@ -30,6 +34,8 @@ import SameTimezoneCountries from '@/components/time-now/SameTimezoneCountries';
 import TimeNowFAQ from '@/components/time-now/TimeNowFAQ';
 import RelatedSearches from '@/components/time-now/RelatedSearches';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
+import { Skeleton } from '@/components/ui/skeleton';
+import routeStyles from '@/app/time-now/TimeNowRoutePage.module.css';
 import {
   getAllCountries,
   getPriorityCountrySlugs,
@@ -47,13 +53,33 @@ import {
 } from '@/lib/seo/country-indexing';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 import { buildTimeNowKeywords } from '@/lib/seo/section-search-intent';
+import { buildNoindexRouteMetadata, isRouteSlug } from '@/lib/route-param-validation';
 import {
   buildCountryTimeNowFaqItems,
   getCountriesSharingCurrentOffset,
   getTimeNowSeoFacts,
 } from '@/lib/time-now-content';
+import { logger, serializeError } from '@/lib/logger';
 
 const BASE = getSiteUrl();
+
+const COUNTRY_TIME_SOURCE_LINKS = [
+  {
+    href: 'https://www.iana.org/time-zones',
+    label: 'قاعدة IANA للمناطق الزمنية',
+    description: 'المرجع التقني لأسماء المناطق الزمنية وتغييرات الإزاحة وقواعد التوقيت الصيفي حول العالم.',
+  },
+  {
+    href: 'https://www.bipm.org/en/time-metrology',
+    label: 'BIPM ومرجعية UTC',
+    description: 'يوضح دور UTC بوصفه مقياس الوقت المرجعي الذي تُقارن به فروق التوقيت الدولية.',
+  },
+  {
+    href: 'https://www.timeanddate.com/time/dst/',
+    label: 'شرح التوقيت الصيفي DST',
+    description: 'مرجع عملي لفهم لماذا يتغير فرق الساعات في بعض الدول خلال السنة ولا يتغير في دول أخرى.',
+  },
+];
 
 /* ── ROUTE CONFIG ────────────────────────────────────────────────── */
 
@@ -67,7 +93,9 @@ export async function generateStaticParams() {
     ];
   }
   const slugs = await getPriorityCountrySlugs(24);
-  return slugs.map(slug => ({ country: slug }));
+  return Array.isArray(slugs)
+    ? slugs.filter(isRouteSlug).map(slug => ({ country: slug }))
+    : [];
 }
 
 function getUtcOffsetStr(timezone) {
@@ -79,120 +107,191 @@ function getUtcOffsetStr(timezone) {
   } catch { return ''; }
 }
 
+function isValidCityRecord(city) {
+  return Boolean(
+    city
+      && typeof city === 'object'
+      && typeof city.city_slug === 'string'
+      && city.city_slug.trim().length > 0
+      && (city.name_ar || city.name_en || city.city_name_ar),
+  );
+}
+
+function isValidFaqItem(item) {
+  return Boolean(
+    item
+      && typeof item === 'object'
+      && typeof item.q === 'string'
+      && item.q.trim().length > 0
+      && typeof item.a === 'string'
+      && item.a.trim().length > 0,
+  );
+}
+
+function isValidCountryOffsetEntry(entry) {
+  return Boolean(
+    entry
+      && typeof entry === 'object'
+      && typeof entry.country_slug === 'string'
+      && entry.country_slug.trim().length > 0
+      && (entry.country_name_ar || entry.country_name_en),
+  );
+}
+
 /* ── DYNAMIC METADATA ────────────────────────────────────────────── */
 export async function generateMetadata({ params }) {
   const { country: countrySlug } = await params;
-  const country = await getCountryBySlug(countrySlug);
-  if (!country) return { title: 'الوقت الان' };
+  if (!isRouteSlug(countrySlug)) {
+    return buildNoindexRouteMetadata({
+      title: `رابط وقت غير صالح | ${SITE_BRAND}`,
+      description: 'هذا الرابط غير صالح أو يحتوي على جزء ديناميكي غير مكتمل، لذلك لا تتم فهرسته.',
+      canonical: '/time-now',
+    });
+  }
 
-  const capital = await getCapitalCity(country.country_code);
+  try {
+    const country = await getCountryBySlug(countrySlug);
+    if (!country) return { title: 'الوقت الان' };
 
-  const countryAr = country.name_ar;
-  const cityAr = capital ? capital.name_ar : countryAr;
-  const timezone = capital ? capital.timezone : country.timezone;
-  const offset = getUtcOffsetStr(timezone);
-  const policy = GEO_ROUTE_INDEXING_POLICIES.timeNow;
-  const isIndexableCountry = isSeoIndexableCountrySlug(countrySlug, {
-    scope: policy.countryScope,
-  });
+    const capital = await getCapitalCity(country.country_code);
 
-  return {
-    title: `كم الساعة الآن في ${countryAr}؟ | ${cityAr} والمدن الرئيسية اليوم`,
-    description: `اعرف فوراً الساعة الآن في ${countryAr} مع الوقت الحالي في ${cityAr}، والتاريخ اليوم، وفارق UTC ${offset}، وروابط أبرز المدن داخل الدولة.`,
-    keywords: buildTimeNowKeywords({
-      countryAr,
-      countryEn: country.name_en,
-      cityAr,
-      cityEn: capital?.name_en,
-      timezone,
-      utcOffset: offset,
-    }),
-    metadataBase: new URL(BASE),
-    alternates: {
-      canonical: `/time-now/${countrySlug}`,
-    },
-    openGraph: {
-      type: 'website',
-      locale: 'ar_SA',
-      url: `${BASE}/time-now/${countrySlug}`,
-      siteName: SITE_BRAND,
-      title: `كم الساعة الآن في ${countryAr}؟ | ${cityAr} والمدن اليوم`,
-      description: `اعرف الوقت الحالي في ${countryAr} مع توقيت ${cityAr} المباشر والتاريخ اليوم والمنطقة الزمنية ${offset}.`,
-      images: [{
-        url: `${BASE}/time-now/${countrySlug}/opengraph-image`,
-        width: 1200,
-        height: 630,
-        alt: `الوقت الان في ${countryAr}`,
-      }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `كم الساعة الآن في ${countryAr}؟ | ${cityAr} الآن`,
-      description: `اعرف الوقت الحالي في ${countryAr} مع توقيت ${cityAr} المباشر والتاريخ اليوم والمنطقة الزمنية ${offset}.`,
-      images: [`${BASE}/time-now/${countrySlug}/opengraph-image`],
-    },
-    robots: {
-      index: isIndexableCountry,
-      follow: true,
-      googleBot: {
+    const countryAr = country.name_ar;
+    const cityAr = capital ? capital.name_ar : countryAr;
+    const timezone = capital ? capital.timezone : country.timezone;
+    const offset = getUtcOffsetStr(timezone);
+    const policy = GEO_ROUTE_INDEXING_POLICIES.timeNow;
+    const isIndexableCountry = isSeoIndexableCountrySlug(countrySlug, {
+      scope: policy.countryScope,
+    });
+
+    return {
+      title: `الوقت الان في ${countryAr} | الساعة والتاريخ والمدن`,
+      description: `اعرف الساعة الان في ${countryAr} مع توقيت ${cityAr}، التاريخ المحلي، منطقة IANA، فرق UTC ${offset}، حالة التوقيت الصيفي، وروابط المدن وفرق التوقيت.`,
+      keywords: buildTimeNowKeywords({
+        countryAr,
+        countryEn: country.name_en,
+        cityAr,
+        cityEn: capital?.name_en,
+        timezone,
+        utcOffset: offset,
+      }),
+      metadataBase: new URL(BASE),
+      alternates: {
+        canonical: `/time-now/${countrySlug}`,
+      },
+      openGraph: {
+        type: 'website',
+        locale: 'ar_SA',
+        url: `${BASE}/time-now/${countrySlug}`,
+        siteName: SITE_BRAND,
+        title: `الوقت الان في ${countryAr} | الساعة والتاريخ والمدن`,
+        description: `ساعة ${countryAr} الآن مع توقيت ${cityAr}، التاريخ المحلي، منطقة IANA، فرق UTC ${offset}، وروابط المدن وفرق التوقيت.`,
+        images: [{
+          url: `${BASE}/time-now/${countrySlug}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: `الوقت الان في ${countryAr}`,
+        }],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `الوقت الان في ${countryAr} | ${cityAr}`,
+        description: `اعرف ساعة ${countryAr} الآن مع التاريخ المحلي وفرق UTC ${offset} وروابط المدن داخل الدولة.`,
+        images: [`${BASE}/time-now/${countrySlug}/opengraph-image`],
+      },
+      robots: {
         index: isIndexableCountry,
         follow: true,
-        'max-snippet': -1,
-        'max-image-preview': 'large',
+        googleBot: {
+          index: isIndexableCountry,
+          follow: true,
+          'max-snippet': -1,
+          'max-image-preview': 'large',
+        },
       },
-    },
-  };
+    };
+  } catch (error) {
+    logger.error('time-now-country-metadata-failed', {
+      routePath: `/time-now/${countrySlug}`,
+      countrySlug,
+      error: serializeError(error),
+    });
+    return {
+      title: `الوقت الان حسب الدولة | ${SITE_BRAND}`,
+      description: 'اعرف الوقت الحالي حسب الدولة مع مسارات المدن والتاريخ والصلاة داخل ميقاتنا.',
+      alternates: {
+        canonical: `/time-now/${countrySlug}`,
+      },
+    };
+  }
 }
 
 /* ── PAGE ────────────────────────────────────────────────────────── */
 export default async function CountryTimePage({ params }) {
   const { country: countrySlug } = await params;
+  if (!isRouteSlug(countrySlug)) notFound();
 
   /* Fetch country and capital from DB */
-  const country = await getCountryBySlug(countrySlug);
+  let country;
+  try {
+    country = await getCountryBySlug(countrySlug);
+  } catch (error) {
+    logger.error('time-now-country-page-data-failed', {
+      routePath: `/time-now/${countrySlug}`,
+      countrySlug,
+      error: serializeError(error),
+    });
+    return (
+      <RouteUnavailableState
+        eyebrow="تعذر الوصول إلى بيانات الدولة الآن"
+        title="صفحة الوقت حسب الدولة متاحة جزئياً فقط الآن"
+        description="تعذر تحميل بيانات هذه الدولة في هذه اللحظة، لذلك أوقفنا الانهيار الكامل وأظهرنا لك مسارات واضحة بديلة حتى لا تتحول الزيارة إلى 5xx أو صفحة فارغة."
+        primaryLink={{
+          href: '/time-now',
+          label: 'افتح صفحة الوقت الان',
+          description: 'انتقل إلى صفحة الوقت الرئيسية ثم اختر دولة أو مدينة أخرى من البحث المباشر.',
+        }}
+        secondaryLinks={[
+          {
+            href: '/mwaqit-al-salat',
+            label: 'افتح مواقيت الصلاة',
+            description: 'يمكنك الوصول إلى صفحات الصلاة حسب الدولة والمدينة من القسم الرئيسي.',
+          },
+          {
+            href: '/date',
+            label: 'افتح قسم التاريخ',
+            description: 'راجع التاريخ اليوم وأدوات التحويل والتقويم من صفحة التاريخ الرئيسية.',
+          },
+          {
+            href: '/fahras',
+            label: 'استكشف الصفحات',
+            description: 'استخدم فهرس الصفحات للوصول السريع إلى أقرب مسار مرتبط بسؤالك.',
+          },
+        ]}
+      />
+    );
+  }
   if (!country) notFound();
-  const capital = await getCapitalCity(country.country_code);
+  let capital = null;
+  try {
+    capital = await getCapitalCity(country.country_code);
+  } catch (error) {
+    logger.warn('time-now-country-capital-lookup-failed', {
+      routePath: `/time-now/${countrySlug}`,
+      countrySlug,
+      countryCode: country.country_code,
+      error: serializeError(error),
+    });
+  }
   const timezone = capital ? capital.timezone : country.timezone;
-
-  /* Fetch supporting data */
-  const [cities, nowIso, allCountries] = await Promise.all([
-    getTopCitiesByCountry(country.country_code, 30),
-    getCachedNowIso(),
-    getAllCountries(),
-  ]);
-
   const countryAr = country.name_ar;
   const cityAr = capital ? capital.name_ar : countryAr;
   const utcOffset = getUtcOffsetStr(timezone);
-  const timeFacts = getTimeNowSeoFacts({
-    timezone,
-    utcOffset,
-    referenceDateOrIso: nowIso,
-    placeAr: countryAr,
-  });
-  const sameOffsetCountries = getCountriesSharingCurrentOffset(allCountries, {
-    referenceTimezone: timezone,
-    referenceDateOrIso: nowIso,
-    excludeCountrySlug: countrySlug,
-  });
-  const faqItems = buildCountryTimeNowFaqItems({
-    countryAr,
-    capitalAr: capital?.name_ar || null,
-    timezone,
-    utcOffset,
-    referenceDateOrIso: nowIso,
-    cityCount: cities.length,
-  });
-  const relatedOffsetCountriesText = sameOffsetCountries
-    .slice(0, 3)
-    .map((entry) => entry.country_name_ar || entry.country_name_en)
-    .filter(Boolean)
-    .join('، ');
   const countryUtilityLinks = [
     {
       href: `/mwaqit-al-salat/${countrySlug}`,
       label: `مواقيت الصلاة في ${countryAr}`,
-      description: `صفحة مواقيت الصلاة في ${countryAr} مع العاصمة وأبرز المدن وروابط داخلية قابلة للفهرسة.`,
+      description: `اعرف مواقيت الصلاة في ${countryAr} مع العاصمة وأشهر المدن من نفس القسم بدون بحث إضافي.`,
     },
     {
       href: `/date/country/${countrySlug}`,
@@ -223,25 +322,12 @@ export default async function CountryTimePage({ params }) {
     ],
   };
 
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqItems.map((item) => ({
-      '@type': 'Question',
-      name: item.q,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.a,
-      },
-    })),
-  };
-
   const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: `الوقت الآن في ${countryAr}`,
+    name: `الوقت الان في ${countryAr}`,
     url: `${BASE}/time-now/${countrySlug}`,
-    description: `اعرف الوقت الآن في ${countryAr} بدقة حتى الثانية. الساعة الحالية في ${cityAr} مع التاريخ اليوم الميلادي والهجري.`,
+    description: `اعرف الوقت الان في ${countryAr} بدقة حتى الثانية، مع توقيت ${cityAr}، التاريخ الميلادي والهجري، منطقة IANA، حالة التوقيت الصيفي، وروابط المدن داخل الدولة.`,
     inLanguage: 'ar',
     breadcrumb: { '@id': `${BASE}/time-now/${countrySlug}#breadcrumb` },
     about: {
@@ -250,165 +336,459 @@ export default async function CountryTimePage({ params }) {
       alternateName: countryAr,
     },
   };
-  const cityItemListSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: `مدن ${countryAr} في قسم الوقت الآن`,
-    itemListElement: cities.slice(0, 30).map((cityItem, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: cityItem.name_ar || cityItem.name_en,
-      url: `${BASE}/time-now/${countrySlug}/${cityItem.city_slug}`,
-    })),
-  };
 
   return (
     <div className="min-h-screen bg-base text-primary" dir="rtl" lang="ar">
-
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(cityItemListSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <main>
         {/* ── BREADCRUMB ── */}
         <nav
           aria-label="مسار التنقل"
-          className="container mx-auto px-4 pt-6 pb-2"
+          className={`container mx-auto px-4 ${routeStyles.breadcrumb}`}
         >
-          <ol style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', flexWrap: 'wrap', margin: 0, padding: 0, listStyle: 'none', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
-            <li><Link href="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }} className="hover:text-accent transition-colors">الرئيسية</Link></li>
-            <li aria-hidden><ChevronLeft size={13} style={{ rotate: '180deg' }} /></li>
-            <li><Link href="/time-now" style={{ color: 'var(--text-muted)', textDecoration: 'none' }} className="hover:text-accent transition-colors">الوقت الان</Link></li>
-            <li aria-hidden><ChevronLeft size={13} style={{ rotate: '180deg' }} /></li>
-            <li aria-current="page" style={{ color: 'var(--text-primary)', fontWeight: '600' }}>{countryAr}</li>
+          <ol className={routeStyles.breadcrumbList}>
+            <li className={routeStyles.breadcrumbItem}>
+              <Link href="/" className={routeStyles.breadcrumbLink}>الرئيسية</Link>
+            </li>
+            <li aria-hidden><ChevronLeft size={13} className={routeStyles.breadcrumbChevron} /></li>
+            <li className={routeStyles.breadcrumbItem}>
+              <Link href="/time-now" className={routeStyles.breadcrumbLink}>الوقت الان</Link>
+            </li>
+            <li aria-hidden><ChevronLeft size={13} className={routeStyles.breadcrumbChevron} /></li>
+            <li aria-current="page" className={routeStyles.breadcrumbCurrent}>{countryAr}</li>
           </ol>
         </nav>
 
         {/* ── HERO SECTION ── */}
-        <section aria-labelledby="country-time-heading" className="container mx-auto px-4 py-8">
-          <h1 id="country-time-heading" className="text-3xl md:text-5xl font-black mb-6 leading-tight text-center">
-            كم الساعة الآن في <span className="text-accent">{countryAr}</span>؟
-          </h1>
-          <p className="mx-auto mb-6 max-w-2xl text-center text-sm leading-7 text-[var(--text-muted)] sm:text-base">
-            اعرف الوقت الحالي في {countryAr} مع توقيت {cityAr} والتاريخ اليوم والمنطقة الزمنية {utcOffset || timezone}، ثم انتقل إلى صفحات المدن داخل الدولة.
-          </p>
+        <section aria-labelledby="country-time-heading" className={`container mx-auto px-4 ${routeStyles.heroSection}`}>
+          <div className={routeStyles.heroInner}>
+            <div className={routeStyles.heroCopy}>
+              <h1 id="country-time-heading" className={routeStyles.heroTitle}>
+                كم الساعة الان في <span className="text-accent">{countryAr}</span>؟
+              </h1>
+              <p className={routeStyles.heroLead}>
+                الوقت الان في {countryAr} يبدأ من توقيت {cityAr}: سترى الساعة الحالية، التاريخ المحلي، المنطقة الزمنية {utcOffset || timezone}، وروابط المدن داخل الدولة. إذا كان موعدك للسفر أو العمل، لا تحفظ فرق الساعات فقط؛ تحقق من المدينة وفرق UTC قبل تثبيت الموعد.
+              </p>
+            </div>
 
-          {/* City Search */}
-          <div className="w-full max-w-xl mx-auto shadow-sm rounded-xl mb-4">
-            <SearchCity mode="time-now" />
-          </div>
+            <div className={routeStyles.searchWrap}>
+              <SearchCity mode="time-now" />
+            </div>
 
-          {/* Live Clock */}
-          <div className="max-w-3xl mx-auto">
-            <Suspense fallback={<div style={{ height: '280px', borderRadius: '1rem', background: 'var(--bg-surface-2)' }} aria-hidden />}>
-              <TimeNowHero
-                ianaTimezone={timezone}
-                cityNameAr={cityAr}
-                countryNameAr={countryAr}
-                countryCode={country.country_code}
-              />
-            </Suspense>
+            <div className={routeStyles.clockWrap}>
+              <Suspense fallback={<div className={routeStyles.heroClockFallback} aria-hidden />}>
+                <TimeNowHero
+                  ianaTimezone={timezone}
+                  cityNameAr={cityAr}
+                  countryNameAr={countryAr}
+                  countryCode={country.country_code}
+                />
+              </Suspense>
+            </div>
           </div>
         </section>
 
-        {/* ── CITIES GRID ── */}
-        {cities.length > 1 && (
-          <section aria-labelledby="cities-grid-heading" className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
-            <h2 id="cities-grid-heading" className="text-2xl font-bold mb-6">
-              🏙️ الوقت الان في مدن {countryAr}
-            </h2>
-            <Suspense fallback={<div style={{ height: '160px', borderRadius: '1rem', background: 'var(--bg-surface-2)' }} aria-hidden />}>
-              <CountryCitiesGrid cities={cities} countrySlug={countrySlug} />
-            </Suspense>
+        <section className={`container mx-auto px-4 ${routeStyles.summaryBand}`}>
+          <div className={routeStyles.summaryGrid}>
+            <div className={routeStyles.summaryCard}>
+              <p className={routeStyles.summaryLabel}>العاصمة المرجعية</p>
+              <p className={routeStyles.summaryValue}>{cityAr}</p>
+              <p className={routeStyles.summaryCopy}>
+                نبدأ بالعاصمة أو المدينة الأوضح بحثاً حتى تحصل على جواب سريع، ثم نفتح لك مسارات المدن عند الحاجة.
+              </p>
+            </div>
+            <div className={routeStyles.summaryCard}>
+              <p className={routeStyles.summaryLabel}>المنطقة الزمنية</p>
+              <p className={`${routeStyles.summaryValue} ${routeStyles.summaryValueLtr}`}>{utcOffset || timezone}</p>
+              <p className={routeStyles.summaryCopy}>
+                الإزاحة الحالية مفيدة الآن، لكن مواعيد الأسابيع القادمة تحتاج مراجعة حالة التوقيت الصيفي.
+              </p>
+            </div>
+            <div className={routeStyles.summaryCard}>
+              <p className={routeStyles.summaryLabel}>ما الذي ستجده هنا؟</p>
+              <p className={routeStyles.summaryValue}>وقت + تاريخ + مسارات</p>
+              <p className={routeStyles.summaryCopy}>
+                اختر بعدها الصلاة، التاريخ، صفحة المدينة، أو حاسبة فرق التوقيت حسب القرار الذي تريد اتخاذه.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="container mx-auto px-4 pb-2">
+          <AdTopBanner slotId={`top-time-country-${countrySlug}`} />
+        </section>
+
+        <Suspense fallback={<CountryTimePageSectionsFallback />}>
+          <CountryTimePageSections
+            capital={capital}
+            country={country}
+            countryAr={countryAr}
+            countrySlug={countrySlug}
+            countryUtilityLinks={countryUtilityLinks}
+            cityAr={cityAr}
+            timezone={timezone}
+            utcOffset={utcOffset}
+          />
+        </Suspense>
+      </main>
+    </div>
+  );
+}
+
+async function CountryTimePageSections({
+  capital,
+  country,
+  countryAr,
+  countrySlug,
+  countryUtilityLinks,
+  cityAr,
+  timezone,
+  utcOffset,
+}) {
+  try {
+    const [cities, nowIso, allCountries] = await Promise.all([
+      getTopCitiesByCountry(country.country_code, 30),
+      getCachedNowIso(),
+      getAllCountries(),
+    ]);
+    const safeCities = Array.isArray(cities) ? cities.filter(isValidCityRecord) : [];
+    const safeAllCountries = Array.isArray(allCountries) ? allCountries : [];
+    const timeFacts = getTimeNowSeoFacts({
+      timezone,
+      utcOffset,
+      referenceDateOrIso: nowIso,
+      placeAr: countryAr,
+    });
+    const sameOffsetCountries = getCountriesSharingCurrentOffset(safeAllCountries, {
+      referenceTimezone: timezone,
+      referenceDateOrIso: nowIso,
+      excludeCountrySlug: countrySlug,
+    });
+    const safeSameOffsetCountries = Array.isArray(sameOffsetCountries)
+      ? sameOffsetCountries.filter(isValidCountryOffsetEntry)
+      : [];
+    const builtFaqItems = buildCountryTimeNowFaqItems({
+      countryAr,
+      capitalAr: capital?.name_ar || null,
+      timezone,
+      utcOffset,
+      referenceDateOrIso: nowIso,
+      cityCount: safeCities.length,
+    });
+    const faqItems = Array.isArray(builtFaqItems) ? builtFaqItems.filter(isValidFaqItem) : [];
+    const relatedOffsetCountriesText = safeSameOffsetCountries
+      .slice(0, 3)
+      .map((entry) => entry.country_name_ar || entry.country_name_en)
+      .filter(Boolean)
+      .join('، ');
+    const faqSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqItems.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.a,
+        },
+      })),
+    };
+    const cityItemListSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: `مدن ${countryAr} في قسم الوقت الان`,
+      itemListElement: safeCities.slice(0, 30).map((cityItem, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: cityItem.name_ar || cityItem.name_en,
+        url: `${BASE}/time-now/${countrySlug}/${cityItem.city_slug}`,
+      })),
+    };
+
+    return (
+      <>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(cityItemListSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+
+        {safeCities.length > 1 && (
+          <section aria-labelledby="cities-grid-heading" className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+            <div className={routeStyles.sectionPanel}>
+              <div className={routeStyles.sectionHead}>
+                <h2 id="cities-grid-heading" className={routeStyles.sectionTitle}>
+                  الوقت الان في مدن {countryAr}
+                </h2>
+                <p className={routeStyles.sectionCopy}>
+                  ابدأ بالعاصمة أو انتقل مباشرة إلى المدينة الأقرب لك. هذا القسم يظهر بعد الجواب الأساسي حتى تبقى الصفحة عملية قبل عرض بقية المدن.
+                </p>
+              </div>
+              <Suspense fallback={<div className={`${routeStyles.boxSkeleton} ${routeStyles.cityCardSkeleton}`} aria-hidden />}>
+                <CountryCitiesGrid cities={safeCities} countrySlug={countrySlug} />
+              </Suspense>
+            </div>
           </section>
         )}
 
-        {/* ── TIMEZONE INFO ── */}
-        <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
-          <Suspense fallback={null}>
-            <TimezoneInfoCard
-              ianaTimezone={timezone}
-              countryAr={countryAr}
-              utcOffset={utcOffset}
-              nowIso={nowIso}
-            />
+        <section className="container mx-auto px-4">
+          <AdInArticle slotId={`mid-time-country-${countrySlug}-1`} />
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <Suspense
+            fallback={(
+              <DeferredSectionNotice
+                title="نجهز معلومات التوقيت الإضافية"
+                description="الوقت الحالي ظاهر الآن، وبعد لحظات ستظهر لك تفاصيل المنطقة الزمنية وفرق UTC بشكل أوضح."
+              />
+            )}
+          >
+            <div className={routeStyles.sectionPanel}>
+              <TimezoneInfoCard
+                ianaTimezone={timezone}
+                countryAr={countryAr}
+                utcOffset={utcOffset}
+                nowIso={nowIso}
+              />
+            </div>
           </Suspense>
         </section>
 
-        {/* ── SAME TIMEZONE ── */}
-        {sameOffsetCountries.length > 0 && (
-          <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
-            <SameTimezoneCountries
-              countries={sameOffsetCountries}
-              utcOffset={timeFacts.offsetLabel}
-              currentCityAr={cityAr}
-            />
+        <section aria-labelledby="country-time-use-heading" className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <div className={routeStyles.sectionHead}>
+              <h2 id="country-time-use-heading" className={routeStyles.sectionTitle}>
+                كيف تستخدم توقيت {countryAr} عملياً؟
+              </h2>
+              <p className={routeStyles.sectionCopy}>
+                أغلب صفحات الوقت تكتفي بعرض الساعة. هنا نساعدك على القرار التالي: هل تريد مكالمة الآن، موعداً بعد أسبوع، رحلة، صلاة، أم مقارنة مع بلد آخر؟
+              </p>
+            </div>
+
+            <div className={routeStyles.insightGrid}>
+              <article className={routeStyles.insightCard}>
+                <span className={routeStyles.insightKicker}>موعد اليوم</span>
+                <h3>إذا كان الموعد خلال ساعات</h3>
+                <p>
+                  يمكنك الاعتماد على الساعة الحالية في {countryAr} ثم مقارنة وقتك المحلي بها. هذا مناسب لمكالمة عائلية، متابعة مباراة، أو اجتماع يبدأ اليوم.
+                </p>
+              </article>
+              <article className={routeStyles.insightCard}>
+                <span className={routeStyles.insightKicker}>موعد مستقبلي</span>
+                <h3>إذا كان الموعد بعد أيام أو أسابيع</h3>
+                <p>
+                  لا تعتمد على فرق محفوظ مثل “ثلاث ساعات”. راجع منطقة {timezone} وحالة DST، ثم استخدم حاسبة فرق التوقيت لأن بعض الدول تتغير إزاحتها موسمياً.
+                </p>
+              </article>
+              <article className={routeStyles.insightCard}>
+                <span className={routeStyles.insightKicker}>مدينة محددة</span>
+                <h3>إذا كان السؤال عن مدينة بعينها</h3>
+                <p>
+                  افتح صفحة المدينة من القائمة، خصوصاً في الدول الكبيرة أو عند السفر. صفحة الدولة تعطيك مرجعاً سريعاً، أما صفحة المدينة فتقلل خطأ الموقع المحلي.
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        {safeSameOffsetCountries.length > 0 && (
+          <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+            <div className={routeStyles.sectionPanel}>
+              <SameTimezoneCountries
+                countries={safeSameOffsetCountries}
+                utcOffset={timeFacts.offsetLabel}
+                currentCityAr={cityAr}
+              />
+            </div>
           </section>
         )}
 
-        {/* ── FAQ ── */}
-        <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
-          <div className="max-w-4xl mx-auto">
+        <section aria-labelledby="country-time-rules-heading" className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <div className={routeStyles.proseBlock}>
+              <h2 id="country-time-rules-heading">
+                قاعدة سريعة قبل أن تثبت موعداً في {countryAr}
+              </h2>
+              <p>
+                إذا كان سؤالك هو <strong>كم الساعة الان في {countryAr}</strong> فالإجابة موجودة أعلى الصفحة. لكن إذا كان سؤالك الحقيقي هو “متى أتصل؟” أو “متى يبدأ الاجتماع؟” ففكّر بثلاث طبقات: الوقت الحالي، تاريخ الموعد، والمدينة.
+              </p>
+              <p>
+                السبب بسيط: UTC هو خط المقارنة العالمي، أما التوقيت المحلي فهو نتيجة قواعد الدولة في ذلك التاريخ. قاعدة IANA تسجل أسماء المناطق الزمنية وتغييرات الإزاحة، وUTC هو المرجع الذي تُقاس عليه الفروق. لذلك نعرض {timezone} و{utcOffset || timeFacts.offsetLabel} معاً بدل الاكتفاء برقم ساعة معزول.
+              </p>
+              <ul className={routeStyles.ruleList}>
+                <li>للمكالمة الآن: راجع الساعة الحالية ثم اتصل إذا كان الوقت مناسباً محلياً.</li>
+                <li>للموعد المستقبلي: استخدم حاسبة فرق التوقيت، ولا تعتمد على فرق محفوظ من شهر سابق.</li>
+                <li>للصلاة أو السفر: افتح صفحة المدينة لأن المدينة هي التي تحدد السياق العملي.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
             <TimeNowFAQ
               placeLabelAr={countryAr}
-              introText={`إجابات عملية حول الوقت الرسمي في ${countryAr}، التاريخ اليوم، وتغطية المدن المرتبطة بنفس الصفحة.`}
+              introText={`إجابات عملية حول الوقت الرسمي في ${countryAr}، التاريخ اليوم، المدن، UTC، وحالة التوقيت الصيفي عند التخطيط لموعد حقيقي.`}
               items={faqItems}
             />
           </div>
         </section>
 
-        {/* ── RELATED SEARCHES ── */}
-        <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
-          <RelatedSearches currentCountrySlug={countrySlug} />
-        </section>
-
-        <section className="container mx-auto px-4 py-8 border-t border-[var(--border-subtle)]">
-          <GeoInternalLinks
-            title={`روابط مهمة عن ${countryAr}`}
-            description={`إذا كنت تتابع الوقت في ${countryAr} فهذه الروابط تختصر لك الوصول إلى الصلاة والتاريخ وصفحة العاصمة وأداة فرق التوقيت من مكان واحد.`}
-            links={countryUtilityLinks}
-            ariaLabel={`روابط مهمة عن ${countryAr}`}
-          />
-        </section>
-
-        {/* ── SEO PROSE ── */}
-        <section className="container mx-auto px-4 py-12 border-t border-[var(--border-subtle)]">
-          <div className="max-w-4xl mx-auto prose prose-invert text-muted leading-loose space-y-5">
-            <h2 className="text-2xl font-bold text-primary">
-              توقيت {countryAr} — معلومات شاملة
-            </h2>
-            <p>
-              تتبع <strong>{countryAr}</strong> المنطقة الزمنية{' '}
-              <strong>{timezone}</strong> وهي{' '}
-              <strong>{utcOffset}</strong> من التوقيت العالمي المنسق (UTC).
-              {` ${timeFacts.utcRelationSentence}`}{' '}يعرض هذا الموقع الوقت الحالي في {countryAr} بدقة حتى الثانية،
-              محدَّثاً تلقائياً دون الحاجة إلى تحديث الصفحة.
-            </p>
-            <p>
-              {timeFacts.gregorianDateAr ? (
-                <>
-                  التاريخ المحلي اليوم في {countryAr} هو <strong>{timeFacts.gregorianDateAr}</strong>
-                  {timeFacts.hijriDateAr ? <> وبالهجري <strong>{timeFacts.hijriDateAr}</strong></> : null}.
-                </>
-              ) : (
-                <>
-                  بالإضافة إلى الوقت، تجد هنا <strong>التاريخ اليوم</strong> بالتقويم الميلادي
-                  والهجري (تقويم أم القرى).
-                </>
-              )}{' '}
-              كما يوضح قسم المنطقة الزمنية ما إذا كانت الإزاحة تتغير خلال السنة أم تبقى ثابتة.
-            </p>
-            <p>
-              ستجد هنا الوقت الحالي في <strong>{countryAr}</strong> مع روابط مفيدة
-              إلى العاصمة والمدن الكبرى، بحيث تنتقل بسهولة بين الدولة والمدينة
-              وتصل إلى المعلومة الأقرب لما تحتاجه الآن
-              {relatedOffsetCountriesText ? `، إضافة إلى دول تشترك اليوم مع ${countryAr} في نفس الإزاحة مثل ${relatedOffsetCountriesText}` : ''}.
-            </p>
+        <section aria-labelledby="country-time-sources-heading" className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <div className={routeStyles.sectionHead}>
+              <h2 id="country-time-sources-heading" className={routeStyles.sectionTitle}>
+                مصادر تساعدك على فهم الوقت الرسمي
+              </h2>
+              <p className={routeStyles.sectionCopy}>
+                نستخدم هذه المراجع لتفسير مفاهيم مثل IANA وUTC والتوقيت الصيفي. الساعة الحية نفسها تُحسب من المنطقة الزمنية المخزنة للمدينة أو الدولة، ولا يتم جلب هذه المصادر أثناء عرض الصفحة.
+              </p>
+            </div>
+            <div className={routeStyles.sourceGrid}>
+              {COUNTRY_TIME_SOURCE_LINKS.map((source) => (
+                <a
+                  key={source.href}
+                  className={routeStyles.sourceCard}
+                  href={source.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <strong>{source.label}</strong>
+                  <span>{source.description}</span>
+                </a>
+              ))}
+            </div>
           </div>
         </section>
-      </main>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <RelatedSearches currentCountrySlug={countrySlug} />
+          </div>
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <GeoInternalLinks
+              title={`خطوات تكمل وقت ${countryAr}`}
+              description={`بعد معرفة الساعة في ${countryAr}، اختر خطوة واحدة حسب حاجتك: الصلاة إذا كان يومك مرتبطاً بالأذان، التاريخ إذا كان السؤال عن اليوم المحلي، أو فرق التوقيت إذا كان الموعد مع بلد آخر.`}
+              links={countryUtilityLinks}
+              ariaLabel={`خطوات تكمل وقت ${countryAr}`}
+            />
+          </div>
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <div className={routeStyles.proseBlock}>
+              <h2>
+              كيف تقرأ توقيت {countryAr} بدون خلط؟
+              </h2>
+              <p>
+                عندما ترى أن <strong>{countryAr}</strong> تتبع المنطقة الزمنية{' '}
+                <strong>{timezone}</strong> وأن إزاحتها هي <strong>{utcOffset}</strong> من UTC،
+                فالمعنى العملي هو: قارن كل موعد عالمي بهذه الإزاحة قبل أن تعتمد عليه.
+                {` ${timeFacts.utcRelationSentence}`}{' '}لهذا نعرض الساعة الحالية أولاً ثم نضيف التاريخ والمدينة المرجعية.
+              </p>
+              <p>
+                {timeFacts.gregorianDateAr ? (
+                  <>
+                    التاريخ المحلي اليوم في {countryAr} هو <strong>{timeFacts.gregorianDateAr}</strong>
+                    {timeFacts.hijriDateAr ? <> وبالهجري <strong>{timeFacts.hijriDateAr}</strong></> : null}.
+                  </>
+                ) : (
+                  <>
+                    بالإضافة إلى الوقت، تجد هنا <strong>التاريخ اليوم</strong> بالتقويم الميلادي
+                    والهجري (تقويم أم القرى).
+                  </>
+                )}{' '}
+                كما يوضح قسم المنطقة الزمنية ما إذا كانت الإزاحة تتغير خلال السنة أم تبقى ثابتة.
+              </p>
+              <p>
+                صفحة الدولة تكفي عندما تريد لمحة عامة أو تبحث عن العاصمة. أما إذا كان موعدك مرتبطاً بمدينة معينة،
+                فافتح صفحة المدينة نفسها لأن بعض الدول الكبيرة تضم أكثر من منطقة زمنية أو تختلف فيها طريقة استخدام التوقيت الصيفي.
+                ستجد هنا مسارات إلى العاصمة والمدن الكبرى
+                {relatedOffsetCountriesText ? `، إضافة إلى دول تشترك اليوم مع ${countryAr} في نفس الإزاحة مثل ${relatedOffsetCountriesText}` : ''}.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <SiteTrustPanel panel="time" />
+          </div>
+        </section>
+      </>
+    );
+  } catch (error) {
+    logger.error('time-now-country-support-sections-failed', {
+      countryCode: country.country_code,
+      countrySlug,
+      route: `/time-now/${countrySlug}`,
+      timezone,
+      degraded: true,
+      error: serializeError(error),
+    });
+
+    return (
+      <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+        <DeferredSectionNotice
+          title={`تعذر تحميل الأقسام الإضافية الخاصة بـ ${countryAr}`}
+          description={`ما زال وقت ${countryAr} الأساسي ومسارات المتابعة متاحة، لكن تفاصيل المدن والشرح الإضافي لم تكتمل بعد. تمت كتابة الخطأ في السجل حتى نراجعه قبل أي نشر جديد.`}
+        />
+        <div className="mt-6">
+          <div className={routeStyles.sectionPanel}>
+            <GeoInternalLinks
+              title={`خطوات تكمل وقت ${countryAr}`}
+              description={`بعد معرفة الساعة في ${countryAr}، اختر خطوة واحدة حسب حاجتك: الصلاة، التاريخ المحلي، صفحة العاصمة، أو فرق التوقيت.`}
+              links={countryUtilityLinks}
+              ariaLabel={`خطوات تكمل وقت ${countryAr}`}
+            />
+          </div>
+        </div>
+      </section>
+    );
+  }
+}
+
+function CountryTimePageSectionsFallback() {
+  return (
+    <div className={routeStyles.fallbackStack}>
+      <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`} aria-hidden="true">
+        <div className={routeStyles.sectionPanel}>
+          <Skeleton className={`${routeStyles.titleSkeleton} ${routeStyles.lineSkeleton}`} />
+          <div className={routeStyles.fallbackGrid}>
+          {Array.from({ length: 6 }).map((_, index) => (
+            <Skeleton
+              key={`time-now-country-city-grid-${index}`}
+              className={`${routeStyles.cityCardSkeleton} ${routeStyles.boxSkeleton}`}
+            />
+          ))}
+        </div>
+        </div>
+      </section>
+
+      <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`} aria-hidden="true">
+        <Skeleton className={routeStyles.largePanelSkeleton} />
+      </section>
+
+      <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`} aria-hidden="true">
+        <div className={routeStyles.sectionPanel}>
+          <Skeleton className={`${routeStyles.titleSkeleton} ${routeStyles.lineSkeleton}`} />
+          <Skeleton className={`${routeStyles.lineFull} ${routeStyles.lineSkeleton}`} />
+          <Skeleton className={`${routeStyles.lineWide} ${routeStyles.lineSkeleton}`} />
+          <div className={routeStyles.faqFallbackList}>
+            {Array.from({ length: 4 }).map((_, index) => (
+              <Skeleton
+                key={`time-now-country-faq-${index}`}
+                className={`${routeStyles.faqItemSkeleton} ${routeStyles.boxSkeleton}`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

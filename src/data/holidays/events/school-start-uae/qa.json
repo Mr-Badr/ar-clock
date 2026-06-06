@@ -2,12 +2,15 @@
   "slug": "school-start-uae",
   "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:37.049Z"
+  "notes": [
+    "2026-06-01: Authored package revalidated against current UAE Ministry of Education calendar sources. The 31 August 2026 student return date remains correct for government schools and private schools following the ministry curriculum, while local flexibility for other private schools stays clearly explained.",
+    "2026-06-01: Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. Not marked done in the rollout checklist because generated holiday bundles were intentionally not rebuilt."
+  ],
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

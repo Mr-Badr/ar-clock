@@ -1,6 +1,6 @@
 /**
  * Building Calculator — Country Data (12 Arab Countries)
- * Prices are reasonable estimates (Mid-2025). Users can override them.
+ * Prices are rough editable estimates. Users can override them.
  * cost_per_m2 values cover the full built area (materials + labour + contractor).
  */
 

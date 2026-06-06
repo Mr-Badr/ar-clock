@@ -1,3 +1,5 @@
+import { QUERY_CLUSTER_TITLES } from '@/lib/audience-copy';
+
 function normalizeTerm(value) {
   return String(value || '').trim().replace(/\s+/g, ' ');
 }
@@ -82,10 +84,10 @@ export function buildPrincipalPageSearchCoverage({
     ...baseKeywords,
   ]).slice(0, maxSchemaAbout);
   const queryClusters = [
-    buildCluster('العبارات الأساسية', priorityQueries),
-    buildCluster('أسئلة مباشرة', questionQueries),
-    buildCluster('صيغ المقارنة والقرار', comparisonQueries),
-    buildCluster('صيغ محلية وزمنية', [...regionalQueries, ...temporalQueries]),
+    buildCluster(QUERY_CLUSTER_TITLES.priority, priorityQueries),
+    buildCluster(QUERY_CLUSTER_TITLES.direct, questionQueries),
+    buildCluster(QUERY_CLUSTER_TITLES.decision, comparisonQueries),
+    buildCluster(QUERY_CLUSTER_TITLES.localAndTimely, [...regionalQueries, ...temporalQueries]),
   ].filter(Boolean);
 
   return {

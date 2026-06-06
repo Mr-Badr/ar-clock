@@ -49,7 +49,7 @@ export default function AgeMilestonesCalculator() {
             <CardHeader>
               <CardTitle className="calc-card-title">الماضية والقادمة</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent aria-live="polite">
               <MilestoneList items={milestones.items} />
             </CardContent>
           </Card>

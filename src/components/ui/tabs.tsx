@@ -6,18 +6,26 @@ import { Tabs as TabsPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
+type TabsProps = React.ComponentProps<typeof TabsPrimitive.Root>
+type TabsListProps = React.ComponentProps<typeof TabsPrimitive.List> &
+  VariantProps<typeof tabsListVariants>
+type TabsTriggerProps = React.ComponentProps<typeof TabsPrimitive.Trigger>
+type TabsContentProps = React.ComponentProps<typeof TabsPrimitive.Content>
+
 function Tabs({
   className,
-  orientation = "horizontal",
+  orientation,
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.Root>) {
+}: TabsProps): React.JSX.Element {
+  const resolvedOrientation = orientation ?? "horizontal"
+
   return (
     <TabsPrimitive.Root
       data-slot="tabs"
-      data-orientation={orientation}
-      orientation={orientation}
+      data-orientation={resolvedOrientation}
+      orientation={resolvedOrientation}
       className={cn(
-        "group/tabs flex gap-2 data-[orientation=horizontal]:flex-col",
+        "group/tabs flex gap-[var(--space-2)] data-[orientation=horizontal]:flex-col",
         className
       )}
       {...props}
@@ -26,12 +34,14 @@ function Tabs({
 }
 
 const tabsListVariants = cva(
-  "rounded-lg p-[3px] group-data-[orientation=horizontal]/tabs:h-9 data-[variant=line]:rounded-none group/tabs-list text-muted inline-flex w-fit items-center justify-center group-data-[orientation=vertical]/tabs:h-fit group-data-[orientation=vertical]/tabs:flex-col",
+  "group/tabs-list inline-flex w-fit items-center justify-center text-[var(--text-3)] group-data-[orientation=vertical]/tabs:h-fit group-data-[orientation=vertical]/tabs:flex-col",
   {
     variants: {
       variant: {
-        default: "bg-muted",
-        line: "gap-1 bg-transparent",
+        default:
+          "rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--muted)] p-[3px] group-data-[orientation=horizontal]/tabs:min-h-[var(--space-11)]",
+        line:
+          "gap-[var(--space-1)] border-b border-[var(--border)] bg-transparent",
       },
     },
     defaultVariants: {
@@ -42,15 +52,16 @@ const tabsListVariants = cva(
 
 function TabsList({
   className,
-  variant = "default",
+  variant,
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.List> &
-  VariantProps<typeof tabsListVariants>) {
+}: TabsListProps): React.JSX.Element {
+  const resolvedVariant = variant ?? "default"
+
   return (
     <TabsPrimitive.List
       data-slot="tabs-list"
-      data-variant={variant}
-      className={cn(tabsListVariants({ variant }), className)}
+      data-variant={resolvedVariant}
+      className={cn(tabsListVariants({ variant: resolvedVariant }), className)}
       {...props}
     />
   )
@@ -59,15 +70,14 @@ function TabsList({
 function TabsTrigger({
   className,
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
+}: TabsTriggerProps): React.JSX.Element {
   return (
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
       className={cn(
-        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring text-primary/60 hover:text-primary dark:text-muted dark:hover:text-primary relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-all group-data-[orientation=vertical]/tabs:w-full group-data-[orientation=vertical]/tabs:justify-start focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 group-data-[variant=default]/tabs-list:data-[state=active]:shadow-sm group-data-[variant=line]/tabs-list:data-[state=active]:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        "group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-[state=active]:bg-transparent dark:group-data-[variant=line]/tabs-list:data-[state=active]:border-transparent dark:group-data-[variant=line]/tabs-list:data-[state=active]:bg-transparent",
-        "data-[state=active]:bg-base dark:data-[state=active]:text-primary dark:data-[state=active]:border-input dark:data-[state=active]:bg-input/30 data-[state=active]:text-primary",
-        "after:bg-foreground after:absolute after:opacity-0 after:transition-opacity group-data-[orientation=horizontal]/tabs:after:inset-x-0 group-data-[orientation=horizontal]/tabs:after:bottom-[-5px] group-data-[orientation=horizontal]/tabs:after:h-0.5 group-data-[orientation=vertical]/tabs:after:inset-y-0 group-data-[orientation=vertical]/tabs:after:-right-1 group-data-[orientation=vertical]/tabs:after:w-0.5 group-data-[variant=line]/tabs-list:data-[state=active]:after:opacity-100",
+        "relative inline-flex min-h-[var(--space-11)] flex-1 items-center justify-center gap-[var(--space-2)] rounded-[calc(var(--radius-lg)-3px)] border border-transparent px-[var(--space-4)] py-[var(--space-2)] text-[var(--text-sm)] font-medium leading-[var(--leading-none)] whitespace-nowrap text-[var(--text-3)] transition-[background-color,border-color,box-shadow,color,transform] duration-100 hover:text-[var(--text-1)] focus-visible:border-[var(--border-focus)] focus-visible:shadow-[var(--shadow-focus)] disabled:pointer-events-none disabled:opacity-50 group-data-[orientation=vertical]/tabs:w-full group-data-[orientation=vertical]/tabs:justify-start [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[var(--space-4)]",
+        "group-data-[variant=default]/tabs-list:data-[state=active]:bg-[var(--surface)] group-data-[variant=default]/tabs-list:data-[state=active]:text-[var(--text-1)] group-data-[variant=default]/tabs-list:data-[state=active]:shadow-none",
+        "group-data-[variant=line]/tabs-list:rounded-none group-data-[variant=line]/tabs-list:border-x-0 group-data-[variant=line]/tabs-list:border-t-0 group-data-[variant=line]/tabs-list:border-b-[1.5px] group-data-[variant=line]/tabs-list:px-[var(--space-4)] group-data-[variant=line]/tabs-list:shadow-none group-data-[variant=line]/tabs-list:data-[state=active]:border-b-[var(--blue)] group-data-[variant=line]/tabs-list:data-[state=active]:bg-transparent group-data-[variant=line]/tabs-list:data-[state=active]:text-[var(--blue)]",
         className
       )}
       {...props}
@@ -78,11 +88,14 @@ function TabsTrigger({
 function TabsContent({
   className,
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.Content>) {
+}: TabsContentProps): React.JSX.Element {
   return (
     <TabsPrimitive.Content
       data-slot="tabs-content"
-      className={cn("flex-1 outline-none", className)}
+      className={cn(
+        "flex-1 rounded-[var(--radius-md)] outline-none focus-visible:shadow-[var(--shadow-focus)]",
+        className
+      )}
       {...props}
     />
   )

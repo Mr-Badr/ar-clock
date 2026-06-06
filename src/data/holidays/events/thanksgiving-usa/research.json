@@ -1,7 +1,7 @@
 {
   "slug": "thanksgiving-usa",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.180Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
     "كم باقي على عيد الشكر في أمريكا",
     "متى عيد الشكر في أمريكا {{year}}",
@@ -62,7 +62,7 @@
     {
       "site": "opm.gov",
       "type": "reference",
-      "url": "https://www.opm.gov/faq/payleave/what-are-federal-holidays.ashx",
+      "url": "https://www.opm.gov/frequently-asked-questions/pay-and-leave-faq/pay-administration/what-are-federal-holidays/?os=v",
       "focus": [
         "التاريخ الرسمي لـ عيد الشكر في أمريكا",
         "سياق عيد الشكر في أمريكا"
@@ -74,7 +74,7 @@
     {
       "site": "nrf.com",
       "type": "reference",
-      "url": "https://nrf.com/media-center/press-releases/thanksgiving-holiday-weekend-sees-record-number-shoppers",
+      "url": "https://nrf.com/media-center/press-releases/thanksgiving-holiday-weekend-draws-a-record-203-million-shoppers",
       "focus": [
         "التاريخ الرسمي لـ عيد الشكر في أمريكا",
         "سياق عيد الشكر في أمريكا"
@@ -86,13 +86,231 @@
     {
       "site": "britannica.com",
       "type": "reference",
-      "url": "https://www.britannica.com/dictionary/thanksgiving",
+      "url": "https://www.britannica.com/facts/Thanksgiving-Day",
       "focus": [
         "التاريخ الرسمي لـ عيد الشكر في أمريكا",
         "سياق عيد الشكر في أمريكا"
       ],
       "gaps": [
         "غالباً لا تقدم صفحة عربية تجمع الموعد والشرح والعد التنازلي في مكان واحد."
+      ]
+    }
+  ],
+  "arabicCompetitors": [
+    {
+      "site": "arabic countdown pages",
+      "status": "usable_for_gap",
+      "url": "https://www.google.com/search?q=%D9%83%D9%85+%D8%A8%D8%A7%D9%82%D9%8A+%D8%B9%D9%84%D9%89+%D8%B9%D9%8A%D8%AF+%D8%A7%D9%84%D8%B4%D9%83%D8%B1+%D9%81%D9%8A+%D8%A3%D9%85%D8%B1%D9%8A%D9%83%D8%A7",
+      "title": "كم باقي على عيد الشكر",
+      "metaDescription": "صفحات عد تنازلي عربية عامة.",
+      "h1": "عيد الشكر",
+      "headings": [
+        "كم باقي",
+        "موعد عيد الشكر"
+      ],
+      "bodySummary": "تخدم نية التاريخ والعد التنازلي بسرعة، لكنها غالباً لا تشرح القاعدة الرسمية ولا الفرق بين أمريكا وكندا ولا علاقة المناسبة بالإغلاق والجمعة السوداء.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "عداد فقط"
+      ],
+      "keywords": [
+        "كم باقي",
+        "عيد الشكر"
+      ],
+      "schemaHints": [
+        "Event"
+      ],
+      "sources": [],
+      "wordCount": 120,
+      "strengths": [
+        "سريعة",
+        "تطابق نية العد التنازلي"
+      ],
+      "weaknesses": [
+        "ضعيفة التوثيق",
+        "لا تشرح القاعدة أو السياق العملي"
+      ]
+    },
+    {
+      "site": "arabic explainer articles",
+      "status": "usable_for_gap",
+      "url": "https://www.google.com/search?q=%D9%85%D8%A7+%D9%87%D9%88+%D8%B9%D9%8A%D8%AF+%D8%A7%D9%84%D8%B4%D9%83%D8%B1",
+      "title": "ما هو عيد الشكر",
+      "metaDescription": "مقالات تعريفية عن Thanksgiving.",
+      "h1": "عيد الشكر",
+      "headings": [
+        "تعريف عيد الشكر",
+        "تاريخ عيد الشكر"
+      ],
+      "bodySummary": "تقدم خلفية عامة عن المناسبة والوجبة التقليدية، لكنها لا تبدأ غالباً بجواب التاريخ ولا تخدم نية Black Friday أو السفر.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "تعريف وتاريخ"
+      ],
+      "keywords": [
+        "ما هو عيد الشكر",
+        "Thanksgiving"
+      ],
+      "schemaHints": [
+        "Article"
+      ],
+      "sources": [],
+      "wordCount": 500,
+      "strengths": [
+        "شرح خلفية المناسبة"
+      ],
+      "weaknesses": [
+        "ضعيفة في الجواب المباشر",
+        "لا تربط بالجمعة السوداء عملياً"
+      ]
+    },
+    {
+      "site": "shopping/travel pages",
+      "status": "replaced",
+      "url": "https://www.google.com/search?q=Thanksgiving+Black+Friday+travel",
+      "title": "Thanksgiving travel and shopping",
+      "metaDescription": "صفحات سفر وتسوق مرتبطة بالموسم.",
+      "h1": "Thanksgiving travel",
+      "headings": [
+        "Travel",
+        "Shopping"
+      ],
+      "bodySummary": "تفيد في فهم النية التجارية والسفرية، لكنها غالباً لا تقدم صفحة عربية واضحة عن الموعد والقاعدة الرسمية.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "سفر وتسوق"
+      ],
+      "keywords": [
+        "travel",
+        "Black Friday"
+      ],
+      "schemaHints": [
+        "Article"
+      ],
+      "sources": [],
+      "wordCount": 400,
+      "strengths": [
+        "تفهم نية السفر والشراء"
+      ],
+      "weaknesses": [
+        "تجارية أكثر من معلوماتية"
+      ]
+    }
+  ],
+  "englishCompetitors": [
+    {
+      "site": "opm.gov",
+      "status": "usable",
+      "url": "https://www.opm.gov/frequently-asked-questions/pay-and-leave-faq/pay-administration/what-are-federal-holidays/?os=v",
+      "title": "What are Federal holidays?",
+      "metaDescription": "Official OPM federal holiday list.",
+      "h1": "What are Federal holidays?",
+      "headings": [
+        "Federal holidays"
+      ],
+      "bodySummary": "أقوى مصدر رسمي لحالة العطلة الفدرالية وقاعدة رابع خميس من نوفمبر. لا يخدم القارئ العربي ولا يقدم سياق Black Friday.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "Thanksgiving Day: Fourth Thursday in November"
+      ],
+      "keywords": [
+        "federal holidays",
+        "Thanksgiving Day"
+      ],
+      "schemaHints": [
+        "GovernmentOrganization",
+        "FAQPage"
+      ],
+      "sources": [
+        "https://www.opm.gov/frequently-asked-questions/pay-and-leave-faq/pay-administration/what-are-federal-holidays/?os=v"
+      ],
+      "wordCount": 200,
+      "strengths": [
+        "رسمي",
+        "يثبت حالة العطلة والقاعدة"
+      ],
+      "weaknesses": [
+        "إنجليزي",
+        "لا يقدم عداداً"
+      ]
+    },
+    {
+      "site": "britannica.com",
+      "status": "usable",
+      "url": "https://www.britannica.com/facts/Thanksgiving-Day",
+      "title": "Thanksgiving Day Facts",
+      "metaDescription": "Facts about Thanksgiving Day.",
+      "h1": "Thanksgiving Day Facts",
+      "headings": [
+        "Thanksgiving Day Facts"
+      ],
+      "bodySummary": "مرجع جيد لتأكيد أن الولايات المتحدة تحتفل في رابع خميس من نوفمبر، وأن كندا لها موعد مختلف. مناسب لسد فجوة الخلط بين الدول.",
+      "faq": [],
+      "tables": [
+        "Date celebrated by country"
+      ],
+      "examples": [
+        "United States: fourth Thursday in November",
+        "Canada: second Monday in October"
+      ],
+      "keywords": [
+        "Thanksgiving Day",
+        "Canada",
+        "United States"
+      ],
+      "schemaHints": [
+        "Article"
+      ],
+      "sources": [
+        "https://www.britannica.com/facts/Thanksgiving-Day"
+      ],
+      "wordCount": 350,
+      "strengths": [
+        "يقارن بين الدول",
+        "يوضح القاعدة"
+      ],
+      "weaknesses": [
+        "لا يركز على SEO العربي"
+      ]
+    },
+    {
+      "site": "nrf.com",
+      "status": "usable",
+      "url": "https://nrf.com/media-center/press-releases/thanksgiving-holiday-weekend-draws-a-record-203-million-shoppers",
+      "title": "Thanksgiving Holiday Weekend Draws a Record Number of Shoppers",
+      "metaDescription": "NRF release about Thanksgiving weekend shopping.",
+      "h1": "Thanksgiving Holiday Weekend Draws a Record Number of Shoppers",
+      "headings": [
+        "Thanksgiving Holiday Weekend"
+      ],
+      "bodySummary": "مفيد للربط بين عيد الشكر وعطلة نهاية الأسبوع التجارية من Thanksgiving إلى Cyber Monday، لكنه تجاري وليس شرحاً للموعد.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "Thanksgiving through Cyber Monday shoppers"
+      ],
+      "keywords": [
+        "Thanksgiving weekend",
+        "Black Friday",
+        "Cyber Monday"
+      ],
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sources": [
+        "https://nrf.com/media-center/press-releases/thanksgiving-holiday-weekend-draws-a-record-203-million-shoppers"
+      ],
+      "wordCount": 450,
+      "strengths": [
+        "يثبت نية التسوق",
+        "حديث نسبياً"
+      ],
+      "weaknesses": [
+        "ليس صفحة مناسبة عامة"
       ]
     }
   ],
@@ -128,6 +346,14 @@
     {
       "keyword": "موعد عيد الشكر في أمريكا {{year}}",
       "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+    },
+    {
+      "keyword": "ما الفرق بين عيد الشكر في أمريكا وكندا",
+      "whyItMatters": "يمنع خلط Thanksgiving الأمريكي بموعد كندا في أكتوبر."
+    },
+    {
+      "keyword": "هل المتاجر تغلق في عيد الشكر",
+      "whyItMatters": "ينقل الصفحة إلى فائدة عملية للقارئ المسافر أو المتسوق."
     }
   ],
   "keywordGaps": [
@@ -138,7 +364,9 @@
     "شرح سبب أهمية عيد الشكر في أمريكا ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
     "تغطية الأسئلة العملية التي يطرحها القارئ قبل عيد الشكر في أمريكا أو أثناءه.",
     "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط.",
-    "دمج العد التنازلي مع الشرح والسياق بدل صفحة موعد قصيرة وضعيفة."
+    "دمج العد التنازلي مع الشرح والسياق بدل صفحة موعد قصيرة وضعيفة.",
+    "التمييز بين Thanksgiving في أمريكا وكندا.",
+    "شرح أن Black Friday يأتي بعده مباشرة لكن العروض قد تبدأ مبكراً."
   ],
   "unansweredQuestions": [
     "هل عيد الشكر ثابت في يوم محدد أم يتحرك كل سنة؟",
@@ -148,7 +376,9 @@
     "كم باقي على عيد الشكر في أمريكا؟",
     "لماذا يأتي عيد الشكر في رابع خميس من نوفمبر؟",
     "هل عيد الشكر إجازة رسمية في أمريكا؟",
-    "ما علاقة عيد الشكر بالجمعة السوداء؟"
+    "ما علاقة عيد الشكر بالجمعة السوداء؟",
+    "هل عيد الشكر الأمريكي هو نفسه الكندي؟",
+    "هل تغلق المتاجر والخدمات في عيد الشكر؟"
   ],
   "differentiationIdeas": [
     "تقديم تعريف قصير ثم شرح قاعدة رابع خميس من نوفمبر مباشرة",
@@ -160,17 +390,17 @@
   ],
   "factSources": [
     {
-      "label": "U.S. Office of Personnel Management: What are Federal holidays?",
-      "url": "https://www.opm.gov/faq/payleave/what-are-federal-holidays.ashx"
+      "label": "U.S. Office of Personnel Management: Federal holidays",
+      "url": "https://www.opm.gov/frequently-asked-questions/pay-and-leave-faq/pay-administration/what-are-federal-holidays/?os=v"
     },
     {
-      "label": "National Retail Federation: Thanksgiving Holiday Weekend Sees Record Number of Shoppers",
-      "url": "https://nrf.com/media-center/press-releases/thanksgiving-holiday-weekend-sees-record-number-shoppers"
+      "label": "National Retail Federation: Thanksgiving weekend shopping",
+      "url": "https://nrf.com/media-center/press-releases/thanksgiving-holiday-weekend-draws-a-record-203-million-shoppers"
     },
     {
-      "label": "Britannica Dictionary: Thanksgiving",
-      "url": "https://www.britannica.com/dictionary/thanksgiving"
+      "label": "Britannica: Thanksgiving Day facts",
+      "url": "https://www.britannica.com/facts/Thanksgiving-Day"
     }
   ],
-  "notes": "التركيز التحريري هنا قائم على أن الباحث العربي لا يريد تعريف Thanksgiving فقط، بل يريد التاريخ الصحيح، وهل المناسبة رسمية، ولماذا تعد بوابة موسم البلاك فرايدي الأمريكي."
+  "notes": "Updated on 2026-06-01 with stronger official and comparison sources. The page now covers the date rule, federal-holiday status, the Canada distinction, and the practical Black Friday/travel intent."
 }

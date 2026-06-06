@@ -349,16 +349,32 @@ export const enrichEvent = (raw) => {
   return e;
 };
 
+function buildEventDateError(ev, reason) {
+  const slug = ev?.slug || ev?.id || '(missing slug)';
+  const type = ev?.type || '(missing type)';
+  return new Error(
+    `[holidays-engine] ${reason}. slug="${slug}", type="${type}", date="${ev?.date || ''}", month="${ev?.month || ''}", day="${ev?.day || ''}".`,
+  );
+}
+
+function hasMonthDay(ev) {
+  return Number.isFinite(Number(ev?.month)) && Number.isFinite(Number(ev?.day));
+}
+
 function nextFixed(m, d, now) {
   const n = new Date(now); n.setHours(0, 0, 0, 0);
   let t = new Date(n.getFullYear(), m - 1, d); t.setHours(0, 0, 0, 0);
   if (t < n) t = new Date(n.getFullYear() + 1, m - 1, d);
   return t;
 }
-function nextEstimated(iso, now) {
+
+function nextEstimated(iso, now, ev) {
   const n = new Date(now); n.setHours(0, 0, 0, 0);
   const d = new Date(iso); d.setHours(0, 0, 0, 0);
-  if (isNaN(d.getTime()) || d < n) d.setFullYear(d.getFullYear() + 1);
+  if (Number.isNaN(d.getTime())) {
+    throw buildEventDateError(ev, `Invalid estimated event date "${iso}"`);
+  }
+  if (d < n) d.setFullYear(d.getFullYear() + 1);
   return d;
 }
 function nextMonthly(day, now) {
@@ -434,11 +450,15 @@ export function getNextEventDate(rawEvent, resolvedMap = {}, nowMs = Date.now())
   if (ev.type === 'estimated') {
     // Resolve {{year}} / {{nextYear}} tokens in the date string before parsing.
     // Without this, '{{year}}-06-11' would produce an invalid / year-2002 date.
+    if (!ev.date && hasMonthDay(ev)) return nextFixed(ev.month, ev.day, now);
+    if (!ev.date) {
+      throw buildEventDateError(ev, 'Estimated event requires either a date template or month/day fields');
+    }
     const yr = now.getFullYear();
     const resolvedDate = (ev.date || '')
       .replace(/\{\{year\}\}/g,     String(yr))
       .replace(/\{\{nextYear\}\}/g, String(yr + 1));
-    return nextEstimated(resolvedDate, now);
+    return nextEstimated(resolvedDate, now, ev);
   }
   if (ev.type === 'monthly') return nextMonthly(ev.day, now);
   if (ev.type === 'floating') return nextFloating(ev, now);

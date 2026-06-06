@@ -6,6 +6,7 @@ import {
   Palmtree,
   Globe,
   Briefcase,
+  Search,
 } from 'lucide-react';
 import {
   Select,
@@ -44,22 +45,35 @@ export default function HolidaysFiltersPanel({
   return (
     <div className="waqt-panel">
       <div className="waqt-panel__search">
+        <p className="waqt-panel__label" style={{ marginBottom: '0.45rem' }}>
+          ابدأ باسم المناسبة أو الدولة أو نوع الموعد
+        </p>
         <input
           id="ev-search"
           type="search"
           className="waqt-panel__search-input"
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}
-          placeholder="ابحث عن مناسبة…"
+          placeholder="مثل: رمضان، عيد الأضحى، السعودية، راتب، مدرسة"
           aria-label="البحث في المناسبات"
         />
-        <span className="waqt-panel__search-icon" aria-hidden>🔍</span>
+        <Search className="waqt-panel__search-icon" size={16} strokeWidth={1.8} aria-hidden />
+        <p
+          style={{
+            marginTop: '0.55rem',
+            color: 'var(--text-muted)',
+            fontSize: '0.78rem',
+            lineHeight: 1.7,
+          }}
+        >
+          لا تحتاج إلى كتابة الاسم كاملاً. كلمة واحدة مثل “رمضان” أو “راتب” أو “مدرسة” تكفي غالباً لترتيب النتائج.
+        </p>
       </div>
 
       <div className="waqt-panel__divider" />
 
       <div className="waqt-panel__section">
-        <p className="waqt-panel__label">التصنيف</p>
+        <p className="waqt-panel__label">اختر نوع المناسبة</p>
         <div className="waqt-cat-grid" role="tablist" aria-label="تصفية حسب التصنيف">
           {categoryOptions.map((option) => {
             const Icon = CATEGORY_ICON_COMPONENTS[option.iconKey] || LayoutGrid;
@@ -89,7 +103,7 @@ export default function HolidaysFiltersPanel({
       <div className="waqt-panel__divider" />
 
       <div className="waqt-panel__section">
-        <p className="waqt-panel__label">الدولة</p>
+        <p className="waqt-panel__label">اختر الدولة عند السؤال عن إجازة أو دفع</p>
         <div
           role="group"
           aria-label="تصفية حسب الدولة"
@@ -115,7 +129,7 @@ export default function HolidaysFiltersPanel({
       <div className="waqt-panel__section">
         <div className="waqt-panel__inline">
           <div className="waqt-panel__col">
-            <p className="waqt-panel__label">الترتيب</p>
+            <p className="waqt-panel__label">رتّب النتائج</p>
             <Select value={sortMode} onValueChange={onSortModeChange}>
               <SelectTrigger className="waqt-select-trigger">
                 <SelectValue />
@@ -131,7 +145,7 @@ export default function HolidaysFiltersPanel({
           </div>
 
           <div className="waqt-panel__col" style={{ flex: 1 }}>
-            <p className="waqt-panel__label">المدة</p>
+            <p className="waqt-panel__label">الفترة</p>
             <div className="waqt-panel__row waqt-panel__row--align">
               {timeRangeOptions.map((option) => (
                 <button

@@ -1,7 +1,7 @@
 {
   "slug": "arabic-language-day",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.068Z",
+  "capturedAt": "2026-05-31T13:22:43.217Z",
   "primaryQueries": [
     "كم باقي على اليوم العالمي للغة العربية",
     "متى اليوم العالمي للغة العربية {{year}}",
@@ -148,6 +148,14 @@
     {
       "label": "United Nations: World Arabic Language Day",
       "url": "https://www.un.org/en/observances/arabiclanguageday"
+    },
+    {
+      "label": "اليونسكو: اليوم العالمي للغة العربية",
+      "url": "https://www.unesco.org/ar/world-arabic-language-day?hub=701"
+    },
+    {
+      "label": "الأمم المتحدة: اليوم العالمي للغة العربية",
+      "url": "https://www.un.org/ar/observances/arabiclanguageday/"
     }
   ],
   "notes": "المعاينة اعتمدت على أنماط SERP العربي لصفحات العدّادات المختصرة والمقالات الإخبارية/الإرشادية، مع ترجيح المصادر الرسمية والمرجعية في الحقائق الأساسية."

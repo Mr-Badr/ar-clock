@@ -1,20 +1,64 @@
 import { Suspense } from 'react';
 import DiscoveryWorkspace from '@/components/site/DiscoveryWorkspace';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildDiscoveryViewModel, normalizeDiscoveryQueryValue } from '@/lib/site/discovery';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 const VALID_TABS = new Set(['all', 'tools', 'articles', 'sections', 'featured']);
+const SEARCH_PAGE_TITLE = 'البحث داخل ميقاتنا | اعثر على الأداة أو المقال بسرعة';
+const SEARCH_PAGE_DESCRIPTION =
+  'استخدم البحث الداخلي في ميقاتنا للوصول إلى أدوات الوقت، مواقيت الصلاة، التاريخ، الحاسبات، المناسبات، والمقالات بصيغة سؤالك الطبيعي.';
+
+const SEARCH_FAQ_ITEMS = [
+  {
+    question: 'كيف أبحث داخل ميقاتنا؟',
+    answer:
+      'اكتب السؤال كما تفكر فيه: كم الساعة في الرياض، تحويل هجري إلى ميلادي، حاسبة القسط، أو كم باقي على رمضان. صفحة البحث ترتب النتائج حسب الأقرب إلى نيتك.',
+  },
+  {
+    question: 'ما الفرق بين صفحة البحث وصفحة الفهرس؟',
+    answer:
+      'صفحة البحث مفيدة عندما تعرف ما تريد تقريباً وتريد الوصول بسرعة. أما الفهرس فيناسبك عندما تريد استكشاف كل الأقسام والمسارات من دون عبارة بحث محددة.',
+  },
+  {
+    question: 'ماذا أفعل إذا لم تظهر نتيجة مناسبة؟',
+    answer:
+      'جرّب عبارة أقصر، احذف الكلمات العامة، أو افتح الفهرس الكامل. مثال: بدلاً من “أريد أداة تساعدني في حساب القرض” اكتب “حاسبة القسط”.',
+  },
+];
+
+const SEARCH_FAQ_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  name: 'أسئلة البحث داخل ميقاتنا',
+  url: `${SITE_URL}/search`,
+  inLanguage: 'ar',
+  mainEntity: SEARCH_FAQ_ITEMS.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
+
 export const metadata = {
   ...buildCanonicalMetadata({
-    title: 'البحث داخل ميقاتنا | ابحث عن أي أداة أو صفحة أو موضوع',
-    description: 'ابحث داخل ميقاتنا عن أي أداة أو صفحة أو موضوع: الوقت، الصلاة، التاريخ، الحاسبات، الاقتصاد، المناسبات، والأدلة.',
+    title: SEARCH_PAGE_TITLE,
+    description: SEARCH_PAGE_DESCRIPTION,
     keywords: [
       'البحث داخل ميقاتنا',
       'بحث ميقاتنا',
       'ابحث في الموقع',
       'أدوات وصفحات ميقاتنا',
+      'بحث أدوات الوقت',
+      'بحث مواقيت الصلاة',
+      'بحث محول التاريخ',
+      'بحث الحاسبات العربية',
+      'البحث في مقالات ميقاتنا',
     ],
     url: `${SITE_URL}/search`,
   }),
@@ -46,8 +90,11 @@ export default function SearchPage({ searchParams }) {
   const fallbackViewModel = buildDiscoveryViewModel('');
 
   return (
-    <Suspense fallback={<DiscoveryWorkspace mode="search" viewModel={fallbackViewModel} initialTab="all" />}>
-      <SearchResults searchParams={searchParams} />
-    </Suspense>
+    <>
+      <JsonLd data={SEARCH_FAQ_SCHEMA} />
+      <Suspense fallback={<DiscoveryWorkspace mode="search" viewModel={fallbackViewModel} initialTab="all" />}>
+        <SearchResults searchParams={searchParams} />
+      </Suspense>
+    </>
   );
 }

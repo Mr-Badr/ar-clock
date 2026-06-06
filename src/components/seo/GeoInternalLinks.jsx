@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
 /**
  * @param {Object} props
@@ -7,12 +8,11 @@ import Link from 'next/link';
  * @param {Array<{href: string, label: string, description?: string}>} [props.links]
  * @param {string} [props.ariaLabel]
  */
-export default function GeoInternalLinks({
-  title,
-  description,
-  links = [],
-  ariaLabel,
-}) {
+export default function GeoInternalLinks(props) {
+  const title = props.title;
+  const description = props.description;
+  const links = Array.isArray(props.links) ? props.links : [];
+  const ariaLabel = props.ariaLabel;
   const safeLinks = links.filter((link) => link?.href && link?.label);
 
   if (safeLinks.length === 0) return null;
@@ -46,16 +46,17 @@ export default function GeoInternalLinks({
             gap: '0.75rem',
           }}
         >
-          {safeLinks.map((link) => (
+          {safeLinks.map((link, index) => (
             <Link
               key={link.href}
               href={link.href}
               style={{
-                display: 'block',
+                display: 'grid',
+                gap: '0.4rem',
                 padding: '1rem',
-                borderRadius: '1rem',
+                borderRadius: 'var(--radius-lg)',
                 textDecoration: 'none',
-                background: 'var(--bg-surface-1)',
+                background: index === 0 ? 'var(--bg-surface-2)' : 'transparent',
                 border: '1px solid var(--border-subtle)',
               }}
             >
@@ -73,6 +74,20 @@ export default function GeoInternalLinks({
                   {link.description}
                 </span>
               ) : null}
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 'var(--space-2)',
+                  color: 'var(--accent-alt)',
+                  fontSize: 'var(--text-sm)',
+                  fontWeight: 'var(--font-semibold)',
+                  marginTop: 'var(--space-1)',
+                }}
+              >
+                افتح المسار
+                <ArrowLeft size={14} aria-hidden="true" />
+              </span>
             </Link>
           ))}
         </div>

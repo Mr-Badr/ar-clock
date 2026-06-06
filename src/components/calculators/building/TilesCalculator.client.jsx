@@ -14,9 +14,12 @@ export default function TilesCalculator() {
   const [customBoxSize, setCustomBoxSize] = useState('');
 
   const updateRoom = (index, field, val) => {
-    const newRooms = [...rooms];
-    newRooms[index][field] = field === 'name' ? val : parseFloat(val) || 0;
-    setRooms(newRooms);
+    const nextValue = field === 'name' ? val : parseFloat(val) || 0;
+    setRooms(
+      rooms.map((room, roomIndex) => (
+        roomIndex === index ? { ...room, [field]: nextValue } : room
+      )),
+    );
   };
 
   const addRoom = () => setRooms([...rooms, { name: `غرفة ${rooms.length + 1}`, width: 4, length: 4 }]);
@@ -32,13 +35,14 @@ export default function TilesCalculator() {
   const totalAreaM2 = rooms.reduce((acc, r) => acc + (r.width * r.length), 0);
   
   const selectedSize = TILE_SIZES[parseInt(tileSizeIndex)] || TILE_SIZES[4];
-  const tilesPerBox = customBoxSize ? parseInt(customBoxSize) : selectedSize.defaultPerBox;
+  const parsedBoxSize = Number.parseInt(customBoxSize, 10);
+  const tilesPerBox = Number.isFinite(parsedBoxSize) && parsedBoxSize > 0 ? parsedBoxSize : selectedSize.defaultPerBox;
 
   const results = calcTiles(totalAreaM2, selectedSize.w, selectedSize.h, pattern, tilesPerBox);
 
   return (
-    <div className="grid gap-8 lg:grid-cols-12">
-      <div className="lg:col-span-5 space-y-6">
+    <div className="calc-app-grid grid gap-8">
+      <div className="space-y-6">
         <Card className="calc-surface-card">
           <CardHeader>
             <CardTitle className="calc-card-title text-xl">مواصفات البلاط والمساحات</CardTitle>
@@ -50,7 +54,7 @@ export default function TilesCalculator() {
               <div className="space-y-2">
                 <Label>مقاس البلاط (سم)</Label>
                 <Select value={tileSizeIndex} onValueChange={setTileSizeIndex}>
-                  <SelectTrigger dir="rtl">
+                  <SelectTrigger dir="rtl" aria-label="اختر مقاس البلاط">
                     <SelectValue placeholder="اختر المقاس" />
                   </SelectTrigger>
                   <SelectContent dir="rtl">
@@ -69,14 +73,15 @@ export default function TilesCalculator() {
                   {TILE_PATTERNS.map((p) => (
                     <button
                       key={p.key}
+                      type="button"
+                      aria-pressed={pattern === p.key}
                       onClick={() => setPattern(p.key)}
-                      className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
+                      className={`flex flex-col items-center justify-center p-3 rounded-[var(--radius-lg)] border transition-colors ${
                         pattern === p.key
-                          ? 'border-primary bg-primary/5'
-                          : 'border-transparent bg-accent/5 hover:bg-accent/10'
+                          ? 'border-[var(--border-accent)] bg-[var(--bg-surface-1)]'
+                          : 'border-[var(--border-subtle)] bg-[var(--bg-surface-2)] hover:bg-[var(--bg-surface-3)]'
                       }`}
                     >
-                      <span className="text-xl mb-1">{p.icon}</span>
                       <span className="text-sm font-bold">{p.label}</span>
                       <span className="text-xs text-text-secondary">هدر {p.waste}</span>
                     </button>
@@ -85,11 +90,12 @@ export default function TilesCalculator() {
               </div>
               
               <div className="space-y-2">
-                <Label className="flex justify-between items-center">
+                <Label htmlFor="tiles-box-count" className="flex justify-between items-center">
                   <span>عدد الحبات في الكرتون (اختياري)</span>
                   <span className="text-xs text-text-secondary">الافتراضي: {selectedSize.defaultPerBox}</span>
                 </Label>
                 <Input
+                  id="tiles-box-count"
                   type="number"
                   min="1"
                   placeholder={`الافتراضي للمقاس: ${selectedSize.defaultPerBox}`}
@@ -101,16 +107,17 @@ export default function TilesCalculator() {
 
             {/* Rooms Setup */}
             <div className="space-y-4">
-              <div className="flex justify-between items-center border-b border-accent/10 pb-2">
+              <div className="flex justify-between items-center border-b border-[var(--border-subtle)] pb-2">
                 <Label>المساحات / الغرف</Label>
                 <span className="text-sm font-bold text-primary">{fmt(totalAreaM2, 1)} م² إجمالي</span>
               </div>
 
               <div className="space-y-3">
                 {rooms.map((room, index) => (
-                  <div key={index} className="flex gap-2 items-end bg-accent/5 p-3 rounded-xl border border-accent/10">
+                  <div key={index} className="flex gap-2 items-end bg-[var(--bg-surface-2)] p-3 rounded-[var(--radius-lg)] border border-[var(--border-subtle)]">
                     <div className="flex-1 space-y-2">
                       <Input
+                        aria-label={`اسم المساحة رقم ${index + 1}`}
                         type="text"
                         value={room.name}
                         onChange={(e) => updateRoom(index, 'name', e.target.value)}
@@ -118,8 +125,9 @@ export default function TilesCalculator() {
                       />
                       <div className="flex gap-2 items-center">
                         <div className="flex-1">
-                           <Label className="text-[10px] text-text-secondary">الطول (م)</Label>
+                           <Label htmlFor={`tiles-room-length-${index}`} className="text-[10px] text-text-secondary">الطول (م)</Label>
                            <Input
+                             id={`tiles-room-length-${index}`}
                              type="number"
                              min="0.1"
                              step="0.1"
@@ -130,8 +138,9 @@ export default function TilesCalculator() {
                         </div>
                         <span className="text-text-secondary translate-y-2">×</span>
                         <div className="flex-1">
-                           <Label className="text-[10px] text-text-secondary">العرض (م)</Label>
+                           <Label htmlFor={`tiles-room-width-${index}`} className="text-[10px] text-text-secondary">العرض (م)</Label>
                            <Input
+                             id={`tiles-room-width-${index}`}
                              type="number"
                              min="0.1"
                              step="0.1"
@@ -144,9 +153,11 @@ export default function TilesCalculator() {
                     </div>
                     
                     <button
+                      type="button"
                       onClick={() => removeRoom(index)}
                       disabled={rooms.length === 1}
-                      className="h-9 px-3 flex items-center justify-center rounded-md bg-base border border-accent/20 hover:bg-red-500/10 hover:text-red-500 transition-colors disabled:opacity-30 mb-[2px]"
+                      className="h-9 px-3 flex items-center justify-center rounded-md bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] hover:bg-[var(--red-subtle)] hover:text-[var(--red-text)] transition-colors disabled:opacity-30 mb-[2px]"
+                      aria-label={`حذف المساحة رقم ${index + 1}`}
                       title="حذف الغرفة"
                     >
                       ×
@@ -156,8 +167,9 @@ export default function TilesCalculator() {
               </div>
               
               <button
+                type="button"
                 onClick={addRoom}
-                className="w-full py-2 text-sm text-primary font-medium border border-primary border-dashed rounded-lg hover:bg-primary/5 transition-colors"
+                className="w-full py-2 text-sm text-[var(--blue)] font-medium border border-[var(--blue)] border-dashed rounded-lg hover:bg-[var(--blue-subtle)] transition-colors"
               >
                 + إضافة غرفة أخرى
               </button>
@@ -167,48 +179,44 @@ export default function TilesCalculator() {
         </Card>
       </div>
 
-      <div className="lg:col-span-7 space-y-6">
+      <div className="space-y-6">
         <Card className="calc-result-card h-full relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10" />
-          
-          <CardHeader className="pb-2 border-b border-accent/10">
+          <CardHeader className="pb-2 border-b border-[var(--border-subtle)]">
             <CardTitle className="calc-card-title text-base flex justify-between items-center">
               <span>الكمية المطلوبة للتركيب</span>
-              <span className="text-xs font-normal text-text-secondary bg-base px-2 py-1 rounded-md border border-accent/10">
+              <span className="text-xs font-normal text-text-secondary bg-[var(--bg-surface-2)] px-2 py-1 rounded-md border border-[var(--border-subtle)]">
                 شامل {results.wasteFactor * 100}% نسبة هدر
               </span>
             </CardTitle>
           </CardHeader>
           
-          <CardContent className="pt-8 space-y-8">
+          <CardContent className="pt-8 space-y-8" aria-live="polite">
             <div className="flex flex-col items-center justify-center text-center">
               <h4 className="text-sm text-text-secondary font-medium mb-2">إجمالي الكراتين</h4>
               <div className="flex items-end justify-center mb-2">
-                <span className="text-5xl font-black text-primary mr-2" style={{ fontFamily: 'var(--font-ibm-plex-sans-arabic)' }}>
+                <span className="calc-result-value me-2">
                   {fmt(results.boxes)}
                 </span>
                 <span className="text-xl text-text-secondary font-medium pb-1">كرتون</span>
               </div>
-              <div className="text-sm font-medium text-text-primary px-4 py-1 bg-accent/5 rounded-full inline-block mt-2">
+              <div className="mt-2 inline-block rounded-[var(--radius-md)] border border-[var(--border-default)] bg-[var(--bg-surface-2)] px-4 py-1 text-sm font-medium text-text-primary">
                 إجمالي مساحة: {fmt(totalAreaM2, 1)} متر مربع
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-accent/10">
-              <div className="flex flex-col justify-center p-4 bg-base rounded-xl border border-accent/10 text-center">
-                <span className="text-2xl mb-2">🔲</span>
-                <span className="text-xs text-text-secondary mb-1">العدد الفعلي (بحساب الهدر)</span>
-                <span className="font-bold text-lg">{fmt(results.tilesWithWaste)} بلاطة</span>
+            <div className="calc-metric-grid calc-grid-2 calc-result-metrics">
+              <div className="calc-metric-card text-center">
+                <span className="calc-metric-card__label justify-center">العدد الفعلي (بحساب الهدر)</span>
+                <span className="calc-metric-card__value">{fmt(results.tilesWithWaste)} بلاطة</span>
               </div>
               
-              <div className="flex flex-col justify-center p-4 bg-base rounded-xl border border-accent/10 text-center">
-                <span className="text-2xl mb-2">📦</span>
-                <span className="text-xs text-text-secondary mb-1">تعبئة الكرتون الواحد</span>
-                <span className="font-bold text-lg">{tilesPerBox} حبات</span>
+              <div className="calc-metric-card text-center">
+                <span className="calc-metric-card__label justify-center">تعبئة الكرتون الواحد</span>
+                <span className="calc-metric-card__value">{tilesPerBox} حبات</span>
               </div>
             </div>
             
-            <div className="flex items-center justify-between p-3 bg-primary/10 rounded-lg text-sm text-text-primary px-4">
+            <div className="flex items-center justify-between p-3 bg-[var(--bg-surface-2)] rounded-lg text-sm text-text-primary px-4">
               <span>المتر المربع يحتاج بشكل صافي:</span>
               <span className="font-bold font-mono">{fmt(results.tilesPerM2, 1)} حبة / م²</span>
             </div>

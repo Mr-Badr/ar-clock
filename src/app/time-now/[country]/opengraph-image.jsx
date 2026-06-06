@@ -4,7 +4,7 @@ import { getOgCountryCapitalLabels } from '@/lib/geo-og-labels';
 import { getOgArabicFonts } from '@/lib/og-fonts';
 import { SITE_BRAND } from '@/lib/site-config';
 
-export const alt = `${SITE_BRAND} - الوقت الآن`;
+export const alt = `${SITE_BRAND} - الوقت الان`;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 export const runtime = 'nodejs';
@@ -29,7 +29,7 @@ function renderFallbackImage(countryLabel = 'البلد', fonts) {
       >
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '18px' }}>
           <div style={{ display: 'flex', fontSize: '30px', fontWeight: 600, color: '#cbd5e1' }}>
-            {SITE_BRAND} | الوقت الآن
+            {SITE_BRAND} | الوقت الان
           </div>
           <div style={{ display: 'flex', fontSize: '74px', fontWeight: 900 }}>
             {countryLabel}
@@ -91,7 +91,7 @@ export default async function Image({ params }) {
                 color: '#cbd5e1',
               }}
             >
-              {SITE_BRAND} | الوقت الآن
+              {SITE_BRAND} | الوقت الان
             </div>
 
             <div

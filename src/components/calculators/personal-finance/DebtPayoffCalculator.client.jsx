@@ -76,7 +76,7 @@ export default function DebtPayoffCalculator() {
               id="debt-payoff-currency"
             />
             {debts.map((debt, index) => (
-              <div key={debt.id} className="card-nested p-4">
+              <div key={debt.id} className="p-4">
                 <div className="calc-field-row mb-3">
                   <strong>{debt.name || `دين ${index + 1}`}</strong>
                   {debts.length > 1 ? (
@@ -126,7 +126,7 @@ export default function DebtPayoffCalculator() {
             <CardHeader>
               <CardTitle className="calc-card-title">مقارنة خطة السداد</CardTitle>
             </CardHeader>
-            <CardContent className="calc-metric-grid">
+            <CardContent className="calc-metric-grid" aria-live="polite">
               <div className="calc-grid-2">
                 <div className="calc-metric-card">
                   <div className="calc-metric-card__label">كرة الثلج</div>

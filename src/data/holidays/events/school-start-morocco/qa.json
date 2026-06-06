@@ -2,12 +2,17 @@
   "slug": "school-start-morocco",
   "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:37.043Z"
+  "notes": [
+    "Validated the authored package while preserving the key trust rule: no claim that a final 2026-2027 ministerial school-start date is already confirmed in open sources.",
+    "The current page correctly frames 7 September {{year}} as a planning estimate only, while keeping the official-source warning visible for families and school staff.",
+    "Focused validation passed with validate-holiday-content, ESLint, typecheck, and seo:validate.",
+    "Generated holiday bundles were not regenerated because events:build was intentionally not run, so the rendered route can still lag behind the authored package."
+  ],
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

@@ -114,7 +114,7 @@ function SpinnerCol({ value, onUp, onDown, onCommit, min, max, label, snapValues
           size={18}
           strokeWidth={2.5}
           style={{ transition: 'transform var(--transition-fast)' }}
-          className="group-hover:-translate-y-0.5"
+          className="group-"
         />
       </button>
 
@@ -219,13 +219,11 @@ function PeriodToggle({ period, onChange }) {
             borderRadius: 'var(--radius-md)',
             fontSize: 'var(--text-base)',
             fontWeight: 'var(--font-bold)',
-            transition: 'background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast)',
+            transition: 'background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast)',
             ...(period === p ? {
-              background: 'var(--accent-gradient)',
+              background: 'var(--blue)',
               color: 'var(--text-on-accent)',
-              border: '1px solid transparent',
-              boxShadow: 'var(--shadow-accent)',
-              transform: 'scale(1.05)',
+              border: '1px solid var(--blue)',
             } : {
               background: 'var(--bg-surface-3)',
               color: 'var(--text-muted)',
@@ -249,8 +247,7 @@ function CityLabel({ name, accentColor }) {
       <div style={{
         flex: 1,
         height: '1px',
-        background: `linear-gradient(to left, ${accentColor}, transparent)`,
-        opacity: 0.4,
+        background: 'var(--border-subtle)',
       }} />
       <div className="flex items-center" style={{ gap: 'var(--space-2)', flexShrink: 0 }}>
         <span style={{
@@ -273,8 +270,7 @@ function CityLabel({ name, accentColor }) {
       <div style={{
         flex: 1,
         height: '1px',
-        background: `linear-gradient(to right, ${accentColor}, transparent)`,
-        opacity: 0.4,
+        background: 'var(--border-subtle)',
       }} />
     </div>
   );
@@ -293,7 +289,7 @@ function SourceCard({ srcCity, hour, minute, period, setHour, setMinute, setPeri
         style={{
           background: 'var(--bg-surface-2)',
           border: '1px solid var(--border-default)',
-          borderRadius: 'var(--radius-2xl)',
+          borderRadius: 'var(--radius-lg)',
           padding: 'var(--space-4) var(--space-3)',
           gap: 'var(--space-2)',
         }}
@@ -360,18 +356,18 @@ function DestCard({ destCity, destResult, dayLabel }) {
         aria-atomic="true"
         className="flex-1 flex flex-col items-center justify-center"
         style={{
-          background: 'var(--accent-gradient)',
-          borderRadius: 'var(--radius-2xl)',
+          background: 'var(--blue)',
+          border: '1px solid var(--blue)',
+          borderRadius: 'var(--radius-lg)',
           padding: 'var(--space-4) var(--space-3)',
           gap: 'var(--space-3)',
-          boxShadow: 'var(--shadow-accent)',
         }}
       >
         <div className="flex flex-col items-center" style={{ gap: 'var(--space-1)' }}>
           <span style={{
             fontSize: 'var(--text-2xs)',
             fontWeight: 'var(--font-semibold)',
-            color: 'rgba(255,255,255,0.55)',
+            color: 'var(--text-on-accent)',
             letterSpacing: 'var(--tracking-wide)',
           }}>
             الوقت المحوَّل
@@ -381,7 +377,7 @@ function DestCard({ destCity, destResult, dayLabel }) {
             style={{
               fontSize: 'var(--text-4xl)',
               fontWeight: 'var(--font-extrabold)',
-              color: '#FFFFFF',
+              color: 'var(--text-on-accent)',
               lineHeight: 'var(--leading-none)',
             }}
             dir="ltr"
@@ -391,7 +387,7 @@ function DestCard({ destCity, destResult, dayLabel }) {
           <span style={{
             fontSize: 'var(--text-lg)',
             fontWeight: 'var(--font-bold)',
-            color: 'rgba(255,255,255,0.75)',
+            color: 'var(--text-on-accent)',
           }}>
             {destResult.period}
           </span>
@@ -399,25 +395,25 @@ function DestCard({ destCity, destResult, dayLabel }) {
 
         {dayLabel ? (
           <span style={{
-            background: 'rgba(255,255,255,0.18)',
-            color: '#FFFFFF',
+            background: 'color-mix(in srgb, var(--text-on-accent) 16%, transparent)',
+            color: 'var(--text-on-accent)',
             fontSize: 'var(--text-xs)',
             fontWeight: 'var(--font-semibold)',
             padding: 'var(--space-1-5) var(--space-3)',
-            borderRadius: 'var(--radius-full)',
-            border: '1px solid rgba(255,255,255,0.25)',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid color-mix(in srgb, var(--text-on-accent) 28%, transparent)',
           }}>
             {dayLabel}
           </span>
         ) : (
           <span style={{
-            background: 'rgba(255,255,255,0.08)',
-            color: 'rgba(255,255,255,0.45)',
+            background: 'color-mix(in srgb, var(--text-on-accent) 10%, transparent)',
+            color: 'var(--text-on-accent)',
             fontSize: 'var(--text-xs)',
             fontWeight: 'var(--font-semibold)',
             padding: 'var(--space-1-5) var(--space-3)',
-            borderRadius: 'var(--radius-full)',
-            border: '1px solid rgba(255,255,255,0.15)',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid color-mix(in srgb, var(--text-on-accent) 18%, transparent)',
           }}>
             نفس اليوم
           </span>
@@ -439,29 +435,26 @@ function SwapButton({ onClick, isAnimating }) {
         flexShrink: 0,
         width: '44px',
         height: '44px',
-        borderRadius: 'var(--radius-full)',
+        borderRadius: 'var(--radius-md)',
         background: 'var(--bg-surface-3)',
         border: '1px solid var(--border-default)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         color: 'var(--text-muted)',
-        boxShadow: 'var(--shadow-xs)',
         cursor: 'pointer',
         transform: isAnimating ? 'rotate(180deg)' : 'rotate(0deg)',
-        transition: `transform var(--duration-slow) var(--ease-spring), color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast)`,
+        transition: `transform var(--duration-slow) var(--ease-spring), color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast)`,
       }}
       onMouseEnter={e => {
         e.currentTarget.style.borderColor = 'var(--border-accent-strong)';
         e.currentTarget.style.color = 'var(--accent-alt)';
         e.currentTarget.style.background = 'var(--accent-soft)';
-        e.currentTarget.style.boxShadow = 'var(--shadow-accent)';
       }}
       onMouseLeave={e => {
         e.currentTarget.style.borderColor = 'var(--border-default)';
         e.currentTarget.style.color = 'var(--text-muted)';
         e.currentTarget.style.background = 'var(--bg-surface-3)';
-        e.currentTarget.style.boxShadow = 'var(--shadow-xs)';
       }}
     >
       <ArrowLeftRight size={18} strokeWidth={2} />
@@ -472,7 +465,10 @@ function SwapButton({ onClick, isAnimating }) {
 /* ─────────────────────────────────────────
    Main Component
 ───────────────────────────────────────── */
-export default function TimeConverter({ fromCity, toCity, totalMinutes = 0 }) {
+export default function TimeConverter(props) {
+  const fromCity = props.fromCity;
+  const toCity = props.toCity;
+  const totalMinutes = typeof props.totalMinutes === 'number' ? props.totalMinutes : 0;
   const [hour, setHour] = useState(9);
   const [minute, setMinute] = useState(0);
   const [period, setPeriod] = useState('am');
@@ -634,15 +630,14 @@ export default function TimeConverter({ fromCity, toCity, totalMinutes = 0 }) {
                   onClick={() => selectPreset(p)}
                   style={{
                     padding: 'var(--space-1-5) var(--space-3)',
-                    borderRadius: 'var(--radius-full)',
+                    borderRadius: 'var(--radius-md)',
                     fontSize: 'var(--text-xs)',
                     fontWeight: 'var(--font-semibold)',
-                    transition: 'background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast)',
+                    transition: 'background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast)',
                     ...(isActive ? {
-                      background: 'var(--accent-gradient)',
+                      background: 'var(--blue)',
                       color: 'var(--text-on-accent)',
-                      border: '1px solid transparent',
-                      boxShadow: 'var(--shadow-accent)',
+                      border: '1px solid var(--blue)',
                     } : {
                       background: 'var(--bg-surface-3)',
                       color: 'var(--text-secondary)',
@@ -669,7 +664,7 @@ export default function TimeConverter({ fromCity, toCity, totalMinutes = 0 }) {
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: var(--radius-xl);
+          border-radius: var(--radius-lg);
           border: 2px solid var(--border-default);
           background: var(--bg-surface-3);
           cursor: text;

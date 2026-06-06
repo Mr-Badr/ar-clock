@@ -13,17 +13,18 @@ export function resolveTemplate(template, context) {
   });
 }
 
-export function buildTemplateContext(base = {}) {
-  const yearRaw = Number(base.year);
-  const year = Number.isFinite(yearRaw) ? yearRaw : new Date().getFullYear();
-  const hijriRaw = Number(base.hijriYear);
+export function buildTemplateContext(base) {
+  const contextBase = base && typeof base === 'object' ? base : {};
+  const yearRaw = Number(contextBase.year);
+  const hasYear = Number.isFinite(yearRaw);
+  const year = hasYear ? yearRaw : '';
+  const hijriRaw = Number(contextBase.hijriYear);
   const hijriYear = Number.isFinite(hijriRaw) ? hijriRaw : year;
 
   return {
-    ...base,
+    ...contextBase,
     year,
     hijriYear,
-    nextYear: year + 1,
+    nextYear: hasYear ? year + 1 : '',
   };
 }
-

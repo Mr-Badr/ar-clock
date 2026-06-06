@@ -1,12 +1,12 @@
 import './globals.css';
 import './waqt-ui.css';
-import './styles/economy.css';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { IBM_Plex_Sans_Arabic, Noto_Sans_Arabic } from 'next/font/google';
 import { Toaster } from 'sonner';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/Footer';
+import ScrollToTopButton from '@/components/layout/ScrollToTopButton';
 import AdSenseProvider from '@/components/ads/AdSenseProvider';
 import AdStickyAnchor from '@/components/ads/AdStickyAnchor';
 import AnalyticsProvider from '@/components/analytics/AnalyticsProvider';
@@ -34,7 +34,9 @@ const themeBootScript = `
   try {
     var root = document.documentElement;
     var storedTheme = localStorage.getItem('theme');
-    var nextTheme = storedTheme === 'light' ? 'light' : 'dark';
+    var hasStoredTheme = storedTheme === 'light' || storedTheme === 'dark';
+    var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    var nextTheme = hasStoredTheme ? storedTheme : (prefersLight ? 'light' : 'dark');
     root.classList.remove('dark', 'light');
     root.classList.add(nextTheme);
     root.style.colorScheme = nextTheme;
@@ -69,7 +71,7 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   keywords: SITE_KEYWORDS,
-  authors: [{ name: `${SITE_BRAND} (${SITE_BRAND_EN}) — منصة عربية للوقت والصلاة والتاريخ والحاسبات والاقتصاد` }],
+  authors: [{ name: `${SITE_BRAND} (${SITE_BRAND_EN}) — منصة عربية للوقت والصلاة والتاريخ والحاسبات` }],
   creator: SITE_BRAND,
   publisher: SITE_BRAND,
   category: 'utilities',
@@ -130,8 +132,8 @@ export const metadata: Metadata = {
 
 export const viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#181C2A' },
-    { media: '(prefers-color-scheme: light)', color: '#F2F4FF' },
+    { media: '(prefers-color-scheme: dark)', color: '#05080F' },
+    { media: '(prefers-color-scheme: light)', color: '#F5F7FB' },
   ],
   colorScheme: 'dark light',
   width: 'device-width',
@@ -193,13 +195,18 @@ export default function RootLayout({
       <body suppressHydrationWarning className={notoSansArabic.className}>
         <PublicRuntimeProvider value={publicRuntimeConfig}>
           <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+          <a className="skip-link" href="#main-content">
+            تجاوز إلى المحتوى الرئيسي
+          </a>
           <SiteWideSchemas />
           <Suspense fallback={<div className="h-16" />}>
             <Header />
           </Suspense>
-          <ErrorBoundary name="AppContent">
-            {children}
-          </ErrorBoundary>
+          <div id="main-content" tabIndex={-1}>
+            <ErrorBoundary name="AppContent">
+              {children}
+            </ErrorBoundary>
+          </div>
           {/* Vercel Analytics removed — use GTM/GA4 instead on self-hosted VPS */}
           <Suspense fallback={<div className="h-24" />}>
             <Footer />
@@ -214,7 +221,7 @@ export default function RootLayout({
               style: {
                 fontFamily: 'var(--font-base)',
                 fontSize: 'var(--text-sm)',
-                borderRadius: 'var(--radius-xl)',
+                borderRadius: 'var(--radius-lg)',
               },
             }}
           />
@@ -224,6 +231,7 @@ export default function RootLayout({
               <AdStickyAnchor />
               <ConsentBanner />
               <SiteVisitTracker />
+              <ScrollToTopButton />
               <Suspense fallback={null}>
                 <AnalyticsProvider />
               </Suspense>

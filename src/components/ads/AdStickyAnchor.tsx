@@ -56,8 +56,9 @@ interface AdStickyAnchorProps {
 }
 
 export default function AdStickyAnchor({
-  className = "",
+  className,
 }: AdStickyAnchorProps) {
+  const resolvedClassName = className ?? "";
   const { clientId, manualSlots } = useAdsRuntimeConfig();
   const adSlot = manualSlots.stickyAnchor || "";
   const shouldRenderAds = Boolean(clientId && adSlot);
@@ -130,7 +131,7 @@ export default function AdStickyAnchor({
       className={[
         "ad-slot ad-slot--sticky-anchor",
         !fullscreenActive || !visible ? "is-hidden" : "",
-        className,
+        resolvedClassName,
       ]
         .filter(Boolean)
         .join(" ")}

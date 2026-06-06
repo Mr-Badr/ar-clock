@@ -9,32 +9,64 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { MethodComparisonTable } from '@/components/date/MethodComparisonTable';
 import { DateShareActions } from '@/components/date/DateShareActions';
+import DateRouteLoading from '@/components/date/DateRouteLoading';
+import {
+  DateEditorialSections,
+  buildDateFaqJsonLd,
+  type DateFaqItem,
+  type DateInsightItem,
+} from '@/components/date/DateEditorialSections';
 import TodayClientHydration from './TodayClientHydration'; // Force TS Server refresh
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { Moon, CalendarDays, ArrowLeftRight } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildDateKeywords } from '@/lib/seo/section-search-intent';
+import { logger, serializeError } from '@/lib/logger';
+import styles from '../DateRoutePage.module.css';
 
 const BASE_URL = getSiteUrl();
 
 export const metadata: Metadata = {
-  title: 'كم تاريخ اليوم؟ | هجري وميلادي اليوم',
-  description: 'اعرف تاريخ اليوم بالهجري والميلادي فوراً، مع مقارنة طرق الحساب، اليوم من السنة، ورقم الأسبوع وروابط التحويل والتقويم.',
+  title: 'تاريخ اليوم هجري وميلادي | رقم الأسبوع واليوم من السنة',
+  description: 'اعرف تاريخ اليوم بالهجري والميلادي، رقم الأسبوع، اليوم من السنة، وما الذي تفعله إذا اختلف التاريخ الهجري أو توقيتك المحلي عن النتيجة العامة.',
   keywords: buildDateKeywords(),
   alternates: { canonical: `${BASE_URL}/date/today` },
   openGraph: {
-    title: 'كم تاريخ اليوم؟ | هجري وميلادي',
-    description: 'تاريخ اليوم الهجري والميلادي مع مقارنة طرق الحساب وروابط الأدوات المرتبطة.',
+    title: 'تاريخ اليوم هجري وميلادي',
+    description: 'تاريخ اليوم مع رقم الأسبوع واليوم من السنة ومقارنة طرق الحساب الهجري.',
     url: `${BASE_URL}/date/today`,
     locale: 'ar_SA',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'كم تاريخ اليوم؟ | هجري وميلادي',
-    description: 'اعرف تاريخ اليوم بالهجري والميلادي مع مقارنة طرق الحساب وروابط الأدوات المرتبطة.',
+    title: 'تاريخ اليوم هجري وميلادي',
+    description: 'اعرف تاريخ اليوم بالهجري والميلادي مع رقم الأسبوع ومقارنة طرق الحساب.',
   },
 };
+
+const TODAY_SOURCE_LINKS = [
+  {
+    href: 'https://react-spectrum.adobe.com/internationalized/date/index.html',
+    label: '@internationalized/date',
+    description: 'مرجع مكتبة تحويل التقويمات المستخدمة في صفحات التاريخ داخل المشروع.',
+  },
+  {
+    href: 'https://cldr.unicode.org/development/development-process/design-proposals/islamic-calendar-types',
+    label: 'Unicode CLDR: التقويمات الإسلامية',
+    description: 'يوضح تعدد أنواع التقويم الإسلامي مثل أم القرى والمدني والجدولي، وهو سبب شائع لاختلاف يوم واحد.',
+  },
+  {
+    href: 'https://www.timeanddate.com/date/weeknumber.html',
+    label: 'Timeanddate: رقم الأسبوع',
+    description: 'مرجع مبسط لفهم رقم الأسبوع وكيف تُقرأ الأسابيع داخل السنة الميلادية.',
+  },
+  {
+    href: 'https://www.britannica.com/science/calendar/The-Gregorian-calendar',
+    label: 'Britannica: التقويم الغريغوري',
+    description: 'مرجع عام لفهم التقويم الميلادي وقاعدة السنوات الكبيسة.',
+  },
+];
 
 
 
@@ -51,16 +83,33 @@ function getDayOfYear(date: Date): number {
   return Math.floor((date.getTime() - start.getTime()) / 86400000);
 }
 
+async function getTodayNow(): Promise<Date> {
+  try {
+    const nowIso = await getCachedNowIso();
+    const now = new Date(nowIso);
+    if (Number.isNaN(now.getTime())) {
+      throw new Error('getCachedNowIso returned an invalid ISO date');
+    }
+    return now;
+  } catch (error) {
+    logger.warn('date-today-current-date-fallback-used', {
+      routePath: '/date/today',
+      error: serializeError(error),
+    });
+    return new Date();
+  }
+}
+
 export default function TodayPage() {
   return (
-    <Suspense fallback={<div className="h-screen animate-pulse bg-surface-1" />}>
+    <Suspense fallback={<DateRouteLoading title="جاري تجهيز تاريخ اليوم" description="نجهز التاريخ الهجري والميلادي ومقارنة طرق الحساب." />}>
       <TodayDynamicContent />
     </Suspense>
   );
 }
 
 async function TodayDynamicContent() {
-  const now = new Date(await getCachedNowIso());
+  const now = await getTodayNow();
   const y = now.getUTCFullYear();
   const m = now.getUTCMonth() + 1;
   const d = now.getUTCDate();
@@ -78,14 +127,19 @@ async function TodayDynamicContent() {
     umalqura = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' });
     astronomical = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'astronomical' });
     civil = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'civil' });
-  } catch (e) {
-    // out of range — fallback gracefully
+  } catch (error) {
+    logger.warn('date-today-conversion-failed', {
+      date: isoDate,
+      methods: ['umalqura', 'astronomical', 'civil'],
+      error: serializeError(error),
+    });
   }
 
   const hijri = umalqura;
   const isRamadan = hijri ? checkRamadan(hijri.month) : false;
   const isSacred = hijri ? isSacredMonth(hijri.month) : false;
-  const islamicEvents = hijri ? getIslamicEventsForHijriDate(hijri.year, hijri.month, hijri.day) : [];
+  const islamicEventsResult = hijri ? getIslamicEventsForHijriDate(hijri.year, hijri.month, hijri.day) : [];
+  const islamicEvents = Array.isArray(islamicEventsResult) ? islamicEventsResult : [];
 
   const breadcrumbItems = [
     { label: 'الرئيسية', href: '/' },
@@ -93,212 +147,355 @@ async function TodayDynamicContent() {
     { label: 'اليوم' },
   ];
 
+  const faqItems: DateFaqItem[] = [
+    {
+      question: 'كم تاريخ اليوم بالهجري والميلادي؟',
+      answer: hijri
+        ? `تاريخ اليوم هو ${gregorianFormatted} ميلادي، ويوافق ${hijri.formatted.ar} وفق تقويم أم القرى.`
+        : `تاريخ اليوم الميلادي هو ${gregorianFormatted}، ويمكن استخدام محول التاريخ لمعرفة المقابل الهجري عند توفر النطاق المدعوم.`,
+    },
+    {
+      question: 'لماذا قد يختلف التاريخ الهجري عن تطبيق آخر؟',
+      answer: 'الاختلاف غالباً لا يعني وجود خطأ، بل اختلاف طريقة إثبات بداية الشهر الهجري. بعض الجهات تعتمد تقويم أم القرى، وبعضها يعتمد الرؤية أو الحساب الفلكي، لذلك قد يظهر فرق يوم واحد.',
+    },
+    {
+      question: 'ما الفرق بين صفحة اليوم وصفحة التحويل؟',
+      answer: 'صفحة اليوم تعرض التاريخ الحالي فوراً مع معلومات الأسبوع والسنة. أما صفحة التحويل فهي مخصصة لإدخال أي تاريخ قديم أو مستقبلي ومقارنة نتيجته بين الطرق المختلفة.',
+    },
+    {
+      question: 'هل يمكن الاعتماد على هذه الصفحة للتخطيط اليومي؟',
+      answer: 'نعم، الصفحة مناسبة لمعرفة التاريخ اليومي، المشاركة، والتخطيط العام. أما القرارات الرسمية المتعلقة ببداية رمضان أو الأعياد فيجب مطابقتها مع إعلان الجهة الرسمية في بلدك.',
+    },
+    {
+      question: 'لماذا قد يظهر تنبيه أن تاريخي المحلي مختلف؟',
+      answer: 'الصفحة تُرندر تاريخاً عاماً من الخادم حتى يكون المحتوى واضحاً لمحركات البحث، ثم يفحص المتصفح تاريخ جهازك. إذا كنت في منطقة زمنية دخلت يوماً جديداً قبل الخادم أو بعده، يظهر التنبيه حتى لا تعتمد على يوم غير يومك المحلي.',
+    },
+    {
+      question: 'متى أحتاج صفحة الدولة بدلاً من تاريخ اليوم العام؟',
+      answer: 'استخدم صفحة الدولة عندما يكون التاريخ مرتبطاً بإعلان محلي أو عطلة أو بداية شهر هجري. صفحة اليوم تكفي للسؤال العام، لكن صفحة الدولة أو الجهة الرسمية أوضح عند القرارات المحلية.',
+    },
+    {
+      question: 'ما فائدة رقم الأسبوع واليوم من السنة؟',
+      answer: 'رقم الأسبوع مفيد في الجداول الدراسية والعمل والتقارير، واليوم من السنة يساعدك على فهم موقع اليوم داخل السنة وما تبقى منها دون فتح تقويم كامل.',
+    },
+  ];
+
+  const insights: DateInsightItem[] = [
+    {
+      badge: 'جواب سريع',
+      title: 'التاريخان في بطاقة واحدة',
+      body: 'يعرض القسم الأول التاريخ الهجري والميلادي معاً، ثم يضع بجانبهما اليوم من الأسبوع. بهذه الطريقة تعرف الإجابة التي جئت من أجلها قبل أن تدخل في تفاصيل التحويل أو التقويم.',
+      tone: 'accent',
+    },
+    {
+      badge: 'فهم الاختلاف',
+      title: 'مقارنة الطرق تمنع سوء الفهم',
+      body: 'وجود أم القرى والفلكي والمدني في نفس الصفحة يوضح لماذا قد ترى تاريخاً هجرياً مختلفاً في بلد آخر أو تطبيق آخر.',
+      tone: 'warning',
+    },
+    {
+      badge: 'استخدام يومي',
+      title: 'مناسب للنسخ والمشاركة والتخطيط',
+      body: 'معلومات اليوم من السنة ورقم الأسبوع والأيام المتبقية تساعدك في الدراسة والعمل والسفر. هي مفيدة عندما تريد كتابة موعد واضح، لا مجرد معرفة رقم اليوم في الشهر.',
+      tone: 'success',
+    },
+    {
+      badge: 'تنبيه الوقت',
+      title: 'تاريخك المحلي قد يسبق التاريخ العام',
+      body: 'إذا كنت قرب منتصف الليل أو في بلد بعيد زمنياً، قد يختلف تاريخ جهازك عن التاريخ المعروض من الخادم. التنبيه المحلي يمنع الاعتماد على يوم غير يومك.',
+      tone: 'info',
+    },
+  ];
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: 'تاريخ اليوم',
-    description: 'تاريخ اليوم الهجري والميلادي مع مقارنة طرق الحساب',
+    description: 'تاريخ اليوم الهجري والميلادي مع رقم الأسبوع واليوم من السنة ومقارنة طرق الحساب الهجري.',
     url: `${BASE_URL}/date/today`,
     breadcrumb: buildBreadcrumbJsonLd(breadcrumbItems, BASE_URL),
-    mainEntity: {
-      '@type': 'FAQPage',
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name: 'كم تاريخ اليوم بالهجري؟',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: hijri
-              ? `تاريخ اليوم بالهجري هو ${hijri.formatted.ar} وفق حساب أم القرى.`
-              : 'يمكنك معرفة التاريخ الهجري اليوم عبر هذه الصفحة.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: 'ما هو التاريخ الميلادي اليوم؟',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: `التاريخ الميلادي اليوم هو ${gregorianFormatted}.`,
-          },
-        },
-      ],
-    },
   };
 
   return (
     <>
       <TodayClientHydration serverDate={isoDate} />
-      <JsonLd data={jsonLd} />
+      <JsonLd
+        data={[
+          jsonLd,
+          buildDateFaqJsonLd({
+            pageName: 'أسئلة تاريخ اليوم',
+            items: faqItems,
+          }),
+        ]}
+      />
 
       <AdLayoutWrapper>
-        <main className="content-col pt-24 pb-20 mt-12">
-          <DateBreadcrumb items={breadcrumbItems} />
+        <main className={styles.main}>
+          <div className="container mx-auto px-4">
+            <DateBreadcrumb items={breadcrumbItems} />
+          </div>
 
-          <section className="bg-surface-1 border border-border rounded-[var(--radius)] overflow-hidden mb-6 shadow-sm">
-            {/* Header row */}
-            <div
-              className="px-6 py-3 flex justify-between items-center"
-              style={{ background: 'var(--accent-gradient)' }}
-            >
-              <h1 className="text-lg md:text-xl font-bold text-on-accent m-0 flex items-center gap-2">
-                تاريخ اليوم — {dayOfWeek}
-              </h1>
-              <span className="text-white/75 text-sm font-medium">
-                {gregorianFormatted}
-              </span>
-            </div>
-
-            {/* Date cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x md:divide-x-reverse divide-border/50">
-              {/* Hijri */}
-              <div className="p-8 pb-10">
-                <div className="text-sm font-semibold text-muted mb-2 flex items-center gap-1.5">
-                  🌙 التاريخ الهجري
-                </div>
-                {hijri ? (
-                  <>
-                    <div className="text-5xl md:text-6xl font-black text-accent-alt leading-none mb-1">
-                      {hijri.day}
-                    </div>
-                    <div className="text-2xl md:text-3xl font-bold text-primary mb-1">
-                      {hijri.monthNameAr}
-                    </div>
-                    <div className="text-xl md:text-2xl font-semibold text-secondary mb-3">
-                      {hijri.year} هـ
-                    </div>
-
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {isRamadan && (
-                        <span className="bg-warning-soft text-warning px-3 py-1 rounded-full text-xs font-semibold">
-                          🌙 شهر رمضان المبارك
-                        </span>
-                      )}
-                      {isSacred && !isRamadan && (
-                        <span className="bg-accent-soft text-accent-alt px-3 py-1 rounded-full text-xs font-semibold">
-                          شهر حرام
-                        </span>
-                      )}
-                      {islamicEvents.length > 0 && (
-                        <span className="bg-success-soft text-success px-3 py-1 rounded-full text-xs font-semibold">
-                          ⭐ {islamicEvents.map(e => e.nameAr).join('، ')}
-                        </span>
-                      )}
-                    </div>
-                  </>
-                ) : (
-                  <div className="text-muted">خارج النطاق المدعوم</div>
-                )}
-              </div>
-
-              {/* Gregorian */}
-              <div className="p-8 pb-10 bg-surface-2/30">
-                <div className="text-sm font-semibold text-muted mb-2 flex items-center gap-1.5">
-                  🗓️ التاريخ الميلادي
-                </div>
-                <div className="text-5xl md:text-6xl font-black text-accent-alt leading-none mb-1">
-                  {d}
-                </div>
-                <div className="text-2xl md:text-3xl font-bold text-primary mb-1">
-                  {GREGORIAN_MONTHS_AR[m - 1]}
-                </div>
-                <div className="text-xl md:text-2xl font-semibold text-secondary">
-                  {y}م
+          <section className={`container mx-auto px-4 ${styles.heroSection}`} aria-labelledby="today-title">
+            <div className={styles.heroInner}>
+              <div className={styles.heroCopy}>
+                <span className={styles.eyebrow}>
+                  <CalendarDays size={14} />
+                  جواب مباشر لتاريخ اليوم
+                </span>
+                <h1 id="today-title" className={styles.heroTitle}>
+                  كم تاريخ اليوم بالهجري والميلادي؟
+                </h1>
+                <p className={styles.heroLead}>
+                  تاريخ اليوم هو {gregorianFormatted} ميلادي. في البطاقة ستجد المقابل الهجري
+                  وفق أم القرى، ثم رقم الأسبوع واليوم من السنة، مع توضيح ماذا تفعل إذا اختلف
+                  التاريخ الهجري أو كان توقيتك المحلي في يوم آخر.
+                </p>
+                <div className={styles.heroActions}>
+                  <Link href="/date/converter" className={styles.primaryAction}>
+                    <ArrowLeftRight size={16} />
+                    تحويل تاريخ آخر
+                  </Link>
+                  <Link href="/date/today/hijri" className={styles.secondaryAction}>
+                    <Moon size={16} />
+                    تفاصيل الهجري اليوم
+                  </Link>
                 </div>
               </div>
-            </div>
 
-            {/* Share bar */}
-            <div className="p-4 md:px-6 md:py-4 border-t border-border bg-surface-1">
-              <DateShareActions
-                hijriFormatted={hijri ? hijri.formatted.ar : ''}
-                gregorianFormatted={gregorianFormatted}
-                hijriIso={hijri ? hijri.formatted.iso : ''}
-                gregorianIso={isoDate}
-                pageUrl={`${BASE_URL}/date/today`}
-              />
+              <section className={styles.dateAnswerPanel} aria-label="التاريخ الحالي">
+                <div className={styles.dateAnswerHeader}>
+                  <h2 className={styles.dateAnswerTitle}>تاريخ اليوم، {dayOfWeek}</h2>
+                  <span className={styles.dateAnswerMeta}>{gregorianFormatted}</span>
+                </div>
+
+                <div className={styles.dualDateGrid}>
+                  <div className={styles.dateCard}>
+                    <p className={styles.dateCardLabel}>
+                      <Moon size={15} />
+                      التاريخ الهجري
+                    </p>
+                    {hijri ? (
+                      <>
+                        <p className={styles.dateDay}>{hijri.day}</p>
+                        <p className={styles.dateMonth}>{hijri.monthNameAr}</p>
+                        <p className={styles.dateYear}>{hijri.year} هـ</p>
+
+                        <div className="flex flex-wrap justify-center gap-2 mt-2">
+                          {isRamadan && (
+                            <span className="bg-warning-soft text-warning px-3 py-1 rounded-[var(--radius-md)] text-xs font-semibold">
+                              شهر رمضان المبارك
+                            </span>
+                          )}
+                          {isSacred && !isRamadan && (
+                            <span className="bg-accent-soft text-accent-alt px-3 py-1 rounded-[var(--radius-md)] text-xs font-semibold">
+                              شهر حرام
+                            </span>
+                          )}
+                          {islamicEvents.length > 0 && (
+                            <span className="bg-success-soft text-success px-3 py-1 rounded-[var(--radius-md)] text-xs font-semibold">
+                              {islamicEvents.map(e => e.nameAr).join('، ')}
+                            </span>
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      <p className={styles.cardBody}>خارج النطاق المدعوم</p>
+                    )}
+                  </div>
+
+                  <div className={`${styles.dateCard} ${styles.dateCardMuted}`}>
+                    <p className={styles.dateCardLabel}>
+                      <CalendarDays size={15} />
+                      التاريخ الميلادي
+                    </p>
+                    <p className={styles.dateDay}>{d}</p>
+                    <p className={styles.dateMonth}>{GREGORIAN_MONTHS_AR[m - 1]}</p>
+                    <p className={styles.dateYear}>{y}م</p>
+                  </div>
+                </div>
+
+                <div className={styles.sharePanel}>
+                  <DateShareActions
+                    hijriFormatted={hijri ? hijri.formatted.ar : ''}
+                    gregorianFormatted={gregorianFormatted}
+                    hijriIso={hijri ? hijri.formatted.iso : ''}
+                    gregorianIso={isoDate}
+                    pageUrl={`${BASE_URL}/date/today`}
+                  />
+                </div>
+              </section>
             </div>
           </section>
 
-          {/* DATE FACTS ROW */}
-          <section className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+          <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-label="مؤشرات تاريخ اليوم">
+            <div className={styles.metricGrid}>
             {[
               { label: 'اليوم من السنة', value: `${dayOfYear} / ${daysInYear}` },
               { label: 'رقم الأسبوع', value: `الأسبوع ${weekNum}` },
               { label: 'تبقى حتى نهاية السنة', value: `${daysLeft} يوم` },
-              { label: 'Julian Day', value: hijri ? Math.floor(hijri.julianDay).toLocaleString('en') : '—' },
+              { label: 'اليوم اليولياني', value: hijri ? Math.floor(hijri.julianDay).toLocaleString('en') : 'غير متاح' },
             ].map((fact, i) => (
               <div
                 key={i}
-                className="bg-surface-1 border border-border rounded-[var(--radius)] p-4 text-center shadow-sm"
+                className={styles.metricCard}
               >
-                <div className="text-lg md:text-xl font-bold text-accent-alt">
+                <div className={styles.metricValue}>
                   {fact.value}
                 </div>
-                <div className="text-xs text-muted mt-1 font-medium">
+                <div className={styles.metricLabel}>
                   {fact.label}
                 </div>
               </div>
             ))}
+            </div>
           </section>
 
-          {/* METHOD COMPARISON TABLE */}
           {umalqura && astronomical && civil && (
-            <section className="mb-8">
-              <h2 className="text-xl font-bold text-primary mb-4">
-                مقارنة طرق الحساب الثلاثة
-              </h2>
-              <MethodComparisonTable
-                gregorianDate={isoDate}
-                umalqura={umalqura}
-                astronomical={astronomical}
-                civil={civil}
-              />
-              <p className="text-xs md:text-sm text-secondary mt-3">
-                * قد يختلف التاريخ بيوم واحد بين الطرق المختلفة بناءً على معايير الحساب والرؤية.
-              </p>
+            <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="date-methods-heading">
+              <div className={styles.sectionPanel}>
+                <div className={styles.sectionHead}>
+                  <h2 id="date-methods-heading" className={styles.sectionTitle}>
+                    مقارنة طرق الحساب الثلاثة
+                  </h2>
+                  <p className={styles.sectionCopy}>
+                    هذه المقارنة توضّح لماذا قد يظهر التاريخ الهجري مختلفاً بيوم واحد عند استخدام بلد أو مرجع حساب مختلف.
+                  </p>
+                </div>
+                <MethodComparisonTable
+                  gregorianDate={isoDate}
+                  umalqura={umalqura}
+                  astronomical={astronomical}
+                  civil={civil}
+                />
+                <p className={styles.cardBody}>
+                  إذا رأيت فرق يوم واحد، فابدأ بمراجعة طريقة الحساب قبل الحكم على النتيجة. غالباً يكون الاختلاف بسبب مرجع بداية الشهر الهجري، لا بسبب اختلاف التاريخ الميلادي نفسه.
+                </p>
+              </div>
             </section>
           )}
 
-          {/* QUICK LINKS */}
-          <nav aria-label="روابط ذات صلة" className="related-links" dir="rtl">
-            <p className="related-links__heading">صفحات ذات صلة</p>
-            <div className="related-links__grid">
+          <DateEditorialSections
+            badge="مرجع اليوم"
+            title="تاريخ اليوم مع سياق يكفي للاستخدام الفعلي"
+            intro="ابدأ من الإجابة الفورية، ثم راجع مصدر التاريخ وسبب اختلافه أحياناً وكيف تستخدمه في التقويم أو التحويل أو المشاركة."
+            insights={insights}
+            faqTitle="أسئلة قبل مشاركة تاريخ اليوم أو اعتماده"
+            faqItems={faqItems}
+          />
 
-              <Link href="/date/today/hijri" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
+          <section className={`container mx-auto px-4 ${styles.sectionBand}`}>
+            <div className={styles.prosePanel}>
+              <h2 className={styles.sectionTitle}>متى تكفي صفحة تاريخ اليوم؟</h2>
+              <div className={styles.proseBody}>
+              <p>
+                استخدم هذه الصفحة عندما تحتاج جواباً سريعاً للتاريخ الحالي مع سياق كافٍ لفهمه: اليوم من الأسبوع، التاريخ الهجري والميلادي، رقم الأسبوع، واليوم من السنة. إذا كان السؤال عن تاريخ سابق أو قادم، فمحوّل التاريخ هو المسار الأنسب لأنه يسمح بإدخال اليوم والشهر والسنة ومقارنة طرق الحساب.
+              </p>
+              <p>
+                إذا كنت ترسل موعداً مهماً اليوم، فاكتب التاريخين معاً ولا تكتفِ بعبارة "اليوم". مثال واضح: {gregorianFormatted} ميلادي
+                {hijri ? `، الموافق ${hijri.formatted.ar} وفق أم القرى` : ''}. هذه الصيغة تساعد الطرف الآخر على فهم الموعد حتى لو كان في بلد أو منطقة زمنية مختلفة.
+              </p>
+              </div>
+            </div>
+          </section>
+
+          <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="today-decision-heading">
+            <div className={styles.sectionPanel}>
+              <div className={styles.sectionHead}>
+                <h2 id="today-decision-heading" className={styles.sectionTitle}>قاعدة الاعتماد على تاريخ اليوم</h2>
+                <p className={styles.sectionCopy}>
+                  تاريخ اليوم يبدو بسيطاً، لكن طريقة استخدامه تختلف بين مشاركة يوم عادي وموعد رسمي
+                  ومناسبة هجرية. هذه القاعدة تمنع الالتباس.
+                </p>
+              </div>
+              <div className={styles.infoGrid}>
+                {[
+                  {
+                    title: 'للمحادثة والمشاركة',
+                    body: 'استخدم التاريخ المعروض مباشرة. اكتب اليوم والشهر والسنة، ويفضل أن تضيف التقويمين إذا كان الطرف الآخر في بلد مختلف.',
+                  },
+                  {
+                    title: 'للمناسبات الهجرية',
+                    body: 'راجع مقارنة الطرق وصفحة الدولة، لأن بداية الشهر قد تختلف بين الحساب العام والإعلان المحلي.',
+                  },
+                  {
+                    title: 'للنماذج والتقارير',
+                    body: 'استخدم التاريخ الميلادي ورقم الأسبوع عند الحاجة. كثير من الأنظمة الإدارية تعتمد الميلادي أو رقم الأسبوع في التقارير.',
+                  },
+                  {
+                    title: 'لتاريخ غير اليوم',
+                    body: 'انتقل إلى محول التاريخ. صفحة اليوم لا تكفي إذا كان لديك تاريخ ميلاد، عقد، رحلة، أو مناسبة في يوم آخر.',
+                  },
+                ].map((card, index) => (
+                  <article
+                    key={card.title}
+                    className={`${styles.infoCard} ${index === 0 ? styles.infoCardLead : ''}`}
+                  >
+                    <h3 className={styles.cardTitle}>{card.title}</h3>
+                    <p className={styles.cardBody}>{card.body}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="today-sources-heading">
+            <div className={styles.sectionPanel}>
+              <div className={styles.sectionHead}>
+                <h2 id="today-sources-heading" className={styles.sectionTitle}>مصادر ومنهج تاريخ اليوم</h2>
+                <p className={styles.sectionCopy}>
+                  نعرض التاريخ الحالي بسرعة، ونوضح في الوقت نفسه أن اختلاف التقويم الهجري أو رقم الأسبوع
+                  له سبب منهجي يمكن مراجعته.
+                </p>
+              </div>
+              <div className={styles.linkGrid}>
+                {TODAY_SOURCE_LINKS.map((source, index) => (
+                  <a
+                    key={source.href}
+                    href={source.href}
+                    className={`${styles.linkCard} ${index === 0 ? styles.linkCardPrimary : ''}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className={styles.cardTitle}>{source.label}</span>
+                    <span className={styles.cardBody}>{source.description}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className={`container mx-auto px-4 ${styles.sectionBand}`}>
+            <nav aria-label="مسارات تفصيل تاريخ اليوم وتحويله" className={styles.sectionPanel} dir="rtl">
+              <h2 className={styles.sectionTitle}>بعد تاريخ اليوم: اختر الخطوة التالية</h2>
+              <div className={`${styles.linkGrid} mt-5`}>
+
+              <Link href="/date/today/hijri" className={styles.linkCard}>
+                <span className={styles.cardIcon} aria-hidden="true">
                   <Moon size={16} strokeWidth={1.75} />
                 </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">تفاصيل التاريخ الهجري</span>
-                  <span className="related-link-card__desc">بثلاث طرق حساب مع المناسبات</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
+                <span className={styles.cardTitle}>تفاصيل التاريخ الهجري</span>
+                <span className={styles.cardBody}>بثلاث طرق حساب مع المناسبات</span>
               </Link>
 
-              <Link href="/date/today/gregorian" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
+              <Link href="/date/today/gregorian" className={styles.linkCard}>
+                <span className={styles.cardIcon} aria-hidden="true">
                   <CalendarDays size={16} strokeWidth={1.75} />
                 </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">تفاصيل التاريخ الميلادي</span>
-                  <span className="related-link-card__desc">معلومات تفصيلية عن يوم اليوم</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
+                <span className={styles.cardTitle}>تفاصيل التاريخ الميلادي</span>
+                <span className={styles.cardBody}>اليوم من السنة، رقم الأسبوع، ومسار اليوم الكامل</span>
               </Link>
 
-              <Link href="/date/converter" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
+              <Link href="/date/converter" className={styles.linkCard}>
+                <span className={styles.cardIcon} aria-hidden="true">
                   <ArrowLeftRight size={16} strokeWidth={1.75} />
                 </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">محول التاريخ</span>
-                  <span className="related-link-card__desc">تحويل بين الهجري والميلادي بثلاث طرق</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
+                <span className={styles.cardTitle}>محول التاريخ</span>
+                <span className={styles.cardBody}>تحويل بين الهجري والميلادي بثلاث طرق</span>
               </Link>
 
-            </div>
-          </nav>
+              </div>
+            </nav>
+          </section>
         </main>
       </AdLayoutWrapper>
     </>

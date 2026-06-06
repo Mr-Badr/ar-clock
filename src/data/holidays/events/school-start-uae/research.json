@@ -1,135 +1,356 @@
 {
   "slug": "school-start-uae",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.166Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
-    "متى بداية الدراسة في الإمارات {{year}}",
-    "كم باقي على بداية الدراسة في الإمارات {{year}}",
+    "متى تبدأ الدراسة في الإمارات {{year}}",
     "موعد بداية الدراسة في الإمارات {{year}}",
-    "بداية الدراسة في الإمارات {{year}}",
-    "بداية الدراسة في الإمارات العد التنازلي",
-    "بداية الدراسة في الإمارات متى",
+    "كم باقي على بداية الدراسة في الإمارات {{year}}",
     "تاريخ بداية الدراسة في الإمارات {{year}}",
-    "متى بداية الدراسة في الإمارات {{nextYear}}",
-    "كم باقي على بداية الدراسة في الإمارات",
-    "بداية الدراسة في الإمارات {{nextYear}}",
-    "كيف أستعد لـبداية الدراسة في الإمارات",
-    "ما هو بداية الدراسة في الإمارات"
+    "بداية الدراسة في الإمارات {{year}}",
+    "التقويم الأكاديمي الإمارات {{year}} {{nextYear}}",
+    "المدارس الحكومية تبدأ متى في الإمارات {{year}}",
+    "المدارس الخاصة الإمارات منهاج وزارة التربية {{year}}",
+    "متى ترجع المدارس في الإمارات {{year}}",
+    "هل كل المدارس في الإمارات تبدأ في اليوم نفسه"
   ],
   "competitors": [
     {
       "site": "moe.gov.ae",
-      "type": "official",
-      "url": "https://www.moe.gov.ae",
-      "focus": [
+      "type": "official_reference",
+      "url": "https://www.moe.gov.ae/en/guides/Pages/Academic-calendar-2026-2027.aspx"
+    },
+    {
+      "site": "moe.gov.ae",
+      "type": "official_news_reference",
+      "url": "https://www.moe.gov.ae/Ar/MediaCenter/News/Pages/MOE-announces-the-academic-calendar-for-the-next-3-years.aspx"
+    },
+    {
+      "site": "emirateswoman.com",
+      "type": "arabic_english_news_competitor",
+      "url": "https://emirateswoman.com/academic-calendar-uae-2026-2027/"
+    },
+    {
+      "site": "whichschooladvisor.com",
+      "type": "english_comparison",
+      "url": "https://whichschooladvisor.com/uae/guides/school-holidays-in-uae"
+    },
+    {
+      "site": "bayut.com",
+      "type": "english_explainer_comparison",
+      "url": "https://www.bayut.com/mybayut/academic-calendar-uae/"
+    }
+  ],
+  "arabicCompetitors": [
+    {
+      "site": "moe.gov.ae",
+      "status": "usable",
+      "url": "https://www.moe.gov.ae/en/guides/Pages/Academic-calendar-2026-2027.aspx",
+      "title": "Academic Calendar 2026-2027",
+      "metaDescription": "Official UAE academic calendar.",
+      "h1": "Academic Calendar 2026-2027",
+      "headings": [
+        "Academic Calendar 2026-2027"
+      ],
+      "bodySummary": "هذه الصفحة هي المرجع الرسمي الأقوى في البحث لأنها تثبت أن بداية الدراسة للطلبة ستكون يوم 31 أغسطس 2026، وتوضح أيضاً إجازة منتصف الفصل الأول ونهاية العام الدراسي. لكنها لا تشرح للمستخدم العربي بسرعة من يشمله القرار ومتى تحتاج المدارس الخاصة المختلفة إلى تحقق إضافي.",
+      "faq": [],
+      "tables": [
+        "التقويم الأكاديمي 2026-2027"
+      ],
+      "examples": [
+        "31 August 2026 start date"
+      ],
+      "keywords": [
+        "Academic Calendar",
+        "UAE school start"
+      ],
+      "schemaHints": [
+        "GovernmentOrganization",
+        "WebPage"
+      ],
+      "sources": [
+        "https://www.moe.gov.ae/en/guides/Pages/Academic-calendar-2026-2027.aspx"
+      ],
+      "wordCount": 220,
+      "strengths": [
+        "أعلى ثقة",
+        "يقدم التقويم الكامل"
+      ],
+      "weaknesses": [
+        "لا يبدأ بجواب عربي خِدمي مباشر",
+        "لا يشرح اختلاف المدارس الخاصة خارج منهاج الوزارة"
+      ]
+    },
+    {
+      "site": "moe.gov.ae",
+      "status": "usable",
+      "url": "https://www.moe.gov.ae/Ar/MediaCenter/News/Pages/MOE-announces-the-academic-calendar-for-the-next-3-years.aspx",
+      "title": "وزارة التربية والتعليم تعتمد التقويم الأكاديمي للأعوام الثلاثة القادمة",
+      "metaDescription": "خبر رسمي عن اعتماد التقويم الأكاديمي للأعوام الثلاثة القادمة.",
+      "h1": "وزارة التربية والتعليم تعتمد التقويم الأكاديمي للأعوام الثلاثة القادمة",
+      "headings": [
+        "اعتماد التقويم الأكاديمي"
+      ],
+      "bodySummary": "هذه الصفحة مهمة لأنها تؤكد أن التقويم الثلاثي ليس مجرد جدول متداول، بل قرار معلن من الوزارة. كما تشير إلى وجود مرونة لبعض المدارس الخاصة التابعة للجهات التعليمية المحلية، وهو التفصيل الذي يمنع التعميم الخاطئ على كل المدارس في الدولة.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "مرونة للمدارس الخاصة غير التابعة لمنهاج الوزارة"
+      ],
+      "keywords": [
         "التقويم الأكاديمي",
-        "بداية الدراسة",
-        "الإعلانات التعليمية"
+        "وزارة التربية والتعليم"
       ],
-      "gaps": [
-        "لا يجمع نية كم باقي مع الشرح السريع",
-        "اللغة رسمية أكثر من كونها خدمية"
+      "schemaHints": [
+        "NewsArticle",
+        "GovernmentOrganization"
+      ],
+      "sources": [
+        "https://www.moe.gov.ae/Ar/MediaCenter/News/Pages/MOE-announces-the-academic-calendar-for-the-next-3-years.aspx"
+      ],
+      "wordCount": 260,
+      "strengths": [
+        "يوضح السلطة الرسمية",
+        "يفسر وجود مرونة لبعض المدارس"
+      ],
+      "weaknesses": [
+        "ليس صفحة سؤال/جواب مباشرة",
+        "لا يبني رحلة استخدام أسرية"
       ]
     },
     {
-      "site": "المواقع المحلية الإماراتية",
-      "type": "news",
-      "focus": [
-        "تاريخ العودة للمدارس",
-        "التقويم المدرسي",
-        "المدارس الحكومية والخاصة"
+      "site": "emirateswoman.com",
+      "status": "usable",
+      "url": "https://emirateswoman.com/academic-calendar-uae-2026-2027/",
+      "title": "Academic calendar in the UAE for 2026-2027 unveiled",
+      "metaDescription": "Coverage of the academic calendar in the UAE.",
+      "h1": "Academic calendar in the UAE for 2026-2027 unveiled",
+      "headings": [
+        "Academic calendar in the UAE for 2026-2027 unveiled"
       ],
-      "gaps": [
-        "تكرار الخبر من دون صفحة مرجعية ثابتة",
-        "ضعف في التحضير العملي للأسر"
+      "bodySummary": "هذه الصفحة تقرأ الخبر بلغة أسهل للعائلة العامة، وتؤكد 31 أغسطس 2026 كبداية الدراسة، مع ذكر العطل الرئيسية. قوتها في السهولة، لكنها تبقى خبراً عامّاً لا يشرح الفرق الدقيق بين المدارس الحكومية والخاصة التابعة للوزارة وغيرها.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "خبر مبسط للقارئ العام"
+      ],
+      "keywords": [
+        "UAE academic calendar",
+        "school start UAE"
+      ],
+      "schemaHints": [
+        "Article"
+      ],
+      "sources": [
+        "https://emirateswoman.com/academic-calendar-uae-2026-2027/"
+      ],
+      "wordCount": 350,
+      "strengths": [
+        "سهل القراءة",
+        "يلخص أهم المواعيد"
+      ],
+      "weaknesses": [
+        "أقل دقة من المرجع الرسمي",
+        "لا يشرح من يشمله القرار بالتفصيل"
+      ]
+    }
+  ],
+  "englishCompetitors": [
+    {
+      "site": "whichschooladvisor.com",
+      "status": "usable_for_comparison",
+      "url": "https://whichschooladvisor.com/uae/guides/school-holidays-in-uae",
+      "title": "School Holidays in the UAE",
+      "metaDescription": "Guide to school terms and holidays in the UAE.",
+      "h1": "School Holidays in the UAE",
+      "headings": [
+        "School Holidays in the UAE"
+      ],
+      "bodySummary": "Useful for comparison because it explains how different curricula and emirate-level regulation can affect calendars. It is stronger on structure and context than on the exact Arabic search intent around the single start date.",
+      "faq": [],
+      "tables": [
+        "Holiday and term date tables"
+      ],
+      "examples": [
+        "different curricula context"
+      ],
+      "keywords": [
+        "UAE school holidays"
+      ],
+      "schemaHints": [
+        "Article",
+        "Table"
+      ],
+      "sources": [
+        "https://whichschooladvisor.com/uae/guides/school-holidays-in-uae"
+      ],
+      "wordCount": 420,
+      "strengths": [
+        "Strong on contextual differences"
+      ],
+      "weaknesses": [
+        "Not optimized for the exact Arabic query"
       ]
     },
     {
-      "site": "صفحات العد التنازلي العربية",
-      "type": "countdown",
-      "focus": [
-        "كم باقي على الدراسة",
-        "متى تبدأ الدراسة في الإمارات"
+      "site": "bayut.com",
+      "status": "usable_for_comparison",
+      "url": "https://www.bayut.com/mybayut/academic-calendar-uae/",
+      "title": "Academic calendar in the UAE",
+      "metaDescription": "Guide to UAE academic calendar and breaks.",
+      "h1": "Academic calendar in the UAE",
+      "headings": [
+        "Academic calendar in the UAE"
       ],
-      "gaps": [
-        "لا توثق الفروقات المحلية جيداً",
-        "تفتقر إلى مرجعية رسمية واضحة"
+      "bodySummary": "Useful as a family-facing explainer because it translates official dates into planning language and break windows. It still needs the official ministry pages to anchor facts about which schools are covered.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "family-facing planning frame"
+      ],
+      "keywords": [
+        "academic calendar UAE"
+      ],
+      "schemaHints": [
+        "Article"
+      ],
+      "sources": [
+        "https://www.bayut.com/mybayut/academic-calendar-uae/"
+      ],
+      "wordCount": 500,
+      "strengths": [
+        "Planning-oriented structure"
+      ],
+      "weaknesses": [
+        "Less authoritative than ministry sources"
       ]
+    },
+    {
+      "site": "edarabia.com",
+      "status": "replaced",
+      "url": "https://www.edarabia.com/school-holidays-uae/",
+      "replacementReason": "Useful generally, but WhichSchoolAdvisor and Bayut covered the family/planning comparison angle more clearly for this rewrite."
+    }
+  ],
+  "replacedOrBlockedCompetitors": [
+    {
+      "site": "countdown-only pages",
+      "status": "replaced",
+      "reason": "They repeated a date without clarifying which schools the official ministry decision covered."
+    },
+    {
+      "site": "generic local news duplicates",
+      "status": "replaced",
+      "reason": "They added little beyond the ministry announcement and did not improve the user decision logic."
     }
   ],
   "coverageMatrix": [
     {
-      "keyword": "متى بداية الدراسة في الإمارات {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "الجواب السريع عن تاريخ العودة",
+      "arabicCoverage": "قوي",
+      "englishCoverage": "متوسط",
+      "opportunity": "تقديم 31 أغسطس في أول سطر مع تفسير الفئة المشمولة"
     },
     {
-      "keyword": "كم باقي على بداية الدراسة في الإمارات {{year}}",
-      "whyItMatters": "نية عد تنازلي مباشرة تناسب الباحث الذي يريد معرفة المدة المتبقية بسرعة."
+      "topic": "من يشمله القرار الرسمي",
+      "arabicCoverage": "متوسط",
+      "englishCoverage": "متوسط",
+      "opportunity": "تحويله إلى أهم عنصر توضيحي في الصفحة"
     },
     {
-      "keyword": "موعد بداية الدراسة في الإمارات {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "المدارس الخاصة غير التابعة لمنهاج الوزارة",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "أفضل نسبياً",
+      "opportunity": "منع التعميم الخاطئ على كل مدرسة خاصة"
     },
     {
-      "keyword": "بداية الدراسة في الإمارات {{year}}",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "topic": "كيف تتحقق من مدرستك",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "متوسط",
+      "opportunity": "إضافة قاعدة تحقق عملية"
     },
     {
-      "keyword": "بداية الدراسة في الإمارات العد التنازلي",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "topic": "ربط البداية بالعطل القريبة",
+      "arabicCoverage": "متوسط",
+      "englishCoverage": "جيد",
+      "opportunity": "استخدام إجازة منتصف الفصل الأول لإثراء التخطيط"
     },
     {
-      "keyword": "بداية الدراسة في الإمارات متى",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "خطوات الاستعداد للأسرة",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "جيد بنيوياً",
+      "opportunity": "توسيع الفائدة العملية"
     },
     {
-      "keyword": "تاريخ بداية الدراسة في الإمارات {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "هل الموعد إجازة أم عودة",
+      "arabicCoverage": "غائب تقريباً",
+      "englishCoverage": "غائب",
+      "opportunity": "معالجة سؤال شائع ببساطة"
     },
     {
-      "keyword": "متى بداية الدراسة في الإمارات {{nextYear}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "العد التنازلي وعلاقته بنوع المدرسة",
+      "arabicCoverage": "غائب",
+      "englishCoverage": "ضعيف",
+      "opportunity": "منع استخدام العداد على مدرسة قد لا ينطبق عليها التاريخ نفسه"
     }
   ],
   "keywordGaps": [
-    "جواب عربي مباشر يوضح معنى بداية الدراسة في الإمارات وموعده في صفحة واحدة.",
-    "شرح سبب أهمية بداية الدراسة في الإمارات ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
-    "تغطية الأسئلة العملية التي يطرحها القارئ قبل بداية الدراسة في الإمارات أو أثناءه.",
-    "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط.",
-    "دمج العد التنازلي مع الشرح والسياق بدل صفحة موعد قصيرة وضعيفة.",
-    "ربط الموعد بالقيمة العملية للقارئ: إجازة، استعداد، تهنئة، أو تنظيم مسبق.",
-    "شرح الفروقات المحلية أو الرسمية عند الحاجة بدلاً من الاكتفاء بموعد عام مبهم.",
-    "لغة عربية طبيعية لا تبدو كأنها قائمة كلمات أو نص مولد آلياً."
+    "هل كل المدارس في الإمارات تبدأ في اليوم نفسه",
+    "هل المدارس الخاصة في الإمارات تبدأ يوم 31 أغسطس {{year}}",
+    "المدارس الخاصة الإمارات منهاج وزارة التربية {{year}}",
+    "متى تبدأ الدراسة في الإمارات {{year}} للمدارس الحكومية",
+    "كيف أستعد لبداية الدراسة في الإمارات {{year}}",
+    "إجازة منتصف الفصل الأول الإمارات {{year}}",
+    "متى ترجع المدارس في الإمارات {{year}}",
+    "كم باقي على بداية الدراسة في الإمارات {{year}}"
   ],
   "unansweredQuestions": [
-    "متى بداية الدراسة في الإمارات {{year}}؟",
-    "كم باقي على بداية الدراسة في الإمارات؟",
-    "ما هو بداية الدراسة في الإمارات؟",
-    "كيف أستعد لـبداية الدراسة في الإمارات؟",
-    "متى بداية الدراسة في الإمارات {{nextYear}}؟",
-    "ما أهمية بداية الدراسة في الإمارات؟",
-    "كم باقي على بداية الدراسة في الإمارات {{year}}؟",
-    "تاريخ بداية الدراسة في الإمارات {{year}}؟"
+    "هل مدرستي مشمولة بقرار 31 أغسطس؟",
+    "هل كل المدارس الخاصة تبدأ في اليوم نفسه؟",
+    "متى أحتاج مراجعة الجهة التعليمية المحلية؟",
+    "ما أول محطة إجازة بعد بداية الدراسة؟",
+    "كيف أستخدم هذا الموعد عملياً في خطة الأسرة؟",
+    "هل بداية الدراسة في الإمارات إجازة أم عودة فعلية؟"
   ],
-  "differentiationIdeas": [
-    "جواب مباشر عن موعد بداية الدراسة في الإمارات في بداية الصفحة قبل أي شرح إضافي.",
-    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر.",
-    "أسئلة شائعة عملية تساعد القارئ على فهم بداية الدراسة في الإمارات والتصرف بناءً عليه.",
-    "ربط الصفحة بطريقة البحث الشائعة عن بداية الدراسة في الإمارات دون فقدان الوضوح العام."
-  ],
+  "competitorMatrix": {
+    "strengths": [
+      "وجود مرجع رسمي قوي وواضح",
+      "توفر صفحات مقارنة جيدة للعطل والسياق",
+      "سهولة العثور على 31 أغسطس كتاريخ رئيسي"
+    ],
+    "weaknesses": [
+      "ضعف في شرح من يشمله القرار بدقة",
+      "قلة التوجيه العملي للأسر",
+      "تعميم غير دقيق على كل المدارس الخاصة في بعض النتائج"
+    ],
+    "missingTopics": [
+      "قاعدة قرار مبسطة لنوع المدرسة",
+      "متى تراجع الجهة المحلية أو المدرسة الخاصة",
+      "ربط الموعد بخطوات عملية وقريبة زمنياً"
+    ],
+    "uniqueOpportunities": [
+      "الجمع بين التاريخ الرسمي ومنطقه التنظيمي في صفحة واحدة",
+      "تحويل الصفحة من خبر إلى أداة قرار",
+      "شرح الفئة المشمولة بدل تكرار التاريخ وحده"
+    ]
+  },
   "factSources": [
     {
-      "label": "وزارة التربية والتعليم - الإمارات",
-      "url": "https://www.moe.gov.ae"
+      "label": "وزارة التربية والتعليم: التقويم الأكاديمي للعام 2026-2027",
+      "url": "https://www.moe.gov.ae/en/guides/Pages/Academic-calendar-2026-2027.aspx"
     },
     {
-      "label": "المنصة الرسمية لحكومة الإمارات - التعليم",
-      "url": "https://u.ae/ar-ae/information-and-services/education"
+      "label": "وزارة التربية والتعليم: التقويم الأكاديمي للأعوام الثلاثة القادمة",
+      "url": "https://www.moe.gov.ae/Ar/MediaCenter/News/Pages/MOE-announces-the-academic-calendar-for-the-next-3-years.aspx"
     },
     {
-      "label": "البوابة الرسمية لحكومة الإمارات",
-      "url": "https://u.ae"
+      "label": "وزارة التربية والتعليم: فتح التسجيل في المدارس الحكومية للعام 2026-2027",
+      "url": "https://www.moe.gov.ae/ar/mediacenter/news/Pages/MOE-opens-2026-2027-academic-year-public-school-registration.aspx"
+    },
+    {
+      "label": "WhichSchoolAdvisor: School Holidays in the UAE",
+      "url": "https://whichschooladvisor.com/uae/guides/school-holidays-in-uae"
     }
   ],
-  "notes": "تم تعزيز خريطة البحث العربية لـ بداية الدراسة في الإمارات اعتماداً على الكلمات المفتاحية الحالية، والأسئلة الشائعة، والمصادر الموجودة داخل الحزمة نفسها."
+  "notes": "الخلاصة الأهم من البحث أن الصفحة الإماراتية لا يجب أن تقدم 31 أغسطس بوصفه جواباً عائماً لكل المدارس. القيمة الحقيقية تبدأ عندما توضح أن القرار الرسمي يشمل المدارس الحكومية والخاصة التي تتبع منهاج الوزارة، وأن بعض المدارس الخاصة الأخرى قد تحتاج تحققاً إضافياً من الجهة المحلية أو المؤسسة نفسها."
 }

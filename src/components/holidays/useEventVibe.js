@@ -15,11 +15,12 @@
  *   - All strings in Arabic
  *   - Every category must have a valid config
  */
+import { BookOpen, Briefcase, CircleDollarSign, Flag, Globe2, GraduationCap, Moon, Users } from 'lucide-react'
 
 /* ── Category visual configurations ─────────────────────────────────── */
 const CATEGORY_CONFIG = {
   islamic: {
-    emoji: '🌙',
+    Icon: Moon,
     label: 'مناسبة إسلامية',
     pattern: 'moon',
     accentCssVar: '--accent-alt',
@@ -27,7 +28,7 @@ const CATEGORY_CONFIG = {
     urgencyThresholds: { critical: 3, high: 10, medium: 30 },
   },
   national: {
-    emoji: '🏳️',
+    Icon: Flag,
     label: 'عيد وطني',
     pattern: 'wave',
     accentCssVar: '--success',
@@ -35,7 +36,7 @@ const CATEGORY_CONFIG = {
     urgencyThresholds: { critical: 3, high: 7, medium: 30 },
   },
   school: {
-    emoji: '📚',
+    Icon: GraduationCap,
     label: 'مناسبة مدرسية',
     pattern: 'grid',
     accentCssVar: '--warning',
@@ -43,7 +44,7 @@ const CATEGORY_CONFIG = {
     urgencyThresholds: { critical: 7, high: 14, medium: 45 }, // higher urgency earlier
   },
   holidays: {
-    emoji: '🏖️',
+    Icon: BookOpen,
     label: 'إجازة رسمية',
     pattern: 'wave',
     accentCssVar: '--success',
@@ -51,7 +52,7 @@ const CATEGORY_CONFIG = {
     urgencyThresholds: { critical: 2, high: 7, medium: 21 },
   },
   astronomy: {
-    emoji: '🌍',
+    Icon: Globe2,
     label: 'فلكي وطبيعي',
     pattern: 'orbit',
     accentCssVar: '--info',
@@ -59,7 +60,7 @@ const CATEGORY_CONFIG = {
     urgencyThresholds: { critical: 1, high: 3, medium: 7 },
   },
   social: {
-    emoji: '🎗️',
+    Icon: Users,
     label: 'مناسبة اجتماعية',
     pattern: 'wave',
     accentCssVar: '--accent-alt',
@@ -67,7 +68,7 @@ const CATEGORY_CONFIG = {
     urgencyThresholds: { critical: 3, high: 10, medium: 30 },
   },
   business: {
-    emoji: '💼',
+    Icon: Briefcase,
     label: 'مناسبة أعمال',
     pattern: 'grid',
     accentCssVar: '--accent-alt',
@@ -75,7 +76,7 @@ const CATEGORY_CONFIG = {
     urgencyThresholds: { critical: 2, high: 5, medium: 14 },
   },
   support: {
-    emoji: '💰',
+    Icon: CircleDollarSign,
     label: 'برنامج أو استحقاق',
     pattern: 'wave',
     accentCssVar: '--success',
@@ -109,30 +110,30 @@ export function getUrgencyTier(daysLeft, categoryId = 'islamic') {
  * that feels written specifically for THIS event, not a template.
  */
 const SLUG_HEADLINES = {
-  'ramadan': (days) => days <= 7 ? 'رمضان على الأبواب — هيّئ نفسك' : days <= 30 ? 'رمضان يقترب — ابدأ التحضير' : `${days} يوماً تفصلك عن رمضان المبارك`,
-  'eid-al-fitr': (days) => days <= 3 ? 'عيد الفطر المبارك بعد أيام!' : `عيد الفطر يقترب — ${days} يوم متبقي`,
+  'ramadan': (days) => days <= 7 ? 'رمضان على الأبواب: هيّئ نفسك' : days <= 30 ? 'رمضان يقترب: ابدأ التحضير' : `${days} يوماً تفصلك عن رمضان المبارك`,
+  'eid-al-fitr': (days) => days <= 3 ? 'عيد الفطر المبارك بعد أيام!' : `عيد الفطر يقترب: ${days} يوم متبقي`,
   'eid-al-adha': (days) => days <= 3 ? 'عيد الأضحى المبارك وشيك!' : `عيد الأضحى بعد ${days} يوم`,
   'hajj-season': (days) => days <= 10 ? 'الحجاج يستعدون لأقدس رحلة' : `موسم الحج بعد ${days} يوم`,
-  'day-of-arafa': (days) => days <= 3 ? 'أفضل أيام العام — يوم عرفة وشيك' : `يوم عرفة بعد ${days} يوم — صيامه يكفّر سنتين`,
-  'laylat-al-qadr': (days) => days <= 5 ? 'ليلة القدر — خير من ألف شهر' : `ليلة القدر بعد ${days} يوم`,
+  'day-of-arafa': (days) => days <= 3 ? 'أفضل أيام العام: يوم عرفة وشيك' : `يوم عرفة بعد ${days} يوم، وصيامه يكفّر سنتين`,
+  'laylat-al-qadr': (days) => days <= 5 ? 'ليلة القدر: خير من ألف شهر' : `ليلة القدر بعد ${days} يوم`,
   'mawlid': (days) => `ذكرى المولد النبوي الشريف بعد ${days} يوم`,
   'islamic-new-year': (days) => `رأس السنة الهجرية الجديدة بعد ${days} يوم`,
-  'ashura': (days) => `يوم عاشوراء بعد ${days} يوم — صيامه سنة مؤكدة`,
+  'ashura': (days) => `يوم عاشوراء بعد ${days} يوم، وصيامه سنة مؤكدة`,
   'isra-miraj': (days) => `ذكرى الإسراء والمعراج بعد ${days} يوم`,
-  'laylat-al-qadr': (days) => `ليلة القدر — خير من ألف شهر`,
+  'laylat-al-qadr': (days) => `ليلة القدر: خير من ألف شهر`,
   'nisf-shaban': (days) => `ليلة النصف من شعبان بعد ${days} يوم`,
-  'first-dhul-hijjah': (days) => `أول ذي الحجة — أفضل أيام السنة — بعد ${days} يوم`,
-  'saudi-national-day': (days) => days <= 7 ? 'اليوم الوطني السعودي — الاحتفال قريب!' : `اليوم الوطني السعودي بعد ${days} يوم`,
+  'first-dhul-hijjah': (days) => `أول ذي الحجة، من أفضل أيام السنة، بعد ${days} يوم`,
+  'saudi-national-day': (days) => days <= 7 ? 'اليوم الوطني السعودي: الاحتفال قريب!' : `اليوم الوطني السعودي بعد ${days} يوم`,
   'uae-national-day': (days) => `اليوم الوطني الإماراتي بعد ${days} يوم`,
   'kuwait-national-day': (days) => `اليوم الوطني الكويتي بعد ${days} يوم`,
   'independence-day-algeria': (days) => `ذكرى استقلال الجزائر المجيد بعد ${days} يوم`,
-  'bac-results-algeria': (days) => days <= 14 ? `نتائج الباك قادمة — ${days} يوم للانتظار` : `نتائج الباكالوريا الجزائر بعد ${days} يوم`,
-  'thanaweya-results': (days) => days <= 14 ? `نتيجة الثانوية قريبة — ${days} يوم متبقي` : `نتيجة الثانوية العامة مصر بعد ${days} يوم`,
+  'bac-results-algeria': (days) => days <= 14 ? `نتائج الباك قادمة: ${days} يوم للانتظار` : `نتائج الباكالوريا الجزائر بعد ${days} يوم`,
+  'thanaweya-results': (days) => days <= 14 ? `نتيجة الثانوية قريبة: ${days} يوم متبقي` : `نتيجة الثانوية العامة مصر بعد ${days} يوم`,
   'bac-results-morocco': (days) => `نتائج الباكالوريا المغرب بعد ${days} يوم`,
-  'sham-nessim': (days) => `شم النسيم — ربيع مصر بعد ${days} يوم`,
-  'salary-day-saudi': (days) => days <= 5 ? `الراتب قادم — ${days} أيام فقط!` : `الراتب الحكومي السعودي بعد ${days} يوم`,
-  'citizen-account-saudi': (days) => days <= 5 ? `حساب المواطن قادم — ${days} أيام!` : `حساب المواطن بعد ${days} يوم`,
-  'salary-day-egypt': (days) => days <= 5 ? `الراتب قادم — ${days} أيام!` : `الراتب الحكومي مصر بعد ${days} يوم`,
+  'sham-nessim': (days) => `شم النسيم، ربيع مصر، بعد ${days} يوم`,
+  'salary-day-saudi': (days) => days <= 5 ? `الراتب قادم: ${days} أيام فقط!` : `الراتب الحكومي السعودي بعد ${days} يوم`,
+  'citizen-account-saudi': (days) => days <= 5 ? `حساب المواطن قادم: ${days} أيام!` : `حساب المواطن بعد ${days} يوم`,
+  'salary-day-egypt': (days) => days <= 5 ? `الراتب قادم: ${days} أيام!` : `الراتب الحكومي مصر بعد ${days} يوم`,
   'new-year': (days) => `رأس السنة الميلادية بعد ${days} يوم`,
   'summer-season': (days) => `بداية فصل الصيف فلكياً بعد ${days} يوم`,
   'winter-season': (days) => `بداية فصل الشتاء فلكياً بعد ${days} يوم`,
@@ -141,14 +142,14 @@ const SLUG_HEADLINES = {
 }
 
 const CATEGORY_HEADLINE_FALLBACKS = {
-  islamic: (name, days) => days <= 10 ? `${name} — الموعد اقترب` : `${days} يوماً على ${name}`,
-  national: (name, days) => days <= 7 ? `احتفلوا — ${name} قريب` : `${days} يوماً على ${name}`,
-  school: (name, days) => days <= 14 ? `${name} — انتبه!` : `${days} يوماً على ${name}`,
-  holidays: (name, days) => days <= 7 ? `الإجازة قريبة — ${days} أيام!` : `${days} يوماً على ${name}`,
-  astronomy: (name, days) => `${name} — موعد فلكي دقيق بعد ${days} يوم`,
-  social: (name, days) => days <= 7 ? `${name} قريب — استعد له من الآن` : `${days} يوماً على ${name}`,
+  islamic: (name, days) => days <= 10 ? `${name}: الموعد اقترب` : `${days} يوماً على ${name}`,
+  national: (name, days) => days <= 7 ? `${name} قريب، استعد للاحتفال` : `${days} يوماً على ${name}`,
+  school: (name, days) => days <= 14 ? `${name}: انتبه للموعد` : `${days} يوماً على ${name}`,
+  holidays: (name, days) => days <= 7 ? `الإجازة قريبة: ${days} أيام!` : `${days} يوماً على ${name}`,
+  astronomy: (name, days) => `${name}: موعد فلكي دقيق بعد ${days} يوم`,
+  social: (name, days) => days <= 7 ? `${name} قريب، استعد له من الآن` : `${days} يوماً على ${name}`,
   business: (name, days) => `${days} يوماً على ${name}`,
-  support: (name, days) => days <= 5 ? `${name} — الإيداع قريب!` : `${days} يوماً على ${name}`,
+  support: (name, days) => days <= 5 ? `${name}: الإيداع قريب!` : `${days} يوماً على ${name}`,
 }
 
 export function getEventHeadline(slug, categoryId, daysLeft, eventName) {
@@ -168,8 +169,8 @@ export function getEventSubtext(slug, categoryId, countryCode) {
     'eid-al-fitr': 'يعتمد الموعد النهائي على رؤية هلال شوال.',
     'eid-al-adha': 'يتزامن مع موسم الحج وذبح الأضاحي.',
     'hajj-season': 'يجمع ملايين المسلمين من أنحاء العالم في مكة المكرمة.',
-    'day-of-arafa': 'أفضل أيام العام — يُستحب صيامه لغير الحاج.',
-    'laylat-al-qadr': 'في الأوتار من آخر عشر ليالٍ — أرجحها ليلة 27.',
+    'day-of-arafa': 'أفضل أيام العام، ويُستحب صيامه لغير الحاج.',
+    'laylat-al-qadr': 'في الأوتار من آخر عشر ليالٍ، وأرجحها ليلة 27.',
     'bac-results-algeria': 'تُنشر النتائج على bac.onec.dz فور الإعلان.',
     'thanaweya-results': 'تُنشر على moe.gov.eg أو بالرقم القومي.',
     'bac-results-morocco': 'تُنشر على massar.men.gov.ma.',
@@ -180,14 +181,14 @@ export function getEventSubtext(slug, categoryId, countryCode) {
   if (SLUG_SUBTEXTS[slug]) return SLUG_SUBTEXTS[slug]
 
   const CATEGORY_SUBTEXTS = {
-    islamic: 'مناسبة إسلامية — التواريخ الهجرية قد تختلف بيوم بين الدول.',
-    national: 'إجازة رسمية في البلاد — احتفالات وطنية.',
+    islamic: 'مناسبة إسلامية، والتواريخ الهجرية قد تختلف بيوم بين الدول.',
+    national: 'إجازة رسمية في البلاد مع احتفالات وطنية.',
     school: 'تابع الجهات الرسمية للتأكيد النهائي.',
-    holidays: 'إجازة رسمية — تحقق من تقويم جهة عملك.',
-    astronomy: 'موعد فلكي محسوب بدقة — لا يتغير.',
-    social: 'مناسبة عامة أو عالمية — افهم معناها وموعدها من مصدر موثوق.',
-    business: 'تاريخ تقديري — تحقق من الجهات الرسمية.',
-    support: 'يُحدَّث شهرياً — قد يتقدم إذا وافق إجازة.',
+    holidays: 'إجازة رسمية، تحقق من تقويم جهة عملك.',
+    astronomy: 'موعد فلكي محسوب بدقة ولا يتغير.',
+    social: 'مناسبة عامة أو عالمية، افهم معناها وموعدها من مصدر موثوق.',
+    business: 'تاريخ تقديري، تحقق من الجهات الرسمية.',
+    support: 'يُحدَّث شهرياً، وقد يتقدم إذا وافق إجازة.',
   }
 
   return CATEGORY_SUBTEXTS[categoryId] ?? 'تابع آخر المستجدات.'

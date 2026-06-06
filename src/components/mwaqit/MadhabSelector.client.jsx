@@ -4,7 +4,7 @@
  *
  * Madhab (فقه school) selector affecting Asr prayer time only.
  * Fully aligned with the WAQT design system (new.css v4.1):
- *   - Tab track  : bg-surface-2 + border-subtle + radius-xl + padding space-1
+ *   - Tab track  : bg-surface-2 + border-subtle + radius-lg + padding space-1
  *   - Active pill: bg-surface-4 + border-accent + shadow-xs + radius-lg
  *   - Active text: accent-alt  |  Inactive: text-secondary
  *   - Cards      : card-nested (bg-surface-3 + border-subtle + radius-lg)
@@ -176,14 +176,13 @@ export default function MadhabSelector({
         Track mirrors .tabs:
           background-color: var(--bg-surface-2)
           border: 1px solid var(--border-subtle)
-          border-radius: var(--radius-xl)
+          border-radius: var(--radius-lg)
           padding: var(--space-1)
           gap: var(--space-1)
 
         Pill mirrors .tab--active:
           background-color: var(--bg-surface-4)
           border: 1px solid var(--border-accent)
-          box-shadow: var(--shadow-xs)
           border-radius: var(--radius-lg)
 
         Inactive tab mirrors .tab:
@@ -201,7 +200,7 @@ export default function MadhabSelector({
           position: 'relative', display: 'flex', gap: 'var(--space-1)',
           backgroundColor: 'var(--bg-surface-2)',
           border: '1px solid var(--border-subtle)',
-          borderRadius: 'var(--radius-xl)',
+          borderRadius: 'var(--radius-lg)',
           padding: 'var(--space-1)',
           marginBottom: 'var(--space-4)',
         }}
@@ -217,7 +216,7 @@ export default function MadhabSelector({
             backgroundColor: 'var(--bg-surface-4)',
             border: '1px solid var(--border-accent)',
             borderRadius: 'var(--radius-lg)',
-            boxShadow: 'var(--shadow-xs)',
+            boxShadow: 'none',
             transition: 'right var(--transition-spring)',
             pointerEvents: 'none',
             zIndex: 0,
@@ -308,14 +307,13 @@ export default function MadhabSelector({
         border: 1px solid var(--border-subtle)
         border-radius: var(--radius-lg)
         padding: var(--space-4) var(--space-5)
-        box-shadow: var(--shadow-xs)
       */}
       <div style={{
         backgroundColor: 'var(--bg-surface-3)',
         border: '1px solid var(--border-subtle)',
         borderRadius: 'var(--radius-lg)',
         padding: 'var(--space-4) var(--space-5)',
-        boxShadow: 'var(--shadow-xs)',
+        boxShadow: 'none',
         marginBottom: 'var(--space-3)',
       }}>
 

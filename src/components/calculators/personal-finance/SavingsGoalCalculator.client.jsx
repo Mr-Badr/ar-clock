@@ -74,7 +74,7 @@ export default function SavingsGoalCalculator() {
             <CardHeader>
               <CardTitle className="calc-card-title">خطة الادخار المقترحة</CardTitle>
             </CardHeader>
-            <CardContent className="calc-metric-grid">
+            <CardContent className="calc-metric-grid" aria-live="polite">
               <div className="calc-metric-card">
                 <div className="calc-metric-card__label"><PiggyBank size={16} /> المطلوب شهريًا</div>
                 <div className="calc-metric-card__value">{formatMoney(result.monthlyRequired)}</div>

@@ -17,17 +17,6 @@ This file is the short map of the highest-value places to edit titles, descripti
 
 ## Highest-priority money/traffic pages
 
-### Economy
-
-- `src/lib/economy/seo-content.js`
-  Main shared edit surface for the principal economy route titles, descriptions, keywords, `searchProfile` query clusters, hub FAQ copy, and schema-facing route copy.
-- `src/lib/economy/discovery-content.js`
-  Crawlable supporting copy used across economy discovery surfaces.
-- `src/lib/economy/page-helpers.js`
-  Shared builder that converts the economy `searchProfile` into metadata keywords and schema terms.
-- `src/app/economie/*.page.jsx`
-  Route composition and any route-only text that is not yet centralized.
-
 ### Calculators hubs
 
 - `src/app/calculators/page.jsx`
@@ -97,12 +86,11 @@ This file is the short map of the highest-value places to edit titles, descripti
 
 ## Suggested editing order
 
-1. Economy pages
-2. Calculator hubs
-3. Highest-value calculator detail pages
-4. Time now / time difference / prayer
-5. Holidays and guides
-6. Discovery page and internal search terms
+1. Calculator hubs
+2. Highest-value calculator detail pages
+3. Time now / time difference / prayer
+4. Holidays and guides
+5. Discovery page and internal search terms
 
 ## Rule for editing
 

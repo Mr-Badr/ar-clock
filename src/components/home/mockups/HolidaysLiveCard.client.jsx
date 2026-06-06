@@ -14,9 +14,6 @@
  *       isoDate:     string   — ISO date e.g. '2025-03-31'
  *       hijriDate:   string   — Hijri label e.g. '1 شوال 1447'
  *       type:        string   — 'ديني' | 'وطني' | 'هجري'
- *       icon:        string   — emoji
- *       color:       string   — CSS variable
- *       softBg:      string   — CSS variable
  *       accuracy:    string   — 'high' | 'medium' | 'low'
  *       note:        string   — calendar method note
  *     }
@@ -94,129 +91,82 @@ export default function HolidaysLiveCard({ occasions = [] }) {
   if (!mounted) {
     return (
       <div
-        className="relative w-full max-w-sm mx-auto animate-pulse"
-        style={{ height: '300px', background: 'var(--bg-surface-1)', borderRadius: '24px' }}
+        className="skeleton-card mx-auto h-[300px] w-full max-w-sm animate-pulse"
+        aria-busy="true"
+        aria-label="جاري تحميل المناسبات القادمة"
       />
     )
   }
 
   return (
-    <div
-      className="relative w-full max-w-sm mx-auto select-none"
-      style={{ boxShadow: '0 20px 40px rgba(6,8,18,0.5)', borderRadius: '24px' }}
-    >
-      <div
-        className="rounded-3xl overflow-hidden"
-        style={{
-          background: 'var(--bg-surface-1)',
-          border: '1px solid var(--border-default)',
-        }}
-      >
+    <div className="live-card mx-auto">
 
-        {/* ── Header ── */}
-        <div
-          className="px-5 py-4 flex items-center justify-between"
-          style={{
-            background: 'var(--bg-surface-2)',
-            borderBottom: '1px solid var(--border-subtle)',
-          }}
-        >
+        <div className="live-card__header">
           <div className="flex items-center gap-2">
-            <Calendar size={15} style={{ color: 'var(--accent-alt)' }} />
-            <span className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
+            <span className="live-card__header-icon h-8 w-8" aria-hidden="true">
+              <Calendar size={15} />
+            </span>
+            <span className="live-card__header-title">
               المناسبات القادمة
             </span>
           </div>
-          <span
-            className="text-[11px] rounded-full px-2.5 py-0.5 font-semibold"
-            style={{ background: 'var(--accent-soft)', color: 'var(--accent-alt)' }}
-          >
+          <span className="badge badge-default">
             هجري + ميلادي
           </span>
         </div>
 
-        {/* ── Occasion rows ── */}
-        <ul className="p-4 space-y-3" role="list">
+        <ul className="live-card__body live-card__list" role="list">
           {enriched.map((occ) => {
             const urgent = isUrgent(occ.daysRemaining)
 
             return (
               <li
                 key={occ.slug}
-                className="flex items-center gap-3 rounded-2xl px-4 py-3"
-                style={{
-                  background:      urgent ? occ.softBg      : 'var(--bg-surface-2)',
-                  borderInlineEnd: `3px solid ${occ.color}`,
-                }}
+                className="live-card__row"
+                data-urgent={urgent ? 'true' : undefined}
               >
-                {/* Days-remaining badge */}
-                <div
-                  className="flex shrink-0 flex-col items-center justify-center rounded-xl w-14 min-h-[52px] px-1"
-                  style={{ background: urgent ? occ.color : 'var(--bg-surface-3)' }}
-                >
-                  <div className="flex items-center gap-0.5">
-                    <Clock
-                      size={9}
-                      style={{ color: urgent ? '#fff' : 'var(--text-muted)' }}
-                    />
-                    <span
-                      className="text-[9px] font-semibold leading-none"
-                      style={{ color: urgent ? '#fff' : 'var(--text-muted)' }}
-                    >
+                <div className="live-card__row-main">
+                <div className="live-card__count">
+                  <div className="flex items-center gap-0.5" aria-hidden="true">
+                    <Clock size={9} />
+                    <span className="live-card__count-label">
                       يوم
                     </span>
                   </div>
-                  <span
-                    className="text-xl font-extrabold tabular-nums leading-tight"
-                    style={{ color: urgent ? '#fff' : 'var(--text-primary)' }}
-                  >
+                  <span className="live-card__count-value">
                     {occ.daysRemaining}
                   </span>
                 </div>
 
-                {/* Name + dates */}
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-1.5 mb-0.5">
-                    <span className="text-base leading-none" aria-hidden="true">
-                      {occ.icon}
+                    <span className="live-card__icon-cell" aria-hidden="true">
+                      <Calendar size={13} />
                     </span>
-                    <p
-                      className="text-xs font-bold leading-tight truncate"
-                      style={{ color: urgent ? occ.color : 'var(--text-primary)' }}
-                    >
+                    <p className="live-card__label truncate">
                       {occ.name}
                     </p>
                   </div>
-                  <p
-                    className="text-[10px] tabular-nums leading-snug"
-                    style={{ color: 'var(--text-muted)' }}
-                  >
+                  <p className="live-card__meta tabular-nums">
                     {occ.dateLabel}
                   </p>
                   {occ.hijriDate && (
-                    <p
-                      className="text-[9px] leading-snug mt-0.5"
-                      style={{ color: occ.color, fontWeight: 600 }}
-                    >
+                    <p className="live-card__meta mt-0.5 font-semibold">
                       {occ.hijriDate}
                     </p>
                   )}
-                  {/* Accuracy badge for medium/low accuracy dates */}
                   {occ.accuracy === 'medium' && (
-                    <p
-                      className="text-[9px] leading-snug mt-0.5"
-                      style={{ color: 'var(--warning)' }}
-                    >
+                    <p className="mt-0.5 text-[9px] font-semibold leading-snug text-warning">
                       * قد يختلف بيوم حسب الرؤية
                     </p>
                   )}
+                </div>
                 </div>
               </li>
             )
           })}
         </ul>
 
-      </div>
     </div>
   )
 }

@@ -23,7 +23,7 @@ export default function FAQAccordions({ items = [] }) {
       {items.map((it, idx) => (
         <details
           key={idx}
-          className="group overflow-hidden rounded-xl border border-subtle bg-surface-2 shadow-sm transition-all duration-200 hover:border-default hover:shadow-md"
+          className="group overflow-hidden rounded-[var(--radius-lg)] border border-subtle bg-surface-2 transition-all duration-200 hover:border-default "
         >
           <summary
             className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-right text-base font-bold text-primary [&::-webkit-details-marker]:hidden"
@@ -38,7 +38,7 @@ export default function FAQAccordions({ items = [] }) {
                 </span>
               )}
               {it.badge && (
-                <span className="shrink-0 rounded-full bg-accent-soft px-2 py-0.5 text-[10px] font-semibold text-accent-alt border border-accent">
+                <span className="shrink-0 rounded-[var(--radius-md)] bg-accent-soft px-2 py-0.5 text-[10px] font-semibold text-accent-alt border border-accent">
                   {it.badge}
                 </span>
               )}

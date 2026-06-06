@@ -9,8 +9,10 @@
     "hasHardcodedYear": false
   },
   "notes": [
-    "fact-source: هسبريس: عيد العرش بالمغرب.. تاريخه ورمزيته",
-    "fact-source: هسبريس: الذكرى السادسة والعشرون لعيد العرش المجيد"
+    "fact-source: Maroc.ma: عيد العرش ورؤية ملكية لمغرب حديث ومزدهر",
+    "fact-source: Maroc.ma: نص خطاب عيد العرش",
+    "fact-source: PublicHolidays Africa: Throne Day Morocco",
+    "2026-06-01: Authored package refined with visible official sources, clearer direct answer, public-holiday wording, and distinction from Independence Day and Green March. Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. events:build and rendered-route confirmation were intentionally skipped per instruction."
   ],
-  "updatedAt": "2026-04-09T00:00:00.000Z"
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

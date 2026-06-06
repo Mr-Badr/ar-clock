@@ -46,6 +46,16 @@ function normalizeAboutItems({ event, seo, tokenContext }) {
   if (items.length === 0 && (seo.details || seo.description)) {
     items.push({ heading: `عن ${event.name}`, content: toPlainText(seo.details || seo.description) });
   }
+  if (items.length === 0) {
+    const eventLabel = toPlainText(replaceTokens(seo?.seoMeta?.h1 || event.name, tokenContext));
+    const description = toPlainText(replaceTokens(seo?.seoMeta?.metaDescription || seo?.description || '', tokenContext));
+    items.push({
+      heading: `ما معنى ${eventLabel || event.name}؟`,
+      content:
+        description
+        || `${eventLabel || event.name} صفحة موعد وعد تنازلي تساعدك على معرفة التاريخ القادم، عدد الأيام المتبقية، وطبيعة الموعد إذا كان ثابتاً أو مرتبطاً بالتقويم الهجري أو بإعلان رسمي.`,
+    });
+  }
   return items;
 }
 
@@ -55,12 +65,12 @@ function buildAboutNotes({ event, calInfo, nowIso }) {
     notes.push({
       id: 'source',
       kind: 'text',
-      text: `المرجع التقويمي: ${calInfo?.label || 'تحويل محلي داخل التطبيق'}.`,
+      text: `المرجع التقويمي: ${calInfo?.label || 'تقويم معتمد في الصفحة'}.`,
     });
     if (calInfo?.localSighting) {
       notes.push({ id: 'variance', kind: 'text', text: 'قد يختلف الموعد بيوم بناءً على رؤية الهلال في بعض الدول.' });
     }
-    notes.push({ id: 'refresh', kind: 'text', text: 'يُحتسب الموعد محلياً داخل التطبيق ويُحدَّث مع إعادة التوليد الدورية للصفحة.' });
+    notes.push({ id: 'refresh', kind: 'text', text: 'يُعاد حساب الموعد عند تحديث بيانات الصفحة حتى يبقى العدّاد مرتبطاً بالسنة الحالية.' });
   }
   if (event.type === 'estimated') {
     notes.push({ id: 'estimated', kind: 'text', text: 'هذا التاريخ تقديري وقد يتغير بقرار رسمي.' });
@@ -128,7 +138,7 @@ export function buildHolidayPageModel(input) {
   const aboutItems = normalizeAboutItems({ event, seo, tokenContext });
   const intentHeadingTemplate = category?.intentHeading || 'استعد لـ{{eventName}}';
   const displayTitle = localizeEventLabel(
-    toPlainText(replaceTokens(seo?.seoMeta?.h1 || event.name, tokenContext)),
+    toPlainText(replaceTokens(event.name || seo?.seoMeta?.h1 || '', tokenContext)),
     event,
   );
   const answerSummary = ensureCountryContextSentence(

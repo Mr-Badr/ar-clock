@@ -7,17 +7,20 @@ import { cn } from "@/lib/utils"
 
 function Separator({
   className,
-  orientation = "horizontal",
-  decorative = true,
+  orientation,
+  decorative,
   ...props
-}: React.ComponentProps<typeof SeparatorPrimitive.Root>) {
+}: React.ComponentProps<typeof SeparatorPrimitive.Root>): React.JSX.Element {
+  const resolvedOrientation = orientation ?? "horizontal"
+  const resolvedDecorative = decorative ?? true
+
   return (
     <SeparatorPrimitive.Root
       data-slot="separator"
-      decorative={decorative}
-      orientation={orientation}
+      decorative={resolvedDecorative}
+      orientation={resolvedOrientation}
       className={cn(
-        "bg-border shrink-0 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px",
+        "shrink-0 bg-[var(--border-default)] data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px",
         className
       )}
       {...props}

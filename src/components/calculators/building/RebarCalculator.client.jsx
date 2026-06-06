@@ -13,9 +13,12 @@ export default function RebarCalculator() {
   const [lengthInputGroup, setLengthInputGroup] = useState([{ length: 1, count: 100 }]);
 
   const updateGroup = (index, field, val) => {
-    const newGroups = [...lengthInputGroup];
-    newGroups[index][field] = parseFloat(val) || 0;
-    setLengthInputGroup(newGroups);
+    const parsedValue = parseFloat(val) || 0;
+    setLengthInputGroup(
+      lengthInputGroup.map((group, groupIndex) => (
+        groupIndex === index ? { ...group, [field]: parsedValue } : group
+      )),
+    );
   };
 
   const addGroup = () => setLengthInputGroup([...lengthInputGroup, { length: 12, count: 1 }]);
@@ -31,11 +34,8 @@ export default function RebarCalculator() {
   const results = calcRebarWeight(diameter, totalLengthM);
 
   return (
-    <div
-      className="calc-app-grid grid gap-8 lg:grid-cols-12"
-      style={{ '--calc-accent': '#EF4444' }}
-    >
-      <div className="lg:col-span-5 space-y-6">
+    <div className="calc-app-grid grid gap-8">
+      <div className="space-y-6">
         <Card className="calc-surface-card">
           <CardHeader>
             <CardTitle className="calc-card-title text-xl">مواصفات الحديد</CardTitle>
@@ -53,6 +53,7 @@ export default function RebarCalculator() {
                   <Button
                     key={d}
                     type="button"
+                    aria-pressed={diameter === d}
                     onClick={() => setDiameter(d)}
                     variant="outline"
                     size="sm"
@@ -66,17 +67,18 @@ export default function RebarCalculator() {
             </div>
 
             <div className="calc-field">
-              <div className="calc-field-row border-b border-accent/10 pb-2">
+              <div className="calc-field-row border-b border-[var(--border-subtle)] pb-2">
                 <Label className="calc-label">أسياخ التقطيع</Label>
                 <span className="calc-hint">أدخل الأطوال المختلفة وعدد كل طول</span>
               </div>
 
               <div className="space-y-3">
                 {lengthInputGroup.map((group, index) => (
-                  <div key={index} className="calc-grid-2 items-end rounded-2xl border border-accent/10 bg-base p-3">
+                  <div key={index} className="calc-grid-2 items-end rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface-2)] p-3">
                     <div className="calc-field">
-                      <Label className="calc-label text-xs">الطول (متر)</Label>
+                      <Label htmlFor={`rebar-length-${index}`} className="calc-label text-xs">الطول (متر)</Label>
                       <Input
+                        id={`rebar-length-${index}`}
                         type="number"
                         min="0.1"
                         step="0.1"
@@ -86,8 +88,9 @@ export default function RebarCalculator() {
                       />
                     </div>
                     <div className="calc-field">
-                      <Label className="calc-label text-xs">العدد</Label>
+                      <Label htmlFor={`rebar-count-${index}`} className="calc-label text-xs">العدد</Label>
                       <Input
+                        id={`rebar-count-${index}`}
                         type="number"
                         min="1"
                         value={group.count}
@@ -100,6 +103,7 @@ export default function RebarCalculator() {
                         type="button"
                         variant="ghost"
                         size="sm"
+                        aria-label={`حذف سطر الحديد رقم ${index + 1}`}
                         onClick={() => removeGroup(index)}
                         disabled={lengthInputGroup.length === 1}
                         className="calc-button"
@@ -126,31 +130,29 @@ export default function RebarCalculator() {
         </Card>
       </div>
 
-      <div className="lg:col-span-7 space-y-6">
+      <div className="space-y-6">
         <Card className="calc-result-card h-full relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10" />
-          
-          <CardHeader className="pb-2 border-b border-accent/10">
+          <CardHeader className="pb-2 border-b border-[var(--border-subtle)]">
             <CardTitle className="calc-card-title text-base">الوزن النهائي</CardTitle>
           </CardHeader>
 
-          <CardContent className="pt-8 space-y-8">
+          <CardContent className="pt-8 space-y-8" aria-live="polite">
             <div className="flex flex-col items-center justify-center text-center">
               <h4 className="text-sm text-text-secondary font-medium mb-2">إجمالي الوزن</h4>
               <div className="flex items-end justify-center mb-2">
-                <span className="text-5xl font-black text-primary mr-2" style={{ fontFamily: 'var(--font-ibm-plex-sans-arabic)' }}>
+                <span className="calc-result-value me-2">
                   {fmt(results.totalKg, 1)}
                 </span>
                 <span className="text-xl text-text-secondary font-medium pb-1">كجم</span>
               </div>
               {results.totalTons >= 0.1 && (
-                <div className="text-sm font-medium text-text-primary px-4 py-1 bg-accent/5 rounded-full inline-block">
+                <div className="inline-block rounded-[var(--radius-md)] border border-[var(--border-default)] bg-[var(--bg-surface-2)] px-4 py-1 text-sm font-medium text-text-primary">
                   أو {fmt(results.totalTons, 3)} طن
                 </div>
               )}
             </div>
 
-            <div className="calc-metric-grid calc-grid-2 mt-6 pt-6 border-t border-accent/10">
+            <div className="calc-metric-grid calc-grid-2 calc-result-metrics">
               <div className="calc-metric-card">
                 <div className="calc-metric-card__label">
                   <Ruler size={15} />

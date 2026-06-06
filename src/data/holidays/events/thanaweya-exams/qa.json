@@ -9,8 +9,8 @@
     "hasHardcodedYear": false
   },
   "notes": [
-    "تمت ترقية الصفحة من نسخة خبرية ضعيفة إلى مرجع دائم يوضح أن الموعد المؤكد حالياً هو يوم 20 يونيو 2026 وفق الخريطة الزمنية.",
-    "تمت إضافة فجوة تنافسية مهمة: الفرق بين موعد البداية وجدول المواد التفصيلي."
+    "2026-06-01: Full authored rewrite completed after official schedule confirmation. Corrected the page from the older 20 June planning framing to the approved {{formattedDate}} start for regular first-round Thanaweya Amma exams.",
+    "2026-06-01: Added the key SERP gap: the first day is not the start of core score-bearing subjects, and STEM has a separate schedule. Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. events:build and rendered-route confirmation were intentionally skipped per instruction."
   ],
-  "updatedAt": "2026-04-09T00:00:00.000Z"
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

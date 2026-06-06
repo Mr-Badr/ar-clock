@@ -9,20 +9,22 @@ function Progress({
   className,
   value,
   ...props
-}: React.ComponentProps<typeof ProgressPrimitive.Root>) {
+}: React.ComponentProps<typeof ProgressPrimitive.Root>): React.JSX.Element {
+  const normalizedValue = typeof value === "number" ? value : 0
+
   return (
     <ProgressPrimitive.Root
       data-slot="progress"
       className={cn(
-        "bg-accent-soft relative h-2 w-full overflow-hidden rounded-full",
+        "relative h-[var(--space-2)] w-full overflow-hidden rounded-[var(--radius-full)] bg-[var(--blue-subtle)]",
         className
       )}
       {...props}
     >
       <ProgressPrimitive.Indicator
         data-slot="progress-indicator"
-        className="bg-primary h-full w-full flex-1 transition-all"
-        style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+        className="h-full w-full flex-1 bg-[var(--blue)] transition-transform"
+        style={{ transform: `translateX(-${100 - normalizedValue}%)` }}
       />
     </ProgressPrimitive.Root>
   )

@@ -63,7 +63,7 @@ export default function WakeTimeCalculator() {
       <div className="calc-app-grid">
         <Card className="calc-surface-card calc-app-panel">
           <CardHeader>
-            <CardTitle className="calc-card-title">إذا نمت الآن أو في وقت تختاره</CardTitle>
+            <CardTitle className="calc-card-title">إذا نمت الان أو في وقت تختاره</CardTitle>
           </CardHeader>
           <CardContent className="calc-form-grid">
             <div className="calc-field">
@@ -71,7 +71,7 @@ export default function WakeTimeCalculator() {
                 <Label className="calc-label" htmlFor="sleep-wake-bedtime">وقت النوم</Label>
                 <Button type="button" variant={useNow ? 'default' : 'outline'} size="sm" onClick={() => setUseNow((current) => !current)}>
                   <RefreshCcw size={14} />
-                  {useNow ? 'يعمل على الآن' : 'فعّل الآن'}
+                  {useNow ? 'يعمل على الان' : 'فعّل الان'}
                 </Button>
               </div>
               <Input
@@ -120,10 +120,10 @@ export default function WakeTimeCalculator() {
               </div>
             </div>
 
-              <div className="calc-note">
-              خيار "أنام الآن" يتحدث حسب وقت جهازك المحلي بعد فتح الصفحة، وهو ما يجعل الأداة
+            <div className="calc-note">
+              خيار "أنام الان" يتحدث حسب وقت جهازك المحلي بعد فتح الصفحة، وهو ما يجعل الأداة
               مفيدة في الاستخدام المتكرر لا في التخطيط فقط.
-              </div>
+            </div>
           </CardContent>
         </Card>
 
@@ -132,7 +132,7 @@ export default function WakeTimeCalculator() {
             <CardHeader>
               <CardTitle className="calc-card-title">أوقات الاستيقاظ المقترحة</CardTitle>
             </CardHeader>
-            <CardContent className="calc-metric-grid">
+            <CardContent className="calc-metric-grid" aria-live="polite">
               <div className="calc-grid-2">
                 <div className="calc-metric-card">
                   <div className="calc-metric-card__label"><BedDouble size={16} /> وقت النوم الحالي</div>
@@ -140,7 +140,7 @@ export default function WakeTimeCalculator() {
                   <div className="calc-metric-card__note">
                     {useNow
                       ? isHydrated
-                        ? 'مأخوذ من ساعة جهازك الآن.'
+                        ? 'مأخوذ من ساعة جهازك الان.'
                         : 'يُزامَن مع وقت جهازك بعد فتح الصفحة.'
                       : 'الوقت الذي اخترته يدوياً.'}
                   </div>

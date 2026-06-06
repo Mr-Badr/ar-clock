@@ -52,7 +52,7 @@ export default function AgeHijriCalculator() {
           </CardContent>
         </Card>
 
-        <div className="calc-results-panel">
+        <div className="calc-results-panel" aria-live="polite">
           <ResultState result={result} />
 
           {result?.isValid ? (
@@ -82,12 +82,12 @@ export default function AgeHijriCalculator() {
                   <CardTitle className="calc-card-title">عرض مزدوج للتاريخ</CardTitle>
                 </CardHeader>
                 <CardContent className="calc-grid-2">
-                  <div className="calc-metric-card card-nested">
+                  <div className="calc-metric-card">
                     <div className="calc-metric-card__label">تاريخ الميلاد الميلادي</div>
                     <div className="calc-metric-card__value">{result.birthDateLabel}</div>
                     <div className="calc-metric-card__note">{result.birthWeekday}</div>
                   </div>
-                  <div className="calc-metric-card card-nested">
+                  <div className="calc-metric-card">
                     <div className="calc-metric-card__label">تاريخ الميلاد الهجري</div>
                     <div className="calc-metric-card__value">{result.hijri.birth?.formatted?.ar || 'غير متاح'}</div>
                     <div className="calc-metric-card__note">{result.hijri.target?.formatted?.ar ? `اليوم: ${result.hijri.target.formatted.ar}` : 'داخل النطاق المدعوم'}</div>
@@ -123,7 +123,7 @@ export default function AgeHijriCalculator() {
             {HIJRI_MONTHS_INFO.map((item) => (
               <div
                 key={item.month}
-                className={`calc-metric-card card-nested ${highlightedMonth === item.month ? 'age-month-card--active' : ''}`}
+                className={`calc-metric-card ${highlightedMonth === item.month ? 'age-month-card--active' : ''}`}
               >
                 <div className="calc-metric-card__label">{item.month}</div>
                 <div className="calc-metric-card__note">{item.kind}</div>

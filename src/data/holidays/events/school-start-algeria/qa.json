@@ -2,12 +2,18 @@
   "slug": "school-start-algeria",
   "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:37.039Z"
+  "notes": [
+    "Refined the planning date to Sunday 20 September {{year}} so the estimate matches the Algeria Sunday school-return pattern instead of a Monday date.",
+    "Reinforced the answer-first copy to distinguish clearly between the planning estimate and the still-unannounced official date.",
+    "Added practical parent guidance tied to first-year primary registration, the 13 June {{year}} extension, and the 30 June {{year}} results window.",
+    "Focused validation passed with validate-holiday-content, ESLint, typecheck, and seo:validate.",
+    "Generated holiday bundles were not regenerated because events:build was intentionally not run, so the rendered route can still lag behind the authored package."
+  ],
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

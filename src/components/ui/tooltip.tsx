@@ -2,16 +2,19 @@
 
 import * as React from "react"
 import { Tooltip as TooltipPrimitive } from "radix-ui"
+
 import { cn } from "@/lib/utils"
 
 function TooltipProvider({
-  delayDuration = 300,
+  delayDuration,
   ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Provider>) {
+}: React.ComponentProps<typeof TooltipPrimitive.Provider>): React.JSX.Element {
+  const resolvedDelayDuration = delayDuration ?? 300
+
   return (
     <TooltipPrimitive.Provider
       data-slot="tooltip-provider"
-      delayDuration={delayDuration}
+      delayDuration={resolvedDelayDuration}
       {...props}
     />
   )
@@ -19,33 +22,33 @@ function TooltipProvider({
 
 function Tooltip({
   ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Root>) {
+}: React.ComponentProps<typeof TooltipPrimitive.Root>): React.JSX.Element {
   return <TooltipPrimitive.Root data-slot="tooltip" {...props} />
 }
 
 function TooltipTrigger({
   ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
+}: React.ComponentProps<typeof TooltipPrimitive.Trigger>): React.JSX.Element {
   return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />
 }
 
 function TooltipContent({
   className,
-  sideOffset = 8,
+  sideOffset,
   children,
   ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Content>) {
+}: React.ComponentProps<typeof TooltipPrimitive.Content>): React.JSX.Element {
+  const resolvedSideOffset = sideOffset ?? 8
+
   return (
     <TooltipPrimitive.Portal>
       <TooltipPrimitive.Content
         data-slot="tooltip-content"
-        sideOffset={sideOffset}
+        sideOffset={resolvedSideOffset}
         className={cn("tooltip-content", className)}
         {...props}
       >
         {children}
-        {/* Arrow — Radix rotates this automatically per side.
-            When side="bottom" the arrow points UP toward the trigger. */}
         <TooltipPrimitive.Arrow className="tooltip-arrow" />
       </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>

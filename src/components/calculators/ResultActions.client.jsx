@@ -137,12 +137,11 @@ export default function ResultActions({
       </div>
 
       {isShareOpen ? (
-        <div id={sharePanelId} className="card-nested calc-share-panel">
+        <div id={sharePanelId} className="calc-share-panel">
           <div className="calc-share-meta">
             <strong>شارك النتيجة في المكان المناسب لك</strong>
             <span>
-              استخدم المشاركة السريعة أو افتح الرابط مباشرة في واتساب وتيليجرام وX
-              وفيسبوك ولينكدإن والبريد.
+              أرسل ملخص النتيجة أو انسخ رابط الصفحة حتى تراجعه لاحقاً مع نفس المدخلات والسياق.
             </span>
           </div>
 

@@ -1,7 +1,7 @@
 {
   "slug": "takaful-karama-egypt",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.176Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
     "متى ينزل تكافل وكرامة",
     "كم باقي على تكافل وكرامة",
@@ -20,6 +20,49 @@
     {
       "site": "moss.gov.eg",
       "type": "official",
+      "url": "https://www.moss.gov.eg/ar-eg/Pages/default.aspx",
+      "focus": [
+        "رابط الاستعلام والشكاوى",
+        "خبر صرف إبريل",
+        "أرقام مستفيدي تكافل وكرامة"
+      ],
+      "gaps": [
+        "ليست صفحة SEO مباشرة لموعد الشهر",
+        "الأخبار والروابط موزعة داخل الصفحة الرئيسية",
+        "لا تقدم عداداً أو رحلة مستخدم"
+      ]
+    },
+    {
+      "site": "moss.gov.eg",
+      "type": "official_service",
+      "url": "https://www.moss.gov.eg/ar-eg/Pages/advert-details.aspx?AdID=50",
+      "focus": [
+        "بوابة الاستعلام والشكاوى",
+        "الخط الساخن",
+        "البريد الإلكتروني للشكاوى"
+      ],
+      "gaps": [
+        "لا يجيب عن موعد الصرف",
+        "صفحة إعلان خدمية وليست دليل شهر كامل"
+      ]
+    },
+    {
+      "site": "sp.moss.gov.eg",
+      "type": "official_program_portal",
+      "url": "https://sp.moss.gov.eg/main/index.php/en/",
+      "focus": [
+        "شكاوى تكافل وكرامة",
+        "الخط الساخن",
+        "بيانات الاتصال"
+      ],
+      "gaps": [
+        "المحتوى محدود في النسخة المفتوحة",
+        "لا يقدم موعد الصرف الشهري"
+      ]
+    },
+    {
+      "site": "moss.gov.eg",
+      "type": "official_monthly_news",
       "url": "https://www.moss.gov.eg/ar-eg/Pages/news-details.aspx?nid=4637",
       "focus": [
         "موعد بدء الصرف",
@@ -33,21 +76,36 @@
       ]
     },
     {
-      "site": "اليوتيوب والأخبار الخدمية",
+      "site": "youm7.com",
       "type": "news",
+      "url": "https://www.youm7.com/story/2026/5/21/%D9%85%D9%88%D8%B9%D8%AF-%D8%B5%D8%B1%D9%81-%D9%85%D8%B3%D8%A7%D8%B9%D8%AF%D8%A7%D8%AA-%D8%AA%D9%83%D8%A7%D9%81%D9%84-%D9%88%D9%83%D8%B1%D8%A7%D9%85%D8%A9-%D9%84%D8%B4%D9%87%D8%B1-%D9%8A%D9%88%D9%86%D9%8A%D9%88-2026-%D8%A7%D8%B9%D8%B1%D9%81-%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84/7422496",
       "focus": [
         "العناوين السريعة",
-        "الشائعات عن الزيادات",
-        "موعد الشهر الحالي"
+        "موعد الشهر الحالي",
+        "أعداد الأسر والموازنة السنوية"
       ],
       "gaps": [
-        "ضجيج مرتفع",
-        "ضعف التوثيق",
-        "اختلاط خبر الزيادة بموعد الصرف"
+        "خبر يتقادم بسرعة",
+        "لا يقدم عداداً دائماً",
+        "لا يشرح بوابة الاستعلام والشكاوى بعمق"
       ]
     },
     {
-      "site": "صفحات العد التنازلي العربية",
+      "site": "dostor.org",
+      "type": "news_competitor",
+      "url": "https://www.dostor.org/5578788",
+      "focus": [
+        "موعد الصرف",
+        "قنوات الصرف",
+        "نية البحث العاجلة"
+      ],
+      "gaps": [
+        "يميل إلى خبر الشهر لا مرجع دائم",
+        "لا يفصل بما يكفي بين الموعد والاستعلام والشكوى"
+      ]
+    },
+    {
+      "site": "generic countdown pages",
       "type": "countdown",
       "focus": [
         "كم باقي",
@@ -57,20 +115,211 @@
       "gaps": [
         "لا تسند الموعد إلى بيانات الوزارة",
         "لا تشرح قنوات الصرف",
-        "تغيب عنها أسئلة الزيادة والموعد"
+        "تغيب عنها أسئلة الزيادة والاستعلام"
+      ]
+    }
+  ],
+  "arabicCompetitors": [
+    {
+      "site": "moss.gov.eg",
+      "status": "usable",
+      "url": "https://www.moss.gov.eg/ar-eg/Pages/default.aspx",
+      "title": "وزارة التضامن الاجتماعي",
+      "metaDescription": "الصفحة الرسمية لوزارة التضامن الاجتماعي وروابط الخدمات.",
+      "h1": "وزارة التضامن الاجتماعي",
+      "headings": [
+        "للإستعلام وتلقى شكاوى برنامج تكافل وكرامة",
+        "التنويهات",
+        "حقائق و أرقام"
+      ],
+      "bodySummary": "الصفحة الرسمية تعرض رابط الاستعلام والشكاوى، وتظهر خبراً حديثاً عن صرف تكافل وكرامة في منتصف الشهر، إضافة إلى أرقام مستفيدي كرامة وتكافل. قوتها في الرسمية والثقة، وضعفها أنها ليست صفحة منظمة حول سؤال موعد الصرف.",
+      "faq": [],
+      "tables": [
+        "أجندة الأحداث",
+        "حقائق وأرقام"
+      ],
+      "examples": [
+        "رابط الاستعلام والشكاوى",
+        "خبر صرف تكافل وكرامة عن شهر إبريل"
+      ],
+      "keywords": [
+        "تكافل وكرامة",
+        "الاستعلام",
+        "الشكاوى",
+        "صرف"
+      ],
+      "schemaHints": [
+        "GovernmentOrganization",
+        "WebPage"
+      ],
+      "sources": [
+        "https://www.moss.gov.eg/ar-eg/Pages/default.aspx"
+      ],
+      "wordCount": 650,
+      "strengths": [
+        "أعلى ثقة",
+        "يعرض رابط الخدمة الرسمي",
+        "يوضح أرقاماً حديثة للمستفيدين"
+      ],
+      "weaknesses": [
+        "لا يبدأ بجواب مباشر عن موعد الصرف",
+        "المعلومات موزعة بين خبر ورابط وخدمات"
+      ]
+    },
+    {
+      "site": "youm7.com",
+      "status": "usable",
+      "url": "https://www.youm7.com/story/2026/5/21/%D9%85%D9%88%D8%B9%D8%AF-%D8%B5%D8%B1%D9%81-%D9%85%D8%B3%D8%A7%D8%B9%D8%AF%D8%A7%D8%AA-%D8%AA%D9%83%D8%A7%D9%81%D9%84-%D9%88%D9%83%D8%B1%D8%A7%D9%85%D8%A9-%D9%84%D8%B4%D9%87%D8%B1-%D9%8A%D9%88%D9%86%D9%8A%D9%88-2026-%D8%A7%D8%B9%D8%B1%D9%81-%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84/7422496",
+      "title": "موعد صرف مساعدات تكافل وكرامة",
+      "metaDescription": "خبر عن موعد صرف الشهر الحالي.",
+      "h1": "موعد صرف مساعدات تكافل وكرامة",
+      "headings": [
+        "موعد صرف مساعدات تكافل وكرامة"
+      ],
+      "bodySummary": "خبر قوي في نية الشهر الحالي لأنه يذكر يوم 15 وأعداد الأسر والموازنة السنوية، لكنه يتقادم بسرعة ولا يقدم رحلة استعلام أو شكوى للمستفيد.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "صرف الشهر الحالي من يوم 15",
+        "أرقام الأسر والمواطنين المستفيدين"
+      ],
+      "keywords": [
+        "موعد صرف",
+        "تكافل وكرامة",
+        "شهر يونيو"
+      ],
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sources": [
+        "https://www.youm7.com/story/2026/5/21/%D9%85%D9%88%D8%B9%D8%AF-%D8%B5%D8%B1%D9%81-%D9%85%D8%B3%D8%A7%D8%B9%D8%AF%D8%A7%D8%AA-%D8%AA%D9%83%D8%A7%D9%81%D9%84-%D9%88%D9%83%D8%B1%D8%A7%D9%85%D8%A9-%D9%84%D8%B4%D9%87%D8%B1-%D9%8A%D9%88%D9%86%D9%8A%D9%88-2026-%D8%A7%D8%B9%D8%B1%D9%81-%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84/7422496"
+      ],
+      "wordCount": 320,
+      "strengths": [
+        "قريب من نية الشهر الحالي",
+        "سهل القراءة"
+      ],
+      "weaknesses": [
+        "خبر مؤقت",
+        "لا يغطي بوابة الاستعلام والشكاوى"
+      ]
+    },
+    {
+      "site": "dostor.org",
+      "status": "usable",
+      "url": "https://www.dostor.org/5578788",
+      "title": "موعد صرف تكافل وكرامة",
+      "metaDescription": "خبر عن موعد الصرف وقنوات الحصول على الدعم.",
+      "h1": "موعد صرف تكافل وكرامة",
+      "headings": [
+        "موعد صرف تكافل وكرامة"
+      ],
+      "bodySummary": "يمثل نمط الأخبار الخدمية التي تجيب بسرعة عن موعد الصرف وتذكر قنوات مثل الصراف الآلي والبريد والمنافذ. قوته في السرعة، وضعفه أنه لا يبني صفحة دائمة تفرق بين الصرف والزيادة والشكوى.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "قنوات الصرف",
+        "موعد الشهر الحالي"
+      ],
+      "keywords": [
+        "تكافل وكرامة",
+        "موعد صرف",
+        "قنوات الصرف"
+      ],
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sources": [
+        "https://www.dostor.org/5578788"
+      ],
+      "wordCount": 360,
+      "strengths": [
+        "يغطي قنوات الصرف",
+        "يخدم البحث العاجل"
+      ],
+      "weaknesses": [
+        "يتقادم شهرياً",
+        "لا يكفي كمرجع دائم"
+      ]
+    }
+  ],
+  "englishCompetitors": [
+    {
+      "site": "worldbank.org",
+      "status": "usable_for_background",
+      "url": "https://www.worldbank.org/en/news/feature/2022/09/13/takaful-and-karama-a-social-safety-net-project-that-promotes-egyptian-women-empowerment-and-human-capital",
+      "title": "Takaful and Karama social safety net project",
+      "metaDescription": "Background on Takaful and Karama and social protection in Egypt.",
+      "h1": "Takaful and Karama",
+      "headings": [
+        "Takaful and Karama"
+      ],
+      "bodySummary": "Useful background for understanding the program as a social protection project, but not useful for monthly payout timing.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "social safety net framing"
+      ],
+      "keywords": [
+        "Takaful",
+        "Karama",
+        "social safety net"
+      ],
+      "schemaHints": [
+        "Article"
+      ],
+      "sources": [
+        "https://www.worldbank.org/en/news/feature/2022/09/13/takaful-and-karama-a-social-safety-net-project-that-promotes-egyptian-women-empowerment-and-human-capital"
+      ],
+      "wordCount": 500,
+      "strengths": [
+        "Strong program background"
+      ],
+      "weaknesses": [
+        "No monthly payout intent"
       ]
     },
     {
       "site": "moss.gov.eg",
-      "type": "reference",
-      "url": "https://www.moss.gov.eg/Sites/MOSA/ar-eg/Pages/news-details.aspx?nid=3804",
-      "focus": [
-        "التاريخ الرسمي لـ تكافل وكرامة (مصر)",
-        "سياق تكافل وكرامة (مصر)"
+      "status": "usable_for_service_context",
+      "url": "https://sp.moss.gov.eg/main/index.php/en/",
+      "title": "Takaful and Karama",
+      "metaDescription": "Program portal and contact details.",
+      "h1": "Takaful and Karama",
+      "headings": [
+        "Takaful and Karama"
       ],
-      "gaps": [
-        "غالباً لا تقدم صفحة عربية تجمع الموعد والشرح والعد التنازلي في مكان واحد."
+      "bodySummary": "Useful for official contact and complaint context, including the hotline and complaint link, but not a rich content page.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "hotline 19680",
+        "complaints link"
+      ],
+      "keywords": [
+        "complaints",
+        "hotline",
+        "Takaful"
+      ],
+      "schemaHints": [
+        "GovernmentOrganization"
+      ],
+      "sources": [
+        "https://sp.moss.gov.eg/main/index.php/en/"
+      ],
+      "wordCount": 120,
+      "strengths": [
+        "Official contact context"
+      ],
+      "weaknesses": [
+        "Thin open content"
       ]
+    },
+    {
+      "site": "worldbank.org",
+      "status": "replaced",
+      "url": "https://www.worldbank.org/en/country/egypt",
+      "replacementReason": "General Egypt social protection pages were less relevant than the dedicated Takaful and Karama background article."
     }
   ],
   "coverageMatrix": [
@@ -89,6 +338,22 @@
     {
       "keyword": "كيف أصرف تكافل وكرامة",
       "whyItMatters": "سؤال عملي يسند الصفحة بعد السؤال الزمني المباشر."
+    },
+    {
+      "keyword": "الاستعلام عن تكافل وكرامة بالرقم القومي",
+      "whyItMatters": "نية خدمية مكملة للموعد، وتحتاج ربطاً بالبوابة الرسمية لا بخبر عابر."
+    },
+    {
+      "keyword": "شكاوى تكافل وكرامة",
+      "whyItMatters": "تغطي حالة المستخدم الذي لم تُحل مشكلته بمجرد معرفة موعد الصرف."
+    },
+    {
+      "keyword": "زيادة تكافل وكرامة",
+      "whyItMatters": "تمنع الخلط بين خبر تغيير قيمة الدعم وموعد إتاحة الدفعة الشهرية."
+    },
+    {
+      "keyword": "قنوات صرف تكافل وكرامة",
+      "whyItMatters": "تخدم القرار العملي بعد معرفة يوم الصرف."
     },
     {
       "keyword": "متى ينزل تكافل وكرامة",
@@ -136,6 +401,14 @@
     "أسئلة شائعة عملية تساعد القارئ على فهم تكافل وكرامة (مصر) والتصرف بناءً عليه."
   ],
   "factSources": [
+    {
+      "label": "وزارة التضامن الاجتماعي: الصفحة الرسمية وروابط الاستعلام",
+      "url": "https://www.moss.gov.eg/ar-eg/Pages/default.aspx"
+    },
+    {
+      "label": "وزارة التضامن الاجتماعي: بوابة الاستعلام والشكاوى",
+      "url": "https://www.moss.gov.eg/ar-eg/Pages/advert-details.aspx?AdID=50"
+    },
     {
       "label": "وزارة التضامن الاجتماعي: صرف تكافل وكرامة عن شهر يناير",
       "url": "https://www.moss.gov.eg/Sites/MOSA/ar-eg/Pages/news-details.aspx?nid=3804"

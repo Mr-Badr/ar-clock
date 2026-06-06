@@ -167,11 +167,11 @@ export const MASONRY_UNITS_PER_M2 = {
 // ─── Building Finish Levels ──────────────────────────────────────────────────
 
 export const FINISH_LEVELS = [
-  { key: 'skeleton',  label: 'هيكل فقط',      subLabel: 'عظم',          emoji: '🏗️', color: '#6B7280' },
-  { key: 'economy',   label: 'اقتصادي',        subLabel: 'تشطيب خفيف',  emoji: '🏠', color: '#10B981' },
-  { key: 'standard',  label: 'عادي',           subLabel: 'التشطيب الأكثر شيوعاً', emoji: '🏡', color: '#3B82F6' },
-  { key: 'luxury',    label: 'لوكس',           subLabel: 'تشطيب راقٍ',  emoji: '✨', color: '#F59E0B' },
-  { key: 'super_lux', label: 'سوبر لوكس',     subLabel: 'أعلى مستوى',  emoji: '👑', color: '#8B5CF6' },
+  { key: 'skeleton',  label: 'هيكل فقط',      subLabel: 'عظم',          emoji: '🏗️', color: 'var(--blue)' },
+  { key: 'economy',   label: 'اقتصادي',        subLabel: 'تشطيب خفيف',  emoji: '🏠', color: 'var(--blue)' },
+  { key: 'standard',  label: 'عادي',           subLabel: 'التشطيب الأكثر شيوعاً', emoji: '🏡', color: 'var(--blue)' },
+  { key: 'luxury',    label: 'لوكس',           subLabel: 'تشطيب راقٍ',  emoji: '✨', color: 'var(--blue)' },
+  { key: 'super_lux', label: 'سوبر لوكس',     subLabel: 'أعلى مستوى',  emoji: '👑', color: 'var(--blue)' },
 ];
 
 // نوع المبنى — معامل تعديل التكلفة
@@ -216,7 +216,15 @@ export const REBAR_TONS_PER_M2 = {
 
 // ─── Chart Colors ────────────────────────────────────────────────────────────
 
-export const CHART_COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4', '#84CC16'];
+export const CHART_COLORS = [
+  'var(--blue)',
+  'var(--blue-hover)',
+  'var(--blue-text)',
+  'var(--text-2)',
+  'var(--text-3)',
+  'var(--border-strong)',
+  'var(--border-default)',
+];
 
 // ─── Calculation Functions ───────────────────────────────────────────────────
 

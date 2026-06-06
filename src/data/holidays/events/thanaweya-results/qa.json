@@ -2,12 +2,15 @@
   "slug": "thanaweya-results",
   "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:37.059Z"
+  "notes": [
+    "2026-06-01: Full authored rewrite completed. The page now treats {{formattedDate}} as an expected planning date, not an official result announcement, and explains the difference between expected date, ministerial approval, and opening the official result link.",
+    "2026-06-01: Research refreshed with official ministry/result portal references, Arabic news competitors, and fake-link/search-intent gaps. Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. events:build and rendered-route confirmation were intentionally skipped per instruction."
+  ],
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

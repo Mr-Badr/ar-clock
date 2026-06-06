@@ -15,14 +15,13 @@ const ORG_ID = `${SITE_URL}#organization`;
 const WEBSITE_ID = `${SITE_URL}#website`;
 const WEBSITE_PARTS = WEBSITE_ARCHITECTURE_PATHS;
 const CORE_SECTION_PAGES = [
-  { path: '/fahras', name: 'الفهرس الشامل' },
-  { path: '/guides', name: 'الأدلة العملية' },
-  { path: '/time-now', name: 'الوقت الآن' },
+  { path: '/fahras', name: 'استكشف الصفحات' },
+  { path: '/blog', name: 'المدونة' },
+  { path: '/time-now', name: 'الوقت الان' },
   { path: '/mwaqit-al-salat', name: 'مواقيت الصلاة' },
   { path: '/date', name: 'التاريخ والتحويل' },
   { path: '/holidays', name: 'المناسبات والعد التنازلي' },
   { path: '/calculators', name: 'الحاسبات' },
-  { path: '/economie', name: 'أدوات الاقتصاد' },
   { path: '/time-difference', name: 'فرق التوقيت' },
 ];
 
@@ -54,6 +53,30 @@ export default function SiteWideSchemas() {
         email: SITE_CONTACT_EMAIL,
         availableLanguage: ['ar', 'en'],
         url: `${SITE_URL}/contact`,
+      },
+      {
+        '@type': 'ContactPoint',
+        contactType: 'editorial corrections',
+        email: SITE_CONTACT_EMAIL,
+        availableLanguage: ['ar'],
+        url: `${SITE_URL}/editorial-policy`,
+      },
+    ],
+    subjectOf: [
+      {
+        '@type': 'WebPage',
+        url: `${SITE_URL}/about`,
+        name: 'من نحن',
+      },
+      {
+        '@type': 'WebPage',
+        url: `${SITE_URL}/contact`,
+        name: 'اتصل بنا',
+      },
+      {
+        '@type': 'WebPage',
+        url: `${SITE_URL}/editorial-policy`,
+        name: 'السياسة التحريرية',
       },
     ],
   };

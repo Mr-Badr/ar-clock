@@ -1,140 +1,234 @@
 {
   "slug": "qatar-national-day",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.141Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
     "متى اليوم الوطني القطري {{year}}",
     "كم باقي على اليوم الوطني القطري {{year}}",
-    "يوم المؤسس قطر {{year}}",
-    "اليوم الوطني القطري 18 ديسمبر",
     "هل اليوم الوطني القطري إجازة",
-    "موعد اليوم الوطني القطري {{year}}",
-    "يوم المؤسس قطر",
-    "اليوم الوطني القطري {{year}}",
-    "تاريخ اليوم الوطني القطري {{year}}",
-    "متى اليوم الوطني القطري {{nextYear}}",
-    "اليوم الوطني القطري العد التنازلي",
-    "اليوم الوطني القطري متى"
+    "يوم المؤسس قطر {{year}}",
+    "لماذا اليوم الوطني القطري 18 ديسمبر",
+    "ما الفرق بين اليوم الوطني ويوم المؤسس في قطر",
+    "18 ديسمبر قطر {{year}}",
+    "تاريخ اليوم الوطني القطري",
+    "هل 18 ديسمبر عطلة في قطر",
+    "متى اليوم الوطني القطري {{nextYear}}"
   ],
   "competitors": [
     {
       "site": "visitqatar.com",
+      "language": "ar",
       "type": "official",
       "url": "https://visitqatar.com/qa-ar/events-calendar/qatar-national-day",
+      "title": "اليوم الوطني لدولة قطر",
+      "h1": "اليوم الوطني لدولة قطر",
+      "wordCountEstimate": 170,
       "focus": [
         "التاريخ الرسمي 18 ديسمبر",
         "ربط المناسبة بيوم المؤسس",
-        "أماكن الفعاليات"
+        "أماكن الاحتفال مثل درب الساعي وكورنيش الدوحة"
       ],
-      "gaps": [
-        "ليس موجهاً بالكامل لنية كم باقي",
-        "لا يقدم FAQ عربية مركزة",
-        "لا يلخص الأسئلة الخدمية الأكثر تكراراً"
-      ]
+      "strengths": [
+        "مرجع قطري رسمي واضح",
+        "ربط جيد بين المناسبة وهوية قطر",
+        "إشارات عملية إلى مواقع الاحتفال"
+      ],
+      "weaknesses": [
+        "لا يجيب بصيغة خدمية مباشرة على سؤال كم باقي",
+        "لا يفصل سؤال الإجازة",
+        "لا يحسم لبس 3 سبتمبر داخل النص نفسه"
+      ],
+      "extractionConfidence": "high"
     },
     {
-      "site": "diwan.gov.qa",
-      "type": "official",
-      "url": "https://www.diwan.gov.qa/ar-qa/briefing-room/news/activities-and-occasions/2025/december/18/hh-the-amir-attends-qatar-national-day-parade",
+      "site": "publicholidays.qa",
+      "language": "ar",
+      "type": "reference",
+      "url": "https://publicholidays.qa/ar/national-day/",
+      "title": "باليوم الوطني 2026 و2027 و 2028",
+      "h1": "باليوم الوطني 2026 و2027 و 2028",
+      "wordCountEstimate": 260,
       "focus": [
-        "المرجعية الرسمية للاحتفال",
-        "أخبار اليوم الوطني",
-        "المناسبات الوطنية"
+        "ثبات 18 ديسمبر",
+        "جدول السنوات",
+        "إشارة مباشرة إلى نقل الاحتفال من 3 سبتمبر إلى 18 ديسمبر"
       ],
-      "gaps": [
-        "لا يقدم عداداً أو صفحة دائمة لنية البحث الخدمية",
-        "لغة خبرية مرتبطة بالموسم",
-        "لا يشرح المصطلحات الأكثر بحثاً"
-      ]
+      "strengths": [
+        "يوضح التغيير من 3 سبتمبر إلى 18 ديسمبر",
+        "مفيد في نية الموعد والسنوات القادمة"
+      ],
+      "weaknesses": [
+        "صياغة عربية ضعيفة في العنوان والنص",
+        "الشرح التاريخي سطحي",
+        "لا يربط بين نية المستخدم وسؤال يوم المؤسس بوضوح"
+      ],
+      "extractionConfidence": "high"
     },
     {
-      "site": "صفحات العد التنازلي العربية",
-      "type": "countdown",
+      "site": "marefa.org",
+      "language": "ar",
+      "type": "reference",
+      "url": "https://www.marefa.org/%D8%A7%D9%84%D9%8A%D9%88%D9%85_%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A_%D8%A7%D9%84%D9%82%D8%B7%D8%B1%D9%8A",
+      "title": "اليوم الوطني القطري - المعرفة",
+      "h1": "اليوم الوطني القطري",
+      "wordCountEstimate": 350,
       "focus": [
-        "التاريخ السريع",
-        "العداد",
-        "كم باقي"
+        "معنى المناسبة",
+        "ربطها بتأسيس الدولة",
+        "إشارات إلى درب الساعي والفعاليات"
       ],
-      "gaps": [
-        "قلة التفسير التاريخي",
-        "إهمال اسم يوم المؤسس",
-        "فقر المصادر الرسمية"
-      ]
+      "strengths": [
+        "يوفر خلفية تاريخية أوسع من صفحات العدادات",
+        "يغطي الفعاليات الشعبية والرمزية"
+      ],
+      "weaknesses": [
+        "ليس مرجعاً رسمياً",
+        "لا يجيب باقتصاد على نية المستخدم الأساسية",
+        "قد يطيل الشرح قبل تقديم الإجابة المباشرة"
+      ],
+      "extractionConfidence": "medium"
+    },
+    {
+      "site": "officeholidays.com",
+      "language": "en",
+      "type": "reference",
+      "url": "https://www.officeholidays.com/holidays/qatar/qatar-national-day",
+      "title": "National Day in Qatar in 2026",
+      "h1": "National Day in Qatar in 2026",
+      "wordCountEstimate": 330,
+      "focus": [
+        "National holiday status",
+        "18 December every year",
+        "historical note about 3 September and the 2007 decree"
+      ],
+      "strengths": [
+        "Strong on holiday mechanics and year tables",
+        "clear distinction between current holiday and old independence date"
+      ],
+      "weaknesses": [
+        "English-only comparison source",
+        "limited Arabic intent coverage",
+        "generic structure shared across many holidays"
+      ],
+      "extractionConfidence": "high"
     },
     {
       "site": "visitqatar.com",
-      "type": "reference",
-      "url": "https://visitqatar.com/qa-ar/about-qatar/history-of-qatar",
+      "language": "en",
+      "type": "official",
+      "url": "https://visitqatar.com/intl-en/events-calendar/qatar-national-day",
+      "title": "Qatar National Day",
+      "h1": "Qatar National Day",
+      "wordCountEstimate": 180,
       "focus": [
-        "التاريخ الرسمي لـ اليوم الوطني القطري",
-        "سياق اليوم الوطني القطري"
+        "18 December",
+        "Founder's Day positioning",
+        "major celebration locations"
       ],
-      "gaps": [
-        "غالباً لا تقدم صفحة عربية تجمع الموعد والشرح والعد التنازلي في مكان واحد."
-      ]
+      "strengths": [
+        "confirms the same official narrative in English",
+        "useful for terminology comparison مثل Founder's Day"
+      ],
+      "weaknesses": [
+        "not built for Arabic search intent",
+        "thin on practical questions"
+      ],
+      "extractionConfidence": "high"
+    },
+    {
+      "site": "gco.gov.qa",
+      "language": "en",
+      "type": "official",
+      "url": "https://www.gco.gov.qa/en/state-of-qatar/facts-about-qatar/",
+      "title": "Facts about Qatar",
+      "h1": "Facts about Qatar",
+      "wordCountEstimate": 120,
+      "focus": [
+        "National Day annually on December 18",
+        "unification and independence under Sheikh Jassim"
+      ],
+      "strengths": [
+        "official and concise",
+        "supports factual phrasing around national significance"
+      ],
+      "weaknesses": [
+        "not a dedicated holiday page",
+        "no FAQ, no countdown, no holiday-use guidance"
+      ],
+      "extractionConfidence": "high"
+    }
+  ],
+  "replacedCompetitors": [
+    {
+      "site": "صفحات تهنئة أو أخبار موسمية",
+      "reason": "لا تخدم صفحة خالدة بنية متى وكم باقي وهل هي إجازة."
+    },
+    {
+      "site": "نتائج Reddit ومنشورات منسوخة",
+      "reason": "محتوى غير موثوق أو مكرر ولا يصلح مصدراً أساسياً."
+    },
+    {
+      "site": "صفحات العدّاد العربية الرفيعة بلا شرح",
+      "reason": "تعطي التاريخ فقط من دون معالجة لبس يوم المؤسس و3 سبتمبر."
     }
   ],
   "coverageMatrix": [
     {
       "keyword": "متى اليوم الوطني القطري {{year}}",
-      "whyItMatters": "الاستعلام الخدمي الأساسي للمناسبة."
+      "whyItMatters": "الاستعلام الخدمي الأول الذي يجب أن تجيبه الصفحة في السطر الأول."
     },
     {
       "keyword": "كم باقي على اليوم الوطني القطري {{year}}",
-      "whyItMatters": "صيغة العد التنازلي الأهم في الصفحات الموسمية."
+      "whyItMatters": "نية العد التنازلي الموسمية الأساسية."
     },
     {
       "keyword": "يوم المؤسس قطر {{year}}",
-      "whyItMatters": "تغلق فجوة الاسم البديل الأكثر تداولاً."
-    },
-    {
-      "keyword": "اليوم الوطني القطري 18 ديسمبر",
-      "whyItMatters": "يثبت التاريخ الثابت للمناسبة في العربية."
+      "whyItMatters": "يغلق فجوة التسمية البديلة التي تظهر بقوة في البحث العربي."
     },
     {
       "keyword": "هل اليوم الوطني القطري إجازة",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "whyItMatters": "يمثل السؤال العملي الأهم بعد معرفة التاريخ."
     },
     {
-      "keyword": "موعد اليوم الوطني القطري {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "keyword": "لماذا اليوم الوطني القطري 18 ديسمبر",
+      "whyItMatters": "يعطي الصفحة عمقاً تفسيرياً لا توفره صفحات العدادات فقط."
     },
     {
-      "keyword": "يوم المؤسس قطر",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "keyword": "هل 18 ديسمبر عطلة في قطر",
+      "whyItMatters": "صياغة عامية/عملية قريبة من استخدام الباحث."
     },
     {
-      "keyword": "اليوم الوطني القطري {{year}}",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "keyword": "تاريخ اليوم الوطني القطري",
+      "whyItMatters": "يغطي الباحث الذي يريد التحقق من التاريخ الرسمي من دون إضافة السنة."
+    },
+    {
+      "keyword": "متى اليوم الوطني القطري {{nextYear}}",
+      "whyItMatters": "مهم للبحث المبكر بعد انتهاء الموسم الحالي."
     }
   ],
   "keywordGaps": [
-    "جمع “اليوم الوطني” و“يوم المؤسس” في صفحة واحدة واضحة",
-    "شرح سبب ارتباط 18 ديسمبر بالمناسبة",
-    "دمج العد التنازلي مع السياق الرسمي لا الموسمي فقط",
-    "جواب عربي مباشر يوضح معنى اليوم الوطني القطري وموعده في صفحة واحدة.",
-    "شرح سبب أهمية اليوم الوطني القطري ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
-    "تغطية الأسئلة العملية التي يطرحها القارئ قبل اليوم الوطني القطري أو أثناءه.",
-    "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط.",
-    "دمج العد التنازلي مع الشرح والسياق بدل صفحة موعد قصيرة وضعيفة."
+    "شرح واضح بأن اليوم الوطني ويوم المؤسس يقودان إلى المناسبة نفسها في نية البحث العملية",
+    "تفسير لبس 3 سبتمبر من دون إرباك المستخدم",
+    "فصل بين التاريخ الثابت وبين قرارات الدوام الإضافية في بعض السنوات",
+    "استخدام لغة عربية مباشرة تبدأ بالجواب قبل الخلفية",
+    "دمج العد التنازلي مع المعنى والسياق الرسمي في صفحة واحدة",
+    "إجابة صريحة عن سؤال الإجازة لا تكتفي بذكر كلمة عطلة من دون شرح عملي",
+    "جسر أوضح بين الصفحة الوطنية الرسمية وصفحات الموعد السنوي والعداد",
+    "معالجة سؤال السنة القادمة داخل FAQ والكلمات المفتاحية بدل تركه لصفحات أرشيفية"
   ],
   "unansweredQuestions": [
     "هل اليوم الوطني القطري هو نفسه يوم المؤسس؟",
-    "لماذا اختير 18 ديسمبر تحديداً؟",
+    "لماذا اليوم الوطني القطري في 18 ديسمبر؟",
+    "هل كان هناك تاريخ آخر قبل 18 ديسمبر؟",
     "هل اليوم الوطني القطري إجازة رسمية؟",
-    "متى اليوم الوطني القطري {{year}}؟",
-    "كم باقي على اليوم الوطني القطري؟",
-    "ما هو اليوم الوطني القطري؟",
-    "متى اليوم الوطني القطري {{nextYear}}؟",
-    "لماذا يسمى اليوم الوطني القطري بيوم المؤسس؟"
+    "ماذا أفعل إذا وافق 18 ديسمبر نهاية الأسبوع؟",
+    "متى اليوم الوطني القطري {{nextYear}}؟"
   ],
   "differentiationIdeas": [
-    "معالجة مشكلة تعدد أسماء المناسبة في البحث العربي",
-    "استخدام مصدرين قطريين رسميين بدل التدوير بين المقالات العامة",
-    "إعطاء المستخدم جواباً خدمياً وتفسيرياً في آن واحد",
-    "جواب مباشر عن موعد اليوم الوطني القطري في بداية الصفحة قبل أي شرح إضافي.",
-    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر.",
-    "أسئلة شائعة عملية تساعد القارئ على فهم اليوم الوطني القطري والتصرف بناءً عليه."
+    "بدء الصفحة بجواب مباشر عن 18 ديسمبر ثم الانتقال فوراً إلى لبس يوم المؤسس",
+    "تقديم القاعدة العملية: التاريخ ثابت لكن ترتيبات الدوام الإضافية تُراجع رسمياً",
+    "شرح لبس 3 سبتمبر في فقرة قصيرة بدلاً من ترك القارئ يفسره وحده",
+    "كتابة عربية تعليمية تشرح الفكرة كأن القارئ يسمعها لأول مرة"
   ],
   "factSources": [
     {
@@ -142,13 +236,17 @@
       "url": "https://visitqatar.com/qa-ar/events-calendar/qatar-national-day"
     },
     {
-      "label": "Visit Qatar: تاريخ قطر",
-      "url": "https://visitqatar.com/qa-ar/about-qatar/history-of-qatar"
+      "label": "الديوان الأميري: الإنجازات",
+      "url": "https://diwan.gov.qa/ar-qa/about-qatar/qatars-rulers/father/achievements"
     },
     {
-      "label": "diwan.gov.qa",
-      "url": "https://www.diwan.gov.qa/ar-qa/briefing-room/news/activities-and-occasions/2025/december/18/hh-the-amir-attends-qatar-national-day-parade"
+      "label": "مكتب الاتصال الحكومي: سمو الأمير يشهد مسير اليوم الوطني للدولة",
+      "url": "https://www.gco.gov.qa/ar/media-centre/top-news/his-highness-the-amir-attends-the-national-day-parade/"
+    },
+    {
+      "label": "OfficeHolidays: National Day in Qatar",
+      "url": "https://www.officeholidays.com/holidays/qatar/qatar-national-day"
     }
   ],
-  "notes": "يظهر في SERP العربي تداخل واضح بين بحث “اليوم الوطني القطري” وبحث “يوم المؤسس قطر”، لذلك صيغت الصفحة لتوحيد النيتين في إجابة واحدة موثقة وقابلة للترتيب عالياً."
+  "notes": "المشكلة الأساسية في SERP هنا ليست ندرة المعلومات، بل تشتتها بين صفحة رسمية تحتفي بالمناسبة، وصفحات عدّاد ضعيفة، وصفحات مرجعية تتحدث عن 3 سبتمبر. لذلك بُنيت الصفحة الجديدة حول إزالة هذا التشتت: 18 ديسمبر أولاً، ثم يوم المؤسس، ثم سؤال الإجازة."
 }

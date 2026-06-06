@@ -7,7 +7,7 @@ export default function ContextSummaryView({ lines, title = 'ملخص فرق ا�
     <div
       role="region"
       aria-label={title}
-      className={`bg-[var(--bg-surface-2)] border border-[var(--border-accent)] rounded-2xl p-5 space-y-2 ${className}`.trim()}
+      className={`bg-[var(--bg-surface-2)] border border-[var(--border-accent)] rounded-[var(--radius-lg)] p-5 space-y-2 ${className}`.trim()}
     >
       <div className="flex items-center gap-2 mb-3">
         <Info size={16} className="text-[var(--accent)]" />

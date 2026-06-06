@@ -7,7 +7,8 @@ import React from 'react';
  * 2-4h: فرق متوسط (yellow/warning)
  * 5+h:  فرق كبير (red/danger)
  */
-export default function SmartBadge({ totalMinutes = 0 }) {
+export default function SmartBadge(props) {
+  const totalMinutes = typeof props.totalMinutes === 'number' ? props.totalMinutes : 0;
   const absHours = Math.abs(totalMinutes) / 60;
 
   let label, colorClass, dotClass;
@@ -27,8 +28,8 @@ export default function SmartBadge({ totalMinutes = 0 }) {
   }
 
   return (
-    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border ${colorClass}`}>
-      <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${dotClass}`} />
+    <span className={`inline-flex items-center gap-1.5 rounded-[var(--radius-md)] border px-3 py-1 text-xs font-bold ${colorClass}`}>
+      <span className={`h-1.5 w-1.5 rounded-[var(--radius-sm)] ${dotClass}`} />
       {label}
     </span>
   );

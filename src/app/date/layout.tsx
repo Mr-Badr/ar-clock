@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function DateLayout({ children }: { children: React.ReactNode }) {
   return (
-    // Static segment wrapper — no <html>/<body>, no duplication of root layout
+    // Static segment wrapper without duplicating the root html/body layout.
     // The root layout already sets dir="rtl" and RTL body globally
     <div className="date-feature-root">
       {children}

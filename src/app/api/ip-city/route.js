@@ -54,12 +54,16 @@ export const GET = withApiHandler(
       logger.warn('ip-city-no-hints', {
         route: '/api/ip-city',
         requestId,
-        ip,
+        hasIp: Boolean(ip),
         timezoneHint,
         countryCodeHint: normalizedCountryCodeHint,
       });
 
-      return json({ error: 'No location hints available.' }, { status: 404 });
+      return json({
+        ok: false,
+        error: 'No location hints available.',
+        requestId,
+      }, { status: 404 });
     }
 
     const results = await searchCities(data.city, 1);
@@ -75,15 +79,19 @@ export const GET = withApiHandler(
       });
     }
 
-    logger.warn('ip-city-db-fallback-miss', {
-      route: '/api/ip-city',
-      requestId,
-      ip,
-      lookupCity: data.city,
-      lookupCountryCode: data.countryCode,
-    });
+      logger.warn('ip-city-db-fallback-miss', {
+        route: '/api/ip-city',
+        requestId,
+        hasIp: Boolean(ip),
+        lookupCity: data.city,
+        lookupCountryCode: data.countryCode,
+      });
 
-    return json({ error: 'No matching city in database.' }, { status: 404 });
+    return json({
+      ok: false,
+      error: 'No matching city in database.',
+      requestId,
+    }, { status: 404 });
   },
   {
     rateLimit: {

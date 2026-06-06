@@ -8,7 +8,7 @@
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import Link from 'next/link';
-import { MapPin } from 'lucide-react';
+import { ChevronLeft, Clock3, MapPin, Moon, Sunrise, Sun, Sunset } from 'lucide-react';
 import { getPriorityCountrySlugs, getCountryBySlug } from '@/lib/db/queries/countries';
 import { getTopCitiesByCountry, getCapitalCity } from '@/lib/db/queries/cities';
 import { calculatePrayerTimes, getNextPrayer, formatTime } from '@/lib/prayerEngine';
@@ -20,9 +20,13 @@ import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar.cli
 import CalendarSeoBlock from '@/components/mwaqit/CalendarSeoBlock';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import { ErrorBoundary } from '@/components/ErrorBoundary.client';
+import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
+import SiteTrustPanel from '@/components/site/SiteTrustPanel';
+import { Skeleton } from '@/components/ui/skeleton';
+import routeStyles from '@/app/mwaqit-al-salat/PrayerRoutePage.module.css';
 import {
   GEO_ROUTE_INDEXING_POLICIES,
   isSeoIndexableCountrySlug,
@@ -31,8 +35,71 @@ import { getSiteUrl } from '@/lib/site-config';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { formatGregorianLabel, getHijriMonthSpanFromDate } from '@/lib/hijri-utils';
 import { buildPrayerKeywords } from '@/lib/seo/section-search-intent';
+import { buildNoindexRouteMetadata, isRouteSlug } from '@/lib/route-param-validation';
+import { logger, serializeError } from '@/lib/logger';
 
 const BASE = getSiteUrl();
+
+const COUNTRY_PRAYER_SOURCE_LINKS = [
+  {
+    href: 'https://github.com/batoulapps/adhan-js',
+    label: 'Adhan.js',
+    description: 'محرك حساب مواقيت الصلاة المستخدم في المشروع، ويوضح أثر الإحداثيات وطريقة الحساب واختيار العصر.',
+  },
+  {
+    href: 'https://pray.zone/calculations',
+    label: 'Pray.Zone: طرق الحساب',
+    description: 'مرجع مبسط يشرح اختلاف زوايا الفجر والعشاء، وإعداد العصر، والتعامل مع المناطق ذات الحالات الخاصة.',
+  },
+  {
+    href: 'https://zaman.today/en',
+    label: 'Zaman Today',
+    description: 'مرجع مقارنة لمواقيت الصلاة حسب المدينة والمنطقة الزمنية، مفيد لمراجعة الفروق بين المدن.',
+  },
+];
+
+function buildCountryPrayerTitle(countryNameAr) {
+  return `مواقيت الصلاة في ${countryNameAr} اليوم | المدن وطريقة الحساب`;
+}
+
+function buildCountryPrayerDescription(countryNameAr, capitalNameAr) {
+  const cityPhrase = capitalNameAr
+    ? `العاصمة ${capitalNameAr} وبقية المدن`
+    : 'العاصمة وبقية المدن';
+
+  return `اعرف مواقيت الصلاة في ${countryNameAr} اليوم، ثم اختر ${cityPhrase} لمراجعة الفجر والمغرب والجدول الشهري وطريقة الحساب المحلي.`;
+}
+
+function buildCountryPrayerFaqItems(countryAr, capitalAr, methodLabel) {
+  const capitalPhrase = capitalAr ? `العاصمة ${capitalAr}` : 'العاصمة';
+
+  return [
+    {
+      question: `هل تكفي مواقيت ${capitalPhrase} لكل ${countryAr}؟`,
+      answer: `لا. صفحة الدولة تعطيك بداية سريعة من ${capitalPhrase}، لكنها لا تغني عن صفحة مدينتك إذا كنت بعيداً عنها. مواقيت الصلاة تعتمد على خط الطول وخط العرض والمنطقة الزمنية، لذلك قد يتغير وقت الفجر أو المغرب بين مدينتين داخل الدولة نفسها.`,
+    },
+    {
+      question: `لماذا تختلف مواقيت الصلاة بين مدن ${countryAr}؟`,
+      answer: 'لأن دخول وقت الصلاة مرتبط بموقع الشمس بالنسبة لمكانك الفعلي. اختلاف الإحداثيات، واتساع الدولة جغرافياً، والتوقيت الصيفي عند وجوده، وطريقة حساب الفجر والعشاء كلها عوامل يمكن أن تغيّر الوقت المعروض.',
+    },
+    {
+      question: `ما طريقة الحساب المستخدمة في ${countryAr}؟`,
+      answer: `تعرض الصفحة طريقة الحساب الأقرب لإعداد الدولة وهي ${methodLabel}. استخدمها لفهم سبب اختلاف النتائج بين التطبيقات، ثم راجع صفحة المدينة أو جدول المسجد إذا كان لديك مصدر محلي ثابت.`,
+    },
+    {
+      question: 'ماذا أفعل إذا اختلف وقت المسجد المحلي عن وقت الصفحة؟',
+      answer: 'اجعل جدول المسجد أو الجهة الرسمية المحلية مرجعك العملي للصلاة والجماعة. هذه الصفحة تساعدك على الفهم والتخطيط، أما القرار اليومي داخل حيّك فينبغي أن يراعي الإعلان المحلي المعمول به.',
+    },
+    {
+      question: 'هل يؤثر اختيار المذهب على كل الصلوات؟',
+      answer: 'غالباً يظهر أثر الاختيار الفقهي بوضوح في وقت العصر، لأن بعض الجداول تعتمد ظل المثل وبعضها يعتمد ظل المثلين. أما الفجر والعشاء فيتأثران أكثر بزوايا الشفق وطريقة الحساب المستخدمة.',
+    },
+    {
+      question: 'هل تتغير المواقيت عند السفر داخل الدولة نفسها؟',
+      answer: 'نعم إذا انتقلت إلى مدينة أخرى، خصوصاً في الدول الواسعة أو المدن البعيدة شرقاً وغرباً. قبل السفر افتح صفحة المدينة التي ستصل إليها، ولا تعتمد على وقت مدينتك الحالية أو وقت العاصمة.',
+    },
+  ];
+}
 
 export async function generateStaticParams() {
   const slugs = await getPriorityCountrySlugs(24);
@@ -41,56 +108,72 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { country: countrySlug } = await params;
-  const country = await getCountryBySlug(countrySlug);
-  if (!country) return { title: 'مواقيت الصلاة' };
+  if (!isRouteSlug(countrySlug)) {
+    return buildNoindexRouteMetadata({
+      title: 'رابط مواقيت صلاة غير صالح',
+      description: 'هذا الرابط غير صالح أو يحتوي على جزء ديناميكي غير مكتمل، لذلك لا تتم فهرسته.',
+      canonical: '/mwaqit-al-salat',
+    });
+  }
 
-  const countryAr  = country.name_ar || country.name_en;
-  const methodInfo = getMethodByCountry(country.country_code);
-  const canonical  = `${BASE}/mwaqit-al-salat/${countrySlug}`;
-  const policy = GEO_ROUTE_INDEXING_POLICIES.prayerTimes;
-  const isIndexableCountry = isSeoIndexableCountrySlug(countrySlug, {
-    scope: policy.countryScope,
-  });
+  try {
+    const country = await getCountryBySlug(countrySlug);
+    if (!country) return { title: 'مواقيت الصلاة' };
 
-  // Fetch capital to include in title — key for SEO: "مواقيت الصلاة في السعودية، الرياض"
-  const capital = await getCapitalCity(country.country_code);
-  const capitalAr = capital ? (capital.name_ar || capital.name_en) : null;
+    const countryAr  = country.name_ar || country.name_en;
+    const methodInfo = getMethodByCountry(country.country_code);
+    const canonical  = `${BASE}/mwaqit-al-salat/${countrySlug}`;
+    const policy = GEO_ROUTE_INDEXING_POLICIES.prayerTimes;
+    const isIndexableCountry = isSeoIndexableCountrySlug(countrySlug, {
+      scope: policy.countryScope,
+    });
+    const capital = await getCapitalCity(country.country_code);
+    const capitalAr = capital ? (capital.name_ar || capital.name_en) : null;
 
-  const titleSuffix = capitalAr ? `، ${capitalAr}` : '';
-  const title = `مواقيت الصلاة اليوم في ${countryAr}${titleSuffix} | متى الأذان اليوم؟`;
-  const description = capitalAr
-    ? `اعرف فوراً مواقيت الصلاة اليوم في ${countryAr} مع أوقات الفجر والشروق والظهر والعصر والمغرب والعشاء في ${capitalAr} وبقية المدن، وطريقة الحساب ${methodInfo.label}.`
-    : `اعرف فوراً مواقيت الصلاة اليوم في ${countryAr} مع الفجر والشروق والظهر والعصر والمغرب والعشاء، وطريقة الحساب ${methodInfo.label} وروابط المدن الرئيسية.`;
+    const title = buildCountryPrayerTitle(countryAr);
+    const description = buildCountryPrayerDescription(countryAr, capitalAr);
 
-  return {
-    title,
-    description,
-    keywords: buildPrayerKeywords({
-      countryAr,
-      countryEn: country.name_en,
-      cityAr: capitalAr,
-      cityEn: capital?.name_en,
-      methodLabel: methodInfo.label,
-    }),
-    alternates: { canonical },
-    openGraph: {
+    return {
       title,
       description,
-      type:   'website',
-      locale: 'ar_SA',
-      url:    canonical,
-    },
-    robots: {
-      index: isIndexableCountry,
-      follow: true,
-      googleBot: {
+      keywords: buildPrayerKeywords({
+        countryAr,
+        countryEn: country.name_en,
+        cityAr: capitalAr,
+        cityEn: capital?.name_en,
+        methodLabel: methodInfo.label,
+      }),
+      alternates: { canonical },
+      openGraph: {
+        title,
+        description,
+        type: 'website',
+        locale: 'ar_SA',
+        url: canonical,
+      },
+      robots: {
         index: isIndexableCountry,
         follow: true,
-        'max-snippet': -1,
-        'max-image-preview': 'large',
+        googleBot: {
+          index: isIndexableCountry,
+          follow: true,
+          'max-snippet': -1,
+          'max-image-preview': 'large',
+        },
       },
-    },
-  };
+    };
+  } catch (error) {
+    logger.error('prayer-country-metadata-failed', {
+      routePath: `/mwaqit-al-salat/${countrySlug}`,
+      countrySlug,
+      error: serializeError(error),
+    });
+    return {
+      title: 'مواقيت الصلاة حسب الدولة',
+      description: 'اعرف مواقيت الصلاة حسب الدولة والمدينة مع التوقيت الحالي والتاريخ ومسارات الصفحات المرتبطة.',
+      alternates: { canonical: `${BASE}/mwaqit-al-salat/${countrySlug}` },
+    };
+  }
 }
 // ─── Prayer labels ────────────────────────────────────────────────────────────
 const PRAYER_AR = {
@@ -99,27 +182,93 @@ const PRAYER_AR = {
 };
 
 const PRAYER_ICON = {
-  fajr: '🌙', sunrise: '🌅', dhuhr: '☀️',
-  asr: '🌇', maghrib: '🌆', isha: '🌃',
+  fajr: Moon,
+  sunrise: Sunrise,
+  dhuhr: Sun,
+  asr: Sun,
+  maghrib: Sunset,
+  isha: Moon,
 };
 
 export default async function CountryPrayerPage({ params }) {
   const { country: countrySlug } = await params;
-  const country = await getCountryBySlug(countrySlug);
+  if (!isRouteSlug(countrySlug)) notFound();
+
+  let country;
+  try {
+    country = await getCountryBySlug(countrySlug);
+  } catch (error) {
+    logger.error('prayer-country-page-data-failed', {
+      routePath: `/mwaqit-al-salat/${countrySlug}`,
+      countrySlug,
+      error: serializeError(error),
+    });
+    return (
+      <RouteUnavailableState
+        eyebrow="تعذر الوصول إلى بيانات الدولة الآن"
+        title="صفحة مواقيت الصلاة حسب الدولة متوقفة مؤقتاً"
+        description="تعذر تحميل البيانات الأساسية لهذه الدولة في هذه اللحظة، لذلك أظهرنا لك مسارات بديلة واضحة تمنع تحوّل الصفحة إلى 5xx أو تجربة فارغة."
+        primaryLink={{
+          href: '/mwaqit-al-salat',
+          label: 'افتح قسم مواقيت الصلاة',
+          description: 'انتقل إلى القسم الرئيسي ثم ابحث عن دولة أو مدينة أخرى مباشرة.',
+        }}
+        secondaryLinks={[
+          {
+            href: '/time-now',
+            label: 'افتح الوقت الان',
+            description: 'راجع الوقت الحالي في الدول والمدن من القسم المرتبط زمنياً بهذه الصفحة.',
+          },
+          {
+            href: '/date',
+            label: 'افتح قسم التاريخ',
+            description: 'الوصول إلى التاريخ اليومي والتقويم والتحويل من مسار التاريخ الرئيسي.',
+          },
+          {
+            href: '/fahras',
+            label: 'استكشف الصفحات',
+            description: 'إذا تغير سؤالك، استخدم فهرس الصفحات للوصول السريع إلى أقرب مسار مفيد.',
+          },
+        ]}
+      />
+    );
+  }
   if (!country) notFound();
 
-  const [cities, capital] = await Promise.all([
+  const [citiesResult, capitalResult] = await Promise.allSettled([
     getTopCitiesByCountry(country.country_code, 120),
     getCapitalCity(country.country_code),
   ]);
+  const cities = citiesResult.status === 'fulfilled' ? citiesResult.value : [];
+  const capital = capitalResult.status === 'fulfilled' ? capitalResult.value : null;
+
+  if (citiesResult.status === 'rejected') {
+    logger.error('prayer-country-cities-section-failed', {
+      route: `/mwaqit-al-salat/${countrySlug}`,
+      countrySlug,
+      countryCode: country.country_code,
+      error: serializeError(citiesResult.reason),
+    });
+  }
+
+  if (capitalResult.status === 'rejected') {
+    logger.warn('prayer-country-capital-section-failed', {
+      route: `/mwaqit-al-salat/${countrySlug}`,
+      countrySlug,
+      countryCode: country.country_code,
+      error: serializeError(capitalResult.reason),
+    });
+  }
 
   const countryAr  = country.name_ar || country.name_en;
   const methodInfo = getMethodByCountry(country.country_code);
+  const capitalAr = capital ? (capital.name_ar || capital.name_en) : null;
+  const countryFaqItems = buildCountryPrayerFaqItems(countryAr, capitalAr, methodInfo.label);
   const utilityLinks = [
     {
       href: `/time-now/${countrySlug}`,
       label: `الوقت الان في ${countryAr}`,
-      description: `صفحة الوقت الآن في ${countryAr} مع الساعة الحالية والعاصمة والمدن الرئيسية.`,
+      description: `صفحة الوقت الان في ${countryAr} مع الساعة الحالية والعاصمة والمدن الرئيسية.`,
     },
     {
       href: `/date/country/${countrySlug}`,
@@ -154,7 +303,7 @@ export default async function CountryPrayerPage({ params }) {
     '@type': 'CollectionPage',
     name: `مواقيت الصلاة في ${countryAr} اليوم`,
     url: `${BASE}/mwaqit-al-salat/${countrySlug}`,
-    description: `تعرف على مواقيت الصلاة في كافة مدن ${countryAr} اليوم. الفجر، الظهر، العصر، المغرب والعشاء بدقة عالية.`,
+    description: `ابدأ من مواقيت الصلاة في مدن ${countryAr} اليوم، ثم افتح صفحة المدينة الأقرب لك لمراجعة الفجر والظهر والعصر والمغرب والعشاء مع سياق التاريخ المحلي.`,
     inLanguage: 'ar',
     breadcrumb: { '@id': `${BASE}/mwaqit-al-salat/${countrySlug}#breadcrumb` },
     about: {
@@ -178,13 +327,11 @@ export default async function CountryPrayerPage({ params }) {
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: `كيف أجد مواقيت الصلاة في مدن ${countryAr}؟`,
-        acceptedAnswer: { '@type': 'Answer', text: `تُقدم هذه الصفحة أوقات الصلاة الدقيقة للعاصمة وكافة مدن ${countryAr}. يمكنك اختيار مدينتك من القائمة لعرض أوقات الفجر والمغرب وبقية الصلوات بدقة عالية.` },
-      },
-    ],
+    mainEntity: countryFaqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
   };
 
   return (
@@ -194,92 +341,305 @@ export default async function CountryPrayerPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(cityItemListSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      {/* <AdLayoutWrapper> */}
-      <main className="content-col pt-24 pb-20">
-
-        {/* Breadcrumb */}
-        <nav aria-label="مسار التنقل" className="text-xs text-muted mb-8 flex items-center gap-1.5">
-          <Link href="/" className="hover:text-accent transition-colors">الرئيسية</Link>
-          <span aria-hidden="true">›</span>
-          <Link href="/mwaqit-al-salat" className="hover:text-accent transition-colors">مواقيت الصلاة</Link>
-          <span aria-hidden="true">›</span>
-          <span className="text-secondary">{countryAr}</span>
+      <main>
+        <nav aria-label="مسار التنقل" className={`container mx-auto px-4 ${routeStyles.breadcrumb}`}>
+          <ol className={routeStyles.breadcrumbList}>
+            {[
+              { href: '/', label: 'الرئيسية' },
+              { href: '/mwaqit-al-salat', label: 'مواقيت الصلاة' },
+            ].map((item) => (
+              <li key={item.href} className={routeStyles.breadcrumbItem}>
+                <Link href={item.href} className={routeStyles.breadcrumbLink}>{item.label}</Link>
+                <ChevronLeft size={12} className={routeStyles.breadcrumbChevron} aria-hidden />
+              </li>
+            ))}
+            <li aria-current="page" className={routeStyles.breadcrumbCurrent}>{countryAr}</li>
+          </ol>
         </nav>
 
-        {/* Header */}
-        <header className="mb-10 text-center">
-          <h1 className="text-3xl md:text-5xl font-black mb-3">
-            متى الأذان اليوم في <span className="text-accent">{countryAr}</span>؟
-          </h1>
-          <p className="text-muted text-base mb-3" style={{ margin: '10px auto' }}>
-            اختر المدينة لعرض الفجر والظهر والعصر والمغرب والعشاء بدقة، مع طريقة الحساب المعتمدة داخل الدولة.
-          </p>
-          {/* Method badge */}
-          <span className="inline-flex items-center gap-1.5 text-xs bg-surface-2 border border-subtle px-3 py-1.5 rounded-full text-muted">
-            <span>🕌</span>
-            طريقة الحساب المعتمدة: <strong className="text-accent-alt">{methodInfo.label}</strong>
-          </span>
-        </header>
+        <section className={`container mx-auto px-4 ${routeStyles.heroSection}`}>
+          <div className={routeStyles.heroInner}>
+            <div className={routeStyles.heroCopy}>
+              <h1 className={routeStyles.heroTitle}>
+                متى الأذان اليوم في <span className="text-accent">{countryAr}</span>؟
+              </h1>
+              <p className={routeStyles.heroLead}>
+                مواقيت الصلاة في {countryAr} اليوم تبدأ من العاصمة كمرجع سريع، لكن أفضل نتيجة
+                تحصل عليها عندما تختار مدينتك الفعلية. ستجد الفجر والظهر والعصر والمغرب والعشاء،
+                مع طريقة الحساب المستخدمة ومتى تحتاج إلى الرجوع لجدول مسجدك أو الجهة المحلية.
+              </p>
+              <div className={routeStyles.heroMeta}>
+                <span className={routeStyles.metaPill}>
+                  <Clock3 size={14} />
+                  طريقة الحساب: <strong>{methodInfo.label}</strong>
+                </span>
+                {capital ? (
+                  <span className={routeStyles.metaPill}>
+                    <MapPin size={14} />
+                    العاصمة المرجعية: <strong>{capital.name_ar || capital.name_en}</strong>
+                  </span>
+                ) : null}
+              </div>
+            </div>
 
-        <AdTopBanner slotId="top-country" />
+            <div className={routeStyles.searchWrap}>
+              <ErrorBoundary name="PrayerCountrySearch">
+                <SearchCity mode="mwaqit-al-salat" />
+              </ErrorBoundary>
+            </div>
 
-        {/* Search */}
-        <div className="mb-12">
-          <SearchCity mode="mwaqit-al-salat" />
-        </div>
-
-        {/* Capital city section */}
-        {capital && (
-          <section className="mb-12">
-            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-              <MapPin size={22} className="text-accent" />
-              أوقات الصلاة في العاصمة — <span className="text-accent">{capital.name_ar}</span>
-            </h2>
-
-            <ErrorBoundary>
-            <Suspense
-              fallback={
-                <div className="space-y-4">
-                  <div className="h-72 animate-pulse bg-[var(--bg-surface-2)] rounded-3xl" />
-                  <div className="h-64 animate-pulse bg-[var(--bg-surface-2)] rounded-3xl" />
-                </div>
-              }
-            >
-              <PrayerTimesContent
-                country={countrySlug}
-                city={capital.city_slug}
-                cityData={capital}
-                countryCode={country.country_code}
-                countryNameAr={countryAr}
-              />
-            </Suspense>
-            </ErrorBoundary>
-          </section>
-        )}
-
-        <AdInArticle slotId="mid-country-1" />
-
-        {/* All cities grid */}
-        <section>
-          <h2 className="text-xl font-bold mb-6">أبرز المدن في {countryAr}</h2>
-          <CityPrayerCardsGrid
-            cities={cities}
-            countrySlug={countrySlug}
-            countryCode={country.country_code}
-          />
+            {capital ? (
+              <div className={routeStyles.heroPanel}>
+                <ErrorBoundary>
+                  <Suspense fallback={<PrayerCountryHeroFallback />}>
+                    <PrayerTimesContent
+                      country={countrySlug}
+                      city={capital.city_slug}
+                      cityData={capital}
+                      countryCode={country.country_code}
+                      countryNameAr={countryAr}
+                    />
+                  </Suspense>
+                </ErrorBoundary>
+              </div>
+            ) : null}
+          </div>
         </section>
 
-        <section className="mt-12 pt-8 border-t border-[var(--border-subtle)]">
-          <GeoInternalLinks
-            title={`روابط مهمة عن ${countryAr}`}
-            description={`نربط هنا بين صفحات الصلاة والوقت والتاريخ الخاصة بـ${countryAr} حتى تبقى الصفحات الرئيسية والمدن المهمة قريبة من بعضها في البنية الداخلية للموقع.`}
-            links={utilityLinks}
-            ariaLabel={`روابط مهمة عن ${countryAr}`}
-          />
+        <section className={`container mx-auto px-4 ${routeStyles.summaryBand}`}>
+          <div className={routeStyles.summaryGrid}>
+            <div className={routeStyles.summaryCard}>
+              <p className={routeStyles.summaryLabel}>التغطية الأساسية</p>
+              <p className={routeStyles.summaryValue}>العاصمة + المدن</p>
+              <p className={routeStyles.summaryCopy}>
+                تبدأ الصفحة بإجابة سريعة من العاصمة، ثم تنقلك إلى المدن الأبرز داخل {countryAr}
+                حتى لا تضطر إلى إعادة البحث من الصفر.
+              </p>
+            </div>
+            <div className={routeStyles.summaryCard}>
+              <p className={routeStyles.summaryLabel}>طريقة الحساب</p>
+              <p className={routeStyles.summaryValue}>{methodInfo.label}</p>
+              <p className={routeStyles.summaryCopy}>
+                نعرض طريقة الحساب حتى تفهم سبب اختلاف الفجر أو العشاء أو العصر بين التطبيقات،
+                ولا تتعامل مع أي وقت وكأنه منفصل عن إعداداته.
+              </p>
+            </div>
+            <div className={routeStyles.summaryCard}>
+              <p className={routeStyles.summaryLabel}>أفضل استخدام</p>
+              <p className={routeStyles.summaryValue}>اختر مدينتك الفعلية</p>
+              <p className={routeStyles.summaryCopy}>
+                صفحة الدولة مناسبة للبدء، لكن المرجع اليومي النهائي يبقى صفحة المدينة الأقرب إليك
+                بسبب اختلاف الإحداثيات والتوقيت المحلي.
+              </p>
+            </div>
+          </div>
         </section>
 
+        <section className="container mx-auto px-4 pb-2">
+          <AdTopBanner slotId={`top-prayer-country-${countrySlug}`} />
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <div className={routeStyles.sectionHead}>
+              <h2 className={routeStyles.sectionTitle}>أبرز المدن في {countryAr}</h2>
+              <p className={routeStyles.sectionCopy}>
+                انتقل مباشرة إلى صفحة المدينة التي تحتاجها. هذا الجزء يأتي بعد الإجابة الأساسية حتى
+                تبقى الصفحة عملية قبل أن تتحول إلى دليل تنقل داخل الدولة.
+              </p>
+            </div>
+            {cities.length ? (
+              <ErrorBoundary name="PrayerCountryCitiesGrid">
+                <CityPrayerCardsGrid
+                  cities={cities}
+                  countrySlug={countrySlug}
+                  countryCode={country.country_code}
+                />
+              </ErrorBoundary>
+            ) : (
+              <p className={routeStyles.sectionCopy}>
+                تعذر إظهار قائمة المدن الآن، لكن البحث المباشر ما زال متاحاً للوصول إلى المدينة التي تريدها.
+              </p>
+            )}
+          </div>
+        </section>
+
+        <section className="container mx-auto px-4">
+          <AdInArticle slotId={`mid-prayer-country-${countrySlug}-1`} />
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <div className={routeStyles.sectionHead}>
+              <h2 className={routeStyles.sectionTitle}>الطريقة والمنطقة الزمنية وسياق الدولة</h2>
+              <p className={routeStyles.sectionCopy}>
+                قبل الاعتماد على وقت العاصمة أو أي مدينة داخل {countryAr}، راجع طريقة الحساب والمنطقة الزمنية
+                والفرق المتوقع بين المدن الواسعة جغرافياً.
+              </p>
+            </div>
+            <div className={routeStyles.contextGrid}>
+              <article className={routeStyles.contextCard}>
+                <h3 className={routeStyles.contextTitle}>طريقة الحساب الأقرب</h3>
+                <p className={routeStyles.contextBody}>
+                  تعتمد هذه الصفحات على <strong>{methodInfo.label}</strong> كإعداد حسابي واضح. هذا مهم عند مقارنة
+                  الفجر والعشاء، أو عند مراجعة وقت العصر إذا كان مسجدك يتبع اختياراً فقهياً مختلفاً.
+                </p>
+              </article>
+              <article className={routeStyles.contextCard}>
+                <h3 className={routeStyles.contextTitle}>المدينة المرجعية</h3>
+                <p className={routeStyles.contextBody}>
+                  {capital
+                    ? `تبدأ الصفحة من ${capital.name_ar || capital.name_en} لأنها نقطة مرجعية سهلة، لكن الاستخدام اليومي الصحيح يكون من صفحة مدينتك أو من جدول مسجدك المحلي.`
+                    : `لم تتوفر العاصمة المرجعية هنا، لذلك استخدم البحث أو قائمة المدن للوصول إلى الصفحة المحلية الأقرب لك.`}
+                </p>
+              </article>
+              <article className={routeStyles.contextCard}>
+                <h3 className={routeStyles.contextTitle}>المنطقة الزمنية</h3>
+                <p className={routeStyles.contextBody}>
+                  {capital?.timezone || country.timezone
+                    ? <>المنطقة الزمنية المرجعية هنا هي <strong>{capital?.timezone || country.timezone}</strong>، وقد يظهر اختلاف بين المدن داخل الدولة نفسها تبعاً للموقع الجغرافي أو التوقيت الصيفي.</>
+                    : 'راجع صفحة المدينة النهائية لأن المنطقة الزمنية المرجعية لم تظهر هنا بشكل كامل.'}
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <div className={routeStyles.proseBlock}>
+              <h2>كيف تستخدم صفحة مواقيت الصلاة في {countryAr}؟</h2>
+              <p>
+                تبدأ الصفحة بالعاصمة لأنها غالباً أسرع نقطة مرجعية، ثم تعرض قائمة المدن حتى لا تضطر
+                إلى البحث من جديد إذا كنت في مدينة أخرى داخل {countryAr}. إذا كان هدفك معرفة الصلاة
+                القادمة الآن، فافتح صفحة المدينة الأقرب لك مباشرة.
+              </p>
+              <p>
+                تختلف مواقيت الصلاة بين المدن داخل الدولة نفسها بسبب خطوط الطول والعرض، وقد يظهر الفرق
+                بوضوح في الدول الكبيرة. لذلك لا تعتمد على وقت العاصمة إذا كنت في مدينة بعيدة عنها، بل
+                استخدم رابط مدينتك حتى تحصل على الفجر والمغرب وبقية الصلوات حسب الإحداثيات الصحيحة.
+              </p>
+              <p>
+                عند متابعة الأذان من نتيجة بحث سريعة، راجع اسم المدينة، المنطقة الزمنية، وطريقة الحساب
+                قبل الاعتماد على الوقت. إذا وجدت فرقاً بين الصفحة وجدول مسجدك، فاعتبر الجدول المحلي
+                مرجعك العملي للصلاة والجماعة، واستخدم الصفحة للفهم والمقارنة والتخطيط.
+              </p>
+              <div className={routeStyles.threeUpGrid}>
+                <article className={routeStyles.smallGuideCard}>
+                  <h3 className={routeStyles.smallGuideTitle}>للمقيم اليومي</h3>
+                  <p className={routeStyles.smallGuideCopy}>احفظ صفحة مدينتك وراجع الصلاة القادمة وجدول الشهر من نفس المكان.</p>
+                </article>
+                <article className={routeStyles.smallGuideCard}>
+                  <h3 className={routeStyles.smallGuideTitle}>للمسافر</h3>
+                  <p className={routeStyles.smallGuideCopy}>انتقل إلى صفحة المدينة التي ستصل إليها، خصوصاً عند اختلاف التوقيت أو طول الرحلة.</p>
+                </article>
+                <article className={routeStyles.smallGuideCard}>
+                  <h3 className={routeStyles.smallGuideTitle}>للمراجعة</h3>
+                  <p className={routeStyles.smallGuideCopy}>راجع طريقة الحساب ومسارات الوقت والتاريخ إذا احتجت سياقاً زمنياً كاملاً.</p>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <div className={routeStyles.sectionHead}>
+              <h2 className={routeStyles.sectionTitle}>قاعدة سريعة: أي وقت تتبع؟</h2>
+              <p className={routeStyles.sectionCopy}>
+                لا تحتاج إلى حفظ تفاصيل فلكية كثيرة. اتبع هذه القاعدة العملية حتى لا تخلط بين
+                وقت العاصمة، وقت المدينة، ووقت المسجد القريب منك.
+              </p>
+            </div>
+            <div className={routeStyles.contextGrid}>
+              <article className={routeStyles.contextCard}>
+                <h3 className={routeStyles.contextTitle}>إذا كنت تريد نظرة عامة</h3>
+                <p className={routeStyles.contextBody}>
+                  استخدم صفحة {countryAr} لمعرفة الإطار العام، المدن المدعومة، وطريقة الحساب. هذا يكفي
+                  للمقارنة السريعة أو قبل اختيار المدينة.
+                </p>
+              </article>
+              <article className={routeStyles.contextCard}>
+                <h3 className={routeStyles.contextTitle}>إذا كنت ستصلي اليوم</h3>
+                <p className={routeStyles.contextBody}>
+                  افتح صفحة مدينتك الفعلية، لأن فرق الدقائق بين المدن قد يكون مهماً عند الفجر والمغرب
+                  خصوصاً في الأيام القصيرة أو أثناء السفر.
+                </p>
+              </article>
+              <article className={routeStyles.contextCard}>
+                <h3 className={routeStyles.contextTitle}>إذا اختلف المسجد</h3>
+                <p className={routeStyles.contextBody}>
+                  اتبع جدول المسجد أو الجهة المحلية المعلنة للصلاة والجماعة. اختلاف بضع دقائق قد ينتج
+                  عن طريقة الحساب أو الاحتياط المحلي أو اختيار العصر.
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <div className={routeStyles.sectionHead}>
+              <h2 className={routeStyles.sectionTitle}>أسئلة شائعة عن مواقيت {countryAr}</h2>
+              <p className={routeStyles.sectionCopy}>
+                هذه الأسئلة تعالج أكثر نقاط الالتباس التي تظهر عند مقارنة صفحات الدولة مع صفحات المدن
+                أو تطبيقات الأذان المختلفة.
+              </p>
+            </div>
+            <div className={routeStyles.contextGrid}>
+              {countryFaqItems.map((item) => (
+                <details key={item.question} className={routeStyles.contextCard}>
+                  <summary className={routeStyles.contextTitle}>{item.question}</summary>
+                  <p className={routeStyles.contextBody}>{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <div className={routeStyles.sectionHead}>
+              <h2 className={routeStyles.sectionTitle}>مصادر ومنهج الحساب</h2>
+              <p className={routeStyles.sectionCopy}>
+                نعتمد على حسابات مبنية على الإحداثيات والمنطقة الزمنية وطريقة الحساب، ونربطك بمراجع
+                تساعدك على فهم سبب اختلاف المواقيت بين مصدر وآخر.
+              </p>
+            </div>
+            <div className={routeStyles.linkGrid}>
+              {COUNTRY_PRAYER_SOURCE_LINKS.map((source) => (
+                <a
+                  key={source.href}
+                  href={source.href}
+                  className={routeStyles.linkCard}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className={routeStyles.linkLabel}>{source.label}</span>
+                  <span className={routeStyles.linkDescription}>{source.description}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <GeoInternalLinks
+              title={`خطوات تكمل مواقيت ${countryAr}`}
+              description={`بعد معرفة مواقيت ${countryAr}، اختر الخطوة التي تناسبك: الوقت الان للسياق الزمني، تاريخ اليوم للسياق المحلي، أو صفحة العاصمة إذا كنت تريد جدولاً أدق.`}
+              links={utilityLinks}
+              ariaLabel={`خطوات تكمل مواقيت ${countryAr}`}
+            />
+          </div>
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <SiteTrustPanel panel="prayer" />
+          </div>
+        </section>
       </main>
-      {/* </AdLayoutWrapper> */}
     </div>
   );
 }
@@ -307,8 +667,7 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
 
   return (
     <>
-      {/* Countdown hero */}
-      <section className="card card--accent mb-6">
+      <section className={`mb-6 ${routeStyles.sectionPanel}`}>
         <PrayerHeroClient
           nextPrayerKey={nextKey}
           nextPrayerIso={nextIso}
@@ -321,59 +680,57 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
         />
       </section>
 
-      {/* Prayer times list */}
-      <section className="card mb-6" aria-label={`مواقيت الصلاة اليوم في ${cityData.name_ar}`}>
-        <div className="card__header flex flex-wrap justify-between items-start gap-3">
-          <div>
-            <h3 className="card__title m-0 text-xl font-bold">مواقيت الصلاة اليوم</h3>
-            <p className="text-[11px] text-muted mt-0.5">
-              طريقة الحساب: <span className="text-accent-alt font-semibold">{methodInfo.label}</span>
-            </p>
-          </div>
-          <span className="badge badge-accent">{todayLabel}</span>
+      <section className={routeStyles.sectionPanel} aria-label={`مواقيت الصلاة اليوم في ${cityData.name_ar}`}>
+        <div className={routeStyles.sectionHead}>
+          <h3 className={routeStyles.sectionTitle}>مواقيت الصلاة اليوم</h3>
+          <p className={routeStyles.sectionCopy}>
+            هذا هو جدول اليوم في {cityData.name_ar || cityData.name_en}. لا نضع إعلاناً بين اسم الصلاة ووقتها،
+            وتبقى طريقة الحساب والتاريخ ظاهرين في نفس الجزء. إذا كنت خارج هذه المدينة فافتح صفحة مدينتك
+            قبل الاعتماد على الوقت للصلاة.
+          </p>
+          <p className={routeStyles.methodNote}>
+            طريقة الحساب: <span className="text-accent-alt font-semibold">{methodInfo.label}</span> | {todayLabel}
+          </p>
         </div>
 
-        <div className="flex flex-col" style={{ gap: '2px' }}>
+        <div className={routeStyles.tableWrap}>
+          <table className={routeStyles.table}>
+            <thead>
+              <tr className={routeStyles.tableHeadRow}>
+                <th className={routeStyles.tableHeader}>الصلاة</th>
+                <th className={routeStyles.tableHeader}>الوقت</th>
+              </tr>
+            </thead>
+            <tbody>
           {['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'].map((key) => {
             const isoStr = times[key];
             if (!isoStr) return null;
-            
+
             const isNext  = key === nextKey;
             const timeStr = formatTime(isoStr, cityData.timezone, false);
-            
+            const PrayerIcon = PRAYER_ICON[key] ?? Clock3;
+
             return (
-                <div
-                  key={key}
-                  className="flex items-center justify-between rounded-lg"
-                  style={{
-                    padding: 'var(--space-3) var(--space-2)',
-                    background:  isNext ? 'var(--accent-soft)' : 'transparent',
-                  }}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="text-lg">{PRAYER_ICON[key] ?? '🕌'}</span>
-                    {isNext && <span className="badge badge-accent text-xs">القادمة</span>}
-                    <span style={{
-                      color:      isNext ? 'var(--accent)' : 'var(--text-primary)',
-                      fontWeight: 'var(--font-bold)',
-                      fontSize:   'var(--text-base)',
-                    }}>
-                      {PRAYER_AR[key] ?? key}
-                    </span>
-                  </div>
-                  <time dateTime={isoStr} dir="ltr" className="tabular-nums font-mono font-bold text-xl" style={{
-                    color: isNext ? 'var(--accent)' : 'var(--text-primary)',
-                  }}>
-                    {timeStr}
-                  </time>
-                </div>
+              <tr key={key} className={routeStyles.tableRow}>
+                <td className={`${routeStyles.tableCell} ${routeStyles.prayerNameCell}`}>
+                  <span className="me-2 inline-flex text-accent-alt" aria-hidden>
+                    <PrayerIcon size={16} strokeWidth={1.75} />
+                  </span>
+                  {PRAYER_AR[key] ?? key}
+                  {isNext ? <span className={routeStyles.nextBadge}>القادمة</span> : null}
+                </td>
+                <td className={`${routeStyles.tableCell} ${routeStyles.prayerTimeCell}`}>
+                  <time dateTime={isoStr}>{timeStr}</time>
+                </td>
+              </tr>
             );
           })}
+            </tbody>
+          </table>
         </div>
       </section>
 
-      {/* Monthly calendar */}
-      <section className="mb-6">
+      <section className={routeStyles.sectionPanel}>
         <CalendarSeoBlock
           cityNameAr={cityData.name_ar || cityData.name_en}
           countryNameAr={countryNameAr}
@@ -390,5 +747,24 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
         />
       </section>
     </>
+  );
+}
+
+function PrayerCountryHeroFallback() {
+  return (
+    <div className="space-y-4" aria-hidden="true">
+      <Skeleton className={routeStyles.largePanelSkeleton} />
+      <div className={routeStyles.sectionPanel}>
+        <Skeleton className={`${routeStyles.titleSkeleton} ${routeStyles.lineSkeleton}`} />
+        <div className="mt-4 space-y-3">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <Skeleton
+              key={`prayer-country-row-${index}`}
+              className={routeStyles.faqItemSkeleton}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }

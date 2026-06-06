@@ -10,7 +10,7 @@ export default function manifest() {
   return {
     name: SITE_APP_NAME,
     short_name: SITE_BRAND,
-    description: `دليلك الشامل للوقت، المواعيد، والمناسبات الإسلامية والعالمية في تطبيق ${SITE_BRAND} العصري`,
+    description: `${SITE_BRAND} يجمع الوقت، مواقيت الصلاة، التاريخ، الحاسبات، والمناسبات في تجربة عربية واضحة.`,
     start_url: '/',
     display: 'standalone',
     background_color: '#181C2A',
@@ -30,17 +30,12 @@ export default function manifest() {
       {
         name: 'فهرس الأدوات',
         url: '/fahras',
-        description: 'ابحث داخل الوقت والحاسبات والاقتصاد من صفحة واحدة',
+        description: 'ابحث داخل الوقت والحاسبات من صفحة واحدة',
       },
       {
         name: 'الحاسبات',
         url: '/calculators',
         description: 'ابدأ من أشهر الحاسبات العربية اليومية',
-      },
-      {
-        name: 'الاقتصاد الحي',
-        url: '/economie',
-        description: 'تابع السوق الأمريكي والذهب والفوركس في لوحة واحدة',
       },
       {
         name: 'مواقيت الصلاة',

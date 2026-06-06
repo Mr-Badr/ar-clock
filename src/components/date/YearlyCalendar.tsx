@@ -1,26 +1,4 @@
 // src/components/date/YearlyCalendar.tsx
-// ─────────────────────────────────────────────────────────────────────────────
-// COMPLETE REWRITE — fixes catastrophic performance bug:
-//
-// OLD: Called convertDate() 372 times per render (12 months × 31 days max)
-//      → 372 synchronous date conversion calls at render time
-//      → Build time for calendar page was 20-30 seconds
-//
-// NEW: Single pre-compute pass — one Map<iso, DayData> built ONCE before JSX
-//      → All 372 (or fewer) conversions in one tight loop
-//      → Calendar component renders in milliseconds
-//
-// DESIGN IMPROVEMENTS:
-//   • Today highlighted with accent gradient + white text
-//   • Islamic events marked with a 1px colored border + cell tint + shadcn Tooltip
-//   • Ramadan days tinted warning-soft
-//   • Friday Jumu'ah in success color
-//   • Each day stays clickable and remains crawlable for canonical day pages
-//   • Uses .card CSS class for month cards
-//   • Uses new.css tokens exclusively — zero hard-coded colors
-//   • Responsive: 1→2→3→4 column grid
-// ─────────────────────────────────────────────────────────────────────────────
-
 import Link from 'next/link';
 import { cacheLife, cacheTag } from 'next/cache';
 import { convertDate } from '@/lib/date-adapter';
@@ -31,13 +9,13 @@ const MONTHS_AR = [
   'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
   'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر',
 ];
-// Sun Mon Tue Wed Thu Fri Sat — abbreviated Arabic
 const WEEKDAYS_AR = ['أح', 'إث', 'ثل', 'أر', 'خم', 'جم', 'سب'];
 
-function getDaysInMonth(year: number, month: number) {
+function getDaysInMonth(year: number, month: number): number {
   return new Date(Date.UTC(year, month, 0)).getUTCDate();
 }
-function getFirstDayOfMonth(year: number, month: number) {
+
+function getFirstDayOfMonth(year: number, month: number): number {
   return new Date(Date.UTC(year, month - 1, 1)).getUTCDay();
 }
 
@@ -52,10 +30,20 @@ interface DayData {
 
 interface Props {
   year: number;
-  serverTodayIso?: string; // Pass from page to avoid server/client time mismatch
+  serverTodayIso?: string;
 }
 
-async function getGregorianCalendarDayLookup(year: number) {
+function getGregorianDayLinkClass(data: DayData | undefined, isToday: boolean, isFriday: boolean): string {
+  return [
+    'date-day-link',
+    isToday ? 'date-day-link--today' : '',
+    !isToday && data?.hasEvent ? 'date-day-link--event' : '',
+    !isToday && !data?.hasEvent && data?.isRamadan ? 'date-day-link--ramadan' : '',
+    !isToday && isFriday ? 'date-day-link--friday' : '',
+  ].filter(Boolean).join(' ');
+}
+
+async function getGregorianCalendarDayLookup(year: number): Promise<Record<string, DayData>> {
   'use cache';
   cacheTag('date-calendar-gregorian', `date-calendar-gregorian-${year}`);
   cacheLife('days');
@@ -90,138 +78,78 @@ export async function YearlyCalendar({ year, serverTodayIso }: Props) {
   const todayIso = serverTodayIso ?? '';
   const dayLookup = await getGregorianCalendarDayLookup(year);
 
-  // ── RENDER ────────────────────────────────────────────────────────────────
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3" style={{ gap: '20px' }}>
+    <div className="date-calendar-grid">
       {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => {
         const daysInMonth = getDaysInMonth(year, month);
         const firstDay = getFirstDayOfMonth(year, month);
         const monthStr = String(month).padStart(2, '0');
 
         return (
-          <div
-            key={month}
-            className="card"
-            style={{ padding: 0, overflow: 'hidden' }}
-          >
-            {/* Month header */}
-            <div
-              className="flex items-center justify-between px-4 py-3"
-              style={{ background: 'var(--accent-gradient)' }}
-            >
-              <h3
-                className="text-sm font-bold"
-                style={{ color: '#fff', margin: 0 }}
-              >
+          <div key={month} className="date-month-panel">
+            <div className="date-month-header date-month-header--gregorian">
+              <h3 className="date-month-title">
                 {MONTHS_AR[month - 1]}
               </h3>
               <Link
                 href={`/date/${year}/${monthStr}/01`}
-                className="text-xs font-medium"
-                style={{ color: 'rgba(255,255,255,0.75)' }}
+                className="date-month-link"
               >
                 {month}/{year}
               </Link>
             </div>
 
-            {/* Weekday headers */}
-            <div
-              className="grid"
-              style={{
-                gridTemplateColumns: 'repeat(7, 1fr)',
-                borderBottom: '1px solid var(--border-subtle)',
-              }}
-            >
+            <div className="date-weekday-row">
               {WEEKDAYS_AR.map((d, i) => (
                 <div
                   key={d}
-                  className="text-center text-2xs font-bold py-2"
-                  style={{ color: i === 5 ? 'var(--success)' : 'var(--text-muted)' }}
+                  className={i === 5 ? 'date-weekday date-weekday--friday' : 'date-weekday'}
                 >
                   {d}
                 </div>
               ))}
             </div>
 
-            {/* Day grid */}
-            <div
-              className="grid p-2"
-              style={{ gridTemplateColumns: 'repeat(7, 1fr)', gap: '3px' }}
-            >
-              {/* Blank cells for offset */}
+            <div className="date-day-grid">
               {Array.from({ length: firstDay }).map((_, i) => (
-                <div key={`blank-${i}`} style={{ minHeight: '34px' }} />
+                <div key={`blank-${i}`} className="date-day-spacer" />
               ))}
 
-              {/* Day cells */}
               {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((day) => {
                 const iso = `${year}-${monthStr}-${String(day).padStart(2, '0')}`;
                 const data = dayLookup[iso];
                 const isToday = iso === todayIso;
                 const dayOfWeek = new Date(Date.UTC(year, month - 1, day)).getUTCDay();
                 const isFriday = dayOfWeek === 5;
-
-                // Cell background
-                let cellBg = 'transparent';
-                if (isToday) cellBg = 'var(--accent-gradient)';
-                else if (data?.hasEvent) cellBg = 'var(--success-soft)';
-                else if (data?.isRamadan) cellBg = 'var(--warning-soft)';
-
-                // Gregorian day color
-                let dayColor = 'var(--text-primary)';
-                if (isToday) dayColor = '#ffffff';
-                else if (isFriday) dayColor = 'var(--success)';
-
-                // Hijri sub-label color
-                const hijriColor = isToday
-                  ? 'rgba(255,255,255,0.75)'
-                  : data?.hasEvent
-                    ? 'var(--success)'
-                    : 'var(--text-muted)';
-
                 const href = `/date/${year}/${monthStr}/${String(day).padStart(2, '0')}`;
                 const hijriLabel = data ? String(data.hijriDay) : undefined;
+                const className = getGregorianDayLinkClass(data, isToday, isFriday);
 
-                // Event days: client component with Tooltip + colored border
                 if (data?.hasEvent && !isToday) {
                   return (
                     <EventDayLink
                       key={day}
                       href={href}
                       eventName={data.eventName}
-                      cellBg={cellBg}
-                      dayColor={dayColor}
-                      hijriColor={hijriColor}
                       hijriLabel={hijriLabel}
                       day={day}
+                      className={className}
                     />
                   );
                 }
 
-                // Non-event days: plain server-rendered Link
                 return (
                   <Link
                     key={day}
                     href={href}
-                    className="relative flex flex-col items-center justify-center rounded-md transition-colors group"
-                    style={{
-                      minHeight: '34px',
-                      background: cellBg,
-                      border: '1px solid transparent',
-                    }}
+                    className={className}
                     title={data ? `${data.hijriDay}/${data.hijriMonth}/${data.hijriYear} هـ` : ''}
                   >
-                    <span
-                      className="text-sm font-bold leading-none tabular-nums"
-                      style={{ color: dayColor }}
-                    >
+                    <span className="date-day-main">
                       {day}
                     </span>
                     {data && (
-                      <span
-                        className="text-2xs leading-none mt-0.5 tabular-nums"
-                        style={{ color: hijriColor, fontWeight: '400' }}
-                      >
+                      <span className="date-day-sub">
                         {data.hijriDay}
                       </span>
                     )}
@@ -229,7 +157,6 @@ export async function YearlyCalendar({ year, serverTodayIso }: Props) {
                 );
               })}
             </div>
-
           </div>
         );
       })}

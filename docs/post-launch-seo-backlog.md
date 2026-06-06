@@ -23,6 +23,33 @@ Based on the latest validation report in `reports/holiday-content-validation.jso
 
 The remaining work is concentrated in `tier2` and `tier3`.
 
+## Workstream 0: SERP-Guided Research Pipeline
+
+### Goal
+
+Create the offline research workflow described in [`docs/content-research-scraping-method.md`](./content-research-scraping-method.md), then execute it page by page using [`docs/content-research-rollout-checklist.md`](./content-research-rollout-checklist.md).
+
+### Priority
+
+`P0`
+
+### Required Behavior
+
+- discover top 3 Arabic and top 3 English competitors per target page
+- prefer SERP/search APIs over scraping search result pages
+- fetch pages through a tiered scraper: static fetch first, Scrapling fallback, browser fallback, managed API only for hard failures
+- extract headings, useful text, tables, dates, metadata, keyword signals, and gaps
+- record extraction confidence and require manual review for low-confidence pages
+- store research summaries in authored data files, not runtime code
+
+### Acceptance Criteria
+
+- one holiday page and one non-holiday page have complete 6-competitor research briefs
+- no full competitor article text is committed
+- official fact sources are separated from competitor observations
+- resulting page copy is original, Arabic-first, source-backed, and stronger than the competitor set
+- relevant validation scripts pass after the pilot
+
 ## Workstream 1: Tier2 Batch Cleanup
 
 ### Goal

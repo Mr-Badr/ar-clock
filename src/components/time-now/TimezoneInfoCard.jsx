@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Clock3, Globe2, Lock, Sun } from 'lucide-react';
 
 /**
  * TimezoneInfoCard — Rich SEO-focused timezone information section.
@@ -24,22 +25,36 @@ import {
  * new Date() is never called at the module level during prerender.
  *
  * ── Styling rules ──────────────────────────────────────────────────────────
- * ✅ shadcn Table + Card primitives — className forwarded to DOM elements
- * ✅ new.css §32 .table / .table--compact / .table-wrapper on <Table>
- * ✅ .td-col-center (time-difference.css §4) — center-aligns value column
- * ✅ .badge / .badge-* (new.css §18)
- * ✅ .td-static (time-difference.css §3) — suppresses hover lift on prose Card
- * ✅ Typography: .text-xs/sm/base .font-bold/semibold/medium .tabular-nums
+ * - shadcn Table + Card primitives — className forwarded to DOM elements
+ * - new.css §32 .table / .table--compact / .table-wrapper on <Table>
+ * - .td-col-center (time-difference.css §4) — center-aligns value column
+ * - .badge / .badge-* (new.css §18)
+ * - .td-static (time-difference.css §3) — suppresses hover lift on prose Card
+ * - Typography: .text-xs/sm/base .font-bold/semibold/medium .tabular-nums
  *    .text-primary/secondary/muted/accent-alt (new.css §08 + @theme inline)
- * ✅ .leading-loose on all Arabic prose (new.css §08 — ≥ 1.6 required)
- * ✅ Zero inline styles — zero hardcoded colours
- * ✅ No letter-spacing on Arabic text
+ * - .leading-loose on all Arabic prose (new.css §08 — ≥ 1.6 required)
+ * - Zero inline styles — zero hardcoded colours
+ * - No letter-spacing on Arabic text
  */
 
 
 /* ─── Helpers ──────────────────────────────────────────────────────────── */
+const EMPTY_TIMEZONE_META = {
+  offsetStr: '',
+  tzNameAr: 'غير متاح الآن',
+  tzNameEn: 'Unavailable',
+  hasDST: null,
+  dstDetailAr: null,
+  dateAr: 'غير متاح الآن',
+  dateEn: 'Unavailable',
+  hijriDate: 'غير متاح الآن',
+  timeStr: 'غير متاح الآن',
+  continentAr: 'غير محددة',
+  isAvailable: false,
+};
+
 function getTimezoneMeta(tz, nowDate) {
-  if (!tz || !nowDate) return {};
+  if (!tz || !nowDate || Number.isNaN(nowDate.getTime())) return EMPTY_TIMEZONE_META;
   try {
     const now = nowDate;
 
@@ -101,8 +116,11 @@ function getTimezoneMeta(tz, nowDate) {
       hasDST, dstDetailAr,
       dateAr, dateEn, hijriDate, timeStr,
       continentAr,
+      isAvailable: true,
     };
-  } catch { return {}; }
+  } catch {
+    return EMPTY_TIMEZONE_META;
+  }
 }
 
 
@@ -154,8 +172,15 @@ function InfoTable({ caption, rows }) {
  */
 function StatPill({ icon, value, label, dir = 'rtl' }) {
   return (
-    <div className="card-nested td-static flex flex-col items-center justify-center gap-1 p-3 text-center">
-      <span className="text-xl leading-none" aria-hidden="true">{icon}</span>
+    <div
+      className="td-static flex flex-col items-center justify-center gap-1 p-3 text-center"
+      style={{
+        border: '1px solid var(--border-subtle)',
+        borderRadius: 'var(--radius-md)',
+        background: 'var(--bg-surface-2)',
+      }}
+    >
+      <span className="text-accent-alt leading-none" aria-hidden="true">{icon}</span>
       <span className="font-bold tabular-nums text-accent-alt text-sm leading-tight" dir={dir}>
         {value}
       </span>
@@ -175,12 +200,19 @@ export default function TimezoneInfoCard({
 }) {
   const nowDate = nowIso ? new Date(nowIso) : null;
   const m = getTimezoneMeta(ianaTimezone, nowDate);
+  const placeAr = cityAr || countryAr || 'هذا المكان';
+  const countryLabel = countryAr || placeAr;
+  const timezoneLabel = ianaTimezone || 'غير متاح الآن';
+  const displayOffset = m.offsetStr || utcOffset || '—';
+  const dstStatus = m.hasDST === true ? 'يطبّق DST' : m.hasDST === false ? 'توقيت ثابت' : 'غير مؤكد';
+  const dstIcon = m.hasDST === true ? <Sun size={18} strokeWidth={1.75} /> : <Lock size={18} strokeWidth={1.75} />;
+  const dstBadgeClass = m.hasDST === true ? 'badge-warning' : 'badge-default';
 
   /* ── Table 1: zone identity + DST ───────────────────────────────────── */
   const zoneRows = [
     {
       label: 'الدولة',
-      value: <span className="font-semibold text-primary">{countryAr}</span>,
+      value: <span className="font-semibold text-primary">{countryLabel}</span>,
     },
     ...(cityAr ? [{
       label: 'العاصمة / المدينة',
@@ -190,7 +222,7 @@ export default function TimezoneInfoCard({
       label: 'المنطقة الزمنية (IANA)',
       value: (
         <span className="font-bold tabular-nums text-accent-alt" dir="ltr">
-          {ianaTimezone}
+          {timezoneLabel}
         </span>
       ),
     },
@@ -198,24 +230,24 @@ export default function TimezoneInfoCard({
       label: 'إزاحة GMT / UTC',
       value: (
         <span className="font-bold tabular-nums text-accent-alt" dir="ltr">
-          {m.offsetStr ?? utcOffset}
+          {displayOffset}
         </span>
       ),
     },
     {
       label: 'اسم التوقيت',
-      value: <span className="font-semibold text-primary">{m.tzNameAr}</span>,
-      sub:   m.tzNameEn,
+      value: <span className="font-semibold text-primary">{m.tzNameAr || 'غير متاح الآن'}</span>,
+      sub:   m.tzNameEn || undefined,
     },
     {
       label: 'القارة / المنطقة',
-      value: <span className="text-secondary">{m.continentAr}</span>,
+      value: <span className="text-secondary">{m.continentAr || 'غير محددة'}</span>,
     },
     {
       label: 'التوقيت الصيفي (DST)',
       value: (
-        <span className={`badge ${m.hasDST ? 'badge-warning' : 'badge-default'}`}>
-          {m.hasDST ? 'نعم' : 'لا — ثابت'}
+        <span className={`badge ${dstBadgeClass}`}>
+          {m.hasDST === true ? 'نعم' : m.hasDST === false ? 'لا، ثابت' : 'غير مؤكد'}
         </span>
       ),
       sub: m.dstDetailAr ?? undefined,
@@ -244,17 +276,18 @@ export default function TimezoneInfoCard({
   ];
 
   /* ── Derived values for stat pills ──────────────────────────────────── */
-  const displayOffset = m.offsetStr ?? utcOffset ?? '—';
-  const dstStatus     = m.hasDST ? 'يطبّق DST' : 'توقيت ثابت';
-  const dstIcon       = m.hasDST ? '☀️' : '🔒';
-
   return (
     <div className="max-w-4xl mx-auto space-y-5">
 
       {/* ── Section heading ──────────────────────────────────────────── */}
-      <h2 className="text-xl font-extrabold text-primary">
-        🌐 معلومات المنطقة الزمنية
-      </h2>
+      <div className="space-y-2">
+        <h2 className="text-xl font-extrabold text-primary">
+          كيف تقرأ المنطقة الزمنية في {placeAr}؟
+        </h2>
+        <p className="text-sm text-secondary leading-loose">
+          الإزاحة عن UTC تخبرك بالفارق الأساسي، لكن القرار العملي يحتاج أيضاً إلى التاريخ المحلي وحالة التوقيت الصيفي. لذلك نعرض الثلاثة معاً قبل أي شرح طويل.
+        </p>
+      </div>
 
       {/* ── Table 1 — Zone identity + DST ────────────────────────────── */}
       <InfoTable
@@ -283,7 +316,7 @@ export default function TimezoneInfoCard({
        *      first — matches featured-snippet extraction patterns
        *
        * shadcn Card anatomy used:
-       *   <Card>        — outer shell: bg-card = var(--bg-surface-2), rounded-xl
+       *   <Card>        — outer shell: bg-card = var(--bg-surface-2), rounded-[var(--radius-lg)]
        *   <CardHeader>  — top section with title
        *   <CardTitle>   — renders an <h3>
        *   <CardContent> — body padding wrapper
@@ -304,7 +337,7 @@ export default function TimezoneInfoCard({
              * .text-primary
              */}
             <span className="text-base font-bold text-primary">
-              توقيت {countryAr} — {displayOffset} من غرينيتش
+              توقيت {placeAr}: {displayOffset} من غرينيتش
             </span>
           </CardTitle>
 
@@ -314,7 +347,7 @@ export default function TimezoneInfoCard({
            * Short-tail keyword: "المنطقة الزمنية" + IANA string.
            */}
           <p className="text-xs text-muted tabular-nums mt-1 mx-auto" dir="ltr">
-            {ianaTimezone} · {m.tzNameEn}
+            {timezoneLabel} · {m.tzNameEn || 'Unavailable'}
           </p>
         </CardHeader>
 
@@ -332,7 +365,7 @@ export default function TimezoneInfoCard({
            */}
           <div className="grid grid-cols-3 gap-2">
             <StatPill
-              icon="🕐"
+              icon={<Clock3 size={18} strokeWidth={1.75} />}
               value={displayOffset}
               label="إزاحة UTC"
               dir="ltr"
@@ -343,8 +376,8 @@ export default function TimezoneInfoCard({
               label="التوقيت الصيفي"
             />
             <StatPill
-              icon="🌍"
-              value={m.continentAr ?? '—'}
+              icon={<Globe2 size={18} strokeWidth={1.75} />}
+              value={m.continentAr || '—'}
               label="القارة"
             />
           </div>
@@ -375,13 +408,13 @@ export default function TimezoneInfoCard({
             <p className="text-sm text-muted leading-loose mx-auto pb-4">
               يبلغ{' '}
               <strong className="text-secondary font-semibold">
-                توقيت {countryAr}
+                توقيت {placeAr}
               </strong>{' '}
               {displayOffset} من{' '}
               <strong className="text-secondary font-semibold">
                 التوقيت العالمي المنسق (UTC/GMT)
               </strong>.{' '}
-              {m.hasDST
+              {m.hasDST === true
                 ? <>
                     يتغير هذا الفارق خلال العام بسبب{' '}
                     <strong className="text-secondary font-semibold">
@@ -389,12 +422,15 @@ export default function TimezoneInfoCard({
                     </strong>:{' '}
                     <span className="tabular-nums" dir="ltr">{m.dstDetailAr}</span>.
                   </>
-                : <>
+                : m.hasDST === false ? <>
                     التوقيت ثابت على مدار السنة{' '}
-                    ولا تطبّق {countryAr}{' '}
+                    ولا تطبّق {placeAr}{' '}
                     <strong className="text-secondary font-semibold">
                       التوقيت الصيفي
                     </strong>.
+                  </>
+                : <>
+                    لم نتمكن من تأكيد حالة التوقيت الصيفي حالياً، لذلك لا تعتمد على هذه المعلومة وحدها عند تثبيت موعد مستقبلي.
                   </>
               }
             </p>
@@ -405,11 +441,11 @@ export default function TimezoneInfoCard({
               <strong className="text-secondary font-semibold">IANA / Olson</strong>{' '}
               هو{' '}
               <strong className="text-secondary font-semibold tabular-nums" dir="ltr">
-                {ianaTimezone}
+                {timezoneLabel}
               </strong>،{' '}
               ويُعرف رسمياً بـ{' '}
               <strong className="text-secondary font-semibold" dir="ltr">
-                {m.tzNameEn}
+                {m.tzNameEn || 'Unavailable'}
               </strong>.{' '}
               استخدم هذا المعرّف عند ضبط{' '}
               <strong className="text-secondary font-semibold">
@@ -420,18 +456,24 @@ export default function TimezoneInfoCard({
 
             {/* Para 3 — Continent + quick-answer long-tail */}
             <p className="text-sm text-muted leading-loose mx-auto">
-              تقع {countryAr} ضمن منطقة{' '}
-              <strong className="text-secondary font-semibold">{m.continentAr}</strong>.{' '}
+              تقع {placeAr} ضمن منطقة{' '}
+              <strong className="text-secondary font-semibold">{m.continentAr || 'غير محددة'}</strong>.{' '}
               لمعرفة{' '}
               <strong className="text-secondary font-semibold">
-                الساعة الآن في {countryAr}
+                الساعة الان في {placeAr}
               </strong>{' '}
               أو حساب{' '}
               <strong className="text-secondary font-semibold">
-                الفرق الزمني بين {countryAr} وأي دولة أخرى
+                الفرق الزمني بين {placeAr} وأي دولة أخرى
               </strong>،{' '}
               استخدم أداة المقارنة التفاعلية أعلاه.
             </p>
+
+            {!m.isAvailable && (
+              <p className="text-sm text-muted leading-loose mx-auto">
+                لم تكتمل بيانات المنطقة الزمنية من المتصفح في هذه اللحظة. يمكنك الاعتماد على الساعة الحية أعلى الصفحة كبداية، ثم استخدام حاسبة فرق التوقيت عند التخطيط لموعد مستقبلي.
+              </p>
+            )}
 
           </div>
         </CardContent>

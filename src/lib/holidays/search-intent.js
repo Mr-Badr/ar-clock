@@ -8,7 +8,7 @@ function normalizeValue(value) {
 export function getHolidayDisplayTitle({ event, seo, tokenContext }) {
   return localizeEventLabel(
     normalizeValue(
-      replaceTokens(seo?.seoMeta?.h1 || seo?.seoTitle || event?.name || '', tokenContext),
+      replaceTokens(event?.name || seo?.seoMeta?.h1 || seo?.seoTitle || '', tokenContext),
     ),
     event,
   );

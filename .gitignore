@@ -47,3 +47,8 @@ backups/
 # system noise
 =
 .DS_Store
+
+.agents
+/.vscode/
+/.codex/
+AGENTS.md

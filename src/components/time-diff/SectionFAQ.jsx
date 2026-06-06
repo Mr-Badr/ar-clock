@@ -20,11 +20,24 @@ import { FAQ_ITEMS }                     from './data/faqItems'
 
 const H2_ID = 'h2-td-faq'
 
+function isValidFaqItem(item) {
+  return Boolean(
+    item
+      && typeof item === 'object'
+      && typeof item.q === 'string'
+      && item.q.trim().length > 0
+      && typeof item.a === 'string'
+      && item.a.trim().length > 0,
+  )
+}
+
+const SAFE_FAQ_ITEMS = Array.isArray(FAQ_ITEMS) ? FAQ_ITEMS.filter(isValidFaqItem) : []
+
 function FAQSchema() {
   const schema = {
     '@context':   'https://schema.org',
     '@type':      'FAQPage',
-    mainEntity: FAQ_ITEMS.map((item) => ({
+    mainEntity: SAFE_FAQ_ITEMS.map((item) => ({
       '@type': 'Question',
       name:    item.q,
       acceptedAnswer: { '@type': 'Answer', text: item.a },
@@ -43,79 +56,64 @@ export default function SectionFAQ() {
     <SectionWrapper id="section-td-faq" headingId={H2_ID}>
       <FAQSchema />
 
-      {/* Header */}
-      <header className="max-w-2xl mx-auto text-center mb-10 space-y-3">
-        <div className="flex justify-center">
-          <SectionBadge><CheckCircle2 size={11} />الأسئلة الشائعة</SectionBadge>
-        </div>
+      <header className="section-head section-head--center">
+        <SectionBadge><CheckCircle2 size={11} />قبل ضبط الموعد</SectionBadge>
         <h2
           id={H2_ID}
-          className="text-2xl sm:text-3xl font-extrabold"
-          style={{ color: 'var(--text-primary)' }}
+          className="section-title"
         >
-          إجابات عن أكثر الأسئلة شيوعاً
-          <span
-            className="block text-xl sm:text-2xl mt-1"
-            style={{
-              background:           'var(--accent-gradient)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor:  'transparent',
-              backgroundClip:       'text',
-            }}
-          >
-            حول فرق التوقيت والمناطق الزمنية
-          </span>
+          أسئلة تمنع أخطاء
+          <span className="text-accent"> فرق التوقيت والمناطق الزمنية</span>
         </h2>
-        <p className="text-sm sm:text-base mx-auto" style={{ color: 'var(--text-secondary)' }}>
-          إجابات مفصّلة حول UTC وGMT والتوقيت الصيفي وكيفية حساب فرق التوقيت بدقة
+        <p className="section-copy">
+          افهم الفرق بين UTC وGMT والتوقيت الصيفي قبل تثبيت اجتماع أو رحلة أو موعد
+          مع شخص في دولة أخرى.
         </p>
       </header>
 
-      {/* FAQ Accordion */}
       <div
-        className="max-w-3xl mx-auto space-y-2"
+        className="faq-list"
       >
-        {FAQ_ITEMS.map((item, idx) => (
+        {SAFE_FAQ_ITEMS.length > 0 ? SAFE_FAQ_ITEMS.map((item, idx) => (
           <details
             key={idx}
-            className="group rounded-2xl overflow-hidden"
-            style={{
-              background: 'var(--bg-surface-1)',
-              border:     '1px solid var(--border-subtle)',
-            }}
+            className="faq-item"
             aria-label={item.q}
           >
             <summary
-              className="flex cursor-pointer list-none select-none items-center justify-between gap-4 px-5 py-4
-                         [&::-webkit-details-marker]:hidden hover:bg-[color:var(--accent-soft)] transition-colors"
+              className="faq-item__summary"
             >
               <span
-                className="text-sm sm:text-base font-semibold leading-snug"
-                style={{ color: 'var(--text-primary)' }}
+                className="faq-item__question"
               >
                 {item.q}
               </span>
-              {/* RTL-safe: ChevronDown + rotate-180 on open */}
               <ChevronDown
                 size={18}
-                className="shrink-0 transition-transform duration-200 group-open:rotate-180"
-                style={{ color: 'var(--text-muted)' }}
+                className="faq-item__chevron"
                 aria-hidden="true"
               />
             </summary>
 
             <div
-              className="px-5 pb-5 pt-2"
+              className="faq-item__body"
             >
               <p
-                className="text-sm sm:text-base leading-relaxed"
-                style={{ color: 'var(--text-secondary)' }}
+                className="feature-tile__copy"
               >
                 {item.a}
               </p>
             </div>
           </details>
-        ))}
+        )) : (
+          <div className="faq-item" role="status">
+            <div className="faq-item__body">
+              <p className="feature-tile__copy">
+                لم تتوفر الأسئلة التفصيلية الآن. ابدأ بالحاسبة في أعلى الصفحة، ثم راجع قسم التوقيت الصيفي لأن معظم أخطاء فرق التوقيت تحدث عند تغيّر الساعة موسمياً.
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
     </SectionWrapper>

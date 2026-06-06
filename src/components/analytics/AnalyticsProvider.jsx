@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { useMarketingPermission } from "@/lib/client/marketing";
@@ -10,6 +10,7 @@ function RouteChangeTracker({ activeMode, measurementId }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const searchQuery = searchParams?.toString() || "";
+  const hasTrackedInitialView = useRef(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -22,6 +23,10 @@ function RouteChangeTracker({ activeMode, measurementId }) {
     };
 
     if (activeMode === "gtm") {
+      if (!hasTrackedInitialView.current) {
+        hasTrackedInitialView.current = true;
+        return;
+      }
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: "pageview",
@@ -31,6 +36,10 @@ function RouteChangeTracker({ activeMode, measurementId }) {
     }
 
     if (activeMode === "ga4" && typeof window.gtag === "function") {
+      if (!hasTrackedInitialView.current) {
+        hasTrackedInitialView.current = true;
+        return;
+      }
       window.gtag("event", "page_view", {
         send_to: measurementId,
         ...pagePayload,
@@ -97,10 +106,7 @@ export default function AnalyticsProvider() {
           function gtag(){dataLayer.push(arguments);}
           window.gtag = gtag;
           gtag('js', new Date());
-          gtag('config', '${gaMeasurementId}', {
-            send_page_view: false,
-            anonymize_ip: true
-          });
+          gtag('config', '${gaMeasurementId}');
         `}
       </Script>
       <Suspense fallback={null}>

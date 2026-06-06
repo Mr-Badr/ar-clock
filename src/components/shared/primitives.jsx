@@ -4,26 +4,28 @@
 export function SectionWrapper({
   id,
   children,
-  className = '',
-  glow,
+  className,
   headingId,
-  subtle = false,
-  contentWidth = 'container',
-  containerClassName = '',
+  subtle,
+  contentWidth,
+  containerClassName,
 }) {
+  const resolvedClassName = className ?? '';
+  const resolvedContentWidth = contentWidth ?? 'container';
+  const resolvedContainerClassName = containerClassName ?? '';
+  const isSubtle = subtle === true;
   const containerClasses =
-    contentWidth === 'content-col'
-      ? `content-col ${containerClassName}`.trim()
-      : `container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl ${containerClassName}`.trim();
+    resolvedContentWidth === 'content-col'
+      ? `content-col ${resolvedContainerClassName}`.trim()
+      : `container ${resolvedContainerClassName}`.trim();
 
   return (
     <section
       id={id}
       aria-labelledby={headingId}
-      className={`relative w-full overflow-hidden py-16 sm:py-20 lg:py-24 ${className}`}
-      style={subtle ? { background: 'var(--bg-subtle)' } : undefined}
+      className={`editorial-section section ${resolvedClassName}`.trim()}
+      data-tone={isSubtle ? 'subtle' : 'plain'}
     >
-      {glow}
       <div className={containerClasses}>
         {children}
       </div>
@@ -35,11 +37,7 @@ export function SectionWrapper({
 export function SectionDivider() {
   return (
     <div
-      className="w-full h-px"
-      style={{
-        background:
-          'linear-gradient(90deg, transparent 0%, var(--border-subtle) 20%, var(--border-default) 50%, var(--border-subtle) 80%, transparent 100%)',
-      }}
+      className="section-divider"
       role="separator"
       aria-hidden="true"
     />
@@ -50,12 +48,7 @@ export function SectionDivider() {
 export function SectionBadge({ children }) {
   return (
     <span
-      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
-      style={{
-        background: 'var(--accent-soft)',
-        color:      'var(--accent-alt)',
-        border:     '1px solid var(--border-accent)',
-      }}
+      className="section-kicker"
     >
       {children}
     </span>
@@ -65,18 +58,14 @@ export function SectionBadge({ children }) {
 // ─── FeatureItem ──────────────────────────────────────────────────────────────
 export function FeatureItem({ icon: Icon, children }) {
   return (
-    <li className="flex items-start gap-3">
+    <li className="feature-row">
       <span
-        className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
-        style={{ background: 'var(--accent-soft)' }}
+        className="feature-row__icon"
         aria-hidden="true"
       >
-        <Icon size={13} style={{ color: 'var(--accent-alt)' }} />
+        <Icon size={16} />
       </span>
-      <span
-        className="text-sm sm:text-base leading-relaxed"
-        style={{ color: 'var(--text-secondary)' }}
-      >
+      <span className="feature-row__text">
         {children}
       </span>
     </li>

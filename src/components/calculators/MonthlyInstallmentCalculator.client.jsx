@@ -100,8 +100,8 @@ export default function MonthlyInstallmentCalculator() {
 
   const principalVsInterest = useMemo(
     () => [
-      { name: 'الأصل', value: result.principal || 0, color: '#059669' },
-      { name: 'الفوائد', value: result.totalInterest || 0, color: '#3B82F6' },
+      { name: 'الأصل', value: result.principal || 0, color: 'var(--text-3)' },
+      { name: 'الفوائد', value: result.totalInterest || 0, color: 'var(--blue)' },
     ],
     [result.principal, result.totalInterest],
   );
@@ -151,6 +151,28 @@ export default function MonthlyInstallmentCalculator() {
   const shareText = result.isValid
     ? `القرض الصافي: ${formatMoney(result.principal)}\nالقسط الشهري: ${formatMoney(result.monthlyOutflow)}\nإجمالي الفوائد: ${formatMoney(result.totalInterest)}`
     : '';
+  const loanReviewCards = [
+    {
+      label: 'الأصل بعد الدفعة',
+      value: formatMoney(result.principal || 0),
+      note: 'هذا هو المبلغ الذي تُحسب عليه الفائدة، وليس سعر الأصل قبل الدفعة.',
+    },
+    {
+      label: 'الفوائد',
+      value: formatMoney(result.totalInterest || 0),
+      note: 'إذا ارتفع الرقم كثيراً، جرّب مدة أقصر أو دفعة مقدمة أكبر قبل مقارنة العروض.',
+    },
+    {
+      label: 'الرسوم',
+      value: formatMoney(result.totalFees || 0),
+      note: 'ضعها في المقارنة حتى لا يبدو عرض أقل قسطاً وهو أغلى فعلياً.',
+    },
+    {
+      label: 'إجمالي السداد',
+      value: formatMoney(result.totalPaid || 0),
+      note: 'هذا هو الرقم الأهم بعد القسط الشهري لأنه يوضح تكلفة القرار كاملة.',
+    },
+  ];
 
   function applyPreset(key) {
     const preset = LOAN_PRESETS[key];
@@ -175,7 +197,7 @@ export default function MonthlyInstallmentCalculator() {
             <div className="calc-field">
               <div className="calc-field-row">
                 <Label className="calc-label">نوع القرض</Label>
-                <span className="calc-hint">اختر preset سريعاً ثم عدل كما تشاء</span>
+                <span className="calc-hint">اختر نموذجاً سريعاً ثم عدّل الأرقام بما يناسب عرضك</span>
               </div>
               <div className="calc-kbd-row">
                 {Object.entries(LOAN_PRESETS).map(([key, preset]) => (
@@ -237,14 +259,14 @@ export default function MonthlyInstallmentCalculator() {
             <div className="calc-field">
               <Label className="calc-label">نوع الفائدة</Label>
               <RadioGroup value={interestType} onValueChange={setInterestType} className="calc-radio-grid">
-                <label className="card-nested calc-radio-card">
+                <label className="calc-radio-card">
                   <RadioGroupItem value="fixed" />
                   <span className="calc-radio-copy">
                     <strong>ثابتة</strong>
                     <span>تقريب مبسط للفائدة المسطحة على كامل الأصل.</span>
                   </span>
                 </label>
-                <label className="card-nested calc-radio-card">
+                <label className="calc-radio-card">
                   <RadioGroupItem value="reducing" />
                   <span className="calc-radio-copy">
                     <strong>متناقصة</strong>
@@ -315,7 +337,7 @@ export default function MonthlyInstallmentCalculator() {
               {result.isValid ? (
                 <>
                   <div className="calc-metric-grid">
-                    <div className="card-nested calc-metric-card">
+                    <div className="calc-metric-card">
                       <div className="calc-metric-card__label">القسط الشهري</div>
                       <div className="calc-metric-card__value">
                         {formatMoney(result.monthlyOutflow)}
@@ -324,7 +346,7 @@ export default function MonthlyInstallmentCalculator() {
                         المدة {formatNumber(result.months)} شهر
                       </div>
                     </div>
-                    <div className="card-nested calc-metric-card">
+                    <div className="calc-metric-card">
                       <div className="calc-metric-card__label">إجمالي الفوائد</div>
                       <div className="calc-metric-card__value">
                         {formatMoney(result.totalInterest)}
@@ -407,18 +429,18 @@ export default function MonthlyInstallmentCalculator() {
                   <AreaChart data={lineData}>
                     <defs>
                       <linearGradient id="loanBalanceFill" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.45} />
-                        <stop offset="95%" stopColor="#3B82F6" stopOpacity={0.05} />
+                        <stop offset="5%" stopColor="var(--blue)" stopOpacity={0.35} />
+                        <stop offset="95%" stopColor="var(--blue)" stopOpacity={0.05} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border-default)" />
                     <XAxis dataKey="month" />
                     <YAxis />
                     <RechartsTooltip formatter={(value) => formatMoney(value)} />
                     <Area
                       type="monotone"
                       dataKey="balance"
-                      stroke="#3B82F6"
+                      stroke="var(--blue)"
                       fill="url(#loanBalanceFill)"
                       strokeWidth={2}
                     />
@@ -440,7 +462,7 @@ export default function MonthlyInstallmentCalculator() {
                 </Button>
               </div>
               <div className="calc-table-wrap">
-                <Table className="economy-table">
+                <Table>
                   <TableHeader>
                     <TableRow>
                       <TableHead>القسط</TableHead>
@@ -498,12 +520,12 @@ export default function MonthlyInstallmentCalculator() {
               </CardHeader>
               <CardContent className="calc-form-grid">
                 <div className="calc-metric-grid">
-                  <div className="card-nested calc-metric-card">
+                  <div className="calc-metric-card">
                     <div className="calc-metric-card__label">عدد الأشهر بعد السداد الإضافي</div>
                     <div className="calc-metric-card__value">{formatNumber(earlyPlan.payoffMonths)}</div>
                     <div className="calc-metric-card__note">بدلاً من {formatNumber(result.months)} شهراً</div>
                   </div>
-                  <div className="card-nested calc-metric-card">
+                  <div className="calc-metric-card">
                     <div className="calc-metric-card__label">التوفير في الفوائد</div>
                     <div className="calc-metric-card__value">{formatMoney(earlyPlan.interestSaved)}</div>
                     <div className="calc-metric-card__note">التوفير الإجمالي {formatMoney(earlyPlan.totalSaved)}</div>
@@ -552,7 +574,7 @@ export default function MonthlyInstallmentCalculator() {
                 <CardTitle className="calc-card-title">نسبة الدين إلى الدخل</CardTitle>
               </CardHeader>
               <CardContent className="calc-form-grid">
-                <div className="card-nested calc-metric-card">
+                <div className="calc-metric-card">
                   <div className="calc-metric-card__label">النسبة الحالية</div>
                   <div className="calc-metric-card__value">{formatPercent(debtRatio.ratio || 0)}</div>
                   <div className="calc-metric-card__note">
@@ -574,7 +596,7 @@ export default function MonthlyInstallmentCalculator() {
               <CardTitle className="calc-card-title">3 عروض للمقارنة السريعة</CardTitle>
             </CardHeader>
             <CardContent className="calc-table-wrap">
-              <Table className="economy-table">
+              <Table>
                 <TableHeader>
                   <TableRow>
                     <TableHead>العرض</TableHead>
@@ -601,33 +623,20 @@ export default function MonthlyInstallmentCalculator() {
         </TabsContent>
       </Tabs>
 
-      <Card className="calc-surface-card">
-        <CardHeader>
-          <CardTitle className="calc-card-title">لمحة سريعة</CardTitle>
-        </CardHeader>
-        <CardContent className="calc-grid-4">
-          <div className="card-nested calc-metric-card">
-            <div className="calc-metric-card__label">الأصل</div>
-            <div className="calc-metric-card__value">{formatMoney(result.principal || 0)}</div>
-            <div className="calc-metric-card__note">بعد خصم الدفعة المقدمة</div>
+      <section className="calc-review-strip" aria-label="مراجعة سريعة قبل اعتماد القرض">
+        <div className="calc-review-strip__head">
+          <span>راجع قبل المقارنة</span>
+          <strong>لا تختَر العرض من القسط وحده</strong>
+          <p>ثبّت هذه الأربعة أولاً، ثم قارن بين البنوك أو جهات التمويل على أساس واحد.</p>
+        </div>
+        {loanReviewCards.map((item) => (
+          <div key={item.label} className="calc-metric-card">
+            <div className="calc-metric-card__label">{item.label}</div>
+            <div className="calc-metric-card__value">{item.value}</div>
+            <div className="calc-metric-card__note">{item.note}</div>
           </div>
-          <div className="card-nested calc-metric-card">
-            <div className="calc-metric-card__label">الفوائد</div>
-            <div className="calc-metric-card__value">{formatMoney(result.totalInterest || 0)}</div>
-            <div className="calc-metric-card__note">تتغير بوضوح مع المدة والنوع</div>
-          </div>
-          <div className="card-nested calc-metric-card">
-            <div className="calc-metric-card__label">الرسوم</div>
-            <div className="calc-metric-card__value">{formatMoney(result.totalFees || 0)}</div>
-            <div className="calc-metric-card__note">لا تنس إضافتها عند المقارنة</div>
-          </div>
-          <div className="card-nested calc-metric-card">
-            <div className="calc-metric-card__label">إجمالي السداد</div>
-            <div className="calc-metric-card__value">{formatMoney(result.totalPaid || 0)}</div>
-            <div className="calc-metric-card__note">التكلفة النهائية للقرض</div>
-          </div>
-        </CardContent>
-      </Card>
+        ))}
+      </section>
     </div>
   );
 }

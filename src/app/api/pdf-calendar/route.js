@@ -1,13 +1,8 @@
-/**
- * app/api/pdf-calendar/route.js
- */
-
-import { NextResponse } from 'next/server';
 import { z } from 'zod';
 
 import { getSiteUrl } from '@/lib/site-config';
 import { logger, serializeError } from '@/lib/logger';
-import { parseJsonBody, withApiHandler } from '@/lib/api/route-utils';
+import { json, parseJsonBody, withApiHandler } from '@/lib/api/route-utils';
 
 const scheduleRowSchema = z.object({
   dayName: z.string().trim().min(1).max(40),
@@ -88,6 +83,31 @@ const PRAYER_AR   = {
   asr:  'العصر', maghrib: 'المغرب', isha:  'العشاء',
 };
 
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function sanitizeScheduleForHtml(schedule) {
+  return schedule.map((row) => ({
+    ...row,
+    dayName: escapeHtml(row.dayName),
+    hijriDay: escapeHtml(row.hijriDay),
+    dayNumber: escapeHtml(row.dayNumber),
+    fajr: escapeHtml(row.fajr),
+    sunrise: escapeHtml(row.sunrise),
+    dhuhr: escapeHtml(row.dhuhr),
+    asr: escapeHtml(row.asr),
+    maghrib: escapeHtml(row.maghrib),
+    isha: escapeHtml(row.isha),
+    hijriMonthName: escapeHtml(row.hijriMonthName),
+  }));
+}
+
 // ─── Puppeteer launch ─────────────────────────────────────────────────────────
 async function launchBrowser() {
   const preferServerlessChromium =
@@ -128,9 +148,13 @@ async function launchBrowser() {
 function generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, theme }) {
   const B      = theme === 'dark' ? BD : BL;
   const isDark = theme === 'dark';
+  const safeSchedule = sanitizeScheduleForHtml(schedule);
+  const safeCityName = escapeHtml(cityNameAr);
+  const safeGregorianLabel = escapeHtml(gregorianLabel);
+  const safeHijriLabel = escapeHtml(hijriLabel);
 
   // ── Row builder ─────────────────────────────────────────────────────────────
-  const rows = schedule.map((row) => {
+  const rows = safeSchedule.map((row) => {
     const isFri   = row.isFriday;
     const bg      = isFri ? B.rowFriday : B.rowAll;
     const col     = isFri ? B.fridayText : B.text;
@@ -170,7 +194,7 @@ function generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, theme 
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>تقويم مواقيت الصلاة — ${cityNameAr} — ${gregorianLabel}</title>
+  <title>تقويم مواقيت الصلاة: ${safeCityName}، ${safeGregorianLabel}</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -318,14 +342,14 @@ function generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, theme 
     <div class="pdf-header-left">
       <h1 class="pdf-title">
         تقويم مواقيت الصلاة
-        <span class="pdf-title-accent"> — ${cityNameAr}</span>
+        <span class="pdf-title-accent">: ${safeCityName}</span>
       </h1>
       <p class="pdf-subtitle">
         جدول أوقات الصلاة الشهري · الفجر · الشروق · الظهر · العصر · المغرب · العشاء
       </p>
       <div class="pdf-badges">
-        <span class="badge badge-primary">📅 ${gregorianLabel}</span>
-        ${hijriLabel ? `<span class="badge badge-neutral">🌙 ${hijriLabel}</span>` : ''}
+        <span class="badge badge-primary">ميلادي: ${safeGregorianLabel}</span>
+        ${safeHijriLabel ? `<span class="badge badge-neutral">هجري: ${safeHijriLabel}</span>` : ''}
       </div>
     </div>
 
@@ -352,7 +376,7 @@ function generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, theme 
   <!-- ═══ TABLE ═════════════════════════════════════════════════════════ -->
   <div class="pdf-table-wrap">
     <table class="pdf-table"
-      aria-label="جدول مواقيت الصلاة الشهري — ${cityNameAr} — ${gregorianLabel}">
+      aria-label="جدول مواقيت الصلاة الشهري: ${safeCityName}، ${safeGregorianLabel}">
 
       <colgroup>
         <col class="col-day" />
@@ -380,7 +404,7 @@ function generateHtml({ schedule, cityNameAr, gregorianLabel, hijriLabel, theme 
   <!-- ═══ FOOTER ════════════════════════════════════════════════════════ -->
   <footer class="pdf-footer">
     <span class="pdf-footer-text">
-      جدول مواقيت الصلاة الشهري لـ ${cityNameAr} — حسابات فلكية دقيقة وفق المعايير المعتمدة دولياً ومحلياً
+      جدول مواقيت الصلاة الشهري لـ ${safeCityName}: حسابات فلكية دقيقة وفق المعايير المعتمدة دولياً ومحلياً
     </span>
     <span class="pdf-footer-url">${SITE_URL}</span>
   </footer>
@@ -397,8 +421,12 @@ export const POST = withApiHandler(
     const pdfCalendarEnabled = process.env.ENABLE_PDF_CALENDAR === 'true';
 
     if (!pdfCalendarEnabled) {
-      return NextResponse.json(
-        { error: 'PDF calendar generation is temporarily disabled during the bridge stabilization period.' },
+      return json(
+        {
+          ok: false,
+          error: 'تحميل تقويم الصلاة PDF متوقف مؤقتًا. يمكنك استخدام الجدول على الشاشة الآن والمحاولة لاحقًا.',
+          requestId,
+        },
         { status: 503 },
       );
     }
@@ -456,8 +484,12 @@ export const POST = withApiHandler(
         error: serializeError(err),
       });
 
-      return NextResponse.json(
-        { error: 'فشل إنشاء ملف تقويم الصلاة. يرجى المحاولة مرة أخرى.' },
+      return json(
+        {
+          ok: false,
+          error: 'تعذر إنشاء ملف PDF لتقويم الصلاة الآن. تأكد من ظهور الجدول كاملًا ثم حاول مرة أخرى.',
+          requestId,
+        },
         { status: 500 },
       );
     }

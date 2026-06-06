@@ -1,7 +1,10 @@
 'use client';
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import Link from 'next/link';
+import { Globe2, MapPinned } from 'lucide-react';
 import { getFlagEmoji, getSafeTimezone, isValidTimeZone } from '@/lib/country-utils';
+
+import styles from './TimeNowClient.module.css';
 
 /* ─── SHARED TICK ───────────────────────────────────────────────────
  * One single 1-second interval for the entire page.
@@ -68,81 +71,42 @@ function CountryCard({ country_slug, country_code, name_ar, timezone }) {
       ref={ref}
       href={`/time-now/${country_slug}`}
       prefetch={false}
-      style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        gap: '0.5rem', padding: '0.7rem 1rem',
-        borderRadius: '0.875rem',
-        border: '1px solid var(--border-default)',
-        background: 'var(--bg-surface-2)',
-        textDecoration: 'none', color: 'inherit',
-        transition: 'background 0.15s, border-color 0.15s, transform 0.15s',
-        contain: 'layout style', /* CSS containment for render perf */
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.background = 'var(--bg-surface-3)';
-        e.currentTarget.style.borderColor = 'var(--border-accent)';
-        e.currentTarget.style.transform = 'translateY(-1px)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.background = 'var(--bg-surface-2)';
-        e.currentTarget.style.borderColor = 'var(--border-default)';
-        e.currentTarget.style.transform = 'none';
-      }}
+      className={styles.card}
+      aria-label={`الوقت الان في ${name_ar}`}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', minWidth: 0 }}>
-        <span aria-hidden style={{ fontSize: '1.25rem', flexShrink: 0, lineHeight: 1 }}>{displayFlag}</span>
-        <span style={{
-          fontSize: '0.875rem', fontWeight: '600', color: 'var(--text-primary)',
-          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-        }}>{name_ar}</span>
+      <div className={styles.cardLeading}>
+        <span aria-hidden className={styles.flag}>{displayFlag}</span>
+        <span className={styles.name}>{name_ar}</span>
       </div>
 
-      <div style={{ flexShrink: 0, paddingRight: '0.2rem' }}>
+      <div>
         {visible && time ? (
-          <span suppressHydrationWarning style={{
-            fontSize: '0.9rem', fontWeight: '700', color: 'var(--accent-alt)',
-            fontVariantNumeric: 'tabular-nums', direction: 'ltr', whiteSpace: 'nowrap',
-          }}>
+          <span suppressHydrationWarning className={styles.time}>
             {time}
           </span>
         ) : (
-          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>--:--</span>
+          <span className={styles.timeFallback}>--:--</span>
         )}
       </div>
     </Link>
   );
 }
 
-function SectionHeading({ children }) {
-  return (
-    <h2 style={{
-      fontSize: '0.72rem', fontWeight: '800', letterSpacing: '0.12em',
-      textTransform: 'uppercase', color: 'var(--text-muted)',
-      margin: '0 0 0.75rem',
-    }}>
-      {children}
-    </h2>
-  );
-}
-
-const GRID_STYLE = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))',
-  gap: '0.45rem',
-};
-
 const PAGE_SIZE = 24;
+const EMPTY_COUNTRIES = [];
 
 export default function TimeNowClient({ arabCountries, worldCountries }) {
   const [worldPage, setWorldPage] = useState(1);
+  const safeArabCountries = Array.isArray(arabCountries) ? arabCountries : EMPTY_COUNTRIES;
+  const safeWorldCountries = Array.isArray(worldCountries) ? worldCountries : EMPTY_COUNTRIES;
 
   const validArab = useMemo(
-    () => arabCountries.filter(c => isValidTimeZone(c.timezone)),
-    [arabCountries]
+    () => safeArabCountries.filter(c => isValidTimeZone(c.timezone)),
+    [safeArabCountries]
   );
   const validWorld = useMemo(
-    () => worldCountries.filter(c => isValidTimeZone(c.timezone)),
-    [worldCountries]
+    () => safeWorldCountries.filter(c => isValidTimeZone(c.timezone)),
+    [safeWorldCountries]
   );
   const visibleWorld = useMemo(
     () => validWorld.slice(0, worldPage * PAGE_SIZE),
@@ -152,51 +116,83 @@ export default function TimeNowClient({ arabCountries, worldCountries }) {
 
   const loadMore = useCallback(() => setWorldPage(p => p + 1), []);
 
+  if (validArab.length === 0 && validWorld.length === 0) {
+    return (
+      <div className={styles.emptyState}>
+        <h3 className={styles.emptyTitle}>لا تتوفر قائمة الدول الآن</h3>
+        <p className={styles.emptyCopy}>
+          جرّب البحث عن مدينة مباشرة من أعلى الصفحة. إذا استمر هذا الوضع فالمشكلة
+          من مصدر بيانات الدول، وليست من رابطك الحالي.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <section aria-label="تصفح الدول">
+    <section aria-label="قائمة الدول حسب المنطقة" className={styles.root}>
       {/* ── Arab Countries ── */}
-      <div style={{ marginBottom: '2rem' }}>
-        <SectionHeading>📍 الدول العربية</SectionHeading>
-        <div style={GRID_STYLE}>
-          {validArab.map((c) => (
-            <CountryCard key={c.country_slug} {...c} />
-          ))}
+      <div className={styles.group}>
+        <div className={styles.groupHead}>
+          <span className={styles.groupLabel}>
+            <MapPinned size={13} aria-hidden />
+            بداية أقرب للمستخدم العربي
+          </span>
+          <h3 className={styles.groupTitle}>الدول العربية</h3>
+          <p className={styles.groupCopy}>
+            رتبنا هذه المجموعة أولاً لأن أكثر الزيارات تبدأ منها ثم تنتقل إلى العاصمة
+            أو المدينة الأقرب داخل الدولة نفسها.
+          </p>
+        </div>
+
+        <div className={styles.grid}>
+          {validArab.length > 0 ? (
+            validArab.map((c) => (
+              <CountryCard key={c.country_slug} {...c} />
+            ))
+          ) : (
+            <div className={styles.emptyState}>
+              <h4 className={styles.emptyTitle}>لم تظهر دول عربية الآن</h4>
+              <p className={styles.emptyCopy}>استخدم البحث أعلى الصفحة للوصول إلى المدينة مباشرة، أو تابع دول العالم في المجموعة التالية.</p>
+            </div>
+          )}
         </div>
       </div>
 
       {/* ── World Countries (paginated) ── */}
-      <div>
-        <SectionHeading>🌐 دول العالم</SectionHeading>
-        <div style={GRID_STYLE}>
-          {visibleWorld.map((c) => (
-            <CountryCard key={c.country_slug} {...c} />
-          ))}
+      <div className={styles.group}>
+        <div className={styles.groupHead}>
+          <span className={styles.groupLabel}>
+            <Globe2 size={13} aria-hidden />
+            أرشيف أوسع
+          </span>
+          <h3 className={styles.groupTitle}>دول العالم</h3>
+          <p className={styles.groupCopy}>
+            عندما لا تجد الدولة في المجموعة الأولى، استخدم هذا الأرشيف الموسع مع
+            تحميل تدريجي يحافظ على خفة الصفحة.
+          </p>
+        </div>
+
+        <div className={styles.grid}>
+          {visibleWorld.length > 0 ? (
+            visibleWorld.map((c) => (
+              <CountryCard key={c.country_slug} {...c} />
+            ))
+          ) : (
+            <div className={styles.emptyState}>
+              <h4 className={styles.emptyTitle}>لا توجد دول إضافية للعرض</h4>
+              <p className={styles.emptyCopy}>ما زال بإمكانك استخدام البحث المباشر للوصول إلى مدينة محددة إذا لم تظهر في القائمة.</p>
+            </div>
+          )}
         </div>
 
         {hasMore && (
-          <div style={{ textAlign: 'center', marginTop: '1.25rem' }}>
+          <div className={styles.loadMoreWrap}>
             <button
+              type="button"
               onClick={loadMore}
-              style={{
-                padding: '0.6rem 2rem',
-                borderRadius: '999px',
-                border: '1px solid var(--border-default)',
-                background: 'var(--bg-surface-2)',
-                color: 'var(--text-secondary)',
-                fontSize: '0.875rem', fontWeight: '600',
-                cursor: 'pointer',
-                transition: 'background 0.15s, border-color 0.15s',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = 'var(--bg-surface-3)';
-                e.currentTarget.style.borderColor = 'var(--border-accent)';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = 'var(--bg-surface-2)';
-                e.currentTarget.style.borderColor = 'var(--border-default)';
-              }}
+              className={styles.loadMoreButton}
             >
-              تحميل المزيد ({validWorld.length - visibleWorld.length} دولة متبقية)
+              اعرض دولاً أخرى ({validWorld.length - visibleWorld.length} دولة متبقية)
             </button>
           </div>
         )}
@@ -204,5 +200,3 @@ export default function TimeNowClient({ arabCountries, worldCountries }) {
     </section>
   );
 }
-
-

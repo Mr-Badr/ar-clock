@@ -1,0 +1,1300 @@
+.page {
+  min-height: 100dvh;
+  background: var(--bg-base);
+  color: var(--text-primary);
+}
+
+.main {
+  padding-block: calc(var(--app-header-height) + var(--space-8)) var(--space-20);
+}
+
+.sectionBand {
+  padding-block: var(--space-8);
+}
+
+.heroSection {
+  padding-block: var(--space-8);
+}
+
+.heroInner {
+  display: grid;
+  gap: var(--space-6);
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+.heroCopy {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 72ch;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: fit-content;
+  min-height: 2.25rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--border-accent);
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+}
+
+.heroTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--text-4xl);
+  font-weight: var(--font-black);
+  line-height: 1.15;
+}
+
+.heroLead {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+  line-height: 1.9;
+}
+
+.dateAnswerPanel {
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--border-default) 82%, transparent);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface-1);
+  box-shadow: 0 24px 48px -40px color-mix(in srgb, var(--shadow-color) 34%, transparent);
+}
+
+.dateAnswerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface-2);
+}
+
+.dateAnswerTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+}
+
+.dateAnswerMeta {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+}
+
+.dualDateGrid {
+  display: grid;
+}
+
+.dateCard {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  padding: var(--space-8) var(--space-6);
+  text-align: center;
+}
+
+.dateCardMuted {
+  background: color-mix(in srgb, var(--bg-surface-2) 62%, transparent);
+}
+
+.dateCardLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+}
+
+.dateDay {
+  margin: 0;
+  color: var(--accent-alt);
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: var(--font-black);
+  line-height: 0.95;
+  font-variant-numeric: tabular-nums;
+}
+
+.dateMonth {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-extrabold);
+}
+
+.dateYear {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+}
+
+.dateAction {
+  color: var(--accent-alt);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-decoration: none;
+}
+
+.dateAction:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.dateAction:focus-visible,
+.toolPrimaryPath:focus-visible,
+.toolChoice:focus-visible,
+.pillLink:focus-visible,
+.toolCard:focus-visible,
+.faqQuestion:focus-visible,
+.linkCard:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 3px;
+}
+
+.sectionPanel {
+  max-width: 1100px;
+  margin-inline: auto;
+  padding: var(--space-6);
+  border: 1px solid color-mix(in srgb, var(--border-default) 82%, transparent);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface-1);
+  box-shadow: 0 24px 48px -40px color-mix(in srgb, var(--shadow-color) 34%, transparent);
+}
+
+.sectionHead {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 72ch;
+  margin-bottom: var(--space-5);
+}
+
+.sectionHead :global(.badge) {
+  width: fit-content;
+  justify-self: start;
+}
+
+.sectionTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-extrabold);
+  line-height: var(--leading-tight);
+}
+
+.sectionCopy {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.9;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.primaryAction,
+.secondaryAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 2.75rem;
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  text-decoration: none;
+}
+
+.primaryAction {
+  background: var(--accent);
+  color: var(--text-on-accent);
+}
+
+.secondaryAction {
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-1);
+  color: var(--text-primary);
+}
+
+.primaryAction:hover,
+.secondaryAction:hover {
+  transform: translateY(-1px);
+}
+
+.sharePanel {
+  margin: 0 var(--space-6) var(--space-6);
+  padding: var(--space-4) var(--space-6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-2);
+}
+
+.metricGrid {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+.metricCard {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: 1px solid color-mix(in srgb, var(--border-default) 82%, transparent);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-1);
+  text-align: center;
+}
+
+.metricValue {
+  color: var(--accent-alt);
+  font-size: var(--text-lg);
+  font-weight: var(--font-extrabold);
+  font-variant-numeric: tabular-nums;
+}
+
+.metricLabel {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+}
+
+.methodResultGrid {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.prosePanel {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 1100px;
+  margin-inline: auto;
+  padding: var(--space-6);
+  border: 1px solid color-mix(in srgb, var(--border-default) 82%, transparent);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface-1);
+}
+
+.proseBody {
+  max-width: 76ch;
+}
+
+.proseBody p {
+  margin: 0 0 var(--space-4);
+  color: var(--text-secondary);
+  line-height: 2;
+}
+
+.proseBody p:last-child {
+  margin-bottom: 0;
+}
+
+.methodGrid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.toolGrid,
+.infoGrid,
+.faqGrid,
+.linkGrid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.faqGrid {
+  align-items: start;
+}
+
+.toolDecisionLayout {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.toolCard,
+.infoCard,
+.faqCard,
+.linkCard {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border: 1px solid color-mix(in srgb, var(--border-default) 82%, transparent);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-1);
+  text-decoration: none;
+  transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+}
+
+.faqCard {
+  align-self: start;
+}
+
+.methodCardHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.methodSubtitle {
+  margin: var(--space-1) 0 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  line-height: 1.7;
+}
+
+.infoCardLead,
+.linkCardPrimary {
+  border-color: var(--border-accent);
+  background: color-mix(in srgb, var(--accent-soft) 52%, var(--bg-surface-1));
+}
+
+.linkCardPrimary {
+  align-content: start;
+}
+
+.toolCard:hover,
+.linkCard:hover {
+  border-color: var(--border-accent);
+  background: color-mix(in srgb, var(--accent-soft) 45%, var(--bg-surface-1));
+  transform: translateY(-1px);
+}
+
+.toolCardPrimary {
+  border-color: var(--border-accent);
+  background: color-mix(in srgb, var(--accent-soft) 56%, var(--bg-surface-1));
+}
+
+.toolPrimaryPath {
+  align-content: start;
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-xl);
+  background: color-mix(in srgb, var(--accent-soft) 54%, var(--bg-surface-1));
+  text-decoration: none;
+}
+
+.toolPrimaryPath:hover {
+  border-color: var(--accent-alt);
+  background: color-mix(in srgb, var(--accent-soft) 72%, var(--bg-surface-1));
+}
+
+.toolPrimaryTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-extrabold);
+  line-height: var(--leading-tight);
+}
+
+.toolPrimaryBody {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.9;
+}
+
+.toolPrimaryAction {
+  color: var(--accent-alt);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+}
+
+.toolChoiceList {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.toolChoice {
+  align-items: center;
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: auto minmax(0, 1fr);
+  padding: var(--space-4);
+  border: 1px solid color-mix(in srgb, var(--border-default) 82%, transparent);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-1);
+  text-decoration: none;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.toolChoice:hover {
+  border-color: var(--border-accent);
+  background: color-mix(in srgb, var(--accent-soft) 36%, var(--bg-surface-1));
+}
+
+.toolChoiceText {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.toolArchive {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-2);
+}
+
+.toolArchiveTitle {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+}
+
+.toolArchiveLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.cardIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+}
+
+.cardTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  line-height: 1.45;
+}
+
+.cardBody {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.8;
+}
+
+.faqQuestion {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  line-height: 1.55;
+  list-style: none;
+}
+
+.faqQuestion svg {
+  flex: 0 0 auto;
+  margin-top: 0.2rem;
+  color: var(--accent-alt);
+}
+
+.faqQuestion::-webkit-details-marker {
+  display: none;
+}
+
+.faqCard[open] {
+  border-color: var(--border-accent);
+  background: color-mix(in srgb, var(--accent-soft) 36%, var(--bg-surface-1));
+}
+
+.faqCard[open] .faqQuestion {
+  margin-bottom: var(--space-3);
+}
+
+.pillRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pillLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  background: var(--bg-surface-2);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  text-decoration: none;
+}
+
+.pillLink:hover {
+  border-color: var(--border-accent);
+  color: var(--accent-alt);
+}
+
+@media (min-width: 768px) {
+  .dualDateGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dateCard:first-child {
+    border-left: 1px solid var(--border-subtle);
+  }
+
+  .toolGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .toolDecisionLayout {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  }
+
+  .metricGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .methodResultGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .methodGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .infoGrid,
+  .faqGrid,
+  .linkGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .infoGrid .infoCardLead {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 767px) {
+  .heroTitle {
+    font-size: var(--text-3xl);
+  }
+
+  .dateCard:first-child {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .sectionPanel {
+    padding: var(--space-4);
+  }
+
+  .methodCardHead {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* Date hub quality pass: keep the answer prominent, then turn long card grids into readable paths. */
+.dateHubMain {
+  padding-block-end: var(--space-16);
+}
+
+.dateHubMain .sectionBand {
+  padding-block: var(--space-5);
+}
+
+.dateHubMain .sectionPanel {
+  max-width: 1080px;
+  padding: var(--space-8) 0;
+  border-width: 1px 0 0;
+  border-color: color-mix(in srgb, var(--border-default) 64%, transparent);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.dateHubMain .decisionPanel {
+  padding: var(--space-6);
+  border: 1px solid color-mix(in srgb, var(--border-default) 78%, transparent);
+  border-radius: var(--radius-xl);
+  background: color-mix(in srgb, var(--bg-surface-1) 84%, transparent);
+}
+
+.dateHubMain .shortcutPanel {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+}
+
+.dateHubMain .sectionHead {
+  margin-bottom: var(--space-4);
+}
+
+.dateHubMain .sectionTitle {
+  font-size: clamp(1.5rem, 2.4vw, 2.15rem);
+}
+
+.dateHubMain .toolDecisionLayout {
+  gap: var(--space-3);
+}
+
+.dateHubMain .toolPrimaryPath {
+  min-height: auto;
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+}
+
+.dateHubMain .toolPrimaryTitle {
+  font-size: var(--text-xl);
+}
+
+.dateHubMain .toolPrimaryBody {
+  line-height: 1.75;
+}
+
+.dateHubMain .toolChoiceList {
+  gap: 0;
+  border-block: 1px solid color-mix(in srgb, var(--border-default) 56%, transparent);
+}
+
+.dateHubMain .toolChoice {
+  padding: var(--space-4) 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.dateHubMain .toolChoice + .toolChoice {
+  border-block-start: 1px solid color-mix(in srgb, var(--border-default) 46%, transparent);
+}
+
+.dateHubMain .toolChoice:hover {
+  background: transparent;
+}
+
+.dateHubMain .toolArchive {
+  align-items: center;
+  grid-template-columns: auto minmax(0, 1fr);
+  border-color: color-mix(in srgb, var(--border-default) 52%, transparent);
+  background: color-mix(in srgb, var(--bg-surface-2) 52%, transparent);
+}
+
+.dateHubMain .proseBody {
+  max-width: 82ch;
+}
+
+.dateHubMain .proseBody p {
+  line-height: 1.85;
+}
+
+.dateHubMain .infoGrid,
+.dateHubMain .faqGrid,
+.dateHubMain .linkGrid {
+  gap: 0;
+  grid-template-columns: minmax(0, 1fr);
+  border-block: 1px solid color-mix(in srgb, var(--border-default) 56%, transparent);
+}
+
+.dateHubMain .infoCard,
+.dateHubMain .faqCard,
+.dateHubMain .linkCard {
+  padding: var(--space-4) 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.dateHubMain .infoCard + .infoCard,
+.dateHubMain .faqCard + .faqCard,
+.dateHubMain .linkCard + .linkCard {
+  border-block-start: 1px solid color-mix(in srgb, var(--border-default) 44%, transparent);
+}
+
+.dateHubMain .infoCardLead,
+.dateHubMain .linkCardPrimary {
+  background: transparent;
+}
+
+.dateHubMain .infoCard {
+  align-items: start;
+}
+
+.dateHubMain .infoCard .cardIcon {
+  margin-bottom: var(--space-2);
+}
+
+.dateHubMain .cardBody {
+  line-height: 1.7;
+}
+
+.dateHubMain .pillRow {
+  gap: var(--space-2);
+}
+
+.dateHubMain .pillLink {
+  background: color-mix(in srgb, var(--bg-surface-1) 76%, transparent);
+}
+
+@media (min-width: 900px) {
+  .dateHubMain .decisionPanel {
+    padding: var(--space-7);
+  }
+
+  .dateHubMain .infoGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-8);
+  }
+
+  .dateHubMain .infoCard:nth-child(2) {
+    border-block-start: 0;
+  }
+
+  .dateHubMain .faqGrid,
+  .dateHubMain .linkGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-8);
+  }
+
+  .dateHubMain .faqCard:nth-child(2),
+  .dateHubMain .linkCard:nth-child(2) {
+    border-block-start: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .dateHubMain {
+    padding-block-end: var(--space-12);
+  }
+
+  .dateHubMain .sectionBand {
+    padding-block: var(--space-4);
+  }
+
+  .dateHubMain .sectionPanel,
+  .dateHubMain .decisionPanel {
+    padding: var(--space-5) 0;
+    border-inline: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .dateHubMain .sectionTitle {
+    font-size: var(--text-2xl);
+    line-height: 1.28;
+  }
+
+  .dateHubMain .toolPrimaryPath {
+    padding: var(--space-4);
+  }
+
+  .dateHubMain .toolArchive {
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dateHubMain .infoCard .cardIcon {
+    margin-bottom: var(--space-2);
+  }
+}
+
+/* Date hub product redesign: the first answer remains prominent, while the rest reads as one guided page. */
+.dateHubMain {
+  --date-hub-line: color-mix(in srgb, var(--border-default) 54%, transparent);
+  --date-hub-panel: color-mix(in srgb, var(--bg-surface-1) 82%, transparent);
+  --date-hub-panel-strong: color-mix(in srgb, var(--bg-surface-2) 74%, var(--bg-surface-1));
+}
+
+.dateHubMain .sectionBand {
+  padding-block: clamp(1.5rem, 4vw, 3.25rem);
+}
+
+.dateHubMain .sectionPanel {
+  max-width: 1040px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.dateHubMain .sectionHead {
+  max-width: 760px;
+  margin-inline: auto;
+  margin-bottom: clamp(1rem, 3vw, 1.75rem);
+  text-align: center;
+}
+
+.sectionKicker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 1.9rem;
+  padding: 0.28rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--border-accent) 76%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-soft) 60%, transparent);
+  color: var(--accent-alt);
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+}
+
+.dateHubMain .sectionHead .sectionKicker {
+  justify-self: center;
+}
+
+.dateHubMain .sectionTitle {
+  font-size: clamp(1.6rem, 2.8vw, 2.35rem);
+  line-height: 1.22;
+}
+
+.dateHubMain .sectionCopy {
+  max-width: 72ch;
+  margin-inline: auto;
+  color: color-mix(in srgb, var(--text-secondary) 88%, var(--text-muted));
+  font-size: var(--text-base);
+}
+
+.dateHubMain .decisionPanel {
+  padding: clamp(1rem, 2.8vw, 1.75rem);
+  border: 1px solid color-mix(in srgb, var(--border-accent) 40%, var(--border-default));
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 48%, transparent), transparent 48%),
+    var(--date-hub-panel);
+  box-shadow: 0 28px 80px -58px color-mix(in srgb, var(--shadow-color) 44%, transparent);
+}
+
+.decisionHero {
+  display: grid;
+  gap: clamp(1rem, 3vw, 2rem);
+}
+
+.decisionHeroCopy {
+  display: grid;
+  gap: var(--space-3);
+  align-content: center;
+}
+
+.decisionHeroCopy .sectionKicker {
+  justify-self: start;
+}
+
+.decisionActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.dateHubMain .primaryAction,
+.dateHubMain .secondaryAction {
+  min-height: 2.85rem;
+  border-radius: 999px;
+  transition: border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.dateHubMain .secondaryAction {
+  border-color: color-mix(in srgb, var(--border-accent) 38%, var(--border-default));
+  background: color-mix(in srgb, var(--bg-surface-1) 72%, transparent);
+}
+
+.pathList {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--date-hub-line);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--bg-base) 28%, transparent);
+}
+
+.pathItem {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: 1rem;
+  color: inherit;
+  text-decoration: none;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.pathItem + .pathItem {
+  border-block-start: 1px solid var(--date-hub-line);
+}
+
+.pathItem:hover {
+  background: color-mix(in srgb, var(--accent-soft) 34%, transparent);
+}
+
+.pathItem:focus-visible,
+.sourceLink:focus-visible,
+.faqDisclosure:focus-within,
+.utilityCard:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 3px;
+}
+
+.pathIndex {
+  display: inline-grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid color-mix(in srgb, var(--border-accent) 54%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-soft) 58%, var(--bg-surface-1));
+  color: var(--accent-alt);
+  font-size: var(--text-xs);
+  font-weight: var(--font-black);
+  font-variant-numeric: tabular-nums;
+}
+
+.pathText {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.quickDateRail {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: clamp(1rem, 2.8vw, 1.5rem);
+  padding-top: clamp(1rem, 2.8vw, 1.5rem);
+  border-block-start: 1px solid var(--date-hub-line);
+}
+
+.quickDateHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.quickDateTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--text-lg);
+  font-weight: var(--font-extrabold);
+  line-height: 1.35;
+}
+
+.dateHubMain .pillRow {
+  gap: 0.55rem;
+}
+
+.dateHubMain .pillLink {
+  min-height: 2.35rem;
+  padding: 0.45rem 0.8rem;
+  border-color: color-mix(in srgb, var(--border-default) 64%, transparent);
+  background: color-mix(in srgb, var(--bg-surface-2) 52%, transparent);
+  color: var(--text-secondary);
+}
+
+.dateHubMain .pillLink:hover {
+  background: color-mix(in srgb, var(--accent-soft) 44%, transparent);
+}
+
+.editorialPanel,
+.rulePanel,
+.sourcesPanel,
+.faqPanel,
+.utilityPanel {
+  padding-block: clamp(0.5rem, 2vw, 1rem);
+}
+
+.learningStack,
+.sourceList,
+.faqList {
+  max-width: 860px;
+  margin-inline: auto;
+  border-block: 1px solid var(--date-hub-line);
+}
+
+.learningRow {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: clamp(1rem, 2.8vw, 1.4rem) 0;
+}
+
+.learningRow + .learningRow {
+  border-block-start: 1px solid var(--date-hub-line);
+}
+
+.dateHubMain .learningRow .cardTitle,
+.dateHubMain .ruleItem .cardTitle,
+.dateHubMain .utilityCard .cardTitle {
+  font-size: var(--text-lg);
+}
+
+.dateHubMain .learningRow .cardBody,
+.dateHubMain .ruleItem .cardBody {
+  max-width: 72ch;
+}
+
+.ruleGrid {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 960px;
+  margin-inline: auto;
+}
+
+.ruleItem {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: start;
+  padding: var(--space-4);
+  border: 1px solid var(--date-hub-line);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--bg-surface-1) 50%, transparent);
+}
+
+.ruleItem .cardTitle,
+.ruleItem .cardBody {
+  grid-column: 2;
+}
+
+.ruleItem .pathIndex {
+  grid-row: span 2;
+}
+
+.sourceList {
+  display: grid;
+  border-block: 0;
+  gap: var(--space-2);
+}
+
+.sourceLink {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--date-hub-line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--bg-surface-1) 54%, transparent);
+  text-decoration: none;
+  transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+}
+
+.sourceLink:hover {
+  border-color: color-mix(in srgb, var(--border-accent) 72%, var(--border-default));
+  background: color-mix(in srgb, var(--accent-soft) 34%, transparent);
+  transform: translateY(-1px);
+}
+
+.sourceLinkPrimary {
+  border-color: color-mix(in srgb, var(--border-accent) 64%, var(--border-default));
+}
+
+.faqList {
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid var(--date-hub-line);
+  background: color-mix(in srgb, var(--bg-surface-1) 46%, transparent);
+}
+
+.faqDisclosure {
+  padding: 0;
+}
+
+.faqDisclosure + .faqDisclosure {
+  border-block-start: 1px solid var(--date-hub-line);
+}
+
+.faqDisclosure .faqQuestion {
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding: 1rem 1.1rem;
+  font-size: var(--text-base);
+}
+
+.faqDisclosure .faqQuestion::marker {
+  content: "";
+}
+
+.faqDisclosure .faqQuestion::after {
+  content: "+";
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-soft) 54%, transparent);
+  color: var(--accent-alt);
+  font-weight: var(--font-black);
+}
+
+.faqDisclosure[open] .faqQuestion::after {
+  content: "-";
+}
+
+.faqDisclosure .cardBody {
+  padding: 0 1.1rem 1.05rem;
+}
+
+.utilityPanel {
+  display: grid;
+  gap: clamp(1rem, 2.8vw, 1.5rem);
+}
+
+.utilityHead {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 760px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.utilityHead .sectionKicker {
+  justify-self: center;
+}
+
+.utilityGrid {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 980px;
+  margin-inline: auto;
+}
+
+.utilityCard {
+  display: grid;
+  align-content: start;
+  gap: 0.55rem;
+  min-height: 100%;
+  padding: var(--space-4);
+  border: 1px solid var(--date-hub-line);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--bg-surface-1) 50%, transparent);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+}
+
+.utilityCard:hover {
+  border-color: color-mix(in srgb, var(--border-accent) 70%, var(--border-default));
+  background: color-mix(in srgb, var(--accent-soft) 32%, transparent);
+  transform: translateY(-1px);
+}
+
+.utilityTag {
+  width: fit-content;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: var(--font-black);
+}
+
+.utilityTag1 {
+  background: color-mix(in srgb, #38bdf8 18%, transparent);
+  color: #8bd8ff;
+}
+
+.utilityTag2 {
+  background: color-mix(in srgb, #34d399 18%, transparent);
+  color: #8ff0c0;
+}
+
+.utilityTag3 {
+  background: color-mix(in srgb, #f59e0b 18%, transparent);
+  color: #ffd27a;
+}
+
+.utilityTag4 {
+  background: color-mix(in srgb, #c084fc 18%, transparent);
+  color: #ddbbff;
+}
+
+.utilityAction {
+  margin-top: auto;
+  color: var(--accent-alt);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+}
+
+@media (min-width: 820px) {
+  .decisionHero {
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+    align-items: center;
+  }
+
+  .sourceList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .utilityGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .ruleGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .ruleItem {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ruleItem .cardTitle,
+  .ruleItem .cardBody {
+    grid-column: auto;
+  }
+
+  .ruleItem .pathIndex {
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .dateHubMain .sectionPanel,
+  .dateHubMain .decisionPanel {
+    border-radius: 0;
+  }
+
+  .dateHubMain .decisionPanel {
+    margin-inline: calc(var(--space-4) * -1);
+    padding-inline: var(--space-4);
+    border-inline: 0;
+  }
+
+  .dateHubMain .sectionHead,
+  .utilityHead {
+    text-align: start;
+  }
+
+  .dateHubMain .sectionHead .sectionKicker,
+  .utilityHead .sectionKicker {
+    justify-self: start;
+  }
+
+  .decisionActions {
+    display: grid;
+  }
+
+  .learningRow,
+  .ruleItem {
+    gap: var(--space-3);
+  }
+
+  .quickDateHead {
+    display: grid;
+    justify-items: start;
+  }
+}

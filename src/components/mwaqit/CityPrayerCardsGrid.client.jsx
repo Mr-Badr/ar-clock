@@ -3,6 +3,18 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import {
+  Cloud,
+  CloudFog,
+  CloudLightning,
+  CloudMoon,
+  CloudRain,
+  CloudSnow,
+  CloudSun,
+  Moon,
+  Sun,
+  Thermometer,
+} from 'lucide-react';
 import { calculatePrayerTimes, getNextPrayer, formatTime } from '@/lib/prayerEngine';
 
 const PRAYER_AR = {
@@ -14,33 +26,69 @@ const PRAYER_AR = {
   isha: 'العشاء',
 };
 
-const getWeatherInfo = (wCode, isDay = 1) => {
+const getWeatherInfo = (wCode, isDay) => {
   const map = {
-    0: { label: 'صافي', icon: isDay ? '☀️' : '🌙' },
-    1: { label: 'صافي غالباً', icon: isDay ? '🌤️' : '🌑' },
-    2: { label: 'غائم جزئياً', icon: isDay ? '⛅' : '☁️' },
-    3: { label: 'غائم', icon: '☁️' },
-    45: { label: 'ضباب', icon: '🌫️' },
-    48: { label: 'ضباب جليدي', icon: '🌫️' },
-    51: { label: 'رذاذ خفيف', icon: '🌦️' },
-    53: { label: 'رذاذ متوسط', icon: '🌦️' },
-    55: { label: 'رذاذ كثيف', icon: '🌦️' },
-    61: { label: 'مطر خفيف', icon: '🌧️' },
-    63: { label: 'مطر متوسط', icon: '🌧️' },
-    65: { label: 'مطر غزير', icon: '🌧️' },
-    71: { label: 'ثلوج خفيفة', icon: '❄️' },
-    73: { label: 'ثلوج متوسطة', icon: '❄️' },
-    75: { label: 'ثلوج كثيفة', icon: '❄️' },
-    80: { label: 'زخات خفيفة', icon: '🌦️' },
-    81: { label: 'زخات متوسطة', icon: '🌦️' },
-    82: { label: 'زخات عنيفة', icon: '🌧️' },
-    95: { label: 'عواصف رعدية', icon: '⚡' },
+    0: { label: 'صافي', Icon: isDay ? Sun : Moon },
+    1: { label: 'صافي غالباً', Icon: isDay ? CloudSun : CloudMoon },
+    2: { label: 'غائم جزئياً', Icon: isDay ? CloudSun : CloudMoon },
+    3: { label: 'غائم', Icon: Cloud },
+    45: { label: 'ضباب', Icon: CloudFog },
+    48: { label: 'ضباب جليدي', Icon: CloudFog },
+    51: { label: 'رذاذ خفيف', Icon: CloudRain },
+    53: { label: 'رذاذ متوسط', Icon: CloudRain },
+    55: { label: 'رذاذ كثيف', Icon: CloudRain },
+    61: { label: 'مطر خفيف', Icon: CloudRain },
+    63: { label: 'مطر متوسط', Icon: CloudRain },
+    65: { label: 'مطر غزير', Icon: CloudRain },
+    71: { label: 'ثلوج خفيفة', Icon: CloudSnow },
+    73: { label: 'ثلوج متوسطة', Icon: CloudSnow },
+    75: { label: 'ثلوج كثيفة', Icon: CloudSnow },
+    80: { label: 'زخات خفيفة', Icon: CloudRain },
+    81: { label: 'زخات متوسطة', Icon: CloudRain },
+    82: { label: 'زخات عنيفة', Icon: CloudRain },
+    95: { label: 'عواصف رعدية', Icon: CloudLightning },
   };
-  return map[wCode] || { label: 'غير معروف', icon: '🌡️' };
+  return map[wCode] || { label: 'غير معروف', Icon: Thermometer };
 };
 
 // How many cards to show per page
 const PAGE_SIZE = 12;
+
+function parseCachedWeatherEntry(rawValue) {
+  if (!rawValue) {
+    return null;
+  }
+
+  try {
+    const parsedValue = JSON.parse(rawValue);
+    const timestamp = parsedValue?.ts;
+    const data = parsedValue?.data;
+
+    if (!Number.isFinite(timestamp) || !data || typeof data !== 'object') {
+      return null;
+    }
+
+    return {
+      ts: timestamp,
+      data,
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function parseWeatherResponse(response) {
+  const body = await response.text();
+  if (!body.trim()) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(body);
+  } catch {
+    return null;
+  }
+}
 
 // Hydration-safe: render nothing on SSR to avoid class mismatches.
 export default function CityPrayerCardsGrid({ cities, countrySlug, countryCode }) {
@@ -77,8 +125,9 @@ export default function CityPrayerCardsGrid({ cities, countrySlug, countryCode }
         try {
           if (typeof sessionStorage !== 'undefined') {
             const cached = sessionStorage.getItem(cacheKey);
-            if (cached) {
-              const { ts, data } = JSON.parse(cached);
+            const parsedCacheEntry = parseCachedWeatherEntry(cached);
+            if (parsedCacheEntry) {
+              const { ts, data } = parsedCacheEntry;
               if (currentTs - ts < CACHE_TTL) {
                 mapping[key] = data;
                 found = true;
@@ -103,7 +152,8 @@ export default function CityPrayerCardsGrid({ cities, countrySlug, countryCode }
         const url = `/api/weather?latitudes=${encodeURIComponent(lats)}&longitudes=${encodeURIComponent(lons)}`;
         const res = await fetch(url);
         if (!res.ok) return;
-        const responseData = await res.json();
+        const responseData = await parseWeatherResponse(res);
+        if (!responseData) return;
         const results = Array.isArray(responseData) ? responseData : [responseData];
 
         citiesToFetch.forEach((c, i) => {
@@ -193,7 +243,7 @@ export default function CityPrayerCardsGrid({ cities, countrySlug, countryCode }
             style={{ 
               gap: 'var(--space-2)', 
               minWidth: 180,
-              borderRadius: 'var(--radius-xl)',
+              borderRadius: 'var(--radius-lg)',
             }}
           >
             تحميل {Math.min(PAGE_SIZE, remaining)} مدينة أخرى
@@ -232,18 +282,7 @@ function CityCard({ city, countrySlug, countryCode, now, weather }) {
           color: 'var(--text-primary)',
           fontWeight: 'var(--font-semibold)',
           fontSize: 'var(--text-sm)',
-          transition: 'border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast)',
-          boxShadow: 'var(--shadow-xs)',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.borderColor = 'var(--border-accent-strong)';
-          e.currentTarget.style.transform = 'translateY(-2px)';
-          e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.borderColor = 'var(--border-subtle)';
-          e.currentTarget.style.transform = 'translateY(0)';
-          e.currentTarget.style.boxShadow = 'var(--shadow-xs)';
+          transition: 'border-color var(--transition-fast), background-color var(--transition-fast)',
         }}
       >
         <span className="truncate">{city.name_ar}</span>
@@ -255,7 +294,8 @@ function CityCard({ city, countrySlug, countryCode, now, weather }) {
   const timeStr = formatTime(nextIso, city.timezone, false);
   const prayerLabel = PRAYER_AR[nextKey] || nextKey;
 
-  const wInfo = weather ? getWeatherInfo(weather.weather_code, weather.is_day) : { icon: '🌡️' };
+  const wInfo = weather ? getWeatherInfo(weather.weather_code, weather.is_day) : { Icon: Thermometer };
+  const WeatherIcon = wInfo.Icon;
 
   return (
     <Link
@@ -271,18 +311,7 @@ function CityCard({ city, countrySlug, countryCode, now, weather }) {
         color: 'var(--text-primary)',
         position: 'relative',
         overflow: 'hidden',
-        transition: 'border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast)',
-        boxShadow: 'var(--shadow-xs)',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = 'var(--border-accent-strong)';
-        e.currentTarget.style.transform = 'translateY(-3px)';
-        e.currentTarget.style.boxShadow = 'var(--shadow-accent)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = 'var(--border-subtle)';
-        e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.boxShadow = 'var(--shadow-xs)';
+        transition: 'border-color var(--transition-fast), background-color var(--transition-fast)',
       }}
     >
       {/* Top row: city name + weather/temp group */}
@@ -330,12 +359,12 @@ function CityCard({ city, countrySlug, countryCode, now, weather }) {
           <span
             aria-hidden="true"
             style={{
-              fontSize: '1rem',
+              color: 'var(--accent-alt)',
               lineHeight: 1,
-              filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.2))',
+              filter: 'none',
             }}
           >
-            {wInfo.icon}
+            <WeatherIcon size={16} strokeWidth={1.75} />
           </span>
         </div>
       </div>
@@ -373,23 +402,6 @@ function CityCard({ city, countrySlug, countryCode, now, weather }) {
           {timeStr}
         </time>
       </div>
-
-      {/* Decorative accent glow */}
-      <div
-        aria-hidden
-        style={{
-          position: 'absolute',
-          left: -12,
-          bottom: -12,
-          width: 48,
-          height: 48,
-          borderRadius: '50%',
-          background: 'var(--accent)',
-          opacity: 0.06,
-          filter: 'blur(10px)',
-          pointerEvents: 'none',
-        }}
-      />
     </Link>
   );
 }

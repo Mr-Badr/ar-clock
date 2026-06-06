@@ -1,25 +1,15 @@
 import PercentageCalculator from '@/components/calculators/PercentageCalculator.client';
 import {
-  CalculatorChecklist,
+  CalculatorDecisionTable,
   CalculatorFaqSection,
-  CalculatorFooterCta,
   CalculatorHero,
-  CalculatorInfoGrid,
-  CalculatorIntentCloud,
-  CalculatorQuickAnswerGrid,
-  CalculatorResourceLinks,
   CalculatorSection,
-  CalculatorSectionNav,
-  CalculatorStoryBand,
   RelatedCalculators,
 } from '@/components/calculators/common';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
 import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
-import { getGuidesBySlugs } from '@/lib/guides/data';
-import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
@@ -28,7 +18,6 @@ const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'percentage');
 const CONTENT = getFinancePageContent('percentage');
 const SEARCH_COVERAGE = buildFinancePageSearchCoverage(PAGE, CONTENT);
-const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.percentage);
 
 export const metadata = buildCanonicalMetadata({
   title: PAGE.heroTitle,
@@ -38,6 +27,8 @@ export const metadata = buildCanonicalMetadata({
 });
 
 export default function PercentagePage() {
+  const faqItems = Array.isArray(CONTENT.faqItems) ? CONTENT.faqItems : [];
+  const howToSteps = Array.isArray(CONTENT.howTo?.steps) ? CONTENT.howTo.steps : [];
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -58,7 +49,7 @@ export default function PercentagePage() {
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: CONTENT.faqItems.map((item) => ({
+    mainEntity: faqItems.map((item) => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: { '@type': 'Answer', text: item.answer },
@@ -67,9 +58,9 @@ export default function PercentagePage() {
   const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: CONTENT.howTo.name,
-    description: CONTENT.howTo.description,
-    step: CONTENT.howTo.steps.map((item) => ({
+    name: CONTENT.howTo?.name || 'كيفية استخدام حاسبة النسبة المئوية',
+    description: CONTENT.howTo?.description || PAGE.description,
+    step: howToSteps.map((item) => ({
       '@type': 'HowToStep',
       name: item.name,
       text: item.text,
@@ -77,7 +68,7 @@ export default function PercentagePage() {
   };
 
   return (
-    <main className="bg-base text-primary">
+    <main className="calc-product-page bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
@@ -87,153 +78,78 @@ export default function PercentagePage() {
         badge={CONTENT.hero.badge}
         title={PAGE.heroTitle}
         description={CONTENT.hero.description}
-        accent={PAGE.accent}
         highlights={CONTENT.hero.highlights}
       >
         <PercentageCalculator />
       </CalculatorHero>
 
       <CalculatorSection
-        id="percent-overview"
-        eyebrow="خريطة الصفحة"
-        title="صفحة نسبة مئوية شاملة تحل أكثر من نوع واحد من المسائل"
-        description="بدلاً من حاسبة ضيقة لوظيفة واحدة، هذه الصفحة تجمع الحاسبة الأساسية مع أقسام تعليمية وأمثلة واستخدامات يومية وجداول مرجعية وأدوات إضافية."
-      >
-        <CalculatorSectionNav items={CONTENT.sectionNavItems} />
-      </CalculatorSection>
-
-      <CalculatorSection
-        id="percent-intents"
-        eyebrow="تغطية بحثية"
-        title="الكلمات والأسئلة التي تستهدفها الصفحة فعلياً"
-        description="صفحة النسبة المئوية يجب أن تغطي عشرات الصيغ البحثية، لأن المستخدم قد يسألها بأكثر من طريقة: كم يساوي؟ كم نسبة؟ ما المبلغ بعد الزيادة؟ أو ما نسبة التغير؟"
+        id="percent-formulas"
+        eyebrow="المعادلة الصحيحة"
+        title="جدول قرار: أي معادلة تستخدم؟"
+        description="عندما تعرف اسم المسألة يصبح الحساب سهلاً. هذا الجدول يلخص أكثر الحالات التي تظهر في الخصومات والدرجات والرواتب والأسعار."
         subtle
       >
-        <div className="calc-grid-2">
-          <CalculatorIntentCloud items={SEARCH_COVERAGE.intentChips} />
-          <CalculatorStoryBand
-            title="ميزة تنافسية واضحة: 4 حاسبات في تجربة واحدة"
-            description="بدلاً من تحويل المستخدم بين أربع صفحات ضعيفة، صممنا هذه الصفحة كمركز واحد لمسائل النسبة المئوية الأكثر شيوعاً، مع أمثلة جاهزة وسجل نتائج وأدوات مكمّلة."
-            items={[
-              { label: 'نسبة من مبلغ', value: 'للخصومات والضريبة والإكراميات والتوزيع.' },
-              { label: 'جزء من كل', value: 'للدراسة والإحصاء ونسب الإنجاز والنجاح.' },
-              { label: 'زيادة أو خفض', value: 'للأسعار والرواتب والعروض والتضخم.' },
-            ]}
-          />
-        </div>
-      </CalculatorSection>
-
-      <CalculatorSection
-        id="percent-examples"
-        eyebrow="استخدامات يومية"
-        title="أين نستخدم النسبة المئوية فعلياً؟"
-        description="من الخصومات والرواتب إلى العلامات الدراسية والاستثمار، النسبة المئوية أداة يومية أكثر مما نظن."
-      >
-        <CalculatorInfoGrid
-          items={[
+        <CalculatorDecisionTable
+          columns={['سؤالك الحقيقي', 'المعادلة المختصرة', 'مثال سريع', 'المسار داخل الصفحة']}
+          rows={[
             {
-              title: 'التسوق والخصومات',
-              content: 'خصم 30% على منتج، أو ضريبة على فاتورة، أو مقارنة بين سعرين قبل وبعد التخفيض. هذه الحالات يغطيها تبويبا النسبة من مبلغ والزيادة أو الخفض.',
+              key: 'percent-of-amount',
+              cells: [
+                'كم يساوي X% من مبلغ؟',
+                '(النسبة ÷ 100) × المبلغ',
+                '20% من 500 = 100',
+                'تبويب كم يساوي X%؟',
+              ],
             },
             {
-              title: 'الدراسة والنتائج',
-              content: 'إذا حصلت على 85 من 100 أو 42 من 50 وتريد معرفة النسبة، فتبويب "كم نسبة X من Y؟" يعطيك النتيجة فوراً.',
+              key: 'part-of-whole',
+              cells: [
+                'كم نسبة جزء من كل؟',
+                '(الجزء ÷ الكل) × 100',
+                '42 من 50 = 84%',
+                'تبويب كم نسبة X من Y؟',
+              ],
             },
             {
-              title: 'الاستثمار والأسعار',
-              content: 'حين يرتفع أصل من 100 إلى 120 أو ينخفض من 80 إلى 60، يوضح تبويب نسبة التغيير مقدار النمو أو الانكماش بوضوح.',
+              key: 'discount-or-increase',
+              cells: [
+                'ما السعر بعد خصم أو زيادة؟',
+                'الأصل × (1 ± النسبة ÷ 100)',
+                '1000 بعد خصم 25% = 750',
+                'تبويب زيادة أو خفض',
+              ],
             },
             {
-              title: 'الميزانية والتقسيم',
-              content: 'يمكنك توزيع راتب أو ميزانية مشروع بنسبة 50/30/20 مثلاً باستخدام أداة تقسيم المبلغ بالنسب أسفل الحاسبة الرئيسية.',
+              key: 'percent-change',
+              cells: [
+                'كم تغير رقم قديم إلى رقم جديد؟',
+                '((الجديد - القديم) ÷ القديم) × 100',
+                '100 إلى 150 = زيادة 50%',
+                'تبويب نسبة التغيير',
+              ],
+            },
+            {
+              key: 'reverse-discount',
+              cells: [
+                'ما السعر الأصلي قبل الخصم؟',
+                'السعر النهائي ÷ النسبة المتبقية',
+                '400 بعد خصم 20% أصلها 500',
+                'اقرأ الشرح ثم استخدم الحاسبة عكسياً',
+              ],
             },
           ]}
         />
       </CalculatorSection>
 
       <CalculatorSection
-        id="percent-answers"
-        eyebrow="إجابات مباشرة"
-        title="إذا كتبت في Google: كم يساوي 20% من 500؟"
-        description="هذا القسم مكتوب خصيصاً لصيغ البحث التي يدخلها المستخدم كما هي تقريباً إلى Google."
-      >
-        <CalculatorQuickAnswerGrid items={CONTENT.quickAnswers} />
-      </CalculatorSection>
-
-      <CalculatorSection
-        id="percent-content"
-        eyebrow="فهم أعمق"
-        title="أخطاء شائعة وحيل مفيدة"
-        description="هذه المفاهيم الصغيرة هي التي تجعل النسبة المئوية مربكة أحياناً، رغم أن قواعدها الأساسية بسيطة جداً."
-        subtle
-      >
-        <div className="calc-article-grid">
-          <article className="calc-article-block">
-            <h3>1. زيادة 50% ثم خفض 50% لا تعيدك لنفس الرقم</h3>
-            <p>
-              لأن النسبة الثانية تطبق على أساس جديد. إذا ارتفع 100 إلى 150 ثم خفضت 50% من 150
-              فستصل إلى 75، لا إلى 100.
-            </p>
-          </article>
-          <article className="calc-article-block">
-            <h3>2. 10% أسهل مما يبدو</h3>
-            <p>
-              احسب 10% بتحريك الفاصلة منزلة واحدة، ثم ابنِ عليها: 5% نصفها، 1% جزء من عشرة،
-              و15% = 10% + 5%. هذا يختصر كثيراً من الحسابات الذهنية اليومية.
-            </p>
-          </article>
-          <article className="calc-article-block">
-            <h3>3. النسبة ليست دائماً مبلغاً</h3>
-            <p>
-              أحياناً تحتاج رقمًا نقديًا مثل 15% من 500، وأحياناً تحتاج نسبة فقط مثل 40 من 200.
-              لهذا فصلنا كل حالة في تبويب مستقل بدل دمجها داخل نموذج واحد يربك المستخدم.
-            </p>
-          </article>
-          <article className="calc-article-block">
-            <h3>4. لماذا أضفنا أدوات إضافية؟</h3>
-            <ul>
-              <li>الخصومات المتتالية تكشف الفرق بين الخصم الاسمي والخصم الفعلي.</li>
-              <li>تقسيم المبلغ بالنسب مفيد للميزانيات والادخار وتوزيع الأرباح.</li>
-              <li>التغيرات المتعددة توضح أثر الزيادات والانخفاضات المتتابعة على المدى الزمني.</li>
-            </ul>
-          </article>
-        </div>
-      </CalculatorSection>
-
-      <CalculatorSection
-        id="percent-playbook"
-        eyebrow="خطة الحل"
-        title="كيف تعرف أي تبويب تستخدمه في ثوانٍ؟"
-        description="كثير من الالتباس في النسبة المئوية سببه اختيار المعادلة الخطأ. هذه القائمة تساعدك على تحديد نوع المسألة قبل أن تبدأ."
-        subtle
-      >
-        <div className="calc-grid-2">
-          <CalculatorChecklist
-            title="اختر التبويب الصحيح"
-            description="سؤال واحد من هذه الأسئلة يكفي لتحديد المسار الصحيح."
-            items={[
-              'إذا كنت تسأل: كم يساوي 15% من مبلغ؟ فابدأ بتبويب نسبة من مبلغ.',
-              'إذا كنت تسأل: كم نسبة 42 من 60؟ فتبويب جزء من كل هو الصحيح.',
-              'إذا كنت تريد السعر بعد خصم أو زيادة فاذهب إلى تبويب الزيادة أو الخفض.',
-              'إذا كنت تقارن قيمة قديمة بأخرى جديدة فتبويب نسبة التغيير هو المطلوب.',
-              'إذا كانت هناك أكثر من خصم أو أكثر من تغير فاستخدم الأدوات الإضافية أسفل الحاسبة.',
-            ]}
-          />
-          <CalculatorChecklist
-            title="متى تصبح الأداة الإضافية أهم من الحاسبة الرئيسية؟"
-            description="عند الخصومات المتعددة أو تقسيم الميزانيات أو التغيرات المركبة."
-            content="بعض المسائل اليومية لا يكفيها تبويب واحد، مثل خصم 20% ثم 10%، أو تقسيم مبلغ بين ثلاث نسب، أو سلسلة ارتفاع وانخفاض متتابعة. لذلك أضفنا أدوات مكمّلة في نفس الصفحة بدل تشتيت المستخدم."
-          />
-        </div>
-      </CalculatorSection>
-
-      <CalculatorSection
         id="percent-table"
         eyebrow="مرجع سريع"
         title="جدول تحويلات مفيد للحساب الذهني"
+        description="هذه التحويلات لا تغني عن الحاسبة عند وجود أكثر من خطوة، لكنها تختصر الأسئلة المتكررة مثل 10% و20% و25% و50%."
       >
         <div className="calc-table-wrap">
-          <Table className="economy-table">
+          <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>النسبة</TableHead>
@@ -273,38 +189,66 @@ export default function PercentagePage() {
                 <TableCell>0.05</TableCell>
                 <TableCell>نصف الـ10%</TableCell>
               </TableRow>
+              <TableRow>
+                <TableCell>1%</TableCell>
+                <TableCell>1/100</TableCell>
+                <TableCell>0.01</TableCell>
+                <TableCell>أساس حساب النسبة بدقة</TableCell>
+              </TableRow>
             </TableBody>
           </Table>
         </div>
       </CalculatorSection>
 
       <CalculatorSection
-        id="percent-guides"
-        eyebrow="أدلة مرتبطة"
-        title="متى تحتاج شرحًا قبل الحاسبة؟"
-        description="هذه الأدلة تساعد المستخدم الذي يريد فهم الخصومات ونسبة التغير والنقاط المئوية قبل الانتقال إلى التبويب الصحيح داخل الحاسبة."
+        id="percent-sources"
+        eyebrow="المصادر والمنهج"
+        title="على ماذا يعتمد شرح النسبة في هذه الصفحة؟"
+        description="النسبة المئوية مفهوم رياضي ثابت، لكن طريقة عرضه للمستخدم العربي تحتاج أمثلة عملية. لذلك جمعنا بين تعريفات رياضية موثوقة وفجوات صفحات الحاسبات المنافسة."
         subtle
       >
-        <CalculatorResourceLinks items={RELATED_GUIDES} />
+        <div className="calc-resource-stack">
+          <a className="calc-resource-link calc-resource-link--soft" href="https://www.britannica.com/topic/percentage">
+            <span className="calc-resource-link__index">01</span>
+            <span className="calc-resource-link__copy">
+              <strong className="calc-card-title">Britannica: تعريف النسبة المئوية</strong>
+              <span className="calc-card-description">مرجع تعريفي يشرح أن النسبة قيمة نسبية من أجزاء المئة، وهو الأساس الذي تبنى عليه كل المعادلات في الصفحة.</span>
+            </span>
+          </a>
+          <a className="calc-resource-link calc-resource-link--soft" href="https://www.rapidtables.org/ar/calc/math/Percentage_Calculator.html">
+            <span className="calc-resource-link__index">02</span>
+            <span className="calc-resource-link__copy">
+              <strong className="calc-card-title">RapidTables Arabic: أمثلة معادلات النسبة</strong>
+              <span className="calc-card-description">مرجع عربي مختصر يعرض حالات النسبة من مبلغ، والنسبة من كل، والقيمة الكاملة، ونسبة التغيير.</span>
+            </span>
+          </a>
+          <a className="calc-resource-link calc-resource-link--soft" href="https://www.mathwords.com/p/percentage.htm">
+            <span className="calc-resource-link__index">03</span>
+            <span className="calc-resource-link__copy">
+              <strong className="calc-card-title">Mathwords: التحويل بين النسبة والعشري والكسر</strong>
+              <span className="calc-card-description">مرجع تعليمي مفيد لفهم لماذا 20% تساوي 0.20، ولماذا نضرب أو نقسم على 100 في الحسابات اليومية.</span>
+            </span>
+          </a>
+        </div>
       </CalculatorSection>
 
       <CalculatorSection
         id="percent-faq"
-        eyebrow="الأسئلة الشائعة"
+        eyebrow="قبل اعتماد النسبة"
         title="أسئلة تتكرر في الخصومات والدرجات والتغيرات"
       >
-        <CalculatorFaqSection items={CONTENT.faqItems} />
+        <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>
 
       <CalculatorSection
         id="percent-related"
-        eyebrow="روابط داخلية"
+        eyebrow="بعد النسبة"
         title="حاسبات مرتبطة بالنسب والتسعير"
+        description="إذا كان حساب النسبة جزءاً من فاتورة أو قرض أو مستحقات عمل، فانتقل إلى الأداة التي تكمل نفس القرار بدلاً من بدء بحث جديد."
       >
         <RelatedCalculators currentSlug="percentage" />
       </CalculatorSection>
 
-      <CalculatorFooterCta />
     </main>
   );
 }

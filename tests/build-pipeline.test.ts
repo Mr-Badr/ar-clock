@@ -6,7 +6,11 @@ import packageJson from '../package.json';
 test('build scripts regenerate holiday indexes before Next.js compilation', () => {
   const buildScript = packageJson?.scripts?.build || '';
   const smokeBuildScript = packageJson?.scripts?.['build:smoke'] || '';
+  const routeHealthScript = packageJson?.scripts?.['health:routes'] || '';
 
   assert.match(buildScript, /\bevents:build\b/);
   assert.match(smokeBuildScript, /\bevents:build\b/);
+  assert.match(buildScript, /\bseo:validate\b/);
+  assert.match(smokeBuildScript, /\bseo:validate\b/);
+  assert.match(routeHealthScript, /\broute-health-check\.ts\b/);
 });

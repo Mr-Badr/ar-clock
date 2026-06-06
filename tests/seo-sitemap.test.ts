@@ -5,58 +5,50 @@ process.env.NEXT_PUBLIC_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://
 
 import manifest from '@/data/holidays/generated/manifest.json';
 import { GENERATED_ALIAS_META_BY_SLUG } from '@/lib/events/generated-aliases';
+import blogSitemap from '@/app/blog/sitemap';
 import calculatorsSitemap from '@/app/calculators/sitemap';
-import economySitemap from '@/app/economie/sitemap';
-import guidesSitemap from '@/app/guides/sitemap';
 import holidaysSitemap from '@/app/holidays/sitemap';
 import rootSitemap from '@/app/sitemap';
 import { GET as sitemapIndexRoute } from '@/app/sitemap-index.xml/route';
 import { GET as gregorianDateSitemapRoute } from '@/app/date/gregorian/sitemap.xml/route';
 import { GET as hijriDateSitemapRoute } from '@/app/date/hijri/sitemap.xml/route';
+import { GET as calendarDateSitemapRoute } from '@/app/date/sitemaps/calendars/route';
 import robots from '@/app/robots';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { ALL_CALCULATOR_SEO_ROUTES } from '@/lib/seo/calculator-route-manifest';
-import { ECONOMY_SEO_ROUTES } from '@/lib/seo/economy-route-manifest';
+import {
+  DATE_DAILY_SITEMAP_WINDOW_DAYS,
+  GREGORIAN_CALENDAR_INDEXABLE_RANGE,
+  HIJRI_CALENDAR_INDEXABLE_RANGE,
+} from '@/lib/seo/date-indexing';
 import { getSiteUrl } from '@/lib/site-config';
 import { COUNTRY_LIST } from '@/lib/calculators/building/country-data';
 
-test('holiday sitemap contains published canonical events and their routable aliases', async () => {
+test('holiday sitemap contains published canonical events only', async () => {
   const sitemap = await holidaysSitemap();
   const publishedCanonicalSlugs = (manifest.events || [])
     .filter((row: { publishStatus?: string }) => ['published', 'monitored'].includes(String(row.publishStatus)))
     .map((row: { slug: string }) => row.slug)
     .sort();
-  const publishedCanonicalSet = new Set(publishedCanonicalSlugs);
-  const publishedAliasSlugs = Object.entries(GENERATED_ALIAS_META_BY_SLUG || {})
-    .filter(([, meta]) => meta?.canonicalSlug && publishedCanonicalSet.has(meta.canonicalSlug))
-    .map(([slug]) => slug)
-    .sort();
-  const expectedSlugs = [...publishedCanonicalSlugs, ...publishedAliasSlugs].sort();
 
   const sitemapSlugs = sitemap
     .map((row) => String(row.url).split('/holidays/')[1])
     .filter(Boolean)
     .sort();
 
-  assert.deepEqual(sitemapSlugs, expectedSlugs);
+  assert.deepEqual(sitemapSlugs, publishedCanonicalSlugs);
 });
 
-test('holiday sitemap only includes aliases for published canonicals', async () => {
+test('holiday sitemap excludes alias routes so duplicates do not compete with canonicals', async () => {
   const sitemap = await holidaysSitemap();
   const urls = sitemap.map((row) => String(row.url));
-  const publishedCanonicalSet = new Set(
-    (manifest.events || [])
-      .filter((row: { publishStatus?: string }) => ['published', 'monitored'].includes(String(row.publishStatus)))
-      .map((row: { slug: string }) => row.slug),
-  );
   const aliasEntries = Object.entries(GENERATED_ALIAS_META_BY_SLUG || {});
 
-  for (const [aliasSlug, meta] of aliasEntries) {
-    const shouldAppear = publishedCanonicalSet.has(meta?.canonicalSlug);
+  for (const [aliasSlug] of aliasEntries) {
     assert.equal(
       urls.some((url) => url.endsWith(`/holidays/${aliasSlug}`)),
-      shouldAppear,
-      `alias slug ${aliasSlug} should ${shouldAppear ? '' : 'not '}appear in sitemap`,
+      false,
+      `alias slug ${aliasSlug} should not appear in sitemap`,
     );
   }
 });
@@ -81,7 +73,7 @@ test('root sitemap includes key static pages', async () => {
     '/holidays',
     '/time-difference',
     '/calculators',
-    '/guides',
+    '/blog',
     '/about',
     '/editorial-policy',
     '/terms',
@@ -107,16 +99,18 @@ test('root sitemap includes key static pages', async () => {
     true,
     '/calculators/age should remain in the root sitemap as a promoted priority tool path',
   );
+  assert.equal(
+    sitemap.some((row) => row.url.includes('/guides') || row.url.includes('/guide/')),
+    false,
+    'root sitemap should not include legacy article aliases',
+  );
 });
 
-test('root sitemap promotes all calculator and economy tools as first-class routes', async () => {
+test('root sitemap promotes all calculator tools as first-class routes', async () => {
   const sitemap: Array<{ url: string }> = await rootSitemap();
   const base = getSiteUrl();
   const sitemapUrls = new Set(sitemap.map((row) => row.url));
-  const expectedPaths = [
-    ...ALL_CALCULATOR_SEO_ROUTES.map((route) => route.path),
-    ...ECONOMY_SEO_ROUTES.map((route) => route.path),
-  ];
+  const expectedPaths = ALL_CALCULATOR_SEO_ROUTES.map((route) => route.path);
 
   for (const expectedPath of expectedPaths) {
     assert.equal(
@@ -178,54 +172,33 @@ test('calculators sitemap includes hub and detail routes', async () => {
   }
 });
 
-test('economy sitemap includes all economy routes with site base urls', async () => {
-  const sitemap = await economySitemap();
-  const base = getSiteUrl();
-  const sitemapUrls = sitemap.map((row) => row.url);
-  const expectedPaths: string[] = [
-    '/economie',
-    '/economie/market-hours',
-    '/economie/us-market-open',
-    '/economie/gold-market-hours',
-    '/economie/forex-sessions',
-    '/economie/stock-markets',
-    '/economie/market-clock',
-    '/economie/best-trading-time',
-  ];
-
-  assert.equal(sitemapUrls.length, new Set(sitemapUrls).size, 'economy sitemap should not contain duplicate URLs');
-
-  for (const expectedPath of expectedPaths) {
-    assert.equal(
-      sitemapUrls.includes(`${base}${expectedPath}`),
-      true,
-      `${expectedPath} should appear in the economy sitemap`,
-    );
-  }
-});
-
-test('guides sitemap includes the guides hub and article routes', async () => {
-  const sitemap = await guidesSitemap();
+test('blog sitemap includes the blog hub and article routes', async () => {
+  const sitemap = await blogSitemap();
   const base = getSiteUrl();
   const sitemapUrls = sitemap.map((row) => row.url);
 
-  assert.equal(sitemapUrls.includes(`${base}/guides`), true);
-  assert.equal(sitemapUrls.length, new Set(sitemapUrls).size, 'guides sitemap should not contain duplicate URLs');
+  assert.equal(sitemapUrls.includes(`${base}/blog`), true);
+  assert.equal(sitemapUrls.length, new Set(sitemapUrls).size, 'blog sitemap should not contain duplicate URLs');
   assert.equal(
-    sitemapUrls.some((url) => String(url).startsWith(`${base}/guides/`)),
+    sitemapUrls.some((url) => url.includes('/guides') || url.includes('/guide/')),
+    false,
+    'blog sitemap should only publish canonical /blog article URLs',
+  );
+  assert.equal(
+    sitemapUrls.some((url) => String(url).startsWith(`${base}/blog/`)),
     true,
-    'guides sitemap should include article routes',
+    'blog sitemap should include article routes',
   );
 });
 
-test('sitemap index includes economy sitemap entry', async () => {
+test('sitemap index includes active sitemap entries', async () => {
   const base = getSiteUrl();
   const response = await sitemapIndexRoute();
   const xml = await response.text();
 
   assert.match(xml, new RegExp(`${base}/calculators/sitemap\\.xml`));
-  assert.match(xml, new RegExp(`${base}/economie/sitemap\\.xml`));
-  assert.match(xml, new RegExp(`${base}/guides/sitemap\\.xml`));
+  assert.match(xml, new RegExp(`${base}/blog/sitemap\\.xml`));
+  assert.doesNotMatch(xml, new RegExp(`${base}/date/sitemap\\.xml`));
   assert.match(xml, new RegExp(`${base}/date/sitemaps/static`));
   assert.match(xml, new RegExp(`${base}/date/sitemaps/countries`));
   assert.match(xml, new RegExp(`${base}/date/sitemaps/calendars`));
@@ -238,9 +211,42 @@ test('date daily sitemaps publish canonical Gregorian and Hijri day pages', asyn
 
   const gregorianXml = await (await gregorianDateSitemapRoute()).text();
   const hijriXml = await (await hijriDateSitemapRoute()).text();
+  const expectedUrlCount = DATE_DAILY_SITEMAP_WINDOW_DAYS * 2 + 1;
 
   assert.match(gregorianXml, new RegExp(`${base}/date/\\d{4}/\\d{2}/\\d{2}`));
   assert.match(hijriXml, new RegExp(`${base}/date/hijri/\\d{4}/\\d{2}/\\d{2}`));
+  assert.equal(
+    [...gregorianXml.matchAll(/<url>/g)].length,
+    expectedUrlCount,
+    'Gregorian daily sitemap should use the rolling daily-date window only',
+  );
+  assert.equal(
+    [...hijriXml.matchAll(/<url>/g)].length,
+    expectedUrlCount,
+    'Hijri daily sitemap should use the rolling daily-date window only',
+  );
+});
+
+test('calendar sitemap includes the full supported Gregorian and Hijri year ranges', async () => {
+  const base = getSiteUrl();
+  const xml = await (await calendarDateSitemapRoute()).text();
+
+  assert.match(
+    xml,
+    new RegExp(`${base}/date/calendar/${GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear}`),
+  );
+  assert.match(
+    xml,
+    new RegExp(`${base}/date/calendar/${GREGORIAN_CALENDAR_INDEXABLE_RANGE.maxYear}`),
+  );
+  assert.match(
+    xml,
+    new RegExp(`${base}/date/calendar/hijri/${HIJRI_CALENDAR_INDEXABLE_RANGE.minYear}`),
+  );
+  assert.match(
+    xml,
+    new RegExp(`${base}/date/calendar/hijri/${HIJRI_CALENDAR_INDEXABLE_RANGE.maxYear}`),
+  );
 });
 
 test('robots points crawlers to sitemap index', () => {

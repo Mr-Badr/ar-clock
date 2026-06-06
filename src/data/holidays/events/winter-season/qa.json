@@ -10,7 +10,10 @@
   },
   "notes": [
     "fact-source: timeanddate - Seasons",
-    "fact-source: Encyclopaedia Britannica - Winter solstice"
+    "fact-source: timeanddate - Winter Solstice",
+    "fact-source: Encyclopaedia Britannica - Winter solstice",
+    "fact-source: National Weather Service - Meteorological and Astronomical Seasons",
+    "review: rewritten around the 21/22 December timezone issue for Arab users, astronomical versus meteorological winter, and practical weather-reading guidance."
   ],
-  "updatedAt": "2026-04-10T00:00:00.000Z"
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

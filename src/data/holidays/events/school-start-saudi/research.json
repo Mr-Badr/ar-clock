@@ -1,209 +1,357 @@
 {
   "slug": "school-start-saudi",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.162Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
-    "متى تبدأ الدراسة في السعودية 2026",
-    "بداية الدراسة 1448",
-    "كم باقي على الدراسة في السعودية 1448",
-    "موعد الدراسة السعودية 23 أغسطس 2026",
-    "موعد بداية الدراسة في السعودية {{year}}",
     "متى تبدأ الدراسة في السعودية {{year}}",
+    "موعد بداية الدراسة في السعودية {{year}}",
     "كم باقي على الدراسة في السعودية {{year}}",
+    "بداية الدراسة في السعودية {{year}}",
+    "تاريخ بداية الدراسة في السعودية {{year}}",
     "التقويم الدراسي 1448 1449",
     "عودة الطلاب في السعودية {{year}}",
+    "اختلاف موعد الدراسة مكة جدة الطائف المدينة {{year}}",
     "الدراسة في السعودية 23 أغسطس {{year}}",
-    "بداية الدراسة في السعودية {{year}}",
-    "كم باقي على بداية الدراسة في السعودية {{year}}"
+    "الدراسة في السعودية 30 أغسطس {{year}}"
   ],
   "competitors": [
     {
-      "site": "saudicalculator",
-      "url": "https://www.saudicalculator.com/academic-calendar/school-start",
-      "strengths": [
-        "يمسك نية العد التنازلي مباشرة",
-        "يعرض 23 أغسطس 2026 بوضوح"
-      ],
-      "weaknesses": [
-        "لا يشرح اختلاف الإدارات التعليمية الغربية",
-        "يقدم جواباً واحداً قد لا يحل الالتباس لدى كل الأسر"
-      ]
+      "site": "moe.gov.sa",
+      "type": "official_reference",
+      "url": "https://moe.gov.sa/ar/education/generaleducation/Pages/academiccalendar.aspx"
     },
     {
-      "site": "saudicalendars",
-      "url": "https://saudicalendars.com/academic-calendar/",
-      "strengths": [
-        "يعرض الموعد العام والموعد المختلف لمكة والمدينة وجدة والطائف"
-      ],
-      "weaknesses": [
-        "صفحة تقويم لا صفحة SEO عربية متكاملة عن بداية الدراسة",
-        "لا تقدم شرحاً عملياً لسبب وجود التاريخين"
-      ]
+      "site": "saudicalendars.com",
+      "type": "arabic_calendar_competitor",
+      "url": "https://saudicalendars.com/academic-calendar/"
     },
+    {
+      "site": "saudicalculator.com",
+      "type": "arabic_countdown_competitor",
+      "url": "https://www.saudicalculator.com/academic-calendar/school-start"
+    },
+    {
+      "site": "saudicalendars.com",
+      "type": "arabic_event_reference",
+      "url": "https://saudicalendars.com/events/%D8%A8%D8%AF%D8%A7%D9%8A%D8%A9-%D8%A7%D9%84%D8%B9%D8%A7%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-2026-2027/"
+    },
+    {
+      "site": "officeholidays.com",
+      "type": "english_comparison",
+      "url": "https://www.officeholidays.com/countries/saudi-arabia/2026"
+    }
+  ],
+  "arabicCompetitors": [
     {
       "site": "moe.gov.sa",
-      "type": "reference",
-      "url": "https://moe.gov.sa/ar/education/generaleducation/Pages/rss.aspx",
-      "focus": [
-        "التاريخ الرسمي لـ بداية الدراسة في السعودية",
-        "سياق بداية الدراسة في السعودية"
+      "status": "usable",
+      "url": "https://moe.gov.sa/ar/education/generaleducation/Pages/academiccalendar.aspx",
+      "title": "التقويم الدراسي",
+      "metaDescription": "مرجع وزارة التعليم للتقويم الدراسي.",
+      "h1": "التقويم الدراسي",
+      "headings": [
+        "التقويم الدراسي"
       ],
-      "gaps": [
-        "غالباً لا تقدم صفحة عربية تجمع الموعد والشرح والعد التنازلي في مكان واحد."
+      "bodySummary": "هذه الصفحة هي أعلى مصدر ثقة لأنها تمثل المرجع الرسمي للتقويم الدراسي. لكنها لا تتحول وحدها إلى صفحة خدمية تجيب عن سؤال المستخدم بصيغة مباشرة، ولا تشرح له لماذا تظهر تواريخ مختلفة في بعض النتائج.",
+      "faq": [],
+      "tables": [
+        "جدول التقويم الدراسي"
+      ],
+      "examples": [],
+      "keywords": [
+        "التقويم الدراسي",
+        "وزارة التعليم"
+      ],
+      "schemaHints": [
+        "GovernmentOrganization",
+        "WebPage"
+      ],
+      "sources": [
+        "https://moe.gov.sa/ar/education/generaleducation/Pages/academiccalendar.aspx"
+      ],
+      "wordCount": 160,
+      "strengths": [
+        "مرجع رسمي",
+        "أعلى ثقة"
+      ],
+      "weaknesses": [
+        "لا يشرح نية البحث مباشرة",
+        "لا يفسر الالتباس بين التواريخ المتداولة"
       ]
     },
     {
       "site": "saudicalendars.com",
-      "type": "reference",
-      "url": "https://saudicalendars.com/events/%D8%A8%D8%AF%D8%A7%D9%8A%D8%A9-%D8%A7%D9%84%D8%B9%D8%A7%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-2026-2027/",
-      "focus": [
-        "التاريخ الرسمي لـ بداية الدراسة في السعودية",
-        "سياق بداية الدراسة في السعودية"
-      ],
-      "gaps": [
-        "غالباً لا تقدم صفحة عربية تجمع الموعد والشرح والعد التنازلي في مكان واحد."
-      ]
-    },
-    {
-      "site": "moe.gov.sa",
-      "type": "official",
-      "url": "https://moe.gov.sa",
-      "focus": [
+      "status": "usable",
+      "url": "https://saudicalendars.com/academic-calendar/",
+      "title": "التقويم الدراسي في السعودية",
+      "metaDescription": "تقويم دراسي مع توضيح بعض الاختلافات التعليمية.",
+      "h1": "التقويم الدراسي",
+      "headings": [
         "التقويم الدراسي",
-        "عودة الطلاب",
-        "الإعلانات الرسمية"
+        "مواعيد الإدارات التعليمية"
       ],
-      "gaps": [
-        "لا يقدّم عداداً تنازلياً سريعاً",
-        "لا يشرح للمستخدم سبب ظهور أكثر من تاريخ متداول عند وجود استثناءات"
-      ]
-    },
-    {
-      "site": "المواقع الإخبارية السعودية",
-      "type": "news",
-      "focus": [
-        "تاريخ العودة",
-        "التقويم الدراسي",
-        "الاستثناءات التعليمية"
+      "bodySummary": "أهم نقطة قوة هنا أنه يوضح الموعد العام مع ذكر اختلاف بعض الإدارات التعليمية الغربية. هذه هي الفجوة التي لا تعالجها أغلب صفحات العد التنازلي. لكنه يبقى أقرب إلى صفحة تقويم منه إلى صفحة شرح تساعد الأسرة على معرفة ماذا تفعل بالمعلومة.",
+      "faq": [],
+      "tables": [
+        "جدول المواعيد",
+        "فروق بعض الإدارات"
       ],
-      "gaps": [
-        "تغلب عليها الصياغة الخبرية المؤقتة",
-        "لا تبني مرجعاً دائماً للبحث المتكرر"
-      ]
-    },
-    {
-      "site": "صفحات العد التنازلي العربية",
-      "type": "countdown",
-      "focus": [
-        "كم باقي على الدراسة",
+      "examples": [
+        "إبراز 23 أغسطس مع 30 أغسطس لبعض الإدارات"
+      ],
+      "keywords": [
+        "التقويم الدراسي السعودية",
         "متى تبدأ الدراسة في السعودية"
       ],
-      "gaps": [
-        "ضعف في تفسير اختلاف التواريخ",
-        "نقص في الربط بين الموعد والقرار التعليمي الرسمي"
+      "schemaHints": [
+        "Article",
+        "Table"
+      ],
+      "sources": [
+        "https://saudicalendars.com/academic-calendar/"
+      ],
+      "wordCount": 420,
+      "strengths": [
+        "يعالج نقطة اختلاف التواريخ",
+        "مفيد في المقارنة"
+      ],
+      "weaknesses": [
+        "ضعيف في التوجيه العملي للأسرة",
+        "لا يبدأ دائماً بجواب مبسط"
       ]
+    },
+    {
+      "site": "saudicalculator.com",
+      "status": "usable",
+      "url": "https://www.saudicalculator.com/academic-calendar/school-start",
+      "title": "كم باقي على بداية الدراسة",
+      "metaDescription": "صفحة عد تنازلي لبداية الدراسة في السعودية.",
+      "h1": "كم باقي على بداية الدراسة",
+      "headings": [
+        "كم باقي على بداية الدراسة"
+      ],
+      "bodySummary": "هذه الصفحة تمسك نية العد التنازلي بشكل ممتاز وتخدم المستخدم الذي يريد جواباً سريعاً. لكنها لا تكفي وحدها لأن الصفحة الأقوى يجب أن تشرح أيضاً من أين جاء التاريخ، ومتى يكون غير كافٍ لبعض المناطق أو الإدارات التعليمية.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "جواب سريع بنية كم باقي"
+      ],
+      "keywords": [
+        "كم باقي على الدراسة",
+        "بداية الدراسة السعودية"
+      ],
+      "schemaHints": [
+        "WebPage"
+      ],
+      "sources": [
+        "https://www.saudicalculator.com/academic-calendar/school-start"
+      ],
+      "wordCount": 220,
+      "strengths": [
+        "قوي في العد التنازلي",
+        "جواب سريع"
+      ],
+      "weaknesses": [
+        "لا يفسر الاستثناءات",
+        "ضعيف في الشرح والتعليم"
+      ]
+    }
+  ],
+  "englishCompetitors": [
+    {
+      "site": "officeholidays.com",
+      "status": "usable_for_comparison",
+      "url": "https://www.officeholidays.com/countries/saudi-arabia/2026",
+      "title": "Saudi Arabia Public Holidays 2026",
+      "metaDescription": "Public holidays and observances in Saudi Arabia.",
+      "h1": "Saudi Arabia Public Holidays 2026",
+      "headings": [
+        "Public Holidays"
+      ],
+      "bodySummary": "Useful only as an English comparison for how date-based reference pages are structured. It does not answer the Saudi school-start query directly, but it helps benchmark simple date-first information architecture.",
+      "faq": [],
+      "tables": [
+        "Holiday table"
+      ],
+      "examples": [],
+      "keywords": [
+        "Saudi Arabia dates"
+      ],
+      "schemaHints": [
+        "WebPage",
+        "Table"
+      ],
+      "sources": [
+        "https://www.officeholidays.com/countries/saudi-arabia/2026"
+      ],
+      "wordCount": 180,
+      "strengths": [
+        "Simple date-first structure"
+      ],
+      "weaknesses": [
+        "Not the same search intent"
+      ]
+    },
+    {
+      "site": "timeanddate.com",
+      "status": "replaced",
+      "url": "https://www.timeanddate.com/holidays/saudi-arabia/",
+      "replacementReason": "Useful generally, but OfficeHolidays was enough for date-first comparison and the Saudi page needed Arabic competitive focus more than broad English holiday coverage."
+    },
+    {
+      "site": "edarabia.com",
+      "status": "usable_for_comparison",
+      "url": "https://www.edarabia.com/school-holidays-saudi-arabia/",
+      "title": "School Holidays in Saudi Arabia",
+      "metaDescription": "School holidays and term dates in Saudi Arabia.",
+      "h1": "School Holidays in Saudi Arabia",
+      "headings": [
+        "School Calendar"
+      ],
+      "bodySummary": "Useful for comparison on how educational calendars are wrapped for a general audience, but it is less precise than Arabic local pages on the exact difference between the general start date and western-region exceptions.",
+      "faq": [],
+      "tables": [
+        "School calendar table"
+      ],
+      "examples": [],
+      "keywords": [
+        "Saudi school holidays"
+      ],
+      "schemaHints": [
+        "Article",
+        "Table"
+      ],
+      "sources": [
+        "https://www.edarabia.com/school-holidays-saudi-arabia/"
+      ],
+      "wordCount": 260,
+      "strengths": [
+        "Family-friendly framing"
+      ],
+      "weaknesses": [
+        "Less exact on local exception logic"
+      ]
+    }
+  ],
+  "replacedOrBlockedCompetitors": [
+    {
+      "site": "generic news duplicates",
+      "status": "replaced",
+      "reason": "They repeated one of the two dates without adding durable explanatory value."
+    },
+    {
+      "site": "countdown-only pages without source logic",
+      "status": "replaced",
+      "reason": "Useful for quick intent capture, but too weak alone for a full rewrite."
     }
   ],
   "coverageMatrix": [
     {
-      "keyword": "متى تبدأ الدراسة في السعودية 2026",
-      "competitorCoverage": [
-        "saudicalculator",
-        "saudicalendars"
-      ],
-      "ourGap": false
+      "topic": "الجواب المباشر عن الموعد العام",
+      "arabicCoverage": "قوي",
+      "englishCoverage": "ضعيف",
+      "opportunity": "البدء بالجواب الواضح ثم ربطه بالسياق المحلي"
     },
     {
-      "keyword": "لماذا 23 أغسطس و30 أغسطس",
-      "competitorCoverage": [
-        "saudicalendars"
-      ],
-      "ourGap": false
+      "topic": "تفسير تضارب 23 و30 أغسطس",
+      "arabicCoverage": "متوسط",
+      "englishCoverage": "غائب",
+      "opportunity": "تحويل الالتباس إلى عنصر تعليمي أساسي في الصفحة"
     },
     {
-      "keyword": "كيف أعرف التاريخ الصحيح لمدرستي",
-      "competitorCoverage": [],
-      "ourGap": true
+      "topic": "كيف أعرف التاريخ الصحيح لمدرستي",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "غائب",
+      "opportunity": "إضافة قاعدة قرار مباشرة للأسر"
     },
     {
-      "keyword": "كيف أستعد لأول أسبوع دراسي",
-      "competitorCoverage": [],
-      "ourGap": true
+      "topic": "خطوات الاستعداد قبل أول أسبوع",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "متوسط بنيوياً فقط",
+      "opportunity": "إضافة قيمة عملية لا توفرها صفحات التقويم"
     },
     {
-      "keyword": "بداية الدراسة 1448",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "topic": "العد التنازلي وربطه بالتنفيذ",
+      "arabicCoverage": "قوي شكلياً",
+      "englishCoverage": "ضعيف",
+      "opportunity": "ربط العداد بالسؤال: أي تاريخ يخصني؟"
     },
     {
-      "keyword": "كم باقي على الدراسة في السعودية 1448",
-      "whyItMatters": "نية عد تنازلي مباشرة تناسب الباحث الذي يريد معرفة المدة المتبقية بسرعة."
+      "topic": "هل الموعد إجازة أم عودة",
+      "arabicCoverage": "غائب تقريباً",
+      "englishCoverage": "غائب",
+      "opportunity": "معالجة سؤال شائع بسرعة في FAQ"
     },
     {
-      "keyword": "موعد الدراسة السعودية 23 أغسطس 2026",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "الفرق بين التقويم العام والإدارات التعليمية",
+      "arabicCoverage": "متوسط",
+      "englishCoverage": "غائب",
+      "opportunity": "توضيح أن عدم التناقض لا يعني شمول الجميع بتاريخ واحد"
     },
     {
-      "keyword": "موعد بداية الدراسة في السعودية {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "ما الذي تراجعه الأسرة أولاً",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "ضعيف",
+      "opportunity": "إضافة ترتيب عملي للقرارات"
     }
   ],
   "keywordGaps": [
-    "اختلاف 23 أغسطس و30 أغسطس",
-    "بداية الدراسة مكة جدة الطائف المدينة 2026",
-    "كيف أعرف الموعد الصحيح لمدرستي",
-    "الاستعداد لأول أسبوع دراسي",
-    "جواب عربي مباشر يوضح معنى بداية الدراسة في السعودية وموعده في صفحة واحدة.",
-    "شرح سبب أهمية بداية الدراسة في السعودية ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
-    "تغطية الأسئلة العملية التي يطرحها القارئ قبل بداية الدراسة في السعودية أو أثناءه.",
-    "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط."
+    "لماذا أرى 23 أغسطس و30 أغسطس في الدراسة السعودية",
+    "بداية الدراسة في مكة وجدة والطائف والمدينة {{year}}",
+    "كيف أعرف التاريخ الصحيح لمدرستي في السعودية",
+    "هل جميع إدارات التعليم تبدأ في اليوم نفسه",
+    "كم باقي على بداية الدراسة في السعودية {{year}}",
+    "كيف أستعد لبداية الدراسة في السعودية {{year}}",
+    "هل بداية الدراسة في السعودية {{year}} إجازة",
+    "موعد الدراسة السعودية 1448 1449"
   ],
   "unansweredQuestions": [
     "هل يبدأ جميع الطلاب في السعودية في اليوم نفسه؟",
-    "ما سبب اختلاف الموعد بين بعض الصفحات؟",
+    "لماذا أرى 23 أغسطس و30 أغسطس في الوقت نفسه؟",
+    "كيف أعرف التاريخ الصحيح لمدرستي؟",
     "ما أول شيء يجب أن تراجعه الأسرة قبل العودة؟",
-    "متى تبدأ الدراسة في السعودية {{year}}؟",
-    "كم باقي على بداية الدراسة في السعودية؟",
-    "لماذا أرى 23 أغسطس في بعض الصفحات و30 أغسطس في صفحات أخرى؟",
-    "ما هي بداية الدراسة في السعودية؟",
-    "كيف أستعد لبداية الدراسة في السعودية؟"
+    "هل بداية الدراسة في السعودية إجازة أم عودة؟",
+    "ما الذي ينطبق علي إذا كنت في منطقة غربية؟"
   ],
-  "differentiationIdeas": [
-    "تحويل تضارب 23 و30 أغسطس إلى نقطة قوة شرح واضحة",
-    "إضافة توجيه عملي للأسرة بدل العدّاد وحده",
-    "بناء صفحة تجمع الموعد العام والاستثناءات المعروفة في مكان واحد",
-    "جواب مباشر عن موعد بداية الدراسة في السعودية في بداية الصفحة قبل أي شرح إضافي.",
-    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر.",
-    "أسئلة شائعة عملية تساعد القارئ على فهم بداية الدراسة في السعودية والتصرف بناءً عليه."
-  ],
+  "competitorMatrix": {
+    "strengths": [
+      "وجود مرجع رسمي قوي",
+      "توفر صفحات عد تنازلي سريعة",
+      "وجود منافس عربي يوضح فرق التاريخين"
+    ],
+    "weaknesses": [
+      "قلة الشرح العملي",
+      "ضعف في ربط التاريخ بالقرار المحلي للمستخدم",
+      "غياب جواب واضح عمّا يجب فعله بعد معرفة الموعد"
+    ],
+    "missingTopics": [
+      "قاعدة قرار للأسر بحسب الإدارة التعليمية",
+      "خطوات الاستعداد قبل أول أسبوع",
+      "جواب صريح عن سؤال الإجازة أو العودة"
+    ],
+    "uniqueOpportunities": [
+      "تحويل تضارب التواريخ إلى نقطة قوة",
+      "بناء صفحة عربية تعلم القارئ كيف يحدد ما ينطبق عليه",
+      "الجمع بين العد التنازلي والثقة الرسمية والقرار العملي"
+    ]
+  },
   "factSources": [
     {
-      "label": "وزارة التعليم السعودية RSS: بداية العام الدراسي 1448 - 1449 هـ",
-      "url": "https://moe.gov.sa/ar/education/generaleducation/Pages/rss.aspx"
-    },
-    {
-      "label": "تقويم السعودية: بداية العام الدراسي 2026-2027",
-      "url": "https://saudicalendars.com/events/%D8%A8%D8%AF%D8%A7%D9%8A%D8%A9-%D8%A7%D9%84%D8%B9%D8%A7%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-2026-2027/"
-    },
-    {
-      "label": "تقويم السعودية: التقويم الدراسي مع اختلاف الإدارات الغربية",
-      "url": "https://saudicalendars.com/academic-calendar/"
-    },
-    {
-      "label": "حاسبة السعودية: كم باقي على المدرسة 1448",
-      "url": "https://www.saudicalculator.com/academic-calendar/school-start"
-    },
-    {
-      "label": "وزارة التعليم - السعودية",
-      "url": "https://moe.gov.sa"
-    },
-    {
-      "label": "التقويم الدراسي - وزارة التعليم السعودية",
+      "label": "وزارة التعليم السعودية - التقويم الدراسي",
       "url": "https://moe.gov.sa/ar/education/generaleducation/Pages/academiccalendar.aspx"
     },
     {
-      "label": "المنصة الوطنية الموحدة - التعليم",
-      "url": "https://www.my.gov.sa"
+      "label": "تقويم السعودية - بداية العام الدراسي",
+      "url": "https://saudicalendars.com/events/%D8%A8%D8%AF%D8%A7%D9%8A%D8%A9-%D8%A7%D9%84%D8%B9%D8%A7%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-2026-2027/"
+    },
+    {
+      "label": "تقويم السعودية - التقويم الدراسي مع اختلاف الإدارات الغربية",
+      "url": "https://saudicalendars.com/academic-calendar/"
+    },
+    {
+      "label": "حاسبة السعودية - بداية الدراسة",
+      "url": "https://www.saudicalculator.com/academic-calendar/school-start"
     }
   ],
-  "notes": "أكبر فرصة في هذه الصفحة هي أن الباحث السعودي يرى تاريخين مختلفين كثيراً في النتائج. الصفحة تربح إذا فسرت هذا التضارب بوضوح وربطته بالمستخدم مباشرة."
+  "notes": "الخلاصة الأهم من البحث أن الصفحة السعودية تكسب عندما تشرح للمستخدم لماذا يظهر تاريخان في النتائج، لا عندما تختار واحداً منهما فحسب. السؤال الصحيح ليس ما الموعد العام فقط، بل ما التاريخ الذي ينطبق على مدرستي أو إدارتي التعليمية فعلاً."
 }

@@ -3,16 +3,34 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
-function scheduleIdleWork(callback, timeout = 1200) {
+function scheduleIdleWork(callback, timeout) {
   if (typeof window === 'undefined') return () => {};
 
+  const delay = Number.isFinite(timeout) ? timeout : 1200;
+
   if ('requestIdleCallback' in window) {
-    const id = window.requestIdleCallback(callback, { timeout });
+    const id = window.requestIdleCallback(callback, { timeout: delay });
     return () => window.cancelIdleCallback(id);
   }
 
-  const id = window.setTimeout(callback, timeout);
+  const id = window.setTimeout(callback, delay);
   return () => window.clearTimeout(id);
+}
+
+function canRunRouteWarmup() {
+  if (typeof navigator === 'undefined') return false;
+
+  const connection =
+    navigator.connection ||
+    navigator.mozConnection ||
+    navigator.webkitConnection;
+
+  if (connection?.saveData) return false;
+  if (connection?.effectiveType === 'slow-2g' || connection?.effectiveType === '2g') {
+    return false;
+  }
+
+  return true;
 }
 
 export function useIntentPrefetch() {
@@ -43,18 +61,23 @@ export function useIntentPrefetch() {
   };
 }
 
-export function useIdleRouteWarmup(routes, options = {}) {
-  const { enabled = true, timeout = 1200 } = options;
+export function useIdleRouteWarmup(routes, options) {
+  const routeList = Array.isArray(routes) ? routes : [];
+  const warmupOptions = options && typeof options === 'object' ? options : {};
+  const enabled = warmupOptions.enabled !== false;
+  const timeout = Number.isFinite(warmupOptions.timeout) ? warmupOptions.timeout : 1200;
+  const limit = Number.isInteger(warmupOptions.limit) ? warmupOptions.limit : 4;
   const { prefetchMany } = useIntentPrefetch();
 
   const normalizedRoutes = useMemo(
-    () => routes.filter(Boolean),
-    [routes],
+    () => routeList.filter(Boolean).slice(0, limit),
+    [routeList, limit],
   );
   const routesKey = normalizedRoutes.join('|');
 
   useEffect(() => {
     if (!enabled || normalizedRoutes.length === 0) return undefined;
+    if (!canRunRouteWarmup()) return undefined;
 
     return scheduleIdleWork(() => {
       prefetchMany(normalizedRoutes);

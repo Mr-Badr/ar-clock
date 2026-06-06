@@ -2,12 +2,17 @@
   "slug": "ramadan",
   "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:37.027Z"
+  "notes": [
+    "fact-source: القرآن الكريم — سورة البقرة 183",
+    "fact-source: القرآن الكريم — سورة البقرة 185",
+    "fact-source: الإسلام سؤال وجواب — إذا لم تثبت رؤية هلال شوال فيجب إكمال رمضان ثلاثين يوماً",
+    "fact-source: Timeanddate — Ramadan Start"
+  ],
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

@@ -69,7 +69,7 @@ interface AdLayoutWrapperProps {
   children: React.ReactNode;
   /** Hide both sidebars (short pages, special layouts) */
   hideSidebars?: boolean;
-  /** Standard = broad content pages, narrow = denser tool pages such as economy */
+  /** Standard = broad content pages, narrow = denser tool pages */
   layout?: "standard" | "narrow";
   /** single = one sticky rail, dual = sticky right + static left, none = content only */
   sidebarMode?: "single" | "dual" | "none";
@@ -77,15 +77,18 @@ interface AdLayoutWrapperProps {
 
 export default function AdLayoutWrapper({
   children,
-  hideSidebars = false,
-  layout = "standard",
-  sidebarMode = "single",
+  hideSidebars,
+  layout,
+  sidebarMode,
 }: AdLayoutWrapperProps) {
   const { enabled, manualSlots } = getServerAdsConfig();
+  const shouldHideSidebars = hideSidebars === true;
+  const resolvedLayout = layout ?? "standard";
+  const requestedSidebarMode = sidebarMode ?? "single";
   const adsEnabled = enabled && Boolean(
     manualSlots.sidebar || manualSlots.sidebarRight || manualSlots.sidebarLeft,
   );
-  const resolvedSidebarMode = hideSidebars ? "none" : sidebarMode;
+  const resolvedSidebarMode = shouldHideSidebars ? "none" : requestedSidebarMode;
 
   if (!adsEnabled || resolvedSidebarMode === "none") {
     return <>{children}</>;
@@ -94,7 +97,7 @@ export default function AdLayoutWrapper({
   return (
     <div
       className="layout-with-ads"
-      data-layout={layout}
+      data-layout={resolvedLayout}
       data-rail-mode={resolvedSidebarMode}
     >
 

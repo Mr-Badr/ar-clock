@@ -33,7 +33,7 @@ export default function TodayClientHydration({ serverDate }: TodayClientHydratio
 
   return (
     <div className="flex items-center gap-2 bg-info-soft border border-info-border rounded-[var(--radius)] px-4 py-3 text-sm text-info mb-4">
-      <span className="text-lg leading-none">🕐</span>
+      <span className="badge badge-info">تنبيه</span>
       <span className="leading-relaxed">
         بتوقيتك المحلي، اليوم هو <strong>{dayName} {d} {monthName} {y}</strong>.
         التاريخ المعروض أعلاه قد يختلف قليلاً بسبب فارق التوقيت.

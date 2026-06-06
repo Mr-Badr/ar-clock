@@ -11,7 +11,9 @@
   "notes": [
     "fact-source: وزارة التعليم السعودية",
     "fact-source: وزارة التربية الكويتية - التقويم الدراسي",
-    "fact-source: وزارة التربية والتعليم الإماراتية"
+    "fact-source: وزارة التربية والتعليم الإماراتية",
+    "2026-06-01: Revalidated authored package against current official school-calendar examples. The page still correctly avoids inventing one pan-Arab spring-vacation date, explains naming and timing differences across systems, and guides families to the right local calendar path.",
+    "2026-06-01: Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. Not marked done in the rollout checklist because generated holiday bundles were intentionally not rebuilt."
   ],
-  "updatedAt": "2026-04-10T00:00:00.000Z"
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

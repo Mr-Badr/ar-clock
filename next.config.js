@@ -114,11 +114,6 @@ const nextConfig = {
         headers: SHARED_HTML_CACHE_HEADERS,
       },
       {
-        source: '/economie/:path*',
-        headers: SHARED_HTML_CACHE_HEADERS,
-      },
-
-      {
         source: '/time-now/:path*/opengraph-image',
         headers: SHARED_OG_IMAGE_HEADERS,
       },
@@ -190,12 +185,22 @@ const nextConfig = {
       },
       {
         source: '/guide',
-        destination: '/guides',
+        destination: '/blog',
         permanent: true,
       },
       {
         source: '/guide/:slug*',
-        destination: '/guides/:slug*',
+        destination: '/blog/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/guides',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/guides/:slug*',
+        destination: '/blog/:slug*',
         permanent: true,
       },
       {

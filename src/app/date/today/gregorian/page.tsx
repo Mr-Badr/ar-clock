@@ -6,24 +6,52 @@ import { convertDate } from '@/lib/date-adapter';
 import { GREGORIAN_MONTHS_AR, DAY_NAMES_AR } from '@/lib/constants';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
+import {
+  DateEditorialSections,
+  buildDateFaqJsonLd,
+  type DateFaqItem,
+  type DateInsightItem,
+} from '@/components/date/DateEditorialSections';
+import DateRouteLoading from '@/components/date/DateRouteLoading';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { Moon, ArrowLeftRight, CalendarDays } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
+import { buildDateKeywords } from '@/lib/seo/section-search-intent';
+import { logger, serializeError } from '@/lib/logger';
 
 const BASE_URL = getSiteUrl();
 
 export const metadata: Metadata = {
-  title: 'كم التاريخ الميلادي اليوم؟ | اليوم والشهر والسنة كاملة',
-  description: 'اعرف التاريخ الميلادي اليوم مع اليوم من السنة، ورقم الأسبوع، والتاريخ الهجري الموافق وروابط أدوات التاريخ.',
+  title: 'التاريخ الميلادي اليوم | رقم الأسبوع وصيغة ISO والتاريخ الهجري',
+  description: 'اعرف التاريخ الميلادي اليوم، رقم الأسبوع، اليوم من السنة، صيغة ISO 8601، الربع السنوي، والتاريخ الهجري الموافق مع قاعدة كتابة التاريخ دون التباس.',
+  keywords: buildDateKeywords(),
   alternates: { canonical: `${BASE_URL}/date/today/gregorian` },
   openGraph: {
-    title: 'كم التاريخ الميلادي اليوم؟',
-    description: 'تفاصيل التاريخ الميلادي اليوم مع التاريخ الهجري الموافق وروابط الأدوات.',
+    title: 'التاريخ الميلادي اليوم',
+    description: 'التاريخ الميلادي اليوم مع رقم الأسبوع، اليوم من السنة، صيغة ISO، والتاريخ الهجري الموافق.',
     url: `${BASE_URL}/date/today/gregorian`,
     locale: 'ar_SA',
   },
 };
+
+const GREGORIAN_SOURCE_LINKS = [
+  {
+    href: 'https://www.iso8601.com/',
+    label: 'ISO 8601',
+    description: 'مرجع مبسط لصيغة السنة-الشهر-اليوم، وأرقام الأسابيع، والتواريخ الرقمية الأقل التباساً.',
+  },
+  {
+    href: 'https://www.timeanddate.com/date/weeknumber.html',
+    label: 'Timeanddate: رقم الأسبوع',
+    description: 'شرح عملي لرقم الأسبوع وكيف تختلف قراءة الأسبوع بين الأنظمة.',
+  },
+  {
+    href: 'https://www.britannica.com/science/calendar/The-Gregorian-calendar',
+    label: 'Britannica: التقويم الغريغوري',
+    description: 'خلفية عن التقويم الميلادي وقاعدة السنة الكبيسة في النظام الغريغوري.',
+  },
+];
 
 
 
@@ -45,16 +73,40 @@ function getJulianDay(year: number, month: number, day: number): number {
   return Math.floor(jsDate.getTime() / 86400000) + 2440587.5;
 }
 
+async function getTodayGregorianNow(): Promise<Date> {
+  try {
+    const nowIso = await getCachedNowIso();
+    const now = new Date(nowIso);
+    if (Number.isNaN(now.getTime())) {
+      throw new Error('getCachedNowIso returned an invalid ISO date');
+    }
+    return now;
+  } catch (error) {
+    logger.warn('date-today-gregorian-current-date-fallback-used', {
+      routePath: '/date/today/gregorian',
+      error: serializeError(error),
+    });
+    return new Date();
+  }
+}
+
 export default function TodayGregorianPage() {
   return (
-    <Suspense fallback={<div className="h-screen animate-pulse bg-surface-1" />}>
+    <Suspense
+      fallback={(
+        <DateRouteLoading
+          title="جاري تجهيز التاريخ الميلادي اليوم"
+          description="نجهز التاريخ الميلادي، رقم الأسبوع، اليوم من السنة، والصيغة الرقمية."
+        />
+      )}
+    >
       <TodayGregorianDynamicContent />
     </Suspense>
   );
 }
 
 async function TodayGregorianDynamicContent() {
-  const now = new Date(await getCachedNowIso());
+  const now = await getTodayGregorianNow();
   const y = now.getUTCFullYear();
   const m = now.getUTCMonth() + 1;
   const d = now.getUTCDate();
@@ -71,7 +123,14 @@ async function TodayGregorianDynamicContent() {
   let hijri;
   try {
     hijri = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' });
-  } catch { }
+  } catch (error) {
+    logger.warn('date-today-gregorian-hijri-conversion-failed', {
+      error: serializeError(error),
+      date: isoDate,
+      method: 'umalqura',
+      toCalendar: 'hijri',
+    });
+  }
 
   const breadcrumb = [
     { label: 'الرئيسية', href: '/' },
@@ -84,86 +143,262 @@ async function TodayGregorianDynamicContent() {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: 'التاريخ الميلادي اليوم',
+    description: 'التاريخ الميلادي اليوم مع رقم الأسبوع واليوم من السنة وصيغة ISO 8601 والتاريخ الهجري الموافق.',
     url: `${BASE_URL}/date/today/gregorian`,
     breadcrumb: buildBreadcrumbJsonLd(breadcrumb, BASE_URL),
   };
 
+  const faqItems: DateFaqItem[] = [
+    {
+      question: 'كم التاريخ الميلادي اليوم؟',
+      answer: `التاريخ الميلادي اليوم هو ${d} ${GREGORIAN_MONTHS_AR[m - 1]} ${y}، ويوافق يوم ${dayOfWeek}. تعرض الصفحة أيضاً رقم الأسبوع واليوم من السنة حتى لا تحتاج إلى أكثر من أداة.`,
+    },
+    {
+      question: 'ما فائدة معرفة اليوم من السنة؟',
+      answer: `اليوم هو رقم ${dayOfYear} من أصل ${daysInYear} يوماً في سنة ${isLeap ? 'كبيسة' : 'بسيطة'}. هذه المعلومة مفيدة في الجداول الدراسية، العقود، التخطيط السنوي، ومتابعة المدد الزمنية الطويلة.`,
+    },
+    {
+      question: 'هل يعرض الموقع التاريخ الهجري الموافق؟',
+      answer: hijri
+        ? `نعم، التاريخ الهجري الموافق اليوم هو ${hijri.formatted.ar} وفق تقويم أم القرى، ويمكنك فتح صفحة التاريخ الهجري اليوم لمقارنة طرق الحساب.`
+        : 'نعم، تعرض صفحات التاريخ الهجري التاريخ الموافق متى كان التحويل ضمن النطاق المدعوم.',
+    },
+    {
+      question: 'لماذا تظهر صيغة ISO 8601 في الصفحة؟',
+      answer: `صيغة ${isoDate} مفيدة عند إدخال التاريخ في الأنظمة التقنية والنماذج الرقمية لأنها تقلل الالتباس بين ترتيب اليوم والشهر، خصوصاً عند التعامل مع خدمات دولية.`,
+    },
+    {
+      question: 'متى أستخدم صيغة عربية بدلاً من ISO؟',
+      answer: 'استخدم الصيغة العربية عندما تراسل شخصاً أو تنشر موعداً للقراءة البشرية، مثل: اليوم والشهر بالحروف. استخدم ISO عندما تدخل التاريخ في نظام، جدول، ملف، أو خدمة دولية.',
+    },
+    {
+      question: 'هل رقم الأسبوع هو نفسه في كل الدول؟',
+      answer: 'ليس دائماً. هذه الصفحة تعرض رقم الأسبوع بطريقة ISO التي تبدأ الأسبوع يوم الاثنين، بينما قد تستخدم بعض الدول أو التطبيقات بداية أسبوع مختلفة. لذلك اذكر نظام الأسبوع عند التقارير الحساسة.',
+    },
+    {
+      question: 'هل التاريخ الميلادي يتغير حسب المنطقة الزمنية؟',
+      answer: 'نعم قرب منتصف الليل. قد يدخل يوم جديد في بلد قبل بلد آخر، لذلك استخدم التاريخ المحلي لجهازك أو صفحة الوقت الان إذا كان الموعد مرتبطاً بمكالمة أو سفر.',
+    },
+  ];
+
+  const insights: DateInsightItem[] = [
+    {
+      badge: 'إجابة مباشرة',
+      title: 'التاريخ الكامل يظهر في أول الشاشة',
+      body: 'يعرض العنوان اليوم والشهر والسنة بوضوح، ثم يضيف اليوم من الأسبوع والتاريخ الهجري الموافق حتى تحصل على الجواب قبل أي تفاصيل إضافية.',
+      tone: 'accent',
+    },
+    {
+      badge: 'تخطيط سنوي',
+      title: 'الأسبوع واليوم من السنة يختصران الحساب اليدوي',
+      body: 'بدلاً من عد الأيام في التقويم، تظهر الصفحة رقم الأسبوع، الربع السنوي، اليوم من السنة، وعدد الأيام المتبقية حتى نهاية العام.',
+      tone: 'success',
+    },
+    {
+      badge: 'أقل التباساً',
+      title: 'استخدم ISO عند النسخ إلى التطبيقات',
+      body: 'صيغة السنة-الشهر-اليوم مناسبة للنماذج التقنية والجداول، بينما الصيغة العربية مناسبة للقراءة والمشاركة مع الأشخاص.',
+      tone: 'info',
+    },
+    {
+      badge: 'منطقة زمنية',
+      title: 'قرب منتصف الليل راجع الوقت المحلي',
+      body: 'إذا كنت تخطط لموعد دولي، فقد يكون اليوم الميلادي مختلفاً بين بلدين في اللحظة نفسها. اربط التاريخ بالوقت والمنطقة الزمنية عند السفر أو الاجتماعات.',
+      tone: 'warning',
+    },
+  ];
+
   return (
     <>
-      <JsonLd data={jsonLd} />
+      <JsonLd
+        data={[
+          jsonLd,
+          buildDateFaqJsonLd({
+            pageName: 'أسئلة التاريخ الميلادي اليوم',
+            items: faqItems,
+          }),
+        ]}
+      />
       <AdLayoutWrapper>
         <main className="content-col pt-24 pb-20 mt-12">
           <DateBreadcrumb items={breadcrumb} />
 
-          {/* HERO */}
-          <section className="bg-surface-1 border border-border rounded-[var(--radius)] px-6 py-10 md:py-12 mb-6 text-center shadow-sm">
-            <div className="text-sm font-medium text-muted mb-2">
-              {dayOfWeek}
+          <section className="date-hero-panel mb-6">
+            <div className="date-hero-main">
+              <div className="date-kicker">{dayOfWeek}</div>
+              <h1 className="date-hero-title text-accent-alt">
+                {d} {GREGORIAN_MONTHS_AR[m - 1]} {y}
+              </h1>
+              {hijri && (
+                <p className="date-hero-copy mb-0">
+                  الموافق هجرياً: <strong className="text-primary">{hijri.formatted.ar}</strong>
+                </p>
+              )}
+              <p className="date-hero-copy mb-0">
+                ستجد أيضاً رقم الأسبوع، اليوم من السنة، الربع السنوي، وصيغة ISO حتى تختار
+                الشكل المناسب للنماذج أو الرسائل أو التخطيط.
+              </p>
             </div>
-            <h1 className="text-[clamp(2.5rem,7vw,4.5rem)] font-black text-accent-alt leading-[1.1] m-0 mb-3 md:mb-4">
-              {d} {GREGORIAN_MONTHS_AR[m - 1]} {y}
-            </h1>
-            {hijri && (
-              <div className="text-base md:text-lg font-medium text-muted">
-                الموافق: <span className="text-primary font-bold ml-1">{hijri.formatted.ar}</span>
+            <div className="date-hero-rail" aria-label="إجراءات تاريخ اليوم الميلادي">
+              <div>
+                <div className="date-hero-answer">{isoDate}</div>
+                <p className="date-hero-note mb-0">
+                  صيغة مناسبة للنماذج والأنظمة الرقمية.
+                </p>
               </div>
-            )}
+              <div className="date-hero-actions">
+                <Link href="/date/today/hijri" className="date-hero-link date-hero-link--primary">
+                  اعرض التاريخ الهجري
+                  <span aria-hidden="true">←</span>
+                </Link>
+                <Link href="/date/converter" className="date-hero-link">
+                  حوّل تاريخاً آخر
+                  <span aria-hidden="true">←</span>
+                </Link>
+              </div>
+            </div>
           </section>
 
-          {/* DATE FACTS GRID */}
-          <section className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+          <section className="date-stat-grid mb-6">
             {[
               { label: 'اليوم من السنة', value: `${dayOfYear} / ${daysInYear}` },
               { label: 'أسبوع رقم', value: weekNum },
               { label: 'تبقى للسنة', value: `${daysLeft} يوم` },
-              { label: 'ربع السنة', value: `Q${quarter}` },
-              { label: 'Julian Day', value: Math.floor(jd).toLocaleString('en') },
-              { label: 'ISO 8601', value: isoDate },
+              { label: 'الربع السنوي', value: `الربع ${quarter}` },
+              { label: 'اليوم اليولياني', value: Math.floor(jd).toLocaleString('en') },
+              { label: 'صيغة ISO 8601', value: isoDate },
             ].map((f, i) => (
               <div
                 key={i}
-                className="bg-surface-1 border border-border rounded-[var(--radius)] p-4 text-center shadow-sm"
+                className="date-stat-item"
               >
-                <div
-                  className="text-lg md:text-xl font-bold text-accent-alt"
-                  style={{ fontVariantNumeric: 'tabular-nums' }}
-                >
+                <div className="date-stat-value">
                   {f.value}
                 </div>
-                <div className="text-xs text-muted mt-1.5 font-medium">
+                <div className="date-stat-label">
                   {f.label}
                 </div>
               </div>
             ))}
           </section>
 
-          {/* MONTH INFO */}
-          <section className="bg-surface-1 border border-border rounded-[var(--radius)] p-6 mb-8 shadow-sm">
-            <h2 className="text-lg md:text-xl font-bold text-primary mb-4 pb-2 border-b border-border/50">
+          <section className="date-detail-panel mb-8">
+            <h2 className="date-section-title">
               معلومات الشهر والسنة
             </h2>
-            <div className="flex flex-col gap-1">
+            <div className="date-detail-list">
               {[
                 ['الشهر', GREGORIAN_MONTHS_AR[m - 1]],
                 ['عدد أيام الشهر', new Date(y, m, 0).getDate()],
                 ['نوع السنة', isLeap ? 'سنة كبيسة (366 يوم)' : 'سنة بسيطة (365 يوم)'],
-                ['التاريخ الهجري الموافق', hijri ? hijri.formatted.ar : '—'],
-              ].map(([label, val], i, arr) => (
+                ['التاريخ الهجري الموافق', hijri ? hijri.formatted.ar : 'غير متاح'],
+              ].map(([label, val], i) => (
                 <div
                   key={i}
-                  className={`flex flex-col sm:flex-row sm:justify-between sm:items-center py-3 text-sm ${i < arr.length - 1 ? 'border-b border-border/50' : ''
-                    }`}
+                  className="date-detail-row"
                 >
-                  <span className="text-muted font-medium mb-1 sm:mb-0">{label}</span>
-                  <span className="font-bold text-primary">{val}</span>
+                  <span className="date-detail-label">{label}</span>
+                  <span className="date-detail-value">{val}</span>
                 </div>
               ))}
             </div>
           </section>
 
-          {/* LINKS */}
-          <nav aria-label="روابط ذات صلة" className="related-links mt-8" dir="rtl">
-            <p className="related-links__heading">صفحات ذات صلة</p>
+          <DateEditorialSections
+            badge="شرح عملي"
+            title="التاريخ الميلادي اليوم مع سياق يساعدك على استخدامه"
+            intro="اعرف اليوم والشهر والسنة، ثم استخدم التفاصيل الإضافية للتخطيط، تعبئة النماذج، أو ربط التاريخ الميلادي بالتاريخ الهجري."
+            insights={insights}
+            faqTitle="أسئلة قبل نسخ تاريخ اليوم الميلادي أو إدخاله في نموذج"
+            faqItems={faqItems}
+          />
+
+          <section className="date-editorial-grid date-section">
+            <div className="max-w-3xl space-y-4">
+              <h2 className="date-editorial-title">لماذا لا يكفي عرض التاريخ كرقم فقط؟</h2>
+              <p className="date-editorial-copy">
+                كثير من النماذج والرسائل تحتاج التاريخ بصيغة مختلفة: صيغة عربية للقراءة، وصيغة رقمية للأنظمة، ورقم أسبوع للتخطيط، وتاريخ هجري للمناسبات. لذلك تعرض الصفحة التاريخ الميلادي اليوم مع معلومات تساعدك على نسخه واستخدامه في العمل أو الدراسة أو المواعيد الرسمية دون الرجوع إلى تقويم آخر.
+              </p>
+              <p className="date-editorial-copy">
+                عند إرسال التاريخ في رسالة أو نموذج، استخدم الصيغة العربية للقراءة والصيغة الرقمية عند التعامل مع نظام إلكتروني حتى لا يحدث لبس بين ترتيب اليوم والشهر.
+              </p>
+              <p className="date-editorial-copy">
+                رقم الأسبوع والربع السنوي يفيدان في العمل والدراسة أكثر مما يبدو للوهلة الأولى. فرق المتابعة، الجداول الدراسية، خطط المحتوى، ومواعيد التسليم تعتمد أحياناً على الأسبوع لا على اسم اليوم فقط. لذلك تجمع الصفحة بين الصيغة البشرية والصيغة التنظيمية في مكان واحد.
+              </p>
+              <p className="date-editorial-copy">
+                إذا كنت تنقل التاريخ إلى نظام أجنبي، فاستخدم صيغة ISO لأنها تبدأ بالسنة ثم الشهر ثم اليوم. أما في الرسائل العربية فاكتب اليوم والشهر بالحروف حتى لا يختلط ترتيب الأرقام، خصوصاً عندما يكون اليوم والشهر كلاهما أقل من 13.
+              </p>
+            </div>
+            <div className="date-use-list">
+              <article className="date-use-item">
+                <h3 className="date-use-title">للنماذج</h3>
+                <p className="date-use-copy">استخدم صيغة ISO عند تعبئة الأنظمة الرقمية لتقليل الخطأ في ترتيب الشهر واليوم.</p>
+              </article>
+              <article className="date-use-item">
+                <h3 className="date-use-title">للتخطيط</h3>
+                <p className="date-use-copy">راجع رقم الأسبوع واليوم من السنة عند متابعة خطط طويلة أو مواعيد مرتبطة بفترة زمنية.</p>
+              </article>
+              <article className="date-use-item">
+                <h3 className="date-use-title">للمشاركة</h3>
+                <p className="date-use-copy">اكتب اسم الشهر بالعربية عند إرسال التاريخ لشخص حتى تكون القراءة واضحة وسريعة.</p>
+              </article>
+            </div>
+          </section>
+
+          <section className="date-editorial-grid date-section">
+            <div className="max-w-3xl space-y-4">
+              <h2 className="date-editorial-title">قاعدة كتابة التاريخ الميلادي دون التباس</h2>
+              <p className="date-editorial-copy">
+                إذا كان التاريخ موجهاً لشخص، فاكتب الشهر بالحروف: {d} {GREGORIAN_MONTHS_AR[m - 1]} {y}.
+                وإذا كان موجهاً لنظام أو جدول بيانات، فاستخدم صيغة {isoDate}. بهذه الطريقة تقلل احتمال
+                الخلط بين اليوم والشهر، خصوصاً في التواريخ التي يكون فيها الرقمان أقل من 13.
+              </p>
+              <p className="date-editorial-copy">
+                لا تعتمد على رقم الأسبوع وحده إلا إذا كان الطرف الآخر يستخدم نفس معيار الأسبوع. في أغلب
+                السياقات الدولية يكون معيار ISO مناسباً، لكن بعض المؤسسات تبدأ الأسبوع من الأحد أو السبت.
+              </p>
+            </div>
+            <div className="date-use-list">
+              <article className="date-use-item">
+                <h3 className="date-use-title">لرسالة عربية</h3>
+                <p className="date-use-copy">اكتب: {dayOfWeek}، {d} {GREGORIAN_MONTHS_AR[m - 1]} {y}.</p>
+              </article>
+              <article className="date-use-item">
+                <h3 className="date-use-title">لنظام إلكتروني</h3>
+                <p className="date-use-copy">اكتب: {isoDate} حتى يكون الترتيب سنة، شهر، يوم.</p>
+              </article>
+              <article className="date-use-item">
+                <h3 className="date-use-title">لتقرير أسبوعي</h3>
+                <p className="date-use-copy">اكتب الأسبوع {weekNum} مع تاريخ بداية التقرير أو نهايته.</p>
+              </article>
+            </div>
+          </section>
+
+          <section className="related-links mt-8" dir="rtl" aria-labelledby="gregorian-sources-heading">
+            <p id="gregorian-sources-heading" className="related-links__heading">
+              مصادر ومنهج التاريخ الميلادي
+            </p>
+            <div className="related-links__grid">
+              {GREGORIAN_SOURCE_LINKS.map((source) => (
+                <a
+                  key={source.href}
+                  href={source.href}
+                  className="related-link-card"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="related-link-card__body">
+                    <span className="related-link-card__label">{source.label}</span>
+                    <span className="related-link-card__desc">{source.description}</span>
+                  </span>
+                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
+                </a>
+              ))}
+            </div>
+          </section>
+
+          <nav aria-label="مسارات استخدام التاريخ الميلادي اليوم" className="related-links mt-8" dir="rtl">
+            <p className="related-links__heading">إذا احتجت الصيغة الهجرية أو تاريخاً آخر</p>
             <div className="related-links__grid">
 
               <Link href="/date/today/hijri" className="related-link-card">

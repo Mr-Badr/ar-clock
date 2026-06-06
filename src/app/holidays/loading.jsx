@@ -18,11 +18,11 @@ export function HolidaysLoading() {
 
       {/* Upcoming 3 cards */}
       <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))', gap:'var(--space-4)', marginBottom:'var(--space-12)' }}>
-        {[1,2,3].map(i => <Skeleton key={i} style={{ height:'120px', borderRadius:'var(--radius-xl)' }} />)}
+        {[1,2,3].map(i => <Skeleton key={i} style={{ height:'120px', borderRadius: 'var(--radius-lg)' }} />)}
       </div>
 
       {/* Category tabs */}
-      <Skeleton style={{ height:'52px', borderRadius:'var(--radius-xl)', marginBottom:'var(--space-5)' }} />
+      <Skeleton style={{ height:'52px', borderRadius: 'var(--radius-lg)', marginBottom:'var(--space-5)' }} />
 
       {/* Country chips */}
       <div style={{ display:'flex', gap:'var(--space-2)', marginBottom:'var(--space-5)' }}>

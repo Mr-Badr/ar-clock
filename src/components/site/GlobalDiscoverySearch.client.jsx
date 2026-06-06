@@ -7,7 +7,6 @@ import {
   BookOpenText,
   BriefcaseBusiness,
   Calculator,
-  ChartNoAxesCombined,
   Clock3,
   Compass,
   FileText,
@@ -50,8 +49,7 @@ const TYPE_ICONS = {
 
 const VISIT_ICONS = {
   calculator: Calculator,
-  economy: ChartNoAxesCombined,
-  guide: BookOpenText,
+  blog: BookOpenText,
   holiday: PartyPopper,
   date: Clock3,
   prayer: Landmark,
@@ -294,6 +292,7 @@ export default function GlobalDiscoverySearch() {
         onFocus={() => void primeDiscoveryData()}
       >
         <Search size={16} />
+        <span className="header-search-link__label">بحث</span>
       </button>
 
       <CommandDialog
@@ -302,13 +301,13 @@ export default function GlobalDiscoverySearch() {
         shouldFilter={false}
         showCloseButton={false}
         contentClassName={styles.commandDialog}
-        title="البحث الذكي داخل ميقاتنا"
-        description="ابحث عن صفحة أو أداة أو دليل من أي مكان داخل الموقع."
+        title="ابحث داخل ميقاتنا"
+        description="ابحث عن صفحة أو أداة أو مقال من أي مكان داخل الموقع."
       >
         <CommandInput
           value={query}
           onValueChange={setQuery}
-          placeholder="ابحث عن صفحة أو أداة أو دليل..."
+          placeholder="ابحث عن صفحة أو أداة أو مقال..."
           className={styles.commandInput}
           wrapperClassName={styles.commandInputWrap}
         />
@@ -317,8 +316,8 @@ export default function GlobalDiscoverySearch() {
           {isLoading && !searchResults.length && !effectiveSearchValue ? (
             <div className={styles.commandEmptyState}>
               <div className={styles.commandBlock}>
-                <h3>جاري تجهيز البحث</h3>
-                <p>نحمّل فهرس الصفحات والأدوات الآن حتى تظهر لك النتائج فور الكتابة.</p>
+                <h3>نجهّز البحث الآن</h3>
+                <p>بعد لحظات قصيرة ستظهر لك الصفحات والأدوات والمقالات فور الكتابة.</p>
               </div>
             </div>
           ) : effectiveSearchValue ? (
@@ -329,7 +328,7 @@ export default function GlobalDiscoverySearch() {
                   className={styles.commandActionItem}
                 >
                   <Search size={16} />
-                  <span>اعرض كل النتائج داخل البحث الذكي</span>
+                  <span>اعرض كل النتائج في صفحة واحدة</span>
                   <CommandShortcut>Enter</CommandShortcut>
                 </CommandItem>
               </CommandGroup>
@@ -426,7 +425,7 @@ export default function GlobalDiscoverySearch() {
               </div>
 
               <div className={styles.commandBlock}>
-                <h3>تصفح حسب النوع</h3>
+                <h3>اختر حسب النوع</h3>
                 <div className={styles.commandPillRow}>
                   {TAB_SHORTCUTS.map((tab) => (
                     <button

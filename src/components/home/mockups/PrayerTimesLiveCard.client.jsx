@@ -110,132 +110,60 @@ export default function PrayerTimesLiveCard({
   }, [nextIso])
 
   return (
-    <div
-      className="relative w-full max-w-sm mx-auto select-none"
-      style={{ boxShadow: '0 20px 40px rgba(6,8,18,0.5)', borderRadius: '24px' }}
-    >
-      {/* Gradient border ring */}
-      <div
-        className="rounded-3xl p-px"
-        style={{
-          background:
-            'linear-gradient(135deg, var(--accent) 0%, var(--border-default) 60%, transparent 100%)',
-        }}
-      >
-        <div
-          className="rounded-[23px] overflow-hidden"
-          style={{ background: 'var(--bg-surface-1)' }}
-        >
-
-          {/* ── Header ── */}
-          <div
-            className="px-5 py-4 flex items-center justify-between"
-            style={{ background: 'var(--accent-gradient)' }}
-          >
+    <div className="live-card mx-auto">
+          <div className="live-card__header">
             <div>
-              <p className="text-[11px] font-medium text-white/75 leading-tight">
+              <p className="live-card__header-meta">
                 {cityNameAr} · مواقيت الصلاة اليوم
               </p>
-              <p className="text-sm font-bold text-white mt-0.5">
+              <p className="live-card__header-title mt-0.5">
                 {PRAYER_AR[nextKey] || nextKey} القادمة
               </p>
             </div>
-            <div
-              className="flex h-10 w-10 items-center justify-center rounded-full"
-              style={{ background: 'rgba(255,255,255,0.18)' }}
-            >
-              <Moon size={18} className="text-white" />
+            <div className="live-card__header-icon">
+              <Moon size={18} />
             </div>
           </div>
 
-          {/* ── Countdown chip ── */}
-          <div
-            className="mx-4 mt-4 mb-2 rounded-2xl px-4 py-3 flex items-center justify-between"
-            style={{
-              background: 'var(--accent-soft)',
-              border: '1px solid var(--border-accent)',
-            }}
-          >
+          <div className="live-card__body">
+          <div className="live-card__notice">
             <div>
-              <p
-                className="text-[10px] font-semibold"
-                style={{ color: 'var(--accent-alt)' }}
-              >
+              <p className="live-card__notice-label">
                 الوقت المتبقي على {PRAYER_AR[nextKey] || nextKey}
               </p>
-              {/* suppressHydrationWarning: server time ≠ client time */}
-              <p
-                className="text-sm font-bold tabular-nums mt-0.5"
-                style={{ color: 'var(--text-primary)' }}
+              <span
+                className="live-card__notice-value"
                 suppressHydrationWarning
               >
                 {mounted ? countdown : '--:--:--'}
-              </p>
+              </span>
             </div>
-            <Bell size={16} style={{ color: 'var(--accent-alt)' }} />
+            <Bell size={16} aria-hidden="true" />
           </div>
 
-          {/* ── Prayer rows ── */}
-          <ul
-            className="divide-y"
-            style={{ borderColor: 'var(--border-subtle)' }}
-            role="list"
-          >
+          <ul className="live-card__list" role="list">
             {PRAYER_ORDER.map((key) => {
               const Icon     = PRAYER_ICONS[key]
               const isActive = key === nextKey
-              const timeStr  = fmtTime(times[key], timezone)
+              const timeStr  = fmtTime(times?.[key], timezone)
 
               return (
                 <li
                   key={key}
-                  className="flex items-center justify-between px-5 py-2.5"
-                  style={
-                    isActive
-                      ? {
-                          background:      'var(--accent-soft)',
-                          borderInlineEnd: '3px solid var(--accent-alt)',
-                        }
-                      : {}
-                  }
+                  className="live-card__row"
+                  data-active={isActive ? 'true' : undefined}
                 >
-                  <div className="flex items-center gap-3">
-                    <span
-                      className="flex h-7 w-7 items-center justify-center rounded-full"
-                      style={{
-                        background: isActive
-                          ? 'var(--accent-soft)'
-                          : 'var(--bg-surface-3)',
-                      }}
-                    >
-                      <Icon
-                        size={13}
-                        style={{
-                          color: isActive
-                            ? 'var(--accent-alt)'
-                            : 'var(--text-muted)',
-                        }}
-                      />
+                  <div className="live-card__row-main">
+                    <span className="live-card__icon-cell" aria-hidden="true">
+                      <Icon size={13} />
                     </span>
-                    <span
-                      className="text-sm font-medium"
-                      style={{
-                        color: isActive
-                          ? 'var(--accent-alt)'
-                          : 'var(--text-primary)',
-                      }}
-                    >
+                    <span className="live-card__label">
                       {PRAYER_AR[key]}
                     </span>
                   </div>
 
                   <span
-                    className="text-sm font-bold tabular-nums"
-                    style={{
-                      color: isActive
-                        ? 'var(--accent-alt)'
-                        : 'var(--text-secondary)',
-                    }}
+                    className="live-card__value"
                   >
                     {timeStr}
                   </span>
@@ -244,26 +172,17 @@ export default function PrayerTimesLiveCard({
             })}
           </ul>
 
-          {/* ── Qibla row ── */}
           {qiblaText && (
-            <div
-              className="flex items-center gap-3 mx-4 mb-4 mt-3 rounded-xl px-4 py-2.5"
-              style={{ background: 'var(--bg-surface-3)' }}
-            >
-              <Compass size={14} style={{ color: 'var(--accent-alt)' }} />
-              <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+            <div className="live-card__footer">
+              <Compass size={14} aria-hidden="true" />
+              <span className="live-card__meta">
                 اتجاه القبلة:
               </span>
-              <span
-                className="text-xs font-bold tabular-nums"
-                style={{ color: 'var(--text-primary)' }}
-              >
+              <span className="live-card__label tabular-nums">
                 {qiblaText}
               </span>
             </div>
           )}
-
-        </div>
       </div>
     </div>
   )

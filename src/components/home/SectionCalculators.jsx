@@ -27,13 +27,13 @@ const TOOLS = [
   {
     href: '/calculators/personal-finance',
     title: 'حاسبات التخطيط المالي الشخصي',
-    description: 'ابدأ من صندوق الطوارئ والديون والادخار وصافي الثروة داخل مسار واحد قوي.',
+    description: 'ابدأ من صندوق الطوارئ والديون والادخار وصافي الثروة بحسب القرار الذي تريد ترتيبه.',
     icon: BriefcaseBusiness,
   },
   {
     href: '/calculators/finance',
     title: 'حاسبات المال والعمل',
-    description: 'ابدأ من مسار يجمع القرض والضريبة والنسبة ومكافأة نهاية الخدمة في بوابة واحدة.',
+    description: 'ابدأ من القرض أو الضريبة أو النسبة أو مكافأة نهاية الخدمة بحسب الرقم الذي تريد فهمه.',
     icon: BriefcaseBusiness,
   },
   {
@@ -92,13 +92,6 @@ export default function SectionCalculators() {
       id="section-calculators"
       headingId={H2_ID}
       subtle
-      glow={
-        <div
-          className="pointer-events-none absolute end-0 top-0 h-[420px] w-[420px] translate-x-1/3 -translate-y-1/4 rounded-full blur-3xl opacity-[0.08]"
-          style={{ background: 'var(--accent)' }}
-          aria-hidden="true"
-        />
-      }
     >
       <script
         type="application/ld+json"
@@ -106,7 +99,7 @@ export default function SectionCalculators() {
       />
 
       <div className="grid items-start gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-12">
-        <div className="space-y-5">
+        <div className="media-split__content">
           <SectionBadge>
             <Calculator size={11} />
             الحاسبات الأكثر بحثاً
@@ -114,58 +107,51 @@ export default function SectionCalculators() {
 
           <h2
             id={H2_ID}
-            className="text-2xl font-extrabold leading-tight sm:text-3xl lg:text-[2.15rem]"
-            style={{ color: 'var(--text-primary)' }}
+            className="section-title"
           >
-            مسارات حاسبات واضحة: التخطيط المالي، العمر، المال والعمل، البناء، والعمليات اليومية
+            حاسبات يومية واضحة تساعدك على الوصول إلى الإجابة بسرعة
           </h2>
 
-          <p
-            className="text-base leading-relaxed sm:text-lg"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            كثير من الزوار لا يبحثون عن اسم موقع، بل يكتبون مباشرة{' '}
-            <strong style={{ color: 'var(--text-primary)' }}>حاسبة العمر</strong> أو{' '}
-            <strong style={{ color: 'var(--text-primary)' }}>متى أنام لأستيقظ الساعة 6</strong> أو{' '}
-            <strong style={{ color: 'var(--text-primary)' }}>كم قسط قرض 100 ألف</strong> أو{' '}
-            <strong style={{ color: 'var(--text-primary)' }}>حساب الضريبة 15%</strong>.
-            لهذا لم نكتفِ ببطاقات أدوات فقط، بل بدأنا نبني مسارات أعلى تجمع الأدوات
-            المتقاربة في نية البحث حتى يصل المستخدم إلى الصفحة المناسبة أسرع.
+          <p className="feature-copy">
+            غالباً لا تبدأ من اسم الأداة، بل من سؤال مباشر مثل{' '}
+            <strong>حاسبة العمر</strong> أو{' '}
+            <strong>متى أنام لأستيقظ الساعة 6</strong> أو{' '}
+            <strong>كم قسط قرض 100 ألف</strong> أو{' '}
+            <strong>حساب الضريبة 15%</strong>.
+            لذلك رتّبنا الحاسبات حول السؤال نفسه: خذ الرقم، اقرأ معناه، ثم جرّب سيناريو آخر قبل الاعتماد عليه.
           </p>
 
-          <ul className="space-y-3" role="list" aria-label="مزايا قسم الحاسبات">
+          <ul className="feature-list" role="list" aria-label="مزايا قسم الحاسبات">
             <FeatureItem icon={CakeSlice}>
-              أدوات موجّهة لعبارات بحث عربية واضحة مثل{' '}
-              <strong style={{ color: 'var(--text-primary)' }}>احسب عمرك</strong> و{' '}
-              <strong style={{ color: 'var(--text-primary)' }}>كم عمري</strong>.
+              أدوات مبنية على أسئلة عربية يومية مثل{' '}
+              <strong>احسب عمرك</strong> و{' '}
+              <strong>كم عمري</strong>.
             </FeatureItem>
             <FeatureItem icon={MoonStar}>
-              مسار نوم ذكي يلتقط عبارات عالية التكرار مثل{' '}
-              <strong style={{ color: 'var(--text-primary)' }}>إذا نمت الآن متى أستيقظ</strong> و{' '}
-              <strong style={{ color: 'var(--text-primary)' }}>كم ساعة نوم أحتاج</strong>.
+              مسار نوم ذكي يجيب عن أسئلة تتكرر فعلاً مثل{' '}
+              <strong>إذا نمت الآن متى أستيقظ</strong> و{' '}
+              <strong>كم ساعة نوم أحتاج</strong>.
             </FeatureItem>
             <FeatureItem icon={BriefcaseBusiness}>
-              صفحات أعمق من مجرد نموذج: حاسبة مع شرح وأمثلة وأسئلة شائعة ونية بحث واضحة.
+              كل نتيجة تأتي مع شرح قصير وأمثلة تساعدك على فهم الرقم قبل استخدامه في قرار.
             </FeatureItem>
             <FeatureItem icon={ReceiptText}>
-              روابط داخلية مباشرة إلى أكثر الأدوات استخداماً حتى يسهل على Google اكتشافها
-              وترتيبها.
+              انتقال أسهل بين الحاسبات المتقاربة حتى لا تضيع بين صفحات كثيرة من دون داعٍ.
             </FeatureItem>
           </ul>
 
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          <div className="action-row">
             <CtaLink href="/calculators">افتح قسم الحاسبات</CtaLink>
             <Link
               href="/calculators/personal-finance"
-              className="text-sm font-semibold transition-colors hover:opacity-80"
-              style={{ color: 'var(--accent-alt)' }}
+              className="text-link"
             >
               ابدأ بالتخطيط المالي الشخصي
             </Link>
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {TOOLS.map((tool) => {
             const Icon = tool.icon;
 
@@ -173,41 +159,21 @@ export default function SectionCalculators() {
               <Link
                 key={tool.href}
                 href={tool.href}
-                className="group rounded-2xl border p-5 transition-all hover:-translate-y-1 hover:border-[var(--border-default)] hover:shadow-[var(--shadow-lg)]"
-                style={{
-                  background: 'var(--bg-surface-1)',
-                  borderColor: 'var(--border-subtle)',
-                }}
+                className="section-card-link group"
               >
-                <div
-                  className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl border"
-                  style={{
-                    background: 'var(--accent-soft)',
-                    borderColor: 'var(--border-accent)',
-                    color: 'var(--accent-alt)',
-                  }}
-                >
+                <div className="section-icon-box mb-4">
                   <Icon size={19} aria-hidden="true" />
                 </div>
 
-                <h3
-                  className="mb-2 text-base font-bold"
-                  style={{ color: 'var(--text-primary)' }}
-                >
+                <h3 className="section-card-title mb-2">
                   {tool.title}
                 </h3>
-                <p
-                  className="mb-4 text-sm leading-6"
-                  style={{ color: 'var(--text-secondary)' }}
-                >
+                <p className="section-card-copy mb-4">
                   {tool.description}
                 </p>
-                <span
-                  className="inline-flex items-center gap-2 text-sm font-semibold"
-                  style={{ color: 'var(--accent-alt)' }}
-                >
-                  افتح الأداة
-                  <ArrowLeft size={15} className="transition-transform group-hover:-translate-x-1" />
+                <span className="section-card-action">
+                  ابدأ الحساب
+                  <ArrowLeft size={15} aria-hidden="true" />
                 </span>
               </Link>
             );

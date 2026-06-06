@@ -9,9 +9,10 @@
     "hasHardcodedYear": false
   },
   "notes": [
-    "fact-source: U.S. Office of Personnel Management: What are Federal holidays?",
-    "fact-source: National Retail Federation: Thanksgiving Holiday Weekend Sees Record Number of Shoppers",
-    "fact-source: Britannica Dictionary: Thanksgiving"
+    "fact-source: U.S. Office of Personnel Management: Federal holidays",
+    "fact-source: National Retail Federation: Thanksgiving weekend shopping",
+    "fact-source: Britannica: Thanksgiving Day facts",
+    "2026-06-01: Authored package refined with clearer Arabic explanation of the fourth-Thursday rule, federal-holiday status, Canada distinction, service-hour caveat, and Black Friday relationship. Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. events:build and rendered-route confirmation were intentionally skipped per instruction."
   ],
-  "updatedAt": "2026-04-10T00:00:00.000Z"
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

@@ -2,12 +2,15 @@
   "slug": "laylat-al-qadr",
   "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-03-30T23:57:37.009Z"
+  "notes": [
+    "أعيدت كتابة الصفحة كاملة حول الليلة المرجحة في 27 رمضان مع تصحيح أن التحري يكون في أوتار العشر الأواخر كلها.",
+    "تم تعزيز FAQ والبطاقات والمصادر لتخدم نية متى/كم باقي/ما الدعاء/ما العلامات بلغة عربية مباشرة."
+  ],
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

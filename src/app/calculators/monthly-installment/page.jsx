@@ -1,29 +1,16 @@
-import Link from 'next/link';
-
 import MonthlyInstallmentCalculator from '@/components/calculators/MonthlyInstallmentCalculator.client';
 import {
-  CalculatorChecklist,
   CalculatorFaqSection,
-  CalculatorFooterCta,
   CalculatorHero,
   CalculatorInfoGrid,
-  CalculatorIntentCloud,
-  CalculatorQuickAnswerGrid,
-  CalculatorResourceLinks,
   CalculatorSection,
-  CalculatorSectionNav,
-  CalculatorStoryBand,
   RelatedCalculators,
 } from '@/components/calculators/common';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
 import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
-import { getGuidesBySlugs } from '@/lib/guides/data';
-import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
@@ -32,7 +19,6 @@ const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'monthly-installment');
 const CONTENT = getFinancePageContent('monthly-installment');
 const SEARCH_COVERAGE = buildFinancePageSearchCoverage(PAGE, CONTENT);
-const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.monthlyInstallment);
 
 export const metadata = buildCanonicalMetadata({
   title: PAGE.heroTitle,
@@ -42,6 +28,8 @@ export const metadata = buildCanonicalMetadata({
 });
 
 export default function MonthlyInstallmentPage() {
+  const faqItems = Array.isArray(CONTENT.faqItems) ? CONTENT.faqItems : [];
+  const howToSteps = Array.isArray(CONTENT.howTo?.steps) ? CONTENT.howTo.steps : [];
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -62,7 +50,7 @@ export default function MonthlyInstallmentPage() {
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: CONTENT.faqItems.map((item) => ({
+    mainEntity: faqItems.map((item) => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: { '@type': 'Answer', text: item.answer },
@@ -71,9 +59,9 @@ export default function MonthlyInstallmentPage() {
   const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: CONTENT.howTo.name,
-    description: CONTENT.howTo.description,
-    step: CONTENT.howTo.steps.map((item) => ({
+    name: CONTENT.howTo?.name || 'كيفية استخدام حاسبة القسط الشهري',
+    description: CONTENT.howTo?.description || PAGE.description,
+    step: howToSteps.map((item) => ({
       '@type': 'HowToStep',
       name: item.name,
       text: item.text,
@@ -81,7 +69,7 @@ export default function MonthlyInstallmentPage() {
   };
 
   return (
-    <main className="bg-base text-primary">
+    <main className="calc-product-page bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
@@ -91,47 +79,16 @@ export default function MonthlyInstallmentPage() {
         badge={CONTENT.hero.badge}
         title={PAGE.heroTitle}
         description={CONTENT.hero.description}
-        accent={PAGE.accent}
         highlights={CONTENT.hero.highlights}
       >
         <MonthlyInstallmentCalculator />
       </CalculatorHero>
 
       <CalculatorSection
-        id="loan-overview"
-        eyebrow="خريطة الصفحة"
-        title="صفحة تمويل كاملة وليست مجرد حاسبة قسط"
-        description="استخدم هذه الخريطة للوصول بسرعة إلى الجزء الذي تحتاجه: الحساب، المقارنة، فهم الفائدة، الأسئلة المباشرة، أو خطوات اختيار العرض الأقوى."
-      >
-        <CalculatorSectionNav items={CONTENT.sectionNavItems} />
-      </CalculatorSection>
-
-      <CalculatorSection
-        id="loan-intents"
-        eyebrow="تغطية بحثية"
-        title="الكلمات والنيات التي تستهدفها الصفحة"
-        description="الهدف ليس فقط الظهور لكلمة حاسبة القرض، بل تغطية الأسئلة العملية التي يبحث بها المستخدم قبل التقديم أو عند مقارنة عروض البنوك."
-        subtle
-      >
-        <div className="calc-grid-2">
-          <CalculatorIntentCloud items={SEARCH_COVERAGE.intentChips} />
-          <CalculatorStoryBand
-            title="ما الذي يجعل هذه الصفحة أقوى SEO وUX من الحاسبات البسيطة؟"
-            description="بدلاً من نموذج واحد وصف صغير، تجمع الصفحة بين الحاسبة والجداول والرسوم والمقارنة والشرح، وهذا يزيد من عمق التغطية ونية المستخدم التي تخدمها الصفحة."
-            items={[
-              { label: 'نية قرار', value: 'القسط وحده لا يكفي، لذلك نغطي المقارنة والسداد المبكر والقدرة على الاقتراض.' },
-              { label: 'نية تعليم', value: 'شرح الفرق بين الثابتة والمتناقصة موجود في الصفحة نفسها.' },
-              { label: 'نية مقارنة', value: 'هناك جدول عروض ورسوم وجداول استهلاك بدل نتيجة رقمية معزولة.' },
-            ]}
-          />
-        </div>
-      </CalculatorSection>
-
-      <CalculatorSection
         id="loan-tabs"
         eyebrow="افهم النتيجة"
         title="القرض ليس قسطاً شهرياً فقط"
-        description="هذه التبويبات تلخص الجوانب التي يغفلها كثير من المستخدمين عند مقارنة العروض."
+        description="هذه التبويبات تلخص الجوانب التي قد تغفلها عند مقارنة العروض."
       >
         <Tabs defaultValue="components" className="calc-app">
           <TabsList className="tabs calc-tabs-list">
@@ -160,7 +117,7 @@ export default function MonthlyInstallmentPage() {
 
           <TabsContent value="rates" className="calc-tabs-panel">
             <div className="calc-table-wrap">
-              <Table className="economy-table">
+              <Table>
                 <TableHeader>
                   <TableRow>
                     <TableHead>الجانب</TableHead>
@@ -210,36 +167,23 @@ export default function MonthlyInstallmentPage() {
 
           <TabsContent value="cases" className="calc-tabs-panel">
             <div className="calc-grid-2">
-              <Card className="calc-surface-card">
-                <CardHeader>
-                  <CardTitle className="calc-card-title">قرض سيارة</CardTitle>
-                </CardHeader>
-                <CardContent className="calc-card-copy">
+              <article className="calc-article-block">
+                <h3>قرض سيارة</h3>
+                <p>
                   سيارة بسعر 80,000 مع دفعة مقدمة 20,000 لمدة 5 سنوات تعطيك نموذجاً ممتازاً
                   لرؤية الفرق بين القسط المنخفض والرسوم الإضافية والتأمين.
-                </CardContent>
-              </Card>
-              <Card className="calc-surface-card">
-                <CardHeader>
-                  <CardTitle className="calc-card-title">تمويل عقاري</CardTitle>
-                </CardHeader>
-                <CardContent className="calc-card-copy">
+                </p>
+              </article>
+              <article className="calc-article-block">
+                <h3>تمويل عقاري</h3>
+                <p>
                   في العقار غالباً يكون أثر المدة أكبر من أثر الفائدة الاسمية فقط. لهذا تساعدك
                   الرسوم البيانية في الصفحة على رؤية الرصيد المتبقي عبر السنوات.
-                </CardContent>
-              </Card>
+                </p>
+              </article>
             </div>
           </TabsContent>
         </Tabs>
-      </CalculatorSection>
-
-      <CalculatorSection
-        id="loan-answers"
-        eyebrow="إجابات مباشرة"
-        title="إذا كتبت في Google: كم قسط قرض 100 ألف؟"
-        description="هذا القسم يخاطب نية البحث الطويلة مثل: كم قسط قرض 100 ألف؟ وهل الفائدة المتناقصة أوفر؟ ومتى يفيد السداد المبكر؟"
-      >
-        <CalculatorQuickAnswerGrid items={CONTENT.quickAnswers} />
       </CalculatorSection>
 
       <CalculatorSection
@@ -268,9 +212,9 @@ export default function MonthlyInstallmentPage() {
           <article className="calc-article-block">
             <h3>3. قارن العروض على نفس الأساس</h3>
             <p>
-              عند المقارنة ثبت مبلغ القرض والدفعة المقدمة والمدة قدر الإمكان، ثم غيّر الفائدة
-              والرسوم فقط. بهذه الطريقة تعرف أي عرض أرخص فعلاً بدل أن تنخدع بعرض يغيّر عدة
-              عناصر دفعة واحدة.
+              عند المقارنة ثبت العملة ومبلغ القرض والدفعة المقدمة والمدة قدر الإمكان، ثم غيّر
+              الفائدة والرسوم فقط. بهذه الطريقة تعرف في السعودية أو الإمارات أو مصر أو المغرب أي
+              عرض أرخص فعلاً بدل أن تنخدع بعرض يغيّر عدة عناصر دفعة واحدة.
             </p>
           </article>
           <article className="calc-article-block">
@@ -285,76 +229,21 @@ export default function MonthlyInstallmentPage() {
       </CalculatorSection>
 
       <CalculatorSection
-        id="loan-playbook"
-        eyebrow="خطة قرار"
-        title="كيف تختار عرض التمويل الأقوى دون أن تنخدع بالقسط الأقل؟"
-        description="هذا القسم مصمم للمستخدم الذي يقارن عرضين أو ثلاثة ويريد طريقة عملية للحسم."
-        subtle
-      >
-        <div className="calc-grid-2">
-          <CalculatorChecklist
-            title="قائمة المقارنة الذكية"
-            description="قبل اختيار أي عرض تمويلي، مر على هذه النقاط بالترتيب."
-            items={[
-              'ثبّت مبلغ القرض والدفعة المقدمة أولاً ثم ابدأ المقارنة.',
-              'انظر إلى إجمالي السداد لا إلى القسط الشهري فقط.',
-              'أدخل الرسوم والتأمين في الحاسبة حتى لا تقارن رقماً ناقصاً.',
-              'اختبر سيناريو سداد مبكر إذا كنت تتوقع تحسن الدخل لاحقاً.',
-              'راجع نسبة الدين إلى الدخل حتى لا يتحول القرض من أداة إلى ضغط شهري.',
-            ]}
-          />
-          <CalculatorChecklist
-            title="متى يكون العرض الأطول مفيداً؟"
-            description="ليس دائماً الأسوأ."
-            content="قد يكون العرض الأطول مناسباً إذا كانت الأولوية للسيولة الشهرية، لكن عليك أن تعرف مقدار ما تدفعه مقابل هذا الارتياح. لهذا تعرض الحاسبة القسط والإجمالي والرسم البياني معاً."
-          />
-        </div>
-      </CalculatorSection>
-
-      <CalculatorSection
-        id="loan-guides"
-        eyebrow="أدلة مرتبطة"
-        title="قبل أن تختار عرض التمويل"
-        description="هذه الأدلة تكمل الحاسبة: واحد يشرح كيف تقارن العروض، وآخر يوضح الفرق بين الفائدة الثابتة والمتناقصة بلغة عملية."
-        subtle
-      >
-        <CalculatorResourceLinks items={RELATED_GUIDES} />
-      </CalculatorSection>
-
-      <CalculatorSection
         id="loan-faq"
-        eyebrow="الأسئلة الشائعة"
+        eyebrow="قبل اختيار التمويل"
         title="أسئلة متكررة قبل اختيار التمويل"
       >
-        <CalculatorFaqSection items={CONTENT.faqItems} />
+        <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>
 
       <CalculatorSection
         id="loan-related"
-        eyebrow="روابط داخلية"
+        eyebrow="بعد القسط"
         title="أكمل التخطيط بحاسبات مرتبطة"
+        description="افتح حاسبة واحدة فقط إذا كانت تكمل نفس القرار: ضريبة الفاتورة، نسبة الخصم، أو مستحقات العمل. الهدف أن تخرج بخطوة أوضح لا بفهرس جديد."
       >
         <RelatedCalculators currentSlug="monthly-installment" />
       </CalculatorSection>
-
-      <CalculatorSection
-        id="loan-nav"
-        eyebrow="التالي"
-        title="بعد معرفة القسط، ماذا تحتاج أيضاً؟"
-      >
-        <Card className="calc-surface-card">
-          <CardContent className="calc-cta-actions pt-6">
-            <Button asChild className="btn btn-primary--flat calc-button">
-              <Link href="/calculators/percentage">احسب نسبة الفائدة أو التغيير</Link>
-            </Button>
-            <Button asChild variant="outline" className="btn btn-surface calc-button">
-              <Link href="/calculators/vat">راجع الضريبة على المشتريات</Link>
-            </Button>
-          </CardContent>
-        </Card>
-      </CalculatorSection>
-
-      <CalculatorFooterCta />
     </main>
   );
 }

@@ -10,7 +10,9 @@
   },
   "notes": [
     "fact-source: timeanddate - Seasons",
-    "fact-source: Encyclopaedia Britannica - Spring equinox"
+    "fact-source: Encyclopaedia Britannica - Spring equinox",
+    "2026-06-01: Revalidated authored package against current astronomical and meteorological references. The page still correctly answers the direct query early, resolves the 20 versus 21 March confusion, and explains the difference between astronomical and meteorological spring in clear Arabic.",
+    "2026-06-01: Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. Not marked done in the rollout checklist because generated holiday bundles were intentionally not rebuilt."
   ],
-  "updatedAt": "2026-04-10T00:00:00.000Z"
+  "updatedAt": "2026-06-01T00:00:00.000Z"
 }

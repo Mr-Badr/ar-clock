@@ -9,9 +9,16 @@ const querySchema = z.object({
   limit: z.coerce.number().int().min(1).max(10).optional().default(10),
 });
 
-// ==========================
-// 🧠 normalize shared format
-// ==========================
+const CITY_SEARCH_CACHE_HEADERS = {
+  'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+};
+
+function citySearchJson(data) {
+  return json(data, {
+    headers: CITY_SEARCH_CACHE_HEADERS,
+  });
+}
+
 function normalizeCity(city) {
   return {
     city_slug: city.city_slug,
@@ -29,34 +36,23 @@ function normalizeCity(city) {
   };
 }
 
-// ==========================
-// 🚀 API
-// ==========================
 export const GET = withApiHandler(
   '/api/search-city',
   async ({ request }) => {
     const { q: query, limit } = parseSearchParams(request, querySchema);
 
     if (!query || query.length < 2) {
-      return json([]);
+      return citySearchJson([]);
     }
 
     if (query.length < 4) {
-      return json([], {
-        headers: {
-          'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
-        },
-      });
+      return citySearchJson([]);
     }
 
     const cities = await dbSearchCities(query, limit);
     const results = cities.map(normalizeCity);
 
-    return json(results, {
-      headers: {
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
-      },
-    });
+    return citySearchJson(results);
   },
   {
     rateLimit: {

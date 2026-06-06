@@ -23,6 +23,19 @@ What is already in place:
 
 What remains is mostly quality expansion, content depth, and cross-page polish.
 
+## Track 0: SERP-Guided Content Research
+
+Use [`docs/content-research-scraping-method.md`](./content-research-scraping-method.md) as the source of truth for competitor research before rewriting important pages.
+Track execution in [`docs/content-research-rollout-checklist.md`](./content-research-rollout-checklist.md).
+
+Priority:
+
+- add automated SERP discovery and extraction as an offline authoring pipeline
+- collect 3 Arabic and 3 English competitors for each priority page
+- keep scraped data out of runtime rendering paths
+- store only research summaries, source URLs, gaps, and verified facts in authored data files
+- apply the method first to one holiday page and one non-holiday page before broad rollout
+
 ## Track 1: Holiday Content Expansion
 
 ### Priority 1

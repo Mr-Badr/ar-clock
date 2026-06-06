@@ -1,19 +1,16 @@
 "use client";
 
 import { useMemo, useState } from 'react';
-import { Calculator, ReceiptText, Scale, Store } from 'lucide-react';
+import { ArrowLeft, Calculator, ReceiptText, Scale, Store } from 'lucide-react';
 
 import {
   CalcInput as Input,
   CalcSelectTrigger as SelectTrigger,
-  CalcTabsList as TabsList,
-  CalcTabsTrigger as TabsTrigger,
 } from '@/components/calculators/controls.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent } from '@/components/ui/tabs';
+import { getCurrencyOptions } from '@/lib/calculators/currency-options';
 import { VAT_COUNTRIES } from '@/lib/calculators/data';
 import {
   calculateDiscountAndVat,
@@ -26,8 +23,92 @@ import {
   getVatCountry,
 } from '@/lib/calculators/engine';
 
+const VAT_MODES = [
+  {
+    value: 'add',
+    label: 'أضيف الضريبة',
+    title: 'لدي سعر قبل الضريبة',
+    copy: 'استخدم هذا إذا كان السعر غير شامل وتريد معرفة الإجمالي الذي سيدفعه العميل.',
+  },
+  {
+    value: 'extract',
+    label: 'أستخرج الضريبة',
+    title: 'لدي سعر شامل الضريبة',
+    copy: 'استخدم هذا إذا كانت الفاتورة شاملة وتريد فصل السعر الأصلي وقيمة الضريبة.',
+  },
+  {
+    value: 'month',
+    label: 'صافي الشهر',
+    title: 'لدي مبيعات ومشتريات',
+    copy: 'استخدم هذا كتقدير أولي لصافي ضريبة المخرجات والمدخلات قبل الإقرار الرسمي.',
+  },
+];
+
+const VAT_AMOUNT_PRESETS = ['100', '500', '1000', '5000'];
+
+function buildCustomCountry(customRate, customCurrencyCode, currencyOptions) {
+  const fallbackCurrency = { code: 'USD', label: 'USD — دولار أمريكي' };
+  const customCurrency = currencyOptions.find((item) => item.code === customCurrencyCode)
+    ?? currencyOptions[0]
+    ?? fallbackCurrency;
+
+  return {
+    code: 'custom',
+    flag: '🌍',
+    name: 'نسبة مخصصة',
+    rate: Math.max(0, Number(customRate) || 0),
+    currency: customCurrency.label,
+    currencyCode: customCurrency.code,
+    note: 'أدخل النسبة الرسمية المعتمدة في بلدك أو قطاعك',
+  };
+}
+
+function ResultRow({ label, value, strong }) {
+  return (
+    <div className={`vat-result-row${strong ? ' vat-result-row--strong' : ''}`}>
+      <span>{label}</span>
+      <strong>{value}</strong>
+    </div>
+  );
+}
+
+function ModeButton({ mode, activeMode, onSelect }) {
+  const isActive = mode.value === activeMode;
+
+  return (
+    <button
+      type="button"
+      className={`vat-mode-card${isActive ? ' is-active' : ''}`}
+      onClick={() => onSelect(mode.value)}
+      aria-pressed={isActive}
+    >
+      <span className="vat-mode-card__label">{mode.label}</span>
+      <strong>{mode.title}</strong>
+      <span>{mode.copy}</span>
+    </button>
+  );
+}
+
+function PresetButtons({ values, currencyCode, onSelect }) {
+  return (
+    <div className="vat-presets" aria-label="أمثلة مبالغ جاهزة">
+      <span>أمثلة جاهزة</span>
+      <div className="vat-presets__buttons">
+        {values.map((value) => (
+          <button key={value} type="button" onClick={() => onSelect(value)}>
+            {formatCurrency(Number(value), currencyCode)}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function VatCalculator() {
+  const [mode, setMode] = useState('add');
   const [countryCode, setCountryCode] = useState('sa');
+  const [customRate, setCustomRate] = useState('15');
+  const [customCurrencyCode, setCustomCurrencyCode] = useState('SAR');
   const [exclusiveAmount, setExclusiveAmount] = useState('1000');
   const [inclusiveAmount, setInclusiveAmount] = useState('1150');
   const [salesAmount, setSalesAmount] = useState('11500');
@@ -37,8 +118,13 @@ export default function VatCalculator() {
   const [discountRate, setDiscountRate] = useState('20');
   const [cost, setCost] = useState('100');
   const [marginRate, setMarginRate] = useState('35');
+  const currencyOptions = useMemo(() => getCurrencyOptions('ar'), []);
 
-  const country = useMemo(() => getVatCountry(countryCode), [countryCode]);
+  const country = useMemo(() => {
+    if (countryCode !== 'custom') return getVatCountry(countryCode);
+
+    return buildCustomCountry(customRate, customCurrencyCode, currencyOptions);
+  }, [countryCode, currencyOptions, customCurrencyCode, customRate]);
   const addResult = useMemo(
     () => calculateVatAdd(exclusiveAmount, country.rate),
     [exclusiveAmount, country.rate],
@@ -66,248 +152,266 @@ export default function VatCalculator() {
     [cost, marginRate, country.rate],
   );
 
-  const shareText = `الدولة: ${country.name}\nالنسبة: ${formatPercent(country.rate, 0)}\nالمبلغ بدون الضريبة: ${formatCurrency(addResult.base, country.currencyCode)}\nالضريبة: ${formatCurrency(addResult.tax, country.currencyCode)}\nالإجمالي: ${formatCurrency(addResult.total, country.currencyCode)}`;
+  const activeAmount = mode === 'extract' ? inclusiveAmount : exclusiveAmount;
+  const activeResult = mode === 'extract' ? extractResult : addResult;
+  const shareText = `البلد/النسبة: ${country.name} - ${formatPercent(country.rate, 0)}\nالمبلغ: ${activeAmount}\nقبل الضريبة: ${formatCurrency(activeResult.base, country.currencyCode)}\nقيمة الضريبة: ${formatCurrency(activeResult.tax, country.currencyCode)}\nالإجمالي: ${formatCurrency(activeResult.total, country.currencyCode)}`;
 
   return (
-    <div className="calc-app">
-      <div className="calc-app-grid">
-        <Card className="calc-surface-card calc-app-panel">
-          <CardHeader>
-            <CardTitle className="calc-card-title">إعدادات الضريبة</CardTitle>
-          </CardHeader>
-          <CardContent className="calc-form-grid">
-            <div className="calc-field">
-              <Label className="calc-label">اختر الدولة</Label>
-              <Select value={countryCode} onValueChange={setCountryCode}>
-                <SelectTrigger className="w-full">
+    <section className="vat-tool" aria-label="حاسبة ضريبة القيمة المضافة">
+      <div className="vat-tool__intro">
+        <span className="vat-tool__eyebrow">ابدأ من السؤال الحقيقي</span>
+        <h2>هل السعر عندك شامل الضريبة أم قبل الضريبة؟</h2>
+        <p>
+          اختر حالتك أولاً، ثم أدخل الرقم. الحاسبة تعرض السعر قبل الضريبة، قيمة الضريبة،
+          والإجمالي في نفس المكان حتى لا تختلط عليك المعادلة.
+        </p>
+      </div>
+
+      <ol className="vat-flow-steps" aria-label="خطوات استخدام الحاسبة">
+        <li>
+          <span>01</span>
+          <strong>اختر الحالة</strong>
+        </li>
+        <li>
+          <span>02</span>
+          <strong>اكتب الرقم</strong>
+        </li>
+        <li>
+          <span>03</span>
+          <strong>راجع التفصيل</strong>
+        </li>
+      </ol>
+
+      <div className="vat-mode-grid" aria-label="اختر نوع حساب الضريبة">
+        {VAT_MODES.map((item) => (
+          <ModeButton key={item.value} mode={item} activeMode={mode} onSelect={setMode} />
+        ))}
+      </div>
+
+      <div className="vat-settings">
+        <div className="vat-field">
+          <Label className="calc-label" htmlFor="vat-country">الدولة أو النسبة</Label>
+          <p className="calc-hint">اختر دولة جاهزة أو استخدم نسبة مخصصة لأي بلد لا يظهر في القائمة.</p>
+          <Select value={countryCode} onValueChange={setCountryCode}>
+            <SelectTrigger id="vat-country" className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {VAT_COUNTRIES.map((item) => (
+                <SelectItem key={item.code} value={item.code}>
+                  {item.flag} {item.name} - {formatPercent(item.rate, 0)}
+                </SelectItem>
+              ))}
+              <SelectItem value="custom">🌍 نسبة مخصصة لأي دولة</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {countryCode === 'custom' ? (
+          <>
+            <div className="vat-field">
+              <Label className="calc-label" htmlFor="custom-vat-rate">نسبة الضريبة</Label>
+              <p className="calc-hint">اكتب النسبة كما تظهر في الجهة الرسمية، مثل 19 أو 20.</p>
+              <Input
+                id="custom-vat-rate"
+                inputMode="decimal"
+                value={customRate}
+                onChange={(event) => setCustomRate(event.target.value)}
+              />
+            </div>
+            <div className="vat-field">
+              <Label className="calc-label" htmlFor="custom-vat-currency">العملة</Label>
+              <p className="calc-hint">تستطيع اختيار معظم العملات المتداولة عالمياً، وليس عملات القائمة المختصرة فقط.</p>
+              <Select value={customCurrencyCode} onValueChange={setCustomCurrencyCode}>
+                <SelectTrigger id="custom-vat-currency" className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {VAT_COUNTRIES.map((item) => (
+                  {currencyOptions.map((item) => (
                     <SelectItem key={item.code} value={item.code}>
-                      {item.flag} {item.name} - {formatPercent(item.rate, 0)}
+                      {item.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              <p className="calc-hint">
-                النسبة العامة الشائعة حالياً في {country.name}: {formatPercent(country.rate, 0)}.
-              </p>
             </div>
+          </>
+        ) : null}
 
-            <div className="calc-note">
-              هذه الحاسبة إرشادية للمعدل العام. بعض السلع والخدمات قد تخضع لإعفاءات أو نسب مخفضة
-              بحسب الدولة والقطاع.
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="calc-surface-card">
-          <CardHeader>
-            <CardTitle className="calc-card-title">ملخص سريع</CardTitle>
-          </CardHeader>
-          <CardContent className="calc-form-grid">
-            <div className="calc-metric-grid">
-              <div className="card-nested calc-metric-card">
-                <div className="calc-metric-card__label">النسبة المعتمدة</div>
-                <div className="calc-metric-card__value">{formatPercent(country.rate, 0)}</div>
-                <div className="calc-metric-card__note">{country.note}</div>
-              </div>
-              <div className="card-nested calc-metric-card">
-                <div className="calc-metric-card__label">العملة الافتراضية</div>
-                <div className="calc-metric-card__value">{country.currency}</div>
-                <div className="calc-metric-card__note">{country.flag} {country.name}</div>
-              </div>
-            </div>
-            <ResultActions
-              copyText={shareText}
-              shareTitle="حاسبة ضريبة القيمة المضافة"
-              shareText={shareText}
-            />
-          </CardContent>
-        </Card>
+        <div className="vat-rate-card" aria-live="polite">
+          <span>{country.flag} {country.name}</span>
+          <strong>{formatPercent(country.rate, 0)}</strong>
+          <small>{country.note}</small>
+        </div>
       </div>
 
-      <Tabs defaultValue="add" className="calc-app">
-        <TabsList className="calc-tabs-list">
-          <TabsTrigger value="add" className="calc-tabs-trigger">إضافة الضريبة</TabsTrigger>
-          <TabsTrigger value="extract" className="calc-tabs-trigger">استخراج الضريبة</TabsTrigger>
-          <TabsTrigger value="month" className="calc-tabs-trigger">ضريبة الشهر</TabsTrigger>
-        </TabsList>
+      <div className="vat-workspace">
+        {mode === 'add' ? (
+        <div className="vat-panel" role="region" aria-label="إضافة ضريبة القيمة المضافة">
+          <div className="vat-main-flow">
+            <div className="vat-entry-card">
+              <span className="vat-entry-card__icon"><Calculator size={18} aria-hidden="true" /></span>
+              <div className="vat-field">
+                <Label className="calc-label" htmlFor="exclusive-amount">
+                  اكتب السعر قبل الضريبة
+                </Label>
+                <Input
+                  id="exclusive-amount"
+                  inputMode="decimal"
+                  value={exclusiveAmount}
+                  onChange={(event) => setExclusiveAmount(event.target.value)}
+                />
+                <p className="calc-hint">
+                  مثال: إذا كان المنتج سعره 1000 قبل ضريبة 15%، فالإجمالي سيكون 1150.
+                </p>
+              </div>
+              <PresetButtons values={VAT_AMOUNT_PRESETS} currencyCode={country.currencyCode} onSelect={setExclusiveAmount} />
+            </div>
 
-        <TabsContent value="add" className="calc-tabs-panel">
-          <div className="calc-grid-2">
-            <Card className="calc-surface-card">
-              <CardHeader>
-                <CardTitle className="calc-card-title">من مبلغ غير شامل</CardTitle>
-              </CardHeader>
-              <CardContent className="calc-form-grid">
-                <div className="calc-field">
-                  <Label className="calc-label" htmlFor="exclusive-amount" style={{ display:'flex', justifyContent: 'flex-end' }}>
-                    المبلغ بدون ضريبة</Label>
-                  <Input
-                    id="exclusive-amount"
-                    inputMode="decimal"
-                    value={exclusiveAmount}
-                    onChange={(event) => setExclusiveAmount(event.target.value)}
-                  />
-                </div>
-                <div className="card-deep calc-inline-formula">
-                  <Calculator size={16} />
-                  المبلغ × (1 + نسبة الضريبة)
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="calc-surface-card">
-              <CardHeader>
-                <CardTitle className="calc-card-title">النتيجة</CardTitle>
-              </CardHeader>
-              <CardContent className="calc-form-grid">
-                <div className="calc-metric-grid">
-                  <div className="card-nested calc-metric-card">
-                    <div className="calc-metric-card__label">قيمة الضريبة</div>
-                    <div className="calc-metric-card__value">
-                      {formatCurrency(addResult.tax, country.currencyCode)}
-                    </div>
-                  </div>
-                  <div className="card-nested calc-metric-card">
-                    <div className="calc-metric-card__label">الإجمالي شامل الضريبة</div>
-                    <div className="calc-metric-card__value">
-                      {formatCurrency(addResult.total, country.currencyCode)}
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="vat-result-card" aria-live="polite">
+              <span className="vat-result-card__label">الإجمالي شامل الضريبة</span>
+              <strong className="vat-result-card__value">
+                {formatCurrency(addResult.total, country.currencyCode)}
+              </strong>
+              <div className="vat-result-list">
+                <ResultRow label="السعر قبل الضريبة" value={formatCurrency(addResult.base, country.currencyCode)} />
+                <ResultRow label="قيمة الضريبة" value={formatCurrency(addResult.tax, country.currencyCode)} strong />
+              </div>
+              <div className="vat-formula">
+                <span>المعادلة</span>
+                <strong>
+                  {formatCurrency(addResult.base, country.currencyCode)}
+                  {' + '}
+                  {formatCurrency(addResult.tax, country.currencyCode)}
+                  {' = '}
+                  {formatCurrency(addResult.total, country.currencyCode)}
+                </strong>
+              </div>
+            </div>
           </div>
-        </TabsContent>
+        </div>
+        ) : null}
 
-        <TabsContent value="extract" className="calc-tabs-panel">
-          <div className="calc-grid-2">
-            <Card className="calc-surface-card">
-              <CardHeader>
-                <CardTitle className="calc-card-title">من مبلغ شامل</CardTitle>
-              </CardHeader>
-              <CardContent className="calc-form-grid">
-                <div className="calc-field">
-                  <Label className="calc-label" htmlFor="inclusive-amount" style={{ display:'flex', justifyContent: 'flex-end' }}>المبلغ شامل الضريبة</Label>
-                  <Input
-                    id="inclusive-amount"
-                    inputMode="decimal"
-                    value={inclusiveAmount}
-                    onChange={(event) => setInclusiveAmount(event.target.value)}
-                  />
-                </div>
-                <div className="card-deep calc-inline-formula">
-                  <ReceiptText size={16} />
-                  المبلغ ÷ (1 + نسبة الضريبة)
-                </div>
-              </CardContent>
-            </Card>
+        {mode === 'extract' ? (
+        <div className="vat-panel" role="region" aria-label="استخراج ضريبة القيمة المضافة">
+          <div className="vat-main-flow">
+            <div className="vat-entry-card">
+              <span className="vat-entry-card__icon"><ReceiptText size={18} aria-hidden="true" /></span>
+              <div className="vat-field">
+                <Label className="calc-label" htmlFor="inclusive-amount">
+                  اكتب السعر الشامل للضريبة
+                </Label>
+                <Input
+                  id="inclusive-amount"
+                  inputMode="decimal"
+                  value={inclusiveAmount}
+                  onChange={(event) => setInclusiveAmount(event.target.value)}
+                />
+                <p className="calc-hint">
+                  لا تضرب السعر الشامل في النسبة مباشرة. نستخرج السعر الأصلي بالقسمة على 1 + النسبة.
+                </p>
+              </div>
+              <PresetButtons values={VAT_AMOUNT_PRESETS} currencyCode={country.currencyCode} onSelect={setInclusiveAmount} />
+            </div>
 
-            <Card className="calc-surface-card">
-              <CardHeader>
-                <CardTitle className="calc-card-title">تفصيل الفاتورة</CardTitle>
-              </CardHeader>
-              <CardContent className="calc-breakdown-list">
-                <div className="calc-breakdown-item">
-                  <span>قبل الضريبة</span>
-                  <strong>{formatCurrency(extractResult.base, country.currencyCode)}</strong>
-                </div>
-                <div className="calc-breakdown-item">
-                  <span>الضريبة المستخرجة</span>
-                  <strong>{formatCurrency(extractResult.tax, country.currencyCode)}</strong>
-                </div>
-                <div className="calc-breakdown-item">
-                  <span>الإجمالي</span>
-                  <strong>{formatCurrency(extractResult.total, country.currencyCode)}</strong>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="vat-result-card" aria-live="polite">
+              <span className="vat-result-card__label">قيمة الضريبة داخل الفاتورة</span>
+              <strong className="vat-result-card__value">
+                {formatCurrency(extractResult.tax, country.currencyCode)}
+              </strong>
+              <div className="vat-result-list">
+                <ResultRow label="السعر قبل الضريبة" value={formatCurrency(extractResult.base, country.currencyCode)} strong />
+                <ResultRow label="الإجمالي كما كتبته" value={formatCurrency(extractResult.total, country.currencyCode)} />
+              </div>
+              <div className="vat-formula">
+                <span>المعادلة</span>
+                <strong>
+                  {formatCurrency(extractResult.total, country.currencyCode)}
+                  {' - '}
+                  {formatCurrency(extractResult.tax, country.currencyCode)}
+                  {' = '}
+                  {formatCurrency(extractResult.base, country.currencyCode)}
+                </strong>
+              </div>
+            </div>
           </div>
-        </TabsContent>
+        </div>
+        ) : null}
 
-        <TabsContent value="month" className="calc-tabs-panel">
-          <div className="calc-grid-2">
-            <Card className="calc-surface-card">
-              <CardHeader>
-                <CardTitle className="calc-card-title">ضريبة المخرجات والمدخلات</CardTitle>
-              </CardHeader>
-              <CardContent className="calc-form-grid">
-                <div className="calc-grid-2">
-                  <div className="calc-field">
-                    <Label className="calc-label" htmlFor="sales-amount">إجمالي المبيعات</Label>
-                    <Input
-                      id="sales-amount"
-                      inputMode="decimal"
-                      value={salesAmount}
-                      onChange={(event) => setSalesAmount(event.target.value)}
-                    />
-                  </div>
-                  <div className="calc-field">
-                    <Label className="calc-label" htmlFor="purchase-amount">إجمالي المشتريات</Label>
-                    <Input
-                      id="purchase-amount"
-                      inputMode="decimal"
-                      value={purchaseAmount}
-                      onChange={(event) => setPurchaseAmount(event.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="calc-kbd-row">
-                  <button
-                    type="button"
-                    className={`chip calc-chip-button ${amountsIncludeVat ? 'is-active' : ''}`}
-                    onClick={() => setAmountsIncludeVat(true)}
-                  >
-                    المبالغ شاملة الضريبة
-                  </button>
-                  <button
-                    type="button"
-                    className={`chip calc-chip-button ${!amountsIncludeVat ? 'is-active' : ''}`}
-                    onClick={() => setAmountsIncludeVat(false)}
-                  >
-                    المبالغ غير شاملة
-                  </button>
-                </div>
-              </CardContent>
-            </Card>
+        {mode === 'month' ? (
+        <div className="vat-panel" role="region" aria-label="صافي ضريبة الفترة">
+          <div className="vat-main-flow">
+            <div className="vat-entry-card">
+              <span className="vat-entry-card__icon"><Store size={18} aria-hidden="true" /></span>
+              <div className="vat-field">
+                <Label className="calc-label" htmlFor="sales-amount">إجمالي المبيعات</Label>
+                <Input
+                  id="sales-amount"
+                  inputMode="decimal"
+                  value={salesAmount}
+                  onChange={(event) => setSalesAmount(event.target.value)}
+                />
+              </div>
+              <div className="vat-field">
+                <Label className="calc-label" htmlFor="purchase-amount">إجمالي المشتريات</Label>
+                <Input
+                  id="purchase-amount"
+                  inputMode="decimal"
+                  value={purchaseAmount}
+                  onChange={(event) => setPurchaseAmount(event.target.value)}
+                />
+              </div>
+              <div className="vat-toggle-row">
+                <button
+                  type="button"
+                  className={`vat-toggle${amountsIncludeVat ? ' is-active' : ''}`}
+                  onClick={() => setAmountsIncludeVat(true)}
+                >
+                  الأرقام شاملة الضريبة
+                </button>
+                <button
+                  type="button"
+                  className={`vat-toggle${!amountsIncludeVat ? ' is-active' : ''}`}
+                  onClick={() => setAmountsIncludeVat(false)}
+                >
+                  الأرقام قبل الضريبة
+                </button>
+              </div>
+            </div>
 
-            <Card className="calc-surface-card">
-              <CardHeader>
-                <CardTitle className="calc-card-title">صافي الضريبة</CardTitle>
-              </CardHeader>
-              <CardContent className="calc-form-grid">
-                <div className="calc-breakdown-list">
-                  <div className="calc-breakdown-item">
-                    <span>ضريبة المبيعات</span>
-                    <strong>{formatCurrency(monthResult.outputs.tax, country.currencyCode)}</strong>
-                  </div>
-                  <div className="calc-breakdown-item">
-                    <span>ضريبة المشتريات</span>
-                    <strong>{formatCurrency(monthResult.inputs.tax, country.currencyCode)}</strong>
-                  </div>
-                </div>
-                <div className={monthResult.status === 'due' ? 'calc-warning' : 'calc-success'}>
-                  {monthResult.status === 'due'
-                    ? `الصافي المستحق للهيئة: ${formatCurrency(monthResult.net, country.currencyCode)}`
-                    : `صافي الرصيد القابل للاسترداد: ${formatCurrency(Math.abs(monthResult.net), country.currencyCode)}`}
-                </div>
-              </CardContent>
-            </Card>
+            <div className="vat-result-card" aria-live="polite">
+              <span className="vat-result-card__label">
+                {monthResult.status === 'due' ? 'الصافي المستحق تقريباً' : 'رصيد قابل للاسترداد تقريباً'}
+              </span>
+              <strong className="vat-result-card__value">
+                {formatCurrency(Math.abs(monthResult.net), country.currencyCode)}
+              </strong>
+              <div className="vat-result-list">
+                <ResultRow label="ضريبة المبيعات" value={formatCurrency(monthResult.outputs.tax, country.currencyCode)} />
+                <ResultRow label="ضريبة المشتريات" value={formatCurrency(monthResult.inputs.tax, country.currencyCode)} />
+              </div>
+              <div className="vat-formula">
+                <span>المعادلة</span>
+                <strong>
+                  ضريبة المبيعات - ضريبة المشتريات = صافي الفترة
+                </strong>
+              </div>
+            </div>
           </div>
-        </TabsContent>
-      </Tabs>
+        </div>
+        ) : null}
+      </div>
 
-      <div className="calc-grid-2">
-        <Card className="calc-surface-card">
-          <CardHeader>
-            <CardTitle className="calc-card-title">خصم ثم ضريبة</CardTitle>
-          </CardHeader>
-          <CardContent className="calc-form-grid">
-            <div className="calc-grid-2">
-              <div className="calc-field">
+      <details className="vat-advanced">
+        <summary>
+          أدوات تسعير إضافية
+          <ArrowLeft size={14} aria-hidden="true" />
+        </summary>
+        <div className="vat-advanced-grid">
+          <div className="vat-mini-tool">
+            <h3>خصم ثم ضريبة</h3>
+            <div className="vat-mini-tool__fields">
+              <div className="vat-field">
                 <Label className="calc-label" htmlFor="discount-amount">السعر الأصلي</Label>
                 <Input
                   id="discount-amount"
@@ -316,7 +420,7 @@ export default function VatCalculator() {
                   onChange={(event) => setDiscountAmount(event.target.value)}
                 />
               </div>
-              <div className="calc-field">
+              <div className="vat-field">
                 <Label className="calc-label" htmlFor="discount-rate">نسبة الخصم</Label>
                 <Input
                   id="discount-rate"
@@ -326,30 +430,17 @@ export default function VatCalculator() {
                 />
               </div>
             </div>
-            <div className="calc-breakdown-list">
-              <div className="calc-breakdown-item">
-                <span>بعد الخصم</span>
-                <strong>{formatCurrency(discountResult.discounted, country.currencyCode)}</strong>
-              </div>
-              <div className="calc-breakdown-item">
-                <span>الضريبة على السعر المخفض</span>
-                <strong>{formatCurrency(discountResult.tax, country.currencyCode)}</strong>
-              </div>
-              <div className="calc-breakdown-item">
-                <span>السعر النهائي</span>
-                <strong>{formatCurrency(discountResult.total, country.currencyCode)}</strong>
-              </div>
+            <div className="vat-result-list">
+              <ResultRow label="بعد الخصم" value={formatCurrency(discountResult.discounted, country.currencyCode)} />
+              <ResultRow label="الضريبة" value={formatCurrency(discountResult.tax, country.currencyCode)} />
+              <ResultRow label="السعر النهائي" value={formatCurrency(discountResult.total, country.currencyCode)} strong />
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        <Card className="calc-surface-card">
-          <CardHeader>
-            <CardTitle className="calc-card-title">هامش الربح ثم الضريبة</CardTitle>
-          </CardHeader>
-          <CardContent className="calc-form-grid">
-            <div className="calc-grid-2">
-              <div className="calc-field">
+          <div className="vat-mini-tool">
+            <h3>هامش ربح ثم ضريبة</h3>
+            <div className="vat-mini-tool__fields">
+              <div className="vat-field">
                 <Label className="calc-label" htmlFor="cost">تكلفة المنتج</Label>
                 <Input
                   id="cost"
@@ -358,7 +449,7 @@ export default function VatCalculator() {
                   onChange={(event) => setCost(event.target.value)}
                 />
               </div>
-              <div className="calc-field">
+              <div className="vat-field">
                 <Label className="calc-label" htmlFor="margin-rate">هامش الربح</Label>
                 <Input
                   id="margin-rate"
@@ -368,52 +459,26 @@ export default function VatCalculator() {
                 />
               </div>
             </div>
-            <div className="calc-breakdown-list">
-              <div className="calc-breakdown-item">
-                <span>سعر البيع قبل الضريبة</span>
-                <strong>{formatCurrency(marginResult.sellingBeforeVat, country.currencyCode)}</strong>
-              </div>
-              <div className="calc-breakdown-item">
-                <span>الضريبة</span>
-                <strong>{formatCurrency(marginResult.tax, country.currencyCode)}</strong>
-              </div>
-              <div className="calc-breakdown-item">
-                <span>سعر البيع النهائي</span>
-                <strong>{formatCurrency(marginResult.total, country.currencyCode)}</strong>
-              </div>
+            <div className="vat-result-list">
+              <ResultRow label="قبل الضريبة" value={formatCurrency(marginResult.sellingBeforeVat, country.currencyCode)} />
+              <ResultRow label="الضريبة" value={formatCurrency(marginResult.tax, country.currencyCode)} />
+              <ResultRow label="السعر النهائي" value={formatCurrency(marginResult.total, country.currencyCode)} strong />
             </div>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+        </div>
+      </details>
 
-      <div className="calc-grid-4">
-        <div className="card-nested calc-metric-card">
-          <div className="calc-metric-card__label"><Calculator size={16} /></div>
-          <div className="calc-metric-card__value">{formatPercent(country.rate, 0)}</div>
-          <div className="calc-metric-card__note">النسبة العامة في {country.name}</div>
+      <div className="vat-tool__footer">
+        <div className="vat-footnote">
+          <Scale size={16} aria-hidden="true" />
+          النتيجة للتقدير السريع. عند الفاتورة الرسمية أو الإقرار، راجع النسبة الرسمية وحالة السلعة أو الخدمة.
         </div>
-        <div className="card-nested calc-metric-card">
-          <div className="calc-metric-card__label"><Store size={16} /></div>
-          <div className="calc-metric-card__value">
-            {formatCurrency(monthResult.outputs.tax, country.currencyCode)}
-          </div>
-          <div className="calc-metric-card__note">ضريبة المخرجات حسب بياناتك</div>
-        </div>
-        <div className="card-nested calc-metric-card">
-          <div className="calc-metric-card__label"><Scale size={16} /></div>
-          <div className="calc-metric-card__value">
-            {formatCurrency(monthResult.inputs.tax, country.currencyCode)}
-          </div>
-          <div className="calc-metric-card__note">ضريبة المدخلات حسب بياناتك</div>
-        </div>
-        <div className="card-nested calc-metric-card">
-          <div className="calc-metric-card__label"><ReceiptText size={16} /></div>
-          <div className="calc-metric-card__value">
-            {formatCurrency(addResult.total, country.currencyCode)}
-          </div>
-          <div className="calc-metric-card__note">مثال الفاتورة الشاملة</div>
-        </div>
+        <ResultActions
+          copyText={shareText}
+          shareTitle="حاسبة ضريبة القيمة المضافة"
+          shareText={shareText}
+        />
       </div>
-    </div>
+    </section>
   );
 }

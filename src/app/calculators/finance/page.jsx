@@ -2,31 +2,24 @@ import Link from 'next/link';
 import { ArrowLeft, BadgePercent, BriefcaseBusiness, CreditCard, ReceiptText } from 'lucide-react';
 
 import {
+  CalculatorDecisionTable,
   CalculatorFaqSection,
-  CalculatorFooterCta,
   CalculatorHero,
   CalculatorInfoGrid,
-  CalculatorIntentCloud,
-  CalculatorQuickAnswerGrid,
   CalculatorResourceLinks,
   CalculatorSection,
-  CalculatorSectionNav,
 } from '@/components/calculators/common';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   CALCULATOR_HUBS,
   getCalculatorHubBySlug,
   getCalculatorRoutesByCluster,
 } from '@/lib/calculators/data';
-import { getGuidesBySlugs } from '@/lib/guides/data';
-import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 const FINANCE_HUB = getCalculatorHubBySlug('finance');
 const FINANCE_ROUTES = getCalculatorRoutesByCluster('finance');
-const FINANCE_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.financeHub);
 
 const FINANCE_ICONS = {
   'end-of-service-benefits': BriefcaseBusiness,
@@ -34,6 +27,8 @@ const FINANCE_ICONS = {
   vat: ReceiptText,
   percentage: BadgePercent,
 };
+const PRIMARY_FINANCE_ROUTE = FINANCE_ROUTES.find((item) => item.slug === 'monthly-installment') ?? FINANCE_ROUTES[0];
+const SUPPORTING_FINANCE_ROUTES = FINANCE_ROUTES.filter((item) => item.slug !== PRIMARY_FINANCE_ROUTE.slug);
 const FINANCE_RETURN_PATHS = [
   {
     href: '/calculators/monthly-installment',
@@ -53,34 +48,72 @@ const FINANCE_RETURN_PATHS = [
   {
     href: '/calculators/end-of-service-benefits',
     title: 'كم مكافأة نهاية الخدمة بعد 5 سنوات؟',
-    description: 'صفحة عالية النية للسوق السعودي تجمع الحاسبة مع الشرح والمقارنة بين الاستقالة ونهاية العقد.',
+    description: 'احسب مكافأة نهاية الخدمة في السعودية، ثم قارن بين الاستقالة ونهاية العقد قبل الاعتماد على الرقم.',
   },
 ];
+const FINANCE_DECISION_TABLE = [
+  {
+    key: 'installment',
+    cells: [
+      'أقارن تمويلاً أو قرضاً',
+      'حاسبة القسط الشهري',
+      'لا تكتف بالقسط. راجع إجمالي الفائدة والمدة والدفعة المقدمة حتى لا يبدو العرض أرخص مما هو فعلاً.',
+    ],
+  },
+  {
+    key: 'vat',
+    cells: [
+      'أراجع فاتورة أو سعراً شاملاً',
+      'حاسبة الضريبة',
+      'افصل بين السعر قبل الضريبة والسعر الشامل، وتأكد من نسبة بلدك أو نوع السلعة عند قرار رسمي.',
+    ],
+  },
+  {
+    key: 'percentage',
+    cells: [
+      'أحسب خصماً أو زيادة أو تغيراً',
+      'حاسبة النسبة المئوية',
+      'استخدمها للمقارنة بين رقمين أو فهم نسبة الخصم، لا لحساب ضريبة لها قواعد خاصة.',
+    ],
+  },
+  {
+    key: 'service',
+    cells: [
+      'أراجع مستحقات عمل',
+      'حاسبة نهاية الخدمة',
+      'فرّق بين الاستقالة ونهاية العقد والراتب المعتمد، ثم راجع النظام أو جهة العمل قبل القرار النهائي.',
+    ],
+  },
+];
+const FINANCE_NEXT_HUB_SLUGS = ['personal-finance', 'building', 'sleep'];
 
 const FAQ_ITEMS = [
   {
     question: 'ما الذي ستجده داخل قسم حاسبات المال والعمل؟',
-    answer: 'ستجد حاسبات القسط الشهري، وضريبة القيمة المضافة، والنسبة المئوية، ومكافأة نهاية الخدمة في بوابة واحدة مع روابط مباشرة إلى كل أداة.',
+    answer: 'ستجد حاسبات القسط الشهري، وضريبة القيمة المضافة، والنسبة المئوية، ومكافأة نهاية الخدمة مع مسار مباشر لكل أداة. الفكرة ليست عرض قائمة أسماء فقط؛ كل مسار يبدأ من سؤال عملي مثل كم القسط أو هل السعر شامل الضريبة أو كم أستحق عند نهاية العمل. بعد النتيجة ستجد شرحاً يساعدك على فهم حدود الرقم قبل الاعتماد عليه.',
   },
   {
     question: 'هل هذا القسم موجه فقط للسعودية؟',
-    answer: 'ليس كله. حاسبة نهاية الخدمة موجهة للسعودية تحديداً، بينما القسط والضريبة والنسبة المئوية تخدم مستخدمين في دول عربية متعددة مع أمثلة واضحة.',
+    answer: 'ليس كله. حاسبة نهاية الخدمة موجهة للسعودية تحديداً لأنها تعتمد على قواعد نظام العمل السعودي، بينما القسط والضريبة والنسبة المئوية تصلح لأسئلة يومية في دول عربية متعددة. في القسط والنسبة يمكنك تغيير العملة أو المدخلات، وفي الضريبة يمكنك اختيار دولة أو إدخال نسبة مخصصة عندما لا تجد بلدك في القائمة.',
   },
   {
     question: 'لماذا يحتاج هذا القسم إلى صفحة مستقلة؟',
-    answer: 'لأن كثيراً من المستخدمين يبحثون عن حاسبات المال والعمل كفئة كاملة، وليس عن أداة واحدة فقط. وجود صفحة جامعة يسهّل الاكتشاف والفهرسة والانتقال بين الأدوات المرتبطة.',
+    answer: 'لأنك قد تبدأ بسؤال مالي لا باسم أداة محددة: كم القسط؟ هل السعر شامل الضريبة؟ كم الخصم؟ أو هل نهاية الخدمة تختلف عند الاستقالة؟ هذه الصفحة تعمل كخريطة قرار قصيرة، فتقودك إلى الأداة الأنسب بسرعة ثم تعيدك إلى الشرح عندما تحتاج فهماً أعمق. هذا أفضل من أرشيف طويل يجعلك تجرب أكثر من صفحة بلا سبب.',
   },
   {
     question: 'أي صفحة أبدأ بها إذا كنت أقارن قرضاً أو تمويلاً؟',
-    answer: 'ابدأ من حاسبة القسط الشهري إذا كان سؤالك عن مبلغ التمويل والدفعة والفائدة، ثم انتقل إلى النسبة المئوية إذا أردت فهم نسب التغير أو الخصم أو الزيادة.',
+    answer: 'ابدأ من حاسبة القسط الشهري إذا كان سؤالك عن مبلغ التمويل والدفعة والفائدة، لأنها تعرض القسط والتكلفة الكلية والسداد المبكر. بعد ذلك انتقل إلى النسبة المئوية إذا أردت فهم نسب التغير أو الخصم أو الزيادة داخل العرض نفسه. لا تقارن عرضين بالقسط وحده؛ ثبّت المدة والمبلغ والعملة ثم غيّر الفائدة والرسوم فقط.',
   },
 ];
-
 export const metadata = buildCanonicalMetadata({
-  title: 'حاسبات المال والعمل | القسط والضريبة ونهاية الخدمة والنسبة',
+  title: 'حاسبات مالية عربية | القسط والضريبة ونهاية الخدمة والنسبة',
   description:
-    'ابدأ من أقوى الحاسبات المالية التي يبحث عنها المستخدم العربي: كم قسط القرض؟ كم الضريبة 15%؟ كم مكافأة نهاية الخدمة؟ وكم تساوي النسبة المئوية؟',
+    'حاسبات مالية عربية للقسط الشهري، ضريبة القيمة المضافة، النسبة المئوية، ومكافأة نهاية الخدمة مع شرح يساعدك على فهم الرقم قبل القرار.',
   keywords: [
+    'حاسبات مالية عربية',
+    'حاسبة مالية',
+    'حاسبة قرض وضريبة',
+    'حاسبات المال والعمل',
     ...FINANCE_HUB.keywords,
     ...FINANCE_ROUTES.flatMap((item) => item.keywords),
   ],
@@ -116,139 +149,113 @@ export default function FinanceCalculatorsHubPage() {
       { '@type': 'ListItem', position: 3, name: 'حاسبات المال والعمل', item: `${SITE_URL}${FINANCE_HUB.href}` },
     ],
   };
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQ_ITEMS.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
 
   return (
-    <main className="bg-base text-primary">
+    <main className="calc-product-page bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <CalculatorHero
         badge="مال / عمل"
-        title="كم القسط؟ كم الضريبة؟ كم مكافأة نهاية الخدمة؟ ابدأ من هنا"
-        description="هذه الصفحة تجمع الحاسبات التي تمس القرارات اليومية الأكثر حساسية للمستخدم العربي: التمويل، الضريبة، النسب، ومستحقات نهاية الخدمة. بدل أن يفتح الزائر أدوات متفرقة، يبدأ من صفحة واحدة توضّح له أين يذهب بحسب سؤاله الفعلي."
-        accent={FINANCE_HUB.accent}
+        title="حاسبات مالية عربية: القسط، الضريبة، النسبة ونهاية الخدمة"
+        description="إذا كان قرارك مرتبطاً بتمويل، فاتورة، خصم، أو مستحقات عمل، فابدأ من السؤال الأقرب لك: كم القسط؟ كم الضريبة؟ كم الخصم؟ كم مكافأة نهاية الخدمة؟ اختر الحاسبة المناسبة، ثم راجع الشرح المختصر حتى تفهم الرقم قبل أن تعتمد عليه."
         highlights={[
-          'قسم مبني حول أسئلة مالية يبحث بها الناس فعلاً، لا حول أسماء أدوات جامدة فقط.',
-          'كل صفحة فرعية تعطي نتيجة سريعة ثم توسّع الفهم بشرح وأمثلة وروابط مرتبطة.',
+          'ابدأ من سؤال واضح مثل كم قسط قرض 100 ألف أو كم ضريبة 1000 ريال.',
+          'كل صفحة فرعية تعطي نتيجة سريعة ثم توسع الفهم بشرح وأمثلة ومسار تطبيقي واضح.',
           'مفيد للموظف، وصاحب المتجر، والباحث عن قرض، وكل من يحتاج قراراً أسرع وأوضح.',
+          'النتائج تقديرية عند القرارات الحساسة ولا تغني عن عرض البنك أو الجهة الرسمية أو النظام المحلي.',
         ]}
-      >
-        <CalculatorIntentCloud
-          title="أقوى نيات البحث داخل هذا القسم"
-          items={[
-            'كم قسط قرض 100 ألف',
-            'كم ضريبة 1000 ريال عند 15%',
-            'كم مكافأة نهاية الخدمة بعد 5 سنوات',
-            'كم يساوي 20% من 500',
-            'حاسبات مالية بالعربي',
-            'حساب القرض والضريبة والنسبة',
-          ]}
-        />
-      </CalculatorHero>
-
-      <CalculatorSection
-        id="finance-hub-map"
-        eyebrow="خريطة القسم"
-        title="ابدأ من السؤال الذي كتبه المستخدم في Google"
-        description="كل بطاقة هنا مبنية على صيغة بحث عربية مباشرة. هذا يجعل الصفحة أوضح للمستخدم وأسهل على Google في فهم العلاقة بين القسم والأدوات الفرعية."
-      >
-        <CalculatorSectionNav
-          items={[
-            { href: '#finance-tools', label: 'الأدوات', description: 'القرض والضريبة والنسبة ونهاية الخدمة' },
-            { href: '#finance-answers', label: 'إجابات سريعة', description: 'أسئلة يكررها المستخدمون قبل النقر' },
-            { href: '#finance-cases', label: 'سيناريوهات عملية', description: 'كيف يخدم القسم مواقف الحياة والعمل' },
-            { href: '#finance-faq', label: 'الأسئلة الشائعة', description: 'متى أستخدم كل أداة؟' },
-          ]}
-        />
-      </CalculatorSection>
+      />
 
       <CalculatorSection
         id="finance-tools"
         eyebrow="الأدوات الأساسية"
-        title="أربع صفحات قوية بدل صفحة مالية عامة وضعيفة"
-        description="بدلاً من صفحة فضفاضة تتكلم عن المال بشكل عام، يقودك هذا القسم إلى أدوات متخصصة لها نية بحث واضحة وقابلة للنمو في النتائج."
+        title="ابدأ من الأداة التي تطابق القرار لا من قائمة أسماء"
+        description="القرض عادة هو القرار الأعلى أثراً، لذلك نضعه أولاً، ثم تأتي الضريبة والنسبة ونهاية الخدمة كمسارات مساعدة حسب السؤال الذي بين يديك."
         subtle
       >
-        <div className="calc-related-grid">
-          {FINANCE_ROUTES.map((item) => {
-            const Icon = FINANCE_ICONS[item.slug] || CreditCard;
+        <div className="calc-decision-layout">
+          <Link href={PRIMARY_FINANCE_ROUTE.href} className="calc-decision-primary">
+            <span className="calc-decision-primary__label">ابدأ هنا إذا كان القرار تمويلياً</span>
+            <span className="calc-decision-primary__title">{PRIMARY_FINANCE_ROUTE.title}</span>
+            <span className="calc-decision-primary__body">
+              القسط الشهري لا يشرح وحده هل العرض مناسب لك. افتح الحاسبة لترى القسط، إجمالي الفوائد، أثر مدة السداد، والفرق بين سيناريو وآخر قبل أن تقارن العرض أو توقع على تمويل.
+            </span>
+            <span className="calc-decision-primary__cta">
+              افتح حاسبة القسط
+              <ArrowLeft size={16} aria-hidden="true" />
+            </span>
+          </Link>
 
-            return (
-              <Card key={item.slug} className="calc-surface-card calc-related-card card-hover">
-                <CardHeader>
-                  <div
-                    className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl border"
-                    style={{
-                      background: item.accentSoft,
-                      borderColor: 'var(--border-accent)',
-                      color: item.accent,
-                    }}
-                  >
-                    <Icon size={18} aria-hidden="true" />
-                  </div>
-                  <CardTitle className="calc-card-title">{item.title}</CardTitle>
-                  <CardDescription className="calc-card-description">
-                    {item.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Link href={item.href} className="btn btn-primary--flat calc-button calc-inline-button">
-                    افتح الصفحة
-                    <ArrowLeft size={16} />
-                  </Link>
-                </CardContent>
-              </Card>
-            );
-          })}
+          <div className="calc-decision-list">
+            {SUPPORTING_FINANCE_ROUTES.map((item) => {
+              const Icon = FINANCE_ICONS[item.slug] || CreditCard;
+
+              return (
+                <Link key={item.slug} href={item.href} className="calc-decision-link">
+                  <span className="calc-tool-icon flex h-11 w-11 items-center justify-center rounded-[var(--radius-lg)] border" aria-hidden="true">
+                    <Icon size={18} />
+                  </span>
+                  <span className="calc-decision-link__copy">
+                    <strong className="calc-card-title">{item.title}</strong>
+                    <span className="calc-card-description">{item.description}</span>
+                  </span>
+                  <ArrowLeft size={16} className="calc-decision-link__arrow" aria-hidden="true" />
+                </Link>
+              );
+            })}
+          </div>
         </div>
+        <p className="calc-section-note">
+          إذا كان سؤالك عن فاتورة فابدأ بالضريبة، وإذا كان عن خصم أو زيادة فابدأ بالنسبة، وإذا كان عن مستحقات عمل فانتقل مباشرة إلى نهاية الخدمة. هذا الترتيب يقلل التنقل ويجعل كل خطوة مرتبطة بسؤال واضح.
+        </p>
       </CalculatorSection>
 
       <CalculatorSection
-        id="finance-answers"
-        eyebrow="إجابات سريعة"
-        title="ما الذي ينتظره الزائر قبل أن يختار الأداة؟"
-        description="هذه الأسئلة لا تستبدل الحاسبات نفسها، لكنها توضّح لزائر Google أنه وصل إلى المكان الصحيح من أول شاشة."
+        id="finance-decision-table"
+        eyebrow="مقارنة القرار"
+        title="لا تجعل كل الأسئلة المالية في حاسبة واحدة"
+        description="القرض والضريبة والنسبة ونهاية الخدمة قد تبدو كلها أرقاماً مالية، لكنها تخدم قرارات مختلفة تماماً."
+        subtle
       >
-        <CalculatorQuickAnswerGrid
-          items={[
-            {
-              question: 'أريد معرفة قسط قرض بسرعة، أين أبدأ؟',
-              description: 'عندما يكون القرار متعلقاً بتمويل أو سيارة أو منزل',
-              answer: 'ابدأ من حاسبة القسط الشهري لأنها تعرض القسط، وإجمالي الفوائد، وأثر المدة، والدفعة المقدمة، والسداد المبكر في صفحة واحدة.',
-            },
-            {
-              question: 'أريد فقط حساب الضريبة من فاتورة أو إضافة 15%، ماذا أفعل؟',
-              description: 'أكثر أسئلة VAT شيوعاً في الخليج',
-              answer: 'استخدم حاسبة الضريبة لأنها تعطيك إضافة الضريبة واستخراجها من السعر الشامل، مع توضيح الفرق بين شامل الضريبة وغير شاملها.',
-            },
-            {
-              question: 'لدي خصم أو زيادة أو نسبة تغير، هل أذهب لحاسبة الضريبة أم النسبة؟',
-              description: 'تمييز مهم بين صفحتين قريبتين',
-              answer: 'إذا كان السؤال عاماً عن نسبة مئوية أو خصم أو تغير سعر، فحاسبة النسبة المئوية هي الأنسب. أما إذا كان السؤال عن VAT أو TVA تحديداً فابدأ بحاسبة الضريبة.',
-            },
-          ]}
+        <CalculatorDecisionTable
+          columns={['سؤالك الان', 'الأداة المناسبة', 'ما الذي تنتبه له؟']}
+          rows={FINANCE_DECISION_TABLE}
         />
       </CalculatorSection>
 
       <CalculatorSection
         id="finance-cases"
         eyebrow="سيناريوهات استخدام"
-        title="هذا القسم يخدم قرارات حقيقية، لا مجرد عمليات حساب"
-        description="كل أداة هنا مرتبطة بموقف فعلي يمكن أن يدفع المستخدم إلى البحث ثم النقر ثم العودة مرة أخرى."
+        title="استخدم الحاسبة في موقف مالي حقيقي"
+        description="كل أداة مرتبطة بسؤال عملي قد تواجهه في العمل، الشراء، التمويل، أو مراجعة المستحقات."
         subtle
       >
         <CalculatorInfoGrid
           items={[
             {
               title: 'موظف يراجع استقالته أو نهاية عقده',
-              description: 'نية مالية حساسة وعالية القيمة',
-              content: 'يحتاج إلى رقم تقريبي واضح لمكافأة نهاية الخدمة قبل أن يراجع القرار أو يتحدث مع جهة العمل. هذه النية من أقوى نيات البحث في سوق العمل السعودي.',
+              description: 'قرار مالي حساس يحتاج وضوحاً',
+              content: 'احسب مكافأة نهاية الخدمة برقم تقريبي واضح قبل أن تراجع القرار أو تتحدث مع جهة العمل، ثم اقرأ الفرق بين الاستقالة ونهاية العقد.',
             },
             {
-              title: 'مستخدم يقارن قرضاً شخصياً أو عقارياً',
+              title: 'تقارن قرضاً شخصياً أو عقارياً',
               description: 'قبل القرار وليس بعده',
-              content: 'لا يبحث فقط عن رقم القسط، بل عن أثر المدة والفائدة والدفعة المقدمة على ميزانيته الشهرية، لذلك صفحة القسط الشهري يجب أن تكون محطة قرار حقيقية.',
+              content: 'لا تنظر إلى رقم القسط وحده. راجع أثر المدة والفائدة والدفعة المقدمة على ميزانيتك الشهرية قبل قبول أي عرض.',
             },
             {
               title: 'تاجر أو مسوّق أو صاحب فاتورة',
@@ -256,9 +263,9 @@ export default function FinanceCalculatorsHubPage() {
               content: 'يحتاج إلى إضافة الضريبة أو استخراجها بسرعة، وغالباً يريد فرق السعر الشامل وغير الشامل دون الذهاب إلى ملف Excel أو آلة حاسبة يدوية.',
             },
             {
-              title: 'مستخدم يريد خصماً أو زيادة أو نسبة نجاح',
+              title: 'تحسب خصماً أو زيادة أو نسبة نجاح',
               description: 'أداة يومية ذات استعمال واسع',
-              content: 'صفحة النسبة المئوية مهمة لأنها لا تخدم التجارة فقط، بل تخدم التسعير، التعليم، التغيير بين رقمين، وتقسيم المبالغ والنسب العامة.',
+              content: 'استخدم حاسبة النسبة في التسعير، التعليم، التغيير بين رقمين، تقسيم المبالغ، أو فهم الخصومات المتتالية.',
             },
           ]}
         />
@@ -267,8 +274,8 @@ export default function FinanceCalculatorsHubPage() {
       <CalculatorSection
         id="finance-return-paths"
         eyebrow="رحلات متكررة"
-        title="صفحات تجعل المستخدم يعود إلى الموقع بدل زيارة واحدة فقط"
-        description="هذه الصفحات ليست مجرد أدوات متجاورة، بل أسئلة مالية يومية متكررة يمكن أن تبني عادة استخدام مستمرة إذا وصل الزائر إلى المسار الصحيح من البداية."
+        title="أسئلة مالية ستحتاجها أكثر من مرة"
+        description="احفظ الصفحات التي تناسب قراراتك المتكررة: قسط قرض، ضريبة فاتورة، خصم، أو مكافأة نهاية خدمة."
         subtle
       >
         <CalculatorResourceLinks items={FINANCE_RETURN_PATHS} buttonLabel="افتح السؤال مباشرة" />
@@ -276,50 +283,30 @@ export default function FinanceCalculatorsHubPage() {
 
       <CalculatorSection
         id="finance-faq"
-        eyebrow="الأسئلة الشائعة"
-        title="FAQ سريع حول قسم المال والعمل"
-        description="أسئلة تمهّد للزائر وتدفعه إلى الأداة المناسبة بدل أن يخرج من القسم بسرعة."
+        eyebrow="قبل الاعتماد"
+        title="أسئلة قبل اختيار حاسبة مالية أو الاعتماد على نتيجتها"
+        description="إجابات قصيرة تساعدك على اختيار الأداة المناسبة، وفهم متى يكون الرقم كافياً ومتى تحتاج قراءة الشروط أو مقارنة بديلة."
       >
         <CalculatorFaqSection items={FAQ_ITEMS} />
       </CalculatorSection>
 
       <CalculatorSection
-        id="finance-guides"
-        eyebrow="محتوى داعم"
-        title="أدلة تقوّي القرار قبل استخدام الأداة"
-        description="هذه الأدلة تلتقط أسئلة تعليمية شائعة حول القروض والضريبة والنسبة والمستحقات، ثم تربطها مباشرة بالأداة العملية داخل القسم."
-        subtle
-      >
-        <CalculatorResourceLinks items={FINANCE_GUIDES} />
-      </CalculatorSection>
-
-      <CalculatorSection
         id="finance-more"
-        eyebrow="مسارات داخلية"
-        title="ماذا بعد هذا القسم؟"
-        description="بعد الحاسبات المالية، يمكن للمستخدم الانتقال إلى باقي المسارات العليا داخل الحاسبات."
+        eyebrow="خطوة تالية"
+        title="ثلاثة مسارات تكمل القرار المالي غالباً"
+        description="لا تحتاج شبكة خيارات واسعة هنا. اختر مساراً واحداً فقط إذا كان سؤالك التالي عن خطة شهرية، مشروع بناء، أو موعد نوم يؤثر في روتينك اليومي."
       >
-        <div className="calc-related-grid">
-          {CALCULATOR_HUBS.filter((hub) => hub.slug !== 'finance').map((hub) => (
-            <Card key={hub.slug} className="calc-surface-card calc-related-card card-hover">
-              <CardHeader>
-                <CardTitle className="calc-card-title">{hub.title}</CardTitle>
-                <CardDescription className="calc-card-description">
-                  {hub.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Link href={hub.href} className="btn btn-primary--flat calc-button calc-inline-button">
-                  افتح القسم
-                  <ArrowLeft size={16} />
-                </Link>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <CalculatorResourceLinks
+          items={CALCULATOR_HUBS.filter((hub) => FINANCE_NEXT_HUB_SLUGS.includes(hub.slug)).map((hub) => ({
+            href: hub.href,
+            title: hub.title,
+            description: hub.description,
+            ctaLabel: 'افتح القسم',
+          }))}
+          buttonLabel="افتح القسم"
+        />
       </CalculatorSection>
 
-      <CalculatorFooterCta />
     </main>
   );
 }

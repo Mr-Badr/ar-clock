@@ -23,41 +23,36 @@
  * components/home/
  * ├── data/
  * │   ├── faqItems.js         — FAQ question/answer pairs
- * │   ├── stats.js            — trust-bar stat objects
  * │   └── whyFeatures.js      — benefit card objects
  * ├── mockups/
- * │   ├── PrayerTimesMockup.jsx   — decorative prayer times UI card
- * │   ├── TimeDifferenceMockup.jsx — decorative time-diff UI card
- * │   └── HolidaysMockup.jsx      — decorative holidays UI card
+ * │   ├── PrayerTimesLiveCard.client.jsx   — live prayer times preview
+ * │   ├── TimeDifferenceLiveCard.client.jsx — live time-diff preview
+ * │   └── HolidaysLiveCard.client.jsx      — live holidays preview
  * ├── shared/
  * │   ├── SectionWrapper.jsx  — section shell (overflow, aria-labelledby, glow)
- * │   ├── SectionDivider.jsx  — 1px gradient line between sections
+ * │   ├── SectionDivider.jsx  — 1px token-based line between sections
  * │   ├── SectionBadge.jsx    — small pill label above headings
  * │   ├── FeatureItem.jsx     — icon + text bullet row
- * │   └── CtaLink.jsx         — gradient CTA button with hover fix
+ * │   └── CtaLink.jsx         — primary CTA link
  * ├── GlobalSchemas.jsx       — WebSite + Organization JSON-LD
- * ├── SectionStats.jsx        — trust bar (5 key numbers)
  * ├── SectionPrayerTimes.jsx  — feature: prayer times  (Image RIGHT)
  * ├── SectionTimeDifference.jsx — feature: time diff   (Image LEFT)
  * ├── SectionHolidays.jsx     — feature: holidays      (Image RIGHT)
- * ├── SectionWhyUs.jsx        — 6 benefit cards + SEO paragraph
- * ├── SectionSEOArticle.jsx   — 300+ word editorial Arabic copy
- * ├── SectionCitiesGrid.jsx   — 18-city world clock grid
+ * ├── SectionStartHere.jsx    — guided entry paths after the hero
+ * ├── SectionSEOArticle.jsx   — latest practical guides
+ * ├── SectionCitiesGrid.jsx   — footer taxonomy links
  * ├── SectionFAQ.jsx          — 8 Q&A + FAQPage JSON-LD schema
  * └── index.jsx               ← YOU ARE HERE
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 import { Suspense } from 'react'
-import SectionStats        from './SectionStats'
-import { SectionDivider } from '@/components/shared/primitives'
+import SectionStartHere    from './SectionStartHere'
 import SectionSkeleton     from '@/components/shared/SectionSkeleton'
 import SectionPrayerTimes  from './SectionPrayerTimes'
 import SectionTimeDifference from './SectionTimeDifference'
 import SectionHolidays     from './SectionHolidays'
 import SectionCalculators  from './SectionCalculators'
-import SectionEconomy      from './SectionEconomy'
-import SectionWhyUs        from './SectionWhyUs'
 import SectionSEOArticle   from './SectionSEOArticle'
 import SectionCitiesGrid   from './SectionCitiesGrid'
 import SectionFAQ          from './SectionFAQ'
@@ -65,65 +60,35 @@ import SectionFAQ          from './SectionFAQ'
 export default function HomeSections() {
   return (
     <>
-      {/* Trust bar — 5 authority numbers, shown right after hero */}
-      <SectionStats />
+      <SectionStartHere />
 
-      {/* Feature 1: Prayer times — Image RIGHT · Text LEFT */}
       <Suspense fallback={<SectionSkeleton />}>
         <SectionPrayerTimes />
       </Suspense>
 
-      <SectionDivider />
-
-      {/* Feature 2: Time difference — Image LEFT · Text RIGHT */}
       <SectionTimeDifference />
 
-      <SectionDivider />
-
-      {/* Feature 3: Holidays — Image RIGHT · Text LEFT */}
       <Suspense fallback={<SectionSkeleton />}>
         <SectionHolidays />
       </Suspense>
 
-      <SectionDivider />
-
       <SectionCalculators />
 
-      <SectionDivider />
-
-      <SectionEconomy />
-
-      <SectionDivider />
-
-      {/* 6 benefit cards + SEO intro paragraph */}
-      <SectionWhyUs />
-
-      <SectionDivider />
-
-      {/* 300+ word editorial copy in 4 topic cards */}
       <SectionSEOArticle />
 
-      <SectionDivider />
-
-      {/* 18-city world clock grid with internal links */}
-      <SectionCitiesGrid />
-
-      <SectionDivider />
-
-      {/* FAQ accordion — FAQPage JSON-LD + microdata */}
       <SectionFAQ />
+
+      <SectionCitiesGrid />
     </>
   )
 }
 
 /* Named re-exports for individual use */
-export { default as SectionStats }         from './SectionStats'
+export { default as SectionStartHere }     from './SectionStartHere'
 export { default as SectionPrayerTimes }   from './SectionPrayerTimes'
 export { default as SectionTimeDifference } from './SectionTimeDifference'
 export { default as SectionHolidays }      from './SectionHolidays'
 export { default as SectionCalculators }   from './SectionCalculators'
-export { default as SectionEconomy }       from './SectionEconomy'
-export { default as SectionWhyUs }         from './SectionWhyUs'
 export { default as SectionSEOArticle }    from './SectionSEOArticle'
 export { default as SectionCitiesGrid }    from './SectionCitiesGrid'
 export { default as SectionFAQ }           from './SectionFAQ'

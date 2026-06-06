@@ -1,101 +1,356 @@
 {
   "slug": "school-start-kuwait",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.158Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
     "متى تبدأ الدراسة في الكويت {{year}}",
-    "كم باقي على الدراسة في الكويت",
-    "التقويم الدراسي الكويت {{year}}",
-    "وزارة التربية الكويت التقويم الدراسي",
-    "موعد بدء الدراسة في الكويت",
-    "العودة إلى المدارس في الكويت",
-    "بدء الدراسة في الكويت {{year}}",
-    "كم باقي على بدء الدراسة في الكويت {{year}}",
     "موعد بدء الدراسة في الكويت {{year}}",
-    "تاريخ بدء الدراسة في الكويت {{year}}",
-    "متى بدء الدراسة في الكويت {{nextYear}}",
-    "بدء الدراسة في الكويت العد التنازلي"
+    "كم باقي على الدراسة في الكويت {{year}}",
+    "التقويم الدراسي الكويت {{year}}",
+    "موعد دوام الطلبة في الكويت {{year}}",
+    "موعد دوام المعلمين في الكويت {{year}}",
+    "موعد دوام الإداريين في الكويت {{year}}",
+    "متى يعود الطلاب إلى المدارس في الكويت {{year}}",
+    "موعد العودة إلى المدارس في الكويت {{year}}",
+    "إجازات المدارس في الكويت {{year}} {{nextYear}}"
   ],
   "competitors": [
     {
       "site": "moe.edu.kw",
-      "type": "reference",
+      "type": "official_arabic_reference",
+      "url": "https://www.moe.edu.kw/pages/calendar"
+    },
+    {
+      "site": "rahhal.wego.com",
+      "type": "arabic_content_competitor",
+      "url": "https://rahhal.wego.com/blog/%D8%A7%D9%84%D8%AA%D9%82%D9%88%D9%8A%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-1448-%D8%A7%D9%84%D9%83%D9%88%D9%8A%D8%AA/"
+    },
+    {
+      "site": "almanahj.com",
+      "type": "arabic_reference_mirror",
+      "url": "https://almanahj.com/kw/id=20386"
+    },
+    {
+      "site": "kes.edu.kw",
+      "type": "english_comparison",
+      "url": "https://www.kes.edu.kw/calendar/"
+    },
+    {
+      "site": "ais-kuwait.org",
+      "type": "english_comparison",
+      "url": "https://www.ais-kuwait.org/calendar"
+    }
+  ],
+  "arabicCompetitors": [
+    {
+      "site": "moe.edu.kw",
+      "status": "usable",
       "url": "https://www.moe.edu.kw/pages/calendar",
-      "focus": [
-        "التاريخ الرسمي لـ بدء الدراسة في الكويت",
-        "سياق بدء الدراسة في الكويت"
+      "title": "وزارة التربية الكويتية - التقويم الدراسي",
+      "metaDescription": "صفحة مرجعية تعرض التقويم الدراسي الرسمي.",
+      "h1": "التقويم الدراسي",
+      "headings": [
+        "التقويم الدراسي"
       ],
-      "gaps": [
-        "غالباً لا تقدم صفحة عربية تجمع الموعد والشرح والعد التنازلي في مكان واحد."
+      "bodySummary": "الصفحة الرسمية هي أقوى مرجع ثقة، وتُظهر منهج العرض الرسمي للتقويم ومكان الرجوع المؤسسي. لكنها ليست دائماً أفضل صفحة من حيث الشرح أو الجواب السريع أو قابلية القراءة على نية البحث العامة.",
+      "faq": [],
+      "tables": [
+        "جدول التقويم الدراسي الرسمي"
+      ],
+      "examples": [],
+      "keywords": [
+        "التقويم الدراسي",
+        "وزارة التربية الكويت"
+      ],
+      "schemaHints": [
+        "GovernmentOrganization",
+        "WebPage"
+      ],
+      "sources": [
+        "https://www.moe.edu.kw/pages/calendar"
+      ],
+      "wordCount": 180,
+      "strengths": [
+        "أعلى ثقة",
+        "مرجع رسمي مباشر"
+      ],
+      "weaknesses": [
+        "لا يجيب بصيغة سؤال المستخدم فوراً",
+        "قد يحتاج القارئ إلى تفسير للفرق بين الطلبة والكادر المدرسي"
       ]
+    },
+    {
+      "site": "rahhal.wego.com",
+      "status": "usable",
+      "url": "https://rahhal.wego.com/blog/%D8%A7%D9%84%D8%AA%D9%82%D9%88%D9%8A%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-1448-%D8%A7%D9%84%D9%83%D9%88%D9%8A%D8%AA/",
+      "title": "التقويم الدراسي 1448 الكويت 2026 / 2027 .. جدول التقويم الدراسي في الكويت",
+      "metaDescription": "عرض مبسط للتقويم الدراسي في الكويت مع أبرز المواعيد.",
+      "h1": "التقويم الدراسي 1448 الكويت 2026 / 2027 .. جدول التقويم الدراسي في الكويت",
+      "headings": [
+        "متى يبدأ العام الدراسي 2026/2027 في الكويت؟",
+        "التقويم الدراسي 2026/2027 الكويت",
+        "ما هي مواعيد إجازات المدارس في الكويت 2026 / 2027؟"
+      ],
+      "bodySummary": "هذه الصفحة تعطي الجواب الذي يريده الباحث بسرعة: الإداريون 11 أغسطس 2026، والمعلمون 16 أغسطس 2026، والطلبة 24 أغسطس 2026، مع لمحة عن إجازة الربيع في آخر أسبوع من رمضان. قوتها في السرعة، لكن شرحها العملي محدود وموجّه أكثر كنشرة معلومات مختصرة.",
+      "faq": [],
+      "tables": [
+        "جدول التقويم الدراسي 2026/2027"
+      ],
+      "examples": [
+        "تفريق واضح بين عودة الإداريين والمعلمين والطلبة"
+      ],
+      "keywords": [
+        "التقويم الدراسي 1448 الكويت",
+        "متى يبدأ العام الدراسي في الكويت"
+      ],
+      "schemaHints": [
+        "Article",
+        "FAQ-like heading structure without visible FAQ schema"
+      ],
+      "sources": [
+        "https://rahhal.wego.com/blog/%D8%A7%D9%84%D8%AA%D9%82%D9%88%D9%8A%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-1448-%D8%A7%D9%84%D9%83%D9%88%D9%8A%D8%AA/"
+      ],
+      "wordCount": 900,
+      "strengths": [
+        "جواب سريع",
+        "تفصيل زمني مفيد",
+        "يخدم نية الباحث مباشرة"
+      ],
+      "weaknesses": [
+        "لا يشرح للقارئ كيف يستخدم التواريخ",
+        "لا يحول التاريخ إلى خطة للأسرة أو الطالب"
+      ]
+    },
+    {
+      "site": "almanahj.com",
+      "status": "usable",
+      "url": "https://almanahj.com/kw/id=20386",
+      "title": "التقويم الدراسي 2026-2027 للمدارس",
+      "metaDescription": "صفحة تعرض ملف التقويم الدراسي للمدارس في الكويت.",
+      "h1": "التقويم الدراسي 2026-2027 للمدارس",
+      "headings": [
+        "التقويم الدراسي"
+      ],
+      "bodySummary": "الموقع يعمل كمكتبة ملفات تعليمية ويعطي نسخة عملية من ملف التقويم الدراسي، ما يجعله مفيداً للباحث الذي يريد تنزيل الملف أو رؤية الجدول مباشرة. لكنه ليس محتوى تفسيرياً، كما أن تجربة القراءة فيه محدودة.",
+      "faq": [],
+      "tables": [
+        "ملف أو صورة للتقويم الدراسي"
+      ],
+      "examples": [],
+      "keywords": [
+        "التقويم الدراسي الكويت",
+        "تقويم المدارس 2026 2027"
+      ],
+      "schemaHints": [
+        "WebPage",
+        "Document"
+      ],
+      "sources": [
+        "https://almanahj.com/kw/id=20386"
+      ],
+      "wordCount": 250,
+      "strengths": [
+        "يوفر الملف نفسه",
+        "يخدم نية من يريد الجدول مباشرة"
+      ],
+      "weaknesses": [
+        "ضعيف جداً في الشرح",
+        "لا يجيب عن أسئلة الأسرة أو الطالب"
+      ]
+    }
+  ],
+  "englishCompetitors": [
+    {
+      "site": "kes.edu.kw",
+      "status": "usable_for_comparison",
+      "url": "https://www.kes.edu.kw/calendar/",
+      "title": "Kuwait English School Calendar",
+      "metaDescription": "School calendar for Kuwait English School.",
+      "h1": "Calendar",
+      "headings": [
+        "Calendar"
+      ],
+      "bodySummary": "Useful as an English comparison for how schools present term structure and parent-facing planning, but it is a private-school calendar rather than the public-school answer to the main query.",
+      "faq": [],
+      "tables": [
+        "Term calendar"
+      ],
+      "examples": [
+        "Parent-facing calendar blocks"
+      ],
+      "keywords": [
+        "Kuwait school calendar"
+      ],
+      "schemaHints": [
+        "School",
+        "WebPage"
+      ],
+      "sources": [
+        "https://www.kes.edu.kw/calendar/"
+      ],
+      "wordCount": 220,
+      "strengths": [
+        "Readable parent-first structure"
+      ],
+      "weaknesses": [
+        "Not the same public-school intent"
+      ]
+    },
+    {
+      "site": "ais-kuwait.org",
+      "status": "usable_for_comparison",
+      "url": "https://www.ais-kuwait.org/calendar",
+      "title": "American International School Kuwait Calendar",
+      "metaDescription": "Academic calendar for AIS Kuwait.",
+      "h1": "Calendar",
+      "headings": [
+        "Calendar"
+      ],
+      "bodySummary": "Another English comparison page showing how schools expose practical dates to families. It is useful for layout and information hierarchy benchmarking, not as the main factual source for public-school start dates.",
+      "faq": [],
+      "tables": [
+        "Academic calendar"
+      ],
+      "examples": [],
+      "keywords": [
+        "Kuwait academic calendar"
+      ],
+      "schemaHints": [
+        "School",
+        "WebPage"
+      ],
+      "sources": [
+        "https://www.ais-kuwait.org/calendar"
+      ],
+      "wordCount": 180,
+      "strengths": [
+        "Clear date hierarchy"
+      ],
+      "weaknesses": [
+        "Different institution type and audience"
+      ]
+    },
+    {
+      "site": "kuwaittimes.com",
+      "status": "replaced",
+      "url": "https://kuwaittimes.com/",
+      "replacementReason": "Open search results were not consistently extractable for a strong English page matching the exact public-school start query, so private-school calendar pages were used instead as English comparison references for structure and planning UX."
+    }
+  ],
+  "replacedOrBlockedCompetitors": [
+    {
+      "site": "nabd.com",
+      "status": "replaced",
+      "reason": "Snippet-level result without stable full readable content for extraction."
+    },
+    {
+      "site": "kuna.net.kw",
+      "status": "blocked",
+      "reason": "Relevant snippet existed in search, but the article was not reliably readable in open extraction during research."
     }
   ],
   "coverageMatrix": [
     {
-      "keyword": "متى تبدأ الدراسة في الكويت {{year}}",
-      "whyItMatters": "الطلب المباشر على معرفة الموعد هو المدخل الأول للترتيب."
+      "topic": "الجواب السريع عن موعد الطلبة",
+      "arabicCoverage": "قوي في Wego",
+      "englishCoverage": "ضعيف لنفس النية",
+      "opportunity": "البدء بالجواب المباشر في أول 100 كلمة"
     },
     {
-      "keyword": "كم باقي على الدراسة في الكويت",
-      "whyItMatters": "يغطي صياغات قريبة يستعملها الباحث العربي قبل المناسبة وأثناءها."
+      "topic": "الفرق بين الطلبة والمعلمين والإداريين",
+      "arabicCoverage": "موجود لكنه مختصر",
+      "englishCoverage": "غالباً غائب لأن الصفحات إنجليزية مدرسية داخلية",
+      "opportunity": "تحويل الفرق إلى شرح عملي يمنع سوء الفهم"
     },
     {
-      "keyword": "التقويم الدراسي الكويت {{year}}",
-      "whyItMatters": "يغطي صياغات قريبة يستعملها الباحث العربي قبل المناسبة وأثناءها."
+      "topic": "كيف تستعد الأسرة عملياً",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "أفضل بنيوياً لا موضوعياً",
+      "opportunity": "إضافة خطوات واضحة للأسرة والطالب"
     },
     {
-      "keyword": "موعد بدء الدراسة في الكويت",
-      "whyItMatters": "يغطي صياغات قريبة يستعملها الباحث العربي قبل المناسبة وأثناءها."
+      "topic": "ربط الموعد بالتقويم الكامل",
+      "arabicCoverage": "متوسط",
+      "englishCoverage": "يظهر في بعض جداول المدارس",
+      "opportunity": "ربط موعد البداية بالإجازات والسياق المدرسي"
     },
     {
-      "keyword": "وزارة التربية الكويت التقويم الدراسي",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "topic": "العد التنازلي وصياغات كم باقي",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "شبه غائب",
+      "opportunity": "تغطية سؤال كم باقي في النص والـFAQ والحقائق السريعة"
     },
     {
-      "keyword": "العودة إلى المدارس في الكويت",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "topic": "من أين أتأكد من التحديث النهائي",
+      "arabicCoverage": "مذكور جزئياً",
+      "englishCoverage": "ضعيف",
+      "opportunity": "تكرار قاعدة المرجع النهائي بوضوح"
     },
     {
-      "keyword": "بدء الدراسة في الكويت {{year}}",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "topic": "ماذا يفعل ولي الأمر قبل اليوم الأول",
+      "arabicCoverage": "شبه غائب",
+      "englishCoverage": "أفضل في مواقع المدارس الخاصة",
+      "opportunity": "إضافة خطوات تخطيطية عملية"
     },
     {
-      "keyword": "كم باقي على بدء الدراسة في الكويت {{year}}",
-      "whyItMatters": "نية عد تنازلي مباشرة تناسب الباحث الذي يريد معرفة المدة المتبقية بسرعة."
+      "topic": "الإجازات المرتبطة ببداية العام",
+      "arabicCoverage": "متوسط في الجداول",
+      "englishCoverage": "متوسط",
+      "opportunity": "ذكر الإجازة البارزة لتوسيع نية البحث"
     }
   ],
   "keywordGaps": [
-    "متى بداية العام الدراسي في الكويت",
-    "موعد الدراسة في الكويت",
-    "الدراسة في الكويت العد التنازلي",
-    "هل تبدأ جميع الصفوف في الكويت في اليوم نفسه",
-    "جواب عربي مباشر يوضح معنى بدء الدراسة في الكويت وموعده في صفحة واحدة.",
-    "شرح سبب أهمية بدء الدراسة في الكويت ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
-    "تغطية الأسئلة العملية التي يطرحها القارئ قبل بدء الدراسة في الكويت أو أثناءه.",
-    "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط."
+    "موعد دوام الطلبة في الكويت {{year}}",
+    "موعد دوام المعلمين في الكويت {{year}}",
+    "موعد دوام الإداريين في الكويت {{year}}",
+    "هل يبدأ جميع الطلبة في الكويت في اليوم نفسه",
+    "كيف أستعد لبدء الدراسة في الكويت {{year}}",
+    "متى يعود الطلاب إلى المدارس في الكويت {{year}}",
+    "موعد العودة إلى المدارس في الكويت {{year}}",
+    "إجازات المدارس في الكويت {{year}} {{nextYear}}"
   ],
   "unansweredQuestions": [
-    "متى تبدأ الدراسة في الكويت {{year}}؟",
-    "كم باقي على الدراسة في الكويت؟",
-    "أين يصدر التقويم الدراسي الرسمي في الكويت؟",
-    "هل تبدأ جميع المراحل الدراسية في الكويت في اليوم نفسه؟",
-    "كيف أستعد لبداية الدراسة في الكويت؟",
-    "متى تبدأ الدراسة في الكويت {{nextYear}}؟",
-    "متى بدء الدراسة في الكويت {{year}}؟",
-    "كم باقي على بدء الدراسة في الكويت {{year}}؟"
+    "هل أسأل عن عودة الطلبة أم عن دوام المعلمين؟",
+    "ما الفرق بين تاريخ الكادر المدرسي وتاريخ الطلبة؟",
+    "كيف أستخدم التاريخ في تجهيز الأسرة فعلياً؟",
+    "ما المرجع النهائي إذا ظهر خبر مختصر أو صورة متداولة؟",
+    "هل تشمل المواعيد التعليم العام والديني والتربية الخاصة وتعليم الكبار؟",
+    "ما الإجازة البارزة التي يجب الانتباه لها في التقويم نفسه؟"
   ],
-  "differentiationIdeas": [
-    "الجمع بين العد التنازلي والإجابة التفسيرية في صفحة واحدة بدلاً من المحتوى الخبري العابر.",
-    "جواب مباشر عن موعد بدء الدراسة في الكويت في بداية الصفحة قبل أي شرح إضافي.",
-    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر.",
-    "أسئلة شائعة عملية تساعد القارئ على فهم بدء الدراسة في الكويت والتصرف بناءً عليه.",
-    "ربط الصفحة بطريقة البحث الشائعة عن بدء الدراسة في الكويت دون فقدان الوضوح العام."
-  ],
+  "competitorMatrix": {
+    "strengths": [
+      "المنافسون الأفضل يجيبون بسرعة أو يعرضون الجدول مباشرة",
+      "المرجع الرسمي يرفع الثقة"
+    ],
+    "weaknesses": [
+      "ضعف الشرح العملي",
+      "خلط محتمل بين مواعيد الفئات المختلفة",
+      "قلة المحتوى الذي يعلّم المستخدم ماذا يفعل بعد معرفة التاريخ"
+    ],
+    "missingTopics": [
+      "شرح الفرق بين عودة الطلبة وعودة الكادر",
+      "خطوات الاستعداد للأسرة",
+      "نص عربي واضح يربط التاريخ بسياق التقويم الكامل"
+    ],
+    "uniqueOpportunities": [
+      "صياغة عربية تبدأ بالجواب ثم الشرح",
+      "تحويل التاريخ إلى قرار عملي لا إلى خبر قصير",
+      "جمع الثقة الرسمية مع سهولة الفهم في صفحة واحدة"
+    ]
+  },
   "factSources": [
     {
       "label": "وزارة التربية الكويتية - التقويم الدراسي",
       "url": "https://www.moe.edu.kw/pages/calendar"
+    },
+    {
+      "label": "رحال Wego - التقويم الدراسي 1448 الكويت",
+      "url": "https://rahhal.wego.com/blog/%D8%A7%D9%84%D8%AA%D9%82%D9%88%D9%8A%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-1448-%D8%A7%D9%84%D9%83%D9%88%D9%8A%D8%AA/"
+    },
+    {
+      "label": "المناهج الكويتية - ملف التقويم الدراسي",
+      "url": "https://almanahj.com/kw/id=20386"
     }
   ],
-  "notes": "نقطة القوة هنا أن الصفحة تخدم بحث الكويت المحلي بصياغات عملية مباشرة، وتربط العد التنازلي بمرجع الوزارة بدلاً من التاريخ المجرد."
+  "notes": "النتيجة الأساسية من البحث أن نية المستخدم في الكويت ليست تاريخاً عاماً فقط، بل معرفة اليوم الذي يعود فيه الطلبة تحديداً، مع تمييزه عن بداية دوام الإداريين والمعلمين. لذلك يجب أن تبدأ الصفحة بموعد الطلبة، ثم تشرح الفروق وتحوّلها إلى خطوات عملية للأسرة والطالب."
 }

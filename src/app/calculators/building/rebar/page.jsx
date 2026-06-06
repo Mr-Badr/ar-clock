@@ -1,18 +1,17 @@
 import RebarCalculator from '@/components/calculators/building/RebarCalculator.client';
 import {
+  CalculatorDecisionTable,
+  CalculatorEditorialArticle,
   CalculatorHero,
+  CalculatorInfoGrid,
   CalculatorSection,
-  CalculatorSectionNav,
-  CalculatorStoryBand,
-  CalculatorQuickAnswerGrid,
   CalculatorFaqSection,
   CalculatorResourceLinks,
-  CalculatorFooterCta,
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getGuidesBySlugs } from '@/lib/guides/data';
-import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tools-and-economy-guides';
+import { TOOL_GUIDE_GROUPS } from '@/lib/guides/tool-guides';
 import { getSiteUrl } from '@/lib/site-config';
 import { getBuildingKeywords } from '@/lib/calculators/building/seo-keywords';
 import {
@@ -23,11 +22,111 @@ import {
 
 const SITE_URL = getSiteUrl();
 const RELATED_GUIDES = getGuidesBySlugs(TOOL_GUIDE_GROUPS.rebar);
+const REBAR_SOURCE_LINKS = [
+  {
+    href: 'https://www.crsi.org/reinforcing-basics/reinforcing-steel/rebar-properties/',
+    title: 'CRSI: Rebar Properties',
+    description: 'مرجع متخصص في خصائص حديد التسليح وأقطاره واستخداماته في الخرسانة المسلحة.',
+    ctaLabel: 'افتح المصدر',
+  },
+  {
+    href: 'https://www.structuralguide.com/rebar-weight/',
+    title: 'Structural Guide: Rebar Weight per Meter',
+    description: 'جدول مقارن لأوزان الحديد بالمتر والقدم، مفيد لمراجعة القيم التقريبية قبل الشراء.',
+    ctaLabel: 'افتح المصدر',
+  },
+  {
+    href: '/blog/how-to-estimate-rebar-weight',
+    title: 'شرح عربي: كيف تقدّر وزن الحديد؟',
+    description: 'دليل عربي يشرح المعادلة، وزن سيخ 12 متر، والتحويل إلى طن قبل طلب عرض سعر.',
+    ctaLabel: 'اقرأ الشرح',
+  },
+  {
+    href: '/calculators/building/cement',
+    title: 'حاسبة الأسمنت والخرسانة',
+    description: 'افتحها عندما يتحول السؤال من وزن الحديد إلى مواد الصبة كاملة.',
+    ctaLabel: 'احسب مواد الصبة',
+  },
+];
+const REBAR_METHOD_ITEMS = [
+  {
+    title: 'الوزن يبدأ من القطر لأن القطر مربع في المعادلة',
+    description: 'الفرق بين 12 و16 ملم ليس فرقاً بسيطاً في الوزن.',
+    content: (
+      <p>
+        معادلة وزن الحديد بالمتر هي القطر بالمليمتر مربعاً مقسوماً على 162. لذلك زيادة القطر ترفع الوزن بسرعة. سيخ 16 ملم ليس أثقل من 12 ملم بنسبة بسيطة؛ لأن 16² أكبر بكثير من 12². لهذا ابدأ دائماً بالقطر الصحيح من المخطط.
+      </p>
+    ),
+  },
+  {
+    title: 'فرّق بين وزن المتر ووزن السيخ والوزن الإجمالي',
+    description: 'كل رقم يخدم قراراً مختلفاً.',
+    content: (
+      <p>
+        وزن المتر يساعدك على مراجعة الجدول، وزن سيخ 12 متر يساعدك عند الشراء، والوزن الإجمالي بالكيلو أو الطن يساعدك على طلب السعر. إذا خلطت هذه الأرقام قد تطلب عدد أسياخ صحيحاً لكن بسعر أو وزن غير مطابق.
+      </p>
+    ),
+  },
+  {
+    title: 'الهدر والتراكب لا يظهران من المعادلة وحدها',
+    description: 'الحاسبة تحوّل الأطوال إلى وزن، لكنها لا تصمم التفريد.',
+    content: (
+      <p>
+        في الموقع قد تحتاج تراكباً، ثنياً، قصاً، أو أطوالاً إضافية حسب التفاصيل الإنشائية. لذلك استخدم الحاسبة لمراجعة الوزن والشراء الأولي، ثم ارجع إلى جدول تفريد الحديد أو المخطط قبل اعتماد الكمية النهائية.
+      </p>
+    ),
+  },
+];
+const REBAR_DECISION_ROWS = [
+  {
+    key: 'bar-weight',
+    cells: [
+      'أريد وزن سيخ 12 متر',
+      'اختر القطر وأدخل طول 12 وعدد 1.',
+      'مفيد لمراجعة المورد أو جدول الأوزان بسرعة.',
+    ],
+  },
+  {
+    key: 'mixed-lengths',
+    cells: [
+      'لدي أطوال مختلفة بعد التقطيع',
+      'أضف كل طول وعدده في سطر مستقل.',
+      'لا تجمع الأطوال ذهنياً إذا كان المشروع كبيراً؛ خطأ صغير يتكرر كثيراً.',
+    ],
+  },
+  {
+    key: 'buying',
+    cells: [
+      'أريد طلب سعر من المورد',
+      'اقرأ الوزن بالطن بعد إدخال كل الأطوال.',
+      'اسأل عن سعر الطن، النقل، القص، وربط الحديد إن كانت منفصلة.',
+    ],
+  },
+  {
+    key: 'design',
+    cells: [
+      'أريد معرفة كمية حديد سقف أو قاعدة',
+      'استخدم الحاسبة بعد وجود مخطط أو جدول تفريد.',
+      'لا تستخدم متوسط كجم/م² كبديل عن التصميم الإنشائي.',
+    ],
+  },
+];
+const REBAR_EDITORIAL_PARAGRAPHS = [
+  'من يبحث عن وزن الحديد غالباً لا يريد درساً نظرياً؛ يريد أن يطلب كمية، يقارن سعر طن، أو يراجع جدول تفريد. لذلك تبدأ الصفحة بالحاسبة، ثم تعطيك جدول الأقطار والشرح الذي يمنع الخلط بين وزن متر واحد ووزن سيخ كامل.',
+  'المعادلة سهلة، لكنها لا تكفي وحدها. الخطأ الحقيقي يحدث عندما تستخدم قطر 12 بدل 16، أو تنسى أن المورد يبيع بالطن، أو تعتمد رقماً عاماً للسقف دون مخطط. الصفحة تربط بين الحساب السريع وحدود القرار الهندسي.',
+  'استخدم النتيجة كي تسأل سؤالاً أفضل: هل هذا الوزن يشمل كل الأطوال؟ هل يوجد تراكب؟ هل هناك هدر قص؟ وهل السعر المعروض شامل النقل؟ بهذه الطريقة يصبح الرقم أداة تفاوض وفهم، لا مجرد ناتج آلة حاسبة.',
+];
+const REBAR_EDITORIAL_POINTS = [
+  'القطر الصحيح أهم من سرعة الحساب.',
+  'وزن سيخ 12م يسهّل الشراء، لكن الوزن الإجمالي هو ما يهم في التسعير.',
+  'التفريد والتراكب والهدر يحتاجان مخططاً أو مهندساً عند التنفيذ.',
+  'لا تقارن سعر موردين قبل توحيد القطر والطول والوزن وطريقة التسليم.',
+];
 
 export const metadata = buildCanonicalMetadata({
-  title: 'كم وزن الحديد؟ | احسب وزن سيخ 12 متر وحديد التسليح بالكجم والطن',
+  title: 'حاسبة وزن الحديد | وزن حديد التسليح وسيخ 12 متر',
   description:
-    'إذا كان سؤالك: كم وزن الحديد؟ فهذه الصفحة تحسب وزن حديد التسليح حسب القطر والطول والعدد، وتحوّل النتيجة إلى كجم وطن وعدد الأسياخ القياسية 12 متر فوراً.',
+    'احسب وزن حديد التسليح حسب القطر والطول والعدد، واعرف وزن المتر وسيخ 12 متر والتحويل إلى كجم وطن قبل شراء الحديد أو مقارنة السعر.',
   keywords: getBuildingKeywords('rebar'),
   url: `${SITE_URL}/calculators/building/rebar`,
 });
@@ -44,69 +143,73 @@ export default function RebarPage() {
     },
     {
       question: 'ما الفرق بين الحديد الملساء والمشرشرة؟',
-      answer: 'الحديد المشرشر (الربيط) يتمسك بالخرسانة أفضل ويستخدم للتسليح الرئيسي. الحديد الملساء يستخدم للكانات (الأساور). الفرق في الشكل فقط، الوزن لنفس القطر متقارب جداً.',
+      answer: 'الحديد المشرشر يتمسك بالخرسانة أفضل ويستخدم غالباً في التسليح الرئيسي للكمرات والأعمدة والأسقف. الحديد الأملس يظهر في بعض التفاصيل أو الاستخدامات الثانوية بحسب البلد والمخطط. من ناحية الوزن، القطر والطول هما العاملان الأساسيان، لذلك يكون الوزن لنفس القطر والطول متقارباً حتى لو اختلف شكل السطح.',
     },
     {
       question: 'كم كيلو حديد في المتر المربع من السقف؟',
-      answer: 'يعتمد على نوع السقف والتصميم الإنشائي. بشكل تقريبي، السقف الهوردي يحتاج 10-15 كجم/م²، والسقف المصمت يحتاج 15-25 كجم/م². هذه أرقام تقديرية فقط خارج نطاق المخطط الإنشائي الفعلي.',
-    },
-  ];
-
-  const quickAnswers = [
-    {
-      question: 'وزن حديد قطر 12 ملم لكل متر؟',
-      description: 'من أكثر الأسئلة شيوعاً في مواقع البناء',
-      answer: 'وزن المتر الطولي لقطر 12 ملم هو 0.888 كجم. أي سيخ 12 متر يزن 0.888 × 12 = 10.66 كجم.',
+      answer: 'يعتمد على نوع السقف والتصميم الإنشائي والبحور والأحمال. بشكل تقريبي، السقف الهوردي قد يدور حول 10 إلى 15 كجم/م²، والسقف المصمت قد يحتاج 15 إلى 25 كجم/م²، لكن هذه أرقام للتصور الأولي فقط. لا تعتمد كمية الحديد النهائية دون مخطط إنشائي أو مراجعة مهندس، لأن الخطأ هنا مكلف وخطر.',
     },
     {
-      question: 'كم طن حديد لبناء 200 متر مربع (دورين)؟',
-      description: 'تقدير مبدئي لمنزل عائلي',
-      answer: 'بشكل تقديري عام (مع مراعاة وجود مخطط إنشائي): مبنى 400 م² إجمالي × 45 كجم/م² تقديرياً = حوالي 18 طن حديد. هذا مجرد مؤشر أولي.',
+      question: 'هل أستخدم الحاسبة بالكيلو أم بالطن عند الشراء؟',
+      answer: 'استخدم الكيلو لفهم التفاصيل الصغيرة مثل وزن قطر أو طول محدد، واستخدم الطن عند طلب عرض سعر كبير من المورد. الحاسبة تعرض الرقمين معاً حتى لا تضطر للتحويل يدوياً. في مصر أو السعودية أو المغرب أو الخليج قد تختلف طريقة عرض السعر، لكن الوزن الهندسي نفسه يبقى مبنياً على القطر والطول والعدد.',
     },
     {
-      question: 'كم وزن سيخ 16 بطول 12 متر؟',
-      description: 'سؤال شراء وتسعير متكرر',
-      answer: 'سيخ 16 ملم يزن تقريباً 18.94 كجم عند طول 12 متر، لأن وزن المتر الواحد منه 1.578 كجم تقريباً.',
+      question: 'هل تحسب الحاسبة الهدر والتراكب تلقائياً؟',
+      answer: 'لا. الحاسبة تحول الأطوال التي تدخلها إلى وزن. إذا كان المخطط يحتاج تراكباً أو ثنياً أو هدر قص، أدخل الأطوال بعد مراجعة جدول التفريد أو أضف هامشاً مناسباً بمعرفة المهندس أو المقاول.',
+    },
+    {
+      question: 'لماذا وزن قطر 16 أكبر بكثير من قطر 12؟',
+      answer: 'لأن الوزن يعتمد على مربع القطر. قطر 16 يعني 16 × 16، وقطر 12 يعني 12 × 12، لذلك الزيادة ليست خطية. هذا هو سبب ضرورة اختيار القطر الصحيح قبل مقارنة السعر أو الكمية.',
     },
   ];
-
-  const sectionNavItems = [
-    { href: '#calculator-hero', label: 'الحاسبة', description: 'أدخل القطر والطول واحسب الوزن' },
-    { href: '#rebar-table', label: 'جدول الأقطار', description: 'وزن كل قطر من ⌀8 إلى ⌀32' },
-    { href: '#rebar-story', label: 'فهم الحديد', description: 'استخدامات كل قطر' },
-    { href: '#rebar-answers', label: 'إجابات سريعة', description: 'أرقام جاهزة' },
-    { href: '#rebar-faq', label: 'الأسئلة الشائعة', description: 'المزيد' },
-  ];
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
+  const howToSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'كيف تحسب وزن حديد التسليح؟',
+    inLanguage: 'ar',
+    description: 'خطوات حساب وزن الحديد من القطر والطول والعدد ثم تحويله إلى كجم وطن.',
+    step: [
+      { '@type': 'HowToStep', name: 'اختر قطر الحديد', text: 'ابدأ بالقطر الصحيح بالمليمتر كما يظهر في المخطط أو جدول التفريد.' },
+      { '@type': 'HowToStep', name: 'أدخل الأطوال والعدد', text: 'أضف كل طول وعدد الأسياخ له، خصوصاً عند وجود أكثر من مقاس تقطيع.' },
+      { '@type': 'HowToStep', name: 'اقرأ الوزن بالكيلو والطن', text: 'استخدم الكيلو للمراجعة التفصيلية، والطن عند طلب السعر من المورد.' },
+      { '@type': 'HowToStep', name: 'راجع الهدر والتراكب', text: 'أضف أي أطوال إضافية مطلوبة في التفريد ولا تعتمد المعادلة وحدها للتنفيذ.' },
+    ],
+  };
 
   return (
-    <main className="bg-base text-primary">
+    <main className="calc-product-page bg-base text-primary" dir="rtl" lang="ar">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       <CalculatorHero
         badge="هندسة / حديد"
-        title="كم وزن الحديد؟ احسب وزن حديد التسليح وسيخ 12 متر"
-        description="أدخل قطر الحديد والأطوال والعدد لتحصل فوراً على الوزن الإجمالي بالكجم والطن، مع وزن المتر الطولي وعدد الأسياخ القياسية 12 متر بطريقة واضحة وسريعة."
-        accent="#EF4444"
+        title="حاسبة وزن الحديد: اعرف وزن السيخ والمتر والطن قبل الشراء"
+        description="إذا كنت تسأل كم وزن الحديد، أدخل القطر والطول والعدد لتحصل على وزن حديد التسليح بالكيلو والطن، مع وزن المتر وعدد أسياخ 12 متر. النتيجة تساعدك على مراجعة المورد أو جدول التفريد دون أن تستبدل المخطط الإنشائي."
         highlights={[
-          'يعطيك الوزن بالكجم والطن في نفس اللحظة.',
-          'يدعم جميع الأقطار الشائعة من ⌀8 إلى ⌀32.',
-          'يحوّل النتيجة إلى عدد أسياخ 12 متر بسهولة.',
+          'وزن المتر والسيخ والكمية الإجمالية في نتيجة واحدة.',
+          'يدعم الأقطار الشائعة من ⌀8 إلى ⌀32.',
+          'شرح عملي للهدر والتراكب وحدود التقدير قبل التسعير.',
         ]}
       >
         <RebarCalculator />
       </CalculatorHero>
 
       <CalculatorSection
-        id="rebar-overview"
-        eyebrow="خريطة الصفحة"
-        title="كل ما تحتاجه عن وزن الحديد"
-      >
-        <CalculatorSectionNav items={sectionNavItems} />
-      </CalculatorSection>
-
-      <CalculatorSection
         id="rebar-table"
         eyebrow="مرجع هندسي"
-        title="جدول أوزان أقطار الحديد"
-        description="مشتق من المعادلة القياسية: وزن (كجم/م) = قطر (مم)² ÷ 162"
+        title="جدول أوزان الحديد حسب القطر"
+        description="استخدم الجدول للتحقق السريع من وزن المتر وسيخ 12 متر قبل إدخال كمية كبيرة في الحاسبة."
         subtle
       >
         <div className="calc-table-wrap">
@@ -134,58 +237,78 @@ export default function RebarPage() {
       </CalculatorSection>
 
       <CalculatorSection
-        id="rebar-story"
-        eyebrow="دليل الأقطار"
-        title="أيّ قطر لأيّ استخدام؟"
-        description="اختيار القطر الصحيح لا يقل أهمية عن الكمية. كل عنصر إنشائي يتطلب قطراً محدداً في المخطط الهندسي."
-        subtle
+        id="rebar-method"
+        eyebrow="فهم الرقم"
+        title="كيف تقرأ وزن الحديد دون أن تخلط بين السيخ والمتر والطن؟"
+        description="هذه البطاقات توضّح لماذا يتغير الوزن بسرعة مع القطر، وكيف تستخدم كل رقم في مكانه الصحيح."
       >
-        <CalculatorStoryBand
-          title="القطر الصغير لا يعني القطع الضعيف"
-          description="الكانات (حديد ⌀8 أو ⌀10) هي التي تمنع الانهيار المفاجئ في الأعمدة، على الرغم من قطرها الصغير."
-          items={[
-            { label: 'الأقطار الصغيرة (⌀8 - ⌀12)', value: 'كانات توزيع، حديد الأسقف الثانوي. متوفرة عادة في شدة 4200 أو 5200.' },
-            { label: 'الأقطار المتوسطة (⌀14 - ⌀20)', value: 'التسليح الرئيسي للأشرطة والكمرات والأعمدة المتوسطة.' },
-            { label: 'الأقطار الكبيرة (⌀22 - ⌀32)', value: 'الأعمدة الكبيرة والجسور والمنشآت الثقيلة. نادر في المساكن.' },
-          ]}
+        <CalculatorInfoGrid items={REBAR_METHOD_ITEMS} />
+      </CalculatorSection>
+
+      <CalculatorSection
+        id="rebar-decision"
+        eyebrow="قبل الشراء"
+        title="أي رقم تستخدم عند حساب أو طلب الحديد؟"
+        description="اختر الرقم المناسب لسؤالك الحالي: مراجعة جدول، شراء أسياخ، أو طلب سعر بالطن."
+      >
+        <CalculatorDecisionTable
+          columns={['سؤالك الان', 'طريقة الاستخدام', 'تنبيه مهم']}
+          rows={REBAR_DECISION_ROWS}
         />
       </CalculatorSection>
 
       <CalculatorSection
-        id="rebar-answers"
-        eyebrow="إجابات مباشرة"
-        title="أرقام جاهزة قبل شراء الحديد"
+        id="rebar-editorial"
+        eyebrow="شرح مبسط"
+        title="المعادلة سهلة، لكن قرار الشراء يحتاج سياقاً"
+        description="الهدف أن تفهم الوزن وتعرف أين يتوقف الحساب وأين يبدأ التفريد أو التسعير."
+        subtle
       >
-        <CalculatorQuickAnswerGrid items={quickAnswers} />
+        <CalculatorEditorialArticle
+          eyebrow="قراءة قبل التسعير"
+          title="حوّل القطر والطول إلى وزن يمكن مراجعته"
+          lead="لا تعتمد على رقم عام للحديد إذا كان لديك قطر وطول وعدد واضح. أدخل التفاصيل واجعل النتيجة قابلة للمقارنة."
+          paragraphs={REBAR_EDITORIAL_PARAGRAPHS}
+          points={REBAR_EDITORIAL_POINTS}
+        />
       </CalculatorSection>
 
       <CalculatorSection
         id="rebar-guides"
-        eyebrow="دليل داعم"
+        eyebrow="مقال داعم"
         title="قبل شراء الحديد أو طلب العرض"
-        description="هذا الدليل يشرح طريقة تقدير الوزن والصيغة الأقرب للشراء، ثم يربطك مباشرة بحاسبة الحديد لتطبيق الحساب على القطر والطول والعدد."
+        description="هذا المقال يشرح طريقة تقدير الوزن والصيغة الأقرب للشراء، ثم يربطك مباشرة بحاسبة الحديد لتطبيق الحساب على القطر والطول والعدد."
         subtle
       >
-        <CalculatorResourceLinks items={RELATED_GUIDES} />
+        <CalculatorResourceLinks items={RELATED_GUIDES} buttonLabel="اقرأ التفسير" />
+      </CalculatorSection>
+
+      <CalculatorSection
+        id="rebar-sources"
+        eyebrow="مصادر"
+        title="مصادر لمراجعة خصائص وأوزان حديد التسليح"
+        description="استخدمها لفهم الجداول والمعادلة، ثم اعتمد المخطط وجدول التفريد في الكميات النهائية."
+      >
+        <CalculatorResourceLinks items={REBAR_SOURCE_LINKS} buttonLabel="افتح المصدر" />
       </CalculatorSection>
 
       <CalculatorSection
         id="rebar-faq"
-        eyebrow="الأسئلة الشائعة"
-        title="أسئلة متكررة حول وزن الحديد"
+        eyebrow="قبل تسعير الحديد"
+        title="أسئلة قبل اعتماد وزن الحديد أو طلب العرض"
       >
         <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>
 
       <CalculatorSection
         id="rebar-related"
-        eyebrow="روابط داخلية"
-        title="حاسبات مكملة"
+        eyebrow="بعد وزن الحديد"
+        title="افتح حساب الأسمنت أو التكلفة عندما تنتقل من الوزن إلى ميزانية المشروع"
+        description="بعد معرفة الوزن، يصبح السؤال عادة عن السعر أو بقية المواد. انتقل إلى الأسمنت أو تكلفة البناء فقط إذا كان هذا هو القرار التالي في مشروعك."
       >
         <RelatedCalculators currentSlug="rebar" />
       </CalculatorSection>
 
-      <CalculatorFooterCta />
     </main>
   );
 }

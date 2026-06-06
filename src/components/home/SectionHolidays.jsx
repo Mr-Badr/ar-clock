@@ -31,6 +31,7 @@
 import { Moon, Star, Calendar, Bell } from 'lucide-react'
 
 import { resolveAllHijriEvents } from '@/lib/hijri-resolver'
+import { logger, serializeError } from '@/lib/logger'
 
 import { SectionWrapper, SectionBadge, FeatureItem } from '@/components/shared/primitives'
 import CtaLink          from '@/components/shared/CtaLink'
@@ -62,7 +63,7 @@ const OCCASION_DEFS = [
     name:         'عيد الفطر المبارك',
     hijriLabel:   '1 شوال',
     badgeType:    'عيد',
-    icon:         '🎉',
+    icon:         null,
     color:        'var(--success)',
     softBg:       'var(--success-soft)',
   },
@@ -75,7 +76,7 @@ const OCCASION_DEFS = [
     name:         'عيد الأضحى المبارك',
     hijriLabel:   '10 ذو الحجة',
     badgeType:    'عيد',
-    icon:         '🐑',
+    icon:         null,
     color:        'var(--success)',
     softBg:       'var(--success-soft)',
   },
@@ -88,7 +89,7 @@ const OCCASION_DEFS = [
     name:         'شهر رمضان المبارك',
     hijriLabel:   '1 رمضان',
     badgeType:    'صيام',
-    icon:         '🌙',
+    icon:         null,
     color:        'var(--warning)',
     softBg:       'var(--warning-soft)',
   },
@@ -101,7 +102,7 @@ const OCCASION_DEFS = [
     name:         'يوم عرفة',
     hijriLabel:   '9 ذو الحجة',
     badgeType:    'حج',
-    icon:         '🕋',
+    icon:         null,
     color:        'var(--accent-alt)',
     softBg:       'var(--accent-alt-soft)',
   },
@@ -114,7 +115,7 @@ const OCCASION_DEFS = [
     name:         'المولد النبوي الشريف',
     hijriLabel:   '12 ربيع الأول',
     badgeType:    'ديني',
-    icon:         '🌹',
+    icon:         null,
     color:        'var(--info)',
     softBg:       'var(--info-soft)',
   },
@@ -177,8 +178,12 @@ export default async function SectionHolidays() {
     )
 
     if (built.length > 0) occasions = built
-  } catch {
-    /* Resolution failed — fallback already set */
+  } catch (error) {
+    logger.warn('home-holidays-resolution-failed', {
+      error: serializeError(error),
+      section: 'home-holidays',
+      fallbackCount: FALLBACK_OCCASIONS.length,
+    })
   }
 
   /* ─────────────────────────────────────────────────────────────────────── */
@@ -186,52 +191,26 @@ export default async function SectionHolidays() {
     <SectionWrapper
       id="section-holidays"
       headingId={H2_ID}
-      glow={
-        <div
-          className="pointer-events-none absolute bottom-0 start-0 h-[450px] w-[450px] -translate-x-1/4 translate-y-1/4 rounded-full blur-3xl opacity-[0.07]"
-          style={{ background: 'var(--warning)' }}
-          aria-hidden="true"
-        />
-      }
     >
-      {/* RTL flex-row-reverse: DOM [Text, Card] → Text LEFT, Card RIGHT ✓ */}
-      <div className="flex flex-col md:flex-row-reverse items-center gap-10 lg:gap-16">
-
-        {/* ── Text column — LEFT on desktop ──────────────────────────── */}
-        <div className="w-full md:w-1/2 space-y-5">
+      <div className="media-split media-split--reverse">
+        <div className="media-split__content">
           <SectionBadge><Calendar size={11} />المناسبات والأعياد</SectionBadge>
 
           <h2
             id={H2_ID}
-            className="text-2xl sm:text-3xl lg:text-[2.2rem] font-extrabold leading-tight"
-            style={{ color: 'var(--text-primary)' }}
+            className="section-title"
           >
             تقويم الأعياد والمناسبات
-            <span
-              className="block"
-              style={{
-                background:           'var(--accent-gradient)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor:  'transparent',
-                backgroundClip:       'text',
-              }}
-            >
-              الدينية والإسلامية
-            </span>
+            <span className="text-accent"> الدينية والإسلامية</span>
           </h2>
 
-          <p className="text-base sm:text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-            دليل شامل بـ
-            <strong style={{ color: 'var(--text-primary)' }}> الأعياد الإسلامية الكبرى</strong>{' '}
-            التي يعرفها كل مسلم — عيد الفطر، عيد الأضحى، رمضان، يوم عرفة، والمولد
-            النبوي. مع{' '}
-            <strong style={{ color: 'var(--text-primary)' }}>عداد تنازلي دقيق</strong>{' '}
-            بالتاريخين{' '}
-            <strong style={{ color: 'var(--text-primary)' }}>الهجري والميلادي</strong>{' '}
-            لكل مناسبة.
+          <p className="feature-copy">
+            ابدأ من المناسبات التي غالباً تحتاجها في التخطيط اليومي: رمضان، العيدان،
+            يوم عرفة، والمولد النبوي. ستجد لكل مناسبة عداداً واضحاً وتاريخاً هجرياً
+            وميلادياً حتى تعرف الموعد، ثم تقرر هل تحتاج صفحة التفاصيل أو تحويل التاريخ.
           </p>
 
-          <ul className="space-y-3" role="list" aria-label="مزايا قسم المناسبات">
+          <ul className="feature-list" role="list" aria-label="مزايا قسم المناسبات">
             <FeatureItem icon={Moon}>
               <strong>المناسبات الإسلامية الكبرى:</strong> رمضان، عيد الفطر، عيد الأضحى،
               يوم عرفة، ليلة القدر، والمولد النبوي الشريف
@@ -241,22 +220,21 @@ export default async function SectionHolidays() {
               بالتواريخ الرسمية المعلنة
             </FeatureItem>
             <FeatureItem icon={Calendar}>
-              <strong>تحويل التواريخ</strong> بين التقويم الهجري والميلادي بنقرة واحدة —
+              <strong>تحويل التواريخ</strong> بين التقويم الهجري والميلادي بنقرة واحدة،
               دقيق ومتزامن مع معايير أم القرى
             </FeatureItem>
             <FeatureItem icon={Bell}>
-              <strong>تذكير المناسبات</strong> القادمة — خطّط لإجازاتك وأحداثك العائلية
+              <strong>تذكير المناسبات</strong> القادمة، خطّط لإجازاتك وأحداثك العائلية
               مسبقاً
             </FeatureItem>
           </ul>
 
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          <div className="action-row">
             <CtaLink href="/holidays">استعرض جميع المناسبات والأعياد</CtaLink>
           </div>
         </div>
 
-        {/* ── Live holidays card — RIGHT on desktop ──────────────────── */}
-        <div className="w-full md:w-1/2 flex justify-center">
+        <div className="media-split__visual">
           <HolidaysLiveCard occasions={occasions} />
         </div>
 

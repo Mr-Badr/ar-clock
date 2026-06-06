@@ -1,135 +1,391 @@
 {
   "slug": "school-start-morocco",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.159Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
     "متى الدخول المدرسي في المغرب {{year}}",
-    "كم باقي على الدخول المدرسي في المغرب {{year}}",
     "موعد الدخول المدرسي في المغرب {{year}}",
-    "الدخول المدرسي في المغرب {{year}}",
-    "الدخول المدرسي في المغرب العد التنازلي",
-    "الدخول المدرسي في المغرب متى",
+    "كم باقي على الدخول المدرسي في المغرب {{year}}",
     "تاريخ الدخول المدرسي في المغرب {{year}}",
-    "متى الدخول المدرسي في المغرب {{nextYear}}",
-    "كم باقي على الدخول المدرسي في المغرب",
-    "الدخول المدرسي في المغرب {{nextYear}}",
-    "كيف أستعد لـالدخول المدرسي في المغرب",
-    "ما هو الدخول المدرسي في المغرب"
+    "الدخول المدرسي في المغرب {{year}}",
+    "الدخول المدرسي 2026 2027 المغرب",
+    "متى ترجع الدراسة في المغرب {{year}}",
+    "المقرر الوزاري الدخول المدرسي المغرب {{year}}",
+    "موعد الدراسة في المغرب {{year}}",
+    "الدخول المدرسي بالمغرب شتنبر {{year}}"
   ],
   "competitors": [
     {
       "site": "men.gov.ma",
-      "type": "official",
-      "url": "https://www.men.gov.ma",
-      "focus": [
-        "الدخول المدرسي",
-        "المقرر الوزاري",
-        "التقويم الدراسي"
+      "type": "official_arabic_reference",
+      "url": "https://www.men.gov.ma/node/1107"
+    },
+    {
+      "site": "ar.lesiteinfo.com",
+      "type": "arabic_news_competitor",
+      "url": "https://ar.lesiteinfo.com/maroc/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AA%D8%B1%D8%A8%D9%8A%D8%A9-%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A%D8%A9-%D8%AA%D9%83%D8%B4%D9%81-%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84-%D8%A7%D9%84%D8%AF-953630.html"
+    },
+    {
+      "site": "al-ain.com",
+      "type": "arabic_explainer_competitor",
+      "url": "https://al-ain.com/article/school-entry-2026-morocco"
+    },
+    {
+      "site": "berrynoon.ma",
+      "type": "english_comparison",
+      "url": "https://berrynoon.ma/en/useful-pages/school-holidays"
+    },
+    {
+      "site": "wizaide.com",
+      "type": "comparison_reference",
+      "url": "https://wizaide.com/calendrier-scolaire-2026-2027/"
+    },
+    {
+      "site": "dreamjob.ma",
+      "type": "arabic_supporting_reference",
+      "url": "https://www.dreamjob.ma/etudiants/%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE-%D8%A7%D9%84%D8%AF%D8%AE%D9%88%D9%84-%D8%A7%D9%84%D9%85%D8%AF%D8%B1%D8%B3%D9%8A-%D8%A8%D8%A7%D9%84%D9%85%D8%BA%D8%B1%D8%A8/"
+    }
+  ],
+  "arabicCompetitors": [
+    {
+      "site": "men.gov.ma",
+      "status": "usable",
+      "url": "https://www.men.gov.ma/node/1107",
+      "title": "أهم المستجدات والمعطيات المتعلقة بالدخول المدرسي 2025-2026",
+      "metaDescription": "صفحة الوزارة حول مستجدات الدخول المدرسي للموسم السابق.",
+      "h1": "أهم المستجدات والمعطيات المتعلقة بالدخول المدرسي 2025-2026",
+      "headings": [
+        "أهم المستجدات والمعطيات المتعلقة بالدخول المدرسي 2025-2026"
       ],
-      "gaps": [
-        "اللغة المؤسسية لا تجيب مباشرة عن نية كم باقي",
-        "لا تجمع العد التنازلي مع الشرح العملي للأسر"
+      "bodySummary": "الصفحة الرسمية قوية من حيث الثقة، وتؤكد أن المرجع النهائي هو الوزارة. لكنها في الاستخراج المفتوح لم تعط كل تفاصيل التقويم بشكل مقروء، لذلك استُخدمت بوصفها المصدر المرجعي الأعلى مع دعمها بمصادر شارحة.",
+      "faq": [],
+      "tables": [],
+      "examples": [],
+      "keywords": [
+        "الدخول المدرسي",
+        "وزارة التربية الوطنية"
+      ],
+      "schemaHints": [
+        "GovernmentOrganization",
+        "WebPage"
+      ],
+      "sources": [
+        "https://www.men.gov.ma/node/1107"
+      ],
+      "wordCount": 120,
+      "strengths": [
+        "مرجع رسمي",
+        "ثقة عالية"
+      ],
+      "weaknesses": [
+        "ليس أفضل صفحة لجواب المستخدم السريع",
+        "الاستخراج المفتوح محدود"
       ]
     },
     {
-      "site": "المواقع الإخبارية المغربية",
-      "type": "news",
-      "focus": [
-        "الدخول المدرسي",
-        "بلاغات الوزارة",
-        "تفاصيل الموسم الدراسي"
+      "site": "ar.lesiteinfo.com",
+      "status": "usable",
+      "url": "https://ar.lesiteinfo.com/maroc/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AA%D8%B1%D8%A8%D9%8A%D8%A9-%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A%D8%A9-%D8%AA%D9%83%D8%B4%D9%81-%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84-%D8%A7%D9%84%D8%AF-953630.html",
+      "title": "وزارة التربية الوطنية تكشف تفاصيل الدخول المدرسي",
+      "metaDescription": "خبر يلخص انطلاق الموسم 2025-2026.",
+      "h1": "وزارة التربية الوطنية تكشف تفاصيل الدخول المدرسي",
+      "headings": [
+        "وزارة التربية الوطنية تكشف تفاصيل الدخول المدرسي"
       ],
-      "gaps": [
-        "تتغير بسرعة مع الخبر اليومي",
-        "غالباً لا تقدّم مرجعاً مستقراً طوال الموسم"
+      "bodySummary": "يعطي خبر LeSiteInfo جواباً مباشراً وسريعاً: 1 شتنبر 2025 لتوقيع محاضر الدخول لبعض الأطر، و8 شتنبر 2025 لانطلاق الدراسة فعلياً، مع 6 أكتوبر 2025 للتمدرس الاستدراكي والفرصة الثانية. هذا مفيد جداً في شرح النمط، لكنه خبر خاص بالموسم السابق لا بالموسم الجديد.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "التفريق بين عودة الأطر وبداية الدراسة الفعلية"
+      ],
+      "keywords": [
+        "الدخول المدرسي",
+        "مدارس المغرب"
+      ],
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sources": [
+        "https://ar.lesiteinfo.com/maroc/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AA%D8%B1%D8%A8%D9%8A%D8%A9-%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A%D8%A9-%D8%AA%D9%83%D8%B4%D9%81-%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84-%D8%A7%D9%84%D8%AF-953630.html"
+      ],
+      "wordCount": 170,
+      "strengths": [
+        "جواب سريع",
+        "تفصيل عملي للموسم السابق"
+      ],
+      "weaknesses": [
+        "خبر موسمي",
+        "لا يوضح أن الموسم الجديد غير معلن بعد"
       ]
     },
     {
-      "site": "صفحات العد التنازلي العربية",
-      "type": "countdown",
-      "focus": [
-        "كم باقي على الدخول المدرسي",
-        "موعد بداية الدراسة"
+      "site": "al-ain.com",
+      "status": "usable",
+      "url": "https://al-ain.com/article/school-entry-2026-morocco",
+      "title": "الدخول المدرسي 2026 المغرب.. مواعيد البداية والعطل الرسمية",
+      "metaDescription": "ملخص خبري لموعد البداية والعطل.",
+      "h1": "الدخول المدرسي 2026 المغرب.. مواعيد البداية والعطل الرسمية",
+      "headings": [
+        "العطل المدرسية الرسمية لعام 2025-2026"
       ],
-      "gaps": [
-        "ضعف في التوثيق المغربي الرسمي",
-        "لا تشرح خصوصية مصطلح الدخول المدرسي في المغرب"
+      "bodySummary": "الصفحة تجمع تاريخ 8 شتنبر 2025 مع قائمة العطل الرئيسية للموسم 2025-2026. قوتها في تقديم سياق أوسع من مجرد تاريخ البداية، لكنها تعيد تدوير معطيات الموسم السابق وقد توهم القارئ أن الجواب صالح تلقائياً للموسم الجديد.",
+      "faq": [],
+      "tables": [
+        "قائمة العطل المدرسية 2025-2026"
+      ],
+      "examples": [
+        "ربط الدخول المدرسي بخريطة العطل"
+      ],
+      "keywords": [
+        "الدخول المدرسي 2026 المغرب",
+        "العطل الرسمية"
+      ],
+      "schemaHints": [
+        "Article"
+      ],
+      "sources": [
+        "https://al-ain.com/article/school-entry-2026-morocco"
+      ],
+      "wordCount": 320,
+      "strengths": [
+        "يغطي العطل",
+        "صياغة مفهومة للقارئ العام"
+      ],
+      "weaknesses": [
+        "يخلط بين سنة البحث والموسم السابق",
+        "لا يبرز غياب الإعلان الجديد"
       ]
+    }
+  ],
+  "englishCompetitors": [
+    {
+      "site": "berrynoon.ma",
+      "status": "usable_for_comparison",
+      "url": "https://berrynoon.ma/en/useful-pages/school-holidays",
+      "title": "School Holidays Morocco 2026 - Complete Calendar",
+      "metaDescription": "School holidays calendar for Morocco.",
+      "h1": "School Holidays Calendar",
+      "headings": [
+        "About",
+        "About the Moroccan School Calendar",
+        "Frequently Asked Questions"
+      ],
+      "bodySummary": "Useful for comparison because it explains the school-year structure in parent-friendly English and includes FAQ blocks. It still describes the 2025-2026 year under the label 2026 and is stronger on school holidays than on the exact new-season start question.",
+      "faq": [
+        "When does the school year start in Morocco?",
+        "How many vacation periods are there?",
+        "Do private schools follow the same calendar?"
+      ],
+      "tables": [
+        "Vacation periods"
+      ],
+      "examples": [
+        "FAQ-led explanatory structure"
+      ],
+      "keywords": [
+        "Morocco school holidays",
+        "school year start in Morocco"
+      ],
+      "schemaHints": [
+        "FAQPage",
+        "WebPage"
+      ],
+      "sources": [
+        "https://berrynoon.ma/en/useful-pages/school-holidays"
+      ],
+      "wordCount": 520,
+      "strengths": [
+        "Parent-friendly structure",
+        "Good contextual explanation"
+      ],
+      "weaknesses": [
+        "Not focused on the exact current-season query"
+      ]
+    },
+    {
+      "site": "en.expresstv.ma",
+      "status": "usable_for_comparison",
+      "url": "https://en.expresstv.ma/2025/08/the-ministry-of-education-reveals-the-school-vacation-schedule-for-the-2025-2026-academic-year/",
+      "title": "The Ministry of Education Reveals the School Vacation Schedule for the 2025-2026 Academic Year",
+      "metaDescription": "English coverage of the school vacation schedule in Morocco.",
+      "h1": "The Ministry of Education Reveals the School Vacation Schedule for the 2025-2026 Academic Year",
+      "headings": [],
+      "bodySummary": "This English article is not the best direct match for the school-start query, but it helps compare how English-language coverage frames the official calendar and breaks for a broad audience.",
+      "faq": [],
+      "tables": [],
+      "examples": [],
+      "keywords": [
+        "Morocco academic year",
+        "school vacation schedule"
+      ],
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sources": [
+        "https://en.expresstv.ma/2025/08/the-ministry-of-education-reveals-the-school-vacation-schedule-for-the-2025-2026-academic-year/"
+      ],
+      "wordCount": 300,
+      "strengths": [
+        "English framing of official calendar"
+      ],
+      "weaknesses": [
+        "Broader than the exact query"
+      ]
+    },
+    {
+      "site": "das.ac.ma",
+      "status": "usable_for_comparison",
+      "url": "https://das.ac.ma/school-calendar/",
+      "title": "School Calendar - Dar Essalam American School",
+      "metaDescription": "School calendar for an American school in Morocco.",
+      "h1": "School Calendar",
+      "headings": [
+        "School Calendar"
+      ],
+      "bodySummary": "Useful only as a comparison point for how international schools present the year to families. It is not the national Moroccan answer, but it reinforces the need to distinguish national schools from foreign systems.",
+      "faq": [],
+      "tables": [
+        "Academic calendar"
+      ],
+      "examples": [],
+      "keywords": [
+        "school calendar Morocco"
+      ],
+      "schemaHints": [
+        "School",
+        "WebPage"
+      ],
+      "sources": [
+        "https://das.ac.ma/school-calendar/"
+      ],
+      "wordCount": 180,
+      "strengths": [
+        "Clear institutional calendar"
+      ],
+      "weaknesses": [
+        "Different audience and system"
+      ]
+    }
+  ],
+  "replacedOrBlockedCompetitors": [
+    {
+      "site": "men.gov.ma official 2026-2027 decree",
+      "status": "blocked",
+      "reason": "No clearly extractable final 2026-2027 ministerial decree was found in open search as of 1 June 2026."
+    },
+    {
+      "site": "wizaide.com",
+      "status": "usable_but_not_primary",
+      "reason": "Helpful for 2026-2027 planning dates, but it is not an official ministry publication and explicitly marks dates as subject to the official order."
     }
   ],
   "coverageMatrix": [
     {
-      "keyword": "متى الدخول المدرسي في المغرب {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "هل الموعد الجديد أُعلن رسمياً؟",
+      "arabicCoverage": "ضعيف جداً",
+      "englishCoverage": "ضعيف",
+      "opportunity": "البدء بحالة الإعلان نفسها قبل ذكر أي تاريخ"
     },
     {
-      "keyword": "كم باقي على الدخول المدرسي في المغرب {{year}}",
-      "whyItMatters": "نية عد تنازلي مباشرة تناسب الباحث الذي يريد معرفة المدة المتبقية بسرعة."
+      "topic": "التاريخ التخطيطي الأقرب",
+      "arabicCoverage": "موجود بشكل متباين",
+      "englishCoverage": "موجود في المراجع المقارنة",
+      "opportunity": "تقديمه كتقدير واضح لا كحقيقة نهائية"
     },
     {
-      "keyword": "موعد الدخول المدرسي في المغرب {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "الفرق بين الموسم السابق والجديد",
+      "arabicCoverage": "غالباً غائب",
+      "englishCoverage": "ضعيف",
+      "opportunity": "شرح أن 8 شتنبر 2025 كان للموسم السابق وليس إعلاناً تلقائياً للجديد"
     },
     {
-      "keyword": "الدخول المدرسي في المغرب {{year}}",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "topic": "عودة الأطر قبل التلاميذ",
+      "arabicCoverage": "متوسط",
+      "englishCoverage": "شبه غائب",
+      "opportunity": "تحويلها إلى فائدة عملية للمدرسة والأسرة"
     },
     {
-      "keyword": "الدخول المدرسي في المغرب العد التنازلي",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "topic": "تمييز المدارس الوطنية عن البعثات الأجنبية",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "أوضح في المقارنات",
+      "opportunity": "منع تعميم رزنامة AEFE أو المدارس الدولية على الجميع"
     },
     {
-      "keyword": "الدخول المدرسي في المغرب متى",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "ربط الموعد بالعطل والسياق المدرسي",
+      "arabicCoverage": "متوسط",
+      "englishCoverage": "متوسط",
+      "opportunity": "استعمال العطل لتوسيع الفائدة لا لإغراق الصفحة"
     },
     {
-      "keyword": "تاريخ الدخول المدرسي في المغرب {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "ماذا يفعل ولي الأمر الآن",
+      "arabicCoverage": "شبه غائب",
+      "englishCoverage": "أفضل بنيوياً في بعض الصفحات",
+      "opportunity": "إضافة خطوات عملية قابلة للتنفيذ"
     },
     {
-      "keyword": "متى الدخول المدرسي في المغرب {{nextYear}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "كم باقي على الدخول المدرسي",
+      "arabicCoverage": "موجود شكلياً فقط",
+      "englishCoverage": "ضعيف",
+      "opportunity": "ربط العد التنازلي بجملة توضح أنه على تاريخ تخطيطي"
     }
   ],
   "keywordGaps": [
-    "جواب عربي مباشر يوضح معنى الدخول المدرسي في المغرب وموعده في صفحة واحدة.",
-    "شرح سبب أهمية الدخول المدرسي في المغرب ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
-    "تغطية الأسئلة العملية التي يطرحها القارئ قبل الدخول المدرسي في المغرب أو أثناءه.",
-    "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط.",
-    "دمج العد التنازلي مع الشرح والسياق بدل صفحة موعد قصيرة وضعيفة.",
-    "ربط الموعد بالقيمة العملية للقارئ: إجازة، استعداد، تهنئة، أو تنظيم مسبق.",
-    "شرح الفروقات المحلية أو الرسمية عند الحاجة بدلاً من الاكتفاء بموعد عام مبهم.",
-    "لغة عربية طبيعية لا تبدو كأنها قائمة كلمات أو نص مولد آلياً."
+    "هل أُعلن الدخول المدرسي في المغرب {{year}}",
+    "المقرر الوزاري الدخول المدرسي المغرب {{year}}",
+    "متى ترجع الدراسة في المغرب {{year}}",
+    "الدخول المدرسي بالمغرب شتنبر {{year}}",
+    "آخر تاريخ رسمي للدخول المدرسي في المغرب",
+    "هل المدارس الخاصة في المغرب تبدأ مع العمومية",
+    "هل بعثات AEFE في المغرب تتبع التاريخ نفسه",
+    "كيف أستعد للدخول المدرسي في المغرب {{year}}"
   ],
   "unansweredQuestions": [
-    "متى الدخول المدرسي في المغرب {{year}}؟",
-    "كم باقي على الدخول المدرسي في المغرب؟",
-    "ما هو الدخول المدرسي في المغرب؟",
-    "كيف أستعد لـالدخول المدرسي في المغرب؟",
-    "متى الدخول المدرسي في المغرب {{nextYear}}؟",
-    "ما أهمية الدخول المدرسي في المغرب؟",
-    "كم باقي على الدخول المدرسي في المغرب {{year}}؟",
-    "تاريخ الدخول المدرسي في المغرب {{year}}؟"
+    "هل أعلنت الوزارة تاريخ الدخول المدرسي للموسم {{year}}-{{nextYear}}؟",
+    "ما الفرق بين التاريخ المتوقع والتاريخ الرسمي؟",
+    "ما آخر تاريخ رسمي مؤكد في المغرب؟",
+    "هل تعود الأطر التربوية قبل التلاميذ؟",
+    "هل المدارس الخاصة أو البعثات الأجنبية تتبع التاريخ نفسه؟",
+    "ما الذي يجب أن تفعله الأسرة قبل صدور البلاغ النهائي؟"
   ],
-  "differentiationIdeas": [
-    "جواب مباشر عن موعد الدخول المدرسي في المغرب في بداية الصفحة قبل أي شرح إضافي.",
-    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر.",
-    "أسئلة شائعة عملية تساعد القارئ على فهم الدخول المدرسي في المغرب والتصرف بناءً عليه.",
-    "ربط الصفحة بطريقة البحث الشائعة عن الدخول المدرسي في المغرب دون فقدان الوضوح العام."
-  ],
+  "competitorMatrix": {
+    "strengths": [
+      "بعض المنافسين يقدمون تاريخ الموسم السابق بوضوح",
+      "المصدر الرسمي يرفع الثقة",
+      "المراجع المقارنة توسّع الفهم حول العطل والأنظمة المختلفة"
+    ],
+    "weaknesses": [
+      "خلط شائع بين الموسم السابق والموسم الجديد",
+      "ضعف في شرح مستوى اليقين",
+      "قلة الخطوات العملية للأسرة"
+    ],
+    "missingTopics": [
+      "التأكيد أن 2026-2027 غير معلن نهائياً بعد",
+      "شرح متى يصبح التاريخ نهائياً",
+      "فصل النظام المغربي الوطني عن AEFE والمدارس الدولية"
+    ],
+    "uniqueOpportunities": [
+      "جواب عربي يبدأ بحالة الإعلان لا بتاريخ مضلل",
+      "تحويل الصفحة إلى مرجع تعليمي يشرح الفرق بين المتوقع والرسمي",
+      "ربط العد التنازلي بالتخطيط العملي لا باليقين الوهمي"
+    ]
+  },
   "factSources": [
     {
-      "label": "وزارة التربية الوطنية والتعليم الأولي والرياضة - المغرب",
-      "url": "https://www.men.gov.ma"
+      "label": "وزارة التربية الوطنية والتعليم الأولي والرياضة - مستجدات الدخول المدرسي 2025-2026",
+      "url": "https://www.men.gov.ma/node/1107"
     },
     {
-      "label": "البوابة الرسمية لوزارة التربية الوطنية - المغرب",
-      "url": "https://www.men.gov.ma/Ar/Pages/Accueil.aspx"
+      "label": "LeSiteInfo - تفاصيل الدخول المدرسي 2025-2026",
+      "url": "https://ar.lesiteinfo.com/maroc/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AA%D8%B1%D8%A8%D9%8A%D8%A9-%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A%D8%A9-%D8%AA%D9%83%D8%B4%D9%81-%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84-%D8%A7%D9%84%D8%AF-953630.html"
     },
     {
-      "label": "البوابة الوطنية للخدمات العمومية - المغرب",
-      "url": "https://www.service-public.ma"
+      "label": "العين الإخبارية - مواعيد البداية والعطل الرسمية",
+      "url": "https://al-ain.com/article/school-entry-2026-morocco"
+    },
+    {
+      "label": "Wizaide - calendrier scolaire 2026-2027 au Maroc",
+      "url": "https://wizaide.com/calendrier-scolaire-2026-2027/"
     }
   ],
-  "notes": "تم تعزيز خريطة البحث العربية لـ الدخول المدرسي في المغرب اعتماداً على الكلمات المفتاحية الحالية، والأسئلة الشائعة، والمصادر الموجودة داخل الحزمة نفسها."
+  "notes": "الخلاصة الأهم من البحث أن الصفحة المغربية يجب ألا تعيد تقديم تاريخ الموسم السابق كما لو أنه جواب نهائي للموسم الجديد. حتى 1 يونيو 2026، أقوى صياغة صادقة للمستخدم هي: لا يوجد إعلان نهائي مفتوح يمكن التحقق منه بعد، ويمكن استخدام الأسبوع الأول من شتنبر كتقدير تخطيطي فقط إلى حين صدور المقرر الوزاري."
 }

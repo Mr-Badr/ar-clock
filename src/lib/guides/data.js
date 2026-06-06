@@ -1,30 +1,37 @@
-import { PERSONAL_FINANCE_GUIDES } from '@/lib/calculators/personal-finance-data';
+import { normalizeGuideCollection } from '@/lib/guides/page-model';
 import { SLEEP_GUIDES } from '@/lib/sleep/content';
-import { TOOLS_AND_ECONOMY_GUIDES } from '@/lib/guides/tools-and-economy-guides';
+import { TOOL_GUIDES } from '@/lib/guides/tool-guides';
 
-const PERSONAL_FINANCE_GUIDES_ENRICHED = PERSONAL_FINANCE_GUIDES.map((guide) => ({
-  hubTitle: 'التخطيط المالي الشخصي',
-  hubHref: '/calculators/personal-finance',
-  badge: guide.badge || 'دليل التخطيط المالي',
-  accent: guide.accent || '#2563EB',
-  ...guide,
-}));
-
-export const ALL_GUIDES = [
-  ...PERSONAL_FINANCE_GUIDES_ENRICHED,
+const RAW_ALL_GUIDES = [
   ...SLEEP_GUIDES,
-  ...TOOLS_AND_ECONOMY_GUIDES,
+  ...TOOL_GUIDES,
 ];
+
+export const ALL_GUIDES = normalizeGuideCollection(RAW_ALL_GUIDES);
 
 export function getGuideBySlug(slug) {
   return ALL_GUIDES.find((guide) => guide.slug === slug) || null;
+}
+
+function deduplicateGuides(guides) {
+  const seenHrefs = new Set();
+
+  return guides.filter((guide) => {
+    const href = String(guide?.href || '');
+    if (!href || seenHrefs.has(href)) {
+      return false;
+    }
+
+    seenHrefs.add(href);
+    return true;
+  });
 }
 
 export function getGuidesBySlugs(slugs = []) {
   return slugs.map((slug) => getGuideBySlug(slug)).filter(Boolean);
 }
 
-export function getGuideCardsBySlugs(slugs = [], ctaLabel = 'افتح الدليل') {
+export function getGuideCardsBySlugs(slugs = [], ctaLabel = 'اقرأ المقال') {
   return getGuidesBySlugs(slugs).map((guide) => ({
     href: guide.href,
     title: guide.title,
@@ -35,4 +42,21 @@ export function getGuideCardsBySlugs(slugs = [], ctaLabel = 'افتح الدلي
 
 export function getRelatedGuidesBySlugs(slugs = []) {
   return getGuidesBySlugs(slugs);
+}
+
+export function getGuidesByHub(hubHref, excludedSlug) {
+  return ALL_GUIDES.filter((guide) => {
+    if (!hubHref || guide.slug === excludedSlug) {
+      return false;
+    }
+
+    return guide.hubHref === hubHref;
+  });
+}
+
+export function getSuggestedGuides(guide, limit) {
+  const curatedGuides = getGuidesBySlugs(guide?.relatedGuideSlugs || []);
+  const sameHubGuides = getGuidesByHub(guide?.hubHref || '', guide?.slug || '');
+
+  return deduplicateGuides([...curatedGuides, ...sameHubGuides]).slice(0, limit);
 }

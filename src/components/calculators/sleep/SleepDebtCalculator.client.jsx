@@ -74,7 +74,7 @@ export default function SleepDebtCalculator() {
             <CardHeader>
               <CardTitle className="calc-card-title">قراءة دين النوم</CardTitle>
             </CardHeader>
-            <CardContent className="calc-metric-grid">
+            <CardContent className="calc-metric-grid" aria-live="polite">
               <div className="calc-grid-2">
                 <div className="calc-metric-card">
                   <div className="calc-metric-card__label"><CalendarRange size={16} /> الاحتياج الأسبوعي</div>

@@ -46,7 +46,7 @@ export default function BirthdayDetailsCalculator() {
           </CardContent>
         </Card>
 
-        <div className="calc-results-panel">
+        <div className="calc-results-panel" aria-live="polite">
           <ResultState result={result} />
 
           {result?.isValid ? (

@@ -1,39 +1,19 @@
 // Footer.jsx
-'use client';
-
 import Link from "next/link";
 import { Clock } from "lucide-react";
-import dynamic from "next/dynamic";
-import { SectionDivider } from "@/components/shared/primitives";
-import { SITE_BRAND, SITE_CONTACT_EMAIL } from "@/lib/site-config";
 
-// Lazy-load the WebGL globe — deferred until after first paint so it never
-// blocks LCP or FCP. The footer text/links render instantly.
-const Globe = dynamic(
-  () => import("@/components/ui/globe").then((m) => m.Globe),
-  { ssr: false, loading: () => <div style={{ height: 'clamp(260px, 32vw, 400px)' }} /> }
-);
+import { SITE_BRAND, SITE_CONTACT_EMAIL } from "@/lib/site-config";
+import "./footer.css";
 
 const PRODUCT_LINKS = [
-  { href: '/fahras', label: 'الفهرس الشامل' },
-  { href: '/guides', label: 'الأدلة العملية' },
+  { href: '/fahras', label: 'استكشف الصفحات' },
+  { href: '/blog', label: 'المدونة' },
   { href: '/mwaqit-al-salat', label: 'مواقيت الصلاة' },
-  { href: '/time-now', label: 'الوقت الآن' },
+  { href: '/time-now', label: 'الوقت الان' },
   { href: '/time-difference', label: 'فرق التوقيت' },
   { href: '/calculators', label: 'الحاسبات' },
-  { href: '/economie', label: 'الاقتصاد الحي' },
   { href: '/holidays', label: 'المناسبات' },
   { href: '/date', label: 'التاريخ والتحويل' },
-];
-
-const ECONOMY_LINKS = [
-  { href: '/economie/market-hours', label: 'ساعات الأسواق والتداول' },
-  { href: '/economie/us-market-open', label: 'متى يفتح السوق الأمريكي؟' },
-  { href: '/economie/gold-market-hours', label: 'هل الذهب مفتوح الآن؟' },
-  { href: '/economie/forex-sessions', label: 'جلسات الفوركس الآن' },
-  { href: '/economie/stock-markets', label: 'البورصات العالمية الآن' },
-  { href: '/economie/market-clock', label: 'ساعة التداول' },
-  { href: '/economie/best-trading-time', label: 'أفضل وقت للتداول اليوم' },
 ];
 
 const CALCULATOR_LINKS = [
@@ -55,59 +35,66 @@ const COMPANY_LINKS = [
   { href: '/contact', label: 'اتصل بنا' },
 ];
 
+const COPYRIGHT_YEAR = 2026;
+
+const START_LINKS = [
+  {
+    href: '/fahras',
+    title: 'أريد الوصول بسرعة',
+    description: 'صفحة واحدة تجمع أهم الأدوات والمسارات.',
+  },
+  {
+    href: '/calculators',
+    title: 'أريد حساب نتيجة',
+    description: 'اختر القسط أو الضريبة أو العمر أو النوم من السؤال نفسه.',
+  },
+  {
+    href: '/blog',
+    title: 'أريد فهماً قبل القرار',
+    description: 'مقالات عملية تشرح متى تستخدم الأداة وماذا تعني النتيجة.',
+  },
+];
+
 const Footer = () => {
   return (
     <footer className="footer-root">
-      <SectionDivider />
-
-      {/* ── Top accent glow line ── */}
-      <div className="footer-glow-line" />
-
-      {/* ── Main content ── */}
       <div className="footer-container">
+        <div className="footer-start">
+          <div className="footer-start-copy">
+            <p className="footer-start-kicker">ما الذي تريد معرفته الآن؟</p>
+            <h2 className="footer-start-title">اعرف الوقت، حوّل التاريخ، احسب النتيجة، أو افتح الصفحة المناسبة من مسار واضح.</h2>
+          </div>
+          <div className="footer-start-links" aria-label="مسارات بداية سريعة">
+            {START_LINKS.map(({ href, title, description }) => (
+              <Link key={href} href={href} className="footer-start-link">
+                <span>{title}</span>
+                <small>{description}</small>
+              </Link>
+            ))}
+          </div>
+        </div>
 
-        {/* ── Brand + Links row ── */}
         <div className="footer-main">
-
-          {/* ── Brand block ── */}
           <div className="footer-brand">
-            <div className="footer-brand-logo">
+            <Link href="/" className="footer-brand-logo" aria-label={`${SITE_BRAND} - الصفحة الرئيسية`}>
               <div className="footer-brand-icon">
-                <Clock size={20} color="white" />
+                <Clock size={20} aria-hidden="true" />
               </div>
               <span className="footer-brand-name">{SITE_BRAND}</span>
-            </div>
+            </Link>
 
             <p className="footer-brand-desc">
-              {SITE_BRAND} يجمع الوقت والتاريخ والمواقيت والحاسبات والأدلة العربية في تجربة واحدة سريعة وواضحة.
+              ابدأ من السؤال الأقرب لك: متى الموعد؟ كم النتيجة؟ ما التاريخ؟ ثم انتقل إلى الصفحة التي تعطيك جواباً عملياً وواضحاً.
             </p>
 
-            <div className="footer-brand-actions">
-              <Link href="/fahras" className="footer-brand-index">
-                افتح الفهرس الشامل
-              </Link>
-              <Link href="/guides" className="footer-brand-index">
-                تصفح الأدلة العملية
-              </Link>
-            </div>
-
-            <div className="footer-brand-badge-wrap">
-              <span className="footer-brand-badge">
-                <span className="footer-brand-dot" />
-                متاح مجاناً
-              </span>
-            </div>
-
             <p className="footer-brand-contact">
-              للتواصل: <a href={`mailto:${SITE_CONTACT_EMAIL}`}>{SITE_CONTACT_EMAIL}</a>
+              للتواصل: <a href={`mailto:${SITE_CONTACT_EMAIL}`} dir="ltr">{SITE_CONTACT_EMAIL}</a>
             </p>
           </div>
 
-          {/* ── Links grid — all 5 columns flat ── */}
-          <nav className="footer-links-grid" aria-label="روابط التذييل">
-
+          <nav className="footer-links-grid" aria-label="مسارات التذييل">
             <div className="footer-col">
-              <h3 className="footer-col-heading">روابط مهمة</h3>
+              <h3 className="footer-col-heading">مسارات مهمة</h3>
               <ul className="footer-col-list">
                 {COMPANY_LINKS.map(({ href, label }) => (
                   <li key={href}>
@@ -129,17 +116,6 @@ const Footer = () => {
             </div>
 
             <div className="footer-col">
-              <h3 className="footer-col-heading">أدوات الاقتصاد</h3>
-              <ul className="footer-col-list">
-                {ECONOMY_LINKS.map(({ href, label }) => (
-                  <li key={href}>
-                    <Link href={href} className="footer-col-link">{label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="footer-col">
               <h3 className="footer-col-heading">أشهر الحاسبات</h3>
               <ul className="footer-col-list">
                 {CALCULATOR_LINKS.map(({ href, label }) => (
@@ -149,398 +125,18 @@ const Footer = () => {
                 ))}
               </ul>
             </div>
-
-            <div className="footer-col footer-directory-col">
-              <h3 className="footer-col-heading">لا تبحث في كل مكان</h3>
-              <p className="footer-directory-note">
-                افتح <strong>الفهرس</strong> إذا كنت تريد الوصول السريع إلى أهم الحاسبات
-                وأدوات الاقتصاد والأدلة من صفحة واحدة مرتبة، ثم انتقل إلى
-                <strong> قسم الأدلة</strong> عندما تحتاج شرحاً أوسع قبل استخدام الأداة.
-              </p>
-              <ul className="footer-directory-list">
-                <li>مسارات عليا أوضح من التشتت بين بطاقات كثيرة</li>
-                <li>روابط مباشرة للحاسبات والأدلة الأكثر أهمية</li>
-                <li>صفحة واحدة تعطيك صورة كاملة عمّا يقدمه الموقع</li>
-              </ul>
-              <Link href="/fahras" className="footer-directory-link">
-                افتح الفهرس الشامل
-              </Link>
-            </div>
-
           </nav>
         </div>
-        {/* ── end footer-main ── */}
 
-      </div>
-
-      {/* ── Globe ── */}
-      <div
-        style={{
-          position: 'relative',
-          width: '100%',
-          height: 'clamp(260px, 32vw, 400px)',
-          overflow: 'hidden',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-          zIndex: 1,
-        }}
-      >
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: 'clamp(500px, 60vw, 780px)',
-            height: 'clamp(500px, 60vw, 780px)',
-            flexShrink: 0,
-          }}
-        >
-          <Globe style={{ width: '100%', height: '100%' }} />
+        <div className="footer-bottom">
+          <p>© {COPYRIGHT_YEAR} {SITE_BRAND}. أدوات ومحتوى عربي لخدمة القرار اليومي.</p>
+          <div className="footer-bottom-links" aria-label="مسارات الثقة">
+            <Link href="/editorial-policy">كيف نكتب المحتوى</Link>
+            <Link href="/privacy">الخصوصية</Link>
+            <Link href="/contact">التواصل</Link>
+          </div>
         </div>
       </div>
-
-      {/* ── Styles ── */}
-      <style>{`
-
-        /* ─────────────────────────────────────────
-           ROOT
-        ───────────────────────────────────────── */
-        .footer-root {
-          position: relative;
-          overflow: hidden;
-          background-color: var(--bg-subtle);
-          border-top: 1px solid var(--border-subtle);
-        }
-
-        /* ─────────────────────────────────────────
-           GLOW LINE
-        ───────────────────────────────────────── */
-        .footer-glow-line {
-          position: absolute;
-          top: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 70%;
-          max-width: 700px;
-          height: 1px;
-          background: linear-gradient(90deg, transparent 0%, var(--accent-alt) 50%, transparent 100%);
-          opacity: 0.35;
-          pointer-events: none;
-        }
-
-        /* ─────────────────────────────────────────
-           CONTAINER
-        ───────────────────────────────────────── */
-        .footer-container {
-          max-width: 1320px;
-          margin: 0 auto;
-          padding: var(--space-16) var(--space-6) 0;
-          position: relative;
-          z-index: 1;
-        }
-
-        .footer-directory-col {
-          background: linear-gradient(180deg, rgba(59, 130, 246, 0.10), rgba(15, 23, 42, 0.04));
-          border: 1px solid var(--border-subtle);
-          border-radius: 24px;
-          padding: 1rem;
-        }
-
-        .footer-directory-note {
-          color: var(--text-secondary);
-          font-size: 0.95rem;
-          line-height: 1.8;
-          margin: 0 0 0.85rem 0;
-        }
-
-        .footer-directory-list {
-          margin: 0 0 1rem 0;
-          padding: 0;
-          list-style: none;
-          display: grid;
-          gap: 0.55rem;
-          color: var(--text-secondary);
-          font-size: 0.92rem;
-        }
-
-        .footer-directory-list li {
-          position: relative;
-          padding-inline-start: 1rem;
-        }
-
-        .footer-directory-list li::before {
-          content: "";
-          position: absolute;
-          inset-inline-start: 0;
-          top: 0.7rem;
-          width: 0.38rem;
-          height: 0.38rem;
-          border-radius: 999px;
-          background: var(--accent-alt);
-          opacity: 0.9;
-        }
-
-        .footer-directory-link {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 2.75rem;
-          padding: 0.7rem 1rem;
-          border-radius: 999px;
-          text-decoration: none;
-          font-weight: 800;
-          color: var(--on-accent);
-          background: linear-gradient(135deg, var(--accent-alt), #2563eb);
-          box-shadow: 0 14px 36px rgba(37, 99, 235, 0.22);
-          transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
-        }
-
-        .footer-directory-link:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 16px 40px rgba(37, 99, 235, 0.28);
-          opacity: 0.98;
-        }
-
-        /* ─────────────────────────────────────────
-           MAIN ROW  (brand + links)
-
-          Mobile (<640px):  column, centered
-          Tablet (640-1023): column, centered
-          Desktop (1024px+): single row — brand on
-                             the right (RTL start),
-                             links fill the rest
-        ───────────────────────────────────────── */
-        .footer-main {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          gap: var(--space-10);
-        }
-
-        @media (min-width: 1024px) {
-          .footer-main {
-            flex-direction: row;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: var(--space-14);
-          }
-        }
-
-        /* ─────────────────────────────────────────
-           BRAND BLOCK
-        ───────────────────────────────────────── */
-        .footer-brand {
-          flex-shrink: 0;
-          width: 100%;
-          text-align: right;
-          padding-top: 1rem;
-        }
-
-        @media (min-width: 1024px) {
-          .footer-brand {
-            width: auto;
-            max-width: 280px;
-            padding-top: 1rem;
-          }
-        }
-
-        .footer-brand-logo {
-          display: flex;
-          align-items: center;
-          gap: var(--space-2-5);
-          margin-bottom: var(--space-4);
-       justify-content: flex-start;
-        }
-
-        .footer-brand-icon {
-          width: 38px;
-          height: 38px;
-          border-radius: var(--radius-md);
-          background: var(--accent-gradient);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: var(--shadow-accent);
-          flex-shrink: 0;
-        }
-
-        .footer-brand-name {
-          font-size: var(--text-2xl);
-          font-weight: var(--font-bold);
-          color: var(--text-primary);
-        }
-
-        .footer-brand-desc {
-          font-size: var(--text-sm);
-          color: var(--text-muted);
-          line-height: var(--leading-relaxed);
-          max-width: 300px;
-          margin: 0 0 0 auto;
-        }
-
-        @media (min-width: 1024px) {
-          .footer-brand-desc {
-            margin: 0;
-          }
-        }
-
-        .footer-brand-badge-wrap {
-          margin-top: var(--space-5);
-          display: flex;
-       justify-content: flex-start;
-        }
-
-        .footer-brand-actions {
-          margin-top: var(--space-5);
-          display: flex;
-          gap: 0.75rem;
-          flex-wrap: wrap;
-          justify-content: flex-start;
-        }
-
-        .footer-brand-index {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          padding: var(--space-2-5) var(--space-4);
-          border-radius: var(--radius-full);
-          border: 1px solid var(--border-accent);
-          background:
-            linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 100%),
-            var(--bg-surface-1);
-          color: var(--text-primary);
-          font-size: var(--text-sm);
-          font-weight: var(--font-semibold);
-          text-decoration: none;
-          transition: transform var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
-        }
-
-        .footer-brand-index:hover {
-          transform: translateY(-1px);
-          border-color: var(--accent-alt);
-          color: var(--accent-alt);
-        }
-
-        .footer-brand-contact {
-          margin-top: var(--space-4);
-          font-size: var(--text-sm);
-          color: var(--text-muted);
-          line-height: var(--leading-relaxed);
-        }
-
-        .footer-brand-contact a {
-          color: var(--accent-alt);
-          text-decoration: none;
-        }
-
-        .footer-brand-contact a:hover {
-          text-decoration: underline;
-        }
-
-        .footer-brand-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: var(--space-1-5);
-          font-size: var(--text-xs);
-          font-weight: var(--font-medium);
-          color: var(--accent-alt);
-          background-color: var(--accent-soft);
-          border: 1px solid var(--border-accent);
-          border-radius: var(--radius-full);
-          padding: var(--space-1-5) var(--space-3);
-        }
-
-        .footer-brand-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 9999px;
-          background-color: var(--success);
-          flex-shrink: 0;
-        }
-
-        /* ─────────────────────────────────────────
-           LINKS GRID
-
-          All columns live in ONE flat CSS Grid.
-          No nested rows, no display:contents tricks.
-
-          Mobile  (<640px):  2 columns
-          Tablet (640-1023): 3 columns
-          Desktop (1024px+): 7 columns, all in one line
-        ───────────────────────────────────────── */
-        .footer-links-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: var(--space-8) var(--space-6);
-          width: 100%;
-        }
-
-        @media (min-width: 640px) {
-          .footer-links-grid {
-            grid-template-columns: repeat(3, 1fr);
-          }
-        }
-
-        @media (min-width: 1024px) {
-          .footer-links-grid {
-            /* Each column is sized to its content —
-               no stretching, no overflow.            */
-            grid-template-columns: repeat(7, auto);
-            gap: var(--space-10);
-            width: auto;
-            flex: 1;             /* fill remaining space in the main row */
-            justify-content: flex-start; /* columns hug their content */
-          }
-        }
-
-        /* ─────────────────────────────────────────
-           INDIVIDUAL COLUMN
-        ───────────────────────────────────────── */
-        .footer-col {
-          text-align: right;
-          padding-top: 1rem;
-        }
-
-        .footer-col-heading {
-          font-size: var(--text-sm);
-          font-weight: var(--font-semibold);
-          color: var(--text-primary);
-          margin-bottom: var(--space-4);
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          white-space: nowrap;
-        }
-
-        .footer-col-list {
-          display: flex;
-          flex-direction: column;
-          gap: var(--space-3);
-          list-style: none;
-          padding: 0;
-          margin: 0;
-        }
-
-        .footer-col-link {
-          font-size: var(--text-sm);
-          color: var(--text-muted);
-          transition: color var(--transition-fast);
-          display: block;
-        }
-
-        .footer-col-link:hover {
-          color: var(--text-primary);
-        }
-
-        footer canvas,
-        footer .globe-container,
-        footer [class*="globe"] {
-          width: 100% !important;
-          height: 100% !important;
-        }
-
-      `}</style>
     </footer>
   );
 };

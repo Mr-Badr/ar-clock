@@ -394,6 +394,7 @@ export default function PercentageCalculator() {
                       type="button"
                       className={`chip calc-chip-button ${adjustMode === 'increase' ? 'is-active' : ''}`}
                       onClick={() => setAdjustMode('increase')}
+                      aria-pressed={adjustMode === 'increase'}
                     >
                       زيادة
                     </button>
@@ -401,6 +402,7 @@ export default function PercentageCalculator() {
                       type="button"
                       className={`chip calc-chip-button ${adjustMode === 'decrease' ? 'is-active' : ''}`}
                       onClick={() => setAdjustMode('decrease')}
+                      aria-pressed={adjustMode === 'decrease'}
                     >
                       خفض
                     </button>
@@ -484,10 +486,10 @@ export default function PercentageCalculator() {
           <CardHeader>
             <CardTitle className="calc-card-title">النتيجة</CardTitle>
           </CardHeader>
-          <CardContent className="calc-form-grid">
+          <CardContent className="calc-form-grid" aria-live="polite" role="status">
             {activeTab === 'amount' ? (
               <div className="calc-form-grid">
-                <div className="card-nested calc-metric-card">
+                <div className="calc-metric-card">
                   <div className="calc-metric-card__label">الناتج</div>
                   <div className="calc-metric-card__value">{formatNumber(amountResult.result)}</div>
                   <div className="calc-metric-card__note">
@@ -499,7 +501,7 @@ export default function PercentageCalculator() {
 
             {activeTab === 'ratio' ? (
               <div className="calc-form-grid">
-                <div className="card-nested calc-metric-card">
+                <div className="calc-metric-card">
                   <div className="calc-metric-card__label">النسبة</div>
                   <div className="calc-metric-card__value">{formatPercent(ratioResult.result, 2)}</div>
                   <div className="calc-metric-card__note">
@@ -511,7 +513,7 @@ export default function PercentageCalculator() {
 
             {activeTab === 'adjust' ? (
               <div className="calc-form-grid">
-                <div className="card-nested calc-metric-card">
+                <div className="calc-metric-card">
                   <div className="calc-metric-card__label">
                     {adjustMode === 'increase' ? 'بعد الزيادة' : 'بعد الخفض'}
                   </div>
@@ -525,7 +527,7 @@ export default function PercentageCalculator() {
 
             {activeTab === 'change' ? (
               <div className="calc-form-grid">
-                <div className="card-nested calc-metric-card">
+                <div className="calc-metric-card">
                   <div className="calc-metric-card__label">نسبة التغيير</div>
                   <div className="calc-metric-card__value">{formatPercent(changeResult.percentChange, 2)}</div>
                   <div className="calc-metric-card__note">
@@ -699,7 +701,7 @@ export default function PercentageCalculator() {
                 <button
                   key={item.id}
                   type="button"
-                  className="card-nested calc-history-item"
+                  className="calc-history-item"
                   onClick={() => restoreHistory(item)}
                 >
                   <span className="calc-history-item__copy">

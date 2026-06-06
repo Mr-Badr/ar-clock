@@ -1,135 +1,362 @@
 {
   "slug": "school-start-qatar",
   "locale": "ar",
-  "capturedAt": "2026-05-01T20:21:24.161Z",
+  "capturedAt": "2026-06-01T00:00:00.000Z",
   "primaryQueries": [
-    "متى بدء الدراسة في قطر {{year}}",
-    "كم باقي على بدء الدراسة في قطر {{year}}",
+    "متى تبدأ الدراسة في قطر {{year}}",
     "موعد بدء الدراسة في قطر {{year}}",
-    "بدء الدراسة في قطر {{year}}",
-    "بدء الدراسة في قطر العد التنازلي",
-    "بدء الدراسة في قطر متى",
+    "كم باقي على بدء الدراسة في قطر {{year}}",
     "تاريخ بدء الدراسة في قطر {{year}}",
-    "متى بدء الدراسة في قطر {{nextYear}}",
-    "كم باقي على بدء الدراسة في قطر",
-    "بدء الدراسة في قطر {{nextYear}}",
-    "كيف أستعد لـبدء الدراسة في قطر",
-    "ما هو بدء الدراسة في قطر"
+    "بدء الدراسة في قطر {{year}}",
+    "موعد دوام الطلبة في قطر {{year}}",
+    "موعد دوام الموظفين في مدارس قطر {{year}}",
+    "التقويم الأكاديمي قطر {{year}} {{nextYear}}",
+    "متى ترجع المدارس في قطر {{year}}",
+    "تسجيل الطلبة الجدد قطر {{year}}"
   ],
   "competitors": [
     {
       "site": "edu.gov.qa",
-      "type": "official",
-      "url": "https://www.edu.gov.qa",
-      "focus": [
+      "type": "official_arabic_reference",
+      "url": "https://www.edu.gov.qa/ar/mediacenter/Pages/newsdetails.aspx?ItemID=4063"
+    },
+    {
+      "site": "alarab.qa",
+      "type": "arabic_news_competitor",
+      "url": "https://alarab.qa/article/31/08/2025/%D8%A7%D9%86%D8%B7%D9%84%D8%A7%D9%82-%D8%A7%D9%84%D8%B9%D8%A7%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF-2025--2026-%D9%81%D9%8A-%D9%82%D8%B7%D8%B1"
+    },
+    {
+      "site": "mdares.com",
+      "type": "arabic_reference_competitor",
+      "url": "https://mdares.com/%D8%A7%D9%84%D8%AA%D9%82%D9%88%D9%8A%D9%85-%D8%A7%D9%84%D8%A3%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A-%D9%84%D8%AF%D9%88%D9%84%D8%A9-%D9%82%D8%B7%D8%B1-2025-2026/"
+    },
+    {
+      "site": "edu.gov.qa",
+      "type": "official_service_reference",
+      "url": "https://www.edu.gov.qa/ar/mediacenter/Pages/newsdetails.aspx?ItemID=4207"
+    },
+    {
+      "site": "publicholidays.qa",
+      "type": "english_comparison",
+      "url": "https://publicholidays.qa/school-holidays/"
+    },
+    {
+      "site": "qatarhow.net",
+      "type": "english_supporting_comparison",
+      "url": "https://qatarhow.net/ministry-of-education-qatar-school-calendar/"
+    }
+  ],
+  "arabicCompetitors": [
+    {
+      "site": "edu.gov.qa",
+      "status": "usable",
+      "url": "https://www.edu.gov.qa/ar/mediacenter/Pages/newsdetails.aspx?ItemID=4063",
+      "title": "اعتماد التقويم الأكاديمي للأعوام الدراسية الثلاثة 2025-2026 و2026-2027 و2027-2028",
+      "metaDescription": "خبر رسمي عن اعتماد التقويم الأكاديمي لثلاثة أعوام في قطر.",
+      "h1": "اعتماد التقويم الأكاديمي للأعوام الدراسية الثلاثة",
+      "headings": [
+        "اعتماد التقويم الأكاديمي للأعوام الدراسية الثلاثة"
+      ],
+      "bodySummary": "هذه هي أقوى صفحة مرجعية في البحث لأنها تؤكد أن التقويم الأكاديمي لثلاثة أعوام تمت المصادقة عليه رسمياً. قوتها في الثقة المؤسسية، لكن القارئ يحتاج عادة إلى صفحة تشرح له ماذا يعني ذلك عملياً: متى يعود الطلبة؟ متى يعود الموظفون؟ وما الذي يجب أن يفعله قبل ذلك؟",
+      "faq": [],
+      "tables": [
+        "التقويم الأكاديمي المعتمد"
+      ],
+      "examples": [
+        "اعتماد جدول لعدة أعوام"
+      ],
+      "keywords": [
         "التقويم الأكاديمي",
-        "بدء الدراسة",
-        "الإعلانات التعليمية"
+        "وزارة التربية والتعليم والتعليم العالي"
       ],
-      "gaps": [
-        "لا يقدّم إجابة عربية خدمية فورية",
-        "لا يجمع العد التنازلي مع التهيئة الأسرية"
+      "schemaHints": [
+        "GovernmentOrganization",
+        "NewsArticle"
+      ],
+      "sources": [
+        "https://www.edu.gov.qa/ar/mediacenter/Pages/newsdetails.aspx?ItemID=4063"
+      ],
+      "wordCount": 180,
+      "strengths": [
+        "مرجع رسمي",
+        "يوفر أساس التاريخ النهائي"
+      ],
+      "weaknesses": [
+        "لا يجيب بصيغة المستخدم المباشرة",
+        "لا يشرح الاستخدام العملي للأسرة"
       ]
     },
     {
-      "site": "المواقع المحلية القطرية",
-      "type": "news",
-      "focus": [
-        "موعد بدء الدراسة",
-        "الجداول المدرسية",
-        "العودة للمدارس"
+      "site": "alarab.qa",
+      "status": "usable",
+      "url": "https://alarab.qa/article/31/08/2025/%D8%A7%D9%86%D8%B7%D9%84%D8%A7%D9%82-%D8%A7%D9%84%D8%B9%D8%A7%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF-2025--2026-%D9%81%D9%8A-%D9%82%D8%B7%D8%B1",
+      "title": "انطلاق العام الدراسي الجديد 2025 - 2026 في قطر",
+      "metaDescription": "خبر عن انطلاق العام الدراسي وعودة الطلبة والموظفين.",
+      "h1": "انطلاق العام الدراسي الجديد 2025 - 2026 في قطر",
+      "headings": [],
+      "bodySummary": "هذا الخبر مفيد لأنه يذكّر بالسلوك العملي للعام السابق: عودة الطلبة في نهاية أغسطس مع انتظام واسع في المدارس، وعودة الموظفين قبلهم. لكنه يبقى خبراً موسمياً ولا يكفي وحده لبناء صفحة قوية للموسم الجديد.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "صياغة الجواب السريع عن عودة الطلبة"
       ],
-      "gaps": [
-        "تغلب عليها الصياغة الخبرية",
-        "لا تبقى مرجعاً ثابتاً بعد نشر الخبر"
+      "keywords": [
+        "العام الدراسي الجديد",
+        "عودة الطلبة"
+      ],
+      "schemaHints": [
+        "NewsArticle"
+      ],
+      "sources": [
+        "https://alarab.qa/article/31/08/2025/%D8%A7%D9%86%D8%B7%D9%84%D8%A7%D9%82-%D8%A7%D9%84%D8%B9%D8%A7%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF-2025--2026-%D9%81%D9%8A-%D9%82%D8%B7%D8%B1"
+      ],
+      "wordCount": 240,
+      "strengths": [
+        "واضح للقارئ العام",
+        "يعكس التطبيق الواقعي"
+      ],
+      "weaknesses": [
+        "خبر موسمي لا يكفي وحده",
+        "لا يشرح التسجيل والنقل"
       ]
     },
     {
-      "site": "صفحات العد التنازلي العربية",
-      "type": "countdown",
-      "focus": [
-        "كم باقي على الدراسة",
-        "موعد الدراسة في قطر"
+      "site": "mdares.com",
+      "status": "usable",
+      "url": "https://mdares.com/%D8%A7%D9%84%D8%AA%D9%82%D9%88%D9%8A%D9%85-%D8%A7%D9%84%D8%A3%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A-%D9%84%D8%AF%D9%88%D9%84%D8%A9-%D9%82%D8%B7%D8%B1-2025-2026/",
+      "title": "التقويم الأكاديمي لدولة قطر 2025-2028",
+      "metaDescription": "عرض مبسط لتواريخ الأعوام الأكاديمية في قطر.",
+      "h1": "التقويم الأكاديمي لدولة قطر",
+      "headings": [
+        "العام الأكاديمي 2026-2027",
+        "العام الأكاديمي 2027-2028"
       ],
-      "gaps": [
-        "ضعف في التوثيق المحلي",
-        "لا تشرح أين يتأكد ولي الأمر من الموعد"
+      "bodySummary": "هذه الصفحة مفيدة جداً في استخراج التواريخ العملية من التقويم المعتمد، مثل 23 أغسطس 2026 لدوام الموظفين و30 أغسطس 2026 للطلبة. قوتها في سهولة القراءة، لكن مرجعيتها أدنى من الوزارة نفسها، لذلك استُخدمت كصفحة دعم لا كمصدر أعلى.",
+      "faq": [],
+      "tables": [
+        "جدول العام الأكاديمي 2026-2027"
+      ],
+      "examples": [
+        "تفريق صريح بين الموظفين والطلبة"
+      ],
+      "keywords": [
+        "التقويم الأكاديمي قطر",
+        "بدء الدراسة في قطر"
+      ],
+      "schemaHints": [
+        "Article",
+        "Table"
+      ],
+      "sources": [
+        "https://mdares.com/%D8%A7%D9%84%D8%AA%D9%82%D9%88%D9%8A%D9%85-%D8%A7%D9%84%D8%A3%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A-%D9%84%D8%AF%D9%88%D9%84%D8%A9-%D9%82%D8%B7%D8%B1-2025-2026/"
+      ],
+      "wordCount": 650,
+      "strengths": [
+        "مقروء بوضوح",
+        "يغطي التواريخ المطلوبة مباشرة"
+      ],
+      "weaknesses": [
+        "ليس المصدر الأعلى رسمياً",
+        "أقل فائدة من الوزارة في التوثيق"
       ]
+    }
+  ],
+  "englishCompetitors": [
+    {
+      "site": "publicholidays.qa",
+      "status": "usable_for_comparison",
+      "url": "https://publicholidays.qa/school-holidays/",
+      "title": "Qatar School Holidays 2025 and 2026",
+      "metaDescription": "School holiday dates in Qatar.",
+      "h1": "Qatar School Holidays",
+      "headings": [
+        "School Holidays 2025",
+        "School Holidays 2026"
+      ],
+      "bodySummary": "Useful as an English comparison for how broad calendars frame school seasons and holidays, but it is stronger on breaks than on the exact user intent around start-of-school timing and distinctions between students and staff.",
+      "faq": [],
+      "tables": [
+        "Holiday tables"
+      ],
+      "examples": [],
+      "keywords": [
+        "Qatar school holidays"
+      ],
+      "schemaHints": [
+        "WebPage",
+        "Table"
+      ],
+      "sources": [
+        "https://publicholidays.qa/school-holidays/"
+      ],
+      "wordCount": 260,
+      "strengths": [
+        "Clean calendar presentation"
+      ],
+      "weaknesses": [
+        "Not focused on school start intent"
+      ]
+    },
+    {
+      "site": "qatarhow.net",
+      "status": "usable_for_comparison",
+      "url": "https://qatarhow.net/ministry-of-education-qatar-school-calendar/",
+      "title": "Ministry of Education Qatar School Calendar",
+      "metaDescription": "Explainer about the Qatar school calendar.",
+      "h1": "Ministry of Education Qatar School Calendar",
+      "headings": [
+        "Qatar school calendar",
+        "Official academic calendar"
+      ],
+      "bodySummary": "This English page is useful for seeing how a simpler explainer wraps the ministry calendar for users, but it remains generic and less precise than the Arabic sources on the exact 2026-2027 start dates.",
+      "faq": [],
+      "tables": [],
+      "examples": [
+        "Simple explainer structure"
+      ],
+      "keywords": [
+        "Qatar school calendar"
+      ],
+      "schemaHints": [
+        "Article"
+      ],
+      "sources": [
+        "https://qatarhow.net/ministry-of-education-qatar-school-calendar/"
+      ],
+      "wordCount": 500,
+      "strengths": [
+        "Readable structure"
+      ],
+      "weaknesses": [
+        "Generic and less exact"
+      ]
+    },
+    {
+      "site": "edarabia.com",
+      "status": "replaced",
+      "url": "https://www.edarabia.com/school-holidays-qatar/",
+      "replacementReason": "Broad school-holidays coverage existed, but PublicHolidays and QatarHow provided a cleaner comparison set for this exact page rewrite."
+    }
+  ],
+  "replacedOrBlockedCompetitors": [
+    {
+      "site": "countdown-only Arabic pages",
+      "status": "replaced",
+      "reason": "They repeated a date without explaining the difference between students, staff, and school services."
+    },
+    {
+      "site": "snippet-only local news items",
+      "status": "replaced",
+      "reason": "Useful for leads, but weak for durable readable extraction and long-term page value."
     }
   ],
   "coverageMatrix": [
     {
-      "keyword": "متى بدء الدراسة في قطر {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "الجواب المباشر عن عودة الطلبة",
+      "arabicCoverage": "جيد",
+      "englishCoverage": "ضعيف",
+      "opportunity": "وضع الجواب في أول 100 كلمة بوضوح شديد"
     },
     {
-      "keyword": "كم باقي على بدء الدراسة في قطر {{year}}",
-      "whyItMatters": "نية عد تنازلي مباشرة تناسب الباحث الذي يريد معرفة المدة المتبقية بسرعة."
+      "topic": "الفرق بين الطلبة والموظفين",
+      "arabicCoverage": "متوسط",
+      "englishCoverage": "ضعيف",
+      "opportunity": "تحويل الفرق إلى عنصر تعليمي عملي"
     },
     {
-      "keyword": "موعد بدء الدراسة في قطر {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "موعد التسجيل والنقل",
+      "arabicCoverage": "ضعيف في المنافسين العامين",
+      "englishCoverage": "شبه غائب",
+      "opportunity": "إضافة طبقة منفعة حقيقية للأسر"
     },
     {
-      "keyword": "بدء الدراسة في قطر {{year}}",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "topic": "تمييز المدارس الدولية أو الخاصة",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "متوسط",
+      "opportunity": "منع التعميم الخاطئ على كل المؤسسات"
     },
     {
-      "keyword": "بدء الدراسة في قطر العد التنازلي",
-      "whyItMatters": "صيغة بحث داعمة تزيد من تغطية الصفحة لطرق البحث العربية المختلفة حول المناسبة."
+      "topic": "خطوات الاستعداد قبل العودة",
+      "arabicCoverage": "ضعيف",
+      "englishCoverage": "بعضه بنيوي فقط",
+      "opportunity": "صياغة خطوات واضحة للأسرة"
     },
     {
-      "keyword": "بدء الدراسة في قطر متى",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "الاعتماد على مصدر رسمي",
+      "arabicCoverage": "قوي",
+      "englishCoverage": "ضعيف",
+      "opportunity": "ربط الثقة الرسمية بسهولة الفهم"
     },
     {
-      "keyword": "تاريخ بدء الدراسة في قطر {{year}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "صيغة كم باقي على الدراسة",
+      "arabicCoverage": "شكلية في صفحات العد التنازلي",
+      "englishCoverage": "ضعيف",
+      "opportunity": "ربط العداد بقرار المستخدم لا بالتاريخ فقط"
     },
     {
-      "keyword": "متى بدء الدراسة في قطر {{nextYear}}",
-      "whyItMatters": "نية مباشرة لمعرفة التاريخ الحالي أو أقرب موعد للمناسبة بطريقة سريعة وواضحة."
+      "topic": "هل البداية إجازة أم عودة",
+      "arabicCoverage": "غائب تقريباً",
+      "englishCoverage": "غائب",
+      "opportunity": "تغطية سؤال شائع في FAQ"
     }
   ],
   "keywordGaps": [
-    "جواب عربي مباشر يوضح معنى بدء الدراسة في قطر وموعده في صفحة واحدة.",
-    "شرح سبب أهمية بدء الدراسة في قطر ولماذا يرتفع البحث عنه عند اقتراب الموعد.",
-    "تغطية الأسئلة العملية التي يطرحها القارئ قبل بدء الدراسة في قطر أو أثناءه.",
-    "صياغة أوضح حول التاريخ الحالي والسنوات القادمة بدل الاكتفاء باسم المناسبة فقط.",
-    "دمج العد التنازلي مع الشرح والسياق بدل صفحة موعد قصيرة وضعيفة.",
-    "ربط الموعد بالقيمة العملية للقارئ: إجازة، استعداد، تهنئة، أو تنظيم مسبق.",
-    "شرح الفروقات المحلية أو الرسمية عند الحاجة بدلاً من الاكتفاء بموعد عام مبهم.",
-    "لغة عربية طبيعية لا تبدو كأنها قائمة كلمات أو نص مولد آلياً."
+    "موعد دوام الطلبة في قطر {{year}}",
+    "موعد دوام الموظفين في مدارس قطر {{year}}",
+    "تسجيل الطلبة الجدد قطر {{year}}",
+    "متى يفتح نقل الطلبة في قطر {{year}}",
+    "هل المدارس الخاصة في قطر تبدأ في اليوم نفسه",
+    "هل بدء الدراسة في قطر {{year}} إجازة",
+    "كيف أستعد لبدء الدراسة في قطر {{year}}",
+    "متى ترجع المدارس في قطر {{year}}"
   ],
   "unansweredQuestions": [
-    "متى بدء الدراسة في قطر {{year}}؟",
-    "كم باقي على بدء الدراسة في قطر؟",
-    "ما هو بدء الدراسة في قطر؟",
-    "كيف أستعد لـبدء الدراسة في قطر؟",
-    "متى بدء الدراسة في قطر {{nextYear}}؟",
-    "ما أهمية بدء الدراسة في قطر؟",
-    "كم باقي على بدء الدراسة في قطر {{year}}؟",
-    "تاريخ بدء الدراسة في قطر {{year}}؟"
+    "هل أسأل عن عودة الطلبة أم عن دوام الموظفين؟",
+    "متى يفتح التسجيل والنقل الإلكتروني؟",
+    "هل المدارس الدولية أو الخاصة تتبع التاريخ نفسه؟",
+    "ما الذي يجب أن تفعله الأسرة قبل اليوم الأول؟",
+    "أين أتحقق رسمياً من الموعد؟",
+    "هل البداية إجازة أم عودة منتظمة للدراسة؟"
   ],
-  "differentiationIdeas": [
-    "جواب مباشر عن موعد بدء الدراسة في قطر في بداية الصفحة قبل أي شرح إضافي.",
-    "محتوى عربي يشرح المعنى والسياق بدلاً من الاكتفاء بعداد أو تاريخ مختصر.",
-    "أسئلة شائعة عملية تساعد القارئ على فهم بدء الدراسة في قطر والتصرف بناءً عليه.",
-    "ربط الصفحة بطريقة البحث الشائعة عن بدء الدراسة في قطر دون فقدان الوضوح العام."
-  ],
+  "competitorMatrix": {
+    "strengths": [
+      "وجود مصدر رسمي قوي",
+      "توفر صفحات عربية تقرأ التاريخ بسرعة",
+      "سهولة استخراج التواريخ من بعض المراجع"
+    ],
+    "weaknesses": [
+      "ضعف في الشرح العملي",
+      "قلة التمييز بين الفئات المختلفة",
+      "التركيز على التاريخ أكثر من القرار الذي يحتاجه المستخدم"
+    ],
+    "missingTopics": [
+      "موعد التسجيل والنقل",
+      "خطوات تجهيز الأسرة",
+      "توضيح من يعود أولاً ولماذا يهم ذلك"
+    ],
+    "uniqueOpportunities": [
+      "الجمع بين الثقة الرسمية والشرح العربي السهل",
+      "تحويل الصفحة من تاريخ مجرد إلى أداة تخطيط",
+      "خدمة نية الأسرة والطالب والموظف في صفحة واحدة"
+    ]
+  },
   "factSources": [
     {
-      "label": "وزارة التربية والتعليم والتعليم العالي - قطر",
-      "url": "https://www.edu.gov.qa"
+      "label": "وزارة التربية والتعليم والتعليم العالي: اعتماد التقويم الأكاديمي لثلاثة أعوام",
+      "url": "https://www.edu.gov.qa/ar/mediacenter/Pages/newsdetails.aspx?ItemID=4063"
     },
     {
-      "label": "بوابة خدمات وزارة التعليم - قطر",
-      "url": "https://www.edu.gov.qa/ar/Pages/default.aspx"
+      "label": "العرب: انطلاق العام الدراسي 2025-2026 في قطر",
+      "url": "https://alarab.qa/article/31/08/2025/%D8%A7%D9%86%D8%B7%D9%84%D8%A7%D9%82-%D8%A7%D9%84%D8%B9%D8%A7%D9%85-%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D9%8A-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF-2025--2026-%D9%81%D9%8A-%D9%82%D8%B7%D8%B1"
     },
     {
-      "label": "بوابة حكومة قطر - التعليم",
-      "url": "https://hukoomi.gov.qa/ar/service-categories/education"
+      "label": "وزارة التربية والتعليم والتعليم العالي: إعادة فتح تسجيل ونقل الطلبة",
+      "url": "https://www.edu.gov.qa/ar/mediacenter/Pages/newsdetails.aspx?ItemID=4207"
+    },
+    {
+      "label": "Mdares: التقويم الأكاديمي لدولة قطر",
+      "url": "https://mdares.com/%D8%A7%D9%84%D8%AA%D9%82%D9%88%D9%8A%D9%85-%D8%A7%D9%84%D8%A3%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A-%D9%84%D8%AF%D9%88%D9%84%D8%A9-%D9%82%D8%B7%D8%B1-2025-2026/"
     }
   ],
-  "notes": "تم تعزيز خريطة البحث العربية لـ بدء الدراسة في قطر اعتماداً على الكلمات المفتاحية الحالية، والأسئلة الشائعة، والمصادر الموجودة داخل الحزمة نفسها."
+  "notes": "الخلاصة الأهم من البحث أن صفحة قطر يجب ألا تكرر تاريخ عودة الطلبة فقط. النية الأقوى للمستخدم تصبح أوضح عندما نميز بين 30 أغسطس {{year}} للطلبة، و23 أغسطس {{year}} للموظفين، و25 أغسطس {{year}} لفتح التسجيل والنقل، مع تنبيه إلى احتمال اختلاف بعض المدارس الدولية أو الخاصة في التفاصيل التنفيذية."
 }

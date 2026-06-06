@@ -3,18 +3,17 @@ https://miqatona.com/sitemap-index.xml ✅
 
 # Optional debug sitemaps
 https://miqatona.com/sitemap.xml ✅
-https://miqatona.com/economie/sitemap.xml ✅
 https://miqatona.com/holidays/sitemap.xml ✅
 https://miqatona.com/time-difference/sitemap.xml ✅
-https://miqatona.com/date/sitemap.xml ✅
 https://miqatona.com/date/gregorian/sitemap.xml ✅
 https://miqatona.com/date/hijri/sitemap.xml ✅
 https://miqatona.com/date/sitemaps/static ✅
 https://miqatona.com/date/sitemaps/countries ✅
 https://miqatona.com/date/sitemaps/calendars ✅
 
-# NEVER submit this in the Sitemaps box. Open it manually only.
+# NEVER submit these in the Sitemaps box. Open manually only.
 https://miqatona.com/robots.txt
+https://miqatona.com/date/sitemap.xml
 
 # Request indexing in URL Inspection -> Core hubs
 https://miqatona.com/
@@ -23,16 +22,6 @@ https://miqatona.com/mwaqit-al-salat
 https://miqatona.com/time-difference
 https://miqatona.com/holidays
 https://miqatona.com/date
-https://miqatona.com/economie
-
-# Request indexing in URL Inspection -> Priority economy pages
-https://miqatona.com/economie
-https://miqatona.com/economie/us-market-open
-https://miqatona.com/economie/gold-market-hours
-https://miqatona.com/economie/forex-sessions
-https://miqatona.com/economie/stock-markets
-https://miqatona.com/economie/market-clock
-https://miqatona.com/economie/best-trading-time
 
 # Request indexing in URL Inspection -> Priority time-difference pages
 https://miqatona.com/time-difference

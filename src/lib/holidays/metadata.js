@@ -3,12 +3,54 @@ import {
 } from '@/lib/holidays-engine';
 import {
   ensureCountryContextSentence,
+  getHolidayCountryContext,
   localizeEventLabel,
 } from '@/lib/holidays/display';
 import { getSiteUrl, SITE_APP_NAME } from '@/lib/site-config';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getHolidayPageCriticalData } from '@/lib/holidays/page-data';
 import { getHolidayMetadataKeywords } from '@/lib/holidays/search-intent';
+
+const META_TITLE_MAX_LENGTH = 80;
+const META_DESCRIPTION_MAX_LENGTH = 175;
+
+function normalizeMetadataText(value) {
+  return String(value || '').trim().replace(/\s+/g, ' ');
+}
+
+function removeHolidayBrandSuffix(value) {
+  return normalizeMetadataText(value)
+    .replace(/\s*[-–|]\s*ميقات(?:نا)?\s*$/u, '')
+    .trim();
+}
+
+function clampMetadataText(value, maxLength) {
+  const text = normalizeMetadataText(value);
+  if (text.length <= maxLength) return text;
+
+  const candidate = text.slice(0, maxLength - 1).trim();
+  const lastSpaceIndex = candidate.lastIndexOf(' ');
+  if (lastSpaceIndex < 40) return candidate;
+
+  return candidate.slice(0, lastSpaceIndex).trim();
+}
+
+function buildHolidayTitleTag(rawTitleTag, tokenContext, event) {
+  const replacedTitle = replaceTokens(rawTitleTag, tokenContext);
+  const localizedTitle = localizeEventLabel(removeHolidayBrandSuffix(replacedTitle), event);
+
+  return clampMetadataText(localizedTitle, META_TITLE_MAX_LENGTH);
+}
+
+function buildHolidayMetaDescription(rawDescription, tokenContext, event) {
+  const replacedDescription = normalizeMetadataText(replaceTokens(rawDescription, tokenContext));
+  const country = getHolidayCountryContext(event);
+  const countryAwareDescription = country?.name && !replacedDescription.includes(country.name)
+    ? `${replacedDescription} في ${country.name}.`
+    : ensureCountryContextSentence(replacedDescription, event);
+
+  return clampMetadataText(countryAwareDescription, META_DESCRIPTION_MAX_LENGTH);
+}
 
 export async function getHolidayMetadata(slug) {
   const data = await getHolidayPageCriticalData(slug);
@@ -17,6 +59,7 @@ export async function getHolidayMetadata(slug) {
   }
   const {
     requestedSlug,
+    canonicalSlug,
     remaining,
     seo,
     gregStr,
@@ -26,17 +69,15 @@ export async function getHolidayMetadata(slug) {
     event,
   } = data;
   const siteUrl = getSiteUrl();
-  const url = `${siteUrl}/holidays/${requestedSlug}`;
+  const canonicalPathSlug = canonicalSlug || requestedSlug;
+  const url = `${siteUrl}/holidays/${canonicalPathSlug}`;
 
   const rawTitleTag = seo?.seoMeta?.titleTag || seo.seoTitle;
-  const titleTag = localizeEventLabel(replaceTokens(rawTitleTag, tokenContext), event);
+  const titleTag = buildHolidayTitleTag(rawTitleTag, tokenContext, event);
   const rawDescription =
     seo?.seoMeta?.metaDescription ||
     `${rawTitleTag} — ${gregStr}. متبقي ${remaining.days} يوم. ${seo.description}`;
-  const description = ensureCountryContextSentence(
-    replaceTokens(rawDescription, tokenContext),
-    event,
-  );
+  const description = buildHolidayMetaDescription(rawDescription, tokenContext, event);
   const keywords = getHolidayMetadataKeywords({
     event,
     seo,

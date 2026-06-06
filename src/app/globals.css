@@ -6,6 +6,7 @@
 @import "./styles/components.css";
 @import "./styles/utilities.css";
 @import "./styles/ads.css";
+@import "./styles/editorial-redesign.css";
 
 @custom-variant dark (&:is(.dark *));
 

@@ -5,32 +5,42 @@ import { Popover as PopoverPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
+type PopoverRootProps = React.ComponentProps<typeof PopoverPrimitive.Root>
+type PopoverTriggerProps = React.ComponentProps<typeof PopoverPrimitive.Trigger>
+type PopoverContentProps = React.ComponentProps<typeof PopoverPrimitive.Content>
+type PopoverAnchorProps = React.ComponentProps<typeof PopoverPrimitive.Anchor>
+type PopoverElementProps = React.ComponentProps<"div">
+type PopoverDescriptionProps = React.ComponentProps<"p">
+
 function Popover({
   ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Root>) {
+}: PopoverRootProps): React.JSX.Element {
   return <PopoverPrimitive.Root data-slot="popover" {...props} />
 }
 
 function PopoverTrigger({
   ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {
+}: PopoverTriggerProps): React.JSX.Element {
   return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />
 }
 
 function PopoverContent({
   className,
-  align = "center",
-  sideOffset = 4,
+  align,
+  sideOffset,
   ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Content>) {
+}: PopoverContentProps): React.JSX.Element {
+  const resolvedAlign = align ?? "center"
+  const resolvedSideOffset = sideOffset ?? 4
+
   return (
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
         data-slot="popover-content"
-        align={align}
-        sideOffset={sideOffset}
+        align={resolvedAlign}
+        sideOffset={resolvedSideOffset}
         className={cn(
-          "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-72 origin-(--radix-popover-content-transform-origin) rounded-md border p-4 shadow-md outline-hidden",
+          "z-50 w-72 origin-(--radix-popover-content-transform-origin) rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--elevated)] p-[var(--space-4)] text-[var(--text-1)] shadow-none outline-none transition-[opacity] duration-100 data-[state=closed]:opacity-0 data-[state=open]:opacity-100 focus-visible:shadow-[var(--shadow-focus)]",
           className
         )}
         {...props}
@@ -41,25 +51,25 @@ function PopoverContent({
 
 function PopoverAnchor({
   ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Anchor>) {
+}: PopoverAnchorProps): React.JSX.Element {
   return <PopoverPrimitive.Anchor data-slot="popover-anchor" {...props} />
 }
 
-function PopoverHeader({ className, ...props }: React.ComponentProps<"div">) {
+function PopoverHeader({ className, ...props }: PopoverElementProps): React.JSX.Element {
   return (
     <div
       data-slot="popover-header"
-      className={cn("flex flex-col gap-1 text-sm", className)}
+      className={cn("flex flex-col gap-[var(--space-1)] text-[var(--text-sm)]", className)}
       {...props}
     />
   )
 }
 
-function PopoverTitle({ className, ...props }: React.ComponentProps<"h2">) {
+function PopoverTitle({ className, ...props }: React.ComponentProps<"h2">): React.JSX.Element {
   return (
     <div
       data-slot="popover-title"
-      className={cn("font-medium", className)}
+      className={cn("font-medium text-[var(--text-1)]", className)}
       {...props}
     />
   )
@@ -68,11 +78,11 @@ function PopoverTitle({ className, ...props }: React.ComponentProps<"h2">) {
 function PopoverDescription({
   className,
   ...props
-}: React.ComponentProps<"p">) {
+}: PopoverDescriptionProps): React.JSX.Element {
   return (
     <p
       data-slot="popover-description"
-      className={cn("text-muted", className)}
+      className={cn("text-[var(--text-2)]", className)}
       {...props}
     />
   )

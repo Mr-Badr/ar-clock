@@ -10,27 +10,27 @@ function renderHeroCopy(mode, hasQuery, query) {
   if (mode === 'search' && hasQuery) {
     return {
       title: `نتائج أقرب إلى ${query}`,
-      lead: 'هذه الواجهة تجمع بين البحث السريع وخريطة الموقع نفسها، حتى يرى المستخدم الصفحة الأقرب ثم المسارات المرتبطة بها داخل المنتج.',
+      lead: 'ابدأ من الصفحة الأقرب لسؤالك، ثم انتقل إلى أداة للحساب أو مقال يشرح السياق إذا احتجت إلى فهم أعمق قبل القرار.',
     };
   }
 
   if (mode === 'search') {
     return {
-      title: 'ابحث عن أي صفحة أو أداة أو دليل من مكان واحد',
-      lead: 'ابحث داخل ميقاتنا عن صفحات الوقت والصلاة والتاريخ والحاسبات والاقتصاد والأدلة والمناسبات من مركز واحد.',
+      title: 'ابحث عن أي صفحة أو أداة أو مقال من مكان واحد',
+      lead: 'ابحث داخل ميقاتنا بصيغة السؤال التي تستخدمها فعلاً: وقت مدينة، صلاة اليوم، تحويل تاريخ، حاسبة، مناسبة، أو مقال يشرح الفكرة.',
     };
   }
 
   if (hasQuery) {
     return {
-      title: `فهرس الموقع مع نتائج مرتبطة بـ ${query}`,
-      lead: 'النتائج هنا مبنية على نفس فهرس الصفحات والأدوات، لذلك يبقى المستخدم داخل خريطة واضحة بدل صفحة بحث معزولة.',
+      title: `صفحات مرتبطة بـ ${query}`,
+      lead: 'هذه الصفحة تجمع لك أقرب النتائج والمسارات التي تكملها حتى تصل إلى الصفحة المناسبة من أول مرة.',
     };
   }
 
   return {
-    title: 'فهرس ميقاتنا الكامل',
-    lead: 'دليل بصري يربط بين الوقت، الصلاة، التاريخ، الحاسبات، الاقتصاد، المناسبات، والأدلة في صفحة واحدة قابلة للزحف والفهم السريع.',
+    title: 'فهرس ميقاتنا للوصول إلى الأداة أو المقال من أول مرة',
+    lead: 'ابدأ من نيتك الآن: نتيجة سريعة، شرح قبل القرار، أو قسم يجمع المسارات القريبة. الفهرس يربط الوقت والصلاة والتاريخ والحاسبات والمناسبات والمدونة دون أن يحوّلها إلى قائمة مربكة.',
   };
 }
 
@@ -113,16 +113,18 @@ function buildSchemas({ routePath, title, description, viewModel }) {
 }
 
 function modeLabel(routePath) {
-  return routePath === '/search' ? 'البحث الذكي' : 'الفهرس';
+  return routePath === '/search' ? 'البحث' : 'استكشف الصفحات';
 }
 
 export default function DiscoveryWorkspace({
-  mode = 'map',
+  mode,
   viewModel,
-  initialTab = 'all',
+  initialTab,
 }) {
-  const routePath = mode === 'search' ? '/search' : '/fahras';
-  const heroCopy = renderHeroCopy(mode, viewModel.hasQuery, viewModel.query);
+  const resolvedMode = mode ?? 'map';
+  const resolvedInitialTab = initialTab ?? 'all';
+  const routePath = resolvedMode === 'search' ? '/search' : '/fahras';
+  const heroCopy = renderHeroCopy(resolvedMode, viewModel.hasQuery, viewModel.query);
   const schemas = buildSchemas({
     routePath,
     title: heroCopy.title,
@@ -134,10 +136,10 @@ export default function DiscoveryWorkspace({
     <div className={styles.stylesAnchor}>
       <JsonLd data={schemas} />
       <DiscoveryWorkspaceClient
-        mode={mode}
+        mode={resolvedMode}
         viewModel={viewModel}
         routePath={routePath}
-        initialTab={initialTab}
+        initialTab={resolvedInitialTab}
       />
     </div>
   );

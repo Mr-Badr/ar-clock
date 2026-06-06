@@ -6,11 +6,17 @@ import { BirthInputBlock, ProgressCard, resolveBirthInput, ResultState } from '@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { buildAgeSnapshot, formatAgeNumber } from '@/lib/calculators/age';
 
-function getTodayIsoFromClock(now) {
-  const year = now.getUTCFullYear();
-  const month = String(now.getUTCMonth() + 1).padStart(2, '0');
-  const day = String(now.getUTCDate()).padStart(2, '0');
+function getLocalIsoFromClock(now) {
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
+}
+
+function getLocalMidnightTime(isoDate) {
+  const [year, month, day] = String(isoDate).split('-').map(Number);
+  if (!year || !month || !day) return 0;
+  return new Date(year, month - 1, day, 0, 0, 0, 0).getTime();
 }
 
 export default function AgeCountdownCalculator() {
@@ -32,13 +38,13 @@ export default function AgeCountdownCalculator() {
     if (!normalized.isValid) return normalized;
     return buildAgeSnapshot({
       birthDateIso: normalized.iso,
-      targetDateIso: getTodayIsoFromClock(now),
+      targetDateIso: getLocalIsoFromClock(now),
     });
   }, [normalized, now]);
 
   const countdown = useMemo(() => {
     if (!result?.isValid) return null;
-    const midnight = new Date(`${result.nextBirthday.iso}T00:00:00Z`).getTime();
+    const midnight = getLocalMidnightTime(result.nextBirthday.iso);
     const remainingMs = Math.max(0, midnight - now.getTime());
     const days = Math.floor(remainingMs / (24 * 60 * 60 * 1000));
     const hours = Math.floor((remainingMs / (60 * 60 * 1000)) % 24);
@@ -74,21 +80,21 @@ export default function AgeCountdownCalculator() {
             <CardHeader>
               <CardTitle className="calc-card-title">عداد عيد الميلاد القادم</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent aria-live="polite">
               <div className="calc-grid-4">
-                <div className="calc-metric-card card-nested">
+                <div className="calc-metric-card">
                   <div className="calc-metric-card__label">أيام</div>
                   <div className="calc-metric-card__value">{formatAgeNumber(countdown.days, { maximumFractionDigits: 0 })}</div>
                 </div>
-                <div className="calc-metric-card card-nested">
+                <div className="calc-metric-card">
                   <div className="calc-metric-card__label">ساعات</div>
                   <div className="calc-metric-card__value">{formatAgeNumber(countdown.hours, { maximumFractionDigits: 0 })}</div>
                 </div>
-                <div className="calc-metric-card card-nested">
+                <div className="calc-metric-card">
                   <div className="calc-metric-card__label">دقائق</div>
                   <div className="calc-metric-card__value">{formatAgeNumber(countdown.minutes, { maximumFractionDigits: 0 })}</div>
                 </div>
-                <div className="calc-metric-card card-nested">
+                <div className="calc-metric-card">
                   <div className="calc-metric-card__label">ثوانٍ</div>
                   <div className="calc-metric-card__value">{formatAgeNumber(countdown.seconds, { maximumFractionDigits: 0 })}</div>
                 </div>
@@ -99,7 +105,7 @@ export default function AgeCountdownCalculator() {
           <ProgressCard
             title="التقدم من عيد الميلاد الأخير إلى القادم"
             value={result.birthdayProgress.progressPercent}
-            note={`عيدك القادم سيكون يوم ${result.nextBirthday.weekday} الموافق ${result.nextBirthday.label}.`}
+            note={`عيدك القادم سيكون يوم ${result.nextBirthday.weekday} الموافق ${result.nextBirthday.label} حسب تاريخ جهازك الحالي.`}
           />
         </>
       ) : null}
