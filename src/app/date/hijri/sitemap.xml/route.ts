@@ -1,14 +1,11 @@
 /**
  * /date/hijri/sitemap.xml: Recently relevant Hijri daily date pages.
- * The root sitemap index also publishes one sitemap per supported year.
  */
 import { getHijriDailySitemapDays } from '@/lib/seo/date-indexing';
 import { getSiteUrl } from '@/lib/site-config';
-import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
 export async function GET() {
   const base = getSiteUrl();
-  const lastmod = getSitemapLastModifiedDate();
   const entries = getHijriDailySitemapDays(new Date()).map(({ year, month, day }) => {
     const monthStr = String(month).padStart(2, '0');
     const dayStr = String(day).padStart(2, '0');
@@ -16,9 +13,6 @@ export async function GET() {
     return `
   <url>
     <loc>${base}/date/hijri/${year}/${monthStr}/${dayStr}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.55</priority>
   </url>`;
   });
 

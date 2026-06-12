@@ -12,7 +12,7 @@
  *
  * SEO:
  *  - generateMetadata → dynamic title/description/keywords per country
- *  - JSON-LD: WebPage + FAQPage + BreadcrumbList
+ *  - JSON-LD: CollectionPage + BreadcrumbList + city ItemList
  *  - hreflang for all Arab-country locales on the generic page
  */
 
@@ -497,18 +497,6 @@ async function CountryTimePageSections({
       .map((entry) => entry.country_name_ar || entry.country_name_en)
       .filter(Boolean)
       .join('، ');
-    const faqSchema = {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: faqItems.map((item) => ({
-        '@type': 'Question',
-        name: item.q,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: item.a,
-        },
-      })),
-    };
     const cityItemListSchema = {
       '@context': 'https://schema.org',
       '@type': 'ItemList',
@@ -524,7 +512,6 @@ async function CountryTimePageSections({
     return (
       <>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(cityItemListSchema) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
         <section aria-labelledby="country-time-answer-heading" className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
           <div className={routeStyles.sectionPanel}>

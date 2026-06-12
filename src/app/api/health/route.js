@@ -8,6 +8,7 @@ import {
   CRITICAL_ROUTE_PROBES,
   buildRouteProbeUrl,
   evaluateRouteProbeResponse,
+  resolveRouteProbeOrigin,
 } from '@/lib/route-health/critical-routes';
 import { getAppVersion } from '@/lib/runtime-config';
 import { json, parseSearchParams, withApiHandler } from '@/lib/api/route-utils';
@@ -267,11 +268,18 @@ export const GET = withApiHandler('/api/health', async ({ request, requestId }) 
       };
   const routeProbeTimeoutMs = resolveRouteProbeTimeoutMs(routeTimeoutMs);
   const routeProbeConcurrency = resolveRouteProbeConcurrency(routeConcurrency);
+  const routeProbeOrigin = runRouteChecks
+    ? resolveRouteProbeOrigin(
+        request.url,
+        getNodeEnv(),
+        process.env.PORT,
+      )
+    : null;
   const routeChecks = runRouteChecks
     ? await runWithConcurrency(
         CRITICAL_ROUTE_PROBES,
         routeProbeConcurrency,
-        (probe) => checkCriticalRoute(new URL(request.url).origin, probe, routeProbeTimeoutMs),
+        (probe) => checkCriticalRoute(routeProbeOrigin, probe, routeProbeTimeoutMs),
       )
     : [];
   const upstreams = runDeepChecks && runtimeEnv.status === 'ok'

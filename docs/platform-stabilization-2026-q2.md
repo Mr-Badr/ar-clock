@@ -61,7 +61,7 @@
 
 ## Phase 3: Shrink And Stabilize The SEO Surface
 - Status:
-  - Completed in code for canonical host assumptions, sitemap stabilization, and daily date `noindex,follow`.
+  - Completed in code for canonical host assumptions, sitemap stabilization, and bounded date indexation.
   - Remaining manual step: submit the new sitemap index in Search Console and validate existing 4xx/redirect issue groups after deployment.
 - Keep indexed + in sitemap:
   - homepage and core hubs
@@ -69,10 +69,13 @@
   - all country pages for `time-now`, `mwaqit-al-salat`, and `date/country`
   - all capital city pages
   - top-ranked extra city pages only
-  - date hub/today/converter/calendar pages
-- Remove from sitemaps and mark `noindex,follow` for the bridge:
-  - `/date/[year]/[month]/[day]`
-  - `/date/hijri/[year]/[month]/[day]`
+  - date hub/today/converter pages
+  - Gregorian and Hijri daily date pages within 370 days before or after today
+  - Gregorian and Hijri calendar years within two years of the current year
+- Keep reachable with `noindex,follow` outside the demand window:
+  - historical and distant-future `/date/[year]/[month]/[day]`
+  - historical and distant-future `/date/hijri/[year]/[month]/[day]`
+  - yearly calendar pages outside the current-year ±2 window
 - Replace dynamic sitemap generation with deterministic snapshot/build output:
   - `src/app/time-now/sitemap.js`
   - `src/app/mwaqit-al-salat/sitemap.js`
@@ -85,14 +88,14 @@
   - no `force-dynamic`
   - no request-time `new Date().toISOString()` churn
   - only canonical 200 URLs
-  - `lastmod` from snapshot/build timestamp or real content update time
+  - omit `lastmod` unless a real editorial modification date exists
 - Keep one canonical production host:
   - `https://miqatona.com`
   - `www` stays 301-only
   - old Vercel domains never appear in canonicals or sitemaps
 - Acceptance for Phase 3:
   - sitemap surface is much smaller and fully canonical
-  - daily date pages are crawlable but not index-targeted
+  - current and near-term date pages are index-targeted; older pages remain usable without sitemap pressure
   - GSC validation can start on current 4xx/redirect issues after deploy
 
 ## Phase 4: Build-Time Reduction

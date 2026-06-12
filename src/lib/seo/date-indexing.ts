@@ -11,6 +11,7 @@ export const HIJRI_CALENDAR_INDEXABLE_RANGE = Object.freeze({
 });
 
 export const DATE_DAILY_SITEMAP_WINDOW_DAYS = 370;
+export const DATE_CALENDAR_INDEXING_WINDOW_YEARS = 2;
 
 export type DateSitemapDay = {
   year: number;
@@ -27,21 +28,14 @@ export type DateCalendarSeoBoundsWithCurrentYear = DateCalendarSeoBounds & {
   currentYear: number;
 };
 
-export const DATE_YEAR_SITEMAP_PATHS = Object.freeze([
-  ...Array.from(
-    { length: GREGORIAN_CALENDAR_INDEXABLE_RANGE.maxYear - GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear + 1 },
-    (_, index) => `/date/gregorian/sitemap/${GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear + index}`,
-  ),
-  ...Array.from(
-    { length: HIJRI_CALENDAR_INDEXABLE_RANGE.maxYear - HIJRI_CALENDAR_INDEXABLE_RANGE.minYear + 1 },
-    (_, index) => `/date/hijri/sitemap/${HIJRI_CALENDAR_INDEXABLE_RANGE.minYear + index}`,
-  ),
-]);
-
 function addUtcDays(date: Date, days: number): Date {
   const nextDate = new Date(date);
   nextDate.setUTCDate(nextDate.getUTCDate() + days);
   return nextDate;
+}
+
+function toUtcDate(day: DateSitemapDay): Date {
+  return new Date(Date.UTC(day.year, day.month - 1, day.day));
 }
 
 function toSitemapDay(date: Date): DateSitemapDay {
@@ -55,16 +49,28 @@ function toSitemapDay(date: Date): DateSitemapDay {
 export function getGregorianCalendarSeoBoundsForYear(currentYear: number): DateCalendarSeoBoundsWithCurrentYear {
   return {
     currentYear,
-    minYear: GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear,
-    maxYear: GREGORIAN_CALENDAR_INDEXABLE_RANGE.maxYear,
+    minYear: Math.max(
+      GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear,
+      currentYear - DATE_CALENDAR_INDEXING_WINDOW_YEARS,
+    ),
+    maxYear: Math.min(
+      GREGORIAN_CALENDAR_INDEXABLE_RANGE.maxYear,
+      currentYear + DATE_CALENDAR_INDEXING_WINDOW_YEARS,
+    ),
   };
 }
 
 export function getHijriCalendarSeoBoundsForYear(currentYear: number): DateCalendarSeoBoundsWithCurrentYear {
   return {
     currentYear,
-    minYear: HIJRI_CALENDAR_INDEXABLE_RANGE.minYear,
-    maxYear: HIJRI_CALENDAR_INDEXABLE_RANGE.maxYear,
+    minYear: Math.max(
+      HIJRI_CALENDAR_INDEXABLE_RANGE.minYear,
+      currentYear - DATE_CALENDAR_INDEXING_WINDOW_YEARS,
+    ),
+    maxYear: Math.min(
+      HIJRI_CALENDAR_INDEXABLE_RANGE.maxYear,
+      currentYear + DATE_CALENDAR_INDEXING_WINDOW_YEARS,
+    ),
   };
 }
 
@@ -78,20 +84,6 @@ export function getCurrentHijriSeoYear(now: Date): number {
   return convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' }).year;
 }
 
-export function getGregorianCalendarSeoBounds(): DateCalendarSeoBounds {
-  return {
-    minYear: GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear,
-    maxYear: GREGORIAN_CALENDAR_INDEXABLE_RANGE.maxYear,
-  };
-}
-
-export function getHijriCalendarSeoBounds(): DateCalendarSeoBounds {
-  return {
-    minYear: HIJRI_CALENDAR_INDEXABLE_RANGE.minYear,
-    maxYear: HIJRI_CALENDAR_INDEXABLE_RANGE.maxYear,
-  };
-}
-
 export function isSeoIndexableGregorianCalendarYear(year: number, currentYear: number): boolean {
   const { minYear, maxYear } = getGregorianCalendarSeoBoundsForYear(currentYear);
   return year >= minYear && year <= maxYear;
@@ -100,6 +92,47 @@ export function isSeoIndexableGregorianCalendarYear(year: number, currentYear: n
 export function isSeoIndexableHijriCalendarYear(year: number, currentYear: number): boolean {
   const { minYear, maxYear } = getHijriCalendarSeoBoundsForYear(currentYear);
   return year >= minYear && year <= maxYear;
+}
+
+export function isSeoIndexableGregorianDate(day: DateSitemapDay, now: Date): boolean {
+  const routeDate = toUtcDate(day);
+  const normalizedNow = new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate(),
+  ));
+  const startDate = addUtcDays(normalizedNow, -DATE_DAILY_SITEMAP_WINDOW_DAYS);
+  const endDate = addUtcDays(normalizedNow, DATE_DAILY_SITEMAP_WINDOW_DAYS);
+
+  return routeDate >= startDate && routeDate <= endDate;
+}
+
+export function isSeoIndexableHijriDate(day: DateSitemapDay, now: Date): boolean {
+  const isoDate = [
+    String(day.year),
+    String(day.month).padStart(2, '0'),
+    String(day.day).padStart(2, '0'),
+  ].join('-');
+
+  try {
+    const gregorian = convertDate({
+      date: isoDate,
+      toCalendar: 'gregorian',
+      method: 'umalqura',
+    });
+
+    return isSeoIndexableGregorianDate({
+      year: gregorian.year,
+      month: gregorian.month,
+      day: gregorian.day,
+    }, now);
+  } catch (error) {
+    if (error instanceof RangeError) {
+      return false;
+    }
+
+    throw error;
+  }
 }
 
 export function getGregorianDailySitemapDays(now: Date): DateSitemapDay[] {

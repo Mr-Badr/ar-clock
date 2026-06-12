@@ -16,11 +16,27 @@ type TriageRow = SearchConsoleRow & {
   reason: string;
 };
 
+type DatePageKind = 'gregorian-day' | 'hijri-day';
+
+type DateDemandCandidate = {
+  page: string;
+  kind: DatePageKind;
+  clicks: number;
+  impressions: number;
+  ctr: number;
+  position: number;
+  queryCount: number;
+  reason: string;
+};
+
 const DEFAULT_MIN_IMPRESSIONS = 500;
 const DEFAULT_MAX_CTR = 1.2;
 const DEFAULT_MIN_POSITION = 3;
 const DEFAULT_MAX_POSITION = 20;
+const DEFAULT_DATE_MIN_IMPRESSIONS = 25;
+const DEFAULT_DATE_MAX_POSITION = 40;
 const MAX_OUTPUT_ROWS = 80;
+const MAX_DATE_OUTPUT_ROWS = 100;
 
 const COLUMN_ALIASES = {
   query: ['query', 'queries', 'top queries', 'search term', 'الكلمة', 'طلب البحث'],
@@ -237,6 +253,88 @@ function summarizeByFamily(rows: TriageRow[]) {
     .sort((left, right) => right.impressions - left.impressions);
 }
 
+function getDailyDatePageKind(page: string): DatePageKind | null {
+  const pathname = extractPath(page);
+
+  if (/^\/date\/hijri\/\d{4}\/\d{2}\/\d{2}\/?$/.test(pathname)) {
+    return 'hijri-day';
+  }
+
+  if (/^\/date\/\d{4}\/\d{2}\/\d{2}\/?$/.test(pathname)) {
+    return 'gregorian-day';
+  }
+
+  return null;
+}
+
+function getDateDemandCandidates(
+  rows: SearchConsoleRow[],
+  minImpressions: number,
+  maxPosition: number,
+): DateDemandCandidate[] {
+  const aggregates = new Map<string, {
+    page: string;
+    kind: DatePageKind;
+    clicks: number;
+    impressions: number;
+    weightedPosition: number;
+    queries: Set<string>;
+  }>();
+
+  for (const row of rows) {
+    const kind = getDailyDatePageKind(row.page);
+    if (!kind) continue;
+
+    const pathname = extractPath(row.page);
+    const current = aggregates.get(pathname) || {
+      page: pathname,
+      kind,
+      clicks: 0,
+      impressions: 0,
+      weightedPosition: 0,
+      queries: new Set<string>(),
+    };
+
+    current.clicks += row.clicks;
+    current.impressions += row.impressions;
+    current.weightedPosition += row.position * row.impressions;
+    current.queries.add(row.query);
+    aggregates.set(pathname, current);
+  }
+
+  return Array.from(aggregates.values())
+    .map((row): DateDemandCandidate => {
+      const position = row.impressions > 0
+        ? Number((row.weightedPosition / row.impressions).toFixed(2))
+        : 0;
+      const ctr = row.impressions > 0
+        ? Number(((row.clicks / row.impressions) * 100).toFixed(2))
+        : 0;
+
+      return {
+        page: row.page,
+        kind: row.kind,
+        clicks: row.clicks,
+        impressions: row.impressions,
+        ctr,
+        position,
+        queryCount: row.queries.size,
+        reason: row.clicks > 0
+          ? 'The page already earns organic clicks and should be reviewed before any noindex decision.'
+          : 'The page has meaningful impressions within the review position range.',
+      };
+    })
+    .filter((row) => (
+      row.clicks > 0
+      || (row.impressions >= minImpressions && row.position <= maxPosition)
+    ))
+    .sort((left, right) => (
+      right.clicks - left.clicks
+      || right.impressions - left.impressions
+      || left.position - right.position
+    ));
+}
+
 function main() {
   const args = process.argv.slice(2);
   const input = getArgumentValue(args, 'input');
@@ -249,9 +347,22 @@ function main() {
   const maxCtr = parseNumber(getArgumentValue(args, 'max-ctr'), DEFAULT_MAX_CTR);
   const minPosition = parseNumber(getArgumentValue(args, 'min-position'), DEFAULT_MIN_POSITION);
   const maxPosition = parseNumber(getArgumentValue(args, 'max-position'), DEFAULT_MAX_POSITION);
+  const dateMinImpressions = parseNumber(
+    getArgumentValue(args, 'date-min-impressions'),
+    DEFAULT_DATE_MIN_IMPRESSIONS,
+  );
+  const dateMaxPosition = parseNumber(
+    getArgumentValue(args, 'date-max-position'),
+    DEFAULT_DATE_MAX_POSITION,
+  );
   const csvPath = path.resolve(process.cwd(), input);
   const rows = parseRows(readFileSync(csvPath, 'utf8'));
   const triagedRows = triageRows(rows, minImpressions, maxCtr, minPosition, maxPosition);
+  const dateDemandCandidates = getDateDemandCandidates(
+    rows,
+    dateMinImpressions,
+    dateMaxPosition,
+  );
 
   console.log('[search-console-ctr-triage] summary');
   console.log(JSON.stringify({
@@ -263,12 +374,18 @@ function main() {
       maxCtr,
       minPosition,
       maxPosition,
+      dateMinImpressions,
+      dateMaxPosition,
     },
     byFamily: summarizeByFamily(triagedRows),
+    dateDemandCandidatePages: dateDemandCandidates.length,
   }, null, 2));
 
   console.log('[search-console-ctr-triage] top-opportunities');
   console.log(JSON.stringify(triagedRows.slice(0, MAX_OUTPUT_ROWS), null, 2));
+
+  console.log('[search-console-ctr-triage] date-indexing-candidates');
+  console.log(JSON.stringify(dateDemandCandidates.slice(0, MAX_DATE_OUTPUT_ROWS), null, 2));
 }
 
 try {

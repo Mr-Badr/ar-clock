@@ -1,6 +1,5 @@
 import { getSiteUrl } from '@/lib/site-config';
 import { buildRootSitemapEntries } from '@/lib/seo/site-architecture';
-import { getSitemapLastModified } from '@/lib/sitemap';
 
 /**
  * app/sitemap.js — Next.js App Router native sitemap
@@ -10,6 +9,5 @@ import { getSitemapLastModified } from '@/lib/sitemap';
 
 export default async function sitemap() {
   const base = getSiteUrl();
-  const lastModified = getSitemapLastModified();
-  return buildRootSitemapEntries({ base, lastModified });
+  return buildRootSitemapEntries({ base });
 }

@@ -1,9 +1,9 @@
 import {
   GREGORIAN_CALENDAR_INDEXABLE_RANGE,
   getGregorianYearSitemapDays,
+  isSeoIndexableGregorianDate,
 } from '@/lib/seo/date-indexing';
 import { getSiteUrl } from '@/lib/site-config';
-import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
 const BASE = getSiteUrl();
 
@@ -25,19 +25,18 @@ export async function GET(
     return new Response('Not Found', { status: 404 });
   }
 
-  const lastmod = getSitemapLastModifiedDate();
-  const entries = getGregorianYearSitemapDays(numericYear).map(({ year: rowYear, month, day }) => {
-    const monthStr = String(month).padStart(2, '0');
-    const dayStr = String(day).padStart(2, '0');
+  const now = new Date();
+  const entries = getGregorianYearSitemapDays(numericYear)
+    .filter((date) => isSeoIndexableGregorianDate(date, now))
+    .map(({ year: rowYear, month, day }) => {
+      const monthStr = String(month).padStart(2, '0');
+      const dayStr = String(day).padStart(2, '0');
 
-    return `
+      return `
   <url>
     <loc>${BASE}/date/${rowYear}/${monthStr}/${dayStr}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
   </url>`;
-  });
+    });
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

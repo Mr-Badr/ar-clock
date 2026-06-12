@@ -6,11 +6,9 @@ import {
   selectSeoCountrySlugs,
 } from '@/lib/seo/country-indexing';
 import { getSiteUrl } from '@/lib/site-config';
-import { getSitemapLastModified } from '@/lib/sitemap';
 
 export default async function sitemap() {
   const base = getSiteUrl();
-  const lastModified = getSitemapLastModified();
   const policy = GEO_ROUTE_INDEXING_POLICIES.timeNow;
   const [countrySlugs, cities] = await Promise.all([
     getAllCountrySlugs(),
@@ -27,7 +25,6 @@ export default async function sitemap() {
     if (!countrySlug) continue;
     urls.push({
       url: `${base}/time-now/${countrySlug}`,
-      lastModified,
     });
   }
 
@@ -35,7 +32,6 @@ export default async function sitemap() {
     if (!city?.country || !city?.city) continue;
     urls.push({
       url: `${base}/time-now/${city.country}/${city.city}`,
-      lastModified,
     });
   }
 

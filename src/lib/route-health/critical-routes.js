@@ -1,3 +1,11 @@
+const currentDate = new Date();
+const currentGregorianDatePath = [
+  '/date',
+  String(currentDate.getUTCFullYear()),
+  String(currentDate.getUTCMonth() + 1).padStart(2, '0'),
+  String(currentDate.getUTCDate()).padStart(2, '0'),
+].join('/');
+
 export const CRITICAL_ROUTE_PROBES = Object.freeze([
   { id: 'home', path: '/', label: 'Home' },
   { id: 'blog-hub', path: '/blog', label: 'Blog hub' },
@@ -92,51 +100,59 @@ export const CRITICAL_ROUTE_PROBES = Object.freeze([
     id: 'date-hijri-calendar-history',
     path: '/date/calendar/hijri/1441',
     label: 'Historical Hijri calendar year',
-    requiredMarkers: ['التقويم الهجري لعام 1441 هـ', 'date-month-panel', '/date/hijri/1441/12/'],
+    requiredMarkers: [
+      'التقويم الهجري لعام 1441 هـ',
+      'date-month-panel',
+      '/date/hijri/1441/12/',
+      'content="noindex',
+    ],
+  },
+  {
+    id: 'date-gregorian-current-day',
+    path: currentGregorianDatePath,
+    label: 'Current Gregorian day',
+    requiredMarkers: ['/date/calendar/'],
+    forbiddenMarkers: ['content="noindex'],
   },
   {
     id: 'date-gregorian-first-supported-day',
     path: '/date/1924/01/01',
     label: 'First supported Gregorian day',
-    requiredMarkers: ['1 يناير 1924 يوافق', '/date/calendar/1924'],
-    forbiddenMarkers: ['content="noindex'],
+    requiredMarkers: ['1 يناير 1924 يوافق', '/date/calendar/1924', 'content="noindex'],
   },
   {
     id: 'date-gregorian-future-day',
     path: '/date/2077/12/31',
     label: 'Last supported Gregorian day',
-    requiredMarkers: ['31 ديسمبر 2077 يوافق', '/date/calendar/2077'],
-    forbiddenMarkers: ['content="noindex'],
+    requiredMarkers: ['31 ديسمبر 2077 يوافق', '/date/calendar/2077', 'content="noindex'],
   },
   {
     id: 'date-hijri-first-supported-day',
     path: '/date/hijri/1343/01/01',
     label: 'First supported Hijri day',
-    requiredMarkers: ['1 محرم 1343 هجري يوافق', '/date/calendar/hijri/1343'],
-    forbiddenMarkers: ['content="noindex'],
+    requiredMarkers: ['1 محرم 1343 هجري يوافق', '/date/calendar/hijri/1343', 'content="noindex'],
   },
   {
     id: 'date-hijri-future-day',
     path: '/date/hijri/1500/12/30',
     label: 'Last supported Hijri day',
-    requiredMarkers: ['30 ذو الحجة 1500 هجري يوافق', '/date/calendar/hijri/1500'],
-    forbiddenMarkers: ['content="noindex'],
+    requiredMarkers: ['30 ذو الحجة 1500 هجري يوافق', '/date/calendar/hijri/1500', 'content="noindex'],
   },
   {
-    id: 'date-gregorian-year-sitemap',
-    path: '/date/gregorian/sitemap/1924',
-    label: 'Gregorian year sitemap',
+    id: 'date-gregorian-rolling-sitemap',
+    path: '/date/gregorian/sitemap.xml',
+    label: 'Gregorian rolling sitemap',
     expectedContentType: 'application/xml',
     minimumBodyBytes: 1000,
-    requiredMarkers: ['/date/1924/01/01', '/date/1924/12/31'],
+    requiredMarkers: ['/date/'],
   },
   {
-    id: 'date-hijri-year-sitemap',
-    path: '/date/hijri/sitemap/1441',
-    label: 'Hijri year sitemap',
+    id: 'date-hijri-rolling-sitemap',
+    path: '/date/hijri/sitemap.xml',
+    label: 'Hijri rolling sitemap',
     expectedContentType: 'application/xml',
     minimumBodyBytes: 1000,
-    requiredMarkers: ['/date/hijri/1441/01/01', '/date/hijri/1441/12/29'],
+    requiredMarkers: ['/date/hijri/'],
   },
   { id: 'date-country', path: '/date/country/saudi-arabia', label: 'Country date page' },
   { id: 'time-country', path: '/time-now/saudi-arabia', label: 'Country time page' },
@@ -192,6 +208,18 @@ export function normalizeRouteHealthBaseUrl(baseUrl) {
   }
 
   return value.endsWith('/') ? value.slice(0, -1) : value;
+}
+
+export function resolveRouteProbeOrigin(requestUrl, nodeEnv, portValue) {
+  const requestOrigin = new URL(requestUrl).origin;
+  if (nodeEnv !== 'production') return requestOrigin;
+
+  const port = Number(portValue);
+  if (!Number.isInteger(port) || port <= 0 || port > 65535) {
+    throw new TypeError(`PORT must be a valid TCP port for production route probes; received "${String(portValue)}".`);
+  }
+
+  return `http://127.0.0.1:${port}`;
 }
 
 export function buildRouteProbeUrl(baseUrl, path) {

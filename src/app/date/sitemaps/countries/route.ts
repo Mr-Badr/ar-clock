@@ -8,21 +8,16 @@ import {
   selectSeoCountrySlugs,
 } from '@/lib/seo/country-indexing';
 import { getSiteUrl } from '@/lib/site-config';
-import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
 export async function GET() {
   const base = getSiteUrl();
   const policy = GEO_ROUTE_INDEXING_POLICIES.dateCountry;
   const slugs = selectSeoCountrySlugs(await getAllCountrySlugs(), { scope: policy.countryScope });
-  const lastmod = getSitemapLastModifiedDate();
 
   const entries = slugs.map(
     slug => `
   <url>
     <loc>${base}/date/country/${slug}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
   </url>`
   ).join('');
 

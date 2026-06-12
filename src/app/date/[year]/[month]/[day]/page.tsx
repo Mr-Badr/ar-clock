@@ -1,11 +1,7 @@
 // src/app/date/[year]/[month]/[day]/page.tsx
 // ─────────────────────────────────────────────────────────────────────────────
-// CRITICAL FIX:
-//   OLD: generateStaticParams built ±5 years = 3,650 pages at deploy time
-//        → huge build cost, large bundle
-//   NEW: generateStaticParams builds only ±90 days = 181 pages (faster deploys)
-//        + unlisted dates render on demand by default
-//        + cache behavior is handled by Cache Components rather than route-level revalidate
+// The current day is prebuilt for fast access. Other valid dates render on
+// demand and retain full server-rendered content if client hydration retries.
 //
 // DESIGN IMPROVEMENTS:
 //   • .card CSS class for sections
@@ -34,15 +30,15 @@ import {
 } from '@/components/date/DateEditorialSections';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { CalendarDays, ArrowLeftRight, Moon } from 'lucide-react';
+import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildDateKeywords } from '@/lib/seo/section-search-intent';
+import { isSeoIndexableGregorianDate } from '@/lib/seo/date-indexing';
 import {
   validateGregorianDateRouteSegments,
 } from '@/lib/route-param-validation';
 
 const BASE_URL = getSiteUrl();
-
-// ── ISR: 24h cache managed via cacheComponents ──────────────────────────────
 
 export async function generateStaticParams() {
   const now = new Date();
@@ -71,6 +67,10 @@ export async function generateMetadata({
   const hijri = convertDate({ date: routeDate.isoDate, toCalendar: 'hijri', method: 'umalqura' });
   const monthAr = getGregorianMonthNameAr(routeDate.month);
   const gregorianLabel = `${routeDate.day} ${monthAr} ${routeDate.year}`;
+  const isIndexableDate = isSeoIndexableGregorianDate(
+    routeDate,
+    new Date(await getCachedNowIso()),
+  );
   return {
     title: `${gregorianLabel} كم هجري؟ | ${hijri.formatted.ar}`,
     description: `${gregorianLabel} يوافق ${hijri.formatted.ar} حسب أم القرى. راجع اليوم، رقم السنة، الطرق الثلاث، واليوم السابق والتالي قبل اعتماد التاريخ.`,
@@ -91,10 +91,10 @@ export async function generateMetadata({
       locale: 'ar_SA',
     },
     robots: {
-      index: true,
+      index: isIndexableDate,
       follow: true,
       googleBot: {
-        index: true,
+        index: isIndexableDate,
         follow: true,
         'max-snippet': -1,
         'max-image-preview': 'large',

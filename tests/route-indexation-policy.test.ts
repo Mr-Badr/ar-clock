@@ -4,7 +4,10 @@ import assert from 'node:assert/strict';
 import { NextRequest } from 'next/server';
 
 import * as proxyModule from '@/proxy';
-import { evaluateRouteProbeResponse } from '@/lib/route-health/critical-routes';
+import {
+  evaluateRouteProbeResponse,
+  resolveRouteProbeOrigin,
+} from '@/lib/route-health/critical-routes';
 
 function runProxy(pathname: string) {
   const proxy =
@@ -105,4 +108,37 @@ test('route health rejects indexable pages that contain noindex metadata', () =>
 
   assert.equal(result.status, 'fail');
   assert.equal(result.reason, 'forbidden-content-marker-found');
+});
+
+test('route health accepts usable historical pages with intentional noindex metadata', () => {
+  const result = evaluateRouteProbeResponse({
+    status: 200,
+    body: `<html><head><meta name="robots" content="noindex, follow"></head><body><main>${'Historical date '.repeat(120)}</main></body></html>`,
+    contentType: 'text/html; charset=utf-8',
+    requiredMarkers: ['content="noindex', 'Historical date'],
+  });
+
+  assert.equal(result.status, 'ok');
+  assert.equal(result.reason, 'rendered-normally');
+});
+
+test('production route health probes the app container directly', () => {
+  assert.equal(
+    resolveRouteProbeOrigin('https://miqatona.com/api/health', 'production', '3000'),
+    'http://127.0.0.1:3000',
+  );
+});
+
+test('production route health rejects an invalid app port', () => {
+  assert.throws(
+    () => resolveRouteProbeOrigin('https://miqatona.com/api/health', 'production', undefined),
+    /PORT must be a valid TCP port/,
+  );
+});
+
+test('development route health keeps the request origin', () => {
+  assert.equal(
+    resolveRouteProbeOrigin('http://localhost:3100/api/health', 'development', undefined),
+    'http://localhost:3100',
+  );
 });

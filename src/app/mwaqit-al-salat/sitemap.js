@@ -6,11 +6,9 @@ import {
   selectSeoCountrySlugs,
 } from '@/lib/seo/country-indexing';
 import { getSiteUrl } from '@/lib/site-config';
-import { getSitemapLastModified } from '@/lib/sitemap';
 
 export default async function sitemap() {
   const base = getSiteUrl();
-  const lastModified = getSitemapLastModified();
   const policy = GEO_ROUTE_INDEXING_POLICIES.prayerTimes;
   const [countrySlugs, cities] = await Promise.all([
     getAllCountrySlugs(),
@@ -24,7 +22,6 @@ export default async function sitemap() {
   const urls = [
     {
       url: `${base}/mwaqit-al-salat`,
-      lastModified,
       changeFrequency: 'daily',
       priority: 0.9,
     },
@@ -34,7 +31,6 @@ export default async function sitemap() {
     if (!countrySlug) continue;
     urls.push({
       url: `${base}/mwaqit-al-salat/${countrySlug}`,
-      lastModified,
       changeFrequency: 'daily',
       priority: 0.8,
     });
@@ -44,7 +40,6 @@ export default async function sitemap() {
     if (!city?.country || !city?.city) continue;
     urls.push({
       url: `${base}/mwaqit-al-salat/${city.country}/${city.city}`,
-      lastModified,
       changeFrequency: 'daily',
       priority: 0.7,
     });

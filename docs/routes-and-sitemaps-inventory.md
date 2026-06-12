@@ -45,11 +45,11 @@ Primary sitemap submission URL:
 - `/date/converter`
 - `/date/gregorian-to-hijri`
 - `/date/hijri-to-gregorian`
-- `/date/country` — redirect helper
+- `/date/country` — country date directory
 - `/date/country/[countrySlug]`
-- `/date/calendar` — redirect helper
+- `/date/calendar` — Gregorian calendar directory
 - `/date/calendar/[year]`
-- `/date/calendar/hijri` — redirect helper
+- `/date/calendar/hijri` — Hijri calendar directory
 - `/date/calendar/hijri/[year]`
 - `/date/[year]/[month]/[day]`
 - `/date/hijri/[year]/[month]/[day]`
@@ -68,13 +68,15 @@ Primary sitemap submission URL:
 - `/time-now/sitemap.xml`
 - `/mwaqit-al-salat/sitemap.xml`
 - `/date/sitemap.xml` — feature-local diagnostic index
-- `/date/gregorian/sitemap.xml` — intentionally empty in bridge mode
-- `/date/hijri/sitemap.xml` — intentionally empty in bridge mode
+- `/date/gregorian/sitemap.xml` — rolling Gregorian daily pages within ±370 days
+- `/date/hijri/sitemap.xml` — rolling Hijri daily pages within ±370 days
 
 ### Date child sitemap routes
 - `/date/sitemaps/static`
 - `/date/sitemaps/countries`
 - `/date/sitemaps/calendars`
+- `/date/gregorian/sitemap/[year]` — legacy-compatible diagnostic route filtered to the rolling window
+- `/date/hijri/sitemap/[year]` — legacy-compatible diagnostic route filtered to the rolling window
 
 ## Sitemap Coverage Map
 
@@ -163,17 +165,19 @@ Primary sitemap submission URL:
 - `/date/country/[countrySlug]`
 
 ### Covered by `/date/sitemaps/calendars`
-- `/date/calendar/[year]`
-- `/date/calendar/hijri/[year]`
+- `/date/calendar/[year]` for the current Gregorian year ±2
+- `/date/calendar/hijri/[year]` for the current Hijri year ±2
+
+### Covered by rolling daily-date sitemaps
+- `/date/[year]/[month]/[day]` within 370 days before or after today
+- `/date/hijri/[year]/[month]/[day]` within the same Gregorian relevance window
 
 ## Intentionally Not In Sitemaps
 
 - `/offline` — utility/offline fallback page
-- `/date/country` — redirects to a detected country page
-- `/date/calendar` — redirects to the current Gregorian year calendar
-- `/date/calendar/hijri` — redirects to the current Hijri year calendar
-- `/date/[year]/[month]/[day]` — bridge mode keeps daily Gregorian date pages reachable but not submitted
-- `/date/hijri/[year]/[month]/[day]` — bridge mode keeps daily Hijri date pages reachable but not submitted
+- daily Gregorian and Hijri date pages outside the rolling ±370-day window
+- Gregorian and Hijri calendar years outside the current-year ±2 window
+- legacy per-year daily sitemaps are not listed in the root sitemap index
 - API routes under `/api/*`
 - metadata/image/helper routes such as Open Graph image handlers
 

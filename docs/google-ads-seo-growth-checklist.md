@@ -35,6 +35,13 @@ Use this file for execution status only. Keep competitor research in temporary w
   - Blocked by: the real production `ADSENSE_CLIENT_ID` value and AdSense recrawl status.
   - Done when: root `ads.txt` contains the active Google publisher line and AdSense no longer reports it missing after recrawl.
 
+- [!] Configure a Google-certified consent management platform before enabling ads.
+  - Required for: serving personalized or non-personalized ads to users in the EEA, UK, and Switzerland under Google's consent requirements.
+  - Important: the local `ENABLE_CONSENT_BANNER` control is not a substitute for a Google-certified CMP.
+  - Recommended path: configure Google Privacy & messaging in AdSense or another certified CMP, then verify consent choices and ad blocking in a fresh mobile browser session.
+  - Blocked by: AdSense account access and live CMP configuration.
+  - Done when: the certified CMP is active on production and ads do not load before the required consent signal.
+
 - [!] Run destination health before Ads resubmission.
   - Local check while production is old: `npm run health:routes -- --base=http://localhost:3000 --route-timeout-ms=60000 --route-concurrency=1 --request-timeout-ms=360000`.
   - Production check after deploy: `npm run health:routes:live`.
@@ -43,6 +50,12 @@ Use this file for execution status only. Keep competitor research in temporary w
   - Known local behavior: first cold dev health run can time out during compilation; rerun after warmup before treating it as a real failure.
   - Blocked by: live production access from the deployed host.
   - Done when: all critical routes return 200, invalid placeholder routes return clean 404, and no route renders app-error or unavailable states.
+
+- [~] Monitor the Next.js cold-load hydration warning on unseeded daily date routes.
+  - Current result: sampled pages keep full server-rendered content, one H1, canonical metadata, and the intended `index,follow` or `noindex,follow` directive after hydration.
+  - Residual: some cold standalone-browser requests can log minified React error `#418` on on-demand `/date/[year]/[month]/[day]` or Hijri equivalents.
+  - Risk control: daily date pages are not approved paid-ad destinations; route health verifies that content never disappears, and only the rolling relevance window is submitted for indexing.
+  - Done when: a Next.js/React upgrade or an isolated framework fix removes the warning in repeated cold standalone-browser runs without expanding the prerender surface.
 
 - [!] Run Google Ads readiness simulation before Ads resubmission.
   - Local check while production is old: `npm run ads:readiness -- --base=http://localhost:3000 --timeout-ms=90000`.
@@ -96,7 +109,8 @@ Use this file for execution status only. Keep competitor research in temporary w
 
 - [x] Simplify date sitemap submission.
   - Source: `src/lib/seo/site-architecture.js`, `src/app/date/sitemap.xml/route.ts`, `docs/routes-and-sitemaps-inventory.md`.
-  - Validation: root sitemap index no longer includes `/date/sitemap.xml`; it lists the concrete date leaf sitemaps directly. `tests/seo-sitemap.test.ts` and `npm run seo:validate` passed.
+  - Current policy: root sitemap index lists compact rolling Gregorian/Hijri daily sitemaps, current-year ±2 calendar pages, and date static/country pages. Full-range per-year daily sitemaps are no longer submitted.
+  - Validation: `tests/seo-sitemap.test.ts` and `npm run seo:validate`.
   - Done when: root sitemap index lists only intended submitted sitemaps; diagnostic nested sitemap indexes are not submitted as normal URL sitemaps unless intentionally documented.
 
 - [!] Confirm placeholder dynamic URLs are blocked in production.
@@ -128,7 +142,7 @@ Use this file for execution status only. Keep competitor research in temporary w
   - Required export: pages and queries with impressions, clicks, CTR, average position.
   - Source: `scripts/search-console-ctr-triage.ts`, `package.json`.
   - Check: export Search Console query/page CSV, then run `npm run growth:ctr -- --input=/path/to/export.csv`.
-  - Local status: triage tooling now groups high-impression low-CTR rows by route family and labels rewrite, cluster, or position-work priorities.
+  - Local status: triage tooling groups high-impression low-CTR rows by route family and separately reports daily date pages with clicks or meaningful impressions before they are considered for historical indexing exceptions.
   - Blocked by: Search Console performance export for the current property and date range.
   - Done when: top 50 high-impression low-CTR queries are grouped by route family and assigned rewrite targets.
 

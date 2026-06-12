@@ -4,25 +4,22 @@
  * the date leaf sitemaps directly for simpler Search Console visibility.
  */
 import { getSiteUrl } from '@/lib/site-config';
-import { getSitemapLastModifiedDate } from '@/lib/sitemap';
-import { DATE_YEAR_SITEMAP_PATHS } from '@/lib/seo/date-indexing';
 
 export async function GET() {
   const base = getSiteUrl();
-  const lastmod = getSitemapLastModifiedDate();
 
   const sitemaps = [
     '/date/sitemaps/static',
     '/date/sitemaps/countries',
     '/date/sitemaps/calendars',
-    ...DATE_YEAR_SITEMAP_PATHS,
+    '/date/gregorian/sitemap.xml',
+    '/date/hijri/sitemap.xml',
   ];
 
   const entries = sitemaps.map(
     url => `
   <sitemap>
     <loc>${base}${url}</loc>
-    <lastmod>${lastmod}</lastmod>
   </sitemap>`
   ).join('');
 

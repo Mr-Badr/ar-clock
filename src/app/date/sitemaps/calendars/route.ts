@@ -3,39 +3,33 @@
  * Yearly calendars (Gregorian and Hijri).
  */
 import {
-  getGregorianCalendarSeoBounds,
-  getHijriCalendarSeoBounds,
+  getCurrentHijriSeoYear,
+  getGregorianCalendarSeoBoundsForYear,
+  getHijriCalendarSeoBoundsForYear,
 } from '@/lib/seo/date-indexing';
 import { getSiteUrl } from '@/lib/site-config';
-import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
 export async function GET() {
   const base = getSiteUrl();
-  const { minYear: gregorianMinYear, maxYear: gregorianMaxYear } = getGregorianCalendarSeoBounds();
-  const { minYear: hijriMinYear, maxYear: hijriMaxYear } = getHijriCalendarSeoBounds();
+  const now = new Date();
+  const { minYear: gregorianMinYear, maxYear: gregorianMaxYear } =
+    getGregorianCalendarSeoBoundsForYear(now.getUTCFullYear());
+  const { minYear: hijriMinYear, maxYear: hijriMaxYear } =
+    getHijriCalendarSeoBoundsForYear(getCurrentHijriSeoYear(now));
 
   const entries: string[] = [];
-  const lastmod = getSitemapLastModifiedDate();
 
-  // Gregorian calendars within the approved indexable range.
   for (let y = gregorianMinYear; y <= gregorianMaxYear; y++) {
     entries.push(`
   <url>
     <loc>${base}/date/calendar/${y}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>`);
   }
 
-  // Hijri calendars within the approved indexable range.
   for (let y = hijriMinYear; y <= hijriMaxYear; y++) {
     entries.push(`
   <url>
     <loc>${base}/date/calendar/hijri/${y}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>`);
   }
 

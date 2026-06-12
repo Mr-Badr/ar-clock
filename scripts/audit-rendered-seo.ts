@@ -15,6 +15,8 @@ type RenderedHtmlAudit = {
   descriptionLength: number;
   h1Count: number;
   jsonLdCount: number;
+  invalidJsonLdCount: number;
+  faqPageCount: number;
   robotsMeta: string | null;
   wordCount: number;
   isInternal: boolean;
@@ -36,6 +38,9 @@ type AuditSummary = {
   missingCanonicalCount: number;
   invalidH1Count: number;
   missingStructuredDataCount: number;
+  invalidJsonLdCount: number;
+  duplicateFaqPageCount: number;
+  timeNowFaqPageCount: number;
   missingTrustLinksCount: number;
   titleOutsideRecommendedLengthCount: number;
   descriptionOutsideRecommendedLengthCount: number;
@@ -51,6 +56,7 @@ type AuditSummary = {
 const APP_BUILD_DIR = path.join(process.cwd(), '.next', 'server', 'app');
 const PLACEHOLDER_PATTERN: RegExp = /(?:\[|\]|%5B|%5D)/i;
 const SITEMAP_FILE_PATTERN: RegExp = /(?:sitemap|\.xml)(?:\.body)?$/i;
+const TIME_NOW_ROUTE_PATTERN: RegExp = /^\/time-now(?:\/|$)/;
 
 function assertBuiltAppDir(): void {
   if (!existsSync(APP_BUILD_DIR)) {
@@ -101,9 +107,53 @@ function countVisibleWords(html: string): number {
   return text.split(/\s+/u).filter(Boolean).length;
 }
 
+function countJsonLdType(value: unknown, targetType: string): number {
+  if (Array.isArray(value)) {
+    return value.reduce((count, item) => count + countJsonLdType(item, targetType), 0);
+  }
+
+  if (!value || typeof value !== 'object') {
+    return 0;
+  }
+
+  const record = value as Record<string, unknown>;
+  const schemaType = record['@type'];
+  const matchesTarget = schemaType === targetType
+    || (Array.isArray(schemaType) && schemaType.includes(targetType));
+
+  return Object.values(record).reduce(
+    (count, item) => count + countJsonLdType(item, targetType),
+    matchesTarget ? 1 : 0,
+  );
+}
+
+function inspectJsonLd(html: string): { count: number; invalidCount: number; faqPageCount: number } {
+  const $ = load(html);
+  const scripts = $('script[type="application/ld+json"]').toArray();
+  let invalidCount = 0;
+  let faqPageCount = 0;
+
+  for (const script of scripts) {
+    const source = $(script).text().trim();
+
+    try {
+      faqPageCount += countJsonLdType(JSON.parse(source), 'FAQPage');
+    } catch {
+      invalidCount += 1;
+    }
+  }
+
+  return {
+    count: scripts.length,
+    invalidCount,
+    faqPageCount,
+  };
+}
+
 function auditHtmlFile(filePath: string): RenderedHtmlAudit {
   const html = readFileSync(filePath, 'utf8');
   const $ = load(html);
+  const jsonLd = inspectJsonLd(html);
   const routePath = routePathFromHtmlFile(filePath);
   const title = $('title').first().text().trim() || null;
   const description = $('meta[name="description"]').first().attr('content')?.trim() || null;
@@ -127,7 +177,9 @@ function auditHtmlFile(filePath: string): RenderedHtmlAudit {
     titleLength: title?.length || 0,
     descriptionLength: description?.length || 0,
     h1Count: $('h1').length,
-    jsonLdCount: $('script[type="application/ld+json"]').length,
+    jsonLdCount: jsonLd.count,
+    invalidJsonLdCount: jsonLd.invalidCount,
+    faqPageCount: jsonLd.faqPageCount,
     robotsMeta,
     wordCount: countVisibleWords(html),
     isInternal: isInternalRoute(routePath),
@@ -166,6 +218,11 @@ function summarizeAudits(audits: readonly RenderedHtmlAudit[]): AuditSummary {
     missingCanonicalCount: indexableAudits.filter((audit) => !audit.canonical).length,
     invalidH1Count: indexableAudits.filter((audit) => audit.h1Count !== 1).length,
     missingStructuredDataCount: indexableAudits.filter((audit) => audit.jsonLdCount < 1).length,
+    invalidJsonLdCount: indexableAudits.reduce((count, audit) => count + audit.invalidJsonLdCount, 0),
+    duplicateFaqPageCount: indexableAudits.filter((audit) => audit.faqPageCount > 1).length,
+    timeNowFaqPageCount: indexableAudits.filter((audit) => (
+      TIME_NOW_ROUTE_PATTERN.test(audit.routePath) && audit.faqPageCount > 0
+    )).length,
     missingTrustLinksCount: indexableAudits.filter((audit) => (
       !audit.hasPrivacyLink || !audit.hasContactLink || !audit.hasAboutLink
     )).length,
@@ -236,6 +293,11 @@ function runAudit(): void {
   const missingCanonical = indexableAudits.filter((audit) => !audit.canonical);
   const invalidH1 = indexableAudits.filter((audit) => audit.h1Count !== 1);
   const missingStructuredData = indexableAudits.filter((audit) => audit.jsonLdCount < 1);
+  const invalidJsonLd = indexableAudits.filter((audit) => audit.invalidJsonLdCount > 0);
+  const duplicateFaqPages = indexableAudits.filter((audit) => audit.faqPageCount > 1);
+  const timeNowFaqPages = indexableAudits.filter((audit) => (
+    TIME_NOW_ROUTE_PATTERN.test(audit.routePath) && audit.faqPageCount > 0
+  ));
   const missingTrustLinks = indexableAudits.filter((audit) => (
     !audit.hasPrivacyLink || !audit.hasContactLink || !audit.hasAboutLink
   ));
@@ -262,6 +324,9 @@ function runAudit(): void {
     ...missingCanonical.map((audit) => `Missing canonical: ${audit.routePath}`),
     ...invalidH1.map((audit) => `Invalid H1 count (${audit.h1Count}): ${audit.routePath}`),
     ...missingStructuredData.map((audit) => `Missing structured data: ${audit.routePath}`),
+    ...invalidJsonLd.map((audit) => `Invalid JSON-LD scripts (${audit.invalidJsonLdCount}): ${audit.routePath}`),
+    ...duplicateFaqPages.map((audit) => `Duplicate FAQPage definitions (${audit.faqPageCount}): ${audit.routePath}`),
+    ...timeNowFaqPages.map((audit) => `Retired FAQPage schema under /time-now: ${audit.routePath}`),
     ...missingTrustLinks.map((audit) => `Missing trust links: ${audit.routePath}`),
     ...shallowPublicPages.map((audit) => `Public page under 500 words: ${audit.routePath} (${audit.wordCount} words)`),
     ...sitemapPlaceholderLeaks.map((filePath) => `Placeholder leaked into sitemap output: ${path.relative(process.cwd(), filePath)}`),
@@ -278,6 +343,9 @@ function runAudit(): void {
   console.log(`- Missing canonicals: ${summary.missingCanonicalCount}`);
   console.log(`- Invalid H1 counts: ${summary.invalidH1Count}`);
   console.log(`- Missing structured data: ${summary.missingStructuredDataCount}`);
+  console.log(`- Invalid JSON-LD scripts: ${summary.invalidJsonLdCount}`);
+  console.log(`- Pages with duplicate FAQPage definitions: ${summary.duplicateFaqPageCount}`);
+  console.log(`- /time-now pages with retired FAQPage schema: ${summary.timeNowFaqPageCount}`);
   console.log(`- Missing trust links: ${summary.missingTrustLinksCount}`);
   console.log(`- Titles outside 20-80 chars: ${summary.titleOutsideRecommendedLengthCount}`);
   console.log(`- Descriptions outside 90-175 chars: ${summary.descriptionOutsideRecommendedLengthCount}`);

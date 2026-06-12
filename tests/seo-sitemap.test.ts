@@ -9,20 +9,29 @@ import blogSitemap from '@/app/blog/sitemap';
 import calculatorsSitemap from '@/app/calculators/sitemap';
 import holidaysSitemap from '@/app/holidays/sitemap';
 import rootSitemap from '@/app/sitemap';
+import timeDifferenceSitemap from '@/app/time-difference/sitemap';
 import { GET as sitemapIndexRoute } from '@/app/sitemap-index.xml/route';
 import { GET as dateSitemapIndexRoute } from '@/app/date/sitemap.xml/route';
 import { GET as gregorianDateSitemapRoute } from '@/app/date/gregorian/sitemap.xml/route';
 import { GET as hijriDateSitemapRoute } from '@/app/date/hijri/sitemap.xml/route';
+import { GET as gregorianYearSitemapRoute } from '@/app/date/gregorian/sitemap/[year]/route';
+import { GET as hijriYearSitemapRoute } from '@/app/date/hijri/sitemap/[year]/route';
 import { GET as calendarDateSitemapRoute } from '@/app/date/sitemaps/calendars/route';
 import robots from '@/app/robots';
+import { convertDate } from '@/lib/date-adapter';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { ALL_CALCULATOR_SEO_ROUTES } from '@/lib/seo/calculator-route-manifest';
 import {
+  DATE_CALENDAR_INDEXING_WINDOW_YEARS,
   DATE_DAILY_SITEMAP_WINDOW_DAYS,
-  DATE_YEAR_SITEMAP_PATHS,
   GREGORIAN_CALENDAR_INDEXABLE_RANGE,
   HIJRI_CALENDAR_INDEXABLE_RANGE,
+  getCurrentHijriSeoYear,
+  getGregorianCalendarSeoBoundsForYear,
+  getHijriCalendarSeoBoundsForYear,
   getHijriYearSitemapDays,
+  isSeoIndexableGregorianDate,
+  isSeoIndexableHijriDate,
 } from '@/lib/seo/date-indexing';
 import { getSiteUrl } from '@/lib/site-config';
 import { COUNTRY_LIST } from '@/lib/calculators/building/country-data';
@@ -194,6 +203,25 @@ test('blog sitemap includes the blog hub and article routes', async () => {
   );
 });
 
+test('generated sitemaps omit synthetic lastModified values', async () => {
+  const sitemaps = [
+    await rootSitemap(),
+    await calculatorsSitemap(),
+    await blogSitemap(),
+    await timeDifferenceSitemap(),
+  ];
+
+  for (const sitemapRows of sitemaps) {
+    for (const row of sitemapRows) {
+      assert.equal(
+        Object.prototype.hasOwnProperty.call(row, 'lastModified'),
+        false,
+        `${String(row.url)} should not claim a synthetic modification time`,
+      );
+    }
+  }
+});
+
 test('sitemap index includes active sitemap entries', async () => {
   const base = getSiteUrl();
   const response = await sitemapIndexRoute();
@@ -205,25 +233,25 @@ test('sitemap index includes active sitemap entries', async () => {
   assert.match(xml, new RegExp(`${base}/date/sitemaps/static`));
   assert.match(xml, new RegExp(`${base}/date/sitemaps/countries`));
   assert.match(xml, new RegExp(`${base}/date/sitemaps/calendars`));
-  assert.doesNotMatch(xml, new RegExp(`${base}/date/gregorian/sitemap\\.xml`));
-  assert.doesNotMatch(xml, new RegExp(`${base}/date/hijri/sitemap\\.xml`));
-  assert.match(xml, new RegExp(`${base}/date/gregorian/sitemap/${GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear}`));
-  assert.match(xml, new RegExp(`${base}/date/gregorian/sitemap/${GREGORIAN_CALENDAR_INDEXABLE_RANGE.maxYear}`));
-  assert.match(xml, new RegExp(`${base}/date/hijri/sitemap/${HIJRI_CALENDAR_INDEXABLE_RANGE.minYear}`));
-  assert.match(xml, new RegExp(`${base}/date/hijri/sitemap/${HIJRI_CALENDAR_INDEXABLE_RANGE.maxYear}`));
+  assert.match(xml, new RegExp(`${base}/date/gregorian/sitemap\\.xml`));
+  assert.match(xml, new RegExp(`${base}/date/hijri/sitemap\\.xml`));
+  assert.doesNotMatch(xml, new RegExp(`${base}/date/gregorian/sitemap/\\d{4}`));
+  assert.doesNotMatch(xml, new RegExp(`${base}/date/hijri/sitemap/\\d{4}`));
+  assert.doesNotMatch(xml, /<lastmod>/);
 });
 
-test('date sitemap index exposes every supported daily-date year sitemap', async () => {
+test('date sitemap index exposes compact rolling daily-date sitemaps', async () => {
   const base = getSiteUrl();
   const response = await dateSitemapIndexRoute();
   const xml = await response.text();
 
   assert.match(xml, new RegExp(`${base}/date/sitemaps/calendars`));
-  assert.match(xml, new RegExp(`${base}/date/gregorian/sitemap/${GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear}`));
-  assert.match(xml, new RegExp(`${base}/date/gregorian/sitemap/${GREGORIAN_CALENDAR_INDEXABLE_RANGE.maxYear}`));
-  assert.match(xml, new RegExp(`${base}/date/hijri/sitemap/${HIJRI_CALENDAR_INDEXABLE_RANGE.minYear}`));
-  assert.match(xml, new RegExp(`${base}/date/hijri/sitemap/${HIJRI_CALENDAR_INDEXABLE_RANGE.maxYear}`));
-  assert.equal([...xml.matchAll(/<sitemap>/g)].length, DATE_YEAR_SITEMAP_PATHS.length + 3);
+  assert.match(xml, new RegExp(`${base}/date/gregorian/sitemap\\.xml`));
+  assert.match(xml, new RegExp(`${base}/date/hijri/sitemap\\.xml`));
+  assert.doesNotMatch(xml, new RegExp(`${base}/date/gregorian/sitemap/\\d{4}`));
+  assert.doesNotMatch(xml, new RegExp(`${base}/date/hijri/sitemap/\\d{4}`));
+  assert.doesNotMatch(xml, /<lastmod>/);
+  assert.equal([...xml.matchAll(/<sitemap>/g)].length, 5);
 });
 
 test('recent date sitemaps publish canonical Gregorian and Hijri day pages', async () => {
@@ -245,28 +273,46 @@ test('recent date sitemaps publish canonical Gregorian and Hijri day pages', asy
     expectedUrlCount,
     'Hijri daily sitemap should use the rolling daily-date window only',
   );
+  assert.doesNotMatch(gregorianXml, /<lastmod>|<changefreq>|<priority>/);
+  assert.doesNotMatch(hijriXml, /<lastmod>|<changefreq>|<priority>/);
 });
 
-test('calendar sitemap includes the full supported Gregorian and Hijri year ranges', async () => {
+test('calendar sitemap includes only current and near-term Gregorian and Hijri years', async () => {
   const base = getSiteUrl();
   const xml = await (await calendarDateSitemapRoute()).text();
+  const now = new Date();
+  const gregorianBounds = getGregorianCalendarSeoBoundsForYear(now.getUTCFullYear());
+  const hijriBounds = getHijriCalendarSeoBoundsForYear(getCurrentHijriSeoYear(now));
 
   assert.match(
+    xml,
+    new RegExp(`${base}/date/calendar/${gregorianBounds.minYear}`),
+  );
+  assert.match(
+    xml,
+    new RegExp(`${base}/date/calendar/${gregorianBounds.maxYear}`),
+  );
+  assert.match(
+    xml,
+    new RegExp(`${base}/date/calendar/hijri/${hijriBounds.minYear}`),
+  );
+  assert.match(
+    xml,
+    new RegExp(`${base}/date/calendar/hijri/${hijriBounds.maxYear}`),
+  );
+  assert.doesNotMatch(
     xml,
     new RegExp(`${base}/date/calendar/${GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear}`),
   );
-  assert.match(
-    xml,
-    new RegExp(`${base}/date/calendar/${GREGORIAN_CALENDAR_INDEXABLE_RANGE.maxYear}`),
-  );
-  assert.match(
+  assert.doesNotMatch(
     xml,
     new RegExp(`${base}/date/calendar/hijri/${HIJRI_CALENDAR_INDEXABLE_RANGE.minYear}`),
   );
-  assert.match(
-    xml,
-    new RegExp(`${base}/date/calendar/hijri/${HIJRI_CALENDAR_INDEXABLE_RANGE.maxYear}`),
+  assert.equal(
+    [...xml.matchAll(/<url>/g)].length,
+    (DATE_CALENDAR_INDEXING_WINDOW_YEARS * 2 + 1) * 2,
   );
+  assert.doesNotMatch(xml, /<lastmod>|<changefreq>|<priority>/);
 });
 
 test('Hijri year sitemap excludes invalid constrained dates', () => {
@@ -277,6 +323,59 @@ test('Hijri year sitemap excludes invalid constrained dates', () => {
     days.some((day) => day.year === 1441 && day.month === 2 && day.day === 30),
     false,
   );
+});
+
+test('retired daily year sitemaps stay valid but expose only rolling-window URLs', async () => {
+  const gregorianResponse = await gregorianYearSitemapRoute(
+    new Request('https://miqatona.com/date/gregorian/sitemap/1924'),
+    { params: Promise.resolve({ year: '1924' }) },
+  );
+  const hijriResponse = await hijriYearSitemapRoute(
+    new Request('https://miqatona.com/date/hijri/sitemap/1441'),
+    { params: Promise.resolve({ year: '1441' }) },
+  );
+  const xmlDocuments = [
+    await gregorianResponse.text(),
+    await hijriResponse.text(),
+  ];
+
+  for (const xml of xmlDocuments) {
+    assert.doesNotMatch(xml, /<lastmod>/);
+    assert.doesNotMatch(xml, /<changefreq>/);
+    assert.doesNotMatch(xml, /<priority>/);
+    assert.doesNotMatch(xml, /<url>/);
+  }
+});
+
+test('daily date indexation helpers follow the rolling relevance window', () => {
+  const now = new Date();
+  const currentGregorianDate = {
+    year: now.getUTCFullYear(),
+    month: now.getUTCMonth() + 1,
+    day: now.getUTCDate(),
+  };
+  const currentIsoDate = [
+    String(currentGregorianDate.year),
+    String(currentGregorianDate.month).padStart(2, '0'),
+    String(currentGregorianDate.day).padStart(2, '0'),
+  ].join('-');
+  const currentHijriDate = convertDate({
+    date: currentIsoDate,
+    toCalendar: 'hijri',
+    method: 'umalqura',
+  });
+
+  assert.equal(isSeoIndexableGregorianDate(currentGregorianDate, now), true);
+  assert.equal(isSeoIndexableGregorianDate({ year: 1924, month: 1, day: 1 }, now), false);
+  assert.equal(
+    isSeoIndexableHijriDate({
+      year: currentHijriDate.year,
+      month: currentHijriDate.month,
+      day: currentHijriDate.day,
+    }, now),
+    true,
+  );
+  assert.equal(isSeoIndexableHijriDate({ year: 1343, month: 1, day: 1 }, now), false);
 });
 
 test('robots points crawlers to sitemap index', () => {

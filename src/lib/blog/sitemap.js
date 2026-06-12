@@ -1,6 +1,5 @@
 import { ALL_GUIDES } from '@/lib/guides/data';
 import { getSiteUrl } from '@/lib/site-config';
-import { getSitemapLastModified } from '@/lib/sitemap';
 
 function getGuidePriority(guide) {
   if (guide?.hubHref === '/calculators/building') return 0.72;
@@ -9,7 +8,6 @@ function getGuidePriority(guide) {
 
 export default async function blogSitemap() {
   const base = getSiteUrl();
-  const lastModified = getSitemapLastModified();
   const seen = new Set();
   const guideEntries = ALL_GUIDES
     .filter((guide) => guide?.href)
@@ -20,7 +18,6 @@ export default async function blogSitemap() {
     })
     .map((guide) => ({
       url: `${base}${guide.href}`,
-      lastModified,
       changeFrequency: 'monthly',
       priority: getGuidePriority(guide),
     }));
@@ -28,7 +25,6 @@ export default async function blogSitemap() {
   return [
     {
       url: `${base}/blog`,
-      lastModified,
       changeFrequency: 'weekly',
       priority: 0.82,
     },

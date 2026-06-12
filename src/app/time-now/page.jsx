@@ -136,24 +136,10 @@ export default function TimeNowPage() {
     ],
     keywords: buildTimeNowKeywords(),
   });
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: TIME_NOW_FAQ_ITEMS.map((item) => ({
-      '@type': 'Question',
-      name: item.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.answer,
-      },
-    })),
-  };
-
   return (
     <div className={`${styles.page} min-h-screen bg-base text-primary`} dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <main className={styles.main}>
         <section className={styles.heroShell} aria-labelledby="time-now-heading">
           <header className={styles.hero}>

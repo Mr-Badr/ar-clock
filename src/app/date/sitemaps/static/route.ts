@@ -3,32 +3,27 @@
  * Core static pages for the Date feature.
  */
 import { getSiteUrl } from '@/lib/site-config';
-import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 
 const STATIC_PAGES = [
-  { url: '/date', priority: '1.0', changefreq: 'daily' },
-  { url: '/date/today', priority: '1.0', changefreq: 'daily' },
-  { url: '/date/today/hijri', priority: '0.9', changefreq: 'daily' },
-  { url: '/date/today/gregorian', priority: '0.9', changefreq: 'daily' },
-  { url: '/date/converter', priority: '0.9', changefreq: 'monthly' },
-  { url: '/date/hijri-to-gregorian', priority: '0.8', changefreq: 'monthly' },
-  { url: '/date/gregorian-to-hijri', priority: '0.8', changefreq: 'monthly' },
-  { url: '/date/calendar', priority: '0.8', changefreq: 'weekly' },
-  { url: '/date/calendar/hijri', priority: '0.8', changefreq: 'weekly' },
-  { url: '/date/country', priority: '0.8', changefreq: 'weekly' },
+  '/date',
+  '/date/today',
+  '/date/today/hijri',
+  '/date/today/gregorian',
+  '/date/converter',
+  '/date/hijri-to-gregorian',
+  '/date/gregorian-to-hijri',
+  '/date/calendar',
+  '/date/calendar/hijri',
+  '/date/country',
 ];
 
 export async function GET() {
   const base = getSiteUrl();
-  const lastmod = getSitemapLastModifiedDate();
 
   const entries = STATIC_PAGES.map(
-    p => `
+    path => `
   <url>
-    <loc>${base}${p.url}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>${p.changefreq}</changefreq>
-    <priority>${p.priority}</priority>
+    <loc>${base}${path}</loc>
   </url>`
   ).join('');
 

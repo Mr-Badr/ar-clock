@@ -20,8 +20,10 @@ import {
 } from '@/components/date/DateEditorialSections';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { CalendarDays, ArrowLeftRight, Calendar } from 'lucide-react';
+import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildDateKeywords } from '@/lib/seo/section-search-intent';
+import { isSeoIndexableHijriDate } from '@/lib/seo/date-indexing';
 import {
   validateHijriDateRouteSegments,
 } from '@/lib/route-param-validation';
@@ -131,6 +133,10 @@ export async function generateMetadata({
 
   const monthAr = ISLAMIC_MONTH_NAMES_AR[hMonth - 1];
   const hijriLabel = `${hDay} ${monthAr} ${hYear} هجري`;
+  const isIndexableDate = isSeoIndexableHijriDate(
+    routeDate,
+    new Date(await getCachedNowIso()),
+  );
   return {
     title: `${hijriLabel} كم ميلادي؟ | ${gregorian.formatted.ar}`,
     description: `${hijriLabel} يوافق ${gregorian.formatted.ar}م حسب أم القرى. راجع اليوم السابق والتالي وحدود اختلاف بداية الشهر قبل الاعتماد الرسمي.`,
@@ -150,10 +156,10 @@ export async function generateMetadata({
       locale: 'ar_SA',
     },
     robots: {
-      index: true,
+      index: isIndexableDate,
       follow: true,
       googleBot: {
-        index: true,
+        index: isIndexableDate,
         follow: true,
         'max-snippet': -1,
         'max-image-preview': 'large',

@@ -10,7 +10,6 @@ import { ALL_GUIDES } from '@/lib/guides/data';
 import { SITE_DESCRIPTION, SITE_HOME_TITLE, SITE_TITLE } from '@/lib/site-config';
 import { INTENT_PATHWAYS } from '@/lib/site/intent-pathways';
 import {
-  DATE_YEAR_SITEMAP_PATHS,
   GREGORIAN_CALENDAR_INDEXABLE_RANGE,
   HIJRI_CALENDAR_INDEXABLE_RANGE,
   getGregorianYearSitemapDays,
@@ -70,11 +69,23 @@ const INDEXABLE_ROOT_PAGE_RULES = [
   { route: '/date/country', filePath: 'src/app/date/country/page.tsx' },
 ] as const;
 
-const INDEXABLE_DATE_PAGE_FILES = [
-  'src/app/date/[year]/[month]/[day]/page.tsx',
-  'src/app/date/hijri/[year]/[month]/[day]/page.tsx',
-  'src/app/date/calendar/[year]/page.tsx',
-  'src/app/date/calendar/hijri/[year]/page.tsx',
+const DATE_INDEXATION_PAGE_RULES = [
+  {
+    filePath: 'src/app/date/[year]/[month]/[day]/page.tsx',
+    helper: 'isSeoIndexableGregorianDate',
+  },
+  {
+    filePath: 'src/app/date/hijri/[year]/[month]/[day]/page.tsx',
+    helper: 'isSeoIndexableHijriDate',
+  },
+  {
+    filePath: 'src/app/date/calendar/[year]/page.tsx',
+    helper: 'isSeoIndexableGregorianCalendarYear',
+  },
+  {
+    filePath: 'src/app/date/calendar/hijri/[year]/page.tsx',
+    helper: 'isSeoIndexableHijriCalendarYear',
+  },
 ] as const;
 
 const LEGACY_ROUTE_FILES = [
@@ -109,11 +120,27 @@ function routeFileExists(routeDir: string, filename: string) {
   return existsSync(path.join(process.cwd(), routeDir, filename));
 }
 
+function routeOrAncestorFileExists(routeDir: string, filenames: readonly string[]) {
+  const appRoot = path.resolve(process.cwd(), 'src/app');
+  let currentDir = path.resolve(process.cwd(), routeDir);
+
+  while (currentDir === appRoot || currentDir.startsWith(`${appRoot}${path.sep}`)) {
+    if (filenames.some((filename) => existsSync(path.join(currentDir, filename)))) {
+      return true;
+    }
+
+    if (currentDir === appRoot) break;
+    currentDir = path.dirname(currentDir);
+  }
+
+  return false;
+}
+
 function assertRequiredSegmentGuardFiles(errors: string[]) {
   for (const segment of REQUIRED_SEGMENT_GUARDS) {
-    const hasLoadingFile = (
-      routeFileExists(segment.dir, 'loading.tsx') ||
-      routeFileExists(segment.dir, 'loading.jsx')
+    const hasLoadingFile = routeOrAncestorFileExists(
+      segment.dir,
+      ['loading.tsx', 'loading.jsx'],
     );
     const hasErrorFile = (
       routeFileExists(segment.dir, 'error.tsx') ||
@@ -121,7 +148,7 @@ function assertRequiredSegmentGuardFiles(errors: string[]) {
     );
 
     if (!hasLoadingFile) {
-      errors.push(`Route segment is missing loading.tsx/loading.jsx: ${segment.route}`);
+      errors.push(`Route segment and its ancestors are missing loading.tsx/loading.jsx: ${segment.route}`);
     }
 
     if (!hasErrorFile) {
@@ -151,17 +178,17 @@ function assertIndexableRootPages(errors: string[]) {
   }
 }
 
-function assertIndexableDatePages(errors: string[]) {
-  for (const filePath of INDEXABLE_DATE_PAGE_FILES) {
-    const fullPath = path.join(process.cwd(), filePath);
+function assertDateIndexationPolicies(errors: string[]) {
+  for (const rule of DATE_INDEXATION_PAGE_RULES) {
+    const fullPath = path.join(process.cwd(), rule.filePath);
     if (!existsSync(fullPath)) {
-      errors.push(`Indexable date page file is missing: ${filePath}`);
+      errors.push(`Date page file is missing: ${rule.filePath}`);
       continue;
     }
 
     const source = readFileSync(fullPath, 'utf8');
-    if (source.includes('index: false')) {
-      errors.push(`Indexable date page contains noindex metadata: ${filePath}`);
+    if (!source.includes(rule.helper)) {
+      errors.push(`Date page does not use ${rule.helper} for robots metadata: ${rule.filePath}`);
     }
   }
 }
@@ -425,7 +452,6 @@ function main() {
   assertUnique('ROOT_SITEMAP_ROUTES', rootPaths, errors);
   assertUnique('WEBSITE_ARCHITECTURE_PATHS', WEBSITE_ARCHITECTURE_PATHS, errors);
   assertUnique('SITEMAP_INDEX_PATHS', SITEMAP_INDEX_PATHS, errors);
-  assertUnique('DATE_YEAR_SITEMAP_PATHS', DATE_YEAR_SITEMAP_PATHS, errors);
   assertUnique('COVERAGE_SAMPLE_PATHS', COVERAGE_SAMPLE_PATHS, errors);
 
   if (!SITEMAP_INDEX_PATHS.includes('/sitemap.xml')) {
@@ -438,10 +464,14 @@ function main() {
     );
   }
 
-  for (const sitemapPath of DATE_YEAR_SITEMAP_PATHS) {
+  for (const sitemapPath of ['/date/gregorian/sitemap.xml', '/date/hijri/sitemap.xml']) {
     if (!SITEMAP_INDEX_PATHS.includes(sitemapPath)) {
-      errors.push(`SITEMAP_INDEX_PATHS is missing date year sitemap: ${sitemapPath}`);
+      errors.push(`SITEMAP_INDEX_PATHS is missing rolling date sitemap: ${sitemapPath}`);
     }
+  }
+
+  if (SITEMAP_INDEX_PATHS.some((pathValue) => /^\/date\/(?:gregorian|hijri)\/sitemap\/\d{4}$/.test(pathValue))) {
+    errors.push('SITEMAP_INDEX_PATHS must not expose full-range daily date year sitemaps.');
   }
 
   if (!rootPaths.includes('/blog')) {
@@ -462,7 +492,7 @@ function main() {
 
   assertRequiredSegmentGuardFiles(errors);
   assertIndexableRootPages(errors);
-  assertIndexableDatePages(errors);
+  assertDateIndexationPolicies(errors);
   assertLegacyRouteFilesRemoved(errors);
   assertLegacyBlogFeatureFilesRemoved(errors);
   assertCanonicalBlogPaths(errors);

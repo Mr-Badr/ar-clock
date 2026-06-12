@@ -15,7 +15,7 @@
  *  Cities in same country (internal linking)
  *  Timezone info card (server, zero JS)
  *  Same-timezone countries (server, zero JS)
- *  Dense FAQ (server, native <details>, FAQPage JSON-LD)
+ *  Dense FAQ (server, native <details>)
  *  Related searches (server, zero JS, internal links)
  *  SEO prose (server, visible keyword-rich copy for readers and crawlers)
  */
@@ -545,23 +545,8 @@ async function CityTimePageSections({
       .map((entry) => entry.country_name_ar || entry.country_name_en)
       .filter(Boolean)
       .join('، ');
-    const faqSchema = {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: faqItems.map((item) => ({
-        '@type': 'Question',
-        name: item.q,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: item.a,
-        },
-      })),
-    };
-
     return (
       <>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-
         <section
           aria-labelledby="city-time-answer-heading"
           className={`container mx-auto px-4 ${routeStyles.sectionBand}`}
