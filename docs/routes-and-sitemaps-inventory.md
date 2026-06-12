@@ -144,11 +144,11 @@ Primary sitemap submission URL:
 
 ### Covered by `/time-now/sitemap.xml`
 - `/time-now/[country]`
-- `/time-now/[country]/[city]`
+- all valid `/time-now/[country]/[city]` pages
 
 ### Covered by `/mwaqit-al-salat/sitemap.xml`
 - `/mwaqit-al-salat/[country]`
-- `/mwaqit-al-salat/[country]/[city]`
+- all valid `/mwaqit-al-salat/[country]/[city]` pages
 
 ### Covered by `/date/sitemaps/static`
 - `/date`

@@ -34,6 +34,7 @@ import SameTimezoneCountries from '@/components/time-now/SameTimezoneCountries';
 import TimeNowFAQ from '@/components/time-now/TimeNowFAQ';
 import RelatedSearches from '@/components/time-now/RelatedSearches';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
+import GeoCityDirectory from '@/components/seo/GeoCityDirectory';
 import { Skeleton } from '@/components/ui/skeleton';
 import routeStyles from '@/app/time-now/TimeNowRoutePage.module.css';
 import {
@@ -43,8 +44,8 @@ import {
 } from '@/lib/db/queries/countries';
 
 import {
-  getTopCitiesByCountry,
   getCapitalCity,
+  getCitiesByCountry,
 } from '@/lib/db/queries/cities';
 import { getCachedNowIso } from '@/lib/date-utils';
 import {
@@ -166,8 +167,8 @@ export async function generateMetadata({ params }) {
     });
 
     return {
-      title: `الوقت الان في ${countryAr} | الساعة والتاريخ والمدن`,
-      description: `اعرف الساعة الان في ${countryAr} مع توقيت ${cityAr}، التاريخ المحلي، منطقة IANA، فرق UTC ${offset}، حالة التوقيت الصيفي، وروابط المدن وفرق التوقيت.`,
+      title: `الوقت الآن في ${countryAr} | الساعة والتاريخ والمدن`,
+      description: `اعرف الوقت الآن في ${countryAr} مع توقيت ${cityAr}، التاريخ المحلي، منطقة IANA، فرق UTC ${offset}، حالة التوقيت الصيفي، وروابط جميع المدن.`,
       keywords: buildTimeNowKeywords({
         countryAr,
         countryEn: country.name_en,
@@ -185,7 +186,7 @@ export async function generateMetadata({ params }) {
         locale: 'ar_SA',
         url: `${BASE}/time-now/${countrySlug}`,
         siteName: SITE_BRAND,
-        title: `الوقت الان في ${countryAr} | الساعة والتاريخ والمدن`,
+        title: `الوقت الآن في ${countryAr} | الساعة والتاريخ والمدن`,
         description: `ساعة ${countryAr} الآن مع توقيت ${cityAr}، التاريخ المحلي، منطقة IANA، فرق UTC ${offset}، وروابط المدن وفرق التوقيت.`,
         images: [{
           url: `${BASE}/time-now/${countrySlug}/opengraph-image`,
@@ -368,10 +369,10 @@ export default async function CountryTimePage({ params }) {
           <div className={routeStyles.heroInner}>
             <div className={routeStyles.heroCopy}>
               <h1 id="country-time-heading" className={routeStyles.heroTitle}>
-                كم الساعة الان في <span className="text-accent">{countryAr}</span>؟
+                الوقت الآن في <span className="text-accent">{countryAr}</span>
               </h1>
               <p className={routeStyles.heroLead}>
-                الوقت الان في {countryAr} يبدأ من توقيت {cityAr}: سترى الساعة الحالية، التاريخ المحلي، المنطقة الزمنية {utcOffset || timezone}، وروابط المدن داخل الدولة. إذا كان موعدك للسفر أو العمل، لا تحفظ فرق الساعات فقط؛ تحقق من المدينة وفرق UTC قبل تثبيت الموعد.
+                الوقت الآن في {countryAr} يُعرض حسب توقيت {cityAr}: سترى الساعة الحالية، التاريخ المحلي، المنطقة الزمنية {utcOffset || timezone}، وروابط جميع المدن المدعومة. إذا كان موعدك للسفر أو العمل، تحقق من المدينة وفرق UTC قبل تثبيت الموعد.
               </p>
             </div>
 
@@ -451,11 +452,12 @@ async function CountryTimePageSections({
 }) {
   try {
     const [cities, nowIso, allCountries] = await Promise.all([
-      getTopCitiesByCountry(country.country_code, 30),
+      getCitiesByCountry(country.country_code),
       getCachedNowIso(),
       getAllCountries(),
     ]);
     const safeCities = Array.isArray(cities) ? cities.filter(isValidCityRecord) : [];
+    const featuredCities = safeCities.slice(0, 30);
     const safeAllCountries = Array.isArray(allCountries) ? allCountries : [];
     const timeFacts = getTimeNowSeoFacts({
       timezone,
@@ -511,7 +513,7 @@ async function CountryTimePageSections({
       '@context': 'https://schema.org',
       '@type': 'ItemList',
       name: `مدن ${countryAr} في قسم الوقت الان`,
-      itemListElement: safeCities.slice(0, 30).map((cityItem, index) => ({
+      itemListElement: safeCities.map((cityItem, index) => ({
         '@type': 'ListItem',
         position: index + 1,
         name: cityItem.name_ar || cityItem.name_en,
@@ -572,7 +574,7 @@ async function CountryTimePageSections({
           </div>
         </section>
 
-        {safeCities.length > 1 && (
+        {featuredCities.length > 1 && (
           <section aria-labelledby="cities-grid-heading" className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
             <div className={routeStyles.sectionPanel}>
               <div className={routeStyles.sectionHead}>
@@ -584,11 +586,24 @@ async function CountryTimePageSections({
                 </p>
               </div>
               <Suspense fallback={<div className={`${routeStyles.boxSkeleton} ${routeStyles.cityCardSkeleton}`} aria-hidden />}>
-                <CountryCitiesGrid cities={safeCities} countrySlug={countrySlug} />
+                <CountryCitiesGrid cities={featuredCities} countrySlug={countrySlug} />
               </Suspense>
             </div>
           </section>
         )}
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <GeoCityDirectory
+              title={`دليل الوقت الآن في جميع مدن ${countryAr}`}
+              description={`تصفح كل المدن المتاحة في ${countryAr}. كل رابط يقود إلى صفحة مستقلة تعرض الساعة المحلية والتاريخ والمنطقة الزمنية للمدينة نفسها.`}
+              cities={safeCities}
+              routeBase={`/time-now/${countrySlug}`}
+              linkLabelPrefix="الوقت الآن في"
+              ariaLabel={`دليل الوقت الآن في مدن ${countryAr}`}
+            />
+          </div>
+        </section>
 
         <section className="container mx-auto px-4">
           <AdInArticle slotId={`mid-time-country-${countrySlug}-1`} />

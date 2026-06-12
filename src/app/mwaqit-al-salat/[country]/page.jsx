@@ -10,7 +10,7 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, Clock3, MapPin, Moon, Sunrise, Sun, Sunset } from 'lucide-react';
 import { getPriorityCountrySlugs, getCountryBySlug } from '@/lib/db/queries/countries';
-import { getTopCitiesByCountry, getCapitalCity } from '@/lib/db/queries/cities';
+import { getCapitalCity, getCitiesByCountry } from '@/lib/db/queries/cities';
 import { calculatePrayerTimes, getNextPrayer, formatTime } from '@/lib/prayerEngine';
 import { getMethodByCountry } from '@/lib/prayer-methods';
 import PrayerHeroClient from '@/components/PrayerHero.client';
@@ -20,6 +20,7 @@ import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar';
 import CalendarSeoBlock from '@/components/mwaqit/CalendarSeoBlock';
 import QiblaCompass from '@/components/mwaqit/QiblaCompass.client';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
+import GeoCityDirectory from '@/components/seo/GeoCityDirectory';
 import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
@@ -242,11 +243,12 @@ export default async function CountryPrayerPage({ params }) {
   if (!country) notFound();
 
   const [citiesResult, capitalResult, nowIsoResult] = await Promise.allSettled([
-    getTopCitiesByCountry(country.country_code, 120),
+    getCitiesByCountry(country.country_code),
     getCapitalCity(country.country_code),
     getCachedNowIso(),
   ]);
   const cities = citiesResult.status === 'fulfilled' ? citiesResult.value : [];
+  const featuredCities = Array.isArray(cities) ? cities.slice(0, 36) : [];
   const capital = capitalResult.status === 'fulfilled' ? capitalResult.value : null;
   const cityCardsNowIso = nowIsoResult.status === 'fulfilled' ? nowIsoResult.value : null;
 
@@ -378,12 +380,12 @@ export default async function CountryPrayerPage({ params }) {
           <div className={routeStyles.heroInner}>
             <div className={routeStyles.heroCopy}>
               <h1 className={routeStyles.heroTitle}>
-                متى الأذان اليوم في <span className="text-accent">{countryAr}</span>؟
+                مواقيت الصلاة في <span className="text-accent">{countryAr}</span> اليوم
               </h1>
               <p className={routeStyles.heroLead}>
-                مواقيت الصلاة في {countryAr} اليوم تبدأ من العاصمة كمرجع سريع، لكن أفضل نتيجة
-                تحصل عليها عندما تختار مدينتك الفعلية. ستجد الفجر والظهر والعصر والمغرب والعشاء،
-                مع طريقة الحساب المستخدمة ومتى تحتاج إلى الرجوع لجدول مسجدك أو الجهة المحلية.
+                مواقيت الصلاة في {countryAr} اليوم تعرض الفجر والظهر والعصر والمغرب والعشاء من
+                العاصمة كمرجع سريع، ثم تربطك بجميع المدن المدعومة. للحصول على موعد الأذان الأدق،
+                اختر مدينتك الفعلية وراجع طريقة الحساب وجدول المسجد المحلي عند وجود اختلاف.
               </p>
               <div className={routeStyles.heroMeta}>
                 <span className={routeStyles.metaPill}>
@@ -465,10 +467,10 @@ export default async function CountryPrayerPage({ params }) {
                 تبقى الصفحة عملية قبل أن تتحول إلى دليل تنقل داخل الدولة.
               </p>
             </div>
-            {cities.length ? (
+            {featuredCities.length ? (
               <ErrorBoundary name="PrayerCountryCitiesGrid">
                 <CityPrayerCardsGrid
-                  cities={cities}
+                  cities={featuredCities}
                   countrySlug={countrySlug}
                   countryCode={country.country_code}
                   initialNowIso={cityCardsNowIso}
@@ -479,6 +481,19 @@ export default async function CountryPrayerPage({ params }) {
                 تعذر إظهار قائمة المدن الآن، لكن البحث المباشر ما زال متاحاً للوصول إلى المدينة التي تريدها.
               </p>
             )}
+          </div>
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <GeoCityDirectory
+              title={`دليل مواقيت الصلاة في جميع مدن ${countryAr}`}
+              description={`اختر مدينتك من الدليل الكامل. كل مدينة لها صفحة مستقلة لمواقيت اليوم، الصلاة القادمة، طريقة الحساب، والجدول الشهري.`}
+              cities={cities}
+              routeBase={`/mwaqit-al-salat/${countrySlug}`}
+              linkLabelPrefix="مواقيت الصلاة في"
+              ariaLabel={`دليل مواقيت الصلاة في مدن ${countryAr}`}
+            />
           </div>
         </section>
 
@@ -821,6 +836,7 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
           timezone={cityData.timezone}
           cityNameAr={cityNameAr}
           countryCode={countryCode}
+          referenceDate={now}
         />
       </section>
     </>

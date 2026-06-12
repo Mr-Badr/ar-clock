@@ -104,7 +104,7 @@ export default function Header() {
   return (
     <>
       <header className="header-nav" id="main-header">
-        <div className="header-inner">
+        <div className="header-inner" data-nosnippet>
 
           <Link
             href="/"

@@ -54,17 +54,17 @@ const _hijriNumFmt = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-lat
   day: 'numeric', month: 'numeric', year: 'numeric',
 });
 
-// ─── getDaysInCurrentMonth ────────────────────────────────────────────────────
+// ─── getDaysInMonth ───────────────────────────────────────────────────────────
 /**
- * Returns a Date[] for every day in the current Gregorian month.
+ * Returns a Date[] for every day in the Gregorian month containing `date`.
  * Used by MonthlyPrayerCalendar and Hijri span calculations.
  *
+ * @param {Date} date
  * @returns {Date[]}
  */
-export function getDaysInCurrentMonth() {
-  const now   = new Date();
-  const y     = now.getFullYear();
-  const m     = now.getMonth();
+export function getDaysInMonth(date) {
+  const y     = date.getFullYear();
+  const m     = date.getMonth();
   const count = new Date(y, m + 1, 0).getDate();
   return Array.from({ length: count }, (_, i) => new Date(y, m, i + 1));
 }
@@ -138,12 +138,7 @@ export function getHijriMonthSpan(days) {
  * @returns {string}
  */
 export function getHijriMonthSpanFromDate(date) {
-  const y     = date.getFullYear();
-  const m     = date.getMonth();
-  const count = new Date(y, m + 1, 0).getDate();
-  return getHijriMonthSpan(
-    Array.from({ length: count }, (_, i) => new Date(y, m, i + 1))
-  );
+  return getHijriMonthSpan(getDaysInMonth(date));
 }
 
 // ─── formatGregorianLabel ─────────────────────────────────────────────────────

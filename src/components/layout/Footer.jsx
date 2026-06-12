@@ -58,7 +58,7 @@ const START_LINKS = [
 const Footer = () => {
   return (
     <footer className="footer-root">
-      <div className="footer-container">
+      <div className="footer-container" data-nosnippet>
         <div className="footer-start">
           <div className="footer-start-copy">
             <p className="footer-start-kicker">ما الذي تريد معرفته الآن؟</p>

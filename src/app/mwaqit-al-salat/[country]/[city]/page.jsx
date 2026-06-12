@@ -142,7 +142,7 @@ export async function generateMetadata({ params }) {
     );
 
     const title = `مواقيت الصلاة في ${cityNameAr} اليوم | الفجر والمغرب والجدول الشهري`;
-    const description = `اعرف مواقيت الصلاة اليوم في ${cityNameAr}: الفجر والمغرب والصلاة القادمة والجدول الشهري، مع طريقة الحساب ومتى تتبع جدول مسجدك المحلي.`;
+    const description = `اعرف مواقيت الصلاة في ${cityNameAr}، ${countryNameAr} اليوم: الفجر والظهر والعصر والمغرب والعشاء، الصلاة القادمة، وطريقة الحساب والجدول الشهري.`;
     const canonical = `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}`;
 
     return {
@@ -362,6 +362,11 @@ export default async function PrayerTimesPage({ params }) {
         name: country.name_en,
         alternateName: countryNameAr,
       },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: cityData.lat,
+        longitude: cityData.lon,
+      },
     },
   };
 
@@ -402,12 +407,12 @@ export default async function PrayerTimesPage({ params }) {
           <div className={routeStyles.heroInner}>
             <div className={routeStyles.heroCopy}>
               <h1 className={routeStyles.heroTitle}>
-                متى أذان الفجر والمغرب اليوم في <span className="text-accent">{cityNameAr}</span>؟
+                مواقيت الصلاة في <span className="text-accent">{cityNameAr}</span> اليوم
               </h1>
               <p className={routeStyles.heroLead}>
-                مواقيت الصلاة في {cityNameAr} اليوم تعرض لك الفجر والظهر والعصر والمغرب والعشاء
-                مع الصلاة القادمة والجدول الشهري. استخدمها لتخطيط يومك، وراجع جدول مسجدك المحلي
-                إذا أعلن وقتاً مختلفاً للصلاة أو الإقامة.
+                مواقيت الصلاة في {cityNameAr}، {countryNameAr} اليوم تشمل الفجر والظهر والعصر
+                والمغرب والعشاء، مع الصلاة القادمة والجدول الشهري وطريقة الحساب المحلية. راجع
+                جدول مسجدك إذا أعلن موعداً مختلفاً للأذان أو الإقامة.
               </p>
               <div className={routeStyles.heroMeta}>
                 <span className={routeStyles.metaPill}>
@@ -884,6 +889,7 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
             timezone={cityData.timezone}
             cityNameAr={cityNameAr}
             countryCode={countryCode}
+            referenceDate={now}
           />
         </ErrorBoundary>
       </section>

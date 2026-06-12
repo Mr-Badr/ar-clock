@@ -2,7 +2,7 @@ import { CalendarDays, Moon, Star, Sun, Sunrise, Sunset } from 'lucide-react';
 import { calculatePrayerTimes } from '@/lib/prayerEngine';
 import {
   formatGregorianLabel,
-  getDaysInCurrentMonth,
+  getDaysInMonth,
   getHijriMonthSpan,
   getHijriParts,
 } from '@/lib/hijri-utils';
@@ -45,12 +45,11 @@ function formatPrayerTime(isoString, formatter) {
   }
 }
 
-function buildMonthlySchedule({ lat, lon, timezone, countryCode }) {
+function buildMonthlySchedule({ days, lat, lon, timezone, countryCode }) {
   if (!isFiniteCoordinate(lat) || !isFiniteCoordinate(lon) || typeof timezone !== 'string') {
     return [];
   }
 
-  const days = getDaysInCurrentMonth();
   const timeFormatter = getTimeFormatter(timezone);
   const dayFormatter = new Intl.DateTimeFormat('ar-EG', { weekday: 'long' });
 
@@ -112,13 +111,14 @@ export default function MonthlyPrayerCalendar({
   timezone,
   cityNameAr,
   countryCode,
+  referenceDate,
 }) {
-  const now = new Date();
-  const currentDay = now.getDate();
-  const days = getDaysInCurrentMonth();
-  const gregorianLabel = formatGregorianLabel(now);
+  const currentDay = referenceDate.getDate();
+  const days = getDaysInMonth(referenceDate);
+  const gregorianLabel = formatGregorianLabel(referenceDate);
   const hijriLabel = getHijriMonthSpan(days);
   const schedule = buildMonthlySchedule({
+    days,
     lat,
     lon,
     timezone,

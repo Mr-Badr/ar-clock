@@ -18,7 +18,7 @@ import {
   CalendarDays, Loader2,
 } from 'lucide-react';
 import {
-  getDaysInCurrentMonth,
+  getDaysInMonth,
   getHijriParts,
   getHijriMonthSpan,
   formatGregorianLabel,
@@ -89,7 +89,7 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr, 
     s.scrollTo({ top: Math.max(0, r.offsetTop - s.offsetTop - s.clientHeight / 2 + r.clientHeight / 2), behavior: 'smooth' });
   }, [mounted]);
 
-  const days           = useMemo(() => getDaysInCurrentMonth(), []);
+  const days           = useMemo(() => getDaysInMonth(new Date()), []);
   const gregorianLabel = useMemo(() => mounted ? formatGregorianLabel(new Date()) : '', [mounted]);
   const hijriLabel     = useMemo(() => mounted ? getHijriMonthSpan(days) : '', [mounted, days]);
 

@@ -103,6 +103,12 @@ function getUtcOffsetStr(timezone) {
   } catch { return ''; }
 }
 
+function buildCityTimeTitle(cityAr, countryAr) {
+  const fullTitle = `الوقت الآن في ${cityAr}، ${countryAr} | الساعة والتاريخ`;
+  if (fullTitle.length <= 64) return fullTitle;
+  return `الوقت الآن في ${cityAr} | الساعة والتاريخ`;
+}
+
 function isValidCityRecord(city) {
   return Boolean(
     city
@@ -154,6 +160,7 @@ export async function generateMetadata({ params }) {
     const cityAr = city.name_ar || city.name_en;
     const countryAr = country.name_ar || country.name_en;
     const offset = getUtcOffsetStr(city.timezone);
+    const title = buildCityTimeTitle(cityAr, countryAr);
     const policy = GEO_ROUTE_INDEXING_POLICIES.timeNow;
     const isIndexableCity = isSeoIndexableCityParams(
       { country: countrySlug, city: citySlug },
@@ -161,8 +168,8 @@ export async function generateMetadata({ params }) {
     );
 
     return {
-      title: `كم الساعة الان في ${cityAr}؟ | التوقيت المحلي والتاريخ وUTC`,
-      description: `اعرف الساعة الان في ${cityAr} مع التاريخ المحلي، منطقة IANA، فرق UTC ${offset}، حالة التوقيت الصيفي، وروابط الصلاة وفرق التوقيت ومدن ${countryAr}.`,
+      title,
+      description: `اعرف الوقت الآن في ${cityAr}، ${countryAr} مع الساعة المحلية والتاريخ، منطقة IANA، فرق UTC ${offset}، وحالة التوقيت الصيفي.`,
       keywords: buildTimeNowKeywords({
         countryAr,
         countryEn: country.name_en,
@@ -180,7 +187,7 @@ export async function generateMetadata({ params }) {
         locale: 'ar_SA',
         url: `${BASE}/time-now/${countrySlug}/${citySlug}`,
         siteName: SITE_BRAND,
-        title: `كم الساعة الان في ${cityAr}؟ | ${countryAr} اليوم`,
+        title: `الوقت الآن في ${cityAr}، ${countryAr}`,
         description: `ساعة ${cityAr} الآن مع التاريخ المحلي، فرق UTC ${offset}، منطقة IANA، وروابط الصلاة وفرق التوقيت.`,
         images: [{
           url: `${BASE}/time-now/${countrySlug}/${citySlug}/opengraph-image`,
@@ -191,7 +198,7 @@ export async function generateMetadata({ params }) {
       },
       twitter: {
         card: 'summary_large_image',
-        title: `كم الساعة الان في ${cityAr}؟ | التوقيت المحلي`,
+        title: `الوقت الآن في ${cityAr} | التوقيت المحلي`,
         description: `اعرف ساعة ${cityAr} الآن مع التاريخ المحلي وفرق UTC ${offset} وروابط المدينة المفيدة.`,
         images: [`${BASE}/time-now/${countrySlug}/${citySlug}/opengraph-image`],
       },
@@ -368,6 +375,11 @@ export default async function CityTimePage({ params }) {
         name: country.name_en,
         alternateName: countryAr,
       },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: city.lat,
+        longitude: city.lon,
+      },
     },
   };
 
@@ -402,12 +414,10 @@ export default async function CityTimePage({ params }) {
           <div className={routeStyles.heroInner}>
             <div className={routeStyles.heroCopy}>
               <h1 id="city-time-h1" className={routeStyles.heroTitle}>
-                كم الساعة الان في{' '}
-                <span className="text-accent">{cityAr}</span>
-                ؟
+                الوقت الآن في <span className="text-accent">{cityAr}</span>، {countryAr}
               </h1>
               <p className={routeStyles.heroLead}>
-                الوقت الان في {cityAr}، {countryAr}: سترى الساعة الحالية، التاريخ المحلي، المنطقة الزمنية {offset || city.timezone}، ثم تختار الخطوة المناسبة: مواقيت الصلاة، مقارنة مع مدينة أخرى، أو مراجعة توقيت مدن {countryAr}. للموعد المستقبلي لا تحفظ فرق الساعات فقط؛ تحقق من التاريخ وDST.
+                الوقت الآن في {cityAr}، {countryAr} هو التوقيت المحلي المرتبط بالمنطقة {city.timezone} وإزاحة {offset || city.timezone}. ستجد الساعة الحية والتاريخ، ثم مواقيت الصلاة وفرق التوقيت ومدن {countryAr} الأخرى.
               </p>
             </div>
 
