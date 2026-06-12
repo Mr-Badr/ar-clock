@@ -160,11 +160,26 @@ async function checkCriticalRoute(origin, probe, timeoutMs) {
         'x-route-health-probe': '1',
       },
     });
-    const body = await response.text();
+    const responseBody = await response.arrayBuffer();
+    const contentType = response.headers.get('content-type') || '';
+    const normalizedContentType = contentType.toLowerCase();
+    const body = (
+      normalizedContentType.startsWith('text/')
+      || normalizedContentType.includes('json')
+      || normalizedContentType.includes('xml')
+    )
+      ? new TextDecoder().decode(responseBody)
+      : '';
     const evaluation = evaluateRouteProbeResponse({
       status: response.status,
       body,
       expectedStatus: probe.expectedStatus,
+      contentType,
+      expectedContentType: probe.expectedContentType,
+      bodyByteLength: responseBody.byteLength,
+      minimumBodyBytes: probe.minimumBodyBytes,
+      requiredMarkers: probe.requiredMarkers,
+      forbiddenMarkers: probe.forbiddenMarkers,
     });
 
     return {

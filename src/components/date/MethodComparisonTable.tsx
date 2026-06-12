@@ -60,7 +60,7 @@ export function MethodComparisonTable({ gregorianDate: _gregorianDate, umalqura,
         </p>
       </div>
 
-      <div className="table-wrapper">
+      <div className={`table-wrapper ${styles.tableWrapper}`}>
         <table className="table">
           <thead>
             <tr>
@@ -79,7 +79,7 @@ export function MethodComparisonTable({ gregorianDate: _gregorianDate, umalqura,
                   key={key}
                   className={differs ? styles.differs : undefined}
                 >
-                  <td>
+                  <td data-label="طريقة الحساب">
                     <div className={styles.methodCell}>
                       <div>
                         <div className={styles.methodName}>{label}</div>
@@ -89,10 +89,10 @@ export function MethodComparisonTable({ gregorianDate: _gregorianDate, umalqura,
                       {differs && <span className="badge badge-warning">يختلف</span>}
                     </div>
                   </td>
-                  <td>
+                  <td data-label="تُستخدم في">
                     <div className={styles.countries}>{countries}</div>
                   </td>
-                  <td className="numeric">
+                  <td className="numeric" data-label="التاريخ الهجري">
                     <div className={styles.dateValue}>{result.formatted.ar}</div>
                     <div className={styles.dayName}>{result.dayNameAr}</div>
                   </td>

@@ -1,14 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { Suspense } from 'react';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { HijriYearlyCalendar } from '@/components/date/HijriYearlyCalendar';
-import { DateCalendarGridSkeleton } from '@/components/date/DateRouteLoading';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import { Calendar } from 'lucide-react';
-import { convertDate } from '@/lib/date-adapter';
+import { convertDate, getHijriMonthDays } from '@/lib/date-adapter';
 import { GREGORIAN_MONTHS_AR, HIJRI_MONTHS_AR } from '@/lib/constants';
 import { BASE_ISLAMIC_EVENTS } from '@/lib/islamic-holidays';
 import { getCachedNowIso } from '@/lib/date-utils';
@@ -121,19 +119,6 @@ async function getCurrentHijriYear(): Promise<number> {
   }
 }
 
-function getHijriMonthDays(hYear: number, hMonth: number): number {
-  try {
-    convertDate({
-      date: `${hYear}-${String(hMonth).padStart(2, '0')}-30`,
-      toCalendar: 'gregorian',
-      method: 'umalqura',
-    });
-    return 30;
-  } catch {
-    return 29;
-  }
-}
-
 function buildDecisionRows(
   year: number,
   totalDays: number,
@@ -203,8 +188,13 @@ export async function generateStaticParams() {
     });
   }
 
+  // Cover current ±10 years so that historically-indexed pages (e.g. 1441
+  // which is 2019-2020 and still crawled by Google) are pre-built at deploy
+  // time rather than relying on on-demand rendering which is more fragile.
   const params = [];
-  for (let y = currentHijriYear - 5; y <= currentHijriYear + 5; y++) {
+  for (let y = currentHijriYear - 10; y <= currentHijriYear + 10; y++) {
+    // Skip years outside the UmalQura adapter's supported range.
+    if (y < 1343 || y > 1500) continue;
     params.push({ year: String(y) });
   }
   return params;
@@ -449,9 +439,7 @@ export default async function HijriCalendarPage({
           </section>
 
           <section className="mb-12">
-            <Suspense fallback={<DateCalendarGridSkeleton />}>
-              <HijriYearlyCalendar year={y} />
-            </Suspense>
+            <HijriYearlyCalendar year={y} />
           </section>
 
           <section className="date-editorial-grid date-section">

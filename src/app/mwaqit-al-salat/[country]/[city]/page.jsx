@@ -25,10 +25,11 @@ import { getMethodByCountry } from '@/lib/prayer-methods';
 
 import PrayerHeroClient from '@/components/PrayerHero.client';
 import SearchCity from '@/components/SearchCityWrapper.client';
-import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar.client';
+import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar';
 import CalendarSeoBlock from '@/components/mwaqit/CalendarSeoBlock';
 import MadhabSelector from '@/components/mwaqit/MadhabSelector.client';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
+import QiblaCompass from '@/components/mwaqit/QiblaCompass.client';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
@@ -41,6 +42,11 @@ import routeStyles from '@/app/mwaqit-al-salat/PrayerRoutePage.module.css';
 import { getSiteUrl } from '@/lib/site-config';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { formatGregorianLabel, getHijriMonthSpanFromDate } from '@/lib/hijri-utils';
+import {
+  getQiblaBearingDegrees,
+  getQiblaBearingLabel,
+  getSolarPrayerFacts,
+} from '@/lib/solar-prayer-facts';
 import {
   GEO_ROUTE_INDEXING_POLICIES,
   isSeoIndexableCityParams,
@@ -660,6 +666,22 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
   const fajrStr    = formatTime(times.fajr,    cityData.timezone);
   const maghribStr = formatTime(times.maghrib,  cityData.timezone);
   const asrStr     = formatTime(times.asr,      cityData.timezone);
+  const solarFacts = getSolarPrayerFacts({
+    lat: cityData.lat,
+    lon: cityData.lon,
+    timezone: cityData.timezone,
+    date: now,
+    countryCode,
+    cacheKey: `${country}::${city}::solar`,
+  });
+  const qiblaLabel = getQiblaBearingLabel({
+    lat: cityData.lat,
+    lon: cityData.lon,
+  });
+  const qiblaBearing = getQiblaBearingDegrees({
+    lat: cityData.lat,
+    lon: cityData.lon,
+  });
 
   const todayLabel = now.toLocaleDateString('ar-EG-u-nu-latn', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
@@ -764,6 +786,50 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
           </table>
         </div>
       </section>
+
+      {solarFacts || qiblaLabel ? (
+        <section className={routeStyles.sectionPanel} aria-label={`ملخص الصيام والشمس والقبلة في ${cityNameAr}`}>
+          <div className={routeStyles.sectionHead}>
+            <h2 className={routeStyles.sectionTitle}>ملخص سريع قبل الأذان في {cityNameAr}</h2>
+            <p className={routeStyles.sectionCopy}>
+              هذا الجزء يجمع أكثر ما يحتاجه الباحث بعد جدول الصلاة: نهاية السحور، وقت الإفطار،
+              مدة الصيام التقريبية، الشروق والغروب، واتجاه القبلة من نفس إحداثيات المدينة.
+            </p>
+          </div>
+          <div className={routeStyles.contextGrid}>
+            {solarFacts ? (
+              <article className={routeStyles.contextCard}>
+                <h3 className={routeStyles.contextTitle}>السحور والإفطار اليوم</h3>
+                <p className={routeStyles.contextBody}>
+                  ينتهي وقت السحور بدخول الفجر عند <strong>{solarFacts.fajrLabel}</strong>،
+                  ويبدأ الإفطار عند المغرب <strong>{solarFacts.maghribLabel}</strong>
+                  {solarFacts.fastingLengthLabel ? `، ومدة الصيام التقريبية ${solarFacts.fastingLengthLabel}.` : '.'}
+                </p>
+              </article>
+            ) : null}
+            {solarFacts ? (
+              <article className={routeStyles.contextCard}>
+                <h3 className={routeStyles.contextTitle}>الشروق والغروب</h3>
+                <p className={routeStyles.contextBody}>
+                  الشروق اليوم في {cityNameAr} عند <strong>{solarFacts.sunriseLabel}</strong>،
+                  والغروب عند <strong>{solarFacts.sunsetLabel}</strong>
+                  {solarFacts.dayLengthLabel ? `، وطول النهار تقريباً ${solarFacts.dayLengthLabel}.` : '.'}
+                </p>
+              </article>
+            ) : null}
+            {qiblaLabel ? (
+              <article className={routeStyles.contextCard}>
+                <QiblaCompass
+                  bearingDegrees={qiblaBearing}
+                  bearingLabel={qiblaLabel}
+                  cityNameAr={cityNameAr}
+                  countryNameAr={countryNameAr}
+                />
+              </article>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
 
       <AdInArticle slotId={`mid-prayer-city-${country}-${city}-1`} />
 

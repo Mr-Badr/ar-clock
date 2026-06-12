@@ -16,8 +16,9 @@ import { getMethodByCountry } from '@/lib/prayer-methods';
 import PrayerHeroClient from '@/components/PrayerHero.client';
 import SearchCity from '@/components/SearchCityWrapper.client';
 import CityPrayerCardsGrid from '@/components/mwaqit/CityPrayerCardsGrid.client';
-import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar.client';
+import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar';
 import CalendarSeoBlock from '@/components/mwaqit/CalendarSeoBlock';
+import QiblaCompass from '@/components/mwaqit/QiblaCompass.client';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
@@ -34,6 +35,11 @@ import {
 import { getSiteUrl } from '@/lib/site-config';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { formatGregorianLabel, getHijriMonthSpanFromDate } from '@/lib/hijri-utils';
+import {
+  getQiblaBearingDegrees,
+  getQiblaBearingLabel,
+  getSolarPrayerFacts,
+} from '@/lib/solar-prayer-facts';
 import { buildPrayerKeywords } from '@/lib/seo/section-search-intent';
 import { buildNoindexRouteMetadata, isRouteSlug } from '@/lib/route-param-validation';
 import { logger, serializeError } from '@/lib/logger';
@@ -235,12 +241,14 @@ export default async function CountryPrayerPage({ params }) {
   }
   if (!country) notFound();
 
-  const [citiesResult, capitalResult] = await Promise.allSettled([
+  const [citiesResult, capitalResult, nowIsoResult] = await Promise.allSettled([
     getTopCitiesByCountry(country.country_code, 120),
     getCapitalCity(country.country_code),
+    getCachedNowIso(),
   ]);
   const cities = citiesResult.status === 'fulfilled' ? citiesResult.value : [];
   const capital = capitalResult.status === 'fulfilled' ? capitalResult.value : null;
+  const cityCardsNowIso = nowIsoResult.status === 'fulfilled' ? nowIsoResult.value : null;
 
   if (citiesResult.status === 'rejected') {
     logger.error('prayer-country-cities-section-failed', {
@@ -257,6 +265,15 @@ export default async function CountryPrayerPage({ params }) {
       countrySlug,
       countryCode: country.country_code,
       error: serializeError(capitalResult.reason),
+    });
+  }
+
+  if (nowIsoResult.status === 'rejected') {
+    logger.warn('prayer-country-city-cards-time-failed', {
+      route: `/mwaqit-al-salat/${countrySlug}`,
+      countrySlug,
+      countryCode: country.country_code,
+      error: serializeError(nowIsoResult.reason),
     });
   }
 
@@ -454,6 +471,7 @@ export default async function CountryPrayerPage({ params }) {
                   cities={cities}
                   countrySlug={countrySlug}
                   countryCode={country.country_code}
+                  initialNowIso={cityCardsNowIso}
                 />
               </ErrorBoundary>
             ) : (
@@ -664,6 +682,23 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
   const todayLabel = now.toLocaleDateString('ar-EG-u-nu-latn', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
   });
+  const cityNameAr = cityData.name_ar || cityData.name_en;
+  const solarFacts = getSolarPrayerFacts({
+    lat: cityData.lat,
+    lon: cityData.lon,
+    timezone: cityData.timezone,
+    date: now,
+    countryCode,
+    cacheKey: `country::${country}::${city}::solar`,
+  });
+  const qiblaLabel = getQiblaBearingLabel({
+    lat: cityData.lat,
+    lon: cityData.lon,
+  });
+  const qiblaBearing = getQiblaBearingDegrees({
+    lat: cityData.lat,
+    lon: cityData.lon,
+  });
 
   return (
     <>
@@ -684,7 +719,7 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
         <div className={routeStyles.sectionHead}>
           <h3 className={routeStyles.sectionTitle}>مواقيت الصلاة اليوم</h3>
           <p className={routeStyles.sectionCopy}>
-            هذا هو جدول اليوم في {cityData.name_ar || cityData.name_en}. لا نضع إعلاناً بين اسم الصلاة ووقتها،
+            هذا هو جدول اليوم في {cityNameAr}. لا نضع إعلاناً بين اسم الصلاة ووقتها،
             وتبقى طريقة الحساب والتاريخ ظاهرين في نفس الجزء. إذا كنت خارج هذه المدينة فافتح صفحة مدينتك
             قبل الاعتماد على الوقت للصلاة.
           </p>
@@ -730,9 +765,51 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
         </div>
       </section>
 
+      {solarFacts || qiblaLabel ? (
+        <section className={routeStyles.sectionPanel} aria-label={`ملخص الصيام والشمس والقبلة في ${cityNameAr}`}>
+          <div className={routeStyles.sectionHead}>
+            <h3 className={routeStyles.sectionTitle}>ملخص سريع للعاصمة المرجعية</h3>
+            <p className={routeStyles.sectionCopy}>
+              يعرض هذا الملخص ما يبحث عنه المستخدم غالباً بعد الأذان: نهاية السحور، الإفطار، الشروق،
+              الغروب، واتجاه القبلة من {cityNameAr}. لمدينة أخرى داخل {countryNameAr} افتح صفحة المدينة نفسها.
+            </p>
+          </div>
+          <div className={routeStyles.contextGrid}>
+            {solarFacts ? (
+              <article className={routeStyles.contextCard}>
+                <h4 className={routeStyles.contextTitle}>السحور والإفطار</h4>
+                <p className={routeStyles.contextBody}>
+                  الفجر عند <strong>{solarFacts.fajrLabel}</strong> والمغرب عند <strong>{solarFacts.maghribLabel}</strong>
+                  {solarFacts.fastingLengthLabel ? `، ومدة الصيام التقريبية ${solarFacts.fastingLengthLabel}.` : '.'}
+                </p>
+              </article>
+            ) : null}
+            {solarFacts ? (
+              <article className={routeStyles.contextCard}>
+                <h4 className={routeStyles.contextTitle}>الشروق والغروب</h4>
+                <p className={routeStyles.contextBody}>
+                  الشروق عند <strong>{solarFacts.sunriseLabel}</strong> والغروب عند <strong>{solarFacts.sunsetLabel}</strong>
+                  {solarFacts.dayLengthLabel ? `، وطول النهار تقريباً ${solarFacts.dayLengthLabel}.` : '.'}
+                </p>
+              </article>
+            ) : null}
+            {qiblaLabel ? (
+              <article className={routeStyles.contextCard}>
+                <QiblaCompass
+                  bearingDegrees={qiblaBearing}
+                  bearingLabel={qiblaLabel}
+                  cityNameAr={cityNameAr}
+                  countryNameAr={countryNameAr}
+                />
+              </article>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
+
       <section className={routeStyles.sectionPanel}>
         <CalendarSeoBlock
-          cityNameAr={cityData.name_ar || cityData.name_en}
+          cityNameAr={cityNameAr}
           countryNameAr={countryNameAr}
           gregorianLabel={formatGregorianLabel(now)}
           hijriLabel={getHijriMonthSpanFromDate(now)}
@@ -742,7 +819,7 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
           lat={cityData.lat}
           lon={cityData.lon}
           timezone={cityData.timezone}
-          cityNameAr={cityData.name_ar || cityData.name_en}
+          cityNameAr={cityNameAr}
           countryCode={countryCode}
         />
       </section>

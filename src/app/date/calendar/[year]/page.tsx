@@ -2,11 +2,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { Suspense } from 'react';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { YearlyCalendar } from '@/components/date/YearlyCalendar';
-import { DateCalendarGridSkeleton } from '@/components/date/DateRouteLoading';
 import { Calendar, ArrowLeftRight, CalendarDays } from 'lucide-react';
 import { convertDate, ISLAMIC_MONTH_NAMES_AR } from '@/lib/date-adapter';
 import { DAY_NAMES_AR, GREGORIAN_MONTHS_AR } from '@/lib/constants';
@@ -169,7 +167,9 @@ function buildKeyHijriEventsForGregorianYear(gregorianYear: number, hijriYears: 
 export async function generateStaticParams() {
   const currentYear = await getCurrentGregorianYear();
   const params = [];
-  for (let y = currentYear - 5; y <= currentYear + 5; y++) {
+  // Cover ±10 years so historically-indexed pages are pre-built at deploy time.
+  for (let y = currentYear - 10; y <= currentYear + 10; y++) {
+    if (y < 1924 || y > 2077) continue;
     params.push({ year: String(y) });
   }
   return params;
@@ -415,9 +415,7 @@ export default async function GregorianCalendarPage({
         </section>
 
         <section className="mb-12">
-          <Suspense fallback={<DateCalendarGridSkeleton />}>
-            <YearlyCalendar year={y} serverTodayIso={serverTodayIso} />
-          </Suspense>
+          <YearlyCalendar year={y} serverTodayIso={serverTodayIso} />
         </section>
 
         <section className="date-editorial-grid date-section">

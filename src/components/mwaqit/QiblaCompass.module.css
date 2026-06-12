@@ -1,0 +1,250 @@
+.qiblaShell {
+  display: grid;
+  gap: var(--space-4);
+  min-height: 100%;
+}
+
+.qiblaHeader {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.qiblaKicker {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 26px;
+  padding: 0.24rem 0.58rem;
+  border: 1px solid color-mix(in srgb, var(--border-accent) 42%, transparent);
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--accent-soft) 36%, transparent);
+  color: var(--accent-alt);
+  font-size: 0.72rem;
+  font-weight: var(--font-bold);
+}
+
+.qiblaTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+}
+
+.qiblaCopy,
+.qiblaNote,
+.statusText {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.82;
+}
+
+.qiblaCopy strong,
+.statusText strong {
+  color: var(--text-primary);
+}
+
+.qiblaBody {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.dialWrap {
+  display: grid;
+  place-items: center;
+}
+
+.dial {
+  position: relative;
+  inline-size: min(100%, 15rem);
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--border-accent) 48%, var(--border-default));
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--accent-soft) 28%, transparent) 0 28%, transparent 29%),
+    conic-gradient(
+      from 0deg,
+      color-mix(in srgb, var(--accent) 16%, transparent),
+      transparent 22deg,
+      transparent 68deg,
+      color-mix(in srgb, var(--accent-alt) 18%, transparent) 90deg,
+      transparent 112deg,
+      transparent 248deg,
+      color-mix(in srgb, var(--accent-alt) 18%, transparent) 270deg,
+      transparent 292deg,
+      color-mix(in srgb, var(--accent) 16%, transparent)
+    ),
+    var(--bg-surface-1);
+  box-shadow: inset 0 0 0 10px color-mix(in srgb, var(--bg-surface-2) 72%, transparent);
+}
+
+.dial::after {
+  content: "";
+  position: absolute;
+  inset: 18%;
+  border: 1px dashed color-mix(in srgb, var(--border-default) 80%, transparent);
+  border-radius: 50%;
+}
+
+.marker {
+  position: absolute;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: var(--font-black);
+  line-height: 1;
+}
+
+.markerNorth {
+  inset-block-start: 0.7rem;
+  inset-inline: 50% auto;
+  transform: translateX(50%);
+  color: var(--accent-alt);
+}
+
+.markerEast {
+  inset-block: 50% auto;
+  inset-inline-end: 0.72rem;
+  transform: translateY(-50%);
+}
+
+.markerSouth {
+  inset-block-end: 0.7rem;
+  inset-inline: 50% auto;
+  transform: translateX(50%);
+}
+
+.markerWest {
+  inset-block: 50% auto;
+  inset-inline-start: 0.72rem;
+  transform: translateY(-50%);
+}
+
+.qiblaNeedle {
+  position: absolute;
+  inset: 12%;
+  z-index: 1;
+  transform: rotate(var(--qibla-rotation));
+  transition: transform var(--transition-slow);
+}
+
+.qiblaNeedle::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: calc(50% - 0.55rem);
+  inline-size: 1.1rem;
+  block-size: 45%;
+  border-radius: 999px 999px 0 0;
+  background: linear-gradient(180deg, var(--accent-alt), color-mix(in srgb, var(--accent) 72%, var(--accent-alt)));
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+.centerPin {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  inline-size: 3.1rem;
+  block-size: 3.1rem;
+  border: 1px solid color-mix(in srgb, var(--border-accent) 64%, transparent);
+  border-radius: 50%;
+  background: var(--bg-surface-1);
+  color: var(--accent-alt);
+  font-size: 0.72rem;
+  font-weight: var(--font-black);
+  transform: translate(-50%, -50%);
+}
+
+.qiblaMeta {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.bearingLine {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+}
+
+.bearingValue {
+  direction: ltr;
+  color: var(--accent-alt);
+  font-size: var(--text-xl);
+  font-weight: var(--font-black);
+}
+
+.mobileControls {
+  display: none;
+  gap: var(--space-2);
+}
+
+.sensorButton {
+  min-height: 44px;
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--border-accent) 56%, var(--border-default));
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--accent-soft) 46%, var(--bg-surface-1));
+  color: var(--accent-alt);
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  transition: border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+}
+
+.sensorButton:hover {
+  border-color: var(--border-accent);
+  background: color-mix(in srgb, var(--accent-soft) 70%, var(--bg-surface-1));
+}
+
+.sensorButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.desktopAdvice,
+.mobileAdvice {
+  display: grid;
+  gap: 0.45rem;
+  padding: var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--border-default) 82%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--bg-surface-1) 62%, transparent);
+}
+
+.mobileAdvice {
+  display: none;
+}
+
+.adviceTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+}
+
+@media (pointer: coarse) {
+  .mobileControls,
+  .mobileAdvice {
+    display: grid;
+  }
+
+  .desktopAdvice {
+    display: none;
+  }
+}
+
+@media (min-width: 720px) {
+  .qiblaBody {
+    grid-template-columns: minmax(11rem, 15rem) minmax(0, 1fr);
+    align-items: center;
+  }
+}

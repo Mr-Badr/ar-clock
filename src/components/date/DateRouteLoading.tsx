@@ -42,7 +42,7 @@ function LoadingMonthCard({ index }: { index: number }) {
       </div>
 
       <div className={styles.calendarGrid}>
-        {Array.from({ length: 35 }, (_, cell) => (
+        {Array.from({ length: 28 }, (_, cell) => (
           <Skeleton key={`${index}-${cell}`} className={styles.calendarCell} />
         ))}
       </div>
@@ -53,7 +53,7 @@ function LoadingMonthCard({ index }: { index: number }) {
 export function DateCalendarGridSkeleton() {
   return (
     <div className={styles.gridCalendar}>
-      {Array.from({ length: 6 }, (_, index) => (
+      {Array.from({ length: 2 }, (_, index) => (
         <LoadingMonthCard key={index} index={index} />
       ))}
     </div>

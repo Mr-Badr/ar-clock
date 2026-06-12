@@ -56,6 +56,7 @@ import {
   getCountriesSharingCurrentOffset,
   getTimeNowSeoFacts,
 } from '@/lib/time-now-content';
+import { getSolarPrayerFacts } from '@/lib/solar-prayer-facts';
 import { logger, serializeError } from '@/lib/logger';
 
 const BASE = getSiteUrl();
@@ -79,7 +80,6 @@ const CITY_TIME_SOURCE_LINKS = [
 ];
 
 /* ─── ROUTE CONFIG ──────────────────────────────────────────────── */
-
 export async function generateStaticParams() {
   if (process.env.NODE_ENV === 'development') {
     return [
@@ -506,6 +506,14 @@ async function CityTimePageSections({
       referenceDateOrIso: nowIso,
       placeAr: cityAr,
     });
+    const solarFacts = getSolarPrayerFacts({
+      lat: city.lat,
+      lon: city.lon,
+      timezone: city.timezone,
+      date: new Date(nowIso),
+      countryCode: country.country_code,
+      cacheKey: `time-now::${countrySlug}::${citySlug}::solar`,
+    });
     const sameOffsetCountries = getCountriesSharingCurrentOffset(safeAllCountries, {
       referenceTimezone: city.timezone,
       referenceDateOrIso: nowIso,
@@ -543,6 +551,57 @@ async function CityTimePageSections({
     return (
       <>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+
+        <section
+          aria-labelledby="city-time-answer-heading"
+          className={`container mx-auto px-4 ${routeStyles.sectionBand}`}
+        >
+          <div className={routeStyles.sectionPanel}>
+            <div className={routeStyles.sectionHead}>
+              <h2 id="city-time-answer-heading" className={routeStyles.sectionTitle}>
+                ملخص التوقيت المحلي في {cityAr}
+              </h2>
+              <p className={routeStyles.sectionCopy}>
+                هذا هو الجزء الذي تحتاجه قبل مقارنة موعد أو حجز رحلة: التاريخ المحلي، فرق UTC،
+                حالة التوقيت الصيفي، ومعه الشروق والغروب عندما تتوفر إحداثيات المدينة.
+              </p>
+            </div>
+            <div className={routeStyles.insightGrid}>
+              <article className={routeStyles.insightCard}>
+                <span className={routeStyles.insightKicker}>اليوم المحلي</span>
+                <h3>التاريخ في {cityAr}</h3>
+                <p>
+                  {timeFacts.gregorianDateAr ? (
+                    <>
+                      اليوم هو <strong>{timeFacts.gregorianDateAr}</strong>
+                      {timeFacts.hijriDateAr ? <>، وبالهجري <strong>{timeFacts.hijriDateAr}</strong>.</> : '.'}
+                    </>
+                  ) : (
+                    <>تُعرض الساعة حسب التاريخ المحلي للمدينة، لا حسب توقيت جهازك أو بلدك الحالي.</>
+                  )}
+                </p>
+              </article>
+              <article className={routeStyles.insightCard}>
+                <span className={routeStyles.insightKicker}>UTC وDST</span>
+                <h3>منطقة IANA الرسمية</h3>
+                <p>
+                  المنطقة الزمنية هي <strong dir="ltr">{city.timezone}</strong> والإزاحة الحالية <strong dir="ltr">{timeFacts.offsetLabel}</strong>.
+                  {' '}{timeFacts.hasDst ? 'تتغير الإزاحة خلال السنة، لذلك راجع التاريخ قبل المواعيد المستقبلية.' : 'لا يظهر تغير بين يناير ويوليو في بيانات هذا العام.'}
+                </p>
+              </article>
+              {solarFacts ? (
+                <article className={routeStyles.insightCard}>
+                  <span className={routeStyles.insightKicker}>الشمس اليوم</span>
+                  <h3>الشروق والغروب</h3>
+                  <p>
+                    الشروق في {cityAr} عند <strong>{solarFacts.sunriseLabel}</strong> والغروب عند <strong>{solarFacts.sunsetLabel}</strong>
+                    {solarFacts.dayLengthLabel ? `، وطول النهار تقريباً ${solarFacts.dayLengthLabel}.` : '.'}
+                  </p>
+                </article>
+              ) : null}
+            </div>
+          </div>
+        </section>
 
         {visibleSiblingCities.length > 0 && (
           <section

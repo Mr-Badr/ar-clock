@@ -2,7 +2,12 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { convertDate } from '@/lib/date-adapter';
-import { DAY_NAMES_AR, GREGORIAN_MONTHS_AR } from '@/lib/constants';
+import type { ConvertDateResult } from '@/lib/date-adapter';
+import { DAY_NAMES_AR, GREGORIAN_MONTHS_AR, HIJRI_MONTHS_AR } from '@/lib/constants';
+import {
+  buildHijriYearCalendar,
+  type HijriCalendarDay,
+} from '@/lib/date-calendar';
 import { isSacredMonth, isRamadan as checkRamadan, getIslamicEventsForHijriDate } from '@/lib/islamic-holidays';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
@@ -33,6 +38,15 @@ export const metadata: Metadata = {
 };
 
 const MONTH_ORDINALS = ['الأول', 'الثاني', 'الثالث', 'الرابع', 'الخامس', 'السادس', 'السابع', 'الثامن', 'التاسع', 'العاشر', 'الحادي عشر', 'الثاني عشر'];
+
+type HijriMonthTableRow = {
+  dayName: string;
+  hijriDateLabel: string;
+  gregorianDateLabel: string;
+  href: string;
+  eventName: string | null;
+  isToday: boolean;
+};
 
 const MONTH_SIGNIFICANCE: Record<number, string> = {
   1: 'محرم من الأشهر الحرم، وفيه يوم عاشوراء في اليوم العاشر.',
@@ -84,6 +98,62 @@ async function getTodayHijriNow(): Promise<Date> {
   }
 }
 
+function padDatePart(value: number): string {
+  return String(value).padStart(2, '0');
+}
+
+function buildHijriDayHref(year: number, month: number, day: number): string {
+  return `/date/hijri/${year}/${padDatePart(month)}/${padDatePart(day)}`;
+}
+
+function getHijriMonthHref(year: number, month: number): string {
+  return buildHijriDayHref(year, month, 1);
+}
+
+function getPreviousHijriMonth(year: number, month: number): { year: number; month: number } {
+  if (month === 1) {
+    return { year: year - 1, month: 12 };
+  }
+
+  return { year, month: month - 1 };
+}
+
+function getNextHijriMonth(year: number, month: number): { year: number; month: number } {
+  if (month === 12) {
+    return { year: year + 1, month: 1 };
+  }
+
+  return { year, month: month + 1 };
+}
+
+function formatGregorianDateLabel(day: HijriCalendarDay): string {
+  const monthName = GREGORIAN_MONTHS_AR[day.gregorianMonth - 1] ?? String(day.gregorianMonth);
+  return `${day.gregorianDay} ${monthName} ${day.gregorianYear}`;
+}
+
+function getGregorianDayName(day: HijriCalendarDay): string {
+  const weekday = new Date(Date.UTC(day.gregorianYear, day.gregorianMonth - 1, day.gregorianDay)).getUTCDay();
+  return DAY_NAMES_AR[weekday] ?? 'اليوم';
+}
+
+function buildCurrentHijriMonthRows(hijri: ConvertDateResult): HijriMonthTableRow[] {
+  const yearCalendar = buildHijriYearCalendar(hijri.year);
+  const monthData = yearCalendar.months.find((month) => month.month === hijri.month);
+
+  if (!monthData) {
+    throw new RangeError(`Hijri month ${hijri.month} was not found in year ${hijri.year}.`);
+  }
+
+  return monthData.days.map((day): HijriMonthTableRow => ({
+    dayName: getGregorianDayName(day),
+    hijriDateLabel: `${day.day} ${hijri.monthNameAr} ${hijri.year} هـ`,
+    gregorianDateLabel: formatGregorianDateLabel(day),
+    href: buildHijriDayHref(hijri.year, hijri.month, day.day),
+    eventName: day.eventName ?? null,
+    isToday: day.day === hijri.day,
+  }));
+}
+
 export default function TodayHijriPage() {
   return (
     <Suspense
@@ -128,6 +198,21 @@ async function TodayHijriDynamicContent() {
   const progress = hijri ? Math.round((hijri.day / daysInMonth) * 100) : 0;
   const daysLeft = hijri ? daysInMonth - hijri.day : 0;
   const significance = hijri ? MONTH_SIGNIFICANCE[hijri.month] : '';
+  let currentMonthRows: HijriMonthTableRow[] = [];
+  if (hijri) {
+    try {
+      currentMonthRows = buildCurrentHijriMonthRows(hijri);
+    } catch (error) {
+      logger.warn('date-today-hijri-month-table-failed', {
+        routePath: '/date/today/hijri',
+        hijriYear: hijri.year,
+        hijriMonth: hijri.month,
+        error: serializeError(error),
+      });
+    }
+  }
+  const previousMonth = hijri ? getPreviousHijriMonth(hijri.year, hijri.month) : null;
+  const nextMonth = hijri ? getNextHijriMonth(hijri.year, hijri.month) : null;
 
   const faqItems = [
     {
@@ -177,10 +262,24 @@ async function TodayHijriDynamicContent() {
       })),
     },
   };
+  const monthItemListJsonLd = hijri && currentMonthRows.length > 0
+    ? {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: `أيام شهر ${hijri.monthNameAr} ${hijri.year} هـ`,
+      itemListElement: currentMonthRows.map((row, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: `${row.hijriDateLabel} يوافق ${row.gregorianDateLabel}`,
+        url: `${BASE_URL}${row.href}`,
+      })),
+    }
+    : null;
+  const structuredData: object[] = monthItemListJsonLd ? [jsonLd, monthItemListJsonLd] : [jsonLd];
 
   return (
     <>
-      <JsonLd data={jsonLd} />
+      <JsonLd data={structuredData} />
       <AdLayoutWrapper>
         <main className="content-col pt-24 pb-20 mt-12">
           <DateBreadcrumb items={breadcrumb} />
@@ -286,6 +385,93 @@ async function TodayHijriDynamicContent() {
                   <div className="date-stat-label">{s.label}</div>
                 </div>
               ))}
+            </section>
+          )}
+
+          {hijri && currentMonthRows.length > 0 && (
+            <section className="date-detail-panel mb-8" aria-labelledby="hijri-month-table-heading">
+              <div className="date-section-head">
+                <h2 id="hijri-month-table-heading" className="date-section-title">
+                  جدول شهر {hijri.monthNameAr} {hijri.year} هـ بالميلادي
+                </h2>
+                <p className="date-section-copy">
+                  اختر أي يوم من الشهر الحالي لترى صفحته التفصيلية. الجدول يعرض اليوم، التاريخ الهجري،
+                  والمقابل الميلادي في ثلاثة أعمدة واضحة، مع تمييز تاريخ اليوم حتى لا تضطر للبحث داخل الشهر.
+                </p>
+              </div>
+
+              <div className="date-hero-actions mb-4">
+                {previousMonth && (
+                  <Link href={getHijriMonthHref(previousMonth.year, previousMonth.month)} className="date-hero-link">
+                    → شهر {HIJRI_MONTHS_AR[previousMonth.month - 1]} {previousMonth.year} هـ
+                  </Link>
+                )}
+                <Link
+                  href={`/date/calendar/hijri/${hijri.year}`}
+                  className="date-hero-link date-hero-link--primary"
+                >
+                  تقويم {hijri.year} هـ كاملاً
+                </Link>
+                {nextMonth && (
+                  <Link href={getHijriMonthHref(nextMonth.year, nextMonth.month)} className="date-hero-link">
+                    شهر {HIJRI_MONTHS_AR[nextMonth.month - 1]} {nextMonth.year} هـ ←
+                  </Link>
+                )}
+              </div>
+
+              <div className="flex flex-wrap gap-2 mb-5" aria-label={`اختيار شهر هجري من عام ${hijri.year}`}>
+                {HIJRI_MONTHS_AR.map((monthName, index) => {
+                  const monthNumber = index + 1;
+                  const isCurrentMonth = monthNumber === hijri.month;
+
+                  return (
+                    <Link
+                      key={monthName}
+                      href={getHijriMonthHref(hijri.year, monthNumber)}
+                      className={isCurrentMonth ? 'chip chip--active' : 'chip'}
+                      aria-current={isCurrentMonth ? 'date' : undefined}
+                    >
+                      {monthName}
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <div className="table-wrapper" dir="rtl">
+                <table className="table table--compact">
+                  <caption className="sr-only">
+                    أيام شهر {hijri.monthNameAr} {hijri.year} هـ مع التاريخ الميلادي الموافق
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">اليوم</th>
+                      <th scope="col">الهجري</th>
+                      <th scope="col">الميلادي</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentMonthRows.map((row) => (
+                      <tr key={row.href} aria-current={row.isToday ? 'date' : undefined}>
+                        <td className={row.isToday ? 'td-accent' : undefined}>
+                          <span className="flex flex-wrap items-center gap-2">
+                            {row.isToday && <span className="badge badge-accent">اليوم</span>}
+                            <span>{row.dayName}</span>
+                            {row.eventName && <span className="badge badge-success">{row.eventName}</span>}
+                          </span>
+                        </td>
+                        <td className={row.isToday ? 'td-accent' : undefined}>
+                          <Link href={row.href} className="date-action">
+                            {row.hijriDateLabel}
+                          </Link>
+                        </td>
+                        <td className={row.isToday ? 'td-accent' : undefined}>
+                          {row.gregorianDateLabel}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </section>
           )}
 

@@ -68,12 +68,7 @@ export async function generateMetadata({
     notFound();
   }
 
-  let hijri;
-  try {
-    hijri = convertDate({ date: routeDate.isoDate, toCalendar: 'hijri', method: 'umalqura' });
-  } catch {
-    notFound();
-  }
+  const hijri = convertDate({ date: routeDate.isoDate, toCalendar: 'hijri', method: 'umalqura' });
   const monthAr = getGregorianMonthNameAr(routeDate.month);
   const gregorianLabel = `${routeDate.day} ${monthAr} ${routeDate.year}`;
   return {
@@ -94,6 +89,16 @@ export async function generateMetadata({
       description: `صفحة عربية لمعرفة المقابل الهجري لتاريخ ${gregorianLabel} مع مقارنة طرق الحساب وروابط المراجعة.`,
       url: `${BASE_URL}/date/${year}/${month}/${day}`,
       locale: 'ar_SA',
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-snippet': -1,
+        'max-image-preview': 'large',
+      },
     },
     twitter: {
       card: 'summary_large_image',
@@ -186,18 +191,16 @@ export default async function ProgrammaticDatePage({
   if (y < 1924 || y > 2077) notFound();
 
   const isoDate = routeDate.isoDate;
-  let umalqura, astronomical, civil;
-  try {
-    umalqura = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' });
-    astronomical = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'astronomical' });
-    civil = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'civil' });
-  } catch { notFound(); }
-  if (!umalqura) notFound();
+  const umalqura = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' });
+  const astronomical = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'astronomical' });
+  const civil = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'civil' });
 
   const hijri = umalqura;
   const islamicEvents = getIslamicEventsForHijriDate(hijri.year, hijri.month, hijri.day);
-  const prevDate = new Date(Date.UTC(y, m - 1, d - 1));
-  const nextDate = new Date(Date.UTC(y, m - 1, d + 1));
+  const hasPreviousDate = !(y === 1924 && m === 1 && d === 1);
+  const hasNextDate = !(y === 2077 && m === 12 && d === 31);
+  const prevDate = hasPreviousDate ? new Date(Date.UTC(y, m - 1, d - 1)) : null;
+  const nextDate = hasNextDate ? new Date(Date.UTC(y, m - 1, d + 1)) : null;
   const fmtNav = (dt: Date) => `/date/${dt.getUTCFullYear()}/${String(dt.getUTCMonth() + 1).padStart(2, '0')}/${String(dt.getUTCDate()).padStart(2, '0')}`;
   const fmtLabel = (dt: Date) => `${dt.getUTCDate()} ${MONTHS_AR[dt.getUTCMonth()]}`;
   const daysInYear = (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0 ? 366 : 365;
@@ -209,9 +212,12 @@ export default async function ProgrammaticDatePage({
   const isLeap = daysInYear === 366;
   const gregorianLabel = `${d} ${MONTHS_AR[m - 1]} ${y}`;
   const hijriLabel = hijri.formatted.ar;
-  const hijriPageUrl = `/date/hijri/${hijri.year}/${String(hijri.month).padStart(2, '0')}/${String(hijri.day).padStart(2, '0')}`;
+  const hasSupportedHijriRoute = hijri.year >= 1343 && hijri.year <= 1500;
+  const hijriPageUrl = hasSupportedHijriRoute
+    ? `/date/hijri/${hijri.year}/${String(hijri.month).padStart(2, '0')}/${String(hijri.day).padStart(2, '0')}`
+    : null;
   const currentCalendarUrl = `/date/calendar/${y}`;
-  const hijriCalendarUrl = `/date/calendar/hijri/${hijri.year}`;
+  const hijriCalendarUrl = hasSupportedHijriRoute ? `/date/calendar/hijri/${hijri.year}` : null;
   const decisionRows = buildDecisionRows(gregorianLabel, hijriLabel, dayOfYear, daysLeft);
 
   const uniqueContext = generateUniqueContext(y, m, d, hijri.year, hijri.month, hijri.day, hijri.monthNameAr, dayOfYear, daysInYear);
@@ -332,12 +338,14 @@ export default async function ProgrammaticDatePage({
                 <Link href="/date/converter" className="date-hero-link date-hero-link--primary">
                   تحويل تاريخ آخر
                 </Link>
-                <Link
-                  href={hijriPageUrl}
-                  className="date-hero-link"
-                >
-                  فتح الصفحة الهجرية
-                </Link>
+                {hijriPageUrl && (
+                  <Link
+                    href={hijriPageUrl}
+                    className="date-hero-link"
+                  >
+                    فتح الصفحة الهجرية
+                  </Link>
+                )}
               </div>
             </aside>
           </section>
@@ -422,8 +430,10 @@ export default async function ProgrammaticDatePage({
           {/* ── NAVIGATION ───────────────────────────────────────────── */}
           <section className="mb-8">
             <DateNavigation
-              prevUrl={fmtNav(prevDate)} prevLabel={fmtLabel(prevDate)}
-              nextUrl={fmtNav(nextDate)} nextLabel={fmtLabel(nextDate)}
+              prevUrl={prevDate ? fmtNav(prevDate) : undefined}
+              prevLabel={prevDate ? fmtLabel(prevDate) : undefined}
+              nextUrl={nextDate ? fmtNav(nextDate) : undefined}
+              nextLabel={nextDate ? fmtLabel(nextDate) : undefined}
               hubLabel="التقويم"
               hubHref="/date/calendar"
             />
@@ -488,7 +498,7 @@ export default async function ProgrammaticDatePage({
                 <span className="related-link-card__arrow" aria-hidden="true">←</span>
               </Link>
 
-              {hijri && (
+              {hijriPageUrl && (
                 <Link
                   href={hijriPageUrl}
                   className="related-link-card"
@@ -515,16 +525,18 @@ export default async function ProgrammaticDatePage({
                 <span className="related-link-card__arrow" aria-hidden="true">←</span>
               </Link>
 
-              <Link href={hijriCalendarUrl} className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <Moon size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">تقويم {hijri.year} الهجري</span>
-                  <span className="related-link-card__desc">راجع السنة الهجرية التي يقع فيها هذا التاريخ</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
+              {hijriCalendarUrl && (
+                <Link href={hijriCalendarUrl} className="related-link-card">
+                  <span className="related-link-card__icon" aria-hidden="true">
+                    <Moon size={16} strokeWidth={1.75} />
+                  </span>
+                  <span className="related-link-card__body">
+                    <span className="related-link-card__label">تقويم {hijri.year} الهجري</span>
+                    <span className="related-link-card__desc">راجع السنة الهجرية التي يقع فيها هذا التاريخ</span>
+                  </span>
+                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
+                </Link>
+              )}
 
             </div>
           </nav>

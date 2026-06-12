@@ -2,8 +2,11 @@
 import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
-import { convertDate } from '@/lib/date-adapter';
-import { ISLAMIC_MONTH_NAMES_AR } from '@/lib/date-adapter';
+import {
+  convertDate,
+  getHijriMonthDays,
+  ISLAMIC_MONTH_NAMES_AR,
+} from '@/lib/date-adapter';
 import { getIslamicEventsForHijriDate } from '@/lib/islamic-holidays';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
@@ -91,23 +94,19 @@ function buildHijriDecisionRows(
 }
 
 export async function generateStaticParams() {
-  try {
-    const now = new Date();
-    const isoDate = [
-      String(now.getUTCFullYear()),
-      String(now.getUTCMonth() + 1).padStart(2, '0'),
-      String(now.getUTCDate()).padStart(2, '0'),
-    ].join('-');
-    const hijri = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' });
+  const now = new Date();
+  const isoDate = [
+    String(now.getUTCFullYear()),
+    String(now.getUTCMonth() + 1).padStart(2, '0'),
+    String(now.getUTCDate()).padStart(2, '0'),
+  ].join('-');
+  const hijri = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' });
 
-    return [{
-      year: String(hijri.year),
-      month: String(hijri.month).padStart(2, '0'),
-      day: String(hijri.day).padStart(2, '0'),
-    }];
-  } catch {
-    return [{ year: '1447', month: '01', day: '01' }];
-  }
+  return [{
+    year: String(hijri.year),
+    month: String(hijri.month).padStart(2, '0'),
+    day: String(hijri.day).padStart(2, '0'),
+  }];
 }
 
 export async function generateMetadata({
@@ -128,12 +127,7 @@ export async function generateMetadata({
     notFound();
   }
 
-  let gregorian;
-  try {
-    gregorian = convertDate({ date: routeDate.isoDate, toCalendar: 'gregorian', method: 'umalqura' });
-  } catch {
-    notFound();
-  }
+  const gregorian = convertDate({ date: routeDate.isoDate, toCalendar: 'gregorian', method: 'umalqura' });
 
   const monthAr = ISLAMIC_MONTH_NAMES_AR[hMonth - 1];
   const hijriLabel = `${hDay} ${monthAr} ${hYear} هجري`;
@@ -154,6 +148,16 @@ export async function generateMetadata({
       description: `صفحة عربية لمعرفة المقابل الميلادي لتاريخ ${hijriLabel} مع روابط اليوم السابق والتالي والمحول.`,
       url: `${BASE_URL}/date/hijri/${year}/${month}/${day}`,
       locale: 'ar_SA',
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-snippet': -1,
+        'max-image-preview': 'large',
+      },
     },
     twitter: {
       card: 'summary_large_image',
@@ -185,32 +189,24 @@ export default async function ProgrammaticHijriDatePage({
 
   const isoHijri = routeDate.isoDate;
 
-  let gregorian;
-  try {
-    gregorian = convertDate({ date: isoHijri, toCalendar: 'gregorian', method: 'umalqura' });
-  } catch {
-    notFound();
-  }
-
-  if (!gregorian) notFound();
+  const gregorian = convertDate({ date: isoHijri, toCalendar: 'gregorian', method: 'umalqura' });
 
   const islamicEvents = getIslamicEventsForHijriDate(hY, hM, hD);
   const monthNameAr = ISLAMIC_MONTH_NAMES_AR[hM - 1];
 
   // Prev/next Hijri day navigation
-  const prevHD = hD - 1;
-  const nextHD = hD + 1;
-  const daysInMonth = hM % 2 !== 0 ? 30 : 29;
+  const daysInMonth = getHijriMonthDays(hY, hM);
   const daysLeftInHijriMonth = daysInMonth - hD;
-  const prevHM = prevHD < 1 ? hM - 1 : hM;
-  const prevHDAdj = prevHD < 1 ? (prevHM % 2 !== 0 ? 30 : 29) : prevHD;
-  const prevHY = prevHM < 1 ? hY - 1 : hY;
-  const prevHMAdj = prevHM < 1 ? 12 : prevHM;
-
-  const nextHM = nextHD > daysInMonth ? hM + 1 : hM;
-  const nextHDAdj = nextHD > daysInMonth ? 1 : nextHD;
-  const nextHY = nextHM > 12 ? hY + 1 : hY;
-  const nextHMAdsj = nextHM > 12 ? 1 : nextHM;
+  const hasPreviousDate = !(hY === 1343 && hM === 1 && hD === 1);
+  const hasNextDate = !(hY === 1500 && hM === 12 && hD === daysInMonth);
+  const prevHY = hasPreviousDate && hD === 1 && hM === 1 ? hY - 1 : hY;
+  const prevHMAdj = hasPreviousDate && hD === 1 ? (hM === 1 ? 12 : hM - 1) : hM;
+  const prevHDAdj = hasPreviousDate
+    ? (hD === 1 ? getHijriMonthDays(prevHY, prevHMAdj) : hD - 1)
+    : null;
+  const nextHY = hasNextDate && hD === daysInMonth && hM === 12 ? hY + 1 : hY;
+  const nextHMAdj = hasNextDate && hD === daysInMonth ? (hM === 12 ? 1 : hM + 1) : hM;
+  const nextHDAdj = hasNextDate ? (hD === daysInMonth ? 1 : hD + 1) : null;
 
   const fmtNav = (hy: number, hm: number, hd: number) =>
     `/date/hijri/${hy}/${String(hm).padStart(2, '0')}/${String(hd).padStart(2, '0')}`;
@@ -381,10 +377,10 @@ export default async function ProgrammaticHijriDatePage({
           {/* NAVIGATION */}
           <section className="mb-8">
             <DateNavigation
-              prevUrl={fmtNav(prevHY, prevHMAdj, prevHDAdj)}
-              nextUrl={fmtNav(nextHY, nextHMAdsj, nextHDAdj)}
-              prevLabel={fmtLabel(prevHMAdj, prevHDAdj)}
-              nextLabel={fmtLabel(nextHMAdsj, nextHDAdj)}
+              prevUrl={prevHDAdj === null ? undefined : fmtNav(prevHY, prevHMAdj, prevHDAdj)}
+              nextUrl={nextHDAdj === null ? undefined : fmtNav(nextHY, nextHMAdj, nextHDAdj)}
+              prevLabel={prevHDAdj === null ? undefined : fmtLabel(prevHMAdj, prevHDAdj)}
+              nextLabel={nextHDAdj === null ? undefined : fmtLabel(nextHMAdj, nextHDAdj)}
               hubHref="/date/calendar/hijri"
             />
           </section>

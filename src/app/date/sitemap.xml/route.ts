@@ -5,34 +5,17 @@
  */
 import { getSiteUrl } from '@/lib/site-config';
 import { getSitemapLastModifiedDate } from '@/lib/sitemap';
-import {
-  GREGORIAN_CALENDAR_INDEXABLE_RANGE,
-  HIJRI_CALENDAR_INDEXABLE_RANGE,
-} from '@/lib/seo/date-indexing';
+import { DATE_YEAR_SITEMAP_PATHS } from '@/lib/seo/date-indexing';
 
 export async function GET() {
   const base = getSiteUrl();
   const lastmod = getSitemapLastModifiedDate();
 
-  const baseSitemaps = [
+  const sitemaps = [
     '/date/sitemaps/static',
     '/date/sitemaps/countries',
     '/date/sitemaps/calendars',
-    '/date/gregorian/sitemap.xml',
-    '/date/hijri/sitemap.xml',
-  ];
-  const gregorianYearSitemaps = Array.from(
-    { length: GREGORIAN_CALENDAR_INDEXABLE_RANGE.maxYear - GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear + 1 },
-    (_, index) => `/date/gregorian/sitemap/${GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear + index}`,
-  );
-  const hijriYearSitemaps = Array.from(
-    { length: HIJRI_CALENDAR_INDEXABLE_RANGE.maxYear - HIJRI_CALENDAR_INDEXABLE_RANGE.minYear + 1 },
-    (_, index) => `/date/hijri/sitemap/${HIJRI_CALENDAR_INDEXABLE_RANGE.minYear + index}`,
-  );
-  const sitemaps = [
-    ...baseSitemaps,
-    ...gregorianYearSitemaps,
-    ...hijriYearSitemaps,
+    ...DATE_YEAR_SITEMAP_PATHS,
   ];
 
   const entries = sitemaps.map(

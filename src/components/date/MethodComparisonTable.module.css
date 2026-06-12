@@ -84,3 +84,79 @@
   gap: var(--space-1-5);
   margin: 0;
 }
+
+@media (max-width: 640px) {
+  .tableWrapper {
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .tableWrapper table,
+  .tableWrapper thead,
+  .tableWrapper tbody,
+  .tableWrapper tr,
+  .tableWrapper th,
+  .tableWrapper td {
+    display: block;
+  }
+
+  .tableWrapper table {
+    background: transparent;
+  }
+
+  .tableWrapper thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .tableWrapper tbody {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .tableWrapper tr {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--bg-surface-1);
+  }
+
+  .tableWrapper tr:last-child {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .tableWrapper tr:hover {
+    background: var(--bg-surface-1);
+  }
+
+  .tableWrapper td {
+    display: grid;
+    gap: var(--space-1);
+    padding: 0;
+    text-align: start;
+  }
+
+  .tableWrapper td::before {
+    content: attr(data-label);
+    color: var(--text-muted);
+    font-size: var(--text-2xs);
+    font-weight: var(--font-bold);
+  }
+
+  .tableWrapper td.numeric {
+    text-align: start;
+  }
+
+  .methodCell {
+    align-items: flex-start;
+  }
+}

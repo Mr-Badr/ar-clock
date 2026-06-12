@@ -3,10 +3,19 @@ import path from 'node:path';
 
 import { CALCULATOR_HUBS, CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { POPULAR_PAIRS } from '@/components/time-diff/data/popularPairs';
+import { buildGregorianYearCalendar, buildHijriYearCalendar } from '@/lib/date-calendar';
+import { convertDate } from '@/lib/date-adapter';
 import { ALL_RAW_EVENTS } from '@/lib/events';
 import { ALL_GUIDES } from '@/lib/guides/data';
 import { SITE_DESCRIPTION, SITE_HOME_TITLE, SITE_TITLE } from '@/lib/site-config';
 import { INTENT_PATHWAYS } from '@/lib/site/intent-pathways';
+import {
+  DATE_YEAR_SITEMAP_PATHS,
+  GREGORIAN_CALENDAR_INDEXABLE_RANGE,
+  HIJRI_CALENDAR_INDEXABLE_RANGE,
+  getGregorianYearSitemapDays,
+  getHijriYearSitemapDays,
+} from '@/lib/seo/date-indexing';
 import {
   ROOT_SITEMAP_PATHS,
   ROOT_SITEMAP_ROUTES,
@@ -25,6 +34,7 @@ const REQUIRED_ROOT_SITEMAP_PATHS = [
   '/date/calendar/hijri',
   '/date/country',
 ] as const;
+const MAX_SITEMAP_INDEX_ENTRIES = 50000;
 
 const REQUIRED_SEGMENT_GUARDS = [
   { route: '/blog', dir: 'src/app/blog' },
@@ -58,6 +68,13 @@ const INDEXABLE_ROOT_PAGE_RULES = [
   { route: '/date/calendar', filePath: 'src/app/date/calendar/page.tsx' },
   { route: '/date/calendar/hijri', filePath: 'src/app/date/calendar/hijri/page.tsx' },
   { route: '/date/country', filePath: 'src/app/date/country/page.tsx' },
+] as const;
+
+const INDEXABLE_DATE_PAGE_FILES = [
+  'src/app/date/[year]/[month]/[day]/page.tsx',
+  'src/app/date/hijri/[year]/[month]/[day]/page.tsx',
+  'src/app/date/calendar/[year]/page.tsx',
+  'src/app/date/calendar/hijri/[year]/page.tsx',
 ] as const;
 
 const LEGACY_ROUTE_FILES = [
@@ -130,6 +147,21 @@ function assertIndexableRootPages(errors: string[]) {
 
     if (source.includes('redirect(')) {
       errors.push(`Indexable root page still performs a redirect instead of rendering content: ${pageRule.route}`);
+    }
+  }
+}
+
+function assertIndexableDatePages(errors: string[]) {
+  for (const filePath of INDEXABLE_DATE_PAGE_FILES) {
+    const fullPath = path.join(process.cwd(), filePath);
+    if (!existsSync(fullPath)) {
+      errors.push(`Indexable date page file is missing: ${filePath}`);
+      continue;
+    }
+
+    const source = readFileSync(fullPath, 'utf8');
+    if (source.includes('index: false')) {
+      errors.push(`Indexable date page contains noindex metadata: ${filePath}`);
     }
   }
 }
@@ -315,6 +347,77 @@ function assertIntentPathwaysQuality(errors: string[]) {
   }
 }
 
+function assertDateCalendarModels(errors: string[]) {
+  for (
+    let year = GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear;
+    year <= GREGORIAN_CALENDAR_INDEXABLE_RANGE.maxYear;
+    year += 1
+  ) {
+    try {
+      const calendar = buildGregorianYearCalendar(year);
+      const expectedDays = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0) ? 366 : 365;
+
+      if (calendar.months.length !== 12 || calendar.totalDays !== expectedDays) {
+        errors.push(
+          `Gregorian calendar model ${year} is incomplete: months=${calendar.months.length}, days=${calendar.totalDays}.`,
+        );
+      }
+
+      if (calendar.months.some((month) => month.days.length !== month.daysInMonth)) {
+        errors.push(`Gregorian calendar model ${year} contains an incomplete month.`);
+      }
+
+      const sitemapDays = getGregorianYearSitemapDays(year);
+      if (sitemapDays.length !== expectedDays) {
+        errors.push(`Gregorian daily sitemap ${year} contains ${sitemapDays.length} URLs instead of ${expectedDays}.`);
+      }
+
+      for (const date of [`${year}-01-01`, `${year}-06-15`, `${year}-12-31`]) {
+        for (const method of ['umalqura', 'astronomical', 'civil'] as const) {
+          convertDate({ date, toCalendar: 'hijri', method });
+        }
+      }
+    } catch (error) {
+      const reason = error instanceof Error ? error.message : String(error);
+      errors.push(`Gregorian calendar model ${year} failed: ${reason}`);
+    }
+  }
+
+  for (
+    let year = HIJRI_CALENDAR_INDEXABLE_RANGE.minYear;
+    year <= HIJRI_CALENDAR_INDEXABLE_RANGE.maxYear;
+    year += 1
+  ) {
+    try {
+      const calendar = buildHijriYearCalendar(year);
+
+      if (
+        calendar.months.length !== 12
+        || calendar.totalDays < 354
+        || calendar.totalDays > 355
+      ) {
+        errors.push(
+          `Hijri calendar model ${year} is incomplete: months=${calendar.months.length}, days=${calendar.totalDays}.`,
+        );
+      }
+
+      if (calendar.months.some((month) => month.days.length !== month.daysInMonth)) {
+        errors.push(`Hijri calendar model ${year} contains an incomplete month.`);
+      }
+
+      const sitemapDays = getHijriYearSitemapDays(year);
+      if (sitemapDays.length !== calendar.totalDays) {
+        errors.push(
+          `Hijri daily sitemap ${year} contains ${sitemapDays.length} URLs instead of ${calendar.totalDays}.`,
+        );
+      }
+    } catch (error) {
+      const reason = error instanceof Error ? error.message : String(error);
+      errors.push(`Hijri calendar model ${year} failed: ${reason}`);
+    }
+  }
+}
+
 function main() {
   const errors: string[] = [];
   const rootPaths = ROOT_SITEMAP_ROUTES.map((route: { path: string }) => route.path);
@@ -322,10 +425,23 @@ function main() {
   assertUnique('ROOT_SITEMAP_ROUTES', rootPaths, errors);
   assertUnique('WEBSITE_ARCHITECTURE_PATHS', WEBSITE_ARCHITECTURE_PATHS, errors);
   assertUnique('SITEMAP_INDEX_PATHS', SITEMAP_INDEX_PATHS, errors);
+  assertUnique('DATE_YEAR_SITEMAP_PATHS', DATE_YEAR_SITEMAP_PATHS, errors);
   assertUnique('COVERAGE_SAMPLE_PATHS', COVERAGE_SAMPLE_PATHS, errors);
 
   if (!SITEMAP_INDEX_PATHS.includes('/sitemap.xml')) {
     errors.push('SITEMAP_INDEX_PATHS must include /sitemap.xml');
+  }
+
+  if (SITEMAP_INDEX_PATHS.length > MAX_SITEMAP_INDEX_ENTRIES) {
+    errors.push(
+      `SITEMAP_INDEX_PATHS contains ${SITEMAP_INDEX_PATHS.length} entries; sitemap indexes must stay at or below ${MAX_SITEMAP_INDEX_ENTRIES}.`,
+    );
+  }
+
+  for (const sitemapPath of DATE_YEAR_SITEMAP_PATHS) {
+    if (!SITEMAP_INDEX_PATHS.includes(sitemapPath)) {
+      errors.push(`SITEMAP_INDEX_PATHS is missing date year sitemap: ${sitemapPath}`);
+    }
   }
 
   if (!rootPaths.includes('/blog')) {
@@ -346,12 +462,14 @@ function main() {
 
   assertRequiredSegmentGuardFiles(errors);
   assertIndexableRootPages(errors);
+  assertIndexableDatePages(errors);
   assertLegacyRouteFilesRemoved(errors);
   assertLegacyBlogFeatureFilesRemoved(errors);
   assertCanonicalBlogPaths(errors);
   assertCalculatorRegistryQuality(errors);
   assertRootMetadataQuality(errors);
   assertIntentPathwaysQuality(errors);
+  assertDateCalendarModels(errors);
 
   const uncoveredPaths = COVERAGE_SAMPLE_PATHS.filter((path) => !isPathCoveredBySeoArchitecture(path));
   for (const path of uncoveredPaths) {

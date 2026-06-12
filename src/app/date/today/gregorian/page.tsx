@@ -3,7 +3,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { convertDate } from '@/lib/date-adapter';
-import { GREGORIAN_MONTHS_AR, DAY_NAMES_AR } from '@/lib/constants';
+import { GREGORIAN_MONTHS_AR, DAY_NAMES_AR, HIJRI_MONTHS_AR } from '@/lib/constants';
+import {
+  buildGregorianYearCalendar,
+  type GregorianCalendarDay,
+} from '@/lib/date-calendar';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import {
@@ -53,7 +57,75 @@ const GREGORIAN_SOURCE_LINKS = [
   },
 ];
 
+type GregorianMonthTableRow = {
+  dayName: string;
+  gregorianDateLabel: string;
+  hijriDateLabel: string;
+  href: string;
+  eventName: string | null;
+  isToday: boolean;
+};
 
+
+function padDatePart(value: number): string {
+  return String(value).padStart(2, '0');
+}
+
+function buildGregorianDayHref(year: number, month: number, day: number): string {
+  return `/date/${year}/${padDatePart(month)}/${padDatePart(day)}`;
+}
+
+function getGregorianMonthHref(year: number, month: number): string {
+  return buildGregorianDayHref(year, month, 1);
+}
+
+function getPreviousGregorianMonth(year: number, month: number): { year: number; month: number } {
+  if (month === 1) {
+    return { year: year - 1, month: 12 };
+  }
+
+  return { year, month: month - 1 };
+}
+
+function getNextGregorianMonth(year: number, month: number): { year: number; month: number } {
+  if (month === 12) {
+    return { year: year + 1, month: 1 };
+  }
+
+  return { year, month: month + 1 };
+}
+
+function formatHijriDateLabel(day: GregorianCalendarDay): string {
+  const monthName = HIJRI_MONTHS_AR[day.hijriMonth - 1] ?? String(day.hijriMonth);
+  return `${day.hijriDay} ${monthName} ${day.hijriYear} هـ`;
+}
+
+function getGregorianDayName(year: number, month: number, day: number): string {
+  const weekday = new Date(Date.UTC(year, month - 1, day)).getUTCDay();
+  return DAY_NAMES_AR[weekday] ?? 'اليوم';
+}
+
+function buildCurrentGregorianMonthRows(
+  year: number,
+  month: number,
+  todayDay: number,
+): GregorianMonthTableRow[] {
+  const yearCalendar = buildGregorianYearCalendar(year);
+  const monthData = yearCalendar.months.find((item) => item.month === month);
+
+  if (!monthData) {
+    throw new RangeError(`Gregorian month ${month} was not found in year ${year}.`);
+  }
+
+  return monthData.days.map((day): GregorianMonthTableRow => ({
+    dayName: getGregorianDayName(year, month, day.day),
+    gregorianDateLabel: `${day.day} ${GREGORIAN_MONTHS_AR[month - 1] ?? month} ${year}`,
+    hijriDateLabel: formatHijriDateLabel(day),
+    href: buildGregorianDayHref(year, month, day.day),
+    eventName: day.eventName ?? null,
+    isToday: day.day === todayDay,
+  }));
+}
 
 function getWeekNumber(date: Date): number {
   const d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
@@ -119,6 +191,19 @@ async function TodayGregorianDynamicContent() {
   const daysLeft = daysInYear - dayOfYear;
   const quarter = Math.ceil(m / 3);
   const jd = getJulianDay(y, m, d);
+  let currentMonthRows: GregorianMonthTableRow[] = [];
+  try {
+    currentMonthRows = buildCurrentGregorianMonthRows(y, m, d);
+  } catch (error) {
+    logger.warn('date-today-gregorian-month-table-failed', {
+      routePath: '/date/today/gregorian',
+      gregorianYear: y,
+      gregorianMonth: m,
+      error: serializeError(error),
+    });
+  }
+  const previousMonth = getPreviousGregorianMonth(y, m);
+  const nextMonth = getNextGregorianMonth(y, m);
 
   let hijri;
   try {
@@ -147,6 +232,19 @@ async function TodayGregorianDynamicContent() {
     url: `${BASE_URL}/date/today/gregorian`,
     breadcrumb: buildBreadcrumbJsonLd(breadcrumb, BASE_URL),
   };
+  const monthItemListJsonLd = currentMonthRows.length > 0
+    ? {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: `أيام شهر ${GREGORIAN_MONTHS_AR[m - 1]} ${y}`,
+      itemListElement: currentMonthRows.map((row, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: `${row.gregorianDateLabel} يوافق ${row.hijriDateLabel}`,
+        url: `${BASE_URL}${row.href}`,
+      })),
+    }
+    : null;
 
   const faqItems: DateFaqItem[] = [
     {
@@ -217,6 +315,7 @@ async function TodayGregorianDynamicContent() {
             pageName: 'أسئلة التاريخ الميلادي اليوم',
             items: faqItems,
           }),
+          ...(monthItemListJsonLd ? [monthItemListJsonLd] : []),
         ]}
       />
       <AdLayoutWrapper>
@@ -303,6 +402,89 @@ async function TodayGregorianDynamicContent() {
               ))}
             </div>
           </section>
+
+          {currentMonthRows.length > 0 && (
+            <section className="date-detail-panel mb-8" aria-labelledby="gregorian-month-table-heading">
+              <div className="date-section-head">
+                <h2 id="gregorian-month-table-heading" className="date-section-title">
+                  جدول شهر {GREGORIAN_MONTHS_AR[m - 1]} {y} بالهجري
+                </h2>
+                <p className="date-section-copy">
+                  اختر أي يوم من الشهر الميلادي الحالي لترى صفحته التفصيلية. الجدول يعرض اليوم،
+                  التاريخ الميلادي، والتاريخ الهجري الموافق في ثلاثة أعمدة واضحة، مع تمييز تاريخ اليوم.
+                </p>
+              </div>
+
+              <div className="date-hero-actions mb-4">
+                <Link href={getGregorianMonthHref(previousMonth.year, previousMonth.month)} className="date-hero-link">
+                  → شهر {GREGORIAN_MONTHS_AR[previousMonth.month - 1]} {previousMonth.year}
+                </Link>
+                <Link
+                  href={`/date/calendar/${y}`}
+                  className="date-hero-link date-hero-link--primary"
+                >
+                  تقويم {y} ميلادي كاملاً
+                </Link>
+                <Link href={getGregorianMonthHref(nextMonth.year, nextMonth.month)} className="date-hero-link">
+                  شهر {GREGORIAN_MONTHS_AR[nextMonth.month - 1]} {nextMonth.year} ←
+                </Link>
+              </div>
+
+              <div className="flex flex-wrap gap-2 mb-5" aria-label={`اختيار شهر ميلادي من عام ${y}`}>
+                {GREGORIAN_MONTHS_AR.map((monthName, index) => {
+                  const monthNumber = index + 1;
+                  const isCurrentMonth = monthNumber === m;
+
+                  return (
+                    <Link
+                      key={monthName}
+                      href={getGregorianMonthHref(y, monthNumber)}
+                      className={isCurrentMonth ? 'chip chip--active' : 'chip'}
+                      aria-current={isCurrentMonth ? 'date' : undefined}
+                    >
+                      {monthName}
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <div className="table-wrapper" dir="rtl">
+                <table className="table table--compact">
+                  <caption className="sr-only">
+                    أيام شهر {GREGORIAN_MONTHS_AR[m - 1]} {y} مع التاريخ الهجري الموافق
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">اليوم</th>
+                      <th scope="col">الميلادي</th>
+                      <th scope="col">الهجري</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentMonthRows.map((row) => (
+                      <tr key={row.href} aria-current={row.isToday ? 'date' : undefined}>
+                        <td className={row.isToday ? 'td-accent' : undefined}>
+                          <span className="flex flex-wrap items-center gap-2">
+                            {row.isToday && <span className="badge badge-accent">اليوم</span>}
+                            <span>{row.dayName}</span>
+                            {row.eventName && <span className="badge badge-success">{row.eventName}</span>}
+                          </span>
+                        </td>
+                        <td className={row.isToday ? 'td-accent' : undefined}>
+                          <Link href={row.href} className="date-action">
+                            {row.gregorianDateLabel}
+                          </Link>
+                        </td>
+                        <td className={row.isToday ? 'td-accent' : undefined}>
+                          {row.hijriDateLabel}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          )}
 
           <DateEditorialSections
             badge="شرح عملي"

@@ -45,11 +45,28 @@ export interface ConvertDateResult {
   julianDay: number;
 }
 
+export interface GregorianCalendarDayResult {
+  year: number;
+  month: number;
+  day: number;
+  weekday: number;
+}
+
+export interface HijriCalendarDayResult {
+  year: number;
+  month: number;
+  day: number;
+}
+
 // ── Range guards ──────────────────────────────────────────────────────────────
 const HIJRI_MIN_YEAR = 1343;
 const HIJRI_MAX_YEAR = 1500;
 const GREGORIAN_MIN_YEAR = 1924;
 const GREGORIAN_MAX_YEAR = 2077;
+const GREGORIAN_CALENDAR = new GregorianCalendar();
+const UMALQURA_CALENDAR = new IslamicUmalquraCalendar();
+const CIVIL_CALENDAR = new IslamicCivilCalendar();
+const ASTRONOMICAL_CALENDAR = new IslamicTabularCalendar();
 
 // ── Month / day name tables ──────────────────────────────────────────────────
 export const ISLAMIC_MONTH_NAMES_AR = [
@@ -100,19 +117,124 @@ function dayOfYearCalc(cd: CalendarDate): number {
   return days;
 }
 
+function daysInYearCalc(cd: CalendarDate): number {
+  const monthsInYear = cd.calendar.getMonthsInYear(cd);
+  let days = 0;
+
+  for (let month = 1; month <= monthsInYear; month += 1) {
+    days += cd.calendar.getDaysInMonth(new CalendarDate(cd.calendar, cd.year, month, 1));
+  }
+
+  return days;
+}
+
+function getHijriCalendar(method: ConversionMethod) {
+  if (method === 'umalqura') {
+    return UMALQURA_CALENDAR;
+  }
+
+  if (method === 'astronomical') {
+    return ASTRONOMICAL_CALENDAR;
+  }
+
+  return CIVIL_CALENDAR;
+}
+
+function assertIntegerDateParts(year: number, month: number, day: number): void {
+  if (!Number.isInteger(year) || !Number.isInteger(month) || !Number.isInteger(day)) {
+    throw new TypeError(`Date parts must be integers. Received year=${year}, month=${month}, day=${day}.`);
+  }
+
+  if (month < 1 || month > 12) {
+    throw new RangeError(`Month ${month} is outside the supported range 1-12.`);
+  }
+
+  if (day < 1) {
+    throw new RangeError(`Day ${day} must be greater than zero.`);
+  }
+}
+
+function assertValidCalendarDay(
+  calendar: GregorianCalendar | IslamicUmalquraCalendar | IslamicCivilCalendar | IslamicTabularCalendar,
+  year: number,
+  month: number,
+  day: number,
+  calendarLabel: string,
+): void {
+  assertIntegerDateParts(year, month, day);
+  const monthStart = new CalendarDate(calendar, year, month, 1);
+  const daysInMonth = calendar.getDaysInMonth(monthStart);
+
+  if (day > daysInMonth) {
+    throw new RangeError(
+      `${calendarLabel} date ${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')} is invalid. `
+      + `Month ${month} has ${daysInMonth} days.`,
+    );
+  }
+}
+
+export function getHijriMonthDays(year: number, month: number): number {
+  assertIntegerDateParts(year, month, 1);
+
+  if (year < HIJRI_MIN_YEAR || year > HIJRI_MAX_YEAR) {
+    throw new RangeError(`Hijri year ${year} is out of supported range (${HIJRI_MIN_YEAR}-${HIJRI_MAX_YEAR}).`);
+  }
+
+  return UMALQURA_CALENDAR.getDaysInMonth(new CalendarDate(UMALQURA_CALENDAR, year, month, 1));
+}
+
+export function convertHijriDayForCalendar(
+  year: number,
+  month: number,
+  day: number,
+): GregorianCalendarDayResult {
+  if (year < HIJRI_MIN_YEAR || year > HIJRI_MAX_YEAR) {
+    throw new RangeError(`Hijri year ${year} is out of supported range (${HIJRI_MIN_YEAR}-${HIJRI_MAX_YEAR}).`);
+  }
+
+  assertValidCalendarDay(UMALQURA_CALENDAR, year, month, day, 'Hijri');
+  const gregorianDate = libToCalendar(
+    new CalendarDate(UMALQURA_CALENDAR, year, month, day),
+    GREGORIAN_CALENDAR,
+  ) as CalendarDate;
+
+  return {
+    year: gregorianDate.year,
+    month: gregorianDate.month,
+    day: gregorianDate.day,
+    weekday: new Date(Date.UTC(gregorianDate.year, gregorianDate.month - 1, gregorianDate.day)).getUTCDay(),
+  };
+}
+
+export function convertGregorianDayForCalendar(
+  year: number,
+  month: number,
+  day: number,
+): HijriCalendarDayResult {
+  if (year < GREGORIAN_MIN_YEAR || year > GREGORIAN_MAX_YEAR) {
+    throw new RangeError(`Gregorian year ${year} is out of supported range (${GREGORIAN_MIN_YEAR}-${GREGORIAN_MAX_YEAR}).`);
+  }
+
+  assertValidCalendarDay(GREGORIAN_CALENDAR, year, month, day, 'Gregorian');
+  const hijriDate = libToCalendar(
+    new CalendarDate(GREGORIAN_CALENDAR, year, month, day),
+    UMALQURA_CALENDAR,
+  ) as CalendarDate;
+
+  return {
+    year: hijriDate.year,
+    month: hijriDate.month,
+    day: hijriDate.day,
+  };
+}
+
 // ── Main conversion function ──────────────────────────────────────────────────
 export function convertDate(input: ConvertDateInput): ConvertDateResult {
   const method = input.method ?? 'umalqura';
 
   // 1. Choose calendars
-  const hijriCal =
-    method === 'umalqura'
-      ? new IslamicUmalquraCalendar()
-      : method === 'astronomical'
-        ? new IslamicTabularCalendar() // best public-domain Tabular approximation
-        : new IslamicCivilCalendar();
-
-  const gregorianCal = new GregorianCalendar();
+  const hijriCal = getHijriCalendar(method);
+  const gregorianCal = GREGORIAN_CALENDAR;
 
   // 2. Parse input date
   let inYear: number, inMonth: number, inDay: number;
@@ -133,12 +255,14 @@ export function convertDate(input: ConvertDateInput): ConvertDateResult {
   // 3. Range guard
   if (input.toCalendar === 'hijri') {
     if (inYear < GREGORIAN_MIN_YEAR || inYear > GREGORIAN_MAX_YEAR) {
-      throw new RangeError(`Gregorian year ${inYear} is out of supported range (${GREGORIAN_MIN_YEAR}–${GREGORIAN_MAX_YEAR})`);
+      throw new RangeError(`Gregorian year ${inYear} is out of supported range (${GREGORIAN_MIN_YEAR}-${GREGORIAN_MAX_YEAR})`);
     }
+    assertValidCalendarDay(gregorianCal, inYear, inMonth, inDay, 'Gregorian');
   } else {
     if (inYear < HIJRI_MIN_YEAR || inYear > HIJRI_MAX_YEAR) {
-      throw new RangeError(`Hijri year ${inYear} is out of supported range (${HIJRI_MIN_YEAR}–${HIJRI_MAX_YEAR})`);
+      throw new RangeError(`Hijri year ${inYear} is out of supported range (${HIJRI_MIN_YEAR}-${HIJRI_MAX_YEAR})`);
     }
+    assertValidCalendarDay(hijriCal, inYear, inMonth, inDay, 'Hijri');
   }
 
   // 4. Build source CalendarDate and convert using the module-level toCalendar()
@@ -160,7 +284,7 @@ export function convertDate(input: ConvertDateInput): ConvertDateResult {
   const dow = dayOfWeek(targetDate);
   const jd = julianDay(targetDate);
   const doy = dayOfYearCalc(targetDate);
-  const diy = (targetDate.calendar as any).getDaysInYear(targetDate);
+  const diy = daysInYearCalc(targetDate);
 
   const monthNameAr = isHijriResult
     ? ISLAMIC_MONTH_NAMES_AR[targetDate.month - 1]
@@ -187,9 +311,6 @@ export function convertDate(input: ConvertDateInput): ConvertDateResult {
     : `${toArabicNumerals(targetDate.day)} ${monthNameAr} ${toArabicNumerals(targetDate.year)}`;
 
   // 7. Leap year (Gregorian only — Hijri leap is complex and not needed for display)
-  const gregYear = isHijriResult ? inYear : targetDate.year;
-  const isLeapYear = (gregYear % 4 === 0 && gregYear % 100 !== 0) || gregYear % 400 === 0;
-
   return {
     year: targetDate.year,
     month: targetDate.month,

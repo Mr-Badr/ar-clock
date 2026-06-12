@@ -1,9 +1,6 @@
 /**
- * /date/hijri/sitemap.xml: Hijri date pages
- * Publish a narrow rolling SEO window of canonical Hijri day pages. The full
- * historical Hijri archive remains available through valid routes, but it is
- * not submitted wholesale because that creates thousands of low-demand URLs in
- * Search Console.
+ * /date/hijri/sitemap.xml: Recently relevant Hijri daily date pages.
+ * The root sitemap index also publishes one sitemap per supported year.
  */
 import { getHijriDailySitemapDays } from '@/lib/seo/date-indexing';
 import { getSiteUrl } from '@/lib/site-config';
@@ -12,7 +9,7 @@ import { getSitemapLastModifiedDate } from '@/lib/sitemap';
 export async function GET() {
   const base = getSiteUrl();
   const lastmod = getSitemapLastModifiedDate();
-  const entries = getHijriDailySitemapDays().map(({ year, month, day }) => {
+  const entries = getHijriDailySitemapDays(new Date()).map(({ year, month, day }) => {
     const monthStr = String(month).padStart(2, '0');
     const dayStr = String(day).padStart(2, '0');
 

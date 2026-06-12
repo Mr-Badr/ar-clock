@@ -6,6 +6,7 @@ import {
   hasDynamicRouteToken,
   validateRouteSlug,
 } from '@/lib/route-param-validation';
+import { getHijriMonthDays } from '@/lib/date-adapter';
 import snapshotCities from '../public/geo/city-search-index.json';
 import snapshotCountries from '../public/geo/countries.json';
 
@@ -242,8 +243,11 @@ function isHijriDateShapeValid(yearSegment: string, monthSegment: string, daySeg
   const year = parseNumericSegment(yearSegment, HIJRI_DATE_MIN_YEAR, HIJRI_DATE_MAX_YEAR, 4);
   const month = parseNumericSegment(monthSegment, 1, 12, 2);
   const day = parseNumericSegment(daySegment, 1, 30, 2);
+  if (year === null || month === null || day === null) {
+    return false;
+  }
 
-  return year !== null && month !== null && day !== null;
+  return day <= getHijriMonthDays(year, month);
 }
 
 function isGregorianCalendarYearValid(yearSegment: string): boolean {
@@ -316,6 +320,14 @@ function isDatePathValid(segments: string[]): boolean {
 
   if (segments[1] === 'sitemaps') {
     return segments.length === 3 && DATE_SITEMAP_ROUTES.has(segments[2]);
+  }
+
+  if (segments[1] === 'gregorian' && segments[2] === 'sitemap' && segments.length === 4) {
+    return isGregorianCalendarYearValid(segments[3]);
+  }
+
+  if (segments[1] === 'hijri' && segments[2] === 'sitemap' && segments.length === 4) {
+    return isHijriCalendarYearValid(segments[3]);
   }
 
   if (segments[1] === 'hijri' && segments.length === 5) {

@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { NextRequest } from 'next/server';
 
 import * as proxyModule from '@/proxy';
+import { evaluateRouteProbeResponse } from '@/lib/route-health/critical-routes';
 
 function runProxy(pathname: string) {
   const proxy =
@@ -19,6 +20,7 @@ test('route proxy blocks unknown date paths before they become indexation noise'
     '/date/today/not-a-page',
     '/date/2026/13/01',
     '/date/hijri/1600/01/01',
+    '/date/hijri/1441/02/30',
     '/date/country/not-a-country',
   ];
 
@@ -43,6 +45,10 @@ test('route proxy allows indexable date pages and canonical sitemap endpoints', 
     '/date/calendar/hijri/1447',
     '/date/2026/05/22',
     '/date/hijri/1447/12/06',
+    '/date/gregorian/sitemap/1924',
+    '/date/gregorian/sitemap/2077',
+    '/date/hijri/sitemap/1343',
+    '/date/hijri/sitemap/1500',
     '/date/sitemaps/static',
     '/date/sitemaps/calendars',
     '/date/sitemaps/countries',
@@ -61,4 +67,42 @@ test('route proxy redirects unpadded date URLs to one canonical day URL', () => 
 
   assert.equal(response.status, 308);
   assert.equal(response.headers.get('location'), 'https://miqatona.com/date/2026/05/02');
+});
+
+test('route health requires configured HTML markers', () => {
+  const result = evaluateRouteProbeResponse({
+    status: 200,
+    body: '<html><body><main>Calendar page</main></body></html>',
+    contentType: 'text/html; charset=utf-8',
+    requiredMarkers: ['date-month-panel'],
+  });
+
+  assert.equal(result.status, 'fail');
+  assert.equal(result.reason, 'required-content-marker-missing');
+});
+
+test('route health accepts a non-empty PNG response', () => {
+  const result = evaluateRouteProbeResponse({
+    status: 200,
+    body: '',
+    bodyByteLength: 4096,
+    contentType: 'image/png',
+    expectedContentType: 'image/png',
+    minimumBodyBytes: 1000,
+  });
+
+  assert.equal(result.status, 'ok');
+  assert.equal(result.reason, 'binary-response-rendered-normally');
+});
+
+test('route health rejects indexable pages that contain noindex metadata', () => {
+  const result = evaluateRouteProbeResponse({
+    status: 200,
+    body: '<html><head><meta name="robots" content="noindex, follow"></head><body><main>Date</main></body></html>',
+    contentType: 'text/html; charset=utf-8',
+    forbiddenMarkers: ['content="noindex'],
+  });
+
+  assert.equal(result.status, 'fail');
+  assert.equal(result.reason, 'forbidden-content-marker-found');
 });

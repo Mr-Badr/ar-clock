@@ -90,10 +90,19 @@ async function parseWeatherResponse(response) {
   }
 }
 
-// Hydration-safe: render nothing on SSR to avoid class mismatches.
-export default function CityPrayerCardsGrid({ cities, countrySlug, countryCode }) {
+function parseInitialNow(initialNowIso) {
+  if (typeof initialNowIso !== 'string' || !initialNowIso.trim()) {
+    return null;
+  }
 
-  const [now, setNow] = useState(null);
+  const parsedDate = new Date(initialNowIso);
+  return Number.isNaN(parsedDate.getTime()) ? null : parsedDate;
+}
+
+// Hydration-safe when the server passes a stable initial timestamp.
+export default function CityPrayerCardsGrid({ cities, countrySlug, countryCode, initialNowIso }) {
+
+  const [now, setNow] = useState(() => parseInitialNow(initialNowIso));
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [weather, setWeather] = useState({});
 
@@ -178,7 +187,7 @@ export default function CityPrayerCardsGrid({ cities, countrySlug, countryCode }
     return () => { isMounted = false; };
   }, [cities, visibleCount, now]);
 
-  // Server side: render null to avoid hydration mismatch
+  // Without a server-provided timestamp, avoid a hydration mismatch.
   if (!now) return null;
 
   const visibleCities = cities.slice(0, visibleCount);

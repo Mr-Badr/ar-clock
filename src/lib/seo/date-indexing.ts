@@ -18,6 +18,26 @@ export type DateSitemapDay = {
   day: number;
 };
 
+export type DateCalendarSeoBounds = {
+  minYear: number;
+  maxYear: number;
+};
+
+export type DateCalendarSeoBoundsWithCurrentYear = DateCalendarSeoBounds & {
+  currentYear: number;
+};
+
+export const DATE_YEAR_SITEMAP_PATHS = Object.freeze([
+  ...Array.from(
+    { length: GREGORIAN_CALENDAR_INDEXABLE_RANGE.maxYear - GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear + 1 },
+    (_, index) => `/date/gregorian/sitemap/${GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear + index}`,
+  ),
+  ...Array.from(
+    { length: HIJRI_CALENDAR_INDEXABLE_RANGE.maxYear - HIJRI_CALENDAR_INDEXABLE_RANGE.minYear + 1 },
+    (_, index) => `/date/hijri/sitemap/${HIJRI_CALENDAR_INDEXABLE_RANGE.minYear + index}`,
+  ),
+]);
+
 function addUtcDays(date: Date, days: number): Date {
   const nextDate = new Date(date);
   nextDate.setUTCDate(nextDate.getUTCDate() + days);
@@ -32,7 +52,7 @@ function toSitemapDay(date: Date): DateSitemapDay {
   };
 }
 
-export function getGregorianCalendarSeoBoundsForYear(currentYear: number) {
+export function getGregorianCalendarSeoBoundsForYear(currentYear: number): DateCalendarSeoBoundsWithCurrentYear {
   return {
     currentYear,
     minYear: GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear,
@@ -40,7 +60,7 @@ export function getGregorianCalendarSeoBoundsForYear(currentYear: number) {
   };
 }
 
-export function getHijriCalendarSeoBoundsForYear(currentYear: number) {
+export function getHijriCalendarSeoBoundsForYear(currentYear: number): DateCalendarSeoBoundsWithCurrentYear {
   return {
     currentYear,
     minYear: HIJRI_CALENDAR_INDEXABLE_RANGE.minYear,
@@ -48,39 +68,41 @@ export function getHijriCalendarSeoBoundsForYear(currentYear: number) {
   };
 }
 
-export function getCurrentHijriSeoYear(now = new Date()) {
+export function getCurrentHijriSeoYear(now: Date): number {
   const isoDate = [
     String(now.getUTCFullYear()),
     String(now.getUTCMonth() + 1).padStart(2, '0'),
     String(now.getUTCDate()).padStart(2, '0'),
   ].join('-');
 
-  try {
-    return convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' }).year;
-  } catch {
-    return 1447;
-  }
+  return convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' }).year;
 }
 
-export function getGregorianCalendarSeoBounds(now = new Date()) {
-  return getGregorianCalendarSeoBoundsForYear(now.getUTCFullYear());
+export function getGregorianCalendarSeoBounds(): DateCalendarSeoBounds {
+  return {
+    minYear: GREGORIAN_CALENDAR_INDEXABLE_RANGE.minYear,
+    maxYear: GREGORIAN_CALENDAR_INDEXABLE_RANGE.maxYear,
+  };
 }
 
-export function getHijriCalendarSeoBounds(now = new Date()) {
-  return getHijriCalendarSeoBoundsForYear(getCurrentHijriSeoYear(now));
+export function getHijriCalendarSeoBounds(): DateCalendarSeoBounds {
+  return {
+    minYear: HIJRI_CALENDAR_INDEXABLE_RANGE.minYear,
+    maxYear: HIJRI_CALENDAR_INDEXABLE_RANGE.maxYear,
+  };
 }
 
-export function isSeoIndexableGregorianCalendarYear(year: number, currentYear: number) {
+export function isSeoIndexableGregorianCalendarYear(year: number, currentYear: number): boolean {
   const { minYear, maxYear } = getGregorianCalendarSeoBoundsForYear(currentYear);
   return year >= minYear && year <= maxYear;
 }
 
-export function isSeoIndexableHijriCalendarYear(year: number, currentYear: number) {
+export function isSeoIndexableHijriCalendarYear(year: number, currentYear: number): boolean {
   const { minYear, maxYear } = getHijriCalendarSeoBoundsForYear(currentYear);
   return year >= minYear && year <= maxYear;
 }
 
-export function getGregorianDailySitemapDays(now = new Date()): DateSitemapDay[] {
+export function getGregorianDailySitemapDays(now: Date): DateSitemapDay[] {
   const startDate = addUtcDays(now, -DATE_DAILY_SITEMAP_WINDOW_DAYS);
   const endDate = addUtcDays(now, DATE_DAILY_SITEMAP_WINDOW_DAYS);
   const days: DateSitemapDay[] = [];
@@ -119,27 +141,22 @@ export function getGregorianYearSitemapDays(year: number): DateSitemapDay[] {
   return days;
 }
 
-export function getHijriDailySitemapDays(now = new Date()): DateSitemapDay[] {
+export function getHijriDailySitemapDays(now: Date): DateSitemapDay[] {
   return getGregorianDailySitemapDays(now)
-    .map((day) => {
+    .map((day): DateSitemapDay => {
       const isoDate = [
         String(day.year),
         String(day.month).padStart(2, '0'),
         String(day.day).padStart(2, '0'),
       ].join('-');
 
-      try {
-        const hijri = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' });
-        return {
-          year: hijri.year,
-          month: hijri.month,
-          day: hijri.day,
-        };
-      } catch {
-        return null;
-      }
-    })
-    .filter((day): day is DateSitemapDay => Boolean(day));
+      const hijri = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' });
+      return {
+        year: hijri.year,
+        month: hijri.month,
+        day: hijri.day,
+      };
+    });
 }
 
 export function getHijriYearSitemapDays(year: number): DateSitemapDay[] {
@@ -163,8 +180,12 @@ export function getHijriYearSitemapDays(year: number): DateSitemapDay[] {
       try {
         convertDate({ date: isoDate, toCalendar: 'gregorian', method: 'umalqura' });
         days.push({ year, month, day });
-      } catch {
-        continue;
+      } catch (error) {
+        if (error instanceof RangeError) {
+          continue;
+        }
+
+        throw error;
       }
     }
   }

@@ -1,3 +1,5 @@
+import { getHijriMonthDays } from '@/lib/date-adapter';
+
 export const ROUTE_SLUG_PATTERN: RegExp = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 type InvalidRouteReason =
@@ -216,6 +218,10 @@ export function validateHijriDateRouteSegments(segments: DateRouteSegments): Cal
 
   if (year === null || month === null || day === null) {
     return buildInvalidCalendarResult(segments, 'invalid-format');
+  }
+
+  if (day > getHijriMonthDays(year, month)) {
+    return buildInvalidCalendarResult(segments, 'invalid-date');
   }
 
   const isoDate = [
