@@ -10,24 +10,33 @@ const DEFAULT_FIELDS = [
 ];
 
 function getIpLookupBaseUrl() {
-  return (process.env.IP_API_BASE_URL || 'http://ip-api.com').replace(/\/$/, '');
+  return String(process.env.IP_API_BASE_URL || '').trim().replace(/\/$/, '');
+}
+
+export function isIpGeoLookupEnabled() {
+  return process.env.ENABLE_IP_GEO_LOOKUP === 'true';
 }
 
 function buildIpLookupUrl(ip, fields = DEFAULT_FIELDS) {
+  const baseUrl = getIpLookupBaseUrl();
+  if (!baseUrl) return '';
+
   const encodedIp = encodeURIComponent(String(ip || '').trim());
   const encodedFields = Array.isArray(fields) ? fields.join(',') : DEFAULT_FIELDS.join(',');
-  return `${getIpLookupBaseUrl()}/json/${encodedIp}?fields=${encodedFields}`;
+  return `${baseUrl}/json/${encodedIp}?fields=${encodedFields}`;
 }
 
 export async function lookupIpGeo(ip, options = {}) {
   const normalizedIp = String(ip || '').trim();
-  if (!normalizedIp) return null;
+  if (!isIpGeoLookupEnabled() || !normalizedIp) return null;
+  const lookupUrl = buildIpLookupUrl(normalizedIp, options.fields);
+  if (!lookupUrl) return null;
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), options.timeoutMs || 3500);
 
   try {
-    const response = await fetch(buildIpLookupUrl(normalizedIp, options.fields), {
+    const response = await fetch(lookupUrl, {
       signal: controller.signal,
       next: { revalidate: options.revalidate ?? 3600 },
       headers: {

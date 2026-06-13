@@ -16,8 +16,25 @@ Primary sitemap submission URL:
 - `/about`
 - `/contact`
 - `/privacy`
+- `/terms`
 - `/disclaimer`
+- `/editorial-policy`
+
+### Utility pages (public but intentionally not indexable)
+- `/search`
 - `/offline`
+
+### Blog
+- `/blog`
+- `/blog/[slug]`
+
+### Calculators
+- `/calculators`
+- `/calculators/age/*`
+- `/calculators/building/*`
+- `/calculators/personal-finance/*`
+- `/calculators/sleep/*`
+- individual finance and percentage calculator routes
 
 ### Time now
 - `/time-now`
@@ -46,7 +63,7 @@ Primary sitemap submission URL:
 - `/date/gregorian-to-hijri`
 - `/date/hijri-to-gregorian`
 - `/date/country` — country date directory
-- `/date/country/[countrySlug]`
+- `/date/country/[countrySlug]` — priority countries are indexable; other valid countries use `noindex, follow`
 - `/date/calendar` — Gregorian calendar directory
 - `/date/calendar/[year]`
 - `/date/calendar/hijri` — Hijri calendar directory
@@ -63,6 +80,7 @@ Primary sitemap submission URL:
 
 ### Feature sitemaps
 - `/calculators/sitemap.xml`
+- `/blog/sitemap.xml`
 - `/holidays/sitemap.xml`
 - `/time-difference/sitemap.xml`
 - `/time-now/sitemap.xml`
@@ -98,6 +116,10 @@ Primary sitemap submission URL:
 - `/privacy`
 - `/contact`
 
+### Covered by `/blog/sitemap.xml`
+- `/blog`
+- canonical `/blog/[slug]` article pages
+
 ### Covered by `/calculators/sitemap.xml`
 - `/calculators`
 - `/calculators/sleep`
@@ -125,20 +147,15 @@ Primary sitemap submission URL:
 - `/calculators/vat`
 - `/calculators/percentage`
 
-### Covered by `/sitemap.xml` via priority paths
-- `/guides/how-many-cement-bags-do-i-need`
-- `/guides/how-to-estimate-rebar-weight`
-- `/guides/what-is-a-sleep-cycle`
-- `/guides/how-many-hours-of-sleep-do-i-need`
-- `/guides/best-nap-length`
-- `/guides/sleep-debt-explained`
-- `/guides/why-am-i-tired-after-sleeping`
-- `/guides/how-long-does-it-take-to-fall-asleep`
-- `/guides/rem-vs-deep-sleep`
-- `/guides/sleep-hygiene-basics`
+### Legacy article redirects
+- `/guide`, `/guides`, `/guide/*`, and `/guides/*` permanently redirect to the
+  equivalent canonical `/blog` route.
+- `/map` permanently redirects to `/fahras`.
+- Legacy article URLs are not submitted in any sitemap.
+
 ### Covered by `/holidays/sitemap.xml`
-- `/holidays/[slug]`
-- holiday alias slugs generated from the manifest
+- canonical `/holidays/[slug]` pages with `published` or `monitored` status
+- holiday alias slugs are intentionally excluded so they cannot compete with canonicals
 
 ### Covered by `/time-difference/sitemap.xml`
 - `/time-difference`
@@ -162,7 +179,7 @@ Primary sitemap submission URL:
 - `/date/gregorian-to-hijri`
 
 ### Covered by `/date/sitemaps/countries`
-- `/date/country/[countrySlug]`
+- priority `/date/country/[countrySlug]` pages only
 
 ### Covered by `/date/sitemaps/calendars`
 - `/date/calendar/[year]` for the current Gregorian year ±2
@@ -174,12 +191,20 @@ Primary sitemap submission URL:
 
 ## Intentionally Not In Sitemaps
 
-- `/offline` — utility/offline fallback page
+- `/search` and all query variants — internal search results use `noindex, follow`
+- `/offline` — utility/offline fallback page uses `noindex, nofollow`
+- invalid dynamic placeholders and unknown country/city/date paths — return `404`
+- `/fahras?q=...` and `/fahras?tab=...` — variants use `X-Robots-Tag: noindex, follow`; only `/fahras` is indexable
+- holiday alias routes — excluded in favor of their canonical holiday pages
 - daily Gregorian and Hijri date pages outside the rolling ±370-day window
 - Gregorian and Hijri calendar years outside the current-year ±2 window
 - legacy per-year daily sitemaps are not listed in the root sitemap index
 - API routes under `/api/*`
 - metadata/image/helper routes such as Open Graph image handlers
+
+These exclusions are intentional. Submitting every reachable route would create
+duplicate, thin, utility, or low-relevance URLs and can make Search Console
+coverage noisier rather than improving discovery.
 
 ## Google Search Console Submission List
 

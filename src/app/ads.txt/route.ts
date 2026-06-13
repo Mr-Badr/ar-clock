@@ -1,7 +1,7 @@
-import { getServerAdsConfig } from '@/lib/runtime-config';
+import { getAdsensePublisherId } from '@/lib/ads/account';
 
 function getAdsTxtLines() {
-  const publisherId = getServerAdsConfig().clientId?.replace(/^ca-/, '') || null;
+  const publisherId = getAdsensePublisherId();
   const extraLines = String(process.env.ADS_TXT_EXTRA_LINES || "")
     .split(/\r?\n/)
     .map((line) => line.trim())
@@ -14,10 +14,6 @@ function getAdsTxtLines() {
   }
 
   lines.push(...extraLines);
-
-  if (lines.length === 0) {
-    lines.push("# Configure ADSENSE_CLIENT_ID to publish ads.txt.");
-  }
 
   return lines;
 }

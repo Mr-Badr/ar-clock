@@ -24,12 +24,24 @@ type FetchResult = {
   body: string;
 };
 
+type AdSenseConnectionAudit = {
+  publisherId: string | null;
+  issues: AuditIssue[];
+};
+
 const DEFAULT_BASE_URL = 'https://miqatona.com';
 const DEFAULT_REQUEST_TIMEOUT_MS = 15000;
 const MAX_RETRY_ATTEMPTS = 2;
 const MIN_BODY_CHARS = 12000;
 const MIN_TEXT_WORDS = 500;
 const TRUST_LINKS = ['/about', '/privacy', '/contact', '/terms', '/disclaimer'];
+const GOOGLE_PARTNER_DATA_URL = 'https://policies.google.com/technologies/partner-sites';
+const PRIVACY_DISCLOSURE_TERMS = [
+  'ملفات تعريف الارتباط',
+  'إشارات الويب',
+  'عناوين IP',
+  'معرّفات',
+];
 const ADSBOT_USER_AGENT = [
   'AdsBot-Google (+http://www.google.com/adsbot.html)',
   'Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36',
@@ -129,6 +141,13 @@ function normalizeBaseUrl(value: string | null) {
   return rawValue.replace(/\/+$/, '');
 }
 
+function normalizeCanonicalBaseUrl(value: string | null, fetchBaseUrl: string) {
+  const rawValue = value
+    || process.env.GOOGLE_ADS_AUDIT_CANONICAL_BASE_URL
+    || fetchBaseUrl;
+  return rawValue.replace(/\/+$/, '');
+}
+
 function getRequestTimeoutMs(args: string[]) {
   const rawValue = getArgumentValue(args, 'timeout-ms') || process.env.GOOGLE_ADS_AUDIT_TIMEOUT_MS || '';
   const parsedValue = Number(rawValue);
@@ -151,6 +170,14 @@ function parseRobotsContent(value: string) {
     .split(',')
     .map((item) => item.trim())
     .filter(Boolean);
+}
+
+function parseGooglePublisherId(adsTxtBody: string) {
+  const match = adsTxtBody.match(
+    /^google\.com,\s*(pub-\d+),\s*DIRECT,\s*f08c47fec0942fa0\s*$/im,
+  );
+
+  return match?.[1] || null;
 }
 
 function isSameCanonicalPath(canonicalUrl: string, expectedUrl: string) {
@@ -212,9 +239,66 @@ async function fetchWithRetry(url: string, attempt: number, timeoutMs: number): 
   }
 }
 
-function auditHtml(baseUrl: string, page: LandingPageCheck, result: FetchResult) {
+async function auditAdSenseConnection(
+  baseUrl: string,
+  timeoutMs: number,
+): Promise<AdSenseConnectionAudit> {
   const issues: AuditIssue[] = [];
-  const expectedUrl = `${baseUrl}${page.path}`;
+
+  try {
+    const adsTxtResult = await fetchWithRetry(`${baseUrl}/ads.txt`, 1, timeoutMs);
+    const publisherId = parseGooglePublisherId(adsTxtResult.body);
+
+    if (!publisherId) {
+      return { publisherId: null, issues };
+    }
+
+    const homeResult = await fetchWithRetry(`${baseUrl}/`, 1, timeoutMs);
+    const $ = cheerio.load(homeResult.body);
+    const expectedAccountId = `ca-${publisherId}`;
+    const accountId = normalizeText(
+      $('meta[name="google-adsense-account"]').attr('content') || '',
+    );
+
+    if (accountId !== expectedAccountId) {
+      pushIssue(
+        issues,
+        '/',
+        'error',
+        'adsense-account-verification',
+        'The AdSense account meta tag must match the publisher declared in ads.txt.',
+        {
+          adsTxtPublisherId: publisherId,
+          expectedAccountId,
+          accountId: accountId || null,
+        },
+      );
+    }
+
+    return { publisherId, issues };
+  } catch (error) {
+    pushIssue(
+      issues,
+      '/ads.txt',
+      'error',
+      'adsense-connection-fetch-failed',
+      'The audit could not verify ads.txt and the AdSense account meta tag.',
+      {
+        timeoutMs,
+        error: error instanceof Error ? error.message : String(error),
+      },
+    );
+    return { publisherId: null, issues };
+  }
+}
+
+function auditHtml(
+  canonicalBaseUrl: string,
+  page: LandingPageCheck,
+  result: FetchResult,
+) {
+  const issues: AuditIssue[] = [];
+  const expectedUrl = `${canonicalBaseUrl}${page.path}`;
   const $ = cheerio.load(result.body);
   const title = normalizeText($('title').first().text());
   const description = normalizeText($('meta[name="description"]').attr('content') || '');
@@ -341,14 +425,39 @@ function auditHtml(baseUrl: string, page: LandingPageCheck, result: FetchResult)
     });
   }
 
+  if (page.path === '/privacy') {
+    const missingPrivacyTerms = PRIVACY_DISCLOSURE_TERMS.filter((term) => !bodyText.includes(term));
+    const hasGooglePartnerDataLink = $(`a[href="${GOOGLE_PARTNER_DATA_URL}"]`).length > 0;
+
+    if (missingPrivacyTerms.length > 0 || !hasGooglePartnerDataLink) {
+      pushIssue(
+        issues,
+        page.path,
+        'error',
+        'privacy-disclosure',
+        'Privacy policy must disclose Google ad-serving identifiers and link to Google partner data usage.',
+        {
+          missingPrivacyTerms,
+          requiredLink: GOOGLE_PARTNER_DATA_URL,
+          hasGooglePartnerDataLink,
+        },
+      );
+    }
+  }
+
   return issues;
 }
 
-async function auditLandingPage(baseUrl: string, page: LandingPageCheck, timeoutMs: number) {
-  const url = `${baseUrl}${page.path}`;
+async function auditLandingPage(
+  fetchBaseUrl: string,
+  canonicalBaseUrl: string,
+  page: LandingPageCheck,
+  timeoutMs: number,
+) {
+  const url = `${fetchBaseUrl}${page.path}`;
   try {
     const result = await fetchWithRetry(url, 1, timeoutMs);
-    return auditHtml(baseUrl, page, result);
+    return auditHtml(canonicalBaseUrl, page, result);
   } catch (error) {
     const issues: AuditIssue[] = [];
     pushIssue(
@@ -370,6 +479,10 @@ async function auditLandingPage(baseUrl: string, page: LandingPageCheck, timeout
 async function main() {
   const args = process.argv.slice(2);
   const baseUrl = normalizeBaseUrl(getArgumentValue(args, 'base'));
+  const canonicalBaseUrl = normalizeCanonicalBaseUrl(
+    getArgumentValue(args, 'canonical-base'),
+    baseUrl,
+  );
   const timeoutMs = getRequestTimeoutMs(args);
   const selectedPath = getArgumentValue(args, 'path');
   const pages = selectedPath
@@ -381,9 +494,16 @@ async function main() {
   }
 
   const allIssues: AuditIssue[] = [];
+  const adsenseConnection = await auditAdSenseConnection(baseUrl, timeoutMs);
+  allIssues.push(...adsenseConnection.issues);
 
   for (const page of pages) {
-    const issues = await auditLandingPage(baseUrl, page, timeoutMs);
+    const issues = await auditLandingPage(
+      baseUrl,
+      canonicalBaseUrl,
+      page,
+      timeoutMs,
+    );
     allIssues.push(...issues);
   }
 
@@ -393,8 +513,10 @@ async function main() {
   console.log('[google-ads-readiness] summary');
   console.log(JSON.stringify({
     baseUrl,
+    canonicalBaseUrl,
     timeoutMs,
     checkedPages: pages.length,
+    adsTxtPublisherId: adsenseConnection.publisherId,
     errors: errors.length,
     warnings: warnings.length,
   }, null, 2));

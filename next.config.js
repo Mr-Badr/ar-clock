@@ -85,13 +85,6 @@ const nextConfig = {
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(self)' },
         ],
       },
-      {
-        source: '/_next/static/(.*)',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
-
       // ── YOUR ORIGINAL ROUTES (UNCHANGED) ────────────────────────────────
       {
         source: '/time-now/:path*',

@@ -3,7 +3,8 @@
  *
  * Activation rule:
  * - If ADSENSE_CLIENT_ID is empty, ads are off everywhere.
- * - If ADSENSE_CLIENT_ID is set, Google Auto Ads can run globally.
+ * - ADSENSE_CLIENT_ID may remain set for site verification and ads.txt.
+ * - Ad delivery also requires GOOGLE_CERTIFIED_CMP_ENABLED=true.
  * - Manual placements below are optional refinements for higher-control layouts.
  *
  * When you are ready for precise placements, paste the slot ids here once.

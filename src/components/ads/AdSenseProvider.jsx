@@ -50,13 +50,17 @@
  */
 
 import Script from "next/script";
+import { usePathname } from "next/navigation";
+import { getAdRoutePolicy } from "@/lib/ads/route-policy";
 import { useMarketingPermission } from "@/lib/client/marketing";
 import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
 import { logger, serializeError } from "@/lib/logger";
 
 export default function AdSenseProvider() {
   const { autoAdsEnabled, clientId } = useAdsRuntimeConfig();
-  const shouldLoadAds = Boolean(clientId);
+  const pathname = usePathname();
+  const routePolicy = getAdRoutePolicy(pathname || "/");
+  const shouldLoadAds = Boolean(clientId) && routePolicy.allowAdDelivery;
   const canLoad = useMarketingPermission(shouldLoadAds);
 
   if (!shouldLoadAds || !canLoad) return null;

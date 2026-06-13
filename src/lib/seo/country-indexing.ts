@@ -16,7 +16,7 @@ type GeoSeoScope = typeof GEO_SEO_SCOPE[keyof typeof GEO_SEO_SCOPE];
 
 export const GEO_ROUTE_INDEXING_POLICIES = {
   dateCountry: {
-    countryScope: GEO_SEO_SCOPE.ALL,
+    countryScope: GEO_SEO_SCOPE.PRIORITY,
   },
   prayerTimes: {
     countryScope: GEO_SEO_SCOPE.ALL,

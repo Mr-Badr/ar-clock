@@ -33,6 +33,11 @@ import {
   isSeoIndexableGregorianDate,
   isSeoIndexableHijriDate,
 } from '@/lib/seo/date-indexing';
+import {
+  GEO_ROUTE_INDEXING_POLICIES,
+  SEO_PRIORITY_COUNTRY_SLUGS,
+  selectSeoCountrySlugs,
+} from '@/lib/seo/country-indexing';
 import { getSiteUrl } from '@/lib/site-config';
 import { COUNTRY_LIST } from '@/lib/calculators/building/country-data';
 
@@ -252,6 +257,22 @@ test('date sitemap index exposes compact rolling daily-date sitemaps', async () 
   assert.doesNotMatch(xml, new RegExp(`${base}/date/hijri/sitemap/\\d{4}`));
   assert.doesNotMatch(xml, /<lastmod>/);
   assert.equal([...xml.matchAll(/<sitemap>/g)].length, 5);
+});
+
+test('country date sitemap publishes priority markets instead of every templated country page', async () => {
+  const policy = GEO_ROUTE_INDEXING_POLICIES.dateCountry;
+  const slugs = selectSeoCountrySlugs(
+    [...SEO_PRIORITY_COUNTRY_SLUGS, 'afghanistan'],
+    { scope: policy.countryScope },
+  );
+  const prioritySlugs = new Set(SEO_PRIORITY_COUNTRY_SLUGS);
+
+  assert.ok(slugs.length > 0);
+  assert.ok(slugs.length < 100, 'country date sitemap should remain curated');
+  assert.equal(slugs.every((slug) => prioritySlugs.has(slug)), true);
+  assert.equal(slugs.includes('saudi-arabia'), true);
+  assert.equal(slugs.includes('united-states'), true);
+  assert.equal(slugs.includes('afghanistan'), false);
 });
 
 test('recent date sitemaps publish canonical Gregorian and Hijri day pages', async () => {

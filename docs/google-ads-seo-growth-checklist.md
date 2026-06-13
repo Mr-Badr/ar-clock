@@ -21,24 +21,26 @@ Use this file for execution status only. Keep competitor research in temporary w
 
 ## P0: Google Ads Acceptance and Destination Health
 
-- [!] Verify production canonical host configuration.
+- [x] Verify production canonical host configuration.
   - Check: production `NEXT_PUBLIC_BASE_URL` or `NEXT_PUBLIC_SITE_URL` resolves to `https://miqatona.com`.
   - Code guard: `getSiteUrl()` canonicalizes `https://www.miqatona.com` to `https://miqatona.com`, and production falls back to `https://miqatona.com`.
   - Validation: `tests/google-ads-config.test.ts` covers canonical host normalization; `npm run seo:validate` passed.
-  - Blocked by: live production fetch/deploy confirmation that HTML, sitemap entries, Open Graph URLs, and canonical tags all emit `https://miqatona.com`.
+  - Live validation on June 13, 2026: HTTP redirects to HTTPS, `www` redirects to the apex host, the sitemap index returns `200`, and sampled production canonicals use `https://miqatona.com`.
   - Done when: production HTML, sitemap entries, Open Graph URLs, and canonical tags never emit localhost, staging, IP, or non-canonical hosts.
 
-- [!] Verify production `ads.txt`.
+- [~] Verify production `ads.txt`.
   - Check: `https://miqatona.com/ads.txt`, `https://www.miqatona.com/ads.txt`, and HTTP redirects.
-  - Code guard: `ads.txt` publishes `google.com, pub-..., DIRECT, f08c47fec0942fa0` when `ADSENSE_CLIENT_ID=ca-pub-...` is configured.
+  - Code guard: `ads.txt` and the global `google-adsense-account` meta tag always publish the verified public account, independent of runtime ad delivery.
   - Validation: `tests/google-ads-config.test.ts` covers the generated Google seller line.
-  - Blocked by: the real production `ADSENSE_CLIENT_ID` value and AdSense recrawl status.
+  - Live validation on June 13, 2026: root `ads.txt` returns `google.com, pub-5421885011942418, DIRECT, f08c47fec0942fa0`.
+  - Blocked by: AdSense recrawl status in the account.
   - Done when: root `ads.txt` contains the active Google publisher line and AdSense no longer reports it missing after recrawl.
 
 - [!] Configure a Google-certified consent management platform before enabling ads.
   - Required for: serving personalized or non-personalized ads to users in the EEA, UK, and Switzerland under Google's consent requirements.
   - Important: the local `ENABLE_CONSENT_BANNER` control is not a substitute for a Google-certified CMP.
   - Recommended path: configure Google Privacy & messaging in AdSense or another certified CMP, then verify consent choices and ad blocking in a fresh mobile browser session.
+  - Code guard: `ADSENSE_CLIENT_ID` remains available for `ads.txt` and account verification, but ad scripts and slots stay off until `GOOGLE_CERTIFIED_CMP_ENABLED=true`.
   - Blocked by: AdSense account access and live CMP configuration.
   - Done when: the certified CMP is active on production and ads do not load before the required consent signal.
 
@@ -62,8 +64,9 @@ Use this file for execution status only. Keep competitor research in temporary w
   - Production check after deploy: `npm run ads:readiness:live`.
   - Source: `scripts/google-ads-readiness-audit.ts`, `package.json`.
   - Scope: AdsBot-style fetches for priority landing pages, 200 HTML status, canonical match, no `noindex`/`nofollow`, one H1, useful task surface, trust links, message match, and ad markup after primary content. The sampled map now includes city-level and country-level current-time routes.
-  - Current local dev validation: `17` sampled landing pages returned `0` errors and `0` warnings against `http://localhost:3000`.
-  - Blocked by: live production execution and reviewing any warnings with rendered mobile screenshots.
+  - Current local validation: `13` sampled landing pages returned `0` errors and `0` warnings against `http://localhost:3000`.
+  - Current live validation on June 13, 2026: one account-verification error remains because the deployed homepage does not yet contain the new `google-adsense-account` meta tag.
+  - Blocked by: deploying the local fix, rerunning the live audit, and reviewing rendered mobile screenshots.
   - Done when: all sampled Ads landing pages return zero errors and only justified warnings.
 
 - [x] Confirm Google AdsBot can crawl the site.

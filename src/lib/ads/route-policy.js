@@ -1,3 +1,17 @@
+const AD_FREE_EXACT_PATHS = new Set([
+  '/404',
+  '/_not-found',
+  '/about',
+  '/contact',
+  '/disclaimer',
+  '/editorial-policy',
+  '/fahras',
+  '/offline',
+  '/privacy',
+  '/search',
+  '/terms',
+]);
+
 export function normalizeAdPathname(pathname = '/') {
   if (!pathname) return '/';
   const normalized = pathname.replace(/\/+$/, '');
@@ -6,6 +20,10 @@ export function normalizeAdPathname(pathname = '/') {
 
 export function getAdRoutePolicy(pathname = '/') {
   const normalized = normalizeAdPathname(pathname);
+  const allowAdDelivery = (
+    !AD_FREE_EXACT_PATHS.has(normalized)
+    && !normalized.startsWith('/api/')
+  );
 
   const isHolidayDetail = normalized.startsWith('/holidays/');
   const isDateSection = normalized === '/date' || normalized.startsWith('/date/');
@@ -13,11 +31,14 @@ export function getAdRoutePolicy(pathname = '/') {
   const isTimeDifferenceSection = normalized === '/time-difference' || normalized.startsWith('/time-difference/');
 
   return {
+    allowAdDelivery,
     enableFullscreenCompanion:
+      allowAdDelivery && (
       normalized === '/' ||
       isHolidayDetail ||
       isDateSection ||
       isTimeNowSection ||
-      isTimeDifferenceSection,
+      isTimeDifferenceSection
+      ),
   };
 }

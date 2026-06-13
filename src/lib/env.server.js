@@ -49,6 +49,7 @@ const runtimeSchema = z
     LIVE_GEO_PROVIDER: z.literal('postgres').default('postgres'),
 
     /* optional infrastructure */
+    ENABLE_IP_GEO_LOOKUP: optionalBoolean,
     IP_API_BASE_URL: emptyToUndefined(z.string().url().optional()),
 
     /* pdf */
@@ -63,6 +64,7 @@ const runtimeSchema = z
 
     /* ads */
     ADSENSE_CLIENT_ID: optionalString,
+    GOOGLE_CERTIFIED_CMP_ENABLED: optionalBoolean,
 
     /* PWA */
     ENABLE_SW: optionalBoolean,
@@ -91,6 +93,27 @@ const runtimeSchema = z
         code: 'custom',
         path: ['DATABASE_URL'],
         message: 'DATABASE_URL required in production',
+      })
+    }
+
+    if (value.ENABLE_IP_GEO_LOOKUP === 'true' && !value.IP_API_BASE_URL) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['IP_API_BASE_URL'],
+        message: 'IP_API_BASE_URL required when IP geolocation is enabled',
+      })
+    }
+
+    if (
+      isProd
+      && value.ENABLE_IP_GEO_LOOKUP === 'true'
+      && value.IP_API_BASE_URL
+      && !value.IP_API_BASE_URL.startsWith('https://')
+    ) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['IP_API_BASE_URL'],
+        message: 'IP_API_BASE_URL must use HTTPS in production',
       })
     }
   })

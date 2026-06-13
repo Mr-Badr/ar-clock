@@ -16,6 +16,7 @@ import ConsentBanner from '@/components/consent/ConsentBanner';
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
 import SiteVisitTracker from '@/components/site/SiteVisitTracker.client';
 // @vercel/analytics removed — not compatible with self-hosted VPS
+import { ADSENSE_ACCOUNT_CLIENT_ID } from '@/lib/ads/account';
 import { getMetadataEnv } from '@/lib/env.server';
 import { PublicRuntimeProvider } from '@/lib/client/public-runtime';
 import { getPublicRuntimeConfig } from '@/lib/runtime-config';
@@ -163,12 +164,12 @@ export default function RootLayout({
       className={`dark ${notoSansArabic.variable} ${ibmPlexSansArabic.variable}`}
     >
       <head>
+        <meta
+          name="google-adsense-account"
+          content={ADSENSE_ACCOUNT_CLIENT_ID}
+        />
         {publicRuntimeConfig.ads.enabled ? (
           <>
-            <meta
-              name="google-adsense-account"
-              content={publicRuntimeConfig.ads.clientId || undefined}
-            />
             <link
               rel="preconnect"
               href="https://pagead2.googlesyndication.com"

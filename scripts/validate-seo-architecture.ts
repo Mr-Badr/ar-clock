@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
 import { CALCULATOR_HUBS, CALCULATOR_ROUTES } from '@/lib/calculators/data';
@@ -34,6 +34,11 @@ const REQUIRED_ROOT_SITEMAP_PATHS = [
   '/date/country',
 ] as const;
 const MAX_SITEMAP_INDEX_ENTRIES = 50000;
+const APP_PAGE_EXTENSIONS = new Set(['.js', '.jsx', '.ts', '.tsx']);
+const INTENTIONALLY_NON_INDEXABLE_PAGE_ROUTES = new Map([
+  ['/offline', 'src/app/offline/page.tsx'],
+  ['/search', 'src/app/search/page.jsx'],
+]);
 
 const REQUIRED_SEGMENT_GUARDS = [
   { route: '/blog', dir: 'src/app/blog' },
@@ -134,6 +139,79 @@ function routeOrAncestorFileExists(routeDir: string, filenames: readonly string[
   }
 
   return false;
+}
+
+function collectAppPageFiles(directory: string): string[] {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const entryPath = path.join(directory, entry.name);
+
+    if (entry.isDirectory()) {
+      return collectAppPageFiles(entryPath);
+    }
+
+    const extension = path.extname(entry.name);
+    return entry.name.startsWith('page.') && APP_PAGE_EXTENSIONS.has(extension)
+      ? [entryPath]
+      : [];
+  });
+}
+
+function getRoutePatternFromPageFile(filePath: string) {
+  const appRoot = path.join(process.cwd(), 'src/app');
+  const relativePath = path.relative(appRoot, filePath);
+  const routeDirectory = path.dirname(relativePath);
+  const segments = routeDirectory === '.'
+    ? []
+    : routeDirectory
+        .split(path.sep)
+        .filter((segment) => !segment.startsWith('(') && !segment.startsWith('@'));
+
+  return segments.length > 0 ? `/${segments.join('/')}` : '/';
+}
+
+function assertPageRouteIndexabilityDecisions(errors: string[]) {
+  const appRoot = path.join(process.cwd(), 'src/app');
+  const pageFiles = collectAppPageFiles(appRoot);
+  const discoveredRoutes = new Set<string>();
+
+  for (const filePath of pageFiles) {
+    const route = getRoutePatternFromPageFile(filePath);
+    discoveredRoutes.add(route);
+    const expectedNonIndexableFile = INTENTIONALLY_NON_INDEXABLE_PAGE_ROUTES.get(route);
+
+    if (expectedNonIndexableFile) {
+      const relativeFilePath = path.relative(process.cwd(), filePath);
+      if (relativeFilePath !== expectedNonIndexableFile) {
+        errors.push(
+          `Non-indexable route ${route} moved from ${expectedNonIndexableFile} to ${relativeFilePath}; update its explicit policy.`,
+        );
+        continue;
+      }
+
+      const source = readFileSync(filePath, 'utf8');
+      if (!source.includes('index: false')) {
+        errors.push(`Intentionally non-indexable route is missing robots index:false: ${route}`);
+      }
+      continue;
+    }
+
+    if (!isPathCoveredBySeoArchitecture(route)) {
+      errors.push(
+        `Page route has no sitemap/indexability decision: ${route} (${path.relative(process.cwd(), filePath)})`,
+      );
+    }
+  }
+
+  for (const [route, expectedFile] of INTENTIONALLY_NON_INDEXABLE_PAGE_ROUTES) {
+    if (!discoveredRoutes.has(route)) {
+      errors.push(`Declared non-indexable page route is missing: ${route} (${expectedFile})`);
+    }
+  }
+
+  return {
+    pageFiles: pageFiles.length,
+    explicitlyNonIndexableRoutes: INTENTIONALLY_NON_INDEXABLE_PAGE_ROUTES.size,
+  };
 }
 
 function assertRequiredSegmentGuardFiles(errors: string[]) {
@@ -448,6 +526,7 @@ function assertDateCalendarModels(errors: string[]) {
 function main() {
   const errors: string[] = [];
   const rootPaths = ROOT_SITEMAP_ROUTES.map((route: { path: string }) => route.path);
+  const pageRouteAudit = assertPageRouteIndexabilityDecisions(errors);
 
   assertUnique('ROOT_SITEMAP_ROUTES', rootPaths, errors);
   assertUnique('WEBSITE_ARCHITECTURE_PATHS', WEBSITE_ARCHITECTURE_PATHS, errors);
@@ -530,6 +609,8 @@ function main() {
         websiteParts: WEBSITE_ARCHITECTURE_PATHS.length,
         sitemapEndpoints: SITEMAP_INDEX_PATHS.length,
         sampledPaths: COVERAGE_SAMPLE_PATHS.length,
+        pageRoutes: pageRouteAudit.pageFiles,
+        explicitlyNonIndexablePageRoutes: pageRouteAudit.explicitlyNonIndexableRoutes,
         coverageByFamily: Object.fromEntries(coverageCounts),
       },
       null,

@@ -1,8 +1,8 @@
 import { getManualAdsConfig } from '@/lib/ads/manual-config';
+import { ADSENSE_ACCOUNT_CLIENT_ID } from '@/lib/ads/account';
 
 const TRUTHY_VALUES = new Set(['1', 'true', 'yes', 'on']);
 const ADSENSE_CLIENT_PREFIX = 'ca-pub-';
-const DEFAULT_GA_MEASUREMENT_ID = 'G-N25LF6BM0K';
 
 function resolveEnvValue(...values) {
   for (const value of values) {
@@ -44,11 +44,19 @@ export function getAppVersion() {
 }
 
 export function getServerAdsConfig() {
-  const clientId = normalizeAdsenseClientId(
+  const configuredClientId = normalizeAdsenseClientId(
     resolveEnvValue(
       process.env.ADSENSE_CLIENT_ID,
       process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID,
     ),
+  );
+  const clientIdMatchesAccount = (
+    !configuredClientId || configuredClientId === ADSENSE_ACCOUNT_CLIENT_ID
+  );
+  const clientId = clientIdMatchesAccount ? configuredClientId : null;
+  const certifiedCmpEnabled = normalizeBooleanEnv(
+    process.env.GOOGLE_CERTIFIED_CMP_ENABLED,
+    false,
   );
   const manualSlots = getManualAdsConfig();
   const hasManualPlacements = Boolean(
@@ -60,11 +68,14 @@ export function getServerAdsConfig() {
     || manualSlots.sidebarRight
     || manualSlots.sidebarLeft,
   );
+  const enabled = Boolean(clientId) && certifiedCmpEnabled;
 
   return {
     clientId,
-    enabled: Boolean(clientId),
-    autoAdsEnabled: Boolean(clientId) && !hasManualPlacements,
+    enabled,
+    certifiedCmpEnabled,
+    clientIdMatchesAccount,
+    autoAdsEnabled: enabled && !hasManualPlacements,
     hasManualPlacements,
     manualSlots,
   };
@@ -74,7 +85,6 @@ export function getPublicRuntimeConfig() {
   const gaMeasurementId = resolveEnvValue(
     process.env.GA_MEASUREMENT_ID,
     process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
-    DEFAULT_GA_MEASUREMENT_ID,
   );
   const gtmId = resolveEnvValue(
     process.env.GTM_ID,
@@ -85,9 +95,8 @@ export function getPublicRuntimeConfig() {
     process.env.NEXT_PUBLIC_ENABLE_ANALYTICS,
   );
   const hasTrackingId = Boolean(gtmId || gaMeasurementId);
-  const analyticsEnabled = analyticsExplicitFlag
-    ? normalizeBooleanEnv(analyticsExplicitFlag, false)
-    : hasTrackingId;
+  const analyticsEnabled = normalizeBooleanEnv(analyticsExplicitFlag, false);
+  const adsConfig = getServerAdsConfig();
 
   return {
     appVersion: getAppVersion(),
@@ -111,6 +120,11 @@ export function getPublicRuntimeConfig() {
       gtmId,
       mode: gtmId ? 'gtm' : gaMeasurementId ? 'ga4' : 'none',
     },
-    ads: getServerAdsConfig(),
+    ads: adsConfig.enabled
+      ? adsConfig
+      : {
+        ...adsConfig,
+        clientId: null,
+      },
   };
 }

@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { detectBestCityMatch } from '@/lib/locationService';
 import { searchCities } from '@/lib/db/queries/cities';
-import { lookupIpGeo } from '@/lib/ip-lookup';
+import { isIpGeoLookupEnabled, lookupIpGeo } from '@/lib/ip-lookup';
 import { getRequestIp, json, parseSearchParams, withApiHandler } from '@/lib/api/route-utils';
 import { logger, serializeError } from '@/lib/logger';
 
@@ -15,8 +15,7 @@ const querySchema = z.object({
 /**
  * api/ip-city/route.js
  * 
- * Falls back to IP-based location detection when GPS is not available.
- * Uses ip-api.com (free for non-commercial).
+ * Resolves location from browser hints and optional server-side IP geolocation.
  */
 export const GET = withApiHandler(
   '/api/ip-city',
@@ -27,7 +26,7 @@ export const GET = withApiHandler(
     const normalizedCountryCodeHint = countryCodeHint ? countryCodeHint.toUpperCase() : '';
     const ip = String(getRequestIp(request) || '').trim();
 
-    const data = ip
+    const data = isIpGeoLookupEnabled() && ip
       ? await lookupIpGeo(ip, {
           fields: ['status', 'message', 'country', 'countryCode', 'city', 'lat', 'lon', 'timezone'],
           revalidate: 3600,

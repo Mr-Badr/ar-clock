@@ -14,7 +14,7 @@ import { getCountryBySlug, getCountryByCode }                          from '@/l
 import { getCityBySlug, getTopCitiesByCountry, getCapitalCity, getCitiesByCountry,
          searchCities as dbSearchCities, getAllCityParams }            from '@/lib/db/queries/cities';
 import { findNearestCitiesViaLiveSource }                              from '@/lib/db/live-geo-source';
-import { lookupIpGeo }                                                 from '@/lib/ip-lookup';
+import { isIpGeoLookupEnabled, lookupIpGeo }                            from '@/lib/ip-lookup';
 import citiesFallback                                                  from '@/lib/db/fallback/cities-index.json';
 
 /* ── In-memory index from build-time fallback for O(1) lookups ─────────── */
@@ -457,7 +457,7 @@ export async function resolveRequestLocationFromHeaders(headersLike) {
   const ip = getForwardedIp(headersLike);
 
   let ipGeo = null;
-  if (isLookupableIp(ip)) {
+  if (isIpGeoLookupEnabled() && isLookupableIp(ip)) {
     ipGeo = await lookupIpGeo(ip, {
       fields: ['status', 'countryCode', 'city', 'lat', 'lon', 'timezone'],
       revalidate: 3600,

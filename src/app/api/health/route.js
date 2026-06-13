@@ -72,7 +72,7 @@ function resolveRouteProbeConcurrency(value) {
 }
 
 function getIpApiBaseUrl(env) {
-  const configuredBaseUrl = String(env?.IP_API_BASE_URL || 'http://ip-api.com').replace(/\/$/, '');
+  const configuredBaseUrl = String(env?.IP_API_BASE_URL || '').replace(/\/$/, '');
   return `${configuredBaseUrl}/json/8.8.8.8?fields=status`;
 }
 
@@ -282,18 +282,21 @@ export const GET = withApiHandler('/api/health', async ({ request, requestId }) 
         (probe) => checkCriticalRoute(routeProbeOrigin, probe, routeProbeTimeoutMs),
       )
     : [];
-  const upstreams = runDeepChecks && runtimeEnv.status === 'ok'
-    ? await Promise.all([
+  const ipGeoLookupEnabled = runtimeEnv.status === 'ok'
+    && runtimeEnv.env.ENABLE_IP_GEO_LOOKUP === 'true';
+  const upstreamChecks = runDeepChecks && runtimeEnv.status === 'ok'
+    ? [
         checkUpstream(
           'open-meteo',
           'https://api.open-meteo.com/v1/forecast?latitude=24.7136&longitude=46.6753&current=temperature_2m',
         ),
-        checkUpstream(
+        ...(ipGeoLookupEnabled ? [checkUpstream(
           'ip-api',
           getIpApiBaseUrl(runtimeEnv.env),
-        ),
-      ])
+        )] : []),
+      ]
     : [];
+  const upstreams = await Promise.all(upstreamChecks);
   const environment = runtimeEnv.status === 'ok'
     ? {
         status: 'ok',
@@ -367,6 +370,7 @@ export const GET = withApiHandler('/api/health', async ({ request, requestId }) 
         nodeEnv: runtimeEnv.status === 'ok' ? runtimeEnv.env.NODE_ENV : getNodeEnv(),
         liveGeoDbEnabled: isLiveGeoDbEnabled(),
         liveGeoProvider: getLiveGeoProviderName(),
+        ipGeoLookupEnabled,
       },
       checks: {
         environment,

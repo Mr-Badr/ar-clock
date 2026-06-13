@@ -8,6 +8,8 @@ const HEALTH_ENV_KEYS = [
   'DATABASE_URL',
   'REVALIDATE_SECRET',
   'ENABLE_LIVE_GEO_DB',
+  'ENABLE_IP_GEO_LOOKUP',
+  'IP_API_BASE_URL',
 ] as const;
 
 function withEnv(
@@ -79,6 +81,30 @@ test('getRuntimeEnvHealthSnapshot returns ok when production env requirements ar
       assert.equal(snapshot.status, 'ok');
       assert.deepEqual(snapshot.issues, []);
       assert.equal(snapshot.env.NODE_ENV, 'production');
+    },
+  );
+});
+
+test('production IP geolocation requires an explicit HTTPS provider', () => {
+  withEnv(
+    {
+      NODE_ENV: 'production',
+      REVALIDATE_SECRET: 'secret',
+      DATABASE_URL: 'postgresql://user:pass@localhost:5432/miqatona',
+      ENABLE_LIVE_GEO_DB: undefined,
+      ENABLE_IP_GEO_LOOKUP: 'true',
+      IP_API_BASE_URL: 'http://ip-api.com',
+    },
+    () => {
+      const snapshot = getRuntimeEnvHealthSnapshot();
+
+      assert.equal(snapshot.status, 'fail');
+      assert.equal(
+        snapshot.issues.some(
+          (issue) => issue.path === 'IP_API_BASE_URL' && issue.message.includes('HTTPS'),
+        ),
+        true,
+      );
     },
   );
 });
