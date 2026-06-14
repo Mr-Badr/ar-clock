@@ -1,5 +1,3 @@
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
 import { Suspense } from 'react';
 
 import AgeCalculator from '@/components/calculators/age/AgeCalculator.client';
@@ -10,6 +8,7 @@ import {
   CalculatorInfoGrid,
   CalculatorResourceLinks,
   CalculatorSection,
+  CalculatorToolLauncher,
 } from '@/components/calculators/common';
 import {
   AGE_CALCULATOR_ROUTES,
@@ -129,6 +128,36 @@ const AGE_RELATED_GUIDES = [
     description: 'بعد معرفة العمر، قارنه بنطاق النوم المناسب للأطفال أو البالغين.',
   },
 ];
+const AGE_TOOL_LABELS = {
+  calculator: 'العمر الآن',
+  hijri: 'هجري وميلادي',
+  difference: 'فرق عمر',
+  'birth-day': 'يوم الميلاد',
+  milestones: 'محطات عمرية',
+  planets: 'تعليم ممتع',
+  countdown: 'عد تنازلي',
+  retirement: 'تخطيط تقاعد',
+};
+const AGE_TOOL_CTAS = {
+  calculator: 'ابدأ حساب العمر',
+  hijri: 'احسب العمر الهجري',
+  difference: 'احسب فرق العمر',
+  'birth-day': 'اعرف يوم ميلادك',
+  milestones: 'اعرف محطتك القادمة',
+  planets: 'قارن عمرك على الكواكب',
+  countdown: 'ابدأ العد التنازلي',
+  retirement: 'قدّر موعد التقاعد',
+};
+const AGE_TOOL_ICONS = {
+  calculator: 'عمر',
+  hijri: 'هجري',
+  difference: 'فرق',
+  'birth-day': 'يوم',
+  milestones: '10K',
+  planets: 'كواكب',
+  countdown: 'عد',
+  retirement: 'تقاعد',
+};
 
 export const metadata = buildAgeMetadata({
   title: 'حاسبة العمر | احسب عمرك بالهجري والميلادي وفرق العمر',
@@ -173,8 +202,14 @@ export default function AgeHubPage() {
       },
     })),
   };
-  const primaryRoute = safeRoutes[0];
-  const secondaryRoutes = safeRoutes.slice(1);
+  const toolLauncherItems = safeRoutes.map((item) => ({
+    href: item.href,
+    label: AGE_TOOL_LABELS[item.slug] || 'مسار عمر',
+    title: item.title,
+    description: item.description,
+    ctaLabel: AGE_TOOL_CTAS[item.slug] || 'افتح الأداة',
+    iconLabel: AGE_TOOL_ICONS[item.slug] || 'عمر',
+  }));
 
   return (
     <main className="calc-product-page bg-base text-primary" dir="rtl" lang="ar">
@@ -213,36 +248,14 @@ export default function AgeHubPage() {
         title="اختر حاسبة العمر بحسب ما تريد معرفته الآن"
         description="ابدأ بالحاسبة الأساسية إذا كان سؤالك هو: كم عمري الان؟ ثم انتقل للمسارات الأخرى عندما تحتاج الهجري، فرق العمر، عيد الميلاد، أو التقاعد."
       >
-        <div className="calc-decision-layout">
-          {primaryRoute ? (
-            <Link href={primaryRoute.href} className="calc-decision-primary">
-              <span className="calc-decision-primary__label">البداية الأسرع</span>
-              <strong className="calc-decision-primary__title">{primaryRoute.title}</strong>
-              <span className="calc-decision-primary__body">{primaryRoute.description}</span>
-              <span className="calc-decision-primary__cta">
-                ابدأ حساب العمر
-                <ArrowLeft size={16} aria-hidden="true" />
-              </span>
-            </Link>
-          ) : null}
-          <div className="calc-decision-list" aria-label="حاسبات عمر متخصصة">
-            {secondaryRoutes.map((item, index) => (
-              <Link key={item.slug} href={item.href} className="calc-decision-link">
-                <span className="calc-resource-link__index">{String(index + 2).padStart(2, '0')}</span>
-                <span className="calc-decision-link__copy">
-                  <strong className="calc-card-title">{item.title}</strong>
-                  <span className="calc-card-description">{item.description}</span>
-                </span>
-                <span className="calc-decision-link__arrow">
-                  <ArrowLeft size={16} aria-hidden="true" />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-        <p className="calc-section-note">
-          لا تحتاج كل هذه الأدوات في الزيارة نفسها. اختر المسار الذي يطابق سؤالك الان، ثم ارجع إلى هذا القسم عندما يتغير السؤال من “كم عمري؟” إلى “كم الفرق؟” أو “كم بقي؟” أو “ما معنى النتيجة؟”.
-        </p>
+        <CalculatorToolLauncher
+          items={toolLauncherItems}
+          ariaLabel="اختيار حاسبة العمر المناسبة"
+          badge="8 مسارات عمر"
+          featuredLabel="البداية الأسرع"
+          theme="blue"
+          note="لا تحتاج كل هذه الأدوات في الزيارة نفسها. اختر المسار الذي يطابق سؤالك الان، ثم ارجع إلى هذا القسم عندما يتغير السؤال من “كم عمري؟” إلى “كم الفرق؟” أو “كم بقي؟” أو “ما معنى النتيجة؟”."
+        />
       </CalculatorSection>
 
       <CalculatorSection

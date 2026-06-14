@@ -4845,12 +4845,28 @@ main:not(.calc-hub-page) .calc-resource-link {
 }
 
 .calc-vat-page #vat-rates .calc-surface-card {
+  width: min(100%, 920px);
   max-width: 920px;
   margin-inline: auto;
 }
 
 .calc-vat-page #vat-rates .calc-grid-2 {
   grid-template-columns: minmax(0, 1fr) !important;
+}
+
+.calc-vat-page #vat-rates [data-slot="card-content"],
+.calc-vat-page #vat-rates .calc-form-grid,
+.calc-vat-page #vat-rates .calc-table-wrap {
+  width: 100%;
+  min-width: 0;
+}
+
+.calc-vat-page #vat-rates .vat-rates-filter-row {
+  align-items: end;
+}
+
+.calc-vat-page #vat-rates .vat-rate-filters {
+  min-height: 3.25rem;
 }
 
 .calc-vat-page #vat-details .calc-article-grid {
@@ -6689,5 +6705,578 @@ main:not(.calc-hub-page) .calc-select-trigger.select[data-slot="select-trigger"]
 
   .calc-building-page #building-method .calc-info-grid--editorial {
     grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+/* Calculator tool UX v16: responsive forms and stable result hierarchy. */
+main:not(.calc-hub-page) .calc-app-panel {
+  container: calc-form / inline-size;
+}
+
+main:not(.calc-hub-page) .calc-results-panel > .calc-surface-card {
+  container: calc-results / inline-size;
+}
+
+main:not(.calc-hub-page) .calc-app-grid {
+  grid-template-columns: minmax(0, 1fr) !important;
+  align-items: start;
+}
+
+main:not(.calc-hub-page) .calc-app .calc-grid-2,
+main:not(.calc-hub-page) .calc-app .calc-grid-3,
+main:not(.calc-hub-page) .calc-app .calc-grid-4 {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+main:not(.calc-hub-page) .calc-metric-grid {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+main:not(.calc-hub-page) .calc-metric-grid > .calc-grid-2,
+main:not(.calc-hub-page) .calc-metric-grid > .calc-grid-3,
+main:not(.calc-hub-page) .calc-metric-grid > .calc-grid-4,
+main:not(.calc-hub-page) .calc-metric-grid > .calc-query-grid,
+main:not(.calc-hub-page) .calc-metric-grid > .calc-share-wrap,
+main:not(.calc-hub-page) .calc-metric-grid > .calc-field,
+main:not(.calc-hub-page) .calc-metric-grid > .calc-note,
+main:not(.calc-hub-page) .calc-metric-grid > .calc-warning,
+main:not(.calc-hub-page) .calc-metric-grid > .calc-success,
+main:not(.calc-hub-page) .calc-metric-grid > .calc-breakdown-list,
+main:not(.calc-hub-page) .calc-metric-grid > .calc-mini-list {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0;
+}
+
+main:not(.calc-hub-page) .calc-share-wrap {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+  padding-top: var(--space-4);
+  border-top: 1px solid color-mix(in srgb, var(--border-default) 72%, transparent);
+}
+
+main:not(.calc-hub-page) .calc-result-actions__intro {
+  display: grid;
+  gap: 0.2rem;
+}
+
+main:not(.calc-hub-page) .calc-result-actions__intro strong {
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+main:not(.calc-hub-page) .calc-result-actions__intro span {
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  line-height: 1.7;
+}
+
+main:not(.calc-hub-page) .calc-result-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  width: 100%;
+}
+
+main:not(.calc-hub-page) .calc-result-actions > * {
+  width: 100%;
+  min-width: 0;
+}
+
+main:not(.calc-hub-page) .calc-share-panel {
+  margin-top: 0;
+}
+
+main:not(.calc-hub-page) .calc-share-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr));
+}
+
+@container calc-form (min-width: 17rem) {
+  main:not(.calc-hub-page) .calc-app .calc-grid-2,
+  main:not(.calc-hub-page) .calc-app .calc-grid-3,
+  main:not(.calc-hub-page) .calc-app .calc-grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  main:not(.calc-hub-page) .calc-app .calc-grid-3 > :last-child:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+}
+
+@container calc-form (min-width: 38rem) {
+  main:not(.calc-hub-page) .calc-app .calc-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  main:not(.calc-hub-page) .calc-app .calc-grid-3 > :last-child:nth-child(3) {
+    grid-column: auto;
+  }
+}
+
+@container calc-form (min-width: 44rem) {
+  main:not(.calc-hub-page) .calc-app .calc-grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@container calc-results (min-width: 22rem) {
+  main:not(.calc-hub-page) .calc-query-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  main:not(.calc-hub-page) .calc-metric-grid > .calc-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@container calc-results (min-width: 38rem) {
+  main:not(.calc-hub-page) .calc-metric-grid > .calc-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  main:not(.calc-hub-page) .calc-metric-grid > .calc-grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 1020px) {
+  main:not(.calc-hub-page) .calc-app-grid {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr) !important;
+  }
+}
+
+@media (max-width: 359px) {
+  main:not(.calc-hub-page) .calc-result-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+main:not(.calc-hub-page) .calc-table-scroll-hint {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  line-height: 1.7;
+}
+
+main:not(.calc-hub-page) .calc-table-wrap [data-slot="table-container"] {
+  scrollbar-color: color-mix(in srgb, var(--blue) 55%, var(--border-default)) var(--bg-surface-2);
+  scrollbar-width: thin;
+}
+
+main:not(.calc-hub-page) .calc-table-wrap [data-slot="table-container"]:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+main:not(.calc-hub-page) .calc-table-wrap th:first-child,
+main:not(.calc-hub-page) .calc-table-wrap td:first-child {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 1;
+  background: var(--bg-surface-1);
+  box-shadow: -1px 0 0 var(--border-default);
+}
+
+main:not(.calc-hub-page) .calc-table-wrap th:first-child {
+  z-index: 2;
+}
+
+@media (min-width: 720px) {
+  main:not(.calc-hub-page) .calc-table-scroll-hint {
+    display: none;
+  }
+}
+
+/* Calculator tool UX v17: calculator-specific form craft and accessible controls. */
+main:not(.calc-hub-page) .calc-form-grid {
+  container: calc-fields / inline-size;
+}
+
+main:not(.calc-hub-page) .calc-form-grid > .calc-grid-2,
+main:not(.calc-hub-page) .calc-form-grid > .calc-grid-3,
+main:not(.calc-hub-page) .calc-form-grid > .calc-grid-4 {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+main:not(.calc-hub-page) .calc-button[data-slot="button"],
+main:not(.calc-hub-page) .calc-chip-button,
+main:not(.calc-hub-page) .chip.calc-chip-button,
+main:not(.calc-hub-page) .calc-currency-chip,
+.vat-presets__buttons button,
+.vat-toggle,
+.calc-building-choice-card,
+.calc-room-remove,
+.calc-room-add {
+  min-height: 2.75rem;
+}
+
+main:not(.calc-hub-page) .calc-choice-grid {
+  display: grid;
+  gap: var(--space-2);
+}
+
+main:not(.calc-hub-page) .calc-choice-grid--loan {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+main:not(.calc-hub-page) .calc-choice-grid .calc-chip-button {
+  justify-content: center;
+  text-align: center;
+}
+
+main:not(.calc-hub-page) .calc-debt-card {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid color-mix(in srgb, var(--border-default) 52%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-surface-2) 46%, transparent);
+}
+
+main:not(.calc-hub-page) .calc-debt-card__head {
+  align-items: center;
+  padding-block-end: var(--space-1);
+}
+
+main:not(.calc-hub-page) .calc-debt-card__head > strong {
+  color: var(--text-primary);
+  font-size: var(--text-lg);
+  line-height: 1.45;
+}
+
+main:not(.calc-hub-page) .age-calendar-toggle,
+main:not(.calc-hub-page) .age-compare-toggle {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: min(100%, 18rem);
+}
+
+main:not(.calc-hub-page) .age-calendar-toggle > *,
+main:not(.calc-hub-page) .age-compare-toggle > * {
+  flex: initial !important;
+  justify-content: center;
+  min-width: 0;
+}
+
+main:not(.calc-hub-page) .age-date-field {
+  max-width: 22rem;
+}
+
+main:not(.calc-hub-page) .age-birth-input {
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--border-default) 44%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-base) 26%, transparent);
+}
+
+main:not(.calc-hub-page) .age-birth-input > .calc-field-row {
+  align-items: flex-start;
+}
+
+main:not(.calc-hub-page) .age-standalone-tool {
+  justify-items: center;
+}
+
+main:not(.calc-hub-page) .age-standalone-tool > .calc-app-panel {
+  width: min(100%, 52rem);
+}
+
+main:not(.calc-hub-page) .age-standalone-tool > .calc-surface-card:not(.calc-app-panel),
+main:not(.calc-hub-page) .age-standalone-tool > .calc-grid-3,
+main:not(.calc-hub-page) .age-standalone-tool > [aria-live="polite"] {
+  width: min(100%, 70rem);
+}
+
+main:not(.calc-hub-page) .calc-results-panel > .calc-share-wrap {
+  padding: var(--space-4);
+  border: 1px solid color-mix(in srgb, var(--border-default) 58%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-surface-1) 72%, transparent);
+}
+
+main:not(.calc-hub-page) .age-detail-board {
+  display: grid;
+  gap: var(--space-3);
+}
+
+main:not(.calc-hub-page) .age-detail-card {
+  min-width: 0;
+}
+
+main:not(.calc-hub-page) .age-detail-card--stats .calc-grid-3 {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+main:not(.calc-hub-page) .age-detail-card--milestones .calc-history-item {
+  align-items: flex-start;
+}
+
+main:not(.calc-hub-page) .calc-sleep-week-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 7.25rem), 1fr));
+  gap: var(--space-3);
+}
+
+main:not(.calc-hub-page) .calc-building-tool .calc-surface-card {
+  min-width: 0;
+}
+
+main:not(.calc-hub-page) .calc-building-choice-grid {
+  display: grid;
+  gap: var(--space-2);
+}
+
+main:not(.calc-hub-page) .calc-building-choice-grid--patterns,
+main:not(.calc-hub-page) .calc-building-choice-grid--types,
+main:not(.calc-hub-page) .calc-building-choice-grid--finish {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+main:not(.calc-hub-page) .calc-building-choice-grid--rebar {
+  grid-template-columns: repeat(auto-fit, minmax(3.75rem, 1fr));
+}
+
+main:not(.calc-hub-page) .calc-building-choice-card {
+  display: grid;
+  place-items: center;
+  gap: 0.2rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--border-default) 62%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-surface-2) 54%, transparent);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  line-height: 1.45;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+main:not(.calc-hub-page) .calc-building-choice-card:hover {
+  border-color: color-mix(in srgb, var(--blue) 44%, var(--border-default));
+  background: color-mix(in srgb, var(--blue) 9%, var(--bg-surface-2));
+}
+
+main:not(.calc-hub-page) .calc-building-choice-card.is-active {
+  border-color: color-mix(in srgb, var(--blue) 62%, var(--border-default));
+  background: color-mix(in srgb, var(--blue) 82%, transparent);
+  color: var(--text-on-accent);
+}
+
+main:not(.calc-hub-page) .calc-building-choice-card.is-active span,
+main:not(.calc-hub-page) .calc-building-choice-card.is-active .text-text-secondary {
+  color: color-mix(in srgb, var(--text-on-accent) 82%, transparent);
+}
+
+main:not(.calc-hub-page) .calc-building-choice-card--compact {
+  min-height: 3.15rem;
+}
+
+main:not(.calc-hub-page) .calc-building-inline-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+main:not(.calc-hub-page) .calc-building-inline-field .calc-input {
+  width: min(100%, 8rem);
+  text-align: center;
+  font-weight: var(--font-black);
+}
+
+main:not(.calc-hub-page) .calc-repeat-row {
+  align-items: end;
+  padding: var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--border-default) 50%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-surface-2) 48%, transparent);
+}
+
+main:not(.calc-hub-page) .calc-rebar-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+main:not(.calc-hub-page) .calc-repeat-actions {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+}
+
+main:not(.calc-hub-page) .calc-line-remove[data-slot="button"] {
+  justify-self: end;
+  width: fit-content;
+}
+
+main:not(.calc-hub-page) .calc-rebar-chip[data-slot="button"] {
+  min-width: 3.6rem;
+  justify-content: center;
+}
+
+main:not(.calc-hub-page) .calc-room-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+main:not(.calc-hub-page) .calc-room-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-3);
+  align-items: end;
+  padding: var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--border-default) 52%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-surface-2) 50%, transparent);
+}
+
+main:not(.calc-hub-page) .calc-room-card__fields {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+main:not(.calc-hub-page) .calc-room-name-input.input {
+  min-height: 2.75rem;
+  padding-inline: 0;
+  border-color: transparent;
+  background: transparent;
+  color: var(--text-primary);
+  font-weight: var(--font-black);
+}
+
+main:not(.calc-hub-page) .calc-room-dimensions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: var(--space-2);
+  align-items: end;
+}
+
+main:not(.calc-hub-page) .calc-room-number-input.input {
+  min-height: 2.75rem;
+  text-align: center;
+}
+
+main:not(.calc-hub-page) .calc-room-multiply {
+  display: inline-grid;
+  min-height: 2.75rem;
+  place-items: center;
+  color: var(--text-secondary);
+  font-weight: var(--font-black);
+}
+
+main:not(.calc-hub-page) .calc-room-remove {
+  display: inline-grid;
+  min-width: 2.75rem;
+  place-items: center;
+  padding-inline: 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--border-default) 56%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--bg-base) 38%, transparent);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
+}
+
+main:not(.calc-hub-page) .calc-room-remove:hover {
+  border-color: color-mix(in srgb, var(--red) 44%, var(--border-default));
+  background: color-mix(in srgb, var(--red) 12%, transparent);
+  color: var(--red-text);
+}
+
+main:not(.calc-hub-page) .calc-room-remove:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+main:not(.calc-hub-page) .calc-room-add {
+  width: 100%;
+  border: 1px dashed color-mix(in srgb, var(--blue) 72%, var(--border-default));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--blue) 7%, transparent);
+  color: var(--blue-text);
+  font-weight: var(--font-bold);
+  cursor: pointer;
+}
+
+@container calc-fields (min-width: 17rem) {
+  main:not(.calc-hub-page) .calc-form-grid > .calc-grid-2,
+  main:not(.calc-hub-page) .calc-form-grid > .calc-grid-3,
+  main:not(.calc-hub-page) .calc-form-grid > .calc-grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  main:not(.calc-hub-page) .calc-form-grid > .calc-grid-3 > :last-child:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+}
+
+@container calc-fields (min-width: 34rem) {
+  main:not(.calc-hub-page) .calc-form-grid > .calc-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  main:not(.calc-hub-page) .calc-form-grid > .calc-grid-3 > :last-child:nth-child(3) {
+    grid-column: auto;
+  }
+
+  main:not(.calc-hub-page) .calc-building-choice-grid--finish {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@container calc-fields (min-width: 42rem) {
+  main:not(.calc-hub-page) .calc-form-grid > .calc-grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 760px) {
+  main:not(.calc-hub-page) .age-detail-board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  main:not(.calc-hub-page) .age-detail-card--stats {
+    grid-column: 1 / -1;
+  }
+
+  main:not(.calc-hub-page) .age-detail-card--stats .calc-grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 1100px) {
+  main:not(.calc-hub-page) .age-detail-board {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr) minmax(0, 0.9fr);
+  }
+
+  main:not(.calc-hub-page) .age-detail-card--stats {
+    grid-column: auto;
+  }
+
+  main:not(.calc-hub-page) .age-detail-card--stats .calc-grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 420px) {
+  main:not(.calc-hub-page) .calc-choice-grid--loan,
+  main:not(.calc-hub-page) .age-calendar-toggle,
+  main:not(.calc-hub-page) .age-compare-toggle,
+  main:not(.calc-hub-page) .calc-building-choice-grid--types,
+  main:not(.calc-hub-page) .calc-building-choice-grid--finish,
+  main:not(.calc-hub-page) .calc-building-choice-grid--patterns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  main:not(.calc-hub-page) .calc-room-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  main:not(.calc-hub-page) .calc-room-remove {
+    justify-self: start;
   }
 }

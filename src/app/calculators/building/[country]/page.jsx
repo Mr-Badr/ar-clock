@@ -7,6 +7,7 @@ import {
   CalculatorSection,
   CalculatorFaqSection,
   CalculatorResourceLinks,
+  CalculatorToolLauncher,
 } from '@/components/calculators/common';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
@@ -28,18 +29,24 @@ const BUILDING_MATERIAL_LINKS = [
     title: 'احسب أكياس الأسمنت للخرسانة والمونة',
     description: 'افتحها عندما تريد ضبط كمية الأسمنت والرمل والحصى قبل مقارنة السعر المحلي.',
     ctaLabel: 'جرّب حاسبة الأسمنت',
+    label: 'خرسانة ومونة',
+    iconLabel: 'أسمنت',
   },
   {
     href: '/calculators/building/rebar',
     title: 'احسب وزن الحديد وعدد الأسياخ',
     description: 'مفيدة عند مراجعة عروض الحديد أو تقدير الكميات التقريبية للأسقف والأعمدة.',
     ctaLabel: 'جرّب حاسبة الحديد',
+    label: 'تسليح ووزن',
+    iconLabel: 'حديد',
   },
   {
     href: '/calculators/building/tiles',
     title: 'احسب كراتين البلاط مع الهدر',
     description: 'استخدمها عندما تعرف مساحة الغرف وتريد كمية شراء أقرب للواقع.',
     ctaLabel: 'جرّب حاسبة البلاط',
+    label: 'تشطيب وهدر',
+    iconLabel: 'بلاط',
   },
 ];
 const COUNTRY_SOURCE_LINKS = [
@@ -274,7 +281,14 @@ export default async function CountryBuildingPage({ params }) {
         title="احسب الكميات بدقة هندسية"
         description="بعد تقدير تكلفة المشروع في بلدك، ابدأ بالأداة التي تضبط البند الأقرب لقرارك الحالي."
       >
-        <CalculatorResourceLinks items={BUILDING_MATERIAL_LINKS} buttonLabel="افتح الحاسبة" />
+        <CalculatorToolLauncher
+          items={BUILDING_MATERIAL_LINKS}
+          ariaLabel={`اختيار حاسبة مواد البناء في ${country.nameShort}`}
+          badge="3 مواد بعد تقدير المشروع"
+          featuredLabel="ابدأ عندما تكون الصبة واضحة"
+          theme="amber"
+          note={`استخدم هذه الأدوات بعد تقدير تكلفة البناء في ${country.nameShort}، لأن كمية الأسمنت أو الحديد أو البلاط تصبح مفيدة فقط عندما يكون البند والمقاسات أقرب للواقع.`}
+        />
       </CalculatorSection>
 
       <CalculatorSection

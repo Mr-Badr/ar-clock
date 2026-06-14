@@ -199,7 +199,7 @@ export default function MonthlyInstallmentCalculator() {
                 <Label className="calc-label">نوع القرض</Label>
                 <span className="calc-hint">اختر نموذجاً سريعاً ثم عدّل الأرقام بما يناسب عرضك</span>
               </div>
-              <div className="calc-kbd-row">
+              <div className="calc-choice-grid calc-choice-grid--loan">
                 {Object.entries(LOAN_PRESETS).map(([key, preset]) => (
                   <button
                     key={key}
@@ -221,16 +221,33 @@ export default function MonthlyInstallmentCalculator() {
               id="monthly-installment-currency"
             />
 
-            <div className="calc-field">
-              <Label className="calc-label" htmlFor="loan-amount">
-                مبلغ القرض
-              </Label>
-              <Input
-                id="loan-amount"
-                inputMode="decimal"
-                value={loanAmount}
-                onChange={(event) => setLoanAmount(event.target.value)}
-              />
+            <div className="calc-grid-2">
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="loan-amount">
+                  مبلغ القرض
+                </Label>
+                <Input
+                  id="loan-amount"
+                  inputMode="decimal"
+                  value={loanAmount}
+                  onChange={(event) => setLoanAmount(event.target.value)}
+                />
+              </div>
+
+              <div className="calc-field">
+                <div className="calc-field-row">
+                  <Label className="calc-label" htmlFor="annual-rate">
+                    الفائدة السنوية
+                  </Label>
+                  <strong>{formatPercent(annualRate || 0)}</strong>
+                </div>
+                <Input
+                  id="annual-rate"
+                  inputMode="decimal"
+                  value={annualRate}
+                  onChange={(event) => setAnnualRate(event.target.value)}
+                />
+              </div>
             </div>
 
             <div className="calc-field">
@@ -239,21 +256,6 @@ export default function MonthlyInstallmentCalculator() {
                 <strong>{years[0]} سنة</strong>
               </div>
               <Slider className="calc-slider" min={1} max={30} step={1} value={years} onValueChange={setYears} />
-            </div>
-
-            <div className="calc-field">
-              <div className="calc-field-row">
-                <Label className="calc-label" htmlFor="annual-rate">
-                  الفائدة السنوية
-                </Label>
-                <strong>{formatPercent(annualRate || 0)}</strong>
-              </div>
-              <Input
-                id="annual-rate"
-                inputMode="decimal"
-                value={annualRate}
-                onChange={(event) => setAnnualRate(event.target.value)}
-              />
             </div>
 
             <div className="calc-field">
@@ -461,8 +463,18 @@ export default function MonthlyInstallmentCalculator() {
                   {showRows === 12 ? 'اعرض 24 صفاً' : 'اعرض 12 صفاً'}
                 </Button>
               </div>
+              <p id="amortization-scroll-hint" className="calc-table-scroll-hint">
+                مرر الجدول أفقياً لرؤية الأصل والفائدة والرصيد المتبقي.
+              </p>
               <div className="calc-table-wrap">
-                <Table>
+                <Table
+                  containerProps={{
+                    role: 'region',
+                    'aria-label': 'جدول استهلاك القرض',
+                    'aria-describedby': 'amortization-scroll-hint',
+                    tabIndex: 0,
+                  }}
+                >
                   <TableHeader>
                     <TableRow>
                       <TableHead>القسط</TableHead>

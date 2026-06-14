@@ -8,6 +8,7 @@ import {
   CalculatorSection,
   CalculatorFaqSection,
   CalculatorResourceLinks,
+  CalculatorToolLauncher,
 } from '@/components/calculators/common';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getGuidesBySlugs } from '@/lib/guides/data';
@@ -25,18 +26,24 @@ const BUILDING_MATERIAL_LINKS = [
     title: 'احسب أكياس الأسمنت قبل طلب الكمية',
     description: 'استخدمها للخرسانة والمونة عندما تريد معرفة الأسمنت والرمل والحصى والماء بدل الاكتفاء بتقدير عام.',
     ctaLabel: 'افتح حاسبة الأسمنت',
+    label: 'خرسانة ومونة',
+    iconLabel: 'أسمنت',
   },
   {
     href: '/calculators/building/rebar',
     title: 'حوّل الحديد من أطوال وأقطار إلى وزن',
     description: 'مفيدة عندما تريد تقدير وزن الحديد أو عدد الأسياخ قبل مقارنة عروض الموردين أو المقاولين.',
     ctaLabel: 'افتح حاسبة الحديد',
+    label: 'تسليح ووزن',
+    iconLabel: 'حديد',
   },
   {
     href: '/calculators/building/tiles',
     title: 'اعرف كراتين البلاط مع نسبة الهدر',
     description: 'ابدأ بها عندما تكون مساحة الغرف والمقاسات واضحة وتريد كمية أقرب للشراء الفعلي.',
     ctaLabel: 'افتح حاسبة البلاط',
+    label: 'تشطيب وهدر',
+    iconLabel: 'بلاط',
   },
 ];
 const BUILDING_SOURCE_LINKS = [
@@ -239,7 +246,14 @@ export default function BuildingHubPage() {
         title="حاسبات تفصيلية للكميات"
         description="بعد معرفة التكلفة العامة، افتح أداة واحدة فقط بحسب البند الذي تريد ضبطه الان: الأسمنت، الحديد، أو البلاط."
       >
-        <CalculatorResourceLinks items={BUILDING_MATERIAL_LINKS} buttonLabel="افتح الحاسبة" />
+        <CalculatorToolLauncher
+          items={BUILDING_MATERIAL_LINKS}
+          ariaLabel="اختيار حاسبة مواد البناء المناسبة"
+          badge="3 مواد مؤثرة"
+          featuredLabel="ابدأ عندما تكون الصبة واضحة"
+          theme="amber"
+          note="لا تبدأ بكميات المواد إذا كان السؤال لا يزال عن تكلفة المشروع كله. استخدم الحاسبة العامة أولاً، ثم افتح الأسمنت أو الحديد أو البلاط عندما تكون المقاسات أو البند المطلوب واضحاً."
+        />
       </CalculatorSection>
 
       <CalculatorSection

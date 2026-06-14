@@ -19,12 +19,65 @@ const CALCULATOR_TRUST_ITEMS = [
   'نوضح حدود النتيجة قبل القرار',
 ];
 
+const TOOL_LAUNCHER_THEMES = {
+  blue: {
+    accent: 'var(--blue)',
+    accentText: 'var(--blue-text)',
+  },
+  green: {
+    accent: 'var(--green)',
+    accentText: 'var(--green-text)',
+  },
+  amber: {
+    accent: 'var(--amber)',
+    accentText: 'var(--amber-text)',
+  },
+};
+
 function formatSequenceLabel(index) {
   return String(index + 1).padStart(2, '0');
 }
 
 function isValidResourceItem(item) {
   return Boolean(item?.href && item?.title);
+}
+
+function getToolLauncherTheme(theme) {
+  if (typeof theme === 'string' && TOOL_LAUNCHER_THEMES[theme]) {
+    return TOOL_LAUNCHER_THEMES[theme];
+  }
+
+  return TOOL_LAUNCHER_THEMES.blue;
+}
+
+function getToolLauncherPanelStyle(theme) {
+  return {
+    borderColor: `color-mix(in srgb, ${theme.accent} 24%, var(--border-default))`,
+    background: `radial-gradient(circle at 86% 4%, color-mix(in srgb, ${theme.accent} 22%, transparent), transparent 24rem), linear-gradient(145deg, color-mix(in srgb, var(--bg-surface-1) 92%, transparent), color-mix(in srgb, var(--bg-base) 78%, transparent))`,
+    boxShadow: `0 24px 80px color-mix(in srgb, ${theme.accent} 11%, transparent)`,
+  };
+}
+
+function getToolLauncherCardStyle(theme) {
+  return {
+    borderColor: `color-mix(in srgb, ${theme.accent} 34%, var(--border-default))`,
+    background: `linear-gradient(160deg, color-mix(in srgb, ${theme.accent} 17%, transparent), color-mix(in srgb, var(--bg-surface-1) 92%, transparent) 58%, color-mix(in srgb, var(--bg-base) 72%, transparent))`,
+  };
+}
+
+function getToolLauncherChipStyle(theme) {
+  return {
+    borderColor: `color-mix(in srgb, ${theme.accent} 36%, var(--border-default))`,
+    background: `color-mix(in srgb, ${theme.accent} 12%, transparent)`,
+    color: theme.accentText,
+  };
+}
+
+function getToolLauncherSoftStyle(theme) {
+  return {
+    borderColor: `color-mix(in srgb, ${theme.accent} 18%, var(--border-default))`,
+    background: `linear-gradient(180deg, color-mix(in srgb, ${theme.accent} 6%, transparent), transparent 62%), color-mix(in srgb, var(--bg-surface-1) 80%, transparent)`,
+  };
 }
 
 function getUniqueCalculatorLinks(items) {
@@ -419,6 +472,125 @@ export function CalculatorResourceLinks({ items, buttonLabel, variant }) {
           </span>
         </Link>
       ))}
+    </div>
+  );
+}
+
+export function CalculatorToolLauncher({
+  items,
+  ariaLabel,
+  badge,
+  featuredLabel,
+  note,
+  theme,
+}) {
+  const safeItems = Array.isArray(items) ? items.filter(isValidResourceItem).slice(0, 8) : [];
+  const resolvedTheme = getToolLauncherTheme(theme);
+  const featuredItem = safeItems[0];
+  const supportingItems = safeItems.slice(1);
+  const resolvedAriaLabel = ariaLabel || 'اختر الحاسبة المناسبة';
+  const resolvedBadge = badge || `${safeItems.length} مسارات عملية`;
+  const resolvedFeaturedLabel = featuredLabel || featuredItem?.label || 'المسار المقترح';
+
+  if (!safeItems.length || !featuredItem) {
+    return (
+      <CalculatorEmptyState
+        title="لا توجد حاسبات كافية لهذا القسم الآن"
+        description="تابع الحاسبة الرئيسية أولاً، ثم ارجع إلى فهرس الحاسبات إذا احتجت مساراً مختلفاً."
+      />
+    );
+  }
+
+  return (
+    <div
+      className="relative mx-auto grid w-full max-w-5xl gap-3 overflow-hidden rounded-[1.35rem] border p-3 sm:gap-4 sm:p-4 lg:grid-cols-[minmax(0,1.03fr)_minmax(0,0.97fr)]"
+      style={getToolLauncherPanelStyle(resolvedTheme)}
+      aria-label={resolvedAriaLabel}
+    >
+      <div className="pointer-events-none absolute inset-x-6 top-0 h-px opacity-80" style={{ background: `linear-gradient(90deg, transparent, ${resolvedTheme.accent}, transparent)` }} />
+      <div className="flex flex-wrap items-center gap-2 lg:col-span-2">
+        <span
+          className="inline-flex min-h-9 items-center rounded-full border px-3 text-xs font-extrabold"
+          style={getToolLauncherChipStyle(resolvedTheme)}
+        >
+          {resolvedBadge}
+        </span>
+        <span className="text-xs font-bold text-muted sm:text-sm">
+          اختر حسب نية المستخدم الآن، لا حسب اسم الحاسبة فقط.
+        </span>
+      </div>
+
+      <Link
+        href={featuredItem.href}
+        className="group relative grid min-h-[18rem] content-between overflow-hidden rounded-[1.1rem] border p-5 text-start text-inherit no-underline transition duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 sm:p-6"
+        style={getToolLauncherCardStyle(resolvedTheme)}
+      >
+        <span className="pointer-events-none absolute -left-10 -top-10 h-32 w-32 rounded-full opacity-50 blur-3xl" style={{ background: resolvedTheme.accent }} />
+        <span className="relative flex flex-wrap items-center justify-between gap-3">
+          <span
+            className="inline-flex min-h-9 items-center rounded-full border px-3 text-xs font-extrabold"
+            style={getToolLauncherChipStyle(resolvedTheme)}
+          >
+            {resolvedFeaturedLabel}
+          </span>
+          <span className="grid h-12 w-12 place-items-center rounded-2xl border text-sm font-black" style={getToolLauncherChipStyle(resolvedTheme)}>
+            {featuredItem.iconLabel || '01'}
+          </span>
+        </span>
+
+        <span className="relative grid gap-3">
+          <strong className="text-2xl font-black leading-snug text-primary sm:text-3xl">
+            {featuredItem.title}
+          </strong>
+          <span className="max-w-[58ch] text-sm leading-8 text-secondary sm:text-base">
+            {featuredItem.description}
+          </span>
+        </span>
+
+        <span className="relative inline-flex w-fit items-center gap-2 rounded-full border px-4 py-2 text-sm font-extrabold text-primary transition group-hover:border-blue-400">
+          {featuredItem.ctaLabel || 'ابدأ الحساب'}
+          <ArrowLeft size={16} aria-hidden="true" />
+        </span>
+      </Link>
+
+      <div className="grid gap-3" role="list" aria-label="حاسبات أخرى في نفس القسم">
+        {supportingItems.map((item, index) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="group grid min-h-[6.2rem] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-[1rem] border p-3 text-start text-inherit no-underline transition duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 sm:p-4"
+            style={getToolLauncherSoftStyle(resolvedTheme)}
+            role="listitem"
+          >
+            <span className="grid h-11 w-11 place-items-center rounded-2xl border text-xs font-black" style={getToolLauncherChipStyle(resolvedTheme)}>
+              {item.iconLabel || formatSequenceLabel(index + 1)}
+            </span>
+            <span className="grid min-w-0 gap-1">
+              <span className="inline-flex w-fit rounded-full bg-surface-2 px-2 py-1 text-[0.68rem] font-extrabold text-muted">
+                {item.label || 'مسار متخصص'}
+              </span>
+              <strong className="text-[0.98rem] font-extrabold leading-6 text-primary">
+                {item.title}
+              </strong>
+              <span className="hidden text-sm leading-7 text-secondary sm:block">
+                {item.description}
+              </span>
+            </span>
+            <span className="grid h-9 w-9 place-items-center rounded-full border border-default text-muted transition group-hover:text-primary" aria-hidden="true">
+              <ArrowLeft size={16} />
+            </span>
+          </Link>
+        ))}
+      </div>
+
+      {note ? (
+        <p
+          className="m-0 rounded-[1rem] border border-dashed border-default p-3 text-sm leading-8 text-secondary lg:col-span-2"
+          style={{ background: 'color-mix(in srgb, var(--bg-base) 25%, transparent)' }}
+        >
+          {note}
+        </p>
+      ) : null}
     </div>
   );
 }

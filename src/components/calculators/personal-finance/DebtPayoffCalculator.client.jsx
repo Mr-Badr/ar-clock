@@ -76,11 +76,17 @@ export default function DebtPayoffCalculator() {
               id="debt-payoff-currency"
             />
             {debts.map((debt, index) => (
-              <div key={debt.id} className="p-4">
-                <div className="calc-field-row mb-3">
+              <div key={debt.id} className="calc-debt-card">
+                <div className="calc-field-row calc-debt-card__head">
                   <strong>{debt.name || `دين ${index + 1}`}</strong>
                   {debts.length > 1 ? (
-                    <Button type="button" variant="outline" size="sm" onClick={() => removeDebt(debt.id)}>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => removeDebt(debt.id)}
+                      aria-label={`حذف ${debt.name || `دين ${index + 1}`}`}
+                    >
                       <Trash2 size={15} />
                       حذف
                     </Button>
@@ -88,22 +94,41 @@ export default function DebtPayoffCalculator() {
                 </div>
                 <div className="calc-grid-2">
                   <div className="calc-field">
-                    <Label className="calc-label">الاسم</Label>
-                    <Input value={debt.name} onChange={(e) => updateDebt(debt.id, 'name', e.target.value)} />
+                    <Label className="calc-label" htmlFor={`debt-${debt.id}-name`}>الاسم</Label>
+                    <Input
+                      id={`debt-${debt.id}-name`}
+                      value={debt.name}
+                      onChange={(e) => updateDebt(debt.id, 'name', e.target.value)}
+                    />
                   </div>
                   <div className="calc-field">
-                    <Label className="calc-label">الرصيد الحالي</Label>
-                    <Input inputMode="decimal" value={debt.balance} onChange={(e) => updateDebt(debt.id, 'balance', e.target.value)} />
+                    <Label className="calc-label" htmlFor={`debt-${debt.id}-balance`}>الرصيد الحالي</Label>
+                    <Input
+                      id={`debt-${debt.id}-balance`}
+                      inputMode="decimal"
+                      value={debt.balance}
+                      onChange={(e) => updateDebt(debt.id, 'balance', e.target.value)}
+                    />
                   </div>
                 </div>
                 <div className="calc-grid-2">
                   <div className="calc-field">
-                    <Label className="calc-label">نسبة الفائدة %</Label>
-                    <Input inputMode="decimal" value={debt.annualRate} onChange={(e) => updateDebt(debt.id, 'annualRate', e.target.value)} />
+                    <Label className="calc-label" htmlFor={`debt-${debt.id}-annual-rate`}>نسبة الفائدة %</Label>
+                    <Input
+                      id={`debt-${debt.id}-annual-rate`}
+                      inputMode="decimal"
+                      value={debt.annualRate}
+                      onChange={(e) => updateDebt(debt.id, 'annualRate', e.target.value)}
+                    />
                   </div>
                   <div className="calc-field">
-                    <Label className="calc-label">الحد الأدنى / الدفعة الشهرية</Label>
-                    <Input inputMode="decimal" value={debt.minimumPayment} onChange={(e) => updateDebt(debt.id, 'minimumPayment', e.target.value)} />
+                    <Label className="calc-label" htmlFor={`debt-${debt.id}-minimum-payment`}>الحد الأدنى / الدفعة الشهرية</Label>
+                    <Input
+                      id={`debt-${debt.id}-minimum-payment`}
+                      inputMode="decimal"
+                      value={debt.minimumPayment}
+                      onChange={(e) => updateDebt(debt.id, 'minimumPayment', e.target.value)}
+                    />
                   </div>
                 </div>
               </div>

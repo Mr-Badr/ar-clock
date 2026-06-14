@@ -8,7 +8,7 @@ import { CalcInput as Input } from '@/components/calculators/controls.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { calculateSavingsGoal, formatCurrency, formatNumber } from '@/lib/calculators/engine';
+import { calculateSavingsGoal, formatCurrency } from '@/lib/calculators/engine';
 
 export default function SavingsGoalCalculator() {
   const { currency, setCurrency, options: currencyOptions } = usePreferredCurrency();
@@ -50,21 +50,25 @@ export default function SavingsGoalCalculator() {
               hint="تُستخدم هذه العملة في هدف الادخار والفجوة الحالية والخطة الشهرية."
               id="savings-goal-currency"
             />
-            <div className="calc-field">
-              <Label className="calc-label" htmlFor="goal-amount">الهدف المالي</Label>
-              <Input id="goal-amount" inputMode="decimal" value={goalAmount} onChange={(e) => setGoalAmount(e.target.value)} />
+            <div className="calc-grid-2">
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="goal-amount">الهدف المالي</Label>
+                <Input id="goal-amount" inputMode="decimal" value={goalAmount} onChange={(e) => setGoalAmount(e.target.value)} />
+              </div>
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="goal-current">المدخر الحالي</Label>
+                <Input id="goal-current" inputMode="decimal" value={currentSavings} onChange={(e) => setCurrentSavings(e.target.value)} />
+              </div>
             </div>
-            <div className="calc-field">
-              <Label className="calc-label" htmlFor="goal-current">المدخر الحالي</Label>
-              <Input id="goal-current" inputMode="decimal" value={currentSavings} onChange={(e) => setCurrentSavings(e.target.value)} />
-            </div>
-            <div className="calc-field">
-              <Label className="calc-label" htmlFor="goal-months">المدة بالأشهر</Label>
-              <Input id="goal-months" inputMode="numeric" value={months} onChange={(e) => setMonths(e.target.value)} />
-            </div>
-            <div className="calc-field">
-              <Label className="calc-label" htmlFor="goal-return">عائد سنوي اختياري %</Label>
-              <Input id="goal-return" inputMode="decimal" value={annualReturn} onChange={(e) => setAnnualReturn(e.target.value)} />
+            <div className="calc-grid-2">
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="goal-months">المدة بالأشهر</Label>
+                <Input id="goal-months" inputMode="numeric" value={months} onChange={(e) => setMonths(e.target.value)} />
+              </div>
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="goal-return">عائد سنوي اختياري %</Label>
+                <Input id="goal-return" inputMode="decimal" value={annualReturn} onChange={(e) => setAnnualReturn(e.target.value)} />
+              </div>
             </div>
           </CardContent>
         </Card>

@@ -9,7 +9,7 @@ import { formatAgeDate, formatAgeNumber, normalizeBirthInput } from '@/lib/calcu
 
 export function CalendarToggle({ value, onChange }) {
   return (
-    <div className="calc-kbd-row">
+    <div className="calc-kbd-row age-calendar-toggle">
       <button
         type="button"
         className={`calc-chip-button ${value === 'gregorian' ? 'is-active' : ''}`}
@@ -40,7 +40,7 @@ export function GregorianDateField({
   onChange,
 }) {
   return (
-    <div className="calc-field">
+    <div className="calc-field age-date-field">
       <Label htmlFor={id} className="calc-label">{label}</Label>
       <Input id={id} type="date" value={value} onChange={(event) => onChange(event.target.value)} />
       {hint ? <p className="calc-hint">{hint}</p> : null}
@@ -100,7 +100,7 @@ export function BirthInputBlock({
   label = 'أدخل تاريخ ميلادك بدقة',
 }) {
   return (
-    <div className="calc-field">
+    <div className="calc-field age-birth-input">
       <div className="calc-field-row">
         <Label className="calc-label">{label}</Label>
         <CalendarToggle value={calendar} onChange={onCalendarChange} />

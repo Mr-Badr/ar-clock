@@ -17,52 +17,54 @@ export default function CementCalculator() {
   const results = calcConcrete(volumeM3, grade, bagWeight, wastePct / 100);
 
   return (
-    <div className="calc-app-grid grid gap-8">
+    <div className="calc-app-grid calc-building-tool">
       <div className="space-y-6">
-        <Card className="calc-surface-card">
+        <Card className="calc-surface-card calc-app-panel">
           <CardHeader>
             <CardTitle className="calc-card-title text-xl">مدخلات الحساب</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="calc-form-grid">
             <div className="calc-note">
               هذه الأداة مخصصة لخرسانة الصبات: الأسمنت، الرمل، الحصى، والماء. للمونة أو اللياسة استخدم النتيجة كمرجع عام فقط ولا تعتمدها كخلطة تنفيذية.
             </div>
 
-            <div className="calc-field">
-              <Label htmlFor="cement-volume" className="calc-label">حجم الخرسانة (متر مكعب m³)</Label>
-              <Input
-                id="cement-volume"
-                type="number"
-                min="0.1"
-                step="0.1"
-                value={volumeM3}
-                onChange={(e) => setVolumeM3(parseFloat(e.target.value) || 0)}
-                className="calc-input text-lg font-bold"
-              />
-              <p className="calc-hint">الطول × العرض × السماكة بعد تحويل الأبعاد إلى متر.</p>
+            <div className="grid gap-[var(--space-3)] md:grid-cols-2 calc-building-primary-grid">
+              <div className="calc-field">
+                <Label htmlFor="cement-volume" className="calc-label">حجم الخرسانة (متر مكعب m³)</Label>
+                <Input
+                  id="cement-volume"
+                  type="number"
+                  min="0.1"
+                  step="0.1"
+                  value={volumeM3}
+                  onChange={(e) => setVolumeM3(parseFloat(e.target.value) || 0)}
+                  className="calc-input text-lg font-bold"
+                />
+                <p className="calc-hint">الطول × العرض × السماكة بعد تحويل الأبعاد إلى متر.</p>
+              </div>
+
+              <div className="calc-field">
+                <Label className="calc-label">عيار الخرسانة (المتانة)</Label>
+                <Select value={grade} onValueChange={setGrade}>
+                  <SelectTrigger dir="rtl" className="calc-select-trigger" aria-label="اختر عيار الخرسانة">
+                    <SelectValue placeholder="اختر العيار" />
+                  </SelectTrigger>
+                  <SelectContent dir="rtl">
+                    {MIX_GRADES.map((g) => (
+                      <SelectItem key={g.key} value={g.key}>
+                        <div className="flex flex-col text-right">
+                          <span className="font-bold">{g.label}</span>
+                          <span className="text-xs text-text-secondary">{g.use}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="calc-hint">اختر العيار بحسب نوع العنصر الإنشائي لا بحسب السعر فقط.</p>
+              </div>
             </div>
 
-            <div className="calc-field">
-              <Label className="calc-label">عيار الخرسانة (المتانة)</Label>
-              <Select value={grade} onValueChange={setGrade}>
-                <SelectTrigger dir="rtl" className="calc-select-trigger" aria-label="اختر عيار الخرسانة">
-                  <SelectValue placeholder="اختر العيار" />
-                </SelectTrigger>
-                <SelectContent dir="rtl">
-                  {MIX_GRADES.map((g) => (
-                    <SelectItem key={g.key} value={g.key}>
-                      <div className="flex flex-col text-right">
-                        <span className="font-bold">{g.label}</span>
-                        <span className="text-xs text-text-secondary">{g.use}</span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <p className="calc-hint">اختر العيار بحسب نوع العنصر الإنشائي لا بحسب السعر فقط.</p>
-            </div>
-
-            <div className="calc-grid-2 pt-4">
+            <div className="calc-grid-2">
               <div className="calc-field">
                 <Label className="calc-label">وزن الكيس (كجم)</Label>
                 <Select value={bagWeight.toString()} onValueChange={(val) => setBagWeight(parseFloat(val))}>
@@ -94,8 +96,8 @@ export default function CementCalculator() {
         </Card>
       </div>
 
-      <div className="space-y-6">
-        <Card className="calc-result-card h-full">
+      <div className="calc-results-panel">
+        <Card className="calc-surface-card calc-result-card h-full">
           <CardHeader className="pb-2 border-b border-[var(--border-subtle)]">
             <CardTitle className="calc-card-title text-base flex justify-between items-center">
               <span>الكميات المطلوبة</span>

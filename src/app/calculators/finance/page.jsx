@@ -1,6 +1,3 @@
-import Link from 'next/link';
-import { ArrowLeft, BadgePercent, BriefcaseBusiness, CreditCard, ReceiptText } from 'lucide-react';
-
 import {
   CalculatorDecisionTable,
   CalculatorFaqSection,
@@ -8,6 +5,7 @@ import {
   CalculatorInfoGrid,
   CalculatorResourceLinks,
   CalculatorSection,
+  CalculatorToolLauncher,
 } from '@/components/calculators/common';
 import {
   CALCULATOR_HUBS,
@@ -21,14 +19,29 @@ const SITE_URL = getSiteUrl();
 const FINANCE_HUB = getCalculatorHubBySlug('finance');
 const FINANCE_ROUTES = getCalculatorRoutesByCluster('finance');
 
-const FINANCE_ICONS = {
-  'end-of-service-benefits': BriefcaseBusiness,
-  'monthly-installment': CreditCard,
-  vat: ReceiptText,
-  percentage: BadgePercent,
-};
 const PRIMARY_FINANCE_ROUTE = FINANCE_ROUTES.find((item) => item.slug === 'monthly-installment') ?? FINANCE_ROUTES[0];
-const SUPPORTING_FINANCE_ROUTES = FINANCE_ROUTES.filter((item) => item.slug !== PRIMARY_FINANCE_ROUTE.slug);
+const SUPPORTING_FINANCE_ROUTES = PRIMARY_FINANCE_ROUTE
+  ? FINANCE_ROUTES.filter((item) => item.slug !== PRIMARY_FINANCE_ROUTE.slug)
+  : FINANCE_ROUTES;
+const FINANCE_TOOL_LABELS = {
+  'monthly-installment': 'قرار تمويلي',
+  vat: 'فاتورة وسعر شامل',
+  percentage: 'خصم أو زيادة',
+  'end-of-service-benefits': 'مستحقات عمل',
+};
+const FINANCE_TOOL_CTAS = {
+  'monthly-installment': 'افتح حاسبة القسط',
+  vat: 'افتح حاسبة الضريبة',
+  percentage: 'افتح حاسبة النسبة',
+  'end-of-service-benefits': 'احسب نهاية الخدمة',
+};
+const FINANCE_TOOL_ICONS = {
+  'monthly-installment': 'قسط',
+  vat: 'ضريبة',
+  percentage: 'نسبة',
+  'end-of-service-benefits': 'عمل',
+};
+const FINANCE_PRIMARY_DESCRIPTION = 'القسط الشهري لا يشرح وحده هل العرض مناسب لك. افتح الحاسبة لترى القسط، إجمالي الفوائد، أثر مدة السداد، والفرق بين سيناريو وآخر قبل أن تقارن العرض أو توقع على تمويل.';
 const FINANCE_RETURN_PATHS = [
   {
     href: '/calculators/monthly-installment',
@@ -105,6 +118,29 @@ const FAQ_ITEMS = [
     answer: 'ابدأ من حاسبة القسط الشهري إذا كان سؤالك عن مبلغ التمويل والدفعة والفائدة، لأنها تعرض القسط والتكلفة الكلية والسداد المبكر. بعد ذلك انتقل إلى النسبة المئوية إذا أردت فهم نسب التغير أو الخصم أو الزيادة داخل العرض نفسه. لا تقارن عرضين بالقسط وحده؛ ثبّت المدة والمبلغ والعملة ثم غيّر الفائدة والرسوم فقط.',
   },
 ];
+function buildFinanceToolPathways() {
+  const primaryItems = PRIMARY_FINANCE_ROUTE
+    ? [{
+        href: PRIMARY_FINANCE_ROUTE.href,
+        label: FINANCE_TOOL_LABELS[PRIMARY_FINANCE_ROUTE.slug],
+        title: PRIMARY_FINANCE_ROUTE.title,
+        description: FINANCE_PRIMARY_DESCRIPTION,
+        ctaLabel: FINANCE_TOOL_CTAS[PRIMARY_FINANCE_ROUTE.slug],
+        iconLabel: FINANCE_TOOL_ICONS[PRIMARY_FINANCE_ROUTE.slug],
+      }]
+    : [];
+  const supportingItems = SUPPORTING_FINANCE_ROUTES.map((item) => ({
+    href: item.href,
+    label: FINANCE_TOOL_LABELS[item.slug] || item.badge,
+    title: item.title,
+    description: item.description,
+    ctaLabel: FINANCE_TOOL_CTAS[item.slug] || 'افتح الحاسبة',
+    iconLabel: FINANCE_TOOL_ICONS[item.slug] || 'مال',
+  }));
+
+  return [...primaryItems, ...supportingItems];
+}
+
 export const metadata = buildCanonicalMetadata({
   title: 'حاسبات مالية عربية | القسط والضريبة ونهاية الخدمة والنسبة',
   description:
@@ -121,6 +157,7 @@ export const metadata = buildCanonicalMetadata({
 });
 
 export default function FinanceCalculatorsHubPage() {
+  const financeToolPathways = buildFinanceToolPathways();
   const collectionSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
@@ -188,41 +225,14 @@ export default function FinanceCalculatorsHubPage() {
         description="القرض عادة هو القرار الأعلى أثراً، لذلك نضعه أولاً، ثم تأتي الضريبة والنسبة ونهاية الخدمة كمسارات مساعدة حسب السؤال الذي بين يديك."
         subtle
       >
-        <div className="calc-decision-layout">
-          <Link href={PRIMARY_FINANCE_ROUTE.href} className="calc-decision-primary">
-            <span className="calc-decision-primary__label">ابدأ هنا إذا كان القرار تمويلياً</span>
-            <span className="calc-decision-primary__title">{PRIMARY_FINANCE_ROUTE.title}</span>
-            <span className="calc-decision-primary__body">
-              القسط الشهري لا يشرح وحده هل العرض مناسب لك. افتح الحاسبة لترى القسط، إجمالي الفوائد، أثر مدة السداد، والفرق بين سيناريو وآخر قبل أن تقارن العرض أو توقع على تمويل.
-            </span>
-            <span className="calc-decision-primary__cta">
-              افتح حاسبة القسط
-              <ArrowLeft size={16} aria-hidden="true" />
-            </span>
-          </Link>
-
-          <div className="calc-decision-list">
-            {SUPPORTING_FINANCE_ROUTES.map((item) => {
-              const Icon = FINANCE_ICONS[item.slug] || CreditCard;
-
-              return (
-                <Link key={item.slug} href={item.href} className="calc-decision-link">
-                  <span className="calc-tool-icon flex h-11 w-11 items-center justify-center rounded-[var(--radius-lg)] border" aria-hidden="true">
-                    <Icon size={18} />
-                  </span>
-                  <span className="calc-decision-link__copy">
-                    <strong className="calc-card-title">{item.title}</strong>
-                    <span className="calc-card-description">{item.description}</span>
-                  </span>
-                  <ArrowLeft size={16} className="calc-decision-link__arrow" aria-hidden="true" />
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-        <p className="calc-section-note">
-          إذا كان سؤالك عن فاتورة فابدأ بالضريبة، وإذا كان عن خصم أو زيادة فابدأ بالنسبة، وإذا كان عن مستحقات عمل فانتقل مباشرة إلى نهاية الخدمة. هذا الترتيب يقلل التنقل ويجعل كل خطوة مرتبطة بسؤال واضح.
-        </p>
+        <CalculatorToolLauncher
+          items={financeToolPathways}
+          ariaLabel="اختيار الحاسبة المالية المناسبة"
+          badge="4 قرارات مال وعمل"
+          featuredLabel="ابدأ هنا إذا كان القرار تمويلياً"
+          theme="green"
+          note="إذا كان سؤالك عن فاتورة فابدأ بالضريبة، وإذا كان عن خصم أو زيادة فابدأ بالنسبة، وإذا كان عن مستحقات عمل فانتقل مباشرة إلى نهاية الخدمة. هذا الترتيب يقلل التنقل ويجعل كل خطوة مرتبطة بسؤال واضح."
+        />
       </CalculatorSection>
 
       <CalculatorSection

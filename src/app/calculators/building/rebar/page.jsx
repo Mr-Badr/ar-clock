@@ -212,7 +212,28 @@ export default function RebarPage() {
         description="استخدم الجدول للتحقق السريع من وزن المتر وسيخ 12 متر قبل إدخال كمية كبيرة في الحاسبة."
         subtle
       >
-        <div className="calc-table-wrap">
+        <ul className="grid gap-3 md:hidden" aria-label="جدول أوزان الحديد حسب القطر للهواتف">
+          {REBAR_DIAMETERS.map((d) => (
+            <li key={d} className="calc-metric-card">
+              <div className="calc-metric-card__label justify-between gap-3">
+                <span>قطر ⌀{d} ملم</span>
+                <span>{REBAR_TYPICAL_USE[d]}</span>
+              </div>
+              <div className="calc-grid-2 calc-result-metrics">
+                <div>
+                  <span className="calc-hint block">وزن المتر</span>
+                  <strong className="calc-metric-card__value">{REBAR_WEIGHT_PER_METER[d]} كجم/م</strong>
+                </div>
+                <div>
+                  <span className="calc-hint block">وزن سيخ 12م</span>
+                  <strong className="calc-metric-card__value">{(REBAR_WEIGHT_PER_METER[d] * 12).toFixed(2)} كجم</strong>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <div className="calc-table-wrap hidden md:block">
           <table className="calc-guide-table">
             <thead>
               <tr>

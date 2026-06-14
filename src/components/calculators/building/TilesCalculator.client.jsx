@@ -41,16 +41,16 @@ export default function TilesCalculator() {
   const results = calcTiles(totalAreaM2, selectedSize.w, selectedSize.h, pattern, tilesPerBox);
 
   return (
-    <div className="calc-app-grid grid gap-8">
+    <div className="calc-app-grid calc-building-tool">
       <div className="space-y-6">
-        <Card className="calc-surface-card">
+        <Card className="calc-surface-card calc-app-panel">
           <CardHeader>
             <CardTitle className="calc-card-title text-xl">مواصفات البلاط والمساحات</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="calc-form-grid">
             
             {/* Tile Size & Pattern */}
-            <div className="space-y-4">
+            <div className="calc-form-grid">
               <div className="space-y-2">
                 <Label>مقاس البلاط (سم)</Label>
                 <Select value={tileSizeIndex} onValueChange={setTileSizeIndex}>
@@ -69,17 +69,17 @@ export default function TilesCalculator() {
 
               <div className="space-y-2">
                 <Label>طريقة التركيب (تؤثر على الهدر)</Label>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="calc-building-choice-grid calc-building-choice-grid--patterns">
                   {TILE_PATTERNS.map((p) => (
                     <button
                       key={p.key}
                       type="button"
                       aria-pressed={pattern === p.key}
                       onClick={() => setPattern(p.key)}
-                      className={`flex flex-col items-center justify-center p-3 rounded-[var(--radius-lg)] border transition-colors ${
+                      className={`calc-building-choice-card ${
                         pattern === p.key
-                          ? 'border-[var(--border-accent)] bg-[var(--bg-surface-1)]'
-                          : 'border-[var(--border-subtle)] bg-[var(--bg-surface-2)] hover:bg-[var(--bg-surface-3)]'
+                          ? 'is-active'
+                          : ''
                       }`}
                     >
                       <span className="text-sm font-bold">{p.label}</span>
@@ -101,30 +101,31 @@ export default function TilesCalculator() {
                   placeholder={`الافتراضي للمقاس: ${selectedSize.defaultPerBox}`}
                   value={customBoxSize}
                   onChange={(e) => setCustomBoxSize(e.target.value)}
+                  className="calc-input"
                 />
               </div>
             </div>
 
             {/* Rooms Setup */}
-            <div className="space-y-4">
+            <div className="calc-field">
               <div className="flex justify-between items-center border-b border-[var(--border-subtle)] pb-2">
                 <Label>المساحات / الغرف</Label>
                 <span className="text-sm font-bold text-primary">{fmt(totalAreaM2, 1)} م² إجمالي</span>
               </div>
 
-              <div className="space-y-3">
+              <div className="calc-room-list">
                 {rooms.map((room, index) => (
-                  <div key={index} className="flex gap-2 items-end bg-[var(--bg-surface-2)] p-3 rounded-[var(--radius-lg)] border border-[var(--border-subtle)]">
-                    <div className="flex-1 space-y-2">
+                  <div key={index} className="calc-room-card">
+                    <div className="calc-room-card__fields">
                       <Input
                         aria-label={`اسم المساحة رقم ${index + 1}`}
                         type="text"
                         value={room.name}
                         onChange={(e) => updateRoom(index, 'name', e.target.value)}
-                        className="h-8 text-sm font-bold bg-transparent border-none px-0 focus-visible:ring-0"
+                        className="calc-room-name-input"
                       />
-                      <div className="flex gap-2 items-center">
-                        <div className="flex-1">
+                      <div className="calc-room-dimensions">
+                        <div className="calc-field">
                            <Label htmlFor={`tiles-room-length-${index}`} className="text-[10px] text-text-secondary">الطول (م)</Label>
                            <Input
                              id={`tiles-room-length-${index}`}
@@ -133,11 +134,11 @@ export default function TilesCalculator() {
                              step="0.1"
                              value={room.length}
                              onChange={(e) => updateRoom(index, 'length', e.target.value)}
-                             className="text-center h-9"
+                             className="calc-input calc-room-number-input"
                            />
                         </div>
-                        <span className="text-text-secondary translate-y-2">×</span>
-                        <div className="flex-1">
+                        <span className="calc-room-multiply">×</span>
+                        <div className="calc-field">
                            <Label htmlFor={`tiles-room-width-${index}`} className="text-[10px] text-text-secondary">العرض (م)</Label>
                            <Input
                              id={`tiles-room-width-${index}`}
@@ -146,7 +147,7 @@ export default function TilesCalculator() {
                              step="0.1"
                              value={room.width}
                              onChange={(e) => updateRoom(index, 'width', e.target.value)}
-                             className="text-center h-9"
+                             className="calc-input calc-room-number-input"
                            />
                         </div>
                       </div>
@@ -156,7 +157,7 @@ export default function TilesCalculator() {
                       type="button"
                       onClick={() => removeRoom(index)}
                       disabled={rooms.length === 1}
-                      className="h-9 px-3 flex items-center justify-center rounded-md bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] hover:bg-[var(--red-subtle)] hover:text-[var(--red-text)] transition-colors disabled:opacity-30 mb-[2px]"
+                      className="calc-room-remove"
                       aria-label={`حذف المساحة رقم ${index + 1}`}
                       title="حذف الغرفة"
                     >
@@ -169,7 +170,7 @@ export default function TilesCalculator() {
               <button
                 type="button"
                 onClick={addRoom}
-                className="w-full py-2 text-sm text-[var(--blue)] font-medium border border-[var(--blue)] border-dashed rounded-lg hover:bg-[var(--blue-subtle)] transition-colors"
+                className="calc-room-add"
               >
                 + إضافة غرفة أخرى
               </button>
@@ -179,8 +180,8 @@ export default function TilesCalculator() {
         </Card>
       </div>
 
-      <div className="space-y-6">
-        <Card className="calc-result-card h-full relative overflow-hidden">
+      <div className="calc-results-panel">
+        <Card className="calc-surface-card calc-result-card h-full relative overflow-hidden">
           <CardHeader className="pb-2 border-b border-[var(--border-subtle)]">
             <CardTitle className="calc-card-title text-base flex justify-between items-center">
               <span>الكمية المطلوبة للتركيب</span>

@@ -1,6 +1,3 @@
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
-
 import {
   CalculatorDecisionTable,
   CalculatorFaqSection,
@@ -8,6 +5,7 @@ import {
   CalculatorInfoGrid,
   CalculatorResourceLinks,
   CalculatorSection,
+  CalculatorToolLauncher,
 } from '@/components/calculators/common';
 import {
   PERSONAL_FINANCE_HUB,
@@ -75,6 +73,7 @@ const toolPathways = [
     title: 'احسب صندوق الطوارئ قبل أي خطة طويلة',
     description: 'إذا كان أي ظرف مفاجئ يربك ميزانيتك، فابدأ هنا. ستعرف المبلغ الذي يحمي مصاريفك الأساسية والمدة الأقرب لوضعك.',
     ctaLabel: 'احسب صندوق الطوارئ',
+    iconLabel: 'أمان',
   },
   {
     href: '/calculators/personal-finance/debt-payoff',
@@ -82,6 +81,7 @@ const toolPathways = [
     title: 'اعرف متى تنتهي ديونك فعلاً',
     description: 'استخدمها عندما تريد رؤية مدة السداد، أثر الفائدة، والفرق بين زيادة الدفعة أو تغيير ترتيب الديون.',
     ctaLabel: 'احسب خطة السداد',
+    iconLabel: 'دين',
   },
   {
     href: '/calculators/personal-finance/savings-goal',
@@ -89,6 +89,7 @@ const toolPathways = [
     title: 'حوّل هدفك إلى ادخار شهري واضح',
     description: 'مفيدة عندما تعرف ما تريد شراءه أو تحقيقه، لكنك لا تعرف كم تحتاج شهرياً ولا هل الموعد واقعي.',
     ctaLabel: 'احسب هدف الادخار',
+    iconLabel: 'هدف',
   },
   {
     href: '/calculators/personal-finance/net-worth',
@@ -96,6 +97,7 @@ const toolPathways = [
     title: 'احسب صافي ثروتك من غير تجميل',
     description: 'اجمع ما تملك وما عليك في صورة واحدة حتى تعرف هل مسارك يتحسن أم يحتاج تقليل ديون أو زيادة أصول.',
     ctaLabel: 'احسب صافي الثروة',
+    iconLabel: 'صافي',
   },
 ];
 
@@ -260,31 +262,14 @@ export default function PersonalFinanceHubPage() {
         description="لا تحتاج فتح أربع أدوات معاً. ابدأ بالمسار الأقرب لحالتك، ثم انتقل للأداة التالية عندما تكشف النتيجة سؤالاً جديداً."
         subtle
       >
-        <div className="calc-decision-layout">
-          <Link href={toolPathways[0].href} className="calc-decision-primary">
-            <span className="calc-decision-primary__label">{toolPathways[0].label}</span>
-            <strong className="calc-decision-primary__title">{toolPathways[0].title}</strong>
-            <span className="calc-decision-primary__body">{toolPathways[0].description}</span>
-            <span className="calc-decision-primary__cta">
-              {toolPathways[0].ctaLabel}
-              <ArrowLeft size={16} aria-hidden="true" />
-            </span>
-          </Link>
-          <div className="calc-decision-list" aria-label="مسارات مالية أخرى">
-            {toolPathways.slice(1).map((item, index) => (
-              <Link key={item.href} href={item.href} className="calc-decision-link">
-                <span className="calc-resource-link__index">{String(index + 2).padStart(2, '0')}</span>
-                <span className="calc-decision-link__copy">
-                  <strong className="calc-card-title">{item.title}</strong>
-                  <span className="calc-card-description">{item.description}</span>
-                </span>
-                <span className="calc-decision-link__arrow">
-                  <ArrowLeft size={16} aria-hidden="true" />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
+        <CalculatorToolLauncher
+          items={toolPathways}
+          ariaLabel="اختيار حاسبة التخطيط المالي المناسبة"
+          badge="4 قرارات مالية"
+          featuredLabel="ابدأ بالحماية"
+          theme="green"
+          note="صندوق الطوارئ يظهر أولاً لأنه يمنع انهيار الخطة عند أول ظرف مفاجئ، ثم تأتي الديون والادخار وصافي الثروة بحسب المشكلة التي تضغط على الشهر."
+        />
       </CalculatorSection>
 
       <CalculatorSection

@@ -1,12 +1,10 @@
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
-
 import {
   CalculatorDecisionTable,
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorResourceLinks,
   CalculatorSection,
+  CalculatorToolLauncher,
 } from '@/components/calculators/common';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
@@ -52,6 +50,7 @@ const sleepToolPathways = [
     title: 'اعرف متى تنام إذا كان وقت الاستيقاظ ثابتاً',
     description: 'ابدأ هنا عندما تعرف موعد الاستيقاظ وتريد أوقات نوم واقعية تراعي وقت الغفو ودورات النوم.',
     ctaLabel: 'احسب وقت النوم',
+    iconLabel: 'نوم',
   },
   {
     href: '/calculators/sleep/wake-time',
@@ -59,6 +58,7 @@ const sleepToolPathways = [
     title: 'إذا ستنام الان، اختر وقت استيقاظ مناسباً',
     description: 'مفيدة عندما يكون القرار الان: متى أستيقظ بعد نومي الحالي من غير تجربة عشوائية؟',
     ctaLabel: 'احسب وقت الاستيقاظ',
+    iconLabel: 'منبه',
   },
   {
     href: '/calculators/sleep/sleep-duration',
@@ -66,6 +66,7 @@ const sleepToolPathways = [
     title: 'احسب صافي نومك الفعلي',
     description: 'استخدمها عندما تكون الساعات على الورق جيدة لكن التعب مستمر بسبب الغفو أو الاستيقاظات الليلية.',
     ctaLabel: 'احسب مدة النوم',
+    iconLabel: 'مدة',
   },
   {
     href: '/calculators/sleep/nap-calculator',
@@ -73,6 +74,7 @@ const sleepToolPathways = [
     title: 'اختر قيلولة قصيرة أو دورة كاملة',
     description: 'تساعدك على معرفة وقت الاستيقاظ من القيلولة وهل توقيتها قريب جداً من نوم الليل.',
     ctaLabel: 'احسب القيلولة',
+    iconLabel: 'قيلولة',
   },
   {
     href: '/calculators/sleep/sleep-debt',
@@ -80,6 +82,7 @@ const sleepToolPathways = [
     title: 'اعرف هل تراكم عليك دين نوم',
     description: 'افتحها إذا كانت المشكلة تتكرر عدة أيام وتريد رؤية العجز الأسبوعي بدل التركيز على ليلة واحدة.',
     ctaLabel: 'احسب دين النوم',
+    iconLabel: 'أسبوع',
   },
   {
     href: '/calculators/sleep/sleep-needs-by-age',
@@ -87,6 +90,7 @@ const sleepToolPathways = [
     title: 'اعرف نطاق النوم المناسب لعمرك',
     description: 'مفيدة عندما تريد مرجعاً سريعاً قبل الحكم على مدة النوم بأنها قليلة أو كافية.',
     ctaLabel: 'اعرف احتياجك',
+    iconLabel: 'عمر',
   },
 ];
 
@@ -232,31 +236,14 @@ export default function SleepHubPage() {
         title="ابدأ من موقف النوم الأقرب لك"
         description="لا تفتح كل الحاسبات. اختر المسار الذي يصف هذه الليلة أو هذا الأسبوع، ثم انتقل فقط إذا كشفت النتيجة سؤالاً جديداً."
       >
-        <div className="calc-decision-layout">
-          <Link href={sleepToolPathways[0].href} className="calc-decision-primary">
-            <span className="calc-decision-primary__label">{sleepToolPathways[0].label}</span>
-            <strong className="calc-decision-primary__title">{sleepToolPathways[0].title}</strong>
-            <span className="calc-decision-primary__body">{sleepToolPathways[0].description}</span>
-            <span className="calc-decision-primary__cta">
-              {sleepToolPathways[0].ctaLabel}
-              <ArrowLeft size={16} aria-hidden="true" />
-            </span>
-          </Link>
-          <div className="calc-decision-list" aria-label="مسارات نوم أخرى">
-            {sleepToolPathways.slice(1, 4).map((item, index) => (
-              <Link key={item.href} href={item.href} className="calc-decision-link">
-                <span className="calc-resource-link__index">{String(index + 2).padStart(2, '0')}</span>
-                <span className="calc-decision-link__copy">
-                  <strong className="calc-card-title">{item.title}</strong>
-                  <span className="calc-card-description">{item.description}</span>
-                </span>
-                <span className="calc-decision-link__arrow">
-                  <ArrowLeft size={16} aria-hidden="true" />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
+        <CalculatorToolLauncher
+          items={sleepToolPathways}
+          ariaLabel="اختيار حاسبة النوم المناسبة"
+          badge="6 مسارات نوم"
+          featuredLabel="الأكثر فائدة قبل النوم"
+          theme="blue"
+          note="الترتيب مقصود: وقت النوم أولاً لأنه يحل قرار الليلة، ثم وقت الاستيقاظ والقيلولة والمدة، وأخيراً دين النوم واحتياج العمر عندما يصبح السؤال أوسع."
+        />
       </CalculatorSection>
 
       <CalculatorSection

@@ -21,7 +21,7 @@ export default function AgePlanetsCalculator() {
   }, [normalized]);
 
   return (
-    <div className="calc-app">
+    <div className="calc-app age-standalone-tool">
       <Card className="calc-surface-card calc-app-panel">
         <CardHeader>
           <CardTitle className="calc-card-title">أدخل تاريخ الميلاد</CardTitle>

@@ -90,7 +90,7 @@ export default function AgeCalculator({ compact = false }) {
             <div className="calc-field">
               <div className="calc-field-row">
                 <Label className="calc-label">احسب على تاريخ</Label>
-                <div className="calc-kbd-row">
+                <div className="calc-kbd-row age-compare-toggle">
                   <button
                     type="button"
                     className={`calc-chip-button ${compareMode === 'today' ? 'is-active' : ''}`}
@@ -197,91 +197,88 @@ export default function AgeCalculator({ compact = false }) {
                 note={`مرّ ${formatAgeNumber(result.birthdayProgress.elapsedDays, { maximumFractionDigits: 0 })} يوم من أصل ${formatAgeNumber(result.birthdayProgress.totalDays, { maximumFractionDigits: 0 })} يوم بين آخر عيد ميلاد والقادم.`}
               />
 
-              <Card className="calc-surface-card">
-                <CardHeader>
-                  <CardTitle className="calc-card-title">ملخصات سريعة</CardTitle>
-                </CardHeader>
-                <CardContent className="calc-breakdown-list">
-                  <InlineFacts
-                    items={[
-                      { label: 'جيلك', value: result.personal.generation.label },
-                      { label: 'فصل الميلاد', value: result.personal.season },
-                      { label: 'نصف عيد الميلاد', value: formatAgeDate(result.personal.halfBirthdayIso) },
-                    ]}
-                  />
-                  <div className="calc-mini-item">
-                    <strong>تاريخ الميلاد الهجري</strong>
-                    <span>{result.hijri.birth?.formatted?.ar || 'غير متاح لهذا التاريخ'}</span>
-                  </div>
-                  <div className="calc-mini-item">
-                    <strong>عيد الميلاد القادم</strong>
-                    <span>ستبلغ {formatAgeNumber(result.nextBirthday.nextAge, { maximumFractionDigits: 0 })} سنة في {result.nextBirthday.label}</span>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="calc-surface-card">
-                <CardHeader>
-                  <CardTitle className="calc-card-title">إحصائيات تقديرية ممتعة</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <MetricGrid
-                    items={[
-                      {
-                        label: 'نبضات القلب',
-                        value: formatAgeNumber(result.lifeStats.heartbeats, { maximumFractionDigits: 0 }),
-                        note: 'على متوسط 72 نبضة في الدقيقة.',
-                      },
-                      {
-                        label: 'الخطوات',
-                        value: formatAgeNumber(result.lifeStats.steps, { maximumFractionDigits: 0 }),
-                        note: 'بمتوسط 7,000 خطوة في اليوم.',
-                      },
-                      {
-                        label: 'ساعات النوم',
-                        value: formatAgeNumber(result.lifeStats.sleepHours, { maximumFractionDigits: 0 }),
-                        note: 'على افتراض 8 ساعات يومياً.',
-                      },
-                      {
-                        label: 'كمية الماء',
-                        value: `${formatAgeNumber(result.lifeStats.waterLiters, { maximumFractionDigits: 0 })} لتر`,
-                        note: 'بمتوسط 1.5 لتر يومياً.',
-                      },
-                      {
-                        label: 'مرات الرمش',
-                        value: formatAgeNumber(result.lifeStats.blinks, { maximumFractionDigits: 0 }),
-                        note: 'تقدير تقريبي للاستخدام الترفيهي.',
-                      },
-                    ]}
-                  />
-                </CardContent>
-              </Card>
-
-              <Card className="calc-surface-card">
-                <CardHeader>
-                  <CardTitle className="calc-card-title">الإنجازات الزمنية الأقرب</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <MilestoneList items={result.milestones.slice(0, 4)} />
-                </CardContent>
-              </Card>
-
-              <Card className="calc-surface-card">
-                <CardHeader>
-                  <CardTitle className="calc-card-title">مشاركة النتيجة</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ResultActions
-                    copyText={shareText}
-                    shareTitle="نتيجة حاسبة العمر"
-                    shareText={shareText}
-                  />
-                </CardContent>
-              </Card>
+              <ResultActions
+                copyText={shareText}
+                shareTitle="نتيجة حاسبة العمر"
+                shareText={shareText}
+              />
             </>
           ) : null}
         </div>
       </div>
+
+      {result?.isValid ? (
+        <div className="age-detail-board">
+          <Card className="calc-surface-card age-detail-card age-detail-card--summary">
+            <CardHeader>
+              <CardTitle className="calc-card-title">ملخصات سريعة</CardTitle>
+            </CardHeader>
+            <CardContent className="calc-breakdown-list">
+              <InlineFacts
+                items={[
+                  { label: 'جيلك', value: result.personal.generation.label },
+                  { label: 'فصل الميلاد', value: result.personal.season },
+                  { label: 'نصف عيد الميلاد', value: formatAgeDate(result.personal.halfBirthdayIso) },
+                ]}
+              />
+              <div className="calc-mini-item">
+                <strong>تاريخ الميلاد الهجري</strong>
+                <span>{result.hijri.birth?.formatted?.ar || 'غير متاح لهذا التاريخ'}</span>
+              </div>
+              <div className="calc-mini-item">
+                <strong>عيد الميلاد القادم</strong>
+                <span>ستبلغ {formatAgeNumber(result.nextBirthday.nextAge, { maximumFractionDigits: 0 })} سنة في {result.nextBirthday.label}</span>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="calc-surface-card age-detail-card age-detail-card--stats">
+            <CardHeader>
+              <CardTitle className="calc-card-title">إحصائيات تقديرية ممتعة</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <MetricGrid
+                items={[
+                  {
+                    label: 'نبضات القلب',
+                    value: formatAgeNumber(result.lifeStats.heartbeats, { maximumFractionDigits: 0 }),
+                    note: 'على متوسط 72 نبضة في الدقيقة.',
+                  },
+                  {
+                    label: 'الخطوات',
+                    value: formatAgeNumber(result.lifeStats.steps, { maximumFractionDigits: 0 }),
+                    note: 'بمتوسط 7,000 خطوة في اليوم.',
+                  },
+                  {
+                    label: 'ساعات النوم',
+                    value: formatAgeNumber(result.lifeStats.sleepHours, { maximumFractionDigits: 0 }),
+                    note: 'على افتراض 8 ساعات يومياً.',
+                  },
+                  {
+                    label: 'كمية الماء',
+                    value: `${formatAgeNumber(result.lifeStats.waterLiters, { maximumFractionDigits: 0 })} لتر`,
+                    note: 'بمتوسط 1.5 لتر يومياً.',
+                  },
+                  {
+                    label: 'مرات الرمش',
+                    value: formatAgeNumber(result.lifeStats.blinks, { maximumFractionDigits: 0 }),
+                    note: 'تقدير تقريبي للاستخدام الترفيهي.',
+                  },
+                ]}
+              />
+            </CardContent>
+          </Card>
+
+          <Card className="calc-surface-card age-detail-card age-detail-card--milestones">
+            <CardHeader>
+              <CardTitle className="calc-card-title">الإنجازات الزمنية الأقرب</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <MilestoneList items={result.milestones.slice(0, 4)} />
+            </CardContent>
+          </Card>
+        </div>
+      ) : null}
 
       {result?.isValid ? (
         <div className="calc-grid-3">

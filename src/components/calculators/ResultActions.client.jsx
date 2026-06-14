@@ -118,9 +118,13 @@ export default function ResultActions({
 
   return (
     <div className="calc-share-wrap">
+      <div className="calc-result-actions__intro">
+        <strong>احتفظ بهذه النتيجة</strong>
+        <span>انسخ الملخص أو شارك رابط الحاسبة للرجوع إليه بسهولة.</span>
+      </div>
       <div className="calc-result-actions">
-        <Button type="button" variant="outline" size="sm" onClick={handleCopy}>
-          <Copy size={16} />
+        <Button type="button" variant="outline" size="sm" onClick={handleCopy} disabled={!copyText}>
+          <Copy size={16} aria-hidden="true" />
           نسخ الملخص
         </Button>
         <Button
@@ -130,14 +134,15 @@ export default function ResultActions({
           aria-expanded={isShareOpen}
           aria-controls={sharePanelId}
           onClick={() => setIsShareOpen((current) => !current)}
+          disabled={!isShareReady}
         >
-          <Share2 size={16} />
+          <Share2 size={16} aria-hidden="true" />
           مشاركة
         </Button>
       </div>
 
       {isShareOpen ? (
-        <div id={sharePanelId} className="calc-share-panel">
+        <div id={sharePanelId} className="calc-share-panel" role="region" aria-label="خيارات مشاركة النتيجة">
           <div className="calc-share-meta">
             <strong>شارك النتيجة في المكان المناسب لك</strong>
             <span>
@@ -155,7 +160,7 @@ export default function ResultActions({
                 onClick={handleNativeShare}
                 disabled={!isShareReady}
               >
-                <Share2 size={16} />
+                <Share2 size={16} aria-hidden="true" />
                 مشاركة عبر التطبيقات
               </Button>
             ) : null}
@@ -168,7 +173,7 @@ export default function ResultActions({
               onClick={handleCopyLink}
               disabled={!isShareReady}
             >
-              <Link2 size={16} />
+              <Link2 size={16} aria-hidden="true" />
               نسخ الرابط
             </Button>
 
@@ -180,9 +185,9 @@ export default function ResultActions({
                   <a
                     href={item.href}
                     target={item.external === false ? undefined : '_blank'}
-                    rel={item.external === false ? undefined : 'noreferrer'}
+                    rel={item.external === false ? undefined : 'noopener noreferrer'}
                   >
-                    <Icon size={16} />
+                    <Icon size={16} aria-hidden="true" />
                     {item.label}
                   </a>
                 </Button>

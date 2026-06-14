@@ -44,12 +44,12 @@ export default function SleepDebtCalculator() {
             <CardTitle className="calc-card-title">ساعات نومك خلال الأسبوع</CardTitle>
           </CardHeader>
           <CardContent className="calc-form-grid">
-            <div className="calc-field">
-              <Label className="calc-label" htmlFor="sleep-debt-age">العمر</Label>
-              <Input id="sleep-debt-age" inputMode="numeric" value={age} onChange={(e) => setAge(e.target.value)} />
-            </div>
+            <div className="calc-sleep-week-grid">
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="sleep-debt-age">العمر</Label>
+                <Input id="sleep-debt-age" inputMode="numeric" value={age} onChange={(e) => setAge(e.target.value)} />
+              </div>
 
-            <div className="calc-info-grid">
               {DAY_LABELS.map((label, index) => (
                 <div key={label} className="calc-field">
                   <Label className="calc-label" htmlFor={`sleep-debt-day-${index}`}>{label}</Label>

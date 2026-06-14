@@ -34,13 +34,13 @@ export default function RebarCalculator() {
   const results = calcRebarWeight(diameter, totalLengthM);
 
   return (
-    <div className="calc-app-grid grid gap-8">
+    <div className="calc-app-grid calc-building-tool">
       <div className="space-y-6">
-        <Card className="calc-surface-card">
+        <Card className="calc-surface-card calc-app-panel">
           <CardHeader>
             <CardTitle className="calc-card-title text-xl">مواصفات الحديد</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-8">
+          <CardContent className="calc-form-grid">
             <div className="calc-field">
               <div className="calc-field-row">
                 <Label className="calc-label">قطر السيخ (ملم)</Label>
@@ -48,7 +48,7 @@ export default function RebarCalculator() {
                   {REBAR_TYPICAL_USE[diameter]}
                 </span>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="calc-building-choice-grid calc-building-choice-grid--rebar">
                 {REBAR_DIAMETERS.map((d) => (
                   <Button
                     key={d}
@@ -57,7 +57,7 @@ export default function RebarCalculator() {
                     onClick={() => setDiameter(d)}
                     variant="outline"
                     size="sm"
-                    className={`calc-chip-button chip min-w-[56px] ${diameter === d ? 'is-active' : ''}`}
+                    className={`calc-chip-button chip calc-rebar-chip ${diameter === d ? 'is-active' : ''}`}
                   >
                     ⌀{d}
                   </Button>
@@ -74,7 +74,7 @@ export default function RebarCalculator() {
 
               <div className="space-y-3">
                 {lengthInputGroup.map((group, index) => (
-                  <div key={index} className="calc-grid-2 items-end rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface-2)] p-3">
+                  <div key={index} className="calc-grid-2 calc-repeat-row calc-rebar-row">
                     <div className="calc-field">
                       <Label htmlFor={`rebar-length-${index}`} className="calc-label text-xs">الطول (متر)</Label>
                       <Input
@@ -98,7 +98,7 @@ export default function RebarCalculator() {
                         className="calc-input text-center"
                       />
                     </div>
-                    <div className="flex justify-end sm:col-span-2">
+                    <div className="calc-repeat-actions">
                       <Button
                         type="button"
                         variant="ghost"
@@ -106,7 +106,7 @@ export default function RebarCalculator() {
                         aria-label={`حذف سطر الحديد رقم ${index + 1}`}
                         onClick={() => removeGroup(index)}
                         disabled={lengthInputGroup.length === 1}
-                        className="calc-button"
+                        className="calc-button calc-line-remove"
                       >
                         <X size={16} />
                         حذف السطر
@@ -130,8 +130,8 @@ export default function RebarCalculator() {
         </Card>
       </div>
 
-      <div className="space-y-6">
-        <Card className="calc-result-card h-full relative overflow-hidden">
+      <div className="calc-results-panel">
+        <Card className="calc-surface-card calc-result-card h-full relative overflow-hidden">
           <CardHeader className="pb-2 border-b border-[var(--border-subtle)]">
             <CardTitle className="calc-card-title text-base">الوزن النهائي</CardTitle>
           </CardHeader>

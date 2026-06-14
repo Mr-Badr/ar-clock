@@ -236,7 +236,7 @@ export default async function SleepToolPage({ params }) {
     description: mode.description,
     ctaLabel: 'افتح النمط',
   }));
-  const nextPathLinks = [
+  const nextPathLinkCandidates = [
     ...modeLinks.slice(0, 2),
     ...relatedTools.slice(0, 2).map((item) => ({
       href: item.href,
@@ -251,6 +251,9 @@ export default async function SleepToolPage({ params }) {
       ctaLabel: 'اقرأ التفسير',
     })),
   ];
+  const nextPathLinks = nextPathLinkCandidates.filter((item, index, items) => (
+    item?.href && items.findIndex((candidate) => candidate?.href === item.href) === index
+  ));
   const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',

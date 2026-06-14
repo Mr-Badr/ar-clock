@@ -2,7 +2,9 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-type TableProps = React.ComponentProps<"table">
+type TableProps = React.ComponentProps<"table"> & {
+  containerProps?: Omit<React.ComponentProps<"div">, "children">
+}
 type TableSectionProps = React.ComponentProps<"thead">
 type TableBodyProps = React.ComponentProps<"tbody">
 type TableFooterProps = React.ComponentProps<"tfoot">
@@ -11,11 +13,24 @@ type TableHeadProps = React.ComponentProps<"th">
 type TableCellProps = React.ComponentProps<"td">
 type TableCaptionProps = React.ComponentProps<"caption">
 
-function Table({ className, ...props }: TableProps): React.JSX.Element {
+function Table({
+  className,
+  containerProps,
+  ...props
+}: TableProps): React.JSX.Element {
+  const {
+    className: containerClassName,
+    ...resolvedContainerProps
+  } = containerProps ?? {}
+
   return (
     <div
       data-slot="table-container"
-      className="relative w-full overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] shadow-none"
+      className={cn(
+        "relative w-full overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] shadow-none",
+        containerClassName
+      )}
+      {...resolvedContainerProps}
     >
       <table
         data-slot="table"

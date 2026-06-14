@@ -55,17 +55,17 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug }) {
   const safeBreakdown = Array.isArray(results?.breakdown) ? results.breakdown : [];
 
   return (
-    <div className="calc-app-grid grid gap-8">
+    <div className="calc-app-grid calc-building-tool">
       {/* ─── Controls Panel (Left/Top) ─────────────── */}
       <div className="space-y-6">
-        <Card className="calc-surface-card">
+        <Card className="calc-surface-card calc-app-panel">
           <CardHeader>
             <CardTitle className="calc-card-title text-xl">مواصفات المبنى</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="calc-form-grid">
 
             {/* Country & Region Selectors */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="calc-grid-2">
               <div className="space-y-2">
                 <Label>الدولة</Label>
                 <Select value={countrySlug} onValueChange={(val) => {
@@ -126,7 +126,7 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug }) {
             {/* Floors */}
             <div className="space-y-2">
               <Label htmlFor="building-floors">عدد الطوابق</Label>
-              <div className="flex items-center gap-4">
+              <div className="calc-building-inline-field">
                 <Input
                   id="building-floors"
                   type="number"
@@ -143,17 +143,17 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug }) {
             {/* Building Type */}
             <div className="space-y-2">
               <Label>نوع المبنى</Label>
-              <div className="flex flex-wrap gap-2">
+              <div className="calc-building-choice-grid calc-building-choice-grid--types">
                 {BUILDING_TYPES.map((type) => (
                   <button
                     key={type.key}
                     type="button"
                     aria-pressed={buildingType === type.key}
                     onClick={() => setBuildingType(type.key)}
-                    className={`flex-1 min-w-[80px] py-2 px-3 rounded-[var(--radius-md)] text-sm font-medium transition-colors ${
+                    className={`calc-building-choice-card calc-building-choice-card--compact ${
                       buildingType === type.key
-                        ? 'bg-[var(--blue)] text-[var(--text-on-accent)] font-bold'
-                        : 'bg-[var(--bg-surface-2)] hover:bg-[var(--bg-surface-3)]'
+                        ? 'is-active'
+                        : ''
                     }`}
                   >
                     {type.label}
@@ -165,17 +165,17 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug }) {
             {/* Finish Level */}
             <div className="space-y-2">
               <Label>مستوى التشطيب</Label>
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
+              <div className="calc-building-choice-grid calc-building-choice-grid--finish">
                 {FINISH_LEVELS.map((level) => (
                   <button
                     key={level.key}
                     type="button"
                     aria-pressed={finishLevel === level.key}
                     onClick={() => setFinishLevel(level.key)}
-                    className={`flex flex-col items-center justify-center p-3 rounded-[var(--radius-lg)] border transition-colors ${
+                    className={`calc-building-choice-card ${
                       finishLevel === level.key
-                        ? 'border-[var(--border-accent)] bg-[var(--bg-surface-1)]'
-                        : 'border-[var(--border-subtle)] bg-[var(--bg-surface-2)] hover:bg-[var(--bg-surface-3)]'
+                        ? 'is-active'
+                        : ''
                     }`}
                   >
                     <span className="text-sm font-bold">{level.label}</span>
@@ -190,10 +190,10 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug }) {
       </div>
 
       {/* ─── Results Panel (Right/Bottom) ──────────── */}
-      <div className="space-y-6">
+      <div className="calc-results-panel">
 
         {/* Main Cost Highlight */}
-        <Card className="calc-result-card relative overflow-hidden">
+        <Card className="calc-surface-card calc-result-card relative overflow-hidden">
           {/* Subtle background glow based on finish level */}
           <CardContent className="p-8 text-center space-y-4" aria-live="polite">
             <h3 className="text-lg font-medium text-text-secondary">التكلفة الإجمالية التقديرية</h3>
@@ -225,7 +225,7 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug }) {
         </Card>
 
         {/* Breakdown Chart & Table */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="calc-grid-2 calc-building-breakdown-grid">
           <Card className="calc-surface-card">
             <CardHeader className="pb-2">
               <CardTitle className="calc-card-title text-base text-center">توزيع التكلفة</CardTitle>
@@ -286,7 +286,7 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug }) {
         </div>
 
         {/* Quick Estimates (Cement & Rebar) */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="calc-grid-2 calc-building-quick-grid">
           <Card className="calc-surface-card bg-[var(--bg-surface-2)] border-none">
             <CardContent className="p-4 flex flex-col items-center justify-center text-center">
               <span className="text-sm text-text-secondary mb-1">الأسمنت (تقديري)</span>

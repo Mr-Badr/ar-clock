@@ -59,21 +59,25 @@ export default function EmergencyFundCalculator() {
               hint="تُستخدم هذه العملة في الهدف الكلي والمبلغ المتبقي وخطة الادخار الشهرية."
               id="emergency-fund-currency"
             />
-            <div className="calc-field">
-              <Label className="calc-label" htmlFor="emergency-expenses">المصاريف الشهرية</Label>
-              <Input id="emergency-expenses" inputMode="decimal" value={monthlyExpenses} onChange={(e) => setMonthlyExpenses(e.target.value)} />
+            <div className="calc-grid-2">
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="emergency-expenses">المصاريف الشهرية</Label>
+                <Input id="emergency-expenses" inputMode="decimal" value={monthlyExpenses} onChange={(e) => setMonthlyExpenses(e.target.value)} />
+              </div>
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="emergency-months">عدد الأشهر المستهدفة</Label>
+                <Input id="emergency-months" inputMode="numeric" value={targetMonths} onChange={(e) => setTargetMonths(e.target.value)} />
+              </div>
             </div>
-            <div className="calc-field">
-              <Label className="calc-label" htmlFor="emergency-months">عدد الأشهر المستهدفة</Label>
-              <Input id="emergency-months" inputMode="numeric" value={targetMonths} onChange={(e) => setTargetMonths(e.target.value)} />
-            </div>
-            <div className="calc-field">
-              <Label className="calc-label" htmlFor="emergency-current">المدخر الحالي</Label>
-              <Input id="emergency-current" inputMode="decimal" value={currentSavings} onChange={(e) => setCurrentSavings(e.target.value)} />
-            </div>
-            <div className="calc-field">
-              <Label className="calc-label" htmlFor="emergency-monthly">الادخار الشهري</Label>
-              <Input id="emergency-monthly" inputMode="decimal" value={monthlyContribution} onChange={(e) => setMonthlyContribution(e.target.value)} />
+            <div className="calc-grid-2">
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="emergency-current">المدخر الحالي</Label>
+                <Input id="emergency-current" inputMode="decimal" value={currentSavings} onChange={(e) => setCurrentSavings(e.target.value)} />
+              </div>
+              <div className="calc-field">
+                <Label className="calc-label" htmlFor="emergency-monthly">الادخار الشهري</Label>
+                <Input id="emergency-monthly" inputMode="decimal" value={monthlyContribution} onChange={(e) => setMonthlyContribution(e.target.value)} />
+              </div>
             </div>
           </CardContent>
         </Card>
