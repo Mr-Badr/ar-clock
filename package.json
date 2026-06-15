@@ -26,6 +26,7 @@
     "ads:readiness": "node --import tsx scripts/google-ads-readiness-audit.ts",
     "ads:readiness:live": "node --import tsx scripts/google-ads-readiness-audit.ts --base=https://miqatona.com",
     "growth:ctr": "node --import tsx scripts/search-console-ctr-triage.ts",
+    "coverage:triage": "node --import tsx scripts/search-console-coverage-triage.ts",
     "health:routes": "node --import tsx scripts/route-health-check.ts",
     "health:routes:live": "node --import tsx scripts/route-health-check.ts --base=https://miqatona.com",
     "events:build": "node --import tsx scripts/generate-events-index.ts",

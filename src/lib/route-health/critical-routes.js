@@ -91,6 +91,14 @@ export const CRITICAL_ROUTE_PROBES = Object.freeze([
     forbiddenMarkers: ['content="noindex'],
   },
   {
+    id: 'holidays-sitemap',
+    path: '/holidays/sitemap.xml',
+    label: 'Holidays sitemap',
+    expectedContentType: 'application/xml',
+    minimumBodyBytes: 1000,
+    requiredMarkers: ['/holidays/ramadan', '/holidays/eid-al-fitr'],
+  },
+  {
     id: 'date-calendar',
     path: '/date/calendar/2026',
     label: 'Gregorian calendar year',
