@@ -9,6 +9,7 @@ import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorInfoGrid,
+  CalculatorPolicyNotice,
   CalculatorResourceLinks,
   CalculatorSection,
 } from '@/components/calculators/common';
@@ -17,6 +18,7 @@ import {
   getPersonalFinanceToolBySlug,
   getRelatedPersonalFinanceTools,
 } from '@/lib/calculators/personal-finance-data';
+import { PERSONAL_FINANCE_INFORMATIONAL_NOTICE } from '@/lib/calculators/policy-notices';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
@@ -222,6 +224,15 @@ export default async function PersonalFinanceToolPage({ params }) {
       >
         <CalculatorComponent />
       </CalculatorHero>
+
+      <CalculatorSection
+        id="pf-tool-policy-notice"
+        eyebrow="تنبيه مهم"
+        title="النتيجة تقديرية وليست توجيهاً مالياً فردياً"
+        description="استخدم الحاسبة لفهم الاتجاه وتجربة السيناريوهات، ثم تحقق من شروط بلدك أو مستنداتك أو مختص موثوق عند قرار كبير."
+      >
+        <CalculatorPolicyNotice {...PERSONAL_FINANCE_INFORMATIONAL_NOTICE} />
+      </CalculatorSection>
 
       {methodSteps.length ? (
         <CalculatorSection

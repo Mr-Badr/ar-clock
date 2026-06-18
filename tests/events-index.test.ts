@@ -131,6 +131,39 @@ test('country directory listing expands shared events into localized route slugs
   assert.ok(franceSlugs.includes('eid-al-fitr-in-france'));
 });
 
+test('country directory listing excludes unrelated global events', () => {
+  const moroccoEvents = getListableEvents({ countryCode: 'ma' });
+  const moroccoSlugs = moroccoEvents.map((event) => event.slug);
+
+  assert.ok(moroccoSlugs.includes('ramadan-in-morocco'));
+  assert.ok(moroccoSlugs.includes('independence-day-morocco'));
+  assert.equal(moroccoSlugs.includes('ramadan'), false);
+  assert.equal(moroccoSlugs.includes('new-year'), false);
+  assert.equal(moroccoSlugs.includes('world-health-day-in-morocco'), false);
+  assert.equal(moroccoEvents.some((event) => !event._countryCode && !event.__aliasCountryCode), false);
+});
+
+test('country directory listing can include broad seo aliases for explicit search intent', () => {
+  const moroccoEvents = getListableEvents({
+    countryCode: 'ma',
+    includeCountrySeoAliases: true,
+  });
+  const moroccoSlugs = moroccoEvents.map((event) => event.slug);
+
+  assert.ok(moroccoSlugs.includes('ramadan-in-morocco'));
+  assert.ok(moroccoSlugs.includes('world-health-day-in-morocco'));
+  assert.equal(moroccoSlugs.includes('world-health-day'), false);
+});
+
+test('all-country holiday listing keeps canonical global events without country aliases', () => {
+  const allEvents = getListableEvents();
+  const allSlugs = allEvents.map((event) => event.slug);
+
+  assert.ok(allSlugs.includes('ramadan'));
+  assert.ok(allSlugs.includes('new-year'));
+  assert.equal(allSlugs.includes('ramadan-in-morocco'), false);
+});
+
 test('countryScope all events build country rows for every supported country', async () => {
   const base = getEventBySlug('eid-al-fitr');
   assert.ok(base);

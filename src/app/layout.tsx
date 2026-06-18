@@ -2,19 +2,12 @@ import './globals.css';
 import './waqt-ui.css';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
-import { IBM_Plex_Sans_Arabic, Noto_Sans_Arabic } from 'next/font/google';
-import { Toaster } from 'sonner';
+import { Noto_Sans_Arabic } from 'next/font/google';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/Footer';
-import ScrollToTopButton from '@/components/layout/ScrollToTopButton';
-import AdSenseProvider from '@/components/ads/AdSenseProvider';
-import AdStickyAnchor from '@/components/ads/AdStickyAnchor';
-import AnalyticsProvider from '@/components/analytics/AnalyticsProvider';
+import ClientRuntimeMounts from '@/components/layout/ClientRuntimeMounts.client';
 import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import SiteWideSchemas from '@/components/seo/SiteWideSchemas';
-import ConsentBanner from '@/components/consent/ConsentBanner';
-import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
-import SiteVisitTracker from '@/components/site/SiteVisitTracker.client';
 // @vercel/analytics removed — not compatible with self-hosted VPS
 import { ADSENSE_ACCOUNT_CLIENT_ID } from '@/lib/ads/account';
 import { getMetadataEnv } from '@/lib/env.server';
@@ -43,24 +36,14 @@ const themeBootScript = `
     root.style.colorScheme = nextTheme;
   } catch (_) {}
 `;
-// Body copy uses Noto Sans Arabic across the app.
-// The heavier weights are still needed by the design system for clocks/heroes.
+// Noto Sans Arabic covers both body copy and headings to keep the critical
+// font request chain small on mobile and desktop.
 const notoSansArabic = Noto_Sans_Arabic({
   subsets: ['arabic'],
-  weight: ['400', '700'],
+  weight: ['400', '600', '700'],
   variable: '--font-noto-sans-arabic',
   display: 'swap',
   preload: true,
-});
-
-// Headings use IBM Plex Sans Arabic for a clearer visual hierarchy.
-const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
-  subsets: ['arabic'],
-  weight: ['600', '700'],
-  variable: '--font-ibm-plex-sans-arabic',
-  display: 'swap',   // Show fallback font immediately, swap when loaded — no invisible text
-  preload: true,     // Preload the heading font to minimise swap flash
-  adjustFontFallback: false,  // Suppress Next.js metric-adjusted fallback that causes CLS
 });
 
 export const metadata: Metadata = {
@@ -161,7 +144,7 @@ export default function RootLayout({
       lang="ar"
       dir="rtl"
       suppressHydrationWarning
-      className={`dark ${notoSansArabic.variable} ${ibmPlexSansArabic.variable}`}
+      className={`dark ${notoSansArabic.variable}`}
     >
       <head>
         <meta
@@ -212,32 +195,9 @@ export default function RootLayout({
           <Suspense fallback={<div className="h-24" />}>
             <Footer />
           </Suspense>
-          {/* Sonner Toaster — dir and position match RTL layout */}
-          <Toaster
-            dir="rtl"
-            position="top-center"
-            richColors
-            expand={false}
-            toastOptions={{
-              style: {
-                fontFamily: 'var(--font-base)',
-                fontSize: 'var(--text-sm)',
-                borderRadius: 'var(--radius-lg)',
-              },
-            }}
-          />
-
           <Suspense fallback={null}>
             <ErrorBoundary name="ClientProviders">
-              <AdStickyAnchor />
-              <ConsentBanner />
-              <SiteVisitTracker />
-              <ScrollToTopButton />
-              <Suspense fallback={null}>
-                <AnalyticsProvider />
-              </Suspense>
-              <AdSenseProvider />
-              <ServiceWorkerRegistration />
+              <ClientRuntimeMounts />
             </ErrorBoundary>
           </Suspense>
         </PublicRuntimeProvider>

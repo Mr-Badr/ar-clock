@@ -66,7 +66,7 @@ export default function HolidaysFiltersPanel({
             lineHeight: 1.7,
           }}
         >
-          لا تحتاج إلى كتابة الاسم كاملاً. كلمة واحدة مثل “رمضان” أو “راتب” أو “مدرسة” تكفي غالباً لترتيب النتائج.
+          لا تحتاج إلى كتابة الاسم كاملاً. اختر الدولة أولاً إذا أردت نتائج محلية، ثم اكتب كلمة مثل “رمضان” أو “مدرسة”.
         </p>
       </div>
 
@@ -103,7 +103,7 @@ export default function HolidaysFiltersPanel({
       <div className="waqt-panel__divider" />
 
       <div className="waqt-panel__section">
-        <p className="waqt-panel__label">اختر الدولة عند السؤال عن إجازة أو دفع</p>
+        <p className="waqt-panel__label">اختر الدولة لعرض المناسبات المرتبطة بها فقط</p>
         <div
           role="group"
           aria-label="تصفية حسب الدولة"

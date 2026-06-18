@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { logError } from '@/lib/observability';
 import { getOgCityLabels } from '@/lib/geo-og-labels';
-import { getOgArabicFonts } from '@/lib/og-fonts';
+import { getSafeOgArabicFonts } from '@/lib/og-fonts';
 import { SITE_BRAND } from '@/lib/site-config';
 
 // We specify standard OG dimensions
@@ -46,7 +46,11 @@ function renderFallbackImage(cityLabel = 'المدينة', countryLabel = 'ال�
 
 export default async function Image({ params }) {
   const { country, city } = await params;
-  const fonts = await getOgArabicFonts();
+  const fonts = await getSafeOgArabicFonts({
+    routePath: `/time-now/${country}/${city}/opengraph-image`,
+    countrySlug: country,
+    citySlug: city,
+  });
   const {
     cityLabel,
     countryLabel,

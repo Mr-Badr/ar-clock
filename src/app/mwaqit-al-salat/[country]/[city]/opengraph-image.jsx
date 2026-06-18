@@ -15,7 +15,7 @@ import { ImageResponse } from 'next/og';
 import { logError } from '@/lib/observability';
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 import { getOgCityLabels } from '@/lib/geo-og-labels';
-import { getOgArabicFonts } from '@/lib/og-fonts';
+import { getSafeOgArabicFonts } from '@/lib/og-fonts';
 import { getMethodByCountry } from '@/lib/prayer-methods';
 import { SITE_BRAND } from '@/lib/site-config';
 
@@ -54,7 +54,11 @@ function renderFallbackImage(label = 'مواقيت الصلاة', sublabel = '',
 
 export default async function OgImage({ params }) {
   const { country: countrySlug, city: citySlug } = await params;
-  const fonts = await getOgArabicFonts();
+  const fonts = await getSafeOgArabicFonts({
+    routePath: `/mwaqit-al-salat/${countrySlug}/${citySlug}/opengraph-image`,
+    countrySlug,
+    citySlug,
+  });
   const {
     cityLabel,
     countryLabel,

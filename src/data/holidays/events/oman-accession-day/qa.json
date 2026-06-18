@@ -1,0 +1,17 @@
+{
+  "slug": "oman-accession-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تم تثبيت تاريخ 11 يناير بوصفه تاريخ يوم تولي السلطان في عمان.",
+    "تم شرح معنى Accession Day بالعربية لتغطية فجوة المصطلح في نتائج البحث.",
+    "تم فصل تاريخ المناسبة الثابت عن تفاصيل الإجازة أو التعويض التي تحتاج إعلاناً سنوياً."
+  ],
+  "updatedAt": "2026-06-16T00:00:00.000Z"
+}

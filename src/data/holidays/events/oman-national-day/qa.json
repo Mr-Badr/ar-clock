@@ -1,0 +1,17 @@
+{
+  "slug": "oman-national-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: Times of Oman reports the 2025 proclamation that 20 November of each year is Oman's National Day.",
+    "fact-source: Office Holidays and Timeanddate were used to separate fixed event date from movable public-holiday days.",
+    "content-note: Arabic page explicitly explains why some older results still show 18 November."
+  ],
+  "updatedAt": "2026-06-15T00:00:00.000Z"
+}

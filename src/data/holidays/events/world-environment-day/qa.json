@@ -1,0 +1,19 @@
+{
+  "slug": "world-environment-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: World Environment Day official site",
+    "fact-source: UNEP: World Environment Day",
+    "fact-source: UNEP: Climate action",
+    "fact-source: UNEP: Nature and land action",
+    "review: written around fixed 5 June date, official UNEP campaign source, no stale yearly theme, and practical school/home/work activity intent."
+  ],
+  "updatedAt": "2026-06-16T00:00:00.000Z"
+}

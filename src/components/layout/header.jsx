@@ -4,7 +4,6 @@ import { ClockIcon } from "@phosphor-icons/react/ssr";
 import NavLinks from "./NavLinks";
 import ThemeToggle from "./ThemeToggle";
 import MobileMenu from "./MobileMenu";
-import HeaderScrollEffect from "./HeaderScrollEffect";
 import HeaderRouteWarmup from "./HeaderRouteWarmup";
 import GlobalDiscoverySearch from "@/components/site/GlobalDiscoverySearch.client";
 import { SITE_BRAND } from "@/lib/site-config";
@@ -131,7 +130,6 @@ export default function Header() {
       </header>
 
       <HeaderRouteWarmup routes={primaryRoutes} />
-      <HeaderScrollEffect />
     </>
   );
 }

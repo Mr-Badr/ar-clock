@@ -4,6 +4,41 @@ This is the single authoritative guide for adding a new `/holidays/[slug]` event
 
 If you give only one file to another AI, give it this file.
 
+## AI Handoff Answer
+
+Yes: this is the docs file to give another AI when you only know the event name.
+
+Give the AI:
+
+```text
+docs/add-new-event.md
+EVENT_NAME: <Arabic or English event name>
+TARGET_COUNTRY_OR_REGION: <country, region, global, or unknown>
+DATE_OR_RULE_IF_KNOWN: <fixed date, Hijri date, floating rule, or unknown>
+PUBLISH_INTENT: draft until validated
+```
+
+The AI must use this file as a strict contract and should create or edit only:
+
+```text
+src/data/holidays/events/<slug>/package.json
+src/data/holidays/events/<slug>/research.json
+src/data/holidays/events/<slug>/qa.json
+```
+
+The AI must not edit generated files, runtime files, sitemap files, repository files, or compatibility layers by hand.
+
+The AI must optimize for:
+- correct event facts and date rules
+- Arabic human-facing quality
+- SEO metadata and search intent
+- structured data that matches visible content
+- indexability through the normal event build pipeline
+- Google Ads destination quality when the page may receive paid traffic
+- clear uncertainty when a date, status, or source is not fully verified
+
+Indexing cannot be guaranteed by any file or AI response. The correct goal is indexing readiness: valid data, strong content, clean metadata, sitemap eligibility after publish, and no `noindex` contradiction.
+
 Use this file when:
 - a developer adds an event manually
 - an AI agent is asked to add a new event

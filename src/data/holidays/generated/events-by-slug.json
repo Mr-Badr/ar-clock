@@ -89,6 +89,16 @@
     "hijriMonth": 7,
     "hijriDay": 27
   },
+  "oman-accession-day": {
+    "id": "oman-accession-day",
+    "slug": "oman-accession-day",
+    "name": "يوم تولي السلطان في عمان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "om",
+    "month": 1,
+    "day": 11
+  },
   "first-dhul-hijjah": {
     "id": "first-dhul-hijjah",
     "slug": "first-dhul-hijjah",
@@ -197,6 +207,16 @@
     "category": "support",
     "_countryCode": "sa",
     "day": 10
+  },
+  "sinai-liberation-day-egypt": {
+    "id": "sinai-liberation-day-egypt",
+    "slug": "sinai-liberation-day-egypt",
+    "name": "عيد تحرير سيناء",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "eg",
+    "month": 4,
+    "day": 25
   },
   "thanaweya-results": {
     "id": "results-th-eg",
@@ -545,6 +565,16 @@
     "month": 2,
     "day": 26
   },
+  "oman-national-day": {
+    "id": "oman-national-day",
+    "slug": "oman-national-day",
+    "name": "اليوم الوطني العماني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "om",
+    "month": 11,
+    "day": 20
+  },
   "martyrs-day-uae": {
     "id": "martyrs-day-ae",
     "slug": "martyrs-day-uae",
@@ -713,6 +743,82 @@
     "category": "support",
     "_countryCode": "sa",
     "day": 1
+  },
+  "world-childrens-day": {
+    "id": "world-childrens-day",
+    "slug": "world-childrens-day",
+    "name": "اليوم العالمي للطفل",
+    "type": "fixed",
+    "category": "social",
+    "month": 11,
+    "day": 20
+  },
+  "international-day-of-education": {
+    "id": "international-day-of-education",
+    "slug": "international-day-of-education",
+    "name": "اليوم الدولي للتعليم",
+    "type": "fixed",
+    "category": "school",
+    "month": 1,
+    "day": 24
+  },
+  "world-mental-health-day": {
+    "id": "world-mental-health-day",
+    "slug": "world-mental-health-day",
+    "name": "اليوم العالمي للصحة النفسية",
+    "type": "fixed",
+    "category": "social",
+    "month": 10,
+    "day": 10
+  },
+  "world-environment-day": {
+    "id": "world-environment-day",
+    "slug": "world-environment-day",
+    "name": "اليوم العالمي للبيئة",
+    "type": "fixed",
+    "category": "social",
+    "month": 6,
+    "day": 5
+  },
+  "independence-manifesto-day-morocco": {
+    "id": "independence-manifesto-day-morocco",
+    "slug": "independence-manifesto-day-morocco",
+    "name": "ذكرى تقديم وثيقة الاستقلال في المغرب",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ma",
+    "month": 1,
+    "day": 11
+  },
+  "amazigh-new-year-algeria": {
+    "id": "amazigh-new-year-algeria",
+    "slug": "amazigh-new-year-algeria",
+    "name": "رأس السنة الأمازيغية في الجزائر",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "dz",
+    "month": 1,
+    "day": 12
+  },
+  "amazigh-new-year-morocco": {
+    "id": "amazigh-new-year-morocco",
+    "slug": "amazigh-new-year-morocco",
+    "name": "رأس السنة الأمازيغية في المغرب",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ma",
+    "month": 1,
+    "day": 14
+  },
+  "january-25-egypt": {
+    "id": "january-25-egypt",
+    "slug": "january-25-egypt",
+    "name": "عيد الشرطة وثورة 25 يناير",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "eg",
+    "month": 1,
+    "day": 25
   },
   "world-fathers-day": {
     "id": "world-fathers-day",

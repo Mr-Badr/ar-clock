@@ -3,6 +3,7 @@ import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorInfoGrid,
+  CalculatorPolicyNotice,
   CalculatorResourceLinks,
   CalculatorSection,
   CalculatorToolLauncher,
@@ -11,6 +12,7 @@ import {
   PERSONAL_FINANCE_HUB,
   PERSONAL_FINANCE_TOOLS,
 } from '@/lib/calculators/personal-finance-data';
+import { PERSONAL_FINANCE_INFORMATIONAL_NOTICE } from '@/lib/calculators/policy-notices';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
 
@@ -254,6 +256,15 @@ export default function PersonalFinanceHubPage() {
           </div>
         </div>
       </CalculatorHero>
+
+      <CalculatorSection
+        id="pf-policy-notice"
+        eyebrow="قبل التخطيط"
+        title="هذه أدوات تعليمية وليست نصيحة مالية شخصية"
+        description="الصفحة تساعدك على ترتيب الأرقام والأولويات، لكنها لا تعرف كل تفاصيل دخلك أو التزاماتك أو بلدك."
+      >
+        <CalculatorPolicyNotice {...PERSONAL_FINANCE_INFORMATIONAL_NOTICE} />
+      </CalculatorSection>
 
       <CalculatorSection
         id="pf-tools"

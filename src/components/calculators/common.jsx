@@ -320,6 +320,41 @@ export function CalculatorInfoGrid({ items }) {
   );
 }
 
+export function CalculatorPolicyNotice({ title, description, points, links }) {
+  const safePoints = Array.isArray(points) ? points : [];
+  const safeLinks = Array.isArray(links) ? links.filter((item) => item?.href && item?.label) : [];
+
+  return (
+    <aside className="calc-policy-notice" aria-label={title || 'تنبيه مهم'}>
+      <div className="calc-policy-notice__head">
+        <span className="calc-policy-notice__icon" aria-hidden="true">
+          <CheckCircle2 size={18} />
+        </span>
+        <div>
+          <h3 className="calc-card-title">{title}</h3>
+          {description ? <p className="calc-card-description">{description}</p> : null}
+        </div>
+      </div>
+      {safePoints.length ? (
+        <ul className="calc-policy-notice__list">
+          {safePoints.map((point) => (
+            <li key={point}>{point}</li>
+          ))}
+        </ul>
+      ) : null}
+      {safeLinks.length ? (
+        <div className="calc-policy-notice__links" aria-label="روابط الشفافية">
+          {safeLinks.map((item) => (
+            <Link key={item.href} href={item.href}>
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      ) : null}
+    </aside>
+  );
+}
+
 export function CalculatorEditorialArticle({ eyebrow, title, lead, paragraphs, points }) {
   const safeParagraphs = Array.isArray(paragraphs) ? paragraphs : [];
   const safePoints = Array.isArray(points) ? points : [];

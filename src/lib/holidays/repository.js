@@ -54,6 +54,13 @@ const OVERLAY_FIELDS = new Set([
   'seoMeta',
 ]);
 
+const COUNTRY_DISCOVERY_ALIAS_CATEGORIES = new Set([
+  'islamic',
+  'school',
+  'support',
+  'business',
+]);
+
 function normalizeObject(value) {
   return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
 }
@@ -429,6 +436,11 @@ function buildRouteEvent(baseEvent, routeSlug, countryCode = null) {
   };
 }
 
+function shouldIncludeCountryAliasInDiscovery(event, options) {
+  if (options?.includeCountrySeoAliases) return true;
+  return COUNTRY_DISCOVERY_ALIAS_CATEGORIES.has(event?.category || '');
+}
+
 export function getListableHolidayEvents(options = {}) {
   const requestedCountryCode = String(options.countryCode || '').trim().toLowerCase();
   if (!requestedCountryCode || requestedCountryCode === 'all') {
@@ -460,11 +472,10 @@ export function getListableHolidayEvents(options = {}) {
     );
 
     if (aliasSlug) {
-      pushUnique(buildRouteEvent(event, aliasSlug, validCountryCode));
-      continue;
+      if (shouldIncludeCountryAliasInDiscovery(event, options)) {
+        pushUnique(buildRouteEvent(event, aliasSlug, validCountryCode));
+      }
     }
-
-    pushUnique(buildRouteEvent(event, event.slug, null));
   }
 
   return results;

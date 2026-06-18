@@ -1,0 +1,17 @@
+{
+  "slug": "sinai-liberation-day-egypt",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تم اعتماد 25 أبريل من صفحة العطلات الرسمية في موقع رئاسة الجمهورية المصرية.",
+    "تم توضيح الفرق بين تاريخ المناسبة ويوم الإجازة التنفيذي حتى لا يصبح المحتوى مضللاً عند ترحيل العطلة.",
+    "تم ربط الصفحة بصفحات مصر الحالية فقط لتجنب أي روابط داخلية مكسورة."
+  ],
+  "updatedAt": "2026-06-16T00:00:00.000Z"
+}

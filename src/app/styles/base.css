@@ -769,7 +769,7 @@
 /*   3. Arabic body text needs line-height ≥ 1.6                             */
 :root {
   --font-base: var(--font-noto-sans-arabic), system-ui, sans-serif;
-  --font-heading: var(--font-ibm-plex-sans-arabic), var(--font-base);
+  --font-heading: var(--font-base);
 
   /* Arabic type scale from DESIGN.md */
   --text-2xs: 0.625rem;

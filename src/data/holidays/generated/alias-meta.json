@@ -1299,6 +1299,310 @@
     "canonicalSlug": "nisf-shaban",
     "countryCode": "us"
   },
+  "world-childrens-day-in-saudi": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "sa"
+  },
+  "world-childrens-day-in-egypt": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "eg"
+  },
+  "world-childrens-day-in-morocco": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "ma"
+  },
+  "world-childrens-day-in-algeria": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "dz"
+  },
+  "world-childrens-day-in-uae": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "ae"
+  },
+  "world-childrens-day-in-tunisia": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "tn"
+  },
+  "world-childrens-day-in-kuwait": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "kw"
+  },
+  "world-childrens-day-in-qatar": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "qa"
+  },
+  "world-childrens-day-in-iraq": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "iq"
+  },
+  "world-childrens-day-in-syria": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "sy"
+  },
+  "world-childrens-day-in-yemen": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "ye"
+  },
+  "world-childrens-day-in-jordan": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "jo"
+  },
+  "world-childrens-day-in-libya": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "ly"
+  },
+  "world-childrens-day-in-oman": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "om"
+  },
+  "world-childrens-day-in-palestine": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "ps"
+  },
+  "world-childrens-day-in-canada": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "ca"
+  },
+  "world-childrens-day-in-france": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "fr"
+  },
+  "world-childrens-day-in-turkey": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "tr"
+  },
+  "world-childrens-day-in-usa": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "us"
+  },
+  "international-day-of-education-in-saudi": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "sa"
+  },
+  "international-day-of-education-in-egypt": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "eg"
+  },
+  "international-day-of-education-in-morocco": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "ma"
+  },
+  "international-day-of-education-in-algeria": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "dz"
+  },
+  "international-day-of-education-in-uae": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "ae"
+  },
+  "international-day-of-education-in-tunisia": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "tn"
+  },
+  "international-day-of-education-in-kuwait": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "kw"
+  },
+  "international-day-of-education-in-qatar": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "qa"
+  },
+  "international-day-of-education-in-iraq": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "iq"
+  },
+  "international-day-of-education-in-syria": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "sy"
+  },
+  "international-day-of-education-in-yemen": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "ye"
+  },
+  "international-day-of-education-in-jordan": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "jo"
+  },
+  "international-day-of-education-in-libya": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "ly"
+  },
+  "international-day-of-education-in-oman": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "om"
+  },
+  "international-day-of-education-in-palestine": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "ps"
+  },
+  "international-day-of-education-in-canada": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "ca"
+  },
+  "international-day-of-education-in-france": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "fr"
+  },
+  "international-day-of-education-in-turkey": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "tr"
+  },
+  "international-day-of-education-in-usa": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "us"
+  },
+  "world-mental-health-day-in-saudi": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "sa"
+  },
+  "world-mental-health-day-in-egypt": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "eg"
+  },
+  "world-mental-health-day-in-morocco": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "ma"
+  },
+  "world-mental-health-day-in-algeria": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "dz"
+  },
+  "world-mental-health-day-in-uae": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "ae"
+  },
+  "world-mental-health-day-in-tunisia": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "tn"
+  },
+  "world-mental-health-day-in-kuwait": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "kw"
+  },
+  "world-mental-health-day-in-qatar": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "qa"
+  },
+  "world-mental-health-day-in-iraq": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "iq"
+  },
+  "world-mental-health-day-in-syria": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "sy"
+  },
+  "world-mental-health-day-in-yemen": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "ye"
+  },
+  "world-mental-health-day-in-jordan": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "jo"
+  },
+  "world-mental-health-day-in-libya": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "ly"
+  },
+  "world-mental-health-day-in-oman": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "om"
+  },
+  "world-mental-health-day-in-palestine": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "ps"
+  },
+  "world-mental-health-day-in-canada": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "ca"
+  },
+  "world-mental-health-day-in-france": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "fr"
+  },
+  "world-mental-health-day-in-turkey": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "tr"
+  },
+  "world-mental-health-day-in-usa": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "us"
+  },
+  "world-environment-day-in-saudi": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "sa"
+  },
+  "world-environment-day-in-egypt": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "eg"
+  },
+  "world-environment-day-in-morocco": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "ma"
+  },
+  "world-environment-day-in-algeria": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "dz"
+  },
+  "world-environment-day-in-uae": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "ae"
+  },
+  "world-environment-day-in-tunisia": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "tn"
+  },
+  "world-environment-day-in-kuwait": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "kw"
+  },
+  "world-environment-day-in-qatar": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "qa"
+  },
+  "world-environment-day-in-iraq": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "iq"
+  },
+  "world-environment-day-in-syria": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "sy"
+  },
+  "world-environment-day-in-yemen": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "ye"
+  },
+  "world-environment-day-in-jordan": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "jo"
+  },
+  "world-environment-day-in-libya": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "ly"
+  },
+  "world-environment-day-in-oman": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "om"
+  },
+  "world-environment-day-in-palestine": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "ps"
+  },
+  "world-environment-day-in-canada": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "ca"
+  },
+  "world-environment-day-in-france": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "fr"
+  },
+  "world-environment-day-in-turkey": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "tr"
+  },
+  "world-environment-day-in-usa": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "us"
+  },
   "world-fathers-day-in-saudi": {
     "canonicalSlug": "world-fathers-day",
     "countryCode": "sa"

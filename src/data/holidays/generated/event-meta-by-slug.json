@@ -451,6 +451,17 @@
       "isra-miraj-in-usa"
     ]
   },
+  "oman-accession-day": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "om"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/oman-accession-day",
+    "aliases": []
+  },
   "first-dhul-hijjah": {
     "publishStatus": "published",
     "countryScope": "all",
@@ -607,6 +618,17 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/citizen-account-saudi",
+    "aliases": []
+  },
+  "sinai-liberation-day-egypt": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "eg"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/sinai-liberation-day-egypt",
     "aliases": []
   },
   "thanaweya-results": {
@@ -1193,6 +1215,17 @@
     "canonicalPath": "/holidays/liberation-day-kuwait",
     "aliases": []
   },
+  "oman-national-day": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "om"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/oman-national-day",
+    "aliases": []
+  },
   "martyrs-day-uae": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -1450,6 +1483,246 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/pension-day-saudi",
+    "aliases": []
+  },
+  "world-childrens-day": {
+    "publishStatus": "published",
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/world-childrens-day",
+    "aliases": [
+      "world-childrens-day-in-saudi",
+      "world-childrens-day-in-egypt",
+      "world-childrens-day-in-morocco",
+      "world-childrens-day-in-algeria",
+      "world-childrens-day-in-uae",
+      "world-childrens-day-in-tunisia",
+      "world-childrens-day-in-kuwait",
+      "world-childrens-day-in-qatar",
+      "world-childrens-day-in-iraq",
+      "world-childrens-day-in-syria",
+      "world-childrens-day-in-yemen",
+      "world-childrens-day-in-jordan",
+      "world-childrens-day-in-libya",
+      "world-childrens-day-in-oman",
+      "world-childrens-day-in-palestine",
+      "world-childrens-day-in-canada",
+      "world-childrens-day-in-france",
+      "world-childrens-day-in-turkey",
+      "world-childrens-day-in-usa"
+    ]
+  },
+  "international-day-of-education": {
+    "publishStatus": "published",
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/international-day-of-education",
+    "aliases": [
+      "international-day-of-education-in-saudi",
+      "international-day-of-education-in-egypt",
+      "international-day-of-education-in-morocco",
+      "international-day-of-education-in-algeria",
+      "international-day-of-education-in-uae",
+      "international-day-of-education-in-tunisia",
+      "international-day-of-education-in-kuwait",
+      "international-day-of-education-in-qatar",
+      "international-day-of-education-in-iraq",
+      "international-day-of-education-in-syria",
+      "international-day-of-education-in-yemen",
+      "international-day-of-education-in-jordan",
+      "international-day-of-education-in-libya",
+      "international-day-of-education-in-oman",
+      "international-day-of-education-in-palestine",
+      "international-day-of-education-in-canada",
+      "international-day-of-education-in-france",
+      "international-day-of-education-in-turkey",
+      "international-day-of-education-in-usa"
+    ]
+  },
+  "world-mental-health-day": {
+    "publishStatus": "published",
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/world-mental-health-day",
+    "aliases": [
+      "world-mental-health-day-in-saudi",
+      "world-mental-health-day-in-egypt",
+      "world-mental-health-day-in-morocco",
+      "world-mental-health-day-in-algeria",
+      "world-mental-health-day-in-uae",
+      "world-mental-health-day-in-tunisia",
+      "world-mental-health-day-in-kuwait",
+      "world-mental-health-day-in-qatar",
+      "world-mental-health-day-in-iraq",
+      "world-mental-health-day-in-syria",
+      "world-mental-health-day-in-yemen",
+      "world-mental-health-day-in-jordan",
+      "world-mental-health-day-in-libya",
+      "world-mental-health-day-in-oman",
+      "world-mental-health-day-in-palestine",
+      "world-mental-health-day-in-canada",
+      "world-mental-health-day-in-france",
+      "world-mental-health-day-in-turkey",
+      "world-mental-health-day-in-usa"
+    ]
+  },
+  "world-environment-day": {
+    "publishStatus": "published",
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/world-environment-day",
+    "aliases": [
+      "world-environment-day-in-saudi",
+      "world-environment-day-in-egypt",
+      "world-environment-day-in-morocco",
+      "world-environment-day-in-algeria",
+      "world-environment-day-in-uae",
+      "world-environment-day-in-tunisia",
+      "world-environment-day-in-kuwait",
+      "world-environment-day-in-qatar",
+      "world-environment-day-in-iraq",
+      "world-environment-day-in-syria",
+      "world-environment-day-in-yemen",
+      "world-environment-day-in-jordan",
+      "world-environment-day-in-libya",
+      "world-environment-day-in-oman",
+      "world-environment-day-in-palestine",
+      "world-environment-day-in-canada",
+      "world-environment-day-in-france",
+      "world-environment-day-in-turkey",
+      "world-environment-day-in-usa"
+    ]
+  },
+  "independence-manifesto-day-morocco": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ma"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/independence-manifesto-day-morocco",
+    "aliases": []
+  },
+  "amazigh-new-year-algeria": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "dz"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/amazigh-new-year-algeria",
+    "aliases": []
+  },
+  "amazigh-new-year-morocco": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ma"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/amazigh-new-year-morocco",
+    "aliases": []
+  },
+  "january-25-egypt": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "eg"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/january-25-egypt",
     "aliases": []
   },
   "world-fathers-day": {

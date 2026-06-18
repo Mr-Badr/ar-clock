@@ -1,0 +1,17 @@
+{
+  "slug": "amazigh-new-year-morocco",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تم تثبيت 14 يناير كتاريخ رأس السنة الأمازيغية في المغرب.",
+    "تم توضيح الفرق مع الجزائر التي تعتمد 12 يناير حتى لا تظهر معلومة بلد مكان بلد آخر.",
+    "تم إنشاء الصفحة كصفحة مغربية مستقلة لا كصفحة عامة لكل شمال أفريقيا."
+  ],
+  "updatedAt": "2026-06-16T00:00:00.000Z"
+}

@@ -13,6 +13,96 @@ const SHARED_OG_IMAGE_HEADERS = [
   { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=86400, stale-while-revalidate=86400' },
 ];
 
+const LEGACY_BLOG_CANONICAL_REDIRECTS = [
+  {
+    source: '/blog/end-of-service-benefits-saudi',
+    destination: '/calculators/end-of-service-benefits',
+  },
+  {
+    source: '/guide/end-of-service-benefits-saudi',
+    destination: '/calculators/end-of-service-benefits',
+  },
+  {
+    source: '/guides/end-of-service-benefits-saudi',
+    destination: '/calculators/end-of-service-benefits',
+  },
+  {
+    source: '/blog/how-to-calculate-percentage-discount',
+    destination: '/calculators/percentage',
+  },
+  {
+    source: '/guide/how-to-calculate-percentage-discount',
+    destination: '/calculators/percentage',
+  },
+  {
+    source: '/guides/how-to-calculate-percentage-discount',
+    destination: '/calculators/percentage',
+  },
+  {
+    source: '/blog/what-is-vat-input-vs-output-tax',
+    destination: '/calculators/vat',
+  },
+  {
+    source: '/guide/what-is-vat-input-vs-output-tax',
+    destination: '/calculators/vat',
+  },
+  {
+    source: '/guides/what-is-vat-input-vs-output-tax',
+    destination: '/calculators/vat',
+  },
+];
+
+const LEGACY_INDEXING_REDIRECTS = [
+  {
+    source: '/economie',
+    destination: '/calculators/finance',
+  },
+  {
+    source: '/economie/best-trading-time',
+    destination: '/calculators/finance',
+  },
+  {
+    source: '/map',
+    destination: '/fahras',
+  },
+  {
+    source: '/time-now/netherlands',
+    destination: '/time-now/the-netherlands',
+  },
+  {
+    source: '/time-now/هولندا',
+    destination: '/time-now/the-netherlands',
+  },
+  {
+    source: '/time-now/%D9%87%D9%88%D9%84%D9%86%D8%AF%D8%A7',
+    destination: '/time-now/the-netherlands',
+  },
+  {
+    source: '/time-now/الكويت',
+    destination: '/time-now/kuwait',
+  },
+  {
+    source: '/time-now/%D8%A7%D9%84%D9%83%D9%88%D9%8A%D8%AA',
+    destination: '/time-now/kuwait',
+  },
+  {
+    source: '/time-now/أوغندا',
+    destination: '/time-now/uganda',
+  },
+  {
+    source: '/time-now/%D8%A3%D9%88%D8%BA%D9%86%D8%AF%D8%A7',
+    destination: '/time-now/uganda',
+  },
+  {
+    source: '/time-now/libya/bani-walid',
+    destination: '/time-now/libya',
+  },
+  {
+    source: '/time-now/libya/zawiya',
+    destination: '/time-now/libya',
+  },
+];
+
 const nextConfig = {
   // ── Server ───────────────────────────────────────────────────────────────────
   serverExternalPackages: [
@@ -160,6 +250,14 @@ const nextConfig = {
   // ── Redirects (UNCHANGED) ────────────────────────────────────────────────
   async redirects() {
     return [
+      ...LEGACY_BLOG_CANONICAL_REDIRECTS.map((redirect) => ({
+        ...redirect,
+        permanent: true,
+      })),
+      ...LEGACY_INDEXING_REDIRECTS.map((redirect) => ({
+        ...redirect,
+        permanent: true,
+      })),
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'www.miqatona.com' }],

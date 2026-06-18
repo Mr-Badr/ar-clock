@@ -1,0 +1,17 @@
+{
+  "slug": "january-25-egypt",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تم اعتماد صيغة رئاسة الجمهورية التي تجمع بين ثورة 25 يناير وعيد الشرطة.",
+    "تم توضيح الفرق بين الاسمين حتى لا تظهر الصفحة كنسخة مكررة أو مربكة.",
+    "تم فصل تاريخ المناسبة عن يوم الإجازة التنفيذي لتقليل مخاطر المعلومات السنوية القديمة."
+  ],
+  "updatedAt": "2026-06-16T00:00:00.000Z"
+}

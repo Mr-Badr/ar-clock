@@ -1,0 +1,17 @@
+{
+  "slug": "amazigh-new-year-algeria",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تم تثبيت 12 يناير كتاريخ رأس السنة الأمازيغية في الجزائر.",
+    "تم توضيح الفرق مع المغرب الذي يعتمد 14 يناير حتى لا تظهر معلومة بلد مكان بلد آخر.",
+    "تم إنشاء الصفحة كصفحة جزائرية مستقلة لا كصفحة عامة لكل شمال أفريقيا."
+  ],
+  "updatedAt": "2026-06-16T00:00:00.000Z"
+}

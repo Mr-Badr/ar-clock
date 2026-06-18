@@ -48,14 +48,21 @@ export default function HolidaysResultsSummary({
   const SelectedCategoryIcon = selectedCategory
     ? CATEGORY_ICON_COMPONENTS[selectedCategory.iconKey || selectedCategory.id] || LayoutGrid
     : null;
+  const countryLabel = country !== 'all' && selectedCountry?.label
+    ? selectedCountry.label
+    : '';
   const summaryLine = isPending
     ? 'نرتّب النتائج المناسبة لك الآن…'
-    : hasActiveFilters
+    : countryLabel
+      ? `وجدنا ${eventsCount} مناسبة مرتبطة بـ ${countryLabel}`
+      : hasActiveFilters
       ? `وجدنا ${eventsCount} مناسبة توافق ما اخترته`
       : `تصفّح ${total} مناسبة مع عدّادات واضحة ومسارات متابعة عملية`;
   const summaryHint = isPending
     ? null
-    : hasActiveFilters
+    : countryLabel
+      ? `نعرض الآن المناسبات المحلية أو النسخ الخاصة بـ ${countryLabel} فقط. امسح الدولة إذا أردت رؤية المناسبات العامة لكل البلدان.`
+      : hasActiveFilters
       ? `من أصل ${total} مناسبة يمكنك تعديل الدولة أو النوع أو المدة. إذا كنت تبحث عن إجازة رسمية، ابدأ بالدولة قبل الاسم.`
       : 'ابدأ بالأقرب زمنًا أو ابحث باسم المناسبة أو الدولة أو نوع الموعد للوصول إلى الصفحة التي تريدها مباشرة.';
 

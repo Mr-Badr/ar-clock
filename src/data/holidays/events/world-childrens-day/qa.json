@@ -1,0 +1,19 @@
+{
+  "slug": "world-childrens-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: UNICEF: World Children's Day",
+    "fact-source: UNICEF Arabic: World Children's Day",
+    "fact-source: UNICEF: Convention on the Rights of the Child",
+    "fact-source: United Nations: World Children's Day",
+    "review: written around 20 November, rights-focused explanation, school/family/content use cases, no legal or medical advice, and clear distinction from local Children's Day dates."
+  ],
+  "updatedAt": "2026-06-16T00:00:00.000Z"
+}

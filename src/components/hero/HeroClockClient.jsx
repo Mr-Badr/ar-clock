@@ -9,7 +9,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Fullscreen, Minimize2, Share2, MapPin } from 'lucide-react';
 import styles from './HeroEmbeddedClock.module.css';
 import { getSafeTimezone } from '@/lib/country-utils';
-import { resolveCurrentUserCity } from '@/lib/user-location.client';
 import { getCurrentPageUrl, useCopyFeedback } from '@/lib/share.client';
 import { SectionDivider } from '@/components/shared/primitives';
 import {
@@ -66,6 +65,46 @@ function getTimeData(tz) {
   return { h: get('hour'), m: get('minute'), s: get('second'), dateAr, dateHijri };
 }
 
+function scheduleAfterLoadIdle(callback, timeoutMs) {
+  if (typeof window === 'undefined') return () => {};
+
+  let cancelIdleWork = () => {};
+
+  const scheduleIdleWork = () => {
+    if ('requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(callback, { timeout: timeoutMs });
+      cancelIdleWork = () => window.cancelIdleCallback(idleId);
+      return;
+    }
+
+    const timeoutId = window.setTimeout(callback, timeoutMs);
+    cancelIdleWork = () => window.clearTimeout(timeoutId);
+  };
+
+  if (document.readyState === 'complete') {
+    scheduleIdleWork();
+    return () => cancelIdleWork();
+  }
+
+  window.addEventListener('load', scheduleIdleWork, { once: true });
+
+  return () => {
+    window.removeEventListener('load', scheduleIdleWork);
+    cancelIdleWork();
+  };
+}
+
+function canRunLocationLookup() {
+  if (typeof navigator === 'undefined') return false;
+
+  const connection =
+    navigator.connection ||
+    navigator.mozConnection ||
+    navigator.webkitConnection;
+
+  return !connection?.saveData;
+}
+
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 /**
@@ -86,7 +125,7 @@ function Unit({ value, label }) {
     <div className={styles.unit}>
       <div className={styles.digitsWrap} aria-hidden="true">
         {str.split('').map((ch, i) => (
-          <span key={`${label}-${i}-${ch}`} className={styles.digit}>
+          <span key={`${label}-${i}`} className={styles.digit}>
             {ch}
           </span>
         ))}
@@ -107,13 +146,15 @@ function Unit({ value, label }) {
  */
 export default function HeroClockClient({
   ianaTimezone,
-  cityNameAr = 'توقيتك المحلي',
+  cityNameAr,
   countryNameAr,
 }) {
+  const initialCityNameAr = cityNameAr || 'توقيتك المحلي';
+
   // ── Location state (upgradeable via geolocation) ─────────────────────────
   const [resolvedLocation, setResolvedLocation] = useState(() => ({
     ianaTimezone: getSafeTimezone(ianaTimezone) || ianaTimezone || '',
-    cityNameAr: cityNameAr || 'توقيتك المحلي',
+    cityNameAr: initialCityNameAr,
     countryNameAr: countryNameAr || '',
   }));
 
@@ -135,6 +176,7 @@ export default function HeroClockClient({
 
   const containerRef = useRef(null);
   const wakeLockRef  = useRef(null);
+  const locationUpgradeStartedRef = useRef(false);
 
   // ── Sync props → state (parent re-renders with new timezone/city) ─────────
   useEffect(() => {
@@ -148,6 +190,13 @@ export default function HeroClockClient({
   // ── Geolocation upgrade (browser timezone → IP → GPS) ────────────────────
   useEffect(() => {
     let cancelled = false;
+    const needsLocationUpgrade = !safeCityName || safeCityName === 'توقيتك المحلي';
+
+    if (!needsLocationUpgrade || locationUpgradeStartedRef.current) {
+      return undefined;
+    }
+
+    locationUpgradeStartedRef.current = true;
 
     const applyDetectedCity = (city) => {
       if (!city || cancelled) return false;
@@ -160,6 +209,8 @@ export default function HeroClockClient({
     };
 
     const upgradeLocation = async () => {
+      if (!canRunLocationLookup()) return;
+
       const browserTimezone =
         getSafeTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone || '') ||
         Intl.DateTimeFormat().resolvedOptions().timeZone ||
@@ -171,6 +222,7 @@ export default function HeroClockClient({
         }
 
         try {
+          const { resolveCurrentUserCity } = await import('@/lib/user-location.client');
           const detection = await resolveCurrentUserCity({
             geolocation: 'if-granted',
             gpsTimeoutMs: 4000,
@@ -182,8 +234,14 @@ export default function HeroClockClient({
       }
     };
 
-    upgradeLocation();
-    return () => { cancelled = true; };
+    const cleanupLocationUpgrade = scheduleAfterLoadIdle(() => {
+      void upgradeLocation();
+    }, 3000);
+
+    return () => {
+      cancelled = true;
+      cleanupLocationUpgrade();
+    };
   }, [resolvedLocation.ianaTimezone, safeCityName]);
 
   // ── Clock tick (1 s interval) ─────────────────────────────────────────────

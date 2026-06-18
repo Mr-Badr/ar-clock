@@ -5,8 +5,8 @@
  * ─────────────────────────────────────────────────────────────────────────────
  * ADD TO: app/layout.tsx — once, in the root layout.
  *
- * Uses Next.js <Script> with strategy="afterInteractive" — this means:
- *   - Script loads AFTER the page becomes interactive (not render-blocking)
+ * Uses Next.js <Script> with strategy="lazyOnload" — this means:
+ *   - Script loads after the window load event and idle time
  *   - LCP is not affected by the AdSense script
  *   - AdSense initializes correctly for all ad slots on the page
  *
@@ -40,11 +40,11 @@
  *   Next.js <Script> with onError cannot be passed through Server Component
  *   boundaries because event handlers are not serializable.
  *   'use client' keeps it out of the SSR stream — the script still defers via
- *   strategy="afterInteractive" so there is zero LCP impact.
+ *   strategy="lazyOnload" so it does not compete with LCP.
  *
  * WHY NOT IN <head>:
  *   AdSense script in <head> blocks HTML parsing → slower LCP.
- *   `strategy="afterInteractive"` defers it until after React hydration.
+ *   `strategy="lazyOnload"` defers it until after the page has loaded.
  *   All ad slots are lazy-loaded via IntersectionObserver anyway, so there's
  *   no race condition — slots request creatives only when near viewport.
  */
@@ -72,7 +72,7 @@ export default function AdSenseProvider() {
         async
         src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`}
         crossOrigin="anonymous"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         onError={(e) => {
           logger.warn("adsense-script-load-failed", {
             component: "AdSenseProvider",
@@ -81,7 +81,7 @@ export default function AdSenseProvider() {
         }}
       />
       {autoAdsEnabled ? (
-        <Script id="adsense-auto-ads" strategy="afterInteractive">
+        <Script id="adsense-auto-ads" strategy="lazyOnload">
           {`
             try {
               (window.adsbygoogle = window.adsbygoogle || []).push({

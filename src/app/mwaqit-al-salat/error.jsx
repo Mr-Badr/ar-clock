@@ -5,11 +5,13 @@ import RouteSegmentError from '@/components/shared/RouteSegmentError';
 export default function Error({
   error,
   reset,
+  unstable_retry,
 }) {
   return (
     <RouteSegmentError
       error={error}
       reset={reset}
+      unstable_retry={unstable_retry}
       boundary="app/mwaqit-al-salat"
       eyebrow="تم احتواء مشكلة قسم مواقيت الصلاة"
       title="تعذر تحميل قسم مواقيت الصلاة بالكامل"

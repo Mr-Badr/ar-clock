@@ -3,6 +3,7 @@ import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorInfoGrid,
+  CalculatorPolicyNotice,
   CalculatorResourceLinks,
   CalculatorSection,
   CalculatorToolLauncher,
@@ -12,6 +13,7 @@ import {
   getCalculatorHubBySlug,
   getCalculatorRoutesByCluster,
 } from '@/lib/calculators/data';
+import { FINANCE_INFORMATIONAL_NOTICE } from '@/lib/calculators/policy-notices';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
 
@@ -217,6 +219,15 @@ export default function FinanceCalculatorsHubPage() {
           'النتائج تقديرية عند القرارات الحساسة ولا تغني عن عرض البنك أو الجهة الرسمية أو النظام المحلي.',
         ]}
       />
+
+      <CalculatorSection
+        id="finance-policy-notice"
+        eyebrow="شفافية قبل الحساب"
+        title="ميقاتنا ليس بنكاً ولا وسيط تمويل"
+        description="بعض أدوات هذا القسم تتحدث عن قروض أو تمويل، لذلك نعرض حدود الاستخدام بوضوح قبل اختيار أي حاسبة."
+      >
+        <CalculatorPolicyNotice {...FINANCE_INFORMATIONAL_NOTICE} />
+      </CalculatorSection>
 
       <CalculatorSection
         id="finance-tools"

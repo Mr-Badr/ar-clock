@@ -15,7 +15,7 @@
  */
 import { ImageResponse } from 'next/og';
 import { getHolidayOgData } from '@/lib/holidays/og-data';
-import { getOgArabicFonts } from '@/lib/og-fonts';
+import { getSafeOgArabicFonts } from '@/lib/og-fonts';
 import { logError } from '@/lib/observability';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 
@@ -70,7 +70,10 @@ function renderFallbackImage({ width, height, fonts }) {
 
 export default async function Image({ params, searchParams }) {
   const { slug } = await params;
-  const fonts = await getOgArabicFonts();
+  const fonts = await getSafeOgArabicFonts({
+    routePath: `/holidays/${slug}/opengraph-image`,
+    slug,
+  });
 
   /* ── Square variant for Google Discover / Instagram ── */
   const sp = (await searchParams) || {};

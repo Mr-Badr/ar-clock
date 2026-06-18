@@ -1,0 +1,19 @@
+{
+  "slug": "world-mental-health-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: WHO: World Mental Health Day",
+    "fact-source: WHO: Mental health",
+    "fact-source: WHO: Mental health strengthening response",
+    "fact-source: World Federation for Mental Health",
+    "review: written as date and awareness content only; no diagnosis, treatment, self-help protocol, medication, or crisis-specific instructions beyond seeking qualified/local support."
+  ],
+  "updatedAt": "2026-06-16T00:00:00.000Z"
+}

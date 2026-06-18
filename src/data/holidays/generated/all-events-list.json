@@ -90,6 +90,16 @@
     "hijriDay": 27
   },
   {
+    "id": "oman-accession-day",
+    "slug": "oman-accession-day",
+    "name": "يوم تولي السلطان في عمان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "om",
+    "month": 1,
+    "day": 11
+  },
+  {
     "id": "first-dhul-hijjah",
     "slug": "first-dhul-hijjah",
     "name": "أول ذي الحجة",
@@ -197,6 +207,16 @@
     "category": "support",
     "_countryCode": "sa",
     "day": 10
+  },
+  {
+    "id": "sinai-liberation-day-egypt",
+    "slug": "sinai-liberation-day-egypt",
+    "name": "عيد تحرير سيناء",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "eg",
+    "month": 4,
+    "day": 25
   },
   {
     "id": "results-th-eg",
@@ -546,6 +566,16 @@
     "day": 26
   },
   {
+    "id": "oman-national-day",
+    "slug": "oman-national-day",
+    "name": "اليوم الوطني العماني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "om",
+    "month": 11,
+    "day": 20
+  },
+  {
     "id": "martyrs-day-ae",
     "slug": "martyrs-day-uae",
     "name": "يوم الشهيد الإماراتي",
@@ -713,6 +743,82 @@
     "category": "support",
     "_countryCode": "sa",
     "day": 1
+  },
+  {
+    "id": "world-childrens-day",
+    "slug": "world-childrens-day",
+    "name": "اليوم العالمي للطفل",
+    "type": "fixed",
+    "category": "social",
+    "month": 11,
+    "day": 20
+  },
+  {
+    "id": "international-day-of-education",
+    "slug": "international-day-of-education",
+    "name": "اليوم الدولي للتعليم",
+    "type": "fixed",
+    "category": "school",
+    "month": 1,
+    "day": 24
+  },
+  {
+    "id": "world-mental-health-day",
+    "slug": "world-mental-health-day",
+    "name": "اليوم العالمي للصحة النفسية",
+    "type": "fixed",
+    "category": "social",
+    "month": 10,
+    "day": 10
+  },
+  {
+    "id": "world-environment-day",
+    "slug": "world-environment-day",
+    "name": "اليوم العالمي للبيئة",
+    "type": "fixed",
+    "category": "social",
+    "month": 6,
+    "day": 5
+  },
+  {
+    "id": "independence-manifesto-day-morocco",
+    "slug": "independence-manifesto-day-morocco",
+    "name": "ذكرى تقديم وثيقة الاستقلال في المغرب",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ma",
+    "month": 1,
+    "day": 11
+  },
+  {
+    "id": "amazigh-new-year-algeria",
+    "slug": "amazigh-new-year-algeria",
+    "name": "رأس السنة الأمازيغية في الجزائر",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "dz",
+    "month": 1,
+    "day": 12
+  },
+  {
+    "id": "amazigh-new-year-morocco",
+    "slug": "amazigh-new-year-morocco",
+    "name": "رأس السنة الأمازيغية في المغرب",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ma",
+    "month": 1,
+    "day": 14
+  },
+  {
+    "id": "january-25-egypt",
+    "slug": "january-25-egypt",
+    "name": "عيد الشرطة وثورة 25 يناير",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "eg",
+    "month": 1,
+    "day": 25
   },
   {
     "id": "world-fathers-day",

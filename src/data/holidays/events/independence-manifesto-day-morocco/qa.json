@@ -1,0 +1,17 @@
+{
+  "slug": "independence-manifesto-day-morocco",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تم تثبيت 11 يناير كتاريخ ذكرى تقديم وثيقة الاستقلال.",
+    "تم توضيح أن 18 نوفمبر هو عيد الاستقلال المغربي لتجنب الخلط بين المناسبتين.",
+    "تم ربط الصفحة بصفحات المغرب الحالية فقط لتجنب روابط داخلية مكسورة."
+  ],
+  "updatedAt": "2026-06-16T00:00:00.000Z"
+}

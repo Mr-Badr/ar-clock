@@ -3,6 +3,7 @@ import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorInfoGrid,
+  CalculatorPolicyNotice,
   CalculatorSection,
   RelatedCalculators,
 } from '@/components/calculators/common';
@@ -11,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
 import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
+import { FINANCE_INFORMATIONAL_NOTICE } from '@/lib/calculators/policy-notices';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
@@ -83,6 +85,15 @@ export default function MonthlyInstallmentPage() {
       >
         <MonthlyInstallmentCalculator />
       </CalculatorHero>
+
+      <CalculatorSection
+        id="loan-policy-notice"
+        eyebrow="قبل المقارنة"
+        title="هذه حاسبة مجانية وليست عرض تمويل"
+        description="اقرأ هذا التنبيه قبل أن تقارن القسط أو الفائدة، لأنه يوضح حدود الصفحة وما لا نفعله ببياناتك أو قرارك."
+      >
+        <CalculatorPolicyNotice {...FINANCE_INFORMATIONAL_NOTICE} />
+      </CalculatorSection>
 
       <CalculatorSection
         id="loan-tabs"

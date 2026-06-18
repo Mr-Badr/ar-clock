@@ -1,0 +1,18 @@
+{
+  "slug": "international-day-of-education",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: UNESCO: International Day of Education",
+    "fact-source: United Nations: International Day of Education",
+    "fact-source: UN Digital Library: Resolution A/RES/73/25",
+    "review: written around 24 January, education as a right/public good, school activity intent, no dependency on a yearly theme, and clear distinction from World Teachers' Day."
+  ],
+  "updatedAt": "2026-06-16T00:00:00.000Z"
+}

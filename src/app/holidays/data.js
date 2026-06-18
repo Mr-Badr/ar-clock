@@ -69,8 +69,15 @@ function annotate(raw, resolvedMap, nowMs) {
 async function buildEventsPage(cursor = 0, filter = {}) {
   const normalizedFilter = normalizeHolidayFilter(filter);
 
+  const includeCountrySeoAliases = Boolean(
+    normalizedFilter.search.trim() || normalizedFilter.category !== 'all',
+  );
+
   let pool = normalizedFilter.countryCode !== 'all'
-    ? getListableHolidayEvents({ countryCode: normalizedFilter.countryCode }).map(enrichEvent)
+    ? getListableHolidayEvents({
+        countryCode: normalizedFilter.countryCode,
+        includeCountrySeoAliases,
+      }).map(enrichEvent)
     : ALL_EVENTS.map(enrichEvent);
 
   if (normalizedFilter.category !== 'all') {

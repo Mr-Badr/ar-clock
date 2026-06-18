@@ -62,7 +62,7 @@ export default function AnalyticsProvider() {
   if (useGtm) {
     return (
       <>
-        <Script id="gtm-init" strategy="afterInteractive">
+        <Script id="gtm-init" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             (function(w,d,s,l,i){
@@ -98,9 +98,9 @@ export default function AnalyticsProvider() {
       <Script
         id="ga4-src"
         src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
-      <Script id="ga4-init" strategy="afterInteractive">
+      <Script id="ga4-init" strategy="lazyOnload">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}

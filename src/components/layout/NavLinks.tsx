@@ -1,40 +1,22 @@
 // layout/NavLinks.tsx
-"use client";
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import type { ElementType } from "react";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
-import {
-  // Date submenu
-  Moon,
-  Sun,
   ArrowsCounterClockwise,
+  ArrowsLeftRight,
+  Buildings,
+  Calculator,
   Calendar,
   CalendarDots,
-  ArrowRight,
-  ArrowLeft,
-  ArrowsLeftRight,
-  CaretLeft,
-  CaretLeftIcon,
-  Clock,
-  Timer,
-  Hourglass,
+  CaretDown,
   Globe,
-  Calculator,
+  Hourglass,
+  Moon,
   Percent,
   Receipt,
+  Sun,
   Wallet,
-  Buildings,
-} from "@phosphor-icons/react";
-import { useIntentPrefetch } from "./useIntentPrefetch";
+} from "@phosphor-icons/react/ssr";
 
 type SubLink = {
   href: string;
@@ -51,35 +33,21 @@ type NavLink = {
   panelIcon?: string;
 };
 
-// All icon names used anywhere in NAV_LINKS must appear here.
-// Do NOT rely on the namespace fallback — tree-shaking / Turbopack drops it.
-function getPhosphorIcon(name?: string): React.ElementType | null {
-  if (!name) return null;
-
-  const iconMap: Record<string, React.ElementType> = {
-    // shared / date
-    Moon,
-    Sun,
-    ArrowsCounterClockwise,
-    Calendar,
-    CalendarDots,
-    ArrowRight,
-    ArrowLeft,
-    ArrowsLeftRight,
-    CaretLeft,
-    Clock,
-    Timer,
-    Hourglass,
-    Globe,
-    Calculator,
-    Percent,
-    Receipt,
-    Wallet,
-    Buildings,
-  };
-
-  return iconMap[name] ?? null;
-}
+const ICONS = {
+  ArrowsCounterClockwise,
+  ArrowsLeftRight,
+  Buildings,
+  Calculator,
+  Calendar,
+  CalendarDots,
+  Globe,
+  Hourglass,
+  Moon,
+  Percent,
+  Receipt,
+  Sun,
+  Wallet,
+};
 
 function getMegaMenuAlignment(href: string): "right" | "center" | "left" {
   if (href === "/date") return "right";
@@ -91,163 +59,102 @@ function getMegaMenuVariant(href: string): "calculators" | "default" {
   return "default";
 }
 
+function getPanelLabel(link: NavLink): string {
+  if (link.panelIcon) return link.label.slice(0, 1);
+  if (link.sublinks?.[0]?.label) return link.sublinks[0].label.slice(0, 1);
+  return link.label.slice(0, 1);
+}
+
+function getIcon(name: string | undefined): ElementType | null {
+  if (!name) return null;
+  return ICONS[name as keyof typeof ICONS] ?? null;
+}
+
 export default function NavLinks({ links }: { links: NavLink[] }) {
-  const pathname = usePathname();
-  const { getPrefetchHandlers, prefetchMany } = useIntentPrefetch();
-
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
-
   return (
-    <NavigationMenu dir="rtl" viewport={false} className="max-w-none justify-start">
-      <NavigationMenuList className="gap-1 flex-row">
-        {links.map((link) => (
-          <NavigationMenuItem key={link.href} className="relative flex">
-            {link.sublinks
-              ? (() => {
-                  const sublinkHrefs = link.sublinks.map((s) => s.href);
+    <ul className="header-nav-list" dir="rtl">
+      {links.map((link) => {
+        const PanelIcon = getIcon(link.panelIcon);
 
-                  return (
-                    <>
-                      <NavigationMenuTrigger
-                        onMouseEnter={() =>
-                          prefetchMany([link.href, ...sublinkHrefs])
-                        }
-                        onFocus={() =>
-                          prefetchMany([link.href, ...sublinkHrefs])
-                        }
-                        className={cn(
-                          "header-nav-link header-nav-link--trigger",
-                          isActive(link.href) && "active"
-                        )}
-                        aria-current={isActive(link.href) ? "page" : undefined}
+        if (!link.sublinks?.length) {
+          return (
+            <li key={link.href} className="header-nav-item">
+              <Link href={link.href} prefetch className="header-nav-link">
+                {link.label}
+              </Link>
+            </li>
+          );
+        }
+
+        return (
+          <li key={link.href} className="header-nav-item header-nav-item--has-panel">
+            <Link
+              href={link.href}
+              prefetch
+              className="header-nav-link header-nav-link--trigger"
+              aria-haspopup="true"
+            >
+              {link.label}
+              <CaretDown className="header-nav-caret" size={14} weight="bold" aria-hidden="true" />
+            </Link>
+
+            <div
+              className={[
+                "nav-mega-content",
+                `nav-mega-content--${getMegaMenuAlignment(link.href)}`,
+              ].join(" ")}
+            >
+              <div
+                className={[
+                  "nav-mega-menu",
+                  `nav-mega-menu--${getMegaMenuVariant(link.href)}`,
+                ].join(" ")}
+              >
+                <div className="nav-mega-panel">
+                  <div className="nav-mega-panel-inner">
+                    <div className="nav-mega-panel-icon" aria-hidden="true">
+                      {PanelIcon ? <PanelIcon size={22} weight="duotone" /> : getPanelLabel(link)}
+                    </div>
+                    <p className="nav-mega-panel-title">{link.label}</p>
+                    <p className="nav-mega-panel-desc">
+                      {link.panelDescription ?? `اختر من أدوات ${link.label}`}
+                    </p>
+                    <Link href={link.href} prefetch className="nav-mega-panel-cta">
+                      استعرض الكل
+                      <span className="nav-mega-cta-arrow" aria-hidden="true" />
+                    </Link>
+                  </div>
+                </div>
+
+                <div className="nav-mega-links">
+                  {link.sublinks.map((sublink) => {
+                    const SublinkIcon = getIcon(sublink.icon);
+
+                    return (
+                      <Link
+                        key={sublink.href}
+                        href={sublink.href}
+                        prefetch
+                        className="nav-mega-item"
                       >
-                        {link.label}
-                      </NavigationMenuTrigger>
-
-                      <NavigationMenuContent
-                        className={cn(
-                          "nav-mega-content bg-transparent border-none shadow-none p-0 outline-none !overflow-visible",
-                          `nav-mega-content--${getMegaMenuAlignment(link.href)}`
-                        )}
-                      >
-                        <div
-                          className={cn(
-                            "nav-mega-menu",
-                            `nav-mega-menu--${getMegaMenuVariant(link.href)}`
-                          )}
-                        >
-
-                          {/* ── Side panel ── */}
-                          <div className="nav-mega-panel">
-                            <div className="nav-mega-panel-inner">
-                              {(() => {
-                                const PanelIcon = getPhosphorIcon(
-                                  link.panelIcon ??
-                                    link.sublinks?.[0]?.icon ??
-                                    "CalendarDots"
-                                );
-                                return (
-                                  <div className="nav-mega-panel-icon" aria-hidden="true">
-                                    {PanelIcon && (
-                                      <PanelIcon size={22} weight="duotone" />
-                                    )}
-                                  </div>
-                                );
-                              })()}
-                              <p className="nav-mega-panel-title">
-                                {link.label}
-                              </p>
-                              <p className="nav-mega-panel-desc">
-                                {link.panelDescription ??
-                                  `اختر من أدوات ${link.label}`}
-                              </p>
-                              <Link
-                                href={link.href}
-                                prefetch
-                                className="nav-mega-panel-cta"
-                                {...getPrefetchHandlers(link.href)}
-                              >
-                                استعرض الكل
-                                <CaretLeftIcon size={12} weight="bold" />
-                              </Link>
-                            </div>
-                          </div>
-
-                          {/* ── Link grid ── */}
-                          <div className="nav-mega-links">
-                            {link.sublinks.map((sublink) => {
-                              const Icon = getPhosphorIcon(sublink.icon);
-                              const active = pathname === sublink.href;
-
-                              return (
-                                <NavigationMenuLink key={sublink.href} asChild>
-                                  <Link
-                                    href={sublink.href}
-                                    prefetch
-                                    className={cn(
-                                      "nav-mega-item",
-                                      active && "nav-mega-item--active"
-                                    )}
-                                    {...getPrefetchHandlers(sublink.href)}
-                                  >
-                                    <div className="nav-mega-top-row">
-                                      {/* Icon wrapper — .nav-mega-icon handles
-                                          all colour/bg via CSS; never set color
-                                          inline here or shadcn will win */}
-                                      <span className="nav-mega-icon" aria-hidden="true">
-                                        {Icon && (
-                                          <Icon
-                                            size={18}
-                                            weight={
-                                              active ? "duotone" : "regular"
-                                            }
-                                          />
-                                        )}
-                                      </span>
-                                      <span className="nav-mega-arrow" aria-hidden="true">
-                                        <CaretLeft size={14} weight="bold" />
-                                      </span>
-                                    </div>
-                                    <span className="nav-mega-text">
-                                      <span className="nav-mega-label">
-                                        {sublink.label}
-                                      </span>
-                                      {sublink.description && (
-                                        <span className="nav-mega-desc">
-                                          {sublink.description}
-                                        </span>
-                                      )}
-                                    </span>
-                                  </Link>
-                                </NavigationMenuLink>
-                              );
-                            })}
-                          </div>
-
-                        </div>
-                      </NavigationMenuContent>
-                    </>
-                  );
-                })()
-              : (
-                <NavigationMenuLink asChild active={isActive(link.href)}>
-                  <Link
-                    href={link.href}
-                    prefetch
-                    className={cn(
-                      "header-nav-link",
-                      isActive(link.href) && "active"
-                    )}
-                    {...getPrefetchHandlers(link.href)}
-                  >
-                    {link.label}
-                  </Link>
-                </NavigationMenuLink>
-              )}
-          </NavigationMenuItem>
-        ))}
-      </NavigationMenuList>
-    </NavigationMenu>
+                        <span className="nav-mega-icon" aria-hidden="true">
+                          {SublinkIcon ? <SublinkIcon size={18} weight="duotone" /> : null}
+                        </span>
+                        <span className="nav-mega-text">
+                          <span className="nav-mega-label">{sublink.label}</span>
+                          {sublink.description ? (
+                            <span className="nav-mega-desc">{sublink.description}</span>
+                          ) : null}
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }

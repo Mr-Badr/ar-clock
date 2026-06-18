@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { logError } from '@/lib/observability';
 import { getOgCountryCapitalLabels } from '@/lib/geo-og-labels';
-import { getOgArabicFonts } from '@/lib/og-fonts';
+import { getSafeOgArabicFonts } from '@/lib/og-fonts';
 import { SITE_BRAND } from '@/lib/site-config';
 
 export const alt = `${SITE_BRAND} - الوقت الان`;
@@ -43,7 +43,10 @@ function renderFallbackImage(countryLabel = 'البلد', fonts) {
 
 export default async function Image({ params }) {
   const { country } = await params;
-  const fonts = await getOgArabicFonts();
+  const fonts = await getSafeOgArabicFonts({
+    routePath: `/time-now/${country}/opengraph-image`,
+    countrySlug: country,
+  });
   const { countryLabel, capitalLabel, fallbackCountryLabel } = getOgCountryCapitalLabels(country);
 
   try {
