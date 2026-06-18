@@ -1,3 +1,5 @@
+import v8 from 'node:v8';
+
 import { connection } from 'next/server';
 import { z } from 'zod';
 
@@ -31,15 +33,18 @@ function isPrerenderConnectionError(error) {
 
 function getMemoryHealth() {
   const usage = process.memoryUsage();
-  const heapUsageRatio = usage.heapTotal > 0 ? usage.heapUsed / usage.heapTotal : 0;
+  const heapStats = v8.getHeapStatistics();
+  const heapLimit = heapStats.heap_size_limit;
+  const heapLimitUsageRatio = heapLimit > 0 ? usage.heapUsed / heapLimit : 0;
 
   return {
-    status: heapUsageRatio >= 0.9 ? 'warn' : 'ok',
+    status: heapLimitUsageRatio >= 0.8 ? 'warn' : 'ok',
     rssMb: Math.round(usage.rss / 1024 / 1024),
     heapUsedMb: Math.round(usage.heapUsed / 1024 / 1024),
     heapTotalMb: Math.round(usage.heapTotal / 1024 / 1024),
+    heapLimitMb: Math.round(heapLimit / 1024 / 1024),
     externalMb: Math.round(usage.external / 1024 / 1024),
-    heapUsageRatio: Number(heapUsageRatio.toFixed(2)),
+    heapLimitUsageRatio: Number(heapLimitUsageRatio.toFixed(2)),
   };
 }
 

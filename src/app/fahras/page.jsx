@@ -208,6 +208,43 @@ function DiscoveryFallback() {
             </p>
           </div>
         </section>
+
+        <section className="grid gap-[var(--space-4)] rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--surface)] p-[var(--space-6)]">
+          <div className="grid gap-[var(--space-2)]">
+            <h2 className="font-[var(--font-heading)] text-[1.35rem] font-black leading-[1.35] text-[var(--text-primary)]">
+              متى تختار الأداة، ومتى تختار الشرح؟
+            </h2>
+            <p className="max-w-[76ch] text-[1rem] leading-[1.95] text-[var(--text-secondary)]">
+              أفضل تجربة في ميقاتنا تبدأ من نية واضحة. إذا كنت تريد رقماً أو موعداً الآن،
+              افتح الأداة مباشرة. إذا كان الرقم سيؤثر في مالك أو عبادتك أو موعد رسمي،
+              فاقرأ الشرح وحدود الاعتماد أولاً ثم استخدم الأداة كخطوة مساعدة.
+            </p>
+          </div>
+
+          <div className="grid gap-[var(--space-3)] md:grid-cols-2">
+            <article className="grid gap-[var(--space-2)] rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--bg-surface-1)] p-[var(--space-4)]">
+              <strong className="text-[1.02rem] font-black leading-[1.6] text-[var(--text-primary)]">
+                افتح الأداة مباشرة عندما يكون السؤال حسابياً
+              </strong>
+              <p className="m-0 text-[0.96rem] leading-[1.9] text-[var(--text-secondary)]">
+                مثل: كم الساعة في مدينة؟ كم باقي على مناسبة؟ كم يساوي 15%؟ ما تاريخ
+                اليوم؟ هذه أسئلة تحتاج نتيجة فورية، ثم يمكنك حفظ الرابط أو مشاركة النتيجة
+                إذا احتجت.
+              </p>
+            </article>
+
+            <article className="grid gap-[var(--space-2)] rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--bg-surface-1)] p-[var(--space-4)]">
+              <strong className="text-[1.02rem] font-black leading-[1.6] text-[var(--text-primary)]">
+                اقرأ الشرح عندما يكون القرار له أثر
+              </strong>
+              <p className="m-0 text-[0.96rem] leading-[1.9] text-[var(--text-secondary)]">
+                مثل: قسط تمويل، نهاية خدمة، صندوق طوارئ، موعد صلاة محلي، أو تاريخ عطلة
+                رسمية. هنا لا يكفي الرقم وحده؛ تحتاج أن تعرف مصدره وحدوده ومتى تراجع
+                جهة رسمية أو مختصاً.
+              </p>
+            </article>
+          </div>
+        </section>
       </div>
     </main>
   );
