@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 
 import AdInArticle from '@/components/ads/AdInArticle';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import {
@@ -1095,6 +1096,10 @@ export default function BlogArticleView(props) {
                 </div>
                 <GuideFaqList faqItems={faqItems} />
               </section>
+            ) : null}
+
+            {shouldShowAds ? (
+              <AdMultiplex slotId={`end-guide-${guide.slug || 'entry'}`} />
             ) : null}
 
             <SiteTrustPanel panel="blog" />

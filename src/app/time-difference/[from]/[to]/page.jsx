@@ -14,8 +14,10 @@ import {
 import TimeConversionTable from './TimeConversionTable.client';
 import ContextSummaryView from '@/components/TimeDifference/ContextSummaryView';
 import { buildContextSummaryLines } from '@/components/TimeDifference/contextSummary';
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import { SectionDivider } from '@/components/shared/primitives';
 import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
 import { POPULAR_PAIRS } from '@/components/time-diff/data/popularPairs';
@@ -471,8 +473,8 @@ async function ComparisonPageContent({ paramsPromise }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      {/* <AdLayoutWrapper> */}
-      <main className="content-col pt-24 pb-20">
+      <AdLayoutWrapper>
+        <main className="content-col pt-24 pb-20">
 
         {/* ── Breadcrumb ─────────────────────────────────────────────── */}
         <nav aria-label="مسار التنقل" className="text-xs text-muted mb-6 flex items-center gap-1 flex-wrap">
@@ -936,12 +938,14 @@ async function ComparisonPageContent({ paramsPromise }) {
           />
         </section>
 
+        <AdMultiplex slotId={`end-time-diff-${from}-${to}`} />
+
         <div className="my-20">
           <SectionDivider />
         </div>
 
-      </main>
-      {/* </AdLayoutWrapper> */}
+        </main>
+      </AdLayoutWrapper>
     </div>
   );
 }

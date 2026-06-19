@@ -12,6 +12,8 @@ import {
 import { getInitialEvents } from './data';
 import HolidaysClient from './HolidaysClient';
 import { getCachedNowIso } from '@/lib/date-utils';
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import HolidaysSections from '@/components/holidays/index';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
@@ -249,8 +251,9 @@ export default async function HolidaysPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(holidaysCollectionSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(upcomingEventsSchema) }} />
 
-      
-      <main className={styles.pageShell}>
+      <AdLayoutWrapper layout="wide" sidebarMode="single">
+        <div className="layout-content-shell">
+          <main className={styles.pageShell}>
         {/* ── Breadcrumb ─────────────────────────────────────────────── */}
         <nav
           aria-label="breadcrumb"
@@ -366,8 +369,13 @@ export default async function HolidaysPage() {
             ariaLabel="خطوات تكمل متابعة المناسبات"
           />
         </section>
-      </main>
-      <HolidaysSections nowIso={nowIso} />
+          </main>
+          <HolidaysSections nowIso={nowIso} />
+          <section className={styles.followupSection}>
+            <AdMultiplex slotId="end-holidays-list" />
+          </section>
+        </div>
+      </AdLayoutWrapper>
     </div>
   );
 }

@@ -136,11 +136,11 @@ export default function AdStickyAnchor({
         .filter(Boolean)
         .join(" ")}
       role="complementary"
-      aria-label="إعلانات"
+      aria-label="إعلان"
       aria-hidden={!fullscreenActive || !visible}
     >
       {/* Label — visible per Google AdSense policy */}
-      <span className="ad-slot__label">إعلانات</span>
+      <span className="ad-slot__label">إعلان</span>
 
       {/* Dismiss button */}
       <button

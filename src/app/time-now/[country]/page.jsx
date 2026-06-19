@@ -21,7 +21,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
 
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdInArticle from '@/components/ads/AdInArticle';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import DeferredSectionNotice from '@/components/shared/DeferredSectionNotice';
@@ -345,7 +347,8 @@ export default async function CountryTimePage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
 
-      <main>
+      <AdLayoutWrapper layout="wide" sidebarMode="single">
+        <main>
         {/* ── BREADCRUMB ── */}
         <nav
           aria-label="مسار التنقل"
@@ -435,7 +438,8 @@ export default async function CountryTimePage({ params }) {
             utcOffset={utcOffset}
           />
         </Suspense>
-      </main>
+        </main>
+      </AdLayoutWrapper>
     </div>
   );
 }
@@ -774,6 +778,10 @@ async function CountryTimePageSections({
               </p>
             </div>
           </div>
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <AdMultiplex slotId={`end-time-country-${countrySlug}`} />
         </section>
 
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>

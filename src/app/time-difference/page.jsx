@@ -1,6 +1,8 @@
 // app/time-difference/page.tsx
 import Link from 'next/link';
 import TimeDiffCalculator from "@/components/TimeDifference/TimeDiffCalculatorV2.client";
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import TimeDiffSections from '@/components/time-diff/index';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
@@ -193,20 +195,21 @@ export default async function TimeDifferencePage() {
 
   return (
     <div className="min-h-screen bg-base text-primary time-diff-hub-page" dir="rtl">
-      {/* <AdLayoutWrapper> */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(popularPairsSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
-      />
-      <main className="content-col pt-24 mt-12 time-diff-hub-main">
+      <AdLayoutWrapper>
+        <div className="layout-content-shell">
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(popularPairsSchema) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+          />
+          <main className="content-col pt-24 mt-12 time-diff-hub-main">
 
         {/* JSON-LD structured data (HowTo) */}
         <script
@@ -561,17 +564,19 @@ export default async function TimeDifferencePage() {
 
         <AdTopBanner slotId="top-time-diff-list" />
 
-      </main>
-      <TimeDiffSections />
-      <section className="content-col pb-20">
-        <GeoInternalLinks
-          title="خطوتك التالية بعد حساب فرق التوقيت"
-          description="بعد معرفة الفارق، اختر المسار الذي يكمّل قرارك: الوقت الان للتحقق من المدينة، الصلاة عند السفر أو التنسيق اليومي، التاريخ عندما يعبر الموعد منتصف الليل، أو المناسبات عند ترتيب رحلة."
-          links={utilityLinks}
-          ariaLabel="خطوات تكمل حساب فرق التوقيت"
-        />
-      </section>
-      {/* </AdLayoutWrapper> */}
+          </main>
+          <TimeDiffSections />
+          <section className="content-col pb-20">
+            <GeoInternalLinks
+              title="خطوتك التالية بعد حساب فرق التوقيت"
+              description="بعد معرفة الفارق، اختر المسار الذي يكمّل قرارك: الوقت الان للتحقق من المدينة، الصلاة عند السفر أو التنسيق اليومي، التاريخ عندما يعبر الموعد منتصف الليل، أو المناسبات عند ترتيب رحلة."
+              links={utilityLinks}
+              ariaLabel="خطوات تكمل حساب فرق التوقيت"
+            />
+            <AdMultiplex slotId="end-time-difference-hub" />
+          </section>
+        </div>
+      </AdLayoutWrapper>
     </div>
   );
 }

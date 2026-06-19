@@ -21,6 +21,8 @@ const defaultConfig = Object.freeze({
       inArticle: null,
       inFeed: null,
       inFeedLayoutKey: null,
+      eventsFeedHorizontal: null,
+      multiplex: null,
       stickyAnchor: null,
       sidebar: null,
       sidebarRight: null,

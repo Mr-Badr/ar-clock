@@ -95,9 +95,9 @@ export default function AdInArticle({
       ref={ref}
       className={`ad-slot ad-slot--in-article ${isLoading ? "is-loading" : ""} ${className}`}
       role="complementary"
-      aria-label="إعلانات"
+      aria-label="إعلان"
     >
-      <span className="ad-slot__label">إعلانات</span>
+      <span className="ad-slot__label">إعلان</span>
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}

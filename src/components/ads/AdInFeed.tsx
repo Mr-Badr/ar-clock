@@ -27,7 +27,7 @@
  * RULES:
  *   ✅ First ad after item index 5 minimum (not index 0, 1, 2...)
  *   ✅ Max 1 ad per 5 real items (Google policy)
- *   ✅ Uses .card class so it visually matches surrounding cards
+ *   ✅ Aligns with the feed rhythm while staying visually marked as an ad
  *   ❌ Never inject two consecutive AdInFeed
  */
 
@@ -91,11 +91,11 @@ export default function AdInFeed({
     <div
       id={slotId}
       ref={ref}
-      className={`card ad-slot ad-slot--in-feed ${isLoading ? "is-loading" : ""} ${className}`}
+      className={`ad-slot ad-slot--in-feed ${isLoading ? "is-loading" : ""} ${className}`}
       role="complementary"
-      aria-label="إعلانات"
+      aria-label="إعلان"
     >
-      <span className="ad-slot__label">إعلانات</span>
+      <span className="ad-slot__label">إعلان</span>
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { SectionWrapper } from '@/components/shared/primitives';
@@ -197,6 +198,7 @@ export function CalculatorHero({
             </div>
           </div>
         </div>
+        <AdTopBanner slotId="top-calculator-tool" />
       </div>
     </SectionWrapper>
   );

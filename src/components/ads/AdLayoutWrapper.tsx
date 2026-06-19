@@ -69,8 +69,8 @@ interface AdLayoutWrapperProps {
   children: React.ReactNode;
   /** Hide both sidebars (short pages, special layouts) */
   hideSidebars?: boolean;
-  /** Standard = broad content pages, narrow = denser tool pages */
-  layout?: "standard" | "narrow";
+  /** Standard = broad content pages, narrow = denser tool pages, wide = hubs with rich grids */
+  layout?: "standard" | "narrow" | "wide";
   /** single = one sticky rail, dual = sticky right + static left, none = content only */
   sidebarMode?: "single" | "dual" | "none";
 }

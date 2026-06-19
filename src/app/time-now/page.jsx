@@ -4,6 +4,9 @@ import { ArrowLeft, Clock3, MapPin, Search } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 import { getCountriesAction } from '@/app/actions/location';
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdMultiplex from '@/components/ads/AdMultiplex';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import SearchCity from '@/components/SearchCityWrapper.client';
 import TimeNowHero from '@/components/time-now/TimeNowHero';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -140,7 +143,8 @@ export default function TimeNowPage() {
     <div className={`${styles.page} min-h-screen bg-base text-primary`} dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
-      <main className={styles.main}>
+      <AdLayoutWrapper layout="wide" sidebarMode="single">
+        <main className={styles.main}>
         <section className={styles.heroShell} aria-labelledby="time-now-heading">
           <header className={styles.hero}>
             <div className={styles.heroBadge}>
@@ -175,6 +179,8 @@ export default function TimeNowPage() {
           </section>
         </section>
 
+        <AdTopBanner slotId="top-time-now-hub" />
+
         <section aria-labelledby="time-now-local-clock-heading" className={styles.clockFocusSection}>
           <div className={styles.clockIntro}>
             <span className={styles.clockKicker}>
@@ -198,7 +204,9 @@ export default function TimeNowPage() {
         <Suspense fallback={<TimeNowLandingSectionsFallback />}>
           <TimeNowLandingSections />
         </Suspense>
-      </main>
+          <AdMultiplex slotId="end-time-now-hub" />
+        </main>
+      </AdLayoutWrapper>
     </div>
   );
 }

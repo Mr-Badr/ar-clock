@@ -1,4 +1,5 @@
 import AdLayoutWrapper from "./AdLayoutWrapper";
+import AdMultiplex from "./AdMultiplex";
 import SiteTrustPanel from "@/components/site/SiteTrustPanel";
 
 interface CalculatorAdLayoutProps {
@@ -10,6 +11,7 @@ export default function CalculatorAdLayout({ children }: CalculatorAdLayoutProps
     <AdLayoutWrapper layout="standard" sidebarMode="single">
       <div className="layout-content-shell calculator-layout-shell">
         {children}
+        <AdMultiplex slotId="end-calculator-section" />
         <SiteTrustPanel panel="calculators" />
       </div>
     </AdLayoutWrapper>

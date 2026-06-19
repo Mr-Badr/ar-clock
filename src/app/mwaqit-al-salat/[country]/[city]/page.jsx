@@ -386,7 +386,8 @@ export default async function PrayerTimesPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      <main>
+      <AdLayoutWrapper layout="wide" sidebarMode="single">
+        <main>
         <nav aria-label="مسار التنقل" className={`container mx-auto px-4 ${routeStyles.breadcrumb}`}>
           <ol className={routeStyles.breadcrumbList}>
             {[
@@ -635,7 +636,8 @@ export default async function PrayerTimesPage({ params }) {
             <SiteTrustPanel panel="prayer" />
           </div>
         </section>
-      </main>
+        </main>
+      </AdLayoutWrapper>
     </div>
   );
 }

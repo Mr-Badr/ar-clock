@@ -3,8 +3,10 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import SearchCityWrapper from '@/components/SearchCityWrapper.client';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import { CalendarDays, Clock, Compass, Globe2, MapPin, Timer } from 'lucide-react';
 import routeStyles from '@/app/mwaqit-al-salat/PrayerRoutePage.module.css';
 import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
@@ -438,7 +440,8 @@ export default async function PrayerLandingPage() {
 
   return (
     <div className={`${routeStyles.prayerHubPage} min-h-screen bg-base text-primary`} dir="rtl" lang="ar">
-      <main className={routeStyles.pageMain}>
+      <AdLayoutWrapper layout="wide" sidebarMode="single">
+        <main className={routeStyles.pageMain}>
 
         {/* JSON-LD */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
@@ -656,7 +659,11 @@ export default async function PrayerLandingPage() {
             <PrayerNextSteps links={utilityLinks} />
           </div>
         </section>
-      </main>
+          <section className="container mx-auto px-4 pb-20">
+            <AdMultiplex slotId="end-mwaqit-hub" />
+          </section>
+        </main>
+      </AdLayoutWrapper>
     </div>
   );
 }

@@ -63,6 +63,8 @@ export function getServerAdsConfig() {
     manualSlots.topBanner
     || manualSlots.inArticle
     || manualSlots.inFeed
+    || manualSlots.eventsFeedHorizontal
+    || manualSlots.multiplex
     || manualSlots.stickyAnchor
     || manualSlots.sidebar
     || manualSlots.sidebarRight

@@ -1,4 +1,7 @@
+import { Fragment } from 'react';
 import { Search } from 'lucide-react';
+import AdEventsFeedHorizontal from '@/components/ads/AdEventsFeedHorizontal';
+import AdInFeed from '@/components/ads/AdInFeed';
 import EventCard, { EventGridSkeleton } from '@/components/events/EventCard';
 
 import { PAGE_SIZE } from './constants';
@@ -10,6 +13,18 @@ function isValidEvent(event) {
       && typeof event.slug === 'string'
       && event.slug.trim().length > 0,
   );
+}
+
+function shouldInsertInFeedAd(index, totalEvents) {
+  if (totalEvents < 8) {
+    return false;
+  }
+
+  if (index === 5) {
+    return true;
+  }
+
+  return totalEvents >= 18 && index === 17;
 }
 
 export default function HolidaysEventsGrid({
@@ -26,6 +41,8 @@ export default function HolidaysEventsGrid({
   const safeEventsCount = Number.isFinite(eventsCount) ? eventsCount : safeDisplayEvents.length;
   const safeTotal = Number.isFinite(total) ? total : safeEventsCount;
   const remainingCount = Math.max(0, safeTotal - safeEventsCount);
+  const shouldShowInFeedAds = safeDisplayEvents.length >= 8 && !isFiltering;
+  const shouldShowEventsFeedAd = safeDisplayEvents.length >= 6 && !isFiltering;
 
   return (
     <>
@@ -71,15 +88,23 @@ export default function HolidaysEventsGrid({
           ) : null}
         </div>
       ) : (
-        <div
-          className="waqt-grid"
-          aria-busy={isFiltering || isLoadingMore}
-          style={{ opacity: isFiltering ? 0.6 : 1, transition: 'opacity var(--transition-base)' }}
-        >
-          {safeDisplayEvents.map((event, index) => (
-            <EventCard key={event.slug} event={event} priority={index < 6} index={index} />
-          ))}
-        </div>
+        <>
+          <div
+            className="waqt-grid"
+            aria-busy={isFiltering || isLoadingMore}
+            style={{ opacity: isFiltering ? 0.6 : 1, transition: 'opacity var(--transition-base)' }}
+          >
+            {safeDisplayEvents.map((event, index) => (
+              <Fragment key={event.slug}>
+                <EventCard event={event} priority={index < 6} index={index} />
+                {shouldShowInFeedAds && shouldInsertInFeedAd(index, safeDisplayEvents.length) ? (
+                  <AdInFeed slotId={`events-list-in-feed-${index + 1}`} />
+                ) : null}
+              </Fragment>
+            ))}
+          </div>
+          {shouldShowEventsFeedAd ? <AdEventsFeedHorizontal /> : null}
+        </>
       )}
 
       {cursor !== null && !isFiltering && !isLoadingMore && (

@@ -25,7 +25,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
 
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdInArticle from '@/components/ads/AdInArticle';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import DeferredSectionNotice from '@/components/shared/DeferredSectionNotice';
@@ -390,7 +392,8 @@ export default async function CityTimePage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
 
-      <main>
+      <AdLayoutWrapper layout="wide" sidebarMode="single">
+        <main>
 
         {/* ══ BREADCRUMB ══════════════════════════════════════════ */}
         <nav aria-label="مسار التنقل" className={`container mx-auto px-4 ${routeStyles.breadcrumb}`}>
@@ -483,7 +486,8 @@ export default async function CityTimePage({ params }) {
           />
         </Suspense>
 
-      </main>
+        </main>
+      </AdLayoutWrapper>
       <style>{`@keyframes pulse { 0%,100%{opacity:.5} 50%{opacity:1} }`}</style>
     </div>
   );
@@ -811,6 +815,10 @@ async function CityTimePageSections({
               </p>
             </div>
           </div>
+        </section>
+
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <AdMultiplex slotId={`end-time-city-${countrySlug}-${citySlug}`} />
         </section>
 
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>

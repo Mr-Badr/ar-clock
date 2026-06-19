@@ -20,6 +20,7 @@ import { COUNTRY_META } from '@/lib/calendar-config';
 import CountdownTicker, { ShareBar } from '@/components/clocks/CountdownTicker';
 import EventVibeCard from '@/components/holidays/EventVibeCard';
 import AdInArticle from '@/components/ads/AdInArticle';
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import HolidayDetailsSections from './HolidayDetailsSections';
 import CountryDatesSection, { CountryDatesSectionFallback } from './CountryDatesSection';
@@ -132,8 +133,8 @@ export default async function HolidayPage({ params }) {
       {articleSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />}
       {eventSeriesSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSeriesSchema) }} />}
 
-      {/* <AdLayoutWrapper> */}
-      <main className="content-col pt-24 pb-20">
+      <AdLayoutWrapper>
+        <main className="content-col pt-24 pb-20">
 
         {/* Breadcrumb */}
         <nav aria-label="breadcrumb" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)', marginBottom: 'var(--space-8)' }}>
@@ -352,8 +353,8 @@ export default async function HolidayPage({ params }) {
           )}
         />
 
-      </main>
-      {/* </AdLayoutWrapper> */}
+        </main>
+      </AdLayoutWrapper>
     </div>
   );
 }

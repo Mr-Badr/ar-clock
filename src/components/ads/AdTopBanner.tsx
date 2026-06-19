@@ -96,10 +96,10 @@ export default function AdTopBanner({
       ref={ref}
       className={`ad-slot ad-slot--top-banner ${isLoading ? "is-loading" : ""} ${className}`}
       role="complementary"
-      aria-label="إعلانات"
+      aria-label="إعلان"
     >
       {/* Label — required by Google AdSense policy to be visible */}
-      <span className="ad-slot__label">إعلانات</span>
+      <span className="ad-slot__label">إعلان</span>
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}

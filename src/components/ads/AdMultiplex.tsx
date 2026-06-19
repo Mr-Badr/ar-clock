@@ -1,61 +1,30 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
 import { useMarketingPermission } from "@/lib/client/marketing";
 import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
 import { logger, serializeError } from "@/lib/logger";
 
-interface AdSidebarStickyProps {
+interface AdMultiplexProps {
   slotId?: string;
   className?: string;
-  side?: "right" | "left";
-  sticky?: boolean;
 }
 
-type ManualSidebarSlots = {
-  sidebar?: string | null;
-  sidebarRight?: string | null;
-  sidebarLeft?: string | null;
-};
-
-function resolveSidebarSlot(
-  side: "right" | "left",
-  slotId: string,
-  manualSlots: ManualSidebarSlots,
-) {
-  if (side === "right" || slotId.includes("right")) {
-    return manualSlots.sidebarRight || manualSlots.sidebar || "";
-  }
-
-  if (side === "left" || slotId.includes("left")) {
-    return manualSlots.sidebarLeft || manualSlots.sidebar || "";
-  }
-
-  return manualSlots.sidebar || "";
-}
-
-export default function AdSidebarSticky({
-  slotId = "sidebar-ad",
+export default function AdMultiplex({
+  slotId = "multiplex",
   className = "",
-  side = "right",
-  sticky = true,
-}: AdSidebarStickyProps) {
+}: AdMultiplexProps) {
   const { clientId, manualSlots } = useAdsRuntimeConfig();
-  const adSlot = resolveSidebarSlot(side, slotId, manualSlots);
+  const adSlot = manualSlots.multiplex || "";
   const shouldRenderAds = Boolean(clientId && adSlot);
   const canLoadAds = useMarketingPermission(shouldRenderAds);
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const loaded = useRef(false);
 
   useEffect(() => {
     if (!canLoadAds) return;
     if (!ref.current || loaded.current) return;
-
-    const minWidthQuery = sticky ? "(min-width: 1280px)" : "(min-width: 1536px)";
-    const isDesktop = window.matchMedia(minWidthQuery).matches;
-    if (!isDesktop) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -68,10 +37,9 @@ export default function AdSidebarSticky({
               const adsWindow = window as Window & { adsbygoogle?: unknown[] };
               (adsWindow.adsbygoogle = adsWindow.adsbygoogle || []).push({});
             } catch (error) {
-              logger.warn("adsense-sidebar-init-failed", {
-                component: "AdSidebarSticky",
+              logger.warn("adsense-multiplex-init-failed", {
+                component: "AdMultiplex",
                 slotId,
-                side,
                 error: serializeError(error),
               });
             }
@@ -80,31 +48,22 @@ export default function AdSidebarSticky({
           }
         });
       },
-      { rootMargin: "100px 0px" }
+      { rootMargin: "500px 0px" },
     );
 
     observer.observe(ref.current);
     return () => observer.disconnect();
-  }, [canLoadAds]);
+  }, [canLoadAds, slotId]);
 
   if (!shouldRenderAds || !canLoadAds) return null;
 
   return (
-    <aside
+    <div
       id={slotId}
       ref={ref}
-      className={[
-        "ad-slot",
-        "ad-slot--sidebar",
-        sticky ? "ad-slot--sidebar--sticky" : "ad-slot--sidebar--static",
-        side === "left" ? "ad-slot--sidebar--left" : "ad-slot--sidebar--right",
-        isLoading ? "is-loading" : "",
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
+      className={`ad-slot ad-slot--multiplex ${isLoading ? "is-loading" : ""} ${className}`}
       role="complementary"
-      aria-label="إعلان جانبي"
+      aria-label="إعلان"
     >
       <span className="ad-slot__label">إعلان</span>
       <ins
@@ -112,9 +71,8 @@ export default function AdSidebarSticky({
         style={{ display: "block" }}
         data-ad-client={clientId || undefined}
         data-ad-slot={adSlot}
-        data-ad-format="auto"
-        data-full-width-responsive="true"
+        data-ad-format="autorelaxed"
       />
-    </aside>
+    </div>
   );
 }

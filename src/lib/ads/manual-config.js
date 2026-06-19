@@ -10,10 +10,12 @@
  * When you are ready for precise placements, paste the slot ids here once.
  */
 const MANUAL_AD_SLOT_REGISTRY = {
-  topBanner: '',
-  inArticle: '',
+  topBanner: '8090183510',
+  inArticle: '1176301123',
   inFeed: '',
   inFeedLayoutKey: '',
+  eventsFeedHorizontal: '4296454334',
+  multiplex: '',
   stickyAnchor: '',
   sidebar: '',
   sidebarRight: '',
@@ -32,6 +34,8 @@ export function getManualAdsConfig() {
     inArticle: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inArticle),
     inFeed: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inFeed),
     inFeedLayoutKey: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inFeedLayoutKey),
+    eventsFeedHorizontal: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.eventsFeedHorizontal),
+    multiplex: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.multiplex),
     stickyAnchor: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.stickyAnchor),
     sidebar: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.sidebar),
     sidebarRight: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.sidebarRight),

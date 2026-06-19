@@ -1,4 +1,5 @@
 import BlogHubClient from '@/components/blog/BlogHubClient';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { countBlogArticleWords, estimateBlogArticleReadingMinutes } from '@/lib/blog/read-time';
@@ -302,6 +303,7 @@ export default function BlogHubPage() {
         shortcutLinks={BLOG_SHORTCUTS}
         siteBrand={SITE_BRAND}
       />
+      <AdMultiplex slotId="end-blog-hub" className="content-col" />
     </main>
   );
 }
