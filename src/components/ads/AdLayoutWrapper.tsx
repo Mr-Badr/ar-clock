@@ -84,7 +84,7 @@ export default function AdLayoutWrapper({
   const { enabled, manualSlots } = getServerAdsConfig();
   const shouldHideSidebars = hideSidebars === true;
   const resolvedLayout = layout ?? "standard";
-  const requestedSidebarMode = sidebarMode ?? (manualSlots.sidebarLeft ? "dual" : "single");
+  const requestedSidebarMode = sidebarMode ?? "single";
   const adsEnabled = enabled && Boolean(
     manualSlots.sidebar || manualSlots.sidebarRight || manualSlots.sidebarLeft,
   );
@@ -101,13 +101,14 @@ export default function AdLayoutWrapper({
       data-rail-mode={resolvedSidebarMode}
     >
 
-      {/*
-        Primary rail — sticky and always on the visual right in RTL layouts.
-      */}
-      <AdSidebarSticky slotId="sidebar-right" side="right" sticky />
-
       {/* Main content — always present, always center column */}
       {children}
+
+      {/*
+        Primary rail — sticky and placed on the visual right with CSS grid.
+        It renders after content in the DOM so page H1 appears before ads.
+      */}
+      <AdSidebarSticky slotId="sidebar-right" side="right" sticky />
 
       {/*
         Secondary rail — only on layouts that can carry more density.

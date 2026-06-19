@@ -12,7 +12,7 @@
 const MANUAL_AD_SLOT_REGISTRY = {
   topBanner: '8090183510',
   inArticle: '1176301123',
-  inFeed: '',
+  inFeed: '1947291465',
   inFeedLayoutKey: '',
   eventsFeedHorizontal: '4296454334',
   multiplex: '3132380621',
