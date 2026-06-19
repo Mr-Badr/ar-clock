@@ -440,7 +440,7 @@ export default async function PrayerLandingPage() {
 
   return (
     <div className={`${routeStyles.prayerHubPage} min-h-screen bg-base text-primary`} dir="rtl" lang="ar">
-      <AdLayoutWrapper layout="wide" sidebarMode="single">
+      <AdLayoutWrapper layout="wide" sidebarMode="dual">
         <main className={routeStyles.pageMain}>
 
         {/* JSON-LD */}

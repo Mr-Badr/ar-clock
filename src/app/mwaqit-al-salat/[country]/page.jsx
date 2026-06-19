@@ -360,7 +360,7 @@ export default async function CountryPrayerPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(cityItemListSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      <AdLayoutWrapper layout="wide" sidebarMode="single">
+      <AdLayoutWrapper layout="wide" sidebarMode="dual">
         <main>
         <nav aria-label="مسار التنقل" className={`container mx-auto px-4 ${routeStyles.breadcrumb}`}>
           <ol className={routeStyles.breadcrumbList}>

@@ -15,11 +15,11 @@ const MANUAL_AD_SLOT_REGISTRY = {
   inFeed: '',
   inFeedLayoutKey: '',
   eventsFeedHorizontal: '4296454334',
-  multiplex: '',
+  multiplex: '3132380621',
   stickyAnchor: '',
   sidebar: '',
-  sidebarRight: '',
-  sidebarLeft: '',
+  sidebarRight: '4134471107',
+  sidebarLeft: '5183828891',
 };
 
 function normalizeManualSlotValue(value) {

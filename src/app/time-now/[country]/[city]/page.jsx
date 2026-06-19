@@ -392,7 +392,7 @@ export default async function CityTimePage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
 
-      <AdLayoutWrapper layout="wide" sidebarMode="single">
+      <AdLayoutWrapper layout="wide" sidebarMode="dual">
         <main>
 
         {/* ══ BREADCRUMB ══════════════════════════════════════════ */}

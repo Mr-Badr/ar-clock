@@ -143,7 +143,7 @@ export default function TimeNowPage() {
     <div className={`${styles.page} min-h-screen bg-base text-primary`} dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
-      <AdLayoutWrapper layout="wide" sidebarMode="single">
+      <AdLayoutWrapper layout="wide" sidebarMode="dual">
         <main className={styles.main}>
         <section className={styles.heroShell} aria-labelledby="time-now-heading">
           <header className={styles.hero}>

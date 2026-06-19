@@ -251,7 +251,7 @@ export default async function HolidaysPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(holidaysCollectionSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(upcomingEventsSchema) }} />
 
-      <AdLayoutWrapper layout="wide" sidebarMode="single">
+      <AdLayoutWrapper layout="wide" sidebarMode="dual">
         <div className="layout-content-shell">
           <main className={styles.pageShell}>
         {/* ── Breadcrumb ─────────────────────────────────────────────── */}

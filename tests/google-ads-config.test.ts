@@ -78,7 +78,9 @@ test('AdSense delivery becomes available after certified CMP confirmation', () =
     assert.equal(serverConfig.manualSlots.topBanner, '8090183510');
     assert.equal(serverConfig.manualSlots.inArticle, '1176301123');
     assert.equal(serverConfig.manualSlots.eventsFeedHorizontal, '4296454334');
-    assert.equal(serverConfig.manualSlots.multiplex, null);
+    assert.equal(serverConfig.manualSlots.multiplex, '3132380621');
+    assert.equal(serverConfig.manualSlots.sidebarRight, '4134471107');
+    assert.equal(serverConfig.manualSlots.sidebarLeft, '5183828891');
     assert.equal(publicConfig.ads.clientId, 'ca-pub-5421885011942418');
     assert.equal(publicConfig.ads.enabled, true);
   } finally {

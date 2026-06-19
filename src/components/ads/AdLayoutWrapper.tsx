@@ -84,7 +84,7 @@ export default function AdLayoutWrapper({
   const { enabled, manualSlots } = getServerAdsConfig();
   const shouldHideSidebars = hideSidebars === true;
   const resolvedLayout = layout ?? "standard";
-  const requestedSidebarMode = sidebarMode ?? "single";
+  const requestedSidebarMode = sidebarMode ?? (manualSlots.sidebarLeft ? "dual" : "single");
   const adsEnabled = enabled && Boolean(
     manualSlots.sidebar || manualSlots.sidebarRight || manualSlots.sidebarLeft,
   );
