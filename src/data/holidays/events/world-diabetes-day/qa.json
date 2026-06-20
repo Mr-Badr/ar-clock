@@ -1,0 +1,19 @@
+{
+  "slug": "world-diabetes-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: World Diabetes Day: About WDD",
+    "fact-source: World Diabetes Day: campaign homepage",
+    "fact-source: WHO: World Diabetes Day",
+    "review: أنشئت الصفحة حول 14 نوفمبر، سبب اختيار التاريخ، سؤال الإجازة، والدائرة الزرقاء، مع حدود واضحة تمنع التشخيص أو العلاج الشخصي.",
+    "research-limit: نتائج البحث العربية المتاحة كانت محدودة، لذلك اعتمدت الصفحة على مصادر رسمية وبحث مرجعي غير عربي مع كتابة عربية أصلية."
+  ],
+  "updatedAt": "2026-06-19T00:00:00.000Z"
+}

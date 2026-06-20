@@ -17,10 +17,10 @@
   min-height: 100svh;
   height: 100dvh;
   padding:
-    max(clamp(1.25rem, 2.5vw, 2.5rem), env(safe-area-inset-top))
-    max(clamp(1.25rem, 2.5vw, 2.5rem), env(safe-area-inset-right))
-    max(clamp(1.25rem, 2.5vw, 2.5rem), env(safe-area-inset-bottom))
-    max(clamp(1.25rem, 2.5vw, 2.5rem), env(safe-area-inset-left));
+    max(clamp(0.75rem, 2vmin, 1.5rem), env(safe-area-inset-top))
+    max(clamp(0.75rem, 2vmin, 1.5rem), env(safe-area-inset-right))
+    max(clamp(0.75rem, 2vmin, 1.5rem), env(safe-area-inset-bottom))
+    max(clamp(0.75rem, 2vmin, 1.5rem), env(safe-area-inset-left));
   background: var(--bg);
   container-type: inline-size;
   overscroll-behavior: none;
@@ -28,7 +28,7 @@
 }
 
 :global(.has-css-fullscreen) .clockRootFullscreen {
-  padding-bottom: max(calc(env(safe-area-inset-bottom) + 7rem), clamp(1.25rem, 2.5vw, 2.5rem));
+  padding-bottom: max(clamp(0.75rem, 2vmin, 1.5rem), env(safe-area-inset-bottom));
 }
 
 .shineBorder {
@@ -157,6 +157,9 @@
 }
 
 .clockContainer {
+  width: 100%;
+  max-width: min(100%, 42rem);
+  margin-inline: auto;
   margin-block: var(--space-4);
 }
 
@@ -223,6 +226,7 @@
   width: 100%;
   max-width: 420px;
   height: 2px;
+  margin-inline: auto;
   margin-top: var(--space-4);
   overflow: hidden;
   border-radius: var(--radius-sm);
@@ -283,7 +287,51 @@
 }
 
 .clockRootFullscreen .topbar {
-  padding-bottom: var(--space-4);
+  position: absolute;
+  inset-block-start: max(var(--space-3), env(safe-area-inset-top));
+  right: max(var(--space-3), env(safe-area-inset-right));
+  left: max(var(--space-3), env(safe-area-inset-left));
+  z-index: 2;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding-bottom: 0;
+  border-bottom: 0;
+  pointer-events: none;
+}
+
+.clockRootFullscreen .topbar > * {
+  pointer-events: auto;
+}
+
+.clockRootFullscreen :global(.section-divider) {
+  display: none;
+}
+
+.clockRootFullscreen .stageWrapper {
+  min-height: 100%;
+  padding-block: clamp(4.5rem, 10vh, 7rem) clamp(1rem, 4vh, 2.5rem);
+}
+
+.clockRootFullscreen .centerStage {
+  min-height: 100%;
+  gap: clamp(0.75rem, 2vh, 1.25rem);
+  padding: 0;
+}
+
+.clockRootFullscreen .clockContainer {
+  max-width: min(94vw, 76rem);
+  margin-block: clamp(0.75rem, 2vh, 1.5rem);
+}
+
+.clockRootFullscreen .clockLine {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: end;
+  justify-items: center;
+  column-gap: clamp(0.25rem, 1.1vw, 0.9rem);
+}
+
+.clockRootFullscreen .unit {
+  width: 100%;
 }
 
 .clockRootFullscreen .digit {
@@ -295,7 +343,8 @@
 }
 
 .clockRootFullscreen .progressTrack {
-  max-width: 600px;
+  width: min(100%, 56rem);
+  max-width: none;
   height: 3px;
 }
 
@@ -375,5 +424,92 @@
   .toolBtn {
     min-width: var(--space-9);
     padding-inline: var(--space-2);
+  }
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  .clockRootFullscreen {
+    padding:
+      max(0.75rem, env(safe-area-inset-top))
+      max(0.75rem, env(safe-area-inset-right))
+      max(0.75rem, env(safe-area-inset-bottom))
+      max(0.75rem, env(safe-area-inset-left));
+  }
+
+  :global(.has-css-fullscreen) .clockRootFullscreen {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+
+  .clockRootFullscreen .topbar {
+    inset-block-start: max(0.75rem, env(safe-area-inset-top));
+    right: max(0.75rem, env(safe-area-inset-right));
+    left: max(0.75rem, env(safe-area-inset-left));
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  .clockRootFullscreen .locationPill {
+    grid-column: 1 / -1;
+    order: 2;
+    justify-self: center;
+    max-width: min(72vw, 28rem);
+    min-height: var(--space-8);
+  }
+
+  .clockRootFullscreen .toolBtn {
+    min-width: var(--space-9);
+    min-height: var(--space-8);
+    padding-inline: var(--space-2);
+  }
+
+  .clockRootFullscreen .btnLabel {
+    display: none;
+  }
+
+  .clockRootFullscreen .stageWrapper {
+    padding-block: clamp(3.5rem, 13vh, 4.75rem) clamp(0.25rem, 2vh, 1rem);
+  }
+
+  .clockRootFullscreen .centerStage {
+    gap: clamp(0.35rem, 1.8vh, 0.75rem);
+  }
+
+  .clockRootFullscreen .clockContainer {
+    max-width: min(92vw, 64rem);
+    margin-block: clamp(0.25rem, 1.5vh, 0.75rem);
+  }
+
+  .clockRootFullscreen .digit {
+    font-size: clamp(3.1rem, min(12vw, 30vh), 7rem);
+  }
+
+  .clockRootFullscreen .sep {
+    margin-bottom: 0.95em;
+    font-size: clamp(1.6rem, min(5vw, 16vh), 3.4rem);
+  }
+
+  .clockRootFullscreen .unitLabel,
+  .clockRootFullscreen .periodBadge,
+  .clockRootFullscreen .livePill {
+    min-height: 1.55rem;
+    height: auto;
+    padding-inline: var(--space-2);
+    font-size: clamp(0.58rem, 2.2vh, 0.75rem);
+  }
+
+  .clockRootFullscreen .progressTrack {
+    width: min(100%, 44rem);
+    margin-top: clamp(0.5rem, 2vh, 0.9rem);
+  }
+
+  .clockRootFullscreen .dateLine {
+    max-width: min(92vw, 48rem);
+    padding: var(--space-1-5) var(--space-3);
+  }
+
+  .clockRootFullscreen .dateAr,
+  .clockRootFullscreen .dateHijri {
+    font-size: clamp(0.68rem, 2.35vh, 0.86rem);
   }
 }

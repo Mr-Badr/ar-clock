@@ -987,6 +987,90 @@
     "canonicalSlug": "earth-day",
     "countryCode": "us"
   },
+  "world-diabetes-day-in-saudi": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "sa"
+  },
+  "world-diabetes-day-in-egypt": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "eg"
+  },
+  "world-diabetes-day-in-morocco": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "ma"
+  },
+  "world-diabetes-day-in-algeria": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "dz"
+  },
+  "world-diabetes-day-in-uae": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "ae"
+  },
+  "world-diabetes-day-in-tunisia": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "tn"
+  },
+  "world-diabetes-day-in-kuwait": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "kw"
+  },
+  "world-diabetes-day-in-qatar": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "qa"
+  },
+  "world-diabetes-day-in-iraq": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "iq"
+  },
+  "world-diabetes-day-in-syria": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "sy"
+  },
+  "world-diabetes-day-in-yemen": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "ye"
+  },
+  "world-diabetes-day-in-jordan": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "jo"
+  },
+  "world-diabetes-day-in-libya": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "ly"
+  },
+  "world-diabetes-day-in-oman": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "om"
+  },
+  "world-diabetes-day-in-palestine": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "ps"
+  },
+  "world-diabetes-day-in-canada": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "ca"
+  },
+  "world-diabetes-day-in-france": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "fr"
+  },
+  "world-diabetes-day-in-turkey": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "tr"
+  },
+  "world-diabetes-day-in-usa": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "us"
+  },
+  "diabetes-day": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": null
+  },
+  "world-diabetes-day-countdown": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": null
+  },
   "international-womens-day-in-morocco": {
     "canonicalSlug": "international-womens-day",
     "countryCode": "ma"

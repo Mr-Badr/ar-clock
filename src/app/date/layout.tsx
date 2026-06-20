@@ -30,7 +30,7 @@ export default function DateLayout({ children }: { children: React.ReactNode }) 
     // The root layout already sets dir="rtl" and RTL body globally
     <div className="date-feature-root">
       {children}
-      <AdMultiplex slotId="end-date-section" className="content-col" />
+      <AdMultiplex slotId="end-date-section" slotKey="multiplexDate" className="content-col" />
     </div>
   );
 }

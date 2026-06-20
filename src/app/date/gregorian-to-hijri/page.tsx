@@ -8,6 +8,7 @@ import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBre
 import DateRouteLoading from '@/components/date/DateRouteLoading';
 import { ConverterForm } from '../converter/ConverterForm';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import {
   ArrowLeftRight,
   CalendarCheck,
@@ -282,6 +283,8 @@ async function GregorianToHijriDynamicContent() {
               </div>
             </div>
           </section>
+
+          <AdTopBanner slotId="top-date-gregorian-to-hijri" slotKey="topDateBanner" />
 
           <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-label="أداة تحويل الميلادي إلى هجري">
             <div className={styles.sectionPanel}>

@@ -15,6 +15,7 @@ import { MethodComparisonTable } from '@/components/date/MethodComparisonTable';
 import { DateShareActions } from '@/components/date/DateShareActions';
 import DateRouteLoading from '@/components/date/DateRouteLoading';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { Moon, CalendarDays, ArrowLeftRight, Calendar, Star } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
@@ -349,6 +350,8 @@ async function TodayHijriDynamicContent() {
               </div>
             )}
           </section>
+
+          <AdTopBanner slotId="top-date-today-hijri" slotKey="topDateBanner" />
 
           {hijri && (
             <section className="date-detail-panel mb-6">

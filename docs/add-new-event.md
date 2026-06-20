@@ -901,6 +901,110 @@ Example:
 `notes`
 - Freeform editorial note about SERP patterns, source confidence, or SEO angle.
 
+## Mandatory Competitive Research Standard
+
+Every real event must be researched before the AI writes public copy.
+
+The AI must not generate the event from the name alone. It must first gather:
+
+- the official source for the date or date rule
+- the top 5 Arabic pages for the main Arabic query
+- the top 5 English pages for the closest English query
+- Google-style question patterns, autocomplete-style phrasing, and country-specific wording when relevant
+- at least one source that explains the event's origin, purpose, or official status
+
+Use competitor pages to understand the SERP, not to copy it.
+
+Allowed:
+- extracting headings, covered topics, missing angles, and repeated user questions
+- identifying weak Arabic explanations, thin pages, outdated dates, or missing caveats
+- learning which questions users are trying to answer
+- recording URLs and gap notes in `research.json`
+
+Not allowed:
+- copying competitor paragraphs
+- lightly paraphrasing a competitor structure section by section
+- translating English content and publishing it as original Arabic
+- using unverifiable facts because many competitors repeat them
+- writing a generic article that could fit any event by changing the event name
+
+### Competitor capture requirement
+
+For each of the 10 competitor/reference pages, add a `research.json.competitors` entry with:
+
+```json
+{
+  "site": "example.com",
+  "type": "official|arabic-competitor|english-competitor|reference",
+  "url": "https://example.com/page",
+  "focus": ["what the page answers well"],
+  "gaps": ["what our page must answer better"]
+}
+```
+
+If the AI cannot access 10 useful pages, it must say so in `research.json.notes`, keep the event drafted unless the official source and page quality are still strong, and explain the research limitation in the final response.
+
+### Superiority plan requirement
+
+Before writing `package.json`, the AI must decide how our page will beat the current results.
+
+The plan must appear in `research.json.differentiationIdeas` and should cover:
+
+- the direct answer that appears in the first 100 Arabic words
+- the exact date, countdown, and whether it is a public holiday or only an observance
+- the official date source and any uncertainty or annual theme caveat
+- what competitors failed to explain clearly
+- the difference between this event and similar events
+- practical value for the reader: school project, family planning, work calendar, content ideas, awareness participation, or travel context
+- country-specific wording when the event is shared across Arabic countries
+- the safe caveat needed for health, legal, political, financial, or humanitarian topics
+
+The public Arabic copy must make the user feel:
+
+```text
+وجدت التاريخ بسرعة، وفهمت معنى المناسبة، وعرفت هل هي إجازة أم لا، وأخذت فكرة عملية لما يمكنني فعله بهذا اليوم.
+```
+
+### Official-source hierarchy
+
+Use official sources before competitors:
+
+1. UN, UNESCO, WHO, UNICEF, UNHCR, FAO, ILO, WMO, official government, or official event organizer pages.
+2. Major institutional pages such as universities, public agencies, or international federations.
+3. Calendar/reference pages such as timeanddate or Office Holidays only to support date/status, not as the main authority when an official page exists.
+4. News or blog pages only for search intent, examples, or regional phrasing.
+
+For health-awareness events, the page must:
+
+- avoid diagnosis, treatment instructions, or personalized medical advice
+- recommend qualified professional care for personal health decisions
+- use WHO or a named health authority as a fact source when available
+- avoid fear-based or stigmatizing wording
+
+For legal, humanitarian, migration, press, or rights-related events, the page must:
+
+- stay factual and neutral
+- avoid partisan claims
+- separate date facts from interpretation
+- cite official or institutional sources for sensitive claims
+
+### Research must shape public content
+
+The AI must not leave research hidden in `research.json` only.
+
+The best findings must become visible in:
+
+- `answerSummary`
+- `quickFacts`
+- `aboutEvent`
+- `faq`
+- `seoMeta.titleTag`
+- `seoMeta.metaDescription`
+- `keywordTemplateSet.base`
+- `keywordTemplateSet.country` when the event is shared
+
+If a competitor gap is not addressed in public content, do not list it as a real gap.
+
 ## `qa.json` Structure
 
 Recommended shape:
@@ -982,6 +1086,7 @@ For strong indexing and ranking potential:
   - `seoMeta.secondaryKeywords`: usually 6 to 12 phrases
   - `seoMeta.longTailKeywords`: usually 10 to 20 phrases
   - `research.json.primaryQueries`: at least 10 real Arabic queries
+  - `research.json.competitors`: at least 10 researched pages when web access is available, ideally 5 Arabic and 5 English/reference pages
   - `research.json.keywordGaps`: at least 8 meaningful missed angles
   - `research.json.unansweredQuestions`: at least 6 real user questions
   - `research.json.factSources`: at least 3 trustworthy sources for a real event
@@ -1373,6 +1478,10 @@ If you give this file to an AI and ask it to add an event, the AI should:
    - Arabic phrasing people actually use
    - country relevance
    - factual reliability
+   - official date source
+   - top 5 Arabic competitor pages
+   - top 5 English competitor or reference pages
+   - competitor headings, strengths, weaknesses, and unanswered questions
    - likely questions users ask before and after the event
 5. Fill `core` with the right `type`, `category`, and date keys.
 6. Fill `richContent` with real Arabic content, not placeholders.
@@ -1387,41 +1496,44 @@ If you give this file to an AI and ask it to add an event, the AI should:
    - extended search phrases that match real Arabic intent
 9. Spread those phrases naturally through the public copy instead of leaving them trapped inside keyword arrays.
 10. Put the research findings into `research.json`, not only into the page copy.
-11. Write for Arabic search quality first, not keyword stuffing.
-12. Keep user-facing Arabic natural and clear for ordinary readers, not developers.
-13. Do not use raw technical labels inside public text or QA notes.
-14. If a technical field exists in JSON, that does not mean the written Arabic should mention its English or code name.
-15. Write as an Arabic editor, not as a prompt engineer, developer, or SEO checklist writer.
-16. Never describe the page itself with words like HTML, JSON, slug, schema, FAQ, canonical, Open Graph, or similar implementation terms.
-17. Make the content feel richer than common competitor pages by adding direct value, not repeated filler.
-18. If the event category is `islamic`, use `{{year}} - {{hijriYear}} هـ` in every title/description field.
-19. Keep `canonicalPath` exactly `/holidays/<slug>`.
-20. Author a single clean `faq` array only.
-21. Add real `relatedSlugs` only if those events already exist.
-22. If `relatedSlugs` is present, keep it at 4 to 6 slugs. If no strong related set exists yet, leave it empty.
-23. If the event is shared across countries, use `countryScope: "all"` and keep the canonical page country-neutral.
-24. If the event is shared across countries, do not mention a specific country by name in the base canonical copy unless the mention is truly necessary.
-25. If the event is shared across countries, add meaningful `keywordTemplateSet.country` templates for Arabic country queries.
-26. If the event belongs to one country only, set `core._countryCode` and do not write base copy as if it applies everywhere.
-27. Leave generated, runtime, export, and editorial-helper files alone.
-28. Do not create or edit anything under `src/data/holidays/generated/` or `out/holidays-delivery/`.
-29. Return only the three source files plus notes and commands.
-30. Run:
+11. Turn the best research findings into public content, not only internal notes.
+12. Write a clear superiority plan in `research.json.differentiationIdeas`.
+13. Do not copy, lightly paraphrase, or translate competitor content as page copy.
+14. Write for Arabic search quality first, not keyword stuffing.
+15. Keep user-facing Arabic natural and clear for ordinary readers, not developers.
+16. Do not use raw technical labels inside public text or QA notes.
+17. If a technical field exists in JSON, that does not mean the written Arabic should mention its English or code name.
+18. Write as an Arabic editor, not as a prompt engineer, developer, or SEO checklist writer.
+19. Never describe the page itself with words like HTML, JSON, slug, schema, FAQ, canonical, Open Graph, or similar implementation terms.
+20. Make the content feel richer than common competitor pages by adding direct value, not repeated filler.
+21. If the event category is `islamic`, use `{{year}} - {{hijriYear}} هـ` in every title/description field.
+22. Keep `canonicalPath` exactly `/holidays/<slug>`.
+23. Author a single clean `faq` array only.
+24. Add real `relatedSlugs` only if those events already exist.
+25. If `relatedSlugs` is present, keep it at 4 to 6 slugs. If no strong related set exists yet, leave it empty.
+26. If the event is shared across countries, use `countryScope: "all"` and keep the canonical page country-neutral.
+27. If the event is shared across countries, do not mention a specific country by name in the base canonical copy unless the mention is truly necessary.
+28. If the event is shared across countries, add meaningful `keywordTemplateSet.country` templates for Arabic country queries.
+29. If the event belongs to one country only, set `core._countryCode` and do not write base copy as if it applies everywhere.
+30. Leave generated, runtime, export, and editorial-helper files alone.
+31. Do not create or edit anything under `src/data/holidays/generated/` or `out/holidays-delivery/`.
+32. Return only the three source files plus notes and commands.
+33. Run:
 
 ```bash
 npm run events:build
 npm run validate:holidays:slug -- --slug <slug>
 ```
 
-31. If the content is ready, suggest this one-command path first:
+34. If the content is ready, suggest this one-command path first:
 
 ```bash
 npm run events:sync -- --slug <slug>
 ```
 
-32. Publishing should still be a human decision after review.
-33. Be explicit if the event is strong enough to go live immediately or should stay hidden for more editing.
-34. Do not ask the user to touch generated files or runtime wiring.
+35. Publishing should still be a human decision after review.
+36. Be explicit if the event is strong enough to go live immediately or should stay hidden for more editing.
+37. Do not ask the user to touch generated files or runtime wiring.
 
 ## AI Research Standard
 
@@ -1440,11 +1552,13 @@ It should infer carefully from research and mark uncertainty clearly when confid
 
 Research minimum for a real event:
 - at least 10 `primaryQueries`
-- at least 3 real `competitors` or reference pages worth learning from
+- at least 10 real `competitors` or reference pages when web access is available
+- among those, aim for 5 Arabic pages and 5 English official/reference/competitor pages
 - at least 8 `coverageMatrix` rows
 - at least 8 `keywordGaps`
 - at least 6 `unansweredQuestions`
 - at least 3 `factSources`
+- at least 5 `differentiationIdeas` that describe how our page will beat current results
 
 ## AI Output Contract
 
@@ -1460,17 +1574,22 @@ When you give this file to another AI, require it to return the result in this e
    - recommended `publishStatus`
    - keyword strategy note
    - research confidence note
-3. A folder tree.
-4. The full contents of:
+3. A competitor research summary with:
+   - official source used for the date
+   - Arabic pages reviewed
+   - English/reference pages reviewed
+   - top gaps our page fills
+4. A folder tree.
+5. The full contents of:
    - `src/data/holidays/events/<slug>/package.json`
    - `src/data/holidays/events/<slug>/research.json`
    - `src/data/holidays/events/<slug>/qa.json`
-5. Any assumptions or factual uncertainty.
-6. Exact commands to run after pasting the files:
+6. Any assumptions or factual uncertainty.
+7. Exact commands to run after pasting the files:
    - `npm run events:sync -- --slug <slug>`
    - if the user wants a check without going live: `npm run validate:holidays:slug -- --slug <slug>`
-7. Whether the event should stay hidden for more editing or can safely go live now.
-8. A short note confirming whether the event should automatically appear across shared country views or only its own country.
+8. Whether the event should stay hidden for more editing or can safely go live now.
+9. A short note confirming whether the event should automatically appear across shared country views or only its own country.
 
 The AI should return full file contents, not partial diffs.
 The AI should not return generated files, runtime-layer edits, or `out/holidays-delivery` artifacts.
@@ -1490,6 +1609,12 @@ countryCode=<... or none>
 publishStatus=<...>
 keywords=<base-only|base+country>
 researchConfidence=<high|medium|low>
+
+Competitor research:
+officialSource=<...>
+arabicPagesReviewed=<count and URLs>
+englishPagesReviewed=<count and URLs>
+topGaps=<short list>
 
 src/data/holidays/events/<slug>/
   package.json
@@ -1528,6 +1653,11 @@ Add a new holiday event called "يوم الطيبة العالمي".
 
 Requirements:
 - do deep Arabic search research before writing
+- scrape/read the top 5 Arabic pages for the main Arabic query
+- scrape/read the top 5 English official, reference, or competitor pages for the closest English query
+- record each competitor/reference URL with its strengths and gaps in research.json
+- write a superiority plan in research.json.differentiationIdeas before writing public content
+- use competitors to find gaps and user intent, never to copy or lightly paraphrase text
 - author only the source-of-truth event package
 - choose a safe canonical English slug
 - create exactly:
@@ -1537,6 +1667,8 @@ Requirements:
 - fill every important key with real Arabic content
 - make the SEO strong for Arabic Google Search
 - make the content feel like a rich Arabic editorial page, not a thin countdown page
+- make the first 100 Arabic words answer the main query directly
+- clearly answer: the date, countdown, whether it is a public holiday or an observance, and what the reader can do with the date
 - make `answerSummary` feel complete and useful, not like a one-line filler answer
 - make `aboutEvent` contain 4 clearly different sections with real depth
 - make FAQ answers begin with the answer, then add context that gives the reader extra value
@@ -1550,9 +1682,11 @@ Requirements:
 - put the actual research logic into research.json, including query patterns, competitors, keyword gaps, unanswered questions, and factual sources
 - include at least:
   - 10 primaryQueries
+  - 10 competitors/reference pages when web access is available, ideally 5 Arabic and 5 English
   - 8 coverageMatrix rows
   - 8 keyword gaps
   - 6 unanswered questions
+  - 5 differentiation ideas that explain why our page is better
   - 3 trustworthy fact sources for a real event
 - make sure the main and supporting phrases appear naturally inside the public content itself, not only inside keyword arrays
 - spread the strongest phrases across the title, summary, section headings, and FAQ in a way that still reads like natural Arabic
@@ -1569,6 +1703,8 @@ Requirements:
 - never write sentences that describe the page itself instead of helping the reader
 - make every major section add new value instead of rephrasing the same idea
 - prefer concrete Arabic phrasing that a normal reader would naturally search for, say, or understand immediately
+- for health events, avoid diagnosis, treatment instructions, or personal medical advice and include a professional-care caveat
+- for legal, humanitarian, migration, press, rights, or political-adjacent events, stay factual, neutral, and source-led
 - if the event belongs to one country only, set `core._countryCode` and keep it country-specific
 - if the event is not fully verifiable, keep it drafted and explain why
 - do not create or edit:

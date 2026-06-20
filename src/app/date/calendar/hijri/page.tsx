@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { convertDate } from '@/lib/date-adapter';
@@ -333,6 +334,8 @@ export default async function HijriCalendarRootPage() {
               </div>
             </div>
           </section>
+
+          <AdTopBanner slotId="top-date-calendar-hijri" slotKey="topDateBanner" />
 
           <section className="date-action-list date-action-list--four mb-8">
             <Link href={`/date/calendar/hijri/${currentHijriYear}`} className="date-action-link">

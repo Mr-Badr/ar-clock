@@ -32,6 +32,8 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { getRouteManualAdSlotKey, resolveManualAdSlot } from "@/lib/ads/slot-resolution";
 import { useMarketingPermission } from "@/lib/client/marketing";
 import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
 import { logger, serializeError } from "@/lib/logger";
@@ -39,15 +41,20 @@ import { logger, serializeError } from "@/lib/logger";
 interface AdTopBannerProps {
   /** Unique ID per page to prevent AdSense slot conflicts */
   slotId?: string;
+  /** Optional family-specific slot key, falls back to topBanner. */
+  slotKey?: string;
   className?: string;
 }
 
 export default function AdTopBanner({
   slotId = "top-banner",
+  slotKey,
   className = "",
 }: AdTopBannerProps) {
   const { clientId, manualSlots } = useAdsRuntimeConfig();
-  const adSlot = manualSlots.topBanner || "";
+  const pathname = usePathname();
+  const preferredSlotKey = slotKey || getRouteManualAdSlotKey(pathname || "/", "topBanner");
+  const adSlot = resolveManualAdSlot(manualSlots, preferredSlotKey, "topBanner");
   const shouldRenderAds = Boolean(clientId && adSlot);
   const canLoadAds = useMarketingPermission(shouldRenderAds);
   const ref = useRef<HTMLDivElement>(null);

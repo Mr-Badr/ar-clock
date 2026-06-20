@@ -257,7 +257,7 @@
 
 
   /* ──────────────────────────────────────────────────────────────────────────
-     IN-ARTICLE AD (MPU 300×250)
+     IN-ARTICLE AD (FLUID NATIVE)
      
      WHERE: Between major page sections, never inside a section.
      
@@ -276,20 +276,18 @@
      ────────────────────────────────────────────────────────────────────────── */
   .ad-slot--in-article {
     width: 100%;
-    /* 300:250 aspect ratio preserves space on all screen widths */
-    aspect-ratio: 300 / 250;
     min-height: 250px;
-    max-width: 336px;
-    /* max MPU width */
+    max-width: 720px;
     margin-inline: auto;
-    /* center within content-col */
     margin-block: var(--space-16);
-    /* 64px breathing room above/below */
     border-radius: var(--radius-lg);
     overflow: hidden;
-    /* Defer off-screen rendering for better LCP on long pages */
     content-visibility: auto;
-    contain-intrinsic-size: 0 250px;
+    contain-intrinsic-size: 0 280px;
+  }
+
+  .ad-slot--in-article > .adsbygoogle {
+    min-height: 250px;
   }
 
 

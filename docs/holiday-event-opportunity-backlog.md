@@ -53,11 +53,10 @@ This backlog focuses on gaps that are stable enough to publish once and keep acc
 
 Difficulty is not a guarantee. "Easy" means the intent is narrow, the Arabic SERP is likely thin, or existing results are mostly generic calendars/news.
 
-## Top 20 Stable Event Opportunities
+## Remaining Stable Event Opportunities
 
 | Priority | Event opportunity | Scope | Suggested slug | Fixed date | Why it can win | Demand | Gap | Fit | Difficulty | Build action |
 |---:|---|---|---|---|---|---:|---:|---:|---|---|
-| 1 | اليوم العالمي للسكري | Global | `world-diabetes-day` | 14 November | High health-awareness traffic. Needs careful WHO/IDF sourcing and no medical advice. | 4 | 4 | 3 | Medium | New global day with health caveat |
 | 2 | اليوم العالمي للسرطان | Global | `world-cancer-day` | 4 February | Strong awareness demand. Publish only with sourced, non-diagnostic language and clear professional-care caveat. | 4 | 4 | 3 | Medium | New global day with health caveat |
 | 3 | اليوم العالمي للمياه | Global | `world-water-day` | 22 March | UN source, school projects, awareness copy, and environmental education. Good evergreen potential. | 3 | 4 | 4 | Easy-Medium | New global day |
 | 4 | اليوم العالمي للغذاء | Global | `world-food-day` | 16 October | FAO source and school/awareness demand. Strong opportunity for date, meaning, and practical food-waste tips. | 3 | 4 | 4 | Easy-Medium | New global day |
@@ -66,6 +65,17 @@ Difficulty is not a guarantee. "Easy" means the intent is narrow, the Arabic SER
 | 7 | اليوم الدولي للشباب | Global | `international-youth-day` | 12 August | UN source and youth-focused content demand. Good fit for date, ideas, captions, and school/community activities. | 3 | 4 | 4 | Easy-Medium | New global day |
 | 8 | يوم السياحة العالمي | Global | `world-tourism-day` | 27 September | UN Tourism source, travel/country intent, and strong Arabic commercial-adjacent demand. | 3 | 4 | 4 | Medium | New global day |
 | 9 | اليوم العالمي للقهوة | Global | `international-coffee-day` | 1 October | Commercially friendly, high social/share demand, and broad Arabic interest. Verify source and avoid thin quote-style content. | 3 | 4 | 4 | Medium | New global day |
+| 10 | اليوم العالمي للإيدز | Global | `world-aids-day` | 1 December | WHO source and strong awareness demand. Must be careful, stigma-free, and never medical-diagnostic. | 4 | 4 | 3 | Medium | New global day with health caveat |
+| 11 | اليوم العالمي للامتناع عن التبغ | Global | `world-no-tobacco-day` | 31 May | WHO source, high public-health awareness demand, and strong school/social campaign intent. Avoid personal medical advice. | 4 | 4 | 3 | Medium | New global day with health caveat |
+| 12 | اليوم العالمي للقلب | Global | `world-heart-day` | 29 September | Strong health-awareness and social campaign traffic. Good fit for date, countdown, warning caveats, and practical non-diagnostic guidance. | 4 | 4 | 3 | Medium | New global day with health caveat |
+| 13 | اليوم العالمي للاجئين | Global | `world-refugee-day` | 20 June | UNHCR source and high MENA relevance. Arabic pages often miss the difference between refugee, migrant, and asylum seeker. | 4 | 4 | 4 | Medium | New global day |
+| 14 | اليوم العالمي للأشخاص ذوي الإعاقة | Global | `international-day-of-persons-with-disabilities` | 3 December | UN observance with broad school, awareness, inclusion, and rights intent. Needs respectful Arabic terminology. | 3 | 4 | 4 | Easy-Medium | New global day |
+| 15 | اليوم العالمي لكبار السن | Global | `international-day-of-older-persons` | 1 October | UN observance with family, care, dignity, and social-awareness intent. Useful for Arabic family-centered content. | 3 | 4 | 4 | Easy-Medium | New global day |
+| 16 | اليوم الدولي للمهاجرين | Global | `international-migrants-day` | 18 December | UN observance and strong regional relevance. Can win by explaining migrant/refugee/expat wording clearly. | 3 | 4 | 4 | Medium | New global day |
+| 17 | اليوم العالمي للكتاب وحقوق المؤلف | Global | `world-book-and-copyright-day` | 23 April | UNESCO source, school/library/search demand, and Rabat 2026 relevance. Good fit for Arabic reading ideas and copyright explanation. | 3 | 4 | 4 | Easy-Medium | New global day |
+| 18 | اليوم العالمي لمحو الأمية | Global | `international-literacy-day` | 8 September | UNESCO source, education and school-project intent, and strong Arabic social value. Can include literacy facts and action ideas. | 3 | 4 | 4 | Easy-Medium | New global day |
+| 19 | اليوم العالمي لحرية الصحافة | Global | `world-press-freedom-day` | 3 May | UNESCO source and journalism/media intent. Needs neutral, factual, non-political writing with clear history and purpose. | 3 | 3 | 3 | Medium | New global day |
+| 20 | اليوم العالمي للتطوع | Global | `international-volunteer-day` | 5 December | UN observance with school, NGO, youth, and community-service demand. Strong fit for practical activity ideas. | 3 | 4 | 4 | Easy-Medium | New global day |
 
 ## Excluded From This Stable Backlog
 
@@ -110,7 +120,9 @@ Before building any item from this list, run the premium playbook:
 ```text
 Follow docs/holiday-event-premium-content-playbook.md.
 Use top 5 Arabic and top 5 English results.
-Verify official sources.
+Scrape and read the competitor pages for structure, gaps, missing questions, and user intent.
+Do not copy or lightly paraphrase competitor text.
+Verify official sources before writing any factual claim.
 Create only package.json, research.json, qa.json.
 Run events:build, validate:holidays:slug, seo:validate, test:unit, and build.
 ```
@@ -123,6 +135,14 @@ For fixed events whose public vacation may be moved, keep `dateRule` fixed and e
 - [Egypt Presidency national holidays 2026](https://www.presidency.eg/en/%D9%85%D8%B5%D8%B1/%D8%A7%D9%84%D8%B9%D8%B7%D9%84%D8%A7%D8%AA-%D8%A7%D9%84%D8%B1%D8%B3%D9%85%D9%8A%D8%A9/) confirms Egyptian public holidays such as 25 January and Sinai Liberation Day.
 - [UNICEF World Children's Day](https://www.unicef.org/world-childrens-day) confirms World Children's Day on 20 November and provides an Arabic version.
 - [WHO World Mental Health Day](https://www.who.int/campaigns/world-mental-health-day) confirms World Mental Health Day on 10 October.
+- [WHO World AIDS Day](https://www.who.int/campaigns/world-aids-day) confirms World AIDS Day on 1 December.
+- [WHO World No Tobacco Day](https://www.who.int/campaigns/world-no-tobacco-day) confirms World No Tobacco Day on 31 May.
 - [UNEP World Environment Day](https://www.worldenvironmentday.global/) confirms World Environment Day on 5 June.
 - [UNESCO International Day of Education](https://www.unesco.org/en/days/education) confirms International Day of Education on 24 January.
+- [UNHCR World Refugee Day](https://www.unhcr.org/world-refugee-day) confirms World Refugee Day on 20 June.
+- [UNESCO World Book and Copyright Day](https://www.unesco.org/en/days/world-book-and-copyright) confirms World Book and Copyright Day on 23 April.
+- [UNESCO International Literacy Day](https://www.unesco.org/en/days/literacy) confirms International Literacy Day on 8 September.
+- [UNESCO World Press Freedom Day](https://www.unesco.org/en/days/press-freedom) confirms World Press Freedom Day on 3 May.
+- [World Heart Federation World Heart Day](https://world-heart-federation.org/world-heart-day/) confirms World Heart Day on 29 September.
+- UN observance pages confirm stable dates for International Day of Persons with Disabilities, International Day of Older Persons, International Migrants Day, and International Volunteer Day.
 - UN observance pages confirm stable dates for World Water Day, World Food Day, Human Rights Day, International Day of Peace, and International Youth Day.

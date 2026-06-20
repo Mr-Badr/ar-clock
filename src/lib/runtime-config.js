@@ -59,17 +59,7 @@ export function getServerAdsConfig() {
     false,
   );
   const manualSlots = getManualAdsConfig();
-  const hasManualPlacements = Boolean(
-    manualSlots.topBanner
-    || manualSlots.inArticle
-    || manualSlots.inFeed
-    || manualSlots.eventsFeedHorizontal
-    || manualSlots.multiplex
-    || manualSlots.stickyAnchor
-    || manualSlots.sidebar
-    || manualSlots.sidebarRight
-    || manualSlots.sidebarLeft,
-  );
+  const hasManualPlacements = Object.values(manualSlots).some(Boolean);
   const enabled = Boolean(clientId) && certifiedCmpEnabled;
 
   return {

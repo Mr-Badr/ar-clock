@@ -5,6 +5,7 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { HijriYearlyCalendar } from '@/components/date/HijriYearlyCalendar';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { Calendar } from 'lucide-react';
 import { convertDate, getHijriMonthDays } from '@/lib/date-adapter';
 import { GREGORIAN_MONTHS_AR, HIJRI_MONTHS_AR } from '@/lib/constants';
@@ -423,6 +424,8 @@ export default async function HijriCalendarPage({
               </div>
             </aside>
           </section>
+
+          <AdTopBanner slotId={`top-date-calendar-hijri-${year}`} slotKey="topDateBanner" />
 
           <section className="date-stat-grid mb-8">
             {[

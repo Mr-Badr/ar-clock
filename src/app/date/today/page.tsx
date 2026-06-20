@@ -18,6 +18,7 @@ import {
 } from '@/components/date/DateEditorialSections';
 import TodayClientHydration from './TodayClientHydration'; // Force TS Server refresh
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { Moon, CalendarDays, ArrowLeftRight } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
@@ -326,6 +327,8 @@ async function TodayDynamicContent() {
               </section>
             </div>
           </section>
+
+          <AdTopBanner slotId="top-date-today" slotKey="topDateBanner" />
 
           <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-label="مؤشرات تاريخ اليوم">
             <div className={styles.metricGrid}>

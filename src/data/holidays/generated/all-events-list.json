@@ -499,6 +499,15 @@
     "day": 22
   },
   {
+    "id": "world-diabetes-day",
+    "slug": "world-diabetes-day",
+    "name": "اليوم العالمي للسكري",
+    "type": "fixed",
+    "category": "social",
+    "month": 11,
+    "day": 14
+  },
+  {
     "id": "international-womens-day",
     "slug": "international-womens-day",
     "name": "اليوم الدولي للمرأة",

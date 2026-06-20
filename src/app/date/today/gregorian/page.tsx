@@ -18,6 +18,7 @@ import {
 } from '@/components/date/DateEditorialSections';
 import DateRouteLoading from '@/components/date/DateRouteLoading';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { Moon, ArrowLeftRight, CalendarDays } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
@@ -357,6 +358,8 @@ async function TodayGregorianDynamicContent() {
               </div>
             </div>
           </section>
+
+          <AdTopBanner slotId="top-date-today-gregorian" slotKey="topDateBanner" />
 
           <section className="date-stat-grid mb-6">
             {[

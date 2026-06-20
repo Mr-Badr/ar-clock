@@ -14,6 +14,7 @@ import HolidaysClient from './HolidaysClient';
 import { getCachedNowIso } from '@/lib/date-utils';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdMultiplex from '@/components/ads/AdMultiplex';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import HolidaysSections from '@/components/holidays/index';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
@@ -285,6 +286,7 @@ export default async function HolidaysPage() {
               <span>التصفية تعمل بدون مغادرة الصفحة</span>
             </div>
           </div>
+          <AdTopBanner slotId="top-holidays-list" />
           <HolidaysClient
             initialEvents={defaultData.events}
             initialNextCursor={defaultData.nextCursor}

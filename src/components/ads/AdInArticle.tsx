@@ -1,15 +1,10 @@
 "use client";
 
 /**
- * AdInArticle — Medium Rectangle MPU  (v2 — aspect-ratio CLS fix)
+ * AdInArticle — Fluid native unit between editorial sections
  * ─────────────────────────────────────────────────────────────────────────────
- * SIZE:    300×250 — highest eCPM unit industry-wide. Max width 336px.
- *          Centered in content column.
- *
- * v2 CHANGE: Uses `aspect-ratio: 300/250` in CSS (instead of only min-height).
- *   aspect-ratio is more reliable for CLS prevention on fluid-width containers.
- *   The CSS also adds `content-visibility: auto` for render performance on
- *   long pages with multiple sections.
+ * SIZE:    Responsive width with variable height, controlled by AdSense.
+ *          The CSS reserves a stable minimum before the creative loads.
  *
  * WHERE TO USE — BETWEEN major content sections, never inside them:
  *
@@ -34,21 +29,27 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { getRouteManualAdSlotKey, resolveManualAdSlot } from "@/lib/ads/slot-resolution";
 import { useMarketingPermission } from "@/lib/client/marketing";
 import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
 import { logger, serializeError } from "@/lib/logger";
 
 interface AdInArticleProps {
   slotId?: string;
+  slotKey?: string;
   className?: string;
 }
 
 export default function AdInArticle({
   slotId = "in-article",
+  slotKey,
   className = "",
 }: AdInArticleProps) {
   const { clientId, manualSlots } = useAdsRuntimeConfig();
-  const adSlot = manualSlots.inArticle || "";
+  const pathname = usePathname();
+  const preferredSlotKey = slotKey || getRouteManualAdSlotKey(pathname || "/", "inArticle");
+  const adSlot = resolveManualAdSlot(manualSlots, preferredSlotKey, "inArticle");
   const shouldRenderAds = Boolean(clientId && adSlot);
   const canLoadAds = useMarketingPermission(shouldRenderAds);
   const ref = useRef<HTMLDivElement>(null);
@@ -100,11 +101,11 @@ export default function AdInArticle({
       <span className="ad-slot__label">إعلان</span>
       <ins
         className="adsbygoogle"
-        style={{ display: "block" }}
+        style={{ display: "block", textAlign: "center" }}
         data-ad-client={clientId || undefined}
         data-ad-slot={adSlot}
-        data-ad-format="auto"
-        data-full-width-responsive="true"
+        data-ad-layout="in-article"
+        data-ad-format="fluid"
       />
     </div>
   );

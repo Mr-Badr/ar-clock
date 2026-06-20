@@ -19,6 +19,7 @@ import {
   type DateInsightItem,
 } from '@/components/date/DateEditorialSections';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { CalendarDays, ArrowLeftRight, Calendar } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
@@ -354,6 +355,8 @@ export default async function ProgrammaticHijriDatePage({
               </div>
             </aside>
           </section>
+
+          <AdTopBanner slotId={`top-date-hijri-${year}-${month}-${day}`} slotKey="topDateBanner" />
 
           {/* SHARE */}
           <section className="mb-8">

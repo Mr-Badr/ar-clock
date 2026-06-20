@@ -7,6 +7,7 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import DateRouteLoading from '@/components/date/DateRouteLoading';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { ArrowLeftRight, Calendar, CalendarDays, Globe2, Moon } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
@@ -297,6 +298,8 @@ async function DateHubDynamicContent() {
               </section>
             </div>
           </section>
+
+          <AdTopBanner slotId="top-date-hub" slotKey="topDateBanner" />
 
           <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="date-tools-heading">
             <div className={`${styles.sectionPanel} ${styles.decisionPanel}`}>

@@ -16,6 +16,7 @@ import DateRouteLoading from '@/components/date/DateRouteLoading';
 import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdInArticle from '@/components/ads/AdInArticle';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import { Calendar, Clock, ArrowLeftRight, type LucideIcon } from 'lucide-react';
 import styles from '@/app/date/DateRoutePage.module.css';
@@ -731,6 +732,8 @@ async function CountryDateDynamicContent({
             </aside>
           </section>
 
+          <AdTopBanner slotId={`top-date-country-${countrySlug}`} slotKey="topDateBanner" />
+
           <section className="date-detail-panel mb-8" aria-label="مشاركة تاريخ اليوم في الدولة">
               <ErrorBoundary name="DateCountryShareActions">
                 <DateShareActions
@@ -871,7 +874,7 @@ async function CountryDateDynamicContent({
             <SiteTrustPanel panel="date" />
           </section>
 
-          <AdInArticle slotId={`mid-date-country-${countrySlug}-1`} />
+          <AdInArticle slotId={`mid-date-country-${countrySlug}-1`} slotKey="inArticleDate" />
 
           <section className="related-links mb-8" dir="rtl" aria-labelledby="country-date-sources-heading">
             <p id="country-date-sources-heading" className="related-links__heading">

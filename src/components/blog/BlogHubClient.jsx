@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useDeferredValue, useState } from 'react';
+import { Fragment, useDeferredValue, useState } from 'react';
 import {
   ArrowLeft,
   BookOpenText,
@@ -15,6 +15,8 @@ import {
   X,
 } from 'lucide-react';
 
+import AdInFeed from '@/components/ads/AdInFeed';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import styles from './BlogHubClient.module.css';
 
 const READING_COMPASS = [
@@ -406,6 +408,8 @@ export default function BlogHubClient(props) {
         </div>
       </section>
 
+      <AdTopBanner slotId="top-blog-hub" slotKey="topBlogBanner" />
+
       <section className={styles.readingCompass} aria-labelledby="blog-compass-title">
         <div className={styles.compassHeader}>
           <span className={styles.sideEyebrow}>
@@ -564,42 +568,46 @@ export default function BlogHubClient(props) {
 
           {hasSearchResults ? (
             <div className={styles.articleGrid}>
-              {listArticles.map((article) => (
-                <Link
-                  key={article.href}
-                  href={article.href}
-                  className={styles.articleCard}
-                  style={{ '--collection-accent': article.collectionAccent }}
-                >
-                  <div className={styles.articleCardTop}>
-                    <span className={styles.articleCollection}>{article.collectionTitle}</span>
-                    <span className={styles.articleArrow}>
-                      <ArrowLeft size={16} />
-                    </span>
-                  </div>
-                  <div className={styles.articleCardBody}>
-                    <h4>{article.title}</h4>
-                    <p>{article.description}</p>
-                    {article.summaryValue ? (
-                      <span className={styles.articleCardExcerpt}>{article.summaryValue}</span>
-                    ) : null}
-                  </div>
-                  <div className={styles.articleMetaRow}>
-                    {buildArticleMeta(article).map((metaItem) => (
-                      <span
-                        key={`${article.href}-${metaItem.id}`}
-                        className={`${styles.articleMetaChip} ${getArticleMetaToneClass(metaItem.tone)}`}
-                      >
-                        <span>{metaItem.label}</span>
-                        <strong>{metaItem.value}</strong>
+              {listArticles.map((article, index) => (
+                <Fragment key={article.href}>
+                  <Link
+                    href={article.href}
+                    className={styles.articleCard}
+                    style={{ '--collection-accent': article.collectionAccent }}
+                  >
+                    <div className={styles.articleCardTop}>
+                      <span className={styles.articleCollection}>{article.collectionTitle}</span>
+                      <span className={styles.articleArrow}>
+                        <ArrowLeft size={16} />
                       </span>
-                    ))}
-                  </div>
-                  <span className={styles.articleCardFooter}>
-                    افتح المقال
-                    <ArrowLeft size={15} />
-                  </span>
-                </Link>
+                    </div>
+                    <div className={styles.articleCardBody}>
+                      <h4>{article.title}</h4>
+                      <p>{article.description}</p>
+                      {article.summaryValue ? (
+                        <span className={styles.articleCardExcerpt}>{article.summaryValue}</span>
+                      ) : null}
+                    </div>
+                    <div className={styles.articleMetaRow}>
+                      {buildArticleMeta(article).map((metaItem) => (
+                        <span
+                          key={`${article.href}-${metaItem.id}`}
+                          className={`${styles.articleMetaChip} ${getArticleMetaToneClass(metaItem.tone)}`}
+                        >
+                          <span>{metaItem.label}</span>
+                          <strong>{metaItem.value}</strong>
+                        </span>
+                      ))}
+                    </div>
+                    <span className={styles.articleCardFooter}>
+                      افتح المقال
+                      <ArrowLeft size={15} />
+                    </span>
+                  </Link>
+                  {(index + 1) % 4 === 0 ? (
+                    <AdInFeed slotId={`blog-list-in-feed-${Math.floor(index / 4) + 1}`} slotKey="inFeedBlog" />
+                  ) : null}
+                </Fragment>
               ))}
             </div>
           ) : (

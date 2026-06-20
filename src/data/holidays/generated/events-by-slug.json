@@ -498,6 +498,15 @@
     "month": 4,
     "day": 22
   },
+  "world-diabetes-day": {
+    "id": "world-diabetes-day",
+    "slug": "world-diabetes-day",
+    "name": "اليوم العالمي للسكري",
+    "type": "fixed",
+    "category": "social",
+    "month": 11,
+    "day": 14
+  },
   "international-womens-day": {
     "id": "international-womens-day",
     "slug": "international-womens-day",

@@ -19,34 +19,40 @@
  *     <React.Fragment key={country.slug}>
  *       <CountryCard country={country} />
  *       {(i + 1) % 6 === 0 && (
- *         <AdInFeed slotId={`feed-${Math.floor(i / 6)}`} />
+ *         <AdInFeed slotId={`feed-${Math.floor(i / 4)}`} />
  *       )}
  *     </React.Fragment>
  *   ))}
  *
  * RULES:
- *   ✅ First ad after item index 5 minimum (not index 0, 1, 2...)
- *   ✅ Max 1 ad per 5 real items (Google policy)
+ *   ✅ First ad after at least four real feed items
+ *   ✅ Keep at least four real content items between native ads
  *   ✅ Aligns with the feed rhythm while staying visually marked as an ad
  *   ❌ Never inject two consecutive AdInFeed
  */
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { getRouteManualAdSlotKey, resolveManualAdSlot } from "@/lib/ads/slot-resolution";
 import { useMarketingPermission } from "@/lib/client/marketing";
 import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
 import { logger, serializeError } from "@/lib/logger";
 
 interface AdInFeedProps {
   slotId?: string;
+  slotKey?: string;
   className?: string;
 }
 
 export default function AdInFeed({
   slotId = "in-feed",
+  slotKey,
   className = "",
 }: AdInFeedProps) {
   const { clientId, manualSlots } = useAdsRuntimeConfig();
-  const adSlot = manualSlots.inFeed || "";
+  const pathname = usePathname();
+  const preferredSlotKey = slotKey || getRouteManualAdSlotKey(pathname || "/", "inFeed");
+  const adSlot = resolveManualAdSlot(manualSlots, preferredSlotKey, "inFeed");
   const shouldRenderAds = Boolean(clientId && adSlot);
   const canLoadAds = useMarketingPermission(shouldRenderAds);
   const ref = useRef<HTMLDivElement>(null);

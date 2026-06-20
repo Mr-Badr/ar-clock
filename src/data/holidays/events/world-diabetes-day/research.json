@@ -1,0 +1,269 @@
+{
+  "slug": "world-diabetes-day",
+  "locale": "ar",
+  "capturedAt": "2026-06-19T00:00:00.000Z",
+  "primaryQueries": [
+    "متى اليوم العالمي للسكري {{year}}",
+    "كم باقي على اليوم العالمي للسكري {{year}}",
+    "موعد اليوم العالمي للسكري {{year}}",
+    "اليوم العالمي للسكري {{year}}",
+    "14 نوفمبر اليوم العالمي للسكري",
+    "شعار اليوم العالمي للسكري {{year}}",
+    "موضوع اليوم العالمي للسكري {{year}}",
+    "هل اليوم العالمي للسكري إجازة رسمية",
+    "أنشطة اليوم العالمي للسكري",
+    "اليوم العالمي للسكري في المدارس",
+    "ما هو اليوم العالمي للسكري",
+    "من ينظم اليوم العالمي للسكري"
+  ],
+  "competitors": [
+    {
+      "site": "worlddiabetesday.org",
+      "type": "official",
+      "url": "https://worlddiabetesday.org/about-wdd/",
+      "focus": [
+        "14 November fixed date",
+        "IDF and WHO origin",
+        "UN recognition",
+        "global campaign scale"
+      ],
+      "gaps": [
+        "لا يخاطب الباحث العربي مباشرة",
+        "لا يقدم عداداً أو صياغة كم باقي",
+        "لا يشرح سؤال الإجازة للمدارس والعمل"
+      ]
+    },
+    {
+      "site": "worlddiabetesday.org",
+      "type": "official",
+      "url": "https://worlddiabetesday.org/",
+      "focus": [
+        "current campaign focus",
+        "early action",
+        "global figures and participation"
+      ],
+      "gaps": [
+        "صفحة حملة أكثر من كونها صفحة موعد",
+        "لا تفصل بين التاريخ الثابت والموضوع السنوي",
+        "تحتاج تبسيطاً عربياً للقارئ العام"
+      ]
+    },
+    {
+      "site": "who.int",
+      "type": "official",
+      "url": "https://www.who.int/campaigns/world-diabetes-day",
+      "focus": [
+        "WHO recognition",
+        "established in 1991",
+        "official UN day in 2006"
+      ],
+      "gaps": [
+        "لا توجد نسخة عربية واضحة من صفحة الحملة في نتيجة البحث",
+        "لا تقدم أفكار مشاركة عملية",
+        "لا تخدم نية العد التنازلي"
+      ]
+    },
+    {
+      "site": "worlddiabetesday.org",
+      "type": "official-reference",
+      "url": "https://worlddiabetesday.org/t2d-risk-test/",
+      "focus": [
+        "type 2 diabetes risk awareness",
+        "risk test available in Arabic",
+        "early action"
+      ],
+      "gaps": [
+        "أداة منفصلة وليست صفحة عن الموعد",
+        "قد تُفهم خطأً كبديل عن تقييم طبي إذا لم نشرح الحدود",
+        "لا تغطي تاريخ المناسبة"
+      ]
+    },
+    {
+      "site": "worlddiabetesday.org",
+      "type": "official-reference",
+      "url": "https://worlddiabetesday.org/understanding-diabetes/",
+      "focus": [
+        "understanding diabetes",
+        "free courses",
+        "education for people and carers"
+      ],
+      "gaps": [
+        "لا تقدم جواب متى اليوم العالمي للسكري",
+        "لا تحتوي سياق عربي تحريري",
+        "ليست مهيأة لسؤال هل هو إجازة أو لا"
+      ]
+    },
+    {
+      "site": "en.wikipedia.org",
+      "type": "english-reference",
+      "url": "https://en.wikipedia.org/wiki/World_Diabetes_Day",
+      "focus": [
+        "history overview",
+        "14 November",
+        "Banting and insulin",
+        "past themes"
+      ],
+      "gaps": [
+        "ليس مصدراً رسمياً رئيسياً",
+        "لا يخدم نية العد التنازلي",
+        "لا يقدم توجيهاً آمناً للنشر الصحي"
+      ]
+    },
+    {
+      "site": "verywellhealth.com",
+      "type": "english-competitor",
+      "url": "https://www.verywellhealth.com/diabetes-awareness-month-6888943",
+      "focus": [
+        "Diabetes Awareness Month",
+        "ways to get involved",
+        "World Diabetes Day mention"
+      ],
+      "gaps": [
+        "يركز على شهر التوعية أكثر من يوم 14 نوفمبر",
+        "موجه لجمهور أمريكي",
+        "لا يجيب عن الموعد بالعربية"
+      ]
+    },
+    {
+      "site": "economictimes.indiatimes.com",
+      "type": "english-competitor",
+      "url": "https://m.economictimes.com/news/new-updates/world-diabetes-day-2025-morning-habits-that-can-help-you-control-blood-sugar-levels-naturally/articleshow/125296557.cms",
+      "focus": [
+        "World Diabetes Day 2025",
+        "lifestyle habits",
+        "blood sugar control"
+      ],
+      "gaps": [
+        "يتجه إلى نصائح صحية قد تبدو علاجية",
+        "لا يصلح كمرجع ثابت للتاريخ",
+        "لا يفصل بين التوعية العامة والاستشارة الطبية"
+      ]
+    },
+    {
+      "site": "timesofindia.indiatimes.com",
+      "type": "english-competitor",
+      "url": "https://timesofindia.indiatimes.com/life-style/health-fitness/health-news/world-diabetes-day-2025-the-link-between-diabetes-and-heart-health-that-is-commonly-overlooked/articleshow/125303127.cms",
+      "focus": [
+        "diabetes and heart health",
+        "World Diabetes Day 2025",
+        "complication awareness"
+      ],
+      "gaps": [
+        "موضوع صحي فرعي لا يجيب عن صفحة مناسبة عامة",
+        "قد يرفع القلق من دون توجيه واضح",
+        "لا يقدم عداداً أو سياقاً عربياً"
+      ]
+    },
+    {
+      "site": "Arabic web search",
+      "type": "arabic-competitor-limited",
+      "url": "https://www.google.com/search?q=%D8%A7%D9%84%D9%8A%D9%88%D9%85+%D8%A7%D9%84%D8%B9%D8%A7%D9%84%D9%85%D9%8A+%D9%84%D9%84%D8%B3%D9%83%D8%B1%D9%8A",
+      "focus": [
+        "Arabic query pattern",
+        "date and awareness intent",
+        "school and social content angle"
+      ],
+      "gaps": [
+        "أداة البحث المتاحة لم تُرجع صفحات عربية كافية قابلة للفتح",
+        "لذلك عُوضت الفجوة بمصادر رسمية وبنية محتوى عربية أصلية",
+        "يجب تحديث هذا الجزء إذا توفرت نتائج عربية مباشرة لاحقاً"
+      ]
+    }
+  ],
+  "coverageMatrix": [
+    {
+      "keyword": "متى اليوم العالمي للسكري {{year}}",
+      "whyItMatters": "النية الأساسية لمعرفة التاريخ بسرعة."
+    },
+    {
+      "keyword": "كم باقي على اليوم العالمي للسكري {{year}}",
+      "whyItMatters": "نية مناسبة جداً لصفحات ميقاتنا لأنها تجمع الموعد والعداد."
+    },
+    {
+      "keyword": "موعد اليوم العالمي للسكري {{year}}",
+      "whyItMatters": "صيغة عربية عامة يستخدمها الباحث قبل المناسبة."
+    },
+    {
+      "keyword": "14 نوفمبر اليوم العالمي للسكري",
+      "whyItMatters": "تثبت التاريخ الثابت وتربطه بسبب الاختيار."
+    },
+    {
+      "keyword": "هل اليوم العالمي للسكري إجازة رسمية",
+      "whyItMatters": "تمنع سوء فهم شائع حول أيام التوعية العالمية."
+    },
+    {
+      "keyword": "شعار اليوم العالمي للسكري {{year}}",
+      "whyItMatters": "نية موسمية مهمة للمدارس والمؤسسات والحسابات الاجتماعية."
+    },
+    {
+      "keyword": "أنشطة اليوم العالمي للسكري",
+      "whyItMatters": "تحول الصفحة من عداد فقط إلى صفحة عملية قابلة للاستخدام."
+    },
+    {
+      "keyword": "اليوم العالمي للسكري في المدارس",
+      "whyItMatters": "نية عربية تعليمية متوقعة قبل 14 نوفمبر."
+    },
+    {
+      "keyword": "ما معنى الدائرة الزرقاء للسكري",
+      "whyItMatters": "تضيف شرحاً بصرياً لا تجيب عنه صفحات العدادات."
+    },
+    {
+      "keyword": "توعية صحية آمنة عن السكري",
+      "whyItMatters": "تدعم الثقة وتمنع الانزلاق إلى نصائح علاجية غير مسؤولة."
+    }
+  ],
+  "keywordGaps": [
+    "كم باقي على اليوم العالمي للسكري {{year}}",
+    "هل اليوم العالمي للسكري إجازة رسمية",
+    "لماذا 14 نوفمبر هو اليوم العالمي للسكري",
+    "شعار اليوم العالمي للسكري {{year}}",
+    "أنشطة اليوم العالمي للسكري في المدارس",
+    "الفرق بين التوعية والنصيحة الطبية",
+    "ما معنى الدائرة الزرقاء للسكري",
+    "كيف ندعم من يعيش مع السكري بلا وصم",
+    "مصدر IDF الرسمي للحملة",
+    "متى اليوم العالمي للسكري {{nextYear}}"
+  ],
+  "unansweredQuestions": [
+    "متى اليوم العالمي للسكري {{year}}؟",
+    "كم باقي على اليوم العالمي للسكري؟",
+    "لماذا اختير 14 نوفمبر؟",
+    "هل اليوم العالمي للسكري إجازة رسمية؟",
+    "من يحدد شعار اليوم العالمي للسكري؟",
+    "كيف أشارك في اليوم من دون نشر معلومات طبية خاطئة؟",
+    "ما أفضل نشاط مدرسي عن السكري؟",
+    "هل يجوز نشر وصفات أو حميات لمرضى السكري؟"
+  ],
+  "differentiationIdeas": [
+    "نبدأ بإجابة مباشرة عن الموعد والعداد في أول فقرة، وهي فجوة لا تغطيها المصادر الرسمية.",
+    "نشرح أن 14 نوفمبر ثابت، بينما موضوع الحملة قد يتغير، حتى لا يستخدم القارئ شعاراً قديماً.",
+    "نجيب بوضوح عن سؤال الإجازة الرسمية لأن كثيراً من أيام التوعية تلتبس على المستخدمين.",
+    "نضيف حدوداً صحية آمنة: لا تشخيص، لا علاج، لا جرعات، ولا وعود بخفض السكر.",
+    "نحول المناسبة إلى خطوات عملية للمدرسة والعمل والمحتوى الاجتماعي بدلاً من تعريف عام فقط.",
+    "نشرح الدائرة الزرقاء واللغة غير الوصمية حتى تكون المشاركة محترمة لمن يعيشون مع السكري.",
+    "نربط المصادر الرسمية IDF وWHO بكتابة عربية سهلة لا تشبه الترجمة الحرفية."
+  ],
+  "factSources": [
+    {
+      "label": "World Diabetes Day: About WDD",
+      "url": "https://worlddiabetesday.org/about-wdd/"
+    },
+    {
+      "label": "World Diabetes Day: campaign homepage",
+      "url": "https://worlddiabetesday.org/"
+    },
+    {
+      "label": "WHO: World Diabetes Day",
+      "url": "https://www.who.int/campaigns/world-diabetes-day"
+    },
+    {
+      "label": "World Diabetes Day: type 2 diabetes risk test",
+      "url": "https://worlddiabetesday.org/t2d-risk-test/"
+    },
+    {
+      "label": "World Diabetes Day: understanding diabetes",
+      "url": "https://worlddiabetesday.org/understanding-diabetes/"
+    }
+  ],
+  "notes": "أُنشئت الصفحة بالاعتماد على مصادر IDF وWHO الرسمية. أداة البحث المتاحة أعادت نتائج عربية محدودة وغير كافية للفتح والتحليل، لذلك وُثق هذا القيد ضمن competitors واستُخدمت المصادر الرسمية مع بحث إنجليزي مرجعي لتصميم محتوى عربي أصلي. يجب عدم تحويل الصفحة إلى نصائح علاجية؛ دورها موعد وعد تنازلي وتوعية عامة آمنة."
+}

@@ -29,6 +29,7 @@ import {
   type DateInsightItem,
 } from '@/components/date/DateEditorialSections';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { CalendarDays, ArrowLeftRight, Moon } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
@@ -349,6 +350,8 @@ export default async function ProgrammaticDatePage({
               </div>
             </aside>
           </section>
+
+          <AdTopBanner slotId={`top-date-gregorian-${year}-${month}-${day}`} slotKey="topDateBanner" />
 
           <section className="date-stat-grid mb-8">
             {[

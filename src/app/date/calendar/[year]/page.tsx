@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { YearlyCalendar } from '@/components/date/YearlyCalendar';
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { Calendar, ArrowLeftRight, CalendarDays } from 'lucide-react';
 import { convertDate, ISLAMIC_MONTH_NAMES_AR } from '@/lib/date-adapter';
 import { DAY_NAMES_AR, GREGORIAN_MONTHS_AR } from '@/lib/constants';
@@ -369,36 +371,39 @@ export default async function GregorianCalendarPage({
   return (
     <>
       <JsonLd data={[breadcrumbSchema, webPageSchema, itemListSchema, faqSchema, howToSchema]} />
-      <main className="content-col pt-24 pb-20 mt-12">
-        <DateBreadcrumb items={breadcrumb} />
+      <AdLayoutWrapper>
+        <main className="content-col pt-24 pb-20 mt-12">
+          <DateBreadcrumb items={breadcrumb} />
 
-        <section className="date-hero-panel mb-8">
-          <div className="date-hero-main">
-            <p className="date-kicker m-0">التقويم الميلادي السنوي</p>
-            <h1 className="date-hero-title text-accent-alt">
-              تقويم عام {year} ميلادي
-            </h1>
-            <p className="date-hero-copy">
-              تقويم {year} الميلادي يعرض لك السنة كاملة من يناير إلى ديسمبر، مع المقابل الهجري لكل يوم وفق أم القرى. إذا كنت تريد معرفة أيام سنة {year}، هل هي كبيسة، أين يقع رمضان أو العيد، أو تريد فتح يوم محدد للتحويل، فابدأ من هذه الصفحة ثم انتقل إلى اليوم الذي تحتاجه.
-            </p>
-          </div>
-          <aside className="date-hero-rail" aria-label="التنقل بين السنوات الميلادية">
-            <p className="date-hero-answer">
-              {totalDays} يوماً
-            </p>
-            <p className="date-hero-note">
-              تبدأ السنة يوم {firstDayName} وتنتهي يوم {lastDayName}. النطاق الهجري: {firstHijriLabel} إلى {lastHijriLabel}.
-            </p>
-            <div className="date-hero-actions">
-              <Link href={`/date/calendar/${y - 1}`} className="date-hero-link">
-                → عام {y - 1}
-              </Link>
-              <Link href={`/date/calendar/${y + 1}`} className="date-hero-link date-hero-link--primary">
-                عام {y + 1} ←
-              </Link>
+          <section className="date-hero-panel mb-8">
+            <div className="date-hero-main">
+              <p className="date-kicker m-0">التقويم الميلادي السنوي</p>
+              <h1 className="date-hero-title text-accent-alt">
+                تقويم عام {year} ميلادي
+              </h1>
+              <p className="date-hero-copy">
+                تقويم {year} الميلادي يعرض لك السنة كاملة من يناير إلى ديسمبر، مع المقابل الهجري لكل يوم وفق أم القرى. إذا كنت تريد معرفة أيام سنة {year}، هل هي كبيسة، أين يقع رمضان أو العيد، أو تريد فتح يوم محدد للتحويل، فابدأ من هذه الصفحة ثم انتقل إلى اليوم الذي تحتاجه.
+              </p>
             </div>
-          </aside>
-        </section>
+            <aside className="date-hero-rail" aria-label="التنقل بين السنوات الميلادية">
+              <p className="date-hero-answer">
+                {totalDays} يوماً
+              </p>
+              <p className="date-hero-note">
+                تبدأ السنة يوم {firstDayName} وتنتهي يوم {lastDayName}. النطاق الهجري: {firstHijriLabel} إلى {lastHijriLabel}.
+              </p>
+              <div className="date-hero-actions">
+                <Link href={`/date/calendar/${y - 1}`} className="date-hero-link">
+                  → عام {y - 1}
+                </Link>
+                <Link href={`/date/calendar/${y + 1}`} className="date-hero-link date-hero-link--primary">
+                  عام {y + 1} ←
+                </Link>
+              </div>
+            </aside>
+          </section>
+
+          <AdTopBanner slotId={`top-date-calendar-${year}`} slotKey="topDateBanner" />
 
         <section className="date-stat-grid mb-8">
           {[
@@ -599,7 +604,8 @@ export default async function GregorianCalendarPage({
           </div>
         </nav>
 
-      </main>
+        </main>
+      </AdLayoutWrapper>
     </>
   );
 }

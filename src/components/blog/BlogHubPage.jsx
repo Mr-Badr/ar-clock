@@ -303,7 +303,7 @@ export default function BlogHubPage() {
         shortcutLinks={BLOG_SHORTCUTS}
         siteBrand={SITE_BRAND}
       />
-      <AdMultiplex slotId="end-blog-hub" className="content-col" />
+      <AdMultiplex slotId="end-blog-hub" slotKey="multiplexBlog" className="content-col" />
     </main>
   );
 }

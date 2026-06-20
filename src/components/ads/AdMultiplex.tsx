@@ -1,21 +1,27 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { getRouteManualAdSlotKey, resolveManualAdSlot } from "@/lib/ads/slot-resolution";
 import { useMarketingPermission } from "@/lib/client/marketing";
 import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
 import { logger, serializeError } from "@/lib/logger";
 
 interface AdMultiplexProps {
   slotId?: string;
+  slotKey?: string;
   className?: string;
 }
 
 export default function AdMultiplex({
   slotId = "multiplex",
+  slotKey,
   className = "",
 }: AdMultiplexProps) {
   const { clientId, manualSlots } = useAdsRuntimeConfig();
-  const adSlot = manualSlots.multiplex || "";
+  const pathname = usePathname();
+  const preferredSlotKey = slotKey || getRouteManualAdSlotKey(pathname || "/", "multiplex");
+  const adSlot = resolveManualAdSlot(manualSlots, preferredSlotKey, "multiplex");
   const shouldRenderAds = Boolean(clientId && adSlot);
   const canLoadAds = useMarketingPermission(shouldRenderAds);
   const ref = useRef<HTMLDivElement>(null);

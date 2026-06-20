@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
+import AdTopBanner from '@/components/ads/AdTopBanner';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getFlagEmoji } from '@/lib/country-utils';
@@ -351,6 +352,8 @@ export default async function DateCountryRootPage() {
               </div>
             </div>
           </section>
+
+          <AdTopBanner slotId="top-date-country-list" slotKey="topDateBanner" />
 
           {primaryCountry && (
             <section className="date-section" aria-labelledby="featured-countries-heading">
