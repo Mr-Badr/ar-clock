@@ -35,7 +35,8 @@
      3-COLUMN AD LAYOUT
      
      Wraps: [sidebar] + [content-col] + [sidebar]
-     Sidebars are display:none below 1280px — zero layout impact on mobile.
+     Sidebars are display:none below 1440px — zero layout impact on mobile
+     and common laptop widths where rails would squeeze tool layouts.
      
      USAGE:
        <div className="layout-with-ads">
@@ -82,7 +83,7 @@
     min-width: 0;
   }
 
-  @media (min-width: 1280px) {
+  @media (min-width: 1440px) {
     .layout-with-ads[data-rail-mode='single'],
     .layout-with-ads[data-rail-mode='dual'] {
       grid-template-columns: 240px minmax(0, 900px);
@@ -109,7 +110,7 @@
     }
   }
 
-  @media (min-width: 1536px) {
+  @media (min-width: 1680px) {
     .layout-with-ads[data-rail-mode='dual'] {
       grid-template-columns: 240px minmax(0, 900px) 240px;
       gap: var(--space-8);
@@ -129,7 +130,7 @@
     }
   }
 
-  @media (min-width: 1280px) {
+  @media (min-width: 1440px) {
     .layout-with-ads[data-rail-mode='single'],
     .layout-with-ads[data-rail-mode='dual'] {
       gap: var(--space-8);
@@ -385,11 +386,11 @@
 
 
   /* ──────────────────────────────────────────────────────────────────────────
-     SIDEBAR AD (desktop only, ≥1280px)
+     SIDEBAR AD (desktop only, ≥1440px)
      
      WHERE: As first and third children inside .layout-with-ads.
      
-     VISIBILITY: display:none on all screens < 1280px.
+     VISIBILITY: display:none on all screens < 1440px.
      This means the sidebar occupies ZERO space on mobile/tablet.
      The ad script is not even requested on mobile (handled in component JS).
      
@@ -409,7 +410,7 @@
     margin-block-start: var(--space-4);
   }
 
-  @media (min-width: 1280px) {
+  @media (min-width: 1440px) {
     .ad-slot--sidebar--sticky {
       display: block;
       position: sticky;
@@ -418,7 +419,7 @@
     }
   }
 
-  @media (min-width: 1536px) {
+  @media (min-width: 1680px) {
     .ad-slot--sidebar--static {
       display: block;
       position: relative;
@@ -544,6 +545,7 @@
   .layout-with-ads .calculator-layout-shell {
     width: 100%;
     min-width: 0;
+    container: calculator-layout / inline-size;
   }
 
 }

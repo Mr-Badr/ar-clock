@@ -8,7 +8,7 @@ interface CalculatorAdLayoutProps {
 
 export default function CalculatorAdLayout({ children }: CalculatorAdLayoutProps) {
   return (
-    <AdLayoutWrapper layout="standard" sidebarMode="single">
+    <AdLayoutWrapper layout="wide" sidebarMode="single">
       <div className="layout-content-shell calculator-layout-shell">
         {children}
         <AdMultiplex slotId="end-calculator-section" />

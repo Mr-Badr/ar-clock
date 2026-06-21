@@ -7360,3 +7360,42 @@ main:not(.calc-hub-page) .calc-room-add {
     justify-self: start;
   }
 }
+
+@container calculator-layout (max-width: 1019px) {
+  .calculator-layout-shell main:not(.calc-hub-page) .calc-app-grid,
+  .calculator-layout-shell .calc-esb-page .end-service-tool .calc-app-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .calculator-layout-shell .calc-esb-page .calc-results-panel {
+    position: static;
+    top: auto;
+  }
+
+  .calculator-layout-shell .calc-esb-page .end-service-summary-strip,
+  .calculator-layout-shell .calc-esb-page .calc-esb-result-context,
+  .calculator-layout-shell .calc-esb-page #esb-guide .calc-tabs-panel .calc-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .calculator-layout-shell .calc-esb-page #esb-guide .calc-info-grid--editorial,
+  .calculator-layout-shell main:not(.calc-hub-page) .calc-editorial-article {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .calculator-layout-shell main:not(.calc-hub-page) .calc-editorial-article__points {
+    grid-column: auto;
+  }
+}
+
+@container calculator-layout (max-width: 720px) {
+  .calculator-layout-shell .calc-esb-page .end-service-tool .calc-radio-grid,
+  .calculator-layout-shell .calc-esb-page .end-service-tool .calc-grid-2,
+  .calculator-layout-shell .calc-esb-page .end-service-tool .calc-metric-grid,
+  .calculator-layout-shell .calc-esb-page .calc-esb-result-context,
+  .calculator-layout-shell .calc-esb-page .end-service-summary-strip,
+  .calculator-layout-shell .calc-esb-page #esb-guide .calc-tabs-list,
+  .calculator-layout-shell .calc-esb-page #esb-guide .calc-tabs-panel .calc-grid-2 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}

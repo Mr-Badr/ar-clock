@@ -53,7 +53,7 @@ export default function AdSidebarSticky({
     if (!canLoadAds) return;
     if (!ref.current || loaded.current) return;
 
-    const minWidthQuery = sticky ? "(min-width: 1280px)" : "(min-width: 1536px)";
+    const minWidthQuery = sticky ? "(min-width: 1440px)" : "(min-width: 1680px)";
     const isDesktop = window.matchMedia(minWidthQuery).matches;
     if (!isDesktop) return;
 

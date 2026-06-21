@@ -1,6 +1,6 @@
 {
   "schemaVersion": 6,
-  "generatedAt": "2026-06-20T13:25:38.869Z",
+  "generatedAt": "2026-06-21T20:02:24.041Z",
   "totalEvents": 88,
   "totalPublished": 88,
   "totalAliases": 442,
@@ -102,7 +102,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "eid-al-fitr",
@@ -167,7 +167,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "eid-al-adha",
@@ -232,7 +232,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "day-of-arafa",
@@ -297,7 +297,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "hajj-start",
@@ -362,7 +362,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "islamic-new-year",
@@ -427,7 +427,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "ashura",
@@ -492,7 +492,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "laylat-al-qadr",
@@ -557,7 +557,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "social-security-sa",
@@ -584,7 +584,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "isra-miraj",
@@ -649,7 +649,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "oman-accession-day",
@@ -676,7 +676,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "first-dhul-hijjah",
@@ -741,7 +741,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "winter",
@@ -766,7 +766,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "spring",
@@ -791,7 +791,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "spring-vac",
@@ -816,7 +816,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "summer",
@@ -841,7 +841,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "summer-vac",
@@ -866,7 +866,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "back-to-school",
@@ -891,7 +891,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "national-day-sa",
@@ -918,7 +918,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "founding-day-sa",
@@ -945,7 +945,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "school-start-sa",
@@ -972,7 +972,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "salary-sa",
@@ -999,7 +999,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "citizen-account-sa",
@@ -1026,7 +1026,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "sinai-liberation-day-egypt",
@@ -1053,7 +1053,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "results-th-eg",
@@ -1080,7 +1080,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "hafez-sa",
@@ -1107,7 +1107,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "exams-th-eg",
@@ -1134,7 +1134,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "housing-support-sa",
@@ -1161,7 +1161,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "school-start-eg",
@@ -1188,7 +1188,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "salary-eg",
@@ -1215,7 +1215,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "exams-bac-dz",
@@ -1242,7 +1242,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "autumn",
@@ -1267,7 +1267,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "school-start-dz",
@@ -1294,7 +1294,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "sham-nessim",
@@ -1321,7 +1321,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "revolution-dz",
@@ -1348,7 +1348,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "school-start-ma",
@@ -1375,7 +1375,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "throne-day",
@@ -1402,7 +1402,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "independence-ma",
@@ -1429,7 +1429,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "independence-dz",
@@ -1456,7 +1456,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "national-day-ae",
@@ -1483,7 +1483,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "school-start-ae",
@@ -1510,7 +1510,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "school-start-tn",
@@ -1537,7 +1537,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "independence-tn",
@@ -1564,7 +1564,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "national-day-kw",
@@ -1591,7 +1591,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "school-start-kw",
@@ -1618,7 +1618,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "national-day-qa",
@@ -1645,7 +1645,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "school-start-qa",
@@ -1672,7 +1672,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "valentines-day",
@@ -1737,7 +1737,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "labor-day",
@@ -1762,7 +1762,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "sand-sa",
@@ -1789,7 +1789,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "takaful-karama-eg",
@@ -1816,7 +1816,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "world-health-day",
@@ -1881,7 +1881,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "earth-day",
@@ -1946,7 +1946,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "world-diabetes-day",
@@ -2013,7 +2013,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "international-womens-day",
@@ -2044,7 +2044,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "world-teachers-day",
@@ -2109,7 +2109,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "arabic-language-day",
@@ -2174,7 +2174,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "saudi-flag-day",
@@ -2201,7 +2201,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "jordan-independence-day",
@@ -2228,7 +2228,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "bahrain-national-day",
@@ -2253,7 +2253,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "liberation-day-kw",
@@ -2280,7 +2280,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "oman-national-day",
@@ -2307,7 +2307,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "martyrs-day-ae",
@@ -2334,7 +2334,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "revolution-day-eg",
@@ -2361,7 +2361,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "armed-forces-day-eg",
@@ -2388,7 +2388,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "green-march-ma",
@@ -2415,7 +2415,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "thanksgiving-usa",
@@ -2442,7 +2442,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "black-friday-usa",
@@ -2469,7 +2469,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "cyber-monday-usa",
@@ -2496,7 +2496,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "mawlid",
@@ -2561,7 +2561,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "halloween-usa",
@@ -2588,7 +2588,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "mothers-day",
@@ -2613,7 +2613,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "christmas-usa",
@@ -2640,7 +2640,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "national-exam-ma",
@@ -2667,7 +2667,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "new-year",
@@ -2692,7 +2692,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "new-years-eve-new-york",
@@ -2719,7 +2719,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "nisf-shaban",
@@ -2784,7 +2784,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "pension-eg",
@@ -2811,7 +2811,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "pension-sa",
@@ -2838,7 +2838,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "world-childrens-day",
@@ -2903,7 +2903,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "international-day-of-education",
@@ -2968,7 +2968,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "world-mental-health-day",
@@ -3033,7 +3033,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "world-environment-day",
@@ -3098,7 +3098,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "independence-manifesto-day-morocco",
@@ -3125,7 +3125,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "amazigh-new-year-algeria",
@@ -3152,7 +3152,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "amazigh-new-year-morocco",
@@ -3179,7 +3179,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "january-25-egypt",
@@ -3206,7 +3206,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     },
     {
       "id": "world-fathers-day",
@@ -3272,7 +3272,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-06-20T13:25:38.869Z"
+      "lastModified": "2026-06-21T20:02:24.041Z"
     }
   ]
 }
