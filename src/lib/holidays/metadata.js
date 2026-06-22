@@ -42,14 +42,24 @@ function buildHolidayTitleTag(rawTitleTag, tokenContext, event) {
   return clampMetadataText(localizedTitle, META_TITLE_MAX_LENGTH);
 }
 
-function buildHolidayMetaDescription(rawDescription, tokenContext, event) {
-  const replacedDescription = normalizeMetadataText(replaceTokens(rawDescription, tokenContext));
-  const country = getHolidayCountryContext(event);
-  const countryAwareDescription = country?.name && !replacedDescription.includes(country.name)
-    ? `${replacedDescription} في ${country.name}.`
-    : ensureCountryContextSentence(replacedDescription, event);
+function buildDatePreamble(gregStr, remaining) {
+  if (!gregStr || !remaining) return '';
+  const { days } = remaining;
+  if (days > 1) return `${gregStr} — يتبقى ${days} يوماً. `;
+  if (days === 1) return `${gregStr} — يتبقى يوم واحد. `;
+  if (days === 0) return `${gregStr} — اليوم هو الموعد. `;
+  return '';
+}
 
-  return clampMetadataText(countryAwareDescription, META_DESCRIPTION_MAX_LENGTH);
+function buildHolidayMetaDescription(rawDescription, tokenContext, event, { gregStr, remaining } = {}) {
+  const preamble = buildDatePreamble(gregStr, remaining);
+  const replaced = normalizeMetadataText(replaceTokens(rawDescription, tokenContext));
+  const country = getHolidayCountryContext(event);
+  const withCountry = country?.name && !replaced.includes(country.name)
+    ? `${replaced} في ${country.name}.`
+    : ensureCountryContextSentence(replaced, event);
+  const full = preamble ? `${preamble}${withCountry}` : withCountry;
+  return clampMetadataText(full, META_DESCRIPTION_MAX_LENGTH);
 }
 
 export async function getHolidayMetadata(slug) {
@@ -76,8 +86,8 @@ export async function getHolidayMetadata(slug) {
   const titleTag = buildHolidayTitleTag(rawTitleTag, tokenContext, event);
   const rawDescription =
     seo?.seoMeta?.metaDescription ||
-    `${rawTitleTag} — ${gregStr}. متبقي ${remaining.days} يوم. ${seo.description}`;
-  const description = buildHolidayMetaDescription(rawDescription, tokenContext, event);
+    `${rawTitleTag}. ${seo.description}`;
+  const description = buildHolidayMetaDescription(rawDescription, tokenContext, event, { gregStr, remaining });
   const keywords = getHolidayMetadataKeywords({
     event,
     seo,

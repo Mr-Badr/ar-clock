@@ -12,6 +12,7 @@ import {
   formatUTCOffset,
 } from './time-snapshot';
 import TimeConversionTable from './TimeConversionTable.client';
+import DualLiveClock from '@/components/time-diff/DualLiveClock.client';
 import ContextSummaryView from '@/components/TimeDifference/ContextSummaryView';
 import { buildContextSummaryLines } from '@/components/TimeDifference/contextSummary';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
@@ -518,8 +519,15 @@ async function ComparisonPageContent({ paramsPromise }) {
         </header>
 
         {/* ── SSR snapshot — crawlable current times ─────────────────── */}
-        <section className="td-snapshot mb-8" aria-label="الوقت الحالي في المدينتين">
+        <section className="td-snapshot mb-4" aria-label="الوقت الحالي في المدينتين">
           <SuspendedTimeSnapshot fromCity={fromCity} toCity={toCity} />
+          <DualLiveClock
+            fromTz={fromCity.timezone}
+            toTz={toCity.timezone}
+            fromCityAr={fromCity.city_name_ar}
+            toCityAr={toCity.city_name_ar}
+            diffMinutes={diffMinutes}
+          />
         </section>
 
         <section className="mb-8" aria-labelledby="summary-heading">

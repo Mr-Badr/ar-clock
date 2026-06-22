@@ -1,0 +1,13 @@
+{
+  "slug": "palestine-land-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": false,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [],
+  "updatedAt": "2026-06-22T22:34:20.202Z"
+}

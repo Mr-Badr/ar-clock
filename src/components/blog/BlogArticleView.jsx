@@ -15,8 +15,10 @@ import {
 
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
+import AdBlogSidebar from '@/components/ads/AdBlogSidebar';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import SiteTrustPanel from '@/components/site/SiteTrustPanel';
+import { JsonLd } from '@/components/seo/JsonLd';
 import {
   buildBlogArticleLeadParagraphs,
   buildBlogArticlePracticalParagraphs,
@@ -24,7 +26,7 @@ import {
   estimateBlogArticleReadingMinutes,
   splitBlogArticleBodyParagraphs,
 } from '@/lib/blog/read-time';
-import { SITE_BRAND } from '@/lib/site-config';
+import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 
 import styles from './BlogArticleView.module.css';
 
@@ -709,8 +711,24 @@ export default function BlogArticleView(props) {
     '--guide-accent': guide.accent || 'var(--accent)',
   };
 
+  const authorName = guide.authorName || `فريق ${SITE_BRAND}`;
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: guide.metaTitle || guide.title,
+    description: guide.description,
+    author: { '@type': 'Organization', name: authorName },
+    publisher: { '@type': 'Organization', name: SITE_BRAND, url: getSiteUrl() },
+    url: `${getSiteUrl()}/blog/${guide.slug}`,
+    datePublished: guide.publishedAt,
+    dateModified: guide.updatedAt || guide.publishedAt,
+    inLanguage: 'ar',
+    ...(guide.topic ? { articleSection: guide.topic } : {}),
+  };
+
   return (
     <main className={styles.page} style={pageStyle}>
+      <JsonLd data={articleSchema} />
       <article className={styles.shell}>
         <GuideBreadcrumb guide={guide} />
 
@@ -1087,6 +1105,10 @@ export default function BlogArticleView(props) {
               </section>
             ) : null}
 
+            {shouldShowAds && faqItems.length ? (
+              <AdInArticle slotId={`mid-guide-${guide.slug || 'entry'}-2`} />
+            ) : null}
+
             {faqItems.length ? (
               <section id="guide-faq" className={styles.section}>
                 <div className={styles.sectionHead}>
@@ -1130,6 +1152,10 @@ export default function BlogArticleView(props) {
                   ))}
                 </nav>
               </div>
+            ) : null}
+
+            {shouldShowAds ? (
+              <AdBlogSidebar slotId={`sidebar-guide-${guide.slug || 'entry'}`} className={styles.sidebarCard} />
             ) : null}
 
           </aside>

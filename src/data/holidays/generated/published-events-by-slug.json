@@ -108,6 +108,16 @@
     "hijriMonth": 12,
     "hijriDay": 1
   },
+  "bac-results-tunisia": {
+    "id": "bac-results-tunisia",
+    "slug": "bac-results-tunisia",
+    "name": "نتيجة الباك (البكالوريا) تونس",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "tn",
+    "month": 7,
+    "day": 7
+  },
   "winter-season": {
     "id": "winter",
     "slug": "winter-season",
@@ -828,6 +838,36 @@
     "_countryCode": "eg",
     "month": 1,
     "day": 25
+  },
+  "iraq-national-day": {
+    "id": "iraq-national-day",
+    "slug": "iraq-national-day",
+    "name": "يوم الاستقلال العراقي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "iq",
+    "month": 10,
+    "day": 3
+  },
+  "libya-independence-day": {
+    "id": "libya-independence-day",
+    "slug": "libya-independence-day",
+    "name": "عيد الاستقلال الليبي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ly",
+    "month": 12,
+    "day": 24
+  },
+  "palestine-land-day": {
+    "id": "palestine-land-day",
+    "slug": "palestine-land-day",
+    "name": "يوم الأرض الفلسطيني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ps",
+    "month": 3,
+    "day": 30
   },
   "world-fathers-day": {
     "id": "world-fathers-day",

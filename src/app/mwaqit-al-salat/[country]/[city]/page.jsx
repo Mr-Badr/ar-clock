@@ -24,6 +24,7 @@ import {
 import { getMethodByCountry } from '@/lib/prayer-methods';
 
 import PrayerHeroClient from '@/components/PrayerHero.client';
+import PrayerTimeline from '@/components/mwaqit/PrayerTimeline.client';
 import SearchCity from '@/components/SearchCityWrapper.client';
 import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar';
 import CalendarSeoBlock from '@/components/mwaqit/CalendarSeoBlock';
@@ -36,6 +37,7 @@ import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import { Skeleton } from '@/components/ui/skeleton';
 import routeStyles from '@/app/mwaqit-al-salat/PrayerRoutePage.module.css';
@@ -141,8 +143,25 @@ export async function generateMetadata({ params }) {
       { countryScope: policy.countryScope, cityScope: policy.cityScope },
     );
 
-    const title = `مواقيت الصلاة في ${cityNameAr} اليوم | الفجر والمغرب والجدول الشهري`;
-    const description = `اعرف مواقيت الصلاة في ${cityNameAr}، ${countryNameAr} اليوم: الفجر والظهر والعصر والمغرب والعشاء، الصلاة القادمة، وطريقة الحساب والجدول الشهري.`;
+    const nowIso = await getCachedNowIso();
+    const todayTimes = calculatePrayerTimes({
+      lat: cityData.lat, lon: cityData.lon,
+      timezone: cityData.timezone, date: new Date(nowIso),
+      countryCode: country.country_code,
+      cacheKey: `meta::${countrySlug}::${citySlug}`,
+    });
+    const fajrStr = todayTimes ? formatTime(todayTimes.fajr, cityData.timezone) : null;
+    const maghribStr = todayTimes ? formatTime(todayTimes.maghrib, cityData.timezone) : null;
+
+    const titleWithTimes = fajrStr && maghribStr
+      ? `مواقيت الصلاة في ${cityNameAr} اليوم — الفجر ${fajrStr} والمغرب ${maghribStr}`
+      : `مواقيت الصلاة في ${cityNameAr} اليوم — الفجر والمغرب والجدول الشهري`;
+    const title = titleWithTimes.length <= 80 ? titleWithTimes
+      : `مواقيت الصلاة في ${cityNameAr} اليوم — الفجر والمغرب والجدول الشهري`;
+
+    const description = fajrStr && maghribStr
+      ? `الفجر ${fajrStr} — المغرب ${maghribStr} في ${cityNameAr} اليوم. مواقيت الصلاة الخمس: الظهر والعصر والعشاء، الصلاة القادمة، الجدول الشهري، وطريقة ${methodInfo.label}.`
+      : `اعرف مواقيت الصلاة في ${cityNameAr}، ${countryNameAr} اليوم: الفجر والظهر والعصر والمغرب والعشاء، الصلاة القادمة، وطريقة الحساب والجدول الشهري.`;
     const canonical = `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}`;
 
     return {
@@ -631,6 +650,8 @@ export default async function PrayerTimesPage({ params }) {
           </div>
         </section>
 
+        <AdMultiplex slotId={`end-prayer-city-${countrySlug}-${citySlug}`} className="container mx-auto px-4" />
+
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
           <div className={routeStyles.sectionPanel}>
             <SiteTrustPanel panel="prayer" />
@@ -741,6 +762,23 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
             timezone={cityData.timezone}
             method={methodInfo.name}
             countryCode={countryCode}
+          />
+        </ErrorBoundary>
+      </section>
+
+      <section className={`mb-4 ${routeStyles.sectionPanel}`} aria-label="خط سير الصلوات">
+        <ErrorBoundary name="PrayerTimeline">
+          <PrayerTimeline
+            times={{
+              fajr:    times.fajr,
+              sunrise: times.sunrise,
+              dhuhr:   times.dhuhr,
+              asr:     times.asr,
+              maghrib: times.maghrib,
+              isha:    times.isha,
+            }}
+            timezone={cityData.timezone}
+            nextPrayerKey={nextKey}
           />
         </ErrorBoundary>
       </section>

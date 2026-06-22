@@ -106,9 +106,11 @@ function getUtcOffsetStr(timezone) {
 }
 
 function buildCityTimeTitle(cityAr, countryAr) {
-  const fullTitle = `الوقت الآن في ${cityAr}، ${countryAr} | الساعة والتاريخ`;
-  if (fullTitle.length <= 64) return fullTitle;
-  return `الوقت الآن في ${cityAr} | الساعة والتاريخ`;
+  const full = `الوقت الآن في ${cityAr}، ${countryAr} — ساعة حية وتاريخ اليوم`;
+  if (full.length <= 72) return full;
+  const mid = `الوقت الآن في ${cityAr} — ساعة حية وتاريخ اليوم`;
+  if (mid.length <= 72) return mid;
+  return `الوقت الآن في ${cityAr} — ساعة حية`;
 }
 
 function isValidCityRecord(city) {

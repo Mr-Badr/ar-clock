@@ -1,6 +1,8 @@
 "use client";
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, lazy, Suspense } from 'react';
+
+const EndOfServiceChart = lazy(() => import('./EndOfServiceChart.client'));
 import {
   AlertTriangle,
   BriefcaseBusiness,
@@ -275,11 +277,6 @@ export default function EndOfServiceCalculator({
                       <small>{contractLabel}</small>
                     </div>
                     <div>
-                      <span>نسبة الاستحقاق</span>
-                      <strong>{formatPercent(result.entitlementPercent)}</strong>
-                      <small>{reason === 'resignation' ? result.resignationBracket.label : 'القاعدة العامة'}</small>
-                    </div>
-                    <div>
                       <span>الأيام المحتسبة</span>
                       <strong>{formatNumber(result.service.totalDays)}</strong>
                       <small>يوم فعلي بين التاريخين</small>
@@ -292,6 +289,9 @@ export default function EndOfServiceCalculator({
                       <strong>{formatPercent(result.entitlementPercent)}</strong>
                     </div>
                     <Progress value={result.entitlementPercent} />
+                    <p className="calc-hint">
+                      {reason === 'resignation' ? result.resignationBracket.label : 'القاعدة العامة عند انتهاء العقد'}
+                    </p>
                   </div>
 
                   <div className="calc-breakdown-list calc-esb-breakdown">
@@ -308,6 +308,10 @@ export default function EndOfServiceCalculator({
                       <strong>{formatMoney(result.partialAmount)}</strong>
                     </div>
                   </div>
+
+                  <Suspense fallback={null}>
+                    <EndOfServiceChart result={result} salary={salary} />
+                  </Suspense>
                 </>
               ) : (
                 <div className="calc-warning calc-esb-empty-result">

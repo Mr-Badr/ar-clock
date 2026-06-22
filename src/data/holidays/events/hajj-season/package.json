@@ -152,7 +152,7 @@
       }
     ],
     "seoMeta": {
-      "titleTag": "بداية موسم الحج {{year}} - {{hijriYear}} هـ | يوم التروية - ميقاتنا",
+      "titleTag": "موسم الحج {{year}} - {{hijriYear}} هـ | {{formattedDate}}",
       "metaDescription": "اعرف متى تبدأ أيام الحج {{year}} - {{hijriYear}} هـ من يوم التروية، وكم بقي على البداية، وما ترتيب الأيام حتى عرفة والنحر.",
       "h1": "بداية موسم الحج {{year}} - {{hijriYear}} هـ | يوم التروية",
       "canonicalPath": "/holidays/hajj-season",
@@ -226,7 +226,8 @@
       "day-of-arafa",
       "eid-al-adha",
       "islamic-new-year",
-      "ramadan"
+      "ramadan",
+      "ashura"
     ],
     "sources": [
       {

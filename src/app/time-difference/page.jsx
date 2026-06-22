@@ -90,9 +90,9 @@ const SAFE_POPULAR_PAIRS = Array.isArray(POPULAR_PAIRS)
 
 export const metadata = buildCanonicalMetadata({
   title:
-    "حاسبة فرق التوقيت بين بلدين أو مدينتين | الوقت الان وDST",
+    "فرق التوقيت بين أي مدينتين الآن — مباشر مع DST وUTC | ميقاتنا",
   description:
-    "احسب فرق التوقيت بين بلدين أو مدينتين الآن، واعرف من يسبق الآخر، التاريخ المحلي، أفضل وقت للاجتماع، ودور التوقيت الصيفي وUTC.",
+    "احسب فرق الوقت بين أي مدينتين أو دولتين الآن بالدقيقة، مع ساعة مزدوجة حية ومقارنة التاريخ المحلي وأثر التوقيت الصيفي DST وأفضل وقت للتواصل.",
   keywords: buildTimeDifferenceHubKeywords(SAFE_POPULAR_PAIRS),
   url: `${SITE_URL}/time-difference`,
 });

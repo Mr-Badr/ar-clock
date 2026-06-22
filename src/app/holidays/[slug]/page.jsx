@@ -133,7 +133,7 @@ export default async function HolidayPage({ params }) {
       {articleSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />}
       {eventSeriesSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSeriesSchema) }} />}
 
-      <AdLayoutWrapper>
+      <AdLayoutWrapper sidebarMode="dual">
         <main className="content-col pt-24 pb-20">
 
         {/* Breadcrumb */}
@@ -295,6 +295,7 @@ export default async function HolidayPage({ params }) {
           eventName={displayTitle}
           days={remaining.days}
           dateStr={gregStr}
+          eventISODate={remaining.days >= 0 ? targetDate.toISOString() : null}
         />
 
         <section

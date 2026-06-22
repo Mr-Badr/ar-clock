@@ -72,6 +72,56 @@ function ResultRow({ label, value, strong }) {
   );
 }
 
+function VatSplitBar({ base, tax, total, rate }) {
+  if (!total || total <= 0 || !base) return null;
+  const basePct = Math.round((base / total) * 100);
+  const taxPct  = 100 - basePct;
+  const perHundred = rate > 0
+    ? `لكل ١٠٠ وحدة: ${(100 / (1 + rate / 100)).toFixed(1)} سعر + ${(rate / (1 + rate / 100) * 100 / 100).toFixed(1)} ضريبة`
+    : null;
+  return (
+    <div style={{ marginTop: '14px', direction: 'rtl' }}>
+      <div style={{
+        display: 'flex', gap: '2px', height: '9px',
+        borderRadius: '9999px', overflow: 'hidden',
+      }}>
+        <div style={{
+          width: `${basePct}%`, background: '#10b981',
+          borderRadius: '9999px 0 0 9999px',
+          transition: 'width 0.55s ease',
+        }} />
+        <div style={{
+          width: `${taxPct}%`, background: '#f59e0b',
+          borderRadius: '0 9999px 9999px 0',
+          transition: 'width 0.55s ease',
+        }} />
+      </div>
+      <div style={{
+        display: 'flex', justifyContent: 'space-between',
+        marginTop: '6px', fontSize: '11px', color: 'var(--text-secondary)',
+      }}>
+        <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#10b981', display: 'inline-block', flexShrink: 0 }} />
+          المبلغ الأصلي {basePct}٪
+        </span>
+        <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+          الضريبة {taxPct}٪
+          <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#f59e0b', display: 'inline-block', flexShrink: 0 }} />
+        </span>
+      </div>
+      {perHundred && (
+        <p style={{
+          marginTop: '8px', marginBottom: 0,
+          fontSize: '11px', color: 'var(--text-secondary)',
+          textAlign: 'center', opacity: 0.8,
+        }}>
+          💡 {perHundred}
+        </p>
+      )}
+    </div>
+  );
+}
+
 function ModeButton({ mode, activeMode, onSelect }) {
   const isActive = mode.value === activeMode;
 
@@ -287,6 +337,12 @@ export default function VatCalculator() {
                   {formatCurrency(addResult.total, country.currencyCode)}
                 </strong>
               </div>
+              <VatSplitBar
+                base={addResult.base}
+                tax={addResult.tax}
+                total={addResult.total}
+                rate={country.rate}
+              />
             </div>
           </div>
         </div>
@@ -333,6 +389,12 @@ export default function VatCalculator() {
                   {formatCurrency(extractResult.base, country.currencyCode)}
                 </strong>
               </div>
+              <VatSplitBar
+                base={extractResult.base}
+                tax={extractResult.tax}
+                total={extractResult.total}
+                rate={country.rate}
+              />
             </div>
           </div>
         </div>

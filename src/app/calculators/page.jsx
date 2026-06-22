@@ -3,6 +3,9 @@ import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { CALCULATOR_HUBS, CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getSiteUrl } from '@/lib/site-config';
 import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
+import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInFeed from '@/components/ads/AdInFeed';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 
 const SITE_URL = getSiteUrl();
 const CALCULATOR_EDITORIAL_PARAGRAPHS = [
@@ -91,9 +94,9 @@ const FEATURED_CALCULATOR_SLUGS = [
 ];
 
 export const metadata = buildCanonicalMetadata({
-  title: 'حاسبات عربية للقرارات اليومية مع شرح النتيجة',
+  title: 'حاسبات عربية مجانية: العمر والضريبة والقروض ونهاية الخدمة',
   description:
-    'اختر الحاسبة التي تطابق سؤالك اليومي، واحصل على نتيجة فورية مع شرح يوضح متى يكون الرقم مباشراً ومتى يحتاج مراجعة أو مصدر رسمي.',
+    'حاسبات عربية مجانية بدون تسجيل: احسب العمر، وضريبة القيمة المضافة، والقسط الشهري، ومكافأة نهاية الخدمة فوراً، مع شرح يوضح متى تثق بالرقم ومتى تحتاج مصدراً رسمياً.',
   keywords: [
     'حاسبات أونلاين عربية',
     'حاسبة عربية',
@@ -247,6 +250,8 @@ export default function CalculatorsPage() {
         </div>
       </section>
 
+      <AdTopBanner slotId="top-calculator-hub" />
+
       <section className="calc-hub-v8-section" aria-labelledby="popular-calculators">
         <div className="calc-hub-v8-wrap">
           <div className="calc-hub-v8-section-head">
@@ -288,6 +293,8 @@ export default function CalculatorsPage() {
           </div>
         </div>
       </section>
+
+      <AdInFeed slotId="feed-calculators-hub-1" />
 
       <section className="calc-hub-v8-section" aria-labelledby="calculator-decision-map">
         <div className="calc-hub-v8-wrap">
@@ -428,6 +435,8 @@ export default function CalculatorsPage() {
           </nav>
         </div>
       </section>
+
+      <AdMultiplex slotId="end-calculators-hub" />
     </main>
   );
 }

@@ -2,17 +2,13 @@ import Link from 'next/link';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import AdInArticle from '@/components/ads/AdInArticle';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { SectionWrapper } from '@/components/shared/primitives';
 import { CALCULATOR_HUBS, CALCULATOR_ROUTES } from '@/lib/calculators/data';
-
-const CALCULATOR_HERO_STEPS = [
-  'اختر الحالة الأقرب لسؤالك',
-  'أدخل الرقم أو جرّب مثالاً سريعاً',
-  'راجع النتيجة والتفصيل قبل الاعتماد',
-];
 
 const CALCULATOR_TRUST_ITEMS = [
   'مجاني بدون تسجيل',
@@ -108,21 +104,31 @@ function buildRelatedCalculatorLinks(currentSlug) {
   const currentHub = currentCluster
     ? CALCULATOR_HUBS.find((hub) => hub.slug === currentCluster)
     : null;
+  const tag = (item, kind, reason) => (item ? { ...item, kind, reason } : null);
+
   const hubLink = currentHub && currentHub.href !== currentRoute?.href
-    ? {
-        href: currentHub.href,
-        title: currentHub.title,
-        description: currentHub.description,
-        badge: currentHub.badge,
-      }
+    ? tag(
+        {
+          href: currentHub.href,
+          title: currentHub.title,
+          description: currentHub.description,
+          badge: currentHub.badge,
+        },
+        'hub',
+        'المسار الكامل',
+      )
     : null;
-  const clusterRoutes = currentCluster
+  const clusterRoutes = (currentCluster
     ? CALCULATOR_ROUTES.filter((item) => item.cluster === currentCluster && item.slug !== currentSlug)
-    : [];
+    : []
+  ).map((item) => tag(item, 'sibling', 'نفس المسار'));
   const complementRoutes = getComplementSlugs(currentCluster)
     .map((slug) => CALCULATOR_ROUTES.find((item) => item.slug === slug))
-    .filter((item) => item && item.slug !== currentSlug);
-  const fallbackRoutes = CALCULATOR_ROUTES.filter((item) => item.slug !== currentSlug);
+    .filter((item) => item && item.slug !== currentSlug)
+    .map((item) => tag(item, 'complement', 'أداة مكمّلة'));
+  const fallbackRoutes = CALCULATOR_ROUTES
+    .filter((item) => item.slug !== currentSlug)
+    .map((item) => tag(item, 'more', 'أداة أخرى'));
 
   return getUniqueCalculatorLinks([
     hubLink,
@@ -169,14 +175,6 @@ export function CalculatorHero({
             <p className="calc-page-description">{description}</p>
           </div>
           <div className="calc-hero-panel">
-            <ol className="calc-use-flow" aria-label="طريقة استخدام الحاسبة">
-              {CALCULATOR_HERO_STEPS.map((item, index) => (
-                <li key={item}>
-                  <span>{formatSequenceLabel(index)}</span>
-                  <strong>{item}</strong>
-                </li>
-              ))}
-            </ol>
             {children}
           </div>
           <div className="calc-hero-support">
@@ -400,6 +398,7 @@ export function CalculatorFaqSection({ items }) {
 
   return (
     <div>
+      <AdInArticle slotId="mid-calculator-faq" />
       <Card className="calc-surface-card calc-faq-card">
         <CardContent className="pt-2">
           <Accordion type="single" collapsible>
@@ -436,39 +435,47 @@ export function RelatedCalculators({ currentSlug }) {
     );
   }
 
+  const [featured, ...rest] = links;
+
   return (
     <div className="calc-related-panel">
       <div className="calc-related-panel__head">
         <span className="calc-section-eyebrow">لا تتوقف عند رقم واحد</span>
-        <div>
-          <h3 className="calc-card-title">حاسبات تكمل نفس القرار</h3>
-          <p className="calc-card-description">
-            {currentHub
-              ? `هذه روابط من مسار ${currentHub.title} مع أدوات قريبة تساعدك على مقارنة الرقم أو فهمه قبل الاعتماد.`
-              : 'اختر حاسبة قريبة من نفس السؤال حتى لا ترجع إلى الفهرس وتبدأ من الصفر.'}
-          </p>
-        </div>
-        <span className="calc-related-panel__count">{links.length} اختيارات</span>
+        <h3 className="calc-card-title">حاسبات تكمل نفس القرار</h3>
+        <p className="calc-card-description">
+          {currentHub
+            ? `أدوات قريبة من مسار ${currentHub.title} تساعدك على مقارنة الرقم أو فهمه قبل الاعتماد.`
+            : 'اختر الأداة الأقرب لنفس السؤال حتى لا ترجع إلى الفهرس وتبدأ من الصفر.'}
+        </p>
       </div>
-      <div className="calc-resource-stack calc-resource-stack--cards calc-related-grid" data-count={links.length}>
-      {links.map((item, index) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          className={`calc-resource-link calc-resource-link--card${index === 0 ? ' calc-resource-link--primary' : ''}`}
-        >
-          <span className="calc-resource-link__index">{formatSequenceLabel(index)}</span>
-          <span className="calc-resource-link__copy">
-            <strong className="calc-card-title">{item.title}</strong>
-            <span className="calc-card-description">{item.description}</span>
-          </span>
-          <span className="calc-resource-link__cta">
-            {item.href === currentHub?.href ? 'افتح المسار الكامل' : 'افتح الحاسبة'}
-            <ArrowLeft size={16} aria-hidden="true" />
-          </span>
-        </Link>
-      ))}
-      </div>
+
+      <Link href={featured.href} className="calc-related-featured">
+        <span className="calc-related-featured__reason">{featured.reason || 'الأنسب الآن'}</span>
+        <strong className="calc-related-featured__title">{featured.title}</strong>
+        {featured.description ? (
+          <span className="calc-related-featured__desc">{featured.description}</span>
+        ) : null}
+        <span className="calc-related-featured__cta">
+          {featured.kind === 'hub' ? 'افتح المسار الكامل' : 'افتح الحاسبة'}
+          <ArrowLeft size={16} aria-hidden="true" />
+        </span>
+      </Link>
+
+      {rest.length ? (
+        <ul className="calc-related-rows" aria-label="أدوات أخرى مرتبطة">
+          {rest.map((item) => (
+            <li key={item.href}>
+              <Link href={item.href} className="calc-related-row">
+                <span className="calc-related-row__reason">{item.reason || 'أداة أخرى'}</span>
+                <span className="calc-related-row__title">{item.title}</span>
+                <ArrowLeft className="calc-related-row__arrow" size={16} aria-hidden="true" />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+
+      <AdMultiplex slotId="end-calculator-related" />
     </div>
   );
 }

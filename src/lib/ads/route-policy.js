@@ -29,6 +29,10 @@ export function getAdRoutePolicy(pathname = '/') {
   const isDateSection = normalized === '/date' || normalized.startsWith('/date/');
   const isTimeNowSection = normalized === '/time-now' || normalized.startsWith('/time-now/');
   const isTimeDifferenceSection = normalized === '/time-difference' || normalized.startsWith('/time-difference/');
+  // Blog articles and prayer pages are long, high-dwell surfaces where the
+  // dismissible mobile anchor adds viewable impressions without covering content.
+  const isBlogDetail = normalized.startsWith('/blog/');
+  const isPrayerSection = normalized === '/mwaqit-al-salat' || normalized.startsWith('/mwaqit-al-salat/');
 
   return {
     allowAdDelivery,
@@ -38,7 +42,9 @@ export function getAdRoutePolicy(pathname = '/') {
       isHolidayDetail ||
       isDateSection ||
       isTimeNowSection ||
-      isTimeDifferenceSection
+      isTimeDifferenceSection ||
+      isBlogDetail ||
+      isPrayerSection
       ),
   };
 }

@@ -657,65 +657,154 @@
   color: var(--blue-hover);
 }
 
+/* Related calculators — ranked structure (1 featured + compact rows), not a
+   card wall. Follows DESIGN.md §5.6: repeated equal boxes become a priority
+   expression. The panel is a legitimate self-contained surface (§5.4 #4). */
 .calc-related-panel {
   display: grid;
-  gap: var(--space-4);
-  max-width: 980px;
+  gap: var(--space-5);
+  max-width: 720px;
   margin-inline: auto;
-  padding: var(--space-4);
+  padding: var(--space-6);
   border: 1px solid color-mix(in srgb, var(--border-default) 58%, transparent);
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--blue) 5%, transparent), transparent),
+    linear-gradient(180deg, color-mix(in srgb, var(--blue) 5%, transparent), transparent 40%),
     color-mix(in srgb, var(--bg-surface-1) 78%, transparent);
 }
 
 .calc-related-panel__head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--space-3);
-  align-items: end;
+  gap: var(--space-2);
 }
 
-.calc-related-panel__head .calc-section-eyebrow {
-  grid-column: 1 / -1;
-}
-
+.calc-related-panel__head .calc-section-eyebrow,
 .calc-related-panel__head h3,
 .calc-related-panel__head p {
   margin: 0;
 }
 
-.calc-related-panel__count {
-  display: inline-flex;
-  min-height: 2.2rem;
-  align-items: center;
-  justify-content: center;
-  padding-inline: 0.75rem;
-  border: 1px solid color-mix(in srgb, var(--blue) 36%, var(--border-default));
+/* Featured recommendation — the single strongest next step. */
+.calc-related-featured {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border: 1px solid color-mix(in srgb, var(--blue) 32%, var(--border-default));
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(150deg, color-mix(in srgb, var(--blue) 14%, transparent), transparent 60%),
+    color-mix(in srgb, var(--bg-surface-2) 88%, transparent);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.calc-related-featured:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--blue) 52%, var(--border-default));
+}
+
+.calc-related-featured:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.calc-related-featured__reason {
+  justify-self: start;
+  padding: 0.15rem 0.6rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--blue) 10%, transparent);
-  color: var(--text-primary);
+  background: color-mix(in srgb, var(--blue) 16%, transparent);
+  color: var(--blue-text, var(--text-primary));
   font-size: var(--text-xs);
   font-weight: var(--font-extrabold);
+}
+
+.calc-related-featured__title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-extrabold);
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+.calc-related-featured__desc {
+  font-size: var(--text-sm);
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+.calc-related-featured__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: var(--space-1);
+  color: var(--blue);
+  font-size: var(--text-sm);
+  font-weight: var(--font-extrabold);
+}
+
+/* Remaining tools — compact rows, scannable, with a reason chip each. */
+.calc-related-rows {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.calc-related-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 3.4rem;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--bg-surface-1) 70%, transparent);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.calc-related-row:hover {
+  border-color: color-mix(in srgb, var(--blue) 40%, var(--border-default));
+  background: color-mix(in srgb, var(--bg-surface-2) 80%, transparent);
+}
+
+.calc-related-row:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.calc-related-row__reason {
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-2);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
   white-space: nowrap;
 }
 
-.calc-related-grid.calc-resource-stack--cards {
-  max-width: none;
-  margin-inline: 0;
-}
-
-.calc-related-grid .calc-resource-link {
-  gap: 0.7rem;
-  padding: 0.95rem;
-}
-
-.calc-related-grid .calc-resource-link__copy .calc-card-description {
-  display: -webkit-box;
+.calc-related-row__title {
+  min-width: 0;
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  line-height: 1.5;
+  color: var(--text-primary);
   overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calc-related-row__arrow {
+  color: var(--text-muted);
+  transition: color 0.18s ease;
+}
+
+.calc-related-row:hover .calc-related-row__arrow {
+  color: var(--blue);
 }
 
 .calc-footer-strip {
@@ -758,32 +847,17 @@
   }
 }
 
-@media (min-width: 900px) {
-  .calc-related-grid.calc-resource-stack--cards {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .calc-related-grid.calc-resource-stack--cards > .calc-resource-link:first-child {
-    grid-column: span 2;
-  }
-}
-
 @media (max-width: 640px) {
   .calc-related-panel {
-    padding: var(--space-3);
+    padding: var(--space-4);
   }
 
-  .calc-related-panel__head {
-    grid-template-columns: minmax(0, 1fr);
-    align-items: start;
+  .calc-related-featured {
+    padding: var(--space-4);
   }
 
-  .calc-related-panel__count {
-    width: fit-content;
-  }
-
-  .calc-related-grid .calc-resource-link {
-    min-height: auto;
+  .calc-related-row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
   }
 }
 
@@ -6344,7 +6418,7 @@ main:not(.calc-hub-page) .calc-cta-card .calc-section-title {
 
 .calc-esb-page .calc-esb-result-context {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-3);
 }
 
@@ -6588,11 +6662,22 @@ main:not(.calc-hub-page) .calc-select-trigger.select[data-slot="select-trigger"]
 @media (min-width: 1020px) {
   .calc-esb-page .end-service-tool .calc-app-grid {
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) !important;
+    align-items: start;
   }
 
   .calc-esb-page .calc-results-panel {
     position: sticky;
     top: 5rem;
+    z-index: 2;
+    align-self: start;
+  }
+
+  /* A sticky panel must be opaque, otherwise content scrolling underneath it
+     ghosts through the translucent surface. Give the sticky result card a
+     solid background and isolate its stacking context. */
+  .calc-esb-page .calc-results-panel > .calc-surface-card {
+    background: var(--bg-surface-1) !important;
+    isolation: isolate;
   }
 }
 
@@ -7397,5 +7482,12 @@ main:not(.calc-hub-page) .calc-room-add {
   .calculator-layout-shell .calc-esb-page #esb-guide .calc-tabs-list,
   .calculator-layout-shell .calc-esb-page #esb-guide .calc-tabs-panel .calc-grid-2 {
     grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+@media (min-width: 900px) {
+  main:not(.calc-hub-page) .calc-page-title {
+    font-size: 2.75rem;
+    max-width: 22ch;
   }
 }

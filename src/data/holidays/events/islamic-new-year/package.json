@@ -148,7 +148,7 @@
       }
     ],
     "seoMeta": {
-      "titleTag": "متى رأس السنة الهجرية {{year}} - {{hijriYear}} هـ؟ | 1 محرم - ميقاتنا",
+      "titleTag": "رأس السنة الهجرية {{year}} - {{hijriYear}} هـ | {{formattedDate}}",
       "metaDescription": "اعرف موعد رأس السنة الهجرية {{year}} - {{hijriYear}} هـ وبداية 1 محرم، وهل التاريخ نهائي أم متوقع، ولماذا ليست المناسبة عيداً شرعياً مستقلاً.",
       "h1": "متى رأس السنة الهجرية {{year}} - {{hijriYear}} هـ؟ | 1 محرم",
       "canonicalPath": "/holidays/islamic-new-year",
@@ -222,7 +222,7 @@
       "mawlid",
       "nisf-shaban",
       "hajj-season",
-      "new-year"
+      "ramadan"
     ],
     "sources": [
       {

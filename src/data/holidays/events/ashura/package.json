@@ -154,7 +154,7 @@
       }
     ],
     "seoMeta": {
-      "titleTag": "عاشوراء {{year}} - {{hijriYear}} هـ | كم باقي وكيف تصومه؟ - ميقاتنا",
+      "titleTag": "عاشوراء {{year}} - {{hijriYear}} هـ | {{formattedDate}}",
       "metaDescription": "موعد عاشوراء {{year}} - {{hijriYear}} هـ مع عداد دقيق، وشرح واضح لفضل الصيام ومراتبه، وماذا تفعل إذا فاتك تاسوعاء أو اختلفت بداية الشهر.",
       "h1": "عاشوراء {{year}} - {{hijriYear}} هـ | كم باقي وفضل الصيام؟",
       "canonicalPath": "/holidays/ashura",
@@ -239,7 +239,7 @@
       "laylat-al-qadr",
       "mawlid",
       "hajj-season",
-      "first-dhul-hijjah"
+      "isra-miraj"
     ],
     "about": {
       "heading": "عن عاشوراء",

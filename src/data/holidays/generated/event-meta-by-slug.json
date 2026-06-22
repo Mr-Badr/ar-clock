@@ -511,6 +511,17 @@
       "first-dhul-hijjah-in-usa"
     ]
   },
+  "bac-results-tunisia": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "tn"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/bac-results-tunisia",
+    "aliases": []
+  },
   "winter-season": {
     "publishStatus": "published",
     "countryScope": "custom",
@@ -1774,6 +1785,39 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/january-25-egypt",
+    "aliases": []
+  },
+  "iraq-national-day": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "iq"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/iraq-national-day",
+    "aliases": []
+  },
+  "libya-independence-day": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ly"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/libya-independence-day",
+    "aliases": []
+  },
+  "palestine-land-day": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ps"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/palestine-land-day",
     "aliases": []
   },
   "world-fathers-day": {

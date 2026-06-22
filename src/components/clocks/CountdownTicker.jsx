@@ -322,7 +322,45 @@ const PLATFORMS = [
    SHARE BAR — named export. Root is <section> — no wrapper, no style tags.
    window.location resolved only after mount (never in render path).
 ───────────────────────────────────────────────────────────────────── */
-export function ShareBar({ url, eventName, days, dateStr }) {
+function buildGoogleCalendarUrl(eventName, isoDate, pageUrl) {
+  if (!isoDate) return null;
+  const d = isoDate.split('T')[0].replace(/-/g, '');
+  const nextDay = new Date(isoDate);
+  nextDay.setDate(nextDay.getDate() + 1);
+  const end = nextDay.toISOString().split('T')[0].replace(/-/g, '');
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: eventName,
+    dates: `${d}/${end}`,
+    details: pageUrl || '',
+  });
+  return `https://www.google.com/calendar/render?${params.toString()}`;
+}
+
+function buildIcsDataUrl(eventName, isoDate, pageUrl) {
+  if (!isoDate) return null;
+  const d = isoDate.split('T')[0].replace(/-/g, '');
+  const nextDay = new Date(isoDate);
+  nextDay.setDate(nextDay.getDate() + 1);
+  const end = nextDay.toISOString().split('T')[0].replace(/-/g, '');
+  const uid = `${d}-${encodeURIComponent(eventName)}@miqatona.com`;
+  const ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//ميقاتنا//AR//EN',
+    'BEGIN:VEVENT',
+    `UID:${uid}`,
+    `DTSTART;VALUE=DATE:${d}`,
+    `DTEND;VALUE=DATE:${end}`,
+    `SUMMARY:${eventName}`,
+    `URL:${pageUrl || ''}`,
+    'END:VEVENT',
+    'END:VCALENDAR',
+  ].join('\r\n');
+  return `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}`;
+}
+
+export function ShareBar({ url, eventName, days, dateStr, eventISODate }) {
   const { copied, copy } = useCopyFeedback(2500);
   const [pageUrl, setPageUrl] = useState(url || '');
 
@@ -331,6 +369,8 @@ export function ShareBar({ url, eventName, days, dateStr }) {
   }, [url]);
 
   const shareText = `${eventName}: متبقي ${days} يوم (${dateStr})`;
+  const gcalUrl = buildGoogleCalendarUrl(eventName, eventISODate, pageUrl);
+  const icsUrl = buildIcsDataUrl(eventName, eventISODate, pageUrl);
 
   const handleCopy = async () => {
     await copy(pageUrl);
@@ -422,6 +462,61 @@ export function ShareBar({ url, eventName, days, dateStr }) {
           : <span>نسخ الرابط</span>
         }
       </button>
+
+      {(gcalUrl || icsUrl) && (
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: gcalUrl && icsUrl ? '1fr 1fr' : '1fr',
+          gap: 'var(--space-2)',
+          marginTop: 'var(--space-2)',
+        }}>
+          {gcalUrl && (
+            <a
+              href={gcalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="أضف إلى تقويم جوجل"
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                gap: '0.4rem', padding: 'var(--space-3)', borderRadius: 'var(--radius-lg)',
+                border: '1px solid var(--border-default)',
+                background: 'var(--bg-surface-3)',
+                color: 'var(--text-secondary)',
+                fontSize: 'var(--text-xs)', fontWeight: '600',
+                textDecoration: 'none', cursor: 'pointer',
+                transition: 'opacity 0.15s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.opacity = '0.75'; }}
+              onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}
+            >
+              <CalendarDays size={14} />
+              تقويم جوجل
+            </a>
+          )}
+          {icsUrl && (
+            <a
+              href={icsUrl}
+              download={`${eventName}.ics`}
+              aria-label="تحميل ملف ICS للتقويم"
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                gap: '0.4rem', padding: 'var(--space-3)', borderRadius: 'var(--radius-lg)',
+                border: '1px solid var(--border-default)',
+                background: 'var(--bg-surface-3)',
+                color: 'var(--text-secondary)',
+                fontSize: 'var(--text-xs)', fontWeight: '600',
+                textDecoration: 'none', cursor: 'pointer',
+                transition: 'opacity 0.15s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.opacity = '0.75'; }}
+              onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}
+            >
+              <CalendarDays size={14} />
+              Apple / Outlook
+            </a>
+          )}
+        </div>
+      )}
     </section>
   );
 }

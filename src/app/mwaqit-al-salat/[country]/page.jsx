@@ -26,6 +26,7 @@ import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import { Skeleton } from '@/components/ui/skeleton';
 import routeStyles from '@/app/mwaqit-al-salat/PrayerRoutePage.module.css';
@@ -667,6 +668,8 @@ export default async function CountryPrayerPage({ params }) {
             />
           </div>
         </section>
+
+        <AdMultiplex slotId={`end-prayer-country-${countrySlug}`} className="container mx-auto px-4" />
 
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
           <div className={routeStyles.sectionPanel}>

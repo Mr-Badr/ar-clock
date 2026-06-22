@@ -150,7 +150,7 @@
       }
     ],
     "seoMeta": {
-      "titleTag": "عيد الفطر {{year}} - {{hijriYear}} هـ | الموعد وزكاة الفطر - ميقاتنا",
+      "titleTag": "عيد الفطر {{year}} - {{hijriYear}} هـ | {{formattedDate}}",
       "metaDescription": "اعرف متى يوافق عيد الفطر {{year}} - {{hijriYear}} هـ، وكم بقي عليه، ومتى تُخرج زكاة الفطر، ومتى صلاة العيد، مع تنبيه إلى اختلاف الإعلان الرسمي بين الدول.",
       "h1": "عيد الفطر {{year}} - {{hijriYear}} هـ | الموعد وزكاة الفطر",
       "canonicalPath": "/holidays/eid-al-fitr",
@@ -226,7 +226,8 @@
       "laylat-al-qadr",
       "eid-al-adha",
       "day-of-arafa",
-      "nisf-shaban"
+      "nisf-shaban",
+      "hajj-season"
     ],
     "countryDates": [
       {

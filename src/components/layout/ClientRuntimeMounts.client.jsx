@@ -10,6 +10,7 @@ const ConsentBanner = dynamic(() => import('@/components/consent/ConsentBanner')
 const ScrollToTopButton = dynamic(() => import('@/components/layout/ScrollToTopButton'), { ssr: false });
 const ServiceWorkerRegistration = dynamic(() => import('@/components/ServiceWorkerRegistration'), { ssr: false });
 const SiteVisitTracker = dynamic(() => import('@/components/site/SiteVisitTracker.client'), { ssr: false });
+const WebVitalsReporter = dynamic(() => import('@/components/analytics/WebVitalsReporter.client'), { ssr: false });
 const Toaster = dynamic(() => import('sonner').then((module) => module.Toaster), { ssr: false });
 
 function scheduleIdle(callback) {
@@ -56,6 +57,7 @@ export default function ClientRuntimeMounts() {
           <SiteVisitTracker />
           <ScrollToTopButton />
           <AnalyticsProvider />
+          <WebVitalsReporter />
           <AdSenseProvider />
           <ServiceWorkerRegistration />
           <Toaster
