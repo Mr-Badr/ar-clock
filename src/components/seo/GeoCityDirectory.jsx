@@ -25,6 +25,7 @@ function normalizeCities(cities) {
  * @param {string} props.routeBase
  * @param {string} props.linkLabelPrefix
  * @param {string} props.ariaLabel
+ * @param {number} [props.featuredCount=0] — always-visible cities shown above the collapsible (for SEO link authority)
  */
 export default function GeoCityDirectory({
   title,
@@ -33,6 +34,7 @@ export default function GeoCityDirectory({
   routeBase,
   linkLabelPrefix,
   ariaLabel,
+  featuredCount = 0,
 }) {
   const safeCities = normalizeCities(cities);
 
@@ -45,6 +47,10 @@ export default function GeoCityDirectory({
     );
   }
 
+  const clampedFeatured = Math.min(Math.max(0, featuredCount), safeCities.length);
+  const featuredCities = safeCities.slice(0, clampedFeatured);
+  const restCities     = safeCities.slice(clampedFeatured);
+
   return (
     <div>
       <div className={styles.heading}>
@@ -52,16 +58,11 @@ export default function GeoCityDirectory({
         <p>{description}</p>
       </div>
 
-      <details className={styles.directory}>
-        <summary>
-          عرض دليل المدن الكامل
-          <span>{safeCities.length} مدينة</span>
-        </summary>
-        <nav aria-label={ariaLabel}>
-          <ul className={styles.list}>
-            {safeCities.map((city) => {
+      {featuredCities.length > 0 && (
+        <nav aria-label={`أبرز مدن — ${ariaLabel || title}`}>
+          <ul className={styles.featuredLinks}>
+            {featuredCities.map((city) => {
               const cityName = city.name_ar || city.name_en;
-
               return (
                 <li key={city.city_slug}>
                   <Link href={`${routeBase}/${city.city_slug}`}>
@@ -72,7 +73,30 @@ export default function GeoCityDirectory({
             })}
           </ul>
         </nav>
-      </details>
+      )}
+
+      {restCities.length > 0 && (
+        <details className={styles.directory}>
+          <summary>
+            {clampedFeatured > 0 ? 'مدن أخرى' : 'عرض دليل المدن الكامل'}
+            <span>{restCities.length} مدينة</span>
+          </summary>
+          <nav aria-label={ariaLabel}>
+            <ul className={styles.list}>
+              {restCities.map((city) => {
+                const cityName = city.name_ar || city.name_en;
+                return (
+                  <li key={city.city_slug}>
+                    <Link href={`${routeBase}/${city.city_slug}`}>
+                      {linkLabelPrefix} {cityName}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        </details>
+      )}
     </div>
   );
 }

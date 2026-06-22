@@ -592,6 +592,7 @@ async function CountryTimePageSections({
               routeBase={`/time-now/${countrySlug}`}
               linkLabelPrefix="الوقت الآن في"
               ariaLabel={`دليل الوقت الآن في مدن ${countryAr}`}
+              featuredCount={12}
             />
           </div>
         </section>

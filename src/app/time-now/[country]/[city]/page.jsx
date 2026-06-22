@@ -40,6 +40,7 @@ import SameTimezoneCountries from '@/components/time-now/SameTimezoneCountries';
 import TimeNowFAQ from '@/components/time-now/TimeNowFAQ';
 import RelatedSearches from '@/components/time-now/RelatedSearches';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { Skeleton } from '@/components/ui/skeleton';
 import routeStyles from '@/app/time-now/TimeNowRoutePage.module.css';
 
@@ -350,49 +351,57 @@ export default async function CityTimePage({ params }) {
   ];
 
   /* ── JSON-LD SCHEMAS ─────────────────────────────────────────── */
+  const cityPageId = `${BASE}/time-now/${countrySlug}/${citySlug}`;
+
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    '@id': `${BASE}/time-now/${countrySlug}/${citySlug}#breadcrumb`,
+    '@id': `${cityPageId}#breadcrumb`,
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${BASE}/` },
       { '@type': 'ListItem', position: 2, name: 'الوقت الان', item: `${BASE}/time-now` },
       { '@type': 'ListItem', position: 3, name: `الوقت في ${countryAr}`, item: `${BASE}/time-now/${countrySlug}` },
-      { '@type': 'ListItem', position: 4, name: `الوقت في ${cityAr}`, item: `${BASE}/time-now/${countrySlug}/${citySlug}` },
+      { '@type': 'ListItem', position: 4, name: `الوقت في ${cityAr}`, item: cityPageId },
     ],
   };
 
   const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
+    '@id': `${cityPageId}#webpage`,
     name: `الوقت الان في ${cityAr}، ${countryAr}`,
-    url: `${BASE}/time-now/${countrySlug}/${citySlug}`,
+    url: cityPageId,
     description: `الوقت الحالي في ${cityAr} بدقة حتى الثانية مع التاريخ المحلي، فرق UTC ${offset}، منطقة IANA، حالة التوقيت الصيفي، وروابط الصلاة وفرق التوقيت.`,
     inLanguage: 'ar',
-    breadcrumb: { '@id': `${BASE}/time-now/${countrySlug}/${citySlug}#breadcrumb` },
-    mainEntity: {
-      '@type': 'City',
-      name: city.name_en,
-      alternateName: cityAr,
-      containedInPlace: {
-        '@type': 'Country',
-        name: country.name_en,
-        alternateName: countryAr,
-      },
+    breadcrumb: { '@id': `${cityPageId}#breadcrumb` },
+    about: { '@id': `${cityPageId}#place` },
+  };
+
+  const placeSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'City',
+    '@id': `${cityPageId}#place`,
+    name: city.name_en || cityAr,
+    alternateName: cityAr,
+    url: cityPageId,
+    containedInPlace: {
+      '@type': 'Country',
+      name: country.name_en || countryAr,
+      alternateName: countryAr,
+    },
+    ...(city.lat && city.lon ? {
       geo: {
         '@type': 'GeoCoordinates',
-        latitude: city.lat,
-        longitude: city.lon,
+        latitude: Number(city.lat),
+        longitude: Number(city.lon),
       },
-    },
+    } : {}),
   };
 
   /* ── RENDER ──────────────────────────────────────────────────── */
   return (
     <div className="min-h-screen bg-base text-primary" dir="rtl" lang="ar">
-      {/* Structured Data */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+      <JsonLd data={[breadcrumbSchema, webPageSchema, placeSchema]} />
 
       <AdLayoutWrapper layout="wide" sidebarMode="dual">
         <main>

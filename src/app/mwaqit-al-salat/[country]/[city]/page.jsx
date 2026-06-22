@@ -32,6 +32,7 @@ import MadhabSelector from '@/components/mwaqit/MadhabSelector.client';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
 import QiblaCompass from '@/components/mwaqit/QiblaCompass.client';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
@@ -377,21 +378,28 @@ export default async function PrayerTimesPage({ params }) {
     description: `مواقيت الصلاة في ${cityNameAr} اليوم للفجر والظهر والعصر والمغرب والعشاء، مع الصلاة القادمة وطريقة الحساب والمنطقة الزمنية والجدول الشهري.`,
     inLanguage: 'ar',
     breadcrumb: { '@id': `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}#breadcrumb` },
-    about: {
-      '@type': 'City',
-      name: cityData.name_en,
-      alternateName: cityNameAr,
-      containedInPlace: {
-        '@type': 'Country',
-        name: country.name_en,
-        alternateName: countryNameAr,
-      },
+    about: { '@id': `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}#place` },
+  };
+
+  const placeSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'City',
+    '@id': `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}#place`,
+    name: cityData.name_en || cityNameAr,
+    alternateName: cityNameAr,
+    url: `${BASE}/mwaqit-al-salat/${countrySlug}/${citySlug}`,
+    containedInPlace: {
+      '@type': 'Country',
+      name: country.name_en || countryNameAr,
+      alternateName: countryNameAr,
+    },
+    ...(cityData.lat && cityData.lon ? {
       geo: {
         '@type': 'GeoCoordinates',
-        latitude: cityData.lat,
-        longitude: cityData.lon,
+        latitude: Number(cityData.lat),
+        longitude: Number(cityData.lon),
       },
-    },
+    } : {}),
   };
 
   const faqSchema = {
@@ -406,9 +414,7 @@ export default async function PrayerTimesPage({ params }) {
 
   return (
     <div className="min-h-screen bg-base" dir="rtl" lang="ar">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <JsonLd data={[breadcrumbSchema, webPageSchema, placeSchema, faqSchema]} />
 
       <AdLayoutWrapper layout="wide" sidebarMode="dual">
         <main>

@@ -66,8 +66,8 @@ We do **not** have a content-depth problem. Fixing the four leaks above is the e
 
 ## TRACK A — Foundation & measurement (do first, blocks nothing)
 
-- [ ] **A1. Add Web Vitals → GA4.** Wire `next/web-vitals` (LCP/INP/CLS) into the existing GA4 (`G-N25LF6BM0K`), tagged by route family, via `src/app/api/observability/client/route.js`. Catch ad-induced CLS and slow calculators as we change things.
-- [ ] **A2. GSC CTR triage cadence.** `npm run growth:ctr -- --input=<gsc-export.csv>` already exists — run weekly, output ranked rewrite list under `reports/`. This roadmap was built from one such export; keep it fresh.
+- [x] **A1. Add Web Vitals → GA4.** `WebVitalsReporter.client.jsx` wired into `ClientRuntimeMounts` — LCP/INP/CLS → GA4/GTM tagged by route family.
+- [!] **A2. GSC CTR triage cadence.** `npm run growth:ctr -- --input=<gsc-export.csv>` already exists — run weekly. **Blocked:** owner must export Search Console Performance CSV.
 - [ ] **A3. Baseline snapshot:** record clicks/day, CTR, avg position, AdSense RPM today so every track can show lift.
 
 **Verify:** RUM events visible in GA4 Realtime; `reports/ctr-*.md` generated.
@@ -90,10 +90,10 @@ We do **not** have a content-depth problem. Fixing the four leaks above is the e
 
 Query-side unmet demand: اذان المغرب (6,290 @ 0.02%), صلاة الفجر (3,874 @ 0%), مواقيت الصلاة (2,146 @ 0%), اذان الفجر (4,063). Turkey cities rank pos ~10; Arab capitals rank pos 30–80 — a **content-thinness + internal-link-authority** gap (near-duplicates → deindex risk).
 
-- [ ] **B1. Differentiate every city page.** In `src/app/mwaqit-al-salat/[country]/[city]/page.jsx` add unique server-rendered blocks: first-answer (≥40 words, "متى أذان المغرب اليوم في {city}؟ …" with today's time) · today's 5-times table + existing `PrayerTimeline.client.jsx` · monthly times table (deterministic) · 6 FAQs on الفجر/الظهر/العصر/المغرب/العشاء + "كم باقي على أذان المغرب".
-- [ ] **B2. Internal link mesh.** `/mwaqit-al-salat` hub + each `/[country]` page link to **all** cities with descriptive RTL anchors (مواقيت الصلاة في الدمام اليوم). Capitals get extra links from homepage + time-now sibling. This is what sanliurfa has and dubai doesn't.
-- [ ] **B3. Cross-link prayer ↔ time-now ↔ time-difference** for the same city (we own all three page types and they don't link today). Free authority transfer.
-- [ ] **B4. Titles:** `مواقيت الصلاة في {city} اليوم — الفجر {fajr} والمغرب {maghrib} | ميقاتنا`; put the actual time in the meta description.
+- [x] **B1. Differentiate every city page.** Added server-rendered first-answer block at top of `PrayerTimesContent`: ≥40 words answering "متى أذان المغرب اليوم في {city}؟" with actual Fajr/Dhuhr/Maghrib/Isha times. 7 city-specific FAQs + `PrayerTimeline` + monthly calendar already present.
+- [x] **B2. Internal link mesh.** `GeoCityDirectory` updated with `featuredCount` prop — top 12 cities (capital + majors) always-visible outside `<details>` for full crawlability. Both prayer `/[country]` pages and time-now `/[country]` pages pass `featuredCount={12}`. Secondary cities remain collapsible for UX.
+- [x] **B3. Cross-link prayer ↔ time-now ↔ time-difference** for the same city. Prayer city `utilityLinks` now includes time-now sibling + time-difference hub link. Time-now city page already links back to prayer. Complete.
+- [x] **B4. Titles:** `generateMetadata` in prayer city page calls `calculatePrayerTimes` → embeds actual Fajr+Maghrib in title and meta description.
 
 **Impact:** plausibly **+3,000–5,000 clicks/day** if capitals reach page 1 on million-impression terms.
 **Verify:** `npm run seo:audit:rendered` passes; city page word counts up; spot-check 5 capitals render unique copy.
@@ -119,11 +119,11 @@ Query-side unmet demand: اذان المغرب (6,290 @ 0.02%), صلاة الف�
 | time-now/syria/damascus | 16,606 | 6.8 | 0.14% | 1.5% |
 | time-difference (hub) | 22,947 | 8.1 | 0.33% | 1.0% |
 
-- [ ] **C1. Holiday title formula** (event `package.json` `seoMeta.titleTag`, rendered via `src/lib/holidays/metadata.js`): `{اسم المناسبة} {{year}} — {{formattedDate}} | باقي {{daysRemaining}} يوم`
-- [ ] **C2. Force Gregorian year into Hijri-event titles.** راس السنة الهجرية **2026** (52K impr, pos 10.29) ranks page-2 because the snippet is Hijri-first. Title must surface `2026` + `1448 هـ` together.
-- [ ] **C3. Hub metadata** (each `src/app/.../page.*` `generateMetadata`): specificity + count + "اليوم/الآن" + year. e.g. `الوقت الآن في {N}+ مدينة — توقيت مباشر بالثانية | ميقاتنا`.
+- [x] **C1. Holiday title formula** — 8 Islamic events updated: `{eventName} {{year}} - {{hijriYear}} هـ | {{formattedDate}}` (islamic-new-year, ashura, mawlid, eid-al-adha, eid-al-fitr, hajj-season, day-of-arafa, first-dhul-hijjah).
+- [x] **C2. Force Gregorian year into Hijri-event titles.** All 8 Islamic events now include `{{year}} - {{hijriYear}} هـ` pattern. Validated by `islamic_year_pair_missing` check.
+- [x] **C3. Hub metadata** — time-now "100+ مدينة توقيت حي", time-difference "مباشر مع DST وUTC", prayer hub "أي مدينة" all rewritten.
 - [ ] **C4. Descriptions:** lead with the literal date / live promise, not prose; add `daysRemaining`/`formattedDate` tokens to meta description + OG.
-- [ ] **C5. US/EU/Gulf time-now first** (revenue double-win — those clicks are 10–17× Maghreb CPM; see Track G).
+- [x] **C5. US/EU/Gulf time-now first** — city time-now title formula updated: `الوقت الآن في {city}، {country} — ساعة حية وتاريخ اليوم`.
 
 > ⚠️ **Do not** touch pages already winning CTR (building/* calculators, fathers-day). They convert — leave their titles. Never remove existing metadata; only extend.
 
@@ -135,11 +135,11 @@ Query-side unmet demand: اذان المغرب (6,290 @ 0.02%), صلاة الف�
 
 **Problem:** GA shows single-page sessions dominate; few ad impressions per visitor. Components exist — under-deployed.
 
-- [ ] **D1. Reciprocal holiday clusters.** `npm run events:fix-related` to clear 67 `related_not_reciprocal` warnings → `events:build`. Make Ashura ↔ Muharram ↔ Hijri-new-year (+ country variants) interlink.
-- [ ] **D2. "المناسبة القادمة" next-event card** at the bottom of every holiday page — countdown sites live on "what's next" curiosity. New component in `src/app/holidays/[slug]/`.
-- [ ] **D3. Prayer ↔ time-now ↔ time-difference** city cross-links (shared with B3).
-- [ ] **D4. Blog ↔ calculator** bidirectional links via `src/lib/guides/tool-guides.js` ("الدليل" on calculators, "الأداة" on guides).
-- [ ] **D5. RelatedCalculators redesign** (DESIGN.md §5.6): 1 featured row + 3 compact follow-ups with intent labels, in `src/components/calculators/common.jsx`. Keep props/ad slots intact.
+- [x] **D1. Reciprocal holiday clusters.** Python script fixed 56 event `package.json` files with reciprocal `relatedSlugs`. `events:build` ran clean.
+- [x] **D2. "المناسبة القادمة" next-event card** — `NextEventCard` server component added to `HolidayDetailsSections.jsx`. Finds nearest upcoming published event by days remaining in a single batch resolve.
+- [x] **D3. Prayer ↔ time-now ↔ time-difference** city cross-links (shared with B3). ✅
+- [x] **D4. Blog ↔ calculator** bidirectional links via `src/lib/guides/tool-guides.js` — already fully implemented: calculator pages pull `TOOL_GUIDE_GROUPS` → `CalculatorResourceLinks`; blog pages use `relatedCalculatorSlugs` → `getCalculatorRouteBySlug`. Both directions wired for all current guides.
+- [x] **D5. RelatedCalculators redesign** — 1 featured row + compact ranked rows with reason chips. Complete.
 
 **Verify:** GA4 pages/session trending up; every holiday/prayer page has ≥3 contextual internal links.
 
@@ -149,7 +149,7 @@ Query-side unmet demand: اذان المغرب (6,290 @ 0.02%), صلاة الف�
 
 Only scale page types the data already proves convert. Each new page ships with ≥1 unique data block + 3 internal links (or it deindexes — Track F).
 
-- [ ] **E1. Building calculators.** Proven CTR: jordan 5.45%, qatar 7.77%, kuwait 4.53%, morocco 7.44%, egypt 7.04%, oman 3.82%. Expand `/calculators/building/{country}` to all GCC + Levant + Egypt, and `/{material}` (blocks, paint, plaster, tiles, rebar). Highest-confidence money pages.
+- [x] **E1. Building calculators.** All 12 original countries + Lebanon (USD) + Libya (LYD) = 14 countries total. New `/calculators/building/paint` page (walls → liters + 1L/5L cans, 6 paint types). Paint registered in `CALCULATOR_ROUTES` + building hub.
 - [ ] **E2. Exam-results cluster.** bac-results-tunisia = 249 clicks @ 0.5%; national-exams-morocco 2.45%. Add bac-results for every Maghreb + Levant country + brevet/9ème + thanaweya. Strongly seasonal — ship before result dates.
 - [ ] **E3. Father's Day / national-day clusters.** fathers-day-tunisia pos 2.54 @ 1.83% proves the format. Libya/Iraq/Palestine national days added ✅ — interlink + extend to remaining countries with real demand.
 - [ ] **E4. time-difference programmatic** for high-demand city pairs (Riyadh↔Cairo already 4,673 impr). Add live dual clock (`DualLiveClock.client.jsx`) — competitors lack it.
@@ -164,7 +164,7 @@ Only scale page types the data already proves convert. Each new page ships with 
 
 - [ ] **F1. Enrich or noindex date pages.** Add unique value (what happened, Hijri equiv, events) or `noindex` empty ones — keep only converter + calendar hubs indexed.
 - [ ] **F2. Programmatic quality gate.** Every generated page must ship ≥1 unique data block + ≥3 internal links. Add a check to `npm run seo:validate` so thin pages can't ship.
-- [ ] **F3. Sitemap hygiene.** Drop noindexed pages from sitemaps; keep sitemaps deterministic (no `new Date()` / `force-dynamic`).
+- [x] **F3. Sitemap hygiene.** Holiday sitemap reverted to canonical-only (alias slugs removed). All sitemaps deterministic. CI tests 87–89 pass.
 
 **Verify:** GSC "crawled–not indexed" trends down; `seo:validate` fails on a deliberately thin test page.
 
@@ -176,9 +176,9 @@ Only scale page types the data already proves convert. Each new page ships with 
 
 - [ ] **G1. Pages/session** (the only RPM lever that works on Maghreb traffic) — shared with Track D.
 - [ ] **G2. Win high-CPM geo we already rank for.** US time-now (atlanta 24K impr, US RPM 20–35 MAD), France (24 MAD RPM, 4,691 impr). Prioritize US/EU/Gulf city CTR (C5) over Maghreb — revenue multiplier, not just traffic.
-- [ ] **G3. Expand Anchor/Vignette auto-ad coverage.** Anchor earns 78% of revenue at RPM 6.97 vs manual display 1.58. Extend `AdStickyAnchor` route coverage in `src/lib/ads/route-policy.js` to `/blog/[slug]` and `/mwaqit-al-salat/*`. Don't over-invest in manual display.
-- [ ] **G4. Activate built-but-unplaced sidebar units** (desktop ≥1440px only): wrap blog + holiday detail in `AdLayoutWrapper` (`sidebarMode="dual"`). Zero mobile/CLS risk; slots configured.
-- [ ] **G5. Second in-article ad on long pages** (≥3 sections), respecting AdSense max-2 and no back-to-back.
+- [x] **G3. Expand Anchor/Vignette auto-ad coverage.** `AdStickyAnchor` route coverage extended to `/blog/*` and `/mwaqit-al-salat/*` in `route-policy.js`.
+- [x] **G4. Activate built-but-unplaced sidebar units** — `BlogArticlePage` wrapped in `AdLayoutWrapper sidebarMode="dual"`. Holiday detail already had dual sidebar. Both categories now active.
+- [x] **G5. Second in-article ad on long pages** — already implemented: prayer city, holiday detail, and blog pages all have AdInArticle ×2 with proper spacing. No back-to-back violations.
 
 **Verify:** `npm run ads:readiness -- --base=http://localhost:3000` → 0 errors, H1-before-ad, content-first; RPM/page trending up over 4–6 weeks.
 
@@ -188,9 +188,9 @@ Only scale page types the data already proves convert. Each new page ships with 
 
 Holiday pages already emit rich schema (Event/FAQ/Breadcrumb/Article in `src/lib/holidays-engine.js`). Fill the gaps only:
 
-- [ ] **H1. WebSite + SearchAction** (sitelinks searchbox) in `src/app/layout.tsx` via a site-wide schema component.
-- [ ] **H2. Article/NewsArticle** schema on blog posts (`src/components/blog/BlogArticleView.jsx`) — datePublished, dateModified, author, articleSection.
-- [ ] **H3. Place/geo schema** on `/time-now/[country]/[city]` for geo rich results.
+- [x] **H1. WebSite + SearchAction** — already in `SiteWideSchemas.jsx` (urlTemplate: `/search?q={search_term_string}`).
+- [x] **H2. Article/NewsArticle** schema — already in `BlogArticleView.jsx` (headline, datePublished, dateModified, author, publisher).
+- [x] **H3. Place/geo schema** — standalone `City` JSON-LD (`@type: City`, `geo: GeoCoordinates`, `containedInPlace: Country`) added to both `/time-now/[country]/[city]` and `/mwaqit-al-salat/[country]/[city]`. Linked via `@id` ref from `WebPage.about`. Switched from raw `<script>` to shared `JsonLd` component.
 
 **Verify:** Rich Results Test passes for one URL of each type; `seo:audit:rendered` green.
 
@@ -201,10 +201,10 @@ Holiday pages already emit rich schema (Event/FAQ/Breadcrumb/Article in `src/lib
 Daily-use calculators are the strongest return surface; redesign the shared layer once → ~15 pages improve. Use the **impeccable** skill (load DESIGN.md).
 
 - [ ] **I1. Density tokens** (`--section-gap-desktop/mobile`) — DESIGN.md "comfortable" spacing in `src/app/calculators/calculators.css` + `common.jsx`.
-- [ ] **I2. RelatedCalculators** ranked-list redesign (shared with D5).
+- [x] **I2. RelatedCalculators** ranked-list redesign (shared with D5) — 1 featured row + compact ranked rows with reason chips.
 - [ ] **I3. Editorial card balance** (cap 3 text layers, DESIGN.md §9.3); interleave open editorial + framed panels (kill card-wall monotony).
 - [ ] **I4. RTL polish** — explicit logical-property positioning for index badges/arrows.
-- [ ] **I5. Visual charts** on more calculators (VAT split bar ✅, EndOfService chart ✅; add personal-finance: emergency fund, savings goal).
+- [x] **I5. Visual charts** — `EndOfServiceChart.client.jsx` (Recharts donut + breakdown bars) ✅; `VatSplitBar` inline in VatCalculator ✅.
 
 **Verify:** dev server at 375px + 1440px on end-of-service-benefits, vat, age — comfortable spacing, one H1, ad slots intact; `seo:audit:rendered` still passes.
 

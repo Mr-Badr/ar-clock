@@ -495,6 +495,7 @@ export default async function CountryPrayerPage({ params }) {
               routeBase={`/mwaqit-al-salat/${countrySlug}`}
               linkLabelPrefix="مواقيت الصلاة في"
               ariaLabel={`دليل مواقيت الصلاة في مدن ${countryAr}`}
+              featuredCount={12}
             />
           </div>
         </section>
