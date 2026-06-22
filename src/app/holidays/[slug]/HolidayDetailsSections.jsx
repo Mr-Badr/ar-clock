@@ -14,6 +14,7 @@ import {
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import HistoricalTable from './HistoricalTable';
+import NextEventCard from './NextEventCard';
 import RelatedEvents from './RelatedEvents';
 import HolidayInternalLinks from './HolidayInternalLinks';
 import styles from '../HolidaysV4.module.css';
@@ -299,6 +300,10 @@ export default function HolidayDetailsSections({
           </ul>
         </section>
       )}
+
+      <Suspense fallback={null}>
+        <NextEventCard currentSlug={slug} />
+      </Suspense>
 
       <AdMultiplex slotId={`end-holiday-${slug}`} />
 

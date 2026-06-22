@@ -350,6 +350,11 @@ export default async function PrayerTimesPage({ params }) {
       label: 'التاريخ الهجري اليوم',
       description: 'انتقل إلى صفحة التاريخ الهجري اليوم والتحويلات المرتبطة بها.',
     },
+    {
+      href: '/time-difference',
+      label: `فرق التوقيت من ${cityNameAr}`,
+      description: `قارن توقيت ${cityNameAr} مع أي مدينة عربية أو عالمية في الوقت الفعلي.`,
+    },
   ];
 
   const breadcrumbSchema = {
@@ -749,8 +754,24 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
     },
   ];
 
+  const dhuhrStr = formatTime(times.dhuhr, cityData.timezone);
+  const ishaStr  = formatTime(times.isha,  cityData.timezone);
+
   return (
     <>
+      <section className={`${routeStyles.sectionPanel} mb-4`} aria-label={`الإجابة المباشرة — أوقات الصلاة في ${cityNameAr} اليوم`}>
+        <p className={routeStyles.firstAnswerText}>
+          <strong>متى أذان المغرب اليوم في {cityNameAr}؟</strong>{' '}
+          أذان المغرب في {cityNameAr} اليوم {todayLabel} عند الساعة <strong>{maghribStr}</strong>،
+          والفجر عند <strong>{fajrStr}</strong>، والظهر عند <strong>{dhuhrStr}</strong>،
+          والعشاء عند <strong>{ishaStr}</strong>.
+          المواقيت محسوبة بطريقة <strong>{methodInfo.label}</strong> بناءً على إحداثيات{' '}
+          {cityNameAr} والمنطقة الزمنية <strong>{cityData.timezone}</strong>، وتتغير يومياً
+          تبعاً لحركة الشمس وفصل السنة. راجع الجدول أدناه لمواقيت الصلوات الخمس كاملة،
+          والتقويم الشهري لتتبع التغيّر اليومي.
+        </p>
+      </section>
+
       <section className={`mb-6 ${routeStyles.sectionPanel}`}>
         <ErrorBoundary name="PrayerCityHero">
           <PrayerHeroClient

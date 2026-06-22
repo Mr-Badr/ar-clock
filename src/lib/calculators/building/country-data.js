@@ -373,6 +373,66 @@ export const COUNTRY_DATA = {
       other:    { name: 'محافظات أخرى', m: 0.82 },
     },
   },
+
+  lb: {
+    slug:        'lebanon',
+    countryKey:  'lb',
+    name:        'لبنان',
+    nameShort:   'لبنان',
+    currency:    'USD',
+    symbol:      '$',
+    flag:        '🇱🇧',
+    dialectNote: 'الأسعار بالدولار الأمريكي (USD) — التعامل النقدي السائد بعد 2022',
+    cementUnit:  'كيس',
+    rebarUnit:   'طن',
+    defaults: {
+      cement_50kg: 12,
+      rebar_ton:   1100,
+      sand_m3:     28,
+      gravel_m3:   38,
+      labor_day:   50,
+      tile_mid_m2: 22,
+    },
+    cost_per_m2: {
+      skeleton: 350, economy: 550, standard: 900, luxury: 1600, super_lux: 3000,
+    },
+    regions: {
+      beirut:   { name: 'بيروت',       m: 1.00 },
+      tripoli:  { name: 'طرابلس',      m: 0.88 },
+      sidon:    { name: 'صيدا',        m: 0.85 },
+      zahle:    { name: 'زحلة',        m: 0.82 },
+      other:    { name: 'مناطق أخرى', m: 0.80 },
+    },
+  },
+
+  ly: {
+    slug:       'libya',
+    countryKey: 'ly',
+    name:       'ليبيا',
+    nameShort:  'ليبيا',
+    currency:   'LYD',
+    symbol:     'د.ل',
+    flag:       '🇱🇾',
+    cementUnit: 'كيس',
+    rebarUnit:  'طن',
+    defaults: {
+      cement_50kg: 18,
+      rebar_ton:   3200,
+      sand_m3:     60,
+      gravel_m3:   80,
+      labor_day:   80,
+      tile_mid_m2: 55,
+    },
+    cost_per_m2: {
+      skeleton: 700, economy: 1150, standard: 1800, luxury: 3200, super_lux: 5500,
+    },
+    regions: {
+      tripoli:  { name: 'طرابلس',      m: 1.00 },
+      benghazi: { name: 'بنغازي',      m: 0.93 },
+      misrata:  { name: 'مصراتة',      m: 0.90 },
+      other:    { name: 'مناطق أخرى', m: 0.82 },
+    },
+  },
 };
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────

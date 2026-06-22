@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import BlogArticleView from '@/components/blog/BlogArticleView';
 import { getCalculatorRouteBySlug } from '@/lib/calculators/data';
 import {
@@ -204,13 +205,15 @@ export default async function BlogArticlePage({ params }) {
       {howToSchema ? (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       ) : null}
-      <BlogArticleView
-        guide={guide}
-        relatedCalculators={relatedCalculators}
-        relatedGuides={relatedGuides}
-        topicGuides={topicGuides}
-        relatedPages={relatedPages}
-      />
+      <AdLayoutWrapper sidebarMode="dual">
+        <BlogArticleView
+          guide={guide}
+          relatedCalculators={relatedCalculators}
+          relatedGuides={relatedGuides}
+          topicGuides={topicGuides}
+          relatedPages={relatedPages}
+        />
+      </AdLayoutWrapper>
     </>
   );
 }

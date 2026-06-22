@@ -453,6 +453,19 @@
   font-weight: var(--font-bold);
 }
 
+.firstAnswerText {
+  margin: 0;
+  max-width: 760px;
+  margin-inline: auto;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.95;
+}
+
+.firstAnswerText strong {
+  color: var(--text-primary);
+}
+
 .methodNote {
   margin: 0;
   color: var(--text-muted);

@@ -45,6 +45,14 @@ const BUILDING_MATERIAL_LINKS = [
     label: 'تشطيب وهدر',
     iconLabel: 'بلاط',
   },
+  {
+    href: '/calculators/building/paint',
+    title: 'احسب لترات الدهان قبل الشراء',
+    description: 'استخدمها عندما تريد معرفة كمية الدهان بالليتر وعدد العلب حسب أبعاد الجدران وعدد الطبقات.',
+    ctaLabel: 'افتح حاسبة الدهان',
+    label: 'دهان وتشطيب',
+    iconLabel: 'دهان',
+  },
 ];
 const BUILDING_SOURCE_LINKS = [
   {

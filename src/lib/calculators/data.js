@@ -707,6 +707,26 @@ export const CALCULATOR_ROUTES = [
       'حساب البلاط مع الهدر',
     ],
   },
+  {
+    slug: 'building-paint',
+    href: '/calculators/building/paint',
+    cluster: 'building',
+    shortLabel: 'حاسبة الدهان',
+    title: 'كم لتر دهان أحتاج؟',
+    heroTitle: 'حاسبة الدهان | كم لتر دهان أحتاج للغرفة؟',
+    description:
+      'احسب كمية الدهان بالليتر وعدد العلب حسب أبعاد الجدران وعدد الطبقات ونوع الدهان قبل الشراء.',
+    accent: 'var(--green)',
+    accentSoft: 'var(--green-subtle)',
+    badge: 'دهان / تشطيب',
+    keywords: [
+      'كم لتر دهان للغرفة',
+      'حاسبة الدهان',
+      'حساب كمية الدهان',
+      'كم علبة دهان',
+      'كمية الدهان للمتر',
+    ],
+  },
 ];
 
 export const CALCULATOR_HUBS = [
@@ -858,6 +878,7 @@ export const CALCULATOR_HUBS = [
       'cement',
       'rebar',
       'tiles',
+      'building-paint',
     ],
   },
 ];
