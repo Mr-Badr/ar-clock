@@ -145,7 +145,7 @@ export async function generateMetadata({
 
   const title = `${hijriLabel} — ${dayName} | ${gregorian.formatted.ar}`;
   const description = firstEvent
-    ? `${hijriLabel} يوافق ${gregorian.formatted.ar}م — ${firstEvent.name}. مع مقارنة طرق الحساب والتقويم الشهري.`
+    ? `${hijriLabel} يوافق ${gregorian.formatted.ar}م — ${firstEvent.nameAr}. مع مقارنة طرق الحساب والتقويم الشهري.`
     : `${hijriLabel} يوافق ${gregorian.formatted.ar}م (أم القرى). يوم ${dayName}. مع مقارنة الطرق الثلاث والتقويم الهجري للشهر.`;
 
   return {

@@ -81,7 +81,7 @@ export async function generateMetadata({
 
   const title = `${gregorianLabel} — ${dayName} | ${hijri.formatted.ar}`;
   const description = firstEvent
-    ? `${gregorianLabel} يوافق ${hijri.formatted.ar} — ${firstEvent.name}. مقارنة طرق الحساب الثلاث والتقويم الشهري.`
+    ? `${gregorianLabel} يوافق ${hijri.formatted.ar} — ${firstEvent.nameAr}. مقارنة طرق الحساب الثلاث والتقويم الشهري.`
     : `${gregorianLabel} يوافق ${hijri.formatted.ar} (أم القرى). الطريقة المدنية قد تختلف يوماً. مع يوم الأسبوع والتقويم الشهري.`;
 
   return {
