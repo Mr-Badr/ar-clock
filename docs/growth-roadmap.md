@@ -154,7 +154,7 @@ Only scale page types the data already proves convert. Each new page ships with 
 - [x] **E1. Building calculators.** All 12 original countries + Lebanon (USD) + Libya (LYD) = 14 countries total. New `/calculators/building/paint` page (walls → liters + 1L/5L cans, 6 paint types). Paint registered in `CALCULATOR_ROUTES` + building hub.
 - [x] **E2. Exam-results cluster.** bac-results-tunisia = 249 clicks @ 0.5%; national-exams-morocco 2.45%. Added `bac-results-algeria` (month 7, ONEC, دورة الاستدراك) and `bac-results-morocco` (month 7, massar.men.gov.ma). Both published with 8 FAQ each, country-specific copy, full keyword integration. 94 events total (+2). Remaining: brevet results, Jordan Tawjihi, Lebanon.
 - [ ] **E3. Father's Day / national-day clusters.** fathers-day-tunisia pos 2.54 @ 1.83% proves the format. Libya/Iraq/Palestine national days added ✅ — interlink + extend to remaining countries with real demand.
-- [ ] **E4. time-difference programmatic** for high-demand city pairs (Riyadh↔Cairo already 4,673 impr). Add live dual clock (`DualLiveClock.client.jsx`) — competitors lack it.
+- [x] **E4. time-difference programmatic** — Added 6 Maghreb diaspora pairs to `POPULAR_PAIRS` (now 18 indexed pairs): Algeria↔France, Tunisia↔France, Morocco↔France, Morocco↔Spain, Egypt↔UK, Egypt↔USA. Previously noindex in SITEMAP_PAIRS. DualLiveClock already on all pair pages. Hub description improved (data-first). 116/116 CI.
 
 **Verify:** `npm run validate:holidays` / `seo:validate` green; new pages indexed within 2 weeks (GSC coverage).
 
