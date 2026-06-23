@@ -161,44 +161,46 @@ export function CalculatorHero({
   const safeHighlights = Array.isArray(highlights) ? highlights : [];
 
   return (
-    <SectionWrapper
-      id="calculator-hero"
-      className="calc-shell calc-shell--hero pt-28 sm:pt-32"
-    >
-      <div className="calc-section-frame calc-section-frame--hero">
-        <div className="calc-hero-grid">
-          <div className="calc-hero-copy">
-            <Badge className="calc-pill">
-              {badge}
-            </Badge>
-            <h1 className="calc-page-title">{title}</h1>
-            <p className="calc-page-description">{description}</p>
-          </div>
-          <div className="calc-hero-panel">
-            {children}
-          </div>
-          <div className="calc-hero-support">
-            {safeHighlights.length ? (
-              <ul className="calc-highlight-list">
-                {safeHighlights.map((item) => (
-                  <li key={item}>
-                    <CheckCircle2 size={16} />
-                    <span>{item}</span>
-                  </li>
+    <>
+      <SectionWrapper
+        id="calculator-hero"
+        className="calc-shell calc-shell--hero pt-28 sm:pt-32"
+      >
+        <div className="calc-section-frame calc-section-frame--hero">
+          <div className="calc-hero-grid">
+            <div className="calc-hero-copy">
+              <Badge className="calc-pill">
+                {badge}
+              </Badge>
+              <h1 className="calc-page-title">{title}</h1>
+              <p className="calc-page-description">{description}</p>
+            </div>
+            <div className="calc-hero-panel">
+              {children}
+            </div>
+            <div className="calc-hero-support">
+              {safeHighlights.length ? (
+                <ul className="calc-highlight-list">
+                  {safeHighlights.map((item) => (
+                    <li key={item}>
+                      <CheckCircle2 size={16} />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+              <div className="calc-hero-trust" aria-label="معلومات الثقة والخصوصية">
+                {CALCULATOR_TRUST_ITEMS.map((item) => (
+                  <span key={item}>{item}</span>
                 ))}
-              </ul>
-            ) : null}
-            <div className="calc-hero-trust" aria-label="معلومات الثقة والخصوصية">
-              {CALCULATOR_TRUST_ITEMS.map((item) => (
-                <span key={item}>{item}</span>
-              ))}
-              <Link href="/privacy">سياسة الخصوصية</Link>
+                <Link href="/privacy">سياسة الخصوصية</Link>
+              </div>
             </div>
           </div>
         </div>
-        <AdTopBanner slotId="top-calculator-tool" />
-      </div>
-    </SectionWrapper>
+      </SectionWrapper>
+      <AdTopBanner slotId="top-calculator-tool" />
+    </>
   );
 }
 
@@ -398,7 +400,6 @@ export function CalculatorFaqSection({ items }) {
 
   return (
     <div>
-      <AdInArticle slotId="mid-calculator-faq" />
       <Card className="calc-surface-card calc-faq-card">
         <CardContent className="pt-2">
           <Accordion type="single" collapsible>
@@ -415,6 +416,7 @@ export function CalculatorFaqSection({ items }) {
           </Accordion>
         </CardContent>
       </Card>
+      <AdInArticle slotId="mid-calculator-faq" />
     </div>
   );
 }
