@@ -850,6 +850,16 @@
     "day": 14
   },
   {
+    "id": "bac-results-jordan",
+    "slug": "bac-results-jordan",
+    "name": "نتائج التوجيهي الأردني",
+    "type": "fixed",
+    "category": "school",
+    "_countryCode": "jo",
+    "month": 7,
+    "day": 25
+  },
+  {
     "id": "bac-results-morocco",
     "slug": "bac-results-morocco",
     "name": "نتيجة الباكالوريا المغرب",

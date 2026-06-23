@@ -28,6 +28,11 @@ export default async function sitemap() {
       changeFrequency: 'daily',
       priority: 0.9,
     },
+    {
+      url: `${base}/time-difference/converter`,
+      changeFrequency: 'weekly',
+      priority: 0.87,
+    },
     ...popularUrls,
     ...sitemapUrls,
   ];

@@ -1,0 +1,32 @@
+# Build output
+.next/
+out/
+
+# Dependencies
+node_modules/
+
+# Generated files — never author these directly
+src/generated/
+src/data/holidays/generated/
+
+# Large static data blobs
+public/geo/cities/
+public/geo/city-search-index.json
+
+# Lock files and build caches
+package-lock.json
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+
+# Infra backups
+infra/backup-*.tar.gz
+infra/docker/backup-*.tar.gz
+
+# Git internals
+.git/
+
+# Reports (generated output)
+reports/
+
+# Test artifacts
+coverage/

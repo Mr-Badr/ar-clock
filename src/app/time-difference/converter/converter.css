@@ -1,0 +1,425 @@
+/* ─── Timezone Converter Tool ─────────────────────────────────────────────── */
+
+.tz-converter {
+  container-type: inline-size;
+  container-name: tz-converter;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* Controls row */
+.tz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--surface-subtle, hsl(220 14% 96%));
+  border: 1px solid var(--border-subtle, hsl(220 13% 91%));
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.tz-controls__ref {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.tz-controls__ref-select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-1) var(--space-3);
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--text);
+  cursor: pointer;
+  direction: rtl;
+}
+
+.tz-controls__stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-inline-start: auto;
+}
+
+.tz-controls__step-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.tz-controls__step-btn:hover {
+  background: var(--surface-hover, hsl(220 14% 93%));
+  color: var(--text);
+}
+
+.tz-controls__hour {
+  min-width: 6rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.tz-controls__slider {
+  flex: 1;
+  min-width: 120px;
+  accent-color: var(--primary, hsl(221 83% 53%));
+}
+
+/* Timeline bars */
+.tz-timelines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.tz-hourbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.tz-hourbar__label {
+  width: 5.5rem;
+  flex-shrink: 0;
+  text-align: end;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tz-hourbar__slots {
+  display: flex;
+  flex: 1;
+  height: 1.75rem;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.tz-slot {
+  flex: 1;
+  height: 100%;
+  background: var(--surface-subtle);
+  border-inline-end: 1px solid var(--surface);
+  position: relative;
+  transition: opacity 0.1s;
+}
+
+.tz-slot--biz {
+  background: hsl(142 76% 90%);
+}
+
+.tz-slot--night {
+  background: hsl(220 14% 82%);
+}
+
+.tz-slot--current {
+  outline: 2px solid var(--primary, hsl(221 83% 53%));
+  outline-offset: -1px;
+  z-index: 1;
+}
+
+.tz-slot__label {
+  position: absolute;
+  bottom: 100%;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+[dir="rtl"] .tz-slot__label {
+  transform: translateX(50%);
+}
+
+/* Cards grid */
+.tz-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+@container tz-converter (min-width: 600px) {
+  .tz-cards {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+.tz-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transition: border-color 0.15s;
+}
+
+.tz-card--ref {
+  border-color: var(--primary, hsl(221 83% 53%));
+  background: hsl(221 83% 53% / 0.04);
+}
+
+.tz-card--business {
+  border-color: hsl(142 76% 40%);
+}
+
+.tz-card--night {
+  opacity: 0.7;
+}
+
+.tz-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.tz-card__city {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.tz-card__name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.tz-card__country {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.tz-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.tz-card__offset {
+  font-size: 0.7rem;
+  font-family: monospace;
+  color: var(--text-muted);
+  background: var(--surface-subtle);
+  padding: 0.1rem 0.3rem;
+  border-radius: var(--radius-sm);
+}
+
+.tz-card__remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s, color 0.15s;
+}
+
+.tz-card__remove:hover {
+  background: var(--surface-subtle);
+  color: var(--text);
+}
+
+.tz-card__time {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.tz-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.tz-card__day {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.tz-card__status {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.tz-card__status--ok {
+  color: hsl(142 76% 36%);
+}
+
+.tz-card__status--night {
+  color: hsl(220 14% 55%);
+}
+
+/* City picker */
+.tz-picker {
+  position: relative;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 8rem;
+}
+
+.tz-picker__trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.tz-picker__trigger:hover:not(:disabled) {
+  background: var(--surface-subtle);
+  color: var(--text);
+  border-color: var(--primary, hsl(221 83% 53%));
+}
+
+.tz-picker__trigger:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.tz-picker__dropdown {
+  position: absolute;
+  inset-block-end: calc(100% + var(--space-2));
+  inset-inline-start: 0;
+  width: 14rem;
+  max-height: 16rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.tz-picker__search {
+  padding: var(--space-3);
+  border: none;
+  border-block-end: 1px solid var(--border);
+  background: var(--surface);
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: var(--text);
+  outline: none;
+  width: 100%;
+}
+
+.tz-picker__list {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.tz-picker__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: var(--text);
+  cursor: pointer;
+  text-align: start;
+  transition: background 0.1s;
+}
+
+.tz-picker__option:hover {
+  background: var(--surface-subtle);
+}
+
+.tz-picker__option-name {
+  font-weight: 500;
+}
+
+.tz-picker__option-country {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.tz-picker__empty {
+  padding: var(--space-3);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Legend */
+.tz-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.tz-legend__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.tz-legend__item::before {
+  content: '';
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 2px;
+  background: var(--surface-subtle);
+}
+
+.tz-legend__item--biz::before {
+  background: hsl(142 76% 90%);
+  border: 1px solid hsl(142 76% 70%);
+}
+
+.tz-legend__item--night::before {
+  background: hsl(220 14% 82%);
+}

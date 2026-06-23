@@ -198,12 +198,14 @@
       "bac-results-tunisia",
       "thanaweya-results",
       "school-start-algeria",
-      "bac-results-morocco"
+      "bac-results-morocco",
+      "bac-results-jordan"
     ]
   },
   "countryOverrides": {},
   "aliasSlugs": [],
   "countryScope": "none",
+  "countryAliasTemplate": "{{slug}}-in-{{countrySlug}}",
   "publishStatus": "published",
   "canonicalPath": "/holidays/bac-results-algeria",
   "canonicalSource": "internal"

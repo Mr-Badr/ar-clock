@@ -138,8 +138,64 @@ export function getCountriesSharingCurrentOffset(countries, {
     .slice(0, limit);
 }
 
+// ── Call-time helpers (diaspora use case: calling a foreign city) ─────────────
+
+const DIASPORA_COUNTRY_SLUGS = new Set([
+  'united-states', 'france', 'germany', 'united-kingdom', 'spain',
+  'italy', 'canada', 'australia', 'netherlands', 'belgium', 'sweden',
+  'denmark', 'norway', 'switzerland', 'austria', 'portugal', 'finland',
+]);
+
+const ARAB_CALL_REFERENCES = [
+  { nameAr: 'القاهرة', timezone: 'Africa/Cairo' },
+  { nameAr: 'الرياض', timezone: 'Asia/Riyadh' },
+  { nameAr: 'الدار البيضاء', timezone: 'Africa/Casablanca' },
+];
+
+function getUtcOffsetHours(timezone, referenceDate) {
+  try {
+    const label = new Intl.DateTimeFormat('en', {
+      timeZone: timezone,
+      timeZoneName: 'shortOffset',
+    }).formatToParts(referenceDate).find((p) => p.type === 'timeZoneName')?.value ?? '';
+
+    const m = /^GMT([+-])(\d{1,2})(?::(\d{2}))?$/.exec(label);
+    if (!m) return 0;
+    return (m[1] === '+' ? 1 : -1) * (parseInt(m[2], 10) + (m[3] ? parseInt(m[3], 10) / 60 : 0));
+  } catch {
+    return 0;
+  }
+}
+
+function formatHourAr(h) {
+  const norm = ((Math.round(h) % 24) + 24) % 24;
+  const period = norm >= 12 ? 'م' : 'ص';
+  const display = norm === 0 ? 12 : norm > 12 ? norm - 12 : norm;
+  return `${display}${period}`;
+}
+
+// Returns: for each Arab reference city, the window to call targetTimezone during 9AM-5PM
+export function buildCallTimeWindows(targetTimezone, referenceDateOrIso) {
+  const now = toReferenceDate(referenceDateOrIso);
+  const targetOffset = getUtcOffsetHours(targetTimezone, now);
+
+  return ARAB_CALL_REFERENCES.map((ref) => {
+    const refOffset = getUtcOffsetHours(ref.timezone, now);
+    const diff = refOffset - targetOffset; // hours ref is ahead of target
+    const refStart = 9 + diff;  // when target opens (9AM), what time is it in ref city?
+    const refEnd = 17 + diff;   // when target closes (5PM)
+    return {
+      cityAr: ref.nameAr,
+      diffHours: Math.round(diff),
+      windowStart: formatHourAr(refStart),
+      windowEnd: formatHourAr(refEnd),
+    };
+  });
+}
+
 export function buildCityTimeNowFaqItems({
   countryAr,
+  countrySlug,
   cityAr,
   timezone,
   utcOffset,
@@ -177,7 +233,41 @@ export function buildCityTimeNowFaqItems({
       q: `كيف أقارن توقيت ${cityAr} بمدينة أخرى؟`,
       a: `بعد معرفة الوقت المحلي في ${cityAr} يمكنك الانتقال إلى أداة فرق التوقيت أو إلى صفحات المدن داخل ${countryAr} لمعرفة الفارق الفعلي قبل السفر أو الاجتماعات أو المتابعة اليومية.`,
     },
+    // Diaspora-specific: best call time from Arab world
+    ...buildDiasporaFaqItems(countrySlug, cityAr, timezone, referenceDateOrIso),
   ];
+}
+
+function buildDiasporaFaqItems(countrySlug, cityAr, timezone, referenceDateOrIso) {
+  if (!countrySlug || !DIASPORA_COUNTRY_SLUGS.has(countrySlug)) return [];
+
+  try {
+    const windows = buildCallTimeWindows(timezone, referenceDateOrIso);
+    if (!windows.length) return [];
+
+    const cairoWin = windows[0];
+    const riyadhWin = windows[1];
+    const casaWin = windows[2];
+
+    const windowSummary = [
+      `${cairoWin.cityAr}: ${cairoWin.windowStart} – ${cairoWin.windowEnd}`,
+      `${riyadhWin.cityAr}: ${riyadhWin.windowStart} – ${riyadhWin.windowEnd}`,
+      `${casaWin.cityAr}: ${casaWin.windowStart} – ${casaWin.windowEnd}`,
+    ].join('، ');
+
+    const diffLabel = cairoWin.diffHours > 0
+      ? `القاهرة تسبق ${cityAr} بـ${cairoWin.diffHours} ساعات`
+      : `${cityAr} تسبق القاهرة بـ${Math.abs(cairoWin.diffHours)} ساعات`;
+
+    return [
+      {
+        q: `متى يُناسب الاتصال بـ${cityAr} من مصر أو السعودية أو المغرب؟`,
+        a: `لتقع مكالمتك في وقت الدوام بـ${cityAr} (9ص–5م توقيتها)، اتصل خلال هذه النوافذ: ${windowSummary}. ${diffLabel} حالياً. إذا كانت ${cityAr} تطبق التوقيت الصيفي فقد تتغير النافذة بساعة في مارس وأكتوبر/نوفمبر.`,
+      },
+    ];
+  } catch {
+    return [];
+  }
 }
 
 export function buildCountryTimeNowFaqItems({

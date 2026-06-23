@@ -7491,3 +7491,50 @@ main:not(.calc-hub-page) .calc-room-add {
     max-width: 22ch;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   I1: Density tokens — global section-gap custom properties for easy tuning.
+   Desktop: 5rem between major sections; mobile: 2.5rem.
+   Applied via the existing calc-shell padding rhythm and section margins.
+───────────────────────────────────────────────────────────────────────────── */
+:root {
+  --calc-section-gap: 5rem;
+  --calc-section-gap-mobile: 2.5rem;
+  --calc-card-rhythm: var(--space-6);
+}
+
+.calc-shell + .calc-shell {
+  margin-top: var(--calc-section-gap-mobile);
+}
+
+@media (min-width: 768px) {
+  .calc-shell + .calc-shell {
+    margin-top: var(--calc-section-gap);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   I3: Editorial card balance — interleave open + framed panels on 2-col grid.
+   When a 3-col grid is active (data-count="3") all cards keep equal framing.
+   On 2-col desktop: even cards go open (no border/bg) for visual breathing room.
+───────────────────────────────────────────────────────────────────────────── */
+@media (min-width: 640px) {
+  .calc-info-grid--editorial:not([data-count="3"])
+  > .calc-editorial-card:not(.calc-editorial-card--lead):nth-child(even) {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   I4: RTL index-badge polish — tabular numbers for consistent badge sizing.
+   Logical-property equivalents already in use for inset-inline-start/end.
+───────────────────────────────────────────────────────────────────────────── */
+.calc-editorial-card__index,
+.calc-answer-card__index,
+.calc-resource-link__index,
+.calc-story-point__index {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}

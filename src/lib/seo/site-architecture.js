@@ -24,6 +24,7 @@ export const ROOT_SITEMAP_ROUTES = Object.freeze(dedupeRoutes([
   { path: '/mwaqit-al-salat', priority: 0.93, changeFrequency: 'daily', websitePart: true },
   { path: '/holidays', priority: 0.92, changeFrequency: 'daily', websitePart: true },
   { path: '/time-difference', priority: 0.9, changeFrequency: 'daily', websitePart: true },
+  { path: '/time-difference/converter', priority: 0.87, changeFrequency: 'weekly', websitePart: true },
   { path: '/date', priority: 0.9, changeFrequency: 'daily', websitePart: true },
   { path: '/date/today', priority: 0.9, changeFrequency: 'daily', websitePart: true },
   { path: '/date/converter', priority: 0.88, changeFrequency: 'weekly', websitePart: true },

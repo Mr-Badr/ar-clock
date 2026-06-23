@@ -1798,6 +1798,17 @@
     "canonicalPath": "/holidays/bac-results-algeria",
     "aliases": []
   },
+  "bac-results-jordan": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "jo"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/bac-results-jordan",
+    "aliases": []
+  },
   "bac-results-morocco": {
     "publishStatus": "published",
     "countryScope": "none",

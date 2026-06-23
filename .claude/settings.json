@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(.next/**)",
+      "Read(node_modules/**)",
+      "Read(src/generated/**)",
+      "Read(src/data/holidays/generated/**)",
+      "Read(package-lock.json)",
+      "Read(tsconfig.tsbuildinfo)",
+      "Read(public/geo/cities/**)",
+      "Read(infra/backup-*.tar.gz)",
+      "Read(infra/docker/backup-*.tar.gz)",
+      "Read(out/**)",
+      "Read(.git/**)",
+      "Read(reports/**)"
+    ]
+  }
+}

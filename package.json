@@ -27,6 +27,8 @@
     "ads:readiness:live": "node --import tsx scripts/google-ads-readiness-audit.ts --base=https://miqatona.com",
     "growth:ctr": "node --import tsx scripts/search-console-ctr-triage.ts",
     "coverage:triage": "node --import tsx scripts/search-console-coverage-triage.ts",
+    "research:topic": "node --import tsx scripts/research/topic-research.ts",
+    "research:keywords": "node --import tsx scripts/research/keyword-suggest.ts",
     "health:routes": "node --import tsx scripts/route-health-check.ts",
     "health:routes:live": "node --import tsx scripts/route-health-check.ts --base=https://miqatona.com",
     "events:build": "node --import tsx scripts/generate-events-index.ts",

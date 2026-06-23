@@ -56,6 +56,7 @@ import { buildTimeNowKeywords } from '@/lib/seo/section-search-intent';
 import { buildNoindexRouteMetadata, isRouteSlug } from '@/lib/route-param-validation';
 import {
   buildCityTimeNowFaqItems,
+  buildCallTimeWindows,
   getCountriesSharingCurrentOffset,
   getTimeNowSeoFacts,
 } from '@/lib/time-now-content';
@@ -539,6 +540,7 @@ async function CityTimePageSections({
       countryCode: country.country_code,
       cacheKey: `time-now::${countrySlug}::${citySlug}::solar`,
     });
+    const callTimeWindows = buildCallTimeWindows(city.timezone, nowIso);
     const sameOffsetCountries = getCountriesSharingCurrentOffset(safeAllCountries, {
       referenceTimezone: city.timezone,
       referenceDateOrIso: nowIso,
@@ -549,6 +551,7 @@ async function CityTimePageSections({
       : [];
     const builtFaqItems = buildCityTimeNowFaqItems({
       countryAr,
+      countrySlug,
       cityAr,
       timezone: city.timezone,
       utcOffset: offset,
@@ -609,6 +612,21 @@ async function CityTimePageSections({
                   </p>
                 </article>
               ) : null}
+              {callTimeWindows.length > 0 && (
+                <article className={routeStyles.insightCard}>
+                  <span className={routeStyles.insightKicker}>الاتصال من العالم العربي</span>
+                  <h3>أفضل وقت للتواصل</h3>
+                  <p>
+                    لتصل مكالمتك في ساعات الدوام بـ{cityAr}، اتصل:{' '}
+                    {callTimeWindows.map((w, i) => (
+                      <span key={w.cityAr}>
+                        <strong>{w.cityAr}</strong>{' '}{w.windowStart}–{w.windowEnd}
+                        {i < callTimeWindows.length - 1 ? '، ' : '.'}
+                      </span>
+                    ))}
+                  </p>
+                </article>
+              )}
             </div>
           </div>
         </section>

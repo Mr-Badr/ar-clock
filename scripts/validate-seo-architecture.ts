@@ -364,6 +364,7 @@ const COVERAGE_SAMPLE_PATHS = uniqueValues([
   '/mwaqit-al-salat/saudi-arabia/riyadh',
   '/holidays',
   '/time-difference',
+  '/time-difference/converter',
   `/time-difference/${POPULAR_PAIRS[0].from.slug}/${POPULAR_PAIRS[0].to.slug}`,
   '/date',
   '/date/today',
@@ -402,6 +403,33 @@ function assertTextLength(label: string, value: string, min: number, max: number
 
   if (normalized.length < min || normalized.length > max) {
     errors.push(`${label} must be between ${min} and ${max} characters: "${normalized}"`);
+  }
+}
+
+function assertPublishedHolidayQuality(errors: string[]) {
+  const MIN_RELATED_SLUGS = 3;
+  const MIN_FAQ_ITEMS = 3;
+
+  const published = ALL_RAW_EVENTS.filter(
+    (event) => (event as Record<string, unknown>)?.publishStatus === 'published',
+  );
+
+  for (const event of published) {
+    const e = event as Record<string, unknown>;
+    const relatedSlugs = Array.isArray(e.relatedSlugs) ? e.relatedSlugs : [];
+    const faq = Array.isArray(e.faq) ? e.faq : Array.isArray(e.faqItems) ? e.faqItems : [];
+
+    if (relatedSlugs.length < MIN_RELATED_SLUGS) {
+      errors.push(
+        `[F2] Holiday /holidays/${e.slug} has only ${relatedSlugs.length} relatedSlugs (min ${MIN_RELATED_SLUGS}). Add internal links to meet the quality gate.`,
+      );
+    }
+
+    if (faq.length < MIN_FAQ_ITEMS) {
+      errors.push(
+        `[F2] Holiday /holidays/${e.slug} has only ${faq.length} FAQ items (min ${MIN_FAQ_ITEMS}). Add more FAQ entries to meet the quality gate.`,
+      );
+    }
   }
 }
 
@@ -575,6 +603,7 @@ function main() {
   assertLegacyRouteFilesRemoved(errors);
   assertLegacyBlogFeatureFilesRemoved(errors);
   assertCanonicalBlogPaths(errors);
+  assertPublishedHolidayQuality(errors);
   assertCalculatorRegistryQuality(errors);
   assertRootMetadataQuality(errors);
   assertIntentPathwaysQuality(errors);

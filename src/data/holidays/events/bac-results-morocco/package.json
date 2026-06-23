@@ -164,7 +164,11 @@
     "recurringYears": {
       "contextParagraph": "تُعلن نتيجة الباكالوريا المغربية عادةً في مطلع يوليو كل عام للدورة الرئيسية، والجدول التالي يُوضح التواريخ التقريبية للسنوات الأخيرة.",
       "sourceNote": "يُراجع موقع men.gov.ma للتأكيد الرسمي الدقيق قبل كل دورة.",
-      "columns": ["السنة", "التاريخ التقريبي", "ملاحظة"],
+      "columns": [
+        "السنة",
+        "التاريخ التقريبي",
+        "ملاحظة"
+      ],
       "highlightCurrentYear": true
     },
     "schemaData": {
@@ -174,9 +178,18 @@
       "endDate": "{{year}}-07-05",
       "eventDescription": "إعلان نتيجة الباكالوريا في المغرب للعام {{year}}، مع إمكانية الاستعلام عبر منصة مسار أو الرسائل القصيرة.",
       "breadcrumbs": [
-        { "name": "الرئيسية", "path": "/" },
-        { "name": "المناسبات", "path": "/holidays" },
-        { "name": "نتيجة الباكالوريا المغرب", "path": "/holidays/bac-results-morocco" }
+        {
+          "name": "الرئيسية",
+          "path": "/"
+        },
+        {
+          "name": "المناسبات",
+          "path": "/holidays"
+        },
+        {
+          "name": "نتيجة الباكالوريا المغرب",
+          "path": "/holidays/bac-results-morocco"
+        }
       ],
       "articleHeadline": "نتيجة الباكالوريا المغرب {{year}} — الموعد والاستعلام ودورة الاستدراك"
     },
@@ -185,12 +198,14 @@
       "bac-results-tunisia",
       "bac-results-algeria",
       "school-start-morocco",
-      "thanaweya-results"
+      "thanaweya-results",
+      "bac-results-jordan"
     ]
   },
   "countryOverrides": {},
   "aliasSlugs": [],
   "countryScope": "none",
+  "countryAliasTemplate": "{{slug}}-in-{{countrySlug}}",
   "publishStatus": "published",
   "canonicalPath": "/holidays/bac-results-morocco",
   "canonicalSource": "internal"
