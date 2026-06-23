@@ -72,9 +72,21 @@ export async function generateMetadata({
     routeDate,
     new Date(await getCachedNowIso()),
   );
+
+  // Day of week gives unique info not visible in the snippet answer → improves CTR
+  const dayName = new Date(routeDate.isoDate).toLocaleDateString('ar-EG', { weekday: 'long' });
+  // Islamic events on that day give a reason to click for event-aware users
+  const islamicEvents = getIslamicEventsForHijriDate(hijri.year, hijri.month, hijri.day);
+  const firstEvent = islamicEvents[0];
+
+  const title = `${gregorianLabel} — ${dayName} | ${hijri.formatted.ar}`;
+  const description = firstEvent
+    ? `${gregorianLabel} يوافق ${hijri.formatted.ar} — ${firstEvent.name}. مقارنة طرق الحساب الثلاث والتقويم الشهري.`
+    : `${gregorianLabel} يوافق ${hijri.formatted.ar} (أم القرى). الطريقة المدنية قد تختلف يوماً. مع يوم الأسبوع والتقويم الشهري.`;
+
   return {
-    title: `${gregorianLabel} كم هجري؟ | ${hijri.formatted.ar}`,
-    description: `${gregorianLabel} يوافق ${hijri.formatted.ar} حسب أم القرى. راجع اليوم، رقم السنة، الطرق الثلاث، واليوم السابق والتالي قبل اعتماد التاريخ.`,
+    title,
+    description,
     keywords: [
       ...buildDateKeywords({ gregorianYear: routeDate.year, hijriYear: hijri.year }),
       `${gregorianLabel} كم هجري`,
@@ -86,8 +98,8 @@ export async function generateMetadata({
     ],
     alternates: { canonical: `${BASE_URL}/date/${year}/${month}/${day}` },
     openGraph: {
-      title: `${gregorianLabel} يوافق ${hijri.formatted.ar}`,
-      description: `صفحة عربية لمعرفة المقابل الهجري لتاريخ ${gregorianLabel} مع مقارنة طرق الحساب وروابط المراجعة.`,
+      title: `${gregorianLabel} — ${dayName} | ${hijri.formatted.ar}`,
+      description,
       url: `${BASE_URL}/date/${year}/${month}/${day}`,
       locale: 'ar_SA',
     },
@@ -103,8 +115,8 @@ export async function generateMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${gregorianLabel} كم هجري؟`,
-      description: `${gregorianLabel} يوافق ${hijri.formatted.ar} مع تفاصيل تساعدك على استخدام التاريخ بدون خلط.`,
+      title: `${gregorianLabel} — ${dayName} | ${hijri.formatted.ar}`,
+      description,
     },
   };
 }

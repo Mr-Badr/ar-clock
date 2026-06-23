@@ -138,9 +138,19 @@ export async function generateMetadata({
     routeDate,
     new Date(await getCachedNowIso()),
   );
+
+  const dayName = new Date(`${gregorian.year}-${String(gregorian.month).padStart(2, '0')}-${String(gregorian.day).padStart(2, '0')}`).toLocaleDateString('ar-EG', { weekday: 'long' });
+  const islamicEvents = getIslamicEventsForHijriDate(hYear, hMonth, hDay);
+  const firstEvent = islamicEvents[0];
+
+  const title = `${hijriLabel} — ${dayName} | ${gregorian.formatted.ar}`;
+  const description = firstEvent
+    ? `${hijriLabel} يوافق ${gregorian.formatted.ar}م — ${firstEvent.name}. مع مقارنة طرق الحساب والتقويم الشهري.`
+    : `${hijriLabel} يوافق ${gregorian.formatted.ar}م (أم القرى). يوم ${dayName}. مع مقارنة الطرق الثلاث والتقويم الهجري للشهر.`;
+
   return {
-    title: `${hijriLabel} كم ميلادي؟ | ${gregorian.formatted.ar}`,
-    description: `${hijriLabel} يوافق ${gregorian.formatted.ar}م حسب أم القرى. راجع اليوم السابق والتالي وحدود اختلاف بداية الشهر قبل الاعتماد الرسمي.`,
+    title,
+    description,
     keywords: [
       ...buildDateKeywords({ gregorianYear: gregorian.year, hijriYear: hYear }),
       `${hijriLabel} كم ميلادي`,
@@ -151,8 +161,8 @@ export async function generateMetadata({
     ],
     alternates: { canonical: `${BASE_URL}/date/hijri/${year}/${month}/${day}` },
     openGraph: {
-      title: `${hijriLabel} يوافق ${gregorian.formatted.ar}م`,
-      description: `صفحة عربية لمعرفة المقابل الميلادي لتاريخ ${hijriLabel} مع روابط اليوم السابق والتالي والمحول.`,
+      title,
+      description,
       url: `${BASE_URL}/date/hijri/${year}/${month}/${day}`,
       locale: 'ar_SA',
     },
@@ -168,8 +178,8 @@ export async function generateMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${hijriLabel} كم ميلادي؟`,
-      description: `${hijriLabel} يوافق ${gregorian.formatted.ar}م مع إرشاد واضح قبل الاعتماد الرسمي.`,
+      title,
+      description,
     },
   };
 }

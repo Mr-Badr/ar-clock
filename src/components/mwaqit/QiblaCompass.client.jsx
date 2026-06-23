@@ -148,11 +148,10 @@ export default function QiblaCompass({
     <div className={styles.qiblaShell}>
       <div className={styles.qiblaHeader}>
         <span className={styles.qiblaKicker}>اتجاه القبلة</span>
-        <h3 className={styles.qiblaTitle}>قبلة {cityNameAr} على الهاتف وسطح المكتب</h3>
+        <h3 className={styles.qiblaTitle}>اتجاه القبلة من {cityNameAr}</h3>
         <p className={styles.qiblaCopy}>
-          اتجاه القبلة من {cityNameAr}{countryNameAr ? `، ${countryNameAr}` : ''} يقارب{' '}
-          <strong dir="ltr">{displayedBearingLabel}</strong> من الشمال الحقيقي. الرقم يعمل على كل الأجهزة،
-          والبوصلة الحية تعمل على الهواتف التي تسمح بحساسات الاتجاه.
+          القبلة من {cityNameAr}{countryNameAr ? `، ${countryNameAr}` : ''} تقع عند{' '}
+          <strong dir="ltr">{displayedBearingLabel}</strong> من الشمال الحقيقي. على الهاتف يمكنك تفعيل البوصلة الحية، وعلى سطح المكتب تعتمد على الدرجة المعروضة.
         </p>
       </div>
 

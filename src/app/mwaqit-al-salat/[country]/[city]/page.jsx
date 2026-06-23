@@ -499,10 +499,9 @@ export default async function PrayerTimesPage({ params }) {
             </div>
             <div className={routeStyles.summaryCard}>
               <p className={routeStyles.summaryLabel}>سياق الحساب</p>
-              <p className={`${routeStyles.summaryValue} ${routeStyles.summaryValueLtr}`}>{cityData.timezone}</p>
+              <p className={routeStyles.summaryValue}>{methodInfo.label}</p>
               <p className={routeStyles.summaryCopy}>
-                تظهر المنطقة الزمنية مع طريقة الحساب لأن وقت الصلاة لا يُقرأ بشكل صحيح إذا فُصل عن
-                المدينة واليوم والسياق المحلي.
+                المنطقة الزمنية: <strong dir="ltr">{cityData.timezone}</strong>. وقت الصلاة لا يُقرأ صحيحاً إذا فُصل عن المدينة واليوم والسياق المحلي.
               </p>
             </div>
             <div className={routeStyles.summaryCard}>
@@ -859,47 +858,43 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
         </div>
       </section>
 
-      {solarFacts || qiblaLabel ? (
-        <section className={routeStyles.sectionPanel} aria-label={`ملخص الصيام والشمس والقبلة في ${cityNameAr}`}>
+      {solarFacts ? (
+        <section className={routeStyles.sectionPanel} aria-label={`الصيام والشمس في ${cityNameAr}`}>
           <div className={routeStyles.sectionHead}>
             <h2 className={routeStyles.sectionTitle}>ملخص سريع قبل الأذان في {cityNameAr}</h2>
             <p className={routeStyles.sectionCopy}>
-              هذا الجزء يجمع أكثر ما يحتاجه الباحث بعد جدول الصلاة: نهاية السحور، وقت الإفطار،
-              مدة الصيام التقريبية، الشروق والغروب، واتجاه القبلة من نفس إحداثيات المدينة.
+              نهاية السحور، وقت الإفطار، مدة الصيام التقريبية، والشروق والغروب — كلها من نفس إحداثيات المدينة.
             </p>
           </div>
           <div className={routeStyles.contextGrid}>
-            {solarFacts ? (
-              <article className={routeStyles.contextCard}>
-                <h3 className={routeStyles.contextTitle}>السحور والإفطار اليوم</h3>
-                <p className={routeStyles.contextBody}>
-                  ينتهي وقت السحور بدخول الفجر عند <strong>{solarFacts.fajrLabel}</strong>،
-                  ويبدأ الإفطار عند المغرب <strong>{solarFacts.maghribLabel}</strong>
-                  {solarFacts.fastingLengthLabel ? `، ومدة الصيام التقريبية ${solarFacts.fastingLengthLabel}.` : '.'}
-                </p>
-              </article>
-            ) : null}
-            {solarFacts ? (
-              <article className={routeStyles.contextCard}>
-                <h3 className={routeStyles.contextTitle}>الشروق والغروب</h3>
-                <p className={routeStyles.contextBody}>
-                  الشروق اليوم في {cityNameAr} عند <strong>{solarFacts.sunriseLabel}</strong>،
-                  والغروب عند <strong>{solarFacts.sunsetLabel}</strong>
-                  {solarFacts.dayLengthLabel ? `، وطول النهار تقريباً ${solarFacts.dayLengthLabel}.` : '.'}
-                </p>
-              </article>
-            ) : null}
-            {qiblaLabel ? (
-              <article className={routeStyles.contextCard}>
-                <QiblaCompass
-                  bearingDegrees={qiblaBearing}
-                  bearingLabel={qiblaLabel}
-                  cityNameAr={cityNameAr}
-                  countryNameAr={countryNameAr}
-                />
-              </article>
-            ) : null}
+            <article className={routeStyles.contextCard}>
+              <h3 className={routeStyles.contextTitle}>السحور والإفطار اليوم</h3>
+              <p className={routeStyles.contextBody}>
+                ينتهي وقت السحور بدخول الفجر عند <strong>{solarFacts.fajrLabel}</strong>،
+                ويبدأ الإفطار عند المغرب <strong>{solarFacts.maghribLabel}</strong>
+                {solarFacts.fastingLengthLabel ? `، ومدة الصيام التقريبية ${solarFacts.fastingLengthLabel}.` : '.'}
+              </p>
+            </article>
+            <article className={routeStyles.contextCard}>
+              <h3 className={routeStyles.contextTitle}>الشروق والغروب</h3>
+              <p className={routeStyles.contextBody}>
+                الشروق اليوم في {cityNameAr} عند <strong>{solarFacts.sunriseLabel}</strong>،
+                والغروب عند <strong>{solarFacts.sunsetLabel}</strong>
+                {solarFacts.dayLengthLabel ? `، وطول النهار تقريباً ${solarFacts.dayLengthLabel}.` : '.'}
+              </p>
+            </article>
           </div>
+        </section>
+      ) : null}
+
+      {qiblaLabel ? (
+        <section className={`mb-4 ${routeStyles.sectionPanel}`} aria-label={`اتجاه القبلة من ${cityNameAr}`}>
+          <QiblaCompass
+            bearingDegrees={qiblaBearing}
+            bearingLabel={qiblaLabel}
+            cityNameAr={cityNameAr}
+            countryNameAr={countryNameAr}
+          />
         </section>
       ) : null}
 
