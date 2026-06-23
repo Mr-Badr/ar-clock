@@ -840,6 +840,26 @@
     "day": 25
   },
   {
+    "id": "bac-results-algeria",
+    "slug": "bac-results-algeria",
+    "name": "نتيجة الباك الجزائر",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "dz",
+    "month": 7,
+    "day": 14
+  },
+  {
+    "id": "bac-results-morocco",
+    "slug": "bac-results-morocco",
+    "name": "نتيجة الباكالوريا المغرب",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ma",
+    "month": 7,
+    "day": 5
+  },
+  {
     "id": "iraq-national-day",
     "slug": "iraq-national-day",
     "name": "يوم الاستقلال العراقي",

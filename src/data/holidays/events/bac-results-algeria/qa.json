@@ -1,0 +1,13 @@
+{
+  "slug": "bac-results-algeria",
+  "publishStatus": "drafted",
+  "checks": {
+    "contentReady": false,
+    "factChecked": false,
+    "schemaValid": false,
+    "seoValidated": false,
+    "hasHardcodedYear": false
+  },
+  "notes": [],
+  "updatedAt": "2026-06-22T23:59:15.632Z"
+}

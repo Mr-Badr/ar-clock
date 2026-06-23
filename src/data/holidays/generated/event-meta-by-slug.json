@@ -1787,6 +1787,28 @@
     "canonicalPath": "/holidays/january-25-egypt",
     "aliases": []
   },
+  "bac-results-algeria": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "dz"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/bac-results-algeria",
+    "aliases": []
+  },
+  "bac-results-morocco": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ma"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/bac-results-morocco",
+    "aliases": []
+  },
   "iraq-national-day": {
     "publishStatus": "published",
     "countryScope": "none",
