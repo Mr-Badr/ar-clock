@@ -151,11 +151,11 @@
     ],
     "seoMeta": {
       "titleTag": "عيد الفطر {{year}} - {{hijriYear}} هـ | {{formattedDate}}",
-      "metaDescription": "اعرف متى يوافق عيد الفطر {{year}} - {{hijriYear}} هـ، وكم بقي عليه، ومتى تُخرج زكاة الفطر، ومتى صلاة العيد، مع تنبيه إلى اختلاف الإعلان الرسمي بين الدول.",
+      "metaDescription": "عيد الفطر {{year}} - {{hijriYear}} هـ: {{formattedDate}}. عداد دقيق + موعد زكاة الفطر وصلاة العيد وإجازات الدول العربية.",
       "h1": "عيد الفطر {{year}} - {{hijriYear}} هـ | الموعد وزكاة الفطر",
       "canonicalPath": "/holidays/eid-al-fitr",
       "ogTitle": "عيد الفطر {{year}} - {{hijriYear}} هـ | العد التنازلي والشرح العملي",
-      "ogDescription": "عداد دقيق لعيد الفطر {{year}} - {{hijriYear}} هـ مع شرح زكاة الفطر وصلاة العيد والفرق بين الموعد المتوقع والإعلان الرسمي.",
+      "ogDescription": "عيد الفطر {{year}} - {{hijriYear}} هـ: {{formattedDate}} — زكاة الفطر وإجازات الدول.",
       "ogImageAlt": "عيد الفطر {{year}} — {{formattedDate}}",
       "primaryKeyword": "متى عيد الفطر {{year}}",
       "secondaryKeywords": [

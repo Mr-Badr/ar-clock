@@ -133,11 +133,11 @@
     ],
     "seoMeta": {
       "titleTag": "رمضان {{year}} - {{hijriYear}} هـ | الموعد المتوقع وبداية الصيام",
-      "metaDescription": "تعرف على موعد رمضان {{year}} - {{hijriYear}} هـ، وكم بقي عليه، ولماذا قد يختلف يوماً واحداً بين الدول، مع شرح واضح لمعنى الشهر وبداية الصيام وسؤال الإجازة.",
+      "metaDescription": "رمضان {{year}} - {{hijriYear}} هـ: {{formattedDate}}. عداد مباشر + سبب اختلاف بداية الشهر بين الدول وإجازات شهر رمضان.",
       "h1": "متى رمضان {{year}} - {{hijriYear}} هـ؟ | الموعد المتوقع",
       "canonicalPath": "/holidays/ramadan",
       "ogTitle": "متى رمضان {{year}} - {{hijriYear}} هـ؟ | الموعد المتوقع",
-      "ogDescription": "موعد رمضان {{year}} - {{hijriYear}} هـ كما يبحث عنه الناس، مع توضيح الفرق بين التاريخ المتوقع والإعلان الرسمي، وسؤال الإجازة، وكيف تستعد لبداية الصيام.",
+      "ogDescription": "رمضان {{year}} - {{hijriYear}} هـ: {{formattedDate}} — عداد مباشر وبداية الشهر.",
       "ogImageAlt": "رمضان {{year}} — {{formattedDate}}",
       "primaryKeyword": "متى رمضان {{year}}",
       "secondaryKeywords": [

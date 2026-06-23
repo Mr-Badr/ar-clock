@@ -153,11 +153,11 @@
     ],
     "seoMeta": {
       "titleTag": "عيد الأضحى {{year}} - {{hijriYear}} هـ | {{formattedDate}}",
-      "metaDescription": "اعرف متى يوافق عيد الأضحى {{year}} - {{hijriYear}} هـ، وما الفرق بينه وبين يوم عرفة، ومتى يبدأ وقت الأضحية، وهل الإجازة واحدة في كل الدول.",
+      "metaDescription": "عيد الأضحى {{year}} - {{hijriYear}} هـ: {{formattedDate}}. عداد دقيق + الفرق مع يوم عرفة ووقت الأضحية وإجازات الدول العربية.",
       "h1": "عيد الأضحى {{year}} - {{hijriYear}} هـ | الموعد والأضحية",
       "canonicalPath": "/holidays/eid-al-adha",
       "ogTitle": "عيد الأضحى {{year}} - {{hijriYear}} هـ | العد التنازلي والشرح العملي",
-      "ogDescription": "عداد دقيق لعيد الأضحى {{year}} - {{hijriYear}} هـ مع شرح الفرق بين يوم عرفة والعيد، ووقت الأضحية، وتنبيه اختلاف الإعلان الرسمي.",
+      "ogDescription": "عيد الأضحى {{year}} - {{hijriYear}} هـ: {{formattedDate}} — عداد دقيق وإجازات الدول.",
       "ogImageAlt": "عيد الأضحى {{year}} — {{formattedDate}}",
       "primaryKeyword": "متى عيد الأضحى {{year}}",
       "secondaryKeywords": [

@@ -155,11 +155,11 @@
     ],
     "seoMeta": {
       "titleTag": "عاشوراء {{year}} - {{hijriYear}} هـ | {{formattedDate}}",
-      "metaDescription": "موعد عاشوراء {{year}} - {{hijriYear}} هـ مع عداد دقيق، وشرح واضح لفضل الصيام ومراتبه، وماذا تفعل إذا فاتك تاسوعاء أو اختلفت بداية الشهر.",
+      "metaDescription": "عاشوراء {{year}} - {{hijriYear}} هـ: {{formattedDate}}. عداد دقيق + فضل صيام اليوم العاشر والتاسع وحكم اختلاف الرؤية بين الدول.",
       "h1": "عاشوراء {{year}} - {{hijriYear}} هـ | كم باقي وفضل الصيام؟",
       "canonicalPath": "/holidays/ashura",
       "ogTitle": "عاشوراء {{year}} - {{hijriYear}} هـ | كم باقي وكيف تصومه؟",
-      "ogDescription": "عداد دقيق لعاشوراء {{year}} - {{hijriYear}} هـ مع شرح فضل الصيام ومراتبه وحل أكثر الأسئلة شيوعاً.",
+      "ogDescription": "عاشوراء {{year}} - {{hijriYear}} هـ: {{formattedDate}} — فضل الصيام وأحكام تاسوعاء.",
       "ogImageAlt": "عاشوراء {{year}} — {{formattedDate}}",
       "primaryKeyword": "متى عاشوراء {{year}}",
       "secondaryKeywords": [

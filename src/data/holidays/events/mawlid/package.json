@@ -123,11 +123,11 @@
     ],
     "seoMeta": {
       "titleTag": "المولد النبوي {{year}} - {{hijriYear}} هـ | {{formattedDate}}",
-      "metaDescription": "تعرف على موعد المولد النبوي الشريف {{year}} - {{hijriYear}} هـ، وهل يعد إجازة في بلدك، مع شرح واضح لمعنى المناسبة والتنبيه إلى اختلاف الإحياء والإعلان الرسمي محلياً.",
+      "metaDescription": "المولد النبوي {{year}} - {{hijriYear}} هـ: {{formattedDate}}. عداد دقيق + الإجازة الرسمية في الدول العربية والإسلامية.",
       "h1": "متى المولد النبوي الشريف {{year}} - {{hijriYear}} هـ؟ | 12 ربيع الأول",
       "canonicalPath": "/holidays/mawlid",
       "ogTitle": "متى المولد النبوي الشريف {{year}} - {{hijriYear}} هـ؟",
-      "ogDescription": "موعد المولد النبوي الشريف {{year}} - {{hijriYear}} هـ مع توضيح فرق مهم بين التاريخ العام، والإجازة المحلية، وطريقة إحياء المناسبة من بلد لآخر.",
+      "ogDescription": "المولد النبوي {{year}} - {{hijriYear}} هـ: {{formattedDate}} — الإجازات الرسمية والاحتفال.",
       "ogImageAlt": "المولد النبوي الشريف {{year}} — {{formattedDate}}",
       "primaryKeyword": "متى المولد النبوي الشريف {{year}}",
       "secondaryKeywords": [

@@ -124,11 +124,11 @@
     ],
     "seoMeta": {
       "titleTag": "ليلة النصف من شعبان {{year}} - {{hijriYear}} هـ | 15 شعبان",
-      "metaDescription": "تعرف على موعد ليلة النصف من شعبان {{year}} - {{hijriYear}} هـ، وما أكثر الأسئلة الصحيحة حول فضلها وصيام 15 شعبان وقيامها، مع تنبيه إلى اختلاف التاريخ والثبوت.",
+      "metaDescription": "ليلة النصف من شعبان {{year}} - {{hijriYear}} هـ: {{formattedDate}}. عداد مباشر + أحكام إحيائها وصيام 15 شعبان.",
       "h1": "متى ليلة النصف من شعبان {{year}} - {{hijriYear}} هـ؟ | 15 شعبان",
       "canonicalPath": "/holidays/nisf-shaban",
       "ogTitle": "متى ليلة النصف من شعبان {{year}} - {{hijriYear}} هـ؟",
-      "ogDescription": "موعد ليلة النصف من شعبان {{year}} - {{hijriYear}} هـ مع توضيح أهم الأسئلة حول فضلها وصيام يومها وما يثبت فيها وما لا يثبت.",
+      "ogDescription": "ليلة النصف من شعبان {{year}} - {{hijriYear}} هـ: {{formattedDate}} — أحكامها.",
       "ogImageAlt": "ليلة النصف من شعبان {{year}} — {{formattedDate}}",
       "primaryKeyword": "متى ليلة النصف من شعبان {{year}}",
       "secondaryKeywords": [

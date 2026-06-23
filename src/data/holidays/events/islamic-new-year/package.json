@@ -149,11 +149,11 @@
     ],
     "seoMeta": {
       "titleTag": "رأس السنة الهجرية {{year}} - {{hijriYear}} هـ | {{formattedDate}}",
-      "metaDescription": "اعرف موعد رأس السنة الهجرية {{year}} - {{hijriYear}} هـ وبداية 1 محرم، وهل التاريخ نهائي أم متوقع، ولماذا ليست المناسبة عيداً شرعياً مستقلاً.",
+      "metaDescription": "رأس السنة الهجرية {{hijriYear}} هـ ({{year}}): {{formattedDate}}. عداد تنازلي دقيق + سبب اختلاف بدء المحرم بين الدول وفضل الصيام.",
       "h1": "متى رأس السنة الهجرية {{year}} - {{hijriYear}} هـ؟ | 1 محرم",
       "canonicalPath": "/holidays/islamic-new-year",
       "ogTitle": "متى رأس السنة الهجرية {{year}} - {{hijriYear}} هـ؟ | 1 محرم",
-      "ogDescription": "موعد رأس السنة الهجرية {{year}} - {{hijriYear}} هـ مع شرح معنى 1 محرم، واحتمال اختلاف ثبوت الهلال، والفرق بين بداية السنة والعيد.",
+      "ogDescription": "رأس السنة الهجرية {{hijriYear}} هـ ({{year}}): {{formattedDate}} — عداد دقيق ومواعيد الدول العربية.",
       "ogImageAlt": "رأس السنة الهجرية {{year}} — {{formattedDate}}",
       "primaryKeyword": "متى رأس السنة الهجرية {{year}}",
       "secondaryKeywords": [

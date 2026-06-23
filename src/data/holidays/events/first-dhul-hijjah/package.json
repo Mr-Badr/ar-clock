@@ -153,11 +153,11 @@
     ],
     "seoMeta": {
       "titleTag": "أول ذي الحجة {{year}} - {{hijriYear}} هـ | {{formattedDate}}",
-      "metaDescription": "اعرف متى يبدأ أول ذي الحجة {{year}} - {{hijriYear}} هـ، وكم بقي عليه، ومتى تبدأ عشر ذي الحجة والتكبير والصيام، مع ربط عملي بيوم عرفة وعيد الأضحى.",
+      "metaDescription": "أول ذي الحجة {{year}} - {{hijriYear}} هـ: {{formattedDate}}. بداية عشر ذي الحجة والتكبير والأضحية وفضل الأيام.",
       "h1": "أول ذي الحجة {{year}} - {{hijriYear}} هـ | بداية العشر",
       "canonicalPath": "/holidays/first-dhul-hijjah",
       "ogTitle": "أول ذي الحجة {{year}} - {{hijriYear}} هـ | متى تبدأ العشر؟",
-      "ogDescription": "عداد دقيق لأول ذي الحجة {{year}} - {{hijriYear}} هـ مع شرح بداية العشر والتكبير والصيام والفرق بين البداية ويوم عرفة والعيد.",
+      "ogDescription": "أول ذي الحجة {{year}} - {{hijriYear}} هـ: {{formattedDate}} — العشر الأوائل وفضلها.",
       "ogImageAlt": "أول ذي الحجة {{year}} — {{formattedDate}}",
       "primaryKeyword": "متى أول ذي الحجة {{year}}",
       "secondaryKeywords": [

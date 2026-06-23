@@ -126,11 +126,11 @@
     ],
     "seoMeta": {
       "titleTag": "ليلة القدر {{year}} - {{hijriYear}} هـ | 27 رمضان",
-      "metaDescription": "تعرف على موعد ليلة القدر {{year}} - {{hijriYear}} هـ بحسب الليلة المرجحة في 27 رمضان، مع شرح واضح للتحري في أوتار العشر الأواخر، ودعاء ليلة القدر وعلاماتها.",
+      "metaDescription": "ليلة القدر {{year}} - {{hijriYear}} هـ: {{formattedDate}}. الليلة المرجحة في 27 رمضان وفضلها وأبرز ما يسن فعله.",
       "h1": "متى ليلة القدر {{year}} - {{hijriYear}} هـ؟ | 27 رمضان أم الأوتار كلها؟",
       "canonicalPath": "/holidays/laylat-al-qadr",
       "ogTitle": "متى ليلة القدر {{year}} - {{hijriYear}} هـ؟ | الليلة المرجحة والتحري الصحيح",
-      "ogDescription": "موعد ليلة القدر {{year}} - {{hijriYear}} هـ كما يبحث عنه الناس، مع توضيح أن 27 رمضان هي الليلة الأشهر لا الوحيدة، وشرح الدعاء والعلامات والتحري في الأوتار.",
+      "ogDescription": "ليلة القدر {{year}} - {{hijriYear}} هـ: {{formattedDate}} — فضلها وما يسن.",
       "ogImageAlt": "ليلة القدر {{year}} — {{formattedDate}}",
       "primaryKeyword": "متى ليلة القدر {{year}}",
       "secondaryKeywords": [

@@ -155,11 +155,11 @@
     ],
     "seoMeta": {
       "titleTag": "يوم عرفة {{year}} - {{hijriYear}} هـ | {{formattedDate}}",
-      "metaDescription": "اعرف متى يوافق يوم عرفة {{year}} - {{hijriYear}} هـ، وكم بقي عليه، وماذا يسن لغير الحاج، ومتى يثبت الموعد رسمياً، مع الفرق بينه وبين عيد الأضحى.",
+      "metaDescription": "يوم عرفة {{year}} - {{hijriYear}} هـ: {{formattedDate}}. عداد دقيق + فضل الصيام لغير الحاج وثبوت اليوم بين الدول.",
       "h1": "متى يوم عرفة {{year}} - {{hijriYear}} هـ؟ | الموعد وفضل الصيام",
       "canonicalPath": "/holidays/day-of-arafa",
       "ogTitle": "متى يوم عرفة {{year}} - {{hijriYear}} هـ؟ | العد التنازلي والشرح العملي",
-      "ogDescription": "عداد دقيق ليوم عرفة {{year}} - {{hijriYear}} هـ مع شرح الفرق بين الموعد المتوقع والإعلان الرسمي، وما يسن لغير الحاج، وعلاقته بعيد الأضحى.",
+      "ogDescription": "يوم عرفة {{year}} - {{hijriYear}} هـ: {{formattedDate}} — فضل الصيام وثبوت الهلال.",
       "ogImageAlt": "يوم عرفة {{year}} — {{formattedDate}}",
       "primaryKeyword": "متى يوم عرفة {{year}}",
       "secondaryKeywords": [
