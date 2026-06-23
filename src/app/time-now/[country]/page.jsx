@@ -170,7 +170,7 @@ export async function generateMetadata({ params }) {
 
     return {
       title: `الوقت الآن في ${countryAr} | الساعة والتاريخ والمدن`,
-      description: `اعرف الوقت الآن في ${countryAr} مع توقيت ${cityAr}، التاريخ المحلي، منطقة IANA، فرق UTC ${offset}، حالة التوقيت الصيفي، وروابط جميع المدن.`,
+      description: `الوقت الآن في ${countryAr} — ${cityAr} UTC ${offset}. ساعة حية، التاريخ المحلي، التوقيت الصيفي، ومدن الدولة كاملة.`,
       keywords: buildTimeNowKeywords({
         countryAr,
         countryEn: country.name_en,
@@ -200,7 +200,7 @@ export async function generateMetadata({ params }) {
       twitter: {
         card: 'summary_large_image',
         title: `الوقت الان في ${countryAr} | ${cityAr}`,
-        description: `اعرف ساعة ${countryAr} الآن مع التاريخ المحلي وفرق UTC ${offset} وروابط المدن داخل الدولة.`,
+        description: `${countryAr} الآن: UTC ${offset}. ساعة حية، التاريخ المحلي، وروابط مدن الدولة.`,
         images: [`${BASE}/time-now/${countrySlug}/opengraph-image`],
       },
       robots: {
