@@ -80,4 +80,42 @@ export const POPULAR_PAIRS = [
     labelAr: 'السعودية ↔ أمريكا',
     volume: null,
   },
+
+  // Maghreb diaspora — high daily search volume from diaspora communities in Europe
+  {
+    from: { nameAr: 'الجزائر',  flag: '🇩🇿', slug: 'algeria-algiers',              tz: 'Africa/Algiers'       },
+    to:   { nameAr: 'باريس',    flag: '🇫🇷', slug: 'france-paris',                 tz: 'Europe/Paris'         },
+    labelAr: 'الجزائر ↔ فرنسا',
+    volume: null,
+  },
+  {
+    from: { nameAr: 'تونس',     flag: '🇹🇳', slug: 'tunisia-tunis',                tz: 'Africa/Tunis'         },
+    to:   { nameAr: 'باريس',    flag: '🇫🇷', slug: 'france-paris',                 tz: 'Europe/Paris'         },
+    labelAr: 'تونس ↔ فرنسا',
+    volume: null,
+  },
+  {
+    from: { nameAr: 'الرباط',   flag: '🇲🇦', slug: 'morocco-rabat',                tz: 'Africa/Casablanca'    },
+    to:   { nameAr: 'باريس',    flag: '🇫🇷', slug: 'france-paris',                 tz: 'Europe/Paris'         },
+    labelAr: 'المغرب ↔ فرنسا',
+    volume: null,
+  },
+  {
+    from: { nameAr: 'الرباط',   flag: '🇲🇦', slug: 'morocco-rabat',                tz: 'Africa/Casablanca'    },
+    to:   { nameAr: 'مدريد',    flag: '🇪🇸', slug: 'spain-madrid',                 tz: 'Europe/Madrid'        },
+    labelAr: 'المغرب ↔ إسبانيا',
+    volume: null,
+  },
+  {
+    from: { nameAr: 'القاهرة',  flag: '🇪🇬', slug: 'egypt-cairo',                  tz: 'Africa/Cairo'         },
+    to:   { nameAr: 'لندن',     flag: '🇬🇧', slug: 'united-kingdom-london',        tz: 'Europe/London'        },
+    labelAr: 'مصر ↔ بريطانيا',
+    volume: null,
+  },
+  {
+    from: { nameAr: 'القاهرة',  flag: '🇪🇬', slug: 'egypt-cairo',                  tz: 'Africa/Cairo'         },
+    to:   { nameAr: 'نيويورك',  flag: '🇺🇸', slug: 'united-states-new-york-city',  tz: 'America/New_York'     },
+    labelAr: 'مصر ↔ أمريكا',
+    volume: null,
+  },
 ]

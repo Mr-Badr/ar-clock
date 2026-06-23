@@ -91,6 +91,7 @@ export const SITEMAP_PAIRS = [
 
   // North Africa
   { from: 'morocco-rabat', to: 'united-kingdom-london' },
+  { from: 'morocco-rabat', to: 'france-paris' },
   { from: 'morocco-rabat', to: 'spain-madrid' },
   { from: 'morocco-rabat', to: 'germany-berlin' },
   { from: 'morocco-rabat', to: 'united-states-new-york-city' },

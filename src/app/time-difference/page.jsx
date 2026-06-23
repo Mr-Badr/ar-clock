@@ -92,7 +92,7 @@ export const metadata = buildCanonicalMetadata({
   title:
     "فرق التوقيت بين أي مدينتين الآن — مباشر مع DST وUTC | ميقاتنا",
   description:
-    "احسب فرق الوقت بين أي مدينتين أو دولتين الآن بالدقيقة، مع ساعة مزدوجة حية ومقارنة التاريخ المحلي وأثر التوقيت الصيفي DST وأفضل وقت للتواصل.",
+    "ساعة مزدوجة حية + فرق التوقيت بالدقيقة بين أي مدينتين أو دولتين. جدول تحويل الوقت، مقارنة UTC والتوقيت الصيفي DST، وأفضل وقت للاجتماع أو الاتصال.",
   keywords: buildTimeDifferenceHubKeywords(SAFE_POPULAR_PAIRS),
   url: `${SITE_URL}/time-difference`,
 });
