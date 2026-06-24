@@ -1,0 +1,18 @@
+{
+  "slug": "salary-day-qatar",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "موعد راتب الحكومة القطرية هو الأول من كل شهر ميلادي",
+    "قطر غيّرت عطلة نهاية الأسبوع في يناير 2022 إلى السبت والأحد",
+    "إذا وافق الأول السبت أو الأحد يُعدَّل الموعد وفق الإعلان الرسمي",
+    "المرجع الرسمي: وزارة المالية القطرية وبوابة حكومي"
+  ],
+  "updatedAt": "2026-06-24T09:59:42.848Z"
+}

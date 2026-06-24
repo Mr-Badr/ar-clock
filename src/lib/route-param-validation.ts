@@ -141,6 +141,27 @@ export function isRouteSlug(value: unknown): boolean {
   return validateRouteSlug(value).valid;
 }
 
+/**
+ * Validates that a city record from the geo snapshot / DB is safe to render.
+ * A city with missing or invalid timezone / coordinates will produce wrong times
+ * or throw during calculation — call notFound() when this returns false.
+ */
+export function isRenderableCityData(city: unknown): boolean {
+  if (!city || typeof city !== 'object') return false;
+  const c = city as Record<string, unknown>;
+  // Timezone must be a non-empty string that Intl recognises
+  if (!c.timezone || typeof c.timezone !== 'string') return false;
+  try { new Intl.DateTimeFormat('en', { timeZone: c.timezone as string }); }
+  catch { return false; }
+  // Coordinates must be finite numbers in valid ranges; (0,0) signals missing data
+  const lat = Number(c.lat);
+  const lon = Number(c.lon);
+  if (!isFinite(lat) || lat < -90 || lat > 90) return false;
+  if (!isFinite(lon) || lon < -180 || lon > 180) return false;
+  if (lat === 0 && lon === 0) return false;
+  return true;
+}
+
 function validateTwoDigitNumber(value: unknown, minimum: number, maximum: number): number | null {
   if (typeof value !== 'string' || !/^\d{2}$/.test(value)) {
     return null;

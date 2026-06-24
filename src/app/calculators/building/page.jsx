@@ -246,6 +246,19 @@ export default function BuildingHubPage() {
         <Suspense fallback={<SectionSkeleton />}>
           <BuildingCostCalculator />
         </Suspense>
+
+        {/* Quick-access strip for material calculators */}
+        <div className="building-tools-strip">
+          <p className="building-tools-strip__label">احسب المواد بالتفصيل:</p>
+          <div className="building-tools-strip__links">
+            {BUILDING_MATERIAL_LINKS.map((tool) => (
+              <Link key={tool.href} href={tool.href} className="building-tool-pill">
+                <span className="building-tool-pill__icon" aria-hidden="true">{tool.iconLabel}</span>
+                <span>{tool.label}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
       </CalculatorHero>
 
       <CalculatorSection

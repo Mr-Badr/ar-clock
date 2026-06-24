@@ -1,0 +1,18 @@
+{
+  "slug": "salary-day-kuwait",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "موعد راتب الكويت الحكومي هو الأول من كل شهر ميلادي",
+    "عطلة نهاية الأسبوع في الكويت: الجمعة والسبت",
+    "إذا وافق الأول الجمعة أو السبت يُصرف يوم الخميس قبله",
+    "المرجع الرسمي: ديوان الخدمة المدنية ووزارة المالية الكويتية"
+  ],
+  "updatedAt": "2026-06-24T09:59:39.289Z"
+}

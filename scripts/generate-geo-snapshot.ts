@@ -288,6 +288,20 @@ async function main() {
   });
 
   console.log(`[geo:snapshot] countries=${countries.length} cities=${cities.length}`);
+
+  // Quick sanity check after generation — fail fast before the snapshot is committed.
+  // Full deep audit runs separately via "npm run validate:geo".
+  let badCount = 0;
+  for (const city of cities) {
+    if (!city.timezone || !city.lat || !city.lon) {
+      console.warn(`[geo:snapshot] WARNING: ${city.country_slug}/${city.city_slug} has missing timezone/coordinates`);
+      badCount++;
+    }
+  }
+  if (badCount > 0) {
+    console.warn(`[geo:snapshot] ${badCount} cities have incomplete data. Run "npm run validate:geo" for details.`);
+    console.warn('[geo:snapshot] If data is wrong in the DB, run "npm run geo:fix" to repair via OpenStreetMap API.');
+  }
 }
 
 main().catch((error) => {

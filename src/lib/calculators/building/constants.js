@@ -167,11 +167,11 @@ export const MASONRY_UNITS_PER_M2 = {
 // ─── Building Finish Levels ──────────────────────────────────────────────────
 
 export const FINISH_LEVELS = [
-  { key: 'skeleton',  label: 'هيكل فقط',      subLabel: 'عظم',          emoji: '🏗️', color: 'var(--blue)' },
-  { key: 'economy',   label: 'اقتصادي',        subLabel: 'تشطيب خفيف',  emoji: '🏠', color: 'var(--blue)' },
-  { key: 'standard',  label: 'عادي',           subLabel: 'التشطيب الأكثر شيوعاً', emoji: '🏡', color: 'var(--blue)' },
-  { key: 'luxury',    label: 'لوكس',           subLabel: 'تشطيب راقٍ',  emoji: '✨', color: 'var(--blue)' },
-  { key: 'super_lux', label: 'سوبر لوكس',     subLabel: 'أعلى مستوى',  emoji: '👑', color: 'var(--blue)' },
+  { key: 'skeleton',  label: 'هيكل فقط',      subLabel: 'عظم فقط',                emoji: '🏗️', color: 'var(--text-secondary)' },
+  { key: 'economy',   label: 'اقتصادي',        subLabel: 'تشطيب خفيف',             emoji: '🏠', color: 'var(--calc-cat-personal)' },
+  { key: 'standard',  label: 'عادي',           subLabel: 'الأكثر شيوعاً',          emoji: '🏡', color: 'var(--calc-cat-finance)' },
+  { key: 'luxury',    label: 'لوكس',           subLabel: 'تشطيب راقٍ',             emoji: '✨', color: 'var(--calc-cat-education)' },
+  { key: 'super_lux', label: 'سوبر لوكس',     subLabel: 'أعلى مستوى',             emoji: '👑', color: 'var(--calc-cat-age)' },
 ];
 
 // نوع المبنى — معامل تعديل التكلفة

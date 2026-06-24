@@ -13,7 +13,7 @@
     "prisma:studio": "prisma studio",
     "geo:snapshot": "sh -c 'if [ -f .env.local ]; then tsx --env-file=.env.local scripts/generate-geo-snapshot.ts; else tsx scripts/generate-geo-snapshot.ts; fi'",
     "export-fallback": "npm run geo:snapshot",
-    "build": "npm run events:build && npm run prisma:generate && npm run seo:validate && next build && npm run seo:audit:rendered",
+    "build": "npm run events:build && npm run prisma:generate && npm run validate:geo && npm run seo:validate && next build && npm run seo:audit:rendered",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx",
     "typecheck": "tsc --noEmit",
@@ -45,13 +45,16 @@
     "events:publish": "tsx --env-file=.env.local scripts/events-publish.ts",
     "events:go-live": "node --import tsx --env-file=.env.local scripts/events-go-live.ts",
     "events:sync": "node --import tsx --env-file=.env.local scripts/events-sync.ts",
+    "validate:geo": "node --import tsx scripts/audit-geo-snapshots.ts",
+    "geo:check": "node --import tsx scripts/geo-enrich.ts",
+    "geo:fix": "node --import tsx scripts/geo-enrich.ts --fix",
     "validate:holidays": "tsx --env-file=.env.local scripts/validate-holiday-content.ts",
     "validate:holidays:strict": "tsx --env-file=.env.local scripts/validate-holiday-content.ts --strict",
     "validate:holidays:slug": "tsx --env-file=.env.local scripts/validate-holiday-content.ts --strict",
     "validate:holidays:changed": "tsx --env-file=.env.local scripts/validate-holiday-content.ts --strict --changed --json",
     "validate:holidays:live": "tsx --env-file=.env.local scripts/validate-holiday-content.ts --strict --live --json",
     "build:smoke": "npm run events:build && npm run seo:validate && next build",
-    "ci:check": "npm run lint && npm run typecheck && npm run test:unit && npm run seo:validate && npm run validate:holidays"
+    "ci:check": "npm run lint && npm run typecheck && npm run test:unit && npm run seo:validate && npm run validate:holidays && npm run validate:geo"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

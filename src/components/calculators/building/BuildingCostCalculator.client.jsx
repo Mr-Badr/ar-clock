@@ -166,22 +166,23 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug }) {
             <div className="space-y-2">
               <Label>مستوى التشطيب</Label>
               <div className="calc-building-choice-grid calc-building-choice-grid--finish">
-                {FINISH_LEVELS.map((level) => (
-                  <button
-                    key={level.key}
-                    type="button"
-                    aria-pressed={finishLevel === level.key}
-                    onClick={() => setFinishLevel(level.key)}
-                    className={`calc-building-choice-card ${
-                      finishLevel === level.key
-                        ? 'is-active'
-                        : ''
-                    }`}
-                  >
-                    <span className="text-sm font-bold">{level.label}</span>
-                    <span className="text-xs text-text-secondary">{level.subLabel}</span>
-                  </button>
-                ))}
+                {FINISH_LEVELS.map((level) => {
+                  const active = finishLevel === level.key;
+                  return (
+                    <button
+                      key={level.key}
+                      type="button"
+                      aria-pressed={active}
+                      onClick={() => setFinishLevel(level.key)}
+                      className={`calc-finish-card${active ? ' is-active' : ''}`}
+                      style={{ '--finish-color': level.color }}
+                    >
+                      <span className="calc-finish-card__icon" aria-hidden="true">{level.emoji}</span>
+                      <span className="calc-finish-card__label">{level.label}</span>
+                      <span className="calc-finish-card__sub">{level.subLabel}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -190,39 +191,36 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug }) {
       </div>
 
       {/* ─── Results Panel (Right/Bottom) ──────────── */}
-      <div className="calc-results-panel">
+      <div
+        className="calc-results-panel"
+        style={{ '--finish-color': FINISH_LEVELS.find(l => l.key === finishLevel)?.color ?? 'var(--calc-cat-building)' }}
+      >
 
         {/* Main Cost Highlight */}
-        <Card className="calc-surface-card calc-result-card relative overflow-hidden">
-          {/* Subtle background glow based on finish level */}
-          <CardContent className="p-8 text-center space-y-4" aria-live="polite">
-            <h3 className="text-lg font-medium text-text-secondary">التكلفة الإجمالية التقديرية</h3>
-            
-            <div className="flex flex-col items-center justify-center">
-              <div className="calc-result-value">
-                {formatCurrency(results.midCost, currentCountry.symbol)}
-              </div>
-              
-              <div className="mt-4 flex items-center justify-center gap-3 rounded-[var(--radius-md)] border border-[var(--border-default)] bg-base px-4 py-2 text-sm font-medium text-text-secondary">
-                <span>تتراوح بين</span>
-                <span className="font-bold text-text-primary">{fmt(results.minCost)}</span>
-                <span>إلى</span>
-                <span className="font-bold text-text-primary">{fmt(results.maxCost)}</span>
-              </div>
-            </div>
+        <div className="calc-building-result-hero" aria-live="polite">
+          <p className="calc-building-result-hero__label">التكلفة الإجمالية التقديرية</p>
+          <div className="calc-building-result-hero__value">
+            {formatCurrency(results.midCost, currentCountry.symbol)}
+          </div>
+          <div className="calc-building-result-hero__range">
+            <span>من</span>
+            <strong>{fmt(results.minCost)}</strong>
+            <span>إلى</span>
+            <strong>{fmt(results.maxCost)}</strong>
+            <span>{currentCountry.symbol}</span>
+          </div>
 
-            <div className="calc-metric-grid calc-grid-2 calc-result-metrics">
-              <div className="calc-metric-card text-center">
-                <span className="calc-metric-card__label justify-center">إجمالي المساحة المبنية</span>
-                <span className="calc-metric-card__value">{fmt(results.totalArea)} م²</span>
-              </div>
-              <div className="calc-metric-card text-center">
-                <span className="calc-metric-card__label justify-center">متوسط تكلفة المتر</span>
-                <span className="calc-metric-card__value">{formatCurrency(results.costPerM2Mid, currentCountry.symbol)}</span>
-              </div>
+          <div className="calc-metric-grid calc-grid-2 calc-result-metrics" style={{ marginTop: 'var(--space-4)' }}>
+            <div className="calc-metric-card text-center">
+              <span className="calc-metric-card__label justify-center">إجمالي المساحة المبنية</span>
+              <span className="calc-metric-card__value">{fmt(results.totalArea)} م²</span>
             </div>
-          </CardContent>
-        </Card>
+            <div className="calc-metric-card text-center">
+              <span className="calc-metric-card__label justify-center">متوسط تكلفة المتر</span>
+              <span className="calc-metric-card__value">{formatCurrency(results.costPerM2Mid, currentCountry.symbol)}</span>
+            </div>
+          </div>
+        </div>
 
         {/* Breakdown Chart & Table */}
         <div className="calc-grid-2 calc-building-breakdown-grid">

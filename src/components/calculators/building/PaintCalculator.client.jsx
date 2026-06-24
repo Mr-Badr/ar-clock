@@ -1,210 +1,385 @@
 'use client';
-import { useState, useCallback } from 'react';
+
+import { useMemo, useState, useCallback } from 'react';
+import { Minus, Plus, PaintBucket, Info } from 'lucide-react';
+
+// ─── Paint data ──────────────────────────────────────────────────────────────
 
 const PAINT_TYPES = [
-  { id: 'interior_economy',  label: 'داخلي اقتصادي',   coverage: 10 },
-  { id: 'interior_standard', label: 'داخلي عادي',       coverage: 12 },
-  { id: 'interior_premium',  label: 'داخلي فاخر',       coverage: 14 },
-  { id: 'exterior_standard', label: 'خارجي عادي',       coverage:  8 },
-  { id: 'exterior_premium',  label: 'خارجي فاخر',       coverage: 10 },
-  { id: 'primer',            label: 'أستر / بريمر',     coverage:  8 },
+  {
+    id: 'interior_economy',
+    label: 'داخلي اقتصادي',
+    sub: 'جدران واسعة',
+    coverage: 10,
+    icon: '🏠',
+    note: 'كميات كبيرة بسعر منخفض',
+  },
+  {
+    id: 'interior_standard',
+    label: 'داخلي عادي',
+    sub: 'الأكثر استخداماً',
+    coverage: 12,
+    icon: '🏠',
+    note: 'توازن بين الجودة والسعر',
+    recommended: true,
+  },
+  {
+    id: 'interior_premium',
+    label: 'داخلي فاخر',
+    sub: 'تغطية ممتازة',
+    coverage: 14,
+    icon: '✨',
+    note: 'قد تكفي طبقة واحدة',
+  },
+  {
+    id: 'exterior_standard',
+    label: 'خارجي عادي',
+    sub: 'واجهات خارجية',
+    coverage: 8,
+    icon: '🏗️',
+    note: 'متين للأسطح المكشوفة',
+  },
+  {
+    id: 'exterior_premium',
+    label: 'خارجي فاخر',
+    sub: 'مقاوم للرطوبة',
+    coverage: 10,
+    icon: '🏗️',
+    note: 'مقاوم للطقس والأشعة',
+  },
+  {
+    id: 'primer',
+    label: 'أستر / بريمر',
+    sub: 'طبقة أساسية',
+    coverage: 8,
+    icon: '🖌️',
+    note: 'ضروري قبل لون جديد أو جدار جديد',
+  },
 ];
 
-const DOOR_AREA  = 1.8; // m² per door (0.9×2.0)
-const WINDOW_AREA = 1.44; // m² per window (1.2×1.2)
+const DOOR_AREA   = 1.80;
+const WINDOW_AREA = 1.44;
 
-function calcPaint({ length, width, height, doors, windows, coats, paintType }) {
-  const wallArea    = 2 * (length + width) * height;
-  const openings    = doors * DOOR_AREA + windows * WINDOW_AREA;
-  const netArea     = Math.max(0, wallArea - openings);
-  const paintedArea = netArea * coats;
-  const paint       = PAINT_TYPES.find((p) => p.id === paintType) || PAINT_TYPES[1];
-  const liters      = paintedArea / paint.coverage;
-  const cans5L  = Math.ceil(liters / 5);
-  const cans1L  = Math.ceil(liters);
-  return { netArea, paintedArea, liters, cans5L, cans1L, coverage: paint.coverage };
+// ─── Calc ─────────────────────────────────────────────────────────────────────
+
+function calcPaint({ length, width, height, doors, windows, coats, paintId }) {
+  const paint     = PAINT_TYPES.find((p) => p.id === paintId) ?? PAINT_TYPES[1];
+  const wallArea  = 2 * (length + width) * height;
+  const openings  = doors * DOOR_AREA + windows * WINDOW_AREA;
+  const netArea   = Math.max(0, wallArea - openings);
+  const totalArea = netArea * coats;
+  const liters    = totalArea / paint.coverage;
+  const cans5L    = Math.ceil(liters / 5);
+  const cans20L   = Math.ceil(liters / 20);
+  const safeL     = liters * 1.12;
+  const safeCans5L = Math.ceil(safeL / 5);
+  const openPct   = wallArea > 0 ? (openings / wallArea) * 100 : 0;
+  return {
+    wallArea, openings, netArea, totalArea,
+    liters, cans5L, cans20L, safeCans5L, openPct,
+    coverage: paint.coverage,
+    paintLabel: paint.label,
+  };
 }
 
 function fmt(n, d = 1) {
   return new Intl.NumberFormat('ar-SA-u-nu-latn', {
-    minimumFractionDigits: d, maximumFractionDigits: d,
+    minimumFractionDigits: d,
+    maximumFractionDigits: d,
   }).format(n);
 }
 
-export default function PaintCalculator() {
-  const [form, setForm] = useState({
-    length: '', width: '', height: '2.8',
-    doors: '1', windows: '1',
-    coats: '2', paintType: 'interior_standard',
-  });
-  const [result, setResult] = useState(null);
-  const [error, setError]   = useState('');
+// ─── Sub-components ───────────────────────────────────────────────────────────
 
-  const set = useCallback((key, val) => setForm((f) => ({ ...f, [key]: val })), []);
-
-  function calculate() {
-    const length  = parseFloat(form.length);
-    const width   = parseFloat(form.width);
-    const height  = parseFloat(form.height);
-    const doors   = parseInt(form.doors,   10) || 0;
-    const windows = parseInt(form.windows, 10) || 0;
-    const coats   = parseInt(form.coats,   10) || 1;
-
-    if (!length || !width || !height || length <= 0 || width <= 0 || height <= 0) {
-      setError('أدخل أبعاد الغرفة (الطول والعرض والارتفاع) بشكل صحيح.');
-      setResult(null);
-      return;
-    }
-    setError('');
-    setResult(calcPaint({ length, width, height, doors, windows, coats, paintType: form.paintType }));
-  }
-
-  const inputStyle = {
-    width: '100%', padding: '0.625rem 0.875rem',
-    border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)',
-    background: 'var(--bg-input)', color: 'var(--text-primary)',
-    fontSize: 'var(--text-base)', outline: 'none',
-    direction: 'ltr', textAlign: 'end',
-  };
-  const labelStyle = {
-    display: 'block', marginBottom: 'var(--space-1)',
-    fontWeight: 'var(--font-medium)', color: 'var(--text-primary)',
-    fontSize: 'var(--text-sm)',
-  };
-  const gridStyle = {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-    gap: 'var(--space-4)',
-  };
-
+function Stepper({ value, min = 0, max = 20, onChange, label }) {
   return (
-    <div style={{ display: 'grid', gap: 'var(--space-6)' }}>
-      {/* Dimensions */}
-      <div>
-        <p style={{ margin: '0 0 var(--space-3)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)' }}>
-          أبعاد الغرفة
-        </p>
-        <div style={gridStyle}>
-          {[
-            { key: 'length', label: 'الطول (م)', placeholder: 'مثال: 4' },
-            { key: 'width',  label: 'العرض (م)', placeholder: 'مثال: 3.5' },
-            { key: 'height', label: 'الارتفاع (م)', placeholder: 'مثال: 2.8' },
-          ].map(({ key, label, placeholder }) => (
-            <div key={key}>
-              <label style={labelStyle}>{label}</label>
-              <input
-                type="number" min="0" step="0.1"
-                placeholder={placeholder}
-                value={form[key]}
-                onChange={(e) => set(key, e.target.value)}
-                style={inputStyle}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Openings */}
-      <div>
-        <p style={{ margin: '0 0 var(--space-3)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)' }}>
-          الفتحات (أبواب ونوافذ)
-        </p>
-        <div style={{ ...gridStyle, gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))' }}>
-          {[
-            { key: 'doors',   label: 'عدد الأبواب' },
-            { key: 'windows', label: 'عدد النوافذ' },
-            { key: 'coats',   label: 'عدد الطبقات' },
-          ].map(({ key, label }) => (
-            <div key={key}>
-              <label style={labelStyle}>{label}</label>
-              <input
-                type="number" min="0" step="1"
-                value={form[key]}
-                onChange={(e) => set(key, e.target.value)}
-                style={inputStyle}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Paint type */}
-      <div>
-        <label style={labelStyle}>نوع الدهان</label>
-        <select
-          value={form.paintType}
-          onChange={(e) => set('paintType', e.target.value)}
-          style={{ ...inputStyle, textAlign: 'start', cursor: 'pointer' }}
-        >
-          {PAINT_TYPES.map((p) => (
-            <option key={p.id} value={p.id}>
-              {p.label} — تغطية {p.coverage} م² / لتر
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Submit */}
+    <div className="pc-stepper" role="group" aria-label={label}>
       <button
         type="button"
-        onClick={calculate}
-        style={{
-          padding: 'var(--space-3) var(--space-8)',
-          background: 'var(--accent)', color: 'var(--text-on-accent)',
-          border: 'none', borderRadius: 'var(--radius-md)',
-          fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-base)',
-          cursor: 'pointer', alignSelf: 'start',
-        }}
+        className="pc-stepper-btn"
+        onClick={() => onChange(Math.max(min, value - 1))}
+        disabled={value <= min}
+        aria-label="تقليل"
       >
-        احسب كمية الدهان
+        <Minus size={13} strokeWidth={2.5} />
       </button>
+      <span className="pc-stepper-val" aria-live="polite">{value}</span>
+      <button
+        type="button"
+        className="pc-stepper-btn"
+        onClick={() => onChange(Math.min(max, value + 1))}
+        aria-label="زيادة"
+      >
+        <Plus size={13} strokeWidth={2.5} />
+      </button>
+    </div>
+  );
+}
 
-      {error ? (
-        <p style={{ color: 'var(--text-danger)', margin: 0 }}>{error}</p>
-      ) : null}
+function DimSlider({ label, unit, value, min, max, step, onChange }) {
+  const handleInput = useCallback(
+    (e) => {
+      const v = parseFloat(e.target.value);
+      if (!isNaN(v) && v >= min && v <= max) onChange(v);
+    },
+    [min, max, onChange],
+  );
 
-      {result ? (
-        <div
-          style={{
-            padding: 'var(--space-5)', borderRadius: 'var(--radius-lg)',
-            background: 'var(--bg-surface-2)', border: '1px solid var(--border-subtle)',
-            display: 'grid', gap: 'var(--space-4)',
-          }}
-          aria-live="polite"
-          aria-label="نتيجة الحساب"
-        >
-          <h3 style={{ margin: 0, fontSize: 'var(--text-lg)', color: 'var(--text-primary)', fontWeight: 'var(--font-bold)' }}>
-            النتيجة
-          </h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 'var(--space-3)' }}>
-            {[
-              { label: 'مساحة الجدران الصافية', value: `${fmt(result.netArea)} م²` },
-              { label: 'المساحة الكلية للدهان', value: `${fmt(result.paintedArea)} م²` },
-              { label: 'كمية الدهان المطلوبة',  value: `${fmt(result.liters)} لتر` },
-              { label: 'علب 5 لتر (تقريباً)',    value: `${result.cans5L} علبة` },
-              { label: 'علب 1 لتر (تقريباً)',    value: `${result.cans1L} علبة` },
-            ].map(({ label, value }) => (
-              <div
-                key={label}
-                style={{
-                  padding: 'var(--space-3)', borderRadius: 'var(--radius-md)',
-                  background: 'var(--bg-base)', border: '1px solid var(--border-subtle)',
-                  textAlign: 'center',
-                }}
-              >
-                <p style={{ margin: '0 0 var(--space-1)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
-                  {label}
-                </p>
-                <p style={{ margin: 0, fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', fontSize: 'var(--text-lg)' }}>
-                  {value}
-                </p>
-              </div>
-            ))}
-          </div>
-          <p style={{ margin: 0, fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
-            الحساب تقديري بناءً على تغطية {result.coverage} م² لكل لتر. اشترِ كمية إضافية 10–15% للاحتياط والإصلاحات.
-          </p>
+  const pct = ((value - min) / (max - min)) * 100;
+
+  return (
+    <div className="pc-dim">
+      <div className="pc-dim-head">
+        <label className="pc-dim-label">{label}</label>
+        <div className="pc-dim-val-wrap">
+          <input
+            type="number"
+            min={min}
+            max={max}
+            step={step}
+            value={value}
+            onChange={handleInput}
+            className="pc-dim-input"
+            aria-label={`${label} بالمتر`}
+          />
+          <span className="pc-dim-unit">{unit}</span>
         </div>
-      ) : null}
+      </div>
+      <div className="pc-range-wrap">
+        <input
+          type="range"
+          min={min}
+          max={max}
+          step={step}
+          value={value}
+          onChange={(e) => onChange(parseFloat(e.target.value))}
+          className="pc-range"
+          style={{ '--pct': `${pct}%` }}
+          aria-label={label}
+        />
+        <div className="pc-range-bounds">
+          <span>{min}</span>
+          <span>{max}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main component ───────────────────────────────────────────────────────────
+
+export default function PaintCalculator() {
+  const [length,  setLength]  = useState(4.5);
+  const [width,   setWidth]   = useState(3.5);
+  const [height,  setHeight]  = useState(2.8);
+  const [doors,   setDoors]   = useState(1);
+  const [windows, setWindows] = useState(2);
+  const [coats,   setCoats]   = useState(2);
+  const [paintId, setPaintId] = useState('interior_standard');
+
+  const result = useMemo(
+    () => calcPaint({ length, width, height, doors, windows, coats, paintId }),
+    [length, width, height, doors, windows, coats, paintId],
+  );
+
+  const netPct = result.wallArea > 0
+    ? (result.netArea / result.wallArea) * 100
+    : 0;
+
+  return (
+    <div className="pc-layout">
+
+      {/* ── Controls ─────────────────────────────── */}
+      <div className="pc-controls">
+
+        {/* Step 1: Dimensions */}
+        <section className="pc-section" aria-labelledby="pc-s1">
+          <h3 className="pc-section-title" id="pc-s1">
+            <span className="pc-step-num" aria-hidden="true">١</span>
+            أبعاد الغرفة
+          </h3>
+          <div className="pc-dims">
+            <DimSlider label="الطول"    unit="م" value={length} min={1}  max={20} step={0.1} onChange={setLength} />
+            <DimSlider label="العرض"    unit="م" value={width}  min={1}  max={20} step={0.1} onChange={setWidth}  />
+            <DimSlider label="الارتفاع" unit="م" value={height} min={2}  max={6}  step={0.1} onChange={setHeight} />
+          </div>
+        </section>
+
+        {/* Step 2: Openings */}
+        <section className="pc-section" aria-labelledby="pc-s2">
+          <h3 className="pc-section-title" id="pc-s2">
+            <span className="pc-step-num" aria-hidden="true">٢</span>
+            الفتحات
+            <span className="pc-section-sub">تُطرح من المساحة</span>
+          </h3>
+          <div className="pc-openings">
+            <div className="pc-opening">
+              <span className="pc-opening-emoji" aria-hidden="true">🚪</span>
+              <div className="pc-opening-copy">
+                <span className="pc-opening-label">أبواب</span>
+                <span className="pc-opening-hint">{fmt(DOOR_AREA, 2)} م² / باب</span>
+              </div>
+              <Stepper value={doors}   min={0} max={10} onChange={setDoors}   label="عدد الأبواب" />
+            </div>
+            <div className="pc-opening">
+              <span className="pc-opening-emoji" aria-hidden="true">🪟</span>
+              <div className="pc-opening-copy">
+                <span className="pc-opening-label">نوافذ</span>
+                <span className="pc-opening-hint">{fmt(WINDOW_AREA, 2)} م² / نافذة</span>
+              </div>
+              <Stepper value={windows} min={0} max={20} onChange={setWindows} label="عدد النوافذ" />
+            </div>
+            <div className="pc-opening">
+              <span className="pc-opening-emoji" aria-hidden="true">🖌️</span>
+              <div className="pc-opening-copy">
+                <span className="pc-opening-label">عدد الطبقات</span>
+                <span className="pc-opening-hint">طبقتان هو المعيار</span>
+              </div>
+              <Stepper value={coats}   min={1} max={4}  onChange={setCoats}   label="عدد الطبقات" />
+            </div>
+          </div>
+        </section>
+
+        {/* Step 3: Paint type */}
+        <section className="pc-section" aria-labelledby="pc-s3">
+          <h3 className="pc-section-title" id="pc-s3">
+            <span className="pc-step-num" aria-hidden="true">٣</span>
+            نوع الدهان
+          </h3>
+          <div className="pc-types">
+            {PAINT_TYPES.map((p) => {
+              const active = paintId === p.id;
+              return (
+                <button
+                  key={p.id}
+                  type="button"
+                  className={`pc-type${active ? ' pc-type--active' : ''}`}
+                  onClick={() => setPaintId(p.id)}
+                  aria-pressed={active}
+                >
+                  {p.recommended && (
+                    <span className="pc-type-rec" aria-label="الأكثر استخداماً">★</span>
+                  )}
+                  <span className="pc-type-icon" aria-hidden="true">{p.icon}</span>
+                  <span className="pc-type-name">{p.label}</span>
+                  <span className="pc-type-sub">{p.sub}</span>
+                  <span className="pc-type-cov">{p.coverage} م²/ل</span>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+      </div>
+
+      {/* ── Live Results ─────────────────────────── */}
+      <div className="pc-results" aria-live="polite" aria-label="نتيجة حاسبة الدهان">
+
+        {/* Area breakdown */}
+        <div className="pc-area-card">
+          <div className="pc-area-head">
+            <span className="pc-area-title">تفصيل المساحة</span>
+            <span className="pc-area-gross">{fmt(result.wallArea)} م²</span>
+          </div>
+
+          <div
+            className="pc-bar-wrap"
+            role="img"
+            aria-label={`${fmt(netPct, 0)}% مساحة صافية`}
+          >
+            <div className="pc-bar">
+              <div className="pc-bar-net"  style={{ width: `${Math.min(100, netPct)}%` }} />
+              {result.openPct > 0 && (
+                <div className="pc-bar-open" style={{ width: `${Math.min(100, result.openPct)}%` }} />
+              )}
+            </div>
+            <div className="pc-bar-legend">
+              <span className="pc-bar-key --net">
+                <span className="pc-bar-dot --net" />
+                دهان {fmt(result.netArea)} م²
+              </span>
+              {result.openings > 0 && (
+                <span className="pc-bar-key --open">
+                  <span className="pc-bar-dot --open" />
+                  فتحات {fmt(result.openings)} م²
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="pc-area-rows">
+            <div className="pc-area-row">
+              <span>مساحة الجدران الكلية</span>
+              <strong>{fmt(result.wallArea)} م²</strong>
+            </div>
+            {result.openings > 0 && (
+              <div className="pc-area-row --minus">
+                <span>تُطرح الفتحات</span>
+                <strong>−{fmt(result.openings)} م²</strong>
+              </div>
+            )}
+            <div className="pc-area-row --net">
+              <span>المساحة الصافية</span>
+              <strong>{fmt(result.netArea)} م²</strong>
+            </div>
+            {coats > 1 && (
+              <div className="pc-area-row --coats">
+                <span>× {coats} طبقات</span>
+                <strong>{fmt(result.totalArea)} م²</strong>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Hero result */}
+        <div className="pc-hero">
+          <div className="pc-hero-top">
+            <div className="pc-hero-icon-wrap">
+              <PaintBucket size={22} aria-hidden="true" />
+            </div>
+            <div>
+              <p className="pc-hero-label">كمية الدهان المطلوبة</p>
+              <p className="pc-hero-liters">{fmt(result.liters)} <span>لتر</span></p>
+            </div>
+          </div>
+
+          <div className="pc-cans">
+            <div className="pc-can">
+              <span className="pc-can-num">{result.cans5L}</span>
+              <span className="pc-can-lbl">علبة 5 لتر</span>
+            </div>
+            <span className="pc-can-or" aria-hidden="true">أو</span>
+            <div className="pc-can">
+              <span className="pc-can-num">{result.cans20L}</span>
+              <span className="pc-can-lbl">علبة 20 لتر</span>
+            </div>
+          </div>
+
+          <div className="pc-safety">
+            <Info size={13} className="pc-safety-ico" aria-hidden="true" />
+            <span>
+              اشترِ <strong>{result.safeCans5L} علبة 5 لتر</strong> — يشمل 12% احتياط للإصلاحات
+            </span>
+          </div>
+        </div>
+
+        {/* Summary row */}
+        <div className="pc-meta">
+          <div className="pc-meta-row">
+            <span>نوع الدهان</span>
+            <strong>{result.paintLabel}</strong>
+          </div>
+          <div className="pc-meta-row">
+            <span>التغطية</span>
+            <strong>{result.coverage} م²/لتر</strong>
+          </div>
+          <div className="pc-meta-row">
+            <span>عدد الطبقات</span>
+            <strong>{coats}</strong>
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 }

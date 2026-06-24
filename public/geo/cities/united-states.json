@@ -127,9 +127,9 @@
     "country_code": "US",
     "country_name_ar": "الولايات المتحدة",
     "country_name_en": "United States",
-    "timezone": "America/Chicago",
-    "lat": 32.77152,
-    "lon": -89.11673,
+    "timezone": "America/New_York",
+    "lat": 39.9526,
+    "lon": -75.1652,
     "is_capital": false,
     "priority": 1573916,
     "population": 1573916

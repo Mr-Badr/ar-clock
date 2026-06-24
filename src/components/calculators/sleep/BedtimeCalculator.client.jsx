@@ -8,7 +8,6 @@ import {
   CalcInput as Input,
 } from '@/components/calculators/controls.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import {
   QUICK_WAKE_TIMES,
@@ -46,11 +45,9 @@ export default function BedtimeCalculator() {
   return (
     <div className="calc-app">
       <div className="calc-app-grid">
-        <Card className="calc-surface-card calc-app-panel">
-          <CardHeader>
-            <CardTitle className="calc-card-title">أدخل وقت الاستيقاظ الذي تريد الوصول إليه</CardTitle>
-          </CardHeader>
-          <CardContent className="calc-form-grid">
+        <div className="calc-surface-card calc-app-panel bedtime-inputs-panel">
+          <div className="bedtime-panel-title">أدخل وقت الاستيقاظ الذي تريد الوصول إليه</div>
+          <div className="calc-form-grid">
             <div className="calc-field">
               <Label className="calc-label" htmlFor="sleep-bedtime-wake">وقت الاستيقاظ</Label>
               <Input id="sleep-bedtime-wake" type="time" value={wakeTime} onChange={(e) => setWakeTime(e.target.value)} />
@@ -78,7 +75,7 @@ export default function BedtimeCalculator() {
                 <Label className="calc-label" htmlFor="sleep-bedtime-latency">وقت الغفو</Label>
                 <select
                   id="sleep-bedtime-latency"
-                  className="select calc-select-trigger"
+                  className="calc-native-select"
                   value={latencyMinutes}
                   onChange={(e) => setLatencyMinutes(e.target.value)}
                 >
@@ -91,7 +88,7 @@ export default function BedtimeCalculator() {
                 <Label className="calc-label" htmlFor="sleep-bedtime-cycle">طول الدورة</Label>
                 <select
                   id="sleep-bedtime-cycle"
-                  className="select calc-select-trigger"
+                  className="calc-native-select"
                   value={cycleMinutes}
                   onChange={(e) => setCycleMinutes(e.target.value)}
                 >
@@ -105,60 +102,83 @@ export default function BedtimeCalculator() {
             <div className="calc-note">
               هذه الأداة تقدير يساعدك على التخطيط، وليست قياساً طبياً دقيقاً لكل شخص.
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         <div className="calc-results-panel">
-          <Card className="calc-surface-card">
-            <CardHeader>
-              <CardTitle className="calc-card-title">أفضل أوقات النوم المقترحة</CardTitle>
-            </CardHeader>
-            <CardContent className="calc-metric-grid" aria-live="polite">
-              <div className="calc-metric-card">
-                <div className="calc-metric-card__label"><MoonStar size={16} /> أفضل وقت لك الآن</div>
-                <div className="calc-metric-card__value">{result.bestOption?.bedtimeLabel || '—'}</div>
-                <div className="calc-metric-card__note">
-                  {result.bestOption ? `هذا الخيار يمنحك ${result.bestOption.cycles} دورات ويقترب من ${formatHoursLabel(result.bestOption.hours, 1)}.` : 'أدخل وقتاً صالحاً'}
+          <div className="bedtime-results" aria-live="polite">
+
+            {/* Hero — best option */}
+            {result.isValid && result.bestOption && (
+              <div className="bedtime-hero-card">
+                <div className="bedtime-hero-icon">
+                  <MoonStar size={20} aria-hidden="true" />
+                </div>
+                <div className="bedtime-hero-body">
+                  <p className="bedtime-hero-label">أفضل وقت للنوم الآن</p>
+                  <p className="bedtime-hero-time">{result.bestOption.bedtimeLabel}</p>
+                  <p className="bedtime-hero-sub">
+                    {result.bestOption.cycles} دورات · {formatHoursLabel(result.bestOption.hours, 1)}
+                  </p>
                 </div>
               </div>
+            )}
 
-              <div className="calc-query-grid">
-                {result.options?.map((option) => (
-                  <Card key={`${option.cycles}-${option.bedtimeLabel}`} className="calc-surface-card calc-query-card">
-                    <CardHeader>
-                      <CardTitle className="calc-card-title">{option.bedtimeLabel}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="calc-card-copy">
-                      <p>{option.summary}</p>
-                      <p>مدة النوم التقريبية: {option.durationLabel}</p>
-                      <p>{option.status.note}</p>
-                    </CardContent>
-                  </Card>
-                ))}
+            {/* All options grid */}
+            {result.options?.length > 0 && (
+              <div className="bedtime-options" role="list" aria-label="خيارات وقت النوم">
+                {result.options.map((option, idx) => {
+                  const isBest = option.bedtimeLabel === result.bestOption?.bedtimeLabel;
+                  const qual = option.status?.label;
+                  const qualClass =
+                    qual === 'مناسب' ? 'bedtime-opt--good'
+                    : qual === 'مقبول' ? 'bedtime-opt--ok'
+                    : 'bedtime-opt--low';
+                  return (
+                    <div
+                      key={`${option.cycles}-${option.bedtimeLabel}`}
+                      className={`bedtime-opt ${qualClass}${isBest ? ' bedtime-opt--best' : ''}`}
+                      role="listitem"
+                    >
+                      {isBest && (
+                        <span className="bedtime-opt-badge" aria-label="الأفضل">★</span>
+                      )}
+                      <span className="bedtime-opt-time">{option.bedtimeLabel}</span>
+                      <span className="bedtime-opt-cycles">
+                        {Array.from({ length: Math.min(option.cycles, 6) }).map((_, i) => (
+                          <span key={i} className="bedtime-cycle-dot" aria-hidden="true" />
+                        ))}
+                      </span>
+                      <span className="bedtime-opt-dur">{option.durationLabel}</span>
+                      <span className="bedtime-opt-qual">{qual}</span>
+                    </div>
+                  );
+                })}
               </div>
+            )}
 
-              <div className="calc-grid-2">
-                <div className="calc-metric-card">
-                  <div className="calc-metric-card__label"><AlarmClock size={16} /> وقت الاستيقاظ</div>
-                  <div className="calc-metric-card__value">{result.wakeLabel || '—'}</div>
-                  <div className="calc-metric-card__note">هذه هي النقطة التي تبني عليها الأداة كل الخيارات.</div>
-                </div>
-                <div className="calc-metric-card">
-                  <div className="calc-metric-card__label"><TimerReset size={16} /> النطاق المناسب لعُمرك</div>
-                  <div className="calc-metric-card__value">
-                    {result.range ? `${result.range.recommendedMin}–${result.range.recommendedMax} ساعات` : '—'}
-                  </div>
-                  <div className="calc-metric-card__note">{result.range?.note}</div>
-                </div>
+            {/* Footer info */}
+            <div className="bedtime-footer">
+              <div className="bedtime-footer-item">
+                <AlarmClock size={14} aria-hidden="true" />
+                <span>الاستيقاظ: <strong>{result.wakeLabel || '—'}</strong></span>
               </div>
+              {result.range && (
+                <div className="bedtime-footer-item">
+                  <TimerReset size={14} aria-hidden="true" />
+                  <span>
+                    النطاق لعمرك: <strong>{result.range.recommendedMin}–{result.range.recommendedMax} ساعات</strong>
+                  </span>
+                </div>
+              )}
+            </div>
 
-              <ResultActions
-                copyText={shareText}
-                shareTitle="نتيجة حاسبة وقت النوم"
-                shareText={shareText}
-              />
-            </CardContent>
-          </Card>
+            <ResultActions
+              copyText={shareText}
+              shareTitle="نتيجة حاسبة وقت النوم"
+              shareText={shareText}
+            />
+          </div>
         </div>
       </div>
     </div>

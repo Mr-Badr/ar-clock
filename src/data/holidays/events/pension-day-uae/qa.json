@@ -1,0 +1,18 @@
+{
+  "slug": "pension-day-uae",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "موعد صرف معاش المتقاعدين عبر GPSSA هو اليوم 25 من كل شهر ميلادي",
+    "GPSSA هي الجهة الاتحادية — أبوظبي لديها ADFPF منفصل",
+    "إذا وافق 25 نهاية الأسبوع (السبت أو الأحد) يُصرف في آخر يوم عمل قبله",
+    "المرجع الرسمي: موقع GPSSA وADFPF"
+  ],
+  "updatedAt": "2026-06-24T09:59:46.579Z"
+}

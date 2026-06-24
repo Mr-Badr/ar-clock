@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import {
   CalculatorDecisionTable,
   CalculatorFaqSection,
@@ -6,6 +7,7 @@ import {
   CalculatorSection,
   CalculatorToolLauncher,
 } from '@/components/calculators/common';
+import BedtimeCalculator from '@/components/calculators/sleep/BedtimeCalculator.client';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
 import {
@@ -217,15 +219,22 @@ export default function SleepHubPage() {
 
       <CalculatorHero
         badge="النوم الذكي"
-        title="حاسبات النوم الذكي"
-        description="حاسبات النوم الذكي تساعدك على اختيار أداة النوم حسب مشكلتك الان: متى تنام الليلة، متى تستيقظ إذا نمت الان، كم نمت فعلياً، هل القيلولة مناسبة، هل تراكم عليك دين نوم، أو كم ساعة تحتاج حسب العمر. ابدأ بالسؤال الأقرب ليومك، ثم اقرأ حدود النتيجة قبل تغيير روتينك."
+        title="متى أنام؟ حاسبة وقت النوم المثالي"
+        description="أدخل وقت الاستيقاظ الذي تريده، وستحصل فوراً على أفضل أوقات النوم مبنيةً على دورات النوم الطبيعية."
         highlights={safeHighlights}
       >
-        <div className="calc-app">
-          <div className="calc-metric-card">
-            <div className="calc-metric-card__label">ابدأ من هنا</div>
-            <div className="calc-metric-card__value">وقت النوم، الاستيقاظ، القيلولة، أو عجز النوم</div>
-            <div className="calc-metric-card__note">ابدأ بالسؤال الذي يصف هذه الليلة أو هذا الأسبوع، سواء كان بسبب دوام مبكر أو دراسة أو رمضان أو قيلولة متأخرة، ثم استخدم المقالات فقط إذا احتجت تفسيراً إضافياً.</div>
+        <BedtimeCalculator />
+
+        {/* Quick-access strip for other sleep tools */}
+        <div className="sleep-tools-strip">
+          <p className="sleep-tools-strip__label">أدوات نوم أخرى:</p>
+          <div className="sleep-tools-strip__links">
+            {sleepToolPathways.slice(1).map((tool) => (
+              <Link key={tool.href} href={tool.href} className="sleep-tool-pill">
+                <span className="sleep-tool-pill__icon" aria-hidden="true">{tool.iconLabel}</span>
+                <span>{tool.label}</span>
+              </Link>
+            ))}
           </div>
         </div>
       </CalculatorHero>

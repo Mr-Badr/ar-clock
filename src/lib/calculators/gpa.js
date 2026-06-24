@@ -149,3 +149,40 @@ export function convertGpa(value, fromSystem, toSystem) {
   const ratio = value / from.max;
   return Math.round(ratio * to.max * 100) / 100;
 }
+
+// Piecewise breakpoints: [gpaPoint, midPercent]
+const _SCALE5_BREAKPOINTS = [
+  [5.0, 100], [4.75, 92.5], [4.5, 87], [4.0, 82],
+  [3.5, 77],  [3.0, 72],   [2.5, 67], [2.0, 62], [0, 30],
+];
+const _SCALE4_BREAKPOINTS = [
+  [4.0, 96.5], [3.7, 91], [3.3, 88], [3.0, 84.5],
+  [2.7, 81],   [2.3, 78], [2.0, 74.5], [1.0, 66], [0, 30],
+];
+
+function _interpolate(value, breakpoints) {
+  for (let i = 0; i < breakpoints.length - 1; i++) {
+    const [g1, p1] = breakpoints[i];
+    const [g2, p2] = breakpoints[i + 1];
+    if (value >= g2) {
+      const t = (value - g2) / (g1 - g2);
+      return Math.round((p2 + t * (p1 - p2)) * 10) / 10;
+    }
+  }
+  return breakpoints[breakpoints.length - 1][1];
+}
+
+/**
+ * Convert a GPA value to its percentage equivalent.
+ * @param {number} gpa
+ * @param {string} systemId — 'scale5' | 'scale4' | 'scale100'
+ * @returns {{ percent: number, isValid: boolean }}
+ */
+export function convertGpaToPercent(gpa, systemId = 'scale5') {
+  const n = parseFloat(gpa);
+  const system = GPA_SYSTEMS[systemId];
+  if (!system || isNaN(n) || n < 0 || n > system.max) return { percent: 0, isValid: false };
+  if (systemId === 'scale100') return { percent: Math.round(n * 10) / 10, isValid: true };
+  const bp = systemId === 'scale4' ? _SCALE4_BREAKPOINTS : _SCALE5_BREAKPOINTS;
+  return { percent: _interpolate(n, bp), isValid: true };
+}

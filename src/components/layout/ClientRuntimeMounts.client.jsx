@@ -7,6 +7,7 @@ const AdSenseProvider = dynamic(() => import('@/components/ads/AdSenseProvider')
 const AdStickyAnchor = dynamic(() => import('@/components/ads/AdStickyAnchor'), { ssr: false });
 const AnalyticsProvider = dynamic(() => import('@/components/analytics/AnalyticsProvider'), { ssr: false });
 const ConsentBanner = dynamic(() => import('@/components/consent/ConsentBanner'), { ssr: false });
+const ScrollToTopOnNav = dynamic(() => import('@/components/layout/ScrollToTopOnNav.client'), { ssr: false });
 const ScrollToTopButton = dynamic(() => import('@/components/layout/ScrollToTopButton'), { ssr: false });
 const ServiceWorkerRegistration = dynamic(() => import('@/components/ServiceWorkerRegistration'), { ssr: false });
 const SiteVisitTracker = dynamic(() => import('@/components/site/SiteVisitTracker.client'), { ssr: false });
@@ -50,7 +51,7 @@ export default function ClientRuntimeMounts() {
 
   return (
     <>
-      {hydrated ? <ConsentBanner /> : null}
+      {hydrated ? <><ConsentBanner /><ScrollToTopOnNav /></> : null}
       {idle ? (
         <>
           <AdStickyAnchor />

@@ -1,7 +1,7 @@
 {
   "slug": "sand-payment-saudi",
   "locale": "ar",
-  "capturedAt": "2026-06-01T00:00:00.000Z",
+  "capturedAt": "2026-06-24T10:45:36.922Z",
   "primaryQueries": [
     "متى ينزل ساند",
     "كم باقي على ساند",
@@ -72,22 +72,6 @@
       "url": "https://kambaqe.com/saned",
       "status": "replaced",
       "replaceReason": "مفيد لرصد نية العد التنازلي، لكنه أضعف من يومي ناو في الشرح والتغطية ويكرر تعميمات غير موثقة بما يكفي."
-    },
-    {
-      "site": "gosi.gov.sa",
-      "language": "en",
-      "type": "official",
-      "url": "https://www.gosi.gov.sa/GOSIOnline/%28en_US%29__FAQ_Unemployment_Insurance_%28SANED%29?locale=en_US",
-      "focus": [
-        "بداية التعويض",
-        "التحويل بعد اعتماد المعاملة",
-        "نص الشروط بالإنجليزية"
-      ],
-      "gaps": [
-        "الصياغة الإنجليزية أقل وضوحاً من العربية في بعض المواضع",
-        "لا تخدم الباحث العربي مباشرة",
-        "ليست مصممة كصفحة جواب سريع"
-      ]
     },
     {
       "site": "saudipedia.com",

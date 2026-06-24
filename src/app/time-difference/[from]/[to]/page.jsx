@@ -34,7 +34,7 @@ import {
   getCountrySeoNames,
   uniqueKeywords,
 } from '@/lib/seo/section-search-intent';
-import { buildNoindexRouteMetadata, isRouteSlug } from '@/lib/route-param-validation';
+import { buildNoindexRouteMetadata, isRouteSlug, isRenderableCityData } from '@/lib/route-param-validation';
 import { logger, serializeError } from '@/lib/logger';
 
 const TIME_DIFFERENCE_PAIR_SOURCE_LINKS = [
@@ -231,6 +231,7 @@ async function ComparisonPageContent({ paramsPromise }) {
     );
   }
   if (!fromCity || !toCity) notFound();
+  if (!isRenderableCityData(fromCity) || !isRenderableCityData(toCity)) notFound();
   const canonicalFrom = fromCity.canonicalSegment || from;
   const canonicalTo = toCity.canonicalSegment || to;
   if (canonicalFrom !== from || canonicalTo !== to) {

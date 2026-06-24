@@ -909,6 +909,42 @@
     "day": 30
   },
   {
+    "id": "pension-uae",
+    "slug": "pension-day-uae",
+    "name": "معاش المتقاعدين الإمارات",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "ae",
+    "day": 25
+  },
+  {
+    "id": "salary-kuwait",
+    "slug": "salary-day-kuwait",
+    "name": "راتب الكويت",
+    "type": "monthly",
+    "category": "business",
+    "_countryCode": "kw",
+    "day": 1
+  },
+  {
+    "id": "salary-qatar",
+    "slug": "salary-day-qatar",
+    "name": "راتب قطر",
+    "type": "monthly",
+    "category": "business",
+    "_countryCode": "qa",
+    "day": 1
+  },
+  {
+    "id": "salary-uae",
+    "slug": "salary-day-uae",
+    "name": "راتب الإمارات",
+    "type": "monthly",
+    "category": "business",
+    "_countryCode": "ae",
+    "day": 25
+  },
+  {
     "id": "uae-tolerance-day",
     "slug": "uae-tolerance-day",
     "name": "يوم التسامح الإماراتي",

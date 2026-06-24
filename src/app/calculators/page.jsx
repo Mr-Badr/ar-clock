@@ -82,21 +82,26 @@ const CALCULATOR_PATH_TABLE = [
     ],
   },
 ];
+// Gulf + high-RPM daily tools go first; classic tools second
 const FEATURED_CALCULATOR_SLUGS = [
+  'iqama',
+  'electricity-bill',
+  'inheritance',
+  'net-salary',
+  'pregnancy',
+  'gpa',
   'monthly-installment',
-  'percentage',
-  'vat',
-  'age-calculator',
-  'bedtime',
   'end-of-service-benefits',
-  'building',
-  'emergency-fund',
+  'age-calculator',
+  'vat',
+  'percentage',
+  'bedtime',
 ];
 
 export const metadata = buildCanonicalMetadata({
-  title: 'حاسبات عربية مجانية: العمر والضريبة والقروض ونهاية الخدمة',
+  title: 'حاسبات عربية مجانية: الإقامة والراتب والكهرباء والميراث والحمل',
   description:
-    'حاسبات عربية مجانية بدون تسجيل: احسب العمر، وضريبة القيمة المضافة، والقسط الشهري، ومكافأة نهاية الخدمة فوراً، مع شرح يوضح متى تثق بالرقم ومتى تحتاج مصدراً رسمياً.',
+    'حاسبات عربية مجانية بدون تسجيل: احسب انتهاء الإقامة، فاتورة الكهرباء، الميراث، صافي الراتب، موعد الولادة، المعدل، القسط، وضريبة القيمة المضافة — نتائج فورية مع شرح واضح.',
   keywords: [
     'حاسبات أونلاين عربية',
     'حاسبة عربية',
@@ -110,9 +115,6 @@ export const metadata = buildCanonicalMetadata({
 
 export default function CalculatorsPage() {
   const calculatorRouteBySlug = new Map(CALCULATOR_ROUTES.map((route) => [route.slug, route]));
-  const featuredCalculators = FEATURED_CALCULATOR_SLUGS
-    .map((slug) => calculatorRouteBySlug.get(slug))
-    .filter(Boolean);
   const calculatorHubLinks = CALCULATOR_HUBS.map((hub) => ({
     ...hub,
     count: Array.isArray(hub.routeSlugs) ? hub.routeSlugs.length : 0,
@@ -216,9 +218,9 @@ export default function CalculatorsPage() {
         <div className="calc-hub-v8-wrap calc-hub-v8-hero-grid">
           <div className="calc-hub-v8-hero-copy">
             <span className="calc-hub-v8-kicker">قسم الحاسبات</span>
-            <h1 id="calculators-title" className="calc-hub-v8-title">حاسبات عربية تبدأ من سؤالك الحقيقي</h1>
+            <h1 id="calculators-title" className="calc-hub-v8-title">حاسبات عربية تجيب عن سؤالك مباشرة</h1>
             <p className="calc-hub-v8-lead">
-              احسب القسط، الضريبة، النسبة، العمر، النوم، نهاية الخدمة، أو تكلفة البناء من صفحة واحدة واضحة. اختر المسار المناسب أولاً، ثم استخدم الحاسبة التي تعطيك رقماً قابلاً للفهم لا رقماً معزولاً.
+              انتهاء الإقامة، فاتورة الكهرباء، الميراث، صافي الراتب، موعد الولادة، المعدل التراكمي، القسط، الضريبة، نهاية الخدمة، والبناء — كل أداة تعطيك رقماً مفهوماً مع شرح حدوده.
             </p>
             <div className="calc-hub-v8-proof" aria-label="مميزات قسم الحاسبات">
               <span>نتائج فورية</span>
@@ -234,15 +236,21 @@ export default function CalculatorsPage() {
               <p>الواجهة هنا مصممة كسؤال سريع: مال، عمر، نوم، بناء، أو تخطيط مالي. اختر المجال أولاً حتى لا تضيع بين أسماء الأدوات.</p>
             </div>
             <div className="calc-hub-v8-intents">
-              {calculatorHubLinks.map((hub, index) => (
-                <Link key={hub.slug} href={hub.href} className="calc-hub-v8-intent">
-                  <span className="calc-hub-v8-number">{String(index + 1).padStart(2, '0')}</span>
+              {calculatorHubLinks.map((hub) => (
+                <Link key={hub.slug} href={hub.href} className="calc-hub-v8-intent" style={{ '--intent-accent': hub.accent || 'var(--blue)' }}>
+                  <span
+                    className="calc-hub-v8-intent-dot"
+                    style={{ background: hub.accent || 'var(--blue)' }}
+                    aria-hidden="true"
+                  />
                   <span className="calc-hub-v8-intent-copy">
-                    <span className="calc-hub-v8-tag">{hub.badge}</span>
+                    <span className="calc-hub-v8-tag" style={{ color: hub.accent || 'var(--blue)', background: `color-mix(in srgb, ${hub.accent || 'var(--blue)'} 12%, var(--bg-surface-1))` }}>
+                      {hub.badge}
+                    </span>
                     <strong>{hub.title}</strong>
                     <span>{hub.description}</span>
                   </span>
-                  <span className="calc-hub-v8-count">{hub.count} أدوات</span>
+                  <span className="calc-hub-v8-count" style={{ color: hub.accent || 'var(--blue)' }}>{hub.count} أدوات</span>
                 </Link>
               ))}
             </div>
@@ -252,24 +260,55 @@ export default function CalculatorsPage() {
 
       <AdTopBanner slotId="top-calculator-hub" />
 
-      <section className="calc-hub-v8-section" aria-labelledby="popular-calculators">
-        <div className="calc-hub-v8-wrap">
-          <div className="calc-hub-v8-section-head">
-            <span className="calc-hub-v8-kicker">الأكثر استخداماً</span>
-            <h2 id="popular-calculators">افتح الحاسبة التي تعطيك الجواب مباشرة</h2>
-            <p>هذه ليست قائمة طويلة. هذه أكثر الأدوات التي يبدأ منها الزائر عادة، وكل بطاقة صغيرة حتى لا تقطع القراءة.</p>
-          </div>
-          <div className="calc-hub-v8-tool-grid">
-            {featuredCalculators.map((tool) => (
-              <Link key={tool.slug} href={tool.href} className="calc-hub-v8-tool-card">
-                <span className="calc-hub-v8-tag">{tool.badge}</span>
-                <strong>{tool.title}</strong>
-                <span>{tool.description}</span>
-                <span className="calc-hub-v8-open">افتح الحاسبة</span>
-              </Link>
-            ))}
-          </div>
-        </div>
+      {/* === Category sections — each hub as a distinct colored block === */}
+      <section className="calc-hub-cats-wrap" aria-label="الحاسبات مرتبة حسب القسم">
+        {archiveGroups.map((group) => {
+          const accent = group.accent || '#2563eb';
+          return (
+            <div
+              key={group.slug}
+              className="calc-hub-cat-section"
+              style={{ '--cat': accent }}
+            >
+              <div className="calc-hub-v8-wrap">
+                <div className="calc-hub-cat-head">
+                  <div className="calc-hub-cat-head-copy">
+                    <span className="calc-hub-cat-dot" style={{ background: accent }} aria-hidden="true" />
+                    <div>
+                      <h2 className="calc-hub-cat-title">{group.title}</h2>
+                      <p className="calc-hub-cat-desc">{group.description}</p>
+                    </div>
+                  </div>
+                  <Link href={group.href} className="calc-hub-cat-viewall" style={{ color: accent, borderColor: `color-mix(in srgb, ${accent} 30%, var(--border-default))` }}>
+                    كل أدوات {group.badge}
+                    <span className="calc-hub-cat-arrow" aria-hidden="true" />
+                  </Link>
+                </div>
+                <div className="calc-hub-cat-grid">
+                  {group.routes.map((route) => (
+                    <Link
+                      key={route.slug}
+                      href={route.href}
+                      className="calc-hub-cat-card"
+                      style={{ '--card-accent': accent }}
+                    >
+                      <span className="calc-hub-cat-card-badge" style={{ color: accent, background: `color-mix(in srgb, ${accent} 11%, var(--bg-surface-1))` }}>
+                        {route.badge || group.badge}
+                      </span>
+                      <strong className="calc-hub-cat-card-title">{route.title}</strong>
+                      <span className="calc-hub-cat-card-desc">
+                        {route.description ? route.description.slice(0, 90).trimEnd() + '…' : ''}
+                      </span>
+                      <span className="calc-hub-cat-card-cta" style={{ color: accent }} aria-hidden="true">
+                        احسب الآن ←
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </section>
 
       <section className="calc-hub-v8-section calc-hub-v8-section-soft" aria-labelledby="calculator-answer-guide">
@@ -351,39 +390,6 @@ export default function CalculatorsPage() {
               <details key={item.question} className="calc-hub-v8-faq" open={index === 0}>
                 <summary>{item.question}</summary>
                 <p>{item.answer}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="calc-hub-v8-section calc-hub-v8-section-soft" aria-labelledby="calculator-archive">
-        <div className="calc-hub-v8-wrap">
-          <div className="calc-hub-v8-archive-head">
-            <div>
-              <span className="calc-hub-v8-kicker">الأرشيف الكامل</span>
-              <h2 id="calculator-archive">كل الحاسبات، لكن مرتبة حسب نيتك</h2>
-            </div>
-            <p>افتح المجموعة التي تشبه سؤالك فقط. الروابط كلها موجودة لمحركات البحث والتنقل الداخلي، لكنها لا تظهر للمستخدم كجدار بطاقات لا ينتهي.</p>
-          </div>
-          <div className="calc-hub-v8-archive" aria-label="أرشيف الحاسبات حسب المسار">
-            {archiveGroups.map((group, index) => (
-              <details key={group.slug} className="calc-hub-v8-archive-group" open={index === 0}>
-                <summary>
-                  <span className="calc-hub-v8-number">{String(index + 1).padStart(2, '0')}</span>
-                  <span>
-                    <strong>{group.title}</strong>
-                    <small>{group.badge} · {group.count} أدوات</small>
-                  </span>
-                </summary>
-                <div className="calc-hub-v8-archive-links">
-                  {group.routes.map((route) => (
-                    <Link key={`${group.slug}-${route.slug}`} href={route.href}>
-                      <span>{route.title}</span>
-                      <small>{route.shortLabel}</small>
-                    </Link>
-                  ))}
-                </div>
               </details>
             ))}
           </div>

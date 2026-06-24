@@ -88,14 +88,16 @@ function getUniqueCalculatorLinks(items) {
 
 function getComplementSlugs(cluster) {
   const complementSlugsByCluster = {
-    finance: ['personal-finance', 'emergency-fund', 'building'],
+    finance: ['iqama', 'net-salary', 'electricity-bill', 'inheritance', 'monthly-installment', 'vat', 'end-of-service-benefits'],
     building: ['vat', 'percentage', 'monthly-installment'],
     age: ['sleep', 'bedtime', 'retirement'],
     sleep: ['age-calculator', 'sleep', 'time-now'],
-    'personal-finance': ['monthly-installment', 'percentage', 'vat'],
+    'personal-finance': ['net-salary', 'monthly-installment', 'end-of-service-benefits'],
+    health: ['pregnancy', 'pregnancy-weeks', 'ovulation', 'age-calculator'],
+    education: ['gpa', 'gpa-to-percent', 'percentage'],
   };
 
-  return complementSlugsByCluster[cluster] || ['monthly-installment', 'percentage', 'vat'];
+  return complementSlugsByCluster[cluster] || ['iqama', 'net-salary', 'electricity-bill', 'inheritance'];
 }
 
 function buildRelatedCalculatorLinks(currentSlug) {

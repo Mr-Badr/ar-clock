@@ -1862,6 +1862,50 @@
     "canonicalPath": "/holidays/palestine-land-day",
     "aliases": []
   },
+  "pension-day-uae": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ae"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/pension-day-uae",
+    "aliases": []
+  },
+  "salary-day-kuwait": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "kw"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/salary-day-kuwait",
+    "aliases": []
+  },
+  "salary-day-qatar": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "qa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/salary-day-qatar",
+    "aliases": []
+  },
+  "salary-day-uae": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ae"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/salary-day-uae",
+    "aliases": []
+  },
   "uae-tolerance-day": {
     "publishStatus": "published",
     "countryScope": "none",

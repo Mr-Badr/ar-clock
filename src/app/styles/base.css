@@ -206,6 +206,15 @@
   --info-border: #0F4F93;
   --info-text: var(--blue-text);
 
+  /* Calculator category accent tokens — bright vivid for use as text/icon on dark surfaces */
+  --calc-cat-finance:   #60a5fa; /* blue-400   */
+  --calc-cat-health:    #f472b6; /* pink-400   */
+  --calc-cat-education: #a78bfa; /* violet-400 */
+  --calc-cat-age:       #fbbf24; /* amber-400  */
+  --calc-cat-sleep:     #2dd4bf; /* teal-400   */
+  --calc-cat-building:  #fb923c; /* orange-400 */
+  --calc-cat-personal:  #34d399; /* emerald-400*/
+
   --nav-bg: #050C18;
   --nav-border: rgba(255, 255, 255, .06);
   --nav-text-rest: rgba(255, 255, 255, .45);
@@ -378,6 +387,15 @@
   --info-muted: var(--blue-muted);
   --info-border: #7AB8FF;
   --info-text: var(--blue-text);
+
+  /* Calculator category accent tokens — darker for contrast on light surfaces */
+  --calc-cat-finance:   #1d4ed8;
+  --calc-cat-health:    #be185d;
+  --calc-cat-education: #6d28d9;
+  --calc-cat-age:       #b45309;
+  --calc-cat-sleep:     #0f766e;
+  --calc-cat-building:  #c2410c;
+  --calc-cat-personal:  #065f46;
 
   --nav-bg: #050C18;
   --nav-border: rgba(255, 255, 255, .06);

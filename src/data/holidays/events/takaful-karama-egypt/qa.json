@@ -15,5 +15,5 @@
     "2026-06-01: Full authored rewrite completed. The page now answers the 15th-of-month payout intent first, then explains official inquiry, complaints, hotline, payout versus increase confusion, and what the user should do before payment day.",
     "2026-06-01: Research refreshed with official MOSS sources, current Arabic news competitors, and English/background comparison. Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. events:build and rendered-route confirmation were intentionally skipped per instruction."
   ],
-  "updatedAt": "2026-06-01T00:00:00.000Z"
+  "updatedAt": "2026-06-24T10:24:00.439Z"
 }

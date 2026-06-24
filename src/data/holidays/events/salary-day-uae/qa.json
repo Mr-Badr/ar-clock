@@ -1,0 +1,18 @@
+{
+  "slug": "salary-day-uae",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "موعد راتب الحكومة الاتحادية هو 25 ميلادي — مصدر: وزارة المالية الاتحادية",
+    "الإمارات غيّرت نظام عطلة نهاية الأسبوع في يناير 2022 إلى السبت والأحد",
+    "إذا وافق 25 السبت أو الأحد يُصرف في آخر يوم عمل قبله",
+    "القطاع الخاص يتبع نظام حماية الأجور (WPS) لا يوم 25 بالضرورة"
+  ],
+  "updatedAt": "2026-06-24T09:59:31.006Z"
+}

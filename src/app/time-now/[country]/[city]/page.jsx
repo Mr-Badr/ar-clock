@@ -53,7 +53,7 @@ import {
 } from '@/lib/seo/country-indexing';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 import { buildTimeNowKeywords } from '@/lib/seo/section-search-intent';
-import { buildNoindexRouteMetadata, isRouteSlug } from '@/lib/route-param-validation';
+import { buildNoindexRouteMetadata, isRouteSlug, isRenderableCityData } from '@/lib/route-param-validation';
 import {
   buildCityTimeNowFaqItems,
   buildCallTimeWindows,
@@ -124,6 +124,7 @@ function isValidCityRecord(city) {
       && (city.name_ar || city.name_en || city.city_name_ar),
   );
 }
+
 
 function isValidFaqItem(item) {
   return Boolean(
@@ -324,6 +325,9 @@ export default async function CityTimePage({ params }) {
     );
   }
   if (!city) notFound();
+  // Guard: city must have valid timezone + coordinates to render meaningfully.
+  // Bad data (e.g. wrong snapshot entry) must 404 rather than render empty/wrong content.
+  if (!isRenderableCityData(city)) notFound();
 
   const cityAr = city.name_ar || city.name_en;
   const countryAr = country.name_ar || country.name_en;

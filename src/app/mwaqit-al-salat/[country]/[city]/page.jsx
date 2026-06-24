@@ -55,7 +55,7 @@ import {
   isSeoIndexableCityParams,
 } from '@/lib/seo/country-indexing';
 import { buildPrayerKeywords } from '@/lib/seo/section-search-intent';
-import { buildNoindexRouteMetadata, isRouteSlug } from '@/lib/route-param-validation';
+import { buildNoindexRouteMetadata, isRouteSlug, isRenderableCityData } from '@/lib/route-param-validation';
 import { logger, serializeError } from '@/lib/logger';
 // ─── ISR: pre-build bridge-priority cities, revalidate hourly ───────────────
 
@@ -320,6 +320,8 @@ export default async function PrayerTimesPage({ params }) {
     );
   }
   if (!cityData) notFound();
+  // Timezone and coordinates must be valid — bad data renders wrong or empty prayer times.
+  if (!isRenderableCityData(cityData)) notFound();
 
   const cityNameAr    = cityData.name_ar || cityData.name_en;
   const countryNameAr = country.name_ar  || country.name_en;

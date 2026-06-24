@@ -15,5 +15,5 @@
     "2026-06-01: Revalidated authored package against current HRSD references. The page still correctly centers the monthly cycle users need most: eligibility on the 27th, disbursement on the 1st, a 30-day objection window, and first-payment timing after initial approval.",
     "2026-06-01: Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. Not marked done in the rollout checklist because generated holiday bundles were intentionally not rebuilt."
   ],
-  "updatedAt": "2026-06-01T00:00:00.000Z"
+  "updatedAt": "2026-06-24T10:40:46.676Z"
 }
