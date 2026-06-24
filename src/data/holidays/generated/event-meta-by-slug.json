@@ -1820,6 +1820,15 @@
     "canonicalPath": "/holidays/bac-results-morocco",
     "aliases": []
   },
+  "gulf-childrens-day": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "standalone",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/gulf-childrens-day",
+    "aliases": []
+  },
   "iraq-national-day": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -1851,6 +1860,28 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/palestine-land-day",
+    "aliases": []
+  },
+  "uae-tolerance-day": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ae"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/uae-tolerance-day",
+    "aliases": []
+  },
+  "uae-womens-day": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ae"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/uae-womens-day",
     "aliases": []
   },
   "world-fathers-day": {

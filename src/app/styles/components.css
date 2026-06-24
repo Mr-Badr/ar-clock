@@ -2050,15 +2050,17 @@ body.has-css-fullscreen {
 
 :root,
 .dark {
-  --tooltip-surface: #111827;
-  --tooltip-text: #ffffff;
-  --tooltip-border: color-mix(in srgb, #ffffff 14%, transparent);
+  --tooltip-surface: #1a2130;
+  --tooltip-text: #f0f4ff;
+  --tooltip-border: rgba(255, 255, 255, 0.12);
+  --tooltip-shadow: 0 4px 16px rgba(0, 0, 0, 0.32), 0 1px 4px rgba(0, 0, 0, 0.24);
 }
 
 .light {
-  --tooltip-surface: var(--bg-surface-1);
-  --tooltip-text: var(--text-primary);
-  --tooltip-border: var(--border-default);
+  --tooltip-surface: #1e293b;
+  --tooltip-text: #f8fafc;
+  --tooltip-border: rgba(255, 255, 255, 0.10);
+  --tooltip-shadow: 0 4px 16px rgba(0, 0, 0, 0.22), 0 1px 4px rgba(0, 0, 0, 0.14);
 }
 
 .tooltip-content {
@@ -2071,9 +2073,10 @@ body.has-css-fullscreen {
   border-radius: var(--radius-md);
   padding: var(--space-2) var(--space-3);
 
-  /* Surface */
+  /* Surface — always dark pill for maximum legibility regardless of page theme */
   background-color: var(--tooltip-surface);
   border: 1px solid var(--tooltip-border);
+  box-shadow: var(--tooltip-shadow);
 
   filter: none;
 

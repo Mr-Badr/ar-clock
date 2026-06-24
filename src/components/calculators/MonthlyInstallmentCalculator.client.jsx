@@ -19,6 +19,7 @@ import {
 import {
   CalcButton as Button,
   CalcInput as Input,
+  CalcProgress as Progress,
   CalcTabsList as TabsList,
   CalcTabsTrigger as TabsTrigger,
 } from '@/components/calculators/controls.client';
@@ -151,28 +152,6 @@ export default function MonthlyInstallmentCalculator() {
   const shareText = result.isValid
     ? `القرض الصافي: ${formatMoney(result.principal)}\nالقسط الشهري: ${formatMoney(result.monthlyOutflow)}\nإجمالي الفوائد: ${formatMoney(result.totalInterest)}`
     : '';
-  const loanReviewCards = [
-    {
-      label: 'الأصل بعد الدفعة',
-      value: formatMoney(result.principal || 0),
-      note: 'هذا هو المبلغ الذي تُحسب عليه الفائدة، وليس سعر الأصل قبل الدفعة.',
-    },
-    {
-      label: 'الفوائد',
-      value: formatMoney(result.totalInterest || 0),
-      note: 'إذا ارتفع الرقم كثيراً، جرّب مدة أقصر أو دفعة مقدمة أكبر قبل مقارنة العروض.',
-    },
-    {
-      label: 'الرسوم',
-      value: formatMoney(result.totalFees || 0),
-      note: 'ضعها في المقارنة حتى لا يبدو عرض أقل قسطاً وهو أغلى فعلياً.',
-    },
-    {
-      label: 'إجمالي السداد',
-      value: formatMoney(result.totalPaid || 0),
-      note: 'هذا هو الرقم الأهم بعد القسط الشهري لأنه يوضح تكلفة القرار كاملة.',
-    },
-  ];
 
   function applyPreset(key) {
     const preset = LOAN_PRESETS[key];
@@ -330,61 +309,56 @@ export default function MonthlyInstallmentCalculator() {
           </CardContent>
         </Card>
 
-        <div className="calc-results-panel">
-          <Card className="calc-surface-card">
-            <CardHeader>
-              <CardTitle className="calc-card-title">النتيجة الرئيسية</CardTitle>
-            </CardHeader>
-            <CardContent className="calc-form-grid">
-              {result.isValid ? (
-                <>
-                  <div className="calc-metric-grid">
-                    <div className="calc-metric-card">
-                      <div className="calc-metric-card__label">القسط الشهري</div>
-                      <div className="calc-metric-card__value">
-                        {formatMoney(result.monthlyOutflow)}
-                      </div>
-                      <div className="calc-metric-card__note">
-                        المدة {formatNumber(result.months)} شهر
-                      </div>
-                    </div>
-                    <div className="calc-metric-card">
-                      <div className="calc-metric-card__label">إجمالي الفوائد</div>
-                      <div className="calc-metric-card__value">
-                        {formatMoney(result.totalInterest)}
-                      </div>
-                      <div className="calc-metric-card__note">
-                        تشكل {formatPercent(result.interestShare)} من أصل القرض
-                      </div>
-                    </div>
-                  </div>
+        <div className="calc-loan-result-sticky">
+          {result.isValid ? (
+            <div className="calc-result-hero-panel --blue" aria-live="polite">
+              <div>
+                <span className="calc-result-hero-label">القسط الشهري</span>
+                <div className="calc-result-hero-value">{formatMoney(result.monthlyOutflow)}</div>
+                <div className="calc-result-hero-meta">
+                  <span>{formatNumber(result.months)} شهراً</span>
+                  <span className="calc-esb-sep">·</span>
+                  <span>فائدة {formatPercent(result.interestShare)} من الأصل</span>
+                </div>
+              </div>
 
-                  <div className="calc-breakdown-list">
-                    <div className="calc-breakdown-item">
-                      <span>أصل القرض بعد الدفعة المقدمة</span>
-                      <strong>{formatMoney(result.principal)}</strong>
-                    </div>
-                    <div className="calc-breakdown-item">
-                      <span>إجمالي الرسوم</span>
-                      <strong>{formatMoney(result.totalFees)}</strong>
-                    </div>
-                    <div className="calc-breakdown-item">
-                      <span>إجمالي المبلغ المدفوع</span>
-                      <strong>{formatMoney(result.totalPaid)}</strong>
-                    </div>
-                  </div>
+              <div className="calc-esb-pct-row">
+                <Progress value={Math.min(100, result.interestShare || 0)} className="calc-esb-pct-bar" />
+                <span className="calc-hint">نسبة الفائدة من مبلغ القرض</span>
+              </div>
 
-                  <ResultActions
-                    copyText={shareText}
-                    shareTitle="حاسبة القسط الشهري"
-                    shareText={shareText}
-                  />
-                </>
-              ) : (
-                <div className="calc-warning">أدخل مبلغ قرض صالحاً حتى تبدأ الحسابات.</div>
-              )}
-            </CardContent>
-          </Card>
+              <div className="calc-esb-breakdown">
+                <div className="calc-esb-brow">
+                  <span>أصل القرض بعد الدفعة</span>
+                  <strong>{formatMoney(result.principal)}</strong>
+                </div>
+                <div className="calc-esb-brow">
+                  <span>إجمالي الفوائد</span>
+                  <strong>{formatMoney(result.totalInterest)}</strong>
+                </div>
+                {result.totalFees > 0 && (
+                  <div className="calc-esb-brow">
+                    <span>إجمالي الرسوم</span>
+                    <strong>{formatMoney(result.totalFees)}</strong>
+                  </div>
+                )}
+                <div className="calc-esb-brow calc-esb-brow--total">
+                  <span>إجمالي المدفوع</span>
+                  <strong>{formatMoney(result.totalPaid)}</strong>
+                </div>
+              </div>
+
+              <ResultActions
+                copyText={shareText}
+                shareTitle="حاسبة القسط الشهري"
+                shareText={shareText}
+              />
+            </div>
+          ) : (
+            <div className="calc-esb-empty-state">
+              <p>أدخل مبلغ قرض صحيحاً حتى تبدأ الحسابات.</p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -416,7 +390,20 @@ export default function MonthlyInstallmentCalculator() {
                         <Cell key={entry.name} fill={entry.color} />
                       ))}
                     </Pie>
-                    <RechartsTooltip formatter={(value) => formatMoney(value)} />
+                    <RechartsTooltip
+                      formatter={(value) => formatMoney(value)}
+                      contentStyle={{
+                        background: 'var(--bg-surface-1)',
+                        border: '1px solid var(--border-default)',
+                        borderRadius: '8px',
+                        color: 'var(--text-primary)',
+                        fontSize: '13px',
+                        boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                        direction: 'rtl',
+                      }}
+                      itemStyle={{ color: 'var(--text-primary)' }}
+                      labelStyle={{ color: 'var(--text-secondary)' }}
+                    />
                   </PieChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -438,7 +425,20 @@ export default function MonthlyInstallmentCalculator() {
                     <CartesianGrid strokeDasharray="3 3" stroke="var(--border-default)" />
                     <XAxis dataKey="month" />
                     <YAxis />
-                    <RechartsTooltip formatter={(value) => formatMoney(value)} />
+                    <RechartsTooltip
+                      formatter={(value) => formatMoney(value)}
+                      contentStyle={{
+                        background: 'var(--bg-surface-1)',
+                        border: '1px solid var(--border-default)',
+                        borderRadius: '8px',
+                        color: 'var(--text-primary)',
+                        fontSize: '13px',
+                        boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                        direction: 'rtl',
+                      }}
+                      itemStyle={{ color: 'var(--text-primary)' }}
+                      labelStyle={{ color: 'var(--text-secondary)' }}
+                    />
                     <Area
                       type="monotone"
                       dataKey="balance"
@@ -635,20 +635,6 @@ export default function MonthlyInstallmentCalculator() {
         </TabsContent>
       </Tabs>
 
-      <section className="calc-review-strip" aria-label="مراجعة سريعة قبل اعتماد القرض">
-        <div className="calc-review-strip__head">
-          <span>راجع قبل المقارنة</span>
-          <strong>لا تختَر العرض من القسط وحده</strong>
-          <p>ثبّت هذه الأربعة أولاً، ثم قارن بين البنوك أو جهات التمويل على أساس واحد.</p>
-        </div>
-        {loanReviewCards.map((item) => (
-          <div key={item.label} className="calc-metric-card">
-            <div className="calc-metric-card__label">{item.label}</div>
-            <div className="calc-metric-card__value">{item.value}</div>
-            <div className="calc-metric-card__note">{item.note}</div>
-          </div>
-        ))}
-      </section>
     </div>
   );
 }

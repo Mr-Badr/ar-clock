@@ -78,6 +78,7 @@ export default function AdMultiplex({
         data-ad-client={clientId || undefined}
         data-ad-slot={adSlot}
         data-ad-format="autorelaxed"
+        data-full-width-responsive="true"
       />
     </div>
   );

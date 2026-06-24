@@ -230,6 +230,7 @@ export default function FinanceCalculatorsHubPage() {
       </CalculatorSection>
 
       <CalculatorSection
+        showAdBefore
         id="finance-tools"
         eyebrow="الأدوات الأساسية"
         title="ابدأ من الأداة التي تطابق القرار لا من قائمة أسماء"

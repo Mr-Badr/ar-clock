@@ -179,8 +179,9 @@ Only scale page types the data already proves convert. Each new page ships with 
 - [ ] **G1. Pages/session** (the only RPM lever that works on Maghreb traffic) — shared with Track D.
 - [ ] **G2. Win high-CPM geo we already rank for.** US time-now (atlanta 24K impr, US RPM 20–35 MAD), France (24 MAD RPM, 4,691 impr). Prioritize US/EU/Gulf city CTR (C5) over Maghreb — revenue multiplier, not just traffic.
 - [x] **G3. Expand Anchor/Vignette auto-ad coverage.** `AdStickyAnchor` route coverage extended to `/blog/*` and `/mwaqit-al-salat/*` in `route-policy.js`.
-- [x] **G4. Activate built-but-unplaced sidebar units** — `BlogArticlePage` wrapped in `AdLayoutWrapper sidebarMode="dual"`. Holiday detail already had dual sidebar. Both categories now active.
-- [x] **G5. Second in-article ad on long pages** — already implemented: prayer city, holiday detail, and blog pages all have AdInArticle ×2 with proper spacing. No back-to-back violations.
+- [x] **G4. Activate built-but-unplaced sidebar units** — `BlogArticlePage` and `/holidays/[slug]/page.jsx` both wrapped in `AdLayoutWrapper sidebarMode="dual"`, which renders `AdSidebarSticky` (right + left) at ≥1440px. Desktop-only, zero mobile CLS impact.
+- [x] **G5. In-article ad density tuned for UX** — Blog articles keep AdInArticle ×2 (long-form content, justified). Holiday detail and prayer city pages reduced to ×1 (second in-article removed — was too close to footer). Calculator pages: AdInArticle placed AFTER FAQ accordion so users see questions before the ad.
+- [x] **G6. Smart ad placement overhaul (2026-06-23)** — Four placement/rendering bugs fixed: (1) Calculator AdTopBanner moved OUT of CalculatorHero — now placed AFTER the tool form via `showAdBefore` prop on the second `CalculatorSection`, applied to all 9 calculator pages. (2) Sticky anchor media query was inverted — was showing on desktop ≥1280px and hiding on mobile; fixed to `min-width: 960px` (desktop-only). (3) Sticky anchor spacer was reserving 0px height — fixed to 68px on mobile so content is never hidden behind the fixed bar. (4) `AdMultiplex` rendered a fixed 728px/970px Google grid on RTL mobile — fixed with `data-full-width-responsive="true"`.
 
 **Verify:** `npm run ads:readiness -- --base=http://localhost:3000` → 0 errors, H1-before-ad, content-first; RPM/page trending up over 4–6 weeks.
 

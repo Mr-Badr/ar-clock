@@ -143,6 +143,7 @@ export default function PercentagePage() {
       </CalculatorSection>
 
       <CalculatorSection
+        showAdBefore
         id="percent-table"
         eyebrow="مرجع سريع"
         title="جدول تحويلات مفيد للحساب الذهني"

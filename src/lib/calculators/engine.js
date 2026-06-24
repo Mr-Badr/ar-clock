@@ -1006,3 +1006,271 @@ export function calculateMultiChange(initialValue, changes = []) {
     steps,
   };
 }
+
+export function calculateSalaryBreakdown({
+  monthlySalary,
+  hoursPerDay = 8,
+  daysPerMonth = 30,
+  extraMonths = 0,
+}) {
+  const monthly = toNumber(monthlySalary);
+  const hpd = Math.max(1, toNumber(hoursPerDay) || 8);
+  const dpm = Math.max(1, toNumber(daysPerMonth) || 30);
+  const extra = toNumber(extraMonths);
+
+  const annual = round(monthly * (12 + extra));
+  const semiMonthly = round(monthly / 2);
+  const weekly = round((monthly * 12) / 52);
+  const daily = round(monthly / dpm);
+  const hourly = round(daily / hpd, 4);
+  const minutely = round(hourly / 60, 4);
+
+  return {
+    isValid: monthly > 0,
+    monthly: round(monthly),
+    annual,
+    semiMonthly,
+    weekly,
+    daily,
+    hourly,
+    minutely,
+    hoursPerDay: hpd,
+    daysPerMonth: dpm,
+    extraMonths: extra,
+  };
+}
+
+// ── Annual Leave Calculator ──────────────────────────────────────────────────
+// Country leave entitlement rules
+export const ANNUAL_LEAVE_COUNTRIES = {
+  sa: {
+    label: 'السعودية',
+    flag: '🇸🇦',
+    daysPerMonth: 30,
+    entitlement: (years) => years >= 5 ? 30 : 21,
+    entitlementNote: (years) => years >= 5 ? '30 يوم (5 سنوات+)' : '21 يوم (أقل من 5 سنوات)',
+  },
+  ae: {
+    label: 'الإمارات',
+    flag: '🇦🇪',
+    daysPerMonth: 30,
+    entitlement: (years) => years >= 1 ? 30 : Math.floor(years * 30),
+    entitlementNote: () => '30 يوم في السنة',
+  },
+  kw: {
+    label: 'الكويت',
+    flag: '🇰🇼',
+    daysPerMonth: 30,
+    entitlement: (years) => 30,
+    entitlementNote: () => '30 يوم في السنة',
+  },
+  qa: {
+    label: 'قطر',
+    flag: '🇶🇦',
+    daysPerMonth: 30,
+    entitlement: (years) => years >= 5 ? 30 : 21,
+    entitlementNote: (years) => years >= 5 ? '30 يوم (5 سنوات+)' : '21 يوم (أقل من 5 سنوات)',
+  },
+  bh: {
+    label: 'البحرين',
+    flag: '🇧🇭',
+    daysPerMonth: 30,
+    entitlement: (years) => 30,
+    entitlementNote: () => '30 يوم في السنة',
+  },
+  om: {
+    label: 'سلطنة عُمان',
+    flag: '🇴🇲',
+    daysPerMonth: 30,
+    entitlement: (years) => years >= 1 ? 30 : Math.floor(years * 30),
+    entitlementNote: () => '30 يوم في السنة',
+  },
+  eg: {
+    label: 'مصر',
+    flag: '🇪🇬',
+    daysPerMonth: 30,
+    entitlement: (years) => years >= 10 ? 30 : years >= 1 ? 21 : 15,
+    entitlementNote: (years) => years >= 10 ? '30 يوم (10 سنوات+)' : years >= 1 ? '21 يوم' : '15 يوم (في سنة الخدمة الأولى)',
+  },
+  jo: {
+    label: 'الأردن',
+    flag: '🇯🇴',
+    daysPerMonth: 30,
+    entitlement: (years) => years >= 5 ? 21 : 14,
+    entitlementNote: (years) => years >= 5 ? '21 يوم (5 سنوات+)' : '14 يوم',
+  },
+};
+
+export function calculateAnnualLeave({
+  monthlySalary,
+  yearsWorked,
+  daysUsed = 0,
+  country = 'sa',
+}) {
+  const salary = toNumber(monthlySalary);
+  const years = Math.max(0, toNumber(yearsWorked));
+  const used = Math.max(0, toNumber(daysUsed));
+  const countryData = ANNUAL_LEAVE_COUNTRIES[country] || ANNUAL_LEAVE_COUNTRIES.sa;
+  const dpm = countryData.daysPerMonth;
+
+  const entitledDays = countryData.entitlement(years);
+  const balance = Math.max(0, entitledDays - used);
+  const dailySalary = round(salary / dpm);
+  const leaveBalance = round(balance * dailySalary);
+  const totalLeaveValue = round(entitledDays * dailySalary);
+  const accrualPerMonth = round(entitledDays / 12, 4);
+
+  return {
+    isValid: salary > 0 && years >= 0,
+    entitledDays,
+    daysUsed: used,
+    balance,
+    dailySalary,
+    leaveBalance,
+    totalLeaveValue,
+    accrualPerMonth,
+    yearsWorked: years,
+    entitlementNote: countryData.entitlementNote(years),
+    daysPerMonth: dpm,
+  };
+}
+
+// ── Zakat Calculator ─────────────────────────────────────────────────────────
+// Nisab thresholds (approximate — user should verify with a scholar or current prices)
+// Gold nisab: 85g | Silver nisab: 595g
+// Zakat rate: 2.5% (1/40)
+export const ZAKAT_NISAB_GOLD_GRAMS = 85;
+export const ZAKAT_NISAB_SILVER_GRAMS = 595;
+export const ZAKAT_RATE = 0.025;
+
+export function calculateZakat({
+  cash = 0,
+  bankDeposits = 0,
+  gold = 0,
+  silver = 0,
+  investments = 0,
+  businessInventory = 0,
+  receivables = 0,
+  debts = 0,
+  goldPricePerGram = 0,
+  silverPricePerGram = 0,
+  nisabBasis = 'gold',
+}) {
+  const cashVal = toNumber(cash);
+  const bankVal = toNumber(bankDeposits);
+  const goldVal = toNumber(gold);
+  const silverVal = toNumber(silver);
+  const investVal = toNumber(investments);
+  const businessVal = toNumber(businessInventory);
+  const receivablesVal = toNumber(receivables);
+  const debtsVal = toNumber(debts);
+  const goldPrice = toNumber(goldPricePerGram);
+  const silverPrice = toNumber(silverPricePerGram);
+
+  const goldMarketValue = round(goldVal * goldPrice);
+  const silverMarketValue = round(silverVal * silverPrice);
+
+  const totalAssets = round(
+    cashVal + bankVal + goldMarketValue + silverMarketValue + investVal + businessVal + receivablesVal,
+  );
+  const netZakatable = Math.max(0, round(totalAssets - debtsVal));
+
+  // Nisab in currency
+  const nisabGoldValue = goldPrice > 0 ? round(ZAKAT_NISAB_GOLD_GRAMS * goldPrice) : 0;
+  const nisabSilverValue = silverPrice > 0 ? round(ZAKAT_NISAB_SILVER_GRAMS * silverPrice) : 0;
+  const nisab = nisabBasis === 'silver' ? nisabSilverValue : nisabGoldValue;
+
+  const meetsNisab = nisab > 0 ? netZakatable >= nisab : null;
+  const zakatDue = meetsNisab ? round(netZakatable * ZAKAT_RATE) : 0;
+  const hasAssets = netZakatable > 0;
+
+  return {
+    isValid: hasAssets,
+    totalAssets,
+    netZakatable,
+    nisab,
+    nisabGoldValue,
+    nisabSilverValue,
+    meetsNisab,
+    zakatDue,
+    zakatRate: ZAKAT_RATE,
+    breakdown: {
+      cash: cashVal,
+      bankDeposits: bankVal,
+      gold: goldMarketValue,
+      silver: silverMarketValue,
+      investments: investVal,
+      businessInventory: businessVal,
+      receivables: receivablesVal,
+      debts: debtsVal,
+    },
+  };
+}
+
+// ── BMI + Ideal Weight + TDEE ─────────────────────────────────────────────────
+export function calculateBMI({
+  weightKg,
+  heightCm,
+  age,
+  gender = 'male',
+  activityLevel = 'moderate',
+}) {
+  const weight = toNumber(weightKg);
+  const height = toNumber(heightCm);
+  const ageVal = toNumber(age);
+
+  if (weight <= 0 || height <= 0) return { isValid: false };
+
+  const heightM = height / 100;
+  const bmi = round(weight / (heightM * heightM), 1);
+
+  let category, categoryAr, color;
+  if (bmi < 18.5) { category = 'underweight'; categoryAr = 'نقص في الوزن'; color = '#3b82f6'; }
+  else if (bmi < 25) { category = 'normal'; categoryAr = 'وزن مثالي'; color = '#10b981'; }
+  else if (bmi < 30) { category = 'overweight'; categoryAr = 'زيادة طفيفة'; color = '#f59e0b'; }
+  else if (bmi < 35) { category = 'obese1'; categoryAr = 'سمنة (درجة أولى)'; color = '#ef4444'; }
+  else { category = 'obese2'; categoryAr = 'سمنة مفرطة'; color = '#dc2626'; }
+
+  // Ideal weight range for this height (BMI 18.5–24.9)
+  const idealMin = round(18.5 * heightM * heightM, 1);
+  const idealMax = round(24.9 * heightM * heightM, 1);
+
+  // Hamwi ideal weight formula
+  const hamwi = gender === 'male'
+    ? round(48 + 2.7 * Math.max(0, (height - 152.4) / 2.54), 1)
+    : round(45.4 + 2.3 * Math.max(0, (height - 152.4) / 2.54), 1);
+
+  const weightDiff = round(weight - (idealMin + idealMax) / 2, 1);
+
+  // Mifflin-St Jeor BMR
+  let bmr;
+  if (ageVal > 0) {
+    bmr = gender === 'male'
+      ? round(10 * weight + 6.25 * height - 5 * ageVal + 5)
+      : round(10 * weight + 6.25 * height - 5 * ageVal - 161);
+  }
+
+  const activityMultipliers = {
+    sedentary: 1.2,
+    light: 1.375,
+    moderate: 1.55,
+    active: 1.725,
+    veryActive: 1.9,
+  };
+  const tdee = bmr ? round(bmr * (activityMultipliers[activityLevel] || 1.55)) : null;
+
+  return {
+    isValid: true,
+    bmi,
+    category,
+    categoryAr,
+    color,
+    idealMin,
+    idealMax,
+    hamwi,
+    weightDiff,
+    bmr,
+    tdee,
+    bmiPercent: clamp(Math.round(((bmi - 10) / (45 - 10)) * 100), 0, 100),
+  };
+}

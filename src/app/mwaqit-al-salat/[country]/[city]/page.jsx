@@ -956,8 +956,6 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
         </ErrorBoundary>
       </section>
 
-      <AdInArticle slotId={`mid-prayer-city-${country}-${city}-2`} />
-
       <section className={routeStyles.sectionPanel} aria-label={`أسئلة قبل الاعتماد على مواقيت الصلاة في ${cityNameAr}`}>
         <h2 className={routeStyles.sectionTitle}>أسئلة قبل الاعتماد على مواقيت الصلاة في {cityNameAr}</h2>
         <ErrorBoundary name="PrayerCityFaq">

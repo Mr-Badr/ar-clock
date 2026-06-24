@@ -40,14 +40,14 @@ function ChartTooltip({ active, payload }) {
   const entry = payload[0];
   return (
     <div style={{
-      background: 'var(--bg-surface)',
-      border: '1px solid var(--border-subtle)',
+      background: 'var(--bg-surface-1)',
+      border: '1px solid var(--border-default)',
       borderRadius: '8px',
       padding: '8px 12px',
       fontSize: '13px',
       color: 'var(--text-primary)',
       direction: 'rtl',
-      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+      boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
     }}>
       <div style={{ fontWeight: '700', color: entry.payload.color }}>
         {entry.name}

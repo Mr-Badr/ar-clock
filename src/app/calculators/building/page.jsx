@@ -265,6 +265,7 @@ export default function BuildingHubPage() {
       </CalculatorSection>
 
       <CalculatorSection
+        showAdBefore
         id="building-decision-table"
         eyebrow="قبل التفاصيل"
         title="متى تستخدم كل حاسبة بناء؟"

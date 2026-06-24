@@ -153,11 +153,11 @@ function OverlapBar({ diffMinutes, fromCityAr, toCityAr, nowHFromCity }) {
       <div style={{ display: 'flex', gap: '12px', marginTop: '8px', flexWrap: 'wrap' }}>
         <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: 'var(--text-secondary)' }}>
           <span style={{ width: '10px', height: '6px', borderRadius: '2px', background: '#6366f140', border: '1px solid #6366f160', display: 'inline-block' }} />
-          {fromCityAr} (٩ص – ٥م)
+          {fromCityAr} (9ص – 5م)
         </span>
         <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: 'var(--text-secondary)' }}>
           <span style={{ width: '10px', height: '6px', borderRadius: '2px', background: '#f59e0b40', border: '1px solid #f59e0b60', display: 'inline-block' }} />
-          {toCityAr} (٩ص – ٥م)
+          {toCityAr} (9ص – 5م)
         </span>
         {hasOverlap && (
           <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: '#10b981' }}>

@@ -1,0 +1,13 @@
+{
+  "slug": "gulf-childrens-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": false,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [],
+  "updatedAt": "2026-06-24T00:49:21.846Z"
+}

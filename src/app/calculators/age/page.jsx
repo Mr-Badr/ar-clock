@@ -243,6 +243,7 @@ export default function AgeHubPage() {
       </CalculatorSection>
 
       <CalculatorSection
+        showAdBefore
         id="age-hub-tools"
         eyebrow="ابدأ من السؤال"
         title="اختر حاسبة العمر بحسب ما تريد معرفته الآن"

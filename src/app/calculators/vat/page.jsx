@@ -95,6 +95,7 @@ export default function VatPage() {
       </CalculatorSection>
 
       <CalculatorSection
+        showAdBefore
         id="vat-learning"
         eyebrow="فهم الأساس"
         title="كيف تختار طريقة الحساب الصحيحة؟"

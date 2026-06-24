@@ -267,6 +267,7 @@ export default function PersonalFinanceHubPage() {
       </CalculatorSection>
 
       <CalculatorSection
+        showAdBefore
         id="pf-tools"
         eyebrow="ابدأ من القرار"
         title="اختر الحاسبة بحسب ما يضغط عليك الان"

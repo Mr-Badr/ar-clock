@@ -161,6 +161,7 @@
   .ad-slot > .adsbygoogle {
     display: block;
     width: 100%;
+    max-width: 100%;
     min-width: 0;
   }
 
@@ -277,18 +278,17 @@
      ────────────────────────────────────────────────────────────────────────── */
   .ad-slot--in-article {
     width: 100%;
-    min-height: 250px;
-    max-width: 720px;
+    max-width: min(720px, 100%);
     margin-inline: auto;
-    margin-block: var(--space-16);
+    margin-block: var(--space-12);
     border-radius: var(--radius-lg);
     overflow: hidden;
     content-visibility: auto;
-    contain-intrinsic-size: 0 280px;
+    contain-intrinsic-size: 0 200px;
   }
 
   .ad-slot--in-article > .adsbygoogle {
-    min-height: 250px;
+    min-height: 180px;
   }
 
 
@@ -347,39 +347,40 @@
 
   .ad-slot--multiplex {
     width: 100%;
-    min-height: 280px;
-    margin-block: var(--space-14);
+    max-width: 100%;
+    min-height: 240px;
+    margin-block: var(--space-12);
     border-radius: var(--radius-lg);
     overflow: hidden;
     content-visibility: auto;
-    contain-intrinsic-size: 0 320px;
+    contain-intrinsic-size: 0 280px;
   }
 
   @media (min-width: 768px) {
     .ad-slot--multiplex {
-      min-height: 320px;
+      min-height: 280px;
     }
   }
 
   @media (max-width: 639px) {
     .ad-slot--top-banner {
-      margin-block: var(--space-8);
-      border-radius: var(--radius-md);
-    }
-
-    .ad-slot--in-article {
-      margin-block: var(--space-14);
-      border-radius: var(--radius-md);
-    }
-
-    .ad-slot--events-feed-horizontal {
       margin-block: var(--space-6);
       border-radius: var(--radius-md);
     }
 
+    .ad-slot--in-article {
+      margin-block: var(--space-8);
+      border-radius: var(--radius-md);
+    }
+
+    .ad-slot--events-feed-horizontal {
+      margin-block: var(--space-4);
+      border-radius: var(--radius-md);
+    }
+
     .ad-slot--multiplex {
-      min-height: 260px;
-      margin-block: var(--space-12);
+      min-height: 220px;
+      margin-block: var(--space-8);
       border-radius: var(--radius-md);
     }
   }

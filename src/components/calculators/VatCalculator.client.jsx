@@ -77,7 +77,7 @@ function VatSplitBar({ base, tax, total, rate }) {
   const basePct = Math.round((base / total) * 100);
   const taxPct  = 100 - basePct;
   const perHundred = rate > 0
-    ? `لكل ١٠٠ وحدة: ${(100 / (1 + rate / 100)).toFixed(1)} سعر + ${(rate / (1 + rate / 100) * 100 / 100).toFixed(1)} ضريبة`
+    ? `لكل 100 وحدة: ${(100 / (1 + rate / 100)).toFixed(1)} سعر + ${(rate / (1 + rate / 100) * 100 / 100).toFixed(1)} ضريبة`
     : null;
   return (
     <div style={{ marginTop: '14px', direction: 'rtl' }}>

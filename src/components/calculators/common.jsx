@@ -199,7 +199,6 @@ export function CalculatorHero({
           </div>
         </div>
       </SectionWrapper>
-      <AdTopBanner slotId="top-calculator-tool" />
     </>
   );
 }
@@ -210,23 +209,27 @@ export function CalculatorSection({
   title,
   description,
   subtle,
+  showAdBefore = false,
   children,
 }) {
   const isSubtle = subtle === true;
 
   return (
-    <SectionWrapper id={id} subtle={isSubtle} className="calc-shell">
-      <div className="calc-section-frame">
-        <div className="calc-section-head">
-          {eyebrow ? <span className="calc-section-eyebrow">{eyebrow}</span> : null}
-          <h2 className="calc-section-title">{title}</h2>
-          {description ? <p className="calc-section-description">{description}</p> : null}
+    <>
+      {showAdBefore ? <AdTopBanner slotId="top-calculator-tool" /> : null}
+      <SectionWrapper id={id} subtle={isSubtle} className="calc-shell">
+        <div className="calc-section-frame">
+          <div className="calc-section-head">
+            {eyebrow ? <span className="calc-section-eyebrow">{eyebrow}</span> : null}
+            <h2 className="calc-section-title">{title}</h2>
+            {description ? <p className="calc-section-description">{description}</p> : null}
+          </div>
+          <div className="calc-section-body">
+            {children}
+          </div>
         </div>
-        <div className="calc-section-body">
-          {children}
-        </div>
-      </div>
-    </SectionWrapper>
+      </SectionWrapper>
+    </>
   );
 }
 

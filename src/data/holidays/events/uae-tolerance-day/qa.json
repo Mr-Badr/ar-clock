@@ -1,0 +1,13 @@
+{
+  "slug": "uae-tolerance-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": false,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [],
+  "updatedAt": "2026-06-24T00:49:16.431Z"
+}

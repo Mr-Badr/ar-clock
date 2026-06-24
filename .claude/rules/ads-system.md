@@ -34,7 +34,7 @@ paths:
 - `AdMultiplex` — content-recommendation grid, placed at end of page
 - `AdInFeed` — native in-feed unit for list/feed layouts
 - `AdEventsFeedHorizontal` — horizontal display for events feed
-- `AdSidebarSticky` — desktop-only sidebar (requires ≥1440px), slots configured but NOT placed in any page yet
+- `AdSidebarSticky` — desktop-only sidebar (requires ≥1440px). Active on blog articles and holiday detail pages via `AdLayoutWrapper sidebarMode="dual"`
 - `AdStickyAnchor` — mobile sticky bottom banner. ALREADY mounted globally in `ClientRuntimeMounts.client.jsx`. Requires `body.has-css-fullscreen` class to show. Activates on: homepage, /holidays/*, /date/*, /time-now/*, /time-difference/*.
 
 ## Slot resolution fallback chain
@@ -42,10 +42,10 @@ Each component reads route prefix → looks up section-specific slot key → fal
 Example for `/mwaqit-al-salat`: tries `topPrayerBanner` → falls back to `topBanner`.
 Fallback is handled by `resolveManualAdSlot()` in `src/lib/ads/slot-resolution.ts`.
 
-## Ad coverage per section (current state after 2026-06-22 changes)
+## Ad coverage per section (current state after 2026-06-23 fixes)
 | Route | Top | InArticle | Multiplex |
 |---|---|---|---|
-| /holidays/[slug] | ✅ | ✅ ×2 | ✅ |
+| /holidays/[slug] | ✅ | ✅ ×1 | ✅ |
 | /holidays (hub) | ✅ | ✅ | ✅ |
 | /date/* | ✅ (layout) | ✅ | ✅ (layout) |
 | /blog/[slug] | ✅ | ✅ | ✅ |
@@ -54,9 +54,15 @@ Fallback is handled by `resolveManualAdSlot()` in `src/lib/ads/slot-resolution.t
 | /time-now/[country]/[city] | ✅ | ✅ | ✅ |
 | /time-difference/[from]/[to] | ✅ | ✅ | ✅ |
 | /mwaqit-al-salat (hub) | ✅ | ✅ | ✅ |
-| /mwaqit-al-salat/[country] | ✅ | ✅ | ✅ (added 2026-06-22) |
-| /mwaqit-al-salat/[country]/[city] | ✅ | ✅ ×2 | ✅ (added 2026-06-22) |
-| /calculators/* (common.jsx) | ✅ | ✅ (in FAQ, added 2026-06-22) | ✅ (in RelatedCalculators, added 2026-06-22) |
+| /mwaqit-al-salat/[country] | ✅ | ✅ | ✅ |
+| /mwaqit-al-salat/[country]/[city] | ✅ | ✅ ×1 | ✅ |
+| /calculators/* (common.jsx) | ✅ (between hero and tool) | ✅ (after FAQ accordion) | ✅ (in RelatedCalculators) |
+
+## Placement rules (updated 2026-06-23)
+- **Max 1 AdInArticle** per page for short/medium pages. Long-form pages (blog articles) may use 2 if separated by 2+ major sections
+- AdTopBanner: after `<h1>` and **outside** the hero section wrapper — not the last child inside it
+- AdInArticle in calculators: **after** the FAQ accordion, not before it — users see FAQs first
+- AdMultiplex: add `data-full-width-responsive="true"` to prevent overflow on RTL mobile
 
 ## Ad-free routes (intentional, from route-policy.js)
 /about, /contact, /disclaimer, /editorial-policy, /fahras, /offline, /privacy, /search, /terms, /api/*
@@ -75,7 +81,6 @@ All calculator pages use these exported components in order:
 4. `<CalculatorSection>` wrapping `<CalculatorFaqSection>` — contains AdInArticle before FAQ accordion
 5. `<CalculatorSection>` wrapping `<RelatedCalculators>` — contains AdMultiplex at end
 
-## Sidebar ads (next opportunity)
-`AdSidebarSticky` component is complete and slot IDs are set (right: 4134471107, left: 5183828891).
-Only shows at ≥1440px wide screens. NOT placed in any page yet — needs layout wrapper with CSS positioning.
-Best candidates: holiday detail pages, prayer city pages (long-form content).
+## Sidebar ads (active)
+`AdSidebarSticky` is active on blog articles (`BlogArticlePage.jsx`) and holiday detail pages (`/holidays/[slug]/page.jsx`) via `AdLayoutWrapper sidebarMode="dual"`. Only shows at ≥1440px. Slot IDs: right: 4134471107, left: 5183828891.
+Next candidates: prayer city pages (long-form, high-traffic).

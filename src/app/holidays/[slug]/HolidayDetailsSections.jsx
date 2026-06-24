@@ -11,7 +11,6 @@ import {
   PackageCheck,
   Sparkles,
 } from 'lucide-react';
-import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import HistoricalTable from './HistoricalTable';
 import NextEventCard from './NextEventCard';
@@ -216,7 +215,6 @@ export default function HolidayDetailsSections({
 
       {countryDatesSlot}
       <HistoricalTable event={event} hijriYear={hijriYearNum} currentYear={currentYear} />
-      <AdInArticle slotId={`late-holiday-${slug}-2`} />
 
       {recurringYears && (
         <section style={{ marginTop: 'var(--space-8)' }} aria-labelledby="recurring-h">

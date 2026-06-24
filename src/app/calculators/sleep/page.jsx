@@ -247,6 +247,7 @@ export default function SleepHubPage() {
       </CalculatorSection>
 
       <CalculatorSection
+        showAdBefore
         id="sleep-decision-table"
         eyebrow="اختيار الأداة"
         title="كل مشكلة نوم لها بداية مختلفة"

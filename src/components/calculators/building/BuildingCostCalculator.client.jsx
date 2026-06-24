@@ -254,8 +254,12 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug }) {
                       border: '1px solid var(--border-default)',
                       backgroundColor: 'var(--bg-surface-1)',
                       color: 'var(--text-primary)',
-                      boxShadow: 'none',
+                      fontSize: '13px',
+                      boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                      direction: 'rtl',
                     }}
+                    itemStyle={{ color: 'var(--text-primary)' }}
+                    labelStyle={{ color: 'var(--text-secondary)' }}
                   />
                 </PieChart>
               </ResponsiveContainer>

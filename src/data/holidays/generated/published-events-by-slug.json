@@ -869,6 +869,15 @@
     "month": 7,
     "day": 5
   },
+  "gulf-childrens-day": {
+    "id": "gulf-childrens-day",
+    "slug": "gulf-childrens-day",
+    "name": "يوم الطفل الخليجي",
+    "type": "fixed",
+    "category": "national",
+    "month": 1,
+    "day": 15
+  },
   "iraq-national-day": {
     "id": "iraq-national-day",
     "slug": "iraq-national-day",
@@ -898,6 +907,26 @@
     "_countryCode": "ps",
     "month": 3,
     "day": 30
+  },
+  "uae-tolerance-day": {
+    "id": "uae-tolerance-day",
+    "slug": "uae-tolerance-day",
+    "name": "يوم التسامح الإماراتي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ae",
+    "month": 11,
+    "day": 16
+  },
+  "uae-womens-day": {
+    "id": "uae-womens-day",
+    "slug": "uae-womens-day",
+    "name": "يوم المرأة الإماراتية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ae",
+    "month": 8,
+    "day": 28
   },
   "world-fathers-day": {
     "id": "world-fathers-day",

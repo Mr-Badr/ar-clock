@@ -482,75 +482,45 @@ export default function PercentageCalculator() {
           </CardContent>
         </Card>
 
-        <Card className="calc-surface-card">
-          <CardHeader>
-            <CardTitle className="calc-card-title">النتيجة</CardTitle>
-          </CardHeader>
-          <CardContent className="calc-form-grid" aria-live="polite" role="status">
-            {activeTab === 'amount' ? (
-              <div className="calc-form-grid">
-                <div className="calc-metric-card">
-                  <div className="calc-metric-card__label">الناتج</div>
-                  <div className="calc-metric-card__value">{formatNumber(amountResult.result)}</div>
-                  <div className="calc-metric-card__note">
-                    {formatNumber(amountResult.value)} × ({formatNumber(amountResult.percent)} ÷ 100)
-                  </div>
-                </div>
-              </div>
-            ) : null}
+        <div className="calc-result-hero-panel --amber" aria-live="polite" role="status">
+          <div className="calc-pct-result-hero">
+            <span className="calc-result-hero-label">{currentSummary.title}</span>
+            <div className="calc-result-hero-value">{currentSummary.value}</div>
+          </div>
 
-            {activeTab === 'ratio' ? (
-              <div className="calc-form-grid">
-                <div className="calc-metric-card">
-                  <div className="calc-metric-card__label">النسبة</div>
-                  <div className="calc-metric-card__value">{formatPercent(ratioResult.result, 2)}</div>
-                  <div className="calc-metric-card__note">
-                    ({formatNumber(ratioResult.part)} ÷ {formatNumber(ratioResult.whole)}) × 100
-                  </div>
-                </div>
-              </div>
-            ) : null}
+          {activeTab === 'amount' && (
+            <div className="calc-hint" dir="ltr" style={{ textAlign: 'end' }}>
+              {formatNumber(amountResult.value)} × ({formatNumber(amountResult.percent)} ÷ 100)
+            </div>
+          )}
+          {activeTab === 'ratio' && (
+            <div className="calc-hint" dir="ltr" style={{ textAlign: 'end' }}>
+              ({formatNumber(ratioResult.part)} ÷ {formatNumber(ratioResult.whole)}) × 100
+            </div>
+          )}
+          {activeTab === 'adjust' && (
+            <div className="calc-hint">
+              قيمة {adjustMode === 'increase' ? 'الزيادة' : 'الخصم'}: {formatNumber(adjustResult.delta)}
+            </div>
+          )}
+          {activeTab === 'change' && (
+            <div className="calc-hint">
+              فرق مطلق {formatNumber(changeResult.difference)} ·{' '}
+              {changeResult.direction === 'increase' ? 'زيادة' : changeResult.direction === 'decrease' ? 'انخفاض' : 'بدون تغيير'}
+            </div>
+          )}
 
-            {activeTab === 'adjust' ? (
-              <div className="calc-form-grid">
-                <div className="calc-metric-card">
-                  <div className="calc-metric-card__label">
-                    {adjustMode === 'increase' ? 'بعد الزيادة' : 'بعد الخفض'}
-                  </div>
-                  <div className="calc-metric-card__value">{formatNumber(adjustResult.result)}</div>
-                  <div className="calc-metric-card__note">
-                    قيمة {adjustMode === 'increase' ? 'الزيادة' : 'الخصم'} {formatNumber(adjustResult.delta)}
-                  </div>
-                </div>
-              </div>
-            ) : null}
-
-            {activeTab === 'change' ? (
-              <div className="calc-form-grid">
-                <div className="calc-metric-card">
-                  <div className="calc-metric-card__label">نسبة التغيير</div>
-                  <div className="calc-metric-card__value">{formatPercent(changeResult.percentChange, 2)}</div>
-                  <div className="calc-metric-card__note">
-                    الفرق المطلق {formatNumber(changeResult.difference)} -{' '}
-                    {changeResult.direction === 'increase'
-                      ? 'زيادة'
-                      : changeResult.direction === 'decrease'
-                        ? 'انخفاض'
-                        : 'بدون تغيير'}
-                  </div>
-                </div>
-              </div>
-            ) : null}
-
-            <ResultActions
-              copyText={shareText}
-              shareTitle="حاسبة النسبة المئوية"
-              shareText={shareText}
-            />
-          </CardContent>
-        </Card>
+          <ResultActions
+            copyText={shareText}
+            shareTitle="حاسبة النسبة المئوية"
+            shareText={shareText}
+          />
+        </div>
       </div>
 
+      <details className="calc-extras-details">
+        <summary>أدوات تسعير إضافية — خصومات متتالية، تقسيم مبالغ، تغيرات متتابعة</summary>
+        <div className="calc-extras-details__body">
       <div className="calc-grid-3">
         <Card className="calc-surface-card">
           <CardHeader>
@@ -717,6 +687,8 @@ export default function PercentageCalculator() {
           )}
         </CardContent>
       </Card>
+      </div>
+      </details>
     </div>
   );
 }

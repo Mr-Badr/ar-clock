@@ -96,6 +96,7 @@ export default function MonthlyInstallmentPage() {
       </CalculatorSection>
 
       <CalculatorSection
+        showAdBefore
         id="loan-tabs"
         eyebrow="افهم النتيجة"
         title="القرض ليس قسطاً شهرياً فقط"
