@@ -1038,6 +1038,16 @@
   color-scheme: light;
 }
 
+.dark .calc-app select,
+.dark .age-standalone-tool select {
+  color-scheme: dark;
+}
+
+.light .calc-app select,
+.light .age-standalone-tool select {
+  color-scheme: light;
+}
+
 .calc-select-trigger.select[data-slot="select-trigger"] {
   min-height: 3rem;
   width: 100%;
@@ -1896,6 +1906,14 @@
 
   .calc-decision-layout {
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  }
+
+  /* Last item spans full row when it's alone (odd total count) */
+  .calc-info-grid > *:last-child:nth-child(odd),
+  .calc-related-grid > *:last-child:nth-child(odd),
+  .calc-hub-grid > *:last-child:nth-child(odd),
+  .calc-query-grid > *:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 }
 
@@ -4033,15 +4051,36 @@
   margin-top: 0.2rem;
 }
 
+/* Mobile 2-col: last item alone spans full width */
+.calc-hub-cat-grid > *:last-child:nth-child(2n + 1) {
+  grid-column: 1 / -1;
+}
+
 @media (min-width: 640px) {
   .calc-hub-cat-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Reset mobile span, apply 3-col lone-last rule */
+  .calc-hub-cat-grid > *:last-child:nth-child(2n + 1) {
+    grid-column: auto;
+  }
+  .calc-hub-cat-grid > *:last-child:nth-child(3n + 1) {
+    grid-column: 1 / -1;
   }
 }
 
 @media (min-width: 1024px) {
   .calc-hub-cat-grid {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Reset 3-col span, apply 4-col lone-last rule */
+  .calc-hub-cat-grid > *:last-child:nth-child(3n + 1) {
+    grid-column: auto;
+  }
+  .calc-hub-cat-grid > *:last-child:nth-child(4n + 1) {
+    grid-column: 1 / -1;
   }
 }
 
@@ -10623,21 +10662,34 @@ main:not(.calc-hub-page) .calc-info-grid--editorial .calc-editorial-card__copy .
 
 .hijri-month-select {
   width: 100%;
-  height: 2.5rem;
-  padding: 0 0.6rem;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius, 0.375rem);
-  background: var(--bg-input, var(--bg-surface));
+  min-height: 3rem;
+  height: auto;
+  padding: var(--space-3) 0.6rem;
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-3);
   color: var(--text-primary);
   font-size: 0.88rem;
+  font-family: inherit;
+  font-weight: var(--font-medium);
   cursor: pointer;
   direction: rtl;
+  appearance: auto;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.hijri-month-select:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border-default));
 }
 
 .hijri-month-select:focus {
-  outline: 2px solid var(--border-accent);
-  outline-offset: 1px;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
 }
+
+.dark .hijri-month-select { color-scheme: dark; }
+.light .hijri-month-select { color-scheme: light; }
 
 @media (max-width: 400px) {
   .hijri-date-row {
