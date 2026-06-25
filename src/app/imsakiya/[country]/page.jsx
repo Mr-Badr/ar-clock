@@ -41,7 +41,7 @@ export async function generateMetadata({ params }) {
   const countryAr = country.name_ar || countrySlug;
 
   return buildCanonicalMetadata({
-    title: `إمساكية رمضان ${hijriYear} هـ / ${gregYear} في ${countryAr} — أوقات السحور والإفطار`,
+    title: `إمساكية رمضان ${gregYear} في ${countryAr} — السحور والإفطار`,
     description: `اختر مدينتك في ${countryAr} لعرض إمساكية رمضان ${gregYear} الكاملة — أوقات السحور والإفطار لكل يوم محسوبة فلكياً.`,
     keywords: [`إمساكية رمضان ${countryAr}`, `إمساكية ${countryAr}`, `مواقيت رمضان ${countryAr}`, `وقت الإفطار ${countryAr}`],
     url: `${SITE_URL}/imsakiya/${countrySlug}`,
@@ -119,6 +119,57 @@ export default async function ImsakiyaCountryPage({ params }) {
             ))}
           </div>
         )}
+      </section>
+
+      <section className="container mx-auto px-4 pb-10">
+        <h2 className="text-lg font-semibold mb-4">أسئلة شائعة عن إمساكية رمضان في {countryAr}</h2>
+        <div className="space-y-4">
+          <details className="bg-card border rounded-lg px-4 py-3">
+            <summary className="font-medium cursor-pointer">كيف تُحسب أوقات السحور والإفطار؟</summary>
+            <p className="mt-2 text-muted-foreground text-sm leading-relaxed">
+              تُحسب أوقات السحور والإفطار فلكياً بناءً على موضع الشمس — يبدأ الصيام عند الفجر الصادق (انبثاق الضوء في أفق السماء قبل الشروق)، وينتهي عند غروب الشمس. تختلف هذه الأوقات من مدينة لأخرى داخل نفس الدولة بسبب تباين خطوط الطول والعرض.
+            </p>
+          </details>
+          <details className="bg-card border rounded-lg px-4 py-3">
+            <summary className="font-medium cursor-pointer">هل يختلف موعد الإفطار بين مدن {countryAr}؟</summary>
+            <p className="mt-2 text-muted-foreground text-sm leading-relaxed">
+              نعم، قد يختلف موعد الإفطار بين مدن {countryAr} بدقائق تتراوح عادةً بين دقيقة وعشر دقائق حسب موقع المدينة جغرافياً. المدن الغربية يغرب فيها الشمس أمتأخرةً قليلاً عن المدن الشرقية. لهذا السبب يُنصح بالاستعانة بإمساكية مدينتك تحديداً لا إمساكية عاصمة الدولة.
+            </p>
+          </details>
+          <details className="bg-card border rounded-lg px-4 py-3">
+            <summary className="font-medium cursor-pointer">متى يبدأ رمضان {gregYear} في {countryAr}؟</summary>
+            <p className="mt-2 text-muted-foreground text-sm leading-relaxed">
+              المتوقع أن يبدأ رمضان {gregYear} في {ramadanStart.day} {GREGORIAN_MONTHS_AR[ramadanStart.month]} {gregYear} وفق حسابات تقويم أم القرى. غير أن الموعد الرسمي يعتمد على رؤية هلال رمضان، وقد يتقدم يوماً أو يتأخر يوماً. تابع إعلان دار الإفتاء أو الجهة الدينية الرسمية في {countryAr} لتأكيد البداية الفعلية.
+            </p>
+          </details>
+          <details className="bg-card border rounded-lg px-4 py-3">
+            <summary className="font-medium cursor-pointer">ما الفرق بين الإمساكية الفلكية وإمساكية دار الإفتاء؟</summary>
+            <p className="mt-2 text-muted-foreground text-sm leading-relaxed">
+              الإمساكية الفلكية تعتمد حسابات علم الفلك الدقيقة لتحديد أوقات الفجر والغروب، وهي الأكثر دقة للتخطيط المسبق. أما إمساكية دار الإفتاء أو وزارة الأوقاف في كل دولة فقد تختلف قليلاً بسبب احتياطات تُضاف للسحور أو الإفطار. الفروق عادةً لا تتجاوز دقيقة أو دقيقتين.
+            </p>
+          </details>
+          <details className="bg-card border rounded-lg px-4 py-3">
+            <summary className="font-medium cursor-pointer">كم ساعة الصيام يومياً في رمضان {gregYear}؟</summary>
+            <p className="mt-2 text-muted-foreground text-sm leading-relaxed">
+              تتباين مدة الصيام اليومي حسب الموسم الذي يقع فيه رمضان. حين يقع رمضان صيفاً تمتد ساعات الصيام من 14 إلى 18 ساعة في كثير من الدول العربية، وحين يقع شتاءً تتراجع إلى 11-13 ساعة. للاطلاع على المدة الدقيقة ليومٍ بعينه في مدينتك، افتح إمساكية مدينتك من القائمة أعلاه.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <section className="container mx-auto px-4 pb-10">
+        <h2 className="text-lg font-semibold mb-3">كيف نحسب أوقات الإمساكية؟</h2>
+        <div className="text-sm text-muted-foreground leading-relaxed space-y-2">
+          <p>
+            تعتمد حاسبة الإمساكية على خوارزمية فلكية دقيقة تأخذ في الاعتبار إحداثيات كل مدينة (خط الطول، خط العرض، الارتفاع عن سطح البحر) وزاوية ميل الشمس تحت الأفق لتحديد لحظة الفجر الصادق الدقيقة.
+          </p>
+          <p>
+            وقت الإفطار يتطابق مع غروب الشمس الفلكي — وهو اللحظة التي يختفي فيها القرص الشمسي كلياً تحت خط الأفق. هذه الأوقات محسوبة مسبقاً لكل أيام رمضان وتُعرض بدقة إلى الدقيقة.
+          </p>
+          <p>
+            يُستحسن إضافة هامش احتياط من دقيقة إلى ثلاث دقائق للسحور احتراطاً، والأخذ بالتوقيت الرسمي لدار الإفتاء في بلدك إذا كان متاحاً. الحسابات الفلكية مرجع للتخطيط، والتأكيد النهائي من المرجعيات الدينية المعتمدة في {countryAr}.
+          </p>
+        </div>
       </section>
 
       <section className="container mx-auto px-4 pb-8">

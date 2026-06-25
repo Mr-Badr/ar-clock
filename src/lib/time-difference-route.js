@@ -64,6 +64,8 @@ async function resolveTimeDifferenceCityFromSegmentInternal(segment) {
     city_slug: city.city_slug,
     city_name_ar: city.name_ar || city.name_en,
     timezone: city.timezone || 'UTC',
+    lat: city.lat,
+    lon: city.lon,
     canonicalSegment: buildTimeDifferenceSegment(country.country_slug, city.city_slug),
   };
 }

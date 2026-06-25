@@ -167,6 +167,37 @@ export default function ImsakiyaHubPage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ section */}
+      <section className="container mx-auto px-4 py-10 max-w-2xl">
+        <h2 className="text-lg font-semibold mb-5">أسئلة شائعة عن إمساكية رمضان {gregYear}</h2>
+        <div className="space-y-4">
+          <details className="bg-card border rounded-lg px-4 py-3">
+            <summary className="font-medium cursor-pointer">ما الفرق بين وقت الإمساك ووقت الفجر؟</summary>
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+              وقت الإمساك هو الوقت الذي يُوصى فيه بالتوقف عن الأكل والشرب احتياطاً، وعادةً يسبق الأذان بعشر دقائق. أما وقت الفجر (السحور) فهو أذان الفجر الصادق، وهو الوقت الحقيقي لبداية الصيام وفق الفقه الإسلامي. كثير من الإمساكيات تعتمد وقت الفجر مباشرةً دون إمساك إضافي.
+            </p>
+          </details>
+          <details className="bg-card border rounded-lg px-4 py-3">
+            <summary className="font-medium cursor-pointer">لماذا يختلف وقت الإفطار بين المدن في نفس الدولة؟</summary>
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+              يتحدد وقت الإفطار بغروب الشمس فلكياً، وهذا يختلف من موقع لآخر بحسب خط الطول. في الدول الكبيرة كالسعودية ومصر والمغرب، قد يصل الفرق بين أقصى الشرق وأقصى الغرب إلى 15-20 دقيقة. لهذا يُنصح دائماً باستخدام إمساكية مدينتك تحديداً.
+            </p>
+          </details>
+          <details className="bg-card border rounded-lg px-4 py-3">
+            <summary className="font-medium cursor-pointer">هل يمكن الاعتماد على هذه الإمساكيات للصيام؟</summary>
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+              هذه الأوقات محسوبة فلكياً بدقة عالية وهي صالحة للاستخدام. للتأكد، يمكنك مقارنتها مع إمساكية المسجد المحلي في مدينتك أو توقيت دار الإفتاء في بلدك. الاختلافات الصغيرة (دقيقة أو دقيقتان) مقبولة فقهياً، ولا تؤثر على صحة الصيام.
+            </p>
+          </details>
+          <details className="bg-card border rounded-lg px-4 py-3">
+            <summary className="font-medium cursor-pointer">كيف أعرف أول يوم رمضان {gregYear}؟</summary>
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+              وفق الحسابات الفلكية وتقويم أم القرى، يُتوقع أن يبدأ رمضان {gregYear} في {ramadanStart.day} {GREGORIAN_MONTHS_AR[ramadanStart.month]} {gregYear}. غير أن الإعلان الرسمي يعتمد على رؤية هلال رمضان، وقد يختلف من دولة لأخرى بيوم كامل. تابع إعلانات وزارة الأوقاف أو دار الإفتاء في بلدك للتأكيد.
+            </p>
+          </details>
+        </div>
+      </section>
     </main>
   );
 }

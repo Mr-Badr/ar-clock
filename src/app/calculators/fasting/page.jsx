@@ -1,4 +1,4 @@
-import FastingWindowCalculator from '@/components/calculators/FastingWindowCalculator.client';
+import FastingWindowCalculator from '@/components/calculators/FastingWindowCalculatorLoader.client';
 import {
   CalculatorFaqSection,
   CalculatorHero,
