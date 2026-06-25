@@ -70,6 +70,32 @@ export const GPA_SYSTEMS = {
       { min: 0,   max: 59,  label: 'راسب',      labelEn: 'Fail',       color: '#dc2626' },
     ],
   },
+  scale20: {
+    id: 'scale20',
+    label: 'من 20 (مغاربي)',
+    max: 20,
+    grades: [],
+    classifications: [
+      { min: 16,  max: 20,    label: 'ممتاز',    labelEn: 'Très Bien',   color: '#16a34a' },
+      { min: 14,  max: 15.99, label: 'جيد جداً', labelEn: 'Bien',        color: '#2563eb' },
+      { min: 12,  max: 13.99, label: 'جيد',       labelEn: 'Assez Bien',  color: '#d97706' },
+      { min: 10,  max: 11.99, label: 'مقبول',     labelEn: 'Passable',    color: '#ea580c' },
+      { min: 0,   max: 9.99,  label: 'راسب',      labelEn: 'Insuffisant', color: '#dc2626' },
+    ],
+  },
+  scale10: {
+    id: 'scale10',
+    label: 'من 10 (ثانوي)',
+    max: 10,
+    grades: [],
+    classifications: [
+      { min: 8,  max: 10,   label: 'ممتاز',    labelEn: 'Très Bien',   color: '#16a34a' },
+      { min: 7,  max: 7.99, label: 'جيد جداً', labelEn: 'Bien',        color: '#2563eb' },
+      { min: 6,  max: 6.99, label: 'جيد',       labelEn: 'Assez Bien',  color: '#d97706' },
+      { min: 5,  max: 5.99, label: 'مقبول',     labelEn: 'Passable',    color: '#ea580c' },
+      { min: 0,  max: 4.99, label: 'راسب',      labelEn: 'Insuffisant', color: '#dc2626' },
+    ],
+  },
 };
 
 /**

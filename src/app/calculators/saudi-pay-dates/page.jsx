@@ -244,10 +244,10 @@ export default function SaudiPayDatesPage() {
             <article key={item.title} className={`calc-editorial-card${index === 0 ? ' calc-editorial-card--lead' : ''}`} role="listitem">
               <div className="calc-editorial-card__meta">
                 <span className="calc-editorial-card__index">{`0${index + 1}`.slice(-2)}</span>
-                {item.description ? <p className="calc-card-description">{item.description}</p> : null}
               </div>
               <div className="calc-editorial-card__copy">
                 <h3 className="calc-card-title">{item.title}</h3>
+                {item.description ? <p className="calc-card-description">{item.description}</p> : null}
                 <div className="calc-card-copy">{item.content}</div>
               </div>
             </article>

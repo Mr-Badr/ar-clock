@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 
-import { GregorianDateField, MetricGrid, ResultState } from '@/components/calculators/age/shared.client';
+import { GregorianDateField, HeroSummaryCard, MetricGrid, ResultState } from '@/components/calculators/age/shared.client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { calculateRetirement } from '@/lib/calculators/age';
 import { RETIREMENT_RULES } from '@/lib/calculators/age-data';
@@ -59,6 +59,16 @@ export default function RetirementAgeCalculator() {
 
       {result?.isValid ? (
         <>
+          <HeroSummaryCard
+            title="العمر الحالي"
+            result={result.currentAge}
+            footer={
+              <span>
+                موعد التقاعد: {result.retirementDateLabel}
+                {!result.isRetired && ` · ${result.remainingLabel}`}
+              </span>
+            }
+          />
           <div aria-live="polite">
             <MetricGrid
               items={[
@@ -68,14 +78,9 @@ export default function RetirementAgeCalculator() {
                   note: `${result.rule.country} · ${sector}`,
                 },
                 {
-                  label: 'موعد التقاعد',
-                  value: result.retirementDateLabel,
-                  note: result.isRetired ? 'بحسب هذه البيانات وصلت إلى سن التقاعد أو تجاوزته.' : result.remainingLabel,
-                },
-                {
-                  label: 'العمر الحالي',
-                  value: result.currentAge.ageLabel,
-                  note: `${result.daysRemaining} يوم متبقية تقريباً`,
+                  label: 'الأيام المتبقية',
+                  value: `${result.daysRemaining}`,
+                  note: result.isRetired ? 'وصلت إلى سن التقاعد' : 'يوم تقريباً حتى التقاعد',
                 },
               ]}
             />

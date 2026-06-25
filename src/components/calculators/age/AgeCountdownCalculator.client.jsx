@@ -80,23 +80,26 @@ export default function AgeCountdownCalculator() {
             <CardHeader>
               <CardTitle className="calc-card-title">عداد عيد الميلاد القادم</CardTitle>
             </CardHeader>
-            <CardContent aria-live="polite">
-              <div className="calc-grid-4">
-                <div className="calc-metric-card">
-                  <div className="calc-metric-card__label">أيام</div>
-                  <div className="calc-metric-card__value">{formatAgeNumber(countdown.days, { maximumFractionDigits: 0 })}</div>
+            <CardContent aria-live="polite" aria-atomic="true">
+              <div className="age-countdown-timer">
+                <div className="age-countdown-unit">
+                  <span className="age-countdown-unit__num">{String(countdown.days).padStart(2, '0')}</span>
+                  <span className="age-countdown-unit__label">يوم</span>
                 </div>
-                <div className="calc-metric-card">
-                  <div className="calc-metric-card__label">ساعات</div>
-                  <div className="calc-metric-card__value">{formatAgeNumber(countdown.hours, { maximumFractionDigits: 0 })}</div>
+                <span className="age-countdown-unit__colon" aria-hidden="true">:</span>
+                <div className="age-countdown-unit">
+                  <span className="age-countdown-unit__num">{String(countdown.hours).padStart(2, '0')}</span>
+                  <span className="age-countdown-unit__label">ساعة</span>
                 </div>
-                <div className="calc-metric-card">
-                  <div className="calc-metric-card__label">دقائق</div>
-                  <div className="calc-metric-card__value">{formatAgeNumber(countdown.minutes, { maximumFractionDigits: 0 })}</div>
+                <span className="age-countdown-unit__colon" aria-hidden="true">:</span>
+                <div className="age-countdown-unit">
+                  <span className="age-countdown-unit__num">{String(countdown.minutes).padStart(2, '0')}</span>
+                  <span className="age-countdown-unit__label">دقيقة</span>
                 </div>
-                <div className="calc-metric-card">
-                  <div className="calc-metric-card__label">ثوانٍ</div>
-                  <div className="calc-metric-card__value">{formatAgeNumber(countdown.seconds, { maximumFractionDigits: 0 })}</div>
+                <span className="age-countdown-unit__colon" aria-hidden="true">:</span>
+                <div className="age-countdown-unit">
+                  <span className="age-countdown-unit__num">{String(countdown.seconds).padStart(2, '0')}</span>
+                  <span className="age-countdown-unit__label">ثانية</span>
                 </div>
               </div>
             </CardContent>

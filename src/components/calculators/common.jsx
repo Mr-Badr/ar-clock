@@ -307,14 +307,14 @@ export function CalculatorInfoGrid({ items }) {
         >
           <div className="calc-editorial-card__meta">
             <span className="calc-editorial-card__index">{formatSequenceLabel(index)}</span>
+          </div>
+          <div className="calc-editorial-card__copy">
+            <h3 className="calc-card-title">{item.title}</h3>
             {item.description ? (
               <p className="calc-card-description">
                 {item.description}
               </p>
             ) : null}
-          </div>
-          <div className="calc-editorial-card__copy">
-            <h3 className="calc-card-title">{item.title}</h3>
             {item.content ? (
               <div className="calc-card-copy">
                 {item.content}

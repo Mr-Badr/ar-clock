@@ -48,6 +48,12 @@ export function GregorianDateField({
   );
 }
 
+const HIJRI_MONTHS = [
+  'محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر',
+  'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان',
+  'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة',
+];
+
 export function HijriDateFields({
   label = 'التاريخ الهجري',
   value,
@@ -57,35 +63,52 @@ export function HijriDateFields({
     <div className="calc-field">
       <div className="calc-field-row">
         <Label className="calc-label">{label}</Label>
-        <span className="calc-hint">النطاق المدعوم تقريباً من 1343هـ إلى 1500هـ</span>
+        <span className="calc-hint">من 1343هـ إلى 1500هـ</span>
       </div>
-      <div className="calc-grid-3">
-        <Input
-          type="number"
-          min="1"
-          max="30"
-          value={value.day}
-          onChange={(event) => onChange({ ...value, day: event.target.value })}
-          placeholder="اليوم"
-        />
-        <Input
-          type="number"
-          min="1"
-          max="12"
-          value={value.month}
-          onChange={(event) => onChange({ ...value, month: event.target.value })}
-          placeholder="الشهر"
-        />
-        <Input
-          type="number"
-          min="1343"
-          max="1500"
-          value={value.year}
-          onChange={(event) => onChange({ ...value, year: event.target.value })}
-          placeholder="السنة"
-        />
+      <div className="hijri-date-row">
+        <div className="hijri-date-field">
+          <label className="hijri-date-field__label">اليوم</label>
+          <Input
+            type="number"
+            inputMode="numeric"
+            min="1"
+            max="30"
+            value={value.day}
+            onChange={(event) => onChange({ ...value, day: event.target.value })}
+            placeholder="١"
+            className="hijri-date-field__input"
+          />
+        </div>
+        <div className="hijri-date-field hijri-date-field--month">
+          <label className="hijri-date-field__label">الشهر</label>
+          <select
+            className="hijri-month-select"
+            value={value.month}
+            onChange={(event) => onChange({ ...value, month: event.target.value })}
+            dir="rtl"
+          >
+            <option value="">-- اختر --</option>
+            {HIJRI_MONTHS.map((name, i) => (
+              <option key={i + 1} value={String(i + 1)}>
+                {i + 1} — {name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="hijri-date-field">
+          <label className="hijri-date-field__label">السنة الهجرية</label>
+          <Input
+            type="number"
+            inputMode="numeric"
+            min="1343"
+            max="1500"
+            value={value.year}
+            onChange={(event) => onChange({ ...value, year: event.target.value })}
+            placeholder="١٤٠٠"
+            className="hijri-date-field__input"
+          />
+        </div>
       </div>
-      <p className="calc-hint">أدخل الشهر كرقم من 1 إلى 12. سنحوّله داخلياً إلى التاريخ الميلادي للمقارنة الدقيقة.</p>
     </div>
   );
 }
@@ -191,6 +214,32 @@ export function MilestoneList({ items = [] }) {
   );
 }
 
+export function AgeUnitsDisplay({ result }) {
+  const src = result.years !== undefined ? result : result.gap;
+  const label = result.ageLabel || result.gapLabel;
+  if (src && src.years !== undefined && src.months !== undefined && src.days !== undefined) {
+    return (
+      <div className="age-units-display" aria-label={label}>
+        <div className="age-unit">
+          <span className="age-unit__num">{formatAgeNumber(src.years, { maximumFractionDigits: 0 })}</span>
+          <span className="age-unit__label">سنة</span>
+        </div>
+        <span className="age-unit__sep" aria-hidden="true">و</span>
+        <div className="age-unit">
+          <span className="age-unit__num">{formatAgeNumber(src.months, { maximumFractionDigits: 0 })}</span>
+          <span className="age-unit__label">شهر</span>
+        </div>
+        <span className="age-unit__sep" aria-hidden="true">و</span>
+        <div className="age-unit">
+          <span className="age-unit__num">{formatAgeNumber(src.days, { maximumFractionDigits: 0 })}</span>
+          <span className="age-unit__label">يوم</span>
+        </div>
+      </div>
+    );
+  }
+  return <div className="age-hero-summary__value">{label || '—'}</div>;
+}
+
 export function HeroSummaryCard({ title, result, footer }) {
   return (
     <Card className="calc-surface-card age-hero-summary">
@@ -200,7 +249,7 @@ export function HeroSummaryCard({ title, result, footer }) {
       <CardContent className="age-hero-summary__body" aria-live="polite">
         {result?.isValid ? (
           <>
-            <div className="age-hero-summary__value">{result.ageLabel || result.gapLabel || '—'}</div>
+            <AgeUnitsDisplay result={result} />
             <div className="age-hero-summary__meta">
               {footer}
             </div>

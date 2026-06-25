@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 
-import { BirthInputBlock, MetricGrid, resolveBirthInput, ResultState } from '@/components/calculators/age/shared.client';
+import { AgeUnitsDisplay, BirthInputBlock, HeroSummaryCard, MetricGrid, resolveBirthInput, ResultState } from '@/components/calculators/age/shared.client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { buildAgeDifference, formatAgeNumber, getTodayIso } from '@/lib/calculators/age';
 
@@ -84,13 +84,15 @@ export default function AgeDifferenceCalculator() {
 
           {result?.isValid ? (
             <>
+              <HeroSummaryCard
+                title="فرق العمر"
+                result={result}
+                footer={
+                  <span>{formatAgeNumber(result.totalDays, { maximumFractionDigits: 0 })} يوم · {result.older.name} أكبر سناً</span>
+                }
+              />
               <MetricGrid
                 items={[
-                  {
-                    label: 'فرق العمر',
-                    value: result.gapLabel,
-                    note: `${formatAgeNumber(result.totalDays, { maximumFractionDigits: 0 })} يوم`,
-                  },
                   {
                     label: 'الأكبر سناً',
                     value: result.older.name,

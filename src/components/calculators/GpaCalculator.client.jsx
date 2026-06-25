@@ -13,7 +13,7 @@ import {
   GPA_SYSTEMS,
 } from '@/lib/calculators/gpa';
 
-const SYSTEM_IDS = ['scale5', 'scale4', 'scale100'];
+const SYSTEM_IDS = ['scale5', 'scale4', 'scale100', 'scale20', 'scale10'];
 
 function emptySubject(id) {
   return { id, name: '', grade: '', hours: 3 };
