@@ -198,19 +198,19 @@ const CALC_CATEGORIES: CalcCategory[] = [
     viewAll: "/calculators/age",
     tools: [
       {
-        href: "/calculators/age-calculator",
+        href: "/calculators/age/calculator",
         label: "حاسبة العمر",
         desc: "عمرك بالتقويمين والأيام والأشهر",
         icon: Hourglass,
       },
       {
-        href: "/calculators/difference",
+        href: "/calculators/age/difference",
         label: "الفرق بين تاريخين",
         desc: "احسب الفارق بالأيام والأشهر",
         icon: ArrowsLeftRight,
       },
       {
-        href: "/calculators/retirement",
+        href: "/calculators/age/retirement",
         label: "حاسبة التقاعد",
         desc: "متى تتقاعد وكم تبقى؟",
         icon: CalendarDots,
@@ -226,25 +226,25 @@ const CALC_CATEGORIES: CalcCategory[] = [
     viewAll: "/calculators/sleep",
     tools: [
       {
-        href: "/calculators/bedtime",
+        href: "/calculators/sleep/bedtime",
         label: "متى أنام؟",
         desc: "وقت النوم الأمثل لوقت استيقاظك",
         icon: Moon,
       },
       {
-        href: "/calculators/wake-time",
+        href: "/calculators/sleep/wake-time",
         label: "متى أستيقظ؟",
         desc: "أفضل أوقات الاستيقاظ بدورات نوم",
         icon: Sun,
       },
       {
-        href: "/calculators/sleep-duration",
+        href: "/calculators/sleep/sleep-duration",
         label: "مدة النوم",
         desc: "كم نمت فعلياً اليوم؟",
         icon: Timer,
       },
       {
-        href: "/calculators/nap-calculator",
+        href: "/calculators/sleep/nap-calculator",
         label: "القيلولة",
         desc: "أفضل وقت وعدد الدورات",
         icon: Moon,
@@ -266,13 +266,13 @@ const CALC_CATEGORIES: CalcCategory[] = [
         icon: Buildings,
       },
       {
-        href: "/calculators/cement",
+        href: "/calculators/building/cement",
         label: "حاسبة الأسمنت",
         desc: "كمية الأسمنت لمساحتك",
         icon: Calculator,
       },
       {
-        href: "/calculators/rebar",
+        href: "/calculators/building/rebar",
         label: "حاسبة الحديد",
         desc: "وزن الحديد المطلوب",
         icon: Calculator,
@@ -291,54 +291,7 @@ function CalculatorMegaMenu({ onClose }: { onClose: () => void }) {
 
   return (
     <>
-      {/* Tools panel — left in RTL */}
-      <div className="nav-calc-tools">
-        <div className="nav-calc-tools-head">
-          <span className="nav-calc-tools-label" style={{ color: active.color }}>
-            {active.label}
-          </span>
-          <Link href={active.viewAll} className="nav-calc-viewall" onClick={onClose}>
-            عرض الكل
-            <span className="nav-mega-cta-arrow" aria-hidden="true" />
-          </Link>
-        </div>
-        <div className="nav-calc-grid">
-          {active.tools.map((tool) => {
-            const TIcon = tool.icon;
-            return (
-              <Link
-                key={tool.href}
-                href={tool.href}
-                className="nav-calc-tool"
-                onClick={onClose}
-              >
-                <span
-                  className="nav-calc-tool-icon"
-                  style={{
-                    background: `color-mix(in srgb, ${active.color} 12%, var(--surface))`,
-                    color: active.color,
-                  }}
-                >
-                  <TIcon size={18} weight="duotone" aria-hidden="true" />
-                </span>
-                <span className="nav-calc-tool-copy">
-                  <span className="nav-calc-tool-name">{tool.label}</span>
-                  <span className="nav-calc-tool-desc">{tool.desc}</span>
-                </span>
-              </Link>
-            );
-          })}
-        </div>
-        <div className="nav-calc-tools-foot">
-          <Link href="/calculators" className="nav-calc-hub-link" onClick={onClose}>
-            <Calculator size={14} weight="duotone" aria-hidden="true" />
-            عرض جميع الحاسبات
-            <span className="nav-mega-cta-arrow" aria-hidden="true" />
-          </Link>
-        </div>
-      </div>
-
-      {/* Categories sidebar — right in RTL (inline-start) */}
+      {/* Categories sidebar — right (second column in LTR grid = physical right) */}
       <nav className="nav-calc-sidebar" aria-label="أقسام الحاسبات">
         <p className="nav-calc-sidebar-title">اختر قسماً</p>
         {CALC_CATEGORIES.map((cat) => {
@@ -385,6 +338,53 @@ function CalculatorMegaMenu({ onClose }: { onClose: () => void }) {
           );
         })}
       </nav>
+
+      {/* Tools panel — left (second column in RTL grid) */}
+      <div className="nav-calc-tools">
+        <div className="nav-calc-tools-head">
+          <span className="nav-calc-tools-label" style={{ color: active.color }}>
+            {active.label}
+          </span>
+          <Link href={active.viewAll} className="nav-calc-viewall" onClick={onClose}>
+            عرض الكل
+            <span className="nav-mega-cta-arrow" aria-hidden="true" />
+          </Link>
+        </div>
+        <div className="nav-calc-grid">
+          {active.tools.map((tool) => {
+            const TIcon = tool.icon;
+            return (
+              <Link
+                key={tool.href}
+                href={tool.href}
+                className="nav-calc-tool"
+                onClick={onClose}
+              >
+                <span
+                  className="nav-calc-tool-icon"
+                  style={{
+                    background: `color-mix(in srgb, ${active.color} 12%, var(--surface))`,
+                    color: active.color,
+                  }}
+                >
+                  <TIcon size={18} weight="duotone" aria-hidden="true" />
+                </span>
+                <span className="nav-calc-tool-copy">
+                  <span className="nav-calc-tool-name">{tool.label}</span>
+                  <span className="nav-calc-tool-desc">{tool.desc}</span>
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+        <div className="nav-calc-tools-foot">
+          <Link href="/calculators" className="nav-calc-hub-link" onClick={onClose}>
+            <Calculator size={14} weight="duotone" aria-hidden="true" />
+            عرض جميع الحاسبات
+            <span className="nav-mega-cta-arrow" aria-hidden="true" />
+          </Link>
+        </div>
+      </div>
     </>
   );
 }
