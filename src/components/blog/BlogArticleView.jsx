@@ -35,7 +35,7 @@ const ARABIC_LIST_FORMATTER = new Intl.ListFormat('ar', {
   style: 'long',
   type: 'conjunction',
 });
-const BLOG_ARTICLE_DATE_FORMATTER = new Intl.DateTimeFormat('ar-u-ca-gregory', {
+const BLOG_ARTICLE_DATE_FORMATTER = new Intl.DateTimeFormat('ar-u-ca-gregory-nu-latn', {
   day: 'numeric',
   month: 'long',
   year: 'numeric',

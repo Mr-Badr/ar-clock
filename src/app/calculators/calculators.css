@@ -5057,6 +5057,20 @@ main:not(.calc-hub-page) .calc-resource-link {
   }
 }
 
+/* Tab list: centered pill strip instead of full-width grid on medium+ screens */
+@media (min-width: 640px) {
+  .calc-tabs-list.tabs {
+    width: fit-content;
+    margin-inline: auto;
+    grid-template-columns: repeat(auto-fit, minmax(120px, auto));
+  }
+}
+
+/* Related calculators panel: extra breathing room above the bordered box */
+main:not(.calc-hub-page) .calc-section-body > .calc-related-panel {
+  margin-block-start: var(--space-6);
+}
+
 /* VAT calculator: scenario-first interaction for normal Arabic users. */
 .calc-vat-page {
   background:

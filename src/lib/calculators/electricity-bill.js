@@ -138,7 +138,7 @@ export function calculateUAEElectricityBill(kWh) {
 // ─── Shared ───────────────────────────────────────────────────────────────────
 
 export function formatBillAmount(amount, currency) {
-  return new Intl.NumberFormat('ar-SA', {
+  return new Intl.NumberFormat('ar-SA-u-nu-latn', {
     style: 'currency',
     currency,
     minimumFractionDigits: 2,

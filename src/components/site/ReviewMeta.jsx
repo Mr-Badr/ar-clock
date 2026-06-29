@@ -4,7 +4,7 @@ import { ShieldCheck, CalendarDays, UserRound } from 'lucide-react';
 import { getAuthor } from '@/data/site/authors';
 import styles from './ReviewMeta.module.css';
 
-const DATE_FORMATTER = new Intl.DateTimeFormat('ar-u-ca-gregory', {
+const DATE_FORMATTER = new Intl.DateTimeFormat('ar-u-ca-gregory-nu-latn', {
   year: 'numeric',
   month: 'long',
   day: 'numeric',

@@ -75,7 +75,7 @@ export function calculateNetSalary({
 }
 
 export function formatSAR(value) {
-  return new Intl.NumberFormat('ar-SA', {
+  return new Intl.NumberFormat('ar-SA-u-nu-latn', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
   }).format(value);

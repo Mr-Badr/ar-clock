@@ -233,11 +233,13 @@ export function CalculatorSection({
       {showAdBefore ? <AdTopBanner slotId="top-calculator-tool" /> : null}
       <SectionWrapper id={id} subtle={isSubtle} className="calc-shell">
         <div className="calc-section-frame">
-          <div className="calc-section-head">
-            {eyebrow ? <span className="calc-section-eyebrow">{eyebrow}</span> : null}
-            <h2 className="calc-section-title">{title}</h2>
-            {description ? <p className="calc-section-description">{description}</p> : null}
-          </div>
+          {(eyebrow || title || description) ? (
+            <div className="calc-section-head">
+              {eyebrow ? <span className="calc-section-eyebrow">{eyebrow}</span> : null}
+              {title ? <h2 className="calc-section-title">{title}</h2> : null}
+              {description ? <p className="calc-section-description">{description}</p> : null}
+            </div>
+          ) : null}
           <div className="calc-section-body">
             {children}
           </div>
