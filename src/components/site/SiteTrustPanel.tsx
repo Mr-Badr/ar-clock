@@ -175,23 +175,25 @@ export default function SiteTrustPanel({ panel }: SiteTrustPanelProps) {
 
   return (
     <section className={styles.panel} aria-labelledby={`trust-panel-${panel}`}>
-      {/* Credibility strip — who maintains this */}
-      <div className={styles.credStrip}>
-        <span className={styles.credItem}>
-          <span className={styles.credLabel}>إعداد</span>
-          <Link href={`/author/${author.id}`} className={styles.credValue}>{author.name}</Link>
-          <span className={styles.credSep}>·</span>
-          <span className={styles.credRole}>{author.role}</span>
-        </span>
-        <span className={styles.credItem}>
-          <span className={styles.credLabel}>المنهجية</span>
-          <Link href="/editorial-policy" className={styles.credValue}>السياسة التحريرية</Link>
-        </span>
-        <span className={styles.credItem}>
-          <span className={styles.credLabel}>خطأ؟</span>
-          <a href={`mailto:${SITE_CONTACT_EMAIL}`} className={styles.credValue}>راسلنا</a>
-        </span>
-      </div>
+      {/* Credibility strip — only on editorial/blog pages; calculator pages use ReviewMeta instead */}
+      {panel === 'blog' && (
+        <div className={styles.credStrip}>
+          <span className={styles.credItem}>
+            <span className={styles.credLabel}>إعداد</span>
+            <Link href={`/author/${author.id}`} className={styles.credValue}>{author.name}</Link>
+            <span className={styles.credSep}>·</span>
+            <span className={styles.credRole}>{author.role}</span>
+          </span>
+          <span className={styles.credItem}>
+            <span className={styles.credLabel}>المنهجية</span>
+            <Link href="/editorial-policy" className={styles.credValue}>السياسة التحريرية</Link>
+          </span>
+          <span className={styles.credItem}>
+            <span className={styles.credLabel}>خطأ؟</span>
+            <a href={`mailto:${SITE_CONTACT_EMAIL}`} className={styles.credValue}>راسلنا</a>
+          </span>
+        </div>
+      )}
 
       {/* Next-step navigation */}
       <div className={styles.head}>
