@@ -115,6 +115,57 @@ export default async function AuthorPage({ params }) {
           </ul>
         </section>
 
+        {/* Methodology */}
+        <section aria-labelledby="author-method-heading" className="mb-10">
+          <h2 id="author-method-heading" className="text-lg font-bold mb-3">منهجية العمل</h2>
+          <div className="space-y-3 text-base leading-relaxed text-secondary">
+            <p>
+              يعتمد بدر الدين في كل أداة أو صفحة محتوى على مصادر بيانات أولية قبل الكتابة: القوانين والأنظمة الرسمية للجهات الحكومية، والبيانات الجغرافية الموثّقة من قواعد بيانات مفتوحة المصدر كـ GeoNames، وخوارزميات حساب أوقات الصلاة المُحكَّمة علمياً. لا يُنشر أي رقم في أداة مالية أو صحية دون مقارنته بحاسبات الجهات الرسمية للدولة المعنية.
+            </p>
+            <p>
+              أدوات الوقت ومواقيت الصلاة تعتمد على حزمة Adhan الحسابية المُشار إليها في الأدبيات العلمية، مع بيانات مناطق زمنية محدّثة من قاعدة IANA tzdata. أدوات التقويم الهجري تعتمد معيار أم القرى المعمول به رسمياً في المملكة العربية السعودية، مع إشارة صريحة عند وجود اختلافات بين الدول.
+            </p>
+            <p>
+              كل حاسبة مالية — من مكافأة نهاية الخدمة إلى الزكاة إلى ضريبة القيمة المضافة — مصحوبة بروابط للمصادر التشريعية الأصلية حتى يتمكن المستخدم من التحقق بنفسه. النتائج تُقدَّم كتقديرات إرشادية لا كحكم قانوني نهائي، ويُصرَّح بذلك بوضوح في كل صفحة.
+            </p>
+          </div>
+        </section>
+
+        {/* Tools authored */}
+        <section aria-labelledby="author-tools-heading" className="mb-10">
+          <h2 id="author-tools-heading" className="text-lg font-bold mb-3">أبرز الأدوات التي أشرف عليها</h2>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            {[
+              { href: '/calculators/end-of-service-benefits', label: 'حاسبة مكافأة نهاية الخدمة السعودية' },
+              { href: '/calculators/uae-end-of-service', label: 'حاسبة مكافأة نهاية الخدمة الإمارات' },
+              { href: '/calculators/zakat', label: 'حاسبة الزكاة' },
+              { href: '/calculators/salary', label: 'حاسبة الراتب' },
+              { href: '/calculators/pregnancy', label: 'حاسبة الحمل' },
+              { href: '/calculators/gpa', label: 'حاسبة المعدل التراكمي GPA' },
+              { href: '/mwaqit-al-salat', label: 'مواقيت الصلاة' },
+              { href: '/holidays', label: 'صفحات المناسبات والأعياد' },
+            ].map((tool) => (
+              <li key={tool.href}>
+                <Link
+                  href={tool.href}
+                  className="flex items-center gap-2 px-3 py-2 rounded-md border border-border bg-muted/30 hover:bg-muted transition-colors text-primary hover:text-accent-alt"
+                >
+                  <ArrowLeft size={12} className="text-accent-alt flex-shrink-0" />
+                  {tool.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* Update policy */}
+        <section aria-labelledby="author-update-heading" className="mb-10">
+          <h2 id="author-update-heading" className="text-lg font-bold mb-3">دورة مراجعة المحتوى</h2>
+          <p className="text-base leading-relaxed text-secondary">
+            يخضع محتوى ميقاتنا لمراجعات دورية مُجدوَلة: الأدوات المالية تُراجع فور صدور أي تعديل تشريعي، وصفحات المناسبات تُحدَّث سنوياً مع تغيُّر المواعيد، وبيانات المناطق الزمنية تتابع إصدارات tzdata عند حدوث تغييرات رسمية. أي قارئ يكتشف خطأً يمكنه التواصل عبر البريد الإلكتروني وسيُعالَج الأمر في أسرع وقت ممكن مع الإشارة للمصدر الصحيح.
+          </p>
+        </section>
+
         {/* Editorial policy note */}
         <div className="p-4 rounded-lg border border-border bg-muted/40 text-sm text-secondary leading-relaxed">
           <strong className="text-primary">ملاحظة شفافية:</strong>{' '}
