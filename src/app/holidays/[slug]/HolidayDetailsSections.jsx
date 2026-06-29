@@ -215,8 +215,6 @@ export default function HolidayDetailsSections({
 
   return (
     <>
-      <ReviewMeta authorId="badr" reviewedAt="2026-01-01" />
-
       {quickFacts.length > 0 && (
         <section style={{ marginBottom: 'var(--space-8)' }}>
           <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
@@ -397,6 +395,8 @@ export default function HolidayDetailsSections({
         currentYear={currentYear}
         hijriYearNum={hijriYearNum}
       />
+
+      <ReviewMeta authorId="badr" reviewedAt="2026-01-01" />
 
       {sourcePanelItems.length > 0 && (
         <SourcesPanel sources={sourcePanelItems} />

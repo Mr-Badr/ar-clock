@@ -171,8 +171,6 @@ export function CalculatorHero({
   description,
   highlights,
   children,
-  reviewedAt,
-  reviewedBy,
 }) {
   const safeHighlights = Array.isArray(highlights) ? highlights : [];
 
@@ -215,11 +213,6 @@ export function CalculatorHero({
           </div>
         </div>
       </SectionWrapper>
-      <ReviewMeta
-        authorId="badr"
-        reviewedAt={reviewedAt || '2026-06-01'}
-        reviewedBy={reviewedBy}
-      />
     </>
   );
 }
@@ -497,6 +490,7 @@ export function RelatedCalculators({ currentSlug }) {
         </ul>
       ) : null}
 
+      <ReviewMeta authorId="badr" reviewedAt="2026-06-01" />
       <AdMultiplex slotId="end-calculator-related" />
     </div>
   );
