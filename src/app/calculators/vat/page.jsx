@@ -6,6 +6,7 @@ import {
   CalculatorInfoGrid,
   CalculatorSection,
   RelatedCalculators,
+  CalculatorSources,
 } from '@/components/calculators/common';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -219,6 +220,8 @@ export default function VatPage() {
         title="حاسبات مرتبطة بالتسعير والربحية"
         description="استخدم هذه المسارات عندما يكون سؤالك التالي عن الخصم أو القسط أو النسبة نفسها. لا تفتحها كلها؛ اختر المسار الذي يكمل الفاتورة التي تعمل عليها الآن."
       >
+        <CalculatorSources sources={CONTENT.sources} />
+
         <RelatedCalculators currentSlug="vat" />
       </CalculatorSection>
     </main>

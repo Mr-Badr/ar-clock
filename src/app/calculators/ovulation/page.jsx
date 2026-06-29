@@ -7,6 +7,7 @@ import {
   CalculatorInfoGrid,
   CalculatorSection,
   RelatedCalculators,
+  CalculatorSources,
 } from '@/components/calculators/common';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -214,6 +215,9 @@ export default function OvulationPage() {
       >
         <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>
+
+      <CalculatorSources sources={CONTENT.sources} />
+
 
       <RelatedCalculators currentSlug="ovulation" />
     </main>

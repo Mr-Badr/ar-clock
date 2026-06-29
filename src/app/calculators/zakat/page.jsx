@@ -5,6 +5,7 @@ import {
   CalculatorInfoGrid,
   CalculatorSection,
   RelatedCalculators,
+  CalculatorSources,
 } from '@/components/calculators/common';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -293,6 +294,8 @@ export default function ZakatPage() {
       </CalculatorSection>
 
       <CalculatorSection id="zakat-related">
+        <CalculatorSources sources={CONTENT.sources} />
+
         <RelatedCalculators currentSlug="zakat" />
       </CalculatorSection>
     </main>

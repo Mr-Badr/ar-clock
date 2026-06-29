@@ -11,12 +11,103 @@ import {
   PackageCheck,
   Sparkles,
 } from 'lucide-react';
+import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
+import ReviewMeta from '@/components/site/ReviewMeta';
+import SourcesPanel from '@/components/site/SourcesPanel';
 import HistoricalTable from './HistoricalTable';
 import NextEventCard from './NextEventCard';
 import RelatedEvents from './RelatedEvents';
 import HolidayInternalLinks from './HolidayInternalLinks';
 import styles from '../HolidaysV4.module.css';
+
+const CATEGORY_CALCULATORS = {
+  islamic: [
+    { href: '/calculators/zakat',       label: 'حاسبة الزكاة',        desc: 'احسب زكاة مالك ووفق النصاب الشرعي',  accent: 'var(--amber)' },
+    { href: '/calculators/fasting',     label: 'حاسبة الصيام',        desc: 'مواعيد الإمساك والإفطار وعدد الساعات', accent: 'var(--accent)' },
+    { href: '/calculators/inheritance', label: 'حاسبة الميراث',       desc: 'توزيع التركة وفق الشريعة الإسلامية',   accent: 'var(--text-secondary)' },
+  ],
+  national: [
+    { href: '/calculators/net-salary',           label: 'صافي الراتب',        desc: 'الراتب بعد خصم الضرائب والاشتراكات', accent: 'var(--green)' },
+    { href: '/calculators/vat',                  label: 'حاسبة الضريبة',       desc: 'احسب ضريبة القيمة المضافة بسرعة',     accent: 'var(--blue)' },
+    { href: '/calculators/end-of-service-benefits', label: 'مكافأة نهاية الخدمة', desc: 'احسب مستحقات العمل عند الاستقالة',  accent: 'var(--accent-alt)' },
+  ],
+  support: [
+    { href: '/calculators/salary',               label: 'حاسبة الراتب',        desc: 'حوّل راتبك الشهري إلى يومي وساعي',    accent: 'var(--green)' },
+    { href: '/calculators/net-salary',           label: 'صافي الراتب',         desc: 'الراتب بعد الاستقطاعات',               accent: 'var(--accent)' },
+    { href: '/calculators/end-of-service-benefits', label: 'نهاية الخدمة',     desc: 'ما تستحقه عند ترك العمل',              accent: 'var(--accent-alt)' },
+  ],
+  school: [
+    { href: '/calculators/gpa',           label: 'المعدل التراكمي',    desc: 'احسب GPA بدقة وفق جدول درجاتك',     accent: 'var(--blue)' },
+    { href: '/calculators/gpa-to-percent', label: 'تحويل المعدل',      desc: 'حوّل GPA إلى نسبة مئوية',            accent: 'var(--accent)' },
+    { href: '/calculators/annual-leave',  label: 'حاسبة الإجازات',    desc: 'أيام إجازتك المستحقة قانونياً',      accent: 'var(--green)' },
+  ],
+  social: [
+    { href: '/calculators/pregnancy', label: 'حاسبة الحمل',    desc: 'موعد الولادة وأسبوع الحمل بدقة',   accent: 'var(--blue)' },
+    { href: '/calculators/ovulation', label: 'حاسبة التبويض',  desc: 'أيام الخصوبة في دورتك',             accent: 'var(--accent)' },
+    { href: '/calculators/bmi',       label: 'مؤشر كتلة الجسم', desc: 'تقييم وزنك الصحي بالمعايير الدولية', accent: 'var(--green)' },
+  ],
+  business: [
+    { href: '/calculators/vat',                label: 'حاسبة الضريبة',      desc: 'احسب VAT للبيع والشراء والفواتير',  accent: 'var(--blue)' },
+    { href: '/calculators/monthly-installment', label: 'حاسبة الأقساط',     desc: 'قسّط أي مبلغ وشاهد الجدول الزمني',  accent: 'var(--accent)' },
+    { href: '/calculators/investment',         label: 'حاسبة الاستثمار',    desc: 'نمو رأس المال مع الفائدة المركبة',   accent: 'var(--green)' },
+  ],
+  astronomy: [
+    { href: '/calculators/fasting',   label: 'حاسبة الصيام',   desc: 'ساعات الصيام في أي مدينة وشهر',     accent: 'var(--accent)' },
+    { href: '/calculators/zakat',     label: 'حاسبة الزكاة',   desc: 'احسب زكاة مالك وفق النصاب',         accent: 'var(--amber)' },
+    { href: '/calculators/pregnancy', label: 'حاسبة الحمل',    desc: 'موعد الولادة بالتقويمين',            accent: 'var(--blue)' },
+  ],
+};
+
+function RelatedCalculatorsWidget({ categoryId }) {
+  const calcs = CATEGORY_CALCULATORS[categoryId];
+  if (!calcs?.length) return null;
+
+  return (
+    <section style={{ marginTop: 'var(--space-10)', marginBottom: 'var(--space-2)' }} aria-labelledby="related-calcs-h">
+      <h2
+        id="related-calcs-h"
+        style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-1)' }}
+      >
+        أدوات ذات صلة
+      </h2>
+      <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', marginBottom: 'var(--space-4)' }}>
+        حاسبات مجانية مرتبطة بهذه المناسبة
+      </p>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(155px, 1fr))', gap: 'var(--space-3)' }}>
+        {calcs.map(({ href, label, desc, accent }) => (
+          <Link
+            key={href}
+            href={href}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'var(--space-1)',
+              padding: 'var(--space-3) var(--space-4)',
+              background: 'var(--bg-surface-2)',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--radius-lg)',
+              textDecoration: 'none',
+              transition: 'border-color 0.15s',
+            }}
+          >
+            <span style={{ width: 28, height: 28, borderRadius: 'var(--radius-sm)', background: `color-mix(in srgb, ${accent} 12%, transparent)`, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 'var(--space-1)' }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M9 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-3" /><path d="M18 2h4v4" /><path d="m14 10 7-7" />
+              </svg>
+            </span>
+            <strong style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', lineHeight: 'var(--leading-snug)' }}>
+              {label}
+            </strong>
+            <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 'var(--leading-snug)' }}>
+              {desc}
+            </span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 const INTENT_ICON_BY_VALUE = {
   '\u{1F319}': Moon,
@@ -49,23 +140,19 @@ function getIntentCtaText(card) {
   return text;
 }
 
-function IntentLink({ href, children }) {
+function IntentLink({ href, children, style }) {
   const safeHref = typeof href === 'string' && href.trim() ? href : '/holidays';
-  const linkStyle = {
+  const defaultStyle = {
     display: 'inline-flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    gap: 'var(--space-2)',
-    minHeight: 44,
-    padding: 'var(--space-2) var(--space-4)',
-    borderRadius: 'var(--radius-md)',
-    background: 'var(--bg-surface-3)',
-    border: '1px solid var(--border-subtle)',
-    color: 'var(--text-primary)',
+    gap: 'var(--space-1)',
+    color: 'var(--accent)',
     fontSize: 'var(--text-sm)',
     fontWeight: 'var(--font-semibold)',
     textDecoration: 'none',
+    marginTop: 'var(--space-1)',
   };
+  const linkStyle = style || defaultStyle;
 
   if (safeHref.startsWith('/')) {
     return (
@@ -86,19 +173,14 @@ function QuickFactsTable({ facts }) {
   if (!facts?.length) return null;
 
   return (
-    <div style={{ overflow: 'hidden', padding: 0, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--bg-surface-2)' }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse' }} dir="rtl">
-        <caption className="sr-only">معلومات سريعة</caption>
-        <tbody>
-          {facts.map((f, i) => (
-            <tr key={i} style={{ background: i % 2 === 0 ? 'var(--bg-surface-3)' : 'var(--bg-surface-4)', borderBottom: '1px solid var(--border-subtle)' }}>
-              <th scope="row" style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-sm)', fontWeight: 'var(--font-medium)', color: 'var(--text-secondary)', textAlign: 'right', whiteSpace: 'nowrap', width: '40%' }}>{f.label}</th>
-              <td style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-primary)', fontWeight: 'var(--font-semibold)' }}>{f.value}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <dl style={{ margin: 0 }}>
+      {facts.map((f, i) => (
+        <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 'var(--space-4)', paddingBlock: 'var(--space-3)', borderBottom: i < facts.length - 1 ? '1px solid var(--border-subtle)' : 'none' }}>
+          <dt style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', fontWeight: 'var(--font-medium)', flexShrink: 0 }}>{f.label}</dt>
+          <dd style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', fontWeight: 'var(--font-semibold)', margin: 0, textAlign: 'start' }}>{f.value}</dd>
+        </div>
+      ))}
+    </dl>
   );
 }
 
@@ -127,8 +209,14 @@ export default function HolidayDetailsSections({
   const hasAboutContent = aboutItems.length > 0 || aboutNotes.length > 0;
   const intentHeading = meta.intentHeading || `خطوات مفيدة قبل ${displayTitle}`;
 
+  const sourcePanelItems = sources
+    .filter((s) => s.url || s.href)
+    .map((s) => ({ label: s.label, href: s.url || s.href, description: s.description }));
+
   return (
     <>
+      <ReviewMeta authorId="badr" reviewedAt="2026-01-01" />
+
       {quickFacts.length > 0 && (
         <section style={{ marginBottom: 'var(--space-8)' }}>
           <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
@@ -140,33 +228,47 @@ export default function HolidayDetailsSections({
 
       {intentCards.length > 0 && (
         <section style={{ marginBottom: 'var(--space-8)' }} aria-label="أبرز الإجراءات">
-          <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-4)' }}>
+          <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-5)' }}>
             {intentHeading}
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-sm)', lineHeight: 'var(--leading-relaxed)', marginBottom: 'var(--space-4)', maxWidth: 720 }}>
-            اختر المسار الذي يناسبك الآن: التحضير، مشاركة الموعد، أو ترتيب الأيام القريبة. هذه الخطوات تختصر عليك البحث المتكرر وتربط التاريخ بما ستفعله فعلاً.
-          </p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-3)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-3)' }}>
             {intentCards.map((card, i) => {
               const Icon = resolveIntentIcon(card);
+              const safeHref = typeof card.ctaHref === 'string' && card.ctaHref.trim() ? card.ctaHref : '/holidays';
+              const isExternal = !safeHref.startsWith('/');
 
               return (
-              <article key={i} style={{ padding: 'var(--space-4)', display: 'flex', flexDirection: 'column', height: '100%', gap: 'var(--space-3)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--bg-surface-2)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)' }}>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 42, height: 42, borderRadius: 'var(--radius-md)', color: 'var(--accent)', background: 'var(--accent-soft)', border: '1px solid var(--border-accent)' }}>
-                    <Icon size={21} strokeWidth={1.75} aria-hidden="true" />
-                  </span>
-                  <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', fontWeight: 'var(--font-semibold)' }}>
-                    خطوة {i + 1}
-                  </span>
-                </div>
-                <h3 style={{ fontSize: 'var(--text-md)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', marginBottom: 'var(--space-1)' }}>{card.title}</h3>
-                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', marginBottom: 'var(--space-4)', flex: 1 }}>{card.description}</p>
-                <IntentLink href={card.ctaHref}>
-                  {getIntentCtaText(card)}
-                  <ArrowLeft size={14} aria-hidden="true" />
-                </IntentLink>
-              </article>
+                <article key={i} style={{ position: 'relative' }}>
+                  <IntentLink href={safeHref}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 'var(--space-3)',
+                      padding: 'var(--space-4)',
+                      background: 'var(--bg-surface-2)',
+                      border: '1px solid var(--border-subtle)',
+                      borderRadius: 'var(--radius-lg)',
+                      textDecoration: 'none',
+                      height: '100%',
+                      boxSizing: 'border-box',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 36, height: 36, borderRadius: 'var(--radius-md)', color: 'var(--accent)', background: 'var(--accent-soft)', flexShrink: 0 }}>
+                        <Icon size={18} strokeWidth={1.75} aria-hidden="true" />
+                      </span>
+                      <span style={{ fontSize: 'var(--text-xs)', color: 'var(--accent-alt)', fontWeight: 700, letterSpacing: '0.04em' }}>{i + 1}/{intentCards.length}</span>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)', flexGrow: 1 }}>
+                      <h3 style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', margin: 0, lineHeight: 'var(--leading-snug)' }}>{card.title}</h3>
+                      <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', margin: 0 }}>{card.description}</p>
+                    </div>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', fontSize: 'var(--text-xs)', color: 'var(--accent)', fontWeight: 'var(--font-semibold)' }}>
+                      {getIntentCtaText(card)}
+                      <ArrowLeft size={12} aria-hidden="true" />
+                    </span>
+                  </IntentLink>
+                </article>
               );
             })}
           </div>
@@ -237,10 +339,20 @@ export default function HolidayDetailsSections({
           <h2 id="engagement-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-5)' }}>
             تفاصيل صغيرة تغيّر طريقة التخطيط لـ {displayTitle}
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-3)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             {engagement.map((item, index) => (
-              <article key={`${item.type}-${index}`} style={{ padding: 'var(--space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--bg-surface-2)' }}>
-                <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
+              <article
+                key={`${item.type}-${index}`}
+                style={{
+                  paddingBlock: 'var(--space-4)',
+                  paddingInline: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 'var(--space-1)',
+                  borderBottom: index < engagement.length - 1 ? '1px solid var(--border-subtle)' : 'none',
+                }}
+              >
+                <span style={{ fontSize: 'var(--text-xs)', color: 'var(--accent-alt)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   {item.subcategory || item.type}
                 </span>
                 <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', margin: 0 }}>
@@ -252,6 +364,8 @@ export default function HolidayDetailsSections({
         </section>
       )}
 
+      <RelatedCalculatorsWidget categoryId={event.category} />
+
       {faq.length > 0 && (
         <section style={{ marginTop: 'var(--space-10)' }} aria-labelledby="faq-h">
           <h2 id="faq-h" style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-5)' }}>
@@ -260,7 +374,7 @@ export default function HolidayDetailsSections({
           <div className={styles.faqList}>
             {faq.map((faqItem, i) => {
               return (
-              <details key={i} className={styles.faqItem}>
+              <details key={i} className={styles.faqItem} open={i === 0 ? true : undefined}>
                 <summary className={styles.faqSummary}>
                   <span>{faqItem.question}</span>
                   <span aria-hidden style={{ color: 'var(--text-muted)', fontSize: 'var(--text-xl)', marginRight: 'var(--space-2)', flexShrink: 0 }}>+</span>
@@ -275,6 +389,8 @@ export default function HolidayDetailsSections({
         </section>
       )}
 
+      <AdInArticle slotId={`mid-holiday-${slug}-2`} />
+
       <HolidayInternalLinks
         event={event}
         displayTitle={displayTitle}
@@ -282,21 +398,8 @@ export default function HolidayDetailsSections({
         hijriYearNum={hijriYearNum}
       />
 
-      {sources.length > 0 && (
-        <section style={{ marginTop: 'var(--space-10)' }} aria-labelledby="sources-h">
-          <h2 id="sources-h" style={{ fontSize: 'var(--text-base)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>
-            المصادر والمراجع
-          </h2>
-          <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', listStyle: 'none', padding: 0, margin: 0 }}>
-            {sources.map((source, i) => (
-              <li key={i} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-link)' }}>
-                <a href={source.url} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>
-                  {source.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
+      {sourcePanelItems.length > 0 && (
+        <SourcesPanel sources={sourcePanelItems} />
       )}
 
       <Suspense fallback={null}>

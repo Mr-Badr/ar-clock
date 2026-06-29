@@ -7,6 +7,7 @@ import {
   CalculatorInfoGrid,
   CalculatorSection,
   RelatedCalculators,
+  CalculatorSources,
 } from '@/components/calculators/common';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -261,6 +262,8 @@ export default function SalaryPage() {
       </CalculatorSection>
 
       <CalculatorSection id="salary-related" subtle>
+        <CalculatorSources sources={CONTENT.sources} />
+
         <RelatedCalculators currentSlug="salary" />
       </CalculatorSection>
     </main>

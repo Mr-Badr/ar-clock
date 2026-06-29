@@ -7,6 +7,7 @@ import {
   CalculatorInfoGrid,
   CalculatorSection,
   RelatedCalculators,
+  CalculatorSources,
 } from '@/components/calculators/common';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -327,6 +328,8 @@ export default async function EndOfServiceBenefitsPage() {
         title="حاسبات مرتبطة بالتخطيط بعد نهاية الخدمة"
         description="بعد معرفة المستحقات، قد تحتاج تقدير قسط أو ضريبة أو نسبة تغير في الدخل. اختر أداة واحدة تكمل خطوتك التالية ولا تنتقل بين الأقسام بلا هدف."
       >
+        <CalculatorSources sources={CONTENT.sources} />
+
         <RelatedCalculators currentSlug="end-of-service-benefits" />
       </CalculatorSection>
     </main>

@@ -4,6 +4,7 @@ import {
   CalculatorHero,
   CalculatorInfoGrid,
   CalculatorSection,
+  CalculatorSources,
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { Button } from '@/components/ui/button';
@@ -329,6 +330,8 @@ export default function BMIPage() {
       </CalculatorSection>
 
       <CalculatorSection id="bmi-related" subtle>
+        <CalculatorSources sources={CONTENT.sources} />
+
         <RelatedCalculators currentSlug="bmi" />
       </CalculatorSection>
     </main>

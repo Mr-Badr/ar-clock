@@ -5,11 +5,26 @@ import { getCountryByCode } from '@/lib/events/country-dictionary';
 const ISLAMIC_CATEGORIES = new Set(['islamic', 'hijri']);
 
 const CALCULATOR_LINKS = {
-  'eid-al-fitr': { href: '/calculators/personal-finance', title: 'حاسبات المالية الشخصية', desc: 'استعد لنفقات العيد: راجع ميزانيتك وزكاة فطرك بأرقام واضحة.' },
-  'ramadan': { href: '/calculators/personal-finance', title: 'حاسبات المالية الشخصية', desc: 'خطّط لنفقات رمضان والزكاة ضمن ميزانيتك الشهرية.' },
-  'eid-al-adha': { href: '/calculators/personal-finance', title: 'حاسبات المالية الشخصية', desc: 'احسب تكلفة الأضحية وزكاة الفطر وخطّط لنفقات العيد.' },
-  'day-of-arafa': { href: '/calculators/personal-finance', title: 'حاسبات المالية الشخصية', desc: 'حضّر حساباتك قبل موسم الحج والعيد.' },
-  'first-dhul-hijjah': { href: '/calculators/personal-finance', title: 'حاسبات المالية الشخصية', desc: 'احسب ما تحتاجه لأيام العشر من النفقات والزكاة.' },
+  // Islamic religious events
+  'eid-al-fitr':         { href: '/calculators/zakat',            title: 'حاسبة الزكاة',           desc: 'احسب زكاتك قبل عيد الفطر — مال وذهب واستثمارات.' },
+  'ramadan':             { href: '/calculators/fasting',           title: 'حاسبة الصيام',           desc: 'ساعات الصيام وأوقات الإفطار في مدينتك طوال الشهر.' },
+  'eid-al-adha':         { href: '/calculators/zakat',            title: 'حاسبة الزكاة',           desc: 'احسب زكاتك وتكلفة الأضحية قبل العيد.' },
+  'day-of-arafa':        { href: '/calculators/fasting',          title: 'حاسبة الصيام',           desc: 'ساعات صيام يوم عرفة وأوقاته في أي مدينة.' },
+  'first-dhul-hijjah':   { href: '/calculators/inheritance',      title: 'حاسبة الميراث',          desc: 'احسب توزيع التركة وفق الشريعة في موسم الحج.' },
+  'ashura':              { href: '/calculators/fasting',          title: 'حاسبة الصيام',           desc: 'ساعات صيام عاشوراء وأوقاته في مدينتك.' },
+  // Salary / support payment events
+  'salary-day-saudi':    { href: '/calculators/salary',           title: 'حاسبة الراتب',           desc: 'احسب ما يعادل راتبك الشهري يومياً وساعياً.' },
+  'salary-day-uae':      { href: '/calculators/net-salary',       title: 'صافي الراتب',            desc: 'احسب راتبك بعد خصم GPSSA وباقي الاستقطاعات.' },
+  'salary-day-kuwait':   { href: '/calculators/salary',           title: 'حاسبة الراتب',           desc: 'حوّل راتبك الكويتي بين شهري ويومي وساعي.' },
+  'salary-day-qatar':    { href: '/calculators/salary',           title: 'حاسبة الراتب',           desc: 'احسب الراتب اليومي والساعي وفق أيام العمل الفعلية.' },
+  'pension-day-saudi':   { href: '/calculators/end-of-service-benefits', title: 'نهاية الخدمة',    desc: 'احسب مكافأة نهاية خدمتك قبل التقاعد.' },
+  'citizen-account-saudi': { href: '/calculators/net-salary',     title: 'صافي الراتب',            desc: 'احسب الراتب بعد خصم GOSI وزكاة الفطر.' },
+  'social-security-saudi': { href: '/calculators/end-of-service-benefits', title: 'نهاية الخدمة',  desc: 'قدّر حقوقك التقاعدية من التأمينات الاجتماعية.' },
+  'hafez-saudi':         { href: '/calculators/salary',           title: 'حاسبة الراتب',           desc: 'احسب ما يعادل مبلغ حافز يومياً مقارنةً بالراتب.' },
+  // National / public holiday events
+  'saudi-national-day':  { href: '/calculators/iqama',            title: 'حاسبة الإقامة',          desc: 'احسب رسوم تجديد الإقامة وتكلفة المرافقين.' },
+  'uae-national-day':    { href: '/calculators/net-salary',       title: 'صافي الراتب',            desc: 'احسب راتبك الإماراتي بعد كل الخصومات.' },
+  'kuwait-national-day': { href: '/calculators/annual-leave',     title: 'حاسبة الإجازات',         desc: 'احسب أيام إجازتك المستحقة وفق قانون العمل الكويتي.' },
 };
 
 function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
@@ -49,11 +64,39 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
   const calcLink = CALCULATOR_LINKS[slug];
   if (calcLink) {
     links.push({ href: calcLink.href, title: calcLink.title, desc: calcLink.desc, cta: 'ابدأ الحاسبة' });
+  } else if (event?.category === 'support') {
+    links.push({
+      href: '/calculators/salary',
+      title: 'حاسبة الراتب',
+      desc: 'احسب ما يعادل راتبك الشهري يومياً وساعياً وسنوياً.',
+      cta: 'ابدأ الحاسبة',
+    });
+  } else if (event?.category === 'national') {
+    links.push({
+      href: '/calculators/annual-leave',
+      title: 'حاسبة الإجازات السنوية',
+      desc: 'احسب أيام إجازتك المستحقة قانونياً خلال العطلات الرسمية.',
+      cta: 'ابدأ الحاسبة',
+    });
+  } else if (event?.category === 'school') {
+    links.push({
+      href: '/calculators/gpa',
+      title: 'حاسبة المعدل التراكمي',
+      desc: 'احسب GPA وحوّله إلى نسبة مئوية بدقة.',
+      cta: 'ابدأ الحاسبة',
+    });
   } else if (isIslamic) {
     links.push({
+      href: '/calculators/zakat',
+      title: 'حاسبة الزكاة',
+      desc: 'احسب زكاتك وفق النصاب الشرعي — مال وذهب واستثمارات.',
+      cta: 'ابدأ الحاسبة',
+    });
+  } else {
+    links.push({
       href: '/calculators',
-      title: 'الحاسبات المالية',
-      desc: 'حاسبات نهاية الخدمة والقسط والضريبة وغيرها — كلها في مكان واحد.',
+      title: 'الحاسبات',
+      desc: 'حاسبات مالية وصحية وتعليمية — كلها في مكان واحد.',
       cta: 'استعرض الحاسبات',
     });
   }

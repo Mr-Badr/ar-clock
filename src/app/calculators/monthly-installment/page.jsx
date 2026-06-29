@@ -6,6 +6,7 @@ import {
   CalculatorPolicyNotice,
   CalculatorSection,
   RelatedCalculators,
+  CalculatorSources,
 } from '@/components/calculators/common';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -254,6 +255,8 @@ export default function MonthlyInstallmentPage() {
         title="أكمل التخطيط بحاسبات مرتبطة"
         description="افتح حاسبة واحدة فقط إذا كانت تكمل نفس القرار: ضريبة الفاتورة، نسبة الخصم، أو مستحقات العمل. الهدف أن تخرج بخطوة أوضح لا بفهرس جديد."
       >
+        <CalculatorSources sources={CONTENT.sources} />
+
         <RelatedCalculators currentSlug="monthly-installment" />
       </CalculatorSection>
     </main>

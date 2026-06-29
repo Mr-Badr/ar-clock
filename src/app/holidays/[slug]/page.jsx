@@ -24,6 +24,7 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import HolidayDetailsSections from './HolidayDetailsSections';
 import CountryDatesSection, { CountryDatesSectionFallback } from './CountryDatesSection';
+import RelatedEventsBubbles from './RelatedEventsBubbles';
 import { featureFlags } from '@/lib/feature-flags';
 import { getHolidayMetadata } from '@/lib/holidays/metadata';
 import { getHolidayPageCriticalData } from '@/lib/holidays/page-data';
@@ -105,23 +106,6 @@ export default async function HolidayPage({ params }) {
   } = data;
   const displayTitle = pageModel.meta.displayTitle || pageModel.hero.title || event.name;
   const pageClassName = featureFlags.holidaysSectionizedUi ? 'bg-base holidays-page-v2' : 'bg-base';
-  const eventGuideSteps = [
-    {
-      label: 'الإجابة',
-      title: 'العدّاد والتاريخ أولاً',
-      description: `ابدأ من الوقت المتبقي على ${displayTitle} ثم راجع التاريخ الميلادي والهجري قبل أي ترتيب عملي.`,
-    },
-    {
-      label: 'الدقة',
-      title: 'افهم طريقة تحديد الموعد',
-      description: 'شارة الدقة والملاحظة المختصرة تخبرك هل الموعد ثابت، تقديري، أو قابل للاختلاف حسب الرؤية المحلية.',
-    },
-    {
-      label: 'الخطوة التالية',
-      title: 'اختر ما تحتاجه بعد الموعد',
-      description: 'بعد فهم التاريخ، انتقل إلى التحويل، مقارنة الدول، أو مناسبة قريبة بدلاً من التنقل في مسارات كثيرة بلا سبب.',
-    },
-  ];
 
   return (
     <div className={pageClassName} style={{ minHeight: '100dvh' }} dir="rtl">
@@ -298,33 +282,11 @@ export default async function HolidayPage({ params }) {
           eventISODate={remaining.days >= 0 ? targetDate.toISOString() : null}
         />
 
-        <section
-          className={styles.journeySection}
-          aria-labelledby="event-guide-heading"
-        >
-          <div className={styles.answerGuide}>
-            <div className={styles.sectionHead}>
-              <h2 id="event-guide-heading" className={styles.sectionTitle}>
-                كيف تستفيد من صفحة {displayTitle}؟
-              </h2>
-              <p className={styles.sectionLead}>
-                لا تحتاج قراءة الصفحة كلها دفعة واحدة. خذ الإجابة من العدّاد، افهم درجة دقة الموعد،
-                ثم اختر الخطوة التالية المناسبة لقرارك.
-              </p>
-            </div>
-            <div className={styles.answerSteps}>
-              {eventGuideSteps.map((step) => (
-                <article key={step.label} className={styles.answerStep}>
-                  <span className={styles.answerStepIcon}>{step.label}</span>
-                  <div>
-                    <h3 className={styles.compactTitle}>{step.title}</h3>
-                    <p className={styles.compactCopy}>{step.description}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
+        <RelatedEventsBubbles
+          relatedSlugs={pageModel.sections.relatedSlugs}
+          currentSlug={slug}
+          categoryId={event.category}
+        />
 
         <AdTopBanner slotId="top-holiday-slug" />
 
