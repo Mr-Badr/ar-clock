@@ -180,6 +180,26 @@ export default function OvulationCalculator() {
                 </div>
               </div>
 
+              {/* Next 3 cycles */}
+              {result.nextCycles?.length > 0 && (
+                <div style={{ marginTop: '0.5rem' }}>
+                  <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    الدورات القادمة
+                  </p>
+                  {result.nextCycles.map((cycle, i) => (
+                    <div key={i} className="calc-esb-brow" style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.5rem', alignItems: 'start' }}>
+                      <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', minWidth: '5rem' }}>
+                        دورة {i + 2}
+                      </span>
+                      <div style={{ fontSize: '0.82rem' }}>
+                        <div><strong style={{ color: '#2563eb' }}>{formatDateAr(cycle.ovulationDate)}</strong> — التبويض</div>
+                        <div style={{ color: 'var(--text-secondary)' }}>{formatDateAr(cycle.fertileStart)} ← {formatDateAr(cycle.fertileEnd)} (خصبة)</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               <p className="bmi-disclaimer">
                 النتيجة تقدير استرشادي بناءً على نمط الدورة — يختلف التبويض الفعلي ويتأثر بعوامل صحية متعددة. راجعي طبيبك لأي قرار طبي.
               </p>

@@ -2,6 +2,8 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
 import { CALCULATOR_HUBS, CALCULATOR_ROUTES } from '@/lib/calculators/data';
+import { ALL_CALCULATOR_SEO_ROUTES } from '@/lib/seo/calculator-route-manifest';
+import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
 import { POPULAR_PAIRS } from '@/components/time-diff/data/popularPairs';
 import { buildGregorianYearCalendar, buildHijriYearCalendar } from '@/lib/date-calendar';
 import { convertDate } from '@/lib/date-adapter';
@@ -452,6 +454,64 @@ function assertCalculatorRegistryQuality(errors: string[]) {
   }
 }
 
+function assertCalculatorSitemapCompleteness(errors: string[]) {
+  // Family-pattern coverage (isPathCoveredBySeoArchitecture) is NOT enough: a
+  // calculator page can match the /calculators/* family yet never be enumerated
+  // in the sitemap manifest, so Google receives no crawl signal for it. This guard
+  // asserts every page-backed calculator route/hub href is explicitly present in
+  // ALL_CALCULATOR_SEO_ROUTES, preventing a new calculator from silently shipping
+  // un-indexed (the root cause of the calculator section's zero organic traffic).
+  const manifestPaths = new Set(ALL_CALCULATOR_SEO_ROUTES.map((route) => route.path));
+  const indexableHrefs = [
+    ...CALCULATOR_HUBS.map((hub) => hub.href),
+    ...CALCULATOR_ROUTES.map((route) => route.href),
+  ];
+
+  for (const href of indexableHrefs) {
+    // Dynamic per-country building pages are covered by BUILDING_COUNTRY_CALCULATOR_SEO_ROUTES.
+    if (/^\/calculators\/building\/[^/]+$/.test(href) && !manifestPaths.has(href)) {
+      const isStaticBuildingChild = ['cement', 'rebar', 'tiles', 'paint'].some(
+        (slug) => href === `/calculators/building/${slug}`,
+      );
+      if (!isStaticBuildingChild) continue;
+    }
+
+    if (!manifestPaths.has(href)) {
+      errors.push(
+        `Calculator route ${href} is missing from ALL_CALCULATOR_SEO_ROUTES (src/lib/seo/calculator-route-manifest.js); it would ship un-indexed. Add it to STATIC_CALCULATOR_SEO_ROUTES.`,
+      );
+    }
+  }
+}
+
+function assertCalculatorContentCompleteness(errors: string[]) {
+  // Every entry in finance-page-content.js must have faqItems (≥6) and a searchProfile
+  // so it can build FAQPage schema and keyword coverage. An empty entry silently ships
+  // a calculator with no FAQ schema and no keyword targeting.
+  const CONTENT_SLUGS = [
+    'monthly-installment', 'end-of-service-benefits', 'annual-leave', 'gpa-to-percent',
+    'pregnancy-weeks', 'net-salary', 'iqama', 'electricity-bill', 'inheritance',
+    'saudi-pay-dates', 'vat', 'zakat', 'percentage', 'gpa', 'investment', 'fasting',
+    'pregnancy', 'bmi', 'salary', 'ovulation',
+  ];
+
+  for (const slug of CONTENT_SLUGS) {
+    const content = getFinancePageContent(slug);
+    if (!content) continue;
+    const faqCount = Array.isArray(content.faqItems) ? content.faqItems.length : 0;
+    if (faqCount < 6) {
+      errors.push(
+        `Calculator ${slug} in finance-page-content.js has ${faqCount} FAQ items (minimum 6). Add faqItems[] so FAQPage schema and search coverage work.`,
+      );
+    }
+    if (!content.searchProfile) {
+      errors.push(
+        `Calculator ${slug} in finance-page-content.js is missing searchProfile. Add searchProfile{} for keyword coverage and internal search discovery.`,
+      );
+    }
+  }
+}
+
 function assertRootMetadataQuality(errors: string[]) {
   if (SITE_TITLE !== SITE_HOME_TITLE) {
     errors.push('SITE_TITLE must match SITE_HOME_TITLE to avoid duplicating the brand in default page titles');
@@ -605,6 +665,8 @@ function main() {
   assertCanonicalBlogPaths(errors);
   assertPublishedHolidayQuality(errors);
   assertCalculatorRegistryQuality(errors);
+  assertCalculatorSitemapCompleteness(errors);
+  assertCalculatorContentCompleteness(errors);
   assertRootMetadataQuality(errors);
   assertIntentPathwaysQuality(errors);
   assertDateCalendarModels(errors);

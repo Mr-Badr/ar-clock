@@ -1007,18 +1007,37 @@ export function calculateMultiChange(initialValue, changes = []) {
   };
 }
 
+// GOSI rates (Saudi Arabia):
+//   Saudi employee: 9.75% (employee share) + 9.75% employer — total 19.5%
+//   Expat employee: 0% (no GOSI contribution for non-Saudis on pension branch)
+//   Both: hazard insurance 2% paid by employer only (not deducted from salary)
+// UAE: no personal income tax; GPSSA for UAE nationals = 5% employee share
+const GOSI_RATES = {
+  none:   { label: 'لا خصومات',         employeeRate: 0 },
+  saudi:  { label: 'سعودي (GOSI 9.75%)', employeeRate: 0.0975 },
+  uae:    { label: 'إماراتي (GPSSA 5%)',  employeeRate: 0.05 },
+};
+
+export { GOSI_RATES };
+
 export function calculateSalaryBreakdown({
   monthlySalary,
   hoursPerDay = 8,
   daysPerMonth = 30,
   extraMonths = 0,
+  gosiType = 'none',
 }) {
   const monthly = toNumber(monthlySalary);
   const hpd = Math.max(1, toNumber(hoursPerDay) || 8);
   const dpm = Math.max(1, toNumber(daysPerMonth) || 30);
   const extra = toNumber(extraMonths);
 
+  const gosiRate = GOSI_RATES[gosiType]?.employeeRate ?? 0;
+  const gosiMonthly = round(monthly * gosiRate);
+  const netMonthly = round(monthly - gosiMonthly);
+
   const annual = round(monthly * (12 + extra));
+  const netAnnual = round(netMonthly * (12 + extra));
   const semiMonthly = round(monthly / 2);
   const weekly = round((monthly * 12) / 52);
   const daily = round(monthly / dpm);
@@ -1028,7 +1047,12 @@ export function calculateSalaryBreakdown({
   return {
     isValid: monthly > 0,
     monthly: round(monthly),
+    netMonthly,
+    gosiMonthly,
+    gosiRate,
+    gosiType,
     annual,
+    netAnnual,
     semiMonthly,
     weekly,
     daily,
@@ -1273,4 +1297,118 @@ export function calculateBMI({
     tdee,
     bmiPercent: clamp(Math.round(((bmi - 10) / (45 - 10)) * 100), 0, 100),
   };
+}
+
+// ─── UAE End of Service (Federal Decree-Law No. 33 of 2021) ──────────────────
+
+// Resignation entitlement brackets under UAE law
+// (same brackets apply to early exit from limited contracts)
+export function getUaeEndOfServiceBracket(serviceYears) {
+  if (serviceYears < 1) return { label: 'أقل من سنة', multiplier: 0 };
+  if (serviceYears < 3) return { label: 'من سنة إلى أقل من 3 سنوات', multiplier: 1 / 3 };
+  if (serviceYears < 5) return { label: 'من 3 إلى أقل من 5 سنوات', multiplier: 2 / 3 };
+  return { label: '5 سنوات فأكثر', multiplier: 1 };
+}
+
+export function calculateUaeEndOfServiceBenefit({
+  basicSalary,
+  startDate,
+  endDate,
+  reason = 'contract_end',
+}) {
+  const salary = Math.max(0, toNumber(basicSalary));
+  const service = diffDates(startDate, endDate);
+
+  if (!salary || !service.isValid) {
+    return {
+      isValid: false,
+      salary,
+      service,
+      dailyRate: 0,
+      firstFiveAmount: 0,
+      remainingAmount: 0,
+      fullGratuity: 0,
+      gratuity: 0,
+      entitlementPercent: 0,
+    };
+  }
+
+  // UAE formula: (basic salary ÷ 30) × 21 days/year (first 5 yrs) or 30 days/year (after)
+  const dailyRate = salary / 30;
+  const firstFiveYears = Math.min(service.decimalYears, 5);
+  const remainingYears = Math.max(service.decimalYears - 5, 0);
+  const firstFiveAmount = dailyRate * 21 * firstFiveYears;
+  const remainingAmount = dailyRate * 30 * remainingYears;
+  const fullGratuity = firstFiveAmount + remainingAmount;
+
+  const resignationBracket = getUaeEndOfServiceBracket(service.decimalYears);
+  const multiplier = reason === 'resignation' ? resignationBracket.multiplier : 1;
+  const gratuity = fullGratuity * multiplier;
+
+  // Breakdown: whole years vs partial year (for display)
+  const wholeFirstFive = Math.min(service.years, 5) * dailyRate * 21;
+  const wholeRemaining = Math.max(service.years - 5, 0) * dailyRate * 30;
+  const partialAmount = Math.max(fullGratuity - wholeFirstFive - wholeRemaining, 0);
+
+  return {
+    isValid: true,
+    salary,
+    reason,
+    service,
+    serviceLabel: formatServiceDuration(service),
+    dailyRate: round(dailyRate, 4),
+    firstFiveYears,
+    remainingYears,
+    firstFiveAmount: round(firstFiveAmount),
+    remainingAmount: round(remainingAmount),
+    partialAmount: round(partialAmount),
+    fullGratuity: round(fullGratuity),
+    gratuity: round(gratuity),
+    entitlementPercent: round(multiplier * 100, 1),
+    resignationBracket,
+  };
+}
+
+export function buildUaeEndOfServiceComparison({
+  salary,
+  startDate,
+  endDate,
+  reason = 'resignation',
+  waitMonths = 0,
+}) {
+  const current = calculateUaeEndOfServiceBenefit({ basicSalary: salary, startDate, endDate, reason });
+  const months = Math.max(0, Math.round(toNumber(waitMonths)));
+  const projDate = (() => {
+    const d = parseDateInput(endDate);
+    if (!d) return null;
+    const t = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + months, d.getUTCDate()));
+    return t.toISOString().slice(0, 10);
+  })();
+  const projected = projDate
+    ? calculateUaeEndOfServiceBenefit({ basicSalary: salary, startDate, endDate: projDate, reason })
+    : { isValid: false, gratuity: 0 };
+
+  return {
+    current,
+    projected,
+    projectedEndDate: projDate,
+    difference: round((projected.gratuity || 0) - current.gratuity),
+  };
+}
+
+export function buildUaeEndOfServiceMilestones(startDate) {
+  const milestones = [
+    { years: 1, label: 'ثلث المكافأة عند الاستقالة' },
+    { years: 3, label: 'ثلثا المكافأة عند الاستقالة' },
+    { years: 5, label: 'مكافأة كاملة عند الاستقالة + معدل 30 يوماً/سنة' },
+  ];
+  return milestones.map((item) => ({
+    ...item,
+    date: (() => {
+      const d = parseDateInput(startDate);
+      if (!d) return null;
+      const t = new Date(Date.UTC(d.getUTCFullYear() + item.years, d.getUTCMonth(), d.getUTCDate()));
+      return t.toISOString().slice(0, 10);
+    })(),
+  }));
 }

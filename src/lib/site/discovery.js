@@ -12,7 +12,23 @@ const calculatorToolEnrichmentByHref = new Map(
   PERSONAL_FINANCE_TOOLS.map((tool) => [tool.href, tool]),
 );
 const financeToolEnrichmentByHref = new Map(
-  ['monthly-installment', 'vat', 'percentage', 'end-of-service-benefits']
+  [
+    'monthly-installment',
+    'vat',
+    'percentage',
+    'end-of-service-benefits',
+    'annual-leave',
+    'inheritance',
+    'net-salary',
+    'pregnancy-weeks',
+    'saudi-pay-dates',
+    'gpa-to-percent',
+    'zakat',
+    'gpa',
+    'investment',
+    'fasting',
+    'pregnancy',
+  ]
     .map((slug) => {
       const route = CALCULATOR_ROUTES.find((item) => item.slug === slug);
       const content = getFinancePageContent(slug);
@@ -53,6 +69,15 @@ const SEARCH_PRIORITY_BY_HREF = new Map([
   ['/calculators/personal-finance', 88],
   ['/calculators/sleep', 86],
   ['/calculators/building', 82],
+  ['/calculators/salary', 93],
+  ['/calculators/bmi', 92],
+  ['/calculators/pregnancy', 93],
+  ['/calculators/ovulation', 90],
+  ['/calculators/zakat', 91],
+  ['/calculators/gpa', 92],
+  ['/calculators/investment', 89],
+  ['/calculators/fasting', 89],
+  ['/calculators/annual-leave', 88],
   ['/blog', 76],
   ['/holidays', 84],
 ]);

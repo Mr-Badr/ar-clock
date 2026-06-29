@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { VISA_TYPES, calculateIqamaExpiry, getStatusMeta } from '@/lib/calculators/iqama';
+import ResultActions from '@/components/calculators/ResultActions.client';
 
 const COUNTRIES = [
   { id: 'sa', label: 'السعودية 🇸🇦' },
@@ -189,6 +190,13 @@ export default function IqamaCalculator() {
             : 'منصة GDRFA الإمارات (gdrfad.gov.ae)'}
           {' '}أو التواصل مع صاحب العمل.
         </div>
+      )}
+      {result && (
+        <ResultActions
+          copyText={`حاسبة الإقامة — ${result.visaType.label}: تنتهي ${formatDateAr(result.expiryDate)}${result.estimatedFine > 0 ? ` | الغرامة التقديرية: ${result.estimatedFine.toLocaleString('ar-SA')} ${result.visaType.fineCurrency}` : ''}`}
+          shareTitle="نتيجة حاسبة الإقامة"
+          shareText={`${result.visaType.label}: تنتهي ${formatDateAr(result.expiryDate)}${result.estimatedFine > 0 ? ` — الغرامة: ${result.estimatedFine.toLocaleString('ar-SA')} ${result.visaType.fineCurrency}` : ''}`}
+        />
       )}
     </div>
   );

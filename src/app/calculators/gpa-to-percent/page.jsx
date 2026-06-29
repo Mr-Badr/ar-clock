@@ -5,6 +5,7 @@ import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorSection,
+  CalculatorSources,
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -201,6 +202,9 @@ export default function GpaToPercentPage() {
       >
         <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>
+
+      <CalculatorSources sources={CONTENT.sources} />
+
 
       <RelatedCalculators currentSlug="gpa-to-percent" />
     </main>

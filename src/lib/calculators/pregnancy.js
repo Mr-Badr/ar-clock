@@ -126,6 +126,17 @@ export function calculateOvulation({ lmpDate, cycleLength = 28, today = new Date
   const isInFertileWindow = ref >= fertileStart && ref <= fertileEnd;
   const ovulationPassed = daysToOvulation < 0;
 
+  // Generate 3 upcoming ovulation + fertile windows (from next cycle onwards)
+  const nextCycles = Array.from({ length: 3 }, (_, i) => {
+    const cycleLmpOffset = (i + 1) * cycleLength;
+    const cLmp = new Date(lmp.getTime() + cycleLmpOffset * MS_PER_DAY);
+    const cOvulation = new Date(cLmp.getTime() + ovulationDay * MS_PER_DAY);
+    const cFertileStart = new Date(cOvulation.getTime() - 5 * MS_PER_DAY);
+    const cFertileEnd = new Date(cOvulation.getTime() + 1 * MS_PER_DAY);
+    const cNextPeriod = new Date(cLmp.getTime() + cycleLength * MS_PER_DAY);
+    return { ovulationDate: cOvulation, fertileStart: cFertileStart, fertileEnd: cFertileEnd, nextPeriod: cNextPeriod };
+  });
+
   return {
     ovulationDate,
     fertileStart,
@@ -135,6 +146,7 @@ export function calculateOvulation({ lmpDate, cycleLength = 28, today = new Date
     daysToNextPeriod,
     isInFertileWindow,
     ovulationPassed,
+    nextCycles,
     isValid: true,
   };
 }

@@ -28,7 +28,7 @@
 }
 
 .editorial-section[data-tone="subtle"] {
-  background: var(--bg-subtle);
+  background: color-mix(in srgb, var(--bg-subtle) 38%, transparent);
 }
 
 .section-kicker {

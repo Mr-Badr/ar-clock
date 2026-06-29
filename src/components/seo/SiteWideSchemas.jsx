@@ -1,5 +1,6 @@
 // src/components/seo/SiteWideSchemas.jsx
 import { JsonLd } from '@/components/seo/JsonLd';
+import { getDefaultAuthor, buildPersonSchema } from '@/data/site/authors';
 import { WEBSITE_ARCHITECTURE_PATHS } from '@/lib/seo/site-architecture';
 import {
   SITE_BRAND,
@@ -13,6 +14,7 @@ import {
 const SITE_URL = getSiteUrl();
 const ORG_ID = `${SITE_URL}#organization`;
 const WEBSITE_ID = `${SITE_URL}#website`;
+const FOUNDER = getDefaultAuthor();
 const WEBSITE_PARTS = WEBSITE_ARCHITECTURE_PATHS;
 const CORE_SECTION_PAGES = [
   { path: '/fahras', name: 'استكشف الصفحات' },
@@ -26,6 +28,8 @@ const CORE_SECTION_PAGES = [
 ];
 
 export default function SiteWideSchemas() {
+  const founderPersonSchema = buildPersonSchema('badr');
+
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -34,6 +38,12 @@ export default function SiteWideSchemas() {
     alternateName: SITE_BRAND_EN,
     url: SITE_URL,
     email: SITE_CONTACT_EMAIL,
+    foundingDate: '2024',
+    founder: {
+      '@type': 'Person',
+      '@id': FOUNDER.url,
+      name: FOUNDER.name,
+    },
     logo: {
       '@type': 'ImageObject',
       url: `${SITE_URL}/icons/icon-512.png`,
@@ -41,6 +51,8 @@ export default function SiteWideSchemas() {
       height: 512,
     },
     description: SITE_DESCRIPTION,
+    // Add your real social profile URLs in src/data/site/authors.js → sameAs[]
+    ...(FOUNDER.sameAs?.length ? { sameAs: FOUNDER.sameAs } : {}),
     areaServed: [
       'SA', 'AE', 'EG', 'IQ', 'KW', 'QA', 'JO', 'LB',
       'MA', 'DZ', 'TN', 'LY', 'SD', 'SY', 'YE', 'OM', 'BH', 'MR',
@@ -123,6 +135,6 @@ export default function SiteWideSchemas() {
   };
 
   return (
-    <JsonLd data={[organizationSchema, websiteSchema, navigationSchema]} />
+    <JsonLd data={[founderPersonSchema, organizationSchema, websiteSchema, navigationSchema]} />
   );
 }

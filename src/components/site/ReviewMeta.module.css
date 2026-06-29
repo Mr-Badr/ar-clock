@@ -1,0 +1,76 @@
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1.5rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--bg-surface-1) 60%, transparent);
+  font-size: 0.8rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.icon {
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.copy {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.45rem;
+}
+
+.label {
+  color: var(--text-muted);
+  font-size: 0.77rem;
+}
+
+.value {
+  color: var(--text-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+a.value:hover {
+  color: var(--accent-alt);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.detail {
+  color: var(--text-muted);
+  font-size: 0.77rem;
+}
+
+.policyLink {
+  margin-inline-start: auto;
+  color: var(--accent-alt);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+
+.policyLink:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 640px) {
+  .strip {
+    gap: 0.5rem 1rem;
+    padding: 0.65rem 0.85rem;
+  }
+
+  .policyLink {
+    margin-inline-start: 0;
+  }
+}

@@ -26,6 +26,7 @@ import {
   estimateBlogArticleReadingMinutes,
   splitBlogArticleBodyParagraphs,
 } from '@/lib/blog/read-time';
+import { getDefaultAuthor } from '@/data/site/authors';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 
 import styles from './BlogArticleView.module.css';
@@ -513,13 +514,15 @@ function buildEditorialMetaItems(guide) {
   const sourceCount = guide.sourceLinks?.length || 0;
   const publishedLabel = formatGuideDate(guide.publishedAt);
   const updatedLabel = formatGuideDate(guide.updatedAt);
-  const authorName = guide.authorName || `فريق ${SITE_BRAND}`;
-  const authorRole = guide.authorRole || 'تحرير المحتوى العربي العملي';
+  const defaultAuthor = getDefaultAuthor();
+  const authorName = guide.authorName || defaultAuthor.name;
+  const authorRole = guide.authorRole || defaultAuthor.role;
 
   return [
     {
       label: 'إعداد المقال',
       value: authorName,
+      href: `/author/${defaultAuthor.id}`,
       detail: authorRole,
       Icon: UserRound,
     },
@@ -580,7 +583,11 @@ function GuideEditorialMeta({ guide }) {
                 <item.Icon size={16} />
               </span>
               <span className={styles.editorialMetaLabel}>{item.label}</span>
-              <strong>{item.value}</strong>
+              <strong>
+                {item.href ? (
+                  <Link href={item.href} style={{ textDecoration: 'underline', textUnderlineOffset: '2px', color: 'inherit' }}>{item.value}</Link>
+                ) : item.value}
+              </strong>
             </div>
           ))}
         </div>
@@ -711,13 +718,19 @@ export default function BlogArticleView(props) {
     '--guide-accent': guide.accent || 'var(--accent)',
   };
 
-  const authorName = guide.authorName || `فريق ${SITE_BRAND}`;
+  const defaultAuthor = getDefaultAuthor();
+  const authorName = guide.authorName || defaultAuthor.name;
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: guide.metaTitle || guide.title,
     description: guide.description,
-    author: { '@type': 'Organization', name: authorName },
+    author: {
+      '@type': 'Person',
+      '@id': defaultAuthor.url,
+      name: authorName,
+      url: defaultAuthor.url,
+    },
     publisher: { '@type': 'Organization', name: SITE_BRAND, url: getSiteUrl() },
     url: `${getSiteUrl()}/blog/${guide.slug}`,
     datePublished: guide.publishedAt,

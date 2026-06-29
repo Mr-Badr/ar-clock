@@ -2,6 +2,7 @@ import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorSection,
+  CalculatorSources,
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -267,6 +268,8 @@ export default function SaudiPayDatesPage() {
 
       {/* Related */}
       <CalculatorSection id="related" eyebrow="حاسبات ذات صلة" title="أدوات مالية أخرى">
+        <CalculatorSources sources={CONTENT.sources} />
+
         <RelatedCalculators currentSlug="saudi-pay-dates" />
       </CalculatorSection>
     </main>

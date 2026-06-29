@@ -47,6 +47,7 @@ export const ROOT_SITEMAP_ROUTES = Object.freeze(dedupeRoutes([
   { path: '/blog', priority: 0.82, changeFrequency: 'weekly', websitePart: true },
   { path: '/about', priority: 0.44, changeFrequency: 'monthly', websitePart: true },
   { path: '/editorial-policy', priority: 0.44, changeFrequency: 'monthly', websitePart: true },
+  { path: '/author/badr', priority: 0.42, changeFrequency: 'monthly', websitePart: true },
   { path: '/contact', priority: 0.38, changeFrequency: 'monthly', websitePart: true },
   { path: '/privacy', priority: 0.28, changeFrequency: 'monthly', websitePart: false },
   { path: '/terms', priority: 0.28, changeFrequency: 'monthly', websitePart: false },
@@ -143,6 +144,13 @@ const FEATURE_ROUTE_FAMILIES = Object.freeze([
     exactPaths: ['/calculators'],
     prefixPaths: ['/calculators/'],
     crawlScope: 'full',
+  },
+  {
+    id: 'author',
+    label: 'Author profiles',
+    exactPaths: ['/author'],
+    prefixPaths: ['/author/'],
+    crawlScope: 'architecture',
   },
 ]);
 

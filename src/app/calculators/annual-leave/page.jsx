@@ -5,6 +5,7 @@ import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorSection,
+  CalculatorSources,
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { Button } from '@/components/ui/button';
@@ -259,6 +260,8 @@ export default function AnnualLeavePage() {
       </CalculatorSection>
 
       <CalculatorSection id="leave-related" subtle>
+        <CalculatorSources sources={CONTENT.sources} />
+
         <RelatedCalculators currentSlug="annual-leave" />
       </CalculatorSection>
     </main>

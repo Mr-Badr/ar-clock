@@ -11,6 +11,7 @@ import AdTopBanner from '@/components/ads/AdTopBanner';
 import { ArrowLeftRight, Calendar, CalendarDays, Globe2, Moon } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
+import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildDateKeywords } from '@/lib/seo/section-search-intent';
 import { logger, serializeError } from '@/lib/logger';
@@ -521,6 +522,7 @@ async function DateHubDynamicContent() {
               </nav>
             </div>
           </section>
+          <SiteTrustPanel panel="date" />
         </main>
       </AdLayoutWrapper>
     </>

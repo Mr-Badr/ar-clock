@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
+import { getDefaultAuthor } from '@/data/site/authors';
 import { SITE_CONTACT_EMAIL } from '@/lib/site-config';
 
 import styles from './SiteTrustPanel.module.css';
@@ -29,8 +30,7 @@ const PANEL_CONTENT: Record<PanelType, PanelContent> = {
   calculators: {
     eyebrow: 'بعد النتيجة',
     title: 'ماذا تفعل بعد أن تظهر لك النتيجة؟',
-    lead:
-      'إذا حصلت على الرقم الذي تريده، لا تحتاج أن تبدأ البحث من جديد. اختر الخطوة الأقرب لسؤالك: حاسبة أخرى، شرح طريقة الحساب، أو صفحة تساعدك على المقارنة.',
+    lead: 'إذا حصلت على الرقم الذي تريده، لا تحتاج أن تبدأ البحث من جديد. اختر الخطوة الأقرب لسؤالك: حاسبة أخرى، شرح طريقة الحساب، أو صفحة تساعدك على المقارنة.',
     items: [
       {
         href: '/calculators',
@@ -43,14 +43,14 @@ const PANEL_CONTENT: Record<PanelType, PanelContent> = {
         body: 'القرض والضريبة ونهاية الخدمة في مسار واحد حتى تقارن الأرقام بسهولة.',
       },
       {
+        href: '/editorial-policy',
+        title: 'كيف نراجع البيانات؟',
+        body: 'الأرقام في حاساباتنا مستندة إلى جهات رسمية. اعرف المنهجية وحدود الدقة.',
+      },
+      {
         href: '/fahras',
         title: 'ابحث بسؤالك كما تكتبه',
         body: 'اكتب مثالاً بسيطاً مثل: كم قسط قرض 100 ألف؟ أو كم ضريبة 1000 ريال؟',
-      },
-      {
-        href: '/editorial-policy',
-        title: 'تأكد من طريقة المراجعة',
-        body: 'اعرف كيف نراجع الشرح ومتى تحتاج النتيجة إلى مصدر رسمي أو مختص.',
       },
     ],
     note: `إذا ظهرت لك نتيجة غير واضحة أو تحتاج مثالاً أفضل، يمكنك مراسلتنا مباشرة على ${SITE_CONTACT_EMAIL}.`,
@@ -58,8 +58,7 @@ const PANEL_CONTENT: Record<PanelType, PanelContent> = {
   blog: {
     eyebrow: 'قراءة أوثق',
     title: 'اجعل المقال بداية رحلة لا صفحة معزولة',
-    lead:
-      'المقال الجيد لا يشرح الفكرة فقط، بل يوضح لك أين تكمل بعدها: صفحة أداة، مقال مرتبط، سياسة تحريرية، أو وسيلة تواصل إذا وجدت نقطة تحتاج تصحيحاً أو توضيحاً.',
+    lead: 'المقال الجيد لا يشرح الفكرة فقط، بل يوضح لك أين تكمل بعدها: صفحة أداة، مقال مرتبط، سياسة تحريرية، أو وسيلة تواصل إذا وجدت نقطة تحتاج تصحيحاً أو توضيحاً.',
     items: [
       {
         href: '/blog',
@@ -67,14 +66,14 @@ const PANEL_CONTENT: Record<PanelType, PanelContent> = {
         body: 'انتقل بين المقالات حسب الموضوع حتى لا تنتهي القراءة عند صفحة واحدة فقط.',
       },
       {
+        href: '/editorial-policy',
+        title: 'اعرف كيف نراجع المحتوى',
+        body: 'هذه الصفحة تشرح طريقة التحرير والمراجعة وحدود الدقة وكيف نحدّث الصفحات.',
+      },
+      {
         href: '/fahras',
         title: 'استكشف الصفحات حسب سؤالك',
         body: 'إذا تغيّر سؤالك بعد القراءة، افتح استكشف للانتقال السريع إلى القسم أو الأداة الأقرب.',
-      },
-      {
-        href: '/editorial-policy',
-        title: 'اعرف كيف نراجع المحتوى',
-        body: 'هذه الصفحة تشرح طريقة التحرير والمراجعة وحدود الدقة وكيف نحدّث الصفحات بمرور الوقت.',
       },
       {
         href: '/contact',
@@ -87,8 +86,7 @@ const PANEL_CONTENT: Record<PanelType, PanelContent> = {
   time: {
     eyebrow: 'متابعة أسهل',
     title: 'حوّل صفحة الوقت إلى نقطة انطلاق مفيدة',
-    lead:
-      'من يبحث عن الوقت الان لا يريد فقط ساعة رقمية، بل يريد أن يكمل بسرعة إلى الصلاة أو التاريخ أو فرق التوقيت أو صفحة الدولة نفسها من غير أن يضيع بين صفحات مبعثرة.',
+    lead: 'من يبحث عن الوقت الان لا يريد فقط ساعة رقمية، بل يريد أن يكمل بسرعة إلى الصلاة أو التاريخ أو فرق التوقيت أو صفحة الدولة نفسها.',
     items: [
       {
         href: '/time-now',
@@ -107,7 +105,7 @@ const PANEL_CONTENT: Record<PanelType, PanelContent> = {
       },
       {
         href: '/contact',
-        title: 'أبلغ عن مدينة أو ملاحظة',
+        title: 'أبلغ عن ملاحظة',
         body: 'إذا لاحظت اسم مدينة يحتاج تصحيحاً أو صفحة ناقصة، يمكنك مراسلتنا مباشرة.',
       },
     ],
@@ -116,8 +114,7 @@ const PANEL_CONTENT: Record<PanelType, PanelContent> = {
   prayer: {
     eyebrow: 'انتقال أوضح',
     title: 'اجعل صفحة الصلاة دليلك اليومي لا محطة سريعة فقط',
-    lead:
-      'ابدأ بمعرفة وقت الصلاة القادم بسرعة، ثم انتقل بسهولة إلى صفحة الدولة أو المدينة التالية أو صفحة الوقت والتاريخ المرتبطة بنفس السؤال.',
+    lead: 'ابدأ بمعرفة وقت الصلاة القادم بسرعة، ثم انتقل بسهولة إلى صفحة الدولة أو المدينة التالية أو صفحة الوقت والتاريخ المرتبطة بنفس السؤال.',
     items: [
       {
         href: '/mwaqit-al-salat',
@@ -125,9 +122,9 @@ const PANEL_CONTENT: Record<PanelType, PanelContent> = {
         body: 'ابدأ من صفحة رئيسية تجمع البحث السريع والمدن الأكثر طلباً والشرح الأساسي لطريقة الحساب.',
       },
       {
-        href: '/time-now',
-        title: 'اعرف الوقت الان قبل المقارنة',
-        body: 'إذا كنت ترتب مكالمة أو سفراً أو موعد أذان بين مدينتين، افتح الوقت الان ثم أكمل من هناك.',
+        href: '/editorial-policy',
+        title: 'اعرف طريقة الحساب المعتمدة',
+        body: 'نشرح الطريقة الحسابية المستخدمة لكل دولة وسبب اختلاف المواقيت بين جهات الإفتاء.',
       },
       {
         href: '/date/today/hijri',
@@ -135,9 +132,9 @@ const PANEL_CONTENT: Record<PanelType, PanelContent> = {
         body: 'صفحة التاريخ تفيدك إذا كان سؤالك مرتبطاً ببداية الشهر أو بموعد عبادي لا بالساعة فقط.',
       },
       {
-        href: '/editorial-policy',
-        title: 'اعرف كيف نراجع المواقيت',
-        body: 'هذه الصفحة تشرح مصادرنا وحدود الحساب والتحديث وكيف نتعامل مع اختلاف الطرق بين البلدان.',
+        href: '/contact',
+        title: 'أبلغ عن طريقة حساب أو مدينة',
+        body: 'إذا لاحظت مدينة ناقصة أو طريقة حساب تحتاج مراجعة، يمكنك مراسلتنا مباشرة.',
       },
     ],
     note: `إذا لاحظت مدينة ناقصة أو طريقة حساب تحتاج مراجعة، يمكنك مراسلتنا مباشرة على ${SITE_CONTACT_EMAIL}.`,
@@ -145,8 +142,7 @@ const PANEL_CONTENT: Record<PanelType, PanelContent> = {
   date: {
     eyebrow: 'خطوة تالية مفيدة',
     title: 'اجعل صفحة التاريخ مدخلاً أوسع للموعد الذي تبحث عنه',
-    lead:
-      'من يدخل صفحة التاريخ غالباً لا يريد رقماً فقط، بل يريد أن يعرف ماذا بعد: تحويل تاريخ، وقت محلي، أو صفحة البلد المرتبطة بنفس اليوم والموعد.',
+    lead: 'من يدخل صفحة التاريخ غالباً لا يريد رقماً فقط، بل يريد أن يعرف ماذا بعد: تحويل تاريخ، وقت محلي، أو صفحة البلد المرتبطة بنفس اليوم والموعد.',
     items: [
       {
         href: '/date',
@@ -159,9 +155,9 @@ const PANEL_CONTENT: Record<PanelType, PanelContent> = {
         body: 'إذا كان عندك موعد قديم أو مستقبلي، انتقل إلى أداة التحويل بدل البحث اليدوي بين الأشهر.',
       },
       {
-        href: '/time-now',
-        title: 'تحقق من الوقت المحلي',
-        body: 'ربط التاريخ بالوقت المحلي يساعدك إذا كان سؤالك متعلقاً ببداية يوم جديد أو فرق منطقة زمنية.',
+        href: '/editorial-policy',
+        title: 'كيف نحسب التقويم الهجري؟',
+        body: 'نشرح الفرق بين حساب أم القرى والرؤية الفلكية وما نعتمده ولماذا.',
       },
       {
         href: '/contact',
@@ -175,9 +171,29 @@ const PANEL_CONTENT: Record<PanelType, PanelContent> = {
 
 export default function SiteTrustPanel({ panel }: SiteTrustPanelProps) {
   const content = PANEL_CONTENT[panel];
+  const author = getDefaultAuthor();
 
   return (
     <section className={styles.panel} aria-labelledby={`trust-panel-${panel}`}>
+      {/* Credibility strip — who maintains this */}
+      <div className={styles.credStrip}>
+        <span className={styles.credItem}>
+          <span className={styles.credLabel}>إعداد</span>
+          <Link href={`/author/${author.id}`} className={styles.credValue}>{author.name}</Link>
+          <span className={styles.credSep}>·</span>
+          <span className={styles.credRole}>{author.role}</span>
+        </span>
+        <span className={styles.credItem}>
+          <span className={styles.credLabel}>المنهجية</span>
+          <Link href="/editorial-policy" className={styles.credValue}>السياسة التحريرية</Link>
+        </span>
+        <span className={styles.credItem}>
+          <span className={styles.credLabel}>خطأ؟</span>
+          <a href={`mailto:${SITE_CONTACT_EMAIL}`} className={styles.credValue}>راسلنا</a>
+        </span>
+      </div>
+
+      {/* Next-step navigation */}
       <div className={styles.head}>
         <span className={styles.eyebrow}>{content.eyebrow}</span>
         <h2 id={`trust-panel-${panel}`} className={styles.title}>

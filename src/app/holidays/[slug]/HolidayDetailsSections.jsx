@@ -30,7 +30,7 @@ const CATEGORY_CALCULATORS = {
   national: [
     { href: '/calculators/net-salary',           label: 'صافي الراتب',        desc: 'الراتب بعد خصم الضرائب والاشتراكات', accent: 'var(--green)' },
     { href: '/calculators/vat',                  label: 'حاسبة الضريبة',       desc: 'احسب ضريبة القيمة المضافة بسرعة',     accent: 'var(--blue)' },
-    { href: '/calculators/end-of-service-benefits', label: 'مكافأة نهاية الخدمة', desc: 'احسب مستحقات العمل عند الاستقالة',  accent: 'var(--accent-alt)' },
+    { href: '/calculators/uae-end-of-service',      label: 'نهاية خدمة الإمارات',  desc: 'مكافأة الإمارات: 21 و30 يوماً',         accent: 'var(--accent-alt)' },
   ],
   support: [
     { href: '/calculators/salary',               label: 'حاسبة الراتب',        desc: 'حوّل راتبك الشهري إلى يومي وساعي',    accent: 'var(--green)' },

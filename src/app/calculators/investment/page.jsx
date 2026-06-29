@@ -3,115 +3,49 @@ import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorSection,
+  CalculatorSources,
+  RelatedCalculators,
 } from '@/components/calculators/common';
+import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
+import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
+import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
+const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'investment');
+const CONTENT = getFinancePageContent('investment');
+const SEARCH_COVERAGE = buildFinancePageSearchCoverage(PAGE, CONTENT);
 
 export const metadata = buildCanonicalMetadata({
-  title: 'حاسبة العائد الاستثماري — كم يصبح مالك بعد سنوات؟',
-  description:
-    'احسب فوراً نمو استثمارك بمعدل الربح المركب السنوي مع خطة ادخار شهرية — بالريال السعودي أو الدرهم أو الدينار. رسم بياني لنمو المال سنة بسنة وفق المنهج الإسلامي.',
-  keywords: [
-    'حاسبة العائد الاستثماري',
-    'حاسبة الربح على الاستثمار',
-    'حاسبة الفائدة المركبة',
-    'حاسبة نمو الأموال',
-    'حاسبة الاستثمار الإسلامي',
-    'كم يصبح الاستثمار بعد سنوات',
-    'حاسبة الربح المركب',
-    'عائد الاستثمار السنوي',
-    'حاسبة صناديق الاستثمار',
-    'لو وضعت 100 ألف ريال كم يصبح',
-    'حاسبة الادخار والاستثمار',
-    'كم تصبح 500 ألف ريال بعد 10 سنوات',
-    'حاسبة الربح الإسلامي',
-    'حاسبة الاستثمار بالريال السعودي',
-    'كيف أحسب عائد الاستثمار',
-    'حاسبة نمو المدخرات',
-    'حاسبة الاستثمار الشهري',
-  ],
-  url: `${SITE_URL}/calculators/investment`,
+  title: PAGE.heroTitle,
+  description: PAGE.description,
+  keywords: SEARCH_COVERAGE.metadataKeywords,
+  url: `${SITE_URL}${PAGE.href}`,
 });
 
-const faqItems = [
-  {
-    question: 'كيف تعمل حاسبة العائد الاستثماري؟',
-    answer:
-      'تعتمد الحاسبة على صيغة الربح المركب الشهري: القيمة المستقبلية = المبلغ الأولي × (1 + معدل الربح الشهري) ^ عدد الأشهر. إذا أضفت إيداعاً شهرياً، تحسب الأداة قيمة كل دفعة مستقلةً ثم تجمعها. النتيجة تبيّن كم يصبح استثمارك بعد المدة التي تختارها.',
-  },
-  {
-    question: 'ما الفرق بين الربح البسيط والربح المركب؟',
-    answer:
-      'في الربح البسيط تحسب الفائدة على المبلغ الأصلي فقط طوال المدة. أما الربح المركب فيحسب على المبلغ مضافاً إليه الأرباح المتراكمة، فيزداد كل دورة. على مدى 10 سنوات بمعدل 5%، يفوق الربح المركب البسيطَ بفارق ملحوظ يزداد كلما طالت المدة.',
-  },
-  {
-    question: 'ما الفرق بين الاستثمار الإسلامي والتقليدي في الحسابات؟',
-    answer:
-      'في الاستثمار الإسلامي (صناديق الأسهم الشرعية، الصكوك، المرابحة) المبلغ المكتسب يُسمى "ربحاً" لا "فائدة"، ويقوم على مشاركة في العائد أو ربح معلوم مسبقاً. الصيغة الرياضية متشابهة، لكن العقد والأساس القانوني مختلفان. الحاسبة هنا صالحة للنوعين: فقط سمِّ المعدل "ربحاً" عند استخدامها للمنتجات الإسلامية.',
-  },
-  {
-    question: 'ما معدلات الربح الواقعية في صناديق الاستثمار السعودية؟',
-    answer:
-      'صناديق النقد والودائع المصرفية تتراوح عادةً بين 3% و5% سنوياً. صناديق الأسهم السعودية (تداول) تتراوح بين 6% و12% تاريخياً على المدى البعيد لكنها متذبذبة. الصكوك والمرابحة بين 4% و7%. عند إدخال معدل في الحاسبة، اختر رقماً محافظاً للتخطيط الواقعي.',
-  },
-  {
-    question: 'لو وضعت 100,000 ريال بمعدل ربح 5% لمدة 10 سنوات، كم يصبح؟',
-    answer:
-      'بالربح المركب الشهري عند 5% سنوياً لمدة 10 سنوات، تصبح قيمة الـ 100,000 ريال حوالي 164,700 ريال — أي ربح صافٍ يقترب من 64,700 ريال. إذا أضفت 500 ريال شهرياً، ترتفع القيمة إلى حوالي 242,000 ريال.',
-  },
-  {
-    question: 'هل يجب أن أقتطع الزكاة من عائد الاستثمار؟',
-    answer:
-      'نعم، إذا بلغ إجمالي مدخراتك واستثماراتك النصابَ (قيمة 85 غراماً من الذهب تقريباً) وحال عليها الحول، فتجب فيها الزكاة بنسبة 2.5%. استخدم حاسبة الزكاة في مقاطونة لحساب مقدارها.',
-  },
-  {
-    question: 'ما هي الصكوك الإسلامية وكيف تختلف عن السندات؟',
-    answer:
-      'الصكوك أدوات تمويل إسلامية مبنية على ملكية حصة في أصل أو مشروع حقيقي، وربحها مشروط بأداء هذا الأصل. السندات التقليدية قرض بفائدة محددة مسبقاً. كلاهما يُستخدم بمعدل ربح ثابت تقريباً، لكن الصكوك تتوافق مع مبدأ عدم الربا.',
-  },
-  {
-    question: 'كم أوفر شهرياً للوصول إلى مليون ريال في 15 سنة؟',
-    answer:
-      'بمعدل ربح مركب 6% سنوياً ومدة 15 سنة، تحتاج إلى توفير حوالي 3,400 ريال شهرياً للوصول إلى مليون ريال. أدخل هدفك في الحاسبة وعدّل المبلغ الشهري حتى تصل إلى الرقم الذي تريده.',
-  },
-];
-
-const methodSteps = [
-  {
-    name: 'أدخل رأس المال الأولي',
-    text: 'المبلغ الذي ستبدأ به الاستثمار — سواء كان مدخرات أو مبلغاً موروثاً أو دفعة أولى في صندوق.',
-  },
-  {
-    name: 'حدد معدل الربح السنوي المتوقع',
-    text: 'اختر أحد الإعدادات المسبقة (محافظ 3%، متوازن 5%، نمو 8%) أو أدخل معدلاً خاصاً بصندوقك أو وديعتك. كلما أردت نتيجة أكثر واقعية، اختر معدلاً أقل قليلاً من المتوقع.',
-  },
-  {
-    name: 'حدد مدة الاستثمار',
-    text: 'عدد السنوات التي ستبقي فيها المال دون سحبه. الاستثمار طويل الأجل (10 سنوات فأكثر) هو أكثر الأوضاع استفادةً من الربح المركب.',
-  },
-  {
-    name: 'أضف إسهاماً شهرياً (اختياري)',
-    text: 'إذا كنت ستضيف مبلغاً شهرياً ثابتاً، أدخله هنا. حتى 300-500 ريال شهرياً يصنع فارقاً كبيراً مع مرور السنوات.',
-  },
-  {
-    name: 'اقرأ الرسم البياني',
-    text: 'يوضح الرسم البياني الفصل بين ما أودعته (رأس المال) وما كسبه الاستثمار (الربح). في السنوات الأولى الفارق صغير؛ وفي السنوات الأخيرة تتسع الفجوة بسبب تراكم الربح المركب.',
-  },
-];
-
 export default async function InvestmentPage() {
-  const pageSchema = buildFreeToolPageSchema({
-    siteUrl: SITE_URL,
-    path: '/calculators/investment',
-    name: 'حاسبة العائد الاستثماري',
-    description:
-      'احسب نمو استثمارك مع الربح المركب السنوي وخطة الادخار الشهرية — رسم بياني ونتائج فورية',
-    keywords: ['حاسبة العائد الاستثماري', 'حاسبة الربح المركب', 'حاسبة نمو الأموال'],
-  });
+  const faqItems = Array.isArray(CONTENT.faqItems) ? CONTENT.faqItems : [];
+  const howToSteps = Array.isArray(CONTENT.howTo?.steps) ? CONTENT.howTo.steps : [];
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${SITE_URL}/` },
+      { '@type': 'ListItem', position: 2, name: 'الحاسبات', item: `${SITE_URL}/calculators` },
+      { '@type': 'ListItem', position: 3, name: PAGE.title, item: `${SITE_URL}${PAGE.href}` },
+    ],
+  };
+  const softwareSchema = buildFreeToolPageSchema({
+    siteUrl: SITE_URL,
+    path: PAGE.href,
+    name: PAGE.title,
+    description: PAGE.description,
+    about: SEARCH_COVERAGE.schemaAbout,
+    keywords: SEARCH_COVERAGE.metadataKeywords,
+  });
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -121,21 +55,30 @@ export default async function InvestmentPage() {
       acceptedAnswer: { '@type': 'Answer', text: item.answer },
     })),
   };
+  const howToSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: CONTENT.howTo?.name || PAGE.title,
+    description: CONTENT.howTo?.description || PAGE.description,
+    step: howToSteps.map((item) => ({
+      '@type': 'HowToStep',
+      name: item.name,
+      text: item.text,
+    })),
+  };
 
   return (
     <main className="calc-product-page bg-base text-primary" dir="rtl" lang="ar">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
       <CalculatorHero
-        badge="مال وادخار"
-        title="حاسبة العائد الاستثماري — كم يصبح مالك بعد سنوات؟"
-        description="أدخل مبلغك ومعدل الربح السنوي، وشاهد فوراً كيف ينمو استثمارك سنةً بسنة مع رسم بياني واضح."
-        highlights={[
-          'رسم بياني تفاعلي لنمو المال سنة بسنة.',
-          'يدعم إضافة مساهمة شهرية منتظمة.',
-          'معدلات ربح مسبقة مرجعية: محافظ وعملي ونمو.',
-        ]}
+        badge={CONTENT.hero.badge}
+        title={PAGE.heroTitle}
+        description={CONTENT.hero.description}
+        highlights={CONTENT.hero.highlights}
       >
         <InvestmentReturnCalculator />
       </CalculatorHero>
@@ -147,7 +90,7 @@ export default async function InvestmentPage() {
         description="الحاسبة تقدير مبني على الربح المركب — لا تضمن أداء مستقبلياً. استخدمها للتخطيط، لا للقرار النهائي وحدها."
       >
         <div className="calc-metric-grid">
-          {methodSteps.map((step, i) => (
+          {howToSteps.map((step, i) => (
             <div key={step.name} className="calc-metric-card">
               <div className="calc-metric-card__label">
                 <span style={{ color: 'var(--calc-cat-finance)', marginInlineEnd: '6px' }}>{i + 1}.</span>
@@ -166,7 +109,7 @@ export default async function InvestmentPage() {
       >
         <div className="calc-editorial-block">
           <p>
-            الاستثمار 100,000 ريال بمعدل 5% سنوياً لمدة 20 سنة يُنتج حوالي 165,000 ريال ربحاً — أكثر من رأس المال الأصلي — لأن كل ريح يُضاف إلى الأصل ثم يُربح هو الآخر. هذا هو جوهر الربح المركب: الوقت يعمل لصالحك.
+            الاستثمار 100,000 ريال بمعدل 5% سنوياً لمدة 20 سنة يُنتج حوالي 165,000 ريال ربحاً — أكثر من رأس المال الأصلي — لأن كل ربح يُضاف إلى الأصل ثم يُربح هو الآخر. هذا هو جوهر الربح المركب: الوقت يعمل لصالحك.
           </p>
           <p>
             في الاستثمار الإسلامي، المبدأ ذاته ينطبق على الصكوك وصناديق الأسهم الشرعية والودائع المرابحة — المصطلح "ربح" بدل "فائدة"، والعقد يقوم على مشاركة أو عائد حقيقي. الحاسبة هنا صالحة لكلا النوعين.
@@ -177,7 +120,20 @@ export default async function InvestmentPage() {
         </div>
       </CalculatorSection>
 
-      <CalculatorFaqSection items={faqItems} />
+      <CalculatorSection
+        showAdBefore
+        id="investment-faq"
+        eyebrow="أسئلة شائعة"
+        title="أسئلة عن الاستثمار والربح المركب"
+      >
+        <CalculatorFaqSection items={faqItems} />
+      </CalculatorSection>
+
+      <CalculatorSection id="investment-related">
+        <CalculatorSources sources={CONTENT.sources} />
+
+        <RelatedCalculators currentSlug="investment" />
+      </CalculatorSection>
     </main>
   );
 }

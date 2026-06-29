@@ -5,6 +5,7 @@ import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorSection,
+  CalculatorSources,
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -169,15 +170,63 @@ export default function ElectricityBillPage() {
         </div>
       </CalculatorSection>
 
+      {/* Savings tips + worked example */}
+      <CalculatorSection
+        showAdBefore
+        id="electricity-savings"
+        eyebrow="تقليل الفاتورة"
+        title="كيف تخفض فاتورة الكهرباء دون التأثير على الراحة؟"
+        description="المكيفات تستهلك 60–70% من كهرباء المنازل في الخليج صيفاً — هذا هو المكان الأول للبدء."
+      >
+        <div className="calc-article-grid">
+          <article className="calc-article-block">
+            <h3>المكيف: كل درجة تُكلفك 6–8%</h3>
+            <p>
+              رفع درجة حرارة المكيف من 20°م إلى 24°م يُقلل استهلاكه بنحو 25%. خبراء الطاقة ينصحون بـ 24–26°م
+              ليلاً و22°م نهاراً كنقطة توازن بين الراحة والاقتصاد. ضع المكيف على "Auto Fan" بدلاً من "Turbo"
+              المستمر.
+            </p>
+          </article>
+          <article className="calc-article-block">
+            <h3>التوقيت: تجنب ذروة الاستهلاك (12–6 مساءً)</h3>
+            <p>
+              بعض التعريفات تطبق أسعاراً متغيرة حسب التوقيت (TOU). في السعودية والإمارات لا تُطبَّق هذه التعريفة
+              للسكن حتى الآن، لكن تشغيل أجهزة الطبخ والغسالة والمجفف في ساعات الصباح الباكر يُخفف العبء على
+              الشبكة ويُطيل عمر الأجهزة بشكل عام.
+            </p>
+          </article>
+          <article className="calc-article-block">
+            <h3>الأجهزة: انتبه للـ "Phantom Load"</h3>
+            <p>
+              الأجهزة في وضع Standby تستهلك 5–10% من كهرباء المنزل. شاشات التلفزيون والمايكروويف والكمبيوتر
+              وشواحن الهواتف تسحب طاقة حتى بدون استخدام. استخدم power strip مع قاطع رئيسي لأجهزة
+              الترفيه والمكتب.
+            </p>
+          </article>
+          <article className="calc-article-block">
+            <h3>مثال محلول: أسرة في الرياض — 3,500 kWh/شهر</h3>
+            <p>
+              الشريحة 1 (0–2,000 kWh): 2,000 × 0.05 = 100 ريال<br />
+              الشريحة 2 (2,001–3,500 kWh): 1,500 × 0.10 = 150 ريال<br />
+              رسوم الاشتراك: 5.175 ريال<br />
+              المجموع قبل الضريبة: 255.175 ريال<br />
+              <strong>الضريبة 15%: 38.28 ريال → الفاتورة الإجمالية: حوالي 293 ريال</strong>
+            </p>
+          </article>
+        </div>
+      </CalculatorSection>
+
       {/* FAQ */}
       <CalculatorSection
         id="electricity-faq"
         eyebrow="أسئلة شائعة"
         title="أسئلة عن فاتورة الكهرباء في السعودية والإمارات"
-        showAdBefore
       >
         <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>
+
+      <CalculatorSources sources={CONTENT.sources} />
+
 
       <RelatedCalculators currentSlug="electricity-bill" />
     </main>

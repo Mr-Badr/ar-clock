@@ -4,6 +4,7 @@ import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorSection,
+  CalculatorSources,
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -247,6 +248,8 @@ export default function PercentagePage() {
         title="حاسبات مرتبطة بالنسب والتسعير"
         description="إذا كان حساب النسبة جزءاً من فاتورة أو قرض أو مستحقات عمل، فانتقل إلى الأداة التي تكمل نفس القرار بدلاً من بدء بحث جديد."
       >
+        <CalculatorSources sources={CONTENT.sources} />
+
         <RelatedCalculators currentSlug="percentage" />
       </CalculatorSection>
 

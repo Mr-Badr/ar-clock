@@ -5,6 +5,7 @@ import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorSection,
+  CalculatorSources,
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -135,15 +136,62 @@ export default function IqamaPage() {
         </p>
       </CalculatorSection>
 
+      {/* Practical guide */}
+      <CalculatorSection
+        showAdBefore
+        id="iqama-guide"
+        eyebrow="دليل عملي"
+        title="ماذا تفعل إذا انتهت إقامتك أو اقتربت من الانتهاء؟"
+        description="الإجراءات تختلف بين السعودية والإمارات — اعرف خياراتك قبل أن تضطر إليها."
+      >
+        <div className="calc-article-grid">
+          <article className="calc-article-block">
+            <h3>السعودية — إذا اقترب انتهاء الإقامة</h3>
+            <p>
+              التجديد عبر منصة أبشر قبل انتهاء الإقامة بشهر على الأقل. تجديد الإقامة مشروط بموافقة صاحب العمل
+              (كفيل) وسداد رسوم التجديد وعدم وجود مخالفات. إذا انتهت الإقامة دون تجديد، تبدأ الغرامة فوراً بـ 100 ريال/يوم.
+              أقصى مدة للتسوية الطوعية (إذا أردت المغادرة) تتيح الخروج بنصف الغرامة في بعض حملات العفو — تحقق
+              من وزارة الداخلية لمعرفة آخر إعلان.
+            </p>
+          </article>
+          <article className="calc-article-block">
+            <h3>الإمارات — إذا انتهت الإقامة</h3>
+            <p>
+              مهلة السماح 30 يوماً بعد انتهاء الإقامة بدون غرامة. بعد المهلة: 50 درهم/يوم. لتجديد
+              الإقامة تحتاج الفحص الطبي وصورة جواز سفر سارية وعدم وجود تذاكر مخالفات مرورية معلقة. يمكن التسجيل
+              عبر ICP (الهيئة الاتحادية للهوية) أو مراكز أمر.
+            </p>
+          </article>
+          <article className="calc-article-block">
+            <h3>الخروج لأغراض التجديد (خروج وعودة)</h3>
+            <p>
+              بعض تأشيرات الزيارة يمكن تجديدها بـ"خروج وعودة" (border run). في السعودية هذا محدود بفئات معينة؛
+              في الإمارات كان شائعاً لكن ضُيِّق عليه. تأكد من نوع إقامتك قبل الاعتماد على هذا الخيار
+              لأنه قد يُفضي إلى رفض الدخول.
+            </p>
+          </article>
+          <article className="calc-article-block">
+            <h3>الإقامة الذهبية والتأشيرات الطويلة</h3>
+            <p>
+              الإمارات تقدم إقامة ذهبية (5 أو 10 سنوات) للمستثمرين والمواهب والطلاب المتفوقين. السعودية
+              تقدم نظام الإقامة المميزة (الإقامة الدائمة برسوم سنوية). كلا النظامين يقلل القلق السنوي
+              من التجديد ويمنح استقلالية عن الكفيل.
+            </p>
+          </article>
+        </div>
+      </CalculatorSection>
+
       {/* FAQ */}
       <CalculatorSection
         id="iqama-faq"
         eyebrow="أسئلة شائعة"
         title="أسئلة عن الإقامة والتأشيرة في السعودية والإمارات"
-        showAdBefore
       >
         <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>
+
+      <CalculatorSources sources={CONTENT.sources} />
+
 
       <RelatedCalculators currentSlug="iqama" />
     </main>

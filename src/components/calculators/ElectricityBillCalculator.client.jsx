@@ -7,6 +7,7 @@ import {
   formatBillAmount,
   getConsumptionCategory,
 } from '@/lib/calculators/electricity-bill';
+import ResultActions from '@/components/calculators/ResultActions.client';
 
 const COUNTRIES = [
   { id: 'sa', label: 'السعودية 🇸🇦', placeholder: '2000', unit: 'kWh' },
@@ -172,6 +173,13 @@ export default function ElectricityBillCalculator() {
           <p>• اضبط الحرارة على 24°م بدلاً من 20°م (توفر 8% لكل درجة)</p>
           <p>• استخدم طباخ الغاز بدلاً من الكهربائي لتقليل الاستهلاك</p>
         </div>
+      )}
+      {result && (
+        <ResultActions
+          copyText={`فاتورة الكهرباء التقديرية — ${kWh.toLocaleString('ar-SA')} kWh: ${formatBillAmount(result.total, result.currency)} (شاملة الضريبة)`}
+          shareTitle="نتيجة حاسبة فاتورة الكهرباء"
+          shareText={`استهلاك ${kWh.toLocaleString('ar-SA')} kWh — الفاتورة الإجمالية: ${formatBillAmount(result.total, result.currency)}`}
+        />
       )}
     </div>
   );

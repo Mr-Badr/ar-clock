@@ -5,6 +5,7 @@ import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorSection,
+  CalculatorSources,
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -27,6 +28,44 @@ export const metadata = buildCanonicalMetadata({
   keywords: SEARCH_COVERAGE.metadataKeywords,
   url: `${SITE_URL}${PAGE.href}`,
 });
+
+const CASE_STUDIES = [
+  {
+    id: 'case1',
+    title: 'الحالة 1 — زوجة + ابن + بنتان',
+    estate: '300,000 ريال',
+    heirs: [
+      { name: 'الزوجة', basis: '⅛ (لوجود الأولاد)', share: '37,500 ريال' },
+      { name: 'الابن', basis: 'عصبة — ضعف حظ الأنثى (2 سهم)', share: '108,333 ريال' },
+      { name: 'البنت الأولى', basis: 'عصبة مع الأخ (1 سهم)', share: '54,167 ريال' },
+      { name: 'البنت الثانية', basis: 'عصبة مع الأخ (1 سهم)', share: '54,167 ريال' },
+    ],
+    note: 'بعد نصيب الزوجة ⅛ يبقى 262,500 — تُقسَّم بين الابن والبنتين: الابن سهمان والبنتان سهم لكل منهما.',
+  },
+  {
+    id: 'case2',
+    title: 'الحالة 2 — زوج + بنتان فقط (بلا أبناء ذكور)',
+    estate: '200,000 ريال',
+    heirs: [
+      { name: 'الزوج', basis: '¼ (لوجود الأولاد)', share: '50,000 ريال' },
+      { name: 'البنتان (مجتمعتان)', basis: '⅔ (بنتان بلا أخ ذكر)', share: '133,333 ريال' },
+      { name: 'الباقي', basis: '← يُرد على البنتين بنسبة حصصهما', share: '16,667 ريال' },
+    ],
+    note: 'الزوج ¼ = 50,000 — البنتان ⅔ = 133,333 — المجموع 183,333 فيبقى 16,667 يُرد على البنتين إذا لم يكن ثمة عاصب.',
+  },
+  {
+    id: 'case3',
+    title: 'الحالة 3 — الأم + الأب + ابن وبنت',
+    estate: '600,000 ريال',
+    heirs: [
+      { name: 'الأم', basis: '⅙ (لوجود أولاد)', share: '100,000 ريال' },
+      { name: 'الأب', basis: '⅙ (لوجود ابن)', share: '100,000 ريال' },
+      { name: 'الابن', basis: 'عصبة (2 سهم من المتبقي)', share: '266,667 ريال' },
+      { name: 'البنت', basis: 'عصبة مع الأخ (1 سهم)', share: '133,333 ريال' },
+    ],
+    note: 'الأم ⅙ + الأب ⅙ = 200,000. يتبقى 400,000 للابن والبنت بنسبة 2:1.',
+  },
+];
 
 const SHARES_TABLE = [
   { heir: 'الزوج', cond1: '½ — بلا أولاد للميتة', cond2: '¼ — مع أولاد للميتة' },
@@ -129,15 +168,78 @@ export default function InheritancePage() {
         </div>
       </CalculatorSection>
 
+      {/* Case walk-throughs */}
+      <CalculatorSection
+        showAdBefore
+        id="inheritance-cases"
+        eyebrow="أمثلة محلولة"
+        title="ثلاث حالات محلولة بالأرقام — خطوة بخطوة"
+        description="الأمثلة أدناه تُطبّق الجدول العلوي على مسائل واقعية. استخدمها مرجعاً لمقارنة نتيجة الحاسبة أو للتحقق من الحساب قبل التوثيق الرسمي."
+      >
+        <div className="calc-article-grid">
+          {CASE_STUDIES.map((cs) => (
+            <article key={cs.id} className="calc-article-block" style={{ gridColumn: '1 / -1' }}>
+              <h3>{cs.title} — تركة: {cs.estate}</h3>
+              <div className="calc-table-wrap">
+                <Table dir="rtl">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>الوارث</TableHead>
+                      <TableHead>أساس الاستحقاق</TableHead>
+                      <TableHead>المبلغ</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {cs.heirs.map((h, i) => (
+                      <TableRow key={i}>
+                        <TableCell className="font-medium">{h.name}</TableCell>
+                        <TableCell style={{ fontSize: '0.85rem', color: 'var(--fg-subtle)' }}>{h.basis}</TableCell>
+                        <TableCell className="font-medium" style={{ color: 'var(--green)' }}>{h.share}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+              <p className="calc-note" style={{ fontSize: '0.82rem', color: 'var(--fg-subtle)', marginTop: '0.5rem' }}>
+                {cs.note}
+              </p>
+            </article>
+          ))}
+        </div>
+      </CalculatorSection>
+
+      <CalculatorSection
+        id="inheritance-caveats"
+        eyebrow="قبل التوثيق الرسمي"
+        title="ملاحظات جوهرية قبل الاعتماد على النتيجة قانونياً"
+      >
+        <div className="calc-article-grid">
+          <article className="calc-article-block">
+            <h3>الحاسبة تُطبّق الفرائض الفقهية القياسية</h3>
+            <p>تستند الحاسبة إلى المذاهب الأربعة في مسائل الأغلبية. مسائل الرد والعَوْل والوصايا وبعض الحالات الخاصة (المفقود، الحمل، الخنثى) تحتاج مراجعة فقيه أو محكمة أحوال شخصية.</p>
+          </article>
+          <article className="calc-article-block">
+            <h3>التركة الفعلية قد تختلف عن المُعلنة</h3>
+            <p>يجب خصم الديون والنفقات الواجبة وتكاليف التجهيز والوصية (بحد أقصى ⅓) قبل توزيع التركة. ما يُوزَّع هو الصافي بعد هذه الخصومات.</p>
+          </article>
+          <article className="calc-article-block">
+            <h3>للتوثيق الرسمي: المحكمة هي الجهة المختصة</h3>
+            <p>صك الإرث يُصدره القضاء أو الجهة المختصة في دولتك. في السعودية: المحاكم الشرعية. في الإمارات: محاكم الأحوال الشخصية. الحاسبة للاستيعاب والتخطيط الأولي — لا تُغني عن التوثيق القانوني.</p>
+          </article>
+        </div>
+      </CalculatorSection>
+
       {/* FAQ */}
       <CalculatorSection
         id="inheritance-faq"
         eyebrow="أسئلة شائعة"
         title="أسئلة عن الميراث الإسلامي وتوزيع التركة"
-        showAdBefore
       >
         <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>
+
+      <CalculatorSources sources={CONTENT.sources} />
+
 
       <RelatedCalculators currentSlug="inheritance" />
     </main>

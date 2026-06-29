@@ -3549,6 +3549,11 @@
   border-color: color-mix(in srgb, var(--border-default) 55%, transparent);
 }
 
+.calc-faq-accordion [data-slot="accordion-item"],
+.calc-faq-item[data-slot="accordion-item"] {
+  border-color: color-mix(in srgb, var(--border-subtle) 70%, transparent);
+}
+
 .calc-faq-trigger {
   min-height: 3.5rem;
   text-align: start;

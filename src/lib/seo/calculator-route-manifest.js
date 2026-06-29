@@ -25,6 +25,7 @@ export const STATIC_CALCULATOR_SEO_ROUTES = Object.freeze([
   { path: '/calculators/age/countdown', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
   { path: '/calculators/age/retirement', priority: 0.76, changeFrequency: 'weekly', websitePart: true },
   { path: '/calculators/end-of-service-benefits', priority: 0.9, changeFrequency: 'weekly', websitePart: true },
+  { path: '/calculators/uae-end-of-service', priority: 0.9, changeFrequency: 'weekly', websitePart: true },
   { path: '/calculators/monthly-installment', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
   { path: '/calculators/vat', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
   { path: '/calculators/percentage', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
@@ -32,6 +33,7 @@ export const STATIC_CALCULATOR_SEO_ROUTES = Object.freeze([
   { path: '/calculators/building/cement', priority: 0.8, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/building/rebar', priority: 0.8, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/building/tiles', priority: 0.8, changeFrequency: 'monthly', websitePart: true },
+  { path: '/calculators/building/paint', priority: 0.8, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/saudi-pay-dates', priority: 0.92, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/gpa-to-percent', priority: 0.91, changeFrequency: 'yearly', websitePart: true },
   { path: '/calculators/pregnancy-weeks', priority: 0.93, changeFrequency: 'yearly', websitePart: true },
@@ -39,6 +41,15 @@ export const STATIC_CALCULATOR_SEO_ROUTES = Object.freeze([
   { path: '/calculators/iqama', priority: 0.93, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/electricity-bill', priority: 0.92, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/inheritance', priority: 0.92, changeFrequency: 'yearly', websitePart: true },
+  { path: '/calculators/salary', priority: 0.92, changeFrequency: 'weekly', websitePart: true },
+  { path: '/calculators/bmi', priority: 0.92, changeFrequency: 'weekly', websitePart: true },
+  { path: '/calculators/pregnancy', priority: 0.93, changeFrequency: 'weekly', websitePart: true },
+  { path: '/calculators/gpa', priority: 0.92, changeFrequency: 'weekly', websitePart: true },
+  { path: '/calculators/zakat', priority: 0.9, changeFrequency: 'weekly', websitePart: true },
+  { path: '/calculators/ovulation', priority: 0.9, changeFrequency: 'weekly', websitePart: true },
+  { path: '/calculators/annual-leave', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
+  { path: '/calculators/fasting', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
+  { path: '/calculators/investment', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
 ]);
 
 export const BUILDING_COUNTRY_CALCULATOR_SEO_ROUTES = Object.freeze(

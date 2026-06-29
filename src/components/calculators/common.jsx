@@ -6,8 +6,9 @@ import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import { SectionWrapper } from '@/components/shared/primitives';
+import ReviewMeta from '@/components/site/ReviewMeta';
+import SourcesPanel from '@/components/site/SourcesPanel';
 import { CALCULATOR_HUBS, CALCULATOR_ROUTES } from '@/lib/calculators/data';
 
 const CALCULATOR_TRUST_ITEMS = [
@@ -88,12 +89,12 @@ function getUniqueCalculatorLinks(items) {
 
 function getComplementSlugs(cluster) {
   const complementSlugsByCluster = {
-    finance: ['iqama', 'net-salary', 'electricity-bill', 'inheritance', 'monthly-installment', 'vat', 'end-of-service-benefits'],
+    finance: ['salary', 'zakat', 'investment', 'net-salary', 'vat', 'percentage', 'annual-leave', 'monthly-installment', 'end-of-service-benefits', 'iqama', 'electricity-bill', 'inheritance'],
     building: ['vat', 'percentage', 'monthly-installment'],
     age: ['sleep', 'bedtime', 'retirement'],
     sleep: ['age-calculator', 'sleep', 'time-now'],
-    'personal-finance': ['net-salary', 'monthly-installment', 'end-of-service-benefits'],
-    health: ['pregnancy', 'pregnancy-weeks', 'ovulation', 'age-calculator'],
+    'personal-finance': ['net-salary', 'salary', 'monthly-installment', 'end-of-service-benefits', 'zakat', 'investment'],
+    health: ['bmi', 'fasting', 'pregnancy', 'pregnancy-weeks', 'ovulation', 'age-calculator'],
     education: ['gpa', 'gpa-to-percent', 'percentage'],
   };
 
@@ -137,7 +138,7 @@ function buildRelatedCalculatorLinks(currentSlug) {
     ...clusterRoutes,
     ...complementRoutes,
     ...fallbackRoutes,
-  ]).slice(0, 4);
+  ]).slice(0, 5);
 }
 
 function CalculatorEmptyState({ title, description }) {
@@ -153,12 +154,25 @@ function CalculatorEmptyState({ title, description }) {
   );
 }
 
+export function CalculatorSources({ sources }) {
+  if (!sources?.length) return null;
+  return (
+    <SectionWrapper className="calc-shell" subtle>
+      <div className="calc-section-frame">
+        <SourcesPanel sources={sources} />
+      </div>
+    </SectionWrapper>
+  );
+}
+
 export function CalculatorHero({
   badge,
   title,
   description,
   highlights,
   children,
+  reviewedAt,
+  reviewedBy,
 }) {
   const safeHighlights = Array.isArray(highlights) ? highlights : [];
 
@@ -201,6 +215,11 @@ export function CalculatorHero({
           </div>
         </div>
       </SectionWrapper>
+      <ReviewMeta
+        authorId="badr"
+        reviewedAt={reviewedAt || '2026-06-01'}
+        reviewedBy={reviewedBy}
+      />
     </>
   );
 }
@@ -405,22 +424,18 @@ export function CalculatorFaqSection({ items }) {
 
   return (
     <div>
-      <Card className="calc-surface-card calc-faq-card">
-        <CardContent className="pt-2">
-          <Accordion type="single" collapsible>
-            {safeItems.map((item, index) => (
-              <AccordionItem key={item.question} value={`faq-${index}`}>
-                <AccordionTrigger className="calc-faq-trigger">
-                  {item.question}
-                </AccordionTrigger>
-                <AccordionContent className="calc-faq-content">
-                  <p>{item.answer}</p>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </CardContent>
-      </Card>
+      <Accordion type="single" collapsible className="calc-faq-accordion">
+        {safeItems.map((item, index) => (
+          <AccordionItem key={item.question} value={`faq-${index}`} className="calc-faq-item">
+            <AccordionTrigger className="calc-faq-trigger">
+              {item.question}
+            </AccordionTrigger>
+            <AccordionContent className="calc-faq-content">
+              <p>{item.answer}</p>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
       <AdInArticle slotId="mid-calculator-faq" />
     </div>
   );

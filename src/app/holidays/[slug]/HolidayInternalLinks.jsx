@@ -23,7 +23,7 @@ const CALCULATOR_LINKS = {
   'hafez-saudi':         { href: '/calculators/salary',           title: 'حاسبة الراتب',           desc: 'احسب ما يعادل مبلغ حافز يومياً مقارنةً بالراتب.' },
   // National / public holiday events
   'saudi-national-day':  { href: '/calculators/iqama',            title: 'حاسبة الإقامة',          desc: 'احسب رسوم تجديد الإقامة وتكلفة المرافقين.' },
-  'uae-national-day':    { href: '/calculators/net-salary',       title: 'صافي الراتب',            desc: 'احسب راتبك الإماراتي بعد كل الخصومات.' },
+  'uae-national-day':    { href: '/calculators/uae-end-of-service', title: 'نهاية الخدمة الإمارات', desc: 'احسب مكافأة نهاية خدمتك في الإمارات وفق قانون 2021.' },
   'kuwait-national-day': { href: '/calculators/annual-leave',     title: 'حاسبة الإجازات',         desc: 'احسب أيام إجازتك المستحقة وفق قانون العمل الكويتي.' },
 };
 

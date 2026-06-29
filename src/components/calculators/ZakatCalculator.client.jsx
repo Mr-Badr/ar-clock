@@ -269,6 +269,29 @@ export default function ZakatCalculator() {
                 </div>
               </div>
 
+              {/* Asset distribution bars */}
+              {result.netZakatable > 0 && breakdownItems.some(i => (i.value || 0) > 0) && (
+                <div style={{ marginTop: '0.5rem' }}>
+                  <p style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    توزيع الأصول
+                  </p>
+                  {breakdownItems.filter(i => (i.value || 0) > 0).map((item) => {
+                    const pct = Math.round(((item.value || 0) / result.netZakatable) * 100);
+                    return (
+                      <div key={item.key} style={{ marginBottom: '0.4rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', marginBottom: '0.15rem' }}>
+                          <span style={{ color: 'var(--text-secondary)' }}>{item.label}</span>
+                          <span style={{ fontWeight: 700 }}>{pct}%</span>
+                        </div>
+                        <div style={{ height: '6px', borderRadius: '3px', background: 'var(--border-subtle)', overflow: 'hidden' }}>
+                          <div style={{ height: '100%', width: `${Math.min(pct, 100)}%`, background: 'var(--accent)', borderRadius: '3px', transition: 'width 0.4s ease' }} />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
               <div className="zakat-disclaimer">
                 <Info size={13} weight="bold" />
                 <span>هذه الحاسبة أداة استرشادية. راجع عالماً موثوقاً لتأكيد وضعك الخاص.</span>

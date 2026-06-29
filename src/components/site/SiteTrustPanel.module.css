@@ -1,3 +1,47 @@
+/* Credibility strip — author + editorial policy + error report */
+.credStrip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+  padding: 0.65rem 0.95rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--bg-surface-1) 70%, transparent);
+  font-size: 0.8rem;
+}
+
+.credItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.credLabel {
+  color: var(--text-muted);
+}
+
+.credValue {
+  color: var(--text-primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.credValue:hover {
+  color: var(--accent-alt);
+}
+
+.credRole {
+  color: var(--text-muted);
+}
+
+.credSep {
+  color: var(--border-strong);
+  margin-inline: 0.1rem;
+}
+
 .panel {
   box-sizing: border-box;
   display: grid;

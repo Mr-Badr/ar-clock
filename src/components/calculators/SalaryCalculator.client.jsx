@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from 'react';
-import { ArrowsLeftRight, Briefcase, CalendarBlank, Clock, CurrencyDollar } from '@phosphor-icons/react';
+import { ArrowsLeftRight, Briefcase, CalendarBlank, Clock, CurrencyDollar, Minus } from '@phosphor-icons/react';
 
 import { CalcInput as Input } from '@/components/calculators/controls.client';
 import CalculatorCurrencyField, { usePreferredCurrency } from '@/components/calculators/CurrencyField.client';
@@ -11,6 +11,7 @@ import {
   calculateSalaryBreakdown,
   formatCurrency,
   formatNumber,
+  GOSI_RATES,
 } from '@/lib/calculators/engine';
 
 const DAY_PRESETS = [
@@ -25,16 +26,24 @@ export default function SalaryCalculator() {
   const [hoursPerDay, setHoursPerDay] = useState('8');
   const [daysPerMonth, setDaysPerMonth] = useState('30');
   const [extraMonths, setExtraMonths] = useState('0');
+  const [gosiType, setGosiType] = useState('none');
 
   const formatMoney = (value) => formatCurrency(value, currency);
 
   const result = useMemo(
-    () => calculateSalaryBreakdown({ monthlySalary, hoursPerDay, daysPerMonth, extraMonths }),
-    [monthlySalary, hoursPerDay, daysPerMonth, extraMonths],
+    () => calculateSalaryBreakdown({ monthlySalary, hoursPerDay, daysPerMonth, extraMonths, gosiType }),
+    [monthlySalary, hoursPerDay, daysPerMonth, extraMonths, gosiType],
   );
 
   const shareText = result.isValid
-    ? `الراتب الشهري: ${formatMoney(result.monthly)}\nاليومي: ${formatMoney(result.daily)}\nالساعي: ${formatMoney(result.hourly)}\nالسنوي: ${formatMoney(result.annual)}`
+    ? [
+        `الراتب الشهري (إجمالي): ${formatMoney(result.monthly)}`,
+        result.gosiMonthly > 0 ? `خصم التأمينات: ${formatMoney(result.gosiMonthly)}` : '',
+        result.gosiMonthly > 0 ? `الراتب الصافي: ${formatMoney(result.netMonthly)}` : '',
+        `اليومي: ${formatMoney(result.daily)}`,
+        `الساعي: ${formatMoney(result.hourly)}`,
+        `السنوي: ${formatMoney(result.annual)}`,
+      ].filter(Boolean).join('\n')
     : '';
 
   return (
@@ -49,7 +58,7 @@ export default function SalaryCalculator() {
               <div className="calc-esb-field">
                 <div className="calc-esb-field-label">
                   <span className="calc-esb-step">1</span>
-                  <Label htmlFor="salary-monthly">الراتب الشهري</Label>
+                  <Label htmlFor="salary-monthly">الراتب الشهري (إجمالي)</Label>
                 </div>
                 <div className="calc-esb-money-row">
                   <Input
@@ -70,9 +79,34 @@ export default function SalaryCalculator() {
                 />
               </div>
 
+              {/* GOSI / Social Insurance */}
               <div className="calc-esb-field">
                 <div className="calc-esb-field-label">
                   <span className="calc-esb-step">2</span>
+                  <Label>التأمينات الاجتماعية (اختياري)</Label>
+                </div>
+                <div className="calc-kbd-row" style={{ flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {Object.entries(GOSI_RATES).map(([key, cfg]) => (
+                    <button
+                      key={key}
+                      type="button"
+                      className={`chip calc-chip-button${gosiType === key ? ' is-active' : ''}`}
+                      onClick={() => setGosiType(key)}
+                    >
+                      {cfg.label}
+                    </button>
+                  ))}
+                </div>
+                <p className="calc-hint">
+                  {gosiType === 'saudi' && 'نسبة GOSI للموظف السعودي: 9.75% من الراتب الأساسي + غلاء المعيشة.'}
+                  {gosiType === 'uae' && 'نسبة GPSSA للمواطن الإماراتي: 5% من الراتب الأساسي.'}
+                  {gosiType === 'none' && 'اختر نظام التأمين لحساب الراتب الصافي بعد الخصم.'}
+                </p>
+              </div>
+
+              <div className="calc-esb-field">
+                <div className="calc-esb-field-label">
+                  <span className="calc-esb-step">3</span>
                   <Label>أيام العمل في الشهر</Label>
                 </div>
                 <div className="calc-kbd-row" style={{ flexWrap: 'wrap', gap: '0.5rem' }}>
@@ -99,7 +133,7 @@ export default function SalaryCalculator() {
 
               <div className="calc-esb-field">
                 <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">3</span>
+                  <span className="calc-esb-step">4</span>
                   <Label htmlFor="salary-hours">ساعات العمل اليومية</Label>
                 </div>
                 <Input
@@ -114,7 +148,7 @@ export default function SalaryCalculator() {
 
               <div className="calc-esb-field">
                 <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">4</span>
+                  <span className="calc-esb-step">5</span>
                   <Label htmlFor="salary-extra">شهور إضافية في السنة</Label>
                 </div>
                 <Input
@@ -137,27 +171,67 @@ export default function SalaryCalculator() {
             <div className="calc-result-hero-panel --green salary-result-panel" aria-live="polite">
 
               <div>
-                <span className="calc-result-hero-label">الراتب السنوي</span>
-                <div className="calc-result-hero-value">{formatMoney(result.annual)}</div>
+                <span className="calc-result-hero-label">
+                  {result.gosiMonthly > 0 ? 'الراتب الصافي الشهري' : 'الراتب السنوي'}
+                </span>
+                <div className="calc-result-hero-value">
+                  {result.gosiMonthly > 0 ? formatMoney(result.netMonthly) : formatMoney(result.annual)}
+                </div>
                 <div className="calc-result-hero-meta">
-                  <span>{formatNumber(result.extraMonths > 0 ? 12 + result.extraMonths : 12)} شهراً</span>
-                  {result.extraMonths > 0 && (
+                  {result.gosiMonthly > 0 ? (
+                    <span>بعد خصم {formatMoney(result.gosiMonthly)} تأمينات شهرياً</span>
+                  ) : (
                     <>
-                      <span className="calc-esb-sep">·</span>
-                      <span>يشمل {formatNumber(result.extraMonths)} شهر إضافي</span>
+                      <span>{formatNumber(result.extraMonths > 0 ? 12 + result.extraMonths : 12)} شهراً</span>
+                      {result.extraMonths > 0 && (
+                        <>
+                          <span className="calc-esb-sep">·</span>
+                          <span>يشمل {formatNumber(result.extraMonths)} شهر إضافي</span>
+                        </>
+                      )}
                     </>
                   )}
                 </div>
               </div>
 
               <div className="calc-esb-breakdown">
-                <div className="calc-esb-brow">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                    <CalendarBlank size={14} weight="bold" />
-                    كل أسبوع
-                  </span>
-                  <strong>{formatMoney(result.weekly)}</strong>
-                </div>
+                {result.gosiMonthly > 0 && (
+                  <>
+                    <div className="calc-esb-brow">
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                        <CurrencyDollar size={14} weight="bold" />
+                        الراتب الإجمالي
+                      </span>
+                      <strong>{formatMoney(result.monthly)}</strong>
+                    </div>
+                    <div className="calc-esb-brow" style={{ color: 'var(--text-secondary)' }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                        <Minus size={14} weight="bold" />
+                        {GOSI_RATES[result.gosiType]?.label || 'تأمينات'}
+                      </span>
+                      <strong style={{ color: '#ef4444' }}>−{formatMoney(result.gosiMonthly)}</strong>
+                    </div>
+                    <div className="calc-esb-brow calc-esb-brow--total">
+                      <span>الصافي شهرياً</span>
+                      <strong>{formatMoney(result.netMonthly)}</strong>
+                    </div>
+                    <div className="calc-esb-brow">
+                      <span>الصافي سنوياً</span>
+                      <strong>{formatMoney(result.netAnnual)}</strong>
+                    </div>
+                  </>
+                )}
+
+                {!result.gosiMonthly && (
+                  <div className="calc-esb-brow">
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      <CalendarBlank size={14} weight="bold" />
+                      كل أسبوع
+                    </span>
+                    <strong>{formatMoney(result.weekly)}</strong>
+                  </div>
+                )}
+
                 <div className="calc-esb-brow">
                   <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                     <CalendarBlank size={14} weight="bold" />
@@ -172,7 +246,7 @@ export default function SalaryCalculator() {
                   </span>
                   <strong>{formatMoney(result.daily)}</strong>
                 </div>
-                <div className="calc-esb-brow calc-esb-brow--total">
+                <div className="calc-esb-brow" style={result.gosiMonthly ? {} : { borderBottom: '2px solid var(--border-subtle)', paddingBottom: '0.75rem' }}>
                   <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                     <Clock size={14} weight="bold" />
                     {`كل ساعة (${formatNumber(result.hoursPerDay)} ساعة/يوم)`}

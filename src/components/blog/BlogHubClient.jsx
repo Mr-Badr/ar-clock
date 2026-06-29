@@ -605,7 +605,9 @@ export default function BlogHubClient(props) {
                     </span>
                   </Link>
                   {(index + 1) % 4 === 0 ? (
-                    <AdInFeed slotId={`blog-list-in-feed-${Math.floor(index / 4) + 1}`} slotKey="inFeedBlog" />
+                    <div style={{ gridColumn: '1 / -1', paddingBlock: '0.5rem' }}>
+                      <AdInFeed slotId={`blog-list-in-feed-${Math.floor(index / 4) + 1}`} slotKey="inFeedBlog" />
+                    </div>
                   ) : null}
                 </Fragment>
               ))}

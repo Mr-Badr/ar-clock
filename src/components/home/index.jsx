@@ -56,15 +56,22 @@ import SectionCalculators  from './SectionCalculators'
 import SectionSEOArticle   from './SectionSEOArticle'
 import SectionCitiesGrid   from './SectionCitiesGrid'
 import SectionFAQ          from './SectionFAQ'
+import SectionTrustBar     from './SectionTrustBar'
+import AdInArticle         from '@/components/ads/AdInArticle'
+import AdMultiplex         from '@/components/ads/AdMultiplex'
 
 export default function HomeSections() {
   return (
     <>
+      <SectionTrustBar />
       <SectionStartHere />
 
       <Suspense fallback={<SectionSkeleton />}>
         <SectionPrayerTimes />
       </Suspense>
+
+      {/* Ad between major feature sections — user has scrolled past hero+prayer block */}
+      <AdInArticle slotId="home-mid-1" />
 
       <SectionTimeDifference />
 
@@ -72,11 +79,17 @@ export default function HomeSections() {
         <SectionHolidays />
       </Suspense>
 
+      {/* Second mid-page ad — after 3 feature sections, deep enough in scroll */}
+      <AdInArticle slotId="home-mid-2" />
+
       <SectionCalculators />
 
       <SectionSEOArticle />
 
       <SectionFAQ />
+
+      {/* Multiplex at page bottom — maximum content depth, highest viewability */}
+      <AdMultiplex slotId="home-bottom" />
 
       <SectionCitiesGrid />
     </>
@@ -92,3 +105,4 @@ export { default as SectionCalculators }   from './SectionCalculators'
 export { default as SectionSEOArticle }    from './SectionSEOArticle'
 export { default as SectionCitiesGrid }    from './SectionCitiesGrid'
 export { default as SectionFAQ }           from './SectionFAQ'
+export { default as SectionTrustBar }      from './SectionTrustBar'
