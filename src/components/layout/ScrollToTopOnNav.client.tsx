@@ -6,18 +6,32 @@ import { usePathname } from "next/navigation";
 /**
  * Scrolls the window to (0,0) on every client-side navigation.
  *
- * Mounted early (in the hydrated phase of ClientRuntimeMounts) so it
- * fires before the idle-deferred ads/analytics. This counteracts two
- * sources of unwanted scroll position on navigation:
- *  1. Radix UI accordion/collapsible triggering scrollIntoView on mount.
- *  2. Browser scroll-restoration interfering with Next.js App Router.
+ * Uses double-RAF so the scroll fires AFTER all component effects (including
+ * Radix UI accordion/tabs which call scrollIntoView on mount), preventing
+ * them from overriding us. Also disables browser scroll-restoration so the
+ * browser doesn't interfere on back/forward navigation.
  */
 export default function ScrollToTopOnNav() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Use instant scroll (not smooth) so the user never sees a fly-down.
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    if (typeof history !== "undefined") {
+      history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  useEffect(() => {
+    let raf1: number;
+    let raf2: number;
+    raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
   }, [pathname]);
 
   return null;

@@ -10,5 +10,5 @@ export default function CurrentTime() {
 
   if (!nowISO) return null; // or a placeholder
 
-  return <time dateTime={nowISO}>{new Date(nowISO).toLocaleString("ar-EG")}</time>;
+  return <time dateTime={nowISO}>{new Date(nowISO).toLocaleString("ar-EG-u-nu-latn")}</time>;
 }

@@ -10,7 +10,7 @@ const COUNTRIES = [
 ];
 
 function formatDateAr(date) {
-  return date.toLocaleDateString('ar-SA', {
+  return date.toLocaleDateString('ar-SA-u-nu-latn', {
     year: 'numeric', month: 'long', day: 'numeric', calendar: 'gregory',
   });
 }
@@ -22,7 +22,7 @@ function CountdownBlock({ days, label, color }) {
   const d = absD % 30;
   return (
     <div className="text-center">
-      <div className="text-4xl font-bold tabular-nums" style={{ color }}>{absD.toLocaleString('ar-SA')}</div>
+      <div className="text-4xl font-bold tabular-nums" style={{ color }}>{absD.toLocaleString('ar-SA-u-nu-latn')}</div>
       <div className="text-sm text-muted-foreground mt-1">{label}</div>
       {absD > 60 && (
         <div className="text-xs text-muted-foreground mt-0.5">
@@ -150,7 +150,7 @@ export default function IqamaCalculator() {
                   <div className="text-center border-t pt-3">
                     <div className="text-sm text-muted-foreground mb-1">الغرامة المتراكمة التقديرية</div>
                     <div className="text-2xl font-bold text-red-600">
-                      {result.estimatedFine.toLocaleString('ar-SA')} {result.visaType.fineCurrency}
+                      {result.estimatedFine.toLocaleString('ar-SA-u-nu-latn')} {result.visaType.fineCurrency}
                     </div>
                     <div className="text-xs text-muted-foreground mt-1">
                       {result.visaType.finePerDay} {result.visaType.fineCurrency} × {result.daysOverstayed} يوم
@@ -193,9 +193,9 @@ export default function IqamaCalculator() {
       )}
       {result && (
         <ResultActions
-          copyText={`حاسبة الإقامة — ${result.visaType.label}: تنتهي ${formatDateAr(result.expiryDate)}${result.estimatedFine > 0 ? ` | الغرامة التقديرية: ${result.estimatedFine.toLocaleString('ar-SA')} ${result.visaType.fineCurrency}` : ''}`}
+          copyText={`حاسبة الإقامة — ${result.visaType.label}: تنتهي ${formatDateAr(result.expiryDate)}${result.estimatedFine > 0 ? ` | الغرامة التقديرية: ${result.estimatedFine.toLocaleString('ar-SA-u-nu-latn')} ${result.visaType.fineCurrency}` : ''}`}
           shareTitle="نتيجة حاسبة الإقامة"
-          shareText={`${result.visaType.label}: تنتهي ${formatDateAr(result.expiryDate)}${result.estimatedFine > 0 ? ` — الغرامة: ${result.estimatedFine.toLocaleString('ar-SA')} ${result.visaType.fineCurrency}` : ''}`}
+          shareText={`${result.visaType.label}: تنتهي ${formatDateAr(result.expiryDate)}${result.estimatedFine > 0 ? ` — الغرامة: ${result.estimatedFine.toLocaleString('ar-SA-u-nu-latn')} ${result.visaType.fineCurrency}` : ''}`}
         />
       )}
     </div>

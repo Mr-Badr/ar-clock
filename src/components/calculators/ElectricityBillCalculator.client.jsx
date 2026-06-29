@@ -87,7 +87,7 @@ export default function ElectricityBillCalculator() {
               onClick={() => setKWhInput(String(p))}
               className={`px-3 py-1 rounded text-xs border transition-colors ${kWh === p ? 'bg-primary text-primary-foreground border-primary' : 'bg-muted hover:bg-muted/70 border-border'}`}
             >
-              {p.toLocaleString('ar-SA')} kWh
+              {p.toLocaleString('ar-SA-u-nu-latn')} kWh
             </button>
           ))}
         </div>
@@ -113,7 +113,7 @@ export default function ElectricityBillCalculator() {
             {result.tierBreakdown.map((tier, i) => (
               <div key={i} className="flex justify-between items-center px-5 py-3 text-sm">
                 <span className="text-muted-foreground">
-                  {tier.consumed.toLocaleString('ar-SA')} kWh × {tier.rate} {result.currency}
+                  {tier.consumed.toLocaleString('ar-SA-u-nu-latn')} kWh × {tier.rate} {result.currency}
                 </span>
                 <span className="font-medium">{formatBillAmount(tier.charge, result.currency)}</span>
               </div>
@@ -176,9 +176,9 @@ export default function ElectricityBillCalculator() {
       )}
       {result && (
         <ResultActions
-          copyText={`فاتورة الكهرباء التقديرية — ${kWh.toLocaleString('ar-SA')} kWh: ${formatBillAmount(result.total, result.currency)} (شاملة الضريبة)`}
+          copyText={`فاتورة الكهرباء التقديرية — ${kWh.toLocaleString('ar-SA-u-nu-latn')} kWh: ${formatBillAmount(result.total, result.currency)} (شاملة الضريبة)`}
           shareTitle="نتيجة حاسبة فاتورة الكهرباء"
-          shareText={`استهلاك ${kWh.toLocaleString('ar-SA')} kWh — الفاتورة الإجمالية: ${formatBillAmount(result.total, result.currency)}`}
+          shareText={`استهلاك ${kWh.toLocaleString('ar-SA-u-nu-latn')} kWh — الفاتورة الإجمالية: ${formatBillAmount(result.total, result.currency)}`}
         />
       )}
     </div>

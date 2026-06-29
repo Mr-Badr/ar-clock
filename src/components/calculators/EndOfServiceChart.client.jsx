@@ -17,7 +17,7 @@ import {
 
 function fmt(n) {
   if (n == null || Number.isNaN(n)) return '—';
-  return n.toLocaleString('ar-EG', { style: 'currency', currency: 'SAR', maximumFractionDigits: 0 });
+  return n.toLocaleString('ar-EG-u-nu-latn', { style: 'currency', currency: 'SAR', maximumFractionDigits: 0 });
 }
 
 function pct(n) {

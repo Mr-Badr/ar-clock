@@ -12,7 +12,7 @@ const CURRENCY = [
 ];
 
 function formatMoney(v, cur) {
-  return v.toLocaleString('ar-SA', { style: 'currency', currency: cur, maximumFractionDigits: 0 });
+  return v.toLocaleString('ar-SA-u-nu-latn', { style: 'currency', currency: cur, maximumFractionDigits: 0 });
 }
 
 const HEIR_COLORS = {
@@ -205,7 +205,7 @@ export default function InheritanceCalculator() {
           <div className="bg-primary/5 px-5 py-4 border-b">
             <div className="text-sm font-medium mb-0.5">توزيع الإرث</div>
             <div className="text-xs text-muted-foreground">
-              التركة: {estate.toLocaleString('ar-SA')} {currency}
+              التركة: {estate.toLocaleString('ar-SA-u-nu-latn')} {currency}
               {result.awl && ' — (مُعال: تجاوزت الفروض التركة وتم التوزيع بالتناسب)'}
             </div>
           </div>

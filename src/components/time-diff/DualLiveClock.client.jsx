@@ -32,7 +32,7 @@ function fmtClock(h, m, s) {
 
 function localDateStr(tz) {
   try {
-    return new Date().toLocaleDateString('ar-EG', {
+    return new Date().toLocaleDateString('ar-EG-u-nu-latn', {
       timeZone: tz, weekday: 'long', day: 'numeric', month: 'long',
     });
   } catch { return ''; }
