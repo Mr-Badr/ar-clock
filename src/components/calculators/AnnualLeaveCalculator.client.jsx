@@ -51,7 +51,7 @@ export default function AnnualLeaveCalculator() {
 
         {/* ── FORM ─────────────────────────────────── */}
         <div className="calc-esb-form-col">
-          <div className="calc-surface-card calc-esb-form-card" style={{ borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-subtle)', background: 'var(--bg-surface-1)' }}>
+          <div className="calc-surface-card calc-esb-form-card">
             <div className="calc-esb-form-body">
 
               {/* Country selector */}
@@ -184,21 +184,21 @@ export default function AnnualLeaveCalculator() {
 
               <div className="calc-esb-breakdown">
                 <div className="calc-esb-brow">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <span className="calc-icon-label">
                     <CalendarBlank size={14} weight="bold" />
                     الاستحقاق السنوي
                   </span>
                   <strong>{formatNumber(result.entitledDays)} يوم</strong>
                 </div>
                 <div className="calc-esb-brow">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <span className="calc-icon-label">
                     <CalendarCheck size={14} weight="bold" />
                     يتراكم شهرياً
                   </span>
                   <strong>{result.accrualPerMonth.toFixed(2)} يوم/شهر</strong>
                 </div>
                 <div className="calc-esb-brow">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <span className="calc-icon-label">
                     <CurrencyDollar size={14} weight="bold" />
                     الأجر اليومي
                   </span>

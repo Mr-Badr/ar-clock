@@ -75,7 +75,7 @@ export default function ZakatCalculator() {
 
         {/* ── FORM ─────────────────────────────────── */}
         <div className="calc-esb-form-col">
-          <div className="calc-surface-card calc-esb-form-card" style={{ borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-subtle)', background: 'var(--bg-surface-1)' }}>
+          <div className="calc-surface-card calc-esb-form-card">
             <div className="calc-esb-form-body">
 
               {/* Currency */}
@@ -92,7 +92,7 @@ export default function ZakatCalculator() {
                 />
                 <div className="zakat-price-row">
                   <div>
-                    <Label htmlFor="zakat-gold-price" className="calc-hint" style={{ marginBottom: '0.3rem', display: 'block' }}>
+                    <Label htmlFor="zakat-gold-price" className="calc-hint">
                       سعر جرام الذهب
                     </Label>
                     <Input
@@ -104,7 +104,7 @@ export default function ZakatCalculator() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="zakat-silver-price" className="calc-hint" style={{ marginBottom: '0.3rem', display: 'block' }}>
+                    <Label htmlFor="zakat-silver-price" className="calc-hint">
                       سعر جرام الفضة
                     </Label>
                     <Input
@@ -155,12 +155,12 @@ export default function ZakatCalculator() {
                 </div>
                 <div className="zakat-price-row">
                   <div>
-                    <Label htmlFor="zakat-gold" className="calc-hint" style={{ marginBottom: '0.3rem', display: 'block' }}>ذهب (جرام)</Label>
+                    <Label htmlFor="zakat-gold" className="calc-hint">ذهب (جرام)</Label>
                     <Input id="zakat-gold" inputMode="decimal" value={goldGrams} onChange={(e) => setGoldGrams(e.target.value)} placeholder="0" />
                     <p className="calc-hint">نصاب: {ZAKAT_NISAB_GOLD_GRAMS} جرام</p>
                   </div>
                   <div>
-                    <Label htmlFor="zakat-silver" className="calc-hint" style={{ marginBottom: '0.3rem', display: 'block' }}>فضة (جرام)</Label>
+                    <Label htmlFor="zakat-silver" className="calc-hint">فضة (جرام)</Label>
                     <Input id="zakat-silver" inputMode="decimal" value={silverGrams} onChange={(e) => setSilverGrams(e.target.value)} placeholder="0" />
                     <p className="calc-hint">نصاب: {ZAKAT_NISAB_SILVER_GRAMS} جرام</p>
                   </div>
@@ -258,7 +258,7 @@ export default function ZakatCalculator() {
                   </div>
                 ))}
                 {result.breakdown?.debts > 0 && (
-                  <div className="calc-esb-brow" style={{ color: 'var(--danger)' }}>
+                  <div className="calc-esb-brow calc-esb-brow--neg">
                     <span>الديون المخصومة</span>
                     <strong>- {formatMoney(result.breakdown.debts)}</strong>
                   </div>
@@ -271,20 +271,18 @@ export default function ZakatCalculator() {
 
               {/* Asset distribution bars */}
               {result.netZakatable > 0 && breakdownItems.some(i => (i.value || 0) > 0) && (
-                <div style={{ marginTop: '0.5rem' }}>
-                  <p style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                    توزيع الأصول
-                  </p>
+                <div className="zakat-asset-bars">
+                  <p className="zakat-asset-bars__heading">توزيع الأصول</p>
                   {breakdownItems.filter(i => (i.value || 0) > 0).map((item) => {
                     const pct = Math.round(((item.value || 0) / result.netZakatable) * 100);
                     return (
-                      <div key={item.key} style={{ marginBottom: '0.4rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', marginBottom: '0.15rem' }}>
-                          <span style={{ color: 'var(--text-secondary)' }}>{item.label}</span>
-                          <span style={{ fontWeight: 700 }}>{pct}%</span>
+                      <div key={item.key} className="zakat-bar-item">
+                        <div className="zakat-bar-meta">
+                          <span>{item.label}</span>
+                          <span className="zakat-bar-pct">{pct}%</span>
                         </div>
-                        <div style={{ height: '6px', borderRadius: '3px', background: 'var(--border-subtle)', overflow: 'hidden' }}>
-                          <div style={{ height: '100%', width: `${Math.min(pct, 100)}%`, background: 'var(--accent)', borderRadius: '3px', transition: 'width 0.4s ease' }} />
+                        <div className="zakat-bar-track">
+                          <div className="zakat-bar-fill" style={{ width: `${Math.min(pct, 100)}%` }} />
                         </div>
                       </div>
                     );

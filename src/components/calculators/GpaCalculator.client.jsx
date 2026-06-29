@@ -126,14 +126,7 @@ export default function GpaCalculator() {
 
         {/* ── LEFT: Subject table ─────────────────── */}
         <div className="calc-esb-form-col">
-          <div
-            className="calc-surface-card calc-esb-form-card"
-            style={{
-              borderRadius: 'var(--radius-lg)',
-              border: '1px solid var(--border-subtle)',
-              background: 'var(--bg-surface-1)',
-            }}
-          >
+          <div className="calc-surface-card calc-esb-form-card">
             <div className="calc-esb-form-body">
 
               <div className="calc-esb-field">
@@ -206,19 +199,19 @@ export default function GpaCalculator() {
 
               {/* Cumulative / plan inputs */}
               {(tab === 'cumulative' || tab === 'plan') && (
-                <div className="calc-esb-field" style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '1rem' }}>
+                <div className="calc-esb-field calc-esb-field--sep">
                   <div className="calc-esb-field-label">
                     <span className="calc-esb-step">2</span>
                     <Label>المعدل التراكمي السابق</Label>
                   </div>
                   <div className="gpa-prior-row">
                     <div>
-                      <Label htmlFor="gpa-prior" className="calc-hint" style={{ display: 'block', marginBottom: '0.3rem' }}>المعدل الحالي</Label>
+                      <Label htmlFor="gpa-prior" className="calc-hint">المعدل الحالي</Label>
                       <input
                         id="gpa-prior"
                         type="number"
                         inputMode="decimal"
-                        className="gpa-input"
+                        className="gpa-input gpa-input--sm"
                         value={priorGpa}
                         placeholder={`0–${system.max}`}
                         min="0"
@@ -226,22 +219,20 @@ export default function GpaCalculator() {
                         step="0.01"
                         onChange={(e) => setPriorGpa(e.target.value)}
                         dir="ltr"
-                        style={{ width: '7rem' }}
                       />
                     </div>
                     <div>
-                      <Label htmlFor="gpa-prior-hours" className="calc-hint" style={{ display: 'block', marginBottom: '0.3rem' }}>ساعات مجتازة</Label>
+                      <Label htmlFor="gpa-prior-hours" className="calc-hint">ساعات مجتازة</Label>
                       <input
                         id="gpa-prior-hours"
                         type="number"
                         inputMode="numeric"
-                        className="gpa-input"
+                        className="gpa-input gpa-input--sm"
                         value={priorHours}
                         placeholder="80"
                         min="0"
                         onChange={(e) => setPriorHours(e.target.value)}
                         dir="ltr"
-                        style={{ width: '7rem' }}
                       />
                     </div>
                   </div>
@@ -256,12 +247,12 @@ export default function GpaCalculator() {
                   </div>
                   <div className="gpa-prior-row">
                     <div>
-                      <Label htmlFor="gpa-target" className="calc-hint" style={{ display: 'block', marginBottom: '0.3rem' }}>المعدل المستهدف</Label>
+                      <Label htmlFor="gpa-target" className="calc-hint">المعدل المستهدف</Label>
                       <input
                         id="gpa-target"
                         type="number"
                         inputMode="decimal"
-                        className="gpa-input"
+                        className="gpa-input gpa-input--sm"
                         value={targetGpa}
                         placeholder={`${system.max}`}
                         min="0"
@@ -269,22 +260,20 @@ export default function GpaCalculator() {
                         step="0.01"
                         onChange={(e) => setTargetGpa(e.target.value)}
                         dir="ltr"
-                        style={{ width: '7rem' }}
                       />
                     </div>
                     <div>
-                      <Label htmlFor="gpa-planned-hours" className="calc-hint" style={{ display: 'block', marginBottom: '0.3rem' }}>ساعات الفصل القادم</Label>
+                      <Label htmlFor="gpa-planned-hours" className="calc-hint">ساعات الفصل القادم</Label>
                       <input
                         id="gpa-planned-hours"
                         type="number"
                         inputMode="numeric"
-                        className="gpa-input"
+                        className="gpa-input gpa-input--sm"
                         value={plannedHours}
                         placeholder="12"
                         min="1"
                         onChange={(e) => setPlannedHours(e.target.value)}
                         dir="ltr"
-                        style={{ width: '7rem' }}
                       />
                     </div>
                   </div>
@@ -300,7 +289,7 @@ export default function GpaCalculator() {
 
           {!semResult.isValid && (
             <div className="calc-esb-empty-state">
-              <GraduationCap size={32} weight="duotone" style={{ color: 'var(--blue)' }} />
+              <GraduationCap size={36} weight="duotone" />
               <p>أدخل درجات مواد الفصل لحساب معدلك.</p>
             </div>
           )}
@@ -309,16 +298,14 @@ export default function GpaCalculator() {
             <div className="calc-result-hero-panel --blue gpa-result" aria-live="polite">
 
               {/* Semester GPA */}
-              <div style={{ textAlign: 'center' }}>
+              <div className="text-center">
                 <span className="calc-result-hero-label">معدل الفصل GPA</span>
                 <div
                   className="calc-result-hero-value"
                   style={{ color: classification?.color ?? 'var(--blue)', fontSize: '2.5rem' }}
                 >
                   {semResult.gpa.toFixed(2)}
-                  <span style={{ fontSize: '1rem', color: 'var(--fg-subtle)', marginRight: '0.4rem' }}>
-                    / {system.max}
-                  </span>
+                  <span className="gpa-result-max">/ {system.max}</span>
                 </div>
                 {classification && (
                   <span
@@ -327,8 +314,6 @@ export default function GpaCalculator() {
                       background: `${classification.color}20`,
                       color: classification.color,
                       border: `1px solid ${classification.color}40`,
-                      display: 'inline-block',
-                      marginTop: '0.35rem',
                     }}
                   >
                     {classification.label} · {classification.labelEn}
@@ -361,14 +346,7 @@ export default function GpaCalculator() {
                 {/* Plan result */}
                 {tab === 'plan' && planResult && (
                   <div
-                    className="calc-esb-brow calc-esb-brow--total"
-                    style={{
-                      background: planResult.isAchievable && planResult.required <= system.max
-                        ? 'var(--green-subtle)'
-                        : 'var(--red-subtle)',
-                      borderRadius: 'var(--radius)',
-                      padding: '0.5rem 0.75rem',
-                    }}
+                    className={`calc-esb-brow calc-esb-brow--total ${planResult.isAchievable && planResult.required <= system.max ? 'calc-esb-brow--success' : 'calc-esb-brow--error'}`}
                   >
                     <span>الدرجة المطلوبة في الفصل القادم</span>
                     <strong>

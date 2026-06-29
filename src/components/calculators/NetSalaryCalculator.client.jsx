@@ -12,8 +12,6 @@ const NATIONALITY_OPTIONS = [
   { id: 'nonSaudi', label: 'غير سعودي' },
 ];
 
-const NUM_STYLE = { direction: 'ltr', textAlign: 'right', width: '100%' };
-
 export default function NetSalaryCalculator() {
   const [basicSalary, setBasicSalary] = useState('8000');
   const [housingAllowance, setHousingAllowance] = useState('2000');
@@ -39,14 +37,7 @@ export default function NetSalaryCalculator() {
 
         {/* ── FORM ─────────────────────────────────── */}
         <div className="calc-esb-form-col">
-          <div
-            className="calc-surface-card calc-esb-form-card"
-            style={{
-              borderRadius: 'var(--radius-lg)',
-              border: '1px solid var(--border-subtle)',
-              background: 'var(--bg-surface-1)',
-            }}
-          >
+          <div className="calc-surface-card calc-esb-form-card">
             <div className="calc-esb-form-body">
 
               {/* Nationality */}
@@ -55,7 +46,7 @@ export default function NetSalaryCalculator() {
                   <span className="calc-esb-step">1</span>
                   <Label>الجنسية</Label>
                 </div>
-                <div className="calc-kbd-row" style={{ gap: '0.5rem' }}>
+                <div className="calc-kbd-row gap-2">
                   {NATIONALITY_OPTIONS.map((opt) => (
                     <button
                       key={opt.id}
@@ -86,7 +77,7 @@ export default function NetSalaryCalculator() {
                     value={basicSalary}
                     onChange={(e) => setBasicSalary(e.target.value)}
                     placeholder="8000"
-                    style={NUM_STYLE}
+                    dir="ltr"
                   />
                   <span className="calc-esb-currency">ريال</span>
                 </div>
@@ -107,7 +98,7 @@ export default function NetSalaryCalculator() {
                     value={housingAllowance}
                     onChange={(e) => setHousingAllowance(e.target.value)}
                     placeholder="0"
-                    style={NUM_STYLE}
+                    dir="ltr"
                   />
                   <span className="calc-esb-currency">ريال</span>
                 </div>
@@ -129,7 +120,7 @@ export default function NetSalaryCalculator() {
                     value={otherAllowances}
                     onChange={(e) => setOtherAllowances(e.target.value)}
                     placeholder="0"
-                    style={NUM_STYLE}
+                    dir="ltr"
                   />
                   <span className="calc-esb-currency">ريال</span>
                 </div>
@@ -143,8 +134,8 @@ export default function NetSalaryCalculator() {
         {/* ── RESULTS ─────────────────────────────── */}
         <div className="calc-esb-result-col">
           {!result && (
-            <div className="pregnancy-empty-state" style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)' }}>
-              <CurrencyDollar size={48} weight="duotone" color="var(--color-accent)" style={{ marginBottom: '0.75rem' }} />
+            <div className="calc-empty-state">
+              <CurrencyDollar size={48} weight="duotone" className="calc-empty-state__icon" />
               <p>أدخل الراتب الأساسي لحساب صافي الراتب</p>
             </div>
           )}
@@ -152,64 +143,52 @@ export default function NetSalaryCalculator() {
           {result?.isValid && (
             <>
               {/* Net salary highlight */}
-              <div
-                className="calc-surface-card"
-                style={{
-                  borderRadius: 'var(--radius-lg)',
-                  border: '2px solid var(--green)',
-                  background: 'var(--green-subtle)',
-                  padding: '1.5rem',
-                  textAlign: 'center',
-                  marginBottom: '1rem',
-                }}
-              >
-                <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>
-                  صافي الراتب بعد خصم GOSI
-                </div>
-                <div style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--green)', lineHeight: 1 }}>
+              <div className="calc-result-hero">
+                <div className="calc-result-hero__label">صافي الراتب بعد خصم GOSI</div>
+                <div className="calc-result-hero__number">
                   {formatSAR(result.netSalary)}
-                  <span style={{ fontSize: '1.1rem', fontWeight: 500, marginRight: '0.4rem' }}>ريال</span>
+                  <span className="calc-result-hero__unit">ريال</span>
                 </div>
               </div>
 
               {/* Breakdown */}
-              <div style={{ display: 'grid', gap: '0.5rem', marginBottom: '1rem' }}>
-                <div className="calc-result-chip" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span className="chip-label">الراتب الإجمالي</span>
-                  <span className="chip-value">{formatSAR(result.grossSalary)} ريال</span>
+              <div className="calc-breakdown">
+                <div className="calc-breakdown-row">
+                  <span className="calc-breakdown-row__label">الراتب الإجمالي</span>
+                  <span className="calc-breakdown-row__value">{formatSAR(result.grossSalary)} ريال</span>
                 </div>
-                <div className="calc-result-chip" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span className="chip-label">وعاء GOSI (أساسي + سكن)</span>
-                  <span className="chip-value">{formatSAR(result.gosiBase)} ريال{result.isCapped ? ' (محدود)' : ''}</span>
+                <div className="calc-breakdown-row">
+                  <span className="calc-breakdown-row__label">وعاء GOSI (أساسي + سكن)</span>
+                  <span className="calc-breakdown-row__value">{formatSAR(result.gosiBase)} ريال{result.isCapped ? ' (محدود)' : ''}</span>
                 </div>
-                <div className="calc-result-chip" style={{ display: 'flex', justifyContent: 'space-between', borderColor: 'var(--destructive)', background: 'var(--destructive-subtle)' }}>
-                  <span className="chip-label" style={{ color: 'var(--destructive)' }}>
+                <div className="calc-breakdown-row calc-breakdown-row--neg">
+                  <span className="calc-breakdown-row__label">
                     خصم GOSI ({(result.gosiRate.employee * 100).toFixed(0)}%)
                   </span>
-                  <span className="chip-value" style={{ color: 'var(--destructive)' }}>
+                  <span className="calc-breakdown-row__value">
                     − {formatSAR(result.gosiEmployee)} ريال
                   </span>
                 </div>
-                <div className="calc-result-chip" style={{ display: 'flex', justifyContent: 'space-between', borderColor: 'var(--blue)', background: 'var(--blue-subtle)' }}>
-                  <span className="chip-label" style={{ color: 'var(--blue)' }}>
+                <div className="calc-breakdown-row calc-breakdown-row--info">
+                  <span className="calc-breakdown-row__label">
                     حصة صاحب العمل في GOSI ({(result.gosiRate.employer * 100).toFixed(1)}%)
                   </span>
-                  <span className="chip-value" style={{ color: 'var(--blue)' }}>
+                  <span className="calc-breakdown-row__value">
                     {formatSAR(result.gosiEmployer)} ريال
                   </span>
                 </div>
               </div>
 
               {result.isCapped && (
-                <div style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem', background: 'var(--bg-surface-2)', borderRadius: 'var(--radius-md)', marginBottom: '0.75rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                  <Info size={16} style={{ flexShrink: 0, marginTop: '2px' }} />
+                <div className="calc-notice">
+                  <Info size={16} className="calc-notice__icon" />
                   <span>الراتب يتجاوز السقف الأعلى لـ GOSI ({formatSAR(GOSI_WAGE_CEILING)} ريال) — احتُسب الخصم على الحد الأقصى فقط.</span>
                 </div>
               )}
 
               {nationality === 'nonSaudi' && (
-                <div style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem', background: 'var(--bg-surface-2)', borderRadius: 'var(--radius-md)', marginBottom: '0.75rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                  <Info size={16} style={{ flexShrink: 0, marginTop: '2px' }} />
+                <div className="calc-notice">
+                  <Info size={16} className="calc-notice__icon" />
                   <span>الموظفون غير السعوديين لا يُخصم منهم GOSI — الصافي يساوي الإجمالي. يدفع صاحب العمل 2% للتأمين ضد إصابات العمل.</span>
                 </div>
               )}

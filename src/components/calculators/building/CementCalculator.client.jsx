@@ -118,7 +118,7 @@ export default function CementCalculator() {
               </p>
             </div>
 
-            <div className="calc-metric-grid calc-grid-3">
+            <div className="calc-building-metrics">
               <div className="calc-metric-card">
                 <div className="calc-metric-card__label">
                   <Waves size={15} />

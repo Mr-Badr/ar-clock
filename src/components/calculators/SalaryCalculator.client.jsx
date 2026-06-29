@@ -52,7 +52,7 @@ export default function SalaryCalculator() {
 
         {/* ── FORM ─────────────────────────────────── */}
         <div className="calc-esb-form-col">
-          <div className="calc-surface-card calc-esb-form-card" style={{ borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-subtle)', background: 'var(--bg-surface-1)', overflow: 'hidden' }}>
+          <div className="calc-surface-card calc-esb-form-card">
             <div className="calc-esb-form-body">
 
               <div className="calc-esb-field">
@@ -85,7 +85,7 @@ export default function SalaryCalculator() {
                   <span className="calc-esb-step">2</span>
                   <Label>التأمينات الاجتماعية (اختياري)</Label>
                 </div>
-                <div className="calc-kbd-row" style={{ flexWrap: 'wrap', gap: '0.5rem' }}>
+                <div className="calc-kbd-row">
                   {Object.entries(GOSI_RATES).map(([key, cfg]) => (
                     <button
                       key={key}
@@ -109,7 +109,7 @@ export default function SalaryCalculator() {
                   <span className="calc-esb-step">3</span>
                   <Label>أيام العمل في الشهر</Label>
                 </div>
-                <div className="calc-kbd-row" style={{ flexWrap: 'wrap', gap: '0.5rem' }}>
+                <div className="calc-kbd-row">
                   {DAY_PRESETS.map((preset) => (
                     <button
                       key={preset.value}
@@ -198,18 +198,18 @@ export default function SalaryCalculator() {
                 {result.gosiMonthly > 0 && (
                   <>
                     <div className="calc-esb-brow">
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      <span className="calc-icon-label">
                         <CurrencyDollar size={14} weight="bold" />
                         الراتب الإجمالي
                       </span>
                       <strong>{formatMoney(result.monthly)}</strong>
                     </div>
-                    <div className="calc-esb-brow" style={{ color: 'var(--text-secondary)' }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <div className="calc-esb-brow calc-esb-brow--neg">
+                      <span className="calc-icon-label">
                         <Minus size={14} weight="bold" />
                         {GOSI_RATES[result.gosiType]?.label || 'تأمينات'}
                       </span>
-                      <strong style={{ color: '#ef4444' }}>−{formatMoney(result.gosiMonthly)}</strong>
+                      <strong>−{formatMoney(result.gosiMonthly)}</strong>
                     </div>
                     <div className="calc-esb-brow calc-esb-brow--total">
                       <span>الصافي شهرياً</span>
@@ -224,7 +224,7 @@ export default function SalaryCalculator() {
 
                 {!result.gosiMonthly && (
                   <div className="calc-esb-brow">
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <span className="calc-icon-label">
                       <CalendarBlank size={14} weight="bold" />
                       كل أسبوع
                     </span>
@@ -233,21 +233,21 @@ export default function SalaryCalculator() {
                 )}
 
                 <div className="calc-esb-brow">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <span className="calc-icon-label">
                     <CalendarBlank size={14} weight="bold" />
                     كل نصف شهر
                   </span>
                   <strong>{formatMoney(result.semiMonthly)}</strong>
                 </div>
                 <div className="calc-esb-brow">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <span className="calc-icon-label">
                     <Briefcase size={14} weight="bold" />
                     {`كل يوم (من ${formatNumber(result.daysPerMonth)} يوم)`}
                   </span>
                   <strong>{formatMoney(result.daily)}</strong>
                 </div>
-                <div className="calc-esb-brow" style={result.gosiMonthly ? {} : { borderBottom: '2px solid var(--border-subtle)', paddingBottom: '0.75rem' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <div className="calc-esb-brow">
+                  <span className="calc-icon-label">
                     <Clock size={14} weight="bold" />
                     {`كل ساعة (${formatNumber(result.hoursPerDay)} ساعة/يوم)`}
                   </span>

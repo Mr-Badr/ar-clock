@@ -57,14 +57,7 @@ export default function PregnancyWeeksCalculator() {
 
         {/* ── FORM ─────────────────────────────────── */}
         <div className="calc-esb-form-col">
-          <div
-            className="calc-surface-card calc-esb-form-card"
-            style={{
-              borderRadius: 'var(--radius-lg)',
-              border: '1px solid var(--border-subtle)',
-              background: 'var(--bg-surface-1)',
-            }}
-          >
+          <div className="calc-surface-card calc-esb-form-card">
             <div className="calc-esb-form-body">
 
               <div className="calc-esb-field">
@@ -93,7 +86,7 @@ export default function PregnancyWeeksCalculator() {
                   <span className="calc-esb-step">2</span>
                   <Label>طول الدورة</Label>
                 </div>
-                <div className="calc-kbd-row" style={{ flexWrap: 'wrap', gap: '0.5rem' }}>
+                <div className="calc-kbd-row">
                   {CYCLE_PRESETS.map((p) => (
                     <button
                       key={p.value}
@@ -113,8 +106,8 @@ export default function PregnancyWeeksCalculator() {
         {/* ── RESULTS ─────────────────────────────── */}
         <div className="calc-esb-result-col">
           {!result && (
-            <div className="pregnancy-empty-state" style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)' }}>
-              <Baby size={48} weight="duotone" color="var(--color-accent)" style={{ marginBottom: '0.75rem' }} />
+            <div className="pregnancy-weeks-empty">
+              <Baby size={48} weight="duotone" className="pregnancy-empty-icon" />
               <p>أدخلي تاريخ آخر دورة لمعرفة أسبوع حملك الحالي</p>
             </div>
           )}
@@ -123,43 +116,34 @@ export default function PregnancyWeeksCalculator() {
             <>
               {/* Week display */}
               <div
-                className="calc-surface-card"
+                className="pregnancy-weeks-card"
                 style={{
-                  borderRadius: 'var(--radius-lg)',
                   border: `2px solid ${tInfo?.color ?? 'var(--border)'}`,
                   background: `${tInfo?.color ?? 'var(--color-accent)'}12`,
-                  padding: '1.5rem',
-                  textAlign: 'center',
-                  marginBottom: '1rem',
                 }}
               >
-                <Baby size={32} color={tInfo?.color} weight="duotone" style={{ marginBottom: '0.5rem' }} />
-                <div style={{ fontSize: '2.5rem', fontWeight: 800, color: tInfo?.color, lineHeight: 1 }}>
+                <Baby size={32} color={tInfo?.color} weight="duotone" />
+                <div className="pregnancy-weeks-value" style={{ color: tInfo?.color }}>
                   {formatPregnancyWeek(result.weeksPregnant, result.extraDays)}
                 </div>
-                <div style={{ fontSize: '1rem', color: 'var(--text-secondary)', marginTop: '0.4rem' }}>
+                <div className="pregnancy-weeks-subtitle">
                   {tInfo?.label} ({tInfo?.range})
                 </div>
 
                 {/* Progress bar */}
-                <div style={{ marginTop: '1rem', height: '8px', borderRadius: '4px', background: 'var(--border-subtle)', overflow: 'hidden' }}>
+                <div className="pregnancy-weeks-progress-track">
                   <div
-                    style={{
-                      height: '100%',
-                      width: `${result.progressPercent}%`,
-                      background: tInfo?.color,
-                      borderRadius: '4px',
-                      transition: 'width 0.4s ease',
-                    }}
+                    className="pregnancy-weeks-progress-fill"
+                    style={{ width: `${result.progressPercent}%`, background: tInfo?.color }}
                   />
                 </div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.4rem' }}>
+                <div className="pregnancy-weeks-pct">
                   {result.progressPercent}% من الحمل مكتمل
                 </div>
               </div>
 
               {/* Key dates */}
-              <div className="gpa-pct-breakdown" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '1rem' }}>
+              <div className="pregnancy-weeks-dates-grid">
                 <div className="calc-result-chip">
                   <span className="chip-label">أيام الحمل</span>
                   <span className="chip-value">{result.daysPregnant} يوم</span>
@@ -168,7 +152,7 @@ export default function PregnancyWeeksCalculator() {
                   <span className="chip-label">باقي على الولادة</span>
                   <span className="chip-value">{Math.max(0, result.daysToEdd)} يوم</span>
                 </div>
-                <div className="calc-result-chip" style={{ gridColumn: '1 / -1' }}>
+                <div className="calc-result-chip">
                   <span className="chip-label">موعد الولادة المتوقع</span>
                   <span className="chip-value">{formatDateAr(result.edd)}</span>
                 </div>
@@ -176,23 +160,23 @@ export default function PregnancyWeeksCalculator() {
 
               {/* Current milestone */}
               {currentMilestone && (
-                <div style={{ background: 'var(--bg-surface-2)', borderRadius: 'var(--radius-md)', padding: '0.875rem', marginBottom: '0.75rem', display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
+                <div className="pregnancy-weeks-milestone">
                   <CheckCircle size={20} color={tInfo?.color} weight="fill" style={{ flexShrink: 0, marginTop: '2px' }} />
                   <div>
-                    <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>الأسبوع الحالي: {currentMilestone.label}</div>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{currentMilestone.detail}</div>
+                    <div className="pregnancy-weeks-milestone__title">الأسبوع الحالي: {currentMilestone.label}</div>
+                    <div className="pregnancy-weeks-milestone__detail">{currentMilestone.detail}</div>
                   </div>
                 </div>
               )}
 
               {/* Next milestone */}
               {nextMilestone && (
-                <div style={{ background: 'var(--bg-surface-2)', borderRadius: 'var(--radius-md)', padding: '0.875rem', marginBottom: '1rem', display: 'flex', gap: '0.75rem', alignItems: 'flex-start', border: '1px dashed var(--border)' }}>
+                <div className="pregnancy-weeks-milestone pregnancy-weeks-milestone--next">
                   <CalendarBlank size={20} color="var(--text-secondary)" style={{ flexShrink: 0, marginTop: '2px' }} />
                   <div>
-                    <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>المحطة القادمة — الأسبوع {nextMilestone.week}: {nextMilestone.label}</div>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{nextMilestone.detail}</div>
-                    <div style={{ color: 'var(--text-tertiary)', fontSize: '0.8rem', marginTop: '0.2rem' }}>{formatDateAr(nextMilestone.date)}</div>
+                    <div className="pregnancy-weeks-milestone__title">المحطة القادمة — الأسبوع {nextMilestone.week}: {nextMilestone.label}</div>
+                    <div className="pregnancy-weeks-milestone__detail">{nextMilestone.detail}</div>
+                    <div className="pregnancy-weeks-milestone__date">{formatDateAr(nextMilestone.date)}</div>
                   </div>
                 </div>
               )}
@@ -202,7 +186,7 @@ export default function PregnancyWeeksCalculator() {
           )}
 
           {result && !result.isValid && (
-            <p style={{ color: 'var(--destructive)', padding: '1rem' }}>
+            <p className="pregnancy-weeks-error">
               التاريخ المدخل يتجاوز 42 أسبوعاً — أدخلي تاريخ آخر دورة صحيح.
             </p>
           )}

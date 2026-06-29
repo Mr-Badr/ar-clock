@@ -57,14 +57,7 @@ export default function OvulationCalculator() {
 
         {/* ── FORM ──────────────────────────────── */}
         <div className="calc-esb-form-col">
-          <div
-            className="calc-surface-card calc-esb-form-card"
-            style={{
-              borderRadius: 'var(--radius-lg)',
-              border: '1px solid var(--border-subtle)',
-              background: 'var(--bg-surface-1)',
-            }}
-          >
+          <div className="calc-surface-card calc-esb-form-card">
             <div className="calc-esb-form-body">
 
               <div className="calc-esb-field">
@@ -90,7 +83,7 @@ export default function OvulationCalculator() {
                   <span className="calc-esb-step">2</span>
                   <Label>طول الدورة الشهرية</Label>
                 </div>
-                <div className="calc-kbd-row" style={{ flexWrap: 'wrap', gap: '0.5rem' }}>
+                <div className="calc-kbd-row">
                   {CYCLE_PRESETS.map((preset) => (
                     <button
                       key={preset.value}
@@ -113,7 +106,7 @@ export default function OvulationCalculator() {
         <div className="calc-esb-result-col">
           {!lmpDate && (
             <div className="calc-esb-empty-state">
-              <Baby size={32} weight="duotone" style={{ color: '#2563eb' }} />
+              <Baby size={32} weight="duotone" className="ovulation-empty-icon" />
               <p>أدخلي تاريخ آخر دورة لمعرفة يوم التبويض والفترة الخصبة.</p>
             </div>
           )}
@@ -123,23 +116,20 @@ export default function OvulationCalculator() {
 
               {/* Fertile window status */}
               {result.isInFertileWindow && (
-                <div
-                  className="ovulation-banner ovulation-banner--active"
-                  style={{ background: '#16a34a20', border: '1px solid #16a34a40', borderRadius: 'var(--radius)', padding: '0.6rem 0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.88rem', fontWeight: 700, color: '#16a34a' }}
-                >
+                <div className="ovulation-banner--active">
                   <CheckCircle size={16} weight="fill" />
                   أنتِ الآن في الفترة الخصبة
                 </div>
               )}
 
               {/* Ovulation date */}
-              <div style={{ textAlign: 'center' }}>
+              <div className="ovulation-date-hero">
                 <span className="calc-result-hero-label">يوم التبويض المتوقع</span>
-                <div className="calc-result-hero-value" style={{ color: '#2563eb', fontSize: '1.5rem', lineHeight: 1.2 }}>
+                <div className="ovulation-date-value">
                   {formatDateAr(result.ovulationDate)}
                 </div>
                 {ovHijri && (
-                  <div style={{ fontSize: '0.85rem', color: 'var(--fg-subtle)', marginTop: '0.3rem' }}>
+                  <div className="ovulation-hijri-date">
                     {formatHijriDate(ovHijri)}
                   </div>
                 )}
@@ -148,7 +138,7 @@ export default function OvulationCalculator() {
               {/* Breakdown */}
               <div className="calc-esb-breakdown">
                 <div className="calc-esb-brow calc-esb-brow--total">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <span className="calc-icon-label">
                     <CalendarBlank size={14} weight="bold" />
                     الفترة الخصبة
                   </span>
@@ -157,7 +147,7 @@ export default function OvulationCalculator() {
                   </strong>
                 </div>
                 <div className="calc-esb-brow">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <span className="calc-icon-label">
                     <Timer size={14} weight="bold" />
                     {result.daysToOvulation >= 0 ? 'باقي على التبويض' : 'مضى على التبويض'}
                   </span>
@@ -168,7 +158,7 @@ export default function OvulationCalculator() {
                   <strong>
                     {formatDateAr(result.nextPeriod)}
                     {nextPeriodHijri && (
-                      <span style={{ fontWeight: 400, color: 'var(--fg-subtle)', fontSize: '0.82rem', display: 'block' }}>
+                      <span className="ovulation-hijri-date" style={{ display: 'block' }}>
                         {formatHijriDate(nextPeriodHijri)}
                       </span>
                     )}
@@ -182,18 +172,14 @@ export default function OvulationCalculator() {
 
               {/* Next 3 cycles */}
               {result.nextCycles?.length > 0 && (
-                <div style={{ marginTop: '0.5rem' }}>
-                  <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                    الدورات القادمة
-                  </p>
+                <div>
+                  <p className="ovulation-cycles-heading">الدورات القادمة</p>
                   {result.nextCycles.map((cycle, i) => (
-                    <div key={i} className="calc-esb-brow" style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.5rem', alignItems: 'start' }}>
-                      <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', minWidth: '5rem' }}>
-                        دورة {i + 2}
-                      </span>
-                      <div style={{ fontSize: '0.82rem' }}>
-                        <div><strong style={{ color: '#2563eb' }}>{formatDateAr(cycle.ovulationDate)}</strong> — التبويض</div>
-                        <div style={{ color: 'var(--text-secondary)' }}>{formatDateAr(cycle.fertileStart)} ← {formatDateAr(cycle.fertileEnd)} (خصبة)</div>
+                    <div key={i} className="calc-esb-brow ovulation-cycle-row">
+                      <span className="ovulation-cycle-num">دورة {i + 2}</span>
+                      <div className="ovulation-cycle-dates">
+                        <div><strong>{formatDateAr(cycle.ovulationDate)}</strong> — التبويض</div>
+                        <div className="ovulation-cycle-fertile">{formatDateAr(cycle.fertileStart)} ← {formatDateAr(cycle.fertileEnd)} (خصبة)</div>
                       </div>
                     </div>
                   ))}

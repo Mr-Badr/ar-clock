@@ -43,7 +43,7 @@ export default function BMICalculator() {
 
         {/* ── FORM ─────────────────────────────────── */}
         <div className="calc-esb-form-col">
-          <div className="calc-surface-card calc-esb-form-card" style={{ borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-subtle)', background: 'var(--bg-surface-1)' }}>
+          <div className="calc-surface-card calc-esb-form-card">
             <div className="calc-esb-form-body">
 
               {/* Gender */}
@@ -78,7 +78,7 @@ export default function BMICalculator() {
                 </div>
                 <div className="bmi-measurement-row">
                   <div>
-                    <Label htmlFor="bmi-weight" className="calc-hint" style={{ display: 'block', marginBottom: '0.3rem' }}>الوزن (كجم)</Label>
+                    <Label htmlFor="bmi-weight" className="calc-hint">الوزن (كجم)</Label>
                     <div className="calc-esb-money-row">
                       <Input
                         id="bmi-weight"
@@ -91,7 +91,7 @@ export default function BMICalculator() {
                     </div>
                   </div>
                   <div>
-                    <Label htmlFor="bmi-height" className="calc-hint" style={{ display: 'block', marginBottom: '0.3rem' }}>الطول (سم)</Label>
+                    <Label htmlFor="bmi-height" className="calc-hint">الطول (سم)</Label>
                     <div className="calc-esb-money-row">
                       <Input
                         id="bmi-height"
@@ -174,11 +174,11 @@ export default function BMICalculator() {
               {/* BMI scale */}
               <div className="bmi-scale-wrap">
                 <div className="bmi-scale-track">
-                  <div className="bmi-scale-segment" style={{ background: '#3b82f6', flex: '1' }} />
-                  <div className="bmi-scale-segment" style={{ background: '#10b981', flex: '1.3' }} />
-                  <div className="bmi-scale-segment" style={{ background: '#f59e0b', flex: '1' }} />
-                  <div className="bmi-scale-segment" style={{ background: '#ef4444', flex: '1' }} />
-                  <div className="bmi-scale-segment" style={{ background: '#dc2626', flex: '0.8' }} />
+                  <div className="bmi-scale-segment bmi-scale-segment--underweight" />
+                  <div className="bmi-scale-segment bmi-scale-segment--normal" />
+                  <div className="bmi-scale-segment bmi-scale-segment--overweight" />
+                  <div className="bmi-scale-segment bmi-scale-segment--obese1" />
+                  <div className="bmi-scale-segment bmi-scale-segment--obese2" />
                   <div
                     className="bmi-scale-pointer"
                     style={{ left: bmiPointerLeft }}
@@ -196,7 +196,7 @@ export default function BMICalculator() {
               {/* Breakdown */}
               <div className="calc-esb-breakdown">
                 <div className="calc-esb-brow">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <span className="calc-icon-label">
                     <Scales size={14} weight="bold" />
                     الوزن المثالي لطولك
                   </span>
@@ -204,7 +204,7 @@ export default function BMICalculator() {
                 </div>
                 {result.weightDiff !== 0 && (
                   <div className="calc-esb-brow">
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <span className="calc-icon-label">
                       <Warning size={14} weight="bold" />
                       {result.weightDiff > 0 ? 'يجب إنقاص' : 'يُنصح بزيادة'}
                     </span>
@@ -214,14 +214,14 @@ export default function BMICalculator() {
                 {result.tdee && (
                   <>
                     <div className="calc-esb-brow">
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      <span className="calc-icon-label">
                         <Heartbeat size={14} weight="bold" />
                         معدل الأيض الأساسي (BMR)
                       </span>
                       <strong>{formatNumber(result.bmr)} كالوري</strong>
                     </div>
                     <div className="calc-esb-brow calc-esb-brow--total">
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      <span className="calc-icon-label">
                         <Lightning size={14} weight="bold" />
                         السعرات اليومية للمحافظة
                       </span>

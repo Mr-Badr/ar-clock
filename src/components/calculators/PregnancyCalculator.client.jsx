@@ -118,14 +118,7 @@ export default function PregnancyCalculator() {
 
         {/* ── FORM ─────────────────────────────────── */}
         <div className="calc-esb-form-col">
-          <div
-            className="calc-surface-card calc-esb-form-card"
-            style={{
-              borderRadius: 'var(--radius-lg)',
-              border: '1px solid var(--border-subtle)',
-              background: 'var(--bg-surface-1)',
-            }}
-          >
+          <div className="calc-surface-card calc-esb-form-card">
             <div className="calc-esb-form-body">
 
               {/* Input mode selector */}
@@ -134,7 +127,7 @@ export default function PregnancyCalculator() {
                   <span className="calc-esb-step">1</span>
                   <Label>اختاري طريقة الحساب</Label>
                 </div>
-                <div className="calc-kbd-row" style={{ flexWrap: 'wrap', gap: '0.5rem' }}>
+                <div className="calc-kbd-row">
                   {INPUT_MODES.map((m) => (
                     <button
                       key={m.key}
@@ -176,7 +169,7 @@ export default function PregnancyCalculator() {
                       <span className="calc-esb-step">3</span>
                       <Label>طول الدورة الشهرية</Label>
                     </div>
-                    <div className="calc-kbd-row" style={{ flexWrap: 'wrap', gap: '0.5rem' }}>
+                    <div className="calc-kbd-row">
                       {CYCLE_PRESETS.map((preset) => (
                         <button
                           key={preset.value}
@@ -218,9 +211,9 @@ export default function PregnancyCalculator() {
                       <span className="calc-esb-step">3</span>
                       <Label>عمر الجنين في السونار</Label>
                     </div>
-                    <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-                      <div style={{ flex: 1 }}>
-                        <p className="calc-hint" style={{ marginBottom: '0.3rem' }}>أسابيع</p>
+                    <div className="pregnancy-week-pair">
+                      <div>
+                        <p className="calc-hint">أسابيع</p>
                         <div className="calc-esb-money-row">
                           <input
                             type="number"
@@ -231,13 +224,12 @@ export default function PregnancyCalculator() {
                             max="42"
                             placeholder="مثال: 12"
                             onChange={(e) => setUsWeeks(e.target.value)}
-                            style={{ maxWidth: '100px' }}
                           />
                           <span className="calc-esb-currency">أسبوع</span>
                         </div>
                       </div>
-                      <div style={{ flex: 1 }}>
-                        <p className="calc-hint" style={{ marginBottom: '0.3rem' }}>أيام إضافية</p>
+                      <div>
+                        <p className="calc-hint">أيام إضافية</p>
                         <div className="calc-esb-money-row">
                           <input
                             type="number"
@@ -248,7 +240,6 @@ export default function PregnancyCalculator() {
                             max="6"
                             placeholder="0"
                             onChange={(e) => setUsDays(e.target.value)}
-                            style={{ maxWidth: '80px' }}
                           />
                           <span className="calc-esb-currency">يوم</span>
                         </div>
@@ -267,7 +258,7 @@ export default function PregnancyCalculator() {
                       <span className="calc-esb-step">2</span>
                       <Label>نوع الإخصاب</Label>
                     </div>
-                    <div className="calc-kbd-row" style={{ gap: '0.5rem' }}>
+                    <div className="calc-kbd-row">
                       <button
                         type="button"
                         className={`chip calc-chip-button${!isIvf ? ' is-active' : ''}`}
@@ -291,7 +282,7 @@ export default function PregnancyCalculator() {
                         <span className="calc-esb-step">3</span>
                         <Label>نوع الجنين المنقول</Label>
                       </div>
-                      <div className="calc-kbd-row" style={{ gap: '0.5rem' }}>
+                      <div className="calc-kbd-row">
                         <button
                           type="button"
                           className={`chip calc-chip-button${embryoDay === 5 ? ' is-active' : ''}`}
@@ -346,7 +337,7 @@ export default function PregnancyCalculator() {
 
           {!hasInput && (
             <div className="calc-esb-empty-state">
-              <Baby size={32} weight="duotone" style={{ color: '#e11d48' }} />
+              <Baby size={32} weight="duotone" className="pregnancy-empty-icon" />
               <p>
                 {mode === 'lmp' && 'أدخلي تاريخ آخر دورة لمعرفة أسبوع حملك وموعد الولادة بالميلادي والهجري.'}
                 {mode === 'ultrasound' && 'أدخلي تاريخ السونار وعمر الجنين لحساب موعد الولادة.'}
@@ -357,7 +348,7 @@ export default function PregnancyCalculator() {
 
           {hasInput && (!result || !result.isValid) && (
             <div className="calc-esb-empty-state">
-              <Baby size={28} weight="duotone" style={{ color: '#e11d48' }} />
+              <Baby size={28} weight="duotone" className="pregnancy-empty-icon" />
               <p>التاريخ يبدو خارج النطاق — تأكدي من صحة التاريخ المدخل (يجب أن يكون خلال آخر 42 أسبوعاً).</p>
             </div>
           )}
@@ -407,7 +398,7 @@ export default function PregnancyCalculator() {
               {/* EDD breakdown */}
               <div className="calc-esb-breakdown">
                 <div className="calc-esb-brow calc-esb-brow--total">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <span className="calc-icon-label">
                     <CalendarBlank size={14} weight="bold" />
                     موعد الولادة المتوقع (ميلادي)
                   </span>
@@ -415,7 +406,7 @@ export default function PregnancyCalculator() {
                 </div>
                 {eddHijri && (
                   <div className="calc-esb-brow">
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <span className="calc-icon-label">
                       <CalendarBlank size={14} weight="bold" />
                       موعد الولادة (هجري)
                     </span>
@@ -423,7 +414,7 @@ export default function PregnancyCalculator() {
                   </div>
                 )}
                 <div className="calc-esb-brow">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <span className="calc-icon-label">
                     <Timer size={14} weight="bold" />
                     {result.daysToEdd >= 0 ? 'باقي على الولادة' : 'مضى على موعد الولادة'}
                   </span>
@@ -441,7 +432,7 @@ export default function PregnancyCalculator() {
                   <p className="pregnancy-milestones-title">المحطات القادمة</p>
                   {upcomingMilestones.slice(0, 4).map((m) => (
                     <div key={m.week} className="pregnancy-milestone-row pregnancy-milestone--upcoming">
-                      <Circle size={15} weight="regular" style={{ color: 'var(--fg-subtle)', flexShrink: 0, marginTop: 2 }} />
+                      <Circle size={15} weight="regular" className="milestone-icon" style={{ flexShrink: 0, marginTop: 2 }} />
                       <div className="pregnancy-milestone-text">
                         <span className="pregnancy-milestone-week">أسبوع {m.week}</span>
                         <span className="pregnancy-milestone-label">{m.label}</span>
