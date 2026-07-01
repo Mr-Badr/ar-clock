@@ -89,7 +89,7 @@ function getUniqueCalculatorLinks(items) {
 
 function getComplementSlugs(cluster) {
   const complementSlugsByCluster = {
-    finance: ['gosi-retirement', 'eos-qatar', 'eos-kuwait', 'eos-bahrain', 'uae-end-of-service', 'car-loan', 'salary', 'zakat', 'investment', 'net-salary', 'vat', 'percentage', 'annual-leave', 'monthly-installment', 'end-of-service-benefits', 'iqama', 'electricity-bill', 'inheritance'],
+    finance: ['gosi-retirement', 'eos-egypt', 'eos-qatar', 'eos-kuwait', 'eos-bahrain', 'uae-end-of-service', 'car-loan', 'salary', 'zakat', 'investment', 'net-salary', 'vat', 'percentage', 'annual-leave', 'monthly-installment', 'end-of-service-benefits', 'iqama', 'electricity-bill', 'inheritance'],
     building: ['vat', 'percentage', 'monthly-installment'],
     age: ['sleep', 'bedtime', 'retirement'],
     sleep: ['age-calculator', 'sleep', 'time-now'],

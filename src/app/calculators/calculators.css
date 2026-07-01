@@ -6884,6 +6884,12 @@ main:not(.calc-hub-page) .calc-cta-card .calc-section-title {
   border-color: color-mix(in srgb, var(--blue) 22%, transparent);
 }
 
+.calc-esb-country-badge--eg {
+  background: color-mix(in srgb, var(--green) 10%, var(--bg-surface-2));
+  color: var(--green-text);
+  border-color: var(--green-border);
+}
+
 .calc-esb-live-dot {
   width: 8px;
   height: 8px;
@@ -11727,6 +11733,26 @@ main:not(.calc-hub-page) .calc-building-tool .calc-building-metrics {
 .bh-zero-notice strong { display: block; margin-bottom: 2px; }
 
 .bh-discount-row {
+  color: color-mix(in srgb, var(--amber) 85%, var(--text-primary));
+  font-weight: 600;
+}
+
+.eg-zero-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--red) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--red) 20%, transparent);
+  color: var(--red);
+  font-size: 0.825rem;
+  margin-top: var(--space-3);
+}
+.eg-zero-notice svg { flex-shrink: 0; margin-top: 2px; }
+.eg-zero-notice strong { display: block; margin-bottom: 2px; }
+
+.eg-discount-row {
   color: color-mix(in srgb, var(--amber) 85%, var(--text-primary));
   font-weight: 600;
 }

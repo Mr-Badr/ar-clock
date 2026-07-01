@@ -1742,3 +1742,115 @@ export function buildBahrainEndOfServiceMilestones(startDate) {
     })(),
   }));
 }
+
+// ─── Egypt End-of-Service (Labour Law No. 12 of 2003, Art. 120–121) ──────────
+export function getEgyptEndOfServiceBracket(serviceYears) {
+  if (serviceYears < 5)  return { label: 'أقل من 5 سنوات',         multiplier: 0 };
+  if (serviceYears < 10) return { label: 'من 5 إلى أقل من 10 سنوات', multiplier: 0.5 };
+  return                        { label: '10 سنوات فأكثر',           multiplier: 1 };
+}
+
+export function calculateEgyptEndOfServiceBenefit({
+  basicSalary,
+  startDate,
+  endDate,
+  reason = 'contract_end',
+}) {
+  const salary = Math.max(0, toNumber(basicSalary));
+  const service = diffDates(startDate, endDate);
+
+  if (!salary || !service.isValid) {
+    return {
+      isValid: false,
+      salary,
+      service,
+      dailyRate: 0,
+      firstTenAmount: 0,
+      remainingAmount: 0,
+      partialAmount: 0,
+      fullGratuity: 0,
+      gratuity: 0,
+      entitlementPercent: 0,
+    };
+  }
+
+  // Art. 120: daily rate = salary ÷ 30
+  // First 10 years: 30 days/year (1 month). After 10 years: 45 days/year (1.5 months).
+  const dailyRate = salary / 30;
+  const firstTenYears   = Math.min(service.decimalYears, 10);
+  const remainingYears  = Math.max(service.decimalYears - 10, 0);
+  const firstTenAmount  = dailyRate * 30 * firstTenYears;
+  const remainingAmount = dailyRate * 45 * remainingYears;
+  const fullGratuity    = firstTenAmount + remainingAmount;
+
+  // Art. 121: resignation multiplier
+  const resignationBracket = getEgyptEndOfServiceBracket(service.decimalYears);
+  const multiplier = reason === 'resignation' ? resignationBracket.multiplier : 1;
+  const gratuity   = fullGratuity * multiplier;
+
+  const wholeTen      = Math.min(service.years, 10) * dailyRate * 30;
+  const wholeRemain   = Math.max(service.years - 10, 0) * dailyRate * 45;
+  const partialAmount = Math.max(fullGratuity - wholeTen - wholeRemain, 0);
+
+  return {
+    isValid: true,
+    salary,
+    reason,
+    service,
+    serviceLabel: formatServiceDuration(service),
+    dailyRate: round(dailyRate, 4),
+    firstTenYears,
+    remainingYears,
+    firstTenAmount:   round(firstTenAmount),
+    remainingAmount:  round(remainingAmount),
+    partialAmount:    round(partialAmount),
+    fullGratuity:     round(fullGratuity),
+    gratuity:         round(gratuity),
+    entitlementPercent: round(multiplier * 100, 1),
+    resignationBracket,
+  };
+}
+
+export function buildEgyptEndOfServiceComparison({
+  salary,
+  startDate,
+  endDate,
+  reason = 'resignation',
+  waitMonths = 0,
+}) {
+  const current = calculateEgyptEndOfServiceBenefit({ basicSalary: salary, startDate, endDate, reason });
+  const months  = Math.max(0, Math.round(toNumber(waitMonths)));
+  const projDate = (() => {
+    const d = parseDateInput(endDate);
+    if (!d) return null;
+    const t = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + months, d.getUTCDate()));
+    return t.toISOString().slice(0, 10);
+  })();
+  const projected = projDate
+    ? calculateEgyptEndOfServiceBenefit({ basicSalary: salary, startDate, endDate: projDate, reason })
+    : { isValid: false, gratuity: 0 };
+
+  return {
+    current,
+    projected,
+    projectedEndDate: projDate,
+    difference: round((projected.gratuity || 0) - current.gratuity),
+  };
+}
+
+export function buildEgyptEndOfServiceMilestones(startDate) {
+  const milestones = [
+    { years: 5,  label: '50% من المكافأة عند الاستقالة' },
+    { years: 10, label: 'مكافأة كاملة + معدل 45 يوم/سنة' },
+    { years: 15, label: 'أكثر من 5 سنوات بالمعدل الكامل' },
+  ];
+  return milestones.map((item) => ({
+    ...item,
+    date: (() => {
+      const d = parseDateInput(startDate);
+      if (!d) return null;
+      const t = new Date(Date.UTC(d.getUTCFullYear() + item.years, d.getUTCMonth(), d.getUTCDate()));
+      return t.toISOString().slice(0, 10);
+    })(),
+  }));
+}

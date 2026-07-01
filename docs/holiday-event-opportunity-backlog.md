@@ -55,18 +55,7 @@ Currently at ~100/day. Path: get 10–15 pages each ranking top 3 for queries se
 
 ---
 
-### P2 — إضافة اتجاه القبلة لصفحات الصلاة (Qibla on all prayer pages)
-**Route:** add to existing `/mwaqit-al-salat/[country]/[city]` pages — 100+ city pages
-**Search queries (daily, year-round):** "اتجاه القبلة [مدينة]", "اتجاه القبلة الرياض", "اتجاه القبلة دبي", "كيف أعرف اتجاه القبلة", "اتجاه الكعبة من [مدينة]"
-**Why we win:** We already have lat/lon for 1,400 cities in our geo database. One calculation formula (bearing to Mecca 21.3891°N, 39.8579°E) added to every prayer city page = 100+ pages each capturing "[مدينة] + قبلة" queries. No new page needed — extends existing pages that already rank.
-**Format:** A simple compass bearing card below the prayer times: "اتجاه القبلة من [المدينة]: 247°" + cardinal direction in Arabic + a visual compass SVG.
-**RPM:** Medium (religious context). Volume: enormous (every Muslim checks this).
-**Effort:** Very small — add calculation to prayer page server component.
-**Result timeline:** Immediate (existing pages get re-indexed within 1-2 weeks).
-
----
-
-### P3 — تحسين صفحات الصلاة: جدول شهري + 6 أسئلة (Prayer Page Depth)
+### P2 — تحسين صفحات الصلاة: جدول شهري + 6 أسئلة (Prayer Page Depth)
 **Route:** existing `/mwaqit-al-salat/[country]/[city]`
 **Search queries:** "أوقات الصلاة [مدينة] يوليو 2026", "جدول أوقات الصلاة [مدينة] 2026", "أوقات الصلاة الأسبوع القادم [مدينة]"
 **Why we win:** Monthly search tables = users bookmark us and return every month. 6 FAQs per city (Fajr dawn time, timezone, summer changes, prayer method) = content depth that ranks for long-tail queries.

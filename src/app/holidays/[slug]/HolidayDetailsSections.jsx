@@ -39,6 +39,7 @@ const CATEGORY_CALCULATORS = {
     { href: '/calculators/eos-qatar',            label: 'نهاية الخدمة قطر',   desc: 'الاستقالة لا تنقص مكافأتك في قطر',    accent: 'var(--blue)' },
     { href: '/calculators/eos-kuwait',           label: 'نهاية الخدمة الكويت',   desc: 'مكافأتك وفق قانون العمل 6/2010',        accent: 'var(--blue)' },
     { href: '/calculators/eos-bahrain',          label: 'نهاية الخدمة البحرين',  desc: 'نصف شهر ثم شهر كامل — قانون 36/2012',   accent: 'var(--blue)' },
+    { href: '/calculators/eos-egypt',            label: 'نهاية الخدمة مصر',      desc: 'شهر ثم شهر ونصف — قانون 12/2003',       accent: 'var(--green)' },
   ],
   school: [
     { href: '/calculators/gpa',           label: 'المعدل التراكمي',    desc: 'احسب GPA بدقة وفق جدول درجاتك',     accent: 'var(--blue)' },

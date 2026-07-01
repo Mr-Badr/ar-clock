@@ -184,6 +184,12 @@ const CALC_CATEGORIES: CalcCategory[] = [
         desc: "نصف شهر ثم شهر كامل — وفق قانون 36/2012",
         icon: Briefcase,
       },
+      {
+        href: "/calculators/eos-egypt",
+        label: "نهاية الخدمة مصر",
+        desc: "شهر ثم شهر ونصف بعد 10 سنوات — قانون 12/2003",
+        icon: Briefcase,
+      },
     ],
   },
   {
