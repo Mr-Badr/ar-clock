@@ -6,81 +6,96 @@ Updated: 2026-07-01
 
 ## The Only Test That Matters
 
-Before anything gets built, it must pass all four:
+Before anything gets built, it must pass all five:
 
-1. **AI chatbots can't replace it** — real-time data, live countdowns, city-aware results, persistent calculations. ChatGPT gives a formula; we give your answer.
-2. **Global apps won't bother** — too Hijri-specific, too Gulf-law-precise, too Arabic-first for Google or a US startup to care.
-3. **Mobile-native, not mobile-adapted** — designed for a 6" Arabic RTL screen from the first sketch. No desktop form shrunk to fit.
-4. **Teaches while it answers** — user leaves knowing their situation, not just a number. One insight per tool, always.
+1. **Real Arabic search volume** — someone in the Arab world is typing this exact query today. If you can't name 3 real keyword phrases with genuine volume, it doesn't go on the list.
+2. **AI chatbots can't replace it** — real-time data, live countdowns, city-aware results, persistent calculations. ChatGPT gives a formula; we give your answer.
+3. **Global apps won't bother** — too Hijri-specific, too Gulf-law-precise, too Arabic-first for Google or a US startup to care.
+4. **Mobile-native, not mobile-adapted** — designed for a 6" Arabic RTL screen from the first sketch. No desktop form shrunk to fit.
+5. **Teaches while it answers** — user leaves knowing their situation, not just a number.
 
-**Never build:** anything Google answers with its own widget · government portal brand queries · Saudi mortgage (bank-owned SERP) · medical diagnoses · anything that's just "same as competitor but Arabic"
+**Never build:** anything Google answers with its own widget · government portal brand queries · Saudi mortgage (bank-owned SERP) · medical diagnoses · anything that's just "same as competitor but Arabic" · anything that sounds clever but has no search query behind it
 
 ---
 
 ## Already Live
 
-**Events (monthly payday):** salary-day + pension-day for Saudi, UAE, Kuwait, Qatar, Egypt, Oman, Jordan, Bahrain · social-security-saudi · takaful-karama-egypt · citizen-account-saudi · pension-day-algeria (CNR, 2026-07-01)
+**Calculators:** age · annual-leave · bmi · building (materials hub) · car-loan · electricity-bill (SA+UAE) · end-of-service (SA+UAE+KW+QA+BH) · gpa + gpa-to-percent · gosi-retirement · inheritance · iqama · monthly-installment · net-salary · ovulation · percentage · personal-finance · pregnancy + pregnancy-weeks · salary · saudi-pay-dates (hub) · sleep (6 sub-tools) · vat · zakat (gold+jewelry) · investment (Islamic) · fasting (intermittent)
+
+**Events (monthly payday):** salary-day + pension-day for SA, UAE, KW, QA, EG, OM, JO, BH · social-security-saudi · takaful-karama-egypt · citizen-account-saudi · social-security-qatar · pension-day-algeria
 
 **Events (Islamic):** ramadan, eid-al-fitr, eid-al-adha, hajj, mawlid, nisf-shaban, ashura, isra-miraj, laylat-al-qadr, day-of-arafa, first-dhul-hijjah, islamic-new-year
 
-**Events (national + school):** 50+ national days across Saudi/UAE/Gulf/Levant/Maghreb · school-start + bac-results for 11 countries
-
-**Calculators:** age · annual-leave · bmi · building (materials hub) · car-loan (dual-mode تقليدي/مرابحة + amortization) · electricity-bill (Saudi+UAE) · end-of-service (Saudi+UAE) · gpa + gpa-to-percent · inheritance · iqama · monthly-installment · net-salary · ovulation · percentage · personal-finance · pregnancy + pregnancy-weeks · salary · saudi-pay-dates (hub) · sleep (6 sub-tools) · vat · zakat (gold+jewelry) · investment (Islamic) · fasting (intermittent) · **gosi-retirement** (2026-07-01) · **eos-kuwait** (2026-07-01) · **eos-qatar** (2026-07-01) · **eos-bahrain** (2026-07-01)
+**Events (national + school):** 50+ national days across Gulf/Levant/Maghreb · school-start + bac-results for 12 countries
 
 ---
 
 ## Build Queue
 
-### ~~P1 — حاسبة التقاعد المبكر GOSI~~ ✅ Live 2026-07-01
-**Route:** `/calculators/gosi-retirement`
-**Why we win:** gosi.gov.sa requires login and is desktop-only clunky. No Arabic consumer tool answers "متى يحق لي التقاعد المبكر؟" + "كم سيكون معاشي؟". We show: (a) exact countdown to early retirement eligibility, (b) pension now (early) vs at 60 (standard), (c) handles July 2024 reform (old formula ÷40 vs new 2.25%).
-**Mobile UX:** 3-step wizard — birth year scroller → subscription years slider → salary input → output is a "retirement card": date you qualify, monthly pension, side-by-side early vs standard comparison.
-**Formula (existing subscribers):** `pension = avg_salary × years / 40`. Early eligibility: 25 years contribution. New formula (post-July 2024): `avg_salary × years × 2.25%`.
-**RPM:** Finance High (Saudi, 12M+ GOSI members)
-
----
-
-### P2 — مُحسِّن الإجازات (Leave Bridge Optimizer)
-**Route:** `/calculators/leave-bridge`
-**Why we win:** Every competitor lists holidays. Nobody personalizes: "I have 14 days remaining — show me the best 3 bridge opportunities in the next 6 months." We have 123 events × 16 countries already. This IS our unfair advantage weaponized.
-**Mobile UX:** pick your country + remaining days → swipeable cards, one per "bridge window": "خذ 4 أيام إجازة حول العيد الوطني → تحصل على 10 أيام متواصلة". Calendar highlighting, share button.
-**Unique hook:** Only tool that connects YOUR leave balance to OUR holiday database.
-**RPM:** Medium (Gulf workers, recurring use every quarter)
-
----
-
-### ~~P3 — حاسبة مكافأة نهاية الخدمة — الكويت + قطر~~ ✅ Live 2026-07-01
-**Route:** `/calculators/eos-kuwait`
-**Why we win:** We have Saudi + UAE EOS live. Kuwait Law 6/2010 is a distinct formula (15 days/yr ≤5 yrs, 30 days/yr ≥5 yrs, for indemnity). 3M+ expats. Programmatic expansion of a proven pattern.
-**Effort:** Small — same component architecture as Saudi/UAE EOS.
-**RPM:** Finance Medium-High (Kuwait, expat audience)
-
----
-
-### P4 — مُخطط الليالي الرمضانية
+### P1 — مُخطط ختم القرآن في رمضان (Quran Completion Planner)
 **Route:** `/calculators/ramadan-planner`
-**Why we win:** We have prayer times engine + Hijri calendar. No competitor combines: iftar countdown for your city + "إذا قرأت X صفحات الليلة تنهي القرآن في يوم Y" + يوم الختمة suggestion. Ramadan = highest traffic month.
-**Mobile UX:** city selector → reading pace → outputs: your personal finish date on a Hijri calendar card, daily page target, with iftar time for your city.
-**Unique:** Islamic purity schedule (طهارة) option for women — hijri tracking, hayd/tuhr pattern.
-**RPM:** Mixed (recurring daily Ramadan use; Islamic finance ads)
+**Search evidence:** "خطة ختم القرآن في رمضان", "كم صفحة يومياً لختم القرآن في رمضان", "جدول ختم القرآن رمضان", "متى أنهي القرآن في رمضان" — these are top-searched Ramadan queries with millions of monthly searches during Ramadan season.
+**Why we win:** We have the prayer times engine (iftar for your city) + Hijri calendar. Competitors give static PDF tables. We give: your reading pace → your exact finish date → daily page count → today's iftar time for your city. Personalised vs static.
+**Mobile UX:** Step 1: pick city (for iftar times) → Step 2: slide your daily reading capacity (pages or juz) → Output: animated card showing finish date + daily target + days remaining. No login. Instant.
+**Unique angle:** Women's Islamic purity option (hayd/tuhr tracking → adjusted page plan). No competitor touches this.
+**RPM:** Medium (recurring daily Ramadan use — huge seasonal spike)
+**Effort:** Medium — prayer engine + Hijri calendar already built.
 
 ---
 
-### P5 — مُقيِّم الصحة المالية الخليجية
+### P2 — تحسين صفحات أوقات الصلاة (Prayer Page Depth)
+**Route:** existing `/mwaqit-al-salat/[country]/[city]`
+**Search evidence:** Prayer time pages are already our highest-traffic pages. "أوقات الصلاة [مدينة]" = millions of daily searches. This is not a new build — it's converting existing traffic to depth.
+**What's missing:**
+- Monthly prayer times table (scrollable, current month highlighted)
+- "الصلاة القادمة خلال X دقيقة" visible above fold on mobile without scroll
+- Qibla direction card (we already have the city lat/lon)
+- 6 FAQ items per page (currently thin content)
+**Why now:** We have traffic but low session depth → high bounce. Each improvement converts existing visitors, not hypothetical ones.
+**Effort:** Medium — data exists, need UI work.
+**RPM:** Medium (high volume, religious context = limited ad RPM but huge traffic base)
+
+---
+
+### P3 — حاسبة ضريبة الدخل المصرية (Egypt Income Tax)
+**Route:** `/calculators/egypt-income-tax`
+**Search evidence:** "حاسبة ضريبة الدخل مصر 2025", "كيف تحسب ضريبة الدخل في مصر", "شرائح ضريبة الدخل مصر 2025", "حاسبة صافي الراتب مصر" — Egypt = 105M people, salary/tax searches are massive.
+**Why we win:** Egypt's income tax law changed in 2023 (new brackets). Most existing tools use old brackets. We verify from ETA (مصلحة الضرائب) directly and show: gross → net with bracket breakdown, plus social insurance deduction.
+**Mobile UX:** Input salary → output: net salary card with color-coded tax brackets showing exactly which bracket each pound falls into. Simple, visual, Arabic.
+**Unique angle:** Side-by-side before/after the 2023 reform — shows users who got a raise and who got a cut.
+**RPM:** Medium (Egypt volume is massive but lower RPM than Gulf)
+**Effort:** Small — same pattern as net-salary calculator.
+
+---
+
+### P4 — تحسين صفحات الإسلاميات الموجودة (Islamic Event Depth)
+**Not a new build — targeted content improvements to existing pages with proven traffic:**
+- **ramadan:** live countdown above fold on mobile + "متوقع فلكياً" label + moon-sighting caveat
+- **eid-al-fitr / eid-al-adha:** estimated date with Islamic moon-sighting disclaimer above fold
+- **hajj-season:** "إجازة الحج للموظفين السعوديين" section (Saudi workers search this heavily)
+- **/date:** verify Hijri date is SSR-rendered above fold + internal links to pregnancy/age/ovulation
+**Effort:** Small. Impact: +500–1,000/day from traffic already landing on these pages.
+
+---
+
+### P5 — مُقيِّم الصحة المالية الخليجية (Gulf Financial Health Score)
 **Route:** `/calculators/financial-health`
-**Why we win:** Gulf workers want to know "هل وضعي المالي جيد؟" — not a generic US calculator. We benchmark against Gulf-specific ratios: rent ≤30% salary, savings ≥20%, debt installments ≤35%. Output is a score/100 + 3 specific actions, not a table.
-**Mobile UX:** 5 quick sliders (salary, rent, installments, savings, dependents) → score card + ranked actions. Connects to: net-salary, EOS, zakat, personal-finance calculators.
-**RPM:** Finance High (cross-links to all finance tools = high session depth)
+**Search evidence:** "كيف أعرف وضعي المالي", "نسبة الادخار المثالية في الخليج", "هل راتبي كافي للادخار والاستثمار" — moderate volume but high intent.
+**Why we win:** Gulf workers want a score, not a spreadsheet. We benchmark against Gulf-specific ratios: rent ≤30% salary, savings ≥20%, debt installments ≤35%. Output is a score/100 + 3 specific Arabic-language actions.
+**Mobile UX:** 5 quick sliders (salary, rent, installments, savings, dependents) → score card + ranked actions. Cross-links to net-salary, EOS, zakat.
+**Note:** Validate search volume from GSC before building. If "وضعي المالي" queries don't show up in impressions data after 60 days, skip.
+**RPM:** Finance High
+**Effort:** Small.
 
 ---
 
-### P6 — تحسين صفحات الإسلاميات الموجودة (T4)
-**Not a new build — targeted improvements to existing pages:**
-- ramadan: live countdown above fold on mobile + "متوقع فلكياً" label + moon-sighting caveat
-- eid-al-fitr / eid-al-adha: estimated date with Islamic moon-sighting note above fold
-- hajj-season: "إجازة الحج للموظفين السعوديين" section
-- /date: verify Hijri date is SSR-rendered above fold + connect to pregnancy/age/ovulation
-**Effort:** Small. Impact: +500–1,000/day from existing traffic.
+### P6 — مُحسِّن الإجازات (Leave Bridge Optimizer)
+**Route:** `/calculators/leave-bridge`
+**Search evidence:** UNVALIDATED — no confirmed high-volume queries yet. Concept: "أفضل توقيت للإجازة حول العيد" or "كيف أستغل إجازتي مع العطل". Check GSC impressions before building.
+**Why we win (if search exists):** We have 123 events × 16 countries. Only tool that personalizes: "You have 14 days — here are the 3 best bridge windows in the next 6 months."
+**Mobile UX:** pick country + remaining days → swipeable bridge cards.
+**Action required:** Before building, verify Arabic search volume exists for bridge optimizer queries. If impressions < 500/month across related terms → skip permanently.
+**RPM:** Medium
 
 ---
 
@@ -95,3 +110,17 @@ Before anything gets built, it must pass all four:
 | Saudi mortgage | Bank-owned SERP; Google widget |
 | Coptic Christmas/Easter Egypt | Low RPM, wrong audience for Gulf/Islamic brand |
 | Any medical diagnosis | Never |
+| Leave Bridge Optimizer | Build ONLY if GSC confirms >500/mo impressions on bridge queries |
+| Gulf Financial Health | Build ONLY after 60 days of GSC data confirms intent queries landing |
+
+---
+
+## Search Volume Gate — Rule for All Future Items
+
+Before any item enters the Build Queue, answer these three questions:
+
+1. **Name the top 3 Arabic keyword phrases with volume.** If you can't name them without guessing, the item is not ready.
+2. **Who is searching and why today?** (not "they might search for this") — name a real user persona and their real situation.
+3. **Does a Google search for these phrases show thin/weak Arabic results?** If the SERP already has a strong Arabic tool, we need a clear differentiator.
+
+Items that fail this gate go to a Parking Lot, not the Build Queue.

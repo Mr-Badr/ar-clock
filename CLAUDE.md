@@ -87,6 +87,7 @@ Docker Compose + Nginx on Hetzner VPS · GitHub Actions CI/CD
 - `.claude/rules/arabic-rtl.md` — RTL layout, design system, ad placement constraints
 - `.claude/rules/database-api.md` — geo snapshot flow, holiday repository, Prisma schema
 - `.claude/rules/nextjs-patterns.md` — Server/Client boundary, caching, prerendering
+- `.claude/rules/calculator-ui-standards.md` — mobile-first layout, no gradients, CSS variables, country badges, pre-ship UI checklist
 
 ## Docs Quick Reference
 
