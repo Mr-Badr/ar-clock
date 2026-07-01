@@ -1,65 +1,58 @@
 # Session notes — ar-clock / miqatona.com
 Last updated: 2026-07-01
 
+## Revenue target
+$1,000/month in 3 months. Currently: ~100 visitors/day, ~$0.05/day.
+Strategy: rank top 3 on 10–15 high-volume daily-use Arabic queries simultaneously.
+Priority order: Egypt tools (105M people, thin competition) > Prayer page depth (existing traffic) > Levant > Morocco.
+
 ## What was done
 
-### Shipped (commit 9e99be0, deployed 2026-07-01)
-- **EOS franchise complete:** eos-kuwait · eos-qatar · eos-bahrain — all with mobile-first layout, country badges, entitlement progress bars, wait comparison sliders, milestone timelines
+### Shipped (commit 9e99be0 → bca07bd, deployed 2026-07-01)
+- **EOS franchise complete:** eos-kuwait · eos-qatar · eos-bahrain — mobile-first, country badges, entitlement bars
 - **New calculators:** car-loan · gosi-retirement
-- **UI/UX redesign (EOS):** removed gradients, fixed Arabic letter-spacing, replaced hardcoded hex colors, added country identity badges (🇰🇼🇶🇦🇧🇭) with pulsing live dots, sidebar facts mobile-visible
-- **Bug fix:** CalculatorHero highlights — `{ label, desc }` objects were rendering as `[object Object]`; fixed with type detection in `common.jsx`
-- **Keywords:** Kuwait/Qatar/Bahrain EOS keywords updated with action verbs, specific scenarios, year tokens
-- **Holiday events:** 15+ new events live (BAC results BH/KW/UAE; pension days BH/KW/OM/Algeria/Jordan; salary days BH/JO/OM; school starts BH/JO/OM; qatar-national-sport-day; social-security-qatar; uae-founding-day + more national days)
-- **Rules:** `.claude/rules/calculator-ui-standards.md` added — permanent UI standards for all future calculators
-
-### Previous sessions (summary)
-- Ads expansion: filled manual-config.js slots, activated stickyAnchor, AdBlogSidebar, B4 hub ads
-- Growth roadmap M0+M1: WebVitals reporter, Islamic event titleTag rewrites (hijriYear pair), hub title rewrites, prayer city SEO
-- 89+ events live total; holiday internal links complete rewrite
-- RelatedCalculators redesigned (featured row + compact ranked rows)
-- HolidayDetailsSections: EOS links for all 5 GCC countries
+- **UI/UX redesign (EOS):** no gradients, fixed Arabic letter-spacing, CSS variables, country identity badges + live dots
+- **Bug fix:** CalculatorHero highlights — `{ label, desc }` objects now render correctly
+- **Keywords:** Kuwait/Qatar/Bahrain EOS updated with action verbs, year tokens, specific scenarios
+- **Holiday events:** 15+ new events (BAC BH/KW/UAE; pension BH/KW/OM/Algeria/Jordan; salary BH/JO/OM; school-start BH/JO/OM; social-security-qatar; uae-founding-day + more)
+- **Rules:** `.claude/rules/calculator-ui-standards.md` added
+- **Backlog:** rewritten with $1k revenue focus, search volume gate, Egypt/Jordan/Morocco priority
 
 ## Key decisions / corrections
-
-- Gradients on calc form/result cards → FORBIDDEN. Use flat bg-surface-1 + border-top colored accent.
-- `letter-spacing` on Arabic text → FORBIDDEN (DESIGN.md §9.2). Always 0.
-- Hardcoded hex colors → FORBIDDEN. Always `var(--green-text)`, `var(--green-border)` etc.
-- Prayer times from calculatePrayerTimes() are already ISO strings — never call .toISOString() on them
-- Holiday sitemap must ONLY include canonical slugs — alias slugs would compete with canonicals
-- `related_not_reciprocal` is a WARNING (non-blocking) — do not let it block events:sync
-- `islamic_year_pair_missing` is a LIVE ERROR — Hijri event titles need `{{year}} - {{hijriYear}} هـ`
-- WebSite+SearchAction schema already in SiteWideSchemas.jsx (pre-done)
-- Article schema already in BlogArticleView.jsx (pre-done)
-- **Search volume gate:** nothing enters Build Queue without 3 named Arabic keyword phrases with real volume
+- Gradients on calc cards → FORBIDDEN. Flat `var(--bg-surface-1)` + `border-top: 3px solid var(--green)`.
+- `letter-spacing` on Arabic text → always 0.
+- Hardcoded hex colors → always `var(--green-text)`, `var(--green-border)` etc.
+- Seasonal-only tools (Ramadan planner) → parked until 8 weeks before the season.
+- `related_not_reciprocal` is a WARNING (non-blocking) — does not block events:sync.
+- `islamic_year_pair_missing` is a LIVE ERROR — Hijri event titles need `{{year}} - {{hijriYear}} هـ`.
+- Prayer times from calculatePrayerTimes() are already ISO strings — never call .toISOString().
+- Holiday sitemap must ONLY include canonical slugs (alias slugs would compete).
+- Search volume gate: nothing enters Build Queue without 3 named Arabic keyword phrases with real volume.
 
 ## Current build queue (priority order)
 
-See `docs/holiday-event-opportunity-backlog.md` for full details.
-
-| Priority | Item | Status |
-|---|---|---|
-| P1 | مخطط ختم القرآن في رمضان (`/calculators/ramadan-planner`) | Not started |
-| P2 | تحسين صفحات أوقات الصلاة (monthly table, Qibla, FAQs) | Not started |
-| P3 | حاسبة ضريبة الدخل المصرية (`/calculators/egypt-income-tax`) | Not started |
-| P4 | تحسين صفحات الإسلاميات الموجودة (content depth on existing events) | Not started |
-| P5 | مقيم الصحة المالية الخليجية (validate GSC first) | Parked |
-| P6 | محسن الإجازات (validate GSC first) | Parked |
+| # | Item | Route | Effort | Why now |
+|---|---|---|---|---|
+| P1 | حاسبة نهاية الخدمة مصر | `/calculators/eos-egypt` | Small | 105M people, Law 12/2003, thin competition |
+| P2 | اتجاه القبلة على صفحات الصلاة | add to existing prayer city pages | Very small | Daily search × 100+ cities = massive surface |
+| P3 | جدول شهري + أسئلة — صفحات الصلاة | existing prayer pages | Medium | Convert existing traffic → monthly return visits |
+| P4 | حاسبة ضريبة الدخل مصر | `/calculators/egypt-income-tax` | Small | 2025 brackets, competitors use outdated 2023 data |
+| P5 | حاسبة نهاية الخدمة الأردن | `/calculators/eos-jordan` | Small | Completes Jordan profile, Law 8/1996 |
+| P6 | حاسبة التأمينات الاجتماعية مصر | `/calculators/egypt-social-insurance` | Very small | Bundle with P4, same audience |
+| P7 | تحسين صفحات إسلاميات موجودة | existing event pages | Very small | Ashura + Hijri New Year arriving July 2026 |
+| P8 | حاسبة الراتب الصافي المغرب | `/calculators/morocco-net-salary` | Small | 36M people, CNSS+IR, no Arabic tool |
 
 ## Ad coverage (current state)
 
 | Route | Top | InArticle | InFeed | Multiplex |
 |---|---|---|---|---|
-| /calculators (hub) | ✅ | — | ✅ | ✅ |
-| /calculators/* | ✅ (in Hero) | ✅ (in FAQ) | — | ✅ (in Related) |
+| /calculators/* | ✅ Hero | ✅ FAQ | — | ✅ Related |
 | /holidays/[slug] | ✅ | ✅ ×2 | — | ✅ |
 | /blog/[slug] | ✅ | ✅ ×2 | — | ✅ |
-| /mwaqit-al-salat/[country]/[city] | ✅ | ✅ ×2 | — | ✅ |
-| /mwaqit-al-salat/[country] | ✅ | ✅ | — | ✅ |
+| /mwaqit-al-salat/* | ✅ | ✅ ×2 | — | ✅ |
 | /time-now/* | ✅ | ✅ | — | ✅ |
 | /date/* | ✅ | ✅ | — | ✅ |
 
-## Blocked on
-
-- GSC CTR triage: owner must export Search Console Performance CSV — needed to validate P5/P6 and unblock A2
-- Live route health: `npm run health:routes --base=https://miqatona.com`
-- Google Search Console: manually request indexing for eos-kuwait, eos-qatar, eos-bahrain (user action)
+## Blocked on (user actions required)
+- Google Search Console: manually request indexing for eos-kuwait, eos-qatar, eos-bahrain
+- GSC CSV export: needed to validate P5/P6 Leave Bridge and Financial Health volume
