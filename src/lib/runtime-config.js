@@ -67,7 +67,7 @@ export function getServerAdsConfig() {
     enabled,
     certifiedCmpEnabled,
     clientIdMatchesAccount,
-    autoAdsEnabled: enabled && !hasManualPlacements,
+    autoAdsEnabled: enabled,  // enables hybrid
     hasManualPlacements,
     manualSlots,
   };

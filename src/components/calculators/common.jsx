@@ -89,7 +89,7 @@ function getUniqueCalculatorLinks(items) {
 
 function getComplementSlugs(cluster) {
   const complementSlugsByCluster = {
-    finance: ['salary', 'zakat', 'investment', 'net-salary', 'vat', 'percentage', 'annual-leave', 'monthly-installment', 'end-of-service-benefits', 'iqama', 'electricity-bill', 'inheritance'],
+    finance: ['gosi-retirement', 'eos-qatar', 'eos-kuwait', 'eos-bahrain', 'uae-end-of-service', 'car-loan', 'salary', 'zakat', 'investment', 'net-salary', 'vat', 'percentage', 'annual-leave', 'monthly-installment', 'end-of-service-benefits', 'iqama', 'electricity-bill', 'inheritance'],
     building: ['vat', 'percentage', 'monthly-installment'],
     age: ['sleep', 'bedtime', 'retirement'],
     sleep: ['age-calculator', 'sleep', 'time-now'],
@@ -195,12 +195,22 @@ export function CalculatorHero({
             <div className="calc-hero-support">
               {safeHighlights.length ? (
                 <ul className="calc-highlight-list">
-                  {safeHighlights.map((item) => (
-                    <li key={item}>
-                      <CheckCircle2 size={16} />
-                      <span>{item}</span>
-                    </li>
-                  ))}
+                  {safeHighlights.map((item, i) => {
+                    const isObj = item && typeof item === 'object';
+                    return (
+                      <li key={isObj ? item.label : (item ?? i)}>
+                        <CheckCircle2 size={16} />
+                        {isObj ? (
+                          <span>
+                            <strong className="calc-highlight-label">{item.label}</strong>
+                            {item.desc ? <span className="calc-highlight-desc"> — {item.desc}</span> : null}
+                          </span>
+                        ) : (
+                          <span>{item}</span>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               ) : null}
               <div className="calc-hero-trust" aria-label="معلومات الثقة والخصوصية">

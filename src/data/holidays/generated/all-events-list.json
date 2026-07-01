@@ -850,6 +850,16 @@
     "day": 14
   },
   {
+    "id": "bac-results-bh",
+    "slug": "bac-results-bahrain",
+    "name": "نتائج الثانوية العامة البحرين",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "bh",
+    "month": 6,
+    "day": 10
+  },
+  {
     "id": "bac-results-jordan",
     "slug": "bac-results-jordan",
     "name": "نتائج التوجيهي الأردني",
@@ -860,6 +870,16 @@
     "day": 25
   },
   {
+    "id": "bac-results-kw",
+    "slug": "bac-results-kuwait",
+    "name": "نتائج الثانوية العامة الكويت",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "kw",
+    "month": 7,
+    "day": 10
+  },
+  {
     "id": "bac-results-morocco",
     "slug": "bac-results-morocco",
     "name": "نتيجة الباكالوريا المغرب",
@@ -868,6 +888,16 @@
     "_countryCode": "ma",
     "month": 7,
     "day": 5
+  },
+  {
+    "id": "bac-results-ae",
+    "slug": "bac-results-uae",
+    "name": "نتائج الثانوية العامة الإمارات",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "ae",
+    "month": 6,
+    "day": 20
   },
   {
     "id": "gulf-childrens-day",
@@ -899,6 +929,26 @@
     "day": 24
   },
   {
+    "id": "martyrs-day-algeria",
+    "slug": "martyrs-day-algeria",
+    "name": "يوم الشهيد الوطني الجزائري",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "dz",
+    "month": 2,
+    "day": 18
+  },
+  {
+    "id": "palestine-independence-day",
+    "slug": "palestine-independence-day",
+    "name": "يوم إعلان الاستقلال الفلسطيني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ps",
+    "month": 11,
+    "day": 15
+  },
+  {
     "id": "palestine-land-day",
     "slug": "palestine-land-day",
     "name": "يوم الأرض الفلسطيني",
@@ -907,6 +957,51 @@
     "_countryCode": "ps",
     "month": 3,
     "day": 30
+  },
+  {
+    "id": "pension-algeria",
+    "slug": "pension-day-algeria",
+    "name": "معاش التقاعد الجزائر CNR",
+    "type": "monthly",
+    "category": "social",
+    "_countryCode": "dz",
+    "day": 18
+  },
+  {
+    "id": "pension-bahrain",
+    "slug": "pension-day-bahrain",
+    "name": "معاش التقاعد البحريني",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "bh",
+    "day": 1
+  },
+  {
+    "id": "pension-jordan",
+    "slug": "pension-day-jordan",
+    "name": "معاش الضمان الاجتماعي الأردن",
+    "type": "monthly",
+    "category": "social",
+    "_countryCode": "jo",
+    "day": 23
+  },
+  {
+    "id": "pension-kuwait",
+    "slug": "pension-day-kuwait",
+    "name": "معاش التقاعد الكويتي",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "kw",
+    "day": 1
+  },
+  {
+    "id": "pension-oman",
+    "slug": "pension-day-oman",
+    "name": "معاش التقاعد العماني",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "om",
+    "day": 27
   },
   {
     "id": "pension-uae",
@@ -918,6 +1013,57 @@
     "day": 25
   },
   {
+    "id": "qatar-sport-day",
+    "slug": "qatar-national-sport-day",
+    "name": "اليوم الرياضي الوطني القطري",
+    "type": "floating",
+    "category": "national",
+    "_countryCode": "qa",
+    "floatingRule": {
+      "month": 2,
+      "weekday": 2,
+      "weekNumber": 2
+    }
+  },
+  {
+    "id": "republic-day-tunisia",
+    "slug": "republic-day-tunisia",
+    "name": "عيد الجمهورية التونسي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "tn",
+    "month": 7,
+    "day": 25
+  },
+  {
+    "id": "revolution-day-ma",
+    "slug": "revolution-day-morocco",
+    "name": "ذكرى ثورة الملك والشعب",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ma",
+    "month": 8,
+    "day": 20
+  },
+  {
+    "id": "salary-bahrain",
+    "slug": "salary-day-bahrain",
+    "name": "راتب موظفي البحرين",
+    "type": "monthly",
+    "category": "business",
+    "_countryCode": "bh",
+    "day": 22
+  },
+  {
+    "id": "salary-jordan",
+    "slug": "salary-day-jordan",
+    "name": "راتب موظفي حكومة الأردن",
+    "type": "monthly",
+    "category": "social",
+    "_countryCode": "jo",
+    "day": 25
+  },
+  {
     "id": "salary-kuwait",
     "slug": "salary-day-kuwait",
     "name": "راتب الكويت",
@@ -925,6 +1071,15 @@
     "category": "business",
     "_countryCode": "kw",
     "day": 1
+  },
+  {
+    "id": "salary-oman",
+    "slug": "salary-day-oman",
+    "name": "راتب موظفي عمان",
+    "type": "monthly",
+    "category": "business",
+    "_countryCode": "om",
+    "day": 28
   },
   {
     "id": "salary-qatar",
@@ -943,6 +1098,55 @@
     "category": "business",
     "_countryCode": "ae",
     "day": 25
+  },
+  {
+    "id": "school-start-bh",
+    "slug": "school-start-bahrain",
+    "name": "بداية العام الدراسي في البحرين",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "bh",
+    "month": 9,
+    "day": 3
+  },
+  {
+    "id": "school-start-jo",
+    "slug": "school-start-jordan",
+    "name": "بداية العام الدراسي في الأردن",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "jo",
+    "month": 9,
+    "day": 1
+  },
+  {
+    "id": "school-start-om",
+    "slug": "school-start-oman",
+    "name": "بداية العام الدراسي في عُمان",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "om",
+    "month": 8,
+    "day": 31
+  },
+  {
+    "id": "social-security-qa",
+    "slug": "social-security-qatar",
+    "name": "دعم التنمية الاجتماعية قطر",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "qa",
+    "day": 1
+  },
+  {
+    "id": "uae-founding-day",
+    "slug": "uae-founding-day",
+    "name": "يوم التأسيس الإماراتي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ae",
+    "month": 2,
+    "day": 20
   },
   {
     "id": "uae-tolerance-day",

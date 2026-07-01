@@ -27,18 +27,33 @@ const SUPPORTING_FINANCE_ROUTES = PRIMARY_FINANCE_ROUTE
   : FINANCE_ROUTES;
 const FINANCE_TOOL_LABELS = {
   'monthly-installment': 'قرار تمويلي',
+  'car-loan': 'تمويل السيارة',
+  'gosi-retirement': 'التقاعد المبكر GOSI',
+  'eos-qatar': 'نهاية الخدمة قطر',
+  'eos-kuwait': 'نهاية الخدمة الكويت',
+  'eos-bahrain': 'نهاية الخدمة البحرين',
   vat: 'فاتورة وسعر شامل',
   percentage: 'خصم أو زيادة',
   'end-of-service-benefits': 'مستحقات عمل',
 };
 const FINANCE_TOOL_CTAS = {
   'monthly-installment': 'افتح حاسبة القسط',
+  'car-loan': 'احسب قسط سيارتك',
+  'gosi-retirement': 'احسب موعد تقاعدك',
+  'eos-qatar': 'احسب مستحقات قطر',
+  'eos-kuwait': 'احسب مستحقات الكويت',
+  'eos-bahrain': 'احسب مستحقات البحرين',
   vat: 'افتح حاسبة الضريبة',
   percentage: 'افتح حاسبة النسبة',
   'end-of-service-benefits': 'احسب نهاية الخدمة',
 };
 const FINANCE_TOOL_ICONS = {
   'monthly-installment': 'قسط',
+  'car-loan': 'سيارة',
+  'gosi-retirement': 'تقاعد',
+  'eos-qatar': 'قطر',
+  'eos-kuwait': 'الكويت',
+  'eos-bahrain': 'البحرين',
   vat: 'ضريبة',
   percentage: 'نسبة',
   'end-of-service-benefits': 'عمل',

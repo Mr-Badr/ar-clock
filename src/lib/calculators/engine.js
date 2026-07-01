@@ -1412,3 +1412,333 @@ export function buildUaeEndOfServiceMilestones(startDate) {
     })(),
   }));
 }
+
+// ─── Qatar End-of-Service (Law No. 14 of 2004, Article 54) ──────────────────
+// Flat 21 days per year for ALL service lengths (2024 reform abolished old tiers)
+// NO resignation penalty — unique among GCC countries
+
+export function calculateQatarEndOfServiceBenefit({
+  basicSalary,
+  startDate,
+  endDate,
+  reason = 'contract_end',
+}) {
+  const salary = Math.max(0, toNumber(basicSalary));
+  const service = diffDates(startDate, endDate);
+
+  if (!salary || !service.isValid) {
+    return {
+      isValid: false,
+      salary,
+      service,
+      dailyRate: 0,
+      gratuityFull: 0,
+      gratuity: 0,
+      entitlementPercent: 100,
+      isForfeited: false,
+    };
+  }
+
+  // Qatar formula: (salary ÷ 30) × 21 days × years served
+  const dailyRate = salary / 30;
+  const gratuityFull = dailyRate * 21 * service.decimalYears;
+
+  // Art. 61 gross misconduct = full forfeiture; all other reasons = 100%
+  const isForfeited = reason === 'misconduct';
+  const gratuity = isForfeited ? 0 : gratuityFull;
+
+  const wholeYearsAmount = service.years * dailyRate * 21;
+  const partialAmount = Math.max(gratuityFull - wholeYearsAmount, 0);
+
+  return {
+    isValid: true,
+    salary,
+    reason,
+    service,
+    serviceLabel: formatServiceDuration(service),
+    dailyRate: round(dailyRate, 4),
+    gratuityFull: round(gratuityFull),
+    wholeYearsAmount: round(wholeYearsAmount),
+    partialAmount: round(partialAmount),
+    gratuity: round(gratuity),
+    entitlementPercent: isForfeited ? 0 : 100,
+    isForfeited,
+  };
+}
+
+export function buildQatarEndOfServiceComparison({
+  salary,
+  startDate,
+  endDate,
+  waitMonths = 0,
+}) {
+  const current = calculateQatarEndOfServiceBenefit({ basicSalary: salary, startDate, endDate });
+  const months = Math.max(0, Math.round(toNumber(waitMonths)));
+  const projDate = (() => {
+    const d = parseDateInput(endDate);
+    if (!d) return null;
+    const t = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + months, d.getUTCDate()));
+    return t.toISOString().slice(0, 10);
+  })();
+  const projected = projDate
+    ? calculateQatarEndOfServiceBenefit({ basicSalary: salary, startDate, endDate: projDate })
+    : { isValid: false, gratuity: 0 };
+
+  return {
+    current,
+    projected,
+    projectedEndDate: projDate,
+    difference: round((projected.gratuity || 0) - current.gratuity),
+  };
+}
+
+export function buildQatarEndOfServiceMilestones(startDate) {
+  const milestones = [
+    { years: 1, label: 'حد الاستحقاق الأدنى (سنة كاملة)' },
+    { years: 5, label: '5 سنوات — استحقاق كامل 21 يوم/سنة' },
+    { years: 10, label: '10 سنوات — استحقاق كامل 21 يوم/سنة' },
+  ];
+  return milestones.map((item) => ({
+    ...item,
+    date: (() => {
+      const d = parseDateInput(startDate);
+      if (!d) return null;
+      const t = new Date(Date.UTC(d.getUTCFullYear() + item.years, d.getUTCMonth(), d.getUTCDate()));
+      return t.toISOString().slice(0, 10);
+    })(),
+  }));
+}
+
+// ─── Kuwait End-of-Service (Law No. 6 of 2010) ──────────────────────────────
+
+export function getKuwaitEndOfServiceBracket(serviceYears) {
+  if (serviceYears < 3) return { label: 'أقل من 3 سنوات', multiplier: 0 };
+  if (serviceYears < 5) return { label: 'من 3 إلى أقل من 5 سنوات', multiplier: 0.5 };
+  if (serviceYears < 10) return { label: 'من 5 إلى أقل من 10 سنوات', multiplier: 2 / 3 };
+  return { label: '10 سنوات فأكثر', multiplier: 1 };
+}
+
+export function calculateKuwaitEndOfServiceBenefit({
+  basicSalary,
+  startDate,
+  endDate,
+  reason = 'contract_end',
+}) {
+  const salary = Math.max(0, toNumber(basicSalary));
+  const service = diffDates(startDate, endDate);
+
+  if (!salary || !service.isValid) {
+    return {
+      isValid: false,
+      salary,
+      service,
+      dailyRate: 0,
+      firstFiveAmount: 0,
+      remainingAmount: 0,
+      fullGratuity: 0,
+      cappedFullGratuity: 0,
+      isCapped: false,
+      gratuity: 0,
+      entitlementPercent: 0,
+    };
+  }
+
+  // Kuwait formula: daily rate = salary ÷ 26
+  // First 5 years: 15 working days/year; after 5 years: 30 working days/year
+  const dailyRate = salary / 26;
+  const firstFiveYears = Math.min(service.decimalYears, 5);
+  const remainingYears = Math.max(service.decimalYears - 5, 0);
+  const firstFiveAmount = dailyRate * 15 * firstFiveYears;
+  const remainingAmount = dailyRate * 30 * remainingYears;
+  const fullGratuity = firstFiveAmount + remainingAmount;
+
+  // 18-month statutory cap
+  const cap = salary * 18;
+  const cappedFullGratuity = Math.min(fullGratuity, cap);
+  const isCapped = fullGratuity > cap;
+
+  const resignationBracket = getKuwaitEndOfServiceBracket(service.decimalYears);
+  const multiplier = reason === 'resignation' ? resignationBracket.multiplier : 1;
+  const gratuity = cappedFullGratuity * multiplier;
+
+  const wholeFirstFive = Math.min(service.years, 5) * dailyRate * 15;
+  const wholeRemaining = Math.max(service.years - 5, 0) * dailyRate * 30;
+  const partialAmount = Math.max(fullGratuity - wholeFirstFive - wholeRemaining, 0);
+
+  return {
+    isValid: true,
+    salary,
+    reason,
+    service,
+    serviceLabel: formatServiceDuration(service),
+    dailyRate: round(dailyRate, 4),
+    firstFiveYears,
+    remainingYears,
+    firstFiveAmount: round(firstFiveAmount),
+    remainingAmount: round(remainingAmount),
+    partialAmount: round(partialAmount),
+    fullGratuity: round(fullGratuity),
+    cappedFullGratuity: round(cappedFullGratuity),
+    isCapped,
+    cap: round(cap),
+    gratuity: round(gratuity),
+    entitlementPercent: round(multiplier * 100, 1),
+    resignationBracket,
+  };
+}
+
+export function buildKuwaitEndOfServiceComparison({
+  salary,
+  startDate,
+  endDate,
+  reason = 'resignation',
+  waitMonths = 0,
+}) {
+  const current = calculateKuwaitEndOfServiceBenefit({ basicSalary: salary, startDate, endDate, reason });
+  const months = Math.max(0, Math.round(toNumber(waitMonths)));
+  const projDate = (() => {
+    const d = parseDateInput(endDate);
+    if (!d) return null;
+    const t = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + months, d.getUTCDate()));
+    return t.toISOString().slice(0, 10);
+  })();
+  const projected = projDate
+    ? calculateKuwaitEndOfServiceBenefit({ basicSalary: salary, startDate, endDate: projDate, reason })
+    : { isValid: false, gratuity: 0 };
+
+  return {
+    current,
+    projected,
+    projectedEndDate: projDate,
+    difference: round((projected.gratuity || 0) - current.gratuity),
+  };
+}
+
+export function buildKuwaitEndOfServiceMilestones(startDate) {
+  const milestones = [
+    { years: 3, label: '50% من المكافأة عند الاستقالة' },
+    { years: 5, label: '66.7% من المكافأة + معدل 30 يوماً/سنة' },
+    { years: 10, label: 'مكافأة كاملة عند الاستقالة' },
+  ];
+  return milestones.map((item) => ({
+    ...item,
+    date: (() => {
+      const d = parseDateInput(startDate);
+      if (!d) return null;
+      const t = new Date(Date.UTC(d.getUTCFullYear() + item.years, d.getUTCMonth(), d.getUTCDate()));
+      return t.toISOString().slice(0, 10);
+    })(),
+  }));
+}
+
+// ─── Bahrain End-of-Service (Law No. 36 of 2012, Article 116) ────────────────
+
+export function getBahrainEndOfServiceBracket(serviceYears) {
+  if (serviceYears < 1) return { label: 'أقل من سنة', multiplier: 0 };
+  if (serviceYears < 3) return { label: 'من سنة إلى أقل من 3 سنوات', multiplier: 1 / 3 };
+  if (serviceYears < 5) return { label: 'من 3 إلى أقل من 5 سنوات', multiplier: 2 / 3 };
+  return { label: '5 سنوات فأكثر', multiplier: 1 };
+}
+
+export function calculateBahrainEndOfServiceBenefit({
+  basicSalary,
+  startDate,
+  endDate,
+  reason = 'contract_end',
+}) {
+  const salary = Math.max(0, toNumber(basicSalary));
+  const service = diffDates(startDate, endDate);
+
+  if (!salary || !service.isValid) {
+    return {
+      isValid: false,
+      salary,
+      service,
+      dailyRate: 0,
+      firstThreeAmount: 0,
+      remainingAmount: 0,
+      fullGratuity: 0,
+      gratuity: 0,
+      entitlementPercent: 0,
+    };
+  }
+
+  // Bahrain formula: daily rate = salary ÷ 30
+  // First 3 years: 15 days/year (half month); after 3 years: 30 days/year (full month)
+  const dailyRate = salary / 30;
+  const firstThreeYears = Math.min(service.decimalYears, 3);
+  const remainingYears = Math.max(service.decimalYears - 3, 0);
+  const firstThreeAmount = dailyRate * 15 * firstThreeYears;
+  const remainingAmount = dailyRate * 30 * remainingYears;
+  const fullGratuity = firstThreeAmount + remainingAmount;
+
+  const resignationBracket = getBahrainEndOfServiceBracket(service.decimalYears);
+  const multiplier = reason === 'resignation' ? resignationBracket.multiplier : 1;
+  const gratuity = fullGratuity * multiplier;
+
+  const wholeFirstThree = Math.min(service.years, 3) * dailyRate * 15;
+  const wholeRemaining = Math.max(service.years - 3, 0) * dailyRate * 30;
+  const partialAmount = Math.max(fullGratuity - wholeFirstThree - wholeRemaining, 0);
+
+  return {
+    isValid: true,
+    salary,
+    reason,
+    service,
+    serviceLabel: formatServiceDuration(service),
+    dailyRate: round(dailyRate, 4),
+    firstThreeYears,
+    remainingYears,
+    firstThreeAmount: round(firstThreeAmount),
+    remainingAmount: round(remainingAmount),
+    partialAmount: round(partialAmount),
+    fullGratuity: round(fullGratuity),
+    gratuity: round(gratuity),
+    entitlementPercent: round(multiplier * 100, 1),
+    resignationBracket,
+  };
+}
+
+export function buildBahrainEndOfServiceComparison({
+  salary,
+  startDate,
+  endDate,
+  reason = 'resignation',
+  waitMonths = 0,
+}) {
+  const current = calculateBahrainEndOfServiceBenefit({ basicSalary: salary, startDate, endDate, reason });
+  const months = Math.max(0, Math.round(toNumber(waitMonths)));
+  const projDate = (() => {
+    const d = parseDateInput(endDate);
+    if (!d) return null;
+    const t = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + months, d.getUTCDate()));
+    return t.toISOString().slice(0, 10);
+  })();
+  const projected = projDate
+    ? calculateBahrainEndOfServiceBenefit({ basicSalary: salary, startDate, endDate: projDate, reason })
+    : { isValid: false, gratuity: 0 };
+
+  return {
+    current,
+    projected,
+    projectedEndDate: projDate,
+    difference: round((projected.gratuity || 0) - current.gratuity),
+  };
+}
+
+export function buildBahrainEndOfServiceMilestones(startDate) {
+  const milestones = [
+    { years: 1, label: '33.3% من المكافأة عند الاستقالة' },
+    { years: 3, label: '66.7% من المكافأة + معدل 30 يوم/سنة' },
+    { years: 5, label: 'مكافأة كاملة عند الاستقالة' },
+  ];
+  return milestones.map((item) => ({
+    ...item,
+    date: (() => {
+      const d = parseDateInput(startDate);
+      if (!d) return null;
+      const t = new Date(Date.UTC(d.getUTCFullYear() + item.years, d.getUTCMonth(), d.getUTCDate()));
+      return t.toISOString().slice(0, 10);
+    })(),
+  }));
+}

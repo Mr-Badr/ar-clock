@@ -1798,6 +1798,15 @@
     "canonicalPath": "/holidays/bac-results-algeria",
     "aliases": []
   },
+  "bac-results-bahrain": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/bac-results-bahrain",
+    "aliases": []
+  },
   "bac-results-jordan": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -1809,6 +1818,17 @@
     "canonicalPath": "/holidays/bac-results-jordan",
     "aliases": []
   },
+  "bac-results-kuwait": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "kw"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/bac-results-kuwait",
+    "aliases": []
+  },
   "bac-results-morocco": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -1818,6 +1838,17 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/bac-results-morocco",
+    "aliases": []
+  },
+  "bac-results-uae": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ae"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/bac-results-uae",
     "aliases": []
   },
   "gulf-childrens-day": {
@@ -1851,6 +1882,28 @@
     "canonicalPath": "/holidays/libya-independence-day",
     "aliases": []
   },
+  "martyrs-day-algeria": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "dz"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/martyrs-day-algeria",
+    "aliases": []
+  },
+  "palestine-independence-day": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ps"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/palestine-independence-day",
+    "aliases": []
+  },
   "palestine-land-day": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -1860,6 +1913,59 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/palestine-land-day",
+    "aliases": []
+  },
+  "pension-day-algeria": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "dz"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/pension-day-algeria",
+    "aliases": []
+  },
+  "pension-day-bahrain": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/pension-day-bahrain",
+    "aliases": []
+  },
+  "pension-day-jordan": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "jo"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/pension-day-jordan",
+    "aliases": []
+  },
+  "pension-day-kuwait": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "kw"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/pension-day-kuwait",
+    "aliases": []
+  },
+  "pension-day-oman": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "om"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/pension-day-oman",
     "aliases": []
   },
   "pension-day-uae": {
@@ -1873,6 +1979,59 @@
     "canonicalPath": "/holidays/pension-day-uae",
     "aliases": []
   },
+  "qatar-national-sport-day": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "qa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/qatar-national-sport-day",
+    "aliases": []
+  },
+  "republic-day-tunisia": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "tn"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/republic-day-tunisia",
+    "aliases": []
+  },
+  "revolution-day-morocco": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ma"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/revolution-day-morocco",
+    "aliases": []
+  },
+  "salary-day-bahrain": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/salary-day-bahrain",
+    "aliases": []
+  },
+  "salary-day-jordan": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "jo"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/salary-day-jordan",
+    "aliases": []
+  },
   "salary-day-kuwait": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -1882,6 +2041,17 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/salary-day-kuwait",
+    "aliases": []
+  },
+  "salary-day-oman": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "om"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/salary-day-oman",
     "aliases": []
   },
   "salary-day-qatar": {
@@ -1904,6 +2074,59 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/salary-day-uae",
+    "aliases": []
+  },
+  "school-start-bahrain": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/school-start-bahrain",
+    "aliases": []
+  },
+  "school-start-jordan": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "jo"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/school-start-jordan",
+    "aliases": []
+  },
+  "school-start-oman": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "om"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/school-start-oman",
+    "aliases": []
+  },
+  "social-security-qatar": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "qa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/social-security-qatar",
+    "aliases": []
+  },
+  "uae-founding-day": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ae"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/uae-founding-day",
     "aliases": []
   },
   "uae-tolerance-day": {

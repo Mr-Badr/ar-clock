@@ -1,0 +1,13 @@
+{
+  "slug": "uae-founding-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": false,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [],
+  "updatedAt": "2026-06-30T05:19:30.556Z"
+}

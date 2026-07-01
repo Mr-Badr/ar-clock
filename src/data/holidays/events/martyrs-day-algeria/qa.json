@@ -1,0 +1,13 @@
+{
+  "slug": "martyrs-day-algeria",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": false,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [],
+  "updatedAt": "2026-06-30T17:21:32.650Z"
+}

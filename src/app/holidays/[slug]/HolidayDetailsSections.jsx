@@ -35,7 +35,10 @@ const CATEGORY_CALCULATORS = {
   support: [
     { href: '/calculators/salary',               label: 'حاسبة الراتب',        desc: 'حوّل راتبك الشهري إلى يومي وساعي',    accent: 'var(--green)' },
     { href: '/calculators/net-salary',           label: 'صافي الراتب',         desc: 'الراتب بعد الاستقطاعات',               accent: 'var(--accent)' },
-    { href: '/calculators/end-of-service-benefits', label: 'نهاية الخدمة',     desc: 'ما تستحقه عند ترك العمل',              accent: 'var(--accent-alt)' },
+    { href: '/calculators/gosi-retirement',      label: 'التقاعد المبكر GOSI', desc: 'متى يحق لك التقاعد وكم معاشك؟',        accent: 'var(--calc-cat-finance)' },
+    { href: '/calculators/eos-qatar',            label: 'نهاية الخدمة قطر',   desc: 'الاستقالة لا تنقص مكافأتك في قطر',    accent: 'var(--blue)' },
+    { href: '/calculators/eos-kuwait',           label: 'نهاية الخدمة الكويت',   desc: 'مكافأتك وفق قانون العمل 6/2010',        accent: 'var(--blue)' },
+    { href: '/calculators/eos-bahrain',          label: 'نهاية الخدمة البحرين',  desc: 'نصف شهر ثم شهر كامل — قانون 36/2012',   accent: 'var(--blue)' },
   ],
   school: [
     { href: '/calculators/gpa',           label: 'المعدل التراكمي',    desc: 'احسب GPA بدقة وفق جدول درجاتك',     accent: 'var(--blue)' },
@@ -49,7 +52,7 @@ const CATEGORY_CALCULATORS = {
   ],
   business: [
     { href: '/calculators/vat',                label: 'حاسبة الضريبة',      desc: 'احسب VAT للبيع والشراء والفواتير',  accent: 'var(--blue)' },
-    { href: '/calculators/monthly-installment', label: 'حاسبة الأقساط',     desc: 'قسّط أي مبلغ وشاهد الجدول الزمني',  accent: 'var(--accent)' },
+    { href: '/calculators/car-loan',           label: 'تمويل السيارة',       desc: 'قسط السيارة: تقليدي أم مرابحة إسلامية؟', accent: 'var(--calc-cat-finance)' },
     { href: '/calculators/investment',         label: 'حاسبة الاستثمار',    desc: 'نمو رأس المال مع الفائدة المركبة',   accent: 'var(--green)' },
   ],
   astronomy: [

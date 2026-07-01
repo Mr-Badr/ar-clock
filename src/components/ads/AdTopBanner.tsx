@@ -58,7 +58,9 @@ export default function AdTopBanner({
   const shouldRenderAds = Boolean(clientId && adSlot);
   const canLoadAds = useMarketingPermission(shouldRenderAds);
   const ref = useRef<HTMLDivElement>(null);
+  const insRef = useRef<HTMLModElement>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isUnfilled, setIsUnfilled] = useState(false);
   const loaded = useRef(false);
 
   useEffect(() => {
@@ -84,6 +86,17 @@ export default function AdTopBanner({
               });
             }
 
+            // Watch for Google's unfilled signal to collapse the reserved space
+            if (insRef.current) {
+              const mutObs = new MutationObserver(() => {
+                if (insRef.current?.getAttribute("data-ad-status") === "unfilled") {
+                  setIsUnfilled(true);
+                  mutObs.disconnect();
+                }
+              });
+              mutObs.observe(insRef.current, { attributes: true, attributeFilter: ["data-ad-status"] });
+            }
+
             observer.disconnect();
           }
         });
@@ -95,7 +108,7 @@ export default function AdTopBanner({
     return () => observer.disconnect();
   }, [canLoadAds]);
 
-  if (!shouldRenderAds || !canLoadAds) return null;
+  if (!shouldRenderAds || !canLoadAds || isUnfilled) return null;
 
   return (
     <div
@@ -108,6 +121,7 @@ export default function AdTopBanner({
       {/* Label — required by Google AdSense policy to be visible */}
       <span className="ad-slot__label">إعلان</span>
       <ins
+        ref={insRef}
         className="adsbygoogle"
         style={{ display: "block" }}
         data-ad-client={clientId || undefined}

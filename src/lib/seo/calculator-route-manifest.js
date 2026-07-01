@@ -50,6 +50,11 @@ export const STATIC_CALCULATOR_SEO_ROUTES = Object.freeze([
   { path: '/calculators/annual-leave', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
   { path: '/calculators/fasting', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
   { path: '/calculators/investment', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
+  { path: '/calculators/car-loan', priority: 0.92, changeFrequency: 'weekly', websitePart: true },
+  { path: '/calculators/gosi-retirement', priority: 0.92, changeFrequency: 'weekly', websitePart: true },
+  { path: '/calculators/eos-qatar', priority: 0.9, changeFrequency: 'weekly', websitePart: true },
+  { path: '/calculators/eos-kuwait', priority: 0.9, changeFrequency: 'weekly', websitePart: true },
+  { path: '/calculators/eos-bahrain', priority: 0.9, changeFrequency: 'weekly', websitePart: true },
 ]);
 
 export const BUILDING_COUNTRY_CALCULATOR_SEO_ROUTES = Object.freeze(

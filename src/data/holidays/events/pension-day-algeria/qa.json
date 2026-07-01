@@ -1,0 +1,52 @@
+{
+  "qaDate": "2026-07-01",
+  "checklist": {
+    "officialDateVerified": true,
+    "officialDateSource": "ennaharonline.com citing Algeria Post/CNR official announcement; mtess.gov.dz",
+    "dayOfMonth": 18,
+    "paymentWindow": "18-26",
+    "weekendExceptionDocumented": true,
+    "weekendException": "Friday and Saturday → advance to preceding Thursday",
+    "noHardcodedYears": true,
+    "yearTokensUsed": [
+      "{{year}}",
+      "{{nextYear}}",
+      "{{formattedDate}}",
+      "{{daysRemaining}}"
+    ],
+    "faqCount": 8,
+    "faqMinimumMet": true,
+    "q1HasPrimaryKeywordWithYear": true,
+    "q2HasKamBaqiWithYear": true,
+    "q7HasNextYear": true,
+    "keywordMatchesAboveMinimum": true,
+    "estimatedKeywordMatches": "18+",
+    "sourcesCount": 3,
+    "sourcesMinimumMet": true,
+    "metaDescriptionLength": "~138 chars (within 120-155 range)",
+    "aliasSlugsEmpty": true,
+    "countryScopeNone": true,
+    "countryCodeSet": "dz",
+    "singleCountryEvent": true,
+    "publishStatusPublished": true,
+    "categoryValid": "social",
+    "noBaseCountryLeakage": true,
+    "competitorsAnalyzed": 5,
+    "winningAngleDocumented": true
+  },
+  "notes": [
+    "IMPORTANT: This event uses day=18 as anchor (first payments begin), but payments extend to day 26 depending on CCP suffix. The countdown shows days until payment WINDOW STARTS.",
+    "CNR is the correct institution, NOT CNAS (which handles health/accident insurance for salaried workers). The backlog had an error calling it 'CNAS'.",
+    "The CCP-based multi-day schedule was introduced in July 2020 by Algeria Post + CNR to prevent post office overcrowding.",
+    "June 2026 had exceptional advancement to June 7-15; normal schedule resumes from July 2026.",
+    "Algeria weekend: Friday+Saturday since 2009 labor law reform.",
+    "Algeria uses Gregorian calendar officially (no Hijri dates needed)."
+  ],
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "schemaValid": true,
+    "seoValidated": true
+  },
+  "updatedAt": "2026-06-30T23:25:40.987Z"
+}

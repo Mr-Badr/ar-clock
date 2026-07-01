@@ -1,0 +1,13 @@
+{
+  "slug": "pension-day-kuwait",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": false,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [],
+  "updatedAt": "2026-06-30T05:20:51.091Z"
+}

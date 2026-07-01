@@ -1,47 +1,15 @@
 "use client";
 
 /**
- * AdStickyAnchor — Fixed bottom banner  (v2 — CLS & UX fixed)
+ * AdStickyAnchor — Fixed bottom banner (mobile only, < 960px)
  * ─────────────────────────────────────────────────────────────────────────────
- * SIZE:    100vw × 60px fixed height
- *          Respects iOS safe-area-inset-bottom (home bar)
- *          Hidden on ≥960px via CSS
+ * Slides up from the bottom after the user has scrolled 20% of the page.
+ * Dismissible via × button — remembers dismiss for the session.
  *
- * v2 FIXES vs v1:
- *   ✅ Anchor hidden via `translateY(100%)` transform, not opacity alone
- *      → slides in from bottom, no layout shift
- *   ✅ sessionStorage check happens synchronously in useState initializer
- *      → avoids flash/re-render on dismissed state
- *   ✅ Cleaner dismiss animation uses transform (not opacity which was clipping)
- *
- * WHERE TO USE in root layout.tsx — LAST elements in <body>:
- *
- *   export default function RootLayout({ children }) {
- *     return (
- *       <html lang="ar" dir="rtl">
- *         <body>
- *           <Navbar />
- *           {children}
- *
- *           ← These two always come last, in this order:
- *           <div className="sticky-anchor-spacer" aria-hidden="true" />
- *           <AdStickyAnchor />
- *         </body>
- *       </html>
- *     );
- *   }
- *
- * WHY THE SPACER MUST BE UNCONDITIONAL:
- *   The .sticky-anchor-spacer CSS always reserves 68px on mobile.
- *   This means the last content item is NEVER hidden behind the anchor,
- *   whether or not the anchor is currently visible.
- *   This is the correct CLS-free pattern: reserve space first, fill later.
- *
- * BEHAVIOR:
- *   - Hidden below screen (translateY: 100%) on page load
- *   - Slides up after user scrolls scrollThreshold (default 25%) down
- *   - Dismissible via × button — remembers dismiss for the session
- *   - Does not re-appear if user dismisses, even after navigation
+ * IMPORTANT: `stickyAnchor` slot in manual-config.js must use a dedicated
+ * Anchor/Bottom banner ad unit from AdSense — NOT the same slot ID as
+ * topBanner. Using a Display slot ID here causes impression conflicts on pages
+ * where both the top banner and sticky anchor coexist.
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -55,9 +23,7 @@ interface AdStickyAnchorProps {
   className?: string;
 }
 
-export default function AdStickyAnchor({
-  className,
-}: AdStickyAnchorProps) {
+export default function AdStickyAnchor({ className }: AdStickyAnchorProps) {
   const resolvedClassName = className ?? "";
   const { clientId, manualSlots } = useAdsRuntimeConfig();
   const adSlot = manualSlots.stickyAnchor || "";
@@ -70,34 +36,30 @@ export default function AdStickyAnchor({
     return sessionStorage.getItem("waqt-fullscreen-companion-dismissed") === "1";
   });
   const [visible, setVisible] = useState(false);
-  const [fullscreenActive, setFullscreenActive] = useState(false);
   const loaded = useRef(false);
 
+  // Slide up after user scrolls 20% of page height
   useEffect(() => {
-    if (typeof document === "undefined") return undefined;
+    if (dismissed) return;
 
-    const update = () => {
-      const active = document.body.classList.contains("has-css-fullscreen");
-      setFullscreenActive(active);
-      if (!active) {
-        setVisible(false);
-      } else if (!dismissed) {
+    const handleScroll = () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      if (total > 0 && window.scrollY / total > 0.20) {
         setVisible(true);
       }
     };
 
-    update();
-
-    const observer = new MutationObserver(update);
-    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
-
-    return () => observer.disconnect();
+    // Check on mount in case the page is already scrolled
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [dismissed]);
 
+  // Load the ad once the banner becomes visible (only once per mount)
   useEffect(() => {
     if (!canLoadAds) return;
     if (!routePolicy.enableFullscreenCompanion) return;
-    if (!fullscreenActive || !visible || loaded.current || dismissed) return;
+    if (!visible || loaded.current || dismissed) return;
     loaded.current = true;
     try {
       const adsWindow = window as Window & { adsbygoogle?: unknown[] };
@@ -109,7 +71,7 @@ export default function AdStickyAnchor({
         error: serializeError(error),
       });
     }
-  }, [canLoadAds, dismissed, fullscreenActive, routePolicy.enableFullscreenCompanion, visible]);
+  }, [canLoadAds, dismissed, routePolicy.enableFullscreenCompanion, visible]);
 
   const handleDismiss = () => {
     setVisible(false);
@@ -117,12 +79,7 @@ export default function AdStickyAnchor({
     sessionStorage.setItem("waqt-fullscreen-companion-dismissed", "1");
   };
 
-  if (
-    !shouldRenderAds ||
-    !canLoadAds ||
-    dismissed ||
-    !routePolicy.enableFullscreenCompanion
-  ) {
+  if (!shouldRenderAds || !canLoadAds || dismissed || !routePolicy.enableFullscreenCompanion) {
     return null;
   }
 
@@ -130,19 +87,17 @@ export default function AdStickyAnchor({
     <div
       className={[
         "ad-slot ad-slot--sticky-anchor",
-        !fullscreenActive || !visible ? "is-hidden" : "",
+        !visible ? "is-hidden" : "",
         resolvedClassName,
       ]
         .filter(Boolean)
         .join(" ")}
       role="complementary"
       aria-label="إعلان"
-      aria-hidden={!fullscreenActive || !visible}
+      aria-hidden={!visible}
     >
-      {/* Label — visible per Google AdSense policy */}
       <span className="ad-slot__label">إعلان</span>
 
-      {/* Dismiss button */}
       <button
         type="button"
         className="ad-slot__close"

@@ -1,0 +1,13 @@
+{
+  "slug": "school-start-bahrain",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": false,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [],
+  "updatedAt": "2026-06-30T05:34:03.121Z"
+}
