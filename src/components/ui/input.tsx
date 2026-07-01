@@ -4,20 +4,25 @@ import { cn } from "@/lib/utils"
 
 type InputProps = React.ComponentProps<"input">
 
-const ltrInputTypes: ReadonlySet<string> = new Set(["email", "tel", "url"])
+const ltrInputTypes: ReadonlySet<string> = new Set(["email", "tel", "url", "number"])
+const ltrInputModes: ReadonlySet<string> = new Set(["decimal", "numeric"])
 
 function Input({
   className,
   dir,
   type,
+  inputMode,
   ...props
 }: InputProps): React.JSX.Element {
   const resolvedDir: InputProps["dir"] =
-    dir ?? (typeof type === "string" && ltrInputTypes.has(type) ? "ltr" : undefined)
+    dir ??
+    (typeof type === "string" && ltrInputTypes.has(type) ? "ltr" : undefined) ??
+    (typeof inputMode === "string" && ltrInputModes.has(inputMode) ? "ltr" : undefined)
 
   return (
     <input
       type={type}
+      inputMode={inputMode}
       dir={resolvedDir}
       data-slot="input"
       className={cn(

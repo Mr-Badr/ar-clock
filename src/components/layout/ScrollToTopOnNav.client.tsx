@@ -23,14 +23,23 @@ export default function ScrollToTopOnNav() {
   useEffect(() => {
     let raf1: number;
     let raf2: number;
+    let tid: ReturnType<typeof setTimeout>;
     raf1 = requestAnimationFrame(() => {
       raf2 = requestAnimationFrame(() => {
         window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+        // Belt-and-suspenders: fire again after 200ms to override any late
+        // scrollIntoView calls from Radix UI Tabs/Accordion mounting effects.
+        tid = setTimeout(() => {
+          if (window.scrollY > 0) {
+            window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+          }
+        }, 200);
       });
     });
     return () => {
       cancelAnimationFrame(raf1);
       cancelAnimationFrame(raf2);
+      clearTimeout(tid);
     };
   }, [pathname]);
 

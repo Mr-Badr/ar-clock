@@ -3,6 +3,7 @@ import Link from 'next/link';
 import UaeEndOfServiceCalculator from '@/components/calculators/UaeEndOfServiceCalculator.client';
 import {
   CalculatorFaqSection,
+  CalculatorInArticleDivider,
   CalculatorHero,
   CalculatorInfoGrid,
   CalculatorSection,
@@ -105,6 +106,7 @@ export default async function UaeEndOfServicePage() {
       {/* Guide — understanding your result */}
       <CalculatorSection
         id="uae-esb-guide"
+        showAdBefore
         eyebrow="دليل سريع"
         title="افهم النتيجة قبل اتخاذ القرار"
         description="المعادلة بسيطة لكن التفاصيل تُغيّر الرقم: الراتب الأساسي فقط، والشريحتان، وسبب الإنهاء — هذه الثلاثة تحدد ما تأخذه فعلاً."
@@ -337,7 +339,8 @@ export default async function UaeEndOfServicePage() {
         eyebrow="أسئلة شائعة"
         title="قبل الاستقالة أو مراجعة التسوية"
       >
-        <CalculatorFaqSection items={faqItems} />
+        <CalculatorInArticleDivider />
+      <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>
 
       {/* Related + sources */}

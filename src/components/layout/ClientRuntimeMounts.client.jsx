@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 const AdSenseProvider = dynamic(() => import('@/components/ads/AdSenseProvider'), { ssr: false });
 const AdStickyAnchor = dynamic(() => import('@/components/ads/AdStickyAnchor'), { ssr: false });
@@ -41,6 +42,7 @@ function scheduleIdle(callback) {
 export default function ClientRuntimeMounts() {
   const [hydrated, setHydrated] = useState(false);
   const [idle, setIdle] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setHydrated(true);
@@ -48,6 +50,17 @@ export default function ClientRuntimeMounts() {
       setIdle(true);
     });
   }, []);
+
+  // Mark homepage so ads.css can hide Auto Ads side rail panels at laptop widths
+  // where the wide hero layout leaves < 100px gutter (side rails would overlap content).
+  // All other pages use narrower containers and Google's own space-detection handles it.
+  useEffect(() => {
+    if (pathname === '/') {
+      document.body.classList.add('home-hero-wide');
+    } else {
+      document.body.classList.remove('home-hero-wide');
+    }
+  }, [pathname]);
 
   return (
     <>

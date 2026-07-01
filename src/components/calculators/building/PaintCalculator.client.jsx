@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState, useCallback } from 'react';
-import { Minus, Plus, PaintBucket, Info } from 'lucide-react';
+import { Minus, Plus, PaintBucket, Info } from '@phosphor-icons/react';
 
 // ─── Paint data ──────────────────────────────────────────────────────────────
 
@@ -101,7 +101,7 @@ function Stepper({ value, min = 0, max = 20, onChange, label }) {
         disabled={value <= min}
         aria-label="تقليل"
       >
-        <Minus size={13} strokeWidth={2.5} />
+        <Minus size={13} weight="bold" />
       </button>
       <span className="pc-stepper-val" aria-live="polite">{value}</span>
       <button
@@ -110,7 +110,7 @@ function Stepper({ value, min = 0, max = 20, onChange, label }) {
         onClick={() => onChange(Math.min(max, value + 1))}
         aria-label="زيادة"
       >
-        <Plus size={13} strokeWidth={2.5} />
+        <Plus size={13} weight="bold" />
       </button>
     </div>
   );
@@ -195,7 +195,7 @@ export default function PaintCalculator() {
         {/* Step 1: Dimensions */}
         <section className="pc-section" aria-labelledby="pc-s1">
           <h3 className="pc-section-title" id="pc-s1">
-            <span className="pc-step-num" aria-hidden="true">١</span>
+            <span className="pc-step-num" aria-hidden="true">1</span>
             أبعاد الغرفة
           </h3>
           <div className="pc-dims">
@@ -208,7 +208,7 @@ export default function PaintCalculator() {
         {/* Step 2: Openings */}
         <section className="pc-section" aria-labelledby="pc-s2">
           <h3 className="pc-section-title" id="pc-s2">
-            <span className="pc-step-num" aria-hidden="true">٢</span>
+            <span className="pc-step-num" aria-hidden="true">2</span>
             الفتحات
             <span className="pc-section-sub">تُطرح من المساحة</span>
           </h3>
@@ -243,7 +243,7 @@ export default function PaintCalculator() {
         {/* Step 3: Paint type */}
         <section className="pc-section" aria-labelledby="pc-s3">
           <h3 className="pc-section-title" id="pc-s3">
-            <span className="pc-step-num" aria-hidden="true">٣</span>
+            <span className="pc-step-num" aria-hidden="true">3</span>
             نوع الدهان
           </h3>
           <div className="pc-types">
@@ -335,7 +335,7 @@ export default function PaintCalculator() {
         <div className="pc-hero">
           <div className="pc-hero-top">
             <div className="pc-hero-icon-wrap">
-              <PaintBucket size={22} aria-hidden="true" />
+              <PaintBucket size={22} weight="fill" aria-hidden="true" />
             </div>
             <div>
               <p className="pc-hero-label">كمية الدهان المطلوبة</p>
@@ -356,7 +356,7 @@ export default function PaintCalculator() {
           </div>
 
           <div className="pc-safety">
-            <Info size={13} className="pc-safety-ico" aria-hidden="true" />
+            <Info size={13} weight="fill" className="pc-safety-ico" aria-hidden="true" />
             <span>
               اشترِ <strong>{result.safeCans5L} علبة 5 لتر</strong> — يشمل 12% احتياط للإصلاحات
             </span>

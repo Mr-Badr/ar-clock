@@ -1854,3 +1854,327 @@ export function buildEgyptEndOfServiceMilestones(startDate) {
     })(),
   }));
 }
+
+// ─── Egypt Social Insurance (Law 148/2019) ───────────────────────────────────
+
+export const EGYPT_SI_EMPLOYER_RATE = 0.1875;
+
+export function calculateEgyptSocialInsurance({ monthlySalary }) {
+  const salary = parseFloat(monthlySalary);
+  if (!salary || salary <= 0 || isNaN(salary)) return { isValid: false };
+
+  const siBase         = Math.min(salary, EGYPT_SI_MAX_MONTHLY);
+  const employeeShare  = round(siBase * EGYPT_SI_EMPLOYEE_RATE);
+  const employerShare  = round(siBase * EGYPT_SI_EMPLOYER_RATE);
+  const totalShare     = round(employeeShare + employerShare);
+  const netAfterSi     = round(salary - employeeShare);
+  const cappedNote     = salary > EGYPT_SI_MAX_MONTHLY;
+
+  return {
+    isValid: true,
+    salary,
+    siBase,
+    employeeShare,
+    employerShare,
+    totalShare,
+    netAfterSi,
+    cappedNote,
+    employeePct:  (EGYPT_SI_EMPLOYEE_RATE * 100).toFixed(0),
+    employerPct:  (EGYPT_SI_EMPLOYER_RATE * 100).toFixed(2),
+  };
+}
+
+// ─── Morocco Net Salary (CNSS + IR) ──────────────────────────────────────────
+
+const MOROCCO_CNSS_RATE        = 0.0448; // short-term
+const MOROCCO_CNSS_AMO_RATE    = 0.0629; // AMO long-term
+const MOROCCO_CNSS_TRAINING    = 0.0052; // professional training
+const MOROCCO_CNSS_TOTAL       = MOROCCO_CNSS_RATE + MOROCCO_CNSS_AMO_RATE + MOROCCO_CNSS_TRAINING;
+const MOROCCO_CNSS_MAX_MONTHLY = 6000;   // MAD (2025 cap for some components — full for AMO)
+
+const MOROCCO_IR_BRACKETS = [
+  { upTo: 30000,   rate: 0 },
+  { upTo: 50000,   rate: 0.10 },
+  { upTo: 60000,   rate: 0.20 },
+  { upTo: 80000,   rate: 0.30 },
+  { upTo: 180000,  rate: 0.34 },
+  { upTo: Infinity, rate: 0.38 },
+];
+
+export function calculateMoroccoNetSalary({ monthlyGross }) {
+  const salary = parseFloat(monthlyGross);
+  if (!salary || salary <= 0 || isNaN(salary)) return { isValid: false };
+
+  const cnssDeduction  = round(salary * MOROCCO_CNSS_TOTAL);
+  const annualGross    = round(salary * 12);
+  const annualTaxable  = Math.max(0, round(annualGross - cnssDeduction * 12));
+
+  let remaining       = annualTaxable;
+  let totalIRAnnual   = 0;
+  const bracketDetail = [];
+
+  for (let i = 0; i < MOROCCO_IR_BRACKETS.length; i++) {
+    const b        = MOROCCO_IR_BRACKETS[i];
+    const prevUpTo = i === 0 ? 0 : MOROCCO_IR_BRACKETS[i - 1].upTo;
+    const width    = b.upTo === Infinity ? remaining : (b.upTo - prevUpTo);
+    const taxable  = Math.max(0, Math.min(width, remaining));
+    if (taxable <= 0) break;
+
+    const tax = round(taxable * b.rate);
+    totalIRAnnual += tax;
+    bracketDetail.push({
+      rate:   b.rate,
+      label:  `${(b.rate * 100).toFixed(0)}%`,
+      from:   prevUpTo,
+      to:     b.upTo === Infinity ? annualTaxable : b.upTo,
+      amount: round(taxable),
+      tax,
+      pct:    annualTaxable > 0 ? (taxable / annualTaxable) * 100 : 0,
+    });
+    remaining -= taxable;
+    if (remaining <= 0) break;
+  }
+
+  const monthlyIR        = round(totalIRAnnual / 12);
+  const netMonthly       = round(salary - cnssDeduction - monthlyIR);
+  const effectiveIRRate  = annualGross > 0 ? round((totalIRAnnual / annualGross) * 100, 2) : 0;
+
+  return {
+    isValid: true,
+    salary,
+    cnssDeduction,
+    cnssRatePct:  (MOROCCO_CNSS_TOTAL * 100).toFixed(2),
+    annualGross,
+    annualTaxable,
+    monthlyIR,
+    netMonthly,
+    effectiveIRRate,
+    bracketDetail,
+  };
+}
+
+// ─── Jordan End-of-Service (Labour Law No. 8 of 1996, Art. 32) ───────────────
+
+export function getJordanEndOfServiceBracket(serviceYears) {
+  if (serviceYears < 1)  return { pct: 0,   label: 'أقل من سنة — لا يوجد استحقاق' };
+  if (serviceYears < 3)  return { pct: 33.3, label: 'من 1 إلى أقل من 3 سنوات — ثلث المكافأة' };
+  return                        { pct: 100,  label: '3 سنوات فأكثر — مكافأة كاملة' };
+}
+
+export function calculateJordanEndOfServiceBenefit({ basicSalary, startDate, endDate, reason }) {
+  const salary = parseFloat(basicSalary);
+  if (!salary || salary <= 0 || isNaN(salary)) return { isValid: false };
+
+  const service = diffDates(startDate, endDate);
+  if (!service.isValid) return { isValid: false };
+
+  const dailyRate    = round(salary / 30);
+  const fullGratuity = round(service.decimalYears * 30 * dailyRate);
+
+  let entitlementPct = 100;
+  let resignationBracket = null;
+  if (reason === 'resignation') {
+    const bracket      = getJordanEndOfServiceBracket(service.decimalYears);
+    entitlementPct     = bracket.pct;
+    resignationBracket = bracket;
+  }
+
+  const gratuity = round(fullGratuity * (entitlementPct / 100));
+
+  return {
+    isValid: true,
+    salary,
+    dailyRate,
+    service,
+    fullGratuity,
+    gratuity,
+    entitlementPercent: entitlementPct,
+    resignationBracket,
+    serviceLabel: formatServiceDuration(service),
+  };
+}
+
+// ─── Egypt Income Tax (Law 91/2005, 2023 amendment brackets) ─────────────────
+
+const EGYPT_IT_BRACKETS = [
+  { upTo: 15000,   rate: 0,     label: 'إعفاء (0%)' },
+  { upTo: 30000,   rate: 0.025, label: '2.5%' },
+  { upTo: 45000,   rate: 0.10,  label: '10%' },
+  { upTo: 60000,   rate: 0.15,  label: '15%' },
+  { upTo: 200000,  rate: 0.20,  label: '20%' },
+  { upTo: 400000,  rate: 0.225, label: '22.5%' },
+  { upTo: Infinity, rate: 0.25, label: '25%' },
+];
+
+export const EGYPT_SI_EMPLOYEE_RATE = 0.11;
+export const EGYPT_SI_MAX_MONTHLY   = 10400;
+
+export function calculateEgyptIncomeTax({ monthlySalary, includeInsurance = true }) {
+  const salary = parseFloat(monthlySalary);
+  if (!salary || salary <= 0 || isNaN(salary)) return { isValid: false };
+
+  const siBase    = Math.min(salary, EGYPT_SI_MAX_MONTHLY);
+  const siMonthly = includeInsurance ? round(siBase * EGYPT_SI_EMPLOYEE_RATE) : 0;
+  const siAnnual  = siMonthly * 12;
+
+  const annualGross    = round(salary * 12);
+  const annualTaxable  = Math.max(0, round(annualGross - siAnnual));
+
+  let remaining       = annualTaxable;
+  let totalTaxAnnual  = 0;
+  const bracketBreakdown = [];
+
+  for (let i = 0; i < EGYPT_IT_BRACKETS.length; i++) {
+    const bracket  = EGYPT_IT_BRACKETS[i];
+    const prevUpTo = i === 0 ? 0 : EGYPT_IT_BRACKETS[i - 1].upTo;
+    const width    = bracket.upTo === Infinity ? remaining : (bracket.upTo - prevUpTo);
+    const taxable  = Math.max(0, Math.min(width, remaining));
+    if (taxable <= 0) break;
+
+    const taxInBracket = round(taxable * bracket.rate);
+    totalTaxAnnual    += taxInBracket;
+
+    bracketBreakdown.push({
+      label:         bracket.label,
+      rate:          bracket.rate,
+      from:          prevUpTo,
+      to:            bracket.upTo === Infinity ? annualTaxable : bracket.upTo,
+      taxableAmount: round(taxable),
+      taxAmount:     taxInBracket,
+      pct:           annualTaxable > 0 ? (taxable / annualTaxable) * 100 : 0,
+    });
+
+    remaining -= taxable;
+    if (remaining <= 0) break;
+  }
+
+  totalTaxAnnual       = round(totalTaxAnnual);
+  const monthlyTax     = round(totalTaxAnnual / 12);
+  const netMonthly     = round(salary - siMonthly - monthlyTax);
+  const effectiveTaxRate = annualGross > 0 ? round((totalTaxAnnual / annualGross) * 100, 2) : 0;
+
+  return {
+    isValid: true,
+    salary,
+    siMonthly,
+    siAnnual,
+    annualGross,
+    annualTaxable,
+    totalTaxAnnual,
+    monthlyTax,
+    netMonthly,
+    effectiveTaxRate,
+    bracketBreakdown,
+  };
+}
+
+// ─── UAE Corporate Tax (Federal Decree-Law 47/2022) ──────────────────────────
+// 0% on taxable income ≤ AED 375,000
+// 9% on taxable income above AED 375,000
+// Small Business Relief: eligible if annual revenue ≤ AED 3,000,000
+const UAE_CT_THRESHOLD    = 375000;   // exempt band
+const UAE_CT_RATE         = 0.09;     // 9% on income above threshold
+const UAE_SBR_MAX_REVENUE = 3000000;  // small business relief ceiling
+
+export const UAE_CT_THRESHOLD_VALUE    = UAE_CT_THRESHOLD;
+export const UAE_CT_RATE_VALUE         = UAE_CT_RATE;
+export const UAE_SBR_MAX_REVENUE_VALUE = UAE_SBR_MAX_REVENUE;
+
+export function calculateUaeCorporateTax({ annualProfit, annualRevenue = 0 }) {
+  const profit  = parseFloat(String(annualProfit).replace(/,/g, '')) || 0;
+  const revenue = parseFloat(String(annualRevenue).replace(/,/g, '')) || 0;
+  if (profit < 0 || isNaN(profit)) return { isValid: false };
+
+  const eligibleForSBR = revenue > 0 && revenue <= UAE_SBR_MAX_REVENUE;
+  const taxableIncome  = profit;
+  const taxableAbove   = Math.max(0, taxableIncome - UAE_CT_THRESHOLD);
+  const taxDue         = round(taxableAbove * UAE_CT_RATE);
+  const netAfterTax    = round(profit - taxDue);
+  const effectiveRate  = profit > 0 ? round((taxDue / profit) * 100, 2) : 0;
+
+  return {
+    isValid:        true,
+    profit,
+    revenue,
+    taxableIncome,
+    exemptBand:     Math.min(taxableIncome, UAE_CT_THRESHOLD),
+    taxableAbove,
+    taxDue,
+    netAfterTax,
+    effectiveRate,
+    eligibleForSBR,
+    rate:           UAE_CT_RATE,
+  };
+}
+
+// ─── Bill Splitter ────────────────────────────────────────────────────────────
+export function calculateBillSplit({ billAmount, tipPercent = 0, numPeople = 2 }) {
+  const amount = parseFloat(String(billAmount).replace(/,/g, '')) || 0;
+  const tip    = parseFloat(String(tipPercent))  || 0;
+  const people = parseInt(String(numPeople), 10) || 2;
+  if (amount <= 0 || people < 1) return { isValid: false };
+
+  const tipAmount   = round(amount * tip / 100);
+  const total       = round(amount + tipAmount);
+  const perPerson   = round(total / people);
+  const perPersonNoTip = round(amount / people);
+
+  return {
+    isValid:       true,
+    billAmount:    amount,
+    tipPercent:    tip,
+    tipAmount,
+    total,
+    numPeople:     people,
+    perPerson,
+    perPersonNoTip,
+  };
+}
+
+// ─── Work Hours Calculator ─────────────────────────────────────────────────────
+const DAY_NAMES_AR = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+
+function parseTimeToMinutes(str) {
+  const [h, m] = (str || '').split(':').map(Number);
+  if (isNaN(h) || isNaN(m)) return null;
+  return h * 60 + m;
+}
+
+export function calculateWorkHours({ schedule, regularDailyHours = 8, regularWeeklyHours = 40 }) {
+  if (!Array.isArray(schedule) || schedule.length !== 7) return { isValid: false };
+
+  let totalMinutes = 0;
+  const days = schedule.map((day, i) => {
+    const name = DAY_NAMES_AR[i];
+    if (!day.active) return { active: false, minutes: 0, hours: 0, dailyOvertime: 0, name };
+
+    const startMin = parseTimeToMinutes(day.start);
+    const endMin   = parseTimeToMinutes(day.end);
+    if (startMin === null || endMin === null || endMin <= startMin) {
+      return { active: true, minutes: 0, hours: 0, dailyOvertime: 0, name, invalid: true };
+    }
+
+    const breakMin  = Math.max(0, parseInt(day.breakMin, 10) || 0);
+    const worked    = Math.max(0, endMin - startMin - breakMin);
+    const workedH   = worked / 60;
+    const overtime  = round(Math.max(0, workedH - regularDailyHours), 2);
+    totalMinutes   += worked;
+
+    return { active: true, minutes: worked, hours: round(workedH, 2), dailyOvertime: overtime, name };
+  });
+
+  const totalHours    = round(totalMinutes / 60, 2);
+  const overtimeHours = round(Math.max(0, totalHours - regularWeeklyHours), 2);
+  const regularHours  = round(Math.min(totalHours, regularWeeklyHours), 2);
+  const activeDays    = days.filter((d) => d.active && d.minutes > 0).length;
+
+  return {
+    isValid: true,
+    days,
+    totalMinutes,
+    totalHours,
+    regularHours,
+    overtimeHours,
+    activeDays,
+  };
+}

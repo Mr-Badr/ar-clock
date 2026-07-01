@@ -149,11 +149,11 @@
     ],
     "seoMeta": {
       "titleTag": "رأس السنة الهجرية {{year}} - {{hijriYear}} هـ | {{formattedDate}}",
-      "metaDescription": "رأس السنة الهجرية {{hijriYear}} هـ ({{year}}): {{formattedDate}}. عداد تنازلي دقيق + سبب اختلاف بدء المحرم بين الدول وفضل الصيام.",
+      "metaDescription": "رأس السنة الهجرية {{year}} - {{hijriYear}} هـ: {{formattedDate}}. عداد تنازلي دقيق + سبب اختلاف بدء المحرم بين الدول وفضل الصيام.",
       "h1": "متى رأس السنة الهجرية {{year}} - {{hijriYear}} هـ؟ | 1 محرم",
       "canonicalPath": "/holidays/islamic-new-year",
       "ogTitle": "متى رأس السنة الهجرية {{year}} - {{hijriYear}} هـ؟ | 1 محرم",
-      "ogDescription": "رأس السنة الهجرية {{hijriYear}} هـ ({{year}}): {{formattedDate}} — عداد دقيق ومواعيد الدول العربية.",
+      "ogDescription": "رأس السنة الهجرية {{year}} - {{hijriYear}} هـ: {{formattedDate}} — عداد تنازلي دقيق ومواعيد الدول العربية.",
       "ogImageAlt": "رأس السنة الهجرية {{year}} — {{formattedDate}}",
       "primaryKeyword": "متى رأس السنة الهجرية {{year}}",
       "secondaryKeywords": [

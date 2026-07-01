@@ -131,6 +131,7 @@ export default function OvulationPage() {
       {/* How it works */}
       <CalculatorSection
         id="ovulation-method"
+        showAdBefore
         eyebrow="كيف تعمل الحاسبة"
         title="المرحلة الأصفرية وقاعدة الـ14 يوماً"
         description="قاعدة واحدة تحكم التبويض في أغلب الدورات — والحاسبة تطبقها مع ضبط طول الدورة للدقة الأعلى."

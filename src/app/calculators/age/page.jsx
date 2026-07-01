@@ -235,6 +235,7 @@ export default function AgeHubPage() {
 
       <CalculatorSection
         id="age-hub-explainer"
+        showAdBefore
         eyebrow="الجواب أولاً"
         title="كيف تقرأ نتيجة حاسبة العمر دون أن تخلط بين التقويمات؟"
         description="حاسبة العمر لا تسأل عن رقم السنوات فقط. هي تقيس الفترة الكاملة بين تاريخين، ثم تعرضها بطريقة تفهمها أنت وتستطيع استخدامها في الحياة اليومية."

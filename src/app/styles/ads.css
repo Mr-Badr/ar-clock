@@ -562,4 +562,33 @@
 
 }
 
+  /* ──────────────────────────────────────────────────────────────────────────
+     GOOGLE AUTO ADS — SIDE RAIL GUARD FOR WIDE-HERO PAGES
+
+     Google's Auto Ads side rail panels are injected as direct <body> children
+     with IDs like "google_auto_ads_container_0". They appear correctly on
+     narrow-content pages (blog/prayer/calculator — 900px container → 190px
+     gutter at 1280px viewport). The problem occurs ONLY on the homepage hero:
+     its grid expands to fill most of the viewport, leaving < 100px gutter at
+     1280–1440px, so Google's panels overlap the hero content.
+
+     Rule: on `.home-hero-wide` pages (homepage only), hide side rails below
+     1600px. All other pages: let Google's own space-detection decide.
+
+     Body class is set by ClientRuntimeMounts.client.jsx via usePathname.
+
+     SELECTOR SAFETY: `body > [id^="google_auto_ads"]` only matches Google's
+     auto-injected containers (direct body children). Our own ad units are
+     always nested inside .ad-slot containers, never direct body children.
+     ────────────────────────────────────────────────────────────────────────── */
+  @media (max-width: 1599px) {
+    body.home-hero-wide > [id^="google_auto_ads"],
+    body.home-hero-wide > [id^="google_ads_container"],
+    body.home-hero-wide > div[data-google-container-id] {
+      display: none !important;
+    }
+  }
+
+}
+
 /* ─── END AD LAYOUT & AD SLOT SYSTEM ──────────────────────────────────── */

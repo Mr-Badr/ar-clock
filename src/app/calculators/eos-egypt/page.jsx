@@ -1,6 +1,7 @@
 import EgyptEndOfServiceCalculator from '@/components/calculators/EgyptEndOfServiceCalculator.client';
 import {
   CalculatorFaqSection,
+  CalculatorInArticleDivider,
   CalculatorHero,
   CalculatorSection,
   CalculatorSources,
@@ -86,6 +87,7 @@ export default async function EosEgyptPage() {
       {/* Formula explanation */}
       <CalculatorSection
         id="eg-eos-formula"
+        showAdBefore
         eyebrow="المعادلة"
         title="كيف تُحسب مكافأة نهاية الخدمة في مصر؟"
       >
@@ -164,6 +166,7 @@ export default async function EosEgyptPage() {
         </div>
       </CalculatorSection>
 
+      <CalculatorInArticleDivider />
       <CalculatorFaqSection items={faqItems} />
 
       {CONTENT.sources?.length > 0 && (

@@ -4,7 +4,7 @@ import { SectionBadge, SectionWrapper } from '@/components/shared/primitives'
 import { ALL_GUIDES } from '@/lib/guides/data'
 
 const H2_ID = 'h2-latest-guides'
-const ARABIC_DATE_FORMATTER = new Intl.DateTimeFormat('ar', {
+const ARABIC_DATE_FORMATTER = new Intl.DateTimeFormat('ar-u-nu-latn', {
   day: 'numeric',
   month: 'long',
   year: 'numeric',

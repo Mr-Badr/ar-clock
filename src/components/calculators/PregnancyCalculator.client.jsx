@@ -245,7 +245,7 @@ export default function PregnancyCalculator() {
                         </div>
                       </div>
                     </div>
-                    <p className="calc-hint">الأرقام مكتوبة في تقرير الطبيبة — مثلاً: ١٢ أسبوع و٣ أيام.</p>
+                    <p className="calc-hint">الأرقام مكتوبة في تقرير الطبيبة — مثلاً: 12 أسبوع و3 أيام.</p>
                   </div>
                 </>
               )}

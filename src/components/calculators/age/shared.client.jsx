@@ -75,7 +75,7 @@ export function HijriDateFields({
             max="30"
             value={value.day}
             onChange={(event) => onChange({ ...value, day: event.target.value })}
-            placeholder="١"
+            placeholder="1"
             className="hijri-date-field__input"
           />
         </div>
@@ -104,7 +104,7 @@ export function HijriDateFields({
             max="1500"
             value={value.year}
             onChange={(event) => onChange({ ...value, year: event.target.value })}
-            placeholder="١٤٠٠"
+            placeholder="1400"
             className="hijri-date-field__input"
           />
         </div>

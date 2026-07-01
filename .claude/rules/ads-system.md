@@ -27,6 +27,7 @@ paths:
 | Desktop_Sidebar_Right_01 | 4134471107 | Display |
 | Native_Content_End_Multiplex_01 | 3132380621 | Multiplex |
 | Native_Events_List_InFeed_01 | 1947291465 | In-feed |
+| Calculators_InSection_Mid_01 | 1236962564 | In-article |
 
 ## Ad components (all in src/components/ads/)
 - `AdTopBanner` — horizontal leaderboard, placed AFTER `<h1>`, before first content block
@@ -56,7 +57,7 @@ Fallback is handled by `resolveManualAdSlot()` in `src/lib/ads/slot-resolution.t
 | /mwaqit-al-salat (hub) | ✅ | ✅ | ✅ |
 | /mwaqit-al-salat/[country] | ✅ | ✅ | ✅ |
 | /mwaqit-al-salat/[country]/[city] | ✅ | ✅ ×1 | ✅ |
-| /calculators/* (common.jsx) | ✅ (between hero and tool) | ✅ (after FAQ accordion) | ✅ (in RelatedCalculators) |
+| /calculators/* (common.jsx) | ✅ (between hero and tool, added to 15 more pages) | ✅ (after FAQ accordion) + ✅ (mid-section divider on long pages, activates when inArticleCalculatorMid slot filled) | ✅ (in RelatedCalculators) |
 
 ## Placement rules (updated 2026-06-23)
 - **Max 1 AdInArticle** per page for short/medium pages. Long-form pages (blog articles) may use 2 if separated by 2+ major sections

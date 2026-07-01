@@ -263,6 +263,7 @@ export default function BuildingHubPage() {
 
       <CalculatorSection
         id="tools-grid"
+        showAdBefore
         eyebrow="حاسبات المواد"
         title="حاسبات تفصيلية للكميات"
         description="بعد معرفة التكلفة العامة، افتح أداة واحدة فقط بحسب البند الذي تريد ضبطه الان: الأسمنت، الحديد، أو البلاط."

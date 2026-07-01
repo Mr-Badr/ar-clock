@@ -80,13 +80,14 @@ export default function AdSenseProvider() {
           });
         }}
       />
-      {autoAdsEnabled ? (
+      {autoAdsEnabled && routePolicy.enableAutoAds ? (
         <Script id="adsense-auto-ads" strategy="lazyOnload">
           {`
             try {
               (window.adsbygoogle = window.adsbygoogle || []).push({
                 google_ad_client: '${clientId}',
-                enable_page_level_ads: true
+                enable_page_level_ads: true,
+                overlays: { bottom: false }
               });
             } catch (_) {}
           `}

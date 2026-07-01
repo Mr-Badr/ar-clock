@@ -18,6 +18,8 @@ const MANUAL_AD_SLOT_REGISTRY = {
   topPrayerBanner: '8090183510',
   topTimeDifferenceBanner: '8090183510',
   topCalculatorBanner: '8090183510',
+  // Second in-article for long calculator pages (between editorial + FAQ).
+  inArticleCalculatorMid: '1236962564',
   inArticle: '1176301123',
   inArticleHolidays: '1176301123',
   inArticleDate: '2723286705',
@@ -69,6 +71,7 @@ export function getManualAdsConfig() {
     inArticlePrayer: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inArticlePrayer),
     inArticleTimeDifference: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inArticleTimeDifference),
     inArticleCalculator: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inArticleCalculator),
+    inArticleCalculatorMid: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inArticleCalculatorMid),
     inFeed: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inFeed),
     inFeedHolidays: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inFeedHolidays),
     inFeedBlog: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inFeedBlog),

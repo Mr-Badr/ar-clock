@@ -1,6 +1,7 @@
 import BahrainEndOfServiceCalculator from '@/components/calculators/BahrainEndOfServiceCalculator.client';
 import {
   CalculatorFaqSection,
+  CalculatorInArticleDivider,
   CalculatorHero,
   CalculatorSection,
   CalculatorSources,
@@ -86,6 +87,7 @@ export default async function EosBahrainPage() {
       {/* Formula explanation */}
       <CalculatorSection
         id="bh-eos-formula"
+        showAdBefore
         eyebrow="المعادلة"
         title="كيف تُحسب مكافأة نهاية الخدمة في البحرين؟"
       >
@@ -164,6 +166,7 @@ export default async function EosBahrainPage() {
         </div>
       </CalculatorSection>
 
+      <CalculatorInArticleDivider />
       <CalculatorFaqSection items={faqItems} />
 
       {CONTENT.sources?.length > 0 && (

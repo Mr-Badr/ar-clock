@@ -36,85 +36,13 @@ Currently at ~100/day. Path: get 10–15 pages each ranking top 3 for queries se
 
 ## Already Live
 
-**Calculators (38):** age · annual-leave · bmi · building (hub) · car-loan · electricity-bill (SA+UAE) · end-of-service (SA+UAE+KW+QA+BH) · gpa + gpa-to-percent · gosi-retirement · inheritance · iqama · monthly-installment · net-salary · ovulation · percentage · personal-finance · pregnancy + pregnancy-weeks · salary · saudi-pay-dates (hub) · sleep (6 sub-tools) · vat · zakat (gold+jewelry) · investment (Islamic) · fasting (intermittent)
+**Calculators (49):** age · annual-leave · bmi · building (hub) · car-loan · electricity-bill (SA+UAE) · end-of-service (SA+UAE+KW+QA+BH+EG+JO) · egypt-income-tax · egypt-social-insurance · morocco-net-salary · gpa + gpa-to-percent · gosi-retirement · inheritance · iqama · monthly-installment · net-salary · ovulation · percentage · personal-finance · pregnancy + pregnancy-weeks · salary · saudi-pay-dates (hub) · sleep (6 sub-tools) · vat · zakat (gold+jewelry) · investment (Islamic) · fasting (intermittent) · uae-corporate-tax · bill-splitter · work-hours
 
 **Events (90+):** salary-day + pension-day for SA/UAE/KW/QA/EG/OM/JO/BH · social-security (SA+QA) · takaful-karama-egypt · citizen-account-saudi · pension-day-algeria · 50+ national days · school-start + bac-results 12 countries · Islamic events (12)
 
 ---
 
 ## Build Queue — Ordered by Revenue Impact
-
-### P1 — حاسبة نهاية الخدمة مصر (Egypt EOS)
-**Route:** `/calculators/eos-egypt`
-**Search queries (daily):** "حاسبة نهاية الخدمة مصر", "مكافأة نهاية الخدمة مصر", "احسب مكافأة نهاية الخدمة في مصر", "كيف تحسب نهاية الخدمة في مصر", "قانون العمل المصري 12 لسنة 2003 نهاية الخدمة"
-**Why we win:** 105M people, millions of formal employees. Existing Arabic tools are generic and don't explain the Egyptian law clearly. We ship the same premium pattern (Kuwait/Qatar/Bahrain) directly.
-**Formula (Law No. 12 of 2003, Art. 120):** 1 month per year for the first 10 years, 1.5 months per year after 10 years. Resignation: <1yr=0%, 1-5yr=33%, 5-10yr=66%, 10+=100%. Daily rate = salary ÷ 30.
-**RPM:** Medium (Egypt market), but HUGE volume compensates.
-**Effort:** Small — copy KW/QA/BH pattern, change formula.
-**Result timeline:** Can rank top 5 in 4–6 weeks given weak competition.
-
----
-
-### P2 — تحسين صفحات الصلاة: جدول شهري + 6 أسئلة (Prayer Page Depth)
-**Route:** existing `/mwaqit-al-salat/[country]/[city]`
-**Search queries:** "أوقات الصلاة [مدينة] يوليو 2026", "جدول أوقات الصلاة [مدينة] 2026", "أوقات الصلاة الأسبوع القادم [مدينة]"
-**Why we win:** Monthly search tables = users bookmark us and return every month. 6 FAQs per city (Fajr dawn time, timezone, summer changes, prayer method) = content depth that ranks for long-tail queries.
-**Format:** Server-rendered monthly table (current month) — 30 rows × 6 prayer columns — visible on mobile at 375px without horizontal scroll.
-**Effort:** Medium (server component, static generation per city/month). High leverage since applied to 100+ city pages.
-**Result timeline:** 4–8 weeks as Googlebot re-crawls updated pages.
-
----
-
-### P4 — حاسبة ضريبة الدخل مصر (Egypt Income Tax 2025)
-**Route:** `/calculators/egypt-income-tax`
-**Search queries (daily):** "حاسبة ضريبة الدخل مصر 2025", "شرائح ضريبة الدخل مصر 2025", "كيف أحسب ضريبة الدخل في مصر", "الضريبة على الراتب في مصر", "حاسبة صافي الراتب مصر بعد الضريبة"
-**Why we win:** Egypt updated income tax brackets in 2023. Almost every Arabic calculator online uses outdated brackets — we ship accurate 2025 brackets from the Egyptian Tax Authority. First accurate Arabic tool wins the SERP.
-**Formula (2023 reform):** 0–15K: exempt → 15–30K: 2.5% → 30–45K: 10% → 45–60K: 15% → 60–200K: 20% → 200–400K: 22.5% → 400K+: 25%. Monthly = annual ÷ 12 per bracket. Add social insurance: 11% of basic (employee) + 18.75% employer.
-**Mobile UX:** Input gross salary → output: net salary card + visual bracket breakdown (colored bars per bracket).
-**Effort:** Small — same pattern as net-salary calculator.
-**RPM:** Medium-Low (Egypt) but 105M people = high absolute volume.
-**Result timeline:** 3–6 weeks to top 5 given thin competition.
-
----
-
-### P5 — حاسبة نهاية الخدمة الأردن (Jordan EOS)
-**Route:** `/calculators/eos-jordan`
-**Search queries (daily):** "حاسبة نهاية الخدمة الأردن", "مكافأة نهاية الخدمة الأردن", "قانون العمل الأردني نهاية الخدمة", "كم نهاية الخدمة بعد 5 سنوات الأردن", "نهاية الخدمة الأردن عند الاستقالة"
-**Why we win:** We already have salary-day-jordan, pension-day-jordan, school-start-jordan. EOS calculator completes the Jordan profile. 1M+ formal workers + Gulf returnees. No strong Arabic calculator exists.
-**Formula (Labour Law No. 8 of 1996, Art. 32):** 1 month per year for every year of service. No distinction before/after 5 years (simpler than Gulf). Resignation: <1yr=0%, 1-3yr=33%, 3+=100%. Daily rate = salary ÷ 30.
-**Effort:** Small — same EOS pattern.
-**Result timeline:** 4–8 weeks.
-
----
-
-### P6 — حاسبة التأمينات الاجتماعية مصر (Egypt Social Insurance)
-**Route:** `/calculators/egypt-social-insurance`
-**Search queries:** "حاسبة التأمينات الاجتماعية مصر", "التأمينات الاجتماعية كم تطرح من الراتب مصر", "اشتراك التأمينات الاجتماعية مصر 2025", "نسبة التأمينات مصر 2025"
-**Why we win:** Directly related to Egypt income tax (P4) — bundle both as a two-page Egypt financial cluster. Users who land on income tax click through to social insurance. Thin Arabic competition.
-**Formula:** Employee: 11% of basic salary. Employer: 18.75%. Maximum insured salary = 10,400 EGP/month (2025).
-**Effort:** Very small — simple percentage calculation.
-
----
-
-### P7 — تحسين صفحات الأحداث الإسلامية الموجودة (Islamic Event Content Depth)
-**Not a new build — quick wins on existing pages that already have traffic:**
-- **عاشوراء (Ashura):** arrives ~July 2026 — add fasting virtue section + countdown above fold
-- **رأس السنة الهجرية (Islamic New Year):** Muharram 1 ~July 2026 — above-fold countdown + Hijri year context
-- **عيد الأضحى / رمضان:** estimated date with moon-sighting caveat visible without scroll
-- **موسم الحج:** "إجازة الحج للموظفين السعوديين" section — Saudi workers search this actively
-**Effort:** Very small. Impact: existing traffic converts better, bounce rate drops.
-
----
-
-### P8 — حاسبة الراتب الصافي المغرب (Morocco Net Salary)
-**Route:** `/calculators/morocco-net-salary`
-**Search queries:** "حاسبة الراتب الصافي المغرب", "حاسبة صافي الراتب المغرب", "كم يقتطع CNSS من الراتب المغرب", "IR الضريبة على الدخل المغرب"
-**Why we win:** 36M Moroccans, 5M+ formal-sector workers. CNSS (اشتراكات) + IR (ضريبة الدخل) — two deductions most workers don't understand. No strong Arabic calculator for Morocco.
-**Formula:** CNSS: 4.48% (short-term), 6.29% (long-term AMO), 0.52% (professional training) = ~11.29% total employee. IR: progressive brackets (0–30K MAD: 0% → 30–50K: 10% → 50–60K: 20% → 60–80K: 30% → 80–180K: 34% → 180K+: 38%). Apply monthly ÷ 12.
-**Effort:** Small.
-**RPM:** Low-Medium (Morocco) but 36M population and thin competition = fast ranking.
-
----
 
 ## Parked — Needs GSC Data Before Building
 

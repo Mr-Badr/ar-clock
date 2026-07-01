@@ -1,49 +1,23 @@
 .panel {
   display: grid;
-  gap: clamp(1rem, 2vw, 1.25rem);
-  padding: clamp(1.25rem, 3vw, 1.75rem);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  background: color-mix(in srgb, var(--bg-surface-1) 72%, transparent);
+  gap: 1rem;
 }
 
 .head {
   display: grid;
-  gap: 0.5rem;
-}
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  padding: 0.28rem 0.65rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-accent);
-  background: var(--accent-soft);
-  color: var(--accent-alt);
-  font-size: 0.75rem;
-  font-weight: 850;
-  letter-spacing: 0.01em;
-}
-
-.title {
-  margin: 0;
-  color: var(--text-primary);
-  font-size: clamp(1rem, 1.8vw, 1.2rem);
-  font-weight: 850;
-  line-height: 1.4;
+  gap: 0.4rem;
 }
 
 .lead {
   margin: 0;
   color: var(--text-secondary);
   font-size: 0.875rem;
-  line-height: 1.8;
+  line-height: 1.75;
 }
 
 .list {
   display: grid;
-  gap: 0.6rem;
+  gap: 0.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -55,12 +29,11 @@
 
 .link {
   display: flex;
-  align-items: flex-start;
-  gap: 0.65rem;
-  padding: 0.75rem 0.95rem;
-  border: 1px solid var(--border-subtle);
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.85rem;
   border-radius: var(--radius-md);
-  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
   color: inherit;
   text-decoration: none;
   transition:
@@ -70,39 +43,59 @@
 
 .link:hover {
   border-color: var(--border-strong);
-  background: var(--bg-surface-1);
+  background: color-mix(in srgb, var(--bg-surface-2) 60%, transparent);
 }
 
 .link:focus-visible {
-  outline: 2px solid var(--accent-alt);
+  outline: 2px solid var(--border-focus);
   outline-offset: 2px;
 }
 
-.linkIcon {
+.num {
   flex-shrink: 0;
-  margin-top: 0.1rem;
-  color: var(--accent-alt);
-  font-size: 0.85rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--bg-surface-2) 80%, transparent);
+  border: 1px solid var(--border-subtle);
+  display: grid;
+  place-items: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-secondary);
   direction: ltr;
 }
 
 .linkCopy {
   display: grid;
-  gap: 0.2rem;
+  gap: 0.15rem;
   min-width: 0;
+  flex: 1;
 }
 
 .linkLabel {
   color: var(--text-primary);
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 0.875rem;
+  font-weight: 600;
   line-height: 1.5;
 }
 
 .linkDesc {
   color: var(--text-secondary);
-  font-size: 0.82rem;
-  line-height: 1.7;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.linkArrow {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  direction: ltr;
+  transition: color 140ms ease;
+}
+
+.link:hover .linkArrow {
+  color: var(--text-secondary);
 }
 
 .note {
@@ -113,11 +106,11 @@
 }
 
 .noteLink {
-  color: var(--accent-alt);
+  color: var(--text-secondary);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .noteLink:hover {
-  opacity: 0.8;
+  color: var(--text-primary);
 }

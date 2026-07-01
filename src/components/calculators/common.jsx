@@ -156,13 +156,7 @@ function CalculatorEmptyState({ title, description }) {
 
 export function CalculatorSources({ sources }) {
   if (!sources?.length) return null;
-  return (
-    <SectionWrapper className="calc-shell" subtle>
-      <div className="calc-section-frame">
-        <SourcesPanel sources={sources} />
-      </div>
-    </SectionWrapper>
-  );
+  return <SourcesPanel sources={sources} />;
 }
 
 export function CalculatorHero({
@@ -413,6 +407,10 @@ export function CalculatorEditorialArticle({ eyebrow, title, lead, paragraphs, p
       ) : null}
     </article>
   );
+}
+
+export function CalculatorInArticleDivider() {
+  return <AdInArticle slotId="mid-calculator-mid-section" slotKey="inArticleCalculatorMid" />;
 }
 
 export function CalculatorFaqSection({ items }) {

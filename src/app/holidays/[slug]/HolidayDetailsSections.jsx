@@ -40,6 +40,13 @@ const CATEGORY_CALCULATORS = {
     { href: '/calculators/eos-kuwait',           label: 'نهاية الخدمة الكويت',   desc: 'مكافأتك وفق قانون العمل 6/2010',        accent: 'var(--blue)' },
     { href: '/calculators/eos-bahrain',          label: 'نهاية الخدمة البحرين',  desc: 'نصف شهر ثم شهر كامل — قانون 36/2012',   accent: 'var(--blue)' },
     { href: '/calculators/eos-egypt',            label: 'نهاية الخدمة مصر',      desc: 'شهر ثم شهر ونصف — قانون 12/2003',       accent: 'var(--green)' },
+    { href: '/calculators/egypt-income-tax',     label: 'ضريبة الدخل مصر',       desc: 'شرائح 2023 + تأمينات 11% — صافي الراتب', accent: 'var(--blue)' },
+    { href: '/calculators/egypt-social-insurance', label: 'تأمينات اجتماعية مصر',  desc: 'حصة الموظف 11% وحد الأجر المؤمَّن',      accent: 'var(--amber)' },
+    { href: '/calculators/eos-jordan',           label: 'نهاية الخدمة الأردن',   desc: '30 يوماً/سنة — قانون العمل 8/1996',       accent: 'var(--green)' },
+    { href: '/calculators/morocco-net-salary',   label: 'الراتب الصافي المغرب',  desc: 'CNSS 7.26% + ضريبة IR التصاعدية',         accent: 'var(--red)' },
+    { href: '/calculators/uae-corporate-tax',   label: 'ضريبة شركات الإمارات',  desc: '0% حتى 375K درهم — 9% على الزائد',        accent: 'var(--green)' },
+    { href: '/calculators/bill-splitter',       label: 'تقسيم الفاتورة',         desc: 'مطعم، رحلة، مشتريات — قسّم بالتساوي',     accent: 'var(--amber)' },
+    { href: '/calculators/work-hours',          label: 'ساعات العمل الأسبوعية', desc: 'دوامك اليومي + الإضافي — يُحفظ تلقائياً',   accent: 'var(--blue)' },
   ],
   school: [
     { href: '/calculators/gpa',           label: 'المعدل التراكمي',    desc: 'احسب GPA بدقة وفق جدول درجاتك',     accent: 'var(--blue)' },

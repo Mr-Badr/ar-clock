@@ -12,6 +12,7 @@ const AD_FREE_EXACT_PATHS = new Set([
   '/terms',
 ]);
 
+
 export function normalizeAdPathname(pathname = '/') {
   if (!pathname) return '/';
   const normalized = pathname.replace(/\/+$/, '');
@@ -33,6 +34,7 @@ export function getAdRoutePolicy(pathname = '/') {
   // dismissible mobile anchor adds viewable impressions without covering content.
   const isBlogDetail = normalized.startsWith('/blog/');
   const isPrayerSection = normalized === '/mwaqit-al-salat' || normalized.startsWith('/mwaqit-al-salat/');
+  const isCalculatorSection = normalized === '/calculators' || normalized.startsWith('/calculators/');
 
   return {
     allowAdDelivery,
@@ -44,7 +46,11 @@ export function getAdRoutePolicy(pathname = '/') {
       isTimeNowSection ||
       isTimeDifferenceSection ||
       isBlogDetail ||
-      isPrayerSection
+      isPrayerSection ||
+      isCalculatorSection
       ),
+    // Auto Ads enabled on all monetized routes. Side-rail visibility at laptop
+    // widths is controlled by CSS in ads.css (hidden below 1600px).
+    enableAutoAds: allowAdDelivery,
   };
 }

@@ -1,6 +1,7 @@
 import KuwaitEndOfServiceCalculator from '@/components/calculators/KuwaitEndOfServiceCalculator.client';
 import {
   CalculatorFaqSection,
+  CalculatorInArticleDivider,
   CalculatorHero,
   CalculatorSection,
   CalculatorSources,
@@ -86,6 +87,7 @@ export default async function EosKuwaitPage() {
       {/* Formula explanation */}
       <CalculatorSection
         id="kw-eos-formula"
+        showAdBefore
         eyebrow="المعادلة"
         title="كيف تُحسب مكافأة نهاية الخدمة في الكويت؟"
       >
@@ -133,6 +135,7 @@ export default async function EosKuwaitPage() {
         </div>
       </CalculatorSection>
 
+      <CalculatorInArticleDivider />
       <CalculatorFaqSection items={faqItems} />
 
       {CONTENT.sources?.length > 0 && (

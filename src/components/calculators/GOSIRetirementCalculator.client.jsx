@@ -39,7 +39,7 @@ function yearsRemaining(currentYears) {
 
 function formatSAR(n) {
   if (!isFinite(n) || n < 0) return '—';
-  return n.toLocaleString('ar-SA', { maximumFractionDigits: 0 }) + ' ريال';
+  return new Intl.NumberFormat('ar-SA-u-nu-latn', { maximumFractionDigits: 0 }).format(n) + ' ريال';
 }
 
 function formatPct(pct) {
@@ -90,7 +90,7 @@ export default function GOSIRetirementCalculator() {
   }, [years, salary, isNewFormula, salaryNum]);
 
   const shareText = salaryNum > 0
-    ? `حاسبة التقاعد المبكر GOSI\nسنوات الاشتراك: ${currentYears}\nالمعاش عند التقاعد المبكر (٢٥ سنة): ${formatSAR(result.earlyPension)}\n${result.canRetireEarly ? '✅ يحق لك التقاعد المبكر الآن' : `⏳ تحتاج ${result.rem?.yrs || 0} سنة و${result.rem?.months || 0} شهراً`}`
+    ? `حاسبة التقاعد المبكر GOSI\nسنوات الاشتراك: ${currentYears}\nالمعاش عند التقاعد المبكر (25 سنة): ${formatSAR(result.earlyPension)}\n${result.canRetireEarly ? '✅ يحق لك التقاعد المبكر الآن' : `⏳ تحتاج ${result.rem?.yrs || 0} سنة و${result.rem?.months || 0} شهراً`}`
     : '';
 
   return (
@@ -116,12 +116,12 @@ export default function GOSIRetirementCalculator() {
             aria-label="سنوات الاشتراك"
           />
           <div className="gosi-slider-markers" aria-hidden="true">
-            <span>٠</span>
-            <span>١٠</span>
-            <span>٢٠</span>
-            <span className="gosi-marker-highlight">٢٥</span>
-            <span>٣٠</span>
-            <span>٤٠</span>
+            <span>0</span>
+            <span>10</span>
+            <span>20</span>
+            <span className="gosi-marker-highlight">25</span>
+            <span>30</span>
+            <span>40</span>
           </div>
         </div>
 
@@ -191,7 +191,7 @@ export default function GOSIRetirementCalculator() {
                   <strong>
                     تحتاج {result.rem?.yrs ? `${result.rem.yrs} سنة` : ''}{result.rem?.months ? ` و${result.rem.months} شهراً` : ''} إضافية
                   </strong>
-                  <span>حتى تكتمل شروط التقاعد المبكر (٢٥ سنة)</span>
+                  <span>حتى تكتمل شروط التقاعد المبكر (25 سنة)</span>
                 </>
               )}
             </div>
@@ -205,18 +205,18 @@ export default function GOSIRetirementCalculator() {
                 style={{ width: `${result.progressPct}%` }}
               />
               <div className="gosi-progress-marker" style={{ right: '0%' }}>
-                <span className="gosi-progress-label">٠</span>
+                <span className="gosi-progress-label">0</span>
               </div>
               <div className="gosi-progress-marker" style={{ right: `${(1 - 25 / 40) * 100}%` }}>
-                <span className="gosi-progress-label">٢٥</span>
+                <span className="gosi-progress-label">25</span>
               </div>
               <div className="gosi-progress-marker" style={{ right: '0%', left: '0%' }}>
-                <span className="gosi-progress-label">٤٠</span>
+                <span className="gosi-progress-label">40</span>
               </div>
             </div>
             <div className="gosi-progress-legend">
               <span>{currentYears} سنة حالياً</span>
-              <span>التقاعد المبكر: ٢٥ سنة</span>
+              <span>التقاعد المبكر: 25 سنة</span>
             </div>
           </div>
 
@@ -260,7 +260,7 @@ export default function GOSIRetirementCalculator() {
             )}
 
             <MilestoneRow
-              label="استمرار ٣٠ سنة"
+              label="استمرار 30 سنة"
               years={30}
               salary={salary}
               isNewFormula={isNewFormula}
@@ -278,7 +278,7 @@ export default function GOSIRetirementCalculator() {
             )}
 
             <MilestoneRow
-              label="استمرار ٣٥ سنة"
+              label="استمرار 35 سنة"
               years={35}
               salary={salary}
               isNewFormula={isNewFormula}
@@ -286,7 +286,7 @@ export default function GOSIRetirementCalculator() {
             />
 
             <MilestoneRow
-              label="أقصى معاش (١٠٠٪)"
+              label="أقصى معاش (100%)"
               years={isNewFormula ? MAX_YEARS_NEW : MAX_YEARS}
               salary={salary}
               isNewFormula={isNewFormula}
