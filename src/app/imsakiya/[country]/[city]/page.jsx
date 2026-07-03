@@ -17,6 +17,9 @@ import {
   getUpcomingRamadanHijriYear,
   GREGORIAN_MONTHS_AR,
 } from '@/lib/imsakiyaEngine';
+import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 
 const SITE_URL = getSiteUrl();
 
@@ -197,6 +200,8 @@ export default async function ImsakiyaCityPage({ params }) {
           <strong>تنبيه:</strong> الأوقات محسوبة فلكياً وفق تقويم أم القرى. قد يتقدم أول رمضان يوماً أو يتأخر يوماً بحسب رؤية الهلال في {countryAr}.
         </p>
 
+        <AdTopBanner slotId="imsakiya-city-top" />
+
         <div className="flex flex-wrap gap-4 mt-6 text-sm">
           <div className="bg-card border rounded-lg px-4 py-3">
             <div className="text-muted-foreground">أول رمضان</div>
@@ -295,6 +300,8 @@ export default async function ImsakiyaCityPage({ params }) {
         </div>
       </section>
 
+      <AdInArticle slotId="imsakiya-city-mid" />
+
       {/* FAQ */}
       <section className="imsakiya-faq-section container mx-auto px-4 py-10 max-w-3xl">
         <h2 className="text-xl font-semibold mb-6">أسئلة شائعة عن إمساكية رمضان {gregYear} في {cityAr}</h2>
@@ -330,6 +337,8 @@ export default async function ImsakiyaCityPage({ params }) {
       </section>
 
       {/* Internal links */}
+      <AdMultiplex slotId="imsakiya-city-bottom" />
+
       <section className="container mx-auto px-4 pb-10 max-w-3xl">
         <div className="border rounded-xl p-5 bg-card">
           <h2 className="font-semibold text-base mb-3">صفحات ذات صلة</h2>

@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
 import { getUpcomingRamadanHijriYear, getRamadanGregorianStart } from '@/lib/imsakiyaEngine';
+import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 
 const SITE_URL = getSiteUrl();
 
@@ -126,6 +128,7 @@ export default function ImsakiyaHubPage() {
         <p className="text-sm bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg px-4 py-3 text-amber-800 dark:text-amber-300 mt-4">
           <strong>تنبيه:</strong> أول رمضان المتوقع وفق تقويم أم القرى: {ramadanStart.day} {GREGORIAN_MONTHS_AR[ramadanStart.month]} {gregYear}. قد يتقدم يوماً أو يتأخر برؤية الهلال.
         </p>
+        <AdTopBanner slotId="imsakiya-hub-top" />
       </section>
 
       {/* Country Groups */}
@@ -167,6 +170,8 @@ export default function ImsakiyaHubPage() {
           </div>
         </div>
       </section>
+
+      <AdMultiplex slotId="imsakiya-hub-bottom" />
 
       {/* FAQ section */}
       <section className="container mx-auto px-4 py-10 max-w-2xl">

@@ -561,30 +561,55 @@
   }
 
   /* ──────────────────────────────────────────────────────────────────────────
-     GOOGLE AUTO ADS — SIDE RAIL GUARD FOR WIDE-HERO PAGES
+     GOOGLE AUTO ADS — SIDE RAIL SUPPRESSION ON HOMEPAGE (ALL WIDTHS)
 
-     Google's Auto Ads side rail panels are injected as direct <body> children
-     with IDs like "google_auto_ads_container_0". They appear correctly on
-     narrow-content pages (blog/prayer/calculator — 900px container → 190px
-     gutter at 1280px viewport). The problem occurs ONLY on the homepage hero:
-     its grid expands to fill most of the viewport, leaving < 100px gutter at
-     1280–1440px, so Google's panels overlap the hero content.
+     The homepage uses a full-width hero grid + explicit AdInArticle/Multiplex
+     placements in HomeSections. Google Auto Ads side rails injected at the body
+     level damage the layout at every laptop/desktop width — the hero leaves
+     insufficient gutter at 1280–1680px, and even at wider widths the explicit
+     placements already monetize the page fully.
 
-     Rule: on `.home-hero-wide` pages (homepage only), hide side rails below
-     1600px. All other pages: let Google's own space-detection decide.
+     Two-layer approach for maximum reliability:
 
-     Body class is set by ClientRuntimeMounts.client.jsx via usePathname.
+     Layer 1 — :has(.home-hub-page)
+       Pure CSS, evaluated against SSR output, zero JS race condition.
+       `.home-hub-page` is the server-rendered class on the homepage root div.
+       Applied at ALL viewport widths (no breakpoint threshold).
 
-     SELECTOR SAFETY: `body > [id^="google_auto_ads"]` only matches Google's
-     auto-injected containers (direct body children). Our own ad units are
-     always nested inside .ad-slot containers, never direct body children.
+     Layer 2 — body.home-hero-wide (JS fallback)
+       Set by ClientRuntimeMounts via usePathname as belt-and-suspenders.
+       Handles any edge case where :has() is unavailable (<1% of traffic).
+
+     SELECTOR SAFETY: all selectors are `body > *` — our own ad units are
+     always nested inside .ad-slot containers (never direct body children),
+     so these selectors cannot accidentally hide our intentional ad slots.
+
+     ID patterns covered:
+       google_auto_ads_*   — legacy Auto Ads containers
+       google_ads_container_*  — alternate Auto Ads pattern
+       google-auto-*       — hyphenated variant (newer rollouts)
+       google-ads-*        — hyphenated alternate
+       data-google-container-id — attribute-based container
      ────────────────────────────────────────────────────────────────────────── */
-  @media (max-width: 1599px) {
-    body.home-hero-wide > [id^="google_auto_ads"],
-    body.home-hero-wide > [id^="google_ads_container"],
-    body.home-hero-wide > div[data-google-container-id] {
-      display: none !important;
-    }
+
+  /* Layer 1: :has() — synchronous, no JS, no race condition */
+  body:has(.home-hub-page) > [id^="google_auto_ads"],
+  body:has(.home-hub-page) > [id^="google_ads_container"],
+  body:has(.home-hub-page) > [id^="google-auto"],
+  body:has(.home-hub-page) > [id^="google-ads"],
+  body:has(.home-hub-page) > div[data-google-container-id] {
+    display: none !important;
+    pointer-events: none !important;
+  }
+
+  /* Layer 2: JS class fallback (ClientRuntimeMounts) */
+  body.home-hero-wide > [id^="google_auto_ads"],
+  body.home-hero-wide > [id^="google_ads_container"],
+  body.home-hero-wide > [id^="google-auto"],
+  body.home-hero-wide > [id^="google-ads"],
+  body.home-hero-wide > div[data-google-container-id] {
+    display: none !important;
+    pointer-events: none !important;
   }
 
 }

@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { convertDate } from '@/lib/date-adapter';
@@ -361,6 +362,8 @@ export default async function CalendarRootPage() {
               ))}
             </div>
           </section>
+
+          <AdInArticle slotId="mid-date-calendar" />
 
           <section className="related-links mb-8" dir="rtl" aria-labelledby="calendar-sources-heading">
             <p id="calendar-sources-heading" className="related-links__heading">

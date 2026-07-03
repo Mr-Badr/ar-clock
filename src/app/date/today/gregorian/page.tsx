@@ -19,6 +19,7 @@ import {
 import DateRouteLoading from '@/components/date/DateRouteLoading';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
 import { Moon, ArrowLeftRight, CalendarDays } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
@@ -488,6 +489,8 @@ async function TodayGregorianDynamicContent() {
               </div>
             </section>
           )}
+
+          <AdInArticle slotId="mid-date-today-gregorian" />
 
           <DateEditorialSections
             badge="شرح عملي"

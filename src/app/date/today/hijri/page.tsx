@@ -16,6 +16,7 @@ import { DateShareActions } from '@/components/date/DateShareActions';
 import DateRouteLoading from '@/components/date/DateRouteLoading';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
 import { Moon, CalendarDays, ArrowLeftRight, Calendar, Star } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
@@ -552,6 +553,8 @@ async function TodayHijriDynamicContent() {
               />
             </section>
           )}
+
+          <AdInArticle slotId="mid-date-today-hijri" />
 
           <section className="date-editorial-grid date-section">
             <div className="max-w-3xl space-y-4">

@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { convertDate } from '@/lib/date-adapter';
@@ -439,6 +440,8 @@ export default async function HijriCalendarRootPage() {
               ))}
             </div>
           </section>
+
+          <AdInArticle slotId="mid-date-calendar-hijri" />
 
           <section className="date-section mb-10">
             <div className="date-section-head">

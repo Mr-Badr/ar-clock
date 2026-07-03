@@ -19,6 +19,7 @@ import {
 import TodayClientHydration from './TodayClientHydration'; // Force TS Server refresh
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
 import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import { Moon, CalendarDays, ArrowLeftRight } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
@@ -377,6 +378,8 @@ async function TodayDynamicContent() {
               </div>
             </section>
           )}
+
+          <AdInArticle slotId="mid-date-today" />
 
           <DateEditorialSections
             badge="مرجع اليوم"

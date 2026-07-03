@@ -9,6 +9,7 @@ import DateRouteLoading from '@/components/date/DateRouteLoading';
 import { ConverterForm } from '../converter/ConverterForm';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
 import {
   ArrowLeftRight,
   CalendarCheck,
@@ -395,6 +396,8 @@ async function GregorianToHijriDynamicContent() {
               </div>
             </section>
           )}
+
+          <AdInArticle slotId="mid-date-gregorian-to-hijri" />
 
           <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="gregorian-faq-heading">
             <div className={styles.sectionPanel}>

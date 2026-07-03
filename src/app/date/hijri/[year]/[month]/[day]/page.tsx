@@ -20,6 +20,7 @@ import {
 } from '@/components/date/DateEditorialSections';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
 import { CalendarDays, ArrowLeftRight, Calendar } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
@@ -403,6 +404,8 @@ export default async function ProgrammaticHijriDatePage({
               hubHref="/date/calendar/hijri"
             />
           </section>
+
+          <AdInArticle slotId={`mid-date-hijri-${year}-${month}-${day}`} />
 
           <DateEditorialSections
             badge="قراءة التاريخ"

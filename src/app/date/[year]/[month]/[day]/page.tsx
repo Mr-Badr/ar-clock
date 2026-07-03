@@ -30,6 +30,7 @@ import {
 } from '@/components/date/DateEditorialSections';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
+import AdInArticle from '@/components/ads/AdInArticle';
 import { CalendarDays, ArrowLeftRight, Moon } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
@@ -453,6 +454,8 @@ export default async function ProgrammaticDatePage({
               hubHref="/date/calendar"
             />
           </section>
+
+          <AdInArticle slotId={`mid-date-gregorian-${year}-${month}-${day}`} />
 
           <DateEditorialSections
             badge="تفسير التاريخ"
