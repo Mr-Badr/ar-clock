@@ -1,11 +1,11 @@
 import { getSiteUrl } from '@/lib/site-config';
-import JsonLd from '@/components/seo/JsonLd';
+import { JsonLd } from '@/components/seo/JsonLd';
 import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorSection,
+  RelatedCalculators,
 } from '@/components/calculators/common.jsx';
-import RelatedCalculators from '@/components/calculators/RelatedCalculators';
 import QatarHealthInsuranceCalculator from '@/components/calculators/QatarHealthInsuranceCalculator.client';
 
 const SLUG = 'health-insurance-qatar';

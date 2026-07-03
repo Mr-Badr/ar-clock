@@ -1,13 +1,13 @@
 import { getSiteUrl } from '@/lib/site-config';
-import JsonLd from '@/components/seo/JsonLd';
+import { JsonLd } from '@/components/seo/JsonLd';
 import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorSection,
+  RelatedCalculators,
 } from '@/components/calculators/common.jsx';
-import RelatedCalculators from '@/components/calculators/RelatedCalculators';
 import EgyptPersonalLoanCalculator from '@/components/calculators/EgyptPersonalLoanCalculator.client';
-import { buildFreeToolPageSchema } from '@/lib/calculators/schema';
+import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 
 const SLUG      = 'personal-loan-egypt';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;

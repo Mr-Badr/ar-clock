@@ -1,11 +1,11 @@
 import { getSiteUrl } from '@/lib/site-config';
-import JsonLd from '@/components/seo/JsonLd';
+import { JsonLd } from '@/components/seo/JsonLd';
 import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorSection,
+  RelatedCalculators,
 } from '@/components/calculators/common.jsx';
-import RelatedCalculators from '@/components/calculators/RelatedCalculators';
 import KuwaitCarInsuranceCalculator from '@/components/calculators/KuwaitCarInsuranceCalculator.client';
 
 const SLUG = 'car-insurance-kuwait';

@@ -1,13 +1,13 @@
 import { getSiteUrl } from '@/lib/site-config';
-import JsonLd from '@/components/seo/JsonLd';
+import { JsonLd } from '@/components/seo/JsonLd';
 import {
   CalculatorFaqSection,
   CalculatorHero,
   CalculatorSection,
+  RelatedCalculators,
 } from '@/components/calculators/common.jsx';
-import RelatedCalculators from '@/components/calculators/RelatedCalculators';
 import BahrainMortgageCalculator from '@/components/calculators/BahrainMortgageCalculator.client';
-import { buildFreeToolPageSchema } from '@/lib/calculators/schema';
+import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
 
 const SLUG      = 'mortgage-bahrain';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;
