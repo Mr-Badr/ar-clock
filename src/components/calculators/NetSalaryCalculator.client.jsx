@@ -134,48 +134,41 @@ export default function NetSalaryCalculator() {
         {/* ── RESULTS ─────────────────────────────── */}
         <div className="calc-esb-result-col">
           {!result && (
-            <div className="calc-empty-state">
-              <CurrencyDollar size={48} weight="duotone" className="calc-empty-state__icon" />
+            <div className="calc-esb-empty-state">
+              <CurrencyDollar size={28} weight="duotone" />
               <p>أدخل الراتب الأساسي لحساب صافي الراتب</p>
             </div>
           )}
 
           {result?.isValid && (
-            <>
-              {/* Net salary highlight */}
-              <div className="calc-result-hero">
-                <div className="calc-result-hero__label">صافي الراتب بعد خصم GOSI</div>
-                <div className="calc-result-hero__number">
-                  {formatSAR(result.netSalary)}
-                  <span className="calc-result-hero__unit">ريال</span>
-                </div>
+            <div className="calc-esb-result-panel net-salary-result" aria-live="polite">
+              <div className="calc-esb-result-header">
+                <span className="calc-esb-country-badge calc-esb-country-badge--sa">🇸🇦 السعودية · GOSI</span>
+                <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 
-              {/* Breakdown */}
-              <div className="calc-breakdown">
-                <div className="calc-breakdown-row">
-                  <span className="calc-breakdown-row__label">الراتب الإجمالي</span>
-                  <span className="calc-breakdown-row__value">{formatSAR(result.grossSalary)} ريال</span>
+              <div className="calc-esb-amount-hero">
+                <span className="calc-esb-amount-label">صافي الراتب بعد خصم GOSI</span>
+                <div className="calc-esb-amount-value">{formatSAR(result.netSalary)}</div>
+                <div className="calc-esb-amount-meta">ريال سعودي</div>
+              </div>
+
+              <div className="calc-esb-breakdown">
+                <div className="calc-esb-brow">
+                  <span>الراتب الإجمالي</span>
+                  <strong>{formatSAR(result.grossSalary)} ريال</strong>
                 </div>
-                <div className="calc-breakdown-row">
-                  <span className="calc-breakdown-row__label">وعاء GOSI (أساسي + سكن)</span>
-                  <span className="calc-breakdown-row__value">{formatSAR(result.gosiBase)} ريال{result.isCapped ? ' (محدود)' : ''}</span>
+                <div className="calc-esb-brow">
+                  <span>وعاء GOSI (أساسي + سكن)</span>
+                  <strong>{formatSAR(result.gosiBase)} ريال{result.isCapped ? ' (محدود)' : ''}</strong>
                 </div>
-                <div className="calc-breakdown-row calc-breakdown-row--neg">
-                  <span className="calc-breakdown-row__label">
-                    خصم GOSI ({(result.gosiRate.employee * 100).toFixed(0)}%)
-                  </span>
-                  <span className="calc-breakdown-row__value">
-                    − {formatSAR(result.gosiEmployee)} ريال
-                  </span>
+                <div className="calc-esb-brow calc-esb-brow--neg">
+                  <span>خصم GOSI ({(result.gosiRate.employee * 100).toFixed(0)}%)</span>
+                  <strong>− {formatSAR(result.gosiEmployee)} ريال</strong>
                 </div>
-                <div className="calc-breakdown-row calc-breakdown-row--info">
-                  <span className="calc-breakdown-row__label">
-                    حصة صاحب العمل في GOSI ({(result.gosiRate.employer * 100).toFixed(1)}%)
-                  </span>
-                  <span className="calc-breakdown-row__value">
-                    {formatSAR(result.gosiEmployer)} ريال
-                  </span>
+                <div className="calc-esb-brow calc-esb-brow--total">
+                  <span>حصة صاحب العمل في GOSI ({(result.gosiRate.employer * 100).toFixed(1)}%)</span>
+                  <strong>{formatSAR(result.gosiEmployer)} ريال</strong>
                 </div>
               </div>
 
@@ -194,7 +187,7 @@ export default function NetSalaryCalculator() {
               )}
 
               <ResultActions shareText={shareText} />
-            </>
+            </div>
           )}
         </div>
       </div>

@@ -1869,6 +1869,138 @@
   }
 }
 
+/* ── Fahras category quick-nav hub ──────────────────────────────────────── */
+.catHub {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.catHubTitle {
+  margin: 0 0 var(--space-2);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.catGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.catCard {
+  --cat-accent: var(--blue);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.85rem;
+  min-height: 80px;
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in srgb, var(--border-default) 78%, transparent);
+  border-top: 3px solid var(--cat-accent);
+  background: var(--bg-surface-1);
+  color: inherit;
+  text-decoration: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.catCard:hover {
+  border-color: color-mix(in srgb, var(--cat-accent) 48%, var(--border-default) 52%);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--cat-accent) 8%, transparent);
+}
+
+.catCard:focus-visible {
+  outline: 2px solid var(--cat-accent);
+  outline-offset: 3px;
+}
+
+.catCard[data-cat='time']       { --cat-accent: var(--blue); }
+.catCard[data-cat='prayer']     { --cat-accent: var(--green); }
+.catCard[data-cat='date']       { --cat-accent: var(--amber); }
+.catCard[data-cat='calculators']{ --cat-accent: var(--blue); }
+.catCard[data-cat='holidays']   { --cat-accent: var(--red); }
+.catCard[data-cat='blog']       { --cat-accent: var(--amber); }
+
+.catIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--cat-accent) 10%, var(--bg-surface-2));
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.catCopy {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.catCopy strong {
+  color: var(--text-primary);
+  font-size: 0.96rem;
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+.catCopy span {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.catArrow {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.catCard:hover .catArrow {
+  opacity: 1;
+  color: var(--cat-accent);
+}
+
+@media (max-width: 980px) {
+  .catGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .catGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .catCard {
+    min-height: 68px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .catCard {
+    transition: border-color 120ms ease;
+  }
+
+  .catCard:hover {
+    box-shadow: none;
+  }
+
+  .catArrow {
+    opacity: 0.6;
+  }
+}
+/* ──────────────────────────────────────────────────────────────────────── */
+
 @supports not (color: color-mix(in srgb, var(--bg) 50%, var(--surface) 50%)) {
   .page {
     background: var(--bg-surface-1);

@@ -43,7 +43,7 @@ Each component reads route prefix → looks up section-specific slot key → fal
 Example for `/mwaqit-al-salat`: tries `topPrayerBanner` → falls back to `topBanner`.
 Fallback is handled by `resolveManualAdSlot()` in `src/lib/ads/slot-resolution.ts`.
 
-## Ad coverage per section (current state after 2026-06-23 fixes)
+## Ad coverage per section (current state after 2026-07-03 fixes)
 | Route | Top | InArticle | Multiplex |
 |---|---|---|---|
 | /holidays/[slug] | ✅ | ✅ ×1 | ✅ |
@@ -51,6 +51,7 @@ Fallback is handled by `resolveManualAdSlot()` in `src/lib/ads/slot-resolution.t
 | /date/* | ✅ (layout) | ✅ | ✅ (layout) |
 | /blog/[slug] | ✅ | ✅ | ✅ |
 | /blog (hub) | ✅ | — | ✅ |
+| /time-now (hub) | ✅ | ✅ (added 2026-07-03, between clock and country directory) | ✅ |
 | /time-now/[country] | ✅ | ✅ | ✅ |
 | /time-now/[country]/[city] | ✅ | ✅ | ✅ |
 | /time-difference/[from]/[to] | ✅ | ✅ | ✅ |

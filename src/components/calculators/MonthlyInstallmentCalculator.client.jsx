@@ -311,11 +311,16 @@ export default function MonthlyInstallmentCalculator() {
 
         <div className="calc-loan-result-sticky">
           {result.isValid ? (
-            <div className="calc-result-hero-panel --blue" aria-live="polite">
-              <div>
-                <span className="calc-result-hero-label">القسط الشهري</span>
-                <div className="calc-result-hero-value">{formatMoney(result.monthlyOutflow)}</div>
-                <div className="calc-result-hero-meta">
+            <div className="calc-esb-result-panel loan-result-panel" aria-live="polite">
+              <div className="calc-esb-result-header">
+                <span className="calc-esb-country-badge calc-esb-country-badge--bh">💳 القسط الشهري</span>
+                <span className="calc-esb-live-dot" aria-hidden="true" />
+              </div>
+
+              <div className="calc-esb-amount-hero">
+                <span className="calc-esb-amount-label">القسط الشهري</span>
+                <div className="calc-esb-amount-value">{formatMoney(result.monthlyOutflow)}</div>
+                <div className="calc-esb-amount-meta">
                   <span>{formatNumber(result.months)} شهراً</span>
                   <span className="calc-esb-sep">·</span>
                   <span>فائدة {formatPercent(result.interestShare)} من الأصل</span>

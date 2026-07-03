@@ -295,29 +295,25 @@ export default function GpaCalculator() {
           )}
 
           {semResult.isValid && (
-            <div className="calc-result-hero-panel --blue gpa-result" aria-live="polite">
+            <div className="calc-esb-result-panel gpa-result" aria-live="polite">
+              <div className="calc-esb-result-header">
+                <span className="calc-esb-country-badge calc-esb-country-badge--bh">🎓 المعدل GPA</span>
+                <span className="calc-esb-live-dot gpa-live-dot" aria-hidden="true" />
+              </div>
 
               {/* Semester GPA */}
-              <div className="text-center">
-                <span className="calc-result-hero-label">معدل الفصل GPA</span>
-                <div
-                  className="calc-result-hero-value"
-                  style={{ color: classification?.color ?? 'var(--blue)', fontSize: '2.5rem' }}
-                >
+              <div className="calc-esb-amount-hero">
+                <span className="calc-esb-amount-label">معدل الفصل GPA</span>
+                <div className={`calc-esb-amount-value gpa-value--${classification?.level ?? 'very-good'}`}>
                   {semResult.gpa.toFixed(2)}
                   <span className="gpa-result-max">/ {system.max}</span>
                 </div>
                 {classification && (
-                  <span
-                    className="bmi-category-badge"
-                    style={{
-                      background: `${classification.color}20`,
-                      color: classification.color,
-                      border: `1px solid ${classification.color}40`,
-                    }}
-                  >
-                    {classification.label} · {classification.labelEn}
-                  </span>
+                  <div className="calc-esb-amount-meta">
+                    <span className={`gpa-class-badge gpa-class-badge--${classification.level}`}>
+                      {classification.label} · {classification.labelEn}
+                    </span>
+                  </div>
                 )}
               </div>
 
@@ -336,7 +332,7 @@ export default function GpaCalculator() {
                 {tab === 'cumulative' && cumulativeGpa != null && (
                   <div className="calc-esb-brow calc-esb-brow--total">
                     <span>المعدل التراكمي (CGPA)</span>
-                    <strong style={{ color: cumulativeClass?.color }}>
+                    <strong className={cumulativeClass?.level ? `gpa-value--${cumulativeClass.level}` : ''}>
                       {cumulativeGpa.toFixed(2)} / {system.max}
                       {cumulativeClass ? ` · ${cumulativeClass.label}` : ''}
                     </strong>

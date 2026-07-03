@@ -153,19 +153,20 @@ export default function BMICalculator() {
         {/* ── RESULT ───────────────────────────────── */}
         <div className="calc-esb-result-col">
           {result.isValid ? (
-            <div className="calc-result-hero-panel --blue bmi-result" aria-live="polite">
+            <div className="calc-esb-result-panel bmi-result" aria-live="polite">
+              <div className="calc-esb-result-header">
+                <span className="calc-esb-country-badge calc-esb-country-badge--bh">❤️ مؤشر الجسم</span>
+                <span className="calc-esb-live-dot bmi-live-dot" aria-hidden="true" />
+              </div>
 
               {/* BMI value */}
-              <div>
-                <span className="calc-result-hero-label">مؤشر كتلة الجسم (BMI)</span>
-                <div className="calc-result-hero-value" style={{ color: result.color }}>
+              <div className="calc-esb-amount-hero">
+                <span className="calc-esb-amount-label">مؤشر كتلة الجسم (BMI)</span>
+                <div className={`calc-esb-amount-value bmi-value--${result.category}`}>
                   {result.bmi}
                 </div>
-                <div className="calc-result-hero-meta">
-                  <span
-                    className="bmi-category-badge"
-                    style={{ background: `${result.color}20`, color: result.color, border: `1px solid ${result.color}40` }}
-                  >
+                <div className="calc-esb-amount-meta">
+                  <span className={`bmi-category-badge bmi-category-badge--${result.category}`}>
                     {result.categoryAr}
                   </span>
                 </div>

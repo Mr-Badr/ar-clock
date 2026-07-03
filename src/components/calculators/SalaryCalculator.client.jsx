@@ -168,16 +168,20 @@ export default function SalaryCalculator() {
         {/* ── RESULT ───────────────────────────────── */}
         <div className="calc-esb-result-col">
           {result.isValid ? (
-            <div className="calc-result-hero-panel --green salary-result-panel" aria-live="polite">
+            <div className="calc-esb-result-panel salary-result-panel" aria-live="polite">
+              <div className="calc-esb-result-header">
+                <span className="calc-esb-country-badge calc-esb-country-badge--sa">💼 حاسبة الراتب</span>
+                <span className="calc-esb-live-dot" aria-hidden="true" />
+              </div>
 
-              <div>
-                <span className="calc-result-hero-label">
+              <div className="calc-esb-amount-hero">
+                <span className="calc-esb-amount-label">
                   {result.gosiMonthly > 0 ? 'الراتب الصافي الشهري' : 'الراتب السنوي'}
                 </span>
-                <div className="calc-result-hero-value">
+                <div className="calc-esb-amount-value">
                   {result.gosiMonthly > 0 ? formatMoney(result.netMonthly) : formatMoney(result.annual)}
                 </div>
-                <div className="calc-result-hero-meta">
+                <div className="calc-esb-amount-meta">
                   {result.gosiMonthly > 0 ? (
                     <span>بعد خصم {formatMoney(result.gosiMonthly)} تأمينات شهرياً</span>
                   ) : (

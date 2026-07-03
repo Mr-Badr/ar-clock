@@ -482,10 +482,14 @@ export default function PercentageCalculator() {
           </CardContent>
         </Card>
 
-        <div className="calc-result-hero-panel --amber" aria-live="polite" role="status">
-          <div className="calc-pct-result-hero">
-            <span className="calc-result-hero-label">{currentSummary.title}</span>
-            <div className="calc-result-hero-value">{currentSummary.value}</div>
+        <div className="calc-esb-result-panel pct-result-panel" aria-live="polite" role="status">
+          <div className="calc-esb-result-header">
+            <span className="calc-esb-country-badge calc-esb-country-badge--bh">% النسبة المئوية</span>
+            <span className="calc-esb-live-dot" aria-hidden="true" />
+          </div>
+          <div className="calc-esb-amount-hero">
+            <span className="calc-esb-amount-label">{currentSummary.title}</span>
+            <div className="calc-esb-amount-value">{currentSummary.value}</div>
           </div>
 
           {activeTab === 'amount' && (

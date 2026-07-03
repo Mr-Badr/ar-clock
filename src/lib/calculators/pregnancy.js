@@ -25,9 +25,9 @@ export const PREGNANCY_MILESTONES = [
 ];
 
 export const TRIMESTER_INFO = {
-  1: { label: 'الثلث الأول',   range: 'الأسبوع 1–12',   color: '#e11d48' },
-  2: { label: 'الثلث الثاني',  range: 'الأسبوع 13–27',  color: '#d97706' },
-  3: { label: 'الثلث الثالث', range: 'الأسبوع 28–40',  color: '#16a34a' },
+  1: { label: 'الثلث الأول',   range: 'الأسبوع 1–12',   color: '#e11d48', level: 'first'  },
+  2: { label: 'الثلث الثاني',  range: 'الأسبوع 13–27',  color: '#d97706', level: 'second' },
+  3: { label: 'الثلث الثالث', range: 'الأسبوع 28–40',  color: '#16a34a', level: 'third'  },
 };
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;

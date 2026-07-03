@@ -221,7 +221,11 @@ export default function ZakatCalculator() {
         {/* ── RESULT ───────────────────────────────── */}
         <div className="calc-esb-result-col">
           {result.isValid ? (
-            <div className="calc-result-hero-panel --amber zakat-result" aria-live="polite">
+            <div className="calc-esb-result-panel zakat-result" aria-live="polite">
+              <div className="calc-esb-result-header">
+                <span className="calc-esb-country-badge calc-esb-country-badge--sa">☪️ حاسبة الزكاة</span>
+                <span className="calc-esb-live-dot" aria-hidden="true" />
+              </div>
 
               {/* Nisab status */}
               {result.nisab > 0 && (
@@ -234,12 +238,12 @@ export default function ZakatCalculator() {
                 </div>
               )}
 
-              <div>
-                <span className="calc-result-hero-label">الزكاة الواجبة</span>
-                <div className="calc-result-hero-value">
+              <div className="calc-esb-amount-hero">
+                <span className="calc-esb-amount-label">الزكاة الواجبة</span>
+                <div className="calc-esb-amount-value">
                   {result.meetsNisab ? formatMoney(result.zakatDue) : '—'}
                 </div>
-                <div className="calc-result-hero-meta">
+                <div className="calc-esb-amount-meta">
                   <span>2.5% من الوعاء الصافي</span>
                   {result.nisab > 0 && (
                     <>

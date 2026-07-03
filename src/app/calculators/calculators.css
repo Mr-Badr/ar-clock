@@ -3832,8 +3832,8 @@ label.calc-hint {
 }
 
 .calc-hub-v8-tag {
-  background: color-mix(in srgb, #38bdf8 14%, transparent);
-  color: #8bd8ff;
+  background: color-mix(in srgb, var(--blue) 14%, transparent);
+  color: var(--blue-text);
 }
 
 .calc-hub-v8-count {
@@ -6899,6 +6899,11 @@ main:not(.calc-hub-page) .calc-cta-card .calc-section-title {
   color: var(--green-text);
   border-color: var(--green-border);
 }
+.calc-esb-country-badge--om {
+  background: color-mix(in srgb, var(--red) 8%, var(--bg-surface-2));
+  color: var(--red-text);
+  border-color: color-mix(in srgb, var(--red) 30%, transparent);
+}
 
 .calc-esb-live-dot {
   width: 8px;
@@ -8919,6 +8924,41 @@ main:not(.calc-hub-page) .calc-room-add {
   font-size: 0.8rem;
   font-weight: 700;
   margin-block-start: 0.35rem;
+  border: 1px solid transparent;
+}
+
+.bmi-category-badge--underweight {
+  background: color-mix(in srgb, var(--blue) 12%, transparent);
+  color: var(--blue-text);
+  border-color: color-mix(in srgb, var(--blue) 25%, transparent);
+}
+.bmi-category-badge--normal {
+  background: color-mix(in srgb, var(--green) 12%, transparent);
+  color: var(--green-text);
+  border-color: color-mix(in srgb, var(--green) 22%, transparent);
+}
+.bmi-category-badge--overweight {
+  background: color-mix(in srgb, var(--amber) 15%, transparent);
+  color: var(--amber);
+  border-color: color-mix(in srgb, var(--amber) 30%, transparent);
+}
+.bmi-category-badge--obese1,
+.bmi-category-badge--obese2 {
+  background: color-mix(in srgb, var(--red) 12%, transparent);
+  color: var(--red-text);
+  border-color: color-mix(in srgb, var(--red) 25%, transparent);
+}
+
+.bmi-value--underweight { color: var(--blue-text); }
+.bmi-value--normal      { color: var(--green-text); }
+.bmi-value--overweight  { color: var(--amber); }
+.bmi-value--obese1,
+.bmi-value--obese2      { color: var(--red-text); }
+
+.bmi-result.calc-esb-result-panel { border-top-color: var(--blue); }
+.bmi-result .bmi-live-dot {
+  background: var(--blue);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 20%, transparent);
 }
 
 /* BMI scale */
@@ -9228,6 +9268,63 @@ main:not(.calc-hub-page) .calc-room-add {
   font-weight: 500;
   color: var(--text-muted);
   margin-inline-end: 0.4rem;
+}
+
+.gpa-class-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.gpa-class-badge--excellent {
+  background: color-mix(in srgb, var(--green) 12%, transparent);
+  color: var(--green-text);
+  border-color: color-mix(in srgb, var(--green) 22%, transparent);
+}
+.gpa-class-badge--very-good {
+  background: color-mix(in srgb, var(--blue) 12%, transparent);
+  color: var(--blue-text);
+  border-color: color-mix(in srgb, var(--blue) 22%, transparent);
+}
+.gpa-class-badge--good {
+  background: color-mix(in srgb, var(--amber) 15%, transparent);
+  color: var(--amber);
+  border-color: color-mix(in srgb, var(--amber) 30%, transparent);
+}
+.gpa-class-badge--pass {
+  background: color-mix(in srgb, var(--red) 10%, var(--bg-surface-2));
+  color: color-mix(in srgb, var(--red) 80%, var(--amber));
+  border-color: color-mix(in srgb, var(--red) 30%, transparent);
+}
+.gpa-class-badge--fail {
+  background: color-mix(in srgb, var(--red) 12%, transparent);
+  color: var(--red-text);
+  border-color: color-mix(in srgb, var(--red) 25%, transparent);
+}
+
+.gpa-value--excellent { color: var(--green-text); }
+.gpa-value--very-good { color: var(--blue-text); }
+.gpa-value--good      { color: var(--amber); }
+.gpa-value--pass      { color: color-mix(in srgb, var(--red) 60%, var(--amber)); }
+.gpa-value--fail      { color: var(--red-text); }
+
+.gpa-result.calc-esb-result-panel { border-top-color: var(--blue); }
+.gpa-result .gpa-live-dot {
+  background: var(--blue);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 20%, transparent);
+}
+
+/* PercentageCalculator + loan installment — blue tool badge */
+.pct-result-panel.calc-esb-result-panel,
+.loan-result-panel.calc-esb-result-panel { border-top-color: var(--blue); }
+.pct-result-panel .calc-esb-live-dot,
+.loan-result-panel .calc-esb-live-dot {
+  background: var(--blue);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 20%, transparent);
 }
 
 @media (max-width: 540px) {
@@ -11244,7 +11341,7 @@ main:not(.calc-hub-page) .calc-building-tool .calc-building-metrics {
 .ovulation-empty-icon { color: var(--blue); }
 
 /* ── Pregnancy calculator ─────────────────────────────────────────── */
-.pregnancy-empty-icon { color: #e11d48; }
+.pregnancy-empty-icon { color: var(--red); }
 
 .pregnancy-week-pair {
   display: grid;
@@ -11415,6 +11512,58 @@ main:not(.calc-hub-page) .calc-building-tool .calc-building-metrics {
     gap: var(--space-1);
   }
 }
+
+/* ── Ovulation result panel — blue theme ─────────────────────────── */
+.ovulation-result.calc-esb-result-panel { border-top-color: var(--blue); }
+.ovulation-result .ovulation-live-dot { background: var(--blue); box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 20%, transparent); }
+
+/* ── Pregnancy — trimester-themed result panel ───────────────────── */
+.pregnancy-result--first.calc-esb-result-panel  { border-top-color: var(--red); }
+.pregnancy-result--second.calc-esb-result-panel { border-top-color: var(--amber); }
+.pregnancy-result--third.calc-esb-result-panel  { border-top-color: var(--green); }
+
+.pregnancy-result--first  .calc-esb-live-dot { background: var(--red);   box-shadow: 0 0 0 3px color-mix(in srgb, var(--red)   20%, transparent); }
+.pregnancy-result--second .calc-esb-live-dot { background: var(--amber); box-shadow: 0 0 0 3px color-mix(in srgb, var(--amber) 20%, transparent); }
+.pregnancy-result--third  .calc-esb-live-dot { background: var(--green); }
+
+/* Badge in result header */
+.pregnancy-trimester-badge--first  { color: var(--red-text);   border-color: color-mix(in srgb, var(--red)   40%, transparent); background: color-mix(in srgb, var(--red)   8%, transparent); }
+.pregnancy-trimester-badge--second { color: var(--amber);      border-color: color-mix(in srgb, var(--amber) 40%, transparent); background: color-mix(in srgb, var(--amber) 8%, transparent); }
+.pregnancy-trimester-badge--third  { color: var(--green-text); border-color: var(--green-border); background: var(--green-subtle); }
+
+/* Trimester category badge (below week value) */
+.pregnancy-category-badge {
+  display: inline-block;
+  margin-top: 0.35rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+.pregnancy-category-badge--first  { color: var(--red-text);   border-color: color-mix(in srgb, var(--red)   40%, transparent); background: color-mix(in srgb, var(--red)   8%, transparent); }
+.pregnancy-category-badge--second { color: var(--amber);      border-color: color-mix(in srgb, var(--amber) 40%, transparent); background: color-mix(in srgb, var(--amber) 8%, transparent); }
+.pregnancy-category-badge--third  { color: var(--green-text); border-color: var(--green-border); background: var(--green-subtle); }
+
+/* Week value text color */
+.pregnancy-week-value--first  { color: var(--red-text); }
+.pregnancy-week-value--second { color: var(--amber); }
+.pregnancy-week-value--third  { color: var(--green-text); }
+
+/* Progress fill color */
+.pregnancy-progress-fill--first  { background: var(--red); }
+.pregnancy-progress-fill--second { background: var(--amber); }
+.pregnancy-progress-fill--third  { background: var(--green); }
+
+/* Progress percent label color */
+.pregnancy-progress-pct--first  { color: var(--red-text);   font-weight: 700; }
+.pregnancy-progress-pct--second { color: var(--amber);      font-weight: 700; }
+.pregnancy-progress-pct--third  { color: var(--green-text); font-weight: 700; }
+
+/* Reached milestone check icon color */
+.pregnancy-milestone-check--first  { color: var(--red-text); }
+.pregnancy-milestone-check--second { color: var(--amber); }
+.pregnancy-milestone-check--third  { color: var(--green-text); }
 
 /* ─────────────────────────────────────────────────────────────────────
    GOSI Early Retirement Calculator (gosi-*)
@@ -12444,4 +12593,741 @@ main:not(.calc-hub-page) .calc-building-tool .calc-building-metrics {
   color: var(--text-primary);
   min-width: 3rem;
   text-align: start;
+}
+
+/* ── Saudi Car Insurance / Dubai Setup / Mortgage / Egypt Customs ── */
+
+/* Saudi KSA badge */
+.calc-esb-country-badge--sa {
+  color: var(--green-text);
+  border-color: var(--green-border);
+  background: var(--green-subtle);
+}
+
+/* Coverage / Mode tabs (shared by car-insurance, dubai-setup, mortgage) */
+.ci-coverage-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.ci-coverage-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-3) var(--space-2);
+  border-radius: 10px;
+  border: 1.5px solid var(--border-default);
+  background: var(--bg-surface-2);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  text-align: center;
+}
+
+.ci-coverage-tab:hover {
+  border-color: var(--green-border);
+}
+
+.ci-coverage-tab.is-active {
+  border-color: var(--green);
+  background: var(--green-subtle);
+}
+
+.ci-tab-label {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0;
+}
+
+.ci-tab-sub {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  letter-spacing: 0;
+}
+
+.ci-coverage-tab.is-active .ci-tab-label {
+  color: var(--green-text);
+}
+
+/* Premium / total range display */
+.ci-range-display {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+  justify-content: center;
+  direction: ltr;
+}
+
+.ci-range-low,
+.ci-range-high {
+  font-size: clamp(1.8rem, 6vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: var(--green-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.ci-range-sep {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 var(--space-1);
+}
+
+.ci-range-unit {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  align-self: flex-end;
+  padding-bottom: 4px;
+  direction: rtl;
+}
+
+/* Price factors breakdown */
+.ci-factors {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--bg-surface-2) 60%, transparent);
+  border: 1px solid var(--border-subtle);
+}
+
+.ci-factors-title {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0;
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.ci-factor-row {
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.ci-factor-row:last-child { border-bottom: none; }
+
+.ci-factor-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ci-factor-icon--up   { background: color-mix(in srgb, var(--red)   15%, transparent); color: var(--red-text); }
+.ci-factor-icon--down { background: color-mix(in srgb, var(--green) 15%, transparent); color: var(--green-text); }
+.ci-factor-icon--ok   { background: color-mix(in srgb, var(--green) 15%, transparent); color: var(--green-text); }
+.ci-factor-icon--info { background: color-mix(in srgb, var(--blue)  15%, transparent); color: var(--blue-text); }
+
+.ci-factor-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0;
+}
+
+.ci-factor-effect {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  text-align: end;
+  letter-spacing: 0;
+}
+
+/* Coverage compare strip */
+.ci-compare-strip {
+  margin-top: var(--space-3);
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.ci-compare-row {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.ci-compare-row:last-child { border-bottom: none; }
+
+.ci-compare-header {
+  background: var(--bg-surface-2);
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0;
+}
+
+.ci-compare-active {
+  background: var(--green-subtle);
+  color: var(--green-text);
+  font-weight: 600;
+}
+
+/* Hint warning variant */
+.ci-hint-warning {
+  color: var(--amber);
+}
+
+/* Mortgage rate sensitivity strip */
+.m-rate-strip {
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--bg-surface-2) 50%, transparent);
+}
+
+/* Egypt electricity/water: kWh and m³ preset buttons */
+.eg-elec-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.eg-elec-preset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: 8px;
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-2);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  min-width: 56px;
+}
+
+.eg-elec-preset:hover,
+.eg-elec-preset.is-active {
+  border-color: var(--green-border);
+  background: var(--green-subtle);
+}
+
+.eg-preset-label {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  letter-spacing: 0;
+}
+
+.eg-preset-kwh {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+  direction: ltr;
+}
+
+/* Calories: side-by-side weight + height inputs */
+.cal-wh-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+/* Health insurance: coverage level card selector */
+.hi-levels {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.hi-level-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: 10px;
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-2);
+  cursor: pointer;
+  text-align: start;
+  transition: border-color 0.15s, background 0.15s;
+  width: 100%;
+}
+
+.hi-level-card:hover,
+.hi-level-card.is-active {
+  border-color: var(--green-border);
+  background: var(--green-subtle);
+}
+
+.hi-level-label {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0;
+}
+
+.hi-level-sub {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  letter-spacing: 0;
+}
+
+/* Health insurance country badge — uses existing --ae style */
+
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM RESULT VISUALS — Charts, Gauges, Bars (Wave 2)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Stacked proportion bar ─────────────────────────────────── */
+.calc-prop-bar {
+  display: flex;
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  gap: 2px;
+  margin: var(--space-2) 0;
+  background: var(--border-default);
+}
+.calc-prop-seg {
+  height: 100%;
+  min-width: 4px;
+  transition: width 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.calc-prop-seg--down  { background: var(--blue); }
+.calc-prop-seg--prin  { background: var(--green); }
+.calc-prop-seg--int   { background: var(--amber); }
+.calc-prop-legend {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+}
+.calc-prop-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-inline-end: 4px;
+  vertical-align: middle;
+}
+.calc-prop-dot--down  { background: var(--blue); }
+.calc-prop-dot--prin  { background: var(--green); }
+.calc-prop-dot--int   { background: var(--amber); }
+
+/* ── SVG Donut chart ────────────────────────────────────────── */
+.calc-donut-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-2) 0 var(--space-3);
+}
+.calc-donut-center-wrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 104px;
+  height: 104px;
+}
+.calc-donut-center-wrap svg {
+  width: 100%; height: 100%;
+}
+.calc-donut-center-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.calc-donut-center-pct {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  direction: ltr;
+}
+.calc-donut-center-sub {
+  font-size: 0.58rem;
+  color: var(--text-secondary);
+  letter-spacing: 0;
+  margin-top: 3px;
+  text-align: center;
+}
+.calc-donut-legend {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.calc-donut-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-xs);
+}
+.calc-donut-legend-color {
+  width: 10px; height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.calc-donut-legend-label {
+  color: var(--text-secondary);
+  letter-spacing: 0;
+  flex: 1;
+}
+.calc-donut-legend-val {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  font-size: var(--text-xs);
+}
+
+/* ── DBR / capacity gauge bar ───────────────────────────────── */
+.calc-dbr-meter {
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 12px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-default);
+}
+.calc-dbr-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-2);
+}
+.calc-dbr-title {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0;
+}
+.calc-dbr-pct-label {
+  font-size: var(--text-sm);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}
+.calc-dbr-pct-label--ok   { color: var(--green-text); }
+.calc-dbr-pct-label--warn { color: var(--amber); }
+.calc-dbr-pct-label--over { color: var(--red-text); }
+.calc-dbr-track {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-default);
+  overflow: hidden;
+  position: relative;
+}
+.calc-dbr-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.calc-dbr-fill--ok   { background: linear-gradient(90deg, var(--green), color-mix(in srgb, var(--green) 70%, var(--amber))); }
+.calc-dbr-fill--warn { background: linear-gradient(90deg, var(--green), var(--amber)); }
+.calc-dbr-fill--over { background: linear-gradient(90deg, var(--amber), var(--red)); }
+.calc-dbr-sub {
+  margin-top: var(--space-1);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0;
+}
+
+/* ── Insight mini-cards ─────────────────────────────────────── */
+.calc-insight-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+.calc-insight-card {
+  padding: var(--space-3);
+  border-radius: 10px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-default);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.calc-insight-label {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  letter-spacing: 0;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.calc-insight-value {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  text-align: start;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.calc-insight-sub {
+  font-size: 0.6rem;
+  color: var(--text-secondary);
+  letter-spacing: 0;
+}
+
+/* ── Health insurance class bars ────────────────────────────── */
+.calc-hi-class-bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+.calc-hi-class-bar-item {
+  padding: var(--space-2) var(--space-3);
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: var(--bg-surface-2);
+  transition: border-color 0.15s, background 0.15s;
+}
+.calc-hi-class-bar-item.is-active {
+  border-color: var(--green-border);
+  background: var(--green-subtle);
+}
+.calc-hi-class-bar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.calc-hi-class-bar-name {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0;
+}
+.calc-hi-class-bar-range {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  direction: ltr;
+  font-variant-numeric: tabular-nums;
+}
+.calc-hi-class-bar-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-default);
+  overflow: hidden;
+}
+.calc-hi-class-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.55s ease;
+}
+.calc-hi-class-bar-fill--b { background: var(--blue); }
+.calc-hi-class-bar-fill--c { background: var(--green); }
+.calc-hi-class-bar-fill--d { background: var(--amber); }
+.calc-hi-class-bar-fill--e { background: var(--red); }
+
+/* ── Period toggle (annual / monthly) ───────────────────────── */
+.calc-period-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: var(--space-3);
+  background: var(--bg-surface-2);
+}
+.calc-period-btn {
+  padding: 5px 16px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.calc-period-btn.is-active {
+  background: var(--green);
+  color: #000;
+}
+
+/* ── LTV visual split bar ───────────────────────────────────── */
+.calc-ltv-bar-wrap { margin: var(--space-2) 0 var(--space-1); }
+.calc-ltv-bar-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.calc-ltv-bar {
+  display: flex;
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  gap: 2px;
+}
+.calc-ltv-seg-down { background: var(--blue);  transition: width 0.55s ease; min-width: 4px; }
+.calc-ltv-seg-loan { background: var(--green); transition: width 0.55s ease; min-width: 4px; }
+
+/* ── Result section title ───────────────────────────────────── */
+.calc-result-sec-title {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: var(--space-3) 0 var(--space-2);
+  padding-bottom: var(--space-1);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* ── hint color variant ─────────────────────────────────────── */
+.ci-hint-warning {
+  color: var(--amber) !important;
+}
+
+/* ── Cap notice (max-loan capped) ───────────────────────────── */
+.calc-esb-cap-notice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--blue) 8%, var(--bg-surface-2));
+  border: 1px solid color-mix(in srgb, var(--blue) 22%, transparent);
+  font-size: var(--text-xs);
+  color: var(--blue-text);
+  margin-bottom: var(--space-3);
+}
+.calc-esb-cap-notice svg { flex-shrink: 0; }
+
+/* ── Kuwait KCB comparison block ────────────────────────────── */
+.kw-kcb-strip {
+  margin-top: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--green) 5%, var(--bg-surface-2));
+  border: 1px solid color-mix(in srgb, var(--green) 25%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.kw-kcb-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+}
+.kw-kcb-label {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  letter-spacing: 0;
+  flex: 1;
+}
+.kw-kcb-value {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-primary);
+  direction: ltr;
+  white-space: nowrap;
+}
+.kw-kcb-saving {
+  margin-top: var(--space-1);
+  padding-top: var(--space-2);
+  border-top: 1px solid color-mix(in srgb, var(--green) 25%, transparent);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--green-text);
+  text-align: center;
+}
+
+/* ── DBR progress bar (Bahrain) ─────────────────────────────── */
+.dbr-bar-wrap {
+  margin: var(--space-2) 0 var(--space-3);
+}
+.dbr-bar-track {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  overflow: visible;
+}
+.dbr-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.35s ease;
+  min-width: 4px;
+}
+.dbr-bar-cap {
+  position: absolute;
+  top: -4px;
+  width: 2px;
+  height: 16px;
+  background: var(--text-muted);
+  transform: translateX(-50%);
+  border-radius: 1px;
+}
+.dbr-bar-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* ── Rate sensitivity strip variant: 2-col (no icon column) ─── */
+.m-rate-strip .ci-factor-row--2col {
+  grid-template-columns: auto 1fr;
+}
+
+/* Kuwait live dot override: green for KW (already green) */
+.kw-mortgage-tool .calc-esb-live-dot {
+  background: var(--green);
+}
+/* Qatar live dot: red accent */
+.qa-mortgage-tool .calc-esb-live-dot {
+  background: var(--red);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--red) 20%, transparent);
+}
+/* Bahrain live dot: blue accent */
+.bh-loan-tool .calc-esb-live-dot {
+  background: var(--blue);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 20%, transparent);
+}
+/* Oman live dot: red (Oman flag red/white) */
+.om-loan-tool .calc-esb-live-dot {
+  background: var(--red);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--red) 20%, transparent);
+}
+/* Egypt live dot: green (Egypt flag green) */
+.eg-loan-tool .calc-esb-live-dot {
+  background: var(--green);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 20%, transparent);
+}
+/* Bahrain mortgage live dot: blue */
+.bh-mortgage-tool .calc-esb-live-dot {
+  background: var(--blue);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 20%, transparent);
+}
+/* Kuwait health insurance live dot: green */
+.kw-health-ins-tool .calc-esb-live-dot {
+  background: var(--green);
 }

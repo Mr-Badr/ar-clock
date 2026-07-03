@@ -405,6 +405,7 @@ export default function DiscoveryWorkspaceClient({
   viewModel,
   routePath,
   initialTab,
+  children,
 }) {
   const router = useRouter();
   const resolvedMode = mode || 'map';
@@ -681,7 +682,9 @@ export default function DiscoveryWorkspaceClient({
             </div>
           </section>
 
-          <section className={styles.journeyBand} aria-labelledby="discovery-journey-title">
+          {children}
+
+          <section className={styles.journeyBand} aria-labelledby="discovery-journey-title" hidden={Boolean(children) || undefined}>
             <div className={styles.journeyHead}>
               <span className={styles.stripEyebrow}>
                 <Compass size={15} />
@@ -718,7 +721,7 @@ export default function DiscoveryWorkspaceClient({
             </p>
           </section>
 
-          <section className={styles.decisionBand} aria-labelledby="discovery-decision-title">
+          <section className={styles.decisionBand} aria-labelledby="discovery-decision-title" hidden={Boolean(children) || undefined}>
             <div className={styles.decisionHead}>
               <span className={styles.stripEyebrow}>
                 <ShieldCheck size={15} />

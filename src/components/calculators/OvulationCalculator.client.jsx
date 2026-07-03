@@ -112,7 +112,11 @@ export default function OvulationCalculator() {
           )}
 
           {lmpDate && result?.isValid && (
-            <div className="calc-result-hero-panel --blue ovulation-result" aria-live="polite">
+            <div className="calc-esb-result-panel ovulation-result" aria-live="polite">
+              <div className="calc-esb-result-header">
+                <span className="calc-esb-country-badge calc-esb-country-badge--bh">❤️ حاسبة التبويض</span>
+                <span className="calc-esb-live-dot ovulation-live-dot" aria-hidden="true" />
+              </div>
 
               {/* Fertile window status */}
               {result.isInFertileWindow && (
@@ -124,7 +128,7 @@ export default function OvulationCalculator() {
 
               {/* Ovulation date */}
               <div className="ovulation-date-hero">
-                <span className="calc-result-hero-label">يوم التبويض المتوقع</span>
+                <span className="calc-esb-amount-label">يوم التبويض المتوقع</span>
                 <div className="ovulation-date-value">
                   {formatDateAr(result.ovulationDate)}
                 </div>

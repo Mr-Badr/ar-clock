@@ -144,12 +144,18 @@ export default function AnnualLeaveCalculator() {
         {/* ── RESULT ───────────────────────────────── */}
         <div className="calc-esb-result-col">
           {result.isValid ? (
-            <div className="calc-result-hero-panel --amber annual-leave-result" aria-live="polite">
+            <div className="calc-esb-result-panel annual-leave-result" aria-live="polite">
+              <div className="calc-esb-result-header">
+                <span className={`calc-esb-country-badge calc-esb-country-badge--${country}`}>
+                  {ANNUAL_LEAVE_COUNTRIES[country]?.flag} {ANNUAL_LEAVE_COUNTRIES[country]?.label}
+                </span>
+                <span className="calc-esb-live-dot" aria-hidden="true" />
+              </div>
 
-              <div>
-                <span className="calc-result-hero-label">قيمة رصيد الإجازة</span>
-                <div className="calc-result-hero-value">{formatMoney(result.leaveBalance)}</div>
-                <div className="calc-result-hero-meta">
+              <div className="calc-esb-amount-hero">
+                <span className="calc-esb-amount-label">قيمة رصيد الإجازة</span>
+                <div className="calc-esb-amount-value">{formatMoney(result.leaveBalance)}</div>
+                <div className="calc-esb-amount-meta">
                   <span>{formatNumber(result.balance)} يوم متبقي</span>
                   <span className="calc-esb-sep">·</span>
                   <span>من أصل {formatNumber(result.entitledDays)} يوم</span>

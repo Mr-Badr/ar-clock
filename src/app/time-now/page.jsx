@@ -4,6 +4,7 @@ import { ArrowLeft, Clock3, MapPin, Search } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 import { getCountriesAction } from '@/app/actions/location';
+import AdInArticle from '@/components/ads/AdInArticle';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import AdTopBanner from '@/components/ads/AdTopBanner';
@@ -200,6 +201,8 @@ export default function TimeNowPage() {
             </Suspense>
           </div>
         </section>
+
+        <AdInArticle slotId="mid-time-now-hub" />
 
         <Suspense fallback={<TimeNowLandingSectionsFallback />}>
           <TimeNowLandingSections />

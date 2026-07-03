@@ -2,6 +2,7 @@ import BillSplitterCalculator from '@/components/calculators/BillSplitterCalcula
 import {
   CalculatorFaqSection,
   CalculatorHero,
+  CalculatorInArticleDivider,
   CalculatorSection,
   RelatedCalculators,
 } from '@/components/calculators/common';
@@ -74,6 +75,60 @@ export default async function BillSplitterPage() {
         <BillSplitterCalculator />
       </CalculatorHero>
 
+      <CalculatorSection
+        id="bill-tipping"
+        eyebrow="عرف البقشيش"
+        title="البقشيش ورسوم الخدمة في دول المنطقة"
+        description="قبل أن تضغط على زر المشاركة — تأكد أن البقشيش غير مُدمَج أصلاً في الفاتورة."
+      >
+        <div className="calc-info-table-wrap">
+          <table className="calc-info-table">
+            <thead>
+              <tr>
+                <th>الدولة</th>
+                <th>رسوم الخدمة</th>
+                <th>البقشيش المتعارف عليه</th>
+                <th>ملاحظة</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ['السعودية 🇸🇦', '15% ضريبة + 5–10% خدمة',  '5–10%',  'تحقق من نهاية الفاتورة — الخدمة قد تكون مُضمَّنة'],
+                ['الإمارات 🇦🇪',  '10% خدمة + 6% ضريبة',     '10–15%', 'في الفنادق والمطاعم الراقية البقشيش متوقع'],
+                ['الكويت 🇰🇼',    'نادراً 5–10%',              '0–5%',   'البقشيش غير إلزامي — يُترك للمبادرة الشخصية'],
+                ['قطر 🇶🇦',       '10% خدمة + 5% ضريبة',     '10%',    'الفنادق الدولية تُضيف البقشيش تلقائياً أحياناً'],
+                ['مصر 🇪🇬',       '12% خدمة في الفنادق',      '10–15%', 'في المطاعم العادية 5–10 جنيه كافية'],
+                ['المغرب 🇲🇦',    'لا رسوم ثابتة',             '10%',    'في المقاهي والمطاعم السياحية متعارف عليه'],
+              ].map(([c, fee, tip_, note]) => (
+                <tr key={c}>
+                  <td><strong>{c}</strong></td>
+                  <td>{fee}</td>
+                  <td>{tip_}</td>
+                  <td className="calc-hint">{note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="calc-editorial" style={{ marginTop: 'var(--spacing-6)' }}>
+          <h3>نصائح لتقسيم الحساب بشكل عادل</h3>
+          <p>
+            <strong>قبل الطلب:</strong> اتفق مع المجموعة على طريقة التقسيم — بالتساوي أم حسب ما طلبه كل شخص.
+            اتفاق مسبق يمنع الإحراج عند وصول الفاتورة.
+          </p>
+          <p>
+            <strong>رسوم الخدمة المُضمَّنة:</strong> ابحث عن عبارة "Service Charge" أو "رسوم خدمة" في أسفل الفاتورة.
+            إذا وُجدت، لا تُضف بقشيشاً إضافياً — أنت تدفع مرتين.
+          </p>
+          <p>
+            <strong>التقسيم غير المتساوي:</strong> إذا طلب أحدهم أغلى الأطباق، احسب الإجمالي أولاً بالحاسبة ثم وزّعه يدوياً
+            حسب ما أكله كل شخص. المبلغ الموضّح في الحاسبة هو نقطة البداية.
+          </p>
+        </div>
+      </CalculatorSection>
+
+      <CalculatorInArticleDivider />
       <CalculatorFaqSection items={faqItems} />
 
       <RelatedCalculators currentSlug="bill-splitter" />

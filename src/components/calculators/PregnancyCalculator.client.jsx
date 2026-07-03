@@ -354,27 +354,19 @@ export default function PregnancyCalculator() {
           )}
 
           {result?.isValid && tInfo && (
-            <div className="calc-result-hero-panel pregnancy-result" aria-live="polite">
+            <div className={`calc-esb-result-panel pregnancy-result pregnancy-result--${tInfo.level}`} aria-live="polite">
+              <div className="calc-esb-result-header">
+                <span className={`calc-esb-country-badge pregnancy-trimester-badge--${tInfo.level}`}>🤰 تتبع الحمل</span>
+                <span className="calc-esb-live-dot" aria-hidden="true" />
+              </div>
 
               {/* Week + Trimester */}
               <div className="pregnancy-week-hero">
-                <span className="calc-result-hero-label">أنتِ الآن في</span>
-                <div
-                  className="calc-result-hero-value"
-                  style={{ color: tInfo.color, fontSize: '2rem', lineHeight: 1.1 }}
-                >
+                <span className="calc-esb-amount-label">أنتِ الآن في</span>
+                <div className={`calc-esb-amount-value pregnancy-week-value--${tInfo.level}`}>
                   {formatPregnancyWeek(result.weeksPregnant, result.extraDays)}
                 </div>
-                <span
-                  className="bmi-category-badge"
-                  style={{
-                    background: `${tInfo.color}20`,
-                    color: tInfo.color,
-                    border: `1px solid ${tInfo.color}40`,
-                    display: 'inline-block',
-                    marginTop: '0.35rem',
-                  }}
-                >
+                <span className={`pregnancy-category-badge pregnancy-category-badge--${tInfo.level}`}>
                   {tInfo.label} · {tInfo.range}
                 </span>
               </div>
@@ -383,14 +375,14 @@ export default function PregnancyCalculator() {
               <div className="pregnancy-progress-wrap">
                 <div className="pregnancy-progress-track">
                   <div
-                    className="pregnancy-progress-fill"
-                    style={{ width: `${result.progressPercent}%`, background: tInfo.color }}
+                    className={`pregnancy-progress-fill pregnancy-progress-fill--${tInfo.level}`}
+                    style={{ width: `${result.progressPercent}%` }}
                     aria-label={`${result.progressPercent}% من الحمل مكتمل`}
                   />
                 </div>
                 <div className="pregnancy-progress-labels">
                   <span>الأسبوع 1</span>
-                  <span style={{ color: tInfo.color, fontWeight: 700 }}>{result.progressPercent}% مكتمل</span>
+                  <span className={`pregnancy-progress-pct--${tInfo.level}`}>{result.progressPercent}% مكتمل</span>
                   <span>الأسبوع 40</span>
                 </div>
               </div>
@@ -448,7 +440,7 @@ export default function PregnancyCalculator() {
                   <p className="pregnancy-milestones-title">محطات مررتِ بها</p>
                   {reachedMilestones.slice(-4).map((m) => (
                     <div key={m.week} className="pregnancy-milestone-row pregnancy-milestone--done">
-                      <CheckCircle size={15} weight="fill" style={{ color: tInfo.color, flexShrink: 0, marginTop: 2 }} />
+                      <CheckCircle size={15} weight="fill" className={`pregnancy-milestone-check--${tInfo.level}`} style={{ flexShrink: 0, marginTop: 2 }} />
                       <div className="pregnancy-milestone-text">
                         <span className="pregnancy-milestone-week">أسبوع {m.week}</span>
                         <span className="pregnancy-milestone-label">{m.label}</span>
