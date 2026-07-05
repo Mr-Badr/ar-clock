@@ -17,7 +17,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 
-function fmt(n) { return Math.round(n).toLocaleString('ar-SA'); }
+function fmt(n) { return Math.round(n).toLocaleString('ar-SA-u-nu-latn'); }
 
 /* ── CCHI class bar chart ────────────────────────────────────── */
 const CLASS_FILL_MAP = { B: '--b', C: '--c', D: '--d', E: '--e' };

@@ -19,7 +19,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 
-function fmt(n) { return Math.round(n).toLocaleString('ar-BH'); }
+function fmt(n) { return Math.round(n).toLocaleString('ar-BH-u-nu-latn'); }
 function fmtBHD(n) { return `${fmt(n)} د.ب`; }
 
 const RATE_MIN  = 3.5;

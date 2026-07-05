@@ -77,6 +77,7 @@ export const STATIC_CALCULATOR_SEO_ROUTES = Object.freeze([
   { path: '/calculators/personal-loan', priority: 0.95, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/car-insurance-kuwait', priority: 0.94, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/car-insurance-qatar', priority: 0.93, changeFrequency: 'monthly', websitePart: true },
+  { path: '/calculators/car-insurance-bahrain', priority: 0.93, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/personal-loan-kuwait', priority: 0.95, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/personal-loan-qatar', priority: 0.94, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/health-insurance-qatar', priority: 0.93, changeFrequency: 'monthly', websitePart: true },

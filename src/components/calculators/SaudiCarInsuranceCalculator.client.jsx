@@ -45,7 +45,7 @@ export default function SaudiCarInsuranceCalculator() {
   );
 
   const shareText = result.isValid
-    ? `تأمين السيارة (السعودية) — تقدير:\n${coverageType === 'third-party' ? 'ضد الغير' : 'شامل'}: ${result.low.toLocaleString('ar-SA')} – ${result.high.toLocaleString('ar-SA')} ر.س سنوياً`
+    ? `تأمين السيارة (السعودية) — تقدير:\n${coverageType === 'third-party' ? 'ضد الغير' : 'شامل'}: ${result.low.toLocaleString('ar-SA-u-nu-latn')} – ${result.high.toLocaleString('ar-SA-u-nu-latn')} ر.س سنوياً`
     : '';
 
   return (
@@ -193,13 +193,13 @@ export default function SaudiCarInsuranceCalculator() {
                   {coverageType === 'third-party' ? 'تأمين ضد الغير' : 'تأمين شامل'} — تقدير سنوي
                 </span>
                 <div className="ci-range-display">
-                  <span className="ci-range-low">{result.low.toLocaleString('ar-SA')}</span>
+                  <span className="ci-range-low">{result.low.toLocaleString('ar-SA-u-nu-latn')}</span>
                   <span className="ci-range-sep">–</span>
-                  <span className="ci-range-high">{result.high.toLocaleString('ar-SA')}</span>
+                  <span className="ci-range-high">{result.high.toLocaleString('ar-SA-u-nu-latn')}</span>
                   <span className="ci-range-unit">ر.س</span>
                 </div>
                 <div className="calc-esb-amount-meta">
-                  <span>شهرياً: {Math.round(result.low / 12).toLocaleString('ar-SA')} – {Math.round(result.high / 12).toLocaleString('ar-SA')} ر.س</span>
+                  <span>شهرياً: {Math.round(result.low / 12).toLocaleString('ar-SA-u-nu-latn')} – {Math.round(result.high / 12).toLocaleString('ar-SA-u-nu-latn')} ر.س</span>
                 </div>
               </div>
 

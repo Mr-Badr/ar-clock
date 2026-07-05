@@ -75,7 +75,7 @@ export async function generateMetadata({
   );
 
   // Day of week gives unique info not visible in the snippet answer → improves CTR
-  const dayName = new Date(routeDate.isoDate).toLocaleDateString('ar-EG', { weekday: 'long' });
+  const dayName = new Date(routeDate.isoDate).toLocaleDateString('ar-EG-u-nu-latn', { weekday: 'long' });
   // Islamic events on that day give a reason to click for event-aware users
   const islamicEvents = getIslamicEventsForHijriDate(hijri.year, hijri.month, hijri.day);
   const firstEvent = islamicEvents[0];

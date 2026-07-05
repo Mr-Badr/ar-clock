@@ -112,7 +112,7 @@ export function getUaePriceFactors({ coverageType, carValue, carAge, driverAge, 
     const rates = UAE_COMP_RATES_BY_AGE[carAge] ?? UAE_COMP_RATES_BY_AGE['1-3'];
     factors.push({ icon: 'info', label: 'عمر السيارة', effect: `معدل ${(rates.min * 100).toFixed(1)}–${(rates.max * 100).toFixed(1)}% من قيمتها` });
     const val = parseFloat(carValue);
-    if (val > 0) factors.push({ icon: 'info', label: 'قيمة السيارة', effect: `${val.toLocaleString('ar-AE')} د.إ — أساس الحساب` });
+    if (val > 0) factors.push({ icon: 'info', label: 'قيمة السيارة', effect: `${val.toLocaleString('ar-AE-u-nu-latn')} د.إ — أساس الحساب` });
   }
   return factors;
 }
@@ -188,7 +188,7 @@ export function getPriceFactors({ coverageType, carValue, carAge, driverAge, cit
     factors.push({ icon: 'info', label: `عمر السيارة`, effect: `معدل ${(rates.min * 100).toFixed(1)}–${(rates.max * 100).toFixed(1)}% من قيمتها` });
     const val = parseFloat(carValue);
     if (val > 0) {
-      factors.push({ icon: 'info', label: 'قيمة السيارة', effect: `${val.toLocaleString('ar-SA')} ر.س — أساس الحساب` });
+      factors.push({ icon: 'info', label: 'قيمة السيارة', effect: `${val.toLocaleString('ar-SA-u-nu-latn')} ر.س — أساس الحساب` });
     }
   }
   return factors;
@@ -359,6 +359,103 @@ export function getQatarPriceFactors({ coverageType, carValue, carAge, driverAge
   }
   if (coverageType === 'comprehensive') {
     const rates = QATAR_COMP_RATES_BY_AGE[carAge] ?? QATAR_COMP_RATES_BY_AGE['1-3'];
+    factors.push({ icon: 'info', label: 'عمر السيارة', effect: `${(rates.min * 100).toFixed(1)}–${(rates.max * 100).toFixed(1)}% من القيمة` });
+  }
+  return factors;
+}
+
+// ── Bahrain car insurance ─────────────────────────────────────────────────────
+// Third-party ceilings are a hard legal maximum set by the Central Bank of
+// Bahrain (Resolution No. 2 of 2005) — insurers may charge up to, but never
+// above, these figures per engine size. Source: cbb.gov.bh/insurance-schedule
+
+export const BAHRAIN_ENGINE_TIERS = [
+  { value: 'small',  label: '1400 سم³ أو أقل', tpMax: 53 },
+  { value: 'medium', label: '1401 – 2200 سم³', tpMax: 59 },
+  { value: 'large',  label: '2201 – 3650 سم³', tpMax: 71 },
+  { value: 'xlarge', label: '3651 سم³ فأكثر',  tpMax: 83 },
+];
+
+export const BAHRAIN_GOVERNORATE_FACTORS = {
+  capital:  { label: 'محافظة العاصمة',    factor: 1.10 },
+  muharraq: { label: 'محافظة المحرق',      factor: 1.05 },
+  northern: { label: 'المحافظة الشمالية', factor: 1.00 },
+  southern: { label: 'المحافظة الجنوبية', factor: 1.00 },
+};
+
+export const BAHRAIN_DRIVER_AGE_BANDS = [
+  { value: '18-21', label: '18 – 21 سنة', multiplier: 2.0 },
+  { value: '22-25', label: '22 – 25 سنة', multiplier: 1.5 },
+  { value: '26-30', label: '26 – 30 سنة', multiplier: 1.15 },
+  { value: '31-45', label: '31 – 45 سنة', multiplier: 1.0 },
+  { value: '46-60', label: '46 – 60 سنة', multiplier: 1.05 },
+  { value: '60+',   label: '60+ سنة',     multiplier: 1.2 },
+];
+
+export const BAHRAIN_COMP_RATES_BY_AGE = {
+  new:  { min: 0.028, max: 0.042 },
+  '1-3':{ min: 0.024, max: 0.036 },
+  '4-6':{ min: 0.020, max: 0.030 },
+  '7+': { min: 0.016, max: 0.024 },
+};
+
+const BH_COMP_MIN = 150;  // BHD
+const BH_COMP_MAX = 3000; // BHD
+
+/**
+ * @param {{ coverageType: string, carValue: number|string, carAge: string, driverAge: string, engineTier: string, governorate: string, noClaimYears: string }} p
+ * @returns {{ low: number, high: number, isValid: boolean }}
+ */
+export function estimateBahrainCarInsurancePremium({ coverageType, carValue, carAge, driverAge, engineTier, governorate, noClaimYears }) {
+  const ageBand  = BAHRAIN_DRIVER_AGE_BANDS.find((b) => b.value === driverAge);
+  const govFact  = BAHRAIN_GOVERNORATE_FACTORS[governorate] ?? BAHRAIN_GOVERNORATE_FACTORS.northern;
+  const ncDisc   = NO_CLAIM_DISCOUNTS[noClaimYears] ?? NO_CLAIM_DISCOUNTS['0'];
+  if (!ageBand) return { low: 0, high: 0, isValid: false };
+
+  const ncMul = 1 - ncDisc.discount;
+
+  if (coverageType === 'third-party') {
+    const tier = BAHRAIN_ENGINE_TIERS.find((t) => t.value === engineTier) ?? BAHRAIN_ENGINE_TIERS[0];
+    const ceiling = tier.tpMax; // legal maximum — cannot be exceeded
+    const riskFactor = ageBand.multiplier * govFact.factor * ncMul;
+    const lowPct = Math.min(1, Math.max(0.5, 0.75 * riskFactor));
+    const low = Math.round(ceiling * lowPct);
+    return { low: Math.min(low, ceiling), high: ceiling, isValid: true };
+  }
+
+  const val = parseFloat(carValue) || 0;
+  if (val <= 0) return { low: 0, high: 0, isValid: false };
+
+  const rates   = BAHRAIN_COMP_RATES_BY_AGE[carAge] ?? BAHRAIN_COMP_RATES_BY_AGE['1-3'];
+  const ageMul  = ageBand.multiplier;
+  const rawLow  = val * rates.min * ageMul * govFact.factor * ncMul;
+  const rawHigh = val * rates.max * ageMul * govFact.factor * ncMul;
+  const low     = Math.max(BH_COMP_MIN, Math.round(rawLow  / 5) * 5);
+  const high    = Math.min(BH_COMP_MAX, Math.round(rawHigh / 5) * 5);
+  return { low: Math.min(low, high), high, isValid: true };
+}
+
+export function getBahrainPriceFactors({ coverageType, carValue, carAge, driverAge, engineTier, governorate, noClaimYears }) {
+  const ageBand = BAHRAIN_DRIVER_AGE_BANDS.find((b) => b.value === driverAge);
+  const ncDisc  = NO_CLAIM_DISCOUNTS[noClaimYears] ?? NO_CLAIM_DISCOUNTS['0'];
+  const factors = [];
+  if (ageBand) {
+    if (ageBand.multiplier > 1.0) {
+      factors.push({ icon: 'up', label: `السن (${ageBand.label})`, effect: `× ${ageBand.multiplier} فوق الأساس` });
+    } else {
+      factors.push({ icon: 'ok', label: `السن (${ageBand.label})`, effect: 'نطاق السن المثلى' });
+    }
+  }
+  if (governorate === 'capital')  factors.push({ icon: 'up', label: 'محافظة العاصمة', effect: '+ 10% كثافة مرورية' });
+  if (governorate === 'muharraq') factors.push({ icon: 'up', label: 'محافظة المحرق',   effect: '+ 5%' });
+  if (ncDisc.discount > 0) {
+    factors.push({ icon: 'down', label: `خلو المطالبات (${ncDisc.label})`, effect: `- ${ncDisc.discount * 100}% خصم` });
+  }
+  if (coverageType === 'third-party') {
+    const tier = BAHRAIN_ENGINE_TIERS.find((t) => t.value === engineTier) ?? BAHRAIN_ENGINE_TIERS[0];
+    factors.push({ icon: 'info', label: 'سعة المحرك', effect: `الحد الأقصى القانوني ${tier.tpMax} د.ب — مصرف البحرين المركزي` });
+  } else {
+    const rates = BAHRAIN_COMP_RATES_BY_AGE[carAge] ?? BAHRAIN_COMP_RATES_BY_AGE['1-3'];
     factors.push({ icon: 'info', label: 'عمر السيارة', effect: `${(rates.min * 100).toFixed(1)}–${(rates.max * 100).toFixed(1)}% من القيمة` });
   }
   return factors;

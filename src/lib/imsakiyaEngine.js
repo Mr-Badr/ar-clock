@@ -59,7 +59,7 @@ export function getRamadanDayCount(hijriYear) {
  */
 export function formatTimeAr(isoString, timezone) {
   if (!isoString) return '—';
-  return new Date(isoString).toLocaleTimeString('ar-SA', {
+  return new Date(isoString).toLocaleTimeString('ar-SA-u-nu-latn', {
     timeZone: timezone,
     hour: '2-digit',
     minute: '2-digit',
@@ -72,7 +72,7 @@ export function formatTimeAr(isoString, timezone) {
  */
 export function formatTime12h(isoString, timezone) {
   if (!isoString) return '—';
-  return new Date(isoString).toLocaleTimeString('ar-SA', {
+  return new Date(isoString).toLocaleTimeString('ar-SA-u-nu-latn', {
     timeZone: timezone,
     hour: '2-digit',
     minute: '2-digit',

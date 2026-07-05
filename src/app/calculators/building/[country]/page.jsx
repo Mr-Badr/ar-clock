@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import BuildingCostCalculator from '@/components/calculators/building/BuildingCostCalculator.client';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import {
   CalculatorDecisionTable,
   CalculatorHero,
@@ -75,6 +76,57 @@ const COUNTRY_SOURCE_LINKS = [
     ctaLabel: 'اقرأ الشرح',
   },
 ];
+const COUNTRY_FINANCE_LINKS = {
+  sa: {
+    href: '/calculators/mortgage-saudi',
+    title: 'حاسبة التمويل العقاري السعودية',
+    description: 'إذا كنت ستموّل البناء بدل الدفع نقداً، احسب القسط الشهري والحد الأقصى للتمويل قبل التعاقد مع المقاول.',
+    ctaLabel: 'احسب التمويل العقاري',
+  },
+  ae: {
+    href: '/calculators/mortgage-uae',
+    title: 'حاسبة التمويل العقاري الإمارات',
+    description: 'قبل اعتماد ميزانية البناء، احسب القسط الشهري وسقف التمويل المتاح لك حسب راتبك.',
+    ctaLabel: 'احسب التمويل العقاري',
+  },
+  qa: {
+    href: '/calculators/mortgage-qatar',
+    title: 'حاسبة التمويل العقاري قطر',
+    description: 'قارن تمويل البناء بالتقسيط قبل أن تحدد ميزانية نهائية مع المقاول.',
+    ctaLabel: 'احسب التمويل العقاري',
+  },
+  kw: {
+    href: '/calculators/mortgage-kuwait',
+    title: 'حاسبة التمويل السكني الكويت',
+    description: 'استخدمها لمعرفة القسط الشهري وسقف التمويل قبل التعاقد على البناء.',
+    ctaLabel: 'احسب التمويل السكني',
+  },
+  bh: {
+    href: '/calculators/mortgage-bahrain',
+    title: 'حاسبة التمويل العقاري البحرين',
+    description: 'احسب القسط الشهري وسقف التمويل المتاح لك قبل اعتماد ميزانية البناء.',
+    ctaLabel: 'احسب التمويل العقاري',
+  },
+  om: {
+    href: '/calculators/personal-loan-oman',
+    title: 'حاسبة القرض الشخصي عمان',
+    description: 'إذا كنت ستموّل جزءاً من البناء بقرض شخصي، احسب القسط الشهري وسقف القرض أولاً.',
+    ctaLabel: 'احسب القرض الشخصي',
+  },
+  eg: {
+    href: '/calculators/personal-loan-egypt',
+    title: 'حاسبة القرض الشخصي مصر',
+    description: 'قبل تمويل البناء أو التشطيب بقرض، احسب القسط الشهري وفق قواعد البنك المركزي المصري.',
+    ctaLabel: 'احسب القرض الشخصي',
+  },
+  jo: {
+    href: '/calculators/monthly-installment',
+    title: 'حاسبة القسط الشهري',
+    description: 'إذا كنت ستقسّط تكلفة البناء أو المواد، احسب القسط الشهري والمدة قبل الالتزام.',
+    ctaLabel: 'احسب القسط الشهري',
+  },
+};
+
 const COUNTRY_SCOPE_ROWS = [
   {
     key: 'land',
@@ -159,6 +211,10 @@ export default async function CountryBuildingPage({ params }) {
   const title = `حاسبة تكلفة البناء في ${country.nameShort}`;
   const regionRows = getCountryRegionRows(country);
   const costRows = getCostRows(country);
+  const financeLink = COUNTRY_FINANCE_LINKS[country.countryKey];
+  const countrySourceLinks = financeLink
+    ? [...COUNTRY_SOURCE_LINKS.slice(0, 2), financeLink, ...COUNTRY_SOURCE_LINKS.slice(2)]
+    : COUNTRY_SOURCE_LINKS;
 
   const faqItems = [
     {
@@ -297,7 +353,7 @@ export default async function CountryBuildingPage({ params }) {
         title="أدوات وشروحات تكمل تقدير البناء"
         description="استخدم هذه الروابط لفهم البنود أو الضريبة أو المواد قبل أن تعتمد ميزانية نهائية."
       >
-        <CalculatorResourceLinks items={COUNTRY_SOURCE_LINKS} buttonLabel="افتح الرابط" />
+        <CalculatorResourceLinks items={countrySourceLinks} buttonLabel="افتح الرابط" />
       </CalculatorSection>
 
       <CalculatorSection
@@ -307,6 +363,8 @@ export default async function CountryBuildingPage({ params }) {
       >
         <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>
+
+      <AdMultiplex slotId={`end-building-country-${country.slug}`} className="container mx-auto px-4" />
 
     </main>
   );

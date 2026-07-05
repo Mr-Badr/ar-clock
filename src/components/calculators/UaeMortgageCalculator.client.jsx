@@ -19,7 +19,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 
-function fmt(n) { return Math.round(n).toLocaleString('ar-AE'); }
+function fmt(n) { return Math.round(n).toLocaleString('ar-AE-u-nu-latn'); }
 
 /* ── Three-segment stacked bar ───────────────────────────────── */
 function ThreeBar({ downPct, principalPct, interestPct }) {

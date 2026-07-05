@@ -191,11 +191,11 @@ export default function WorkHoursCalculator() {
             <div className="calc-esb-sidebar-facts">
               <div className="calc-esb-fact">
                 <Clock size={14} weight="bold" />
-                <span>حد السعودية/الإمارات: <strong>٤٠ ساعة</strong>/أسبوع</span>
+                <span>حد السعودية/الإمارات: <strong>40 ساعة</strong>/أسبوع</span>
               </div>
               <div className="calc-esb-fact">
                 <Clock size={14} weight="bold" />
-                <span>حد مصر/الكويت/قطر: <strong>٤٨ ساعة</strong>/أسبوع</span>
+                <span>حد مصر/الكويت/قطر: <strong>48 ساعة</strong>/أسبوع</span>
               </div>
             </div>
           )}
@@ -264,7 +264,7 @@ export default function WorkHoursCalculator() {
                 <div className="eg-si-tax-note" style={{ borderColor: 'color-mix(in srgb, var(--amber) 40%, transparent)', background: 'color-mix(in srgb, var(--amber) 8%, transparent)' }}>
                   <Warning size={14} weight="fill" style={{ color: 'var(--amber)' }} />
                   <span style={{ color: 'var(--amber)' }}>
-                    لديك {fmtHours(result.overtimeHours)} عمل إضافي هذا الأسبوع. وفق نظام العمل السعودي: الأجر الإضافي ≥ ١٥٠٪ من أجر الساعة.
+                    لديك {fmtHours(result.overtimeHours)} عمل إضافي هذا الأسبوع. وفق نظام العمل السعودي: الأجر الإضافي ≥ 150% من أجر الساعة.
                   </span>
                 </div>
               )}

@@ -2013,6 +2013,28 @@ const _CALCULATOR_ROUTES_RAW = [
     ],
   },
   {
+    slug: 'car-insurance-bahrain',
+    href: '/calculators/car-insurance-bahrain',
+    cluster: 'finance',
+    badge: 'البحرين',
+    shortLabel: 'تأمين سيارة البحرين',
+    title: 'حاسبة تأمين السيارة البحرين — ضد الغير والشامل',
+    heroTitle: 'حاسبة تأمين السيارة البحرين — الحد الأقصى القانوني بالدينار البحريني',
+    description:
+      'احسب قسط تأمين سيارتك في البحرين (ضد الغير أو شامل) حسب سعة المحرك والمحافظة وسنوات الخلو من المطالبات، مع الحد الأقصى القانوني من مصرف البحرين المركزي.',
+    accent: 'var(--green)',
+    accentSoft: 'var(--green-subtle)',
+    keywords: [
+      'حاسبة تأمين السيارة البحرين',
+      'تأمين سيارة ضد الغير البحرين',
+      'تأمين شامل سيارة البحرين',
+      'سعر تأمين السيارة البحرين',
+      'الحد الأقصى لتأمين السيارات البحرين',
+      'تكلفة تأمين السيارة البحرين',
+      'تأمين سيارة بالدينار البحريني',
+    ],
+  },
+  {
     slug: 'personal-loan-kuwait',
     href: '/calculators/personal-loan-kuwait',
     cluster: 'finance',

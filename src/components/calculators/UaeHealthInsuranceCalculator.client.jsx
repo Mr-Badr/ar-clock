@@ -17,7 +17,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 
-function fmt(n) { return Math.round(n).toLocaleString('ar-AE'); }
+function fmt(n) { return Math.round(n).toLocaleString('ar-AE-u-nu-latn'); }
 
 /* ── Coverage level bars ─────────────────────────────────────────── */
 const LEVEL_FILL_KEYS = { basic: '--b', enhanced: '--c', premium: '--d' };

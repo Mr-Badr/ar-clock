@@ -10336,6 +10336,156 @@ main:not(.calc-hub-page) .calc-room-add {
 .calc-editorial-block strong { color: var(--text-primary); }
 
 /* =============================================================================
+   calc-editorial-body — prose wrapper used inside CalculatorSection guide blocks
+   Contains: p, h3, calc-editorial-table, calc-tip-list
+   ============================================================================= */
+
+.calc-editorial-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.calc-editorial-body > p {
+  font-size: var(--text-base);
+  line-height: 1.85;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.calc-editorial-body > h3 {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.calc-editorial-body strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* =============================================================================
+   calc-editorial-table — responsive comparison table inside editorial sections
+   ============================================================================= */
+
+.calc-editorial-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  /* scroll on mobile without wrapper div — self-contained */
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  /* reset display:block overflow on wide screens */
+}
+
+/* thead */
+.calc-editorial-table thead {
+  display: table-header-group; /* restore after display:block on table */
+}
+.calc-editorial-table thead tr {
+  background: color-mix(in srgb, var(--bg-surface-2) 90%, transparent);
+}
+.calc-editorial-table th {
+  padding: 0.6rem 0.85rem;
+  text-align: start;
+  font-weight: 700;
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+/* tbody */
+.calc-editorial-table tbody {
+  display: table-row-group;
+}
+.calc-editorial-table td {
+  padding: 0.6rem 0.85rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid color-mix(in srgb, var(--border-subtle) 50%, transparent);
+  vertical-align: top;
+}
+.calc-editorial-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.calc-editorial-table tbody tr:hover td {
+  background: color-mix(in srgb, var(--bg-surface-1) 70%, transparent);
+}
+
+/* first column strong emphasis (label column) */
+.calc-editorial-table td:first-child {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* =============================================================================
+   calc-tip-list — actionable numbered tips list
+   ============================================================================= */
+
+.calc-tip-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  counter-reset: tip-counter;
+}
+
+.calc-tip-list li {
+  counter-increment: tip-counter;
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  font-size: var(--text-sm);
+  line-height: 1.75;
+  color: var(--text-secondary);
+  padding: var(--space-3) var(--space-4);
+  background: color-mix(in srgb, var(--bg-surface-2) 60%, transparent);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  border-right: 3px solid var(--green-border);
+}
+
+.calc-tip-list li::before {
+  content: counter(tip-counter);
+  min-width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--green-subtle);
+  border: 1px solid var(--green-border);
+  color: var(--green-text);
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.calc-tip-list li strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .calc-tip-list li {
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-5);
+  }
+}
+
+/* =============================================================================
    Investment Return Calculator (inv-*)
    Accent: var(--calc-cat-finance)
    ============================================================================= */

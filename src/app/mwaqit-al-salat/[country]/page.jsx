@@ -305,6 +305,11 @@ export default async function CountryPrayerPage({ params }) {
       label: 'التاريخ الهجري اليوم',
       description: 'راجع التاريخ الهجري اليوم وأدوات التحويل والتقويم المرتبطة به.',
     },
+    {
+      href: `/holidays?country=${country.country_code.toLowerCase()}`,
+      label: `المناسبات الإسلامية القادمة في ${countryAr}`,
+      description: `تابع العد التنازلي لعاشوراء والمولد النبوي ورمضان والمناسبات القادمة في ${countryAr}.`,
+    },
   ].filter(Boolean);
 
   const breadcrumbSchema = {

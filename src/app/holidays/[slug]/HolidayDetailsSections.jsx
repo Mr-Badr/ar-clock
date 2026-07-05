@@ -68,10 +68,30 @@ const CATEGORY_CALCULATORS = {
     { href: '/calculators/zakat',     label: 'حاسبة الزكاة',   desc: 'احسب زكاة مالك وفق النصاب',         accent: 'var(--amber)' },
     { href: '/calculators/pregnancy', label: 'حاسبة الحمل',    desc: 'موعد الولادة بالتقويمين',            accent: 'var(--blue)' },
   ],
+  holidays: [
+    { href: '/calculators/percentage',          label: 'حاسبة النسبة والخصم', desc: 'احسب نسبة الخصم والسعر النهائي في عروض المناسبة', accent: 'var(--blue)' },
+    { href: '/calculators/bill-splitter',        label: 'تقسيم الفاتورة',      desc: 'قسّم فاتورة التجمع أو المناسبة بالتساوي',          accent: 'var(--amber)' },
+    { href: '/calculators/monthly-installment',  label: 'حاسبة القسط الشهري', desc: 'احسب قسط مشترياتك من عروض المناسبة',              accent: 'var(--green)' },
+  ],
 };
 
-function RelatedCalculatorsWidget({ categoryId }) {
-  const calcs = CATEGORY_CALCULATORS[categoryId];
+const COUNTRY_EOS_LINK = {
+  eg: { href: '/calculators/eos-egypt',   label: 'نهاية الخدمة مصر',      desc: 'شهر ثم شهر ونصف — قانون 12/2003',        accent: 'var(--green)' },
+  jo: { href: '/calculators/eos-jordan',  label: 'نهاية الخدمة الأردن',   desc: '30 يوماً/سنة — قانون العمل 8/1996',       accent: 'var(--green)' },
+  kw: { href: '/calculators/eos-kuwait',  label: 'نهاية الخدمة الكويت',   desc: 'مكافأتك وفق قانون العمل 6/2010',          accent: 'var(--blue)' },
+  bh: { href: '/calculators/eos-bahrain', label: 'نهاية الخدمة البحرين',  desc: 'نصف شهر ثم شهر كامل — قانون 36/2012',     accent: 'var(--blue)' },
+  qa: { href: '/calculators/eos-qatar',   label: 'نهاية الخدمة قطر',      desc: 'الاستقالة لا تنقص مكافأتك في قطر',       accent: 'var(--blue)' },
+  sa: { href: '/calculators/end-of-service-benefits', label: 'نهاية الخدمة السعودية', desc: 'مكافأة الاستقالة والفصل وفق نظام العمل', accent: 'var(--blue)' },
+  ae: { href: '/calculators/uae-end-of-service', label: 'نهاية خدمة الإمارات', desc: 'مكافأة الإمارات: 21 و30 يوماً',       accent: 'var(--accent-alt)' },
+};
+const EOS_LINKED_CATEGORIES = new Set(['business', 'social', 'support']);
+
+function RelatedCalculatorsWidget({ categoryId, countryCode }) {
+  const baseCalcs = CATEGORY_CALCULATORS[categoryId];
+  const eosLink = countryCode && EOS_LINKED_CATEGORIES.has(categoryId) ? COUNTRY_EOS_LINK[countryCode] : null;
+  const calcs = eosLink
+    ? [eosLink, ...(baseCalcs || [])].filter((item, index, arr) => arr.findIndex((i) => i.href === item.href) === index)
+    : baseCalcs;
   if (!calcs?.length) return null;
 
   return (
@@ -373,7 +393,7 @@ export default function HolidayDetailsSections({
         </section>
       )}
 
-      <RelatedCalculatorsWidget categoryId={event.category} />
+      <RelatedCalculatorsWidget categoryId={event.category} countryCode={event._countryCode} />
 
       {faq.length > 0 && (
         <section style={{ marginTop: 'var(--space-10)' }} aria-labelledby="faq-h">

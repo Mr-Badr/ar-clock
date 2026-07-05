@@ -140,7 +140,7 @@ export async function generateMetadata({
     new Date(await getCachedNowIso()),
   );
 
-  const dayName = new Date(`${gregorian.year}-${String(gregorian.month).padStart(2, '0')}-${String(gregorian.day).padStart(2, '0')}`).toLocaleDateString('ar-EG', { weekday: 'long' });
+  const dayName = new Date(`${gregorian.year}-${String(gregorian.month).padStart(2, '0')}-${String(gregorian.day).padStart(2, '0')}`).toLocaleDateString('ar-EG-u-nu-latn', { weekday: 'long' });
   const islamicEvents = getIslamicEventsForHijriDate(hYear, hMonth, hDay);
   const firstEvent = islamicEvents[0];
 

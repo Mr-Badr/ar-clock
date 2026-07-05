@@ -18,7 +18,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 
-function fmt(n) { return Math.round(n).toLocaleString('ar-KW'); }
+function fmt(n) { return Math.round(n).toLocaleString('ar-KW-u-nu-latn'); }
 
 /* ── Price breakdown donut ───────────────────────────────────── */
 function RangeDonut({ low, high }) {

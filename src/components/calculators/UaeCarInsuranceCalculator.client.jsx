@@ -45,7 +45,7 @@ export default function UaeCarInsuranceCalculator() {
   );
 
   const shareText = result.isValid
-    ? `تأمين السيارة (الإمارات) — تقدير:\n${coverageType === 'third-party' ? 'ضد الغير' : 'شامل'}: ${result.low.toLocaleString('ar-AE')} – ${result.high.toLocaleString('ar-AE')} د.إ سنوياً`
+    ? `تأمين السيارة (الإمارات) — تقدير:\n${coverageType === 'third-party' ? 'ضد الغير' : 'شامل'}: ${result.low.toLocaleString('ar-AE-u-nu-latn')} – ${result.high.toLocaleString('ar-AE-u-nu-latn')} د.إ سنوياً`
     : '';
 
   const stepOffset = coverageType === 'comprehensive' ? 1 : 0;
@@ -195,15 +195,15 @@ export default function UaeCarInsuranceCalculator() {
                   {coverageType === 'third-party' ? 'تأمين ضد الغير' : 'تأمين شامل'} — تقدير سنوي
                 </span>
                 <div className="ci-range-display">
-                  <span className="ci-range-low">{result.low.toLocaleString('ar-AE')}</span>
+                  <span className="ci-range-low">{result.low.toLocaleString('ar-AE-u-nu-latn')}</span>
                   <span className="ci-range-sep">–</span>
-                  <span className="ci-range-high">{result.high.toLocaleString('ar-AE')}</span>
+                  <span className="ci-range-high">{result.high.toLocaleString('ar-AE-u-nu-latn')}</span>
                   <span className="ci-range-unit">د.إ</span>
                 </div>
                 <div className="calc-esb-amount-meta">
                   <span>
-                    شهرياً: {Math.round(result.low / 12).toLocaleString('ar-AE')} –{' '}
-                    {Math.round(result.high / 12).toLocaleString('ar-AE')} د.إ
+                    شهرياً: {Math.round(result.low / 12).toLocaleString('ar-AE-u-nu-latn')} –{' '}
+                    {Math.round(result.high / 12).toLocaleString('ar-AE-u-nu-latn')} د.إ
                   </span>
                 </div>
               </div>

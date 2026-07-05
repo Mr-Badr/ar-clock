@@ -34,6 +34,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { getRouteManualAdSlotKey, resolveManualAdSlot } from "@/lib/ads/slot-resolution";
+import { watchAdFill } from "@/lib/ads/unfilled";
 import { useMarketingPermission } from "@/lib/client/marketing";
 import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
 import { logger, serializeError } from "@/lib/logger";
@@ -65,6 +66,8 @@ export default function AdInFeed({
     if (!canLoadAds) return;
     if (!ref.current || loaded.current) return;
 
+    let stopWatch: (() => void) | undefined;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -82,15 +85,8 @@ export default function AdInFeed({
               });
             }
 
-            if (insRef.current) {
-              const mutObs = new MutationObserver(() => {
-                if (insRef.current?.getAttribute("data-ad-status") === "unfilled") {
-                  setIsUnfilled(true);
-                  mutObs.disconnect();
-                }
-              });
-              mutObs.observe(insRef.current, { attributes: true, attributeFilter: ["data-ad-status"] });
-            }
+            // Collapse the reserved space if Google returns no ad (unfilled).
+            stopWatch = watchAdFill(insRef.current, () => setIsUnfilled(true));
 
             observer.disconnect();
           }
@@ -100,7 +96,10 @@ export default function AdInFeed({
     );
 
     observer.observe(ref.current);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      stopWatch?.();
+    };
   }, [canLoadAds, slotId]);
 
   if (!shouldRenderAds || !canLoadAds || isUnfilled) return null;

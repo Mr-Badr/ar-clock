@@ -20,8 +20,8 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 
-function fmtSA(n) { return Math.round(n).toLocaleString('ar-SA'); }
-function fmtAE(n) { return Math.round(n).toLocaleString('ar-AE'); }
+function fmtSA(n) { return Math.round(n).toLocaleString('ar-SA-u-nu-latn'); }
+function fmtAE(n) { return Math.round(n).toLocaleString('ar-AE-u-nu-latn'); }
 
 /* ── Inline SVG donut ────────────────────────────────────────── */
 function SvgDonut({ principalPct, color1 = 'var(--green)', color2 = 'var(--amber)', label, sub }) {

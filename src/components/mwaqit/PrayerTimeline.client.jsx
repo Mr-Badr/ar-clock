@@ -72,7 +72,7 @@ function nowLocalMinutes(tz) {
 function localTimeStr(iso, tz) {
   if (!iso) return '--:--';
   try {
-    return new Date(iso).toLocaleTimeString('ar-EG', {
+    return new Date(iso).toLocaleTimeString('ar-EG-u-nu-latn', {
       hour: '2-digit', minute: '2-digit', timeZone: tz, hour12: false,
     });
   } catch { return '--:--'; }

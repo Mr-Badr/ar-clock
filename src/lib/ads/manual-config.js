@@ -14,10 +14,13 @@ const MANUAL_AD_SLOT_REGISTRY = {
   topHolidaysBanner: '8090183510',
   topDateBanner: '7427984329',
   topBlogBanner: '5906753168',
-  topTimeBanner: '8090183510',
-  topPrayerBanner: '8090183510',
-  topTimeDifferenceBanner: '8090183510',
-  topCalculatorBanner: '8090183510',
+  // Dedicated per-section units (created 2026-07-05) so AdSense reports show
+  // which section actually earns — previously time/prayer/calculators all
+  // masqueraded as the Events unit and per-section revenue was invisible.
+  topTimeBanner: '5425659014',
+  topPrayerBanner: '5557556347',
+  topTimeDifferenceBanner: '5425659014',
+  topCalculatorBanner: '3292274096',
   // Second in-article for long calculator pages (between editorial + FAQ).
   inArticleCalculatorMid: '1236962564',
   inArticle: '1176301123',
@@ -41,7 +44,15 @@ const MANUAL_AD_SLOT_REGISTRY = {
   multiplexPrayer: '3132380621',
   multiplexTimeDifference: '3132380621',
   multiplexCalculator: '3132380621',
-  stickyAnchor: '8090183510',
+  // Intentionally empty (2026-07-05): this previously reused the topBanner slot
+  // ID ('8090183510'), which AdStickyAnchor's own header forbids (impression
+  // conflicts), and it competed with Google's Auto anchor — the site's
+  // best-performing format per the 2026-07 AdSense format report (Auto anchor
+  // RPM 5.56 MAD / Active View 0.85 vs manual display RPM 1.31 / 0.28). Empty
+  // disables the manual anchor so the Auto anchor owns the bottom position.
+  // If a manual anchor is ever wanted again, create a DEDICATED anchor unit in
+  // AdSense first — never reuse a display slot ID here.
+  stickyAnchor: '',
   sidebar: '',
   sidebarRight: '4134471107',
   sidebarLeft: '5183828891',

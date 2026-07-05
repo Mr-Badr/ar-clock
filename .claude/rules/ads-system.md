@@ -28,6 +28,14 @@ paths:
 | Native_Content_End_Multiplex_01 | 3132380621 | Multiplex |
 | Native_Events_List_InFeed_01 | 1947291465 | In-feed |
 | Calculators_InSection_Mid_01 | 1236962564 | In-article |
+| Prayer_Top_Horizontal_01 | 5557556347 | Display (created 2026-07-05, dedicated prayer-section top banner) |
+| Time_Top_Horizontal_01 | 5425659014 | Display (created 2026-07-05, time-now + time-difference top banner) |
+| Calculators_Top_Horizontal_01 | 3292274096 | Display (created 2026-07-05, dedicated calculators top banner) |
+
+Note (2026-07-05): before these three existed, time/prayer/calculators top banners all reused the
+Events unit ID (8090183510), so per-section revenue was invisible in AdSense reports. Now each major
+section reports separately — expect "Events_Detail_Top_Horizontal_01" impressions to drop and the new
+units to absorb them after deploy.
 
 ## Ad components (all in src/components/ads/)
 - `AdTopBanner` — horizontal leaderboard, placed AFTER `<h1>`, before first content block
@@ -36,7 +44,7 @@ paths:
 - `AdInFeed` — native in-feed unit for list/feed layouts
 - `AdEventsFeedHorizontal` — horizontal display for events feed
 - `AdSidebarSticky` — desktop-only sidebar (requires ≥1440px). Active on blog articles and holiday detail pages via `AdLayoutWrapper sidebarMode="dual"`
-- `AdStickyAnchor` — mobile sticky bottom banner. ALREADY mounted globally in `ClientRuntimeMounts.client.jsx`. Requires `body.has-css-fullscreen` class to show. Activates on: homepage, /holidays/*, /date/*, /time-now/*, /time-difference/*.
+- `AdStickyAnchor` — mobile sticky bottom banner. Mounted globally in `ClientRuntimeMounts.client.jsx` but **DISABLED since 2026-07-05** (`stickyAnchor: ''` in manual-config.js): it had reused the topBanner slot ID (forbidden by its own header — impression conflicts) and competed with Google's Auto anchor, which the 2026-07 format report showed is the site's best earner (RPM 5.56 MAD / AV 0.85 vs manual display 1.31 / 0.28). The Auto anchor now owns the bottom position. Re-enabling requires a DEDICATED anchor unit from AdSense — never a display slot ID.
 
 ## Slot resolution fallback chain
 Each component reads route prefix → looks up section-specific slot key → falls back to generic key.

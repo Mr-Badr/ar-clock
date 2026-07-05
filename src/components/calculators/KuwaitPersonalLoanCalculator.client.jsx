@@ -16,7 +16,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 
-function fmt(n, d = 0) { return Number(n).toLocaleString('ar-KW', { minimumFractionDigits: d, maximumFractionDigits: d }); }
+function fmt(n, d = 0) { return Number(n).toLocaleString('ar-KW-u-nu-latn', { minimumFractionDigits: d, maximumFractionDigits: d }); }
 
 /* ── Inline SVG Donut (principal vs profit) ─────────────────────── */
 function SvgDonut({ pct, label, sub }) {

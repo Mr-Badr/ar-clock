@@ -34,6 +34,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { getRouteManualAdSlotKey, resolveManualAdSlot } from "@/lib/ads/slot-resolution";
+import { watchAdFill } from "@/lib/ads/unfilled";
 import { useMarketingPermission } from "@/lib/client/marketing";
 import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
 import { logger, serializeError } from "@/lib/logger";
@@ -67,8 +68,14 @@ export default function AdTopBanner({
     if (!canLoadAds) return;
     if (!ref.current || loaded.current) return;
 
-    // Load when slot is within 200px of viewport — gives ad time to render
-    // before user reaches it (no visible pop-in, better viewability score)
+    let stopWatch: (() => void) | undefined;
+
+    // Load when the slot is just about to enter the viewport. Kept tight
+    // (50px, was 200px) because AdSense counts the impression at render time:
+    // a generous pre-load margin logs unviewable impressions on quick-bounce
+    // pages, which is what the 2026-07 unit report showed (Active View 0.34 on
+    // the events top banner, 0.00 on the date banner). Space is reserved via
+    // CSS, so the tighter margin costs at most a brief fill-in, not CLS.
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -86,26 +93,21 @@ export default function AdTopBanner({
               });
             }
 
-            // Watch for Google's unfilled signal to collapse the reserved space
-            if (insRef.current) {
-              const mutObs = new MutationObserver(() => {
-                if (insRef.current?.getAttribute("data-ad-status") === "unfilled") {
-                  setIsUnfilled(true);
-                  mutObs.disconnect();
-                }
-              });
-              mutObs.observe(insRef.current, { attributes: true, attributeFilter: ["data-ad-status"] });
-            }
+            // Collapse the reserved space if Google returns no ad (unfilled).
+            stopWatch = watchAdFill(insRef.current, () => setIsUnfilled(true));
 
             observer.disconnect();
           }
         });
       },
-      { rootMargin: "200px 0px" }
+      { rootMargin: "50px 0px" }
     );
 
     observer.observe(ref.current);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      stopWatch?.();
+    };
   }, [canLoadAds]);
 
   if (!shouldRenderAds || !canLoadAds || isUnfilled) return null;

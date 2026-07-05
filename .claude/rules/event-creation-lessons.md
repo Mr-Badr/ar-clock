@@ -281,4 +281,13 @@ Saudi pay schedule (verified from event `core.day` values):
 | حافز | 5 | ميلادي | hafez-saudi |
 | ضمان اجتماعي | 1 | ميلادي | social-security-saudi |
 | دعم سكن | 24 | ميلادي | housing-support-saudi |
-| دعم رمل | 1 | ميلادي | sand-payment-saudi |
+| تعويض ساند (GOSI) | 1 | ميلادي | sand-payment-saudi |
+| دعم ريف | 1 (نافذة 1–10) | ميلادي | reef-support-saudi |
+
+⚠️ **Slug trap (found 2026-07-05):** `sand-payment-saudi` is NOT "دعم رمل" — no such Saudi program
+exists. The slug is a transliteration of **ساند (SANED)**; the event's `core.name` is "ساند (السعودية)"
+and its primary keyword is "متى ينزل ساند". This mislabel caused Wave 5 to build a DUPLICATE
+`saned-saudi` event targeting the identical query with a conflicting pay day — cannibalizing the
+already-ranking page (pos 6). The duplicate was retired to `drafted`; `sand-payment-saudi` is the one
+canonical SANED page. **Before scaffolding any Saudi benefit event, grep event names/keywords — not
+just slugs — for the program name in Arabic.**

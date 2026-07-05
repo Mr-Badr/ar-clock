@@ -1787,6 +1787,17 @@
     "canonicalPath": "/holidays/january-25-egypt",
     "aliases": []
   },
+  "aman-social-tunisia": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "tn"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/aman-social-tunisia",
+    "aliases": []
+  },
   "bac-results-algeria": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -1851,6 +1862,17 @@
     "canonicalPath": "/holidays/bac-results-uae",
     "aliases": []
   },
+  "direct-social-support-morocco": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ma"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/direct-social-support-morocco",
+    "aliases": []
+  },
   "gulf-childrens-day": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -1891,6 +1913,28 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/martyrs-day-algeria",
+    "aliases": []
+  },
+  "national-aid-jordan": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "jo"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/national-aid-jordan",
+    "aliases": []
+  },
+  "national-labor-support-kuwait": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "kw"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/national-labor-support-kuwait",
     "aliases": []
   },
   "palestine-independence-day": {
@@ -1990,6 +2034,17 @@
     "canonicalPath": "/holidays/qatar-national-sport-day",
     "aliases": []
   },
+  "reef-support-saudi": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "sa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/reef-support-saudi",
+    "aliases": []
+  },
   "republic-day-tunisia": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -2076,6 +2131,17 @@
     "canonicalPath": "/holidays/salary-day-uae",
     "aliases": []
   },
+  "saned-saudi": {
+    "publishStatus": "drafted",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "sa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/saned-saudi",
+    "aliases": []
+  },
   "school-start-bahrain": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -2118,6 +2184,17 @@
     "canonicalPath": "/holidays/social-security-qatar",
     "aliases": []
   },
+  "social-welfare-iraq": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "iq"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/social-welfare-iraq",
+    "aliases": []
+  },
   "uae-founding-day": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -2149,6 +2226,17 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/uae-womens-day",
+    "aliases": []
+  },
+  "unemployment-grant-algeria": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "dz"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/unemployment-grant-algeria",
     "aliases": []
   },
   "world-fathers-day": {

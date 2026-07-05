@@ -1,5 +1,5 @@
 # Session notes — ar-clock / miqatona.com
-Last updated: 2026-07-01
+Last updated: 2026-07-05
 
 ## Revenue target
 $1,000/month in 3 months. Currently: ~100 visitors/day, ~$0.05/day.
@@ -7,6 +7,17 @@ Strategy: rank top 3 on 10–15 high-volume daily-use Arabic queries simultaneou
 Priority order: Egypt tools (105M people, thin competition) > Prayer page depth (existing traffic) > Levant > Morocco.
 
 ## What was done
+
+### Shipped (2026-07-05) — Wave 5: monthly social-benefit events, all 6 + 1 optimization
+Full research-then-build pass per event (parallel research agents + manual authoring), all live:
+- `unemployment-grant-algeria` — منحة البطالة, 26/27/28 by CCP digit, 18,000 DA
+- `direct-social-support-morocco` — corrected 400→250 DH/child figure; no fixed pay day (window 20-30)
+- `national-aid-jordan` — 5 alphabetical letter groups (rotates monthly, not a fixed weekday)
+- `saned-saudi` — GOSI unemployment insurance, added to `/calculators/saudi-pay-dates` hub table
+- `social-welfare-iraq` — built as a status-tracker page (no fixed date exists), not a countdown
+- `aman-social-tunisia` — debunked viral "350 DT" figure (separate tiny elderly program); real grant is 280 DT
+- Optimized existing `takaful-karama-egypt` — added شروط/مبلغ/استعلام FAQs + 2 sources
+Details + per-event research notes in memory `project-wave5-social-benefit-events`.
 
 ### Shipped (commit 9e99be0 → bca07bd, deployed 2026-07-01)
 - **EOS franchise complete:** eos-kuwait · eos-qatar · eos-bahrain — mobile-first, country badges, entitlement bars

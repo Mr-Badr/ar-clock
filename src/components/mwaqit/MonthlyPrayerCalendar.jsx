@@ -51,7 +51,7 @@ function buildMonthlySchedule({ days, lat, lon, timezone, countryCode }) {
   }
 
   const timeFormatter = getTimeFormatter(timezone);
-  const dayFormatter = new Intl.DateTimeFormat('ar-EG', { weekday: 'long' });
+  const dayFormatter = new Intl.DateTimeFormat('ar-EG-u-nu-latn', { weekday: 'long' });
 
   return days
     .map((date, index) => {

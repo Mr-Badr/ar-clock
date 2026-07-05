@@ -312,6 +312,11 @@ export default async function CountryTimePage({ params }) {
       label: 'حاسبة فرق التوقيت',
       description: `قارن توقيت ${countryAr} مع أي دولة أو مدينة أخرى من نفس الموقع.`,
     },
+    {
+      href: `/holidays?country=${country.country_code.toLowerCase()}`,
+      label: `المناسبات القادمة في ${countryAr}`,
+      description: `تابع العد التنازلي للمناسبات الوطنية والدينية القادمة في ${countryAr} مع تفاصيل الإجازة الرسمية.`,
+    },
   ].filter(Boolean);
 
   /* ── JSON-LD ─────────────────────────────────────────────────── */

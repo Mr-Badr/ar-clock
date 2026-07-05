@@ -97,7 +97,7 @@ export default function MonthlyPrayerCalendar({ lat, lon, timezone, cityNameAr, 
     if (!mounted || !lat || !lon) return [];
     const timeFmt    = getTimeFmt(timezone);
     const formatTime = (iso) => { if (!iso) return '--:--'; try { return timeFmt.format(new Date(iso)); } catch { return '--:--'; } };
-    const dayFmt     = new Intl.DateTimeFormat('ar-EG', { weekday: 'long' });
+    const dayFmt     = new Intl.DateTimeFormat('ar-EG-u-nu-latn', { weekday: 'long' });
     return days.map((date, i) => {
       const midDay = new Date(date); midDay.setHours(12, 0, 0, 0);
       const times  = calculatePrayerTimes({ lat, lon, timezone, date: midDay, countryCode, cacheKey: null });

@@ -18,7 +18,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 
 function fmt(n) {
-  return Math.round(n).toLocaleString('ar-EG');
+  return Math.round(n).toLocaleString('ar-EG-u-nu-latn');
 }
 
 export default function EgyptCarCustomsCalculator() {

@@ -17,7 +17,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 
-function fmt(n) { return Math.round(n).toLocaleString('ar-QA'); }
+function fmt(n) { return Math.round(n).toLocaleString('ar-QA-u-nu-latn'); }
 
 /* ── SVG Donut ──────────────────────────────────────────────────── */
 function SvgDonut({ pct }) {

@@ -840,6 +840,15 @@
     "day": 25
   },
   {
+    "id": "aman-social-tunisia",
+    "slug": "aman-social-tunisia",
+    "name": "الأمان الاجتماعي تونس",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "tn",
+    "day": 20
+  },
+  {
     "id": "bac-results-algeria",
     "slug": "bac-results-algeria",
     "name": "نتيجة الباك الجزائر",
@@ -900,6 +909,15 @@
     "day": 20
   },
   {
+    "id": "direct-social-support-morocco",
+    "slug": "direct-social-support-morocco",
+    "name": "الدعم الاجتماعي المباشر",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "ma",
+    "day": 25
+  },
+  {
     "id": "gulf-childrens-day",
     "slug": "gulf-childrens-day",
     "name": "يوم الطفل الخليجي",
@@ -937,6 +955,24 @@
     "_countryCode": "dz",
     "month": 2,
     "day": 18
+  },
+  {
+    "id": "national-aid-jordan",
+    "slug": "national-aid-jordan",
+    "name": "المعونة الوطنية الأردن",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "jo",
+    "day": 1
+  },
+  {
+    "id": "national-labor-support-kuwait",
+    "slug": "national-labor-support-kuwait",
+    "name": "دعم العمالة الوطنية",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "kw",
+    "day": 25
   },
   {
     "id": "palestine-independence-day",
@@ -1026,6 +1062,15 @@
     }
   },
   {
+    "id": "reef-support-saudi",
+    "slug": "reef-support-saudi",
+    "name": "دعم ريف",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "sa",
+    "day": 1
+  },
+  {
     "id": "republic-day-tunisia",
     "slug": "republic-day-tunisia",
     "name": "عيد الجمهورية التونسي",
@@ -1100,6 +1145,15 @@
     "day": 25
   },
   {
+    "id": "saned-saudi",
+    "slug": "saned-saudi",
+    "name": "ساند",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "sa",
+    "day": 5
+  },
+  {
     "id": "school-start-bh",
     "slug": "school-start-bahrain",
     "name": "بداية العام الدراسي في البحرين",
@@ -1139,6 +1193,15 @@
     "day": 1
   },
   {
+    "id": "social-welfare-iraq",
+    "slug": "social-welfare-iraq",
+    "name": "الرعاية الاجتماعية العراق",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "iq",
+    "day": 5
+  },
+  {
     "id": "uae-founding-day",
     "slug": "uae-founding-day",
     "name": "يوم التأسيس الإماراتي",
@@ -1167,6 +1230,15 @@
     "_countryCode": "ae",
     "month": 8,
     "day": 28
+  },
+  {
+    "id": "unemployment-grant-algeria",
+    "slug": "unemployment-grant-algeria",
+    "name": "منحة البطالة الجزائر",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "dz",
+    "day": 26
   },
   {
     "id": "world-fathers-day",

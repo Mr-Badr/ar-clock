@@ -13,7 +13,8 @@
     "fact-source: وزارة التضامن الاجتماعي: بوابة الاستعلام والشكاوى",
     "fact-source: وزارة التضامن الاجتماعي: أخبار صرف تكافل وكرامة الشهرية",
     "2026-06-01: Full authored rewrite completed. The page now answers the 15th-of-month payout intent first, then explains official inquiry, complaints, hotline, payout versus increase confusion, and what the user should do before payment day.",
-    "2026-06-01: Research refreshed with official MOSS sources, current Arabic news competitors, and English/background comparison. Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. events:build and rendered-route confirmation were intentionally skipped per instruction."
+    "2026-06-01: Research refreshed with official MOSS sources, current Arabic news competitors, and English/background comparison. Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. events:build and rendered-route confirmation were intentionally skipped per instruction.",
+    "2026-07-03: أضيفت أسئلة جديدة عن شروط الاستحقاق وقيمة الدعم وأعيدت صياغة سؤال الاستعلام ليطابق العبارة الشائعة بالضبط، مع إضافة كلمات مفتاحية جديدة ومصدرين رسميين إضافيين. تم التأكد من عدم وجود تاريخ ثابت غير ضروري ومن استخدام الأرقام اللاتينية فقط."
   ],
-  "updatedAt": "2026-06-24T10:24:00.439Z"
+  "updatedAt": "2026-07-03T00:00:00.000Z"
 }

@@ -20,7 +20,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 
-function fmt(n) { return Math.round(n).toLocaleString('ar-QA'); }
+function fmt(n) { return Math.round(n).toLocaleString('ar-QA-u-nu-latn'); }
 
 const MODES = [
   { value: 'installment',   label: 'القسط الشهري',   sub: 'أعرف سعر العقار' },

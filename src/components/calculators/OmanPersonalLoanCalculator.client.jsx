@@ -17,7 +17,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 
-function fmt(n)    { return Math.round(n).toLocaleString('ar-OM'); }
+function fmt(n)    { return Math.round(n).toLocaleString('ar-OM-u-nu-latn'); }
 function fmtOMR(n) { return `${fmt(n)} ر.ع`; }
 
 const RATE_MIN  = 5.0;
