@@ -202,9 +202,9 @@
       "salary-day-kuwait",
       "pension-day-uae",
       "pension-day-saudi",
-      "salary-day-oman",
-      "salary-day-bahrain",
-      "social-security-qatar"
+      "social-assistance-kuwait",
+      "housing-allowance-kuwait",
+      "student-allowance-kuwait"
     ]
   },
   "countryOverrides": {},

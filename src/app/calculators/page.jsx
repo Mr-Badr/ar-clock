@@ -229,6 +229,10 @@ export default function CalculatorsPage() {
             </div>
           </div>
 
+          <div className="calc-hub-v8-hero-ad">
+            <AdTopBanner slotId="top-calculator-hub" />
+          </div>
+
           <nav className="calc-hub-v8-command" aria-label="ابدأ من نوع السؤال">
             <div className="calc-hub-v8-command-head">
               <span className="calc-hub-v8-kicker">ابدأ هنا</span>
@@ -257,8 +261,6 @@ export default function CalculatorsPage() {
           </nav>
         </div>
       </section>
-
-      <AdTopBanner slotId="top-calculator-hub" />
 
       {/* === Category sections — each hub as a distinct colored block === */}
       <section className="calc-hub-cats-wrap" aria-label="الحاسبات مرتبة حسب القسم">

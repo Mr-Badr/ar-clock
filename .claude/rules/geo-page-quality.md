@@ -64,3 +64,24 @@ When a city has bad data, fix `public/geo/cities/<country>.json` directly. The s
 
 ## Cities vs Countries
 Country pages (e.g. `/time-now/[country]`) don't need `isRenderableCityData` since they use capital city data which is more reliable. Apply the guard to leaf city routes only.
+
+## Prerendering priority is global, not per-country (found 2026-07-05)
+
+`generateStaticParams` on both `time-now/[country]/[city]` and `mwaqit-al-salat/[country]/[city]`
+calls `getPriorityCityParams(24)`, which ranks cities by *global* population/capital status. For a
+small-but-important market like Saudi Arabia (13 total cities), only Riyadh makes the global top 24 —
+Jeddah, Makkah, Madinah, Dammam, etc. never get build-time SSG even though Saudi is the site's #1
+revenue market. Use `getPriorityCountriesCityParams(perCountryLimit)` (in
+`src/lib/db/queries/cities.ts`) alongside `getPriorityCityParams` in any new city-leaf
+`generateStaticParams` — it guarantees every `PRIORITY_COUNTRY_SLUGS` country gets its own top cities
+prerendered regardless of global rank. Dedup by `` `${country}::${city}` `` key when merging the two
+lists. `getBridgeCityParams` looks like it was meant to solve this but is dead code (never called
+anywhere) and wouldn't fully fix it anyway (its "extra" tier is still globally sorted).
+
+## Sibling-city internal linking (found 2026-07-05)
+
+`/time-now/[country]/[city]/page.jsx` links to ~8 sibling same-country cities via `CountryCitiesGrid` +
+`getTopCitiesByCountry`. The prayer template lacked this entirely until fixed — every new geo leaf page
+should link sideways to sibling cities in the same country, not just up to the country hub. For prayer
+pages, reuse `CityPrayerCardsGrid` (`@/components/mwaqit/CityPrayerCardsGrid.client`) rather than
+building a new grid component.

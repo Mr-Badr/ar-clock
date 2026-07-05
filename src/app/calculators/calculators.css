@@ -3649,6 +3649,10 @@ label.calc-hint {
   align-items: center;
 }
 
+.calc-hub-v8-hero-ad {
+  grid-column: 1 / -1;
+}
+
 .calc-hub-v8-hero-copy {
   display: grid;
   gap: var(--space-4);
@@ -4444,6 +4448,23 @@ label.calc-hint {
 @media (min-width: 1060px) {
   .calc-hub-v8-hero-grid {
     grid-template-columns: minmax(0, 0.82fr) minmax(420px, 0.98fr);
+  }
+
+  /* Pin copy/nav to explicit columns so the ad slot (inserted between them
+     in DOM order, spanning both columns) can't push nav into row auto-flow. */
+  .calc-hub-v8-hero-copy {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .calc-hub-v8-command {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .calc-hub-v8-hero-ad {
+    grid-column: 1;
+    grid-row: 2;
   }
 
   .calc-hub-v8-tool-grid {

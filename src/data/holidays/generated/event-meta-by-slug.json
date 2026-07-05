@@ -1882,6 +1882,17 @@
     "canonicalPath": "/holidays/gulf-childrens-day",
     "aliases": []
   },
+  "housing-allowance-kuwait": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "kw"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/housing-allowance-kuwait",
+    "aliases": []
+  },
   "iraq-national-day": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -1913,6 +1924,17 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/martyrs-day-algeria",
+    "aliases": []
+  },
+  "nafis-uae": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ae"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/nafis-uae",
     "aliases": []
   },
   "national-aid-jordan": {
@@ -2173,6 +2195,17 @@
     "canonicalPath": "/holidays/school-start-oman",
     "aliases": []
   },
+  "social-assistance-kuwait": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "kw"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/social-assistance-kuwait",
+    "aliases": []
+  },
   "social-security-qatar": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -2193,6 +2226,17 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/social-welfare-iraq",
+    "aliases": []
+  },
+  "student-allowance-kuwait": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "kw"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/student-allowance-kuwait",
     "aliases": []
   },
   "uae-founding-day": {
@@ -2237,6 +2281,17 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/unemployment-grant-algeria",
+    "aliases": []
+  },
+  "university-stipend-saudi": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "sa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/university-stipend-saudi",
     "aliases": []
   },
   "world-fathers-day": {

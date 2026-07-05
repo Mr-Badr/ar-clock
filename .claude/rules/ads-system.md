@@ -73,6 +73,16 @@ Fallback is handled by `resolveManualAdSlot()` in `src/lib/ads/slot-resolution.t
 - AdTopBanner: after `<h1>` and **outside** the hero section wrapper — not the last child inside it
 - AdInArticle in calculators: **after** the FAQ accordion, not before it — users see FAQs first
 - AdMultiplex: add `data-full-width-responsive="true"` to prevent overflow on RTL mobile
+- **AdTopBanner must render inside the first mobile viewport, not just "after the H1."** A tall hero
+  (nav grids, multi-line intros, a whole interactive tool + supplementary sections) can push the ad
+  hundreds of pixels below what 96% of the site's traffic (mobile) actually sees before bouncing.
+  Fixed 2026-07-05 on `/calculators` (ad moved from after the whole hero+nav grid to between the intro
+  copy and the intent-nav — see `.calc-hub-v8-hero-ad` in `calculators.css`, pinned via explicit
+  `grid-column`/`grid-row` so it doesn't disrupt the 2-column desktop layout) and `/time-difference`
+  (ad moved from after several supplementary sections to right after the calculator tool itself — still
+  satisfies "primary tool before ad", just cuts ~300 lines of content the ad used to sit behind).
+  `/holidays` and `/time-now` already place the ad right after their intro/primary-tool block — use
+  those as the reference pattern for any future hub page.
 
 ## Ad-free routes (intentional, from route-policy.js)
 /about, /contact, /disclaimer, /editorial-policy, /fahras, /offline, /privacy, /search, /terms, /api/*

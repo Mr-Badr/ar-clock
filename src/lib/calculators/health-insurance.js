@@ -361,3 +361,187 @@ export function estimateKuwaitHealthInsurancePremium({ tier, familySize, mainAge
     coverageCeiling: level.coverageCeiling,
   };
 }
+
+// ── Bahrain Health Insurance ──────────────────────────────────────────────────
+// Mandatory baseline: SEHATI national program (Decision No. 23 of 2018, effective
+// 1 Jan 2019) — employers fund basic coverage for expat workers via work-permit
+// fees; annual cap BHD 1,500; excludes dental/optical/maternity/mental health.
+// Private supplemental tiers below are market ranges (Bupa, AXA Gulf, GIG Gulf,
+// NIC, Al Ahlia) for those upgrading beyond the mandatory baseline.
+
+export const BAHRAIN_HI_TIERS = [
+  {
+    value: 'basic',
+    label: 'أساسي',
+    sub: 'مكمّل لسيهاتي (SEHATI)',
+    description: 'تغطية تكميلية فوق الحد الإلزامي (سيهاتي) — شبكة محلية محدودة وخدمات أساسية.',
+    perPerson: { min: 200, max: 400 },
+    coverageCeiling: 15000,
+  },
+  {
+    value: 'standard',
+    label: 'قياسي',
+    sub: 'موصى به',
+    description: 'شبكة خاصة أوسع، طب عام وتخصصي، أدوية جزئية، بعض خدمات الأسنان.',
+    perPerson: { min: 400, max: 800 },
+    coverageCeiling: 50000,
+  },
+  {
+    value: 'premium',
+    label: 'مميز',
+    sub: 'شاملة',
+    description: 'مستشفيات خاصة كبرى + أسنان وبصريات + رعاية مزمنة موسّعة.',
+    perPerson: { min: 800, max: 1500 },
+    coverageCeiling: 150000,
+  },
+  {
+    value: 'global',
+    label: 'عالمي',
+    sub: 'الأعلى',
+    description: 'تغطية محلية ودولية شاملة (Cigna Global / Bupa Global) — إخلاء طبي وعلاج خارج البحرين.',
+    perPerson: { min: 1500, max: 4000 },
+    coverageCeiling: 750000,
+  },
+];
+
+export const BAHRAIN_HI_AGE_BANDS = [
+  { value: '18-30', label: '18 – 30 سنة', factor: 1.0 },
+  { value: '31-40', label: '31 – 40 سنة', factor: 1.3 },
+  { value: '41-50', label: '41 – 50 سنة', factor: 1.85 },
+  { value: '51-60', label: '51 – 60 سنة', factor: 2.6 },
+  { value: '60+',   label: '60+ سنة',     factor: 3.6 },
+];
+
+/**
+ * @param {{ tier: string, familySize: string, mainAge: string, preExisting: boolean }} p
+ */
+export function estimateBahrainHealthInsurancePremium({ tier, familySize, mainAge, preExisting }) {
+  const level   = BAHRAIN_HI_TIERS.find((t) => t.value === tier);
+  const family  = FAMILY_SIZES.find((f) => f.value === familySize);
+  const ageBand = BAHRAIN_HI_AGE_BANDS.find((a) => a.value === mainAge);
+
+  if (!level || !family || !ageBand) return { isValid: false };
+
+  const count  = family.count;
+  const ageFac = ageBand.factor;
+  const preFac = preExisting ? 1.30 : 1.0;
+
+  const mainMin = level.perPerson.min * ageFac * preFac;
+  const mainMax = level.perPerson.max * ageFac * preFac;
+
+  const depAgeFac = count > 1 ? Math.max(1.0, ageFac * 0.65) : 0;
+  const depMin = level.perPerson.min * depAgeFac;
+  const depMax = level.perPerson.max * depAgeFac;
+
+  const rawMin = mainMin + depMin * (count - 1);
+  const rawMax = mainMax + depMax * (count - 1);
+
+  const totalMin = Math.max(20, Math.round(rawMin / 10) * 10);
+  const totalMax = Math.max(totalMin, Math.round(rawMax / 10) * 10);
+
+  return {
+    isValid: true,
+    totalMin,
+    totalMax,
+    monthlyMin: Math.round(totalMin / 12),
+    monthlyMax: Math.round(totalMax / 12),
+    perPersonMin: Math.round(totalMin / count),
+    perPersonMax: Math.round(totalMax / count),
+    memberCount: count,
+    tierName: level.label,
+    coverageCeiling: level.coverageCeiling,
+  };
+}
+
+// ── Oman Health Insurance ──────────────────────────────────────────────────────
+// Mandatory baseline: unified health insurance scheme under Ministerial Decision
+// 76/2019, issued by the Capital Market Authority (CMA) — insurance regulation now
+// sits with the Financial Services Authority (FSA) after the CMA/FSA merger.
+// Private-sector employers must insure staff; annual cap OMR 3,000; optional
+// add-ons (maternity, pediatrics, dental, optical) sit outside the mandatory floor.
+// Private supplemental tiers below are market ranges (Oman Insurance Co., Al Ahlia/
+// Generali, Dhofar Insurance, Liva Group, AXA Gulf, Bupa) for upgrading beyond it.
+
+export const OMAN_HI_TIERS = [
+  {
+    value: 'basic',
+    label: 'أساسي',
+    sub: 'مكمّل للتأمين الإلزامي',
+    description: 'تغطية تكميلية فوق الحد الإلزامي — شبكة محلية محدودة وخدمات أساسية.',
+    perPerson: { min: 100, max: 250 },
+    coverageCeiling: 20000,
+  },
+  {
+    value: 'standard',
+    label: 'قياسي',
+    sub: 'موصى به',
+    description: 'شبكة خاصة أوسع، طب عام وتخصصي، أدوية جزئية، بعض خدمات الأسنان.',
+    perPerson: { min: 300, max: 600 },
+    coverageCeiling: 60000,
+  },
+  {
+    value: 'premium',
+    label: 'مميز',
+    sub: 'شاملة',
+    description: 'مستشفيات خاصة كبرى + أسنان وبصريات + ولادة وأطفال + رعاية مزمنة موسّعة.',
+    perPerson: { min: 700, max: 1500 },
+    coverageCeiling: 200000,
+  },
+  {
+    value: 'global',
+    label: 'عالمي',
+    sub: 'الأعلى',
+    description: 'تغطية محلية ودولية شاملة (Cigna Global / Bupa Global) — إخلاء طبي وعلاج خارج عُمان.',
+    perPerson: { min: 1500, max: 4000 },
+    coverageCeiling: 750000,
+  },
+];
+
+export const OMAN_HI_AGE_BANDS = [
+  { value: '18-30', label: '18 – 30 سنة', factor: 1.0 },
+  { value: '31-40', label: '31 – 40 سنة', factor: 1.3 },
+  { value: '41-50', label: '41 – 50 سنة', factor: 1.85 },
+  { value: '51-60', label: '51 – 60 سنة', factor: 2.6 },
+  { value: '60+',   label: '60+ سنة',     factor: 3.6 },
+];
+
+/**
+ * @param {{ tier: string, familySize: string, mainAge: string, preExisting: boolean }} p
+ */
+export function estimateOmanHealthInsurancePremium({ tier, familySize, mainAge, preExisting }) {
+  const level   = OMAN_HI_TIERS.find((t) => t.value === tier);
+  const family  = FAMILY_SIZES.find((f) => f.value === familySize);
+  const ageBand = OMAN_HI_AGE_BANDS.find((a) => a.value === mainAge);
+
+  if (!level || !family || !ageBand) return { isValid: false };
+
+  const count  = family.count;
+  const ageFac = ageBand.factor;
+  const preFac = preExisting ? 1.30 : 1.0;
+
+  const mainMin = level.perPerson.min * ageFac * preFac;
+  const mainMax = level.perPerson.max * ageFac * preFac;
+
+  const depAgeFac = count > 1 ? Math.max(1.0, ageFac * 0.65) : 0;
+  const depMin = level.perPerson.min * depAgeFac;
+  const depMax = level.perPerson.max * depAgeFac;
+
+  const rawMin = mainMin + depMin * (count - 1);
+  const rawMax = mainMax + depMax * (count - 1);
+
+  const totalMin = Math.max(20, Math.round(rawMin / 10) * 10);
+  const totalMax = Math.max(totalMin, Math.round(rawMax / 10) * 10);
+
+  return {
+    isValid: true,
+    totalMin,
+    totalMax,
+    monthlyMin: Math.round(totalMin / 12),
+    monthlyMax: Math.round(totalMax / 12),
+    perPersonMin: Math.round(totalMin / count),
+    perPersonMax: Math.round(totalMax / count),
+    memberCount: count,
+    tierName: level.label,
+    coverageCeiling: level.coverageCeiling,
+  };
+}

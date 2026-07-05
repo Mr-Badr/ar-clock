@@ -4,6 +4,7 @@ import type { City, CityParams } from '@/lib/db/types'
 import fallback from '@/lib/db/fallback/cities-index.json'
 import snapshot from '../../../../public/geo/city-search-index.json'
 import { logger } from '@/lib/logger'
+import { PRIORITY_COUNTRY_SLUGS } from '@/lib/db/constants'
 import {
   isLiveGeoDbEnabled,
   loadAllCityParams,
@@ -366,6 +367,41 @@ export async function getBridgeCityParams(extraLimit = 100): Promise<CityParams[
     }))
 
   return mergeCityParams([...capitals, ...extra])
+}
+
+// Global population/capital-based prerendering (getPriorityCityParams, getBridgeCityParams)
+// starves small-but-important Arab/Islamic markets: Saudi Arabia has only 13 cities total, but
+// only Riyadh ranks in the global top 24, so Jeddah/Makkah/Madinah/Dammam/etc. never get
+// build-time SSG. This guarantees every PRIORITY_COUNTRY_SLUGS country gets its own top cities
+// prerendered regardless of global population ranking.
+export async function getPriorityCountriesCityParams(perCountryLimit = 15): Promise<CityParams[]> {
+  'use cache'
+  cacheTag('cities', 'priority-countries-city-params')
+  cacheLife('days')
+
+  const prioritySlugs = new Set(PRIORITY_COUNTRY_SLUGS)
+  const byCountry = new Map<string, SearchableCity[]>()
+
+  for (const city of fallbackCities) {
+    const slug = getCityCountrySlug(city)
+    if (!prioritySlugs.has(slug)) continue
+    const list = byCountry.get(slug)
+    if (list) {
+      list.push(city)
+    } else {
+      byCountry.set(slug, [city])
+    }
+  }
+
+  const params: CityParams[] = []
+  for (const [slug, cities] of Array.from(byCountry.entries())) {
+    const top = [...cities].sort(sortCities).slice(0, perCountryLimit)
+    for (const city of top) {
+      params.push({ country: slug, city: city.city_slug })
+    }
+  }
+
+  return mergeCityParams(params)
 }
 
 function normalizeSearchQuery(query: string) {

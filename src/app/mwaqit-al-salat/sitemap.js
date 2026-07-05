@@ -41,7 +41,7 @@ export default async function sitemap() {
     urls.push({
       url: `${base}/mwaqit-al-salat/${city.country}/${city.city}`,
       changeFrequency: 'daily',
-      priority: 0.7,
+      priority: 0.8,
     });
   }
 

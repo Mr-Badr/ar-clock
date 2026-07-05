@@ -250,6 +250,8 @@ export default async function TimeDifferencePage() {
           <TimeDiffCalculator />
         </section>
 
+        <AdTopBanner slotId="top-time-diff-list" />
+
         <section
           aria-labelledby="time-difference-decision-heading"
           style={{ marginBottom: 'var(--space-10)' }}
@@ -561,8 +563,6 @@ export default async function TimeDifferencePage() {
             )}
           </div>
         </section>
-
-        <AdTopBanner slotId="top-time-diff-list" />
 
           </main>
           <TimeDiffSections />

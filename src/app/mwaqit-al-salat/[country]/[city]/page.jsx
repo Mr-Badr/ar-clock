@@ -13,7 +13,7 @@ import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, Clock3, MapPin, Moon, Sunrise, Sun, Sunset } from 'lucide-react';
-import { getPriorityCityParams, getCityBySlug } from '@/lib/db/queries/cities';
+import { getPriorityCityParams, getPriorityCountriesCityParams, getCityBySlug, getCitiesByCountry } from '@/lib/db/queries/cities';
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 import {
   calculatePrayerTimes,
@@ -32,6 +32,7 @@ import MadhabSelector from '@/components/mwaqit/MadhabSelector.client';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
 import QiblaCompass from '@/components/mwaqit/QiblaCompass.client';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
+import CityPrayerCardsGrid from '@/components/mwaqit/CityPrayerCardsGrid.client';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
@@ -115,7 +116,20 @@ export async function generateStaticParams() {
       { country: 'egypt',        city: 'cairo'       },
     ];
   }
-  return getPriorityCityParams(24);
+  const [globalParams, priorityCountryParams] = await Promise.all([
+    getPriorityCityParams(24),
+    getPriorityCountriesCityParams(15),
+  ]);
+  const seen = new Set(globalParams.map((p) => `${p.country}::${p.city}`));
+  const merged = [...globalParams];
+  for (const p of priorityCountryParams) {
+    const key = `${p.country}::${p.city}`;
+    if (!seen.has(key)) {
+      seen.add(key);
+      merged.push(p);
+    }
+  }
+  return merged;
 }
 
 // ─── SEO Metadata ─────────────────────────────────────────────────────────────
@@ -359,6 +373,14 @@ export default async function PrayerTimesPage({ params }) {
       description: `قارن توقيت ${cityNameAr} مع أي مدينة عربية أو عالمية في الوقت الفعلي.`,
     },
   ];
+
+  const [siblingCitiesRaw, siblingCitiesNowIso] = await Promise.all([
+    getCitiesByCountry(country.country_code).catch(() => []),
+    getCachedNowIso().catch(() => null),
+  ]);
+  const siblingCities = Array.isArray(siblingCitiesRaw)
+    ? siblingCitiesRaw.filter((c) => (c?.city_slug || c?.slug) !== citySlug).slice(0, 8)
+    : [];
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -624,6 +646,32 @@ export default async function PrayerTimesPage({ params }) {
             </div>
           </div>
         </section>
+
+        {siblingCities.length > 0 && (
+          <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+            <div className={routeStyles.sectionPanel}>
+              <div className={routeStyles.sectionHeadRow}>
+                <div className={routeStyles.sectionHead}>
+                  <h2 className={routeStyles.sectionTitle}>مواقيت الصلاة في مدن {countryNameAr} الأخرى</h2>
+                  <p className={routeStyles.sectionCopy}>
+                    إذا كانت وجهتك مدينة أخرى داخل {countryNameAr}، انتقل إليها مباشرة من هنا بدل البحث من جديد.
+                  </p>
+                </div>
+                <Link href={`/mwaqit-al-salat/${countrySlug}`} className={routeStyles.sectionAction}>
+                  عرض الكل ←
+                </Link>
+              </div>
+              <ErrorBoundary name="PrayerCitySiblingsGrid">
+                <CityPrayerCardsGrid
+                  cities={siblingCities}
+                  countrySlug={countrySlug}
+                  countryCode={country.country_code}
+                  initialNowIso={siblingCitiesNowIso}
+                />
+              </ErrorBoundary>
+            </div>
+          </section>
+        )}
 
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
           <div className={routeStyles.sectionPanel}>

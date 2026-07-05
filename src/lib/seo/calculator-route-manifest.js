@@ -86,6 +86,8 @@ export const STATIC_CALCULATOR_SEO_ROUTES = Object.freeze([
   { path: '/calculators/personal-loan-bahrain',   priority: 0.94, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/health-insurance-kuwait', priority: 0.93, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/mortgage-bahrain',        priority: 0.93, changeFrequency: 'monthly', websitePart: true },
+  { path: '/calculators/health-insurance-bahrain', priority: 0.93, changeFrequency: 'monthly', websitePart: true },
+  { path: '/calculators/health-insurance-oman', priority: 0.92, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/personal-loan-oman',      priority: 0.92, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/personal-loan-egypt',     priority: 0.92, changeFrequency: 'monthly', websitePart: true },
 ]);

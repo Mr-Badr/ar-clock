@@ -25,6 +25,8 @@ export default async function sitemap() {
     if (!countrySlug) continue;
     urls.push({
       url: `${base}/time-now/${countrySlug}`,
+      changeFrequency: 'daily',
+      priority: 0.8,
     });
   }
 
@@ -32,6 +34,8 @@ export default async function sitemap() {
     if (!city?.country || !city?.city) continue;
     urls.push({
       url: `${base}/time-now/${city.country}/${city.city}`,
+      changeFrequency: 'daily',
+      priority: 0.8,
     });
   }
 

@@ -201,6 +201,31 @@
   margin-bottom: var(--space-5);
 }
 
+.sectionHeadRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.sectionHeadRow .sectionHead {
+  margin-bottom: 0;
+}
+
+.sectionAction {
+  color: var(--accent-alt);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  text-decoration: none;
+}
+
+.sectionAction:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .sectionTitle {
   margin: 0;
   color: var(--text-primary);

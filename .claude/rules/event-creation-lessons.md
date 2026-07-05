@@ -119,6 +119,10 @@ console.log(`\nTotal: ${count}/5`);
 | `base_country_leakage:الإمارات` | `aliasSlugs.length > 0` AND a known country name appears in base content | For single-country events: use `"aliasSlugs": []` (never add aliases to country-specific events) |
 | `related_not_reciprocal:slug` | Event links to `slug` but that event doesn't link back | **Non-blocking** — `events:sync` passes. Fix when doing bulk maintenance on related slugs. |
 | `faq_below_minimum` | Fewer than 4 FAQ entries | Add more FAQ items (target 6-8) |
+| `research_coverage_matrix_below_minimum:N` | `research.json` `coverageMatrix.length < 8` | Add entries until >= 8 (blocking error, not a warning) |
+| `research_keyword_gaps_below_minimum:N` | `research.json` `keywordGaps.length < 8` | Add entries until >= 8 (blocking error) |
+| `research_unanswered_questions_below_minimum:N` | `research.json` `unansweredQuestions.length < 6` | Add entries until >= 6 (blocking error) |
+| `related_slug_not_found:slug` | `relatedSlugs` references a non-event slug (e.g. a calculator slug like `gpa`) | Only reference real event slugs in `relatedSlugs` — never calculator/tool slugs (blocking error) |
 | `seo_extended_keywords_count_out_of_range:N` | `longTailKeywords` outside 10-24 range | Keep between 10 and 24 entries |
 | `islamic_year_pair_missing` | Hijri event missing `{{year}} - {{hijriYear}} هـ` in titleTag | Add the hijri year pair to Islamic event title templates |
 

@@ -1,0 +1,20 @@
+{
+  "slug": "university-stipend-saudi",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: عمادة شؤون الطلاب جامعة أم القرى (uqu.edu.sa) — يؤكد موعد يوم 27 من كل شهر ميلادي",
+    "fact-source: عمادة القبول والتسجيل جامعة الملك سعود (dar.ksu.edu.sa) وجامعة الأميرة نورة (pnu.edu.sa) — صفحات المكافآت الرسمية",
+    "fact-source: وزارة التعليم — بوابة الاستعلام عن مكافآت الطالب",
+    "2026-07-05: يوم 27 هو الموعد الأكثر شيوعاً عبر عدة جامعات مستقلة وليس قاعدة موحدة رسمية من جهة مركزية واحدة — صيغت كل الإجابات بعبارة الموعد المعتاد/الأكثر شيوعاً تفادياً للتضليل.",
+    "2026-07-05: لم يُنشر مبلغ محدد للمكافأة عمداً لأنه يختلف فعلياً حسب الجامعة والتخصص والمرحلة الدراسية.",
+    "2026-07-05: أُضيف كـ related-slug داخل salary-day-saudi/citizen-account-saudi/hafez-saudi/reef-support-saudi ضمن شبكة صفحات السعودية."
+  ],
+  "updatedAt": "2026-07-05T17:02:12.408Z"
+}

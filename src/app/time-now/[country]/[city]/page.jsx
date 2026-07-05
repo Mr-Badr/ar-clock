@@ -45,7 +45,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import routeStyles from '@/app/time-now/TimeNowRoutePage.module.css';
 
 import { getAllCountries, getCountryBySlug } from '@/lib/db/queries/countries';
-import { getPriorityCityParams, getCityBySlug, getTopCitiesByCountry } from '@/lib/db/queries/cities';
+import { getPriorityCityParams, getPriorityCountriesCityParams, getCityBySlug, getTopCitiesByCountry } from '@/lib/db/queries/cities';
 import { getCachedNowIso } from '@/lib/date-utils';
 import {
   GEO_ROUTE_INDEXING_POLICIES,
@@ -92,10 +92,20 @@ export async function generateStaticParams() {
       { country: 'egypt', city: 'cairo' },
     ];
   }
-  const priorityCityParams = await getPriorityCityParams(24);
-  return Array.isArray(priorityCityParams)
-    ? priorityCityParams.filter((item) => isRouteSlug(item?.country) && isRouteSlug(item?.city))
-    : [];
+  const [globalParams, priorityCountryParams] = await Promise.all([
+    getPriorityCityParams(24),
+    getPriorityCountriesCityParams(15),
+  ]);
+  const seen = new Set((globalParams || []).map((p) => `${p.country}::${p.city}`));
+  const merged = Array.isArray(globalParams) ? [...globalParams] : [];
+  for (const p of (priorityCountryParams || [])) {
+    const key = `${p.country}::${p.city}`;
+    if (!seen.has(key)) {
+      seen.add(key);
+      merged.push(p);
+    }
+  }
+  return merged.filter((item) => isRouteSlug(item?.country) && isRouteSlug(item?.city));
 }
 
 function getUtcOffsetStr(timezone) {

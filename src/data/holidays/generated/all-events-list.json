@@ -927,6 +927,15 @@
     "day": 15
   },
   {
+    "id": "housing-allowance-kuwait",
+    "slug": "housing-allowance-kuwait",
+    "name": "بدل الإيجار",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "kw",
+    "day": 1
+  },
+  {
     "id": "iraq-national-day",
     "slug": "iraq-national-day",
     "name": "يوم الاستقلال العراقي",
@@ -955,6 +964,15 @@
     "_countryCode": "dz",
     "month": 2,
     "day": 18
+  },
+  {
+    "id": "nafis-uae",
+    "slug": "nafis-uae",
+    "name": "دعم نافس",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "ae",
+    "day": 27
   },
   {
     "id": "national-aid-jordan",
@@ -1184,6 +1202,15 @@
     "day": 31
   },
   {
+    "id": "social-assistance-kuwait",
+    "slug": "social-assistance-kuwait",
+    "name": "مساعدات الشؤون الاجتماعية",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "kw",
+    "day": 25
+  },
+  {
     "id": "social-security-qa",
     "slug": "social-security-qatar",
     "name": "دعم التنمية الاجتماعية قطر",
@@ -1200,6 +1227,15 @@
     "category": "support",
     "_countryCode": "iq",
     "day": 5
+  },
+  {
+    "id": "student-allowance-kuwait",
+    "slug": "student-allowance-kuwait",
+    "name": "المكافأة الاجتماعية للطلبة",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "kw",
+    "day": 1
   },
   {
     "id": "uae-founding-day",
@@ -1239,6 +1275,15 @@
     "category": "support",
     "_countryCode": "dz",
     "day": 26
+  },
+  {
+    "id": "university-stipend-saudi",
+    "slug": "university-stipend-saudi",
+    "name": "مكافأة الجامعة",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "sa",
+    "day": 27
   },
   {
     "id": "world-fathers-day",
