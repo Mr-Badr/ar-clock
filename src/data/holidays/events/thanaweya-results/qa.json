@@ -10,7 +10,8 @@
   },
   "notes": [
     "2026-06-01: Full authored rewrite completed. The page now treats {{formattedDate}} as an expected planning date, not an official result announcement, and explains the difference between expected date, ministerial approval, and opening the official result link.",
-    "2026-06-01: Research refreshed with official ministry/result portal references, Arabic news competitors, and fake-link/search-intent gaps. Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. events:build and rendered-route confirmation were intentionally skipped per instruction."
+    "2026-06-01: Research refreshed with official ministry/result portal references, Arabic news competitors, and fake-link/search-intent gaps. Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. events:build and rendered-route confirmation were intentionally skipped per instruction.",
+    "2026-07-06 (Week-1 sprint item #3, readiness pass): confirmed the exam-end date (Thursday 2026-07-16) via multiple sources — no change to core.day (31, already within the correct late-Jul/early-Aug window), only added the confirmation to answerSummary. Added the more specific official result portal g12.emis.gov.eg alongside moe.gov.eg/emis.gov.eg, and sharpened the existing generic fake-link warning into a checkable rule (official domains end in moe.gov.eg or emis.gov.eg; natiga.egymoe.com is a real lookalike, not official). Hit and fixed a hardcoded_year_detected trip caused by a literal '2026' in a new source label — removed the year from the label text (URLs are exempt from that check, plain strings are not)."
   ],
-  "updatedAt": "2026-06-01T00:00:00.000Z"
+  "updatedAt": "2026-07-06T10:44:51.170Z"
 }

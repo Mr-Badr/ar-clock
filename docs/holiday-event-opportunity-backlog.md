@@ -28,12 +28,11 @@ and months, ranked by recurrence (things searched every month/day beat one-offs)
 | # | Action | Owner | Deadline | Why |
 |---|---|---|---|---|
 | 1 | **AdSense dashboard toggles (Part 2b).** Anchor incl. wider screens · Vignette both platforms · **Side rails ON** (the desktop fix) · in-page ≈ medium. Screenshot the toggles after. | **USER — 10 minutes** | Jul 7 | Biggest single RPM lever left; 86% of revenue is Auto ads and the top formats are OFF |
-| 3 | **Egypt Thanaweya results readiness** — exams end Jul 16, results expected late Jul/early Aug. Refresh `thanaweya-results` (+`thanaweya-exams` cross-link) with 2026-confirmed facts + استعلام links. Reindex. | Claude | Jul 18 | Biggest single Arabic search event of the summer; page exists |
 
-**Week-1 result checkpoint (Jul 13):** deploy done · toggle screenshot received (pending user action)
-· Algeria results page refreshed and reindex-requested (done 2026-07-06) · Egypt readiness pending ·
-4 new events live with `ci:check` green · AdSense daily revenue vs 0.2 MAD baseline (expect first
-movement from toggles within 3–5 days of the user completing item #1).
+**Week-1 result checkpoint (Jul 13):** deploy done · toggle screenshot still pending (the one remaining
+user action, item #1) · Algeria + Egypt results pages refreshed and reindex-requested (both done
+2026-07-06) · 4 new events live with `ci:check` green · AdSense daily revenue vs 0.2 MAD baseline
+(expect first movement from toggles within 3–5 days of the user completing item #1).
 
 ## Week 2 (Jul 13–20) — the Saudi school-calendar hub + Saudi pushes
 

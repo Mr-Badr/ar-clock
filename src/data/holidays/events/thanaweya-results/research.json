@@ -1,7 +1,7 @@
 {
   "slug": "thanaweya-results",
   "locale": "ar",
-  "capturedAt": "2026-06-01T00:00:00.000Z",
+  "capturedAt": "2026-07-06T10:44:53.260Z",
   "primaryQueries": [
     "متى نتيجة الثانوية العامة {{year}}",
     "موعد نتيجة الثانوية العامة {{year}} مصر",
@@ -43,9 +43,59 @@
       "url": "https://nateega-thanawy.com/"
     },
     {
+      "site": "g12.emis.gov.eg",
+      "type": "official_portal_reference",
+      "url": "https://g12.emis.gov.eg"
+    },
+    {
+      "site": "natiga.egymoe.com",
+      "type": "lookalike_domain_trap",
+      "url": "https://natiga.egymoe.com/",
+      "note": "اسم نطاق شبيه جداً بالنطاق الرسمي (moe.gov.eg) لكنه في الواقع egymoe.com — نطاق غير حكومي منفصل تماماً؛ فرق حرفي واحد قد يخدع الباحث."
+    },
+    {
       "site": "generic countdown pages",
       "type": "replaced_pattern",
       "url": "https://www.google.com/search?q=%D9%83%D9%85+%D8%A8%D8%A7%D9%82%D9%8A+%D8%B9%D9%84%D9%89+%D9%86%D8%AA%D9%8A%D8%AC%D8%A9+%D8%A7%D9%84%D8%AB%D8%A7%D9%86%D9%88%D9%8A%D8%A9+%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9"
+    },
+    {
+      "site": "moe.gov.eg",
+      "type": "official",
+      "url": "https://moe.gov.eg",
+      "focus": [
+        "موعد النتيجة",
+        "الرابط الرسمي",
+        "إعلان الوزارة"
+      ],
+      "gaps": [
+        "لا يركز على نية كم باقي",
+        "لا يشرح الخطوات التالية بعد ظهور النتيجة داخل صفحة واحدة"
+      ]
+    },
+    {
+      "site": "البوابات الإخبارية المصرية",
+      "type": "news",
+      "focus": [
+        "موعد إعلان النتيجة",
+        "اعتماد النتيجة",
+        "روابط الاستعلام"
+      ],
+      "gaps": [
+        "تتغير بسرعة",
+        "كثير منها يعيد الصياغة نفسها من دون فائدة خدمية إضافية"
+      ]
+    },
+    {
+      "site": "صفحات العد التنازلي العربية",
+      "type": "countdown",
+      "focus": [
+        "كم باقي على نتيجة الثانوية العامة",
+        "متى تظهر النتيجة"
+      ],
+      "gaps": [
+        "ضعف في التوثيق المصري الرسمي",
+        "لا تضيف خطوات واضحة للاستعلام والتظلم والتنظيم بعد الظهور"
+      ]
     }
   ],
   "arabicCompetitors": [
@@ -286,13 +336,21 @@
       "url": "https://emis.gov.eg"
     },
     {
+      "label": "بوابة نتيجة الصف الثالث الثانوي (g12) — مركز المعلومات",
+      "url": "https://g12.emis.gov.eg"
+    },
+    {
       "label": "الدستور: الموعد المتوقع وخطوات الاستعلام",
       "url": "https://www.dostor.org/5517995"
     },
     {
       "label": "مصراوي: رابط النتيجة بعد الاعتماد في موسم سابق",
       "url": "https://www.masrawy.com/news/education-schooleducation/details/2025/7/22/2823507/"
+    },
+    {
+      "label": "فيتو: موعد ظهور نتيجة الثانوية العامة 2026 وآخر تطورات التصحيح",
+      "url": "https://www.vetogate.com/5680126"
     }
   ],
-  "notes": "The strongest current angle is not pretending that the 2026 result date is official. The page should rank by answering the expected-date query while clearly teaching that the result appears only after ministry approval and the official link opens."
+  "notes": "The strongest current angle is not pretending that the 2026 result date is official. The page should rank by answering the expected-date query while clearly teaching that the result appears only after ministry approval and the official link opens. Readiness pass 2026-07-06 (Week-1 sprint item #3): confirmed the 2026 exam-end date for Grade 12 (Thursday 2026-07-16) via multiple independent sources, consistent with the page's existing 'about two weeks after exams end' framing — no date change needed, only the confirmation and a more specific official portal reference (g12.emis.gov.eg) were added. Also documented a concrete lookalike-domain trap (natiga.egymoe.com vs. the real moe.gov.eg/emis.gov.eg domains) to sharpen the existing generic fake-link warning into a checkable rule."
 }
