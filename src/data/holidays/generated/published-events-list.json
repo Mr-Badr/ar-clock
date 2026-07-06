@@ -909,6 +909,15 @@
     "day": 20
   },
   {
+    "id": "cost-of-living-allowance-bahrain",
+    "slug": "cost-of-living-allowance-bahrain",
+    "name": "علاوة الغلاء في البحرين",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "bh",
+    "day": 15
+  },
+  {
     "id": "direct-social-support-morocco",
     "slug": "direct-social-support-morocco",
     "name": "الدعم الاجتماعي المباشر",

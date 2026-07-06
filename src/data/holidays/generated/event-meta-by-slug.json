@@ -1862,6 +1862,15 @@
     "canonicalPath": "/holidays/bac-results-uae",
     "aliases": []
   },
+  "cost-of-living-allowance-bahrain": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/cost-of-living-allowance-bahrain",
+    "aliases": []
+  },
   "direct-social-support-morocco": {
     "publishStatus": "published",
     "countryScope": "none",
