@@ -38,7 +38,6 @@ user action, item #1) · Algeria + Egypt results pages refreshed and reindex-req
 
 | # | Action | Deadline | Why |
 |---|---|---|---|
-| 6 | **Build the Saudi school-calendar hub** — `/calculators/saudi-school-calendar` following the `saudi-pay-dates` hub pattern (§8 of event-creation-lessons). VERIFIED tonight: 1448 two-semester calendar with study start **Aug 23, 2026**, extended breaks: National Day Sep 23–26 · autumn Nov 20–28 · mid-year Jan 8–16 · Founding Day Feb 19–22 · Eid al-Fitr Feb 26–Mar 13 · Eid al-Adha May 7–22 (Eids hilal-dependent — say so). Server-rendered table + countdown links to events we ALREADY have (`saudi-national-day`, `saudi-founding-day`, `autumn-season`, `school-start-saudi`, `eid-al-fitr`, `eid-al-adha`, `winter-season`). Verify every date against moe.gov.sa before publishing, not blog aggregators. | Jul 18 | "التقويم الدراسي 1448 / متى الإجازة القادمة / كم باقي على إجازة..." is a huge Saudi (RPM 9.00) query family that re-fires ALL YEAR; SERP is fragmented blogs; our countdown network is a real differentiator; must index before Aug 23 |
 | 7 | **Saudi near-top-10 pushes** from the GSC pass: `hajj-season` (pos 7.05) · `autumn-season` (pos 7.36 — autumn break Nov 20–28 makes this forward demand). NOTE: Ashura 1448 already PASSED (Jun 25, 2026 — the page auto-rolled to 1449 ≈ Jun 2027, no urgency). | Jul 16 | Position 7→4 on existing impressions is the cheapest traffic on the site |
 | 7b | **"كم باقي على رمضان" evergreen push** — the `ramadan` page already counts down to 1449 (≈Feb 2027) and this query is searched daily ALL YEAR. Verify title/keywords lead with the countdown intent ("كم باقي على رمضان {{year}}") and add internal links to it from the highest-traffic pages (prayer city pages, date pages, mawlid). Same treatment for `eid-al-fitr`. | Jul 18 | 7-month daily-search runway on a page that already exists — the definition of forward demand |
 
@@ -219,11 +218,7 @@ in `project-revenue-diagnosis` memory and git history, not here. This section on
 
 Queued in PART 0 (the 30-day sprint) with deadlines — summary here for the record:
 
-1. **Saudi school-calendar hub** (`/calculators/saudi-school-calendar`, calculator-style info page,
-   not an event) — 1448 dates verified 2026-07-06 (school starts Aug 23, 2026; extended breaks listed
-   in PART 0 #6; re-verify against moe.gov.sa at build time). Differentiator: every row countdown-links
-   to an event page we already run.
-2. **Wave 6 countdown gap-fill (6 events, PART 0 Wave 6 table)** — from mapping English countdown-site
+1. **Wave 6 countdown gap-fill (6 events, PART 0 Wave 6 table)** — from mapping English countdown-site
    staples against our catalog: `riyadh-season` (Oct, thin SERP, Saudi RPM) · `asian-cup-2027`
    (Jan 7–Feb 5, 2027, official) · `dst-abolition-morocco` (permanent GMT return after summer 2026 —
    live news wave in our biggest traffic country) · `winter-time-egypt` (last Fri of Oct) ·

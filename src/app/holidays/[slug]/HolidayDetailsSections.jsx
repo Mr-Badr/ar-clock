@@ -52,6 +52,7 @@ const CATEGORY_CALCULATORS = {
     { href: '/calculators/gpa',           label: 'المعدل التراكمي',    desc: 'احسب GPA بدقة وفق جدول درجاتك',     accent: 'var(--blue)' },
     { href: '/calculators/gpa-to-percent', label: 'تحويل المعدل',      desc: 'حوّل GPA إلى نسبة مئوية',            accent: 'var(--accent)' },
     { href: '/calculators/annual-leave',  label: 'حاسبة الإجازات',    desc: 'أيام إجازتك المستحقة قانونياً',      accent: 'var(--green)' },
+    { href: '/calculators/saudi-school-calendar', label: 'التقويم الدراسي السعودي', desc: 'بداية الدراسة وكل الإجازات 1448', accent: 'var(--calc-cat-education)' },
   ],
   social: [
     { href: '/calculators/pregnancy', label: 'حاسبة الحمل',    desc: 'موعد الولادة وأسبوع الحمل بدقة',   accent: 'var(--blue)' },

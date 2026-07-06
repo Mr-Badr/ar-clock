@@ -22,6 +22,7 @@ const financeToolEnrichmentByHref = new Map(
     'net-salary',
     'pregnancy-weeks',
     'saudi-pay-dates',
+    'saudi-school-calendar',
     'gpa-to-percent',
     'zakat',
     'gpa',

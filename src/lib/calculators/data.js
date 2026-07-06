@@ -1440,6 +1440,35 @@ const _CALCULATOR_ROUTES_RAW = [
     ],
   },
   {
+    slug: 'saudi-school-calendar',
+    href: '/calculators/saudi-school-calendar',
+    cluster: 'education',
+    shortLabel: 'التقويم الدراسي السعودي',
+    title: 'التقويم الدراسي السعودي 1448 — بداية الدراسة وكل الإجازات',
+    heroTitle: 'التقويم الدراسي السعودي 1448 | متى تبدأ الدراسة ومتى الإجازة القادمة',
+    description:
+      'التقويم الدراسي السعودي 1448 كاملاً: بداية العام الدراسي، إجازة اليوم الوطني، الخريف، منتصف العام، يوم التأسيس، عيد الفطر وعيد الأضحى — مع عد تنازلي لكل إجازة.',
+    accent: 'var(--calc-cat-education)',
+    accentSoft: 'color-mix(in srgb, var(--calc-cat-education) 12%, var(--bg-surface-2))',
+    badge: 'تعليم / تقويم',
+    keywords: [
+      'التقويم الدراسي 1448',
+      'متى تبدأ الدراسة 1448',
+      'كم باقي على الدراسة',
+      'التقويم الدراسي السعودي {{year}}',
+      'متى الإجازة القادمة',
+      'إجازة الخريف 1448',
+      'إجازة منتصف العام 1448',
+      'إجازة يوم التأسيس 1448',
+      'كم باقي على إجازة نهاية الأسبوع',
+      'التقويم الدراسي 1448 pdf',
+      'موعد بداية الفصل الدراسي الأول 1448',
+      'إجازات المدارس السعودية 1448',
+      'كم باقي على العطلة الصيفية',
+      'جدول الإجازات الدراسية السعودية {{year}}',
+    ],
+  },
+  {
     slug: 'saudi-pay-dates',
     href: '/calculators/saudi-pay-dates',
     cluster: 'finance',
@@ -2438,6 +2467,7 @@ export const CALCULATOR_HUBS = [
     routeSlugs: [
       'gpa',
       'gpa-to-percent',
+      'saudi-school-calendar',
     ],
   },
   {

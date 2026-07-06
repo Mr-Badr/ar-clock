@@ -25,6 +25,8 @@ const CALCULATOR_LINKS = {
   'saudi-national-day':  { href: '/calculators/iqama',            title: 'حاسبة الإقامة',          desc: 'احسب رسوم تجديد الإقامة وتكلفة المرافقين.' },
   'uae-national-day':    { href: '/calculators/uae-end-of-service', title: 'نهاية الخدمة الإمارات', desc: 'احسب مكافأة نهاية خدمتك في الإمارات وفق قانون 2021.' },
   'kuwait-national-day': { href: '/calculators/annual-leave',     title: 'حاسبة الإجازات',         desc: 'احسب أيام إجازتك المستحقة وفق قانون العمل الكويتي.' },
+  // School-year events
+  'school-start-saudi': { href: '/calculators/saudi-school-calendar', title: 'التقويم الدراسي السعودي', desc: 'كل إجازات العام الدراسي 1448 في جدول واحد.' },
 };
 
 function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {

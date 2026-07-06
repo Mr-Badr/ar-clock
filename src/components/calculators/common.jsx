@@ -95,7 +95,7 @@ function getComplementSlugs(cluster) {
     sleep: ['age-calculator', 'sleep', 'time-now'],
     'personal-finance': ['net-salary', 'salary', 'monthly-installment', 'end-of-service-benefits', 'zakat', 'investment'],
     health: ['bmi', 'fasting', 'pregnancy', 'pregnancy-weeks', 'ovulation', 'age-calculator'],
-    education: ['gpa', 'gpa-to-percent', 'percentage'],
+    education: ['gpa', 'gpa-to-percent', 'percentage', 'saudi-school-calendar'],
   };
 
   return complementSlugsByCluster[cluster] || ['iqama', 'net-salary', 'electricity-bill', 'inheritance'];

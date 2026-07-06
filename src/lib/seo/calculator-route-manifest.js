@@ -35,6 +35,7 @@ export const STATIC_CALCULATOR_SEO_ROUTES = Object.freeze([
   { path: '/calculators/building/tiles', priority: 0.8, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/building/paint', priority: 0.8, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/saudi-pay-dates', priority: 0.92, changeFrequency: 'monthly', websitePart: true },
+  { path: '/calculators/saudi-school-calendar', priority: 0.92, changeFrequency: 'monthly', websitePart: true },
   { path: '/calculators/gpa-to-percent', priority: 0.91, changeFrequency: 'yearly', websitePart: true },
   { path: '/calculators/pregnancy-weeks', priority: 0.93, changeFrequency: 'yearly', websitePart: true },
   { path: '/calculators/net-salary', priority: 0.92, changeFrequency: 'yearly', websitePart: true },

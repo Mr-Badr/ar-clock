@@ -258,6 +258,12 @@ const CALC_CATEGORIES: CalcCategory[] = [
         desc: "احسب النسبة والخصم والزيادة",
         icon: Percent,
       },
+      {
+        href: "/calculators/saudi-school-calendar",
+        label: "التقويم الدراسي السعودي",
+        desc: "بداية الدراسة والإجازات 1448",
+        icon: Calendar,
+      },
     ],
   },
   {
