@@ -253,7 +253,13 @@ For `"type": "monthly"` events (salary, pension, support payments):
 3. **Don't add aliasSlugs to single-country events** — triggers `base_country_leakage`
 4. **Don't skip `{{year}}` in Q2 question** — "كم باقي على X؟" won't match "كم باقي على X year" keyword
 5. **Don't run validate:holidays without events:build first** — validates stale compiled output
-6. **Don't hardcode years in any content field** — use `{{year}}`, `{{nextYear}}`
+6. **Don't hardcode years in any content field** — use `{{year}}`, `{{nextYear}}`. The exact validator
+   rule (`hasHardcodedYear` in `src/lib/event-content/schema.js`): any bare 4-digit `20XX` number
+   >= `currentYear - 1` anywhere in content trips `hardcoded_year_detected` (ISO dates, URLs, and
+   `datePublished`/`dateModified`/`updatedAt` keys are exempt). Citing an OLD year as a historical/legal
+   fact is fine (e.g. "يوليو 2024" passed when current year was 2026); citing THIS year or last year is
+   not — when a real fact's date falls in that window (e.g. "a directive effective January 2026" when
+   the current year is 2026), say "مؤخراً" / "بعد آخر زيادة" instead of the literal month+year.
 7. **Don't count "related_not_reciprocal" as a blocker** — it's a warning; events:sync passes anyway
 8. **Don't write content without the research template filled** — rankings come from genuine value over competitors, not from passing the validator
 9. **`research_fact_sources_below_minimum:N`** — add at least 3 `sources[]` entries with real official URLs; 2 is below minimum. Blocked by `events:sync`.
