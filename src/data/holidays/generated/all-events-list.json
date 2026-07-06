@@ -946,6 +946,15 @@
     "day": 3
   },
   {
+    "id": "job-security-oman",
+    "slug": "job-security-oman",
+    "name": "الأمان الوظيفي في عمان",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "om",
+    "day": 28
+  },
+  {
     "id": "libya-independence-day",
     "slug": "libya-independence-day",
     "name": "عيد الاستقلال الليبي",
@@ -1200,6 +1209,15 @@
     "_countryCode": "om",
     "month": 8,
     "day": 31
+  },
+  {
+    "id": "social-assistance-bahrain",
+    "slug": "social-assistance-bahrain",
+    "name": "الضمان الاجتماعي في البحرين",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "bh",
+    "day": 15
   },
   {
     "id": "social-assistance-kuwait",

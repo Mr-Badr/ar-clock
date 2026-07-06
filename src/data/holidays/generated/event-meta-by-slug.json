@@ -1904,6 +1904,17 @@
     "canonicalPath": "/holidays/iraq-national-day",
     "aliases": []
   },
+  "job-security-oman": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "om"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/job-security-oman",
+    "aliases": []
+  },
   "libya-independence-day": {
     "publishStatus": "published",
     "countryScope": "none",
@@ -2193,6 +2204,15 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/school-start-oman",
+    "aliases": []
+  },
+  "social-assistance-bahrain": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/social-assistance-bahrain",
     "aliases": []
   },
   "social-assistance-kuwait": {
