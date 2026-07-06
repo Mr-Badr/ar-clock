@@ -27,14 +27,13 @@ and months, ranked by recurrence (things searched every month/day beat one-offs)
 
 | # | Action | Owner | Deadline | Why |
 |---|---|---|---|---|
-| 0 | **Commit + deploy what's already built.** `job-security-oman` + `social-assistance-bahrain` sit uncommitted in the working tree. Pages earn nothing until they're live and indexed. Then request GSC indexing for both. | Claude → user deploys | Jul 7 | Free — work is done |
 | 1 | **AdSense dashboard toggles (Part 2b).** Anchor incl. wider screens · Vignette both platforms · **Side rails ON** (the desktop fix) · in-page ≈ medium. Screenshot the toggles after. | **USER — 10 minutes** | Jul 7 | Biggest single RPM lever left; 86% of revenue is Auto ads and the top formats are OFF |
-| 2 | **Algeria BAC results readiness** — `bac-results-algeria` has `type: fixed, date: Jul 14`; the official 2026 announcement is **Jul 20, ~10:00**. Fix the date, refresh content with official استعلام channels (bac.onec.dz), add "ظهرت النتيجة — رابط الاستعلام" FAQ phrasing. Request GSC reindex. | Claude | **Jul 15 hard** | Algeria RPM is low but this is a multi-million-query day and the page exists; wrong date = zero trust + zero rank |
 | 3 | **Egypt Thanaweya results readiness** — exams end Jul 16, results expected late Jul/early Aug. Refresh `thanaweya-results` (+`thanaweya-exams` cross-link) with 2026-confirmed facts + استعلام links. Reindex. | Claude | Jul 18 | Biggest single Arabic search event of the summer; page exists |
 
-**Week-1 result checkpoint (Jul 13):** deploy done · toggle screenshot received · Algeria+Egypt
-results pages refreshed and reindex-requested · 2 new events live with `ci:check` green · AdSense
-daily revenue vs 0.2 MAD baseline (expect first movement from toggles within 3–5 days).
+**Week-1 result checkpoint (Jul 13):** deploy done · toggle screenshot received (pending user action)
+· Algeria results page refreshed and reindex-requested (done 2026-07-06) · Egypt readiness pending ·
+4 new events live with `ci:check` green · AdSense daily revenue vs 0.2 MAD baseline (expect first
+movement from toggles within 3–5 days of the user completing item #1).
 
 ## Week 2 (Jul 13–20) — the Saudi school-calendar hub + Saudi pushes
 

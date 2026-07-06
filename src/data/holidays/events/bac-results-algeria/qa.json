@@ -1,13 +1,19 @@
 {
   "slug": "bac-results-algeria",
-  "publishStatus": "drafted",
+  "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-06-22T23:59:15.632Z"
+  "notes": [
+    "Readiness refresh 2026-07-06 (Week-1 sprint item #2): the page carried a wrong fixed date (July 14) and vague 'منتصف يوليو' phrasing — corrected to the confirmed official announcement, July 20 at 10:00, per two independent sources (elkhabar.com, al-ain.com).",
+    "Corrected the official domain throughout (bac.onec.dz, not the bare onec.dz previously used) and added the two real inquiry channels: awlya.education.dz for enrolled students (متمدرسون) and the free *567# USSD/SMS code via Mobilis/Ooredoo/Djezzy — both were missing from the prior content and from every competitor page checked.",
+    "Added a 'هل ظهرت النتيجة؟' FAQ per the backlog's explicit ask for live-mode phrasing distinct from the pre-announcement countdown question; fixed a direct_answer_missing trip caused by that FAQ's answer initially restating the short question before the first '؟'.",
+    "research.json was completely empty before this pass despite the event being live — backfilled to the site's standard minimums (7 competitors, 9 coverageMatrix rows, 8 keywordGaps, 6 unansweredQuestions, 5 differentiationIdeas, 4 factSources).",
+    "GSC reindex request for this URL is a manual Search Console action — flagging for the user to submit, not something this pass can do."
+  ],
+  "updatedAt": "2026-07-06T10:33:32.688Z"
 }
