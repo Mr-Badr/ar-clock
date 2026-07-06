@@ -17,6 +17,7 @@ import {
   CheckCircle2,
   FileText,
   HelpCircle,
+  Moon,
   ShieldCheck,
   type LucideIcon,
 } from 'lucide-react';
@@ -530,6 +531,14 @@ async function ConverterDynamicContent() {
                   </span>
                   <span className={styles.cardTitle}>تقويم {y}</span>
                   <span className={styles.cardBody}>افتح السنة كاملة عندما يكون الموعد جزءاً من خطة شهرية أو سنوية.</span>
+                </Link>
+
+                <Link href="/holidays/ramadan" className={styles.linkCard}>
+                  <span className={styles.cardIcon} aria-hidden="true">
+                    <Moon size={16} strokeWidth={1.75} />
+                  </span>
+                  <span className={styles.cardTitle}>كم باقي على رمضان</span>
+                  <span className={styles.cardBody}>عد تنازلي مباشر لبداية شهر رمضان القادم بالتقويم الهجري.</span>
                 </Link>
               </div>
             </nav>

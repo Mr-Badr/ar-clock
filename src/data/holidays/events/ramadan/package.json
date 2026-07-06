@@ -43,12 +43,12 @@
     },
     "faq": [
       {
-        "question": "متى رمضان {{year}} - {{hijriYear}} هـ؟",
-        "answer": "رمضان {{year}} - {{hijriYear}} هـ يبدأ تقريباً في {{formattedDate}} بحسب الحساب المعروض في الصفحة. لكن الموعد النهائي قد يختلف يوماً واحداً حسب ثبوت الهلال والإعلان الرسمي في بلدك."
-      },
-      {
         "question": "كم باقي على رمضان {{year}}؟",
         "answer": "يتبقى على رمضان {{year}} - {{hijriYear}} هـ {{daysRemaining}} يوماً، ويُحدَّث العداد تلقائياً حتى موعد رمضان {{year}} المتوقع. وتاريخ رمضان {{year}} الموضح في الصفحة هو أول يوم من بداية رمضان {{year}} المحسوب."
+      },
+      {
+        "question": "متى رمضان {{year}} - {{hijriYear}} هـ؟",
+        "answer": "رمضان {{year}} - {{hijriYear}} هـ يبدأ تقريباً في {{formattedDate}} بحسب الحساب المعروض في الصفحة. لكن الموعد النهائي قد يختلف يوماً واحداً حسب ثبوت الهلال والإعلان الرسمي في بلدك."
       },
       {
         "question": "ما هو رمضان؟",
@@ -148,16 +148,16 @@
       }
     ],
     "seoMeta": {
-      "titleTag": "رمضان {{year}} - {{hijriYear}} هـ | الموعد المتوقع وبداية الصيام",
+      "titleTag": "كم باقي على رمضان {{year}} - {{hijriYear}} هـ؟ | العد التنازلي",
       "metaDescription": "رمضان {{year}} - {{hijriYear}} هـ: {{formattedDate}}. عداد مباشر + سبب اختلاف بداية الشهر بين الدول وإجازات شهر رمضان.",
-      "h1": "متى رمضان {{year}} - {{hijriYear}} هـ؟ | الموعد المتوقع",
+      "h1": "كم باقي على رمضان {{year}} - {{hijriYear}} هـ؟ | العد التنازلي",
       "canonicalPath": "/holidays/ramadan",
-      "ogTitle": "متى رمضان {{year}} - {{hijriYear}} هـ؟ | الموعد المتوقع",
+      "ogTitle": "كم باقي على رمضان {{year}} - {{hijriYear}} هـ؟ | العد التنازلي",
       "ogDescription": "رمضان {{year}} - {{hijriYear}} هـ: {{formattedDate}} — عداد مباشر وبداية الشهر.",
       "ogImageAlt": "رمضان {{year}} — {{formattedDate}}",
-      "primaryKeyword": "متى رمضان {{year}}",
+      "primaryKeyword": "كم باقي على رمضان {{year}}",
       "secondaryKeywords": [
-        "كم باقي على رمضان {{year}}",
+        "متى رمضان {{year}}",
         "موعد رمضان {{year}}",
         "بداية رمضان {{year}}",
         "هل رمضان إجازة",

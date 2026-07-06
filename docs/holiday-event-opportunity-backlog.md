@@ -36,10 +36,9 @@ user action, item #1) · Algeria + Egypt results pages refreshed and reindex-req
 
 ## Week 2 (Jul 13–20) — the Saudi school-calendar hub + Saudi pushes
 
-| # | Action | Deadline | Why |
-|---|---|---|---|
-| 7 | **Saudi near-top-10 pushes** from the GSC pass: `hajj-season` (pos 7.05) · `autumn-season` (pos 7.36 — autumn break Nov 20–28 makes this forward demand). NOTE: Ashura 1448 already PASSED (Jun 25, 2026 — the page auto-rolled to 1449 ≈ Jun 2027, no urgency). | Jul 16 | Position 7→4 on existing impressions is the cheapest traffic on the site |
-| 7b | **"كم باقي على رمضان" evergreen push** — the `ramadan` page already counts down to 1449 (≈Feb 2027) and this query is searched daily ALL YEAR. Verify title/keywords lead with the countdown intent ("كم باقي على رمضان {{year}}") and add internal links to it from the highest-traffic pages (prayer city pages, date pages, mawlid). Same treatment for `eid-al-fitr`. | Jul 18 | 7-month daily-search runway on a page that already exists — the definition of forward demand |
+Week 2 is now empty — all Claude-actionable items shipped 2026-07-06 (ahead of schedule). Actual
+position movement for item #7 (hajj-season/autumn-season) needs a fresh GSC export in ~1-2 weeks to
+confirm the internal-link reinforcement moved the needle; see Part 6 monitoring calendar.
 
 ## Weeks 3–4 (Jul 20–Aug 6) — wave harvest + Mawlid + measurement
 
@@ -313,6 +312,11 @@ direct-source verification (see below).
 - **~2026-07-26**: GSC check — Wave 5 events + Reef + Kuwait labor indexing; `saned-saudi` dropping
   out; `sand-payment-saudi` gaining. Zero impressions on Wave 5 by then = indexing bug, investigate.
 - **Early August**: Mawlid cluster position check (pool should be inflating). This is the money window.
+- **~2026-07-20 (2 weeks after the 2026-07-06 internal-link reinforcement)**: fresh GSC export to check
+  whether `hajj-season` (was pos 7.05) and `autumn-season` (was pos 7.36) moved from the new reciprocal
+  links added from `summer-vacation`/`back-to-school`/`school-start-algeria`/`ramadan`. Also check
+  whether `saudi-school-calendar` (shipped 2026-07-06) has started indexing ahead of the Aug 23 school
+  start, and whether the `ramadan`/`eid-al-fitr` title changes to lead with "كم باقي على" moved CTR.
 - **Monthly**: `validate:holidays:strict` clean run + category-map audit after any new event.
 
 ---

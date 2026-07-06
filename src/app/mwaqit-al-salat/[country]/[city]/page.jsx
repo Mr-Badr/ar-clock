@@ -372,6 +372,16 @@ export default async function PrayerTimesPage({ params }) {
       label: `فرق التوقيت من ${cityNameAr}`,
       description: `قارن توقيت ${cityNameAr} مع أي مدينة عربية أو عالمية في الوقت الفعلي.`,
     },
+    {
+      href: '/holidays/ramadan',
+      label: 'كم باقي على رمضان',
+      description: 'عد تنازلي مباشر لبداية شهر رمضان المتوقعة وسبب اختلافها بين الدول.',
+    },
+    {
+      href: '/holidays/eid-al-fitr',
+      label: 'كم باقي على عيد الفطر',
+      description: 'عد تنازلي مباشر لعيد الفطر مع موعد زكاة الفطر وصلاة العيد.',
+    },
   ];
 
   const [siblingCitiesRaw, siblingCitiesNowIso] = await Promise.all([

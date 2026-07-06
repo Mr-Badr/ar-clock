@@ -310,6 +310,11 @@ export default async function CountryPrayerPage({ params }) {
       label: `المناسبات الإسلامية القادمة في ${countryAr}`,
       description: `تابع العد التنازلي لعاشوراء والمولد النبوي ورمضان والمناسبات القادمة في ${countryAr}.`,
     },
+    {
+      href: '/holidays/ramadan',
+      label: 'كم باقي على رمضان',
+      description: 'عد تنازلي مباشر لبداية شهر رمضان المتوقعة وسبب اختلافها بين الدول.',
+    },
   ].filter(Boolean);
 
   const breadcrumbSchema = {

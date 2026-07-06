@@ -43,12 +43,12 @@
     },
     "faq": [
       {
-        "question": "متى عيد الفطر {{year}}؟",
-        "answer": "عيد الفطر {{year}} يوافق {{formattedDate}} تقريباً، الموافق {{hijriDate}}، مع بقاء الإعلان الرسمي النهائي مرتبطاً بثبوت هلال شوال في بلدك."
-      },
-      {
         "question": "كم باقي على عيد الفطر {{year}}؟",
         "answer": "يتبقى على عيد الفطر {{year}} {{daysRemaining}} يوماً. موعد عيد الفطر {{year}} المتوقع هو {{formattedDate}}، وتاريخ عيد الفطر {{year}} يُحسَم بعد ثبوت رؤية هلال شوال أو الإعلان الرسمي في بلدك."
+      },
+      {
+        "question": "متى عيد الفطر {{year}}؟",
+        "answer": "عيد الفطر {{year}} يوافق {{formattedDate}} تقريباً، الموافق {{hijriDate}}، مع بقاء الإعلان الرسمي النهائي مرتبطاً بثبوت هلال شوال في بلدك."
       },
       {
         "question": "متى ينتهي رمضان {{year}} ويبدأ العيد؟",
@@ -158,16 +158,16 @@
       }
     ],
     "seoMeta": {
-      "titleTag": "متى عيد الفطر {{year}} - {{hijriYear}} هـ؟ | الموعد وزكاة الفطر",
+      "titleTag": "كم باقي على عيد الفطر {{year}} - {{hijriYear}} هـ؟ | العد التنازلي",
       "metaDescription": "عيد الفطر {{year}} - {{hijriYear}} هـ: {{formattedDate}}. عداد دقيق + موعد زكاة الفطر وصلاة العيد وإجازات الدول العربية.",
-      "h1": "عيد الفطر {{year}} - {{hijriYear}} هـ | الموعد وزكاة الفطر",
+      "h1": "كم باقي على عيد الفطر {{year}} - {{hijriYear}} هـ؟ | العد التنازلي",
       "canonicalPath": "/holidays/eid-al-fitr",
-      "ogTitle": "عيد الفطر {{year}} - {{hijriYear}} هـ | العد التنازلي والشرح العملي",
+      "ogTitle": "كم باقي على عيد الفطر {{year}} - {{hijriYear}} هـ؟ | العد التنازلي والشرح العملي",
       "ogDescription": "عيد الفطر {{year}} - {{hijriYear}} هـ: {{formattedDate}} — زكاة الفطر وإجازات الدول.",
       "ogImageAlt": "عيد الفطر {{year}} — {{formattedDate}}",
-      "primaryKeyword": "متى عيد الفطر {{year}}",
+      "primaryKeyword": "كم باقي على عيد الفطر {{year}}",
       "secondaryKeywords": [
-        "كم باقي على عيد الفطر {{year}}",
+        "متى عيد الفطر {{year}}",
         "موعد عيد الفطر {{year}}",
         "تاريخ عيد الفطر {{year}}",
         "أول يوم عيد الفطر {{year}}",

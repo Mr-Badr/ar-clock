@@ -500,6 +500,14 @@ async function TodayDynamicContent() {
                 <span className={styles.cardBody}>تحويل بين الهجري والميلادي بثلاث طرق</span>
               </Link>
 
+              <Link href="/holidays/ramadan" className={styles.linkCard}>
+                <span className={styles.cardIcon} aria-hidden="true">
+                  <Moon size={16} strokeWidth={1.75} />
+                </span>
+                <span className={styles.cardTitle}>كم باقي على رمضان</span>
+                <span className={styles.cardBody}>عد تنازلي مباشر لبداية شهر رمضان القادم</span>
+              </Link>
+
               </div>
             </nav>
           </section>
