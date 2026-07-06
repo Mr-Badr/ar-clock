@@ -1,0 +1,19 @@
+{
+  "slug": "retiree-salary-iraq",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Status-tracker format (no fixed date), cloned from the social-welfare-iraq pattern per backlog instruction — Iraq's MoF 'إطلاق تمويل' funding-release announcements gate disbursement month by month, not a fixed legal day. day: 1 used as the closest safe engine anchor (disbursement generally starts in the first days of the month), with the real non-fixed rule disclosed honestly in answerSummary + a dedicated FAQ, matching the job-security-oman precedent for approximate anchors.",
+    "Corrected a research error before publishing: an early draft assumed the legal basis was 'Law No. 39 of 2014' based on an imprecise backlog note — verified via multi-source search that the correct citation is the Unified Retirement Law No. 9 of 2014 (issued 2014-03-03), amended 2019. The wrong number was never used in the published content.",
+    "Caught a country-mix-up near-miss: beseyat.com/salaries/pension-dates.php initially looked like a real Iraqi competitor with a working countdown, but direct fetch showed it covers Saudi Arabian pensions, not Iraqi ones — excluded from competitors, documented in research.json instead (same failure mode as the earlier pension-day-qatar/GOSI mix-up).",
+    "Explicitly distinguished this event from the already-published social-welfare-iraq (a different program: social-welfare network for non-working categories vs. civil/military pension for former employees) to avoid any duplicate-intent cannibalization.",
+    "No specific misleading viral claim was found for this program beyond generic recurring 'payment delay' rumors — handled as part of the funding-mechanism explanation (إطلاق التمويل vs. actual disbursement) rather than a separate myth-debunking paragraph."
+  ],
+  "updatedAt": "2026-07-06T07:28:44.404Z"
+}

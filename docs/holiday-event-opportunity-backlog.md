@@ -18,7 +18,7 @@ and months, ranked by recurrence (things searched every month/day beat one-offs)
 
 | Demand type | What fires | When it fires |
 |---|---|---|
-| 🔁 Every month, forever | 32+ live payday/benefit pages + 1 new build left (Iraq retirees tracker) | Spikes ~20th → 1st of EVERY month — the closest thing to daily-searched money queries |
+| 🔁 Every month, forever | 34+ live payday/benefit pages, Week-1 sprint builds complete | Spikes ~20th → 1st of EVERY month — the closest thing to daily-searched money queries |
 | 🔁 Daily, all year | "كم باقي على رمضان" — Ramadan 1449 ≈ Feb 2027; our `ramadan` page is `type: hijri` so it ALREADY counts down to 1449. Same for eid-al-fitr/adha, mawlid, islamic-new-year (all auto-rolled) | Every day from now to Feb 2027 — 7-month runway |
 | 📈 Building for weeks | Mawlid (Aug 25) — pool historically inflates 5–10× pre-date · Saudi school calendar 1448 (starts Aug 23) · school-start cluster (12 countries, Sept) · Saudi National Day (Sep 23) | Ramp starts late July, peaks Aug–Sep |
 | ⚡ One-shot spikes (still ahead of us) | Algeria BAC results **Jul 20** (not passed — Kuwait/Morocco/Tunisia are the ones already done) · Egypt Thanaweya results ~Jul 28–Aug 2 · Jordan Tawjihi ~early Aug | This month, on pages that already exist — readiness cost ≈ 1 hour each |
@@ -31,7 +31,6 @@ and months, ranked by recurrence (things searched every month/day beat one-offs)
 | 1 | **AdSense dashboard toggles (Part 2b).** Anchor incl. wider screens · Vignette both platforms · **Side rails ON** (the desktop fix) · in-page ≈ medium. Screenshot the toggles after. | **USER — 10 minutes** | Jul 7 | Biggest single RPM lever left; 86% of revenue is Auto ads and the top formats are OFF |
 | 2 | **Algeria BAC results readiness** — `bac-results-algeria` has `type: fixed, date: Jul 14`; the official 2026 announcement is **Jul 20, ~10:00**. Fix the date, refresh content with official استعلام channels (bac.onec.dz), add "ظهرت النتيجة — رابط الاستعلام" FAQ phrasing. Request GSC reindex. | Claude | **Jul 15 hard** | Algeria RPM is low but this is a multi-million-query day and the page exists; wrong date = zero trust + zero rank |
 | 3 | **Egypt Thanaweya results readiness** — exams end Jul 16, results expected late Jul/early Aug. Refresh `thanaweya-results` (+`thanaweya-exams` cross-link) with 2026-confirmed facts + استعلام links. Reindex. | Claude | Jul 18 | Biggest single Arabic search event of the summer; page exists |
-| 5 | **Build `retiree-salary-iraq` as a STATUS-TRACKER** (clone the `social-welfare-iraq` format — NOT a countdown; funding dates are MoF announcements, not law). "متى تنزل رواتب المتقاعدين" is one of Iraq's biggest recurring monthly queries; news sites re-win it every month with junk articles. | Claude | Jul 13 | Iraq RPM is bottom-tier, but the tracker template makes this a near-zero-effort page against enormous volume — passes "only-if-free" |
 
 **Week-1 result checkpoint (Jul 13):** deploy done · toggle screenshot received · Algeria+Egypt
 results pages refreshed and reindex-requested · 2 new events live with `ci:check` green · AdSense
@@ -222,16 +221,11 @@ in `project-revenue-diagnosis` memory and git history, not here. This section on
 
 Queued in PART 0 (the 30-day sprint) with deadlines — summary here for the record:
 
-1. **`retiree-salary-iraq`** — STATUS-TRACKER format only (the `social-welfare-iraq` pattern). No
-   fixed legal date exists: Iraq's MoF "إطلاق تمويل" announcements gate disbursement month by month
-   (usually funding ~20–25 of prior month, disbursement start ~1st). Building it as `type: monthly,
-   day: X` would fabricate a date — the SANED trap. Volume: news outlets (Shafaq, Alsumaria, al-Ain)
-   re-publish "موعد صرف رواتب المتقاعدين" articles EVERY month; query cluster is among Iraq's largest.
-2. **Saudi school-calendar hub** (`/calculators/saudi-school-calendar`, calculator-style info page,
+1. **Saudi school-calendar hub** (`/calculators/saudi-school-calendar`, calculator-style info page,
    not an event) — 1448 dates verified 2026-07-06 (school starts Aug 23, 2026; extended breaks listed
    in PART 0 #6; re-verify against moe.gov.sa at build time). Differentiator: every row countdown-links
    to an event page we already run.
-3. **Wave 6 countdown gap-fill (6 events, PART 0 Wave 6 table)** — from mapping English countdown-site
+2. **Wave 6 countdown gap-fill (6 events, PART 0 Wave 6 table)** — from mapping English countdown-site
    staples against our catalog: `riyadh-season` (Oct, thin SERP, Saudi RPM) · `asian-cup-2027`
    (Jan 7–Feb 5, 2027, official) · `dst-abolition-morocco` (permanent GMT return after summer 2026 —
    live news wave in our biggest traffic country) · `winter-time-egypt` (last Fri of Oct) ·

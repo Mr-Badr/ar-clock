@@ -2098,6 +2098,17 @@
     "canonicalPath": "/holidays/republic-day-tunisia",
     "aliases": []
   },
+  "retiree-salary-iraq": {
+    "publishStatus": "published",
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "iq"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/retiree-salary-iraq",
+    "aliases": []
+  },
   "revolution-day-morocco": {
     "publishStatus": "published",
     "countryScope": "none",

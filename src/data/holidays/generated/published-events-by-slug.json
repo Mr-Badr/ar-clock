@@ -1116,6 +1116,15 @@
     "month": 7,
     "day": 25
   },
+  "retiree-salary-iraq": {
+    "id": "retiree-salary-iraq",
+    "slug": "retiree-salary-iraq",
+    "name": "رواتب المتقاعدين العراق",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "iq",
+    "day": 1
+  },
   "revolution-day-morocco": {
     "id": "revolution-day-ma",
     "slug": "revolution-day-morocco",
