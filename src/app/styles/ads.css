@@ -138,6 +138,27 @@
     }
   }
 
+  /* Large desktop (27"+ monitors, ≥1800px): widen rails from 240px to 300px so
+     Google can serve 300×600 / 300×250 — the strongest-RPM desktop display
+     sizes — instead of being limited to 160×600. Content column stays 900px. */
+  @media (min-width: 1800px) {
+    .layout-with-ads[data-rail-mode='single'] {
+      grid-template-columns: 300px minmax(0, 900px);
+    }
+
+    .layout-with-ads[data-rail-mode='dual'] {
+      grid-template-columns: 300px minmax(0, 900px) 300px;
+    }
+
+    .layout-with-ads[data-layout='narrow'][data-rail-mode='dual'] {
+      grid-template-columns: 300px minmax(0, 820px) 300px;
+    }
+
+    .layout-with-ads[data-layout='wide'][data-rail-mode='dual'] {
+      grid-template-columns: 300px minmax(0, 1fr) 300px;
+    }
+  }
+
 
   /* ──────────────────────────────────────────────────────────────────────────
      AD SLOT BASE
@@ -163,6 +184,18 @@
     width: 100%;
     max-width: 100%;
     min-width: 0;
+    /* When Google downgrades the unit to a fixed-width creative it sets an
+       inline `width` on the <ins>; without auto margins the block sits at
+       inline-start (visual RIGHT in RTL) instead of centered. */
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  /* Google wraps fixed-size creatives in a fixed-width block child inside the
+     <ins>. In RTL that child hugs the right edge of the full-width slot —
+     center it. Google never sets its own margin here, so no !important war. */
+  .ad-slot > .adsbygoogle > div {
+    margin-inline: auto;
   }
 
   .ad-slot + .editorial-section,
@@ -423,6 +456,19 @@
       position: relative;
       top: auto;
       max-height: 600px;
+    }
+  }
+
+  /* Matches the ≥1800px rail widening above: the slot itself must grow too,
+     and 620px leaves room for a full 300×600 creative plus the إعلان label. */
+  @media (min-width: 1800px) {
+    .ad-slot--sidebar {
+      width: 300px;
+      max-height: 620px;
+    }
+
+    .ad-slot--sidebar--static {
+      max-height: 620px;
     }
   }
 

@@ -909,6 +909,15 @@
     "day": 20
   },
   {
+    "id": "caf-payment-france",
+    "slug": "caf-payment-france",
+    "name": "موعد صرف الكاف في فرنسا",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "fr",
+    "day": 5
+  },
+  {
     "id": "cost-of-living-allowance-bahrain",
     "slug": "cost-of-living-allowance-bahrain",
     "name": "علاوة الغلاء في البحرين",
@@ -962,6 +971,15 @@
     "category": "support",
     "_countryCode": "om",
     "day": 28
+  },
+  {
+    "id": "kindergeld-germany",
+    "slug": "kindergeld-germany",
+    "name": "موعد صرف الكيندرغيلد في ألمانيا",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "de",
+    "day": 15
   },
   {
     "id": "libya-independence-day",
@@ -1311,6 +1329,18 @@
     "category": "support",
     "_countryCode": "sa",
     "day": 27
+  },
+  {
+    "id": "winter-time-france",
+    "slug": "winter-time-france",
+    "name": "تغيير الساعة في فرنسا",
+    "type": "floating",
+    "category": "astronomy",
+    "_countryCode": "fr",
+    "month": 10,
+    "weekday": 0,
+    "nth": -1,
+    "offsetDays": 0
   },
   {
     "id": "world-fathers-day",

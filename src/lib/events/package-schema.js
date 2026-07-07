@@ -25,7 +25,10 @@ const eventCoreSchema = z.object({
   hijriMonth: z.number().int().min(1).max(12).optional(),
   hijriDay: z.number().int().min(1).max(30).optional(),
   weekday: z.number().int().min(0).max(6).optional(),
-  nth: z.number().int().min(1).max(5).optional(),
+  // -1 is the "last occurrence of this weekday in the month" sentinel — see
+  // nthWeekdayOfMonth in holidays-engine.js. Plain nth:5 fails in years where
+  // the month only has 4 of that weekday.
+  nth: z.union([z.literal(-1), z.number().int().min(1).max(5)]).optional(),
   offsetDays: z.number().int().optional(),
 }).passthrough();
 
@@ -50,6 +53,17 @@ const keywordTemplateSetSchema = z.object({
   country: z.array(z.string()).default([]),
 }).optional();
 
+// For events that will never recur (a one-off news item, a policy status page
+// tied to a program that may not repeat, etc.) — once `afterDate` is in the
+// past, generate-events-index.ts excludes the event from the published index
+// automatically, so the page 404s and drops out of the sitemap without anyone
+// having to remember to manually unpublish it. Source files are never deleted;
+// removing or pushing back `afterDate` brings the page back on the next build.
+const retirementSchema = z.object({
+  afterDate: z.string().min(1),
+  reason: z.string().optional(),
+}).optional();
+
 export const eventPackageSchema = z.object({
   schemaVersion: z.number().int().default(1),
   core: eventCoreSchema,
@@ -65,6 +79,7 @@ export const eventPackageSchema = z.object({
   sourceAuthority: z.string().optional(),
   queueOrder: z.number().int().positive().optional(),
   notes: z.string().optional(),
+  retirement: retirementSchema,
 }).superRefine((value, ctx) => {
   if (value.core.slug && value.canonicalPath && value.canonicalPath !== `/holidays/${value.core.slug}`) {
     ctx.addIssue({

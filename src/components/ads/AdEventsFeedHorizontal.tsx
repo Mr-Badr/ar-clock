@@ -78,8 +78,8 @@ export default function AdEventsFeedHorizontal() {
         style={{ display: "block" }}
         data-ad-client={clientId || undefined}
         data-ad-slot={adSlot}
-        data-ad-format="auto"
-        data-full-width-responsive="true"
+        data-ad-format="horizontal"
+        data-full-width-responsive="false"
       />
     </div>
   );

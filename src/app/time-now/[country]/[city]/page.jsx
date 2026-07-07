@@ -363,7 +363,22 @@ export default async function CityTimePage({ params }) {
       label: 'حاسبة فرق التوقيت',
       description: `قارن توقيت ${cityAr} مع أي مدينة أخرى بسرعة داخل أداة فرق التوقيت.`,
     },
-  ];
+    countrySlug === 'france' ? {
+      href: '/holidays/caf-payment-france',
+      label: 'موعد صرف الكاف في فرنسا',
+      description: 'اعرف موعد صرف الكاف الشهري، قاعدة الاستحقاق بأثر رجعي، والمبلغ الحالي لمنحة الأطفال.',
+    } : null,
+    countrySlug === 'france' ? {
+      href: '/holidays/winter-time-france',
+      label: 'متى تغيير الساعة في فرنسا',
+      description: 'تابع العد التنازلي لموعد تغيير الساعة القادم وأثره على فرق التوقيت مع بلدك.',
+    } : null,
+    countrySlug === 'germany' ? {
+      href: '/holidays/kindergeld-germany',
+      label: 'موعد صرف الكيندرغيلد في ألمانيا',
+      description: 'اعرف كيف تحدد Familienkasse موعد صرف الكيندرغيلد حسب رقمك، والمبلغ الشهري الحالي لكل طفل.',
+    } : null,
+  ].filter(Boolean);
 
   /* ── JSON-LD SCHEMAS ─────────────────────────────────────────── */
   const cityPageId = `${BASE}/time-now/${countrySlug}/${citySlug}`;
@@ -769,6 +784,10 @@ async function CityTimePageSections({
               items={faqItems}
             />
           </div>
+        </section>
+
+        <section className="container mx-auto px-4">
+          <AdInArticle slotId={`mid-time-city-${countrySlug}-${citySlug}-2`} />
         </section>
 
         <section aria-labelledby="city-time-sources-heading" className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>

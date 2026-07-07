@@ -1,5 +1,45 @@
 # Session notes — ar-clock / miqatona.com
-Last updated: 2026-07-05
+Last updated: 2026-07-07
+
+## Ads/UX overhaul (2026-07-07) — uncommitted at session end unless committed later
+1. **RTL ad centering fixed** (`src/app/styles/ads.css`): fixed-width creatives were hugging the
+   visual right edge on desktop. Now `margin-inline:auto` + `text-align:center` on `.ad-slot > .adsbygoogle`
+   and its child div.
+2. **Banner clipping fixed**: AdTopBanner + AdEventsFeedHorizontal switched `data-ad-format`
+   `auto → horizontal` (slots clamp height to 90–100px with overflow:hidden; auto served tall
+   rectangles that rendered clipped). Watch AdSense fill rate for ~2 weeks after deploy.
+3. **27" monitor rails**: ≥1800px rails widen 240→300px (enables 300×600, best desktop RPM size).
+4. **Date converter UX**: `/date/converter` + both direction pages now use `heroCompact`
+   (small H1, one-line lead, no eyebrow) and the tool renders BEFORE the top banner —
+   tool is in the first mobile viewport. Verified via Puppeteer screenshots at 390/1366/2560px.
+5. **time-now density**: country + city templates got a 2nd AdInArticle after the FAQ section
+   (slot `mid-time-{country|city}-...-2`), matching the prayer-page ×2 pattern.
+
+## Wave 7 shipped (2026-07-07, same session as strategy expansion below)
+`caf-payment-france`, `kindergeld-germany`, `winter-time-france` — all live, `ci:check` green
+(116/116 tests, lint/typecheck/seo:validate/geo clean). Full research-first: 9-11 competitors each,
+verified facts from official sources (caf.fr/service-public.gouv.fr, arbeitsagentur.de,
+service-public.gouv.fr + timeanddate.com). Cross-linked via intentCards + from time-now
+France/Germany country and city pages (verified in rendered HTML). Screenshots confirmed countdown
+computes the correct date on all three (CAF → Aug 5 2026, Kindergeld → Jul 15 2026, DST → Oct 25
+2026).
+Two engineering additions this session:
+- `retirement` field on event packages for genuinely one-time events (auto-excludes from published
+  index past `afterDate`, no manual unpublish/delete needed) — schema in package-schema.js, logic
+  in generate-events-index.ts, documented in content-pipeline.md + add-new-event.md.
+- Fixed a real date-engine bug: floating events with `nth: 5` silently computed wrong dates (skip
+  to next year) in years where a month only has 4 occurrences of that weekday. Added `nth: -1`
+  ("last occurrence") support to holidays-engine.js + package-schema.js, verified against
+  timeanddate.com. This was a blocking correctness issue for winter-time-france and any future
+  "last Sunday/Friday of month" event.
+
+## Strategy expansion (2026-07-07, owner session)
+Owner approved the DIASPORA tier: Arabic-language pages for Arabs living in France/Germany/USA
+(Western RPM, near-zero Arabic competition). Backlog doc got Waves 7–9 + creative-feature audit +
+$100–300 honest math. Sprint Week 2 repurposed: build `caf-payment-france` (Jul 12),
+`kindergeld-germany` (Jul 15), `buergergeld-germany` (Jul 20), `winter-time-france` (Jul 25).
+Egypt volume plays gated on ~Jul 30 RPM decision. Competitor alert: **time-now.me** ranks on
+Arabic DST-France queries — direct competitor in our core niche.
 
 ## Revenue target
 $1,000/month in 3 months. Currently: ~100 visitors/day, ~$0.05/day.

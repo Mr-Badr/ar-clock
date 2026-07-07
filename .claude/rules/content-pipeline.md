@@ -29,6 +29,14 @@ npm run events:new -- --slug <slug> --name "الاسم" --type fixed --category 
 npm run events:sync -- --slug <slug>   # build + validate + go-live
 ```
 
+## `events:sync` side effect warning (found 2026-07-07)
+`events:sync` runs an `events:fix-related` pass that can silently rewrite `relatedSlugs` on
+UNRELATED existing events (not just the one you're syncing) — e.g. syncing 3 new France/Germany
+events caused it to swap out a deliberate, GSC-monitored link (`autumn-season` → `school-start-algeria`)
+for an unrelated one, on top of `ramadan`, `bac-results-tunisia`, and others never touched this
+session. Always run `git diff --stat` (or `git status`) after any `events:sync` call and revert
+(`git checkout -- <file>`) any event package you did not intend to edit before committing.
+
 ## Bulk updates
 Use batch files in `scripts/holiday-batches/`, not one-off root scripts:
 ```bash
@@ -66,3 +74,25 @@ npm run events:apply-batch -- --file scripts/holiday-batches/your-batch.ts --bui
 - `"all"` — one canonical event generates country alias pages automatically
 - `"none"` with `core._countryCode` — single-country event
 - `"none"` without country code — global/international event
+
+## Auto-retirement for one-time events (added 2026-07-07)
+For an event that will genuinely never recur (a one-off news item, a program status page tied to
+something that may be discontinued, a suspended lottery/program tracker, etc.) — add a top-level
+`retirement` field to `package.json`:
+
+```json
+"retirement": {
+  "afterDate": "2026-12-01T00:00:00.000Z",
+  "reason": "برنامج مؤقت لا يتكرر بعد هذا التاريخ"
+}
+```
+
+Once `afterDate` is in the past at build time, `generate-events-index.ts` automatically excludes the
+event from the published index — the page 404s and drops out of the sitemap and all listings on the
+next build/deploy. No source file is touched or deleted, so removing `retirement` (or pushing the date
+forward) instantly restores the page on the next build. `npm run events:build` prints a warning line
+when an event crosses its retirement date, so it surfaces during the normal pipeline.
+
+Do NOT use this for annually-recurring events (bac-results-*, salary/pension paydays, Islamic dates)
+— those already auto-roll to next year via `{{year}}`/`{{nextYear}}` tokens and should stay published
+indefinitely. Only use `retirement` when the event itself has a real end, not just a stale-looking date.

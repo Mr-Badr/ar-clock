@@ -388,6 +388,17 @@ function nthWeekdayOfMonth(year, month, weekday, nth) {
   if ([year, month, weekday, nth].some((value) => value == null || Number.isNaN(Number(value)))) {
     return null;
   }
+  // nth: -1 means "last occurrence" (last Sunday of March, etc). A plain
+  // nth: 5 breaks in years where the month only has 4 of that weekday
+  // (nthWeekdayOfMonth rolls into the next month and the null-check below
+  // rejects it) — silently skipping that year's occurrence entirely.
+  if (nth === -1) {
+    const lastDayOfMonth = new Date(year, month, 0);
+    const diff = (lastDayOfMonth.getDay() - weekday + 7) % 7;
+    const date = new Date(year, month - 1, lastDayOfMonth.getDate() - diff);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
   const first = new Date(year, month - 1, 1);
   const offset = (weekday - first.getDay() + 7) % 7;
   const dayOfMonth = 1 + offset + (nth - 1) * 7;

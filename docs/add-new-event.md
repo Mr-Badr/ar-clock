@@ -356,6 +356,15 @@ This is the full model you should think in:
 `notes`
 - Optional internal notes.
 
+`retirement`
+- Optional. Use ONLY for an event that will genuinely never recur (a one-off news item, a status
+  page tied to a program that may be discontinued or suspended, a one-time results/announcement page
+  with no future occurrence). Shape: `{ "afterDate": "ISO date string", "reason": "short Arabic note" }`.
+  Once `afterDate` is in the past, the build automatically drops the event from the published index —
+  the page 404s and disappears from the sitemap with no manual unpublish step and no file deletion.
+- Do NOT add this to annually-recurring events (exam results, salary/pension paydays, Islamic dates,
+  seasonal countdowns) — those stay published forever and auto-roll via `{{year}}`/`{{nextYear}}`.
+
 ## `core` Keys
 
 Example:

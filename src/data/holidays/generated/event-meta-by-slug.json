@@ -1,6 +1,7 @@
 {
   "ramadan": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -50,6 +51,7 @@
   },
   "eid-al-fitr": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -99,6 +101,7 @@
   },
   "eid-al-adha": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -148,6 +151,7 @@
   },
   "day-of-arafa": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -197,6 +201,7 @@
   },
   "hajj-season": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -246,6 +251,7 @@
   },
   "islamic-new-year": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -295,6 +301,7 @@
   },
   "ashura": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -344,6 +351,7 @@
   },
   "laylat-al-qadr": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -393,6 +401,7 @@
   },
   "social-security-saudi": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -404,6 +413,7 @@
   },
   "isra-miraj": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -453,6 +463,7 @@
   },
   "oman-accession-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -464,6 +475,7 @@
   },
   "first-dhul-hijjah": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -513,6 +525,7 @@
   },
   "bac-results-tunisia": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -524,6 +537,7 @@
   },
   "winter-season": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "standalone",
     "countryCodes": [],
@@ -533,6 +547,7 @@
   },
   "spring-season": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "standalone",
     "countryCodes": [],
@@ -542,6 +557,7 @@
   },
   "spring-vacation": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "standalone",
     "countryCodes": [],
@@ -551,6 +567,7 @@
   },
   "summer-season": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "standalone",
     "countryCodes": [],
@@ -560,6 +577,7 @@
   },
   "summer-vacation": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "standalone",
     "countryCodes": [],
@@ -569,6 +587,7 @@
   },
   "back-to-school": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "standalone",
     "countryCodes": [],
@@ -578,6 +597,7 @@
   },
   "saudi-national-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -589,6 +609,7 @@
   },
   "saudi-founding-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -600,6 +621,7 @@
   },
   "school-start-saudi": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -611,6 +633,7 @@
   },
   "salary-day-saudi": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -622,6 +645,7 @@
   },
   "citizen-account-saudi": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -633,6 +657,7 @@
   },
   "sinai-liberation-day-egypt": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -644,6 +669,7 @@
   },
   "thanaweya-results": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -655,6 +681,7 @@
   },
   "hafez-saudi": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -666,6 +693,7 @@
   },
   "thanaweya-exams": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -677,6 +705,7 @@
   },
   "housing-support-saudi": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -688,6 +717,7 @@
   },
   "school-start-egypt": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -699,6 +729,7 @@
   },
   "salary-day-egypt": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -710,6 +741,7 @@
   },
   "bac-exams-algeria": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -721,6 +753,7 @@
   },
   "autumn-season": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "standalone",
     "countryCodes": [],
@@ -730,6 +763,7 @@
   },
   "school-start-algeria": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -741,6 +775,7 @@
   },
   "sham-nessim": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -752,6 +787,7 @@
   },
   "revolution-day-algeria": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -763,6 +799,7 @@
   },
   "school-start-morocco": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -774,6 +811,7 @@
   },
   "throne-day-morocco": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -785,6 +823,7 @@
   },
   "independence-day-morocco": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -796,6 +835,7 @@
   },
   "independence-day-algeria": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -807,6 +847,7 @@
   },
   "uae-national-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -818,6 +859,7 @@
   },
   "school-start-uae": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -829,6 +871,7 @@
   },
   "school-start-tunisia": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -840,6 +883,7 @@
   },
   "independence-day-tunisia": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -851,6 +895,7 @@
   },
   "kuwait-national-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -862,6 +907,7 @@
   },
   "school-start-kuwait": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -873,6 +919,7 @@
   },
   "qatar-national-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -884,6 +931,7 @@
   },
   "school-start-qatar": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -895,6 +943,7 @@
   },
   "valentines-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -944,6 +993,7 @@
   },
   "labor-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "standalone",
     "countryCodes": [],
@@ -953,6 +1003,7 @@
   },
   "sand-payment-saudi": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -964,6 +1015,7 @@
   },
   "takaful-karama-egypt": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -975,6 +1027,7 @@
   },
   "world-health-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -1024,6 +1077,7 @@
   },
   "earth-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -1073,6 +1127,7 @@
   },
   "world-diabetes-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -1124,6 +1179,7 @@
   },
   "international-womens-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "selective",
     "countryCodes": [
@@ -1139,6 +1195,7 @@
   },
   "world-teachers-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -1188,6 +1245,7 @@
   },
   "arabic-language-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -1237,6 +1295,7 @@
   },
   "saudi-flag-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1248,6 +1307,7 @@
   },
   "jordan-independence-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1259,6 +1319,7 @@
   },
   "bahrain-national-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [],
@@ -1268,6 +1329,7 @@
   },
   "liberation-day-kuwait": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1279,6 +1341,7 @@
   },
   "oman-national-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1290,6 +1353,7 @@
   },
   "martyrs-day-uae": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1301,6 +1365,7 @@
   },
   "revolution-day-egypt": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1312,6 +1377,7 @@
   },
   "armed-forces-day-egypt": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1323,6 +1389,7 @@
   },
   "green-march-morocco": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1334,6 +1401,7 @@
   },
   "thanksgiving-usa": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1345,6 +1413,7 @@
   },
   "black-friday-usa": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1356,6 +1425,7 @@
   },
   "cyber-monday-usa": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1367,6 +1437,7 @@
   },
   "mawlid": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -1416,6 +1487,7 @@
   },
   "halloween-usa": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1427,6 +1499,7 @@
   },
   "mothers-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "standalone",
     "countryCodes": [],
@@ -1436,6 +1509,7 @@
   },
   "christmas-usa": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1447,6 +1521,7 @@
   },
   "national-exams-morocco": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1458,6 +1533,7 @@
   },
   "new-year": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "custom",
     "distribution": "standalone",
     "countryCodes": [],
@@ -1467,6 +1543,7 @@
   },
   "new-years-eve-new-york": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1478,6 +1555,7 @@
   },
   "nisf-shaban": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -1527,6 +1605,7 @@
   },
   "pension-day-egypt": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1538,6 +1617,7 @@
   },
   "pension-day-saudi": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1549,6 +1629,7 @@
   },
   "world-childrens-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -1598,6 +1679,7 @@
   },
   "international-day-of-education": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -1647,6 +1729,7 @@
   },
   "world-mental-health-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -1696,6 +1779,7 @@
   },
   "world-environment-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [
@@ -1745,6 +1829,7 @@
   },
   "independence-manifesto-day-morocco": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1756,6 +1841,7 @@
   },
   "amazigh-new-year-algeria": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1767,6 +1853,7 @@
   },
   "amazigh-new-year-morocco": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1778,6 +1865,7 @@
   },
   "january-25-egypt": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1789,6 +1877,7 @@
   },
   "aman-social-tunisia": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1800,6 +1889,7 @@
   },
   "bac-results-algeria": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1811,6 +1901,7 @@
   },
   "bac-results-bahrain": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [],
@@ -1820,6 +1911,7 @@
   },
   "bac-results-jordan": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1831,6 +1923,7 @@
   },
   "bac-results-kuwait": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1842,6 +1935,7 @@
   },
   "bac-results-morocco": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1853,6 +1947,7 @@
   },
   "bac-results-uae": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1862,8 +1957,21 @@
     "canonicalPath": "/holidays/bac-results-uae",
     "aliases": []
   },
+  "caf-payment-france": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "fr"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/caf-payment-france",
+    "aliases": []
+  },
   "cost-of-living-allowance-bahrain": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [],
@@ -1873,6 +1981,7 @@
   },
   "direct-social-support-morocco": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1884,6 +1993,7 @@
   },
   "gulf-childrens-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "standalone",
     "countryCodes": [],
@@ -1893,6 +2003,7 @@
   },
   "housing-allowance-kuwait": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1904,6 +2015,7 @@
   },
   "iraq-national-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1915,6 +2027,7 @@
   },
   "job-security-oman": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1924,8 +2037,19 @@
     "canonicalPath": "/holidays/job-security-oman",
     "aliases": []
   },
+  "kindergeld-germany": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/kindergeld-germany",
+    "aliases": []
+  },
   "libya-independence-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1937,6 +2061,7 @@
   },
   "martyrs-day-algeria": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1948,6 +2073,7 @@
   },
   "nafis-uae": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1959,6 +2085,7 @@
   },
   "national-aid-jordan": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1970,6 +2097,7 @@
   },
   "national-labor-support-kuwait": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1981,6 +2109,7 @@
   },
   "palestine-independence-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -1992,6 +2121,7 @@
   },
   "palestine-land-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2003,6 +2133,7 @@
   },
   "pension-day-algeria": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2014,6 +2145,7 @@
   },
   "pension-day-bahrain": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [],
@@ -2023,6 +2155,7 @@
   },
   "pension-day-jordan": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2034,6 +2167,7 @@
   },
   "pension-day-kuwait": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2045,6 +2179,7 @@
   },
   "pension-day-oman": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2056,6 +2191,7 @@
   },
   "pension-day-uae": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2067,6 +2203,7 @@
   },
   "qatar-national-sport-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2078,6 +2215,7 @@
   },
   "reef-support-saudi": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2089,6 +2227,7 @@
   },
   "republic-day-tunisia": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2100,6 +2239,7 @@
   },
   "retiree-salary-iraq": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2111,6 +2251,7 @@
   },
   "revolution-day-morocco": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2122,6 +2263,7 @@
   },
   "salary-day-bahrain": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [],
@@ -2131,6 +2273,7 @@
   },
   "salary-day-jordan": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2142,6 +2285,7 @@
   },
   "salary-day-kuwait": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2153,6 +2297,7 @@
   },
   "salary-day-oman": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2164,6 +2309,7 @@
   },
   "salary-day-qatar": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2175,6 +2321,7 @@
   },
   "salary-day-uae": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2186,6 +2333,7 @@
   },
   "saned-saudi": {
     "publishStatus": "drafted",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2197,6 +2345,7 @@
   },
   "school-start-bahrain": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [],
@@ -2206,6 +2355,7 @@
   },
   "school-start-jordan": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2217,6 +2367,7 @@
   },
   "school-start-oman": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2228,6 +2379,7 @@
   },
   "social-assistance-bahrain": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [],
@@ -2237,6 +2389,7 @@
   },
   "social-assistance-kuwait": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2248,6 +2401,7 @@
   },
   "social-security-qatar": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2259,6 +2413,7 @@
   },
   "social-welfare-iraq": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2270,6 +2425,7 @@
   },
   "student-allowance-kuwait": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2281,6 +2437,7 @@
   },
   "uae-founding-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2292,6 +2449,7 @@
   },
   "uae-tolerance-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2303,6 +2461,7 @@
   },
   "uae-womens-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2314,6 +2473,7 @@
   },
   "unemployment-grant-algeria": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2325,6 +2485,7 @@
   },
   "university-stipend-saudi": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "none",
     "distribution": "country_specific",
     "countryCodes": [
@@ -2334,8 +2495,21 @@
     "canonicalPath": "/holidays/university-stipend-saudi",
     "aliases": []
   },
+  "winter-time-france": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "fr"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/winter-time-france",
+    "aliases": []
+  },
   "world-fathers-day": {
     "publishStatus": "published",
+    "retired": false,
     "countryScope": "all",
     "distribution": "shared",
     "countryCodes": [

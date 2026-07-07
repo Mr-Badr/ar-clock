@@ -60,13 +60,25 @@ Fallback is handled by `resolveManualAdSlot()` in `src/lib/ads/slot-resolution.t
 | /blog/[slug] | ✅ | ✅ | ✅ |
 | /blog (hub) | ✅ | — | ✅ |
 | /time-now (hub) | ✅ | ✅ (added 2026-07-03, between clock and country directory) | ✅ |
-| /time-now/[country] | ✅ | ✅ | ✅ |
-| /time-now/[country]/[city] | ✅ | ✅ | ✅ |
+| /time-now/[country] | ✅ | ✅ ×2 (2nd after FAQ, added 2026-07-07) | ✅ |
+| /time-now/[country]/[city] | ✅ | ✅ ×2 (2nd after FAQ, added 2026-07-07) | ✅ |
 | /time-difference/[from]/[to] | ✅ | ✅ | ✅ |
 | /mwaqit-al-salat (hub) | ✅ | ✅ | ✅ |
 | /mwaqit-al-salat/[country] | ✅ | ✅ | ✅ |
 | /mwaqit-al-salat/[country]/[city] | ✅ | ✅ ×1 | ✅ |
 | /calculators/* (common.jsx) | ✅ (between hero and tool, added to 15 more pages) | ✅ (after FAQ accordion) + ✅ (mid-section divider on long pages, activates when inArticleCalculatorMid slot filled) | ✅ (in RelatedCalculators) |
+
+## Format + centering rules (added 2026-07-07)
+- **Horizontal banner units (AdTopBanner, AdEventsFeedHorizontal) use `data-ad-format="horizontal"`,
+  NOT `"auto"`.** The slots reserve a 50–100px banner box with `overflow:hidden`; format "auto" let
+  Google return 250px+ tall rectangles that rendered clipped mid-creative (broken-looking ads +
+  policy risk). Never revert these to "auto" without also removing the height clamp.
+- **RTL centering:** when Google downgrades a responsive unit to a fixed-width creative it sets an
+  inline `width` on the `<ins>`; in RTL the block then hugs the visual RIGHT edge. `ads.css` fixes
+  this globally: `margin-inline:auto` + `text-align:center` on `.ad-slot > .adsbygoogle` and
+  `margin-inline:auto` on its direct child div. Don't remove these rules.
+- **Large-desktop rails:** at ≥1800px the `.layout-with-ads` rails widen from 240px to 300px so
+  Google can serve 300×600/300×250 (strongest desktop RPM sizes). Slot max-height becomes 620px.
 
 ## Placement rules (updated 2026-06-23)
 - **Max 1 AdInArticle** per page for short/medium pages. Long-form pages (blog articles) may use 2 if separated by 2+ major sections
@@ -83,6 +95,10 @@ Fallback is handled by `resolveManualAdSlot()` in `src/lib/ads/slot-resolution.t
   satisfies "primary tool before ad", just cuts ~300 lines of content the ad used to sit behind).
   `/holidays` and `/time-now` already place the ad right after their intro/primary-tool block — use
   those as the reference pattern for any future hub page.
+- **Converter/tool pages: compact hero + tool BEFORE the top banner.** `/date/converter`,
+  `/date/gregorian-to-hijri`, `/date/hijri-to-gregorian` (2026-07-07) use `heroCompact`
+  (small H1 + one-line lead, no eyebrow chip) and render AdTopBanner AFTER the tool panel, so the
+  interactive tool starts inside the first mobile viewport. Same pattern as `/time-difference`.
 
 ## Ad-free routes (intentional, from route-policy.js)
 /about, /contact, /disclaimer, /editorial-policy, /fahras, /offline, /privacy, /search, /terms, /api/*

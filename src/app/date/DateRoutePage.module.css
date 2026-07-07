@@ -59,6 +59,33 @@
   line-height: 1.9;
 }
 
+/* Compact hero for tool-first pages (converter + direction pages): the
+   interactive tool — not the intro copy — is the primary content, so the
+   header must stay small enough that the tool starts inside the first
+   mobile viewport. */
+.heroCompact {
+  padding-block: var(--space-4) 0;
+}
+
+.heroCompact .heroTitle {
+  font-size: var(--text-2xl);
+}
+
+.heroCompact .heroLead {
+  font-size: var(--text-sm);
+  line-height: 1.75;
+}
+
+.heroCompact + .sectionBand {
+  padding-block-start: var(--space-4);
+}
+
+@media (max-width: 767px) {
+  .heroCompact .heroTitle {
+    font-size: var(--text-xl);
+  }
+}
+
 .dateAnswerPanel {
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--border-default) 82%, transparent);

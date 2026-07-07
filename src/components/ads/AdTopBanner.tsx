@@ -122,14 +122,18 @@ export default function AdTopBanner({
     >
       {/* Label — required by Google AdSense policy to be visible */}
       <span className="ad-slot__label">إعلان</span>
+      {/* format="horizontal" (not "auto"): the slot reserves a 50–100px banner
+          box with overflow:hidden, and "auto" lets Google return 250px+ tall
+          rectangles that get clipped mid-creative — broken-looking ads and a
+          policy risk. Horizontal shapes always fit the reserved space. */}
       <ins
         ref={insRef}
         className="adsbygoogle"
         style={{ display: "block" }}
         data-ad-client={clientId || undefined}
         data-ad-slot={adSlot}
-        data-ad-format="auto"
-        data-full-width-responsive="true"
+        data-ad-format="horizontal"
+        data-full-width-responsive="false"
       />
     </div>
   );

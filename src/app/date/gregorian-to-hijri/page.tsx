@@ -261,31 +261,24 @@ async function GregorianToHijriDynamicContent() {
             <DateBreadcrumb items={breadcrumb} />
           </div>
 
-          <section className={`container mx-auto px-4 ${styles.heroSection}`} aria-labelledby="gregorian-to-hijri-title">
+          <section
+            className={`container mx-auto px-4 ${styles.heroSection} ${styles.heroCompact}`}
+            aria-labelledby="gregorian-to-hijri-title"
+          >
             <div className={styles.heroInner}>
               <div className={styles.heroCopy}>
-                <span className={styles.eyebrow}>
-                  <ArrowLeftRight size={14} />
-                  ميلادي إلى هجري
-                </span>
                 <h1 id="gregorian-to-hijri-title" className={styles.heroTitle}>
                   تحويل من ميلادي إلى هجري
                 </h1>
                 <p className={styles.heroLead}>
-                  حوّل التاريخ الميلادي إلى هجري فوراً: أدخل اليوم والشهر والسنة، اختر أم القرى
-                  أو الفلكي أو المدني، ثم اقرأ النتيجة مع التنبيه المناسب. إذا كان التاريخ لوثيقة
-                  أو مناسبة دينية أو إجراء رسمي، استخدم التحويل للفهم السريع ثم طابقه مع الجهة المعتمدة.
+                  أدخل اليوم والشهر والسنة الميلادية وستظهر النتيجة الهجرية فوراً.
+                  {todayUmalqura && (
+                    <> اليوم الميلادي <span dir="ltr">{isoDate}</span> يوافق حسب أم القرى: {todayUmalqura.formatted.ar}.</>
+                  )}
                 </p>
-                {todayUmalqura && (
-                  <p className={styles.dateAnswerMeta}>
-                    اليوم الميلادي <span dir="ltr">{isoDate}</span> يوافق حسب أم القرى: {todayUmalqura.formatted.ar}
-                  </p>
-                )}
               </div>
             </div>
           </section>
-
-          <AdTopBanner slotId="top-date-gregorian-to-hijri" slotKey="topDateBanner" />
 
           <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-label="أداة تحويل الميلادي إلى هجري">
             <div className={styles.sectionPanel}>
@@ -300,6 +293,8 @@ async function GregorianToHijriDynamicContent() {
               </Suspense>
             </div>
           </section>
+
+          <AdTopBanner slotId="top-date-gregorian-to-hijri" slotKey="topDateBanner" />
 
           <section className={`container mx-auto px-4 ${styles.sectionBand}`}>
             <div className={styles.prosePanel}>

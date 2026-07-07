@@ -275,31 +275,24 @@ async function ConverterDynamicContent() {
             <DateBreadcrumb items={breadcrumb} />
           </div>
 
-          <section className={`container mx-auto px-4 ${styles.heroSection}`} aria-labelledby="converter-title">
+          <section
+            className={`container mx-auto px-4 ${styles.heroSection} ${styles.heroCompact}`}
+            aria-labelledby="converter-title"
+          >
             <div className={styles.heroInner}>
               <div className={styles.heroCopy}>
-                <span className={styles.eyebrow}>
-                  <ArrowLeftRight size={14} />
-                  تحويل هجري وميلادي
-                </span>
                 <h1 id="converter-title" className={styles.heroTitle}>
                   محول التاريخ الهجري والميلادي
                 </h1>
                 <p className={styles.heroLead}>
-                  حوّل أي تاريخ بين الهجري والميلادي فوراً: اختر الاتجاه، أدخل اليوم والشهر والسنة،
-                  ثم حدد طريقة الحساب. إذا كان التاريخ لوثيقة أو موعد ديني أو سفر، استخدم النتيجة
-                  كمرجع سريع ثم طابقها مع الجهة الرسمية عند الحاجة.
+                  أدخل التاريخ واختر الاتجاه وطريقة الحساب، وستظهر النتيجة فوراً.
+                  {todayHijri && (
+                    <> اليوم حسب أم القرى: {todayHijri.formatted.ar}، الموافق <span dir="ltr">{isoDate}</span>م.</>
+                  )}
                 </p>
-                {todayHijri && (
-                  <p className={styles.dateAnswerMeta}>
-                    اليوم حسب أم القرى: {todayHijri.formatted.ar}، الموافق <span dir="ltr">{isoDate}</span>م
-                  </p>
-                )}
               </div>
             </div>
           </section>
-
-          <AdTopBanner slotId="top-date-converter" slotKey="topDateBanner" />
 
           <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-label="أداة تحويل التاريخ">
             <div className={styles.sectionPanel}>
@@ -308,6 +301,8 @@ async function ConverterDynamicContent() {
               </Suspense>
             </div>
           </section>
+
+          <AdTopBanner slotId="top-date-converter" slotKey="topDateBanner" />
 
           <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="converter-methods-heading">
             <div className={styles.sectionPanel}>

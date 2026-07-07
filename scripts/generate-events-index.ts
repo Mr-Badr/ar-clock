@@ -350,6 +350,19 @@ function main() {
       const aliases = collectAliases(pkg);
       const aliasSlugs = Array.from(aliases.keys());
 
+      // One-time events (a news item, a program status page that may never
+      // recur) carry `retirement.afterDate` instead of a manual unpublish
+      // step someone has to remember. Once that date is in the past, the
+      // event drops out of the published index below — the page 404s and
+      // disappears from the sitemap on the next build, with no source file
+      // deleted, so pushing the date back (or removing `retirement`) restores
+      // it instantly.
+      const retirementDate = pkg.retirement?.afterDate ? new Date(pkg.retirement.afterDate) : null;
+      const isRetired = Boolean(retirementDate && !Number.isNaN(retirementDate.getTime()) && retirementDate.getTime() < Date.now());
+      if (isRetired && pkg.publishStatus === 'published') {
+        console.warn(`[generate-events-index] "${slug}" passed its retirement date (${pkg.retirement.afterDate}) — excluded from the published index this build.`);
+      }
+
       if (eventsBySlug[slug]) {
         throw new Error(`[generate-events-index] Duplicate canonical slug in event folders: "${slug}".`);
       }
@@ -381,6 +394,7 @@ function main() {
 
       const metaRecord = {
         publishStatus: pkg.publishStatus,
+        retired: isRetired,
         countryScope: pkg.countryScope,
         distribution: distribution.kind,
         countryCodes: distribution.countryCodes,
@@ -421,7 +435,7 @@ function main() {
       };
 
       allEventsList.push(coreRecord);
-      if (pkg.publishStatus === 'published') publishedEventsList.push(coreRecord);
+      if (pkg.publishStatus === 'published' && !isRetired) publishedEventsList.push(coreRecord);
 
       canonicalToAliases[slug] = aliasSlugs;
       const aliasMeta = buildAliasMeta(pkg, aliases);
