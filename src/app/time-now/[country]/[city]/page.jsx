@@ -378,6 +378,26 @@ export default async function CityTimePage({ params }) {
       label: 'موعد صرف الكيندرغيلد في ألمانيا',
       description: 'اعرف كيف تحدد Familienkasse موعد صرف الكيندرغيلد حسب رقمك، والمبلغ الشهري الحالي لكل طفل.',
     } : null,
+    countrySlug === 'germany' ? {
+      href: '/holidays/winter-time-germany',
+      label: 'متى تغيير الساعة في ألمانيا',
+      description: 'تابع العد التنازلي لموعد تغيير الساعة القادم في ألمانيا وأثره على فرق التوقيت مع تركيا والمغرب العربي.',
+    } : null,
+    countrySlug === 'germany' ? {
+      href: '/holidays/buergergeld-germany',
+      label: 'موعد صرف البورغرغيلد Grundsicherungsgeld',
+      description: 'اعرف موعد الصرف الشهري والاسم الجديد للبورغرغيلد بعد إصلاح يوليو 2026.',
+    } : null,
+    countrySlug === 'morocco' ? {
+      href: '/holidays/dst-abolition-morocco',
+      label: 'متى تلغى الساعة الإضافية في المغرب',
+      description: 'تابع العد التنازلي للعودة النهائية لتوقيت غرينيتش بعد إلغاء الساعة الإضافية.',
+    } : null,
+    countrySlug === 'egypt' ? {
+      href: '/holidays/winter-time-egypt',
+      label: 'متى ينتهي التوقيت الصيفي في مصر',
+      description: 'تابع العد التنازلي لموعد نهاية التوقيت الصيفي في مصر وفق القانون رقم 24 لسنة 2023.',
+    } : null,
   ].filter(Boolean);
 
   /* ── JSON-LD SCHEMAS ─────────────────────────────────────────── */

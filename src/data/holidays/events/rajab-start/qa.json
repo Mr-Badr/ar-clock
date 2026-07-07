@@ -1,0 +1,18 @@
+{
+  "slug": "rajab-start",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "core uses hijriMonth:7, hijriDay:1 — same type:hijri engine as ramadan/islamic-new-year, no manual date math needed.",
+    "Facts (Rajab = 7th hijri month, one of 4 sacred months, no distinct worship beyond general sanctity, 27 Rajab linked to Isra/Miraj as a historical not shar'i-mandated date) verified against islamweb.net/binbaz.org.sa fatwa conventions already used elsewhere in the catalog (see islamic-new-year, isra-miraj).",
+    "Differentiation angle: explicitly frames Rajab as the start of the two-month runway to Ramadan (Rajab → Shaban → Ramadan), reciprocally linked to shaban-start and ramadan.",
+    "Written in direct address (أنت) from the first draft per the house style rule."
+  ],
+  "updatedAt": "2026-07-07T20:08:41.280Z"
+}

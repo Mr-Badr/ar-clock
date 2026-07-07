@@ -508,6 +508,23 @@
   color: var(--accent-alt);
 }
 
+/* Rotate the icon-chip color across a grid of info cards so a 3-4 card
+   section doesn't read as one monotone accent repeated identically. */
+.infoGrid .infoCard:nth-child(4n+2) .cardIcon {
+  background: var(--green-subtle);
+  color: var(--green-text);
+}
+
+.infoGrid .infoCard:nth-child(4n+3) .cardIcon {
+  background: var(--amber-subtle);
+  color: var(--amber-text);
+}
+
+.infoGrid .infoCard:nth-child(4n+4) .cardIcon {
+  background: var(--red-subtle);
+  color: var(--red-text);
+}
+
 .cardTitle {
   margin: 0;
   color: var(--text-primary);

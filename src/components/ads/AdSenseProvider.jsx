@@ -78,6 +78,11 @@ export default function AdSenseProvider() {
             component: "AdSenseProvider",
             error: serializeError(e),
           });
+          try {
+            window.dispatchEvent(new CustomEvent("miqat-adsense-blocked"));
+          } catch (_) {
+            // best-effort signal for AdBlockDetector — ignore if unavailable
+          }
         }}
       />
       {autoAdsEnabled && routePolicy.enableAutoAds ? (

@@ -1,0 +1,18 @@
+{
+  "slug": "dst-usa",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تواريخ 2026/2027 محققة عبر بحث ويب مباشر (timeanddate.com، Wikipedia، CBS News): نهاية التوقيت الصيفي 1 نوفمبر 2026، بداية التوقيت الصيفي القادم 14 مارس 2027.",
+    "core يستخدم type:floating مع month:11, weekday:0, nth:1 (أول أحد من نوفمبر) — نفس محرك winter-time-france/germany/egypt.",
+    "المحتوى مكتوب بمخاطبة مباشرة (أنت) من المسودة الأولى، مع زاوية تفرّد: تأثير التغيير على فرق التوقيت مع الجمهور العربي، واستثناء أريزونا وهاواي.",
+    "أولوية أقل من فرنسا/ألمانيا حسب الباكلوغ (W7-7)، بُني بتكلفة هامشية منخفضة بعد اكتمال الكلاستر الأعلى أولوية."
+  ],
+  "updatedAt": "2026-07-07T19:36:30.675Z"
+}

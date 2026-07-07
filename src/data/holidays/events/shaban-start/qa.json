@@ -1,0 +1,18 @@
+{
+  "slug": "shaban-start",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "core uses hijriMonth:8, hijriDay:1 — same type:hijri engine as ramadan/islamic-new-year, no manual date math needed.",
+    "Facts (Shaban = 8th hijri month, directly precedes Ramadan, Prophet's sunnah of frequent fasting in Shaban, Ramadan-entry announcement mechanism) verified against the same islamweb.net/binbaz.org.sa fatwa conventions already used elsewhere in the catalog.",
+    "Differentiation angle: frames Shaban explicitly as the last full month before Ramadan / an indirect Ramadan countdown, reciprocally linked to rajab-start, nisf-shaban, and ramadan.",
+    "Written in direct address (أنت) from the first draft per the house style rule."
+  ],
+  "updatedAt": "2026-07-07T20:09:00.286Z"
+}

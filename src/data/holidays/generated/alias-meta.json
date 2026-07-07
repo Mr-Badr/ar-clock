@@ -1687,6 +1687,158 @@
     "canonicalSlug": "world-environment-day",
     "countryCode": "us"
   },
+  "rajab-start-in-saudi": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "sa"
+  },
+  "rajab-start-in-egypt": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "eg"
+  },
+  "rajab-start-in-morocco": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "ma"
+  },
+  "rajab-start-in-algeria": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "dz"
+  },
+  "rajab-start-in-uae": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "ae"
+  },
+  "rajab-start-in-tunisia": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "tn"
+  },
+  "rajab-start-in-kuwait": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "kw"
+  },
+  "rajab-start-in-qatar": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "qa"
+  },
+  "rajab-start-in-iraq": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "iq"
+  },
+  "rajab-start-in-syria": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "sy"
+  },
+  "rajab-start-in-yemen": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "ye"
+  },
+  "rajab-start-in-jordan": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "jo"
+  },
+  "rajab-start-in-libya": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "ly"
+  },
+  "rajab-start-in-oman": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "om"
+  },
+  "rajab-start-in-palestine": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "ps"
+  },
+  "rajab-start-in-canada": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "ca"
+  },
+  "rajab-start-in-france": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "fr"
+  },
+  "rajab-start-in-turkey": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "tr"
+  },
+  "rajab-start-in-usa": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "us"
+  },
+  "shaban-start-in-saudi": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "sa"
+  },
+  "shaban-start-in-egypt": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "eg"
+  },
+  "shaban-start-in-morocco": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "ma"
+  },
+  "shaban-start-in-algeria": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "dz"
+  },
+  "shaban-start-in-uae": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "ae"
+  },
+  "shaban-start-in-tunisia": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "tn"
+  },
+  "shaban-start-in-kuwait": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "kw"
+  },
+  "shaban-start-in-qatar": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "qa"
+  },
+  "shaban-start-in-iraq": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "iq"
+  },
+  "shaban-start-in-syria": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "sy"
+  },
+  "shaban-start-in-yemen": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "ye"
+  },
+  "shaban-start-in-jordan": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "jo"
+  },
+  "shaban-start-in-libya": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "ly"
+  },
+  "shaban-start-in-oman": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "om"
+  },
+  "shaban-start-in-palestine": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "ps"
+  },
+  "shaban-start-in-canada": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "ca"
+  },
+  "shaban-start-in-france": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "fr"
+  },
+  "shaban-start-in-turkey": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "tr"
+  },
+  "shaban-start-in-usa": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "us"
+  },
   "world-fathers-day-in-saudi": {
     "canonicalSlug": "world-fathers-day",
     "countryCode": "sa"

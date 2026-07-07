@@ -1,5 +1,56 @@
 # Session notes — ar-clock / miqatona.com
-Last updated: 2026-07-07
+Last updated: 2026-07-07 (night)
+
+## Execution pass 3 (2026-07-07 night): backlog queue cleared + site-wide direct-address audit
+Finished the remaining Wave 6/7 queue: `riyadh-season`, `asian-cup-2027`, `white-friday`,
+`world-cup-2030` (already-drafted content, validated + synced live this pass), plus two NEW events
+built fresh this pass — `school-holidays-france` (W7-6, French zone A/B/C 2026-2027 dates verified via
+live web search against Légifrance/service-public.gouv.fr/education.gouv.fr) and `dst-usa` (W7-7, Nov 1
+2026 fall-back / Mar 14 2027 spring-forward verified via web search, Arizona/Hawaii DST-exception angle
+as the differentiator). Both strict-validated and `ci:check` green throughout.
+
+**Owner directive mid-session**: every event must speak directly to the reader ("أنت") — never describe
+them in the third person as "المستخدم"/"الباحث"/"الزائر". Ran a site-wide heuristic scan: found 72 of 151
+live events in the banned register. Fixed via 5 parallel background-agent passes (salary-day-*,
+pension-day-*, bac-results-*, national-day/independence cluster, support/social-benefit cluster — ~60
+events) plus manual fixes for ~29 more stragglers caught on two follow-up broader-marker scans (US
+holidays, seasons, misc national days). Root cause fixed too: `scripts/lib/event-scaffold.ts` +
+`scripts/lib/content-normalizers.ts` (the `events:new` default templates) were rewritten to generate
+direct-address copy by default, and `docs/add-new-event.md` got a permanent "write TO the reader" rule
+section — future events should not need this retrofit. Full detail in the backlog doc's STANDING RULE
+section at the top.
+
+**Background-agent gotcha**: two of the five dispatched agents hit the session's API rate limit mid-run
+and failed; resumed them via `SendMessage` to their `agentId` after the limit reset (~8 hours later per
+the error message) rather than re-dispatching fresh agents — they picked up full context and finished
+cleanly. If an agent notification says "hit your session limit," just resume it later; don't restart.
+
+**events:fix-related bug got worse, not better**: this pass confirmed the bug also re-adds
+YEAR-NUMBERED slugs (`world-cup-2030`, `asian-cup-2027`) into other events' `relatedSlugs` repeatedly
+across every sync — and since the year lives in the slug string itself, this trips `hasHardcodedYear`
+on whichever event links to them. Cleaned up by hand every time (`asian-cup-2027`, `pension-day-algeria`,
+`riyadh-season`, `white-friday`, `world-cup-2030`) — see `.claude/rules/event-creation-lessons.md` §-1
+for the permanent rule: never link TO a year-slugged one-time event from another event's `relatedSlugs`.
+
+`ci:check` green (116/116) after all of the above. Next up: Wave 9 `rajab-start`/`shaban-start` (mid-shaban
+and laylat-al-qadr already exist as `nisf-shaban`/`laylat-al-qadr`), Wave 8 still gated on Egypt-RPM
+decision (~Jul 30).
+
+## Execution pass 2 (2026-07-07 evening): 3 more events shipped, all committed/pushed by owner
+Continuing directly from Wave 7 below, same session: `winter-time-germany` (W7-5), `buergergeld-germany`
+(W7-3, caught the 6-day-old Bürgergeld→Grundsicherungsgeld rename — likely first Arabic coverage
+anywhere), `dst-abolition-morocco` (Wave 6, confirmed exact decree date Sept 20 2026 — first real use
+of the new `retirement` field), `winter-time-egypt` (Wave 6, confirmed Oct 30 2026 under Law 24/2023).
+All verified via Puppeteer screenshots showing correct countdown dates matching official sources
+exactly. Cross-linked from `/time-now/morocco` and `/time-now/egypt` (new conditional links, verified
+in rendered HTML) in addition to the existing France/Germany links.
+**Recurring gotcha, now fully documented**: every `events:sync` call's `events:fix-related` step
+rewrites `relatedSlugs` on unrelated existing events (hit `ramadan`, `autumn-season`,
+`summer-vacation`, `cost-of-living-allowance-bahrain` — same 4 files — on every single sync this
+session). Reverted each time via `git checkout --`; added a standing rule to always `git status`
+after `events:sync`. `ci:check` green (116/116) after every build in this pass.
+Remaining Wave 6/7 queue: `school-holidays-france` (W7-6), `dst-usa` (W7-7), `riyadh-season`,
+`asian-cup-2027`, `white-friday`, `world-cup-2030` (Wave 6) — see backlog doc for details.
 
 ## Ads/UX overhaul (2026-07-07) — uncommitted at session end unless committed later
 1. **RTL ad centering fixed** (`src/app/styles/ads.css`): fixed-width creatives were hugging the

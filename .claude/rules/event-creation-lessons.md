@@ -1,6 +1,41 @@
 # Event Creation — Lessons Learned & Hard Rules
 
-Last updated: 2026-06-24. Derived from: salary-day-uae/kuwait/qatar, pension-day-uae (session 1); ramadan, eid-al-fitr, eid-al-adha, takaful-karama-egypt, Saudi events (session 2).
+Last updated: 2026-07-07. Derived from: salary-day-uae/kuwait/qatar, pension-day-uae (session 1); ramadan, eid-al-fitr, eid-al-adha, takaful-karama-egypt, Saudi events (session 2); Wave 6/7 diaspora + Saudi social events, direct-address content audit (session 3).
+
+---
+
+## -1. Hard Rule: Write TO the reader, never ABOUT them
+
+Every piece of user-facing copy (`aboutEvent`, `about.paragraphs`, `history`, `significance`, `details`,
+`answerSummary`, FAQ answers) must speak directly to the reader in second person ("أنت"/"لك"/your-thing),
+like a knowledgeable friend explaining something practical. It must NEVER describe the reader in the
+third person as a detached "user" or "researcher" — that register reads as AI-generated and kills trust
+and dwell time.
+
+```
+// ❌ third-person / meta-SEO voice (banned):
+"نية المستخدم هنا عملية جداً: متى ينزل الراتب هذا الشهر"
+"الباحث العربي هنا يركز على سؤال مباشر ومتكرر"
+"ما يفعله المستخدم عادة هو متابعة العداد"
+
+// ✅ direct address (required):
+"إذا كان سؤالك المباشر: متى ينزل راتبك هذا الشهر"
+"سؤالك بسيط ومباشر: متى ينزل راتبك هذا الشهر؟"
+"تابع العداد أعلى الصفحة قبل الموعد بأيام"
+```
+
+An audit on 2026-07-07 found 72 of 151 live events written in the banned register — traced to an early
+authoring template that optimized for "explain the search intent to a reviewer" instead of "answer the
+person searching." Reference fix: `salary-day-saudi`'s `aboutEvent`/`about`/`history`/`significance`/
+`details` fields, rewritten same day as the house style template. When rewriting an existing event for
+this: change ONLY voice/grammatical person, never facts, sources, `{{year}}`/`{{nextYear}}` tokens, or
+keyword phrases — those are what the validator checks and what changes rankings.
+
+Also: relatedSlugs entries that are themselves year-numbered slugs (e.g. `world-cup-2030`,
+`asian-cup-2027`) will trip `hasHardcodedYear` on WHATEVER event links to them, because the slug string
+itself contains a 4-digit year >= current-year-1. Don't link TO a year-slugged one-time event from
+another event's `relatedSlugs` — link the other direction (year-slugged event → evergreen events) instead,
+or not at all.
 
 ---
 

@@ -1,0 +1,17 @@
+{
+  "slug": "winter-time-germany",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "الموعد وقاعدة آخر أحد من الشهر وحالة نقاش الإلغاء الأوروبي وحالة تركيا (ثابتة منذ 2016) تم التحقق منها من Time and Date.",
+    "الموعد المحسوب (29 مارس 2026، 25 أكتوبر 2026) طابق بيانات timeanddate.com يدوياً باستخدام نفس محرك nth:-1 المُصلَح لـwinter-time-france.",
+    "الصفحة تغطي فقط التحول إلى التوقيت الشتوي (أكتوبر)؛ صفحة التوقيت الصيفي (مارس) امتداد مستقبلي محتمل."
+  ],
+  "updatedAt": "2026-07-07T07:39:17.249Z"
+}

@@ -848,6 +848,15 @@
     "_countryCode": "tn",
     "day": 20
   },
+  "asian-cup-2027": {
+    "id": "asian-cup-2027",
+    "slug": "asian-cup-2027",
+    "name": "كأس آسيا 2027 في السعودية",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "sa",
+    "date": "{{year}}-01-07"
+  },
   "bac-results-algeria": {
     "id": "bac-results-algeria",
     "slug": "bac-results-algeria",
@@ -908,6 +917,15 @@
     "month": 6,
     "day": 20
   },
+  "buergergeld-germany": {
+    "id": "buergergeld-germany",
+    "slug": "buergergeld-germany",
+    "name": "موعد صرف البورغرغيلد في ألمانيا",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "de",
+    "day": 1
+  },
   "caf-payment-france": {
     "id": "caf-payment-france",
     "slug": "caf-payment-france",
@@ -934,6 +952,27 @@
     "category": "support",
     "_countryCode": "ma",
     "day": 25
+  },
+  "dst-abolition-morocco": {
+    "id": "dst-abolition-morocco",
+    "slug": "dst-abolition-morocco",
+    "name": "إلغاء الساعة الإضافية في المغرب",
+    "type": "estimated",
+    "category": "astronomy",
+    "_countryCode": "ma",
+    "date": "{{year}}-09-20"
+  },
+  "dst-usa": {
+    "id": "dst-usa",
+    "slug": "dst-usa",
+    "name": "تغيير الساعة في أمريكا",
+    "type": "floating",
+    "category": "astronomy",
+    "_countryCode": "us",
+    "month": 11,
+    "weekday": 0,
+    "nth": 1,
+    "offsetDays": 0
   },
   "gulf-childrens-day": {
     "id": "gulf-childrens-day",
@@ -1115,6 +1154,15 @@
       "weekNumber": 2
     }
   },
+  "rajab-start": {
+    "id": "rajab-start",
+    "slug": "rajab-start",
+    "name": "بداية شهر رجب",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 7,
+    "hijriDay": 1
+  },
   "reef-support-saudi": {
     "id": "reef-support-saudi",
     "slug": "reef-support-saudi",
@@ -1152,6 +1200,15 @@
     "_countryCode": "ma",
     "month": 8,
     "day": 20
+  },
+  "riyadh-season": {
+    "id": "riyadh-season",
+    "slug": "riyadh-season",
+    "name": "موسم الرياض",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "sa",
+    "date": "{{year}}-10-15"
   },
   "salary-day-bahrain": {
     "id": "salary-bahrain",
@@ -1207,6 +1264,17 @@
     "_countryCode": "ae",
     "day": 25
   },
+  "school-holidays-france": {
+    "id": "school-holidays-france",
+    "slug": "school-holidays-france",
+    "name": "العطل المدرسية في فرنسا",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "fr",
+    "month": 9,
+    "day": 1,
+    "date": "{{year}}-09-01"
+  },
   "school-start-bahrain": {
     "id": "school-start-bh",
     "slug": "school-start-bahrain",
@@ -1236,6 +1304,15 @@
     "_countryCode": "om",
     "month": 8,
     "day": 31
+  },
+  "shaban-start": {
+    "id": "shaban-start",
+    "slug": "shaban-start",
+    "name": "بداية شهر شعبان",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 8,
+    "hijriDay": 1
   },
   "social-assistance-bahrain": {
     "id": "social-assistance-bahrain",
@@ -1330,6 +1407,29 @@
     "_countryCode": "sa",
     "day": 27
   },
+  "white-friday": {
+    "id": "white-friday",
+    "slug": "white-friday",
+    "name": "الجمعة البيضاء",
+    "type": "floating",
+    "category": "holidays",
+    "month": 11,
+    "weekday": 5,
+    "nth": 4,
+    "offsetDays": 0
+  },
+  "winter-time-egypt": {
+    "id": "winter-time-egypt",
+    "slug": "winter-time-egypt",
+    "name": "نهاية التوقيت الصيفي في مصر",
+    "type": "floating",
+    "category": "astronomy",
+    "_countryCode": "eg",
+    "month": 10,
+    "weekday": 5,
+    "nth": -1,
+    "offsetDays": 0
+  },
   "winter-time-france": {
     "id": "winter-time-france",
     "slug": "winter-time-france",
@@ -1341,6 +1441,27 @@
     "weekday": 0,
     "nth": -1,
     "offsetDays": 0
+  },
+  "winter-time-germany": {
+    "id": "winter-time-germany",
+    "slug": "winter-time-germany",
+    "name": "تغيير الساعة في ألمانيا",
+    "type": "floating",
+    "category": "astronomy",
+    "_countryCode": "de",
+    "month": 10,
+    "weekday": 0,
+    "nth": -1,
+    "offsetDays": 0
+  },
+  "world-cup-2030": {
+    "id": "world-cup-2030",
+    "slug": "world-cup-2030",
+    "name": "كأس العالم 2030",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "ma",
+    "date": "2030-06-08"
   },
   "world-fathers-day": {
     "id": "world-fathers-day",

@@ -1214,6 +1214,35 @@ The AI must not write public-facing content like this:
 
 Instead it should write natural Arabic that sounds like a real editor or writer speaking to a normal reader.
 
+### Hard rule: write TO the reader, never ABOUT them (added 2026-07-07)
+
+Every user-facing field (`answerSummary`, `aboutEvent`, `about.paragraphs`, `history`, `significance`,
+`details`, FAQ answers) must speak directly to the reader in second person ("أنت"/"لك"/your-thing), like
+a knowledgeable friend explaining something practical. It must NEVER describe the reader in the third
+person as a detached "المستخدم" ("the user") or "الزائر" ("the visitor") or "الباحث" ("the researcher") —
+that register reads as AI-generated and kills trust and dwell time. A site-wide audit on 2026-07-07 found
+72 of 151 live events written in this banned register, traced back to this exact scaffold template.
+
+```
+// ❌ third-person / meta-SEO voice (banned):
+"نية المستخدم هنا عملية جداً: متى ينزل الراتب هذا الشهر"
+"هذه الصفحة تساعد الزائر على متابعة موعد إعلان النتائج"
+"يحتاج الزائر إلى معرفة الموعد بدقة"
+"ما يفعله المستخدم عادة هو متابعة العداد"
+
+// ✅ direct address (required):
+"إذا كان سؤالك المباشر: متى ينزل راتبك هذا الشهر"
+"تابع موعد إعلان نتيجتك، وتعرف على طريقة الاستعلام الرسمية"
+"تحتاج لمعرفة الموعد بدقة وما يرتبط به من استعدادات"
+"تابع العداد أعلى الصفحة قبل الموعد بأيام"
+```
+
+This applies to every event scaffolded from `events:new` onward — the default templates in
+`scripts/lib/event-scaffold.ts` and `scripts/lib/content-normalizers.ts` were rewritten the same day to
+generate direct-address copy by default, so a fresh scaffold should already pass this rule. Still,
+always re-read the generated draft before publishing: templates give a safe starting shape, not a
+finished voice, and country/event-specific facts still need a human pass.
+
 ## Real Event vs Unverified Event
 
 If the requested event is fictional, unclear, or not supported by trustworthy sources, the AI must not pretend it is fully publish-ready.

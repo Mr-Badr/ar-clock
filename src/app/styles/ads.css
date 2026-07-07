@@ -658,6 +658,31 @@
     pointer-events: none !important;
   }
 
+  /* ──────────────────────────────────────────────────────────────────────────
+     GOOGLE AUTO ADS — SITE-WIDE WIDTH CONTAINMENT (added 2026-07-08)
+
+     Auto Ads' in-page/anchor/vignette units are injected by Google's own script
+     as direct `body` children, completely outside our `.ad-slot` component tree
+     — so the `overflow:hidden`/`max-width:100%` rules above (which only apply
+     to OUR manual placements) never touch them. Left unconstrained, Google can
+     serve a full-viewport-width creative that visually dominates the page and
+     reads as "the page IS an ad" rather than a normal in-content unit.
+
+     This does not hide anything (the homepage-only block above already does
+     that for side rails) — it just caps whatever Google injects to the same
+     visual width as the rest of the site's content, centered, so an oversized
+     creative never looks more prominent than the content itself.
+     ────────────────────────────────────────────────────────────────────────── */
+  body > [id^="google_auto_ads"],
+  body > [id^="google_ads_container"],
+  body > [id^="google-auto"],
+  body > [id^="google-ads"],
+  body > div[data-google-container-id] {
+    max-width: min(100%, 1200px) !important;
+    margin-inline: auto !important;
+    overflow: hidden !important;
+  }
+
 }
 
 /* ─── END AD LAYOUT & AD SLOT SYSTEM ──────────────────────────────────── */

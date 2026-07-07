@@ -1887,6 +1887,18 @@
     "canonicalPath": "/holidays/aman-social-tunisia",
     "aliases": []
   },
+  "asian-cup-2027": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "sa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/asian-cup-2027",
+    "aliases": []
+  },
   "bac-results-algeria": {
     "publishStatus": "published",
     "retired": false,
@@ -1957,6 +1969,16 @@
     "canonicalPath": "/holidays/bac-results-uae",
     "aliases": []
   },
+  "buergergeld-germany": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/buergergeld-germany",
+    "aliases": []
+  },
   "caf-payment-france": {
     "publishStatus": "published",
     "retired": false,
@@ -1989,6 +2011,30 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/direct-social-support-morocco",
+    "aliases": []
+  },
+  "dst-abolition-morocco": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ma"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/dst-abolition-morocco",
+    "aliases": []
+  },
+  "dst-usa": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "us"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/dst-usa",
     "aliases": []
   },
   "gulf-childrens-day": {
@@ -2213,6 +2259,56 @@
     "canonicalPath": "/holidays/qatar-national-sport-day",
     "aliases": []
   },
+  "rajab-start": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/rajab-start",
+    "aliases": [
+      "rajab-start-in-saudi",
+      "rajab-start-in-egypt",
+      "rajab-start-in-morocco",
+      "rajab-start-in-algeria",
+      "rajab-start-in-uae",
+      "rajab-start-in-tunisia",
+      "rajab-start-in-kuwait",
+      "rajab-start-in-qatar",
+      "rajab-start-in-iraq",
+      "rajab-start-in-syria",
+      "rajab-start-in-yemen",
+      "rajab-start-in-jordan",
+      "rajab-start-in-libya",
+      "rajab-start-in-oman",
+      "rajab-start-in-palestine",
+      "rajab-start-in-canada",
+      "rajab-start-in-france",
+      "rajab-start-in-turkey",
+      "rajab-start-in-usa"
+    ]
+  },
   "reef-support-saudi": {
     "publishStatus": "published",
     "retired": false,
@@ -2259,6 +2355,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/revolution-day-morocco",
+    "aliases": []
+  },
+  "riyadh-season": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "sa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/riyadh-season",
     "aliases": []
   },
   "salary-day-bahrain": {
@@ -2343,6 +2451,18 @@
     "canonicalPath": "/holidays/saned-saudi",
     "aliases": []
   },
+  "school-holidays-france": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "fr"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/school-holidays-france",
+    "aliases": []
+  },
   "school-start-bahrain": {
     "publishStatus": "published",
     "retired": false,
@@ -2376,6 +2496,56 @@
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/school-start-oman",
     "aliases": []
+  },
+  "shaban-start": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/shaban-start",
+    "aliases": [
+      "shaban-start-in-saudi",
+      "shaban-start-in-egypt",
+      "shaban-start-in-morocco",
+      "shaban-start-in-algeria",
+      "shaban-start-in-uae",
+      "shaban-start-in-tunisia",
+      "shaban-start-in-kuwait",
+      "shaban-start-in-qatar",
+      "shaban-start-in-iraq",
+      "shaban-start-in-syria",
+      "shaban-start-in-yemen",
+      "shaban-start-in-jordan",
+      "shaban-start-in-libya",
+      "shaban-start-in-oman",
+      "shaban-start-in-palestine",
+      "shaban-start-in-canada",
+      "shaban-start-in-france",
+      "shaban-start-in-turkey",
+      "shaban-start-in-usa"
+    ]
   },
   "social-assistance-bahrain": {
     "publishStatus": "published",
@@ -2495,6 +2665,28 @@
     "canonicalPath": "/holidays/university-stipend-saudi",
     "aliases": []
   },
+  "white-friday": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "standalone",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/white-friday",
+    "aliases": []
+  },
+  "winter-time-egypt": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "eg"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/winter-time-egypt",
+    "aliases": []
+  },
   "winter-time-france": {
     "publishStatus": "published",
     "retired": false,
@@ -2505,6 +2697,28 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/winter-time-france",
+    "aliases": []
+  },
+  "winter-time-germany": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/winter-time-germany",
+    "aliases": []
+  },
+  "world-cup-2030": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ma"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/world-cup-2030",
     "aliases": []
   },
   "world-fathers-day": {

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 const AdSenseProvider = dynamic(() => import('@/components/ads/AdSenseProvider'), { ssr: false });
+const AdBlockDetector = dynamic(() => import('@/components/ads/AdBlockDetector.client'), { ssr: false });
 const AdStickyAnchor = dynamic(() => import('@/components/ads/AdStickyAnchor'), { ssr: false });
 const AnalyticsProvider = dynamic(() => import('@/components/analytics/AnalyticsProvider'), { ssr: false });
 const ConsentBanner = dynamic(() => import('@/components/consent/ConsentBanner'), { ssr: false });
@@ -73,6 +74,7 @@ export default function ClientRuntimeMounts() {
           <AnalyticsProvider />
           <WebVitalsReporter />
           <AdSenseProvider />
+          <AdBlockDetector />
           <ServiceWorkerRegistration />
           <Toaster
             dir="rtl"

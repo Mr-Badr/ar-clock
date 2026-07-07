@@ -6,7 +6,9 @@ paths:
 
 # Calculator UI/UX Standards
 
-Derived from EOS Kuwait/Qatar/Bahrain redesign session (2026-07-01). Apply to every new calculator and whenever touching existing ones.
+Derived from EOS Kuwait/Qatar/Bahrain redesign session (2026-07-01), revised 2026-07-08 after owner
+feedback that decorative border accents read as templated/AI-generated just like gradients do.
+Apply to every new calculator and whenever touching existing ones.
 
 ---
 
@@ -21,8 +23,42 @@ Gradients on form cards and result panels look AI-generated and cheap. Always us
 
 /* ✅ ALWAYS */
 .calc-form-card    { background: var(--bg-surface-1); border: 1px solid var(--border-default); border-radius: 16px; }
-.calc-result-panel { background: var(--bg-surface-1); border: 1px solid var(--border-default); border-top: 3px solid var(--green); border-radius: 18px; }
+.calc-result-panel { background: var(--bg-surface-1); border: 1px solid var(--border-default); border-radius: 18px; }
 ```
+
+## 1b. No Decorative Colored Border Stripes — Ever (added 2026-07-08)
+
+**Superseded rule, kept for history:** an earlier version of this doc recommended a colored
+`border-top: 3px solid var(--green)` as "the AI-generated-proof alternative to gradients." Owner
+feedback (2026-07-08) was direct: a colored line stamped on a box reads as its own kind of generic
+AI-template pattern, not as intentional design. **Do not add colored border-top/bottom/inline-start/
+inline-end accents to cards, panels, or result boxes as a substitute for real visual hierarchy.**
+
+Carry color with meaning instead — pick ONE of these, not a border stripe:
+- **Icon chip**: a small circular badge (`border-radius: var(--radius-full)`, ~2–2.25rem) with a
+  tinted background (`var(--{color}-subtle)`) and matching icon color (`var(--{color}-text)`),
+  placed above or beside the value/title. This is what a human designer reaches for — the icon
+  carries the category, the chip carries the color, nothing needs a stripe.
+- **Tinted surface**: `background: color-mix(in srgb, var(--{color}-subtle) 40–55%, var(--surface))`
+  on the whole card for a single hero/featured element — used sparingly, not on every card in a grid.
+- **Semantic badge/pill** (`badge-success`, `badge-warning`, etc. — already used site-wide) inline
+  in the copy, when the color signals a real state (Ramadan, sacred month, error/success).
+
+```css
+/* ❌ NEVER (however it's oriented) */
+.card { border-top: 3px solid var(--green); }
+.card { border-inline-start: 3px solid var(--blue); }
+
+/* ✅ Icon chip carries the color instead */
+.card-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.25rem; height: 2.25rem; border-radius: var(--radius-full, 999px);
+  background: var(--blue-subtle); color: var(--blue-text);
+}
+```
+
+If a grid of cards needs visual variety (e.g. 4 stat tiles), rotate the icon-chip color per tile
+(`:nth-child(4n+1..4)`) rather than rotating a border stripe color — same variety, no template look.
 
 The colored `border-top` (3px) gives the result panel identity without decoration. Use `var(--green)` for finance tools, `var(--blue)` for info tools, `var(--amber)` for warnings.
 

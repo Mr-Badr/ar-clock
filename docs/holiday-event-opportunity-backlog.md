@@ -1,8 +1,71 @@
 # Revenue Playbook & Opportunity Backlog — miqatona.com
 
-Updated: 2026-07-07 (Wave 7 diaspora research + Wave 8 volume plays + religious recurring + creative
-feature audit — owner requested more aggressive pipeline toward $100–300 next month) · Built from the
-granular AdSense reports (unit/country/platform/format) + GSC + GA4 + live SERP research
+Updated: 2026-07-07 evening (Wave 6 + Wave 7 execution pass: 6 more events shipped same day as the
+research — see status block below) · Built from the granular AdSense reports (unit/country/platform/
+format) + GSC + GA4 + live SERP research
+
+## STANDING RULE (added 2026-07-07 night): every event must talk TO the reader, not ABOUT them
+
+Owner directive, permanent — applies to every event past, present, and future, not just this batch:
+content must read as premium, human, direct-address Arabic that a reader enjoys, not detached
+AI-sounding prose that describes "the user"/"the researcher" in the third person. Beat every
+competitor not just on facts but on how the page *feels* to read — this is a differentiator search
+bots and humans both reward (dwell time, shares, return visits), and it's what separates this site
+from a generic AI-chat answer the reader could get for free.
+
+**Audit finding (2026-07-07 night)**: a site-wide heuristic scan of all 151 live events found **72
+events** written in a detached "نية المستخدم هنا" / "الباحث العربي هنا يركز" / "ما يفعله المستخدم عادة"
+register — describing the reader in the third person instead of speaking to them with "أنت". This
+was traced to the `aboutEvent` / `about.paragraphs` / `history` / `significance` / `details` fields
+specifically (the `answerSummary`/FAQ fields were mostly already fine). Root cause: an early authoring
+template optimized for "explain the search intent" rather than "talk to the person searching."
+
+**Fix pattern** (template event: `salary-day-saudi`, rewritten 2026-07-07 as the reference): replace
+"نية المستخدم هنا عملية جداً: متى ينزل الراتب" with "إذا كان سؤالك المباشر: متى ينزل راتبك"; replace
+"يفعله المستخدم عادة" with "تابع العداد أعلى الصفحة..."; keep every fact, source, and keyword phrase
+identical — only the voice and grammatical person change (3rd person → 2nd person "أنت"/"لك"/"راتبك").
+
+**Rollout status — DONE (2026-07-07 night)**: all 5 clusters shipped and strict-validated: salary-day-*
+(7 remaining + saudi already fixed = 8/8), pension-day-* (8/8), bac-results-*/bac-exams-algeria (8/8),
+national-day/independence cluster (12/12), support/social-benefit cluster (22/22, 10 needed real fixes,
+12 already clean). Re-ran the site-wide heuristic scan twice after landing — first pass with a narrow
+marker list caught 9 more stragglers outside the original 5 clusters (earth-day, isra-miraj,
+new-years-eve-new-york, nisf-shaban, saudi-flag-day, saudi-founding-day, school-start-morocco,
+spring-season, summer-season); a second pass with a broader marker list (`نية البحث`, `المستخدم يريد`,
+`الباحث العربي`, `كثير من الباحثين`, etc.) caught 20 more across US-holiday events
+(black-friday-usa/cyber-monday-usa/halloween-usa), season pages (spring-season/summer-season/
+winter-season/spring-vacation), and misc national-day pages (kuwait-national-day/qatar-national-day/
+uae-national-day/throne-day-morocco/revolution-day-egypt/martyrs-day-uae/liberation-day-kuwait/
+armed-forces-day-egypt/independence-day-morocco/independence-day-tunisia/january-25-egypt/
+back-to-school/school-start-kuwait). All fixed by hand, one sentence at a time, preserving every fact,
+`{{year}}`/`{{nextYear}}` token, and keyword-matching substring. A handful of `engagementContent[].subcategory`
+tags literally named `"نية البحث"` ("search intent") were left as-is — they're short internal category
+labels, not reader-facing prose, and out of scope for this rule.
+
+**Root cause fixed, not just symptoms**: `scripts/lib/event-scaffold.ts` and
+`scripts/lib/content-normalizers.ts` — the default templates `npm run events:new` fills in for every
+future event — were rewritten the same night to generate direct-address copy by default (was
+previously the literal source of the "الزائر"/"نية المستخدم" register). Verified via a throwaway
+scaffold + diff, then deleted the test folder. `docs/add-new-event.md` now has a dedicated "Hard rule:
+write TO the reader, never ABOUT them" subsection with banned/required examples, so this should not
+recur in future sessions. Full `ci:check` green (116/116) after all of the above.
+
+## Wave 6 + Wave 7 — COMPLETE (shipped 2026-07-07, full record in git history + memory)
+
+All 13 events shipped, strict-validated, `ci:check` green throughout: `caf-payment-france`,
+`kindergeld-germany`, `buergergeld-germany`, `winter-time-france`, `winter-time-germany`,
+`dst-abolition-morocco`, `winter-time-egypt`, `riyadh-season`, `asian-cup-2027`, `white-friday`,
+`world-cup-2030`, `school-holidays-france`, `dst-usa`. Two durable engine additions came out of this
+wave (both documented in `.claude/rules/content-pipeline.md` and `.claude/rules/event-creation-lessons.md`,
+not repeated here): the `retirement` field (auto-unpublish one-time events past a date) and `nth: -1`
+on floating events (last occurrence of a weekday in the month — fixed a real date-computation bug).
+Full narrative detail lives in the `project-wave7-diaspora-events` memory file, not this doc.
+
+**Standing gotcha (still live, watch for it every sync)**: `events:sync`'s `events:fix-related` step
+repeatedly rewrites `relatedSlugs` on UNRELATED existing events, and specifically re-injects
+year-numbered slugs (`world-cup-2030`, `asian-cup-2027`) into other events' `relatedSlugs`, which trips
+the hardcoded-year validator on the LINKING event too. Always `git status` after `events:sync` and
+revert anything unintended — see `.claude/rules/event-creation-lessons.md` §-1.
 
 ---
 
@@ -35,19 +98,11 @@ user action, item #1) · Algeria + Egypt results pages refreshed and reindex-req
 2026-07-06) · 4 new events live with `ci:check` green · AdSense daily revenue vs 0.2 MAD baseline
 (expect first movement from toggles within 3–5 days of the user completing item #1).
 
-## Week 2 (Jul 13–20) — REPURPOSED 2026-07-07: Wave 7 diaspora builds (owner-approved queue jump)
+## Week 2 (Jul 13–20) — Wave 7 diaspora builds — SHIPPED
 
-Original Week-2 items all shipped early on 2026-07-06. Owner directed (2026-07-07) that the diaspora
-high-RPM engine enters the sprint immediately — indexing lead time is the binding constraint for
-"money next month", so these build NOW:
-
-| # | Action | Deadline |
-|---|---|---|
-| W2-1 | **`caf-payment-france`** (W7-1) — full research-first build, caf.fr primary source | Jul 12 |
-| W2-2 | **`kindergeld-germany`** (W7-2) — Endziffer lookup table + countdown, arbeitsagentur.de source | Jul 15 |
-| W2-3 | **`buergergeld-germany`** (W7-3) | Jul 20 |
-| W2-4 | **`winter-time-france`** (W7-4) — the time-now.me competitor threat makes this urgent for brand defense too | Jul 25 |
-| W2-5 | GSC: request indexing for all four the day each ships; add hreflang/interlinks to /time-now/france + /time-now/germany + Paris/Berlin prayer pages | rolling |
+`caf-payment-france`, `kindergeld-germany`, `buergergeld-germany`, `winter-time-france` all live.
+GSC indexing requests + hreflang/interlinks to /time-now/france + /time-now/germany + Paris/Berlin
+prayer pages done as each shipped.
 
 ## Weeks 3–4 (Jul 20–Aug 6) — wave harvest + Mawlid + measurement
 
@@ -59,73 +114,19 @@ high-RPM engine enters the sprint immediately — indexing lead time is the bind
 | 11 | **Mawlid position check** (pool historically inflates 5–10× in the 2–3 pre-weeks; page already optimized). School-start cluster (12 pages) freshness pass before Aug 23. `bac-results-jordan` (Tawjihi results ~early-mid Aug) readiness. | Aug 1–6 |
 | 12 | **Sprint retro vs the equation**: pv/day and RPM vs Jul 6 baseline; decide next sprint from data, not vibes. | Aug 6 |
 
-## Wave 6 — countdown gap-fill (what English countdown sites run that Arabic SERPs don't serve)
+## Wave 6 + Wave 7 — countdown/diaspora gap-fill — ALL SHIPPED
 
-Researched 2026-07-06 by mapping the English "how many days until X" staples (Christmas, Halloween,
-Black Friday, Super Bowl, World Cup, seasons, paydays, school…) against our 133 events. We already
-cover the holiday/season/payday staples. The REAL gaps are sports, entertainment seasons, shopping
-events, and clock changes — all forward demand, several in high-RPM countries. Build order by
-(RPM × volume × indexing lead time); each still goes through full research-first at build:
+All 6 Wave 6 events (`riyadh-season`, `asian-cup-2027`, `dst-abolition-morocco`, `winter-time-egypt`,
+`white-friday`, `world-cup-2030`) and all 7 Wave 7 events (`caf-payment-france`, `kindergeld-germany`,
+`buergergeld-germany`, `winter-time-france`, `winter-time-germany`, `school-holidays-france`,
+`dst-usa`) are SHIPPED, strict-validated, cross-linked, `ci:check` green. Full per-event detail lives
+in git history and the `project-wave7-diaspora-events` memory file, not repeated here.
 
-| # | Event | Date (verified 2026-07-06) | Build by | Why it wins |
-|---|---|---|---|---|
-| W6-1 | **`riyadh-season`** (موسم الرياض) — countdown to opening, `type: estimated` October | Opens ~Oct 2026 (2025 edition opened Oct 10; official date lands ~Sep) | Jul 25 | "متى يبدأ موسم الرياض 2026" SERP = thin blogs/forums, NO countdown page. Saudi RPM 9. Searches ramp Jul→Oct. Runs to Mar 2027 = 6-month tail |
-| W6-2 | **`asian-cup-2027`** (كأس آسيا 2027 السعودية) | **Jan 7 – Feb 5, 2027**, Riyadh/Jeddah/Alkhobar — official AFC announcement | Aug 1 | Saudi hosts. 6-month countdown runway, huge Dec–Jan spike. News sites (kooora/goal) serve match news, nobody serves "كم باقي على كأس آسيا" countdown intent |
-| W6-3 | **`dst-abolition-morocco`** (إلغاء الساعة الإضافية بالمغرب) | Announced ~late Jun 2026: Morocco returns permanently to GMT **after summer 2026** — exact changeover date TBD at build (verify via official سلطة حكومية source, not press) | Jul 31 | Morocco = 24% of our traffic; announcement is 2 weeks old and search interest is LIVE now. A time-utilities site is the most credible answer on the SERP. Cross-links to /time-now/morocco |
-| W6-4 | **`winter-time-egypt`** (التوقيت الشتوي في مصر) — `type: floating`, last Friday of October (≈Oct 30, 2026) | Twice-a-year national clock change; spring counterpart (`summer-time-egypt`, last Thu/Fri of April) built later | Sep 1 | Every phone in Egypt asks this twice a year; news articles expire, a permanent countdown page doesn't. Brand-perfect for miqatona |
-| W6-5 | **`white-friday`** (الجمعة البيضاء) — Gulf/MENA's Black Friday, `type: floating` Nov (≈Nov 27, 2026) | Nov shopping season | Sep 15 | `black-friday-usa` covers ONLY the US event ("الجمعة السوداء في أمريكا") — zero White Friday coverage. November shopping queries carry the year's highest CPCs, Gulf-wide audience |
-| W6-6 | **`world-cup-2030`** (كأس العالم 2030 — المغرب/إسبانيا/البرتغال) | Jun–Jul 2030, Morocco co-hosts | Aug (any slow week) | Evergreen 4-year countdown, searched daily at low volume forever, near-zero competition today; Morocco audience = our base. Build once, earns quietly for years |
-
-**Consciously SKIPPED from the English staple list** (wrong audience or dead ends): Super Bowl ·
-Easter (western) · July 4 · Thanksgiving variants beyond what exists · Olympics LA 2028 (park until
-2027) · tax day · "days until Friday/weekend" (engine has no weekly type; revisit only if trivial) ·
-FIFA Arab Cup (next edition 2029, not 2026 — verified) · خليجي 27 Gulf Cup (date unconfirmed — park
-until officially scheduled) · دوري روشن season start (candidate, needs volume check vs kooora
-dominance) · عيد الميلاد المجيد مصر Jan 7 (cheap add, Egypt RPM — build in a slow December week).
-
-## Wave 7 STATUS UPDATE (2026-07-07, same day): W7-1, W7-2, W7-4 SHIPPED
-
-`caf-payment-france`, `kindergeld-germany`, and `winter-time-france` are live (published,
-`ci:check` green, full research-first rigor: 9-11 competitors each, 8+ coverageMatrix rows, 8
-keywordGaps, 6 unansweredQuestions, 5-6 differentiationIdeas, 3-4 factSources). Cross-linked to
-each other via intentCards and from `/time-now/france` + `/time-now/germany` (both country and
-city-level pages). Two engineering fixes shipped alongside:
-1. **New `retirement` field** on any event package (`{ afterDate, reason }`) — auto-excludes an
-   event from the published index once the date passes, for genuinely one-time content. See
-   `.claude/rules/content-pipeline.md` and `docs/add-new-event.md`.
-2. **Date engine bug fixed**: `nth: -1` now means "last occurrence of this weekday in the month"
-   (`holidays-engine.js` + `package-schema.js`). The old engine had NO way to express "last Sunday
-   of March/October" — `nth: 5` silently returned wrong results (skipped to next year) in years
-   with only 4 occurrences of that weekday. Verified against timeanddate.com: 29 Mar 2026, 25 Oct
-   2026, 26 Oct 2025 all match. This unblocks any future floating "last X of month" event
-   (`summer-time-france`, `summer-time-germany`, other DST/last-weekday patterns).
-
-W7-3 (`buergergeld-germany`), W7-5 (`winter-time-germany`), W7-6 (`school-holidays-france`), W7-7
-(`dst-usa`) remain queued below at their original priority.
-
-## Wave 7 — DIASPORA HIGH-RPM engine (researched 2026-07-07, owner-approved direction)
-
-**The thesis (owner's, confirmed by SERP research):** Arabic speakers *living in* France, Germany,
-USA, etc. search in Arabic but monetize at Western RPMs (France/Germany CPMs are 5–15× Gulf-adjacent,
-30–100× Egypt/Algeria). Nobody serves them date/countdown pages — the SERPs are refugee-info PDFs,
-static blog tables, and expired news. This is the same recurring-payday playbook that already works,
-pointed at richer ad markets. **Build order (by RPM × recurrence × SERP thinness):**
-
-| # | Event | Date rule (verify at build via primary source) | Build by | SERP evidence (2026-07-07) |
-|---|---|---|---|---|
-| W7-1 | **`caf-payment-france`** (موعد صرف الكاف CAF) | ~5th of each month, one month in arrears (verify caf.fr) | **Jul 12** | Arabic SERP has NO date page at all — collisions with the football CAF + refugies.info procedure guides. "متى ينزل الكاف" intent completely unserved. Monthly recurring, France RPM |
-| W7-2 | **`kindergeld-germany`** (موعد صرف الكيندرغيلد) | By Endziffer (last digit of Kindergeld-Nr), 0=start of month → 9=end; 259€/child 2026 (verify arbeitsagentur.de) | **Jul 15** | Same by-digit mechanic as our proven `unemployment-grant-algeria` (CCP digit). Arabic competition = static blog tables (elkhatib.net, favaim) — beatable with a live Endziffer→date lookup + countdown. ~1M+ Arabic speakers in DE, Germany RPM |
-| W7-3 | **`buergergeld-germany`** (موعد صرف الجوب سنتر / بورغرغيلد) | Paid in advance at month start (verify exact rule at build) | Jul 20 | Rides the same audience + internal links as W7-2; "متى ينزل راتب الجوب سنتر" phrasing is how the audience actually talks |
-| W7-4 | **`winter-time-france`** (تغيير الساعة في فرنسا) | Last Sunday of October (Oct 25, 2026) / summer counterpart last Sunday of March | Jul 25 | SERP = expired Oct-2025 news (youm7, wam) + time.is. A permanent countdown page from a time-utilities site is the natural #1. **A competitor (time-now.me) already ranks here — direct threat/validation** |
-| W7-5 | **`winter-time-germany`** (تغيير الساعة في ألمانيا) | Same EU dates as France | Aug 1 | Same as W7-4 for the Germany diaspora; trivial marginal cost after W7-4 |
-| W7-6 | **`school-holidays-france`** (العطل المدرسية في فرنسا) | Zones A/B/C calendar, official éducation.gouv.fr | Aug 10 | Arabic SERP = one generic travel blog + france-en-arabe. The zone-A/B/C complexity is our differentiator (interactive zone picker). Recurring every school year; pairs with existing school-start cluster |
-| W7-7 | **`dst-usa`** (تغيير الساعة في أمريكا) | Nov 1, 2026 (fall back) / Mar 14, 2027 | Sep 1 | Arab-American audience, USA RPM; same template as W7-4/5. Lower priority — smaller Arabic-searching population than FR/DE |
-
-**Wave 7 rules:** every page must state amounts/rules from the official source only (caf.fr,
-arbeitsagentur.de, service-public.fr, éducation nationale) — same primary-source discipline as Gulf
-benefits. Cross-link W7 pages to each other + `/time-now/france|germany` + prayer pages for those
-cities (diaspora users are the same people who need prayer times in Paris/Berlin — internal-link
-loop with existing high-RPM-geo prayer pages).
+**Consciously SKIPPED** (wrong audience or dead ends, don't re-litigate): Super Bowl · Easter (western)
+· July 4 · Thanksgiving variants beyond what exists · Olympics LA 2028 (park until 2027) · tax day ·
+"days until Friday/weekend" (engine has no weekly type) · FIFA Arab Cup (next edition 2029) · خليجي 27
+Gulf Cup (date unconfirmed) · دوري روشن season start (needs volume check) · عيد الميلاد المجيد مصر
+Jan 7 (cheap add, park for a slow December week).
 
 ## Wave 8 — VOLUME plays: huge-population, low-RPM countries (owner-approved, gated)
 
@@ -145,13 +146,13 @@ its gate:
 Owner's point: religious events shouldn't only pay off next Ramadan. The catalog already auto-rolls
 yearly hijri events; what's missing is **monthly and weekly** Islamic recurrence:
 
-| # | Item | Recurrence | Why it wins | Gate |
+| # | Item | Status | Why it wins | Gate |
 |---|---|---|---|---|
-| W9-1 | **`white-days`** (أيام البيض — صيام 13/14/15 هجري) | **Every month** | "متى أيام البيض لشهر X" searched every single hijri month; SERP = dated news + generic fatwa pages, no countdown. We have the hijri engine + أم القرى authority | Engine check: needs monthly-hijri recurrence (like `type: monthly` but hijri) — if >1 day of eng work, build as a single evergreen page under /date with auto-computed next window instead of an event |
-| W9-2 | **Hijri month-start events: `rajab-start`, `shaban-start`** (متى يبدأ شهر رجب/شعبان) | Yearly each, but they chain — Rajab≈Dec 2026, Shaban≈Jan 2027, feeding straight into the Ramadan-1449 funnel | People search month starts 2–3 weeks ahead; competition = calendar-widget sites; we countdown + explain الرؤية vs أم القرى | Cheap builds (existing `type: hijri`); volume gate: 3 named phrases each |
-| W9-3 | **`mid-shaban`** (ليلة النصف من شعبان) ≈ Feb 2, 2027 | Yearly | High seasonal volume, thin Arabic countdown SERP | Build with W9-2 in the same session |
-| W9-4 | **`laylat-al-qadr`** (ليلة القدر) ≈ Mar 2027 | Yearly | Peak-Ramadan monster query; needs to exist and index MONTHS before Ramadan | Build by Dec 2026 — do not wait for Ramadan proximity |
-| — | صيام الاثنين والخميس (weekly) | Weekly | Engine has no weekly type (known limitation) | Revisit only if weekly type ever gets built for "days until Friday" |
+| W9-2 | **`rajab-start`, `shaban-start`** (متى يبدأ شهر رجب/شعبان) | ✅ SHIPPED (2026-07-07 night) | People search month starts 2–3 weeks ahead; we countdown + explain الرؤية vs أم القرى, frame Rajab/Shaban as the runway toward Ramadan | `type: hijri`, strict-validated, `ci:check` green, direct-address from first draft |
+| W9-3 | ~~`mid-shaban`~~ | ✅ already exists as `nisf-shaban` | — | — |
+| W9-4 | ~~`laylat-al-qadr`~~ | ✅ already exists as `laylat-al-qadr` | — | — |
+| W9-1 | **`white-days`** (أيام البيض — صيام 13/14/15 هجري) | 🟡 gated | "متى أيام البيض لشهر X" searched every single hijri month; SERP = dated news + generic fatwa, no countdown | Needs monthly-hijri recurrence in the engine — if >1 day of eng work, build as an evergreen page under /date instead of an event |
+| — | صيام الاثنين والخميس (weekly) | 🚫 not now | Engine has no weekly type | Revisit only if a weekly type gets built |
 
 ## Creative NEW surface (owner asked: not calculators, not events) — audit results 2026-07-07
 
@@ -321,16 +322,10 @@ That plus the RPM work is what puts $300/month in reach — first during the Aug
 Shipped events are removed from this list once live and verified (`ci:check` green) — the record lives
 in `project-revenue-diagnosis` memory and git history, not here. This section only tracks what's left.
 
-## 🟢 VERIFIED — ready to build next (gate passed today via live research)
+## 🟢 VERIFIED — ready to build next (gate passed)
 
-Queued in PART 0 (the 30-day sprint) with deadlines — summary here for the record:
-
-1. **Wave 6 countdown gap-fill (6 events, PART 0 Wave 6 table)** — from mapping English countdown-site
-   staples against our catalog: `riyadh-season` (Oct, thin SERP, Saudi RPM) · `asian-cup-2027`
-   (Jan 7–Feb 5, 2027, official) · `dst-abolition-morocco` (permanent GMT return after summer 2026 —
-   live news wave in our biggest traffic country) · `winter-time-egypt` (last Fri of Oct) ·
-   `white-friday` (Gulf shopping, peak-CPC November) · `world-cup-2030` (Morocco co-host, 4-year
-   evergreen). Dates and reasoning in the Wave 6 table; each still gets full research-first at build.
+**Wave 9 W9-2 shipped** (`rajab-start`, `shaban-start`) — see Part 0 Wave 9 table. Remaining: Wave 8
+(gated ~Jul 30) and W9-1 `white-days` (gated on a monthly-hijri engine decision).
 
 **Saudi GSC query pass — done 2026-07-05 (real export, last 3 months, Saudi-filtered):**
 379 clicks / 145,429 impressions / 0.26% CTR / avg position 9.09 — confirms the "too little traffic,
@@ -411,7 +406,14 @@ direct-source verification (see below).
 - **Every June (annual)**: freshness pass on all exam-results pages BEFORE the waves (Kuwait ≈Jul 1 —
   highest-RPM country, missed in 2026; Algeria ≈Jul 20; Egypt ≈late Jul; Jordan Tawjihi ≈early Aug).
 - **~Sep 2026**: Riyadh Season official opening date announced — update `riyadh-season` from
-  estimated to fixed same-day. Morocco DST changeover date officialized — update `dst-abolition-morocco`.
+  estimated to fixed same-day.
+- **2026-09-20**: Morocco DST abolition happens live (confirmed date, decree 2.26.530) — verify the
+  page served the correct countdown through the actual transition; no action needed unless the
+  government postpones (watch news the week before).
+- **2026-10-20**: `dst-abolition-morocco`'s `retirement.afterDate` fires — confirm the page actually
+  drops out of the sitemap/listing on the next build (first real-world test of the retirement field).
+- **2026-10-30**: Egypt DST ends (`winter-time-egypt` live) — same week Germany/France DST ends
+  (`winter-time-germany`/`winter-time-france`, Oct 25) — good week to check all 3 pages' GSC impressions.
 - **Late Nov 2026**: White Friday week — verify `white-friday` serving; Asian Cup countdown spike
   begins (Dec–Jan).
 - **On deploy + 3 days**: AdSense daily check — Auto anchor share should rise; manual display

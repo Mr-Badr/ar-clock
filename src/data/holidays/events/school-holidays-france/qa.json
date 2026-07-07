@@ -1,0 +1,18 @@
+{
+  "slug": "school-holidays-france",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تواريخ السنة الدراسية 2026-2027 محققة من 3 مصادر رسمية فرنسية (Légifrance arrêté 22 octobre 2025، service-public.gouv.fr، education.gouv.fr).",
+    "core.date يستخدم {{year}}-09-01 (الدخول المدرسي، اليوم الأكثر بحثاً)؛ باقي التواريخ (توسان/كريسماس/شتاء/ربيع/صيف) مكتوبة بيوم+شهر فقط بدون رقم سنة صريح، مع {{year}}/{{nextYear}} حيث يلزم، لتفادي hasHardcodedYear.",
+    "المحتوى مكتوب بمخاطبة مباشرة لولي أمر عربي مقيم في فرنسا (أنت)، تطبيقاً لتوجيه الأسلوب الجديد — أول حدث في الموقع يُبنى بهذا الأسلوب من المسودة الأولى بدل الحاجة لتصحيح لاحق.",
+    "يحتاج تحديث سنوي فور صدور القرار الوزاري الفرنسي للسنة الدراسية التالية."
+  ],
+  "updatedAt": "2026-07-07T19:20:21.892Z"
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "asian-cup-2027",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "الموعد (7 يناير - 5 فبراير 2027)، المدن، الملاعب، وعدد المنتخبات تم التحقق منها من مصدرين رسميين مستقلين متطابقين (saff.com.sa وthe-afc.com).",
+    "core.date يستخدم {{year}}-01-07 (type: estimated) — تحقق تقني أن محرك التواريخ يرحّل الموعد تلقائياً وبشكل صحيح إلى 2027 بما أن اليوم الحالي يقع بعد يناير من السنة الحالية.",
+    "أُضيف حقل retirement (afterDate: 2027-03-01) لأن هذا حدث رياضي لمرة واحدة، والنسخة القادمة من البطولة ستكون في بلد آخر بعد سنوات."
+  ],
+  "updatedAt": "2026-07-07T08:21:47.792Z"
+}

@@ -379,12 +379,15 @@ async function TodayHijriDynamicContent() {
           {hijri && (
             <section className="date-stat-grid mb-8">
               {[
-                { label: 'اليوم من الشهر', value: `${hijri.day} / ${daysInMonth}` },
-                { label: 'اليوم من السنة', value: `${hijri.dayOfYear} / ${hijri.daysInYear}` },
-                { label: 'الشهر', value: MONTH_ORDINALS[(hijri.month ?? 1) - 1] },
-                { label: 'تبقى للسنة', value: `${hijri.daysInYear - hijri.dayOfYear} يوم` },
+                { label: 'اليوم من الشهر', value: `${hijri.day} / ${daysInMonth}`, Icon: CalendarDays },
+                { label: 'اليوم من السنة', value: `${hijri.dayOfYear} / ${hijri.daysInYear}`, Icon: Calendar },
+                { label: 'الشهر', value: MONTH_ORDINALS[(hijri.month ?? 1) - 1], Icon: Moon },
+                { label: 'تبقى للسنة', value: `${hijri.daysInYear - hijri.dayOfYear} يوم`, Icon: Star },
               ].map((s, i) => (
                 <div key={i} className="date-stat-item">
+                  <span className="date-stat-icon" aria-hidden="true">
+                    <s.Icon size={18} strokeWidth={1.75} />
+                  </span>
                   <div className="date-stat-value">{s.value}</div>
                   <div className="date-stat-label">{s.label}</div>
                 </div>
@@ -527,15 +530,24 @@ async function TodayHijriDynamicContent() {
             </div>
             <div className="date-use-list">
               <article className="date-use-item">
-                <h3 className="date-use-title">للعبادات</h3>
+                <h3 className="date-use-title">
+                  <span className="date-use-icon" aria-hidden="true"><Moon size={16} strokeWidth={1.75} /></span>
+                  للعبادات
+                </h3>
                 <p className="date-use-copy">تحقق من الشهر واليوم قبل الصيام أو متابعة الأيام الفاضلة، ثم قارن مع إعلان بلدك عند الحاجة.</p>
               </article>
               <article className="date-use-item">
-                <h3 className="date-use-title">للمناسبات</h3>
+                <h3 className="date-use-title">
+                  <span className="date-use-icon" aria-hidden="true"><Calendar size={16} strokeWidth={1.75} /></span>
+                  للمناسبات
+                </h3>
                 <p className="date-use-copy">استخدم التاريخين معاً عند مشاركة موعد عائلي حتى يفهمه من يعتمد الهجري ومن يعتمد الميلادي.</p>
               </article>
               <article className="date-use-item">
-                <h3 className="date-use-title">للتخطيط</h3>
+                <h3 className="date-use-title">
+                  <span className="date-use-icon" aria-hidden="true"><CalendarDays size={16} strokeWidth={1.75} /></span>
+                  للتخطيط
+                </h3>
                 <p className="date-use-copy">راقب تقدم الشهر وعدد الأيام المتبقية إذا كنت ترتب سفراً، إجازة، أو موعداً قريباً.</p>
               </article>
             </div>

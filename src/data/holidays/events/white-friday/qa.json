@@ -1,0 +1,17 @@
+{
+  "slug": "white-friday",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "قاعدة الموعد (الجمعة الرابعة من نوفمبر) تم التحقق منها بمطابقة تاريخ 2025 الفعلي (28 نوفمبر) مع حساب المحرك — تطابق تام.",
+    "لا يوجد مرسوم حكومي رسمي للمناسبة — ظاهرة تسويقية تجارية تتبع توقيت Black Friday الأمريكي، فاستُخدم sourceAuthority: rule-based-calendar.",
+    "لم يُنشر مبلغ خصم أقصى دقيق كرقم ثابت لأنه يختلف حسب المتجر والمنصة؛ ذُكر كنطاق تقريبي (حتى 75%) بدل رقم مضلل."
+  ],
+  "updatedAt": "2026-07-07T08:29:54.812Z"
+}
