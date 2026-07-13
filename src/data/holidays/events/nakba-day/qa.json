@@ -1,0 +1,19 @@
+{
+  "slug": "nakba-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11 (Wikipedia x2, palquest.org, Al Jazeera encyclopedia): Palestinians date the Nakba to May 15, 1948, the day after Israel's declaration of independence (May 14, 1948); displacement estimates range 700,000-800,000 (reported the range honestly instead of asserting one figure).",
+    "Verified Yasser Arafat's 1998 proposal to formally commemorate the 50th Nakba anniversary annually on May 15.",
+    "Implemented backlog's specific winning angle: answered the 'كم مرت من سنوات' (how many years since) date-intent with an evergreen calculation method (subtract 1948 from the current year) instead of a hardcoded number that would go stale and trip hasHardcodedYear next year.",
+    "Most politically sensitive topic in this batch — strict neutral, dual-narrative factual register maintained (presents both the Israeli 'founding day' framing and the Palestinian 'start of displacement' framing without editorializing), per the site's standing Palestine content rule.",
+    "Single-country event (_countryCode: ps), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T09:17:28.107Z"
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "june-30-revolution-egypt",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر المصري اليوم واليوم السابع ومجلس الوزراء المصري: إجازة مدفوعة الأجر للقطاعين الحكومي والخاص، نمط متكرر في سنوات حديثة عديدة لترحيل الإجازة الفعلية إلى الخميس التالي لتكوين عطلة 3 أيام.",
+    "تعمّدت تجنب ذكر أي سنة محددة (حالية أو سابقة) عند وصف حالات الترحيل الفعلية، امتثالاً لقاعدة hardcoded_year_detected — استُخدمت صياغة 'في سنوات حديثة عديدة' بدل تواريخ صريحة.",
+    "تمييز صريح عن revolution-day-egypt (23 يوليو 1952) في المحتوى — حدثان وطنيان منفصلان بفارق أكثر من 60 عاماً.",
+    "fixed type، _countryCode: eg، countryScope: none — حدث مصري وحيد يذكر 'مصر' بحرية في المحتوى (القاعدة base_country_leakage لا تنطبق على أحداث single-country)."
+  ],
+  "updatedAt": "2026-07-12T19:15:05.255Z"
+}

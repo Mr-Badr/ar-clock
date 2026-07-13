@@ -1,0 +1,19 @@
+{
+  "slug": "revolution-day-syria",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11 from multiple independent sources: Presidential Decree No. 188 (Ahmed al-Sharaa) added March 18 (Syrian Revolution Anniversary, marking the 2011 Daraa uprising spark) and Dec 8 (Liberation Day) as new official holidays, while removing 4 prior-regime holidays: March 8 Revolution (1963 coup), Teacher's Day, October War Day, Martyrs' Day.",
+    "Politically sensitive/live topic — strict neutral factual register maintained throughout (decree facts only, no commentary on legitimacy), same approach as liberation-day-syria.",
+    "Explicitly distinguished the new March 18 anniversary from the OLD, now-abolished March 8 Revolution holiday — a real potential source of confusion given both fall in the same month.",
+    "Avoided citing the literal decree year (2025, currentYear-1 territory) in published copy — used 'صدر مؤخراً' instead; 2011 (the historical Daraa event) is safe and cited directly.",
+    "evacuation-day-syria not yet built — excluded from relatedSlugs to avoid related_slug_not_found."
+  ],
+  "updatedAt": "2026-07-11T08:54:14.850Z"
+}

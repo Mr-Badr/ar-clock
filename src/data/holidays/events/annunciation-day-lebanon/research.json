@@ -1,0 +1,139 @@
+{
+  "slug": "annunciation-day-lebanon",
+  "locale": "ar",
+  "capturedAt": "2026-07-12T09:10:26.595Z",
+  "primaryQueries": [
+    "متى عيد البشارة في لبنان {{year}}",
+    "25 مارس عيد البشارة لبنان",
+    "عيد مسيحي إسلامي مشترك",
+    "من أطلق فكرة عيد البشارة المشترك",
+    "هل عيد البشارة إجازة رسمية في لبنان",
+    "مريم العذراء في القرآن",
+    "كم باقي على عيد البشارة {{year}}",
+    "عيد البشارة في لبنان {{nextYear}}",
+    "متى اعتُمد عيد البشارة عيداً رسمياً",
+    "مزار سيدة الجمهور عيد البشارة"
+  ],
+  "competitors": [
+    {
+      "site": "fides.org",
+      "type": "official",
+      "url": "https://www.fides.org/en/news/65776-ASIA_LEBANON_Sheikh_Nokkari_this_is_why_the_Annunciation_of_Mary_is_a_national_holiday_in_Lebanon",
+      "focus": [
+        "مقابلة مباشرة مع الشيخ النقري عن أصل الفكرة"
+      ],
+      "gaps": [
+        "إنجليزي، لا مقابل عربي بنفس التفصيل"
+      ]
+    },
+    {
+      "site": "oasiscenter.eu",
+      "type": "reference",
+      "url": "https://www.oasiscenter.eu/en/lebanon-how-the-annunciation-came-to-be-a-joint-muslim-christian-national-holiday",
+      "focus": [
+        "السرد الكامل لتطور الفكرة من 2007 إلى 2010"
+      ],
+      "gaps": [
+        "إنجليزي فقط"
+      ]
+    },
+    {
+      "site": "asianews.it",
+      "type": "reference",
+      "url": "https://www.asianews.it/news-en/Lebanese-Christians-and-Muslims-celebrate-the-Annunciation-together-in-the-name-of-Mary-17985.html",
+      "focus": [
+        "تغطية الاحتفال المشترك الفعلي"
+      ],
+      "gaps": [
+        "تغطية إخبارية آنية دون خلفية تاريخية كاملة"
+      ]
+    },
+    {
+      "site": "officeholidays.com",
+      "type": "reference",
+      "url": "https://www.officeholidays.com/holidays/lebanon/feast-of-the-annunciation",
+      "focus": [
+        "تأكيد صفة الإجازة الرسمية"
+      ],
+      "gaps": [
+        "لا يشرح قصة التأسيس أو الشيخ النقري"
+      ]
+    }
+  ],
+  "coverageMatrix": [
+    {
+      "keyword": "لماذا يُعد عيد البشارة استثنائياً عالمياً",
+      "whyItMatters": "الزاوية الأهم — لا يوجد مثيل معروف آخر لعيد وطني رسمي مشترك بين ديانتين."
+    },
+    {
+      "keyword": "من أطلق فكرة عيد البشارة المشترك",
+      "whyItMatters": "يربط المناسبة بشخصية حقيقية (الشيخ النقري) بدل تركها ذكرى مجردة."
+    },
+    {
+      "keyword": "هل عيد البشارة إجازة رسمية في لبنان",
+      "whyItMatters": "سؤال عملي مؤكد بالإيجاب من قوائم ABL الرسمية."
+    },
+    {
+      "keyword": "متى اعتُمد عيد البشارة عيداً رسمياً",
+      "whyItMatters": "يحدد سنة التحول من مبادرة أهلية إلى قرار حكومي (2010)."
+    },
+    {
+      "keyword": "مزار سيدة الجمهور عيد البشارة",
+      "whyItMatters": "الموقع الفعلي لأول احتفال مشترك سنة 2007 — تفصيل جغرافي دقيق."
+    },
+    {
+      "keyword": "مريم العذراء في القرآن",
+      "whyItMatters": "السند الديني الذي يفسر لماذا اختيرت هذه المناسبة تحديداً كرمز وحدة."
+    },
+    {
+      "keyword": "كيف يُحتفى بعيد البشارة في لبنان",
+      "whyItMatters": "نية بحث عملية عن مظاهر الاحتفال الفعلية."
+    },
+    {
+      "keyword": "عيد البشارة في لبنان {{nextYear}}",
+      "whyItMatters": "يخدم من يخطط مسبقاً ويؤكد ثبات التاريخ."
+    }
+  ],
+  "keywordGaps": [
+    "شرح دقيق لتدرج الفكرة من مبادرة أهلية 2007 إلى قرار حكومي رسمي 2010",
+    "ربط الاختيار بمكانة مريم العذراء المشتركة في القرآن (34 ذكراً وسورة كاملة)",
+    "توثيق مباشر من مصادر تخصصت في الحوار الإسلامي المسيحي (Oasis Center، Fides) بدل مصادر عامة",
+    "ذكر مزار سيدة الجمهور كموقع فعلي لانطلاقة الفكرة",
+    "تسمية الشيخ محمد النقري تحديداً بدل صياغة غامضة مثل 'رجل دين'",
+    "توضيح استمرار الطابع المشترك للاحتفال حتى اليوم وليس مجرد حدث تاريخي منته",
+    "تأكيد صفة الإجازة الرسمية عبر مصدر ABL بدل الاكتفاء بالوصف الرمزي",
+    "تصحيح انطباع أن هذا عيد مسيحي بحت — التأكيد على الطابع المشترك الفعلي"
+  ],
+  "unansweredQuestions": [
+    "متى عيد البشارة بالضبط؟",
+    "لماذا هو استثنائي عالمياً؟",
+    "من أطلق الفكرة ومتى؟",
+    "هل هو إجازة رسمية فعلاً؟",
+    "كيف يُحتفى به فعلياً؟",
+    "ما علاقة مريم العذراء بالقرآن؟"
+  ],
+  "differentiationIdeas": [
+    "القصة الكاملة الموثقة لتدرج الفكرة (2007 مبادرة أهلية → 2010 قرار رسمي)، غائبة عن أغلب المحتوى العربي الذي يذكر فقط 'عيد مشترك' دون تفاصيل",
+    "ربط مباشر بمكانة مريم في القرآن كسند لفهم القصة",
+    "الاعتماد على مصادر متخصصة في الحوار الإسلامي المسيحي (Oasis Center, Fides) بدل مقالات عامة"
+  ],
+  "factSources": [
+    {
+      "label": "Agenzia Fides — الشيخ النقري وعيد البشارة",
+      "url": "https://www.fides.org/en/news/65776-ASIA_LEBANON_Sheikh_Nokkari_this_is_why_the_Annunciation_of_Mary_is_a_national_holiday_in_Lebanon"
+    },
+    {
+      "label": "Oasis Center — كيف صار عيد البشارة عيداً مشتركاً",
+      "url": "https://www.oasiscenter.eu/en/lebanon-how-the-annunciation-came-to-be-a-joint-muslim-christian-national-holiday"
+    },
+    {
+      "label": "AsiaNews — احتفال المسلمين والمسيحيين اللبنانيين بعيد البشارة",
+      "url": "https://www.asianews.it/news-en/Lebanese-Christians-and-Muslims-celebrate-the-Annunciation-together-in-the-name-of-Mary-17985.html"
+    },
+    {
+      "label": "Office Holidays — Feast of the Annunciation, Lebanon",
+      "url": "https://www.officeholidays.com/holidays/lebanon/feast-of-the-annunciation"
+    }
+  ],
+  "notes": "تحقق ثلاثي المصادر (Fides، Oasis Center، AsiaNews) لقصة الشيخ محمد النقري وتأسيس أول احتفال مشترك سنة 2007 في مزار سيدة الجمهور، ثم الاعتماد الرسمي سنة 2010 في عهد سعد الحريري. لم يُذكر رقم دقيق لتاريخ قرار مجلس الوزراء (أحد المصادر أشار إلى 'فبراير' كتاريخ تقريبي للموافقة) — اكتُفي بذكر سنة 2010 فقط دون شهر محدد لعدم كفاية التوثيق. صفة الإجازة الرسمية مؤكدة عبر ظهورها في قائمة ABL الرسمية."
+}

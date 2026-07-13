@@ -13,7 +13,18 @@ export const NAV_LINKS = [
   { href: "/", label: "الرئيسية" },
   { href: "/fahras", label: "استكشف" },
   { href: "/blog", label: "المدونة" },
-  { href: "/mwaqit-al-salat", label: "مواقيت الصلاة" },
+  {
+    href: "/mwaqit-al-salat",
+    label: "مواقيت الصلاة",
+    panelIcon: "Moon",
+    panelDescription: "مواقيت اليوم في مدينتك، وأوقات مستحبة أخرى محسوبة حياً: الثلث الأخير من الليل، الضحى، ساعة الاستجابة، وأيام البيض",
+    sublinks: [
+      { href: '/mwaqit-al-salat/last-third-of-night', label: 'الثلث الأخير من الليل', icon: 'Moon', description: 'ومنتصف الليل الشرعي، محسوبان حسب مدينتك' },
+      { href: '/mwaqit-al-salat/duha-prayer-time',    label: 'وقت صلاة الضحى',        icon: 'Sun',  description: 'البداية والنهاية حسب مدينتك اليوم' },
+      { href: '/mwaqit-al-salat/friday-response-hour', label: 'ساعة الاستجابة',        icon: 'Hourglass', description: 'آخر ساعة قبل المغرب كل جمعة' },
+      { href: '/mwaqit-al-salat/white-days',           label: 'أيام البيض',            icon: 'CalendarDots', description: '13 و14 و15 من كل شهر هجري' },
+    ],
+  },
   {
     href: "/date",
     label: "التاريخ والتحويل",

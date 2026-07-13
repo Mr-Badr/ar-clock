@@ -1,0 +1,17 @@
+{
+  "slug": "perseids-meteor-shower",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Peak Aug 12-13 verified 2026-07-12 across arabiaweather.com, alkhaleej.ae, astronomycenter.net (IAC).",
+    "Honest-numbers angle: realistic 30-50/hr dark-sky rate vs theoretical 150 headline figure.",
+    "Moon-phase advice kept evergreen - no specific year phase asserted (hardcoded-year rule)."
+  ],
+  "updatedAt": "2026-07-11T23:09:36.791Z"
+}

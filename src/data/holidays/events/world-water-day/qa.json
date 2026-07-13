@@ -1,0 +1,17 @@
+{
+  "slug": "world-water-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر موقع الأمم المتحدة الرسمي: 22 مارس اعتمد سنة 1992، أول احتفال فعلي مارس 1993.",
+    "زاوية ندرة المياه العربية موثقة عبر الجزيرة نت، صيغت بعبارات عامة حذرة (بدون أرقام دقيقة غير مؤكدة مباشرة) لتجنب أي مبالغة.",
+    "fixed type، ليس إجازة رسمية في أي دولة عربية — موضح صراحة في المحتوى."
+  ],
+  "updatedAt": "2026-07-12T14:20:49.034Z"
+}

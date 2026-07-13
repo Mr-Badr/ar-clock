@@ -1,0 +1,17 @@
+{
+  "slug": "tasua-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر إسلام ويب (فتوى 59112) ومصادر متعددة: النبي ﷺ نوى صيام التاسع من محرم مخالفة لليهود، لكنه توفي قبل العام المقبل — حديث ابن عباس في صحيح مسلم.",
+    "اقتصر المحتوى على الزاوية الفقهية السنية (الصيام) دون التطرق للجانب الطائفي المرتبط بكربلاء، حفاظاً على الحياد بنفس أسلوب حدث ashura القائم على الموقع.",
+    "hijri type مع hijriMonth:1, hijriDay:9 — اليوم السابق مباشرة لـ ashura (hijriDay:10)."
+  ],
+  "updatedAt": "2026-07-12T14:05:59.025Z"
+}

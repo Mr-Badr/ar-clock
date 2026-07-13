@@ -374,6 +374,18 @@ export function buildRichContentScaffold(core: EventCoreLike, nowIso: string): R
     : scaffold;
 }
 
+const YEAR_SLUG_RE = /\b20\d{2}\b/;
+
+// A slug containing a hardcoded 4-digit year (e.g. "world-cup-2030") trips the
+// hasHardcodedYear validator on ANY event that lists it in relatedSlugs, since that
+// check scans relatedSlugs strings too. Never auto-suggest such a slug as a related
+// link target for a different event — see .claude/rules/event-creation-lessons.md §-1.
+export function isYearNumberedSlug(slug: string) {
+  const match = slug.match(YEAR_SLUG_RE);
+  if (!match) return false;
+  return Number(match[0]) >= new Date().getUTCFullYear() - 1;
+}
+
 export function suggestRelatedSlugs(current: RelatedEntry, allEntries: RelatedEntry[]) {
   const byDistance = (a: RelatedEntry, b: RelatedEntry) => {
     const currentQueue = current.queueOrder || Number.MAX_SAFE_INTEGER;
@@ -385,12 +397,11 @@ export function suggestRelatedSlugs(current: RelatedEntry, allEntries: RelatedEn
     return a.slug.localeCompare(b.slug);
   };
 
-  const sameCategory = allEntries
-    .filter((entry) => entry.slug !== current.slug && entry.category === current.category)
-    .sort(byDistance);
-  const otherCategories = allEntries
-    .filter((entry) => entry.slug !== current.slug && entry.category !== current.category)
-    .sort(byDistance);
+  const candidates = allEntries.filter(
+    (entry) => entry.slug !== current.slug && !isYearNumberedSlug(entry.slug),
+  );
+  const sameCategory = candidates.filter((entry) => entry.category === current.category).sort(byDistance);
+  const otherCategories = candidates.filter((entry) => entry.category !== current.category).sort(byDistance);
 
   return Array.from(new Set([...sameCategory, ...otherCategories].map((entry) => entry.slug))).slice(0, 4);
 }

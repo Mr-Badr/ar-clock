@@ -1,0 +1,17 @@
+{
+  "slug": "barnbidrag-sweden",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "كل الأرقام مؤكدة مباشرة من forsakringskassan.se: 1,250 كرونة أساسي، 2,650/4,480/6,740 مع علاوة تعدد الأطفال، صرف يوم 20 تلقائياً بلا طلب",
+    "استثناء نهاية الأسبوع لبارنبيدراغ هو التقديم إلى الجمعة دائماً (سبت وأحد كلاهما) — يختلف عن قاعدة معاش التقاعد السويدي التي تفرق بين السبت والأحد، يجب الانتباه لهذا الفرق عند بناء pension-sweden",
+    "المنافسة العربية الحالية كلها مقالات إخبارية موسمية (centersweden, dalmedia, swed24) تفقد صلاحيتها؛ صفحتنا الأولى الدائمة المحدّثة تلقائياً"
+  ],
+  "updatedAt": "2026-07-08T03:38:48.755Z"
+}

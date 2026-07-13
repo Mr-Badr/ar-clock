@@ -1,0 +1,164 @@
+{
+  "slug": "pension-day-france",
+  "locale": "ar",
+  "capturedAt": "2026-07-11T23:06:46.011Z",
+  "primaryQueries": [
+    "متى ينزل راتب التقاعد في فرنسا {{year}}",
+    "كم باقي على راتب التقاعد في فرنسا {{year}}",
+    "موعد صرف التقاعد في فرنسا",
+    "تاريخ دفع التقاعد Carsat",
+    "موعد صرف Agirc-Arrco",
+    "معاش التقاعد في فرنسا",
+    "راتب التقاعد الفرنسي عن الشهر السابق",
+    "راتب التقاعد لم يظهر في حسابي",
+    "تقويم دفعات التقاعد الفرنسي",
+    "متى راتب التقاعد في فرنسا {{nextYear}}"
+  ],
+  "competitors": [
+    {
+      "site": "lassuranceretraite.fr",
+      "type": "official",
+      "url": "https://www.lassuranceretraite.fr/portail-info/home/retraite/paiements-retraite/calendrier-paiement-retraite.html",
+      "focus": [
+        "التقويم الرسمي الفرنسي لدفعات التقاعد (يوم 9 + الاستثناءات)"
+      ],
+      "gaps": [
+        "بالفرنسية فقط",
+        "لا محتوى عربي إطلاقاً",
+        "لا عداد ولا شرح لقاعدة الشهر السابق بلغة مبسطة"
+      ]
+    },
+    {
+      "site": "service-public.gouv.fr",
+      "type": "official",
+      "url": "https://www.service-public.gouv.fr/particuliers/actualites/A18602",
+      "focus": [
+        "إعلان التقويم السنوي الرسمي للدفعات"
+      ],
+      "gaps": [
+        "فرنسي فقط",
+        "خبر إداري بلا أدوات"
+      ]
+    },
+    {
+      "site": "moneyvox.fr",
+      "type": "finance-media",
+      "url": "https://www.moneyvox.fr/retraite/actualites/105917/retraite-carsat-agirc-arrco-ces-dates-ou-le-versement-sera-decale-en-2026",
+      "focus": [
+        "مقالات سنوية عن الشهور التي يتقدم فيها الصرف",
+        "يغطي الأساسي والتكميلي معاً"
+      ],
+      "gaps": [
+        "فرنسي فقط",
+        "مقال يتقادم كل سنة",
+        "لا عداد"
+      ]
+    },
+    {
+      "site": "carsat-normandie.fr (وبقية صناديق Carsat الإقليمية)",
+      "type": "official",
+      "url": "https://www.carsat-normandie.fr/home/retraite/votre-retraite-au-quotidien/les-dates-de-paiement-de-votre-retraite.html",
+      "focus": [
+        "صفحات مواعيد الدفع الإقليمية"
+      ],
+      "gaps": [
+        "فرنسي فقط",
+        "مبعثرة على عشرات المواقع الإقليمية"
+      ]
+    },
+    {
+      "site": "المحتوى العربي عموماً",
+      "type": "gap",
+      "url": "https://www.google.com/search?q=موعد+صرف+التقاعد+في+فرنسا",
+      "focus": [
+        "لا شيء — منتديات مهاجرين متفرقة وأسئلة بلا إجابة موثوقة"
+      ],
+      "gaps": [
+        "صفر صفحات عربية مخصصة لمواعيد التقاعد الفرنسي — نفس فجوة prime-noel-france وcaf-payment-france التي أثبتت نجاحها"
+      ]
+    }
+  ],
+  "coverageMatrix": [
+    {
+      "keyword": "متى ينزل راتب التقاعد في فرنسا {{year}}",
+      "whyItMatters": "السؤال المباشر للجالية العربية المتقاعدة في فرنسا؛ لا توجد أي صفحة عربية تجيبه بقاعدة يوم 9 مع عداد."
+    },
+    {
+      "keyword": "كم باقي على راتب التقاعد في فرنسا {{year}}",
+      "whyItMatters": "نية العد التنازلي الشهرية المتكررة — العداد يجيبها تلقائياً كل شهر إلى الأبد."
+    },
+    {
+      "keyword": "موعد صرف Agirc-Arrco",
+      "whyItMatters": "الخلط بين الأساسي (يوم 9، عن الشهر السابق) والتكميلي (يوم 1، مقدماً) أكبر مصدر قلق — لا مصدر عربي يفصله."
+    },
+    {
+      "keyword": "لماذا وصلني الراتب يوم 7",
+      "whyItMatters": "قاعدة تقديم الصرف عند العطلات تربك المتقاعدين شهرين إلى ثلاثة كل سنة."
+    },
+    {
+      "keyword": "راتب التقاعد لم يظهر في حسابي",
+      "whyItMatters": "فجوة الأيام بين إطلاق التحويل وظهوره بنكياً — إجابة عملية تمنع مراجعات لا داعي لها."
+    },
+    {
+      "keyword": "لماذا راتب التقاعد الأساسي عن الشهر السابق",
+      "whyItMatters": "قاعدة arrears تفاجئ كل متقاعد جديد؛ شرحها بالعربية غير موجود."
+    },
+    {
+      "keyword": "الألزاس الموزيل موعد التقاعد",
+      "whyItMatters": "استثناء إقليمي حقيقي (الصرف يوم 1) لا يذكره أي محتوى عربي — عمق يبني الثقة."
+    },
+    {
+      "keyword": "معاش التقاعد في فرنسا",
+      "whyItMatters": "صيغة بحث عامة تلتقط الباحثين الجدد وتوصلهم للتفاصيل العملية."
+    },
+    {
+      "keyword": "متى راتب التقاعد في فرنسا {{nextYear}}",
+      "whyItMatters": "نية التخطيط للسنة القادمة — الصفحة تتدحرج تلقائياً بقاعدة يوم 9 الثابتة."
+    }
+  ],
+  "keywordGaps": [
+    "قاعدة يوم 9 الشهرية بالعربية مع عداد — غير موجودة في أي مكان",
+    "قاعدة التقديم عند العطلات (شهران إلى ثلاثة كل سنة يوم 7 أو 8) مشروحة بالعربية",
+    "الفرق الكامل بين الأساسي والتكميلي في المواعيد واتجاه الدفع",
+    "قاعدة الدفع عن الشهر السابق وتأثيرها على أول شهر تقاعد",
+    "استثناء Carsat Alsace-Moselle (يوم 1)",
+    "فجوة التحويل البنكي 1-3 أيام عمل — متى تقلق فعلاً",
+    "توجيه المتقاعد الجديد لأول دفعة وما يسبقها",
+    "ربط الموعد بمنظومة الدعم الفرنسية الأوسع (CAF يوم 5، prime de Noël ديسمبر) عبر الروابط الداخلية"
+  ],
+  "unansweredQuestions": [
+    "متى تصل دفعة هذا الشهر بالضبط وكم باقٍ عليها؟",
+    "لماذا وصلت الدفعة قبل يوم 9 في بعض الشهور؟",
+    "لماذا تختلف دفعة Agirc-Arrco عن دفعة Carsat في التوقيت؟",
+    "هل دفعة يوليو هي راتب يوليو أم يونيو؟",
+    "متى أقلق إذا لم يظهر المبلغ في حسابي؟",
+    "هل لسكان الألزاس-موزيل موعد مختلف فعلاً؟",
+    "ماذا يتغير في مواعيد السنة القادمة؟"
+  ],
+  "differentiationIdeas": [
+    "أول صفحة عربية لمواعيد التقاعد الفرنسي — نفس الفجوة الصفرية التي نجحت مع prime-noel وcaf-payment",
+    "عداد شهري تلقائي على قاعدة يوم 9 (monthly engine type)",
+    "فصل الأساسي عن التكميلي بجدول مواعيد واتجاه دفع — أكبر مصدر خلط",
+    "استثناء الألزاس-موزيل كعمق لا يملكه أي محتوى عربي",
+    "الربط بعنقود فرنسا القائم (CAF، prime de Noël، استرداد الضرائب، منح CROUS) بروابط متبادلة"
+  ],
+  "factSources": [
+    {
+      "label": "L'Assurance Retraite — الصفحة الرسمية لتقويم الدفعات: الصرف يوم 9 شهرياً ويُقدَّم عند العطلات؛ استثناء الألزاس-موزيل يوم 1",
+      "url": "https://www.lassuranceretraite.fr/portail-info/home/retraite/paiements-retraite/calendrier-paiement-retraite.html"
+    },
+    {
+      "label": "service-public.gouv.fr — التقويم السنوي الرسمي للدفعات (عشر دفعات يوم 9 ودفعتان مقدمتان ليوم 7 هذه السنة)",
+      "url": "https://www.service-public.gouv.fr/particuliers/actualites/A18602"
+    },
+    {
+      "label": "MoneyVox — الأساسي يُدفع عن الشهر السابق بينما Agirc-Arrco التكميلي يوم 1 مقدماً، مع جدول شهور التقديم",
+      "url": "https://www.moneyvox.fr/retraite/actualites/105917/retraite-carsat-agirc-arrco-ces-dates-ou-le-versement-sera-decale-en-2026"
+    },
+    {
+      "label": "Carsat Normandie — صفحة مواعيد الدفع الإقليمية المطابقة لقاعدة يوم 9",
+      "url": "https://www.carsat-normandie.fr/home/retraite/votre-retraite-au-quotidien/les-dates-de-paiement-de-votre-retraite.html"
+    }
+  ],
+  "notes": "Winning angle: zero Arabic competition (same proven gap as prime-noel-france/caf-payment-france) + monthly recurring countdown that earns every month forever + the basic-vs-complementary confusion (day 9 arrears vs day 1 advance) as the practical differentiator. Facts verified 2026-07-11 against lassuranceretraite.fr + service-public.gouv.fr + MoneyVox triangulation. Deliberately NO literal year for the two pulled-forward months (hardcoded-year rule) — phrased as 'شهران إلى ثلاثة كل سنة'."
+}

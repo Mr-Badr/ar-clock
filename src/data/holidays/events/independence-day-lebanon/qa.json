@@ -1,0 +1,17 @@
+{
+  "slug": "independence-day-lebanon",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق مباشر عبر ويكيبيديا الإنجليزية (Lebanese Independence Day) وقائمتي العطل الرسمية لجمعية مصارف لبنان (ABL) ومصرف لبنان (BDL): 22 نوفمبر مؤكد كإجازة رسمية مصرفية وحكومية.",
+    "فُصل بدقة بين تعديل الدستور (8 نوفمبر 1943) والإفراج الفعلي عن القادة من قلعة راشيا (22 نوفمبر 1943) — التاريخ الثاني هو يوم العيد الرسمي.",
+    "أول حدث لبناني يُضاف لهذا الموقع — لبنان دولة جديدة كلياً في تصنيف /holidays، أضيفت إلى taxonomy/countries.json بالرمز lb."
+  ],
+  "updatedAt": "2026-07-12T09:09:21.396Z"
+}

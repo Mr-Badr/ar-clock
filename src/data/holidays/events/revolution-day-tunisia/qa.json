@@ -1,0 +1,18 @@
+{
+  "slug": "revolution-day-tunisia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11: Presidential Order No. 223/2021 (dated Dec 7, 2021) moved the official Revolution Day holiday from Jan 14 to Dec 17, replacing Order No. 317/2011.",
+    "Political framing handled neutrally per project rule — states legal facts only, does not take a side in the Dec-17-vs-Jan-14 political debate.",
+    "Single-country event (_countryCode: tn), aliasSlugs: [] to avoid base_country_leakage.",
+    "martyrs-day-tunisia not yet built — excluded from relatedSlugs to avoid related_slug_not_found."
+  ],
+  "updatedAt": "2026-07-11T04:19:31.038Z"
+}

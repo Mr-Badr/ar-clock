@@ -1,0 +1,18 @@
+{
+  "slug": "tax-day-usa",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر WebFetch مباشر على 3 روابط حية وعاملة فعلياً: irs.gov/filing/individuals/when-to-file (موعد أساسي + قاعدة التأجيل)، irs.gov automatic-2-month-extension (تمديد المقيمين بالخارج حتى 15 يونيو)، accountingtoday.com (أمثلة 2011/2012 موثقة عبر IRS Notice 2011-17).",
+    "تحقق حسابي إضافي (Node.js Date): 15 أبريل 2026 = أربعاء، 16 أبريل 2026 = خميس — لا تعارض هذا العام، الموعد الفعلي = 15 أبريل بلا تأجيل.",
+    "fixed type (month:4, day:15)؛ قاعدة التأجيل عند تعارض عطلة نهاية أسبوع/Emancipation Day موضحة في المحتوى فقط (المحرك لا يحسبها آلياً)، بنفس نمط استثناءات نهاية الأسبوع في أحداث السويد/الاستحقاقات الأخرى.",
+    "countryScope: none، حدث أمريكي وحيد. الفرق بين تمديد التقديم (نموذج 4868) وتمديد الدفع موضح بدقة لتفادي معلومة مضللة شائعة."
+  ],
+  "updatedAt": "2026-07-13T05:23:50.664Z"
+}

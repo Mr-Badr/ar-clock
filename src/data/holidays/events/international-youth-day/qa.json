@@ -1,0 +1,17 @@
+{
+  "slug": "international-youth-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر موقع الأمم المتحدة الرسمي (un.org): 12 أغسطس اعتمد سنة 1999، بناءً على توصية منتدى الشباب العالمي في فيينا 1991.",
+    "الزاوية الخليجية (فعاليات وزارات الشباب) صيغت بعبارات عامة حذرة دون أرقام أو ادعاءات غير موثقة، تماشياً مع ملاحظة البحث الأولي في backlog.",
+    "fixed type، ليس إجازة رسمية في أي دولة عربية — موضح صراحة في المحتوى."
+  ],
+  "updatedAt": "2026-07-12T14:20:40.893Z"
+}

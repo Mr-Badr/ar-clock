@@ -1,0 +1,17 @@
+{
+  "slug": "tashreeq-days",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر فتوى ابن باز (16100) ودار الإفتاء المصرية: أيام التشريق 11-13 ذي الحجة، الصيام فيها حرام لعموم المسلمين إلا حاج بلا هدي، ورمي الجمرات من الزوال حتى الغروب.",
+    "hijri type مع hijriMonth:12, hijriDay:11 كنقطة انطلاق (أول أيام التشريق)؛ المحتوى يوضح صراحة أنها تمتد 3 أيام حتى 13 ذي الحجة.",
+    "countryScope: all (حدث إسلامي عالمي لا يحتاج تخصيصاً قطرياً)."
+  ],
+  "updatedAt": "2026-07-12T14:06:07.339Z"
+}

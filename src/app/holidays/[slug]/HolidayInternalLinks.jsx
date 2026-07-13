@@ -1,8 +1,20 @@
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { getCountryByCode } from '@/lib/events/country-dictionary';
+import { getCountryHubByCode } from '@/lib/holidays/country-hub-data';
 
 const ISLAMIC_CATEGORIES = new Set(['islamic', 'hijri']);
+
+const GULF_PAY_DATES_SLUGS = new Set([
+  'salary-day-saudi', 'salary-day-uae', 'salary-day-kuwait', 'salary-day-qatar',
+  'salary-day-bahrain', 'salary-day-oman',
+  'pension-day-saudi', 'pension-day-uae', 'pension-day-kuwait', 'pension-day-bahrain', 'pension-day-oman',
+  'citizen-account-saudi', 'hafez-saudi', 'housing-support-saudi', 'reef-support-saudi',
+  'sand-payment-saudi', 'social-security-saudi',
+  'housing-allowance-kuwait', 'national-labor-support-kuwait', 'social-assistance-kuwait',
+  'cost-of-living-allowance-bahrain', 'social-assistance-bahrain',
+  'job-security-oman', 'social-security-qatar', 'nafis-uae',
+]);
 
 const CALCULATOR_LINKS = {
   // Islamic religious events
@@ -120,15 +132,33 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
     });
   }
 
-  // 5. All holidays hub
-  links.push({
-    href: '/holidays',
-    title: 'كل المناسبات',
-    desc: country?.nameAr
-      ? `تابع المناسبات القادمة لـ${country.nameAr} ومقارنة المواعيد بين الدول.`
-      : 'قارن هذا الموعد بمناسبات أخرى قريبة في نفس الفهرس.',
-    cta: 'استعرض المناسبات',
-  });
+  // 5. Gulf-wide pay calendar for salary/pension/support events, then the
+  //    country holiday-calendar hub when one exists, otherwise the all-holidays hub
+  const countryHub = getCountryHubByCode(event?._countryCode);
+  if (GULF_PAY_DATES_SLUGS.has(slug)) {
+    links.push({
+      href: '/calculators/gulf-pay-dates',
+      title: 'جدول رواتب الخليج',
+      desc: 'قارن هذا الموعد بكل مواعيد الرواتب والمعاشات والدعم في دول الخليج الست، مرتبة حسب الأقرب.',
+      cta: 'افتح الجدول',
+    });
+  } else if (countryHub) {
+    links.push({
+      href: `/holidays/country/${countryHub.slug}`,
+      title: `العطل الرسمية في ${countryHub.nameAr}`,
+      desc: `جدول عطل ${countryHub.nameAr} كاملاً بالميلادي والهجري، مع عداد لأقرب إجازة وملف تقويم لهاتفك.`,
+      cta: 'افتح الجدول',
+    });
+  } else {
+    links.push({
+      href: '/holidays',
+      title: 'كل المناسبات',
+      desc: country?.nameAr
+        ? `تابع المناسبات القادمة لـ${country.nameAr} ومقارنة المواعيد بين الدول.`
+        : 'قارن هذا الموعد بمناسبات أخرى قريبة في نفس الفهرس.',
+      cta: 'استعرض المناسبات',
+    });
+  }
 
   return links.slice(0, 4);
 }

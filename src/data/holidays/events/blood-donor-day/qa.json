@@ -1,0 +1,17 @@
+{
+  "slug": "blood-donor-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر ويكيبيديا العربية ومكتب شرق المتوسط لمنظمة الصحة العالمية: أول احتفال 2004، اعتماد رسمي من جمعية الصحة العالمية 2005، 14 يونيو ذكرى ميلاد كارل لاندشتاينر (1868) مكتشف فصائل الدم ABO.",
+    "أصلحت خطأ إملائي في مفتاح JSON بـ research.json (whyItمatters → whyItMatters) بعد كتابة المحتوى.",
+    "fixed type، ليس إجازة رسمية في أي دولة عربية — موضح صراحة في المحتوى."
+  ],
+  "updatedAt": "2026-07-12T14:21:16.854Z"
+}

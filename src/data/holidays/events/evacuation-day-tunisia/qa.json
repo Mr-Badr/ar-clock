@@ -1,0 +1,16 @@
+{
+  "slug": "evacuation-day-tunisia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر مصدرين مستقلين (ويكيبيديا الإنجليزية وCarthage Magazine): معركة بنزرت يوليو 1961 (630 شهيداً تونسياً، 24 قتيلاً فرنسياً)، اتفاقية الجلاء 15 أغسطس 1963، والانسحاب الكامل 15 أكتوبر 1963.",
+    "تعمّدت عدم ذكر اسم القائد الفرنسي الذي غادر آخراً لعدم كفاية التوثيق المستقل لهذا التفصيل الجزئي غير الأساسي."
+  ],
+  "updatedAt": "2026-07-12T13:52:34.379Z"
+}

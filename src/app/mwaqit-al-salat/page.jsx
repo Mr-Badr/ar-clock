@@ -495,6 +495,31 @@ export default async function PrayerLandingPage() {
           </Suspense>
         </section>
 
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`} aria-label="أوقات مستحبة أخرى">
+          <div className={routeStyles.sectionPanel}>
+            <div className={routeStyles.sectionHead}>
+              <h2 className={routeStyles.sectionTitle}>أوقات مستحبة أخرى، محسوبة حياً</h2>
+              <p className={routeStyles.sectionCopy}>
+                بالإضافة إلى الصلوات الخمس، نحسب لك أربعة أوقات يبحث عنها المسلمون يومياً وأسبوعياً وشهرياً — كل واحد له صفحة مخصصة وجدول لكل مدينة.
+              </p>
+            </div>
+            <div className={routeStyles.contextGrid}>
+              {[
+                { href: '/mwaqit-al-salat/last-third-of-night', title: 'الثلث الأخير من الليل', body: 'ومنتصف الليل الشرعي — من المغرب إلى الفجر، أفضل وقت للتهجد.' },
+                { href: '/mwaqit-al-salat/duha-prayer-time', title: 'وقت صلاة الضحى', body: 'من ارتفاع الشمس بعد الشروق حتى قبيل الظهر.' },
+                { href: '/mwaqit-al-salat/friday-response-hour', title: 'ساعة الاستجابة', body: 'آخر ساعة قبل أذان المغرب كل يوم جمعة، على الرأي الراجح.' },
+                { href: '/mwaqit-al-salat/white-days', title: 'أيام البيض', body: '13 و14 و15 من كل شهر هجري — صيام مستحب متكرر.' },
+                { href: '/mwaqit-al-salat/prayer-times-calculation-method', title: 'كيف تُحسب المواقيت فلكياً؟', body: 'زوايا الفجر والعشاء وطول ظل العصر، مع مثال حي محسوب فعلياً.' },
+              ].map((item) => (
+                <Link key={item.href} href={item.href} className={routeStyles.contextCard}>
+                  <h3 className={routeStyles.contextTitle}>{item.title}</h3>
+                  <p className={routeStyles.contextBody}>{item.body}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`} aria-label="مميزات الأداة">
           <div className={routeStyles.sectionPanel}>
             <div className={routeStyles.sectionHead}>

@@ -1,0 +1,16 @@
+{
+  "slug": "army-day-lebanon",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق مهم: 1 أغسطس (تأسيس الجيش اللبناني 1945) لا يظهر في قوائم العطل الرسمية لجمعية مصارف لبنان (ABL) أو مصرف لبنان (BDL)، بخلاف عيد الاستقلال. المحتوى ينص على هذا الغموض صراحة بدل افتراض أنه إجازة رسمية مؤكدة.",
+    "نفس نمط 'commemoration != confirmed paid holiday' المطبق سابقاً على armed-forces-day-oman وgreat-arab-revolt-day-jordan."
+  ],
+  "updatedAt": "2026-07-12T09:10:05.351Z"
+}

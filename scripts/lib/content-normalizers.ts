@@ -11,6 +11,7 @@ import {
   buildRecurringYears,
   buildSchemaData,
   buildSeoMeta,
+  isYearNumberedSlug,
   suggestRelatedSlugs,
   type EventCategory,
   type EventType,
@@ -515,6 +516,10 @@ export function ensureReciprocalLink(
   targetSlugs: string[],
   max = 6,
 ) {
+  // Never force a reciprocal link back to a year-numbered one-time-event slug — it would
+  // reintroduce hasHardcodedYear on the target event. Year-slugged events may link OUT to
+  // evergreen events, but nothing should be forced to link back to them.
+  if (isYearNumberedSlug(sourceSlug)) return targetSlugs.slice(0, max);
   if (targetSlugs.includes(sourceSlug)) return targetSlugs.slice(0, max);
   if (targetSlugs.length < max) return [...targetSlugs, sourceSlug];
   return [...targetSlugs.slice(0, max - 1), sourceSlug];

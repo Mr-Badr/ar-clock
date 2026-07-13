@@ -848,6 +848,75 @@
     "_countryCode": "tn",
     "day": 20
   },
+  "annunciation-day-lebanon": {
+    "id": "annunciation-day-lebanon",
+    "slug": "annunciation-day-lebanon",
+    "name": "عيد البشارة في لبنان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "lb",
+    "month": 3,
+    "day": 25
+  },
+  "april-fools": {
+    "id": "april-fools",
+    "slug": "april-fools",
+    "name": "كذبة أبريل",
+    "type": "fixed",
+    "category": "social",
+    "month": 4,
+    "day": 1
+  },
+  "arab-orphan-day": {
+    "id": "arab-orphan-day",
+    "slug": "arab-orphan-day",
+    "name": "يوم اليتيم العربي",
+    "type": "floating",
+    "category": "social",
+    "month": 4,
+    "weekday": 5,
+    "nth": 1,
+    "offsetDays": 0
+  },
+  "armed-forces-day-oman": {
+    "id": "armed-forces-day-oman",
+    "slug": "armed-forces-day-oman",
+    "name": "يوم القوات المسلحة العمانية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "om",
+    "month": 12,
+    "day": 11
+  },
+  "army-day-iraq": {
+    "id": "army-day-iraq",
+    "slug": "army-day-iraq",
+    "name": "عيد الجيش العراقي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "iq",
+    "month": 1,
+    "day": 6
+  },
+  "army-day-lebanon": {
+    "id": "army-day-lebanon",
+    "slug": "army-day-lebanon",
+    "name": "عيد الجيش اللبناني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "lb",
+    "month": 8,
+    "day": 1
+  },
+  "ars-france": {
+    "id": "ars-france",
+    "slug": "ars-france",
+    "name": "منحة الدخول المدرسي في فرنسا",
+    "type": "estimated",
+    "category": "support",
+    "_countryCode": "fr",
+    "date": "{{year}}-08-19"
+  },
   "asian-cup-2027": {
     "id": "asian-cup-2027",
     "slug": "asian-cup-2027",
@@ -917,6 +986,61 @@
     "month": 6,
     "day": 20
   },
+  "badr-day": {
+    "id": "badr-day",
+    "slug": "badr-day",
+    "name": "غزوة بدر",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 9,
+    "hijriDay": 17
+  },
+  "barnbidrag-sweden": {
+    "id": "barnbidrag-sweden",
+    "slug": "barnbidrag-sweden",
+    "name": "دعم الأطفال في السويد",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "se",
+    "day": 20
+  },
+  "barnetrygd-norway": {
+    "id": "barnetrygd-norway",
+    "slug": "barnetrygd-norway",
+    "name": "دعم الأطفال في النرويج",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "no",
+    "day": 20
+  },
+  "bastille-day-france": {
+    "id": "bastille-day-france",
+    "slug": "bastille-day-france",
+    "name": "العيد الوطني الفرنسي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "fr",
+    "month": 7,
+    "day": 14
+  },
+  "blood-donor-day": {
+    "id": "blood-donor-day",
+    "slug": "blood-donor-day",
+    "name": "اليوم العالمي للمتبرعين بالدم",
+    "type": "fixed",
+    "category": "social",
+    "month": 6,
+    "day": 14
+  },
+  "bostadsbidrag-sweden": {
+    "id": "bostadsbidrag-sweden",
+    "slug": "bostadsbidrag-sweden",
+    "name": "دعم السكن في السويد",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "se",
+    "day": 27
+  },
   "buergergeld-germany": {
     "id": "buergergeld-germany",
     "slug": "buergergeld-germany",
@@ -935,6 +1059,54 @@
     "_countryCode": "fr",
     "day": 5
   },
+  "canada-day": {
+    "id": "canada-day",
+    "slug": "canada-day",
+    "name": "عيد كندا الوطني",
+    "type": "fixed",
+    "category": "holidays",
+    "_countryCode": "ca",
+    "month": 7,
+    "day": 1
+  },
+  "ccb-canada": {
+    "id": "ccb-canada",
+    "slug": "ccb-canada",
+    "name": "دعم الأطفال في كندا",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "ca",
+    "day": 20
+  },
+  "child-benefit-oman": {
+    "id": "child-benefit-om",
+    "slug": "child-benefit-oman",
+    "name": "منفعة الطفولة",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "om",
+    "day": 18
+  },
+  "childrens-day-uae": {
+    "id": "childrens-day-uae",
+    "slug": "childrens-day-uae",
+    "name": "يوم الطفل الإماراتي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ae",
+    "month": 3,
+    "day": 15
+  },
+  "coptic-christmas-egypt": {
+    "id": "coptic-christmas-egypt",
+    "slug": "coptic-christmas-egypt",
+    "name": "عيد الميلاد المجيد",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "eg",
+    "month": 1,
+    "day": 7
+  },
   "cost-of-living-allowance-bahrain": {
     "id": "cost-of-living-allowance-bahrain",
     "slug": "cost-of-living-allowance-bahrain",
@@ -942,6 +1114,34 @@
     "type": "monthly",
     "category": "support",
     "_countryCode": "bh",
+    "day": 15
+  },
+  "crous-scholarship-france": {
+    "id": "crous-scholarship-france",
+    "slug": "crous-scholarship-france",
+    "name": "منحة الطلاب CROUS",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "fr",
+    "day": 5
+  },
+  "csn-payment-sweden": {
+    "id": "csn-payment-sweden",
+    "slug": "csn-payment-sweden",
+    "name": "دعم الطلاب في السويد (CSN)",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "se",
+    "day": 25
+  },
+  "democracy-day-turkey": {
+    "id": "democracy-day-turkey",
+    "slug": "democracy-day-turkey",
+    "name": "يوم الديمقراطية والوحدة الوطنية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "tr",
+    "month": 7,
     "day": 15
   },
   "direct-social-support-morocco": {
@@ -974,6 +1174,91 @@
     "nth": 1,
     "offsetDays": 0
   },
+  "evacuation-day-egypt": {
+    "id": "evacuation-day-egypt",
+    "slug": "evacuation-day-egypt",
+    "name": "عيد الجلاء",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "eg",
+    "month": 6,
+    "day": 18
+  },
+  "evacuation-day-syria": {
+    "id": "evacuation-day-syria",
+    "slug": "evacuation-day-syria",
+    "name": "عيد الجلاء السوري",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sy",
+    "month": 4,
+    "day": 17
+  },
+  "evacuation-day-tunisia": {
+    "id": "evacuation-day-tunisia",
+    "slug": "evacuation-day-tunisia",
+    "name": "عيد الجلاء في تونس",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "tn",
+    "month": 10,
+    "day": 15
+  },
+  "fath-makkah": {
+    "id": "fath-makkah",
+    "slug": "fath-makkah",
+    "name": "فتح مكة",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 9,
+    "hijriDay": 20
+  },
+  "final-exams-saudi": {
+    "id": "final-exams-saudi",
+    "slug": "final-exams-saudi",
+    "name": "الاختبارات النهائية في السعودية",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "sa",
+    "date": "{{year}}-01-04"
+  },
+  "flag-day-uae": {
+    "id": "flag-day-uae",
+    "slug": "flag-day-uae",
+    "name": "يوم العلم الإماراتي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ae",
+    "month": 11,
+    "day": 3
+  },
+  "friendship-day": {
+    "id": "friendship-day",
+    "slug": "friendship-day",
+    "name": "اليوم العالمي للصداقة",
+    "type": "fixed",
+    "category": "social",
+    "month": 7,
+    "day": 30
+  },
+  "geminids-meteor-shower": {
+    "id": "geminids-meteor-shower",
+    "slug": "geminids-meteor-shower",
+    "name": "شهب الجوزاء (التوأميات)",
+    "type": "estimated",
+    "category": "astronomy",
+    "date": "{{year}}-12-13"
+  },
+  "great-arab-revolt-day-jordan": {
+    "id": "great-arab-revolt-day-jordan",
+    "slug": "great-arab-revolt-day-jordan",
+    "name": "ذكرى الثورة العربية الكبرى ويوم الجيش",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "jo",
+    "month": 6,
+    "day": 10
+  },
   "gulf-childrens-day": {
     "id": "gulf-childrens-day",
     "slug": "gulf-childrens-day",
@@ -983,6 +1268,15 @@
     "month": 1,
     "day": 15
   },
+  "hala-february-kuwait": {
+    "id": "hala-february-kuwait",
+    "slug": "hala-february-kuwait",
+    "name": "مهرجان هلا فبراير",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "kw",
+    "date": "{{year}}-02-01"
+  },
   "housing-allowance-kuwait": {
     "id": "housing-allowance-kuwait",
     "slug": "housing-allowance-kuwait",
@@ -991,6 +1285,64 @@
     "category": "support",
     "_countryCode": "kw",
     "day": 1
+  },
+  "independence-day-lebanon": {
+    "id": "independence-day-lebanon",
+    "slug": "independence-day-lebanon",
+    "name": "عيد الاستقلال اللبناني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "lb",
+    "month": 11,
+    "day": 22
+  },
+  "independence-day-usa": {
+    "id": "independence-day-usa",
+    "slug": "independence-day-usa",
+    "name": "عيد الاستقلال الأمريكي",
+    "type": "fixed",
+    "category": "holidays",
+    "_countryCode": "us",
+    "month": 7,
+    "day": 4
+  },
+  "independence-day-yemen": {
+    "id": "independence-day-yemen",
+    "slug": "independence-day-yemen",
+    "name": "عيد الاستقلال اليمني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ye",
+    "month": 11,
+    "day": 30
+  },
+  "international-coffee-day": {
+    "id": "international-coffee-day",
+    "slug": "international-coffee-day",
+    "name": "اليوم العالمي للقهوة",
+    "type": "fixed",
+    "category": "social",
+    "month": 10,
+    "day": 1
+  },
+  "international-youth-day": {
+    "id": "international-youth-day",
+    "slug": "international-youth-day",
+    "name": "اليوم العالمي للشباب",
+    "type": "fixed",
+    "category": "social",
+    "month": 8,
+    "day": 12
+  },
+  "invasion-remembrance-kuwait": {
+    "id": "invasion-remembrance-kw",
+    "slug": "invasion-remembrance-kuwait",
+    "name": "ذكرى الغزو العراقي للكويت",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "kw",
+    "month": 8,
+    "day": 2
   },
   "iraq-national-day": {
     "id": "iraq-national-day",
@@ -1002,6 +1354,15 @@
     "month": 10,
     "day": 3
   },
+  "jeddah-season": {
+    "id": "jeddah-season",
+    "slug": "jeddah-season",
+    "name": "موسم جدة",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "sa",
+    "date": "{{year}}-06-20"
+  },
   "job-security-oman": {
     "id": "job-security-oman",
     "slug": "job-security-oman",
@@ -1011,6 +1372,35 @@
     "_countryCode": "om",
     "day": 28
   },
+  "june-30-revolution-egypt": {
+    "id": "june-30-revolution-egypt",
+    "slug": "june-30-revolution-egypt",
+    "name": "ذكرى ثورة 30 يونيو",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "eg",
+    "month": 6,
+    "day": 30
+  },
+  "karameh-day-jordan": {
+    "id": "karameh-day-jordan",
+    "slug": "karameh-day-jordan",
+    "name": "ذكرى معركة الكرامة",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "jo",
+    "month": 3,
+    "day": 21
+  },
+  "khareef-salalah": {
+    "id": "khareef-salalah",
+    "slug": "khareef-salalah",
+    "name": "موسم خريف صلالة",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "om",
+    "date": "{{year}}-06-21"
+  },
   "kindergeld-germany": {
     "id": "kindergeld-germany",
     "slug": "kindergeld-germany",
@@ -1019,6 +1409,57 @@
     "category": "support",
     "_countryCode": "de",
     "day": 15
+  },
+  "knowledge-day-algeria": {
+    "id": "knowledge-day-algeria",
+    "slug": "knowledge-day-algeria",
+    "name": "يوم العلم في الجزائر",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "dz",
+    "month": 4,
+    "day": 16
+  },
+  "labor-day-usa": {
+    "id": "labor-day-usa",
+    "slug": "labor-day-usa",
+    "name": "عيد العمال في أمريكا",
+    "type": "floating",
+    "category": "holidays",
+    "_countryCode": "us",
+    "month": 9,
+    "weekday": 1,
+    "nth": 1,
+    "offsetDays": 0
+  },
+  "last-ten-nights-ramadan": {
+    "id": "last-ten-nights-ramadan",
+    "slug": "last-ten-nights-ramadan",
+    "name": "العشر الأواخر من رمضان",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 9,
+    "hijriDay": 21
+  },
+  "liberation-day-libya": {
+    "id": "liberation-day-libya",
+    "slug": "liberation-day-libya",
+    "name": "عيد التحرير في ليبيا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ly",
+    "month": 10,
+    "day": 23
+  },
+  "liberation-day-syria": {
+    "id": "liberation-day-syria",
+    "slug": "liberation-day-syria",
+    "name": "عيد التحرير في سوريا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sy",
+    "month": 12,
+    "day": 8
   },
   "libya-independence-day": {
     "id": "libya-independence-day",
@@ -1040,6 +1481,86 @@
     "month": 2,
     "day": 18
   },
+  "martyrs-day-libya": {
+    "id": "martyrs-day-libya",
+    "slug": "martyrs-day-libya",
+    "name": "يوم الشهيد في ليبيا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ly",
+    "month": 9,
+    "day": 16
+  },
+  "martyrs-day-tunisia": {
+    "id": "martyrs-day-tunisia",
+    "slug": "martyrs-day-tunisia",
+    "name": "عيد الشهداء في تونس",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "tn",
+    "month": 4,
+    "day": 9
+  },
+  "memorial-day-usa": {
+    "id": "memorial-day-usa",
+    "slug": "memorial-day-usa",
+    "name": "يوم الذكرى في أمريكا",
+    "type": "floating",
+    "category": "national",
+    "_countryCode": "us",
+    "month": 5,
+    "weekday": 1,
+    "nth": -1,
+    "offsetDays": 0
+  },
+  "midday-work-ban-kuwait": {
+    "id": "midday-work-ban-kuwait",
+    "slug": "midday-work-ban-kuwait",
+    "name": "حظر العمل وقت الظهيرة في الكويت",
+    "type": "fixed",
+    "category": "support",
+    "_countryCode": "kw",
+    "month": 6,
+    "day": 1
+  },
+  "midyear-break-jordan": {
+    "id": "midyear-break-jordan",
+    "slug": "midyear-break-jordan",
+    "name": "إجازة نصف العام في الأردن",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "jo",
+    "date": "{{year}}-01-23"
+  },
+  "midyear-break-saudi": {
+    "id": "midyear-break-saudi",
+    "slug": "midyear-break-saudi",
+    "name": "إجازة منتصف العام الدراسي في السعودية",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "sa",
+    "date": "{{year}}-01-08"
+  },
+  "moroccan-womens-day": {
+    "id": "moroccan-womens-day",
+    "slug": "moroccan-womens-day",
+    "name": "اليوم الوطني للمرأة المغربية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ma",
+    "month": 10,
+    "day": 10
+  },
+  "mujahid-day-algeria": {
+    "id": "mujahid-day-dz",
+    "slug": "mujahid-day-algeria",
+    "name": "يوم المجاهد",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "dz",
+    "month": 8,
+    "day": 20
+  },
   "nafis-uae": {
     "id": "nafis-uae",
     "slug": "nafis-uae",
@@ -1048,6 +1569,16 @@
     "category": "support",
     "_countryCode": "ae",
     "day": 27
+  },
+  "nakba-day": {
+    "id": "nakba-day",
+    "slug": "nakba-day",
+    "name": "ذكرى النكبة",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ps",
+    "month": 5,
+    "day": 15
   },
   "national-aid-jordan": {
     "id": "national-aid-jordan",
@@ -1058,6 +1589,16 @@
     "_countryCode": "jo",
     "day": 1
   },
+  "national-day-sweden": {
+    "id": "national-day-sweden",
+    "slug": "national-day-sweden",
+    "name": "العيد الوطني السويدي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "se",
+    "month": 6,
+    "day": 6
+  },
   "national-labor-support-kuwait": {
     "id": "national-labor-support-kuwait",
     "slug": "national-labor-support-kuwait",
@@ -1066,6 +1607,45 @@
     "category": "support",
     "_countryCode": "kw",
     "day": 25
+  },
+  "nowruz-iraq": {
+    "id": "nowruz-iraq",
+    "slug": "nowruz-iraq",
+    "name": "عيد نوروز في العراق",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "iq",
+    "month": 3,
+    "day": 21
+  },
+  "nurses-day": {
+    "id": "nurses-day",
+    "slug": "nurses-day",
+    "name": "اليوم العالمي للتمريض",
+    "type": "fixed",
+    "category": "social",
+    "month": 5,
+    "day": 12
+  },
+  "omani-womens-day": {
+    "id": "omani-womens-day",
+    "slug": "omani-womens-day",
+    "name": "يوم المرأة العمانية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "om",
+    "month": 10,
+    "day": 17
+  },
+  "oued-eddahab-day-morocco": {
+    "id": "oued-eddahab-day-ma",
+    "slug": "oued-eddahab-day-morocco",
+    "name": "ذكرى استرجاع وادي الذهب",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ma",
+    "month": 8,
+    "day": 14
   },
   "palestine-independence-day": {
     "id": "palestine-independence-day",
@@ -1087,6 +1667,15 @@
     "month": 3,
     "day": 30
   },
+  "palestine-solidarity-day": {
+    "id": "palestine-solidarity-day",
+    "slug": "palestine-solidarity-day",
+    "name": "اليوم العالمي للتضامن مع الشعب الفلسطيني",
+    "type": "fixed",
+    "category": "social",
+    "month": 11,
+    "day": 29
+  },
   "pension-day-algeria": {
     "id": "pension-algeria",
     "slug": "pension-day-algeria",
@@ -1104,6 +1693,15 @@
     "category": "support",
     "_countryCode": "bh",
     "day": 1
+  },
+  "pension-day-france": {
+    "id": "pension-day-france",
+    "slug": "pension-day-france",
+    "name": "راتب التقاعد في فرنسا",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "fr",
+    "day": 9
   },
   "pension-day-jordan": {
     "id": "pension-jordan",
@@ -1141,6 +1739,42 @@
     "_countryCode": "ae",
     "day": 25
   },
+  "pension-sweden": {
+    "id": "pension-sweden",
+    "slug": "pension-sweden",
+    "name": "معاش التقاعد في السويد",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "se",
+    "day": 19
+  },
+  "perseids-meteor-shower": {
+    "id": "perseids-meteor-shower",
+    "slug": "perseids-meteor-shower",
+    "name": "شهب البرشاويات",
+    "type": "estimated",
+    "category": "astronomy",
+    "date": "{{year}}-08-12"
+  },
+  "prime-noel-france": {
+    "id": "prime-noel-france",
+    "slug": "prime-noel-france",
+    "name": "منحة الكريسماس في فرنسا",
+    "type": "estimated",
+    "category": "support",
+    "_countryCode": "fr",
+    "date": "{{year}}-12-16"
+  },
+  "prisoners-day-palestine": {
+    "id": "prisoners-day-palestine",
+    "slug": "prisoners-day-palestine",
+    "name": "يوم الأسير الفلسطيني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ps",
+    "month": 4,
+    "day": 17
+  },
   "qatar-national-sport-day": {
     "id": "qatar-sport-day",
     "slug": "qatar-national-sport-day",
@@ -1172,6 +1806,16 @@
     "_countryCode": "sa",
     "day": 1
   },
+  "republic-day-iraq": {
+    "id": "republic-day-iraq",
+    "slug": "republic-day-iraq",
+    "name": "ذكرى ثورة 14 تموز",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "iq",
+    "month": 7,
+    "day": 14
+  },
   "republic-day-tunisia": {
     "id": "republic-day-tunisia",
     "slug": "republic-day-tunisia",
@@ -1182,6 +1826,16 @@
     "month": 7,
     "day": 25
   },
+  "republic-day-turkey": {
+    "id": "republic-day-turkey",
+    "slug": "republic-day-turkey",
+    "name": "عيد الجمهورية التركية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "tr",
+    "month": 10,
+    "day": 29
+  },
   "retiree-salary-iraq": {
     "id": "retiree-salary-iraq",
     "slug": "retiree-salary-iraq",
@@ -1190,6 +1844,16 @@
     "category": "support",
     "_countryCode": "iq",
     "day": 1
+  },
+  "revolution-day-libya": {
+    "id": "revolution-day-libya",
+    "slug": "revolution-day-libya",
+    "name": "ذكرى ثورة 17 فبراير",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ly",
+    "month": 2,
+    "day": 17
   },
   "revolution-day-morocco": {
     "id": "revolution-day-ma",
@@ -1200,6 +1864,26 @@
     "_countryCode": "ma",
     "month": 8,
     "day": 20
+  },
+  "revolution-day-syria": {
+    "id": "revolution-day-syria",
+    "slug": "revolution-day-syria",
+    "name": "ذكرى انطلاق الثورة السورية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sy",
+    "month": 3,
+    "day": 18
+  },
+  "revolution-day-tunisia": {
+    "id": "revolution-day-tunisia",
+    "slug": "revolution-day-tunisia",
+    "name": "عيد الثورة في تونس",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "tn",
+    "month": 12,
+    "day": 17
   },
   "riyadh-season": {
     "id": "riyadh-season",
@@ -1314,6 +1998,35 @@
     "month": 8,
     "day": 31
   },
+  "school-start-turkey": {
+    "id": "school-start-tr",
+    "slug": "school-start-turkey",
+    "name": "بداية الدراسة في تركيا",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "tr",
+    "month": 9,
+    "day": 14
+  },
+  "semester-break-turkey": {
+    "id": "semester-break-turkey",
+    "slug": "semester-break-turkey",
+    "name": "عطلة نصف العام في تركيا",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "tr",
+    "date": "{{year}}-01-25"
+  },
+  "september-26-revolution-yemen": {
+    "id": "september-26-revolution-yemen",
+    "slug": "september-26-revolution-yemen",
+    "name": "ثورة 26 سبتمبر في اليمن",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ye",
+    "month": 9,
+    "day": 26
+  },
   "shaban-start": {
     "id": "shaban-start",
     "slug": "shaban-start",
@@ -1322,6 +2035,15 @@
     "category": "islamic",
     "hijriMonth": 8,
     "hijriDay": 1
+  },
+  "six-days-shawwal": {
+    "id": "six-days-shawwal",
+    "slug": "six-days-shawwal",
+    "name": "صيام الست من شوال",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 10,
+    "hijriDay": 2
   },
   "social-assistance-bahrain": {
     "id": "social-assistance-bahrain",
@@ -1350,6 +2072,15 @@
     "_countryCode": "qa",
     "day": 1
   },
+  "social-security-usa": {
+    "id": "social-security-usa",
+    "slug": "social-security-usa",
+    "name": "راتب الضمان الاجتماعي في أمريكا",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "us",
+    "day": 1
+  },
   "social-welfare-iraq": {
     "id": "social-welfare-iraq",
     "slug": "social-welfare-iraq",
@@ -1359,6 +2090,24 @@
     "_countryCode": "iq",
     "day": 5
   },
+  "solar-eclipse": {
+    "id": "solar-eclipse",
+    "slug": "solar-eclipse",
+    "name": "كسوف الشمس القادم",
+    "type": "estimated",
+    "category": "astronomy",
+    "date": "2026-08-12"
+  },
+  "sovereignty-childrens-day-turkey": {
+    "id": "sovereignty-childrens-day-turkey",
+    "slug": "sovereignty-childrens-day-turkey",
+    "name": "يوم السيادة الوطنية والطفولة",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "tr",
+    "month": 4,
+    "day": 23
+  },
   "student-allowance-kuwait": {
     "id": "student-allowance-kuwait",
     "slug": "student-allowance-kuwait",
@@ -1367,6 +2116,92 @@
     "category": "support",
     "_countryCode": "kw",
     "day": 1
+  },
+  "suhail-star": {
+    "id": "suhail-star",
+    "slug": "suhail-star",
+    "name": "طلوع نجم سهيل",
+    "type": "estimated",
+    "category": "astronomy",
+    "_countryCode": "sa",
+    "date": "{{year}}-08-24"
+  },
+  "tarwiyah-day": {
+    "id": "tarwiyah-day",
+    "slug": "tarwiyah-day",
+    "name": "يوم التروية",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 12,
+    "hijriDay": 8
+  },
+  "tashreeq-days": {
+    "id": "tashreeq-days",
+    "slug": "tashreeq-days",
+    "name": "أيام التشريق",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 12,
+    "hijriDay": 11
+  },
+  "tasua-day": {
+    "id": "tasua-day",
+    "slug": "tasua-day",
+    "name": "يوم تاسوعاء",
+    "type": "hijri",
+    "category": "islamic",
+    "hijriMonth": 1,
+    "hijriDay": 9
+  },
+  "tax-day-usa": {
+    "id": "tax-day-usa",
+    "slug": "tax-day-usa",
+    "name": "يوم الضرائب في أمريكا (Tax Day)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "us",
+    "month": 4,
+    "day": 15
+  },
+  "tax-refund-france": {
+    "id": "tax-refund-france",
+    "slug": "tax-refund-france",
+    "name": "استرجاع الضرائب في فرنسا",
+    "type": "estimated",
+    "category": "support",
+    "_countryCode": "fr",
+    "date": "{{year}}-07-24"
+  },
+  "thanksgiving-canada": {
+    "id": "thanksgiving-canada",
+    "slug": "thanksgiving-canada",
+    "name": "عيد الشكر الكندي",
+    "type": "floating",
+    "category": "national",
+    "_countryCode": "ca",
+    "month": 10,
+    "weekday": 1,
+    "nth": 2,
+    "offsetDays": 0
+  },
+  "trillium-benefit-canada": {
+    "id": "trillium-benefit-canada",
+    "slug": "trillium-benefit-canada",
+    "name": "إعانة ترليوم أونتاريو",
+    "type": "monthly",
+    "category": "support",
+    "_countryCode": "ca",
+    "day": 10
+  },
+  "tunisian-womens-day": {
+    "id": "tunisian-womens-day",
+    "slug": "tunisian-womens-day",
+    "name": "عيد المرأة التونسية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "tn",
+    "month": 8,
+    "day": 13
   },
   "uae-founding-day": {
     "id": "uae-founding-day",
@@ -1407,6 +2242,26 @@
     "_countryCode": "dz",
     "day": 26
   },
+  "unity-day-germany": {
+    "id": "unity-day-germany",
+    "slug": "unity-day-germany",
+    "name": "يوم الوحدة الألمانية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "de",
+    "month": 10,
+    "day": 3
+  },
+  "unity-day-yemen": {
+    "id": "unity-day-yemen",
+    "slug": "unity-day-yemen",
+    "name": "عيد الوحدة اليمنية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ye",
+    "month": 5,
+    "day": 22
+  },
   "university-stipend-saudi": {
     "id": "university-stipend-saudi",
     "slug": "university-stipend-saudi",
@@ -1415,6 +2270,46 @@
     "category": "support",
     "_countryCode": "sa",
     "day": 27
+  },
+  "veterans-day-usa": {
+    "id": "veterans-day-usa",
+    "slug": "veterans-day-usa",
+    "name": "يوم المحاربين القدامى في أمريكا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "us",
+    "month": 11,
+    "day": 11
+  },
+  "victory-day-algeria": {
+    "id": "victory-day-algeria",
+    "slug": "victory-day-algeria",
+    "name": "عيد النصر في الجزائر",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "dz",
+    "month": 3,
+    "day": 19
+  },
+  "victory-day-iraq": {
+    "id": "victory-day-iraq",
+    "slug": "victory-day-iraq",
+    "name": "يوم النصر في العراق",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "iq",
+    "month": 12,
+    "day": 10
+  },
+  "victory-day-turkey": {
+    "id": "victory-day-turkey",
+    "slug": "victory-day-turkey",
+    "name": "عيد النصر في تركيا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "tr",
+    "month": 8,
+    "day": 30
   },
   "white-friday": {
     "id": "white-friday",
@@ -1426,6 +2321,15 @@
     "weekday": 5,
     "nth": 4,
     "offsetDays": 0
+  },
+  "winter-break-qatar": {
+    "id": "winter-break-qatar",
+    "slug": "winter-break-qatar",
+    "name": "إجازة منتصف العام في قطر",
+    "type": "estimated",
+    "category": "school",
+    "_countryCode": "qa",
+    "date": "{{year}}-12-22"
   },
   "winter-time-egypt": {
     "id": "winter-time-egypt",
@@ -1463,6 +2367,15 @@
     "nth": -1,
     "offsetDays": 0
   },
+  "world-cancer-day": {
+    "id": "world-cancer-day",
+    "slug": "world-cancer-day",
+    "name": "اليوم العالمي للسرطان",
+    "type": "fixed",
+    "category": "social",
+    "month": 2,
+    "day": 4
+  },
   "world-cup-2030": {
     "id": "world-cup-2030",
     "slug": "world-cup-2030",
@@ -1481,5 +2394,62 @@
     "month": 6,
     "weekday": 0,
     "nth": 3
+  },
+  "world-happiness-day": {
+    "id": "world-happiness-day",
+    "slug": "world-happiness-day",
+    "name": "اليوم العالمي للسعادة",
+    "type": "fixed",
+    "category": "social",
+    "month": 3,
+    "day": 20
+  },
+  "world-no-tobacco-day": {
+    "id": "world-no-tobacco-day",
+    "slug": "world-no-tobacco-day",
+    "name": "اليوم العالمي للامتناع عن التدخين",
+    "type": "fixed",
+    "category": "social",
+    "month": 5,
+    "day": 31
+  },
+  "world-water-day": {
+    "id": "world-water-day",
+    "slug": "world-water-day",
+    "name": "اليوم العالمي للمياه",
+    "type": "fixed",
+    "category": "social",
+    "month": 3,
+    "day": 22
+  },
+  "youth-day-morocco": {
+    "id": "youth-day-ma",
+    "slug": "youth-day-morocco",
+    "name": "عيد الشباب",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ma",
+    "month": 8,
+    "day": 21
+  },
+  "youth-sports-day-turkey": {
+    "id": "youth-sports-day-turkey",
+    "slug": "youth-sports-day-turkey",
+    "name": "يوم إحياء ذكرى أتاتورك والشباب والرياضة",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "tr",
+    "month": 5,
+    "day": 19
+  },
+  "zayed-humanitarian-day": {
+    "id": "zayed-humanitarian-day",
+    "slug": "zayed-humanitarian-day",
+    "name": "يوم زايد للعمل الإنساني",
+    "type": "hijri",
+    "category": "national",
+    "_countryCode": "ae",
+    "hijriMonth": 9,
+    "hijriDay": 19
   }
 }

@@ -1,0 +1,16 @@
+{
+  "slug": "national-day-sweden",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "حقائق قصة 2005 (مقايضة إثنين العنصرة) موثقة عبر النص الحكومي الأصلي Prop. 2004/05:23 مباشرة من موقع الريكسداغ، ومؤكدة أثناء بحث hub السويد نفس الجلسة.",
+    "غوستاف فاسا 1523 ودستور 1809 موثقان عبر ويكيبيديا الإنجليزية."
+  ],
+  "updatedAt": "2026-07-12T13:42:44.219Z"
+}

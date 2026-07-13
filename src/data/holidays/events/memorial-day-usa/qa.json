@@ -1,0 +1,16 @@
+{
+  "slug": "memorial-day-usa",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "حقائق يوم الزينة، قانون 1971، والقاعدة 'آخر اثنين لا الرابع' موثقة عبر OPM ونص القانون الفدرالي مباشرة ومؤكدة أثناء بحث hub أمريكا نفس الجلسة.",
+    "استخدم rule nth:-1 (آخر أسبوع) المدعوم في محرك الموقع منذ Wave 7 لحساب التاريخ المتحرك بدقة."
+  ],
+  "updatedAt": "2026-07-12T13:43:00.049Z"
+}

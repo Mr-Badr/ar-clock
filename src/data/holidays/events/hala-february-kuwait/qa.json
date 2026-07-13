@@ -1,0 +1,18 @@
+{
+  "slug": "hala-february-kuwait",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11: first held 1999 (Feb 3-24 that year), organized annually since, named for/timed around Kuwait Independence Day (Feb 25) and Liberation Day (Feb 26).",
+    "estimated type with {{year}}-02-01 anchor, same pattern as winter-break-qatar — exact festival start/end dates shift slightly year to year, content states this and recommends checking official announcements.",
+    "Clarified the festival itself is commercial/tourism, not an official holiday, though it contains two days that are.",
+    "Single-country event (_countryCode: kw), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T08:06:17.760Z"
+}

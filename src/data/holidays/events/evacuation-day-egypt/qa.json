@@ -1,0 +1,18 @@
+{
+  "slug": "evacuation-day-egypt",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر ويكيبيديا العربية (عيد الجلاء + اتفاقية الجلاء) والمصري اليوم: 18 يونيو 1956 جلاء آخر جندي بريطاني، اتفاقية موقعة 19 أكتوبر 1954، وتفصيل دقيق أن الجلاء الفعلي عن بورسعيد تم 13 يونيو (قبل 5 أيام من التاريخ الرسمي).",
+    "لم يظهر كإجازة رسمية في القوائم الحديثة المرصودة — تم توصيفه بصدق كمناسبة وطنية غير مدفوعة الإجازة، بخلاف june-30-revolution-egypt وcoptic-christmas-egypt.",
+    "ربط صريح مع evacuation-day-syria وevacuation-day-tunisia لتمييز 3 مناسبات عربية متشابهة الاسم.",
+    "fixed type، _countryCode: eg، countryScope: none — حدث مصري وحيد."
+  ],
+  "updatedAt": "2026-07-12T19:15:22.695Z"
+}

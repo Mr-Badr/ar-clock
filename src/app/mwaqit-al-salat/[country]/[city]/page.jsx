@@ -52,6 +52,11 @@ import {
   getSolarPrayerFacts,
 } from '@/lib/solar-prayer-facts';
 import {
+  getLastThirdOfNightFacts,
+  getDuhaPrayerFacts,
+  getFridayResponseHourFacts,
+} from '@/lib/night-prayer-facts';
+import {
   GEO_ROUTE_INDEXING_POLICIES,
   isSeoIndexableCityParams,
 } from '@/lib/seo/country-indexing';
@@ -772,6 +777,30 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
     countryCode,
     cacheKey: `${country}::${city}::solar`,
   });
+  const nightFacts = getLastThirdOfNightFacts({
+    lat: cityData.lat,
+    lon: cityData.lon,
+    timezone: cityData.timezone,
+    date: now,
+    countryCode,
+    cacheKey: `${country}::${city}::night`,
+  });
+  const duhaFacts = getDuhaPrayerFacts({
+    lat: cityData.lat,
+    lon: cityData.lon,
+    timezone: cityData.timezone,
+    date: now,
+    countryCode,
+    cacheKey: `${country}::${city}::duha`,
+  });
+  const fridayFacts = getFridayResponseHourFacts({
+    lat: cityData.lat,
+    lon: cityData.lon,
+    timezone: cityData.timezone,
+    date: now,
+    countryCode,
+    cacheKey: `${country}::${city}::friday`,
+  });
   const qiblaLabel = getQiblaBearingLabel({
     lat: cityData.lat,
     lon: cityData.lon,
@@ -818,6 +847,31 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
       a: `لا تعتمد على لقطة قديمة. مواقيت ${cityNameAr} تتحرك يومياً مع حركة الشمس، لذلك افتح الصفحة في نفس اليوم أو استخدم الجدول الشهري إذا كنت تخطط لأيام لاحقة.`,
     },
   ];
+
+  if (nightFacts) {
+    faqItems.push(
+      {
+        q: `متى الثلث الأخير من الليل في ${cityNameAr}؟`,
+        a: `يبدأ الثلث الأخير من الليل في ${cityNameAr} اليوم عند الساعة ${nightFacts.lastThirdStartLabel}، ويمتد حتى أذان الفجر عند ${nightFacts.fajrLabel}. يُحسب بقسمة الليل (من المغرب ${nightFacts.maghribLabel} إلى الفجر) على ثلاثة أجزاء متساوية.`,
+      },
+      {
+        q: `متى منتصف الليل الشرعي في ${cityNameAr}؟`,
+        a: `منتصف الليل الشرعي في ${cityNameAr} اليوم هو الساعة ${nightFacts.islamicMidnightLabel}، وهو نقطة المنتصف بين المغرب والفجر، ويُعتمد كنهاية لوقت العشاء المفضل عند بعض العلماء.`,
+      },
+    );
+  }
+  if (duhaFacts) {
+    faqItems.push({
+      q: `متى وقت صلاة الضحى في ${cityNameAr}؟`,
+      a: `يبدأ وقت صلاة الضحى في ${cityNameAr} اليوم عند ${duhaFacts.duhaStartLabel} بعد ارتفاع الشمس قليلاً عن الشروق (${duhaFacts.sunriseLabel})، وينتهي قبيل دخول وقت الظهر عند ${duhaFacts.duhaEndLabel}.`,
+    });
+  }
+  if (fridayFacts) {
+    faqItems.push({
+      q: `متى ساعة الاستجابة يوم الجمعة في ${cityNameAr}؟`,
+      a: `على الرأي الراجح، تبدأ ساعة الاستجابة آخر ساعة قبل المغرب يوم الجمعة في ${cityNameAr}، أي من الساعة ${fridayFacts.responseHourStartLabel} حتى أذان المغرب عند ${fridayFacts.fridayMaghribLabel}.`,
+    });
+  }
 
   const dhuhrStr = formatTime(times.dhuhr, cityData.timezone);
   const ishaStr  = formatTime(times.isha,  cityData.timezone);
@@ -943,6 +997,66 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
                 {solarFacts.dayLengthLabel ? `، وطول النهار تقريباً ${solarFacts.dayLengthLabel}.` : '.'}
               </p>
             </article>
+          </div>
+        </section>
+      ) : null}
+
+      {(nightFacts || duhaFacts || fridayFacts) ? (
+        <section className={routeStyles.sectionPanel} aria-label={`أوقات العبادة اليومية في ${cityNameAr}`}>
+          <div className={routeStyles.sectionHead}>
+            <h2 className={routeStyles.sectionTitle}>مواقيت مستحبة أخرى في {cityNameAr}</h2>
+            <p className={routeStyles.sectionCopy}>
+              الثلث الأخير من الليل، وقت الضحى، وساعة الاستجابة يوم الجمعة — كلها محسوبة من نفس
+              إحداثيات {cityNameAr}.
+            </p>
+          </div>
+          <div className={routeStyles.contextGrid}>
+            {nightFacts ? (
+              <article className={routeStyles.contextCard}>
+                <h3 className={routeStyles.contextTitle}>الثلث الأخير من الليل</h3>
+                <p className={routeStyles.contextBody}>
+                  يبدأ عند <strong>{nightFacts.lastThirdStartLabel}</strong> ويمتد حتى أذان الفجر
+                  عند <strong>{nightFacts.fajrLabel}</strong>. منتصف الليل الشرعي عند{' '}
+                  <strong>{nightFacts.islamicMidnightLabel}</strong>.
+                </p>
+                <Link href="/mwaqit-al-salat/last-third-of-night" className={routeStyles.contextLink}>
+                  كيف يُحسب الثلث الأخير من الليل؟
+                </Link>
+              </article>
+            ) : null}
+            {duhaFacts ? (
+              <article className={routeStyles.contextCard}>
+                <h3 className={routeStyles.contextTitle}>وقت صلاة الضحى</h3>
+                <p className={routeStyles.contextBody}>
+                  يبدأ عند <strong>{duhaFacts.duhaStartLabel}</strong> وينتهي عند{' '}
+                  <strong>{duhaFacts.duhaEndLabel}</strong>، أي قبل دخول وقت الظهر بقليل.
+                </p>
+                <Link href="/mwaqit-al-salat/duha-prayer-time" className={routeStyles.contextLink}>
+                  أفضل وقت لصلاة الضحى؟
+                </Link>
+              </article>
+            ) : null}
+            {fridayFacts ? (
+              <article className={routeStyles.contextCard}>
+                <h3 className={routeStyles.contextTitle}>ساعة الاستجابة يوم الجمعة</h3>
+                <p className={routeStyles.contextBody}>
+                  {fridayFacts.isLiveNow ? (
+                    <>
+                      <strong>الساعة جارية الآن</strong> حتى أذان المغرب عند{' '}
+                      <strong>{fridayFacts.fridayMaghribLabel}</strong>.
+                    </>
+                  ) : (
+                    <>
+                      تبدأ من <strong>{fridayFacts.responseHourStartLabel}</strong> حتى المغرب عند{' '}
+                      <strong>{fridayFacts.fridayMaghribLabel}</strong> كل يوم جمعة.
+                    </>
+                  )}
+                </p>
+                <Link href="/mwaqit-al-salat/friday-response-hour" className={routeStyles.contextLink}>
+                  ما هي ساعة الاستجابة؟
+                </Link>
+              </article>
+            ) : null}
           </div>
         </section>
       ) : null}

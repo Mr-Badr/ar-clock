@@ -1,0 +1,19 @@
+{
+  "slug": "childrens-day-uae",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11: March 15, approved by UAE Ministerial Council for Development (Sheikh Mansour bin Zayed), timed to Federal Child Rights Law No. 3/2016 (Wadeema Law) gazette publication.",
+    "Verified the Wadeema Law backstory (named for a child whose abuse/death case moved national legislation, 23-article law) via multiple independent sources (uaelegislation.gov.ae, familylaw.ae) — handled with respectful, factual framing, no graphic detail, per the sensitive-topic content standard.",
+    "Explicitly distinguished from gulf-childrens-day (Jan 15, GCC-wide) per backlog instruction — different date, different scope, same-sounding name causes real confusion.",
+    "Not an official holiday — stated directly in FAQ.",
+    "Single-country event (_countryCode: ae), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T08:50:40.339Z"
+}

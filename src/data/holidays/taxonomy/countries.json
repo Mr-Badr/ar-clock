@@ -96,6 +96,18 @@
     "order": 8
   },
   {
+    "code": "bh",
+    "aliasSlugToken": "bahrain",
+    "nameAr": "البحرين",
+    "officialNameAr": "مملكة البحرين",
+    "authority": "وزارة العدل والشؤون الإسلامية والأوقاف",
+    "dateVarianceLabel": "أم القرى / رؤية هلال",
+    "localTerms": ["البحرين", "البحرينية"],
+    "flag": "🇧🇭",
+    "timezone": "Asia/Bahrain",
+    "order": 9
+  },
+  {
     "code": "iq",
     "aliasSlugToken": "iraq",
     "nameAr": "العراق",
@@ -105,7 +117,7 @@
     "localTerms": ["العراق", "العراقي"],
     "flag": "🇮🇶",
     "timezone": "Asia/Baghdad",
-    "order": 9
+    "order": 10
   },
   {
     "code": "sy",
@@ -117,7 +129,7 @@
     "localTerms": ["سوريا", "سورية"],
     "flag": "🇸🇾",
     "timezone": "Asia/Damascus",
-    "order": 10
+    "order": 11
   },
   {
     "code": "ye",
@@ -129,7 +141,7 @@
     "localTerms": ["اليمن", "اليمني"],
     "flag": "🇾🇪",
     "timezone": "Asia/Aden",
-    "order": 11
+    "order": 12
   },
   {
     "code": "jo",
@@ -141,7 +153,7 @@
     "localTerms": ["الأردن", "الاردن", "الأردنية"],
     "flag": "🇯🇴",
     "timezone": "Asia/Amman",
-    "order": 12
+    "order": 13
   },
   {
     "code": "ly",
@@ -153,7 +165,7 @@
     "localTerms": ["ليبيا", "الليبية"],
     "flag": "🇱🇾",
     "timezone": "Africa/Tripoli",
-    "order": 13
+    "order": 14
   },
   {
     "code": "om",
@@ -165,7 +177,7 @@
     "localTerms": ["عمان", "سلطنة عمان"],
     "flag": "🇴🇲",
     "timezone": "Asia/Muscat",
-    "order": 14
+    "order": 15
   },
   {
     "code": "ps",
@@ -177,7 +189,7 @@
     "localTerms": ["فلسطين", "فلسطينية"],
     "flag": "🇵🇸",
     "timezone": "Asia/Gaza",
-    "order": 15
+    "order": 16
   },
   {
     "code": "ca",
@@ -189,7 +201,7 @@
     "localTerms": ["كندا", "الكندية"],
     "flag": "🇨🇦",
     "timezone": "America/Toronto",
-    "order": 16
+    "order": 17
   },
   {
     "code": "fr",
@@ -201,7 +213,7 @@
     "localTerms": ["فرنسا", "الفرنسية"],
     "flag": "🇫🇷",
     "timezone": "Europe/Paris",
-    "order": 17
+    "order": 18
   },
   {
     "code": "tr",
@@ -213,7 +225,7 @@
     "localTerms": ["تركيا", "التركية"],
     "flag": "🇹🇷",
     "timezone": "Europe/Istanbul",
-    "order": 18
+    "order": 19
   },
   {
     "code": "us",
@@ -225,6 +237,42 @@
     "localTerms": ["أمريكا", "أميركا", "الولايات المتحدة", "الولايات المتحدة الأمريكية"],
     "flag": "🇺🇸",
     "timezone": "America/New_York",
-    "order": 19
+    "order": 20
+  },
+  {
+    "code": "de",
+    "aliasSlugToken": "germany",
+    "nameAr": "ألمانيا",
+    "officialNameAr": "جمهورية ألمانيا الاتحادية",
+    "authority": "المجالس الإسلامية المحلية",
+    "dateVarianceLabel": "إعلان محلي / حسابات فلكية",
+    "localTerms": ["ألمانيا", "الألمانية"],
+    "flag": "🇩🇪",
+    "timezone": "Europe/Berlin",
+    "order": 21
+  },
+  {
+    "code": "se",
+    "aliasSlugToken": "sweden",
+    "nameAr": "السويد",
+    "officialNameAr": "مملكة السويد",
+    "authority": "المجالس الإسلامية المحلية",
+    "dateVarianceLabel": "إعلان محلي / حسابات فلكية",
+    "localTerms": ["السويد", "السويدية"],
+    "flag": "🇸🇪",
+    "timezone": "Europe/Stockholm",
+    "order": 22
+  },
+  {
+    "code": "lb",
+    "aliasSlugToken": "lebanon",
+    "nameAr": "لبنان",
+    "officialNameAr": "الجمهورية اللبنانية",
+    "authority": "دار الفتوى اللبنانية",
+    "dateVarianceLabel": "رؤية هلال محلية",
+    "localTerms": ["لبنان", "اللبنانية"],
+    "flag": "🇱🇧",
+    "timezone": "Asia/Beirut",
+    "order": 23
   }
 ]

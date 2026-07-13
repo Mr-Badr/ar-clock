@@ -1,0 +1,19 @@
+{
+  "slug": "great-arab-revolt-day-jordan",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11 (khaberni.com, alsaa.net, MENAFN, royalheritage.jo, ar.wikipedia.org, Jordan Times): June 10 marks the Great Arab Revolt (started 1916, led by Sharif Hussein bin Ali from Mecca against Ottoman rule) and Army Day, since the revolt's forces are the historical root of the Jordanian Armed Forces.",
+    "KEY FINDING confirming backlog's angle: this is an official holiday for the Jordanian Armed Forces and ALL security agencies ONLY — not a general public holiday. Multiple Arabic news sources explicitly confirm this ('عطلة رسمية للقوات المسلحة والأجهزة الأمنية'), with the driving/vehicle licensing department explicitly excepted and continuing normal hours.",
+    "Identified real competitor gap: global aggregators like timeanddate.com list this as a normal public holiday in Jordan without the armed-forces-only distinction — this page corrects that and leads with it.",
+    "Avoided conflating with the King's coronation anniversary (a different date/event that appeared alongside this one in one old news headline) — content covers only the Great Arab Revolt / Army Day facts.",
+    "Single-country event (_countryCode: jo), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T13:10:49.240Z"
+}

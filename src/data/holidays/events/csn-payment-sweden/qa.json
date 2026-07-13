@@ -1,0 +1,17 @@
+{
+  "slug": "csn-payment-sweden",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر الموقع الرسمي csn.se (nar-kommer-pengarna.html): يوم 25 من كل شهر، مع تقديم الدفعة (لا تأجيلها) إذا صادفت عطلة نهاية أسبوع أو يوماً أحمر.",
+    "studiemedel يجمع منحة (بيدراغ) وقرضاً (لان) في دفعة واحدة — موضح صراحة في المحتوى.",
+    "monthly type، _countryCode: se، countryScope: none، aliasSlugs: [] — حدث سويدي وحيد أحادي الدولة وفق قاعدة event-creation-lessons.md."
+  ],
+  "updatedAt": "2026-07-12T14:29:22.135Z"
+}

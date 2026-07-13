@@ -1,0 +1,19 @@
+{
+  "slug": "knowledge-day-algeria",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11 (Wikipedia, Al Jazeera encyclopedia, Algeria's Ministry of Religious Affairs): April 16 marks Sheikh Abdelhamid Ben Badis's death anniversary (1889-1940), founder of the Association of Algerian Muslim Ulama (1931).",
+    "Verified establishment: created by President Houari Boumediene's initiative, first celebrated 1976.",
+    "Explicitly confirmed NOT a paid public holiday (direct source statement) — same 'commemoration != confirmed paid holiday' pattern as victory-day-algeria, mujahid-day-algeria, karameh-day-jordan.",
+    "Positive historical topic (honoring a scholar/educator), no political sensitivity requiring special framing.",
+    "Single-country event (_countryCode: dz), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T09:07:30.308Z"
+}

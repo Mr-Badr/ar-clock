@@ -1,0 +1,17 @@
+{
+  "slug": "fath-makkah",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر جريدة الوطن والجزيرة نت وإسلام ويب: فتح مكة 20 رمضان 8هـ، بعد نقض قريش صلح الحديبية، جيش نحو عشرة آلاف مقاتل، دخول شبه سلمي، عبارة 'اذهبوا فأنتم الطلقاء' موثقة عبر مصادر متعددة.",
+    "hijri type مع hijriMonth:9 (رمضان), hijriDay:20. islamic_year_pair مطبق في titleTag/h1/ogTitle/schemaData.eventDescription.",
+    "أُلغي ذكر أي رقم غير متفق عليه (مثل تفصيل 12 ألف مقاتل الذي تذكره بعض المصادر فقط) لصالح الرقم الأكثر اتفاقاً 'عشرة آلاف'."
+  ],
+  "updatedAt": "2026-07-12T14:06:26.624Z"
+}

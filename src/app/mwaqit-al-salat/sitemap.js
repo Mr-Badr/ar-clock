@@ -25,6 +25,31 @@ export default async function sitemap() {
       changeFrequency: 'daily',
       priority: 0.9,
     },
+    {
+      url: `${base}/mwaqit-al-salat/last-third-of-night`,
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
+    {
+      url: `${base}/mwaqit-al-salat/duha-prayer-time`,
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
+    {
+      url: `${base}/mwaqit-al-salat/friday-response-hour`,
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
+    {
+      url: `${base}/mwaqit-al-salat/white-days`,
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
+    {
+      url: `${base}/mwaqit-al-salat/prayer-times-calculation-method`,
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
   ];
 
   for (const countrySlug of indexedCountrySlugs) {

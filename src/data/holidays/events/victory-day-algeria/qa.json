@@ -1,0 +1,18 @@
+{
+  "slug": "victory-day-algeria",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "IMPORTANT CORRECTION over backlog's ⚠️ assumption: verified via WebSearch 2026-07-11 (cross-checked against Algeria's official 9-holiday list, Law No. 63/278) that March 19 (Victory Day / ceasefire) is NOT among Algeria's paid public holidays, despite being a real national commemorative occasion — some Arabic holiday-list sites incorrectly include it. Content states this directly.",
+    "Verified Evian Accords facts: signed Mar 18, 1962 (Algerian delegation led by Krim Belkacem, French delegation led by Louis Joxe); ceasefire took effect at noon Mar 19, 1962, after 7.5 years of the Algerian War of Liberation (started Nov 1, 1954).",
+    "Explicitly distinguished from independence-day-algeria (Jul 5, formal independence declared after the self-determination referendum) — same 'commemoration date vs formal-independence date' confusion pattern seen elsewhere.",
+    "Single-country event (_countryCode: dz), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T08:58:11.577Z"
+}

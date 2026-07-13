@@ -1,0 +1,16 @@
+{
+  "slug": "youth-sports-day-turkey",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "حقائق نزول أتاتورك في سامسون (19 مايو 1919) وبداية حرب الاستقلال موثقة عبر ويكيبيديا الإنجليزية ومؤكدة أثناء بحث hub تركيا نفس الجلسة.",
+    "ميّز المحتوى بوضوح عن يوم السيادة الوطنية والطفولة (23 أبريل) لتفادي الخلط بين مناسبتي أتاتورك."
+  ],
+  "updatedAt": "2026-07-12T09:28:30.974Z"
+}

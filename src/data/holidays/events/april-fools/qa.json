@@ -1,0 +1,17 @@
+{
+  "slug": "april-fools",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر الجزيرة نت وسكاي نيوز عربية وويكيبيديا العربية: نظرية التقويم الغريغوري 1582 هي الأشهر، مع نظريات بديلة (هيلاريا، الاعتدال الربيعي) معروضة دون جزم — لا إجماع تاريخي قاطع.",
+    "الحكم الشرعي: مسألة اجتهادية حقيقية بين أهل العلم — عُرضت الآراء بحياد تام دون ترجيح رأي الموقع، تنفيذاً حرفياً لتوجيه backlog ('cite views, no ruling of our own').",
+    "fixed type، محتوى برند آمن (brand-safe fun) — لا محتوى مسيء أو مقالب مؤذية مقترحة."
+  ],
+  "updatedAt": "2026-07-12T14:21:36.200Z"
+}

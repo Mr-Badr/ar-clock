@@ -1,0 +1,19 @@
+{
+  "slug": "arab-orphan-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11: idea originated 2003 (Orman Association volunteer, Egypt), first celebration 2004, officially adopted 2006 by the 26th session of the Arab Council of Ministers of Social Affairs as first-Friday-of-April.",
+    "Verified 2010 Guinness World Record: ~25,000 orphans gathered at the foot of the pyramids (Orman Association).",
+    "Explicitly distinguished from World Orphan Day (15 Ramadan, hijri, declared 2013 by OIC at IHH's initiative) — a common source of confusion in competing Arabic content.",
+    "floating type: month 4, weekday 5 (Friday), nth 1. countryScope: all (pan-Arab social observance, no single-country content needed).",
+    "Not an official holiday anywhere — stated directly in FAQ."
+  ],
+  "updatedAt": "2026-07-11T08:43:37.036Z"
+}

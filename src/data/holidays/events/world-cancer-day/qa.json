@@ -1,0 +1,18 @@
+{
+  "slug": "world-cancer-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11: Feb 4, founded 2000 (Charter of Paris Against Cancer), organized by UICC, current theme United by Unique (2025-2027) — years kept out of published fields, used relative phrasing instead.",
+    "Not a public holiday in any Arab country — stated directly in FAQ.",
+    "Health-content rule applied: awareness only, no diagnosis/treatment advice, WHO/UICC sourced.",
+    "countryScope: all (global awareness day, no single-country content)."
+  ],
+  "updatedAt": "2026-07-11T04:12:06.926Z"
+}

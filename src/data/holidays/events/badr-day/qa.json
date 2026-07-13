@@ -1,0 +1,17 @@
+{
+  "slug": "badr-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر ويكيبيديا العربية وإسلام ويب: غزوة بدر 17 رمضان 2هـ، آبار بدر جنوب غرب المدينة، يوم الفرقان (الأنفال: 41).",
+    "أعداد الطرفين: 313 مسلماً مقابل 950-1000 من قريش (صيغة 'نحو 950 إلى 1000' تعكس تفاوتاً طفيفاً بين المصادر)؛ النتيجة 70 قتيلاً و70 أسيراً من قريش مقابل 14 شهيداً من المسلمين — رقم متفق عليه.",
+    "hijri type مع hijriMonth:9 (رمضان), hijriDay:17. islamic_year_pair مطبق في titleTag/h1/ogTitle/schemaData.eventDescription."
+  ],
+  "updatedAt": "2026-07-12T14:06:17.139Z"
+}

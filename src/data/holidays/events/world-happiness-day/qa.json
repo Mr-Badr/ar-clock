@@ -1,0 +1,17 @@
+{
+  "slug": "world-happiness-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر البوابة الرسمية لحكومة الإمارات (u.ae): وزارة السعادة أنشئت 2016، أول وزارة سعادة عربية، الإمارات تتصدر الترتيب العربي باستمرار.",
+    "تعمّدت عدم ذكر رقم ترتيب عالمي دقيق كحقيقة ثابتة في المحتوى لأنه يتغير سنوياً مع كل تقرير جديد.",
+    "fixed type، ليس إجازة رسمية في أي دولة عربية — موضح صراحة في المحتوى."
+  ],
+  "updatedAt": "2026-07-12T14:20:58.072Z"
+}

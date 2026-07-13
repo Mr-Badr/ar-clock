@@ -1,0 +1,18 @@
+{
+  "slug": "jeddah-season",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11: Jeddah Season 2024 opened Jun 27, 2024 at Jeddah Art Promenade; the following year ran under theme 'جدة غير'; 2026 opened Jun 20 under Saudi Summer program (GEA-organized).",
+    "No official 2027 date announced yet — followed the exact riyadh-season pattern (undisclosed date + historical pattern + immediate update on announcement), estimated type with {{year}}-06-20 anchor.",
+    "Only the 2024 date is stated as a literal year (safe, < currentYear-1); the more recent two years are described with relative phrasing (العام الماضي / العام قبل الماضي) to avoid hasHardcodedYear.",
+    "Distinguished explicitly from riyadh-season (season, timing, city) per backlog's note this is an identical-pattern build."
+  ],
+  "updatedAt": "2026-07-11T08:13:51.799Z"
+}

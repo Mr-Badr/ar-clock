@@ -1,0 +1,18 @@
+{
+  "slug": "semester-break-turkey",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11 directly against meb.gov.tr and independent Turkish sources: semester break (Yarıyıl Tatili) runs Mon Jan 25 - Fri Feb 5, term 2 starts Mon Feb 8 — matches the dates already documented from the school-start-turkey build.",
+    "estimated type with {{year}}-01-25 anchor, same pattern as school-start-turkey (approximate + immediate update on new official calendar), since MEB re-announces yearly and the date shifts by a day or two.",
+    "No existing Arabic content found for this specific topic — zero-competition opportunity given Turkey hosts one of the world's largest Arab diaspora communities.",
+    "Single-country event (_countryCode: tr), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T08:25:59.005Z"
+}

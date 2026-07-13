@@ -1,0 +1,19 @@
+{
+  "slug": "martyrs-day-tunisia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11 (Wikipedia, TAP official news agency, Inkyfada): April 9, 1938 — French colonial forces killed 22 and wounded ~150 Tunisian demonstrators demanding an elected parliament; two marches (led by Ali Belhouane from Halfaouine, Mongi Slim from Rahbet El Ghanem) converged near the French Résidence Générale, 7,000-10,000 participants.",
+    "Verified women's first documented participation in a major Tunisian national protest movement during these events.",
+    "Confirmed official paid public holiday status since April 1957 (post-independence government decision), still in effect.",
+    "Historical colonial-violence content handled with respectful, factual national register, no contemporary political framing.",
+    "Single-country event (_countryCode: tn), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T09:04:26.513Z"
+}

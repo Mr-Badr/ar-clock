@@ -1,0 +1,19 @@
+{
+  "slug": "tarwiyah-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11: 8 Dhul-Hijjah, named for pilgrims historically stocking up on water (tarwiyah) before heading to water-scarce Mina/Arafat.",
+    "Verified via binbaz.org.sa fatwa: pilgrim enters ihram for hajj, moves to Mina, prays the 5 prayers there and stays overnight (confirmed sunnah).",
+    "Fasting recommended for non-pilgrims as part of the virtuous first 10 days of Dhul-Hijjah.",
+    "hijri type with year-pair fix applied to h1/ogTitle/schemaData.eventDescription per islamic_year_pair_missing rule.",
+    "countryScope: all (universal Islamic observance, no country-specific content needed)."
+  ],
+  "updatedAt": "2026-07-11T08:47:03.531Z"
+}

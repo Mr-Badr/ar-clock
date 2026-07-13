@@ -1,0 +1,19 @@
+{
+  "slug": "midyear-break-jordan",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "IMPORTANT CORRECTION from prior assumption: earlier note said 'Jan 24-Feb 5 with grade exceptions' — verified via WebSearch 2026-07-11 from Jordan-specific sources (light-dark.net, almasdar.com, petra.gov.jo) that Jordan has NO grade-level staggering; all levels including Tawjihi follow one unified date. The 'grade exceptions' detail was actually Egypt's system bleeding into search results due to similar ministry terminology — content explicitly corrects this common confusion.",
+    "Verified two consecutive years: current academic year break Jan 24 - Feb 5 (2 weeks); confirmed next academic year Jan 23 - Feb 4 via Jordan's official news agency (Petra), term 2 starts Feb 6, year ends Jun 24.",
+    "estimated type with {{year}}-01-23 anchor, disclaimer pattern consistent with other estimated-type Saudi/Turkey builds this session.",
+    "great-arab-revolt-day-jordan not yet built — used jordan-independence-day instead in relatedSlugs to avoid related_slug_not_found.",
+    "Single-country event (_countryCode: jo), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T08:30:16.732Z"
+}

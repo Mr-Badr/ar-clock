@@ -1,0 +1,17 @@
+{
+  "slug": "tax-refund-france",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "التواريخ مؤكدة من مصدرين رسميين: service-public.gouv.fr (A16659) وeconomie.gouv.fr — بداية الاسترجاع 24 يوليو، سداد الباقي من 25 سبتمبر مع عتبة 300 يورو للتقسيط على 4 دفعات",
+    "لا يوجد منافس عربي مباشر يغطي هذا الموعد بالتحديد — الصفحات العربية الموجودة تتوقف عند موعد التصريح الضريبي في الربيع",
+    "الصفحة موجهة لفرنسا فقط، دولة واحدة، بلا صياغة خاصة بدول أخرى"
+  ],
+  "updatedAt": "2026-07-08T03:06:44.136Z"
+}

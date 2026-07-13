@@ -31,6 +31,10 @@
     "canonicalSlug": "ramadan",
     "countryCode": "qa"
   },
+  "ramadan-in-bahrain": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "bh"
+  },
   "ramadan-in-iraq": {
     "canonicalSlug": "ramadan",
     "countryCode": "iq"
@@ -75,6 +79,18 @@
     "canonicalSlug": "ramadan",
     "countryCode": "us"
   },
+  "ramadan-in-germany": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "de"
+  },
+  "ramadan-in-sweden": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "se"
+  },
+  "ramadan-in-lebanon": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "lb"
+  },
   "eid-al-fitr-in-saudi": {
     "canonicalSlug": "eid-al-fitr",
     "countryCode": "sa"
@@ -106,6 +122,10 @@
   "eid-al-fitr-in-qatar": {
     "canonicalSlug": "eid-al-fitr",
     "countryCode": "qa"
+  },
+  "eid-al-fitr-in-bahrain": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "bh"
   },
   "eid-al-fitr-in-iraq": {
     "canonicalSlug": "eid-al-fitr",
@@ -151,6 +171,18 @@
     "canonicalSlug": "eid-al-fitr",
     "countryCode": "us"
   },
+  "eid-al-fitr-in-germany": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "de"
+  },
+  "eid-al-fitr-in-sweden": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "se"
+  },
+  "eid-al-fitr-in-lebanon": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "lb"
+  },
   "eid-al-adha-in-saudi": {
     "canonicalSlug": "eid-al-adha",
     "countryCode": "sa"
@@ -182,6 +214,10 @@
   "eid-al-adha-in-qatar": {
     "canonicalSlug": "eid-al-adha",
     "countryCode": "qa"
+  },
+  "eid-al-adha-in-bahrain": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "bh"
   },
   "eid-al-adha-in-iraq": {
     "canonicalSlug": "eid-al-adha",
@@ -227,6 +263,18 @@
     "canonicalSlug": "eid-al-adha",
     "countryCode": "us"
   },
+  "eid-al-adha-in-germany": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "de"
+  },
+  "eid-al-adha-in-sweden": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "se"
+  },
+  "eid-al-adha-in-lebanon": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "lb"
+  },
   "day-of-arafa-in-saudi": {
     "canonicalSlug": "day-of-arafa",
     "countryCode": "sa"
@@ -258,6 +306,10 @@
   "day-of-arafa-in-qatar": {
     "canonicalSlug": "day-of-arafa",
     "countryCode": "qa"
+  },
+  "day-of-arafa-in-bahrain": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "bh"
   },
   "day-of-arafa-in-iraq": {
     "canonicalSlug": "day-of-arafa",
@@ -303,6 +355,18 @@
     "canonicalSlug": "day-of-arafa",
     "countryCode": "us"
   },
+  "day-of-arafa-in-germany": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "de"
+  },
+  "day-of-arafa-in-sweden": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "se"
+  },
+  "day-of-arafa-in-lebanon": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "lb"
+  },
   "hajj-season-in-saudi": {
     "canonicalSlug": "hajj-season",
     "countryCode": "sa"
@@ -334,6 +398,10 @@
   "hajj-season-in-qatar": {
     "canonicalSlug": "hajj-season",
     "countryCode": "qa"
+  },
+  "hajj-season-in-bahrain": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "bh"
   },
   "hajj-season-in-iraq": {
     "canonicalSlug": "hajj-season",
@@ -379,6 +447,18 @@
     "canonicalSlug": "hajj-season",
     "countryCode": "us"
   },
+  "hajj-season-in-germany": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "de"
+  },
+  "hajj-season-in-sweden": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "se"
+  },
+  "hajj-season-in-lebanon": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "lb"
+  },
   "islamic-new-year-in-saudi": {
     "canonicalSlug": "islamic-new-year",
     "countryCode": "sa"
@@ -410,6 +490,10 @@
   "islamic-new-year-in-qatar": {
     "canonicalSlug": "islamic-new-year",
     "countryCode": "qa"
+  },
+  "islamic-new-year-in-bahrain": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "bh"
   },
   "islamic-new-year-in-iraq": {
     "canonicalSlug": "islamic-new-year",
@@ -455,6 +539,18 @@
     "canonicalSlug": "islamic-new-year",
     "countryCode": "us"
   },
+  "islamic-new-year-in-germany": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "de"
+  },
+  "islamic-new-year-in-sweden": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "se"
+  },
+  "islamic-new-year-in-lebanon": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "lb"
+  },
   "ashura-in-saudi": {
     "canonicalSlug": "ashura",
     "countryCode": "sa"
@@ -486,6 +582,10 @@
   "ashura-in-qatar": {
     "canonicalSlug": "ashura",
     "countryCode": "qa"
+  },
+  "ashura-in-bahrain": {
+    "canonicalSlug": "ashura",
+    "countryCode": "bh"
   },
   "ashura-in-iraq": {
     "canonicalSlug": "ashura",
@@ -531,6 +631,18 @@
     "canonicalSlug": "ashura",
     "countryCode": "us"
   },
+  "ashura-in-germany": {
+    "canonicalSlug": "ashura",
+    "countryCode": "de"
+  },
+  "ashura-in-sweden": {
+    "canonicalSlug": "ashura",
+    "countryCode": "se"
+  },
+  "ashura-in-lebanon": {
+    "canonicalSlug": "ashura",
+    "countryCode": "lb"
+  },
   "laylat-al-qadr-in-saudi": {
     "canonicalSlug": "laylat-al-qadr",
     "countryCode": "sa"
@@ -562,6 +674,10 @@
   "laylat-al-qadr-in-qatar": {
     "canonicalSlug": "laylat-al-qadr",
     "countryCode": "qa"
+  },
+  "laylat-al-qadr-in-bahrain": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "bh"
   },
   "laylat-al-qadr-in-iraq": {
     "canonicalSlug": "laylat-al-qadr",
@@ -607,6 +723,18 @@
     "canonicalSlug": "laylat-al-qadr",
     "countryCode": "us"
   },
+  "laylat-al-qadr-in-germany": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "de"
+  },
+  "laylat-al-qadr-in-sweden": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "se"
+  },
+  "laylat-al-qadr-in-lebanon": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "lb"
+  },
   "isra-miraj-in-saudi": {
     "canonicalSlug": "isra-miraj",
     "countryCode": "sa"
@@ -638,6 +766,10 @@
   "isra-miraj-in-qatar": {
     "canonicalSlug": "isra-miraj",
     "countryCode": "qa"
+  },
+  "isra-miraj-in-bahrain": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "bh"
   },
   "isra-miraj-in-iraq": {
     "canonicalSlug": "isra-miraj",
@@ -683,6 +815,18 @@
     "canonicalSlug": "isra-miraj",
     "countryCode": "us"
   },
+  "isra-miraj-in-germany": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "de"
+  },
+  "isra-miraj-in-sweden": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "se"
+  },
+  "isra-miraj-in-lebanon": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "lb"
+  },
   "first-dhul-hijjah-in-saudi": {
     "canonicalSlug": "first-dhul-hijjah",
     "countryCode": "sa"
@@ -714,6 +858,10 @@
   "first-dhul-hijjah-in-qatar": {
     "canonicalSlug": "first-dhul-hijjah",
     "countryCode": "qa"
+  },
+  "first-dhul-hijjah-in-bahrain": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "bh"
   },
   "first-dhul-hijjah-in-iraq": {
     "canonicalSlug": "first-dhul-hijjah",
@@ -759,6 +907,18 @@
     "canonicalSlug": "first-dhul-hijjah",
     "countryCode": "us"
   },
+  "first-dhul-hijjah-in-germany": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "de"
+  },
+  "first-dhul-hijjah-in-sweden": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "se"
+  },
+  "first-dhul-hijjah-in-lebanon": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "lb"
+  },
   "valentines-day-in-saudi": {
     "canonicalSlug": "valentines-day",
     "countryCode": "sa"
@@ -790,6 +950,10 @@
   "valentines-day-in-qatar": {
     "canonicalSlug": "valentines-day",
     "countryCode": "qa"
+  },
+  "valentines-day-in-bahrain": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "bh"
   },
   "valentines-day-in-iraq": {
     "canonicalSlug": "valentines-day",
@@ -835,6 +999,18 @@
     "canonicalSlug": "valentines-day",
     "countryCode": "us"
   },
+  "valentines-day-in-germany": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "de"
+  },
+  "valentines-day-in-sweden": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "se"
+  },
+  "valentines-day-in-lebanon": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "lb"
+  },
   "world-health-day-in-saudi": {
     "canonicalSlug": "world-health-day",
     "countryCode": "sa"
@@ -866,6 +1042,10 @@
   "world-health-day-in-qatar": {
     "canonicalSlug": "world-health-day",
     "countryCode": "qa"
+  },
+  "world-health-day-in-bahrain": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "bh"
   },
   "world-health-day-in-iraq": {
     "canonicalSlug": "world-health-day",
@@ -911,6 +1091,18 @@
     "canonicalSlug": "world-health-day",
     "countryCode": "us"
   },
+  "world-health-day-in-germany": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "de"
+  },
+  "world-health-day-in-sweden": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "se"
+  },
+  "world-health-day-in-lebanon": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "lb"
+  },
   "earth-day-in-saudi": {
     "canonicalSlug": "earth-day",
     "countryCode": "sa"
@@ -942,6 +1134,10 @@
   "earth-day-in-qatar": {
     "canonicalSlug": "earth-day",
     "countryCode": "qa"
+  },
+  "earth-day-in-bahrain": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "bh"
   },
   "earth-day-in-iraq": {
     "canonicalSlug": "earth-day",
@@ -987,6 +1183,18 @@
     "canonicalSlug": "earth-day",
     "countryCode": "us"
   },
+  "earth-day-in-germany": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "de"
+  },
+  "earth-day-in-sweden": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "se"
+  },
+  "earth-day-in-lebanon": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "lb"
+  },
   "world-diabetes-day-in-saudi": {
     "canonicalSlug": "world-diabetes-day",
     "countryCode": "sa"
@@ -1018,6 +1226,10 @@
   "world-diabetes-day-in-qatar": {
     "canonicalSlug": "world-diabetes-day",
     "countryCode": "qa"
+  },
+  "world-diabetes-day-in-bahrain": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "bh"
   },
   "world-diabetes-day-in-iraq": {
     "canonicalSlug": "world-diabetes-day",
@@ -1062,6 +1274,18 @@
   "world-diabetes-day-in-usa": {
     "canonicalSlug": "world-diabetes-day",
     "countryCode": "us"
+  },
+  "world-diabetes-day-in-germany": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "de"
+  },
+  "world-diabetes-day-in-sweden": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "se"
+  },
+  "world-diabetes-day-in-lebanon": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "lb"
   },
   "diabetes-day": {
     "canonicalSlug": "world-diabetes-day",
@@ -1111,6 +1335,10 @@
     "canonicalSlug": "world-teachers-day",
     "countryCode": "qa"
   },
+  "world-teachers-day-in-bahrain": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "bh"
+  },
   "world-teachers-day-in-iraq": {
     "canonicalSlug": "world-teachers-day",
     "countryCode": "iq"
@@ -1155,6 +1383,18 @@
     "canonicalSlug": "world-teachers-day",
     "countryCode": "us"
   },
+  "world-teachers-day-in-germany": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "de"
+  },
+  "world-teachers-day-in-sweden": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "se"
+  },
+  "world-teachers-day-in-lebanon": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "lb"
+  },
   "arabic-language-day-in-saudi": {
     "canonicalSlug": "arabic-language-day",
     "countryCode": "sa"
@@ -1186,6 +1426,10 @@
   "arabic-language-day-in-qatar": {
     "canonicalSlug": "arabic-language-day",
     "countryCode": "qa"
+  },
+  "arabic-language-day-in-bahrain": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "bh"
   },
   "arabic-language-day-in-iraq": {
     "canonicalSlug": "arabic-language-day",
@@ -1231,6 +1475,18 @@
     "canonicalSlug": "arabic-language-day",
     "countryCode": "us"
   },
+  "arabic-language-day-in-germany": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "de"
+  },
+  "arabic-language-day-in-sweden": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "se"
+  },
+  "arabic-language-day-in-lebanon": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "lb"
+  },
   "mawlid-in-saudi": {
     "canonicalSlug": "mawlid",
     "countryCode": "sa"
@@ -1262,6 +1518,10 @@
   "mawlid-in-qatar": {
     "canonicalSlug": "mawlid",
     "countryCode": "qa"
+  },
+  "mawlid-in-bahrain": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "bh"
   },
   "mawlid-in-iraq": {
     "canonicalSlug": "mawlid",
@@ -1307,6 +1567,18 @@
     "canonicalSlug": "mawlid",
     "countryCode": "us"
   },
+  "mawlid-in-germany": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "de"
+  },
+  "mawlid-in-sweden": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "se"
+  },
+  "mawlid-in-lebanon": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "lb"
+  },
   "nisf-shaban-in-saudi": {
     "canonicalSlug": "nisf-shaban",
     "countryCode": "sa"
@@ -1338,6 +1610,10 @@
   "nisf-shaban-in-qatar": {
     "canonicalSlug": "nisf-shaban",
     "countryCode": "qa"
+  },
+  "nisf-shaban-in-bahrain": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "bh"
   },
   "nisf-shaban-in-iraq": {
     "canonicalSlug": "nisf-shaban",
@@ -1383,6 +1659,18 @@
     "canonicalSlug": "nisf-shaban",
     "countryCode": "us"
   },
+  "nisf-shaban-in-germany": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "de"
+  },
+  "nisf-shaban-in-sweden": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "se"
+  },
+  "nisf-shaban-in-lebanon": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "lb"
+  },
   "world-childrens-day-in-saudi": {
     "canonicalSlug": "world-childrens-day",
     "countryCode": "sa"
@@ -1414,6 +1702,10 @@
   "world-childrens-day-in-qatar": {
     "canonicalSlug": "world-childrens-day",
     "countryCode": "qa"
+  },
+  "world-childrens-day-in-bahrain": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "bh"
   },
   "world-childrens-day-in-iraq": {
     "canonicalSlug": "world-childrens-day",
@@ -1459,6 +1751,18 @@
     "canonicalSlug": "world-childrens-day",
     "countryCode": "us"
   },
+  "world-childrens-day-in-germany": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "de"
+  },
+  "world-childrens-day-in-sweden": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "se"
+  },
+  "world-childrens-day-in-lebanon": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "lb"
+  },
   "international-day-of-education-in-saudi": {
     "canonicalSlug": "international-day-of-education",
     "countryCode": "sa"
@@ -1490,6 +1794,10 @@
   "international-day-of-education-in-qatar": {
     "canonicalSlug": "international-day-of-education",
     "countryCode": "qa"
+  },
+  "international-day-of-education-in-bahrain": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "bh"
   },
   "international-day-of-education-in-iraq": {
     "canonicalSlug": "international-day-of-education",
@@ -1535,6 +1843,18 @@
     "canonicalSlug": "international-day-of-education",
     "countryCode": "us"
   },
+  "international-day-of-education-in-germany": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "de"
+  },
+  "international-day-of-education-in-sweden": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "se"
+  },
+  "international-day-of-education-in-lebanon": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "lb"
+  },
   "world-mental-health-day-in-saudi": {
     "canonicalSlug": "world-mental-health-day",
     "countryCode": "sa"
@@ -1566,6 +1886,10 @@
   "world-mental-health-day-in-qatar": {
     "canonicalSlug": "world-mental-health-day",
     "countryCode": "qa"
+  },
+  "world-mental-health-day-in-bahrain": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "bh"
   },
   "world-mental-health-day-in-iraq": {
     "canonicalSlug": "world-mental-health-day",
@@ -1611,6 +1935,18 @@
     "canonicalSlug": "world-mental-health-day",
     "countryCode": "us"
   },
+  "world-mental-health-day-in-germany": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "de"
+  },
+  "world-mental-health-day-in-sweden": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "se"
+  },
+  "world-mental-health-day-in-lebanon": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "lb"
+  },
   "world-environment-day-in-saudi": {
     "canonicalSlug": "world-environment-day",
     "countryCode": "sa"
@@ -1642,6 +1978,10 @@
   "world-environment-day-in-qatar": {
     "canonicalSlug": "world-environment-day",
     "countryCode": "qa"
+  },
+  "world-environment-day-in-bahrain": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "bh"
   },
   "world-environment-day-in-iraq": {
     "canonicalSlug": "world-environment-day",
@@ -1687,6 +2027,846 @@
     "canonicalSlug": "world-environment-day",
     "countryCode": "us"
   },
+  "world-environment-day-in-germany": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "de"
+  },
+  "world-environment-day-in-sweden": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "se"
+  },
+  "world-environment-day-in-lebanon": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "lb"
+  },
+  "april-fools-in-saudi": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "sa"
+  },
+  "april-fools-in-egypt": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "eg"
+  },
+  "april-fools-in-morocco": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "ma"
+  },
+  "april-fools-in-algeria": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "dz"
+  },
+  "april-fools-in-uae": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "ae"
+  },
+  "april-fools-in-tunisia": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "tn"
+  },
+  "april-fools-in-kuwait": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "kw"
+  },
+  "april-fools-in-qatar": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "qa"
+  },
+  "april-fools-in-bahrain": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "bh"
+  },
+  "april-fools-in-iraq": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "iq"
+  },
+  "april-fools-in-syria": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "sy"
+  },
+  "april-fools-in-yemen": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "ye"
+  },
+  "april-fools-in-jordan": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "jo"
+  },
+  "april-fools-in-libya": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "ly"
+  },
+  "april-fools-in-oman": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "om"
+  },
+  "april-fools-in-palestine": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "ps"
+  },
+  "april-fools-in-canada": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "ca"
+  },
+  "april-fools-in-france": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "fr"
+  },
+  "april-fools-in-turkey": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "tr"
+  },
+  "april-fools-in-usa": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "us"
+  },
+  "april-fools-in-germany": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "de"
+  },
+  "april-fools-in-sweden": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "se"
+  },
+  "april-fools-in-lebanon": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "lb"
+  },
+  "arab-orphan-day-in-saudi": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "sa"
+  },
+  "arab-orphan-day-in-egypt": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "eg"
+  },
+  "arab-orphan-day-in-morocco": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "ma"
+  },
+  "arab-orphan-day-in-algeria": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "dz"
+  },
+  "arab-orphan-day-in-uae": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "ae"
+  },
+  "arab-orphan-day-in-tunisia": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "tn"
+  },
+  "arab-orphan-day-in-kuwait": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "kw"
+  },
+  "arab-orphan-day-in-qatar": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "qa"
+  },
+  "arab-orphan-day-in-bahrain": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "bh"
+  },
+  "arab-orphan-day-in-iraq": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "iq"
+  },
+  "arab-orphan-day-in-syria": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "sy"
+  },
+  "arab-orphan-day-in-yemen": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "ye"
+  },
+  "arab-orphan-day-in-jordan": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "jo"
+  },
+  "arab-orphan-day-in-libya": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "ly"
+  },
+  "arab-orphan-day-in-oman": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "om"
+  },
+  "arab-orphan-day-in-palestine": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "ps"
+  },
+  "arab-orphan-day-in-canada": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "ca"
+  },
+  "arab-orphan-day-in-france": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "fr"
+  },
+  "arab-orphan-day-in-turkey": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "tr"
+  },
+  "arab-orphan-day-in-usa": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "us"
+  },
+  "arab-orphan-day-in-germany": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "de"
+  },
+  "arab-orphan-day-in-sweden": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "se"
+  },
+  "arab-orphan-day-in-lebanon": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "lb"
+  },
+  "badr-day-in-saudi": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "sa"
+  },
+  "badr-day-in-egypt": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "eg"
+  },
+  "badr-day-in-morocco": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "ma"
+  },
+  "badr-day-in-algeria": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "dz"
+  },
+  "badr-day-in-uae": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "ae"
+  },
+  "badr-day-in-tunisia": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "tn"
+  },
+  "badr-day-in-kuwait": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "kw"
+  },
+  "badr-day-in-qatar": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "qa"
+  },
+  "badr-day-in-bahrain": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "bh"
+  },
+  "badr-day-in-iraq": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "iq"
+  },
+  "badr-day-in-syria": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "sy"
+  },
+  "badr-day-in-yemen": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "ye"
+  },
+  "badr-day-in-jordan": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "jo"
+  },
+  "badr-day-in-libya": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "ly"
+  },
+  "badr-day-in-oman": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "om"
+  },
+  "badr-day-in-palestine": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "ps"
+  },
+  "badr-day-in-canada": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "ca"
+  },
+  "badr-day-in-france": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "fr"
+  },
+  "badr-day-in-turkey": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "tr"
+  },
+  "badr-day-in-usa": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "us"
+  },
+  "badr-day-in-germany": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "de"
+  },
+  "badr-day-in-sweden": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "se"
+  },
+  "badr-day-in-lebanon": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "lb"
+  },
+  "blood-donor-day-in-saudi": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "sa"
+  },
+  "blood-donor-day-in-egypt": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "eg"
+  },
+  "blood-donor-day-in-morocco": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "ma"
+  },
+  "blood-donor-day-in-algeria": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "dz"
+  },
+  "blood-donor-day-in-uae": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "ae"
+  },
+  "blood-donor-day-in-tunisia": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "tn"
+  },
+  "blood-donor-day-in-kuwait": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "kw"
+  },
+  "blood-donor-day-in-qatar": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "qa"
+  },
+  "blood-donor-day-in-bahrain": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "bh"
+  },
+  "blood-donor-day-in-iraq": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "iq"
+  },
+  "blood-donor-day-in-syria": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "sy"
+  },
+  "blood-donor-day-in-yemen": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "ye"
+  },
+  "blood-donor-day-in-jordan": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "jo"
+  },
+  "blood-donor-day-in-libya": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "ly"
+  },
+  "blood-donor-day-in-oman": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "om"
+  },
+  "blood-donor-day-in-palestine": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "ps"
+  },
+  "blood-donor-day-in-canada": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "ca"
+  },
+  "blood-donor-day-in-france": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "fr"
+  },
+  "blood-donor-day-in-turkey": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "tr"
+  },
+  "blood-donor-day-in-usa": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "us"
+  },
+  "blood-donor-day-in-germany": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "de"
+  },
+  "blood-donor-day-in-sweden": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "se"
+  },
+  "blood-donor-day-in-lebanon": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "lb"
+  },
+  "fath-makkah-in-saudi": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "sa"
+  },
+  "fath-makkah-in-egypt": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "eg"
+  },
+  "fath-makkah-in-morocco": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "ma"
+  },
+  "fath-makkah-in-algeria": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "dz"
+  },
+  "fath-makkah-in-uae": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "ae"
+  },
+  "fath-makkah-in-tunisia": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "tn"
+  },
+  "fath-makkah-in-kuwait": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "kw"
+  },
+  "fath-makkah-in-qatar": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "qa"
+  },
+  "fath-makkah-in-bahrain": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "bh"
+  },
+  "fath-makkah-in-iraq": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "iq"
+  },
+  "fath-makkah-in-syria": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "sy"
+  },
+  "fath-makkah-in-yemen": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "ye"
+  },
+  "fath-makkah-in-jordan": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "jo"
+  },
+  "fath-makkah-in-libya": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "ly"
+  },
+  "fath-makkah-in-oman": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "om"
+  },
+  "fath-makkah-in-palestine": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "ps"
+  },
+  "fath-makkah-in-canada": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "ca"
+  },
+  "fath-makkah-in-france": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "fr"
+  },
+  "fath-makkah-in-turkey": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "tr"
+  },
+  "fath-makkah-in-usa": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "us"
+  },
+  "fath-makkah-in-germany": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "de"
+  },
+  "fath-makkah-in-sweden": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "se"
+  },
+  "fath-makkah-in-lebanon": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "lb"
+  },
+  "international-coffee-day-in-saudi": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "sa"
+  },
+  "international-coffee-day-in-egypt": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "eg"
+  },
+  "international-coffee-day-in-morocco": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "ma"
+  },
+  "international-coffee-day-in-algeria": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "dz"
+  },
+  "international-coffee-day-in-uae": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "ae"
+  },
+  "international-coffee-day-in-tunisia": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "tn"
+  },
+  "international-coffee-day-in-kuwait": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "kw"
+  },
+  "international-coffee-day-in-qatar": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "qa"
+  },
+  "international-coffee-day-in-bahrain": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "bh"
+  },
+  "international-coffee-day-in-iraq": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "iq"
+  },
+  "international-coffee-day-in-syria": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "sy"
+  },
+  "international-coffee-day-in-yemen": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "ye"
+  },
+  "international-coffee-day-in-jordan": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "jo"
+  },
+  "international-coffee-day-in-libya": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "ly"
+  },
+  "international-coffee-day-in-oman": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "om"
+  },
+  "international-coffee-day-in-palestine": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "ps"
+  },
+  "international-coffee-day-in-canada": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "ca"
+  },
+  "international-coffee-day-in-france": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "fr"
+  },
+  "international-coffee-day-in-turkey": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "tr"
+  },
+  "international-coffee-day-in-usa": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "us"
+  },
+  "international-coffee-day-in-germany": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "de"
+  },
+  "international-coffee-day-in-sweden": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "se"
+  },
+  "international-coffee-day-in-lebanon": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "lb"
+  },
+  "international-youth-day-in-saudi": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "sa"
+  },
+  "international-youth-day-in-egypt": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "eg"
+  },
+  "international-youth-day-in-morocco": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "ma"
+  },
+  "international-youth-day-in-algeria": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "dz"
+  },
+  "international-youth-day-in-uae": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "ae"
+  },
+  "international-youth-day-in-tunisia": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "tn"
+  },
+  "international-youth-day-in-kuwait": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "kw"
+  },
+  "international-youth-day-in-qatar": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "qa"
+  },
+  "international-youth-day-in-bahrain": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "bh"
+  },
+  "international-youth-day-in-iraq": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "iq"
+  },
+  "international-youth-day-in-syria": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "sy"
+  },
+  "international-youth-day-in-yemen": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "ye"
+  },
+  "international-youth-day-in-jordan": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "jo"
+  },
+  "international-youth-day-in-libya": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "ly"
+  },
+  "international-youth-day-in-oman": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "om"
+  },
+  "international-youth-day-in-palestine": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "ps"
+  },
+  "international-youth-day-in-canada": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "ca"
+  },
+  "international-youth-day-in-france": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "fr"
+  },
+  "international-youth-day-in-turkey": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "tr"
+  },
+  "international-youth-day-in-usa": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "us"
+  },
+  "international-youth-day-in-germany": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "de"
+  },
+  "international-youth-day-in-sweden": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "se"
+  },
+  "international-youth-day-in-lebanon": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "lb"
+  },
+  "last-ten-nights-ramadan-in-saudi": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "sa"
+  },
+  "last-ten-nights-ramadan-in-egypt": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "eg"
+  },
+  "last-ten-nights-ramadan-in-morocco": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "ma"
+  },
+  "last-ten-nights-ramadan-in-algeria": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "dz"
+  },
+  "last-ten-nights-ramadan-in-uae": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "ae"
+  },
+  "last-ten-nights-ramadan-in-tunisia": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "tn"
+  },
+  "last-ten-nights-ramadan-in-kuwait": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "kw"
+  },
+  "last-ten-nights-ramadan-in-qatar": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "qa"
+  },
+  "last-ten-nights-ramadan-in-bahrain": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "bh"
+  },
+  "last-ten-nights-ramadan-in-iraq": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "iq"
+  },
+  "last-ten-nights-ramadan-in-syria": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "sy"
+  },
+  "last-ten-nights-ramadan-in-yemen": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "ye"
+  },
+  "last-ten-nights-ramadan-in-jordan": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "jo"
+  },
+  "last-ten-nights-ramadan-in-libya": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "ly"
+  },
+  "last-ten-nights-ramadan-in-oman": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "om"
+  },
+  "last-ten-nights-ramadan-in-palestine": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "ps"
+  },
+  "last-ten-nights-ramadan-in-canada": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "ca"
+  },
+  "last-ten-nights-ramadan-in-france": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "fr"
+  },
+  "last-ten-nights-ramadan-in-turkey": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "tr"
+  },
+  "last-ten-nights-ramadan-in-usa": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "us"
+  },
+  "last-ten-nights-ramadan-in-germany": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "de"
+  },
+  "last-ten-nights-ramadan-in-sweden": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "se"
+  },
+  "last-ten-nights-ramadan-in-lebanon": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "lb"
+  },
+  "nurses-day-in-saudi": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "sa"
+  },
+  "nurses-day-in-egypt": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "eg"
+  },
+  "nurses-day-in-morocco": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "ma"
+  },
+  "nurses-day-in-algeria": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "dz"
+  },
+  "nurses-day-in-uae": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "ae"
+  },
+  "nurses-day-in-tunisia": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "tn"
+  },
+  "nurses-day-in-kuwait": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "kw"
+  },
+  "nurses-day-in-qatar": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "qa"
+  },
+  "nurses-day-in-bahrain": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "bh"
+  },
+  "nurses-day-in-iraq": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "iq"
+  },
+  "nurses-day-in-syria": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "sy"
+  },
+  "nurses-day-in-yemen": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "ye"
+  },
+  "nurses-day-in-jordan": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "jo"
+  },
+  "nurses-day-in-libya": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "ly"
+  },
+  "nurses-day-in-oman": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "om"
+  },
+  "nurses-day-in-palestine": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "ps"
+  },
+  "nurses-day-in-canada": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "ca"
+  },
+  "nurses-day-in-france": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "fr"
+  },
+  "nurses-day-in-turkey": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "tr"
+  },
+  "nurses-day-in-usa": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "us"
+  },
+  "nurses-day-in-germany": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "de"
+  },
+  "nurses-day-in-sweden": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "se"
+  },
+  "nurses-day-in-lebanon": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "lb"
+  },
   "rajab-start-in-saudi": {
     "canonicalSlug": "rajab-start",
     "countryCode": "sa"
@@ -1718,6 +2898,10 @@
   "rajab-start-in-qatar": {
     "canonicalSlug": "rajab-start",
     "countryCode": "qa"
+  },
+  "rajab-start-in-bahrain": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "bh"
   },
   "rajab-start-in-iraq": {
     "canonicalSlug": "rajab-start",
@@ -1763,6 +2947,18 @@
     "canonicalSlug": "rajab-start",
     "countryCode": "us"
   },
+  "rajab-start-in-germany": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "de"
+  },
+  "rajab-start-in-sweden": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "se"
+  },
+  "rajab-start-in-lebanon": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "lb"
+  },
   "shaban-start-in-saudi": {
     "canonicalSlug": "shaban-start",
     "countryCode": "sa"
@@ -1794,6 +2990,10 @@
   "shaban-start-in-qatar": {
     "canonicalSlug": "shaban-start",
     "countryCode": "qa"
+  },
+  "shaban-start-in-bahrain": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "bh"
   },
   "shaban-start-in-iraq": {
     "canonicalSlug": "shaban-start",
@@ -1839,6 +3039,478 @@
     "canonicalSlug": "shaban-start",
     "countryCode": "us"
   },
+  "shaban-start-in-germany": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "de"
+  },
+  "shaban-start-in-sweden": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "se"
+  },
+  "shaban-start-in-lebanon": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "lb"
+  },
+  "six-days-shawwal-in-saudi": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "sa"
+  },
+  "six-days-shawwal-in-egypt": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "eg"
+  },
+  "six-days-shawwal-in-morocco": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "ma"
+  },
+  "six-days-shawwal-in-algeria": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "dz"
+  },
+  "six-days-shawwal-in-uae": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "ae"
+  },
+  "six-days-shawwal-in-tunisia": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "tn"
+  },
+  "six-days-shawwal-in-kuwait": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "kw"
+  },
+  "six-days-shawwal-in-qatar": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "qa"
+  },
+  "six-days-shawwal-in-bahrain": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "bh"
+  },
+  "six-days-shawwal-in-iraq": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "iq"
+  },
+  "six-days-shawwal-in-syria": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "sy"
+  },
+  "six-days-shawwal-in-yemen": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "ye"
+  },
+  "six-days-shawwal-in-jordan": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "jo"
+  },
+  "six-days-shawwal-in-libya": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "ly"
+  },
+  "six-days-shawwal-in-oman": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "om"
+  },
+  "six-days-shawwal-in-palestine": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "ps"
+  },
+  "six-days-shawwal-in-canada": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "ca"
+  },
+  "six-days-shawwal-in-france": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "fr"
+  },
+  "six-days-shawwal-in-turkey": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "tr"
+  },
+  "six-days-shawwal-in-usa": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "us"
+  },
+  "six-days-shawwal-in-germany": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "de"
+  },
+  "six-days-shawwal-in-sweden": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "se"
+  },
+  "six-days-shawwal-in-lebanon": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "lb"
+  },
+  "tarwiyah-day-in-saudi": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "sa"
+  },
+  "tarwiyah-day-in-egypt": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "eg"
+  },
+  "tarwiyah-day-in-morocco": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "ma"
+  },
+  "tarwiyah-day-in-algeria": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "dz"
+  },
+  "tarwiyah-day-in-uae": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "ae"
+  },
+  "tarwiyah-day-in-tunisia": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "tn"
+  },
+  "tarwiyah-day-in-kuwait": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "kw"
+  },
+  "tarwiyah-day-in-qatar": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "qa"
+  },
+  "tarwiyah-day-in-bahrain": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "bh"
+  },
+  "tarwiyah-day-in-iraq": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "iq"
+  },
+  "tarwiyah-day-in-syria": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "sy"
+  },
+  "tarwiyah-day-in-yemen": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "ye"
+  },
+  "tarwiyah-day-in-jordan": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "jo"
+  },
+  "tarwiyah-day-in-libya": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "ly"
+  },
+  "tarwiyah-day-in-oman": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "om"
+  },
+  "tarwiyah-day-in-palestine": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "ps"
+  },
+  "tarwiyah-day-in-canada": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "ca"
+  },
+  "tarwiyah-day-in-france": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "fr"
+  },
+  "tarwiyah-day-in-turkey": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "tr"
+  },
+  "tarwiyah-day-in-usa": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "us"
+  },
+  "tarwiyah-day-in-germany": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "de"
+  },
+  "tarwiyah-day-in-sweden": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "se"
+  },
+  "tarwiyah-day-in-lebanon": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "lb"
+  },
+  "tashreeq-days-in-saudi": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "sa"
+  },
+  "tashreeq-days-in-egypt": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "eg"
+  },
+  "tashreeq-days-in-morocco": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "ma"
+  },
+  "tashreeq-days-in-algeria": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "dz"
+  },
+  "tashreeq-days-in-uae": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "ae"
+  },
+  "tashreeq-days-in-tunisia": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "tn"
+  },
+  "tashreeq-days-in-kuwait": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "kw"
+  },
+  "tashreeq-days-in-qatar": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "qa"
+  },
+  "tashreeq-days-in-bahrain": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "bh"
+  },
+  "tashreeq-days-in-iraq": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "iq"
+  },
+  "tashreeq-days-in-syria": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "sy"
+  },
+  "tashreeq-days-in-yemen": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "ye"
+  },
+  "tashreeq-days-in-jordan": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "jo"
+  },
+  "tashreeq-days-in-libya": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "ly"
+  },
+  "tashreeq-days-in-oman": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "om"
+  },
+  "tashreeq-days-in-palestine": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "ps"
+  },
+  "tashreeq-days-in-canada": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "ca"
+  },
+  "tashreeq-days-in-france": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "fr"
+  },
+  "tashreeq-days-in-turkey": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "tr"
+  },
+  "tashreeq-days-in-usa": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "us"
+  },
+  "tashreeq-days-in-germany": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "de"
+  },
+  "tashreeq-days-in-sweden": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "se"
+  },
+  "tashreeq-days-in-lebanon": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "lb"
+  },
+  "tasua-day-in-saudi": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "sa"
+  },
+  "tasua-day-in-egypt": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "eg"
+  },
+  "tasua-day-in-morocco": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "ma"
+  },
+  "tasua-day-in-algeria": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "dz"
+  },
+  "tasua-day-in-uae": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "ae"
+  },
+  "tasua-day-in-tunisia": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "tn"
+  },
+  "tasua-day-in-kuwait": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "kw"
+  },
+  "tasua-day-in-qatar": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "qa"
+  },
+  "tasua-day-in-bahrain": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "bh"
+  },
+  "tasua-day-in-iraq": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "iq"
+  },
+  "tasua-day-in-syria": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "sy"
+  },
+  "tasua-day-in-yemen": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "ye"
+  },
+  "tasua-day-in-jordan": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "jo"
+  },
+  "tasua-day-in-libya": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "ly"
+  },
+  "tasua-day-in-oman": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "om"
+  },
+  "tasua-day-in-palestine": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "ps"
+  },
+  "tasua-day-in-canada": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "ca"
+  },
+  "tasua-day-in-france": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "fr"
+  },
+  "tasua-day-in-turkey": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "tr"
+  },
+  "tasua-day-in-usa": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "us"
+  },
+  "tasua-day-in-germany": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "de"
+  },
+  "tasua-day-in-sweden": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "se"
+  },
+  "tasua-day-in-lebanon": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "lb"
+  },
+  "world-cancer-day-in-saudi": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "sa"
+  },
+  "world-cancer-day-in-egypt": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "eg"
+  },
+  "world-cancer-day-in-morocco": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "ma"
+  },
+  "world-cancer-day-in-algeria": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "dz"
+  },
+  "world-cancer-day-in-uae": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "ae"
+  },
+  "world-cancer-day-in-tunisia": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "tn"
+  },
+  "world-cancer-day-in-kuwait": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "kw"
+  },
+  "world-cancer-day-in-qatar": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "qa"
+  },
+  "world-cancer-day-in-bahrain": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "bh"
+  },
+  "world-cancer-day-in-iraq": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "iq"
+  },
+  "world-cancer-day-in-syria": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "sy"
+  },
+  "world-cancer-day-in-yemen": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "ye"
+  },
+  "world-cancer-day-in-jordan": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "jo"
+  },
+  "world-cancer-day-in-libya": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "ly"
+  },
+  "world-cancer-day-in-oman": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "om"
+  },
+  "world-cancer-day-in-palestine": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "ps"
+  },
+  "world-cancer-day-in-canada": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "ca"
+  },
+  "world-cancer-day-in-france": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "fr"
+  },
+  "world-cancer-day-in-turkey": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "tr"
+  },
+  "world-cancer-day-in-usa": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "us"
+  },
+  "world-cancer-day-in-germany": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "de"
+  },
+  "world-cancer-day-in-sweden": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "se"
+  },
+  "world-cancer-day-in-lebanon": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "lb"
+  },
   "world-fathers-day-in-saudi": {
     "canonicalSlug": "world-fathers-day",
     "countryCode": "sa"
@@ -1870,6 +3542,10 @@
   "world-fathers-day-in-qatar": {
     "canonicalSlug": "world-fathers-day",
     "countryCode": "qa"
+  },
+  "world-fathers-day-in-bahrain": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "bh"
   },
   "world-fathers-day-in-iraq": {
     "canonicalSlug": "world-fathers-day",
@@ -1915,8 +3591,296 @@
     "canonicalSlug": "world-fathers-day",
     "countryCode": "us"
   },
+  "world-fathers-day-in-germany": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "de"
+  },
+  "world-fathers-day-in-sweden": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "se"
+  },
+  "world-fathers-day-in-lebanon": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "lb"
+  },
   "fathers-day": {
     "canonicalSlug": "world-fathers-day",
     "countryCode": null
+  },
+  "world-happiness-day-in-saudi": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "sa"
+  },
+  "world-happiness-day-in-egypt": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "eg"
+  },
+  "world-happiness-day-in-morocco": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "ma"
+  },
+  "world-happiness-day-in-algeria": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "dz"
+  },
+  "world-happiness-day-in-uae": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "ae"
+  },
+  "world-happiness-day-in-tunisia": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "tn"
+  },
+  "world-happiness-day-in-kuwait": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "kw"
+  },
+  "world-happiness-day-in-qatar": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "qa"
+  },
+  "world-happiness-day-in-bahrain": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "bh"
+  },
+  "world-happiness-day-in-iraq": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "iq"
+  },
+  "world-happiness-day-in-syria": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "sy"
+  },
+  "world-happiness-day-in-yemen": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "ye"
+  },
+  "world-happiness-day-in-jordan": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "jo"
+  },
+  "world-happiness-day-in-libya": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "ly"
+  },
+  "world-happiness-day-in-oman": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "om"
+  },
+  "world-happiness-day-in-palestine": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "ps"
+  },
+  "world-happiness-day-in-canada": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "ca"
+  },
+  "world-happiness-day-in-france": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "fr"
+  },
+  "world-happiness-day-in-turkey": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "tr"
+  },
+  "world-happiness-day-in-usa": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "us"
+  },
+  "world-happiness-day-in-germany": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "de"
+  },
+  "world-happiness-day-in-sweden": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "se"
+  },
+  "world-happiness-day-in-lebanon": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "lb"
+  },
+  "world-no-tobacco-day-in-saudi": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "sa"
+  },
+  "world-no-tobacco-day-in-egypt": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "eg"
+  },
+  "world-no-tobacco-day-in-morocco": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "ma"
+  },
+  "world-no-tobacco-day-in-algeria": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "dz"
+  },
+  "world-no-tobacco-day-in-uae": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "ae"
+  },
+  "world-no-tobacco-day-in-tunisia": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "tn"
+  },
+  "world-no-tobacco-day-in-kuwait": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "kw"
+  },
+  "world-no-tobacco-day-in-qatar": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "qa"
+  },
+  "world-no-tobacco-day-in-bahrain": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "bh"
+  },
+  "world-no-tobacco-day-in-iraq": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "iq"
+  },
+  "world-no-tobacco-day-in-syria": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "sy"
+  },
+  "world-no-tobacco-day-in-yemen": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "ye"
+  },
+  "world-no-tobacco-day-in-jordan": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "jo"
+  },
+  "world-no-tobacco-day-in-libya": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "ly"
+  },
+  "world-no-tobacco-day-in-oman": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "om"
+  },
+  "world-no-tobacco-day-in-palestine": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "ps"
+  },
+  "world-no-tobacco-day-in-canada": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "ca"
+  },
+  "world-no-tobacco-day-in-france": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "fr"
+  },
+  "world-no-tobacco-day-in-turkey": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "tr"
+  },
+  "world-no-tobacco-day-in-usa": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "us"
+  },
+  "world-no-tobacco-day-in-germany": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "de"
+  },
+  "world-no-tobacco-day-in-sweden": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "se"
+  },
+  "world-no-tobacco-day-in-lebanon": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "lb"
+  },
+  "world-water-day-in-saudi": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "sa"
+  },
+  "world-water-day-in-egypt": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "eg"
+  },
+  "world-water-day-in-morocco": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "ma"
+  },
+  "world-water-day-in-algeria": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "dz"
+  },
+  "world-water-day-in-uae": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "ae"
+  },
+  "world-water-day-in-tunisia": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "tn"
+  },
+  "world-water-day-in-kuwait": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "kw"
+  },
+  "world-water-day-in-qatar": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "qa"
+  },
+  "world-water-day-in-bahrain": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "bh"
+  },
+  "world-water-day-in-iraq": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "iq"
+  },
+  "world-water-day-in-syria": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "sy"
+  },
+  "world-water-day-in-yemen": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "ye"
+  },
+  "world-water-day-in-jordan": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "jo"
+  },
+  "world-water-day-in-libya": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "ly"
+  },
+  "world-water-day-in-oman": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "om"
+  },
+  "world-water-day-in-palestine": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "ps"
+  },
+  "world-water-day-in-canada": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "ca"
+  },
+  "world-water-day-in-france": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "fr"
+  },
+  "world-water-day-in-turkey": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "tr"
+  },
+  "world-water-day-in-usa": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "us"
+  },
+  "world-water-day-in-germany": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "de"
+  },
+  "world-water-day-in-sweden": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "se"
+  },
+  "world-water-day-in-lebanon": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "lb"
   }
 }

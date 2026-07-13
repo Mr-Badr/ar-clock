@@ -1,0 +1,17 @@
+{
+  "slug": "victory-day-turkey",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "حقائق معركة دوملوبينار 1922 وقيادة أتاتورك موثقة عبر ويكيبيديا الإنجليزية.",
+    "التصنيف القانوني الدقيق (عطلة عامة وليست العيد الوطني الوحيد) مأخوذ من بحث القانون التركي رقم 2429 الذي أُجري لبناء hub تركيا في نفس الجلسة.",
+    "بُني بأولوية عاجلة: الموعد (30 أغسطس) على بعد نحو 18 يوماً وقت النشر."
+  ],
+  "updatedAt": "2026-07-12T09:28:04.696Z"
+}

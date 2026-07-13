@@ -1,0 +1,19 @@
+{
+  "slug": "republic-day-iraq",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11 (Wikipedia, Al Jazeera, alforatnews.iq, baghdadtoday.news): July 14, 1958 military movement led by Abd al-Karim Qasim and Abd al-Salam Arif ended the Hashemite monarchy in Iraq (established 1921) and proclaimed the Republic of Iraq; Arif broadcast the announcement from Iraqi radio headquarters; Qasim became PM, Defense Minister, and Commander-in-Chief.",
+    "CORRECTION to backlog premise ('Official holiday'): paid-holiday status is NOT settled — Parliament passed a holidays law including July 14, but the Presidency objected and returned it to Parliament in an appendix alongside October 3; the Council of Ministers' General Secretariat has explicitly denied an official holiday existing on this date in at least one recent year. Same pattern as the already-documented victory-day-iraq (Dec 10) nuance.",
+    "Content states this honestly (commemoration is historically fixed; paid-holiday status is announced separately/disputed each year) rather than asserting it's automatically a holiday, matching the site's established 'commemoration != confirmed paid holiday' pattern.",
+    "Avoided any political-history commentary on the revolution's legacy or the monarchy's fall, per the neutral-framing rule used for sensitive Iraq/Syria/Palestine content.",
+    "Single-country event (_countryCode: iq), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T13:34:11.347Z"
+}

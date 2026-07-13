@@ -1,0 +1,18 @@
+{
+  "slug": "unity-day-yemen",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11 (Wikipedia x2, Al Jazeera, Yemen Embassy Riyadh): May 22, 1990 unification of Yemen Arab Republic (north) and People's Democratic Republic of Yemen (south); Ali Abdullah Saleh became president, Ali Salim al-Beidh vice president; negotiations spanned 20+ years.",
+    "Confirmed official holiday status (national day of the Republic of Yemen).",
+    "Sensitive contemporary context (ongoing civil war, southern separatist movement) — content stuck strictly to 1990 historical facts, no commentary on current political divisions, same approach as independence-day-yemen and september-26-revolution-yemen.",
+    "Single-country event (_countryCode: ye), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T09:20:51.568Z"
+}

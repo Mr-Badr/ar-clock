@@ -1,0 +1,18 @@
+{
+  "slug": "revolution-day-libya",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11: commemorates the Feb 17, 2011 Benghazi uprising; GNU (Tripoli, internationally recognized) issues an annual holiday decision (e.g. Decision No. 55/2026, No. 71/2025).",
+    "Confirmed the rival eastern government (Hammad government) canceled celebrations of this anniversary in at least one prior year — both governments' stances reported neutrally per the backlog instruction to cite both when they differ.",
+    "Distinguished explicitly from liberation-day-libya (Oct 23) per the project's documented confusion point.",
+    "Single-country event (_countryCode: ly), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T08:03:05.569Z"
+}

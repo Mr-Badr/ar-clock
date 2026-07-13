@@ -1,0 +1,19 @@
+{
+  "slug": "trillium-benefit-canada",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11: OTB paid ~10th monthly by CRA, shifts to prior business day on weekend/holiday conflict (confirmed 2026 shifted dates: Jan 9, May 8, Oct 9).",
+    "Verified 2026-27 benefit year amounts: up to $378 (sales tax credit), up to $1,307/$1,488 seniors (energy & property tax credit), $189-$290 (Northern Ontario energy credit).",
+    "Verified lump-sum rule: annual entitlement <= $500 paid as one lump sum in July instead of monthly.",
+    "No existing Arabic content found for this topic — zero-competition opportunity, especially relevant since Ontario hosts Canada's largest Arab community.",
+    "Single-country event (_countryCode: ca), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T08:10:23.814Z"
+}

@@ -1,0 +1,19 @@
+{
+  "slug": "prisoners-day-palestine",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11 (Wikipedia, WAFA official Palestinian news agency, Institute for Palestine Studies): established 1974 by the Palestinian National Council (PLO's highest authority); April 17 chosen to commemorate the release of the first Palestinian prisoner, Mahmoud Bakr Hijazi, in the first prisoner exchange.",
+    "Deliberately avoided citing current prisoner-count statistics (sources gave a ~9,900 figure as of early April 2025) — both because such numbers go stale quickly and because 2025 falls inside the hasHardcodedYear window; content instead points readers to specialized human-rights sources for up-to-date figures.",
+    "Politically sensitive topic — content follows the site's standing Palestine rule: factual, neutral, institution-sourced register (WAFA, Palestinian National Council), no inflammatory language.",
+    "Not a paid public holiday — stated directly.",
+    "Single-country event (_countryCode: ps), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T09:14:13.332Z"
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "midday-work-ban-kuwait",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11 (Kuwait PAM manpower.gov.kw, akhbrna.ae, Gulf News, Arab Times): daily outdoor work ban 11:00-16:00 from June 1 to August 31 each year, legal basis is the permanent Private Sector Labor Law No. 6 of 2010, re-issued annually via an executive ministerial resolution (deliberately did NOT cite this year's specific resolution number/year to keep content evergreen).",
+    "Exemptions: technical necessity / non-deferrable emergency work, with prior approval from the Labor Inspection Department and full compliance with occupational safety requirements.",
+    "Employer obligations in all exempted cases: cold drinking water, first aid, cooling means, shaded rest areas — sourced directly from official PAM decision summary.",
+    "Deliberately avoided citing a specific fine amount (secondary sources mentioned an unconfirmed ~$325/worker figure) — used general 'legal penalties under Law No. 6/2010, possible suspension of employer file' phrasing instead to avoid an unverifiable, possibly-outdated number.",
+    "Confirmed no contamination with Saudi Arabia's separate midday work ban (June 15 - Sept 15) which appeared in mixed search results — all facts here are Kuwait-specific (June 1 - Aug 31).",
+    "Single-country event (_countryCode: kw), aliasSlugs: [] to avoid base_country_leakage.",
+    "core.type is 'fixed' anchored to June 1 (start date, the dominant search intent); the August 31 end date is covered thoroughly in FAQ, aboutEvent, and schemaData.endDate instead, since the engine's fixed type only supports one countdown anchor."
+  ],
+  "updatedAt": "2026-07-11T09:28:47.455Z"
+}

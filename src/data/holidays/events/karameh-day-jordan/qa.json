@@ -1,0 +1,19 @@
+{
+  "slug": "karameh-day-jordan",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11 (Wikipedia, royalheritage.jo, Al Jazeera encyclopedia, Jordan Armed Forces): Battle of Karameh occurred March 21, 1968, ~15-hour engagement in the town of Karameh near Jordan's western border, Jordanian Armed Forces + PLO factions vs. Israeli occupation forces.",
+    "No official confirmation found that March 21 is a paid public holiday under Jordanian law, despite being a prominent annual national commemoration — content states this honestly rather than assuming, per the site's established 'commemoration != confirmed paid holiday' pattern (victory-day-algeria, mujahid-day-algeria).",
+    "Sensitive Arab-Israeli conflict topic — content stuck to objective historical facts (date, location, participants, significance) without contemporary political commentary.",
+    "nakba-day not yet built — used national-aid-jordan instead in relatedSlugs to avoid related_slug_not_found.",
+    "Single-country event (_countryCode: jo), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T09:01:13.374Z"
+}

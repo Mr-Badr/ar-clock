@@ -1,0 +1,19 @@
+{
+  "slug": "labor-day-usa",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11 (Wikipedia, US DOL, Britannica, HISTORY.com): first Labor Day observance September 5, 1882 in NYC (Central Labor Union march, ~10,000 workers, proposed by Matthew Maguire); became a federal holiday (first Monday of September) when President Grover Cleveland signed the law June 28, 1894, shortly after the Pullman Strike.",
+    "KEY DIFFERENTIATION FACT (addresses backlog's specific angle): the September date was a deliberate political choice, not coincidence — Cleveland favored it over May 1 to avoid linking the labor holiday to the 1886 Haymarket affair and strengthening socialist/anarchist movements. This 'why September not May' explanation is completely absent from the Arabic content reviewed.",
+    "Explicitly cross-linked and distinguished from the site's existing global labor-day event (May 1) — relatedSlugs includes 'labor-day' and FAQ directly answers 'لماذا يختلف الموعد' per the backlog's exact instruction.",
+    "Floating type (month 9, weekday 1/Monday, nth 1) — engine-native, no manual date calculation needed.",
+    "Global/diaspora event (_countryCode: us), aliasSlugs: [] — same pattern as thanksgiving-usa/christmas-usa/independence-day-usa."
+  ],
+  "updatedAt": "2026-07-11T13:37:20.188Z"
+}

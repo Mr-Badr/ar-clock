@@ -1,0 +1,19 @@
+{
+  "slug": "canada-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11 (Wikipedia, Canada.ca, arabz.ca, ayam-alotal.com): July 1, 1867 Confederation (British North America Act) uniting the Province of Canada (Ontario/Quebec), Nova Scotia, and New Brunswick. Named Dominion Day from its 1879 statutory establishment until renamed Canada Day in 1982 (same year as the Canada Act patriation).",
+    "Federal statutory holiday across all provinces/territories: banks, post offices, government offices, schools closed. If July 1 falls on a Sunday, the statutory holiday moves to the following Monday.",
+    "Evening fireworks in 15+ major Canadian cities, most notably Ottawa — this practical detail is absent from the Arabic competitor content reviewed.",
+    "Deliberately did not conflate with US Independence Day (July 4) despite the close dates; content covers only Canada Day facts.",
+    "Global/diaspora event (_countryCode: ca), aliasSlugs: [] — same pattern as thanksgiving-usa/christmas-usa."
+  ],
+  "updatedAt": "2026-07-11T13:15:38.209Z"
+}

@@ -1,0 +1,16 @@
+{
+  "slug": "bastille-day-france",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "حقائق سقوط الباستيل 1789 (7 سجناء فقط، الطابع الرمزي أكثر من العسكري) موثقة عبر ويكيبيديا الإنجليزية.",
+    "الخصوصية القانونية الفرنسية (فقط عيد العمال مضمون قانونياً بالكامل) مأخوذة من بحث hub فرنسا في نفس الجلسة."
+  ],
+  "updatedAt": "2026-07-12T13:42:52.480Z"
+}

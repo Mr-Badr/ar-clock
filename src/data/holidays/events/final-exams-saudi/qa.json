@@ -1,0 +1,18 @@
+{
+  "slug": "final-exams-saudi",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "IMPORTANT CORRECTION from prior assumption: backlog said 'spikes 3x/year, each term' — verified via WebSearch 2026-07-11 that Saudi Arabia reverted to a TWO-semester system starting academic year 1447-1448h (Cabinet decision, 4-year calendar 1447-1450h approved), replacing the old 3-semester/trimester system. Content corrected to state 2 final-exam periods per year, not 3, and explicitly flags that some older Arabic news content still uses the outdated 'third semester' terminology.",
+    "Verified regional Hajj-season delay: Mecca/Medina/Jeddah/Taif education departments delay term-2 final exams ~1 week vs other regions (confirmed: Sun 1447/12/28h for most regions vs Sun 1448/1/6h for these four cities).",
+    "Cross-linked to midyear-break-saudi (which now also needs final-exams-saudi added to its relatedSlugs as the reciprocal link, since final-exams-saudi didn't exist yet when that event was built).",
+    "Single-country event (_countryCode: sa), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T08:22:30.201Z"
+}

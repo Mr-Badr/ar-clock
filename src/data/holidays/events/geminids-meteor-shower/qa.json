@@ -1,0 +1,17 @@
+{
+  "slug": "geminids-meteor-shower",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر الجزيرة نت ومركز الفلك الدولي: ذروة 13-15 ديسمبر، مصدرها كويكب 3200 فايثون (لا مذنب)، رقم نظري 120/ساعة مقابل رقم فعلي مُشاهد 40-60/ساعة.",
+    "طُبّق نفس نمط 'الأرقام الصادقة' الناجح في صفحة perseids-meteor-shower الحية (نظري مقابل فعلي)، ونفس فحص missing_date_confidence_disclaimer (استُخدمت 'تقريبي' حرفياً في quickFacts وrecurringYears).",
+    "estimated type، countryScope: none (نفس نمط الحدث الفلكي الشقيق)."
+  ],
+  "updatedAt": "2026-07-12T14:25:47.016Z"
+}

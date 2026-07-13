@@ -1,0 +1,16 @@
+{
+  "slug": "democracy-day-turkey",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "حقائق محاولة الانقلاب 2016 وإقرار الإجازة بالقانون رقم 6741 موثقة عبر ويكيبيديا الإنجليزية ومؤكدة أثناء بحث hub تركيا نفس الجلسة.",
+    "سجل محايد صارم يقتصر على الوقائع القانونية والتقويمية دون تعليق سياسي معاصر، تماشياً مع قواعد الموقع للمواضيع الحساسة."
+  ],
+  "updatedAt": "2026-07-12T09:28:12.846Z"
+}

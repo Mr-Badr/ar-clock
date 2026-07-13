@@ -1,0 +1,18 @@
+{
+  "slug": "army-day-iraq",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11: founded Jan 6, 1921 (first unit: فوج موسى الكاظم), declared official holiday by Iraqi Cabinet decision Dec 31, 1945.",
+    "Key nuance included: holiday not observed in Kurdistan Region (confirmed via kurdistan24.net independent source).",
+    "Avoided political analysis of the army's historical role (coups, political interference) per neutral-framing rule — stuck to founding facts and holiday status only.",
+    "Single-country event (_countryCode: iq), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T04:23:24.569Z"
+}

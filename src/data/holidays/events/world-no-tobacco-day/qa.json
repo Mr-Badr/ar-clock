@@ -1,0 +1,17 @@
+{
+  "slug": "world-no-tobacco-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر منظمة الصحة العالمية ومصدر إنجليزي ثانٍ: قرار WHA40.38 سنة 1987 دعا لأول يوم بلا تدخين في 7 أبريل 1988، ثم قرار WHA42.19 في نفس سنة 1988 ثبّت 31 مايو موعداً سنوياً دائماً.",
+    "طُبّق نفس نمط التوعية الآمنة المستخدم في world-cancer-day وworld-diabetes-day (تشجيع استشارة مختص، دون وصف علاج شخصي).",
+    "fixed type، ليس إجازة رسمية في أي دولة عربية — موضح صراحة في المحتوى."
+  ],
+  "updatedAt": "2026-07-12T14:21:07.682Z"
+}

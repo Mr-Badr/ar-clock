@@ -1,0 +1,20 @@
+{
+  "slug": "evacuation-day-syria",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11 (Wikipedia x2, Emarat Al Youm, Al Wafd): April 17, 1946 — last French soldier left Syrian territory; confirmed official holiday status.",
+    "Verified a rare, well-documented detail: France proposed leaving April 18 (Good Friday) 1946, but Syrian officials chose one day earlier specifically to avoid the evacuation celebration coinciding with a Christian religious holiday.",
+    "Explicitly distinguished from Syria's Independence Day declaration (March 8, 1920, 26 years earlier) — a common source of confusion in Arabic content.",
+    "Confirmed this holiday predates and is unaffected by the recent Presidential Decree No. 188 (which added revolution-day-syria/liberation-day-syria and removed 4 other holidays) — no mention of changes to April 17 in that decree.",
+    "Single-country event (_countryCode: sy), aliasSlugs: [] to avoid base_country_leakage; neutral historical register maintained consistent with the site's other Syria events.",
+    "prisoners-day-palestine not yet built — used palestine-independence-day and jordan-independence-day instead in relatedSlugs to avoid related_slug_not_found."
+  ],
+  "updatedAt": "2026-07-11T09:10:46.296Z"
+}

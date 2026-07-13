@@ -31,6 +31,14 @@ const DATE_STATIC_ROUTES: ReadonlySet<string> = new Set([
   'converter',
   'gregorian-to-hijri',
   'hijri-to-gregorian',
+  'hijri-months',
+]);
+const PRAYER_STATIC_ROUTES: ReadonlySet<string> = new Set([
+  'last-third-of-night',
+  'duha-prayer-time',
+  'friday-response-hour',
+  'white-days',
+  'prayer-times-calculation-method',
 ]);
 const DATE_TODAY_ROUTES: ReadonlySet<string> = new Set(['gregorian', 'hijri']);
 const DATE_SITEMAP_ROUTES: ReadonlySet<string> = new Set(['static', 'calendars', 'countries']);
@@ -172,6 +180,10 @@ function isTimeNowPathValid(segments: string[]): boolean {
 
 function isPrayerPathValid(segments: string[]): boolean {
   if (segments.length === 1) {
+    return true;
+  }
+
+  if (segments.length === 2 && PRAYER_STATIC_ROUTES.has(segments[1])) {
     return true;
   }
 

@@ -1,0 +1,16 @@
+{
+  "slug": "thanksgiving-canada",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "حقائق إقرار 1957 وفارق أكثر من شهر عن النسخة الأمريكية موثقة عبر ويكيبيديا الإنجليزية وموقع الحكومة الكندية.",
+    "استخدم rule floating (2nd Monday of October) نفس القاعدة الموثقة أثناء بناء hub كندا نفس الجلسة."
+  ],
+  "updatedAt": "2026-07-12T13:43:15.783Z"
+}

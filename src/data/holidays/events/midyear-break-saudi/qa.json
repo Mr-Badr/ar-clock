@@ -1,0 +1,19 @@
+{
+  "slug": "midyear-break-saudi",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11: midyear break 1447-1448 academic year ran 20-28 Rajab 1447h (9 days); confirmed next academic year 1448-1449 runs 9 days in early-mid January per independent source.",
+    "estimated type with {{year}}-01-08 anchor; Gregorian year digits avoided in published content (only Hijri years cited freely since they don't match the hasHardcodedYear regex).",
+    "Cross-linked to the existing /calculators/saudi-school-calendar hub per backlog instruction (both-ways link).",
+    "final-exams-saudi reference deferred from relatedSlugs until that event is built next, to avoid related_slug_not_found.",
+    "Single-country event (_countryCode: sa), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-11T08:18:37.772Z"
+}

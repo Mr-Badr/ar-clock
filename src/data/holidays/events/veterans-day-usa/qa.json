@@ -1,0 +1,16 @@
+{
+  "slug": "veterans-day-usa",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "حقائق هدنة 1918 وإعادة التسمية 1954 موثقة عبر OPM وويكيبيديا الإنجليزية، ومؤكدة أثناء بحث hub أمريكا نفس الجلسة.",
+    "الفرق مع يوم الذكرى موثق بدقة (من خدم مقابل من مات في الخدمة تحديداً)."
+  ],
+  "updatedAt": "2026-07-12T13:43:08.334Z"
+}

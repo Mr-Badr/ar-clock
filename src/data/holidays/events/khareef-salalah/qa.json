@@ -1,0 +1,17 @@
+{
+  "slug": "khareef-salalah",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Facts verified 2026-07-11: season Jun 21 - Sep 21 (omannews.gov.om), 1.048M visitors NCSI (alroya.om), land/air split, temps 20-25C.",
+    "Festival dates deliberately not asserted - announced annually, update on official announcement (jeddah-season pattern).",
+    "metaDescription length checked; direct-address voice throughout."
+  ],
+  "updatedAt": "2026-07-11T18:15:30.623Z"
+}

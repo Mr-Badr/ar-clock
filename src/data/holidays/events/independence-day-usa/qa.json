@@ -1,0 +1,19 @@
+{
+  "slug": "independence-day-usa",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-11 (Wikipedia, TODAY.com, AOL, goldeagles.gold): Declaration of Independence adopted July 4, 1776 by the Second Continental Congress in Philadelphia; first anniversary celebration 1777; became an official federal holiday only in 1870.",
+    "USPS post offices fully closed with no regular mail delivery; banks/financial institutions/stock market closed as a federal holiday.",
+    "Deliberately did NOT hardcode any specific year (e.g. 2026) when describing the weekend-observance-shift rule — used the general evergreen rule instead ('if it falls on a weekend, official observance may shift to the nearest weekday') to avoid a stale/wrong fact next year.",
+    "Distinguished clearly from Canada Day (July 1) despite the close dates; content covers only US Independence Day facts.",
+    "Global/diaspora event (_countryCode: us), aliasSlugs: [] — same pattern as thanksgiving-usa/christmas-usa/canada-day."
+  ],
+  "updatedAt": "2026-07-11T13:30:24.569Z"
+}

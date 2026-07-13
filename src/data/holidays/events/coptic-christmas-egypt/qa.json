@@ -1,0 +1,17 @@
+{
+  "slug": "coptic-christmas-egypt",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر sis.gov.eg وlabour.gov.eg وتغطيات youm7.com/dostor.org عبر عدة سنوات: 7 يناير إجازة رسمية لجميع المصريين (ليست حصراً للمسيحيين)، والقطاع الخاص يحتاج تأكيداً منفصلاً سنوياً من وزارة العمل بخلاف التلقائية الحكومية.",
+    "تعمّدت عدم ذكر أي ادعاء تاريخي غير مؤكد (مثل سنة إقرار الإجازة لأول مرة) لعدم توفر مصدر مستقل موثوق له.",
+    "fixed type، _countryCode: eg، countryScope: none — حدث مصري وحيد."
+  ],
+  "updatedAt": "2026-07-12T19:15:13.141Z"
+}

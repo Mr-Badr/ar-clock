@@ -1,0 +1,17 @@
+{
+  "slug": "annunciation-day-lebanon",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق ثلاثي المصادر (Fides، Oasis Center، AsiaNews) لقصة الشيخ محمد النقري وأول احتفال مشترك سنة 2007، ثم الاعتماد الرسمي سنة 2010 في عهد سعد الحريري.",
+    "صفة الإجازة الرسمية مؤكدة عبر ظهورها في قائمة جمعية مصارف لبنان (ABL) الرسمية.",
+    "لم يُذكر شهر دقيق لقرار 2010 (مصدر واحد فقط أشار إليه تقريبياً) — اكتُفي بالسنة لتفادي نشر تفصيل غير مؤكد بثقة كافية."
+  ],
+  "updatedAt": "2026-07-12T09:10:23.278Z"
+}

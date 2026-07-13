@@ -1,0 +1,17 @@
+{
+  "slug": "pension-day-france",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Facts verified 2026-07-11: day-9 monthly rule + weekend pull-forward (lassuranceretraite.fr, service-public.gouv.fr), Agirc-Arrco day-1 advance vs basic arrears (MoneyVox), Alsace-Moselle day-1 exception.",
+    "No literal years for the pulled-forward months (hardcoded-year rule) - phrased as recurring pattern.",
+    "Zero Arabic competition confirmed - same gap class as prime-noel-france."
+  ],
+  "updatedAt": "2026-07-11T23:06:40.944Z"
+}
