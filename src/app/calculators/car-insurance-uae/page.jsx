@@ -74,7 +74,6 @@ export default async function CarInsuranceUaePage() {
 
       <CalculatorSection
         id="ci-uae-factors"
-        showAdBefore
         eyebrow="كيف يُحسب؟"
         title="العوامل التي تحدد سعر تأمين سيارتك في الإمارات"
       >

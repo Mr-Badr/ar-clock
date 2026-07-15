@@ -8846,9 +8846,9 @@ main:not(.calc-hub-page) .calc-room-add {
 }
 
 .zakat-nisab-badge.--met {
-  background: color-mix(in srgb, #10b981 12%, var(--bg-surface-2));
-  color: #10b981;
-  border: 1px solid color-mix(in srgb, #10b981 30%, var(--border-subtle));
+  background: var(--green-subtle);
+  color: var(--green-text);
+  border: 1px solid var(--green-border);
 }
 
 .zakat-nisab-badge.--not-met {
@@ -9089,8 +9089,7 @@ main:not(.calc-hub-page) .calc-room-add {
   font-size: 0.72rem;
   font-weight: 700;
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0;
   margin: 0 0 0.2rem;
 }
 
@@ -9339,6 +9338,93 @@ main:not(.calc-hub-page) .calc-room-add {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 20%, transparent);
 }
 
+/* ── GPA-to-percent calculator ───────────────────────────────────────────── */
+.gpa-pct-result.calc-esb-result-panel { border-top-color: var(--blue); }
+
+.gpa-pct-badge {
+  color: var(--blue-text);
+  border-color: color-mix(in srgb, var(--blue) 40%, transparent);
+  background: color-mix(in srgb, var(--blue) 8%, transparent);
+}
+
+.gpa-pct-scale { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.gpa-pct-scale-track {
+  position: relative;
+  height: 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border-default) 55%, transparent);
+}
+
+.gpa-pct-scale-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+.gpa-pct-scale-fill--excellent { background: var(--green); }
+.gpa-pct-scale-fill--very-good { background: var(--blue); }
+.gpa-pct-scale-fill--good      { background: var(--amber); }
+.gpa-pct-scale-fill--pass      { background: color-mix(in srgb, var(--red) 60%, var(--amber)); }
+.gpa-pct-scale-fill--fail      { background: var(--red); }
+
+.gpa-pct-scale-marker {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-surface-1);
+  transform: translate(50%, -50%);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--border-default) 70%, transparent);
+}
+.gpa-pct-scale-marker--excellent { background: var(--green); }
+.gpa-pct-scale-marker--very-good { background: var(--blue); }
+.gpa-pct-scale-marker--good      { background: var(--amber); }
+.gpa-pct-scale-marker--pass      { background: color-mix(in srgb, var(--red) 60%, var(--amber)); }
+.gpa-pct-scale-marker--fail      { background: var(--red); }
+
+.gpa-pct-scale-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.gpa-pct-grades {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.gpa-pct-grade-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: var(--text-xs);
+}
+.gpa-pct-grade-row:last-child { border-bottom: none; }
+
+.gpa-pct-grade-label { color: var(--text-primary); font-weight: var(--font-medium); }
+.gpa-pct-grade-points {
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}
+.gpa-pct-grade-pct {
+  color: var(--text-primary);
+  font-weight: var(--font-bold);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  min-width: 3.2em;
+  text-align: end;
+}
+
 /* PercentageCalculator + loan installment — blue tool badge */
 .pct-result-panel.calc-esb-result-panel,
 .loan-result-panel.calc-esb-result-panel { border-top-color: var(--blue); }
@@ -9346,6 +9432,48 @@ main:not(.calc-hub-page) .calc-room-add {
 .loan-result-panel .calc-esb-live-dot {
   background: var(--blue);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 20%, transparent);
+}
+
+.pct-formula {
+  direction: ltr;
+  text-align: end;
+}
+
+.pct-quick-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.pct-quick-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 5px var(--space-3);
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-2);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.pct-quick-btn:hover {
+  color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--blue) 35%, var(--border-subtle));
+  background: color-mix(in srgb, var(--blue) 8%, var(--bg-surface-2));
+}
+
+/* Four tab labels don't fit a single row inside the narrower calc-esb-form-card
+   column (420px) — wrap into a 2x2 grid instead of overflowing past the card. */
+.pct-tool .calc-tabs-list {
+  width: 100%;
+  flex-wrap: wrap;
+}
+.pct-tool .calc-tabs-trigger.tab {
+  flex: 1 1 calc(50% - var(--space-1));
 }
 
 @media (max-width: 540px) {
@@ -11219,8 +11347,7 @@ main:not(.calc-hub-page) .calc-info-grid--editorial .calc-editorial-card__copy .
   font-size: 0.72rem;
   font-weight: var(--font-black);
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
 }
 
 .zakat-bar-item {
@@ -13501,4 +13628,346 @@ main:not(.calc-hub-page) .calc-building-tool .calc-building-metrics {
 /* Kuwait health insurance live dot: green */
 .kw-health-ins-tool .calc-esb-live-dot {
   background: var(--green);
+}
+
+/* ── Iqama / visa expiry calculator ──────────────────────────────── */
+.iqama-country-row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.iqama-country-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 10px;
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  color: var(--text-secondary);
+}
+
+.iqama-country-btn--active {
+  border-color: var(--green-border);
+  background: var(--green-subtle);
+  color: var(--green-text);
+}
+
+.iqama-country-flag { font-size: 1.1em; }
+
+.iqama-badge--sa { color: var(--green-text); border-color: var(--green-border); background: var(--green-subtle); }
+.iqama-badge--ae { color: var(--blue-text); border-color: color-mix(in srgb, var(--blue) 40%, transparent); background: color-mix(in srgb, var(--blue) 8%, transparent); }
+
+.iqama-status-pill {
+  width: fit-content;
+}
+
+.iqama-amount--success { color: var(--green-text); }
+.iqama-amount--warning { color: var(--amber-text, var(--amber)); }
+.iqama-amount--danger  { color: var(--red-text, var(--destructive)); }
+
+/* Timeline: issue date → expiry, with a progress fill and "you are here" marker */
+.iqama-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.iqama-timeline-track {
+  position: relative;
+  height: 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border-default) 55%, transparent);
+  overflow: visible;
+}
+
+.iqama-timeline-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+
+.iqama-timeline-fill[data-tone="success"] { background: var(--green); }
+.iqama-timeline-fill[data-tone="warning"] { background: var(--amber); }
+.iqama-timeline-fill[data-tone="danger"]  { background: var(--red, var(--destructive)); }
+
+.iqama-timeline-marker {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-surface-1);
+  transform: translate(50%, -50%);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--border-default) 70%, transparent);
+}
+
+.iqama-timeline-marker[data-tone="success"] { background: var(--green); }
+.iqama-timeline-marker[data-tone="warning"] { background: var(--amber); }
+.iqama-timeline-marker[data-tone="danger"]  { background: var(--red, var(--destructive)); }
+
+.iqama-timeline-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+/* Fine box */
+.iqama-fine-box {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--red, var(--destructive)) 25%, transparent);
+  background: color-mix(in srgb, var(--red, var(--destructive)) 6%, transparent);
+}
+
+.iqama-fine-box__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.iqama-fine-amount {
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
+  font-weight: 900;
+  color: var(--red-text, var(--destructive));
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  text-align: end;
+}
+
+.iqama-fine-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.iqama-fine-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.iqama-fine-row strong {
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}
+
+.iqama-fine-capped {
+  margin: 0;
+}
+
+/* ── Generic reusable primitives (toggle pills, steppers, amount tones) ──── */
+/* Any calculator can use these — avoid re-declaring per-tool duplicates. */
+
+.calc-toggle-row {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.calc-toggle-btn {
+  flex: 1;
+  min-width: 5.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 10px;
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  color: var(--text-secondary);
+}
+
+.calc-toggle-btn--active {
+  border-color: var(--green-border);
+  background: var(--green-subtle);
+  color: var(--green-text);
+}
+
+.calc-stepper-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-1) 0;
+}
+
+.calc-stepper-label {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+}
+
+.calc-stepper-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.calc-stepper-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: var(--bg-surface-1);
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.calc-stepper-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--blue) 12%, var(--bg-surface-2));
+  color: var(--blue-text);
+}
+
+.calc-stepper-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.calc-stepper-val {
+  min-width: 2.25rem;
+  text-align: center;
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  background: var(--bg-surface-2);
+  border-inline: 1px solid var(--border-default);
+  height: 2rem;
+  line-height: 2rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.calc-stepper-fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-surface-2) 50%, transparent);
+}
+
+.calc-stepper-fieldset > .calc-stepper-row + .calc-stepper-row {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.calc-amount-tone--success { color: var(--green-text); }
+.calc-amount-tone--warning { color: var(--amber-text, var(--amber)); }
+.calc-amount-tone--danger  { color: var(--red-text, var(--destructive)); }
+
+/* ── Inheritance / Faraid calculator ─────────────────────────────── */
+.inh-estate-row {
+  display: grid;
+  grid-template-columns: 1fr 6.5rem;
+  gap: var(--space-2);
+}
+
+.inh-blocked-hint {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--amber-text, var(--amber));
+}
+
+.inh-chart-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inh-heir-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.inh-heir-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.inh-heir-row:last-child { border-bottom: none; }
+
+.inh-heir-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.inh-heir-copy {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.inh-heir-label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.inh-heir-count {
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+}
+
+.inh-heir-meta {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.inh-heir-amount {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  flex-shrink: 0;
+}
+
+.inh-heir-amount strong {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}
+
+.inh-heir-per {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  direction: ltr;
 }

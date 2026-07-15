@@ -168,7 +168,6 @@ export default function PregnancyPage() {
 
       {/* Trimesters table */}
       <CalculatorSection
-        showAdBefore
         id="pregnancy-trimesters"
         eyebrow="مراحل الحمل الثلاثة"
         title="الثلث الأول والثاني والثالث — ما يحدث وما تتوقعينه"

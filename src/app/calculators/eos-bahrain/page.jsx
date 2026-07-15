@@ -87,7 +87,6 @@ export default async function EosBahrainPage() {
       {/* Formula explanation */}
       <CalculatorSection
         id="bh-eos-formula"
-        showAdBefore
         eyebrow="المعادلة"
         title="كيف تُحسب مكافأة نهاية الخدمة في البحرين؟"
       >

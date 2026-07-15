@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import AdBlockNotice from "@/components/ads/AdBlockNotice.client";
-import { detectAdBlockViaBait } from "@/lib/client/adblock-detection";
+import { detectAdBlockViaBait, detectAdBlockViaScriptFlag } from "@/lib/client/adblock-detection";
+import { getAdRoutePolicy } from "@/lib/ads/route-policy";
+import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
 
 const SESSION_NOTICE_KEY = "miqat-adblock-notice-shown";
 const ADSENSE_BLOCKED_EVENT = "miqat-adsense-blocked";
@@ -43,6 +46,9 @@ function markNoticeShown() {
  */
 export default function AdBlockDetector() {
   const [showNotice, setShowNotice] = useState(false);
+  const pathname = usePathname();
+  const { clientId } = useAdsRuntimeConfig();
+  const adsExpected = Boolean(clientId) && getAdRoutePolicy(pathname || "/").allowAdDelivery;
 
   useEffect(() => {
     let cancelled = false;
@@ -58,6 +64,15 @@ export default function AdBlockDetector() {
       if (blocked) reveal("bait-element");
     });
 
+    // Only meaningful on routes where an ad script load was actually attempted —
+    // on ad-free routes (e.g. /fahras) adsbygoogle.js never loads by design,
+    // so this check would always false-positive there.
+    if (adsExpected) {
+      detectAdBlockViaScriptFlag().then((blocked) => {
+        if (blocked) reveal("script-flag-timeout");
+      });
+    }
+
     function onAdsenseScriptBlocked() {
       reveal("script-network-block");
     }
@@ -67,7 +82,7 @@ export default function AdBlockDetector() {
       cancelled = true;
       window.removeEventListener(ADSENSE_BLOCKED_EVENT, onAdsenseScriptBlocked);
     };
-  }, []);
+  }, [adsExpected]);
 
   if (!showNotice) return null;
 

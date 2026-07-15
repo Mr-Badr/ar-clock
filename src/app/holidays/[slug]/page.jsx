@@ -273,6 +273,15 @@ export default async function HolidayPage({ params }) {
           )}
         </div>
 
+        {/*
+          Ad right after the primary answer (countdown + exact dates), before
+          the secondary engagement UI (share bar, related bubbles) — was
+          previously placed after those, landing ~1.75 mobile viewports down
+          instead of ~1.1. Share/bubbles are discovery chrome, not the answer
+          the user came for, so they can follow the ad instead of precede it.
+        */}
+        <AdTopBanner slotId="top-holiday-slug" />
+
         {/* ── SHARE BAR — WhatsApp · Telegram · X · Facebook · Copy ──────── */}
         <ShareBar
           url={`${siteUrl}/holidays/${slug}`}
@@ -287,8 +296,6 @@ export default async function HolidayPage({ params }) {
           currentSlug={slug}
           categoryId={event.category}
         />
-
-        <AdTopBanner slotId="top-holiday-slug" />
 
         {/* ── EVENT VIBE CARD — The "WOW" section ───────────────────────── */}
         <section style={{ marginBottom: 'var(--space-8)' }} aria-label={`نظرة على ${displayTitle}`}>

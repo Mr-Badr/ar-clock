@@ -136,7 +136,6 @@ export default function PregnancyWeeksPage() {
 
       {/* Link to pregnancy calculator */}
       <CalculatorSection
-        showAdBefore
         id="full-pregnancy-calc"
         eyebrow="أداة مكملة"
         title="تريدين معرفة موعد الولادة بالهجري والميلادي؟"

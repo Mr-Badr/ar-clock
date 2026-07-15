@@ -121,7 +121,6 @@ export default async function InvestmentPage() {
       </CalculatorSection>
 
       <CalculatorSection
-        showAdBefore
         id="investment-faq"
         eyebrow="أسئلة شائعة"
         title="أسئلة عن الاستثمار والربح المركب"

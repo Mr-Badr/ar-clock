@@ -225,7 +225,6 @@ export default async function EndOfServiceBenefitsPage() {
       </CalculatorSection>
 
       <CalculatorSection
-        showAdBefore
         id="esb-comparison"
         eyebrow="جدول مرجعي"
         title="الفرق بين أسباب إنهاء العلاقة"

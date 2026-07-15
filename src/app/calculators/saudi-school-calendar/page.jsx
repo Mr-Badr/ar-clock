@@ -263,7 +263,6 @@ export default function SaudiSchoolCalendarPage() {
         id="faq"
         eyebrow="أسئلة شائعة"
         title="أسئلة عن التقويم الدراسي السعودي"
-        showAdBefore
       >
         <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>

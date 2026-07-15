@@ -83,7 +83,6 @@ export default async function EgyptCarCustomsPage() {
       {/* Tariff table section */}
       <CalculatorSection
         id="ec-tariff"
-        showAdBefore
         eyebrow="الجدول الجمركي"
         title="معدلات جمارك السيارات في مصر 2025"
       >

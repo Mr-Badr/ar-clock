@@ -1075,6 +1075,137 @@
   font-weight: var(--font-semibold);
 }
 
+/* ============================================================
+   Mobile calculators menu — categories, then tools per category
+   (mirrors the desktop calc mega menu's category/color system)
+   ============================================================ */
+
+.header-mobile-cat-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.header-mobile-cat-item {
+  border-bottom: none;
+}
+
+.header-mobile-cat-trigger {
+  padding: var(--space-2) var(--space-2);
+  border-radius: var(--radius-lg);
+  gap: var(--space-3);
+}
+
+.header-mobile-cat-trigger:hover {
+  background: var(--muted);
+  color: var(--text-primary);
+}
+
+.header-mobile-cat-trigger[data-state="open"] {
+  background: color-mix(in srgb, var(--cat) 10%, transparent);
+  color: var(--cat);
+}
+
+.header-mobile-cat-icon {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--cat) 16%, var(--surface));
+  color: var(--cat);
+  border: 1px solid color-mix(in srgb, var(--cat) 28%, var(--border-default));
+}
+
+.header-mobile-cat-trigger[data-state="open"] .header-mobile-cat-icon {
+  background: color-mix(in srgb, var(--cat) 24%, var(--surface));
+}
+
+.header-mobile-cat-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.header-mobile-cat-label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  line-height: var(--leading-snug);
+}
+
+.header-mobile-cat-trigger[data-state="open"] .header-mobile-cat-label {
+  color: var(--cat);
+}
+
+.header-mobile-cat-sub {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: var(--leading-snug);
+}
+
+.header-mobile-cat-tools {
+  padding-inline-start: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.header-mobile-sublink-icon--cat {
+  color: var(--cat);
+  border-color: color-mix(in srgb, var(--cat) 30%, var(--border-default));
+  background: color-mix(in srgb, var(--cat) 10%, var(--surface));
+}
+
+.header-mobile-sublink.active .header-mobile-sublink-icon--cat,
+.header-mobile-sublink[aria-current="page"] .header-mobile-sublink-icon--cat {
+  border-color: var(--cat);
+  background: var(--cat);
+  color: var(--text-on-accent);
+}
+
+.header-mobile-cat-viewall {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-block-start: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border: 1px dashed color-mix(in srgb, var(--cat) 35%, var(--border-default));
+  border-radius: var(--radius-md);
+  color: var(--cat);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-decoration: none;
+}
+
+.header-mobile-cat-viewall:hover {
+  background: color-mix(in srgb, var(--cat) 8%, transparent);
+}
+
+.header-mobile-cat-viewall-all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  margin-block-start: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  background: var(--blue-subtle);
+  color: var(--blue-text);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  text-decoration: none;
+}
+
+.header-mobile-cat-viewall-all:hover {
+  background: color-mix(in srgb, var(--blue) 20%, var(--blue-subtle));
+}
+
 @media (max-width: 1279px), (hover: none) and (pointer: coarse) {
   .header-center-nav {
     display: none;

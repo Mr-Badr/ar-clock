@@ -88,7 +88,6 @@ export default function VatPage() {
 
       <CalculatorSection
         id="vat-rates"
-        showAdBefore
         eyebrow="النسب والدول"
         title="اختر النسبة إذا كانت فاتورتك من دولة أخرى"
         description="ابدأ بالنسبة العامة المعروفة، ثم تحقق من المرجع الرسمي عند الفاتورة الحساسة أو الحالات المعفاة أو المخفضة."
@@ -97,7 +96,6 @@ export default function VatPage() {
       </CalculatorSection>
 
       <CalculatorSection
-        showAdBefore
         id="vat-learning"
         eyebrow="فهم الأساس"
         title="كيف تختار طريقة الحساب الصحيحة؟"

@@ -79,7 +79,6 @@ export default async function PersonalLoanBahrainPage() {
       {/* CBB rules explainer */}
       <CalculatorSection
         id="pl-bh-cbb"
-        showAdBefore
         eyebrow="لوائح بنك البحرين المركزي"
         title="شروط القرض الشخصي في البحرين"
       >

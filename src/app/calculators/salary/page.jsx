@@ -89,7 +89,6 @@ export default function SalaryPage() {
       </CalculatorHero>
 
       <CalculatorSection
-        showAdBefore
         id="salary-methods"
         eyebrow="كيف يُحسب"
         title="طريقة الحساب وأثر عدد أيام العمل"

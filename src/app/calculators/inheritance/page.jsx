@@ -170,7 +170,6 @@ export default function InheritancePage() {
 
       {/* Case walk-throughs */}
       <CalculatorSection
-        showAdBefore
         id="inheritance-cases"
         eyebrow="أمثلة محلولة"
         title="ثلاث حالات محلولة بالأرقام — خطوة بخطوة"

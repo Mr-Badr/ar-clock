@@ -79,7 +79,6 @@ export default async function WorkHoursPage() {
       {/* Overtime rules by country */}
       <CalculatorSection
         id="wh-overtime-rules"
-        showAdBefore
         eyebrow="قوانين العمل"
         title="ساعات العمل الإضافي في دول المنطقة"
       >

@@ -281,7 +281,6 @@ export default function SaudiPayDatesPage() {
         id="faq"
         eyebrow="أسئلة شائعة"
         title="أسئلة عن مواعيد الرواتب والدعم السعودية"
-        showAdBefore
       >
         <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>

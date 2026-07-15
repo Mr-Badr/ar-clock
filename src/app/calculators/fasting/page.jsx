@@ -124,7 +124,6 @@ export default async function FastingPage() {
       </CalculatorSection>
 
       <CalculatorSection
-        showAdBefore
         id="fasting-ramadan"
         eyebrow="رمضان والصيام المتقطع"
         title="كيف يختلف صيام رمضان عن الصيام المتقطع الصحي؟"

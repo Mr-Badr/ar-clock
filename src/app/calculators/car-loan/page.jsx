@@ -225,7 +225,6 @@ export default async function CarLoanPage() {
 
       {/* FAQ */}
       <CalculatorSection
-        showAdBefore
         id="car-loan-faq"
         eyebrow="أسئلة شائعة"
         title="أسئلة عن تمويل السيارة والمرابحة الإسلامية"

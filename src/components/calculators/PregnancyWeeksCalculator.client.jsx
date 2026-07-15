@@ -1,15 +1,15 @@
 "use client";
 
 import { useMemo, useState } from 'react';
-import { Baby, CalendarBlank, CheckCircle } from '@phosphor-icons/react';
+import { Baby, CalendarBlank, CheckCircle, Circle, Timer } from '@phosphor-icons/react';
 
+import { CalcInput as Input } from '@/components/calculators/controls.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
 import { Label } from '@/components/ui/label';
 import {
   calculatePregnancy,
   formatPregnancyWeek,
   TRIMESTER_INFO,
-  PREGNANCY_MILESTONES,
 } from '@/lib/calculators/pregnancy';
 
 function formatDateAr(date) {
@@ -44,11 +44,15 @@ export default function PregnancyWeeksCalculator() {
 
   const tInfo = result ? (TRIMESTER_INFO[result.trimester] ?? TRIMESTER_INFO[1]) : null;
 
-  const nextMilestone = result?.milestones?.find((m) => !m.reached && !m.current);
-  const currentMilestone = result?.milestones?.find((m) => m.current);
+  const reachedMilestones = result?.milestones?.filter((m) => m.reached || m.current) ?? [];
+  const upcomingMilestones = result?.milestones?.filter((m) => !m.reached && !m.current) ?? [];
 
   const shareText = result?.isValid
-    ? `أنا في ${formatPregnancyWeek(result.weeksPregnant, result.extraDays)} من الحمل\n${tInfo?.label ?? ''}\nموعد الولادة المتوقع: ${formatDateAr(result.edd)}\n${result.progressPercent}% مكتمل`
+    ? [
+        `أنا في ${formatPregnancyWeek(result.weeksPregnant, result.extraDays)} من الحمل`,
+        `${tInfo?.label ?? ''} · ${result.progressPercent}% مكتمل`,
+        `موعد الولادة المتوقع: ${formatDateAr(result.edd)}`,
+      ].filter(Boolean).join('\n')
     : '';
 
   return (
@@ -65,18 +69,17 @@ export default function PregnancyWeeksCalculator() {
                   <span className="calc-esb-step">1</span>
                   <Label htmlFor="pw-lmp">أول يوم في آخر دورة شهرية</Label>
                 </div>
-                <input
+                <Input
                   id="pw-lmp"
                   type="date"
-                  className="pregnancy-date-input"
+                  dir="ltr"
                   value={lmpDate}
                   max={maxDate}
                   min={minDate}
                   onChange={(e) => setLmpDate(e.target.value)}
-                  dir="ltr"
                 />
                 <p className="calc-hint">
-                  لا تعرفي التاريخ الميلادي؟{' '}
+                  لا تعرفين التاريخ الميلادي؟{' '}
                   <a href="/date/converter" className="pregnancy-hint-link">حوّلي من هجري ↔ ميلادي</a>
                 </p>
               </div>
@@ -98,98 +101,145 @@ export default function PregnancyWeeksCalculator() {
                     </button>
                   ))}
                 </div>
+                <p className="calc-hint">المعيار الطبي 28 يوم — غيّري فقط إذا كانت دورتك منتظمة بطول مختلف.</p>
               </div>
+
             </div>
+          </div>
+
+          {/* Sidebar quick facts */}
+          <div className="calc-esb-sidebar-facts">
+            <div className="calc-esb-fact">
+              <CalendarBlank size={15} weight="bold" />
+              <span>طول الدورة: <strong>{cycleLength} يوم</strong></span>
+            </div>
+            {result?.isValid && (
+              <div className="calc-esb-fact">
+                <Baby size={15} weight="bold" />
+                <span>{tInfo?.label}</span>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* ── RESULTS ─────────────────────────────── */}
+        {/* ── RESULT ───────────────────────────────── */}
         <div className="calc-esb-result-col">
+
           {!result && (
-            <div className="pregnancy-weeks-empty">
-              <Baby size={48} weight="duotone" className="pregnancy-empty-icon" />
-              <p>أدخلي تاريخ آخر دورة لمعرفة أسبوع حملك الحالي</p>
+            <div className="calc-esb-empty-state">
+              <Baby size={28} weight="duotone" className="pregnancy-empty-icon" />
+              <p>أدخلي تاريخ آخر دورة لمعرفة أسبوع حملك الحالي وموعد الولادة المتوقع فوراً.</p>
             </div>
           )}
 
-          {result?.isValid && (
-            <>
-              {/* Week display */}
-              <div
-                className="pregnancy-weeks-card"
-                style={{
-                  border: `2px solid ${tInfo?.color ?? 'var(--border)'}`,
-                  background: `${tInfo?.color ?? 'var(--color-accent)'}12`,
-                }}
-              >
-                <Baby size={32} color={tInfo?.color} weight="duotone" />
-                <div className="pregnancy-weeks-value" style={{ color: tInfo?.color }}>
+          {result && !result.isValid && (
+            <div className="calc-esb-empty-state">
+              <Baby size={28} weight="duotone" className="pregnancy-empty-icon" />
+              <p>التاريخ المدخل يتجاوز 42 أسبوعاً — تأكدي من صحة تاريخ آخر دورة.</p>
+            </div>
+          )}
+
+          {result?.isValid && tInfo && (
+            <div className={`calc-esb-result-panel pregnancy-result pregnancy-result--${tInfo.level}`} aria-live="polite">
+              <div className="calc-esb-result-header">
+                <span className={`calc-esb-country-badge pregnancy-trimester-badge--${tInfo.level}`}>🤰 أسبوع الحمل</span>
+                <span className="calc-esb-live-dot" aria-hidden="true" />
+              </div>
+
+              {/* Week + Trimester */}
+              <div className="pregnancy-week-hero">
+                <span className="calc-esb-amount-label">أنتِ الآن في</span>
+                <div className={`calc-esb-amount-value pregnancy-week-value--${tInfo.level}`}>
                   {formatPregnancyWeek(result.weeksPregnant, result.extraDays)}
                 </div>
-                <div className="pregnancy-weeks-subtitle">
-                  {tInfo?.label} ({tInfo?.range})
-                </div>
+                <span className={`pregnancy-category-badge pregnancy-category-badge--${tInfo.level}`}>
+                  {tInfo.label} · {tInfo.range}
+                </span>
+              </div>
 
-                {/* Progress bar */}
-                <div className="pregnancy-weeks-progress-track">
+              {/* Progress bar */}
+              <div className="pregnancy-progress-wrap">
+                <div className="pregnancy-progress-track">
                   <div
-                    className="pregnancy-weeks-progress-fill"
-                    style={{ width: `${result.progressPercent}%`, background: tInfo?.color }}
+                    className={`pregnancy-progress-fill pregnancy-progress-fill--${tInfo.level}`}
+                    style={{ width: `${result.progressPercent}%` }}
+                    aria-label={`${result.progressPercent}% من الحمل مكتمل`}
                   />
                 </div>
-                <div className="pregnancy-weeks-pct">
-                  {result.progressPercent}% من الحمل مكتمل
+                <div className="pregnancy-progress-labels">
+                  <span>الأسبوع 1</span>
+                  <span className={`pregnancy-progress-pct--${tInfo.level}`}>{result.progressPercent}% مكتمل</span>
+                  <span>الأسبوع 40</span>
                 </div>
               </div>
 
-              {/* Key dates */}
-              <div className="pregnancy-weeks-dates-grid">
-                <div className="calc-result-chip">
-                  <span className="chip-label">أيام الحمل</span>
-                  <span className="chip-value">{result.daysPregnant} يوم</span>
+              {/* Key dates breakdown */}
+              <div className="calc-esb-breakdown">
+                <div className="calc-esb-brow calc-esb-brow--total">
+                  <span className="calc-icon-label">
+                    <CalendarBlank size={14} weight="bold" />
+                    موعد الولادة المتوقع
+                  </span>
+                  <strong>{formatDateAr(result.edd)}</strong>
                 </div>
-                <div className="calc-result-chip">
-                  <span className="chip-label">باقي على الولادة</span>
-                  <span className="chip-value">{Math.max(0, result.daysToEdd)} يوم</span>
+                <div className="calc-esb-brow">
+                  <span className="calc-icon-label">
+                    <Timer size={14} weight="bold" />
+                    {result.daysToEdd >= 0 ? 'باقي على الولادة' : 'مضى على موعد الولادة'}
+                  </span>
+                  <strong>{Math.abs(result.daysToEdd)} يوم</strong>
                 </div>
-                <div className="calc-result-chip">
-                  <span className="chip-label">موعد الولادة المتوقع</span>
-                  <span className="chip-value">{formatDateAr(result.edd)}</span>
+                <div className="calc-esb-brow">
+                  <span>أيام الحمل المنقضية</span>
+                  <strong>{result.daysPregnant} يوم</strong>
                 </div>
               </div>
 
-              {/* Current milestone */}
-              {currentMilestone && (
-                <div className="pregnancy-weeks-milestone">
-                  <CheckCircle size={20} color={tInfo?.color} weight="fill" style={{ flexShrink: 0, marginTop: '2px' }} />
-                  <div>
-                    <div className="pregnancy-weeks-milestone__title">الأسبوع الحالي: {currentMilestone.label}</div>
-                    <div className="pregnancy-weeks-milestone__detail">{currentMilestone.detail}</div>
-                  </div>
+              {/* Milestones */}
+              {upcomingMilestones.length > 0 && (
+                <div className="pregnancy-milestones">
+                  <p className="pregnancy-milestones-title">المحطات القادمة</p>
+                  {upcomingMilestones.slice(0, 3).map((m) => (
+                    <div key={m.week} className="pregnancy-milestone-row pregnancy-milestone--upcoming">
+                      <Circle size={15} weight="regular" className="milestone-icon" style={{ flexShrink: 0, marginTop: 2 }} />
+                      <div className="pregnancy-milestone-text">
+                        <span className="pregnancy-milestone-week">أسبوع {m.week}</span>
+                        <span className="pregnancy-milestone-label">{m.label}</span>
+                      </div>
+                      <span className="pregnancy-milestone-date">{formatDateAr(m.date)}</span>
+                    </div>
+                  ))}
                 </div>
               )}
 
-              {/* Next milestone */}
-              {nextMilestone && (
-                <div className="pregnancy-weeks-milestone pregnancy-weeks-milestone--next">
-                  <CalendarBlank size={20} color="var(--text-secondary)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                  <div>
-                    <div className="pregnancy-weeks-milestone__title">المحطة القادمة — الأسبوع {nextMilestone.week}: {nextMilestone.label}</div>
-                    <div className="pregnancy-weeks-milestone__detail">{nextMilestone.detail}</div>
-                    <div className="pregnancy-weeks-milestone__date">{formatDateAr(nextMilestone.date)}</div>
-                  </div>
+              {reachedMilestones.length > 0 && (
+                <div className="pregnancy-milestones">
+                  <p className="pregnancy-milestones-title">محطات مررتِ بها</p>
+                  {reachedMilestones.slice(-3).map((m) => (
+                    <div key={m.week} className="pregnancy-milestone-row pregnancy-milestone--done">
+                      <CheckCircle size={15} weight="fill" className={`pregnancy-milestone-check--${tInfo.level}`} style={{ flexShrink: 0, marginTop: 2 }} />
+                      <div className="pregnancy-milestone-text">
+                        <span className="pregnancy-milestone-week">أسبوع {m.week}</span>
+                        <span className="pregnancy-milestone-label">{m.label}</span>
+                      </div>
+                      <span className="pregnancy-milestone-date">{formatDateAr(m.date)}</span>
+                    </div>
+                  ))}
                 </div>
               )}
 
-              <ResultActions shareText={shareText} />
-            </>
+              <p className="bmi-disclaimer">
+                نتيجة تقديرية وفق قاعدة ناجيل الطبية — راجعي طبيبك لتأكيد أسبوع الحمل، خاصة عبر سونار الأسبوع 8–14.
+              </p>
+
+              <ResultActions
+                copyText={shareText}
+                shareTitle="حاسبة أسابيع الحمل"
+                shareText={shareText}
+              />
+            </div>
           )}
 
-          {result && !result.isValid && (
-            <p className="pregnancy-weeks-error">
-              التاريخ المدخل يتجاوز 42 أسبوعاً — أدخلي تاريخ آخر دورة صحيح.
-            </p>
-          )}
         </div>
       </div>
     </div>

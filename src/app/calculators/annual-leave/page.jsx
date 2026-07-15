@@ -88,7 +88,6 @@ export default function AnnualLeavePage() {
       </CalculatorHero>
 
       <CalculatorSection
-        showAdBefore
         id="leave-comparison"
         eyebrow="مقارنة دولية"
         title="الإجازة السنوية في الدول العربية — جدول مقارنة شامل"

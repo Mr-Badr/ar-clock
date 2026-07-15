@@ -79,7 +79,6 @@ export default async function EosJordanPage() {
       {/* Formula explanation */}
       <CalculatorSection
         id="jo-eos-formula"
-        showAdBefore
         eyebrow="المعادلة"
         title="كيف تُحسب مكافأة نهاية الخدمة في الأردن؟"
       >

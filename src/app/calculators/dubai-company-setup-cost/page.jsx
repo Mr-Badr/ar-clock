@@ -83,7 +83,6 @@ export default async function DubaiCompanySetupCostPage() {
       {/* Mainland vs Free Zone comparison */}
       <CalculatorSection
         id="dubai-setup-compare"
-        showAdBefore
         eyebrow="المقارنة"
         title="براً مقابل المنطقة الحرة — أيهما يناسبك؟"
       >

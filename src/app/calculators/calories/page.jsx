@@ -72,7 +72,7 @@ export default async function CaloriesPage() {
         <CaloriesCalculator />
       </CalculatorHero>
 
-      <CalculatorSection id="cal-explained" showAdBefore eyebrow="كيف يعمل؟" title="معدل الأيض والطاقة اليومية">
+      <CalculatorSection id="cal-explained" eyebrow="كيف يعمل؟" title="معدل الأيض والطاقة اليومية">
         <div className="calc-editorial">
           <p>
             الحاسبة تستخدم <strong>معادلة ميفلين-سانت جيور (Mifflin-St Jeor)</strong> — الأدق للبالغين وفق الأبحاث الحديثة.

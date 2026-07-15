@@ -12,7 +12,7 @@
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, Clock3, MapPin, Moon, Sunrise, Sun, Sunset } from 'lucide-react';
+import { ChevronLeft, Clock3, MapPin } from 'lucide-react';
 import { getPriorityCityParams, getPriorityCountriesCityParams, getCityBySlug, getCitiesByCountry } from '@/lib/db/queries/cities';
 import { getCountryBySlug } from '@/lib/db/queries/countries';
 import {
@@ -25,12 +25,12 @@ import { getMethodByCountry } from '@/lib/prayer-methods';
 
 import PrayerHeroClient from '@/components/PrayerHero.client';
 import PrayerTimeline from '@/components/mwaqit/PrayerTimeline.client';
+import PrayerTimesTable from '@/components/mwaqit/PrayerTimesTable.client';
 import SearchCity from '@/components/SearchCityWrapper.client';
 import MonthlyPrayerCalendar from '@/components/mwaqit/MonthlyPrayerCalendar';
 import CalendarSeoBlock from '@/components/mwaqit/CalendarSeoBlock';
 import MadhabSelector from '@/components/mwaqit/MadhabSelector.client';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
-import QiblaCompass from '@/components/mwaqit/QiblaCompass.client';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import CityPrayerCardsGrid from '@/components/mwaqit/CityPrayerCardsGrid.client';
 import { JsonLd } from '@/components/seo/JsonLd';
@@ -46,11 +46,7 @@ import routeStyles from '@/app/mwaqit-al-salat/PrayerRoutePage.module.css';
 import { getSiteUrl } from '@/lib/site-config';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { formatGregorianLabel, getHijriMonthSpanFromDate } from '@/lib/hijri-utils';
-import {
-  getQiblaBearingDegrees,
-  getQiblaBearingLabel,
-  getSolarPrayerFacts,
-} from '@/lib/solar-prayer-facts';
+import { getSolarPrayerFacts } from '@/lib/solar-prayer-facts';
 import {
   getLastThirdOfNightFacts,
   getDuhaPrayerFacts,
@@ -235,21 +231,6 @@ export async function generateMetadata({ params }) {
     };
   }
 }
-
-// ─── Prayer labels ────────────────────────────────────────────────────────────
-const PRAYER_AR = {
-  fajr: 'الفجر', sunrise: 'الشروق', dhuhr: 'الظهر',
-  asr: 'العصر', maghrib: 'المغرب', isha: 'العشاء',
-};
-
-const PRAYER_ICON = {
-  fajr: Moon,
-  sunrise: Sunrise,
-  dhuhr: Sun,
-  asr: Sun,
-  maghrib: Sunset,
-  isha: Moon,
-};
 
 // ─── Page shell (statically cached) ──────────────────────────────────────────
 export default async function PrayerTimesPage({ params }) {
@@ -801,15 +782,6 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
     countryCode,
     cacheKey: `${country}::${city}::friday`,
   });
-  const qiblaLabel = getQiblaBearingLabel({
-    lat: cityData.lat,
-    lon: cityData.lon,
-  });
-  const qiblaBearing = getQiblaBearingDegrees({
-    lat: cityData.lat,
-    lon: cityData.lon,
-  });
-
   const todayLabel = now.toLocaleDateString('ar-EG-u-nu-latn', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
   });
@@ -918,6 +890,11 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
               isha:    times.isha,
             }}
             timezone={cityData.timezone}
+            lat={cityData.lat}
+            lon={cityData.lon}
+            countryCode={countryCode}
+            method={methodInfo.name}
+            cacheKey={`${country}::${city}`}
             nextPrayerKey={nextKey}
           />
         </ErrorBoundary>
@@ -935,41 +912,26 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
           </p>
         </div>
 
-        <div className={routeStyles.tableWrap}>
-          <table className={routeStyles.table}>
-            <thead>
-              <tr className={routeStyles.tableHeadRow}>
-                <th className={routeStyles.tableHeader}>الصلاة</th>
-                <th className={routeStyles.tableHeader}>الوقت</th>
-              </tr>
-            </thead>
-            <tbody>
-          {['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'].map((key) => {
-            const isoStr = times[key];
-            if (!isoStr) return null;
-
-            const isNext  = key === nextKey;
-            const timeStr = formatTime(isoStr, cityData.timezone, false);
-            const PrayerIcon = PRAYER_ICON[key] ?? Clock3;
-
-            return (
-              <tr key={key} className={routeStyles.tableRow}>
-                <td className={`${routeStyles.tableCell} ${routeStyles.prayerNameCell}`}>
-                  <span className="me-2 inline-flex text-accent-alt" aria-hidden>
-                    <PrayerIcon size={16} strokeWidth={1.75} />
-                  </span>
-                  {PRAYER_AR[key] ?? key}
-                  {isNext ? <span className={routeStyles.nextBadge}>القادمة</span> : null}
-                </td>
-                <td className={`${routeStyles.tableCell} ${routeStyles.prayerTimeCell}`}>
-                  <time dateTime={isoStr}>{timeStr}</time>
-                </td>
-              </tr>
-            );
-          })}
-            </tbody>
-          </table>
-        </div>
+        <ErrorBoundary name="PrayerTimesTable">
+          <PrayerTimesTable
+            times={{
+              fajr:    times.fajr,
+              sunrise: times.sunrise,
+              dhuhr:   times.dhuhr,
+              asr:     times.asr,
+              maghrib: times.maghrib,
+              isha:    times.isha,
+            }}
+            timezone={cityData.timezone}
+            lat={cityData.lat}
+            lon={cityData.lon}
+            countryCode={countryCode}
+            method={methodInfo.name}
+            cacheKey={`${country}::${city}`}
+            nextPrayerKey={nextKey}
+            styles={routeStyles}
+          />
+        </ErrorBoundary>
       </section>
 
       {solarFacts ? (
@@ -1058,17 +1020,6 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
               </article>
             ) : null}
           </div>
-        </section>
-      ) : null}
-
-      {qiblaLabel ? (
-        <section className={`mb-4 ${routeStyles.sectionPanel}`} aria-label={`اتجاه القبلة من ${cityNameAr}`}>
-          <QiblaCompass
-            bearingDegrees={qiblaBearing}
-            bearingLabel={qiblaLabel}
-            cityNameAr={cityNameAr}
-            countryNameAr={countryNameAr}
-          />
         </section>
       ) : null}
 

@@ -140,7 +140,6 @@ export default function NetSalaryPage() {
 
       {/* Examples table */}
       <CalculatorSection
-        showAdBefore
         id="gosi-examples"
         eyebrow="أمثلة عملية"
         title="أمثلة محسوبة على صافي الراتب بعد GOSI"

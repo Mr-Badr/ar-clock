@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowUpDown, Eraser, History, RefreshCcw, Sparkles } from 'lucide-react';
 
 import {
-  CalcButton as Button,
   CalcInput as Input,
   CalcProgress as Progress,
   CalcTabsList as TabsList,
@@ -264,75 +263,72 @@ export default function PercentageCalculator() {
   const activeGuide = TAB_GUIDES[activeTab];
 
   return (
-    <div className="calc-app">
-      <Card className="calc-surface-card">
-        <CardHeader>
-          <CardTitle className="calc-card-title">أدوات سريعة</CardTitle>
-        </CardHeader>
-        <CardContent className="calc-kbd-row">
-          <Button type="button" variant="outline" size="sm" onClick={swapNumbers}>
-            <ArrowUpDown size={16} />
-            بدّل الأرقام
-          </Button>
-          <Button type="button" variant="outline" size="sm" onClick={clearCurrentTab}>
-            <Eraser size={16} />
-            امسح الحالي
-          </Button>
-          <Button type="button" variant="outline" size="sm" onClick={applyRandomExample}>
-            <Sparkles size={16} />
-            مثال عشوائي
-          </Button>
-          <Button type="button" variant="outline" size="sm" onClick={saveCurrentResult}>
-            <History size={16} />
-            احفظ النتيجة
-          </Button>
-          {history[0] ? (
-            <Button type="button" variant="outline" size="sm" onClick={() => restoreHistory(history[0])}>
-              <RefreshCcw size={16} />
-              كرر آخر حساب
-            </Button>
-          ) : null}
-        </CardContent>
-      </Card>
+    <div className="calc-app pct-tool">
+      <div className="calc-esb-layout">
 
-      <div className="calc-app-grid">
-        <Card className="calc-surface-card calc-app-panel">
-          <CardHeader>
-            <CardTitle className="calc-card-title">الحاسبة الرئيسية</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="calc-app">
-              <TabsList className="calc-tabs-list">
-                <TabsTrigger value="amount" className="calc-tabs-trigger">كم يساوي X%؟</TabsTrigger>
-                <TabsTrigger value="ratio" className="calc-tabs-trigger">كم نسبة X من Y؟</TabsTrigger>
-                <TabsTrigger value="adjust" className="calc-tabs-trigger">زيادة أو خفض</TabsTrigger>
-                <TabsTrigger value="change" className="calc-tabs-trigger">نسبة التغيير</TabsTrigger>
-              </TabsList>
-              <div className="calc-note">
-                <strong>{activeGuide.title}:</strong> {activeGuide.note}
+        {/* ── FORM ─────────────────────────────────── */}
+        <div className="calc-esb-form-col">
+          <Card className="calc-surface-card calc-esb-form-card">
+            <CardContent className="calc-esb-form-body">
+
+              {/* Quick tools — compact strip, not a separate card */}
+              <div className="pct-quick-tools">
+                <button type="button" className="pct-quick-btn" onClick={swapNumbers}>
+                  <ArrowUpDown size={14} /> بدّل
+                </button>
+                <button type="button" className="pct-quick-btn" onClick={clearCurrentTab}>
+                  <Eraser size={14} /> امسح
+                </button>
+                <button type="button" className="pct-quick-btn" onClick={applyRandomExample}>
+                  <Sparkles size={14} /> مثال عشوائي
+                </button>
+                <button type="button" className="pct-quick-btn" onClick={saveCurrentResult}>
+                  <History size={14} /> احفظ
+                </button>
+                {history[0] ? (
+                  <button type="button" className="pct-quick-btn" onClick={() => restoreHistory(history[0])}>
+                    <RefreshCcw size={14} /> كرر آخر حساب
+                  </button>
+                ) : null}
               </div>
 
-              <TabsContent value="amount" className="calc-tabs-panel">
-                <div className="calc-form-grid">
-                  <div className="calc-grid-2">
-                    <div className="calc-field">
-                      <Label className="calc-label" htmlFor="amount-percent">النسبة المئوية</Label>
-                      <Input
-                        id="amount-percent"
-                        inputMode="decimal"
-                        value={amountPercent}
-                        onChange={(event) => setAmountPercent(event.target.value)}
-                      />
+              <Tabs value={activeTab} onValueChange={setActiveTab}>
+                <TabsList className="calc-tabs-list">
+                  <TabsTrigger value="amount" className="calc-tabs-trigger">كم يساوي X%؟</TabsTrigger>
+                  <TabsTrigger value="ratio" className="calc-tabs-trigger">كم نسبة X من Y؟</TabsTrigger>
+                  <TabsTrigger value="adjust" className="calc-tabs-trigger">زيادة أو خفض</TabsTrigger>
+                  <TabsTrigger value="change" className="calc-tabs-trigger">نسبة التغيير</TabsTrigger>
+                </TabsList>
+                <div className="calc-note">
+                  <strong>{activeGuide.title}:</strong> {activeGuide.note}
+                </div>
+
+                <TabsContent value="amount" className="calc-tabs-panel">
+                  <div className="calc-esb-field">
+                    <div className="calc-esb-field-label">
+                      <span className="calc-esb-step">1</span>
+                      <Label htmlFor="amount-percent">النسبة المئوية</Label>
                     </div>
-                    <div className="calc-field">
-                      <Label className="calc-label" htmlFor="amount-value">من المبلغ</Label>
-                      <Input
-                        id="amount-value"
-                        inputMode="decimal"
-                        value={amountValue}
-                        onChange={(event) => setAmountValue(event.target.value)}
-                      />
+                    <Input
+                      id="amount-percent"
+                      inputMode="decimal"
+                      dir="ltr"
+                      value={amountPercent}
+                      onChange={(event) => setAmountPercent(event.target.value)}
+                    />
+                  </div>
+                  <div className="calc-esb-field">
+                    <div className="calc-esb-field-label">
+                      <span className="calc-esb-step">2</span>
+                      <Label htmlFor="amount-value">من المبلغ</Label>
                     </div>
+                    <Input
+                      id="amount-value"
+                      inputMode="decimal"
+                      dir="ltr"
+                      value={amountValue}
+                      onChange={(event) => setAmountValue(event.target.value)}
+                    />
                   </div>
                   <div className="calc-kbd-row">
                     {PERCENTAGE_EXAMPLES.amount.map((item) => (
@@ -346,32 +342,36 @@ export default function PercentageCalculator() {
                       </button>
                     ))}
                   </div>
-                </div>
-              </TabsContent>
+                </TabsContent>
 
-              <TabsContent value="ratio" className="calc-tabs-panel">
-                <div className="calc-form-grid">
-                  <div className="calc-grid-2">
-                    <div className="calc-field">
-                      <Label className="calc-label" htmlFor="ratio-part">الجزء</Label>
-                      <Input
-                        id="ratio-part"
-                        inputMode="decimal"
-                        value={ratioPart}
-                        onChange={(event) => setRatioPart(event.target.value)}
-                      />
+                <TabsContent value="ratio" className="calc-tabs-panel">
+                  <div className="calc-esb-field">
+                    <div className="calc-esb-field-label">
+                      <span className="calc-esb-step">1</span>
+                      <Label htmlFor="ratio-part">الجزء</Label>
                     </div>
-                    <div className="calc-field">
-                      <Label className="calc-label" htmlFor="ratio-whole">الكل</Label>
-                      <Input
-                        id="ratio-whole"
-                        inputMode="decimal"
-                        value={ratioWhole}
-                        onChange={(event) => setRatioWhole(event.target.value)}
-                      />
-                    </div>
+                    <Input
+                      id="ratio-part"
+                      inputMode="decimal"
+                      dir="ltr"
+                      value={ratioPart}
+                      onChange={(event) => setRatioPart(event.target.value)}
+                    />
                   </div>
-                  <Progress value={Math.min(100, Math.max(0, ratioResult.result))} />
+                  <div className="calc-esb-field">
+                    <div className="calc-esb-field-label">
+                      <span className="calc-esb-step">2</span>
+                      <Label htmlFor="ratio-whole">الكل</Label>
+                    </div>
+                    <Input
+                      id="ratio-whole"
+                      inputMode="decimal"
+                      dir="ltr"
+                      value={ratioWhole}
+                      onChange={(event) => setRatioWhole(event.target.value)}
+                    />
+                  </div>
+                  <Progress value={Math.min(100, Math.max(0, ratioResult.result))} className="calc-progress" />
                   <div className="calc-kbd-row">
                     {PERCENTAGE_EXAMPLES.ratio.map((item) => (
                       <button
@@ -384,48 +384,58 @@ export default function PercentageCalculator() {
                       </button>
                     ))}
                   </div>
-                </div>
-              </TabsContent>
+                </TabsContent>
 
-              <TabsContent value="adjust" className="calc-tabs-panel">
-                <div className="calc-form-grid">
-                  <div className="calc-kbd-row">
-                    <button
-                      type="button"
-                      className={`chip calc-chip-button ${adjustMode === 'increase' ? 'is-active' : ''}`}
-                      onClick={() => setAdjustMode('increase')}
-                      aria-pressed={adjustMode === 'increase'}
-                    >
-                      زيادة
-                    </button>
-                    <button
-                      type="button"
-                      className={`chip calc-chip-button ${adjustMode === 'decrease' ? 'is-active' : ''}`}
-                      onClick={() => setAdjustMode('decrease')}
-                      aria-pressed={adjustMode === 'decrease'}
-                    >
-                      خفض
-                    </button>
+                <TabsContent value="adjust" className="calc-tabs-panel">
+                  <div className="calc-esb-field">
+                    <div className="calc-esb-field-label">
+                      <span className="calc-esb-step">1</span>
+                      <Label>زيادة أم خفض؟</Label>
+                    </div>
+                    <div className="calc-kbd-row">
+                      <button
+                        type="button"
+                        className={`chip calc-chip-button ${adjustMode === 'increase' ? 'is-active' : ''}`}
+                        onClick={() => setAdjustMode('increase')}
+                        aria-pressed={adjustMode === 'increase'}
+                      >
+                        زيادة
+                      </button>
+                      <button
+                        type="button"
+                        className={`chip calc-chip-button ${adjustMode === 'decrease' ? 'is-active' : ''}`}
+                        onClick={() => setAdjustMode('decrease')}
+                        aria-pressed={adjustMode === 'decrease'}
+                      >
+                        خفض
+                      </button>
+                    </div>
                   </div>
-                  <div className="calc-grid-2">
-                    <div className="calc-field">
-                      <Label className="calc-label" htmlFor="adjust-value">المبلغ الأصلي</Label>
-                      <Input
-                        id="adjust-value"
-                        inputMode="decimal"
-                        value={adjustValue}
-                        onChange={(event) => setAdjustValue(event.target.value)}
-                      />
+                  <div className="calc-esb-field">
+                    <div className="calc-esb-field-label">
+                      <span className="calc-esb-step">2</span>
+                      <Label htmlFor="adjust-value">المبلغ الأصلي</Label>
                     </div>
-                    <div className="calc-field">
-                      <Label className="calc-label" htmlFor="adjust-percent">النسبة</Label>
-                      <Input
-                        id="adjust-percent"
-                        inputMode="decimal"
-                        value={adjustPercent}
-                        onChange={(event) => setAdjustPercent(event.target.value)}
-                      />
+                    <Input
+                      id="adjust-value"
+                      inputMode="decimal"
+                      dir="ltr"
+                      value={adjustValue}
+                      onChange={(event) => setAdjustValue(event.target.value)}
+                    />
+                  </div>
+                  <div className="calc-esb-field">
+                    <div className="calc-esb-field-label">
+                      <span className="calc-esb-step">3</span>
+                      <Label htmlFor="adjust-percent">النسبة</Label>
                     </div>
+                    <Input
+                      id="adjust-percent"
+                      inputMode="decimal"
+                      dir="ltr"
+                      value={adjustPercent}
+                      onChange={(event) => setAdjustPercent(event.target.value)}
+                    />
                   </div>
                   <div className="calc-kbd-row">
                     {PERCENTAGE_EXAMPLES.adjust.map((item) => (
@@ -439,30 +449,34 @@ export default function PercentageCalculator() {
                       </button>
                     ))}
                   </div>
-                </div>
-              </TabsContent>
+                </TabsContent>
 
-              <TabsContent value="change" className="calc-tabs-panel">
-                <div className="calc-form-grid">
-                  <div className="calc-grid-2">
-                    <div className="calc-field">
-                      <Label className="calc-label" htmlFor="change-from">القيمة الأولى</Label>
-                      <Input
-                        id="change-from"
-                        inputMode="decimal"
-                        value={changeFrom}
-                        onChange={(event) => setChangeFrom(event.target.value)}
-                      />
+                <TabsContent value="change" className="calc-tabs-panel">
+                  <div className="calc-esb-field">
+                    <div className="calc-esb-field-label">
+                      <span className="calc-esb-step">1</span>
+                      <Label htmlFor="change-from">القيمة الأولى</Label>
                     </div>
-                    <div className="calc-field">
-                      <Label className="calc-label" htmlFor="change-to">القيمة الثانية</Label>
-                      <Input
-                        id="change-to"
-                        inputMode="decimal"
-                        value={changeTo}
-                        onChange={(event) => setChangeTo(event.target.value)}
-                      />
+                    <Input
+                      id="change-from"
+                      inputMode="decimal"
+                      dir="ltr"
+                      value={changeFrom}
+                      onChange={(event) => setChangeFrom(event.target.value)}
+                    />
+                  </div>
+                  <div className="calc-esb-field">
+                    <div className="calc-esb-field-label">
+                      <span className="calc-esb-step">2</span>
+                      <Label htmlFor="change-to">القيمة الثانية</Label>
                     </div>
+                    <Input
+                      id="change-to"
+                      inputMode="decimal"
+                      dir="ltr"
+                      value={changeTo}
+                      onChange={(event) => setChangeTo(event.target.value)}
+                    />
                   </div>
                   <div className="calc-kbd-row">
                     {PERCENTAGE_EXAMPLES.change.map((item) => (
@@ -476,50 +490,54 @@ export default function PercentageCalculator() {
                       </button>
                     ))}
                   </div>
-                </div>
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-        </Card>
-
-        <div className="calc-esb-result-panel pct-result-panel" aria-live="polite" role="status">
-          <div className="calc-esb-result-header">
-            <span className="calc-esb-country-badge calc-esb-country-badge--bh">% النسبة المئوية</span>
-            <span className="calc-esb-live-dot" aria-hidden="true" />
-          </div>
-          <div className="calc-esb-amount-hero">
-            <span className="calc-esb-amount-label">{currentSummary.title}</span>
-            <div className="calc-esb-amount-value">{currentSummary.value}</div>
-          </div>
-
-          {activeTab === 'amount' && (
-            <div className="calc-hint" dir="ltr" style={{ textAlign: 'end' }}>
-              {formatNumber(amountResult.value)} × ({formatNumber(amountResult.percent)} ÷ 100)
-            </div>
-          )}
-          {activeTab === 'ratio' && (
-            <div className="calc-hint" dir="ltr" style={{ textAlign: 'end' }}>
-              ({formatNumber(ratioResult.part)} ÷ {formatNumber(ratioResult.whole)}) × 100
-            </div>
-          )}
-          {activeTab === 'adjust' && (
-            <div className="calc-hint">
-              قيمة {adjustMode === 'increase' ? 'الزيادة' : 'الخصم'}: {formatNumber(adjustResult.delta)}
-            </div>
-          )}
-          {activeTab === 'change' && (
-            <div className="calc-hint">
-              فرق مطلق {formatNumber(changeResult.difference)} ·{' '}
-              {changeResult.direction === 'increase' ? 'زيادة' : changeResult.direction === 'decrease' ? 'انخفاض' : 'بدون تغيير'}
-            </div>
-          )}
-
-          <ResultActions
-            copyText={shareText}
-            shareTitle="حاسبة النسبة المئوية"
-            shareText={shareText}
-          />
+                </TabsContent>
+              </Tabs>
+            </CardContent>
+          </Card>
         </div>
+
+        {/* ── RESULT ───────────────────────────────── */}
+        <div className="calc-esb-result-col">
+          <div className="calc-esb-result-panel pct-result-panel" aria-live="polite" role="status">
+            <div className="calc-esb-result-header">
+              <span className="calc-esb-country-badge calc-esb-country-badge--bh">% النسبة المئوية</span>
+              <span className="calc-esb-live-dot" aria-hidden="true" />
+            </div>
+            <div className="calc-esb-amount-hero">
+              <span className="calc-esb-amount-label">{currentSummary.title}</span>
+              <div className="calc-esb-amount-value">{currentSummary.value}</div>
+            </div>
+
+            {activeTab === 'amount' && (
+              <div className="calc-hint pct-formula">
+                {formatNumber(amountResult.value)} × ({formatNumber(amountResult.percent)} ÷ 100)
+              </div>
+            )}
+            {activeTab === 'ratio' && (
+              <div className="calc-hint pct-formula">
+                ({formatNumber(ratioResult.part)} ÷ {formatNumber(ratioResult.whole)}) × 100
+              </div>
+            )}
+            {activeTab === 'adjust' && (
+              <div className="calc-hint">
+                قيمة {adjustMode === 'increase' ? 'الزيادة' : 'الخصم'}: {formatNumber(adjustResult.delta)}
+              </div>
+            )}
+            {activeTab === 'change' && (
+              <div className="calc-hint">
+                فرق مطلق {formatNumber(changeResult.difference)} ·{' '}
+                {changeResult.direction === 'increase' ? 'زيادة' : changeResult.direction === 'decrease' ? 'انخفاض' : 'بدون تغيير'}
+              </div>
+            )}
+
+            <ResultActions
+              copyText={shareText}
+              shareTitle="حاسبة النسبة المئوية"
+              shareText={shareText}
+            />
+          </div>
+        </div>
+
       </div>
 
       <details className="calc-extras-details">

@@ -271,7 +271,6 @@ export default async function GulfPayDatesPage() {
         id="faq"
         eyebrow="أسئلة شائعة"
         title="أسئلة عن مواعيد الرواتب والدعم في الخليج"
-        showAdBefore
       >
         <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>

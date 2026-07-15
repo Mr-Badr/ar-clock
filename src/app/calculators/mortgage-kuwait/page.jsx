@@ -79,7 +79,6 @@ export default async function MortgageKuwaitPage() {
       {/* KCB vs commercial bank explainer */}
       <CalculatorSection
         id="m-kw-kcb"
-        showAdBefore
         eyebrow="المسارات التمويلية"
         title="بنك الائتمان الكويتي (KCB) مقابل البنوك التجارية"
       >

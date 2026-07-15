@@ -87,7 +87,6 @@ export default async function EgyptIncomeTaxPage() {
       {/* Bracket explanation */}
       <CalculatorSection
         id="eg-tax-brackets"
-        showAdBefore
         eyebrow="الشرائح"
         title="شرائح ضريبة الدخل في مصر 2025"
       >

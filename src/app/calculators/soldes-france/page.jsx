@@ -300,7 +300,6 @@ export default async function SoldesFrancePage() {
         id="faq"
         eyebrow="أسئلة شائعة"
         title="أسئلة عن مواعيد soldes في فرنسا"
-        showAdBefore
       >
         <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>

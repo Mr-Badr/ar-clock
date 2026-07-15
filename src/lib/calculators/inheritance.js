@@ -84,17 +84,17 @@ export function calculateInheritance({
   }
   if (hasWife && wivesCount >= 1) {
     const total = hasChildren ? fr(1, 8) : fr(1, 4);
-    if (wivesCount === 1) {
+    const n = Math.min(wivesCount, 4);
+    if (n === 1) {
       addFixed('wife', 'الزوجة', 1, total);
     } else {
-      // Each wife gets an equal portion of the wife share
-      for (let i = 1; i <= Math.min(wivesCount, 4); i++) {
-        addFixed(`wife_${i}`, `الزوجة ${i}`, 1, fr(total.n, total.d * Math.min(wivesCount, 4)));
-        // Undo duplicate sumFixed additions — we add wivesCount shares that together equal total
-        if (i > 1) sumFixed = fsub(sumFixed, fr(total.n, total.d * Math.min(wivesCount, 4)));
+      // Each wife gets an equal portion of the wife share; the group's total
+      // must be added to sumFixed exactly once (not once per wife).
+      const perWife = fr(total.n, total.d * n);
+      for (let i = 1; i <= n; i++) {
+        heirs[`wife_${i}`] = { label: `الزوجة ${i}`, count: 1, fraction: perWife, amount: 0, note: '', asabah: false };
       }
-      // Re-add total once
-      sumFixed = fadd(fsub(sumFixed, fr(total.n * Math.min(wivesCount, 4), total.d * Math.min(wivesCount, 4))), total);
+      sumFixed = fadd(sumFixed, total);
     }
   }
 
@@ -194,33 +194,29 @@ export function calculateInheritance({
       } else {
         heirs['father'].amount = remainder;
       }
-    } else if (!siblingsBlocked) {
-      if (fullBrothers > 0 || fullSisters > 0) {
-        // Brothers + sisters as asabah (brother gets 2× sister's share)
-        const units = fullBrothers * 2 + fullSisters;
-        const perUnit = remainder / units;
-
-        if (fullBrothers > 0) {
-          heirs['fullBrothers'] = { label: fullBrothers === 1 ? 'الأخ الشقيق' : 'الإخوة الأشقاء', count: fullBrothers, fraction: null, amount: perUnit * 2 * fullBrothers, note: 'عصبة', asabah: true };
-        }
-        if (fullSisters > 0) {
-          if (fullBrothers > 0) {
-            // Sisters participate with brothers as asabah
-            const existing = heirs['fullSisters']?.amount ?? 0;
-            heirs['fullSisters'] = { label: fullSisters === 1 ? 'الأخت الشقيقة' : 'الأخوات الشقيقات', count: fullSisters, fraction: null, amount: existing + perUnit * fullSisters, note: 'مع إخوتهن', asabah: false };
-          }
-          // Else sisters already have fixed share; remainder via radd below
-        }
-      } else {
-        // Radd: return remainder to fixed-share heirs proportionally (excluding spouse)
-        const raddEligible = Object.values(heirs).filter(h => h.amount > 0 && !h.label?.startsWith('الزوج'));
-        const raddTotal = raddEligible.reduce((s, h) => s + h.amount, 0);
-        if (raddTotal > 0) {
-          for (const h of raddEligible) {
-            const key = Object.keys(heirs).find(k => heirs[k] === h);
-            heirs[key].amount += (h.amount / raddTotal) * remainder;
-            heirs[key].raddNote = '(شمل الرد)';
-          }
+    } else if (!siblingsBlocked && fullBrothers > 0) {
+      // Brothers (with or without sisters) take asabah — brother gets 2× a sister's share
+      const units = fullBrothers * 2 + fullSisters;
+      const perUnit = remainder / units;
+      heirs['fullBrothers'] = { label: fullBrothers === 1 ? 'الأخ الشقيق' : 'الإخوة الأشقاء', count: fullBrothers, fraction: null, amount: perUnit * 2 * fullBrothers, note: 'عصبة', asabah: true };
+      if (fullSisters > 0) {
+        // Sisters participate with brothers as asabah (no separate fixed share was set for them)
+        heirs['fullSisters'] = { label: fullSisters === 1 ? 'الأخت الشقيقة' : 'الأخوات الشقيقات', count: fullSisters, fraction: null, amount: perUnit * fullSisters, note: 'مع إخوتهن', asabah: false };
+      }
+    } else if (!siblingsBlocked && fullSisters > 0 && hasChildren) {
+      // Classic case (البنت مع الأخت الشقيقة): with daughters present and no father/son/brother,
+      // the full sister(s) take the remainder as "عصبة مع الغير" — agreed across the four Sunni madhahib.
+      heirs['fullSisters'] = { label: fullSisters === 1 ? 'الأخت الشقيقة' : 'الأخوات الشقيقات', count: fullSisters, fraction: null, amount: remainder, note: 'عصبة مع البنات', asabah: true };
+    } else {
+      // Radd: return remainder to fixed-share heirs proportionally (excluding spouse).
+      // Covers: no siblings at all, or a full sister with a fixed share but no children/brothers.
+      const raddEligible = Object.values(heirs).filter(h => h.amount > 0 && !h.label?.startsWith('الزوج'));
+      const raddTotal = raddEligible.reduce((s, h) => s + h.amount, 0);
+      if (raddTotal > 0) {
+        for (const h of raddEligible) {
+          const key = Object.keys(heirs).find(k => heirs[k] === h);
+          heirs[key].amount += (h.amount / raddTotal) * remainder;
+          heirs[key].raddNote = '(شمل الرد)';
         }
       }
     }

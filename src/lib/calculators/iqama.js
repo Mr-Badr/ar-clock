@@ -4,14 +4,14 @@
  * Covers the most common residence and visit permit types for Saudi Arabia and UAE.
  * All dates handled as Gregorian; Hijri display via getHijriParts() at call site.
  *
- * Fine rules (Saudi):
- *   - Iqama overstay: 100 SAR/day (max 50,000 SAR) — نظام الإقامة 2023
- *   - Exit/re-entry visa overstay: 100 SAR/day
- *   - Visit visa overstay: 100 SAR/day (tourist visa amnesty sometimes applies)
- * Fine rules (UAE):
- *   - Visa overstay: 50 AED/day for first 6 months, 100 AED/day after
+ * Fine rules (Saudi) — نظام الإقامة، وزارة الداخلية:
+ *   - Iqama (residence) overstay: 100 SAR/day, capped at 50,000 SAR total
+ *   - Visit / Umrah visa overstay: 100 SAR/day, no published cap
+ * Fine rules (UAE) — الهيئة الاتحادية للهوية والجنسية (ICP) / GDRFA:
+ *   - Overstay fine: 50 AED/day for the first 180 days after the grace period ends,
+ *     then 100 AED/day for every day after that
  *
- * Reference: Saudi MOI — absher.sa; UAE GDRFA — gdrfa.gov.ae
+ * Reference: Saudi MOI — absher.sa; UAE GDRFA/ICP — gdrfa.gov.ae, icp.gov.ae
  */
 
 const MS_PER_DAY = 86_400_000;
@@ -26,6 +26,7 @@ export const VISA_TYPES = {
     graceDays: 0,
     finePerDay: 100,
     fineCurrency: 'SAR',
+    fineCapAmount: 50000,
     renewalWarningDays: 60,
     hint: 'يُنصح بالتجديد قبل انتهاء الإقامة بـ 60 يوماً على الأقل.',
   },
@@ -37,6 +38,7 @@ export const VISA_TYPES = {
     graceDays: 0,
     finePerDay: 100,
     fineCurrency: 'SAR',
+    fineCapAmount: 50000,
     renewalWarningDays: 60,
     hint: 'يُنصح بالتجديد قبل انتهاء الإقامة بـ 60 يوماً على الأقل.',
   },
@@ -48,6 +50,7 @@ export const VISA_TYPES = {
     graceDays: 0,
     finePerDay: 100,
     fineCurrency: 'SAR',
+    fineCapAmount: null,
     renewalWarningDays: 14,
     hint: 'تأشيرة الزيارة غير قابلة للتمديد — يجب المغادرة قبل انتهائها.',
   },
@@ -59,6 +62,7 @@ export const VISA_TYPES = {
     graceDays: 0,
     finePerDay: 100,
     fineCurrency: 'SAR',
+    fineCapAmount: null,
     renewalWarningDays: 7,
     hint: 'تأشيرة العمرة والزيارة القصيرة — الخروج إلزامي قبل انتهائها.',
   },
@@ -70,9 +74,11 @@ export const VISA_TYPES = {
     durationDays: 730,
     graceDays: 30,
     finePerDay: 50,
+    fineTier2PerDay: 100,
+    fineTier1Days: 180,
     fineCurrency: 'AED',
     renewalWarningDays: 60,
-    hint: 'مهلة السماح بعد الانتهاء 30 يوماً ثم غرامة 50 درهم/يوم لأول 6 أشهر.',
+    hint: 'مهلة السماح بعد الانتهاء 30 يوماً، ثم غرامة 50 درهم/يوم لأول 180 يوماً و100 درهم/يوم بعدها.',
   },
   uae_residence_3yr: {
     id: 'uae_residence_3yr',
@@ -81,6 +87,8 @@ export const VISA_TYPES = {
     durationDays: 1095,
     graceDays: 30,
     finePerDay: 50,
+    fineTier2PerDay: 100,
+    fineTier1Days: 180,
     fineCurrency: 'AED',
     renewalWarningDays: 60,
     hint: 'الإقامة الذهبية وبعض إقامات الكفالة تمتد 3 سنوات.',
@@ -92,9 +100,11 @@ export const VISA_TYPES = {
     durationDays: 30,
     graceDays: 10,
     finePerDay: 50,
+    fineTier2PerDay: 100,
+    fineTier1Days: 180,
     fineCurrency: 'AED',
     renewalWarningDays: 7,
-    hint: 'مهلة 10 أيام ثم غرامة 50 درهم/يوم.',
+    hint: 'مهلة 10 أيام بعد الانتهاء، ثم غرامة 50 درهم/يوم لأول 180 يوماً.',
   },
   visit_uae_90: {
     id: 'visit_uae_90',
@@ -103,9 +113,11 @@ export const VISA_TYPES = {
     durationDays: 90,
     graceDays: 10,
     finePerDay: 50,
+    fineTier2PerDay: 100,
+    fineTier1Days: 180,
     fineCurrency: 'AED',
     renewalWarningDays: 14,
-    hint: 'مهلة 10 أيام ثم غرامة 50 درهم/يوم.',
+    hint: 'مهلة 10 أيام بعد الانتهاء، ثم غرامة 50 درهم/يوم لأول 180 يوماً.',
   },
 };
 
@@ -149,9 +161,7 @@ export function calculateIqamaExpiry({ issueDate, visaTypeId, today = new Date()
     status = 'overstayed';
   }
 
-  const estimatedFine = daysOverstayed > 0
-    ? daysOverstayed * vt.finePerDay
-    : 0;
+  const { estimatedFine, fineBreakdown, fineCapped } = calculateOverstayFine(vt, daysOverstayed);
 
   return {
     issueDate: issue,
@@ -161,18 +171,68 @@ export function calculateIqamaExpiry({ issueDate, visaTypeId, today = new Date()
     daysToGraceEnd,
     daysOverstayed,
     estimatedFine,
+    fineBreakdown,
+    fineCapped,
+    fineCapAmount: vt.fineCapAmount || null,
     status,
     visaType: vt,
     isValid: true,
   };
 }
 
+function calculateOverstayFine(vt, daysOverstayed) {
+  if (daysOverstayed <= 0) {
+    return { estimatedFine: 0, fineBreakdown: [], fineCapped: false };
+  }
+
+  // Two-tier fine (UAE): 50/day for the first N days, higher rate after.
+  if (vt.fineTier2PerDay) {
+    const tier1Days = Math.min(daysOverstayed, vt.fineTier1Days);
+    const tier2Days = Math.max(daysOverstayed - vt.fineTier1Days, 0);
+    const fineBreakdown = [];
+    if (tier1Days > 0) {
+      fineBreakdown.push({
+        label: `أول ${vt.fineTier1Days} يوماً`,
+        days: tier1Days,
+        rate: vt.finePerDay,
+        amount: tier1Days * vt.finePerDay,
+      });
+    }
+    if (tier2Days > 0) {
+      fineBreakdown.push({
+        label: `بعد ${vt.fineTier1Days} يوماً`,
+        days: tier2Days,
+        rate: vt.fineTier2PerDay,
+        amount: tier2Days * vt.fineTier2PerDay,
+      });
+    }
+    const estimatedFine = fineBreakdown.reduce((sum, row) => sum + row.amount, 0);
+    return { estimatedFine, fineBreakdown, fineCapped: false };
+  }
+
+  // Flat-rate fine (Saudi), optionally capped.
+  let estimatedFine = daysOverstayed * vt.finePerDay;
+  let fineCapped = false;
+  if (vt.fineCapAmount && estimatedFine > vt.fineCapAmount) {
+    estimatedFine = vt.fineCapAmount;
+    fineCapped = true;
+  }
+  const fineBreakdown = [{
+    label: `${daysOverstayed} يوم تجاوز`,
+    days: daysOverstayed,
+    rate: vt.finePerDay,
+    amount: daysOverstayed * vt.finePerDay,
+  }];
+
+  return { estimatedFine, fineBreakdown, fineCapped };
+}
+
 export function getStatusMeta(status) {
   const map = {
-    valid: { label: 'سارية', color: '#16a34a', bg: '#dcfce7', icon: '✓' },
-    expiring_soon: { label: 'تنتهي قريباً', color: '#d97706', bg: '#fef3c7', icon: '⚠' },
-    in_grace: { label: 'في مهلة السماح', color: '#ea580c', bg: '#ffedd5', icon: '⏳' },
-    overstayed: { label: 'منتهية — مخالفة', color: '#dc2626', bg: '#fee2e2', icon: '✗' },
+    valid: { label: 'الإقامة سارية', tone: 'success' },
+    expiring_soon: { label: 'تنتهي قريباً', tone: 'warning' },
+    in_grace: { label: 'في مهلة السماح', tone: 'warning' },
+    overstayed: { label: 'منتهية — تجاوز', tone: 'danger' },
   };
   return map[status] ?? map.valid;
 }

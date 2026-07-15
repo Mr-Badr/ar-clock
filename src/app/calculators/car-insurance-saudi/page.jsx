@@ -83,7 +83,6 @@ export default async function CarInsuranceSaudiPage() {
       {/* How it works + factors table */}
       <CalculatorSection
         id="ci-sa-factors"
-        showAdBefore
         eyebrow="كيف يُحسب؟"
         title="العوامل التي تحدد سعر تأمين سيارتك"
       >

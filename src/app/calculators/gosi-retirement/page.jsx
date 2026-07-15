@@ -86,7 +86,6 @@ export default async function GOSIRetirementPage() {
       {/* Explanation: how the formula works */}
       <CalculatorSection
         id="gosi-formula"
-        showAdBefore
         eyebrow="المعادلة"
         title="كيف تُحسب معاشات GOSI؟"
       >

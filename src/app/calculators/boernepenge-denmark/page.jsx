@@ -321,7 +321,6 @@ export default async function BoernepengeDenmarkPage() {
         id="faq"
         eyebrow="أسئلة شائعة"
         title="أسئلة عن دعم الأطفال في الدنمارك"
-        showAdBefore
       >
         <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>

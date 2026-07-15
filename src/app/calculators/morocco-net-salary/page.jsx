@@ -78,7 +78,6 @@ export default async function MoroccoNetSalaryPage() {
       {/* CNSS explanation */}
       <CalculatorSection
         id="ma-cnss-rates"
-        showAdBefore
         eyebrow="معدلات الاقتطاع"
         title="CNSS وIR — كيف تُحتسب اقتطاعات الراتب في المغرب"
       >

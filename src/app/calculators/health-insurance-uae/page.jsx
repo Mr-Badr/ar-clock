@@ -74,7 +74,6 @@ export default async function HealthInsuranceUaePage() {
 
       <CalculatorSection
         id="hi-uae-explained"
-        showAdBefore
         eyebrow="التأمين الصحي في الإمارات"
         title="ما تحتاج معرفته قبل الاختيار"
       >

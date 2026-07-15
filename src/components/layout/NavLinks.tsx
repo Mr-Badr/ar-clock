@@ -74,14 +74,14 @@ const ICONS: Record<string, ElementType> = {
 // Calculator mega menu — category data
 // ─────────────────────────────────────────────────
 
-type CalcTool = {
+export type CalcTool = {
   href: string;
   label: string;
   desc: string;
   icon: ElementType;
 };
 
-type CalcCategory = {
+export type CalcCategory = {
   id: string;
   label: string;
   sub: string;
@@ -91,7 +91,7 @@ type CalcCategory = {
   viewAll: string;
 };
 
-const CALC_CATEGORIES: CalcCategory[] = [
+export const CALC_CATEGORIES: CalcCategory[] = [
   {
     id: "gulf",
     label: "مال وخليج",

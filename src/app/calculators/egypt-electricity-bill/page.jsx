@@ -73,7 +73,7 @@ export default async function EgyptElectricityBillPage() {
         <EgyptElectricityBillCalculator />
       </CalculatorHero>
 
-      <CalculatorSection id="eg-elec-tariff" showAdBefore eyebrow="التعريفة" title="شرائح أسعار الكهرباء المصرية {{year}}">
+      <CalculatorSection id="eg-elec-tariff" eyebrow="التعريفة" title="شرائح أسعار الكهرباء المصرية {{year}}">
         <div className="calc-editorial">
           <p>
             تعتمد مصر نظام الشرائح التصاعدية (المتدرجة) لتسعير الكهرباء السكنية. كل شريحة تُسعّر الكيلوواط الإضافي

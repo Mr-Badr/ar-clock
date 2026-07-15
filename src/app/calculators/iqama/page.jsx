@@ -138,7 +138,6 @@ export default function IqamaPage() {
 
       {/* Practical guide */}
       <CalculatorSection
-        showAdBefore
         id="iqama-guide"
         eyebrow="دليل عملي"
         title="ماذا تفعل إذا انتهت إقامتك أو اقتربت من الانتهاء؟"

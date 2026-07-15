@@ -256,7 +256,6 @@ export default async function CgebCanadaPage() {
         id="faq"
         eyebrow="أسئلة شائعة"
         title="أسئلة عن دعم المقاضي والأساسيات في كندا"
-        showAdBefore
       >
         <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>

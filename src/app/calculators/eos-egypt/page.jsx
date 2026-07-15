@@ -87,7 +87,6 @@ export default async function EosEgyptPage() {
       {/* Formula explanation */}
       <CalculatorSection
         id="eg-eos-formula"
-        showAdBefore
         eyebrow="المعادلة"
         title="كيف تُحسب مكافأة نهاية الخدمة في مصر؟"
       >

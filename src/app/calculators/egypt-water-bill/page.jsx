@@ -72,7 +72,7 @@ export default async function EgyptWaterBillPage() {
         <EgyptWaterBillCalculator />
       </CalculatorHero>
 
-      <CalculatorSection id="eg-water-tariff" showAdBefore eyebrow="التعريفة" title="شرائح أسعار المياه والصرف الصحي في مصر">
+      <CalculatorSection id="eg-water-tariff" eyebrow="التعريفة" title="شرائح أسعار المياه والصرف الصحي في مصر">
         <div className="calc-editorial">
           <p>
             تُسعّر المياه في مصر وفق نظام شرائح تصاعدية هامشية. على كل فاتورة تُضاف رسوم الصرف الصحي (65% من قيمة المياه)،

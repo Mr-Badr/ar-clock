@@ -87,7 +87,6 @@ export default async function EosKuwaitPage() {
       {/* Formula explanation */}
       <CalculatorSection
         id="kw-eos-formula"
-        showAdBefore
         eyebrow="المعادلة"
         title="كيف تُحسب مكافأة نهاية الخدمة في الكويت؟"
       >

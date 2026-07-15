@@ -79,7 +79,6 @@ export default async function MortgageQatarPage() {
       {/* LTV & QCB rules explainer */}
       <CalculatorSection
         id="m-qa-ltv"
-        showAdBefore
         eyebrow="لوائح QCB 2023"
         title="نسب LTV وشروط التمويل العقاري في قطر"
       >

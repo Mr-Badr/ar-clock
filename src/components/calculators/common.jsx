@@ -217,6 +217,11 @@ export function CalculatorHero({
           </div>
         </div>
       </SectionWrapper>
+      {/* Right after the tool, outside the hero wrapper — the first ad a mobile
+          user reaches must come after the interactive tool, not several
+          sections later (was landing 2-3 viewports down on many pages when
+          each page manually opted in via showAdBefore on a later section). */}
+      <AdTopBanner slotId="top-calculator-tool" />
     </>
   );
 }
@@ -227,14 +232,12 @@ export function CalculatorSection({
   title,
   description,
   subtle,
-  showAdBefore = false,
   children,
 }) {
   const isSubtle = subtle === true;
 
   return (
     <>
-      {showAdBefore ? <AdTopBanner slotId="top-calculator-tool" /> : null}
       <SectionWrapper id={id} subtle={isSubtle} className="calc-shell">
         <div className="calc-section-frame">
           {(eyebrow || title || description) ? (

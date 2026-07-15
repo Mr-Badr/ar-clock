@@ -78,7 +78,6 @@ export default async function EgyptSocialInsurancePage() {
       {/* Rates explanation */}
       <CalculatorSection
         id="eg-si-rates"
-        showAdBefore
         eyebrow="النسب والأحكام"
         title="نسب التأمينات الاجتماعية في مصر 2025"
       >

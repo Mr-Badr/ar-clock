@@ -139,7 +139,6 @@ export default function GpaPage() {
       {/* Explainer */}
       <CalculatorSection
         id="gpa-how"
-        showAdBefore
         eyebrow="كيف يُحسب المعدل"
         title="المعدل المرجّح والخطة — كيف تعمل الحاسبة"
         description="الحاسبة لا تجمع الدرجات وتقسمها — تأخذ وزن كل مادة بساعاتها للوصول إلى المعدل الدقيق."
@@ -149,7 +148,6 @@ export default function GpaPage() {
 
       {/* Classifications table */}
       <CalculatorSection
-        showAdBefore
         id="gpa-classifications"
         eyebrow="جدول التصنيفات"
         title="تصنيفات المعدل في الأنظمة الثلاثة"

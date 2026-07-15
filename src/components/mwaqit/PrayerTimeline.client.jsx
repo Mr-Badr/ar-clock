@@ -8,6 +8,7 @@
  */
 
 import { useState, useEffect, memo } from 'react';
+import { useLiveNextPrayer } from '@/lib/client/useLiveNextPrayer';
 
 const PRAYER_KEYS = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
 
@@ -80,7 +81,7 @@ function localTimeStr(iso, tz) {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-function PrayerTimeline({ times, timezone, nextPrayerKey }) {
+function PrayerTimeline({ times, timezone, lat, lon, countryCode, method, cacheKey, nextPrayerKey: fallbackNextPrayerKey }) {
   const [mounted, setMounted] = useState(false);
   const [nowMin, setNowMin]   = useState(0);
 
@@ -91,6 +92,16 @@ function PrayerTimeline({ times, timezone, nextPrayerKey }) {
     const id = setInterval(tick, 30_000);
     return () => clearInterval(id);
   }, [timezone]);
+
+  // Live "next prayer" — re-derived every second from the same coordinates,
+  // instead of trusting the server-rendered nextPrayerKey prop, which is only
+  // a snapshot from render time and can disagree with the live countdown ring
+  // the moment real time crosses a prayer boundary.
+  const { nextKey: liveNextPrayerKey } = useLiveNextPrayer({
+    lat, lon, timezone, countryCode, method, cacheKey,
+    fallbackNextPrayerKey,
+  });
+  const nextPrayerKey = liveNextPrayerKey ?? fallbackNextPrayerKey;
 
   // Parse prayer times → local minutes
   const pMin = {};
@@ -297,6 +308,10 @@ function PrayerTimeline({ times, timezone, nextPrayerKey }) {
 export default memo(PrayerTimeline, (prev, next) =>
   prev.timezone        === next.timezone &&
   prev.nextPrayerKey   === next.nextPrayerKey &&
+  prev.lat             === next.lat &&
+  prev.lon             === next.lon &&
+  prev.countryCode     === next.countryCode &&
+  prev.method          === next.method &&
   prev.times?.fajr     === next.times?.fajr &&
   prev.times?.isha     === next.times?.isha
 );

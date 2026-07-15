@@ -31,3 +31,24 @@ export function detectAdBlockViaBait() {
     }, 150);
   });
 }
+
+// Real adsbygoogle.js sets `window.adsbygoogle.loaded = true` the moment it
+// initializes — independent of whether any individual ad slot later gets
+// filled. Our own components also do `window.adsbygoogle = window.adsbygoogle
+// || []` as a defensive no-op, so the array existing proves nothing; only
+// `.loaded` proves the real script executed. This catches blocking the bait
+// check can't see: DNS-level filters, enterprise/security-suite proxies, and
+// network-request blockers that silently drop the script request without
+// touching the page's DOM or ever hitting the script's onerror handler.
+export function detectAdBlockViaScriptFlag(timeoutMs = 5000) {
+  return new Promise((resolve) => {
+    if (typeof window === "undefined") {
+      resolve(false);
+      return;
+    }
+
+    window.setTimeout(() => {
+      resolve(!(window.adsbygoogle && window.adsbygoogle.loaded === true));
+    }, timeoutMs);
+  });
+}

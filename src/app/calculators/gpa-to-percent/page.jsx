@@ -9,6 +9,7 @@ import {
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { GPA_SYSTEMS } from '@/lib/calculators/gpa';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
 import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
@@ -147,7 +148,6 @@ export default function GpaToPercentPage() {
 
       {/* Scale 4 table */}
       <CalculatorSection
-        showAdBefore
         id="scale4-table"
         eyebrow="نظام من 4 — الدولي"
         title="جدول تحويل المعدل من 4 إلى نسبة مئوية"
@@ -171,6 +171,65 @@ export default function GpaToPercentPage() {
                   <TableCell>{row.label}</TableCell>
                   <TableCell className="font-medium">{row.pct}</TableCell>
                   <TableCell>{row.classification}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </CalculatorSection>
+
+      {/* Scale 20 (Maghrebi) table */}
+      <CalculatorSection
+        id="scale20-table"
+        eyebrow="نظام من 20 — المغاربي"
+        title="جدول تحويل المعدل من 20 إلى نسبة مئوية"
+        description="النظام الفرنسي المعتمد في المغرب والجزائر وتونس ولبنان — تحويل خطي مباشر (المعدل ÷ 20 × 100)."
+        subtle
+      >
+        <div className="calc-table-wrap">
+          <Table dir="rtl">
+            <TableHeader>
+              <TableRow>
+                <TableHead>المعدل (من 20)</TableHead>
+                <TableHead>النسبة المئوية</TableHead>
+                <TableHead>التصنيف</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {GPA_SYSTEMS.scale20.classifications.map((c) => (
+                <TableRow key={c.label + c.min}>
+                  <TableCell className="font-medium">{c.min}–{c.max}</TableCell>
+                  <TableCell className="font-medium">{Math.round((c.min / 20) * 100)}–{Math.round((c.max / 20) * 100)}%</TableCell>
+                  <TableCell>{c.label} — {c.labelEn}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </CalculatorSection>
+
+      {/* Scale 10 (secondary) table */}
+      <CalculatorSection
+        id="scale10-table"
+        eyebrow="نظام من 10 — الثانوي"
+        title="جدول تحويل المعدل من 10 إلى نسبة مئوية"
+        description="مستخدم في بعض شهادات الثانوية العامة — تحويل خطي مباشر (المعدل ÷ 10 × 100)."
+      >
+        <div className="calc-table-wrap">
+          <Table dir="rtl">
+            <TableHeader>
+              <TableRow>
+                <TableHead>المعدل (من 10)</TableHead>
+                <TableHead>النسبة المئوية</TableHead>
+                <TableHead>التصنيف</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {GPA_SYSTEMS.scale10.classifications.map((c) => (
+                <TableRow key={c.label + c.min}>
+                  <TableCell className="font-medium">{c.min}–{c.max}</TableCell>
+                  <TableCell className="font-medium">{Math.round(c.min * 10)}–{Math.round(c.max * 10)}%</TableCell>
+                  <TableCell>{c.label} — {c.labelEn}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

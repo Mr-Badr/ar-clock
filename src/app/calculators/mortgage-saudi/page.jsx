@@ -83,7 +83,6 @@ export default async function MortgageSaudiPage() {
       {/* DBR + housing support explainer */}
       <CalculatorSection
         id="m-sa-dbr"
-        showAdBefore
         eyebrow="نسبة التحمل"
         title="كيف يحدد البنك مبلغ التمويل الذي تستحقه؟"
       >

@@ -198,17 +198,23 @@ function _interpolate(value, breakpoints) {
   return breakpoints[breakpoints.length - 1][1];
 }
 
+// Scales that convert linearly to percent (no known grade-compression convention),
+// unlike the US-style scale4/scale5 which use the piecewise breakpoints above.
+const _LINEAR_SYSTEMS = new Set(['scale100', 'scale20', 'scale10']);
+
 /**
  * Convert a GPA value to its percentage equivalent.
  * @param {number} gpa
- * @param {string} systemId — 'scale5' | 'scale4' | 'scale100'
+ * @param {string} systemId — 'scale5' | 'scale4' | 'scale100' | 'scale20' | 'scale10'
  * @returns {{ percent: number, isValid: boolean }}
  */
 export function convertGpaToPercent(gpa, systemId = 'scale5') {
   const n = parseFloat(gpa);
   const system = GPA_SYSTEMS[systemId];
   if (!system || isNaN(n) || n < 0 || n > system.max) return { percent: 0, isValid: false };
-  if (systemId === 'scale100') return { percent: Math.round(n * 10) / 10, isValid: true };
+  if (_LINEAR_SYSTEMS.has(systemId)) {
+    return { percent: Math.round((n / system.max) * 1000) / 10, isValid: true };
+  }
   const bp = systemId === 'scale4' ? _SCALE4_BREAKPOINTS : _SCALE5_BREAKPOINTS;
   return { percent: _interpolate(n, bp), isValid: true };
 }

@@ -128,8 +128,22 @@ export default function ZakatCalculator() {
                   { id: 'zakat-cash', label: 'النقود في اليد', value: cash, setter: setCash, placeholder: '0' },
                   { id: 'zakat-bank', label: 'الودائع المصرفية والحسابات', value: bankDeposits, setter: setBankDeposits, placeholder: '0' },
                   { id: 'zakat-invest', label: 'الأسهم والاستثمارات (قيمة السوقية)', value: investments, setter: setInvestments, placeholder: '0' },
-                  { id: 'zakat-biz', label: 'البضاعة التجارية (بتكلفة الشراء)', value: businessInventory, setter: setBusinessInventory, placeholder: '0' },
-                  { id: 'zakat-rec', label: 'الديون المستحقة لك (قابلة للسداد)', value: receivables, setter: setReceivables, placeholder: '0' },
+                  {
+                    id: 'zakat-biz',
+                    label: 'البضاعة التجارية (بالقيمة السوقية الحالية)',
+                    value: businessInventory,
+                    setter: setBusinessInventory,
+                    placeholder: '0',
+                    hint: 'قوّمها بسعر البيع الحالي في السوق يوم الزكاة، لا بسعر شرائها — وهو قول جمهور الفقهاء.',
+                  },
+                  {
+                    id: 'zakat-rec',
+                    label: 'الديون المستحقة لك (قابلة للسداد)',
+                    value: receivables,
+                    setter: setReceivables,
+                    placeholder: '0',
+                    hint: 'أدخل الديون التي تتوقع تحصيلها (دين على مليء باذل). الديون المعدومة أو المشكوك فيها لا تُزكّى إلا بعد قبضها.',
+                  },
                 ].map((field) => (
                   <div key={field.id} className="zakat-asset-row">
                     <Label htmlFor={field.id} className="zakat-asset-label">{field.label}</Label>
@@ -143,6 +157,7 @@ export default function ZakatCalculator() {
                       />
                       <span className="calc-esb-currency">{currency}</span>
                     </div>
+                    {field.hint && <p className="calc-hint">{field.hint}</p>}
                   </div>
                 ))}
               </div>

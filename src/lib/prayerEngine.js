@@ -190,3 +190,55 @@ export function getNextPrayer(times, nowIso) {
 
   return { nextKey, nextIso, prevIso };
 }
+
+/**
+ * Live, browser-clock version of getNextPrayer() — recomputes prayer times
+ * fresh from coordinates using `new Date()` at call time, instead of trusting
+ * a server-rendered snapshot. This is the SINGLE function every "which prayer
+ * is next" UI (countdown ring, timeline, table) must call on every tick.
+ *
+ * Why this exists: a server-rendered "next prayer" value is only correct at
+ * the instant the page was rendered — it goes stale the moment real time
+ * crosses a prayer boundary while the tab stays open, and can also be served
+ * from an already-stale cached timestamp on first load. Calling this on a
+ * client-side interval keeps every consumer showing the identical, correct
+ * answer, including the midnight rollover to a new day's Fajr.
+ *
+ * @param {object} opts
+ * @param {number} opts.lat
+ * @param {number} opts.lon
+ * @param {string} opts.timezone
+ * @param {string} [opts.countryCode]
+ * @param {string} [opts.method]
+ * @param {string} [opts.cacheKey] - stable key prefix for the calculatePrayerTimes module cache
+ * @param {{nextKey:string,nextIso:string,prevIso:string}} [opts.fallback] - used if lat/lon/timezone are invalid or calculation fails
+ * @returns {{ nextKey: string, nextIso: string, prevIso: string }}
+ */
+export function resolveLivePrayerWindow({ lat, lon, timezone, countryCode, method, cacheKey, fallback }) {
+  const parsedLat = Number(lat);
+  const parsedLon = Number(lon);
+  const safeFallback = fallback || { nextKey: undefined, nextIso: undefined, prevIso: undefined };
+
+  if (!Number.isFinite(parsedLat) || !Number.isFinite(parsedLon) || !timezone) {
+    return safeFallback;
+  }
+
+  try {
+    const now = new Date();
+    const times = calculatePrayerTimes({
+      lat: parsedLat,
+      lon: parsedLon,
+      timezone,
+      date: now,
+      method,
+      countryCode,
+      cacheKey: `${cacheKey || 'live-next-prayer'}::${countryCode || timezone}::${parsedLat.toFixed(4)}::${parsedLon.toFixed(4)}`,
+    });
+
+    if (!times) return safeFallback;
+
+    return getNextPrayer(times, now.toISOString());
+  } catch {
+    return safeFallback;
+  }
+}

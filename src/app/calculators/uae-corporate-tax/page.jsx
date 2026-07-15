@@ -79,7 +79,6 @@ export default async function UaeCorporateTaxPage() {
       {/* Tax rates table */}
       <CalculatorSection
         id="uae-ct-rates"
-        showAdBefore
         eyebrow="نظام الضريبة"
         title="شرائح ضريبة الشركات في الإمارات"
       >

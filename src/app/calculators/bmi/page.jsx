@@ -87,7 +87,6 @@ export default function BMIPage() {
       </CalculatorHero>
 
       <CalculatorSection
-        showAdBefore
         id="bmi-classification"
         eyebrow="تصنيفات WHO"
         title="جدول تصنيف BMI وفق منظمة الصحة العالمية"

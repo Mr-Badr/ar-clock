@@ -172,7 +172,6 @@ export default function ElectricityBillPage() {
 
       {/* Savings tips + worked example */}
       <CalculatorSection
-        showAdBefore
         id="electricity-savings"
         eyebrow="تقليل الفاتورة"
         title="كيف تخفض فاتورة الكهرباء دون التأثير على الراحة؟"
