@@ -90,6 +90,12 @@ export const COUNTRY_HUBS = [
         eventSlug: 'riyadh-season',
         note: 'موسم ترفيهي يُعلن موعده سنوياً، وليس إجازة',
       },
+      {
+        nameAr: 'ذكرى استرداد الرياض',
+        rule: { type: 'fixed', month: 1, day: 15 },
+        eventSlug: 'recapture-of-riyadh',
+        note: 'ذكرى تاريخية (1902) لا علاقة لها بيوم التأسيس أو اليوم الوطني — وليست يوم إجازة',
+      },
     ],
     faqExtras: [
       {
@@ -213,6 +219,12 @@ export const COUNTRY_HUBS = [
         approximate: true,
         eventSlug: 'hala-february-kuwait',
         note: 'مهرجان تسوق وترفيه شهري، وليس إجازة بذاته',
+      },
+      {
+        nameAr: 'عيد استقلال الكويت',
+        rule: { type: 'fixed', month: 6, day: 19 },
+        eventSlug: 'independence-day-kuwait',
+        note: 'ذكرى تاريخية (1961) منفصلة عن العيد الوطني (25 فبراير) — وليست يوم إجازة',
       },
     ],
     faqExtras: [
@@ -411,7 +423,14 @@ export const COUNTRY_HUBS = [
         note: null,
       },
     ],
-    observances: [],
+    observances: [
+      {
+        nameAr: 'عيد استقلال قطر',
+        rule: { type: 'fixed', month: 9, day: 3 },
+        eventSlug: 'independence-day-qatar',
+        note: 'كان اليوم الوطني القطري نفسه حتى 2007، ثم أصبح ذكرى تاريخية منفصلة عن اليوم الوطني الحالي (18 ديسمبر) — وليس إجازة رسمية',
+      },
+    ],
     faqExtras: [
       {
         question: 'لماذا لا يُعد المولد النبوي إجازة رسمية في قطر؟',
@@ -490,7 +509,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'hijri', month: 1, day: 9 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'tasua-day',
         note: 'إجازة رسمية قائمة بذاتها في البحرين، وليست يوماً تحضيرياً فقط',
       },
       {
@@ -530,7 +549,14 @@ export const COUNTRY_HUBS = [
         note: 'اليوم الوطني (16 ديسمبر) يليه مباشرة يوم جلوس الملك حمد على العرش (17 ديسمبر) — إجازة واحدة متصلة بيومين',
       },
     ],
-    observances: [],
+    observances: [
+      {
+        nameAr: 'عيد استقلال البحرين',
+        rule: { type: 'fixed', month: 8, day: 15 },
+        eventSlug: 'independence-day-bahrain',
+        note: 'ذكرى تاريخية (1971) منفصلة عن اليوم الوطني (16 ديسمبر) — وليست يوم إجازة',
+      },
+    ],
     faqExtras: [
       {
         question: 'هل يجمع البحرين بين تاسوعاء وعاشوراء كإجازتين رسميتين؟',
@@ -635,7 +661,7 @@ export const COUNTRY_HUBS = [
       {
         nameAr: 'يوم النهضة العماني',
         rule: { type: 'fixed', month: 7, day: 23 },
-        eventSlug: null,
+        eventSlug: 'renaissance-day-oman',
         note: 'مناسبة تاريخية من عهد السلطان قابوس، وليست ضمن قائمة الإجازات الرسمية الحالية بالمرسوم 88/2022',
       },
       {
@@ -693,7 +719,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'easter', offset: -2 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'good-friday-germany',
         note: 'يسبق أحد الفصح بيومين — تاريخ متحرك يُحسب من عيد الفصح كل عام',
       },
       {
@@ -702,7 +728,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'easter', offset: 1 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'easter-monday-germany',
         note: null,
       },
       {
@@ -720,7 +746,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'easter', offset: 39 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'ascension-day-germany',
         note: 'الخميس الذي يوافق 39 يوماً بعد أحد الفصح',
       },
       {
@@ -729,7 +755,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'easter', offset: 50 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'whit-monday-germany',
         note: null,
       },
       {
@@ -738,7 +764,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 10, day: 3 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'unity-day-germany',
         note: 'الإجازة الرسمية الوحيدة بقانون اتحادي في كل ألمانيا — البقية مسيحية المصدر وتُشرَّع ولاية بولاية',
       },
       {
@@ -747,7 +773,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 12, day: 25 },
         durationDays: 2,
         durationLabel: 'يومان (25–26 ديسمبر)',
-        eventSlug: null,
+        eventSlug: 'christmas-germany',
         note: 'يليه مباشرة اليوم الثاني لعيد الميلاد في 26 ديسمبر',
       },
     ],
@@ -794,7 +820,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 1, day: 6 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'epiphany-sweden',
         note: null,
       },
       {
@@ -857,7 +883,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 6, day: 6 },
         durationDays: 1,
         durationLabel: 'يوم واحد (إجازة رسمية منذ 2005 فقط)',
-        eventSlug: null,
+        eventSlug: 'national-day-sweden',
         note: 'أصبح إجازة رسمية سنة 2005 بقرار من البرلمان السويدي، مقابل إلغاء إثنين العنصرة في نفس الإصلاح',
       },
       {
@@ -866,7 +892,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'weekday-in-range', weekday: 6, startMonth: 6, startDay: 20, endMonth: 6, endDay: 26 },
         durationDays: 1,
         durationLabel: 'السبت الواقع بين 20–26 يونيو',
-        eventSlug: null,
+        eventSlug: 'midsummer-sweden',
         note: 'من أكثر المناسبات السويدية احتفالاً — تاريخه متحرك كل عام ضمن هذا الأسبوع',
       },
       {
@@ -875,7 +901,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'weekday-in-range', weekday: 6, startMonth: 10, startDay: 31, endMonth: 11, endDay: 6 },
         durationDays: 1,
         durationLabel: 'السبت الواقع بين 31 أكتوبر–6 نوفمبر',
-        eventSlug: null,
+        eventSlug: 'all-saints-sweden',
         note: null,
       },
       {
@@ -892,7 +918,7 @@ export const COUNTRY_HUBS = [
       {
         nameAr: 'ليلة عيد الميلاد',
         rule: { type: 'fixed', month: 12, day: 24 },
-        eventSlug: null,
+        eventSlug: 'christmas-eve-sweden',
         note: 'يوم عمل رسمياً بالقانون السويدي، لكن أغلب السويديين يحصلون عليه عرفاً أو بموجب اتفاقيات عمل جماعية',
       },
       {
@@ -1106,7 +1132,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'easter', offset: 1 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'easter-monday-france',
         note: null,
       },
       {
@@ -1124,7 +1150,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 5, day: 8 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'victory-day-france',
         note: null,
       },
       {
@@ -1133,7 +1159,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'easter', offset: 39 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'ascension-day-france',
         note: null,
       },
       {
@@ -1142,7 +1168,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'easter', offset: 50 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'whit-monday-france',
         note: 'قد يُخصص كـ"يوم تضامن" غير مدفوع بقرار الشركة، وليس بالضرورة في هذا اليوم تحديداً منذ تعديل 2008',
       },
       {
@@ -1151,7 +1177,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 7, day: 14 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'bastille-day-france',
         note: null,
       },
       {
@@ -1160,7 +1186,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 8, day: 15 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'assumption-day-france',
         note: null,
       },
       {
@@ -1169,7 +1195,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 11, day: 1 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'all-saints-day-france',
         note: null,
       },
       {
@@ -1178,7 +1204,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 11, day: 11 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'armistice-day-france',
         note: null,
       },
       {
@@ -1239,7 +1265,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 4, day: 23 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'sovereignty-childrens-day-turkey',
         note: null,
       },
       {
@@ -1257,7 +1283,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 5, day: 19 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'youth-sports-day-turkey',
         note: null,
       },
       {
@@ -1275,7 +1301,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 7, day: 15 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'democracy-day-turkey',
         note: 'إجازة رسمية منذ محاولة الانقلاب سنة 2016',
       },
       {
@@ -1293,7 +1319,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 8, day: 30 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'victory-day-turkey',
         note: null,
       },
       {
@@ -1367,7 +1393,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'floating', month: 1, weekday: 1, nth: 3 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'mlk-day-usa',
         note: 'الاثنين الثالث من يناير',
       },
       {
@@ -1376,7 +1402,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'floating', month: 2, weekday: 1, nth: 3 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'washington-birthday-usa',
         note: 'الاسم الرسمي الفدرالي ما زال "عيد ميلاد واشنطن"، رغم شيوع اسم "يوم الرؤساء" إعلامياً وتجارياً فقط',
       },
       {
@@ -1385,7 +1411,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'floating', month: 5, weekday: 1, nth: -1 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'memorial-day-usa',
         note: 'الاثنين الأخير من مايو تحديداً، وليس الرابع — يختلفان في السنوات التي يقع فيها مايو على 5 اثنينات',
       },
       {
@@ -1394,7 +1420,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 6, day: 19 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'juneteenth-usa',
         note: 'أحدث إجازة فدرالية — أُضيفت سنة 2021 فقط، أول إجازة جديدة منذ عيد مارتن لوثر كينغ سنة 1983',
       },
       {
@@ -1421,7 +1447,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'floating', month: 10, weekday: 1, nth: 2 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'columbus-day-usa',
         note: 'بعض الولايات (نيومكسيكو، مين، فيرمونت) تستبدل الاسم رسمياً بـ"يوم الشعوب الأصلية" على مستوى الولاية فقط، وليس فدرالياً',
       },
       {
@@ -1430,7 +1456,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 11, day: 11 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'veterans-day-usa',
         note: null,
       },
       {
@@ -1500,7 +1526,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'floating', month: 2, weekday: 1, nth: 3 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'family-day-canada',
         note: 'ليست إجازة فدرالية وليست معتمدة في كل المقاطعات — تحمل أسماء مختلفة (يوم لوي ريل في مانيتوبا مثلاً) في نفس التاريخ تقريباً',
       },
       {
@@ -1518,7 +1544,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'weekday-in-range', weekday: 1, startMonth: 5, startDay: 18, endMonth: 5, endDay: 24 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'victoria-day-canada',
         note: 'الاثنين الواقع في 24 مايو أو قبله مباشرة',
       },
       {
@@ -1536,7 +1562,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'floating', month: 9, weekday: 1, nth: 1 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'labor-day-canada',
         note: null,
       },
       {
@@ -1545,7 +1571,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 9, day: 30 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'truth-reconciliation-day-canada',
         note: 'إجازة فدرالية منذ 2021 للقطاعات الخاضعة للتنظيم الفدرالي، وتتبناها تدريجياً بعض المقاطعات (كولومبيا البريطانية، مانيتوبا) وليس كلها',
       },
       {
@@ -1554,7 +1580,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'floating', month: 10, weekday: 1, nth: 2 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'thanksgiving-canada',
         note: 'الاثنين الثاني من أكتوبر — تاريخ مختلف تماماً عن عيد الشكر الأمريكي (الخميس الرابع من نوفمبر)',
       },
       {
@@ -1563,7 +1589,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 11, day: 11 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'remembrance-day-canada',
         note: 'إجازة رسمية مدفوعة في نصف المقاطعات تقريباً فقط — غير معتمدة كإجازة عامة في أونتاريو وكيبك ومانيتوبا',
       },
       {
@@ -1572,7 +1598,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 12, day: 25 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'christmas-canada',
         note: null,
       },
       {
@@ -1581,7 +1607,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 12, day: 26 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'boxing-day-canada',
         note: 'إجازة رسمية عامة في أونتاريو فقط — بقية المقاطعات تتركه اختيارياً لصاحب العمل',
       },
     ],
@@ -1954,7 +1980,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 12, day: 25 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'christmas-jordan',
         note: 'إجازة رسمية لكل الأردنيين وليس فقط للمسيحيين — خصوصية أردنية عن أغلب الدول العربية',
       },
     ],
@@ -2014,7 +2040,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 1, day: 7 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'coptic-christmas-egypt',
         note: 'إجازة رسمية لكل المصريين دون استثناء، وليست حكراً على الأقباط',
       },
       {
@@ -2086,7 +2112,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 6, day: 30 },
         durationDays: 1,
         durationLabel: 'يوم واحد رسمياً، وقد يُنقل يوم العطلة الفعلي بقرار حكومي',
-        eventSlug: null,
+        eventSlug: 'june-30-revolution-egypt',
         note: 'يوم العطلة الفعلي يُنقل أحياناً لأيام أخرى بقرار من مجلس الوزراء',
       },
       {
@@ -2112,7 +2138,7 @@ export const COUNTRY_HUBS = [
       {
         nameAr: 'عيد الجلاء (مصر)',
         rule: { type: 'fixed', month: 6, day: 18 },
-        eventSlug: null,
+        eventSlug: 'evacuation-day-egypt',
         note: 'ذكرى جلاء القوات البريطانية سنة 1956، مناسبة وطنية وليست إجازة رسمية',
       },
     ],
@@ -2364,9 +2390,9 @@ export const COUNTRY_HUBS = [
     weekendLabel: 'الجمعة والسبت',
     accentClass: 'sy',
     intro:
-      'قائمة الإجازات الرسمية السورية تغيّرت فعلياً بمرسوم رئاسي حديث: أُضيفت ذكرى انطلاق الثورة (18 مارس) وعيد التحرير (8 ديسمبر)، بينما أُلغيت أربع إجازات من العهد السابق. عيد الجلاء (17 أبريل) يبقى الإجازة الأقدم في هذه القائمة ولم يتأثر بالتغيير.',
+      'قائمة الإجازات الرسمية السورية تغيّرت فعلياً بالمرسوم الرئاسي رقم 188 لسنة 2025: أُضيفت ذكرى انطلاق الثورة (18 مارس) وعيد التحرير (8 ديسمبر)، وأُعيد تثبيت عيدي الفصح الغربي والشرقي كإجازتين منفصلتين للطوائف المسيحية، بينما أُلغيت أربع إجازات من العهد السابق. عيد الجلاء (17 أبريل) يبقى الإجازة الأقدم في هذه القائمة ولم يتأثر بالتغيير.',
     sourceNote:
-      'المرجع: المرسوم الرئاسي الذي أضاف إجازتي 18 مارس و8 ديسمبر وألغى أربع إجازات من العهد السابق، بحسب مصادر إخبارية مستقلة متعددة. هذه الصفحة تلتزم سجلاً محايداً صارماً يقتصر على الوقائع القانونية والتقويمية.',
+      'المرجع: المرسوم الرئاسي رقم 188 لسنة 2025 (صادر 5 أكتوبر 2025) الذي حدّد قائمة العطل الرسمية السورية، مؤكَّداً ببلاغ الأمانة العامة لرئاسة الجمهورية الصادر في 30 مارس 2026 بتواريخ عطلة عيد الفصح لعامي التقويمين الغربي والشرقي، بحسب مصادر إخبارية سورية مستقلة متعددة. هذه الصفحة تلتزم سجلاً محايداً صارماً يقتصر على الوقائع القانونية والتقويمية.',
     holidays: [
       {
         key: 'new-year',
@@ -2384,16 +2410,16 @@ export const COUNTRY_HUBS = [
         durationDays: 1,
         durationLabel: 'يوم واحد',
         eventSlug: 'revolution-day-syria',
-        note: 'أُضيفت بموجب مرسوم رئاسي حديث، وتختلف عن ذكرى ثورة 8 مارس 1963 الملغاة من قائمة العطل',
+        note: 'أُضيفت بموجب المرسوم الرئاسي رقم 188 لسنة 2025، وتختلف عن ذكرى ثورة 8 مارس 1963 الملغاة من قائمة العطل',
       },
       {
-        key: 'labor-day',
-        nameAr: 'عيد العمال',
-        rule: { type: 'fixed', month: 5, day: 1 },
+        key: 'easter-sunday',
+        nameAr: 'أحد الفصح (الغربي)',
+        rule: { type: 'easter', offset: 0 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: 'labor-day',
-        note: null,
+        eventSlug: 'easter-syria',
+        note: 'أعاد المرسوم الرئاسي رقم 188 لسنة 2025 تثبيته إجازة رسمية منفصلة عن الفصح الشرقي — يوم أحد فعلي رغم أن الأحد يوم عمل عادي في سوريا (عطلة نهاية الأسبوع الجمعة والسبت)',
       },
       {
         key: 'evacuation-day',
@@ -2403,6 +2429,15 @@ export const COUNTRY_HUBS = [
         durationLabel: 'يوم واحد',
         eventSlug: 'evacuation-day-syria',
         note: 'أقدم إجازة رسمية في هذه القائمة (منذ 1946) ولم تتأثر بالمرسوم الأخير',
+      },
+      {
+        key: 'labor-day',
+        nameAr: 'عيد العمال',
+        rule: { type: 'fixed', month: 5, day: 1 },
+        durationDays: 1,
+        durationLabel: 'يوم واحد',
+        eventSlug: 'labor-day',
+        note: null,
       },
       {
         key: 'eid-fitr',
@@ -2441,6 +2476,15 @@ export const COUNTRY_HUBS = [
         note: null,
       },
       {
+        key: 'christmas',
+        nameAr: 'عيد الميلاد المجيد',
+        rule: { type: 'fixed', month: 12, day: 25 },
+        durationDays: 1,
+        durationLabel: 'يوم واحد',
+        eventSlug: null,
+        note: 'أعاده المرسوم الرئاسي رقم 188 لسنة 2025 إجازة رسمية مؤكَّدة',
+      },
+      {
         key: 'liberation-day',
         nameAr: 'عيد التحرير',
         rule: { type: 'fixed', month: 12, day: 8 },
@@ -2450,12 +2494,24 @@ export const COUNTRY_HUBS = [
         note: 'أُضيفت بموجب نفس المرسوم الذي أضاف ذكرى 18 مارس',
       },
     ],
-    observances: [],
+    observances: [
+      {
+        nameAr: 'الجمعة العظيمة وأحد الفصح (الشرقي/الأرثوذكسي)',
+        rule: { type: 'orthodox-easter', offset: 0 },
+        eventSlug: null,
+        note: 'إجازة رسمية منفصلة تماماً عن الفصح الغربي وفق التقويم الشرقي الأرثوذكسي، أكدها بلاغ الأمانة العامة لرئاسة الجمهورية في 30 مارس 2026 (مثال 2026: 12 أبريل، بعد الفصح الغربي بأسبوع)',
+      },
+    ],
     faqExtras: [
       {
         question: 'ما الذي تغيّر في قائمة العطل الرسمية السورية مؤخراً؟',
         answer:
-          'بموجب مرسوم رئاسي حديث، أُضيفت إجازتان جديدتان (ذكرى انطلاق الثورة في 18 مارس وعيد التحرير في 8 ديسمبر)، وأُلغيت أربع إجازات من العهد السابق. عيد الجلاء (17 أبريل) وحده لم يتأثر بهذا التغيير، إذ يعود لسنة 1946.',
+          'بموجب المرسوم الرئاسي رقم 188 لسنة 2025 (5 أكتوبر 2025)، أُضيفت إجازتان جديدتان (ذكرى انطلاق الثورة في 18 مارس وعيد التحرير في 8 ديسمبر)، وأُعيد تثبيت عيدي الفصح الغربي والشرقي وعيد الميلاد المجيد كإجازات رسمية منفصلة للطوائف المسيحية، بينما أُلغيت أربع إجازات من العهد السابق. عيد الجلاء (17 أبريل) وحده لم يتأثر بهذا التغيير، إذ يعود لسنة 1946.',
+      },
+      {
+        question: 'هل يحصل المسيحيون في سوريا على إجازتين منفصلتين لعيد الفصح؟',
+        answer:
+          'نعم، بحسب بلاغ الأمانة العامة لرئاسة الجمهورية الصادر في 30 مارس 2026 تطبيقاً للمرسوم رقم 188 لسنة 2025، تمنح الدولة يوم أحد الفصح الغربي إجازة رسمية منفصلة تماماً عن يوم أحد الفصح الشرقي (الأرثوذكسي)، وقد يفصل بينهما أسبوع أو أكثر بحسب اختلاف التقويمين في تلك السنة.',
       },
     ],
   },
@@ -2638,7 +2694,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 12, day: 25 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'christmas-palestine',
         note: 'قانون العمل الفلسطيني يدرج الأعياد المسيحية ضمن الإجازات الوطنية الرسمية',
       },
       {
@@ -2713,7 +2769,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 1, day: 6 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'armenian-christmas-lebanon',
         note: 'إجازة رسمية معتمدة منذ 2003، مرتبطة بتقويم الكنيسة الأرمنية',
       },
       {
@@ -2722,7 +2778,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 2, day: 9 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'saint-maroun-day-lebanon',
         note: 'تكريماً للقديس شفيع الطائفة المارونية؛ إجازة وطنية عامة لكل اللبنانيين',
       },
       {
@@ -2848,7 +2904,7 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 8, day: 15 },
         durationDays: 1,
         durationLabel: 'يوم واحد',
-        eventSlug: null,
+        eventSlug: 'assumption-day-lebanon',
         note: null,
       },
       {

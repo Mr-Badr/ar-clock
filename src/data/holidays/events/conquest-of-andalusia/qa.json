@@ -1,0 +1,17 @@
+{
+  "slug": "conquest-of-andalusia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر islamweb.net وويكيبيديا العربية وmarefa.org: إجماع كامل على 5 رجب (عبور) و28 رمضان (معركة وادي لكة) 92هـ — لا تضارب مصدري هنا.",
+    "خطبة طارق بن زياد موثقة عبر مصادر متعددة؛ خرافة حرق السفن عُرضت بأمانة كرواية متنازع عليها لا حقيقة مسلَّمة.",
+    "hijri type، hijriMonth: 9 (رمضان)، hijriDay: 28، countryScope: all."
+  ],
+  "updatedAt": "2026-07-13T18:10:38.450Z"
+}

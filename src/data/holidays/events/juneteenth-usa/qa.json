@@ -1,0 +1,17 @@
+{
+  "slug": "juneteenth-usa",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر History.com وGalveston Historical Foundation وويكيبيديا الإنجليزية: 19 يونيو 1865، الأمر العسكري رقم 3، الجنرال غرينجر، فارق عامين ونصف عن إعلان 1863.",
+    "أصبح عيداً فيدرالياً 17 يونيو 2021 (Public Law 117-17) — أحدث عيد فيدرالي أمريكي منذ يوم مارتن لوثر كينغ 1983.",
+    "fixed type، _countryCode: us، countryScope: none — حدث أمريكي وحيد بتاريخ ميلادي ثابت 19 يونيو."
+  ],
+  "updatedAt": "2026-07-13T18:05:55.099Z"
+}

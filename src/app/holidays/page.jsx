@@ -9,7 +9,7 @@ import {
   approxHijriYear,
   buildBreadcrumbSchema,
 } from '@/lib/holidays-engine';
-import { getInitialEvents } from './data';
+import { getInitialEvents, getFacetCounts } from './data';
 import HolidaysClient from './HolidaysClient';
 import { getCachedNowIso } from '@/lib/date-utils';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
@@ -177,9 +177,10 @@ export default async function HolidaysPage() {
   };
 
   /* ── Date / year resolution ─────────────────────────────────────── */
-  const [{ now, nowIso }, initialData] = await Promise.all([
+  const [{ now, nowIso }, initialData, initialFacetCounts] = await Promise.all([
     getHolidaysNow('/holidays'),
     getInitialEvents(DEFAULT_FILTER),
+    getFacetCounts(DEFAULT_FILTER),
   ]);
   const defaultData = normalizeInitialEventsData(initialData);
   const gr = now.getFullYear();
@@ -292,6 +293,7 @@ export default async function HolidaysPage() {
             initialNextCursor={defaultData.nextCursor}
             initialTotal={defaultData.total}
             initialFilters={DEFAULT_FILTER}
+            initialFacetCounts={initialFacetCounts}
           />
         </section>
 

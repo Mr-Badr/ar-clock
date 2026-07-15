@@ -1,0 +1,17 @@
+{
+  "slug": "columbus-day-usa",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر Pew Research وويكيبيديا الإنجليزية: إقرار 1937، نقل لصيغة الاثنين 1971، قائمة دقيقة بالولايات ذات الاسم البديل والولايات التي تحتفل بالاسمين معاً.",
+    "نبرة محايدة تماماً تجاه جدل الاسمين، دون ترجيح أي طرف.",
+    "floating type، weekday:1 nth:2 month:10 (الاثنين الثاني من أكتوبر)، _countryCode: us، countryScope: none."
+  ],
+  "updatedAt": "2026-07-13T18:06:21.380Z"
+}

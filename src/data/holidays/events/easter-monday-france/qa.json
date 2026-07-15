@@ -1,0 +1,18 @@
+{
+  "slug": "easter-monday-france",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track A candidate, from country-hub-data.js gap scan.",
+    "Owner explicitly confirmed 2026-07-14 (AskUserQuestion) to proceed with Easter-cycle events (Easter Monday, Ascension, Whit Monday), framed strictly around legal/civil/historical status and never affirming the Resurrection as true, matching the existing live good-friday-germany/ascension-day-germany/assumption-day-france pattern.",
+    "Date rule (easter type, easterOffset 1) and history (1801 Concordat with Napoleon reduced a full Easter-week shutdown to a single day) confirmed via WebSearch against sortiraparis.com/Wikipedia/erasmusplace.com.",
+    "Competitor check: trip.com/Arabic Wikipedia list it only inside general holiday roundups, sortiraparis.com covers events/activities not legal status, no Arabic competitor explains the lunar/astronomical Easter-date calculation or distinguishes Easter Monday from Whit Monday."
+  ],
+  "updatedAt": "2026-07-14T21:55:17.730Z"
+}

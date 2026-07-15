@@ -11,6 +11,7 @@ import { resolveAllHijriEvents } from '@/lib/hijri-resolver';
 import { getNextEventDate, getTimeRemaining } from '@/lib/holidays-engine';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { logHolidayFailure } from '@/lib/holidays/observability';
+import { daysLabel } from '@/lib/holidays/urgency';
 
 export default async function NextEventCard({ currentSlug }) {
   try {
@@ -46,7 +47,7 @@ export default async function NextEventCard({ currentSlug }) {
     if (!next) return null;
 
     const { ev, days } = next;
-    const daysLabel = days === 1 ? 'يوم واحد' : days < 11 ? `${days} أيام` : `${days} يوماً`;
+    const remainingText = days === 1 ? 'غداً' : `باقي ${daysLabel(days)}`;
 
     return (
       <section
@@ -68,29 +69,19 @@ export default async function NextEventCard({ currentSlug }) {
         </h2>
         <Link
           href={`/holidays/${ev.slug}`}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: 'var(--space-4)',
-            padding: 'var(--space-4) var(--space-5)',
-            background: 'color-mix(in srgb, var(--accent-soft) 35%, var(--bg-surface-2))',
-            border: '1px solid var(--border-accent)',
-            borderRadius: 'var(--radius-lg)',
-            textDecoration: 'none',
-            color: 'inherit',
-          }}
+          className="waqt-related-card waqt-related-card--featured"
+          style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)' }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
-            <span style={{ color: 'var(--accent-alt)', flexShrink: 0 }} aria-hidden="true">
-              <CalendarDays size={22} strokeWidth={1.75} />
+          <div className="waqt-related-card__head" style={{ marginBottom: 0 }}>
+            <span className="waqt-icon-chip" aria-hidden="true">
+              <CalendarDays size={18} strokeWidth={1.75} />
             </span>
             <div>
               <p style={{ margin: 0, fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', fontSize: 'var(--text-base)' }}>
                 {ev.name}
               </p>
               <p style={{ margin: 0, fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', marginTop: 'var(--space-1)' }}>
-                باقي <strong style={{ color: 'var(--accent-strong)' }}>{daysLabel}</strong>
+                <strong style={{ color: 'var(--accent-strong)' }}>{remainingText}</strong>
               </p>
             </div>
           </div>

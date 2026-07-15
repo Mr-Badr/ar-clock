@@ -1,0 +1,126 @@
+{
+  "slug": "christmas-germany",
+  "locale": "ar",
+  "capturedAt": "2026-07-13T18:08:42.116Z",
+  "primaryQueries": [
+    "عيد الميلاد في ألمانيا {{year}}",
+    "عطلة عيد الميلاد ألمانيا",
+    "عيد الميلاد في ألمانيا كم يوم",
+    "هدوء عيد الميلاد Weihnachtsruhe",
+    "هل يمنع الضجيج ليلة الميلاد في ألمانيا",
+    "عادات عيد الميلاد في ألمانيا للعرب",
+    "عطلة 25 و26 ديسمبر ألمانيا",
+    "هل عيد الميلاد عطلة رسمية في ألمانيا",
+    "أسواق الميلاد في ألمانيا",
+    "عيد الميلاد الثاني في ألمانيا",
+    "كم باقي على عيد الميلاد في ألمانيا {{year}}",
+    "هل المحلات مغلقة يوم عيد الميلاد في ألمانيا"
+  ],
+  "competitors": [
+    {
+      "site": "studyshoot.com",
+      "type": "arabic-competitor",
+      "url": "https://studyshoot.com/_/جدول-العطل-الرسمية-في-ألمانيا/",
+      "focus": [
+        "جدول عطل عام"
+      ],
+      "gaps": [
+        "لا يذكر Weihnachtsruhe إطلاقاً"
+      ]
+    },
+    {
+      "site": "arab-deutschland.com",
+      "type": "arabic-competitor",
+      "url": "https://arab-deutschland.com/عيد-الميلاد-في-المانيا/",
+      "focus": [
+        "أسواق الميلاد والطعام"
+      ],
+      "gaps": [
+        "دون ذكر القانون أو الفرق بين ليلة 24 ويومي 25-26"
+      ]
+    },
+    {
+      "site": "sonntagsblatt.de",
+      "type": "german-source",
+      "url": "https://www.sonntagsblatt.de/artikel/gesellschaft/heiligabend-ist-kein-feiertag-was-beschaeftigte-weihnachten-wirklich-duerfen",
+      "focus": [
+        "أدق مصدر لقانون الهدوء وساعاته"
+      ],
+      "gaps": [
+        "ألماني، دون محتوى عربي"
+      ]
+    }
+  ],
+  "coverageMatrix": [
+    {
+      "keyword": "عيد الميلاد في ألمانيا {{year}}",
+      "whyItMatters": "أوضح صيغة بحث مباشرة."
+    },
+    {
+      "keyword": "هدوء عيد الميلاد Weihnachtsruhe",
+      "whyItMatters": "الفجوة الأقوى — لا مصدر عربي يشرحه."
+    },
+    {
+      "keyword": "هل يمنع الضجيج ليلة الميلاد في ألمانيا",
+      "whyItMatters": "يوضح أن القيد يخص ليلة 24 لا يومي العيد."
+    },
+    {
+      "keyword": "عيد الميلاد في ألمانيا كم يوم",
+      "whyItMatters": "يوضح النظام الفريد بيومين رسميين متتاليين."
+    },
+    {
+      "keyword": "هل المحلات مغلقة يوم عيد الميلاد في ألمانيا",
+      "whyItMatters": "سؤال عملي مباشر للمقيمين والزوار."
+    },
+    {
+      "keyword": "كم باقي على عيد الميلاد في ألمانيا {{year}}",
+      "whyItMatters": "صيغة عد تنازلي مباشرة."
+    },
+    {
+      "keyword": "عطلة عيد الميلاد في بافاريا",
+      "whyItMatters": "بافاريا الأكثر صرامة في تطبيق القيد."
+    },
+    {
+      "keyword": "عيد الميلاد الثاني في ألمانيا",
+      "whyItMatters": "خصوصية اليوم الثاني (26 ديسمبر) نادراً ما تُشرح عربياً."
+    }
+  ],
+  "keywordGaps": [
+    "لا يوجد مصدر عربي يشرح Weihnachtsruhe بدقة زمنية (2pm-منتصف الليل ليلة 24 تحديداً)",
+    "توضيح أن القيد يخص ليلة 24 ديسمبر لا يومي العيد الرسميين",
+    "شرح أن عيد الميلاد مشرَّع ولاية بولاية وليس بقانون اتحادي موحد كيوم الوحدة",
+    "التمييز بين قيود الهدوء العام (كل الآحاد والأعياد) وقيود ليلة الميلاد الإضافية",
+    "ذكر اليوم الثاني لعيد الميلاد (26 ديسمبر) كخصوصية ألمانية",
+    "الحفاظ على نبرة معلوماتية دقيقة دون مبالغة في تصوير القيود القانونية",
+    "ربط الصفحة بعنقود الأعياد الألمانية الحية على الموقع",
+    "استخدام countryScope: none وcategory: national كحدث ألماني وحيد"
+  ],
+  "unansweredQuestions": [
+    "متى هذا اليوم بالضبط؟",
+    "كم يوماً تستمر العطلة؟",
+    "ما هو هدوء عيد الميلاد؟",
+    "هل يخص القيد يومي العيد أم ليلة 24؟",
+    "هل المحلات مغلقة؟",
+    "هل عيد الميلاد إجازة اتحادية موحدة؟"
+  ],
+  "differentiationIdeas": [
+    "الإجابة المباشرة عن الموعد أولاً، ثم شرح Weihnachtsruhe بدقة زمنية",
+    "تصحيح الافتراض الشائع بأن القيد يخص يومي العيد بدل ليلة 24 تحديداً",
+    "التمييز الدقيق بين الإجازة الاتحادية الوحيدة (يوم الوحدة) وبقية الإجازات المشرّعة ولائياً"
+  ],
+  "factSources": [
+    {
+      "label": "Sonntagsblatt.de — Heiligabend ist kein Feiertag",
+      "url": "https://www.sonntagsblatt.de/artikel/gesellschaft/heiligabend-ist-kein-feiertag-was-beschaeftigte-weihnachten-wirklich-duerfen"
+    },
+    {
+      "label": "Library of Congress Law Blog — Silent Public Holidays in Germany",
+      "url": "https://blogs.loc.gov/law/2018/03/silent-public-holidays-in-germany/"
+    },
+    {
+      "label": "Feiertagsgesetze der Bundesländer (overview)",
+      "url": "https://www.gesetze-im-internet.de"
+    }
+  ],
+  "notes": "تم التحقق عبر Sonntagsblatt.de وLibrary of Congress Law Blog (2026-07-13): قيد Weihnachtsruhe الحقيقي يخص ليلة 24 ديسمبر تحديداً (2pm-منتصف الليل في بافاريا وأغلب الولايات)، وليس يومي 25-26 اللذين يخضعان لقاعدة هدوء الأحد/الأعياد العامة المعتادة فقط. عيد الميلاد مشرَّع ولاية بولاية (Feiertagsgesetze)، ويوم الوحدة الألمانية (3 أكتوبر) هو الإجازة الاتحادية الوحيدة بنص موحد."
+}

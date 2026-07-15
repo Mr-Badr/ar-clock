@@ -1,0 +1,17 @@
+{
+  "slug": "family-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "New Wave 12 candidate, international UN observance track.",
+    "Date and origin (UN GA resolution 47/237, 1993) confirmed via un.org.",
+    "Egyptian Ministry of Awqaf angle ('15 مايو اليوم العالمي للأسر بين الرعاية الأممية والقيم الإسلامية') independently re-verified via WebSearch 2026-07-14 — exact article title and framing confirmed at awkafonline.gov.eg, not fabricated."
+  ],
+  "updatedAt": "2026-07-14T21:09:43.543Z"
+}

@@ -1,0 +1,16 @@
+{
+  "slug": "human-rights-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر un.org/ar وOHCHR: اعتماد الإعلان في باريس بقرار 217A (10 ديسمبر 1948)، إقرار الاحتفال السنوي بقرار 423(V) سنة 1950.",
+    "fixed type، countryScope: all، category: social — حدث عالمي بتاريخ ميلادي ثابت 10 ديسمبر."
+  ],
+  "updatedAt": "2026-07-13T18:10:59.784Z"
+}

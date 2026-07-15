@@ -1,0 +1,16 @@
+{
+  "slug": "autism-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "New Wave 12 candidate, international UN observance track.",
+    "Date and origin (UN GA resolution, 2007-12-18) independently confirmed via direct WebSearch of un.org/en/observances/autism-day 2026-07-14, cross-checked against research agent findings."
+  ],
+  "updatedAt": "2026-07-14T21:09:29.320Z"
+}

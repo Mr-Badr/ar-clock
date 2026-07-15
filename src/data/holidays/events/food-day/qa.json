@@ -1,0 +1,18 @@
+{
+  "slug": "food-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track C candidate (remaining international UN days).",
+    "Date and history confirmed via WebSearch (English + Arabic): Oct 16 marks FAO's founding anniversary (1945); proposed by the Hungarian delegation (led by former Agriculture Minister Dr. Pál Romány) at FAO's 20th Conference session in Rome, November 1979; ratified by UN General Assembly on 5 December 1980; first observed 16 October 1981; now marked in 150+ countries.",
+    "Competitor check: mosoah.com/mawdoo3.com are shallow encyclopedic pieces, fatafeat.com/yummy.layalina.com take a cooking/food angle, alarabiya.net/youm7.com are seasonal news pieces with food-waste tips — none give the precise founding-story timeline or a countdown/FAQ page.",
+    "countryScope: all (shared international day, generates per-country alias pages)."
+  ],
+  "updatedAt": "2026-07-15T12:33:46.390Z"
+}

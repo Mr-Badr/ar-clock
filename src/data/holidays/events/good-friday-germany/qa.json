@@ -1,0 +1,18 @@
+{
+  "slug": "good-friday-germany",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر iamExpat.de وThe Local (2026-07-13): Tanzverbot حقيقي ومطبَّق في كل الولايات الـ16 بدرجات صرامة مختلفة، غرامات موثّقة حتى 10,000 يورو بافاريا وحالة إنفاذ فعلية في غوتنغن.",
+    "أُقر صراحة بتضارب المصادر حول ساعات بافاريا الدقيقة بدل اختيار رقم واحد اعتباطاً.",
+    "مبالغة 'الضحك ممنوع' مصححة صراحة كخرافة شائعة غير دقيقة.",
+    "easter type، easterOffset: -2، _countryCode: de، countryScope: none — حدث ألماني وحيد."
+  ],
+  "updatedAt": "2026-07-13T18:08:48.554Z"
+}

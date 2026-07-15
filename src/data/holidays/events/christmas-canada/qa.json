@@ -1,0 +1,18 @@
+{
+  "slug": "christmas-canada",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track A candidate, from country-hub-data.js gap scan.",
+    "Date rule (fixed, Dec 25) confirmed via WebSearch against canada.ca and Wikipedia; Christmas Day is a statutory holiday in every province/territory, unlike Boxing Day which is only mandatory in Ontario + federal sector — cross-checked against the already-live boxing-day-canada event content for consistency, no contradiction.",
+    "Competitor check: trip.com/arabnews24.ca mention it only inside general holiday-season roundups, ar.immigrant.today covers cultural traditions only with no legal/statutory detail, no Arabic competitor draws the Christmas-vs-Boxing-Day legal distinction or a dedicated countdown.",
+    "Content-policy check: this is observance/legal-status content (a federal/provincial statutory holiday and its commercial/social traditions), not an affirmation of Christian theological claims — consistent with the owner's 2026-07-14 standing rule (which targeted Resurrection/Easter theological content specifically) and consistent with the already-live christmas-usa/christmas-germany/christmas-jordan/christmas-palestine pages."
+  ],
+  "updatedAt": "2026-07-14T21:44:44.458Z"
+}

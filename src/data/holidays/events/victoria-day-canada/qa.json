@@ -1,0 +1,18 @@
+{
+  "slug": "victoria-day-canada",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "New Wave 12 candidate, discovered via country-hub-data.js gap scan (rule already verified in Wave 9/11 for the country-hub summary, never built as an individual event).",
+    "Date rule (weekday-in-range, Mon within May 18-24) confirmed via WebSearch against timeanddate.com/canada.ca — 2026 = May 18.",
+    "Competitor check: arabz.ca has a dedicated Arabic article but no countdown, no year-specific date, thin province-exception coverage.",
+    "Differentiator: Nova Scotia/Newfoundland exception + Quebec's distinct 'Journée nationale des patriotes' naming, neither covered well by any competitor."
+  ],
+  "updatedAt": "2026-07-14T21:00:03.765Z"
+}

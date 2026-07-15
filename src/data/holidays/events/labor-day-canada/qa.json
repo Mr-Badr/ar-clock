@@ -1,0 +1,18 @@
+{
+  "slug": "labor-day-canada",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track A candidate, from country-hub-data.js gap scan.",
+    "Date rule (floating, month 9, weekday Monday, nth 1) confirmed via WebSearch against canada.ca federal holiday list and timeanddate.com.",
+    "Competitor check: arabz.ca mentions it only inside a general holiday-list article, no dedicated countdown page; Arabic Wikipedia is encyclopedic with no year-specific date; no Arabic competitor addresses the Canada/US date-coincidence confusion or the Labour Day vs May Day (international) confusion.",
+    "Differentiator: cultural framing as the unofficial end of Canadian summer + back-to-school timing, plus explicit disambiguation from both US Labor Day (same date, separate law) and international Workers' Day (May 1)."
+  ],
+  "updatedAt": "2026-07-14T21:37:11.395Z"
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "world-book-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر UNESCO: تبني التاريخ 1995، فينسنت كلافيل أندريس اقترح الفكرة 1922 (7 أكتوبر قبل الانتقال لـ23 أبريل).",
+    "تصحيح دقيق لخرافة 'نفس اليوم الفلكي' المكررة في 6 منافسين عرب — فارق حقيقي ~10 أيام بين وفاتي ثيربانتس وشكسبير بسبب اختلاف التقويمين.",
+    "fixed type، countryScope: all، category: social — حدث عالمي بتاريخ ميلادي ثابت 23 أبريل."
+  ],
+  "updatedAt": "2026-07-13T18:11:32.335Z"
+}

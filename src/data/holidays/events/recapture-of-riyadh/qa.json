@@ -1,0 +1,18 @@
+{
+  "slug": "recapture-of-riyadh",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر ويكيبيديا العربية (معركة الرياض 1902) وSaudipedia وسبق: 15 يناير 1902 (5 شوال 1319هـ)، اقتحام قصر المصمك، مقتل عجلان بن محمد، بداية الدولة السعودية الثالثة.",
+    "عرض أمين لتضارب المصادر حول عدد الرجال (40-68) وهوية القاتل الفعلي (عبدالله بن جلوي في أغلب الروايات العربية) دون حسم رقم أو رواية واحدة كحقيقة مطلقة.",
+    "تمييز صريح عن saudi-founding-day (1727، الدولة الأولى) وsaudi-national-day (1932، التوحيد والتسمية) — ثلاث مناسبات سعودية منفصلة.",
+    "fixed type، _countryCode: sa، countryScope: none — حدث سعودي وحيد بتاريخ ميلادي ثابت 15 يناير."
+  ],
+  "updatedAt": "2026-07-13T05:51:46.541Z"
+}

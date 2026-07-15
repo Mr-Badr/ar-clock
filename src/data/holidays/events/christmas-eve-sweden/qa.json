@@ -1,0 +1,17 @@
+{
+  "slug": "christmas-eve-sweden",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر KI Researcher Blog وMental Floss وويكيبيديا الإنجليزية: 24 ديسمبر ليس من الأيام الحمراء الـ13 رسمياً لكنه إجازة عرفية فعلية، تقليد كالي آنكا (SVT، 3pm) موثّق ومتابَع من نحو 3 ملايين سويدي.",
+    "استبعاد 'Så mucho bättre' كتقليد غير مؤكد الصلة، والاعتماد على كالي آنكا كحقيقة أقوى وموثّقة.",
+    "fixed type، _countryCode: se، countryScope: none — حدث سويدي وحيد بتاريخ ميلادي ثابت 24 ديسمبر."
+  ],
+  "updatedAt": "2026-07-13T18:09:10.120Z"
+}

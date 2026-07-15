@@ -1,0 +1,18 @@
+{
+  "slug": "independence-day-kuwait",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر ويكيبيديا العربية والجريدة والراي الكويتيتين ومحاضر البرلمان البريطاني (Hansard): 19 يونيو 1961، إنهاء معاهدة الحماية البريطانية لعام 1899.",
+    "وثّقت أزمة عبدالكريم قاسم (تهنئة بإلغاء المعاهدة ثم مطالبة بالضم خلال أيام) وعملية فانتاج وانضمام الكويت لجامعة الدول العربية 20 يوليو 1961.",
+    "تمييز صريح عن kuwait-national-day (25 فبراير، 1950) وliberation-day-kuwait (26 فبراير، 1991) — ثلاث مناسبات كويتية منفصلة.",
+    "fixed type، _countryCode: kw، countryScope: none — حدث كويتي وحيد بتاريخ ميلادي ثابت 19 يونيو."
+  ],
+  "updatedAt": "2026-07-13T05:58:18.470Z"
+}

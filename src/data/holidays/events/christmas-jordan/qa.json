@@ -1,0 +1,17 @@
+{
+  "slug": "christmas-jordan",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر بيانات country-hub-data.js الداخلية: عطلة عامة لكل الأردنيين 25 ديسمبر، يوم إضافي 26 ديسمبر للمسيحيين تحديداً.",
+    "نبرة مدنية محايدة، تمييز صريح عن christmas-palestine.",
+    "fixed type، _countryCode: jo، countryScope: none — حدث أردني وحيد بتاريخ ميلادي ثابت 25 ديسمبر."
+  ],
+  "updatedAt": "2026-07-13T18:09:54.163Z"
+}

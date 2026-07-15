@@ -1,0 +1,18 @@
+{
+  "slug": "october-14-revolution-yemen",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر Al-Madaniya Magazine وImperial War Museums وويكيبيديا الإنجليزية: 14 أكتوبر 1963، جبال ردفان، راجح بن غالب لحمر (لبوزة) استُشهد في اليوم نفسه.",
+    "الحدث حقيقي ومستقل التوثيق (لا يعتمد فقط على ويكيبيديا عربي)، تغطية إعلامية سنوية حقيقية مؤكدة.",
+    "نبرة تاريخية محايدة صارمة، تتجنب أي إشارة للحساسية السياسية المعاصرة (STC) — سجل 1963 فقط.",
+    "fixed type، _countryCode: ye، countryScope: none — حدث يمني وحيد بتاريخ ميلادي ثابت 14 أكتوبر."
+  ],
+  "updatedAt": "2026-07-13T18:12:28.806Z"
+}

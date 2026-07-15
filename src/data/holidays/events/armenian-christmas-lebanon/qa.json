@@ -1,0 +1,17 @@
+{
+  "slug": "armenian-christmas-lebanon",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر بيانات country-hub-data.js الداخلية ومصادر عامة: عطلة رسمية منذ 2003، عدم فصل الأرمن بين الميلاد والظهور الإلهي كما فعلت كنائس أخرى.",
+    "خلفية ديموغرافية وتاريخية دقيقة (~4% من السكان، موجتا هجرة 1915-16 و1939).",
+    "fixed type، _countryCode: lb، countryScope: none — حدث لبناني وحيد بتاريخ ميلادي ثابت 6 يناير."
+  ],
+  "updatedAt": "2026-07-13T18:09:32.877Z"
+}

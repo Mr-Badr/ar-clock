@@ -1,0 +1,18 @@
+{
+  "slug": "fall-of-granada",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر marefa.org وdorar.net وويكيبيديا العربية: تاريخان منفصلان (21 محرم توقيع المعاهدة، 2 ربيع الأول التسليم الفعلي) 897هـ.",
+    "قصة بكاء بوابديل عُرضت بأمانة كتقليد شعبي غير موثّق معاصرياً، لا حقيقة تاريخية مسلَّمة.",
+    "أعلى حساسية سياسية بين الأحداث الثلاثة — تم تجنب أي إشارة معاصرة بشكل قاطع، نبرة تاريخية تعليمية بحتة.",
+    "hijri type، hijriMonth: 3 (ربيع الأول)، hijriDay: 2، countryScope: all."
+  ],
+  "updatedAt": "2026-07-13T18:10:49.587Z"
+}

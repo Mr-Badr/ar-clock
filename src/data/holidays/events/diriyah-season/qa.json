@@ -1,0 +1,19 @@
+{
+  "slug": "diriyah-season",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track E candidate — final backlog item, flagged as highest-competition tier. Winnability re-verified before building, not assumed.",
+    "Date range confirmed via WebSearch: 2025-26 edition runs 1 Nov 2025 - 23 March 2026 under the slogan 'عزّك وملفاك'; 2023-24 edition ran from 12 Dec 2023 under 'أرض ترويك' and was confirmed as the 3rd official edition since the first launched in 2019 — multi-year stable institutional track record, no cancellation pattern (same reliability check applied that rejected taif-rose-festival).",
+    "At-Turaif history confirmed: capital of the First Saudi State founded 1727, UNESCO World Heritage Site #1329 since 2010 (whc.unesco.org).",
+    "Key relationship fact confirmed (wujhat.com comparison article): Diriyah Season is a heritage-focused component WITHIN the larger Riyadh Season (which spans Oct-March across 15 zones), not a separate rival season — a genuinely common point of confusion this content corrects directly, matching the disambiguation pattern used elsewhere in this wave.",
+    "Competitor check confirms this is denser competition than other Saudi seasons built this wave: ar.wikipedia.org has a dedicated article, saudipedia.com has multiple detailed per-edition articles, wujhat.com already draws the Riyadh-Season comparison. However, none of them ship a live countdown or FAQ-structured answer format — the core UX/format gap this site fills held up even against the strongest competitor found."
+  ],
+  "updatedAt": "2026-07-15T12:47:44.334Z"
+}

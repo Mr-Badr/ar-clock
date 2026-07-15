@@ -1,0 +1,18 @@
+{
+  "slug": "family-day-canada",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track A candidate, from country-hub-data.js gap scan.",
+    "Date rule (floating, month 2, weekday Monday, nth 3) confirmed via WebSearch (English + Arabic queries) against Wikipedia/officeholidays.com/statutoryholidays.com.",
+    "Competitor check: arabz.ca lists it in a general holiday roundup, alforqannewspaper.ca only asks whether it's official without a full province breakdown, halacanada.ca is Toronto-specific practical content, Arabic Wikipedia is encyclopedic with no year-specific date — none give the precise province-by-province breakdown.",
+    "Differentiator: precise province coverage (AB/BC/ON/NB/SK observe as 'Family Day'; MB as Louis Riel Day; NS as Heritage Day; PEI as Islander Day; QC/territories/most of NL do not observe), which no Arabic source covers correctly."
+  ],
+  "updatedAt": "2026-07-14T21:41:26.236Z"
+}

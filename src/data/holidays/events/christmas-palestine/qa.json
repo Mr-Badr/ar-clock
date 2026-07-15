@@ -1,0 +1,18 @@
+{
+  "slug": "christmas-palestine",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر jobs.ps/adel.ps وبيانات country-hub-data.js الداخلية: قانون العمل رقم 7/2000 يمنح 3 أيام إجازة مدفوعة للموظفين المسيحيين تحديداً — استحقاق فردي لا إغلاق عام.",
+    "تمييز صريح عن christmas-jordan (نموذج مختلف: إغلاق عام + يوم إضافي).",
+    "نبرة مدنية/دينية محايدة تماماً دون خوض سياسي.",
+    "fixed type، _countryCode: ps، countryScope: none — حدث فلسطيني وحيد بتاريخ ميلادي ثابت 25 ديسمبر."
+  ],
+  "updatedAt": "2026-07-13T18:10:17.542Z"
+}

@@ -1,0 +1,16 @@
+{
+  "slug": "disability-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "New Wave 12 candidate, international UN observance track.",
+    "Date and origin (UN GA resolution 47/3, 1992, following the 1983-1992 Decade of Disabled Persons) confirmed via un.org directly."
+  ],
+  "updatedAt": "2026-07-14T21:10:20.295Z"
+}

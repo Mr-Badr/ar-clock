@@ -1,0 +1,19 @@
+{
+  "slug": "asir-summer-season",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track E candidate (Saudi seasons, higher-competition tier).",
+    "Date range and 2026 launch details confirmed via WebSearch: officially launched 13 June 2026 by Prince Turki bin Talal, running 25 June - 1 September 2026, 100+ experiences, targeting 3M+ visitors, organized by the Asir Development Authority under the national 'Saudi Summer' program.",
+    "Reliability check (per the taif-rose-festival lesson — verify both competition thinness AND date stability independently): confirmed multi-year track record with no cancellation/postponement pattern — 2024 launched early July, 2025 ran July 1 - Aug 31, 2026 ran June 25 - Sept 1. Only normal year-to-year drift in the exact start date, handled in content with 'عادة'/'تقريباً' hedging per the estimated-type convention, not a reliability red flag.",
+    "Explicitly distinguished from the separate Asir WINTER season (موسم عسير الشتوي) — same region name causes real confusion, addressed directly in FAQ.",
+    "Competitor check: visitsaudi.com/spa.gov.sa are official portal/news with no countdown, nabd.com's 'رحال' guide is a solid single-year article without a live countdown or the winter/summer disambiguation, platinumlist.net is English-only — none combine countdown + FAQ + the two-season disambiguation."
+  ],
+  "updatedAt": "2026-07-15T12:44:06.110Z"
+}

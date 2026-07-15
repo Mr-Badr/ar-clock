@@ -1,0 +1,17 @@
+{
+  "slug": "mlk-day-usa",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر ويكيبيديا العربية وبريتانيكا: اقتراح 1968، إقرار 1983 (ريغان)، أول احتفال 1986، معارضة جيسي هيلمز 15 عاماً.",
+    "توضيح تأخر أريزونا ونيوهامبشير في التبني رغم الإقرار الفيدرالي، ودمج بعض الولايات الجنوبية له مع ذكرى أخرى.",
+    "floating type، weekday:1 nth:3 month:1 (الاثنين الثالث من يناير)، _countryCode: us، countryScope: none."
+  ],
+  "updatedAt": "2026-07-13T18:06:11.703Z"
+}

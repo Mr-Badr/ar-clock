@@ -30,6 +30,7 @@ import {
   Moon,
   Users,
 } from 'lucide-react';
+import { urgencyTier, liveStatusLabel } from '@/lib/holidays/urgency';
 
 /* ── Static maps ──────────────────────────────────────────────────────────── */
 const CAT_ICON = {
@@ -51,19 +52,15 @@ const COUNTRY_FLAGS = {
   ae: '🇦🇪', tn: '🇹🇳', kw: '🇰🇼', qa: '🇶🇦',
 };
 
-/* Three urgency states — drives CSS via data-urgency attribute */
-function urgency(days) {
-  if (days <= 3)  return 'urgent';
-  if (days <= 14) return 'soon';
-  return 'normal';
-}
-
 /* ─────────────────────────────────────────────────────────────────────────── */
 export default function EventCard({ event, priority = false, index = 0 }) {
   const cat = event.category || 'islamic';
   const CategoryIcon = CAT_ICON[cat] || CalendarDays;
   const categoryLabel = CAT_LABEL[cat] || 'مناسبة';
   const routeSlug = event.__canonicalSlug || event.slug;
+  const tier = urgencyTier(event._daysLeft);
+  const liveLabel = liveStatusLabel(event._daysLeft);
+  const isToday = event._daysLeft <= 0;
 
   return (
     /* Stagger wrapper — layout dimensions controlled by .waqt-grid > div CSS */
@@ -79,12 +76,12 @@ export default function EventCard({ event, priority = false, index = 0 }) {
       <Link
         href={`/holidays/${routeSlug}`}
         prefetch={priority}
-        aria-label={`${event.name}: متبقي ${event._daysLeft} يوم`}
+        aria-label={`${event.name}: ${isToday ? 'اليوم' : `متبقي ${event._daysLeft} يوم`}`}
       >
         {/* data-urgency drives number + accent-bar color entirely from CSS */}
-        <article className="waqt-ev" data-urgency={urgency(event._daysLeft)}>
+        <article className="waqt-ev" data-urgency={tier}>
 
-          {/* ── 1. Card header: category pill + country flag ──────── */}
+          {/* ── 1. Card header: category pill + live badge + country flag ──── */}
           <div className="waqt-ev__header">
             <span className="waqt-ev__cat">
               <span aria-hidden className="inline-flex">
@@ -92,11 +89,22 @@ export default function EventCard({ event, priority = false, index = 0 }) {
               </span>
               <span className="waqt-ev__cat-label">{categoryLabel}</span>
             </span>
-            {event._countryCode && (
-              <span className="waqt-ev__flag" aria-hidden>
-                {COUNTRY_FLAGS[event._countryCode]}
-              </span>
-            )}
+
+            <div className="waqt-ev__header-end">
+              {liveLabel && (
+                <span
+                  className={`waqt-ev__live-badge waqt-ev__live-badge--${tier}`}
+                >
+                  {isToday && <span className="waqt-ev__live-dot" aria-hidden="true" />}
+                  {liveLabel}
+                </span>
+              )}
+              {event._countryCode && (
+                <span className="waqt-ev__flag" aria-hidden>
+                  {COUNTRY_FLAGS[event._countryCode]}
+                </span>
+              )}
+            </div>
           </div>
 
           {/* ── 2. Hero: the countdown number ─────────────────────── */}

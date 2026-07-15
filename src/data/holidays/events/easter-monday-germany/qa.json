@@ -1,0 +1,18 @@
+{
+  "slug": "easter-monday-germany",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track A candidate, from country-hub-data.js gap scan.",
+    "Owner explicitly confirmed 2026-07-14 (AskUserQuestion) to proceed with Easter-cycle events, framed strictly around legal/civil/historical status, matching the existing live good-friday-germany/ascension-day-germany pattern.",
+    "Date rule (easter type, easterOffset 1) and status (uniform holiday across all 16 German states, one of 9 nationwide holidays) confirmed via WebSearch against Wikipedia/timeanddate.com/publicholidays.de.",
+    "Competitor check: arab-deutschland.com is a cultural/tourism guide, wikigerman.net/studyshoot.com/elkhatib.net are general state-by-state holiday lists without distinguishing uniform vs. regional holidays, amalfrankfurt.de is Frankfurt-specific shopping-hours content, none has a dedicated countdown/FAQ page."
+  ],
+  "updatedAt": "2026-07-14T21:55:28.703Z"
+}

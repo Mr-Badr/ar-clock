@@ -1,0 +1,18 @@
+{
+  "slug": "battle-of-khandaq",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "New Wave 12 candidate, Islamic history track. Built as a direct replacement for the rejected Egypt Coptic-calendar track per owner instruction.",
+    "Month (Shawwal, 5 AH) confirmed by research agent across ar.wikipedia.org, awkafonline.gov.eg, mawdoo3.com. Exact day-of-month not uniformly pinned across sources — used day 15 (appears in secondary retellings), same level of approximation already accepted for battle-of-uhud's hijriDay.",
+    "Zero sectarian risk — universally accepted pan-Islamic history, Quranic (Surah al-Ahzab).",
+    "Source check per owner instruction (2026-07-14): all sources (ar.wikipedia.org, awkafonline.gov.eg — Egyptian Ministry of Awqaf official Sunni religious authority, mawdoo3.com) are mainstream Sunni-oriented references. No Shia-specific sources used."
+  ],
+  "updatedAt": "2026-07-14T21:00:54.007Z"
+}

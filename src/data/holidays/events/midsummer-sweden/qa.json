@@ -1,0 +1,17 @@
+{
+  "slug": "midsummer-sweden",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Previously blocked (Wave 11) on a genuine engine gap: weekday-in-range type existed only in country-hub.js, not at the individual-event schema/engine level.",
+    "Unblocked 2026-07-14 by porting weekday-in-range support into src/lib/events/package-schema.js and src/lib/holidays-engine.js.",
+    "Rule fields (weekday:6, startMonth:6, startDay:20, endMonth:6, endDay:26) confirmed by dedicated research agent against multiple sources (sweden.se Arabic portal, Wikipedia, timeanddate.com) — matches the pre-existing verified rule in country-hub-data.js exactly."
+  ],
+  "updatedAt": "2026-07-14T09:14:43.069Z"
+}

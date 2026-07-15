@@ -1,0 +1,17 @@
+{
+  "slug": "world-tourism-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر UN Tourism/UNWTO: تأسيس النظام الأساسي 27 سبتمبر 1970، إقرار الاحتفال في الجمعية العمومية الثالثة 1979 (تورّيمولينوس)، بدء الاحتفال الفعلي 1980.",
+    "أرقام السياحة الخليجية (رؤية 2030 السعودية، 15% إماراتياً) مصاغة دون سنة محددة لتفادي التقادم أو قاعدة السنة الصريحة الممنوعة.",
+    "fixed type، countryScope: all، category: social — حدث عالمي بتاريخ ميلادي ثابت 27 سبتمبر."
+  ],
+  "updatedAt": "2026-07-13T18:12:15.019Z"
+}

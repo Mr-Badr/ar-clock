@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback, useDeferredValue } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { loadMoreEvents } from './actions';
+import { loadMoreEvents, loadFacetCounts } from './actions';
 import HolidaysFiltersPanel from './HolidaysFiltersPanel';
 import HolidaysResultsSummary from './HolidaysResultsSummary';
 import HolidaysEventsGrid from './HolidaysEventsGrid';
@@ -23,6 +23,7 @@ export default function HolidaysClientInteractive({
   initialNextCursor,
   initialTotal,
   initialFilters,
+  initialFacetCounts,
   categoryOptions,
   countryOptions,
   timeRangeOptions,
@@ -48,6 +49,8 @@ export default function HolidaysClientInteractive({
   const [sortMode, setSortMode] = useState('daysLeft');
   const [isFiltering, setIsFiltering] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [facetCounts, setFacetCounts] = useState(initialFacetCounts || null);
+  const latestFacetRequestRef = useRef(0);
 
   const deferredSearch = useDeferredValue(search);
 
@@ -68,6 +71,17 @@ export default function HolidaysClientInteractive({
     }
 
     setIsFiltering(true);
+
+    const facetRequestId = latestFacetRequestRef.current + 1;
+    latestFacetRequestRef.current = facetRequestId;
+    loadFacetCounts(normalized)
+      .then((counts) => {
+        if (latestFacetRequestRef.current === facetRequestId) setFacetCounts(counts);
+      })
+      .catch((error) => {
+        console.error('[holidays] failed to refresh facet counts', error);
+      });
+
     try {
       const result = await loadMoreEvents(0, normalized);
       if (latestFilterRequestRef.current !== requestId) return;
@@ -236,6 +250,7 @@ export default function HolidaysClientInteractive({
         countryOptions={countryOptions}
         timeRangeOptions={timeRangeOptions}
         sortOptions={sortOptions}
+        facetCounts={facetCounts}
         onSearchChange={handleSearch}
         onCategoryChange={handleCategory}
         onCountryChange={handleCountry}

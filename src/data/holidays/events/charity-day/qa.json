@@ -1,0 +1,17 @@
+{
+  "slug": "charity-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "New Wave 12 candidate, international UN observance track.",
+    "Date and origin (UN GA resolution A/RES/67/105, 2012) confirmed via un.org directly.",
+    "Content-policy check: mentions of Mother Teresa are neutral historical/biographical fact (nationality, Nobel Prize, death date, charity work) for context on why this date was chosen — no Christian theological claims are made or affirmed, distinct from the rejected Coptic Easter content which centered on the Resurrection as a truth claim."
+  ],
+  "updatedAt": "2026-07-14T21:10:05.632Z"
+}

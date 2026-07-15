@@ -1,0 +1,16 @@
+{
+  "slug": "assumption-day-lebanon",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر بيانات country-hub-data.js الداخلية: عطلة رسمية بموجب المرسوم 15215، اعتراف الكاثوليك والأرثوذكس معاً.",
+    "fixed type، _countryCode: lb، countryScope: none — حدث لبناني وحيد بتاريخ ميلادي ثابت 15 أغسطس."
+  ],
+  "updatedAt": "2026-07-13T18:09:44.504Z"
+}

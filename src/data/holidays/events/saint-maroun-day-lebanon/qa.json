@@ -1,0 +1,17 @@
+{
+  "slug": "saint-maroun-day-lebanon",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر publicholidays.me وcountry-hub-data.js الداخلية: 9 فبراير عطلة رسمية للبنان بأكمله، تكريماً للقديس مارون شفيع الطائفة المارونية.",
+    "تأطير صريح كعطلة لكل اللبنانيين — زاوية غائبة عن كل المنافسين المفحوصين.",
+    "fixed type، _countryCode: lb، countryScope: none — حدث لبناني وحيد بتاريخ ميلادي ثابت 9 فبراير."
+  ],
+  "updatedAt": "2026-07-13T18:09:22.464Z"
+}

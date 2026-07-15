@@ -1,0 +1,18 @@
+{
+  "slug": "all-saints-day-france",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track A candidate, from country-hub-data.js gap scan.",
+    "Date rule (fixed, Nov 1) and history (1801 Concordat, effective 1802; 8th-century date choice by Pope Gregory III as a Christian alternative to Samhain) confirmed via WebSearch (French + Arabic queries) against sortiraparis.com/lepetitjournal.com/fr.wikipedia.org.",
+    "Competitor check: trip.com/infomigrants.net list it only inside general holiday roundups, sortiraparis.com's Arabic translations are Paris-specific practical pieces (restaurants/outings) with no year-specific countdown, none explain the Toussaint (Nov 1, holiday) vs Jour des Morts (Nov 2, not a holiday) confusion.",
+    "Content-policy check: content frames the day around its legal/civil status, historical origin, and social tradition (cemetery visits, chrysanthemums, school holiday) — not an affirmation of Catholic sainthood doctrine — matching the precedent already set by the live assumption-day-france event, which similarly frames a Catholic feast day around its legal/historical status (a royal vow) rather than the underlying theological claim."
+  ],
+  "updatedAt": "2026-07-14T21:48:15.450Z"
+}

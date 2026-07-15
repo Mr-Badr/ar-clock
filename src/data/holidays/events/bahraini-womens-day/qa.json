@@ -1,0 +1,16 @@
+{
+  "slug": "bahraini-womens-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Date (Dec 1) and 2008 establishment verified via scw.bh, mofa.gov.bh, alwasatnews.com by dedicated research agent 2026-07-14.",
+    "Explicitly distinguishes 2001 Supreme Council founding from 2008 Bahraini Women's Day adoption — main differentiator vs. the one competitor that conflates them."
+  ],
+  "updatedAt": "2026-07-14T08:48:29.074Z"
+}

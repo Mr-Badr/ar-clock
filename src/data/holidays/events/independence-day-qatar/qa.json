@@ -1,0 +1,18 @@
+{
+  "slug": "independence-day-qatar",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر الجزيرة نت وويكيبيديا الإنجليزية (History of Qatar) والبوابة القانونية القطرية Almeezan: 3 سبتمبر 1971 استقلال قطر، إنهاء معاهدة 1916.",
+    "الاكتشاف الأقوى: 3 سبتمبر كان اليوم الوطني القطري الرسمي نفسه من 1971 حتى نقله قانون رقم 11 لسنة 2007 إلى 18 ديسمبر — موثّق عبر Almeezan.",
+    "توضيح أمين لتقاسم الأدوار بين الأمير الشيخ أحمد بن علي والشيخ خليفة بن حمد دون الجزم بشخص واحد كمُعلن وحيد.",
+    "fixed type، _countryCode: qa، countryScope: none — حدث قطري وحيد بتاريخ ميلادي ثابت 3 سبتمبر."
+  ],
+  "updatedAt": "2026-07-13T06:01:29.303Z"
+}

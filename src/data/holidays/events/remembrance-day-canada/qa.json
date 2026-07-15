@@ -1,0 +1,17 @@
+{
+  "slug": "remembrance-day-canada",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر arabz.ca وويكيبيديا الإنجليزية: 11 نوفمبر إجازة فيدرالية كندية، غير إلزامية في أونتاريو وكيبك ومانيتوبا للقطاعين الخاص والمقاطعي.",
+    "تمييز واضح عن Veterans Day الأمريكي (اسم مختلف منذ 1954، تركيز مختلف).",
+    "fixed type، _countryCode: ca، countryScope: none — حدث كندي وحيد بتاريخ ميلادي ثابت 11 نوفمبر."
+  ],
+  "updatedAt": "2026-07-13T18:06:32.318Z"
+}

@@ -16,7 +16,7 @@ const eventCoreSchema = z.object({
   id: z.string().min(1),
   slug: z.string().min(1),
   name: z.string().min(1),
-  type: z.enum(['hijri', 'fixed', 'estimated', 'monthly', 'easter', 'floating']),
+  type: z.enum(['hijri', 'fixed', 'estimated', 'monthly', 'easter', 'orthodox-easter', 'floating', 'weekday-in-range']),
   category: z.enum(['islamic', 'national', 'school', 'holidays', 'astronomy', 'social', 'business', 'support']),
   _countryCode: z.string().nullable().optional(),
   month: z.number().int().min(1).max(12).optional(),
@@ -30,6 +30,13 @@ const eventCoreSchema = z.object({
   // the month only has 4 of that weekday.
   nth: z.union([z.literal(-1), z.number().int().min(1).max(5)]).optional(),
   offsetDays: z.number().int().optional(),
+  // weekday-in-range only: the single occurrence of `weekday` inside this
+  // inclusive Gregorian date window (e.g. Sweden's Midsummer = Saturday within
+  // Jun 20-26). Mirrors country-hub-data.js's rule shape for the same concept.
+  startMonth: z.number().int().min(1).max(12).optional(),
+  startDay: z.number().int().min(1).max(31).optional(),
+  endMonth: z.number().int().min(1).max(12).optional(),
+  endDay: z.number().int().min(1).max(31).optional(),
 }).passthrough();
 
 const richContentSchema = z.object({}).passthrough();
@@ -104,6 +111,6 @@ export function parseEventPackage(slug, raw) {
 export function inferSourceAuthority(core) {
   if (core?.type === 'hijri') return 'hijri-authority';
   if (core?.type === 'estimated') return 'official-announcement';
-  if (core?.type === 'floating') return 'rule-based-calendar';
+  if (core?.type === 'floating' || core?.type === 'weekday-in-range') return 'rule-based-calendar';
   return 'fixed-calendar';
 }

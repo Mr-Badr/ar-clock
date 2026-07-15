@@ -1,0 +1,18 @@
+{
+  "slug": "wafat-khadija",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "New Wave 12 candidate, Islamic history track. Built as a direct replacement for the rejected Egypt Coptic-calendar track per owner instruction.",
+    "Date (10 Ramadan, 3 years before the Hijra) confirmed by research agent across 5 independent sources — cleanest date consensus of any Islamic candidate checked this wave.",
+    "Zero sectarian risk — Khadija bint Khuwaylid is revered identically across all Islamic traditions.",
+    "Source check per owner instruction (2026-07-14): all sources (islamweb.net — mainstream Sunni fatwa/reference authority, ar.wikipedia.org, al-ain.com, islamstory.com) are mainstream Sunni-oriented references. No Shia-specific sources used."
+  ],
+  "updatedAt": "2026-07-14T21:01:06.136Z"
+}

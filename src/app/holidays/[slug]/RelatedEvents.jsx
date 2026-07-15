@@ -93,52 +93,27 @@ export default async function RelatedEvents({ relatedSlugs, currentSlug }) {
         <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', maxWidth: '72ch', marginBottom: 'var(--space-4)' }}>
           هذه ليست قائمة عامة؛ اختر منها عندما تريد مقارنة موعد قريب أو مناسبة من نفس التصنيف.
         </p>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-3)' }}>
+        <div className="waqt-related-grid">
           {events.map((event, index) => {
             const Icon = CATEGORY_ICON[event.categoryId] || CalendarDays;
             return (
               <Link
                 key={event.slug}
                 href={`/holidays/${event.slug}`}
-                style={{
-                  display: 'block',
-                  padding: 'var(--space-3)',
-                  background: index === 0
-                    ? 'color-mix(in srgb, var(--accent-soft) 46%, var(--bg-surface-2))'
-                    : 'var(--bg-surface-2)',
-                  borderRadius: 'var(--radius-lg)',
-                  border: index === 0
-                    ? '1px solid var(--border-accent)'
-                    : '1px solid var(--border-default)',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  transition: 'border-color 0.2s ease, background-color 0.2s ease',
-                }}
+                className={`waqt-related-card ${index === 0 ? 'waqt-related-card--featured' : ''}`}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-2)' }}>
-                  <span style={{ display: 'inline-flex', color: 'var(--accent-alt)' }} aria-hidden="true">
-                    <Icon size={20} strokeWidth={1.75} />
+                <div className="waqt-related-card__head">
+                  <span className="waqt-icon-chip" aria-hidden="true">
+                    <Icon size={18} strokeWidth={1.75} />
                   </span>
                   <div>
-                    <h3 style={{ fontSize: 'var(--text-base)', fontWeight: 'var(--font-semibold)', color: 'var(--text-primary)', marginBottom: 'var(--space-1)' }}>
-                      {event.name}
-                    </h3>
-                    <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
-                      {event.categoryName}
-                    </p>
+                    <h3 className="waqt-related-card__title">{event.name}</h3>
+                    <p className="waqt-related-card__meta">{event.categoryName}</p>
                   </div>
                 </div>
-                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', lineHeight: 'var(--leading-relaxed)' }}>
-                  {event.description}
-                </p>
-                <div style={{ marginTop: 'var(--space-3)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)' }}>
-                  <span
-                    style={{
-                      fontSize: 'var(--text-sm)',
-                      fontWeight: 'var(--font-semibold)',
-                      color: 'var(--accent-strong)',
-                    }}
-                  >
+                <p className="waqt-related-card__desc">{event.description}</p>
+                <div style={{ marginTop: 'var(--space-2)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)' }}>
+                  <span className="waqt-related-card__cta">
                     {event.hasMore ? 'قارن الموعد' : 'افتح العدّاد'}
                   </span>
                   <ArrowLeft size={14} style={{ color: 'var(--text-muted)' }} aria-hidden="true" />

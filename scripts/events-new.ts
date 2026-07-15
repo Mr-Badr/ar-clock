@@ -92,6 +92,8 @@ function main() {
       ...(type === 'estimated' ? { date: '{{year}}-01-01' } : {}),
       ...(type === 'monthly' ? { day: 1 } : {}),
       ...(type === 'floating' ? { month: 1, weekday: 1, nth: 1, offsetDays: 0 } : {}),
+      ...(type === 'weekday-in-range' ? { weekday: 6, startMonth: 1, startDay: 1, endMonth: 1, endDay: 7 } : {}),
+      ...(type === 'orthodox-easter' ? { easterOffset: 0 } : {}),
     },
     richContent: buildRichContentScaffold(
       {

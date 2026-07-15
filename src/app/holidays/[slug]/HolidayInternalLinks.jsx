@@ -1,7 +1,15 @@
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Clock, RefreshCw, Calculator, CalendarDays, Globe2 } from 'lucide-react';
 import { getCountryByCode } from '@/lib/events/country-dictionary';
 import { getCountryHubByCode } from '@/lib/holidays/country-hub-data';
+
+const LINK_ICONS = {
+  'prayer-times': Clock,
+  'date-convert': RefreshCw,
+  calculator: Calculator,
+  calendar: CalendarDays,
+  hub: Globe2,
+};
 
 const ISLAMIC_CATEGORIES = new Set(['islamic', 'hijri']);
 
@@ -54,6 +62,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
       title: 'مواقيت الصلاة',
       desc: `اعرف مواعيد الصلاة في يوم ${displayTitle} ويومياً في مدينتك.`,
       cta: 'اعرف المواقيت',
+      kind: 'prayer-times',
     });
   }
 
@@ -64,6 +73,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
       title: 'تحويل التاريخ الهجري',
       desc: 'حوّل بين التاريخ الهجري والميلادي بدقة لأي يوم أو شهر.',
       cta: 'حوّل التاريخ',
+      kind: 'date-convert',
     });
   } else {
     links.push({
@@ -71,19 +81,21 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
       title: 'تحويل التاريخ',
       desc: 'حوّل بين التاريخ الهجري والميلادي إذا كنت تقارن المواعيد بين التقويمين.',
       cta: 'حوّل التاريخ',
+      kind: 'date-convert',
     });
   }
 
   // 3. Smart calculator per event type
   const calcLink = CALCULATOR_LINKS[slug];
   if (calcLink) {
-    links.push({ href: calcLink.href, title: calcLink.title, desc: calcLink.desc, cta: 'ابدأ الحاسبة' });
+    links.push({ href: calcLink.href, title: calcLink.title, desc: calcLink.desc, cta: 'ابدأ الحاسبة', kind: 'calculator' });
   } else if (event?.category === 'support') {
     links.push({
       href: '/calculators/salary',
       title: 'حاسبة الراتب',
       desc: 'احسب ما يعادل راتبك الشهري يومياً وساعياً وسنوياً.',
       cta: 'ابدأ الحاسبة',
+      kind: 'calculator',
     });
   } else if (event?.category === 'national') {
     links.push({
@@ -91,6 +103,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
       title: 'حاسبة الإجازات السنوية',
       desc: 'احسب أيام إجازتك المستحقة قانونياً خلال العطلات الرسمية.',
       cta: 'ابدأ الحاسبة',
+      kind: 'calculator',
     });
   } else if (event?.category === 'school') {
     links.push({
@@ -98,6 +111,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
       title: 'حاسبة المعدل التراكمي',
       desc: 'احسب GPA وحوّله إلى نسبة مئوية بدقة.',
       cta: 'ابدأ الحاسبة',
+      kind: 'calculator',
     });
   } else if (isIslamic) {
     links.push({
@@ -105,6 +119,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
       title: 'حاسبة الزكاة',
       desc: 'احسب زكاتك وفق النصاب الشرعي — مال وذهب واستثمارات.',
       cta: 'ابدأ الحاسبة',
+      kind: 'calculator',
     });
   } else {
     links.push({
@@ -112,6 +127,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
       title: 'الحاسبات',
       desc: 'حاسبات مالية وصحية وتعليمية — كلها في مكان واحد.',
       cta: 'استعرض الحاسبات',
+      kind: 'calculator',
     });
   }
 
@@ -122,6 +138,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
       title: `تقويم ${hijriYearNum} هـ`,
       desc: 'راجع الأشهر والأيام الهجرية للسنة الحالية في تقويم كامل.',
       cta: 'افتح التقويم',
+      kind: 'calendar',
     });
   } else if (currentYear) {
     links.push({
@@ -129,6 +146,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
       title: `تقويم ${currentYear}`,
       desc: 'اعرض تقويم السنة الحالية كاملاً مع التواريخ والمواسم.',
       cta: 'افتح التقويم',
+      kind: 'calendar',
     });
   }
 
@@ -141,6 +159,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
       title: 'جدول رواتب الخليج',
       desc: 'قارن هذا الموعد بكل مواعيد الرواتب والمعاشات والدعم في دول الخليج الست، مرتبة حسب الأقرب.',
       cta: 'افتح الجدول',
+      kind: 'hub',
     });
   } else if (countryHub) {
     links.push({
@@ -148,6 +167,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
       title: `العطل الرسمية في ${countryHub.nameAr}`,
       desc: `جدول عطل ${countryHub.nameAr} كاملاً بالميلادي والهجري، مع عداد لأقرب إجازة وملف تقويم لهاتفك.`,
       cta: 'افتح الجدول',
+      kind: 'hub',
     });
   } else {
     links.push({
@@ -157,6 +177,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
         ? `تابع المناسبات القادمة لـ${country.nameAr} ومقارنة المواعيد بين الدول.`
         : 'قارن هذا الموعد بمناسبات أخرى قريبة في نفس الفهرس.',
       cta: 'استعرض المناسبات',
+      kind: 'hub',
     });
   }
 
@@ -195,60 +216,25 @@ export default function HolidayInternalLinks({
       >
         اختر ما تحتاجه فعلاً: مواقيت الصلاة، تحويل التاريخ، حاسبة مالية، أو مناسبة قريبة.
       </p>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 'var(--space-3)' }}>
-        {links.map((link) => (
-          <Link
-            key={`${link.href}-${link.title}`}
-            href={link.href}
-            style={{
-              padding: 'var(--space-3)',
-              textDecoration: 'none',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 'var(--space-2)',
-              color: 'inherit',
-              background: 'var(--bg-surface-2)',
-              border: '1px solid var(--border-subtle)',
-              borderRadius: 'var(--radius-lg)',
-            }}
-          >
-            <h3
-              style={{
-                fontSize: 'var(--text-base)',
-                fontWeight: 'var(--font-semibold)',
-                color: 'var(--text-primary)',
-                margin: 0,
-              }}
-            >
-              {link.title}
-            </h3>
-            <p
-              style={{
-                fontSize: 'var(--text-sm)',
-                color: 'var(--text-secondary)',
-                lineHeight: 'var(--leading-relaxed)',
-                margin: 0,
-                flexGrow: 1,
-              }}
-            >
-              {link.desc}
-            </p>
-            <span
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 'var(--space-2)',
-                color: 'var(--accent-alt)',
-                fontSize: 'var(--text-sm)',
-                fontWeight: 'var(--font-semibold)',
-                marginTop: 'auto',
-              }}
-            >
-              {link.cta}
-              <ArrowLeft size={14} aria-hidden="true" />
-            </span>
-          </Link>
-        ))}
+      <div className="waqt-related-grid">
+        {links.map((link) => {
+          const Icon = LINK_ICONS[link.kind] || Globe2;
+          return (
+            <Link key={`${link.href}-${link.title}`} href={link.href} className="waqt-related-card">
+              <div className="waqt-related-card__head">
+                <span className="waqt-icon-chip" aria-hidden="true">
+                  <Icon size={18} strokeWidth={1.75} />
+                </span>
+                <h3 className="waqt-related-card__title">{link.title}</h3>
+              </div>
+              <p className="waqt-related-card__desc">{link.desc}</p>
+              <span className="waqt-related-card__cta">
+                {link.cta}
+                <ArrowLeft size={14} aria-hidden="true" />
+              </span>
+            </Link>
+          );
+        })}
       </div>
     </section>
   );

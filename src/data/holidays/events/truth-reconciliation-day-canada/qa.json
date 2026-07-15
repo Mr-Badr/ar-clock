@@ -1,0 +1,18 @@
+{
+  "slug": "truth-reconciliation-day-canada",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر Canada.ca وCBC News وويكيبيديا الإنجليزية: اكتشاف كاملوبس مايو 2021، إقرار فيدرالي سريع يونيو 2021، تبني BC (2023) ومانيتوبا (2023) لاحقاً كإجازة مقاطعية.",
+    "قصة فيليس ويبستاد وحركة القميص البرتقالي 2013 موثّقة بدقة، سابقة للإجازة الفيدرالية بثماني سنوات.",
+    "نبرة تاريخية/تعليمية محترمة تماماً — يوم تذكر لا احتفال، دون خوض سياسي معاصر.",
+    "fixed type، _countryCode: ca، countryScope: none — حدث كندي وحيد بتاريخ ميلادي ثابت 30 سبتمبر."
+  ],
+  "updatedAt": "2026-07-13T18:06:54.757Z"
+}

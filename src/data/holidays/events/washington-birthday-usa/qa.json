@@ -1,0 +1,17 @@
+{
+  "slug": "washington-birthday-usa",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "New Wave 12 candidate, discovered via country-hub-data.js gap scan.",
+    "Federal official name confirmed via 5 U.S. Code Section 6103 — still 'Washington's Birthday', never renamed.",
+    "Differentiator mirrors the site's proven columbus-day-usa pattern: official name vs. popular alternate name."
+  ],
+  "updatedAt": "2026-07-14T21:00:42.207Z"
+}

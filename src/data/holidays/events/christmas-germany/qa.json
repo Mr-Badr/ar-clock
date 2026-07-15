@@ -1,0 +1,17 @@
+{
+  "slug": "christmas-germany",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر Sonntagsblatt.de وLibrary of Congress Law Blog: قيد Weihnachtsruhe يخص ليلة 24 ديسمبر تحديداً (2pm-منتصف الليل)، لا يومي 25-26.",
+    "توضيح أن عيد الميلاد مشرَّع ولاية بولاية، ويوم الوحدة الألمانية هو الإجازة الاتحادية الوحيدة الموحدة.",
+    "fixed type، _countryCode: de، countryScope: none — حدث ألماني وحيد بتاريخ ميلادي ثابت 25-26 ديسمبر."
+  ],
+  "updatedAt": "2026-07-13T18:08:39.329Z"
+}

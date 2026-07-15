@@ -1,0 +1,17 @@
+{
+  "slug": "winter-at-tantora-alula",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "New Wave 12 candidate, Saudi research track. Replaces the originally-recommended taif-rose-festival, which was rejected after independent verification found the festival's own organizers postponed the 2026 edition twice in a row (see project-rejected-event-candidates memory).",
+    "Date pattern (mid-December start, 5 consecutive annual editions, no postponement history) confirmed via WebSearch 2026-07-14 against visitsaudi.com, experiencealula.com, alarabiya.net directly.",
+    "Uses type:'estimated' with a manually-maintained anchor date, mirroring the existing riyadh-season/jeddah-season pattern (RCU announces exact dates a few weeks ahead each year, requiring periodic manual updates like its siblings)."
+  ],
+  "updatedAt": "2026-07-14T21:15:39.298Z"
+}

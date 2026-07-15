@@ -1,0 +1,19 @@
+{
+  "slug": "volunteer-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track C candidate (remaining international UN days).",
+    "Date and history (UNGA Resolution 40/212, adopted 17 Dec 1985; 2001 declared International Year of Volunteers via resolution 52/17 of 1997) confirmed via WebSearch against un.org/unv.org.",
+    "Gulf relevance confirmed: Saudi Arabia's Ministry of Human Resources and Social Development runs 'Saudi Volunteering Day' on the same date under the slogan 'عطاء وطن', tied to Vision 2030 nonprofit-sector goals (spa.gov.sa, hrsd.gov.sa); UAE also observes it nationally (aletihad.ae, alkhaleej.ae).",
+    "Competitor check: spa.gov.sa/aletihad.ae/alkhaleej.ae are seasonal news pieces not evergreen reference pages, belarabyapps.com is general educational content without the precise UN resolution number or a countdown — none unify the UN day and the Saudi/UAE national observances into one reference page.",
+    "countryScope: all (shared international day, generates per-country alias pages)."
+  ],
+  "updatedAt": "2026-07-15T12:31:02.046Z"
+}

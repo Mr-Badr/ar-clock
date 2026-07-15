@@ -1,0 +1,19 @@
+{
+  "slug": "whit-monday-france",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track A candidate, from country-hub-data.js gap scan.",
+    "Owner explicitly confirmed 2026-07-14 (AskUserQuestion) to proceed with Easter-cycle events, framed strictly around legal/civil/historical status, matching the existing live good-friday-germany/ascension-day-germany/assumption-day-france pattern.",
+    "Date rule (easter type, easterOffset 50) and the journée de solidarité history (2004 law after the 2003 heatwave that killed ~15,000, mostly elderly; restored as a nominal holiday in 2008 but each company now picks its own solidarity day) confirmed via WebSearch against connexionfrance.com/Wikipedia/timeanddate.com.",
+    "Fixed a hardcoded-year risk: the €3.56bn annual figure was sourced tied to 2026 specifically; rewrote as 'سنوياً' (annually) rather than citing the literal year, per the hardcoded_year_detected rule.",
+    "Competitor check: connexionfrance.com's detailed explainer is English-only, jelia-arabe.com is a single-year seasonal piece, trip.com/infomigrants.net repeat the oversimplified 'yes it's a holiday' claim without explaining the post-2008 per-company reality — none address the real practical question (will I actually get this day off)."
+  ],
+  "updatedAt": "2026-07-15T12:24:11.659Z"
+}

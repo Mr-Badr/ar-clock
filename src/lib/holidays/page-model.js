@@ -81,6 +81,9 @@ function buildAboutNotes({ event, calInfo, nowIso }) {
   if (event.type === 'floating') {
     notes.push({ id: 'floating', kind: 'text', text: 'يتكرر هذا الموعد سنوياً وفق قاعدة تقويمية متحركة مرتبطة بيوم الأسبوع داخل الشهر.' });
   }
+  if (event.type === 'weekday-in-range') {
+    notes.push({ id: 'weekday-in-range', kind: 'text', text: 'يتكرر هذا الموعد سنوياً وفق يوم أسبوع محدد (مثل السبت أو الاثنين) يقع ضمن نافذة تاريخ ثابتة، فلا يحمل نفس رقم اليوم كل سنة.' });
+  }
   if (event.type === 'fixed') {
     notes.push({ id: 'fixed', kind: 'text', text: 'هذا التاريخ ثابت في التقويم الميلادي كل عام.' });
   }

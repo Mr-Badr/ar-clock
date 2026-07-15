@@ -1,0 +1,17 @@
+{
+  "slug": "world-refugee-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر UNHCR وun.org/ar: قرار 55/76 (ديسمبر 2000)، أول احتفال 2001 بمناسبة الذكرى الخمسين لاتفاقية 1951، أصل التاريخ من يوم اللاجئ الأفريقي 1975.",
+    "نبرة إنسانية محايدة صارمة، بلا أي إشارة سياسية لطرف أو نزاع محدد، وبلا إحصائيات دقيقة قد تصبح قديمة.",
+    "fixed type، countryScope: all، category: social — حدث عالمي بتاريخ ميلادي ثابت 20 يونيو."
+  ],
+  "updatedAt": "2026-07-13T18:11:23.062Z"
+}

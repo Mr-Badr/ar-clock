@@ -1,0 +1,19 @@
+{
+  "slug": "literacy-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track C candidate (remaining international UN/UNESCO days).",
+    "Date and history confirmed via WebSearch: UNESCO declared the day at its 14th General Conference session (1966), proposal originating from the 1965 Tehran World Conference of Ministers of Education on the Eradication of Illiteracy; first observed 8 September 1967.",
+    "Arab-world statistics confirmed via WebSearch (Arabic queries): roughly 1 in 5 adults in the Arab world is illiterate; Qatar/Palestine/Bahrain/Jordan/Kuwait under 10%; Yemen highest at 35-40% (war-driven); Egypt still above 20%; globally 770M+ illiterate, roughly two-thirds women.",
+    "Competitor check: skynewsarabia.com is a seasonal infographic, elbalad.news/albawabhnews.com are news reports, bshra.com is Iraq-specific only — none combine the full Arab-country comparison with the UNESCO founding history in one evergreen reference page.",
+    "countryScope: all (shared international day, generates per-country alias pages)."
+  ],
+  "updatedAt": "2026-07-15T12:36:16.826Z"
+}

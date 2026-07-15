@@ -1,0 +1,19 @@
+{
+  "slug": "independence-day-bahrain",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر ويكيبيديا العربية والإنجليزية (Independence Day Bahrain + 1970 Bahraini independence survey) وUNSCR.com: 15 أغسطس 1971 استقلال البحرين، بعد استفتاء أممي 1970 (بعثة غيكيارديني) وقرار مجلس الأمن 278.",
+    "توضيح صريح لسبب انسحاب البحرين من اتحاد الإمارات التسع (خلافات تمثيل + مخاوف إيرانية متبقية).",
+    "تمييز صريح عن bahrain-national-day (16 ديسمبر، 1961) — تاريخان بحرينيان منفصلان رغم ارتباطهما بالشيخ عيسى بن سلمان نفسه.",
+    "لم يُجزم بتاريخ انضمام البحرين للأمم المتحدة (مصدر واحد غير مستقل) — تم تجنّب ذكره كحقيقة قاطعة.",
+    "fixed type، _countryCode: bh، countryScope: none — حدث بحريني وحيد بتاريخ ميلادي ثابت 15 أغسطس."
+  ],
+  "updatedAt": "2026-07-13T18:05:03.793Z"
+}

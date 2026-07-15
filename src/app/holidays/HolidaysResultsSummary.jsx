@@ -51,13 +51,14 @@ export default function HolidaysResultsSummary({
   const countryLabel = country !== 'all' && selectedCountry?.label
     ? selectedCountry.label
     : '';
-  const summaryLine = isPending
-    ? 'نرتّب النتائج المناسبة لك الآن…'
+  const resultCount = hasActiveFilters || countryLabel ? eventsCount : total;
+  const summaryPrefix = isPending
+    ? null
     : countryLabel
-      ? `وجدنا ${eventsCount} مناسبة مرتبطة بـ ${countryLabel}`
+      ? 'مناسبة مرتبطة بـ'
       : hasActiveFilters
-      ? `وجدنا ${eventsCount} مناسبة توافق ما اخترته`
-      : `تصفّح ${total} مناسبة مع عدّادات واضحة ومسارات متابعة عملية`;
+        ? 'مناسبة توافق ما اخترته'
+        : 'مناسبة متاحة الآن';
   const summaryHint = isPending
     ? null
     : countryLabel
@@ -67,14 +68,23 @@ export default function HolidaysResultsSummary({
       : 'ابدأ بالأقرب زمنًا أو ابحث باسم المناسبة أو الدولة أو نوع الموعد للوصول إلى الصفحة التي تريدها مباشرة.';
 
   return (
-    <div className="flex items-center justify-between flex-wrap" style={{ gap: 'var(--space-3)' }}>
+    <div className="waqt-results-summary flex items-center justify-between flex-wrap" style={{ gap: 'var(--space-3)' }}>
       <div style={{ display: 'grid', gap: '0.22rem', minWidth: 0 }}>
         <p
           aria-live="polite"
           aria-atomic
-          style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', fontWeight: 'var(--font-semibold)' }}
+          className="waqt-results-summary__line"
         >
-          {summaryLine}
+          {isPending ? (
+            'نرتّب النتائج المناسبة لك الآن…'
+          ) : (
+            <>
+              <span className="waqt-results-summary__count">{resultCount}</span>
+              {' '}
+              {summaryPrefix}
+              {countryLabel ? ` ${countryLabel}` : ''}
+            </>
+          )}
         </p>
         {summaryHint ? (
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 1.7 }}>

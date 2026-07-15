@@ -1,0 +1,17 @@
+{
+  "slug": "assumption-day-france",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر service-public.gouv.fr وSortiraparis: نذر لويس الثالث عشر 1638، تزامن مع ولادة لويس الرابع عشر، بقاء العطلة بعد قانون 1905.",
+    "نفس الوضع القانوني غير المضمون فردياً كبقية عطل فرنسا (فقط 1 مايو مضمون).",
+    "fixed type، _countryCode: fr، countryScope: none — حدث فرنسي وحيد بتاريخ ميلادي ثابت 15 أغسطس."
+  ],
+  "updatedAt": "2026-07-13T18:08:30.290Z"
+}

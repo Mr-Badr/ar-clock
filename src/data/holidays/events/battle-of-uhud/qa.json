@@ -1,0 +1,18 @@
+{
+  "slug": "battle-of-uhud",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر islamweb.net وmawdoo3.com وويكيبيديا العربية: 7 شوال 3هـ (الإجماع الأغلب، مع إقرار صريح بتضارب مصادر أخرى حول 11/15 شوال).",
+    "سرد جبل الرماة وتفصيل استشهاد حمزة بن عبدالمطلب موثّق عبر مصادر متعددة.",
+    "نبرة تاريخية/سردية بحتة، دون فقه أو جدل عقدي، مطابقة لنمط badr-day/fath-makkah.",
+    "hijri type، hijriMonth: 10 (شوال)، hijriDay: 7، countryScope: all — نفس نمط الأحداث الإسلامية الحية."
+  ],
+  "updatedAt": "2026-07-13T18:10:28.150Z"
+}

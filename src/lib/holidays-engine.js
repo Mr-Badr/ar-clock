@@ -289,7 +289,7 @@ export function buildHistoricalDates(ev, targetDate) {
     { gregorian: `${gr - 2}م`, note: 'ماضي' },
     { gregorian: `${gr - 1}م`, note: 'ماضي' },
     { gregorian: `${gr}م`, note: 'السنة الحالية', current: true },
-    { gregorian: `${gr + 1}م`, note: ev.type === 'estimated' ? 'تقديري' : ev.type === 'floating' ? 'متحرك وفق القاعدة السنوية' : 'ثابت' },
+    { gregorian: `${gr + 1}م`, note: ev.type === 'estimated' ? 'تقديري' : (ev.type === 'floating' || ev.type === 'weekday-in-range') ? 'متحرك وفق القاعدة السنوية' : 'ثابت' },
   ];
 }
 
@@ -313,7 +313,7 @@ export const enrichEvent = (raw) => {
     if (!('hijriMonth' in e) && 'month' in e) e.hijriMonth = e.month;
     if (!('hijriDay' in e) && 'day' in e) e.hijriDay = e.day;
   }
-  ['hijriMonth', 'hijriDay', 'month', 'day', 'weekday', 'nth', 'offsetDays'].forEach(k => {
+  ['hijriMonth', 'hijriDay', 'month', 'day', 'weekday', 'nth', 'offsetDays', 'startMonth', 'startDay', 'endMonth', 'endDay'].forEach(k => {
     if (e[k] != null) e[k] = Number(e[k]);
   });
   
@@ -342,7 +342,9 @@ export const enrichEvent = (raw) => {
             ? 'نعم، يتقدم ~11 يوماً سنوياً في التقويم الهجري.'
             : e.type === 'floating'
               ? `موعد ${e.name} يتحرك سنوياً وفق قاعدة تقويمية ثابتة مرتبطة بيوم الأسبوع داخل الشهر.`
-              : `موعد ${e.name} ثابت كل عام.`,
+              : e.type === 'weekday-in-range'
+                ? `موعد ${e.name} يتحرك كل عام ضمن نافذة تاريخ ثابتة، لأنه اليوم المحدد (مثل السبت أو الاثنين) الواقع داخل هذه النافذة، لا تاريخاً ثابتاً من الشهر.`
+                : `موعد ${e.name} ثابت كل عام.`,
       },
     ];
   }
@@ -435,6 +437,40 @@ function nextEasterOffset(offset = 0, now) {
   if (t < n) { e = easterSunday(n.getFullYear() + 1); t = new Date(e); t.setDate(t.getDate() + offset); }
   return t;
 }
+/** Orthodox (Julian-calendar) Easter Sunday, converted to Gregorian — Meeus' Julian algorithm + 13-day Julian→Gregorian offset (valid 1900-2099). Mirrors country-hub.js's orthodoxEasterSunday(). */
+function orthodoxEasterSunday(year) {
+  const a = year % 4, b = year % 7, c = year % 19;
+  const d = (19 * c + 15) % 30;
+  const e = (2 * a + 4 * b - d + 34) % 7;
+  const month = Math.floor((d + e + 114) / 31);
+  const day = ((d + e + 114) % 31) + 1;
+  const date = new Date(year, month - 1, day);
+  date.setDate(date.getDate() + 13);
+  return date;
+}
+function nextOrthodoxEasterOffset(offset = 0, now) {
+  const n = new Date(now); n.setHours(0, 0, 0, 0);
+  let e = orthodoxEasterSunday(n.getFullYear());
+  let t = new Date(e); t.setDate(t.getDate() + offset); t.setHours(0, 0, 0, 0);
+  if (t < n) { e = orthodoxEasterSunday(n.getFullYear() + 1); t = new Date(e); t.setDate(t.getDate() + offset); }
+  return t;
+}
+/** The single occurrence of `weekday` inside an inclusive Gregorian range within one year — mirrors country-hub.js's weekdayInRange. */
+function weekdayInRange(year, weekday, startMonth, startDay, endMonth, endDay) {
+  const start = new Date(year, startMonth - 1, startDay);
+  const end = new Date(year, endMonth - 1, endDay);
+  const offset = (weekday - start.getDay() + 7) % 7;
+  const date = new Date(start);
+  date.setDate(date.getDate() + offset);
+  date.setHours(0, 0, 0, 0);
+  return date.getTime() <= end.getTime() ? date : null;
+}
+function nextWeekdayInRange(ev, now) {
+  const n = new Date(now); n.setHours(0, 0, 0, 0);
+  let d = weekdayInRange(n.getFullYear(), ev.weekday, ev.startMonth, ev.startDay, ev.endMonth, ev.endDay);
+  if (!d || d < n) d = weekdayInRange(n.getFullYear() + 1, ev.weekday, ev.startMonth, ev.startDay, ev.endMonth, ev.endDay);
+  return d || n;
+}
 function roughHijri(hMonth, hDay, now) {
   const n = new Date(now);
   const EP = new Date('0622-07-19').getTime(), MSY = 354.37 * 86_400_000;
@@ -474,6 +510,8 @@ export function getNextEventDate(rawEvent, resolvedMap = {}, nowMs = Date.now())
   if (ev.type === 'monthly') return nextMonthly(ev.day, now);
   if (ev.type === 'floating') return nextFloating(ev, now);
   if (ev.type === 'easter') return nextEasterOffset(ev.easterOffset || 0, now);
+  if (ev.type === 'orthodox-easter') return nextOrthodoxEasterOffset(ev.easterOffset || 0, now);
+  if (ev.type === 'weekday-in-range') return nextWeekdayInRange(ev, now);
   return now;
 }
 
@@ -717,7 +755,7 @@ export function buildBreadcrumbSchema(crumbs) {
  */
 export function buildEventSeriesSchema(ev, siteUrl) {
   // Only add EventSeries for recurring event types
-  const recurringTypes = ['hijri', 'fixed', 'easter', 'monthly', 'floating'];
+  const recurringTypes = ['hijri', 'fixed', 'easter', 'orthodox-easter', 'monthly', 'floating', 'weekday-in-range'];
   if (!recurringTypes.includes(ev.type)) return null;
   
   return {

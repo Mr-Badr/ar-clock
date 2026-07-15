@@ -1,0 +1,18 @@
+{
+  "slug": "victory-day-france",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر service-public.gouv.fr وLegifrance: فقط 1 مايو مضمون قانوناً كإجازة مدفوعة إلزامية (L3133-4)؛ 8 مايو عرفية مثل بقية العطل العشر الأخرى.",
+    "مقترح إلغاء حكومي حديث ذُكر دون تحديد سنة (صيغة 'مؤخراً') تجنباً لقاعدة السنة الصريحة الممنوعة.",
+    "ازدواج تاريخي مع مجازر سطيف/الجزائر مسرود بحياد تام كمعلومة إضافية، دون تحليل سياسي.",
+    "fixed type، _countryCode: fr، countryScope: none — حدث فرنسي وحيد بتاريخ ميلادي ثابت 8 مايو."
+  ],
+  "updatedAt": "2026-07-13T18:07:04.361Z"
+}

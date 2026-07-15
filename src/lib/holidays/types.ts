@@ -12,7 +12,7 @@ export interface EventCore {
   id: string;
   slug: string;
   name: string;
-  type: 'hijri' | 'fixed' | 'estimated' | 'monthly' | 'easter' | 'floating';
+  type: 'hijri' | 'fixed' | 'estimated' | 'monthly' | 'easter' | 'orthodox-easter' | 'floating' | 'weekday-in-range';
   category: EventCategory;
   _countryCode?: string | null;
   month?: number;
@@ -23,6 +23,10 @@ export interface EventCore {
   weekday?: number;
   nth?: number;
   offsetDays?: number;
+  startMonth?: number;
+  startDay?: number;
+  endMonth?: number;
+  endDay?: number;
 }
 
 export interface EventRichContent {

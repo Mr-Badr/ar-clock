@@ -2053,6 +2053,30 @@
     "canonicalPath": "/holidays/january-25-egypt",
     "aliases": []
   },
+  "all-saints-day-france": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "fr"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/all-saints-day-france",
+    "aliases": []
+  },
+  "all-saints-sweden": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "se"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/all-saints-sweden",
+    "aliases": []
+  },
   "aman-social-tunisia": {
     "publishStatus": "published",
     "retired": false,
@@ -2205,6 +2229,30 @@
     "canonicalPath": "/holidays/armed-forces-day-oman",
     "aliases": []
   },
+  "armenian-christmas-lebanon": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "lb"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/armenian-christmas-lebanon",
+    "aliases": []
+  },
+  "armistice-day-france": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "fr"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/armistice-day-france",
+    "aliases": []
+  },
   "army-day-iraq": {
     "publishStatus": "published",
     "retired": false,
@@ -2241,6 +2289,30 @@
     "canonicalPath": "/holidays/ars-france",
     "aliases": []
   },
+  "ascension-day-france": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "fr"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/ascension-day-france",
+    "aliases": []
+  },
+  "ascension-day-germany": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "de"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/ascension-day-germany",
+    "aliases": []
+  },
   "asian-cup-2027": {
     "publishStatus": "published",
     "retired": false,
@@ -2251,6 +2323,52 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/asian-cup-2027",
+    "aliases": []
+  },
+  "asir-summer-season": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "sa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/asir-summer-season",
+    "aliases": []
+  },
+  "assumption-day-france": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "fr"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/assumption-day-france",
+    "aliases": []
+  },
+  "assumption-day-lebanon": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "lb"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/assumption-day-lebanon",
+    "aliases": []
+  },
+  "autism-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "standalone",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/autism-day",
     "aliases": []
   },
   "bac-results-algeria": {
@@ -2383,6 +2501,18 @@
       "badr-day-in-lebanon"
     ]
   },
+  "bahraini-womens-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "bh"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/bahraini-womens-day",
+    "aliases": []
+  },
   "barnbidrag-sweden": {
     "publishStatus": "published",
     "retired": false,
@@ -2416,6 +2546,74 @@
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/bastille-day-france",
     "aliases": []
+  },
+  "battle-of-khandaq": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "standalone",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/battle-of-khandaq",
+    "aliases": []
+  },
+  "battle-of-uhud": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "bh",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us",
+      "de",
+      "se",
+      "lb"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/battle-of-uhud",
+    "aliases": [
+      "battle-of-uhud-in-saudi",
+      "battle-of-uhud-in-egypt",
+      "battle-of-uhud-in-morocco",
+      "battle-of-uhud-in-algeria",
+      "battle-of-uhud-in-uae",
+      "battle-of-uhud-in-tunisia",
+      "battle-of-uhud-in-kuwait",
+      "battle-of-uhud-in-qatar",
+      "battle-of-uhud-in-bahrain",
+      "battle-of-uhud-in-iraq",
+      "battle-of-uhud-in-syria",
+      "battle-of-uhud-in-yemen",
+      "battle-of-uhud-in-jordan",
+      "battle-of-uhud-in-libya",
+      "battle-of-uhud-in-oman",
+      "battle-of-uhud-in-palestine",
+      "battle-of-uhud-in-canada",
+      "battle-of-uhud-in-france",
+      "battle-of-uhud-in-turkey",
+      "battle-of-uhud-in-usa",
+      "battle-of-uhud-in-germany",
+      "battle-of-uhud-in-sweden",
+      "battle-of-uhud-in-lebanon"
+    ]
   },
   "blood-donor-day": {
     "publishStatus": "published",
@@ -2487,6 +2685,18 @@
     "canonicalPath": "/holidays/bostadsbidrag-sweden",
     "aliases": []
   },
+  "boxing-day-canada": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ca"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/boxing-day-canada",
+    "aliases": []
+  },
   "buergergeld-germany": {
     "publishStatus": "published",
     "retired": false,
@@ -2535,6 +2745,16 @@
     "canonicalPath": "/holidays/ccb-canada",
     "aliases": []
   },
+  "charity-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "standalone",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/charity-day",
+    "aliases": []
+  },
   "child-benefit-oman": {
     "publishStatus": "published",
     "retired": false,
@@ -2558,6 +2778,136 @@
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/childrens-day-uae",
     "aliases": []
+  },
+  "christmas-canada": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ca"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/christmas-canada",
+    "aliases": []
+  },
+  "christmas-eve-sweden": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "se"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/christmas-eve-sweden",
+    "aliases": []
+  },
+  "christmas-germany": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "de"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/christmas-germany",
+    "aliases": []
+  },
+  "christmas-jordan": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "jo"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/christmas-jordan",
+    "aliases": []
+  },
+  "christmas-palestine": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ps"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/christmas-palestine",
+    "aliases": []
+  },
+  "columbus-day-usa": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "us"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/columbus-day-usa",
+    "aliases": []
+  },
+  "conquest-of-andalusia": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "bh",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us",
+      "de",
+      "se",
+      "lb"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/conquest-of-andalusia",
+    "aliases": [
+      "conquest-of-andalusia-in-saudi",
+      "conquest-of-andalusia-in-egypt",
+      "conquest-of-andalusia-in-morocco",
+      "conquest-of-andalusia-in-algeria",
+      "conquest-of-andalusia-in-uae",
+      "conquest-of-andalusia-in-tunisia",
+      "conquest-of-andalusia-in-kuwait",
+      "conquest-of-andalusia-in-qatar",
+      "conquest-of-andalusia-in-bahrain",
+      "conquest-of-andalusia-in-iraq",
+      "conquest-of-andalusia-in-syria",
+      "conquest-of-andalusia-in-yemen",
+      "conquest-of-andalusia-in-jordan",
+      "conquest-of-andalusia-in-libya",
+      "conquest-of-andalusia-in-oman",
+      "conquest-of-andalusia-in-palestine",
+      "conquest-of-andalusia-in-canada",
+      "conquest-of-andalusia-in-france",
+      "conquest-of-andalusia-in-turkey",
+      "conquest-of-andalusia-in-usa",
+      "conquest-of-andalusia-in-germany",
+      "conquest-of-andalusia-in-sweden",
+      "conquest-of-andalusia-in-lebanon"
+    ]
   },
   "coptic-christmas-egypt": {
     "publishStatus": "published",
@@ -2631,6 +2981,28 @@
     "canonicalPath": "/holidays/direct-social-support-morocco",
     "aliases": []
   },
+  "diriyah-season": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "sa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/diriyah-season",
+    "aliases": []
+  },
+  "disability-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "standalone",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/disability-day",
+    "aliases": []
+  },
   "dst-abolition-morocco": {
     "publishStatus": "published",
     "retired": false,
@@ -2653,6 +3025,54 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/dst-usa",
+    "aliases": []
+  },
+  "easter-monday-france": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "fr"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/easter-monday-france",
+    "aliases": []
+  },
+  "easter-monday-germany": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "de"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/easter-monday-germany",
+    "aliases": []
+  },
+  "easter-syria": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "sy"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/easter-syria",
+    "aliases": []
+  },
+  "epiphany-sweden": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "se"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/epiphany-sweden",
     "aliases": []
   },
   "evacuation-day-egypt": {
@@ -2689,6 +3109,86 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/evacuation-day-tunisia",
+    "aliases": []
+  },
+  "fall-of-granada": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "bh",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us",
+      "de",
+      "se",
+      "lb"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/fall-of-granada",
+    "aliases": [
+      "fall-of-granada-in-saudi",
+      "fall-of-granada-in-egypt",
+      "fall-of-granada-in-morocco",
+      "fall-of-granada-in-algeria",
+      "fall-of-granada-in-uae",
+      "fall-of-granada-in-tunisia",
+      "fall-of-granada-in-kuwait",
+      "fall-of-granada-in-qatar",
+      "fall-of-granada-in-bahrain",
+      "fall-of-granada-in-iraq",
+      "fall-of-granada-in-syria",
+      "fall-of-granada-in-yemen",
+      "fall-of-granada-in-jordan",
+      "fall-of-granada-in-libya",
+      "fall-of-granada-in-oman",
+      "fall-of-granada-in-palestine",
+      "fall-of-granada-in-canada",
+      "fall-of-granada-in-france",
+      "fall-of-granada-in-turkey",
+      "fall-of-granada-in-usa",
+      "fall-of-granada-in-germany",
+      "fall-of-granada-in-sweden",
+      "fall-of-granada-in-lebanon"
+    ]
+  },
+  "family-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "standalone",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/family-day",
+    "aliases": []
+  },
+  "family-day-canada": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ca"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/family-day-canada",
     "aliases": []
   },
   "fath-makkah": {
@@ -2773,6 +3273,64 @@
     "canonicalPath": "/holidays/flag-day-uae",
     "aliases": []
   },
+  "food-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "bh",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us",
+      "de",
+      "se",
+      "lb"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/food-day",
+    "aliases": [
+      "food-day-in-saudi",
+      "food-day-in-egypt",
+      "food-day-in-morocco",
+      "food-day-in-algeria",
+      "food-day-in-uae",
+      "food-day-in-tunisia",
+      "food-day-in-kuwait",
+      "food-day-in-qatar",
+      "food-day-in-bahrain",
+      "food-day-in-iraq",
+      "food-day-in-syria",
+      "food-day-in-yemen",
+      "food-day-in-jordan",
+      "food-day-in-libya",
+      "food-day-in-oman",
+      "food-day-in-palestine",
+      "food-day-in-canada",
+      "food-day-in-france",
+      "food-day-in-turkey",
+      "food-day-in-usa",
+      "food-day-in-germany",
+      "food-day-in-sweden",
+      "food-day-in-lebanon"
+    ]
+  },
   "friendship-day": {
     "publishStatus": "published",
     "retired": false,
@@ -2791,6 +3349,18 @@
     "countryCodes": [],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/geminids-meteor-shower",
+    "aliases": []
+  },
+  "good-friday-germany": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "de"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/good-friday-germany",
     "aliases": []
   },
   "great-arab-revolt-day-jordan": {
@@ -2839,6 +3409,88 @@
     "canonicalPath": "/holidays/housing-allowance-kuwait",
     "aliases": []
   },
+  "human-rights-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "bh",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us",
+      "de",
+      "se",
+      "lb"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/human-rights-day",
+    "aliases": [
+      "human-rights-day-in-saudi",
+      "human-rights-day-in-egypt",
+      "human-rights-day-in-morocco",
+      "human-rights-day-in-algeria",
+      "human-rights-day-in-uae",
+      "human-rights-day-in-tunisia",
+      "human-rights-day-in-kuwait",
+      "human-rights-day-in-qatar",
+      "human-rights-day-in-bahrain",
+      "human-rights-day-in-iraq",
+      "human-rights-day-in-syria",
+      "human-rights-day-in-yemen",
+      "human-rights-day-in-jordan",
+      "human-rights-day-in-libya",
+      "human-rights-day-in-oman",
+      "human-rights-day-in-palestine",
+      "human-rights-day-in-canada",
+      "human-rights-day-in-france",
+      "human-rights-day-in-turkey",
+      "human-rights-day-in-usa",
+      "human-rights-day-in-germany",
+      "human-rights-day-in-sweden",
+      "human-rights-day-in-lebanon"
+    ]
+  },
+  "independence-day-bahrain": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "bh"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/independence-day-bahrain",
+    "aliases": []
+  },
+  "independence-day-kuwait": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "kw"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/independence-day-kuwait",
+    "aliases": []
+  },
   "independence-day-lebanon": {
     "publishStatus": "published",
     "retired": false,
@@ -2849,6 +3501,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/independence-day-lebanon",
+    "aliases": []
+  },
+  "independence-day-qatar": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "qa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/independence-day-qatar",
     "aliases": []
   },
   "independence-day-usa": {
@@ -2931,6 +3595,64 @@
       "international-coffee-day-in-germany",
       "international-coffee-day-in-sweden",
       "international-coffee-day-in-lebanon"
+    ]
+  },
+  "international-peace-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "bh",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us",
+      "de",
+      "se",
+      "lb"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/international-peace-day",
+    "aliases": [
+      "international-peace-day-in-saudi",
+      "international-peace-day-in-egypt",
+      "international-peace-day-in-morocco",
+      "international-peace-day-in-algeria",
+      "international-peace-day-in-uae",
+      "international-peace-day-in-tunisia",
+      "international-peace-day-in-kuwait",
+      "international-peace-day-in-qatar",
+      "international-peace-day-in-bahrain",
+      "international-peace-day-in-iraq",
+      "international-peace-day-in-syria",
+      "international-peace-day-in-yemen",
+      "international-peace-day-in-jordan",
+      "international-peace-day-in-libya",
+      "international-peace-day-in-oman",
+      "international-peace-day-in-palestine",
+      "international-peace-day-in-canada",
+      "international-peace-day-in-france",
+      "international-peace-day-in-turkey",
+      "international-peace-day-in-usa",
+      "international-peace-day-in-germany",
+      "international-peace-day-in-sweden",
+      "international-peace-day-in-lebanon"
     ]
   },
   "international-youth-day": {
@@ -3051,6 +3773,18 @@
     "canonicalPath": "/holidays/june-30-revolution-egypt",
     "aliases": []
   },
+  "juneteenth-usa": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "us"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/juneteenth-usa",
+    "aliases": []
+  },
   "karameh-day-jordan": {
     "publishStatus": "published",
     "retired": false,
@@ -3097,6 +3831,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/knowledge-day-algeria",
+    "aliases": []
+  },
+  "labor-day-canada": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ca"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/labor-day-canada",
     "aliases": []
   },
   "labor-day-usa": {
@@ -3205,6 +3951,64 @@
     "canonicalPath": "/holidays/libya-independence-day",
     "aliases": []
   },
+  "literacy-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "bh",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us",
+      "de",
+      "se",
+      "lb"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/literacy-day",
+    "aliases": [
+      "literacy-day-in-saudi",
+      "literacy-day-in-egypt",
+      "literacy-day-in-morocco",
+      "literacy-day-in-algeria",
+      "literacy-day-in-uae",
+      "literacy-day-in-tunisia",
+      "literacy-day-in-kuwait",
+      "literacy-day-in-qatar",
+      "literacy-day-in-bahrain",
+      "literacy-day-in-iraq",
+      "literacy-day-in-syria",
+      "literacy-day-in-yemen",
+      "literacy-day-in-jordan",
+      "literacy-day-in-libya",
+      "literacy-day-in-oman",
+      "literacy-day-in-palestine",
+      "literacy-day-in-canada",
+      "literacy-day-in-france",
+      "literacy-day-in-turkey",
+      "literacy-day-in-usa",
+      "literacy-day-in-germany",
+      "literacy-day-in-sweden",
+      "literacy-day-in-lebanon"
+    ]
+  },
   "martyrs-day-algeria": {
     "publishStatus": "published",
     "retired": false,
@@ -3265,6 +4069,18 @@
     "canonicalPath": "/holidays/midday-work-ban-kuwait",
     "aliases": []
   },
+  "midsummer-sweden": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "se"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/midsummer-sweden",
+    "aliases": []
+  },
   "midyear-break-jordan": {
     "publishStatus": "published",
     "retired": false,
@@ -3287,6 +4103,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/midyear-break-saudi",
+    "aliases": []
+  },
+  "mlk-day-usa": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "us"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/mlk-day-usa",
     "aliases": []
   },
   "moroccan-womens-day": {
@@ -3442,6 +4270,18 @@
       "nurses-day-in-sweden",
       "nurses-day-in-lebanon"
     ]
+  },
+  "october-14-revolution-yemen": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ye"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/october-14-revolution-yemen",
+    "aliases": []
   },
   "omani-womens-day": {
     "publishStatus": "published",
@@ -3701,6 +4541,18 @@
       "rajab-start-in-lebanon"
     ]
   },
+  "recapture-of-riyadh": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "sa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/recapture-of-riyadh",
+    "aliases": []
+  },
   "reef-support-saudi": {
     "publishStatus": "published",
     "retired": false,
@@ -3711,6 +4563,30 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/reef-support-saudi",
+    "aliases": []
+  },
+  "remembrance-day-canada": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ca"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/remembrance-day-canada",
+    "aliases": []
+  },
+  "renaissance-day-oman": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "om"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/renaissance-day-oman",
     "aliases": []
   },
   "republic-day-iraq": {
@@ -3819,6 +4695,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/riyadh-season",
+    "aliases": []
+  },
+  "saint-maroun-day-lebanon": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "lb"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/saint-maroun-day-lebanon",
     "aliases": []
   },
   "salary-day-bahrain": {
@@ -4433,6 +5321,18 @@
     "canonicalPath": "/holidays/trillium-benefit-canada",
     "aliases": []
   },
+  "truth-reconciliation-day-canada": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ca"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/truth-reconciliation-day-canada",
+    "aliases": []
+  },
   "tunisian-womens-day": {
     "publishStatus": "published",
     "retired": false,
@@ -4505,6 +5405,18 @@
     "canonicalPath": "/holidays/unity-day-germany",
     "aliases": []
   },
+  "unity-day-morocco": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ma"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/unity-day-morocco",
+    "aliases": []
+  },
   "unity-day-yemen": {
     "publishStatus": "published",
     "retired": false,
@@ -4541,6 +5453,18 @@
     "canonicalPath": "/holidays/veterans-day-usa",
     "aliases": []
   },
+  "victoria-day-canada": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ca"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/victoria-day-canada",
+    "aliases": []
+  },
   "victory-day-algeria": {
     "publishStatus": "published",
     "retired": false,
@@ -4551,6 +5475,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/victory-day-algeria",
+    "aliases": []
+  },
+  "victory-day-france": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "fr"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/victory-day-france",
     "aliases": []
   },
   "victory-day-iraq": {
@@ -4577,6 +5513,110 @@
     "canonicalPath": "/holidays/victory-day-turkey",
     "aliases": []
   },
+  "volunteer-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "bh",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us",
+      "de",
+      "se",
+      "lb"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/volunteer-day",
+    "aliases": [
+      "volunteer-day-in-saudi",
+      "volunteer-day-in-egypt",
+      "volunteer-day-in-morocco",
+      "volunteer-day-in-algeria",
+      "volunteer-day-in-uae",
+      "volunteer-day-in-tunisia",
+      "volunteer-day-in-kuwait",
+      "volunteer-day-in-qatar",
+      "volunteer-day-in-bahrain",
+      "volunteer-day-in-iraq",
+      "volunteer-day-in-syria",
+      "volunteer-day-in-yemen",
+      "volunteer-day-in-jordan",
+      "volunteer-day-in-libya",
+      "volunteer-day-in-oman",
+      "volunteer-day-in-palestine",
+      "volunteer-day-in-canada",
+      "volunteer-day-in-france",
+      "volunteer-day-in-turkey",
+      "volunteer-day-in-usa",
+      "volunteer-day-in-germany",
+      "volunteer-day-in-sweden",
+      "volunteer-day-in-lebanon"
+    ]
+  },
+  "wafat-khadija": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "standalone",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/wafat-khadija",
+    "aliases": []
+  },
+  "washington-birthday-usa": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "us"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/washington-birthday-usa",
+    "aliases": []
+  },
+  "whit-monday-france": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "fr"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/whit-monday-france",
+    "aliases": []
+  },
+  "whit-monday-germany": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "de"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/whit-monday-germany",
+    "aliases": []
+  },
   "white-friday": {
     "publishStatus": "published",
     "retired": false,
@@ -4585,6 +5625,76 @@
     "countryCodes": [],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/white-friday",
+    "aliases": []
+  },
+  "wildlife-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "bh",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us",
+      "de",
+      "se",
+      "lb"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/wildlife-day",
+    "aliases": [
+      "wildlife-day-in-saudi",
+      "wildlife-day-in-egypt",
+      "wildlife-day-in-morocco",
+      "wildlife-day-in-algeria",
+      "wildlife-day-in-uae",
+      "wildlife-day-in-tunisia",
+      "wildlife-day-in-kuwait",
+      "wildlife-day-in-qatar",
+      "wildlife-day-in-bahrain",
+      "wildlife-day-in-iraq",
+      "wildlife-day-in-syria",
+      "wildlife-day-in-yemen",
+      "wildlife-day-in-jordan",
+      "wildlife-day-in-libya",
+      "wildlife-day-in-oman",
+      "wildlife-day-in-palestine",
+      "wildlife-day-in-canada",
+      "wildlife-day-in-france",
+      "wildlife-day-in-turkey",
+      "wildlife-day-in-usa",
+      "wildlife-day-in-germany",
+      "wildlife-day-in-sweden",
+      "wildlife-day-in-lebanon"
+    ]
+  },
+  "winter-at-tantora-alula": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "sa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/winter-at-tantora-alula",
     "aliases": []
   },
   "winter-break-qatar": {
@@ -4634,6 +5744,64 @@
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/winter-time-germany",
     "aliases": []
+  },
+  "world-book-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "bh",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us",
+      "de",
+      "se",
+      "lb"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/world-book-day",
+    "aliases": [
+      "world-book-day-in-saudi",
+      "world-book-day-in-egypt",
+      "world-book-day-in-morocco",
+      "world-book-day-in-algeria",
+      "world-book-day-in-uae",
+      "world-book-day-in-tunisia",
+      "world-book-day-in-kuwait",
+      "world-book-day-in-qatar",
+      "world-book-day-in-bahrain",
+      "world-book-day-in-iraq",
+      "world-book-day-in-syria",
+      "world-book-day-in-yemen",
+      "world-book-day-in-jordan",
+      "world-book-day-in-libya",
+      "world-book-day-in-oman",
+      "world-book-day-in-palestine",
+      "world-book-day-in-canada",
+      "world-book-day-in-france",
+      "world-book-day-in-turkey",
+      "world-book-day-in-usa",
+      "world-book-day-in-germany",
+      "world-book-day-in-sweden",
+      "world-book-day-in-lebanon"
+    ]
   },
   "world-cancer-day": {
     "publishStatus": "published",
@@ -4878,6 +6046,122 @@
       "world-no-tobacco-day-in-germany",
       "world-no-tobacco-day-in-sweden",
       "world-no-tobacco-day-in-lebanon"
+    ]
+  },
+  "world-refugee-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "bh",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us",
+      "de",
+      "se",
+      "lb"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/world-refugee-day",
+    "aliases": [
+      "world-refugee-day-in-saudi",
+      "world-refugee-day-in-egypt",
+      "world-refugee-day-in-morocco",
+      "world-refugee-day-in-algeria",
+      "world-refugee-day-in-uae",
+      "world-refugee-day-in-tunisia",
+      "world-refugee-day-in-kuwait",
+      "world-refugee-day-in-qatar",
+      "world-refugee-day-in-bahrain",
+      "world-refugee-day-in-iraq",
+      "world-refugee-day-in-syria",
+      "world-refugee-day-in-yemen",
+      "world-refugee-day-in-jordan",
+      "world-refugee-day-in-libya",
+      "world-refugee-day-in-oman",
+      "world-refugee-day-in-palestine",
+      "world-refugee-day-in-canada",
+      "world-refugee-day-in-france",
+      "world-refugee-day-in-turkey",
+      "world-refugee-day-in-usa",
+      "world-refugee-day-in-germany",
+      "world-refugee-day-in-sweden",
+      "world-refugee-day-in-lebanon"
+    ]
+  },
+  "world-tourism-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "all",
+    "distribution": "shared",
+    "countryCodes": [
+      "sa",
+      "eg",
+      "ma",
+      "dz",
+      "ae",
+      "tn",
+      "kw",
+      "qa",
+      "bh",
+      "iq",
+      "sy",
+      "ye",
+      "jo",
+      "ly",
+      "om",
+      "ps",
+      "ca",
+      "fr",
+      "tr",
+      "us",
+      "de",
+      "se",
+      "lb"
+    ],
+    "autoExpandCountries": true,
+    "canonicalPath": "/holidays/world-tourism-day",
+    "aliases": [
+      "world-tourism-day-in-saudi",
+      "world-tourism-day-in-egypt",
+      "world-tourism-day-in-morocco",
+      "world-tourism-day-in-algeria",
+      "world-tourism-day-in-uae",
+      "world-tourism-day-in-tunisia",
+      "world-tourism-day-in-kuwait",
+      "world-tourism-day-in-qatar",
+      "world-tourism-day-in-bahrain",
+      "world-tourism-day-in-iraq",
+      "world-tourism-day-in-syria",
+      "world-tourism-day-in-yemen",
+      "world-tourism-day-in-jordan",
+      "world-tourism-day-in-libya",
+      "world-tourism-day-in-oman",
+      "world-tourism-day-in-palestine",
+      "world-tourism-day-in-canada",
+      "world-tourism-day-in-france",
+      "world-tourism-day-in-turkey",
+      "world-tourism-day-in-usa",
+      "world-tourism-day-in-germany",
+      "world-tourism-day-in-sweden",
+      "world-tourism-day-in-lebanon"
     ]
   },
   "world-water-day": {

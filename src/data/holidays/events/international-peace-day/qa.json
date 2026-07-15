@@ -1,0 +1,16 @@
+{
+  "slug": "international-peace-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر un.org/ar: إنشاء اليوم 1981 (قرار 36/67، تاريخ متحرك)، تثبيته 21 سبتمبر بقرار 55/282 (2001، نافذ 2002).",
+    "fixed type، countryScope: all، category: social — حدث عالمي بتاريخ ميلادي ثابت 21 سبتمبر."
+  ],
+  "updatedAt": "2026-07-13T18:11:10.920Z"
+}

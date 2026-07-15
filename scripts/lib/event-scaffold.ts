@@ -1,7 +1,7 @@
 import { buildAuthoringFaqContent } from '../../src/lib/holidays/faq-normalizer.js';
 import { normalizeIslamicRichContentYears } from '../../src/lib/islamic-year-format.js';
 
-export type EventType = 'hijri' | 'fixed' | 'estimated' | 'monthly' | 'easter' | 'floating';
+export type EventType = 'hijri' | 'fixed' | 'estimated' | 'monthly' | 'easter' | 'orthodox-easter' | 'floating' | 'weekday-in-range';
 export type EventCategory =
   | 'islamic'
   | 'national'
@@ -182,6 +182,8 @@ export function buildAboutEvent(
         ? `موعد ${core.name} يعتمد على قرار أو إعلان رسمي أو تنظيمي، لذلك قد يختلف قليلاً من سنة لأخرى بحسب الجهة المسؤولة عن اعتماده — تابع التحديثات هنا لتبقى على اطلاع.`
         : core.type === 'floating'
           ? `موعد ${core.name} يتبع قاعدة تقويمية سنوية متحركة، مثل تكراره في أسبوع محدد من الشهر أو بعد مناسبة أخرى معروفة، فلا تعتمد على نفس رقم اليوم كل سنة.`
+        : core.type === 'weekday-in-range'
+          ? `موعد ${core.name} هو يوم أسبوع محدد يقع ضمن نافذة تاريخ ثابتة كل عام، فيتحرك رقم اليوم داخل هذه النافذة من سنة لأخرى.`
         : `موعد ${core.name} ثابت في تقويمك كل سنة، ما يجعل متابعته مفيدة لتخطيط وقتك والاستعداد له مبكراً.`;
   const genericImportance = `${core.name} يهمك لأنه يرتبط بأشياء تخطط لها فعلاً، ولهذا نجمع لك هنا موعده الدقيق وسياقه وما عليك فعله قبله وخلاله وبعده في مكان واحد.`;
   const genericHow = `تابع العداد أعلى الصفحة لمعرفة الوقت المتبقي بدقة، وجهّز مسبقاً أي متطلبات عملية ترتبط بالمناسبة، وراجع الجهة الرسمية أو المصدر المعتمد كلما اقترب الموعد.`;
@@ -207,6 +209,8 @@ export function buildRecurringYears(type: EventType, name: string) {
         ? `قد يتغير موعد ${name} من عام إلى آخر بحسب القرار الرسمي أو الجهة المنظمة، لذلك يفيد جدول السنوات في متابعة الإعلانات وتقدير النمط الزمني للمناسبة.`
         : type === 'floating'
           ? `يتغير تاريخ ${name} داخل التقويم الميلادي من سنة إلى أخرى لأنه يتبع قاعدة سنوية متحركة مرتبطة بيوم الأسبوع داخل الشهر، لا يوماً ثابتاً من الشهر نفسه.`
+        : type === 'weekday-in-range'
+          ? `يتغير تاريخ ${name} كل سنة لأنه اليوم المحدد (كالسبت أو الاثنين) الواقع ضمن نافذة تاريخ ثابتة، لا يوماً بعينه من الشهر.`
         : `موعد ${name} ثابت عادة في التاريخ نفسه كل عام، لذلك يساعد جدول السنوات على معرفة توافقه مع أيام الأسبوع وسياق الموسم.`;
 
   return {

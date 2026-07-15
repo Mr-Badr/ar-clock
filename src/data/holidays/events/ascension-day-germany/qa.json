@@ -1,0 +1,17 @@
+{
+  "slug": "ascension-day-germany",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر The Local (×2 مقالين) وarab-deutschland.com: أصل تقليد Vatertag/Herrentag من القرن الـ18، تطور لرحلات Bollerwagen الحضرية، إحصائية حوادث كحول موثّقة.",
+    "مقارنة صريحة مع عيد الأب الأمريكي كزاوية أصلية غير مطروقة عربياً.",
+    "easter type، easterOffset: 39، _countryCode: de، countryScope: none — حدث ألماني وحيد."
+  ],
+  "updatedAt": "2026-07-13T18:08:59.806Z"
+}

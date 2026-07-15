@@ -1,0 +1,17 @@
+{
+  "slug": "renaissance-day-oman",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر ar.wikipedia.org وbيانات country-hub-data.js الداخلية: يوم النهضة (23 يوليو) موثّق كـ'observance' لا 'holiday' — المرسوم 88/2022 لا يُدرجه كإجازة رسمية مدفوعة.",
+    "تمييز صريح عن oman-accession-day (11 يناير، إجازة رسمية معتمدة).",
+    "fixed type، _countryCode: om، countryScope: none — حدث عماني وحيد بتاريخ ميلادي ثابت 23 يوليو."
+  ],
+  "updatedAt": "2026-07-13T18:10:05.179Z"
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "epiphany-sweden",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track A candidate, from country-hub-data.js gap scan. Fixed date (Jan 6), not Easter-linked, no additional owner approval needed beyond the general Christian-observance precedent already set by christmas-usa/christmas-germany/etc.",
+    "Date and folklore facts (Trettondedag = '13th day' after Christmas Eve, änglafärdagen folklore in Småland, Tjugondag Knut on Jan 13 as the actual bigger tree-removal celebration, Systembolaget closure as the main modern practical effect) confirmed via WebSearch against thelocal.se/nordstjernan.com/watchingtheswedes.com.",
+    "Competitor check: dalmedia.se lists it only in a general yearly holiday map, alkompis.se mentions the bridge-day strategy briefly without full detail or a countdown, no Arabic competitor explains the name meaning, the Knut's Day distinction, or the Systembolaget closure.",
+    "Content-policy check: mentions the Magi's visit to Jesus as contextual historical fact (same register as the already-live Christmas pages' nativity mentions), not an affirmation of contested theology — no Resurrection-adjacent claim involved."
+  ],
+  "updatedAt": "2026-07-15T12:27:25.637Z"
+}

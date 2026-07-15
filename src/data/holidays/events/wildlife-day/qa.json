@@ -1,0 +1,20 @@
+{
+  "slug": "wildlife-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track C candidate (remaining international UN days) — last item in this track.",
+    "Date and history confirmed via WebSearch: March 3 marks the anniversary of the CITES convention signing (Washington D.C., 1973); Thailand proposed the day at CITES CoP16 (Bangkok, March 2013); UN General Assembly proclaimed it 20 December 2013.",
+    "Arabian oryx story fact-checked precisely: extinct in the wild by 1972, reintroduction began 1982 (Phoenix Zoo 'World Herd' from 9 animals since 1963, Saudi herd from 1986), IUCN relisted extinct-in-wild → endangered (1986) → vulnerable (June 2011) — the first-ever such reclassification in IUCN history. Current population ~1000+ wild, 6000-7000 captive (2016 estimate).",
+    "Distinguished from the separate Saudi-specific International Arabian Leopard Day (Feb 10, launched 2022 by the Royal Commission for AlUla) — mentioned only for clarification/disambiguation, no separate event built for it in this pass.",
+    "Competitor check: un.org/ar's official page has no countdown or oryx-story link, saudipedia.com covers only the leopard initiative, sis.gov.eg/mu.edu.sa are seasonal institutional news — none combine the full oryx recovery narrative with the CITES-anniversary history in one reference page.",
+    "countryScope: all (shared international day, generates per-country alias pages)."
+  ],
+  "updatedAt": "2026-07-15T12:39:32.468Z"
+}

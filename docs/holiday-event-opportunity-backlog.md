@@ -47,20 +47,43 @@ Targets: **$100–300 in the Aug 8 → Sep 8 AdSense window · 3,000 visitors/da
 8. **No exam/school/bac-results events in new country quotas** — the existing `bac-results-*`/
    `thanaweya-*`/`school-start-*` pages stay and keep their annual freshness task, but new
    country-quota candidates must be genuine civic/cultural/religious observances instead.
+9. **No Christian-theological-content events (owner instruction, 2026-07-14).** Do not build events that
+   affirm or explain Christian theological claims (Resurrection, Epiphany, Feast of the Cross, etc.) —
+   the owner is Muslim and does not want the site publishing content on a religion's core claims he
+   holds to be doctrinally incorrect. This is a standing content-policy line, not a per-event volume call.
+   `coptic-easter-egypt` and its sibling Egypt Coptic-calendar candidates were dropped for this reason —
+   see the Wave 12 Track B note. Full detail + the still-open question about earlier-built Christian
+   civic-holiday pages: memory `project-rejected-event-candidates`.
+10. **Islamic-content sourcing standard (owner instruction, 2026-07-14).** Every fact/date for an
+    Islamic-calendar or Islamic-history event must be verified against mainstream **Sunni** sources —
+    islamweb.net, islamqa.info, awkafonline.gov.eg, dorar.net, mawdoo3.com, islamstory.com,
+    ar.wikipedia.org (neutral) are acceptable; never cite Shia-specific sources (ar.wikishia.net etc.)
+    for sourcing facts. Applies to every Islamic event, not only contested/sectarian topics — this is the
+    same reasoning behind the Ghadir Khumm skip decision, generalized to a sourcing rule for all Islamic
+    content, existing and future.
+11. **Content quality bar, restated (owner instruction, 2026-07-14).** Every page must be genuinely
+    enjoyable and easy to learn from — smooth, human, reader-centered Arabic (not stiff or robotic),
+    teaching the reader like a knowledgeable friend (see rule 1 and the `arabic-content-writing` skill),
+    while still beating competitors on SEO fundamentals (keyword integration, structured FAQ, real
+    differentiators). "Correct and fact-checked" and "enjoyable to read" are not in tension — do both on
+    every page, not one at the expense of the other.
 
 ---
 
 ## Blocked — do not re-research until resolved (check this FIRST, before any new candidate research)
 
+All 7 rows below were re-verified fresh via WebSearch/WebFetch on 2026-07-14 — every blocker still
+holds, none unblockable right now. Don't re-check again until the "unblock condition" column changes.
+
 | Slug | Blocker | Unblock condition |
 |---|---|---|
-| `kontantstotte-norway` | nav.no does not publish one confirmed fixed day-of-month for this specific benefit | Pull the actual 2026/2027 payment-date list directly from nav.no/utbetalingsdatoer |
+| `kontantstotte-norway` | Re-verified 2026-07-14: every source (nav.no's own site, babyverden.no, other trackers) still only says "rundt den 20." (around the 20th) with "nøyaktige datoer kan variere" (exact dates may vary) — no single confirmed fixed day found | Pull the actual 2026/2027 payment-date list directly from nav.no/utbetalingsdatoer (nav.no blocked WebFetch this session — may need manual browser check) |
 | `national-day-norway` | Blocked on `kontantstotte-norway` (Norway hub-unlock plan needs it as the 3rd event) | Same as above |
-| `salary-day-morocco` | Every source found is a one-off Eid-linked early-payment news announcement, never a recurring monthly TGR day | A primary source (TGR/Ministry of Finance) stating a genuine recurring shared day |
-| `dubai-shopping-festival` | Exact dates announced 3-4 months ahead; sources currently conflict | Official visitdubai.com announcement of exact dates |
-| `f1-bahrain-gp` | Sports-SERP risk; needs a real keyword-volume check | GSC data confirming date-intent queries beat race-coverage-intent |
-| `tax-refund-usa` | No confirmed Arabic search volume yet | 3 GSC-confirmed Arabic keyword phrases with real volume |
-| `dv-lottery` status tracker | Program suspended Mar 2026 | Check travel.state.gov for a reopened window |
+| `salary-day-morocco` | Re-verified 2026-07-14: fresh search still only surfaces one-off Eid-linked early-payment news (e.g. May 20, 2026 tied to Eid al-Adha), never a recurring monthly TGR day | A primary source (TGR/Ministry of Finance) stating a genuine recurring shared day |
+| `dubai-shopping-festival` | Re-verified 2026-07-14: still 3 conflicting unofficial date ranges across travel-affiliate sites (mid-Dec to late-Jan variants), visitdubai.com's own DSF page still doesn't list exact 2026-2027 dates | Official visitdubai.com announcement of exact dates |
+| `f1-bahrain-gp` | Sports-SERP risk; needs a real keyword-volume check | GSC data confirming date-intent queries beat race-coverage-intent — **needs the user's Search Console access, not researchable via web search** |
+| `tax-refund-usa` | No confirmed Arabic search volume yet | 3 GSC-confirmed Arabic keyword phrases with real volume — **needs the user's Search Console access, not researchable via web search** |
+| `dv-lottery` status tracker | Re-verified 2026-07-14: still suspended (correction — suspended **2025-12-18**, not Mar 2026 as previously noted here), no reopening date announced; DV-2026 selectees lose eligibility if not issued by 2026-09-30 | Check travel.state.gov for a reopened window |
 
 **Not a blocker, just low priority (buildable any time, RPM-only reason):** none currently — the Egypt
 trio that used to sit here shipped 2026-07-12.
@@ -72,6 +95,224 @@ trio that used to sit here shipped 2026-07-12.
 **Priority rule: high-RPM countries FIRST — Gulf, Europe (diaspora), US — before any volume play.**
 Low-RPM items (Maghreb, Egypt, Syria/Yemen/Libya/Palestine traffic-plays) are NEVER excluded for RPM
 alone — they build whenever the high-RPM queue is empty, ranked by search volume among themselves.
+
+---
+
+## Wave 12 — new candidates (research pass 2026-07-14, owner brief: fixed date + real daily-search
+## volume + low-medium competition, Saudi/Egypt/other-countries/international/Islamic, aim to rank #1
+## within a month of publishing)
+
+### Wave 12 first tranche — SHIPPED 2026-07-14 (9 events live, ci:check green)
+
+`victoria-day-canada`, `washington-birthday-usa`, `battle-of-khandaq`, `wafat-khadija`, `autism-day`,
+`family-day`, `charity-day`, `disability-day`, `winter-at-tantora-alula` — all built through the full
+research → author → validate → sync pipeline same day. Egypt's Coptic-calendar track was fully dropped
+per owner instruction (see Track B below and the standing rule 9 above) and replaced in the build queue
+with the two Islamic-history events (`battle-of-khandaq`, `wafat-khadija`). `taif-rose-festival`
+(originally Saudi's top pick) was rejected after independent verification found real scheduling
+instability (see Track E) and replaced with `winter-at-tantora-alula`. Final `npm run ci:check` green;
+every new event carries only non-blocking `related_not_reciprocal` warnings, no errors. Remaining
+Track A/C/Saudi items below are still open for a future pass — see the "Ranked build order" list.
+
+Two independent discovery tracks fed this wave: (1) a systematic scan of `country-hub-data.js` for
+`eventSlug: null` rows with NO matching live event (found while fixing 32 *orphaned* links — see below —
+these rows already carry a verified date/rule, zero fresh fact-research needed); (2) five parallel
+research agents dispatched for Saudi, Egypt, international UN days, and Islamic-calendar history.
+
+### Zero — bug found and fixed first: 32 already-built events were never linked from their country hub
+
+Before researching anything new, a systematic re-check of every country's `eventSlug` in
+`country-hub-data.js` found that **32 events built across Wave 9-11 were live and published, but their
+country-hub-page row still pointed `eventSlug: null`** — meaning `/holidays/country/<x>` never linked to
+them. Root cause: the events were authored directly into `src/data/holidays/events/` without going back
+to update the hub-summary data file. Fixed same-session (2026-07-14): `coptic-christmas-egypt`,
+`june-30-revolution-egypt`, `evacuation-day-egypt` (Egypt), `tasua-day` (Bahrain), `renaissance-day-oman`
+(Oman), `good-friday-germany`/`ascension-day-germany`/`unity-day-germany`/`christmas-germany` (Germany),
+`national-day-sweden`/`midsummer-sweden`/`all-saints-sweden`/`christmas-eve-sweden` (Sweden),
+`victory-day-france`/`bastille-day-france`/`assumption-day-france`/`armistice-day-france` (France),
+`sovereignty-childrens-day-turkey`/`youth-sports-day-turkey`/`democracy-day-turkey`/`victory-day-turkey`
+(Turkey), `mlk-day-usa`/`memorial-day-usa`/`juneteenth-usa`/`columbus-day-usa`/`veterans-day-usa` (USA),
+`truth-reconciliation-day-canada`/`thanksgiving-canada`/`remembrance-day-canada`/`boxing-day-canada`
+(Canada), `christmas-jordan` (Jordan), `christmas-palestine` (Palestine),
+`armenian-christmas-lebanon`/`saint-maroun-day-lebanon`/`assumption-day-lebanon` (Lebanon). Verified each
+mapping against the live event's `core` fields (month/day/offset) before wiring — no mismatches. `ci:check`
+green after the fix. **Lesson for future waves: after building an event whose country already has a
+`country-hub-data.js` entry, always check whether that entry's `eventSlug` needs updating from `null`.**
+
+### Track A — pre-verified gaps still sitting in `country-hub-data.js` (some genuinely buildable, zero
+### fact-research needed; others intentionally left `null` because no confirmed date/name exists)
+
+These rows are real, dated, and sourced in `country-hub-data.js` already but have no individual event
+page. Competitor scrape + content authoring is all that's needed — the base facts are done:
+
+| Slug (proposed) | Country | Rule | Priority | Note |
+|---|---|---|---|---|
+| `victoria-day-canada` | Canada | `weekday-in-range` Mon within May 18-24 | **HIGH** | Verified 2026-07-14: 2026 = May 18 (timeanddate.com, canada.ca). Arabic competitor (arabz.ca) exists but has no countdown, no year-specific date, thin on the NS/NL exception — beatable. Real Quebec-specific angle: renamed "Journée nationale des patriotes" there since 2003. |
+| `washington-birthday-usa` (public-facing name: "يوم الرؤساء") | USA | `floating` 3rd Mon of Feb | **HIGH** | Federal name is still officially "Washington's Birthday," not "Presidents Day" — same differentiator pattern already proven on `columbus-day-usa`. Multiple Arabic news outlets (skynewsarabia, al-ain, arabi21) cover it yearly but none have a countdown/FAQ page. Some states observe Lincoln's Feb 12 birthday as an alternate/additional day — real content angle. |
+| `labor-day-canada` | Canada | `floating` 1st Mon of Sept | MEDIUM | Federal, all-Canada (unlike Family Day). Simple, safe, good RPM. |
+| `family-day-canada` | Canada | `floating` 3rd Mon of Feb | MEDIUM | **Only some provinces observe it** (confirmed confusion in Arabic search results — some sources conflate it with the unrelated August "Civic Holiday"); this ambiguity is itself the differentiator (clean province-by-province table nobody else has). |
+| `christmas-canada` | Canada | fixed Dec 25 | MEDIUM | Distinct from already-built `boxing-day-canada`; pairs naturally in a "Canada Christmas week" cluster. |
+| `all-saints-day-france` | France | fixed Nov 1 | LOW-MED | Distinct from `all-saints-sweden` (different rule type: France = fixed Nov 1, not weekday-in-range) — no cross-cannibalization. |
+| `easter-monday-france`, `easter-monday-germany` | France, Germany | `easter` offset 1 | LOW | Thinner individual search intent than named holidays; safe filler, zero research needed. |
+| `ascension-day-france` | France | `easter` offset 39 | LOW | Same rule already proven on `ascension-day-germany`; content just needs a France-specific angle (school holidays "pont de l'Ascension" bridge-day custom is a real differentiator). |
+| `whit-monday-france`, `whit-monday-germany` | France, Germany | `easter` offset 50 | LOW | Lower priority; safe filler. |
+| `epiphany-sweden` | Sweden | fixed Jan 6 | LOW | Same date as `armenian-christmas-lebanon` and `coptic-christmas-egypt` (different traditions, different countries) — no collision, just coincidental date overlap to be aware of when cross-linking. |
+| Sweden's Good Friday/Easter Sun/Easter Mon/Ascension/Whit Sunday, France's Whit Monday (partial dupe of Germany's) | Sweden, France | various `easter` offsets | LOW | Lowest priority in this track — thin standalone search intent for a Swedish-specific Easter-adjacent day beyond what `christmas-eve-sweden`/`midsummer-sweden`/`all-saints-sweden` already cover. Build only if the higher-priority queue empties out. |
+
+**Intentionally left blocked/unbuilt** (do not build without new information): Lebanon's
+`ذكرى اغتيال الرئيس رفيق الحريري` (Hariri assassination anniversary — politically sensitive, fails
+neutral-brand test), Lebanon's `عيد المقاومة والتحرير` (Resistance and Liberation Day — politically
+loaded framing, needs careful neutral-brand assessment before ever considering), Lebanon's Western
+Good Friday/Easter Sunday and Orthodox Good Friday/Easter Sunday as individual pages (mirrors the site's
+existing choice not to split these for Lebanon — only the country-hub summary carries them), Syria's
+regular Christmas and Orthodox Good Friday/Easter (same reasoning as `easter-syria`'s Option A design —
+one event per country covers the Western date, denominational nuance lives in content, not extra pages).
+
+### Track B — Egypt: REJECTED by owner decision 2026-07-14, do not re-research
+
+A research agent proposed a Coptic-calendar cluster (`coptic-easter-egypt`, `eid-al-ghitas-egypt`,
+`nayrouz-egypt`, `eid-al-salib-egypt`) beyond the already-live `coptic-christmas-egypt`. `coptic-easter-egypt`
+was fully authored, fact-checked (55-day Great Lent / Sabt El Noor detail independently re-verified against
+6+ sources), and about to be built when the **owner explicitly rejected the entire track**: he does not want
+the site publishing/affirming Christian theological content (specifically the Resurrection) that he
+personally holds to be religiously incorrect. `coptic-easter-egypt` was deleted immediately (never synced
+live); `eid-al-ghitas-egypt`, `nayrouz-egypt`, `eid-al-salib-egypt` were never built. **Do not propose
+Coptic or other Christian-theological-content events for Egypt again** — this is a standing content-policy
+line, not a per-event volume/competition judgment. See `.claude/session-notes.md` and memory
+`project-rejected-event-candidates` for the full note and the still-open question of whether this same line
+should extend to already-live Christian-observance pages elsewhere on the site (Jordan/Palestine/Lebanon/
+Germany/Sweden/Syria) — that broader question was explicitly not decided and needs the owner's answer
+before any of those pages are touched.
+
+### Track C — international UN observance days (research agent, 2026-07-14)
+
+All of these are on the UN's official `un.org/en/observances/list-days-weeks` registry with a fixed
+annual Gregorian date (confirmed one-by-one, not assumed). Ranked by the research agent:
+
+| Slug | Arabic name | Date | Priority | Differentiator |
+|---|---|---|---|---|
+| `autism-day` | يوم التوحد العالمي | April 2 | **HIGH** | "Light It Up Blue" global campaign, Gulf health-ministry yearly posts (Qatar MOPH, Saudi SPA); no Arabic countdown site found. Parent-facing practical content (early signs, Gulf assessment services) beats the ceremonial competitor pages. |
+| `family-day` | اليوم الدولي للأسرة | May 15 | **HIGH** | Strongest single competitor found (alkhaleej.ae) but beatable. Egypt's Ministry of Awqaf already ran a piece framed "بين الرعاية الأممية والقيم الإسلامية" (UN care vs. Islamic values) — a ready-made, government-validated differentiator angle to lead with. |
+| `charity-day` | اليوم الدولي للعمل الخيري | Sept 5 | HIGH | Marks Mother Teresa's death anniversary (UN designation 2012). Fragmented small-NGO competitor set. Natural Islamic-giving/sadaqah framing fits this audience and isn't done by any current competitor. |
+| `disability-day` | اليوم الدولي للأشخاص ذوي الإعاقة | Dec 3 | MEDIUM-HIGH | Recurring SPA (twice-confirmed) + Egyptian state info service + ALECSO coverage. No dedicated Arabic countdown/FAQ page. Rights/accessibility/inclusion-program angle beats ceremonial ministry press releases. |
+| `volunteer-day` | اليوم الدولي للمتطوعين | Dec 5 | MEDIUM | One low-authority competitor (fekrah.net) already runs a basic date+countdown article — still beatable but not greenfield. Ties directly to Saudi Vision 2030 volunteering targets + UAE Volunteers platform — country-specific info no competitor combines with the countdown. |
+| `food-day` | يوم الأغذية العالمي | Oct 16 | MEDIUM | FAO anniversary (1979/1981). Recurring competitor pattern: Twinkl (UK ed-resource site) runs thin templated Arabic pages across several UN days — noted as a weak-but-present pattern to expect elsewhere too, not a real threat. Food-security/Ramadan-adjacent giving angle fits. |
+| `literacy-day` | اليوم الدولي لمحو الأمية | Sept 8 | LOWER | UNESCO 1966. Weaker standalone search intent than the top 6, but strong internal-linking synergy with the site's 10+ `school-start-*` pages already live. |
+| `wildlife-day` | اليوم العالمي للأحياء البرية | March 3 | LOWER | Real but thinner — environment/conservation topics get less Gulf-government social push than family/charity/disability. Build only if pushing past 6. |
+
+**Checked and explicitly rejected** (don't re-research): International Day for Tolerance (Nov 16) —
+direct date collision with the already-live `uae-tolerance-day`. International Day of the Girl Child
+(Oct 11) — thematically redundant with `world-childrens-day`, weak standalone angle. World Population Day
+(July 11) — UN's own framing centers reproductive-health-rights messaging, poor cultural fit. International
+Day for the Eradication of Poverty (Oct 17) — thematically redundant with `charity-day` above. International
+Day of Yoga (June 21) — real UN day, huge volume, but fails brand-fit test for this audience (religious-practice
+associations are a recurring conservative-MENA objection point) and skews toward South Asian expat search
+demographics, not the site's core. World AIDS Day (Dec 1) — legitimate UN day but routinely trips AdSense
+sensitive-content restrictions + carries cultural stigma in MENA. World Press Freedom Day (May 3) —
+politically sensitive by nature, fails house policy. World Habitat Day, World Statistics Day, Africa Day,
+International Men's Day, World Kindness Day, World Rivers Day, World Sleep Day, World Fisheries Day — not
+on the UN's official international-days registry at all (confirmed via un.org), or (Habitat/Statistics) not
+fixed-dated/not annual.
+
+### Track D — Islamic-calendar history (research agent, 2026-07-14)
+
+| Slug | Arabic name | Hijri date | Priority | Note |
+|---|---|---|---|---|
+| `battle-of-khandaq` | غزوة الخندق (الأحزاب) | Shawwal, 5 AH (majority view; exact day within the month not uniformly pinned — same level of imprecision the site already accepts for `battle-of-uhud`'s `hijriDay`) | **HIGH — build first** | Quranic (Surah al-Ahzab), core school-curriculum battle, arguably higher name recognition than Uhud. Same competitor gap already exploited for `badr-day`/`battle-of-uhud`/`fath-makkah`: encyclopedic narrative pages (mawdoo3, marefa, wikipedia, islamweb, awkafonline), zero countdown-format pages. Zero sectarian risk — universally accepted pan-Islamic history. |
+| `wafat-khadija` (or `aam-al-huzn`) | وفاة السيدة خديجة / عام الحزن | 10 Ramadan, 3 years before the Hijra (~619 CE) | HIGH | Cleanest date consensus of any candidate checked (5 independent sources agree on "10 Ramadan"). Zero sectarian risk — Khadija is revered identically across all Islamic traditions. Strong internal-link synergy with the already-live `ramadan`/`laylat-al-qadr`/`last-ten-nights-ramadan` cluster. Current competitors only mention it as a listicle item inside "events that happened in Ramadan" roundups (al-ain.com, barlamane.com) — no dedicated page exists. |
+| `battle-of-mutah` | غزوة مؤتة | Jumada al-Awwal, 8 AH (month+year solid; **no source found gives a specific day-of-month** — needs one more verification pass against a primary-source-adjacent reference like Ibn Hisham's Sira before scaffolding, per the Golden Rule) | MEDIUM — defer one verification round | Real name-recognition via the three martyred commanders (Zayd ibn Haritha, Ja'far al-Tayyar, Abdullah ibn Rawaha) — strong pull in children's Islamic education. Don't scaffold until the exact day is pinned. |
+
+**Flagged for an explicit decision, not silently built or dropped — Ghadir Khumm / Eid al-Ghadir** (18
+Dhul Hijjah, 10 AH): the date itself is essentially undisputed even in Sunni hadith collections, but the
+occasion's meaning is the entire Sunni-Shia fault line (Sunni: praise of Ali's virtue; Shia: explicit
+succession/Imamate designation). Wikipedia's own Arabic article opens by calling it "a holiday celebrated
+by Shia"; search volume concentrates almost entirely in Shia-majority/mixed populations (Iraq, Bahrain,
+Lebanon) — not this site's stated core markets (UAE/Saudi/Qatar/Kuwait/Egypt/Morocco, all Sunni-majority).
+**Recommendation: skip for this site's brand positioning** — flagging rather than deciding unilaterally,
+since the traffic opportunity in Iraq/Bahrain is real and this is ultimately an editorial-stance call, not
+a pure fact question.
+
+**Checked and explicitly rejected** (don't re-research): Prophet's death (12 Rabi al-Awwal, 11 AH) — same
+Hijri calendar day as the already-live `mawlid`; a second countdown firing the same day is a product
+collision, not differentiation — add as a "did you know" note inside `mawlid` instead, don't build
+standalone. Hajjat al-Wada / Farewell Pilgrimage — no clean non-colliding date exists (climax dates
+overlap `day-of-arafa`/`eid-al-adha`/`tashreeq-days`); deepen those pages instead. Hijra as a narrative
+event distinct from `islamic-new-year` — no evidence of independent "mark this specific day" search
+behavior separate from the New Year event itself; already fully served. "الجمعة البيضاء" (White Friday) —
+could not verify as a real distinct occasion (likely conflated with "الأيام البيض" fasting days, already
+adjacent to the live `nisf-shaban`). Battle of Khaybar — date fragmentation is worse than Khandaq (month-
+*and* year-level disagreement among primary sources, not just day-level) — deferred, not a hard no, needs
+a dedicated Sira/Tabari deep-dive before it clears the accuracy bar.
+
+### Track E — Saudi Arabia (research agent retried successfully 2026-07-14 after an API error on the
+### first attempt)
+
+Saudi's official government holidays are fully built. The research agent found the gap is **regional
+seasonal tourism festivals** — none of AlUla, Diriyah, Taif, or Asir seasons exist yet, despite the engine
+already having a proven content pattern for exactly this event type (`type: "estimated"` with a
+`{{year}}-MM-DD` anchor, same as the already-live `riyadh-season`/`jeddah-season`).
+
+| Slug | Arabic name | Date window | Priority | Why |
+|---|---|---|---|---|
+| `winter-at-tantora-alula` | شتاء طنطورة (العلا) | ~3-4 weeks, mid-Dec–early/mid-Jan (2025-26: Dec 18–Jan 10) | **HIGH — built 2026-07-14** | Official RCU/tourism-board pages are portal-style, not date-answer optimized; secondary competitors are thin/low-authority. 5 consecutive annual editions confirmed (Al Arabiya: "الموسم الخامس"), consistent multi-outlet coverage, no postponement history found. |
+| `asir-summer-season` | موسم صيف عسير | ~10 weeks, late June–early Sept (2026: Jun 25–Sept 1) | MEDIUM | Moderate competition — `discoveraseer.com` is a real dedicated-authority incumbent, comparable difficulty to the already-live `riyadh-season`/`jeddah-season` (a tier the site already competes in successfully, not a free win). Distinct value prop vs. `jeddah-season` (cool mountain retreat vs. coastal entertainment) — no cannibalization. |
+| `diriyah-season` | موسم الدرعية | ~5 months, Nov 1–late March (2025-26: Nov 1–Mar 23) | MEDIUM-LOW | Highest competition of the four — TimeOut Riyadh, Platinumlist, plus multiple strong official domains (a heavily-funded PIF flagship, PR-aggressive). Build only if accepting a longer climb to page-1. |
+
+**`taif-rose-festival` — REJECTED, fails the reliable-date bar (found 2026-07-14, contradicts the
+original research agent's "build first" pick).** The research agent's initial "thinnest competition"
+read was correct but missed a live reliability problem: independent WebSearch verification (okaz.com.sa,
+ts-post.net, multiple syndicated Saudi outlets) found the festival's own organizers ("الملتقى العالمي
+للورد والنباتات العطرية") **postponed the 2026 edition twice in a row**, citing weather-driven crop
+declines directly contradicting their own earlier "bumper harvest, 550 million roses" announcement —
+plus a separate historical COVID-era postponement (sabq.org, 2020). A festival whose own organizers
+can't currently hold to an announced date twice in the same season fails the "reliably computable
+annual date" gate outright, regardless of how thin the competition is. **Lesson: always re-verify a
+research agent's "no competitor" read against current news for the event's own reliability — thin
+competition and an unstable date are two independent questions, and this site's rules require passing
+both.** Do not rebuild without a source confirming at least 2-3 consecutive on-schedule years.
+
+**Checked and explicitly rejected** (don't re-research): King Abdulaziz/Custodian-of-the-Two-Holy-Mosques
+Camel Festival — two similarly-named festivals found with conflicting historical start dates, fails the
+reliable-date bar. Janadriyah National Heritage & Culture Festival — irregular modern cadence (postponed
+2015, paused during COVID, unclear present-day scheduling). Abha Jacaranda season — near-zero competition
+but bloom window is only ~5 days and appears Instagram/fan-driven rather than institutionally anchored.
+**Parked as a lower-priority backup, not rejected**: Riyadh International Book Fair (real, fixed annual
+month, official backing, but lower estimated volume than the four above).
+
+### Ranked build order for this wave
+
+1. `battle-of-khandaq` (Islamic, zero sectarian risk, strong volume) — **built 2026-07-14**
+2. `victoria-day-canada` (Canada, high RPM, verified facts) — **built 2026-07-14**
+3. `washington-birthday-usa` (USA, high RPM, verified facts) — **built 2026-07-14**
+4. `wafat-khadija` (Islamic, cleanest date consensus, Ramadan-cluster synergy) — **built 2026-07-14**
+5. `autism-day`, `family-day`, `charity-day`, `disability-day` (international) — **all built 2026-07-14**
+6. `winter-at-tantora-alula` (Saudi) — **built 2026-07-14**
+7. `labor-day-canada`, `family-day-canada`, `christmas-canada` (Track A, medium priority) — **all built 2026-07-14**
+8. `all-saints-day-france` — **built 2026-07-14**
+9. `easter-monday-france`, `easter-monday-germany`, `ascension-day-france` (Easter-cycle; owner explicitly
+   confirmed 2026-07-14 via AskUserQuestion to proceed, framed strictly around legal/civil/historical status,
+   never affirming the Resurrection — same approach already used on good-friday-germany/ascension-day-germany)
+   — **all built and live 2026-07-15**
+10. `whit-monday-france`, `whit-monday-germany` (Easter-cycle, same owner approval) — **both built and live
+    2026-07-15**
+11. `epiphany-sweden` (fixed Jan 6, not Easter-linked) — **built and live 2026-07-15**
+12. `asir-summer-season`, `diriyah-season` (Saudi, higher-competition tier) — **both built and live 2026-07-15**
+    (diriyah-season winnability re-verified independently before building — confirmed a stable multi-year
+    program since 2019 with no cancellation pattern, and clarified a genuinely useful disambiguation:
+    Diriyah Season is a heritage-focused component WITHIN the larger Riyadh Season, not a rival season)
+13. `volunteer-day`, `food-day`, `literacy-day`, `wildlife-day` (Track C international days) — **all built
+    and live 2026-07-15**
+
+**WAVE 12 FULLY COMPLETE as of 2026-07-15 — all 16 backlog items shipped, `npm run ci:check` green,
+zero blocking failures.** Also fixed 12 more orphaned `eventSlug: null` rows in `country-hub-data.js`
+discovered while wiring this batch (Germany, France, Sweden, USA, Canada) — same recurring bug pattern
+documented in the Wave 12 "Zero" section above; re-run the debug Python scanner from memory
+(`project-wave12-planning`) at the start of any future wave.
+
+Egypt's Track B is fully closed (owner-rejected, see above) — no Egypt items in this queue beyond what's
+already live. `battle-of-mutah` waits on one more source-verification pass. Ghadir Khumm waits on an
+explicit owner decision. No further Wave 12 items remain — next wave needs fresh research per the
+`event-creation-lessons.md` Golden Rule before scaffolding anything new.
 
 ---
 
@@ -91,89 +332,70 @@ country) — forcing 3 more per country there would mean inventing thin, low-vol
 which violates the volume gate. They are marked **saturated** below and excluded from the build list;
 don't re-research them without a genuinely new lead.
 
-### 11A — Country-specific candidates (16 countries with real gaps, Gulf/Saudi first per owner priority 2026-07-13)
+### Wave 11 status as of 2026-07-14 — FULLY SHIPPED, ALL CANDIDATES CLEARED (37 events, 0 blocked)
 
-**Follow-up research pass 2026-07-13 (owner: "add more events from Saudi and MENA/Arab countries that
-will give us more visitors and money"), found by switching lenses**: instead of only checking each
-country's *current official paid-holiday list* (which is how the first Wave 11 pass wrongly marked
-Saudi/Kuwait/Qatar "saturated"), also check for genuinely distinct **historical-milestone** dates —
-the same non-holiday, historical-register pattern already proven to work for the live `badr-day`/
-`fath-makkah`. Result: Gulf countries have a whole category of massively-searched **"independence from
-Britain"** dates that are genuinely separate from their already-covered National/Founding Day (which
-usually commemorates a ruler's ascension or a much-earlier founding, not the actual independence
-moment) — a real, common point of public confusion, and un-tapped by any Arabic countdown page found.
+**All 37 events are live, including the 4 that were previously blocked.** Same-day follow-up
+(2026-07-14) cleared every remaining item on the Wave 11 list:
+- `bahraini-womens-day` (Dec 1, established 2008) — researched from scratch (was accidentally
+  skipped from the original dispatch); differentiator is correcting a real conflation found in the
+  one competitor attempting this topic (mhtwyat.com), which confuses the Supreme Council for Women's
+  2001 founding with the 2008 adoption of Dec 1 as the actual day.
+- `easter-syria` — the original block (Syria's post-decree list allegedly had no Easter entry) was
+  **stale, not correct**: fresh WebSearch/WebFetch verification found Presidential Decree No. 188/2025
+  (issued 2025-10-05) restored Western + Orthodox Easter and Christmas as paid holidays, confirmed by
+  a 2026-03-30 presidency bulletin giving the exact 2026 dates. `country-hub-data.js`'s Syria section
+  was corrected in the same pass (it was missing Christmas and both Easters entirely).
+- `midsummer-sweden` and `all-saints-sweden` — the real engine gap (`weekday-in-range` existed only
+  in `country-hub.js`'s summary renderer, not at the individual-event schema/engine level) was closed:
+  ported into `src/lib/events/package-schema.js` (type enum + `startMonth/startDay/endMonth/endDay`
+  fields) and `src/lib/holidays-engine.js` (`nextWeekdayInRange`, wired into `getNextEventDate`,
+  `buildEventSeriesSchema`, `buildHistoricalDates`). Also ported `orthodox-easter` the same way
+  (needed for `easter-syria`'s Orthodox-calendar explanation) — this type existed only in
+  `country-hub.js` too. Both ports also updated `scripts/lib/event-scaffold.ts` and
+  `scripts/events-new.ts` so future `events:new` scaffolds support these types natively.
 
-| Country | Slug (proposed) | Event | Date rule | Verified facts + source | Differentiator angle |
-|---|---|---|---|---|---|
-| 🇸🇦 السعودية | `recapture-of-riyadh` | استرداد الرياض | `fixed` 01-15 (5 Shawwal 1319 AH / Jan 15, 1902) | Confirmed via ar.wikipedia.org ("معركة الرياض 1902") + saudipedia.com: young Abdulaziz Al Saud stormed Masmak Fort before dawn, killed Ibn Rashid's governor Ajlan bin Mohammed, and reclaimed Riyadh — the founding military/political act of the Third Saudi State (modern Kingdom), genuinely distinct from the already-live `saudi-founding-day` (1727, First Saudi State) and `saudi-national-day` (1932 unification/renaming) | One of the most culturally significant, most-referenced historical moments in Saudi popular media (the Masmak Fort story) with ZERO countdown-style page found anywhere — huge, high-RPM, evergreen opportunity |
-| 🇰🇼 الكويت | `independence-day-kuwait` | عيد استقلال الكويت | `fixed` 06-19 | Confirmed via aljarida.com + alraimedia.com: Sheikh Abdullah Al-Salem signed the document ending the 1899 British protection treaty on Jun 19, 1961 — genuinely distinct from the already-live `kuwait-national-day` (Feb 25, his 1950 ascension) and `liberation-day-kuwait` (Feb 26, 1991 Gulf War liberation) | A real third Kuwaiti national date, referenced in dedicated annual news coverage ("60 عاماً على استقلال الكويت") every June, with no live page anywhere on the site |
-| 🇶🇦 قطر | `independence-day-qatar` | عيد استقلال قطر | `fixed` 09-03 | Confirmed via aljazeera.net + marefa.org: Sheikh Ahmad bin Ali Al Thani declared independence Sep 3, 1971, ending the 1916 Anglo-Qatari treaty — genuinely distinct from the already-live `qatar-national-day` (Dec 18, 1878 founding by Sheikh Jassim) | Qatar's actual independence-from-Britain date has ZERO coverage on the site today; real annual media coverage every September |
-| 🇧🇭 البحرين | `independence-day-bahrain` | عيد استقلال البحرين | `fixed` 08-15 | Confirmed via ar.wikipedia.org + mia.gov.bh: Sheikh Isa bin Salman declared independence Aug 15, 1971, ending the British treaty relationship — genuinely distinct from the already-live `bahrain-national-day` (Dec 16, his 1961 ascension) | Same pattern as Kuwait/Qatar — a real, separate, uncovered independence milestone; completes the Gulf-independence set alongside the new Kuwait/Qatar candidates |
-| 🇯🇴 الأردن | `christmas-jordan` | عيد الميلاد المجيد في الأردن | `fixed` 12-25 | Paid public holiday for **all** Jordanians regardless of religion (already noted in this doc's own Wave 8 Jordan build notes) — confirm via Jordan News Agency (Petra) at build time | Corrects the common assumption it's a Christian-only holiday; distinguishes Jordan's practice from countries where Dec 25 isn't recognized at all |
-| 🇴🇲 عُمان | `renaissance-day-oman` | يوم النهضة العماني | `fixed` 07-23 | Marks Sultan Qaboos's accession in 1970 and the start of the modern "Renaissance" era — genuinely distinct from the already-live `oman-accession-day` (Jan 11, Sultan Haitham's 2020 accession). `country-hub-data.js` currently lists it as an observance, not a paid holiday — verify current paid-status at build time via omandaily.om | Two accession-related Omani days that are NOT the same event, a real and common confusion point |
-| 🇵🇸 فلسطين | `christmas-palestine` | عيد الميلاد المجيد في فلسطين | `fixed` 12-25 | Recognized under Palestinian Labour Law No. 7/2000, which grants both Islamic and Christian holidays — verify current status directly, standing sensitive-topic neutral register applies | Real, distinctly Palestinian angle (Bethlehem is the traditional birthplace) rather than a generic Christmas page |
-| 🇧🇭 البحرين | `bahraini-womens-day` | يوم المرأة البحرينية | `fixed` 12-01 | National observance day, distinct from the already-live BH events (none currently cover this) — verify via bahrain.bh/Supreme Council for Women at build time | Completes Bahrain's national-observance set; every other Gulf country's women's day is already live (Emirati, Omani, Tunisian) — Bahrain was the gap |
-| 🇸🇾 سوريا | `easter-syria` | عيد الفصح في سوريا (الغربي والشرقي) | `easter` (Western; Eastern Orthodox needs the engine addition below) | Confirmed official PAID holiday in Syria for both Western and Eastern-calendar Easter per 2026 presidential holiday decree (verify current government's list at build time — Syria's list has genuinely changed recently, standing neutral-register rule applies) | No Arabic competitor page explains why Syria (like Lebanon) recognizes BOTH Easter dates as paid holidays — real differentiator. **Engine note**: `holidays-engine.js` already supports `type: 'easter'` (Western, via `easterOffset`) but NOT `orthodox-easter` — that rule type only exists in `country-hub.js` so far. Porting it to the main engine is a small, already-solved addition (same Meeus algorithm) needed before this event can compute the Eastern date live |
-| 🇾🇪 اليمن | `october-14-revolution-yemen` | ثورة 14 أكتوبر اليمنية | `fixed` 10-14 | The South Yemen anti-colonial uprising (1963) against British rule, distinct from `september-26-revolution-yemen` (North Yemen, anti-Imamate, 1962) and `independence-day-yemen` (Nov 30, actual British withdrawal, 1967) — verify via Yemeni state sources, standing neutral-register rule applies | A genuinely separate, often-confused third revolutionary date in Yemen's history — completes the set (Sep 26 / Oct 14 / Nov 30 / May 22 unity, all distinct) |
-| 🇲🇦 المغرب | `unity-day-morocco` | عيد الوحدة المغربية | `fixed` 10-31 | **Brand-new holiday** — royal decree declared this a national holiday very recently (verify the exact announcement and legal basis directly at build time; do not cite the announcement year literally in content per the hardcoded-year rule, phrase as "بلاغ ديواني حديث") | Genuine first-mover opportunity — this is new enough that almost no Arabic competitor content will have caught up yet |
-| 🇨🇦 كندا | `remembrance-day-canada` | يوم الذكرى الكندي (ريمِمبرنس داي) | `fixed` 11-11 | Federal commemoration day (poppy symbol, 2 minutes of silence at 11:00) — verify paid-holiday-by-province status at build time (differs from `veterans-day-usa`, same Nov 11 root but different national framing) | Explicit US/Canada Nov 11 naming confusion (Remembrance Day vs Veterans Day) is real and searched |
-| 🇨🇦 كندا | `boxing-day-canada` | يوم الصناديق في كندا | `fixed` 12-26 | Statutory holiday, major shopping event (Canadian equivalent of the already-live `black-friday-usa`/`cyber-monday-usa` pattern) — verify province-level paid status at build time | Zero existing Arabic content found for this specifically-Canadian shopping/holiday angle |
-| 🇨🇦 كندا | `truth-reconciliation-day-canada` | اليوم الوطني للحقيقة والمصالحة الكندي | `fixed` 09-30 | Federal holiday since 2021 (Indigenous residential-schools history) — verify federal-vs-provincial paid status at build time, neutral historical register | Recent, real, growing search interest; near-zero Arabic coverage found |
-| 🇫🇷 فرنسا | `victory-day-france` | ذكرى النصر 1945 في فرنسا | `fixed` 05-08 | Official French public holiday (Art. L3133-1), marks WWII European victory — verify via service-public.gouv.fr at build time | Completes the French national-holiday set alongside the live `bastille-day-france` |
-| 🇫🇷 فرنسا | `armistice-day-france` | ذكرى الهدنة 1918 في فرنسا | `fixed` 11-11 | Official French public holiday, WWI armistice — verify at build time | Real "why does France have TWO war-memorial holidays" angle (May 8 vs Nov 11), distinguishes both clearly |
-| 🇫🇷 فرنسا | `assumption-day-france` | عيد صعود مريم العذراء في فرنسا | `fixed` 08-15 | Official French public holiday (Catholic tradition, legally recognized nationally) — verify at build time | Genuine gap: no Arabic content explains why a Catholic feast is a French national holiday for everyone |
-| 🇩🇪 ألمانيا | `christmas-germany` | عيد الميلاد في ألمانيا | `fixed` 12-25 | Public holiday in all 16 states — verify at build time | Real differentiator to research: Germany's strict "quiet day" (Weihnachtsruhe) laws |
-| 🇩🇪 ألمانيا | `good-friday-germany` | الجمعة العظيمة في ألمانيا | `easter` (offset -2) | Public holiday in all 16 states with unusually strict enforcement — Germany legally bans dancing/loud public entertainment on this day in most states ("Tanzverbot") | This quirky legal-enforcement fact is a genuinely rare, highly shareable differentiator — verify current Tanzverbot details per state at build time |
-| 🇩🇪 ألمانيا | `ascension-day-germany` | عيد الصعود في ألمانيا | `easter` (offset +39) | Public holiday; also informally "Vatertag" (Father's Day) in Germany with a distinct secular tradition (group outings, no gift-giving custom like the Western Father's Day) — verify at build time | Real, quirky "this is ALSO Father's Day but nothing like the American one" angle |
-| 🇸🇪 السويد | `midsummer-sweden` | عيد منتصف الصيف السويدي (ميدسومر) | `weekday-in-range` (Saturday within Jun 20–26, same rule already built for the SE country hub) | Sweden's most important holiday after Christmas by most cultural accounts — verify current details at build time | Zero Arabic content found explaining this genuinely huge Swedish cultural event with any depth |
-| 🇸🇪 السويد | `christmas-eve-sweden` | ليلة عيد الميلاد في السويد (يولافتون) | `fixed` 12-24 | In Sweden, Christmas EVE (not Dec 25) is the main celebration day — a real, distinct Swedish practice vs. most of Europe | Genuine differentiator most Arabic content misses entirely — verify at build time |
-| 🇸🇪 السويد | `all-saints-sweden` | عيد جميع القديسين في السويد | `weekday-in-range` (Saturday within Oct 31–Nov 6) | Public holiday with a distinct Swedish practice: visiting graves and lighting candles — verify at build time | Real, visual, unique cultural content angle (candlelit cemeteries) |
-| 🇱🇧 لبنان | `saint-maroun-day-lebanon` | عيد مار مارون في لبنان | `fixed` 02-09 | Official national holiday for ALL Lebanese honoring the patron saint of the Maronite community (already in `country-hub-data.js`'s Lebanon list, `eventSlug: null`) | Was the "alternate" candidate noted in this doc's original Lebanon plan, never built — genuine remaining gap |
-| 🇱🇧 لبنان | `armenian-christmas-lebanon` | عيد الظهور الإلهي (الميلاد الأرمني) في لبنان | `fixed` 01-06 | Official national holiday since 2003, tied to the Armenian Church calendar (in `country-hub-data.js`, `eventSlug: null`) | Lebanon is a rare Arab country with an official Armenian-calendar national holiday — strong "only Arab country that..." angle, same pattern as the live `annunciation-day-lebanon` |
-| 🇱🇧 لبنان | `assumption-day-lebanon` | عيد انتقال العذراء في لبنان | `fixed` 08-15 | Official national holiday (in `country-hub-data.js`, `eventSlug: null`) | Completes Lebanon's Christian-holiday coverage alongside `annunciation-day-lebanon` |
-| 🇺🇸 أمريكا | `juneteenth-usa` | يوم جونتينث في أمريكا | `fixed` 06-19 | Newest US federal holiday (established 2021), marks the end of slavery's enforcement in Texas in 1865 — verify current details at build time | Real, fast-growing search term; genuinely new in federal-holiday terms, thin Arabic coverage |
-| 🇺🇸 أمريكا | `mlk-day-usa` | يوم مارتن لوثر كينغ في أمريكا | `floating` (3rd Monday of January) | Federal holiday since 1986 — verify at build time | Well-known figure in Arabic media already (civil rights icon), real recurring search interest every January |
-| 🇺🇸 أمريكا | `columbus-day-usa` | يوم كولومبوس في أمريكا | `floating` (2nd Monday of October) | Federal holiday, increasingly co-observed/renamed "Indigenous Peoples' Day" in many states — verify current naming/status split at build time, present both names neutrally | Real "why does this day have two different names depending on the state" angle — genuine content gap |
+**All 33 events from the 2026-07-13 pass are live.** `recapture-of-riyadh` (Saudi, Jan 15), `independence-day-kuwait` (Jun 19),
+and `independence-day-qatar` (Sep 3 — differentiator: Sep 3 was Qatar's own National Day 1971-2007 before
+Law 11/2007 moved it to Dec 18) shipped first. The remaining 30 — `independence-day-bahrain` ·
+`juneteenth-usa` · `mlk-day-usa` · `columbus-day-usa` · `remembrance-day-canada` · `boxing-day-canada` ·
+`truth-reconciliation-day-canada` · `victory-day-france` · `armistice-day-france` ·
+`assumption-day-france` · `christmas-germany` · `good-friday-germany` · `ascension-day-germany` ·
+`christmas-eve-sweden` · `saint-maroun-day-lebanon` · `armenian-christmas-lebanon` ·
+`assumption-day-lebanon` · `christmas-jordan` · `renaissance-day-oman` · `christmas-palestine` ·
+`battle-of-uhud` · `conquest-of-andalusia` · `fall-of-granada` · `human-rights-day` ·
+`international-peace-day` · `world-refugee-day` · `world-book-day` · `world-tourism-day` ·
+`october-14-revolution-yemen` · `unity-day-morocco` — went through the full pipeline
+(`events:build` → `validate:holidays:strict` → `events:sync -- --slug <slug>` per event → final
+`ci:check`) on 2026-07-13. All passed strict validation clean (0 keyword-integration failures,
+0 hardcoded-year hits, 0 direct-answer-missing, all research.json minimums met) and `ci:check`
+(lint + typecheck + test:unit + seo:validate + validate:holidays + validate:geo) is green.
 
-**Saturated — no forced candidates (checked 2026-07-13, don't re-research without a genuinely new
-lead). Note: Saudi/Kuwait/Qatar were WRONGLY marked saturated in the first Wave 11 pass — the
-historical-milestone lens above found real candidates for all three. Genuinely saturated once both
-lenses (official holiday list AND historical-milestone check) were applied:**
-🇩🇿 الجزائر (9 official holidays all built; independence itself is `independence-day-algeria`, Jul 5,
-1962 — the earlier Evian Accords ceasefire, Mar 18-19, 1962, is a real but much weaker/more niche
-diplomatic-history angle, optional low-confidence bonus only) · 🇦🇪 الإمارات (13 events live; confirmed
-via fresh research that UAE's Dec 2 National Day IS its independence day — Britain's protection ended
-Dec 1, 1971 and the Union/independence were declared together Dec 2, no separate date exists) ·
-🇹🇳 تونس (11 holidays, all built) · 🇮🇶 العراق (Independence Day Oct 3 already covers the 1932
-League-of-Nations milestone; Army Day + Victory Day also live) · 🇴🇲 عُمان (confirmed via fresh research
-that Oman's Nov 18 National Day already IS its independence-equivalent milestone — Oman was never a
-British protectorate the way Kuwait/Qatar/Bahrain were, so no separate "independence day" exists;
-`renaissance-day-oman` above remains the one real Oman gap) · 🇹🇷 تركيا (all 4 national-day candidates
-from the original Wave-9 hub research are already live: sovereignty/children's day, youth/sports day,
-democracy day, victory day).
+`events:fix-related` ran once per sync as usual; diffed each time against the known cross-event
+pollution bug (see `.claude/rules/content-pipeline.md`) — every touched unrelated event (e.g.
+`bastille-day-france`, `independence-day-lebanon`, `oman-accession-day`, `canada-day`) had a stale/
+irrelevant `relatedSlugs` entry (mostly `armed-forces-day-oman` used as filler) replaced by a newer,
+topically-closer Wave 11 event. Reviewed as a net content-quality improvement, not reverted.
 
-### 11B — Islamic events (hijri type, countryScope: all — 3 new candidates)
+**Sources used across this batch** (per-event provenance lives in each event's own `research.json`):
+Canada — Canada Labour Code, statutoryholidays.com, CBC News, Canada.ca. France — service-public.gouv.fr,
+Legifrance (L3133-1/L3133-4). Germany — Library of Congress law blog, iamExpat.de, The Local. Sweden —
+Public Holidays Act 1989:253, KI researcher blog, Mental Floss. USA — 5 U.S. Code § 6103, Pew Research,
+Wikipedia. Lebanon/Jordan/Oman/Palestine — `country-hub-data.js` internal verified facts (Wave 9),
+jobs.ps, publicholidays.me. Islamic trio — islamweb.net, mawdoo3.com, marefa.org, ar.wikipedia.org.
+International 5 — un.org, unhcr.org, UNESCO, UN Tourism. Yemen/Morocco — Al-Madaniya Magazine, IWM,
+maroc.ma official, Morocco World News.
 
-Same pattern as the live `badr-day`/`fath-makkah` pair: historical register only, no fiqh ruling
-content, `islamic_year_pair_missing` fix applied from the start.
+**Blocked — none.** All 4 previously-blocked candidates shipped 2026-07-14 (see above). No open Wave 11
+candidates remain.
 
-| Slug (proposed) | Event | Hijri date | Verified facts + source | Differentiator angle |
-|---|---|---|---|---|
-| `battle-of-uhud` | غزوة أحد | 10/7 (7 Shawwal) | Confirmed via islamweb.net + mawdoo3.com: fought Saturday 7 Shawwal 3 AH, one year after Badr, named for the mountain near Medina | Real, heavily-searched historical battle with zero countdown page anywhere; pairs naturally with the live `badr-day` |
-| `conquest-of-andalusia` | فتح الأندلس | 9/28 (28 Ramadan) | Confirmed via islamweb.net: Tariq ibn Ziyad's decisive battle at Wadi Lakka against the Visigothic king, 28 Ramadan 92 AH (711 CE); crossing began 5 Rajab 92 AH | Massive, evergreen Arabic search topic ("متى فتح الأندلس") with zero countdown-style page found |
-| `fall-of-granada` | سقوط غرناطة (الأندلس) | 3/2 (2 Rabi' al-Awwal) — surrender treaty signed 21 Muharram 897 AH | Confirmed via marefa.org + ar.wikipedia.org: Abu Abdullah's surrender to Ferdinand and Isabella, 2 Rabi' al-Awwal 897 AH (Jan 2, 1492 CE), ending 8 centuries of Muslim rule in Iberia | Pairs with `conquest-of-andalusia` as the historical bookend (conquest → fall), mirroring the `badr-day`/`fath-makkah` pairing pattern; one of the most-searched topics in Arabic history content |
+### Completed sub-waves (11A/11B/11C originally split by type — all merged into the status list above once shipped/authored)
 
-### 11C — International days (countryScope: all, fixed Gregorian — 5 new candidates)
-
-Same countdown+FAQ pattern as the live `world-cancer-day`/`world-happiness-day`.
-
-| Slug (proposed) | Event | Date | Verified facts + source | Differentiator angle |
-|---|---|---|---|---|
-| `human-rights-day` | اليوم العالمي لحقوق الإنسان | 12-10 | Confirmed via un.org: marks the UN General Assembly's adoption of the Universal Declaration of Human Rights, Paris, Dec 10, 1948 (Resolution 217A); formal annual observance since 1950 (Resolution 423(V)) | Globally recognized, huge baseline search volume every December; zero live page on the site |
-| `international-peace-day` | اليوم الدولي للسلام | 09-21 | Confirmed via un.org: established 1981 (UNGA Resolution 36/67), fixed to Sep 21 permanently by Resolution 55/282 in 2001 | Well-known UN flagship day, real recurring search volume, thin Arabic countdown coverage |
-| `world-refugee-day` | اليوم العالمي للاجئين | 06-20 | Confirmed via unhcr.org + un.org: designated Dec 2000, first observed 2001 (previously "Africa Refugee Day" before UN globalized it) | Directly relevant to the site's core MENA audience given the scale of Syrian/Palestinian/Yemeni/Sudanese displacement — genuine, sensitive-but-real content opportunity (neutral, humanitarian register, no political commentary) |
-| `world-book-day` | اليوم العالمي للكتاب وحقوق المؤلف | 04-23 | Confirmed via UNESCO + youm7.com: UNESCO designated 1995; date chosen because it's the death date of Cervantes, Shakespeare, and Inca Garcilaso de la Vega (originally proposed 1922 by Spanish writer Vicente Clavel Andrés to honor Cervantes, first held Oct 7, moved to Apr 23) | Rich, genuinely story-driven differentiator (three literary giants sharing one death date) that no Arabic competitor page tells in full |
-| `world-tourism-day` | اليوم العالمي للسياحة | 09-27 | Confirmed via UNWTO/dostor.org: UN World Tourism Organization observes it since 1980; date marks the adoption of UNWTO's founding statute on Sep 27, 1970 | Real Gulf-RPM hook available (Saudi Vision 2030 / UAE tourism-economy angle), same pattern that worked for `world-happiness-day`'s UAE Ministry of Happiness angle |
+11A was the country-specific batch (Jordan/Oman/Palestine/Bahrain/Syria/Yemen/Morocco/Canada×3/France×3/
+Germany×3/Sweden×3/Lebanon×3/USA×3), 11B the 3 Islamic hijri events, 11C the 5 international days — see
+the status list above for what shipped vs. what's blocked. Full per-candidate verified-facts tables from
+the original research pass are preserved in git history (this doc's own 2026-07-13 revision) if deeper
+per-slug sourcing detail is ever needed again; not repeated here per the doc's "forward-only" policy now
+that all candidates have moved to shipped/authored/blocked status.
 
 ---
 
@@ -192,6 +414,13 @@ Same countdown+FAQ pattern as the live `world-cancer-day`/`world-happiness-day`.
 - **Wave 10** (2026-07-12): 31+ events — Wave 10D Arab fixed-dates, 10F Islamic hijri events, 10G
   international days, `geminids-meteor-shower`, `csn-payment-sweden`, `tax-day-usa`, and the Egypt trio
   (`coptic-christmas-egypt`, `june-30-revolution-egypt`, `evacuation-day-egypt`).
+- **Wave 11** (2026-07-13 → 2026-07-14): 37 events shipped, 0 blocked — 3 Gulf independence days, 27
+  country-specific holidays across USA/Canada/France/Germany/Sweden/Lebanon/Jordan/Oman/Palestine/
+  Yemen/Morocco/Bahrain, 3 Islamic historical events (`battle-of-uhud`, `conquest-of-andalusia`,
+  `fall-of-granada`), 5 UN/international observance days, plus `bahraini-womens-day`, `easter-syria`,
+  `midsummer-sweden`, `all-saints-sweden` (all 4 initially blocked, cleared same wave). Added
+  `weekday-in-range` and `orthodox-easter` as individual-event engine types (previously summary-only in
+  `country-hub.js`), corrected a stale Syria holiday list, ran full ci:check green throughout.
 - **Recurring engine additions across these waves** (all in `holidays-engine.js` / `country-hub.js`):
   `retirement` field (auto-unpublish), `nth: -1` (last weekday of month), `floating`, `easter`,
   `orthodox-easter` (Meeus algorithm), `weekday-in-range`.

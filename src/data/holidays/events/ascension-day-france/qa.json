@@ -1,0 +1,19 @@
+{
+  "slug": "ascension-day-france",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track A candidate, from country-hub-data.js gap scan. Uses the exact proven pattern of the live ascension-day-germany event (type: easter, easterOffset: 39).",
+    "Owner explicitly confirmed 2026-07-14 (AskUserQuestion) to proceed with Easter-cycle events, framed strictly around legal/civil/historical status, matching the existing live good-friday-germany/ascension-day-germany/assumption-day-france pattern.",
+    "Date rule (always a Thursday, 39 days after Easter Sunday) and history (religious origin 4th century; French legal holiday since the 1801 Concordat) confirmed via WebSearch against sortiraparis.com/animapro.fr/elementeyre.fr.",
+    "Competitor check: sortiraparis.com's Arabic translations and wissal.org cover practical shopping/pool-hours content only, radar2.net is seasonal transport/weather news, none explain the 'pont de l'Ascension' (4-day weekend from 1 vacation day) tradition or the Thursday-every-year calculation in Arabic.",
+    "Differentiator: 'pont de l'Ascension' is the single most distinctive French cultural/practical angle for this holiday (versus Germany's Vatertag) and is completely unaddressed by any Arabic competitor found."
+  ],
+  "updatedAt": "2026-07-15T12:18:37.956Z"
+}

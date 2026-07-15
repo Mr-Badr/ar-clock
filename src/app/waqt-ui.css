@@ -164,6 +164,46 @@
 
 }
 
+/* Groups the live-status badge + country flag together on the end side */
+.waqt-ev__header-end {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Live-status badge — only rendered for the two most urgent tiers.
+   Built on the existing .waqt-badge color language (danger/warning), never a
+   border-stripe or gradient. The pulsing dot is reserved for "today" only,
+   matching the .calc-esb-live-dot precedent from calculator result headers. */
+.waqt-ev__live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 3px 8px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.waqt-ev__live-badge--urgent { background: var(--danger-soft); color: var(--danger); border-color: var(--danger-border); }
+.waqt-ev__live-badge--soon   { background: var(--warning-soft); color: var(--warning); border-color: var(--warning-border); }
+
+.waqt-ev__live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--danger);
+  animation: waqt-live-pulse 2s ease-in-out infinite;
+}
+
+@keyframes waqt-live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.75); }
+}
+
 
 /* ── 2. HERO — the countdown number ──────────────────────────────────────── */
 /*
@@ -347,6 +387,103 @@
 
 
 /* ══════════════════════════════════════════════════════════════════════════
+   RELATED-CONTENT CARD SYSTEM
+   Shared visual language across RelatedEventsBubbles, RelatedEvents,
+   NextEventCard, and HolidayInternalLinks — four different components with
+   four different jobs, but they should read as ONE "related to this" system
+   rather than four unrelated card styles. Color carries meaning via an icon
+   chip (circular, tinted), never a border-stripe or gradient.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.waqt-related-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.waqt-related-card:hover { transform: translateY(0); box-shadow: none; }
+
+/* Reserved for exactly one featured/first card per grid — never applied
+   uniformly across a whole grid of identical cards. */
+.waqt-related-card--featured {
+  background: color-mix(in srgb, var(--accent-soft) 40%, var(--bg-surface-2));
+  border-color: var(--border-accent);
+}
+
+.waqt-related-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.waqt-icon-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-full, 999px);
+  background: var(--blue-subtle);
+  color: var(--blue-text);
+}
+
+.waqt-icon-chip--green  { background: var(--green-subtle);  color: var(--green-text); }
+.waqt-icon-chip--amber  { background: var(--amber-subtle);  color: var(--amber-text); }
+.waqt-icon-chip--red    { background: var(--red-subtle);    color: var(--red-text); }
+
+/* Rotate icon-chip color across a grid of cards for variety — never rotate
+   a border-stripe color, per the anti-template design rule. */
+.waqt-related-grid > *:nth-child(4n+2) .waqt-icon-chip { background: var(--green-subtle); color: var(--green-text); }
+.waqt-related-grid > *:nth-child(4n+3) .waqt-icon-chip { background: var(--amber-subtle); color: var(--amber-text); }
+.waqt-related-grid > *:nth-child(4n+4) .waqt-icon-chip { background: var(--red-subtle);   color: var(--red-text); }
+
+.waqt-related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-3);
+}
+
+.waqt-related-card__title {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.waqt-related-card__meta {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.waqt-related-card__desc {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+  flex-grow: 1;
+}
+
+.waqt-related-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: auto;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--accent-strong);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════
    FILTER PANEL
    ══════════════════════════════════════════════════════════════════════════ */
 
@@ -424,6 +561,58 @@
   color: var(--text-muted);
   pointer-events: none;
   font-size: 0.88rem;
+}
+
+/* Recent-searches quick-access — replaces the helper paragraph in normal
+   document flow while the search input is focused and empty, reusing the
+   same chip styling as the active-filter tags for visual consistency. */
+.waqt-recent-searches {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.waqt-recent-searches__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.waqt-recent-searches__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.waqt-recent-searches__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-3);
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 600;
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.waqt-recent-searches__chip:hover {
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+  border-color: var(--border-accent);
+}
+
+.waqt-recent-searches__chip:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
 }
 
 .waqt-select-trigger {
@@ -527,6 +716,29 @@
   color: inherit;
 }
 
+/* Result-count preview — plain muted numeral, never a colored badge, so it
+   reads as metadata (like a tab count) rather than a status signal. */
+.waqt-cat-cell__count {
+  display: inline-block;
+  margin-inline-start: 4px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+/* CSS-generated separator, not a JSX text node, so no text-encoding tool can
+   ever silently mangle it into a non-breaking space or strip it. */
+.waqt-cat-cell__count::before { content: '\00b7'; margin-inline-end: 3px; }
+
+.waqt-cat-cell--active .waqt-cat-cell__count { color: var(--accent-alt); opacity: 0.75; }
+
+/* Dims (never disables — still clickable) an option whose count would be
+   zero given the currently active filters, so users see a dead end coming
+   instead of clicking into an empty grid. */
+.waqt-cat-cell--empty { opacity: 0.45; }
+
 
 /* ══════════════════════════════════════════════════════════════════════════
    PILLS
@@ -578,10 +790,50 @@
 
 .waqt-pill__flag { font-size: 1rem; line-height: 1; }
 
+.waqt-pill__count {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+.waqt-pill--active .waqt-pill__count { color: var(--accent-alt); opacity: 0.8; }
+
+.waqt-pill--empty { opacity: 0.45; }
+
 
 /* ══════════════════════════════════════════════════════════════════════════
    ACTIVE FILTER TAGS
    ══════════════════════════════════════════════════════════════════════════ */
+
+/* Results summary — sticks just below the fixed site header while scrolling
+   the grid, so the match count stays visible without floating over content
+   that isn't part of it. Flat surface + border only, no gradient/stripe. */
+.waqt-results-summary {
+  position: sticky;
+  top: calc(var(--app-header-height) + var(--space-2));
+  z-index: 5;
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+}
+
+.waqt-results-summary__line {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  font-weight: var(--font-semibold);
+}
+
+.waqt-results-summary__count {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--accent-alt);
+  direction: ltr;
+  unicode-bidi: embed;
+  font-variant-numeric: tabular-nums;
+}
 
 .waqt-active-filters {
   display: flex;

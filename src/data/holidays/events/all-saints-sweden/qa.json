@@ -1,0 +1,18 @@
+{
+  "slug": "all-saints-sweden",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Previously blocked (Wave 11) on the same weekday-in-range engine gap as midsummer-sweden.",
+    "Unblocked 2026-07-14 by the same engine port.",
+    "Rule fields (weekday:6, startMonth:10, startDay:31, endMonth:11, endDay:6) confirmed by dedicated research agent — matches the pre-existing verified rule in country-hub-data.js exactly.",
+    "Content correctly distinguishes this from midsummer-sweden's history: this was a brand-new paid holiday created by the 1953 reform (no prior red-day status), not a converted existing one."
+  ],
+  "updatedAt": "2026-07-14T09:14:54.729Z"
+}

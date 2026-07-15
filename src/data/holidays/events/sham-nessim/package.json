@@ -4,10 +4,10 @@
     "id": "sham-nessim",
     "slug": "sham-nessim",
     "name": "شم النسيم",
-    "type": "estimated",
+    "type": "orthodox-easter",
     "category": "holidays",
     "_countryCode": "eg",
-    "date": "{{year}}-04-13"
+    "easterOffset": 1
   },
   "richContent": {
     "seoTitle": "متى شم النسيم {{year}}؟ الموعد الرسمي ولماذا يتغير",

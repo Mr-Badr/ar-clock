@@ -1,0 +1,18 @@
+{
+  "slug": "easter-syria",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Previously blocked (Wave 11) on a stale finding: Wave 9 research found no Easter entry in Syria's holiday list.",
+    "Unblocked 2026-07-14: verified via WebSearch/WebFetch that Presidential Decree No. 188/2025 (issued 2025-10-05) restored Easter (Western + Orthodox, separately) plus Christmas as official paid holidays, confirmed by a 2026-03-30 General Secretariat of the Presidency bulletin giving exact 2026 dates (April 5 Western, April 12 Orthodox).",
+    "country-hub-data.js Syria section updated in the same session to reflect the corrected holiday list.",
+    "This event tracks Western Easter (type: easter, easterOffset: 0) as the primary countdown; Orthodox Easter is explained in content but not a separate event page (mirrors this site's existing choice not to split Lebanon's dual Easter into two pages either)."
+  ],
+  "updatedAt": "2026-07-14T09:08:39.642Z"
+}

@@ -1,0 +1,19 @@
+{
+  "slug": "whit-monday-germany",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Wave 12 Track A candidate, from country-hub-data.js gap scan.",
+    "Owner explicitly confirmed 2026-07-14 (AskUserQuestion) to proceed with Easter-cycle events, framed strictly around legal/civil/historical status, matching the existing live good-friday-germany/ascension-day-germany pattern.",
+    "Date rule (easter type, easterOffset 50) and uniform nationwide status confirmed via WebSearch against iamexpat.de/todaywhy.com/Wikipedia — no complication analogous to France's journée de solidarité.",
+    "Competitor check: iamexpat.de/todaywhy.com are English-only explainers, wikigerman.net/arab-deutschland.com are general lists or cultural-tradition guides, none draw the direct Germany-vs-France legal-simplicity contrast or distinguish Pentecost Sunday from Whit Monday.",
+    "Differentiator: direct comparison with the newly-live whit-monday-france event (same astronomical date, opposite legal complexity) is a genuinely unique editorial angle."
+  ],
+  "updatedAt": "2026-07-15T12:24:22.184Z"
+}

@@ -17,15 +17,9 @@ import { resolveAllHijriEvents } from '@/lib/hijri-resolver';
 import { getNextEventDate, getTimeRemaining } from '@/lib/holidays-engine';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { logHolidayFailure } from '@/lib/holidays/observability';
+import { daysLabel } from '@/lib/holidays/urgency';
 
 const MAX_BUBBLES = 6;
-
-function daysLabel(days) {
-  if (days <= 0) return 'اليوم';
-  if (days === 1) return 'غداً';
-  if (days < 11) return `${days} أيام`;
-  return `${days} يوماً`;
-}
 
 function urgencyColor(days) {
   if (days <= 7)  return { bg: 'color-mix(in srgb, var(--accent) 10%, var(--bg-surface-2))', border: 'var(--border-accent)', text: 'var(--accent-strong)' };

@@ -2,12 +2,14 @@ import { cacheLife, cacheTag } from 'next/cache';
 
 import {
   ALL_EVENTS,
+  CATEGORIES,
   enrichEvent,
   getNextEventDate,
   formatGregorianAr,
   resolveEventMeta,
 } from '@/lib/holidays-engine';
 import { getCountryByCode } from '@/lib/events/country-dictionary';
+import { COUNTRY_META } from '@/lib/calendar-config';
 import {
   getHolidayRuntimeRecord,
   getListableHolidayEvents,
@@ -151,4 +153,54 @@ export async function getInitialEvents(filter = {}) {
 
 export async function loadEventsPage(cursor = 0, filter = {}) {
   return buildEventsPage(cursor, normalizeHolidayFilter(filter));
+}
+
+/**
+ * Facet counts for the filter panel: "how many events would I get if I picked
+ * this category / this country, given my other active filters?"
+ *
+ * Deliberately ignores `timeRange` (no Hijri/target-date resolution needed) so
+ * this stays a cheap synchronous pass over already-enriched events — timeRange
+ * rarely narrows a facet to zero the way category/country do, so the added
+ * accuracy isn't worth the extra async resolution cost on every filter change.
+ */
+function poolForCountryFacet(countryCode) {
+  return countryCode && countryCode !== 'all'
+    ? getListableHolidayEvents({ countryCode, includeCountrySeoAliases: true }).map(enrichEvent)
+    : ALL_EVENTS.map(enrichEvent);
+}
+
+function countMatching(pool, category, searchTerm) {
+  let filtered = category && category !== 'all'
+    ? pool.filter((event) => event.category === category)
+    : pool;
+  if (searchTerm) {
+    filtered = filtered.filter((event) => scoreHolidaySearchMatch(event, searchTerm) > 0);
+  }
+  return filtered.length;
+}
+
+export async function getFacetCounts(filter = {}) {
+  'use cache';
+
+  const normalizedFilter = normalizeHolidayFilter(filter);
+  cacheTag('holidays-page');
+  cacheTag('events:all');
+  cacheLife('hours');
+
+  const searchTerm = normalizedFilter.search.trim();
+
+  const countryFacetPool = poolForCountryFacet(normalizedFilter.countryCode);
+  const categoryCounts = { all: countMatching(countryFacetPool, 'all', searchTerm) };
+  for (const category of CATEGORIES) {
+    categoryCounts[category.id] = countMatching(countryFacetPool, category.id, searchTerm);
+  }
+
+  const allEventsPool = ALL_EVENTS.map(enrichEvent);
+  const countryCounts = { all: countMatching(allEventsPool, normalizedFilter.category, searchTerm) };
+  for (const code of Object.keys(COUNTRY_META)) {
+    countryCounts[code] = countMatching(poolForCountryFacet(code), normalizedFilter.category, searchTerm);
+  }
+
+  return { categoryCounts, countryCounts };
 }

@@ -1,0 +1,18 @@
+{
+  "slug": "unity-day-morocco",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر maroc.ma الرسمي وHespress وMorocco World News وchamaly.ma: بلاغ ملكي حديث، 31 أكتوبر عيد الوحدة، إقرار لاحق كإجازة مدفوعة الأجر للقطاعين بمرسومين حكوميين.",
+    "تعمّد تجنب أي ذكر لسنة الإعلان أو التصديق (حديثان جداً، ضمن النطاق الممنوع) — استُخدمت صيغة 'مؤخراً/حديث' حصراً في كل الحقول.",
+    "تمييز صريح عن green-march-morocco (6 نوفمبر) — مناسبة منفصلة قائمة لم تُلغَ.",
+    "fixed type، _countryCode: ma، countryScope: none — حدث مغربي وحيد بتاريخ ميلادي ثابت 31 أكتوبر."
+  ],
+  "updatedAt": "2026-07-13T18:12:39.498Z"
+}
