@@ -26,9 +26,12 @@ export default function robots() {
         userAgent: '*',
         allow: '/',
         disallow: [
-          '/api/',          // Backend APIs — no crawl value
-          '/search?*',      // Search query pages — duplicate content
-          '/offline',       // PWA offline page — no content
+          '/api/',              // Backend APIs — no crawl value
+          '/search?*',          // Search query pages — duplicate content
+          '/offline',           // PWA offline page — no content
+          '/*/opengraph-image', // Dynamic OG image endpoints — image binaries, never pages;
+                                 // only ever needed for og:image previews, which social
+                                 // scrapers fetch directly regardless of robots.txt.
         ],
       },
       {
@@ -39,6 +42,7 @@ export default function robots() {
           '/api/',
           '/search?*',
           '/offline',
+          '/*/opengraph-image',
         ],
       },
       {
@@ -49,6 +53,7 @@ export default function robots() {
           '/api/',
           '/search?*',
           '/offline',
+          '/*/opengraph-image',
         ],
       },
       {
@@ -59,6 +64,7 @@ export default function robots() {
           '/api/',
           '/search?*',
           '/offline',
+          '/*/opengraph-image',
         ],
       },
       {

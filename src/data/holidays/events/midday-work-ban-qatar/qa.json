@@ -1,0 +1,20 @@
+{
+  "slug": "midday-work-ban-qatar",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-19 (mubasher.info, raya.com, almeezan.qa): daily outdoor work ban 10:00-15:30 from June 1 to September 15 each year — the longest daily ban window in the GCC (5.5 hours).",
+    "Legal basis: Ministerial Decision No. 17 of 2021, per Qatar's official legal portal (almeezan.qa).",
+    "Scope is wider than most GCC neighbours: covers not just open-air sites but also shaded sites without adequate ventilation.",
+    "Workers have an explicit legal right to stop work and file a complaint if they believe conditions pose a health risk, without disciplinary/discriminatory retaliation — sourced from official coverage.",
+    "Single-country event (_countryCode: qa), aliasSlugs: [] to avoid base_country_leakage.",
+    "core.type is 'fixed' anchored to June 1 (start date); September 15 end date covered in FAQ/aboutEvent/schemaData.endDate."
+  ],
+  "updatedAt": "2026-07-19T15:41:04.372Z"
+}

@@ -73,3 +73,245 @@
 ::view-transition-old(root) {
   z-index: 1;
 }
+
+/* ── Embed mode (/embed/*) ──────────────────────────────────────────────── */
+/* Widget pages are meant to be iframed into a third-party site — hide this
+   site's own chrome so only the widget content shows. Class is toggled by
+   ClientRuntimeMounts.client.jsx once it reads the pathname; the brief flash
+   of full chrome before that JS runs is an accepted v1 tradeoff. */
+html.embed-mode #main-header,
+html.embed-mode .footer-root,
+html.embed-mode .skip-link {
+  display: none !important;
+}
+
+html.embed-mode #main-content {
+  padding: 0;
+}
+
+.embed-prayer-widget {
+  max-width: 22rem;
+  margin: 0 auto;
+  padding: var(--space-4);
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-base);
+}
+
+.embed-prayer-widget__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.embed-prayer-widget__city {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.embed-prayer-widget__country {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.embed-prayer-widget__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.embed-prayer-widget__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+}
+
+.embed-prayer-widget__row--next {
+  background: var(--green-subtle);
+}
+
+.embed-prayer-widget__row--next .embed-prayer-widget__time {
+  color: var(--green-text);
+  font-weight: var(--font-bold);
+}
+
+.embed-prayer-widget__label {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.embed-prayer-widget__time {
+  color: var(--text-primary);
+  font-weight: var(--font-semibold);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}
+
+.embed-prayer-widget__attribution {
+  display: block;
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.embed-prayer-widget__attribution:hover {
+  color: var(--blue-text);
+  text-decoration: underline;
+}
+
+.embed-calculator-widget {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: var(--space-4);
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-base);
+}
+
+.embed-calculator-widget__skeleton {
+  height: 12rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-2);
+}
+
+.embed-calculator-widget__attribution {
+  display: block;
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.embed-calculator-widget__attribution:hover {
+  color: var(--blue-text);
+  text-decoration: underline;
+}
+
+.embed-countdown-widget {
+  max-width: 100%;
+  min-width: 0;
+  margin: 0 auto;
+  padding: var(--space-4);
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-base);
+  text-align: center;
+}
+
+.embed-countdown-widget__title {
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-4);
+}
+
+.embed-countdown-widget__units {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.embed-countdown-widget__unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  min-width: 3.5rem;
+}
+
+.embed-countdown-widget__value {
+  font-size: clamp(1.75rem, 8vw, 2.5rem);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--accent-alt);
+  direction: ltr;
+}
+
+.embed-countdown-widget__label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.embed-countdown-widget__skeleton {
+  height: 8rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-2);
+}
+
+.embed-countdown-widget__attribution {
+  display: block;
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.embed-countdown-widget__attribution:hover {
+  color: var(--blue-text);
+  text-decoration: underline;
+}
+
+.embed-snippet-block {
+  /* max-width/min-width here are load-bearing, not decorative: the code
+     block below has un-wrapped (white-space: pre) long single-line content
+     whose intrinsic preferred width is 1300+px. Without both properties, a
+     flex/grid ancestor sizes this whole block (and its parent track) to that
+     preferred width instead of the available column width — the block then
+     renders straddling both edges of the page (confirmed via a real
+     getBoundingClientRect() check: x was -105px, i.e. rendered starting
+     105px to the left of the viewport). overflow-x: auto below is what's
+     actually supposed to handle the long content, but only works once this
+     element itself is properly constrained. */
+  max-width: 100%;
+  min-width: 0;
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.embed-snippet-block__hint {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  margin: 0;
+}
+
+.embed-snippet-block__code {
+  max-width: 100%;
+  min-width: 0;
+  background: var(--bg-surface-2);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  font-size: var(--text-xs);
+  overflow-x: auto;
+  direction: ltr;
+  text-align: left;
+  color: var(--text-primary);
+  margin: 0;
+}

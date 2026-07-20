@@ -2,7 +2,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { Suspense } from 'react';
 
 import { getPriorityCountrySlugs, getCountryBySlug } from '@/lib/db/queries/countries';
 import { getCapitalCity } from '@/lib/db/queries/cities';
@@ -12,7 +11,6 @@ import { getFlagEmoji, getSafeTimezone } from '@/lib/country-utils';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { DateShareActions } from '@/components/date/DateShareActions';
-import DateRouteLoading from '@/components/date/DateRouteLoading';
 import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdInArticle from '@/components/ads/AdInArticle';
@@ -512,27 +510,7 @@ export async function generateMetadata({
   }
 }
 
-export default function CountryDatePage({
-  params,
-}: {
-  params: Promise<{ countrySlug: string }>;
-}) {
-  return (
-    <Suspense
-      fallback={(
-        <DateRouteLoading
-          kind="hub"
-          title="جاري تحميل صفحة التاريخ"
-          description="نجهز التاريخ اليومي ومسارات المتابعة الخاصة بهذه الدولة الآن."
-        />
-      )}
-    >
-      <CountryDateDynamicContent params={params} />
-    </Suspense>
-  );
-}
-
-async function CountryDateDynamicContent({
+export default async function CountryDatePage({
   params,
 }: {
   params: Promise<{ countrySlug: string }>;

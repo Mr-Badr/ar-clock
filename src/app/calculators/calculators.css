@@ -1103,6 +1103,17 @@
   line-height: 1.7;
 }
 
+.calc-inline-link {
+  color: var(--blue-text);
+  font-weight: var(--font-semibold);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.calc-inline-link:hover {
+  color: var(--blue);
+}
+
 label.calc-hint {
   display: block;
   margin-bottom: var(--space-1);
@@ -13970,4 +13981,38 @@ main:not(.calc-hub-page) .calc-building-tool .calc-building-metrics {
   font-size: 0.68rem;
   color: var(--text-secondary);
   direction: ltr;
+}
+
+/* ── Weighted Grade Calculator ────────────────────────────────────────────── */
+.weighted-grade-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.weighted-grade-row {
+  display: grid;
+  grid-template-columns: 1fr 72px 84px auto;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+@media (max-width: 480px) {
+  .weighted-grade-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "name name"
+      "weight score"
+      "remove remove";
+  }
+  .weighted-grade-name-input { grid-area: name; }
+  .weighted-grade-weight-input { grid-area: weight; }
+  .weighted-grade-score-input { grid-area: score; }
+  .weighted-grade-row > button { grid-area: remove; justify-self: start; }
+}
+
+.weighted-grade-weight-input,
+.weighted-grade-score-input {
+  text-align: center;
 }

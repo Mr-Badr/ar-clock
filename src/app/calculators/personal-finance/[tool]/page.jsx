@@ -12,6 +12,7 @@ import {
   CalculatorPolicyNotice,
   CalculatorResourceLinks,
   CalculatorSection,
+  RelatedCalculators,
 } from '@/components/calculators/common';
 import {
   PERSONAL_FINANCE_TOOLS,
@@ -298,6 +299,10 @@ export default async function PersonalFinanceToolPage({ params }) {
         description="أسئلة قصيرة ومباشرة تساعدك على حسم التردد قبل أن تعتمد النتيجة أو تنتقل إلى خطوة أخرى."
       >
         <CalculatorFaqSection items={faqItems} />
+      </CalculatorSection>
+
+      <CalculatorSection id="pf-related" subtle>
+        <RelatedCalculators currentSlug={toolSlug} />
       </CalculatorSection>
     </main>
   );

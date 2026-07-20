@@ -216,7 +216,7 @@ const BLOG_KEYWORDS = uniqStrings([
 export const blogMetadata = buildCanonicalMetadata({
   title: 'مدونة ميقاتنا | شروحات عربية للنوم والبناء',
   description:
-    `اقرأ مقالات ${SITE_BRAND} العملية: شروحات عربية للنوم والبناء، مع أمثلة وروابط للحاسبات والأدوات المناسبة.`,
+    `اقرأ مقالات ${SITE_BRAND} العملية: شروحات عربية واضحة عن روتين النوم اليومي وتقدير تكاليف البناء، مع أمثلة حقيقية وروابط مباشرة إلى الحاسبة المناسبة لسؤالك.`,
   keywords: BLOG_KEYWORDS,
   url: `${SITE_URL}/blog`,
 });

@@ -2,6 +2,7 @@ import { POPULAR_PAIRS } from '@/components/time-diff/data/popularPairs';
 import { SITEMAP_PAIRS } from '@/components/time-diff/data/sitemapPairs';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildTimeDifferenceHref } from '@/lib/time-difference-links';
+import { getPriorityHubTimeDifferencePairs } from '@/lib/seo/time-difference-priority-pairs';
 
 export default async function sitemap() {
   const base = getSiteUrl();
@@ -12,7 +13,7 @@ export default async function sitemap() {
     priority: index < 4 ? 0.9 : 0.8,
   }));
 
-  const popularUrlSet = new Set(popularUrls.map((e) => e.url));
+  const seenUrls = new Set(popularUrls.map((e) => e.url));
 
   const sitemapUrls = SITEMAP_PAIRS
     .map(({ from, to }) => ({
@@ -20,7 +21,21 @@ export default async function sitemap() {
       changeFrequency: 'daily',
       priority: 0.75,
     }))
-    .filter((e) => !popularUrlSet.has(e.url));
+    .filter((e) => !seenUrls.has(e.url) && seenUrls.add(e.url));
+
+  let priorityHubUrls = [];
+  try {
+    const priorityHubPairs = await getPriorityHubTimeDifferencePairs();
+    priorityHubUrls = priorityHubPairs
+      .map(({ from, to }) => ({
+        url: `${base}${buildTimeDifferenceHref(from, to)}`,
+        changeFrequency: 'daily',
+        priority: 0.65,
+      }))
+      .filter((e) => !seenUrls.has(e.url) && seenUrls.add(e.url));
+  } catch {
+    priorityHubUrls = [];
+  }
 
   return [
     {
@@ -35,5 +50,6 @@ export default async function sitemap() {
     },
     ...popularUrls,
     ...sitemapUrls,
+    ...priorityHubUrls,
   ];
 }

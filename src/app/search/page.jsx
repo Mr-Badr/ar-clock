@@ -1,5 +1,7 @@
 import { Suspense } from 'react';
+
 import DiscoveryWorkspace from '@/components/site/DiscoveryWorkspace';
+import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildDiscoveryViewModel, normalizeDiscoveryQueryValue } from '@/lib/site/discovery';
@@ -77,7 +79,7 @@ function normalizeTabParam(value) {
   return VALID_TABS.has(normalized) ? normalized : 'all';
 }
 
-async function SearchResults({ searchParams }) {
+async function SearchDiscoveryContent({ searchParams }) {
   const resolvedSearchParams = await searchParams;
   const query = normalizeDiscoveryQueryValue(resolvedSearchParams?.q);
   const initialTab = normalizeTabParam(resolvedSearchParams?.tab);
@@ -86,15 +88,19 @@ async function SearchResults({ searchParams }) {
   return <DiscoveryWorkspace mode="search" viewModel={viewModel} initialTab={initialTab} />;
 }
 
-export default function SearchPage({ searchParams }) {
-  const fallbackViewModel = buildDiscoveryViewModel('');
+const SEARCH_DEFAULT_VIEW_MODEL = buildDiscoveryViewModel('');
 
+export default function SearchPage({ searchParams }) {
   return (
     <>
       <JsonLd data={SEARCH_FAQ_SCHEMA} />
-      <Suspense fallback={<DiscoveryWorkspace mode="search" viewModel={fallbackViewModel} initialTab="all" />}>
-        <SearchResults searchParams={searchParams} />
-      </Suspense>
+      <ErrorBoundary name="search-discovery-workspace">
+        <Suspense
+          fallback={<DiscoveryWorkspace mode="search" viewModel={SEARCH_DEFAULT_VIEW_MODEL} initialTab="all" />}
+        >
+          <SearchDiscoveryContent searchParams={searchParams} />
+        </Suspense>
+      </ErrorBoundary>
     </>
   );
 }

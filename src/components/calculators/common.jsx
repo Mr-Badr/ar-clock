@@ -89,13 +89,13 @@ function getUniqueCalculatorLinks(items) {
 
 function getComplementSlugs(cluster) {
   const complementSlugsByCluster = {
-    finance: ['gosi-retirement', 'eos-egypt', 'eos-qatar', 'eos-kuwait', 'eos-bahrain', 'uae-end-of-service', 'car-loan', 'salary', 'zakat', 'investment', 'net-salary', 'vat', 'percentage', 'annual-leave', 'monthly-installment', 'end-of-service-benefits', 'iqama', 'electricity-bill', 'inheritance'],
+    finance: ['gosi-retirement', 'eos-egypt', 'eos-qatar', 'eos-kuwait', 'eos-bahrain', 'uae-end-of-service', 'car-loan', 'salary', 'zakat', 'investment', 'net-salary', 'vat', 'percentage', 'annual-leave', 'sick-leave', 'working-days', 'margin-markup', 'monthly-installment', 'end-of-service-benefits', 'iqama', 'electricity-bill', 'inheritance'],
     building: ['vat', 'percentage', 'monthly-installment'],
     age: ['sleep', 'bedtime', 'retirement'],
     sleep: ['age-calculator', 'sleep', 'time-now'],
     'personal-finance': ['net-salary', 'salary', 'monthly-installment', 'end-of-service-benefits', 'zakat', 'investment'],
     health: ['bmi', 'fasting', 'pregnancy', 'pregnancy-weeks', 'ovulation', 'age-calculator'],
-    education: ['gpa', 'gpa-to-percent', 'percentage', 'saudi-school-calendar'],
+    education: ['gpa', 'gpa-to-percent', 'weighted-grade', 'percentage', 'saudi-school-calendar'],
   };
 
   return complementSlugsByCluster[cluster] || ['iqama', 'net-salary', 'electricity-bill', 'inheritance'];
@@ -122,15 +122,15 @@ function buildRelatedCalculatorLinks(currentSlug) {
       )
     : null;
   const clusterRoutes = (currentCluster
-    ? CALCULATOR_ROUTES.filter((item) => item.cluster === currentCluster && item.slug !== currentSlug)
+    ? CALCULATOR_ROUTES.filter((item) => item.cluster === currentCluster && item.slug !== currentSlug && !item.draft)
     : []
   ).map((item) => tag(item, 'sibling', 'نفس المسار'));
   const complementRoutes = getComplementSlugs(currentCluster)
     .map((slug) => CALCULATOR_ROUTES.find((item) => item.slug === slug))
-    .filter((item) => item && item.slug !== currentSlug)
+    .filter((item) => item && item.slug !== currentSlug && !item.draft)
     .map((item) => tag(item, 'complement', 'أداة مكمّلة'));
   const fallbackRoutes = CALCULATOR_ROUTES
-    .filter((item) => item.slug !== currentSlug)
+    .filter((item) => item.slug !== currentSlug && !item.draft)
     .map((item) => tag(item, 'more', 'أداة أخرى'));
 
   return getUniqueCalculatorLinks([

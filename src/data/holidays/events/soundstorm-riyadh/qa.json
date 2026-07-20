@@ -1,0 +1,20 @@
+{
+  "slug": "soundstorm-riyadh",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch + WebFetch 2026-07-19: official MDLBEAST page (mdlbeast.com/events/soundstorm-26) confirms 2026 edition runs Dec 3-4 at Banban, north Riyadh.",
+    "Historical pattern: 2024 edition Dec 12-14 (450k+ attendees, per Time Out Riyadh); 2025 edition Dec 11-13 (200+ artists, per Saudi Moments). No stable day-of-month, so core.type='estimated' with {{year}}-12-03 as best estimate.",
+    "Festival launched 2019 as part of Riyadh Season before becoming a standalone branded event with its own ticketing/dates.",
+    "Deliberately did NOT cite specific artist lineups (Post Malone, Eminem, etc.) or ticket prices (SAR 269-1799) since both change yearly and would go stale.",
+    "Content is purely entertainment/cultural/civic — zero religious content.",
+    "relatedSlugs limited to genuinely built events (riyadh-season, saudi-cup, diriyah-season, king-abdulaziz-camel-festival-saudi) — did not reference world-cup-2034-saudi since that event doesn't exist yet."
+  ],
+  "updatedAt": "2026-07-19T15:51:09.082Z"
+}

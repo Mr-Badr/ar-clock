@@ -1,0 +1,17 @@
+{
+  "slug": "easter-monday-uk",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: إثنين الفصح إجازة في إنجلترا/ويلز/أيرلندا الشمالية فقط، ليس اسكتلندا — إجماع بين مصادر متعددة (ukpublicholidays.co.uk، timeanddate.com).",
+    "إطار مدني/ثقافي بحت (دحرجة بيض الفصح)، بلا تأكيد ديني.",
+    "easterOffset: 1 يطابق النمط الحي على easter-monday-france/germany بالضبط."
+  ],
+  "updatedAt": "2026-07-18T20:41:15.270Z"
+}

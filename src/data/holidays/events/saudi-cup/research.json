@@ -1,0 +1,105 @@
+{
+  "slug": "saudi-cup",
+  "locale": "ar",
+  "capturedAt": "2026-07-17T19:10:46.957Z",
+  "primaryQueries": [
+    "متى كأس السعودية",
+    "كم باقي على كأس السعودية",
+    "موعد كأس السعودية",
+    "تاريخ كأس السعودية",
+    "أين يقام كأس السعودية",
+    "جائزة كأس السعودية",
+    "كأس السعودية للخيل",
+    "أغلى سباق خيل في العالم",
+    "ميدان الملك عبدالعزيز للفروسية",
+    "كأس السعودية أم موسم الرياض"
+  ],
+  "competitors": [
+    {
+      "name": "VisitSaudi (official tourism site)",
+      "url": "https://www.visitsaudi.com/en/riyadh/events/saudi-cup",
+      "strengths": "Official, trustworthy, event background",
+      "gaps": "No countdown, no daily-updated remaining-days figure, English-first"
+    }
+  ],
+  "coverageMatrix": [
+    {
+      "topic": "Exact date this year",
+      "competitorCoverage": "Only via one-off news articles once officially announced",
+      "ourAngle": "Live countdown + evergreen page updated every year automatically"
+    },
+    {
+      "topic": "Prize money total",
+      "competitorCoverage": "Mentioned in passing in news coverage",
+      "ourAngle": "Explicit total prize figure ($38M+) as the core hook/differentiator"
+    },
+    {
+      "topic": "Venue details",
+      "competitorCoverage": "Covered by VisitSaudi",
+      "ourAngle": "Concise, direct answer without marketing filler"
+    },
+    {
+      "topic": "Relationship to Riyadh Season",
+      "competitorCoverage": "Not addressed anywhere found",
+      "ourAngle": "Explicit disambiguation FAQ — real point of confusion"
+    },
+    {
+      "topic": "Comparison to Dubai World Cup",
+      "competitorCoverage": "Mentioned in some international racing press, not in Arabic content found",
+      "ourAngle": "Direct comparison establishing why it's the world's richest race"
+    },
+    {
+      "topic": "How to watch / tickets",
+      "competitorCoverage": "Announced late each year via official channels",
+      "ourAngle": "General guidance pointing to official channels, avoiding stale specific claims"
+    },
+    {
+      "topic": "Number of races/legs in the day",
+      "competitorCoverage": "Covered in international racing press",
+      "ourAngle": "Explained in Arabic with the headline race highlighted"
+    },
+    {
+      "topic": "Historical context / when it started",
+      "competitorCoverage": "Covered briefly in news pieces",
+      "ourAngle": "Framed as part of Saudi Arabia's growing global sporting-event portfolio"
+    }
+  ],
+  "keywordGaps": [
+    "متى كأس السعودية {{year}}",
+    "كم باقي على كأس السعودية {{year}}",
+    "موعد كأس السعودية {{year}}",
+    "جائزة كأس السعودية للخيل",
+    "أغلى سباق خيل في العالم",
+    "ميدان الملك عبدالعزيز للفروسية",
+    "كأس السعودية مقابل كأس دبي العالمي",
+    "هل كأس السعودية جزء من موسم الرياض"
+  ],
+  "unansweredQuestions": [
+    "هل كأس السعودية جزء من موسم الرياض أم فعالية منفصلة؟",
+    "لماذا يعتبر كأس السعودية أغلى سباق خيل في العالم تحديداً؟",
+    "كم عدد الأشواط في يوم سباق كأس السعودية؟",
+    "أين بالضبط يقام كأس السعودية داخل الرياض؟",
+    "كيف يمكن مشاهدة كأس السعودية أو حضوره؟",
+    "هل يتغير موعد كأس السعودية كل سنة بشكل كبير؟"
+  ],
+  "differentiationIdeas": [
+    "قيادة المحتوى بالعدّاد التنازلي بدل مقال إخباري ثابت يفقد قيمته بعد الحدث",
+    "التمييز الصريح بين كأس السعودية وموسم الرياض، وهو ارتباك حقيقي غير معالج في أي مصدر وجدناه",
+    "إبراز رقم الجائزة الإجمالية كنقطة الجذب الأساسية بدل الاكتفاء بذكره عرضاً"
+  ],
+  "factSources": [
+    {
+      "label": "VisitSaudi — Saudi Cup event page",
+      "url": "https://www.visitsaudi.com/en/riyadh/events/saudi-cup"
+    },
+    {
+      "label": "Saudi Press Agency (SPA)",
+      "url": "https://www.spa.gov.sa"
+    },
+    {
+      "label": "King Abdulaziz Racetrack / Jockey Club of Saudi Arabia",
+      "url": "https://www.saudicup.com"
+    }
+  ],
+  "notes": "Researched 2026-07-17 as part of Wave 13 (post-Wave-12 fresh research pass). Thin Arabic competition confirmed: no dedicated Arabic countdown/hub page found for this query, only official tourism content and news-cycle coverage. Real differentiator is the countdown mechanic plus the explicit Riyadh-Season disambiguation, which nobody else addresses."
+}

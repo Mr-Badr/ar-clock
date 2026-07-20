@@ -485,7 +485,7 @@ const CALCULATOR_HUB_ITEMS = [CALCULATORS_ROOT_ITEM, ...CALCULATOR_HUBS.map((hub
 })];
 
 const BASE_CALCULATOR_TOOL_ITEMS = CALCULATOR_ROUTES
-  .filter((route) => !calculatorHubHrefs.has(route.href))
+  .filter((route) => !calculatorHubHrefs.has(route.href) && !route.draft)
   .map((route) => {
     const enrichment = calculatorToolEnrichmentByHref.get(route.href);
     const financeEnrichment = financeToolEnrichmentByHref.get(route.href);

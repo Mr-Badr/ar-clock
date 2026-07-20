@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Suspense } from 'react';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import BuildingCostCalculator from '@/components/calculators/building/BuildingCostCalculator.client';
 import {
   CalculatorDecisionTable,
@@ -368,6 +369,8 @@ export default function BuildingHubPage() {
       >
         <CalculatorFaqSection items={faqItems} />
       </CalculatorSection>
+
+      <AdMultiplex slotId="end-building-hub" />
 
     </main>
   );

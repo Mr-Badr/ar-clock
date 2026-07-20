@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import EndOfServiceCalculator from '@/components/calculators/EndOfServiceCalculator.client';
+import EmbedCodeSnippet from '@/components/shared/EmbedCodeSnippet.client';
 import {
   CalculatorFaqSection,
   CalculatorHero,
@@ -319,6 +320,16 @@ export default async function EndOfServiceBenefitsPage() {
         title="أسئلة تتكرر قبل الاستقالة أو عند مراجعة التسوية"
       >
         <CalculatorFaqSection items={faqItems} />
+      </CalculatorSection>
+
+      <CalculatorSection id="esb-embed" subtle>
+        <EmbedCodeSnippet
+          embedUrl={`${SITE_URL}/embed/calculators/end-of-service-benefits`}
+          title="حاسبة مكافأة نهاية الخدمة"
+          hint="هل تدير موقعاً أو منتدى؟ أضف حاسبة مكافأة نهاية الخدمة إليه مجاناً بنسخ الكود التالي:"
+          width={380}
+          height={480}
+        />
       </CalculatorSection>
 
       <CalculatorSection

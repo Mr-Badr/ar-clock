@@ -13,6 +13,7 @@ const PRODUCT_LINKS = [
   { href: '/time-difference', label: 'فرق التوقيت' },
   { href: '/calculators', label: 'الحاسبات' },
   { href: '/holidays', label: 'المناسبات' },
+  { href: '/countdown', label: 'عداد تنازلي' },
   { href: '/date', label: 'التاريخ والتحويل' },
 ];
 

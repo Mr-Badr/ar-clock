@@ -52,7 +52,7 @@ Targets: **$100–300 in the Aug 8 → Sep 8 AdSense window · 3,000 visitors/da
    the owner is Muslim and does not want the site publishing content on a religion's core claims he
    holds to be doctrinally incorrect. This is a standing content-policy line, not a per-event volume call.
    `coptic-easter-egypt` and its sibling Egypt Coptic-calendar candidates were dropped for this reason —
-   see the Wave 12 Track B note. Full detail + the still-open question about earlier-built Christian
+   see the Rejected section below. Full detail + the still-open question about earlier-built Christian
    civic-holiday pages: memory `project-rejected-event-candidates`.
 10. **Islamic-content sourcing standard (owner instruction, 2026-07-14).** Every fact/date for an
     Islamic-calendar or Islamic-history event must be verified against mainstream **Sunni** sources —
@@ -80,13 +80,42 @@ holds, none unblockable right now. Don't re-check again until the "unblock condi
 | `kontantstotte-norway` | Re-verified 2026-07-14: every source (nav.no's own site, babyverden.no, other trackers) still only says "rundt den 20." (around the 20th) with "nøyaktige datoer kan variere" (exact dates may vary) — no single confirmed fixed day found | Pull the actual 2026/2027 payment-date list directly from nav.no/utbetalingsdatoer (nav.no blocked WebFetch this session — may need manual browser check) |
 | `national-day-norway` | Blocked on `kontantstotte-norway` (Norway hub-unlock plan needs it as the 3rd event) | Same as above |
 | `salary-day-morocco` | Re-verified 2026-07-14: fresh search still only surfaces one-off Eid-linked early-payment news (e.g. May 20, 2026 tied to Eid al-Adha), never a recurring monthly TGR day | A primary source (TGR/Ministry of Finance) stating a genuine recurring shared day |
-| `dubai-shopping-festival` | Re-verified 2026-07-14: still 3 conflicting unofficial date ranges across travel-affiliate sites (mid-Dec to late-Jan variants), visitdubai.com's own DSF page still doesn't list exact 2026-2027 dates | Official visitdubai.com announcement of exact dates |
 | `f1-bahrain-gp` | Sports-SERP risk; needs a real keyword-volume check | GSC data confirming date-intent queries beat race-coverage-intent — **needs the user's Search Console access, not researchable via web search** |
 | `tax-refund-usa` | No confirmed Arabic search volume yet | 3 GSC-confirmed Arabic keyword phrases with real volume — **needs the user's Search Console access, not researchable via web search** |
 | `dv-lottery` status tracker | Re-verified 2026-07-14: still suspended (correction — suspended **2025-12-18**, not Mar 2026 as previously noted here), no reopening date announced; DV-2026 selectees lose eligibility if not issued by 2026-09-30 | Check travel.state.gov for a reopened window |
+| `vat-filing-deadline-saudi` (ZATCA VAT إقرار) | Engine gap, found 2026-07-17: real deadline is "last calendar day of the month following the tax period," but `holidays-engine.js`'s `type: 'monthly'` only supports a fixed numeric day, not "last day of month" (28-31 varies) | Add a `lastDayOfMonth`-style rule to `holidays-engine.js` (same class of fix `nth: -1` solved for floating weekday events) — an engineering task, not a content task |
+| `salary-day-algeria` | A 2026 full-year payment calendar mostly fits "day 27, shift to Thursday if Fri/Sat," but May 2026 pays 3 days early (24th) and June 2026 pays 1 day late (28th) — likely an unconfirmed Eid al-Adha adjustment, single tweet-thread source only | An official multi-year source confirming the Eid-adjustment pattern, or engine support for per-month overrides |
+| `pension-day-tunisia` | CNSS/CNRPS weekday-based pay pattern confirmed for one month only (July 2026: CNSS Thu 23rd, CNRPS Fri 24th) — not enough to confirm a repeatable formula | 2+ more months of confirmed CNSS/CNRPS pay dates to pin the exact weekday rule |
+| `battle-of-mutah` | Month + year solid (Jumada al-Awwal, 8 AH) but no source gives a specific day-of-month | A primary-source-adjacent reference (e.g. Ibn Hisham's Sira) pinning the exact day |
+| `election-day-usa` | Recurs biennially, not annually — the engine's `repeatFrequency` computation assumes `P1Y` | Engine support for a `P2Y`-style repeat frequency before building as a countdown |
+| `back-to-school-tax-free-usa` | Real high-RPM gap, but ~17 different state dates — doesn't fit a single-event countdown format | Build as a hub/table page (same pattern as the Saudi pay-dates hub), not a `holidays` event |
 
 **Not a blocker, just low priority (buildable any time, RPM-only reason):** none currently — the Egypt
 trio that used to sit here shipped 2026-07-12.
+
+**Flagged — needs explicit owner sign-off before building (found 2026-07-19, Algeria diaspora pass):**
+Algeria's **National Memory Day** (May 8, 1945 Sétif/Guelma massacre) and **National Immigration Day**
+(Oct 17, 1961 Paris massacre) are real, officially observed, and genuinely high dual-relevance (Algeria +
+large France-diaspora audience) — but both center French state violence against Algerians, same risk
+class as the already-rejected Lebanon Hariri/Resistance Day topics. Do not build unilaterally; needs the
+owner's explicit go-ahead on framing before any research/scaffolding starts.
+
+**Kurdistan Flag Day** (Dec 17, Iraq/Kurdistan region, found 2026-07-19) — KRG-parliament-decreed since
+2009, rooted in a real historical date (1946 Mahabad Republic), genuinely low competition (regional news
+portals only, no countdown format). Not built: it's Kurdistan-region-only (a new sub-national-page
+pattern for this site) and touches Kurdish national symbolism in a country with a fragile Baghdad–Erbil
+relationship — same judgment-call class already reserved for owner sign-off (Ghadir Khumm,
+`king-salman-bayah-saudi`). Do not build without explicit go-ahead.
+
+**Ghadir Khumm / Eid al-Ghadir** (18 Dhul Hijjah, 10 AH, found 2026-07-14) — the date itself is
+essentially undisputed even in Sunni hadith collections, but the occasion's meaning is the entire
+Sunni-Shia fault line (Sunni: praise of Ali's virtue; Shia: explicit succession/Imamate designation).
+Arabic Wikipedia's own article opens by calling it "a holiday celebrated by Shia"; search volume
+concentrates almost entirely in Shia-majority/mixed populations (Iraq, Bahrain, Lebanon), not this
+site's stated core Sunni-majority markets. Recommendation is to skip for brand positioning, but this is
+an editorial-stance call, not a pure fact question — flagged rather than decided unilaterally. Do not
+build without explicit owner sign-off. (This is also the basis for standing rule 10's Islamic-sourcing
+policy — see Standing rules above.)
 
 ---
 
@@ -95,307 +124,6 @@ trio that used to sit here shipped 2026-07-12.
 **Priority rule: high-RPM countries FIRST — Gulf, Europe (diaspora), US — before any volume play.**
 Low-RPM items (Maghreb, Egypt, Syria/Yemen/Libya/Palestine traffic-plays) are NEVER excluded for RPM
 alone — they build whenever the high-RPM queue is empty, ranked by search volume among themselves.
-
----
-
-## Wave 12 — new candidates (research pass 2026-07-14, owner brief: fixed date + real daily-search
-## volume + low-medium competition, Saudi/Egypt/other-countries/international/Islamic, aim to rank #1
-## within a month of publishing)
-
-### Wave 12 first tranche — SHIPPED 2026-07-14 (9 events live, ci:check green)
-
-`victoria-day-canada`, `washington-birthday-usa`, `battle-of-khandaq`, `wafat-khadija`, `autism-day`,
-`family-day`, `charity-day`, `disability-day`, `winter-at-tantora-alula` — all built through the full
-research → author → validate → sync pipeline same day. Egypt's Coptic-calendar track was fully dropped
-per owner instruction (see Track B below and the standing rule 9 above) and replaced in the build queue
-with the two Islamic-history events (`battle-of-khandaq`, `wafat-khadija`). `taif-rose-festival`
-(originally Saudi's top pick) was rejected after independent verification found real scheduling
-instability (see Track E) and replaced with `winter-at-tantora-alula`. Final `npm run ci:check` green;
-every new event carries only non-blocking `related_not_reciprocal` warnings, no errors. Remaining
-Track A/C/Saudi items below are still open for a future pass — see the "Ranked build order" list.
-
-Two independent discovery tracks fed this wave: (1) a systematic scan of `country-hub-data.js` for
-`eventSlug: null` rows with NO matching live event (found while fixing 32 *orphaned* links — see below —
-these rows already carry a verified date/rule, zero fresh fact-research needed); (2) five parallel
-research agents dispatched for Saudi, Egypt, international UN days, and Islamic-calendar history.
-
-### Zero — bug found and fixed first: 32 already-built events were never linked from their country hub
-
-Before researching anything new, a systematic re-check of every country's `eventSlug` in
-`country-hub-data.js` found that **32 events built across Wave 9-11 were live and published, but their
-country-hub-page row still pointed `eventSlug: null`** — meaning `/holidays/country/<x>` never linked to
-them. Root cause: the events were authored directly into `src/data/holidays/events/` without going back
-to update the hub-summary data file. Fixed same-session (2026-07-14): `coptic-christmas-egypt`,
-`june-30-revolution-egypt`, `evacuation-day-egypt` (Egypt), `tasua-day` (Bahrain), `renaissance-day-oman`
-(Oman), `good-friday-germany`/`ascension-day-germany`/`unity-day-germany`/`christmas-germany` (Germany),
-`national-day-sweden`/`midsummer-sweden`/`all-saints-sweden`/`christmas-eve-sweden` (Sweden),
-`victory-day-france`/`bastille-day-france`/`assumption-day-france`/`armistice-day-france` (France),
-`sovereignty-childrens-day-turkey`/`youth-sports-day-turkey`/`democracy-day-turkey`/`victory-day-turkey`
-(Turkey), `mlk-day-usa`/`memorial-day-usa`/`juneteenth-usa`/`columbus-day-usa`/`veterans-day-usa` (USA),
-`truth-reconciliation-day-canada`/`thanksgiving-canada`/`remembrance-day-canada`/`boxing-day-canada`
-(Canada), `christmas-jordan` (Jordan), `christmas-palestine` (Palestine),
-`armenian-christmas-lebanon`/`saint-maroun-day-lebanon`/`assumption-day-lebanon` (Lebanon). Verified each
-mapping against the live event's `core` fields (month/day/offset) before wiring — no mismatches. `ci:check`
-green after the fix. **Lesson for future waves: after building an event whose country already has a
-`country-hub-data.js` entry, always check whether that entry's `eventSlug` needs updating from `null`.**
-
-### Track A — pre-verified gaps still sitting in `country-hub-data.js` (some genuinely buildable, zero
-### fact-research needed; others intentionally left `null` because no confirmed date/name exists)
-
-These rows are real, dated, and sourced in `country-hub-data.js` already but have no individual event
-page. Competitor scrape + content authoring is all that's needed — the base facts are done:
-
-| Slug (proposed) | Country | Rule | Priority | Note |
-|---|---|---|---|---|
-| `victoria-day-canada` | Canada | `weekday-in-range` Mon within May 18-24 | **HIGH** | Verified 2026-07-14: 2026 = May 18 (timeanddate.com, canada.ca). Arabic competitor (arabz.ca) exists but has no countdown, no year-specific date, thin on the NS/NL exception — beatable. Real Quebec-specific angle: renamed "Journée nationale des patriotes" there since 2003. |
-| `washington-birthday-usa` (public-facing name: "يوم الرؤساء") | USA | `floating` 3rd Mon of Feb | **HIGH** | Federal name is still officially "Washington's Birthday," not "Presidents Day" — same differentiator pattern already proven on `columbus-day-usa`. Multiple Arabic news outlets (skynewsarabia, al-ain, arabi21) cover it yearly but none have a countdown/FAQ page. Some states observe Lincoln's Feb 12 birthday as an alternate/additional day — real content angle. |
-| `labor-day-canada` | Canada | `floating` 1st Mon of Sept | MEDIUM | Federal, all-Canada (unlike Family Day). Simple, safe, good RPM. |
-| `family-day-canada` | Canada | `floating` 3rd Mon of Feb | MEDIUM | **Only some provinces observe it** (confirmed confusion in Arabic search results — some sources conflate it with the unrelated August "Civic Holiday"); this ambiguity is itself the differentiator (clean province-by-province table nobody else has). |
-| `christmas-canada` | Canada | fixed Dec 25 | MEDIUM | Distinct from already-built `boxing-day-canada`; pairs naturally in a "Canada Christmas week" cluster. |
-| `all-saints-day-france` | France | fixed Nov 1 | LOW-MED | Distinct from `all-saints-sweden` (different rule type: France = fixed Nov 1, not weekday-in-range) — no cross-cannibalization. |
-| `easter-monday-france`, `easter-monday-germany` | France, Germany | `easter` offset 1 | LOW | Thinner individual search intent than named holidays; safe filler, zero research needed. |
-| `ascension-day-france` | France | `easter` offset 39 | LOW | Same rule already proven on `ascension-day-germany`; content just needs a France-specific angle (school holidays "pont de l'Ascension" bridge-day custom is a real differentiator). |
-| `whit-monday-france`, `whit-monday-germany` | France, Germany | `easter` offset 50 | LOW | Lower priority; safe filler. |
-| `epiphany-sweden` | Sweden | fixed Jan 6 | LOW | Same date as `armenian-christmas-lebanon` and `coptic-christmas-egypt` (different traditions, different countries) — no collision, just coincidental date overlap to be aware of when cross-linking. |
-| Sweden's Good Friday/Easter Sun/Easter Mon/Ascension/Whit Sunday, France's Whit Monday (partial dupe of Germany's) | Sweden, France | various `easter` offsets | LOW | Lowest priority in this track — thin standalone search intent for a Swedish-specific Easter-adjacent day beyond what `christmas-eve-sweden`/`midsummer-sweden`/`all-saints-sweden` already cover. Build only if the higher-priority queue empties out. |
-
-**Intentionally left blocked/unbuilt** (do not build without new information): Lebanon's
-`ذكرى اغتيال الرئيس رفيق الحريري` (Hariri assassination anniversary — politically sensitive, fails
-neutral-brand test), Lebanon's `عيد المقاومة والتحرير` (Resistance and Liberation Day — politically
-loaded framing, needs careful neutral-brand assessment before ever considering), Lebanon's Western
-Good Friday/Easter Sunday and Orthodox Good Friday/Easter Sunday as individual pages (mirrors the site's
-existing choice not to split these for Lebanon — only the country-hub summary carries them), Syria's
-regular Christmas and Orthodox Good Friday/Easter (same reasoning as `easter-syria`'s Option A design —
-one event per country covers the Western date, denominational nuance lives in content, not extra pages).
-
-### Track B — Egypt: REJECTED by owner decision 2026-07-14, do not re-research
-
-A research agent proposed a Coptic-calendar cluster (`coptic-easter-egypt`, `eid-al-ghitas-egypt`,
-`nayrouz-egypt`, `eid-al-salib-egypt`) beyond the already-live `coptic-christmas-egypt`. `coptic-easter-egypt`
-was fully authored, fact-checked (55-day Great Lent / Sabt El Noor detail independently re-verified against
-6+ sources), and about to be built when the **owner explicitly rejected the entire track**: he does not want
-the site publishing/affirming Christian theological content (specifically the Resurrection) that he
-personally holds to be religiously incorrect. `coptic-easter-egypt` was deleted immediately (never synced
-live); `eid-al-ghitas-egypt`, `nayrouz-egypt`, `eid-al-salib-egypt` were never built. **Do not propose
-Coptic or other Christian-theological-content events for Egypt again** — this is a standing content-policy
-line, not a per-event volume/competition judgment. See `.claude/session-notes.md` and memory
-`project-rejected-event-candidates` for the full note and the still-open question of whether this same line
-should extend to already-live Christian-observance pages elsewhere on the site (Jordan/Palestine/Lebanon/
-Germany/Sweden/Syria) — that broader question was explicitly not decided and needs the owner's answer
-before any of those pages are touched.
-
-### Track C — international UN observance days (research agent, 2026-07-14)
-
-All of these are on the UN's official `un.org/en/observances/list-days-weeks` registry with a fixed
-annual Gregorian date (confirmed one-by-one, not assumed). Ranked by the research agent:
-
-| Slug | Arabic name | Date | Priority | Differentiator |
-|---|---|---|---|---|
-| `autism-day` | يوم التوحد العالمي | April 2 | **HIGH** | "Light It Up Blue" global campaign, Gulf health-ministry yearly posts (Qatar MOPH, Saudi SPA); no Arabic countdown site found. Parent-facing practical content (early signs, Gulf assessment services) beats the ceremonial competitor pages. |
-| `family-day` | اليوم الدولي للأسرة | May 15 | **HIGH** | Strongest single competitor found (alkhaleej.ae) but beatable. Egypt's Ministry of Awqaf already ran a piece framed "بين الرعاية الأممية والقيم الإسلامية" (UN care vs. Islamic values) — a ready-made, government-validated differentiator angle to lead with. |
-| `charity-day` | اليوم الدولي للعمل الخيري | Sept 5 | HIGH | Marks Mother Teresa's death anniversary (UN designation 2012). Fragmented small-NGO competitor set. Natural Islamic-giving/sadaqah framing fits this audience and isn't done by any current competitor. |
-| `disability-day` | اليوم الدولي للأشخاص ذوي الإعاقة | Dec 3 | MEDIUM-HIGH | Recurring SPA (twice-confirmed) + Egyptian state info service + ALECSO coverage. No dedicated Arabic countdown/FAQ page. Rights/accessibility/inclusion-program angle beats ceremonial ministry press releases. |
-| `volunteer-day` | اليوم الدولي للمتطوعين | Dec 5 | MEDIUM | One low-authority competitor (fekrah.net) already runs a basic date+countdown article — still beatable but not greenfield. Ties directly to Saudi Vision 2030 volunteering targets + UAE Volunteers platform — country-specific info no competitor combines with the countdown. |
-| `food-day` | يوم الأغذية العالمي | Oct 16 | MEDIUM | FAO anniversary (1979/1981). Recurring competitor pattern: Twinkl (UK ed-resource site) runs thin templated Arabic pages across several UN days — noted as a weak-but-present pattern to expect elsewhere too, not a real threat. Food-security/Ramadan-adjacent giving angle fits. |
-| `literacy-day` | اليوم الدولي لمحو الأمية | Sept 8 | LOWER | UNESCO 1966. Weaker standalone search intent than the top 6, but strong internal-linking synergy with the site's 10+ `school-start-*` pages already live. |
-| `wildlife-day` | اليوم العالمي للأحياء البرية | March 3 | LOWER | Real but thinner — environment/conservation topics get less Gulf-government social push than family/charity/disability. Build only if pushing past 6. |
-
-**Checked and explicitly rejected** (don't re-research): International Day for Tolerance (Nov 16) —
-direct date collision with the already-live `uae-tolerance-day`. International Day of the Girl Child
-(Oct 11) — thematically redundant with `world-childrens-day`, weak standalone angle. World Population Day
-(July 11) — UN's own framing centers reproductive-health-rights messaging, poor cultural fit. International
-Day for the Eradication of Poverty (Oct 17) — thematically redundant with `charity-day` above. International
-Day of Yoga (June 21) — real UN day, huge volume, but fails brand-fit test for this audience (religious-practice
-associations are a recurring conservative-MENA objection point) and skews toward South Asian expat search
-demographics, not the site's core. World AIDS Day (Dec 1) — legitimate UN day but routinely trips AdSense
-sensitive-content restrictions + carries cultural stigma in MENA. World Press Freedom Day (May 3) —
-politically sensitive by nature, fails house policy. World Habitat Day, World Statistics Day, Africa Day,
-International Men's Day, World Kindness Day, World Rivers Day, World Sleep Day, World Fisheries Day — not
-on the UN's official international-days registry at all (confirmed via un.org), or (Habitat/Statistics) not
-fixed-dated/not annual.
-
-### Track D — Islamic-calendar history (research agent, 2026-07-14)
-
-| Slug | Arabic name | Hijri date | Priority | Note |
-|---|---|---|---|---|
-| `battle-of-khandaq` | غزوة الخندق (الأحزاب) | Shawwal, 5 AH (majority view; exact day within the month not uniformly pinned — same level of imprecision the site already accepts for `battle-of-uhud`'s `hijriDay`) | **HIGH — build first** | Quranic (Surah al-Ahzab), core school-curriculum battle, arguably higher name recognition than Uhud. Same competitor gap already exploited for `badr-day`/`battle-of-uhud`/`fath-makkah`: encyclopedic narrative pages (mawdoo3, marefa, wikipedia, islamweb, awkafonline), zero countdown-format pages. Zero sectarian risk — universally accepted pan-Islamic history. |
-| `wafat-khadija` (or `aam-al-huzn`) | وفاة السيدة خديجة / عام الحزن | 10 Ramadan, 3 years before the Hijra (~619 CE) | HIGH | Cleanest date consensus of any candidate checked (5 independent sources agree on "10 Ramadan"). Zero sectarian risk — Khadija is revered identically across all Islamic traditions. Strong internal-link synergy with the already-live `ramadan`/`laylat-al-qadr`/`last-ten-nights-ramadan` cluster. Current competitors only mention it as a listicle item inside "events that happened in Ramadan" roundups (al-ain.com, barlamane.com) — no dedicated page exists. |
-| `battle-of-mutah` | غزوة مؤتة | Jumada al-Awwal, 8 AH (month+year solid; **no source found gives a specific day-of-month** — needs one more verification pass against a primary-source-adjacent reference like Ibn Hisham's Sira before scaffolding, per the Golden Rule) | MEDIUM — defer one verification round | Real name-recognition via the three martyred commanders (Zayd ibn Haritha, Ja'far al-Tayyar, Abdullah ibn Rawaha) — strong pull in children's Islamic education. Don't scaffold until the exact day is pinned. |
-
-**Flagged for an explicit decision, not silently built or dropped — Ghadir Khumm / Eid al-Ghadir** (18
-Dhul Hijjah, 10 AH): the date itself is essentially undisputed even in Sunni hadith collections, but the
-occasion's meaning is the entire Sunni-Shia fault line (Sunni: praise of Ali's virtue; Shia: explicit
-succession/Imamate designation). Wikipedia's own Arabic article opens by calling it "a holiday celebrated
-by Shia"; search volume concentrates almost entirely in Shia-majority/mixed populations (Iraq, Bahrain,
-Lebanon) — not this site's stated core markets (UAE/Saudi/Qatar/Kuwait/Egypt/Morocco, all Sunni-majority).
-**Recommendation: skip for this site's brand positioning** — flagging rather than deciding unilaterally,
-since the traffic opportunity in Iraq/Bahrain is real and this is ultimately an editorial-stance call, not
-a pure fact question.
-
-**Checked and explicitly rejected** (don't re-research): Prophet's death (12 Rabi al-Awwal, 11 AH) — same
-Hijri calendar day as the already-live `mawlid`; a second countdown firing the same day is a product
-collision, not differentiation — add as a "did you know" note inside `mawlid` instead, don't build
-standalone. Hajjat al-Wada / Farewell Pilgrimage — no clean non-colliding date exists (climax dates
-overlap `day-of-arafa`/`eid-al-adha`/`tashreeq-days`); deepen those pages instead. Hijra as a narrative
-event distinct from `islamic-new-year` — no evidence of independent "mark this specific day" search
-behavior separate from the New Year event itself; already fully served. "الجمعة البيضاء" (White Friday) —
-could not verify as a real distinct occasion (likely conflated with "الأيام البيض" fasting days, already
-adjacent to the live `nisf-shaban`). Battle of Khaybar — date fragmentation is worse than Khandaq (month-
-*and* year-level disagreement among primary sources, not just day-level) — deferred, not a hard no, needs
-a dedicated Sira/Tabari deep-dive before it clears the accuracy bar.
-
-### Track E — Saudi Arabia (research agent retried successfully 2026-07-14 after an API error on the
-### first attempt)
-
-Saudi's official government holidays are fully built. The research agent found the gap is **regional
-seasonal tourism festivals** — none of AlUla, Diriyah, Taif, or Asir seasons exist yet, despite the engine
-already having a proven content pattern for exactly this event type (`type: "estimated"` with a
-`{{year}}-MM-DD` anchor, same as the already-live `riyadh-season`/`jeddah-season`).
-
-| Slug | Arabic name | Date window | Priority | Why |
-|---|---|---|---|---|
-| `winter-at-tantora-alula` | شتاء طنطورة (العلا) | ~3-4 weeks, mid-Dec–early/mid-Jan (2025-26: Dec 18–Jan 10) | **HIGH — built 2026-07-14** | Official RCU/tourism-board pages are portal-style, not date-answer optimized; secondary competitors are thin/low-authority. 5 consecutive annual editions confirmed (Al Arabiya: "الموسم الخامس"), consistent multi-outlet coverage, no postponement history found. |
-| `asir-summer-season` | موسم صيف عسير | ~10 weeks, late June–early Sept (2026: Jun 25–Sept 1) | MEDIUM | Moderate competition — `discoveraseer.com` is a real dedicated-authority incumbent, comparable difficulty to the already-live `riyadh-season`/`jeddah-season` (a tier the site already competes in successfully, not a free win). Distinct value prop vs. `jeddah-season` (cool mountain retreat vs. coastal entertainment) — no cannibalization. |
-| `diriyah-season` | موسم الدرعية | ~5 months, Nov 1–late March (2025-26: Nov 1–Mar 23) | MEDIUM-LOW | Highest competition of the four — TimeOut Riyadh, Platinumlist, plus multiple strong official domains (a heavily-funded PIF flagship, PR-aggressive). Build only if accepting a longer climb to page-1. |
-
-**`taif-rose-festival` — REJECTED, fails the reliable-date bar (found 2026-07-14, contradicts the
-original research agent's "build first" pick).** The research agent's initial "thinnest competition"
-read was correct but missed a live reliability problem: independent WebSearch verification (okaz.com.sa,
-ts-post.net, multiple syndicated Saudi outlets) found the festival's own organizers ("الملتقى العالمي
-للورد والنباتات العطرية") **postponed the 2026 edition twice in a row**, citing weather-driven crop
-declines directly contradicting their own earlier "bumper harvest, 550 million roses" announcement —
-plus a separate historical COVID-era postponement (sabq.org, 2020). A festival whose own organizers
-can't currently hold to an announced date twice in the same season fails the "reliably computable
-annual date" gate outright, regardless of how thin the competition is. **Lesson: always re-verify a
-research agent's "no competitor" read against current news for the event's own reliability — thin
-competition and an unstable date are two independent questions, and this site's rules require passing
-both.** Do not rebuild without a source confirming at least 2-3 consecutive on-schedule years.
-
-**Checked and explicitly rejected** (don't re-research): King Abdulaziz/Custodian-of-the-Two-Holy-Mosques
-Camel Festival — two similarly-named festivals found with conflicting historical start dates, fails the
-reliable-date bar. Janadriyah National Heritage & Culture Festival — irregular modern cadence (postponed
-2015, paused during COVID, unclear present-day scheduling). Abha Jacaranda season — near-zero competition
-but bloom window is only ~5 days and appears Instagram/fan-driven rather than institutionally anchored.
-**Parked as a lower-priority backup, not rejected**: Riyadh International Book Fair (real, fixed annual
-month, official backing, but lower estimated volume than the four above).
-
-### Ranked build order for this wave
-
-1. `battle-of-khandaq` (Islamic, zero sectarian risk, strong volume) — **built 2026-07-14**
-2. `victoria-day-canada` (Canada, high RPM, verified facts) — **built 2026-07-14**
-3. `washington-birthday-usa` (USA, high RPM, verified facts) — **built 2026-07-14**
-4. `wafat-khadija` (Islamic, cleanest date consensus, Ramadan-cluster synergy) — **built 2026-07-14**
-5. `autism-day`, `family-day`, `charity-day`, `disability-day` (international) — **all built 2026-07-14**
-6. `winter-at-tantora-alula` (Saudi) — **built 2026-07-14**
-7. `labor-day-canada`, `family-day-canada`, `christmas-canada` (Track A, medium priority) — **all built 2026-07-14**
-8. `all-saints-day-france` — **built 2026-07-14**
-9. `easter-monday-france`, `easter-monday-germany`, `ascension-day-france` (Easter-cycle; owner explicitly
-   confirmed 2026-07-14 via AskUserQuestion to proceed, framed strictly around legal/civil/historical status,
-   never affirming the Resurrection — same approach already used on good-friday-germany/ascension-day-germany)
-   — **all built and live 2026-07-15**
-10. `whit-monday-france`, `whit-monday-germany` (Easter-cycle, same owner approval) — **both built and live
-    2026-07-15**
-11. `epiphany-sweden` (fixed Jan 6, not Easter-linked) — **built and live 2026-07-15**
-12. `asir-summer-season`, `diriyah-season` (Saudi, higher-competition tier) — **both built and live 2026-07-15**
-    (diriyah-season winnability re-verified independently before building — confirmed a stable multi-year
-    program since 2019 with no cancellation pattern, and clarified a genuinely useful disambiguation:
-    Diriyah Season is a heritage-focused component WITHIN the larger Riyadh Season, not a rival season)
-13. `volunteer-day`, `food-day`, `literacy-day`, `wildlife-day` (Track C international days) — **all built
-    and live 2026-07-15**
-
-**WAVE 12 FULLY COMPLETE as of 2026-07-15 — all 16 backlog items shipped, `npm run ci:check` green,
-zero blocking failures.** Also fixed 12 more orphaned `eventSlug: null` rows in `country-hub-data.js`
-discovered while wiring this batch (Germany, France, Sweden, USA, Canada) — same recurring bug pattern
-documented in the Wave 12 "Zero" section above; re-run the debug Python scanner from memory
-(`project-wave12-planning`) at the start of any future wave.
-
-Egypt's Track B is fully closed (owner-rejected, see above) — no Egypt items in this queue beyond what's
-already live. `battle-of-mutah` waits on one more source-verification pass. Ghadir Khumm waits on an
-explicit owner decision. No further Wave 12 items remain — next wave needs fresh research per the
-`event-creation-lessons.md` Golden Rule before scaffolding anything new.
-
----
-
-## Wave 11 — new candidates (research pass 2026-07-13, owner brief: 3 events/country + 3 Islamic + 5 international, fixed/correct dates only, NO exam/school, must beat competitors on richness + direct human address)
-
-Every row below was checked against the full live-event inventory (verify with
-`ls src/data/holidays/events/` before building — this list is current as of 2026-07-13) and against
-each country's already-verified holiday list in `src/lib/holidays/country-hub-data.js` (fast, reliable
-gap-finding: that file's `holidays[]`/`observances[]` arrays already carry a legal source per row; any
-entry with `eventSlug: null` is a pre-verified candidate with zero fresh research needed for the base
-facts — competitor scrape + differentiator work still required before building).
-
-**Honest finding, stated up front**: not every country has 3 real remaining candidates. Saudi Arabia,
-Algeria, UAE, Tunisia, Kuwait, Qatar, Iraq, and Turkey already have their entire confirmed official
-holiday/observance list built out (checked against `country-hub-data.js` + fresh WebSearch per
-country) — forcing 3 more per country there would mean inventing thin, low-volume, or duplicate pages,
-which violates the volume gate. They are marked **saturated** below and excluded from the build list;
-don't re-research them without a genuinely new lead.
-
-### Wave 11 status as of 2026-07-14 — FULLY SHIPPED, ALL CANDIDATES CLEARED (37 events, 0 blocked)
-
-**All 37 events are live, including the 4 that were previously blocked.** Same-day follow-up
-(2026-07-14) cleared every remaining item on the Wave 11 list:
-- `bahraini-womens-day` (Dec 1, established 2008) — researched from scratch (was accidentally
-  skipped from the original dispatch); differentiator is correcting a real conflation found in the
-  one competitor attempting this topic (mhtwyat.com), which confuses the Supreme Council for Women's
-  2001 founding with the 2008 adoption of Dec 1 as the actual day.
-- `easter-syria` — the original block (Syria's post-decree list allegedly had no Easter entry) was
-  **stale, not correct**: fresh WebSearch/WebFetch verification found Presidential Decree No. 188/2025
-  (issued 2025-10-05) restored Western + Orthodox Easter and Christmas as paid holidays, confirmed by
-  a 2026-03-30 presidency bulletin giving the exact 2026 dates. `country-hub-data.js`'s Syria section
-  was corrected in the same pass (it was missing Christmas and both Easters entirely).
-- `midsummer-sweden` and `all-saints-sweden` — the real engine gap (`weekday-in-range` existed only
-  in `country-hub.js`'s summary renderer, not at the individual-event schema/engine level) was closed:
-  ported into `src/lib/events/package-schema.js` (type enum + `startMonth/startDay/endMonth/endDay`
-  fields) and `src/lib/holidays-engine.js` (`nextWeekdayInRange`, wired into `getNextEventDate`,
-  `buildEventSeriesSchema`, `buildHistoricalDates`). Also ported `orthodox-easter` the same way
-  (needed for `easter-syria`'s Orthodox-calendar explanation) — this type existed only in
-  `country-hub.js` too. Both ports also updated `scripts/lib/event-scaffold.ts` and
-  `scripts/events-new.ts` so future `events:new` scaffolds support these types natively.
-
-**All 33 events from the 2026-07-13 pass are live.** `recapture-of-riyadh` (Saudi, Jan 15), `independence-day-kuwait` (Jun 19),
-and `independence-day-qatar` (Sep 3 — differentiator: Sep 3 was Qatar's own National Day 1971-2007 before
-Law 11/2007 moved it to Dec 18) shipped first. The remaining 30 — `independence-day-bahrain` ·
-`juneteenth-usa` · `mlk-day-usa` · `columbus-day-usa` · `remembrance-day-canada` · `boxing-day-canada` ·
-`truth-reconciliation-day-canada` · `victory-day-france` · `armistice-day-france` ·
-`assumption-day-france` · `christmas-germany` · `good-friday-germany` · `ascension-day-germany` ·
-`christmas-eve-sweden` · `saint-maroun-day-lebanon` · `armenian-christmas-lebanon` ·
-`assumption-day-lebanon` · `christmas-jordan` · `renaissance-day-oman` · `christmas-palestine` ·
-`battle-of-uhud` · `conquest-of-andalusia` · `fall-of-granada` · `human-rights-day` ·
-`international-peace-day` · `world-refugee-day` · `world-book-day` · `world-tourism-day` ·
-`october-14-revolution-yemen` · `unity-day-morocco` — went through the full pipeline
-(`events:build` → `validate:holidays:strict` → `events:sync -- --slug <slug>` per event → final
-`ci:check`) on 2026-07-13. All passed strict validation clean (0 keyword-integration failures,
-0 hardcoded-year hits, 0 direct-answer-missing, all research.json minimums met) and `ci:check`
-(lint + typecheck + test:unit + seo:validate + validate:holidays + validate:geo) is green.
-
-`events:fix-related` ran once per sync as usual; diffed each time against the known cross-event
-pollution bug (see `.claude/rules/content-pipeline.md`) — every touched unrelated event (e.g.
-`bastille-day-france`, `independence-day-lebanon`, `oman-accession-day`, `canada-day`) had a stale/
-irrelevant `relatedSlugs` entry (mostly `armed-forces-day-oman` used as filler) replaced by a newer,
-topically-closer Wave 11 event. Reviewed as a net content-quality improvement, not reverted.
-
-**Sources used across this batch** (per-event provenance lives in each event's own `research.json`):
-Canada — Canada Labour Code, statutoryholidays.com, CBC News, Canada.ca. France — service-public.gouv.fr,
-Legifrance (L3133-1/L3133-4). Germany — Library of Congress law blog, iamExpat.de, The Local. Sweden —
-Public Holidays Act 1989:253, KI researcher blog, Mental Floss. USA — 5 U.S. Code § 6103, Pew Research,
-Wikipedia. Lebanon/Jordan/Oman/Palestine — `country-hub-data.js` internal verified facts (Wave 9),
-jobs.ps, publicholidays.me. Islamic trio — islamweb.net, mawdoo3.com, marefa.org, ar.wikipedia.org.
-International 5 — un.org, unhcr.org, UNESCO, UN Tourism. Yemen/Morocco — Al-Madaniya Magazine, IWM,
-maroc.ma official, Morocco World News.
-
-**Blocked — none.** All 4 previously-blocked candidates shipped 2026-07-14 (see above). No open Wave 11
-candidates remain.
-
-### Completed sub-waves (11A/11B/11C originally split by type — all merged into the status list above once shipped/authored)
-
-11A was the country-specific batch (Jordan/Oman/Palestine/Bahrain/Syria/Yemen/Morocco/Canada×3/France×3/
-Germany×3/Sweden×3/Lebanon×3/USA×3), 11B the 3 Islamic hijri events, 11C the 5 international days — see
-the status list above for what shipped vs. what's blocked. Full per-candidate verified-facts tables from
-the original research pass are preserved in git history (this doc's own 2026-07-13 revision) if deeper
-per-slug sourcing detail is ever needed again; not repeated here per the doc's "forward-only" policy now
-that all candidates have moved to shipped/authored/blocked status.
 
 ---
 
@@ -421,6 +149,44 @@ that all candidates have moved to shipped/authored/blocked status.
   `midsummer-sweden`, `all-saints-sweden` (all 4 initially blocked, cleared same wave). Added
   `weekday-in-range` and `orthodox-easter` as individual-event engine types (previously summary-only in
   `country-hub.js`), corrected a stale Syria holiday list, ran full ci:check green throughout.
+- **Wave 12** (2026-07-14 → 2026-07-15): 16 events — `battle-of-khandaq`, `wafat-khadija`,
+  `victoria-day-canada`, `washington-birthday-usa`, 4 UN international days (`autism-day`, `family-day`,
+  `charity-day`, `disability-day`), `winter-at-tantora-alula`, `labor-day-canada`/`family-day-canada`/
+  `christmas-canada`, `all-saints-day-france`, the France/Germany Easter-cycle set
+  (`easter-monday-*`/`whit-monday-*`/`ascension-day-france`, owner-approved via AskUserQuestion, framed
+  strictly civic/legal), `epiphany-sweden`, `asir-summer-season`/`diriyah-season`, plus
+  `volunteer-day`/`food-day`/`literacy-day`/`wildlife-day`. Egypt's Coptic-calendar track was proposed and
+  then owner-rejected as a standing content-policy line (see Rejected section). Also fixed 32+12 events
+  whose `country-hub-data.js` row still pointed `eventSlug: null` despite being live. `ci:check` green
+  throughout.
+- **Wave 13** (2026-07-17, research-only pass): no new events — surfaced `saudi-cup` and `khaleeji-27`
+  as ready-to-build (both shipped in later waves) and `kinderbijslag-netherlands` (still unbuilt, low
+  priority — new-country lift not yet picked up).
+- **Wave 14** (2026-07-17/18): 10-country national-event coverage audit found UAE/Qatar/Kuwait fully
+  saturated; shipped 9 events for the other 7 — `constitution-day-lebanon` (2026 centennial angle),
+  `national-charter-day-bahrain`, `flag-day-jordan`, `royal-accession-day-jordan`,
+  `suez-canal-nationalization-egypt`, `armed-forces-day-morocco`, `martyrs-day-lebanon`,
+  `muscat-festival-oman`, and `king-salman-bayah-saudi` (owner-approved via AskUserQuestion, framed
+  strictly factual/neutral toward a living monarch). `ci:check` green.
+- **Wave 15** (2026-07-18): UK added as a new country (`country-hub-data.js`, full 8 bank holidays) +
+  5 events — `boxing-day-uk`, `guy-fawkes-night-uk`, `christmas-uk`, `good-friday-uk`, `easter-monday-uk`.
+  All civic/legal/cultural framing only, no theological-content affirmation.
+- **Wave 16** (2026-07-18/19): 3 France/US events (`fete-du-travail-france`, `cinco-de-mayo-usa`,
+  `fete-de-la-musique-france`) + 3 more UK bank holidays (`early-may-bank-holiday-uk`,
+  `spring-bank-holiday-uk`, `summer-bank-holiday-uk`) + 2 Saudi calculators (`domestic-worker-cost`,
+  `iddah`). MENA salary/pension research found real gaps in Algeria/Morocco/Tunisia but held them on
+  data-correctness grounds (see Blocked table). `universal-credit-uk`/`child-benefit-uk` confirmed not
+  buildable (see Rejected). Also removed 14 stale `docs/*.md` files.
+- **Wave 17** (2026-07-19): `king-abdulaziz-camel-festival-saudi` (300M+ SAR prize pool, verified fixed
+  Dec 1 date) and `dubai-shopping-festival` (resolved a Blocked-table item sitting since Wave 12/13 via
+  non-visitdubai.com official sourcing).
+- **Wave 18** (2026-07-19): broad growth push — 1 Islamic tool + 11 holiday events across Saudi/GCC/
+  UK/Canada/Algeria (diaspora angle). Flagged Algeria's Memory Day/Immigration Day for owner sign-off
+  (see Flagged section) rather than building unilaterally.
+- **Wave 19** (2026-07-19): remaining MENA/Gulf gap sweep — confirmed Iraq/Libya/Yemen fully saturated
+  and Gulf calculators fully mined out by khaleejcalculators.com (documented in the calculator backlog
+  section below); shipped 4 events — `christmas-syria`, `orthodox-easter-syria`,
+  `orthodox-christmas-palestine`, `tree-day-tunisia`.
 - **Recurring engine additions across these waves** (all in `holidays-engine.js` / `country-hub.js`):
   `retirement` field (auto-unpublish), `nth: -1` (last weekday of month), `floating`, `easter`,
   `orthodox-easter` (Meeus algorithm), `weekday-in-range`.
@@ -453,6 +219,26 @@ that all candidates have moved to shipped/authored/blocked status.
   intent + brand dilution; blanket skip.
 - **World Cup 2026 hub/tracker, Australia Family Tax Benefit** — SERP owned by major sports media /
   fails the no-per-claim-date rule, respectively.
+- **Egypt Coptic-calendar content** (`coptic-easter-egypt` + siblings `eid-al-ghitas-egypt`,
+  `nayrouz-egypt`, `eid-al-salib-egypt`) — standing content-policy rejection (owner instruction,
+  2026-07-14, see Standing rule 9): the site does not publish/affirm Christian theological content
+  (e.g. the Resurrection). `coptic-easter-egypt` was fully authored and fact-checked before being
+  deleted unpublished. Do not re-propose Coptic or other Christian-theological-content events.
+- **Lebanon's Hariri assassination anniversary and "Resistance and Liberation Day"** — both real,
+  dated, well-covered occasions, but centered on politically loaded framing that fails the neutral-brand
+  test. Do not build without a fundamentally different, explicitly owner-approved framing.
+- **`universal-credit-uk` / `child-benefit-uk`** — confirmed not buildable (re-verified directly against
+  gov.uk, 2026-07-19): both pay on a personal, rolling date tied to each claimant's own claim history,
+  not a shared calendar day — the exact case Standing Rule 5 bans. Would need a new explainer-only page
+  format the events system doesn't have; if ever revisited, treat as a new content type, not a `holidays`
+  event.
+- **`taif-rose-festival`** — thin competition, but the organizers themselves postponed the 2026 edition
+  twice (weather-driven crop decline, contradicting their own "bumper harvest" announcement), plus a
+  prior COVID-era postponement. Fails the reliable-annual-date gate regardless of competition thinness.
+  Don't rebuild without a source confirming 2-3 consecutive on-schedule years.
+- **`salary-day-palestine`/`salary-day-libya`/`salary-day-yemen`/`salary-day-syria`/`salary-day-iraq`** —
+  all confirmed not viable: irregular/partial payment, staggered per-bank rollout, dual-authority splits,
+  post-transition flux, or a 20th-30th ministry-dependent range — none has a single shared recurring day.
 
 ---
 
@@ -479,3 +265,248 @@ $100/mo ≈ 33 MAD/day · $300/mo ≈ 100 MAD/day.
   the top of every checklist until done.
 - **~Dec 1**: pre-Ramadan ramp begins (Ramadan 1449 ≈ Feb 2027) — all hijri pages auto-roll, verify
   titles.
+
+---
+
+# CALCULATORS & COMPETITIVE FEATURES BACKLOG (added 2026-07-17)
+
+Goal, in the owner's own words: **beat khaleejcalculators.com and other named competitors, become #1 in
+Arabic content** — not by copying their catalog, but by (a) closing genuine content gaps proven by real
+search demand, and (b) matching/exceeding the growth mechanics they use, not just their tool count.
+
+## Standing rules for this section (gate every item below)
+
+1. **Never build Qibla-direction tools** (owner instruction, 2026-07-17) — do not re-propose regardless
+   of any future competitive gap found. The existing `QiblaCompass.client.jsx` component and its removal
+   from city prayer pages is a closed matter; leave it as-is.
+2. **Never build a new Zakat-themed calculator** (owner instruction, 2026-07-17 — "do not do zakat"). This
+   includes Zakat al-Fitr, Zakat on crypto, or any other Zakat variant. The existing general
+   `/calculators/zakat` (money/gold/silver/investments) stays live and untouched — this rule is about NOT
+   adding to that space, not removing what exists.
+3. **Research-first, same bar as holiday events**: verify real Arabic competition via WebSearch/WebFetch
+   before building anything, name real competitors explicitly, don't guess demand. A candidate that
+   duplicates or heavily overlaps an already-live tool (see the full inventory cross-check note below) is
+   rejected regardless of how good the idea sounds in isolation.
+4. **3+ real Arabic keyword phrases with plausible volume required** before a candidate enters "ready to
+   build" status — same gate as `feedback-search-volume-gate`.
+5. When an item ships, delete it from this section (same forward-only policy as the rest of this doc).
+
+## Competitive intelligence: khaleejcalculators.com (deep-dive 2026-07-17)
+
+Confirmed via direct page fetches, not just search snippets — this is a serious, actively-expanding
+operation, not a thin template site:
+
+- **~180+ individual calculator URLs** across 6 categories: financial/salary (net salary, benchmarking,
+  EOS per-GCC-country, GOSI, VAT, corporate/excise tax), employment (probation, leave, overtime, notice
+  period), real estate/loans (mortgage variants incl. Islamic mortgage, rent-vs-buy), Islamic (7 Zakat
+  variants incl. crypto, Hajj/Umrah cost, Zakat al-Fitr, fidya/kaffarah, udhiyah, inheritance), health
+  (BMI, calorie, ideal weight, water, macro, body fat, pregnancy), utility (age, Hijri date, date-diff,
+  unit/currency converter, IBAN, tafqit, timer/stopwatch/pomodoro, prayer alarm), plus 38 national-holiday
+  countdowns and gamified quizzes/challenges (52-week savings, 50/30/20, no-spend, wealth-score quiz).
+- Quality is genuinely good on the pages checked: cited official sources (GOSI/ZATCA/Qiwa/hrsd.gov.sa,
+  AAOIFI standards for Islamic finance), "last updated" dates, 6-10 supporting content sections per page
+  (nisab tables, error lists, per-country agency links), 180-200+ blog articles, 21 guides.
+- **Their real differentiator is NOT the calculators — it's a free iframe embed-widget system**, live on
+  every calculator page ("أضف هذه الحاسبة إلى موقعك مجاناً"): `<iframe src="https://khaleejcalculators.com
+  /embed/[category]/[tool]" ...>`, free, no signup, no visit cap. The catch: usage terms require keeping
+  their logo + link visible or "usage permission is voided" — every embed is a **permanent backlink +
+  branded touchpoint** driving traffic back to them. This is a compounding SEO-authority acquisition
+  machine, not a revenue play (no ads found inside the embedded widget itself).
+- Design specifics (not vague "clean" — concrete): white background, muted gray dividers, one Islamic-
+  green accent color, 14px rounded cards with soft shadows (`0 4px 16px rgba(0,0,0,0.06)`), the actual
+  tool sits directly under the H1 with **zero marketing copy before it**, results render inline (no
+  separate results screen/page), content density is staged (sparse near the tool, denser in supporting
+  sections below). Ads are genuinely light-touch: confirmed via raw HTML (not the fetch summarizer, which
+  missed it) — Google AdSense is present but limited to a single ~90px manual banner, no auto-ads/vignette
+  stacking — this restraint is a real, copyable factor in why the page reads as "clean."
+
+## NEW FEATURE: embed/widget system for our own calculators — SHIPPED (2026-07-17), v1
+
+**Built**: `/embed/calculators/[slug]` (`src/app/embed/calculators/[slug]/page.jsx`), same pattern as
+`/embed/prayer-times/[country]/[city]` — noindex, chrome-free via the existing `embed-mode` CSS class,
+`params` read inside a Suspense-wrapped child (not the page top level) per the site's PPR lesson,
+registered in `INTENTIONALLY_NON_INDEXABLE_PAGE_ROUTES`. Mandatory attribution baked directly into the
+widget's own rendered content (a visible "{اسم الحاسبة} من ميقاتنا" link back to the real page) —
+matching khaleejcalculators.com's own mandatory-backlink mechanic, not just a ToS term that could be
+silently stripped.
+
+**v1 scope — 5 highest-traffic, most shareable calculators** (reusing their existing client components
+directly, no duplicated calculation logic): `age`, `bmi`, `percentage`, `end-of-service-benefits`,
+`monthly-installment`. Each real calculator page now has an "أضف هذه الحاسبة لموقعك مجاناً" block with a
+copyable iframe snippet (`EmbedCodeSnippet`, moved from `components/mwaqit/` to `components/shared/` and
+generalized with `title`/`hint`/`width`/`height` props so both the prayer widget and calculator widgets
+share one implementation).
+
+**Verified**: lint clean, `tsc --noEmit` clean, `test:unit` 116/116, `seo:validate` passes (`ok`,
+`explicitlyNonIndexablePageRoutes: 4`).
+
+**Next step, not yet done**: expand past these 5 once this proves out — same phased approach as the
+prayer widget, add one calculator at a time to the `EMBEDDABLE_CALCULATORS` map in the embed page plus its
+own `EmbedCodeSnippet` block on the real page.
+
+**Update (2026-07-17, same day) — 3 real bugs found and fixed via actual browser verification, not just
+code review:**
+1. `EmbedCodeSnippet`'s default `title`/`hint` were still hardcoded to prayer-times text — fixed to
+   generic defaults now that the component is shared across 3 widget types.
+2. **The calculator embed widgets were completely unstyled and broken** — `/embed/calculators/[slug]`
+   lives outside `src/app/calculators/layout.jsx`'s route tree, so `calculators.css` (13,600+ lines,
+   ~340 rules scoped to `main:not(.calc-hub-page)`) never loaded. Fixed by importing it directly in the
+   embed page AND wrapping the widget in a real `<main>` (was a bare `<div>` — those 340 scoped rules
+   never match without a real `<main>` ancestor). Confirmed via real Puppeteer screenshots at 320/375/
+   768/1280px, not just code inspection — this is the kind of bug that only shows up in an actual
+   browser render.
+3. **`EmbedCodeSnippet`'s code block was rendering at a negative x-offset**, straddling both edges of the
+   page (confirmed via `getBoundingClientRect()`: x was -105px) — its `<pre>` has un-wrapped long
+   single-line content whose intrinsic width (1300+px) propagated up through ancestor flex/grid
+   containers lacking `min-width: 0`/`max-width: 100%`. Fixed on `.embed-snippet-block` and
+   `.embed-snippet-block__code` in `globals.css`.
+4. **Hit a real Turbopack dev-cache staleness bug mid-session**: a CSS fix wasn't reaching the compiled
+   bundle even after multiple edits and reloads — confirmed via `document.styleSheets` inspection that
+   the served CSS chunk was missing the new properties entirely. Fixed by killing the dev server,
+   clearing `.next/cache/turbopack`, and restarting. **Lesson: if a CSS/JS edit doesn't seem to take
+   effect after a normal wait, check the actual served stylesheet content before assuming the fix is
+   wrong** — it may just be a stale Turbopack cache, a recurring issue in this project (see
+   `.claude/session-notes.md`'s 2026-07-15 note on overlapping dev servers).
+5. Also fixed 13 real ad-placement gaps found via a systematic scan (not spot-checking): the entire
+   `age/*` sub-cluster (7 pages, via the shared `AgeToolSections` component) plus the age hub, the
+   `sleep/[tool]` and `personal-finance/[tool]` shared dynamic routes (covering 6 + 4 tool pages), and
+   the `building`/`finance`/`personal-finance`/`sleep` hub pages were all missing their end-of-page
+   `AdMultiplex` slot. All fixed; verified via a throwaway Node script that scans every calculator
+   `page.jsx` for `CalculatorHero`/`CalculatorFaqSection`/`RelatedCalculators`/direct ad imports.
+6. Added a 3rd widget type: `/embed/countdown/[slug]` — Islamic-calendar countdown widgets for
+   `ramadan`/`eid-al-fitr`/`eid-al-adha` (owner's "counters" widget ask, interpreted as embeddable
+   holiday countdowns — flag if this wasn't the intent). Reuses the real
+   `getNextEventDate`/`resolveAllHijriEvents`/`getTimeRemaining` engine functions already powering the
+   real holiday pages — no duplicated date math. New lean client ticker
+   (`src/components/holidays/CountdownEmbed.client.jsx`) deliberately does NOT reuse the full
+   `CountdownTicker` component (that one carries fullscreen/wake-lock/WhatsApp-share features that make
+   no sense inside a small third-party iframe). `EmbedCodeSnippet` block added to the 3 real holiday
+   pages via a new `CountdownEmbedCallout` in `HolidayDetailsSections.jsx`.
+
+All verified with real Puppeteer browser checks (not just code review) at 320/375/768/1280px across every
+widget type + the snippet blocks on real pages — zero horizontal overflow, zero console errors. Lint
+clean, `tsc --noEmit` clean, `test:unit` 116/116, `seo:validate` ok (5 explicitly-non-indexable routes).
+
+## New calculator candidates — ranked build order (research completed 2026-07-17)
+
+Shipped 2026-07-18: `weighted-grade`, `margin-markup`, `working-days` (all 3 verified live via Puppeteer,
+zero console errors). Full detail in git history + memory `project-saudi-focus-push-2026-07-18`.
+
+Shipped 2026-07-19/20 (owner brief: "the most valuable ones ... focus on arab countries that have high
+rpm"): `date-add-subtract` (native dual Hijri+Gregorian date add/subtract, reuses `date-adapter.ts`'s
+umalqura engine), `aqiqah` (2 sheep for a boy / 1 for a girl per binbaz.org.sa, 3 real Saudi livestock
+price tiers sourced from anaam.app — not invented numbers), `wasiyya` (1/3-of-net-estate bequest limit
+calculator, hadith of Sa'd ibn Abi Waqqas, reuses `/calculators/inheritance`'s net-estate framing). All 3
+verified live via Puppeteer at 375/1280px, `ci:check` green.
+
+### Still open — ranked
+
+| # | Candidate | Real gap evidence | Priority | Keywords |
+|---|---|---|---|---|
+| 1 | حاسبة الانحراف المعياري والإحصاء الأساسي (standard deviation / basic stats: mean, median, mode, variance from a data set) | Arabic results dominated by thin machine-translated calculator mills (symbolab.com, rapidtables.org, calculator-online.net) — no worked examples for Arab curricula, no real pedagogy | MEDIUM (academic, lower commercial intent) | "حساب الانحراف المعياري خطوة بخطوة", "حاسبة التباين والوسيط والمنوال لمجموعة بيانات", "الفرق بين الانحراف المعياري والتباين" |
+| 2 | حاسبة 1RM / القوة القصوى (one-rep-max calculator for gym-goers) | No webteb/altibbi presence at all; existing Arabic coverage thin/fragmented (arabianbodybuilding.com's tool isn't true 1RM, fitnous.com is low-authority) — no dominant incumbent | MEDIUM-LOW | "حاسبة 1RM", "حاسبة القوة القصوى", "احسب اقصى وزن يمكنني رفعه" |
+| 3 | حاسبة الماكروز (macro calculator — protein/carb/fat breakdown, extension of the already-live calorie/TDEE tool) | khaleejcalculators.com already has a macro guide/calculator, so this is not virgin territory — build as a cheap feature-extension of the existing calorie calculator's output, not a standalone launch | LOW | "حاسبة الماكروز", "حساب البروتين والكارب والدهون", "حاسبة احتياج البروتين اليومي" |
+| 4 | حاسبة معدل سرعة الجري (running pace / marathon time calculator) | Genuine gap — Arabic results are thin translated tools (calculator.io, alahasibah.com) or generic news, no real Arabic running-community content | LOW (smaller volume than the rest) | "حساب معدل سرعة الجري كم دقيقة للكيلومتر", "حاسبة الوقت المتوقع لسباق الماراثون من سرعتك الحالية" |
+
+Shipped 2026-07-20: `weaning-schedule` (baby feeding-schedule calculator, was #2 above), plus two items
+from the same-day Saudi/Gulf finance sweep not originally on this list: `nafaqah` (Saudi alimony/child-
+maintenance estimator — see `docs/high-value-tools-tracker.md` for the "official tool is login-gated"
+finding that reversed an initial rejection) and the `best-islamic-credit-cards-saudi` guide (see the
+credit-card-pilot memory). Full detail in git history + memory
+`project-credit-card-content-pilot-2026-07-20`.
+
+**Unexplored angle (flagged 2026-07-20, not yet researched):** non-Gulf high-RPM Arab-country calculator
+gaps (Egypt income-tax/social-insurance, Jordan GOSI-equivalent, Morocco/Algeria/Tunisia CNSS/IR
+calculators) — a dedicated research agent was dispatched for this but failed on a session API limit
+before returning results. khaleejcalculators.com's ~180+ tool catalog is Gulf-labor-law-branded and may
+not cover these countries' distinct legal/administrative calculator needs. Worth a fresh research pass
+before the next calculator wave, per the owner's "focus on arab countries that have high rpm" framing
+which this session interpreted as not Gulf-only.
+
+## Saudi-focused push (2026-07-18) — owner brief: Saudi is the #1 revenue country, weight new
+## events/tools/calculators toward it specifically, target daily-search queries with currently poor results
+
+Dedicated research pass (2 parallel agents: calculator/tool gaps, daily-search content gaps) cross-checked
+against the full existing Saudi inventory (`ls src/app/calculators/`, `ls src/data/holidays/events/ | grep
+saudi`) before proposing anything, to avoid duplicating what's already live.
+
+Shipped this pass: `sick-leave` calculator (Article 117 tiered sick-pay), `al-wasm-saudi` +
+`al-marbaaniya-saudi` (seasonal events), `khaleeji-27` (found drafted-but-never-synced, published as-is).
+Full detail in git history + memory `project-saudi-focus-push-2026-07-18`.
+
+### Remaining Saudi calculator candidates — real gaps, not yet built (ranked)
+
+`domestic-worker-cost` and `iddah` (rows 1 and 4 of the original 4-item list) **shipped 2026-07-19**
+(itemized Musaned government fees; Hijri-accurate iddah waiting-period calculator). `حاسبة ساعات العمل
+والأجر الإضافي في رمضان` was drafted then explicitly rejected by the owner (seasonal/once-a-year,
+doesn't fit the daily-visitor goal) — do not rebuild unless the owner asks again specifically.
+
+| # | Candidate | Real gap evidence | Saudi legal/data source | Priority |
+|---|---|---|---|---|
+| 1 | حاسبة النسبة الموزونة للقبول الجامعي (weighted university-admission-percentage calculator, all Saudi universities in one tool) | Honest caveat — **already semi-saturated**: dedicated tools exist (mzksa.com "موزونتي", KSU's own official calculator). Differentiator would have to be genuinely comprehensive per-university weight coverage + year-round maintenance, not a quick win. | Per-university weighting formulas vary (e.g. KSU sciences: 30% high-school GPA + 30% Qudurat + 40% Tahsili) | MEDIUM (crowded) |
+
+**Checked and ruled out this pass** (real Saudi ideas that don't clear the bar, don't re-research without
+new information): customs duty on online purchases (ZATCA runs its own official calculator, unbeatable),
+real-estate transaction tax RETT 5% (saturated — naqdilive.com, sauragency.com, kshouf.com all have
+calculators, and the math is trivial ×5%), white-land tax رسوم الأراضي البيضاء (real and newly billed
+Jan 2026, but niche B2B — only owners of >5,000m² plots in declared zones, not a daily consumer search),
+Nitaqat/Saudization-band calculator (official Qiwa calculator already exists at qiwa.sa, and the real band
+determination needs internal HRSD tables that shade into portal-dependency), Waqf calculator (distinction
+from the banned Zakat topic is real and safe, but no standard formula exists — demand is for rules, not
+calculation), Saudi-specific GPA/Noor-5.0 scale (overlaps the live `gpa`/`gpa-to-percent` tools; the
+genuinely distinct angle is #3 above, the admission percentage, not the school GPA scale itself).
+
+### Remaining Saudi content candidates — checked, all already covered
+
+The daily-search-content research agent checked several more angles and found the site already serves
+them well — noted here so nobody re-researches: Ramadan imsakia (already live at
+`/imsakiya/[country]/[city]`), today's official Hijri date via Umm al-Qura (already live at `/date/today`,
+already uses the correct calculation engine — the only remaining opportunity is a trust-signal citation
+enhancement, not a new page), دعم ريف/تمكين support programs (already `reef-support-saudi`, confirmed
+same payment window), 11.11 "يوم العزاب" Singles Day (real volume but pure coupon/deal-intent that this
+site structurally can't serve — no live price/affiliate-deal feeds — low priority, at most a thin
+companion to the already-live `white-friday`).
+
+- **Mahr/dowry calculator** — no real calculator-shaped demand (only fatwa/opinion content), and
+  numerically benchmarking dowry amounts risks reading as endorsing dowry inflation, which Islamic
+  teaching explicitly discourages (Prophet's wives' mahr capped near 500 dirhams per binbaz.org.sa) —
+  culturally loaded, skip entirely, not just deprioritized.
+- **Daily water intake calculator** — altibbi.com already has a genuine interactive tool matching the
+  exact query intent.
+- **Vaccination schedule tracker** — altibbi.com ("حاسبة مواعيد تطعيم الأطفال") and Medipol Global both
+  already run dedicated interactive calculators; also carries real medical/liability sourcing complexity.
+- **Child growth percentile calculator** — webteb.com fully owns this end-to-end (0-24 months AND 2-20
+  years, both WHO-based, both interactive) via its baby subdomain. No age-range gap left.
+- **Gold price + Zakat-nisab checker** — moot now (Zakat is banned per standing rule #2 above), but also
+  already saturated: gold.sa, saudi-gold.com, metalhubprice.com, zahabprice.com, gold-era.sa all already
+  auto-pull live gold prices and compute Zakat-nisab automatically.
+- **Fuel cost / trip calculator** — khaleejcalculators.com/vehicle already runs a full suite (per-100km
+  consumption, trip cost, octane comparison, EV-vs-gasoline) with actively-maintained Aramco pricing.
+- **Rent-vs-buy calculator** — owned by real-estate portals with a structural advantage (live listings,
+  lead-gen incentive): propertyfinder.ae has a full Arabic version, plus opensooq.com and others.
+- **Gulf mortgage/DBR affordability, Hajj/Umrah cost, credit-card cashback comparison, standalone
+  remittance-fee comparison** — all previously confirmed saturated (see the affiliate/tools tracker doc),
+  re-confirmed via khaleejcalculators.com's own catalog above.
+- **Body fat percentage calculator** — real dedicated Arabic tools already exist (do-calculate.com,
+  egyfitness.com use genuine Navy-method math) and it heavily overlaps this site's live BMI/calorie tools
+  — cannibalization risk outweighs the thin remaining gap.
+- **Ideal body weight / lean body mass calculator** — mohap.gov.ae (UAE Ministry of Health) runs an
+  official government calculator, a very hard authority to outrank; also overlaps live BMI/calorie tools.
+- **Currency converter** — unwinnable regardless of content quality: Google's own instant-answer widget
+  fires directly on "تحويل الدولار الى ريال"-style queries before any organic result is seen, and the
+  surviving click pool goes to xe.com/wise.com/investing.com/SAMA. Needs a licensed live FX feed just to
+  compete, and there's negligible click volume left even then.
+- **Tip calculator** — already built: `/calculators/bill-splitter` already includes tip-amount + split
+  functionality. A separate tip calculator would cannibalize, not fill a gap.
+
+## Parked (real gap, but a real blocker — don't build yet)
+
+- **Gulf/MENA cost-of-living city comparison** — genuine gap confirmed (existing Arabic coverage is just
+  articles repackaging Numbeo numbers, no interactive tool), but requires ongoing per-city cost-basket data
+  maintenance (rent/groceries/transport/utilities across a dozen+ cities) — heavier upkeep burden than any
+  other calculator on this site. Park until a cheap, low-maintenance data-refresh method exists (e.g. an
+  annual-refresh dataset rather than "live"), or until GSC confirms real demand first.
+- **`school-grant-algeria`** (منحة التمدرس, ~5,000 DZD annual back-to-school grant, verified active for
+  2026-2027 via APS/Decree 26-168) — genuine gap, distinct from both `school-start-algeria` and
+  `bac-results-algeria`. Not a data-correctness issue — the owner explicitly deprioritized MENA/Algeria
+  work (2026-07-19) in favor of Saudi-specific items. Good candidate whenever MENA work resumes.

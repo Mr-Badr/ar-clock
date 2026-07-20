@@ -24,6 +24,10 @@ export function getAdRoutePolicy(pathname = '/') {
   const allowAdDelivery = (
     !AD_FREE_EXACT_PATHS.has(normalized)
     && !normalized.startsWith('/api/')
+    // Embed widgets render on third-party sites — never serve this site's own
+    // ads inside someone else's page, and never load third-party ad scripts
+    // inside an iframe whose framing policy we've deliberately relaxed.
+    && !normalized.startsWith('/embed/')
   );
 
   const isHolidayDetail = normalized.startsWith('/holidays/');

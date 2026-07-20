@@ -261,6 +261,8 @@ export default async function HijriCalendarPage({
 
   if (y < 1343 || y > 1500) notFound();
 
+  const now = new Date(await getCachedNowIso());
+  const currentHijriYear = await getCurrentHijriYear();
   const monthLengths = Array.from({ length: 12 }, (_, index) => getHijriMonthDays(y, index + 1));
   const totalDays = monthLengths.reduce((sum, days) => sum + days, 0);
 
@@ -415,10 +417,18 @@ export default async function HijriCalendarPage({
                 يمتد عام {year} هـ تقريباً من {firstGregorianLabel} إلى {lastGregorianLabel} ميلادي.
               </p>
               <div className="date-hero-actions">
-                <Link href={`/date/calendar/hijri/${y - 1}`} className="date-hero-link">
+                <Link
+                  href={`/date/calendar/hijri/${y - 1}`}
+                  className="date-hero-link"
+                  rel={isSeoIndexableHijriCalendarYear(y - 1, currentHijriYear) ? undefined : 'nofollow'}
+                >
                   → عام {y - 1} هـ
                 </Link>
-                <Link href={`/date/calendar/hijri/${y + 1}`} className="date-hero-link date-hero-link--primary">
+                <Link
+                  href={`/date/calendar/hijri/${y + 1}`}
+                  className="date-hero-link date-hero-link--primary"
+                  rel={isSeoIndexableHijriCalendarYear(y + 1, currentHijriYear) ? undefined : 'nofollow'}
+                >
                   عام {y + 1} هـ ←
                 </Link>
               </div>
@@ -442,7 +452,7 @@ export default async function HijriCalendarPage({
           </section>
 
           <section className="mb-12">
-            <HijriYearlyCalendar year={y} />
+            <HijriYearlyCalendar year={y} now={now} />
           </section>
 
           <section className="date-editorial-grid date-section">

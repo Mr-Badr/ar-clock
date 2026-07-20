@@ -509,6 +509,7 @@ export default async function PrayerLandingPage() {
                 { href: '/mwaqit-al-salat/duha-prayer-time', title: 'وقت صلاة الضحى', body: 'من ارتفاع الشمس بعد الشروق حتى قبيل الظهر.' },
                 { href: '/mwaqit-al-salat/friday-response-hour', title: 'ساعة الاستجابة', body: 'آخر ساعة قبل أذان المغرب كل يوم جمعة، على الرأي الراجح.' },
                 { href: '/mwaqit-al-salat/white-days', title: 'أيام البيض', body: '13 و14 و15 من كل شهر هجري — صيام مستحب متكرر.' },
+                { href: '/mwaqit-al-salat/prohibited-prayer-times', title: 'أوقات النهي عن الصلاة', body: 'الشروق والاستواء والغروب — محسوبة حياً حسب مدينتك.' },
                 { href: '/mwaqit-al-salat/prayer-times-calculation-method', title: 'كيف تُحسب المواقيت فلكياً؟', body: 'زوايا الفجر والعشاء وطول ظل العصر، مع مثال حي محسوب فعلياً.' },
               ].map((item) => (
                 <Link key={item.href} href={item.href} className={routeStyles.contextCard}>

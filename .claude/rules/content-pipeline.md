@@ -45,7 +45,7 @@ npm run events:apply-batch -- --file scripts/holiday-batches/your-batch.ts --bui
 
 ## Content research checklist (before writing any event content)
 1. Web search: find top 3 Arabic + top 3 English competitors for the event keyword
-2. Run Puppeteer/Cheerio scraper on competitor pages (see `docs/content-research-scraping-method.md`)
+2. Run the research pipeline in `scripts/research/` (`serp-research.ts`, `competitor-reader.ts`, `keyword-suggest.ts`, `topic-research.ts`) to pull competitor pages and keyword data
 3. Read any Ahrefs/GSC CSV in the data directory for current ranking signals
 4. Extract: headings outline, FAQ questions asked, date formats used, source citations
 5. Write ORIGINAL Arabic-first content — do not copy or lightly rewrite competitors

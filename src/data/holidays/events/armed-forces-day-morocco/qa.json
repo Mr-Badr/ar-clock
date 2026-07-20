@@ -1,0 +1,19 @@
+{
+  "slug": "armed-forces-day-morocco",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch/WebFetch 2026-07-18: Royal Armed Forces founded 14 May 1956 by King Mohammed V, immediately after Moroccan independence.",
+    "King Mohammed VI, as Supreme Commander and Chief of the General Staff (القائد الأعلى ورئيس أركان الحرب العامة), issues an annual الأمر اليومي (Order of the Day) — the central ritual of the commemoration (confirmed via maroc.ma 69th-anniversary bulletin + Hespress).",
+    "Honest framing: this is a national military commemoration marked officially in barracks/units, NOT a paid public holiday in Morocco — distinguished in-content from عيد العرش (30 July) and عيد الاستقلال (18 Nov).",
+    "Local Darija month name '14 ماي' used (not '14 مايو'), matching green-march-morocco (6 نونبر) and throne-day-morocco (30 يوليوز).",
+    "Single-country event (_countryCode: ma), aliasSlugs: [] to avoid base_country_leakage; no hardcoded current/last-year digits — 1956 is a permitted historical year."
+  ],
+  "updatedAt": "2026-07-18T14:11:42.071Z"
+}

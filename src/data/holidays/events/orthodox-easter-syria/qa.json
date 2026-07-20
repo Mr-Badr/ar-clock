@@ -1,0 +1,20 @@
+{
+  "slug": "orthodox-easter-syria",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Facts sourced from src/lib/holidays/country-hub-data.js's already-verified Syria observances section — Presidential Decree 188/2025 plus a General Secretariat of the Presidency communique (30 March 2026) confirming Orthodox Easter dates. No fresh web research needed.",
+    "core.type='orthodox-easter', easterOffset=0 — engine already implemented and proven live on sham-nessim (Egyptian Coptic Easter Monday equivalent, easterOffset:1); this is the Orthodox Easter Sunday/Good Friday itself, hence offset 0.",
+    "This was a genuine gap: country-hub-data.js's Syria observances entry had eventSlug: null despite the legal basis and confirming source already being verified in a prior session.",
+    "Strictly civic/legal register — no theological content, matching christmas-syria/revolution-day-syria/liberation-day-syria's neutral-record standard.",
+    "Single-country event (_countryCode: sy), aliasSlugs: [] to avoid base_country_leakage.",
+    "relatedSlugs references christmas-syria (built just before this in the same batch, so it already exists at sync time)."
+  ],
+  "updatedAt": "2026-07-19T21:01:11.734Z"
+}

@@ -33,6 +33,7 @@ import MadhabSelector from '@/components/mwaqit/MadhabSelector.client';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
 import CityPrayerCardsGrid from '@/components/mwaqit/CityPrayerCardsGrid.client';
+import EmbedCodeSnippet from '@/components/shared/EmbedCodeSnippet.client';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
@@ -51,6 +52,7 @@ import {
   getLastThirdOfNightFacts,
   getDuhaPrayerFacts,
   getFridayResponseHourFacts,
+  getProhibitedPrayerWindowsFacts,
 } from '@/lib/night-prayer-facts';
 import {
   GEO_ROUTE_INDEXING_POLICIES,
@@ -706,6 +708,12 @@ export default async function PrayerTimesPage({ params }) {
           </div>
         </section>
 
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <div className={routeStyles.sectionPanel}>
+            <EmbedCodeSnippet embedUrl={`${BASE}/embed/prayer-times/${countrySlug}/${citySlug}`} />
+          </div>
+        </section>
+
         <AdMultiplex slotId={`end-prayer-city-${countrySlug}-${citySlug}`} className="container mx-auto px-4" />
 
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
@@ -781,6 +789,14 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
     date: now,
     countryCode,
     cacheKey: `${country}::${city}::friday`,
+  });
+  const prohibitedFacts = getProhibitedPrayerWindowsFacts({
+    lat: cityData.lat,
+    lon: cityData.lon,
+    timezone: cityData.timezone,
+    date: now,
+    countryCode,
+    cacheKey: `${country}::${city}::prohibited`,
   });
   const todayLabel = now.toLocaleDateString('ar-EG-u-nu-latn', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
@@ -1016,6 +1032,31 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
                 </p>
                 <Link href="/mwaqit-al-salat/friday-response-hour" className={routeStyles.contextLink}>
                   ما هي ساعة الاستجابة؟
+                </Link>
+              </article>
+            ) : null}
+            {prohibitedFacts ? (
+              <article className={routeStyles.contextCard}>
+                <h3 className={routeStyles.contextTitle}>
+                  أوقات النهي عن الصلاة{prohibitedFacts.isProhibitedNow ? ' — الآن' : ''}
+                </h3>
+                <p className={routeStyles.contextBody}>
+                  {prohibitedFacts.isProhibitedNow ? (
+                    <>
+                      أنت الآن داخل <strong>{prohibitedFacts.activeWindow?.title}</strong>، ينتهي
+                      عند <strong>{prohibitedFacts.activeWindow?.endLabel}</strong>.
+                    </>
+                  ) : (
+                    <>
+                      ثلاثة أوقات اليوم: الشروق حتى{' '}
+                      <strong>{prohibitedFacts.windows[0]?.endLabel}</strong>، الاستواء من{' '}
+                      <strong>{prohibitedFacts.windows[1]?.startLabel}</strong>، والغروب من{' '}
+                      <strong>{prohibitedFacts.windows[2]?.startLabel}</strong>.
+                    </>
+                  )}
+                </p>
+                <Link href="/mwaqit-al-salat/prohibited-prayer-times" className={routeStyles.contextLink}>
+                  ما هي أوقات النهي عن الصلاة؟
                 </Link>
               </article>
             ) : null}

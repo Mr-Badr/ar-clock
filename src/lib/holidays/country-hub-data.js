@@ -96,6 +96,25 @@ export const COUNTRY_HUBS = [
         eventSlug: 'recapture-of-riyadh',
         note: 'ذكرى تاريخية (1902) لا علاقة لها بيوم التأسيس أو اليوم الوطني — وليست يوم إجازة',
       },
+      {
+        nameAr: 'ذكرى بيعة الملك سلمان',
+        rule: { type: 'hijri', month: 4, day: 3 },
+        eventSlug: 'king-salman-bayah-saudi',
+        note: 'ذكرى هجرية لتولي الملك سلمان الحكم سنة 1436هـ (2015م)، وليست يوم إجازة',
+      },
+      {
+        nameAr: 'موسم الوسم',
+        rule: { type: 'fixed', month: 10, day: 16 },
+        eventSlug: 'al-wasm-saudi',
+        note: 'موسم أنواء خريفي تقليدي (52 يوماً)، وليس يوم إجازة',
+      },
+      {
+        nameAr: 'مربعانية القيظ',
+        rule: { type: 'fixed', month: 6, day: 3 },
+        approximate: true,
+        eventSlug: 'al-marbaaniya-saudi',
+        note: 'موسم أنواء صيفي تقليدي (40 يوماً)، وليس يوم إجازة',
+      },
     ],
     faqExtras: [
       {
@@ -556,6 +575,12 @@ export const COUNTRY_HUBS = [
         eventSlug: 'independence-day-bahrain',
         note: 'ذكرى تاريخية (1971) منفصلة عن اليوم الوطني (16 ديسمبر) — وليست يوم إجازة',
       },
+      {
+        nameAr: 'ذكرى ميثاق العمل الوطني',
+        rule: { type: 'fixed', month: 2, day: 14 },
+        eventSlug: 'national-charter-day-bahrain',
+        note: 'ذكرى استفتاء 2001 وإعلان المملكة 2002، ليست إجازة رسمية لكنها تحظى بتغطية رسمية سنوية',
+      },
     ],
     faqExtras: [
       {
@@ -675,6 +700,13 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 10, day: 17 },
         eventSlug: 'omani-womens-day',
         note: 'مناسبة وطنية للاحتفاء بالمرأة العمانية، وليست إجازة رسمية',
+      },
+      {
+        nameAr: 'ليالي مسقط',
+        rule: { type: 'fixed', month: 1, day: 1 },
+        approximate: true,
+        eventSlug: 'muscat-festival-oman',
+        note: 'موسم ترفيهي تنظمه بلدية مسقط، موعده الدقيق تقريبي ويتحرك 3-4 أسابيع كل عام',
       },
     ],
     faqExtras: [
@@ -942,6 +974,114 @@ export const COUNTRY_HUBS = [
     ],
   },
   {
+    slug: 'uk',
+    code: 'gb',
+    nameAr: 'بريطانيا',
+    officialNameAr: 'المملكة المتحدة',
+    flag: '🇬🇧',
+    weekendDays: [0, 6],
+    weekendLabel: 'السبت والأحد',
+    accentClass: 'uk',
+    intro:
+      'بريطانيا تعتمد 8 إجازات بنكية رسمية (Bank Holidays) في إنجلترا وويلز. إذا صادفت أي منها عطلة نهاية الأسبوع، تُمنح عطلة تعويضية في أول يوم عمل تالٍ — وهذا بالضبط ما يحدث مع بوكسينغ داي 2026 الذي يقع يوم سبت.',
+    sourceNote:
+      'المرجع: تقويم الإجازات البنكية الرسمي الصادر عن حكومة المملكة المتحدة (gov.uk/bank-holidays)، الذي يحدد ثماني إجازات سنوياً لإنجلترا وويلز وتواريخ العطلات التعويضية عند تصادمها مع نهاية الأسبوع.',
+    holidays: [
+      {
+        key: 'new-year',
+        nameAr: 'رأس السنة الميلادية',
+        rule: { type: 'fixed', month: 1, day: 1 },
+        durationDays: 1,
+        durationLabel: 'يوم واحد (تعويضية إذا صادف نهاية الأسبوع)',
+        eventSlug: null,
+        note: null,
+      },
+      {
+        key: 'good-friday',
+        nameAr: 'الجمعة العظيمة',
+        rule: { type: 'easter', offset: -2 },
+        durationDays: 1,
+        durationLabel: 'يوم واحد',
+        eventSlug: null,
+        note: null,
+      },
+      {
+        key: 'easter-monday',
+        nameAr: 'إثنين الفصح',
+        rule: { type: 'easter', offset: 1 },
+        durationDays: 1,
+        durationLabel: 'يوم واحد',
+        eventSlug: null,
+        note: null,
+      },
+      {
+        key: 'early-may',
+        nameAr: 'عطلة أوائل مايو البنكية',
+        rule: { type: 'floating', month: 5, weekday: 1, nth: 1 },
+        durationDays: 1,
+        durationLabel: 'يوم واحد',
+        eventSlug: null,
+        note: null,
+      },
+      {
+        key: 'spring-bank',
+        nameAr: 'عطلة الربيع البنكية',
+        rule: { type: 'floating', month: 5, weekday: 1, nth: -1 },
+        durationDays: 1,
+        durationLabel: 'يوم واحد',
+        eventSlug: null,
+        note: null,
+      },
+      {
+        key: 'summer-bank',
+        nameAr: 'عطلة الصيف البنكية',
+        rule: { type: 'floating', month: 8, weekday: 1, nth: -1 },
+        durationDays: 1,
+        durationLabel: 'يوم واحد (إنجلترا وويلز فقط)',
+        eventSlug: null,
+        note: null,
+      },
+      {
+        key: 'christmas',
+        nameAr: 'عيد الميلاد المجيد',
+        rule: { type: 'fixed', month: 12, day: 25 },
+        durationDays: 1,
+        durationLabel: 'يوم واحد (تعويضية إذا صادف نهاية الأسبوع)',
+        eventSlug: null,
+        note: null,
+      },
+      {
+        key: 'boxing-day',
+        nameAr: 'يوم الصناديق (بوكسينغ داي)',
+        rule: { type: 'fixed', month: 12, day: 26 },
+        durationDays: 1,
+        durationLabel: 'يوم واحد (تعويضية إذا صادف نهاية الأسبوع — مثل 2026)',
+        eventSlug: 'boxing-day-uk',
+        note: null,
+      },
+    ],
+    observances: [
+      {
+        nameAr: 'ليلة جاي فوكس (ليلة البون فاير)',
+        rule: { type: 'fixed', month: 11, day: 5 },
+        eventSlug: 'guy-fawkes-night-uk',
+        note: 'مناسبة ثقافية شعبية بالألعاب النارية، وليست إجازة بنكية رسمية',
+      },
+    ],
+    faqExtras: [
+      {
+        question: 'ماذا يحدث إذا صادفت الإجازة البنكية يوم سبت أو أحد؟',
+        answer:
+          'تُمنح عطلة تعويضية (substitute day) في أول يوم عمل تالٍ. مثال 2026: بوكسينغ داي يقع يوم السبت 26 ديسمبر، فتُمنح العطلة التعويضية يوم الاثنين 28 ديسمبر.',
+      },
+      {
+        question: 'هل الإجازات البنكية موحدة في كل أنحاء المملكة المتحدة؟',
+        answer:
+          'لا تماماً — إنجلترا وويلز تتشاركان القائمة نفسها (8 إجازات)، بينما تختلف اسكتلندا وأيرلندا الشمالية في بعض التفاصيل (مثل عطلة سانت أندرو في اسكتلندا وعطلة القديس باتريك في أيرلندا الشمالية). الجدول هنا يعرض قائمة إنجلترا وويلز، الأكثر بحثاً.',
+      },
+    ],
+  },
+  {
     slug: 'morocco',
     code: 'ma',
     nameAr: 'المغرب',
@@ -1088,6 +1228,12 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 10, day: 10 },
         eventSlug: 'moroccan-womens-day',
         note: 'مناسبة وطنية للاحتفاء بالمرأة المغربية، وليست إجازة رسمية',
+      },
+      {
+        nameAr: 'ذكرى تأسيس القوات المسلحة الملكية',
+        rule: { type: 'fixed', month: 5, day: 14 },
+        eventSlug: 'armed-forces-day-morocco',
+        note: 'ذكرى عسكرية وطنية تُخلَّد رسمياً بأمر يومي ملكي، وليست إجازة رسمية عامة',
       },
     ],
     faqExtras: [
@@ -1997,6 +2143,18 @@ export const COUNTRY_HUBS = [
         eventSlug: 'great-arab-revolt-day-jordan',
         note: 'إجازة رسمية للقوات المسلحة والأجهزة الأمنية حصراً، وليست عطلة عامة لكل القطاعات',
       },
+      {
+        nameAr: 'يوم العلم الأردني',
+        rule: { type: 'fixed', month: 4, day: 16 },
+        eventSlug: 'flag-day-jordan',
+        note: 'مناسبة وطنية معتمدة حكومياً منذ 2021، غير مؤكدة كإجازة رسمية',
+      },
+      {
+        nameAr: 'عيد الجلوس الملكي',
+        rule: { type: 'fixed', month: 6, day: 9 },
+        eventSlug: 'royal-accession-day-jordan',
+        note: 'ذكرى أداء الملك عبدالله الثاني اليمين الدستورية سنة 1999، مستقلة عن ذكرى الثورة العربية الكبرى في اليوم التالي',
+      },
     ],
     faqExtras: [
       {
@@ -2140,6 +2298,12 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 6, day: 18 },
         eventSlug: 'evacuation-day-egypt',
         note: 'ذكرى جلاء القوات البريطانية سنة 1956، مناسبة وطنية وليست إجازة رسمية',
+      },
+      {
+        nameAr: 'ذكرى تأميم قناة السويس',
+        rule: { type: 'fixed', month: 7, day: 26 },
+        eventSlug: 'suez-canal-nationalization-egypt',
+        note: 'ذكرى خطاب الإسكندرية 1956، مناسبة سيادية وطنية وليست إجازة رسمية',
       },
     ],
     faqExtras: [
@@ -2932,6 +3096,18 @@ export const COUNTRY_HUBS = [
         rule: { type: 'fixed', month: 8, day: 1 },
         eventSlug: 'army-day-lebanon',
         note: 'مناسبة وطنية عسكرية بارزة، لكن غير مؤكدة كإجازة رسمية مصرفية أو حكومية',
+      },
+      {
+        nameAr: 'ذكرى صدور الدستور اللبناني',
+        rule: { type: 'fixed', month: 5, day: 23 },
+        eventSlug: 'constitution-day-lebanon',
+        note: 'ذكرى مؤسسية وطنية غير طائفية، ليست إجازة رسمية',
+      },
+      {
+        nameAr: 'يوم الشهداء اللبناني',
+        rule: { type: 'fixed', month: 5, day: 6 },
+        eventSlug: 'martyrs-day-lebanon',
+        note: 'مناسبة وطنية تذكارية، فقدت صفة الإجازة الرسمية المدفوعة سنة 2005',
       },
     ],
     faqExtras: [

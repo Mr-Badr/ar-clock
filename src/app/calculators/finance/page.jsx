@@ -1,3 +1,4 @@
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import {
   CalculatorDecisionTable,
   CalculatorFaqSection,
@@ -366,6 +367,8 @@ export default function FinanceCalculatorsHubPage() {
           buttonLabel="افتح القسم"
         />
       </CalculatorSection>
+
+      <AdMultiplex slotId="end-finance-hub" />
 
     </main>
   );

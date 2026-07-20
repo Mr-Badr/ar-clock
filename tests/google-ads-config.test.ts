@@ -163,7 +163,7 @@ test('robots explicitly allow Google Ads crawlers to reach public landing pages'
 
     assert.ok(rule, `${userAgent} rule should exist`);
     assert.equal(rule.allow, '/');
-    assert.deepEqual(rule.disallow, ['/api/', '/search?*', '/offline']);
+    assert.deepEqual(rule.disallow, ['/api/', '/search?*', '/offline', '/*/opengraph-image']);
   }
 });
 

@@ -20,6 +20,9 @@ import NextEventCard from './NextEventCard';
 import RelatedEvents from './RelatedEvents';
 import HolidayInternalLinks from './HolidayInternalLinks';
 import styles from '../HolidaysV4.module.css';
+import { getAffiliateLink } from '@/lib/affiliate-config';
+import { getSiteUrl } from '@/lib/site-config';
+import EmbedCodeSnippet from '@/components/shared/EmbedCodeSnippet.client';
 
 const CATEGORY_CALCULATORS = {
   islamic: [
@@ -36,6 +39,7 @@ const CATEGORY_CALCULATORS = {
     { href: '/calculators/salary',               label: 'حاسبة الراتب',        desc: 'حوّل راتبك الشهري إلى يومي وساعي',    accent: 'var(--green)' },
     { href: '/calculators/net-salary',           label: 'صافي الراتب',         desc: 'الراتب بعد الاستقطاعات',               accent: 'var(--accent)' },
     { href: '/calculators/gosi-retirement',      label: 'التقاعد المبكر GOSI', desc: 'متى يحق لك التقاعد وكم معاشك؟',        accent: 'var(--calc-cat-finance)' },
+    { href: '/calculators/sick-leave',           label: 'الإجازة المرضية',    desc: 'راتبك أثناء المرض وفق المادة 117',      accent: 'var(--amber)' },
     { href: '/calculators/eos-qatar',            label: 'نهاية الخدمة قطر',   desc: 'الاستقالة لا تنقص مكافأتك في قطر',    accent: 'var(--blue)' },
     { href: '/calculators/eos-kuwait',           label: 'نهاية الخدمة الكويت',   desc: 'مكافأتك وفق قانون العمل 6/2010',        accent: 'var(--blue)' },
     { href: '/calculators/eos-bahrain',          label: 'نهاية الخدمة البحرين',  desc: 'نصف شهر ثم شهر كامل — قانون 36/2012',   accent: 'var(--blue)' },
@@ -51,6 +55,7 @@ const CATEGORY_CALCULATORS = {
   school: [
     { href: '/calculators/gpa',           label: 'المعدل التراكمي',    desc: 'احسب GPA بدقة وفق جدول درجاتك',     accent: 'var(--blue)' },
     { href: '/calculators/gpa-to-percent', label: 'تحويل المعدل',      desc: 'حوّل GPA إلى نسبة مئوية',            accent: 'var(--accent)' },
+    { href: '/calculators/weighted-grade', label: 'الدرجة النهائية بالأوزان', desc: 'كم تحتاج في الاختبار النهائي؟', accent: 'var(--blue)' },
     { href: '/calculators/annual-leave',  label: 'حاسبة الإجازات',    desc: 'أيام إجازتك المستحقة قانونياً',      accent: 'var(--green)' },
     { href: '/calculators/saudi-school-calendar', label: 'التقويم الدراسي السعودي', desc: 'بداية الدراسة وكل الإجازات 1448', accent: 'var(--calc-cat-education)' },
   ],
@@ -63,6 +68,8 @@ const CATEGORY_CALCULATORS = {
     { href: '/calculators/vat',                label: 'حاسبة الضريبة',      desc: 'احسب VAT للبيع والشراء والفواتير',  accent: 'var(--blue)' },
     { href: '/calculators/car-loan',           label: 'تمويل السيارة',       desc: 'قسط السيارة: تقليدي أم مرابحة إسلامية؟', accent: 'var(--calc-cat-finance)' },
     { href: '/calculators/investment',         label: 'حاسبة الاستثمار',    desc: 'نمو رأس المال مع الفائدة المركبة',   accent: 'var(--green)' },
+    { href: '/calculators/working-days',       label: 'أيام العمل بين تاريخين', desc: 'عطلة نهاية الأسبوع الصحيحة لكل دولة', accent: 'var(--blue)' },
+    { href: '/calculators/margin-markup',      label: 'هامش الربح والزيادة', desc: 'Margin و Markup بالاتجاهين',        accent: 'var(--green)' },
   ],
   astronomy: [
     { href: '/calculators/fasting',   label: 'حاسبة الصيام',   desc: 'ساعات الصيام في أي مدينة وشهر',     accent: 'var(--accent)' },
@@ -137,6 +144,99 @@ function RelatedCalculatorsWidget({ categoryId, countryCode }) {
           </Link>
         ))}
       </div>
+    </section>
+  );
+}
+
+// Shown only on salary-day-* pages, and only once a real link is configured —
+// see docs/high-value-tools-tracker.md ("Track A extension") and
+// src/lib/affiliate-config.js. An empty link means this renders nothing.
+function RemittanceCallout({ slug }) {
+  const link = getAffiliateLink('remittance');
+  if (!link || !slug?.startsWith('salary-day-')) return null;
+
+  return (
+    <section
+      style={{
+        marginTop: 'var(--space-8)',
+        padding: 'var(--space-4) var(--space-5)',
+        background: 'var(--bg-surface-2)',
+        border: '1px solid var(--border-subtle)',
+        borderRadius: 'var(--radius-lg)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 'var(--space-3)',
+      }}
+      aria-labelledby="remittance-callout-h"
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+        <span
+          style={{
+            width: 36,
+            height: 36,
+            flexShrink: 0,
+            borderRadius: 'var(--radius-full)',
+            background: 'var(--green-subtle)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          aria-hidden="true"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green-text)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17 1l4 4-4 4" /><path d="M3 11V9a4 4 0 0 1 4-4h14" /><path d="M7 23l-4-4 4-4" /><path d="M21 13v2a4 4 0 0 1-4 4H3" />
+          </svg>
+        </span>
+        <h2 id="remittance-callout-h" style={{ fontSize: 'var(--text-base)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', margin: 0 }}>
+          وصل راتبك؟
+        </h2>
+      </div>
+      <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)', margin: 0 }}>
+        إذا كنت تخطط لتحويل جزء من راتبك لعائلتك، قارن الرسوم وسعر الصرف قبل الإرسال — الفرق بين مزود
+        وآخر قد يصل لعشرات الريالات في نفس الحوالة.
+      </p>
+      <a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer sponsored"
+        style={{
+          alignSelf: 'flex-start',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 'var(--space-1)',
+          fontSize: 'var(--text-sm)',
+          fontWeight: 'var(--font-semibold)',
+          color: 'var(--green-text)',
+          textDecoration: 'none',
+        }}
+      >
+        قارن طرق التحويل
+        <ArrowLeft size={14} aria-hidden="true" />
+      </a>
+    </section>
+  );
+}
+
+// Only the small, curated set also registered in
+// `src/app/embed/countdown/[slug]/page.jsx` (EMBEDDABLE_COUNTDOWNS) gets this
+// block — keep both lists in sync.
+const EMBEDDABLE_COUNTDOWN_SLUGS = new Set(['ramadan', 'eid-al-fitr', 'eid-al-adha']);
+
+function CountdownEmbedCallout({ slug, eventName }) {
+  if (!EMBEDDABLE_COUNTDOWN_SLUGS.has(slug)) return null;
+
+  return (
+    <section style={{ marginTop: 'var(--space-8)' }} aria-labelledby="countdown-embed-h">
+      <h2 id="countdown-embed-h" style={{ fontSize: 'var(--text-base)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>
+        شارك عداد {eventName} على موقعك
+      </h2>
+      <EmbedCodeSnippet
+        embedUrl={`${getSiteUrl()}/embed/countdown/${slug}`}
+        title={`عداد ${eventName}`}
+        hint={`هل تدير موقعاً أو منتدى؟ أضف عداد ${eventName} إليه مجاناً بنسخ الكود التالي:`}
+        width={340}
+        height={220}
+      />
     </section>
   );
 }
@@ -395,6 +495,10 @@ export default function HolidayDetailsSections({
       )}
 
       <RelatedCalculatorsWidget categoryId={event.category} countryCode={event._countryCode} />
+
+      <RemittanceCallout slug={slug} />
+
+      <CountdownEmbedCallout slug={slug} eventName={displayTitle} />
 
       {faq.length > 0 && (
         <section style={{ marginTop: 'var(--space-10)' }} aria-labelledby="faq-h">

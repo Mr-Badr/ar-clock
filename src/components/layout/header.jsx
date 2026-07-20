@@ -17,12 +17,13 @@ export const NAV_LINKS = [
     href: "/mwaqit-al-salat",
     label: "مواقيت الصلاة",
     panelIcon: "Moon",
-    panelDescription: "مواقيت اليوم في مدينتك، وأوقات مستحبة أخرى محسوبة حياً: الثلث الأخير من الليل، الضحى، ساعة الاستجابة، وأيام البيض",
+    panelDescription: "مواقيت اليوم في مدينتك، وأوقات مستحبة أخرى محسوبة حياً: الثلث الأخير من الليل، الضحى، ساعة الاستجابة، أيام البيض، وأوقات النهي",
     sublinks: [
       { href: '/mwaqit-al-salat/last-third-of-night', label: 'الثلث الأخير من الليل', icon: 'Moon', description: 'ومنتصف الليل الشرعي، محسوبان حسب مدينتك' },
       { href: '/mwaqit-al-salat/duha-prayer-time',    label: 'وقت صلاة الضحى',        icon: 'Sun',  description: 'البداية والنهاية حسب مدينتك اليوم' },
       { href: '/mwaqit-al-salat/friday-response-hour', label: 'ساعة الاستجابة',        icon: 'Hourglass', description: 'آخر ساعة قبل المغرب كل جمعة' },
       { href: '/mwaqit-al-salat/white-days',           label: 'أيام البيض',            icon: 'CalendarDots', description: '13 و14 و15 من كل شهر هجري' },
+      { href: '/mwaqit-al-salat/prohibited-prayer-times', label: 'أوقات النهي عن الصلاة', icon: 'Timer', description: 'الشروق والاستواء والغروب، محسوبة حسب مدينتك' },
     ],
   },
   {
@@ -124,6 +125,7 @@ export const NAV_LINKS = [
   },
   { href: "/time-now",        label: "الوقت الان"   },
   { href: "/holidays",        label: "المناسبات"   },
+  { href: "/countdown",       label: "عداد تنازلي"  },
 ];
 
 export default function Header() {

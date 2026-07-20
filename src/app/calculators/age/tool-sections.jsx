@@ -1,3 +1,4 @@
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import {
   CalculatorResourceLinks,
   CalculatorSection,
@@ -438,6 +439,8 @@ export function AgeToolSections({ toolId }) {
       >
         <CalculatorResourceLinks items={SHARED_RESOURCES} buttonLabel="افتح المسار" />
       </CalculatorSection>
+
+      <AdMultiplex slotId={`end-age-${toolId}`} />
     </>
   );
 }

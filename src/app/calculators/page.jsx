@@ -108,7 +108,7 @@ export const metadata = buildCanonicalMetadata({
     'كل الحاسبات',
     'حاسبة العمر والقروض والضريبة',
     ...CALCULATOR_HUBS.flatMap((item) => item.keywords),
-    ...CALCULATOR_ROUTES.flatMap((item) => item.keywords),
+    ...CALCULATOR_ROUTES.filter((item) => !item.draft).flatMap((item) => item.keywords),
   ],
   url: `${SITE_URL}/calculators`,
 });
@@ -162,7 +162,7 @@ export default function CalculatorsPage() {
   const itemListSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    itemListElement: CALCULATOR_ROUTES.map((item, index) => ({
+    itemListElement: CALCULATOR_ROUTES.filter((item) => !item.draft).map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       name: item.title,

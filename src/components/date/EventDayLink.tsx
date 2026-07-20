@@ -15,6 +15,7 @@ interface EventDayLinkProps {
   eventName?: string;
   hijriLabel?: string;
   className: string;
+  nofollow?: boolean;
 }
 
 export function EventDayLink({
@@ -23,6 +24,7 @@ export function EventDayLink({
   eventName,
   hijriLabel,
   className,
+  nofollow,
 }: EventDayLinkProps) {
   return (
     <TooltipProvider>
@@ -31,6 +33,7 @@ export function EventDayLink({
           <Link
             href={href}
             className={className}
+            rel={nofollow ? 'nofollow' : undefined}
           >
             <span className="date-day-main">
               {day}

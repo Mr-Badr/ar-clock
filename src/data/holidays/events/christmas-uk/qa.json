@@ -1,0 +1,17 @@
+{
+  "slug": "christmas-uk",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: قانون تجارة عيد الميلاد 2004 يمنع متاجر >280م² من الفتح في إنجلترا وويلز — مصدر رسمي legislation.gov.uk + تقرير مكتبة مجلس العموم.",
+    "خطاب الملك: بدأ 1932 (جورج الخامس)، يُبث 3pm GMT — مصدر ويكيبيديا الإنجليزية.",
+    "إطار مدني/قانوني/تقليدي بحت، بلا أي تأكيد على مضمون ديني مسيحي — نفس نهج good-friday-germany الحي على الموقع."
+  ],
+  "updatedAt": "2026-07-18T20:38:28.416Z"
+}

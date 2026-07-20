@@ -1,0 +1,21 @@
+{
+  "slug": "remembrance-sunday-uk",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-19: Remembrance Sunday = second Sunday of November, fixed as official rule in 1956. Mathematically always equivalent to 'Sunday nearest to 11 November' since the 2nd Sunday always falls between the 8th-14th (Wikipedia).",
+    "core.type='floating', month:11, weekday:0 (Sunday, matching JS Date.getDay() convention confirmed via nthWeekdayOfMonth in src/lib/holidays-engine.js), nth:2 — zero new engine work, same floating-type pattern already proven on summer-bank-holiday-uk (weekday:1/nth:-1).",
+    "Main ceremony at the Cenotaph, Whitehall, London, with royal family attendance and two-minute silence — standard well-documented civic fact.",
+    "Poppy symbol traced to the 1920s, inspired by the WWI poem 'In Flanders Fields' — real cultural depth not found in thin competitor coverage.",
+    "Explicitly noted this is NOT itself a bank/statutory holiday (unlike new-years-day-uk, boxing-day-uk etc. on this site) — a voluntary national day of remembrance, stated clearly in content to avoid misleading readers.",
+    "Single-country event (_countryCode: gb), aliasSlugs: [] to avoid base_country_leakage.",
+    "Content is civic/historical — no direct religious content, despite some ceremonies taking place at places of worship."
+  ],
+  "updatedAt": "2026-07-19T20:25:43.230Z"
+}

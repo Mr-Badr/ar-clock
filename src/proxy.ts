@@ -38,6 +38,7 @@ const PRAYER_STATIC_ROUTES: ReadonlySet<string> = new Set([
   'duha-prayer-time',
   'friday-response-hour',
   'white-days',
+  'prohibited-prayer-times',
   'prayer-times-calculation-method',
 ]);
 const DATE_TODAY_ROUTES: ReadonlySet<string> = new Set(['gregorian', 'hijri']);
@@ -400,6 +401,11 @@ function shouldNoindexDiscoveryVariant(request: NextRequest): boolean {
     && (request.nextUrl.searchParams.has('q') || request.nextUrl.searchParams.has('tab'));
 }
 
+function shouldNoindexCountdownVariant(request: NextRequest): boolean {
+  return request.nextUrl.pathname === '/countdown'
+    && request.nextUrl.searchParams.has('date');
+}
+
 function buildRedirectUrl(request: NextRequest, pathname: string): URL {
   return new URL(pathname, request.url);
 }
@@ -437,7 +443,7 @@ export function proxy(request: NextRequest): NextResponse {
   }
 
   const response = NextResponse.next();
-  if (shouldNoindexDiscoveryVariant(request)) {
+  if (shouldNoindexDiscoveryVariant(request) || shouldNoindexCountdownVariant(request)) {
     response.headers.set('x-robots-tag', 'noindex, follow');
   }
 

@@ -1,0 +1,18 @@
+{
+  "slug": "early-may-bank-holiday-uk",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: أول اثنين من مايو، بدأت في اسكتلندا 1871 وبقية بريطانيا 1978 — مصدر gov.uk/House of Commons Library.",
+    "تحركت مرتين فقط: 1995 و2020، كلتاهما بمناسبة يوم النصر في أوروبا — مصدر gov.uk وHR Solutions UK.",
+    "floating rule: month:5, weekday:1, nth:1 يطابق country-hub-data.js بالضبط.",
+    "محتوى مدني/تاريخي بحت، صفر مضمون ديني."
+  ],
+  "updatedAt": "2026-07-19T00:47:40.118Z"
+}

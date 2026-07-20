@@ -1,0 +1,18 @@
+{
+  "slug": "cinco-de-mayo-usa",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 40% من الأمريكيين يخطئون بربط سينكو دي مايو بعيد استقلال المكسيك (16 سبتمبر الحقيقي) — مصدر Bryan University.",
+    "الأصل التاريخي: معركة بويبلا 5 مايو 1862 — مصدر History.com.",
+    "ليس إجازة رسمية في المكسيك (محلي في بويبلا فقط)، اعتراف الكونغرس الأمريكي 2005 — مصدر UCLA Newsroom.",
+    "محتوى تاريخي/ثقافي/مدني بحت، صفر مضمون ديني."
+  ],
+  "updatedAt": "2026-07-18T21:01:06.480Z"
+}

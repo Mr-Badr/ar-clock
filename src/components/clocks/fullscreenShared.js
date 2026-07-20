@@ -91,9 +91,12 @@ export const FULLSCREEN_LAYER_STYLE = {
   touchAction: 'manipulation',
 };
 
+// Positioned at the BOTTOM (not top) so the close control sits within thumb
+// reach on mobile — a fullscreen browser view hides the OS chrome, so a
+// top-corner-only exit is easy to miss and hard to reach one-handed.
 export const FULLSCREEN_TOOLBAR_STYLE = {
   position: 'absolute',
-  top: 'max(clamp(0.9rem, 1.8vw, 1.5rem), env(safe-area-inset-top))',
+  bottom: 'max(clamp(0.9rem, 1.8vw, 1.5rem), env(safe-area-inset-bottom))',
   right: 'max(clamp(0.9rem, 1.8vw, 1.5rem), env(safe-area-inset-right))',
   left: 'max(clamp(0.9rem, 1.8vw, 1.5rem), env(safe-area-inset-left))',
   display: 'flex',
@@ -135,6 +138,14 @@ export function getFullscreenContentStyle(scaleValue) {
     alignItems: 'center',
     justifyContent: 'center',
     padding: 'clamp(1rem, 2.2vh, 1.65rem) clamp(0.9rem, 2vw, 1.5rem)',
+    // The exit toolbar is absolutely positioned at the bottom of the fullscreen
+    // layer, outside normal flex flow — the layer's `justifyContent: center`
+    // centers this content in the FULL viewport height with no awareness of
+    // the toolbar underneath it. A bottom margin (not a maxHeight/overflow
+    // trick — content rarely hits that limit) shifts the centered block
+    // upward so its last row (the 4-unit countdown's date pill, especially)
+    // clears the toolbar on short mobile viewports.
+    marginBlockEnd: 'clamp(5.5rem, 13vh, 7.5rem)',
     transform: scaleValue,
     transformOrigin: 'center center',
     transition: 'transform 0.35s ease-in-out',

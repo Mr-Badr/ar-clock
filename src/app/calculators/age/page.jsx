@@ -1,6 +1,8 @@
 import { Suspense } from 'react';
 
 import AgeCalculator from '@/components/calculators/age/AgeCalculator.client';
+import EmbedCodeSnippet from '@/components/shared/EmbedCodeSnippet.client';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import {
   CalculatorDecisionTable,
   CalculatorFaqSection,
@@ -297,6 +299,18 @@ export default function AgeHubPage() {
       >
         <CalculatorFaqSection items={safeFaqItems} />
       </CalculatorSection>
+
+      <CalculatorSection id="age-embed" subtle>
+        <EmbedCodeSnippet
+          embedUrl={`${SITE_URL}/embed/calculators/age`}
+          title="حاسبة العمر"
+          hint="هل تدير موقعاً أو منتدى؟ أضف حاسبة العمر إليه مجاناً بنسخ الكود التالي:"
+          width={360}
+          height={420}
+        />
+      </CalculatorSection>
+
+      <AdMultiplex slotId="end-age-hub" />
 
     </main>
   );

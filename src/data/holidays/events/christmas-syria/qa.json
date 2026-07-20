@@ -1,0 +1,19 @@
+{
+  "slug": "christmas-syria",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Facts sourced from src/lib/holidays/country-hub-data.js's already-verified Syria section (Presidential Decree 188/2025, dated 5 Oct 2025) — no fresh web research needed since this was already fact-checked and sourced in a prior session (General Secretariat of the Presidency communique, 30 March 2026).",
+    "This was a genuine gap: country-hub-data.js's Syria christmas entry had eventSlug: null despite the date/legal-basis already being verified — this event fills that gap.",
+    "Strictly civic/legal register (holiday-status facts only), matching the neutral-record standard already used on revolution-day-syria/liberation-day-syria/evacuation-day-syria — no theological content.",
+    "relatedSlugs deliberately excludes orthodox-easter-syria for now since that event doesn't exist yet at time of writing (building it next in the same batch) — will be added back once it's live.",
+    "Single-country event (_countryCode: sy), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-19T20:59:30.823Z"
+}

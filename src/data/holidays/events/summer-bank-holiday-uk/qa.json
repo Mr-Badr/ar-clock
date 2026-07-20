@@ -1,0 +1,18 @@
+{
+  "slug": "summer-bank-holiday-uk",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: آخر اثنين من أغسطس في إنجلترا/ويلز/أيرلندا الشمالية، أول اثنين من أغسطس في اسكتلندا — مصدر Wikipedia EN وThe Online Calendar.",
+    "السبب القانوني: قانون العطل البنكية 1871 (اسكتلندا) مقابل قانون العطل البنكية والمعاملات المالية 1971 (بقية بريطانيا).",
+    "floating rule: month:8, weekday:1, nth:-1 يطابق country-hub-data.js بالضبط (نطاق إنجلترا/ويلز؛ اسكتلندا تُذكر في المحتوى فقط، لا تُبنى كحدث منفصل هذه الجولة).",
+    "محتوى مدني/قانوني/تاريخي بحت، صفر مضمون ديني."
+  ],
+  "updatedAt": "2026-07-19T00:48:00.483Z"
+}

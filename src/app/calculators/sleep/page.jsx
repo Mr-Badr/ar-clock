@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import AdMultiplex from '@/components/ads/AdMultiplex';
 import {
   CalculatorDecisionTable,
   CalculatorFaqSection,
@@ -303,6 +304,8 @@ export default function SleepHubPage() {
       >
         <CalculatorFaqSection items={hubFaqItems} />
       </CalculatorSection>
+
+      <AdMultiplex slotId="end-sleep-hub" />
 
     </main>
   );

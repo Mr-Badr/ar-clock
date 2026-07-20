@@ -1,0 +1,18 @@
+{
+  "slug": "muscat-festival-oman",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: موسم 2026 = 1-31 يناير، موسم 2025 = 23 ديسمبر 2024 - 1 فبراير 2025، موسم 2023 بدأ 19 يناير — يؤكد type: estimated وليس fixed.",
+    "طابق core.date shape ('{{year}}-01-01') مع hala-february-kuwait، النمط الوحيد المشابه الحي على الموقع.",
+    "الاسم الرسمي الحالي ليالي مسقط يحل محل الاسم الأقدم مهرجان مسقط — استُخدم الاسمان في الكلمات المفتاحية.",
+    "المحتوى يلتزم بالصدق الكامل حول عدم ثبات التاريخ الدقيق، لا يدّعي يوماً محدداً ثابتاً."
+  ],
+  "updatedAt": "2026-07-18T14:12:10.184Z"
+}

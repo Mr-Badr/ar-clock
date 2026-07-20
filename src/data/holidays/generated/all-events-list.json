@@ -840,6 +840,33 @@
     "day": 25
   },
   {
+    "id": "al-marbaaniya-saudi",
+    "slug": "al-marbaaniya-saudi",
+    "name": "مربعانية القيظ",
+    "type": "estimated",
+    "category": "astronomy",
+    "_countryCode": "sa",
+    "date": "{{year}}-06-03"
+  },
+  {
+    "id": "al-safari-saudi",
+    "slug": "al-safari-saudi",
+    "name": "موسم الصفري",
+    "type": "estimated",
+    "category": "astronomy",
+    "_countryCode": "sa",
+    "date": "{{year}}-09-06"
+  },
+  {
+    "id": "al-wasm-saudi",
+    "slug": "al-wasm-saudi",
+    "name": "موسم الوسم",
+    "type": "estimated",
+    "category": "astronomy",
+    "_countryCode": "sa",
+    "date": "{{year}}-10-16"
+  },
+  {
     "id": "all-saints-day-france",
     "slug": "all-saints-day-france",
     "name": "عيد جميع القديسين في فرنسا",
@@ -900,6 +927,16 @@
     "weekday": 5,
     "nth": 1,
     "offsetDays": 0
+  },
+  {
+    "id": "armed-forces-day-morocco",
+    "slug": "armed-forces-day-morocco",
+    "name": "ذكرى تأسيس القوات المسلحة الملكية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ma",
+    "month": 5,
+    "day": 14
   },
   {
     "id": "armed-forces-day-oman",
@@ -1179,6 +1216,16 @@
     "day": 26
   },
   {
+    "id": "boxing-day-uk",
+    "slug": "boxing-day-uk",
+    "name": "يوم الصناديق (بوكسينغ داي)",
+    "type": "fixed",
+    "category": "holidays",
+    "_countryCode": "gb",
+    "month": 12,
+    "day": 26
+  },
+  {
     "id": "buergergeld-germany",
     "slug": "buergergeld-germany",
     "name": "موعد صرف البورغرغيلد في ألمانيا",
@@ -1294,6 +1341,36 @@
     "day": 25
   },
   {
+    "id": "christmas-syria",
+    "slug": "christmas-syria",
+    "name": "عيد الميلاد المجيد في سوريا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sy",
+    "month": 12,
+    "day": 25
+  },
+  {
+    "id": "christmas-uk",
+    "slug": "christmas-uk",
+    "name": "عيد الميلاد في بريطانيا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "gb",
+    "month": 12,
+    "day": 25
+  },
+  {
+    "id": "cinco-de-mayo-usa",
+    "slug": "cinco-de-mayo-usa",
+    "name": "سينكو دي مايو في أمريكا",
+    "type": "fixed",
+    "category": "holidays",
+    "_countryCode": "us",
+    "month": 5,
+    "day": 5
+  },
+  {
     "id": "columbus-day-usa",
     "slug": "columbus-day-usa",
     "name": "يوم كولومبوس",
@@ -1312,6 +1389,16 @@
     "category": "islamic",
     "hijriMonth": 9,
     "hijriDay": 28
+  },
+  {
+    "id": "constitution-day-lebanon",
+    "slug": "constitution-day-lebanon",
+    "name": "ذكرى صدور الدستور اللبناني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "lb",
+    "month": 5,
+    "day": 23
   },
   {
     "id": "coptic-christmas-egypt",
@@ -1409,6 +1496,26 @@
     "offsetDays": 0
   },
   {
+    "id": "dubai-shopping-festival",
+    "slug": "dubai-shopping-festival",
+    "name": "مهرجان دبي للتسوق",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "ae",
+    "date": "{{year}}-12-05"
+  },
+  {
+    "id": "early-may-bank-holiday-uk",
+    "slug": "early-may-bank-holiday-uk",
+    "name": "عطلة أوائل مايو البنكية في بريطانيا",
+    "type": "floating",
+    "category": "national",
+    "_countryCode": "gb",
+    "month": 5,
+    "weekday": 1,
+    "nth": 1
+  },
+  {
     "id": "easter-monday-france",
     "slug": "easter-monday-france",
     "name": "اثنين الفصح في فرنسا",
@@ -1424,6 +1531,15 @@
     "type": "easter",
     "category": "national",
     "_countryCode": "de",
+    "easterOffset": 1
+  },
+  {
+    "id": "easter-monday-uk",
+    "slug": "easter-monday-uk",
+    "name": "إثنين الفصح في بريطانيا",
+    "type": "easter",
+    "category": "national",
+    "_countryCode": "gb",
     "easterOffset": 1
   },
   {
@@ -1514,6 +1630,26 @@
     "hijriDay": 20
   },
   {
+    "id": "fete-de-la-musique-france",
+    "slug": "fete-de-la-musique-france",
+    "name": "عيد الموسيقى في فرنسا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "fr",
+    "month": 6,
+    "day": 21
+  },
+  {
+    "id": "fete-du-travail-france",
+    "slug": "fete-du-travail-france",
+    "name": "عيد العمال في فرنسا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "fr",
+    "month": 5,
+    "day": 1
+  },
+  {
     "id": "final-exams-saudi",
     "slug": "final-exams-saudi",
     "name": "الاختبارات النهائية في السعودية",
@@ -1521,6 +1657,16 @@
     "category": "school",
     "_countryCode": "sa",
     "date": "{{year}}-01-04"
+  },
+  {
+    "id": "flag-day-jordan",
+    "slug": "flag-day-jordan",
+    "name": "يوم العلم الأردني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "jo",
+    "month": 4,
+    "day": 16
   },
   {
     "id": "flag-day-uae",
@@ -1559,12 +1705,30 @@
     "date": "{{year}}-12-13"
   },
   {
+    "id": "good-friday-canada",
+    "slug": "good-friday-canada",
+    "name": "الجمعة العظيمة في كندا",
+    "type": "easter",
+    "category": "national",
+    "_countryCode": "ca",
+    "easterOffset": -2
+  },
+  {
     "id": "good-friday-germany",
     "slug": "good-friday-germany",
     "name": "الجمعة العظيمة في ألمانيا",
     "type": "easter",
     "category": "national",
     "_countryCode": "de",
+    "easterOffset": -2
+  },
+  {
+    "id": "good-friday-uk",
+    "slug": "good-friday-uk",
+    "name": "الجمعة العظيمة في بريطانيا",
+    "type": "easter",
+    "category": "national",
+    "_countryCode": "gb",
     "easterOffset": -2
   },
   {
@@ -1585,6 +1749,16 @@
     "category": "national",
     "month": 1,
     "day": 15
+  },
+  {
+    "id": "guy-fawkes-night-uk",
+    "slug": "guy-fawkes-night-uk",
+    "name": "ليلة جاي فوكس",
+    "type": "fixed",
+    "category": "holidays",
+    "_countryCode": "gb",
+    "month": 11,
+    "day": 5
   },
   {
     "id": "hala-february-kuwait",
@@ -1769,6 +1943,15 @@
     "day": 21
   },
   {
+    "id": "khaleeji-27",
+    "slug": "khaleeji-27",
+    "name": "خليجي 27",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "sa",
+    "date": "2026-09-23"
+  },
+  {
     "id": "khareef-salalah",
     "slug": "khareef-salalah",
     "name": "موسم خريف صلالة",
@@ -1785,6 +1968,26 @@
     "category": "support",
     "_countryCode": "de",
     "day": 15
+  },
+  {
+    "id": "king-abdulaziz-camel-festival-saudi",
+    "slug": "king-abdulaziz-camel-festival-saudi",
+    "name": "مهرجان الملك عبدالعزيز للإبل",
+    "type": "fixed",
+    "category": "social",
+    "_countryCode": "sa",
+    "month": 12,
+    "day": 1
+  },
+  {
+    "id": "king-salman-bayah-saudi",
+    "slug": "king-salman-bayah-saudi",
+    "name": "ذكرى بيعة الملك سلمان",
+    "type": "hijri",
+    "category": "national",
+    "_countryCode": "sa",
+    "hijriMonth": 4,
+    "hijriDay": 3
   },
   {
     "id": "knowledge-day-algeria",
@@ -1878,6 +2081,16 @@
     "day": 18
   },
   {
+    "id": "martyrs-day-lebanon",
+    "slug": "martyrs-day-lebanon",
+    "name": "يوم الشهداء اللبناني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "lb",
+    "month": 5,
+    "day": 6
+  },
+  {
     "id": "martyrs-day-libya",
     "slug": "martyrs-day-libya",
     "name": "يوم الشهيد في ليبيا",
@@ -1910,6 +2123,16 @@
     "offsetDays": 0
   },
   {
+    "id": "midday-work-ban-bahrain",
+    "slug": "midday-work-ban-bahrain",
+    "name": "حظر العمل وقت الظهيرة في البحرين",
+    "type": "fixed",
+    "category": "support",
+    "_countryCode": "bh",
+    "month": 6,
+    "day": 15
+  },
+  {
     "id": "midday-work-ban-kuwait",
     "slug": "midday-work-ban-kuwait",
     "name": "حظر العمل وقت الظهيرة في الكويت",
@@ -1918,6 +2141,36 @@
     "_countryCode": "kw",
     "month": 6,
     "day": 1
+  },
+  {
+    "id": "midday-work-ban-oman",
+    "slug": "midday-work-ban-oman",
+    "name": "حظر العمل وقت الظهيرة في عُمان",
+    "type": "fixed",
+    "category": "support",
+    "_countryCode": "om",
+    "month": 6,
+    "day": 1
+  },
+  {
+    "id": "midday-work-ban-qatar",
+    "slug": "midday-work-ban-qatar",
+    "name": "حظر العمل في الأماكن المكشوفة في قطر",
+    "type": "fixed",
+    "category": "support",
+    "_countryCode": "qa",
+    "month": 6,
+    "day": 1
+  },
+  {
+    "id": "midday-work-ban-uae",
+    "slug": "midday-work-ban-uae",
+    "name": "حظر العمل تحت أشعة الشمس في الإمارات",
+    "type": "fixed",
+    "category": "support",
+    "_countryCode": "ae",
+    "month": 6,
+    "day": 15
   },
   {
     "id": "midsummer-sweden",
@@ -1982,6 +2235,15 @@
     "day": 20
   },
   {
+    "id": "muscat-festival-oman",
+    "slug": "muscat-festival-oman",
+    "name": "ليالي مسقط",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "om",
+    "date": "{{year}}-01-01"
+  },
+  {
     "id": "nafis-uae",
     "slug": "nafis-uae",
     "name": "دعم نافس",
@@ -2010,6 +2272,16 @@
     "day": 1
   },
   {
+    "id": "national-charter-day-bahrain",
+    "slug": "national-charter-day-bahrain",
+    "name": "ذكرى ميثاق العمل الوطني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "bh",
+    "month": 2,
+    "day": 14
+  },
+  {
     "id": "national-day-sweden",
     "slug": "national-day-sweden",
     "name": "العيد الوطني السويدي",
@@ -2027,6 +2299,16 @@
     "category": "support",
     "_countryCode": "kw",
     "day": 25
+  },
+  {
+    "id": "new-years-day-uk",
+    "slug": "new-years-day-uk",
+    "name": "رأس السنة في بريطانيا",
+    "type": "fixed",
+    "category": "holidays",
+    "_countryCode": "gb",
+    "month": 1,
+    "day": 1
   },
   {
     "id": "nowruz-iraq",
@@ -2066,6 +2348,25 @@
     "_countryCode": "om",
     "month": 10,
     "day": 17
+  },
+  {
+    "id": "orthodox-christmas-palestine",
+    "slug": "orthodox-christmas-palestine",
+    "name": "عيد الميلاد الشرقي في فلسطين",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ps",
+    "month": 1,
+    "day": 7
+  },
+  {
+    "id": "orthodox-easter-syria",
+    "slug": "orthodox-easter-syria",
+    "name": "الفصح الشرقي في سوريا",
+    "type": "orthodox-easter",
+    "category": "national",
+    "_countryCode": "sy",
+    "easterOffset": 0
   },
   {
     "id": "oued-eddahab-day-ma",
@@ -2257,6 +2558,17 @@
     "day": 11
   },
   {
+    "id": "remembrance-sunday-uk",
+    "slug": "remembrance-sunday-uk",
+    "name": "أحد إحياء الذكرى في بريطانيا",
+    "type": "floating",
+    "category": "national",
+    "_countryCode": "gb",
+    "month": 11,
+    "weekday": 0,
+    "nth": 2
+  },
+  {
     "id": "renaissance-day-oman",
     "slug": "renaissance-day-oman",
     "name": "يوم النهضة العماني",
@@ -2355,6 +2667,16 @@
     "date": "{{year}}-10-15"
   },
   {
+    "id": "royal-accession-day-jordan",
+    "slug": "royal-accession-day-jordan",
+    "name": "عيد الجلوس الملكي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "jo",
+    "month": 6,
+    "day": 9
+  },
+  {
     "id": "saint-maroun-day-lebanon",
     "slug": "saint-maroun-day-lebanon",
     "name": "عيد مار مارون",
@@ -2426,6 +2748,24 @@
     "category": "support",
     "_countryCode": "sa",
     "day": 5
+  },
+  {
+    "id": "saudi-cup",
+    "slug": "saudi-cup",
+    "name": "كأس السعودية",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "sa",
+    "date": "{{year}}-02-13"
+  },
+  {
+    "id": "school-grant-algeria",
+    "slug": "school-grant-algeria",
+    "name": "منحة التمدرس في الجزائر",
+    "type": "estimated",
+    "category": "support",
+    "_countryCode": "dz",
+    "date": "{{year}}-06-30"
   },
   {
     "id": "school-holidays-france",
@@ -2569,6 +2909,15 @@
     "date": "2026-08-12"
   },
   {
+    "id": "soundstorm-riyadh",
+    "slug": "soundstorm-riyadh",
+    "name": "ساوندستورم",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "sa",
+    "date": "{{year}}-12-03"
+  },
+  {
     "id": "sovereignty-childrens-day-turkey",
     "slug": "sovereignty-childrens-day-turkey",
     "name": "يوم السيادة الوطنية والطفولة",
@@ -2577,6 +2926,17 @@
     "_countryCode": "tr",
     "month": 4,
     "day": 23
+  },
+  {
+    "id": "spring-bank-holiday-uk",
+    "slug": "spring-bank-holiday-uk",
+    "name": "عطلة الربيع البنكية في بريطانيا",
+    "type": "floating",
+    "category": "national",
+    "_countryCode": "gb",
+    "month": 5,
+    "weekday": 1,
+    "nth": -1
   },
   {
     "id": "student-allowance-kuwait",
@@ -2588,6 +2948,26 @@
     "day": 1
   },
   {
+    "id": "student-day-algeria",
+    "slug": "student-day-algeria",
+    "name": "يوم الطالب في الجزائر",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "dz",
+    "month": 5,
+    "day": 19
+  },
+  {
+    "id": "suez-canal-nationalization-egypt",
+    "slug": "suez-canal-nationalization-egypt",
+    "name": "ذكرى تأميم قناة السويس",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "eg",
+    "month": 7,
+    "day": 26
+  },
+  {
     "id": "suhail-star",
     "slug": "suhail-star",
     "name": "طلوع نجم سهيل",
@@ -2595,6 +2975,17 @@
     "category": "astronomy",
     "_countryCode": "sa",
     "date": "{{year}}-08-24"
+  },
+  {
+    "id": "summer-bank-holiday-uk",
+    "slug": "summer-bank-holiday-uk",
+    "name": "عطلة الصيف البنكية في بريطانيا",
+    "type": "floating",
+    "category": "national",
+    "_countryCode": "gb",
+    "month": 8,
+    "weekday": 1,
+    "nth": -1
   },
   {
     "id": "tarwiyah-day",
@@ -2653,6 +3044,17 @@
     "weekday": 1,
     "nth": 2,
     "offsetDays": 0
+  },
+  {
+    "id": "tree-day-tunisia",
+    "slug": "tree-day-tunisia",
+    "name": "عيد الشجرة في تونس",
+    "type": "floating",
+    "category": "national",
+    "_countryCode": "tn",
+    "month": 11,
+    "weekday": 0,
+    "nth": 2
   },
   {
     "id": "trillium-benefit-canada",

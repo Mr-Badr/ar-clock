@@ -1,0 +1,19 @@
+{
+  "slug": "midday-work-ban-bahrain",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-19 (alayam.com, albiladpress.com, lloc.gov.bh): daily outdoor work ban 12:00-16:00 from June 15 to August 31 each year, run by Bahrain's Ministry of Labour under Ministerial Decision No. 5 of 2026.",
+    "Deliberately did NOT cite the specific decision number/year in published content (same lesson as midday-work-ban-kuwait) to keep content evergreen and avoid the hardcoded-year validator.",
+    "Real differentiator found: Ministry publicized a dedicated phone/WhatsApp line (17873921, 7am-4pm daily) for the public to report violations — a genuinely useful practical detail absent from standard news coverage.",
+    "Single-country event (_countryCode: bh), aliasSlugs: [] to avoid base_country_leakage.",
+    "core.type is 'fixed' anchored to June 15 (start date); August 31 end date covered in FAQ/aboutEvent/schemaData.endDate."
+  ],
+  "updatedAt": "2026-07-19T15:41:32.735Z"
+}

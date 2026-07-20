@@ -9,192 +9,500 @@
  *   ✅ Hover ONLY on interactive elements (links, swap button, stepper btns)
  *   ✅ tabular-nums on every numeric element
  *   ✅ No letter-spacing on Arabic text (breaks connected script)
- *   ✅ RTL-correct: logical properties (border-inline-*, padding-inline-*)
+ *   ✅ RTL-correct: logical properties (inset-inline-*, padding-inline-*)
  *
  * Contents:
- *   1.  .td-snapshot      — SSR current-time panel (static, no hover)
- *   2.  .td-city-clock    — LiveClock size override inside comparison card
- *   3.  .td-static        — suppresses .card:hover lift on data-only cards
- *   4.  .td-faq-item      — FAQ accordion item (full border + rounded)
- *   5.  .td-faq-trigger   — FAQ accordion trigger
- *   6.  .td-faq-body      — FAQ answer text
- *   7.  .td-day-note      — "next/prev day" pill inside table cell
- *   8.  .td-dst-summary-row — summary row in DST table
- *   9.  Print styles
- *   10. Reduced-motion
- *
- * NOTE ON TABS:
- * TimeConversionTable.client.jsx uses the design system's own
- * .tabs / .tab / .tab--active classes (new.css §19) directly via useState.
- * No shadcn Tabs component is used, so zero overrides are needed here.
- *
- * NOTE ON TABLE CENTER ALIGNMENT:
- * new.css §32 sets .table th { text-align: right }.
- * Centre-aligned columns (both city headers + all their cells) use
- * style={{ textAlign: 'center' }} inline — inline styles beat class rules
- * at any specificity, making !important unnecessary.
+ *   1.  .td-section        — consistent vertical rhythm, no divider lines
+ *   2.  .td-h2 / .td-h3    — clean headings (no colored-bg strip)
+ *   3.  .td-body / .td-trust
+ *   4.  .td-ad-gap
+ *   5.  .td-hero           — hero live-comparison module
+ *   6.  .td-hours          — shared-hours-bar module
+ *   7.  .td-col-center     — DST table centre alignment
+ *   8.  .td-dst-summary-row
+ *   9.  Print / reduced-motion
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 
-/* ── 1. SSR snapshot ──────────────────────────────────────────────────────────
- * Server-rendered current-time comparison (crawlable, static).
- * Looks like a card (bg-surface-2, border, shadow) but NO hover,
- * because it is data display — not clickable.
+/* ── 1. Section rhythm ────────────────────────────────────────────────────────
+ * Whitespace does the separating job instead of stacked <hr>-style dividers.
  */
-.td-snapshot {
-  background-color: var(--bg-surface-2);
-  border:           1px solid var(--border-default);
-  border-radius:    var(--radius-lg);
-  padding:          var(--space-4) var(--space-6);
-  box-shadow: none;
+.td-section {
+  margin-block-start: var(--space-14, 3.5rem);
+}
+@media (min-width: 768px) {
+  .td-section {
+    margin-block-start: var(--space-20, 5rem);
+  }
 }
 
 
-/* ── 2. LiveClock size override ───────────────────────────────────────────────
- * 1.75rem (28px) fits a city panel inside a card without dominating the layout.
- * !important: LiveClock may inject inline style at equal or higher specificity.
- */
-.td-city-clock .clock-display {
-  font-size:   1.75rem;
+/* ── 2. Clean headings — no background box, no border stripe ─────────────── */
+.td-h2 {
+  font-size: var(--text-xl);
   font-weight: var(--font-extrabold);
+  color: var(--text-primary);
+  line-height: var(--leading-snug);
+  margin-bottom: var(--space-4);
+}
+.td-h3 {
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  line-height: var(--leading-snug);
+  margin-block: var(--space-8) var(--space-3);
+}
+
+
+/* ── 3. Body copy ──────────────────────────────────────────────────────────── */
+.td-body {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-loose);
+}
+.td-body--muted {
+  margin-top: var(--space-3);
+}
+.td-trust {
+  margin-top: var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+}
+.td-trust a {
+  color: var(--accent-alt);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+
+/* ── 4. Ad spacing ─────────────────────────────────────────────────────────── */
+.td-ad-gap {
+  margin-block: var(--space-8, 2rem);
+}
+
+
+/* ── 5. Hero live-comparison module ───────────────────────────────────────── */
+.td-hero {
+  padding: var(--space-5) var(--space-5) var(--space-6) !important;
+}
+.td-hero__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+.td-hero__live {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  color: var(--text-secondary);
+}
+.td-hero__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background: var(--success);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--success) 22%, transparent);
+}
+.td-hero__share {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  padding: var(--space-1-5) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  min-height: 32px;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+.td-hero__share:hover {
+  background: var(--bg-surface-3);
+  border-color: var(--border-accent);
+}
+
+.td-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-2);
+}
+.td-hero__city {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1-5);
+  min-width: 0;
+}
+.td-hero__name {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--text-secondary);
+  max-width: 100%;
+  overflow-wrap: break-word;
+  text-align: center;
+}
+.td-hero__time {
+  font-size: clamp(1.5rem, 6vw, 2.25rem);
+  font-weight: var(--font-extrabold);
+  color: var(--text-primary);
   line-height: var(--leading-none);
 }
-.td-city-clock .clock-xs,
-.td-city-clock .clock-sm {
-  font-size: 1.75rem !important;
+.td-hero__diff {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1-5);
+  padding-inline: var(--space-2);
 }
-
-
-/* ── 3. Keep data-only cards visually static ─────────────────────────────────
- * Data panels are not interactive controls, so their hover state stays flat.
- * !important: .card:hover and .td-static:hover share specificity 0,2,0.
- */
-.td-static,
-.td-static:hover {
-  transform:    none !important;
-  box-shadow: none !important;
-  border-color: var(--border-default) !important;
-  cursor:       default;
-}
-
-
-/* ── 4. FAQ accordion item ────────────────────────────────────────────────────
- * shadcn AccordionItem default: border-b only, no radius.
- * Override to full card-style border + rounded corners.
- * Open state: accent border + glow.
- */
-.td-faq-item {
-  background:    var(--bg-surface-2);
-  border:        1px solid var(--border-default) !important;
-  border-radius: var(--radius-lg) !important;
-  overflow:      hidden;
-  padding:       0 !important;
-  transition:    border-color var(--transition-fast),
-                 box-shadow   var(--transition-fast);
-}
-.td-faq-item[data-state='open'] {
-  border-color: var(--border-accent-strong) !important;
-  box-shadow: none !important;
-}
-
-
-/* ── 5. FAQ trigger ───────────────────────────────────────────────────────────
- * Removes shadcn's default hover:underline.
- * Hover shows accent-soft bg (trigger IS interactive, opens/closes).
- * SVG chevron pushed to logical-start (left edge in RTL layout).
- */
-.td-faq-trigger {
-  width:           100%;
-  display:         flex !important;
-  align-items:     center !important;
-  justify-content: flex-start !important;
-  gap:             var(--space-3);
-  padding:         var(--space-3-5) var(--space-5) !important;
-  font-size:       var(--text-sm);
-  font-weight:     var(--font-semibold);
-  color:           var(--text-primary);
-  text-align:      right;
-  text-decoration: none !important;
-  background:      transparent;
-  border:          none;
-  cursor:          pointer;
-  line-height:     var(--leading-snug);
-  transition:      background var(--transition-fast);
-}
-.td-faq-trigger:hover {
-  background:      var(--accent-soft);
-  text-decoration: none !important;
-}
-.td-faq-trigger svg {
-  color:               var(--accent-alt);
-  flex-shrink:         0;
-  margin-inline-start: auto;
-  margin-inline-end:   0;
-  transition:          transform var(--transition-fast);
-}
-.td-faq-item[data-state='open'] .td-faq-trigger svg {
-  transform: rotate(180deg);
-}
-
-
-/* ── 6. FAQ answer body ───────────────────────────────────────────────────────
- */
-.td-faq-body {
-  padding:     0 var(--space-5) var(--space-4) !important;
-  padding-top: var(--space-3)   !important;
-  margin:      0;
-  font-size:   var(--text-sm);
-  color:       var(--text-secondary);
-  line-height: var(--leading-loose);
-  border-top:  1px solid var(--border-subtle);
-}
-
-
-/* ── 7. Day-note pill ─────────────────────────────────────────────────────────
- * Appears below the destination time when it crosses midnight.
- * "اليوم التالي" / "اليوم السابق"
- * Rendered as a compact warning-coloured pill on its own line.
- */
-.td-day-note {
-  display:       block;
-  margin-top:    2px;
-  font-size:     var(--text-2xs);
-  font-weight:   var(--font-semibold);
-  color:         var(--warning);
-  background:    var(--warning-soft);
-  border:        1px solid var(--warning-border);
+.td-hero__diff-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--text-sm);
+  font-weight: var(--font-extrabold);
+  padding: var(--space-1-5) var(--space-3);
   border-radius: var(--radius-full);
-  padding:       1px var(--space-1-5);
-  white-space:   nowrap;
-  line-height:   1.4;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.td-hero__diff-pill--success { background: var(--success-soft); border-color: var(--success-border); color: var(--success); }
+.td-hero__diff-pill--warning { background: var(--warning-soft); border-color: var(--warning-border); color: var(--warning); }
+.td-hero__diff-pill--danger  { background: var(--danger-soft);  border-color: var(--danger-border);  color: var(--danger); }
+.td-hero__diff-note {
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+  text-align: center;
+}
+
+@media (max-width: 420px) {
+  .td-hero__diff-note { display: none; }
+}
+
+
+/* ── 6. Shared hours bar ───────────────────────────────────────────────────── */
+.td-hours {
+  margin-top: var(--space-4);
+}
+.td-hours__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.td-hours__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-full);
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+  flex-shrink: 0;
+}
+.td-hours__title {
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+.td-hours__subtitle {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.td-hours__controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.td-hours__control-label {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--text-muted);
+  margin-bottom: var(--space-1-5);
+}
+.td-hours__stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-1-5) var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-2);
+}
+.td-hours__stepper-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  color: var(--accent-alt);
+  transition: background var(--transition-fast);
+}
+.td-hours__stepper-btn:hover {
+  background: var(--accent-soft);
+}
+.td-hours__stepper-val {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.td-hours__banner {
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+  text-align: center;
+}
+.td-hours__banner--success { background: var(--success-soft); border: 1px solid var(--success-border); }
+.td-hours__banner--warning { background: var(--warning-soft); border: 1px solid var(--warning-border); }
+.td-hours__banner-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1-5);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+.td-hours__banner-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+.td-hours__banner-city {
+  display: block;
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+.td-hours__banner-time {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.td-hours__bar {
+  position: relative;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-3);
+  overflow: visible;
+}
+.td-hours__band {
+  position: absolute;
+  inset-block: 0;
+  border-radius: var(--radius-sm);
+}
+.td-hours__band--from    { top: 3px; bottom: 21px; background: var(--accent-soft); border: 1px solid var(--border-accent); }
+.td-hours__band--to      { top: 21px; bottom: 3px; background: var(--amber-subtle); border: 1px solid var(--amber-border); }
+.td-hours__band--overlap { top: 0; bottom: 0; background: color-mix(in srgb, var(--success-soft) 70%, transparent); border: 1.5px solid var(--success-border); }
+.td-hours__now {
+  position: absolute;
+  inset-block: -3px;
+  width: 2px;
+  background: var(--accent);
+}
+.td-hours__now-label {
+  position: absolute;
+  top: -18px;
+  transform: translateX(50%);
+  inset-inline-end: 0;
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  color: var(--accent);
+  white-space: nowrap;
+}
+.td-hours__ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.td-hours__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-3);
+}
+.td-hours__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+.td-hours__legend-swatch {
+  display: inline-block;
+  width: 12px;
+  height: 8px;
+  border-radius: var(--radius-xs, 3px);
+}
+.td-hours__legend-swatch--from    { background: var(--accent-soft); border: 1px solid var(--border-accent); }
+.td-hours__legend-swatch--to      { background: var(--amber-subtle); border: 1px solid var(--amber-border); }
+.td-hours__legend-swatch--overlap { background: var(--success-soft); border: 1px solid var(--success-border); }
+
+
+/* ── 6b. Flight arrival calculator ────────────────────────────────────────── */
+.td-flight {
+  margin-top: var(--space-4);
+}
+.td-flight__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.td-flight__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-full);
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+  flex-shrink: 0;
+}
+.td-flight__title {
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+.td-flight__subtitle {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.td-flight__controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.td-flight__control-label {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--text-muted);
+  margin-bottom: var(--space-1-5);
+}
+.td-flight__time-input {
+  width: 100%;
+  padding: var(--space-1-5) var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  font-variant-numeric: tabular-nums;
+}
+.td-flight__duration-row {
+  display: flex;
+  gap: var(--space-2);
+}
+.td-flight__stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  padding: var(--space-1-5) var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-2);
+}
+.td-flight__stepper-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  color: var(--accent-alt);
+  transition: background var(--transition-fast);
+}
+.td-flight__stepper-btn:hover {
+  background: var(--accent-soft);
+}
+.td-flight__stepper-val {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+.td-flight__banner {
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  text-align: center;
+  background: var(--success-soft);
+  border: 1px solid var(--success-border);
+}
+.td-flight__banner-title {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+.td-flight__banner-time {
+  font-size: var(--text-2xl, 1.5rem);
+  font-weight: var(--font-black, 900);
+  color: var(--text-primary);
+  margin: var(--space-1) 0;
+}
+.td-flight__banner-day {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  margin: 0;
+}
+@media (max-width: 420px) {
+  .td-flight__controls { grid-template-columns: 1fr; }
+}
+
+
+/* ── 7. DST table centre alignment ────────────────────────────────────────────
+ * new.css §32 sets .table th { text-align: right }. Centre-aligned columns
+ * use this class since inline styles on <th style={{textAlign:'center'}}>
+ * already win specificity — kept as a class for the <td> cells too.
+ */
+.td-col-center {
+  text-align: center;
 }
 
 
 /* ── 8. DST summary row ───────────────────────────────────────────────────────
- * The colSpan row at the bottom of the DST table.
- * Slightly darker background (bg-surface-3) distinguishes it as a summary,
- * not just another data row. Top border reinforces visual separation.
+ * The colSpan row at the bottom of the DST table — bg-surface-3 + top border
+ * distinguishes it as a summary, not just another data row.
  */
 .td-dst-summary-row td {
   background-color: var(--bg-surface-3);
-  border-top:       1px solid var(--border-default);
+  border-top: 1px solid var(--border-default);
 }
 
 
-/* ── 9. Print ─────────────────────────────────────────────────────────────────
+/* ── 9. Print / reduced motion ────────────────────────────────────────────────
  */
 @media print {
-  [aria-label="حاسبة فرق التوقيت التفاعلية"] { display: none !important; }
-  .card, .card-nested { box-shadow: none !important; border: 1px solid var(--border-default) !important; }
-  .td-snapshot        { box-shadow: none !important; }
+  [aria-label="أدوات فرق التوقيت التفاعلية"] { display: none !important; }
+  .card { box-shadow: none !important; border: 1px solid var(--border-default) !important; }
 }
 
-
-/* ── 10. Reduced motion ───────────────────────────────────────────────────────
- */
 @media (prefers-reduced-motion: reduce) {
-  .td-faq-item,
-  .td-faq-trigger,
-  .td-faq-trigger svg { transition: none !important; }
+  .td-hero__dot { box-shadow: none; }
 }

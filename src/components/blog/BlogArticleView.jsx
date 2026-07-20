@@ -610,6 +610,59 @@ function GuideEditorialMeta({ guide }) {
   );
 }
 
+// Content-commerce guides only (e.g. src/lib/guides/pregnancy-guides.js).
+// Editorial advice (`why`/`lookFor`) always shows — it's genuinely useful
+// reading on its own. The "shop" buttons per store only appear once a real
+// affiliate link exists (see src/lib/affiliate-config.js); a category with
+// no active links yet still shows its advice, just without buy buttons.
+function GuideProductPicks({ productPicks }) {
+  const safePicks = Array.isArray(productPicks) ? productPicks.filter((pick) => pick?.category) : [];
+
+  if (!safePicks.length) {
+    return null;
+  }
+
+  return (
+    <section id="guide-product-picks" className={styles.section}>
+      <div className={styles.sectionHead}>
+        <span className={styles.sectionEyebrow}>ماذا تشترين فعلاً</span>
+        <h2>الأساسيات مرتبة حسب الأولوية</h2>
+        <p>معايير اختيار حقيقية لكل فئة، لا قائمة عامة منسوخة من متجر.</p>
+      </div>
+      <div className={styles.sourceList}>
+        {safePicks.map((pick) => {
+          const safeOptions = Array.isArray(pick.options) ? pick.options.filter((o) => o?.href) : [];
+          return (
+            <article key={pick.category} className={styles.sourceCard}>
+              <div className={styles.sourceBody}>
+                <strong>{pick.category}</strong>
+                <p>{pick.why}</p>
+                {pick.lookFor ? <p style={{ marginTop: 'var(--space-2)' }}>{pick.lookFor}</p> : null}
+              </div>
+              {safeOptions.length ? (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
+                  {safeOptions.map((option) => (
+                    <a
+                      key={option.store}
+                      href={option.href}
+                      target="_blank"
+                      rel="noopener noreferrer sponsored"
+                      className={styles.sourceLink}
+                    >
+                      تسوقي من {option.store}
+                      <ExternalLink size={15} />
+                    </a>
+                  ))}
+                </div>
+              ) : null}
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 function GuideSources({ sourceLinks }) {
   const safeSourceLinks = Array.isArray(sourceLinks) ? sourceLinks : [];
 
@@ -1063,6 +1116,8 @@ export default function BlogArticleView(props) {
                 </div>
               </section>
             ) : null}
+
+            <GuideProductPicks productPicks={guide.productPicks} />
 
             <GuideSources sourceLinks={sourceLinks} />
 

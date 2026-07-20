@@ -1,0 +1,22 @@
+{
+  "slug": "tree-day-tunisia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-19: Presidential Order No. 289 of 1958 (dated 3 Nov 1958), Article 1 states literally 'a national Tree Day is held every year on the second Sunday of November' — a fixed rule, not an approximation.",
+    "Cross-checked against a real historical instance: Tunisia's Ministry of Agriculture held the 2024 edition on 10 Nov 2024, which is indeed the 2nd Sunday of November 2024 (Nov 1 2024 was a Friday, so 1st Sunday = Nov 3, 2nd Sunday = Nov 10 — matches exactly).",
+    "core.type='floating', month:11, weekday:0 (Sunday), nth:2 — identical rule shape to remembrance-sunday-uk built earlier this session, zero new engine work.",
+    "Explicitly stated this is a civic/environmental observance, NOT a paid public holiday — no source found classifying it as a paid day off; schools and offices stay open. Same honesty standard as karameh-day-jordan.",
+    "1958 appears as a bare year throughout content but is far below the hardcoded-year threshold (current year - 1 = 2025), no validator issue.",
+    "relatedSlugs fixed to reference only real existing Tunisia slugs (revolution-day-tunisia, republic-day-tunisia, independence-day-tunisia, tunisian-womens-day) after an initial draft mistakenly referenced a non-existent amazigh-new-year-tunisia.",
+    "Single-country event (_countryCode: tn), aliasSlugs: [] to avoid base_country_leakage.",
+    "Content is purely civic/environmental — zero religious or political content."
+  ],
+  "updatedAt": "2026-07-19T21:07:43.853Z"
+}

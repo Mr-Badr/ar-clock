@@ -183,3 +183,79 @@ export function getFridayResponseHourFacts({ lat, lon, timezone, date, countryCo
     isLiveNow,
   };
 }
+
+/**
+ * أوقات النهي عن الصلاة — the three prohibited/disliked prayer windows, per the
+ * hadith of Uqbah ibn Amir (Sahih Muslim 831): sunrise, true noon (istiwaa/zawal),
+ * and sunset. The sunrise and zawal windows use the same ~15min/~10min practical
+ * buffers already used by `getDuhaPrayerFacts` above (Duha starts exactly where
+ * the sunrise window ends, and ends exactly where the zawal window begins — the
+ * two pages are deliberately consistent). The sunset window uses the exact
+ * asr→maghrib prayer times with no estimation needed.
+ */
+export function getProhibitedPrayerWindowsFacts({ lat, lon, timezone, date, countryCode, cacheKey }) {
+  if (!isFiniteCoordinate(lat) || !isFiniteCoordinate(lon) || typeof timezone !== 'string' || !(date instanceof Date)) {
+    return null;
+  }
+
+  const times = calculatePrayerTimes({ lat, lon, timezone, date, countryCode, cacheKey });
+  if (!times?.fajr || !times?.sunrise || !times?.dhuhr || !times?.asr || !times?.maghrib) {
+    return null;
+  }
+
+  const fajrMs = new Date(times.fajr).getTime();
+  const sunriseMs = new Date(times.sunrise).getTime();
+  const dhuhrMs = new Date(times.dhuhr).getTime();
+  const asrMs = new Date(times.asr).getTime();
+  const maghribMs = new Date(times.maghrib).getTime();
+  const nowMs = date.getTime();
+
+  const rawWindows = [
+    {
+      key: 'sunrise',
+      title: 'من الفجر حتى ارتفاع الشمس',
+      startMs: fajrMs,
+      endMs: sunriseMs + 15 * 60000,
+    },
+    {
+      key: 'zawal',
+      title: 'وقت الاستواء (زوال الشمس)',
+      startMs: dhuhrMs - 10 * 60000,
+      endMs: dhuhrMs,
+    },
+    {
+      key: 'sunset',
+      title: 'من العصر حتى الغروب',
+      startMs: asrMs,
+      endMs: maghribMs,
+    },
+  ];
+
+  const windows = rawWindows.map((w) => {
+    const startIso = new Date(w.startMs).toISOString();
+    const endIso = new Date(w.endMs).toISOString();
+    return {
+      key: w.key,
+      title: w.title,
+      startIso,
+      endIso,
+      startLabel: formatTime(startIso, timezone, false),
+      endLabel: formatTime(endIso, timezone, false),
+      durationLabel: formatMinutesDuration((w.endMs - w.startMs) / 60000),
+      isActiveNow: nowMs >= w.startMs && nowMs < w.endMs,
+    };
+  });
+
+  const activeWindow = windows.find((w) => w.isActiveNow) || null;
+
+  return {
+    fajrLabel: formatTime(times.fajr, timezone, false),
+    sunriseLabel: formatTime(times.sunrise, timezone, false),
+    dhuhrLabel: formatTime(times.dhuhr, timezone, false),
+    asrLabel: formatTime(times.asr, timezone, false),
+    maghribLabel: formatTime(times.maghrib, timezone, false),
+    windows,
+    activeWindow,
+    isProhibitedNow: Boolean(activeWindow),
+  };
+}

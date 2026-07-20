@@ -1,29 +1,45 @@
-/* app/time-difference/[from]/[to]/page.jsx */
-import { Suspense } from 'react';
+/* app/time-difference/[from]/[to]/page.jsx
+ *
+ * Rendering model: fully STATIC prerender (no PPR "postponed" dynamic hole).
+ * `params` is awaited at the top level of the default export — never read inside
+ * a Suspense boundary — so this page prerenders into real HTML exactly like the
+ * time-now / prayer pages. Every server-side data read on the render path is
+ * `'use cache'` (getCachedNowIso → cacheLife('minutes'); geo queries →
+ * cacheLife('days')), so nothing forces a per-request dynamic resume.
+ *
+ * Why this matters: previously the whole page body lived inside one <Suspense>
+ * and `params` was read inside it, which turned the entire main content into a
+ * postponed streaming hole. When that resume was slow, interrupted, or served
+ * during stale-while-revalidate, users (and crawlers) got just the navbar +
+ * footer shell with an empty #main-content. Static prerender puts the content
+ * in the first HTML flush, so the page always appears. The only live pieces
+ * (ticking clocks, the interactive tool) are client islands that hydrate after
+ * paint and are wrapped in an ErrorBoundary so a JS failure there can never
+ * blank the server-rendered answer.
+ */
 import TimeDiffCalculator from '@/components/TimeDifference/TimeDiffCalculatorV2.client';
+import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
-import { AlertTriangle, CheckCircle2, ChevronDown, Moon, Sun } from 'lucide-react';
+import { ChevronDown, Moon, Sun, CheckCircle2, AlertTriangle } from 'lucide-react';
 import './time-difference.css';
 import {
-  SuspendedTimeSnapshot,
   getOffsetMinutes,
   observesDST,
   formatUTCOffset,
+  getInitialClockParts,
 } from './time-snapshot';
-import TimeConversionTable from './TimeConversionTable.client';
-import DualLiveClock from '@/components/time-diff/DualLiveClock.client';
-import ContextSummaryView from '@/components/TimeDifference/ContextSummaryView';
-import { buildContextSummaryLines } from '@/components/TimeDifference/contextSummary';
+import HeroLiveComparison from '@/components/time-diff/HeroLiveComparison.client';
+import FlightArrivalCalculator from '@/components/TimeDifference/FlightArrivalCalculator.client';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
-import { SectionDivider } from '@/components/shared/primitives';
 import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
 import { POPULAR_PAIRS } from '@/components/time-diff/data/popularPairs';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { isSeoIndexableTimeDifferencePair } from '@/lib/seo/time-difference-indexing';
+import { getPriorityHubTimeDifferencePairs } from '@/lib/seo/time-difference-priority-pairs';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 import { getTimeDifference } from '@/lib/time-diff';
 import { resolveTimeDifferenceCityFromSegment } from '@/lib/time-difference-route';
@@ -37,31 +53,6 @@ import {
 import { buildNoindexRouteMetadata, isRouteSlug, isRenderableCityData } from '@/lib/route-param-validation';
 import { logger, serializeError } from '@/lib/logger';
 
-const TIME_DIFFERENCE_PAIR_SOURCE_LINKS = [
-  {
-    href: 'https://www.iana.org/time-zones',
-    label: 'قاعدة IANA للمناطق الزمنية',
-    description: 'مرجع أسماء المناطق الزمنية وقواعد التوقيت الصيفي التي تعتمد عليها أنظمة التشغيل والتطبيقات.',
-  },
-  {
-    href: 'https://www.bipm.org/en/time-metrology',
-    label: 'مرجعية UTC من BIPM',
-    description: 'يوضح UTC بوصفه معيار الوقت العالمي الذي تُقاس عليه فروق التوقيت بين المدن.',
-  },
-  {
-    href: 'https://www.timeanddate.com/time/dst/',
-    label: 'شرح التوقيت الصيفي DST',
-    description: 'يساعدك على فهم لماذا يتغير فرق التوقيت بين مدينتين في بعض أشهر السنة.',
-  },
-];
-
-function dayNote(srcH, diffH) {
-  const dest = srcH + diffH;
-  if (dest >= 24) return 'اليوم التالي';
-  if (dest < 0) return 'اليوم السابق';
-  return '';
-}
-
 /** Western-numeral 12-hour Arabic time string */
 function fmtTime(h24) {
   const norm = ((Math.round(h24 * 60) % 1440) + 1440) % 1440;
@@ -73,14 +64,31 @@ function fmtTime(h24) {
 }
 
 export async function generateStaticParams() {
-  return Array.isArray(POPULAR_PAIRS)
+  const curatedParams = Array.isArray(POPULAR_PAIRS)
     ? POPULAR_PAIRS
         .filter((pair) => isRouteSlug(pair?.from?.slug) && isRouteSlug(pair?.to?.slug))
-        .map((pair) => ({
-          from: pair.from.slug,
-          to: pair.to.slug,
-        }))
+        .map((pair) => ({ from: pair.from.slug, to: pair.to.slug }))
     : [];
+
+  let priorityHubParams = [];
+  try {
+    const priorityHubPairs = await getPriorityHubTimeDifferencePairs();
+    priorityHubParams = priorityHubPairs
+      .filter((pair) => isRouteSlug(pair.from) && isRouteSlug(pair.to))
+      .map((pair) => ({ from: pair.from, to: pair.to }));
+  } catch (error) {
+    logger.warn('time-difference-priority-hub-static-params-failed', { error: serializeError(error) });
+  }
+
+  const seen = new Set();
+  const params = [];
+  for (const param of [...curatedParams, ...priorityHubParams]) {
+    const key = `${param.from}::${param.to}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    params.push(param);
+  }
+  return params;
 }
 
 async function getCurrentDateForComparison(routePath, from, to) {
@@ -146,6 +154,8 @@ export async function generateMetadata({ params }) {
       `الساعة الان في ${toCity.city_name_ar} مقارنة بـ ${fromCity.city_name_ar} مع التوقيت الصيفي`,
       `حساب فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary} بالدقيقة`,
       `أفضل وقت للاجتماعات المشتركة بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
+      `كم الساعة عند وصولي من ${fromCity.city_name_ar} إلى ${toCity.city_name_ar}`,
+      `حساب وقت الوصول حسب مدة الرحلة بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
     ];
     const keywords = uniqueKeywords(keywordsArray);
 
@@ -181,9 +191,8 @@ export async function generateMetadata({ params }) {
 }
 
 
-async function ComparisonPageContent({ paramsPromise }) {
-  const paramsResolved = await paramsPromise;
-  const { from, to } = paramsResolved;
+export default async function ComparisonPage({ params }) {
+  const { from, to } = await params;
   if (!isRouteSlug(from) || !isRouteSlug(to)) notFound();
 
   let fromCity;
@@ -242,6 +251,7 @@ async function ComparisonPageContent({ paramsPromise }) {
   const sameCountry = fromCountryPrimary === toCountryPrimary;
   const comparisonQuery = `فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary}`;
   const countryContext = `${fromCountryPrimary} (${fromCity.city_name_ar}) و${toCountryPrimary} (${toCity.city_name_ar})`;
+  const pairHref = buildTimeDifferenceHref(canonicalFrom, canonicalTo);
 
   const CURRENT_DATE = await getCurrentDateForComparison(`/time-difference/${from}/${to}`, from, to);
   const fromOffMin = getOffsetMinutes(fromCity.timezone, CURRENT_DATE);
@@ -265,41 +275,9 @@ async function ComparisonPageContent({ paramsPromise }) {
   const ahead = diffMinutes > 0 ? toCity.city_name_ar : fromCity.city_name_ar;
   const behind = diffMinutes > 0 ? fromCity.city_name_ar : toCity.city_name_ar;
   const bothFixed = !fromHasDST && !toHasDST;
-  const directAnswer = diffMinutes === 0
-    ? `${comparisonQuery} يساوي صفر ساعة حاليًا، لأن ${fromCountryPrimary} و${toCountryPrimary} في هذا المثال يعتمدان التوقيت نفسه بين ${fromCity.city_name_ar} و${toCity.city_name_ar}.`
-    : `${comparisonQuery} هو ${diffLabel} حاليًا. هذه الصفحة تعرض الجواب مباشرة بين ${fromCity.city_name_ar} في ${fromCountryPrimary} و${toCity.city_name_ar} في ${toCountryPrimary} مع تحويل الوقت الفوري والتوقيت الصيفي.`;
-  const summaryLines = buildContextSummaryLines({
-    fromCity,
-    toCity,
-    diffData: initialDiffData,
-  });
-
-  const workdayStart = 9;
-  const workdayEnd = 17;
-  const targetWorkdayStart = workdayStart - diffHours;
-  const targetWorkdayEnd = workdayEnd - diffHours;
-  const overlapStart = Math.max(workdayStart, targetWorkdayStart);
-  const overlapEnd = Math.min(workdayEnd, targetWorkdayEnd);
-  const hasOverlap = overlapStart < overlapEnd;
-  const overlapFromSource = hasOverlap ? fmtTime(overlapStart) : null;
-  const overlapToSource = hasOverlap ? fmtTime(overlapEnd) : null;
-  const overlapFromTarget = hasOverlap ? fmtTime(overlapStart + diffHours) : null;
-  const overlapToTarget = hasOverlap ? fmtTime(overlapEnd + diffHours) : null;
-
-  // ─── Pre-compute conversion rows (serialisable → passed to Client) ─────
-  const conversionGroups = [
-    { label: 'الصباح', icon: null, hours: [6, 7, 8, 9, 10, 11] },
-    { label: 'الظهيرة', icon: null, hours: [12, 13, 14, 15] },
-    { label: 'المساء', icon: null, hours: [16, 17, 18, 19, 20, 21] },
-  ].map(g => ({
-    label: g.label,
-    icon: g.icon,
-    rows: g.hours.map(h => ({
-      fromTime: fmtTime(h),
-      toTime: fmtTime(h + diffHours),
-      note: dayNote(h, diffHours),
-    })),
-  }));
+  const headerLine = diffMinutes === 0
+    ? `${fromCity.city_name_ar} و${toCity.city_name_ar} على نفس التوقيت الآن (${fromOffStr})، ولا فرق بينهما في الساعة.`
+    : `${ahead} تسبق ${behind} بـ${diffLabel} الآن، حسب توقيت ${fromCity.city_name_ar} (${fromOffStr}) و${toCity.city_name_ar} (${toOffStr}).`;
 
   // ─── DST summary paragraph ────────────────────────────────────────────────
   const dstSummaryText = bothFixed
@@ -310,32 +288,8 @@ async function ComparisonPageContent({ paramsPromise }) {
         ? <>{fromCity.city_name_ar} تطبق التوقيت الصيفي بينما {toCity.city_name_ar} لا تطبقه. الفارق الحالي <strong className="text-primary">{diffLabel}</strong> قد يتغير موسميًا.</>
         : <>كلتاهما تطبقان التوقيت الصيفي. الفارق الحالي <strong className="text-primary">{diffLabel}</strong> قد يبقى ثابتًا أو يتغير ساعة حسب توقيت كل منهما.</>;
 
-  // ─── FAQ data ─────────────────────────────────────────────────────────────
+  // ─── FAQ data — only questions not already answered by the hero/tool/table ─
   const faqs = [
-    {
-      q: `كم فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary}؟`,
-      a: diffMinutes === 0
-        ? `فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary} في هذه الصفحة هو صفر ساعة، لأن المقارنة هنا بين ${fromCity.city_name_ar} و${toCity.city_name_ar} على التوقيت نفسه. وقد يختلف الجواب إذا قارنت مدنًا أخرى داخل الدولة متعددة المناطق الزمنية.`
-        : `فرق التوقيت بين ${fromCountryPrimary} و${toCountryPrimary} في هذه الصفحة هو ${diffLabel}. المقارنة مبنية على ${fromCity.city_name_ar} و${toCity.city_name_ar} تحديدًا، لذلك قد يختلف الفرق إذا كانت الدولة تحتوي أكثر من منطقة زمنية مثل أمريكا.`
-    },
-    {
-      q: `كم ساعة الفرق بين ${fromCity.city_name_ar} و${toCity.city_name_ar}؟`,
-      a: diffMinutes === 0
-        ? `لا يوجد فرق، كلتاهما في نفس النطاق (${fromOffStr}).`
-        : `الفرق الحالي ${diffLabel}. ${ahead} تسبق ${behind}. ${fromCity.city_name_ar} في ${fromOffStr} و${toCity.city_name_ar} في ${toOffStr}.`,
-    },
-    {
-      q: `هل ${fromCity.city_name_ar} تطبق التوقيت الصيفي؟`,
-      a: fromHasDST
-        ? `نعم. قد يتغير توقيتها بين الصيفي والشتوي خلال العام.`
-        : `لا، توقيتها ثابت طوال العام عند ${fromOffStr}.`,
-    },
-    {
-      q: `هل ${toCity.city_name_ar} تطبق التوقيت الصيفي؟`,
-      a: toHasDST
-        ? `نعم. قد يتغير توقيتها بين الصيفي والشتوي خلال العام.`
-        : `لا، توقيتها ثابت طوال العام عند ${toOffStr}.`,
-    },
     {
       q: `هل يتغير الفرق بين ${fromCity.city_name_ar} و${toCity.city_name_ar} خلال العام؟`,
       a: bothFixed
@@ -344,39 +298,27 @@ async function ComparisonPageContent({ paramsPromise }) {
     },
     {
       q: `هل هذا هو نفس فرق التوقيت بين كل مدن ${toCountryPrimary} و${fromCountryPrimary}؟`,
-      a: `ليس دائمًا. هذه الصفحة تقارن ${fromCity.city_name_ar} و${toCity.city_name_ar} فقط، وقد يختلف فرق التوقيت داخل الدولة نفسها إذا كانت تضم أكثر من منطقة زمنية.`
+      a: `ليس دائمًا. هذه المقارنة بين ${fromCity.city_name_ar} و${toCity.city_name_ar} فقط، وقد يختلف فرق التوقيت داخل الدولة نفسها إذا كانت تضم أكثر من منطقة زمنية.`
     },
     {
-      q: `ما أفضل وقت للاجتماعات بين ${fromCity.city_name_ar} و${toCity.city_name_ar}؟`,
-      a: `استخدم أداة "ساعات العمل المشتركة" في الأداة التفاعلية أعلاه لمعرفة نافذة التوقيت المشترك. يمكنك تعديل وقت الدوام حسب جدولك الفعلي.`,
+      q: `ما أفضل وقت للتواصل بين ${fromCity.city_name_ar} و${toCity.city_name_ar}؟`,
+      a: `افتح "أفضل وقت للتواصل" في الأداة أعلاه واضبط ساعات دوامك — ستظهر لك نافذة التقاطع الفعلية بتوقيت كل مدينة فور تغييرها.`,
     },
     {
       q: `هل يكفي هذا الفرق لموعد مستقبلي بين ${fromCity.city_name_ar} و${toCity.city_name_ar}؟`,
       a: bothFixed
         ? `غالباً نعم لأن المدينتين لا تغيّران الساعة موسمياً، لكن يبقى الأفضل مراجعة التاريخ المحلي قبل إرسال دعوة رسمية أو حجز سفر.`
-        : `لا تعتمد على الفرق الحالي وحده إذا كان الموعد بعد أسابيع أو أشهر. إحدى المدينتين قد تدخل أو تخرج من التوقيت الصيفي، لذلك استخدم الحاسبة لتاريخ الموعد نفسه.`
+        : `لا تعتمد على الفرق الحالي وحده إذا كان الموعد بعد أسابيع أو أشهر. إحدى المدينتين قد تدخل أو تخرج من التوقيت الصيفي، لذلك استخدم أداة التحويل أعلاه بتاريخ الموعد نفسه.`
     },
     {
       q: `هل التاريخ واحد في ${fromCity.city_name_ar} و${toCity.city_name_ar}؟`,
       a: Math.abs(diffMinutes) >= 720
-        ? `بسبب الفرق الكبير (${diffLabel}) قد يختلف التاريخ في بعض الساعات. الأداة أعلاه تُنبّهك تلقائيًا.`
+        ? `بسبب الفرق الكبير (${diffLabel}) قد يختلف التاريخ في بعض الساعات. أداة التحويل أعلاه تُنبّهك تلقائيًا بعلامة "يوم مختلف".`
         : `في الغالب نعم، الفرق لا يتجاوز حدود اليوم في معظم الأحوال.`,
-    },
-    {
-      q: `ما هو توقيت جرينتش لـ${fromCity.city_name_ar} و${toCity.city_name_ar}؟`,
-      a: `${fromCity.city_name_ar} في ${fromOffStr}، و${toCity.city_name_ar} في ${toOffStr}.`,
     },
     {
       q: `كيف أحسب فرق التوقيت يدويًا؟`,
       a: `اطرح UTC الأولى من UTC الثانية: (${toOffMin >= 0 ? '+' : ''}${toOffMin}) − (${fromOffMin >= 0 ? '+' : ''}${fromOffMin}) = ${diffMinutes > 0 ? '+' : ''}${diffMinutes} دقيقة أي ${diffLabel}.`,
-    },
-    {
-      q: `لماذا أستخدم اسم المدينة بدلاً من اختصار التوقيت؟`,
-      a: `اختصارات مثل CST أو EST قد تكون غامضة وتُستخدم في أكثر من منطقة. عند المقارنة بين ${fromCity.city_name_ar} و${toCity.city_name_ar} استخدم اسم المدينة أو منطقة IANA، لأن القاعدة الزمنية هي التي تضبط فرق UTC والتوقيت الصيفي بدقة.`
-    },
-    {
-      q: `لماذا أحتاج معرفة فرق التوقيت؟`,
-      a: `لتنسيق الاجتماعات عن بُعد، متابعة البث المباشر، تحديد المواعيد الرسمية، والتواصل الصحيح مع الأهل والزملاء.`,
     },
     {
       q: `هل يتغير الفرق في رمضان؟`,
@@ -384,7 +326,11 @@ async function ComparisonPageContent({ paramsPromise }) {
     },
     {
       q: `كيف أشارك مقارنة التوقيت؟`,
-      a: `اضغط زر "مشاركة" في الأداة أعلاه. يُنسخ الرابط تلقائيًا ويمكن مشاركته مباشرة.`,
+      a: `اضغط زر "مشاركة" أعلى الصفحة. يُنسخ الرابط تلقائيًا ويمكن مشاركته مباشرة.`,
+    },
+    {
+      q: `كيف أعرف وقت وصولي عند السفر من ${fromCity.city_name_ar} إلى ${toCity.city_name_ar}؟`,
+      a: `استخدم "وقت الوصول عند السفر" أعلى الصفحة: أدخل وقت مغادرة رحلتك ومدتها، وستظهر لك الساعة المحلية عند وصولك في ${toCity.city_name_ar} تلقائيًا مع توضيح هل ستصل في نفس اليوم أو اليوم التالي.`,
     },
   ];
 
@@ -394,15 +340,15 @@ async function ComparisonPageContent({ paramsPromise }) {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${BASE}` },
       { '@type': 'ListItem', position: 2, name: 'فرق التوقيت', item: `${BASE}/time-difference` },
-      { '@type': 'ListItem', position: 3, name: `${fromCity.city_name_ar} – ${toCity.city_name_ar}`, item: `${BASE}${buildTimeDifferenceHref(canonicalFrom, canonicalTo)}` },
+      { '@type': 'ListItem', position: 3, name: `${fromCity.city_name_ar} – ${toCity.city_name_ar}`, item: `${BASE}${pairHref}` },
     ],
   };
   const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: `${comparisonQuery} | ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
-    url: `${BASE}${buildTimeDifferenceHref(canonicalFrom, canonicalTo)}`,
-    description: directAnswer,
+    url: `${BASE}${pairHref}`,
+    description: headerLine,
     inLanguage: 'ar',
     about: [
       { '@type': 'Thing', name: fromCountryPrimary },
@@ -435,16 +381,6 @@ async function ComparisonPageContent({ paramsPromise }) {
         href: `/time-now/${toCity.country_slug}/${toCity.city_slug}`,
         label: `الوقت الان في ${toCity.city_name_ar}`,
         description: `اعرف الساعة الحالية والتاريخ اليوم في ${toCity.city_name_ar}.`,
-      },
-      {
-        href: `/time-now/${fromCity.country_slug}`,
-        label: `الوقت الان في ${fromCountryPrimary}`,
-        description: 'صفحة الدولة مع العاصمة والمدن الكبرى المرتبطة بهذه المقارنة.',
-      },
-      {
-        href: `/time-now/${toCity.country_slug}`,
-        label: `الوقت الان في ${toCountryPrimary}`,
-        description: 'صفحة الدولة مع العاصمة والمدن الكبرى المرتبطة بهذه المقارنة.',
       },
       {
         href: `/mwaqit-al-salat/${fromCity.country_slug}/${fromCity.city_slug}`,
@@ -488,13 +424,13 @@ async function ComparisonPageContent({ paramsPromise }) {
         </nav>
 
         {/* ── Header ─────────────────────────────────────────────────── */}
-        <header className="mb-8">
+        <header className="mb-6">
           <div className="mb-3">
             <span className={`badge ${diffMinutes === 0 ? 'badge-success' : 'badge-accent'}`}>
               {diffMinutes === 0 ? 'نفس التوقيت' : `فارق ${diffLabel}`}
             </span>
           </div>
-          <h1 className="text-3xl font-black leading-tight mb-2">
+          <h1 className="text-3xl font-black leading-tight mb-3">
             {sameCountry ? (
               <>
                 كم فرق التوقيت بين <span className="text-accent">{fromCity.city_name_ar}</span>
@@ -509,203 +445,83 @@ async function ComparisonPageContent({ paramsPromise }) {
               </>
             )}
           </h1>
-          <p className="text-muted text-sm leading-relaxed">
-            {diffMinutes === 0
-              ? `${countryContext} في نفس النطاق الزمني (${fromOffStr})`
-              : `${ahead} تسبق ${behind} بـ${diffLabel}. مقارنة ${countryContext} محدّثة حسب التاريخ المحلي الحالي`}
-          </p>
-          <p className="text-sm text-secondary leading-loose mt-4">
-            {directAnswer}
+          <p className="text-sm text-secondary leading-relaxed">
+            {headerLine}
           </p>
         </header>
 
-        {/* ── SSR snapshot — crawlable current times ─────────────────── */}
-        <section className="td-snapshot mb-4" aria-label="الوقت الحالي في المدينتين">
-          <SuspendedTimeSnapshot fromCity={fromCity} toCity={toCity} />
-          <DualLiveClock
-            fromTz={fromCity.timezone}
-            toTz={toCity.timezone}
-            fromCityAr={fromCity.city_name_ar}
-            toCityAr={toCity.city_name_ar}
+        {/* ── Hero: the one live answer module ─────────────────────────
+            Client island (ticking clocks). Isolated: if it throws on the
+            client, the static header answer above still stands. */}
+        <ErrorBoundary name="time-diff-hero">
+          <HeroLiveComparison
+            fromCity={fromCity}
+            toCity={toCity}
             diffMinutes={diffMinutes}
+            diffLabel={diffLabel}
+            fromHasDST={fromDST}
+            toHasDST={toDST}
+            fromInitial={getInitialClockParts(fromCity.timezone, CURRENT_DATE)}
+            toInitial={getInitialClockParts(toCity.timezone, CURRENT_DATE)}
+            shareHref={pairHref}
           />
-        </section>
+        </ErrorBoundary>
 
-        <section className="mb-8" aria-labelledby="summary-heading">
-          <h2 id="summary-heading" className="sr-only">
-            ملخص فرق التوقيت بين {fromCity.city_name_ar} و{toCity.city_name_ar}
-          </h2>
-          <ContextSummaryView lines={summaryLines} />
-        </section>
-
-        <section className="mb-10" aria-labelledby="facts-heading">
-          <h2 id="facts-heading" className="active-indicator text-xl font-bold mb-4">
-            معلومات سريعة عن فرق التوقيت بين {fromCity.city_name_ar} و{toCity.city_name_ar}
-          </h2>
-
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <article className="card p-4 td-static">
-              <p className="text-xs text-muted mb-2">كم ساعة بين المدينتين؟</p>
-              <p className="text-lg font-black text-accent-alt">{diffMinutes === 0 ? 'نفس التوقيت' : diffLabel}</p>
-              <p className="text-sm text-secondary mt-2 leading-relaxed">
-                {diffMinutes === 0
-                  ? `الوقت متطابق حالياً بين ${fromCity.city_name_ar} و${toCity.city_name_ar}.`
-                  : `${ahead} تسبق ${behind} حالياً، وهذا هو الجواب المباشر لأكثر عمليات البحث شيوعاً.`}
-              </p>
-            </article>
-
-            <article className="card p-4 td-static">
-              <p className="text-xs text-muted mb-2">التوقيت العالمي UTC</p>
-              <p className="text-lg font-black text-accent-alt" dir="ltr">{fromOffStr} / {toOffStr}</p>
-              <p className="text-sm text-secondary mt-2 leading-relaxed">
-                يعتمد الحساب على المنطقة الزمنية الرسمية لكل مدينة، وليس على متوسط الدولة بالكامل.
-              </p>
-            </article>
-
-            <article className="card p-4 td-static">
-              <p className="text-xs text-muted mb-2">أفضل وقت للاجتماعات</p>
-              <p className="text-lg font-black text-accent-alt">
-                {hasOverlap ? 'يوجد وقت مشترك' : 'التقاطع محدود'}
-              </p>
-              <p className="text-sm text-secondary mt-2 leading-relaxed">
-                {hasOverlap
-                  ? `${overlapFromSource} إلى ${overlapToSource} في ${fromCity.city_name_ar} يقابله ${overlapFromTarget} إلى ${overlapToTarget} في ${toCity.city_name_ar}.`
-                  : `لا يوجد تقاطع واضح بين ساعات العمل التقليدية 9-17، لذلك يُفضَّل تعديل مواعيد الدوام أو الاعتماد على التحويل المباشر.`}
-              </p>
-            </article>
-
-            <article className="card p-4 td-static">
-              <p className="text-xs text-muted mb-2">حالة التوقيت الصيفي</p>
-              <p className="text-lg font-black text-accent-alt">
-                {!fromHasDST && !toHasDST ? 'فارق ثابت غالباً' : 'قد يتغير موسمياً'}
-              </p>
-              <p className="text-sm text-secondary mt-2 leading-relaxed">
-                {bothFixed
-                  ? `كل من ${fromCity.city_name_ar} و${toCity.city_name_ar} لا يطبقان التوقيت الصيفي، لذلك يبقى الفارق مستقراً طوال معظم السنة.`
-                  : `التوقيت الصيفي قد يغيّر فرق التوقيت ساعة كاملة في بعض الفترات، لذلك نعرض الحالة الحالية والتغيرات المحتملة بوضوح.`}
-              </p>
-            </article>
-          </div>
-        </section>
-
-        <section className="mb-10" aria-labelledby="decision-guide-heading">
-          <h2 id="decision-guide-heading" className="active-indicator text-xl font-bold mb-4">
-            كيف تقرأ هذه النتيجة قبل تثبيت موعد؟
-          </h2>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            <article className="card p-4 td-static">
-              <p className="text-xs text-muted mb-2">إذا كان الموعد اليوم</p>
-              <h3 className="text-base font-bold text-primary mb-2">ابدأ من الساعة الحالية</h3>
-              <p className="text-sm text-secondary leading-relaxed">
-                استخدم الفرق الحالي بين {fromCity.city_name_ar} و{toCity.city_name_ar} مباشرة، ثم راجع هل الوقت يقع في ساعات عمل أو مساء أو نوم عند الطرف الآخر.
-              </p>
-            </article>
-
-            <article className="card p-4 td-static">
-              <p className="text-xs text-muted mb-2">إذا كان الموعد مستقبلياً</p>
-              <h3 className="text-base font-bold text-primary mb-2">لا تحفظ فرق الساعات</h3>
-              <p className="text-sm text-secondary leading-relaxed">
-                {bothFixed
-                  ? `الفارق بين المدينتين ثابت غالباً، لكن راجع التاريخ المحلي حتى لا ترسل موعداً يقع في يوم مختلف.`
-                  : `قد يتغير الفرق عندما يدخل أحد الطرفين في التوقيت الصيفي أو يخرج منه، لذلك احسب الموعد بتاريخ اليوم المقصود.`}
-              </p>
-            </article>
-
-            <article className="card p-4 td-static">
-              <p className="text-xs text-muted mb-2">إذا كان السؤال للسفر</p>
-              <h3 className="text-base font-bold text-primary mb-2">فرّق بين مدة الرحلة ووقت الوصول</h3>
-              <p className="text-sm text-secondary leading-relaxed">
-                مدة الرحلة هي ما تقضيه في الطريق، أما وقت الوصول فهو بالتوقيت المحلي في {toCity.city_name_ar}. اقرأ التاريخ والساعة معاً قبل الحجز.
-              </p>
-            </article>
-          </div>
-        </section>
-
-        <section className="mb-10" aria-labelledby="pair-sources-heading">
-          <h2 id="pair-sources-heading" className="active-indicator text-xl font-bold mb-4">
-            مصادر تساعدك على فهم UTC وDST في هذه المقارنة
-          </h2>
-
-          <p className="text-sm text-secondary leading-loose mb-4">
-            النتيجة أعلاه تُحسب من مناطق المدن الزمنية، ولا يتم جلب هذه المصادر أثناء تشغيل الصفحة. نعرضها لك لأنها تشرح لماذا نستخدم أسماء IANA وUTC بدلاً من اختصارات غامضة أو فروق محفوظة من الذاكرة.
-          </p>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            {TIME_DIFFERENCE_PAIR_SOURCE_LINKS.map((source) => (
-              <a
-                key={source.href}
-                href={source.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="card p-4 no-underline"
-              >
-                <strong className="text-primary text-sm">{source.label}</strong>
-                <span className="block text-sm text-secondary leading-relaxed mt-2">
-                  {source.description}
-                </span>
-              </a>
-            ))}
-          </div>
-        </section>
-
-        <AdTopBanner slotId="top-time-diff" />
-
-        {/* ── Interactive calculator ──────────────────────────────────── */}
-        <section className="mb-10" aria-label="حاسبة فرق التوقيت التفاعلية">
-          <TimeDiffCalculator
-            initialFrom={fromCity}
-            initialTo={toCity}
-            initialDiffData={initialDiffData}
-          />
-        </section>
-
-        <div className="my-20">
-          <SectionDivider />
+        <div className="td-ad-gap">
+          <AdTopBanner slotId="top-time-diff" />
         </div>
 
-        {/* ════════════════════════════════════════════════════════
-            SEO SECTION 1 — Explanation
-            ════════════════════════════════════════════════════════ */}
-        <section className="mb-10" aria-labelledby="diff-heading">
-          <h2 id="diff-heading" className="active-indicator text-xl font-bold mb-4">
-            فرق التوقيت بين {fromCountryPrimary} و{toCountryPrimary} اليوم
+        {/* ── Interactive tool: change cities, convert time, shared hours ──
+            Client island. Isolated so a failure here can't take down the
+            static explanation / DST table / FAQ that follow. */}
+        <section className="td-section" aria-label="أدوات فرق التوقيت التفاعلية">
+          <ErrorBoundary name="time-diff-calculator">
+            <TimeDiffCalculator
+              initialFrom={fromCity}
+              initialTo={toCity}
+              initialDiffData={initialDiffData}
+            />
+          </ErrorBoundary>
+        </section>
+
+        {/* ── Flight arrival: distinct tool + distinct keyword cluster ──── */}
+        <section className="td-section" aria-labelledby="flight-arrival-heading">
+          <h2 id="flight-arrival-heading" className="td-h2">
+            وقت الوصول عند السفر بين {fromCity.city_name_ar} و{toCity.city_name_ar}
+          </h2>
+          <ErrorBoundary name="time-diff-flight-arrival">
+            <FlightArrivalCalculator
+              fromCityAr={fromCity.city_name_ar}
+              toCityAr={toCity.city_name_ar}
+              diffMinutes={diffMinutes}
+            />
+          </ErrorBoundary>
+        </section>
+
+        {/* ── Explanation + DST, merged into one section ──────────────── */}
+        <section className="td-section" aria-labelledby="dst-heading">
+          <h2 id="dst-heading" className="td-h2">
+            فرق التوقيت بين {fromCountryPrimary} و{toCountryPrimary} والتوقيت الصيفي
           </h2>
 
-          <div className="card--flat border-default card mb-4 p-0 overflow-hidden">
-            <div className="grid grid-cols-2">
-              <div className="p-4">
-                <p className="text-xs text-muted mb-1">{fromCity.city_name_ar}</p>
-                <p className="text-xl font-black tabular-nums text-accent-alt" dir="ltr">{fromOffStr}</p>
-                <p className="text-xs text-muted mt-1">{fromHasDST ? 'قد يتغير توقيتها موسمياً' : 'توقيت ثابت'}</p>
-              </div>
-              <div className="p-4 border-r border-[var(--border-subtle)]">
-                <p className="text-xs text-muted mb-1">{toCity.city_name_ar}</p>
-                <p className="text-xl font-black tabular-nums text-accent-alt" dir="ltr">{toOffStr}</p>
-                <p className="text-xs text-muted mt-1">{toHasDST ? 'قد يتغير توقيتها موسمياً' : 'توقيت ثابت'}</p>
-              </div>
-            </div>
-          </div>
-
-          <p className="text-sm text-secondary leading-loose">
+          <p className="td-body">
             {diffMinutes === 0
               ? <>
-                <strong className="text-primary">{countryContext}</strong> في نفس
-                النطاق الزمني <strong dir="ltr" className="tabular-nums">{fromOffStr}</strong>.
-                الساعة متطابقة في هاتين المدينتين، وهو ما يجيب بسرعة عن بحث مثل "{comparisonQuery}" عندما تكون المقارنة بين {fromCity.city_name_ar} و{toCity.city_name_ar}.
+                <strong className="text-primary">{countryContext}</strong> على نفس
+                النطاق الزمني <strong dir="ltr" className="tabular-nums">{fromOffStr}</strong> حالياً،
+                فلا حاجة لتحويل الوقت بين {fromCity.city_name_ar} و{toCity.city_name_ar}.
               </>
               : <>
-                إذا كنت تبحث عن <strong className="text-primary">{comparisonQuery}</strong> فالإجابة هنا مبنية على{' '}
-                <strong className="text-primary">{fromCity.city_name_ar}</strong> في{' '}
+                <strong className="text-primary">{fromCity.city_name_ar}</strong> على{' '}
                 <strong dir="ltr" className="tabular-nums">{fromOffStr}</strong> و
-                <strong className="text-primary">{toCity.city_name_ar}</strong> في{' '}
-                <strong dir="ltr" className="tabular-nums">{toOffStr}</strong>.
-                الفارق الحالي <strong className="text-primary">{diffLabel}</strong>،
+                <strong className="text-primary">{toCity.city_name_ar}</strong> على{' '}
+                <strong dir="ltr" className="tabular-nums">{toOffStr}</strong>،
+                بفارق <strong className="text-primary">{diffLabel}</strong>{' '}
                 تسبق فيه <strong className="text-primary">{ahead}</strong> مدينة{' '}
                 <strong className="text-primary">{behind}</strong>.{' '}
-                مثال: إذا كانت الساعة{' '}
+                مثال: الساعة{' '}
                 <span dir="ltr" className="tabular-nums font-bold">9:00 ص</span> في{' '}
-                {fromCity.city_name_ar} فهي{' '}
+                {fromCity.city_name_ar} تعادل{' '}
                 <span dir="ltr" className="tabular-nums font-bold text-accent-alt">
                   {fmtTime(9 + diffHours)}
                 </span>{' '}
@@ -713,116 +529,27 @@ async function ComparisonPageContent({ paramsPromise }) {
               </>
             }
           </p>
-        </section>
 
-        <div className="my-20">
-          <SectionDivider />
-        </div>
-
-        {/* ════════════════════════════════════════════════════════
-            SEO SECTION 2 — Time conversion table (tabbed, client)
-            ════════════════════════════════════════════════════════
-         *
-         * TimeConversionTable is 'use client' for tab state only.
-         * All data pre-built above → passed as plain serialisable props.
-         * Uses new.css .tabs / .tab / .tab--active natively — no overrides.
-         */}
-        <section className="mb-10" aria-labelledby="conversion-heading">
-          <h2 id="conversion-heading" className="active-indicator text-xl font-bold mb-4">
-            تحويل الوقت بين {fromCity.city_name_ar} و{toCity.city_name_ar}
-          </h2>
-
-          <TimeConversionTable
-            groups={conversionGroups}
-            fromCity={fromCity.city_name_ar}
-            toCity={toCity.city_name_ar}
-          />
-        </section>
-
-        <div className="my-20">
-          <SectionDivider />
-        </div>
-
-        {/* ════════════════════════════════════════════════════════
-            SEO SECTION 3 — DST comparison table
-            ════════════════════════════════════════════════════════
-         *
-         * Plain <table> with new.css classes only:
-         *   .table-wrapper  § border-default, radius-lg, flat surface
-         *   .table          § bg-surface-1, font-sm, text-primary
-         *   .table--compact § reduced padding
-         *   .table thead tr § bg-surface-2, border-bottom-2
-         *   .table th       § font-semibold, text-xs, text-secondary, text-right
-         *   .td-col-center  § overrides text-align to center (time-difference.css §4)
-         *   .table tbody tr § border-bottom, hover:bg-surface-2
-         *   .table td       § text-primary, leading-snug, vertical-align:middle
-         *   .tabular-nums   § font-variant-numeric:tabular-nums
-         *   .font-bold      § font-weight: var(--font-bold)
-         *   .text-secondary § color: var(--text-secondary)
-         *   .text-muted     § color: var(--text-muted)
-         *   .text-xs        § font-size: var(--text-xs)
-         *   .badge-*        § new.css §18 badge variants
-         *   .td-dst-summary-row § time-difference.css §6 — muted bg summary row
-         */}
-        <section className="mb-10" aria-labelledby="dst-heading">
-          <h2 id="dst-heading" className="active-indicator text-xl font-bold mb-4">
-            هل يتغير الفارق بين {fromCountryPrimary} و{toCountryPrimary} خلال السنة؟
-          </h2>
+          <h3 className="td-h3">هل يتغير هذا الفارق خلال السنة؟</h3>
 
           <div className="table-wrapper mb-4">
             <table className="table table--compact">
-
               <thead>
                 <tr>
-                  {/*
-                   * Label column: default .table th = text-right ← correct for RTL
-                   * City columns: .td-col-center overrides to text-center
-                   */}
                   <th style={{ width: '40%' }}>المعلومة</th>
-                  <th className="td-col-center" style={{ width: '30%' }}>
-                    {fromCity.city_name_ar}
-                  </th>
-                  <th className="td-col-center" style={{ width: '30%' }}>
-                    {toCity.city_name_ar}
-                  </th>
+                  <th className="td-col-center" style={{ width: '30%' }}>{fromCity.city_name_ar}</th>
+                  <th className="td-col-center" style={{ width: '30%' }}>{toCity.city_name_ar}</th>
                 </tr>
               </thead>
-
               <tbody>
-
-                {/* ── Row 1: UTC offset ─────────────────────────────── */}
                 <tr>
-                  {/*
-                   * Label: text-secondary (from @theme inline → var(--text-secondary))
-                   *        text-xs       (from @theme → var(--text-xs))
-                   * .table td already sets color:text-primary;
-                   * text-secondary Tailwind class overrides that for label cells.
-                   */}
                   <td className="text-secondary text-xs">التوقيت (UTC)</td>
-
-                  {/*
-                   * .td-col-center  — centering (time-difference.css §4)
-                   * .tabular-nums   — numeric layout (new.css §08)
-                   * .font-bold      — weight (new.css §08)
-                   * .text-accent-alt — Tailwind via @theme = var(--accent-alt)
-                   */}
-                  <td className="td-col-center tabular-nums font-bold text-accent-alt" dir="ltr">
-                    {fromOffStr}
-                  </td>
-                  <td className="td-col-center tabular-nums font-bold text-accent-alt" dir="ltr">
-                    {toOffStr}
-                  </td>
+                  <td className="td-col-center tabular-nums font-bold text-accent-alt" dir="ltr">{fromOffStr}</td>
+                  <td className="td-col-center tabular-nums font-bold text-accent-alt" dir="ltr">{toOffStr}</td>
                 </tr>
-
-                {/* ── Row 2: Applies DST? ───────────────────────────── */}
                 <tr>
                   <td className="text-secondary text-xs">يطبق التوقيت الصيفي؟</td>
                   <td className="td-col-center">
-                    {/*
-                     * .badge        — new.css §18: inline-flex, xs, pill
-                     * .badge-warning — warning-soft bg + warning text + warning border
-                     * .badge-default — surface-3 bg + text-secondary + border-default
-                     */}
                     <span className={`badge ${fromHasDST ? 'badge-warning' : 'badge-default'}`}>
                       {fromHasDST ? 'نعم' : 'لا'}
                     </span>
@@ -833,15 +560,9 @@ async function ComparisonPageContent({ paramsPromise }) {
                     </span>
                   </td>
                 </tr>
-
-                {/* ── Row 3: Current season ─────────────────────────── */}
                 <tr>
                   <td className="text-secondary text-xs">الحالة الآن</td>
                   <td className="td-col-center">
-                    {/*
-                     * badge-warning = active DST (summer) — warm amber
-                     * badge-info    = standard time (winter) — cool blue
-                     */}
                     <span className={`badge ${fromDST ? 'badge-warning' : 'badge-info'}`}>
                       {fromDST ? <><Sun size={12} aria-hidden="true" /> توقيت صيفي</> : <><Moon size={12} aria-hidden="true" /> توقيت شتوي</>}
                     </span>
@@ -852,93 +573,57 @@ async function ComparisonPageContent({ paramsPromise }) {
                     </span>
                   </td>
                 </tr>
-
-                {/* ── Row 4: Is diff stable? — summary, colSpan 2 ──── */}
                 <tr className="td-dst-summary-row">
                   <td className="text-secondary text-xs">الفارق ثابت طوال السنة؟</td>
-                  {/*
-                   * colSpan={2} spans both city columns.
-                   * .td-col-center centres the badge inside.
-                   * badge-success = stable year-round
-                   * badge-warning = may shift seasonally
-                   */}
                   <td className="td-col-center" colSpan={2}>
                     <span className={`badge ${bothFixed ? 'badge-success' : 'badge-warning'}`}>
                       {bothFixed ? <><CheckCircle2 size={12} aria-hidden="true" /> نعم، ثابت</> : <><AlertTriangle size={12} aria-hidden="true" /> قد يتغير موسمياً</>}
                     </span>
                   </td>
                 </tr>
-
               </tbody>
             </table>
           </div>
 
-          <p className="text-sm text-secondary leading-loose">
+          <p className="td-body td-body--muted">
             {dstSummaryText}
+          </p>
+
+          <p className="td-trust">
+            يعتمد الحساب على قاعدة{' '}
+            <a href="https://www.iana.org/time-zones" target="_blank" rel="noopener noreferrer">IANA</a>
+            {' '}للمناطق الزمنية ومعيار{' '}
+            <a href="https://www.bipm.org/en/time-metrology" target="_blank" rel="noopener noreferrer">UTC</a>
+            {' '}العالمي، ويتحدّث تلقائياً عند تغيّر قواعد{' '}
+            <a href="https://www.timeanddate.com/time/dst/" target="_blank" rel="noopener noreferrer">التوقيت الصيفي</a>
+            {' '}في أي من البلدين.
           </p>
         </section>
 
-        <div className="my-20">
-          <SectionDivider />
-        </div>
-
         <AdInArticle slotId="mid-time-diff-1" />
 
-        {/* ════════════════════════════════════════════════════════
-            SEO SECTION 4 — FAQ accordion
-            ════════════════════════════════════════════════════════
-         *
-         * AccordionItem    → .td-faq-item   (card border + radius + open accent)
-         * AccordionTrigger → .td-faq-trigger (RTL flex, hover accent-soft bg)
-         * AccordionContent → .td-faq-body   (padding, border-top, line-height)
-         * [&>div]:p-0 removes shadcn inner wrapper padding so .td-faq-body
-         * !important rules are the sole spacing source.
-         */}
-        <section className="mb-10" aria-labelledby="faq-heading">
-          <h2 id="faq-heading" className="active-indicator text-xl font-bold mb-4">
+        {/* ── FAQ ──────────────────────────────────────────────────────── */}
+        <section className="td-section" aria-labelledby="faq-heading">
+          <h2 id="faq-heading" className="td-h2">
             أسئلة قبل تثبيت موعد بين المدينتين
           </h2>
 
-          <div
-            className="faq-list"
-          >
+          <div className="faq-list">
             {faqs.map((item, idx) => (
-              <details
-                key={idx}
-                className="faq-item"
-                aria-label={item.q}
-              >
-                <summary
-                  className="faq-item__summary"
-                >
-                  <span
-                    className="faq-item__question"
-                  >
-                    {item.q}
-                  </span>
-
-                  <ChevronDown
-                    size={18}
-                    className="faq-item__chevron"
-                    aria-hidden="true"
-                  />
+              <details key={idx} className="faq-item" aria-label={item.q}>
+                <summary className="faq-item__summary">
+                  <span className="faq-item__question">{item.q}</span>
+                  <ChevronDown size={18} className="faq-item__chevron" aria-hidden="true" />
                 </summary>
-
-                <div
-                  className="faq-item__body"
-                >
-                  <p
-                    className="feature-tile__copy"
-                  >
-                    {item.a}
-                  </p>
+                <div className="faq-item__body">
+                  <p className="feature-tile__copy">{item.a}</p>
                 </div>
               </details>
             ))}
           </div>
         </section>
 
-        <section className="mb-10">
+        <section className="td-section">
           <GeoInternalLinks
             title={`خطوات تكمل مقارنة ${fromCity.city_name_ar} و${toCity.city_name_ar}`}
             description={`إذا بدأت بمقارنة ${fromCity.city_name_ar} و${toCity.city_name_ar}، فاختر المسار التالي حسب حاجتك: الوقت الحالي، الصلاة، أو التاريخ في الصفحات المرتبطة بكل مدينة أو دولة.`}
@@ -949,27 +634,10 @@ async function ComparisonPageContent({ paramsPromise }) {
 
         <AdMultiplex slotId={`end-time-diff-${from}-${to}`} />
 
-        <div className="my-20">
-          <SectionDivider />
-        </div>
-
         </main>
       </AdLayoutWrapper>
     </div>
   );
 }
 
-
-// ─── Page Wrapper ─────────────────────────────────────────────────────────────
-export default function ComparisonPage({ params }) {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="route-loading-skeleton route-loading-skeleton--mini-panel" />
-      </div>
-    }>
-      <ComparisonPageContent paramsPromise={params} />
-    </Suspense>
-  );
-}
 const BASE = getSiteUrl();

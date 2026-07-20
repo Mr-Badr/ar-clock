@@ -94,7 +94,7 @@ Docker Compose + Nginx on Hetzner VPS · GitHub Actions CI/CD
 - Architecture: `docs/architecture/system-overview.md`
 - Codebase map: `docs/codebase-map.md`
 - Adding events: `docs/add-new-event.md`
-- Content research method: `docs/content-research-scraping-method.md`
+- Content research method: `scripts/research/` (`serp-research.ts`, `competitor-reader.ts`, `keyword-suggest.ts`, `topic-research.ts`)
 - Master roadmap: `docs/growth-roadmap.md`
 - Growth plan: `docs/next-level-growth-plan.md`
 - Event opportunities: `docs/holiday-event-opportunity-backlog.md`

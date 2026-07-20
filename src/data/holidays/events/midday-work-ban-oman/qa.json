@@ -1,0 +1,20 @@
+{
+  "slug": "midday-work-ban-oman",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-19, resolving a real source conflict: Oman Ministry of Labour's own official X account (@Labour_OMAN) confirms 12:30-15:30, June-August — used this over conflicting secondary-source figures (11:00-16:00) with no official backing.",
+    "Multiple Omani outlets (tamol.om, ol.om, alsahwa.om) published Ministry corrections debunking premature social-media rumors about the ban 'not having started yet' — confirms genuine recurring public confusion each season, a real content gap this page fills.",
+    "Scope: construction sites and open/uncovered locations, per the Ministry's own wording.",
+    "Ban period is 3 months only (June 1 - Aug 31) — shorter than Qatar/UAE which extend to September 15.",
+    "Single-country event (_countryCode: om), aliasSlugs: [] to avoid base_country_leakage.",
+    "core.type is 'fixed' anchored to June 1 (start date); August 31 end date covered in FAQ/aboutEvent/schemaData.endDate."
+  ],
+  "updatedAt": "2026-07-19T15:41:17.776Z"
+}

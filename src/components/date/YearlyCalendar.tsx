@@ -6,6 +6,7 @@ import {
   type GregorianYearCalendar,
 } from '@/lib/date-calendar';
 import { logger, serializeError } from '@/lib/logger';
+import { isSeoIndexableGregorianDate } from '@/lib/seo/date-indexing';
 import { DateCalendarUnavailable } from './DateCalendarUnavailable';
 import { EventDayLink } from './EventDayLink';
 
@@ -18,6 +19,7 @@ const WEEKDAYS_AR = ['أح', 'إث', 'ثل', 'أر', 'خم', 'جم', 'سب'];
 interface Props {
   year: number;
   serverTodayIso?: string;
+  now: Date;
 }
 
 function getGregorianDayLinkClass(data: GregorianCalendarDay, isToday: boolean, isFriday: boolean): string {
@@ -30,7 +32,7 @@ function getGregorianDayLinkClass(data: GregorianCalendarDay, isToday: boolean, 
   ].filter(Boolean).join(' ');
 }
 
-export function YearlyCalendar({ year, serverTodayIso }: Props) {
+export function YearlyCalendar({ year, serverTodayIso, now }: Props) {
   let calendar: GregorianYearCalendar;
   try {
     calendar = buildGregorianYearCalendar(year);
@@ -88,6 +90,7 @@ export function YearlyCalendar({ year, serverTodayIso }: Props) {
                 const href = `/date/${year}/${monthStr}/${String(day).padStart(2, '0')}`;
                 const hijriLabel = String(data.hijriDay);
                 const className = getGregorianDayLinkClass(data, isToday, isFriday);
+                const isIndexable = isSeoIndexableGregorianDate({ year, month, day }, now);
 
                 if (data.hasEvent && !isToday) {
                   return (
@@ -98,6 +101,7 @@ export function YearlyCalendar({ year, serverTodayIso }: Props) {
                       hijriLabel={hijriLabel}
                       day={day}
                       className={className}
+                      nofollow={!isIndexable}
                     />
                   );
                 }
@@ -108,6 +112,7 @@ export function YearlyCalendar({ year, serverTodayIso }: Props) {
                     href={href}
                     className={className}
                     title={`${data.hijriDay}/${data.hijriMonth}/${data.hijriYear} هـ`}
+                    rel={isIndexable ? undefined : 'nofollow'}
                   >
                     <span className="date-day-main">
                       {day}

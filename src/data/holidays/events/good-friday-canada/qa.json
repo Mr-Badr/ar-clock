@@ -1,0 +1,19 @@
+{
+  "slug": "good-friday-canada",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-19: Good Friday is a federal statutory holiday under the Canada Labour Code, observed as a paid stat holiday in 9 of 10 provinces plus all 3 territories.",
+    "Quebec is the sole exception: employers may legally choose EITHER Good Friday OR Easter Monday as the paid statutory holiday (not both required) — Easter Monday is the more common traditional pick in Quebec specifically. Sourced via blog.payworks.ca, cross-checked against mtlblog.com's 2026 Quebec holiday list.",
+    "No mandatory store-closure law tied to this day in Canada (unlike the UK, where the closure law attaches to Easter Sunday specifically) — content framed as a civil/labor-law holiday, matching the same civic (non-religious) treatment already used for good-friday-uk and good-friday-germany.",
+    "core.type='easter', easterOffset=-2, zero new engine work needed (same pattern as good-friday-uk/good-friday-germany).",
+    "Single-country event (_countryCode: ca), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-19T16:01:00.136Z"
+}

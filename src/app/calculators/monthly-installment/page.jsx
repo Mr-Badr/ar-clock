@@ -1,4 +1,5 @@
 import MonthlyInstallmentCalculator from '@/components/calculators/MonthlyInstallmentCalculator.client';
+import EmbedCodeSnippet from '@/components/shared/EmbedCodeSnippet.client';
 import {
   CalculatorFaqSection,
   CalculatorHero,
@@ -246,6 +247,16 @@ export default function MonthlyInstallmentPage() {
         title="أسئلة متكررة قبل اختيار التمويل"
       >
         <CalculatorFaqSection items={faqItems} />
+      </CalculatorSection>
+
+      <CalculatorSection id="loan-embed" subtle>
+        <EmbedCodeSnippet
+          embedUrl={`${SITE_URL}/embed/calculators/monthly-installment`}
+          title="حاسبة القسط الشهري"
+          hint="هل تدير موقعاً أو منتدى؟ أضف حاسبة القسط الشهري إليه مجاناً بنسخ الكود التالي:"
+          width={380}
+          height={480}
+        />
       </CalculatorSection>
 
       <CalculatorSection

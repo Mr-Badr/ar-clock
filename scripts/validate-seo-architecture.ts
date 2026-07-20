@@ -40,6 +40,9 @@ const APP_PAGE_EXTENSIONS = new Set(['.js', '.jsx', '.ts', '.tsx']);
 const INTENTIONALLY_NON_INDEXABLE_PAGE_ROUTES = new Map([
   ['/offline', 'src/app/offline/page.tsx'],
   ['/search', 'src/app/search/page.jsx'],
+  ['/embed/prayer-times/[country]/[city]', 'src/app/embed/prayer-times/[country]/[city]/page.jsx'],
+  ['/embed/calculators/[slug]', 'src/app/embed/calculators/[slug]/page.jsx'],
+  ['/embed/countdown/[slug]', 'src/app/embed/countdown/[slug]/page.jsx'],
 ]);
 
 const REQUIRED_SEGMENT_GUARDS = [

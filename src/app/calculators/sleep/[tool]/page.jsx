@@ -13,6 +13,7 @@ import {
   CalculatorInfoGrid,
   CalculatorResourceLinks,
   CalculatorSection,
+  RelatedCalculators,
 } from '@/components/calculators/common';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
@@ -352,6 +353,10 @@ export default async function SleepToolPage({ params }) {
         description="أسئلة قصيرة تساعدك على فهم الأداة قبل استخدامها أو العودة إليها لاحقاً."
       >
         <CalculatorFaqSection items={faqItems} />
+      </CalculatorSection>
+
+      <CalculatorSection id="sleep-related" subtle>
+        <RelatedCalculators currentSlug={toolSlug} />
       </CalculatorSection>
     </main>
   );

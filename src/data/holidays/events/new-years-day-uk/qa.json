@@ -1,0 +1,21 @@
+{
+  "slug": "new-years-day-uk",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-19: 1 January is a bank holiday across the whole UK; 2 January is an ADDITIONAL bank holiday unique to Scotland only (mygov.scot official source) — England/Wales/NI get only 1 day.",
+    "Cultural reason: Scotland's Hogmanay tradition — historically the Church of Scotland suppressed Christmas celebrations for centuries, so New Year became the primary winter festival, hence the extra recovery day (The Scotsman; article itself 403-blocked but content confirmed via search snippet).",
+    "Substitute-day rule: if 1 Jan or 2 Jan falls on a weekend, the holiday(s) move to the next available weekday (e.g. Sat+Sun → Mon+Tue) — consistent across multiple English sources.",
+    "Legal basis: Banking and Financial Dealings Act 1971, same legal basis already used for boxing-day-uk and other UK bank holidays on this site.",
+    "Replaced an initial Scotland-flag emoji tag sequence (🏴󠁧󠁢󠁳󠁣󠁴󠁿) with a plain emoji (🥃) to avoid any encoding edge cases in JSON.",
+    "core.type='fixed', month:1/day:1 — the substitute-day nuance lives in content (FAQ/aboutEvent), not the countdown engine, matching the established boxing-day-uk pattern.",
+    "Single-country event (_countryCode: gb), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-19T20:21:36.345Z"
+}

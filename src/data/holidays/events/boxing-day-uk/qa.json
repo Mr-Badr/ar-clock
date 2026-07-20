@@ -1,0 +1,17 @@
+{
+  "slug": "boxing-day-uk",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 26 ديسمبر 2026 يوم سبت، العطلة التعويضية الاثنين 28 ديسمبر — مصادر: alarabinuk.com، gov.uk/bank-holidays.",
+    "أول حدث بريطاني على الموقع — بريطانيا أُضيفت كدولة جديدة في country-hub-data.js (code: gb) بنفس نمط إضافة لبنان في الموجة 9.",
+    "زاويتا التمايز: تخفيضات التسوق ومباريات الدوري الإنجليزي الممتاز (Boxing Day fixtures) — لا يقدمهما أي منافس عربي حالي بصفحة عداد مخصصة."
+  ],
+  "updatedAt": "2026-07-18T20:03:06.278Z"
+}

@@ -1,0 +1,13 @@
+{
+  "slug": "saudi-cup",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": false,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [],
+  "updatedAt": "2026-07-17T19:10:42.505Z"
+}

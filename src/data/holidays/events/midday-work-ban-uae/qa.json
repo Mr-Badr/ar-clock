@@ -1,0 +1,20 @@
+{
+  "slug": "midday-work-ban-uae",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-19 (albayan.ae, emaratalyoum.com, mohre.gov.ae): daily outdoor work ban 12:30-15:00 from June 15 to September 15 each year, run by the Ministry of Human Resources and Emiratisation (MOHRE) under the 'worker heat stress protection policy'.",
+    "Policy has run continuously for 20+ years — deliberately phrased as 'more than twenty years' rather than citing a specific edition number (e.g. '22nd year') to keep content evergreen.",
+    "Scope: construction, infrastructure, and any field work in open/uncovered locations. Indoor/shaded/air-conditioned work is exempt.",
+    "Monitoring: smart digital inspection tools plus field patrols, per MOHRE's own statements — no specific fine amount cited since none was found from an official primary source.",
+    "Single-country event (_countryCode: ae), aliasSlugs: [] to avoid base_country_leakage.",
+    "core.type is 'fixed' anchored to June 15 (start date, dominant search intent); the September 15 end date is covered in FAQ, aboutEvent, and schemaData.endDate."
+  ],
+  "updatedAt": "2026-07-19T15:40:48.549Z"
+}

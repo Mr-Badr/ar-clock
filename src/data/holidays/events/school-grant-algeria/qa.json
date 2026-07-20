@@ -1,0 +1,21 @@
+{
+  "slug": "school-grant-algeria",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-19 (aps.dz official Algerian news agency, elkhabar.com, ennaharonline.com): school grant (منحة التمدرس) value is a stable 5000 DZD per beneficiary, paid directly to the recipient's CCP postal current account via Algérie Poste.",
+    "Payment date is NOT a fixed day of year: 2024 season deadline was end of July 2024 (15 July file-submission deadline, 31 July payment deadline per Education Minister statement); most recently announced season cited 30 June. core.type='estimated' with {{year}}-06-30 as best estimate, following the same honest not-yet-announced pattern as riyadh-season/dubai-shopping-festival/soundstorm-riyadh.",
+    "Deliberately did NOT cite a specific executive-decree number — secondary sources gave conflicting numbers (25-166 vs 26-168) for the same 22 June 2025 decree, so a general 'مرسوم تنفيذي' reference was used instead, following the same evergreen-content lesson already applied to midday-work-ban-bahrain's ministerial decision.",
+    "Explicitly distinguished this grant (pre-university students, annual, Ministry of National Solidarity) from Algeria's separate monthly ONOU university student stipend — a real confusion risk flagged by the original research pass (search contamination with Tunisia's identically-named ONOU office).",
+    "Responsible body: Ministry of National Solidarity, Family and Women's Affairs (وزارة التضامن الوطني والأسرة وقضايا المرأة).",
+    "Single-country event (_countryCode: dz), aliasSlugs: [] to avoid base_country_leakage.",
+    "Content is purely administrative/social-welfare — zero religious or politically sensitive content."
+  ],
+  "updatedAt": "2026-07-19T20:33:50.269Z"
+}

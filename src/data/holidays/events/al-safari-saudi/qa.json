@@ -1,0 +1,20 @@
+{
+  "slug": "al-safari-saudi",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-19: two independent news sources across two consecutive years (alarabiya.net for 2024, emaratalyoum.com for 2025) both confirm September 6 as the start date — confirms this is a fixed solar-calendar date (Gregorian), not tied to the lunar Hijri calendar despite some secondary sources incorrectly framing it via a Hijri '21 Safar' reference.",
+    "Duration: 27 days is the most-cited figure (adennews.net headline), used as the primary figure despite a secondary 26-39 day range debate in some sources.",
+    "3 lunar mansions (منازل): الجبهة (Al-Jabha), الزبرة (Al-Zubra), الصرفة (Al-Sarfa) — follow directly after Suhail star's rising, per traditional Arabic anwaa astronomy sources.",
+    "core.type is 'estimated' (not 'fixed') matching the established convention for this folk-astronomy cluster (al-wasm-saudi, al-marbaaniya-saudi) despite the date being highly consistent year-to-year.",
+    "Deliberately avoided citing the Hijri '21 Safar' framing some competitors use incorrectly — this event is solar/stellar-based, not lunar-Hijri.",
+    "Content is purely astronomical/cultural/civic — zero religious content."
+  ],
+  "updatedAt": "2026-07-19T15:56:19.378Z"
+}

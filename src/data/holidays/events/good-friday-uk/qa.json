@@ -1,0 +1,18 @@
+{
+  "slug": "good-friday-uk",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: الجمعة العظيمة غير مشمولة بقانون التجارة يوم الأحد 1994 (بخلاف أحد الفصح) — مصدر House of Commons Library.",
+    "إثنين الفصح إجازة في إنجلترا/ويلز/أيرلندا الشمالية فقط، ليس اسكتلندا — مصدر ukpublicholidays.co.uk.",
+    "إطار مدني/قانوني/ثقافي بحت، بلا تأكيد ديني — نفس نهج good-friday-germany الحي على الموقع.",
+    "easterOffset: -2 يطابق النمط الحي على good-friday-germany بالضبط."
+  ],
+  "updatedAt": "2026-07-18T20:39:59.932Z"
+}

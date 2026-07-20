@@ -15,7 +15,7 @@ export const CRITICAL_ROUTE_PROBES = Object.freeze([
     path: '/calculators',
     label: 'Calculators hub',
     minimumBodyBytes: 10000,
-    requiredMarkers: ['حاسبات عربية تبدأ من سؤالك الحقيقي', '/calculators/age', '/calculators/vat'],
+    requiredMarkers: ['حاسبات عربية تجيب عن سؤالك مباشرة', '/calculators/age', '/calculators/vat'],
     forbiddenMarkers: ['content="noindex'],
   },
   {
@@ -23,7 +23,7 @@ export const CRITICAL_ROUTE_PROBES = Object.freeze([
     path: '/calculators/monthly-installment',
     label: 'Finance calculator',
     minimumBodyBytes: 10000,
-    requiredMarkers: ['حاسبة القسط الشهري', 'قسط القرض والفائدة وإجمالي السداد'],
+    requiredMarkers: ['حاسبة القسط الشهري', 'كم قسط القرض الشخصي والتمويل العقاري'],
     forbiddenMarkers: ['content="noindex'],
   },
   {
@@ -39,7 +39,7 @@ export const CRITICAL_ROUTE_PROBES = Object.freeze([
     path: '/calculators/vat',
     label: 'VAT calculator',
     minimumBodyBytes: 10000,
-    requiredMarkers: ['حاسبة ضريبة القيمة المضافة', 'إضافة أو استخراج الضريبة'],
+    requiredMarkers: ['حاسبة ضريبة القيمة المضافة', 'إضافة واستخراج — السعودية والإمارات'],
     forbiddenMarkers: ['content="noindex'],
   },
   {

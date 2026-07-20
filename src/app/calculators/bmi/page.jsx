@@ -1,4 +1,5 @@
 import BMICalculator from '@/components/calculators/BMICalculator.client';
+import EmbedCodeSnippet from '@/components/shared/EmbedCodeSnippet.client';
 import {
   CalculatorFaqSection,
   CalculatorHero,
@@ -326,6 +327,16 @@ export default function BMIPage() {
         title="ما الذي يريد معرفته الجميع عن BMI والوزن المثالي"
       >
         <CalculatorFaqSection items={faqItems} />
+      </CalculatorSection>
+
+      <CalculatorSection id="bmi-embed" subtle>
+        <EmbedCodeSnippet
+          embedUrl={`${SITE_URL}/embed/calculators/bmi`}
+          title="حاسبة مؤشر كتلة الجسم"
+          hint="هل تدير موقعاً أو منتدى؟ أضف حاسبة مؤشر كتلة الجسم إليه مجاناً بنسخ الكود التالي:"
+          width={360}
+          height={420}
+        />
       </CalculatorSection>
 
       <CalculatorSection id="bmi-related" subtle>

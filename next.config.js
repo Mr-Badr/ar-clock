@@ -166,11 +166,25 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/(.*)',
+        // Everything except /embed/* gets the normal same-origin framing lock.
+        source: '/:path((?!embed/).*)',
         headers: [
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(self)' },
+        ],
+      },
+      {
+        // Embed widgets are built to be iframed into third-party sites — no
+        // X-Frame-Options here, and CSP frame-ancestors explicitly allows any
+        // origin to embed them (this is the ONLY route family that does).
+        source: '/embed/:path*',
+        headers: [
+          { key: 'X-DNS-Prefetch-Control', value: 'on' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Content-Security-Policy', value: 'frame-ancestors *' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(self)' },
         ],

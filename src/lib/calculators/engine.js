@@ -1159,6 +1159,50 @@ export function calculateAnnualLeave({
   };
 }
 
+// ── Sick Leave Pay Calculator (Saudi Labor Law Article 117) ──────────────────
+// Tiered pay across a rolling 12-month sick-leave allowance:
+//   Days 1-30:   100% of daily wage
+//   Days 31-90:  75% of daily wage
+//   Days 91-120: unpaid (0%)
+// Beyond 120 days total, Article 117 no longer applies (separate GOSI/disability provisions).
+export const SICK_LEAVE_TIER_LIMITS = { full: 30, partial: 60, unpaid: 30 };
+export const SICK_LEAVE_PARTIAL_RATE = 0.75;
+
+export function calculateSickLeavePay({ monthlySalary, sickDays }) {
+  const salary = toNumber(monthlySalary);
+  const days = Math.max(0, Math.round(toNumber(sickDays)));
+  const dailySalary = round(salary / 30);
+
+  const fullPayDays = Math.min(days, SICK_LEAVE_TIER_LIMITS.full);
+  const partialPayDays = Math.min(Math.max(days - SICK_LEAVE_TIER_LIMITS.full, 0), SICK_LEAVE_TIER_LIMITS.partial);
+  const unpaidDays = Math.min(
+    Math.max(days - SICK_LEAVE_TIER_LIMITS.full - SICK_LEAVE_TIER_LIMITS.partial, 0),
+    SICK_LEAVE_TIER_LIMITS.unpaid,
+  );
+  const excessDays = Math.max(days - 120, 0);
+
+  const fullPayAmount = round(fullPayDays * dailySalary);
+  const partialPayAmount = round(partialPayDays * dailySalary * SICK_LEAVE_PARTIAL_RATE);
+  const totalPay = round(fullPayAmount + partialPayAmount);
+  const totalIfHealthy = round(days * dailySalary);
+  const totalDeduction = round(totalIfHealthy - totalPay);
+
+  return {
+    isValid: salary > 0 && days >= 0,
+    dailySalary,
+    sickDays: days,
+    fullPayDays,
+    partialPayDays,
+    unpaidDays,
+    excessDays,
+    fullPayAmount,
+    partialPayAmount,
+    totalPay,
+    totalDeduction,
+    coveredByLaw: days <= 120,
+  };
+}
+
 // ── Zakat Calculator ─────────────────────────────────────────────────────────
 // Nisab thresholds (approximate — user should verify with a scholar or current prices)
 // Gold nisab: 85g | Silver nisab: 595g
@@ -2176,5 +2220,203 @@ export function calculateWorkHours({ schedule, regularDailyHours = 8, regularWee
     regularHours,
     overtimeHours,
     activeDays,
+  };
+}
+
+// ── Working Days Calculator (per-country weekend-aware) ──────────────────────
+// Weekend days verified against src/lib/holidays/country-hub-data.js (JS getDay():
+// 0=Sunday..6=Saturday). UAE and Qatar moved to Sat-Sun in Jan 2022 — several
+// competitor tools still show the pre-2022 Fri-Sat rule for these two.
+export const WORKING_DAYS_COUNTRIES = {
+  sa: { label: 'السعودية', flag: '🇸🇦', weekend: [5, 6], weekendLabel: 'الجمعة والسبت' },
+  ae: { label: 'الإمارات', flag: '🇦🇪', weekend: [6, 0], weekendLabel: 'السبت والأحد' },
+  kw: { label: 'الكويت', flag: '🇰🇼', weekend: [5, 6], weekendLabel: 'الجمعة والسبت' },
+  qa: { label: 'قطر', flag: '🇶🇦', weekend: [6, 0], weekendLabel: 'السبت والأحد' },
+  bh: { label: 'البحرين', flag: '🇧🇭', weekend: [5, 6], weekendLabel: 'الجمعة والسبت' },
+  om: { label: 'سلطنة عُمان', flag: '🇴🇲', weekend: [5, 6], weekendLabel: 'الجمعة والسبت' },
+  eg: { label: 'مصر', flag: '🇪🇬', weekend: [5, 6], weekendLabel: 'الجمعة والسبت' },
+  jo: { label: 'الأردن', flag: '🇯🇴', weekend: [5, 6], weekendLabel: 'الجمعة والسبت' },
+};
+
+export function calculateWorkingDays({ startDate, endDate, country = 'sa' }) {
+  const countryData = WORKING_DAYS_COUNTRIES[country] || WORKING_DAYS_COUNTRIES.sa;
+  const rawStart = startDate ? new Date(`${startDate}T00:00:00`) : null;
+  const rawEnd = endDate ? new Date(`${endDate}T00:00:00`) : null;
+
+  if (!rawStart || !rawEnd || Number.isNaN(rawStart.getTime()) || Number.isNaN(rawEnd.getTime())) {
+    return { isValid: false };
+  }
+
+  const reversed = rawStart > rawEnd;
+  const from = reversed ? rawEnd : rawStart;
+  const to = reversed ? rawStart : rawEnd;
+
+  let totalDays = 0;
+  let weekendDays = 0;
+  const weekdayBreakdown = [0, 0, 0, 0, 0, 0, 0]; // Sun..Sat, count of each weekday in range
+  const cursor = new Date(from);
+
+  while (cursor <= to) {
+    totalDays += 1;
+    const dow = cursor.getDay();
+    weekdayBreakdown[dow] += 1;
+    if (countryData.weekend.includes(dow)) weekendDays += 1;
+    cursor.setDate(cursor.getDate() + 1);
+  }
+
+  const workingDays = totalDays - weekendDays;
+  const fullWeeks = Math.floor(totalDays / 7);
+
+  return {
+    isValid: true,
+    totalDays,
+    weekendDays,
+    workingDays,
+    fullWeeks,
+    remainderDays: totalDays - fullWeeks * 7,
+    country,
+    countryLabel: countryData.label,
+    countryFlag: countryData.flag,
+    weekendLabel: countryData.weekendLabel,
+    weekdayBreakdown,
+    reversed,
+  };
+}
+
+// ── Weighted Final-Grade Calculator ───────────────────────────────────────────
+// Components with a score = already-graded work; components left blank = pending
+// (usually the final exam). Computes the current secured grade and the score
+// needed on the remaining weight to reach a target overall grade.
+export function calculateWeightedGrade({ components, targetGrade = 60 }) {
+  const rows = Array.isArray(components) ? components : [];
+  const target = toNumber(targetGrade);
+
+  let totalWeight = 0;
+  let gradedWeight = 0;
+  let pendingWeight = 0;
+  let earnedPoints = 0;
+  let hasInvalidScore = false;
+
+  for (const row of rows) {
+    const weight = Math.max(0, toNumber(row?.weight));
+    if (weight <= 0) continue;
+    totalWeight += weight;
+
+    const rawScore = row?.score;
+    const hasScore = rawScore !== '' && rawScore !== null && rawScore !== undefined;
+    if (hasScore) {
+      const score = toNumber(rawScore);
+      if (score < 0 || score > 100) hasInvalidScore = true;
+      gradedWeight += weight;
+      earnedPoints += (weight * Math.min(100, Math.max(0, score))) / 100;
+    } else {
+      pendingWeight += weight;
+    }
+  }
+
+  const currentGrade = gradedWeight > 0 ? round((earnedPoints / gradedWeight) * 100) : 0;
+  const neededScore = pendingWeight > 0 ? round(((target - earnedPoints) / pendingWeight) * 100) : null;
+
+  return {
+    isValid: totalWeight > 0 && !hasInvalidScore,
+    totalWeight: round(totalWeight),
+    gradedWeight: round(gradedWeight),
+    pendingWeight: round(pendingWeight),
+    earnedPoints: round(earnedPoints),
+    currentGrade,
+    targetGrade: target,
+    neededScore,
+    isAchievable: neededScore === null ? null : neededScore <= 100,
+    alreadySecured: neededScore !== null && neededScore <= 0,
+    weightMismatch: totalWeight > 0 && Math.abs(totalWeight - 100) > 0.01,
+  };
+}
+
+// ── Margin vs. Markup Calculator (bidirectional) ──────────────────────────────
+// Margin  = profit ÷ sale price  (profit as % of what the customer pays)
+// Markup  = profit ÷ cost        (profit as % of what the seller paid)
+// Three entry modes so the same tool works whichever number the user already has.
+export function calculateMarginMarkup({ mode = 'from-price', cost, price, marginPercent, markupPercent }) {
+  const c = toNumber(cost);
+  if (c <= 0) return { isValid: false };
+
+  let p;
+  let margin;
+  let markup;
+
+  if (mode === 'from-margin') {
+    margin = toNumber(marginPercent);
+    if (margin >= 100 || margin < 0) return { isValid: false };
+    p = c / (1 - margin / 100);
+    markup = ((p - c) / c) * 100;
+  } else if (mode === 'from-markup') {
+    markup = toNumber(markupPercent);
+    if (markup < 0) return { isValid: false };
+    p = c * (1 + markup / 100);
+    margin = ((p - c) / p) * 100;
+  } else {
+    p = toNumber(price);
+    if (p <= 0) return { isValid: false };
+    margin = ((p - c) / p) * 100;
+    markup = ((p - c) / c) * 100;
+  }
+
+  const profit = p - c;
+
+  return {
+    isValid: true,
+    mode,
+    cost: round(c),
+    price: round(p),
+    profit: round(profit),
+    marginPercent: round(margin),
+    markupPercent: round(markup),
+  };
+}
+
+// ── Domestic Worker Recruitment Cost Calculator (Saudi Arabia — Musaned) ─────
+// Fixed government fees paid through the Musaned platform (musaned.com.sa) —
+// verified 2026: visa issuance 2,000 SAR, e-service fee 172.5 SAR (incl. VAT),
+// annual iqama (residence permit) 600 SAR, mandatory health insurance minimum
+// 332 SAR/year. The recruitment office's own service fee (which also usually
+// bundles the mandatory Musaned contract-insurance premium) varies by office
+// and nationality, so it stays a user input rather than a hardcoded constant.
+export const DOMESTIC_WORKER_GOV_FEES = {
+  visaIssuance: 2000,
+  musanedEService: 172.5,
+  annualIqama: 600,
+  annualHealthInsurance: 332,
+};
+
+export function calculateDomesticWorkerCost({
+  monthlySalary,
+  recruitmentOfficeFee,
+  contractYears = 2,
+}) {
+  const salary = toNumber(monthlySalary);
+  const officeFee = toNumber(recruitmentOfficeFee);
+  const years = Math.max(1, Math.round(toNumber(contractYears) || 2));
+
+  const oneTimeGovFees = round(DOMESTIC_WORKER_GOV_FEES.visaIssuance + DOMESTIC_WORKER_GOV_FEES.musanedEService);
+  const annualGovFees = round(DOMESTIC_WORKER_GOV_FEES.annualIqama + DOMESTIC_WORKER_GOV_FEES.annualHealthInsurance);
+  const totalAnnualGovFees = round(annualGovFees * years);
+  const totalSalaryCost = round(salary * 12 * years);
+  const totalGovAndOfficeCost = round(oneTimeGovFees + totalAnnualGovFees + officeFee);
+  const grandTotal = round(totalGovAndOfficeCost + totalSalaryCost);
+  const firstYearCost = round(oneTimeGovFees + annualGovFees + officeFee + salary * 12);
+  const monthlyEquivalent = round(grandTotal / (years * 12));
+
+  return {
+    isValid: salary > 0 && officeFee >= 0,
+    contractYears: years,
+    oneTimeGovFees,
+    annualGovFees,
+    totalAnnualGovFees,
+    officeFee: round(officeFee),
+    totalSalaryCost,
+    totalGovAndOfficeCost,
+    grandTotal,
+    firstYearCost,
+    monthlyEquivalent,
   };
 }

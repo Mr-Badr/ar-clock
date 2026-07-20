@@ -1,0 +1,20 @@
+{
+  "slug": "flag-day-jordan",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: وكالة الأنباء الأردنية بترا — يوم العلم الأردني رمز الفخر والاعتزاز",
+    "fact-source: وزارة النقل الأردنية — يوم العلم ضمن التقويم الرسمي",
+    "fact-source: التراث الملكي الأردني — القانون الأساسي 1928 واعتماد العلم في 16 نيسان",
+    "fact: قرار مجلس الوزراء 31 آذار 2021 باعتماد 16 نيسان يوماً للعلم ضمن مئوية الدولة",
+    "fact: العلم مشتق من علم الثورة العربية الكبرى 1916؛ النجمة السباعية ترمز للسبع المثاني",
+    "serp: arabic competitors scraped from Petra, Wikipedia, Addustour, MoT, Arabica Doha Institute"
+  ],
+  "updatedAt": "2026-07-18T14:10:52.244Z"
+}

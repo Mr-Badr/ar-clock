@@ -1,0 +1,105 @@
+{
+  "slug": "khaleeji-27",
+  "locale": "ar",
+  "capturedAt": "2026-07-18T14:55:55.819Z",
+  "primaryQueries": [
+    "متى خليجي 27",
+    "كم باقي على خليجي 27",
+    "موعد خليجي 27",
+    "خليجي 27 جدة",
+    "الفرق المشاركة في خليجي 27",
+    "كأس الخليج 27",
+    "منتخبات خليجي 27",
+    "جدول مباريات خليجي 27",
+    "بطولة الخليج 27",
+    "خليجي 27 السعودية"
+  ],
+  "competitors": [
+    {
+      "name": "kooora.com",
+      "url": "https://www.kooora.com",
+      "strengths": "Deep, real-time fixture/score coverage",
+      "gaps": "Zero countdown/date-explainer format — pure live journalism"
+    }
+  ],
+  "coverageMatrix": [
+    {
+      "topic": "Exact tournament start date",
+      "competitorCoverage": "Only via one-off news announcements once confirmed by SAFF",
+      "ourAngle": "Live countdown + evergreen page"
+    },
+    {
+      "topic": "Participating teams list",
+      "competitorCoverage": "Covered in news roundups",
+      "ourAngle": "Clear, direct FAQ answer without needing to read a full article"
+    },
+    {
+      "topic": "Host city/venue",
+      "competitorCoverage": "Mentioned in passing in announcement articles",
+      "ourAngle": "Direct answer up front"
+    },
+    {
+      "topic": "Relationship to continental tournaments (Asian Cup, Arab Cup)",
+      "competitorCoverage": "Not addressed clearly anywhere found",
+      "ourAngle": "Explicit disambiguation FAQ"
+    },
+    {
+      "topic": "Tournament frequency/history",
+      "competitorCoverage": "Covered in occasional retrospective pieces",
+      "ourAngle": "Concise context framing it as one of the region's oldest recurring football tournaments"
+    },
+    {
+      "topic": "How to watch/broadcast",
+      "competitorCoverage": "Announced close to the tournament via official channels",
+      "ourAngle": "General guidance pointing to official channels"
+    },
+    {
+      "topic": "Fixture schedule",
+      "competitorCoverage": "Live-updated once released — this site won't compete on live coverage",
+      "ourAngle": "Not our angle — we own the pre-tournament countdown/context phase instead"
+    },
+    {
+      "topic": "Comparison with the site's own world-cup-2030 page format",
+      "competitorCoverage": "N/A",
+      "ourAngle": "Reuse the same proven countdown+context format that already works for major tournament pages"
+    }
+  ],
+  "keywordGaps": [
+    "متى خليجي 27",
+    "كم باقي على خليجي 27",
+    "موعد خليجي 27",
+    "خليجي 27 جدة",
+    "الفرق المشاركة في خليجي 27",
+    "كأس الخليج 27",
+    "منتخبات خليجي 27",
+    "بطولة الخليج 27"
+  ],
+  "unansweredQuestions": [
+    "ما الدول المشاركة في خليجي 27؟",
+    "أين تقام خليجي 27 بالضبط؟",
+    "كل كم سنة تقام بطولة الخليج؟",
+    "هل خليجي 27 جزء من بطولة قارية أكبر؟",
+    "كيف أتابع مباريات خليجي 27؟",
+    "متى تنطلق خليجي 27؟"
+  ],
+  "differentiationIdeas": [
+    "قيادة المحتوى بعداد تنازلي بدل الاكتفاء بمقالات إخبارية متفرقة",
+    "بناء صفحة واحدة تجمع كل الأسئلة الأساسية (الدول، المكان، التاريخ) بدل تشتيتها عبر عدة مقالات إخبارية",
+    "التمييز الصريح بين خليجي 27 والبطولات القارية الأخرى، نقطة غير معالجة بوضوح في المصادر المتاحة"
+  ],
+  "factSources": [
+    {
+      "label": "SAFF (Saudi Arabian Football Federation)",
+      "url": "https://www.saff.com.sa"
+    },
+    {
+      "label": "alkass.net — Gulf Cup coverage",
+      "url": "https://www.alkass.net"
+    },
+    {
+      "label": "kooora.com — Gulf Cup 27 coverage",
+      "url": "https://www.kooora.com"
+    }
+  ],
+  "notes": "Researched 2026-07-17 as part of Wave 13. Confirmed via SAFF, alkass.net, Al Jazeera Sport, and kooora.com that Saudi Arabia hosts the 27th Gulf Cup in Jeddah, Sept 23 - Oct 6, with all 8 eligible national teams (the 6 GCC members plus Iraq and Yemen) participating. Zero countdown-format competitor found — every existing source is fixture/score journalism, not a pre-tournament date/context hub. Reuses the same countdown+FAQ+context format already proven on world-cup-2030."
+}

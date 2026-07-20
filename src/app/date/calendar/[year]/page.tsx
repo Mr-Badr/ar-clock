@@ -393,10 +393,18 @@ export default async function GregorianCalendarPage({
                 تبدأ السنة يوم {firstDayName} وتنتهي يوم {lastDayName}. النطاق الهجري: {firstHijriLabel} إلى {lastHijriLabel}.
               </p>
               <div className="date-hero-actions">
-                <Link href={`/date/calendar/${y - 1}`} className="date-hero-link">
+                <Link
+                  href={`/date/calendar/${y - 1}`}
+                  className="date-hero-link"
+                  rel={isSeoIndexableGregorianCalendarYear(y - 1, currentYear) ? undefined : 'nofollow'}
+                >
                   → عام {y - 1}
                 </Link>
-                <Link href={`/date/calendar/${y + 1}`} className="date-hero-link date-hero-link--primary">
+                <Link
+                  href={`/date/calendar/${y + 1}`}
+                  className="date-hero-link date-hero-link--primary"
+                  rel={isSeoIndexableGregorianCalendarYear(y + 1, currentYear) ? undefined : 'nofollow'}
+                >
                   عام {y + 1} ←
                 </Link>
               </div>
@@ -420,7 +428,7 @@ export default async function GregorianCalendarPage({
         </section>
 
         <section className="mb-12">
-          <YearlyCalendar year={y} serverTodayIso={serverTodayIso} />
+          <YearlyCalendar year={y} serverTodayIso={serverTodayIso} now={now} />
         </section>
 
         <section className="date-editorial-grid date-section">

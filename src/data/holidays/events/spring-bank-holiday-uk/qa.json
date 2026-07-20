@@ -1,0 +1,20 @@
+{
+  "slug": "spring-bank-holiday-uk",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: كانت تُسمى إثنين العنصرة (Whit Monday) قبل 1971، تتبع عيد العنصرة المتحرك — مصدر Wikipedia EN.",
+    "ثُبتت في آخر اثنين من مايو بقانون العطل البنكية والمعاملات المالية 1971 — مصدر House of Commons Library.",
+    "تحركت مرة واحدة موثقة: 2022، لليوبيل البلاتيني للملكة إليزابيث الثانية.",
+    "floating rule: month:5, weekday:1, nth:-1 يطابق country-hub-data.js بالضبط.",
+    "اسم إثنين العنصرة مذكور كحقيقة تاريخية محايدة فقط، بلا شرح أو تأكيد ديني.",
+    "محتوى مدني/تاريخي بحت."
+  ],
+  "updatedAt": "2026-07-19T00:47:50.042Z"
+}

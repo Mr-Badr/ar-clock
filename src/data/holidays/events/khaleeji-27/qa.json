@@ -1,0 +1,13 @@
+{
+  "slug": "khaleeji-27",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": false,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [],
+  "updatedAt": "2026-07-18T14:55:52.981Z"
+}

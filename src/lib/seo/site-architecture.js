@@ -20,6 +20,7 @@ function dedupeRoutes(routes) {
 export const ROOT_SITEMAP_ROUTES = Object.freeze(dedupeRoutes([
   { path: '/', priority: 1.0, changeFrequency: 'daily', websitePart: true },
   { path: '/fahras', priority: 0.95, changeFrequency: 'daily', websitePart: true },
+  { path: '/countdown', priority: 0.9, changeFrequency: 'weekly', websitePart: true },
   { path: '/time-now', priority: 0.93, changeFrequency: 'daily', websitePart: true },
   { path: '/mwaqit-al-salat', priority: 0.93, changeFrequency: 'daily', websitePart: true },
   { path: '/imsakiya', priority: 0.9, changeFrequency: 'monthly', websitePart: true },

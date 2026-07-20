@@ -1,0 +1,20 @@
+{
+  "slug": "orthodox-christmas-palestine",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebFetch directly against the official Palestinian National Information Center (info.wafa.ps/pages/details/29601), which explicitly lists '7 كانون الثاني' (7 January, Eastern/Orthodox Christmas) as a separate 1-day official paid holiday, distinct from the already-live christmas-palestine (25 December, Western Christmas).",
+    "Legal basis: Palestinian Labor Law No. 7 of 2000 — same legal basis already used for christmas-palestine.",
+    "Strictly civic/legal register (holiday-status facts only) — deliberately avoided any political content given Palestine's sensitivity; this is purely about which day is a paid holiday for Christian employees, not a political topic.",
+    "Explicitly addresses a real point of confusion: many readers assume 7 Jan is just an alternate name for 25 Dec Christmas rather than a genuinely separate paid holiday — this is the core differentiation angle.",
+    "2000 (law year) appears in content but is well below the hardcoded-year threshold (current year - 1 = 2025), no validator issue.",
+    "Single-country event (_countryCode: ps), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-19T21:04:12.038Z"
+}

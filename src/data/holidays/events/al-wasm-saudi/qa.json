@@ -1,0 +1,17 @@
+{
+  "slug": "al-wasm-saudi",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر WebSearch مباشر: بداية الوسم 16 أكتوبر، مدته 52 يوماً (حتى ~7 ديسمبر)، الأنواء الأربعة (العواء 16 أكتوبر، السماك 29 أكتوبر، الغفر 11 نوفمبر، الزبانا 24 نوفمبر) — مصادر: spa.gov.sa، alriyadh.com، saudipedia.com.",
+    "يطابق قالب suhail-star الحي على الموقع هيكلياً وتحريرياً (نفس الفئة astronomy، نفس نمط type: estimated).",
+    "تفريق صريح عن مربعانية القيظ ضمن FAQ لمنع الخلط بين موسمي الأنواء."
+  ],
+  "updatedAt": "2026-07-18T15:07:13.532Z"
+}

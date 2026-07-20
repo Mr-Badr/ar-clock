@@ -5,6 +5,7 @@ import {
   type HijriYearCalendar,
 } from '@/lib/date-calendar';
 import { logger, serializeError } from '@/lib/logger';
+import { isSeoIndexableGregorianDate } from '@/lib/seo/date-indexing';
 import { DateCalendarUnavailable } from './DateCalendarUnavailable';
 import { EventDayLink } from './EventDayLink';
 
@@ -55,7 +56,7 @@ function getDayLinkClass(data: HijriCalendarDay, special: SpecialMonth | undefin
   ].filter(Boolean).join(' ');
 }
 
-export function HijriYearlyCalendar({ year }: { year: number }) {
+export function HijriYearlyCalendar({ year, now }: { year: number; now: Date }) {
   let calendar: HijriYearCalendar;
   try {
     calendar = buildHijriYearCalendar(year);
@@ -113,6 +114,10 @@ export function HijriYearlyCalendar({ year }: { year: number }) {
                 const className = getDayLinkClass(data, special);
                 const href = `/date/hijri/${year}/${monthStr}/${String(day).padStart(2, '0')}`;
                 const gregorianLabel = `${data.gregorianDay}/${data.gregorianMonth}`;
+                const isIndexable = isSeoIndexableGregorianDate(
+                  { year: data.gregorianYear, month: data.gregorianMonth, day: data.gregorianDay },
+                  now,
+                );
 
                 if (data.hasEvent) {
                   return (
@@ -123,6 +128,7 @@ export function HijriYearlyCalendar({ year }: { year: number }) {
                       hijriLabel={gregorianLabel}
                       day={day}
                       className={className}
+                      nofollow={!isIndexable}
                     />
                   );
                 }
@@ -133,6 +139,7 @@ export function HijriYearlyCalendar({ year }: { year: number }) {
                     href={href}
                     className={className}
                     title={`${data.gregorianDay}/${data.gregorianMonth}/${data.gregorianYear}`}
+                    rel={isIndexable ? undefined : 'nofollow'}
                   >
                     <span className="date-day-main">
                       {day}

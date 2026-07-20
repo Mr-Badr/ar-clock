@@ -63,10 +63,18 @@ export default function ClientRuntimeMounts() {
     }
   }, [pathname]);
 
+  // Embed widgets (/embed/*) are meant to be iframed into a third-party page —
+  // hide this site's own chrome (nav, footer, ads, consent banner) so only the
+  // widget content shows. See embed-mode rules in globals.css.
+  const isEmbed = pathname?.startsWith('/embed/');
+  useEffect(() => {
+    document.documentElement.classList.toggle('embed-mode', Boolean(isEmbed));
+  }, [isEmbed]);
+
   return (
     <>
-      {hydrated ? <><ConsentBanner /><ScrollToTopOnNav /></> : null}
-      {idle ? (
+      {hydrated && !isEmbed ? <><ConsentBanner /><ScrollToTopOnNav /></> : null}
+      {idle && !isEmbed ? (
         <>
           <AdStickyAnchor />
           <SiteVisitTracker />

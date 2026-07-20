@@ -1,6 +1,4 @@
 import 'server-only';
-import { Suspense } from 'react';
-import { getCachedNowIso } from '@/lib/date-utils';
 
 // ─── Timezone helpers ─────────────────────────────────────────────────────────
 
@@ -48,70 +46,30 @@ export function formatUTCOffset(minutes) {
   return `UTC${sign}${h}${m > 0 ? ':' + String(m).padStart(2, '0') : ''}`;
 }
 
-/** SSR current time – Western numerals via -u-nu-latn */
-function getCurrentTime(tz, dateInfo) {
+/**
+ * Server-computed clock parts for a timezone, used to seed the live clock's
+ * first paint (client ticks from here — no hydration flash, no CLS).
+ */
+export function getInitialClockParts(tz, dateInfo) {
   try {
-    if (!dateInfo) return '—';
-    return new Intl.DateTimeFormat('ar-SA-u-nu-latn', {
-      timeZone: tz, hour: '2-digit', minute: '2-digit', hour12: true,
-    }).format(dateInfo);
-  } catch { return '—'; }
+    if (!dateInfo) return { h: 0, m: 0, s: 0 };
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz, hour: 'numeric', minute: 'numeric', second: 'numeric',
+      hour12: false,
+    }).formatToParts(dateInfo);
+    const g = (t) => {
+      const v = parseInt(parts.find(p => p.type === t)?.value ?? '0', 10);
+      return t === 'hour' && v === 24 ? 0 : v;
+    };
+    return { h: g('hour'), m: g('minute'), s: g('second') };
+  } catch { return { h: 0, m: 0, s: 0 }; }
 }
 
-export async function TimeSnapshot({ fromCity, toCity }) {
-  const currentDate = new Date(await getCachedNowIso());
-  const fromOffMin = getOffsetMinutes(fromCity.timezone, currentDate);
-  const toOffMin = getOffsetMinutes(toCity.timezone, currentDate);
-  const diffMinutes = toOffMin - fromOffMin;
-  const diffHours = diffMinutes / 60;
-  const fromDST = isDSTActive(fromCity.timezone, currentDate);
-  const toDST = isDSTActive(toCity.timezone, currentDate);
-  const fromOffStr = formatUTCOffset(fromOffMin);
-  const toOffStr = formatUTCOffset(toOffMin);
-
-  const absDiffH = Math.floor(Math.abs(diffHours));
-  const absDiffM = Math.abs(diffMinutes) % 60;
-
-  const fromTime = getCurrentTime(fromCity.timezone, currentDate);
-  const toTime = getCurrentTime(toCity.timezone, currentDate);
-
-  return (
-    <div className="grid grid-cols-3 items-center gap-2">
-      <div className="text-center">
-        <p className="text-xs text-muted mb-1">{fromCity.city_name_ar}</p>
-        <p className="text-2xl font-extrabold tabular-nums text-clock leading-none" dir="ltr">
-          {fromTime}
-        </p>
-        <p className="text-xs text-muted mt-1 tabular-nums" dir="ltr">{fromOffStr}</p>
-        {fromDST && <span className="badge badge-warning mt-2">صيفي</span>}
-      </div>
-
-      <div className="text-center border-x border-[var(--border-subtle)] py-1">
-        <p className="text-xs text-muted">الفارق</p>
-        <p className="text-xl font-black tabular-nums text-accent-alt leading-tight" dir="ltr">
-          {diffMinutes === 0
-            ? '0'
-            : `${diffMinutes > 0 ? '+' : ''}${absDiffH}${absDiffM > 0 ? `:${String(absDiffM).padStart(2, '0')}` : ''}`}
-        </p>
-        <p className="text-xs text-muted">{diffMinutes === 0 ? 'متطابق' : 'ساعة'}</p>
-      </div>
-
-      <div className="text-center">
-        <p className="text-xs text-muted mb-1">{toCity.city_name_ar}</p>
-        <p className="text-2xl font-extrabold tabular-nums text-clock leading-none" dir="ltr">
-          {toTime}
-        </p>
-        <p className="text-xs text-muted mt-1 tabular-nums" dir="ltr">{toOffStr}</p>
-        {toDST && <span className="badge badge-warning mt-2">صيفي</span>}
-      </div>
-    </div>
-  );
-}
-
-export function SuspendedTimeSnapshot({ fromCity, toCity }) {
-  return (
-    <Suspense fallback={<div className="h-24 animate-pulse bg-[var(--bg-surface-2)] rounded-[var(--radius-lg)]" />}>
-      <TimeSnapshot fromCity={fromCity} toCity={toCity} />
-    </Suspense>
-  );
+export function getLocalDateLabel(tz, dateInfo) {
+  try {
+    if (!dateInfo) return '';
+    return dateInfo.toLocaleDateString('ar-EG-u-nu-latn', {
+      timeZone: tz, weekday: 'long', day: 'numeric', month: 'long',
+    });
+  } catch { return ''; }
 }

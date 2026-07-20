@@ -1,6 +1,162 @@
 # Session notes — ar-clock / miqatona.com
-Last updated: 2026-07-15 (Wave 12 FULLY COMPLETE — see checkpoint immediately below; supersedes all
+Last updated: 2026-07-17 (SEO/discoverability audit — see checkpoint immediately below; supersedes
 checkpoints further down for build status)
+
+## Checkpoint: embed-widget bugs found via real browser testing + ad-placement audit + 3rd widget type (2026-07-17, same day, follow-up to the checkpoint below)
+
+Owner reviewed the embed-widget code directly and pushed back: fix the generic title, make sure it's
+"perfect for all devices," verify placement, and don't build anything new until existing things are
+premium quality — plus a standing complaint that calculators get zero visitors and ad placement is bad
+in many places. Did a REAL browser verification pass (Puppeteer, not just code review) and found 3 real,
+confirmed bugs the previous session's code-only review had missed:
+
+1. `EmbedCodeSnippet` defaults were still prayer-specific — fixed to generic.
+2. **Calculator embed widgets were completely unstyled/broken** — `/embed/calculators/[slug]` sits
+   outside `calculators.css`'s route tree (that file only loads via `src/app/calculators/layout.jsx`),
+   AND the widget used a bare `<div>` instead of `<main>` — calculators.css has ~340 rules scoped to
+   `main:not(.calc-hub-page)` that silently never matched. Fixed both.
+3. **`EmbedCodeSnippet`'s code block rendered at a negative x-offset**, straddling both page edges — its
+   `<pre>`'s un-wrapped long content (1300+px intrinsic width) propagated up through flex/grid ancestors
+   missing `min-width: 0`/`max-width: 100%`. Fixed in `globals.css`.
+
+**Also hit a real Turbopack dev-cache staleness bug**: a CSS fix wasn't reaching the compiled bundle even
+after edits + waits — confirmed by inspecting `document.styleSheets` directly. Fixed by killing the dev
+server, clearing `.next/cache/turbopack`, restarting. **Don't trust "the edit should have applied" —
+verify the actual served CSS/JS when something looks unfixed after a real change.**
+
+**Ad-placement audit** (systematic script scan, not spot-checking): found and fixed 13 real gaps — the
+entire `age/*` sub-cluster (7 pages via the shared `AgeToolSections` component) + the age hub, the
+`sleep/[tool]` and `personal-finance/[tool]` shared dynamic routes (6 + 4 tool pages), and the
+`building`/`finance`/`personal-finance`/`sleep` hub pages were all missing their end-of-page
+`AdMultiplex`. All fixed.
+
+**Zero-visitors investigation**: spot-checked indexability (robots/canonical/titles) on several
+calculator pages — all clean, no technical blocker found. The real, already-identified cause is the
+orphan bug fixed earlier the same day (44 calculators never linked from the hub or navbar) — that's the
+single biggest lever, and it just shipped today so it hasn't had time to show in rankings yet. Beyond
+that it's normal domain-authority/backlink buildup, which is exactly what the embed-widget system is
+for.
+
+**Built a 3rd widget type**: `/embed/countdown/[slug]` for `ramadan`/`eid-al-fitr`/`eid-al-adha`
+(interpretation of the owner's "widget for counters" — flag if this wasn't the intent). Reuses the real
+`getNextEventDate`/`resolveAllHijriEvents`/`getTimeRemaining` engine, not duplicated math. Deliberately
+does NOT reuse the full `CountdownTicker` (fullscreen/wake-lock/WhatsApp-share make no sense in a 3rd-
+party iframe) — built a lean dedicated ticker instead.
+
+**Verification this round**: real Puppeteer checks (320/375/768/1280px, zero horizontal overflow, zero
+console errors) on every widget type AND the snippet blocks on real pages — not just lint/typecheck.
+Lint clean, `tsc --noEmit` clean, `test:unit` 116/116, `seo:validate` ok.
+
+## Checkpoint: competitor research + docs cleanup + embed-widget system (2026-07-17, same day, follow-up to the checkpoint below)
+
+Continuation of the SEO/discoverability audit below, same session. Owner asked for new calculator ideas
+that are big in English but weak in Arabic, explicitly banned Qibla and any new Zakat tool, and asked for
+a deep-dive on khaleejcalculators.com (their real edge: a free iframe-embed-widget network with a
+mandatory backlink term — a compounding SEO-authority play, not an ad-revenue one). Full research +
+ranked candidates written into `docs/holiday-event-opportunity-backlog.md`'s new "CALCULATORS &
+COMPETITIVE FEATURES BACKLOG" section (that file is now the canonical spot for calculator/feature
+ideas too, per owner instruction, despite its holiday-specific name).
+
+Then owner said "implement `high-value-tools-tracker.md` + `growth-roadmap.md` + `nextjs-patterns.md`,
+delete everything done, do what we still waiting":
+- Built `hajj-umrah-packing-guide` (`src/lib/guides/hajj-guides.js`) — the one tracker item not blocked
+  on an owner action, same Wirecutter-style pattern as `newborn-essentials-guide`, hidden via
+  `draft: true` pending Amazon.sa/.ae tags.
+- Rewrote both growth docs from scratch after verifying every checkbox against real code — several
+  "unchecked" items were secretly already shipped (K1/K4/K4b/K4c/K4d/K8/C5/M1). Deleted everything
+  confirmed done; kept only genuinely open items (J3 shareable-calc-URL, J4 touch-target audit, K5 Jordan
+  income tax, K7/K9/K10, L1-3 GSC-export-blocked, M2/M4 non-subscription personalization). M3 (push
+  notifications) explicitly re-banned inline — standing no-subscription rule.
+- Audited `.claude/rules/nextjs-patterns.md` compliance. **Important false-positive lesson**: checking
+  for `error.tsx`/`loading.tsx` as direct siblings of `page.jsx` flags ~90 "violations," but Next.js App
+  Router inherits both from ANY ancestor segment — `date/loading.tsx`, `holidays/loading.jsx`,
+  `imsakiya/loading.jsx` already cover their whole dynamic subtrees. Don't re-run a naive sibling-file
+  check next time; check the full ancestor chain. The one REAL gap found and fixed:
+  `/embed/prayer-times/[country]/[city]` had no error/loading anywhere in its chain — fixed with
+  embed-appropriate minimal versions (no site chrome, renders inside third-party iframes). No
+  `force-dynamic`/`new Date()` found in any sitemap (already compliant).
+- On a bare "continue," built the embed-widget system for calculators (previously just a plan item):
+  `/embed/calculators/[slug]/page.jsx`, v1 = age/bmi/percentage/end-of-service-benefits/
+  monthly-installment, reusing their real client components (no duplicated calc logic), mandatory
+  attribution baked into the widget markup itself (matching khaleejcalculators.com's own mechanic).
+  Moved `EmbedCodeSnippet` from `components/mwaqit/` to `components/shared/`, generalized with
+  title/hint/width/height props. Added error.jsx/loading.jsx from the start this time. Registered in
+  `INTENTIONALLY_NON_INDEXABLE_PAGE_ROUTES`.
+
+**Verification**: lint clean, `tsc --noEmit` clean, `test:unit` 116/116, `seo:validate` passes (`ok`,
+4 explicitly-non-indexable routes). Did not run full `npm run build` this round either.
+
+## Checkpoint: SEO/discoverability audit — time-difference indexing fix, calculator hub + navbar orphan fixes, flight-arrival tool (2026-07-17)
+
+Owner said traffic is stuck at ~200/day and asked to find/fix real problems for a 10x-visitor target,
+plus complete anything left in "the plan." Found and fixed 3 concrete, high-confidence bugs (not
+guesses) plus shipped one new bundled tool:
+
+**1. Time-difference indexing bug (the exact thing the owner described).**
+`src/lib/seo/time-difference-indexing.js` gated `robots.index` behind a hardcoded allowlist
+(`POPULAR_PAIRS`, ~62 pairs) — every other real city pair the site can genuinely resolve (any two
+cities via the geo DB/fallback file) was forced `noindex`. Worse: 93 more pairs (`SITEMAP_PAIRS`) were
+being submitted to Google via sitemap.xml while still `noindex` — a real "submitted URL marked noindex"
+problem. Fixed: `isSeoIndexableTimeDifferencePair` now only checks both segments are non-empty and
+distinct (self-pair guard) — by the time it's called both cities already resolved as real. Added
+`src/lib/seo/time-difference-priority-pairs.js` (~1,000 more pairs for sitemap/SSG, built from each
+priority country's *real* hub city — reusing existing curated data so it's Dubai not Abu Dhabi, etc. —
+crossed with every other hub, both directions, skipping foreign-foreign pairs) wired into both
+`generateStaticParams` and `sitemap.js`. Updated `tests/time-difference-indexing.test.ts` to match the
+new contract (was asserting the OLD buggy behavior as correct — a reverse-direction pair and an
+uncurated pair were both asserted `false`; now `true`, plus a new self-pair/empty-segment test).
+`getSeoIndexableTimeDifferencePairs()` export was removed (no longer meaningful — there's no fixed set
+anymore).
+
+**2. Calculator hub orphans — 44 real tools invisible on `/calculators`.** The main hub page builds its
+category cards from a hand-maintained `CALCULATOR_HUBS[cluster].routeSlugs` array, not from the real
+inventory (`CALCULATOR_ROUTES` filtered by cluster — which `/calculators/finance` correctly uses and was
+therefore unaffected). 41 finance-cluster tools (EOS/mortgage/personal-loan/car-insurance/health-insurance
+by country, Egypt/Morocco tax tools, etc.) + 3 health-cluster tools (bmi, calories, fasting) were fully
+built and sitemapped but never listed — the "16 أدوات" finance badge was literally wrong (55 real tools).
+Fixed by adding all 44 slugs to `CALCULATOR_HUBS` in `src/lib/calculators/data.js`. Verified with a
+throwaway Node script (parses `_CALCULATOR_ROUTES_RAW`/`CALCULATOR_HUBS`, diffs cluster membership) —
+orphan count now 0 across all 92 routes.
+
+**3. Navbar mega-menu — a THIRD, separate drifted taxonomy.** `src/components/layout/NavLinks.tsx`
+(`CALC_CATEGORIES`) has its own fully hand-maintained tool list (own icons/descriptions per tool,
+unrelated to `CALCULATOR_ROUTES`/`CALCULATOR_HUBS`) — shown on every single page in the header, likely
+the single most-seen calculator discovery surface on the site. The entire `personal-finance` cluster
+(emergency-fund/debt-payoff/savings-goal/net-worth) had zero presence — not even a category existed.
+Fixed with a bounded, curated (not exhaustive) expansion: added the missing `personal-finance` category
+(4 tools), plus `vat`/`annual-leave` to gulf, `calories` to health, and completed the small
+age/sleep/building clusters (7+3+2 items). Deliberately did NOT cram all ~40 country-specific finance
+variants into the dropdown — a mega-menu should curate, not enumerate; those stay reachable via
+`/calculators/finance` (already fixed in #2) and viewAll links. This is now a documented, recurring
+pattern (3rd/4th instance — see memory `project-mobile-nav-calc-categories`) — **any new calculator added
+to an existing cluster must be added in 3 places**: `CALCULATOR_ROUTES`, its hub's `routeSlugs`, and (if
+warranted) `CALC_CATEGORIES` in NavLinks.tsx.
+
+**4. New bundled tool: flight-arrival-time calculator on the time-difference page** (the owner's "provide
+more tools in one page and target all these keywords" ask). Added
+`src/components/TimeDifference/FlightArrivalCalculator.client.jsx` — given a departure time (local to the
+"from" city) and flight duration, computes the local arrival time in the "to" city. Deliberately pure
+arithmetic on the page's already-verified `diffMinutes` prop (no fresh timezone API calls, so it can't
+disagree with the rest of the page) — same-day/next-day/previous-day labeling included. Wired in right
+after the existing interactive tool (city switcher + time converter + `SharedHoursBar` — already built
+earlier this project, confirmed NOT orphaned, already wired into `TimeDiffCalculatorV2.client.jsx`), with
+a new H2, 1 new FAQ, and 2 new keyword phrases targeting "كم الساعة عند وصولي" / "حساب وقت الوصول".
+
+**Checked and found NOT broken (no fix needed)**: `/blog` hub reads directly from `ALL_GUIDES` (single
+source of truth, already filtered by `!draft`) — no drift risk. `/holidays` hub's `.slice(0, 12)` is an
+intentional "featured then full searchable grid" pattern from the recent UX redesign, not a stale list.
+
+**Stale docs found**: `docs/growth-roadmap.md` and `docs/next-level-growth-plan.md` are both dated
+June 2026 and significantly out of date — several `[ ]` unchecked items (K1 EOS-by-country, K4 mortgage,
+K4b BMI, K4c hijri-age, K4d work-hours, K5 partially, C5 time-now title formula) are actually already
+shipped in current code, confirmed by direct inspection this session. Don't trust their checkboxes without
+verifying against current code first. `docs/holiday-event-opportunity-backlog.md` remains the one
+genuinely forward-only, currently-accurate doc — confirmed nothing is queued (Wave 12 fully shipped,
+"next wave needs fresh research").
+
+**Verification**: lint clean on every touched file, `npx tsc --noEmit` clean, `npm run test:unit` 116/116
+(after fixing the one test that encoded the old buggy behavior). Did NOT run `npm run build` (owner asked
+to keep working rather than run the full build this session) — run it before deploying.
 
 ## Checkpoint: Wave 12 complete (16/16), 12 more orphaned-links fixed, Easter-cycle content approved, holidays/fahras UX redesign started (2026-07-15)
 
@@ -40,9 +196,10 @@ through.**
 (Saudi Vision 2030) — a proper-noun program name, not a temporal date reference, so the false positive was
 left as-is rather than distorting a well-known, searched term into something vaguer.
 
-**(b) UX redesign — Phase 1 of 5 shipped, Phases 2-5 not started**. Dispatched a background Explore agent to
-audit the current `/holidays` and `/fahras` implementations file-by-file; wrote the full findings + 5-phase
-build plan into `docs/holidays-fahras-ux-redesign-plan.md` (read that file before touching this area again).
+**(b) UX redesign — Phase 1 of 5 shipped at the time of this entry; all 5 phases are now complete and
+verified (2026-07-15) — see memory `project-holidays-fahras-ux-redesign` for the full final state.** The
+original planning doc (`docs/holidays-fahras-ux-redesign-plan.md`) was deleted 2026-07-19 once its
+"FULLY SHIPPED" status made it pure historical record; the memory file is now the source of truth.
 Shipped Phase 1: extracted `src/lib/holidays/urgency.js` (shared urgency-tier/label helpers, deduplicating
 logic that was previously copy-pasted in `RelatedEventsBubbles.jsx`), added a live-status badge (اليوم with a
 pulsing dot / قريب جداً / قريباً) to `EventCard.jsx`'s header row, reusing the existing `.waqt-badge` color

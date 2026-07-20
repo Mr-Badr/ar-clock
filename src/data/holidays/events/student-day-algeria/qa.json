@@ -1,0 +1,21 @@
+{
+  "slug": "student-day-algeria",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "Verified via WebSearch 2026-07-19 (Arabic Wikipedia, aps.dz official Algerian news agency, radioalgerie.dz): 19 May 1956 general student strike called by UGEMA (الاتحاد العام للطلبة المسلمين الجزائريين), in support of the Algerian War of Independence.",
+    "Strike spanned Algeria plus Algerian students in French, Egyptian, and Tunisian universities; extended to secondary-school students too; many joined the FLN's armed wing (ALN) directly in the mountains.",
+    "Annually commemorated 19 May as 'يوم الطالب' — radioalgerie.dz's 2024 article references the '68th anniversary', confirming consistent annual recurrence since 1956.",
+    "1956 appears as a bare year throughout content but is well below the hardcoded-year threshold (current year - 1 = 2025), so no validator issue — it's a genuine historical fact citation, not a stale 'this year' reference.",
+    "Explicitly stated this is a commemorative national day, NOT an official paid public holiday in Algeria's calendar — no source found classifying it as such, stated clearly to avoid misleading readers.",
+    "Deliberately safe content scope: internal Algerian student mobilization history, NOT the flagged-sensitive French-colonial-violence topics (Sétif/Guelma massacre, Paris massacre) that need explicit owner sign-off per the Algeria research pass.",
+    "Single-country event (_countryCode: dz), aliasSlugs: [] to avoid base_country_leakage."
+  ],
+  "updatedAt": "2026-07-19T20:28:59.195Z"
+}

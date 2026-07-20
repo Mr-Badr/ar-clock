@@ -287,8 +287,11 @@
 }
 
 .clockRootFullscreen .topbar {
+  /* Bottom, not top — a thumb-reachable exit control on mobile, where a
+     fullscreen browser view hides the OS chrome and a top-corner-only close
+     button is easy to miss. */
   position: absolute;
-  inset-block-start: max(var(--space-3), env(safe-area-inset-top));
+  inset-block-end: max(var(--space-3), env(safe-area-inset-bottom));
   right: max(var(--space-3), env(safe-area-inset-right));
   left: max(var(--space-3), env(safe-area-inset-left));
   z-index: 2;
@@ -308,7 +311,8 @@
 
 .clockRootFullscreen .stageWrapper {
   min-height: 100%;
-  padding-block: clamp(4.5rem, 10vh, 7rem) clamp(1rem, 4vh, 2.5rem);
+  /* Reserved space is now at the END (bottom) since the exit toolbar moved there. */
+  padding-block: clamp(1rem, 4vh, 2.5rem) clamp(4.5rem, 10vh, 7rem);
 }
 
 .clockRootFullscreen .centerStage {
@@ -441,7 +445,7 @@
   }
 
   .clockRootFullscreen .topbar {
-    inset-block-start: max(0.75rem, env(safe-area-inset-top));
+    inset-block-end: max(0.75rem, env(safe-area-inset-bottom));
     right: max(0.75rem, env(safe-area-inset-right));
     left: max(0.75rem, env(safe-area-inset-left));
     grid-template-columns: auto auto;

@@ -1,52 +1,13 @@
 /* components/TimeDifference/TimeDiffCalculatorV2.client.jsx */
 'use client';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import SearchCity from '../SearchCity.client';
-import LiveClock from './LiveClock.client';
-import SmartBadge from './SmartBadge';
-import ContextSummary from './ContextSummary.client';
 import TimeConverter from './TimeConverter.client';
-import Timeline24h from './Timeline24h.client';
+import SharedHoursBar from './SharedHoursBar.client';
 import { Skeleton } from '@/components/ui/skeleton';
-import { SectionDivider } from '@/components/shared/primitives';
-import {
-  ArrowUpDown,
-  Briefcase,
-  Share2,
-  Sun,
-  Moon,
-  Check,
-  CheckCircle2,
-  AlertTriangle,
-  Globe2,
-  MapPin,
-  ChevronUp,
-  ChevronDown,
-} from 'lucide-react';
+import { ArrowUpDown, Check, Globe2, MapPin } from 'lucide-react';
 import { getTimeDiffAction } from '@/app/actions/location';
-import { useCopyFeedback } from '@/lib/share.client';
-
-// ── 24-hour slot helpers ──────────────────────────────────────────────────────
-const HOURS_24 = Array.from({ length: 24 }, (_, i) => i);
-
-function isInRange(h, start, end) {
-  // handles midnight wrap
-  const s = ((start % 24) + 24) % 24;
-  const e = ((end % 24) + 24) % 24;
-  const n = ((h % 24) + 24) % 24;
-  return s <= e ? n >= s && n < e : n >= s || n < e;
-}
-
-// ── Time format: Western numerals, Arabic period marker ───────────────────────
-function fmtTime(totalMins) {
-  const norm = ((Math.round(totalMins) % 1440) + 1440) % 1440;
-  const h = Math.floor(norm / 60);
-  const m = norm % 60;
-  const period = h >= 12 ? 'م' : 'ص';
-  const h12 = h % 12 || 12;
-  return `${h12}:${String(m).padStart(2, '0')} ${period}`;
-}
 
 export default function TimeDiffCalculator(props) {
   const initialFrom = props.initialFrom ?? null;
@@ -59,9 +20,6 @@ export default function TimeDiffCalculator(props) {
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState(null);
   const [requestVersion, setRequestVersion] = useState(0);
-  const [bizStart, setBizStart] = useState(9);
-  const [bizEnd, setBizEnd] = useState(17);
-  const { copied, copy } = useCopyFeedback();
 
   useEffect(() => {
     if (!fromCity || !toCity) {
@@ -129,29 +87,6 @@ export default function TimeDiffCalculator(props) {
   const handleFrom = (c) => toCity ? router.push(url(c, toCity)) : setFromCity(c);
   const handleTo = (c) => fromCity ? router.push(url(fromCity, c)) : setToCity(c);
   const handleSwap = () => fromCity && toCity && router.push(url(toCity, fromCity));
-  const handleShare = async () => {
-    await copy(window.location.origin + url(fromCity, toCity));
-  };
-
-  // ── Business hours ────────────────────────────────────────────────────────
-  const biz = useMemo(() => {
-    if (!diffData?.success) return null;
-    const diffH = diffData.totalMinutes / 60;
-    const bStartB = bizStart - diffH;  // City B working hours in City A time
-    const bEndB = bizEnd - diffH;
-    const ovS = Math.max(bizStart, bStartB);
-    const ovE = Math.min(bizEnd, bEndB);
-    const hasOv = ovS < ovE;
-    return {
-      hasOverlap: hasOv,
-      ovHours: hasOv ? ovE - ovS : 0,
-      ovFromA: hasOv ? fmtTime(ovS * 60) : null,
-      ovToA: hasOv ? fmtTime(ovE * 60) : null,
-      ovFromB: hasOv ? fmtTime((ovS + diffH) * 60) : null,
-      ovToB: hasOv ? fmtTime((ovE + diffH) * 60) : null,
-      bStartB, bEndB,
-    };
-  }, [diffData, bizStart, bizEnd]);
 
   // ── Loading skeleton ──────────────────────────────────────────────────────
   if (loading && !diffData) {
@@ -206,11 +141,11 @@ export default function TimeDiffCalculator(props) {
   return (
     <div className="space-y-4">
 
-      {/* ── Search row ──────────────────────────────────────────────── */}
+      {/* ── Search row — change the city pair ──────────────────────── */}
       <div className="card p-4">
         <div className="flex flex-wrap flex-col sm:flex-row items-start sm:items-end gap-3">
 
-          <div className="flex-1 w-full input-group">
+          <div className="flex-1 w-full sm:w-auto input-group">
             <label className="input-label flex items-center gap-1.5">
               <MapPin size={13} className="text-accent-alt shrink-0" aria-hidden="true" />
               المدينة الأولى
@@ -226,7 +161,7 @@ export default function TimeDiffCalculator(props) {
             )}
           </div>
 
-          <div className="flex justify-center w-full my-1">
+          <div className="flex justify-center w-full sm:w-auto my-1">
             <button
               onClick={handleSwap}
               disabled={!fromCity || !toCity}
@@ -237,7 +172,7 @@ export default function TimeDiffCalculator(props) {
             </button>
           </div>
 
-          <div className="flex-1 w-full input-group">
+          <div className="flex-1 w-full sm:w-auto input-group">
             <label className="input-label flex items-center gap-1.5">
               <MapPin size={13} className="text-accent-alt shrink-0" aria-hidden="true" />
               المدينة الثانية
@@ -255,319 +190,16 @@ export default function TimeDiffCalculator(props) {
         </div>
       </div>
 
-      {/* ── Results ─────────────────────────────────────────────────── */}
+      {/* ── Results: converter first (flagship tool), then shared hours ── */}
       {diffData?.success && (
         <>
-          {/* City comparison card — compact, no clock-display sizes */}
-
-            <div style={{
-              background: 'var(--bg-surface-2)',
-              borderRadius: 'var(--radius-lg)',
-              border: '1px solid var(--border-default)',
-              transition: 'background-color var(--transition-theme), border-color var(--transition-theme)',
-              overflow: 'hidden',
-            }}>
-              {/* Diff header */}
-              <div
-                className="px-4 py-3 flex items-center justify-between"
-                style={{ background: 'var(--blue)' }}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold text-[var(--text-on-accent)] opacity-80">فارق التوقيت</span>
-                  <div dir="ltr" className="font-black tabular-nums text-[var(--text-on-accent)]">
-                    {diffData.totalMinutes === 0 ? (
-                      <span className="text-base">متطابق</span>
-                    ) : (
-                      <span className="text-lg">
-                        {diffData.sign}{diffData.formattedHours}
-                        {diffData.formattedMinutes > 0 && `:`}
-                        {diffData.formattedMinutes > 0 && String(diffData.formattedMinutes).padStart(2, '0')}
-                        {' '}ساعة
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="flex gap-2 items-center">
-                  <SmartBadge totalMinutes={diffData.totalMinutes} />
-                  <button
-                    onClick={handleShare}
-                    className="btn btn-xs gap-1 rounded-[var(--radius-md)] border border-[var(--border-default)] bg-[var(--bg-surface-1)] font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-surface-2)]"
-                    aria-label={copied ? 'تم النسخ' : 'مشاركة'}
-                  >
-                    {copied ? <><Check size={12} /> تم النسخ</> : <><Share2 size={12} /> مشاركة</>}
-                  </button>
-                </div>
-              </div>
-              {/* City times — two columns */}
-              <div className="grid grid-cols-2 divide-x divide-x-reverse divide-[var(--border-subtle)]">
-
-                {/* From city */}
-                <div className="p-4 text-center">
-                  <p className="text-xs text-muted mb-1">{fromCity.city_name_ar}</p>
-                  <p className="text-xs text-muted mb-2">{fromCity.country_name_ar}</p>
-                  {/* LiveClock with small styling — NOT clock-display size */}
-                  <div className="td-city-time">
-                    <LiveClock
-                      timezone={diffData.from}
-                      aria-label={`الساعة الان في ${fromCity.city_name_ar}`}
-                    />
-                  </div>
-                  <span className={`badge mt-2 ${diffData.isDSTFrom ? 'badge-warning' : 'badge-default'}`}>
-                    {diffData.isDSTFrom
-                      ? <><Sun size={10} className="text-warning" aria-hidden="true" /> توقيت صيفي</>
-                      : <><Moon size={10} className="text-muted" aria-hidden="true" /> توقيت شتوي</>
-                    }
-                  </span>
-                </div>
-
-                {/* To city */}
-                <div className="p-4 text-center">
-                  <p className="text-xs text-muted mb-1">{toCity.city_name_ar}</p>
-                  <p className="text-xs text-muted mb-2">{toCity.country_name_ar}</p>
-                  <div className="td-city-time">
-                    <LiveClock
-                      timezone={diffData.to}
-                      aria-label={`الساعة الان في ${toCity.city_name_ar}`}
-                    />
-                  </div>
-                  <span className={`badge mt-2 ${diffData.isDSTTo ? 'badge-warning' : 'badge-default'}`}>
-                    {diffData.isDSTTo
-                      ? <><Sun size={10} className="text-warning" aria-hidden="true" /> توقيت صيفي</>
-                      : <><Moon size={10} className="text-muted" aria-hidden="true" /> توقيت شتوي</>
-                    }
-                  </span>
-                </div>
-              </div>
-            </div>
-
-          {/* ── Context Summary ───────────────────────────────── */}
-          <ContextSummary fromCity={fromCity} toCity={toCity} diffData={diffData} />
-
-          <div className="my-20">
-            <SectionDivider />
-          </div>
-
-          {/* ── Time Converter ────────────────────────────────── */}
           <TimeConverter fromCity={fromCity} toCity={toCity} totalMinutes={diffData.totalMinutes} />
-
-          {/* ── 24h Timeline ──────────────────────────────────── */}
-          <Timeline24h fromCity={fromCity} toCity={toCity} diffData={diffData} />
-
-          {/* ── Business Hours ────────────────────────────────── */}
-          <div className="card p-0 overflow-hidden">
-
-            <div className="card__header px-4 pt-4 pb-3 mx-0 mb-0">
-              <div className="flex items-center gap-2">
-                <div className="bg-accent-soft p-2 rounded-lg text-accent-alt shrink-0">
-                  <Briefcase size={16} aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="card__title text-base">ساعات العمل المشتركة</p>
-                  <p className="card__subtitle">أفضل وقت للاجتماعات بين الطرفين</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="px-4 pb-4 space-y-4">
-
-              {/* Overlap result — shown first (most important) */}
-              {biz && (
-                biz.hasOverlap ? (
-                  <div
-                    className="rounded-[var(--radius-lg)] p-3 text-center"
-                    style={{ background: 'var(--success-soft)', border: '1px solid var(--success-border)' }}
-                  >
-                    <p className="text-xs text-success font-semibold mb-2 flex items-center justify-center gap-1.5">
-                      <CheckCircle2 size={13} aria-hidden="true" />
-                      <span><strong className="tabular-nums">{biz.ovHours}</strong> ساعة مشتركة، مناسبة للاجتماعات</span>
-                    </p>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <p className="text-xs text-muted mb-0.5">{fromCity.city_name_ar}</p>
-                        <p className="font-black tabular-nums text-success text-base leading-tight" dir="ltr">
-                          {biz.ovFromA} – {biz.ovToA}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-muted mb-0.5">{toCity.city_name_ar}</p>
-                        <p className="font-black tabular-nums text-success text-base leading-tight" dir="ltr">
-                          {biz.ovFromB} – {biz.ovToB}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div
-                    className="rounded-[var(--radius-lg)] p-3 text-center"
-                    style={{ background: 'var(--danger-soft)', border: '1px solid var(--danger-border)' }}
-                  >
-                    <p className="text-sm font-semibold text-danger flex items-center justify-center gap-1.5">
-                      <AlertTriangle size={14} aria-hidden="true" />
-                      <span>لا يوجد وقت عمل مشترك</span>
-                    </p>
-                    <p className="text-xs text-secondary mt-1">عدّل وقت الدوام أدناه لإيجاد توقيت مناسب.</p>
-                  </div>
-                )
-              )}
-
-              {/* Controls */}
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  {
-                    label: 'بداية الدوام',
-                    val: bizStart,
-                    onDec: () => setBizStart(s => Math.max(0, s - 1)),
-                    onInc: () => setBizStart(s => Math.min(bizEnd - 1, s + 1)),
-                    decLabel: 'تقليل بداية الدوام',
-                    incLabel: 'زيادة بداية الدوام',
-                  },
-                  {
-                    label: 'نهاية الدوام',
-                    val: bizEnd,
-                    onDec: () => setBizEnd(e => Math.max(bizStart + 1, e - 1)),
-                    onInc: () => setBizEnd(e => Math.min(23, e + 1)),
-                    decLabel: 'تقليل نهاية الدوام',
-                    incLabel: 'زيادة نهاية الدوام',
-                  },
-                ].map(ctrl => (
-                  <div key={ctrl.label} className="input-group">
-                    <span className="input-label">{ctrl.label}</span>
-                    <div
-                      className="flex items-center justify-between px-2 py-2"
-                      style={{
-                        border: '1px solid var(--border-subtle)',
-                        borderRadius: 'var(--radius-md)',
-                        background: 'var(--bg-surface-2)',
-                      }}
-                    >
-                      <button
-                        onClick={ctrl.onDec}
-                        aria-label={ctrl.decLabel}
-                        className="w-7 h-7 flex items-center justify-center rounded-md text-accent-alt hover:bg-accent-soft transition-colors"
-                      >
-                        <ChevronDown size={16} />
-                      </button>
-                      <span className="font-bold text-primary tabular-nums text-sm" dir="ltr">
-                        {ctrl.val}:00
-                      </span>
-                      <button
-                        onClick={ctrl.onInc}
-                        aria-label={ctrl.incLabel}
-                        className="w-7 h-7 flex items-center justify-center rounded-md text-accent-alt hover:bg-accent-soft transition-colors"
-                      >
-                        <ChevronUp size={16} />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* 24-hour slot grid */}
-              {biz && (
-                <div className="space-y-2">
-                  {/* City A row */}
-                  <div>
-                    <p className="text-xs text-muted mb-1">{fromCity.city_name_ar}</p>
-                    <div
-                      className="flex rounded-lg overflow-hidden h-6"
-                      style={{ border: '1px solid var(--border-default)' }}
-                    >
-                      {HOURS_24.map(h => {
-                        const inA = h >= bizStart && h < bizEnd;
-                        const inOv = biz.hasOverlap && h >= biz.ovHours &&
-                          h >= Math.max(bizStart, biz.bStartB) &&
-                          h < Math.min(bizEnd, biz.bEndB);
-                        // Recalculate overlap for grid coloring
-                        const ovS = Math.max(bizStart, biz.bStartB);
-                        const ovE = Math.min(bizEnd, biz.bEndB);
-                        const isOv = biz.hasOverlap && h >= ovS && h < ovE;
-                        return (
-                          <div
-                            key={h}
-                            title={`${h}:00`}
-                            className="flex-1 border-e border-[var(--border-subtle)] last:border-e-0"
-                            style={{
-                              backgroundColor: isOv
-                                ? 'var(--success-soft)'
-                                : inA
-                                  ? 'var(--accent-soft)'
-                                  : 'var(--bg-surface-3)',
-                              borderTop: isOv
-                                ? '2px solid var(--success)'
-                                : inA
-                                  ? '2px solid var(--accent-alt)'
-                                  : '2px solid transparent',
-                            }}
-                          />
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* City B row */}
-                  <div>
-                    <p className="text-xs text-muted mb-1">{toCity.city_name_ar}</p>
-                    <div
-                      className="flex rounded-lg overflow-hidden h-6"
-                      style={{ border: '1px solid var(--border-default)' }}
-                    >
-                      {HOURS_24.map(h => {
-                        const inB = isInRange(h, biz.bStartB, biz.bEndB);
-                        const inA = h >= bizStart && h < bizEnd;
-                        const isOv = inA && inB;
-                        return (
-                          <div
-                            key={h}
-                            title={`${h}:00`}
-                            className="flex-1 border-e border-[var(--border-subtle)] last:border-e-0"
-                            style={{
-                              backgroundColor: isOv
-                                ? 'var(--success-soft)'
-                                : inB
-                                  ? 'var(--info-soft)'
-                                  : 'var(--bg-surface-3)',
-                              borderTop: isOv
-                                ? '2px solid var(--success)'
-                                : inB
-                                  ? '2px solid var(--info)'
-                                  : '2px solid transparent',
-                            }}
-                          />
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Time labels */}
-                  <div
-                    className="flex justify-between text-muted tabular-nums"
-                    style={{ fontSize: '10px' }}
-                    aria-hidden="true"
-                    dir="ltr"
-                  >
-                    <span>0</span><span>6</span><span>12</span><span>18</span><span>24</span>
-                  </div>
-
-                  {/* Legend */}
-                  <div className="flex gap-4 flex-wrap" style={{ fontSize: '11px' }}>
-                    {[
-                      { color: 'var(--accent-soft)', border: 'var(--accent-alt)', label: fromCity.city_name_ar },
-                      { color: 'var(--info-soft)', border: 'var(--info)', label: toCity.city_name_ar },
-                      { color: 'var(--success-soft)', border: 'var(--success)', label: 'وقت مشترك' },
-                    ].map(item => (
-                      <span key={item.label} className="flex items-center gap-1 text-secondary">
-                        <span
-                          className="inline-block rounded-sm"
-                          style={{ width: 14, height: 10, backgroundColor: item.color, border: `1.5px solid ${item.border}` }}
-                        />
-                        {item.label}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+          <SharedHoursBar
+            fromCityAr={fromCity.city_name_ar}
+            toCityAr={toCity.city_name_ar}
+            fromTz={fromCity.timezone}
+            diffMinutes={diffData.totalMinutes}
+          />
         </>
       )}
 

@@ -46,6 +46,11 @@ export default async function sitemap() {
       priority: 0.8,
     },
     {
+      url: `${base}/mwaqit-al-salat/prohibited-prayer-times`,
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
+    {
       url: `${base}/mwaqit-al-salat/prayer-times-calculation-method`,
       changeFrequency: 'daily',
       priority: 0.8,

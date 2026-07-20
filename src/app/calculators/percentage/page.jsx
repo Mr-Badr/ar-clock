@@ -1,4 +1,5 @@
 import PercentageCalculator from '@/components/calculators/PercentageCalculator.client';
+import EmbedCodeSnippet from '@/components/shared/EmbedCodeSnippet.client';
 import {
   CalculatorDecisionTable,
   CalculatorFaqSection,
@@ -239,6 +240,16 @@ export default function PercentagePage() {
         title="أسئلة تتكرر في الخصومات والدرجات والتغيرات"
       >
         <CalculatorFaqSection items={faqItems} />
+      </CalculatorSection>
+
+      <CalculatorSection id="percent-embed" subtle>
+        <EmbedCodeSnippet
+          embedUrl={`${SITE_URL}/embed/calculators/percentage`}
+          title="حاسبة النسبة المئوية"
+          hint="هل تدير موقعاً أو منتدى؟ أضف حاسبة النسبة المئوية إليه مجاناً بنسخ الكود التالي:"
+          width={360}
+          height={420}
+        />
       </CalculatorSection>
 
       <CalculatorSection

@@ -1,0 +1,19 @@
+{
+  "slug": "fete-du-travail-france",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: فاتح مايو هو الإجازة الرسمية الوحيدة الإلزامية قانونياً على أصحاب العمل في فرنسا — مصدر service-public.gouv.fr.",
+    "غرامة 750 يورو على صاحب العمل المخالف، أجر مضاعف إلزامي للعامل — مصدر Baker Tilly France.",
+    "تقليد بيع زهر زنبق الوادي بلا ترخيص تجاري (شروط: زهور برية، كميات صغيرة) — مصدر service-public.gouv.fr.",
+    "لا تكرار مع صفحة labor-day العامة الحية (لا تذكر فرنسا إطلاقاً) — تحقق يدوي من الفهرس.",
+    "محتوى مدني/قانوني بحت، صفر مضمون ديني."
+  ],
+  "updatedAt": "2026-07-18T21:00:09.896Z"
+}
