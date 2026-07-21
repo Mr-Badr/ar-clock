@@ -234,6 +234,9 @@ async function TodayDynamicContent() {
 
       <AdLayoutWrapper>
         <main className={styles.main}>
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId="top-date-today" slotKey="topDateBanner" />
+
           <div className="container mx-auto px-4">
             <DateBreadcrumb items={breadcrumbItems} />
           </div>
@@ -329,8 +332,6 @@ async function TodayDynamicContent() {
               </section>
             </div>
           </section>
-
-          <AdTopBanner slotId="top-date-today" slotKey="topDateBanner" />
 
           <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-label="مؤشرات تاريخ اليوم">
             <div className={styles.metricGrid}>

@@ -180,6 +180,9 @@ export default async function ImsakiyaCityPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: tableRows }) }} />
 
+      {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+      <AdTopBanner slotId="imsakiya-city-top" />
+
       {/* Hero */}
       <section className="imsakiya-hero container mx-auto px-4 py-8">
         <nav className="text-sm text-muted-foreground mb-4" aria-label="مسار التنقل">
@@ -199,8 +202,6 @@ export default async function ImsakiyaCityPage({ params }) {
         <p className="text-sm bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg px-4 py-3 text-amber-800 dark:text-amber-300 mt-4">
           <strong>تنبيه:</strong> الأوقات محسوبة فلكياً وفق تقويم أم القرى. قد يتقدم أول رمضان يوماً أو يتأخر يوماً بحسب رؤية الهلال في {countryAr}.
         </p>
-
-        <AdTopBanner slotId="imsakiya-city-top" />
 
         <div className="flex flex-wrap gap-4 mt-6 text-sm">
           <div className="bg-card border rounded-lg px-4 py-3">

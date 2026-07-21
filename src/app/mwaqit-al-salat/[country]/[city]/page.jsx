@@ -440,6 +440,9 @@ export default async function PrayerTimesPage({ params }) {
 
       <AdLayoutWrapper layout="wide" sidebarMode="dual">
         <main>
+        {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+        <AdTopBanner slotId={`top-prayer-city-${countrySlug}-${citySlug}`} />
+
         <nav aria-label="مسار التنقل" className={`container mx-auto px-4 ${routeStyles.breadcrumb}`}>
           <ol className={routeStyles.breadcrumbList}>
             {[
@@ -534,10 +537,6 @@ export default async function PrayerTimesPage({ params }) {
               </p>
             </div>
           </div>
-        </section>
-
-        <section className="container mx-auto px-4 pb-2">
-          <AdTopBanner slotId={`top-prayer-city-${countrySlug}-${citySlug}`} />
         </section>
 
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>

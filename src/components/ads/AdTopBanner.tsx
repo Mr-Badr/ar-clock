@@ -1,39 +1,52 @@
 "use client";
 
 /**
- * AdTopBanner — Horizontal leaderboard  (v2 — placement corrected)
+ * AdTopBanner — Horizontal leaderboard  (v3 — moved above the H1)
  * ─────────────────────────────────────────────────────────────────────────────
  * SIZE:    320×50 mobile  |  728×90 tablet  |  970×90 desktop
  * CLS:     Reserved via aspect-ratio + min-height in CSS
  *
- * ⚠️  v1 vs v2 PLACEMENT CHANGE:
+ * ⚠️  PLACEMENT HISTORY:
  *   v1: Banner placed BEFORE <h1> (between breadcrumb and title)
- *   v2: Banner placed AFTER <h1> (between title and first content block)
- *
- *   WHY: Google's viewability research shows ads just BELOW the first content
- *   element (the H1 title) have HIGHER viewability AND CTR than ads above it.
- *   Also: Googlebot needs to see your H1 BEFORE any ad markup for correct
- *   topic classification and SEO ranking.
+ *   v2 (2026-06/07): moved AFTER <h1> — reasoned that Google's viewability
+ *     research favors ads just below the first content element, and that
+ *     Googlebot benefits from seeing the H1 before any ad markup.
+ *   v3 (2026-07-21): moved back to BEFORE the H1 — first element inside
+ *     <main>, right below the fixed navbar. Reason: a 2026-07-16 revenue
+ *     audit found this site's traffic is overwhelmingly quick-glance
+ *     (single-lookup prayer/time/countdown pages, ~96% mobile) and most
+ *     sessions generate at most ONE viewable ad impression before leaving —
+ *     usually whichever ad is highest on the page. A tall hero (interactive
+ *     tool, multi-line intro, nav grid) can push an after-H1 banner well
+ *     past what a fast-bouncing visitor ever sees. Putting the ad first
+ *     guarantees it renders in the same viewport as the navbar on every
+ *     page, independent of hero height — this matters more for a CPM/RPM-
+ *     driven revenue model than the CTR argument v2 was optimized for.
+ *     Kept small and clean: single unit, reserved-height slot (no CLS),
+ *     IntersectionObserver lazy-load so an impression is only logged if it
+ *     actually enters the viewport, and it never renders on ad-free routes.
  *
  * CORRECT JSX ORDER:
  *
- *   <nav aria-label="مسار التنقل">... breadcrumb ...</nav>
- *   <h1 className="...">عنوان الصفحة</h1>           ← SEO first
- *   <AdTopBanner slotId="top-country" />             ← THEN banner
- *   <PrayerTimesTable />                             ← then content
+ *   <main>
+ *     <AdTopBanner slotId="top-country" />             ← first thing, before breadcrumb/H1
+ *     <nav aria-label="مسار التنقل">... breadcrumb ...</nav>
+ *     <h1 className="...">عنوان الصفحة</h1>
+ *     <PrayerTimesTable />                              ← then content
  *
  * USE ON:
- *   ✅ Country pages (/mwaqit-al-salat/[country])
- *   ✅ City pages    (/mwaqit-al-salat/[country]/[city])
- *   ✅ Article / info pages
- *   ✅ Listing pages (countries list, cities list)
- *   ❌ Homepage hero (the hero IS the above-fold — skip banner)
+ *   ✅ Every indexable content page (country/city pages, article/info pages,
+ *      listing pages, the homepage) — one instance per page, first thing
+ *      inside <main>, before the breadcrumb/H1.
  *   ❌ Settings / forms pages (short pages with no content revenue)
+ *   ❌ Ad-free routes (enforced automatically via getAdRoutePolicy below —
+ *      /about, /contact, /privacy, /terms, /search, /fahras, /embed/*, etc.)
  */
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { getRouteManualAdSlotKey, resolveManualAdSlot } from "@/lib/ads/slot-resolution";
+import { getAdRoutePolicy } from "@/lib/ads/route-policy";
 import { watchAdFill } from "@/lib/ads/unfilled";
 import { useMarketingPermission } from "@/lib/client/marketing";
 import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
@@ -56,7 +69,8 @@ export default function AdTopBanner({
   const pathname = usePathname();
   const preferredSlotKey = slotKey || getRouteManualAdSlotKey(pathname || "/", "topBanner");
   const adSlot = resolveManualAdSlot(manualSlots, preferredSlotKey, "topBanner");
-  const shouldRenderAds = Boolean(clientId && adSlot);
+  const routePolicy = getAdRoutePolicy(pathname || "/");
+  const shouldRenderAds = Boolean(clientId && adSlot) && routePolicy.allowAdDelivery;
   const canLoadAds = useMarketingPermission(shouldRenderAds);
   const ref = useRef<HTMLDivElement>(null);
   const insRef = useRef<HTMLModElement>(null);

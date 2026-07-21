@@ -231,6 +231,9 @@ async function DateHubDynamicContent() {
       <JsonLd data={faqSchema} />
       <AdLayoutWrapper>
         <main className={`${styles.main} ${styles.dateHubMain}`}>
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId="top-date-hub" slotKey="topDateBanner" />
+
           <div className="container mx-auto px-4">
             <DateBreadcrumb items={breadcrumb} />
           </div>
@@ -300,8 +303,6 @@ async function DateHubDynamicContent() {
               </section>
             </div>
           </section>
-
-          <AdTopBanner slotId="top-date-hub" slotKey="topDateBanner" />
 
           <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="date-tools-heading">
             <div className={`${styles.sectionPanel} ${styles.decisionPanel}`}>

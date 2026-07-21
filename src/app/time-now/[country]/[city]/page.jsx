@@ -456,6 +456,10 @@ export default async function CityTimePage({ params }) {
       <AdLayoutWrapper layout="wide" sidebarMode="dual">
         <main>
 
+        {/* First thing on the page, before the breadcrumb/H1 — see
+            AdTopBanner.tsx v3. */}
+        <AdTopBanner slotId={`top-time-city-${countrySlug}-${citySlug}`} />
+
         {/* ══ BREADCRUMB ══════════════════════════════════════════ */}
         <nav aria-label="مسار التنقل" className={`container mx-auto px-4 ${routeStyles.breadcrumb}`}>
           <ol className={routeStyles.breadcrumbList}>
@@ -528,10 +532,6 @@ export default async function CityTimePage({ params }) {
               </p>
             </div>
           </div>
-        </section>
-
-        <section className="container mx-auto px-4 pb-2">
-          <AdTopBanner slotId={`top-time-city-${countrySlug}-${citySlug}`} />
         </section>
 
         <Suspense fallback={<CityTimePageSectionsFallback />}>

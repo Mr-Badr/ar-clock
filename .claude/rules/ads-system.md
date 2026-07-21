@@ -38,7 +38,12 @@ section reports separately — expect "Events_Detail_Top_Horizontal_01" impressi
 units to absorb them after deploy.
 
 ## Ad components (all in src/components/ads/)
-- `AdTopBanner` — horizontal leaderboard, placed AFTER `<h1>`, before first content block
+- `AdTopBanner` — horizontal leaderboard. **v3 (2026-07-21): placed BEFORE the breadcrumb/`<h1>`,
+  as the first child inside `<main>`, right below the fixed navbar** — reversed from the earlier
+  "after H1" rule. Reason: most sessions on this site are quick-glance lookups (~96% mobile) that
+  generate at most one viewable ad impression before leaving; putting the ad first guarantees it
+  renders in the same viewport as the navbar regardless of hero height. Full history in
+  `AdTopBanner.tsx`'s file-header JSDoc — don't re-litigate without reading that first.
 - `AdInArticle` — fluid native unit, placed BETWEEN major content sections. Max 2 per page.
 - `AdMultiplex` — content-recommendation grid, placed at end of page
 - `AdInFeed` — native in-feed unit for list/feed layouts
@@ -52,6 +57,11 @@ Example for `/mwaqit-al-salat`: tries `topPrayerBanner` → falls back to `topBa
 Fallback is handled by `resolveManualAdSlot()` in `src/lib/ads/slot-resolution.ts`.
 
 ## Ad coverage per section (current state after 2026-07-03 fixes)
+Coverage (which sections have a top banner) is unchanged by the 2026-07-21 v3 repositioning — only
+WHERE the top banner sits on each page changed (now before breadcrumb/H1, see above). This table also
+doesn't yet list `/imsakiya/*` and `/countdown`, which do have a top banner (added later, pre-existing
+gap in this table, not introduced by this change).
+
 | Route | Top | InArticle | Multiplex |
 |---|---|---|---|
 | /holidays/[slug] | ✅ | ✅ ×1 | ✅ |
@@ -80,31 +90,25 @@ Fallback is handled by `resolveManualAdSlot()` in `src/lib/ads/slot-resolution.t
 - **Large-desktop rails:** at ≥1800px the `.layout-with-ads` rails widen from 240px to 300px so
   Google can serve 300×600/300×250 (strongest desktop RPM sizes). Slot max-height becomes 620px.
 
-## Placement rules (updated 2026-06-23)
+## Placement rules (updated 2026-07-21)
 - **Max 1 AdInArticle** per page for short/medium pages. Long-form pages (blog articles) may use 2 if separated by 2+ major sections
-- AdTopBanner: after `<h1>` and **outside** the hero section wrapper — not the last child inside it
+- AdTopBanner: first child inside `<main>`, before the breadcrumb nav and before `<h1>` (v3 — see
+  `AdTopBanner.tsx` JSDoc). This supersedes the older "after H1, must render in first mobile viewport"
+  rule below — placing it first makes that viewport concern moot by construction, since it no longer
+  depends on hero height at all.
 - AdInArticle in calculators: **after** the FAQ accordion, not before it — users see FAQs first
 - AdMultiplex: add `data-full-width-responsive="true"` to prevent overflow on RTL mobile
-- **AdTopBanner must render inside the first mobile viewport, not just "after the H1."** A tall hero
-  (nav grids, multi-line intros, a whole interactive tool + supplementary sections) can push the ad
-  hundreds of pixels below what 96% of the site's traffic (mobile) actually sees before bouncing.
-  Fixed 2026-07-05 on `/calculators` (ad moved from after the whole hero+nav grid to between the intro
-  copy and the intent-nav — see `.calc-hub-v8-hero-ad` in `calculators.css`, pinned via explicit
-  `grid-column`/`grid-row` so it doesn't disrupt the 2-column desktop layout) and `/time-difference`
-  (ad moved from after several supplementary sections to right after the calculator tool itself — still
-  satisfies "primary tool before ad", just cuts ~300 lines of content the ad used to sit behind).
-  `/holidays` and `/time-now` already place the ad right after their intro/primary-tool block — use
-  those as the reference pattern for any future hub page.
-- **Converter/tool pages: compact hero + tool BEFORE the top banner.** `/date/converter`,
-  `/date/gregorian-to-hijri`, `/date/hijri-to-gregorian` (2026-07-07) use `heroCompact`
-  (small H1 + one-line lead, no eyebrow chip) and render AdTopBanner AFTER the tool panel, so the
-  interactive tool starts inside the first mobile viewport. Same pattern as `/time-difference`.
+- **Historical note (pre-2026-07-21):** AdTopBanner used to sit after `<h1>`, with a hard rule that it
+  must still land inside the first mobile viewport — this required auditing hero height per page type
+  (fixed on `/calculators` via `.calc-hub-v8-hero-ad` grid placement, `/time-difference`, and compact-hero
+  converter pages). That whole class of bug is eliminated now that the ad renders before any hero
+  content, first thing inside `<main>` on every page.
 
 ## Ad-free routes (intentional, from route-policy.js)
 /about, /contact, /disclaimer, /editorial-policy, /fahras, /offline, /privacy, /search, /terms, /api/*
 
 ## Placement rules (from AdTopBanner.tsx JSDoc)
-- AdTopBanner: after `<h1>`, before first content block — NOT before H1
+- AdTopBanner: first child inside `<main>`, before the breadcrumb and `<h1>` (v3, 2026-07-21)
 - AdInArticle: between sections, never two back-to-back, never as first element
 - AdMultiplex: at end of page, after all content
 - Never inside a `.card` — between cards only

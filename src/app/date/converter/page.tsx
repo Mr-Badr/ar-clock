@@ -271,6 +271,9 @@ async function ConverterDynamicContent() {
       <JsonLd data={[toolSchema, buildBreadcrumbJsonLd(breadcrumb, BASE_URL), faqSchema, howToSchema]} />
       <AdLayoutWrapper>
         <main className={styles.main}>
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId="top-date-converter" slotKey="topDateBanner" />
+
           <div className="container mx-auto px-4">
             <DateBreadcrumb items={breadcrumb} />
           </div>
@@ -301,8 +304,6 @@ async function ConverterDynamicContent() {
               </Suspense>
             </div>
           </section>
-
-          <AdTopBanner slotId="top-date-converter" slotKey="topDateBanner" />
 
           <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="converter-methods-heading">
             <div className={styles.sectionPanel}>

@@ -206,6 +206,9 @@ async function HijriMonthsDynamicContent() {
       <JsonLd data={[jsonLd]} />
       <AdLayoutWrapper>
         <main className="content-col pt-24 pb-20 mt-12">
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId="top-date-hijri-months" slotKey="topDateBanner" />
+
           <DateBreadcrumb items={breadcrumb} />
 
           <section className="date-hero-panel mb-6">
@@ -257,8 +260,6 @@ async function HijriMonthsDynamicContent() {
               </div>
             )}
           </section>
-
-          <AdTopBanner slotId="top-date-hijri-months" slotKey="topDateBanner" />
 
           <section className="date-detail-panel mb-8" aria-labelledby="hijri-months-table-heading">
             <div className="date-section-head">

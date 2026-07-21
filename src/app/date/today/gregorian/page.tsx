@@ -322,6 +322,9 @@ async function TodayGregorianDynamicContent() {
       />
       <AdLayoutWrapper>
         <main className="content-col pt-24 pb-20 mt-12">
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId="top-date-today-gregorian" slotKey="topDateBanner" />
+
           <DateBreadcrumb items={breadcrumb} />
 
           <section className="date-hero-panel mb-6">
@@ -359,8 +362,6 @@ async function TodayGregorianDynamicContent() {
               </div>
             </div>
           </section>
-
-          <AdTopBanner slotId="top-date-today-gregorian" slotKey="topDateBanner" />
 
           <section className="date-stat-grid mb-6">
             {[

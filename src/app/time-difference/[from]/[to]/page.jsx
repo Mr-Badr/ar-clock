@@ -414,6 +414,10 @@ export default async function ComparisonPage({ params }) {
       <AdLayoutWrapper>
         <main className="content-col pt-24 pb-20">
 
+        {/* First thing on the page, before the breadcrumb/H1 — see
+            AdTopBanner.tsx v3. */}
+        <AdTopBanner slotId="top-time-diff" />
+
         {/* ── Breadcrumb ─────────────────────────────────────────────── */}
         <nav aria-label="مسار التنقل" className="text-xs text-muted mb-6 flex items-center gap-1 flex-wrap">
           <Link href="/" className="hover:text-accent transition-colors">الرئيسية</Link>
@@ -466,10 +470,6 @@ export default async function ComparisonPage({ params }) {
             shareHref={pairHref}
           />
         </ErrorBoundary>
-
-        <div className="td-ad-gap">
-          <AdTopBanner slotId="top-time-diff" />
-        </div>
 
         {/* ── Interactive tool: change cities, convert time, shared hours ──
             Client island. Isolated so a failure here can't take down the

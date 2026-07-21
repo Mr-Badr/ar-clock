@@ -135,6 +135,10 @@ export default async function CountryHubPage({ params }) {
     <main className={`bg-base ${styles.page}`} dir="rtl" lang="ar">
       <JsonLd data={schemas} />
 
+      {/* First thing on the page, before the breadcrumb/H1 — see
+          AdTopBanner.tsx v3. */}
+      <AdTopBanner slotId={`top-holiday-country-${hub.code}`} />
+
       {/* ── Hero ── */}
       <header className={styles.hero}>
         <nav className={styles.breadcrumb} aria-label="مسار التنقل">
@@ -215,8 +219,6 @@ export default async function CountryHubPage({ params }) {
           <div><strong>{stats.weekendLabel}</strong><span>نهاية الأسبوع</span></div>
         </div>
       </section>
-
-      <AdTopBanner slotId={`top-holiday-country-${hub.code}`} />
 
       {/* ── Year timeline ── */}
       <section className={styles.section} aria-labelledby="calendar-h">

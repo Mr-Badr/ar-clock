@@ -95,6 +95,8 @@ export default function ConverterPage() {
 
       <main dir="rtl" lang="ar">
         <div className="container">
+          {/* First thing on the page, before the breadcrumb/H1 — see
+              AdTopBanner.tsx v3. */}
           <AdTopBanner />
 
           <header style={{ paddingBlock: 'var(--space-8) var(--space-4)' }}>

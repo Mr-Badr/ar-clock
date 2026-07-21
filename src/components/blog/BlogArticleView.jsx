@@ -796,6 +796,12 @@ export default function BlogArticleView(props) {
     <main className={styles.page} style={pageStyle}>
       <JsonLd data={articleSchema} />
       <article className={styles.shell}>
+        {/* First thing in the article shell, before the breadcrumb/H1 — see
+            AdTopBanner.tsx v3 for why. */}
+        {shouldShowAds ? (
+          <AdTopBanner slotId={`top-guide-${guide.slug || 'entry'}`} />
+        ) : null}
+
         <GuideBreadcrumb guide={guide} />
 
         <header className={styles.hero}>
@@ -849,10 +855,6 @@ export default function BlogArticleView(props) {
             <GuideEditorialMeta guide={guide} />
           </div>
         </header>
-
-        {shouldShowAds ? (
-          <AdTopBanner slotId={`top-guide-${guide.slug || 'entry'}`} />
-        ) : null}
 
         <nav className={styles.mobileToc} aria-label="تنقل سريع داخل المقال">
           {navItems.map((item) => (

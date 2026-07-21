@@ -146,6 +146,10 @@ export default function TimeNowPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
       <AdLayoutWrapper layout="wide" sidebarMode="dual">
         <main className={styles.main}>
+        {/* First thing on the page, before the breadcrumb/H1 — see
+            AdTopBanner.tsx v3. */}
+        <AdTopBanner slotId="top-time-now-hub" />
+
         <section className={styles.heroShell} aria-labelledby="time-now-heading">
           <header className={styles.hero}>
             <div className={styles.heroBadge}>
@@ -179,8 +183,6 @@ export default function TimeNowPage() {
             </div>
           </section>
         </section>
-
-        <AdTopBanner slotId="top-time-now-hub" />
 
         <section aria-labelledby="time-now-local-clock-heading" className={styles.clockFocusSection}>
           <div className={styles.clockIntro}>

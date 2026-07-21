@@ -253,21 +253,25 @@
 
 
   /* ──────────────────────────────────────────────────────────────────────────
-     TOP BANNER AD
-     
-     WHERE: Inside content-col, AFTER <h1> and BEFORE first content block.
-     
+     TOP BANNER AD  (v3 — moved above the H1, 2026-07-21)
+
+     WHERE: Inside content-col, FIRST thing — BEFORE the breadcrumb and <h1>.
+
      CORRECT ORDER in JSX:
-       <nav breadcrumb />
-       <h1>Page Title</h1>
-       <AdTopBanner />          ← HERE (just below H1, above content)
-       <PrayerTimesTable />
-     
-     WHY AFTER H1 (not before):
-       Google's heat map data shows ads just BELOW the first content element
-       (the title) have HIGHER viewability AND CTR than ads above the title.
-       Also: H1 before ad means Googlebot sees the topic FIRST → better SEO.
-     
+       <main>
+         <AdTopBanner />          ← HERE, first child, right below the navbar
+         <nav breadcrumb />
+         <h1>Page Title</h1>
+         <PrayerTimesTable />
+
+     WHY BEFORE H1 (reversed from the old v2 placement):
+       Most sessions on this site are quick-glance lookups (prayer/time/date/
+       countdown, ~96% mobile) that generate at most one viewable ad
+       impression before the visitor leaves. A tall hero can push an
+       after-H1 banner below what a fast-bouncing visitor ever sees.
+       Placing it first guarantees it renders in the same viewport as the
+       navbar on every page. Full reasoning: AdTopBanner.tsx file header.
+
      SIZES: 320×50 mobile → 728×90 tablet → 970×90 desktop
      ────────────────────────────────────────────────────────────────────────── */
   .ad-slot--top-banner {

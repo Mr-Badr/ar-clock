@@ -120,6 +120,12 @@ export default async function HolidayPage({ params }) {
       <AdLayoutWrapper sidebarMode="dual">
         <main className="content-col pt-24 pb-20">
 
+        {/* First thing on the page, before the breadcrumb/H1/counter — this
+            is exactly the page type where visitors glance at the countdown
+            and leave, so the ad must render before that counter, not after
+            it. See AdTopBanner.tsx v3. */}
+        <AdTopBanner slotId="top-holiday-slug" />
+
         {/* Breadcrumb */}
         <nav aria-label="breadcrumb" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)', marginBottom: 'var(--space-8)' }}>
           <Link href="/" style={{ color: 'var(--text-muted)' }}>الرئيسية</Link>
@@ -272,15 +278,6 @@ export default async function HolidayPage({ params }) {
             </span>
           )}
         </div>
-
-        {/*
-          Ad right after the primary answer (countdown + exact dates), before
-          the secondary engagement UI (share bar, related bubbles) — was
-          previously placed after those, landing ~1.75 mobile viewports down
-          instead of ~1.1. Share/bubbles are discovery chrome, not the answer
-          the user came for, so they can follow the ad instead of precede it.
-        */}
-        <AdTopBanner slotId="top-holiday-slug" />
 
         {/* ── SHARE BAR — WhatsApp · Telegram · X · Facebook · Copy ──────── */}
         <ShareBar

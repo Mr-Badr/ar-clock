@@ -53,6 +53,12 @@ Full before/after examples: `.claude/rules/calculator-ui-standards.md` §1b (ref
 - Ad slots are client-rendered and consent-gated — never replace initial SSR content with ad slots
 
 ## Layout constraints for Google Ads compliance
-- Primary answer/tool/content must appear BEFORE any ad slot in DOM order
+- **Updated 2026-07-21**: `AdTopBanner` now renders BEFORE the breadcrumb/H1 (first child of
+  `<main>`, right below the navbar — see `AdTopBanner.tsx` v3 JSDoc). This reverses the older
+  "primary content before any ad slot" rule below; the reasoning is that Google's actual "Valuable
+  Inventory" policy is about pages having real content at all, not DOM order relative to a single
+  small banner — and the ad + H1 both still render inside the same first mobile viewport, so content
+  is never buried. Keep the ad SMALL (the existing 50–100px reserved slot) — this reasoning does not
+  extend to making ads dominate the first screen.
 - No interstitials, consent prompts, or nav overlays covering H1 or first answer
 - Sidebar and sticky ads are outside the primary content flow

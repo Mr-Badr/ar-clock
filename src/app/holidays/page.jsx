@@ -256,6 +256,10 @@ export default async function HolidaysPage() {
       <AdLayoutWrapper layout="wide" sidebarMode="dual">
         <div className="layout-content-shell">
           <main className={styles.pageShell}>
+        {/* First thing on the page, before the breadcrumb/H1 — see
+            AdTopBanner.tsx v3. */}
+        <AdTopBanner slotId="top-holidays-list" />
+
         {/* ── Breadcrumb ─────────────────────────────────────────────── */}
         <nav
           aria-label="breadcrumb"
@@ -287,7 +291,6 @@ export default async function HolidaysPage() {
               <span>التصفية تعمل بدون مغادرة الصفحة</span>
             </div>
           </div>
-          <AdTopBanner slotId="top-holidays-list" />
           <HolidaysClient
             initialEvents={defaultData.events}
             initialNextCursor={defaultData.nextCursor}

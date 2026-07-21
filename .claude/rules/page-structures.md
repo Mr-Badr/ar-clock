@@ -16,7 +16,7 @@ paths:
 ## Calculator pages
 All calculator tools use exported components from `src/components/calculators/common.jsx`.
 Standard page order:
-1. `<CalculatorHero badge title description highlights>` — H1, trust items, AdTopBanner inside
+1. `<CalculatorHero badge title description highlights>` — AdTopBanner first (before H1), then H1, trust items
 2. `<CalculatorSection id eyebrow title>` — the actual interactive tool form (client component inside)
 3. Additional `<CalculatorSection>` blocks — explanation, methodology, examples
 4. `<CalculatorSection>` → `<CalculatorFaqSection items>` — FAQ accordion + AdInArticle before it

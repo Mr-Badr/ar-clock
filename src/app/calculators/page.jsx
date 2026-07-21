@@ -216,6 +216,13 @@ export default function CalculatorsPage() {
 
       <section className="calc-hub-v8-hero" aria-labelledby="calculators-title">
         <div className="calc-hub-v8-wrap calc-hub-v8-hero-grid">
+          {/* First thing in the (single-column, DOM-order-stacked) hero grid —
+              moved above the H1 so it renders in the same viewport as the
+              navbar. See AdTopBanner.tsx v3. */}
+          <div className="calc-hub-v8-hero-ad">
+            <AdTopBanner slotId="top-calculator-hub" />
+          </div>
+
           <div className="calc-hub-v8-hero-copy">
             <span className="calc-hub-v8-kicker">قسم الحاسبات</span>
             <h1 id="calculators-title" className="calc-hub-v8-title">حاسبات عربية تجيب عن سؤالك مباشرة</h1>
@@ -227,10 +234,6 @@ export default function CalculatorsPage() {
               <span>شرح حدود الرقم</span>
               <span>بدون حساب</span>
             </div>
-          </div>
-
-          <div className="calc-hub-v8-hero-ad">
-            <AdTopBanner slotId="top-calculator-hub" />
           </div>
 
           <nav className="calc-hub-v8-command" aria-label="ابدأ من نوع السؤال">

@@ -203,6 +203,9 @@ export default async function ProhibitedPrayerTimesPage() {
           <JsonLd data={webPageSchema} />
           <JsonLd data={faqSchema} />
 
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId="top-prohibited-prayer-times" />
+
           <section className={`container mx-auto px-4 ${routeStyles.heroSection}`}>
             <div className={`${routeStyles.heroInner} ${routeStyles.heroCenter}`}>
               <div className={routeStyles.heroCopy}>
@@ -230,10 +233,6 @@ export default async function ProhibitedPrayerTimesPage() {
                 </div>
               </div>
             </div>
-          </section>
-
-          <section className="container mx-auto px-4 pb-2">
-            <AdTopBanner slotId="top-prohibited-prayer-times" />
           </section>
 
           <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>

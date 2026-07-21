@@ -202,6 +202,9 @@ export default async function LastThirdOfNightPage() {
           <JsonLd data={webPageSchema} />
           <JsonLd data={faqSchema} />
 
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId="top-last-third-night" />
+
           <section className={`container mx-auto px-4 ${routeStyles.heroSection}`}>
             <div className={`${routeStyles.heroInner} ${routeStyles.heroCenter}`}>
               <div className={routeStyles.heroCopy}>
@@ -228,10 +231,6 @@ export default async function LastThirdOfNightPage() {
                 </div>
               </div>
             </div>
-          </section>
-
-          <section className="container mx-auto px-4 pb-2">
-            <AdTopBanner slotId="top-last-third-night" />
           </section>
 
           <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>

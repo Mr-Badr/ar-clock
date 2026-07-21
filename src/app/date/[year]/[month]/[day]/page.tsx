@@ -321,6 +321,9 @@ export default async function ProgrammaticDatePage({
       />
       <AdLayoutWrapper>
         <main className="content-col pt-24 pb-20 mt-12">
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId={`top-date-gregorian-${year}-${month}-${day}`} slotKey="topDateBanner" />
+
           <DateBreadcrumb items={breadcrumb} />
 
           <section className="date-hero-panel mb-6">
@@ -363,8 +366,6 @@ export default async function ProgrammaticDatePage({
               </div>
             </aside>
           </section>
-
-          <AdTopBanner slotId={`top-date-gregorian-${year}-${month}-${day}`} slotKey="topDateBanner" />
 
           <section className="date-stat-grid mb-8">
             {[

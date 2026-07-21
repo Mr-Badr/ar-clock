@@ -257,6 +257,9 @@ async function GregorianToHijriDynamicContent() {
       <JsonLd data={[toolSchema, buildBreadcrumbJsonLd(breadcrumb, BASE_URL), faqSchema, howToSchema]} />
       <AdLayoutWrapper>
         <main className={styles.main}>
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId="top-date-gregorian-to-hijri" slotKey="topDateBanner" />
+
           <div className="container mx-auto px-4">
             <DateBreadcrumb items={breadcrumb} />
           </div>
@@ -293,8 +296,6 @@ async function GregorianToHijriDynamicContent() {
               </Suspense>
             </div>
           </section>
-
-          <AdTopBanner slotId="top-date-gregorian-to-hijri" slotKey="topDateBanner" />
 
           <section className={`container mx-auto px-4 ${styles.sectionBand}`}>
             <div className={styles.prosePanel}>

@@ -373,6 +373,9 @@ export default async function GregorianCalendarPage({
       <JsonLd data={[breadcrumbSchema, webPageSchema, itemListSchema, faqSchema, howToSchema]} />
       <AdLayoutWrapper>
         <main className="content-col pt-24 pb-20 mt-12">
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId={`top-date-calendar-${year}`} slotKey="topDateBanner" />
+
           <DateBreadcrumb items={breadcrumb} />
 
           <section className="date-hero-panel mb-8">
@@ -410,8 +413,6 @@ export default async function GregorianCalendarPage({
               </div>
             </aside>
           </section>
-
-          <AdTopBanner slotId={`top-date-calendar-${year}`} slotKey="topDateBanner" />
 
         <section className="date-stat-grid mb-8">
           {[

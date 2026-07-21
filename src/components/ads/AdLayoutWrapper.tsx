@@ -21,19 +21,18 @@
  *
  *   export default function CountryPage({ params }) {
  *     return (
- *       // <AdLayoutWrapper> 
+ *       // <AdLayoutWrapper>
  *         <main className="content-col pt-24 pb-20">
  *
  *           <CountryPrayerJsonLd ... />
  *
+ *           // Banner FIRST — before breadcrumb/H1, see AdTopBanner.tsx v3
+ *           <AdTopBanner slotId="top-country" />
+ *
  *           // Breadcrumb
  *           <nav aria-label="مسار التنقل">...</nav>
  *
- *           // H1 BEFORE ad — required for SEO topic classification
  *           <h1>مواقيت الصلاة في السعودية</h1>
- *
- *           // Banner AFTER h1 — higher viewability per Google heat map data
- *           <AdTopBanner slotId="top-country" />
  *
  *           // First major content block
  *           <PrayerTimesTable />

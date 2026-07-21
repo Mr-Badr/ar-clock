@@ -174,6 +174,11 @@ export function CalculatorHero({
         id="calculator-hero"
         className="calc-shell calc-shell--hero pt-28 sm:pt-32"
       >
+        {/* First thing inside the already-header-cleared wrapper — same
+            slot, moved from after the tool to before the H1/breadcrumb so
+            it renders in the same viewport as the navbar on every page,
+            not just on pages with a short hero. See AdTopBanner.tsx v3. */}
+        <AdTopBanner slotId="top-calculator-tool" />
         <div className="calc-section-frame calc-section-frame--hero">
           <div className="calc-hero-grid">
             <div className="calc-hero-copy">
@@ -217,11 +222,6 @@ export function CalculatorHero({
           </div>
         </div>
       </SectionWrapper>
-      {/* Right after the tool, outside the hero wrapper — the first ad a mobile
-          user reaches must come after the interactive tool, not several
-          sections later (was landing 2-3 viewports down on many pages when
-          each page manually opted in via showAdBefore on a later section). */}
-      <AdTopBanner slotId="top-calculator-tool" />
     </>
   );
 }

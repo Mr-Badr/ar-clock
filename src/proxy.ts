@@ -41,6 +41,7 @@ const PRAYER_STATIC_ROUTES: ReadonlySet<string> = new Set([
   'prohibited-prayer-times',
   'prayer-times-calculation-method',
 ]);
+const TIME_DIFFERENCE_STATIC_ROUTES: ReadonlySet<string> = new Set(['converter']);
 const DATE_TODAY_ROUTES: ReadonlySet<string> = new Set(['gregorian', 'hijri']);
 const DATE_SITEMAP_ROUTES: ReadonlySet<string> = new Set(['static', 'calendars', 'countries']);
 
@@ -216,6 +217,10 @@ function isPrayerPathValid(segments: string[]): boolean {
 function isTimeDifferencePathValid(segments: string[]): boolean {
   if (segments.length === 1) {
     return true;
+  }
+
+  if (segments.length === 2) {
+    return TIME_DIFFERENCE_STATIC_ROUTES.has(segments[1]);
   }
 
   if (segments.length !== 3) {

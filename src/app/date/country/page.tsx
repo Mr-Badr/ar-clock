@@ -318,6 +318,9 @@ export default async function DateCountryRootPage() {
       <JsonLd data={[breadcrumbSchema, webPageSchema, itemListSchema, faqSchema]} />
       <AdLayoutWrapper>
         <main className="content-col pt-24 pb-20 mt-12">
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId="top-date-country-list" slotKey="topDateBanner" />
+
           <DateBreadcrumb items={breadcrumb} />
 
           <section className="date-hero-panel mb-8" aria-labelledby="date-country-title">
@@ -352,8 +355,6 @@ export default async function DateCountryRootPage() {
               </div>
             </div>
           </section>
-
-          <AdTopBanner slotId="top-date-country-list" slotKey="topDateBanner" />
 
           {primaryCountry && (
             <section className="date-section" aria-labelledby="featured-countries-heading">

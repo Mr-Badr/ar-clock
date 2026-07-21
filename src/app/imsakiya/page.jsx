@@ -111,6 +111,9 @@ export default function ImsakiyaHubPage() {
     <main className="imsakiya-hub bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
 
+      {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+      <AdTopBanner slotId="imsakiya-hub-top" />
+
       {/* Hero */}
       <section className="container mx-auto px-4 pt-10 pb-8">
         <nav className="text-sm text-muted-foreground mb-4" aria-label="مسار التنقل">
@@ -128,7 +131,6 @@ export default function ImsakiyaHubPage() {
         <p className="text-sm bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg px-4 py-3 text-amber-800 dark:text-amber-300 mt-4">
           <strong>تنبيه:</strong> أول رمضان المتوقع وفق تقويم أم القرى: {ramadanStart.day} {GREGORIAN_MONTHS_AR[ramadanStart.month]} {gregYear}. قد يتقدم يوماً أو يتأخر برؤية الهلال.
         </p>
-        <AdTopBanner slotId="imsakiya-hub-top" />
       </section>
 
       {/* Country Groups */}

@@ -299,6 +299,9 @@ export default async function HijriCalendarRootPage() {
       <JsonLd data={[breadcrumbSchema, webPageSchema, itemListSchema, faqSchema, howToSchema]} />
       <AdLayoutWrapper>
         <main className="content-col pt-24 pb-20 mt-12">
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId="top-date-calendar-hijri" slotKey="topDateBanner" />
+
           <DateBreadcrumb items={breadcrumb} />
 
           <section className="date-hero-panel mb-8">
@@ -335,8 +338,6 @@ export default async function HijriCalendarRootPage() {
               </div>
             </div>
           </section>
-
-          <AdTopBanner slotId="top-date-calendar-hijri" slotKey="topDateBanner" />
 
           <section className="date-action-list date-action-list--four mb-8">
             <Link href={`/date/calendar/hijri/${currentHijriYear}`} className="date-action-link">

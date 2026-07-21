@@ -222,6 +222,9 @@ export default function CountdownPage({ searchParams }) {
       <JsonLd data={[TOOL_SCHEMA, BREADCRUMB_SCHEMA, FAQ_SCHEMA]} />
       <AdLayoutWrapper>
         <main className={styles.main}>
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId="top-countdown" />
+
           <section
             className={`container mx-auto px-4 ${styles.heroSection} ${styles.heroCompact}`}
             aria-labelledby="countdown-title"
@@ -257,8 +260,6 @@ export default function CountdownPage({ searchParams }) {
               </Suspense>
             </div>
           </section>
-
-          <AdTopBanner slotId="top-countdown" />
 
           <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="countdown-use-cases-heading">
             <div className={styles.sectionPanel}>

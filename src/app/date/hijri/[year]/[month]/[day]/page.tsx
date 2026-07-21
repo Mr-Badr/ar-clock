@@ -324,6 +324,9 @@ export default async function ProgrammaticHijriDatePage({
       />
       <AdLayoutWrapper>
         <main className="content-col pt-24 pb-20 mt-12">
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId={`top-date-hijri-${year}-${month}-${day}`} slotKey="topDateBanner" />
+
           <DateBreadcrumb items={breadcrumb} />
 
           <section className="date-hero-panel mb-8">
@@ -366,8 +369,6 @@ export default async function ProgrammaticHijriDatePage({
               </div>
             </aside>
           </section>
-
-          <AdTopBanner slotId={`top-date-hijri-${year}-${month}-${day}`} slotKey="topDateBanner" />
 
           {/* SHARE */}
           <section className="mb-8">

@@ -183,6 +183,9 @@ export default async function DuhaPrayerTimePage() {
           <JsonLd data={webPageSchema} />
           <JsonLd data={faqSchema} />
 
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId="top-duha-prayer" />
+
           <section className={`container mx-auto px-4 ${routeStyles.heroSection}`}>
             <div className={`${routeStyles.heroInner} ${routeStyles.heroCenter}`}>
               <div className={routeStyles.heroCopy}>
@@ -209,10 +212,6 @@ export default async function DuhaPrayerTimePage() {
                 </div>
               </div>
             </div>
-          </section>
-
-          <section className="container mx-auto px-4 pb-2">
-            <AdTopBanner slotId="top-duha-prayer" />
           </section>
 
           <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>

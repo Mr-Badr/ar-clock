@@ -329,6 +329,9 @@ export default function BlogHubClient(props) {
 
   return (
     <div className={styles.page}>
+      {/* First thing on the page, before the hero/H1 — see AdTopBanner.tsx v3. */}
+      <AdTopBanner slotId="top-blog-hub" slotKey="topBlogBanner" />
+
       <section className={styles.hero}>
         <div className={styles.heroMain}>
           <span className={styles.eyebrow}>
@@ -407,8 +410,6 @@ export default function BlogHubClient(props) {
 
         </div>
       </section>
-
-      <AdTopBanner slotId="top-blog-hub" slotKey="topBlogBanner" />
 
       <section className={styles.readingCompass} aria-labelledby="blog-compass-title">
         <div className={styles.compassHeader}>

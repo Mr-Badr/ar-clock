@@ -210,6 +210,9 @@ export default async function TimeDifferencePage() {
             dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
           />
           <main className="content-col pt-24 mt-12 time-diff-hub-main">
+        {/* First thing on the page, before the breadcrumb/H1 — see
+            AdTopBanner.tsx v3. */}
+        <AdTopBanner slotId="top-time-diff-list" />
 
         {/* JSON-LD structured data (HowTo) */}
         <script
@@ -249,8 +252,6 @@ export default async function TimeDifferencePage() {
         <section aria-label="حاسبة فرق التوقيت" style={{ marginBottom: 'var(--space-12)' }}>
           <TimeDiffCalculator />
         </section>
-
-        <AdTopBanner slotId="top-time-diff-list" />
 
         <section
           aria-labelledby="time-difference-decision-heading"
