@@ -1,0 +1,18 @@
+{
+  "slug": "doctors-day-egypt",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: تاريخ 18 مارس وذكرى تأسيس مدرسة طب أبو زعبل سنة 1827 موثقان عبر sis.gov.eg وcairo.gov.eg.",
+    "تم التوضيح صراحة أن اليوم مناسبة تقديرية معنوية وليس إجازة رسمية مدفوعة.",
+    "سنة 1827 تاريخ تاريخي قديم جداً، لا يخضع لقاعدة السنة المحظورة (currentYear-1).",
+    "مختلف عن world-teachers-day/nurses-day في الموقع — مناسبة وطنية مصرية خاصة بمهنة الطب لا يوم عالمي عام."
+  ],
+  "updatedAt": "2026-07-21T12:35:18.236Z"
+}

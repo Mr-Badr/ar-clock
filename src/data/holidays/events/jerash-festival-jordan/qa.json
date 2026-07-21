@@ -1,0 +1,18 @@
+{
+  "slug": "jerash-festival-jordan",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: انتظام لافت عبر 40+ دورة متتالية منذ 1981 (petra.gov.jo)، تفاوت طفيف يوم-يومين فقط بين الدورات — يبرر type: estimated بأعلى موثوقية بين أحداث هذه الدفعة.",
+    "أُدرج الاستبيان الصريح 'تقريبي' في quickFacts (متطلب estimated-type).",
+    "لا حاجة لتنويه سياسي — إطار المحتوى ثقافي/فني/تاريخي بحت.",
+    "سنة التأسيس 1981 تاريخية قديمة، لا تخضع لقاعدة السنة المحظورة."
+  ],
+  "updatedAt": "2026-07-21T12:38:14.262Z"
+}

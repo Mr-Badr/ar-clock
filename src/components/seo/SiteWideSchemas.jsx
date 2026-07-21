@@ -1,7 +1,6 @@
 // src/components/seo/SiteWideSchemas.jsx
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getDefaultAuthor, buildPersonSchema } from '@/data/site/authors';
-import { WEBSITE_ARCHITECTURE_PATHS } from '@/lib/seo/site-architecture';
 import {
   SITE_BRAND,
   SITE_BRAND_EN,
@@ -15,7 +14,6 @@ const SITE_URL = getSiteUrl();
 const ORG_ID = `${SITE_URL}#organization`;
 const WEBSITE_ID = `${SITE_URL}#website`;
 const FOUNDER = getDefaultAuthor();
-const WEBSITE_PARTS = WEBSITE_ARCHITECTURE_PATHS;
 const CORE_SECTION_PAGES = [
   { path: '/fahras', name: 'استكشف الصفحات' },
   { path: '/blog', name: 'المدونة' },
@@ -115,10 +113,6 @@ export default function SiteWideSchemas() {
       },
       'query-input': 'required name=search_term_string',
     },
-    hasPart: WEBSITE_PARTS.map((path) => ({
-      '@type': 'WebPage',
-      url: `${SITE_URL}${path}`,
-    })),
   };
 
   const navigationSchema = {

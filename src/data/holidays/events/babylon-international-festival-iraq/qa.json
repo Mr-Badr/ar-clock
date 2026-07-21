@@ -1,0 +1,18 @@
+{
+  "slug": "babylon-international-festival-iraq",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: تفاوت زمني فعلي بين دورات مختلفة (أوائل مقابل منتصف أبريل)، مصدره إشعارات وزارة الخارجية العراقية — يؤكد type: estimated.",
+    "أُدرج الاستبيان الصريح 'تقريبي' في quickFacts (متطلب estimated-type).",
+    "الجهة المنظمة (وزارة الثقافة العراقية) موثقة عبر إشعارات دبلوماسية رسمية.",
+    "لا يوجد ادعاء بيوم دقيق ثابت — الصفحة صريحة حول أن الموعد يتغير قليلاً كل عام."
+  ],
+  "updatedAt": "2026-07-21T12:38:01.861Z"
+}

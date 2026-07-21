@@ -1,0 +1,16 @@
+{
+  "slug": "kings-day-netherlands",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 27 أبريل موثق عبر royal-house.nl و government.nl، مع استثناء الانتقال إلى 26 أبريل إذا صادف 27 يوم أحد.",
+    "حدث ثانٍ لهولندا كدولة جديدة على الموقع، مرتبط بـ kinderbijslag-netherlands."
+  ],
+  "updatedAt": "2026-07-21T12:36:31.058Z"
+}

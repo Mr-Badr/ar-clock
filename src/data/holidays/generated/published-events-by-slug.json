@@ -839,6 +839,26 @@
     "month": 1,
     "day": 25
   },
+  "abu-simbel-sun-alignment-february": {
+    "id": "abu-simbel-sun-alignment-february",
+    "slug": "abu-simbel-sun-alignment-february",
+    "name": "تعامد الشمس في أبو سمبل (فبراير)",
+    "type": "fixed",
+    "category": "astronomy",
+    "_countryCode": "eg",
+    "month": 2,
+    "day": 22
+  },
+  "abu-simbel-sun-alignment-october": {
+    "id": "abu-simbel-sun-alignment-october",
+    "slug": "abu-simbel-sun-alignment-october",
+    "name": "تعامد الشمس في أبو سمبل (أكتوبر)",
+    "type": "fixed",
+    "category": "astronomy",
+    "_countryCode": "eg",
+    "month": 10,
+    "day": 22
+  },
   "al-marbaaniya-saudi": {
     "id": "al-marbaaniya-saudi",
     "slug": "al-marbaaniya-saudi",
@@ -947,6 +967,16 @@
     "_countryCode": "om",
     "month": 12,
     "day": 11
+  },
+  "armed-forces-day-uae": {
+    "id": "armed-forces-day-uae",
+    "slug": "armed-forces-day-uae",
+    "name": "يوم القوات المسلحة الإماراتية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ae",
+    "month": 5,
+    "day": 6
   },
   "armenian-christmas-lebanon": {
     "id": "armenian-christmas-lebanon",
@@ -1061,6 +1091,15 @@
     "category": "social",
     "month": 4,
     "day": 2
+  },
+  "babylon-international-festival-iraq": {
+    "id": "babylon-international-festival-iraq",
+    "slug": "babylon-international-festival-iraq",
+    "name": "مهرجان بابل الدولي",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "iq",
+    "date": "{{year}}-04-10"
   },
   "bac-results-algeria": {
     "id": "bac-results-algeria",
@@ -1243,6 +1282,15 @@
     "_countryCode": "fr",
     "day": 5
   },
+  "cairo-international-film-festival": {
+    "id": "cairo-international-film-festival",
+    "slug": "cairo-international-film-festival",
+    "name": "مهرجان القاهرة السينمائي الدولي",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "eg",
+    "date": "{{year}}-11-15"
+  },
   "canada-day": {
     "id": "canada-day",
     "slug": "canada-day",
@@ -1252,6 +1300,15 @@
     "_countryCode": "ca",
     "month": 7,
     "day": 1
+  },
+  "carthage-international-festival-tunisia": {
+    "id": "carthage-international-festival-tunisia",
+    "slug": "carthage-international-festival-tunisia",
+    "name": "مهرجان قرطاج الدولي",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "tn",
+    "date": "{{year}}-07-18"
   },
   "ccb-canada": {
     "id": "ccb-canada",
@@ -1474,6 +1531,16 @@
     "month": 12,
     "day": 3
   },
+  "doctors-day-egypt": {
+    "id": "doctors-day-egypt",
+    "slug": "doctors-day-egypt",
+    "name": "يوم الطبيب المصري",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "eg",
+    "month": 3,
+    "day": 18
+  },
   "dst-abolition-morocco": {
     "id": "dst-abolition-morocco",
     "slug": "dst-abolition-morocco",
@@ -1550,6 +1617,16 @@
     "category": "national",
     "_countryCode": "sy",
     "easterOffset": 0
+  },
+  "education-day-uae": {
+    "id": "education-day-uae",
+    "slug": "education-day-uae",
+    "name": "اليوم الإماراتي للتعليم",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ae",
+    "month": 2,
+    "day": 28
   },
   "epiphany-sweden": {
     "id": "epiphany-sweden",
@@ -1903,6 +1980,15 @@
     "_countryCode": "sa",
     "date": "{{year}}-06-20"
   },
+  "jerash-festival-jordan": {
+    "id": "jerash-festival-jordan",
+    "slug": "jerash-festival-jordan",
+    "name": "مهرجان جرش للثقافة والفنون",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "jo",
+    "date": "{{year}}-07-22"
+  },
   "job-security-oman": {
     "id": "job-security-oman",
     "slug": "job-security-oman",
@@ -1960,6 +2046,32 @@
     "_countryCode": "om",
     "date": "{{year}}-06-21"
   },
+  "kinderbijslag-netherlands": {
+    "id": "kinderbijslag-netherlands",
+    "slug": "kinderbijslag-netherlands",
+    "name": "دعم الأطفال في هولندا (Kinderbijslag)",
+    "type": "quarterly",
+    "category": "support",
+    "_countryCode": "nl",
+    "quarterlyDates": [
+      {
+        "month": 1,
+        "day": 2
+      },
+      {
+        "month": 4,
+        "day": 1
+      },
+      {
+        "month": 7,
+        "day": 1
+      },
+      {
+        "month": 10,
+        "day": 1
+      }
+    ]
+  },
   "kindergeld-germany": {
     "id": "kindergeld-germany",
     "slug": "kindergeld-germany",
@@ -1988,6 +2100,16 @@
     "_countryCode": "sa",
     "hijriMonth": 4,
     "hijriDay": 3
+  },
+  "kings-day-netherlands": {
+    "id": "kings-day-netherlands",
+    "slug": "kings-day-netherlands",
+    "name": "يوم الملك في هولندا (Koningsdag)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "nl",
+    "month": 4,
+    "day": 27
   },
   "knowledge-day-algeria": {
     "id": "knowledge-day-algeria",
@@ -2281,6 +2403,16 @@
     "month": 2,
     "day": 14
   },
+  "national-day-spain": {
+    "id": "national-day-spain",
+    "slug": "national-day-spain",
+    "name": "اليوم الوطني الإسباني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "es",
+    "month": 10,
+    "day": 12
+  },
   "national-day-sweden": {
     "id": "national-day-sweden",
     "slug": "national-day-sweden",
@@ -2299,6 +2431,16 @@
     "category": "support",
     "_countryCode": "kw",
     "day": 25
+  },
+  "national-press-day-algeria": {
+    "id": "national-press-day-algeria",
+    "slug": "national-press-day-algeria",
+    "name": "اليوم الوطني للصحافة في الجزائر",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "dz",
+    "month": 10,
+    "day": 22
   },
   "new-years-day-uk": {
     "id": "new-years-day-uk",
@@ -2518,6 +2660,15 @@
       "weekday": 2,
       "weekNumber": 2
     }
+  },
+  "qurain-cultural-festival-kuwait": {
+    "id": "qurain-cultural-festival-kuwait",
+    "slug": "qurain-cultural-festival-kuwait",
+    "name": "مهرجان القرين الثقافي",
+    "type": "estimated",
+    "category": "social",
+    "_countryCode": "kw",
+    "date": "{{year}}-02-01"
   },
   "rajab-start": {
     "id": "rajab-start",
@@ -3023,6 +3174,26 @@
     "category": "support",
     "_countryCode": "fr",
     "date": "{{year}}-07-24"
+  },
+  "teachers-day-egypt": {
+    "id": "teachers-day-egypt",
+    "slug": "teachers-day-egypt",
+    "name": "عيد المعلم في مصر",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "eg",
+    "month": 9,
+    "day": 10
+  },
+  "teachers-day-saudi": {
+    "id": "teachers-day-saudi",
+    "slug": "teachers-day-saudi",
+    "name": "يوم المعلم السعودي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sa",
+    "month": 2,
+    "day": 28
   },
   "thanksgiving-canada": {
     "id": "thanksgiving-canada",

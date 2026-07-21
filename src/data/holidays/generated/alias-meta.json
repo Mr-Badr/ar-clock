@@ -91,6 +91,14 @@
     "canonicalSlug": "ramadan",
     "countryCode": "lb"
   },
+  "ramadan-in-netherlands": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "nl"
+  },
+  "ramadan-in-spain": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "es"
+  },
   "eid-al-fitr-in-saudi": {
     "canonicalSlug": "eid-al-fitr",
     "countryCode": "sa"
@@ -182,6 +190,14 @@
   "eid-al-fitr-in-lebanon": {
     "canonicalSlug": "eid-al-fitr",
     "countryCode": "lb"
+  },
+  "eid-al-fitr-in-netherlands": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "nl"
+  },
+  "eid-al-fitr-in-spain": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "es"
   },
   "eid-al-adha-in-saudi": {
     "canonicalSlug": "eid-al-adha",
@@ -275,6 +291,14 @@
     "canonicalSlug": "eid-al-adha",
     "countryCode": "lb"
   },
+  "eid-al-adha-in-netherlands": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "nl"
+  },
+  "eid-al-adha-in-spain": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "es"
+  },
   "day-of-arafa-in-saudi": {
     "canonicalSlug": "day-of-arafa",
     "countryCode": "sa"
@@ -366,6 +390,14 @@
   "day-of-arafa-in-lebanon": {
     "canonicalSlug": "day-of-arafa",
     "countryCode": "lb"
+  },
+  "day-of-arafa-in-netherlands": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "nl"
+  },
+  "day-of-arafa-in-spain": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "es"
   },
   "hajj-season-in-saudi": {
     "canonicalSlug": "hajj-season",
@@ -459,6 +491,14 @@
     "canonicalSlug": "hajj-season",
     "countryCode": "lb"
   },
+  "hajj-season-in-netherlands": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "nl"
+  },
+  "hajj-season-in-spain": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "es"
+  },
   "islamic-new-year-in-saudi": {
     "canonicalSlug": "islamic-new-year",
     "countryCode": "sa"
@@ -550,6 +590,14 @@
   "islamic-new-year-in-lebanon": {
     "canonicalSlug": "islamic-new-year",
     "countryCode": "lb"
+  },
+  "islamic-new-year-in-netherlands": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "nl"
+  },
+  "islamic-new-year-in-spain": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "es"
   },
   "ashura-in-saudi": {
     "canonicalSlug": "ashura",
@@ -643,6 +691,14 @@
     "canonicalSlug": "ashura",
     "countryCode": "lb"
   },
+  "ashura-in-netherlands": {
+    "canonicalSlug": "ashura",
+    "countryCode": "nl"
+  },
+  "ashura-in-spain": {
+    "canonicalSlug": "ashura",
+    "countryCode": "es"
+  },
   "laylat-al-qadr-in-saudi": {
     "canonicalSlug": "laylat-al-qadr",
     "countryCode": "sa"
@@ -734,6 +790,14 @@
   "laylat-al-qadr-in-lebanon": {
     "canonicalSlug": "laylat-al-qadr",
     "countryCode": "lb"
+  },
+  "laylat-al-qadr-in-netherlands": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "nl"
+  },
+  "laylat-al-qadr-in-spain": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "es"
   },
   "isra-miraj-in-saudi": {
     "canonicalSlug": "isra-miraj",
@@ -827,6 +891,14 @@
     "canonicalSlug": "isra-miraj",
     "countryCode": "lb"
   },
+  "isra-miraj-in-netherlands": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "nl"
+  },
+  "isra-miraj-in-spain": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "es"
+  },
   "first-dhul-hijjah-in-saudi": {
     "canonicalSlug": "first-dhul-hijjah",
     "countryCode": "sa"
@@ -918,6 +990,14 @@
   "first-dhul-hijjah-in-lebanon": {
     "canonicalSlug": "first-dhul-hijjah",
     "countryCode": "lb"
+  },
+  "first-dhul-hijjah-in-netherlands": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "nl"
+  },
+  "first-dhul-hijjah-in-spain": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "es"
   },
   "valentines-day-in-saudi": {
     "canonicalSlug": "valentines-day",
@@ -1011,6 +1091,14 @@
     "canonicalSlug": "valentines-day",
     "countryCode": "lb"
   },
+  "valentines-day-in-netherlands": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "nl"
+  },
+  "valentines-day-in-spain": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "es"
+  },
   "world-health-day-in-saudi": {
     "canonicalSlug": "world-health-day",
     "countryCode": "sa"
@@ -1102,6 +1190,14 @@
   "world-health-day-in-lebanon": {
     "canonicalSlug": "world-health-day",
     "countryCode": "lb"
+  },
+  "world-health-day-in-netherlands": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "nl"
+  },
+  "world-health-day-in-spain": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "es"
   },
   "earth-day-in-saudi": {
     "canonicalSlug": "earth-day",
@@ -1195,6 +1291,14 @@
     "canonicalSlug": "earth-day",
     "countryCode": "lb"
   },
+  "earth-day-in-netherlands": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "nl"
+  },
+  "earth-day-in-spain": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "es"
+  },
   "world-diabetes-day-in-saudi": {
     "canonicalSlug": "world-diabetes-day",
     "countryCode": "sa"
@@ -1286,6 +1390,14 @@
   "world-diabetes-day-in-lebanon": {
     "canonicalSlug": "world-diabetes-day",
     "countryCode": "lb"
+  },
+  "world-diabetes-day-in-netherlands": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "nl"
+  },
+  "world-diabetes-day-in-spain": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "es"
   },
   "diabetes-day": {
     "canonicalSlug": "world-diabetes-day",
@@ -1395,6 +1507,14 @@
     "canonicalSlug": "world-teachers-day",
     "countryCode": "lb"
   },
+  "world-teachers-day-in-netherlands": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "nl"
+  },
+  "world-teachers-day-in-spain": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "es"
+  },
   "arabic-language-day-in-saudi": {
     "canonicalSlug": "arabic-language-day",
     "countryCode": "sa"
@@ -1486,6 +1606,14 @@
   "arabic-language-day-in-lebanon": {
     "canonicalSlug": "arabic-language-day",
     "countryCode": "lb"
+  },
+  "arabic-language-day-in-netherlands": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "nl"
+  },
+  "arabic-language-day-in-spain": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "es"
   },
   "mawlid-in-saudi": {
     "canonicalSlug": "mawlid",
@@ -1579,6 +1707,14 @@
     "canonicalSlug": "mawlid",
     "countryCode": "lb"
   },
+  "mawlid-in-netherlands": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "nl"
+  },
+  "mawlid-in-spain": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "es"
+  },
   "nisf-shaban-in-saudi": {
     "canonicalSlug": "nisf-shaban",
     "countryCode": "sa"
@@ -1670,6 +1806,14 @@
   "nisf-shaban-in-lebanon": {
     "canonicalSlug": "nisf-shaban",
     "countryCode": "lb"
+  },
+  "nisf-shaban-in-netherlands": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "nl"
+  },
+  "nisf-shaban-in-spain": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "es"
   },
   "world-childrens-day-in-saudi": {
     "canonicalSlug": "world-childrens-day",
@@ -1763,6 +1907,14 @@
     "canonicalSlug": "world-childrens-day",
     "countryCode": "lb"
   },
+  "world-childrens-day-in-netherlands": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "nl"
+  },
+  "world-childrens-day-in-spain": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "es"
+  },
   "international-day-of-education-in-saudi": {
     "canonicalSlug": "international-day-of-education",
     "countryCode": "sa"
@@ -1854,6 +2006,14 @@
   "international-day-of-education-in-lebanon": {
     "canonicalSlug": "international-day-of-education",
     "countryCode": "lb"
+  },
+  "international-day-of-education-in-netherlands": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "nl"
+  },
+  "international-day-of-education-in-spain": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "es"
   },
   "world-mental-health-day-in-saudi": {
     "canonicalSlug": "world-mental-health-day",
@@ -1947,6 +2107,14 @@
     "canonicalSlug": "world-mental-health-day",
     "countryCode": "lb"
   },
+  "world-mental-health-day-in-netherlands": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "nl"
+  },
+  "world-mental-health-day-in-spain": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "es"
+  },
   "world-environment-day-in-saudi": {
     "canonicalSlug": "world-environment-day",
     "countryCode": "sa"
@@ -2038,6 +2206,14 @@
   "world-environment-day-in-lebanon": {
     "canonicalSlug": "world-environment-day",
     "countryCode": "lb"
+  },
+  "world-environment-day-in-netherlands": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "nl"
+  },
+  "world-environment-day-in-spain": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "es"
   },
   "april-fools-in-saudi": {
     "canonicalSlug": "april-fools",
@@ -2131,6 +2307,14 @@
     "canonicalSlug": "april-fools",
     "countryCode": "lb"
   },
+  "april-fools-in-netherlands": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "nl"
+  },
+  "april-fools-in-spain": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "es"
+  },
   "arab-orphan-day-in-saudi": {
     "canonicalSlug": "arab-orphan-day",
     "countryCode": "sa"
@@ -2222,6 +2406,14 @@
   "arab-orphan-day-in-lebanon": {
     "canonicalSlug": "arab-orphan-day",
     "countryCode": "lb"
+  },
+  "arab-orphan-day-in-netherlands": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "nl"
+  },
+  "arab-orphan-day-in-spain": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "es"
   },
   "badr-day-in-saudi": {
     "canonicalSlug": "badr-day",
@@ -2315,6 +2507,14 @@
     "canonicalSlug": "badr-day",
     "countryCode": "lb"
   },
+  "badr-day-in-netherlands": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "nl"
+  },
+  "badr-day-in-spain": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "es"
+  },
   "battle-of-uhud-in-saudi": {
     "canonicalSlug": "battle-of-uhud",
     "countryCode": "sa"
@@ -2406,6 +2606,14 @@
   "battle-of-uhud-in-lebanon": {
     "canonicalSlug": "battle-of-uhud",
     "countryCode": "lb"
+  },
+  "battle-of-uhud-in-netherlands": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "nl"
+  },
+  "battle-of-uhud-in-spain": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "es"
   },
   "blood-donor-day-in-saudi": {
     "canonicalSlug": "blood-donor-day",
@@ -2499,6 +2707,14 @@
     "canonicalSlug": "blood-donor-day",
     "countryCode": "lb"
   },
+  "blood-donor-day-in-netherlands": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "nl"
+  },
+  "blood-donor-day-in-spain": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "es"
+  },
   "conquest-of-andalusia-in-saudi": {
     "canonicalSlug": "conquest-of-andalusia",
     "countryCode": "sa"
@@ -2590,6 +2806,14 @@
   "conquest-of-andalusia-in-lebanon": {
     "canonicalSlug": "conquest-of-andalusia",
     "countryCode": "lb"
+  },
+  "conquest-of-andalusia-in-netherlands": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "nl"
+  },
+  "conquest-of-andalusia-in-spain": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "es"
   },
   "fall-of-granada-in-saudi": {
     "canonicalSlug": "fall-of-granada",
@@ -2683,6 +2907,14 @@
     "canonicalSlug": "fall-of-granada",
     "countryCode": "lb"
   },
+  "fall-of-granada-in-netherlands": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "nl"
+  },
+  "fall-of-granada-in-spain": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "es"
+  },
   "fath-makkah-in-saudi": {
     "canonicalSlug": "fath-makkah",
     "countryCode": "sa"
@@ -2774,6 +3006,14 @@
   "fath-makkah-in-lebanon": {
     "canonicalSlug": "fath-makkah",
     "countryCode": "lb"
+  },
+  "fath-makkah-in-netherlands": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "nl"
+  },
+  "fath-makkah-in-spain": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "es"
   },
   "food-day-in-saudi": {
     "canonicalSlug": "food-day",
@@ -2867,6 +3107,14 @@
     "canonicalSlug": "food-day",
     "countryCode": "lb"
   },
+  "food-day-in-netherlands": {
+    "canonicalSlug": "food-day",
+    "countryCode": "nl"
+  },
+  "food-day-in-spain": {
+    "canonicalSlug": "food-day",
+    "countryCode": "es"
+  },
   "human-rights-day-in-saudi": {
     "canonicalSlug": "human-rights-day",
     "countryCode": "sa"
@@ -2958,6 +3206,14 @@
   "human-rights-day-in-lebanon": {
     "canonicalSlug": "human-rights-day",
     "countryCode": "lb"
+  },
+  "human-rights-day-in-netherlands": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "nl"
+  },
+  "human-rights-day-in-spain": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "es"
   },
   "international-coffee-day-in-saudi": {
     "canonicalSlug": "international-coffee-day",
@@ -3051,6 +3307,14 @@
     "canonicalSlug": "international-coffee-day",
     "countryCode": "lb"
   },
+  "international-coffee-day-in-netherlands": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "nl"
+  },
+  "international-coffee-day-in-spain": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "es"
+  },
   "international-peace-day-in-saudi": {
     "canonicalSlug": "international-peace-day",
     "countryCode": "sa"
@@ -3142,6 +3406,14 @@
   "international-peace-day-in-lebanon": {
     "canonicalSlug": "international-peace-day",
     "countryCode": "lb"
+  },
+  "international-peace-day-in-netherlands": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "nl"
+  },
+  "international-peace-day-in-spain": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "es"
   },
   "international-youth-day-in-saudi": {
     "canonicalSlug": "international-youth-day",
@@ -3235,6 +3507,14 @@
     "canonicalSlug": "international-youth-day",
     "countryCode": "lb"
   },
+  "international-youth-day-in-netherlands": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "nl"
+  },
+  "international-youth-day-in-spain": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "es"
+  },
   "last-ten-nights-ramadan-in-saudi": {
     "canonicalSlug": "last-ten-nights-ramadan",
     "countryCode": "sa"
@@ -3326,6 +3606,14 @@
   "last-ten-nights-ramadan-in-lebanon": {
     "canonicalSlug": "last-ten-nights-ramadan",
     "countryCode": "lb"
+  },
+  "last-ten-nights-ramadan-in-netherlands": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "nl"
+  },
+  "last-ten-nights-ramadan-in-spain": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "es"
   },
   "literacy-day-in-saudi": {
     "canonicalSlug": "literacy-day",
@@ -3419,6 +3707,14 @@
     "canonicalSlug": "literacy-day",
     "countryCode": "lb"
   },
+  "literacy-day-in-netherlands": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "nl"
+  },
+  "literacy-day-in-spain": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "es"
+  },
   "nurses-day-in-saudi": {
     "canonicalSlug": "nurses-day",
     "countryCode": "sa"
@@ -3510,6 +3806,14 @@
   "nurses-day-in-lebanon": {
     "canonicalSlug": "nurses-day",
     "countryCode": "lb"
+  },
+  "nurses-day-in-netherlands": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "nl"
+  },
+  "nurses-day-in-spain": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "es"
   },
   "rajab-start-in-saudi": {
     "canonicalSlug": "rajab-start",
@@ -3603,6 +3907,14 @@
     "canonicalSlug": "rajab-start",
     "countryCode": "lb"
   },
+  "rajab-start-in-netherlands": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "nl"
+  },
+  "rajab-start-in-spain": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "es"
+  },
   "shaban-start-in-saudi": {
     "canonicalSlug": "shaban-start",
     "countryCode": "sa"
@@ -3694,6 +4006,14 @@
   "shaban-start-in-lebanon": {
     "canonicalSlug": "shaban-start",
     "countryCode": "lb"
+  },
+  "shaban-start-in-netherlands": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "nl"
+  },
+  "shaban-start-in-spain": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "es"
   },
   "six-days-shawwal-in-saudi": {
     "canonicalSlug": "six-days-shawwal",
@@ -3787,6 +4107,14 @@
     "canonicalSlug": "six-days-shawwal",
     "countryCode": "lb"
   },
+  "six-days-shawwal-in-netherlands": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "nl"
+  },
+  "six-days-shawwal-in-spain": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "es"
+  },
   "tarwiyah-day-in-saudi": {
     "canonicalSlug": "tarwiyah-day",
     "countryCode": "sa"
@@ -3878,6 +4206,14 @@
   "tarwiyah-day-in-lebanon": {
     "canonicalSlug": "tarwiyah-day",
     "countryCode": "lb"
+  },
+  "tarwiyah-day-in-netherlands": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "nl"
+  },
+  "tarwiyah-day-in-spain": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "es"
   },
   "tashreeq-days-in-saudi": {
     "canonicalSlug": "tashreeq-days",
@@ -3971,6 +4307,14 @@
     "canonicalSlug": "tashreeq-days",
     "countryCode": "lb"
   },
+  "tashreeq-days-in-netherlands": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "nl"
+  },
+  "tashreeq-days-in-spain": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "es"
+  },
   "tasua-day-in-saudi": {
     "canonicalSlug": "tasua-day",
     "countryCode": "sa"
@@ -4062,6 +4406,14 @@
   "tasua-day-in-lebanon": {
     "canonicalSlug": "tasua-day",
     "countryCode": "lb"
+  },
+  "tasua-day-in-netherlands": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "nl"
+  },
+  "tasua-day-in-spain": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "es"
   },
   "volunteer-day-in-saudi": {
     "canonicalSlug": "volunteer-day",
@@ -4155,6 +4507,14 @@
     "canonicalSlug": "volunteer-day",
     "countryCode": "lb"
   },
+  "volunteer-day-in-netherlands": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "nl"
+  },
+  "volunteer-day-in-spain": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "es"
+  },
   "wildlife-day-in-saudi": {
     "canonicalSlug": "wildlife-day",
     "countryCode": "sa"
@@ -4246,6 +4606,14 @@
   "wildlife-day-in-lebanon": {
     "canonicalSlug": "wildlife-day",
     "countryCode": "lb"
+  },
+  "wildlife-day-in-netherlands": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "nl"
+  },
+  "wildlife-day-in-spain": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "es"
   },
   "world-book-day-in-saudi": {
     "canonicalSlug": "world-book-day",
@@ -4339,6 +4707,14 @@
     "canonicalSlug": "world-book-day",
     "countryCode": "lb"
   },
+  "world-book-day-in-netherlands": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "nl"
+  },
+  "world-book-day-in-spain": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "es"
+  },
   "world-cancer-day-in-saudi": {
     "canonicalSlug": "world-cancer-day",
     "countryCode": "sa"
@@ -4431,6 +4807,14 @@
     "canonicalSlug": "world-cancer-day",
     "countryCode": "lb"
   },
+  "world-cancer-day-in-netherlands": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "nl"
+  },
+  "world-cancer-day-in-spain": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "es"
+  },
   "world-fathers-day-in-saudi": {
     "canonicalSlug": "world-fathers-day",
     "countryCode": "sa"
@@ -4522,6 +4906,14 @@
   "world-fathers-day-in-lebanon": {
     "canonicalSlug": "world-fathers-day",
     "countryCode": "lb"
+  },
+  "world-fathers-day-in-netherlands": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "nl"
+  },
+  "world-fathers-day-in-spain": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "es"
   },
   "fathers-day": {
     "canonicalSlug": "world-fathers-day",
@@ -4619,6 +5011,14 @@
     "canonicalSlug": "world-happiness-day",
     "countryCode": "lb"
   },
+  "world-happiness-day-in-netherlands": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "nl"
+  },
+  "world-happiness-day-in-spain": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "es"
+  },
   "world-no-tobacco-day-in-saudi": {
     "canonicalSlug": "world-no-tobacco-day",
     "countryCode": "sa"
@@ -4710,6 +5110,14 @@
   "world-no-tobacco-day-in-lebanon": {
     "canonicalSlug": "world-no-tobacco-day",
     "countryCode": "lb"
+  },
+  "world-no-tobacco-day-in-netherlands": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "nl"
+  },
+  "world-no-tobacco-day-in-spain": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "es"
   },
   "world-refugee-day-in-saudi": {
     "canonicalSlug": "world-refugee-day",
@@ -4803,6 +5211,14 @@
     "canonicalSlug": "world-refugee-day",
     "countryCode": "lb"
   },
+  "world-refugee-day-in-netherlands": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "nl"
+  },
+  "world-refugee-day-in-spain": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "es"
+  },
   "world-tourism-day-in-saudi": {
     "canonicalSlug": "world-tourism-day",
     "countryCode": "sa"
@@ -4895,6 +5311,14 @@
     "canonicalSlug": "world-tourism-day",
     "countryCode": "lb"
   },
+  "world-tourism-day-in-netherlands": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "nl"
+  },
+  "world-tourism-day-in-spain": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "es"
+  },
   "world-water-day-in-saudi": {
     "canonicalSlug": "world-water-day",
     "countryCode": "sa"
@@ -4986,5 +5410,13 @@
   "world-water-day-in-lebanon": {
     "canonicalSlug": "world-water-day",
     "countryCode": "lb"
+  },
+  "world-water-day-in-netherlands": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "nl"
+  },
+  "world-water-day-in-spain": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "es"
   }
 }

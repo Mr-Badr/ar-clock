@@ -187,7 +187,11 @@ function buildHolidayPagePayload(runtime, seo) {
     name: pageSchemaEvent.seoTitle,
     description: pageSchemaEvent.description,
   };
-  const faqSchema = buildFAQSchema({ ...event, faqItems });
+  // buildFAQSchema -> pickFaqEntries reads `.faq` before `.faqItems`. `event.faq` is the
+  // raw authored source (still has {{year}}/{{nextYear}} tokens); `faqItems` above is the
+  // token-resolved version. Without clearing `.faq` here, the schema silently ships
+  // unresolved template tokens in the live JSON-LD, breaking Google's FAQ rich-result parsing.
+  const faqSchema = buildFAQSchema({ ...event, faq: undefined, faqItems });
   const bcSchema = buildBreadcrumbSchema([
     { name: 'الرئيسية', url: siteUrl },
     { name: 'المناسبات', url: `${siteUrl}/holidays` },

@@ -1,0 +1,18 @@
+{
+  "slug": "teachers-day-saudi",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: يوم المعلم السعودي ثابت في 28 فبراير من كل عام (وزارة التعليم، moe.gov.sa)، منفصل تماماً عن اليوم العالمي للمعلم في 5 أكتوبر (اليونسكو) الحي على الموقع كـ world-teachers-day.",
+    "الفرق بين المناسبتين موضح صراحة في answerSummary وaboutEvent وثلاثة أسئلة FAQ على الأقل، لمعالجة الخلط الشائع بينهما.",
+    "type: fixed مع month: 2, day: 28 - تاريخ ميلادي ثابت لا يتحرك سنوياً، بعكس المناسبات الهجرية.",
+    "relatedSlugs يربط بـ education-day-uae (نفس التاريخ 28 فبراير، دولة مختلفة) وworld-teachers-day (المناسبة المقابلة عالمياً) ومناسبات وطنية سعودية أخرى."
+  ],
+  "updatedAt": "2026-07-21T12:36:57.139Z"
+}

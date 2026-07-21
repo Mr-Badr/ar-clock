@@ -1,0 +1,18 @@
+{
+  "slug": "education-day-uae",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: اليوم الإماراتي للتعليم اعتمده رئيس الدولة الشيخ محمد بن زايد آل نهيان في 28 فبراير من كل عام، إحياءً لتخريج الشيخ زايد بن سلطان أول دفعة معلمين من جامعة الإمارات سنة 1982 (مصدر: وام + الموقع الرسمي لمحمد بن زايد، سبتمبر 2024).",
+    "التاريخ (28 فبراير) يطابق يوم المعلم السعودي (الحي على الموقع) بمحض الصدفة التاريخية - لا علاقة سببية، وهذا موضح صراحة في answerSummary وaboutEvent وFAQ لمنع الالتباس.",
+    "type: fixed مع month: 2, day: 28 - تاريخ ميلادي ثابت لا يتحرك سنوياً منذ الاعتماد الرئاسي.",
+    "relatedSlugs يربط بشكل متبادل مع teachers-day-saudi (كلاهما يشير للآخر)، إضافة إلى world-teachers-day وuae-founding-day وarmed-forces-day-uae."
+  ],
+  "updatedAt": "2026-07-21T12:37:11.099Z"
+}

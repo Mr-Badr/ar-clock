@@ -1,0 +1,18 @@
+{
+  "slug": "carthage-international-festival-tunisia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: دورات 2024/2025/2026 كلها افتُتحت بين 16 و19 يوليو (avant-premiere.com.tn، CNN بالعربية) — يبرر type: estimated.",
+    "أُدرج الاستبيان الصريح 'تقريبي' في quickFacts (متطلب estimated-type).",
+    "سنة التأسيس 1964 تاريخية قديمة، لا تخضع لقاعدة السنة المحظورة.",
+    "الدورة الستين ذُكرت بصيغة نسبية ('نحو 60 دورة') لا كرقم دقيق مرتبط بسنة معينة، لتبقى الصفحة صالحة للسنوات القادمة."
+  ],
+  "updatedAt": "2026-07-21T12:38:28.332Z"
+}

@@ -2,22 +2,36 @@
 /**
  * components/clocks/CountdownTicker.jsx
  *
- * DEV VS PROD FIXES:
+ * Shared countdown display — used on /countdown, every /holidays/[slug]
+ * event page, and every /holidays/country/[country] hub page. Redesigned
+ * 2026-07 to fix two real bugs found during review:
  *
- * 1. STRICT MODE DOUBLE-MOUNT: React StrictMode (dev only) mounts→unmounts→remounts
- *    every component, causing useEffect to fire twice, restarting animations.
- *    Fix: `animationKey` ref only increments on the FIRST real mount, 
- *    not on StrictMode's fake unmount/remount.
+ * 1. UNIT ORDER: the old unit list was [seconds, minutes, hours, days],
+ *    rendered left-to-right under a forced `direction: ltr` row. That reads
+ *    as "seconds : minutes : hours" (smallest first) — backwards from the
+ *    universal big-endian clock convention (days : hours : minutes : seconds).
+ *    Fixed by ordering ALL_UNITS largest-to-smallest.
+ * 2. FLICKERING DIGITS: the old implementation keyed each digit <span> by
+ *    its character value (`${staggerIndex}-${pos}-${char}`), so React
+ *    unmounted/remounted a digit every time its value changed, retriggering
+ *    a CSS entrance animation every second. Combined with an `opacity: 0`
+ *    gate that only flipped after a mount-count ref reached a magic number,
+ *    this produced units that stayed invisible under real page-load
+ *    conditions (confirmed via Puppeteer — minutes/hours/days routinely
+ *    failed to render while seconds, the only unit whose value changes
+ *    every tick, kept working). Fixed by rendering each unit's two-digit
+ *    string as plain text content (no per-character remount) and dropping
+ *    the mount-gate entirely — SSR already provides a correct initial
+ *    value via `initialRemaining`, so there is nothing to hide.
  *
- * 2. CSS FLASH IN DEV: In dev, CSS loads via JS after the component renders,
- *    causing unstyled digits to flash at full size before snapping to cqi sizes.
- *    Fix: digits are hidden (opacity:0) until `mounted` is true. The skeleton
- *    is visible server-side and during the CSS-load gap.
+ * Also replaces the elastic/bounce easing (banned by DESIGN.md 21.1) with
+ * the project's standard `--ease-default` curve, and unifies the old
+ * "hero days number + divider + separate H:M:S row" two-tier mobile layout
+ * into one consistent 4-unit row that scales fluidly via cqi — no more
+ * container-query row-swapping, so there's one layout to reason about at
+ * every width instead of two disconnected ones.
  *
- * 3. CSS ORDER NON-DETERMINISTIC: Next.js App Router loads CSS in different order
- *    in dev vs prod (confirmed bug #64921). Fix is in new.css using @layer.
- *
- * SSR: Zero <style> tags. All CSS in new.css. window only in useEffect.
+ * SSR: zero <style> tags, all CSS in components.css. window only in effects.
  * Exports: default CountdownTicker · CountdownTickerSkeleton · ShareBar
  */
 import { useState, useEffect, useCallback, useRef } from 'react';
@@ -61,48 +75,26 @@ function calcRem(targetMs) {
 function pad2(n) { return String(Math.max(0, n)).padStart(2, '0'); }
 
 /* ─────────────────────────────────────────────────────────────────────
-   CONSTANTS
+   CONSTANTS — largest unit first so the forced-LTR digit row reads as
+   the universal "days : hours : minutes : seconds" clock convention.
 ───────────────────────────────────────────────────────────────────── */
 const ALL_UNITS = [
-  { key: 'seconds', label: 'ثانية' },
-  { key: 'minutes', label: 'دقيقة' },
-  { key: 'hours', label: 'ساعة' },
   { key: 'days', label: 'يوم' },
+  { key: 'hours', label: 'ساعة' },
+  { key: 'minutes', label: 'دقيقة' },
+  { key: 'seconds', label: 'ثانية' },
 ];
-const HMS_UNITS = ALL_UNITS.slice(0, 3);
 
 /* ─────────────────────────────────────────────────────────────────────
-   UNIT — module-level. Per-character keying means only changed digits animate.
-   CSS class ct-digit controls size via cqi (container-relative, not viewport).
-   The `visible` prop prevents the FOUC flash during dev CSS-load gap.
+   UNIT — module-level. Digits render as one text node per unit (not one
+   span per character), so a value change updates text content in place
+   instead of unmounting/remounting nodes. CSS class ct-digit controls
+   size via cqi (container-relative, not viewport).
 ───────────────────────────────────────────────────────────────────── */
-function Unit({ value, staggerIndex = 0, label, visible }) {
-  const str = pad2(value);
-  const delay = `${staggerIndex * 0.1}s`;
+function Unit({ value, label }) {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '0.55rem',
-        animation: `ct-unit-enter 0.6s cubic-bezier(0.175,0.885,0.32,1.275) ${delay} both`,
-        /* Hide during CSS-load gap in dev — show instantly once mounted */
-        opacity: visible ? undefined : 0,
-      }}
-    >
-      <div style={{ display: 'flex', lineHeight: 1 }}>
-        {str.split('').map((char, pos) => (
-          <span
-            key={`${staggerIndex}-${pos}-${char}`}
-            suppressHydrationWarning
-            aria-hidden
-            className="ct-digit"
-          >
-            {char}
-          </span>
-        ))}
-      </div>
+    <div className="ct-unit-group">
+      <span suppressHydrationWarning className="ct-digit">{pad2(value)}</span>
       <span className="ct-unit-label" aria-hidden>{label}</span>
     </div>
   );
@@ -111,39 +103,28 @@ function Unit({ value, staggerIndex = 0, label, visible }) {
 /* ─────────────────────────────────────────────────────────────────────
    COLON — module-level, no animation
 ───────────────────────────────────────────────────────────────────── */
-function Colon({ visible }) {
-  return (
-    <span
-      className="ct-sep-char"
-      aria-hidden
-      style={{ opacity: visible ? undefined : 0 }}
-    >
-      :
-    </span>
-  );
+function Colon() {
+  return <span className="ct-sep-char" aria-hidden>:</span>;
 }
 
 /* ─────────────────────────────────────────────────────────────────────
-   DESKTOP ROW — shown when card ≥ 30rem (via @container in new.css)
+   TICKER ROW — one layout for every width. Sizing scales fluidly via
+   cqi custom properties set on .ct-clock-card (see components.css), so
+   mobile and desktop need no separate markup.
 ───────────────────────────────────────────────────────────────────── */
-function DesktopRow({ r, visible }) {
+function TickerRow({ r }) {
   return (
     <div
-      className="ct-row-desktop"
-      style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 'clamp(0.5rem, 3cqi, 2.5rem)',
-        direction: 'ltr',
-      }}
+      className="ct-row-unified"
+      dir="ltr"
       role="timer"
       aria-label={`${r.days} يوم و ${r.hours} ساعة و ${r.minutes} دقيقة و ${r.seconds} ثانية`}
       aria-live="off"
     >
       {ALL_UNITS.map(({ key, label }, i) => (
-        <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(0.5rem, 3cqi, 2.5rem)' }}>
-          <Unit value={r[key]} label={label} staggerIndex={i} visible={visible} />
-          {i < ALL_UNITS.length - 1 && <Colon visible={visible} />}
+        <div key={key} className="ct-unit-wrap">
+          <Unit value={r[key]} label={label} />
+          {i < ALL_UNITS.length - 1 && <Colon />}
         </div>
       ))}
     </div>
@@ -151,121 +132,20 @@ function DesktopRow({ r, visible }) {
 }
 
 /* ─────────────────────────────────────────────────────────────────────
-   MOBILE ROW — shown when card < 30rem (via @container in new.css)
+   TOOLBAR BUTTON — ghost icon button with a real CSS hover/focus/active
+   state (class-based, so keyboard focus gets the same feedback as mouse
+   hover — the old inline onMouseEnter/Leave handlers only reacted to
+   the mouse).
 ───────────────────────────────────────────────────────────────────── */
-function MobileRow({ r, visible }) {
-  return (
-    <div
-      className="ct-row-mobile"
-      style={{ flexDirection: 'column', alignItems: 'center', gap: '0.9rem', direction: 'ltr' }}
-      role="timer"
-      aria-label={`${r.days} يوم و ${r.hours} ساعة و ${r.minutes} دقيقة و ${r.seconds} ثانية`}
-      aria-live="off"
-    >
-      {/* Days hero */}
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '0.25rem',
-        animation: 'ct-unit-enter 0.6s cubic-bezier(0.175,0.885,0.32,1.275) both',
-        opacity: visible ? undefined : 0,
-      }}>
-        <span
-          key={pad2(r.days)}
-          suppressHydrationWarning
-          aria-hidden
-          className="ct-days-val"
-          style={{ fontWeight: '800', lineHeight: 1, color: 'var(--clock-digit-color)', textShadow: 'var(--clock-digit-glow)' }}
-        >
-          {pad2(r.days)}
-        </span>
-        <span className="ct-unit-label" aria-hidden>يوم</span>
-      </div>
-
-      <div style={{ width: '60px', height: '1px', background: 'var(--border-subtle)' }} />
-
-      {/* H · M · S */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(0.5rem, 4cqi, 1.5rem)' }}>
-        {HMS_UNITS.map(({ key, label }, i) => (
-          <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(0.5rem, 4cqi, 1.5rem)' }}>
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '0.3rem',
-              animation: `ct-unit-enter 0.6s cubic-bezier(0.175,0.885,0.32,1.275) ${(i + 1) * 0.12}s both`,
-              opacity: visible ? undefined : 0,
-            }}>
-              <span
-                key={pad2(r[key])}
-                suppressHydrationWarning
-                aria-hidden
-                className="ct-hms-digit"
-                style={{ fontWeight: '800', lineHeight: 1, color: 'var(--clock-digit-color)', display: 'block', fontVariantNumeric: 'tabular-nums' }}
-              >
-                {pad2(r[key])}
-              </span>
-              <span className="ct-hms-label" style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>
-                {label}
-              </span>
-            </div>
-            {i < HMS_UNITS.length - 1 && (
-              <span
-                className="ct-hms-sep"
-                aria-hidden
-                style={{ color: 'var(--clock-separator)', fontWeight: '700', alignSelf: 'center', flexShrink: 0, userSelect: 'none', opacity: visible ? undefined : 0 }}
-              >
-                :
-              </span>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────────────────
-   ICON BUTTON
-───────────────────────────────────────────────────────────────────── */
-function IconBtn({ onClick, label, title, children, disabled = false, variant = 'ghost' }) {
+function IconBtn({ onClick, label, title, children, disabled = false }) {
   return (
     <button
+      type="button"
       onClick={disabled ? undefined : onClick}
       aria-label={label}
       title={title || label}
       disabled={disabled}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '0.4rem',
-        minHeight: '44px',
-        padding: '0.65rem 1rem',
-        borderRadius: '0.875rem',
-        border: variant === 'ghost' ? '1px solid var(--border-default)' : 'none',
-        background: 'transparent',
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        color: disabled ? 'var(--text-muted)' : 'var(--text-secondary)',
-        fontSize: '0.88rem',
-        fontWeight: '600',
-        opacity: disabled ? 0.4 : 1,
-        transition: 'background 0.15s, color 0.15s, border-color 0.15s',
-        whiteSpace: 'nowrap',
-      }}
-      onMouseEnter={e => {
-        if (!disabled) {
-          e.currentTarget.style.background = 'color-mix(in srgb, var(--bg-surface-3) 80%, transparent)';
-          e.currentTarget.style.color = 'var(--text-primary)';
-          e.currentTarget.style.borderColor = 'var(--border-accent)';
-        }
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.style.background = 'transparent';
-        e.currentTarget.style.color = disabled ? 'var(--text-muted)' : 'var(--text-secondary)';
-        e.currentTarget.style.borderColor = 'var(--border-default)';
-      }}
+      className="ct-toolbar-btn"
     >
       {children}
     </button>
@@ -319,8 +199,11 @@ const PLATFORMS = [
 ];
 
 /* ─────────────────────────────────────────────────────────────────────
-   SHARE BAR — named export. Root is <section> — no wrapper, no style tags.
-   window.location resolved only after mount (never in render path).
+   SHARE BAR — named export, used standalone on holiday pages too (not
+   just here) — deliberately left structurally untouched by this pass so
+   its appearance stays consistent across every page it already ships on.
+   Root is <section> — no wrapper, no style tags. window.location resolved
+   only after mount (never in render path).
 ───────────────────────────────────────────────────────────────────── */
 function buildGoogleCalendarUrl(eventName, isoDate, pageUrl) {
   if (!isoDate) return null;
@@ -522,7 +405,9 @@ export function ShareBar({ url, eventName, days, dateStr, eventISODate }) {
 }
 
 /* ─────────────────────────────────────────────────────────────────────
-   SKELETON — shown server-side and during the dev CSS-load gap
+   SKELETON — shown only while JS has not yet hydrated (no client fetch
+   involved — SSR already renders the real numbers — but Suspense
+   fallbacks and slow hydration can still show this briefly)
 ───────────────────────────────────────────────────────────────────── */
 export function CountdownTickerSkeleton() {
   return (
@@ -543,11 +428,11 @@ export function CountdownTickerSkeleton() {
         <div style={{ width: '80px', height: '34px', borderRadius: '0.625rem', background: 'var(--bg-surface-4)' }} />
         <div style={{ width: '110px', height: '34px', borderRadius: '0.625rem', background: 'var(--bg-surface-4)' }} />
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(1rem, 4vw, 3rem)', padding: '0.5rem 0' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(0.75rem, 4vw, 2rem)', padding: '0.5rem 0' }}>
         {[0, 1, 2, 3].map(i => (
           <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem' }}>
-            <div style={{ width: 'clamp(60px, 12vw, 96px)', height: 'clamp(56px, 10vw, 88px)', borderRadius: '0.5rem', background: 'var(--bg-surface-4)' }} />
-            <div style={{ width: '44px', height: '22px', borderRadius: '999px', background: 'var(--bg-surface-3)' }} />
+            <div style={{ width: 'clamp(48px, 11vw, 88px)', height: 'clamp(44px, 9vw, 80px)', borderRadius: '0.5rem', background: 'var(--bg-surface-4)' }} />
+            <div style={{ width: '40px', height: '20px', borderRadius: '999px', background: 'var(--bg-surface-3)' }} />
           </div>
         ))}
       </div>
@@ -576,19 +461,9 @@ export default function CountdownTicker({
 
   /* ── State ── */
   const [rem, setRem] = useState(initialRemaining);
-  const [mounted, setMounted] = useState(false);
   const [isZero, setIsZero] = useState(false);
+  const [entered, setEntered] = useState(false);
   const { copied: shareCopied, copy: copyShareUrl } = useCopyFeedback(2500);
-
-  /* ── FIX 1: Strict Mode guard ────────────────────────────────────────
-     React StrictMode (dev only) mounts → unmounts → remounts.
-     We track whether the component has TRULY mounted (not just the
-     Strict Mode probe mount) using a ref that survives the fake unmount.
-     `realMounted` becomes true on the second mount (the real one) OR
-     if the cleanup never fired (prod — only one mount ever happens).
-  ────────────────────────────────────────────────────────────────── */
-  const mountCountRef = useRef(0);
-  const [visible, setVisible] = useState(false);
 
   const tick = useCallback(() => {
     const next = calcRem(targetMs);
@@ -597,33 +472,19 @@ export default function CountdownTicker({
   }, [targetMs]);
 
   useEffect(() => {
-    mountCountRef.current += 1;
-
-    setMounted(true);
     tick();
     const id = setInterval(tick, 1_000);
-
-    /* 
-     * In dev/StrictMode: this cleanup fires after the first mount.
-     * The interval is cleared. Then React remounts — tick starts clean.
-     * In prod: this cleanup only fires on actual unmount.
-     * Either way: one clean interval at a time. ✓
-     */
-    return () => {
-      clearInterval(id);
-      /* Reset mounted so the second (real) mount re-triggers the show animation */
-      if (mountCountRef.current < 2) setMounted(false);
-    };
+    return () => clearInterval(id);
   }, [tick]);
 
-  /* FIX 2: Show digits only after CSS has loaded (avoids unstyled flash) */
+  /* Single, simple card-entrance flag — no per-unit stagger, no key-based
+     remount tricks. React StrictMode's mount→unmount→mount runs this twice
+     in dev; setting the same boolean true both times is harmless. */
   useEffect(() => {
-    /* requestAnimationFrame ensures styles are painted before we show */
-    const raf = requestAnimationFrame(() => setVisible(true));
-    return () => cancelAnimationFrame(raf);
+    setEntered(true);
   }, []);
 
-  const r = mounted ? rem : initialRemaining;
+  const r = rem;
   const pct = Math.max(2, Math.min(98, Math.round((1 - r.days / Math.max(totalDays, 1)) * 100)));
 
   /* ── Fullscreen + zoom ── */
@@ -698,25 +559,16 @@ export default function CountdownTicker({
   /* ── Zero state ── */
   if (isZero) {
     return (
-      <div style={{
-        textAlign: 'center', padding: '3rem', borderRadius: '1rem',
-        border: '1px solid var(--border-accent)', background: 'var(--clock-bg)',
-        boxShadow: 'none', animation: 'ct-scale-in 0.5s ease both',
-      }}>
-        <CalendarDays
-          size={44}
-          strokeWidth={1.6}
-          aria-hidden="true"
-          style={{ color: 'var(--accent)', marginBottom: '0.5rem' }}
-        />
-        <p style={{ fontSize: 'var(--text-xl)', fontWeight: '800', color: 'var(--text-primary)' }}>المناسبة اليوم!</p>
-        <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>سيعرض العداد موعد السنة القادمة عند تحديث بيانات المناسبة.</p>
+      <div className="ct-zero-state">
+        <CalendarDays size={44} strokeWidth={1.6} aria-hidden="true" className="ct-zero-icon" />
+        <p className="ct-zero-title">المناسبة اليوم!</p>
+        <p className="ct-zero-note">سيعرض العداد موعد السنة القادمة عند تحديث بيانات المناسبة.</p>
       </div>
     );
   }
 
   return (
-    <div ref={containerRef} style={{ position: 'relative', width: '100%' }}>
+    <div ref={containerRef} className="ct-outer">
 
       {/* ═══ FULLSCREEN ════════════════════════════════════════════════ */}
       {isFS && (
@@ -730,9 +582,9 @@ export default function CountdownTicker({
               <Minimize2 size={18} /><span>إغلاق</span>
             </IconBtn>
             <div style={FULLSCREEN_ZOOM_GROUP_STYLE}>
-              <IconBtn onClick={zoomOut} label="تصغير" disabled={zoom === 0} variant="none"><ZoomOut size={20} /></IconBtn>
+              <IconBtn onClick={zoomOut} label="تصغير" disabled={zoom === 0}><ZoomOut size={20} /></IconBtn>
               <span style={FULLSCREEN_ZOOM_LABEL_STYLE}>{zoomLabel}</span>
-              <IconBtn onClick={zoomIn} label="تكبير" disabled={zoom === 2} variant="none"><ZoomIn size={20} /></IconBtn>
+              <IconBtn onClick={zoomIn} label="تكبير" disabled={zoom === 2}><ZoomIn size={20} /></IconBtn>
             </div>
           </div>
           <div style={getFullscreenContentStyle(scaleValue)}>
@@ -741,21 +593,17 @@ export default function CountdownTicker({
                 {eventName}
               </h2>
             )}
-            <div className="ct-row-desktop" style={getFullscreenRowStyle(4)}>
+            <div className="ct-row-desktop" style={getFullscreenRowStyle(4)} dir="ltr">
               {ALL_UNITS.map(({ key, label }, i) => (
                 <div key={key} style={getFullscreenUnitWrapStyle(4)}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem' }}>
-                    <div style={{ display: 'flex', lineHeight: 1 }}>
-                      {pad2(r[key]).split('').map((char, pos) => (
-                        <span
-                          key={`fs-${i}-${pos}-${char}`}
-                          suppressHydrationWarning
-                          aria-hidden
-                          className="clock-display"
-                          style={getFullscreenDigitStyle(4)}
-                        >{char}</span>
-                      ))}
-                    </div>
+                    <span
+                      suppressHydrationWarning
+                      className="clock-display"
+                      style={getFullscreenDigitStyle(4)}
+                    >
+                      {pad2(r[key])}
+                    </span>
                     <span style={FULLSCREEN_UNIT_LABEL_STYLE}>{label}</span>
                   </div>
                   {i < ALL_UNITS.length - 1 && (
@@ -774,7 +622,7 @@ export default function CountdownTicker({
           All digit sizes inside use cqi (card-relative, not viewport)
       ═══════════════════════════════════════════════════════════════ */}
       {!isFS && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)', animation: 'ct-card-enter 0.8s cubic-bezier(0.175,0.885,0.32,1.275) both' }}>
+        <div className={`ct-stack${entered ? ' ct-stack--entered' : ''}`}>
 
           <div
             className="ct-clock-card"
@@ -791,48 +639,37 @@ export default function CountdownTicker({
             }}
           >
             {/* Control bar */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-
+            <div className="ct-toolbar">
               <IconBtn onClick={toggleFS} label="فتح العداد بملء الشاشة" title="ملء الشاشة">
                 <Fullscreen size={15} /><span>ملء الشاشة</span>
               </IconBtn>
 
               <button
+                type="button"
                 onClick={handleShare}
                 aria-label="مشاركة"
-                style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
-                  minHeight: '44px', padding: '0.65rem 1rem', borderRadius: '0.875rem',
-                  border: shareCopied ? '1px solid var(--accent)' : '1px solid var(--border-default)',
-                  background: shareCopied ? 'var(--accent-soft)' : 'transparent',
-                  color: shareCopied ? 'var(--accent)' : 'var(--text-secondary)',
-                  fontSize: '0.88rem', fontWeight: '600',
-                  cursor: 'pointer', transition: 'all 0.18s', whiteSpace: 'nowrap',
-                }}
+                className={`ct-toolbar-btn${shareCopied ? ' ct-toolbar-btn--active' : ''}`}
               >
                 <Share2 size={15} />
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                <span className="ct-toolbar-btn__label">
                   {shareCopied ? <CheckCircle2 size={15} aria-hidden="true" /> : null}
                   {shareCopied ? 'تم النسخ' : 'مشاركة'}
                 </span>
               </button>
             </div>
 
-            {/* Rows — CSS @container switches between them based on card width */}
-            <DesktopRow r={r} visible={visible} />
-            <MobileRow r={r} visible={visible} />
+            <TickerRow r={r} />
 
-            {/* Date pill */}
             <DatePill dateAr={dateAr || eventDate} dateHijri={dateHijri} />
           </div>
 
           {/* Progress bar */}
           <div>
             <div className="progress-track">
-              <div className="progress-fill progress-fill--countdown" style={{ width: `${pct}%`, backgroundPosition: `${pct}% 0` }} />
+              <div className="progress-fill progress-fill--countdown" style={{ width: `${pct}%` }} />
             </div>
-            <div aria-hidden style={{ display: 'flex', justifyContent: 'space-between', marginTop: 'var(--space-2)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
-              <span>الان</span>
+            <div aria-hidden className="ct-progress-caption">
+              <span>الآن</span>
               <span suppressHydrationWarning>
                 {r.days > 0
                   ? `${r.days} يوم${r.hours > 0 ? ` و ${r.hours} ساعة` : ''} متبقي`

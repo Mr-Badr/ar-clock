@@ -1,0 +1,16 @@
+{
+  "slug": "kinderbijslag-netherlands",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: مواعيد الصرف الأربعة الثابتة (2 يناير/1 أبريل/1 يوليو/1 أكتوبر) موثقة عبر svb.nl، الجهة الحكومية الوطنية الوحيدة.",
+    "أول حدث من نوع quarterly على الموقع — استخدم core.quarterlyDates بدل core.date، محرك جديد أُضيف هذه الجلسة."
+  ],
+  "updatedAt": "2026-07-21T12:36:15.848Z"
+}

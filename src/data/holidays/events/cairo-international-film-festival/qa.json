@@ -1,0 +1,18 @@
+{
+  "slug": "cairo-international-film-festival",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: دورات 2023/2024/2025 كلها منتصف نوفمبر تقريباً بامتداد 9-10 أيام (ciff.org.eg) — type: estimated مبرر بنمط ثابت نسبياً.",
+    "أُدرج الاستبيان الصريح 'تقريبي' في quickFacts (متطلب estimated-type).",
+    "المهرجان تأسس 1976 وتصنيفه الفئة A من FIAPF — سنة التأسيس تاريخية قديمة، لا تخضع لقاعدة السنة المحظورة.",
+    "لا يوجد ادعاء بيوم دقيق ثابت — الصفحة صريحة حول أن الموعد الرسمي يُعلن قبل الافتتاح بأسابيع فقط."
+  ],
+  "updatedAt": "2026-07-21T12:36:02.101Z"
+}

@@ -1494,17 +1494,151 @@
 }
 
 .ct-clock-card[data-clock-variant='four-unit'] {
-  --ct-digit-size: clamp(2.75rem, 11.75cqi, 5.85rem);
-  --ct-sep-size: clamp(1.55rem, 6.25cqi, 3.2rem);
+  /* One fluid formula for every width — no separate mobile/desktop values.
+     cqi is relative to the CARD, so this already scales correctly whether
+     the card is 340px on a phone or 900px on desktop. */
+  --ct-digit-size: clamp(1.85rem, 9.5cqi, 4.6rem);
+  --ct-sep-size: clamp(1.1rem, 5cqi, 2.6rem);
   --ct-sep-offset: 0.95em;
-  --ct-unit-label-size: clamp(0.68rem, 2.55cqi, 0.94rem);
-  --ct-unit-label-padding-y: 0.18rem;
-  --ct-unit-label-padding-x: 0.62rem;
-  --ct-mobile-days-size: clamp(3.3rem, 22cqi, 6.15rem);
-  --ct-mobile-hms-digit-size: clamp(2.15rem, 9.5cqi, 2.9rem);
-  --ct-mobile-hms-label-size: clamp(0.6rem, 2.65cqi, 0.82rem);
-  --ct-mobile-hms-sep-size: clamp(1.12rem, 5.5cqi, 1.95rem);
-  --ct-mobile-hms-sep-offset: 1.02em;
+  --ct-unit-label-size: clamp(0.62rem, 2.4cqi, 0.86rem);
+  --ct-unit-label-padding-y: 0.16rem;
+  --ct-unit-label-padding-x: 0.55rem;
+  --ct-unit-gap: clamp(0.35rem, 2.75cqi, 1.75rem);
+}
+
+/* ── Unified 4-unit row (CountdownTicker only) — one layout at every
+   width, sized fluidly via the variables above. Deliberately does NOT
+   participate in the .ct-row-desktop/.ct-row-mobile container-query
+   swap above (LiveClock/TimeNowHero's three-unit clocks still use that
+   swap independently). ── */
+.ct-row-unified {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ct-unit-gap);
+  flex-wrap: nowrap;
+}
+
+.ct-unit-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--ct-unit-gap);
+}
+
+.ct-unit-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+/* ── Card entrance — replaces the old bounce/elastic keyframe with the
+   project's standard ease-out curve (DESIGN.md 21.1: no decorative
+   choreography, exits faster than entrances). ── */
+.ct-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.ct-stack--entered {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--duration-slow) var(--ease-default),
+    transform var(--duration-slow) var(--ease-default);
+}
+
+/* ── Toolbar buttons (fullscreen / share) — class-based so keyboard
+   focus gets the same feedback as mouse hover. ── */
+.ct-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ct-toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background var(--duration-base) var(--ease-default),
+    color var(--duration-base) var(--ease-default),
+    border-color var(--duration-base) var(--ease-default);
+}
+
+.ct-toolbar-btn:hover,
+.ct-toolbar-btn:focus-visible {
+  background: color-mix(in srgb, var(--bg-surface-3) 80%, transparent);
+  color: var(--text-primary);
+  border-color: var(--border-accent);
+}
+
+.ct-toolbar-btn:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+.ct-toolbar-btn:disabled {
+  cursor: not-allowed;
+  color: var(--text-muted);
+  opacity: 0.4;
+}
+
+.ct-toolbar-btn--active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.ct-toolbar-btn__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* ── Zero state (event day has arrived) ── */
+.ct-zero-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-accent);
+  background: var(--clock-bg);
+}
+
+.ct-zero-icon {
+  color: var(--accent);
+  margin-bottom: var(--space-2);
+}
+
+.ct-zero-title {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.ct-zero-note {
+  color: var(--text-muted);
+  margin-top: var(--space-2);
+}
+
+.ct-progress-caption {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
 }
 
 /* ── Digit — size in cqi so it tracks the card width exactly ──────────
@@ -1565,33 +1699,14 @@
 }
 
 @container clock-card (max-width: 30rem) {
+  /* Used by LiveClock/TimeNowHero's three-unit clocks only — CountdownTicker's
+     four-unit layout is unified (.ct-row-unified) and doesn't swap rows. */
   .ct-row-desktop {
     display: none !important;
   }
 
   .ct-row-mobile {
     display: flex !important;
-  }
-
-  /* Days hero — bigger treatment on narrow card */
-  .ct-days-val {
-    font-size: var(--ct-mobile-days-size) !important;
-    line-height: 1 !important;
-    animation: ct-digit-enter 0.18s ease-out both;
-  }
-
-  /* H · M · S digits below days */
-  .ct-hms-digit {
-    font-size: var(--ct-mobile-hms-digit-size) !important;
-  }
-
-  .ct-hms-label {
-    font-size: var(--ct-mobile-hms-label-size) !important;
-  }
-
-  .ct-hms-sep {
-    font-size: var(--ct-mobile-hms-sep-size) !important;
-    margin-bottom: var(--ct-mobile-hms-sep-offset) !important;
   }
 }
 

@@ -41,6 +41,7 @@ function buildBaseNote(eventType, countryCode) {
   }
   if (eventType === 'estimated') return 'تاريخ تقديري قابل للتحديث حسب الإعلان الرسمي';
   if (eventType === 'monthly') return 'موعد شهري متكرر وفق الجهة المعتمدة';
+  if (eventType === 'quarterly') return 'موعد ربع سنوي متكرر وفق الجهة المعتمدة';
   return 'موعد موحد على جميع الدول المدعومة';
 }
 

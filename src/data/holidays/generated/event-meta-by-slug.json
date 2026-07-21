@@ -27,7 +27,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/ramadan",
@@ -54,7 +56,9 @@
       "ramadan-in-usa",
       "ramadan-in-germany",
       "ramadan-in-sweden",
-      "ramadan-in-lebanon"
+      "ramadan-in-lebanon",
+      "ramadan-in-netherlands",
+      "ramadan-in-spain"
     ]
   },
   "eid-al-fitr": {
@@ -85,7 +89,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/eid-al-fitr",
@@ -112,7 +118,9 @@
       "eid-al-fitr-in-usa",
       "eid-al-fitr-in-germany",
       "eid-al-fitr-in-sweden",
-      "eid-al-fitr-in-lebanon"
+      "eid-al-fitr-in-lebanon",
+      "eid-al-fitr-in-netherlands",
+      "eid-al-fitr-in-spain"
     ]
   },
   "eid-al-adha": {
@@ -143,7 +151,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/eid-al-adha",
@@ -170,7 +180,9 @@
       "eid-al-adha-in-usa",
       "eid-al-adha-in-germany",
       "eid-al-adha-in-sweden",
-      "eid-al-adha-in-lebanon"
+      "eid-al-adha-in-lebanon",
+      "eid-al-adha-in-netherlands",
+      "eid-al-adha-in-spain"
     ]
   },
   "day-of-arafa": {
@@ -201,7 +213,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/day-of-arafa",
@@ -228,7 +242,9 @@
       "day-of-arafa-in-usa",
       "day-of-arafa-in-germany",
       "day-of-arafa-in-sweden",
-      "day-of-arafa-in-lebanon"
+      "day-of-arafa-in-lebanon",
+      "day-of-arafa-in-netherlands",
+      "day-of-arafa-in-spain"
     ]
   },
   "hajj-season": {
@@ -259,7 +275,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/hajj-season",
@@ -286,7 +304,9 @@
       "hajj-season-in-usa",
       "hajj-season-in-germany",
       "hajj-season-in-sweden",
-      "hajj-season-in-lebanon"
+      "hajj-season-in-lebanon",
+      "hajj-season-in-netherlands",
+      "hajj-season-in-spain"
     ]
   },
   "islamic-new-year": {
@@ -317,7 +337,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/islamic-new-year",
@@ -344,7 +366,9 @@
       "islamic-new-year-in-usa",
       "islamic-new-year-in-germany",
       "islamic-new-year-in-sweden",
-      "islamic-new-year-in-lebanon"
+      "islamic-new-year-in-lebanon",
+      "islamic-new-year-in-netherlands",
+      "islamic-new-year-in-spain"
     ]
   },
   "ashura": {
@@ -375,7 +399,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/ashura",
@@ -402,7 +428,9 @@
       "ashura-in-usa",
       "ashura-in-germany",
       "ashura-in-sweden",
-      "ashura-in-lebanon"
+      "ashura-in-lebanon",
+      "ashura-in-netherlands",
+      "ashura-in-spain"
     ]
   },
   "laylat-al-qadr": {
@@ -433,7 +461,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/laylat-al-qadr",
@@ -460,7 +490,9 @@
       "laylat-al-qadr-in-usa",
       "laylat-al-qadr-in-germany",
       "laylat-al-qadr-in-sweden",
-      "laylat-al-qadr-in-lebanon"
+      "laylat-al-qadr-in-lebanon",
+      "laylat-al-qadr-in-netherlands",
+      "laylat-al-qadr-in-spain"
     ]
   },
   "social-security-saudi": {
@@ -503,7 +535,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/isra-miraj",
@@ -530,7 +564,9 @@
       "isra-miraj-in-usa",
       "isra-miraj-in-germany",
       "isra-miraj-in-sweden",
-      "isra-miraj-in-lebanon"
+      "isra-miraj-in-lebanon",
+      "isra-miraj-in-netherlands",
+      "isra-miraj-in-spain"
     ]
   },
   "oman-accession-day": {
@@ -573,7 +609,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/first-dhul-hijjah",
@@ -600,7 +638,9 @@
       "first-dhul-hijjah-in-usa",
       "first-dhul-hijjah-in-germany",
       "first-dhul-hijjah-in-sweden",
-      "first-dhul-hijjah-in-lebanon"
+      "first-dhul-hijjah-in-lebanon",
+      "first-dhul-hijjah-in-netherlands",
+      "first-dhul-hijjah-in-spain"
     ]
   },
   "bac-results-tunisia": {
@@ -1049,7 +1089,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/valentines-day",
@@ -1076,7 +1118,9 @@
       "valentines-day-in-usa",
       "valentines-day-in-germany",
       "valentines-day-in-sweden",
-      "valentines-day-in-lebanon"
+      "valentines-day-in-lebanon",
+      "valentines-day-in-netherlands",
+      "valentines-day-in-spain"
     ]
   },
   "labor-day": {
@@ -1141,7 +1185,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-health-day",
@@ -1168,7 +1214,9 @@
       "world-health-day-in-usa",
       "world-health-day-in-germany",
       "world-health-day-in-sweden",
-      "world-health-day-in-lebanon"
+      "world-health-day-in-lebanon",
+      "world-health-day-in-netherlands",
+      "world-health-day-in-spain"
     ]
   },
   "earth-day": {
@@ -1199,7 +1247,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/earth-day",
@@ -1226,7 +1276,9 @@
       "earth-day-in-usa",
       "earth-day-in-germany",
       "earth-day-in-sweden",
-      "earth-day-in-lebanon"
+      "earth-day-in-lebanon",
+      "earth-day-in-netherlands",
+      "earth-day-in-spain"
     ]
   },
   "world-diabetes-day": {
@@ -1257,7 +1309,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-diabetes-day",
@@ -1285,6 +1339,8 @@
       "world-diabetes-day-in-germany",
       "world-diabetes-day-in-sweden",
       "world-diabetes-day-in-lebanon",
+      "world-diabetes-day-in-netherlands",
+      "world-diabetes-day-in-spain",
       "diabetes-day",
       "world-diabetes-day-countdown"
     ]
@@ -1333,7 +1389,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-teachers-day",
@@ -1360,7 +1418,9 @@
       "world-teachers-day-in-usa",
       "world-teachers-day-in-germany",
       "world-teachers-day-in-sweden",
-      "world-teachers-day-in-lebanon"
+      "world-teachers-day-in-lebanon",
+      "world-teachers-day-in-netherlands",
+      "world-teachers-day-in-spain"
     ]
   },
   "arabic-language-day": {
@@ -1391,7 +1451,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/arabic-language-day",
@@ -1418,7 +1480,9 @@
       "arabic-language-day-in-usa",
       "arabic-language-day-in-germany",
       "arabic-language-day-in-sweden",
-      "arabic-language-day-in-lebanon"
+      "arabic-language-day-in-lebanon",
+      "arabic-language-day-in-netherlands",
+      "arabic-language-day-in-spain"
     ]
   },
   "saudi-flag-day": {
@@ -1593,7 +1657,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/mawlid",
@@ -1620,7 +1686,9 @@
       "mawlid-in-usa",
       "mawlid-in-germany",
       "mawlid-in-sweden",
-      "mawlid-in-lebanon"
+      "mawlid-in-lebanon",
+      "mawlid-in-netherlands",
+      "mawlid-in-spain"
     ]
   },
   "halloween-usa": {
@@ -1719,7 +1787,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/nisf-shaban",
@@ -1746,7 +1816,9 @@
       "nisf-shaban-in-usa",
       "nisf-shaban-in-germany",
       "nisf-shaban-in-sweden",
-      "nisf-shaban-in-lebanon"
+      "nisf-shaban-in-lebanon",
+      "nisf-shaban-in-netherlands",
+      "nisf-shaban-in-spain"
     ]
   },
   "pension-day-egypt": {
@@ -1801,7 +1873,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-childrens-day",
@@ -1828,7 +1902,9 @@
       "world-childrens-day-in-usa",
       "world-childrens-day-in-germany",
       "world-childrens-day-in-sweden",
-      "world-childrens-day-in-lebanon"
+      "world-childrens-day-in-lebanon",
+      "world-childrens-day-in-netherlands",
+      "world-childrens-day-in-spain"
     ]
   },
   "international-day-of-education": {
@@ -1859,7 +1935,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/international-day-of-education",
@@ -1886,7 +1964,9 @@
       "international-day-of-education-in-usa",
       "international-day-of-education-in-germany",
       "international-day-of-education-in-sweden",
-      "international-day-of-education-in-lebanon"
+      "international-day-of-education-in-lebanon",
+      "international-day-of-education-in-netherlands",
+      "international-day-of-education-in-spain"
     ]
   },
   "world-mental-health-day": {
@@ -1917,7 +1997,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-mental-health-day",
@@ -1944,7 +2026,9 @@
       "world-mental-health-day-in-usa",
       "world-mental-health-day-in-germany",
       "world-mental-health-day-in-sweden",
-      "world-mental-health-day-in-lebanon"
+      "world-mental-health-day-in-lebanon",
+      "world-mental-health-day-in-netherlands",
+      "world-mental-health-day-in-spain"
     ]
   },
   "world-environment-day": {
@@ -1975,7 +2059,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-environment-day",
@@ -2002,7 +2088,9 @@
       "world-environment-day-in-usa",
       "world-environment-day-in-germany",
       "world-environment-day-in-sweden",
-      "world-environment-day-in-lebanon"
+      "world-environment-day-in-lebanon",
+      "world-environment-day-in-netherlands",
+      "world-environment-day-in-spain"
     ]
   },
   "independence-manifesto-day-morocco": {
@@ -2051,6 +2139,30 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/january-25-egypt",
+    "aliases": []
+  },
+  "abu-simbel-sun-alignment-february": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "eg"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/abu-simbel-sun-alignment-february",
+    "aliases": []
+  },
+  "abu-simbel-sun-alignment-october": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "eg"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/abu-simbel-sun-alignment-october",
     "aliases": []
   },
   "al-marbaaniya-saudi": {
@@ -2165,7 +2277,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/april-fools",
@@ -2192,7 +2306,9 @@
       "april-fools-in-usa",
       "april-fools-in-germany",
       "april-fools-in-sweden",
-      "april-fools-in-lebanon"
+      "april-fools-in-lebanon",
+      "april-fools-in-netherlands",
+      "april-fools-in-spain"
     ]
   },
   "arab-orphan-day": {
@@ -2223,7 +2339,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/arab-orphan-day",
@@ -2250,7 +2368,9 @@
       "arab-orphan-day-in-usa",
       "arab-orphan-day-in-germany",
       "arab-orphan-day-in-sweden",
-      "arab-orphan-day-in-lebanon"
+      "arab-orphan-day-in-lebanon",
+      "arab-orphan-day-in-netherlands",
+      "arab-orphan-day-in-spain"
     ]
   },
   "armed-forces-day-morocco": {
@@ -2275,6 +2395,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/armed-forces-day-oman",
+    "aliases": []
+  },
+  "armed-forces-day-uae": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ae"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/armed-forces-day-uae",
     "aliases": []
   },
   "armenian-christmas-lebanon": {
@@ -2419,6 +2551,18 @@
     "canonicalPath": "/holidays/autism-day",
     "aliases": []
   },
+  "babylon-international-festival-iraq": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "iq"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/babylon-international-festival-iraq",
+    "aliases": []
+  },
   "bac-results-algeria": {
     "publishStatus": "published",
     "retired": false,
@@ -2519,7 +2663,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/badr-day",
@@ -2546,7 +2692,9 @@
       "badr-day-in-usa",
       "badr-day-in-germany",
       "badr-day-in-sweden",
-      "badr-day-in-lebanon"
+      "badr-day-in-lebanon",
+      "badr-day-in-netherlands",
+      "badr-day-in-spain"
     ]
   },
   "bahraini-womens-day": {
@@ -2633,7 +2781,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/battle-of-uhud",
@@ -2660,7 +2810,9 @@
       "battle-of-uhud-in-usa",
       "battle-of-uhud-in-germany",
       "battle-of-uhud-in-sweden",
-      "battle-of-uhud-in-lebanon"
+      "battle-of-uhud-in-lebanon",
+      "battle-of-uhud-in-netherlands",
+      "battle-of-uhud-in-spain"
     ]
   },
   "blood-donor-day": {
@@ -2691,7 +2843,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/blood-donor-day",
@@ -2718,7 +2872,9 @@
       "blood-donor-day-in-usa",
       "blood-donor-day-in-germany",
       "blood-donor-day-in-sweden",
-      "blood-donor-day-in-lebanon"
+      "blood-donor-day-in-lebanon",
+      "blood-donor-day-in-netherlands",
+      "blood-donor-day-in-spain"
     ]
   },
   "bostadsbidrag-sweden": {
@@ -2779,6 +2935,18 @@
     "canonicalPath": "/holidays/caf-payment-france",
     "aliases": []
   },
+  "cairo-international-film-festival": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "eg"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/cairo-international-film-festival",
+    "aliases": []
+  },
   "canada-day": {
     "publishStatus": "published",
     "retired": false,
@@ -2789,6 +2957,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/canada-day",
+    "aliases": []
+  },
+  "carthage-international-festival-tunisia": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "tn"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/carthage-international-festival-tunisia",
     "aliases": []
   },
   "ccb-canada": {
@@ -2971,7 +3151,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/conquest-of-andalusia",
@@ -2998,7 +3180,9 @@
       "conquest-of-andalusia-in-usa",
       "conquest-of-andalusia-in-germany",
       "conquest-of-andalusia-in-sweden",
-      "conquest-of-andalusia-in-lebanon"
+      "conquest-of-andalusia-in-lebanon",
+      "conquest-of-andalusia-in-netherlands",
+      "conquest-of-andalusia-in-spain"
     ]
   },
   "constitution-day-lebanon": {
@@ -3107,6 +3291,18 @@
     "canonicalPath": "/holidays/disability-day",
     "aliases": []
   },
+  "doctors-day-egypt": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "eg"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/doctors-day-egypt",
+    "aliases": []
+  },
   "dst-abolition-morocco": {
     "publishStatus": "published",
     "retired": false,
@@ -3199,6 +3395,18 @@
     "canonicalPath": "/holidays/easter-syria",
     "aliases": []
   },
+  "education-day-uae": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "ae"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/education-day-uae",
+    "aliases": []
+  },
   "epiphany-sweden": {
     "publishStatus": "published",
     "retired": false,
@@ -3275,7 +3483,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/fall-of-granada",
@@ -3302,7 +3512,9 @@
       "fall-of-granada-in-usa",
       "fall-of-granada-in-germany",
       "fall-of-granada-in-sweden",
-      "fall-of-granada-in-lebanon"
+      "fall-of-granada-in-lebanon",
+      "fall-of-granada-in-netherlands",
+      "fall-of-granada-in-spain"
     ]
   },
   "family-day": {
@@ -3355,7 +3567,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/fath-makkah",
@@ -3382,7 +3596,9 @@
       "fath-makkah-in-usa",
       "fath-makkah-in-germany",
       "fath-makkah-in-sweden",
-      "fath-makkah-in-lebanon"
+      "fath-makkah-in-lebanon",
+      "fath-makkah-in-netherlands",
+      "fath-makkah-in-spain"
     ]
   },
   "fete-de-la-musique-france": {
@@ -3473,7 +3689,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/food-day",
@@ -3500,7 +3718,9 @@
       "food-day-in-usa",
       "food-day-in-germany",
       "food-day-in-sweden",
-      "food-day-in-lebanon"
+      "food-day-in-lebanon",
+      "food-day-in-netherlands",
+      "food-day-in-spain"
     ]
   },
   "friendship-day": {
@@ -3641,7 +3861,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/human-rights-day",
@@ -3668,7 +3890,9 @@
       "human-rights-day-in-usa",
       "human-rights-day-in-germany",
       "human-rights-day-in-sweden",
-      "human-rights-day-in-lebanon"
+      "human-rights-day-in-lebanon",
+      "human-rights-day-in-netherlands",
+      "human-rights-day-in-spain"
     ]
   },
   "independence-day-bahrain": {
@@ -3771,7 +3995,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/international-coffee-day",
@@ -3798,7 +4024,9 @@
       "international-coffee-day-in-usa",
       "international-coffee-day-in-germany",
       "international-coffee-day-in-sweden",
-      "international-coffee-day-in-lebanon"
+      "international-coffee-day-in-lebanon",
+      "international-coffee-day-in-netherlands",
+      "international-coffee-day-in-spain"
     ]
   },
   "international-peace-day": {
@@ -3829,7 +4057,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/international-peace-day",
@@ -3856,7 +4086,9 @@
       "international-peace-day-in-usa",
       "international-peace-day-in-germany",
       "international-peace-day-in-sweden",
-      "international-peace-day-in-lebanon"
+      "international-peace-day-in-lebanon",
+      "international-peace-day-in-netherlands",
+      "international-peace-day-in-spain"
     ]
   },
   "international-youth-day": {
@@ -3887,7 +4119,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/international-youth-day",
@@ -3914,7 +4148,9 @@
       "international-youth-day-in-usa",
       "international-youth-day-in-germany",
       "international-youth-day-in-sweden",
-      "international-youth-day-in-lebanon"
+      "international-youth-day-in-lebanon",
+      "international-youth-day-in-netherlands",
+      "international-youth-day-in-spain"
     ]
   },
   "invasion-remembrance-kuwait": {
@@ -3951,6 +4187,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/jeddah-season",
+    "aliases": []
+  },
+  "jerash-festival-jordan": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "jo"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/jerash-festival-jordan",
     "aliases": []
   },
   "job-security-oman": {
@@ -4025,6 +4273,18 @@
     "canonicalPath": "/holidays/khareef-salalah",
     "aliases": []
   },
+  "kinderbijslag-netherlands": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "nl"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/kinderbijslag-netherlands",
+    "aliases": []
+  },
   "kindergeld-germany": {
     "publishStatus": "published",
     "retired": false,
@@ -4059,6 +4319,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/king-salman-bayah-saudi",
+    "aliases": []
+  },
+  "kings-day-netherlands": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "nl"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/kings-day-netherlands",
     "aliases": []
   },
   "knowledge-day-algeria": {
@@ -4125,7 +4397,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/last-ten-nights-ramadan",
@@ -4152,7 +4426,9 @@
       "last-ten-nights-ramadan-in-usa",
       "last-ten-nights-ramadan-in-germany",
       "last-ten-nights-ramadan-in-sweden",
-      "last-ten-nights-ramadan-in-lebanon"
+      "last-ten-nights-ramadan-in-lebanon",
+      "last-ten-nights-ramadan-in-netherlands",
+      "last-ten-nights-ramadan-in-spain"
     ]
   },
   "liberation-day-libya": {
@@ -4219,7 +4495,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/literacy-day",
@@ -4246,7 +4524,9 @@
       "literacy-day-in-usa",
       "literacy-day-in-germany",
       "literacy-day-in-sweden",
-      "literacy-day-in-lebanon"
+      "literacy-day-in-lebanon",
+      "literacy-day-in-netherlands",
+      "literacy-day-in-spain"
     ]
   },
   "martyrs-day-algeria": {
@@ -4501,6 +4781,18 @@
     "canonicalPath": "/holidays/national-charter-day-bahrain",
     "aliases": []
   },
+  "national-day-spain": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "es"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/national-day-spain",
+    "aliases": []
+  },
   "national-day-sweden": {
     "publishStatus": "published",
     "retired": false,
@@ -4523,6 +4815,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/national-labor-support-kuwait",
+    "aliases": []
+  },
+  "national-press-day-algeria": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "dz"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/national-press-day-algeria",
     "aliases": []
   },
   "new-years-day-uk": {
@@ -4575,7 +4879,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/nurses-day",
@@ -4602,7 +4908,9 @@
       "nurses-day-in-usa",
       "nurses-day-in-germany",
       "nurses-day-in-sweden",
-      "nurses-day-in-lebanon"
+      "nurses-day-in-lebanon",
+      "nurses-day-in-netherlands",
+      "nurses-day-in-spain"
     ]
   },
   "october-14-revolution-yemen": {
@@ -4841,6 +5149,18 @@
     "canonicalPath": "/holidays/qatar-national-sport-day",
     "aliases": []
   },
+  "qurain-cultural-festival-kuwait": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "kw"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/qurain-cultural-festival-kuwait",
+    "aliases": []
+  },
   "rajab-start": {
     "publishStatus": "published",
     "retired": false,
@@ -4869,7 +5189,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/rajab-start",
@@ -4896,7 +5218,9 @@
       "rajab-start-in-usa",
       "rajab-start-in-germany",
       "rajab-start-in-sweden",
-      "rajab-start-in-lebanon"
+      "rajab-start-in-lebanon",
+      "rajab-start-in-netherlands",
+      "rajab-start-in-spain"
     ]
   },
   "recapture-of-riyadh": {
@@ -5309,7 +5633,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/shaban-start",
@@ -5336,7 +5662,9 @@
       "shaban-start-in-usa",
       "shaban-start-in-germany",
       "shaban-start-in-sweden",
-      "shaban-start-in-lebanon"
+      "shaban-start-in-lebanon",
+      "shaban-start-in-netherlands",
+      "shaban-start-in-spain"
     ]
   },
   "six-days-shawwal": {
@@ -5367,7 +5695,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/six-days-shawwal",
@@ -5394,7 +5724,9 @@
       "six-days-shawwal-in-usa",
       "six-days-shawwal-in-germany",
       "six-days-shawwal-in-sweden",
-      "six-days-shawwal-in-lebanon"
+      "six-days-shawwal-in-lebanon",
+      "six-days-shawwal-in-netherlands",
+      "six-days-shawwal-in-spain"
     ]
   },
   "social-assistance-bahrain": {
@@ -5587,7 +5919,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/tarwiyah-day",
@@ -5614,7 +5948,9 @@
       "tarwiyah-day-in-usa",
       "tarwiyah-day-in-germany",
       "tarwiyah-day-in-sweden",
-      "tarwiyah-day-in-lebanon"
+      "tarwiyah-day-in-lebanon",
+      "tarwiyah-day-in-netherlands",
+      "tarwiyah-day-in-spain"
     ]
   },
   "tashreeq-days": {
@@ -5645,7 +5981,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/tashreeq-days",
@@ -5672,7 +6010,9 @@
       "tashreeq-days-in-usa",
       "tashreeq-days-in-germany",
       "tashreeq-days-in-sweden",
-      "tashreeq-days-in-lebanon"
+      "tashreeq-days-in-lebanon",
+      "tashreeq-days-in-netherlands",
+      "tashreeq-days-in-spain"
     ]
   },
   "tasua-day": {
@@ -5703,7 +6043,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/tasua-day",
@@ -5730,7 +6072,9 @@
       "tasua-day-in-usa",
       "tasua-day-in-germany",
       "tasua-day-in-sweden",
-      "tasua-day-in-lebanon"
+      "tasua-day-in-lebanon",
+      "tasua-day-in-netherlands",
+      "tasua-day-in-spain"
     ]
   },
   "tax-day-usa": {
@@ -5755,6 +6099,30 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/tax-refund-france",
+    "aliases": []
+  },
+  "teachers-day-egypt": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "eg"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/teachers-day-egypt",
+    "aliases": []
+  },
+  "teachers-day-saudi": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "sa"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/teachers-day-saudi",
     "aliases": []
   },
   "thanksgiving-canada": {
@@ -6013,7 +6381,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/volunteer-day",
@@ -6040,7 +6410,9 @@
       "volunteer-day-in-usa",
       "volunteer-day-in-germany",
       "volunteer-day-in-sweden",
-      "volunteer-day-in-lebanon"
+      "volunteer-day-in-lebanon",
+      "volunteer-day-in-netherlands",
+      "volunteer-day-in-spain"
     ]
   },
   "wafat-khadija": {
@@ -6127,7 +6499,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/wildlife-day",
@@ -6154,7 +6528,9 @@
       "wildlife-day-in-usa",
       "wildlife-day-in-germany",
       "wildlife-day-in-sweden",
-      "wildlife-day-in-lebanon"
+      "wildlife-day-in-lebanon",
+      "wildlife-day-in-netherlands",
+      "wildlife-day-in-spain"
     ]
   },
   "winter-at-tantora-alula": {
@@ -6245,7 +6621,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-book-day",
@@ -6272,7 +6650,9 @@
       "world-book-day-in-usa",
       "world-book-day-in-germany",
       "world-book-day-in-sweden",
-      "world-book-day-in-lebanon"
+      "world-book-day-in-lebanon",
+      "world-book-day-in-netherlands",
+      "world-book-day-in-spain"
     ]
   },
   "world-cancer-day": {
@@ -6303,7 +6683,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-cancer-day",
@@ -6330,7 +6712,9 @@
       "world-cancer-day-in-usa",
       "world-cancer-day-in-germany",
       "world-cancer-day-in-sweden",
-      "world-cancer-day-in-lebanon"
+      "world-cancer-day-in-lebanon",
+      "world-cancer-day-in-netherlands",
+      "world-cancer-day-in-spain"
     ]
   },
   "world-cup-2030": {
@@ -6373,7 +6757,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-fathers-day",
@@ -6401,6 +6787,8 @@
       "world-fathers-day-in-germany",
       "world-fathers-day-in-sweden",
       "world-fathers-day-in-lebanon",
+      "world-fathers-day-in-netherlands",
+      "world-fathers-day-in-spain",
       "fathers-day"
     ]
   },
@@ -6432,7 +6820,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-happiness-day",
@@ -6459,7 +6849,9 @@
       "world-happiness-day-in-usa",
       "world-happiness-day-in-germany",
       "world-happiness-day-in-sweden",
-      "world-happiness-day-in-lebanon"
+      "world-happiness-day-in-lebanon",
+      "world-happiness-day-in-netherlands",
+      "world-happiness-day-in-spain"
     ]
   },
   "world-no-tobacco-day": {
@@ -6490,7 +6882,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-no-tobacco-day",
@@ -6517,7 +6911,9 @@
       "world-no-tobacco-day-in-usa",
       "world-no-tobacco-day-in-germany",
       "world-no-tobacco-day-in-sweden",
-      "world-no-tobacco-day-in-lebanon"
+      "world-no-tobacco-day-in-lebanon",
+      "world-no-tobacco-day-in-netherlands",
+      "world-no-tobacco-day-in-spain"
     ]
   },
   "world-refugee-day": {
@@ -6548,7 +6944,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-refugee-day",
@@ -6575,7 +6973,9 @@
       "world-refugee-day-in-usa",
       "world-refugee-day-in-germany",
       "world-refugee-day-in-sweden",
-      "world-refugee-day-in-lebanon"
+      "world-refugee-day-in-lebanon",
+      "world-refugee-day-in-netherlands",
+      "world-refugee-day-in-spain"
     ]
   },
   "world-tourism-day": {
@@ -6606,7 +7006,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-tourism-day",
@@ -6633,7 +7035,9 @@
       "world-tourism-day-in-usa",
       "world-tourism-day-in-germany",
       "world-tourism-day-in-sweden",
-      "world-tourism-day-in-lebanon"
+      "world-tourism-day-in-lebanon",
+      "world-tourism-day-in-netherlands",
+      "world-tourism-day-in-spain"
     ]
   },
   "world-water-day": {
@@ -6664,7 +7068,9 @@
       "us",
       "de",
       "se",
-      "lb"
+      "lb",
+      "nl",
+      "es"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-water-day",
@@ -6691,7 +7097,9 @@
       "world-water-day-in-usa",
       "world-water-day-in-germany",
       "world-water-day-in-sweden",
-      "world-water-day-in-lebanon"
+      "world-water-day-in-lebanon",
+      "world-water-day-in-netherlands",
+      "world-water-day-in-spain"
     ]
   },
   "youth-day-morocco": {

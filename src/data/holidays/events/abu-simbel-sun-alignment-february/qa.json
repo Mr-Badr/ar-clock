@@ -1,0 +1,18 @@
+{
+  "slug": "abu-simbel-sun-alignment-february",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: نفس الظاهرة ونفس المصدر الرسمي (mota.gov.eg) لحدث أكتوبر الشقيق، بموعد ثابت 22 فبراير.",
+    "بُنيت كحدث منفصل عن abu-simbel-sun-alignment-october بزاوية مختلفة (بداية موسم الزراعة، اعتدال الطقس) لتجنب تكرار المحتوى.",
+    "التاريخ القديم لعهد رمسيس الثاني (حوالي 1279-1213 ق.م) لا يخضع لقاعدة السنة المحظورة.",
+    "لا يوجد ادعاء بدقة يوم واحد متغير — الموعد فلكي ثابت (22 فبراير) وليس تقديرياً."
+  ],
+  "updatedAt": "2026-07-21T12:35:49.752Z"
+}

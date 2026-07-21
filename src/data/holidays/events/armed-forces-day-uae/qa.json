@@ -1,0 +1,17 @@
+{
+  "slug": "armed-forces-day-uae",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 6 مايو يوافق ذكرى توحيد القوات المسلحة الإماراتية تحت قيادة واحدة سنة 1976، موثق عبر WAM/البيان/الاتحاد.",
+    "وُصفت الذكرى بصيغة عامة ('الذكرى السنوية') دون ذكر رقم '50' رغم أن 2026 يوافق الذكرى الخمسين فعلياً — تفادياً لتصبح العبارة بالية العام القادم.",
+    "مختلف عن martyrs-day-uae الحي على الموقع — تم التمييز الصريح بينهما."
+  ],
+  "updatedAt": "2026-07-21T12:37:23.751Z"
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "qurain-cultural-festival-kuwait",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: نمط تفاوت زمني فعلي بأسبوع-أسبوعين بين دورات مختلفة (nccal.gov.kw) يؤكد type: estimated بدل fixed.",
+    "أُدرج الاستبيان الصريح 'تقريبي' في quickFacts (متطلب estimated-type).",
+    "تم تمييز المهرجان بوضوح عن hala-february-kuwait الحي على الموقع (ثقافي حكومي مقابل تسوق/سياحة تجاري) لتفادي التباس شائع.",
+    "الجهة المنظمة (المجلس الوطني للثقافة والفنون والآداب) موثقة رسمياً عبر nccal.gov.kw."
+  ],
+  "updatedAt": "2026-07-21T12:37:35.305Z"
+}

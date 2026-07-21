@@ -386,6 +386,19 @@ function nextMonthly(day, now) {
   if (d.getDate() !== day) d = new Date(d.getFullYear(), d.getMonth() + 1, 0);
   return d;
 }
+/** Nearest upcoming date among several fixed {month, day} pairs recurring every year (e.g. quarterly benefit-payment dates). */
+function nextQuarterly(dates, now) {
+  const n = new Date(now); n.setHours(0, 0, 0, 0);
+  const year = n.getFullYear();
+  const candidates = [];
+  for (const { month, day } of dates) {
+    const thisYear = new Date(year, month - 1, day); thisYear.setHours(0, 0, 0, 0);
+    const nextYear = new Date(year + 1, month - 1, day); nextYear.setHours(0, 0, 0, 0);
+    candidates.push(thisYear, nextYear);
+  }
+  candidates.sort((a, b) => a.getTime() - b.getTime());
+  return candidates.find((c) => c.getTime() >= n.getTime()) || candidates[candidates.length - 1];
+}
 function nthWeekdayOfMonth(year, month, weekday, nth) {
   if ([year, month, weekday, nth].some((value) => value == null || Number.isNaN(Number(value)))) {
     return null;
@@ -508,6 +521,7 @@ export function getNextEventDate(rawEvent, resolvedMap = {}, nowMs = Date.now())
     return nextEstimated(resolvedDate, now, ev);
   }
   if (ev.type === 'monthly') return nextMonthly(ev.day, now);
+  if (ev.type === 'quarterly') return nextQuarterly(ev.quarterlyDates || [], now);
   if (ev.type === 'floating') return nextFloating(ev, now);
   if (ev.type === 'easter') return nextEasterOffset(ev.easterOffset || 0, now);
   if (ev.type === 'orthodox-easter') return nextOrthodoxEasterOffset(ev.easterOffset || 0, now);
@@ -755,9 +769,9 @@ export function buildBreadcrumbSchema(crumbs) {
  */
 export function buildEventSeriesSchema(ev, siteUrl) {
   // Only add EventSeries for recurring event types
-  const recurringTypes = ['hijri', 'fixed', 'easter', 'orthodox-easter', 'monthly', 'floating', 'weekday-in-range'];
+  const recurringTypes = ['hijri', 'fixed', 'easter', 'orthodox-easter', 'monthly', 'quarterly', 'floating', 'weekday-in-range'];
   if (!recurringTypes.includes(ev.type)) return null;
-  
+
   return {
     '@context': 'https://schema.org',
     '@type': 'EventSeries',
@@ -773,7 +787,7 @@ export function buildEventSeriesSchema(ev, siteUrl) {
     },
     eventSchedule: {
       '@type': 'Schedule',
-      repeatFrequency: ev.type === 'hijri' ? 'P354D' : ev.type === 'monthly' ? 'P1M' : 'P1Y',
+      repeatFrequency: ev.type === 'hijri' ? 'P354D' : ev.type === 'monthly' ? 'P1M' : ev.type === 'quarterly' ? 'P3M' : 'P1Y',
       startDate: '2025-01-01',
     },
   };

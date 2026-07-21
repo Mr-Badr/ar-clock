@@ -1,0 +1,16 @@
+{
+  "slug": "national-day-spain",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 12 أكتوبر تاريخ وطني إسباني ثابت، يوافق أيضاً يوم الهيسبانيداد وعيد السيدة العذراء بيلار.",
+    "أول حدث لإسبانيا كدولة جديدة على الموقع — إضافة taxonomy/countries.json و country-hub-data.js هذه الجلسة."
+  ],
+  "updatedAt": "2026-07-21T12:36:43.578Z"
+}

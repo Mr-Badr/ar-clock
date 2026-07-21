@@ -274,5 +274,29 @@
     "flag": "🇱🇧",
     "timezone": "Asia/Beirut",
     "order": 23
+  },
+  {
+    "code": "nl",
+    "aliasSlugToken": "netherlands",
+    "nameAr": "هولندا",
+    "officialNameAr": "مملكة هولندا",
+    "authority": "المجالس الإسلامية المحلية",
+    "dateVarianceLabel": "إعلان محلي / حسابات فلكية",
+    "localTerms": ["هولندا", "الهولندية"],
+    "flag": "🇳🇱",
+    "timezone": "Europe/Amsterdam",
+    "order": 24
+  },
+  {
+    "code": "es",
+    "aliasSlugToken": "spain",
+    "nameAr": "إسبانيا",
+    "officialNameAr": "المملكة الإسبانية",
+    "authority": "المجالس الإسلامية المحلية",
+    "dateVarianceLabel": "إعلان محلي / حسابات فلكية",
+    "localTerms": ["إسبانيا", "الإسبانية"],
+    "flag": "🇪🇸",
+    "timezone": "Europe/Madrid",
+    "order": 25
   }
 ]

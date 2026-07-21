@@ -16,12 +16,18 @@ const eventCoreSchema = z.object({
   id: z.string().min(1),
   slug: z.string().min(1),
   name: z.string().min(1),
-  type: z.enum(['hijri', 'fixed', 'estimated', 'monthly', 'easter', 'orthodox-easter', 'floating', 'weekday-in-range']),
+  type: z.enum(['hijri', 'fixed', 'estimated', 'monthly', 'quarterly', 'easter', 'orthodox-easter', 'floating', 'weekday-in-range']),
   category: z.enum(['islamic', 'national', 'school', 'holidays', 'astronomy', 'social', 'business', 'support']),
   _countryCode: z.string().nullable().optional(),
   month: z.number().int().min(1).max(12).optional(),
   day: z.number().int().min(1).max(31).optional(),
   date: z.string().optional(),
+  // quarterly only: several fixed {month, day} pairs recurring every year (e.g. a benefit paid
+  // on 4 fixed calendar dates) — engine resolves to whichever is soonest. See holidays-engine.js's
+  // nextQuarterly.
+  quarterlyDates: z
+    .array(z.object({ month: z.number().int().min(1).max(12), day: z.number().int().min(1).max(31) }))
+    .optional(),
   hijriMonth: z.number().int().min(1).max(12).optional(),
   hijriDay: z.number().int().min(1).max(30).optional(),
   weekday: z.number().int().min(0).max(6).optional(),

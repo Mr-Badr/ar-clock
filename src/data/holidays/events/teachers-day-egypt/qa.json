@@ -1,0 +1,16 @@
+{
+  "slug": "teachers-day-egypt",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: الموعد الجديد 10 سبتمبر (بدل 21 ديسمبر القديم) موثق عبر sis.gov.eg.",
+    "مختلف عن world-teachers-day (5 أكتوبر) الحي على الموقع — تم التمييز الصريح بينهما في المحتوى."
+  ],
+  "updatedAt": "2026-07-21T12:34:56.388Z"
+}

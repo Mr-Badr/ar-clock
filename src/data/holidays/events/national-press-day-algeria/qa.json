@@ -1,0 +1,16 @@
+{
+  "slug": "national-press-day-algeria",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 22 أكتوبر يوافق ذكرى أول عدد من جريدة المقاومة الجزائرية سنة 1955، اليوم أُقر رسمياً سنة 2013.",
+    "سنة 1955 تاريخية قديمة لا تخضع لقاعدة السنة المحظورة؛ سنة 2013 (تاريخ الإقرار) أيضاً أقدم من currentYear-1."
+  ],
+  "updatedAt": "2026-07-21T12:37:49.205Z"
+}

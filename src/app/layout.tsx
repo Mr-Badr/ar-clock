@@ -49,10 +49,7 @@ const notoSansArabic = Noto_Sans_Arabic({
 export const metadata: Metadata = {
   // ── Core ──────────────────────────────────────────────────────────────────
   metadataBase: getMetadataBase(),
-  title: {
-    default: SITE_TITLE,
-    template: `%s | ${SITE_BRAND}`,
-  },
+  title: SITE_TITLE,
   description: SITE_DESCRIPTION,
   keywords: SITE_KEYWORDS,
   authors: [{ name: `${SITE_BRAND} (${SITE_BRAND_EN}) — منصة عربية للوقت والصلاة والتاريخ والحاسبات` }],

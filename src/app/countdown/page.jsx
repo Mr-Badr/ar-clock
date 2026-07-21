@@ -252,7 +252,7 @@ export default function CountdownPage({ searchParams }) {
                 <h2 className={styles.sectionTitle}>أنشئ عداداً تنازلياً</h2>
                 <p className={styles.sectionCopy}>لأي مناسبة أخرى، استخدم النموذج أدناه لإنشاء عداد منفصل بنفس الطريقة.</p>
               </div>
-              <Suspense fallback={<div className="calc-note">جارٍ تجهيز الأداة…</div>}>
+              <Suspense fallback={<p style={{ color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>جارٍ تجهيز الأداة…</p>}>
                 <CountdownCreatorForm />
               </Suspense>
             </div>

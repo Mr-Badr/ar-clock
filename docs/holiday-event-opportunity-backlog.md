@@ -127,6 +127,68 @@ alone — they build whenever the high-RPM queue is empty, ranked by search volu
 
 ---
 
+## Wave 20 candidate queue (researched 2026-07-20, not yet built)
+
+Owner asked for 10-20 new fixed-date events modeled on `throne-day-morocco` (current #1 most-visited
+page) — genuine annual civic/cultural countdowns MENA/Gulf/diaspora Arabic users search for repeatedly
+as the date approaches. 3 parallel research agents + own WebSearch verification, all cross-checked
+against the live 360-slug inventory and `country-hub-data.js` to avoid duplicates. Gulf ruler
+accession/birthday anniversaries (UAE President 14 May, Kuwait's new Emir Dec 2023, Qatar Emir 25 June)
+were checked and are DEAD — none confirmed as an actual gazetted paid holiday (Bahrain's is legally
+merged into the existing `bahrain-national-day` circular); don't re-check without a new primary source.
+
+**Tier 1 — near-term date (event lands within ~4 months, builds countdown momentum fastest):**
+| Slug | Country | Date | Type | Source |
+|---|---|---|---|---|
+| `teachers-day-egypt` | Egypt | 10 Sept, fixed | `fixed` | sis.gov.eg — moved from 21 Dec by teacher demand, distinct from `world-teachers-day` |
+| `kinderbijslag-netherlands` | Netherlands (NEW country) | Quarterly: Jan 2/Apr 1/Jul 1/Oct 1 | needs quarterly rule (engine gap — see note) | svb.nl, single national agency, more deterministic than most salary-day events |
+| `national-day-spain` | Spain | 12 Oct, fixed | `fixed` | Fiesta Nacional/Día de la Hispanidad; largest Moroccan diaspora of the 3 EU candidates checked |
+| `abu-simbel-sun-alignment-october` | Egypt | 22 Oct, fixed | `fixed` | mota.gov.eg (Ministry of Tourism &amp; Antiquities) — real astronomical alignment, can't shift |
+| `national-press-day-algeria` | Algeria | 22 Oct, fixed | `fixed` | Radio Algérie/Ech-Chaab, established 2013, moderate confidence |
+| `cairo-international-film-festival` | Egypt | Mid-Nov, ~10-day window (varies slightly) | `estimated` | ciff.org.eg — 3 consecutive years landed mid-Nov within a tight band |
+
+**Tier 2 — mid-term date (Dec 2026–Apr 2027), build once Tier 1 ships:**
+| Slug | Country | Date | Type | Source |
+|---|---|---|---|---|
+| `qurain-cultural-festival-kuwait` | Kuwait | Late Jan–mid Feb, shifts ~1-2 weeks | `estimated` | nccal.gov.kw — check topical overlap vs `hala-february-kuwait` before building |
+| `teachers-day-saudi` | Saudi Arabia | 28 Feb, fixed | `fixed` | moe.gov.sa — MOE-run, distinct from `world-teachers-day` |
+| `education-day-uae` | UAE | 28 Feb, fixed | `fixed` | WAM (state news) — presidential decree, "اليوم الإماراتي للتعليم" |
+| `doctors-day-egypt` | Egypt | 18 March, fixed | `fixed` | sis.gov.eg, Egyptian Medical Syndicate — broad public coverage, not guild-only |
+| `abu-simbel-sun-alignment-february` | Egypt | 22 Feb, fixed | `fixed` | same source as October sibling |
+| `kings-day-netherlands` | Netherlands | 27 April (26th if 27th is Sunday) | `fixed` | royal-house.nl — pairs with kinderbijslag for a full NL hub |
+| `babylon-international-festival-iraq` | Iraq | April, window shifts noticeably | `estimated` | Iraqi MOFA — lower date-reliability than other festivals, sequence last among festivals |
+
+**Tier 3 — further out / needs a caution flag before building:**
+| Slug | Country | Date | Type | Note |
+|---|---|---|---|---|
+| `armed-forces-day-uae` | UAE | 6 May, fixed | `fixed` | Distinct from `martyrs-day-uae`; describe generically ("الذكرى السنوية"), don't hardcode "50th" even though 2026 is the 50-year mark |
+| `jerash-festival-jordan` | Jordan | ~Late July, ~10-12 day window | `estimated` | petra.gov.jo, 40+ unbroken editions — 2026 edition starts ~22 Jul (this week), so build targets the 2027 cycle |
+| `carthage-international-festival-tunisia` | Tunisia | Mid-Jul–mid/late-Aug, opening drifts a few days | `estimated` | Currently running (started 16 Jul 2026) — build targets the 2027 cycle |
+| `journalists-day-egypt` | Egypt | 10 June, fixed | `fixed` | Rooted in a 1995 anti-Mubarak press-law protest — mild political-sensitivity flag, hold pending a quick owner nod on framing |
+
+**Engine gap found**: `kinderbijslag-netherlands` needs a quarterly-fixed-dates rule
+(Jan 2/Apr 1/Jul 1/Oct 1) — the existing `monthly` type only supports one day-of-month, not a
+4-date/year pattern. Either extend `holidays-engine.js` with a `quarterly` type or treat as 4
+independent `fixed` sub-dates. Same class of fix as the `nth: -1` addition documented in Wave 7.
+
+**Checked and dropped (don't re-research):**
+- Belgium National Day (real Arabic incumbent, belg24.com) and Groeipakket/kinderbijslag (regionalized
+  since FAMIFED's 2020 abolition, no single government source of record — multi-fund patchwork).
+- Australia Day (SBS Arabic — government-funded — already runs deep Arabic coverage; also carries live
+  "Invasion Day" political controversy, unnecessary reputational risk vs. the site's other neutral
+  national-day pages).
+- Austria/Switzerland — Turkish populations too small (~120-125K), no fixed-date benefit program found.
+- Dubai Shopping Festival-style additions for Abu Dhabi ("Summer Season")/Sharjah ("Summer Surprises") —
+  both read as diffuse entertainment-calendar umbrellas, not a crisp single discount event like DSF.
+  Qatar/Bahrain: no comparable branded shopping season exists at all.
+- Egypt Police Day — already fully covered inside `january-25-egypt`'s existing `richContent` (explicit
+  "عيد الشرطة وثورة 25 يناير" framing + FAQ).
+- Morocco/Tunisia/Kuwait/Jordan national Teacher's Day and Environment Day — all resolve to the same
+  UN/UNESCO dates already built (`world-teachers-day`, `world-environment-day`); Morocco/Jordan police
+  founding-days are real but institutional-PR-only sourcing, zero general-public search-behavior evidence.
+
+---
+
 ## Completed waves (compressed summary — full detail in git history + `.claude/session-notes.md` + memory)
 
 - **Tier 1-3 + Wave 6/7/8** (2026-07-08 → 2026-07-11): diaspora France/Sweden/USA/Canada benefit
