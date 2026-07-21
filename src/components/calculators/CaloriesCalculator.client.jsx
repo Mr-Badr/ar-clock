@@ -191,7 +191,7 @@ export default function CaloriesCalculator() {
                   { label: 'كربوهيدرات (40%)', value: result.carbs, unit: 'غرام' },
                   { label: 'دهون (30%)', value: result.fat, unit: 'غرام' },
                 ].map((m) => (
-                  <div key={m.label} className="ci-factor-row">
+                  <div key={m.label} className="ci-factor-row ci-factor-row--2col">
                     <span className="ci-factor-label">{m.label}</span>
                     <span className="ci-factor-effect">{fmt(m.value)} {m.unit}/يوم</span>
                   </div>
@@ -201,13 +201,13 @@ export default function CaloriesCalculator() {
               {/* BMI */}
               <div className="ci-factors" style={{ marginTop: 'var(--spacing-2)' }}>
                 <div className="ci-factors-title">مؤشر كتلة الجسم (BMI)</div>
-                <div className="ci-factor-row">
+                <div className="ci-factor-row ci-factor-row--2col">
                   <span className="ci-factor-label">BMI</span>
                   <span className="ci-factor-effect" style={{ color: result.bmiCategory.color }}>
                     {fmtDec(result.bmi)} — {result.bmiCategory.label}
                   </span>
                 </div>
-                <div className="ci-factor-row">
+                <div className="ci-factor-row ci-factor-row--2col">
                   <span className="ci-factor-label">الوزن المثالي (تقديري)</span>
                   <span className="ci-factor-effect">
                     {fmtDec(result.idealWeightMin)} – {fmtDec(result.idealWeightMax)} كغ

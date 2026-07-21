@@ -1,6 +1,6 @@
 "use client";
 
-import { lazy, Suspense, useMemo, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import {
   Briefcase,
   CalendarBlank,
@@ -44,14 +44,37 @@ const contractOptions = [
   { value: 'open', title: 'غير محدد', description: 'شائع في الاستقالات والعقود المستمرة.' },
 ];
 
-export default function EndOfServiceCalculator({ initialStartDate, initialEndDate }) {
+export default function EndOfServiceCalculator({
+  initialStartDate,
+  initialEndDate,
+  initialSalary,
+  initialReason,
+}) {
   const [contractType, setContractType] = useState('open');
-  const [salary, setSalary] = useState('8000');
+  const [salary, setSalary] = useState(initialSalary || '8000');
   const [startDate, setStartDate] = useState(initialStartDate);
   const [endDate, setEndDate] = useState(initialEndDate);
-  const [reason, setReason] = useState('resignation');
+  const [reason, setReason] = useState(initialReason || 'resignation');
   const [waitMonths, setWaitMonths] = useState([6]);
   const [showExtras, setShowExtras] = useState(false);
+
+  // Keep the URL query string in sync with the current inputs so the page's
+  // existing ResultActions "share/copy link" buttons (window.location.href)
+  // carry the calculation, not just the bare page URL. history.replaceState
+  // (not the Next.js router) so this never triggers a server round-trip.
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const params = new URLSearchParams();
+      if (salary) params.set('salary', salary);
+      if (startDate) params.set('start', startDate);
+      if (endDate) params.set('end', endDate);
+      if (reason) params.set('reason', reason);
+      const query = params.toString();
+      const nextUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
+      window.history.replaceState(null, '', nextUrl);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [salary, startDate, endDate, reason]);
 
   const formatMoney = (value) => formatCurrency(value, 'SAR');
 

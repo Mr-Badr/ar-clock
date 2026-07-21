@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { CurrencyDollar, Info } from '@phosphor-icons/react';
 
+import { CalcInput } from '@/components/calculators/controls.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
 import { Label } from '@/components/ui/label';
 import { calculateNetSalary, formatSAR, GOSI_RATES, GOSI_WAGE_CEILING } from '@/lib/calculators/net-salary';
@@ -69,11 +70,10 @@ export default function NetSalaryCalculator() {
                   <Label htmlFor="ns-basic">الراتب الأساسي (ريال)</Label>
                 </div>
                 <div className="calc-esb-money-row">
-                  <input
+                  <CalcInput
                     id="ns-basic"
                     type="number"
                     inputMode="decimal"
-                    className="calc-input"
                     value={basicSalary}
                     onChange={(e) => setBasicSalary(e.target.value)}
                     placeholder="8000"
@@ -90,11 +90,10 @@ export default function NetSalaryCalculator() {
                   <Label htmlFor="ns-housing">بدل السكن (ريال)</Label>
                 </div>
                 <div className="calc-esb-money-row">
-                  <input
+                  <CalcInput
                     id="ns-housing"
                     type="number"
                     inputMode="decimal"
-                    className="calc-input"
                     value={housingAllowance}
                     onChange={(e) => setHousingAllowance(e.target.value)}
                     placeholder="0"
@@ -112,11 +111,10 @@ export default function NetSalaryCalculator() {
                   <Label htmlFor="ns-other">بدلات أخرى (ريال) — اختياري</Label>
                 </div>
                 <div className="calc-esb-money-row">
-                  <input
+                  <CalcInput
                     id="ns-other"
                     type="number"
                     inputMode="decimal"
-                    className="calc-input"
                     value={otherAllowances}
                     onChange={(e) => setOtherAllowances(e.target.value)}
                     placeholder="0"

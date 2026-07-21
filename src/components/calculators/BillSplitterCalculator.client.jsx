@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { Minus, Plus, Receipt, Users, Warning } from '@phosphor-icons/react';
 
+import CalculatorCurrencyField, { usePreferredCurrency } from '@/components/calculators/CurrencyField.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -19,14 +20,14 @@ export default function BillSplitterCalculator() {
   const [bill,    setBill]    = useState('200');
   const [people,  setPeople]  = useState(4);
   const [tip,     setTip]     = useState(0);
-  const [currency, setCurrency] = useState('SAR');
+  const { currency, setCurrency, options: currencyOptions } = usePreferredCurrency({ defaultCurrency: 'SAR' });
 
   const result = useMemo(
     () => calculateBillSplit({ billAmount: bill, tipPercent: tip, numPeople: people }),
     [bill, tip, people],
   );
 
-  const currencyLabel = currency === 'SAR' ? 'ريال' : currency === 'AED' ? 'درهم' : currency === 'KWD' ? 'دينار' : 'ج.م';
+  const currencyLabel = currencyOptions.find((o) => o.code === currency)?.code || currency;
 
   const shareText = result?.isValid
     ? `تقسيم الفاتورة\nالإجمالي: ${fmt(result.total, currency)}\nعدد الأشخاص: ${people}\nحصة كل شخص: ${fmt(result.perPerson, currency)}`
@@ -49,25 +50,14 @@ export default function BillSplitterCalculator() {
               <div className="calc-esb-field">
                 <div className="calc-esb-field-label">
                   <span className="calc-esb-step">1</span>
-                  <Label>العملة</Label>
                 </div>
-                <div className="bill-currency-row">
-                  {[
-                    { code: 'SAR', label: '🇸🇦 ريال' },
-                    { code: 'AED', label: '🇦🇪 درهم' },
-                    { code: 'KWD', label: '🇰🇼 دينار' },
-                    { code: 'EGP', label: '🇪🇬 جنيه' },
-                  ].map(({ code, label }) => (
-                    <button
-                      key={code}
-                      type="button"
-                      className={`bill-currency-btn${currency === code ? ' is-active' : ''}`}
-                      onClick={() => setCurrency(code)}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </div>
+                <CalculatorCurrencyField
+                  currency={currency}
+                  onChange={setCurrency}
+                  options={currencyOptions}
+                  hint="اختر عملة الفاتورة. نحفظ اختيارك لهذه الحاسبة والحاسبات المالية الأخرى."
+                  id="bill-splitter-currency"
+                />
               </div>
 
               {/* Bill amount */}

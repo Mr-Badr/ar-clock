@@ -26,6 +26,17 @@ export default function ResultActions({
     setShareUrl(window.location.href);
   }, []);
 
+  // Some calculators sync their inputs into the URL query string as the
+  // user types (e.g. EndOfServiceCalculator) so the link below stays a
+  // shareable snapshot of the current result, not just the bare page URL.
+  // The mount-only effect above can't see that later change, so re-read the
+  // live URL right before it's used — every time the panel opens and at the
+  // moment each share action actually fires.
+  useEffect(() => {
+    if (isShareOpen) setShareUrl(window.location.href);
+  }, [isShareOpen]);
+  const getLiveShareUrl = () => (typeof window !== 'undefined' ? window.location.href : shareUrl);
+
   const shareSummary = [shareTitle, shareText].filter(Boolean).join('\n');
   const shareBundle = [shareSummary, shareUrl].filter(Boolean).join('\n');
   const encodedUrl = encodeURIComponent(shareUrl);
@@ -85,13 +96,14 @@ export default function ResultActions({
   }
 
   async function handleCopyLink() {
-    if (!shareUrl) {
+    const liveUrl = getLiveShareUrl();
+    if (!liveUrl) {
       toast.error('الرابط لم يجهز بعد');
       return;
     }
 
     try {
-      await navigator.clipboard.writeText(shareUrl);
+      await navigator.clipboard.writeText(liveUrl);
       toast.success('تم نسخ الرابط');
     } catch {
       toast.error('تعذر نسخ الرابط');
@@ -99,13 +111,14 @@ export default function ResultActions({
   }
 
   async function handleNativeShare() {
-    if (!canNativeShare || !shareText || !shareUrl) return;
+    const liveUrl = getLiveShareUrl();
+    if (!canNativeShare || !shareText || !liveUrl) return;
 
     try {
       await navigator.share({
         title: shareTitle,
         text: shareText,
-        url: shareUrl,
+        url: liveUrl,
       });
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') {

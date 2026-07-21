@@ -2112,6 +2112,97 @@ export function calculateEgyptIncomeTax({ monthlySalary, includeInsurance = true
   };
 }
 
+// ─── Jordan Income Tax (Income Tax Law No. 34/2014, as amended — verified via
+// PwC Worldwide Tax Summaries + Jordan SSC/Petra for the SSC rate) ───────────
+// Brackets apply to ANNUAL taxable income after exemptions.
+const JORDAN_IT_BRACKETS = [
+  { upTo: 5000,     rate: 0.05, label: '5%' },
+  { upTo: 10000,    rate: 0.10, label: '10%' },
+  { upTo: 15000,    rate: 0.15, label: '15%' },
+  { upTo: 20000,    rate: 0.20, label: '20%' },
+  { upTo: 1000000,  rate: 0.25, label: '25%' },
+  { upTo: Infinity, rate: 0.30, label: '30%' },
+];
+const JORDAN_PERSONAL_EXEMPTION   = 9000;  // annual, every resident taxpayer
+const JORDAN_DEPENDENTS_EXEMPTION = 9000;  // annual, flat regardless of dependent count
+const JORDAN_ADDITIONAL_EXEMPTION_CAP = 5000; // medical/education/housing, capped
+const JORDAN_FAMILY_EXEMPTION_CAP = 23000; // combined ceiling, all exemptions
+const JORDAN_SURCHARGE_THRESHOLD = 200000; // national contribution kicks in above this
+const JORDAN_SURCHARGE_RATE = 0.01;
+export const JORDAN_SSC_EMPLOYEE_RATE = 0.075; // private sector employee share
+
+export function calculateJordanIncomeTax({
+  monthlySalary,
+  hasDependents = false,
+  additionalExemptions = 0,
+  includeSsc = true,
+}) {
+  const salary = parseFloat(monthlySalary);
+  if (!salary || salary <= 0 || isNaN(salary)) return { isValid: false };
+
+  const sscMonthly = includeSsc ? round(salary * JORDAN_SSC_EMPLOYEE_RATE) : 0;
+  const annualGross = round(salary * 12);
+
+  const extra = Math.max(0, Math.min(Number(additionalExemptions) || 0, JORDAN_ADDITIONAL_EXEMPTION_CAP));
+  const rawExemptions = JORDAN_PERSONAL_EXEMPTION
+    + (hasDependents ? JORDAN_DEPENDENTS_EXEMPTION : 0)
+    + extra;
+  const totalExemptions = Math.min(rawExemptions, JORDAN_FAMILY_EXEMPTION_CAP);
+
+  const annualTaxable = Math.max(0, round(annualGross - totalExemptions));
+
+  let remaining = annualTaxable;
+  let totalTaxAnnual = 0;
+  const bracketBreakdown = [];
+
+  for (let i = 0; i < JORDAN_IT_BRACKETS.length; i++) {
+    const bracket = JORDAN_IT_BRACKETS[i];
+    const prevUpTo = i === 0 ? 0 : JORDAN_IT_BRACKETS[i - 1].upTo;
+    const width = bracket.upTo === Infinity ? remaining : (bracket.upTo - prevUpTo);
+    const taxable = Math.max(0, Math.min(width, remaining));
+    if (taxable <= 0) break;
+
+    const taxInBracket = round(taxable * bracket.rate);
+    totalTaxAnnual += taxInBracket;
+
+    bracketBreakdown.push({
+      label: bracket.label,
+      rate: bracket.rate,
+      from: prevUpTo,
+      to: bracket.upTo === Infinity ? annualTaxable : bracket.upTo,
+      taxableAmount: round(taxable),
+      taxAmount: taxInBracket,
+      pct: annualTaxable > 0 ? (taxable / annualTaxable) * 100 : 0,
+    });
+
+    remaining -= taxable;
+    if (remaining <= 0) break;
+  }
+
+  const surchargeBase = Math.max(0, annualTaxable - JORDAN_SURCHARGE_THRESHOLD);
+  const surcharge = round(surchargeBase * JORDAN_SURCHARGE_RATE);
+  totalTaxAnnual = round(totalTaxAnnual + surcharge);
+
+  const monthlyTax = round(totalTaxAnnual / 12);
+  const netMonthly = round(salary - sscMonthly - monthlyTax);
+  const effectiveTaxRate = annualGross > 0 ? round((totalTaxAnnual / annualGross) * 100, 2) : 0;
+
+  return {
+    isValid: true,
+    salary,
+    sscMonthly,
+    annualGross,
+    totalExemptions,
+    annualTaxable,
+    surcharge,
+    totalTaxAnnual,
+    monthlyTax,
+    netMonthly,
+    effectiveTaxRate,
+    bracketBreakdown,
+  };
+}
+
 // ─── UAE Corporate Tax (Federal Decree-Law 47/2022) ──────────────────────────
 // 0% on taxable income ≤ AED 375,000
 // 9% on taxable income above AED 375,000
@@ -2418,5 +2509,75 @@ export function calculateDomesticWorkerCost({
     grandTotal,
     firstYearCost,
     monthlyEquivalent,
+  };
+}
+
+// ─── Standard Deviation / Basic Statistics ───────────────────────────────────
+// Parses a free-text list of numbers (comma, space, or newline separated) and
+// computes mean/median/mode/range/variance/standard-deviation for both the
+// "sample" (n-1, Bessel's correction) and "population" (n) conventions, plus
+// a per-value deviation breakdown table — the actual worked-example step
+// competitor calculators either hide behind a toggle or skip entirely.
+export function parseNumberList(rawInput) {
+  return String(rawInput || '')
+    .split(/[\s,،]+/)
+    .map((token) => token.trim())
+    .filter(Boolean)
+    .map((token) => Number(token))
+    .filter((n) => Number.isFinite(n));
+}
+
+export function calculateBasicStatistics(rawInput) {
+  const values = parseNumberList(rawInput);
+  const n = values.length;
+  if (n < 2) return { isValid: false, count: n };
+
+  const sum = round(values.reduce((acc, v) => acc + v, 0), 6);
+  const mean = round(sum / n, 6);
+
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(n / 2);
+  const median = n % 2 === 0 ? round((sorted[mid - 1] + sorted[mid]) / 2, 6) : sorted[mid];
+
+  const frequency = new Map();
+  for (const v of values) frequency.set(v, (frequency.get(v) || 0) + 1);
+  const maxFreq = Math.max(...frequency.values());
+  const modes = maxFreq > 1
+    ? Array.from(frequency.entries()).filter(([, c]) => c === maxFreq).map(([v]) => v).sort((a, b) => a - b)
+    : [];
+
+  const min = sorted[0];
+  const max = sorted[n - 1];
+  const range = round(max - min, 6);
+
+  const breakdown = values.map((x) => {
+    const deviation = round(x - mean, 6);
+    const squaredDeviation = round(deviation * deviation, 6);
+    return { x, deviation, squaredDeviation };
+  });
+  const sumSquaredDeviations = round(breakdown.reduce((acc, row) => acc + row.squaredDeviation, 0), 6);
+
+  const populationVariance = round(sumSquaredDeviations / n, 6);
+  const sampleVariance = n > 1 ? round(sumSquaredDeviations / (n - 1), 6) : null;
+  const populationStdDev = round(Math.sqrt(populationVariance), 6);
+  const sampleStdDev = sampleVariance != null ? round(Math.sqrt(sampleVariance), 6) : null;
+
+  return {
+    isValid: true,
+    count: n,
+    values,
+    sum,
+    mean,
+    median,
+    modes,
+    min,
+    max,
+    range,
+    breakdown,
+    sumSquaredDeviations,
+    populationVariance,
+    sampleVariance,
+    populationStdDev,
+    sampleStdDev,
   };
 }

@@ -283,7 +283,7 @@ export default function SaudiMortgageCalculator() {
                       annualRate[0],
                       annualRate[0] + 1,
                     ].filter((r) => r > 0 && r <= 12).map((r) => (
-                      <div key={r} className={`ci-factor-row${r === annualRate[0] ? ' ci-compare-active' : ''}`}>
+                      <div key={r} className={`ci-factor-row ci-factor-row--2col${r === annualRate[0] ? ' ci-compare-active' : ''}`}>
                         <span className="ci-factor-label">{r}% هامش</span>
                         <span className="ci-factor-effect">
                           {fmt(calcMonthlyPayment(installmentResult.loanAmount, r, installmentResult.termYears))} ر.س/شهر

@@ -1,7 +1,7 @@
 {
   "slug": "salary-day-uae",
   "locale": "ar",
-  "capturedAt": "2026-06-24T09:59:32.913Z",
+  "capturedAt": "2026-07-21T17:21:37.015Z",
   "primaryQueries": [
     "متى ينزل راتب الإمارات {{year}}",
     "كم باقي على راتب الإمارات {{year}}",
@@ -201,6 +201,10 @@
     {
       "label": "بوابة الإمارات الرسمية - الأجور والرواتب",
       "url": "https://u.ae/en/information-and-services/jobs/working-in-the-uae/your-rights-as-a-worker/wages-and-salaries"
+    },
+    {
+      "label": "البوابة الرسمية لحكومة الإمارات — دفع الأجور في القطاع الخاص (نظام حماية الأجور)",
+      "url": "https://u.ae/ar/information-and-services/jobs/employment-in-the-private-sector/payment-of-wages"
     }
   ],
   "notes": "الإمارات غيّرت نظام العطلة الأسبوعية في يناير 2022 إلى السبت-الأحد. القاعدة للحكومة الاتحادية هي يوم 25. القطاع الخاص يتبع WPS وقد يختلف. الصفحة تستهدف جمهور الوافدين والمواطنين الباحثين شهرياً عن موعد الصرف."

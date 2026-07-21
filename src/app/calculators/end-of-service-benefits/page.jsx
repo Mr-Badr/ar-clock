@@ -39,12 +39,45 @@ function shiftYears(isoDate, years) {
   return date.toISOString().slice(0, 10);
 }
 
-export default async function EndOfServiceBenefitsPage() {
+const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+const VALID_REASONS = new Set(['contract_end', 'resignation', 'employer_termination', 'retirement']);
+
+function readSharedInput(searchParams, defaultStartDate, defaultEndDate) {
+  const salaryRaw = searchParams?.salary;
+  const startRaw = searchParams?.start;
+  const endRaw = searchParams?.end;
+  const reasonRaw = searchParams?.reason;
+
+  const salaryNum = Number(salaryRaw);
+  const salary = salaryRaw && Number.isFinite(salaryNum) && salaryNum > 0 ? String(salaryNum) : undefined;
+
+  const start = typeof startRaw === 'string' && ISO_DATE_RE.test(startRaw) ? startRaw : undefined;
+  const end = typeof endRaw === 'string' && ISO_DATE_RE.test(endRaw) ? endRaw : undefined;
+  const validRange = start && end && start < end;
+
+  const reason = typeof reasonRaw === 'string' && VALID_REASONS.has(reasonRaw) ? reasonRaw : undefined;
+
+  return {
+    initialSalary: salary,
+    initialStartDate: validRange ? start : defaultStartDate,
+    initialEndDate: validRange ? end : defaultEndDate,
+    initialReason: reason,
+  };
+}
+
+export default async function EndOfServiceBenefitsPage({ searchParams }) {
   const faqItems = Array.isArray(CONTENT.faqItems) ? CONTENT.faqItems : [];
   const howToSteps = Array.isArray(CONTENT.howTo?.steps) ? CONTENT.howTo.steps : [];
   const nowIso = await getCachedNowIso();
-  const initialEndDate = nowIso.slice(0, 10);
-  const initialStartDate = shiftYears(initialEndDate, -5);
+  const defaultEndDate = nowIso.slice(0, 10);
+  const defaultStartDate = shiftYears(defaultEndDate, -5);
+  const resolvedSearchParams = await searchParams;
+  const {
+    initialSalary,
+    initialStartDate,
+    initialEndDate,
+    initialReason,
+  } = readSharedInput(resolvedSearchParams, defaultStartDate, defaultEndDate);
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -100,6 +133,8 @@ export default async function EndOfServiceBenefitsPage() {
         <EndOfServiceCalculator
           initialStartDate={initialStartDate}
           initialEndDate={initialEndDate}
+          initialSalary={initialSalary}
+          initialReason={initialReason}
         />
       </CalculatorHero>
 

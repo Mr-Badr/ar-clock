@@ -298,5 +298,29 @@
     "flag": "🇪🇸",
     "timezone": "Europe/Madrid",
     "order": 25
+  },
+  {
+    "code": "gb",
+    "aliasSlugToken": "uk",
+    "nameAr": "بريطانيا",
+    "officialNameAr": "المملكة المتحدة",
+    "authority": "المجالس الإسلامية المحلية",
+    "dateVarianceLabel": "إعلان محلي / حسابات فلكية",
+    "localTerms": ["بريطانيا", "المملكة المتحدة", "البريطانية"],
+    "flag": "🇬🇧",
+    "timezone": "Europe/London",
+    "order": 26
+  },
+  {
+    "code": "no",
+    "aliasSlugToken": "norway",
+    "nameAr": "النرويج",
+    "officialNameAr": "مملكة النرويج",
+    "authority": "المجالس الإسلامية المحلية",
+    "dateVarianceLabel": "إعلان محلي / حسابات فلكية",
+    "localTerms": ["النرويج", "النرويجية"],
+    "flag": "🇳🇴",
+    "timezone": "Europe/Oslo",
+    "order": 27
   }
 ]

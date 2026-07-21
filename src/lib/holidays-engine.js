@@ -379,11 +379,42 @@ function nextEstimated(iso, now, ev) {
   if (d < n) d.setFullYear(d.getFullYear() + 1);
   return d;
 }
-function nextMonthly(day, now) {
+// Weekend days per country, as JS Date.getDay() values (0=Sun ... 6=Sat).
+// Used only to shift a monthly payment date back to the last business day
+// when the raw day-of-month falls on that country's weekend — the same rule
+// already described in prose across salary/pension/support FAQ content.
+// Verified 2026-07-21 (see event-creation-lessons.md + WebSearch confirmation
+// per country); Fri+Sat is the Gulf/most-MENA norm, Sat+Sun is Western/
+// Maghreb/Tunisia norm. Countries not listed here get no shift (unchanged
+// legacy behavior) rather than a guessed mapping.
+const MONTHLY_WEEKEND_DAYS_BY_COUNTRY = {
+  sa: [5, 6], kw: [5, 6], bh: [5, 6], om: [5, 6], eg: [5, 6], jo: [5, 6], dz: [5, 6], iq: [5, 6],
+  ae: [6, 0], qa: [6, 0], tn: [6, 0], ma: [6, 0],
+  se: [6, 0], no: [6, 0], de: [6, 0], fr: [6, 0], ca: [6, 0], us: [6, 0],
+};
+function shiftToLastBusinessDay(date, weekendDays) {
+  const d = new Date(date);
+  while (weekendDays.includes(d.getDay())) {
+    d.setDate(d.getDate() - 1);
+  }
+  return d;
+}
+function nextMonthly(day, now, countryCode) {
   const n = new Date(now); n.setHours(0, 0, 0, 0);
-  let d = new Date(n.getFullYear(), n.getMonth(), day); d.setHours(0, 0, 0, 0);
-  if (d < n) d = new Date(n.getFullYear(), n.getMonth() + 1, day);
-  if (d.getDate() !== day) d = new Date(d.getFullYear(), d.getMonth() + 1, 0);
+  const weekendDays = MONTHLY_WEEKEND_DAYS_BY_COUNTRY[countryCode];
+
+  const rawForMonth = (year, month) => {
+    let d = new Date(year, month, day); d.setHours(0, 0, 0, 0);
+    if (d.getDate() !== day) d = new Date(d.getFullYear(), d.getMonth() + 1, 0);
+    return weekendDays ? shiftToLastBusinessDay(d, weekendDays) : d;
+  };
+
+  let d = rawForMonth(n.getFullYear(), n.getMonth());
+  // The weekend shift can pull this month's date backward past "now" (e.g.
+  // "now" is itself one of the weekend days the payment already skipped
+  // past) — in that case this month's occurrence is effectively behind us,
+  // so roll to next month's date instead.
+  if (d < n) d = rawForMonth(n.getFullYear(), n.getMonth() + 1);
   return d;
 }
 /** Nearest upcoming date among several fixed {month, day} pairs recurring every year (e.g. quarterly benefit-payment dates). */
@@ -520,7 +551,7 @@ export function getNextEventDate(rawEvent, resolvedMap = {}, nowMs = Date.now())
       .replace(/\{\{nextYear\}\}/g, String(yr + 1));
     return nextEstimated(resolvedDate, now, ev);
   }
-  if (ev.type === 'monthly') return nextMonthly(ev.day, now);
+  if (ev.type === 'monthly') return nextMonthly(ev.day, now, ev._countryCode);
   if (ev.type === 'quarterly') return nextQuarterly(ev.quarterlyDates || [], now);
   if (ev.type === 'floating') return nextFloating(ev, now);
   if (ev.type === 'easter') return nextEasterOffset(ev.easterOffset || 0, now);

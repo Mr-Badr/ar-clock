@@ -47,6 +47,7 @@ const CATEGORY_CALCULATORS = {
     { href: '/calculators/egypt-income-tax',     label: 'ضريبة الدخل مصر',       desc: 'شرائح 2023 + تأمينات 11% — صافي الراتب', accent: 'var(--blue)' },
     { href: '/calculators/egypt-social-insurance', label: 'تأمينات اجتماعية مصر',  desc: 'حصة الموظف 11% وحد الأجر المؤمَّن',      accent: 'var(--amber)' },
     { href: '/calculators/eos-jordan',           label: 'نهاية الخدمة الأردن',   desc: '30 يوماً/سنة — قانون العمل 8/1996',       accent: 'var(--green)' },
+    { href: '/calculators/jordan-income-tax',    label: 'ضريبة الدخل الأردن',    desc: 'شرائح 5%–30% + إعفاءات — صافي الراتب',    accent: 'var(--blue)' },
     { href: '/calculators/morocco-net-salary',   label: 'الراتب الصافي المغرب',  desc: 'CNSS 7.26% + ضريبة IR التصاعدية',         accent: 'var(--red)' },
     { href: '/calculators/uae-corporate-tax',   label: 'ضريبة شركات الإمارات',  desc: '0% حتى 375K درهم — 9% على الزائد',        accent: 'var(--green)' },
     { href: '/calculators/bill-splitter',       label: 'تقسيم الفاتورة',         desc: 'مطعم، رحلة، مشتريات — قسّم بالتساوي',     accent: 'var(--amber)' },

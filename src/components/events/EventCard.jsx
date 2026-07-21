@@ -31,6 +31,7 @@ import {
   Users,
 } from 'lucide-react';
 import { urgencyTier, liveStatusLabel } from '@/lib/holidays/urgency';
+import { getFlagEmoji } from '@/lib/country-utils';
 
 /* ── Static maps ──────────────────────────────────────────────────────────── */
 const CAT_ICON = {
@@ -46,10 +47,6 @@ const CAT_ICON = {
 const CAT_LABEL = {
   islamic: 'إسلامي', national: 'وطني', school: 'مدرسي',
   holidays: 'إجازة', astronomy: 'فلكي', social: 'اجتماعي', business: 'أعمال', support: 'استحقاق',
-};
-const COUNTRY_FLAGS = {
-  sa: '🇸🇦', eg: '🇪🇬', ma: '🇲🇦', dz: '🇩🇿',
-  ae: '🇦🇪', tn: '🇹🇳', kw: '🇰🇼', qa: '🇶🇦',
 };
 
 /* ─────────────────────────────────────────────────────────────────────────── */
@@ -101,7 +98,7 @@ export default function EventCard({ event, priority = false, index = 0 }) {
               )}
               {event._countryCode && (
                 <span className="waqt-ev__flag" aria-hidden>
-                  {COUNTRY_FLAGS[event._countryCode]}
+                  {getFlagEmoji(event._countryCode)}
                 </span>
               )}
             </div>

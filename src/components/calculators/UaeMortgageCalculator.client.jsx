@@ -337,7 +337,7 @@ export default function UaeMortgageCalculator() {
                       {[annualRate[0] - 1, annualRate[0], annualRate[0] + 1]
                         .filter((v) => v > 0 && v <= 12)
                         .map((v) => (
-                          <div key={v} className={`ci-factor-row${v === annualRate[0] ? ' ci-compare-active' : ''}`}>
+                          <div key={v} className={`ci-factor-row ci-factor-row--2col${v === annualRate[0] ? ' ci-compare-active' : ''}`}>
                             <span className="ci-factor-label">{v}% فائدة</span>
                             <span className="ci-factor-effect">{fmt(calcMonthlyPayment(r.maxLoan, v, r.termYears))} د.إ/شهر</span>
                           </div>
