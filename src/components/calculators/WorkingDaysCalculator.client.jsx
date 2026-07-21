@@ -7,6 +7,7 @@ import { CalcInput as Input } from '@/components/calculators/controls.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
 import { Label } from '@/components/ui/label';
 import { calculateWorkingDays, formatNumber, WORKING_DAYS_COUNTRIES } from '@/lib/calculators/engine';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 function todayIso() {
   const d = new Date();
@@ -68,7 +69,7 @@ export default function WorkingDaysCalculator() {
                       className={`leave-country-btn${country === code ? ' is-active' : ''}`}
                       onClick={() => setCountry(code)}
                     >
-                      <span className="leave-flag">{c.flag}</span>
+                      <span className="leave-flag"><CountryFlag code={code} /></span>
                       <span>{c.label}</span>
                     </button>
                   ))}

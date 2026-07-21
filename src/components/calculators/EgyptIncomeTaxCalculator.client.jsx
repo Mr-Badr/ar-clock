@@ -8,6 +8,7 @@ import ResultActions from '@/components/calculators/ResultActions.client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
+import CountryFlag from '@/components/shared/CountryFlag';
 import {
   calculateEgyptIncomeTax,
   formatCurrency,
@@ -124,7 +125,7 @@ export default function EgyptIncomeTaxCalculator() {
 
               {/* Country badge */}
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--eg">🇪🇬 مصر</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--eg"><CountryFlag code="eg" /> مصر</span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 

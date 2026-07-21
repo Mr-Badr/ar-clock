@@ -119,13 +119,8 @@
   justify-content: center;
 }
 
-.interactiveShell :global(.waqt-cat-cell) {
-  flex: 0 1 118px;
-}
-
 .interactiveShell :global(.waqt-grid) {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 316px));
-  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: var(--space-4);
 }
 

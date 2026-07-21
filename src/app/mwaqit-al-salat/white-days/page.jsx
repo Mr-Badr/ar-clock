@@ -5,6 +5,7 @@ import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
+import WhiteDaysCard from '@/components/mwaqit/WhiteDaysCard';
 import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import { JsonLd } from '@/components/seo/JsonLd';
 import routeStyles from '@/app/mwaqit-al-salat/PrayerRoutePage.module.css';
@@ -121,20 +122,13 @@ export default async function WhiteDaysPage() {
                 </div>
                 <h1 className={routeStyles.heroTitle}>متى أيام البيض القادمة؟</h1>
                 <p className={routeStyles.heroLead}>
-                  {whiteDays.isCurrentlyWhiteDays ? (
-                    <>
-                      إذا كان سؤالك المباشر: <strong>اليوم من أيام البيض</strong> (اليوم{' '}
-                      {whiteDays.currentHijriDay} من {whiteDays.hijriMonthName}). تنتهي هذه
-                      الدفعة يوم <strong>{endLabel}</strong>.
-                    </>
-                  ) : (
-                    <>
-                      إذا كان سؤالك المباشر: تبدأ أيام البيض القادمة يوم{' '}
-                      <strong>{startLabel}</strong> (13 {whiteDays.hijriMonthName}) وتنتهي يوم{' '}
-                      <strong>{endLabel}</strong> — بعد {whiteDays.daysRemaining} يوماً من اليوم.
-                    </>
-                  )}
+                  أيام البيض هي 13 و14 و15 من كل شهر هجري، وتتكرر شهرياً — صيامها الثلاثة يعادل
+                  صيام الشهر كاملاً.
                 </p>
+              </div>
+
+              <div className={routeStyles.searchWrap}>
+                <WhiteDaysCard whiteDays={whiteDays} startLabel={startLabel} endLabel={endLabel} />
               </div>
             </div>
           </section>

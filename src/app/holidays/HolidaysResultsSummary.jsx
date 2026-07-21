@@ -1,28 +1,6 @@
-import {
-  BookOpen,
-  Briefcase,
-  CalendarDays,
-  CircleDollarSign,
-  Flag,
-  Globe2,
-  GraduationCap,
-  LayoutGrid,
-  Moon,
-  Search,
-  Users,
-} from 'lucide-react';
-
-const CATEGORY_ICON_COMPONENTS = {
-  all: LayoutGrid,
-  islamic: Moon,
-  national: Flag,
-  school: GraduationCap,
-  holidays: BookOpen,
-  astronomy: Globe2,
-  social: Users,
-  business: Briefcase,
-  support: CircleDollarSign,
-};
+import { CalendarDays, Search } from 'lucide-react';
+import CountryFlag from '@/components/shared/CountryFlag';
+import { CATEGORY_ICON_COMPONENTS } from './category-icons';
 
 export default function HolidaysResultsSummary({
   eventsCount,
@@ -46,7 +24,7 @@ export default function HolidaysResultsSummary({
   const selectedCountry = countryOptions.find((option) => option.value === country);
   const selectedTimeRange = timeRangeOptions.find((option) => option.id === timeRange);
   const SelectedCategoryIcon = selectedCategory
-    ? CATEGORY_ICON_COMPONENTS[selectedCategory.iconKey || selectedCategory.id] || LayoutGrid
+    ? CATEGORY_ICON_COMPONENTS[selectedCategory.iconKey || selectedCategory.id] || CATEGORY_ICON_COMPONENTS.all
     : null;
   const countryLabel = country !== 'all' && selectedCountry?.label
     ? selectedCountry.label
@@ -59,17 +37,10 @@ export default function HolidaysResultsSummary({
       : hasActiveFilters
         ? 'مناسبة توافق ما اخترته'
         : 'مناسبة متاحة الآن';
-  const summaryHint = isPending
-    ? null
-    : countryLabel
-      ? `نعرض الآن المناسبات المحلية أو النسخ الخاصة بـ ${countryLabel} فقط. امسح الدولة إذا أردت رؤية المناسبات العامة لكل البلدان.`
-      : hasActiveFilters
-      ? `من أصل ${total} مناسبة يمكنك تعديل الدولة أو النوع أو المدة. إذا كنت تبحث عن إجازة رسمية، ابدأ بالدولة قبل الاسم.`
-      : 'ابدأ بالأقرب زمنًا أو ابحث باسم المناسبة أو الدولة أو نوع الموعد للوصول إلى الصفحة التي تريدها مباشرة.';
 
   return (
     <div className="waqt-results-summary flex items-center justify-between flex-wrap" style={{ gap: 'var(--space-3)' }}>
-      <div style={{ display: 'grid', gap: '0.22rem', minWidth: 0 }}>
+      <div style={{ minWidth: 0 }}>
         <p
           aria-live="polite"
           aria-atomic
@@ -86,11 +57,6 @@ export default function HolidaysResultsSummary({
             </>
           )}
         </p>
-        {summaryHint ? (
-          <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 1.7 }}>
-            {summaryHint}
-          </p>
-        ) : null}
       </div>
 
       {hasActiveFilters && (
@@ -113,7 +79,7 @@ export default function HolidaysResultsSummary({
 
           {country !== 'all' && selectedCountry && (
             <span className="waqt-filter-tag">
-              {selectedCountry.flag} {selectedCountry.label}
+              <CountryFlag code={selectedCountry.value} /> {selectedCountry.label}
               <button
                 className="waqt-filter-tag__x"
                 aria-label={`إزالة تصفية: ${selectedCountry.label}`}

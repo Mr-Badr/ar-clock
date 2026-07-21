@@ -1,5 +1,6 @@
 import './globals.css';
 import './waqt-ui.css';
+import 'flag-icons/css/flag-icons.min.css';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { Noto_Sans_Arabic } from 'next/font/google';

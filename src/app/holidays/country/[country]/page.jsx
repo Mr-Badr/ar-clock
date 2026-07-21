@@ -5,6 +5,7 @@ import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import CountdownTicker from '@/components/clocks/CountdownTicker';
+import CountryFlag from '@/components/shared/CountryFlag';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { buildCountryHubModel } from '@/lib/holidays/country-hub';
 import { COUNTRY_HUBS, COUNTRY_HUB_SLUGS, getCountryHubBySlug } from '@/lib/holidays/country-hub-data';
@@ -148,7 +149,7 @@ export default async function CountryHubPage({ params }) {
         </nav>
         <div className={styles.heroTop}>
           <span className={`${styles.flagChip} ${styles[`flag_${hub.accentClass}`] || ''}`} aria-hidden="true">
-            {hub.flag}
+            <CountryFlag code={hub.code} square />
           </span>
           <h1 className={styles.h1}>العطل الرسمية في {hub.nameAr} {year}</h1>
         </div>
@@ -333,7 +334,7 @@ export default async function CountryHubPage({ params }) {
         <div className={styles.hubLinks}>
           {otherHubs.map((item) => (
             <Link key={item.slug} href={`/holidays/country/${item.slug}`} className={styles.hubLink}>
-              <span aria-hidden="true">{item.flag}</span> العطل الرسمية في {item.nameAr}
+              <CountryFlag code={item.code} /> العطل الرسمية في {item.nameAr}
             </Link>
           ))}
           <Link href="/holidays" className={styles.hubLink}>

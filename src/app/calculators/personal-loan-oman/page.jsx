@@ -8,6 +8,7 @@ import {
 } from '@/components/calculators/common.jsx';
 import OmanPersonalLoanCalculator from '@/components/calculators/OmanPersonalLoanCalculator.client';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const SLUG      = 'personal-loan-oman';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;
@@ -77,7 +78,7 @@ export default function OmanPersonalLoanPage() {
       <JsonLd data={SCHEMA} />
 
       <CalculatorHero
-        badge="🇴🇲 عُمان"
+        badge={<><CountryFlag code="om" /> عُمان</>}
         title="حاسبة القرض الشخصي عمان"
         description="احسب قسطك الشهري أو أقصى قرض تستطيع الحصول عليه في سلطنة عمان وفق قواعد البنك المركزي العماني — DBR 50%."
         highlights={[
@@ -107,12 +108,12 @@ export default function OmanPersonalLoanPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr><td>🇴🇲 عمان</td><td>CBO</td><td>50%</td><td>120 شهراً (مواطن)</td><td>5.5%–11%</td></tr>
-                <tr><td>🇦🇪 الإمارات</td><td>CBUAE</td><td>50%</td><td>48 شهراً (وافد)</td><td>5%–10%</td></tr>
-                <tr><td>🇸🇦 السعودية</td><td>SAMA</td><td>33%</td><td>60 شهراً</td><td>4%–8%</td></tr>
-                <tr><td>🇶🇦 قطر</td><td>QCB</td><td>50%</td><td>48 شهراً</td><td>5%–10%</td></tr>
-                <tr><td>🇰🇼 الكويت</td><td>CBK</td><td>40%</td><td>60 شهراً</td><td>4%–9%</td></tr>
-                <tr><td>🇧🇭 البحرين</td><td>CBB</td><td>50%</td><td>84 شهراً (مواطن)</td><td>5%–10%</td></tr>
+                <tr><td><CountryFlag code="om" /> عمان</td><td>CBO</td><td>50%</td><td>120 شهراً (مواطن)</td><td>5.5%–11%</td></tr>
+                <tr><td><CountryFlag code="ae" /> الإمارات</td><td>CBUAE</td><td>50%</td><td>48 شهراً (وافد)</td><td>5%–10%</td></tr>
+                <tr><td><CountryFlag code="sa" /> السعودية</td><td>SAMA</td><td>33%</td><td>60 شهراً</td><td>4%–8%</td></tr>
+                <tr><td><CountryFlag code="qa" /> قطر</td><td>QCB</td><td>50%</td><td>48 شهراً</td><td>5%–10%</td></tr>
+                <tr><td><CountryFlag code="kw" /> الكويت</td><td>CBK</td><td>40%</td><td>60 شهراً</td><td>4%–9%</td></tr>
+                <tr><td><CountryFlag code="bh" /> البحرين</td><td>CBB</td><td>50%</td><td>84 شهراً (مواطن)</td><td>5%–10%</td></tr>
               </tbody>
             </table>
           </div>

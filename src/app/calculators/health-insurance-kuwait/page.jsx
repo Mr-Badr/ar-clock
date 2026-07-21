@@ -8,6 +8,7 @@ import {
 } from '@/components/calculators/common.jsx';
 import KuwaitHealthInsuranceCalculator from '@/components/calculators/KuwaitHealthInsuranceCalculator.client';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const SLUG      = 'health-insurance-kuwait';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;
@@ -77,7 +78,7 @@ export default function KuwaitHealthInsurancePage() {
       <JsonLd data={SCHEMA} />
 
       <CalculatorHero
-        badge="🇰🇼 الكويت"
+        badge={<><CountryFlag code="kw" /> الكويت</>}
         title="حاسبة التأمين الصحي الكويت"
         description="قدّر تكلفة التأمين الصحي للوافدين والعائلات في الكويت — 4 مستويات من الأساسي إلى العالمي بالدينار الكويتي."
         highlights={[

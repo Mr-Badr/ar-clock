@@ -7,6 +7,7 @@ import {
   RelatedCalculators,
 } from '@/components/calculators/common.jsx';
 import SaudiHealthInsuranceCalculator from '@/components/calculators/SaudiHealthInsuranceCalculator.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const SLUG = 'health-insurance-saudi';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;
@@ -127,7 +128,7 @@ export default function SaudiHealthInsurancePage() {
       <JsonLd data={howToSchema} />
 
       <CalculatorHero
-        badge="🇸🇦 السعودية"
+        badge={<><CountryFlag code="sa" /> السعودية</>}
         title="حاسبة التأمين الصحي السعودية"
         description="قدّر تكلفة تأمينك الصحي حسب فئة CCHI (B / C / D / E) وعدد أفراد العائلة والعمر والمنطقة. إلزامي لجميع موظفي القطاع الخاص منذ 2016."
         highlights={[

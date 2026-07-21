@@ -20,6 +20,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
+import CountryFlag from '@/components/shared/CountryFlag';
 import {
   buildQatarEndOfServiceComparison,
   buildQatarEndOfServiceMilestones,
@@ -164,7 +165,7 @@ export default function QatarEndOfServiceCalculator({ initialStartDate, initialE
 
               {/* Country header */}
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--qa">🇶🇦 قطر</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--qa"><CountryFlag code="qa" /> قطر</span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 

@@ -10,7 +10,7 @@ import AdMultiplex from '@/components/ads/AdMultiplex';
 import { CalendarDays, Clock, Compass, Globe2, MapPin, Timer } from 'lucide-react';
 import routeStyles from '@/app/mwaqit-al-salat/PrayerRoutePage.module.css';
 import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
-import { getFlagEmoji } from '@/lib/country-utils';
+import CountryFlag from '@/components/shared/CountryFlag';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import {
@@ -380,7 +380,7 @@ async function PrayerLandingPopularLinks() {
                 title={item.description}
               >
                 <span className={routeStyles.countryFlag} aria-hidden="true">
-                  {getFlagEmoji(item.countryCode)}
+                  <CountryFlag code={item.countryCode} />
                 </span>
                 <span>{getCountryLinkLabel(item.label)}</span>
               </Link>

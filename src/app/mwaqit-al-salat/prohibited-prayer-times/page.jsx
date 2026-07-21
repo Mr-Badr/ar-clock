@@ -8,15 +8,12 @@ import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
 import SearchCityWrapper from '@/components/SearchCityWrapper.client';
+import ProhibitedAutoCard from '@/components/mwaqit/ProhibitedAutoCard.client';
 import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import { JsonLd } from '@/components/seo/JsonLd';
 import routeStyles from '@/app/mwaqit-al-salat/PrayerRoutePage.module.css';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
-import { getCachedNowIso } from '@/lib/date-utils';
-import { getCityBySlug } from '@/lib/db/queries/cities';
-import { getCountryBySlug } from '@/lib/db/queries/countries';
-import { getProhibitedPrayerWindowsFacts } from '@/lib/night-prayer-facts';
 import { getPopularPrayerCityLinks } from '@/lib/seo/popular-links';
 
 const BASE = getSiteUrl();
@@ -82,62 +79,6 @@ const FAQS = [
     a: 'الراجح عند جمهور أهل العلم أن قضاء الفريضة الفائتة جائز في وقت النهي غير المغلّظ (بعد الفجر وبعد العصر)، ولا يُؤخَّر لخطورة تفويت الوقت. أما في الأوقات الثلاثة المغلّظة تحديداً (الشروق والاستواء والغروب) فالأولى تأخير القضاء دقائق معدودة حتى ينتهي الوقت المغلّظ إن أمكن ذلك دون حرج.',
   },
 ];
-
-async function ProhibitedWindowsReferenceCity() {
-  const [country, nowIso] = await Promise.all([
-    getCountryBySlug('saudi-arabia'),
-    getCachedNowIso(),
-  ]);
-  if (!country) return null;
-
-  const city = await getCityBySlug(country.country_code, 'riyadh');
-  if (!city) return null;
-
-  const now = new Date(nowIso);
-  const facts = getProhibitedPrayerWindowsFacts({
-    lat: city.lat,
-    lon: city.lon,
-    timezone: city.timezone,
-    date: now,
-    countryCode: country.country_code,
-    cacheKey: 'saudi-arabia::riyadh::prohibited-windows',
-  });
-
-  if (!facts) return null;
-
-  const cityNameAr = city.name_ar || city.name_en;
-
-  return (
-    <section className={routeStyles.sectionPanel} aria-label={`مثال حي: أوقات النهي عن الصلاة في ${cityNameAr}`}>
-      <div className={routeStyles.sectionHead}>
-        <h2 className={routeStyles.sectionTitle}>
-          {facts.isProhibitedNow ? `الآن وقت نهي في ${cityNameAr}` : `مثال حي الآن: ${cityNameAr}`}
-        </h2>
-        <p className={routeStyles.sectionCopy}>
-          {facts.isProhibitedNow
-            ? `أنت الآن داخل «${facts.activeWindow?.title}» — ينتهي عند ${facts.activeWindow?.endLabel}.`
-            : 'هذا مثال مباشر بمدينة ' + cityNameAr + ' ليوضح لك أوقات النهي الثلاثة اليوم. ابحث عن مدينتك في الأعلى للحصول على توقيتك الدقيق أنت.'}
-        </p>
-      </div>
-      <div className={routeStyles.contextGrid}>
-        {facts.windows.map((w) => (
-          <article key={w.key} className={routeStyles.contextCard}>
-            <h3 className={routeStyles.contextTitle}>
-              {w.title}
-              {w.isActiveNow ? ' — الآن' : ''}
-            </h3>
-            <p className={routeStyles.contextBody}>
-              من <strong>{w.startLabel}</strong> حتى <strong>{w.endLabel}</strong> ({w.durationLabel})
-            </p>
-          </article>
-        ))}
-      </div>
-      <Link href={`/mwaqit-al-salat/${country.country_slug}/riyadh`} className={routeStyles.contextLink}>
-        مواقيت الصلاة الكاملة في {cityNameAr} ←
-      </Link>
-    </section>
-  );
-}
 
 async function PopularCitiesForProhibitedWindows() {
   const links = await getPopularPrayerCityLinks(24);
@@ -215,17 +156,20 @@ export default async function ProhibitedPrayerTimesPage() {
                 </div>
                 <h1 className={routeStyles.heroTitle}>ما هي أوقات النهي عن الصلاة؟</h1>
                 <p className={routeStyles.heroLead}>
-                  إذا كان سؤالك المباشر: أوقات النهي عن الصلاة ثلاثة، ثبتت في صحيح مسلم — بعد
-                  الفجر حتى ارتفاع الشمس، عند استواء الشمس قبيل الظهر، ومن العصر حتى غروب الشمس
-                  تماماً. الوقت الدقيق يختلف يومياً وحسب مدينتك — ابحث عن مدينتك بالأسفل لتوقيتك
-                  الآن.
+                  أوقات النهي عن الصلاة ثلاثة، ثبتت في صحيح مسلم — بعد الفجر حتى ارتفاع الشمس،
+                  عند استواء الشمس قبيل الظهر، ومن العصر حتى غروب الشمس تماماً.
                 </p>
               </div>
+
+              <div className={routeStyles.searchWrap}>
+                <ProhibitedAutoCard />
+              </div>
+
               <div className={routeStyles.searchWrap}>
                 <div className={`${routeStyles.sectionPanel} ${routeStyles.heroSearchPanel}`} aria-labelledby="prohibited-search-title">
                   <div className={routeStyles.searchPanelHeader}>
-                    <span className={routeStyles.searchPanelKicker}>احسب توقيتك</span>
-                    <h2 id="prohibited-search-title" className={routeStyles.searchPanelTitle}>ابحث عن مدينتك</h2>
+                    <span className={routeStyles.searchPanelKicker}>مدينة مختلفة؟</span>
+                    <h2 id="prohibited-search-title" className={routeStyles.searchPanelTitle}>ابحث عن مدينة أخرى</h2>
                   </div>
                   <div className={routeStyles.searchCommandShell}>
                     <SearchCityWrapper mode="prayer" />
@@ -233,12 +177,6 @@ export default async function ProhibitedPrayerTimesPage() {
                 </div>
               </div>
             </div>
-          </section>
-
-          <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
-            <Suspense fallback={null}>
-              <ProhibitedWindowsReferenceCity />
-            </Suspense>
           </section>
 
           <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>

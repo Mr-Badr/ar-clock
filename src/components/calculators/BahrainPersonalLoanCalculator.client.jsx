@@ -18,6 +18,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 function fmt(n) { return Math.round(n).toLocaleString('ar-BH-u-nu-latn'); }
 
@@ -226,7 +227,7 @@ export default function BahrainPersonalLoanCalculator() {
             <div className="calc-esb-result-panel" aria-live="polite">
 
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--bh">🇧🇭 البحرين</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--bh"><CountryFlag code="bh" /> البحرين</span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 
@@ -326,11 +327,11 @@ export default function BahrainPersonalLoanCalculator() {
               {/* GCC comparison */}
               <div className="calc-result-sec-title">مقارنة DBR في دول الخليج</div>
               <div className="calc-esb-breakdown">
-                <div className="calc-esb-brow"><span>🇧🇭 البحرين (CBB)</span><strong>50% للجميع</strong></div>
-                <div className="calc-esb-brow"><span>🇶🇦 قطر (QCB)</span><strong>50% مقيم · 75% قطري</strong></div>
-                <div className="calc-esb-brow"><span>🇦🇪 الإمارات (CBUAE)</span><strong>50% للجميع</strong></div>
-                <div className="calc-esb-brow"><span>🇰🇼 الكويت (CBK)</span><strong>40% موظف · 30% متقاعد</strong></div>
-                <div className="calc-esb-brow"><span>🇸🇦 السعودية (SAMA)</span><strong>33% للجميع</strong></div>
+                <div className="calc-esb-brow"><span><CountryFlag code="bh" /> البحرين (CBB)</span><strong>50% للجميع</strong></div>
+                <div className="calc-esb-brow"><span><CountryFlag code="qa" /> قطر (QCB)</span><strong>50% مقيم · 75% قطري</strong></div>
+                <div className="calc-esb-brow"><span><CountryFlag code="ae" /> الإمارات (CBUAE)</span><strong>50% للجميع</strong></div>
+                <div className="calc-esb-brow"><span><CountryFlag code="kw" /> الكويت (CBK)</span><strong>40% موظف · 30% متقاعد</strong></div>
+                <div className="calc-esb-brow"><span><CountryFlag code="sa" /> السعودية (SAMA)</span><strong>33% للجميع</strong></div>
               </div>
 
               <ResultActions copyText={shareText} shareTitle="حاسبة القرض الشخصي البحرين" shareText={shareText} />

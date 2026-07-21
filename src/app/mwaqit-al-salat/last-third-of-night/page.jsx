@@ -8,15 +8,12 @@ import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
 import SearchCityWrapper from '@/components/SearchCityWrapper.client';
+import LastThirdAutoCard from '@/components/mwaqit/LastThirdAutoCard.client';
 import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import { JsonLd } from '@/components/seo/JsonLd';
 import routeStyles from '@/app/mwaqit-al-salat/PrayerRoutePage.module.css';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
-import { getCachedNowIso } from '@/lib/date-utils';
-import { getCityBySlug } from '@/lib/db/queries/cities';
-import { getCountryBySlug } from '@/lib/db/queries/countries';
-import { getLastThirdOfNightFacts } from '@/lib/night-prayer-facts';
 import { getPopularPrayerCityLinks } from '@/lib/seo/popular-links';
 
 const BASE = getSiteUrl();
@@ -80,63 +77,6 @@ const FAQS = [
     a: 'ينتهي الثلث الأخير من الليل بدخول وقت الفجر، فإذا استيقظت بعده يفوتك وقت التهجد المخصوص، لكن يبقى لك أجر صلاة الفجر وأذكار الصباح. حاول ضبط المنبه قبل وقت الفجر بساعة تقريباً لإدراك جزء من الثلث الأخير.',
   },
 ];
-
-async function LastThirdReferenceCity() {
-  const [country, nowIso] = await Promise.all([
-    getCountryBySlug('saudi-arabia'),
-    getCachedNowIso(),
-  ]);
-  if (!country) return null;
-
-  const city = await getCityBySlug(country.country_code, 'riyadh');
-  if (!city) return null;
-
-  const now = new Date(nowIso);
-  const facts = getLastThirdOfNightFacts({
-    lat: city.lat,
-    lon: city.lon,
-    timezone: city.timezone,
-    date: now,
-    countryCode: country.country_code,
-    cacheKey: 'saudi-arabia::riyadh::night-pillar',
-  });
-
-  if (!facts) return null;
-
-  const cityNameAr = city.name_ar || city.name_en;
-
-  return (
-    <section className={routeStyles.sectionPanel} aria-label={`مثال حي: الثلث الأخير من الليل في ${cityNameAr}`}>
-      <div className={routeStyles.sectionHead}>
-        <h2 className={routeStyles.sectionTitle}>مثال حي الآن: {cityNameAr}</h2>
-        <p className={routeStyles.sectionCopy}>
-          هذا مثال مباشر بمدينة {cityNameAr} ليوضح لك طريقة الحساب. ابحث عن مدينتك في الأعلى
-          للحصول على توقيتك الدقيق أنت.
-        </p>
-      </div>
-      <div className={routeStyles.contextGrid}>
-        <article className={routeStyles.contextCard}>
-          <h3 className={routeStyles.contextTitle}>الثلث الأخير من الليل</h3>
-          <p className={routeStyles.contextBody}>
-            يبدأ عند <strong>{facts.lastThirdStartLabel}</strong> ويمتد حتى أذان الفجر عند{' '}
-            <strong>{facts.fajrLabel}</strong>. مدة الليل الكاملة (من المغرب إلى الفجر){' '}
-            {facts.nightDurationLabel}.
-          </p>
-        </article>
-        <article className={routeStyles.contextCard}>
-          <h3 className={routeStyles.contextTitle}>منتصف الليل الشرعي</h3>
-          <p className={routeStyles.contextBody}>
-            نقطة المنتصف بين المغرب (<strong>{facts.maghribLabel}</strong>) والفجر عند{' '}
-            <strong>{facts.islamicMidnightLabel}</strong>.
-          </p>
-        </article>
-      </div>
-      <Link href={`/mwaqit-al-salat/${country.country_slug}/riyadh`} className={routeStyles.contextLink}>
-        مواقيت الصلاة الكاملة في {cityNameAr} ←
-      </Link>
-    </section>
-  );
-}
 
 async function PopularCitiesForNight() {
   const links = await getPopularPrayerCityLinks(24);
@@ -214,16 +154,20 @@ export default async function LastThirdOfNightPage() {
                 </div>
                 <h1 className={routeStyles.heroTitle}>متى الثلث الأخير من الليل؟</h1>
                 <p className={routeStyles.heroLead}>
-                  إذا كان سؤالك المباشر: يبدأ الثلث الأخير من الليل عند تمام ثلثي الفترة بين
-                  أذان المغرب وأذان الفجر، ويمتد حتى دخول الفجر مباشرة. الوقت الدقيق يختلف
-                  يومياً وحسب مدينتك — ابحث عن مدينتك بالأسفل لتوقيتك الآن.
+                  الثلث الأخير من الليل هو آخر جزء من الليل، من تمام ثلثي الفترة بين المغرب
+                  والفجر حتى أذان الفجر مباشرة — وهو وقت التهجد والدعاء المستحب.
                 </p>
               </div>
+
+              <div className={routeStyles.searchWrap}>
+                <LastThirdAutoCard />
+              </div>
+
               <div className={routeStyles.searchWrap}>
                 <div className={`${routeStyles.sectionPanel} ${routeStyles.heroSearchPanel}`} aria-labelledby="night-search-title">
                   <div className={routeStyles.searchPanelHeader}>
-                    <span className={routeStyles.searchPanelKicker}>احسب توقيتك</span>
-                    <h2 id="night-search-title" className={routeStyles.searchPanelTitle}>ابحث عن مدينتك</h2>
+                    <span className={routeStyles.searchPanelKicker}>مدينة مختلفة؟</span>
+                    <h2 id="night-search-title" className={routeStyles.searchPanelTitle}>ابحث عن مدينة أخرى</h2>
                   </div>
                   <div className={routeStyles.searchCommandShell}>
                     <SearchCityWrapper mode="prayer" />
@@ -231,12 +175,6 @@ export default async function LastThirdOfNightPage() {
                 </div>
               </div>
             </div>
-          </section>
-
-          <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
-            <Suspense fallback={null}>
-              <LastThirdReferenceCity />
-            </Suspense>
           </section>
 
           <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>

@@ -7,6 +7,7 @@ import {
   RelatedCalculators,
 } from '@/components/calculators/common.jsx';
 import BahrainHealthInsuranceCalculator from '@/components/calculators/BahrainHealthInsuranceCalculator.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const SLUG = 'health-insurance-bahrain';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;
@@ -127,7 +128,7 @@ export default function HealthInsuranceBahrainPage() {
       <JsonLd data={howToSchema} />
 
       <CalculatorHero
-        badge="🇧🇭 البحرين"
+        badge={<><CountryFlag code="bh" /> البحرين</>}
         title="حاسبة التأمين الصحي البحرين"
         description="قدّر تكلفة تأمينك الصحي التكميلي في البحرين فوق برنامج سيهاتي الإلزامي — للأفراد والعائلات والوافدين — وفق المستوى المطلوب والعمر وعدد الأشخاص. أرقام استرشادية بالدينار البحريني."
         highlights={[

@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 import { getCurrencyOptions } from '@/lib/calculators/currency-options';
 import { VAT_COUNTRIES } from '@/lib/calculators/data';
+import CountryFlag from '@/components/shared/CountryFlag';
 import {
   calculateDiscountAndVat,
   calculateMarginAndVat,
@@ -249,7 +250,7 @@ export default function VatCalculator() {
             <SelectContent>
               {VAT_COUNTRIES.map((item) => (
                 <SelectItem key={item.code} value={item.code}>
-                  {item.flag} {item.name} - {formatPercent(item.rate, 0)}
+                  <CountryFlag code={item.code} /> {item.name} - {formatPercent(item.rate, 0)}
                 </SelectItem>
               ))}
               <SelectItem value="custom">🌍 نسبة مخصصة لأي دولة</SelectItem>
@@ -289,7 +290,7 @@ export default function VatCalculator() {
         ) : null}
 
         <div className="vat-rate-card" aria-live="polite">
-          <span>{country.flag} {country.name}</span>
+          <span>{country.code === 'custom' ? '🌍' : <CountryFlag code={country.code} />} {country.name}</span>
           <strong>{formatPercent(country.rate, 0)}</strong>
           <small>{country.note}</small>
         </div>

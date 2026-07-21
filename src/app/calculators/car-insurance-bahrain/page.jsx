@@ -7,6 +7,7 @@ import {
   RelatedCalculators,
 } from '@/components/calculators/common.jsx';
 import BahrainCarInsuranceCalculator from '@/components/calculators/BahrainCarInsuranceCalculator.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const SLUG = 'car-insurance-bahrain';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;
@@ -122,7 +123,7 @@ export default function CarInsuranceBahrainPage() {
       <JsonLd data={howToSchema} />
 
       <CalculatorHero
-        badge="🇧🇭 البحرين"
+        badge={<><CountryFlag code="bh" /> البحرين</>}
         title="حاسبة تأمين السيارة البحرين"
         description="قدّر قسط تأمين سيارتك في البحرين — ضد الغير أو شامل — مع الحد الأقصى القانوني الرسمي من مصرف البحرين المركزي لتأمين ضد الغير. أرقام بالدينار البحريني (BHD)."
         highlights={[

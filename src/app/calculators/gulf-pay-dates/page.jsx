@@ -9,6 +9,7 @@ import {
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import CountryFlag from '@/components/shared/CountryFlag';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
 import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
@@ -82,7 +83,7 @@ function buildGulfPayRows(nowMs) {
       slug,
       program: core.name,
       country: country?.name || '',
-      flag: country?.flag || '',
+      countryCode: core._countryCode || '',
       authority: meta.authority,
       nextDate,
       daysRemaining,
@@ -210,7 +211,7 @@ export default async function GulfPayDatesPage() {
                 <TableRow key={row.slug}>
                   <TableCell className="font-medium">{row.program}</TableCell>
                   <TableCell>
-                    <span className="me-1">{row.flag}</span>
+                    <span className="me-1"><CountryFlag code={row.countryCode} /></span>
                     {row.country}
                   </TableCell>
                   <TableCell>

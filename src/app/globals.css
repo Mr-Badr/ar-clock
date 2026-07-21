@@ -8,6 +8,17 @@
 @import "./styles/ads.css";
 @import "./styles/editorial-redesign.css";
 
+/* SVG-based country flags (via flag-icons), not Unicode flag emoji — see
+   src/components/shared/CountryFlag.jsx for why. Inline-friendly sizing
+   that scales with the surrounding text's font-size, with a subtle
+   rounded edge + hairline border so it reads as a deliberate flag chip
+   rather than a raw background image. */
+.fi {
+  vertical-align: -0.1em;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--border-default) 70%, transparent);
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

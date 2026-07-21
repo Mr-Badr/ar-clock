@@ -15,6 +15,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 import { VISA_TYPES, calculateIqamaExpiry, getStatusMeta } from '@/lib/calculators/iqama';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const COUNTRIES = [
   { id: 'sa', label: 'السعودية', flag: '🇸🇦', source: 'منصة أبشر (absher.sa)' },
@@ -120,7 +121,7 @@ export default function IqamaCalculator() {
                       onClick={() => handleCountryChange(c.id)}
                       aria-pressed={country === c.id}
                     >
-                      <span className="iqama-country-flag">{c.flag}</span>
+                      <span className="iqama-country-flag"><CountryFlag code={c.id} /></span>
                       <span>{c.label}</span>
                     </button>
                   ))}
@@ -195,7 +196,7 @@ export default function IqamaCalculator() {
               {/* Country + live identity */}
               <div className="calc-esb-result-header">
                 <span className={`calc-esb-country-badge iqama-badge--${country}`}>
-                  {countryData.flag} {countryData.label}
+                  <CountryFlag code={countryData.id} /> {countryData.label}
                 </span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>

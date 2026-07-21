@@ -1,4 +1,5 @@
 import UaeCorporateTaxCalculator from '@/components/calculators/UaeCorporateTaxCalculator.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 import {
   CalculatorFaqSection,
   CalculatorHero,
@@ -68,7 +69,7 @@ export default async function UaeCorporateTaxPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
       <CalculatorHero
-        badge={CONTENT.hero.badge}
+        badge={<><CountryFlag code="ae" /> قانون 47/2022</>}
         title={PAGE.heroTitle}
         description={CONTENT.hero.description}
         highlights={CONTENT.hero.highlights}
@@ -132,14 +133,14 @@ export default async function UaeCorporateTaxPage() {
             </thead>
             <tbody>
               {[
-                ['الإمارات 🇦🇪', '9%',  '375,000 AED',  'سارٍ منذ يونيو 2023'],
-                ['السعودية 🇸🇦', '20%', 'لا يوجد',      'الشركات الأجنبية فقط، الوطنية تخضع لزكاة 2.5%'],
-                ['مصر 🇪🇬',      '22.5%', 'لا يوجد',   'على الأرباح الصافية'],
-                ['المغرب 🇲🇦',   '20-35%', 'لا يوجد',  'تصاعدي حسب الربح'],
-                ['الأردن 🇯🇴',   '20%',  'لا يوجد',    'معدل ثابت للشركات التجارية'],
-              ].map(([c, r, ex, n]) => (
-                <tr key={c} style={c.startsWith('الإمارات') ? { fontWeight: '600', background: 'color-mix(in srgb, var(--green) 6%, transparent)' } : {}}>
-                  <td>{c}</td><td>{r}</td><td>{ex}</td><td>{n}</td>
+                ['ae', 'الإمارات', '9%',  '375,000 AED',  'سارٍ منذ يونيو 2023'],
+                ['sa', 'السعودية', '20%', 'لا يوجد',      'الشركات الأجنبية فقط، الوطنية تخضع لزكاة 2.5%'],
+                ['eg', 'مصر',      '22.5%', 'لا يوجد',   'على الأرباح الصافية'],
+                ['ma', 'المغرب',   '20-35%', 'لا يوجد',  'تصاعدي حسب الربح'],
+                ['jo', 'الأردن',   '20%',  'لا يوجد',    'معدل ثابت للشركات التجارية'],
+              ].map(([code, c, r, ex, n]) => (
+                <tr key={code} style={code === 'ae' ? { fontWeight: '600', background: 'color-mix(in srgb, var(--green) 6%, transparent)' } : {}}>
+                  <td><CountryFlag code={code} /> {c}</td><td>{r}</td><td>{ex}</td><td>{n}</td>
                 </tr>
               ))}
             </tbody>

@@ -6,20 +6,6 @@
  */
 
 /**
- * Converts ISO 3166-1 alpha-2 country code to emoji flag.
- * @param {string} countryCode - e.g. "MA", "SA", "EG"
- * @returns {string} - Emoji flag
- */
-export function getFlagEmoji(countryCode) {
-  if (!countryCode || countryCode.length !== 2) return '🌍';
-  const codePoints = countryCode
-    .toUpperCase()
-    .split('')
-    .map(char => 127397 + char.charCodeAt(0));
-  return String.fromCodePoint(...codePoints);
-}
-
-/**
  * Maps common country codes or aliases to valid IANA timezone names.
  * This handles cases where the database might store "SA" or "QA" instead of a zone.
  */

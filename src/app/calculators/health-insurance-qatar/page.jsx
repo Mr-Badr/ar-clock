@@ -7,6 +7,7 @@ import {
   RelatedCalculators,
 } from '@/components/calculators/common.jsx';
 import QatarHealthInsuranceCalculator from '@/components/calculators/QatarHealthInsuranceCalculator.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const SLUG = 'health-insurance-qatar';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;
@@ -127,7 +128,7 @@ export default function HealthInsuranceQatarPage() {
       <JsonLd data={howToSchema} />
 
       <CalculatorHero
-        badge="🇶🇦 قطر"
+        badge={<><CountryFlag code="qa" /> قطر</>}
         title="حاسبة التأمين الصحي قطر"
         description="قدّر تكلفة تأمينك الصحي في قطر — للأفراد والعائلات والوافدين — وفق المستوى المطلوب والعمر وعدد الأشخاص. أرقام استرشادية بالريال القطري."
         highlights={[

@@ -7,6 +7,7 @@ import { CalcInput } from '@/components/calculators/controls.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
 import { Label } from '@/components/ui/label';
 import { calculateNetSalary, formatSAR, GOSI_RATES, GOSI_WAGE_CEILING } from '@/lib/calculators/net-salary';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const NATIONALITY_OPTIONS = [
   { id: 'saudi', label: 'سعودي' },
@@ -141,7 +142,7 @@ export default function NetSalaryCalculator() {
           {result?.isValid && (
             <div className="calc-esb-result-panel net-salary-result" aria-live="polite">
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--sa">🇸🇦 السعودية · GOSI</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--sa"><CountryFlag code="sa" /> السعودية · GOSI</span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 

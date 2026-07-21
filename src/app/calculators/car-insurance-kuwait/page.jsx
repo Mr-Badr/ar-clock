@@ -7,6 +7,7 @@ import {
   RelatedCalculators,
 } from '@/components/calculators/common.jsx';
 import KuwaitCarInsuranceCalculator from '@/components/calculators/KuwaitCarInsuranceCalculator.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const SLUG = 'car-insurance-kuwait';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;
@@ -127,7 +128,7 @@ export default function CarInsuranceKuwaitPage() {
       <JsonLd data={howToSchema} />
 
       <CalculatorHero
-        badge="🇰🇼 الكويت"
+        badge={<><CountryFlag code="kw" /> الكويت</>}
         title="حاسبة تأمين السيارة الكويت"
         description="قدّر قسط تأمين سيارتك في الكويت — ضد الغير أو شامل — حسب عمر السائق والمحافظة وسنوات الخلو من المطالبات. أرقام بالدينار الكويتي (KWD)."
         highlights={[

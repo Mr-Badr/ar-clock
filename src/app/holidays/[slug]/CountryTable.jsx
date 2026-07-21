@@ -3,6 +3,8 @@
  * Shows dates for different countries with calendar method info
  */
 
+import CountryFlag from '@/components/shared/CountryFlag';
+
 export default function CountryTable({ title, event, countryDates }) {
   if (!countryDates?.length) return null;
   const displayTitle = title || event.name;
@@ -24,7 +26,7 @@ export default function CountryTable({ title, event, countryDates }) {
           <tbody>
             {countryDates.map((row, i) => (
               <tr key={row.code} style={{ background: i % 2 === 0 ? 'var(--bg-surface-2)' : 'var(--bg-surface-3)', borderBottom: '1px solid var(--border-subtle)' }}>
-                <td style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-sm)', fontWeight: 'var(--font-medium)', color: 'var(--text-primary)' }}>{row.flag} {row.country}</td>
+                <td style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-sm)', fontWeight: 'var(--font-medium)', color: 'var(--text-primary)' }}><CountryFlag code={row.code} /> {row.country}</td>
                 <td style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-primary)', fontVariantNumeric: 'tabular-nums' }}>{row.date}</td>
                 <td style={{ padding: 'var(--space-3) var(--space-4)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{row.note}</td>
               </tr>

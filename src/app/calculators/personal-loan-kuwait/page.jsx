@@ -7,6 +7,7 @@ import {
   RelatedCalculators,
 } from '@/components/calculators/common.jsx';
 import KuwaitPersonalLoanCalculator from '@/components/calculators/KuwaitPersonalLoanCalculator.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const SLUG = 'personal-loan-kuwait';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;
@@ -126,7 +127,7 @@ export default function PersonalLoanKuwaitPage() {
       <JsonLd data={howToSchema} />
 
       <CalculatorHero
-        badge="🇰🇼 الكويت"
+        badge={<><CountryFlag code="kw" /> الكويت</>}
         title="حاسبة القرض الشخصي الكويت"
         description="احسب قسطك الشهري أو اعرف أقصى مبلغ تستطيع اقتراضه في الكويت وفق حدود بنك الكويت المركزي (CBK). يحسب DBR تلقائياً بحسب جنسيتك. بالدينار الكويتي."
         highlights={[
@@ -170,10 +171,10 @@ export default function PersonalLoanKuwaitPage() {
               <tr><th>الدولة</th><th>الجهة التنظيمية</th><th>حد DBR</th><th>الحد الأقصى للقرض</th></tr>
             </thead>
             <tbody>
-              <tr><td>🇰🇼 الكويت</td><td>CBK</td><td>40% (مواطن) / 30% (وافد)</td><td>70,000 / 15,000 د.ك</td></tr>
-              <tr><td>🇦🇪 الإمارات</td><td>CBUAE</td><td>50% للجميع</td><td>250,000 درهم (غير مضمون)</td></tr>
-              <tr><td>🇸🇦 السعودية</td><td>ساما</td><td>33% للجميع</td><td>60× الراتب الشهري</td></tr>
-              <tr><td>🇶🇦 قطر</td><td>QCB</td><td>~50% للجميع</td><td>حسب تقدير البنك</td></tr>
+              <tr><td><CountryFlag code="kw" /> الكويت</td><td>CBK</td><td>40% (مواطن) / 30% (وافد)</td><td>70,000 / 15,000 د.ك</td></tr>
+              <tr><td><CountryFlag code="ae" /> الإمارات</td><td>CBUAE</td><td>50% للجميع</td><td>250,000 درهم (غير مضمون)</td></tr>
+              <tr><td><CountryFlag code="sa" /> السعودية</td><td>ساما</td><td>33% للجميع</td><td>60× الراتب الشهري</td></tr>
+              <tr><td><CountryFlag code="qa" /> قطر</td><td>QCB</td><td>~50% للجميع</td><td>حسب تقدير البنك</td></tr>
             </tbody>
           </table>
 

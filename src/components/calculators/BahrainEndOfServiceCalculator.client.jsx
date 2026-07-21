@@ -19,6 +19,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
+import CountryFlag from '@/components/shared/CountryFlag';
 import {
   buildBahrainEndOfServiceComparison,
   buildBahrainEndOfServiceMilestones,
@@ -158,7 +159,7 @@ export default function BahrainEndOfServiceCalculator({ initialStartDate, initia
 
               {/* Country header */}
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--bh">🇧🇭 البحرين</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--bh"><CountryFlag code="bh" /> البحرين</span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 

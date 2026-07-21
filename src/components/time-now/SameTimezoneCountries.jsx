@@ -4,13 +4,8 @@
  * Targets: "الدول في نفس التوقيت" keyword cluster + internal linking.
  */
 import Link from 'next/link';
+import CountryFlag from '@/components/shared/CountryFlag';
 import styles from './TimeNowSupportSections.module.css';
-
-function flagEmoji(cc) {
-  if (!cc || cc.length !== 2) return '';
-  return String.fromCodePoint(0x1F1E6 - 65 + cc.charCodeAt(0)) +
-         String.fromCodePoint(0x1F1E6 - 65 + cc.charCodeAt(1));
-}
 
 function isValidCountry(country) {
   return Boolean(
@@ -50,7 +45,7 @@ export function SameTimezoneCountries({ countries, utcOffset, currentCityAr }) {
             className={styles.countryCard}
             aria-label={`الوقت في ${c.country_name_ar || c.country_name_en}`}
           >
-            <span className={styles.flag} aria-hidden>{flagEmoji(c.country_code)}</span>
+            <CountryFlag code={c.country_code} className={styles.flag} />
             <span className={styles.countryLabel}>{c.country_name_ar || c.country_name_en}</span>
           </Link>
         ))}

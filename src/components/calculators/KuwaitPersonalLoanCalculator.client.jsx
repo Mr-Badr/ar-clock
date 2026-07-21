@@ -15,6 +15,7 @@ import ResultActions from '@/components/calculators/ResultActions.client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 function fmt(n, d = 0) { return Number(n).toLocaleString('ar-KW-u-nu-latn', { minimumFractionDigits: d, maximumFractionDigits: d }); }
 
@@ -247,7 +248,7 @@ export default function KuwaitPersonalLoanCalculator() {
           {isInstallment && r?.isValid && (
             <div className="calc-esb-result-panel" aria-live="polite">
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--kw">🇰🇼 الكويت</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--kw"><CountryFlag code="kw" /> الكويت</span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 
@@ -314,7 +315,7 @@ export default function KuwaitPersonalLoanCalculator() {
           {!isInstallment && a?.isValid && (
             <div className="calc-esb-result-panel" aria-live="polite">
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--kw">🇰🇼 الكويت</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--kw"><CountryFlag code="kw" /> الكويت</span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 

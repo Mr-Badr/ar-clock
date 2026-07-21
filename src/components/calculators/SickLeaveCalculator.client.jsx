@@ -6,6 +6,7 @@ import { CalendarBlank, FirstAidKit, Info, Wallet } from '@phosphor-icons/react'
 import { CalcInput as Input } from '@/components/calculators/controls.client';
 import CalculatorCurrencyField, { usePreferredCurrency } from '@/components/calculators/CurrencyField.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 import { Label } from '@/components/ui/label';
 import { calculateSickLeavePay, formatCurrency, formatNumber } from '@/lib/calculators/engine';
 
@@ -88,7 +89,7 @@ export default function SickLeaveCalculator() {
             <div className="calc-esb-result-panel sick-leave-result" aria-live="polite">
               <div className="calc-esb-result-header">
                 <span className="calc-esb-country-badge calc-esb-country-badge--sa">
-                  🇸🇦 نظام العمل السعودي — المادة 117
+                  <CountryFlag code="sa" /> نظام العمل السعودي — المادة 117
                 </span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>

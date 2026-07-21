@@ -7,6 +7,7 @@ import { CalcInput as Input } from '@/components/calculators/controls.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
+import CountryFlag from '@/components/shared/CountryFlag';
 import {
   calculateEgyptSocialInsurance,
   formatCurrency,
@@ -87,7 +88,7 @@ export default function EgyptSocialInsuranceCalculator() {
             <div className="calc-esb-result-panel" aria-live="polite">
 
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--eg">🇪🇬 مصر</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--eg"><CountryFlag code="eg" /> مصر</span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 

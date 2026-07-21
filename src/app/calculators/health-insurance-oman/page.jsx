@@ -7,6 +7,7 @@ import {
   RelatedCalculators,
 } from '@/components/calculators/common.jsx';
 import OmanHealthInsuranceCalculator from '@/components/calculators/OmanHealthInsuranceCalculator.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const SLUG = 'health-insurance-oman';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;
@@ -127,7 +128,7 @@ export default function HealthInsuranceOmanPage() {
       <JsonLd data={howToSchema} />
 
       <CalculatorHero
-        badge="🇴🇲 عُمان"
+        badge={<><CountryFlag code="om" /> عُمان</>}
         title="حاسبة التأمين الصحي عُمان"
         description="قدّر تكلفة تأمينك الصحي التكميلي في عُمان فوق التأمين الإلزامي (القرار الوزاري 76/2019) — للأفراد والعائلات والوافدين — وفق المستوى المطلوب والعمر وعدد الأشخاص. أرقام استرشادية بالريال العُماني."
         highlights={[

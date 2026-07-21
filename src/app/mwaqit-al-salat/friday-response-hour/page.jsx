@@ -8,15 +8,12 @@ import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
 import SearchCityWrapper from '@/components/SearchCityWrapper.client';
+import FridayResponseAutoCard from '@/components/mwaqit/FridayResponseAutoCard.client';
 import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import { JsonLd } from '@/components/seo/JsonLd';
 import routeStyles from '@/app/mwaqit-al-salat/PrayerRoutePage.module.css';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
-import { getCachedNowIso } from '@/lib/date-utils';
-import { getCityBySlug } from '@/lib/db/queries/cities';
-import { getCountryBySlug } from '@/lib/db/queries/countries';
-import { getFridayResponseHourFacts } from '@/lib/night-prayer-facts';
 import { getPopularPrayerCityLinks } from '@/lib/seo/popular-links';
 
 const BASE = getSiteUrl();
@@ -75,56 +72,6 @@ const FAQS = [
     a: 'يبقى للجمعة كلها فضل عظيم بالدعاء والذكر وقراءة سورة الكهف، وتتكرر ساعة الاستجابة كل أسبوع، فاضبط تذكيراً قبل أذان المغرب بساعة في الجمعة القادمة.',
   },
 ];
-
-async function FridayReferenceCity() {
-  const [country, nowIso] = await Promise.all([
-    getCountryBySlug('saudi-arabia'),
-    getCachedNowIso(),
-  ]);
-  if (!country) return null;
-
-  const city = await getCityBySlug(country.country_code, 'riyadh');
-  if (!city) return null;
-
-  const now = new Date(nowIso);
-  const facts = getFridayResponseHourFacts({
-    lat: city.lat,
-    lon: city.lon,
-    timezone: city.timezone,
-    date: now,
-    countryCode: country.country_code,
-    cacheKey: 'saudi-arabia::riyadh::friday-pillar',
-  });
-
-  if (!facts) return null;
-
-  const cityNameAr = city.name_ar || city.name_en;
-
-  return (
-    <section className={routeStyles.sectionPanel} aria-label={`مثال حي: ساعة الاستجابة في ${cityNameAr}`}>
-      <div className={routeStyles.sectionHead}>
-        <h2 className={routeStyles.sectionTitle}>مثال حي الآن: {cityNameAr}</h2>
-        <p className={routeStyles.sectionCopy}>
-          هذا مثال مباشر بمدينة {cityNameAr}. ابحث عن مدينتك في الأعلى للحصول على توقيتك الدقيق أنت.
-        </p>
-      </div>
-      <div className={routeStyles.contextGrid}>
-        <article className={routeStyles.contextCard}>
-          <h3 className={routeStyles.contextTitle}>
-            {facts.isLiveNow ? 'الساعة جارية الآن' : facts.isFridayToday ? 'اليوم جمعة' : 'الجمعة القادمة'}
-          </h3>
-          <p className={routeStyles.contextBody}>
-            تبدأ الساعة الأخيرة عند <strong>{facts.responseHourStartLabel}</strong> وتنتهي بأذان
-            المغرب عند <strong>{facts.fridayMaghribLabel}</strong>.
-          </p>
-        </article>
-      </div>
-      <Link href={`/mwaqit-al-salat/${country.country_slug}/riyadh`} className={routeStyles.contextLink}>
-        مواقيت الصلاة الكاملة في {cityNameAr} ←
-      </Link>
-    </section>
-  );
-}
 
 async function PopularCitiesForFriday() {
   const links = await getPopularPrayerCityLinks(24);
@@ -202,16 +149,20 @@ export default async function FridayResponseHourPage() {
                 </div>
                 <h1 className={routeStyles.heroTitle}>متى ساعة الاستجابة يوم الجمعة؟</h1>
                 <p className={routeStyles.heroLead}>
-                  إذا كان سؤالك المباشر: على الرأي الراجح، تبدأ ساعة الاستجابة آخر ساعة قبل أذان
-                  المغرب يوم الجمعة وتنتهي معه. الوقت الدقيق يختلف حسب مدينتك — ابحث عن مدينتك
-                  بالأسفل لتوقيتك الآن.
+                  على الرأي الراجح، تبدأ ساعة الاستجابة آخر ساعة قبل أذان المغرب يوم الجمعة
+                  وتنتهي معه.
                 </p>
               </div>
+
+              <div className={routeStyles.searchWrap}>
+                <FridayResponseAutoCard />
+              </div>
+
               <div className={routeStyles.searchWrap}>
                 <div className={`${routeStyles.sectionPanel} ${routeStyles.heroSearchPanel}`} aria-labelledby="friday-search-title">
                   <div className={routeStyles.searchPanelHeader}>
-                    <span className={routeStyles.searchPanelKicker}>احسب توقيتك</span>
-                    <h2 id="friday-search-title" className={routeStyles.searchPanelTitle}>ابحث عن مدينتك</h2>
+                    <span className={routeStyles.searchPanelKicker}>مدينة مختلفة؟</span>
+                    <h2 id="friday-search-title" className={routeStyles.searchPanelTitle}>ابحث عن مدينة أخرى</h2>
                   </div>
                   <div className={routeStyles.searchCommandShell}>
                     <SearchCityWrapper mode="prayer" />
@@ -219,12 +170,6 @@ export default async function FridayResponseHourPage() {
                 </div>
               </div>
             </div>
-          </section>
-
-          <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
-            <Suspense fallback={null}>
-              <FridayReferenceCity />
-            </Suspense>
           </section>
 
           <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>

@@ -15,6 +15,7 @@ import ResultActions from '@/components/calculators/ResultActions.client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 function fmt(n) { return Math.round(n).toLocaleString('ar-QA-u-nu-latn'); }
 
@@ -175,7 +176,7 @@ export default function QatarHealthInsuranceCalculator() {
             <div className="calc-esb-result-panel" aria-live="polite">
 
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--qa">🇶🇦 قطر</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--qa"><CountryFlag code="qa" /> قطر</span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 

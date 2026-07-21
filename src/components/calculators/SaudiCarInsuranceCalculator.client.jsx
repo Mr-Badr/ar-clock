@@ -18,6 +18,7 @@ import ResultActions from '@/components/calculators/ResultActions.client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const CAR_AGE_OPTIONS = [
   { value: 'new',  label: 'جديدة (سنة أو أقل)' },
@@ -184,7 +185,7 @@ export default function SaudiCarInsuranceCalculator() {
             <div className="calc-esb-result-panel" aria-live="polite">
 
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--sa">🇸🇦 السعودية</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--sa"><CountryFlag code="sa" /> السعودية</span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 

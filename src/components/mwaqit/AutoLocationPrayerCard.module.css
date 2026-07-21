@@ -1,0 +1,245 @@
+/* Shared shell for the auto-detected "your city, right now" hero card used
+   across all /mwaqit-al-salat special pages (last-third-of-night, duha,
+   friday-response-hour, prohibited-prayer-times). One visual language, one
+   file, so a change here stays consistent everywhere it's used. */
+
+.card {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-6);
+  border: 1px solid color-mix(in srgb, var(--border-default) 82%, transparent);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface-1);
+  box-shadow: 0 24px 48px -32px color-mix(in srgb, var(--shadow-color) 40%, transparent);
+  display: grid;
+  gap: var(--space-4);
+  text-align: center;
+  justify-items: center;
+}
+
+@media (min-width: 640px) {
+  .card { padding: var(--space-8); }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.location :global(.fi) { font-size: 1.05rem; }
+
+.autoBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 2px 9px;
+  border-radius: var(--radius-full);
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+  font-size: 0.66rem;
+  font-weight: var(--font-bold);
+}
+
+.changeLink {
+  margin-inline-start: auto;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: var(--font-semibold);
+  text-decoration: none;
+  padding: 6px 4px;
+}
+
+.changeLink:hover { color: var(--accent-alt); text-decoration: underline; }
+
+.valueLabel {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: var(--font-semibold);
+}
+
+.value {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(2.5rem, 10vw, 4rem);
+  font-weight: var(--font-black);
+  line-height: 1;
+  direction: ltr;
+  font-variant-numeric: tabular-nums;
+}
+
+.valueUnit {
+  margin-top: calc(-1 * var(--space-2));
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: var(--font-semibold);
+}
+
+.valueSub {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  max-width: 46ch;
+}
+
+.livePill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: var(--font-bold);
+}
+
+.livePill--active {
+  background: var(--green-subtle);
+  color: var(--green-text);
+}
+
+.livePill--warning {
+  background: var(--red-subtle);
+  color: var(--red-text);
+}
+
+.livePill--upcoming {
+  background: var(--bg-surface-2);
+  color: var(--text-secondary);
+}
+
+.liveDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .livePill--active .liveDot,
+  .livePill--warning .liveDot {
+    animation: alp-pulse 1.8s ease-in-out infinite;
+  }
+}
+
+@keyframes alp-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* Compact "3 windows today" breakdown — only used by the prohibited-times
+   card, which (unlike the other single-window pages) needs to show all
+   three windows, not just one big value. */
+.windowsList {
+  display: grid;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 420px;
+  text-align: start;
+}
+
+.windowRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-2);
+  font-size: 0.82rem;
+}
+
+.windowRow--active {
+  background: var(--red-subtle);
+  color: var(--red-text);
+  font-weight: var(--font-bold);
+}
+
+.windowRowTitle {
+  color: inherit;
+}
+
+.windowRowTime {
+  direction: ltr;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.windowRow--active .windowRowTime { color: inherit; opacity: 0.85; }
+
+.footerLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--accent-alt);
+  font-size: 0.85rem;
+  font-weight: var(--font-bold);
+  text-decoration: none;
+}
+
+.footerLink:hover { text-decoration: underline; }
+
+/* ── Skeleton (loading) — same footprint as the ready card, no layout shift ── */
+.skeleton {
+  padding: var(--space-8);
+  border: 1px solid color-mix(in srgb, var(--border-default) 82%, transparent);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface-1);
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+}
+
+.skeletonHeader,
+.skeletonValue,
+.skeletonLine {
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--bg-surface-3) 60%, transparent);
+}
+
+.skeletonHeader { width: 140px; height: 20px; }
+.skeletonValue { width: 220px; height: 64px; border-radius: var(--radius-lg); }
+.skeletonLine { width: 260px; height: 14px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .skeletonHeader,
+  .skeletonValue,
+  .skeletonLine {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skeletonHeader::after,
+  .skeletonValue::after,
+  .skeletonLine::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      100deg,
+      transparent 0%,
+      color-mix(in srgb, var(--bg-surface-3) 70%, transparent) 45%,
+      transparent 72%
+    );
+    transform: translateX(42%);
+    animation: alp-sheen 1.8s ease-in-out infinite;
+  }
+}
+
+@keyframes alp-sheen {
+  0% { transform: translateX(-60%); }
+  100% { transform: translateX(160%); }
+}

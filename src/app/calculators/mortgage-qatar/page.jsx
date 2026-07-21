@@ -1,4 +1,5 @@
 import QatarMortgageCalculator from '@/components/calculators/QatarMortgageCalculator.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 import {
   CalculatorFaqSection,
   CalculatorHero,
@@ -104,11 +105,11 @@ export default async function MortgageQatarPage() {
             </thead>
             <tbody>
               {[
-                ['🇶🇦 قطري',       '80% / 30 سنة', '75% / 30 سنة', '75% / 25 سنة', '60% / 20 سنة', '75%'],
-                ['👤 مقيم وافد',   '75% / 25 سنة', '70% / 25 سنة', '70% / 25 سنة', '50% / 15 سنة', '50%'],
-                ['🌍 غير مقيم',    '60% / 20 سنة', '60% / 20 سنة', '60% / 20 سنة', '50% / 15 سنة', '50%'],
-              ].map(([t, r1, r2, r3, uc, dbr]) => (
-                <tr key={t}>
+                [<><CountryFlag code="qa" /> قطري</>, '80% / 30 سنة', '75% / 30 سنة', '75% / 25 سنة', '60% / 20 سنة', '75%', 'qatari'],
+                ['👤 مقيم وافد',   '75% / 25 سنة', '70% / 25 سنة', '70% / 25 سنة', '50% / 15 سنة', '50%', 'resident'],
+                ['🌍 غير مقيم',    '60% / 20 سنة', '60% / 20 سنة', '60% / 20 سنة', '50% / 15 سنة', '50%', 'non-resident'],
+              ].map(([t, r1, r2, r3, uc, dbr, key]) => (
+                <tr key={key}>
                   <td><strong>{t}</strong></td>
                   <td>{r1}</td>
                   <td>{r2}</td>
@@ -151,14 +152,14 @@ export default async function MortgageQatarPage() {
             </thead>
             <tbody>
               {[
-                ['🇶🇦 قطر',    '80%',  '30 سنة', '75% قطري · 50% وافد', 'نعم (QCB 2023)'],
-                ['🇸🇦 السعودية', '90%', '30 سنة', '33% (45% بدعم)',       'نعم (ساما)'],
-                ['🇦🇪 الإمارات', '80%', '25 سنة', '50%',                  'نعم (CBUAE)'],
-                ['🇰🇼 الكويت',  'لا ينطبق', '15 سنة', '40%',              'لا (قروض راتبية)'],
-                ['🇧🇭 البحرين', 'يحدده البنك', '25 سنة', '50%',           'نعم (CBB)'],
-              ].map(([c, ltv, term, dbr, law]) => (
-                <tr key={c}>
-                  <td><strong>{c}</strong></td>
+                ['qa', 'قطر',    '80%',  '30 سنة', '75% قطري · 50% وافد', 'نعم (QCB 2023)'],
+                ['sa', 'السعودية', '90%', '30 سنة', '33% (45% بدعم)',       'نعم (ساما)'],
+                ['ae', 'الإمارات', '80%', '25 سنة', '50%',                  'نعم (CBUAE)'],
+                ['kw', 'الكويت',  'لا ينطبق', '15 سنة', '40%',              'لا (قروض راتبية)'],
+                ['bh', 'البحرين', 'يحدده البنك', '25 سنة', '50%',           'نعم (CBB)'],
+              ].map(([code, c, ltv, term, dbr, law]) => (
+                <tr key={code}>
+                  <td><strong><CountryFlag code={code} /> {c}</strong></td>
                   <td>{ltv}</td>
                   <td>{term}</td>
                   <td>{dbr}</td>

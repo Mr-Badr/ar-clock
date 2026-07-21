@@ -6,6 +6,7 @@ import { CalendarBlank, CalendarCheck, CurrencyDollar, Info } from '@phosphor-ic
 import { CalcInput as Input } from '@/components/calculators/controls.client';
 import CalculatorCurrencyField, { usePreferredCurrency } from '@/components/calculators/CurrencyField.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 import { Label } from '@/components/ui/label';
 import {
   ANNUAL_LEAVE_COUNTRIES,
@@ -68,7 +69,7 @@ export default function AnnualLeaveCalculator() {
                       className={`leave-country-btn${country === code ? ' is-active' : ''}`}
                       onClick={() => handleCountryChange(code)}
                     >
-                      <span className="leave-flag">{c.flag}</span>
+                      <span className="leave-flag"><CountryFlag code={code} /></span>
                       <span>{c.label}</span>
                     </button>
                   ))}
@@ -147,7 +148,7 @@ export default function AnnualLeaveCalculator() {
             <div className="calc-esb-result-panel annual-leave-result" aria-live="polite">
               <div className="calc-esb-result-header">
                 <span className={`calc-esb-country-badge calc-esb-country-badge--${country}`}>
-                  {ANNUAL_LEAVE_COUNTRIES[country]?.flag} {ANNUAL_LEAVE_COUNTRIES[country]?.label}
+                  <CountryFlag code={country} /> {ANNUAL_LEAVE_COUNTRIES[country]?.label}
                 </span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>

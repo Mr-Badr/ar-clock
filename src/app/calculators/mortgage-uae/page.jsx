@@ -7,6 +7,7 @@ import {
   RelatedCalculators,
 } from '@/components/calculators/common.jsx';
 import UaeMortgageCalculator from '@/components/calculators/UaeMortgageCalculator.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const SLUG = 'mortgage-uae';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;
@@ -127,7 +128,7 @@ export default function MortgageUaePage() {
       <JsonLd data={howToSchema} />
 
       <CalculatorHero
-        badge="🇦🇪 الإمارات"
+        badge={<><CountryFlag code="ae" /> الإمارات</>}
         title="حاسبة التمويل العقاري الإمارات"
         description="احسب قسطك الشهري أو اعرف كم يعطيك البنك بناءً على راتبك — مع LTV وDBR الإماراتي ومقارنة تأثير الفائدة. لدبي وأبوظبي والشارقة وسائر الإمارات."
         highlights={[

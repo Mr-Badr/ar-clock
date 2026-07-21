@@ -1,17 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import {
-  LayoutGrid,
-  Moon,
-  Flag,
-  GraduationCap,
-  Palmtree,
-  Globe,
-  Briefcase,
-  Search,
-  History,
-} from 'lucide-react';
+import { Search, History } from 'lucide-react';
+import CountryFlag from '@/components/shared/CountryFlag';
+import { CATEGORY_ICON_COMPONENTS } from './category-icons';
 import {
   Select,
   SelectContent,
@@ -23,16 +15,6 @@ import {
   pushDiscoveryHistory,
   readDiscoveryHistory,
 } from '@/lib/site/discovery-history';
-
-const CATEGORY_ICON_COMPONENTS = {
-  all: LayoutGrid,
-  islamic: Moon,
-  national: Flag,
-  school: GraduationCap,
-  holidays: Palmtree,
-  astronomy: Globe,
-  business: Briefcase,
-};
 
 const RECENT_SEARCHES_KEY = 'miqatona:holidays:recent-searches';
 
@@ -83,12 +65,10 @@ export default function HolidaysFiltersPanel({
   return (
     <div className="waqt-panel">
       <div className="waqt-panel__search" ref={searchWrapRef}>
-        <p className="waqt-panel__label" style={{ marginBottom: '0.45rem' }}>
-          ابدأ باسم المناسبة أو الدولة أو نوع الموعد
-        </p>
+        <Search className="waqt-panel__search-icon" size={18} strokeWidth={2} aria-hidden />
         <input
           id="ev-search"
-          type="search"
+          type="text"
           className="waqt-panel__search-input"
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}
@@ -97,11 +77,21 @@ export default function HolidaysFiltersPanel({
           onKeyDown={(event) => {
             if (event.key === 'Enter') commitSearchToHistory(event.currentTarget.value);
           }}
-          placeholder="مثل: رمضان، عيد الأضحى، السعودية، راتب، مدرسة"
+          placeholder="ابحث: رمضان، عيد الأضحى، السعودية، راتب، مدرسة…"
           aria-label="البحث في المناسبات"
           autoComplete="off"
         />
-        <Search className="waqt-panel__search-icon" size={16} strokeWidth={1.8} aria-hidden />
+        {search ? (
+          <button
+            type="button"
+            className="waqt-panel__search-clear"
+            aria-label="مسح البحث"
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={() => onSearchChange('')}
+          >
+            ✕
+          </button>
+        ) : null}
 
         {showRecentSearches ? (
           <div className="waqt-recent-searches" role="listbox" aria-label="عمليات بحث سابقة">
@@ -127,18 +117,7 @@ export default function HolidaysFiltersPanel({
               ))}
             </div>
           </div>
-        ) : (
-          <p
-            style={{
-              marginTop: '0.55rem',
-              color: 'var(--text-muted)',
-              fontSize: '0.78rem',
-              lineHeight: 1.7,
-            }}
-          >
-            لا تحتاج إلى كتابة الاسم كاملاً. اختر الدولة أولاً إذا أردت نتائج محلية، ثم اكتب كلمة مثل “رمضان” أو “مدرسة”.
-          </p>
-        )}
+        ) : null}
       </div>
 
       <div className="waqt-panel__divider" />
@@ -158,18 +137,12 @@ export default function HolidaysFiltersPanel({
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => onCategoryChange(option.id)}
-                className={`waqt-cat-cell ${isActive ? 'waqt-cat-cell--active' : ''} ${isEmpty ? 'waqt-cat-cell--empty' : ''}`}
+                className={`waqt-cat-cell waqt-cat-cell--${option.id} ${isActive ? 'waqt-cat-cell--active' : ''} ${isEmpty ? 'waqt-cat-cell--empty' : ''}`}
               >
-                <Icon
-                  className="waqt-cat-cell__icon"
-                  size={20}
-                  strokeWidth={isActive ? 2.5 : 1.8}
-                  aria-hidden
-                />
-                <span className="waqt-cat-cell__label">
-                  {option.label}
-                  {Number.isFinite(count) ? <span className="waqt-cat-cell__count">{count}</span> : null}
+                <span className="waqt-cat-cell__icon" aria-hidden>
+                  <Icon size={19} strokeWidth={isActive ? 2.4 : 1.9} />
                 </span>
+                <span className="waqt-cat-cell__label">{option.label}</span>
               </button>
             );
           })}
@@ -198,9 +171,8 @@ export default function HolidaysFiltersPanel({
                 onClick={() => onCountryChange(option.value)}
                 className={`waqt-pill flex-shrink-0 ${isActive ? 'waqt-pill--active' : ''} ${isEmpty ? 'waqt-pill--empty' : ''}`}
               >
-                {option.flag && <span className="waqt-pill__flag" aria-hidden>{option.flag}</span>}
+                {option.value !== 'all' && <CountryFlag code={option.value} className="waqt-pill__flag" />}
                 <span>{option.label}</span>
-                {Number.isFinite(count) ? <span className="waqt-pill__count">{count}</span> : null}
               </button>
             );
           })}

@@ -10,6 +10,7 @@ import { CalcInput as Input } from '@/components/calculators/controls.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 function fmt(n, dec = 2) {
   return n.toLocaleString('ar-EG-u-nu-latn', { minimumFractionDigits: dec, maximumFractionDigits: dec });
@@ -92,7 +93,7 @@ export default function EgyptElectricityBillCalculator() {
             <div className="calc-esb-result-panel" aria-live="polite">
 
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--eg">🇪🇬 مصر</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--eg"><CountryFlag code="eg" /> مصر</span>
                 {cat && (
                   <span className="eg-elec-cat" style={{ color: cat.color }}>{cat.label}</span>
                 )}

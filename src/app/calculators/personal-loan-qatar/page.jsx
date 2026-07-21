@@ -7,6 +7,7 @@ import {
   RelatedCalculators,
 } from '@/components/calculators/common.jsx';
 import QatarPersonalLoanCalculator from '@/components/calculators/QatarPersonalLoanCalculator.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const SLUG = 'personal-loan-qatar';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;
@@ -126,7 +127,7 @@ export default function PersonalLoanQatarPage() {
       <JsonLd data={howToSchema} />
 
       <CalculatorHero
-        badge="🇶🇦 قطر"
+        badge={<><CountryFlag code="qa" /> قطر</>}
         title="حاسبة القرض الشخصي قطر"
         description="احسب قسطك الشهري أو أقصى مبلغ تستطيع اقتراضه في قطر وفق حدود مصرف قطر المركزي (QCB). يحسب DBR 50% تلقائياً مع مقارنة الوافد والقطري."
         highlights={[
@@ -171,10 +172,10 @@ export default function PersonalLoanQatarPage() {
               <tr><th>الدولة</th><th>الجهة</th><th>DBR</th><th>الحد (مواطن)</th><th>الحد (وافد)</th></tr>
             </thead>
             <tbody>
-              <tr><td>🇶🇦 قطر</td><td>QCB</td><td>50%</td><td>2,000,000 ريال / 10 سنوات</td><td>400,000 ريال / 4 سنوات</td></tr>
-              <tr><td>🇦🇪 الإمارات</td><td>CBUAE</td><td>50%</td><td>—</td><td>250,000 درهم / 7 سنوات</td></tr>
-              <tr><td>🇰🇼 الكويت</td><td>CBK</td><td>40%</td><td>70,000 دينار / 5 سنوات</td><td>15,000 دينار / 5 سنوات</td></tr>
-              <tr><td>🇸🇦 السعودية</td><td>ساما</td><td>33%</td><td>60× الراتب / 5 سنوات</td><td>نفس الشروط</td></tr>
+              <tr><td><CountryFlag code="qa" /> قطر</td><td>QCB</td><td>50%</td><td>2,000,000 ريال / 10 سنوات</td><td>400,000 ريال / 4 سنوات</td></tr>
+              <tr><td><CountryFlag code="ae" /> الإمارات</td><td>CBUAE</td><td>50%</td><td>—</td><td>250,000 درهم / 7 سنوات</td></tr>
+              <tr><td><CountryFlag code="kw" /> الكويت</td><td>CBK</td><td>40%</td><td>70,000 دينار / 5 سنوات</td><td>15,000 دينار / 5 سنوات</td></tr>
+              <tr><td><CountryFlag code="sa" /> السعودية</td><td>ساما</td><td>33%</td><td>60× الراتب / 5 سنوات</td><td>نفس الشروط</td></tr>
             </tbody>
           </table>
 

@@ -52,9 +52,16 @@
 
 /* ── GRID ─────────────────────────────────────────────────────────────────── */
 
+/* auto-fit + a stretching 1fr max (not a fixed px cap) so columns always
+   fill the available content width evenly instead of leaving dead trailing
+   space. The old fixed 320px cap needed >=1000px to fit 3 columns, but the
+   real content column next to the ad sidebar rails is 900-1072px in
+   production (ads are disabled in local dev, which hid this bug there) —
+   it was silently falling back to 2 columns with ~250-290px unused on
+   laptop/wide-desktop. minmax(260px, 1fr) fits 3 columns down to 900px. */
 .waqt-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 320px));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: var(--space-5);
   align-items: stretch;
   justify-content: start;
@@ -525,7 +532,10 @@
 
 .waqt-panel__row--align { min-height: 34px; align-items: center; }
 
-/* Search */
+/* Search — icon + input + inline clear button, no instructional copy around
+   it. The placeholder itself demonstrates the search pattern (example
+   terms), so the design teaches by example instead of telling the user
+   what to do in a sentence. */
 .waqt-panel__search { position: relative; }
 
 .waqt-panel__search-input {
@@ -534,34 +544,62 @@
   color: var(--text-primary);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  min-height: 48px;
+  min-height: 52px;
   padding: 12px 16px;
-  padding-inline-end: 40px;
+  padding-inline-end: 44px;
+  padding-inline-start: 44px;
   font-family: inherit;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   outline: none;
   direction: rtl;
   transition:
     border-color 150ms cubic-bezier(0, 0, 0.2, 1),
-    box-shadow   150ms cubic-bezier(0, 0, 0.2, 1);
+    box-shadow   150ms cubic-bezier(0, 0, 0.2, 1),
+    background   150ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .waqt-panel__search-input::placeholder { color: var(--text-muted); }
 .waqt-panel__search-input:hover        { border-color: var(--border-default); }
 .waqt-panel__search-input:focus        {
   border-color: var(--accent-alt);
-  box-shadow: none;
+  background: var(--bg-surface-1);
+  box-shadow: 0 0 0 4px var(--accent-glow);
 }
 
 .waqt-panel__search-icon {
   position: absolute;
-  inset-inline-end: 14px;
+  inset-inline-end: 16px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--text-muted);
   pointer-events: none;
-  font-size: 0.88rem;
+  transition: color 150ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+.waqt-panel__search:focus-within .waqt-panel__search-icon { color: var(--accent-alt); }
+
+.waqt-panel__search-clear {
+  position: absolute;
+  inset-inline-start: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-3);
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  cursor: pointer;
+  transition: background-color 150ms, color 150ms, transform 150ms;
+}
+
+.waqt-panel__search-clear:hover { background: var(--accent-soft); color: var(--accent-alt); }
+.waqt-panel__search-clear:active { transform: translateY(-50%) scale(0.92); }
+.waqt-panel__search-clear:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
 
 /* Recent-searches quick-access — replaces the helper paragraph in normal
    document flow while the search input is focused and empty, reusing the
@@ -626,26 +664,29 @@
 
 
 /* ══════════════════════════════════════════════════════════════════════════
-   CATEGORY GRID
+   CATEGORY GRID — icon-chip identity per category (color = recognition,
+   not a status signal) + the site's signature hover lift, so choosing a
+   category feels like a real interaction instead of a static label grid.
+   No result counts here by design — they read as noise next to 9 options
+   the user hasn't chosen yet; the grid itself updates instantly on tap.
    ══════════════════════════════════════════════════════════════════════════ */
 
 .waqt-cat-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
   gap: var(--space-2);
 }
 
 .waqt-cat-cell {
-  flex: 1 1 92px;
-  min-width: 92px;
-  min-height: 44px;
+  min-height: 84px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
+  gap: var(--space-2);
   padding: var(--space-3) var(--space-2);
   border-radius: var(--radius-lg);
-  border: 1px solid transparent;
+  border: 1px solid var(--border-subtle);
   background: var(--bg-surface-2);
   color: var(--text-secondary);
   cursor: pointer;
@@ -666,73 +707,73 @@
 }
 
 .waqt-cat-cell:hover {
-  transform: translateY(0);
+  transform: translateY(-3px);
   background: var(--bg-surface-3);
   color: var(--text-primary);
   border-color: var(--border-default);
-  box-shadow: none;
+  box-shadow: var(--shadow-md);
 }
 
-.waqt-cat-cell:active { transform: translateY(0); }
+.waqt-cat-cell:active {
+  transform: translateY(-1px) scale(0.97);
+  box-shadow: var(--shadow-sm);
+}
 
 .waqt-cat-cell--active {
   background: var(--accent-soft);
   color: var(--accent-alt);
   border-color: var(--border-accent-strong);
-  box-shadow: none;
 }
 
 .waqt-cat-cell--active:hover {
-  transform: translateY(0);
-  box-shadow: none;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
 }
 
-/* Active underline mark */
-.waqt-cat-cell--active::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  inset-inline-start: 20%; inset-inline-end: 20%;
-  height: 2px;
-  background: var(--accent-alt);
-  border-radius: var(--radius-md);
-}
-
+/* Icon chip — the category's color identity. Muted/tinted at rest, fills
+   solid with the accent color only when the cell is the active selection,
+   so color always means something (identity, then selection) and never
+   competes with itself. */
 .waqt-cat-cell__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-3);
   color: var(--text-muted);
   transition:
+    background-color var(--transition-fast),
     color var(--transition-fast),
     transform var(--transition-base);
 }
 
-.waqt-cat-cell:hover .waqt-cat-cell__icon { color: var(--text-primary); transform: scale(1.1); }
-.waqt-cat-cell--active .waqt-cat-cell__icon { color: var(--accent-alt); }
+.waqt-cat-cell:hover .waqt-cat-cell__icon { transform: scale(1.08); }
+
+.waqt-cat-cell--all .waqt-cat-cell__icon       { background: var(--accent-soft); color: var(--accent-alt); }
+.waqt-cat-cell--islamic .waqt-cat-cell__icon   { background: var(--green-subtle); color: var(--green-text); }
+.waqt-cat-cell--national .waqt-cat-cell__icon  { background: var(--red-subtle); color: var(--red-text); }
+.waqt-cat-cell--school .waqt-cat-cell__icon    { background: var(--amber-subtle); color: var(--amber-text); }
+.waqt-cat-cell--holidays .waqt-cat-cell__icon  { background: var(--blue-subtle); color: var(--blue-text); }
+.waqt-cat-cell--astronomy .waqt-cat-cell__icon { background: var(--green-subtle); color: var(--green-text); }
+.waqt-cat-cell--social .waqt-cat-cell__icon    { background: var(--amber-subtle); color: var(--amber-text); }
+.waqt-cat-cell--business .waqt-cat-cell__icon  { background: var(--red-subtle); color: var(--red-text); }
+.waqt-cat-cell--support .waqt-cat-cell__icon   { background: var(--blue-subtle); color: var(--blue-text); }
+
+.waqt-cat-cell--active .waqt-cat-cell__icon {
+  background: var(--accent-alt);
+  color: var(--text-on-accent);
+}
 
 .waqt-cat-cell__label {
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 600;
   white-space: normal;
   text-align: center;
+  line-height: 1.3;
   color: inherit;
 }
-
-/* Result-count preview — plain muted numeral, never a colored badge, so it
-   reads as metadata (like a tab count) rather than a status signal. */
-.waqt-cat-cell__count {
-  display: inline-block;
-  margin-inline-start: 4px;
-  font-size: 0.62rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  direction: ltr;
-  unicode-bidi: embed;
-}
-
-/* CSS-generated separator, not a JSX text node, so no text-encoding tool can
-   ever silently mangle it into a non-breaking space or strip it. */
-.waqt-cat-cell__count::before { content: '\00b7'; margin-inline-end: 3px; }
-
-.waqt-cat-cell--active .waqt-cat-cell__count { color: var(--accent-alt); opacity: 0.75; }
 
 /* Dims (never disables — still clickable) an option whose count would be
    zero given the currently active filters, so users see a dead end coming
@@ -747,9 +788,9 @@
 .waqt-pill {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   min-height: 44px;
-  padding: 7px 13px;
+  padding: 7px 14px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-subtle);
   background: var(--bg-surface-2);
@@ -760,6 +801,7 @@
   cursor: pointer;
   white-space: nowrap;
   transition:
+    transform      150ms cubic-bezier(0, 0, 0.2, 1),
     background     150ms cubic-bezier(0, 0, 0.2, 1),
     border-color   150ms cubic-bezier(0, 0, 0.2, 1),
     color          150ms cubic-bezier(0, 0, 0.2, 1),
@@ -773,10 +815,14 @@
 }
 
 .waqt-pill:hover {
+  transform: translateY(-2px);
   background: var(--bg-surface-3);
   border-color: var(--border-default);
   color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
 }
+
+.waqt-pill:active { transform: translateY(-1px) scale(0.97); }
 
 .waqt-pill--active {
   background: var(--accent-soft);
@@ -786,17 +832,11 @@
   box-shadow: none;
 }
 
+.waqt-pill--active:hover { box-shadow: var(--shadow-sm); }
+
 .waqt-pill--sm { min-height: 44px; padding: 5px 11px; font-size: 0.72rem; }
 
 .waqt-pill__flag { font-size: 1rem; line-height: 1; }
-
-.waqt-pill__count {
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  direction: ltr;
-  unicode-bidi: embed;
-}
 
 .waqt-pill--active .waqt-pill__count { color: var(--accent-alt); opacity: 0.8; }
 

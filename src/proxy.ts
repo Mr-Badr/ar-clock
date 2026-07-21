@@ -41,6 +41,15 @@ const PRAYER_STATIC_ROUTES: ReadonlySet<string> = new Set([
   'prohibited-prayer-times',
   'prayer-times-calculation-method',
 ]);
+// Subset of PRAYER_STATIC_ROUTES that also has per-country/per-city SEO pages
+// (e.g. /mwaqit-al-salat/last-third-of-night/[country]/[city]) — white-days
+// and prayer-times-calculation-method are excluded, they have no geo variant.
+const SPECIAL_PRAYER_GEO_ROUTES: ReadonlySet<string> = new Set([
+  'last-third-of-night',
+  'duha-prayer-time',
+  'friday-response-hour',
+  'prohibited-prayer-times',
+]);
 const TIME_DIFFERENCE_STATIC_ROUTES: ReadonlySet<string> = new Set(['converter']);
 const DATE_TODAY_ROUTES: ReadonlySet<string> = new Set(['gregorian', 'hijri']);
 const DATE_SITEMAP_ROUTES: ReadonlySet<string> = new Set(['static', 'calendars', 'countries']);
@@ -194,9 +203,22 @@ function isPrayerPathValid(segments: string[]): boolean {
     return Boolean(countrySlug && isKnownCountrySlug(countrySlug));
   }
 
+  // /mwaqit-al-salat/<special-topic>/<country>
+  if (segments.length === 3 && SPECIAL_PRAYER_GEO_ROUTES.has(segments[1])) {
+    const countrySlug = normalizeRouteSlugValue(segments[2]);
+    return Boolean(countrySlug && isKnownCountrySlug(countrySlug));
+  }
+
   if (segments.length === 3) {
     const countrySlug = normalizeRouteSlugValue(segments[1]);
     const citySlug = normalizeRouteSlugValue(segments[2]);
+    return Boolean(countrySlug && citySlug && isKnownCityPair(countrySlug, citySlug));
+  }
+
+  // /mwaqit-al-salat/<special-topic>/<country>/<city>
+  if (segments.length === 4 && SPECIAL_PRAYER_GEO_ROUTES.has(segments[1])) {
+    const countrySlug = normalizeRouteSlugValue(segments[2]);
+    const citySlug = normalizeRouteSlugValue(segments[3]);
     return Boolean(countrySlug && citySlug && isKnownCityPair(countrySlug, citySlug));
   }
 

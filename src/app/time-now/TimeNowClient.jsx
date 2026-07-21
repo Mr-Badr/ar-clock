@@ -2,7 +2,8 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import { Globe2, MapPinned } from 'lucide-react';
-import { getFlagEmoji, getSafeTimezone, isValidTimeZone } from '@/lib/country-utils';
+import { getSafeTimezone, isValidTimeZone } from '@/lib/country-utils';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 import styles from './TimeNowClient.module.css';
 
@@ -42,7 +43,6 @@ function CountryCard({ country_slug, country_code, name_ar, timezone }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
   const [time, setTime] = useState(null);
-  const displayFlag = useMemo(() => getFlagEmoji(country_code) || '\uD83C\uDF0D', [country_code]);
 
   /* Observe viewport intersection */
   useEffect(() => {
@@ -75,7 +75,9 @@ function CountryCard({ country_slug, country_code, name_ar, timezone }) {
       aria-label={`الوقت الان في ${name_ar}`}
     >
       <div className={styles.cardLeading}>
-        <span aria-hidden className={styles.flag}>{displayFlag}</span>
+        <span aria-hidden className={styles.flag}>
+          {country_code ? <CountryFlag code={country_code} /> : <Globe2 size={16} />}
+        </span>
         <span className={styles.name}>{name_ar}</span>
       </div>
 

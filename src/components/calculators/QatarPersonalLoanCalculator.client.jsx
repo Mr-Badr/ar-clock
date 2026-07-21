@@ -13,6 +13,7 @@ import {
   CalcSelectTrigger as SelectTrigger,
 } from '@/components/calculators/controls.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
@@ -81,10 +82,10 @@ function DbrMeter({ usedPct, capPct }) {
 /* ── GCC comparison strip ───────────────────────────────────────── */
 function GccComparison({ borrowerType }) {
   const rows = [
-    { flag: '🇶🇦', name: 'قطر (QCB)', dbr: '50%', cap: borrowerType === 'expat' ? '400K ر.ق' : '2M ر.ق', active: true },
-    { flag: '🇦🇪', name: 'الإمارات (CBUAE)', dbr: '50%', cap: '250K درهم (غير مضمون)', active: false },
-    { flag: '🇰🇼', name: 'الكويت (CBK)', dbr: '40% / 30%', cap: '70K / 15K د.ك', active: false },
-    { flag: '🇸🇦', name: 'السعودية (ساما)', dbr: '33%', cap: '60× الراتب', active: false },
+    { code: 'qa', name: 'قطر (QCB)', dbr: '50%', cap: borrowerType === 'expat' ? '400K ر.ق' : '2M ر.ق', active: true },
+    { code: 'ae', name: 'الإمارات (CBUAE)', dbr: '50%', cap: '250K درهم (غير مضمون)', active: false },
+    { code: 'kw', name: 'الكويت (CBK)', dbr: '40% / 30%', cap: '70K / 15K د.ك', active: false },
+    { code: 'sa', name: 'السعودية (ساما)', dbr: '33%', cap: '60× الراتب', active: false },
   ];
   return (
     <div className="ci-compare-strip">
@@ -94,7 +95,7 @@ function GccComparison({ borrowerType }) {
       {rows.map((r) => (
         <div key={r.name} className={`ci-compare-row${r.active ? ' ci-compare-active' : ''}`}
           style={{ gridTemplateColumns: '1fr auto auto', gap: 'var(--space-2)' }}>
-          <span>{r.flag} {r.name}</span>
+          <span><CountryFlag code={r.code} /> {r.name}</span>
           <span style={{ direction: 'ltr', textAlign: 'center' }}>{r.dbr}</span>
           <span style={{ direction: 'ltr', textAlign: 'end', fontSize: 'var(--text-xs)' }}>{r.cap}</span>
         </div>
@@ -281,7 +282,7 @@ export default function QatarPersonalLoanCalculator() {
           {isInstallment && r?.isValid && (
             <div className="calc-esb-result-panel" aria-live="polite">
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--qa">🇶🇦 قطر — QCB</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--qa"><CountryFlag code="qa" /> قطر — QCB</span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 
@@ -346,7 +347,7 @@ export default function QatarPersonalLoanCalculator() {
           {!isInstallment && a?.isValid && (
             <div className="calc-esb-result-panel" aria-live="polite">
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--qa">🇶🇦 قطر — QCB</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--qa"><CountryFlag code="qa" /> قطر — QCB</span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 

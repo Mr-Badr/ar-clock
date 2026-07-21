@@ -1,4 +1,5 @@
 import BahrainPersonalLoanCalculator from '@/components/calculators/BahrainPersonalLoanCalculator.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 import {
   CalculatorFaqSection,
   CalculatorHero,
@@ -148,14 +149,14 @@ export default async function PersonalLoanBahrainPage() {
             </thead>
             <tbody>
               {[
-                ['🇧🇭 البحرين',  '50% / 50%',            '100K د.ب / 60K وافد', '84 شهراً', 'CBB'],
-                ['🇦🇪 الإمارات', '50% / 50%',            'مليون د.إ / 250K وافد', '48 شهراً', 'CBUAE'],
-                ['🇶🇦 قطر',     '75% قطري / 50% وافد', '2M ر.ق / 400K وافد',  '120 شهراً', 'QCB'],
-                ['🇰🇼 الكويت',  '40% / 30%',            '70K د.ك / 15K وافد', '60 شهراً', 'CBK'],
-                ['🇸🇦 السعودية', '33% للجميع',           '1M ر.س / 500K وافد', '60 شهراً', 'ساما'],
-              ].map(([c, dbr, max, term, reg]) => (
-                <tr key={c}>
-                  <td><strong>{c}</strong></td>
+                ['bh', 'البحرين',  '50% / 50%',            '100K د.ب / 60K وافد', '84 شهراً', 'CBB'],
+                ['ae', 'الإمارات', '50% / 50%',            'مليون د.إ / 250K وافد', '48 شهراً', 'CBUAE'],
+                ['qa', 'قطر',     '75% قطري / 50% وافد', '2M ر.ق / 400K وافد',  '120 شهراً', 'QCB'],
+                ['kw', 'الكويت',  '40% / 30%',            '70K د.ك / 15K وافد', '60 شهراً', 'CBK'],
+                ['sa', 'السعودية', '33% للجميع',           '1M ر.س / 500K وافد', '60 شهراً', 'ساما'],
+              ].map(([code, c, dbr, max, term, reg]) => (
+                <tr key={code}>
+                  <td><strong><CountryFlag code={code} /> {c}</strong></td>
                   <td>{dbr}</td>
                   <td>{max}</td>
                   <td>{term}</td>

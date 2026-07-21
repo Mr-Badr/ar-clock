@@ -8,6 +8,7 @@ import {
 } from '@/components/calculators/common.jsx';
 import BahrainMortgageCalculator from '@/components/calculators/BahrainMortgageCalculator.client';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const SLUG      = 'mortgage-bahrain';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;
@@ -77,7 +78,7 @@ export default function BahrainMortgagePage() {
       <JsonLd data={SCHEMA} />
 
       <CalculatorHero
-        badge="🇧🇭 البحرين"
+        badge={<><CountryFlag code="bh" /> البحرين</>}
         title="حاسبة التمويل العقاري البحرين"
         description="احسب قسطك الشهري والدفعة الأولى ونسبة LTV وفق قواعد البنك المركزي البحريني — تمويل تقليدي وإسلامي للمواطنين والوافدين."
         highlights={[

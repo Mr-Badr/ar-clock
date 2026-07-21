@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import BuildingCostCalculator from '@/components/calculators/building/BuildingCostCalculator.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 import {
   CalculatorDecisionTable,
   CalculatorHero,
@@ -315,7 +316,7 @@ export default function BuildingHubPage() {
                 href={`/calculators/building/${country.slug}`}
                 className="calc-country-card"
               >
-                <span className="calc-country-card__flag" aria-hidden="true">{country.flag}</span>
+                <span className="calc-country-card__flag" aria-hidden="true"><CountryFlag code={country.countryKey} /></span>
                 <span className="calc-country-card__copy">
                   <strong>{country.nameShort}</strong>
                   <span>{country.currency} · سعر متر وتكلفة مواد محلية</span>
@@ -334,7 +335,7 @@ export default function BuildingHubPage() {
                   href={`/calculators/building/${country.slug}`}
                   className="calc-country-chip"
                 >
-                  <span aria-hidden="true">{country.flag}</span>
+                  <span aria-hidden="true"><CountryFlag code={country.countryKey} /></span>
                   <span>{country.nameShort}</span>
                 </Link>
               ))}

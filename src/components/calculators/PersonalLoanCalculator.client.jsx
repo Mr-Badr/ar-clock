@@ -15,6 +15,7 @@ import {
   CalcSelectTrigger as SelectTrigger,
 } from '@/components/calculators/controls.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
@@ -100,8 +101,8 @@ const MODES = [
   { value: 'affordability', label: 'كم أستطيع اقتراض', sub: 'من الراتب' },
 ];
 const COUNTRIES = [
-  { value: 'saudi', label: '🇸🇦 السعودية', currency: 'ر.س', fmt: fmtSA, dbr: 0.33, dbrLabel: 'ساما 33%', cap: 'ساما — 33% DBR · 60× الراتب' },
-  { value: 'uae',   label: '🇦🇪 الإمارات', currency: 'د.إ', fmt: fmtAE, dbr: 0.50, dbrLabel: 'CBUAE 50%', cap: 'CBUAE — 50% DBR · 250,000 د.إ سقف' },
+  { value: 'saudi', code: 'sa', label: 'السعودية', currency: 'ر.س', fmt: fmtSA, dbr: 0.33, dbrLabel: 'ساما 33%', cap: 'ساما — 33% DBR · 60× الراتب' },
+  { value: 'uae',   code: 'ae', label: 'الإمارات', currency: 'د.إ', fmt: fmtAE, dbr: 0.50, dbrLabel: 'CBUAE 50%', cap: 'CBUAE — 50% DBR · 250,000 د.إ سقف' },
 ];
 
 export default function PersonalLoanCalculator() {
@@ -158,7 +159,7 @@ export default function PersonalLoanCalculator() {
                       onClick={() => { setCountry(c.value); setTermMonths('36'); }}
                       type="button"
                     >
-                      <span className="ci-tab-label">{c.label}</span>
+                      <span className="ci-tab-label"><CountryFlag code={c.code} /> {c.label}</span>
                       <span className="ci-tab-sub">{c.dbrLabel}</span>
                     </button>
                   ))}
@@ -268,7 +269,7 @@ export default function PersonalLoanCalculator() {
             <div className="calc-esb-result-panel" aria-live="polite">
 
               <div className="calc-esb-result-header">
-                <span className={`calc-esb-country-badge ${badgeClass}`}>{ci.label}</span>
+                <span className={`calc-esb-country-badge ${badgeClass}`}><CountryFlag code={ci.code} /> {ci.label}</span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 

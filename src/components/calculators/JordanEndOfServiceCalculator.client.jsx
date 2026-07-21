@@ -11,6 +11,7 @@ import ResultActions from '@/components/calculators/ResultActions.client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
+import CountryFlag from '@/components/shared/CountryFlag';
 import {
   calculateJordanEndOfServiceBenefit,
   formatCurrency,
@@ -129,7 +130,7 @@ export default function JordanEndOfServiceCalculator() {
             <div className="calc-esb-result-panel" aria-live="polite">
 
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--jo">🇯🇴 الأردن</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--jo"><CountryFlag code="jo" /> الأردن</span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 

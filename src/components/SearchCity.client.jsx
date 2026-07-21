@@ -23,6 +23,7 @@ import React, {
 } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import CountryFlag from '@/components/shared/CountryFlag';
 import {
   Search,
   MapPin,
@@ -69,15 +70,7 @@ const GEO_TIMEOUT_MS = 8000;
 const MIN_GLOBAL_QUERY_LENGTH = 2;
 const API_FALLBACK_MIN_QUERY_LENGTH = 2;
 
-/* ── Arabic Normalization & Flag Helper ─────────────────────────────────── */
-function getFlagEmoji(countryCode) {
-  if (!countryCode || countryCode === 'unknown') return '';
-  const codePoints = countryCode
-    .toUpperCase()
-    .split('')
-    .map(char => 0x1F1E6 + char.charCodeAt(0) - 65);
-  return String.fromCodePoint(...codePoints);
-}
+/* ── Arabic Normalization ──────────────────────────────────────────────── */
 
 function normalizeArabic(s = '') {
   if (!s) return '';
@@ -256,8 +249,8 @@ const CityRow = memo(function CityRow({ city, query, showCountry, onSelect, mode
         <span className="sc-item__body">
           <span className="sc-item__name">
             {city.country_code && (
-              <span className="sc-item__flag" aria-hidden="true" style={{ marginLeft: '0.4rem', fontSize: '1.2em' }}>
-                {getFlagEmoji(city.country_code)}
+              <span className="sc-item__flag" style={{ marginLeft: '0.4rem', fontSize: '1.2em' }}>
+                <CountryFlag code={city.country_code} />
               </span>
             )}
             {highlight(city.city_name_ar, query)}
@@ -797,7 +790,7 @@ export default function SearchCity({
                     aria-pressed={selectedCountry?.slug === c.slug}
                     aria-label={`تصفية بدولة ${c.name_ar}`}
                   >
-                    <span style={{ marginLeft: '0.4rem' }}>{getFlagEmoji(c.country_code)}</span>
+                    <span style={{ marginLeft: '0.4rem' }}><CountryFlag code={c.country_code} /></span>
                     {c.name_ar}
                   </button>
                 ))}
@@ -887,8 +880,8 @@ export default function SearchCity({
                   className="sc-item"
                   aria-label={`تحديد دولة ${c.name_ar}`}
                 >
-                  <span className="sc-item__icon" aria-hidden="true">
-                    {getFlagEmoji(c.country_code)}
+                  <span className="sc-item__icon">
+                    <CountryFlag code={c.country_code} />
                   </span>
                   <span className="sc-item__body">
                     <span className="sc-item__name">{highlight(c.name_ar, query)}</span>
@@ -923,8 +916,8 @@ export default function SearchCity({
                   aria-label={`بحث في دولة ${c.name_ar}`}
                   aria-selected={selectedCountry?.slug === c.slug}
                 >
-                  <span className="sc-item__icon" aria-hidden="true">
-                    {getFlagEmoji(c.country_code)}
+                  <span className="sc-item__icon">
+                    <CountryFlag code={c.country_code} />
                   </span>
                   <span className="sc-item__body">
                     <span className="sc-item__name">{c.name_ar}</span>

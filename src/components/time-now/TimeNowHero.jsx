@@ -36,7 +36,8 @@ import {
   requestElementFullscreen,
   syncFullscreenDocumentState,
 } from '../clocks/fullscreenShared';
-import { getFlagEmoji, getSafeTimezone } from '@/lib/country-utils';
+import { getSafeTimezone } from '@/lib/country-utils';
+import CountryFlag from '@/components/shared/CountryFlag';
 import { getCurrentPageUrl, useCopyFeedback } from '@/lib/share.client';
 
 /* ─── HELPERS ───────────────────────────────────────────────────────── */
@@ -351,7 +352,11 @@ export default function TimeNowHero({
         {/* Location label */}
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.9rem', borderRadius: '999px', background: 'var(--accent-soft)', border: '1px solid var(--border-accent)' }}>
-            {countryCode && <span style={{ fontSize: '1.1rem' }} aria-hidden>{getFlagEmoji(countryCode)}</span>}
+            {countryCode && (
+              <span style={{ fontSize: '1.1rem', display: 'inline-flex' }}>
+                <CountryFlag code={countryCode} />
+              </span>
+            )}
             <span style={{ fontSize: 'var(--text-sm)', fontWeight: '700', color: 'var(--accent-alt)' }}>
               {cityNameAr}{countryNameAr ? `، ${countryNameAr}` : ''}
             </span>

@@ -8,6 +8,7 @@ import ResultActions from '@/components/calculators/ResultActions.client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { calculateMoroccoNetSalary, formatCurrency } from '@/lib/calculators/engine';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const BRACKET_COLORS = [
   'var(--green)',
@@ -88,7 +89,7 @@ export default function MoroccoNetSalaryCalculator() {
             <div className="calc-esb-result-panel ma-result" aria-live="polite">
 
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--ma">🇲🇦 المغرب</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--ma"><CountryFlag code="ma" /> المغرب</span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>
 

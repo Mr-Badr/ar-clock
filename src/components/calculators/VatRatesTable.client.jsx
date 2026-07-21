@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { VAT_COUNTRIES, VAT_FILTERS } from '@/lib/calculators/data';
 import { formatPercent } from '@/lib/calculators/engine';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 export default function VatRatesTable() {
   const [filter, setFilter] = useState('all');
@@ -74,7 +75,7 @@ export default function VatRatesTable() {
             <TableBody>
               {rows.length ? rows.map((row) => (
                 <TableRow key={row.code}>
-                  <TableCell>{row.flag} {row.name}</TableCell>
+                  <TableCell><CountryFlag code={row.code} /> {row.name}</TableCell>
                   <TableCell>{formatPercent(row.rate, 0)}</TableCell>
                   <TableCell>{row.currency}</TableCell>
                   <TableCell>{row.note}</TableCell>

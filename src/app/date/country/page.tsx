@@ -5,7 +5,7 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { getFlagEmoji } from '@/lib/country-utils';
+import CountryFlag from '@/components/shared/CountryFlag';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getAllCountries, getPriorityCountrySlugs } from '@/lib/db/queries/countries';
 import type { Country } from '@/lib/db/types';
@@ -86,7 +86,7 @@ const ARAB_COUNTRY_SLUGS: readonly string[] = [
 
 interface CountryPathway {
   slug: string;
-  flag: string;
+  countryCode: string;
   name: string;
   description: string;
   reason: string;
@@ -202,7 +202,7 @@ function buildCountryPathway(country: Country): CountryPathway {
 
   return {
     slug: country.country_slug,
-    flag: getFlagEmoji(country.country_code),
+    countryCode: country.country_code,
     name,
     description: `صفحة مخصصة لمعرفة التاريخ الهجري والميلادي اليوم في ${name} مع روابط الوقت والصلاة والتحويل.`,
     reason: getCountryReason(country),
@@ -374,7 +374,7 @@ export default async function DateCountryRootPage() {
                   className="date-country-primary"
                 >
                   <span className="date-country-primary__flag" aria-hidden="true">
-                    {primaryCountry.flag}
+                    <CountryFlag code={primaryCountry.countryCode} />
                   </span>
                   <span className="date-country-primary__body">
                     <span className="date-action-meta">مسار موصى به للبدء</span>
@@ -398,7 +398,7 @@ export default async function DateCountryRootPage() {
                       className="date-country-row"
                     >
                       <span className="date-country-row__flag" aria-hidden="true">
-                        {country.flag}
+                        <CountryFlag code={country.countryCode} />
                       </span>
                       <span className="date-country-row__main">
                         <span className="date-country-row__title">
@@ -435,7 +435,7 @@ export default async function DateCountryRootPage() {
                     className="date-country-link"
                   >
                     <span className="date-country-flag" aria-hidden="true">
-                      {getFlagEmoji(country.country_code)}
+                      <CountryFlag code={country.country_code} />
                     </span>
                     <span className="date-country-title">
                       {getCountryDisplayName(country)}

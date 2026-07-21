@@ -9,6 +9,7 @@ import {
   getConsumptionCategory,
 } from '@/lib/calculators/electricity-bill';
 import ResultActions from '@/components/calculators/ResultActions.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { CalcInput as Input } from '@/components/calculators/controls.client';
@@ -84,7 +85,7 @@ export default function ElectricityBillCalculator() {
                       onClick={() => handleCountryChange(c.id)}
                       aria-pressed={country === c.id}
                     >
-                      <span className="elec-country-flag">{c.flag}</span>
+                      <span className="elec-country-flag"><CountryFlag code={c.id} /></span>
                       <span>{c.label}</span>
                     </button>
                   ))}
@@ -161,7 +162,7 @@ export default function ElectricityBillCalculator() {
               {/* Country header */}
               <div className="calc-esb-result-header">
                 <span className={`calc-esb-country-badge elec-badge--${country}`}>
-                  {countryData.flag} {countryData.label}
+                  <CountryFlag code={countryData.id} /> {countryData.label}
                 </span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>

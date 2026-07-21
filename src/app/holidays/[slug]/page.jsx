@@ -17,6 +17,7 @@ import {
 } from '@/lib/holidays-engine';
 import { getEventMeta } from '@/lib/events';
 import { COUNTRY_META } from '@/lib/calendar-config';
+import CountryFlag from '@/components/shared/CountryFlag';
 import CountdownTicker, { ShareBar } from '@/components/clocks/CountdownTicker';
 import EventVibeCard from '@/components/holidays/EventVibeCard';
 import AdInArticle from '@/components/ads/AdInArticle';
@@ -143,7 +144,10 @@ export default async function HolidayPage({ params }) {
             <span className="badge badge-default">{typeLabel}</span>
             {calInfo && <AccuracyBadge accuracy={calInfo.accuracy} localSighting={calInfo.localSighting} />}
             {event._countryCode && COUNTRY_META[event._countryCode] && (
-              <span className="badge badge-info">{COUNTRY_META[event._countryCode].flag} {COUNTRY_META[event._countryCode].name}</span>
+              <span className="badge badge-info">
+                <CountryFlag code={event._countryCode} />
+                {' '}{COUNTRY_META[event._countryCode].name}
+              </span>
             )}
           </div>
 

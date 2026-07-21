@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 function fmt(n)    { return Math.round(n).toLocaleString('ar-OM-u-nu-latn'); }
 function fmtOMR(n) { return `${fmt(n)} ر.ع`; }
@@ -206,7 +207,7 @@ export default function OmanPersonalLoanCalculator() {
             <div className="calc-esb-result-panel" aria-live="polite">
 
               <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--om">🇴🇲 عُمان</span>
+                <span className="calc-esb-country-badge calc-esb-country-badge--om"><CountryFlag code="om" /> عُمان</span>
                 <span className="calc-esb-live-dot om-loan-tool" aria-hidden="true" />
               </div>
 

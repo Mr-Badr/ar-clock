@@ -8,6 +8,7 @@ import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { calcBuildingCost, FINISH_LEVELS, BUILDING_TYPES, formatCurrency, fmt } from '@/lib/calculators/building/constants';
 import { COUNTRY_LIST, getCountryBySlug } from '@/lib/calculators/building/country-data';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 import {
   PieChart,
@@ -79,7 +80,7 @@ export default function BuildingCostCalculator({ preSelectedCountrySlug }) {
                   <SelectContent dir="rtl">
                     {safeCountries.map((c) => (
                       <SelectItem key={c.slug} value={c.slug}>
-                        {c.flag} {c.nameShort}
+                        <CountryFlag code={c.countryKey} /> {c.nameShort}
                       </SelectItem>
                     ))}
                   </SelectContent>

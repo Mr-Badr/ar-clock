@@ -1,4 +1,5 @@
 import CarLoanCalculator from '@/components/calculators/CarLoanCalculator.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 import {
   CalculatorFaqSection,
   CalculatorHero,
@@ -27,12 +28,12 @@ export const metadata = buildCanonicalMetadata({
 
 // Gulf bank indicative rates table data
 const GULF_RATES = [
-  { country: '🇸🇦 السعودية', conventional: '3.99%–9%', murabaha: '3.99%–6.5%', banks: 'الراجحي، رياض، الإنماء' },
-  { country: '🇦🇪 الإمارات', conventional: '2.5%–5%', murabaha: '1.99%–3.5%', banks: 'أديب، الإمارات الإسلامي، FAB' },
-  { country: '🇰🇼 الكويت', conventional: '3%–7%', murabaha: '2.5%–5%', banks: 'KFH، بيت التمويل' },
-  { country: '🇶🇦 قطر', conventional: '3%–6%', murabaha: '2.5%–5%', banks: 'QIB، بروة' },
-  { country: '🇧🇭 البحرين', conventional: '3.5%–7%', murabaha: '3%–5.5%', banks: 'ABC الإسلامي، BISB' },
-  { country: '🇴🇲 عُمان', conventional: '4%–8%', murabaha: '3.5%–6%', banks: 'مزن، بنك نزوى' },
+  { code: 'sa', country: 'السعودية', conventional: '3.99%–9%', murabaha: '3.99%–6.5%', banks: 'الراجحي، رياض، الإنماء' },
+  { code: 'ae', country: 'الإمارات', conventional: '2.5%–5%', murabaha: '1.99%–3.5%', banks: 'أديب، الإمارات الإسلامي، FAB' },
+  { code: 'kw', country: 'الكويت', conventional: '3%–7%', murabaha: '2.5%–5%', banks: 'KFH، بيت التمويل' },
+  { code: 'qa', country: 'قطر', conventional: '3%–6%', murabaha: '2.5%–5%', banks: 'QIB، بروة' },
+  { code: 'bh', country: 'البحرين', conventional: '3.5%–7%', murabaha: '3%–5.5%', banks: 'ABC الإسلامي، BISB' },
+  { code: 'om', country: 'عُمان', conventional: '4%–8%', murabaha: '3.5%–6%', banks: 'مزن، بنك نزوى' },
 ];
 
 // Practical examples (pre-calculated for SSR/SEO capture)
@@ -123,8 +124,8 @@ export default async function CarLoanPage() {
             </thead>
             <tbody>
               {GULF_RATES.map((row) => (
-                <tr key={row.country}>
-                  <td><strong>{row.country}</strong></td>
+                <tr key={row.code}>
+                  <td><strong><CountryFlag code={row.code} /> {row.country}</strong></td>
                   <td>{row.conventional}</td>
                   <td style={{ color: 'var(--green, #16a34a)', fontWeight: 600 }}>{row.murabaha}</td>
                   <td style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{row.banks}</td>

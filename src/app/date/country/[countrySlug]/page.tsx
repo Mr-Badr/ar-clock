@@ -7,7 +7,8 @@ import { getPriorityCountrySlugs, getCountryBySlug } from '@/lib/db/queries/coun
 import { getCapitalCity } from '@/lib/db/queries/cities';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { convertDate, GREGORIAN_MONTH_NAMES_AR, type ConversionMethod } from '@/lib/date-adapter';
-import { getFlagEmoji, getSafeTimezone } from '@/lib/country-utils';
+import { getSafeTimezone } from '@/lib/country-utils';
+import CountryFlag from '@/components/shared/CountryFlag';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { DateShareActions } from '@/components/date/DateShareActions';
@@ -671,8 +672,6 @@ export default async function CountryDatePage({
     })),
   };
 
-  const flag = getFlagEmoji(country.country_code);
-
   return (
     <>
       <JsonLd data={[breadcrumbSchema, webPageSchema, faqSchema]} />
@@ -686,7 +685,7 @@ export default async function CountryDatePage({
           <section className="date-hero-panel mb-6">
             <div className="date-hero-main">
               <p className="date-kicker m-0">
-                <span aria-hidden="true">{flag}</span> تاريخ محلي حسب الدولة
+                <CountryFlag code={country.country_code} /> تاريخ محلي حسب الدولة
               </p>
               <h1 className="date-hero-title">
                 التاريخ اليوم في <span className="text-accent">{country.name_ar}</span>

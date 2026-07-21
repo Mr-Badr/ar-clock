@@ -7,6 +7,7 @@ import {
   RelatedCalculators,
 } from '@/components/calculators/common.jsx';
 import QatarCarInsuranceCalculator from '@/components/calculators/QatarCarInsuranceCalculator.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const SLUG = 'car-insurance-qatar';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;
@@ -127,7 +128,7 @@ export default function CarInsuranceQatarPage() {
       <JsonLd data={howToSchema} />
 
       <CalculatorHero
-        badge="🇶🇦 قطر"
+        badge={<><CountryFlag code="qa" /> قطر</>}
         title="حاسبة تأمين السيارة قطر"
         description="قدّر قسط تأمين سيارتك في قطر — ضد الغير أو شامل — حسب عمر السائق والبلدية وسنوات الخلو من المطالبات. أرقام بالريال القطري (QAR)."
         highlights={[

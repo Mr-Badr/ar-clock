@@ -5,6 +5,7 @@ import { Briefcase, IdentificationCard, Info, ShieldCheck, Wallet } from '@phosp
 
 import { CalcInput as Input } from '@/components/calculators/controls.client';
 import ResultActions from '@/components/calculators/ResultActions.client';
+import CountryFlag from '@/components/shared/CountryFlag';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import {
@@ -122,7 +123,7 @@ export default function DomesticWorkerCostCalculator() {
             <div className="calc-esb-result-panel domestic-worker-cost-result" aria-live="polite">
               <div className="calc-esb-result-header">
                 <span className="calc-esb-country-badge calc-esb-country-badge--sa">
-                  🇸🇦 منصة مساند — رسوم حكومية رسمية
+                  <CountryFlag code="sa" /> منصة مساند — رسوم حكومية رسمية
                 </span>
                 <span className="calc-esb-live-dot" aria-hidden="true" />
               </div>

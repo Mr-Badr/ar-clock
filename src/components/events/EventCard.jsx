@@ -31,7 +31,7 @@ import {
   Users,
 } from 'lucide-react';
 import { urgencyTier, liveStatusLabel } from '@/lib/holidays/urgency';
-import { getFlagEmoji } from '@/lib/country-utils';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 /* ── Static maps ──────────────────────────────────────────────────────────── */
 const CAT_ICON = {
@@ -97,9 +97,7 @@ export default function EventCard({ event, priority = false, index = 0 }) {
                 </span>
               )}
               {event._countryCode && (
-                <span className="waqt-ev__flag" aria-hidden>
-                  {getFlagEmoji(event._countryCode)}
-                </span>
+                <CountryFlag code={event._countryCode} className="waqt-ev__flag" />
               )}
             </div>
           </div>

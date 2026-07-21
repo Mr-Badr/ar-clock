@@ -8,6 +8,7 @@ import {
 } from '@/components/calculators/common.jsx';
 import EgyptPersonalLoanCalculator from '@/components/calculators/EgyptPersonalLoanCalculator.client';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 const SLUG      = 'personal-loan-egypt';
 const CANONICAL = `${getSiteUrl()}/calculators/${SLUG}`;
@@ -77,7 +78,7 @@ export default function EgyptPersonalLoanPage() {
       <JsonLd data={SCHEMA} />
 
       <CalculatorHero
-        badge="🇪🇬 مصر"
+        badge={<><CountryFlag code="eg" /> مصر</>}
         title="حاسبة القرض الشخصي مصر"
         description="احسب قسطك الشهري أو أقصى قرض تستطيع الحصول عليه في مصر وفق قواعد البنك المركزي المصري — DBR 35% للقطاع الخاص و40% للحكومي."
         highlights={[

@@ -996,7 +996,7 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
                   عند <strong>{nightFacts.fajrLabel}</strong>. منتصف الليل الشرعي عند{' '}
                   <strong>{nightFacts.islamicMidnightLabel}</strong>.
                 </p>
-                <Link href="/mwaqit-al-salat/last-third-of-night" className={routeStyles.contextLink}>
+                <Link href={`/mwaqit-al-salat/last-third-of-night/${country}/${city}`} className={routeStyles.contextLink}>
                   كيف يُحسب الثلث الأخير من الليل؟
                 </Link>
               </article>
@@ -1008,7 +1008,7 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
                   يبدأ عند <strong>{duhaFacts.duhaStartLabel}</strong> وينتهي عند{' '}
                   <strong>{duhaFacts.duhaEndLabel}</strong>، أي قبل دخول وقت الظهر بقليل.
                 </p>
-                <Link href="/mwaqit-al-salat/duha-prayer-time" className={routeStyles.contextLink}>
+                <Link href={`/mwaqit-al-salat/duha-prayer-time/${country}/${city}`} className={routeStyles.contextLink}>
                   أفضل وقت لصلاة الضحى؟
                 </Link>
               </article>
@@ -1029,7 +1029,7 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
                     </>
                   )}
                 </p>
-                <Link href="/mwaqit-al-salat/friday-response-hour" className={routeStyles.contextLink}>
+                <Link href={`/mwaqit-al-salat/friday-response-hour/${country}/${city}`} className={routeStyles.contextLink}>
                   ما هي ساعة الاستجابة؟
                 </Link>
               </article>
@@ -1054,7 +1054,7 @@ async function PrayerTimesContent({ country, city, cityData, countryCode, countr
                     </>
                   )}
                 </p>
-                <Link href="/mwaqit-al-salat/prohibited-prayer-times" className={routeStyles.contextLink}>
+                <Link href={`/mwaqit-al-salat/prohibited-prayer-times/${country}/${city}`} className={routeStyles.contextLink}>
                   ما هي أوقات النهي عن الصلاة؟
                 </Link>
               </article>

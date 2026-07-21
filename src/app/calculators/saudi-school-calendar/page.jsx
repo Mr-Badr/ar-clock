@@ -6,6 +6,7 @@ import {
   RelatedCalculators,
 } from '@/components/calculators/common';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import CountryFlag from '@/components/shared/CountryFlag';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
 import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
@@ -205,7 +206,9 @@ export default function SaudiSchoolCalendarPage() {
               {SCHOOL_CALENDAR_1448.map((row) => (
                 <TableRow key={row.slug}>
                   <TableCell className="font-medium">
-                    <span className="me-1">{row.emoji}</span>
+                    <span className="me-1">
+                      {row.emoji === '🇸🇦' ? <CountryFlag code="sa" /> : row.emoji}
+                    </span>
                     {row.type}
                   </TableCell>
                   <TableCell>
