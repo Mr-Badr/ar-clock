@@ -44,19 +44,44 @@ const contractOptions = [
   { value: 'open', title: 'غير محدد', description: 'شائع في الاستقالات والعقود المستمرة.' },
 ];
 
-export default function EndOfServiceCalculator({
-  initialStartDate,
-  initialEndDate,
-  initialSalary,
-  initialReason,
-}) {
+const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+const VALID_REASONS = new Set(['contract_end', 'resignation', 'employer_termination', 'retirement']);
+
+export default function EndOfServiceCalculator({ initialStartDate, initialEndDate }) {
   const [contractType, setContractType] = useState('open');
-  const [salary, setSalary] = useState(initialSalary || '8000');
+  const [salary, setSalary] = useState('8000');
   const [startDate, setStartDate] = useState(initialStartDate);
   const [endDate, setEndDate] = useState(initialEndDate);
-  const [reason, setReason] = useState(initialReason || 'resignation');
+  const [reason, setReason] = useState('resignation');
   const [waitMonths, setWaitMonths] = useState([6]);
   const [showExtras, setShowExtras] = useState(false);
+
+  // Prefill from a shared link (?salary=&start=&end=&reason=) after hydration.
+  // Read client-side, not via the page's searchParams — a Server Component
+  // reading searchParams directly breaks static prerendering of the whole
+  // route under cacheComponents (this is what caused the H1 to go missing
+  // from the built HTML). See the comment in this page's page.jsx.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const salaryRaw = params.get('salary');
+    const startRaw = params.get('start');
+    const endRaw = params.get('end');
+    const reasonRaw = params.get('reason');
+
+    const salaryNum = Number(salaryRaw);
+    if (salaryRaw && Number.isFinite(salaryNum) && salaryNum > 0) {
+      setSalary(String(salaryNum));
+    }
+
+    if (ISO_DATE_RE.test(startRaw || '') && ISO_DATE_RE.test(endRaw || '') && startRaw < endRaw) {
+      setStartDate(startRaw);
+      setEndDate(endRaw);
+    }
+
+    if (reasonRaw && VALID_REASONS.has(reasonRaw)) {
+      setReason(reasonRaw);
+    }
+  }, []);
 
   // Keep the URL query string in sync with the current inputs so the page's
   // existing ResultActions "share/copy link" buttons (window.location.href)

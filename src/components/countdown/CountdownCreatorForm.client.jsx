@@ -1,10 +1,13 @@
 'use client';
 
-import { useId, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { CalendarDays, MoonStar, AlertCircle } from 'lucide-react';
+import {
+  CalendarDays, MoonStar, AlertCircle, Sparkle, Clock, PartyPopper, Loader2,
+} from 'lucide-react';
 
 import { resolveCountdownTarget, sanitizeCountdownTitle } from '@/lib/countdown/resolve';
+import { convertDate } from '@/lib/date-adapter';
 import styles from './CountdownCreatorForm.module.css';
 
 /*
@@ -16,6 +19,11 @@ import styles from './CountdownCreatorForm.module.css';
  * submit button rendered as bare unstyled browser controls. This version
  * is self-contained (CountdownCreatorForm.module.css) and depends only on
  * the design tokens already loaded on every page.
+ *
+ * Second pass, same day — added a live preview panel (title + both calendars
+ * + days-remaining chip, recomputed on every keystroke) and a sliding
+ * segmented-control indicator, so the form reacts before submission instead
+ * of staying inert until the button is pressed.
  */
 
 const HIJRI_MONTHS = [
@@ -23,6 +31,54 @@ const HIJRI_MONTHS = [
   'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان',
   'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة',
 ];
+
+const GREGORIAN_DATE_FORMATTER = new Intl.DateTimeFormat('ar-SA-u-nu-latn', {
+  weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+});
+const TIME_FORMATTER = new Intl.DateTimeFormat('ar-SA-u-nu-latn', {
+  hour: 'numeric', minute: '2-digit', hour12: true,
+});
+
+function pad2(value) {
+  return String(value).padStart(2, '0');
+}
+
+function buildPreview({ title, calendar, gregorianIso, hijriValue, time }) {
+  const target = resolveCountdownTarget({ calendar, gregorianDateIso: gregorianIso, hijriValue, time });
+  if (!target.isValid) return null;
+
+  const targetDate = new Date(target.iso);
+  const gregorianLabel = GREGORIAN_DATE_FORMATTER.format(targetDate);
+
+  let hijriLabel = '';
+  try {
+    const isoDateOnly = `${targetDate.getFullYear()}-${pad2(targetDate.getMonth() + 1)}-${pad2(targetDate.getDate())}`;
+    hijriLabel = convertDate({ date: isoDateOnly, toCalendar: 'hijri' }).formatted.ar;
+  } catch {
+    hijriLabel = '';
+  }
+
+  const timeLabel = time && time !== '00:00' ? TIME_FORMATTER.format(targetDate) : '';
+
+  const diffMs = targetDate.getTime() - Date.now();
+  const diffDays = Math.floor(diffMs / 86400000);
+  let remaining;
+  if (diffMs <= 0) {
+    remaining = { label: 'هذا الموعد مضى بالفعل', tone: 'past' };
+  } else if (diffDays === 0) {
+    remaining = { label: 'الموعد اليوم', tone: 'today' };
+  } else {
+    remaining = { label: `باقي ${diffDays} يوم`, tone: 'future' };
+  }
+
+  return {
+    title: sanitizeCountdownTitle(title),
+    gregorianLabel,
+    hijriLabel,
+    timeLabel,
+    remaining,
+  };
+}
 
 export default function CountdownCreatorForm() {
   const router = useRouter();
@@ -37,6 +93,11 @@ export default function CountdownCreatorForm() {
   const [time, setTime] = useState('00:00');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+
+  const preview = useMemo(
+    () => buildPreview({ title, calendar, gregorianIso, hijriValue, time }),
+    [title, calendar, gregorianIso, hijriValue, time],
+  );
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -67,22 +128,38 @@ export default function CountdownCreatorForm() {
   return (
     <form onSubmit={handleSubmit} className={styles.form} noValidate>
       <div className={styles.field}>
-        <label htmlFor={titleId} className={styles.label}>اسم المناسبة</label>
-        <input
-          id={titleId}
-          type="text"
-          className={styles.input}
-          value={title}
-          maxLength={80}
-          placeholder="مثال: زفافي، امتحاني، إطلاق المنتج"
-          onChange={(event) => setTitle(event.target.value)}
-        />
+        <div className={styles.labelGroup}>
+          <span className={styles.fieldIcon} data-tone="blue" aria-hidden="true">
+            <Sparkle size={14} strokeWidth={2} />
+          </span>
+          <label htmlFor={titleId} className={styles.label}>اسم المناسبة</label>
+        </div>
+        <div className={styles.inputWrap}>
+          <input
+            id={titleId}
+            type="text"
+            className={styles.input}
+            value={title}
+            maxLength={80}
+            placeholder="مثال: زفافي، امتحاني، إطلاق المنتج"
+            onChange={(event) => setTitle(event.target.value)}
+          />
+          {title.length > 0 ? (
+            <span className={styles.counter} aria-hidden="true">{title.length}/80</span>
+          ) : null}
+        </div>
       </div>
 
       <div className={styles.field}>
         <div className={styles.labelRow}>
-          <span className={styles.label}>تاريخ المناسبة</span>
+          <div className={styles.labelGroup}>
+            <span className={styles.fieldIcon} data-tone="green" aria-hidden="true">
+              <CalendarDays size={14} strokeWidth={2} />
+            </span>
+            <span className={styles.label}>تاريخ المناسبة</span>
+          </div>
           <div className={styles.toggle} role="group" aria-label="اختر نوع التقويم">
+            <span className={styles.toggleIndicator} data-active={calendar} aria-hidden="true" />
             <button
               type="button"
               className={`${styles.toggleBtn} ${calendar === 'gregorian' ? styles.toggleBtnActive : ''}`}
@@ -164,7 +241,12 @@ export default function CountdownCreatorForm() {
 
       <div className={styles.field}>
         <div className={styles.labelRow}>
-          <label htmlFor={timeId} className={styles.label}>الوقت</label>
+          <div className={styles.labelGroup}>
+            <span className={styles.fieldIcon} data-tone="amber" aria-hidden="true">
+              <Clock size={14} strokeWidth={2} />
+            </span>
+            <label htmlFor={timeId} className={styles.label}>الوقت</label>
+          </div>
           <span className={styles.optional}>اختياري</span>
         </div>
         <input
@@ -177,6 +259,28 @@ export default function CountdownCreatorForm() {
         <p className={styles.hint}>اتركه كما هو إذا كانت المناسبة تخص اليوم كاملاً وليست ساعة محددة.</p>
       </div>
 
+      {preview ? (
+        <div className={styles.preview} aria-live="polite">
+          <div className={styles.previewHead}>
+            <span className={styles.fieldIcon} data-tone="success" aria-hidden="true">
+              <PartyPopper size={14} strokeWidth={2} />
+            </span>
+            <span className={styles.previewLabel}>معاينة حية</span>
+            <span className={`${styles.previewChip} ${styles[`previewChip_${preview.remaining.tone}`]}`}>
+              {preview.remaining.label}
+            </span>
+          </div>
+          {preview.title ? <p className={styles.previewTitle}>{preview.title}</p> : null}
+          <p className={styles.previewDate}>
+            {preview.gregorianLabel}
+            {preview.timeLabel ? ` — الساعة ${preview.timeLabel}` : ''}
+          </p>
+          {preview.hijriLabel ? (
+            <p className={styles.previewHijri}>الموافق {preview.hijriLabel}</p>
+          ) : null}
+        </div>
+      ) : null}
+
       {error ? (
         <div className={styles.error} role="alert">
           <AlertCircle size={16} aria-hidden="true" />
@@ -185,7 +289,14 @@ export default function CountdownCreatorForm() {
       ) : null}
 
       <button type="submit" className={styles.submit} disabled={submitting}>
-        أنشئ العداد وشاركه
+        {submitting ? (
+          <>
+            <Loader2 size={18} className={styles.spinner} aria-hidden="true" />
+            جارٍ الإنشاء…
+          </>
+        ) : (
+          'أنشئ العداد وشاركه'
+        )}
       </button>
     </form>
   );
