@@ -13,8 +13,12 @@ const ScrollToTopOnNav = dynamic(() => import('@/components/layout/ScrollToTopOn
 const ScrollToTopButton = dynamic(() => import('@/components/layout/ScrollToTopButton'), { ssr: false });
 const ServiceWorkerRegistration = dynamic(() => import('@/components/ServiceWorkerRegistration'), { ssr: false });
 const SiteVisitTracker = dynamic(() => import('@/components/site/SiteVisitTracker.client'), { ssr: false });
-const WebVitalsReporter = dynamic(() => import('@/components/analytics/WebVitalsReporter.client'), { ssr: false });
+const WebVitalsReporter = dynamic(
+  () => import('@/components/analytics/WebVitalsReporter.client').catch(() => ({ default: () => null })),
+  { ssr: false, loading: () => null },
+);
 const Toaster = dynamic(() => import('sonner').then((module) => module.Toaster), { ssr: false });
+
 
 function scheduleIdle(callback) {
   if (typeof window === "undefined") return () => {};

@@ -267,6 +267,8 @@ export function ShareBar({ url, eventName, days, dateStr, eventISODate }) {
         border: '1px solid var(--border-subtle)',
         borderRadius: 'var(--radius-lg)',
         padding: 'var(--space-5)',
+        overflow: 'hidden',
+        minWidth: 0,
       }}
       dir="rtl"
       aria-label="خيارات المشاركة"
@@ -280,9 +282,9 @@ export function ShareBar({ url, eventName, days, dateStr, eventISODate }) {
         شارك هذه المناسبة
       </p>
 
-      <div style={{
+      {/* Mobile: 2×2 grid; wider screens: all 4 in one row */}
+      <div className="share-bar-grid" style={{
         display: 'grid',
-        gridTemplateColumns: `repeat(${PLATFORMS.length}, 1fr)`,
         gap: 'var(--space-2)',
         marginBottom: 'var(--space-3)',
       }}>

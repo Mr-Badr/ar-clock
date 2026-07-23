@@ -109,7 +109,7 @@ export default async function HolidayPage({ params }) {
   const pageClassName = featureFlags.holidaysSectionizedUi ? 'bg-base holidays-page-v2' : 'bg-base';
 
   return (
-    <div className={pageClassName} style={{ minHeight: '100dvh' }} dir="rtl">
+    <div className={pageClassName} style={{ minHeight: '100dvh', overflowX: 'hidden' }} dir="rtl">
       {/* JSON-LD inline — in initial HTML, never deferred, optimal for crawlers */}
       {evSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(evSchema) }} />}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(wpSchema) }} />
@@ -128,12 +128,12 @@ export default async function HolidayPage({ params }) {
         <AdTopBanner slotId="top-holiday-slug" />
 
         {/* Breadcrumb */}
-        <nav aria-label="breadcrumb" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)', marginBottom: 'var(--space-8)' }}>
-          <Link href="/" style={{ color: 'var(--text-muted)' }}>الرئيسية</Link>
-          <span aria-hidden>/</span>
-          <Link href="/holidays" style={{ color: 'var(--text-muted)' }}>المناسبات</Link>
-          <span aria-hidden>/</span>
-          <span aria-current="page" style={{ color: 'var(--text-secondary)' }}>{displayTitle}</span>
+        <nav aria-label="breadcrumb" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', fontSize: 'var(--text-sm)', color: 'var(--text-muted)', marginBottom: 'var(--space-8)', overflow: 'hidden' }}>
+          <Link href="/" style={{ color: 'var(--text-muted)', flexShrink: 0 }}>الرئيسية</Link>
+          <span aria-hidden style={{ flexShrink: 0 }}>/</span>
+          <Link href="/holidays" style={{ color: 'var(--text-muted)', flexShrink: 0 }}>المناسبات</Link>
+          <span aria-hidden style={{ flexShrink: 0 }}>/</span>
+          <span aria-current="page" style={{ color: 'var(--text-secondary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>{displayTitle}</span>
         </nav>
 
         {/* ── HERO ────────────────────────────────────────────────────────── */}
@@ -159,7 +159,7 @@ export default async function HolidayPage({ params }) {
             <span style={{ display: 'block', fontSize: 'var(--text-sm)', fontWeight: 'var(--font-medium)', color: 'var(--text-muted)', marginBottom: 'var(--space-1)' }}>
               كم باقي على{' '}
             </span>
-            <span style={{ fontSize: 'clamp(1.75rem, 5vw, 2.75rem)', fontWeight: 'var(--font-extrabold)', color: 'var(--accent)' }}>
+            <span style={{ display: 'block', fontSize: 'clamp(1.5rem, 5vw, 2.75rem)', fontWeight: 'var(--font-extrabold)', color: 'var(--accent)', wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
               {displayTitle}
             </span>
           </h1>
@@ -221,6 +221,8 @@ export default async function HolidayPage({ params }) {
             marginBottom: 'var(--space-10)',
             alignItems: 'center',
             justifyContent: 'center',
+            overflow: 'hidden',
+            minWidth: 0,
           }}
           aria-label="تفاصيل الموعد"
         >

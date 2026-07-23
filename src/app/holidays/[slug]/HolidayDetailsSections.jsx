@@ -114,7 +114,7 @@ function RelatedCalculatorsWidget({ categoryId, countryCode }) {
       <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', marginBottom: 'var(--space-4)' }}>
         حاسبات مجانية مرتبطة بهذه المناسبة
       </p>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(155px, 1fr))', gap: 'var(--space-3)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(140px, 100%), 1fr))', gap: 'var(--space-3)' }}>
         {calcs.map(({ href, label, desc, accent }) => (
           <Link
             key={href}
@@ -362,7 +362,7 @@ export default function HolidayDetailsSections({
           <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--text-primary)', marginBottom: 'var(--space-5)' }}>
             {intentHeading}
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-3)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(180px, 100%), 1fr))', gap: 'var(--space-3)' }}>
             {intentCards.map((card, i) => {
               const Icon = resolveIntentIcon(card);
               const safeHref = typeof card.ctaHref === 'string' && card.ctaHref.trim() ? card.ctaHref : '/holidays';
@@ -546,7 +546,7 @@ export default function HolidayDetailsSections({
       <AdMultiplex slotId={`end-holiday-${slug}`} />
 
       <Suspense fallback={
-        <div style={{ marginTop: 'var(--space-12)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 'var(--space-3)' }}>
+        <div style={{ marginTop: 'var(--space-12)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(220px,100%),1fr))', gap: 'var(--space-3)' }}>
           {[1, 2, 3, 4].map(i => <div key={i} className="alarm-item" style={{ height: '80px', opacity: 0.4 }} />)}
         </div>
       }>

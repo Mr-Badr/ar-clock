@@ -3575,3 +3575,47 @@ html:not(.light) .tooltip-content.tooltip--danger .tooltip-arrow,
     white-space: normal;
   }
 }
+
+/* ── ShareBar responsive grid ────────────────────────────────────────────────
+   Mobile (<540px): 2×2 grid so each social button has enough tap area.
+   Wider screens: all 4 platforms in a single row.
+   ─────────────────────────────────────────────────────────────────────────── */
+.share-bar-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 540px) {
+  .share-bar-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ── Holiday slug page — mobile overflow containment ─────────────────────────
+   Prevents any pill, heading, or flex item from punching past 100vw on narrow
+   phones (320-390px). Applied as extra defensive rules layered on top of the
+   component-level inline styles already set.
+   ─────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  /* Ensure the content column never causes horizontal scroll */
+  .content-col {
+    overflow-x: hidden;
+  }
+
+  /* Date pills on holiday pages — let them wrap earlier */
+  .holidays-page-v2 time,
+  .holidays-page-v2 [aria-label="تفاصيل الموعد"] span {
+    max-width: 100%;
+    word-break: break-word;
+  }
+
+  /* Tighten AdTopBanner margin on very small phones */
+  .ad-slot--top-banner {
+    margin-block: var(--space-4);
+  }
+
+  /* Tighten in-article margins on very small phones */
+  .ad-slot--in-article {
+    margin-block: var(--space-6);
+  }
+}
+
