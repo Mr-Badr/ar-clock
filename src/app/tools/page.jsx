@@ -1,10 +1,56 @@
 import Link from 'next/link';
+import {
+  Bug,
+  Car,
+  GraduationCap,
+  Hammer,
+  HardHat,
+  Heartbeat,
+  Lightning,
+  Plant,
+  SprayBottle,
+  Storefront,
+  Drop,
+  Snowflake,
+  VideoCamera,
+  Waves,
+  Wallet,
+} from '@phosphor-icons/react/ssr';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
+
+// One distinct, category-specific icon per hub — never share an icon across categories, and
+// never fall back to a generic default (owner correction, 2026-08-05: the old grid repeated
+// the same icon on every card).
+const CATEGORY_ICONS = {
+  'gulf-finance': Wallet,
+  construction: HardHat,
+  plumbing: Drop,
+  electrical: Lightning,
+  hvac: Snowflake,
+  carpenter: Hammer,
+  'car-maintenance': Car,
+  ecommerce: Storefront,
+  cleaning: SprayBottle,
+  'pest-control': Bug,
+  landscaping: Plant,
+  cctv: VideoCamera,
+  pools: Waves,
+  health: Heartbeat,
+  education: GraduationCap,
+};
+
+// Arabic plural agreement for "أداة" (tool, feminine) — 1/2/3-10/11+ each take a different form.
+function formatToolCount(count) {
+  if (count === 1) return 'أداة واحدة';
+  if (count === 2) return 'أداتان';
+  if (count >= 3 && count <= 10) return `${count} أدوات`;
+  return `${count} أداة`;
+}
 
 // Each new /tools/<category> hub gets one entry here, following the keyword-driven,
 // research-first workflow documented in docs/PLAN.md §5 before it's added.
@@ -188,10 +234,25 @@ export default function ToolsHubPage() {
       { '@type': 'ListItem', position: 2, name: 'الأدوات', item: `${SITE_URL}/tools` },
     ],
   };
+  // Category descriptions moved off the visual card (2026-08-05 redesign — icon-first compact
+  // tiles, no body text) but kept here so Google still sees them: same "invisible to the user,
+  // visible to Google" pattern as calculator-ui-standards.md §0a.
+  const categoryListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: CATEGORIES.map((category, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: category.name,
+      description: category.description,
+      url: `${SITE_URL}/tools/${category.slug}`,
+    })),
+  };
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryListSchema) }} />
 
       <ToolTopAdSlot slotId="top-tools-hub" />
 
@@ -202,19 +263,19 @@ export default function ToolsHubPage() {
           <p className="tool-v2-lead">اختر فئة، وابدأ — كل فئة مبنية على بحث حقيقي، لا تخمين.</p>
         </div>
 
-        <div className="tool-v2-cat-panel">
-          {CATEGORIES.map((category) => (
-            <Link key={category.slug} href={`/tools/${category.slug}`} className="tool-v2-cat-card">
-              <span className="tool-v2-cat-ic" aria-hidden="true">
-                <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                  <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                </svg>
-              </span>
-              <h2>{category.name}</h2>
-              <p>{category.description}</p>
-              <span className="tool-v2-cat-count">{category.toolCount} حاسبة</span>
-            </Link>
-          ))}
+        <div className="tool-v2-cat-grid">
+          {CATEGORIES.map((category) => {
+            const Icon = CATEGORY_ICONS[category.slug];
+            return (
+              <Link key={category.slug} href={`/tools/${category.slug}`} className="tool-v2-cat-tile">
+                <span className="tool-v2-cat-tile-ic" aria-hidden="true">
+                  <Icon size={22} weight="bold" />
+                </span>
+                <span className="tool-v2-cat-tile-title">{category.name}</span>
+                <span className="tool-v2-cat-tile-count">{formatToolCount(category.toolCount)}</span>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </main>

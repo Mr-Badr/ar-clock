@@ -1750,54 +1750,63 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-inline: auto;
 }
 
-/* Category cards (top-level /tools hub) — matches mockup's .cat-panel/.cat-card. */
-.tool-v2-cat-panel {
-  display: flex;
-  flex-wrap: wrap;
+/* Category tiles (top-level /tools hub) — redesigned 2026-08-05 (owner feedback: the old
+   .tool-v2-cat-card row used one repeated generic icon for every category, plus a full
+   description paragraph, which read as big/text-heavy and not "premium"). New pattern: a
+   compact icon-first tile grid — icon chip, title, tool count, nothing else. Each category
+   gets its own distinct Phosphor icon (picked per-category in page.jsx, not a shared default)
+   and the icon chip color rotates through the standard 4-color set so the grid reads as
+   organized/varied without a border-stripe or gradient (see arabic-rtl.md icon-chip rule). */
+.tool-v2-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-3);
   margin-block: var(--space-6);
-  justify-content: center;
 }
-.tool-v2-cat-card {
-  flex: 1 1 220px;
-  max-width: 320px;
-  background: var(--bg-surface-1);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.2));
-  padding: var(--space-4);
+@media (min-width: 640px) {
+  .tool-v2-cat-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 900px) {
+  .tool-v2-cat-grid { grid-template-columns: repeat(4, 1fr); }
+}
+.tool-v2-cat-tile {
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  text-align: start;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: var(--space-4) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
   text-decoration: none;
-  transition: box-shadow 0.15s, transform 0.15s;
+  transition: border-color 0.15s, transform 0.15s;
 }
-.tool-v2-cat-card:hover {
-  box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.25));
+.tool-v2-cat-tile:hover {
+  border-color: var(--border-default);
   transform: translateY(-2px);
 }
-.tool-v2-cat-card .tool-v2-cat-ic {
-  color: var(--green-text);
+.tool-v2-cat-tile-ic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-full, 999px);
   margin-bottom: 2px;
 }
-.tool-v2-cat-card .tool-v2-cat-ic svg {
-  width: 1.55em;
-  height: 1.55em;
-}
-.tool-v2-cat-card h2 {
-  font-size: 0.96rem;
-  margin: 0;
+.tool-v2-cat-tile:nth-child(4n+1) .tool-v2-cat-tile-ic { background: var(--green-subtle); color: var(--green-text); }
+.tool-v2-cat-tile:nth-child(4n+2) .tool-v2-cat-tile-ic { background: var(--blue-subtle); color: var(--blue-text); }
+.tool-v2-cat-tile:nth-child(4n+3) .tool-v2-cat-tile-ic { background: var(--amber-subtle); color: var(--amber-text); }
+.tool-v2-cat-tile:nth-child(4n+4) .tool-v2-cat-tile-ic { background: var(--red-subtle); color: var(--red-text); }
+.tool-v2-cat-tile-title {
+  font-size: 0.88rem;
+  font-weight: 700;
   color: var(--text-primary);
-  font-weight: 800;
+  line-height: 1.35;
 }
-.tool-v2-cat-card p {
-  margin: 0;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-.tool-v2-cat-count {
-  font-size: 0.79rem;
+.tool-v2-cat-tile-count {
+  font-size: 0.76rem;
   color: var(--text-muted);
 }
 
