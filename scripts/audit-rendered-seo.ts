@@ -57,6 +57,14 @@ const APP_BUILD_DIR = path.join(process.cwd(), '.next', 'server', 'app');
 const PLACEHOLDER_PATTERN: RegExp = /(?:\[|\]|%5B|%5D)/i;
 const SITEMAP_FILE_PATTERN: RegExp = /(?:sitemap|\.xml)(?:\.body)?$/i;
 const TIME_NOW_ROUTE_PATTERN: RegExp = /^\/time-now(?:\/|$)/;
+// A real "page rendered as an empty shell" bug (e.g. the PPR-postponed-hole class documented in
+// this project's own history) shows up as a near-zero word count — chrome/nav only, no content.
+// This is deliberately far below the 300/500/700 quality-depth tiers below: those track content
+// *investment* (worth prioritizing, not blocking) across pages that are legitimately short by
+// product design (single-tool category hubs like /tools/pools, /tools/cctv — see their own
+// "Deliberately narrow/single-tool hub" comments in src/app/tools/page.jsx). This floor exists
+// only to catch genuine breakage, not to enforce a minimum word count on every page.
+const BROKEN_PAGE_WORD_FLOOR = 80;
 
 function assertBuiltAppDir(): void {
   if (!existsSync(APP_BUILD_DIR)) {
@@ -316,6 +324,12 @@ function runAudit(): void {
   const contentDepthWarnings = indexableAudits
     .filter((audit) => audit.wordCount < 700)
     .sort((left, right) => left.wordCount - right.wordCount);
+  // Only near-zero word counts block the build — see BROKEN_PAGE_WORD_FLOOR above. The 300/500/700
+  // tiers above stay informational (printed in the samples below) so content-investment priority
+  // is still visible without a deploy failing over a page that's short by deliberate design.
+  const likelyBrokenPages = indexableAudits
+    .filter((audit) => audit.wordCount < BROKEN_PAGE_WORD_FLOOR)
+    .sort((left, right) => left.wordCount - right.wordCount);
   const placeholderHtml = audits.filter((audit) => audit.isPlaceholder);
   const sitemapPlaceholderLeaks = findSitemapPlaceholderLeaks(files);
   const failures = [
@@ -328,7 +342,7 @@ function runAudit(): void {
     ...duplicateFaqPages.map((audit) => `Duplicate FAQPage definitions (${audit.faqPageCount}): ${audit.routePath}`),
     ...timeNowFaqPages.map((audit) => `Retired FAQPage schema under /time-now: ${audit.routePath}`),
     ...missingTrustLinks.map((audit) => `Missing trust links: ${audit.routePath}`),
-    ...shallowPublicPages.map((audit) => `Public page under 500 words: ${audit.routePath} (${audit.wordCount} words)`),
+    ...likelyBrokenPages.map((audit) => `Public page likely broken/empty (${audit.wordCount} words, floor is ${BROKEN_PAGE_WORD_FLOOR}): ${audit.routePath}`),
     ...sitemapPlaceholderLeaks.map((filePath) => `Placeholder leaked into sitemap output: ${path.relative(process.cwd(), filePath)}`),
   ];
 
@@ -355,6 +369,7 @@ function runAudit(): void {
   console.log(`- HTML size median/p90/p99/max: ${formatBytes(summary.medianHtmlBytes)} / ${formatBytes(summary.p90HtmlBytes)} / ${formatBytes(summary.p99HtmlBytes)} / ${formatBytes(summary.largestHtmlBytes)}`);
 
   printTopRoutes('Thin public pages sample', thinPublicPages, 10);
+  printTopRoutes('Shallow public pages sample', shallowPublicPages, 10);
   printTopRoutes('Content depth warning sample', contentDepthWarnings, 10);
   printMetadataRoutes('Metadata length warning sample', [...titleOutsideRecommendedLength, ...descriptionOutsideRecommendedLength], 10);
   printTopRoutes('Placeholder shell pages blocked by proxy sample', placeholderHtml, 10);
