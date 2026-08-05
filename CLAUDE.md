@@ -88,6 +88,7 @@ Docker Compose + Nginx on Hetzner VPS · GitHub Actions CI/CD
 - `.claude/rules/database-api.md` — geo snapshot flow, holiday repository, Prisma schema
 - `.claude/rules/nextjs-patterns.md` — Server/Client boundary, caching, prerendering
 - `.claude/rules/calculator-ui-standards.md` — mobile-first layout, no gradients, CSS variables, country badges, pre-ship UI checklist
+- `.claude/rules/tools-hub-pattern.md` — dot-list layout standard for every `/tools/<category>` hub index page, group ordering (tools first, المقالات last)
 
 ## Docs Quick Reference
 

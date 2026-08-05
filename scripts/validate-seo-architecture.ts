@@ -68,9 +68,12 @@ const REQUIRED_SEGMENT_GUARDS = [
   { route: '/mwaqit-al-salat/[country]/[city]', dir: 'src/app/mwaqit-al-salat/[country]/[city]' },
   { route: '/time-difference', dir: 'src/app/time-difference' },
   { route: '/time-difference/[from]/[to]', dir: 'src/app/time-difference/[from]/[to]' },
-  { route: '/calculators/building/[country]', dir: 'src/app/calculators/building/[country]' },
-  { route: '/calculators/sleep/[tool]', dir: 'src/app/calculators/sleep/[tool]' },
-  { route: '/calculators/personal-finance/[tool]', dir: 'src/app/calculators/personal-finance/[tool]' },
+  // '/calculators/building/[country]' removed 2026-08-04 — consolidated into the single
+  // /tools/construction/build-cost country selector (all 14 countries), old dynamic segment
+  // deleted and redirected.
+  // '/calculators/sleep/[tool]' and '/calculators/personal-finance/[tool]' removed 2026-08-04 —
+  // both migrated to individual /tools/sleep/<slug> and /tools/personal-finance/<slug> static
+  // routes (tools-v2), so the old shared dynamic segment no longer exists.
 ] as const;
 
 const INDEXABLE_ROOT_PAGE_RULES = [
@@ -471,14 +474,6 @@ function assertCalculatorSitemapCompleteness(errors: string[]) {
   ];
 
   for (const href of indexableHrefs) {
-    // Dynamic per-country building pages are covered by BUILDING_COUNTRY_CALCULATOR_SEO_ROUTES.
-    if (/^\/calculators\/building\/[^/]+$/.test(href) && !manifestPaths.has(href)) {
-      const isStaticBuildingChild = ['cement', 'rebar', 'tiles', 'paint'].some(
-        (slug) => href === `/calculators/building/${slug}`,
-      );
-      if (!isStaticBuildingChild) continue;
-    }
-
     if (!manifestPaths.has(href)) {
       errors.push(
         `Calculator route ${href} is missing from ALL_CALCULATOR_SEO_ROUTES (src/lib/seo/calculator-route-manifest.js); it would ship un-indexed. Add it to STATIC_CALCULATOR_SEO_ROUTES.`,

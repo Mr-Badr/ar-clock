@@ -184,7 +184,9 @@ export function calculateEndOfServiceBenefit({
   const remainingAmount = basicSalary * remainingYears;
   const fullAward = firstFiveAmount + remainingAmount;
 
-  const resignationBracket = getEndOfServiceBracket(service.decimalYears);
+  // Calendar-exact whole years (not decimalYears) — see the matching comment in
+  // calculateUaeEndOfServiceBenefit for why decimalYears is unsafe at exact-anniversary boundaries.
+  const resignationBracket = getEndOfServiceBracket(service.years);
   const multiplier =
     reason === 'resignation'
       ? resignationBracket.multiplier
@@ -1347,11 +1349,20 @@ export function calculateBMI({
 
 // Resignation entitlement brackets under UAE law
 // (same brackets apply to early exit from limited contracts)
+// Corrected 2026-07-30 after direct verification against the UAE government portal (u.ae) and
+// multiple 2026-dated legal sources: Federal Decree-Law No. 33 of 2021 (effective 2022-02-02)
+// REPEALED the old graduated resignation scale (1/3 at 1-3yrs, 2/3 at 3-5yrs, full at 5+yrs).
+// Under current law, gratuity is NOT reduced for resigning — every termination reason
+// (resignation, contract end, employer termination, retirement) is treated identically: 0%
+// under 1 year of continuous service, 100% at 1 year or more. The old graduated scale only
+// ever survives today as a narrow transitional case (an employee who stayed on a legacy
+// "unlimited" contract never converted to fixed-term by the 2023-02-01 conversion deadline —
+// a deadline that has long passed), which this calculator does not model. This function's old
+// name is kept (it's exported and used by the milestones builder) but it's now a simple
+// eligibility gate, not a resignation-specific graduated scale.
 export function getUaeEndOfServiceBracket(serviceYears) {
-  if (serviceYears < 1) return { label: 'أقل من سنة', multiplier: 0 };
-  if (serviceYears < 3) return { label: 'من سنة إلى أقل من 3 سنوات', multiplier: 1 / 3 };
-  if (serviceYears < 5) return { label: 'من 3 إلى أقل من 5 سنوات', multiplier: 2 / 3 };
-  return { label: '5 سنوات فأكثر', multiplier: 1 };
+  if (serviceYears < 1) return { label: 'أقل من سنة — لا يوجد استحقاق', multiplier: 0 };
+  return { label: 'سنة فأكثر — استحقاق كامل بصرف النظر عن السبب', multiplier: 1 };
 }
 
 export function calculateUaeEndOfServiceBenefit({
@@ -1383,16 +1394,28 @@ export function calculateUaeEndOfServiceBenefit({
   const remainingYears = Math.max(service.decimalYears - 5, 0);
   const firstFiveAmount = dailyRate * 21 * firstFiveYears;
   const remainingAmount = dailyRate * 30 * remainingYears;
-  const fullGratuity = firstFiveAmount + remainingAmount;
+  const uncappedFullGratuity = firstFiveAmount + remainingAmount;
+  // Statutory ceiling (u.ae, Article 51): total gratuity never exceeds two years' basic wage.
+  // Only reachable after ~25.5 years of service — rare, but a real accuracy gap if omitted.
+  const capAmount = salary * 24;
+  const fullGratuity = Math.min(uncappedFullGratuity, capAmount);
+  const isCapped = uncappedFullGratuity > capAmount;
 
-  const resignationBracket = getUaeEndOfServiceBracket(service.decimalYears);
-  const multiplier = reason === 'resignation' ? resignationBracket.multiplier : 1;
+  // Same eligibility rule for every reason now — see getUaeEndOfServiceBracket's comment above.
+  // Uses the calendar-exact whole-years count (service.years), not decimalYears (totalDays /
+  // 365.2425): that approximation puts an exact 12-month span at ~0.9993, one epsilon short of
+  // the 1-year threshold, which wrongly zeroed out gratuity for anyone leaving on their exact
+  // service anniversary. service.years is computed via UTC Y/M/D subtraction, so it has no such
+  // rounding error at bracket boundaries.
+  const resignationBracket = getUaeEndOfServiceBracket(service.years);
+  const multiplier = resignationBracket.multiplier;
   const gratuity = fullGratuity * multiplier;
 
-  // Breakdown: whole years vs partial year (for display)
+  // Breakdown: whole years vs partial year (for display) — computed from the uncapped total so
+  // the displayed line items still sum correctly in the ordinary (non-capped) case.
   const wholeFirstFive = Math.min(service.years, 5) * dailyRate * 21;
   const wholeRemaining = Math.max(service.years - 5, 0) * dailyRate * 30;
-  const partialAmount = Math.max(fullGratuity - wholeFirstFive - wholeRemaining, 0);
+  const partialAmount = Math.max(uncappedFullGratuity - wholeFirstFive - wholeRemaining, 0);
 
   return {
     isValid: true,
@@ -1410,6 +1433,7 @@ export function calculateUaeEndOfServiceBenefit({
     gratuity: round(gratuity),
     entitlementPercent: round(multiplier * 100, 1),
     resignationBracket,
+    isCapped,
   };
 }
 
@@ -1441,10 +1465,13 @@ export function buildUaeEndOfServiceComparison({
 }
 
 export function buildUaeEndOfServiceMilestones(startDate) {
+  // Only two REAL milestones remain under current law (see getUaeEndOfServiceBracket's
+  // comment): the 1-year eligibility threshold, and the 5-year point where the daily-rate
+  // multiplier rises from 21 to 30 days per year. There is no longer a 3-year milestone —
+  // that used to mark a resignation-percentage jump (1/3 → 2/3) under the repealed old law.
   const milestones = [
-    { years: 1, label: 'ثلث المكافأة عند الاستقالة' },
-    { years: 3, label: 'ثلثا المكافأة عند الاستقالة' },
-    { years: 5, label: 'مكافأة كاملة عند الاستقالة + معدل 30 يوماً/سنة' },
+    { years: 1, label: 'أول أهلية لمكافأة نهاية الخدمة (استحقاق كامل من هنا)' },
+    { years: 5, label: 'يرتفع معدل الاحتساب إلى 30 يوماً لكل سنة' },
   ];
   return milestones.map((item) => ({
     ...item,
@@ -1487,9 +1514,13 @@ export function calculateQatarEndOfServiceBenefit({
   const dailyRate = salary / 30;
   const gratuityFull = dailyRate * 21 * service.decimalYears;
 
-  // Art. 61 gross misconduct = full forfeiture; all other reasons = 100%
+  // Art. 54 requires at least 1 full year of service to be eligible at all — checked via the
+  // calendar-exact service.years (not decimalYears, which can put an exact 12-month span just
+  // under 1 due to the 365.2425 approximation; see calculateUaeEndOfServiceBenefit's comment).
+  const isIneligible = service.years < 1;
+  // Art. 61 gross misconduct = full forfeiture; all other reasons = 100% (once eligible)
   const isForfeited = reason === 'misconduct';
-  const gratuity = isForfeited ? 0 : gratuityFull;
+  const gratuity = isForfeited || isIneligible ? 0 : gratuityFull;
 
   const wholeYearsAmount = service.years * dailyRate * 21;
   const partialAmount = Math.max(gratuityFull - wholeYearsAmount, 0);
@@ -1505,8 +1536,9 @@ export function calculateQatarEndOfServiceBenefit({
     wholeYearsAmount: round(wholeYearsAmount),
     partialAmount: round(partialAmount),
     gratuity: round(gratuity),
-    entitlementPercent: isForfeited ? 0 : 100,
+    entitlementPercent: isForfeited || isIneligible ? 0 : 100,
     isForfeited,
+    isIneligible,
   };
 }
 
@@ -1601,7 +1633,9 @@ export function calculateKuwaitEndOfServiceBenefit({
   const cappedFullGratuity = Math.min(fullGratuity, cap);
   const isCapped = fullGratuity > cap;
 
-  const resignationBracket = getKuwaitEndOfServiceBracket(service.decimalYears);
+  // Calendar-exact whole years (not decimalYears) — see the matching comment in
+  // calculateUaeEndOfServiceBenefit for why decimalYears is unsafe at exact-anniversary boundaries.
+  const resignationBracket = getKuwaitEndOfServiceBracket(service.years);
   const multiplier = reason === 'resignation' ? resignationBracket.multiplier : 1;
   const gratuity = cappedFullGratuity * multiplier;
 
@@ -1716,7 +1750,9 @@ export function calculateBahrainEndOfServiceBenefit({
   const remainingAmount = dailyRate * 30 * remainingYears;
   const fullGratuity = firstThreeAmount + remainingAmount;
 
-  const resignationBracket = getBahrainEndOfServiceBracket(service.decimalYears);
+  // Calendar-exact whole years (not decimalYears) — see the matching comment in
+  // calculateUaeEndOfServiceBenefit for why decimalYears is unsafe at exact-anniversary boundaries.
+  const resignationBracket = getBahrainEndOfServiceBracket(service.years);
   const multiplier = reason === 'resignation' ? resignationBracket.multiplier : 1;
   const gratuity = fullGratuity * multiplier;
 
@@ -1828,7 +1864,9 @@ export function calculateEgyptEndOfServiceBenefit({
   const fullGratuity    = firstTenAmount + remainingAmount;
 
   // Art. 121: resignation multiplier
-  const resignationBracket = getEgyptEndOfServiceBracket(service.decimalYears);
+  // Calendar-exact whole years (not decimalYears) — see the matching comment in
+  // calculateUaeEndOfServiceBenefit for why decimalYears is unsafe at exact-anniversary boundaries.
+  const resignationBracket = getEgyptEndOfServiceBracket(service.years);
   const multiplier = reason === 'resignation' ? resignationBracket.multiplier : 1;
   const gratuity   = fullGratuity * multiplier;
 
@@ -2018,7 +2056,9 @@ export function calculateJordanEndOfServiceBenefit({ basicSalary, startDate, end
   let entitlementPct = 100;
   let resignationBracket = null;
   if (reason === 'resignation') {
-    const bracket      = getJordanEndOfServiceBracket(service.decimalYears);
+    // Calendar-exact whole years (not decimalYears) — see the matching comment in
+    // calculateUaeEndOfServiceBenefit for why decimalYears is unsafe at exact-anniversary boundaries.
+    const bracket      = getJordanEndOfServiceBracket(service.years);
     entitlementPct     = bracket.pct;
     resignationBracket = bracket;
   }

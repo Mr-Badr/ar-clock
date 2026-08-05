@@ -141,6 +141,34 @@ export const TILE_SIZES = [
   { label: '100×100',w:100, h: 100,defaultPerBox: 1  },
 ];
 
+// ─── Gypsum Board (drywall / false ceiling) ─────────────────────────────────
+// Standard Gulf sheet size 1200×2400mm (2.88 m²) — confirmed against Saudi/UAE
+// suppliers (Al Qassim, Jawdah, USG ME). Waste bands follow the same
+// standard/complex split used industry-wide for drywall estimating (10%
+// typical rectangular room, 15-20% rooms with many corners/cutouts/fixtures).
+export const GYPSUM_BOARD_SIZES = [
+  { label: '120×240 سم (القياسي)', w: 120, h: 240, area: 2.88 },
+  { label: '120×300 سم', w: 120, h: 300, area: 3.6 },
+  { label: '60×60 سم (بلاطة سقف معلق)', w: 60, h: 60, area: 0.36 },
+];
+
+export const GYPSUM_WASTE_LEVELS = [
+  { key: 'simple', label: 'غرفة بسيطة مستطيلة', waste: 0.10, badge: 'الأكثر شيوعاً', desc: 'سقف أو جدار مستقيم بلا زوايا كثيرة أو فتحات إضاءة معقدة.' },
+  { key: 'complex', label: 'غرفة بها زوايا/فتحات كثيرة', waste: 0.15, desc: 'حمامات ومطابخ وأسقف بها فتحات إضاءة أو مستويات متعددة — قص أكثر يعني هدر أكثر.' },
+  { key: 'heavy', label: 'تصميم مخصص أو أشكال غير منتظمة', waste: 0.20, desc: 'أسقف معلقة بمنحنيات أو مستويات متعددة أو تصميم ديكوري معقد.' },
+];
+
+/**
+ * Calculate gypsum board sheet count from total area, sheet size, and waste level.
+ */
+export function calcGypsumBoard(areaM2, sheetAreaM2, wasteKey = 'simple') {
+  const level = GYPSUM_WASTE_LEVELS.find((w) => w.key === wasteKey) ?? GYPSUM_WASTE_LEVELS[0];
+  const wasteFactor = level.waste;
+  const netSheets = areaM2 / sheetAreaM2;
+  const sheetsWithWaste = Math.ceil(netSheets * (1 + wasteFactor));
+  return { netSheets, sheetsWithWaste, wasteFactor };
+}
+
 // ─── Paint Coverage ──────────────────────────────────────────────────────────
 
 export const PAINT_COVERAGE_PER_LITER = {
@@ -163,6 +191,24 @@ export const MASONRY_UNITS_PER_M2 = {
   block_15:  { perM2: 12.5, label: 'بلك 15 مجوف',  dims: '40×15×20 سم',  mortarBags: 0.3 },
   block_10:  { perM2: 12.5, label: 'بلك 10 مجوف',  dims: '40×10×20 سم',  mortarBags: 0.25 },
 };
+
+// Waste/breakage margin — same 5-10% range every competitor (toolsri.com, webcety.com,
+// omnicalculator.com's concrete-block calculator) recommends for cutting and breakage.
+export const MASONRY_WASTE_FACTOR = 0.08;
+
+/**
+ * Calculate masonry unit count (brick/block) + mortar bags for a wall area, net of
+ * openings (doors/windows), with a waste margin for cuts and breakage.
+ */
+export function calcMasonryUnits(wallAreaM2, openingsAreaM2, unitKey, wasteFactor = MASONRY_WASTE_FACTOR) {
+  const unit = MASONRY_UNITS_PER_M2[unitKey] ?? MASONRY_UNITS_PER_M2.block_20;
+  const netAreaM2 = Math.max(0, wallAreaM2 - Math.max(0, openingsAreaM2));
+  const netUnits = netAreaM2 * unit.perM2;
+  const unitsWithWaste = Math.ceil(netUnits * (1 + wasteFactor));
+  const mortarBags = Math.ceil(netAreaM2 * unit.mortarBags);
+
+  return { netAreaM2, netUnits, unitsWithWaste, mortarBags, unit };
+}
 
 // ─── Building Finish Levels ──────────────────────────────────────────────────
 
@@ -318,6 +364,22 @@ export function calcBuildingCost(
     cementBags, rebarTons, breakdown,
   };
 }
+
+// ─── Unit Conversion (sqft <-> sqm) ──────────────────────────────────────────
+// Exact internationally defined conversion factor — not an estimate.
+export const SQFT_TO_SQM = 0.09290304;
+
+export function sqftToSqm(sqft) {
+  return sqft * SQFT_TO_SQM;
+}
+
+export function sqmToSqft(sqm) {
+  return sqm / SQFT_TO_SQM;
+}
+
+// The specific values found with real recurring search volume in Keyword Planner
+// (keyword-research/construction-hub/DECISION.md) — shown as a quick-reference table.
+export const COMMON_SQFT_VALUES = [100, 200, 300, 500, 1000, 5000, 6000];
 
 // ─── Re-export formatting helpers from country-data ─────────────────────────
 // This lets components import fmt/formatCurrency from one file (constants.js)

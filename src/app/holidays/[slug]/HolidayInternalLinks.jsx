@@ -26,25 +26,24 @@ const GULF_PAY_DATES_SLUGS = new Set([
 
 const CALCULATOR_LINKS = {
   // Islamic religious events
-  'eid-al-fitr':         { href: '/calculators/zakat',            title: 'حاسبة الزكاة',           desc: 'احسب زكاتك قبل عيد الفطر — مال وذهب واستثمارات.' },
   'ramadan':             { href: '/calculators/fasting',           title: 'حاسبة الصيام',           desc: 'ساعات الصيام وأوقات الإفطار في مدينتك طوال الشهر.' },
-  'eid-al-adha':         { href: '/calculators/zakat',            title: 'حاسبة الزكاة',           desc: 'احسب زكاتك وتكلفة الأضحية قبل العيد.' },
+  'eid-al-adha':         { href: '/tools/gulf-finance/aqiqah',    title: 'حاسبة العقيقة',          desc: 'احسب عدد الذبائح وتكلفتها التقديرية قبل العيد.' },
   'day-of-arafa':        { href: '/calculators/fasting',          title: 'حاسبة الصيام',           desc: 'ساعات صيام يوم عرفة وأوقاته في أي مدينة.' },
-  'first-dhul-hijjah':   { href: '/calculators/inheritance',      title: 'حاسبة الميراث',          desc: 'احسب توزيع التركة وفق الشريعة في موسم الحج.' },
+  'first-dhul-hijjah':   { href: '/tools/gulf-finance/wasiyya',   title: 'حاسبة الوصية الشرعية',    desc: 'كم يجوز أن توصي من تركتك قبل موسم الحج.' },
   'ashura':              { href: '/calculators/fasting',          title: 'حاسبة الصيام',           desc: 'ساعات صيام عاشوراء وأوقاته في مدينتك.' },
   // Salary / support payment events
-  'salary-day-saudi':    { href: '/calculators/salary',           title: 'حاسبة الراتب',           desc: 'احسب ما يعادل راتبك الشهري يومياً وساعياً.' },
-  'salary-day-uae':      { href: '/calculators/net-salary',       title: 'صافي الراتب',            desc: 'احسب راتبك بعد خصم GPSSA وباقي الاستقطاعات.' },
-  'salary-day-kuwait':   { href: '/calculators/salary',           title: 'حاسبة الراتب',           desc: 'حوّل راتبك الكويتي بين شهري ويومي وساعي.' },
-  'salary-day-qatar':    { href: '/calculators/salary',           title: 'حاسبة الراتب',           desc: 'احسب الراتب اليومي والساعي وفق أيام العمل الفعلية.' },
-  'pension-day-saudi':   { href: '/calculators/end-of-service-benefits', title: 'نهاية الخدمة',    desc: 'احسب مكافأة نهاية خدمتك قبل التقاعد.' },
-  'citizen-account-saudi': { href: '/calculators/net-salary',     title: 'صافي الراتب',            desc: 'احسب الراتب بعد خصم GOSI وزكاة الفطر.' },
-  'social-security-saudi': { href: '/calculators/end-of-service-benefits', title: 'نهاية الخدمة',  desc: 'قدّر حقوقك التقاعدية من التأمينات الاجتماعية.' },
-  'hafez-saudi':         { href: '/calculators/salary',           title: 'حاسبة الراتب',           desc: 'احسب ما يعادل مبلغ حافز يومياً مقارنةً بالراتب.' },
+  'salary-day-saudi':    { href: '/tools/gulf-finance',           title: 'حاسبات الرواتب الخليجية', desc: 'استكشف حاسبات الرواتب والمزايا في السعودية.' },
+  'salary-day-uae':      { href: '/tools/gulf-finance/uae-end-of-service', title: 'نهاية الخدمة الإمارات', desc: 'احسب مكافأة نهاية خدمتك في الإمارات وفق قانون 2021.' },
+  'salary-day-kuwait':   { href: '/tools/gulf-finance',           title: 'حاسبات الرواتب الخليجية', desc: 'استكشف حاسبات الرواتب والمزايا في الكويت.' },
+  'salary-day-qatar':    { href: '/tools/gulf-finance',           title: 'حاسبات الرواتب الخليجية', desc: 'استكشف حاسبات الرواتب والمزايا في قطر.' },
+  'pension-day-saudi':   { href: '/tools/gulf-finance/end-of-service-benefits', title: 'نهاية الخدمة',    desc: 'احسب مكافأة نهاية خدمتك قبل التقاعد.' },
+  'citizen-account-saudi': { href: '/tools/gulf-finance',         title: 'حاسبات الرواتب الخليجية', desc: 'استكشف حاسبات الرواتب والمزايا السعودية.' },
+  'social-security-saudi': { href: '/tools/gulf-finance/end-of-service-benefits', title: 'نهاية الخدمة',  desc: 'قدّر حقوقك التقاعدية من التأمينات الاجتماعية.' },
+  'hafez-saudi':         { href: '/tools/gulf-finance',           title: 'حاسبات الرواتب الخليجية', desc: 'استكشف حاسبات الرواتب والمزايا السعودية.' },
   // National / public holiday events
-  'saudi-national-day':  { href: '/calculators/iqama',            title: 'حاسبة الإقامة',          desc: 'احسب رسوم تجديد الإقامة وتكلفة المرافقين.' },
-  'uae-national-day':    { href: '/calculators/uae-end-of-service', title: 'نهاية الخدمة الإمارات', desc: 'احسب مكافأة نهاية خدمتك في الإمارات وفق قانون 2021.' },
-  'kuwait-national-day': { href: '/calculators/annual-leave',     title: 'حاسبة الإجازات',         desc: 'احسب أيام إجازتك المستحقة وفق قانون العمل الكويتي.' },
+  'saudi-national-day':  { href: '/tools/gulf-finance/iqama',     title: 'حاسبة الإقامة',          desc: 'احسب رسوم تجديد الإقامة وتكلفة المرافقين.' },
+  'uae-national-day':    { href: '/tools/gulf-finance/uae-end-of-service', title: 'نهاية الخدمة الإمارات', desc: 'احسب مكافأة نهاية خدمتك في الإمارات وفق قانون 2021.' },
+  'kuwait-national-day': { href: '/tools/gulf-finance/annual-leave', title: 'حاسبة الإجازات',       desc: 'احسب أيام إجازتك المستحقة وفق قانون العمل الكويتي.' },
   // School-year events
   'school-start-saudi': { href: '/calculators/saudi-school-calendar', title: 'التقويم الدراسي السعودي', desc: 'كل إجازات العام الدراسي 1448 في جدول واحد.' },
 };
@@ -91,15 +90,15 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
     links.push({ href: calcLink.href, title: calcLink.title, desc: calcLink.desc, cta: 'ابدأ الحاسبة', kind: 'calculator' });
   } else if (event?.category === 'support') {
     links.push({
-      href: '/calculators/salary',
-      title: 'حاسبة الراتب',
-      desc: 'احسب ما يعادل راتبك الشهري يومياً وساعياً وسنوياً.',
+      href: '/tools/gulf-finance',
+      title: 'حاسبات الرواتب الخليجية',
+      desc: 'استكشف حاسبات الرواتب ونهاية الخدمة والمزايا في دولتك.',
       cta: 'ابدأ الحاسبة',
       kind: 'calculator',
     });
   } else if (event?.category === 'national') {
     links.push({
-      href: '/calculators/annual-leave',
+      href: '/tools/gulf-finance/annual-leave',
       title: 'حاسبة الإجازات السنوية',
       desc: 'احسب أيام إجازتك المستحقة قانونياً خلال العطلات الرسمية.',
       cta: 'ابدأ الحاسبة',
@@ -115,9 +114,9 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
     });
   } else if (isIslamic) {
     links.push({
-      href: '/calculators/zakat',
-      title: 'حاسبة الزكاة',
-      desc: 'احسب زكاتك وفق النصاب الشرعي — مال وذهب واستثمارات.',
+      href: '/tools/gulf-finance/wasiyya',
+      title: 'حاسبة الوصية الشرعية',
+      desc: 'كم يجوز أن توصي من تركتك وفق الشريعة.',
       cta: 'ابدأ الحاسبة',
       kind: 'calculator',
     });
@@ -155,7 +154,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
   const countryHub = getCountryHubByCode(event?._countryCode);
   if (GULF_PAY_DATES_SLUGS.has(slug)) {
     links.push({
-      href: '/calculators/gulf-pay-dates',
+      href: '/tools/gulf-finance/gulf-pay-dates',
       title: 'جدول رواتب الخليج',
       desc: 'قارن هذا الموعد بكل مواعيد الرواتب والمعاشات والدعم في دول الخليج الست، مرتبة حسب الأقرب.',
       cta: 'افتح الجدول',

@@ -27,7 +27,6 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
-import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import { Skeleton } from '@/components/ui/skeleton';
 import routeStyles from '@/app/mwaqit-al-salat/PrayerRoutePage.module.css';
 import {
@@ -683,7 +682,6 @@ export default async function CountryPrayerPage({ params }) {
 
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
           <div className={routeStyles.sectionPanel}>
-            <SiteTrustPanel panel="prayer" />
           </div>
         </section>
         </main>

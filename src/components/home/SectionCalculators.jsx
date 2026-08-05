@@ -19,13 +19,13 @@ const SITE_URL = getSiteUrl();
 
 const TOOLS = [
   {
-    href: '/calculators/sleep',
+    href: '/tools/sleep',
     title: 'حاسبات النوم الذكي',
     description: 'ابدأ من متى تنام ومتى تستيقظ وكم تحتاج نوم داخل نظام يومي قابل للرجوع.',
     icon: MoonStar,
   },
   {
-    href: '/calculators/personal-finance',
+    href: '/tools/personal-finance',
     title: 'حاسبات التخطيط المالي الشخصي',
     description: 'ابدأ من صندوق الطوارئ والديون والادخار وصافي الثروة بحسب القرار الذي تريد ترتيبه.',
     icon: BriefcaseBusiness,
@@ -37,39 +37,39 @@ const TOOLS = [
     icon: BriefcaseBusiness,
   },
   {
-    href: '/calculators/age/calculator',
+    href: '/tools/health/age-calculator',
     title: 'كم عمري الآن؟',
     description: 'احسب عمرك بالسنوات والأشهر والأيام والثواني مع عيد الميلاد القادم من نفس الصفحة.',
     icon: CakeSlice,
   },
   {
-    href: '/calculators/end-of-service-benefits',
+    href: '/tools/gulf-finance/end-of-service-benefits',
     title: 'كم مكافأة نهاية الخدمة؟',
     description: 'احسب مكافأة نهاية الخدمة في السعودية بسرعة مع فهم أثر الاستقالة ونهاية العقد.',
     icon: BriefcaseBusiness,
   },
   {
-    href: '/calculators/monthly-installment',
-    title: 'كم قسط قرض 100 ألف؟',
-    description: 'اعرف القسط الشهري وإجمالي الفوائد وتأثير السداد المبكر على أي مبلغ تمويل.',
-    icon: CreditCard,
-  },
-  {
-    href: '/calculators/vat',
-    title: 'كم ضريبة 1000 ريال عند 15%؟',
-    description: 'أضف ضريبة القيمة المضافة أو استخرجها من المبلغ الشامل فوراً مع الفرق بين الشامل وغير الشامل.',
-    icon: ReceiptText,
-  },
-  {
-    href: '/calculators/percentage',
-    title: 'كم يساوي 20% من 500؟',
-    description: 'احسب الخصم والزيادة ونسبة التغيير ونسبة جزء من كل بأمثلة يومية واضحة.',
+    href: '/tools/gulf-finance/article-77-compensation',
+    title: 'كم تعويض الفصل التعسفي؟',
+    description: 'احسب تعويض المادة 77 من نظام العمل السعودي: 15 يوماً عن كل سنة خدمة، بحد أدنى أجر شهرين.',
     icon: Percent,
   },
   {
-    href: '/calculators/building',
+    href: '/tools/gulf-finance/traffic-fine-discount',
+    title: 'هل تستحق خصم 25% على مخالفتك؟',
+    description: 'اعرف المبلغ المستحق بعد خصم المادة 75 قبل انتهاء مهلة الـ45 يوماً، مع خيار التقسيط.',
+    icon: ReceiptText,
+  },
+  {
+    href: '/tools/gulf-finance/domestic-worker-cost',
+    title: 'كم تكلفة استقدام عاملة منزلية؟',
+    description: 'الرسوم الحكومية الفعلية عبر مساند بالإضافة لراتبها ورسوم مكتب الاستقدام.',
+    icon: CreditCard,
+  },
+  {
+    href: '/tools/construction/build-cost',
     title: 'كم تكلفة بناء بيت؟',
-    description: 'قدّر تكلفة البناء ومواد التشييد وسعر المتر في عدة دول عربية من صفحة واحدة.',
+    description: 'قدّر تكلفة البناء ومواد التشييد وسعر المتر في 14 دولة عربية من صفحة واحدة.',
     icon: Calculator,
   },
 ];
@@ -143,7 +143,7 @@ export default function SectionCalculators() {
           <div className="action-row">
             <CtaLink href="/calculators">افتح قسم الحاسبات</CtaLink>
             <Link
-              href="/calculators/personal-finance"
+              href="/tools/personal-finance"
               className="text-link"
             >
               ابدأ بالتخطيط المالي الشخصي

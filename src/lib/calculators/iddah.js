@@ -74,7 +74,7 @@ function hijriToGregorianDate(hijri) {
  * @param {string} startDateIso - "YYYY-MM-DD"
  * @param {string} [expectedDueDateIso] - only used for situationType 'pregnant'
  */
-export function computeIddahSnapshot(situationType, startDateIso, expectedDueDateIso) {
+export function computeIddahSnapshot(situationType, startDateIso, expectedDueDateIso, todayDate) {
   const [sy, sm, sd] = String(startDateIso || '').split('-').map(Number);
   if (!sy || !sm || !sd) return null;
 
@@ -120,7 +120,11 @@ export function computeIddahSnapshot(situationType, startDateIso, expectedDueDat
     endHijri = addHijriDays(endHijri.year, endHijri.month, endHijri.day, extraDays);
   }
   const endDate = hijriToGregorianDate(endHijri);
-  const today = new Date();
+  // `todayDate` must be resolved by the caller (never defaulted to `new Date()` here) — this
+  // function runs inside client-component render paths (useMemo), and evaluating `new Date()`
+  // as a default/fallback at call time is exactly the render-phase Date() hazard Next.js flags
+  // ("used new Date() inside a Client Component without a Suspense boundary").
+  const today = new Date(todayDate);
   today.setHours(0, 0, 0, 0);
   const endMidnight = new Date(endDate);
   endMidnight.setHours(0, 0, 0, 0);

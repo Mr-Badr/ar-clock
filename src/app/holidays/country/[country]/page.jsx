@@ -340,7 +340,7 @@ export default async function CountryHubPage({ params }) {
           <Link href="/holidays" className={styles.hubLink}>
             <span aria-hidden="true">🗓️</span> كل المناسبات والأعياد
           </Link>
-          <Link href="/calculators/gulf-pay-dates" className={styles.hubLink}>
+          <Link href="/tools/gulf-finance/gulf-pay-dates" className={styles.hubLink}>
             <span aria-hidden="true">💰</span> جدول رواتب الخليج
           </Link>
         </div>

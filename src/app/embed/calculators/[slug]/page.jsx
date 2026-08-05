@@ -22,11 +22,25 @@ import { notFound } from 'next/navigation';
 // direct import every calculator renders completely unstyled (broken grids,
 // overflowing RTL text) inside the iframe.
 import '@/app/calculators/calculators.css';
-import AgeCalculator from '@/components/calculators/age/AgeCalculator.client';
+// v2-redesigned calculators (end-of-service-benefits, uae-end-of-service, ...) use
+// .tool-v2-* classes, not the old calc-* system above — without this import, their embedded
+// widgets render completely unstyled inside the iframe (found while migrating UAE
+// end-of-service, 2026-07-30: the Saudi one had silently regressed the same way when it was
+// redesigned to v2 and this file was never updated).
+import '@/app/tools/tools-v2.css';
+import AgeCalculatorTool from '@/components/calculators/age/AgeCalculatorTool.client';
 import BMICalculator from '@/components/calculators/BMICalculator.client';
-import PercentageCalculator from '@/components/calculators/PercentageCalculator.client';
 import EndOfServiceCalculator from '@/components/calculators/EndOfServiceCalculator.client';
-import MonthlyInstallmentCalculator from '@/components/calculators/MonthlyInstallmentCalculator.client';
+import UaeEndOfServiceCalculator from '@/components/calculators/UaeEndOfServiceCalculator.client';
+import Article77CompensationCalculator from '@/components/calculators/Article77CompensationCalculator.client';
+import TrafficFineDiscountCalculator from '@/components/calculators/TrafficFineDiscountCalculator.client';
+import BuildCostCalculator from '@/components/calculators/BuildCostCalculator.client';
+import RebarWeightCalculator from '@/components/calculators/RebarWeightCalculator.client';
+import SqftSqmConverter from '@/components/calculators/SqftSqmConverter.client';
+import CementCalculator from '@/components/calculators/CementCalculator.client';
+import TilesCalculator from '@/components/calculators/TilesCalculator.client';
+import PaintCalculator from '@/components/calculators/PaintCalculator.client';
+import GypsumBoardCalculator from '@/components/calculators/GypsumBoardCalculator.client';
 import { getSiteUrl } from '@/lib/site-config';
 
 export const metadata = {
@@ -38,18 +52,62 @@ export const metadata = {
 // proves out; each entry needs its own `EmbedCodeSnippet` block wired into
 // the real calculator page to be discoverable (see calculator page.jsx files).
 const EMBEDDABLE_CALCULATORS = {
-  age: { Component: AgeCalculator, props: { compact: true }, title: 'حاسبة العمر', fullPageHref: '/calculators/age' },
+  age: { Component: AgeCalculatorTool, props: { compact: true }, title: 'حاسبة العمر', fullPageHref: '/tools/health/age-calculator' },
   bmi: { Component: BMICalculator, title: 'حاسبة مؤشر كتلة الجسم', fullPageHref: '/calculators/bmi' },
-  percentage: { Component: PercentageCalculator, title: 'حاسبة النسبة المئوية', fullPageHref: '/calculators/percentage' },
   'end-of-service-benefits': {
     Component: EndOfServiceCalculator,
     title: 'حاسبة مكافأة نهاية الخدمة',
-    fullPageHref: '/calculators/end-of-service-benefits',
+    fullPageHref: '/tools/gulf-finance/end-of-service-benefits',
   },
-  'monthly-installment': {
-    Component: MonthlyInstallmentCalculator,
-    title: 'حاسبة القسط الشهري',
-    fullPageHref: '/calculators/monthly-installment',
+  'uae-end-of-service': {
+    Component: UaeEndOfServiceCalculator,
+    title: 'حاسبة مكافأة نهاية الخدمة الإمارات',
+    fullPageHref: '/tools/gulf-finance/uae-end-of-service',
+  },
+  'article-77-compensation': {
+    Component: Article77CompensationCalculator,
+    title: 'حاسبة تعويض المادة 77',
+    fullPageHref: '/tools/gulf-finance/article-77-compensation',
+  },
+  'traffic-fine-discount': {
+    Component: TrafficFineDiscountCalculator,
+    title: 'حاسبة خصم المخالفات المرورية',
+    fullPageHref: '/tools/gulf-finance/traffic-fine-discount',
+  },
+  'build-cost': {
+    Component: BuildCostCalculator,
+    title: 'حاسبة تكلفة البناء',
+    fullPageHref: '/tools/construction/build-cost',
+  },
+  'rebar-weight': {
+    Component: RebarWeightCalculator,
+    title: 'حاسبة وزن حديد التسليح',
+    fullPageHref: '/tools/construction/rebar-weight',
+  },
+  'sqft-sqm-converter': {
+    Component: SqftSqmConverter,
+    title: 'محول قدم مربع ومتر مربع',
+    fullPageHref: '/tools/construction/sqft-sqm-converter',
+  },
+  cement: {
+    Component: CementCalculator,
+    title: 'حاسبة الأسمنت والخرسانة',
+    fullPageHref: '/tools/construction/cement',
+  },
+  tiles: {
+    Component: TilesCalculator,
+    title: 'حاسبة البلاط والسيراميك',
+    fullPageHref: '/tools/construction/tiles',
+  },
+  paint: {
+    Component: PaintCalculator,
+    title: 'حاسبة الدهان',
+    fullPageHref: '/tools/construction/paint',
+  },
+  'gypsum-board': {
+    Component: GypsumBoardCalculator,
+    title: 'حاسبة كمية الجبس بورد',
+    fullPageHref: '/tools/construction/gypsum-board',
   },
 };
 

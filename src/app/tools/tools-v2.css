@@ -1,0 +1,2208 @@
+/*
+  Tools v2 — the new article-beside-tool page shell (validated in the design mockup:
+  https://claude.ai/code/artifact/ff2326ea-63e8-410e-8044-25327f4c3966).
+
+  Scoped entirely under .tool-v2-* classes and loaded only for /tools pages, so this never touches
+  the existing 104 /calculators pages or their calculators.css. Reuses the site's real design tokens
+  (--bg-surface-*, --text-*, --border-*, --space-*, --radius-*, --green/-text/-subtle) rather than
+  inventing a parallel color system.
+*/
+
+.tool-v2-hero {
+  /* Lives inside .tool-v2-lane-article now (see .tool-v2-lanes note above) — the article's own
+     flex gap provides the spacing to whatever follows, so no block padding needed here. */
+  padding-block: 0;
+}
+.tool-v2-kicker {
+  display: block;
+  color: var(--amber-text, var(--amber));
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: var(--space-2);
+}
+.tool-v2-hero h1 {
+  font-weight: 800;
+  line-height: 1.32;
+  text-wrap: balance;
+  margin: 0 0 var(--space-3);
+  font-size: clamp(1.35rem, 1.15rem + 0.9vw, 1.8rem);
+}
+.tool-v2-lead {
+  font-size: 0.93rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  max-width: 68ch;
+  margin: 0 0 var(--space-5);
+}
+.tool-v2-lead b {
+  color: var(--text-primary);
+}
+
+/* Table of contents — always expanded, one entry per line, real anchor jumps */
+.tool-v2-toc {
+  background: var(--bg-surface-2);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+  max-width: 560px;
+}
+.tool-v2-toc-head {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-2);
+}
+.tool-v2-toc ol {
+  margin: 0;
+  padding-inline-start: 1.2em;
+  font-size: 0.88rem;
+  /* Tailwind's preflight resets list-style to none on every ol/ul site-wide — without this,
+     the TOC numbers are silently invisible (confirmed bug, 2026-07-30) and the list just reads
+     as plain unmarked text, not obviously a clickable list. Matches the validated mockup's own
+     `.toc ol { list-style: decimal; }` exactly. */
+  list-style: decimal;
+}
+.tool-v2-toc li {
+  margin-bottom: 6px;
+}
+.tool-v2-toc a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.tool-v2-toc a:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* The lane shell — CSS Grid, not flex, because each block needs DIFFERENT positioning per
+   breakpoint: mobile order is a fixed rule — tool first, then one mobile-only ad, then the
+   title, then the rest of the content (the owner's explicit mobile spec, 2026-07-30) — while
+   desktop groups the hero above the article in column 1, beside the sticky tool in column 2
+   (Omni Calculator reference: title sits beside the calculator, not above it). Grid `order`
+   lets every block be reordered independently per breakpoint in a way plain flex
+   direction-reversal can't express (grouping hero+article together on desktop while
+   splitting them apart, around the mobile ad, on mobile). */
+.tool-v2-lanes {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  padding-block: var(--space-5) var(--space-8, 64px);
+}
+.tool-v2-lane-tool {
+  order: 1;
+}
+.tool-v2-lane-mobile-ad {
+  order: 2;
+}
+.tool-v2-lane-hero {
+  order: 3;
+}
+.tool-v2-lane-article {
+  order: 4;
+  min-width: 0;
+  /* One gap value spaces EVERY top-level block (each <section>, the scope <details>) evenly
+     and generously — replacing the old per-h2 margin-top, which only spaced headings and
+     left blocks inconsistently tight against their neighbors. */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8, 64px);
+}
+@media (min-width: 1200px) {
+  /* Breakpoint raised from 1024px to 1200px (owner call, 2026-07-30): "the tablet should have
+     the same system as mobile" — tablets, including landscape iPads (~1024–1180px), now get
+     the SAME tool-first stacked layout as phones. NOT raised all the way to 1440px (the ad
+     rails' own activation point) — a real laptop's BROWSER VIEWPORT is very often narrower
+     than its physical screen resolution (unmaximized windows, devtools open, split-screen),
+     so gating the 2-column article/tool split on the same 1440px the ad rails need would hide
+     it for a lot of genuine laptop users, which is exactly what the owner flagged ("i do not
+     see the 3 columns... i see the calculator taking full width") after the first version of
+     this fix. The two thresholds are intentionally decoupled: 2-column split at 1200px,
+     ad rails layer in separately once the viewport also reaches 1440px. */
+  .tool-v2-lane-mobile-ad {
+    /* Mobile/tablet-only slot — desktop already gets an in-article ad naturally placed
+       mid-content (see ToolInArticleAd usage in page.jsx), so this dedicated one is removed
+       entirely above the breakpoint rather than just visually reordered. */
+    display: none;
+  }
+  .tool-v2-lanes {
+    /* Column 1 (article) is deliberately a bit narrower than the tool column — the
+       calculator is the important, primary element, per the owner's explicit call
+       (2026-07-30): "the first column of content should have a little small width... the
+       calculator is important." Together, columns 1+2 should clearly dominate the page
+       width over column 3 (the ad rail) — per the owner: "column 1 and two should have more
+       space than column 3."
+       Tracks use minmax(min, PX) — a fixed max, NOT fr — so the grid's natural width is
+       simply 560+460+gap (≈950px) and stops there. An fr-based track (tried first) fills
+       100% of whatever container width it's given, which combined with a max-width+
+       margin-inline:auto centering hack produced a visible dead gap beside column 1 on
+       ordinary laptop widths — the owner explicitly flagged this ("i see some space in
+       right of first column... this is wrong"). With fixed-max tracks, default
+       justify-content:start simply flushes the grid against the container's start edge (the
+       visual right in RTL) with NOTHING extra needed — column 1 starts immediately, column 2
+       follows it, and any leftover width trails off past column 2 with no artificial gap
+       between them. On genuinely big screens (≥1440/1800px) that trailing space is exactly
+       where the real ad-rail grid (a separate, outer system — see AdLayoutWrapper) puts a
+       real column; on an ordinary laptop with no rail active yet, it's just page margin,
+       which is correct — the owner: "we should not see two columns in center [with dead
+       space around them] on normal laptops, only on big devices like 27"." */
+    grid-template-columns: minmax(320px, 560px) minmax(360px, 460px);
+    grid-template-rows: auto 1fr;
+    align-items: start;
+    /* Owner call (2026-07-30): columns 1+2 (article/tool) should sit closer together than the
+       mobile stacked gap — the ad rails need the visual "room to breathe," not the article and
+       its own calculator. */
+    gap: var(--space-4);
+  }
+  .tool-v2-lane-hero {
+    grid-column: 1;
+    grid-row: 1;
+    order: initial;
+  }
+  .tool-v2-lane-article {
+    grid-column: 1;
+    grid-row: 2;
+    order: initial;
+    max-width: 560px;
+  }
+  .tool-v2-lane-tool {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    order: initial;
+    max-width: 460px;
+    position: sticky;
+    top: var(--space-5);
+  }
+}
+
+/* Ad gutters — reserve visible breathing room around every /tools ad slot regardless of
+   whether a real ad fills it locally (see ToolTopAdSlot/ToolInArticleAd + DevAdPlaceholder).
+   .tool-v2-ad-gutter--mid has no margin of its own on purpose: both places it's used
+   (mid-article, inside .tool-v2-lane-article's flex gap; mobile-top, inside
+   .tool-v2-lanes' grid gap) already get spacing from their parent's gap — an own-margin here
+   would double up and make the ad's gap visibly bigger than every other block's. */
+.tool-v2-ad-gutter--top {
+  margin-bottom: var(--space-6);
+}
+@media (min-width: 768px) {
+  .tool-v2-ad-gutter--top {
+    margin-bottom: var(--space-8, 32px);
+  }
+}
+
+.tool-v2-lane-article h2 {
+  margin-top: 0;
+  margin-bottom: var(--space-3);
+  scroll-margin-top: 88px;
+  font-size: clamp(1.02rem, 0.96rem + 0.3vw, 1.15rem);
+  font-weight: 800;
+  line-height: 1.4;
+}
+/* Plain flowing prose — the default for article copy. Whitespace between blocks does the
+   separating (per the Omni Calculator reference the owner pointed to), not a bordered box
+   around every paragraph. Reserve real boxes (.tool-v2-related-card, .tool-v2-tip/-callout,
+   .tool-v2-toc) for content that is genuinely a distinct module, not for body copy. */
+.tool-v2-lane-article > section > p,
+.tool-v2-lane-article > section > ul,
+.tool-v2-lane-article > section > ol {
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--text-secondary);
+  max-width: 66ch;
+  margin: 0 0 var(--space-3);
+}
+.tool-v2-lane-article > section > ul,
+.tool-v2-lane-article > section > ol {
+  padding-inline-start: 1.3em;
+}
+.tool-v2-lane-article > section > ul li,
+.tool-v2-lane-article > section > ol li {
+  margin-bottom: 6px;
+}
+.tool-v2-lane-article h3 {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: var(--space-5) 0 3px;
+}
+.tool-v2-lane-article .tool-v2-eyebrow {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--green-text);
+  margin-bottom: 4px;
+}
+.tool-v2-plain-block {
+  margin-block: var(--space-4);
+}
+.tool-v2-plain-block p {
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--text-secondary);
+  max-width: 66ch;
+  margin: 0;
+}
+/* Same plain-prose scale for the collapsible scope note — kept as a separate rule instead
+   of a broad `.tool-v2-lane-article section p` descendant selector, which would
+   out-specificity (more tag selectors) the intentionally distinct .tool-v2-info-card/
+   .tool-v2-faq/.tool-v2-plain-block paragraph rules above. */
+.tool-v2-collapse-body p,
+.tool-v2-collapse-body ul {
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--text-secondary);
+  max-width: 66ch;
+  margin: 0 0 var(--space-3);
+}
+.tool-v2-collapse-body ul {
+  padding-inline-start: 1.3em;
+  list-style: disc;
+}
+.tool-v2-collapse-body li {
+  margin-bottom: 6px;
+}
+/* Same Tailwind-preflight-strips-list-style issue as .tool-v2-toc ol above — applies to any
+   plain <ul> directly in article prose (sources list, etc.), not just inside a collapse. */
+.tool-v2-lane-article > section > ul,
+.tool-v2-lane-article > section > p + ul {
+  padding-inline-start: 1.3em;
+  list-style: disc;
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-3);
+}
+.tool-v2-lane-article > section > ul li {
+  margin-bottom: 6px;
+}
+.tool-v2-lane-article > section > ul a {
+  color: var(--green-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 600;
+}
+/* Plain inline links inside article prose (official-source mentions, inline tool references)
+   — an underline + brand color is enough; these replace what used to be button-styled CTAs
+   wrapped in a bordered card. */
+.tool-v2-lane-article p a,
+.tool-v2-collapse-body p a {
+  color: var(--green-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 600;
+}
+.tool-v2-lane-article p a:hover,
+.tool-v2-collapse-body p a:hover {
+  color: var(--text-primary);
+}
+.tool-v2-lane-tool {
+  min-width: 0;
+}
+
+.tool-v2-tool-panel {
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.25));
+}
+
+/* Optional, click-to-expand sections for long articles — the primary answer sections stay
+   open by default; only secondary ones (e.g. "common mistakes", "edge cases") use this. */
+.tool-v2-collapse {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-block: var(--space-6);
+}
+.tool-v2-collapse summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  cursor: pointer;
+}
+.tool-v2-collapse summary::-webkit-details-marker {
+  display: none;
+}
+.tool-v2-collapse summary h2 {
+  margin: 0;
+}
+.tool-v2-collapse summary .tool-v2-chev {
+  flex: none;
+  color: var(--text-muted);
+  transition: rotate 0.18s;
+  width: 18px;
+  height: 18px;
+}
+.tool-v2-collapse[open] summary .tool-v2-chev {
+  rotate: 180deg;
+}
+.tool-v2-collapse .tool-v2-collapse-body {
+  margin-top: var(--space-3);
+}
+
+/* ===================================================================================
+   Tool panel chrome — country badge, live dot
+   =================================================================================== */
+.tool-v2-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+.tool-v2-country-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--green-text);
+  background: var(--green-subtle);
+  padding: 4px 11px;
+  border-radius: 999px;
+}
+.tool-v2-country-badge .fi {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  background-size: cover;
+  background-position: 50%;
+  border-radius: 2px;
+  flex: none;
+}
+.tool-v2-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: tool-v2-pulse 2s ease-in-out infinite;
+}
+@keyframes tool-v2-pulse {
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+}
+
+/* ===================================================================================
+   Field system — every control is exactly ONE bordered box. Child combinators (not
+   descendant selectors) on the bare-input rule keep it from leaking into wrapped
+   controls (.tool-v2-select-wrap / .tool-v2-unit-input-group own their own box instead),
+   so there is never a border-inside-a-border.
+   =================================================================================== */
+.tool-v2-field {
+  margin-bottom: var(--space-4);
+}
+.tool-v2-field > label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 7px;
+}
+.tool-v2-field-hint-btn {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-full, 999px);
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.tool-v2-field-hint-btn:hover,
+.tool-v2-field-hint-btn:focus-visible {
+  color: var(--green-text);
+  outline: none;
+}
+.tool-v2-field > input[type="number"],
+.tool-v2-field > input[type="text"],
+.tool-v2-field > input[type="date"],
+.tool-v2-field > select {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 10px;
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+.tool-v2-field > select {
+  cursor: pointer;
+}
+.tool-v2-field > input:focus,
+.tool-v2-field > select:focus {
+  outline: none;
+  background: var(--bg-surface-1);
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 20%, transparent);
+}
+.tool-v2-field-row-pair {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.tool-v2-field-row-pair .tool-v2-field {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0;
+}
+@media (max-width: 420px) {
+  .tool-v2-field-row-pair {
+    flex-direction: column;
+  }
+}
+
+/* Premium select — a self-contained component owning its own box, except when nested
+   inside .tool-v2-unit-input-group (overridden below), where the group owns it instead. */
+.tool-v2-select-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--bg-surface-2);
+  border: 1.5px solid var(--border-subtle);
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+.tool-v2-select-wrap:focus-within {
+  background: var(--bg-surface-1);
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 20%, transparent);
+}
+.tool-v2-select-wrap select {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  appearance: none;
+  cursor: pointer;
+  padding-inline: 14px 38px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+}
+.tool-v2-select-wrap select:focus {
+  outline: none;
+}
+.tool-v2-select-wrap .tool-v2-chev {
+  position: absolute;
+  inset-inline-end: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+  width: 16px;
+  height: 16px;
+}
+.tool-v2-select-wrap select option {
+  color: #201d18;
+  background: #ffffff;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.tool-v2-field input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+/* Value + unit as ONE merged component (Omni-style) */
+.tool-v2-unit-input-group {
+  display: flex;
+  align-items: stretch;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--bg-surface-2);
+  border: 1.5px solid var(--border-subtle);
+  overflow: hidden;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+.tool-v2-unit-input-group:focus-within {
+  background: var(--bg-surface-1);
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 20%, transparent);
+}
+.tool-v2-unit-input-group input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  background: transparent;
+  padding-inline: 14px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  direction: ltr;
+  text-align: end;
+}
+.tool-v2-unit-input-group input:focus {
+  outline: none;
+  box-shadow: none;
+}
+.tool-v2-unit-input-group .tool-v2-select-wrap {
+  flex: 0 0 auto;
+  height: 100%;
+  border: none;
+  background: transparent;
+  border-radius: 0;
+}
+.tool-v2-unit-input-group .tool-v2-select-wrap:focus-within {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+.tool-v2-unit-input-group .tool-v2-select-wrap select {
+  height: 100%;
+  padding-inline: 12px 30px;
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--green-text);
+}
+
+/* Radio/checkbox option cards — used for any small branching choice (contract type,
+   reason for leaving, etc.) instead of a hidden dropdown for an important decision. */
+.tool-v2-option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tool-v2-option-list.row {
+  flex-direction: row;
+}
+.tool-v2-option-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 14px;
+  border-radius: 12px;
+  background: var(--bg-surface-2);
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: background 0.12s, color 0.12s;
+}
+.tool-v2-option-row input {
+  accent-color: var(--green);
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+.tool-v2-option-row.is-active {
+  background: var(--green-subtle);
+  color: var(--green-text);
+}
+.tool-v2-option-hint {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* Chip-button grid — for a small fixed set of choices picked by value (e.g. rebar diameter),
+   not a full option-row list (too many items, no need for a description line each). */
+.tool-v2-option-list--grid {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tool-v2-chip {
+  padding: 8px 14px;
+  border-radius: var(--radius-full, 999px);
+  border: 1.5px solid var(--border-subtle);
+  background: var(--bg-surface-2);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.tool-v2-chip:hover {
+  border-color: var(--border-default);
+}
+.tool-v2-chip.is-active {
+  background: var(--green-subtle);
+  border-color: var(--green-border);
+  color: var(--green-text);
+}
+
+/* Repeatable input rows (e.g. rebar length+count pairs) */
+.tool-v2-rebar-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.tool-v2-rebar-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  align-items: end;
+}
+/* 3-input variant (name + weight + score) — weighted-grade tool's rows need one more field
+   than the 2-input rebar-length/count pair the base class was built for. */
+.tool-v2-rebar-row--3col {
+  display: grid;
+  grid-template-columns: 1.3fr 0.75fr 0.75fr auto;
+  gap: 8px;
+  align-items: end;
+}
+.tool-v2-rebar-row-field label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.tool-v2-rebar-row-field input {
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+.tool-v2-rebar-row-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border: none;
+  border-radius: 8px;
+  background: var(--bg-surface-2);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.tool-v2-rebar-row-remove:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--red) 12%, transparent);
+  color: var(--red-text);
+}
+.tool-v2-rebar-row-remove:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Standalone dashed "add another" button — distinct from .tool-v2-action-btn, which is for
+   the equal-width icon-over-label row (clear/reload/share), not an inline single action. */
+.tool-v2-add-row-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px;
+  border: 1.5px dashed var(--border-default);
+  border-radius: 10px;
+  background: none;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.tool-v2-add-row-btn:hover {
+  border-color: var(--green-border);
+  color: var(--green-text);
+}
+
+/* Solid direction-swap button — for reversing a conversion (sqft<->sqm), not "add another item"
+   (that's .tool-v2-add-row-btn's dashed style). Solid surface + icon chip reads as a primary
+   toggle, not an optional secondary action. */
+.tool-v2-swap-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.tool-v2-swap-btn:hover {
+  border-color: var(--blue-border);
+  background: var(--blue-subtle);
+  color: var(--blue-text);
+}
+.tool-v2-swap-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full, 999px);
+  background: var(--blue-subtle);
+  color: var(--blue-text);
+  flex-shrink: 0;
+}
+
+/* Choice cards — for any TYPE/TIER decision (paint type, concrete grade, finish level): icon +
+   title + one-line human description + optional recommended badge. Reserve the plainer
+   .tool-v2-option-row above for genuinely simple choices that don't need explaining — see
+   calculator-ui-standards.md §0 for when to use which. */
+.tool-v2-choice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tool-v2-choice-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 14px;
+  border-radius: 14px;
+  background: var(--bg-surface-2);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+.tool-v2-choice-card:hover {
+  background: var(--border-subtle);
+}
+.tool-v2-choice-card.is-active {
+  background: var(--green-subtle);
+  border-color: var(--green-border);
+}
+.tool-v2-choice-card input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+.tool-v2-choice-icon {
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-full, 999px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tool-v2-choice-icon--blue { background: var(--blue-subtle); color: var(--blue-text); }
+.tool-v2-choice-icon--green { background: var(--green-subtle); color: var(--green-text); }
+.tool-v2-choice-icon--amber { background: var(--amber-subtle); color: var(--amber-text); }
+.tool-v2-choice-icon--red { background: color-mix(in srgb, var(--red) 14%, transparent); color: var(--red-text); }
+.tool-v2-choice-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+  padding-top: 2px;
+}
+.tool-v2-choice-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+}
+.tool-v2-choice-card.is-active .tool-v2-choice-title {
+  color: var(--green-text);
+}
+.tool-v2-choice-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full, 999px);
+  background: var(--green-subtle);
+  color: var(--green-text);
+  white-space: nowrap;
+}
+.tool-v2-choice-card.is-active .tool-v2-choice-badge {
+  background: var(--bg-surface-1);
+}
+.tool-v2-choice-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Stepper — +/- counter for small integer counts (doors, windows, rooms), more tactile than a
+   raw number input on mobile. */
+.tool-v2-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  height: 44px;
+  padding: 0 10px;
+  border-radius: 10px;
+  background: var(--bg-surface-2);
+  border: 1.5px solid var(--border-subtle);
+}
+.tool-v2-stepper-btn {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border-subtle);
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.tool-v2-stepper-btn:hover:not(:disabled) {
+  border-color: var(--green-border);
+  color: var(--green-text);
+}
+.tool-v2-stepper-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.tool-v2-stepper-val {
+  min-width: 2.4ch;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===================================================================================
+   Result hero — the big answer
+   =================================================================================== */
+/* Compact answer panel — plain surface, not a full-bleed colored hero. The Omni Calculator
+   reference the owner pointed to answers with a modest bold number on a plain card, not an
+   oversized centered value on a tinted background; only the number itself carries color. */
+.tool-v2-result-hero {
+  text-align: center;
+  padding: var(--space-4) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  margin: var(--space-4) 0;
+}
+.tool-v2-result-hero .tool-v2-result-label {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+.tool-v2-result-hero .tool-v2-result-value {
+  font-size: clamp(1.55rem, 1.4rem + 0.9vw, 1.95rem);
+  font-weight: 800;
+  color: var(--green-text);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+/* Dual-stat result — for any answer shaped "N of size S" (2 cans × 5 liters, 3 bags × 50kg) where
+   cramming it into one sentence is ambiguous about which number means what (owner feedback,
+   2026-07-31 — standing rule: never present an "N × S" result as a single run-on phrase). Two
+   clearly labeled stats side by side, each with its OWN small caption, removes the ambiguity. */
+.tool-v2-result-stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: 4px;
+}
+.tool-v2-result-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.tool-v2-result-stat-value {
+  font-size: clamp(1.55rem, 1.4rem + 0.9vw, 1.95rem);
+  font-weight: 800;
+  color: var(--green-text);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+.tool-v2-result-stat-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.tool-v2-result-stat-sep {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding-bottom: 1.1rem;
+}
+
+/* Range values (e.g. "467,500 ر.س – 660,000 ر.س") need each amount+currency chunk isolated
+   separately — forcing the WHOLE range into one ltr run (the single-value rule above) makes the
+   bidi algorithm fight itself once the Arabic currency symbol needs to wrap, producing scrambled
+   line breaks. Each part gets its own isolation; the outer value reverts to normal (rtl) flow so
+   "من X إلى Y" reads in natural Arabic order — min-value first (right), max-value second (left). */
+.tool-v2-result-value--range {
+  direction: rtl;
+  unicode-bidi: normal;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35em;
+}
+.tool-v2-result-range-part {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+.tool-v2-result-range-sep {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.tool-v2-result-hero .tool-v2-result-meta {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 6px;
+  /* Meta lines mix Arabic text with Latin-digit numbers ("≈ 6.7 لتر — داخلي عادي") — plaintext
+     bidi resolves each run by its own first strong character instead of forcing the whole line
+     into one direction, which is what scrambled numbers away from their units before. */
+  unicode-bidi: plaintext;
+}
+.tool-v2-result-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-2);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  padding-top: var(--space-3);
+  margin-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+}
+.tool-v2-result-breakdown strong {
+  color: var(--text-primary);
+}
+.tool-v2-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+  padding: var(--space-6) var(--space-4);
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+.tool-v2-progress-track {
+  height: 8px;
+  background: var(--bg-surface-2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.tool-v2-progress-fill {
+  height: 100%;
+  background: var(--green);
+  transition: width 0.25s;
+}
+
+/* ===================================================================================
+   Action row
+   =================================================================================== */
+.tool-v2-action-row {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+.tool-v2-action-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 11px 6px;
+  background: var(--bg-surface-2);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+}
+.tool-v2-action-btn:hover {
+  background: var(--border-subtle);
+  color: var(--text-primary);
+}
+.tool-v2-action-btn.is-primary {
+  background: var(--green);
+  color: #fff;
+}
+.tool-v2-action-btn svg {
+  width: 1.2em;
+  height: 1.2em;
+}
+.tool-v2-action-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.tool-v2-action-btn:disabled:hover {
+  background: var(--bg-surface-2);
+  color: var(--text-secondary);
+}
+
+/* Reason/context strip under the result */
+.tool-v2-note-strip {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-top: var(--space-3);
+}
+.tool-v2-note-strip svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--amber-text, var(--amber));
+}
+
+/* Tool-panel "extras" disclosure (wait comparison, timeline) — same collapse pattern as
+   the article, scoped for use inside the sticky tool panel. */
+.tool-v2-tool-collapse {
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-3);
+}
+.tool-v2-tool-collapse-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px 0;
+}
+.tool-v2-tool-collapse-toggle svg {
+  color: var(--text-muted);
+}
+.tool-v2-tool-collapse-body {
+  margin-top: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.tool-v2-mini-block-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+.tool-v2-timeline {
+  display: flex;
+  flex-direction: column;
+}
+.tool-v2-milestone {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding-block: 6px 16px;
+}
+.tool-v2-milestone:last-child {
+  padding-bottom: 2px;
+}
+/* Connector line runs behind the marker column, joining one step to the next. */
+.tool-v2-milestone:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 22px;
+  bottom: 0;
+  inset-inline-start: 10px;
+  width: 2px;
+  background: var(--border-subtle);
+}
+.tool-v2-milestone.is-past:not(:last-child)::after {
+  background: var(--green-border, var(--green));
+}
+.tool-v2-milestone-marker {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  border-radius: var(--radius-full, 999px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tool-v2-milestone.is-past .tool-v2-milestone-marker {
+  background: var(--green);
+  color: var(--bg-surface-1, #fff);
+}
+.tool-v2-milestone.is-future .tool-v2-milestone-marker {
+  background: var(--bg-surface-2);
+  border: 2px solid var(--border-default);
+}
+.tool-v2-milestone-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full, 999px);
+  background: var(--text-muted);
+}
+.tool-v2-milestone-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding-top: 1px;
+}
+.tool-v2-milestone-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.tool-v2-milestone.is-past .tool-v2-milestone-label {
+  color: var(--text-secondary);
+}
+.tool-v2-milestone-sub {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+.tool-v2-milestone-value,
+.tool-v2-inline-value {
+  flex: none;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  font-size: 0.85rem;
+  padding-top: 3px;
+}
+.tool-v2-milestone.is-future .tool-v2-milestone-value {
+  color: var(--green-text);
+}
+.tool-v2-milestone.is-past .tool-v2-milestone-value {
+  color: var(--text-muted);
+}
+
+/* Non-sequential breakdown list (e.g. cost-by-category) — deliberately NOT the milestone
+   timeline component above, since a connector line implies chronological order, and a cost
+   breakdown's categories have no inherent sequence. */
+.tool-v2-breakdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.tool-v2-breakdown-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 2px;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.85rem;
+}
+.tool-v2-breakdown-row:last-child {
+  border-bottom: none;
+}
+.tool-v2-breakdown-pct {
+  flex: none;
+  min-width: 2.6em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+.tool-v2-breakdown-icon {
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--radius-full, 999px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tool-v2-breakdown-icon--blue { background: var(--blue-subtle); color: var(--blue-text); }
+.tool-v2-breakdown-icon--green { background: var(--green-subtle); color: var(--green-text); }
+.tool-v2-breakdown-icon--amber { background: var(--amber-subtle); color: var(--amber-text); }
+.tool-v2-breakdown-label {
+  flex: 1;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.tool-v2-breakdown-value {
+  flex: none;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}
+
+/* Chart card — content-column visual material (recharts client islands embedded in an otherwise
+   server-rendered article), see calculator-ui-standards.md §0. */
+.tool-v2-chart-card {
+  margin-block: var(--space-5);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg, 16px);
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
+}
+.tool-v2-chart-head h3 {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.tool-v2-chart-head p {
+  margin: 0 0 var(--space-3);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+/* Plain CSS horizontal bar list — see PaintCoverageChart.client.jsx for why this replaced
+   recharts (RTL + dark theme rendering issue there). Track fill grows from the RTL start (right)
+   toward the end (left) via a rtl flex row with justify-content:flex-start on the track. */
+.tool-v2-hbar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tool-v2-hbar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tool-v2-hbar-label {
+  flex: 0 0 5.5rem;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+.tool-v2-hbar-track {
+  flex: 1;
+  display: flex;
+  direction: rtl;
+  justify-content: flex-start;
+  height: 14px;
+  border-radius: var(--radius-full, 999px);
+  background: var(--bg-surface-2);
+  overflow: hidden;
+}
+.tool-v2-hbar-fill {
+  height: 100%;
+  border-radius: var(--radius-full, 999px);
+  min-width: 6px;
+}
+.tool-v2-hbar-value {
+  flex: 0 0 5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: end;
+  direction: ltr;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===================================================================================
+   Article components — tip / callout asides, figure-timeline, table, tabs, FAQ
+   =================================================================================== */
+.tool-v2-tip,
+.tool-v2-callout {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  margin-block: var(--space-5);
+  font-size: 0.93rem;
+}
+.tool-v2-tip {
+  background: var(--green-subtle);
+}
+.tool-v2-callout {
+  background: var(--amber-subtle);
+}
+.tool-v2-tip svg {
+  color: var(--green-text);
+  flex: none;
+  margin-top: 2px;
+}
+.tool-v2-callout svg {
+  color: var(--amber-text, var(--amber));
+  flex: none;
+  margin-top: 2px;
+}
+.tool-v2-tip b,
+.tool-v2-callout b {
+  display: block;
+  font-size: 0.78rem;
+  margin-bottom: 2px;
+  opacity: 0.85;
+}
+.tool-v2-tip p,
+.tool-v2-callout p {
+  margin: 0;
+}
+
+.tool-v2-figure {
+  margin-block: var(--space-5);
+}
+.tool-v2-figure-timeline {
+  display: flex;
+  align-items: flex-start;
+  background: var(--bg-surface-2);
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-4);
+}
+.tool-v2-tl-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  min-width: 0;
+  padding-inline: 4px;
+}
+.tool-v2-tl-step .tool-v2-tl-ic {
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 50%;
+  background: var(--bg-surface-1);
+  color: var(--green-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.2));
+  flex: none;
+}
+.tool-v2-tl-step b {
+  font-size: 0.83rem;
+}
+.tool-v2-tl-step span {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.tool-v2-tl-step--accent .tool-v2-tl-ic {
+  background: var(--green);
+  color: #fff;
+}
+.tool-v2-tl-line {
+  flex: 0 0 30px;
+  height: 2px;
+  background: var(--border-subtle);
+  margin-top: 1.15rem;
+}
+.tool-v2-figure figcaption {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: var(--space-2);
+}
+@media (max-width: 560px) {
+  .tool-v2-figure-timeline {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+  .tool-v2-tl-line {
+    display: none;
+  }
+  .tool-v2-tl-step {
+    flex-direction: row;
+    text-align: start;
+  }
+}
+
+.tool-v2-table-wrap {
+  margin-block: var(--space-4);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  overflow-x: auto;
+}
+.tool-v2-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.tool-v2-table th {
+  background: var(--bg-surface-2);
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 11px 13px;
+  text-align: start;
+  white-space: nowrap;
+}
+.tool-v2-table td {
+  padding: 11px 13px;
+  text-align: start;
+  border-top: 1px solid var(--border-subtle);
+}
+.tool-v2-table tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--bg-surface-2) 55%, transparent);
+}
+
+.tool-v2-tabs-list {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-surface-2);
+  border-radius: 999px;
+  padding: 4px;
+  margin-bottom: var(--space-4);
+  overflow-x: auto;
+  /* shadcn's TabsList ships a `w-fit` Tailwind utility, which lets this box grow to its
+     content's intrinsic width (4 non-wrapping labels) instead of respecting the column
+     width — that blew out the whole page's scrollWidth on mobile. Force it back down so
+     overflow-x: auto above actually has something to scroll within. */
+  width: 100%;
+  max-width: 100%;
+}
+.tool-v2-tabs-trigger {
+  flex: 1;
+  white-space: nowrap;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.tool-v2-tabs-trigger[data-state="active"] {
+  background: var(--bg-surface-1);
+  color: var(--green-text);
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.2));
+}
+
+.tool-v2-info-grid {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin-block: var(--space-4);
+}
+.tool-v2-info-card {
+  background: var(--bg-surface-2);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+.tool-v2-info-card h3 {
+  font-size: 0.92rem;
+  margin: 0 0 4px;
+}
+.tool-v2-info-card .tool-v2-info-desc {
+  font-size: 0.78rem;
+  color: var(--green-text);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.tool-v2-info-card p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Clean FAQ — ONE cohesive framed module (not loose questions floating directly on the page
+   background, and not a separate card per question either). Each entry still toggles
+   independently — the owner's ask was "one clean part" the user can open items within, not a
+   single-open accordion. Internal dividers are deliberately faint (color-mixed, not the full
+   --border-subtle used for real component boundaries) so they read as gentle separation inside
+   one module, not as N separate boxes stacked together. */
+.tool-v2-faq {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-1);
+  overflow: hidden;
+}
+.tool-v2-faq details {
+  padding: var(--space-4);
+  border-bottom: 1px solid color-mix(in srgb, var(--border-subtle) 60%, transparent);
+  transition: background 0.15s;
+}
+.tool-v2-faq details:last-child {
+  border-bottom: none;
+}
+.tool-v2-faq details[open] {
+  background: color-mix(in srgb, var(--bg-surface-2) 45%, transparent);
+}
+.tool-v2-faq summary {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+.tool-v2-faq summary::-webkit-details-marker {
+  display: none;
+}
+.tool-v2-faq summary .tool-v2-chev {
+  flex: none;
+  color: var(--text-muted);
+  transition: rotate 0.18s;
+  width: 16px;
+  height: 16px;
+}
+.tool-v2-faq details[open] summary .tool-v2-chev {
+  rotate: 180deg;
+}
+.tool-v2-faq details[open] summary {
+  color: var(--green-text);
+}
+.tool-v2-faq details p {
+  margin-top: 10px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.85;
+  max-width: 66ch;
+}
+
+.tool-v2-sources-line {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: var(--space-6);
+}
+
+/* End-of-article "related calculators" — a two-column plain link grid with an icon chip per
+   row (icon carries the color, per the site's anti-AI-template rule against colored border
+   stripes). Distinct from .tool-v2-related-card: this lives inline in the article flow at the
+   end of column 1, not boxed as a separate sidebar module. */
+.tool-v2-related-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px var(--space-5);
+}
+@media (max-width: 480px) {
+  .tool-v2-related-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.tool-v2-related-grid a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 1px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.87rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.12s;
+}
+.tool-v2-related-grid a:hover {
+  color: var(--green-text);
+}
+.tool-v2-related-grid a .tool-v2-related-ic {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full, 999px);
+  background: var(--green-subtle);
+  color: var(--green-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tool-v2-related-grid a .tool-v2-related-ic svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ===================================================================================
+   Related-tools reference card — the ONE box for "other tools you might need," styled
+   after the Omni Calculator sidebar module the owner pointed to ("Check out N similar
+   converters"). One outer box holds a plain link list; individual links are NOT their own
+   boxed cards — that's the "not everything is boxes" distinction. Reusable across every
+   /tools page, typically placed in the sticky tool lane just under the calculator panel.
+   =================================================================================== */
+.tool-v2-related-card {
+  margin-top: var(--space-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  background: var(--bg-surface-1);
+}
+.tool-v2-related-card__head {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+.tool-v2-related-card__list {
+  display: flex;
+  flex-direction: column;
+}
+.tool-v2-related-card__list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: 9px 1px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.12s;
+}
+.tool-v2-related-card__list a:last-child {
+  border-bottom: none;
+}
+.tool-v2-related-card__list a:hover {
+  color: var(--green-text);
+}
+.tool-v2-related-card__list a svg {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  color: var(--text-muted);
+}
+/* Featured row — a little liveliness so the list doesn't read as N identical grey lines.
+   Reserve this for the ONE most-relevant pick per page (usually whichever related tool has
+   the highest genuine follow-up intent), not the whole list — that would just recreate the
+   "everything boxed/tinted" problem one level down. */
+.tool-v2-related-card__list a.is-featured {
+  margin: 2px 0;
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  border-bottom: none;
+  background: var(--amber-subtle);
+  color: var(--amber-text, var(--amber));
+}
+.tool-v2-related-card__list a.is-featured:hover {
+  color: var(--amber-text, var(--amber));
+}
+.tool-v2-related-card__list a.is-featured svg {
+  color: var(--amber-text, var(--amber));
+}
+.tool-v2-related-card__list a .tool-v2-related-ic {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  color: inherit;
+}
+
+/* ===================================================================================
+   Hub pages (/tools and /tools/<category>) — ported directly from the validated mockup's
+   own hub-hero/cat-card/cat-hero/featured-row/type-groups pattern (selectors renamed to
+   tool-v2-*, colors mapped onto our real tokens). One deliberate deviation: the mockup's
+   .hub-hero uses a radial-gradient background + a decorative SVG watermark — dropped here,
+   the sitewide rule in calculator-ui-standards.md is "no gradient backgrounds, ever" and
+   that predates and outranks this mockup. Everything else (spacing, type scale, the
+   dot-prefixed plain link list, tooltip-only descriptions) matches the mockup exactly.
+   =================================================================================== */
+
+.tool-v2-hub-content {
+  max-width: 960px;
+  margin-inline: auto;
+}
+
+/* Top-level /tools hub hero — centered, matches mockup's .hub-hero minus the gradient. */
+.tool-v2-hub-hero {
+  padding-block: var(--space-8, 32px) var(--space-6);
+  text-align: center;
+}
+.tool-v2-hub-hero h1 {
+  max-width: 16ch;
+  margin-inline: auto;
+}
+.tool-v2-hub-hero p {
+  max-width: 46ch;
+  margin-inline: auto;
+}
+
+/* Category cards (top-level /tools hub) — matches mockup's .cat-panel/.cat-card. */
+.tool-v2-cat-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-block: var(--space-6);
+  justify-content: center;
+}
+.tool-v2-cat-card {
+  flex: 1 1 220px;
+  max-width: 320px;
+  background: var(--bg-surface-1);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.2));
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  text-align: start;
+  text-decoration: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+.tool-v2-cat-card:hover {
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.25));
+  transform: translateY(-2px);
+}
+.tool-v2-cat-card .tool-v2-cat-ic {
+  color: var(--green-text);
+  margin-bottom: 2px;
+}
+.tool-v2-cat-card .tool-v2-cat-ic svg {
+  width: 1.55em;
+  height: 1.55em;
+}
+.tool-v2-cat-card h2 {
+  font-size: 0.96rem;
+  margin: 0;
+  color: var(--text-primary);
+  font-weight: 800;
+}
+.tool-v2-cat-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.tool-v2-cat-count {
+  font-size: 0.79rem;
+  color: var(--text-muted);
+}
+
+/* Category hub's own hero (/tools/<category>) — matches mockup's .cat-hero/.cat-hero-top/.cat-meta. */
+.tool-v2-cat-hero {
+  padding-block: var(--space-6) var(--space-5);
+}
+.tool-v2-cat-hero-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.tool-v2-cat-hero-top .tool-v2-cat-ic {
+  color: var(--green-text);
+  flex: none;
+}
+.tool-v2-cat-hero-top .tool-v2-cat-ic svg {
+  width: 2.2em;
+  height: 2.2em;
+}
+.tool-v2-cat-hero p {
+  max-width: 70ch;
+  color: var(--text-secondary);
+  margin-top: var(--space-3);
+}
+.tool-v2-cat-meta {
+  display: flex;
+  gap: var(--space-5);
+  margin-top: var(--space-4);
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+.tool-v2-cat-meta b {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* Featured row (top picks) — matches mockup's .featured-row/.featured-tool. */
+.tool-v2-featured-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  padding-block: var(--space-5);
+}
+@media (max-width: 800px) {
+  .tool-v2-featured-row {
+    grid-template-columns: 1fr;
+  }
+}
+.tool-v2-featured-tool {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-1);
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.2));
+  text-decoration: none;
+}
+.tool-v2-featured-tool .tool-v2-ft-ic {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 9px;
+  background: var(--green-subtle);
+  color: var(--green-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.tool-v2-featured-tool b {
+  display: block;
+  font-size: 0.94rem;
+  color: var(--text-primary);
+}
+.tool-v2-featured-tool span {
+  font-size: 0.79rem;
+  color: var(--text-muted);
+}
+
+/* Type groups (country/topic groups) — matches mockup's .type-groups/.type-group/.tool-link-list
+   exactly: a 2-column grid of groups, each a flag+heading and a PLAIN dot-prefixed link list —
+   no icon chip, no visible description line (that moves to the link's native `title` tooltip
+   instead, per the owner's explicit correction). */
+.tool-v2-type-groups {
+  padding-block: var(--space-6) 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+}
+@media (max-width: 800px) {
+  .tool-v2-type-groups {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+}
+.tool-v2-type-group h2 {
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 var(--space-3);
+  font-weight: 800;
+}
+.tool-v2-type-group h2 .fi {
+  /* CountryFlag renders a bare <span> (inline by default) — width/height on a plain inline
+     element are ignored by the box model, which is why the flag rendered as an empty box
+     until this was added. */
+  display: inline-block;
+  width: 1.3em;
+  height: 1.3em;
+  background-size: cover;
+  background-position: 50%;
+  border-radius: 4px;
+  flex: none;
+  box-shadow: 0 0 0 1px var(--border-subtle);
+}
+.tool-v2-type-group-note {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0 0 var(--space-3);
+}
+.tool-v2-tool-link-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+.tool-v2-tool-link-list li + li {
+  margin-top: 2px;
+}
+.tool-v2-tool-link-list a {
+  display: flex;
+  align-items: baseline;
+  gap: 11px;
+  padding: 9px 8px;
+  border-radius: 9px;
+  font-size: 0.9rem;
+  color: var(--green-text);
+  font-weight: 600;
+  text-decoration: none;
+}
+.tool-v2-tool-link-list a:hover {
+  background: var(--bg-surface-2);
+}
+.tool-v2-tool-link-list a:hover .tool-v2-link-text {
+  text-decoration: underline;
+}
+.tool-v2-tool-link-list .tool-v2-dot {
+  color: var(--amber-text, var(--amber));
+  font-size: 1.05em;
+  line-height: 1;
+  flex: none;
+}
+.tool-v2-tool-link-list .tool-v2-coverage-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-inline-start: auto;
+  flex: none;
+}
+
+/* ── Addon checklist rows (cleaning/landscaping/pest-control cost calculators) — a toggle
+   line that reveals an inline quantity stepper + editable unit price once enabled, so every
+   optional line item is priced transparently instead of folded into one opaque total. ────── */
+.tool-v2-addon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tool-v2-addon-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--bg-surface-2);
+  border: 1.5px solid transparent;
+}
+.tool-v2-addon-row.is-active {
+  background: var(--blue-subtle);
+  border-color: var(--blue-border);
+}
+.tool-v2-addon-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.tool-v2-addon-toggle input {
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: var(--blue);
+}
+.tool-v2-addon-inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.tool-v2-addon-unit {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+.tool-v2-addon-price {
+  width: 6rem;
+  padding: 7px 10px;
+  border-radius: 9px;
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-1);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+.tool-v2-addon-price:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 1px;
+}
+
+/* ── Printable quote/invoice/contract document (cleaning/pest-control/landscaping generators)
+   — kept invisible on screen and shown only inside @media print via the visibility trick, so
+   `window.print()` never captures the navbar, ads, or the live form controls. ────────────── */
+.tool-v2-invoice-print { display: none; }
+@media print {
+  body * { visibility: hidden; }
+  .tool-v2-invoice-print, .tool-v2-invoice-print * { visibility: visible; }
+  .tool-v2-invoice-print {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    padding: 24px;
+    background: #fff;
+    color: #111;
+  }
+}
+.tool-v2-invoice-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+}
+.tool-v2-invoice-logo { width: 56px; height: 56px; object-fit: contain; border-radius: 8px; }
+.tool-v2-invoice-business { font-weight: 800; font-size: 1.05rem; margin: 0; }
+.tool-v2-invoice-sub { margin: 2px 0 0; font-size: 0.85rem; color: #555; }
+.tool-v2-invoice-doc-meta { margin-inline-start: auto; text-align: end; font-size: 0.85rem; }
+.tool-v2-invoice-parties { margin-bottom: 16px; font-size: 0.92rem; }
+.tool-v2-invoice-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 0.88rem; }
+.tool-v2-invoice-table th, .tool-v2-invoice-table td { border: 1px solid #ddd; padding: 8px 10px; text-align: start; }
+.tool-v2-invoice-table th { background: #f4f4f4; }
+.tool-v2-invoice-totals { text-align: end; font-size: 0.92rem; margin-bottom: 14px; }
+.tool-v2-invoice-grand { font-weight: 800; font-size: 1.05rem; }
+.tool-v2-invoice-terms { font-size: 0.8rem; color: #555; margin-top: 10px; }
+.tool-v2-invoice-contract p { font-size: 0.92rem; margin: 8px 0; }
+.tool-v2-invoice-signatures { display: flex; justify-content: space-between; margin-top: 40px; }
+.tool-v2-invoice-signatures div { width: 45%; text-align: center; font-size: 0.85rem; }
+.tool-v2-invoice-signatures span { display: block; border-top: 1px solid #999; margin-top: 40px; padding-top: 4px; }
+
+/* Stage timeline (weaning schedule and similar "which stage am I in" tools) — vertical dotted
+   line with a dot per stage, current stage highlighted via icon-chip color, not a border stripe
+   (calculator-ui-standards.md §1b). */
+.tool-v2-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: var(--space-2);
+}
+.tool-v2-timeline-item {
+  display: flex;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+  position: relative;
+}
+.tool-v2-timeline-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 5px;
+  top: 1.4rem;
+  bottom: -0.2rem;
+  width: 2px;
+  background: var(--border-subtle);
+}
+.tool-v2-timeline-dot {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full, 999px);
+  background: var(--border-default);
+  margin-top: 0.3rem;
+  z-index: 1;
+}
+.tool-v2-timeline-item.is-current .tool-v2-timeline-dot {
+  background: var(--green);
+  box-shadow: 0 0 0 4px var(--green-subtle);
+}
+.tool-v2-timeline-title {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+}
+.tool-v2-timeline-item.is-current .tool-v2-timeline-title {
+  color: var(--green-text);
+}
+.tool-v2-timeline-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* Digital-clock-style countdown grid (age countdown, and any future live D:H:M:S display). */
+.tool-v2-countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+.tool-v2-countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-2) 4px;
+  border-radius: var(--radius-md, 10px);
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+}
+.tool-v2-countdown-num {
+  font-size: clamp(1.3rem, 5vw, 1.8rem) !important;
+  font-weight: 800;
+}
+.tool-v2-countdown-label {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+/* Orbiting-circles stage (age-on-planets, and any future "orbit" visual) — fixed square stage
+   sized to contain the widest ring + icon, sun/reference icon centered and non-orbiting. */
+.tool-v2-orbit-stage {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  max-width: 100%;
+  margin: var(--space-4) auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tool-v2-orbit-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-full, 999px);
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+}
+.tool-v2-orbit-sun {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-full, 999px);
+  background: var(--amber-subtle);
+  color: var(--amber-text);
+}
+
+/* MagicUI NumberTicker override — the default className ships `text-black tracking-wider
+   dark:text-white`, which (a) is invisible-risk on this site's dark theme without an explicit
+   var() color, per the documented AnimatedCircularProgressBar bug in calculator-ui-standards.md
+   §0b, and (b) uses POSITIVE letter-spacing, while this site's own numeric-value convention is
+   negative/tight tracking (calculator-ui-standards.md §8). Always pass this class to override. */
+.tool-v2-ticker {
+  color: var(--text-primary);
+  letter-spacing: -0.015em;
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+.tool-v2-ticker--accent { color: var(--green-text); }
+
+/* MagicUI AnimatedCircularProgressBar wrapper — same dark-mode-safe-color requirement, targeted
+   at the component's own `[data-current-value]` span since it ships with no color at all. */
+.tool-v2-progress-ring {
+  margin-inline: auto;
+}
+.tool-v2-progress-ring [data-current-value] {
+  color: var(--text-primary) !important;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.tool-v2-progress-ring [data-current-value]::after {
+  content: '%';
+  font-size: 0.6em;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-inline-start: 1px;
+}

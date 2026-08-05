@@ -16,7 +16,6 @@ import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdTopBanner from '@/components/ads/AdTopBanner';
-import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import { Calendar, Clock, ArrowLeftRight, type LucideIcon } from 'lucide-react';
 import styles from '@/app/date/DateRoutePage.module.css';
 import {
@@ -849,7 +848,6 @@ export default async function CountryDatePage({
           </section>
 
           <section className="mt-8">
-            <SiteTrustPanel panel="date" />
           </section>
 
           <AdInArticle slotId={`mid-date-country-${countrySlug}-1`} slotKey="inArticleDate" />

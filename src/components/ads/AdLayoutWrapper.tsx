@@ -62,7 +62,14 @@
  */
 
 import AdSidebarSticky from "./AdSidebarSticky";
+import DevAdPlaceholder from "./DevAdPlaceholder";
 import { getServerAdsConfig } from "@/lib/runtime-config";
+
+// Gates the dev-preview rail shell below — never true for a real production build (ads are
+// configured there via env vars, so the `!adsEnabled` branch isn't reached in the first
+// place). Exists purely so layout work like the /tools 3-column system can be reviewed
+// locally with the real rail width reserved, instead of every ad silently collapsing to zero.
+const isDevPreview = process.env.NODE_ENV !== "production";
 
 interface AdLayoutWrapperProps {
   children: React.ReactNode;
@@ -89,8 +96,38 @@ export default function AdLayoutWrapper({
   );
   const resolvedSidebarMode = shouldHideSidebars ? "none" : requestedSidebarMode;
 
-  if (!adsEnabled || resolvedSidebarMode === "none") {
+  // hideSidebars (→ "none") is a real per-page decision (short pages, special layouts) —
+  // always honor it, dev preview or not.
+  if (resolvedSidebarMode === "none") {
     return <>{children}</>;
+  }
+
+  if (!adsEnabled) {
+    // Real production builds configure ads via env vars, so this branch is normally only
+    // reached locally. Bail to bare content exactly as before UNLESS this is a dev preview,
+    // in which case show the real 3-column shape with placeholder rails so layout work can
+    // be reviewed without ads actually being configured.
+    if (!isDevPreview) {
+      return <>{children}</>;
+    }
+
+    return (
+      <div
+        className="layout-with-ads"
+        data-layout={resolvedLayout}
+        data-rail-mode={resolvedSidebarMode}
+      >
+        {children}
+        <aside className="ad-slot ad-slot--sidebar ad-slot--sidebar--sticky ad-slot--sidebar--right" aria-hidden="true">
+          <DevAdPlaceholder />
+        </aside>
+        {resolvedSidebarMode === "dual" && (
+          <aside className="ad-slot ad-slot--sidebar ad-slot--sidebar--static ad-slot--sidebar--left" aria-hidden="true">
+            <DevAdPlaceholder />
+          </aside>
+        )}
+      </div>
+    );
   }
 
   return (

@@ -29,7 +29,6 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import AdTopBanner from '@/components/ads/AdTopBanner';
-import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import DeferredSectionNotice from '@/components/shared/DeferredSectionNotice';
 import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
 import TimeNowHero from '@/components/time-now/TimeNowHero';
@@ -905,7 +904,6 @@ async function CityTimePageSections({
 
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
           <div className={routeStyles.sectionPanel}>
-            <SiteTrustPanel panel="time" />
           </div>
         </section>
       </>

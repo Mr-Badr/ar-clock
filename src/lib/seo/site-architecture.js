@@ -61,10 +61,8 @@ export const ROOT_SITEMAP_ROUTES = Object.freeze(dedupeRoutes([
   { path: '/date/country', priority: 0.84, changeFrequency: 'weekly', websitePart: true },
   { path: '/calculators', priority: 0.9, changeFrequency: 'weekly', websitePart: true },
   { path: '/calculators/finance', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
-  { path: '/calculators/age', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
-  { path: '/calculators/sleep', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
-  { path: '/calculators/personal-finance', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
-  { path: '/calculators/building', priority: 0.84, changeFrequency: 'monthly', websitePart: true },
+  { path: '/tools/sleep', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
+  { path: '/tools/personal-finance', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
   ...ALL_CALCULATOR_SEO_ROUTES.map((route) => ({
     ...route,
     websitePart: route.websitePart ?? true,

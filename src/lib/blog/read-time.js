@@ -7,11 +7,11 @@ function cleanInlineArticleText(value) {
 function resolveArticleTrack(article) {
   const hubHref = String(article?.hubHref || '');
 
-  if (hubHref.includes('/calculators/sleep')) {
+  if (hubHref.includes('/tools/sleep')) {
     return 'sleep';
   }
 
-  if (hubHref.includes('/calculators/building')) {
+  if (hubHref.includes('/tools/construction')) {
     return 'building';
   }
 

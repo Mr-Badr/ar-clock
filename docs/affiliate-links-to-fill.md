@@ -74,6 +74,31 @@ needed once a tag exists — just fill in `AMAZON_ASSOCIATE_TAGS.sa` / `.ae` in 
 
 ---
 
+## For the car-maintenance hub (`/tools/car-maintenance`) — flagged 2026-08-02, not actioned yet
+
+### AliExpress Affiliate Program (global, no per-country bank account needed unlike Amazon)
+- **What it unlocks:** physical-product links for exactly the tools people need after using this hub's
+  content — tire pressure gauges (digital PSI/bar gauges), OBD2 code readers (the actual device you'd
+  plug in after reading the `warning-lights` guide's "check engine" section — a real Wave-2 VIN/OBD
+  content angle would pair naturally with this), and portable jump-starter power packs (pairs with a
+  future battery/jump-start guide). Unlike Amazon Associates (needs a bank account per marketplace
+  country — see the newborn-guide section above), AliExpress's affiliate network works from a single
+  account regardless of the seller's or buyer's country, which matters here since car-maintenance
+  audience spans Gulf + wider Arab world and the owner's own banking is Morocco-based.
+- **Action needed from you:** sign up at AliExpress's official affiliate portal
+  (https://portals.aliexpress.com/) or via a network that carries it (Admitad — already has an
+  approved account per the Mumzworld section above, worth checking if AliExpress is in that same
+  network's catalog first before a separate signup).
+- **Your affiliate link once approved:**
+  `` (paste here — likely activates via `src/lib/affiliate-config.js` once wired into the relevant
+  tool pages, same pattern as the other entries in this file)
+
+### Needs its own research pass before deciding
+- Gulf-specific auto-parts retailers (e.g. a Saudi/UAE parts e-commerce site) that ship or have an
+  affiliate program reachable from outside their home country — not checked yet.
+
+---
+
 ## Needs direct outreach — no confirmed self-serve signup found
 
 ### Tameeni (Saudi car/health insurance aggregator)

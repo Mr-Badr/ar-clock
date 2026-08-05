@@ -53,8 +53,11 @@ export default function AdSidebarSticky({
     if (!canLoadAds) return;
     if (!ref.current || loaded.current) return;
 
-    const minWidthQuery = sticky ? "(min-width: 1440px)" : "(min-width: 1680px)";
-    const isDesktop = window.matchMedia(minWidthQuery).matches;
+    // Both rails activate at the same breakpoint now (see ads.css, 2026-07-30) — the static
+    // rail used to gate at 1680px while its grid column only started at 1440px, reserving
+    // dead (ad-less) space on real laptop widths in between. sticky/static no longer need
+    // different thresholds.
+    const isDesktop = window.matchMedia("(min-width: 1440px)").matches;
     if (!isDesktop) return;
 
     const observer = new IntersectionObserver(

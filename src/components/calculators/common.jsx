@@ -89,16 +89,20 @@ function getUniqueCalculatorLinks(items) {
 
 function getComplementSlugs(cluster) {
   const complementSlugsByCluster = {
-    finance: ['gosi-retirement', 'eos-egypt', 'eos-qatar', 'eos-kuwait', 'eos-bahrain', 'uae-end-of-service', 'car-loan', 'salary', 'zakat', 'investment', 'net-salary', 'vat', 'percentage', 'annual-leave', 'sick-leave', 'working-days', 'margin-markup', 'monthly-installment', 'end-of-service-benefits', 'iqama', 'electricity-bill', 'inheritance'],
-    building: ['vat', 'percentage', 'monthly-installment'],
+    finance: ['uae-end-of-service', 'article-77-compensation', 'traffic-fine-discount', 'domestic-worker-cost', 'domestic-worker-cost-uae', 'domestic-worker-cost-kuwait', 'domestic-worker-cost-qatar', 'domestic-worker-cost-bahrain', 'domestic-worker-cost-oman', 'domestic-worker-eligibility', 'domestic-worker-contract-generator', 'annual-leave', 'sick-leave', 'working-days', 'end-of-service-benefits', 'iqama', 'wasiyya', 'nafaqah'],
+    building: ['building', 'rebar', 'cement', 'tiles', 'masonry-units', 'gypsum-board', 'building-paint', 'construction-waterproofing', 'sqft-sqm-converter', 'iqama'],
     age: ['sleep', 'bedtime', 'retirement'],
     sleep: ['age-calculator', 'sleep', 'time-now'],
-    'personal-finance': ['net-salary', 'salary', 'monthly-installment', 'end-of-service-benefits', 'zakat', 'investment'],
-    health: ['bmi', 'fasting', 'pregnancy', 'pregnancy-weeks', 'ovulation', 'age-calculator'],
-    education: ['gpa', 'gpa-to-percent', 'weighted-grade', 'percentage', 'saudi-school-calendar'],
+    'personal-finance': ['end-of-service-benefits', 'article-77-compensation', 'wasiyya'],
+    // 2026-08-04: bmi/fasting/ovulation/age-calculator (a slug that never existed) removed —
+    // dropped from active promotion after a competitive audit (see
+    // keyword-research/health-education-hubs/DECISION.md). 'age' and 'hijri' are the real slugs.
+    health: ['pregnancy', 'pregnancy-weeks', 'weaning-schedule', 'age', 'hijri'],
+    // 2026-08-04: gpa/gpa-to-percent/weighted-grade removed — same audit, dropped as saturated.
+    education: ['saudi-school-calendar'],
   };
 
-  return complementSlugsByCluster[cluster] || ['iqama', 'net-salary', 'electricity-bill', 'inheritance'];
+  return complementSlugsByCluster[cluster] || ['iqama', 'end-of-service-benefits', 'wasiyya'];
 }
 
 function buildRelatedCalculatorLinks(currentSlug) {
@@ -668,25 +672,27 @@ export function CalculatorToolLauncher({
   );
 }
 
-export function CalculatorHubGrid() {
-  const safeRoutes = Array.isArray(CALCULATOR_ROUTES) ? CALCULATOR_ROUTES : [];
+export function CalculatorHubGrid({ routes, emptyTitle, emptyDescription, ariaLabel }) {
+  const source = Array.isArray(routes) ? routes : CALCULATOR_ROUTES;
+  const safeRoutes = Array.isArray(source) ? source : [];
 
   if (!safeRoutes.length) {
     return (
       <CalculatorEmptyState
-        title="لا توجد حاسبات جاهزة للعرض الآن"
-        description="لم تصلنا بيانات الأرشيف الكامل. استخدم المسارات الرئيسية في الصفحة أو جرّب لاحقاً عند اكتمال الفهرس."
+        title={emptyTitle || 'لا توجد حاسبات جاهزة للعرض الآن'}
+        description={emptyDescription || 'لم تصلنا بيانات الأرشيف الكامل. استخدم المسارات الرئيسية في الصفحة أو جرّب لاحقاً عند اكتمال الفهرس.'}
       />
     );
   }
 
   return (
-    <div className="calc-hub-grid">
+    <div className="calc-hub-grid" role="list" aria-label={ariaLabel || 'كل الحاسبات في هذا القسم'}>
       {safeRoutes.map((item) => (
         <Link
           key={item.slug}
           href={item.href}
           className="calc-hub-link"
+          role="listitem"
         >
           <span className="calc-hub-link__head">
             <Badge className="calc-pill calc-pill--subtle">{item.badge}</Badge>

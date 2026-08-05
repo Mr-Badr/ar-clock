@@ -10,7 +10,16 @@ export default function EmbedCodeSnippet({
   height = 320,
 }) {
   const [copied, setCopied] = useState(false);
-  const snippet = `<iframe src="${embedUrl}" width="${width}" height="${height}" style="border:0;" loading="lazy" title="${title}"></iframe>`;
+  // Multi-line, indented — a single 150+ character line reads as truncated/broken in a
+  // narrow code block and is genuinely harder to review before pasting onto another site.
+  const snippet = `<iframe
+  src="${embedUrl}"
+  width="${width}"
+  height="${height}"
+  style="border:0;"
+  loading="lazy"
+  title="${title}"
+></iframe>`;
 
   const handleCopy = async () => {
     try {

@@ -17,7 +17,6 @@ import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import AdBlogSidebar from '@/components/ads/AdBlogSidebar';
 import AdTopBanner from '@/components/ads/AdTopBanner';
-import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import { JsonLd } from '@/components/seo/JsonLd';
 import {
   buildBlogArticleLeadParagraphs,
@@ -1194,7 +1193,6 @@ export default function BlogArticleView(props) {
               <AdMultiplex slotId={`end-guide-${guide.slug || 'entry'}`} />
             ) : null}
 
-            <SiteTrustPanel panel="blog" />
           </div>
 
           <aside className={styles.sidebar}>

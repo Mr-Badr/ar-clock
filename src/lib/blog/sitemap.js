@@ -2,7 +2,7 @@ import { ALL_GUIDES } from '@/lib/guides/data';
 import { getSiteUrl } from '@/lib/site-config';
 
 function getGuidePriority(guide) {
-  if (guide?.hubHref === '/calculators/building') return 0.72;
+  if (guide?.hubHref === '/tools/construction') return 0.72;
   return 0.74;
 }
 

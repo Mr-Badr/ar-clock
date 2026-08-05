@@ -295,6 +295,9 @@ export default function TimeNowHero({
               <IconBtn onClick={() => setZoom(z => Math.max(z - 1, 0))} label="تصغير" disabled={zoom === 0} variant="none"><ZoomOut size={20} /></IconBtn>
               <span style={FULLSCREEN_ZOOM_LABEL_STYLE}>{zoomLabel}</span>
               <IconBtn onClick={() => setZoom(z => Math.min(z + 1, 2))} label="تكبير" disabled={zoom === 2} variant="none"><ZoomIn size={20} /></IconBtn>
+              <IconBtn onClick={handleShare} label={shareCopied ? 'تم نسخ الرابط' : 'مشاركة'} variant="none">
+                <Share2 size={18} />
+              </IconBtn>
             </div>
           </div>
 

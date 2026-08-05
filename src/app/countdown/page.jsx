@@ -336,7 +336,7 @@ export default function CountdownPage({ searchParams }) {
                 <h2 className={styles.sectionTitle}>أدوات مرتبطة</h2>
               </div>
               <div className={`${styles.linkGrid} mt-5`}>
-                <Link href="/calculators/age/countdown" className={`${styles.linkCard} ${styles.linkCardPrimary}`}>
+                <Link href="/tools/health/age-countdown" className={`${styles.linkCard} ${styles.linkCardPrimary}`}>
                   <span className={styles.cardIcon} aria-hidden="true">
                     <Gift size={16} strokeWidth={1.75} />
                   </span>

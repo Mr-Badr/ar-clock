@@ -71,11 +71,15 @@ const PREFERRED_CURRENCY_CODES = [
 ];
 
 function getSupportedCurrencyCodes() {
-  if (typeof Intl.supportedValuesOf === 'function') {
-    try {
-      return Intl.supportedValuesOf('currency');
-    } catch {}
-  }
+  // Deliberately NOT using `Intl.supportedValuesOf('currency')` here (found 2026-08-04 while
+  // shipping the personal-finance tools-v2 pages): that API enumerates the FULL ICU currency
+  // list, whose contents AND whose `Intl.DisplayNames` labels can differ between Node's
+  // server-side ICU build and the browser's — confirmed via a live hydration mismatch on 'SLL'
+  // (old Sierra Leonean Leone, redenominated to 'SLE' in 2022): Node rendered "SLL — ليون
+  // سيراليوني - 1964-2022" while Chromium rendered "SLE — ليون سيراليوني" for the exact same
+  // code, because the two ICU/CLDR data versions disagree on it. The curated, static
+  // PREFERRED_CURRENCY_CODES list avoids this entirely — it never changes at runtime, so SSR
+  // and CSR always enumerate the identical set of codes.
   return PREFERRED_CURRENCY_CODES;
 }
 

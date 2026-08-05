@@ -69,7 +69,13 @@
   }
 
   .layout-with-ads[data-layout='wide'] {
-    max-width: 1680px;
+    /* Was 1680px — at that cap, a dual-rail "wide" page (like /tools) couldn't fit its content
+       columns at their full target size (560+460px) alongside full-width 340px rails even at
+       a genuine 27"+ viewport (1920px): 1680 − 340×2 (rails) − 32×2 (gap) − 32×2 (padding) =
+       only 872px left for content, well under the 1036px needed. Raised to 1900px — "wide"
+       layout exists specifically for hubs/rich-grid pages that want more room, so this is in
+       keeping with its own purpose, not a special case for one page. */
+    max-width: 1900px;
   }
 
   @media (min-width: 640px) {
@@ -83,34 +89,30 @@
     min-width: 0;
   }
 
+  /* Both rails now activate at the SAME breakpoint (1440px) for dual mode — previously the
+     left/static rail didn't get a grid column until 1680px, which meant a huge range of real
+     laptop widths (1366–1679px, extremely common) either showed just one rail or showed a
+     dual-mode page with the left rail rendered but with no assigned column at all (falling
+     back to grid auto-placement). Fixed 2026-07-30 after the owner explicitly flagged the ad
+     column looking wrong/too-small on a real laptop. The math still leaves healthy content
+     width at 1366px even with both 240px rails present: 1366 − 240×2 (rails) − 32×2 (gap) −
+     32×2 (padding) ≈ 758px for content, comfortably above the 900px cap only when the
+     viewport allows it and still very readable below that. */
   @media (min-width: 1440px) {
-    .layout-with-ads[data-rail-mode='single'],
-    .layout-with-ads[data-rail-mode='dual'] {
+    .layout-with-ads[data-rail-mode='single'] {
       grid-template-columns: 240px minmax(0, 900px);
       gap: var(--space-8);
       padding-inline: var(--space-8);
     }
 
-    .layout-with-ads[data-layout='narrow'][data-rail-mode='single'],
-    .layout-with-ads[data-layout='narrow'][data-rail-mode='dual'] {
+    .layout-with-ads[data-layout='narrow'][data-rail-mode='single'] {
       grid-template-columns: 240px minmax(0, 820px);
     }
 
-    .layout-with-ads[data-layout='wide'][data-rail-mode='single'],
-    .layout-with-ads[data-layout='wide'][data-rail-mode='dual'] {
+    .layout-with-ads[data-layout='wide'][data-rail-mode='single'] {
       grid-template-columns: 240px minmax(0, 1fr);
     }
 
-    .layout-with-ads > :not(.ad-slot--sidebar) {
-      grid-column: 2;
-    }
-
-    .layout-with-ads > .ad-slot--sidebar--right {
-      grid-column: 1;
-    }
-  }
-
-  @media (min-width: 1680px) {
     .layout-with-ads[data-rail-mode='dual'] {
       grid-template-columns: 240px minmax(0, 900px) 240px;
       gap: var(--space-8);
@@ -121,20 +123,24 @@
       grid-template-columns: 240px minmax(0, 820px) 240px;
     }
 
+    /* "Wide" + dual is what /tools uses — owner call (2026-07-30): give this specific
+       combination extra rail width since these pages are planned to carry 2-3 stacked ad
+       units per rail, not just one. Left at 240px for narrow/standard dual (blog, holidays)
+       since those weren't part of this ask and have less spare width to give up. */
     .layout-with-ads[data-layout='wide'][data-rail-mode='dual'] {
-      grid-template-columns: 240px minmax(0, 1fr) 240px;
+      grid-template-columns: 280px minmax(0, 1fr) 280px;
+    }
+
+    .layout-with-ads > :not(.ad-slot--sidebar) {
+      grid-column: 2;
+    }
+
+    .layout-with-ads > .ad-slot--sidebar--right {
+      grid-column: 1;
     }
 
     .layout-with-ads[data-rail-mode='dual'] > .ad-slot--sidebar--left {
       grid-column: 3;
-    }
-  }
-
-  @media (min-width: 1440px) {
-    .layout-with-ads[data-rail-mode='single'],
-    .layout-with-ads[data-rail-mode='dual'] {
-      gap: var(--space-8);
-      padding-inline: var(--space-8);
     }
   }
 
@@ -155,7 +161,7 @@
     }
 
     .layout-with-ads[data-layout='wide'][data-rail-mode='dual'] {
-      grid-template-columns: 300px minmax(0, 1fr) 300px;
+      grid-template-columns: 340px minmax(0, 1fr) 340px;
     }
   }
 
@@ -291,6 +297,23 @@
       aspect-ratio: 728 / 90;
       min-height: 90px;
       max-height: 90px;
+    }
+  }
+
+  /* "large" variant (size="large" on AdTopBanner, currently /tools pages only) — owner call
+     (2026-07-30): a genuinely bigger horizontal ad above the 3-column layout on tablet/PC, not
+     just more margin around the same small leaderboard. Mobile stays at the small default size
+     (a 250px-tall unit on a phone would push all real content below the fold). aspect-ratio is
+     cleared since "auto" format creatives aren't a fixed shape the way "horizontal" ones are. */
+  .ad-slot--top-banner--large {
+    aspect-ratio: auto;
+    min-height: 90px;
+    max-height: 100px;
+  }
+  @media (min-width: 768px) {
+    .ad-slot--top-banner--large {
+      min-height: 200px;
+      max-height: 280px;
     }
   }
 
@@ -436,7 +459,10 @@
      ────────────────────────────────────────────────────────────────────────── */
   .ad-slot--sidebar {
     display: none;
-    width: 240px;
+    /* Fills whatever width its grid column actually is (240/280/300/340px depending on
+       layout+rail-mode — see the grid rules above) instead of hardcoding a px value that has
+       to be kept in sync with every grid-template-columns variant by hand. */
+    width: 100%;
     min-height: 400px;
     max-height: 600px;
     overflow: hidden;
@@ -452,27 +478,23 @@
       top: calc(var(--app-header-height) + var(--space-6));
       max-height: calc(100vh - var(--app-header-height) - var(--space-14));
     }
-  }
 
-  @media (min-width: 1680px) {
+    /* Matches the grid's dual-mode column assignment above — both rails now activate at the
+       same 1440px breakpoint (was 1680px; see the grid comment above for why). The static
+       rail isn't sticky, so unlike the row above it isn't bounded by viewport height — give it
+       real room (was 600px) so a future 2-3-stacked-ad-unit column (owner's stated plan for
+       /tools pages) has somewhere to go without a follow-up CSS change. */
     .ad-slot--sidebar--static {
       display: block;
       position: relative;
       top: auto;
-      max-height: 600px;
+      max-height: 1400px;
     }
   }
 
-  /* Matches the ≥1800px rail widening above: the slot itself must grow too,
-     and 620px leaves room for a full 300×600 creative plus the إعلان label. */
   @media (min-width: 1800px) {
-    .ad-slot--sidebar {
-      width: 300px;
-      max-height: 620px;
-    }
-
     .ad-slot--sidebar--static {
-      max-height: 620px;
+      max-height: 1400px;
     }
   }
 
@@ -684,6 +706,28 @@
     max-width: min(100%, 1200px) !important;
     margin-inline: auto !important;
     overflow: hidden !important;
+  }
+
+  /* ──────────────────────────────────────────────────────────────────────────
+     DEV-ONLY AD PLACEHOLDER (see DevAdPlaceholder.tsx)
+
+     Purely a local-preview aid so real ad slots' reserved space is visible
+     while building/reviewing page layout — every caller gates this behind
+     `NODE_ENV !== 'production'`, so it never renders for real visitors.
+     ────────────────────────────────────────────────────────────────────────── */
+  .ad-slot-dev-preview {
+    /* Deliberately undecorated — see DevAdPlaceholder.tsx. Reserved space only, no border,
+       no background, no label. Not a design element, just a layout placeholder. */
+    display: block;
+    width: 100%;
+  }
+  .ad-slot-dev-preview--large {
+    min-height: 90px;
+  }
+  @media (min-width: 768px) {
+    .ad-slot-dev-preview--large {
+      min-height: 240px;
+    }
   }
 
 }

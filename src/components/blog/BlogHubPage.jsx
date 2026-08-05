@@ -16,13 +16,13 @@ function uniqStrings(values) {
 
 const BLOG_COLLECTION_META = [
   {
-    href: '/calculators/sleep',
+    href: '/tools/sleep',
     title: 'النوم الذكي',
     description: 'مقالات تشرح النوم كروتين يومي: متى تنام، متى تستيقظ، متى تفيد القيلولة، ومتى يتحول التعب أو دين النوم إلى إشارة تحتاج انتباهاً.',
     accent: 'var(--info)',
   },
   {
-    href: '/calculators/building',
+    href: '/tools/construction',
     title: 'البناء والتشييد',
     description: 'مقالات توضيحية لمن يريد فهم تقديرات الأسمنت وحديد التسليح والبلاط قبل الحساب النهائي.',
     accent: 'var(--warning)',
@@ -110,23 +110,23 @@ const BLOG_SHORTCUTS = [
 
 const BLOG_SUPPORT_LINKS_BY_HREF = new Map([
   [
-    '/calculators/sleep',
+    '/tools/sleep',
     [
-      '/calculators/sleep',
-      '/calculators/sleep/bedtime',
-      '/calculators/sleep/wake-time',
-      '/calculators/sleep/nap-calculator',
-      '/calculators/sleep/sleep-debt',
-      '/calculators/sleep/sleep-needs-by-age',
+      '/tools/sleep',
+      '/tools/sleep/bedtime',
+      '/tools/sleep/wake-time',
+      '/tools/sleep/nap-calculator',
+      '/tools/sleep/sleep-debt',
+      '/tools/sleep/sleep-needs-by-age',
     ].map((href) => getSupportCard(href)).filter(Boolean),
   ],
   [
-    '/calculators/building',
+    '/tools/construction',
     [
-      '/calculators/building',
-      '/calculators/building/cement',
-      '/calculators/building/rebar',
-      '/calculators/building/tiles',
+      '/tools/construction/build-cost',
+      '/tools/construction/cement',
+      '/tools/construction/rebar-weight',
+      '/tools/construction/tiles',
     ].map((href) => getSupportCard(href)).filter(Boolean),
   ],
 ]);

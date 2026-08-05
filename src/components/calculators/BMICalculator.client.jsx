@@ -1,23 +1,26 @@
 "use client";
 
 import { useMemo, useState } from 'react';
-import { Heartbeat, Lightning, Scales, Warning } from '@phosphor-icons/react';
+import { Heartbeat, Lightning, Scales, ShareNetwork, Warning } from '@phosphor-icons/react';
+import { toast } from 'sonner';
 
-import { CalcInput as Input } from '@/components/calculators/controls.client';
-import ResultActions from '@/components/calculators/ResultActions.client';
-import { Label } from '@/components/ui/label';
-import {
-  calculateBMI,
-  formatNumber,
-} from '@/lib/calculators/engine';
+import { calculateBMI, formatNumber } from '@/lib/calculators/engine';
 
 const ACTIVITY_LEVELS = [
   { value: 'sedentary', label: 'خامل', desc: 'لا رياضة تقريباً' },
-  { value: 'light', label: 'خفيف', desc: '1–3 أيام/أسبوع' },
-  { value: 'moderate', label: 'متوسط', desc: '3–5 أيام/أسبوع' },
-  { value: 'active', label: 'نشيط', desc: '6–7 أيام/أسبوع' },
-  { value: 'veryActive', label: 'رياضي', desc: 'مرتين يومياً' },
+  { value: 'light', label: 'خفيف', desc: '1–3 أيام في الأسبوع' },
+  { value: 'moderate', label: 'متوسط', desc: '3–5 أيام في الأسبوع' },
+  { value: 'active', label: 'نشيط', desc: '6–7 أيام في الأسبوع' },
+  { value: 'veryActive', label: 'رياضي', desc: 'تمرين مرتين يومياً' },
 ];
+
+async function shareResult(title, text) {
+  if (navigator.share) {
+    try { await navigator.share({ title, text }); return; } catch { /* cancelled */ }
+  }
+  try { await navigator.clipboard.writeText(text); toast.success('تم نسخ النتيجة إلى الحافظة'); }
+  catch { toast.error('تعذر نسخ النتيجة'); }
+}
 
 export default function BMICalculator() {
   const [weight, setWeight] = useState('75');
@@ -38,220 +41,122 @@ export default function BMICalculator() {
   const bmiPointerLeft = result.isValid ? `${result.bmiPercent}%` : '0%';
 
   return (
-    <div className="calc-app bmi-tool" aria-label="حاسبة مؤشر كتلة الجسم">
-      <div className="calc-esb-layout">
+    <div aria-label="حاسبة مؤشر كتلة الجسم">
+      <div className="tool-v2-panel-head">
+        <span className="tool-v2-country-badge"><Scales size={14} weight="bold" /> مؤشر الجسم <span className="tool-v2-live-dot" aria-hidden="true" /></span>
+      </div>
 
-        {/* ── FORM ─────────────────────────────────── */}
-        <div className="calc-esb-form-col">
-          <div className="calc-surface-card calc-esb-form-card">
-            <div className="calc-esb-form-body">
+      <div className="tool-v2-field">
+        <label>الجنس</label>
+        <div className="tool-v2-option-list tool-v2-option-list--grid" role="group" aria-label="الجنس">
+          <button type="button" className={`tool-v2-chip${gender === 'male' ? ' is-active' : ''}`} onClick={() => setGender('male')}>ذكر</button>
+          <button type="button" className={`tool-v2-chip${gender === 'female' ? ' is-active' : ''}`} onClick={() => setGender('female')}>أنثى</button>
+        </div>
+      </div>
 
-              {/* Gender */}
-              <div className="calc-esb-field">
-                <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">1</span>
-                  <Label>الجنس</Label>
-                </div>
-                <div className="bmi-gender-row">
-                  <button
-                    type="button"
-                    className={`bmi-gender-btn${gender === 'male' ? ' is-active' : ''}`}
-                    onClick={() => setGender('male')}
-                  >
-                    ذكر
-                  </button>
-                  <button
-                    type="button"
-                    className={`bmi-gender-btn${gender === 'female' ? ' is-active' : ''}`}
-                    onClick={() => setGender('female')}
-                  >
-                    أنثى
-                  </button>
-                </div>
+      <div className="tool-v2-field-row-pair">
+        <div className="tool-v2-field">
+          <label htmlFor="bmi-weight">الوزن (كجم)</label>
+          <input id="bmi-weight" type="number" inputMode="decimal" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="75" />
+        </div>
+        <div className="tool-v2-field">
+          <label htmlFor="bmi-height">الطول (سم)</label>
+          <input id="bmi-height" type="number" inputMode="decimal" value={height} onChange={(e) => setHeight(e.target.value)} placeholder="175" />
+        </div>
+      </div>
+
+      <div className="tool-v2-field">
+        <label htmlFor="bmi-age">
+          العمر (للسعرات)
+          <span className="tool-v2-option-hint">اختياري — يُستخدم فقط لحساب السعرات اليومية</span>
+        </label>
+        <input id="bmi-age" type="number" inputMode="decimal" value={age} onChange={(e) => setAge(e.target.value)} placeholder="30" />
+      </div>
+
+      <div className="tool-v2-field">
+        <label>مستوى النشاط</label>
+        <div className="tool-v2-choice-list">
+          {ACTIVITY_LEVELS.map((level) => {
+            const active = activityLevel === level.value;
+            return (
+              <label key={level.value} className={`tool-v2-choice-card${active ? ' is-active' : ''}`} htmlFor={`bmi-activity-${level.value}`}>
+                <input
+                  type="radio"
+                  id={`bmi-activity-${level.value}`}
+                  name="bmi-activity"
+                  checked={active}
+                  onChange={() => setActivityLevel(level.value)}
+                />
+                <span className="tool-v2-choice-body">
+                  <span className="tool-v2-choice-title">{level.label}</span>
+                  <span className="tool-v2-choice-desc">{level.desc}</span>
+                </span>
+              </label>
+            );
+          })}
+        </div>
+      </div>
+
+      {result.isValid ? (
+        <div aria-live="polite">
+          <div className="tool-v2-result-hero">
+            <span className="tool-v2-result-label">مؤشر كتلة الجسم (BMI)</span>
+            <div className="tool-v2-result-value">{result.bmi}</div>
+            <div className="tool-v2-result-meta">{result.categoryAr}</div>
+          </div>
+
+          <div className="tool-v2-hbar-list" style={{ margin: 'var(--space-3) 0' }}>
+            <div className="tool-v2-hbar-row">
+              <span className="tool-v2-hbar-label">نقص</span>
+              <div className="tool-v2-hbar-track">
+                <div className="tool-v2-hbar-fill" style={{ width: bmiPointerLeft, background: 'var(--blue)' }} />
               </div>
-
-              {/* Weight & Height */}
-              <div className="calc-esb-field">
-                <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">2</span>
-                  <Label>الوزن والطول</Label>
-                </div>
-                <div className="bmi-measurement-row">
-                  <div>
-                    <Label htmlFor="bmi-weight" className="calc-hint">الوزن (كجم)</Label>
-                    <div className="calc-esb-money-row">
-                      <Input
-                        id="bmi-weight"
-                        inputMode="decimal"
-                        value={weight}
-                        onChange={(e) => setWeight(e.target.value)}
-                        placeholder="75"
-                      />
-                      <span className="calc-esb-currency">كجم</span>
-                    </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="bmi-height" className="calc-hint">الطول (سم)</Label>
-                    <div className="calc-esb-money-row">
-                      <Input
-                        id="bmi-height"
-                        inputMode="decimal"
-                        value={height}
-                        onChange={(e) => setHeight(e.target.value)}
-                        placeholder="175"
-                      />
-                      <span className="calc-esb-currency">سم</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Age */}
-              <div className="calc-esb-field">
-                <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">3</span>
-                  <Label htmlFor="bmi-age">العمر (للسعرات)</Label>
-                </div>
-                <div className="calc-esb-money-row">
-                  <Input
-                    id="bmi-age"
-                    inputMode="decimal"
-                    value={age}
-                    onChange={(e) => setAge(e.target.value)}
-                    placeholder="30"
-                  />
-                  <span className="calc-esb-currency">سنة</span>
-                </div>
-                <p className="calc-hint">اختياري — يُستخدم فقط لحساب السعرات اليومية</p>
-              </div>
-
-              {/* Activity level */}
-              <div className="calc-esb-field">
-                <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">4</span>
-                  <Label>مستوى النشاط</Label>
-                </div>
-                <div className="bmi-activity-grid">
-                  {ACTIVITY_LEVELS.map((level) => (
-                    <button
-                      key={level.value}
-                      type="button"
-                      className={`bmi-activity-btn${activityLevel === level.value ? ' is-active' : ''}`}
-                      onClick={() => setActivityLevel(level.value)}
-                    >
-                      <span className="bmi-activity-label">{level.label}</span>
-                      <span className="bmi-activity-desc">{level.desc}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
+              <span className="tool-v2-hbar-label">سمنة</span>
             </div>
           </div>
-        </div>
 
-        {/* ── RESULT ───────────────────────────────── */}
-        <div className="calc-esb-result-col">
-          {result.isValid ? (
-            <div className="calc-esb-result-panel bmi-result" aria-live="polite">
-              <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--bh">❤️ مؤشر الجسم</span>
-                <span className="calc-esb-live-dot bmi-live-dot" aria-hidden="true" />
-              </div>
-
-              {/* BMI value */}
-              <div className="calc-esb-amount-hero">
-                <span className="calc-esb-amount-label">مؤشر كتلة الجسم (BMI)</span>
-                <div className={`calc-esb-amount-value bmi-value--${result.category}`}>
-                  {result.bmi}
-                </div>
-                <div className="calc-esb-amount-meta">
-                  <span className={`bmi-category-badge bmi-category-badge--${result.category}`}>
-                    {result.categoryAr}
-                  </span>
-                </div>
-              </div>
-
-              {/* BMI scale */}
-              <div className="bmi-scale-wrap">
-                <div className="bmi-scale-track">
-                  <div className="bmi-scale-segment bmi-scale-segment--underweight" />
-                  <div className="bmi-scale-segment bmi-scale-segment--normal" />
-                  <div className="bmi-scale-segment bmi-scale-segment--overweight" />
-                  <div className="bmi-scale-segment bmi-scale-segment--obese1" />
-                  <div className="bmi-scale-segment bmi-scale-segment--obese2" />
-                  <div
-                    className="bmi-scale-pointer"
-                    style={{ left: bmiPointerLeft }}
-                    aria-hidden="true"
-                  />
-                </div>
-                <div className="bmi-scale-labels">
-                  <span>نقص</span>
-                  <span>مثالي</span>
-                  <span>زيادة</span>
-                  <span>سمنة</span>
-                </div>
-              </div>
-
-              {/* Breakdown */}
-              <div className="calc-esb-breakdown">
-                <div className="calc-esb-brow">
-                  <span className="calc-icon-label">
-                    <Scales size={14} weight="bold" />
-                    الوزن المثالي لطولك
-                  </span>
-                  <strong>{result.idealMin}–{result.idealMax} كجم</strong>
-                </div>
-                {result.weightDiff !== 0 && (
-                  <div className="calc-esb-brow">
-                    <span className="calc-icon-label">
-                      <Warning size={14} weight="bold" />
-                      {result.weightDiff > 0 ? 'يجب إنقاص' : 'يُنصح بزيادة'}
-                    </span>
-                    <strong>{Math.abs(result.weightDiff)} كجم</strong>
-                  </div>
-                )}
-                {result.tdee && (
-                  <>
-                    <div className="calc-esb-brow">
-                      <span className="calc-icon-label">
-                        <Heartbeat size={14} weight="bold" />
-                        معدل الأيض الأساسي (BMR)
-                      </span>
-                      <strong>{formatNumber(result.bmr)} كالوري</strong>
-                    </div>
-                    <div className="calc-esb-brow calc-esb-brow--total">
-                      <span className="calc-icon-label">
-                        <Lightning size={14} weight="bold" />
-                        السعرات اليومية للمحافظة
-                      </span>
-                      <strong>{formatNumber(result.tdee)} كالوري</strong>
-                    </div>
-                  </>
-                )}
-              </div>
-
-              <div className="bmi-disclaimer">
-                BMI مؤشر استرشادي — يُنصح باستشارة متخصص تغذية للتقييم الكامل.
-              </div>
-
-              <ResultActions
-                copyText={shareText}
-                shareTitle="حاسبة BMI"
-                shareText={shareText}
-              />
-
+          <div className="tool-v2-breakdown-list">
+            <div className="tool-v2-breakdown-row">
+              <span className="tool-v2-breakdown-label"><Scales size={14} weight="bold" style={{ verticalAlign: '-2px' }} /> الوزن المثالي لطولك</span>
+              <span className="tool-v2-breakdown-value">{result.idealMin}–{result.idealMax} كجم</span>
             </div>
-          ) : (
-            <div className="calc-esb-empty-state">
-              <Scales size={28} weight="duotone" />
-              <p>أدخل وزنك وطولك لحساب مؤشر كتلة الجسم.</p>
-            </div>
-          )}
-        </div>
+            {result.weightDiff !== 0 && (
+              <div className="tool-v2-breakdown-row">
+                <span className="tool-v2-breakdown-label"><Warning size={14} weight="bold" style={{ verticalAlign: '-2px' }} /> {result.weightDiff > 0 ? 'يجب إنقاص' : 'يُنصح بزيادة'}</span>
+                <span className="tool-v2-breakdown-value">{Math.abs(result.weightDiff)} كجم</span>
+              </div>
+            )}
+            {result.tdee && (
+              <>
+                <div className="tool-v2-breakdown-row">
+                  <span className="tool-v2-breakdown-label"><Heartbeat size={14} weight="bold" style={{ verticalAlign: '-2px' }} /> معدل الأيض الأساسي (BMR)</span>
+                  <span className="tool-v2-breakdown-value">{formatNumber(result.bmr)} كالوري</span>
+                </div>
+                <div className="tool-v2-breakdown-row">
+                  <span className="tool-v2-breakdown-label"><Lightning size={14} weight="bold" style={{ verticalAlign: '-2px' }} /> السعرات اليومية للمحافظة</span>
+                  <span className="tool-v2-breakdown-value">{formatNumber(result.tdee)} كالوري</span>
+                </div>
+              </>
+            )}
+          </div>
 
-      </div>
+          <div className="tool-v2-note-strip">
+            <Warning size={15} weight="fill" />
+            <span>BMI مؤشر استرشادي — يُنصح باستشارة متخصص تغذية للتقييم الكامل.</span>
+          </div>
+
+          <div className="tool-v2-action-row">
+            <button type="button" className="tool-v2-action-btn is-primary" onClick={() => shareResult('حاسبة BMI', shareText)}>
+              <ShareNetwork size={18} weight="bold" /> مشاركة
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="tool-v2-empty-state">
+          <Scales size={28} weight="duotone" />
+          <p>أدخل وزنك وطولك لحساب مؤشر كتلة الجسم.</p>
+        </div>
+      )}
     </div>
   );
 }

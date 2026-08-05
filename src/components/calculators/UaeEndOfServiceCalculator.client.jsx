@@ -1,324 +1,366 @@
 "use client";
 
-import { Suspense, lazy, useMemo, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import {
-  Briefcase,
   CalendarBlank,
   CaretDown,
+  Check,
   Info,
+  Share as ShareIcon,
   TrendUp,
-  Wallet,
   Warning,
+  X,
 } from '@phosphor-icons/react';
+import { toast } from 'sonner';
+import CountryFlag from '@/components/shared/CountryFlag';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
-import {
-  CalcInput as Input,
-  CalcProgress as Progress,
-  CalcSelectTrigger as SelectTrigger,
-} from '@/components/calculators/controls.client';
-import ResultActions from '@/components/calculators/ResultActions.client';
-import { Card, CardContent } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
-import { Slider } from '@/components/ui/slider';
+function FieldHint({ text }) {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button type="button" className="tool-v2-field-hint-btn" aria-label="توضيح">
+            <Info size={14} weight="bold" />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent>{text}</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+
+const EndOfServiceChart = lazy(() => import('./EndOfServiceChart.client'));
 import {
   buildUaeEndOfServiceComparison,
   buildUaeEndOfServiceMilestones,
   calculateUaeEndOfServiceBenefit,
   formatCurrency,
   formatDateArabic,
-  formatNumber,
   formatPercent,
 } from '@/lib/calculators/engine';
 
-const TERMINATION_OPTIONS = [
-  { value: 'contract_end',         label: 'انتهاء العقد أو عدم تجديده', hint: 'استحقاق كامل وفق قانون العمل.' },
-  { value: 'employer_termination', label: 'إنهاء من صاحب العمل',        hint: 'استحقاق كامل — وقد يضاف تعويض تعسفي.' },
-  { value: 'resignation',          label: 'استقالة',                    hint: 'تُطبَّق نسبة تعتمد على مدة الخدمة.' },
-  { value: 'retirement',           label: 'تقاعد أو وفاة',              hint: 'يُعامَل كاستحقاق كامل في هذه الحاسبة.' },
+// All four reasons now give the same entitlement (full amount after 1 year, zero before it) —
+// since Federal Decree-Law No. 33 of 2021, resignation no longer reduces the gratuity. Hints
+// reflect this rather than the old (repealed) 1/3–2/3 resignation scale.
+const terminationOptions = [
+  { value: 'contract_end', label: 'انتهاء العقد أو عدم تجديده', hint: 'استحقاق كامل بعد سنة واحدة من الخدمة.' },
+  { value: 'employer_termination', label: 'إنهاء من صاحب العمل', hint: 'استحقاق كامل — وقد يضاف تعويض تعسفي منفصل.' },
+  { value: 'resignation', label: 'استقالة', hint: 'استحقاق كامل بعد سنة واحدة — لا تخفّضها الاستقالة بعد قانون 2021.' },
+  { value: 'retirement', label: 'تقاعد أو وفاة', hint: 'استحقاق كامل بنفس شرط السنة الواحدة.' },
 ];
 
-export default function UaeEndOfServiceCalculator({ initialStartDate, initialEndDate }) {
-  const [salary, setSalary]       = useState('10000');
-  const [startDate, setStartDate] = useState(initialStartDate);
-  const [endDate, setEndDate]     = useState(initialEndDate);
-  const [reason, setReason]       = useState('contract_end');
-  const [waitMonths, setWaitMonths] = useState([6]);
-  const [showExtras, setShowExtras] = useState(false);
+const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+const VALID_REASONS = new Set(['contract_end', 'employer_termination', 'resignation', 'retirement']);
 
-  const fmt = (v) => formatCurrency(v, 'AED');
+async function shareResult(title, text) {
+  if (navigator.share) {
+    try {
+      await navigator.share({ title, text });
+      return;
+    } catch {
+      // user cancelled the native share sheet — fall through to clipboard
+    }
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+    toast.success('تم نسخ النتيجة إلى الحافظة');
+  } catch {
+    toast.error('تعذّر نسخ النتيجة');
+  }
+}
+
+export default function UaeEndOfServiceCalculator({ initialStartDate, initialEndDate }) {
+  const [salary, setSalary] = useState('10000');
+  const [startDate, setStartDate] = useState(initialStartDate);
+  const [endDate, setEndDate] = useState(initialEndDate);
+  const [reason, setReason] = useState('contract_end');
+  const [waitMonths, setWaitMonths] = useState(6);
+  const [showExtras, setShowExtras] = useState(false);
+  // See end-of-service-benefits' EndOfServiceCalculator.client.jsx for why this exists: forces
+  // a fresh native <input type="date"> node on مسح (clear) so no stale internal browser
+  // segment state (day/month) survives from before the clear.
+  const [formKey, setFormKey] = useState(0);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const salaryRaw = params.get('salary');
+    const startRaw = params.get('start');
+    const endRaw = params.get('end');
+    const reasonRaw = params.get('reason');
+
+    const salaryNum = Number(salaryRaw);
+    if (salaryRaw && Number.isFinite(salaryNum) && salaryNum > 0) {
+      setSalary(String(salaryNum));
+    }
+    if (ISO_DATE_RE.test(startRaw || '') && ISO_DATE_RE.test(endRaw || '') && startRaw < endRaw) {
+      setStartDate(startRaw);
+      setEndDate(endRaw);
+    }
+    if (reasonRaw && VALID_REASONS.has(reasonRaw)) {
+      setReason(reasonRaw);
+    }
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const params = new URLSearchParams();
+      if (salary) params.set('salary', salary);
+      if (startDate) params.set('start', startDate);
+      if (endDate) params.set('end', endDate);
+      if (reason) params.set('reason', reason);
+      const query = params.toString();
+      const nextUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
+      window.history.replaceState(null, '', nextUrl);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [salary, startDate, endDate, reason]);
+
+  const formatMoney = (value) => formatCurrency(value, 'AED');
 
   const result = useMemo(
     () => calculateUaeEndOfServiceBenefit({ basicSalary: salary, startDate, endDate, reason }),
     [salary, startDate, endDate, reason],
   );
   const comparison = useMemo(
-    () => buildUaeEndOfServiceComparison({ salary, startDate, endDate, reason, waitMonths: waitMonths[0] }),
+    () => buildUaeEndOfServiceComparison({ salary, startDate, endDate, reason, waitMonths }),
     [salary, startDate, endDate, reason, waitMonths],
   );
   const milestones = useMemo(() => buildUaeEndOfServiceMilestones(startDate), [startDate]);
 
-  const selectedOpt = TERMINATION_OPTIONS.find((o) => o.value === reason);
-  const NEAR_DAYS = 180;
-  const nextMilestone = reason === 'resignation'
-    ? milestones.find((m) => {
-        if (!m.date || m.date <= endDate) return false;
-        return new Date(m.date).getTime() - new Date(endDate).getTime() <= NEAR_DAYS * 86400000;
-      })
-    : null;
-  const footerNote = nextMilestone
+  // Milestones (1-year eligibility, 5-year rate increase) now apply the same way regardless
+  // of reason — resignation no longer has its own separate percentage schedule.
+  const NEAR_MILESTONE_DAYS = 180;
+  const nextMilestone = milestones.find((item) => {
+    if (!item.date || item.date <= endDate) return false;
+    const msUntil = new Date(item.date).getTime() - new Date(endDate).getTime();
+    return msUntil <= NEAR_MILESTONE_DAYS * 86400000;
+  });
+  const nextMilestoneText = nextMilestone
     ? `نصيحة: انتظر حتى ${formatDateArabic(nextMilestone.date)} لتصل إلى "${nextMilestone.label}".`
     : 'هذه نتيجة تقديرية — راجع عقدك وجهة العمل قبل أي قرار.';
 
   const shareText = result.isValid
-    ? `مكافأة نهاية الخدمة (الإمارات): ${fmt(result.gratuity)}\nمدة الخدمة: ${result.serviceLabel}\nنسبة الاستحقاق: ${formatPercent(result.entitlementPercent)}`
+    ? `مكافأة نهاية الخدمة (الإمارات): ${formatMoney(result.gratuity)}\nمدة الخدمة: ${result.serviceLabel}\nنسبة الاستحقاق: ${formatPercent(result.entitlementPercent)}`
     : '';
 
+  function handleClear() {
+    setSalary('');
+    setStartDate('');
+    setEndDate('');
+    setFormKey((k) => k + 1);
+  }
+
+  function handleReload() {
+    setSalary('10000');
+    setStartDate(initialStartDate);
+    setEndDate(initialEndDate);
+    setReason('contract_end');
+  }
+
   return (
-    <div className="calc-app end-service-tool" aria-label="حاسبة مكافأة نهاية الخدمة الإمارات">
-      <div className="calc-esb-layout">
+    <div aria-label="حاسبة مكافأة نهاية الخدمة الإمارات">
+      <div className="tool-v2-panel-head">
+        <span className="tool-v2-country-badge"><CountryFlag code="ae" label="الإمارات" /> الإمارات <span className="tool-v2-live-dot" aria-hidden="true" /></span>
+      </div>
 
-        {/* ── FORM ─────────────────────────────────── */}
-        <div className="calc-esb-form-col">
-          <Card className="calc-surface-card calc-esb-form-card">
-            <CardContent className="calc-esb-form-body">
+      <div className="tool-v2-field">
+        <label htmlFor="uae-esb-salary">
+          الراتب الأساسي الشهري (د.إ)
+          <FieldHint text="الراتب الأساسي فقط كما في العقد — بدون بدل السكن أو النقل أو أي بدلات أخرى." />
+        </label>
+        <input
+          id="uae-esb-salary"
+          type="number"
+          inputMode="decimal"
+          value={salary}
+          onChange={(e) => setSalary(e.target.value)}
+          placeholder="10000"
+        />
+      </div>
 
-              {/* Basic salary */}
-              <div className="calc-esb-field">
-                <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">1</span>
-                  <Label htmlFor="uae-esb-salary">الراتب الأساسي الشهري</Label>
-                </div>
-                <div className="calc-esb-money-row">
-                  <Input
-                    id="uae-esb-salary"
-                    inputMode="decimal"
-                    value={salary}
-                    onChange={(e) => setSalary(e.target.value)}
-                    placeholder="10000"
+      <div className="tool-v2-field-row-pair">
+        <div className="tool-v2-field">
+          <label htmlFor="uae-esb-start">بداية العمل</label>
+          <input key={`start-${formKey}`} id="uae-esb-start" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+        </div>
+        <div className="tool-v2-field">
+          <label htmlFor="uae-esb-end">نهاية العمل</label>
+          <input key={`end-${formKey}`} id="uae-esb-end" type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+        </div>
+      </div>
+
+      <div className="tool-v2-field">
+        <label>
+          سبب إنهاء العلاقة
+          <FieldHint text="كل الأسباب تُعطي نفس النسبة الآن — الاختيار هنا يُظهر فقط ملاحظة خاصة مثل التعويض التعسفي." />
+        </label>
+        <div className="tool-v2-option-list">
+          {terminationOptions.map((opt) => (
+            <label
+              key={opt.value}
+              className={`tool-v2-option-row${reason === opt.value ? ' is-active' : ''}`}
+              htmlFor={`uae-esb-reason-${opt.value}`}
+            >
+              <input
+                type="radio"
+                id={`uae-esb-reason-${opt.value}`}
+                name="uae-esb-reason"
+                checked={reason === opt.value}
+                onChange={() => setReason(opt.value)}
+              />
+              <span>
+                {opt.label}
+                <span className="tool-v2-option-hint">{opt.hint}</span>
+              </span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {result.isValid ? (
+        <div aria-live="polite">
+          <div className="tool-v2-result-hero">
+            <div className="tool-v2-result-label">مكافأة نهاية الخدمة المقدّرة</div>
+            <div className="tool-v2-result-value">{formatMoney(result.gratuity)}</div>
+            <div className="tool-v2-result-meta">
+              {result.serviceLabel} · {formatPercent(result.entitlementPercent)} استحقاق
+            </div>
+            <div className="tool-v2-result-breakdown">
+              {result.firstFiveAmount > 0 && (
+                <span>السنوات الأولى (21 يوماً / سنة): <strong>{formatMoney(result.firstFiveAmount)}</strong></span>
+              )}
+              {result.remainingAmount > 0 && (
+                <span>ما بعد الخامسة (30 يوماً / سنة): <strong>{formatMoney(result.remainingAmount)}</strong></span>
+              )}
+              {result.partialAmount > 0 && (
+                <span>كسر السنة: <strong>{formatMoney(result.partialAmount)}</strong></span>
+              )}
+            </div>
+            {result.isCapped && (
+              <div className="tool-v2-result-meta" style={{ marginTop: '6px' }}>
+                المبلغ مُطبَّق عليه الحد الأقصى القانوني (راتب سنتين) — القيمة الفعلية قبل السقف كانت أعلى.
+              </div>
+            )}
+          </div>
+
+          <div className="tool-v2-progress-track">
+            <div className="tool-v2-progress-fill" style={{ width: `${result.entitlementPercent}%` }} />
+          </div>
+
+          <Suspense fallback={null}>
+            <EndOfServiceChart
+              result={{ ...result, award: result.gratuity, fullAward: result.fullGratuity }}
+              salary={salary}
+              currency="AED"
+            />
+          </Suspense>
+
+          <div className="tool-v2-note-strip">
+            <Warning size={14} weight="fill" />
+            <span>{nextMilestoneText}</span>
+          </div>
+
+          <div className="tool-v2-tool-collapse">
+            <button
+              type="button"
+              className="tool-v2-tool-collapse-toggle"
+              onClick={() => setShowExtras((v) => !v)}
+              aria-expanded={showExtras}
+            >
+              <span>أثر الانتظار والخط الزمني</span>
+              <CaretDown size={15} weight="bold" style={{ transform: showExtras ? 'rotate(180deg)' : 'rotate(0deg)' }} />
+            </button>
+
+            {showExtras && (
+              <div className="tool-v2-tool-collapse-body">
+                <div>
+                  <div className="tool-v2-mini-block-head">
+                    <TrendUp size={14} weight="bold" />
+                    <span>قارن مع الانتظار <strong>{waitMonths} شهر</strong> إضافي</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={0}
+                    max={24}
+                    step={1}
+                    value={waitMonths}
+                    onChange={(e) => setWaitMonths(Number(e.target.value))}
+                    style={{ width: '100%', accentColor: 'var(--green)' }}
                   />
-                  <span className="calc-esb-currency">د.إ</span>
+                  {comparison.projected?.isValid && (
+                    <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginTop: '8px' }}>
+                      إذا تغيّر تاريخ النهاية إلى {formatDateArabic(comparison.projectedEndDate)}
+                      {' '}فسيصبح الاستحقاق {formatMoney(comparison.projected.gratuity)}،
+                      {' '}أي فرق {formatMoney(comparison.difference)}.
+                    </p>
+                  )}
                 </div>
-                <p className="calc-hint">الأساسي فقط — لا تُضِف بدل السكن أو النقل أو الهاتف.</p>
-              </div>
 
-              {/* Dates */}
-              <div className="calc-esb-field">
-                <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">2</span>
-                  <Label>تواريخ الخدمة</Label>
-                </div>
-                <div className="calc-esb-date-row">
-                  <div className="calc-esb-date-field">
-                    <Label htmlFor="uae-esb-start" className="calc-esb-date-label">بداية العمل</Label>
-                    <Input id="uae-esb-start" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                <div>
+                  <div className="tool-v2-mini-block-head">
+                    <CalendarBlank size={14} weight="bold" />
+                    <span>محطات الاستحقاق — متى ترتفع المكافأة؟</span>
                   </div>
-                  <div className="calc-esb-date-field">
-                    <Label htmlFor="uae-esb-end" className="calc-esb-date-label">نهاية العمل</Label>
-                    <Input id="uae-esb-end" type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                  <div className="tool-v2-timeline">
+                    {milestones.map((item) => {
+                      const isPast = item.date && item.date <= endDate;
+                      // Same result regardless of reason now (see engine.js) — using the
+                      // actual selected reason instead of a hardcoded one for clarity.
+                      const milestoneResult = calculateUaeEndOfServiceBenefit({
+                        basicSalary: salary,
+                        startDate,
+                        endDate: item.date || endDate,
+                        reason,
+                      });
+                      return (
+                        <div key={item.years} className={`tool-v2-milestone${isPast ? ' is-past' : ' is-future'}`}>
+                          <span className="tool-v2-milestone-marker" aria-hidden="true">
+                            {isPast ? <Check size={12} weight="bold" /> : <span className="tool-v2-milestone-dot" />}
+                          </span>
+                          <span className="tool-v2-milestone-body">
+                            <strong className="tool-v2-milestone-label">{item.label}</strong>
+                            <span className="tool-v2-milestone-sub">
+                              بعد {item.years} {item.years === 1 ? 'سنة' : 'سنوات'} — {item.date ? formatDateArabic(item.date) : '—'}
+                            </span>
+                          </span>
+                          <span className="tool-v2-milestone-value">
+                            {milestoneResult.isValid ? formatMoney(milestoneResult.gratuity) : '—'}
+                          </span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
-              </div>
-
-              {/* Reason */}
-              <div className="calc-esb-field">
-                <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">3</span>
-                  <Label>سبب إنهاء العلاقة</Label>
-                </div>
-                <Select value={reason} onValueChange={setReason}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {TERMINATION_OPTIONS.map((opt) => (
-                      <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {selectedOpt?.hint && <p className="calc-hint">{selectedOpt.hint}</p>}
-              </div>
-
-            </CardContent>
-          </Card>
-
-          {/* Sidebar quick facts */}
-          <div className="calc-esb-sidebar-facts">
-            <div className="calc-esb-fact">
-              <Wallet size={15} weight="bold" />
-              <span>الأساسي: <strong>{fmt(Number(salary) || 0)}</strong></span>
-            </div>
-            <div className="calc-esb-fact">
-              <Briefcase size={15} weight="bold" />
-              <span>{result.isValid ? result.serviceLabel : 'أدخل التواريخ'}</span>
-            </div>
-            {result.isValid && (
-              <div className="calc-esb-fact">
-                <Info size={15} weight="bold" />
-                <span>معدل يومي: <strong>{fmt(result.dailyRate)}</strong></span>
               </div>
             )}
           </div>
         </div>
-
-        {/* ── RESULT ───────────────────────────────── */}
-        <div className="calc-esb-result-col">
-          {result.isValid ? (
-            <div className="calc-esb-result-panel" aria-live="polite">
-
-              {/* Big number */}
-              <div className="calc-esb-amount-hero">
-                <span className="calc-esb-amount-label">المكافأة المقدرة</span>
-                <div className="calc-esb-amount-value">{fmt(result.gratuity)}</div>
-                <div className="calc-esb-amount-meta">
-                  <span>{result.serviceLabel}</span>
-                  <span className="calc-esb-sep">·</span>
-                  <span>{formatPercent(result.entitlementPercent)} استحقاق</span>
-                </div>
-              </div>
-
-              {/* Entitlement progress bar */}
-              <div className="calc-esb-pct-row">
-                <Progress value={result.entitlementPercent} className="calc-esb-pct-bar" />
-                {reason === 'resignation' && (
-                  <span className="calc-hint">{result.resignationBracket?.label}</span>
-                )}
-              </div>
-
-              {/* Two-tier breakdown — the key UAE differentiator */}
-              <div className="calc-esb-breakdown">
-                {result.firstFiveAmount > 0 && (
-                  <div className="calc-esb-brow">
-                    <span>السنوات الأولى × 21 يوماً</span>
-                    <strong>{fmt(result.firstFiveAmount)}</strong>
-                  </div>
-                )}
-                {result.remainingAmount > 0 && (
-                  <div className="calc-esb-brow">
-                    <span>ما بعد الخامسة × 30 يوماً</span>
-                    <strong>{fmt(result.remainingAmount)}</strong>
-                  </div>
-                )}
-                {result.partialAmount > 0 && (
-                  <div className="calc-esb-brow">
-                    <span>كسر السنة</span>
-                    <strong>{fmt(result.partialAmount)}</strong>
-                  </div>
-                )}
-                <div className="calc-esb-brow calc-esb-brow--total">
-                  <span>المكافأة الكاملة قبل التعديل</span>
-                  <strong>{fmt(result.fullGratuity)}</strong>
-                </div>
-                {reason === 'resignation' && result.entitlementPercent < 100 && (
-                  <div className="calc-esb-brow" style={{ borderTop: '1px dashed var(--border-subtle)', marginTop: 'var(--space-2)', paddingTop: 'var(--space-2)' }}>
-                    <span>بعد تطبيق نسبة الاستقالة ({formatPercent(result.entitlementPercent)})</span>
-                    <strong style={{ color: 'var(--accent)' }}>{fmt(result.gratuity)}</strong>
-                  </div>
-                )}
-              </div>
-
-              {/* Result actions */}
-              <ResultActions
-                copyText={shareText}
-                shareTitle="حاسبة مكافأة نهاية الخدمة الإمارات"
-                shareText={shareText}
-              />
-
-              {/* Footer note */}
-              <div className="calc-esb-reason-strip">
-                <Warning size={14} weight="fill" />
-                <span>{footerNote}</span>
-              </div>
-
-              {/* Collapsible: wait comparison + milestones */}
-              <div className="calc-esb-extras">
-                <button
-                  className="calc-esb-extras-toggle"
-                  onClick={() => setShowExtras((v) => !v)}
-                  aria-expanded={showExtras}
-                >
-                  <span>{showExtras ? 'إخفاء' : 'أثر الانتظار والمحطات الزمنية'}</span>
-                  <CaretDown
-                    size={15}
-                    weight="bold"
-                    className="calc-esb-caret"
-                    aria-hidden="true"
-                    style={{ transform: showExtras ? 'rotate(180deg)' : 'rotate(0deg)' }}
-                  />
-                </button>
-
-                {showExtras && (
-                  <div className="calc-esb-extras-panel">
-
-                    {/* Wait comparison */}
-                    <div className="calc-esb-extra-block">
-                      <div className="calc-esb-extra-head">
-                        <TrendUp size={14} weight="bold" />
-                        <span>ماذا لو انتظرت <strong>{waitMonths[0]} شهر</strong> إضافي؟</span>
-                      </div>
-                      <Slider
-                        className="calc-slider"
-                        min={0}
-                        max={24}
-                        step={1}
-                        value={waitMonths}
-                        onValueChange={setWaitMonths}
-                      />
-                      {comparison.projected?.isValid && (
-                        <div className={comparison.difference >= 0 ? 'calc-success' : 'calc-warning'}>
-                          في {formatDateArabic(comparison.projectedEndDate)} ستكون المكافأة{' '}
-                          {fmt(comparison.projected.gratuity)}،
-                          أي فرق {fmt(comparison.difference)}.
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Milestones */}
-                    <div className="calc-esb-extra-block">
-                      <div className="calc-esb-extra-head">
-                        <CalendarBlank size={14} weight="bold" />
-                        <span>محطات الاستحقاق عند الاستقالة</span>
-                      </div>
-                      <div className="calc-esb-timeline">
-                        {milestones.map((m) => {
-                          const isPast = m.date && m.date <= endDate;
-                          const msResult = calculateUaeEndOfServiceBenefit({
-                            basicSalary: salary,
-                            startDate,
-                            endDate: m.date || endDate,
-                            reason: 'resignation',
-                          });
-                          return (
-                            <div key={m.years} className={`calc-esb-milestone${isPast ? ' is-past' : ' is-future'}`}>
-                              <span className="calc-esb-milestone-label">
-                                <strong>{m.label}</strong>
-                                <span className="calc-hint">بعد {m.years} سنة — {m.date ? formatDateArabic(m.date) : '—'}</span>
-                              </span>
-                              <span className={`calc-esb-milestone-date${isPast ? ' is-past' : ''}`}>
-                                {msResult.isValid ? fmt(msResult.gratuity) : '—'}
-                              </span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <p className="calc-hint" style={{ fontSize: '0.72rem', marginTop: '0.25rem' }}>
-                        المبالغ محسوبة بالراتب المُدخل ونسبة الاستقالة عند كل محطة.
-                      </p>
-                    </div>
-
-                  </div>
-                )}
-              </div>
-
-            </div>
-          ) : (
-            <div className="calc-esb-empty-state">
-              <Warning size={28} weight="duotone" />
-              <p>أدخل راتباً صحيحاً وتأكد أن تاريخ نهاية الخدمة بعد تاريخ البداية.</p>
-            </div>
-          )}
+      ) : (
+        <div className="tool-v2-empty-state">
+          <Warning size={28} weight="duotone" />
+          <p>أدخل راتباً صحيحاً وتأكد أن تاريخ نهاية الخدمة بعد تاريخ البداية.</p>
         </div>
+      )}
 
+      <div className="tool-v2-action-row">
+        <button
+          type="button"
+          className="tool-v2-action-btn is-primary"
+          onClick={() => shareResult('حاسبة مكافأة نهاية الخدمة الإمارات', shareText)}
+          disabled={!result.isValid}
+        >
+          <ShareIcon size={18} weight="bold" />
+          مشاركة
+        </button>
+        <button type="button" className="tool-v2-action-btn" onClick={handleClear}>
+          <X size={18} weight="bold" />
+          مسح
+        </button>
+        <button type="button" className="tool-v2-action-btn" onClick={handleReload}>
+          <TrendUp size={18} weight="bold" style={{ rotate: '90deg' }} />
+          إعادة تحميل
+        </button>
       </div>
     </div>
   );

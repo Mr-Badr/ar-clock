@@ -21,8 +21,8 @@ const TAXONOMY_GROUPS = [
     links: [
       { href: '/calculators', label: 'قسم الحاسبات' },
       { href: '/calculators/finance', label: 'المال والعمل' },
-      { href: '/calculators/personal-finance', label: 'التخطيط المالي الشخصي' },
-      { href: '/calculators/sleep', label: 'النوم الذكي' },
+      { href: '/tools/personal-finance', label: 'التخطيط المالي الشخصي' },
+      { href: '/tools/sleep', label: 'النوم الذكي' },
     ],
   },
   {

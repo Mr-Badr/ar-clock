@@ -43,6 +43,7 @@ export const NAV_LINKS = [
     ],
   },
   { href: "/time-difference", label: "فرق التوقيت" },
+  { href: "/tools", label: "الأدوات" },
   {
     href: "/calculators",
     label: "الحاسبات",
@@ -50,28 +51,28 @@ export const NAV_LINKS = [
     panelDescription: "احسب الإقامة والراتب والكهرباء والميراث والحمل والمعدل والبناء من صفحات عربية واضحة",
     sublinks: [
       {
-        href: "/calculators/iqama",
+        href: "/tools/gulf-finance/iqama",
         label: "حاسبة الإقامة",
         icon: "Wallet",
         description: "انتهاء الإقامة والغرامة اليومية للسعودية والإمارات",
       },
       {
-        href: "/calculators/electricity-bill",
-        label: "فاتورة الكهرباء",
+        href: "/calculators/egypt-water-bill",
+        label: "فاتورة المياه مصر",
         icon: "Receipt",
-        description: "شرائح SEC السعودية وDEWA الإماراتية مع الضريبة",
+        description: "شرائح تصاعدية ورسم الصرف الصحي والضريبة",
       },
       {
-        href: "/calculators/inheritance",
-        label: "الميراث الإسلامي",
+        href: "/tools/gulf-finance/wasiyya",
+        label: "الوصية الشرعية",
         icon: "Calculator",
-        description: "توزيع التركة وفق الفرائض مع رسم بياني",
+        description: "كم يجوز أن توصي من تركتك وفق الشريعة",
       },
       {
-        href: "/calculators/net-salary",
-        label: "صافي الراتب",
+        href: "/tools/gulf-finance/article-77-compensation",
+        label: "تعويض المادة 77",
         icon: "Wallet",
-        description: "الراتب بعد GOSI والاستقطاعات الشهرية",
+        description: "تعويض الفصل التعسفي وفق نظام العمل السعودي",
       },
       {
         href: "/calculators/pregnancy",
@@ -86,7 +87,7 @@ export const NAV_LINKS = [
         description: "احسب معدلك من 5 أو من 4 وحوّله لنسبة",
       },
       {
-        href: "/calculators/end-of-service-benefits",
+        href: "/tools/gulf-finance/end-of-service-benefits",
         label: "نهاية الخدمة",
         icon: "Wallet",
         description: "المستحقات بحسب مدة الخدمة وسبب الإنهاء",
@@ -98,22 +99,22 @@ export const NAV_LINKS = [
         description: "قارن القرض والمدة والفائدة والسداد المبكر",
       },
       {
-        href: "/calculators/age-calculator",
+        href: "/tools/health/age-calculator",
         label: "حاسبة العمر",
         icon: "Hourglass",
         description: "عمرك بالتقويمين والأيام والأشهر والدقائق",
       },
       {
-        href: "/calculators/sleep",
+        href: "/tools/sleep",
         label: "حاسبات النوم",
         icon: "Moon",
         description: "متى أنام، متى أستيقظ، القيلولة، ودين النوم",
       },
       {
-        href: "/calculators/building",
+        href: "/tools/construction/build-cost",
         label: "حاسبات البناء",
         icon: "Buildings",
-        description: "تكلفة المنزل، الأسمنت، الحديد — 12 دولة",
+        description: "تكلفة المنزل، الأسمنت، الحديد — 14 دولة",
       },
       {
         href: "/calculators",

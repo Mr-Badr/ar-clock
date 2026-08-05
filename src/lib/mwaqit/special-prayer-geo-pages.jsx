@@ -26,7 +26,6 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
-import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
 import SpecialPrayerFactCard from '@/components/mwaqit/SpecialPrayerFactCard';
 import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
@@ -349,7 +348,6 @@ export function createFactCityPage(config) {
 
             <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
               <div className={routeStyles.sectionPanel}>
-                <SiteTrustPanel panel="prayer" />
               </div>
             </section>
           </main>
@@ -647,7 +645,6 @@ export function createFactCountryPage(config) {
 
             <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
               <div className={routeStyles.sectionPanel}>
-                <SiteTrustPanel panel="prayer" />
               </div>
             </section>
           </main>

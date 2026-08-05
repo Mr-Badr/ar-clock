@@ -1,6 +1,6 @@
 const BUILDING_GUIDE_BASE = {
   hubTitle: 'حاسبات البناء والتشييد',
-  hubHref: '/calculators/building',
+  hubHref: '/tools/construction',
   badge: 'مقال بناء عملي',
   accent: '#10B981',
 };
@@ -412,13 +412,13 @@ const TOOL_GUIDE_BASE = [
     relatedGuideSlugs: ['how-many-cement-bags-do-i-need'],
     relatedPageLinks: [
       {
-        href: '/calculators/building/rebar',
+        href: '/tools/construction/rebar-weight',
         title: 'احسب الوزن الفعلي بالكيلو والطن',
         description: 'أدخل القطر والطول وعدد الأسياخ لتحصل على الوزن ووزن سيخ 12 متر فوراً.',
         ctaLabel: 'افتح حاسبة الحديد',
       },
       {
-        href: '/calculators/building/cement',
+        href: '/tools/construction/cement',
         title: 'هل الصبة تحتاج مواد أخرى؟',
         description: 'بعد وزن الحديد، احسب الأسمنت والرمل والحصى إذا كنت تراجع مواد الصبة كاملة.',
         ctaLabel: 'احسب مواد الصبة',

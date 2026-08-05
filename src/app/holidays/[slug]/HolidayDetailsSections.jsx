@@ -26,38 +26,30 @@ import EmbedCodeSnippet from '@/components/shared/EmbedCodeSnippet.client';
 
 const CATEGORY_CALCULATORS = {
   islamic: [
-    { href: '/calculators/zakat',       label: 'حاسبة الزكاة',        desc: 'احسب زكاة مالك ووفق النصاب الشرعي',  accent: 'var(--amber)' },
+    { href: '/tools/gulf-finance/aqiqah',      label: 'حاسبة العقيقة',       desc: 'عدد الذبائح وتكلفتها التقديرية',  accent: 'var(--amber)' },
     { href: '/calculators/fasting',     label: 'حاسبة الصيام',        desc: 'مواعيد الإمساك والإفطار وعدد الساعات', accent: 'var(--accent)' },
-    { href: '/calculators/inheritance', label: 'حاسبة الميراث',       desc: 'توزيع التركة وفق الشريعة الإسلامية',   accent: 'var(--text-secondary)' },
+    { href: '/tools/gulf-finance/wasiyya',     label: 'حاسبة الوصية الشرعية', desc: 'كم يجوز أن توصي من تركتك',   accent: 'var(--text-secondary)' },
   ],
   national: [
-    { href: '/calculators/net-salary',           label: 'صافي الراتب',        desc: 'الراتب بعد خصم الضرائب والاشتراكات', accent: 'var(--green)' },
-    { href: '/calculators/vat',                  label: 'حاسبة الضريبة',       desc: 'احسب ضريبة القيمة المضافة بسرعة',     accent: 'var(--blue)' },
-    { href: '/calculators/uae-end-of-service',      label: 'نهاية خدمة الإمارات',  desc: 'مكافأة الإمارات: 21 و30 يوماً',         accent: 'var(--accent-alt)' },
+    { href: '/tools/gulf-finance/end-of-service-benefits', label: 'نهاية الخدمة السعودية', desc: 'مكافأة الاستقالة والفصل وفق نظام العمل', accent: 'var(--green)' },
+    { href: '/tools/gulf-finance/article-77-compensation',  label: 'تعويض المادة 77',      desc: 'تعويض الفصل التعسفي وفق نظام العمل',     accent: 'var(--blue)' },
+    { href: '/tools/gulf-finance/uae-end-of-service',      label: 'نهاية خدمة الإمارات',  desc: 'مكافأة الإمارات: 21 و30 يوماً',         accent: 'var(--accent-alt)' },
   ],
   support: [
-    { href: '/calculators/salary',               label: 'حاسبة الراتب',        desc: 'حوّل راتبك الشهري إلى يومي وساعي',    accent: 'var(--green)' },
-    { href: '/calculators/net-salary',           label: 'صافي الراتب',         desc: 'الراتب بعد الاستقطاعات',               accent: 'var(--accent)' },
-    { href: '/calculators/gosi-retirement',      label: 'التقاعد المبكر GOSI', desc: 'متى يحق لك التقاعد وكم معاشك؟',        accent: 'var(--calc-cat-finance)' },
-    { href: '/calculators/sick-leave',           label: 'الإجازة المرضية',    desc: 'راتبك أثناء المرض وفق المادة 117',      accent: 'var(--amber)' },
-    { href: '/calculators/eos-qatar',            label: 'نهاية الخدمة قطر',   desc: 'الاستقالة لا تنقص مكافأتك في قطر',    accent: 'var(--blue)' },
-    { href: '/calculators/eos-kuwait',           label: 'نهاية الخدمة الكويت',   desc: 'مكافأتك وفق قانون العمل 6/2010',        accent: 'var(--blue)' },
-    { href: '/calculators/eos-bahrain',          label: 'نهاية الخدمة البحرين',  desc: 'نصف شهر ثم شهر كامل — قانون 36/2012',   accent: 'var(--blue)' },
-    { href: '/calculators/eos-egypt',            label: 'نهاية الخدمة مصر',      desc: 'شهر ثم شهر ونصف — قانون 12/2003',       accent: 'var(--green)' },
-    { href: '/calculators/egypt-income-tax',     label: 'ضريبة الدخل مصر',       desc: 'شرائح 2023 + تأمينات 11% — صافي الراتب', accent: 'var(--blue)' },
-    { href: '/calculators/egypt-social-insurance', label: 'تأمينات اجتماعية مصر',  desc: 'حصة الموظف 11% وحد الأجر المؤمَّن',      accent: 'var(--amber)' },
-    { href: '/calculators/eos-jordan',           label: 'نهاية الخدمة الأردن',   desc: '30 يوماً/سنة — قانون العمل 8/1996',       accent: 'var(--green)' },
+    { href: '/tools/gulf-finance/end-of-service-benefits', label: 'نهاية الخدمة السعودية', desc: 'مكافأة الاستقالة والفصل وفق نظام العمل', accent: 'var(--green)' },
+    { href: '/tools/gulf-finance/article-77-compensation',  label: 'تعويض المادة 77',      desc: 'تعويض الفصل التعسفي بحد أدنى أجر شهرين',  accent: 'var(--blue)' },
+    { href: '/tools/gulf-finance/sick-leave',           label: 'الإجازة المرضية',    desc: 'راتبك أثناء المرض وفق المادة 117',      accent: 'var(--amber)' },
+    { href: '/tools/gulf-finance/domestic-worker-cost', label: 'تكلفة استقدام عاملة', desc: 'الرسوم الحكومية الفعلية عبر مساند',      accent: 'var(--calc-cat-finance)' },
+    { href: '/tools/gulf-finance/nafaqah',               label: 'حاسبة النفقة',        desc: 'تقدير نفقة الزوجة والأولاد',              accent: 'var(--amber)' },
     { href: '/calculators/jordan-income-tax',    label: 'ضريبة الدخل الأردن',    desc: 'شرائح 5%–30% + إعفاءات — صافي الراتب',    accent: 'var(--blue)' },
-    { href: '/calculators/morocco-net-salary',   label: 'الراتب الصافي المغرب',  desc: 'CNSS 7.26% + ضريبة IR التصاعدية',         accent: 'var(--red)' },
-    { href: '/calculators/uae-corporate-tax',   label: 'ضريبة شركات الإمارات',  desc: '0% حتى 375K درهم — 9% على الزائد',        accent: 'var(--green)' },
-    { href: '/calculators/bill-splitter',       label: 'تقسيم الفاتورة',         desc: 'مطعم، رحلة، مشتريات — قسّم بالتساوي',     accent: 'var(--amber)' },
-    { href: '/calculators/work-hours',          label: 'ساعات العمل الأسبوعية', desc: 'دوامك اليومي + الإضافي — يُحفظ تلقائياً',   accent: 'var(--blue)' },
+    { href: '/calculators/egypt-water-bill',     label: 'فاتورة المياه مصر',     desc: 'شرائح تصاعدية + رسم الصرف الصحي',         accent: 'var(--blue)' },
+    { href: '/tools/gulf-finance/traffic-fine-discount', label: 'خصم المخالفات المرورية', desc: 'خصم 25% خلال 45 يوماً من التسجيل',  accent: 'var(--blue)' },
   ],
   school: [
     { href: '/calculators/gpa',           label: 'المعدل التراكمي',    desc: 'احسب GPA بدقة وفق جدول درجاتك',     accent: 'var(--blue)' },
     { href: '/calculators/gpa-to-percent', label: 'تحويل المعدل',      desc: 'حوّل GPA إلى نسبة مئوية',            accent: 'var(--accent)' },
     { href: '/calculators/weighted-grade', label: 'الدرجة النهائية بالأوزان', desc: 'كم تحتاج في الاختبار النهائي؟', accent: 'var(--blue)' },
-    { href: '/calculators/annual-leave',  label: 'حاسبة الإجازات',    desc: 'أيام إجازتك المستحقة قانونياً',      accent: 'var(--green)' },
+    { href: '/tools/gulf-finance/annual-leave',  label: 'حاسبة الإجازات',    desc: 'أيام إجازتك المستحقة قانونياً',      accent: 'var(--green)' },
     { href: '/calculators/saudi-school-calendar', label: 'التقويم الدراسي السعودي', desc: 'بداية الدراسة وكل الإجازات 1448', accent: 'var(--calc-cat-education)' },
   ],
   social: [
@@ -66,32 +58,30 @@ const CATEGORY_CALCULATORS = {
     { href: '/calculators/bmi',       label: 'مؤشر كتلة الجسم', desc: 'تقييم وزنك الصحي بالمعايير الدولية', accent: 'var(--green)' },
   ],
   business: [
-    { href: '/calculators/vat',                label: 'حاسبة الضريبة',      desc: 'احسب VAT للبيع والشراء والفواتير',  accent: 'var(--blue)' },
-    { href: '/calculators/car-loan',           label: 'تمويل السيارة',       desc: 'قسط السيارة: تقليدي أم مرابحة إسلامية؟', accent: 'var(--calc-cat-finance)' },
-    { href: '/calculators/investment',         label: 'حاسبة الاستثمار',    desc: 'نمو رأس المال مع الفائدة المركبة',   accent: 'var(--green)' },
-    { href: '/calculators/working-days',       label: 'أيام العمل بين تاريخين', desc: 'عطلة نهاية الأسبوع الصحيحة لكل دولة', accent: 'var(--blue)' },
-    { href: '/calculators/margin-markup',      label: 'هامش الربح والزيادة', desc: 'Margin و Markup بالاتجاهين',        accent: 'var(--green)' },
+    { href: '/tools/gulf-finance/article-77-compensation', label: 'تعويض المادة 77', desc: 'تعويض الفصل التعسفي وفق نظام العمل',   accent: 'var(--blue)' },
+    { href: '/tools/gulf-finance/domestic-worker-cost', label: 'تكلفة استقدام عاملة', desc: 'الرسوم الحكومية الفعلية عبر مساند',      accent: 'var(--calc-cat-finance)' },
+    { href: '/tools/gulf-finance/end-of-service-benefits', label: 'نهاية الخدمة السعودية', desc: 'مكافأة الاستقالة والفصل وفق نظام العمل', accent: 'var(--green)' },
+    { href: '/tools/gulf-finance/working-days',       label: 'أيام العمل بين تاريخين', desc: 'عطلة نهاية الأسبوع الصحيحة لكل دولة', accent: 'var(--blue)' },
   ],
   astronomy: [
     { href: '/calculators/fasting',   label: 'حاسبة الصيام',   desc: 'ساعات الصيام في أي مدينة وشهر',     accent: 'var(--accent)' },
-    { href: '/calculators/zakat',     label: 'حاسبة الزكاة',   desc: 'احسب زكاة مالك وفق النصاب',         accent: 'var(--amber)' },
+    { href: '/tools/gulf-finance/iddah',    label: 'حاسبة العدة الشرعية', desc: 'حساب هجري دقيق للأرملة والمطلقة',   accent: 'var(--amber)' },
     { href: '/calculators/pregnancy', label: 'حاسبة الحمل',    desc: 'موعد الولادة بالتقويمين',            accent: 'var(--blue)' },
   ],
   holidays: [
-    { href: '/calculators/percentage',          label: 'حاسبة النسبة والخصم', desc: 'احسب نسبة الخصم والسعر النهائي في عروض المناسبة', accent: 'var(--blue)' },
-    { href: '/calculators/bill-splitter',        label: 'تقسيم الفاتورة',      desc: 'قسّم فاتورة التجمع أو المناسبة بالتساوي',          accent: 'var(--amber)' },
-    { href: '/calculators/monthly-installment',  label: 'حاسبة القسط الشهري', desc: 'احسب قسط مشترياتك من عروض المناسبة',              accent: 'var(--green)' },
+    { href: '/tools/gulf-finance/traffic-fine-discount', label: 'خصم المخالفات المرورية', desc: 'خصم 25% خلال 45 يوماً من التسجيل', accent: 'var(--blue)' },
+    { href: '/tools/gulf-finance/domestic-worker-cost', label: 'تكلفة استقدام عاملة',   desc: 'الرسوم الحكومية الفعلية عبر مساند',   accent: 'var(--amber)' },
+    { href: '/tools/gulf-finance/end-of-service-benefits', label: 'نهاية الخدمة السعودية', desc: 'مكافأة الاستقالة والفصل وفق نظام العمل', accent: 'var(--green)' },
   ],
 };
 
+// eg/jo/kw/bh/qa dropped 2026-08-03 — their EOS calculators were removed hub-wide (thin
+// duplicates of ZenHR/LegalHub/Jisr's real all-8-country tools, see docs/PLAN.md §13).
+// COUNTRY_EOS_LINK[countryCode] returning undefined for those codes is intentional; the
+// lookup already falls back to `baseCalcs` gracefully (see RelatedCalculatorsWidget below).
 const COUNTRY_EOS_LINK = {
-  eg: { href: '/calculators/eos-egypt',   label: 'نهاية الخدمة مصر',      desc: 'شهر ثم شهر ونصف — قانون 12/2003',        accent: 'var(--green)' },
-  jo: { href: '/calculators/eos-jordan',  label: 'نهاية الخدمة الأردن',   desc: '30 يوماً/سنة — قانون العمل 8/1996',       accent: 'var(--green)' },
-  kw: { href: '/calculators/eos-kuwait',  label: 'نهاية الخدمة الكويت',   desc: 'مكافأتك وفق قانون العمل 6/2010',          accent: 'var(--blue)' },
-  bh: { href: '/calculators/eos-bahrain', label: 'نهاية الخدمة البحرين',  desc: 'نصف شهر ثم شهر كامل — قانون 36/2012',     accent: 'var(--blue)' },
-  qa: { href: '/calculators/eos-qatar',   label: 'نهاية الخدمة قطر',      desc: 'الاستقالة لا تنقص مكافأتك في قطر',       accent: 'var(--blue)' },
-  sa: { href: '/calculators/end-of-service-benefits', label: 'نهاية الخدمة السعودية', desc: 'مكافأة الاستقالة والفصل وفق نظام العمل', accent: 'var(--blue)' },
-  ae: { href: '/calculators/uae-end-of-service', label: 'نهاية خدمة الإمارات', desc: 'مكافأة الإمارات: 21 و30 يوماً',       accent: 'var(--accent-alt)' },
+  sa: { href: '/tools/gulf-finance/end-of-service-benefits', label: 'نهاية الخدمة السعودية', desc: 'مكافأة الاستقالة والفصل وفق نظام العمل', accent: 'var(--blue)' },
+  ae: { href: '/tools/gulf-finance/uae-end-of-service', label: 'نهاية خدمة الإمارات', desc: 'مكافأة الإمارات: 21 و30 يوماً',       accent: 'var(--accent-alt)' },
 };
 const EOS_LINKED_CATEGORIES = new Set(['business', 'social', 'support']);
 

@@ -58,12 +58,19 @@ interface AdTopBannerProps {
   /** Optional family-specific slot key, falls back to topBanner. */
   slotKey?: string;
   className?: string;
+  /** "large" opts into a taller reserved box (tablet/desktop only — see
+   * .ad-slot--top-banner--large in ads.css) with format="auto" instead of "horizontal", so a
+   * genuinely bigger creative (e.g. a billboard-style unit) isn't clipped. Default behavior for
+   * every existing caller is completely unchanged — this is opt-in only (currently used by
+   * /tools pages via ToolTopAdSlot). */
+  size?: "default" | "large";
 }
 
 export default function AdTopBanner({
   slotId = "top-banner",
   slotKey,
   className = "",
+  size = "default",
 }: AdTopBannerProps) {
   const { clientId, manualSlots } = useAdsRuntimeConfig();
   const pathname = usePathname();
@@ -130,24 +137,24 @@ export default function AdTopBanner({
     <div
       id={slotId}
       ref={ref}
-      className={`ad-slot ad-slot--top-banner ${isLoading ? "is-loading" : ""} ${className}`}
+      className={`ad-slot ad-slot--top-banner ${size === "large" ? "ad-slot--top-banner--large" : ""} ${isLoading ? "is-loading" : ""} ${className}`}
       role="complementary"
       aria-label="إعلان"
     >
       {/* Label — required by Google AdSense policy to be visible */}
       <span className="ad-slot__label">إعلان</span>
-      {/* format="horizontal" (not "auto"): the slot reserves a 50–100px banner
-          box with overflow:hidden, and "auto" lets Google return 250px+ tall
-          rectangles that get clipped mid-creative — broken-looking ads and a
-          policy risk. Horizontal shapes always fit the reserved space. */}
+      {/* Default: format="horizontal" (not "auto") — the slot reserves a 50–100px banner box
+          with overflow:hidden, and "auto" lets Google return 250px+ tall rectangles that get
+          clipped mid-creative. size="large" reserves a genuinely taller box instead (see
+          .ad-slot--top-banner--large), so "auto" is safe there — nothing to clip into. */}
       <ins
         ref={insRef}
         className="adsbygoogle"
         style={{ display: "block" }}
         data-ad-client={clientId || undefined}
         data-ad-slot={adSlot}
-        data-ad-format="horizontal"
-        data-full-width-responsive="false"
+        data-ad-format={size === "large" ? "auto" : "horizontal"}
+        data-full-width-responsive={size === "large" ? "true" : "false"}
       />
     </div>
   );

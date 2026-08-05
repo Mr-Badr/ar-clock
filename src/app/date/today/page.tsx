@@ -20,7 +20,6 @@ import TodayClientHydration from './TodayClientHydration'; // Force TS Server re
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
-import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import { Moon, CalendarDays, ArrowLeftRight } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
@@ -512,7 +511,6 @@ async function TodayDynamicContent() {
               </div>
             </nav>
           </section>
-          <SiteTrustPanel panel="date" />
         </main>
       </AdLayoutWrapper>
     </>

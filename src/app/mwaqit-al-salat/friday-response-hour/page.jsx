@@ -9,7 +9,6 @@ import AdMultiplex from '@/components/ads/AdMultiplex';
 import FAQAccordions from '@/components/mwaqit/FAQAccordions.client';
 import SearchCityWrapper from '@/components/SearchCityWrapper.client';
 import FridayResponseAutoCard from '@/components/mwaqit/FridayResponseAutoCard.client';
-import SiteTrustPanel from '@/components/site/SiteTrustPanel';
 import { JsonLd } from '@/components/seo/JsonLd';
 import routeStyles from '@/app/mwaqit-al-salat/PrayerRoutePage.module.css';
 import { getSiteUrl } from '@/lib/site-config';
@@ -230,7 +229,6 @@ export default async function FridayResponseHourPage() {
 
           <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
             <div className={routeStyles.sectionPanel}>
-              <SiteTrustPanel panel="prayer" />
             </div>
           </section>
         </main>

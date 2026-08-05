@@ -85,23 +85,23 @@ const CALCULATOR_PATH_TABLE = [
 // Gulf + high-RPM daily tools go first; classic tools second
 const FEATURED_CALCULATOR_SLUGS = [
   'iqama',
-  'electricity-bill',
-  'inheritance',
-  'net-salary',
+  'wasiyya',
+  'sick-leave',
+  'article-77-compensation',
   'pregnancy',
   'gpa',
-  'monthly-installment',
+  'traffic-fine-discount',
   'end-of-service-benefits',
   'age-calculator',
-  'vat',
-  'percentage',
+  'domestic-worker-cost',
+  'nafaqah',
   'bedtime',
 ];
 
 export const metadata = buildCanonicalMetadata({
-  title: 'حاسبات عربية مجانية: الإقامة والراتب والكهرباء والميراث والحمل',
+  title: 'حاسبات عربية مجانية: الإقامة ونهاية الخدمة والكهرباء والميراث والحمل',
   description:
-    'حاسبات عربية مجانية بدون تسجيل: احسب انتهاء الإقامة، فاتورة الكهرباء، الميراث، صافي الراتب، موعد الولادة، المعدل، القسط، وضريبة القيمة المضافة — نتائج فورية مع شرح واضح.',
+    'حاسبات عربية مجانية بدون تسجيل: احسب انتهاء الإقامة، فاتورة الكهرباء، الميراث، مكافأة نهاية الخدمة، تعويض المادة 77، موعد الولادة، والمعدل — نتائج فورية مع شرح واضح.',
   keywords: [
     'حاسبات أونلاين عربية',
     'حاسبة عربية',

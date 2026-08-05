@@ -1,0 +1,890 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Guide v2 — editorial long-form template for Hub سباك and future
+   research-backed content hubs (buying guides, service explainers).
+
+   Deliberately NOT tools-v2.css: that system was built around a
+   form → result-panel calculator layout. These pages have no calculator
+   on 2 of 4 launches and only a small embedded checker on the other 2 —
+   the reading experience itself is the product. Built on the site's real
+   token system (--bg-surface-*, --text-*, --border-*, --space-*, --radius-*,
+   --amber/-green/-blue families in src/app/styles/base.css) — no new hex
+   values, one new font variable (--font-guide-display, set in layout.jsx,
+   Markazi Text — editorial serif for H1/pull-quotes only, never body text).
+
+   STANDING RULE (owner directive, 2026-07-31, applies to every page in this
+   hub and every future one built with this template):
+   1. The page is ONE two-column grid from the very top (.guide-v2-page-grid)
+      — title, lead, verdict box, article, and related-guides all live in the
+      right/main column; the التوك (TOC) card + a sidebar ad sit in the left
+      rail, sticky, visible from the first viewport — not only after scrolling
+      past the hero like the first version of this template did.
+   2. Don't default to boxes. A card/border is earned only for something the
+      user selects, compares, or that stands alone as a distinct module
+      (choice cards, the checker, a real multi-item comparison). Plain
+      explanatory content, steps, and FAQ do NOT each get their own bordered
+      box — see .guide-v2-faq (one container, divider lines) and
+      .guide-v2-steps (connected timeline, not floating circles) below.
+   3. Every "related pages" section needs its own distinct visual identity —
+      never let it read as a second FAQ or a second TOC. Text nodes that sit
+      next to each other in JSX must be separate block elements (<p>, not
+      bare inline <span> with no display rule) — two inline spans with no
+      whitespace between them in JSX render glued together with no visual
+      gap, which is a real bug this file fixes once, here, for every card
+      pattern below (see the block-display rule on every *-title/*-desc
+      class) rather than trusting each page author to remember it.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.guide-v2 {
+  --guide-measure: 42rem; /* ~720px, matches DESIGN.md §16.2 + BlogArticleView precedent */
+  --guide-rail: 300px;
+}
+
+/* ── Shell ─────────────────────────────────────────────────────────────── */
+.guide-v2-shell {
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+  padding-block: var(--space-8) var(--space-24);
+}
+@media (min-width: 768px) {
+  .guide-v2-shell { padding-inline: var(--space-8); }
+}
+
+/* ── Page grid: main column + sticky TOC/ad rail, from the very top ─────── */
+.guide-v2-page-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: start;
+}
+@media (min-width: 1080px) {
+  .guide-v2-page-grid {
+    grid-template-columns: minmax(0, var(--guide-measure)) var(--guide-rail);
+  }
+}
+.guide-v2-main { min-width: 0; }
+
+/* ── Hero ──────────────────────────────────────────────────────────────── */
+.guide-v2-hero {
+  padding-block: 0 var(--space-8);
+  text-align: start;
+}
+.guide-v2-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--amber-text);
+  margin-bottom: var(--space-4);
+}
+.guide-v2-kicker::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--amber);
+}
+.guide-v2-hero h1 {
+  font-family: var(--font-guide-display), var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(2rem, 4.5vw, 2.9rem);
+  line-height: 1.22;
+  letter-spacing: 0;
+  text-wrap: balance;
+  color: var(--text-1);
+  margin: 0 0 var(--space-5);
+}
+.guide-v2-lead {
+  font-size: 1.15rem;
+  line-height: 1.75;
+  color: var(--text-2);
+  max-width: 60ch;
+}
+
+/* ── Verdict / key-takeaway box — answer-first, max one per page ─────────── */
+.guide-v2-verdict {
+  margin: 0 0 var(--space-10);
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  background: color-mix(in srgb, var(--amber-subtle) 55%, var(--bg-surface-1));
+  border: 1px solid var(--amber-border);
+}
+.guide-v2-verdict-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--amber-muted);
+  color: var(--amber-text);
+}
+.guide-v2-verdict-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-1);
+  margin: 0 0 var(--space-1-5);
+}
+.guide-v2-verdict-body {
+  color: var(--text-2);
+  line-height: 1.75;
+  font-size: 1rem;
+}
+.guide-v2-verdict-body strong { color: var(--text-1); }
+
+/* ── TOC rail — sticky from the top of the page, ad slot lives below it ─── */
+.guide-v2-toc-rail { display: none; }
+@media (min-width: 1080px) {
+  .guide-v2-toc-rail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    position: sticky;
+    top: calc(var(--app-header-height) + var(--space-4));
+  }
+}
+.guide-v2-toc-card {
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--bg-surface-1);
+}
+.guide-v2-toc-head {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-3);
+  margin-bottom: var(--space-3);
+}
+.guide-v2-toc-card ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.guide-v2-toc-card a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--text-2);
+  padding: var(--space-1-5) var(--space-2);
+  border-radius: var(--radius-md);
+  transition: color .15s ease, background .15s ease;
+}
+.guide-v2-toc-num {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: var(--bg-surface-2);
+  color: var(--text-3);
+  border: 1px solid var(--border);
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.guide-v2-toc-card a:hover,
+.guide-v2-toc-card a:focus-visible {
+  color: var(--amber-text);
+  background: var(--bg-surface-2);
+}
+.guide-v2-toc-card li.is-active a { color: var(--amber-text); background: var(--amber-subtle); }
+.guide-v2-toc-card li.is-active .guide-v2-toc-num {
+  background: var(--amber);
+  color: var(--bg-surface-1);
+  border-color: var(--amber);
+}
+
+/* Mobile TOC — always-visible horizontal pill strip, never a click-to-expand control (owner:
+   users should see the list without clicking) — and deliberately styled unlike the article body
+   (rounded pills, horizontal scroller, small muted label) so it reads as page navigation chrome,
+   not as another content block. */
+.guide-v2-toc-strip {
+  display: block;
+  margin: 0 0 var(--space-6);
+}
+@media (min-width: 1080px) {
+  .guide-v2-toc-strip { display: none; }
+}
+.guide-v2-toc-strip-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-3);
+  margin: 0 0 var(--space-2);
+}
+.guide-v2-toc-strip-scroll {
+  list-style: none;
+  margin: 0;
+  padding: 2px 2px var(--space-2);
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.guide-v2-toc-strip-scroll::-webkit-scrollbar { display: none; }
+.guide-v2-toc-strip-scroll li { flex-shrink: 0; }
+.guide-v2-toc-strip-scroll a {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  padding: 7px 14px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-2);
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.guide-v2-toc-strip-scroll li.is-active a {
+  background: var(--amber-subtle);
+  border-color: var(--amber-border);
+  color: var(--amber-text);
+}
+
+/* ── Article body ──────────────────────────────────────────────────────── */
+.guide-v2-article {
+  min-width: 0;
+}
+.guide-v2-article section {
+  padding-block: var(--space-16) 0;
+}
+.guide-v2-article section:first-child { padding-block-start: 0; }
+.guide-v2-article h2 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+  line-height: 1.32;
+  color: var(--text-1);
+  text-wrap: balance;
+  margin: 0 0 var(--space-5);
+  scroll-margin-top: var(--space-8);
+}
+.guide-v2-article h3 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  color: var(--text-1);
+  margin: var(--space-8) 0 var(--space-3);
+}
+.guide-v2-article p {
+  font-size: 1.09rem;
+  line-height: 1.9;
+  color: var(--text-2);
+  margin: 0 0 var(--space-5);
+  max-width: 65ch;
+}
+.guide-v2-article p strong { color: var(--text-1); font-weight: 700; }
+.guide-v2-article ul,
+.guide-v2-article ol {
+  margin: 0 0 var(--space-6);
+  padding-inline-start: 1.4em;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--text-2);
+  list-style: disc;
+}
+.guide-v2-article ol { list-style: decimal; }
+.guide-v2-article li strong { color: var(--text-1); }
+.guide-v2-article li::marker { color: var(--amber-text); }
+
+/* ── Pull quote — sparingly, max 1-2 per article ──────────────────────── */
+.guide-v2-pullquote {
+  max-width: 58ch;
+  margin: var(--space-8) 0;
+  padding-inline-start: var(--space-6);
+  border-inline-start: 3px solid var(--amber);
+}
+.guide-v2-pullquote p {
+  font-family: var(--font-guide-display), var(--font-heading);
+  font-size: 1.5rem;
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--text-1);
+  margin: 0;
+}
+
+/* ── Numbered step timeline — connected line, not floating circles.
+   Redesigned 2026-07-31 (owner: "steps with numbers can be so much better,
+   now the page look boring") — the vertical connector turns a flat list
+   into a visible sequence, and the amber-tinted number reads as identity,
+   not a plain grey badge. ─────────────────────────────────────────────── */
+.guide-v2-steps {
+  display: flex;
+  flex-direction: column;
+  margin: var(--space-6) 0;
+  counter-reset: guide-step;
+}
+.guide-v2-step {
+  position: relative;
+  display: flex;
+  gap: var(--space-5);
+  align-items: flex-start;
+  padding-bottom: var(--space-7);
+}
+.guide-v2-step:last-child { padding-bottom: 0; }
+.guide-v2-step::before {
+  /* connector line, drawn from this step's number down to the next one */
+  content: '';
+  position: absolute;
+  top: 38px;
+  bottom: 0;
+  inset-inline-start: 18px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--amber-border), transparent);
+}
+.guide-v2-step:last-child::before { display: none; }
+.guide-v2-step-num {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  counter-increment: guide-step;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-guide-display), var(--font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  background: var(--amber-subtle);
+  border: 1.5px solid var(--amber-border);
+  color: var(--amber-text);
+}
+.guide-v2-step-num::before { content: counter(guide-step); }
+.guide-v2-step-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-1);
+  margin: 0 0 var(--space-1-5);
+  padding-top: 6px;
+}
+.guide-v2-step-body {
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--text-2);
+  margin: 0;
+}
+
+/* ── Comparison cards — mobile-first stack, never a horizontal-scroll
+   table (per 2026 mobile-table UX research: card/stack pattern beats
+   forced horizontal scroll for legible multi-attribute comparison rows).
+   Reserved for genuine side-by-side comparisons (types, price tiers) —
+   not a default container for any grouped content. ──────────────────── */
+.guide-v2-compare-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: var(--space-6) 0;
+}
+.guide-v2-compare-card {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--bg-surface-1);
+  padding: var(--space-5);
+}
+.guide-v2-compare-card.is-recommended {
+  border-color: var(--amber-border);
+  background: color-mix(in srgb, var(--amber-subtle) 45%, var(--bg-surface-1));
+}
+.guide-v2-compare-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.guide-v2-compare-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-1);
+}
+.guide-v2-compare-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  background: var(--amber-muted);
+  color: var(--amber-text);
+  white-space: nowrap;
+}
+.guide-v2-compare-rows { display: flex; flex-direction: column; }
+.guide-v2-compare-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-2-5);
+  border-block-end: 1px solid var(--border);
+  font-size: 0.92rem;
+}
+.guide-v2-compare-row:last-child { border-block-end: none; }
+.guide-v2-compare-row-label { color: var(--text-3); }
+.guide-v2-compare-row-value {
+  color: var(--text-1);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  /* unicode-bidi: plaintext (not forced direction:ltr) — these values range from pure Arabic
+     prose ("خفيف — سهل النقل والتركيب") to mixed Arabic-phrase+number+unit ("من نحو 570 ريال").
+     A forced ltr+isolate only holds up for a single "number + short unit" pair and visibly
+     scrambles multi-segment mixes; plaintext lets the browser resolve direction per the first
+     strong character of each value instead, which is correct for both shapes without a
+     per-instance override. See feedback-premium-calculator-experience memory for the earlier
+     incident this generalizes from. */
+  unicode-bidi: plaintext;
+}
+
+/* ── Embedded mini-tool (checker) — distinct highlighted module inside
+   the reading flow, NOT a sidebar calculator panel ──────────────────── */
+.guide-v2-checker {
+  margin: var(--space-8) 0;
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--blue-border, var(--border));
+  background: color-mix(in srgb, var(--blue-subtle) 55%, var(--bg-surface-1));
+}
+.guide-v2-checker-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+.guide-v2-checker-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--blue-muted);
+  color: var(--blue-text);
+}
+.guide-v2-checker-title { font-weight: 700; font-size: 1rem; color: var(--text-1); margin: 0; }
+.guide-v2-checker-sub { font-size: 0.85rem; color: var(--text-3); margin: 2px 0 0; }
+.guide-v2-checker-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2-5);
+  margin-bottom: var(--space-5);
+}
+.guide-v2-checker-chip {
+  padding: var(--space-2-5) var(--space-4);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: var(--bg-surface-1);
+  color: var(--text-2);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+  transition: border-color .15s ease, color .15s ease, background .15s ease;
+}
+.guide-v2-checker-chip:hover { border-color: var(--blue-border); color: var(--text-1); }
+.guide-v2-checker-chip.is-active {
+  background: var(--blue-muted);
+  border-color: var(--blue);
+  color: var(--blue-text);
+}
+.guide-v2-checker-result {
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border);
+}
+.guide-v2-checker-result-label { font-size: 0.8rem; color: var(--text-3); margin: 0 0 var(--space-1); }
+.guide-v2-checker-result-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-1);
+  font-variant-numeric: tabular-nums;
+}
+.guide-v2-checker-result-note { font-size: 0.88rem; color: var(--text-2); margin: var(--space-2) 0 0; line-height: 1.6; }
+
+/* ── Warning / caution note ────────────────────────────────────────────── */
+.guide-v2-note {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  margin: var(--space-6) 0;
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--red-subtle);
+  border: 1px solid var(--red-border);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+.guide-v2-note svg { flex-shrink: 0; color: var(--red-text); margin-top: 2px; }
+
+/* ── FAQ — one container, divider lines between items, NEVER a box per
+   item. Matches the calculator .tool-v2-faq pattern deliberately (owner:
+   "the faq should be like the style that we have in calculators, because
+   we do not want to see everything in boxes"). ───────────────────────── */
+.guide-v2-faq {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-1);
+  overflow: hidden;
+}
+.guide-v2-faq details {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  transition: background .15s ease;
+}
+.guide-v2-faq details:last-child { border-bottom: none; }
+.guide-v2-faq details[open] {
+  background: color-mix(in srgb, var(--bg-surface-2) 45%, transparent);
+}
+.guide-v2-faq summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  list-style: none;
+}
+.guide-v2-faq summary::-webkit-details-marker { display: none; }
+.guide-v2-faq svg { flex-shrink: 0; transition: transform .18s ease; color: var(--text-3); }
+.guide-v2-faq details[open] svg { transform: rotate(180deg); }
+.guide-v2-faq details[open] summary { color: var(--amber-text); }
+.guide-v2-faq p {
+  margin: var(--space-3) 0 0;
+  font-size: 0.98rem;
+  line-height: 1.85;
+  color: var(--text-2);
+  max-width: 66ch;
+}
+
+/* ── Sources ────────────────────────────────────────────────────────────── */
+.guide-v2-sources-head { font-size: 1.1rem; }
+.guide-v2-sources {
+  list-style: disc;
+  padding-inline-start: 1.3em;
+  color: var(--text-3);
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.guide-v2-sources a { color: var(--amber-text); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+
+/* ── Related guides — deliberately its own visual language: a compact tile
+   grid with an icon chip, never the FAQ's list-with-chevron shape and
+   never the TOC's dot-bullet list shape. Title/reason are separate <p>
+   elements (not inline <span>s) so they can never visually glom together
+   — see the standing-rule note at the top of this file. ───────────────── */
+.guide-v2-related {
+  margin-top: var(--space-16);
+  padding-top: var(--space-10);
+  border-top: 1px solid var(--border);
+}
+.guide-v2-related-head {
+  font-family: var(--font-guide-display), var(--font-heading);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text-1);
+  margin: 0 0 var(--space-5);
+}
+.guide-v2-related-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+@media (min-width: 640px) {
+  .guide-v2-related-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.guide-v2-related-tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-2);
+  transition: background .15s ease, transform .15s ease;
+}
+.guide-v2-related-tile:hover { background: var(--bg-surface-3); transform: translateY(-1px); }
+.guide-v2-related-tile-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--amber-subtle);
+  color: var(--amber-text);
+}
+.guide-v2-related-tile-title {
+  display: block;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-1);
+  margin: 0;
+}
+.guide-v2-related-tile-reason {
+  display: block;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-3);
+  margin: 0;
+}
+
+/* ── Hub index — card grid to the 4 guides ────────────────────────────── */
+.guide-v2-hub-hero {
+  max-width: 52rem;
+  margin: 0 auto var(--space-16);
+  text-align: start;
+}
+.guide-v2-hub-hero h1 {
+  font-family: var(--font-guide-display), var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(2rem, 4.5vw, 2.9rem);
+  line-height: 1.22;
+  text-wrap: balance;
+  color: var(--text-1);
+  margin: var(--space-4) 0 var(--space-5);
+}
+.guide-v2-hub-hero p {
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: var(--text-2);
+  max-width: 60ch;
+}
+.guide-v2-hub-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  max-width: 1180px;
+  margin: 0 auto;
+}
+@media (min-width: 760px) {
+  .guide-v2-hub-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.guide-v2-hub-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  background: var(--bg-surface-1);
+  transition: border-color .15s ease, transform .15s ease;
+}
+.guide-v2-hub-card:hover { border-color: var(--amber-border); transform: translateY(-2px); }
+.guide-v2-hub-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--amber-subtle);
+  color: var(--amber-text);
+}
+.guide-v2-hub-card-title {
+  font-family: var(--font-guide-display), var(--font-heading);
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--text-1);
+  margin: 0;
+}
+.guide-v2-hub-card-desc {
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: var(--text-2);
+  margin: 0;
+  flex: 1;
+}
+.guide-v2-hub-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--amber-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-v2-related-tile,
+  .guide-v2-toc-card a,
+  .guide-v2-checker-chip,
+  .guide-v2-hub-card,
+  .guide-v2-faq details,
+  .guide-v2-faq svg { transition: none; }
+}
+
+/* ── Checklist variant of the embedded checker — multi-select rows with a
+   running total, used by the generator sizing tool (as opposed to the
+   single-pick chip variant above used by water-heater/water-tank type
+   pickers). Shares .guide-v2-checker as the outer shell. ───────────────── */
+.guide-v2-checker-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+.guide-v2-checker-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2-5) var(--space-3);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--bg-surface-1);
+  cursor: pointer;
+  min-height: 44px;
+  text-align: start;
+  width: 100%;
+  transition: border-color .15s ease, background .15s ease;
+}
+.guide-v2-checker-item:hover { border-color: var(--blue-border); }
+.guide-v2-checker-item.is-active {
+  background: var(--blue-muted);
+  border-color: var(--blue);
+}
+.guide-v2-checker-item-box {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-strong, var(--border));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  background: var(--bg-surface-1);
+}
+.guide-v2-checker-item.is-active .guide-v2-checker-item-box {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: var(--bg-surface-1);
+}
+.guide-v2-checker-item-label {
+  flex: 1;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-1);
+}
+.guide-v2-checker-item-watt {
+  flex-shrink: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}
+.guide-v2-checker-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border);
+  margin-bottom: var(--space-4);
+}
+.guide-v2-checker-total-label { font-size: 0.85rem; color: var(--text-3); }
+.guide-v2-checker-total-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--blue-text);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}
+
+/* ── HVAC additions (2026-08-01): verdict-colored result variant, a
+   bento-style type-overview grid, and a star-rating row — all built from
+   the same icon-chip-carries-color rule as the rest of the site (never a
+   border stripe, see .claude/rules/arabic-rtl.md). ────────────────────── */
+.guide-v2-checker-result.is-good {
+  background: color-mix(in srgb, var(--green-subtle) 55%, var(--bg-surface-1));
+  border-color: var(--green-border);
+}
+.guide-v2-checker-result.is-good .guide-v2-checker-result-value { color: var(--green-text); }
+.guide-v2-checker-result.is-warn {
+  background: color-mix(in srgb, var(--amber-subtle) 55%, var(--bg-surface-1));
+  border-color: var(--amber-border);
+}
+.guide-v2-checker-result.is-warn .guide-v2-checker-result-value { color: var(--amber-text); }
+.guide-v2-checker-result.is-bad {
+  background: color-mix(in srgb, var(--red-subtle) 55%, var(--bg-surface-1));
+  border-color: var(--red-border);
+}
+.guide-v2-checker-result.is-bad .guide-v2-checker-result-value { color: var(--red-text); }
+
+.guide-v2-type-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  margin: var(--space-5) 0;
+}
+@media (min-width: 640px) {
+  .guide-v2-type-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.guide-v2-type-card {
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--bg-surface-1);
+}
+.guide-v2-type-card-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  margin-bottom: var(--space-3);
+}
+.guide-v2-type-card-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.guide-v2-type-card-flag {
+  flex-shrink: 0;
+  width: 28px;
+  height: 21px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px var(--border);
+}
+.guide-v2-type-card-title { font-weight: 700; font-size: 1rem; color: var(--text-1); margin: 0; }
+.guide-v2-type-card-facts { display: flex; flex-direction: column; gap: var(--space-1-5); margin: 0; padding: 0; list-style: none; }
+.guide-v2-type-card-facts li {
+  display: flex;
+  gap: var(--space-2);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+.guide-v2-type-card-facts li::before { content: '•'; color: var(--text-3); flex-shrink: 0; }
+
+.guide-v2-star-row { display: inline-flex; gap: 2px; align-items: center; direction: ltr; }
+.guide-v2-star-row svg { color: var(--border-strong, var(--border)); }
+.guide-v2-star-row svg.is-filled { color: var(--amber); }
+
+/* MagicUI's AnimatedCircularProgressBar center number has no explicit color of its own (relies
+   on inherited Tailwind color) — this site's dark theme doesn't feed Tailwind's default color
+   chain, so it was rendering near-black on a dark background. Force it explicitly. */
+.hvac-gauge-text [data-current-value] { color: var(--amber-text) !important; }

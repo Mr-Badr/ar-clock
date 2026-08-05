@@ -14,19 +14,17 @@ const calculatorToolEnrichmentByHref = new Map(
 const financeToolEnrichmentByHref = new Map(
   [
     'monthly-installment',
-    'vat',
-    'percentage',
     'end-of-service-benefits',
+    'article-77-compensation',
+    'traffic-fine-discount',
     'annual-leave',
     'inheritance',
-    'net-salary',
+    'domestic-worker-cost',
     'pregnancy-weeks',
     'saudi-pay-dates',
     'saudi-school-calendar',
     'gpa-to-percent',
-    'zakat',
     'gpa',
-    'investment',
     'fasting',
     'pregnancy',
   ]
@@ -37,7 +35,10 @@ const financeToolEnrichmentByHref = new Map(
     })
     .filter(Boolean),
 );
-const buildingCalculatorRoute = CALCULATOR_ROUTES.find((route) => route.href === '/calculators/building') || null;
+// Looked up by slug, not href — the 'building' route's href moved to /tools/construction/build-cost
+// during the construction-hub migration, and this find-by-href lookup silently returned null from
+// that point on (found 2026-08-04 while consolidating the per-country building pages).
+const buildingCalculatorRoute = CALCULATOR_ROUTES.find((route) => route.slug === 'building') || null;
 const SEARCH_PRIORITY_BY_HREF = new Map([
   ['/time-now', 100],
   ['/mwaqit-al-salat', 98],
@@ -54,31 +55,37 @@ const SEARCH_PRIORITY_BY_HREF = new Map([
   ['/date/today/gregorian', 84],
   ['/calculators', 84],
   ['/calculators/finance', 96],
-  ['/calculators/monthly-installment', 95],
-  ['/calculators/end-of-service-benefits', 95],
-  ['/calculators/vat', 93],
-  ['/calculators/percentage', 92],
-  ['/calculators/age', 94],
-  ['/calculators/age/calculator', 97],
-  ['/calculators/age/difference', 91],
-  ['/calculators/age/hijri', 92],
-  ['/calculators/age/countdown', 90],
-  ['/calculators/age/birth-day', 78],
-  ['/calculators/age/milestones', 82],
-  ['/calculators/age/planets', 76],
-  ['/calculators/age/retirement', 80],
-  ['/calculators/personal-finance', 88],
-  ['/calculators/sleep', 86],
-  ['/calculators/building', 82],
-  ['/calculators/salary', 93],
+  ['/tools/gulf-finance/end-of-service-benefits', 95],
+  ['/tools/gulf-finance/article-77-compensation', 94],
+  ['/tools/gulf-finance/traffic-fine-discount', 92],
+  ['/tools/health', 94],
+  ['/tools/health/age-calculator', 97],
+  ['/tools/health/age-difference', 91],
+  ['/tools/health/age-hijri', 92],
+  ['/tools/health/age-countdown', 90],
+  ['/tools/health/age-birth-day', 78],
+  ['/tools/health/age-milestones', 82],
+  ['/tools/health/age-planets', 76],
+  ['/tools/health/age-retirement', 80],
+  ['/tools/personal-finance', 88],
+  ['/tools/sleep', 86],
+  ['/tools/construction/build-cost', 87],
+  ['/tools/gulf-finance/domestic-worker-cost', 91],
   ['/calculators/bmi', 92],
   ['/calculators/pregnancy', 93],
   ['/calculators/ovulation', 90],
-  ['/calculators/zakat', 91],
+  ['/tools/gulf-finance/wasiyya', 89],
   ['/calculators/gpa', 92],
-  ['/calculators/investment', 89],
   ['/calculators/fasting', 89],
-  ['/calculators/annual-leave', 88],
+  ['/tools/gulf-finance/annual-leave', 88],
+  ['/tools/gulf-finance/aqiqah', 88],
+  ['/tools/gulf-finance/iddah', 90],
+  ['/tools/gulf-finance/iqama', 93],
+  ['/tools/gulf-finance/nafaqah', 90],
+  ['/tools/gulf-finance/sick-leave', 85],
+  ['/tools/gulf-finance/working-days', 85],
+  ['/tools/gulf-finance/saudi-pay-dates', 92],
+  ['/tools/gulf-finance/gulf-pay-dates', 92],
   ['/blog', 76],
   ['/holidays', 84],
 ]);
@@ -177,10 +184,9 @@ function getSearchPriority(href, fallback = 64) {
     return SEARCH_PRIORITY_BY_HREF.get(href);
   }
 
-  if (href.startsWith('/calculators/personal-finance/')) return 88;
-  if (href.startsWith('/calculators/age/')) return 88;
-  if (href.startsWith('/calculators/sleep/')) return 87;
-  if (href.startsWith('/calculators/building/')) return 86;
+  if (href.startsWith('/tools/personal-finance/')) return 88;
+  if (href.startsWith('/tools/health/age-')) return 88;
+  if (href.startsWith('/tools/sleep/')) return 87;
   if (href.startsWith('/calculators/')) return 86;
   if (href.startsWith('/holidays/')) return 72;
   if (href.startsWith('/date/')) return 78;
@@ -523,42 +529,32 @@ const BASE_CALCULATOR_TOOL_ITEMS = CALCULATOR_ROUTES
     );
   });
 
-const BUILDING_COUNTRY_TOOL_ITEMS = COUNTRY_LIST.map((country) =>
-  buildDirectoryItem(
-    {
-      href: `/calculators/building/${country.slug}`,
-      kind: 'tool',
-      title: `كم تكلفة البناء في ${country.nameShort}؟`,
-      heroTitle: `كم تكلفة البناء في ${country.nameShort}؟ | حاسبة سعر المتر والبيت`,
-      description: `احسب تكلفة البناء وسعر المتر في ${country.name} مع تقدير أولي للعظم والتشطيب والمواد الأساسية بعملة ${country.symbol}.`,
-      badge: `بناء / ${country.nameShort}`,
-    },
-    {
-      queries: [
-        `حاسبة تكلفة البناء في ${country.name}`,
-        `حاسبة تكلفة البناء في ${country.nameShort}`,
-        `كم تكلفة البناء في ${country.nameShort}`,
-        `تكلفة بناء بيت في ${country.nameShort}`,
-        `سعر متر البناء في ${country.nameShort}`,
-        `سعر بناء بيت في ${country.nameShort}`,
-        `حاسبة البناء ${country.nameShort}`,
-      ],
-      supportQueries: [
-        country.name,
-        country.nameShort,
-        buildingCalculatorRoute?.shortLabel,
-        `عظم وتشطيب في ${country.nameShort}`,
-        `تكلفة مواد البناء في ${country.nameShort}`,
-        `${country.currency} ${country.symbol}`,
-      ],
-      defaultPriority: 87,
-    },
-  ));
-
-const CALCULATOR_TOOL_ITEMS = dedupeDirectoryItemsByHref([
-  ...BASE_CALCULATOR_TOOL_ITEMS,
-  ...BUILDING_COUNTRY_TOOL_ITEMS,
+// Consolidated 2026-08-04: the old per-country pages (/calculators/building/<country>) were
+// retired into one flagship selector at /tools/construction/build-cost (already covered by
+// BASE_CALCULATOR_TOOL_ITEMS via CALCULATOR_ROUTES' 'building' entry). Rather than emit 14
+// directory items that would collapse down to 1 through dedupeDirectoryItemsByHref anyway
+// (losing 13 countries' worth of query coverage), fold every country's query variants into the
+// SAME item's supportQueries so a search for "تكلفة البناء في مصر" still surfaces the one real
+// page — this is what actually matters for internal search, not a 1-URL-per-item mapping.
+const BUILDING_COUNTRY_SUPPORT_QUERIES = COUNTRY_LIST.flatMap((country) => [
+  `حاسبة تكلفة البناء في ${country.name}`,
+  `كم تكلفة البناء في ${country.nameShort}`,
+  `تكلفة بناء بيت في ${country.nameShort}`,
+  `سعر متر البناء في ${country.nameShort}`,
+  `سعر بناء بيت في ${country.nameShort}`,
+  `حاسبة البناء ${country.nameShort}`,
+  `عظم وتشطيب في ${country.nameShort}`,
+  `تكلفة مواد البناء في ${country.nameShort}`,
 ]);
+
+const CALCULATOR_TOOL_ITEMS = dedupeDirectoryItemsByHref(BASE_CALCULATOR_TOOL_ITEMS).map((item) => {
+  if (item.href !== buildingCalculatorRoute?.href) return item;
+  return {
+    ...item,
+    supportQueries: uniqStrings([...item.supportQueries, ...BUILDING_COUNTRY_SUPPORT_QUERIES]),
+    searchQueries: uniqStrings([...item.searchQueries, ...BUILDING_COUNTRY_SUPPORT_QUERIES]),
+  };
+});
 
 const BLOG_ITEMS = [
   buildDirectoryItem({

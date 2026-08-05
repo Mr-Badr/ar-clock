@@ -14,10 +14,15 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from 'recharts';
+import { formatCurrency } from '@/lib/calculators/engine';
 
-function fmt(n) {
+// currency defaults to 'SAR' to preserve this component's original behavior for the Saudi
+// tool — was previously hardcoded, which would have silently mislabeled AED (or any other
+// currency) amounts as ر.س (found while porting the UAE end-of-service calculator to v2,
+// 2026-07-30). Every future country variant must pass its own currency explicitly.
+function fmt(n, currency = 'SAR') {
   if (n == null || Number.isNaN(n)) return '—';
-  return n.toLocaleString('ar-EG-u-nu-latn', { style: 'currency', currency: 'SAR', maximumFractionDigits: 0 });
+  return formatCurrency(n, currency);
 }
 
 function pct(n) {
@@ -35,7 +40,7 @@ function monthsEquivalent(amount, salary) {
 }
 
 // Custom tooltip shown on hover
-function ChartTooltip({ active, payload }) {
+function ChartTooltip({ active, payload, currency }) {
   if (!active || !payload?.length) return null;
   const entry = payload[0];
   return (
@@ -53,13 +58,13 @@ function ChartTooltip({ active, payload }) {
         {entry.name}
       </div>
       <div style={{ color: 'var(--text-secondary)', marginTop: '2px' }}>
-        {fmt(entry.value)}
+        {fmt(entry.value, currency)}
       </div>
     </div>
   );
 }
 
-function BreakdownBar({ label, amount, total, color }) {
+function BreakdownBar({ label, amount, total, color, currency }) {
   const width = total > 0 ? Math.min(100, Math.round((amount / total) * 100)) : 0;
   if (!amount || amount <= 0) return null;
   return (
@@ -67,7 +72,7 @@ function BreakdownBar({ label, amount, total, color }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{label}</span>
         <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-primary)', direction: 'ltr' }}>
-          {fmt(amount)}
+          {fmt(amount, currency)}
         </span>
       </div>
       <div style={{ height: '6px', background: 'var(--bg-surface-2)', borderRadius: '9999px', overflow: 'hidden' }}>
@@ -83,7 +88,7 @@ function BreakdownBar({ label, amount, total, color }) {
   );
 }
 
-function EndOfServiceChart({ result, salary }) {
+function EndOfServiceChart({ result, salary, currency = 'SAR' }) {
   if (!result?.isValid) return null;
 
   const earned   = result.award       ?? 0;
@@ -141,7 +146,7 @@ function EndOfServiceChart({ result, salary }) {
                     <Cell key={i} fill={entry.color} stroke="none" />
                   ))}
                 </Pie>
-                <Tooltip content={<ChartTooltip />} />
+                <Tooltip content={<ChartTooltip currency={currency} />} />
               </PieChart>
             </ResponsiveContainer>
             {/* Center label */}
@@ -176,18 +181,21 @@ function EndOfServiceChart({ result, salary }) {
             amount={result.firstFiveAmount}
             total={total}
             color="#6366f1"
+            currency={currency}
           />
           <BreakdownBar
             label="السنوات بعد الخامسة (شهر/سنة)"
             amount={result.remainingAmount}
             total={total}
             color="#8b5cf6"
+            currency={currency}
           />
           <BreakdownBar
             label="كسر السنة (أشهر وأيام)"
             amount={result.partialAmount}
             total={total}
             color="#a78bfa"
+            currency={currency}
           />
           {forfeited > 0 && (
             <BreakdownBar
@@ -195,6 +203,7 @@ function EndOfServiceChart({ result, salary }) {
               amount={forfeited}
               total={total}
               color="#f87171"
+              currency={currency}
             />
           )}
 
@@ -208,7 +217,7 @@ function EndOfServiceChart({ result, salary }) {
               المبلغ الصافي المستحق
             </span>
             <span style={{ fontSize: '16px', fontWeight: '800', color: '#10b981', direction: 'ltr' }}>
-              {fmt(earned)}
+              {fmt(earned, currency)}
             </span>
           </div>
         </div>

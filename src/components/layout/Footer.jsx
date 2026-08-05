@@ -18,13 +18,13 @@ const PRODUCT_LINKS = [
 ];
 
 const CALCULATOR_LINKS = [
-  { href: '/calculators/personal-finance', label: 'حاسبات التخطيط المالي الشخصي' },
-  { href: '/calculators/sleep', label: 'حاسبات النوم الذكي' },
-  { href: '/calculators/age/calculator', label: 'كم عمري الآن؟ حاسبة العمر' },
-  { href: '/calculators/monthly-installment', label: 'حاسبة القسط الشهري والقرض' },
-  { href: '/calculators/vat', label: 'حاسبة الضريبة 15% والسعر شامل الضريبة' },
-  { href: '/calculators/percentage', label: 'حاسبة النسبة المئوية والخصم' },
-  { href: '/calculators/building', label: 'حاسبات البناء والتشطيب' },
+  { href: '/tools/personal-finance', label: 'حاسبات التخطيط المالي الشخصي' },
+  { href: '/tools/sleep', label: 'حاسبات النوم الذكي' },
+  { href: '/tools/health/age-calculator', label: 'كم عمري الآن؟ حاسبة العمر' },
+  { href: '/tools/gulf-finance/end-of-service-benefits', label: 'حاسبة مكافأة نهاية الخدمة السعودية' },
+  { href: '/tools/gulf-finance/article-77-compensation', label: 'حاسبة تعويض المادة 77' },
+  { href: '/tools/gulf-finance/traffic-fine-discount', label: 'حاسبة خصم المخالفات المرورية' },
+  { href: '/tools/construction/build-cost', label: 'حاسبات البناء والتشطيب' },
 ];
 
 const COMPANY_LINKS = [
@@ -38,43 +38,10 @@ const COMPANY_LINKS = [
 
 const COPYRIGHT_YEAR = 2026;
 
-const START_LINKS = [
-  {
-    href: '/fahras',
-    title: 'أريد الوصول بسرعة',
-    description: 'صفحة واحدة تجمع أهم الأدوات والمسارات.',
-  },
-  {
-    href: '/calculators',
-    title: 'أريد حساب نتيجة',
-    description: 'اختر القسط أو الضريبة أو العمر أو النوم من السؤال نفسه.',
-  },
-  {
-    href: '/blog',
-    title: 'أريد فهماً قبل القرار',
-    description: 'مقالات عملية تشرح متى تستخدم الأداة وماذا تعني النتيجة.',
-  },
-];
-
 const Footer = () => {
   return (
     <footer className="footer-root">
       <div className="footer-container" data-nosnippet>
-        <div className="footer-start">
-          <div className="footer-start-copy">
-            <p className="footer-start-kicker">ما الذي تريد معرفته الآن؟</p>
-            <h2 className="footer-start-title">اعرف الوقت، حوّل التاريخ، احسب النتيجة، أو افتح الصفحة المناسبة من مسار واضح.</h2>
-          </div>
-          <div className="footer-start-links" aria-label="مسارات بداية سريعة">
-            {START_LINKS.map(({ href, title, description }) => (
-              <Link key={href} href={href} className="footer-start-link">
-                <span>{title}</span>
-                <small>{description}</small>
-              </Link>
-            ))}
-          </div>
-        </div>
-
         <div className="footer-main">
           <div className="footer-brand">
             <Link href="/" className="footer-brand-logo" aria-label={`${SITE_BRAND} - الصفحة الرئيسية`}>

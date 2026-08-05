@@ -587,6 +587,9 @@ export default function CountdownTicker({
               <IconBtn onClick={zoomOut} label="تصغير" disabled={zoom === 0}><ZoomOut size={20} /></IconBtn>
               <span style={FULLSCREEN_ZOOM_LABEL_STYLE}>{zoomLabel}</span>
               <IconBtn onClick={zoomIn} label="تكبير" disabled={zoom === 2}><ZoomIn size={20} /></IconBtn>
+              <IconBtn onClick={handleShare} label={shareCopied ? 'تم نسخ الرابط' : 'مشاركة'}>
+                {shareCopied ? <CheckCircle2 size={18} /> : <Share2 size={18} />}
+              </IconBtn>
             </div>
           </div>
           <div style={getFullscreenContentStyle(scaleValue)}>

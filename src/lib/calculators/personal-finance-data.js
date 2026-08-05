@@ -2,7 +2,7 @@ import { buildQuestionNavItem } from '@/lib/audience-copy';
 
 export const PERSONAL_FINANCE_HUB = {
   slug: 'personal-finance',
-  href: '/calculators/personal-finance',
+  href: '/tools/personal-finance',
   badge: 'تخطيط مالي شخصي',
   title: 'حاسبات التخطيط المالي الشخصي',
   heroTitle: 'حاسبات التخطيط المالي الشخصي | صندوق الطوارئ والديون والادخار',
@@ -38,7 +38,7 @@ export const PERSONAL_FINANCE_HUB = {
 export const PERSONAL_FINANCE_TOOLS = [
   {
     slug: 'emergency-fund',
-    href: '/calculators/personal-finance/emergency-fund',
+    href: '/tools/personal-finance/emergency-fund',
     badge: 'أمان مالي',
     accent: 'var(--blue)',
     accentSoft: 'var(--blue-subtle)',
@@ -115,7 +115,7 @@ export const PERSONAL_FINANCE_TOOLS = [
   },
   {
     slug: 'debt-payoff',
-    href: '/calculators/personal-finance/debt-payoff',
+    href: '/tools/personal-finance/debt-payoff',
     badge: 'ديون / خطة سداد',
     accent: 'var(--blue)',
     accentSoft: 'var(--blue-subtle)',
@@ -194,7 +194,7 @@ export const PERSONAL_FINANCE_TOOLS = [
   },
   {
     slug: 'savings-goal',
-    href: '/calculators/personal-finance/savings-goal',
+    href: '/tools/personal-finance/savings-goal',
     badge: 'ادخار / هدف',
     accent: 'var(--blue)',
     accentSoft: 'var(--blue-subtle)',
@@ -274,7 +274,7 @@ export const PERSONAL_FINANCE_TOOLS = [
   },
   {
     slug: 'net-worth',
-    href: '/calculators/personal-finance/net-worth',
+    href: '/tools/personal-finance/net-worth',
     badge: 'وضع مالي',
     accent: 'var(--blue)',
     accentSoft: 'var(--blue-subtle)',

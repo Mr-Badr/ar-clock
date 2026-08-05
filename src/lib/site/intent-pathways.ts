@@ -49,29 +49,29 @@ export const INTENT_PATHWAYS: IntentPathway[] = [
   {
     id: 'money-decisions',
     badge: 'قرار مالي',
-    title: 'للقرض والضريبة والادخار قبل أن تتسرع في القرار',
+    title: 'لمستحقات العمل والمخالفات قبل أن تتسرع في القرار',
     description:
-      'ابدأ من المسار المالي المناسب ثم افتح الحاسبة أو المقال الذي يعطيك رقماً واضحاً وسياقاً يساعدك على الفهم والمقارنة.',
+      'ابدأ من المسار المناسب ثم افتح الحاسبة أو المقال الذي يعطيك رقماً واضحاً وسياقاً يساعدك على الفهم والمقارنة.',
     ctaHref: '/calculators/finance',
     ctaLabel: 'ابدأ من المال والعمل',
     links: [
       {
         href: '/calculators/finance',
         title: 'حاسبات المال والعمل',
-        description: 'ابدأ من القرض أو الضريبة أو النسبة أو نهاية الخدمة، ثم انتقل إلى الحاسبة التي تعطيك الرقم والشرح.',
+        description: 'ابدأ من نهاية الخدمة أو تعويض الفصل أو خصم المخالفة، ثم انتقل إلى الحاسبة التي تعطيك الرقم والشرح.',
       },
       {
-        href: '/calculators/monthly-installment',
-        title: 'حاسبة القسط الشهري',
-        description: 'قارن الدفعة الشهرية وإجمالي الفوائد وأثر السداد المبكر قبل قبول أي عرض تمويل.',
+        href: '/tools/gulf-finance/article-77-compensation',
+        title: 'حاسبة تعويض المادة 77',
+        description: 'احسب تعويضك إذا أنهى صاحب العمل عقدك دون سبب مشروع، منفصل عن مكافأة نهاية الخدمة.',
       },
       {
-        href: '/calculators/vat',
-        title: 'حاسبة ضريبة القيمة المضافة',
-        description: 'أضف الضريبة أو استخرجها من السعر الشامل بسرعة مع أمثلة عربية شائعة.',
+        href: '/tools/gulf-finance/traffic-fine-discount',
+        title: 'حاسبة خصم المخالفات المرورية',
+        description: 'اعرف المبلغ المستحق بعد خصم 25% قبل انتهاء مهلة الـ45 يوماً، مع خيار التقسيط.',
       },
       {
-        href: '/calculators/personal-finance',
+        href: '/tools/personal-finance',
         title: 'التخطيط المالي الشخصي',
         description: 'انتقل إلى صندوق الطوارئ والديون والادخار وصافي الثروة عندما تحتاج خطة لا رقماً منفصلاً فقط.',
       },
@@ -83,16 +83,16 @@ export const INTENT_PATHWAYS: IntentPathway[] = [
     title: 'للعمر والنوم والمواعيد التي تريد فهمها بسرعة',
     description:
       'هذا المسار يخدم الأسئلة الشخصية المتكررة: كم عمري، متى أنام، كيف أحول تاريخاً، ومتى تأتي المناسبة التالية.',
-    ctaHref: '/calculators/age',
+    ctaHref: '/tools/health/age-calculator',
     ctaLabel: 'ابدأ من حاسبات العمر',
     links: [
       {
-        href: '/calculators/age',
+        href: '/tools/health/age-calculator',
         title: 'حاسبات العمر',
         description: 'احسب عمرك الآن ثم أكمل إلى فرق العمر أو العد التنازلي أو العمر الهجري من نفس الباب.',
       },
       {
-        href: '/calculators/sleep',
+        href: '/tools/sleep',
         title: 'حاسبات النوم الذكي',
         description: 'انتقل من سؤال متى أنام إلى القيلولة ودين النوم واحتياج النوم حسب العمر.',
       },
@@ -128,14 +128,14 @@ export const INTENT_PATHWAYS: IntentPathway[] = [
         description: 'افهم علاقة القطر والطول والعدد بالوزن قبل الانتقال إلى حاسبة الحديد.',
       },
       {
-        href: '/blog/what-is-a-sleep-cycle',
-        title: 'ما دورة النوم؟',
-        description: 'إذا كنت تريد فهم دورات النوم قبل استخدام الحاسبة، فهذه الصفحة بداية أوضح وأهدأ.',
+        href: '/tools/sleep/bedtime',
+        title: 'متى أنام لأستيقظ في الوقت المناسب؟',
+        description: 'الحاسبة نفسها تشرح دورات النوم ووقت الغفو قبل أن تعطيك أوقات النوم المقترحة.',
       },
       {
-        href: '/blog/best-nap-length',
-        title: 'ما أفضل مدة للقيلولة؟',
-        description: 'اقرأ متى تفيد القيلولة ومتى تصبح أطول من اللازم قبل استخدام حاسبة القيلولة.',
+        href: '/tools/sleep/nap-calculator',
+        title: 'أفضل وقت للقيلولة',
+        description: 'اعرف متى تفيد القيلولة ومتى تصبح أطول من اللازم، ثم احسب وقت استيقاظك المناسب.',
       },
     ],
   },

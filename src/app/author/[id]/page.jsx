@@ -126,7 +126,7 @@ export default async function AuthorPage({ params }) {
               أدوات الوقت ومواقيت الصلاة تعتمد على حزمة Adhan الحسابية المُشار إليها في الأدبيات العلمية، مع بيانات مناطق زمنية محدّثة من قاعدة IANA tzdata. أدوات التقويم الهجري تعتمد معيار أم القرى المعمول به رسمياً في المملكة العربية السعودية، مع إشارة صريحة عند وجود اختلافات بين الدول.
             </p>
             <p>
-              كل حاسبة مالية — من مكافأة نهاية الخدمة إلى الزكاة إلى ضريبة القيمة المضافة — مصحوبة بروابط للمصادر التشريعية الأصلية حتى يتمكن المستخدم من التحقق بنفسه. النتائج تُقدَّم كتقديرات إرشادية لا كحكم قانوني نهائي، ويُصرَّح بذلك بوضوح في كل صفحة.
+              كل حاسبة مالية — من مكافأة نهاية الخدمة إلى تعويض المادة 77 إلى خصم المخالفات المرورية — مصحوبة بروابط للمصادر التشريعية الأصلية حتى تتحقق بنفسك. النتائج تُقدَّم كتقديرات إرشادية لا كحكم قانوني نهائي، ويُصرَّح بذلك بوضوح في كل صفحة.
             </p>
           </div>
         </section>
@@ -136,10 +136,10 @@ export default async function AuthorPage({ params }) {
           <h2 id="author-tools-heading" className="text-lg font-bold mb-3">أبرز الأدوات التي أشرف عليها</h2>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
             {[
-              { href: '/calculators/end-of-service-benefits', label: 'حاسبة مكافأة نهاية الخدمة السعودية' },
-              { href: '/calculators/uae-end-of-service', label: 'حاسبة مكافأة نهاية الخدمة الإمارات' },
-              { href: '/calculators/zakat', label: 'حاسبة الزكاة' },
-              { href: '/calculators/salary', label: 'حاسبة الراتب' },
+              { href: '/tools/gulf-finance/end-of-service-benefits', label: 'حاسبة مكافأة نهاية الخدمة السعودية' },
+              { href: '/tools/gulf-finance/uae-end-of-service', label: 'حاسبة مكافأة نهاية الخدمة الإمارات' },
+              { href: '/tools/gulf-finance/article-77-compensation', label: 'حاسبة تعويض المادة 77' },
+              { href: '/tools/gulf-finance/traffic-fine-discount', label: 'حاسبة خصم المخالفات المرورية' },
               { href: '/calculators/pregnancy', label: 'حاسبة الحمل' },
               { href: '/calculators/gpa', label: 'حاسبة المعدل التراكمي GPA' },
               { href: '/mwaqit-al-salat', label: 'مواقيت الصلاة' },
