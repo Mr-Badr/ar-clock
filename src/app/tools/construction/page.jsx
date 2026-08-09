@@ -41,6 +41,15 @@ const TYPE_GROUPS = [
     note: '',
     slugs: ['sqft-sqm-converter'],
   },
+  {
+    // Migrated from /blog (2026-08-09) — the only 2 articles out of the whole /blog section
+    // with real traffic (owner's own analytics); /blog itself was retired entirely. Per
+    // tools-hub-pattern.md: tool groups first, "المقالات" always last.
+    code: 'articles',
+    name: 'المقالات',
+    note: '',
+    slugs: ['construction-cement-bags-guide', 'construction-rebar-weight-guide'],
+  },
 ];
 
 function ToolLink({ slug }) {
@@ -123,7 +132,7 @@ export default function ConstructionCategoryHubPage() {
             منفصلة لكل دولة.
           </p>
           <div className="tool-v2-cat-meta">
-            <span><b>{toolCount}</b> حاسبات مرتبطة مباشرة</span>
+            <span><b>{toolCount}</b> صفحات مرتبطة مباشرة</span>
           </div>
         </div>
 

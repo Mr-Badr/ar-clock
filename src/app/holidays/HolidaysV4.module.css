@@ -241,6 +241,41 @@
   font-weight: var(--font-bold);
 }
 
+.countriesSection {
+  margin-block: var(--space-12);
+}
+
+.countryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-2);
+}
+
+.countryChip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  text-decoration: none;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.countryChip:hover {
+  border-color: var(--border-default);
+  background: var(--muted);
+}
+
+.countryChipFlag {
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
 .guideSection {
   margin-block: var(--space-16);
 }

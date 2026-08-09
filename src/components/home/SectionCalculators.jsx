@@ -31,7 +31,7 @@ const TOOLS = [
     icon: BriefcaseBusiness,
   },
   {
-    href: '/calculators/finance',
+    href: '/tools/gulf-finance',
     title: 'حاسبات المال والعمل',
     description: 'ابدأ من القرض أو الضريبة أو النسبة أو مكافأة نهاية الخدمة بحسب الرقم الذي تريد فهمه.',
     icon: BriefcaseBusiness,
@@ -141,7 +141,7 @@ export default function SectionCalculators() {
           </ul>
 
           <div className="action-row">
-            <CtaLink href="/calculators">افتح قسم الحاسبات</CtaLink>
+            <CtaLink href="/tools">افتح قسم الحاسبات</CtaLink>
             <Link
               href="/tools/personal-finance"
               className="text-link"

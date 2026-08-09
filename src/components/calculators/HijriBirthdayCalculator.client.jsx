@@ -1,10 +1,10 @@
 "use client";
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
+import { CalendarBlank, Sparkle, ShareNetwork } from '@phosphor-icons/react';
+import { toast } from 'sonner';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import {
   computeHijriBirthdaySnapshot,
   findHijriDayMatches,
@@ -29,18 +29,34 @@ function formatYmd({ years, months, days }) {
   return parts.join(' و') || '0 يوم';
 }
 
+async function shareResult(title, text) {
+  if (navigator.share) {
+    try { await navigator.share({ title, text }); return; } catch { /* cancelled */ }
+  }
+  try { await navigator.clipboard.writeText(text); toast.success('تم نسخ النتيجة إلى الحافظة'); }
+  catch { toast.error('تعذر نسخ النتيجة'); }
+}
+
 export default function HijriBirthdayCalculator({ hijriEventsCatalog = [] }) {
   const [birthDateIso, setBirthDateIso] = useState('1995-06-15');
-  const [copyState, setCopyState] = useState('idle');
+  // `now` starts null and is only set inside useEffect (client-only, post-mount) —
+  // never call new Date() directly during render, since Client Components still
+  // execute their render function during server prerendering and a bare new Date()
+  // there breaks static generation without a Suspense boundary.
+  const [now, setNow] = useState(null);
+
+  useEffect(() => {
+    setNow(new Date());
+  }, []);
 
   const snapshot = useMemo(() => {
-    if (!birthDateIso) return null;
+    if (!birthDateIso || !now) return null;
     try {
-      return computeHijriBirthdaySnapshot(birthDateIso);
-    } catch (_error) {
+      return computeHijriBirthdaySnapshot(birthDateIso, now);
+    } catch {
       return null;
     }
-  }, [birthDateIso]);
+  }, [birthDateIso, now]);
 
   const matches = useMemo(() => {
     if (!snapshot) return null;
@@ -52,162 +68,100 @@ export default function HijriBirthdayCalculator({ hijriEventsCatalog = [] }) {
     );
   }, [snapshot, hijriEventsCatalog]);
 
-  const shareText = useMemo(() => {
-    if (!snapshot) return '';
-    const hijriLabel = `${snapshot.birthHijri.day} ${getHijriMonthName(snapshot.birthHijri.month)} ${snapshot.birthHijri.year} هـ`;
-    return `🌙 وُلدت يوم ${hijriLabel}. اكتشف تاريخ ميلادك الهجري ومناسبته على ميقاتنا: miqatona.com/calculators/hijri-birthday`;
-  }, [snapshot]);
-
-  const handleShare = async () => {
-    if (typeof navigator === 'undefined') return;
-    if (navigator.share) {
-      try {
-        await navigator.share({ text: shareText });
-        return;
-      } catch (_error) {
-        // user cancelled or share unsupported — fall through to clipboard
-      }
-    }
-    try {
-      await navigator.clipboard.writeText(shareText);
-      setCopyState('copied');
-      setTimeout(() => setCopyState('idle'), 2000);
-    } catch (_error) {
-      setCopyState('failed');
-    }
-  };
-
   const isOutOfRange = birthDateIso && !snapshot;
 
+  const shareText = snapshot
+    ? `🌙 وُلدت يوم ${snapshot.birthHijri.day} ${getHijriMonthName(snapshot.birthHijri.month)} ${snapshot.birthHijri.year} هـ`
+    : '';
+
   return (
-    <div className="calc-app">
-      <div className="calc-app-grid age-app-grid">
-        <Card className="calc-surface-card calc-app-panel">
-          <CardHeader>
-            <CardTitle className="calc-card-title">أدخل تاريخ ميلادك الميلادي</CardTitle>
-          </CardHeader>
-          <CardContent className="calc-form-grid">
-            <Input
-              type="date"
-              value={birthDateIso}
-              min="1924-01-01"
-              max="2077-12-31"
-              onChange={(event) => setBirthDateIso(event.target.value)}
-              aria-label="تاريخ الميلاد الميلادي"
-            />
-            {isOutOfRange ? (
-              <p className="calc-hint">
-                هذا التاريخ خارج النطاق المدعوم حالياً (1924–2077م) — جرّب تاريخاً ضمن هذا المدى.
-              </p>
-            ) : null}
-          </CardContent>
-        </Card>
-
-        <div className="calc-results-panel" aria-live="polite">
-          {snapshot ? (
-            <>
-              <Card className="calc-surface-card">
-                <CardHeader>
-                  <CardTitle className="calc-card-title">تاريخ ميلادك بالتقويم الهجري</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="calc-metric-card">
-                    <div className="calc-metric-card__label">الموافق</div>
-                    <div className="calc-metric-card__value">
-                      {snapshot.birthHijri.day} {getHijriMonthName(snapshot.birthHijri.month)} {snapshot.birthHijri.year} هـ
-                    </div>
-                    <div className="calc-metric-card__note">
-                      {formatGregorian(new Date(birthDateIso))} بالتقويم الميلادي
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <div className="calc-grid-2">
-                <div className="calc-metric-card">
-                  <div className="calc-metric-card__label">عمرك بالتقويم الهجري</div>
-                  <div className="calc-metric-card__value">{formatYmd(snapshot.ageHijri)}</div>
-                  <div className="calc-metric-card__note">محسوب بفرق السنة/الشهر/اليوم الهجري الفعلي — لا بالتقريب</div>
-                </div>
-                <div className="calc-metric-card">
-                  <div className="calc-metric-card__label">عمرك بالتقويم الميلادي</div>
-                  <div className="calc-metric-card__value">{formatYmd(snapshot.ageGregorian)}</div>
-                  <div className="calc-metric-card__note">للمقارنة بين التقويمين</div>
-                </div>
-              </div>
-
-              <Card className="calc-surface-card">
-                <CardHeader>
-                  <CardTitle className="calc-card-title">عيد ميلادك الهجري القادم</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="calc-metric-card">
-                    <div className="calc-metric-card__value">
-                      {snapshot.daysUntilNextHijriBirthday === 0
-                        ? 'اليوم!'
-                        : `باقي ${snapshot.daysUntilNextHijriBirthday} يوم`}
-                    </div>
-                    <div className="calc-metric-card__note">
-                      {snapshot.birthHijri.day} {getHijriMonthName(snapshot.birthHijri.month)} {snapshot.nextHijriBirthdayYear} هـ — الموافق {formatGregorian(snapshot.nextHijriBirthdayGregorian)}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {matches ? (
-                <Card className="calc-surface-card">
-                  <CardHeader>
-                    <CardTitle className="calc-card-title">هل تعلم؟</CardTitle>
-                  </CardHeader>
-                  <CardContent className="calc-breakdown-list">
-                    {matches.exact.length > 0 ? (
-                      <div className="calc-metric-card">
-                        <div className="calc-metric-card__label">
-                          {matches.exact.length === 1 ? 'وُلدت في نفس اليوم الهجري لـ' : 'وُلدت في نفس اليوم الهجري لعدة مناسبات'}
-                        </div>
-                        <div className="calc-metric-card__value">
-                          {matches.exact.map((event, index) => (
-                            <span key={event.slug}>
-                              {index > 0 ? '، ' : ''}
-                              <Link href={`/holidays/${event.slug}`} className="calc-inline-link">
-                                {event.name}
-                              </Link>
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    ) : matches.nearest ? (
-                      <div className="calc-metric-card">
-                        <div className="calc-metric-card__label">أقرب مناسبة إسلامية ليوم ميلادك الهجري</div>
-                        <div className="calc-metric-card__value">
-                          <Link href={`/holidays/${matches.nearest.event.slug}`} className="calc-inline-link">
-                            {matches.nearest.event.name}
-                          </Link>
-                        </div>
-                        <div className="calc-metric-card__note">
-                          {matches.nearest.daysAway === 0
-                            ? 'في نفس اليوم تقريباً'
-                            : matches.nearest.direction === 'after'
-                              ? `بعد ${matches.nearest.daysAway} يوماً من ميلادك الهجري`
-                              : `قبل ${matches.nearest.daysAway} يوماً من ميلادك الهجري`}
-                        </div>
-                      </div>
-                    ) : null}
-                  </CardContent>
-                </Card>
-              ) : null}
-
-              <button type="button" className="btn btn-outline" onClick={handleShare}>
-                {copyState === 'copied' ? 'تم النسخ ✓' : copyState === 'failed' ? 'انسخ يدوياً' : 'شارك مولدك الهجري'}
-              </button>
-            </>
-          ) : (
-            <div className="calc-metric-card">
-              <div className="calc-metric-card__note">أدخل تاريخ ميلادك لعرض النتيجة.</div>
-            </div>
-          )}
-        </div>
+    <div aria-label="حاسبة مولدك الهجري">
+      <div className="tool-v2-panel-head">
+        <span className="tool-v2-country-badge"><CalendarBlank size={14} weight="bold" /> ميلادك بالهجري <span className="tool-v2-live-dot" aria-hidden="true" /></span>
       </div>
+
+      <div className="tool-v2-field">
+        <label htmlFor="hijri-birth-date">تاريخ ميلادك الميلادي</label>
+        <input
+          id="hijri-birth-date"
+          type="date"
+          value={birthDateIso}
+          min="1924-01-01"
+          max="2077-12-31"
+          onChange={(event) => setBirthDateIso(event.target.value)}
+        />
+        {isOutOfRange ? (
+          <span className="tool-v2-option-hint">هذا التاريخ خارج النطاق المدعوم حالياً (1924–2077م) — جرّب تاريخاً ضمن هذا المدى.</span>
+        ) : null}
+      </div>
+
+      {snapshot ? (
+        <div aria-live="polite">
+          <div className="tool-v2-result-hero">
+            <span className="tool-v2-result-label">تاريخ ميلادك بالتقويم الهجري</span>
+            <div className="tool-v2-result-value">{snapshot.birthHijri.day} {getHijriMonthName(snapshot.birthHijri.month)} {snapshot.birthHijri.year} هـ</div>
+            <div className="tool-v2-result-meta">{formatGregorian(new Date(birthDateIso))} بالتقويم الميلادي</div>
+          </div>
+
+          <div className="tool-v2-breakdown-list">
+            <div className="tool-v2-breakdown-row">
+              <span className="tool-v2-breakdown-label">عمرك بالتقويم الهجري</span>
+              <span className="tool-v2-breakdown-value">{formatYmd(snapshot.ageHijri)}</span>
+            </div>
+            <div className="tool-v2-breakdown-row">
+              <span className="tool-v2-breakdown-label">عمرك بالتقويم الميلادي</span>
+              <span className="tool-v2-breakdown-value">{formatYmd(snapshot.ageGregorian)}</span>
+            </div>
+            <div className="tool-v2-breakdown-row">
+              <span className="tool-v2-breakdown-label">عيد ميلادك الهجري القادم</span>
+              <span className="tool-v2-breakdown-value">
+                {snapshot.daysUntilNextHijriBirthday === 0 ? 'اليوم!' : `باقي ${snapshot.daysUntilNextHijriBirthday} يوم`}
+              </span>
+            </div>
+          </div>
+          <p className="tool-v2-option-hint">
+            {snapshot.birthHijri.day} {getHijriMonthName(snapshot.birthHijri.month)} {snapshot.nextHijriBirthdayYear} هـ — الموافق {formatGregorian(snapshot.nextHijriBirthdayGregorian)}
+          </p>
+
+          {matches ? (
+            <div className="tool-v2-note-strip">
+              <Sparkle size={15} weight="fill" />
+              {matches.exact.length > 0 ? (
+                <span>
+                  {matches.exact.length === 1 ? 'وُلدت في نفس اليوم الهجري لـ ' : 'وُلدت في نفس اليوم الهجري لعدة مناسبات: '}
+                  {matches.exact.map((event, index) => (
+                    <span key={event.slug}>
+                      {index > 0 ? '، ' : ''}
+                      <Link href={`/holidays/${event.slug}`}>{event.name}</Link>
+                    </span>
+                  ))}
+                </span>
+              ) : matches.nearest ? (
+                <span>
+                  أقرب مناسبة إسلامية ليوم ميلادك الهجري: <Link href={`/holidays/${matches.nearest.event.slug}`}>{matches.nearest.event.name}</Link>
+                  {' — '}
+                  {matches.nearest.daysAway === 0
+                    ? 'في نفس اليوم تقريباً'
+                    : matches.nearest.direction === 'after'
+                      ? `بعد ${matches.nearest.daysAway} يوماً من ميلادك الهجري`
+                      : `قبل ${matches.nearest.daysAway} يوماً من ميلادك الهجري`}
+                </span>
+              ) : null}
+            </div>
+          ) : null}
+
+          <div className="tool-v2-action-row">
+            <button type="button" className="tool-v2-action-btn is-primary" onClick={() => shareResult('مولدك الهجري', shareText)}>
+              <ShareNetwork size={18} weight="bold" /> شارك مولدك الهجري
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="tool-v2-empty-state">
+          <CalendarBlank size={28} weight="duotone" />
+          <p>أدخل تاريخ ميلادك لعرض النتيجة.</p>
+        </div>
+      )}
     </div>
   );
 }

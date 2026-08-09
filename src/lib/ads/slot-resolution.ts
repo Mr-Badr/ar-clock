@@ -28,15 +28,6 @@ const ROUTE_MANUAL_AD_SLOT_FAMILIES: readonly RouteManualAdSlotFamily[] = [
     },
   },
   {
-    prefix: '/blog',
-    keys: {
-      topBanner: 'topBlogBanner',
-      inArticle: 'inArticleBlog',
-      inFeed: 'inFeedBlog',
-      multiplex: 'multiplexBlog',
-    },
-  },
-  {
     prefix: '/time-now',
     keys: {
       topBanner: 'topTimeBanner',
@@ -61,7 +52,7 @@ const ROUTE_MANUAL_AD_SLOT_FAMILIES: readonly RouteManualAdSlotFamily[] = [
     },
   },
   {
-    prefix: '/calculators',
+    prefix: '/tools',
     keys: {
       topBanner: 'topCalculatorBanner',
       inArticle: 'inArticleCalculator',

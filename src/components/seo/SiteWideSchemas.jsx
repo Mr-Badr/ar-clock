@@ -16,12 +16,11 @@ const WEBSITE_ID = `${SITE_URL}#website`;
 const FOUNDER = getDefaultAuthor();
 const CORE_SECTION_PAGES = [
   { path: '/fahras', name: 'استكشف الصفحات' },
-  { path: '/blog', name: 'المدونة' },
   { path: '/time-now', name: 'الوقت الان' },
   { path: '/mwaqit-al-salat', name: 'مواقيت الصلاة' },
   { path: '/date', name: 'التاريخ والتحويل' },
   { path: '/holidays', name: 'المناسبات والعد التنازلي' },
-  { path: '/calculators', name: 'الحاسبات' },
+  { path: '/tools', name: 'الحاسبات' },
   { path: '/time-difference', name: 'فرق التوقيت' },
 ];
 

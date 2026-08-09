@@ -1,10 +1,5 @@
 export const TOP_DISCOVERY_LINKS = [
   {
-    href: '/blog',
-    label: 'مدونة ميقاتنا',
-    description: 'ابدأ من المقالات الشارحة ثم انتقل مباشرة إلى الحاسبات والمسارات اليومية.',
-  },
-  {
     href: '/tools/sleep',
     label: 'حاسبات النوم الذكي',
     description: 'اعرف متى تنام ومتى تستيقظ، واحسب القيلولة ودين النوم من صفحة منظمة وواضحة.',
@@ -35,7 +30,7 @@ export const TOP_DISCOVERY_LINKS = [
     description: 'احسب مدة سداد الديون وقارن بين كرة الثلج والانهيار.',
   },
   {
-    href: '/calculators/finance',
+    href: '/tools/gulf-finance',
     label: 'حاسبات المال والعمل',
     description: 'احسب مكافأة نهاية الخدمة، تعويض المادة 77، وخصم المخالفات المرورية من مدخل واحد واضح.',
   },
@@ -58,7 +53,6 @@ export const TOP_DISCOVERY_LINKS = [
 
 export const ROOT_PRIORITY_TOOL_PATHS = [
   '/fahras',
-  '/blog',
   '/tools/sleep',
   '/tools/sleep/bedtime',
   '/tools/sleep/wake-time',
@@ -71,7 +65,7 @@ export const ROOT_PRIORITY_TOOL_PATHS = [
   '/tools/personal-finance/debt-payoff',
   '/tools/personal-finance/savings-goal',
   '/tools/personal-finance/net-worth',
-  '/calculators/finance',
+  '/tools/gulf-finance',
   '/tools/health/age-calculator',
   '/tools/health/age-hijri',
   '/tools/health/age-difference',
@@ -86,16 +80,14 @@ export const ROOT_PRIORITY_TOOL_PATHS = [
   '/date/converter',
   '/date/today/hijri',
   '/date/today/gregorian',
-  '/blog/how-many-cement-bags-do-i-need',
-  '/blog/how-to-estimate-rebar-weight',
-  '/blog/what-is-a-sleep-cycle',
-  '/blog/how-many-hours-of-sleep-do-i-need',
-  '/blog/best-nap-length',
-  '/blog/sleep-debt-explained',
-  '/blog/why-am-i-tired-after-sleeping',
-  '/blog/how-long-does-it-take-to-fall-asleep',
-  '/blog/rem-vs-deep-sleep',
-  '/blog/sleep-hygiene-basics',
+  // /blog/how-many-cement-bags-do-i-need + /blog/how-to-estimate-rebar-weight migrated here
+  // 2026-08-09 (the only 2 articles in the whole retired /blog section with real traffic).
+  // The other 8 entries that used to follow these (what-is-a-sleep-cycle, best-nap-length, etc.)
+  // were removed in the same pass — they'd been dead links since the standalone sleep-guides
+  // content system was dropped 2026-08-04 (SLEEP_GUIDES has been an empty array ever since);
+  // nothing ever actually routed at those URLs.
+  '/tools/construction/how-many-cement-bags-do-i-need',
+  '/tools/construction/how-to-estimate-rebar-weight',
 ];
 
 export function appendToolDiscoveryLinks(baseLinks = []) {

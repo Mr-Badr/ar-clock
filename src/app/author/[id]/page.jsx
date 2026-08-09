@@ -140,8 +140,8 @@ export default async function AuthorPage({ params }) {
               { href: '/tools/gulf-finance/uae-end-of-service', label: 'حاسبة مكافأة نهاية الخدمة الإمارات' },
               { href: '/tools/gulf-finance/article-77-compensation', label: 'حاسبة تعويض المادة 77' },
               { href: '/tools/gulf-finance/traffic-fine-discount', label: 'حاسبة خصم المخالفات المرورية' },
-              { href: '/calculators/pregnancy', label: 'حاسبة الحمل' },
-              { href: '/calculators/gpa', label: 'حاسبة المعدل التراكمي GPA' },
+              { href: '/tools/health/pregnancy', label: 'حاسبة الحمل' },
+              { href: '/tools/education/gpa', label: 'حاسبة المعدل التراكمي GPA' },
               { href: '/mwaqit-al-salat', label: 'مواقيت الصلاة' },
               { href: '/holidays', label: 'صفحات المناسبات والأعياد' },
             ].map((tool) => (

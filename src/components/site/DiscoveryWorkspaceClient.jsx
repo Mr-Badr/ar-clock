@@ -421,7 +421,7 @@ export default function DiscoveryWorkspaceClient({
   const discoveryPath = routePath || (resolvedMode === 'search' ? '/search' : '/fahras');
   const deferredPaletteQuery = useDeferredValue(paletteQuery);
   const heroCopy = renderHeroCopy(resolvedMode, viewModel.hasQuery, viewModel.query);
-  const calculatorItemsCount = viewModel.allItems.filter((item) => item.href.startsWith('/calculators/')).length;
+  const calculatorItemsCount = viewModel.allItems.filter((item) => item.href.startsWith('/tools/')).length;
   const articleItemsCount = viewModel.allItems.filter((item) => item.kind === 'article').length;
   const heroIntentLinks = (viewModel.hasQuery ? viewModel.relatedQueries : viewModel.topSearches).slice(0, 4);
   const featuredHrefSet = useMemo(

@@ -3,7 +3,6 @@ import { COUNTRY_LIST } from '@/lib/calculators/building/country-data';
 import { PERSONAL_FINANCE_HUB, PERSONAL_FINANCE_TOOLS } from '@/lib/calculators/personal-finance-data';
 import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
 import { ALL_RAW_EVENTS } from '@/lib/events';
-import { ALL_GUIDES } from '@/lib/guides/data';
 import { FEATURED_COUNTDOWN_LINKS } from '@/lib/seo/popular-links';
 
 const calculatorHubHrefs = new Set(CALCULATOR_HUBS.map((hub) => hub.href));
@@ -53,8 +52,8 @@ const SEARCH_PRIORITY_BY_HREF = new Map([
   ['/date/country', 80],
   ['/date/today/hijri', 88],
   ['/date/today/gregorian', 84],
-  ['/calculators', 84],
-  ['/calculators/finance', 96],
+  ['/tools', 84],
+  ['/tools/gulf-finance', 96],
   ['/tools/gulf-finance/end-of-service-benefits', 95],
   ['/tools/gulf-finance/article-77-compensation', 94],
   ['/tools/gulf-finance/traffic-fine-discount', 92],
@@ -71,12 +70,12 @@ const SEARCH_PRIORITY_BY_HREF = new Map([
   ['/tools/sleep', 86],
   ['/tools/construction/build-cost', 87],
   ['/tools/gulf-finance/domestic-worker-cost', 91],
-  ['/calculators/bmi', 92],
-  ['/calculators/pregnancy', 93],
-  ['/calculators/ovulation', 90],
+  ['/tools/health/bmi', 92],
+  ['/tools/health/pregnancy', 93],
+  ['/tools/health/ovulation', 90],
   ['/tools/gulf-finance/wasiyya', 89],
-  ['/calculators/gpa', 92],
-  ['/calculators/fasting', 89],
+  ['/tools/education/gpa', 92],
+  ['/tools/health/fasting', 89],
   ['/tools/gulf-finance/annual-leave', 88],
   ['/tools/gulf-finance/aqiqah', 88],
   ['/tools/gulf-finance/iddah', 90],
@@ -86,7 +85,6 @@ const SEARCH_PRIORITY_BY_HREF = new Map([
   ['/tools/gulf-finance/working-days', 85],
   ['/tools/gulf-finance/saudi-pay-dates', 92],
   ['/tools/gulf-finance/gulf-pay-dates', 92],
-  ['/blog', 76],
   ['/holidays', 84],
 ]);
 
@@ -95,7 +93,6 @@ const POPULAR_SEARCH_SECTION_LIMITS = {
   'calculators-hubs': 3,
   'calculators-tools': 5,
   holidays: 2,
-  blog: 2,
 };
 
 const QUERY_PREFIX_TOKENS = new Set([
@@ -187,7 +184,7 @@ function getSearchPriority(href, fallback = 64) {
   if (href.startsWith('/tools/personal-finance/')) return 88;
   if (href.startsWith('/tools/health/age-')) return 88;
   if (href.startsWith('/tools/sleep/')) return 87;
-  if (href.startsWith('/calculators/')) return 86;
+  if (href.startsWith('/tools/')) return 86;
   if (href.startsWith('/holidays/')) return 72;
   if (href.startsWith('/date/')) return 78;
   if (href.startsWith('/time-now') || href.startsWith('/mwaqit-al-salat')) return 80;
@@ -447,7 +444,7 @@ const TIME_AND_DATE_ITEMS = [
 ];
 
 const CALCULATORS_ROOT_ITEM = buildDirectoryItem({
-  href: '/calculators',
+  href: '/tools',
   kind: 'section',
   title: 'قسم الحاسبات',
   heroTitle: 'أشهر الحاسبات العربية اليومية',
@@ -556,42 +553,9 @@ const CALCULATOR_TOOL_ITEMS = dedupeDirectoryItemsByHref(BASE_CALCULATOR_TOOL_IT
   };
 });
 
-const BLOG_ITEMS = [
-  buildDirectoryItem({
-    href: '/blog',
-    kind: 'section',
-    title: 'مدونة ميقاتنا',
-    heroTitle: 'مقالات عربية تربط الشرح بالأداة الصحيحة',
-    description: 'اقرأ مقالات تشرح الحاسبات والنوم والتخطيط المالي قبل استخدام الأداة.',
-    badge: 'المدونة',
-  }, {
-    queries: [
-      'مدونة ميقاتنا',
-      'مقالات ميقاتنا',
-      'كل المقالات',
-      'شروحات الأدوات',
-      'مقالات ميقاتنا',
-    ],
-    supportQueries: ['المدونة العربية', 'مقالات تشرح الأدوات', 'مسارات بين الأدوات والمقالات'],
-    defaultPriority: 74,
-  }),
-  ...ALL_GUIDES.map((guide) =>
-    buildDirectoryItem(
-      {
-        href: guide.href,
-        kind: 'article',
-        title: guide.metaTitle || guide.title,
-        heroTitle: guide.title,
-        description: guide.description,
-      },
-      {
-        queries: [guide.title, guide.metaTitle, ...(guide.keywords || []), ...(guide.intentKeywords || [])],
-        supportQueries: [guide.category, guide.cluster, guide.sectionTitle],
-        defaultPriority: 52,
-      },
-    ),
-  ),
-];
+// BLOG_ITEMS removed 2026-08-09 — /blog retired entirely (real traffic was 0 except 2 articles,
+// migrated into /tools/construction, which are already covered by CALCULATOR_TOOL_ITEMS above).
+// ALL_GUIDES is now always empty; no directory items need to come from it.
 
 const featuredCountdownLookup = new Map(FEATURED_COUNTDOWN_LINKS.map((item) => [item.href, item]));
 
@@ -737,12 +701,6 @@ export const SITE_DIRECTORY_SECTIONS = [
     items: CALCULATOR_TOOL_ITEMS,
   },
   {
-    id: 'blog',
-    title: 'المدونة العربية',
-    description: 'مقالات شرح وتوجيه تدعم الحاسبات وتلتقط الأسئلة التعليمية التفصيلية.',
-    items: BLOG_ITEMS,
-  },
-  {
     id: 'holidays',
     title: 'المناسبات والعدادات',
     description: 'صفحات العد التنازلي والمواسم والأعياد والصفحات الأكثر زيارة في هذا المسار.',
@@ -760,7 +718,6 @@ export const SITE_DIRECTORY_COUNTS = {
   sections: SITE_DIRECTORY_SECTIONS.length,
   items: SITE_DIRECTORY_SECTIONS.reduce((sum, section) => sum + section.items.length, 0),
   calculators: CALCULATOR_HUB_ITEMS.length + CALCULATOR_TOOL_ITEMS.length,
-  blog: BLOG_ITEMS.length,
 };
 
 export const SITE_SEARCH_INDEX = SITE_DIRECTORY_SECTIONS.flatMap((section) =>

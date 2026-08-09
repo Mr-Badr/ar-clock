@@ -92,7 +92,7 @@ export default function MobileMenuPanel({
       <div className="header-mobile-menu-body rtl">
         {links.map((link) => (
           <div key={link.href}>
-            {link.href === "/calculators" ? (
+            {link.href === "/tools" ? (
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value={link.href} className="border-none">
                   <AccordionTrigger
@@ -185,10 +185,10 @@ export default function MobileMenuPanel({
                     </Accordion>
 
                     <Link
-                      href="/calculators"
+                      href="/tools"
                       prefetch
                       className="header-mobile-cat-viewall-all"
-                      {...getPrefetchHandlers("/calculators")}
+                      {...getPrefetchHandlers("/tools")}
                     >
                       <Calculator size={15} weight="duotone" aria-hidden="true" />
                       عرض جميع الحاسبات

@@ -34,11 +34,11 @@ export function getAdRoutePolicy(pathname = '/') {
   const isDateSection = normalized === '/date' || normalized.startsWith('/date/');
   const isTimeNowSection = normalized === '/time-now' || normalized.startsWith('/time-now/');
   const isTimeDifferenceSection = normalized === '/time-difference' || normalized.startsWith('/time-difference/');
-  // Blog articles and prayer pages are long, high-dwell surfaces where the
-  // dismissible mobile anchor adds viewable impressions without covering content.
-  const isBlogDetail = normalized.startsWith('/blog/');
+  // Prayer pages are long, high-dwell surfaces where the dismissible mobile anchor adds
+  // viewable impressions without covering content (this used to also cover /blog/ articles,
+  // same reasoning — removed 2026-08-09 when /blog was retired entirely).
   const isPrayerSection = normalized === '/mwaqit-al-salat' || normalized.startsWith('/mwaqit-al-salat/');
-  const isCalculatorSection = normalized === '/calculators' || normalized.startsWith('/calculators/');
+  const isCalculatorSection = normalized === '/tools' || normalized.startsWith('/tools/');
 
   return {
     allowAdDelivery,
@@ -49,7 +49,6 @@ export function getAdRoutePolicy(pathname = '/') {
       isDateSection ||
       isTimeNowSection ||
       isTimeDifferenceSection ||
-      isBlogDetail ||
       isPrayerSection ||
       isCalculatorSection
       ),

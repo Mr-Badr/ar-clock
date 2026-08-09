@@ -26,11 +26,11 @@ const GULF_PAY_DATES_SLUGS = new Set([
 
 const CALCULATOR_LINKS = {
   // Islamic religious events
-  'ramadan':             { href: '/calculators/fasting',           title: 'حاسبة الصيام',           desc: 'ساعات الصيام وأوقات الإفطار في مدينتك طوال الشهر.' },
+  'ramadan':             { href: '/tools/health/fasting',           title: 'حاسبة الصيام',           desc: 'ساعات الصيام وأوقات الإفطار في مدينتك طوال الشهر.' },
   'eid-al-adha':         { href: '/tools/gulf-finance/aqiqah',    title: 'حاسبة العقيقة',          desc: 'احسب عدد الذبائح وتكلفتها التقديرية قبل العيد.' },
-  'day-of-arafa':        { href: '/calculators/fasting',          title: 'حاسبة الصيام',           desc: 'ساعات صيام يوم عرفة وأوقاته في أي مدينة.' },
+  'day-of-arafa':        { href: '/tools/health/fasting',          title: 'حاسبة الصيام',           desc: 'ساعات صيام يوم عرفة وأوقاته في أي مدينة.' },
   'first-dhul-hijjah':   { href: '/tools/gulf-finance/wasiyya',   title: 'حاسبة الوصية الشرعية',    desc: 'كم يجوز أن توصي من تركتك قبل موسم الحج.' },
-  'ashura':              { href: '/calculators/fasting',          title: 'حاسبة الصيام',           desc: 'ساعات صيام عاشوراء وأوقاته في مدينتك.' },
+  'ashura':              { href: '/tools/health/fasting',          title: 'حاسبة الصيام',           desc: 'ساعات صيام عاشوراء وأوقاته في مدينتك.' },
   // Salary / support payment events
   'salary-day-saudi':    { href: '/tools/gulf-finance',           title: 'حاسبات الرواتب الخليجية', desc: 'استكشف حاسبات الرواتب والمزايا في السعودية.' },
   'salary-day-uae':      { href: '/tools/gulf-finance/uae-end-of-service', title: 'نهاية الخدمة الإمارات', desc: 'احسب مكافأة نهاية خدمتك في الإمارات وفق قانون 2021.' },
@@ -45,7 +45,7 @@ const CALCULATOR_LINKS = {
   'uae-national-day':    { href: '/tools/gulf-finance/uae-end-of-service', title: 'نهاية الخدمة الإمارات', desc: 'احسب مكافأة نهاية خدمتك في الإمارات وفق قانون 2021.' },
   'kuwait-national-day': { href: '/tools/gulf-finance/annual-leave', title: 'حاسبة الإجازات',       desc: 'احسب أيام إجازتك المستحقة وفق قانون العمل الكويتي.' },
   // School-year events
-  'school-start-saudi': { href: '/calculators/saudi-school-calendar', title: 'التقويم الدراسي السعودي', desc: 'كل إجازات العام الدراسي 1448 في جدول واحد.' },
+  'school-start-saudi': { href: '/tools/education/saudi-school-calendar', title: 'التقويم الدراسي السعودي', desc: 'كل إجازات العام الدراسي 1448 في جدول واحد.' },
 };
 
 function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
@@ -106,7 +106,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
     });
   } else if (event?.category === 'school') {
     links.push({
-      href: '/calculators/gpa',
+      href: '/tools/education/gpa',
       title: 'حاسبة المعدل التراكمي',
       desc: 'احسب GPA وحوّله إلى نسبة مئوية بدقة.',
       cta: 'ابدأ الحاسبة',
@@ -122,7 +122,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
     });
   } else {
     links.push({
-      href: '/calculators',
+      href: '/tools',
       title: 'الحاسبات',
       desc: 'حاسبات مالية وصحية وتعليمية — كلها في مكان واحد.',
       cta: 'استعرض الحاسبات',

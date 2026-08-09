@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import {
+  AppWindow,
   Bug,
   Car,
   GraduationCap,
@@ -40,6 +41,7 @@ const CATEGORY_ICONS = {
   landscaping: Plant,
   cctv: VideoCamera,
   pools: Waves,
+  'aluminum-glass': AppWindow,
   health: Heartbeat,
   education: GraduationCap,
 };
@@ -71,7 +73,10 @@ const CATEGORIES = [
     // **2026-08-04, second pass**: added the eligibility checker + contract generator from the
     // same DECISION.md tool-priority list (✅checker → 🧮calculator → 📄generator) — both Gulf-wide
     // multi-country tools, bringing the total from 23 to 25.
-    toolCount: 25,
+    // **2026-08-05**: +3 — the Denmark/Canada/France diaspora payment-date tools were relocated
+    // here from the retired /calculators/* tree (own "مواعيد دفعات دولية" group, not counted as
+    // Gulf/Arab finance) as part of eliminating the /calculators URL prefix sitewide.
+    toolCount: 28,
   },
   {
     slug: 'construction',
@@ -86,7 +91,9 @@ const CATEGORIES = [
     // (MASONRY_UNITS_PER_M2) that had existed unused since the hub's original build).
     // Also 2026-08-04: build-cost went Gulf-wide (6-country selector, re-sourced cost_per_m2 for
     // all 6 GCC countries) — see keyword-research/construction-hub/DECISION.md §2.
-    toolCount: 9,
+    // 2026-08-09: +2 — the only 2 articles from the retired /blog section with real traffic
+    // (cement bags, rebar weight) migrated here as a new "المقالات" group; /blog deleted entirely.
+    toolCount: 11,
   },
   {
     slug: 'plumbing',
@@ -196,25 +203,43 @@ const CATEGORIES = [
     toolCount: 1,
   },
   {
+    slug: 'aluminum-glass',
+    name: 'الألومنيوم والزجاج',
+    description: 'أنواع الزجاج (سيكوريت، دبل جلاس، لامينيت)، ألوان الزجاج العاكس، ومقارنة الألومنيوم مع UPVC.',
+    // Deliberately single-page hub (2026-08-09) — real Keyword Planner data showed zero volume
+    // for every calculator/generator/converter-shaped phrase (weight, meterage, quotes, unit
+    // conversion). The real demand is decorative/comparison browsing (colors, types, framing
+    // material) — a buying-guide page, not a tool. See
+    // keyword-research/aluminum-glass/DECISION.md. Does NOT mean this category passed the full
+    // Hub Gate as a strategic calculator category — it's the minimal container for one page.
+    toolCount: 1,
+  },
+  {
     slug: 'health',
     name: 'الصحة والحمل والعمر',
     description: 'حاسبة الحمل وجدول تغذية الرضيع بالهجري والميلادي، وحاسبات العمر والوقت.',
     // Built 2026-08-04 to fix a real gap: these 11 tools (pregnancy/pregnancy-weeks/
     // weaning-schedule + the 8-tool age cluster) were already live but had ZERO hub card
-    // anywhere in /tools. bmi/calories/ovulation/fasting deliberately EXCLUDED after a real
-    // competitive audit found them dominated by webteb.com/altibbi.com/real hospitals/government
-    // health ministries — see keyword-research/health-education-hubs/DECISION.md.
-    toolCount: 11,
+    // anywhere in /tools. bmi/calories/ovulation/fasting were EXCLUDED from PROMOTION after a
+    // real competitive audit found them dominated by webteb.com/altibbi.com/real hospitals/
+    // government health ministries — see keyword-research/health-education-hubs/DECISION.md.
+    // **2026-08-05**: +6 — those 4 excluded tools plus date-add-subtract/hijri-birthday were
+    // relocated here from the retired /calculators/* tree (owner directive: no /calculators path
+    // at all) and listed in real groups for internal linking — a URL move, not new promotion.
+    toolCount: 17,
   },
   {
     slug: 'education',
     name: 'التعليم',
     description: 'التقويم الدراسي السعودي الكامل — بداية العام، كل الإجازات، وعد تنازلي حي.',
-    // Built 2026-08-04 alongside /tools/health, same root cause. Deliberately single-tool:
-    // gpa/gpa-to-percent/weighted-grade EXCLUDED after a competitive audit found them dominated
-    // by 9+ competitors incl. official university pages and a global calculator giant
-    // (rapidtables.org) — see keyword-research/health-education-hubs/DECISION.md.
-    toolCount: 1,
+    // Built 2026-08-04 alongside /tools/health, same root cause. Originally single-tool:
+    // gpa/gpa-to-percent/weighted-grade were EXCLUDED from PROMOTION after a competitive audit
+    // found them dominated by 9+ competitors incl. official university pages and a global
+    // calculator giant (rapidtables.org) — see keyword-research/health-education-hubs/DECISION.md.
+    // **2026-08-05**: +4 — those 3 tools plus standard-deviation were relocated here from the
+    // retired /calculators/* tree (owner directive: no /calculators path at all) and listed in a
+    // real "أدوات الطلاب" group for internal linking — a URL move, not new promotion.
+    toolCount: 5,
   },
 ];
 

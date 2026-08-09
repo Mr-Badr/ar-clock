@@ -19,10 +19,13 @@ function findRoute(slug) {
 // Built 2026-08-04 to fix a real, concrete gap: these tools were already live but had ZERO hub
 // card anywhere in /tools — undiscoverable by browsing, and the old /calculators/health hub-index
 // page was broken (seo:validate flagged it, unregistered in the sitemap manifest). Only tools
-// that survived a real competitive audit are listed here — see
+// that survived a real competitive audit are FEATURED here — see
 // keyword-research/health-education-hubs/DECISION.md for the full per-tool SERP check.
-// bmi/calories/ovulation are explicitly EXCLUDED (dominated by webteb.com/altibbi.com/real
-// hospitals/government health ministries — not winnable, no redesign investment planned).
+// bmi/calories/fasting/ovulation were EXCLUDED from featuring/new investment (dominated by
+// webteb.com/altibbi.com/real hospitals/government health ministries — not winnable), but per an
+// owner directive 2026-08-05 ("no /calculators path should exist at all") they were still
+// relocated here from the retired /calculators/* tree and listed in a real group below — that's
+// a URL/discoverability move, not a redesign/content investment decision.
 const FEATURED_SLUGS = ['weaning-schedule', 'pregnancy', 'hijri'];
 
 const TYPE_GROUPS = [
@@ -36,7 +39,13 @@ const TYPE_GROUPS = [
     code: 'age-time',
     name: 'العمر والوقت',
     note: 'العمر بالهجري والميلادي، وفرق العمر، وزوايا ممتعة — من صفحة واحدة واضحة.',
-    slugs: ['age-calculator', 'hijri', 'difference', 'birth-day', 'milestones', 'countdown', 'planets', 'retirement'],
+    slugs: ['age-calculator', 'hijri', 'difference', 'birth-day', 'milestones', 'countdown', 'planets', 'retirement', 'date-add-subtract', 'hijri-birthday'],
+  },
+  {
+    code: 'daily-health',
+    name: 'صحة يومية',
+    note: '',
+    slugs: ['bmi', 'calories', 'fasting', 'ovulation'],
   },
 ];
 

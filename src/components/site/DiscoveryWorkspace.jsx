@@ -121,9 +121,8 @@ const FAHRAS_CATEGORIES = [
   { cat: 'time',        emoji: '⏰', title: 'الوقت الآن',         desc: '196 دولة · ساعة حية',         href: '/time-now' },
   { cat: 'prayer',      emoji: '🕌', title: 'مواقيت الصلاة',      desc: '5 أوقات + اتجاه القبلة',       href: '/mwaqit-al-salat' },
   { cat: 'date',        emoji: '📅', title: 'التاريخ والتقويم',   desc: 'هجري · ميلادي · تحويل',        href: '/date' },
-  { cat: 'calculators', emoji: '🧮', title: 'الحاسبات',           desc: '58+ أداة مالية ومعيشية',        href: '/calculators' },
+  { cat: 'calculators', emoji: '🧮', title: 'الحاسبات',           desc: '58+ أداة مالية ومعيشية',        href: '/tools' },
   { cat: 'holidays',    emoji: '🎉', title: 'المناسبات والأعياد', desc: 'عداد تنازلي لكل مناسبة',        href: '/holidays' },
-  { cat: 'blog',        emoji: '📝', title: 'المدونة',            desc: 'مقالات وشروحات معمّقة',         href: '/blog' },
 ];
 
 function FahraCategoryHub() {

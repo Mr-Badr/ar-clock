@@ -7,11 +7,10 @@ import "./footer.css";
 
 const PRODUCT_LINKS = [
   { href: '/fahras', label: 'استكشف الصفحات' },
-  { href: '/blog', label: 'المدونة' },
   { href: '/mwaqit-al-salat', label: 'مواقيت الصلاة' },
   { href: '/time-now', label: 'الوقت الان' },
   { href: '/time-difference', label: 'فرق التوقيت' },
-  { href: '/calculators', label: 'الحاسبات' },
+  { href: '/tools', label: 'الحاسبات' },
   { href: '/holidays', label: 'المناسبات' },
   { href: '/countdown', label: 'عداد تنازلي' },
   { href: '/date', label: 'التاريخ والتحويل' },

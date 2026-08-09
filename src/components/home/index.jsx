@@ -39,7 +39,6 @@
  * ├── SectionTimeDifference.jsx — feature: time diff   (Image LEFT)
  * ├── SectionHolidays.jsx     — feature: holidays      (Image RIGHT)
  * ├── SectionStartHere.jsx    — guided entry paths after the hero
- * ├── SectionSEOArticle.jsx   — latest practical guides
  * ├── SectionCitiesGrid.jsx   — footer taxonomy links
  * ├── SectionFAQ.jsx          — 8 Q&A + FAQPage JSON-LD schema
  * └── index.jsx               ← YOU ARE HERE
@@ -53,7 +52,6 @@ import SectionPrayerTimes  from './SectionPrayerTimes'
 import SectionTimeDifference from './SectionTimeDifference'
 import SectionHolidays     from './SectionHolidays'
 import SectionCalculators  from './SectionCalculators'
-import SectionSEOArticle   from './SectionSEOArticle'
 import SectionCitiesGrid   from './SectionCitiesGrid'
 import SectionFAQ          from './SectionFAQ'
 import SectionTrustBar     from './SectionTrustBar'
@@ -84,8 +82,6 @@ export default function HomeSections() {
 
       <SectionCalculators />
 
-      <SectionSEOArticle />
-
       <SectionFAQ />
 
       {/* Multiplex at page bottom — maximum content depth, highest viewability */}
@@ -102,7 +98,6 @@ export { default as SectionPrayerTimes }   from './SectionPrayerTimes'
 export { default as SectionTimeDifference } from './SectionTimeDifference'
 export { default as SectionHolidays }      from './SectionHolidays'
 export { default as SectionCalculators }   from './SectionCalculators'
-export { default as SectionSEOArticle }    from './SectionSEOArticle'
 export { default as SectionCitiesGrid }    from './SectionCitiesGrid'
 export { default as SectionFAQ }           from './SectionFAQ'
 export { default as SectionTrustBar }      from './SectionTrustBar'

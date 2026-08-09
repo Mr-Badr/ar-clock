@@ -89,6 +89,13 @@ const COUNTRY_GROUPS = [
 // منافسة حقيقية مؤكدة (ahmedbouchefra.com يغطي CNSS/AMO/IR بالكامل، حاسبات متعددة أخرى). لا يوجد
 // محتوى مغربي آخر في هذا الـHub حالياً.
 
+// The 3 non-Arab diaspora payment-date tools (Denmark/Canada/France) were physically relocated
+// here from the retired /calculators/* tree 2026-08-05 (owner directive: no /calculators path at
+// all) — they still aren't Gulf/Arab finance, so kept in their OWN group rather than folded into
+// a country group above, but listed for a real internal link (helps crawl/indexing) rather than
+// left as an orphan page reachable only via the sitemap.
+const INTERNATIONAL_TOOLS_SLUGS = ['boernepenge-denmark', 'cgeb-canada', 'soldes-france'];
+
 // Tools whose calculation logic genuinely covers more than one country (a real dropdown/switch
 // in the tool itself). Full country list goes in the link's tooltip (with the description) —
 // the short `tag` is what shows inline in the list, per the mockup's plain dot-link-list (no
@@ -119,6 +126,30 @@ const SHARIA_TOOLS_SLUGS = ['wasiyya', 'iddah', 'aqiqah'];
 // vat/net-salary were removed (blacklisted duplicates) — replaced with the two strongest
 // confirmed-by-real-keyword-data tools instead.
 const FEATURED_SLUGS = ['end-of-service-benefits', 'article-77-compensation', 'traffic-fine-discount'];
+
+// Ported 2026-08-05 from the retired /calculators/finance hub-index page (a real, high-traffic
+// entry point per intent-pathways.ts and discovery.js's own search-priority list) rather than
+// simply discarded when that page was redirected here — this hub had no FAQ section of its own,
+// and these 4 questions are genuinely useful cross-tool guidance that doesn't belong on any
+// single tool's own page.
+const FAQ_ITEMS = [
+  {
+    question: 'أي حاسبة أفتح إذا انتهى عملي أو فُصلت من غير سابق إنذار؟',
+    answer: 'إذا انتهت مدة عقدك بشكل طبيعي، ابدأ بحاسبة مكافأة نهاية الخدمة لتعرف مستحقاتك. أما إذا أنهى صاحب العمل عقدك بدون سبب واضح، فراجع حاسبة تعويض المادة 77 — فهي مستحق منفصل تماماً يُضاف إلى مكافأتك، لا يحل محلها.',
+  },
+  {
+    question: 'هل هذه الحاسبات تخدم كل الدول العربية؟',
+    answer: 'حاسبة نهاية الخدمة السعودية، وتعويض المادة 77، وخصم المخالفات مبنية خصيصاً على النظام السعودي، لأن الدقة هنا تعتمد على معرفة القانون المحلي بالتفصيل. أما ضريبة الدخل والتأمينات في مصر والأردن والإمارات فلها حاسبتها الخاصة بنفس القدر من الدقة لكل دولة.',
+  },
+  {
+    question: 'كيف أعرف هل أستحق تعويض المادة 77 أصلاً؟',
+    answer: 'راجع أولاً سبب إنهاء عملك. إذا كان اتفاقاً كتابياً بينك وبين صاحب العمل، أو انتهاء عقد محدد المدة دون تجديد، أو بلوغك سن التقاعد، أو فصلاً تأديبياً مبرراً، فلا يوجد استحقاق. أما إذا أُنهي عقدك بدون سبب مشروع أو بدون اتباع إجراءات الإشعار الصحيحة، فافتح حاسبة تعويض المادة 77 مباشرة.',
+  },
+  {
+    question: 'لدي مخالفة مرورية، متى أفقد فرصة الخصم؟',
+    answer: 'لديك 45 يوماً من تاريخ تسجيل المخالفة للحصول على خصم 25% من قيمتها. بعد هذه المهلة يصبح المبلغ الكامل مستحقاً بدون خصم — تحقق من التاريخ في حاسبة خصم المخالفات قبل أن تفوّت الفرصة.',
+  },
+];
 
 export const metadata = buildCanonicalMetadata({
   title: 'حاسبات الرواتب ونهاية الخدمة في الخليج والدول العربية',
@@ -162,6 +193,7 @@ export default function GulfFinanceCategoryHubPage() {
     ...COUNTRY_GROUPS.flatMap((g) => g.slugs),
     ...MULTI_COUNTRY_TOOLS.map((t) => t.slug),
     ...SHARIA_TOOLS_SLUGS,
+    ...INTERNATIONAL_TOOLS_SLUGS,
   ]);
   const toolCount = allListedSlugs.size;
   const countryCount = COUNTRY_GROUPS.length;
@@ -194,11 +226,21 @@ export default function GulfFinanceCategoryHubPage() {
       }),
     },
   };
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQ_ITEMS.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  };
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-gulf-finance-hub" />
 
@@ -277,8 +319,30 @@ export default function GulfFinanceCategoryHubPage() {
               ))}
             </ul>
           </div>
+
+          <div className="tool-v2-type-group">
+            <h2>مواعيد دفعات دولية</h2>
+            <p className="tool-v2-type-group-note">أنظمة دعم ومواعيد رسمية خارج الخليج والعالم العربي.</p>
+            <ul className="tool-v2-tool-link-list">
+              {INTERNATIONAL_TOOLS_SLUGS.map((slug) => (
+                <ToolLink key={slug} slug={slug} />
+              ))}
+            </ul>
+          </div>
         </div>
         </TooltipProvider>
+
+        <div className="tool-v2-type-group">
+          <h2>أسئلة قبل اختيار حاسبة مالية</h2>
+          <div className="tool-v2-faq">
+            {FAQ_ITEMS.map((item, index) => (
+              <details key={item.question} open={index === 0}>
+                <summary>{item.question}<svg className="tool-v2-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></summary>
+                <p>{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
       </div>
     </main>
   );

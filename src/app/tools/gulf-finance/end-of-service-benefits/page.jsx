@@ -338,8 +338,8 @@ export default async function EndOfServiceBenefitsToolPage() {
             <p>
               الحاسبة مصممة للسرعة والفهم الأولي، لكن النص الرسمي هو المرجع النهائي في أي نزاع أو
               حالة استثنائية. إذا كانت النتيجة مرتبطة بتسوية فعلية أو خلاف على مدة الخدمة أو الأجر،
-              فابدأ بـ<a href="https://www.hrsd.gov.sa/en/ministry-services/services/end-service-benefit-calculator" target="_blank" rel="noreferrer">حاسبة منصة قوى</a> (وزارة الموارد البشرية) و<a href="https://www.hrsd.gov.sa/en/knowledge-centre/%D9%86%D8%B8%D8%A7%D9%85-%D8%A7%D9%84%D8%B9%D9%85%D9%84" target="_blank" rel="noreferrer">نص نظام العمل</a>، ثم استخدم{' '}
-              <Link href="/calculators/monthly-installment">حاسبة القسط الشهري</Link> للتخطيط بعد
+              فابدأ بـ<a href="https://www.hrsd.gov.sa/en/ministry-services/services/end-service-benefit-calculator" target="_blank" rel="noreferrer">حاسبة منصة قوى</a> (وزارة الموارد البشرية) و<a href="https://www.hrsd.gov.sa/en/knowledge-centre/%D9%86%D8%B8%D8%A7%D9%85-%D8%A7%D9%84%D8%B9%D9%85%D9%84" target="_blank" rel="noreferrer">نص نظام العمل</a>، ثم راجع{' '}
+              <Link href="/tools/gulf-finance">حاسبات المال والعمل</Link> للتخطيط بعد
               نهاية العمل.
             </p>
           </section>

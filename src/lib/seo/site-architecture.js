@@ -48,6 +48,13 @@ export const ROOT_SITEMAP_ROUTES = Object.freeze(dedupeRoutes([
   { path: '/holidays/country/yemen', priority: 0.85, changeFrequency: 'daily', websitePart: true },
   { path: '/holidays/country/palestine', priority: 0.85, changeFrequency: 'daily', websitePart: true },
   { path: '/holidays/country/lebanon', priority: 0.88, changeFrequency: 'daily', websitePart: true },
+  // uk/netherlands/spain found missing from this list 2026-08-09 — real pages
+  // (COUNTRY_HUBS in country-hub-data.js has 26 entries, generateStaticParams prerenders all of
+  // them, but only 23 were ever registered here) — added while wiring the new /holidays
+  // country-selector section, which links to all 26.
+  { path: '/holidays/country/uk', priority: 0.86, changeFrequency: 'daily', websitePart: true },
+  { path: '/holidays/country/netherlands', priority: 0.86, changeFrequency: 'daily', websitePart: true },
+  { path: '/holidays/country/spain', priority: 0.86, changeFrequency: 'daily', websitePart: true },
   { path: '/time-difference', priority: 0.9, changeFrequency: 'daily', websitePart: true },
   { path: '/time-difference/converter', priority: 0.87, changeFrequency: 'weekly', websitePart: true },
   { path: '/date', priority: 0.9, changeFrequency: 'daily', websitePart: true },
@@ -59,15 +66,12 @@ export const ROOT_SITEMAP_ROUTES = Object.freeze(dedupeRoutes([
   { path: '/date/calendar', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
   { path: '/date/calendar/hijri', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
   { path: '/date/country', priority: 0.84, changeFrequency: 'weekly', websitePart: true },
-  { path: '/calculators', priority: 0.9, changeFrequency: 'weekly', websitePart: true },
-  { path: '/calculators/finance', priority: 0.88, changeFrequency: 'weekly', websitePart: true },
   { path: '/tools/sleep', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
   { path: '/tools/personal-finance', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
   ...ALL_CALCULATOR_SEO_ROUTES.map((route) => ({
     ...route,
     websitePart: route.websitePart ?? true,
   })),
-  { path: '/blog', priority: 0.82, changeFrequency: 'weekly', websitePart: true },
   { path: '/about', priority: 0.44, changeFrequency: 'monthly', websitePart: true },
   { path: '/editorial-policy', priority: 0.44, changeFrequency: 'monthly', websitePart: true },
   { path: '/author/badr', priority: 0.42, changeFrequency: 'monthly', websitePart: true },
@@ -90,8 +94,6 @@ export const WEBSITE_ARCHITECTURE_PATHS = Object.freeze(
 
 export const SITEMAP_INDEX_PATHS = Object.freeze([
   '/sitemap.xml',
-  '/calculators/sitemap.xml',
-  '/blog/sitemap.xml',
   '/holidays/sitemap.xml',
   '/time-difference/sitemap.xml',
   '/time-now/sitemap.xml',
@@ -111,13 +113,6 @@ const FEATURE_ROUTE_FAMILIES = Object.freeze([
     exactPaths: ROOT_SITEMAP_PATHS,
     prefixPaths: [],
     crawlScope: 'architecture',
-  },
-  {
-    id: 'blog',
-    label: 'Blog and articles',
-    exactPaths: ['/blog'],
-    prefixPaths: ['/blog/'],
-    crawlScope: 'full',
   },
   {
     id: 'holidays',
@@ -162,10 +157,10 @@ const FEATURE_ROUTE_FAMILIES = Object.freeze([
     crawlScope: 'mixed-static-country-calendar',
   },
   {
-    id: 'calculators',
-    label: 'Calculators',
-    exactPaths: ['/calculators'],
-    prefixPaths: ['/calculators/'],
+    id: 'tools',
+    label: 'Tools',
+    exactPaths: ['/tools'],
+    prefixPaths: ['/tools/'],
     crawlScope: 'full',
   },
   {

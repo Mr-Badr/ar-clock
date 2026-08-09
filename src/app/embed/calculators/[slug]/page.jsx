@@ -17,11 +17,13 @@
 
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
-// The real calculator pages get this via `src/app/calculators/layout.jsx` —
-// this embed route lives outside that route tree entirely, so without this
-// direct import every calculator renders completely unstyled (broken grids,
-// overflowing RTL text) inside the iframe.
-import '@/app/calculators/calculators.css';
+// Old-design (calc-esb-*/calc-*) embeddable calculators need this shared stylesheet — it used
+// to live at src/app/calculators/calculators.css and load automatically via that route tree's
+// own layout.jsx, but that whole tree was retired 2026-08-05 (no /calculators path left at all),
+// so the file moved to a neutral shared location and this embed route (which lives outside any
+// calculator route tree) needs the direct import to avoid rendering completely unstyled inside
+// the iframe (broken grids, overflowing RTL text).
+import '@/app/styles/calculators.css';
 // v2-redesigned calculators (end-of-service-benefits, uae-end-of-service, ...) use
 // .tool-v2-* classes, not the old calc-* system above — without this import, their embedded
 // widgets render completely unstyled inside the iframe (found while migrating UAE
@@ -53,7 +55,7 @@ export const metadata = {
 // the real calculator page to be discoverable (see calculator page.jsx files).
 const EMBEDDABLE_CALCULATORS = {
   age: { Component: AgeCalculatorTool, props: { compact: true }, title: 'حاسبة العمر', fullPageHref: '/tools/health/age-calculator' },
-  bmi: { Component: BMICalculator, title: 'حاسبة مؤشر كتلة الجسم', fullPageHref: '/calculators/bmi' },
+  bmi: { Component: BMICalculator, title: 'حاسبة مؤشر كتلة الجسم', fullPageHref: '/tools/health/bmi' },
   'end-of-service-benefits': {
     Component: EndOfServiceCalculator,
     title: 'حاسبة مكافأة نهاية الخدمة',

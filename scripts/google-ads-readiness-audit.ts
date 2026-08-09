@@ -86,19 +86,19 @@ const LANDING_PAGES: LandingPageCheck[] = [
     requiredTerms: ['تحويل', 'هجري', 'ميلادي'],
   },
   {
-    path: '/calculators/monthly-installment',
+    path: '/tools/gulf-finance',
     intent: 'حاسبة القسط الشهري',
     kind: 'tool',
     requiredTerms: ['القسط', 'الشهري', 'حاسبة'],
   },
   {
-    path: '/calculators/vat',
+    path: '/tools/gulf-finance',
     intent: 'حاسبة ضريبة القيمة المضافة',
     kind: 'tool',
     requiredTerms: ['ضريبة', 'القيمة المضافة', 'حاسبة'],
   },
   {
-    path: '/calculators/personal-finance/emergency-fund',
+    path: '/tools/personal-finance/emergency-fund',
     intent: 'حاسبة صندوق الطوارئ',
     kind: 'tool',
     requiredTerms: ['الطوارئ', 'الادخار', 'حاسبة'],

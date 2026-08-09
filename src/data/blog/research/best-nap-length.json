@@ -21,8 +21,8 @@
     "targetWordCount": "1500-2300 words after rendered model expansion",
     "cta": "استخدام حاسبة القيلولة ثم مراجعة مدة النوم الفعلية إذا كانت القيلولة ضرورة يومية",
     "relatedTools": [
-      "/calculators/sleep/nap-calculator",
-      "/calculators/sleep/sleep-duration",
+      "/tools/sleep/nap-calculator",
+      "/tools/sleep/sleep-duration",
       "/blog/sleep-hygiene-basics",
       "/blog/sleep-debt-explained"
     ]

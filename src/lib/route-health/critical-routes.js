@@ -8,14 +8,25 @@ const currentGregorianDatePath = [
 
 export const CRITICAL_ROUTE_PROBES = Object.freeze([
   { id: 'home', path: '/', label: 'Home' },
-  { id: 'blog-hub', path: '/blog', label: 'Blog hub' },
-  { id: 'blog-article', path: '/blog/best-nap-length', label: 'Blog article' },
+  {
+    // /blog retired entirely 2026-08-09 (real traffic was 0 except 2 articles, migrated below).
+    // This probe replaces the old 'blog-article' one, which had pointed at
+    // /blog/best-nap-length — a path that never actually existed (the standalone sleep-guides
+    // content system was dropped 2026-08-04 leaving SLEEP_GUIDES empty), so this health check
+    // had been silently failing against a 404 the whole time.
+    id: 'construction-article',
+    path: '/tools/construction/how-many-cement-bags-do-i-need',
+    label: 'Construction article (migrated from /blog)',
+    minimumBodyBytes: 10000,
+    requiredMarkers: ['كم كيس أسمنت أحتاج'],
+    forbiddenMarkers: ['content="noindex'],
+  },
   {
     id: 'calculators-hub',
-    path: '/calculators',
+    path: '/tools',
     label: 'Calculators hub',
     minimumBodyBytes: 10000,
-    requiredMarkers: ['حاسبات عربية تجيب عن سؤالك مباشرة', '/tools/health', '/tools/gulf-finance/domestic-worker-cost'],
+    requiredMarkers: ['كل الحاسبات في مكان واحد', '/tools/health', '/tools/gulf-finance'],
     forbiddenMarkers: ['content="noindex'],
   },
   {

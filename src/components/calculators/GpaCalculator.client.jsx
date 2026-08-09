@@ -1,10 +1,9 @@
 "use client";
 
 import { useMemo, useState } from 'react';
-import { GraduationCap, Plus, Trash } from '@phosphor-icons/react';
+import { GraduationCap, Plus, ShareNetwork, Trash } from '@phosphor-icons/react';
+import { toast } from 'sonner';
 
-import { Label } from '@/components/ui/label';
-import ResultActions from '@/components/calculators/ResultActions.client';
 import {
   calculateGpa,
   calculateCumulativeGpa,
@@ -14,15 +13,23 @@ import {
 } from '@/lib/calculators/gpa';
 
 const SYSTEM_IDS = ['scale5', 'scale4', 'scale100', 'scale20', 'scale10'];
-
-function emptySubject(id) {
-  return { id, name: '', grade: '', hours: 3 };
-}
+const TABS = [
+  { id: 'semester', label: 'معدل الفصل' },
+  { id: 'cumulative', label: 'التراكمي' },
+  { id: 'plan', label: 'خطة رفع المعدل' },
+];
 
 let _nextId = 1;
-
 function uid() {
   return _nextId++;
+}
+
+async function shareResult(title, text) {
+  if (navigator.share) {
+    try { await navigator.share({ title, text }); return; } catch { /* cancelled */ }
+  }
+  try { await navigator.clipboard.writeText(text); toast.success('تم نسخ النتيجة إلى الحافظة'); }
+  catch { toast.error('تعذر نسخ النتيجة'); }
 }
 
 export default function GpaCalculator() {
@@ -32,7 +39,7 @@ export default function GpaCalculator() {
     { id: uid(), name: 'المادة 2', grade: '', hours: 3 },
     { id: uid(), name: 'المادة 3', grade: '', hours: 2 },
   ]);
-  const [tab, setTab] = useState('semester'); // 'semester' | 'cumulative' | 'plan'
+  const [tab, setTab] = useState('semester');
   const [priorGpa, setPriorGpa] = useState('');
   const [priorHours, setPriorHours] = useState('');
   const [targetGpa, setTargetGpa] = useState('');
@@ -40,11 +47,7 @@ export default function GpaCalculator() {
 
   const system = GPA_SYSTEMS[systemId];
 
-  const semResult = useMemo(
-    () => calculateGpa(subjects, systemId),
-    [subjects, systemId],
-  );
-
+  const semResult = useMemo(() => calculateGpa(subjects, systemId), [subjects, systemId]);
   const classification = useMemo(
     () => (semResult.isValid ? getGpaClassification(semResult.gpa, systemId) : null),
     [semResult, systemId],
@@ -74,11 +77,9 @@ export default function GpaCalculator() {
   function updateSubject(id, field, value) {
     setSubjects((prev) => prev.map((s) => (s.id === id ? { ...s, [field]: value } : s)));
   }
-
   function addSubject() {
     setSubjects((prev) => [...prev, { id: uid(), name: `المادة ${prev.length + 1}`, grade: '', hours: 3 }]);
   }
-
   function removeSubject(id) {
     setSubjects((prev) => prev.filter((s) => s.id !== id));
   }
@@ -88,285 +89,128 @@ export default function GpaCalculator() {
     : '';
 
   return (
-    <div className="calc-app gpa-tool" aria-label="حاسبة المعدل التراكمي GPA">
-
-      {/* System selector */}
-      <div className="gpa-system-row">
-        {SYSTEM_IDS.map((sid) => (
-          <button
-            key={sid}
-            type="button"
-            className={`chip calc-chip-button${systemId === sid ? ' is-active' : ''}`}
-            onClick={() => setSystemId(sid)}
-          >
-            {GPA_SYSTEMS[sid].label}
-          </button>
-        ))}
+    <div aria-label="حاسبة المعدل التراكمي GPA">
+      <div className="tool-v2-panel-head">
+        <span className="tool-v2-country-badge"><GraduationCap size={14} weight="bold" /> المعدل GPA <span className="tool-v2-live-dot" aria-hidden="true" /></span>
       </div>
 
-      {/* Tab selector */}
-      <div className="gpa-tab-row">
-        {[
-          { id: 'semester',   label: 'معدل الفصل' },
-          { id: 'cumulative', label: 'التراكمي' },
-          { id: 'plan',       label: 'خطة رفع المعدل' },
-        ].map((t) => (
-          <button
-            key={t.id}
-            type="button"
-            className={`gpa-tab${tab === t.id ? ' is-active' : ''}`}
-            onClick={() => setTab(t.id)}
-          >
-            {t.label}
-          </button>
-        ))}
+      <div className="tool-v2-field">
+        <label>نظام المعدل</label>
+        <div className="tool-v2-option-list tool-v2-option-list--grid" role="group" aria-label="نظام المعدل">
+          {SYSTEM_IDS.map((sid) => (
+            <button key={sid} type="button" className={`tool-v2-chip${systemId === sid ? ' is-active' : ''}`} onClick={() => setSystemId(sid)}>{GPA_SYSTEMS[sid].label}</button>
+          ))}
+        </div>
       </div>
 
-      <div className="calc-esb-layout">
+      <div className="tool-v2-field">
+        <label>نوع الحساب</label>
+        <div className="tool-v2-option-list tool-v2-option-list--grid" role="group" aria-label="نوع الحساب">
+          {TABS.map((t) => (
+            <button key={t.id} type="button" className={`tool-v2-chip${tab === t.id ? ' is-active' : ''}`} onClick={() => setTab(t.id)}>{t.label}</button>
+          ))}
+        </div>
+      </div>
 
-        {/* ── LEFT: Subject table ─────────────────── */}
-        <div className="calc-esb-form-col">
-          <div className="calc-surface-card calc-esb-form-card">
-            <div className="calc-esb-form-body">
-
-              <div className="calc-esb-field">
-                <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">1</span>
-                  <Label>مواد الفصل</Label>
-                </div>
-
-                {/* Subject rows */}
-                <div className="gpa-subjects-list">
-                  {/* Header */}
-                  <div className="gpa-subject-row gpa-subject-header">
-                    <span className="gpa-col-name">المادة</span>
-                    <span className="gpa-col-grade">الدرجة / من {system.max}</span>
-                    <span className="gpa-col-hours">ساعات</span>
-                    <span className="gpa-col-del" />
-                  </div>
-
-                  {subjects.map((s) => (
-                    <div key={s.id} className="gpa-subject-row">
-                      <input
-                        type="text"
-                        className="gpa-input gpa-col-name"
-                        value={s.name}
-                        placeholder="اسم المادة"
-                        onChange={(e) => updateSubject(s.id, 'name', e.target.value)}
-                        dir="rtl"
-                      />
-                      <input
-                        type="number"
-                        inputMode="decimal"
-                        className="gpa-input gpa-col-grade"
-                        value={s.grade}
-                        placeholder={`0–${system.max}`}
-                        min="0"
-                        max={system.max}
-                        step={systemId === 'scale100' ? '1' : '0.25'}
-                        onChange={(e) => updateSubject(s.id, 'grade', e.target.value)}
-                        dir="ltr"
-                      />
-                      <input
-                        type="number"
-                        inputMode="numeric"
-                        className="gpa-input gpa-col-hours"
-                        value={s.hours}
-                        placeholder="3"
-                        min="1"
-                        max="6"
-                        onChange={(e) => updateSubject(s.id, 'hours', e.target.value)}
-                        dir="ltr"
-                      />
-                      <button
-                        type="button"
-                        className="gpa-del-btn gpa-col-del"
-                        onClick={() => removeSubject(s.id)}
-                        disabled={subjects.length <= 1}
-                        aria-label="احذف المادة"
-                      >
-                        <Trash size={14} />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-
-                <button type="button" className="gpa-add-btn" onClick={addSubject}>
-                  <Plus size={14} weight="bold" />
-                  أضف مادة
-                </button>
+      <div className="tool-v2-field">
+        <label>مواد الفصل</label>
+        <div className="tool-v2-rebar-rows">
+          {subjects.map((s, idx) => (
+            <div key={s.id} className="tool-v2-rebar-row--3col">
+              <div className="tool-v2-rebar-row-field">
+                <label htmlFor={`gpa-name-${s.id}`}>المادة</label>
+                <input id={`gpa-name-${s.id}`} value={s.name} placeholder={`مادة ${idx + 1}`} onChange={(e) => updateSubject(s.id, 'name', e.target.value)} />
               </div>
-
-              {/* Cumulative / plan inputs */}
-              {(tab === 'cumulative' || tab === 'plan') && (
-                <div className="calc-esb-field calc-esb-field--sep">
-                  <div className="calc-esb-field-label">
-                    <span className="calc-esb-step">2</span>
-                    <Label>المعدل التراكمي السابق</Label>
-                  </div>
-                  <div className="gpa-prior-row">
-                    <div>
-                      <Label htmlFor="gpa-prior" className="calc-hint">المعدل الحالي</Label>
-                      <input
-                        id="gpa-prior"
-                        type="number"
-                        inputMode="decimal"
-                        className="gpa-input gpa-input--sm"
-                        value={priorGpa}
-                        placeholder={`0–${system.max}`}
-                        min="0"
-                        max={system.max}
-                        step="0.01"
-                        onChange={(e) => setPriorGpa(e.target.value)}
-                        dir="ltr"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="gpa-prior-hours" className="calc-hint">ساعات مجتازة</Label>
-                      <input
-                        id="gpa-prior-hours"
-                        type="number"
-                        inputMode="numeric"
-                        className="gpa-input gpa-input--sm"
-                        value={priorHours}
-                        placeholder="80"
-                        min="0"
-                        onChange={(e) => setPriorHours(e.target.value)}
-                        dir="ltr"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {tab === 'plan' && (
-                <div className="calc-esb-field">
-                  <div className="calc-esb-field-label">
-                    <span className="calc-esb-step">3</span>
-                    <Label>هدف المعدل والساعات القادمة</Label>
-                  </div>
-                  <div className="gpa-prior-row">
-                    <div>
-                      <Label htmlFor="gpa-target" className="calc-hint">المعدل المستهدف</Label>
-                      <input
-                        id="gpa-target"
-                        type="number"
-                        inputMode="decimal"
-                        className="gpa-input gpa-input--sm"
-                        value={targetGpa}
-                        placeholder={`${system.max}`}
-                        min="0"
-                        max={system.max}
-                        step="0.01"
-                        onChange={(e) => setTargetGpa(e.target.value)}
-                        dir="ltr"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="gpa-planned-hours" className="calc-hint">ساعات الفصل القادم</Label>
-                      <input
-                        id="gpa-planned-hours"
-                        type="number"
-                        inputMode="numeric"
-                        className="gpa-input gpa-input--sm"
-                        value={plannedHours}
-                        placeholder="12"
-                        min="1"
-                        onChange={(e) => setPlannedHours(e.target.value)}
-                        dir="ltr"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-
+              <div className="tool-v2-rebar-row-field">
+                <label htmlFor={`gpa-grade-${s.id}`}>الدرجة / {system.max}</label>
+                <input id={`gpa-grade-${s.id}`} type="number" inputMode="decimal" min="0" max={system.max} step={systemId === 'scale100' ? '1' : '0.25'} value={s.grade} placeholder={`0–${system.max}`} onChange={(e) => updateSubject(s.id, 'grade', e.target.value)} />
+              </div>
+              <div className="tool-v2-rebar-row-field">
+                <label htmlFor={`gpa-hours-${s.id}`}>ساعات</label>
+                <input id={`gpa-hours-${s.id}`} type="number" inputMode="numeric" min="1" max="6" value={s.hours} placeholder="3" onChange={(e) => updateSubject(s.id, 'hours', e.target.value)} />
+              </div>
+              <button type="button" className="tool-v2-rebar-row-remove" onClick={() => removeSubject(s.id)} disabled={subjects.length <= 1} aria-label="احذف المادة">
+                <Trash size={16} />
+              </button>
             </div>
+          ))}
+        </div>
+        <button type="button" className="tool-v2-add-row-btn" onClick={addSubject}>
+          <Plus size={16} weight="bold" /> أضف مادة
+        </button>
+      </div>
+
+      {(tab === 'cumulative' || tab === 'plan') && (
+        <div className="tool-v2-field-row-pair">
+          <div className="tool-v2-field">
+            <label htmlFor="gpa-prior">المعدل التراكمي الحالي</label>
+            <input id="gpa-prior" type="number" inputMode="decimal" min="0" max={system.max} step="0.01" value={priorGpa} placeholder={`0–${system.max}`} onChange={(e) => setPriorGpa(e.target.value)} />
+          </div>
+          <div className="tool-v2-field">
+            <label htmlFor="gpa-prior-hours">ساعات مجتازة</label>
+            <input id="gpa-prior-hours" type="number" inputMode="numeric" min="0" value={priorHours} placeholder="80" onChange={(e) => setPriorHours(e.target.value)} />
           </div>
         </div>
+      )}
 
-        {/* ── RIGHT: Result ───────────────────────── */}
-        <div className="calc-esb-result-col">
-
-          {!semResult.isValid && (
-            <div className="calc-esb-empty-state">
-              <GraduationCap size={36} weight="duotone" />
-              <p>أدخل درجات مواد الفصل لحساب معدلك.</p>
-            </div>
-          )}
-
-          {semResult.isValid && (
-            <div className="calc-esb-result-panel gpa-result" aria-live="polite">
-              <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--bh">🎓 المعدل GPA</span>
-                <span className="calc-esb-live-dot gpa-live-dot" aria-hidden="true" />
-              </div>
-
-              {/* Semester GPA */}
-              <div className="calc-esb-amount-hero">
-                <span className="calc-esb-amount-label">معدل الفصل GPA</span>
-                <div className={`calc-esb-amount-value gpa-value--${classification?.level ?? 'very-good'}`}>
-                  {semResult.gpa.toFixed(2)}
-                  <span className="gpa-result-max">/ {system.max}</span>
-                </div>
-                {classification && (
-                  <div className="calc-esb-amount-meta">
-                    <span className={`gpa-class-badge gpa-class-badge--${classification.level}`}>
-                      {classification.label} · {classification.labelEn}
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              {/* Details */}
-              <div className="calc-esb-breakdown">
-                <div className="calc-esb-brow">
-                  <span>إجمالي الساعات المعتمدة</span>
-                  <strong>{semResult.totalHours} ساعة</strong>
-                </div>
-                <div className="calc-esb-brow">
-                  <span>المواد المحسوبة</span>
-                  <strong>{subjects.filter((s) => s.grade !== '' && !isNaN(parseFloat(s.grade))).length} مادة</strong>
-                </div>
-
-                {/* Cumulative GPA (if prior entered) */}
-                {tab === 'cumulative' && cumulativeGpa != null && (
-                  <div className="calc-esb-brow calc-esb-brow--total">
-                    <span>المعدل التراكمي (CGPA)</span>
-                    <strong className={cumulativeClass?.level ? `gpa-value--${cumulativeClass.level}` : ''}>
-                      {cumulativeGpa.toFixed(2)} / {system.max}
-                      {cumulativeClass ? ` · ${cumulativeClass.label}` : ''}
-                    </strong>
-                  </div>
-                )}
-
-                {/* Plan result */}
-                {tab === 'plan' && planResult && (
-                  <div
-                    className={`calc-esb-brow calc-esb-brow--total ${planResult.isAchievable && planResult.required <= system.max ? 'calc-esb-brow--success' : 'calc-esb-brow--error'}`}
-                  >
-                    <span>الدرجة المطلوبة في الفصل القادم</span>
-                    <strong>
-                      {planResult.required <= 0
-                        ? 'تحقق المعدل بالفعل!'
-                        : planResult.required > system.max
-                        ? `غير ممكن (${planResult.required.toFixed(2)} > ${system.max})`
-                        : `${planResult.required.toFixed(2)} / ${system.max}`}
-                    </strong>
-                  </div>
-                )}
-              </div>
-
-              <ResultActions
-                copyText={shareText}
-                shareTitle="معدلي التراكمي GPA"
-                shareText={shareText}
-              />
-
-            </div>
-          )}
-
+      {tab === 'plan' && (
+        <div className="tool-v2-field-row-pair">
+          <div className="tool-v2-field">
+            <label htmlFor="gpa-target">المعدل المستهدف</label>
+            <input id="gpa-target" type="number" inputMode="decimal" min="0" max={system.max} step="0.01" value={targetGpa} placeholder={`${system.max}`} onChange={(e) => setTargetGpa(e.target.value)} />
+          </div>
+          <div className="tool-v2-field">
+            <label htmlFor="gpa-planned-hours">ساعات الفصل القادم</label>
+            <input id="gpa-planned-hours" type="number" inputMode="numeric" min="1" value={plannedHours} placeholder="12" onChange={(e) => setPlannedHours(e.target.value)} />
+          </div>
         </div>
-      </div>
+      )}
+
+      {semResult.isValid ? (
+        <div aria-live="polite">
+          <div className="tool-v2-result-hero">
+            <span className="tool-v2-result-label">معدل الفصل GPA</span>
+            <div className="tool-v2-result-value">{semResult.gpa.toFixed(2)} / {system.max}</div>
+            {classification ? <div className="tool-v2-result-meta">{classification.label} · {classification.labelEn}</div> : null}
+          </div>
+
+          <div className="tool-v2-breakdown-list">
+            <div className="tool-v2-breakdown-row"><span className="tool-v2-breakdown-label">إجمالي الساعات المعتمدة</span><span className="tool-v2-breakdown-value">{semResult.totalHours} ساعة</span></div>
+            <div className="tool-v2-breakdown-row"><span className="tool-v2-breakdown-label">المواد المحسوبة</span><span className="tool-v2-breakdown-value">{subjects.filter((s) => s.grade !== '' && !isNaN(parseFloat(s.grade))).length} مادة</span></div>
+
+            {tab === 'cumulative' && cumulativeGpa != null && (
+              <div className="tool-v2-breakdown-row">
+                <span className="tool-v2-breakdown-label">المعدل التراكمي (CGPA)</span>
+                <span className="tool-v2-breakdown-value">{cumulativeGpa.toFixed(2)} / {system.max}{cumulativeClass ? ` · ${cumulativeClass.label}` : ''}</span>
+              </div>
+            )}
+
+            {tab === 'plan' && planResult && (
+              <div className="tool-v2-breakdown-row">
+                <span className="tool-v2-breakdown-label">الدرجة المطلوبة في الفصل القادم</span>
+                <span className="tool-v2-breakdown-value">
+                  {planResult.required <= 0
+                    ? 'تحقق المعدل بالفعل!'
+                    : planResult.required > system.max
+                      ? `غير ممكن (${planResult.required.toFixed(2)} > ${system.max})`
+                      : `${planResult.required.toFixed(2)} / ${system.max}`}
+                </span>
+              </div>
+            )}
+          </div>
+
+          <div className="tool-v2-action-row">
+            <button type="button" className="tool-v2-action-btn is-primary" onClick={() => shareResult('معدلي التراكمي GPA', shareText)}>
+              <ShareNetwork size={18} weight="bold" /> مشاركة
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="tool-v2-empty-state">
+          <GraduationCap size={28} weight="duotone" />
+          <p>أدخل درجات مواد الفصل لحساب معدلك.</p>
+        </div>
+      )}
     </div>
   );
 }

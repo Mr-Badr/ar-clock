@@ -1,7 +1,10 @@
 "use client";
 
 import { useMemo, useState } from 'react';
-import { Buildings, Warning } from '@phosphor-icons/react';
+import { Buildings, ShareNetwork, Warning } from '@phosphor-icons/react';
+import { toast } from 'sonner';
+
+import CountryFlag from '@/components/shared/CountryFlag';
 import {
   ACTIVITY_TYPES,
   JURISDICTION_TYPES,
@@ -9,25 +12,25 @@ import {
   VISA_COUNTS,
   estimateDubaiCompanySetup,
 } from '@/lib/calculators/dubai-company-setup';
-import {
-  CalcSelectTrigger as SelectTrigger,
-} from '@/components/calculators/controls.client';
-import ResultActions from '@/components/calculators/ResultActions.client';
-import { Card, CardContent } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
-import CountryFlag from '@/components/shared/CountryFlag';
 
 function fmt(n) {
   return Math.round(n).toLocaleString('ar-AE-u-nu-latn');
 }
 
+async function shareResult(title, text) {
+  if (navigator.share) {
+    try { await navigator.share({ title, text }); return; } catch { /* cancelled */ }
+  }
+  try { await navigator.clipboard.writeText(text); toast.success('تم نسخ النتيجة إلى الحافظة'); }
+  catch { toast.error('تعذر نسخ النتيجة'); }
+}
+
 export default function DubaiCompanySetupCalculator() {
   const [jurisdiction, setJurisdiction] = useState('mainland');
-  const [activity,     setActivity]     = useState('services');
-  const [visaCount,    setVisaCount]    = useState('1');
-  const [officeType,   setOfficeType]   = useState('flexi');
-  const [foreignName,  setForeignName]  = useState(false);
+  const [activity, setActivity] = useState('services');
+  const [visaCount, setVisaCount] = useState('1');
+  const [officeType, setOfficeType] = useState('flexi');
+  const [foreignName, setForeignName] = useState(false);
 
   const result = useMemo(
     () => estimateDubaiCompanySetup({ jurisdiction, activity, visaCount, officeType, foreignName }),
@@ -39,178 +42,98 @@ export default function DubaiCompanySetupCalculator() {
     : '';
 
   return (
-    <div className="calc-app dubai-setup-tool" aria-label="حاسبة تكلفة تأسيس شركة في دبي">
-      <div className="calc-esb-layout">
-
-        {/* ── FORM ─────────────────────────────────── */}
-        <div className="calc-esb-form-col">
-          <Card className="calc-surface-card calc-esb-form-card">
-            <CardContent className="calc-esb-form-body">
-
-              {/* Jurisdiction */}
-              <div className="calc-esb-field">
-                <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">1</span>
-                  <Label>نوع الجهة</Label>
-                </div>
-                <div className="ci-coverage-tabs">
-                  {JURISDICTION_TYPES.map((j) => (
-                    <button
-                      key={j.value}
-                      className={`ci-coverage-tab${jurisdiction === j.value ? ' is-active' : ''}`}
-                      onClick={() => setJurisdiction(j.value)}
-                      type="button"
-                    >
-                      <span className="ci-tab-label">{j.label}</span>
-                      <span className="ci-tab-sub">{j.description}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Activity */}
-              <div className="calc-esb-field">
-                <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">2</span>
-                  <Label>نوع النشاط</Label>
-                </div>
-                <Select value={activity} onValueChange={setActivity}>
-                  <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    {ACTIVITY_TYPES.map((a) => (
-                      <SelectItem key={a.value} value={a.value}>{a.label}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Office type */}
-              <div className="calc-esb-field">
-                <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">3</span>
-                  <Label>نوع المكتب</Label>
-                </div>
-                <Select value={officeType} onValueChange={setOfficeType}>
-                  <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    {OFFICE_TYPES.map((o) => (
-                      <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Visa count */}
-              <div className="calc-esb-field">
-                <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">4</span>
-                  <Label>عدد تأشيرات الإقامة</Label>
-                </div>
-                <Select value={visaCount} onValueChange={setVisaCount}>
-                  <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    {VISA_COUNTS.map((v) => (
-                      <SelectItem key={v.value} value={v.value}>{v.label}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <p className="calc-hint">كل تأشيرة تشمل: إذن دخول + فحص طبي + بطاقة هوية إماراتية + بطاقة عمل.</p>
-              </div>
-
-              {/* Foreign name toggle */}
-              <div className="calc-esb-field">
-                <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">5</span>
-                  <Label>الاسم التجاري</Label>
-                </div>
-                <div className="ci-coverage-tabs">
-                  {[
-                    { value: false, label: 'عربي / محلي', sub: 'أقل رسوماً' },
-                    { value: true,  label: 'أجنبي / إنجليزي', sub: 'رسوم أعلى قليلاً' },
-                  ].map((opt) => (
-                    <button
-                      key={String(opt.value)}
-                      className={`ci-coverage-tab${foreignName === opt.value ? ' is-active' : ''}`}
-                      onClick={() => setForeignName(opt.value)}
-                      type="button"
-                    >
-                      <span className="ci-tab-label">{opt.label}</span>
-                      <span className="ci-tab-sub">{opt.sub}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* ── RESULT ───────────────────────────────── */}
-        <div className="calc-esb-result-col">
-          {result.isValid ? (
-            <div className="calc-esb-result-panel" aria-live="polite">
-
-              <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--ae"><CountryFlag code="ae" /> دبي</span>
-                <span className="calc-esb-live-dot" aria-hidden="true" />
-              </div>
-
-              <div className="calc-esb-amount-hero">
-                <span className="calc-esb-amount-label">
-                  {jurisdiction === 'mainland' ? 'براً (Mainland)' : 'منطقة حرة'} — التكلفة التأسيسية
-                </span>
-                <div className="ci-range-display">
-                  <span className="ci-range-low">{fmt(result.totalMin)}</span>
-                  <span className="ci-range-sep">–</span>
-                  <span className="ci-range-high">{fmt(result.totalMax)}</span>
-                  <span className="ci-range-unit">د.إ</span>
-                </div>
-                <div className="calc-esb-amount-meta">
-                  <span>~ {fmt(result.totalMin / 3.67)} – {fmt(result.totalMax / 3.67)} دولار</span>
-                </div>
-              </div>
-
-              {/* Itemized breakdown */}
-              <div className="calc-esb-breakdown">
-                {result.items.map((item) => (
-                  <div key={item.label} className="calc-esb-brow">
-                    <span>
-                      {item.label}
-                      {item.note && <span className="calc-hint"> ({item.note})</span>}
-                    </span>
-                    <strong>
-                      {item.min === item.max
-                        ? `${fmt(item.min)} د.إ`
-                        : `${fmt(item.min)} – ${fmt(item.max)} د.إ`}
-                    </strong>
-                  </div>
-                ))}
-                <div className="calc-esb-brow calc-esb-brow--total">
-                  <span>الإجمالي التقديري</span>
-                  <strong>{fmt(result.totalMin)} – {fmt(result.totalMax)} د.إ</strong>
-                </div>
-              </div>
-
-              <ResultActions
-                copyText={shareText}
-                shareTitle="حاسبة تأسيس شركة دبي"
-                shareText={shareText}
-              />
-
-              <div className="calc-esb-reason-strip">
-                <Warning size={14} weight="fill" />
-                <span>تقدير استرشادي محايد — تحقق من الرسوم الرسمية في DED أو موقع المنطقة الحرة المختارة.</span>
-              </div>
-            </div>
-          ) : (
-            <div className="calc-esb-empty-state">
-              <Buildings size={32} weight="duotone" />
-              <p>اختر بيانات الشركة للحصول على تقدير التكلفة.</p>
-            </div>
-          )}
-        </div>
-
+    <div aria-label="حاسبة تكلفة تأسيس شركة في دبي">
+      <div className="tool-v2-panel-head">
+        <span className="tool-v2-country-badge"><CountryFlag code="ae" /> دبي <span className="tool-v2-live-dot" aria-hidden="true" /></span>
       </div>
+
+      <div className="tool-v2-field">
+        <label>نوع الجهة</label>
+        <div className="tool-v2-choice-list">
+          {JURISDICTION_TYPES.map((j) => {
+            const active = jurisdiction === j.value;
+            return (
+              <label key={j.value} className={`tool-v2-choice-card${active ? ' is-active' : ''}`} htmlFor={`dubai-jur-${j.value}`}>
+                <input type="radio" id={`dubai-jur-${j.value}`} name="dubai-jurisdiction" checked={active} onChange={() => setJurisdiction(j.value)} />
+                <span className="tool-v2-choice-body">
+                  <span className="tool-v2-choice-title">{j.label}</span>
+                  <span className="tool-v2-choice-desc">{j.description}</span>
+                </span>
+              </label>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="tool-v2-field">
+        <label htmlFor="dubai-activity">نوع النشاط</label>
+        <select id="dubai-activity" value={activity} onChange={(e) => setActivity(e.target.value)}>
+          {ACTIVITY_TYPES.map((a) => (<option key={a.value} value={a.value}>{a.label}</option>))}
+        </select>
+      </div>
+
+      <div className="tool-v2-field-row-pair">
+        <div className="tool-v2-field">
+          <label htmlFor="dubai-office">نوع المكتب</label>
+          <select id="dubai-office" value={officeType} onChange={(e) => setOfficeType(e.target.value)}>
+            {OFFICE_TYPES.map((o) => (<option key={o.value} value={o.value}>{o.label}</option>))}
+          </select>
+        </div>
+        <div className="tool-v2-field">
+          <label htmlFor="dubai-visas">عدد تأشيرات الإقامة</label>
+          <select id="dubai-visas" value={visaCount} onChange={(e) => setVisaCount(e.target.value)}>
+            {VISA_COUNTS.map((v) => (<option key={v.value} value={v.value}>{v.label}</option>))}
+          </select>
+        </div>
+      </div>
+      <p className="tool-v2-option-hint">كل تأشيرة تشمل: إذن دخول + فحص طبي + بطاقة هوية إماراتية + بطاقة عمل.</p>
+
+      <div className="tool-v2-field">
+        <label>الاسم التجاري</label>
+        <div className="tool-v2-option-list tool-v2-option-list--grid" role="group" aria-label="الاسم التجاري">
+          <button type="button" className={`tool-v2-chip${!foreignName ? ' is-active' : ''}`} onClick={() => setForeignName(false)}>عربي / محلي</button>
+          <button type="button" className={`tool-v2-chip${foreignName ? ' is-active' : ''}`} onClick={() => setForeignName(true)}>أجنبي / إنجليزي</button>
+        </div>
+      </div>
+
+      {result.isValid ? (
+        <div aria-live="polite">
+          <div className="tool-v2-result-hero">
+            <span className="tool-v2-result-label">{jurisdiction === 'mainland' ? 'براً (Mainland)' : 'منطقة حرة'} — التكلفة التأسيسية</span>
+            <div className="tool-v2-result-value tool-v2-result-value--range">
+              <span className="tool-v2-result-range-part">{fmt(result.totalMin)} د.إ</span>
+              <span className="tool-v2-result-range-sep" aria-hidden="true">–</span>
+              <span className="tool-v2-result-range-part">{fmt(result.totalMax)} د.إ</span>
+            </div>
+            <div className="tool-v2-result-meta">~ {fmt(result.totalMin / 3.67)}–{fmt(result.totalMax / 3.67)} دولار</div>
+          </div>
+
+          <div className="tool-v2-breakdown-list">
+            {result.items.map((item) => (
+              <div key={item.label} className="tool-v2-breakdown-row">
+                <span className="tool-v2-breakdown-label">{item.label}{item.note ? ` (${item.note})` : ''}</span>
+                <span className="tool-v2-breakdown-value">{item.min === item.max ? `${fmt(item.min)} د.إ` : `${fmt(item.min)}–${fmt(item.max)} د.إ`}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="tool-v2-note-strip">
+            <Warning size={15} weight="fill" />
+            <span>تقدير استرشادي محايد — تحقق من الرسوم الرسمية في DED أو موقع المنطقة الحرة المختارة.</span>
+          </div>
+
+          <div className="tool-v2-action-row">
+            <button type="button" className="tool-v2-action-btn is-primary" onClick={() => shareResult('حاسبة تأسيس شركة دبي', shareText)}>
+              <ShareNetwork size={18} weight="bold" /> مشاركة
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="tool-v2-empty-state">
+          <Buildings size={28} weight="duotone" />
+          <p>اختر بيانات الشركة للحصول على تقدير التكلفة.</p>
+        </div>
+      )}
     </div>
   );
 }

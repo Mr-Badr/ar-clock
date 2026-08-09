@@ -486,7 +486,7 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'jordan-income-tax',
-    href: '/calculators/jordan-income-tax',
+    href: '/tools/gulf-finance/jordan-income-tax',
     cluster: 'finance',
     shortLabel: 'ضريبة الدخل الأردن',
     title: 'حاسبة ضريبة الدخل الأردن',
@@ -556,7 +556,7 @@ const _CALCULATOR_ROUTES_RAW = [
     // Deliberately NOT in any /tools hub (2026-08-04) — webteb.com/altibbi.com dominate this
     // term completely, not winnable. See keyword-research/health-education-hubs/DECISION.md.
     slug: 'bmi',
-    href: '/calculators/bmi',
+    href: '/tools/health/bmi',
     cluster: 'health',
     shortLabel: 'مؤشر كتلة الجسم',
     title: 'حاسبة مؤشر كتلة الجسم BMI والوزن المثالي',
@@ -1776,7 +1776,7 @@ const _CALCULATOR_ROUTES_RAW = [
     // (Mediclinic, Saudi German, Mouwasat), and Bahrain's Ministry of Health itself all rank
     // directly. See keyword-research/health-education-hubs/DECISION.md.
     slug: 'ovulation',
-    href: '/calculators/ovulation',
+    href: '/tools/health/ovulation',
     cluster: 'health',
     shortLabel: 'حاسبة التبويض',
     title: 'حاسبة التبويض وأيام الخصوبة',
@@ -1834,7 +1834,7 @@ const _CALCULATOR_ROUTES_RAW = [
     // university pages (Qassim University's own GPA tool). Reconfirms the docs/PLAN.md §13
     // rejection of this space. See keyword-research/health-education-hubs/DECISION.md.
     slug: 'gpa',
-    href: '/calculators/gpa',
+    href: '/tools/education/gpa',
     cluster: 'education',
     shortLabel: 'حاسبة المعدل',
     title: 'حاسبة المعدل التراكمي GPA من 5 ومن 4 ومن 100',
@@ -1871,7 +1871,7 @@ const _CALCULATOR_ROUTES_RAW = [
     // Deliberately NOT in any /tools hub (2026-08-04) — rapidtables.org (global calculator
     // giant) ranks directly for this term. See keyword-research/health-education-hubs/DECISION.md.
     slug: 'weighted-grade',
-    href: '/calculators/weighted-grade',
+    href: '/tools/education/weighted-grade',
     cluster: 'education',
     shortLabel: 'الدرجة النهائية بالأوزان',
     title: 'حاسبة الدرجة النهائية بالأوزان — كم تحتاج في الاختبار النهائي',
@@ -1898,7 +1898,7 @@ const _CALCULATOR_ROUTES_RAW = [
     // Deliberately NOT in any /tools hub (2026-08-04) — same saturated GPA space as 'gpa'.
     // See keyword-research/health-education-hubs/DECISION.md.
     slug: 'gpa-to-percent',
-    href: '/calculators/gpa-to-percent',
+    href: '/tools/education/gpa-to-percent',
     cluster: 'education',
     shortLabel: 'تحويل المعدل لنسبة',
     title: 'تحويل المعدل إلى نسبة مئوية (من 5 ومن 4 ومن 100)',
@@ -1931,7 +1931,7 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'standard-deviation',
-    href: '/calculators/standard-deviation',
+    href: '/tools/education/standard-deviation',
     cluster: 'education',
     shortLabel: 'الانحراف المعياري',
     title: 'حاسبة الانحراف المعياري والإحصاء الأساسي',
@@ -1958,7 +1958,7 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'hijri-birthday',
-    href: '/calculators/hijri-birthday',
+    href: '/tools/health/hijri-birthday',
     cluster: 'age',
     shortLabel: 'مولدك الهجري',
     title: 'مولدك الهجري — تاريخ ميلادك بالهجري وأقرب حدث إسلامي ليوم ميلادك',
@@ -1983,7 +1983,7 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'date-add-subtract',
-    href: '/calculators/date-add-subtract',
+    href: '/tools/health/date-add-subtract',
     cluster: 'age',
     shortLabel: 'إضافة وطرح الأيام',
     title: 'حاسبة إضافة وطرح الأيام من تاريخ — هجري وميلادي معاً',
@@ -2334,7 +2334,7 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'cgeb-canada',
-    href: '/calculators/cgeb-canada',
+    href: '/tools/gulf-finance/cgeb-canada',
     cluster: 'finance',
     shortLabel: 'دعم المقاضي والأساسيات كندا',
     title: 'دعم المقاضي والأساسيات في كندا (CGEB) — مواعيد الصرف الربعية',
@@ -2357,7 +2357,7 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'soldes-france',
-    href: '/calculators/soldes-france',
+    href: '/tools/gulf-finance/soldes-france',
     cluster: 'finance',
     shortLabel: 'مواعيد التخفيضات في فرنسا',
     title: 'متى تبدأ التخفيضات في فرنسا (Soldes) — الشتوية والصيفية',
@@ -2380,7 +2380,7 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'boernepenge-denmark',
-    href: '/calculators/boernepenge-denmark',
+    href: '/tools/gulf-finance/boernepenge-denmark',
     cluster: 'finance',
     shortLabel: 'دعم الأطفال في الدنمارك',
     title: 'دعم الأطفال في الدنمارك (Børnepenge) — مواعيد الصرف الفصلية والشهرية',
@@ -2407,7 +2407,7 @@ const _CALCULATOR_ROUTES_RAW = [
     // /mwaqit-al-salat or the holidays section, not this health cluster — not yet scoped.
     // See keyword-research/health-education-hubs/DECISION.md.
     slug: 'fasting',
-    href: '/calculators/fasting',
+    href: '/tools/health/fasting',
     cluster: 'health',
     shortLabel: 'حاسبة الصيام المتقطع',
     title: 'حاسبة الصيام المتقطع — جدول نافذة الأكل والصيام',
@@ -2430,7 +2430,7 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'dubai-company-setup-cost',
-    href: '/calculators/dubai-company-setup-cost',
+    href: '/tools/gulf-finance/dubai-company-setup-cost',
     cluster: 'finance',
     shortLabel: 'تأسيس شركة دبي',
     title: 'حاسبة تكلفة تأسيس شركة في دبي',
@@ -2457,7 +2457,7 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'egypt-water-bill',
-    href: '/calculators/egypt-water-bill',
+    href: '/tools/gulf-finance/egypt-water-bill',
     cluster: 'finance',
     shortLabel: 'فاتورة المياه مصر',
     title: 'حاسبة فاتورة المياه مصر',
@@ -2486,7 +2486,7 @@ const _CALCULATOR_ROUTES_RAW = [
     // Deliberately NOT in any /tools hub (2026-08-04) — webteb.com and Abbott/Ensure (global
     // pharma brand) dominate this term. See keyword-research/health-education-hubs/DECISION.md.
     slug: 'calories',
-    href: '/calculators/calories',
+    href: '/tools/health/calories',
     cluster: 'health',
     shortLabel: 'حاسبة السعرات',
     title: 'حاسبة السعرات الحرارية وحرق الدهون',
@@ -2883,6 +2883,32 @@ const _CALCULATOR_ROUTES_RAW = [
     ],
   },
   {
+    slug: 'aluminum-glass-types-colors',
+    href: '/tools/aluminum-glass/glass-types-colors',
+    cluster: 'aluminum-glass',
+    shortLabel: 'أنواع وألوان زجاج الشبابيك',
+    title: 'أنواع وألوان زجاج الشبابيك والأبواب',
+    heroTitle: 'أنواع وألوان زجاج الشبابيك {{year}} | سيكوريت، دبل جلاس، وعاكس',
+    description:
+      'الفرق بين الزجاج العادي والسيكوريت والدبل جلاس واللامينيت، ألوان الزجاج العاكس الأنسب لواجهتك، ومقارنة الألومنيوم مع UPVC — دليل شامل قبل أي قرار شراء.',
+    accent: 'var(--blue)',
+    accentSoft: 'var(--blue-subtle)',
+    badge: 'الألومنيوم والزجاج / دليل شراء',
+    keywords: [
+      'زجاج شبابيك',
+      'سكوريت',
+      'زجاج سكوريت',
+      'الفرق بين الزجاج العادي والزجاج السيكوريت',
+      'دبل جلاس',
+      'ألوان زجاج الشبابيك',
+      'أشكال زجاج الشبابيك',
+      'انواع الزجاج للشبابيك',
+      'زجاج عاكس',
+      'الالمنيوم والزجاج',
+      'الالمنيوم ام upvc',
+    ],
+  },
+  {
     slug: 'construction-waterproofing',
     href: '/tools/construction/waterproofing',
     cluster: 'construction',
@@ -2901,6 +2927,63 @@ const _CALCULATOR_ROUTES_RAW = [
       'عزل فوم كم سعره',
       'افضل نوع عزل للاسطح',
       'عزل حراري ام مائي الفرق',
+    ],
+  },
+  {
+    // Migrated from /blog/how-many-cement-bags-do-i-need (2026-08-09) — one of only two
+    // articles in the whole /blog section with real traffic (owner's own analytics), the rest
+    // got zero. /blog was retired entirely per the v1→v2 cleanup directive; this and its rebar
+    // sibling are the only two articles worth keeping, now living as real editorial content
+    // inside the hub whose tools they actually support. No redirect from the old /blog URL —
+    // matches this session's established retirement precedent (real data over link-equity
+    // preservation for zero/near-zero-traffic paths).
+    slug: 'construction-cement-bags-guide',
+    href: '/tools/construction/how-many-cement-bags-do-i-need',
+    cluster: 'construction',
+    shortLabel: 'كم كيس أسمنت أحتاج؟',
+    title: 'كم كيس أسمنت أحتاج؟ طريقة سريعة قبل شراء مواد الصبة',
+    heroTitle: 'كم كيس أسمنت أحتاج؟ {{year}} | احسب المتر المكعب والعيار والهدر',
+    description:
+      'اعرف كيف تحسب أكياس الأسمنت قبل الصبة: ابدأ بحجم الخرسانة بالمتر المكعب، اختر العيار، راجع وزن الكيس والهدر، ثم لا تعتمد الرقم قبل مراجعة المخطط أو المهندس.',
+    accent: 'var(--green)',
+    accentSoft: 'var(--green-subtle)',
+    badge: 'بناء / مقال عملي',
+    keywords: [
+      'كم كيس أسمنت أحتاج',
+      'كم كيس أسمنت في المتر المكعب',
+      'حساب أكياس الأسمنت',
+      'كمية الأسمنت للصبة',
+      'كم شيكارة أسمنت في متر خرسانة',
+      'كم خنشة أسمنت في متر مكعب',
+      'حاسبة الأسمنت والخرسانة',
+      'عيار الخرسانة وعدد الأكياس',
+    ],
+  },
+  {
+    // Migrated from /blog/how-to-estimate-rebar-weight (2026-08-09) — see the cement-bags
+    // entry above for the full retirement context.
+    slug: 'construction-rebar-weight-guide',
+    href: '/tools/construction/how-to-estimate-rebar-weight',
+    cluster: 'construction',
+    shortLabel: 'كيف تقدّر وزن حديد التسليح؟',
+    title: 'كيف تقدّر وزن حديد التسليح قبل الشراء أو التسعير؟',
+    heroTitle: 'كيف تحسب وزن حديد التسليح؟ {{year}} | المعادلة والطن والسيخ',
+    description:
+      'احسب وزن حديد التسليح من القطر والطول والعدد، وافهم وزن سيخ 12 متر، والتحويل إلى طن، ومتى تضيف الهالك أو ترجع للمخطط الإنشائي.',
+    accent: 'var(--green)',
+    accentSoft: 'var(--green-subtle)',
+    badge: 'بناء / مقال عملي',
+    keywords: [
+      'كيف أحسب وزن حديد التسليح',
+      'حساب وزن سيخ 12 متر',
+      'وزن حديد التسليح',
+      'كم وزن الحديد',
+      'جدول أوزان حديد التسليح',
+      'وزن حديد 12 ملم',
+      'وزن حديد 16 ملم',
+      'حساب كمية الحديد بالطن',
+      'معادلة وزن الحديد',
+      'عدد أسياخ الحديد في الطن',
     ],
   },
   {
@@ -3231,7 +3314,12 @@ export const CALCULATOR_HUBS = [
   },
   {
     slug: 'finance',
-    href: '/calculators/finance',
+    // Retired 2026-08-05 — /calculators/finance was deleted (no /calculators path should exist
+    // at all); its real content lives at /tools/gulf-finance now. This CALCULATOR_HUBS entry's
+    // `routeSlugs` list is itself stale pre-existing debt (references slugs like vat/percentage/
+    // net-salary/inheritance/salary/margin-markup/zakat removed in the 2026-08-03 gulf-finance
+    // cleanup) — out of scope for this fix, only the dead href is corrected here.
+    href: '/tools/gulf-finance',
     badge: 'مال / عمل',
     title: 'حاسبات القرض والضريبة والراتب والخدمات',
     heroTitle: 'حاسبات المال والعمل | القسط والضريبة والراتب ونهاية الخدمة',

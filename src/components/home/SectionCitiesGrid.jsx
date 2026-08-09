@@ -19,18 +19,17 @@ const TAXONOMY_GROUPS = [
     title: 'الحاسبات العملية',
     description: 'أدوات سريعة عندما يكون المطلوب رقماً واضحاً أو مقارنة مباشرة.',
     links: [
-      { href: '/calculators', label: 'قسم الحاسبات' },
-      { href: '/calculators/finance', label: 'المال والعمل' },
+      { href: '/tools', label: 'قسم الحاسبات' },
+      { href: '/tools/gulf-finance', label: 'المال والعمل' },
       { href: '/tools/personal-finance', label: 'التخطيط المالي الشخصي' },
       { href: '/tools/sleep', label: 'النوم الذكي' },
     ],
   },
   {
-    title: 'المناسبات والمقالات',
-    description: 'مسارات أقرب لأسئلة المواعيد القادمة والشروحات العملية.',
+    title: 'المناسبات والاستكشاف',
+    description: 'مسارات أقرب لأسئلة المواعيد القادمة واستكشاف بقية صفحات الموقع.',
     links: [
       { href: '/holidays', label: 'المناسبات والعد التنازلي' },
-      { href: '/blog', label: 'الأدلة والمقالات' },
       { href: '/fahras', label: 'استكشف الصفحات' },
       { href: '/date/calendar', label: 'التقويم السنوي' },
     ],

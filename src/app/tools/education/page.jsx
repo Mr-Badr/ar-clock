@@ -16,19 +16,28 @@ function findRoute(slug) {
   return route;
 }
 
-// Built 2026-08-04 alongside /tools/health — same root cause: this tool was already live with
-// zero hub discoverability. Deliberately a single-tool hub for now: gpa/gpa-to-percent/
-// weighted-grade were EXCLUDED after a real competitive audit found them dominated by 9+
-// competitors including official university pages (gpa) and a global calculator giant
-// (rapidtables.org, weighted-grade) — see keyword-research/health-education-hubs/DECISION.md.
-// saudi-school-calendar survives because our own page already ranks (confirmed directly in the
-// SERP check), unlike the others which showed zero foothold.
+// Built 2026-08-04: this tool was already live with zero hub discoverability. Originally a
+// single-tool hub — gpa/gpa-to-percent/weighted-grade/standard-deviation were EXCLUDED from
+// PROMOTION after a real competitive audit found the GPA tools dominated by 9+ competitors
+// including official university pages (gpa) and a global calculator giant (rapidtables.org,
+// weighted-grade) — see keyword-research/health-education-hubs/DECISION.md. saudi-school-calendar
+// survives as featured because our own page already ranks (confirmed directly in the SERP check).
+// 2026-08-05: those excluded tools were still migrated off the retired /calculators/* path (owner
+// directive — no /calculators path should exist at all) and are listed here as a real group so
+// they get a genuine internal link for crawl/indexing purposes — listing ≠ new SEO investment,
+// no new content was written for them, they were only relocated and re-skinned.
 const TYPE_GROUPS = [
   {
     code: 'calendar',
     name: 'التقويم الدراسي',
     note: '',
     slugs: ['saudi-school-calendar'],
+  },
+  {
+    code: 'student-tools',
+    name: 'أدوات الطلاب',
+    note: '',
+    slugs: ['gpa', 'gpa-to-percent', 'weighted-grade', 'standard-deviation'],
   },
 ];
 

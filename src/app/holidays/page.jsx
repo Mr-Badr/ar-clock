@@ -17,6 +17,8 @@ import AdMultiplex from '@/components/ads/AdMultiplex';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import HolidaysSections from '@/components/holidays/index';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
+import CountryFlag from '@/components/shared/CountryFlag';
+import { COUNTRY_HUBS } from '@/lib/holidays/country-hub-data';
 import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
 import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 import { normalizeHolidayFilter } from './holidays-filter-utils';
@@ -324,6 +326,29 @@ export default async function HolidaysPage() {
                   افتح
                   <ArrowLeft size={14} aria-hidden="true" />
                 </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Real internal traffic evidence (2026-08-09): the dedicated per-country pages get
+            genuine visits, but this hub never linked to them directly — the only country
+            shortcut above points at an in-page filter (?country=sa), not the real page. This
+            section is the missing discovery path straight to /holidays/country/[slug]. */}
+        <section aria-labelledby="holidays-countries-heading" className={styles.countriesSection}>
+          <div className={styles.sectionHead}>
+            <h2 id="holidays-countries-heading" className={styles.sectionTitle}>
+              لائحة العطل الرسمية حسب الدولة
+            </h2>
+            <p className={styles.sectionLead}>
+              اختر دولتك لعرض كل الإجازات الرسمية والمناسبات الوطنية والدينية فيها في صفحة واحدة، مع مصدر كل إجازة ومدتها.
+            </p>
+          </div>
+          <div className={styles.countryGrid}>
+            {COUNTRY_HUBS.map((hub) => (
+              <Link key={hub.slug} href={`/holidays/country/${hub.slug}`} className={styles.countryChip}>
+                <CountryFlag code={hub.code} className={styles.countryChipFlag} label={hub.nameAr} />
+                <span>{hub.nameAr}</span>
               </Link>
             ))}
           </div>

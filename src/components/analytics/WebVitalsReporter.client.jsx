@@ -8,10 +8,9 @@ function getRouteFamily(pathname) {
   if (!pathname) return 'other';
   if (pathname.startsWith('/mwaqit-al-salat')) return 'prayer';
   if (pathname.startsWith('/holidays')) return 'holiday';
-  if (pathname.startsWith('/calculators')) return 'calculator';
+  if (pathname.startsWith('/tools')) return 'calculator';
   if (pathname.startsWith('/time-now')) return 'time-now';
   if (pathname.startsWith('/time-difference')) return 'time-difference';
-  if (pathname.startsWith('/blog')) return 'blog';
   if (pathname.startsWith('/date')) return 'date';
   if (pathname === '/') return 'home';
   return 'other';

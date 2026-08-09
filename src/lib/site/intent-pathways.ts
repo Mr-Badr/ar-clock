@@ -52,11 +52,11 @@ export const INTENT_PATHWAYS: IntentPathway[] = [
     title: 'لمستحقات العمل والمخالفات قبل أن تتسرع في القرار',
     description:
       'ابدأ من المسار المناسب ثم افتح الحاسبة أو المقال الذي يعطيك رقماً واضحاً وسياقاً يساعدك على الفهم والمقارنة.',
-    ctaHref: '/calculators/finance',
+    ctaHref: '/tools/gulf-finance',
     ctaLabel: 'ابدأ من المال والعمل',
     links: [
       {
-        href: '/calculators/finance',
+        href: '/tools/gulf-finance',
         title: 'حاسبات المال والعمل',
         description: 'ابدأ من نهاية الخدمة أو تعويض الفصل أو خصم المخالفة، ثم انتقل إلى الحاسبة التي تعطيك الرقم والشرح.',
       },
@@ -114,16 +114,16 @@ export const INTENT_PATHWAYS: IntentPathway[] = [
     title: 'لمن يريد أن يفهم الفكرة أولاً ثم يفتح الأداة المناسبة',
     description:
       'ابدأ من المقال عندما تحتاج شرحاً واضحاً قبل اتخاذ قرار أو استخدام أداة.',
-    ctaHref: '/blog',
-    ctaLabel: 'ابدأ من المدونة',
+    ctaHref: '/tools',
+    ctaLabel: 'ابدأ من الأدوات',
     links: [
       {
-        href: '/blog/how-many-cement-bags-do-i-need',
+        href: '/tools/construction/how-many-cement-bags-do-i-need',
         title: 'كم كيس أسمنت أحتاج؟',
         description: 'اقرأ منطق تقدير الكمية والهدر قبل الانتقال إلى حاسبة الأسمنت.',
       },
       {
-        href: '/blog/how-to-estimate-rebar-weight',
+        href: '/tools/construction/how-to-estimate-rebar-weight',
         title: 'كيف تقدّر وزن حديد التسليح؟',
         description: 'افهم علاقة القطر والطول والعدد بالوزن قبل الانتقال إلى حاسبة الحديد.',
       },

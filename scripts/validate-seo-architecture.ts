@@ -46,11 +46,13 @@ const INTENTIONALLY_NON_INDEXABLE_PAGE_ROUTES = new Map([
 ]);
 
 const REQUIRED_SEGMENT_GUARDS = [
-  { route: '/blog', dir: 'src/app/blog' },
-  { route: '/blog/[slug]', dir: 'src/app/blog/[slug]' },
+  // '/blog' removed 2026-08-09 — the whole section was retired (owner directive: real traffic
+  // was 0 except 2 articles, migrated to /tools/construction instead of kept as a standalone
+  // blog). See keyword-research or memory for the v1→v2 cleanup context.
   { route: '/holidays', dir: 'src/app/holidays' },
   { route: '/holidays/[slug]', dir: 'src/app/holidays/[slug]' },
-  { route: '/calculators', dir: 'src/app/calculators' },
+  // '/calculators' removed 2026-08-05 — the whole route tree was retired (owner directive: no
+  // /calculators path should exist at all); every real tool now lives under /tools/*.
   { route: '/date', dir: 'src/app/date' },
   { route: '/date/[year]/[month]/[day]', dir: 'src/app/date/[year]/[month]/[day]' },
   { route: '/date/hijri/[year]/[month]/[day]', dir: 'src/app/date/hijri/[year]/[month]/[day]' },
@@ -101,33 +103,12 @@ const DATE_INDEXATION_PAGE_RULES = [
   },
 ] as const;
 
-const LEGACY_ROUTE_FILES = [
-  'src/app/guides/page.jsx',
-  'src/app/guides/[slug]/page.jsx',
-  'src/app/guides/sitemap.js',
-] as const;
-const LEGACY_BLOG_FEATURE_FILES = [
-  'src/components/guides/BlogHubClient.jsx',
-  'src/components/guides/BlogHubClient.module.css',
-  'src/components/guides/GuidePage.jsx',
-  'src/components/guides/GuidePage.module.css',
-  'src/components/guides/GuidePageLoading.jsx',
-  'src/lib/guides/read-time.js',
-  'src/lib/guides/observability.js',
-] as const;
-const LEGACY_ARTICLE_PATH_PREFIXES = ['/guide', '/guides'] as const;
-const CANONICAL_BLOG_SOURCE_FILES = [
-  'src/lib/site/discovery.js',
-  'src/lib/site/intent-pathways.ts',
-  'src/lib/seo/discovery-links.js',
-  'src/app/blog/loading.jsx',
-  'src/app/blog/[slug]/loading.jsx',
-  'src/components/blog/BlogHubPage.jsx',
-  'src/components/blog/BlogHubClient.jsx',
-  'src/components/blog/BlogArticlePage.jsx',
-  'src/components/blog/BlogArticleView.jsx',
-  'src/components/blog/BlogArticleLoading.jsx',
-] as const;
+// LEGACY_ROUTE_FILES / LEGACY_BLOG_FEATURE_FILES / LEGACY_ARTICLE_PATH_PREFIXES /
+// CANONICAL_BLOG_SOURCE_FILES removed 2026-08-09, along with the 3 functions that used them
+// (assertLegacyRouteFilesRemoved, assertLegacyBlogFeatureFilesRemoved, assertCanonicalBlogPaths)
+// — these guarded an even older /guides → /blog rename against regressing back to /guides. Now
+// that /blog itself is retired entirely (not renamed again), there is no canonical blog path to
+// protect; guarding against "/blog stops existing" would be exactly backwards.
 
 function routeFileExists(routeDir: string, filename: string) {
   return existsSync(path.join(process.cwd(), routeDir, filename));
@@ -279,88 +260,6 @@ function assertDateIndexationPolicies(errors: string[]) {
   }
 }
 
-function assertLegacyRouteFilesRemoved(errors: string[]) {
-  for (const filePath of LEGACY_ROUTE_FILES) {
-    const fullPath = path.join(process.cwd(), filePath);
-
-    if (existsSync(fullPath)) {
-      errors.push(`Legacy route file must be removed so /blog stays canonical: ${filePath}`);
-    }
-  }
-}
-
-function assertLegacyBlogFeatureFilesRemoved(errors: string[]) {
-  for (const filePath of LEGACY_BLOG_FEATURE_FILES) {
-    const fullPath = path.join(process.cwd(), filePath);
-
-    if (existsSync(fullPath)) {
-      errors.push(`Legacy blog feature file must be removed so article UI stays canonical: ${filePath}`);
-    }
-  }
-}
-
-function isLegacyArticlePath(value: string) {
-  const normalized = String(value || '').trim();
-
-  return LEGACY_ARTICLE_PATH_PREFIXES.some((prefix) => (
-    normalized === prefix || normalized.startsWith(`${prefix}/`)
-  ));
-}
-
-function assertCanonicalBlogPaths(errors: string[]) {
-  for (const guide of ALL_GUIDES) {
-    if (!String(guide?.href || '').startsWith('/blog/')) {
-      errors.push(`Guide href must stay on the canonical /blog path: ${guide?.href || '(missing href)'}`);
-    }
-  }
-
-  const canonicalCollections = [
-    { label: 'ROOT_SITEMAP_PATHS', values: ROOT_SITEMAP_PATHS },
-    { label: 'WEBSITE_ARCHITECTURE_PATHS', values: WEBSITE_ARCHITECTURE_PATHS },
-    {
-      label: 'INTENT_PATHWAYS',
-      values: INTENT_PATHWAYS.flatMap((pathway) => [pathway.ctaHref, ...pathway.links.map((link) => link.href)]),
-    },
-  ] as const;
-
-  for (const collection of canonicalCollections) {
-    const legacyPaths = collection.values.filter((value) => isLegacyArticlePath(value));
-
-    if (legacyPaths.length > 0) {
-      errors.push(`${collection.label} must not publish legacy article paths: ${legacyPaths.join(', ')}`);
-    }
-  }
-
-  const legacyPathPatterns = [
-    /['"`]\/guide['"`]/,
-    /['"`]\/guide\//,
-    /['"`]\/guides['"`]/,
-    /['"`]\/guides\//,
-    /id:\s*['"`]guides['"`]/,
-    /@\/components\/guides\//,
-    /@\/lib\/guides\/read-time/,
-    /@\/lib\/guides\/observability/,
-    /GuidePage\.module\.css/,
-    /GuidePageLoading/,
-  ];
-
-  for (const filePath of CANONICAL_BLOG_SOURCE_FILES) {
-    const fullPath = path.join(process.cwd(), filePath);
-
-    if (!existsSync(fullPath)) {
-      errors.push(`Canonical blog source file is missing: ${filePath}`);
-      continue;
-    }
-
-    const source = readFileSync(fullPath, 'utf8');
-    const hasLegacyPattern = legacyPathPatterns.some((pattern) => pattern.test(source));
-
-    if (hasLegacyPattern) {
-      errors.push(`Canonical blog source file still contains legacy guide path or taxonomy references: ${filePath}`);
-    }
-  }
-}
-
 const COVERAGE_SAMPLE_PATHS = uniqueValues([
   '/',
   '/fahras',
@@ -383,8 +282,7 @@ const COVERAGE_SAMPLE_PATHS = uniqueValues([
   '/date/calendar/hijri',
   '/date/country',
   '/date/country/saudi-arabia',
-  '/calculators',
-  '/blog',
+  '/tools',
   '/about',
   '/editorial-policy',
   '/contact',
@@ -639,10 +537,6 @@ function main() {
     errors.push('SITEMAP_INDEX_PATHS must not expose full-range daily date year sitemaps.');
   }
 
-  if (!rootPaths.includes('/blog')) {
-    errors.push('ROOT_SITEMAP_ROUTES must include /blog');
-  }
-
   for (const requiredPath of REQUIRED_ROOT_SITEMAP_PATHS) {
     if (!rootPaths.includes(requiredPath)) {
       errors.push(`ROOT_SITEMAP_ROUTES must include ${requiredPath}`);
@@ -658,9 +552,6 @@ function main() {
   assertRequiredSegmentGuardFiles(errors);
   assertIndexableRootPages(errors);
   assertDateIndexationPolicies(errors);
-  assertLegacyRouteFilesRemoved(errors);
-  assertLegacyBlogFeatureFilesRemoved(errors);
-  assertCanonicalBlogPaths(errors);
   assertPublishedHolidayQuality(errors);
   assertCalculatorRegistryQuality(errors);
   assertCalculatorSitemapCompleteness(errors);

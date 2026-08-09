@@ -12,7 +12,6 @@ import "./header.css";
 export const NAV_LINKS = [
   { href: "/", label: "الرئيسية" },
   { href: "/fahras", label: "استكشف" },
-  { href: "/blog", label: "المدونة" },
   {
     href: "/mwaqit-al-salat",
     label: "مواقيت الصلاة",
@@ -45,7 +44,7 @@ export const NAV_LINKS = [
   { href: "/time-difference", label: "فرق التوقيت" },
   { href: "/tools", label: "الأدوات" },
   {
-    href: "/calculators",
+    href: "/tools",
     label: "الحاسبات",
     panelIcon: "Calculator",
     panelDescription: "احسب الإقامة والراتب والكهرباء والميراث والحمل والمعدل والبناء من صفحات عربية واضحة",
@@ -57,7 +56,7 @@ export const NAV_LINKS = [
         description: "انتهاء الإقامة والغرامة اليومية للسعودية والإمارات",
       },
       {
-        href: "/calculators/egypt-water-bill",
+        href: "/tools/gulf-finance/egypt-water-bill",
         label: "فاتورة المياه مصر",
         icon: "Receipt",
         description: "شرائح تصاعدية ورسم الصرف الصحي والضريبة",
@@ -75,13 +74,13 @@ export const NAV_LINKS = [
         description: "تعويض الفصل التعسفي وفق نظام العمل السعودي",
       },
       {
-        href: "/calculators/pregnancy",
+        href: "/tools/health/pregnancy",
         label: "حاسبة الحمل",
         icon: "CalendarDots",
         description: "موعد الولادة بالهجري والميلادي وأسابيع الحمل",
       },
       {
-        href: "/calculators/gpa",
+        href: "/tools/education/gpa",
         label: "المعدل التراكمي GPA",
         icon: "Percent",
         description: "احسب معدلك من 5 أو من 4 وحوّله لنسبة",
@@ -91,12 +90,6 @@ export const NAV_LINKS = [
         label: "نهاية الخدمة",
         icon: "Wallet",
         description: "المستحقات بحسب مدة الخدمة وسبب الإنهاء",
-      },
-      {
-        href: "/calculators/monthly-installment",
-        label: "القسط الشهري",
-        icon: "Calculator",
-        description: "قارن القرض والمدة والفائدة والسداد المبكر",
       },
       {
         href: "/tools/health/age-calculator",
@@ -117,7 +110,7 @@ export const NAV_LINKS = [
         description: "تكلفة المنزل، الأسمنت، الحديد — 14 دولة",
       },
       {
-        href: "/calculators",
+        href: "/tools",
         label: "كل الحاسبات",
         icon: "Calculator",
         description: "استعرض جميع الأدوات مرتبة حسب القسم",

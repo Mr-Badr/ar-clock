@@ -34,7 +34,7 @@ export default function manifest() {
       },
       {
         name: 'الحاسبات',
-        url: '/calculators',
+        url: '/tools',
         description: 'ابدأ من أشهر الحاسبات العربية اليومية',
       },
       {

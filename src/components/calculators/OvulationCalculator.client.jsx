@@ -1,10 +1,9 @@
 "use client";
 
-import { useMemo, useState } from 'react';
-import { Baby, CalendarBlank, CheckCircle, Timer } from '@phosphor-icons/react';
+import { useEffect, useMemo, useState } from 'react';
+import { Baby, CalendarBlank, CheckCircle, ShareNetwork, Timer } from '@phosphor-icons/react';
+import { toast } from 'sonner';
 
-import ResultActions from '@/components/calculators/ResultActions.client';
-import { Label } from '@/components/ui/label';
 import { getHijriParts } from '@/lib/hijri-utils';
 import { calculateOvulation } from '@/lib/calculators/pregnancy';
 
@@ -26,14 +25,31 @@ function formatHijriDate(parts) {
   return `${parts.hijriDay} ${parts.hijriMonthName} ${parts.hijriYear} هـ`;
 }
 
+async function shareResult(title, text) {
+  if (navigator.share) {
+    try { await navigator.share({ title, text }); return; } catch { /* cancelled */ }
+  }
+  try { await navigator.clipboard.writeText(text); toast.success('تم نسخ النتيجة إلى الحافظة'); }
+  catch { toast.error('تعذر نسخ النتيجة'); }
+}
+
 export default function OvulationCalculator() {
   const [lmpDate, setLmpDate] = useState('');
   const [cycleLength, setCycleLength] = useState(28);
+  // Date bounds and "today" are only computed client-side, post-mount — a bare
+  // new Date() call during render breaks Next.js static prerendering without a
+  // Suspense boundary (empty strings are a safe no-constraint default for the
+  // date input's min/max before the effect runs).
+  const [dateBounds, setDateBounds] = useState({ min: '', max: '' });
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const maxDate = today.toISOString().split('T')[0];
-  const minDate = new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  useEffect(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    setDateBounds({
+      max: today.toISOString().split('T')[0],
+      min: new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    });
+  }, []);
 
   const result = useMemo(() => {
     if (!lmpDate) return null;
@@ -52,158 +68,91 @@ export default function OvulationCalculator() {
     : '';
 
   return (
-    <div className="calc-app ovulation-tool" aria-label="حاسبة التبويض">
-      <div className="calc-esb-layout">
+    <div aria-label="حاسبة التبويض">
+      <div className="tool-v2-panel-head">
+        <span className="tool-v2-country-badge"><Baby size={14} weight="bold" /> حاسبة التبويض <span className="tool-v2-live-dot" aria-hidden="true" /></span>
+      </div>
 
-        {/* ── FORM ──────────────────────────────── */}
-        <div className="calc-esb-form-col">
-          <div className="calc-surface-card calc-esb-form-card">
-            <div className="calc-esb-form-body">
+      <div className="tool-v2-field">
+        <label htmlFor="ovulation-lmp">أول يوم في آخر دورة شهرية</label>
+        <input id="ovulation-lmp" type="date" value={lmpDate} max={dateBounds.max} min={dateBounds.min} onChange={(e) => setLmpDate(e.target.value)} dir="ltr" />
+        <span className="tool-v2-option-hint">أدخل أول يوم في آخر دورة شهرية لحساب يوم التبويض والفترة الخصبة.</span>
+      </div>
 
-              <div className="calc-esb-field">
-                <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">1</span>
-                  <Label htmlFor="ovulation-lmp">أول يوم في آخر دورة شهرية</Label>
-                </div>
-                <input
-                  id="ovulation-lmp"
-                  type="date"
-                  className="pregnancy-date-input"
-                  value={lmpDate}
-                  max={maxDate}
-                  min={minDate}
-                  onChange={(e) => setLmpDate(e.target.value)}
-                  dir="ltr"
-                />
-                <p className="calc-hint">أدخل أول يوم في آخر دورة شهرية لحساب يوم التبويض والفترة الخصبة.</p>
-              </div>
+      <div className="tool-v2-field">
+        <label>طول الدورة الشهرية</label>
+        <div className="tool-v2-option-list tool-v2-option-list--grid" role="group" aria-label="طول الدورة الشهرية">
+          {CYCLE_PRESETS.map((preset) => (
+            <button key={preset.value} type="button" className={`tool-v2-chip${cycleLength === preset.value ? ' is-active' : ''}`} onClick={() => setCycleLength(preset.value)}>{preset.label}</button>
+          ))}
+        </div>
+        <span className="tool-v2-option-hint">التبويض يحدث عادةً قبل 14 يوماً من الدورة التالية — طول الدورة يحدد الموعد الدقيق.</span>
+      </div>
 
-              <div className="calc-esb-field">
-                <div className="calc-esb-field-label">
-                  <span className="calc-esb-step">2</span>
-                  <Label>طول الدورة الشهرية</Label>
-                </div>
-                <div className="calc-kbd-row">
-                  {CYCLE_PRESETS.map((preset) => (
-                    <button
-                      key={preset.value}
-                      type="button"
-                      className={`chip calc-chip-button${cycleLength === preset.value ? ' is-active' : ''}`}
-                      onClick={() => setCycleLength(preset.value)}
-                    >
-                      {preset.label}
-                    </button>
-                  ))}
-                </div>
-                <p className="calc-hint">التبويض يحدث عادةً قبل 14 يوماً من الدورة التالية — طول الدورة يحدد الموعد الدقيق.</p>
-              </div>
+      {lmpDate && result?.isValid ? (
+        <div aria-live="polite">
+          {result.isInFertileWindow && (
+            <div className="tool-v2-note-strip">
+              <CheckCircle size={15} weight="fill" />
+              <span>أنتِ الآن في الفترة الخصبة</span>
+            </div>
+          )}
 
+          <div className="tool-v2-result-hero">
+            <span className="tool-v2-result-label">يوم التبويض المتوقع</span>
+            <div className="tool-v2-result-value">{formatDateAr(result.ovulationDate)}</div>
+            {ovHijri ? <div className="tool-v2-result-meta">{formatHijriDate(ovHijri)}</div> : null}
+          </div>
+
+          <div className="tool-v2-breakdown-list">
+            <div className="tool-v2-breakdown-row">
+              <span className="tool-v2-breakdown-label"><CalendarBlank size={14} weight="bold" style={{ verticalAlign: '-2px' }} /> الفترة الخصبة</span>
+              <span className="tool-v2-breakdown-value">{formatDateAr(result.fertileStart)} — {formatDateAr(result.fertileEnd)}</span>
+            </div>
+            <div className="tool-v2-breakdown-row">
+              <span className="tool-v2-breakdown-label"><Timer size={14} weight="bold" style={{ verticalAlign: '-2px' }} /> {result.daysToOvulation >= 0 ? 'باقي على التبويض' : 'مضى على التبويض'}</span>
+              <span className="tool-v2-breakdown-value">{Math.abs(result.daysToOvulation)} يوم</span>
+            </div>
+            <div className="tool-v2-breakdown-row">
+              <span className="tool-v2-breakdown-label">الدورة التالية المتوقعة</span>
+              <span className="tool-v2-breakdown-value">{formatDateAr(result.nextPeriod)}{nextPeriodHijri ? ` — ${formatHijriDate(nextPeriodHijri)}` : ''}</span>
+            </div>
+            <div className="tool-v2-breakdown-row">
+              <span className="tool-v2-breakdown-label">باقي على الدورة</span>
+              <span className="tool-v2-breakdown-value">{Math.max(0, result.daysToNextPeriod)} يوم</span>
             </div>
           </div>
-        </div>
 
-        {/* ── RESULT ────────────────────────────── */}
-        <div className="calc-esb-result-col">
-          {!lmpDate && (
-            <div className="calc-esb-empty-state">
-              <Baby size={32} weight="duotone" className="ovulation-empty-icon" />
-              <p>أدخلي تاريخ آخر دورة لمعرفة يوم التبويض والفترة الخصبة.</p>
-            </div>
-          )}
-
-          {lmpDate && result?.isValid && (
-            <div className="calc-esb-result-panel ovulation-result" aria-live="polite">
-              <div className="calc-esb-result-header">
-                <span className="calc-esb-country-badge calc-esb-country-badge--bh">❤️ حاسبة التبويض</span>
-                <span className="calc-esb-live-dot ovulation-live-dot" aria-hidden="true" />
-              </div>
-
-              {/* Fertile window status */}
-              {result.isInFertileWindow && (
-                <div className="ovulation-banner--active">
-                  <CheckCircle size={16} weight="fill" />
-                  أنتِ الآن في الفترة الخصبة
-                </div>
-              )}
-
-              {/* Ovulation date */}
-              <div className="ovulation-date-hero">
-                <span className="calc-esb-amount-label">يوم التبويض المتوقع</span>
-                <div className="ovulation-date-value">
-                  {formatDateAr(result.ovulationDate)}
-                </div>
-                {ovHijri && (
-                  <div className="ovulation-hijri-date">
-                    {formatHijriDate(ovHijri)}
+          {result.nextCycles?.length > 0 && (
+            <>
+              <div className="tool-v2-mini-block-head"><span>الدورات القادمة</span></div>
+              <div className="tool-v2-breakdown-list">
+                {result.nextCycles.map((cycle, i) => (
+                  <div key={i} className="tool-v2-breakdown-row">
+                    <span className="tool-v2-breakdown-label">دورة {i + 2}</span>
+                    <span className="tool-v2-breakdown-value">{formatDateAr(cycle.ovulationDate)} (تبويض) — {formatDateAr(cycle.fertileStart)}←{formatDateAr(cycle.fertileEnd)}</span>
                   </div>
-                )}
+                ))}
               </div>
-
-              {/* Breakdown */}
-              <div className="calc-esb-breakdown">
-                <div className="calc-esb-brow calc-esb-brow--total">
-                  <span className="calc-icon-label">
-                    <CalendarBlank size={14} weight="bold" />
-                    الفترة الخصبة
-                  </span>
-                  <strong>
-                    {formatDateAr(result.fertileStart)} — {formatDateAr(result.fertileEnd)}
-                  </strong>
-                </div>
-                <div className="calc-esb-brow">
-                  <span className="calc-icon-label">
-                    <Timer size={14} weight="bold" />
-                    {result.daysToOvulation >= 0 ? 'باقي على التبويض' : 'مضى على التبويض'}
-                  </span>
-                  <strong>{Math.abs(result.daysToOvulation)} يوم</strong>
-                </div>
-                <div className="calc-esb-brow">
-                  <span>الدورة التالية المتوقعة</span>
-                  <strong>
-                    {formatDateAr(result.nextPeriod)}
-                    {nextPeriodHijri && (
-                      <span className="ovulation-hijri-date" style={{ display: 'block' }}>
-                        {formatHijriDate(nextPeriodHijri)}
-                      </span>
-                    )}
-                  </strong>
-                </div>
-                <div className="calc-esb-brow">
-                  <span>باقي على الدورة</span>
-                  <strong>{Math.max(0, result.daysToNextPeriod)} يوم</strong>
-                </div>
-              </div>
-
-              {/* Next 3 cycles */}
-              {result.nextCycles?.length > 0 && (
-                <div>
-                  <p className="ovulation-cycles-heading">الدورات القادمة</p>
-                  {result.nextCycles.map((cycle, i) => (
-                    <div key={i} className="calc-esb-brow ovulation-cycle-row">
-                      <span className="ovulation-cycle-num">دورة {i + 2}</span>
-                      <div className="ovulation-cycle-dates">
-                        <div><strong>{formatDateAr(cycle.ovulationDate)}</strong> — التبويض</div>
-                        <div className="ovulation-cycle-fertile">{formatDateAr(cycle.fertileStart)} ← {formatDateAr(cycle.fertileEnd)} (خصبة)</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              <p className="bmi-disclaimer">
-                النتيجة تقدير استرشادي بناءً على نمط الدورة — يختلف التبويض الفعلي ويتأثر بعوامل صحية متعددة. راجعي طبيبك لأي قرار طبي.
-              </p>
-
-              <ResultActions
-                copyText={shareText}
-                shareTitle="حاسبة التبويض"
-                shareText={shareText}
-              />
-
-            </div>
+            </>
           )}
+
+          <div className="tool-v2-note-strip">
+            <span>النتيجة تقدير استرشادي بناءً على نمط الدورة — يختلف التبويض الفعلي ويتأثر بعوامل صحية متعددة. راجعي طبيبك لأي قرار طبي.</span>
+          </div>
+
+          <div className="tool-v2-action-row">
+            <button type="button" className="tool-v2-action-btn is-primary" onClick={() => shareResult('حاسبة التبويض', shareText)}>
+              <ShareNetwork size={18} weight="bold" /> مشاركة
+            </button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="tool-v2-empty-state">
+          <Baby size={28} weight="duotone" />
+          <p>أدخلي تاريخ آخر دورة لمعرفة يوم التبويض والفترة الخصبة.</p>
+        </div>
+      )}
     </div>
   );
 }

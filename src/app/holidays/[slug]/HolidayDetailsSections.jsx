@@ -27,7 +27,7 @@ import EmbedCodeSnippet from '@/components/shared/EmbedCodeSnippet.client';
 const CATEGORY_CALCULATORS = {
   islamic: [
     { href: '/tools/gulf-finance/aqiqah',      label: 'حاسبة العقيقة',       desc: 'عدد الذبائح وتكلفتها التقديرية',  accent: 'var(--amber)' },
-    { href: '/calculators/fasting',     label: 'حاسبة الصيام',        desc: 'مواعيد الإمساك والإفطار وعدد الساعات', accent: 'var(--accent)' },
+    { href: '/tools/health/fasting',     label: 'حاسبة الصيام',        desc: 'مواعيد الإمساك والإفطار وعدد الساعات', accent: 'var(--accent)' },
     { href: '/tools/gulf-finance/wasiyya',     label: 'حاسبة الوصية الشرعية', desc: 'كم يجوز أن توصي من تركتك',   accent: 'var(--text-secondary)' },
   ],
   national: [
@@ -41,21 +41,21 @@ const CATEGORY_CALCULATORS = {
     { href: '/tools/gulf-finance/sick-leave',           label: 'الإجازة المرضية',    desc: 'راتبك أثناء المرض وفق المادة 117',      accent: 'var(--amber)' },
     { href: '/tools/gulf-finance/domestic-worker-cost', label: 'تكلفة استقدام عاملة', desc: 'الرسوم الحكومية الفعلية عبر مساند',      accent: 'var(--calc-cat-finance)' },
     { href: '/tools/gulf-finance/nafaqah',               label: 'حاسبة النفقة',        desc: 'تقدير نفقة الزوجة والأولاد',              accent: 'var(--amber)' },
-    { href: '/calculators/jordan-income-tax',    label: 'ضريبة الدخل الأردن',    desc: 'شرائح 5%–30% + إعفاءات — صافي الراتب',    accent: 'var(--blue)' },
-    { href: '/calculators/egypt-water-bill',     label: 'فاتورة المياه مصر',     desc: 'شرائح تصاعدية + رسم الصرف الصحي',         accent: 'var(--blue)' },
+    { href: '/tools/gulf-finance/jordan-income-tax',    label: 'ضريبة الدخل الأردن',    desc: 'شرائح 5%–30% + إعفاءات — صافي الراتب',    accent: 'var(--blue)' },
+    { href: '/tools/gulf-finance/egypt-water-bill',     label: 'فاتورة المياه مصر',     desc: 'شرائح تصاعدية + رسم الصرف الصحي',         accent: 'var(--blue)' },
     { href: '/tools/gulf-finance/traffic-fine-discount', label: 'خصم المخالفات المرورية', desc: 'خصم 25% خلال 45 يوماً من التسجيل',  accent: 'var(--blue)' },
   ],
   school: [
-    { href: '/calculators/gpa',           label: 'المعدل التراكمي',    desc: 'احسب GPA بدقة وفق جدول درجاتك',     accent: 'var(--blue)' },
-    { href: '/calculators/gpa-to-percent', label: 'تحويل المعدل',      desc: 'حوّل GPA إلى نسبة مئوية',            accent: 'var(--accent)' },
-    { href: '/calculators/weighted-grade', label: 'الدرجة النهائية بالأوزان', desc: 'كم تحتاج في الاختبار النهائي؟', accent: 'var(--blue)' },
+    { href: '/tools/education/gpa',           label: 'المعدل التراكمي',    desc: 'احسب GPA بدقة وفق جدول درجاتك',     accent: 'var(--blue)' },
+    { href: '/tools/education/gpa-to-percent', label: 'تحويل المعدل',      desc: 'حوّل GPA إلى نسبة مئوية',            accent: 'var(--accent)' },
+    { href: '/tools/education/weighted-grade', label: 'الدرجة النهائية بالأوزان', desc: 'كم تحتاج في الاختبار النهائي؟', accent: 'var(--blue)' },
     { href: '/tools/gulf-finance/annual-leave',  label: 'حاسبة الإجازات',    desc: 'أيام إجازتك المستحقة قانونياً',      accent: 'var(--green)' },
-    { href: '/calculators/saudi-school-calendar', label: 'التقويم الدراسي السعودي', desc: 'بداية الدراسة وكل الإجازات 1448', accent: 'var(--calc-cat-education)' },
+    { href: '/tools/education/saudi-school-calendar', label: 'التقويم الدراسي السعودي', desc: 'بداية الدراسة وكل الإجازات 1448', accent: 'var(--calc-cat-education)' },
   ],
   social: [
-    { href: '/calculators/pregnancy', label: 'حاسبة الحمل',    desc: 'موعد الولادة وأسبوع الحمل بدقة',   accent: 'var(--blue)' },
-    { href: '/calculators/ovulation', label: 'حاسبة التبويض',  desc: 'أيام الخصوبة في دورتك',             accent: 'var(--accent)' },
-    { href: '/calculators/bmi',       label: 'مؤشر كتلة الجسم', desc: 'تقييم وزنك الصحي بالمعايير الدولية', accent: 'var(--green)' },
+    { href: '/tools/health/pregnancy', label: 'حاسبة الحمل',    desc: 'موعد الولادة وأسبوع الحمل بدقة',   accent: 'var(--blue)' },
+    { href: '/tools/health/ovulation', label: 'حاسبة التبويض',  desc: 'أيام الخصوبة في دورتك',             accent: 'var(--accent)' },
+    { href: '/tools/health/bmi',       label: 'مؤشر كتلة الجسم', desc: 'تقييم وزنك الصحي بالمعايير الدولية', accent: 'var(--green)' },
   ],
   business: [
     { href: '/tools/gulf-finance/article-77-compensation', label: 'تعويض المادة 77', desc: 'تعويض الفصل التعسفي وفق نظام العمل',   accent: 'var(--blue)' },
@@ -64,9 +64,9 @@ const CATEGORY_CALCULATORS = {
     { href: '/tools/gulf-finance/working-days',       label: 'أيام العمل بين تاريخين', desc: 'عطلة نهاية الأسبوع الصحيحة لكل دولة', accent: 'var(--blue)' },
   ],
   astronomy: [
-    { href: '/calculators/fasting',   label: 'حاسبة الصيام',   desc: 'ساعات الصيام في أي مدينة وشهر',     accent: 'var(--accent)' },
+    { href: '/tools/health/fasting',   label: 'حاسبة الصيام',   desc: 'ساعات الصيام في أي مدينة وشهر',     accent: 'var(--accent)' },
     { href: '/tools/gulf-finance/iddah',    label: 'حاسبة العدة الشرعية', desc: 'حساب هجري دقيق للأرملة والمطلقة',   accent: 'var(--amber)' },
-    { href: '/calculators/pregnancy', label: 'حاسبة الحمل',    desc: 'موعد الولادة بالتقويمين',            accent: 'var(--blue)' },
+    { href: '/tools/health/pregnancy', label: 'حاسبة الحمل',    desc: 'موعد الولادة بالتقويمين',            accent: 'var(--blue)' },
   ],
   holidays: [
     { href: '/tools/gulf-finance/traffic-fine-discount', label: 'خصم المخالفات المرورية', desc: 'خصم 25% خلال 45 يوماً من التسجيل', accent: 'var(--blue)' },

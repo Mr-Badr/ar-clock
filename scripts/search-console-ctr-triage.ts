@@ -165,7 +165,7 @@ function getRouteFamily(page: string) {
   if (pathname.startsWith('/time-now')) return 'time-now';
   if (pathname.startsWith('/time-difference')) return 'time-difference';
   if (pathname.startsWith('/date')) return 'date';
-  if (pathname.startsWith('/calculators')) return 'calculators';
+  if (pathname.startsWith('/tools')) return 'calculators';
   if (pathname.startsWith('/holidays')) return 'holidays';
   if (pathname.startsWith('/blog')) return 'blog';
   if (pathname === '/' || pathname === '/fahras') return 'site';

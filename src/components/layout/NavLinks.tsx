@@ -131,46 +131,46 @@ export const CALC_CATEGORIES: CalcCategory[] = [
     sub: "حمل • تبويض • أسابيع الحمل",
     icon: Heart,
     color: "var(--calc-cat-health)",
-    viewAll: "/calculators/pregnancy",
+    viewAll: "/tools/health/pregnancy",
     tools: [
       {
-        href: "/calculators/pregnancy",
+        href: "/tools/health/pregnancy",
         label: "حاسبة الحمل",
         desc: "موعد الولادة بالهجري والميلادي",
         icon: Baby,
       },
       {
-        href: "/calculators/pregnancy-weeks",
+        href: "/tools/health/pregnancy-weeks",
         label: "أسابيع الحمل",
         desc: "أنتِ في الأسبوع كم الآن؟",
         icon: Calendar,
       },
       {
-        href: "/calculators/ovulation",
+        href: "/tools/health/ovulation",
         label: "أيام التبويض",
         desc: "نافذة الخصوبة ودورتك الشهرية",
         icon: Flower,
       },
       {
-        href: "/calculators/weaning-schedule",
+        href: "/tools/health/weaning-schedule",
         label: "جدول إدخال الطعام للرضيع",
         desc: "ماذا يأكل رضيعك الآن حسب عمره",
         icon: Baby,
       },
       {
-        href: "/calculators/bmi",
+        href: "/tools/health/bmi",
         label: "مؤشر كتلة الجسم",
         desc: "هل وزنك صحي؟ احسب BMI الآن",
         icon: Barbell,
       },
       {
-        href: "/calculators/fasting",
+        href: "/tools/health/fasting",
         label: "الصيام المتقطع",
         desc: "مؤقت نافذة الأكل وجدول 16:8",
         icon: Timer,
       },
       {
-        href: "/calculators/calories",
+        href: "/tools/health/calories",
         label: "السعرات الحرارية",
         desc: "احتياجك اليومي ومؤشر كتلة الجسم",
         icon: Barbell,
@@ -183,34 +183,28 @@ export const CALC_CATEGORIES: CalcCategory[] = [
     sub: "GPA • تحويل المعدل • نسبة مئوية",
     icon: GraduationCap,
     color: "var(--calc-cat-education)",
-    viewAll: "/calculators/gpa",
+    viewAll: "/tools/education/gpa",
     tools: [
       {
-        href: "/calculators/gpa",
+        href: "/tools/education/gpa",
         label: "المعدل التراكمي GPA",
         desc: "احسب معدلك من 5 أو من 4",
         icon: GraduationCap,
       },
       {
-        href: "/calculators/gpa-to-percent",
+        href: "/tools/education/gpa-to-percent",
         label: "المعدل إلى نسبة",
         desc: "حوّل GPA إلى نسبة مئوية",
         icon: Percent,
       },
       {
-        href: "/calculators/percentage",
-        label: "النسبة المئوية",
-        desc: "احسب النسبة والخصم والزيادة",
-        icon: Percent,
-      },
-      {
-        href: "/calculators/weighted-grade",
+        href: "/tools/education/weighted-grade",
         label: "الدرجة النهائية بالأوزان",
         desc: "كم تحتاج في الاختبار النهائي؟",
         icon: Target,
       },
       {
-        href: "/calculators/saudi-school-calendar",
+        href: "/tools/education/saudi-school-calendar",
         label: "التقويم الدراسي السعودي",
         desc: "بداية الدراسة والإجازات 1448",
         icon: Calendar,
@@ -250,13 +244,13 @@ export const CALC_CATEGORIES: CalcCategory[] = [
         icon: Moon,
       },
       {
-        href: "/calculators/hijri-birthday",
+        href: "/tools/health/hijri-birthday",
         label: "مولدك الهجري",
         desc: "تاريخ ميلادك الهجري وأقرب مناسبة إسلامية",
         icon: Moon,
       },
       {
-        href: "/calculators/date-add-subtract",
+        href: "/tools/health/date-add-subtract",
         label: "إضافة وطرح الأيام",
         desc: "أضف أو اطرح من تاريخ هجري وميلادي معاً",
         icon: ArrowsCounterClockwise,
@@ -432,7 +426,7 @@ function CalculatorMegaMenu({ onClose }: { onClose: () => void }) {
           })}
         </div>
         <div className="nav-calc-tools-foot">
-          <Link href="/calculators" className="nav-calc-hub-link" onClick={onClose}>
+          <Link href="/tools" className="nav-calc-hub-link" onClick={onClose}>
             <Calculator size={14} weight="duotone" aria-hidden="true" />
             عرض جميع الحاسبات
             <span className="nav-mega-cta-arrow" aria-hidden="true" />
@@ -449,12 +443,12 @@ function CalculatorMegaMenu({ onClose }: { onClose: () => void }) {
 
 function getMegaMenuAlignment(href: string): "right" | "center" | "left" {
   if (href === "/date") return "right";
-  if (href === "/calculators") return "center";
+  if (href === "/tools") return "center";
   return "center";
 }
 
 function getMegaMenuVariant(href: string): "calculators" | "default" {
-  if (href === "/calculators") return "calculators";
+  if (href === "/tools") return "calculators";
   return "default";
 }
 
