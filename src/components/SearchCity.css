@@ -1043,19 +1043,6 @@
     line-height: 1.5;
   }
 
-  .sc-item__preview {
-    font-size: var(--text-xs);
-    font-weight: var(--font-bold);
-    color: var(--accent-alt);
-    background-color: color-mix(in srgb, var(--accent-soft) 90%, transparent);
-    border: 1px solid var(--border-accent);
-    border-radius: var(--radius-full);
-    padding: 0.22rem 0.62rem;
-    font-family: system-ui, ui-sans-serif, sans-serif;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-  }
-
   /* Highlight match */
   .sc-highlight {
     background-color: var(--accent-soft);

@@ -8,7 +8,7 @@
  *
  * WHERE TO USE — BETWEEN major content sections, never inside them:
  *
- *   <PrayerTimesTable />
+ *   <TimezoneInfoCard />
  *
  *   <AdInArticle slotId="mid-country-1" />        ← BETWEEN sections
  *

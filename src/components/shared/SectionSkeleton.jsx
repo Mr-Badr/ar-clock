@@ -1,6 +1,6 @@
 /**
  * SectionSkeleton
- * Loading state for home sections (Prayer Times, Holidays)
+ * Loading state for home sections (Holidays)
  * Matches SectionWrapper layout + pulse animation
  */
 

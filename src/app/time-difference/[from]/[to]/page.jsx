@@ -3,7 +3,7 @@
  * Rendering model: fully STATIC prerender (no PPR "postponed" dynamic hole).
  * `params` is awaited at the top level of the default export — never read inside
  * a Suspense boundary — so this page prerenders into real HTML exactly like the
- * time-now / prayer pages. Every server-side data read on the render path is
+ * time-now pages. Every server-side data read on the render path is
  * `'use cache'` (getCachedNowIso → cacheLife('minutes'); geo queries →
  * cacheLife('days')), so nothing forces a per-request dynamic resume.
  *
@@ -184,7 +184,7 @@ export async function generateMetadata({ params }) {
     });
     return {
       title: `فرق التوقيت | ${SITE_BRAND}`,
-      description: 'قارن فرق التوقيت بين المدن والدول مع تحويل الوقت المباشر ومسارات الوقت والصلاة والتاريخ داخل ميقاتنا.',
+      description: 'قارن فرق التوقيت بين المدن والدول مع تحويل الوقت المباشر ومسارات الوقت والتاريخ داخل ميقاتنا.',
       alternates: { canonical: `${BASE}/time-difference/${from}/${to}` },
     };
   }
@@ -224,16 +224,6 @@ export default async function ComparisonPage({ params }) {
             href: '/time-now',
             label: 'افتح الوقت الان',
             description: 'يمكنك الوصول إلى الوقت الحالي حسب الدولة أو المدينة من القسم الرئيسي.',
-          },
-          {
-            href: '/mwaqit-al-salat',
-            label: 'افتح مواقيت الصلاة',
-            description: 'انتقل إلى صفحات الصلاة إذا كان هدفك الوصول إلى التوقيت المحلي المرتبط بالمدينة.',
-          },
-          {
-            href: '/fahras',
-            label: 'استكشف الصفحات',
-            description: 'استخدم فهرس الصفحات للوصول السريع إلى المسار الأقرب إلى سؤالك الحالي.',
           },
         ]}
       />
@@ -381,16 +371,6 @@ export default async function ComparisonPage({ params }) {
         href: `/time-now/${toCity.country_slug}/${toCity.city_slug}`,
         label: `الوقت الان في ${toCity.city_name_ar}`,
         description: `اعرف الساعة الحالية والتاريخ اليوم في ${toCity.city_name_ar}.`,
-      },
-      {
-        href: `/mwaqit-al-salat/${fromCity.country_slug}/${fromCity.city_slug}`,
-        label: `مواقيت الصلاة في ${fromCity.city_name_ar}`,
-        description: `انتقل إلى أوقات الصلاة الدقيقة في ${fromCity.city_name_ar}.`,
-      },
-      {
-        href: `/mwaqit-al-salat/${toCity.country_slug}/${toCity.city_slug}`,
-        label: `مواقيت الصلاة في ${toCity.city_name_ar}`,
-        description: `انتقل إلى أوقات الصلاة الدقيقة في ${toCity.city_name_ar}.`,
       },
       {
         href: `/date/country/${fromCity.country_slug}`,
@@ -626,7 +606,7 @@ export default async function ComparisonPage({ params }) {
         <section className="td-section">
           <GeoInternalLinks
             title={`خطوات تكمل مقارنة ${fromCity.city_name_ar} و${toCity.city_name_ar}`}
-            description={`إذا بدأت بمقارنة ${fromCity.city_name_ar} و${toCity.city_name_ar}، فاختر المسار التالي حسب حاجتك: الوقت الحالي، الصلاة، أو التاريخ في الصفحات المرتبطة بكل مدينة أو دولة.`}
+            description={`إذا بدأت بمقارنة ${fromCity.city_name_ar} و${toCity.city_name_ar}، فاختر المسار التالي حسب حاجتك: الوقت الحالي أو التاريخ في الصفحات المرتبطة بكل مدينة أو دولة.`}
             links={comparisonUtilityLinks}
             ariaLabel={`خطوات تكمل مقارنة ${fromCity.city_name_ar} و${toCity.city_name_ar}`}
           />

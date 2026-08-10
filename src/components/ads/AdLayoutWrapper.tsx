@@ -15,7 +15,7 @@
  *
  * USAGE:
  *
- *   // app/mwaqit-al-salat/[country]/page.tsx
+ *   // app/time-now/[country]/page.tsx
  *   import AdLayoutWrapper from "@/components/ads/AdLayoutWrapper";
  *   import { AdTopBanner, AdInArticle } from "@/components/ads";
  *
@@ -24,7 +24,7 @@
  *       // <AdLayoutWrapper>
  *         <main className="content-col pt-24 pb-20">
  *
- *           <CountryPrayerJsonLd ... />
+ *           <CountryTimeJsonLd ... />
  *
  *           // Banner FIRST — before breadcrumb/H1, see AdTopBanner.tsx v3
  *           <AdTopBanner slotId="top-country" />
@@ -32,10 +32,10 @@
  *           // Breadcrumb
  *           <nav aria-label="مسار التنقل">...</nav>
  *
- *           <h1>مواقيت الصلاة في السعودية</h1>
+ *           <h1>الوقت الان في السعودية</h1>
  *
  *           // First major content block
- *           <PrayerTimesTable />
+ *           <TimezoneInfoCard />
  *
  *           // Ad between major sections — not inside them
  *           <AdInArticle slotId="mid-country-1" />

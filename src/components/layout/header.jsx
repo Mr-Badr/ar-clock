@@ -11,20 +11,6 @@ import "./header.css";
 
 export const NAV_LINKS = [
   { href: "/", label: "الرئيسية" },
-  { href: "/fahras", label: "استكشف" },
-  {
-    href: "/mwaqit-al-salat",
-    label: "مواقيت الصلاة",
-    panelIcon: "Moon",
-    panelDescription: "مواقيت اليوم في مدينتك، وأوقات مستحبة أخرى محسوبة حياً: الثلث الأخير من الليل، الضحى، ساعة الاستجابة، أيام البيض، وأوقات النهي",
-    sublinks: [
-      { href: '/mwaqit-al-salat/last-third-of-night', label: 'الثلث الأخير من الليل', icon: 'Moon', description: 'ومنتصف الليل الشرعي، محسوبان حسب مدينتك' },
-      { href: '/mwaqit-al-salat/duha-prayer-time',    label: 'وقت صلاة الضحى',        icon: 'Sun',  description: 'البداية والنهاية حسب مدينتك اليوم' },
-      { href: '/mwaqit-al-salat/friday-response-hour', label: 'ساعة الاستجابة',        icon: 'Hourglass', description: 'آخر ساعة قبل المغرب كل جمعة' },
-      { href: '/mwaqit-al-salat/white-days',           label: 'أيام البيض',            icon: 'CalendarDots', description: '13 و14 و15 من كل شهر هجري' },
-      { href: '/mwaqit-al-salat/prohibited-prayer-times', label: 'أوقات النهي عن الصلاة', icon: 'Timer', description: 'الشروق والاستواء والغروب، محسوبة حسب مدينتك' },
-    ],
-  },
   {
     href: "/date",
     label: "التاريخ والتحويل",
@@ -43,80 +29,6 @@ export const NAV_LINKS = [
   },
   { href: "/time-difference", label: "فرق التوقيت" },
   { href: "/tools", label: "الأدوات" },
-  {
-    href: "/tools",
-    label: "الحاسبات",
-    panelIcon: "Calculator",
-    panelDescription: "احسب الإقامة والراتب والكهرباء والميراث والحمل والمعدل والبناء من صفحات عربية واضحة",
-    sublinks: [
-      {
-        href: "/tools/gulf-finance/iqama",
-        label: "حاسبة الإقامة",
-        icon: "Wallet",
-        description: "انتهاء الإقامة والغرامة اليومية للسعودية والإمارات",
-      },
-      {
-        href: "/tools/gulf-finance/egypt-water-bill",
-        label: "فاتورة المياه مصر",
-        icon: "Receipt",
-        description: "شرائح تصاعدية ورسم الصرف الصحي والضريبة",
-      },
-      {
-        href: "/tools/gulf-finance/wasiyya",
-        label: "الوصية الشرعية",
-        icon: "Calculator",
-        description: "كم يجوز أن توصي من تركتك وفق الشريعة",
-      },
-      {
-        href: "/tools/gulf-finance/article-77-compensation",
-        label: "تعويض المادة 77",
-        icon: "Wallet",
-        description: "تعويض الفصل التعسفي وفق نظام العمل السعودي",
-      },
-      {
-        href: "/tools/health/pregnancy",
-        label: "حاسبة الحمل",
-        icon: "CalendarDots",
-        description: "موعد الولادة بالهجري والميلادي وأسابيع الحمل",
-      },
-      {
-        href: "/tools/education/gpa",
-        label: "المعدل التراكمي GPA",
-        icon: "Percent",
-        description: "احسب معدلك من 5 أو من 4 وحوّله لنسبة",
-      },
-      {
-        href: "/tools/gulf-finance/end-of-service-benefits",
-        label: "نهاية الخدمة",
-        icon: "Wallet",
-        description: "المستحقات بحسب مدة الخدمة وسبب الإنهاء",
-      },
-      {
-        href: "/tools/health/age-calculator",
-        label: "حاسبة العمر",
-        icon: "Hourglass",
-        description: "عمرك بالتقويمين والأيام والأشهر والدقائق",
-      },
-      {
-        href: "/tools/sleep",
-        label: "حاسبات النوم",
-        icon: "Moon",
-        description: "متى أنام، متى أستيقظ، القيلولة، ودين النوم",
-      },
-      {
-        href: "/tools/construction/build-cost",
-        label: "حاسبات البناء",
-        icon: "Buildings",
-        description: "تكلفة المنزل، الأسمنت، الحديد — 14 دولة",
-      },
-      {
-        href: "/tools",
-        label: "كل الحاسبات",
-        icon: "Calculator",
-        description: "استعرض جميع الأدوات مرتبة حسب القسم",
-      },
-    ],
-  },
   { href: "/time-now",        label: "الوقت الان"   },
   { href: "/holidays",        label: "المناسبات"   },
   { href: "/countdown",       label: "عداد تنازلي"  },

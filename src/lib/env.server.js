@@ -52,10 +52,6 @@ const runtimeSchema = z
     ENABLE_IP_GEO_LOOKUP: optionalBoolean,
     IP_API_BASE_URL: emptyToUndefined(z.string().url().optional()),
 
-    /* pdf */
-    ENABLE_PDF_CALENDAR: optionalBoolean,
-    PDF_BROWSER_MODE: emptyToUndefined(z.enum(['bundled', 'serverless']).optional()),
-
     /* analytics */
     ENABLE_ANALYTICS: optionalBoolean,
     GA_MEASUREMENT_ID: optionalString,

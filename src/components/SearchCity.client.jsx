@@ -202,9 +202,8 @@ function highlight(text, query) {
   );
 }
 
-function cityHref(city, mode = 'prayer') {
-  if (mode === 'time-now') return `/time-now/${city.country_slug}/${city.city_slug}`;
-  return `/mwaqit-al-salat/${city.country_slug}/${city.city_slug}`;
+function cityHref(city) {
+  return `/time-now/${city.country_slug}/${city.city_slug}`;
 }
 
 /* ── Sub-components ─────────────────────────────────────────────────────── */
@@ -224,8 +223,8 @@ const SkeletonRows = memo(function SkeletonRows() {
   );
 });
 
-const CityRow = memo(function CityRow({ city, query, showCountry, onSelect, mode }) {
-  const href = cityHref(city, mode);
+const CityRow = memo(function CityRow({ city, query, showCountry, onSelect }) {
+  const href = cityHref(city);
   const handleClick = useCallback(
     (e) => { if (onSelect) { e.preventDefault(); onSelect(city); } },
     [city, onSelect]
@@ -262,11 +261,6 @@ const CityRow = memo(function CityRow({ city, query, showCountry, onSelect, mode
           {showCountry && city.country_name_ar && (
             <span className="sc-item__country">{city.country_name_ar}</span>
           )}
-          {city.preview && (
-            <span className="sc-item__preview" aria-label={`وقت الصلاة: ${city.preview}`}>
-              {city.preview}
-            </span>
-          )}
         </span>
       </Link>
     </CommandItem>
@@ -277,11 +271,10 @@ const CityRow = memo(function CityRow({ city, query, showCountry, onSelect, mode
 export default function SearchCity({
   onSelectCity = null,
   initialCity = null,
-  mode = 'prayer',
+  mode = 'time-now',
   preloadedCountries = null
 }) {
   const router = useRouter();
-  const isTimeNowMode = mode === 'time-now';
 
   const [open, setOpen] = useState(false);
   const [countries, setCountries] = useState(() => getInitialCountries(preloadedCountries));
@@ -514,10 +507,10 @@ export default function SearchCity({
     if (message) toast.success(message);
 
     if (onSelectCity) onSelectCity(city);
-    else router.push(cityHref(city, mode));
+    else router.push(cityHref(city));
 
     return true;
-  }, [mode, onSelectCity, router]);
+  }, [onSelectCity, router]);
 
   /* ── Geolocation ─────────────────────────────────────────────────────── */
   const handleGeoLocation = useCallback(() => {
@@ -572,8 +565,8 @@ export default function SearchCity({
     setQuery('');
     startTransition(() => setResults([]));
     if (onSelectCity) onSelectCity(city);
-    else router.push(cityHref(city, mode));
-  }, [onSelectCity, router, mode]);
+    else router.push(cityHref(city));
+  }, [onSelectCity, router]);
 
   const handleClearSelection = useCallback((e) => {
     e.stopPropagation();
@@ -600,17 +593,14 @@ export default function SearchCity({
         query={query}
         showCountry={!selectedCountry}
         onSelect={handleSelectCity}
-        mode={mode}
       />
     )),
-    [results, query, selectedCountry, handleSelectCity, mode]
+    [results, query, selectedCountry, handleSelectCity]
   );
 
   const triggerLabel = selectedCity
     ? selectedCity.city_name_ar
-    : isTimeNowMode
-      ? 'ابحث عن مدينة أو دولة لمعرفة الوقت…'
-      : 'ابحث عن مدينة لعرض مواقيت الصلاة…';
+    : 'ابحث عن مدينة أو دولة لمعرفة الوقت…';
 
   /* ── Render ──────────────────────────────────────────────────────────── */
   return (
@@ -619,7 +609,7 @@ export default function SearchCity({
       dir="rtl"
       lang="ar"
       role="search"
-      aria-label={isTimeNowMode ? 'البحث عن مدينة لمعرفة الوقت الحالي' : 'البحث عن مدينة لمعرفة مواقيت الصلاة'}
+      aria-label="البحث عن مدينة لمعرفة الوقت الحالي"
     >
 
       {/* ── Trigger bar — position:relative so toast anchors to it ─── */}
@@ -701,14 +691,12 @@ export default function SearchCity({
           <div className="sc-dialog-intro">
             <div className="sc-dialog-copy">
               <DialogTitle className="sc-dialog-title">
-                {isTimeNowMode ? 'ابحث عن مدينة لمعرفة الوقت الحالي' : 'ابحث عن مدينة لمعرفة مواقيت الصلاة'}
+                ابحث عن مدينة لمعرفة الوقت الحالي
               </DialogTitle>
               <DialogDescription className="sc-dialog-subtitle">
                 {selectedCountry
                   ? `تظهر النتائج الآن داخل ${selectedCountry.name_ar}. يمكنك تغيير الدولة أو كتابة اسم المدينة مباشرة.`
-                  : isTimeNowMode
-                    ? 'اختر مدينة أو دولة، أو استخدم موقعك الحالي للوصول السريع إلى الوقت المحلي.'
-                    : 'اختر مدينة أو دولة، أو استخدم موقعك الحالي للوصول السريع إلى المواقيت.'}
+                  : 'اختر مدينة أو دولة، أو استخدم موقعك الحالي للوصول السريع إلى الوقت المحلي.'}
               </DialogDescription>
             </div>
 
@@ -967,7 +955,7 @@ export default function SearchCity({
       <noscript>
         <form
           method="get"
-          action="/fahras"
+          action="/search"
           style={{ marginTop: '0.5rem', display: 'flex', gap: '0.5rem' }}
           aria-label="بحث بدون جافاسكريبت"
         >

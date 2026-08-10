@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import styles from './DiscoveryWorkspace.module.css';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getSiteUrl } from '@/lib/site-config';
@@ -117,43 +116,14 @@ function modeLabel(routePath) {
   return routePath === '/search' ? 'البحث' : 'استكشف الصفحات';
 }
 
-const FAHRAS_CATEGORIES = [
-  { cat: 'time',        emoji: '⏰', title: 'الوقت الآن',         desc: '196 دولة · ساعة حية',         href: '/time-now' },
-  { cat: 'prayer',      emoji: '🕌', title: 'مواقيت الصلاة',      desc: '5 أوقات + اتجاه القبلة',       href: '/mwaqit-al-salat' },
-  { cat: 'date',        emoji: '📅', title: 'التاريخ والتقويم',   desc: 'هجري · ميلادي · تحويل',        href: '/date' },
-  { cat: 'calculators', emoji: '🧮', title: 'الحاسبات',           desc: '58+ أداة مالية ومعيشية',        href: '/tools' },
-  { cat: 'holidays',    emoji: '🎉', title: 'المناسبات والأعياد', desc: 'عداد تنازلي لكل مناسبة',        href: '/holidays' },
-];
-
-function FahraCategoryHub() {
-  return (
-    <nav aria-label="أقسام الموقع الرئيسية" className={styles.catHub}>
-      <div className={styles.catGrid}>
-        {FAHRAS_CATEGORIES.map(({ cat, emoji, title, desc, href }) => (
-          <Link key={cat} href={href} className={styles.catCard} data-cat={cat}>
-            <span className={styles.catIcon} aria-hidden="true">{emoji}</span>
-            <span className={styles.catCopy}>
-              <strong>{title}</strong>
-              <span>{desc}</span>
-            </span>
-            <svg className={styles.catArrow} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M19 12H5M12 5l-7 7 7 7"/>
-            </svg>
-          </Link>
-        ))}
-      </div>
-    </nav>
-  );
-}
-
 export default function DiscoveryWorkspace({
   mode,
   viewModel,
   initialTab,
 }) {
-  const resolvedMode = mode ?? 'map';
+  const resolvedMode = mode ?? 'search';
   const resolvedInitialTab = initialTab ?? 'all';
-  const routePath = resolvedMode === 'search' ? '/search' : '/fahras';
+  const routePath = '/search';
   const heroCopy = renderHeroCopy(resolvedMode, viewModel.hasQuery, viewModel.query);
   const schemas = buildSchemas({
     routePath,
@@ -170,9 +140,7 @@ export default function DiscoveryWorkspace({
         viewModel={viewModel}
         routePath={routePath}
         initialTab={resolvedInitialTab}
-      >
-        {resolvedMode === 'map' && !viewModel.hasQuery && <FahraCategoryHub />}
-      </DiscoveryWorkspaceClient>
+      />
     </div>
   );
 }

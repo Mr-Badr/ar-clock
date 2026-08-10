@@ -2,7 +2,7 @@
  * app/embed/calculators/[slug]/page.jsx
  *
  * Chrome-free calculator widgets meant to be <iframe>-embedded on other sites
- * (same pattern as /embed/prayer-times). Only a small, deliberately curated
+ * (same pattern as /embed/countdown). Only a small, deliberately curated
  * allowlist is embeddable — this is NOT every calculator on the site, see
  * `EMBEDDABLE_CALCULATORS` below. Chrome (nav/footer/ads) is hidden globally
  * via the `embed-mode` class (see ClientRuntimeMounts.client.jsx + globals.css).
@@ -12,7 +12,7 @@
  * `params` is read inside the Suspense-wrapped child (`CalculatorEmbedContent`),
  * never in the page component directly — reading it at the top level blocks
  * the whole route outside Suspense under cacheComponents (see the site-wide
- * PPR "postponed empty page" lesson, same reasoning as /embed/prayer-times).
+ * PPR "postponed empty page" lesson, same reasoning as /embed/countdown).
  */
 
 import { Suspense } from 'react';

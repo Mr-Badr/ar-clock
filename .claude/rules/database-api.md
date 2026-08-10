@@ -30,7 +30,6 @@ paths:
 - `/api/cities-by-country` — serves snapshot data first
 - `/api/search-city` — serves snapshot search first
 - `/api/ip-city` — IP geo lookup (disabled by default: `ENABLE_IP_GEO_LOOKUP=false`)
-- `/api/pdf-calendar` — gated behind env flag (off by default)
 - `/api/revalidate` — protected by `REVALIDATE_SECRET`
 
 ## Data safety rules

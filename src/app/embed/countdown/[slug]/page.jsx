@@ -2,7 +2,7 @@
  * app/embed/countdown/[slug]/page.jsx
  *
  * Chrome-free holiday-countdown widgets meant to be <iframe>-embedded on
- * other sites (same pattern as /embed/prayer-times and /embed/calculators).
+ * other sites (same pattern as /embed/calculators).
  * Only a small, curated allowlist of high-recognition Islamic countdowns is
  * embeddable — see `EMBEDDABLE_COUNTDOWNS` below, not every holiday event on
  * the site. Reuses the exact same date-resolution engine as the real holiday

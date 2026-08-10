@@ -6,24 +6,12 @@ import { SITE_BRAND, SITE_CONTACT_EMAIL } from "@/lib/site-config";
 import "./footer.css";
 
 const PRODUCT_LINKS = [
-  { href: '/fahras', label: 'استكشف الصفحات' },
-  { href: '/mwaqit-al-salat', label: 'مواقيت الصلاة' },
   { href: '/time-now', label: 'الوقت الان' },
   { href: '/time-difference', label: 'فرق التوقيت' },
-  { href: '/tools', label: 'الحاسبات' },
+  { href: '/tools', label: 'الأدوات' },
   { href: '/holidays', label: 'المناسبات' },
   { href: '/countdown', label: 'عداد تنازلي' },
   { href: '/date', label: 'التاريخ والتحويل' },
-];
-
-const CALCULATOR_LINKS = [
-  { href: '/tools/personal-finance', label: 'حاسبات التخطيط المالي الشخصي' },
-  { href: '/tools/sleep', label: 'حاسبات النوم الذكي' },
-  { href: '/tools/health/age-calculator', label: 'كم عمري الآن؟ حاسبة العمر' },
-  { href: '/tools/gulf-finance/end-of-service-benefits', label: 'حاسبة مكافأة نهاية الخدمة السعودية' },
-  { href: '/tools/gulf-finance/article-77-compensation', label: 'حاسبة تعويض المادة 77' },
-  { href: '/tools/gulf-finance/traffic-fine-discount', label: 'حاسبة خصم المخالفات المرورية' },
-  { href: '/tools/construction/build-cost', label: 'حاسبات البناء والتشطيب' },
 ];
 
 const COMPANY_LINKS = [
@@ -82,16 +70,6 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="footer-col">
-              <h3 className="footer-col-heading">أشهر الحاسبات</h3>
-              <ul className="footer-col-list">
-                {CALCULATOR_LINKS.map(({ href, label }) => (
-                  <li key={href}>
-                    <Link href={href} className="footer-col-link">{label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </nav>
         </div>
 

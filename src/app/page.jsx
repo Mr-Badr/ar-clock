@@ -10,14 +10,13 @@ import {
 } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
-const HOME_TITLE = 'ميقاتنا يجيبك: الوقت والصلاة والتاريخ والحسابات اليومية';
+const HOME_TITLE = 'ميقاتنا يجيبك: الوقت والتاريخ والحاسبات اليومية';
 const HOME_DESCRIPTION =
-  'ابدأ من سؤال واحد وافتح جوابك اليومي في ميقاتنا: الوقت الان، مواقيت الصلاة، التاريخ، فرق التوقيت، الحاسبات، والمناسبات من واجهة عربية واضحة.';
+  'ابدأ من سؤال واحد وافتح جوابك اليومي في ميقاتنا: الوقت الان، التاريخ، فرق التوقيت، الحاسبات، والمناسبات من واجهة عربية واضحة.';
 const HOME_KEYWORDS = [
   'ميقاتنا',
   'الوقت الان في مدينتي',
   'الوقت الآن في مدينتي',
-  'مواقيت الصلاة اليوم',
   'التاريخ الهجري والميلادي اليوم',
   'محول التاريخ الهجري والميلادي',
   'حاسبات عربية يومية',
@@ -25,9 +24,7 @@ const HOME_KEYWORDS = [
   'عداد المناسبات والأعياد',
 ];
 const HOME_SECTIONS = [
-  { path: '/fahras', name: 'استكشف الصفحات' },
   { path: '/time-now', name: 'الوقت الان' },
-  { path: '/mwaqit-al-salat', name: 'مواقيت الصلاة' },
   { path: '/date', name: 'التاريخ والتحويل' },
   { path: '/date/calendar', name: 'التقويم الميلادي والهجري' },
   { path: '/date/converter', name: 'محول التاريخ' },
@@ -58,7 +55,6 @@ export default function HomePage() {
     about: [
       'الوقت الان',
       'الوقت الآن',
-      'مواقيت الصلاة',
       'التاريخ الهجري والميلادي',
       'فرق التوقيت',
       'الحاسبات العربية',
@@ -79,7 +75,7 @@ export default function HomePage() {
     inLanguage: 'ar',
     potentialAction: {
       '@type': 'SearchAction',
-      target: `${SITE_URL}/fahras?q={search_term_string}`,
+      target: `${SITE_URL}/search?q={search_term_string}`,
       'query-input': 'required name=search_term_string',
     },
   };

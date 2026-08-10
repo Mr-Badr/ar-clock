@@ -117,7 +117,7 @@ export const GET = withApiHandler(
         );
       }
 
-      return weatherErrorJson('تعذر جلب حالة الطقس الآن. ستبقى أوقات المدن والصلاة متاحة بدون درجة الحرارة.', 502, requestId);
+      return weatherErrorJson('تعذر جلب حالة الطقس الآن. ستبقى أوقات المدن متاحة بدون درجة الحرارة.', 502, requestId);
     } finally {
       clearTimeout(timeout);
     }

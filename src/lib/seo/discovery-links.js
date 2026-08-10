@@ -52,7 +52,6 @@ export const TOP_DISCOVERY_LINKS = [
 ];
 
 export const ROOT_PRIORITY_TOOL_PATHS = [
-  '/fahras',
   '/tools/sleep',
   '/tools/sleep/bedtime',
   '/tools/sleep/wake-time',

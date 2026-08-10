@@ -204,7 +204,7 @@ export async function generateMetadata({ params }) {
         url: `${BASE}/time-now/${countrySlug}/${citySlug}`,
         siteName: SITE_BRAND,
         title: `الوقت الآن في ${cityAr}، ${countryAr}`,
-        description: `ساعة ${cityAr} الآن مع التاريخ المحلي، فرق UTC ${offset}، منطقة IANA، وروابط الصلاة وفرق التوقيت.`,
+        description: `ساعة ${cityAr} الآن مع التاريخ المحلي، فرق UTC ${offset}، منطقة IANA، وروابط فرق التوقيت.`,
         images: [{
           url: `${BASE}/time-now/${countrySlug}/${citySlug}/opengraph-image`,
           width: 1200,
@@ -237,7 +237,7 @@ export async function generateMetadata({ params }) {
     });
     return {
       title: `الوقت الان في المدن | ${SITE_BRAND}`,
-      description: 'اعرف الوقت الحالي في المدن العربية والعالمية مع صفحات الدولة والتاريخ والصلاة داخل ميقاتنا.',
+      description: 'اعرف الوقت الحالي في المدن العربية والعالمية مع صفحات الدولة والتاريخ داخل ميقاتنا.',
       alternates: {
         canonical: `/time-now/${countrySlug}/${citySlug}`,
       },
@@ -282,11 +282,6 @@ export default async function CityTimePage({ params }) {
             label: 'افتح حاسبة فرق التوقيت',
             description: 'استخدم أداة فرق التوقيت للوصول إلى المدن والمقارنات الزمنية المرتبطة.',
           },
-          {
-            href: '/fahras',
-            label: 'استكشف الصفحات',
-            description: 'الفهرس السريع يساعدك على الوصول إلى أقرب مسار مرتبط بهذه المدينة أو الدولة.',
-          },
         ]}
       />
     );
@@ -320,11 +315,6 @@ export default async function CityTimePage({ params }) {
             description: 'ابدأ من صفحة الوقت الرئيسية ثم اختر مدينة أخرى من البحث المباشر.',
           },
           {
-            href: '/mwaqit-al-salat',
-            label: 'افتح مواقيت الصلاة',
-            description: 'يمكنك الوصول إلى القسم المرتبط بالمدينة أو الدولة من مسار الصلاة.',
-          },
-          {
             href: '/date',
             label: 'افتح قسم التاريخ',
             description: 'راجع التاريخ اليوم وأدوات التحويل والتقويم من القسم الرئيسي.',
@@ -342,11 +332,6 @@ export default async function CityTimePage({ params }) {
   const countryAr = country.name_ar || country.name_en;
   const offset = getUtcOffsetStr(city.timezone);
   const cityUtilityLinks = [
-    {
-      href: `/mwaqit-al-salat/${countrySlug}/${citySlug}`,
-      label: `مواقيت الصلاة في ${cityAr}`,
-      description: `صفحة أوقات الصلاة اليوم في ${cityAr} مع الفجر والظهر والعصر والمغرب والعشاء.`,
-    },
     {
       href: `/time-now/${countrySlug}`,
       label: `الوقت الان في ${countryAr}`,
@@ -420,7 +405,7 @@ export default async function CityTimePage({ params }) {
     '@id': `${cityPageId}#webpage`,
     name: `الوقت الان في ${cityAr}، ${countryAr}`,
     url: cityPageId,
-    description: `الوقت الحالي في ${cityAr} بدقة حتى الثانية مع التاريخ المحلي، فرق UTC ${offset}، منطقة IANA، حالة التوقيت الصيفي، وروابط الصلاة وفرق التوقيت.`,
+    description: `الوقت الحالي في ${cityAr} بدقة حتى الثانية مع التاريخ المحلي، فرق UTC ${offset}، منطقة IANA، حالة التوقيت الصيفي، وروابط فرق التوقيت.`,
     inLanguage: 'ar',
     breadcrumb: { '@id': `${cityPageId}#breadcrumb` },
     about: { '@id': `${cityPageId}#place` },
@@ -484,7 +469,7 @@ export default async function CityTimePage({ params }) {
                 الوقت الآن في <span className="text-accent">{cityAr}</span>، {countryAr}
               </h1>
               <p className={routeStyles.heroLead}>
-                الوقت الآن في {cityAr}، {countryAr} هو التوقيت المحلي المرتبط بالمنطقة {city.timezone} وإزاحة {offset || city.timezone}. ستجد الساعة الحية والتاريخ، ثم مواقيت الصلاة وفرق التوقيت ومدن {countryAr} الأخرى.
+                الوقت الآن في {cityAr}، {countryAr} هو التوقيت المحلي المرتبط بالمنطقة {city.timezone} وإزاحة {offset || city.timezone}. ستجد الساعة الحية والتاريخ، ثم فرق التوقيت ومدن {countryAr} الأخرى.
               </p>
             </div>
 
@@ -525,9 +510,9 @@ export default async function CityTimePage({ params }) {
             </div>
             <div className={routeStyles.summaryCard}>
               <p className={routeStyles.summaryLabel}>الفائدة العملية</p>
-              <p className={routeStyles.summaryValue}>وقت + صلاة + مقارنة</p>
+              <p className={routeStyles.summaryValue}>وقت + تاريخ + مقارنة</p>
               <p className={routeStyles.summaryCopy}>
-                انتقل إلى الصلاة أو فرق التوقيت أو التاريخ من نفس الصفحة بدون إعادة إدخال المدينة.
+                انتقل إلى فرق التوقيت أو التاريخ من نفس الصفحة بدون إعادة إدخال المدينة.
               </p>
             </div>
           </div>
@@ -732,16 +717,16 @@ async function CityTimePageSections({
                 كيف تستخدم وقت {cityAr} دون خطأ؟
               </h2>
               <p className={routeStyles.sectionCopy}>
-                السؤال ليس دائماً “كم الساعة؟”. أحياناً تريد معرفة هل الوقت مناسب للاتصال، هل أذان المدينة قريب، أو هل موعد العمل سيقع في يوم مختلف عند الطرف الآخر.
+                السؤال ليس دائماً “كم الساعة؟”. أحياناً تريد معرفة هل الوقت مناسب للاتصال، أو هل موعد العمل سيقع في يوم مختلف عند الطرف الآخر.
               </p>
             </div>
 
             <div className={routeStyles.insightGrid}>
               <article className={routeStyles.insightCard}>
-                <span className={routeStyles.insightKicker}>صلاة ويوم محلي</span>
+                <span className={routeStyles.insightKicker}>يوم محلي دقيق</span>
                 <h3>عندما يكون القرار داخل {cityAr}</h3>
                 <p>
-                  ابدأ بالوقت والتاريخ هنا، ثم افتح مواقيت الصلاة في {cityAr}. هذا أدق من الاعتماد على صفحة الدولة عندما يكون سؤالك عن الفجر أو المغرب أو بداية اليوم المحلي.
+                  ابدأ بالوقت والتاريخ هنا مباشرة. هذا أدق من الاعتماد على صفحة الدولة عندما يكون سؤالك عن بداية اليوم المحلي في {cityAr} تحديداً.
                 </p>
               </article>
               <article className={routeStyles.insightCard}>
@@ -788,7 +773,7 @@ async function CityTimePageSections({
               </p>
               <ul className={routeStyles.ruleList}>
                 <li>للمكالمة الآن: راجع الساعة الحالية ثم قارِن الطرف الآخر في أداة فرق التوقيت.</li>
-                <li>للصلاة: افتح مواقيت الصلاة في {cityAr} لأن وقت الصلاة مرتبط بالمدينة لا باسم الدولة فقط.</li>
+                <li>لتوثيق موعد: راجع التاريخ المحلي في {cityAr} لأنه مرتبط بالمدينة لا باسم الدولة فقط.</li>
                 <li>للسفر: استخدم اسم المدينة والمنطقة الزمنية في الحجز، وراجع التاريخ المحلي عند الوصول.</li>
               </ul>
             </div>
@@ -849,7 +834,7 @@ async function CityTimePageSections({
           <div className={routeStyles.sectionPanel}>
             <GeoInternalLinks
               title={`خطوات تكمل وقت ${cityAr}`}
-              description={`بعد معرفة الساعة في ${cityAr}، اختر المسار الذي يكمّل سؤالك: مواقيت الصلاة لليوم، تاريخ ${countryAr} المحلي، صفحة الدولة، أو مقارنة الوقت مع مدينة أخرى.`}
+              description={`بعد معرفة الساعة في ${cityAr}، اختر المسار الذي يكمّل سؤالك: تاريخ ${countryAr} المحلي، صفحة الدولة، أو مقارنة الوقت مع مدينة أخرى.`}
               links={cityUtilityLinks}
               ariaLabel={`خطوات تكمل وقت ${cityAr}`}
             />
@@ -890,7 +875,7 @@ async function CityTimePageSections({
                 لكن إذا كان الموعد مع مدينة أخرى، فلا تعتمد على حفظ فرق الساعات من الذاكرة. استخدم حاسبة فرق التوقيت حتى تراعي التاريخ والتوقيت الصيفي.
               </p>
               <p>
-                تجد في الصفحة أيضاً مسارات إلى الصلاة والتاريخ ومدن أخرى داخل {countryAr}
+                تجد في الصفحة أيضاً مسارات إلى التاريخ ومدن أخرى داخل {countryAr}
                 {relatedOffsetCountriesText ? `، وإلى دول تشترك اليوم في نفس الإزاحة مثل ${relatedOffsetCountriesText}` : ''}
                 . بهذا تصبح الصفحة مفيدة للتخطيط لمكالمة أو سفر أو متابعة يومية، لا مجرد سطر ساعة معزول.
               </p>
@@ -929,7 +914,7 @@ async function CityTimePageSections({
           <div className={routeStyles.sectionPanel}>
             <GeoInternalLinks
               title={`خطوات تكمل وقت ${cityAr}`}
-              description={`بعد معرفة الساعة في ${cityAr}، اختر مواقيت الصلاة، تاريخ ${countryAr} المحلي، صفحة الدولة، أو مقارنة الوقت مع مدينة أخرى.`}
+              description={`بعد معرفة الساعة في ${cityAr}، اختر تاريخ ${countryAr} المحلي، صفحة الدولة، أو مقارنة الوقت مع مدينة أخرى.`}
               links={cityUtilityLinks}
               ariaLabel={`خطوات تكمل وقت ${cityAr}`}
             />

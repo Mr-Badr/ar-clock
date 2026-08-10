@@ -36,14 +36,6 @@ const ROUTE_MANUAL_AD_SLOT_FAMILIES: readonly RouteManualAdSlotFamily[] = [
     },
   },
   {
-    prefix: '/mwaqit-al-salat',
-    keys: {
-      topBanner: 'topPrayerBanner',
-      inArticle: 'inArticlePrayer',
-      multiplex: 'multiplexPrayer',
-    },
-  },
-  {
     prefix: '/time-difference',
     keys: {
       topBanner: 'topTimeDifferenceBanner',

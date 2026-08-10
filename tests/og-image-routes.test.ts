@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import prayerCityImage from '@/app/mwaqit-al-salat/[country]/[city]/opengraph-image.jsx';
 import timeNowCountryImage from '@/app/time-now/[country]/opengraph-image.jsx';
 import timeNowCityImage from '@/app/time-now/[country]/[city]/opengraph-image.jsx';
 
@@ -49,25 +48,6 @@ test('time-now country OG image renders a PNG body for country routes', async ()
 
   for (const route of routes) {
     const result = await renderImageBytes(timeNowCountryImage, route);
-
-    assert.equal(result.contentType, 'image/png');
-    assert.ok(result.byteLength > 0);
-  }
-});
-
-test('prayer city OG image renders a PNG body without closing the response early', async () => {
-  const routes = [
-    { country: 'turkey', city: 'bagcilar' },
-    { country: 'burundi', city: 'gitega' },
-    { country: 'china', city: 'suqian' },
-    { country: 'guinea', city: 'camayenne' },
-    { country: 'mozambique', city: 'matola' },
-    { country: 'saudi-arabia', city: 'taif' },
-    { country: 'china', city: 'guilin' },
-  ];
-
-  for (const route of routes) {
-    const result = await renderImageBytes(prayerCityImage, route);
 
     assert.equal(result.contentType, 'image/png');
     assert.ok(result.byteLength > 0);

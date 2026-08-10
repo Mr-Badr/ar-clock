@@ -28,7 +28,7 @@ paths:
 | Native_Content_End_Multiplex_01 | 3132380621 | Multiplex |
 | Native_Events_List_InFeed_01 | 1947291465 | In-feed |
 | Calculators_InSection_Mid_01 | 1236962564 | In-article |
-| Prayer_Top_Horizontal_01 | 5557556347 | Display (created 2026-07-05, dedicated prayer-section top banner) |
+| Prayer_Top_Horizontal_01 | 5557556347 | Display (created 2026-07-05; **retired 2026-08-09** — `/mwaqit-al-salat` removed, no code references this slot anymore, unit left as-is in AdSense) |
 | Time_Top_Horizontal_01 | 5425659014 | Display (created 2026-07-05, time-now + time-difference top banner) |
 | Calculators_Top_Horizontal_01 | 3292274096 | Display (created 2026-07-05, dedicated calculators top banner) |
 
@@ -53,7 +53,7 @@ units to absorb them after deploy.
 
 ## Slot resolution fallback chain
 Each component reads route prefix → looks up section-specific slot key → falls back to generic key.
-Example for `/mwaqit-al-salat`: tries `topPrayerBanner` → falls back to `topBanner`.
+Example for `/holidays`: tries `topHolidaysBanner` → falls back to `topBanner`.
 Fallback is handled by `resolveManualAdSlot()` in `src/lib/ads/slot-resolution.ts`.
 
 ## Ad coverage per section (current state after 2026-07-03 fixes)
@@ -73,9 +73,6 @@ gap in this table, not introduced by this change).
 | /time-now/[country] | ✅ | ✅ ×2 (2nd after FAQ, added 2026-07-07) | ✅ |
 | /time-now/[country]/[city] | ✅ | ✅ ×2 (2nd after FAQ, added 2026-07-07) | ✅ |
 | /time-difference/[from]/[to] | ✅ | ✅ | ✅ |
-| /mwaqit-al-salat (hub) | ✅ | ✅ | ✅ |
-| /mwaqit-al-salat/[country] | ✅ | ✅ | ✅ |
-| /mwaqit-al-salat/[country]/[city] | ✅ | ✅ ×1 | ✅ |
 | /calculators/* (common.jsx) | ✅ (between hero and tool, added to 15 more pages) | ✅ (after FAQ accordion) + ✅ (mid-section divider on long pages, activates when inArticleCalculatorMid slot filled) | ✅ (in RelatedCalculators) |
 
 ## Format + centering rules (added 2026-07-07)
@@ -105,7 +102,7 @@ gap in this table, not introduced by this change).
   content, first thing inside `<main>` on every page.
 
 ## Ad-free routes (intentional, from route-policy.js)
-/about, /contact, /disclaimer, /editorial-policy, /fahras, /offline, /privacy, /search, /terms, /api/*
+/about, /contact, /disclaimer, /editorial-policy, /offline, /privacy, /search, /terms, /api/*
 
 ## Placement rules (from AdTopBanner.tsx JSDoc)
 - AdTopBanner: first child inside `<main>`, before the breadcrumb and `<h1>` (v3, 2026-07-21)
@@ -123,4 +120,4 @@ All calculator pages use these exported components in order:
 
 ## Sidebar ads (active)
 `AdSidebarSticky` is active on blog articles (`BlogArticlePage.jsx`) and holiday detail pages (`/holidays/[slug]/page.jsx`) via `AdLayoutWrapper sidebarMode="dual"`. Only shows at ≥1440px. Slot IDs: right: 4134471107, left: 5183828891.
-Next candidates: prayer city pages (long-form, high-traffic).
+Next candidates: long-form time-now country/city pages (high-traffic).

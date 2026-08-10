@@ -12,7 +12,6 @@ import {
   Clock3,
   Compass,
   FileText,
-  Landmark,
   LayoutGrid,
   LayoutList,
   PartyPopper,
@@ -68,7 +67,6 @@ const VISIT_ICONS = {
   blog: BookOpenText,
   holiday: PartyPopper,
   date: CalendarDays,
-  prayer: Landmark,
   difference: Compass,
   clock: Clock3,
   page: BriefcaseBusiness,
@@ -418,7 +416,7 @@ export default function DiscoveryWorkspaceClient({
   const [recentSearches, setRecentSearches] = useState([]);
   const [recentVisits, setRecentVisits] = useState([]);
 
-  const discoveryPath = routePath || (resolvedMode === 'search' ? '/search' : '/fahras');
+  const discoveryPath = routePath || '/search';
   const deferredPaletteQuery = useDeferredValue(paletteQuery);
   const heroCopy = renderHeroCopy(resolvedMode, viewModel.hasQuery, viewModel.query);
   const calculatorItemsCount = viewModel.allItems.filter((item) => item.href.startsWith('/tools/')).length;
@@ -844,7 +842,7 @@ export default function DiscoveryWorkspaceClient({
                       عرض الدليل بدون بحث
                       <ArrowLeft size={15} />
                     </Link>
-                    <Link href="/fahras" className={styles.searchEmptySecondary}>
+                    <Link href={discoveryPath} className={styles.searchEmptySecondary}>
                       فتح كل المسارات
                     </Link>
                   </div>
@@ -1025,7 +1023,7 @@ export default function DiscoveryWorkspaceClient({
                     })}
                   </CommandGroup>
                 ))}
-                <CommandEmpty>لا توجد نتائج مطابقة. جرّب كلمة أقصر مثل “القسط” أو “الصلاة”، أو افتح الفهرس لاختيار القسم يدوياً.</CommandEmpty>
+                <CommandEmpty>لا توجد نتائج مطابقة. جرّب كلمة أقصر مثل “القسط” أو “التاريخ”.</CommandEmpty>
               </>
             ) : (
               <div className={styles.commandEmptyState}>

@@ -111,7 +111,6 @@ export default async function ImsakiyaCityPage({ params }) {
   const { gregYear, ramadanStart, dayCount, days } = imsakiya;
 
   const canonicalUrl = `${SITE_URL}/imsakiya/${countrySlug}/${citySlug}`;
-  const prayerUrl = `/mwaqit-al-salat/${countrySlug}/${citySlug}`;
 
   // Compute average fasting hours from middle of month
   const midDays = days.filter(d => d.ramadanDay >= 10 && d.ramadanDay <= 20);
@@ -289,15 +288,6 @@ export default async function ImsakiyaCityPage({ params }) {
               <strong>طريقة الحساب:</strong> تعتمد الأوقات على المعادلات الفلكية المعتمدة في {countryAr}. قد تختلف دقيقة أو دقيقتين عن الإمساكية الرسمية المطبوعة بسبب اختلاف طريقة التقريب.
             </p>
           </div>
-
-          <div className="mt-6">
-            <Link
-              href={prayerUrl}
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground rounded-lg px-5 py-2.5 text-sm font-medium hover:bg-primary/90 transition-colors"
-            >
-              مواقيت الصلاة اليومية في {cityAr} ←
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -331,7 +321,7 @@ export default async function ImsakiyaCityPage({ params }) {
           <div>
             <h3 className="font-semibold text-base mb-1">كيف أتحقق من وقت الإفطار في {cityAr} هذا الشهر؟</h3>
             <p className="text-sm text-foreground/80 leading-relaxed">
-              وقت الإفطار في {cityAr} هو وقت المغرب. يمكنك مراجعة الجدول أعلاه ليوم صيامك، أو زيارة صفحة <Link href={prayerUrl} className="underline underline-offset-2">مواقيت الصلاة في {cityAr}</Link> للوقت الحي اليومي.
+              وقت الإفطار في {cityAr} هو وقت المغرب. راجع الجدول أعلاه ليوم صيامك للحصول على الوقت الدقيق.
             </p>
           </div>
         </div>
@@ -344,11 +334,6 @@ export default async function ImsakiyaCityPage({ params }) {
         <div className="border rounded-xl p-5 bg-card">
           <h2 className="font-semibold text-base mb-3">صفحات ذات صلة</h2>
           <ul className="space-y-2 text-sm">
-            <li>
-              <Link href={prayerUrl} className="text-primary underline underline-offset-2 hover:text-primary/80">
-                مواقيت الصلاة في {cityAr} — توقيت حي يومي
-              </Link>
-            </li>
             <li>
               <Link href="/holidays/ramadan" className="text-primary underline underline-offset-2 hover:text-primary/80">
                 كم باقي على رمضان {gregYear}؟ — عداد تنازلي

@@ -5,7 +5,6 @@ const AD_FREE_EXACT_PATHS = new Set([
   '/contact',
   '/disclaimer',
   '/editorial-policy',
-  '/fahras',
   '/offline',
   '/privacy',
   '/search',
@@ -34,10 +33,6 @@ export function getAdRoutePolicy(pathname = '/') {
   const isDateSection = normalized === '/date' || normalized.startsWith('/date/');
   const isTimeNowSection = normalized === '/time-now' || normalized.startsWith('/time-now/');
   const isTimeDifferenceSection = normalized === '/time-difference' || normalized.startsWith('/time-difference/');
-  // Prayer pages are long, high-dwell surfaces where the dismissible mobile anchor adds
-  // viewable impressions without covering content (this used to also cover /blog/ articles,
-  // same reasoning — removed 2026-08-09 when /blog was retired entirely).
-  const isPrayerSection = normalized === '/mwaqit-al-salat' || normalized.startsWith('/mwaqit-al-salat/');
   const isCalculatorSection = normalized === '/tools' || normalized.startsWith('/tools/');
 
   return {
@@ -49,7 +44,6 @@ export function getAdRoutePolicy(pathname = '/') {
       isDateSection ||
       isTimeNowSection ||
       isTimeDifferenceSection ||
-      isPrayerSection ||
       isCalculatorSection
       ),
     // Auto Ads enabled on all monetized routes. Side-rail visibility at laptop

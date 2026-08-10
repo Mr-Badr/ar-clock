@@ -59,13 +59,13 @@ export default function SectionStartHere() {
           </h2>
 
           <p className="feature-copy">
-            اختر أقرب نية لك الآن: معرفة الوقت، تنظيم الصلاة، تحويل التاريخ، أو استخدام حاسبة يومية.
+            اختر أقرب نية لك الآن: معرفة الوقت، تحويل التاريخ، أو استخدام حاسبة يومية.
             كل مسار يبدأ بالنتيجة ثم يضع الشرح والمصدر والخطوة التالية في مكانها.
           </p>
 
           <ul className="feature-list" role="list" aria-label="كيف تستفيد من هذه المنطقة">
             <FeatureItem icon={Clock3}>
-              للجواب اللحظي، ابدأ من <strong>الوقت الان</strong> أو <strong>مواقيت الصلاة</strong>.
+              للجواب اللحظي، ابدأ من <strong>الوقت الان</strong>.
             </FeatureItem>
             <FeatureItem icon={Calculator}>
               للحسابات، افتح الأداة أولاً ثم راجع المثال والافتراضات من نفس الصفحة.
@@ -76,13 +76,7 @@ export default function SectionStartHere() {
           </ul>
 
           <div className="action-row">
-            <CtaLink href="/fahras">افتح استكشف الصفحات</CtaLink>
-            <Link
-              href="/time-now"
-              className="text-link"
-            >
-              ابدأ من الوقت الان
-            </Link>
+            <CtaLink href="/time-now">ابدأ من الوقت الان</CtaLink>
           </div>
         </div>
 

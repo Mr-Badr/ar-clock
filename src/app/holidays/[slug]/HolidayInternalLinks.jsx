@@ -1,10 +1,9 @@
 import Link from 'next/link';
-import { ArrowLeft, Clock, RefreshCw, Calculator, CalendarDays, Globe2 } from 'lucide-react';
+import { ArrowLeft, RefreshCw, Calculator, CalendarDays, Globe2 } from 'lucide-react';
 import { getCountryByCode } from '@/lib/events/country-dictionary';
 import { getCountryHubByCode } from '@/lib/holidays/country-hub-data';
 
 const LINK_ICONS = {
-  'prayer-times': Clock,
   'date-convert': RefreshCw,
   calculator: Calculator,
   calendar: CalendarDays,
@@ -54,18 +53,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
   const isIslamic = ISLAMIC_CATEGORIES.has(event?.category) || event?.type === 'hijri';
   const links = [];
 
-  // 1. Prayer times — highest daily-use page, always relevant for Islamic events
-  if (isIslamic) {
-    links.push({
-      href: '/mwaqit-al-salat',
-      title: 'مواقيت الصلاة',
-      desc: `اعرف مواعيد الصلاة في يوم ${displayTitle} ويومياً في مدينتك.`,
-      cta: 'اعرف المواقيت',
-      kind: 'prayer-times',
-    });
-  }
-
-  // 2. Date conversion — always useful for hijri events
+  // 1. Date conversion — always useful for hijri events
   if (isIslamic || event?.type === 'hijri') {
     links.push({
       href: '/date/converter',
@@ -84,7 +72,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
     });
   }
 
-  // 3. Smart calculator per event type
+  // 2. Smart calculator per event type
   const calcLink = CALCULATOR_LINKS[slug];
   if (calcLink) {
     links.push({ href: calcLink.href, title: calcLink.title, desc: calcLink.desc, cta: 'ابدأ الحاسبة', kind: 'calculator' });
@@ -130,7 +118,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
     });
   }
 
-  // 4. Calendar / hijri year link
+  // 3. Calendar / hijri year link
   if (event?.type === 'hijri' && hijriYearNum) {
     links.push({
       href: `/date/calendar/hijri/${hijriYearNum}`,
@@ -149,7 +137,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
     });
   }
 
-  // 5. Gulf-wide pay calendar for salary/pension/support events, then the
+  // 4. Gulf-wide pay calendar for salary/pension/support events, then the
   //    country holiday-calendar hub when one exists, otherwise the all-holidays hub
   const countryHub = getCountryHubByCode(event?._countryCode);
   if (GULF_PAY_DATES_SLUGS.has(slug)) {
@@ -213,7 +201,7 @@ export default function HolidayInternalLinks({
           marginBottom: 'var(--space-4)',
         }}
       >
-        اختر ما تحتاجه فعلاً: مواقيت الصلاة، تحويل التاريخ، حاسبة مالية، أو مناسبة قريبة.
+        اختر ما تحتاجه فعلاً: تحويل التاريخ، حاسبة مالية، أو مناسبة قريبة.
       </p>
       <div className="waqt-related-grid">
         {links.map((link) => {

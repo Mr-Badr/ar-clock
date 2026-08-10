@@ -3,6 +3,7 @@ import {
   AppWindow,
   Bug,
   Car,
+  Fingerprint,
   GraduationCap,
   Hammer,
   HardHat,
@@ -44,6 +45,7 @@ const CATEGORY_ICONS = {
   'aluminum-glass': AppWindow,
   health: Heartbeat,
   education: GraduationCap,
+  attendance: Fingerprint,
 };
 
 // Arabic plural agreement for "أداة" (tool, feminine) — 1/2/3-10/11+ each take a different form.
@@ -212,6 +214,17 @@ const CATEGORIES = [
     // material) — a buying-guide page, not a tool. See
     // keyword-research/aluminum-glass/DECISION.md. Does NOT mean this category passed the full
     // Hub Gate as a strategic calculator category — it's the minimal container for one page.
+    toolCount: 1,
+  },
+  {
+    slug: 'attendance',
+    name: 'الحضور والانصراف',
+    description: 'احسب تكلفة نظام الحضور والانصراف حسب عدد موظفيك، مع مقارنة أسعار حقيقية لأبرز المزودين.',
+    // Deliberately single-tool hub (2026-08-10) — real Keyword Planner data on "نظام الحضور
+    // والانصراف" (11,500/mo, Low-Medium comp, bid up to 230.35 SAR — the highest CPC found
+    // across this whole research round). The adjacent ideas from the same research batch
+    // (انتركم، اكسس كنترول تجزئة) were rejected on competition/CPC grounds — see docs/PLAN.md
+    // §13 and keyword-research/access-control-intercom-hub/DECISION.md.
     toolCount: 1,
   },
   {

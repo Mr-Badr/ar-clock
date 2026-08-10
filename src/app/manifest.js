@@ -10,7 +10,7 @@ export default function manifest() {
   return {
     name: SITE_APP_NAME,
     short_name: SITE_BRAND,
-    description: `${SITE_BRAND} يجمع الوقت، مواقيت الصلاة، التاريخ، الحاسبات، والمناسبات في تجربة عربية واضحة.`,
+    description: `${SITE_BRAND} يجمع الوقت، التاريخ، الحاسبات، والمناسبات في تجربة عربية واضحة.`,
     start_url: '/',
     display: 'standalone',
     background_color: '#181C2A',
@@ -28,19 +28,9 @@ export default function manifest() {
     categories: ['lifestyle', 'utilities', 'education'],
     shortcuts: [
       {
-        name: 'فهرس الأدوات',
-        url: '/fahras',
-        description: 'ابحث داخل الوقت والحاسبات من صفحة واحدة',
-      },
-      {
-        name: 'الحاسبات',
+        name: 'الأدوات',
         url: '/tools',
         description: 'ابدأ من أشهر الحاسبات العربية اليومية',
-      },
-      {
-        name: 'مواقيت الصلاة',
-        url: '/mwaqit-al-salat',
-        description: 'تحقق من أوقات الصلاة الدقيقة',
       },
       {
         name: 'فرق التوقيت',

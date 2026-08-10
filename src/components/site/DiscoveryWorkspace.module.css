@@ -1920,7 +1920,6 @@
 }
 
 .catCard[data-cat='time']       { --cat-accent: var(--blue); }
-.catCard[data-cat='prayer']     { --cat-accent: var(--green); }
 .catCard[data-cat='date']       { --cat-accent: var(--amber); }
 .catCard[data-cat='calculators']{ --cat-accent: var(--blue); }
 .catCard[data-cat='holidays']   { --cat-accent: var(--red); }

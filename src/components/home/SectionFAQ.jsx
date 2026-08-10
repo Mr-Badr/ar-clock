@@ -52,7 +52,7 @@ export default function SectionFAQ() {
           className="section-title"
         >
           أسئلة تساعدك على استخدام{' '}
-          <span className="text-accent">الوقت والصلاة والتاريخ بثقة</span>
+          <span className="text-accent">الوقت والتاريخ بثقة</span>
         </h2>
 
         <p className="section-copy">

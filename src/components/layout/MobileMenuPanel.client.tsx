@@ -2,20 +2,14 @@
 "use client";
 
 import Link from "next/link";
-import type { CSSProperties, ElementType } from "react";
+import type { ElementType } from "react";
 import { usePathname } from "next/navigation";
 import {
   Moon, Sun,
   ArrowsCounterClockwise,
   Calendar, CalendarDots,
-  ArrowRight, ArrowLeft, ArrowsLeftRight,
-  Clock, Timer, Hourglass,
+  ArrowsLeftRight,
   Globe,
-  Calculator,
-  Percent,
-  Receipt,
-  Wallet,
-  Buildings,
   X,
 } from "@phosphor-icons/react";
 import {
@@ -26,7 +20,6 @@ import {
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import { useIntentPrefetch } from "./useIntentPrefetch";
-import { CALC_CATEGORIES } from "./NavLinks";
 
 type SubLink = {
   href: string;
@@ -46,8 +39,7 @@ function getPhosphorIcon(name: string | undefined): ElementType | null {
 
   const iconMap: Record<string, ElementType> = {
     Moon, Sun, ArrowsCounterClockwise, Calendar, CalendarDots,
-    ArrowRight, ArrowLeft, ArrowsLeftRight, Clock, Timer, Hourglass,
-    Globe, Calculator, Percent, Receipt, Wallet, Buildings,
+    ArrowsLeftRight, Globe,
   };
 
   return iconMap[name] ?? null;
@@ -92,111 +84,12 @@ export default function MobileMenuPanel({
       <div className="header-mobile-menu-body rtl">
         {links.map((link) => (
           <div key={link.href}>
-            {link.href === "/tools" ? (
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value={link.href} className="border-none">
-                  <AccordionTrigger
-                    onMouseEnter={() =>
-                      prefetchMany(CALC_CATEGORIES.map((cat) => cat.viewAll))
-                    }
-                    onFocus={() =>
-                      prefetchMany(CALC_CATEGORIES.map((cat) => cat.viewAll))
-                    }
-                    className={cn(
-                      "header-mobile-link header-mobile-link--accordion",
-                      isActive(link.href) && "active"
-                    )}
-                    aria-current={isActive(link.href) ? "page" : undefined}
-                  >
-                    <span>{link.label}</span>
-                  </AccordionTrigger>
-
-                  <AccordionContent className="header-mobile-sublist">
-                    <Accordion type="single" collapsible className="w-full header-mobile-cat-accordion">
-                      {CALC_CATEGORIES.map((cat) => {
-                        const CatIcon = cat.icon;
-                        const catStyle = { "--cat": cat.color } as CSSProperties;
-                        return (
-                          <AccordionItem
-                            key={cat.id}
-                            value={cat.id}
-                            className="header-mobile-cat-item"
-                          >
-                            <AccordionTrigger
-                              className="header-mobile-cat-trigger"
-                              style={catStyle}
-                              onMouseEnter={() =>
-                                prefetchMany(cat.tools.map((t) => t.href))
-                              }
-                              onFocus={() =>
-                                prefetchMany(cat.tools.map((t) => t.href))
-                              }
-                            >
-                              <span className="header-mobile-cat-icon" style={catStyle} aria-hidden="true">
-                                <CatIcon size={16} weight="duotone" />
-                              </span>
-                              <span className="header-mobile-cat-body">
-                                <span className="header-mobile-cat-label">{cat.label}</span>
-                                <span className="header-mobile-cat-sub">{cat.sub}</span>
-                              </span>
-                            </AccordionTrigger>
-
-                            <AccordionContent className="header-mobile-cat-tools">
-                              {cat.tools.map((tool) => {
-                                const ToolIcon = tool.icon;
-                                const active = pathname === tool.href;
-                                return (
-                                  <Link
-                                    key={tool.href}
-                                    href={tool.href}
-                                    prefetch
-                                    aria-current={active ? "page" : undefined}
-                                    className={cn(
-                                      "header-mobile-sublink",
-                                      active && "active"
-                                    )}
-                                    style={catStyle}
-                                    {...getPrefetchHandlers(tool.href)}
-                                  >
-                                    <span className="header-mobile-sublink-icon header-mobile-sublink-icon--cat" aria-hidden="true">
-                                      <ToolIcon size={15} weight={active ? "duotone" : "regular"} />
-                                    </span>
-                                    <span className="header-mobile-sublink-copy">
-                                      <span>{tool.label}</span>
-                                      <small>{tool.desc}</small>
-                                    </span>
-                                  </Link>
-                                );
-                              })}
-                              <Link
-                                href={cat.viewAll}
-                                prefetch
-                                className="header-mobile-cat-viewall"
-                                style={catStyle}
-                                {...getPrefetchHandlers(cat.viewAll)}
-                              >
-                                عرض كل أدوات {cat.label}
-                                <ArrowLeft size={13} weight="bold" aria-hidden="true" />
-                              </Link>
-                            </AccordionContent>
-                          </AccordionItem>
-                        );
-                      })}
-                    </Accordion>
-
-                    <Link
-                      href="/tools"
-                      prefetch
-                      className="header-mobile-cat-viewall-all"
-                      {...getPrefetchHandlers("/tools")}
-                    >
-                      <Calculator size={15} weight="duotone" aria-hidden="true" />
-                      عرض جميع الحاسبات
-                    </Link>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            ) : link.sublinks ? (() => {
+            {/* The dedicated "/tools" rich-category accordion (CALC_CATEGORIES) was removed
+                2026-08-09 (owner directive: no more calculators dropdown anywhere in the
+                navbar — "/tools" now renders through the same generic sublinks/plain-link
+                logic as every other nav item below, and since it has no `sublinks`, it
+                falls through to a plain link). */}
+            {link.sublinks ? (() => {
               const sublinkHrefs = link.sublinks.map((sublink) => sublink.href);
               return (
                 <Accordion type="single" collapsible className="w-full">

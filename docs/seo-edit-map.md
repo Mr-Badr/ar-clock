@@ -54,9 +54,6 @@ This file is the short map of the highest-value places to edit titles, descripti
 - `src/app/time-now/[country]/[city]/page.jsx`
 - `src/app/time-difference/page.jsx`
 - `src/app/time-difference/[from]/[to]/page.jsx`
-- `src/app/mwaqit-al-salat/page.jsx`
-- `src/app/mwaqit-al-salat/[country]/page.jsx`
-- `src/app/mwaqit-al-salat/[country]/[city]/page.jsx`
 - `src/app/date/page.tsx`
 - `src/app/date/today/page.tsx`
 - `src/app/date/converter/page.tsx`

@@ -173,7 +173,6 @@ test('AdSense delivery is disabled on trust, navigation, and non-content routes'
     '/contact',
     '/disclaimer',
     '/editorial-policy',
-    '/fahras',
     '/offline',
     '/privacy',
     '/search',

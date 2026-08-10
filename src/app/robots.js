@@ -5,7 +5,7 @@ import { getSiteUrl } from '@/lib/site-config';
  * Auto-served at /robots.txt
  *
  * SEO STRATEGY:
- *  - Allow all content pages (calculators, prayer times, date, holidays)
+ *  - Allow all content pages (tools, time, date, holidays)
  *  - Block API routes (no SEO value, wastes crawl budget)
  *  - Block search result pages (duplicate content risk)
  *  - Block PWA/offline pages (no SEO value)

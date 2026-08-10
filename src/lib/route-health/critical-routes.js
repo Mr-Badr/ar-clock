@@ -175,7 +175,6 @@ export const CRITICAL_ROUTE_PROBES = Object.freeze([
   },
   { id: 'date-country', path: '/date/country/saudi-arabia', label: 'Country date page' },
   { id: 'time-country', path: '/time-now/saudi-arabia', label: 'Country time page' },
-  { id: 'prayer-city', path: '/mwaqit-al-salat/saudi-arabia/riyadh', label: 'Prayer city page' },
   { id: 'time-difference', path: '/time-difference/saudi-arabia-riyadh/egypt-cairo', label: 'Time difference page' },
   {
     id: 'time-city-og-image',
@@ -188,12 +187,6 @@ export const CRITICAL_ROUTE_PROBES = Object.freeze([
     id: 'invalid-time-city-placeholder',
     path: '/time-now/china/%5Bcity%5D',
     label: 'Invalid time city placeholder',
-    expectedStatus: 404,
-  },
-  {
-    id: 'invalid-prayer-city-placeholder',
-    path: '/mwaqit-al-salat/china/%5Bcity%5D',
-    label: 'Invalid prayer city placeholder',
     expectedStatus: 404,
   },
   {

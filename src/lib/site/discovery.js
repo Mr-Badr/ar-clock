@@ -40,7 +40,6 @@ const financeToolEnrichmentByHref = new Map(
 const buildingCalculatorRoute = CALCULATOR_ROUTES.find((route) => route.slug === 'building') || null;
 const SEARCH_PRIORITY_BY_HREF = new Map([
   ['/time-now', 100],
-  ['/mwaqit-al-salat', 98],
   ['/time-difference', 92],
   ['/date', 90],
   ['/date/today', 90],
@@ -187,7 +186,7 @@ function getSearchPriority(href, fallback = 64) {
   if (href.startsWith('/tools/')) return 86;
   if (href.startsWith('/holidays/')) return 72;
   if (href.startsWith('/date/')) return 78;
-  if (href.startsWith('/time-now') || href.startsWith('/mwaqit-al-salat')) return 80;
+  if (href.startsWith('/time-now')) return 80;
 
   return fallback;
 }
@@ -344,14 +343,6 @@ const TIME_AND_DATE_ITEMS = [
     description: 'الوقت الحالي حسب المدينة والدولة مع صفحات محلية قابلة للفهرسة.',
   }, {
     queries: ['كم الساعة الان', 'الوقت الان', 'الساعة الان', 'الوقت الحالي في مدينتي'],
-  }),
-  buildDirectoryItem({
-    href: '/mwaqit-al-salat',
-    kind: 'tool',
-    title: 'مواقيت الصلاة اليوم',
-    description: 'مواعيد الفجر والظهر والعصر والمغرب والعشاء حسب المدينة.',
-  }, {
-    queries: ['مواقيت الصلاة', 'مواعيد الصلاة اليوم', 'وقت الصلاة اليوم', 'أوقات الأذان اليوم'],
   }),
   buildDirectoryItem({
     href: '/time-difference',
@@ -685,7 +676,7 @@ export const SITE_DIRECTORY_SECTIONS = [
   {
     id: 'time',
     title: 'الوقت والتاريخ والمواعيد',
-    description: 'الأدوات الأساسية التي تجيب عن الوقت الان، الصلاة، فرق التوقيت، والتاريخ اليوم.',
+    description: 'الأدوات الأساسية التي تجيب عن الوقت الان، فرق التوقيت، والتاريخ اليوم.',
     items: TIME_AND_DATE_ITEMS,
   },
   {
@@ -770,7 +761,6 @@ export const SITE_SEARCH_INDEX = SITE_DIRECTORY_SECTIONS.flatMap((section) =>
 );
 
 export const SITE_DISCOVERY_PATHS = uniqStrings([
-  '/fahras',
   ...SITE_SEARCH_INDEX.map((item) => item.href),
 ]);
 

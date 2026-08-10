@@ -54,7 +54,6 @@ export function getDiscoveryIconKey(pathname = '') {
   if (pathname.startsWith('/tools')) return 'calculator';
   if (pathname.startsWith('/holidays')) return 'holiday';
   if (pathname.startsWith('/date')) return 'date';
-  if (pathname.startsWith('/mwaqit-al-salat')) return 'prayer';
   if (pathname.startsWith('/time-difference')) return 'difference';
   if (pathname.startsWith('/time-now')) return 'clock';
   return 'page';

@@ -6,7 +6,6 @@ import { useAnalyticsRuntimeConfig } from '@/lib/client/public-runtime';
 
 function getRouteFamily(pathname) {
   if (!pathname) return 'other';
-  if (pathname.startsWith('/mwaqit-al-salat')) return 'prayer';
   if (pathname.startsWith('/holidays')) return 'holiday';
   if (pathname.startsWith('/tools')) return 'calculator';
   if (pathname.startsWith('/time-now')) return 'time-now';

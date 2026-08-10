@@ -5,8 +5,6 @@ process.env.NEXT_PUBLIC_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://
 
 import manifest from '@/data/holidays/generated/manifest.json';
 import { GENERATED_ALIAS_META_BY_SLUG } from '@/lib/events/generated-aliases';
-import blogSitemap from '@/app/blog/sitemap';
-import calculatorsSitemap from '@/app/calculators/sitemap';
 import holidaysSitemap from '@/app/holidays/sitemap';
 import rootSitemap from '@/app/sitemap';
 import timeDifferenceSitemap from '@/app/time-difference/sitemap';
@@ -39,7 +37,6 @@ import {
   selectSeoCountrySlugs,
 } from '@/lib/seo/country-indexing';
 import { getSiteUrl } from '@/lib/site-config';
-import { COUNTRY_LIST } from '@/lib/calculators/building/country-data';
 
 test('holiday sitemap contains published canonical events only', async () => {
   const sitemap = await holidaysSitemap();
@@ -86,11 +83,8 @@ test('root sitemap includes key static pages', async () => {
   const expectedPaths: string[] = [
     '/',
     '/time-now',
-    '/mwaqit-al-salat',
     '/holidays',
     '/time-difference',
-    '/calculators',
-    '/blog',
     '/about',
     '/editorial-policy',
     '/terms',
@@ -111,11 +105,6 @@ test('root sitemap includes key static pages', async () => {
     '/map should not appear in the root sitemap because the route does not exist',
   );
 
-  assert.equal(
-    sitemap.some((row) => row.url === `${base}/calculators/age`),
-    true,
-    '/calculators/age should remain in the root sitemap as a promoted priority tool path',
-  );
   assert.equal(
     sitemap.some((row) => row.url.includes('/guides') || row.url.includes('/guide/')),
     false,
@@ -138,81 +127,9 @@ test('root sitemap promotes all calculator tools as first-class routes', async (
   }
 });
 
-test('calculators sitemap includes hub and detail routes', async () => {
-  const sitemap = await calculatorsSitemap();
-  const base = getSiteUrl();
-  const sitemapUrls = sitemap.map((row) => row.url);
-  const staticPaths: string[] = [
-    '/calculators',
-    '/calculators/sleep',
-    '/calculators/sleep/bedtime',
-    '/calculators/sleep/wake-time',
-    '/calculators/sleep/sleep-duration',
-    '/calculators/sleep/nap-calculator',
-    '/calculators/sleep/sleep-debt',
-    '/calculators/sleep/sleep-needs-by-age',
-    '/calculators/personal-finance',
-    '/calculators/personal-finance/emergency-fund',
-    '/calculators/personal-finance/debt-payoff',
-    '/calculators/personal-finance/savings-goal',
-    '/calculators/personal-finance/net-worth',
-    '/calculators/finance',
-    '/calculators/age',
-    '/calculators/age/calculator',
-    '/calculators/age/hijri',
-    '/calculators/age/difference',
-    '/calculators/age/birth-day',
-    '/calculators/age/milestones',
-    '/calculators/age/planets',
-    '/calculators/age/countdown',
-    '/calculators/age/retirement',
-    '/calculators/end-of-service-benefits',
-    '/calculators/monthly-installment',
-    '/calculators/vat',
-    '/calculators/percentage',
-    '/calculators/building',
-    '/calculators/building/cement',
-    '/calculators/building/rebar',
-    '/calculators/building/tiles',
-  ];
-  const countryPaths = COUNTRY_LIST.map((country) => `/calculators/building/${country.slug}`);
-  const expectedPaths = [...staticPaths, ...countryPaths];
-
-  assert.equal(sitemapUrls.length, new Set(sitemapUrls).size, 'calculators sitemap should not contain duplicate URLs');
-
-  for (const expectedPath of expectedPaths) {
-    assert.equal(
-      sitemapUrls.includes(`${base}${expectedPath}`),
-      true,
-      `${expectedPath} should appear in the calculators sitemap`,
-    );
-  }
-});
-
-test('blog sitemap includes the blog hub and article routes', async () => {
-  const sitemap = await blogSitemap();
-  const base = getSiteUrl();
-  const sitemapUrls = sitemap.map((row) => row.url);
-
-  assert.equal(sitemapUrls.includes(`${base}/blog`), true);
-  assert.equal(sitemapUrls.length, new Set(sitemapUrls).size, 'blog sitemap should not contain duplicate URLs');
-  assert.equal(
-    sitemapUrls.some((url) => url.includes('/guides') || url.includes('/guide/')),
-    false,
-    'blog sitemap should only publish canonical /blog article URLs',
-  );
-  assert.equal(
-    sitemapUrls.some((url) => String(url).startsWith(`${base}/blog/`)),
-    true,
-    'blog sitemap should include article routes',
-  );
-});
-
 test('generated sitemaps omit synthetic lastModified values', async () => {
   const sitemaps = [
     await rootSitemap(),
-    await calculatorsSitemap(),
-    await blogSitemap(),
     await timeDifferenceSitemap(),
   ];
 
@@ -232,8 +149,9 @@ test('sitemap index includes active sitemap entries', async () => {
   const response = await sitemapIndexRoute();
   const xml = await response.text();
 
-  assert.match(xml, new RegExp(`${base}/calculators/sitemap\\.xml`));
-  assert.match(xml, new RegExp(`${base}/blog/sitemap\\.xml`));
+  assert.match(xml, new RegExp(`${base}/holidays/sitemap\\.xml`));
+  assert.match(xml, new RegExp(`${base}/time-now/sitemap\\.xml`));
+  assert.match(xml, new RegExp(`${base}/imsakiya/sitemap\\.xml`));
   assert.doesNotMatch(xml, new RegExp(`${base}/date/sitemap\\.xml`));
   assert.match(xml, new RegExp(`${base}/date/sitemaps/static`));
   assert.match(xml, new RegExp(`${base}/date/sitemaps/countries`));

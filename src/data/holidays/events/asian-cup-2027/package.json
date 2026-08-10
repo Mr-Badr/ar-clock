@@ -86,14 +86,6 @@
         "ctaText": "حاسبة فرق التوقيت",
         "ctaHref": "/time-difference",
         "isAffiliate": false
-      },
-      {
-        "icon": "🕌",
-        "title": "مواقيت الصلاة في الرياض",
-        "description": "تحقق من مواقيت الصلاة في مدن البطولة السعودية.",
-        "ctaText": "مواقيت الصلاة",
-        "ctaHref": "/mwaqit-al-salat/saudi-arabia",
-        "isAffiliate": false
       }
     ],
     "engagementContent": [

@@ -18,7 +18,6 @@ const MANUAL_AD_SLOT_REGISTRY = {
   // which section actually earns — previously time/prayer/calculators all
   // masqueraded as the Events unit and per-section revenue was invisible.
   topTimeBanner: '5425659014',
-  topPrayerBanner: '5557556347',
   topTimeDifferenceBanner: '5425659014',
   topCalculatorBanner: '3292274096',
   // Second in-article for long calculator pages (between editorial + FAQ).
@@ -28,7 +27,6 @@ const MANUAL_AD_SLOT_REGISTRY = {
   inArticleDate: '2723286705',
   inArticleBlog: '1176301123',
   inArticleTime: '1176301123',
-  inArticlePrayer: '1176301123',
   inArticleTimeDifference: '1176301123',
   inArticleCalculator: '1176301123',
   inFeed: '1947291465',
@@ -41,7 +39,6 @@ const MANUAL_AD_SLOT_REGISTRY = {
   multiplexDate: '3132380621',
   multiplexBlog: '3132380621',
   multiplexTime: '3132380621',
-  multiplexPrayer: '3132380621',
   multiplexTimeDifference: '3132380621',
   multiplexCalculator: '3132380621',
   // Intentionally empty (2026-07-05): this previously reused the topBanner slot
@@ -71,7 +68,6 @@ export function getManualAdsConfig() {
     topDateBanner: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.topDateBanner),
     topBlogBanner: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.topBlogBanner),
     topTimeBanner: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.topTimeBanner),
-    topPrayerBanner: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.topPrayerBanner),
     topTimeDifferenceBanner: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.topTimeDifferenceBanner),
     topCalculatorBanner: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.topCalculatorBanner),
     inArticle: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inArticle),
@@ -79,7 +75,6 @@ export function getManualAdsConfig() {
     inArticleDate: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inArticleDate),
     inArticleBlog: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inArticleBlog),
     inArticleTime: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inArticleTime),
-    inArticlePrayer: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inArticlePrayer),
     inArticleTimeDifference: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inArticleTimeDifference),
     inArticleCalculator: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inArticleCalculator),
     inArticleCalculatorMid: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.inArticleCalculatorMid),
@@ -93,7 +88,6 @@ export function getManualAdsConfig() {
     multiplexDate: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.multiplexDate),
     multiplexBlog: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.multiplexBlog),
     multiplexTime: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.multiplexTime),
-    multiplexPrayer: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.multiplexPrayer),
     multiplexTimeDifference: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.multiplexTimeDifference),
     multiplexCalculator: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.multiplexCalculator),
     stickyAnchor: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.stickyAnchor),

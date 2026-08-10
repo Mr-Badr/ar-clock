@@ -486,7 +486,7 @@ export async function generateMetadata({
       },
       openGraph: {
         title: `التاريخ اليوم في ${countryAr} | هجري وميلادي`,
-        description: `اقرأ التاريخ المحلي في ${countryAr} بصيغتيه الهجرية والميلادية مع روابط الوقت والتحويل والصلاة.`,
+        description: `اقرأ التاريخ المحلي في ${countryAr} بصيغتيه الهجرية والميلادية مع روابط الوقت والتحويل.`,
         url: `${BASE_URL}/date/country/${countrySlug}`,
         locale: 'ar_SA',
       },
@@ -549,11 +549,6 @@ export default async function CountryDatePage({
             href: '/date/converter',
             label: 'افتح محوّل التاريخ',
             description: 'استخدم تحويل التاريخ مباشرة إذا كان هدفك الوصول إلى تاريخ محدد.',
-          },
-          {
-            href: '/fahras',
-            label: 'استكشف الصفحات',
-            description: 'استخدم فهرس الصفحات للوصول السريع إلى أقرب مسار يفيدك الآن.',
           },
         ]}
       />
@@ -881,7 +876,7 @@ export default async function CountryDatePage({
             dir="rtl"
           >
             <p className="related-links__heading">
-              إذا كنت تتابع الوقت أو الصلاة في {country.name_ar}
+              إذا كنت تتابع الوقت في {country.name_ar}
             </p>
       
             <div className="related-links__grid">

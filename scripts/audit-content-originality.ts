@@ -68,7 +68,6 @@ function getRouteFamily(routePath: string): string {
   if (segments[0] === 'date') return 'date';
   if (segments[0] === 'time-now') return 'time-now';
   if (segments[0] === 'time-difference') return 'time-difference';
-  if (segments[0] === 'mwaqit-al-salat') return 'prayer-times';
   if (segments[0] === 'holidays') return 'holidays';
   if (segments[0] === 'calculators' && segments[1]) return `calculators-${segments[1]}`;
   if (segments[0] === 'calculators') return 'calculators';

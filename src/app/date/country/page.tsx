@@ -41,7 +41,7 @@ const COUNTRY_DISPLAY_NAMES: Readonly<Record<string, string>> = {
 
 const COUNTRY_REASON_BY_SLUG: Readonly<Record<string, string>> = {
   'saudi-arabia': 'مفيد عندما تبحث عن التاريخ الهجري اليوم أو تقويم أم القرى في سياق سعودي.',
-  egypt: 'اختر مصر عندما تريد التاريخ المحلي قبل ربطه بالوقت أو مواقيت الصلاة في المدن المصرية.',
+  egypt: 'اختر مصر عندما تريد التاريخ المحلي قبل ربطه بالوقت في المدن المصرية.',
   morocco: 'ابدأ من المغرب إذا كان الموعد مرتبطاً بالتوقيت المحلي أو بفرق اليوم مع المشرق.',
   algeria: 'مناسب عندما تحتاج تاريخ اليوم في الجزائر بصيغتيه الهجرية والميلادية.',
   'united-arab-emirates': 'اختر الإمارات للمواعيد والعمل والحجوزات المرتبطة بالتوقيت المحلي هناك.',
@@ -53,7 +53,7 @@ const COUNTRY_REASON_BY_SLUG: Readonly<Record<string, string>> = {
   syria: 'يفيد في قراءة التاريخ المحلي السوري مع مسارات الوقت والتحويل.',
   lebanon: 'مناسب للمواعيد والرسائل التي تحتاج التاريخ المحلي في لبنان بوضوح.',
   yemen: 'استخدمه عندما تريد تاريخ اليوم في اليمن مع رابط سريع للوقت والتحويل.',
-  kuwait: 'مفيد للتأكد من التاريخ المحلي في الكويت قبل الصلاة أو التحويل أو المشاركة.',
+  kuwait: 'مفيد للتأكد من التاريخ المحلي في الكويت قبل التحويل أو المشاركة.',
   qatar: 'يفيدك في الأسئلة اليومية المرتبطة بتاريخ قطر الحالي والوقت المحلي.',
   bahrain: 'اختر البحرين عندما يكون الموعد أو الرسالة مرتبطاً بتاريخ اليوم هناك.',
   oman: 'يساعدك على قراءة التاريخ المحلي في عُمان قبل فتح التقويم أو المحول.',
@@ -159,7 +159,7 @@ const DATE_COUNTRY_FAQ_ITEMS: readonly FaqItem[] = [
   {
     question: 'ما معنى التاريخ حسب الدولة؟',
     answer:
-      'يعني أن تبدأ من البلد الذي يهمك، فتقرأ التاريخ الهجري والميلادي وفق اليوم المحلي لذلك البلد، ثم تنتقل منه إلى الوقت الان أو مواقيت الصلاة أو التحويل. هذا أدق من صفحة عامة عندما يكون السؤال مرتبطاً بسياق محلي.',
+      'يعني أن تبدأ من البلد الذي يهمك، فتقرأ التاريخ الهجري والميلادي وفق اليوم المحلي لذلك البلد، ثم تنتقل منه إلى الوقت الان أو التحويل. هذا أدق من صفحة عامة عندما يكون السؤال مرتبطاً بسياق محلي.',
   },
   {
     question: 'لماذا قد يختلف التاريخ الهجري بين دولتين؟',
@@ -204,7 +204,7 @@ function buildCountryPathway(country: Country): CountryPathway {
     slug: country.country_slug,
     countryCode: country.country_code,
     name,
-    description: `صفحة مخصصة لمعرفة التاريخ الهجري والميلادي اليوم في ${name} مع روابط الوقت والصلاة والتحويل.`,
+    description: `صفحة مخصصة لمعرفة التاريخ الهجري والميلادي اليوم في ${name} مع روابط الوقت والتحويل.`,
     reason: getCountryReason(country),
   };
 }
@@ -250,7 +250,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'التاريخ حسب الدولة | التاريخ الهجري والميلادي اليوم',
     description:
-      'دليل عربي لاختيار بلدك وقراءة تاريخ اليوم المحلي مع روابط الوقت الان والصلاة والتحويل والتقويم.',
+      'دليل عربي لاختيار بلدك وقراءة تاريخ اليوم المحلي مع روابط الوقت الان والتحويل والتقويم.',
     url: `${BASE_URL}${PAGE_PATH}`,
     locale: 'ar_SA',
   },
@@ -284,7 +284,7 @@ export default async function DateCountryRootPage() {
     '@type': 'CollectionPage',
     name: 'التاريخ حسب الدولة',
     description:
-      'دليل عربي لاختيار الدولة وقراءة التاريخ الهجري والميلادي اليوم حسب التوقيت المحلي، مع مسارات الوقت والصلاة والتحويل.',
+      'دليل عربي لاختيار الدولة وقراءة التاريخ الهجري والميلادي اليوم حسب التوقيت المحلي، مع مسارات الوقت والتحويل.',
     url: `${BASE_URL}${PAGE_PATH}`,
     inLanguage: 'ar',
     about: ['تاريخ اليوم', 'التاريخ الهجري', 'التاريخ الميلادي', 'التوقيت المحلي', 'تقويم أم القرى'],
@@ -331,7 +331,7 @@ export default async function DateCountryRootPage() {
               </h1>
               <p className="date-hero-copy mb-4">
                 إذا كنت تسأل: كم التاريخ اليوم في بلدي؟ فابدأ من الدولة. صفحة الدولة تعرض التاريخ
-                الهجري والميلادي وفق اليوم المحلي، ثم تساعدك على فتح الوقت الان ومواقيت الصلاة
+                الهجري والميلادي وفق اليوم المحلي، ثم تساعدك على فتح الوقت الان
                 ومحول التاريخ من نفس السياق.
               </p>
               <p className="date-hero-copy mb-0">
@@ -529,19 +529,12 @@ export default async function DateCountryRootPage() {
           </section>
 
           <nav aria-label="مسارات متابعة التاريخ المحلي حسب الدولة" className="related-links" dir="rtl">
-            <p className="related-links__heading">إذا كنت تريد ربط التاريخ المحلي بالوقت أو الصلاة</p>
+            <p className="related-links__heading">إذا كنت تريد ربط التاريخ المحلي بالوقت أو التقويم</p>
             <div className="related-links__grid">
               <Link href="/time-now" className="related-link-card">
                 <span className="related-link-card__body">
                   <span className="related-link-card__label">الوقت الان</span>
                   <span className="related-link-card__desc">ابدأ من الدولة أو المدينة لمعرفة الساعة الحالية قبل اعتماد التاريخ</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-              <Link href="/mwaqit-al-salat" className="related-link-card">
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">مواقيت الصلاة</span>
-                  <span className="related-link-card__desc">اربط التاريخ المحلي بأوقات الصلاة عندما يكون اليوم الهجري مهماً لعبادة أو مناسبة</span>
                 </span>
                 <span className="related-link-card__arrow" aria-hidden="true">←</span>
               </Link>

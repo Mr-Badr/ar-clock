@@ -319,6 +319,29 @@
   gap: var(--space-4);
   align-items: center;
   padding-block: var(--space-4);
+  padding-inline: var(--space-2);
+  margin-inline: calc(var(--space-2) * -1);
+  border-radius: var(--radius-md);
+  color: inherit;
+  transition: background-color var(--transition-fast);
+}
+
+/* Interactive variant: .method-source-item used as a Link (not a static row) */
+.method-source-item:hover,
+.method-source-item:focus-visible {
+  background: var(--bg-surface-1);
+}
+
+.method-source-item:focus-visible {
+  outline: 0;
+  box-shadow: var(--shadow-focus);
+}
+
+.method-source-item:hover .section-card-title,
+.method-source-item:focus-visible .section-card-title,
+.method-source-item:hover .method-source-item__action,
+.method-source-item:focus-visible .method-source-item__action {
+  color: var(--accent-alt);
 }
 
 .method-source-item + .method-source-item {
@@ -332,8 +355,14 @@
 
 .method-source-item__action {
   display: flex;
+  align-items: center;
+  gap: var(--space-1);
   justify-content: flex-end;
   min-inline-size: 9rem;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  transition: color var(--transition-fast);
 }
 
 @media (max-width: 720px) {

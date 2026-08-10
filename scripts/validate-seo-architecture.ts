@@ -40,7 +40,6 @@ const APP_PAGE_EXTENSIONS = new Set(['.js', '.jsx', '.ts', '.tsx']);
 const INTENTIONALLY_NON_INDEXABLE_PAGE_ROUTES = new Map([
   ['/offline', 'src/app/offline/page.tsx'],
   ['/search', 'src/app/search/page.jsx'],
-  ['/embed/prayer-times/[country]/[city]', 'src/app/embed/prayer-times/[country]/[city]/page.jsx'],
   ['/embed/calculators/[slug]', 'src/app/embed/calculators/[slug]/page.jsx'],
   ['/embed/countdown/[slug]', 'src/app/embed/countdown/[slug]/page.jsx'],
 ]);
@@ -65,9 +64,6 @@ const REQUIRED_SEGMENT_GUARDS = [
   { route: '/time-now', dir: 'src/app/time-now' },
   { route: '/time-now/[country]', dir: 'src/app/time-now/[country]' },
   { route: '/time-now/[country]/[city]', dir: 'src/app/time-now/[country]/[city]' },
-  { route: '/mwaqit-al-salat', dir: 'src/app/mwaqit-al-salat' },
-  { route: '/mwaqit-al-salat/[country]', dir: 'src/app/mwaqit-al-salat/[country]' },
-  { route: '/mwaqit-al-salat/[country]/[city]', dir: 'src/app/mwaqit-al-salat/[country]/[city]' },
   { route: '/time-difference', dir: 'src/app/time-difference' },
   { route: '/time-difference/[from]/[to]', dir: 'src/app/time-difference/[from]/[to]' },
   // '/calculators/building/[country]' removed 2026-08-04 — consolidated into the single
@@ -262,13 +258,9 @@ function assertDateIndexationPolicies(errors: string[]) {
 
 const COVERAGE_SAMPLE_PATHS = uniqueValues([
   '/',
-  '/fahras',
   '/time-now',
   '/time-now/saudi-arabia',
   '/time-now/saudi-arabia/riyadh',
-  '/mwaqit-al-salat',
-  '/mwaqit-al-salat/saudi-arabia',
-  '/mwaqit-al-salat/saudi-arabia/riyadh',
   '/holidays',
   '/time-difference',
   '/time-difference/converter',

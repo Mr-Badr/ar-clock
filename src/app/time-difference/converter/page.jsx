@@ -194,7 +194,6 @@ export default function ConverterPage() {
               {[
                 { href: '/time-difference', label: 'فرق التوقيت بين مدينتين' },
                 { href: '/time-now', label: 'الوقت الآن في أي مدينة' },
-                { href: '/mwaqit-al-salat', label: 'مواقيت الصلاة' },
                 { href: '/date/converter', label: 'تحويل التاريخ هجري / ميلادي' },
               ].map(({ href, label }) => (
                 <Link

@@ -39,7 +39,7 @@ export default function CopyBlock({ extraClass, titleId }) {
       </p>
 
       <div className={styles.ctaWrap}>
-        <HulyButton href="/fahras">
+        <HulyButton href="/search">
           <span>ابدأ من الصفحة المناسبة</span>
         </HulyButton>
         <Link href="/time-now" className={styles.secondaryCta}>

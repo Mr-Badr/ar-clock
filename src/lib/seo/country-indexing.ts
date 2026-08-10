@@ -18,10 +18,6 @@ export const GEO_ROUTE_INDEXING_POLICIES = {
   dateCountry: {
     countryScope: GEO_SEO_SCOPE.PRIORITY,
   },
-  prayerTimes: {
-    countryScope: GEO_SEO_SCOPE.ALL,
-    cityScope: GEO_SEO_SCOPE.ALL,
-  },
   timeNow: {
     countryScope: GEO_SEO_SCOPE.ALL,
     cityScope: GEO_SEO_SCOPE.ALL,

@@ -22,10 +22,8 @@
  * ─────────
  * components/home/
  * ├── data/
- * │   ├── faqItems.js         — FAQ question/answer pairs
- * │   └── whyFeatures.js      — benefit card objects
+ * │   └── faqItems.js         — FAQ question/answer pairs
  * ├── mockups/
- * │   ├── PrayerTimesLiveCard.client.jsx   — live prayer times preview
  * │   ├── TimeDifferenceLiveCard.client.jsx — live time-diff preview
  * │   └── HolidaysLiveCard.client.jsx      — live holidays preview
  * ├── shared/
@@ -35,11 +33,9 @@
  * │   ├── FeatureItem.jsx     — icon + text bullet row
  * │   └── CtaLink.jsx         — primary CTA link
  * ├── GlobalSchemas.jsx       — WebSite + Organization JSON-LD
- * ├── SectionPrayerTimes.jsx  — feature: prayer times  (Image RIGHT)
  * ├── SectionTimeDifference.jsx — feature: time diff   (Image LEFT)
  * ├── SectionHolidays.jsx     — feature: holidays      (Image RIGHT)
  * ├── SectionStartHere.jsx    — guided entry paths after the hero
- * ├── SectionCitiesGrid.jsx   — footer taxonomy links
  * ├── SectionFAQ.jsx          — 8 Q&A + FAQPage JSON-LD schema
  * └── index.jsx               ← YOU ARE HERE
  * ─────────────────────────────────────────────────────────────────────────────
@@ -48,11 +44,9 @@
 import { Suspense } from 'react'
 import SectionStartHere    from './SectionStartHere'
 import SectionSkeleton     from '@/components/shared/SectionSkeleton'
-import SectionPrayerTimes  from './SectionPrayerTimes'
 import SectionTimeDifference from './SectionTimeDifference'
 import SectionHolidays     from './SectionHolidays'
 import SectionCalculators  from './SectionCalculators'
-import SectionCitiesGrid   from './SectionCitiesGrid'
 import SectionFAQ          from './SectionFAQ'
 import SectionTrustBar     from './SectionTrustBar'
 import AdInArticle         from '@/components/ads/AdInArticle'
@@ -64,14 +58,10 @@ export default function HomeSections() {
       <SectionTrustBar />
       <SectionStartHere />
 
-      <Suspense fallback={<SectionSkeleton />}>
-        <SectionPrayerTimes />
-      </Suspense>
-
-      {/* Ad between major feature sections — user has scrolled past hero+prayer block */}
-      <AdInArticle slotId="home-mid-1" />
-
       <SectionTimeDifference />
+
+      {/* Ad between major feature sections — user has scrolled past the hero block */}
+      <AdInArticle slotId="home-mid-1" />
 
       <Suspense fallback={<SectionSkeleton />}>
         <SectionHolidays />
@@ -86,18 +76,14 @@ export default function HomeSections() {
 
       {/* Multiplex at page bottom — maximum content depth, highest viewability */}
       <AdMultiplex slotId="home-bottom" />
-
-      <SectionCitiesGrid />
     </>
   )
 }
 
 /* Named re-exports for individual use */
 export { default as SectionStartHere }     from './SectionStartHere'
-export { default as SectionPrayerTimes }   from './SectionPrayerTimes'
 export { default as SectionTimeDifference } from './SectionTimeDifference'
 export { default as SectionHolidays }      from './SectionHolidays'
 export { default as SectionCalculators }   from './SectionCalculators'
-export { default as SectionCitiesGrid }    from './SectionCitiesGrid'
 export { default as SectionFAQ }           from './SectionFAQ'
 export { default as SectionTrustBar }      from './SectionTrustBar'

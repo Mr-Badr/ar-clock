@@ -221,7 +221,7 @@ export async function generateMetadata({ params }) {
     });
     return {
       title: `الوقت الان حسب الدولة | ${SITE_BRAND}`,
-      description: 'اعرف الوقت الحالي حسب الدولة مع مسارات المدن والتاريخ والصلاة داخل ميقاتنا.',
+      description: 'اعرف الوقت الحالي حسب الدولة مع مسارات المدن والتاريخ داخل ميقاتنا.',
       alternates: {
         canonical: `/time-now/${countrySlug}`,
       },
@@ -256,19 +256,9 @@ export default async function CountryTimePage({ params }) {
         }}
         secondaryLinks={[
           {
-            href: '/mwaqit-al-salat',
-            label: 'افتح مواقيت الصلاة',
-            description: 'يمكنك الوصول إلى صفحات الصلاة حسب الدولة والمدينة من القسم الرئيسي.',
-          },
-          {
             href: '/date',
             label: 'افتح قسم التاريخ',
             description: 'راجع التاريخ اليوم وأدوات التحويل والتقويم من صفحة التاريخ الرئيسية.',
-          },
-          {
-            href: '/fahras',
-            label: 'استكشف الصفحات',
-            description: 'استخدم فهرس الصفحات للوصول السريع إلى أقرب مسار مرتبط بسؤالك.',
           },
         ]}
       />
@@ -291,11 +281,6 @@ export default async function CountryTimePage({ params }) {
   const cityAr = capital ? capital.name_ar : countryAr;
   const utcOffset = getUtcOffsetStr(timezone);
   const countryUtilityLinks = [
-    {
-      href: `/mwaqit-al-salat/${countrySlug}`,
-      label: `مواقيت الصلاة في ${countryAr}`,
-      description: `اعرف مواقيت الصلاة في ${countryAr} مع العاصمة وأشهر المدن من نفس القسم بدون بحث إضافي.`,
-    },
     {
       href: `/date/country/${countrySlug}`,
       label: `التاريخ اليوم في ${countryAr}`,
@@ -459,7 +444,7 @@ export default async function CountryTimePage({ params }) {
               <p className={routeStyles.summaryLabel}>ما الذي ستجده هنا؟</p>
               <p className={routeStyles.summaryValue}>وقت + تاريخ + مسارات</p>
               <p className={routeStyles.summaryCopy}>
-                اختر بعدها الصلاة، التاريخ، صفحة المدينة، أو حاسبة فرق التوقيت حسب القرار الذي تريد اتخاذه.
+                اختر بعدها التاريخ، صفحة المدينة، أو حاسبة فرق التوقيت حسب القرار الذي تريد اتخاذه.
               </p>
             </div>
           </div>
@@ -781,7 +766,7 @@ async function CountryTimePageSections({
           <div className={routeStyles.sectionPanel}>
             <GeoInternalLinks
               title={`خطوات تكمل وقت ${countryAr}`}
-              description={`بعد معرفة الساعة في ${countryAr}، اختر خطوة واحدة حسب حاجتك: الصلاة إذا كان يومك مرتبطاً بالأذان، التاريخ إذا كان السؤال عن اليوم المحلي، أو فرق التوقيت إذا كان الموعد مع بلد آخر.`}
+              description={`بعد معرفة الساعة في ${countryAr}، اختر خطوة واحدة حسب حاجتك: التاريخ إذا كان السؤال عن اليوم المحلي، أو فرق التوقيت إذا كان الموعد مع بلد آخر.`}
               links={countryUtilityLinks}
               ariaLabel={`خطوات تكمل وقت ${countryAr}`}
             />
@@ -854,7 +839,7 @@ async function CountryTimePageSections({
           <div className={routeStyles.sectionPanel}>
             <GeoInternalLinks
               title={`خطوات تكمل وقت ${countryAr}`}
-              description={`بعد معرفة الساعة في ${countryAr}، اختر خطوة واحدة حسب حاجتك: الصلاة، التاريخ المحلي، صفحة العاصمة، أو فرق التوقيت.`}
+              description={`بعد معرفة الساعة في ${countryAr}، اختر خطوة واحدة حسب حاجتك: التاريخ المحلي، صفحة العاصمة، أو فرق التوقيت.`}
               links={countryUtilityLinks}
               ariaLabel={`خطوات تكمل وقت ${countryAr}`}
             />

@@ -69,7 +69,7 @@ const LEGACY_INDEXING_REDIRECTS = [
   },
   {
     source: '/map',
-    destination: '/fahras',
+    destination: '/',
   },
   {
     source: '/time-now/netherlands',
@@ -201,10 +201,6 @@ const nextConfig = {
         headers: SHARED_HTML_CACHE_HEADERS,
       },
       {
-        source: '/mwaqit-al-salat/:path*',
-        headers: SHARED_HTML_CACHE_HEADERS,
-      },
-      {
         source: '/holidays/:path*',
         headers: SHARED_HTML_CACHE_HEADERS,
       },
@@ -218,10 +214,6 @@ const nextConfig = {
       },
       {
         source: '/time-now/:path*/opengraph-image',
-        headers: SHARED_OG_IMAGE_HEADERS,
-      },
-      {
-        source: '/mwaqit-al-salat/:path*/opengraph-image',
         headers: SHARED_OG_IMAGE_HEADERS,
       },
       {
@@ -292,16 +284,6 @@ const nextConfig = {
       {
         source: '/%26',
         destination: '/',
-        permanent: true,
-      },
-      {
-        source: '/prayer-times/:country/:city',
-        destination: '/mwaqit-al-salat/:country/:city',
-        permanent: true,
-      },
-      {
-        source: '/salat/:country/:city',
-        destination: '/mwaqit-al-salat/:country/:city',
         permanent: true,
       },
     ];

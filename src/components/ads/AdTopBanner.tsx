@@ -32,7 +32,7 @@
  *     <AdTopBanner slotId="top-country" />             ← first thing, before breadcrumb/H1
  *     <nav aria-label="مسار التنقل">... breadcrumb ...</nav>
  *     <h1 className="...">عنوان الصفحة</h1>
- *     <PrayerTimesTable />                              ← then content
+ *     <TimezoneInfoCard />                               ← then content
  *
  * USE ON:
  *   ✅ Every indexable content page (country/city pages, article/info pages,

@@ -2,20 +2,23 @@
 
 ## What This App Is
 
-Arabic-first Islamic/MENA time utilities SaaS at **miqatona.com**. Features:
-- **Prayer times** (`/mwaqit-al-salat`) — 19+ countries and cities, Adhan-calculated
+Arabic-first MENA time utilities SaaS at **miqatona.com**. Features:
 - **Current time** (`/time-now`) — real-time clock for any country/city
 - **Time difference** (`/time-difference`) — city pair comparison
 - **Date tools** (`/date`) — Hijri/Gregorian calendar, converter, daily date pages
+- **Ramadan imsakiya** (`/imsakiya`) — per-city fasting/iftar schedule, Adhan-calculated
 - **Holidays/events** (`/holidays`) — 76 published Arabic-first event pages, 345 aliases, countdowns + FAQs
-- **Calculators** (`/calculators`) — age, VAT, installment, end-of-service, personal finance, sleep, building
-- **Blog/guides** (`/blog`) — Arabic editorial articles linked to calculators
-- **Discovery** (`/fahras`) — crawlable directory; `/search` — smart internal search
+- **Tools** (`/tools`) — calculators and guides across finance, health, construction, sleep, education
+- **Search** (`/search`) — smart internal search
+
+Note (2026-08-09): `/mwaqit-al-salat` (prayer times), `/calculators` (old URL prefix), `/blog`, and
+`/fahras` were all retired — owner directive, zero/near-zero real traffic on each. Old paths 404
+(no redirects) except a handful of prominent internal links repointed to `/search` or `/tools`.
 
 ## Tech Stack
 
 Next.js 16 · React 19 · TypeScript 5.9 · Tailwind v4 · shadcn/ui (new-york) · Radix UI · Phosphor icons  
-Prisma 7 + PostgreSQL (geo) · Adhan (prayer calc) · Puppeteer + Cheerio (research scraping)  
+Prisma 7 + PostgreSQL (geo) · Adhan (imsakiya prayer-time calc) · Puppeteer + Cheerio (research scraping)  
 Docker Compose + Nginx on Hetzner VPS · GitHub Actions CI/CD
 
 ## Critical npm Scripts
@@ -51,7 +54,7 @@ Docker Compose + Nginx on Hetzner VPS · GitHub Actions CI/CD
 - Ads are LIVE in production: `ADSENSE_CLIENT_ID=ca-pub-5421885011942418`, `GOOGLE_CERTIFIED_CMP_ENABLED=true`. Manual slot IDs in `src/lib/ads/manual-config.js`.
 - Canonical host: `https://miqatona.com` (no www, no localhost in production output)
 - No `force-dynamic` or `new Date()` in sitemaps — deterministic only
-- Never call `headers()` or IP lookup in hot SSR paths (time-now, prayer, homepage)
+- Never call `headers()` or IP lookup in hot SSR paths (time-now, homepage)
 - Avoid adding `"use client"` to layouts or page wrappers without concrete reason
 - Always `await params` and `await searchParams` before accessing them
 - Never remove existing SEO metadata — only extend or improve
@@ -81,7 +84,7 @@ Docker Compose + Nginx on Hetzner VPS · GitHub Actions CI/CD
 ## Path-Scoped Rules (load automatically when touching relevant files)
 
 - `.claude/rules/ads-system.md` — AdSense unit IDs, component inventory, ad coverage per section
-- `.claude/rules/page-structures.md` — calculator/prayer/holiday/blog page component patterns
+- `.claude/rules/page-structures.md` — calculator/time-now/holiday page component patterns
 - `.claude/rules/content-pipeline.md` — holiday authoring workflow and publish pipeline
 - `.claude/rules/seo-metadata.md` — metadata requirements, sitemap rules, validation commands
 - `.claude/rules/arabic-rtl.md` — RTL layout, design system, ad placement constraints

@@ -164,11 +164,6 @@ async function DateHubDynamicContent() {
       description: 'اعرف الساعة الحالية في المدن والدول المرتبطة بتاريخ اليوم.',
     },
     {
-      href: '/mwaqit-al-salat',
-      label: 'مواقيت الصلاة اليوم',
-      description: 'انتقل إلى مواقيت الصلاة اليومية من نفس بنية الوقت والتاريخ.',
-    },
-    {
       href: '/time-difference',
       label: 'حاسبة فرق التوقيت',
       description: 'قارن الوقت بين الدول والمدن عند التخطيط للتواريخ والسفر والعمل.',
@@ -505,7 +500,7 @@ async function DateHubDynamicContent() {
                 <span className={styles.sectionKicker}>بعد التاريخ</span>
                 <h2 className={styles.sectionTitle}>خطوتك التالية حسب ما تريد فعله الان</h2>
                 <p className={styles.sectionCopy}>
-                  إذا كان التاريخ مرتبطاً بموعد يومي، فافتح الوقت الان أو مواقيت الصلاة. وإذا كان مرتبطاً بسفر أو مناسبة، ففرق التوقيت والمناسبات القادمة هما المساران الأكثر فائدة.
+                  إذا كان التاريخ مرتبطاً بموعد يومي، فافتح الوقت الان. وإذا كان مرتبطاً بسفر أو مناسبة، ففرق التوقيت والمناسبات القادمة هما المساران الأكثر فائدة.
                 </p>
               </div>
               <nav className={styles.utilityGrid} aria-label="خطوات مفيدة بعد استخدام قسم التاريخ">

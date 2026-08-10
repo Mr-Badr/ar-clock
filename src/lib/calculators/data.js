@@ -2403,8 +2403,8 @@ const _CALCULATOR_ROUTES_RAW = [
   {
     // Deliberately NOT in any /tools hub (2026-08-04) — generic intermittent-fasting framing is
     // dominated by webteb.com and diet/health sites. A Ramadan-fasting-hours angle (powered by
-    // this site's own Adhan/prayer-times engine) looked more promising but belongs in
-    // /mwaqit-al-salat or the holidays section, not this health cluster — not yet scoped.
+    // this site's own Adhan/prayer-times engine, same as /imsakiya) looked more promising but
+    // belongs in the holidays section, not this health cluster — not yet scoped.
     // See keyword-research/health-education-hubs/DECISION.md.
     slug: 'fasting',
     href: '/tools/health/fasting',
@@ -3149,6 +3149,29 @@ const _CALCULATOR_ROUTES_RAW = [
       'عقد عمل عاملة منزلية word',
       'نموذج عقد عمالة منزلية',
       'تحميل نموذج عقد استقدام',
+    ],
+  },
+  {
+    slug: 'attendance-cost-calculator',
+    href: '/tools/attendance/cost-calculator',
+    cluster: 'attendance',
+    shortLabel: 'حاسبة تكلفة نظام الحضور والانصراف',
+    title: 'حاسبة تكلفة نظام الحضور والانصراف حسب عدد الموظفين',
+    heroTitle: 'حاسبة تكلفة نظام الحضور والانصراف {{year}} | حسب عدد الموظفين',
+    description:
+      'أدخل عدد موظفيك ونوع النظام، واحصل على تقدير التكلفة الشهرية والسنوية لنظام الحضور والانصراف — مع مقارنة أسعار حقيقية لأبرز المزودين في السوق.',
+    accent: 'var(--green)',
+    accentSoft: 'var(--green-subtle)',
+    badge: 'الحضور والانصراف / حسب عدد الموظفين',
+    keywords: [
+      'نظام الحضور والانصراف',
+      'نظام الحضور',
+      'افضل نظام حضور وانصراف للشركات',
+      'سعر نظام الحضور والانصراف',
+      'حاسبة تكلفة نظام حضور وانصراف',
+      'برنامج حضور وانصراف',
+      'اشتراك نظام حضور وانصراف',
+      'نظام حضور وانصراف مجاني',
     ],
   },
 ];

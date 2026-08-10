@@ -12,5 +12,4 @@ export const featureFlags = {
   observabilityLogs: flag(process.env.FF_OBSERVABILITY_LOGS, false),
   eventsShardIndex: flag(process.env.FF_EVENTS_SHARD_INDEX, true),
   eventsPublishedOnly: flag(process.env.FF_EVENTS_PUBLISHED_ONLY, true),
-  newPrayerEngine: flag(process.env.ENABLE_NEW_PRAYER_ENGINE, false),
 };

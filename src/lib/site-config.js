@@ -6,11 +6,11 @@ export const SITE_BRAND_EN = 'Miqatona';
 export const SITE_CONTACT_EMAIL = 'contact@miqatona.com';
 export const SITE_LEGACY_BRANDS = ['ميقاتنا', 'Miqatona'];
 export const SITE_PRIMARY_DOMAIN = 'https://miqatona.com';
-export const SITE_APP_NAME = `${SITE_BRAND} | منصة عربية للوقت والصلاة والتاريخ والحاسبات`;
-export const SITE_HOME_TITLE = 'ميقاتنا | الوقت الان والصلاة والتاريخ والحاسبات العربية';
+export const SITE_APP_NAME = `${SITE_BRAND} | منصة عربية للوقت والتاريخ والحاسبات`;
+export const SITE_HOME_TITLE = 'ميقاتنا | الوقت الان والتاريخ والحاسبات العربية';
 export const SITE_TITLE = SITE_HOME_TITLE;
 export const SITE_DESCRIPTION =
-  'اعرف الوقت الان ومواقيت الصلاة والتاريخ الهجري والميلادي، وافتح الحاسبات اليومية من مسارات عربية واضحة وسريعة داخل ميقاتنا.';
+  'اعرف الوقت الان وفرق التوقيت والتاريخ الهجري والميلادي، وافتح الحاسبات اليومية من مسارات عربية واضحة وسريعة داخل ميقاتنا.';
 
 const CURRENT_GREGORIAN_YEAR = new Date().getFullYear();
 const NEXT_GREGORIAN_YEAR = CURRENT_GREGORIAN_YEAR + 1;
@@ -90,14 +90,6 @@ const SITE_STATIC_KEYWORDS = [
   'تاريخ اليوم',
   'تاريخ اليوم هجري',
   'تاريخ اليوم ميلادي',
-  'مواقيت',
-  'مواقيت الصلاة',
-  'مواقيت الصلاة اليوم',
-  'أوقات الصلاة',
-  'أوقات الأذان',
-  'الأذان',
-  'اتجاه القبلة',
-  'دليل اتجاه القبلة',
   'فرق التوقيت',
   'حاسبة فرق التوقيت',
   'تحويل الوقت',
@@ -112,7 +104,6 @@ const SITE_STATIC_KEYWORDS = [
   'تاريخ اليوم بالهجري والميلادي',
   'أداة تحويل التاريخ من هجري إلى ميلادي والعكس',
   'العد التنازلي لأهم المناسبات والأعياد والإجازات الرسمية',
-  'مواقيت الصلاة الدقيقة واتجاه القبلة لجميع المدن',
   'مرجع عربي عملي للوقت والمواعيد في الوطن العربي والعالم',
 ];
 
@@ -129,8 +120,6 @@ export const SITE_KEYWORDS = uniqKeywords([
 export const SITE_SCHEMA_TOPICS = [
   'الوقت الان',
   'الوقت الآن',
-  'مواقيت الصلاة',
-  'أوقات الصلاة',
   'فرق التوقيت',
   'التاريخ الهجري',
   'التاريخ الميلادي',
@@ -151,7 +140,6 @@ export const SITE_SCHEMA_TOPICS = [
   'العد التنازلي للمناسبات',
   'المدونة العربية',
   'فهرس الأدوات',
-  'اتجاه القبلة',
 ];
 
 export const SITE_DEFAULT_LOCALE = 'ar-SA';

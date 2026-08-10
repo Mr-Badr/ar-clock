@@ -57,8 +57,6 @@ This file is the quick ownership map for the app so you know what to edit, what 
   Current time pages by country/city.
 - `src/app/time-difference`
   Time difference routes and metadata.
-- `src/app/mwaqit-al-salat`
-  Prayer pages.
 - `src/app/date`
   Date converter/calendar/today pages.
 - `src/app/holidays`

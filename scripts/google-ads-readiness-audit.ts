@@ -50,18 +50,6 @@ const ADSBOT_USER_AGENT = [
 
 const LANDING_PAGES: LandingPageCheck[] = [
   {
-    path: '/mwaqit-al-salat/saudi-arabia/riyadh',
-    intent: 'مواقيت الصلاة في الرياض',
-    kind: 'tool',
-    requiredTerms: ['الرياض', 'الصلاة', 'الفجر'],
-  },
-  {
-    path: '/mwaqit-al-salat/egypt/cairo',
-    intent: 'مواقيت الصلاة في القاهرة',
-    kind: 'tool',
-    requiredTerms: ['القاهرة', 'الصلاة', 'المغرب'],
-  },
-  {
     path: '/time-now/saudi-arabia/riyadh',
     intent: 'الوقت الآن في الرياض',
     kind: 'tool',

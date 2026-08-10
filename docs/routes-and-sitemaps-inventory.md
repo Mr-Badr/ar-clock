@@ -41,11 +41,6 @@ Primary sitemap submission URL:
 - `/time-now/[country]`
 - `/time-now/[country]/[city]`
 
-### Prayer times
-- `/mwaqit-al-salat`
-- `/mwaqit-al-salat/[country]`
-- `/mwaqit-al-salat/[country]/[city]`
-
 ### Holidays
 - `/holidays`
 - `/holidays/[slug]`
@@ -84,7 +79,6 @@ Primary sitemap submission URL:
 - `/holidays/sitemap.xml`
 - `/time-difference/sitemap.xml`
 - `/time-now/sitemap.xml`
-- `/mwaqit-al-salat/sitemap.xml`
 - `/date/sitemap.xml` — feature-local diagnostic index
 - `/date/gregorian/sitemap.xml` — rolling Gregorian daily pages within ±370 days
 - `/date/hijri/sitemap.xml` — rolling Hijri daily pages within ±370 days
@@ -102,7 +96,6 @@ Primary sitemap submission URL:
 - `/`
 - `/fahras`
 - `/time-now`
-- `/mwaqit-al-salat`
 - `/holidays`
 - `/time-difference`
 - `/calculators`
@@ -165,10 +158,6 @@ Primary sitemap submission URL:
 - `/time-now/[country]`
 - all valid `/time-now/[country]/[city]` pages
 
-### Covered by `/mwaqit-al-salat/sitemap.xml`
-- `/mwaqit-al-salat/[country]`
-- all valid `/mwaqit-al-salat/[country]/[city]` pages
-
 ### Covered by `/date/sitemaps/static`
 - `/date`
 - `/date/today`
@@ -216,7 +205,6 @@ Optional temporary diagnostic submissions:
 - `https://miqatona.com/holidays/sitemap.xml`
 - `https://miqatona.com/time-difference/sitemap.xml`
 - `https://miqatona.com/time-now/sitemap.xml`
-- `https://miqatona.com/mwaqit-al-salat/sitemap.xml`
 - `https://miqatona.com/date/sitemaps/static`
 - `https://miqatona.com/date/sitemaps/countries`
 - `https://miqatona.com/date/sitemaps/calendars`

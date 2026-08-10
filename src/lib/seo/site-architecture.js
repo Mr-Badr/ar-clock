@@ -19,10 +19,8 @@ function dedupeRoutes(routes) {
 
 export const ROOT_SITEMAP_ROUTES = Object.freeze(dedupeRoutes([
   { path: '/', priority: 1.0, changeFrequency: 'daily', websitePart: true },
-  { path: '/fahras', priority: 0.95, changeFrequency: 'daily', websitePart: true },
   { path: '/countdown', priority: 0.9, changeFrequency: 'weekly', websitePart: true },
   { path: '/time-now', priority: 0.93, changeFrequency: 'daily', websitePart: true },
-  { path: '/mwaqit-al-salat', priority: 0.93, changeFrequency: 'daily', websitePart: true },
   { path: '/imsakiya', priority: 0.9, changeFrequency: 'monthly', websitePart: true },
   { path: '/holidays', priority: 0.92, changeFrequency: 'daily', websitePart: true },
   { path: '/holidays/country/saudi-arabia', priority: 0.9, changeFrequency: 'daily', websitePart: true },
@@ -97,7 +95,6 @@ export const SITEMAP_INDEX_PATHS = Object.freeze([
   '/holidays/sitemap.xml',
   '/time-difference/sitemap.xml',
   '/time-now/sitemap.xml',
-  '/mwaqit-al-salat/sitemap.xml',
   '/imsakiya/sitemap.xml',
   '/date/sitemaps/static',
   '/date/sitemaps/countries',
@@ -126,13 +123,6 @@ const FEATURE_ROUTE_FAMILIES = Object.freeze([
     label: 'Current time',
     exactPaths: ['/time-now'],
     prefixPaths: ['/time-now/'],
-    crawlScope: 'priority-countries-and-cities',
-  },
-  {
-    id: 'mwaqit-al-salat',
-    label: 'Prayer times',
-    exactPaths: ['/mwaqit-al-salat'],
-    prefixPaths: ['/mwaqit-al-salat/'],
     crawlScope: 'priority-countries-and-cities',
   },
   {

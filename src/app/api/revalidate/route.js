@@ -23,7 +23,7 @@ function isValidRevalidatePath(path) {
  * API Route to trigger on-demand ISR revalidation globally across edge nodes.
  * 
  * Usage from terminal:
- * curl -X POST "http://localhost:3000/api/revalidate?secret=YOUR_SUPER_SECRET&path=/mwaqit-al-salat/morocco/rabat"
+ * curl -X POST "http://localhost:3000/api/revalidate?secret=YOUR_SUPER_SECRET&path=/time-now/morocco/rabat"
  * curl -X POST "http://localhost:3000/api/revalidate?secret=YOUR_SUPER_SECRET&tag=cities"
  * 
  * Webhook Usage Guide:

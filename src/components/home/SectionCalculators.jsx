@@ -1,12 +1,9 @@
 import Link from 'next/link';
 import {
   ArrowLeft,
-  BriefcaseBusiness,
   CakeSlice,
   Calculator,
-  CreditCard,
   MoonStar,
-  Percent,
   ReceiptText,
 } from 'lucide-react';
 
@@ -21,56 +18,27 @@ const TOOLS = [
   {
     href: '/tools/sleep',
     title: 'حاسبات النوم الذكي',
-    description: 'ابدأ من متى تنام ومتى تستيقظ وكم تحتاج نوم داخل نظام يومي قابل للرجوع.',
-    icon: MoonStar,
+    description: 'متى تنام ومتى تستيقظ وكم تحتاج من نوم فعلياً.',
   },
   {
     href: '/tools/personal-finance',
-    title: 'حاسبات التخطيط المالي الشخصي',
-    description: 'ابدأ من صندوق الطوارئ والديون والادخار وصافي الثروة بحسب القرار الذي تريد ترتيبه.',
-    icon: BriefcaseBusiness,
+    title: 'التخطيط المالي الشخصي',
+    description: 'صندوق الطوارئ، سداد الديون، الادخار، وصافي الثروة.',
   },
   {
     href: '/tools/gulf-finance',
     title: 'حاسبات المال والعمل',
-    description: 'ابدأ من القرض أو الضريبة أو النسبة أو مكافأة نهاية الخدمة بحسب الرقم الذي تريد فهمه.',
-    icon: BriefcaseBusiness,
+    description: 'مكافأة نهاية الخدمة، تعويض المادة 77، وخصم المخالفات المرورية.',
   },
   {
     href: '/tools/health/age-calculator',
-    title: 'كم عمري الآن؟',
-    description: 'احسب عمرك بالسنوات والأشهر والأيام والثواني مع عيد الميلاد القادم من نفس الصفحة.',
-    icon: CakeSlice,
-  },
-  {
-    href: '/tools/gulf-finance/end-of-service-benefits',
-    title: 'كم مكافأة نهاية الخدمة؟',
-    description: 'احسب مكافأة نهاية الخدمة في السعودية بسرعة مع فهم أثر الاستقالة ونهاية العقد.',
-    icon: BriefcaseBusiness,
-  },
-  {
-    href: '/tools/gulf-finance/article-77-compensation',
-    title: 'كم تعويض الفصل التعسفي؟',
-    description: 'احسب تعويض المادة 77 من نظام العمل السعودي: 15 يوماً عن كل سنة خدمة، بحد أدنى أجر شهرين.',
-    icon: Percent,
-  },
-  {
-    href: '/tools/gulf-finance/traffic-fine-discount',
-    title: 'هل تستحق خصم 25% على مخالفتك؟',
-    description: 'اعرف المبلغ المستحق بعد خصم المادة 75 قبل انتهاء مهلة الـ45 يوماً، مع خيار التقسيط.',
-    icon: ReceiptText,
-  },
-  {
-    href: '/tools/gulf-finance/domestic-worker-cost',
-    title: 'كم تكلفة استقدام عاملة منزلية؟',
-    description: 'الرسوم الحكومية الفعلية عبر مساند بالإضافة لراتبها ورسوم مكتب الاستقدام.',
-    icon: CreditCard,
+    title: 'حاسبة العمر',
+    description: 'عمرك بالسنوات والأشهر والأيام مع موعد عيد ميلادك القادم.',
   },
   {
     href: '/tools/construction/build-cost',
-    title: 'كم تكلفة بناء بيت؟',
-    description: 'قدّر تكلفة البناء ومواد التشييد وسعر المتر في 14 دولة عربية من صفحة واحدة.',
-    icon: Calculator,
+    title: 'تكلفة البناء',
+    description: 'قدّر تكلفة البناء والتشطيب في 14 دولة عربية من صفحة واحدة.',
   },
 ];
 
@@ -118,7 +86,7 @@ export default function SectionCalculators() {
             <strong>متى أنام لأستيقظ الساعة 6</strong> أو{' '}
             <strong>كم قسط قرض 100 ألف</strong> أو{' '}
             <strong>حساب الضريبة 15%</strong>.
-            لذلك رتّبنا الحاسبات حول السؤال نفسه: خذ الرقم، اقرأ معناه، ثم جرّب سيناريو آخر قبل الاعتماد عليه.
+            كل قسم داخل صفحة الأدوات مرتب حول السؤال نفسه: خذ الرقم، اقرأ معناه، ثم جرّب سيناريو آخر قبل الاعتماد عليه.
           </p>
 
           <ul className="feature-list" role="list" aria-label="مزايا قسم الحاسبات">
@@ -129,14 +97,10 @@ export default function SectionCalculators() {
             </FeatureItem>
             <FeatureItem icon={MoonStar}>
               مسار نوم ذكي يجيب عن أسئلة تتكرر فعلاً مثل{' '}
-              <strong>إذا نمت الآن متى أستيقظ</strong> و{' '}
-              <strong>كم ساعة نوم أحتاج</strong>.
-            </FeatureItem>
-            <FeatureItem icon={BriefcaseBusiness}>
-              كل نتيجة تأتي مع شرح قصير وأمثلة تساعدك على فهم الرقم قبل استخدامه في قرار.
+              <strong>إذا نمت الآن متى أستيقظ</strong>.
             </FeatureItem>
             <FeatureItem icon={ReceiptText}>
-              انتقال أسهل بين الحاسبات المتقاربة حتى لا تضيع بين صفحات كثيرة من دون داعٍ.
+              كل نتيجة تأتي مع شرح قصير وأمثلة تساعدك على فهم الرقم قبل استخدامه في قرار.
             </FeatureItem>
           </ul>
 
@@ -151,34 +115,24 @@ export default function SectionCalculators() {
           </div>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-          {TOOLS.map((tool) => {
-            const Icon = tool.icon;
-
-            return (
-              <Link
-                key={tool.href}
-                href={tool.href}
-                className="section-card-link group"
-              >
-                <div className="section-icon-box mb-4">
-                  <Icon size={19} aria-hidden="true" />
-                </div>
-
-                <h3 className="section-card-title mb-2">
-                  {tool.title}
-                </h3>
-                <p className="section-card-copy mb-4">
-                  {tool.description}
-                </p>
-                <span className="section-card-action">
-                  ابدأ الحساب
-                  <ArrowLeft size={15} aria-hidden="true" />
-                </span>
-              </Link>
-            );
-          })}
-        </div>
+        <nav className="method-source-list" aria-label="أبرز أقسام الحاسبات">
+          {TOOLS.map((tool) => (
+            <Link
+              key={tool.href}
+              href={tool.href}
+              className="method-source-item group"
+            >
+              <div className="method-source-item__body">
+                <h3 className="section-card-title">{tool.title}</h3>
+                <p className="section-card-copy">{tool.description}</p>
+              </div>
+              <span className="method-source-item__action section-card-action">
+                ابدأ
+                <ArrowLeft size={15} aria-hidden="true" />
+              </span>
+            </Link>
+          ))}
+        </nav>
       </div>
     </SectionWrapper>
   );

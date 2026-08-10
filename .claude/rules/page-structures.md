@@ -1,14 +1,11 @@
 ---
 paths:
-  - src/app/mwaqit-al-salat/**
   - src/app/time-now/**
   - src/app/time-difference/**
-  - src/app/calculators/**
+  - src/app/tools/**
   - src/app/holidays/**
   - src/app/date/**
-  - src/app/blog/**
   - src/components/calculators/**
-  - src/components/blog/**
 ---
 
 # Page Structures — Component Patterns
@@ -26,16 +23,6 @@ Other common primitives: `CalculatorDecisionTable`, `CalculatorInfoGrid`, `Calcu
 `CalculatorEditorialArticle`, `CalculatorResourceLinks`, `CalculatorHubGrid`.
 
 Calculator pages that DON'T use RelatedCalculators (e.g. age) still get AdInArticle via CalculatorFaqSection.
-
-## Prayer pages
-Structure for `/mwaqit-al-salat/[country]/page.jsx`:
-- Uses `AdLayoutWrapper` as outer container
-- AdTopBanner → prayer table → AdInArticle → city directory → GeoInternalLinks → SiteTrustPanel
-- AdMultiplex added before SiteTrustPanel (2026-06-22)
-
-Structure for `/mwaqit-al-salat/[country]/[city]/page.jsx`:
-- AdTopBanner → prayer table → monthly calendar → AdInArticle × 2 → source links → AdMultiplex → SiteTrustPanel
-- Uses `routeStyles` from `@/app/mwaqit-al-salat/PrayerRoutePage.module.css` for section spacing
 
 ## Holiday detail pages
 Split across two files:

@@ -33,23 +33,6 @@ const DATE_STATIC_ROUTES: ReadonlySet<string> = new Set([
   'hijri-to-gregorian',
   'hijri-months',
 ]);
-const PRAYER_STATIC_ROUTES: ReadonlySet<string> = new Set([
-  'last-third-of-night',
-  'duha-prayer-time',
-  'friday-response-hour',
-  'white-days',
-  'prohibited-prayer-times',
-  'prayer-times-calculation-method',
-]);
-// Subset of PRAYER_STATIC_ROUTES that also has per-country/per-city SEO pages
-// (e.g. /mwaqit-al-salat/last-third-of-night/[country]/[city]) — white-days
-// and prayer-times-calculation-method are excluded, they have no geo variant.
-const SPECIAL_PRAYER_GEO_ROUTES: ReadonlySet<string> = new Set([
-  'last-third-of-night',
-  'duha-prayer-time',
-  'friday-response-hour',
-  'prohibited-prayer-times',
-]);
 const TIME_DIFFERENCE_STATIC_ROUTES: ReadonlySet<string> = new Set(['converter']);
 const DATE_TODAY_ROUTES: ReadonlySet<string> = new Set(['gregorian', 'hijri']);
 const DATE_SITEMAP_ROUTES: ReadonlySet<string> = new Set(['static', 'calendars', 'countries']);
@@ -173,53 +156,6 @@ function isTimeNowPathValid(segments: string[]): boolean {
         || (citySlug && isKnownCityPair(countrySlug, citySlug))
       ),
     );
-  }
-
-  if (segments.length === 4) {
-    const countrySlug = normalizeRouteSlugValue(segments[1]);
-    const citySlug = normalizeRouteSlugValue(segments[2]);
-    return Boolean(
-      countrySlug
-      && citySlug
-      && isKnownCityPair(countrySlug, citySlug)
-      && segments[3] === 'opengraph-image',
-    );
-  }
-
-  return false;
-}
-
-function isPrayerPathValid(segments: string[]): boolean {
-  if (segments.length === 1) {
-    return true;
-  }
-
-  if (segments.length === 2 && PRAYER_STATIC_ROUTES.has(segments[1])) {
-    return true;
-  }
-
-  if (segments.length === 2) {
-    const countrySlug = normalizeRouteSlugValue(segments[1]);
-    return Boolean(countrySlug && isKnownCountrySlug(countrySlug));
-  }
-
-  // /mwaqit-al-salat/<special-topic>/<country>
-  if (segments.length === 3 && SPECIAL_PRAYER_GEO_ROUTES.has(segments[1])) {
-    const countrySlug = normalizeRouteSlugValue(segments[2]);
-    return Boolean(countrySlug && isKnownCountrySlug(countrySlug));
-  }
-
-  if (segments.length === 3) {
-    const countrySlug = normalizeRouteSlugValue(segments[1]);
-    const citySlug = normalizeRouteSlugValue(segments[2]);
-    return Boolean(countrySlug && citySlug && isKnownCityPair(countrySlug, citySlug));
-  }
-
-  // /mwaqit-al-salat/<special-topic>/<country>/<city>
-  if (segments.length === 4 && SPECIAL_PRAYER_GEO_ROUTES.has(segments[1])) {
-    const countrySlug = normalizeRouteSlugValue(segments[2]);
-    const citySlug = normalizeRouteSlugValue(segments[3]);
-    return Boolean(countrySlug && citySlug && isKnownCityPair(countrySlug, citySlug));
   }
 
   if (segments.length === 4) {
@@ -395,10 +331,6 @@ function shouldBlockPath(pathname: string): boolean {
     return !isTimeNowPathValid(segments);
   }
 
-  if (segments[0] === 'mwaqit-al-salat') {
-    return !isPrayerPathValid(segments);
-  }
-
   if (segments[0] === 'time-difference') {
     return !isTimeDifferencePathValid(segments);
   }
@@ -421,11 +353,6 @@ function createBlockedRouteResponse(pathname: string): NextResponse {
       'x-robots-tag': 'noindex, nofollow',
     },
   });
-}
-
-function shouldNoindexDiscoveryVariant(request: NextRequest): boolean {
-  return request.nextUrl.pathname === '/fahras'
-    && (request.nextUrl.searchParams.has('q') || request.nextUrl.searchParams.has('tab'));
 }
 
 function shouldNoindexCountdownVariant(request: NextRequest): boolean {
@@ -470,7 +397,7 @@ export function proxy(request: NextRequest): NextResponse {
   }
 
   const response = NextResponse.next();
-  if (shouldNoindexDiscoveryVariant(request) || shouldNoindexCountdownVariant(request)) {
+  if (shouldNoindexCountdownVariant(request)) {
     response.headers.set('x-robots-tag', 'noindex, follow');
   }
 

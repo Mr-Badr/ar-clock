@@ -110,6 +110,8 @@ export const STATIC_CALCULATOR_SEO_ROUTES = Object.freeze([
   { path: '/tools/pools/pool-volume-calculator', priority: 0.85, changeFrequency: 'weekly', websitePart: true },
   { path: '/tools/aluminum-glass', priority: 0.75, changeFrequency: 'weekly', websitePart: true },
   { path: '/tools/aluminum-glass/glass-types-colors', priority: 0.85, changeFrequency: 'weekly', websitePart: true },
+  { path: '/tools/attendance', priority: 0.78, changeFrequency: 'weekly', websitePart: true },
+  { path: '/tools/attendance/cost-calculator', priority: 0.9, changeFrequency: 'weekly', websitePart: true },
   { path: '/tools/gulf-finance/saudi-pay-dates', priority: 0.92, changeFrequency: 'monthly', websitePart: true },
   { path: '/tools/gulf-finance/gulf-pay-dates', priority: 0.92, changeFrequency: 'monthly', websitePart: true },
   { path: '/tools/gulf-finance/cgeb-canada', priority: 0.88, changeFrequency: 'monthly', websitePart: true },
