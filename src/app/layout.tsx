@@ -13,7 +13,7 @@ import SiteWideSchemas from '@/components/seo/SiteWideSchemas';
 import { ADSENSE_ACCOUNT_CLIENT_ID } from '@/lib/ads/account';
 import { getMetadataEnv } from '@/lib/env.server';
 import { PublicRuntimeProvider } from '@/lib/client/public-runtime';
-import { getPublicRuntimeConfig } from '@/lib/runtime-config';
+import { getCachedPublicRuntimeConfig } from '@/lib/runtime-config-cached';
 import {
   SITE_BRAND,
   SITE_BRAND_EN,
@@ -24,7 +24,6 @@ import {
 } from '@/lib/site-config';
 
 const env = getMetadataEnv();
-const publicRuntimeConfig = getPublicRuntimeConfig();
 const themeBootScript = `
   try {
     var root = document.documentElement;
@@ -123,11 +122,18 @@ export const viewport = {
   viewportFit: 'cover',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Cache-Components-native replacement for the old module-scope
+  // `const publicRuntimeConfig = getPublicRuntimeConfig()` — see the function's own JSDoc in
+  // runtime-config-cached.js for why that froze `ads.enabled: false` into every fully-static route
+  // (most of /tools/*) in production. Awaiting this here re-evaluates it on its own hourly
+  // `cacheLife`, independent of whether the route around it is otherwise fully static.
+  const publicRuntimeConfig = await getCachedPublicRuntimeConfig();
+
   return (
     // suppressHydrationWarning is required because the inline theme bootstrap
     // may update the <html> class before React hydrates.
