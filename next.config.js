@@ -59,6 +59,36 @@ const LEGACY_BLOG_CANONICAL_REDIRECTS = [
 ];
 
 const LEGACY_INDEXING_REDIRECTS = [
+  // Found 2026-08-11 via live `site:miqatona.com` search — Google's index still ranks these old
+  // /calculators/* URLs (retired 2026-08-09, hard 404 by design, see CLAUDE.md) as top results for
+  // brand + calculator queries. Unlike the general no-redirect policy for the retirement, these are
+  // confirmed still receiving real search visibility right now, so they're redirected to their
+  // closest living replacement to stop losing that traffic outright, matching this array's existing
+  // precedent (economie/map/time-now typo entries below).
+  {
+    source: '/calculators/finance',
+    destination: '/tools/gulf-finance',
+  },
+  {
+    source: '/calculators/percentage',
+    destination: '/tools/gulf-finance',
+  },
+  {
+    source: '/calculators/building/cement',
+    destination: '/tools/construction/cement',
+  },
+  {
+    source: '/calculators/building/uae',
+    destination: '/tools/construction/build-cost',
+  },
+  {
+    source: '/calculators/building/oman',
+    destination: '/tools/construction/build-cost',
+  },
+  {
+    source: '/calculators/age/planets',
+    destination: '/tools/health/age-planets',
+  },
   {
     source: '/economie',
     destination: '/tools/gulf-finance',

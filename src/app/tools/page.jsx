@@ -3,13 +3,18 @@ import {
   AppWindow,
   Bug,
   Car,
+  Elevator,
   Fingerprint,
+  Garage,
   GraduationCap,
   Hammer,
   HardHat,
   Heartbeat,
   Lightning,
+  Mosque,
   Plant,
+  Ruler,
+  Sparkle,
   SprayBottle,
   Storefront,
   Drop,
@@ -46,6 +51,11 @@ const CATEGORY_ICONS = {
   health: Heartbeat,
   education: GraduationCap,
   attendance: Fingerprint,
+  'garage-doors': Garage,
+  elevators: Elevator,
+  welding: Sparkle,
+  scaffolding: Ruler,
+  islamic: Mosque,
 };
 
 // Arabic plural agreement for "أداة" (tool, feminine) — 1/2/3-10/11+ each take a different form.
@@ -226,6 +236,69 @@ const CATEGORIES = [
     // (انتركم، اكسس كنترول تجزئة) were rejected on competition/CPC grounds — see docs/PLAN.md
     // §13 and keyword-research/access-control-intercom-hub/DECISION.md.
     toolCount: 1,
+  },
+  {
+    slug: 'garage-doors',
+    name: 'أبواب الجراج',
+    description: 'اختر مقاس باب الجراج المناسب لعدد سياراتك، وحل مشاكل الريموت الشائعة قبل الاتصال بفني.',
+    // Deliberately single-tool hub (2026-08-10) — real Keyword Planner data on "أبواب الجراج"
+    // (59,700/mo, mostly High comp on the broad retail term but real Low-comp gems on
+    // informational/decision queries, 28.4 SAR avg top bid). WebSearch-first check found no
+    // dedicated Arabic size/troubleshooting selector — only product listings and one-off
+    // articles. See docs/PLAN.md §13 and keyword-research/garage-doors-hub/DECISION.md.
+    toolCount: 1,
+  },
+  {
+    slug: 'elevators',
+    name: 'المصاعد',
+    description: 'تحقق من بنود عقد صيانة المصعد قبل التوقيع، وتعرف على أنواع العقود واشتراطات الدفاع المدني الحقيقية.',
+    // Deliberately narrow single-tool hub (2026-08-10) — real Keyword Planner data on "صيانة
+    // مصاعد" (10,000/mo combined across spellings, Medium comp, bid up to 56.19 SAR). The
+    // generic "guide to maintenance contracts" angle was found saturated by 9+ real elevator
+    // companies publishing near-identical lead-gen content — this hub deliberately narrows to a
+    // compliance-checklist angle grounded in real Civil Defense requirements instead. See
+    // docs/PLAN.md §13 and keyword-research/elevators-hub/DECISION.md.
+    toolCount: 1,
+  },
+  {
+    slug: 'welding',
+    name: 'اللحام',
+    description: 'أنواع اللحام (القوس الكهربائي، الأرجون، MIG/CO2) واحسب كمية أقطاب اللحام والتيار المناسب مباشرة.',
+    // Differentiation play, not a CPC play (owner verdict, 2026-08-10) — 127,700/mo broad volume
+    // on تلحيم/للحام/ورش اللحام (some Low comp), but weak CPC (max 18.8 SAR). Zero Arabic
+    // competitor has a real electrode-consumption/amperage calculator despite real English
+    // precedent (MachineMFG, Kobelco). Calculators shipped as embedded utility on the pillar
+    // guide, not standalone SEO pages — see docs/PLAN.md §13 and
+    // keyword-research/welding-hub/DECISION.md.
+    toolCount: 1,
+  },
+  {
+    slug: 'scaffolding',
+    name: 'السقالات',
+    description: 'جدول أسعار حقيقي شامل لكل أنواع السقالات إيجاراً وشراءً، ودليل اختيار النوع المناسب لمشروعك.',
+    // Built 2026-08-10 after correcting course mid-research: real Keyword Planner data on
+    // سقالات/سقالة (5,000/mo each, Medium comp) decomposed mostly into rental-company brand
+    // names and rental/purchase commercial intent — the first read treated that as unbuildable
+    // and nearly got rejected outright. Owner correction: don't default to reject on
+    // company/commercial-shaped intent — aggregate real, WebFetch-verified data (full pricing
+    // table across all types, a real operating company as a due-diligence reference point) into
+    // one resource instead. See docs/PLAN.md §13 and keyword-research/scaffolding-hub/DECISION.md.
+    toolCount: 1,
+  },
+  {
+    slug: 'islamic',
+    name: 'الأدوات الإسلامية',
+    description: 'حاسبة زكاة المال الشاملة وحاسبات متخصصة للذهب والأسهم والتجارة والراتب، حسب مذهبك، بأسعار حيّة لأكثر من 20 دولة عربية، ودليل الفروق بين المذاهب الأربعة.',
+    // Built 2026-08-10 — by far the largest real Keyword Planner dataset found this session
+    // (1.9M+/mo combined, 88% Low comp). v2 (2026-08-11, owner directive): full hub — 4-madhab-
+    // aware core calculators, live pricing across 22 Arab currencies (not Gulf-only), 4 dedicated
+    // per-asset-type calculators (gold/stocks/trade-goods/salary), a real madhab-comparison guide,
+    // a live nisab-today page, and 4 existing fiqh calculators (aqiqah/wasiyya/nafaqah/iddah)
+    // cross-listed in from gulf-finance — all cross-linked to each other. Real competitors exist
+    // (hasbati.com, arabtoolbox.com, Al-Azhar's own calculator) but none combine a computational
+    // 4-madhab selector + persistent Hawl tracking + 20+-currency live pricing + visual results.
+    // See docs/PLAN.md §13 and keyword-research/zakat-calculator-tracker/DECISION.md.
+    toolCount: 12,
   },
   {
     slug: 'health',

@@ -11,27 +11,24 @@ const SITE_URL = getSiteUrl();
 function findRoute(slug) {
   const route = CALCULATOR_ROUTES.find((item) => item.slug === slug);
   if (!route) {
-    throw new Error(`plumbing hub: no CALCULATOR_ROUTES entry for slug "${slug}"`);
+    throw new Error(`garage-doors hub: no CALCULATOR_ROUTES entry for slug "${slug}"`);
   }
   return route;
 }
 
-// Built 2026-07-31 from a real Keyword Planner run (Gulf/Saudi, Arabic) — see
-// keyword-research/plumber-hub/DECISION.md. Unlike /tools/construction, none of the hand-written
-// tool-specific keywords (حاسبة/محوّل/مولّد phrasing) had real search volume — the real demand was
-// buying guides and service explainers, so every page here is editorial content, not a calculator.
-// Rebuilt 2026-08-01 to match the /tools/construction dot-list pattern (see
-// .claude/rules/tools-hub-pattern.md) — same visual system as /tools/electrical. This hub has no
-// tools group yet since no calculator-shaped keyword demand was found; add one only when the
-// keyword re-audit (feedback-analyze-full-keyword-set-not-just-candidates) turns up real volume.
-const FEATURED_SLUGS = ['leak-detection', 'water-heaters', 'septic-tank-guide'];
+// Narrow hub launched 2026-08-10 from real Keyword Planner data (أبواب الجراج: 59,700/mo, mostly
+// High competition on the broad retail term but with real Low-competition gems on informational/
+// decision queries, 28.4 SAR avg top bid). WebSearch-first check found no dedicated Arabic
+// calculator/selector for sizing or troubleshooting — only product listings and one-off articles.
+// See docs/PLAN.md §13 and keyword-research/garage-doors-hub/DECISION.md.
+const FEATURED_SLUGS = ['garage-doors-size-guide'];
 
 const TYPE_GROUPS = [
   {
-    code: 'articles',
-    name: 'المقالات',
-    note: 'من تسرب لا تعرف مصدره إلى فاتورة مياه مرتفعة فجأة — كل قرار قبل أن تدفع فيه ريالاً واحداً.',
-    slugs: ['leak-detection', 'water-tanks', 'water-heaters', 'water-meter', 'septic-tank-guide'],
+    code: 'tools',
+    name: 'الأدوات والأدلة',
+    note: 'اختر المقاس المناسب لسياراتك، وحل مشاكل الريموت الشائعة قبل الاتصال بفني.',
+    slugs: ['garage-doors-size-guide'],
   },
 ];
 
@@ -53,13 +50,13 @@ function ToolLink({ slug }) {
 }
 
 export const metadata = buildCanonicalMetadata({
-  title: 'دليل السباكة — كشف التسربات، الخزانات، السخانات، وعداد المياه',
+  title: 'أبواب الجراج — دليل اختيار المقاس وحل مشاكل الريموت',
   description:
-    'أدلة سباكة شاملة مبنية على بحث كلمات حقيقي: كشف تسربات المياه، اختيار خزان المياه المناسب، سخان فوري أم مركزي، وحل مشاكل عداد المياه وفاتورته.',
-  url: `${SITE_URL}/tools/plumbing`,
+    'اختر مقاس باب الجراج المناسب لعدد سياراتك من جدول المقاسات القياسية الحقيقية، وتعرف على حلول مشاكل الريموت الشائعة.',
+  url: `${SITE_URL}/tools/garage-doors`,
 });
 
-export default function PlumbingHubPage() {
+export default function GarageDoorsCategoryHubPage() {
   const allListedSlugs = new Set(TYPE_GROUPS.flatMap((g) => g.slugs));
   const toolCount = allListedSlugs.size;
 
@@ -69,52 +66,33 @@ export default function PlumbingHubPage() {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${SITE_URL}/` },
       { '@type': 'ListItem', position: 2, name: 'الأدوات', item: `${SITE_URL}/tools` },
-      { '@type': 'ListItem', position: 3, name: 'السباكة', item: `${SITE_URL}/tools/plumbing` },
+      { '@type': 'ListItem', position: 3, name: 'أبواب الجراج', item: `${SITE_URL}/tools/garage-doors` },
     ],
-  };
-  const collectionSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: 'دليل السباكة',
-    url: `${SITE_URL}/tools/plumbing`,
-    mainEntity: {
-      '@type': 'ItemList',
-      numberOfItems: toolCount,
-      itemListElement: Array.from(allListedSlugs).map((slug, index) => {
-        const route = findRoute(slug);
-        return {
-          '@type': 'ListItem',
-          position: index + 1,
-          name: route.shortLabel || route.title,
-          url: `${SITE_URL}${route.href}`,
-        };
-      }),
-    },
   };
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
 
-      <ToolTopAdSlot slotId="top-plumbing-hub" />
+      <ToolTopAdSlot slotId="top-garage-doors-hub" />
 
       <div className="container mx-auto px-4 tool-v2-hub-content">
         <div className="tool-v2-cat-hero">
           <div className="tool-v2-cat-hero-top">
             <span className="tool-v2-cat-ic" aria-hidden="true">
               <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <path d="M12 2c4 5 6 8.5 6 11.5a6 6 0 1 1-12 0C6 10.5 8 7 12 2Z" />
+                <rect x="3" y="4" width="18" height="16" rx="1.2" />
+                <path d="M3 9h18M8 9v11M13 9v11" />
               </svg>
             </span>
-            <h1>دليل السباكة</h1>
+            <h1>أبواب الجراج</h1>
           </div>
           <p>
-            من تسرب مياه لا تعرف مصدره، إلى اختيار خزان أو سخان جديد، إلى فاتورة مياه مرتفعة
-            فجأة — أربعة أدلة عملية تشرح كل قرار قبل أن تدفع فيه ريالاً واحداً.
+            أي مقاس باب جراج يناسب سيارتك أو سياراتك، ولماذا توقف الريموت عن العمل فجأة — إجابات
+            مباشرة مبنية على مقاسات وحلول حقيقية، لا تخمين.
           </p>
           <div className="tool-v2-cat-meta">
-            <span><b>{toolCount}</b> أدلة مرتبطة مباشرة</span>
+            <span><b>{toolCount}</b> صفحة مرتبطة مباشرة</span>
           </div>
         </div>
 

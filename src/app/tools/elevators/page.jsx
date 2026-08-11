@@ -11,27 +11,27 @@ const SITE_URL = getSiteUrl();
 function findRoute(slug) {
   const route = CALCULATOR_ROUTES.find((item) => item.slug === slug);
   if (!route) {
-    throw new Error(`plumbing hub: no CALCULATOR_ROUTES entry for slug "${slug}"`);
+    throw new Error(`elevators hub: no CALCULATOR_ROUTES entry for slug "${slug}"`);
   }
   return route;
 }
 
-// Built 2026-07-31 from a real Keyword Planner run (Gulf/Saudi, Arabic) — see
-// keyword-research/plumber-hub/DECISION.md. Unlike /tools/construction, none of the hand-written
-// tool-specific keywords (حاسبة/محوّل/مولّد phrasing) had real search volume — the real demand was
-// buying guides and service explainers, so every page here is editorial content, not a calculator.
-// Rebuilt 2026-08-01 to match the /tools/construction dot-list pattern (see
-// .claude/rules/tools-hub-pattern.md) — same visual system as /tools/electrical. This hub has no
-// tools group yet since no calculator-shaped keyword demand was found; add one only when the
-// keyword re-audit (feedback-analyze-full-keyword-set-not-just-candidates) turns up real volume.
-const FEATURED_SLUGS = ['leak-detection', 'water-heaters', 'septic-tank-guide'];
+// Narrow hub launched 2026-08-10 from real Keyword Planner data (صيانة مصاعد: 10,000/mo combined
+// across spellings, Medium comp, bid up to 56.19 SAR). WebSearch-first + SERP check found the
+// generic "guide to maintenance contracts" angle saturated by 9+ real elevator companies
+// publishing near-identical lead-gen content — so this hub deliberately narrows to the one
+// angle none of them cover neutrally: a compliance checklist grounded in real Civil Defense
+// requirements, not a sales pitch. See docs/PLAN.md §13 and
+// keyword-research/elevators-hub/DECISION.md. The "مصاعد عام"/"قطع غيار المصعد" angles were
+// separately rejected on volume (3,050 and 300/mo).
+const FEATURED_SLUGS = ['elevator-maintenance-guide'];
 
 const TYPE_GROUPS = [
   {
-    code: 'articles',
-    name: 'المقالات',
-    note: 'من تسرب لا تعرف مصدره إلى فاتورة مياه مرتفعة فجأة — كل قرار قبل أن تدفع فيه ريالاً واحداً.',
-    slugs: ['leak-detection', 'water-tanks', 'water-heaters', 'water-meter', 'septic-tank-guide'],
+    code: 'tools',
+    name: 'الأدوات والأدلة',
+    note: 'تحقق من عقدك قبل التوقيع، وتعرف على اشتراطات الدفاع المدني الحقيقية.',
+    slugs: ['elevator-maintenance-guide'],
   },
 ];
 
@@ -53,13 +53,13 @@ function ToolLink({ slug }) {
 }
 
 export const metadata = buildCanonicalMetadata({
-  title: 'دليل السباكة — كشف التسربات، الخزانات، السخانات، وعداد المياه',
+  title: 'صيانة المصاعد — أنواع العقود ومدقق البنود قبل التوقيع',
   description:
-    'أدلة سباكة شاملة مبنية على بحث كلمات حقيقي: كشف تسربات المياه، اختيار خزان المياه المناسب، سخان فوري أم مركزي، وحل مشاكل عداد المياه وفاتورته.',
-  url: `${SITE_URL}/tools/plumbing`,
+    'تحقق من بنود عقد صيانة المصعد المعروض عليك، وتعرف على أنواع العقود الحقيقية واشتراطات الدفاع المدني.',
+  url: `${SITE_URL}/tools/elevators`,
 });
 
-export default function PlumbingHubPage() {
+export default function ElevatorsCategoryHubPage() {
   const allListedSlugs = new Set(TYPE_GROUPS.flatMap((g) => g.slugs));
   const toolCount = allListedSlugs.size;
 
@@ -69,52 +69,33 @@ export default function PlumbingHubPage() {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${SITE_URL}/` },
       { '@type': 'ListItem', position: 2, name: 'الأدوات', item: `${SITE_URL}/tools` },
-      { '@type': 'ListItem', position: 3, name: 'السباكة', item: `${SITE_URL}/tools/plumbing` },
+      { '@type': 'ListItem', position: 3, name: 'المصاعد', item: `${SITE_URL}/tools/elevators` },
     ],
-  };
-  const collectionSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: 'دليل السباكة',
-    url: `${SITE_URL}/tools/plumbing`,
-    mainEntity: {
-      '@type': 'ItemList',
-      numberOfItems: toolCount,
-      itemListElement: Array.from(allListedSlugs).map((slug, index) => {
-        const route = findRoute(slug);
-        return {
-          '@type': 'ListItem',
-          position: index + 1,
-          name: route.shortLabel || route.title,
-          url: `${SITE_URL}${route.href}`,
-        };
-      }),
-    },
   };
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
 
-      <ToolTopAdSlot slotId="top-plumbing-hub" />
+      <ToolTopAdSlot slotId="top-elevators-hub" />
 
       <div className="container mx-auto px-4 tool-v2-hub-content">
         <div className="tool-v2-cat-hero">
           <div className="tool-v2-cat-hero-top">
             <span className="tool-v2-cat-ic" aria-hidden="true">
               <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <path d="M12 2c4 5 6 8.5 6 11.5a6 6 0 1 1-12 0C6 10.5 8 7 12 2Z" />
+                <rect x="6" y="3" width="12" height="18" rx="1.2" />
+                <path d="M10 8h4M9 13l2-2 2 2M9 16l2 2 2-2" />
               </svg>
             </span>
-            <h1>دليل السباكة</h1>
+            <h1>المصاعد</h1>
           </div>
           <p>
-            من تسرب مياه لا تعرف مصدره، إلى اختيار خزان أو سخان جديد، إلى فاتورة مياه مرتفعة
-            فجأة — أربعة أدلة عملية تشرح كل قرار قبل أن تدفع فيه ريالاً واحداً.
+            هل عقد صيانة المصعد المعروض عليك يستوفي الأساسيات فعلاً؟ تحقق من البنود قبل التوقيع،
+            بدل الاعتماد على كلام مندوب المبيعات وحده.
           </p>
           <div className="tool-v2-cat-meta">
-            <span><b>{toolCount}</b> أدلة مرتبطة مباشرة</span>
+            <span><b>{toolCount}</b> صفحة مرتبطة مباشرة</span>
           </div>
         </div>
 

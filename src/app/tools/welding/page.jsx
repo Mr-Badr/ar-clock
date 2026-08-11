@@ -11,27 +11,26 @@ const SITE_URL = getSiteUrl();
 function findRoute(slug) {
   const route = CALCULATOR_ROUTES.find((item) => item.slug === slug);
   if (!route) {
-    throw new Error(`plumbing hub: no CALCULATOR_ROUTES entry for slug "${slug}"`);
+    throw new Error(`welding hub: no CALCULATOR_ROUTES entry for slug "${slug}"`);
   }
   return route;
 }
 
-// Built 2026-07-31 from a real Keyword Planner run (Gulf/Saudi, Arabic) — see
-// keyword-research/plumber-hub/DECISION.md. Unlike /tools/construction, none of the hand-written
-// tool-specific keywords (حاسبة/محوّل/مولّد phrasing) had real search volume — the real demand was
-// buying guides and service explainers, so every page here is editorial content, not a calculator.
-// Rebuilt 2026-08-01 to match the /tools/construction dot-list pattern (see
-// .claude/rules/tools-hub-pattern.md) — same visual system as /tools/electrical. This hub has no
-// tools group yet since no calculator-shaped keyword demand was found; add one only when the
-// keyword re-audit (feedback-analyze-full-keyword-set-not-just-candidates) turns up real volume.
-const FEATURED_SLUGS = ['leak-detection', 'water-heaters', 'septic-tank-guide'];
+// Differentiation play, not a CPC play (owner verdict, 2026-08-10): 127,700/mo broad volume on
+// تلحيم/للحام/ورش اللحام (Low comp on several head terms), but CPC is weak (max 18.8 SAR) — this
+// isn't a top earner, it's a first-mover tool bet. Every calculator/converter/checker/tracker-
+// shaped query returned zero Keyword Planner volume (same pattern as Smart Home), so the
+// calculators are shipped as embedded utility inside the pillar guide, not standalone SEO pages —
+// no Arabic competitor has these at all despite real English precedent (MachineMFG, Kobelco,
+// Elga-Welding). See docs/PLAN.md §13 and keyword-research/welding-hub/DECISION.md.
+const FEATURED_SLUGS = ['welding-guide'];
 
 const TYPE_GROUPS = [
   {
-    code: 'articles',
-    name: 'المقالات',
-    note: 'من تسرب لا تعرف مصدره إلى فاتورة مياه مرتفعة فجأة — كل قرار قبل أن تدفع فيه ريالاً واحداً.',
-    slugs: ['leak-detection', 'water-tanks', 'water-heaters', 'water-meter', 'septic-tank-guide'],
+    code: 'tools',
+    name: 'الدليل والحاسبات',
+    note: 'أنواع اللحام، متى تستخدم كل نوع، واحسب كمية الأقطاب والتيار المناسب مباشرة.',
+    slugs: ['welding-guide'],
   },
 ];
 
@@ -53,13 +52,13 @@ function ToolLink({ slug }) {
 }
 
 export const metadata = buildCanonicalMetadata({
-  title: 'دليل السباكة — كشف التسربات، الخزانات، السخانات، وعداد المياه',
+  title: 'اللحام — أنواعه وحاسبة استهلاك الأقطاب والتيار المناسب',
   description:
-    'أدلة سباكة شاملة مبنية على بحث كلمات حقيقي: كشف تسربات المياه، اختيار خزان المياه المناسب، سخان فوري أم مركزي، وحل مشاكل عداد المياه وفاتورته.',
-  url: `${SITE_URL}/tools/plumbing`,
+    'دليل أنواع اللحام (القوس الكهربائي، الأرجون، MIG/CO2) مع حاسبة استهلاك الأقطاب والتيار المناسب لسمك المعدن.',
+  url: `${SITE_URL}/tools/welding`,
 });
 
-export default function PlumbingHubPage() {
+export default function WeldingCategoryHubPage() {
   const allListedSlugs = new Set(TYPE_GROUPS.flatMap((g) => g.slugs));
   const toolCount = allListedSlugs.size;
 
@@ -69,52 +68,35 @@ export default function PlumbingHubPage() {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${SITE_URL}/` },
       { '@type': 'ListItem', position: 2, name: 'الأدوات', item: `${SITE_URL}/tools` },
-      { '@type': 'ListItem', position: 3, name: 'السباكة', item: `${SITE_URL}/tools/plumbing` },
+      { '@type': 'ListItem', position: 3, name: 'اللحام', item: `${SITE_URL}/tools/welding` },
     ],
-  };
-  const collectionSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: 'دليل السباكة',
-    url: `${SITE_URL}/tools/plumbing`,
-    mainEntity: {
-      '@type': 'ItemList',
-      numberOfItems: toolCount,
-      itemListElement: Array.from(allListedSlugs).map((slug, index) => {
-        const route = findRoute(slug);
-        return {
-          '@type': 'ListItem',
-          position: index + 1,
-          name: route.shortLabel || route.title,
-          url: `${SITE_URL}${route.href}`,
-        };
-      }),
-    },
   };
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
 
-      <ToolTopAdSlot slotId="top-plumbing-hub" />
+      <ToolTopAdSlot slotId="top-welding-hub" />
 
       <div className="container mx-auto px-4 tool-v2-hub-content">
         <div className="tool-v2-cat-hero">
           <div className="tool-v2-cat-hero-top">
             <span className="tool-v2-cat-ic" aria-hidden="true">
               <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <path d="M12 2c4 5 6 8.5 6 11.5a6 6 0 1 1-12 0C6 10.5 8 7 12 2Z" />
+                <path d="M4 15 L9 10 L14 15 L20 9" />
+                <path d="M16 5 L20 9 L16 13" />
+                <circle cx="6" cy="18" r="1.4" />
+                <circle cx="11" cy="18" r="1.4" />
               </svg>
             </span>
-            <h1>دليل السباكة</h1>
+            <h1>اللحام</h1>
           </div>
           <p>
-            من تسرب مياه لا تعرف مصدره، إلى اختيار خزان أو سخان جديد، إلى فاتورة مياه مرتفعة
-            فجأة — أربعة أدلة عملية تشرح كل قرار قبل أن تدفع فيه ريالاً واحداً.
+            أي نوع لحام يناسب مشروعك، وكم قطب أو سلك تحتاج فعلاً — دليل عملي مع حاسبة حقيقية بدل
+            التقدير بالعين.
           </p>
           <div className="tool-v2-cat-meta">
-            <span><b>{toolCount}</b> أدلة مرتبطة مباشرة</span>
+            <span><b>{toolCount}</b> صفحة مرتبطة مباشرة</span>
           </div>
         </div>
 
