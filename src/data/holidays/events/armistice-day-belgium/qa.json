@@ -1,0 +1,16 @@
+{
+  "slug": "armistice-day-belgium",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 11 نوفمبر إجازة رسمية موحدة في بلجيكا. مراسم بوابة مينين موثقة عبر lastpost.be وCWGC (يومية منذ 1928، توقف فقط في الحرب العالمية الثانية).",
+    "سنوات 1918/1928/1944 مذكورة كحقائق تاريخية قديمة، مطابقة لقاعدة hasHardcodedYear."
+  ],
+  "updatedAt": "2026-08-12T20:37:49.557Z"
+}

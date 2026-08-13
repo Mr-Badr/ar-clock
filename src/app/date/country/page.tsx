@@ -1,11 +1,15 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Clock, CalendarDays, ArrowLeftRight } from 'lucide-react';
 
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { JsonLd } from '@/components/seo/JsonLd';
 import CountryFlag from '@/components/shared/CountryFlag';
+import { SiteFaqAccordion } from '@/components/shared/SiteFaqAccordion';
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getAllCountries, getPriorityCountrySlugs } from '@/lib/db/queries/countries';
 import type { Country } from '@/lib/db/types';
@@ -323,34 +327,27 @@ export default async function DateCountryRootPage() {
 
           <DateBreadcrumb items={breadcrumb} />
 
-          <section className="date-hero-panel mb-8" aria-labelledby="date-country-title">
+          <section className="date-hero-panel date-hero-panel--single mb-12" aria-labelledby="date-country-title">
             <div className="date-hero-main">
               <div className="date-kicker">التاريخ حسب الدولة</div>
               <h1 id="date-country-title" className="date-hero-title">
                 اختر بلدك لمعرفة التاريخ الهجري والميلادي اليوم
               </h1>
-              <p className="date-hero-copy mb-4">
+              <p className="date-hero-copy">
                 إذا كنت تسأل: كم التاريخ اليوم في بلدي؟ فابدأ من الدولة. صفحة الدولة تعرض التاريخ
                 الهجري والميلادي وفق اليوم المحلي، ثم تساعدك على فتح الوقت الان
                 ومحول التاريخ من نفس السياق.
               </p>
-              <p className="date-hero-copy mb-0">
+              <p className="date-hero-copy">
                 هذه الصفحة لا تعطيك رقماً عاماً فقط؛ بل تساعدك على تجنب خطأ شائع: مشاركة تاريخ صحيح
                 في بلدك لكنه لم يبدأ بعد في بلد آخر بسبب فرق التوقيت أو اختلاف بداية الشهر الهجري.
+                استخدم الاكتشاف السريع إذا أردت أقرب صفحة لك، أو اختر الدولة يدوياً عندما تريد مشاركة رابط واضح.
               </p>
-            </div>
-            <div className="date-hero-rail" aria-label="اختيار الدولة">
-              <div>
-                <div className="date-hero-answer">ابدأ من بلدك</div>
-                <p className="date-hero-note mb-0">
-                  استخدم الاكتشاف السريع إذا أردت أقرب صفحة لك، أو اختر الدولة يدوياً عندما تريد مشاركة رابط واضح.
-                </p>
-              </div>
-              <div className="date-hero-actions">
+              <div className="date-hero-quick-actions">
                 <DateCountryRedirectClient />
-                <Link href="/date/today" className="date-hero-link">
+                <Link href="/date/today" className="date-quick-action">
+                  <CalendarDays size={16} strokeWidth={1.75} aria-hidden="true" />
                   تاريخ اليوم العام
-                  <span aria-hidden="true">←</span>
                 </Link>
               </div>
             </div>
@@ -470,7 +467,8 @@ export default async function DateCountryRootPage() {
             </article>
           </section>
 
-          <section className="date-detail-panel mb-8" aria-labelledby="date-country-decision-heading">
+          {/* Plain text list — no bordered panel (DESIGN.md Law 4). */}
+          <section className="date-section max-w-3xl" aria-labelledby="date-country-decision-heading">
             <h2 id="date-country-decision-heading" className="date-section-title">
               قاعدة القرار: من أين تبدأ؟
             </h2>
@@ -486,74 +484,42 @@ export default async function DateCountryRootPage() {
             </div>
           </section>
 
-          <section className="related-links mb-8" dir="rtl" aria-labelledby="date-country-sources-heading">
-            <p id="date-country-sources-heading" className="related-links__heading">
-              مصادر ومنهج عرض التاريخ حسب الدولة
-            </p>
-            <div className="related-links__grid">
-              {SOURCE_LINKS.map((source) => (
-                <a
-                  key={source.href}
-                  href={source.href}
-                  className="related-link-card"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="related-link-card__body">
-                    <span className="related-link-card__label">{source.label}</span>
-                    <span className="related-link-card__desc">{source.description}</span>
-                  </span>
-                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
-                </a>
-              ))}
-            </div>
+          {/* FAQ — the one pattern used everywhere (owner, 2026-08-13: "FAQ should always
+              be like the FAQ in tools pages"). */}
+          <section className="date-section max-w-3xl" aria-labelledby="date-country-faq-heading">
+            <h2 id="date-country-faq-heading" className="date-section-title">
+              أسئلة قبل اختيار تاريخ دولة معينة
+            </h2>
+            <SiteFaqAccordion items={[...DATE_COUNTRY_FAQ_ITEMS]} />
           </section>
 
-          <section className="date-section mb-10" aria-labelledby="date-country-faq-heading">
-            <div className="date-section-head">
-              <h2 id="date-country-faq-heading" className="date-section-title">
-                أسئلة قبل اختيار تاريخ دولة معينة
-              </h2>
-              <p className="date-section-copy">
-                اقرأ هذه الإجابات إذا كنت تختار بين صفحة الدولة، تاريخ اليوم العام، المحول، أو التقويم.
-              </p>
-            </div>
-            <div className="date-faq-grid">
-              {DATE_COUNTRY_FAQ_ITEMS.map((item) => (
-                <article key={item.question} className="date-faq-item">
-                  <h3 className="date-faq-question">{item.question}</h3>
-                  <p className="date-faq-copy m-0">{item.answer}</p>
-                </article>
-              ))}
-            </div>
+          {/* Related pages — small, clean, unique CARDS (owner, 2026-08-13), not a list. */}
+          <section className="date-section max-w-3xl">
+            <SiteRelatedCardGrid
+              heading="إذا كنت تريد ربط التاريخ المحلي بالوقت أو التقويم"
+              headingId="date-country-next-paths-heading"
+              items={[
+                { href: '/time-now', label: 'الوقت الان', Icon: Clock },
+                { href: `/date/calendar/${currentYear}`, label: `تقويم ${currentYear}`, Icon: CalendarDays },
+                { href: '/date/converter', label: 'محول التاريخ', Icon: ArrowLeftRight },
+              ]}
+            />
           </section>
 
-          <nav aria-label="مسارات متابعة التاريخ المحلي حسب الدولة" className="related-links" dir="rtl">
-            <p className="related-links__heading">إذا كنت تريد ربط التاريخ المحلي بالوقت أو التقويم</p>
-            <div className="related-links__grid">
-              <Link href="/time-now" className="related-link-card">
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">الوقت الان</span>
-                  <span className="related-link-card__desc">ابدأ من الدولة أو المدينة لمعرفة الساعة الحالية قبل اعتماد التاريخ</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-              <Link href={`/date/calendar/${currentYear}`} className="related-link-card">
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">تقويم {currentYear}</span>
-                  <span className="related-link-card__desc">افتح السنة الميلادية كاملة عندما تحتاج أكثر من تاريخ اليوم فقط</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-              <Link href="/date/converter" className="related-link-card">
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">محول التاريخ</span>
-                  <span className="related-link-card__desc">حوّل تاريخاً محدداً بين الهجري والميلادي بدل الاكتفاء بتاريخ اليوم</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-            </div>
-          </nav>
+          {/* Sources — last thing on the page (owner, 2026-08-13), plain small dot-list
+              like /tools. */}
+          <section className="date-section max-w-3xl">
+            <SiteDotLinkList
+              heading="مصادر ومنهج عرض التاريخ حسب الدولة"
+              headingId="date-country-sources-heading"
+              items={SOURCE_LINKS.map((source) => ({
+                href: source.href,
+                label: source.label,
+                description: source.description,
+                external: true,
+              }))}
+            />
+          </section>
         </main>
       </AdLayoutWrapper>
     </>

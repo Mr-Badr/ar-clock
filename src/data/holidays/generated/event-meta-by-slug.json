@@ -31,7 +31,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/ramadan",
@@ -62,7 +65,10 @@
       "ramadan-in-netherlands",
       "ramadan-in-spain",
       "ramadan-in-uk",
-      "ramadan-in-norway"
+      "ramadan-in-norway",
+      "ramadan-in-australia",
+      "ramadan-in-belgium",
+      "ramadan-in-italy"
     ]
   },
   "eid-al-fitr": {
@@ -97,7 +103,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/eid-al-fitr",
@@ -128,7 +137,10 @@
       "eid-al-fitr-in-netherlands",
       "eid-al-fitr-in-spain",
       "eid-al-fitr-in-uk",
-      "eid-al-fitr-in-norway"
+      "eid-al-fitr-in-norway",
+      "eid-al-fitr-in-australia",
+      "eid-al-fitr-in-belgium",
+      "eid-al-fitr-in-italy"
     ]
   },
   "eid-al-adha": {
@@ -163,7 +175,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/eid-al-adha",
@@ -194,7 +209,10 @@
       "eid-al-adha-in-netherlands",
       "eid-al-adha-in-spain",
       "eid-al-adha-in-uk",
-      "eid-al-adha-in-norway"
+      "eid-al-adha-in-norway",
+      "eid-al-adha-in-australia",
+      "eid-al-adha-in-belgium",
+      "eid-al-adha-in-italy"
     ]
   },
   "day-of-arafa": {
@@ -229,7 +247,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/day-of-arafa",
@@ -260,7 +281,10 @@
       "day-of-arafa-in-netherlands",
       "day-of-arafa-in-spain",
       "day-of-arafa-in-uk",
-      "day-of-arafa-in-norway"
+      "day-of-arafa-in-norway",
+      "day-of-arafa-in-australia",
+      "day-of-arafa-in-belgium",
+      "day-of-arafa-in-italy"
     ]
   },
   "hajj-season": {
@@ -295,7 +319,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/hajj-season",
@@ -326,7 +353,10 @@
       "hajj-season-in-netherlands",
       "hajj-season-in-spain",
       "hajj-season-in-uk",
-      "hajj-season-in-norway"
+      "hajj-season-in-norway",
+      "hajj-season-in-australia",
+      "hajj-season-in-belgium",
+      "hajj-season-in-italy"
     ]
   },
   "islamic-new-year": {
@@ -361,7 +391,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/islamic-new-year",
@@ -392,7 +425,10 @@
       "islamic-new-year-in-netherlands",
       "islamic-new-year-in-spain",
       "islamic-new-year-in-uk",
-      "islamic-new-year-in-norway"
+      "islamic-new-year-in-norway",
+      "islamic-new-year-in-australia",
+      "islamic-new-year-in-belgium",
+      "islamic-new-year-in-italy"
     ]
   },
   "ashura": {
@@ -427,7 +463,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/ashura",
@@ -458,7 +497,10 @@
       "ashura-in-netherlands",
       "ashura-in-spain",
       "ashura-in-uk",
-      "ashura-in-norway"
+      "ashura-in-norway",
+      "ashura-in-australia",
+      "ashura-in-belgium",
+      "ashura-in-italy"
     ]
   },
   "laylat-al-qadr": {
@@ -493,7 +535,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/laylat-al-qadr",
@@ -524,7 +569,10 @@
       "laylat-al-qadr-in-netherlands",
       "laylat-al-qadr-in-spain",
       "laylat-al-qadr-in-uk",
-      "laylat-al-qadr-in-norway"
+      "laylat-al-qadr-in-norway",
+      "laylat-al-qadr-in-australia",
+      "laylat-al-qadr-in-belgium",
+      "laylat-al-qadr-in-italy"
     ]
   },
   "social-security-saudi": {
@@ -571,7 +619,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/isra-miraj",
@@ -602,7 +653,10 @@
       "isra-miraj-in-netherlands",
       "isra-miraj-in-spain",
       "isra-miraj-in-uk",
-      "isra-miraj-in-norway"
+      "isra-miraj-in-norway",
+      "isra-miraj-in-australia",
+      "isra-miraj-in-belgium",
+      "isra-miraj-in-italy"
     ]
   },
   "oman-accession-day": {
@@ -649,7 +703,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/first-dhul-hijjah",
@@ -680,7 +737,10 @@
       "first-dhul-hijjah-in-netherlands",
       "first-dhul-hijjah-in-spain",
       "first-dhul-hijjah-in-uk",
-      "first-dhul-hijjah-in-norway"
+      "first-dhul-hijjah-in-norway",
+      "first-dhul-hijjah-in-australia",
+      "first-dhul-hijjah-in-belgium",
+      "first-dhul-hijjah-in-italy"
     ]
   },
   "bac-results-tunisia": {
@@ -1133,7 +1193,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/valentines-day",
@@ -1164,7 +1227,10 @@
       "valentines-day-in-netherlands",
       "valentines-day-in-spain",
       "valentines-day-in-uk",
-      "valentines-day-in-norway"
+      "valentines-day-in-norway",
+      "valentines-day-in-australia",
+      "valentines-day-in-belgium",
+      "valentines-day-in-italy"
     ]
   },
   "labor-day": {
@@ -1233,7 +1299,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-health-day",
@@ -1264,7 +1333,10 @@
       "world-health-day-in-netherlands",
       "world-health-day-in-spain",
       "world-health-day-in-uk",
-      "world-health-day-in-norway"
+      "world-health-day-in-norway",
+      "world-health-day-in-australia",
+      "world-health-day-in-belgium",
+      "world-health-day-in-italy"
     ]
   },
   "earth-day": {
@@ -1299,7 +1371,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/earth-day",
@@ -1330,7 +1405,10 @@
       "earth-day-in-netherlands",
       "earth-day-in-spain",
       "earth-day-in-uk",
-      "earth-day-in-norway"
+      "earth-day-in-norway",
+      "earth-day-in-australia",
+      "earth-day-in-belgium",
+      "earth-day-in-italy"
     ]
   },
   "world-diabetes-day": {
@@ -1365,7 +1443,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-diabetes-day",
@@ -1397,6 +1478,9 @@
       "world-diabetes-day-in-spain",
       "world-diabetes-day-in-uk",
       "world-diabetes-day-in-norway",
+      "world-diabetes-day-in-australia",
+      "world-diabetes-day-in-belgium",
+      "world-diabetes-day-in-italy",
       "diabetes-day",
       "world-diabetes-day-countdown"
     ]
@@ -1449,7 +1533,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-teachers-day",
@@ -1480,7 +1567,10 @@
       "world-teachers-day-in-netherlands",
       "world-teachers-day-in-spain",
       "world-teachers-day-in-uk",
-      "world-teachers-day-in-norway"
+      "world-teachers-day-in-norway",
+      "world-teachers-day-in-australia",
+      "world-teachers-day-in-belgium",
+      "world-teachers-day-in-italy"
     ]
   },
   "arabic-language-day": {
@@ -1515,7 +1605,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/arabic-language-day",
@@ -1546,7 +1639,10 @@
       "arabic-language-day-in-netherlands",
       "arabic-language-day-in-spain",
       "arabic-language-day-in-uk",
-      "arabic-language-day-in-norway"
+      "arabic-language-day-in-norway",
+      "arabic-language-day-in-australia",
+      "arabic-language-day-in-belgium",
+      "arabic-language-day-in-italy"
     ]
   },
   "saudi-flag-day": {
@@ -1725,7 +1821,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/mawlid",
@@ -1756,7 +1855,10 @@
       "mawlid-in-netherlands",
       "mawlid-in-spain",
       "mawlid-in-uk",
-      "mawlid-in-norway"
+      "mawlid-in-norway",
+      "mawlid-in-australia",
+      "mawlid-in-belgium",
+      "mawlid-in-italy"
     ]
   },
   "halloween-usa": {
@@ -1859,7 +1961,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/nisf-shaban",
@@ -1890,7 +1995,10 @@
       "nisf-shaban-in-netherlands",
       "nisf-shaban-in-spain",
       "nisf-shaban-in-uk",
-      "nisf-shaban-in-norway"
+      "nisf-shaban-in-norway",
+      "nisf-shaban-in-australia",
+      "nisf-shaban-in-belgium",
+      "nisf-shaban-in-italy"
     ]
   },
   "pension-day-egypt": {
@@ -1949,7 +2057,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-childrens-day",
@@ -1980,7 +2091,10 @@
       "world-childrens-day-in-netherlands",
       "world-childrens-day-in-spain",
       "world-childrens-day-in-uk",
-      "world-childrens-day-in-norway"
+      "world-childrens-day-in-norway",
+      "world-childrens-day-in-australia",
+      "world-childrens-day-in-belgium",
+      "world-childrens-day-in-italy"
     ]
   },
   "international-day-of-education": {
@@ -2015,7 +2129,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/international-day-of-education",
@@ -2046,7 +2163,10 @@
       "international-day-of-education-in-netherlands",
       "international-day-of-education-in-spain",
       "international-day-of-education-in-uk",
-      "international-day-of-education-in-norway"
+      "international-day-of-education-in-norway",
+      "international-day-of-education-in-australia",
+      "international-day-of-education-in-belgium",
+      "international-day-of-education-in-italy"
     ]
   },
   "world-mental-health-day": {
@@ -2081,7 +2201,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-mental-health-day",
@@ -2112,7 +2235,10 @@
       "world-mental-health-day-in-netherlands",
       "world-mental-health-day-in-spain",
       "world-mental-health-day-in-uk",
-      "world-mental-health-day-in-norway"
+      "world-mental-health-day-in-norway",
+      "world-mental-health-day-in-australia",
+      "world-mental-health-day-in-belgium",
+      "world-mental-health-day-in-italy"
     ]
   },
   "world-environment-day": {
@@ -2147,7 +2273,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-environment-day",
@@ -2178,7 +2307,10 @@
       "world-environment-day-in-netherlands",
       "world-environment-day-in-spain",
       "world-environment-day-in-uk",
-      "world-environment-day-in-norway"
+      "world-environment-day-in-norway",
+      "world-environment-day-in-australia",
+      "world-environment-day-in-belgium",
+      "world-environment-day-in-italy"
     ]
   },
   "independence-manifesto-day-morocco": {
@@ -2289,6 +2421,18 @@
     "canonicalPath": "/holidays/al-wasm-saudi",
     "aliases": []
   },
+  "all-saints-day-belgium": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "be"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/all-saints-day-belgium",
+    "aliases": []
+  },
   "all-saints-day-france": {
     "publishStatus": "published",
     "retired": false,
@@ -2299,6 +2443,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/all-saints-day-france",
+    "aliases": []
+  },
+  "all-saints-day-spain": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "es"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/all-saints-day-spain",
     "aliases": []
   },
   "all-saints-sweden": {
@@ -2337,6 +2493,18 @@
     "canonicalPath": "/holidays/annunciation-day-lebanon",
     "aliases": []
   },
+  "anzac-day-australia": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "au"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/anzac-day-australia",
+    "aliases": []
+  },
   "april-fools": {
     "publishStatus": "published",
     "retired": false,
@@ -2369,7 +2537,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/april-fools",
@@ -2400,7 +2571,10 @@
       "april-fools-in-netherlands",
       "april-fools-in-spain",
       "april-fools-in-uk",
-      "april-fools-in-norway"
+      "april-fools-in-norway",
+      "april-fools-in-australia",
+      "april-fools-in-belgium",
+      "april-fools-in-italy"
     ]
   },
   "arab-orphan-day": {
@@ -2435,7 +2609,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/arab-orphan-day",
@@ -2466,7 +2643,10 @@
       "arab-orphan-day-in-netherlands",
       "arab-orphan-day-in-spain",
       "arab-orphan-day-in-uk",
-      "arab-orphan-day-in-norway"
+      "arab-orphan-day-in-norway",
+      "arab-orphan-day-in-australia",
+      "arab-orphan-day-in-belgium",
+      "arab-orphan-day-in-italy"
     ]
   },
   "armed-forces-day-morocco": {
@@ -2515,6 +2695,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/armenian-christmas-lebanon",
+    "aliases": []
+  },
+  "armistice-day-belgium": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "be"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/armistice-day-belgium",
     "aliases": []
   },
   "armistice-day-france": {
@@ -2635,6 +2827,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/assumption-day-lebanon",
+    "aliases": []
+  },
+  "australia-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "au"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/australia-day",
     "aliases": []
   },
   "autism-day": {
@@ -2763,7 +2967,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/badr-day",
@@ -2794,7 +3001,10 @@
       "badr-day-in-netherlands",
       "badr-day-in-spain",
       "badr-day-in-uk",
-      "badr-day-in-norway"
+      "badr-day-in-norway",
+      "badr-day-in-australia",
+      "badr-day-in-belgium",
+      "badr-day-in-italy"
     ]
   },
   "bahraini-womens-day": {
@@ -2887,7 +3097,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/battle-of-uhud",
@@ -2918,7 +3131,10 @@
       "battle-of-uhud-in-netherlands",
       "battle-of-uhud-in-spain",
       "battle-of-uhud-in-uk",
-      "battle-of-uhud-in-norway"
+      "battle-of-uhud-in-norway",
+      "battle-of-uhud-in-australia",
+      "battle-of-uhud-in-belgium",
+      "battle-of-uhud-in-italy"
     ]
   },
   "blood-donor-day": {
@@ -2953,7 +3169,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/blood-donor-day",
@@ -2984,7 +3203,10 @@
       "blood-donor-day-in-netherlands",
       "blood-donor-day-in-spain",
       "blood-donor-day-in-uk",
-      "blood-donor-day-in-norway"
+      "blood-donor-day-in-norway",
+      "blood-donor-day-in-australia",
+      "blood-donor-day-in-belgium",
+      "blood-donor-day-in-italy"
     ]
   },
   "bostadsbidrag-sweden": {
@@ -3177,6 +3399,18 @@
     "canonicalPath": "/holidays/christmas-jordan",
     "aliases": []
   },
+  "christmas-netherlands": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "nl"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/christmas-netherlands",
+    "aliases": []
+  },
   "christmas-palestine": {
     "publishStatus": "published",
     "retired": false,
@@ -3269,7 +3503,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/conquest-of-andalusia",
@@ -3300,8 +3537,23 @@
       "conquest-of-andalusia-in-netherlands",
       "conquest-of-andalusia-in-spain",
       "conquest-of-andalusia-in-uk",
-      "conquest-of-andalusia-in-norway"
+      "conquest-of-andalusia-in-norway",
+      "conquest-of-andalusia-in-australia",
+      "conquest-of-andalusia-in-belgium",
+      "conquest-of-andalusia-in-italy"
     ]
+  },
+  "constitution-day-kuwait": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "kw"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/constitution-day-kuwait",
+    "aliases": []
   },
   "constitution-day-lebanon": {
     "publishStatus": "published",
@@ -3313,6 +3565,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/constitution-day-lebanon",
+    "aliases": []
+  },
+  "constitution-day-spain": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "es"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/constitution-day-spain",
     "aliases": []
   },
   "coptic-christmas-egypt": {
@@ -3493,6 +3757,18 @@
     "canonicalPath": "/holidays/easter-monday-germany",
     "aliases": []
   },
+  "easter-monday-netherlands": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "nl"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/easter-monday-netherlands",
+    "aliases": []
+  },
   "easter-monday-uk": {
     "publishStatus": "published",
     "retired": false,
@@ -3527,6 +3803,30 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/education-day-uae",
+    "aliases": []
+  },
+  "eid-al-fitr-australia": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "au"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/eid-al-fitr-australia",
+    "aliases": []
+  },
+  "epiphany-spain": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "es"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/epiphany-spain",
     "aliases": []
   },
   "epiphany-sweden": {
@@ -3609,7 +3909,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/fall-of-granada",
@@ -3640,7 +3943,10 @@
       "fall-of-granada-in-netherlands",
       "fall-of-granada-in-spain",
       "fall-of-granada-in-uk",
-      "fall-of-granada-in-norway"
+      "fall-of-granada-in-norway",
+      "fall-of-granada-in-australia",
+      "fall-of-granada-in-belgium",
+      "fall-of-granada-in-italy"
     ]
   },
   "family-day": {
@@ -3697,7 +4003,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/fath-makkah",
@@ -3728,8 +4037,23 @@
       "fath-makkah-in-netherlands",
       "fath-makkah-in-spain",
       "fath-makkah-in-uk",
-      "fath-makkah-in-norway"
+      "fath-makkah-in-norway",
+      "fath-makkah-in-australia",
+      "fath-makkah-in-belgium",
+      "fath-makkah-in-italy"
     ]
+  },
+  "ferragosto-italy": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "it"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/ferragosto-italy",
+    "aliases": []
   },
   "fete-de-la-musique-france": {
     "publishStatus": "published",
@@ -3791,6 +4115,18 @@
     "canonicalPath": "/holidays/flag-day-uae",
     "aliases": []
   },
+  "flag-day-usa": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "us"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/flag-day-usa",
+    "aliases": []
+  },
   "food-day": {
     "publishStatus": "published",
     "retired": false,
@@ -3823,7 +4159,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/food-day",
@@ -3854,7 +4193,10 @@
       "food-day-in-netherlands",
       "food-day-in-spain",
       "food-day-in-uk",
-      "food-day-in-norway"
+      "food-day-in-norway",
+      "food-day-in-australia",
+      "food-day-in-belgium",
+      "food-day-in-italy"
     ]
   },
   "friendship-day": {
@@ -4003,7 +4345,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/human-rights-day",
@@ -4034,7 +4379,10 @@
       "human-rights-day-in-netherlands",
       "human-rights-day-in-spain",
       "human-rights-day-in-uk",
-      "human-rights-day-in-norway"
+      "human-rights-day-in-norway",
+      "human-rights-day-in-australia",
+      "human-rights-day-in-belgium",
+      "human-rights-day-in-italy"
     ]
   },
   "independence-day-bahrain": {
@@ -4141,7 +4489,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/international-coffee-day",
@@ -4172,7 +4523,10 @@
       "international-coffee-day-in-netherlands",
       "international-coffee-day-in-spain",
       "international-coffee-day-in-uk",
-      "international-coffee-day-in-norway"
+      "international-coffee-day-in-norway",
+      "international-coffee-day-in-australia",
+      "international-coffee-day-in-belgium",
+      "international-coffee-day-in-italy"
     ]
   },
   "international-peace-day": {
@@ -4207,7 +4561,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/international-peace-day",
@@ -4238,7 +4595,10 @@
       "international-peace-day-in-netherlands",
       "international-peace-day-in-spain",
       "international-peace-day-in-uk",
-      "international-peace-day-in-norway"
+      "international-peace-day-in-norway",
+      "international-peace-day-in-australia",
+      "international-peace-day-in-belgium",
+      "international-peace-day-in-italy"
     ]
   },
   "international-youth-day": {
@@ -4273,7 +4633,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/international-youth-day",
@@ -4304,7 +4667,10 @@
       "international-youth-day-in-netherlands",
       "international-youth-day-in-spain",
       "international-youth-day-in-uk",
-      "international-youth-day-in-norway"
+      "international-youth-day-in-norway",
+      "international-youth-day-in-australia",
+      "international-youth-day-in-belgium",
+      "international-youth-day-in-italy"
     ]
   },
   "invasion-remembrance-kuwait": {
@@ -4555,7 +4921,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/last-ten-nights-ramadan",
@@ -4586,7 +4955,10 @@
       "last-ten-nights-ramadan-in-netherlands",
       "last-ten-nights-ramadan-in-spain",
       "last-ten-nights-ramadan-in-uk",
-      "last-ten-nights-ramadan-in-norway"
+      "last-ten-nights-ramadan-in-norway",
+      "last-ten-nights-ramadan-in-australia",
+      "last-ten-nights-ramadan-in-belgium",
+      "last-ten-nights-ramadan-in-italy"
     ]
   },
   "liberation-day-libya": {
@@ -4599,6 +4971,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/liberation-day-libya",
+    "aliases": []
+  },
+  "liberation-day-netherlands": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "nl"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/liberation-day-netherlands",
     "aliases": []
   },
   "liberation-day-syria": {
@@ -4657,7 +5041,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/literacy-day",
@@ -4688,7 +5075,10 @@
       "literacy-day-in-netherlands",
       "literacy-day-in-spain",
       "literacy-day-in-uk",
-      "literacy-day-in-norway"
+      "literacy-day-in-norway",
+      "literacy-day-in-australia",
+      "literacy-day-in-belgium",
+      "literacy-day-in-italy"
     ]
   },
   "martyrs-day-algeria": {
@@ -4943,6 +5333,18 @@
     "canonicalPath": "/holidays/national-charter-day-bahrain",
     "aliases": []
   },
+  "national-day-belgium": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "be"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/national-day-belgium",
+    "aliases": []
+  },
   "national-day-spain": {
     "publishStatus": "published",
     "retired": false,
@@ -5047,7 +5449,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/nurses-day",
@@ -5078,7 +5483,10 @@
       "nurses-day-in-netherlands",
       "nurses-day-in-spain",
       "nurses-day-in-uk",
-      "nurses-day-in-norway"
+      "nurses-day-in-norway",
+      "nurses-day-in-australia",
+      "nurses-day-in-belgium",
+      "nurses-day-in-italy"
     ]
   },
   "october-14-revolution-yemen": {
@@ -5361,7 +5769,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/rajab-start",
@@ -5392,7 +5803,10 @@
       "rajab-start-in-netherlands",
       "rajab-start-in-spain",
       "rajab-start-in-uk",
-      "rajab-start-in-norway"
+      "rajab-start-in-norway",
+      "rajab-start-in-australia",
+      "rajab-start-in-belgium",
+      "rajab-start-in-italy"
     ]
   },
   "recapture-of-riyadh": {
@@ -5465,6 +5879,18 @@
     ],
     "autoExpandCountries": false,
     "canonicalPath": "/holidays/republic-day-iraq",
+    "aliases": []
+  },
+  "republic-day-italy": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "it"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/republic-day-italy",
     "aliases": []
   },
   "republic-day-tunisia": {
@@ -5811,7 +6237,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/shaban-start",
@@ -5842,7 +6271,10 @@
       "shaban-start-in-netherlands",
       "shaban-start-in-spain",
       "shaban-start-in-uk",
-      "shaban-start-in-norway"
+      "shaban-start-in-norway",
+      "shaban-start-in-australia",
+      "shaban-start-in-belgium",
+      "shaban-start-in-italy"
     ]
   },
   "six-days-shawwal": {
@@ -5877,7 +6309,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/six-days-shawwal",
@@ -5908,7 +6343,10 @@
       "six-days-shawwal-in-netherlands",
       "six-days-shawwal-in-spain",
       "six-days-shawwal-in-uk",
-      "six-days-shawwal-in-norway"
+      "six-days-shawwal-in-norway",
+      "six-days-shawwal-in-australia",
+      "six-days-shawwal-in-belgium",
+      "six-days-shawwal-in-italy"
     ]
   },
   "social-assistance-bahrain": {
@@ -6017,6 +6455,18 @@
     "canonicalPath": "/holidays/spring-bank-holiday-uk",
     "aliases": []
   },
+  "st-francis-day-italy": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "it"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/st-francis-day-italy",
+    "aliases": []
+  },
   "student-allowance-kuwait": {
     "publishStatus": "published",
     "retired": false,
@@ -6109,7 +6559,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/tarwiyah-day",
@@ -6140,7 +6593,10 @@
       "tarwiyah-day-in-netherlands",
       "tarwiyah-day-in-spain",
       "tarwiyah-day-in-uk",
-      "tarwiyah-day-in-norway"
+      "tarwiyah-day-in-norway",
+      "tarwiyah-day-in-australia",
+      "tarwiyah-day-in-belgium",
+      "tarwiyah-day-in-italy"
     ]
   },
   "tashreeq-days": {
@@ -6175,7 +6631,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/tashreeq-days",
@@ -6206,7 +6665,10 @@
       "tashreeq-days-in-netherlands",
       "tashreeq-days-in-spain",
       "tashreeq-days-in-uk",
-      "tashreeq-days-in-norway"
+      "tashreeq-days-in-norway",
+      "tashreeq-days-in-australia",
+      "tashreeq-days-in-belgium",
+      "tashreeq-days-in-italy"
     ]
   },
   "tasua-day": {
@@ -6241,7 +6703,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/tasua-day",
@@ -6272,7 +6737,10 @@
       "tasua-day-in-netherlands",
       "tasua-day-in-spain",
       "tasua-day-in-uk",
-      "tasua-day-in-norway"
+      "tasua-day-in-norway",
+      "tasua-day-in-australia",
+      "tasua-day-in-belgium",
+      "tasua-day-in-italy"
     ]
   },
   "tax-day-usa": {
@@ -6583,7 +7051,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/volunteer-day",
@@ -6614,7 +7085,10 @@
       "volunteer-day-in-netherlands",
       "volunteer-day-in-spain",
       "volunteer-day-in-uk",
-      "volunteer-day-in-norway"
+      "volunteer-day-in-norway",
+      "volunteer-day-in-australia",
+      "volunteer-day-in-belgium",
+      "volunteer-day-in-italy"
     ]
   },
   "wafat-khadija": {
@@ -6705,7 +7179,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/wildlife-day",
@@ -6736,7 +7213,10 @@
       "wildlife-day-in-netherlands",
       "wildlife-day-in-spain",
       "wildlife-day-in-uk",
-      "wildlife-day-in-norway"
+      "wildlife-day-in-norway",
+      "wildlife-day-in-australia",
+      "wildlife-day-in-belgium",
+      "wildlife-day-in-italy"
     ]
   },
   "winter-at-tantora-alula": {
@@ -6831,7 +7311,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-book-day",
@@ -6862,7 +7345,10 @@
       "world-book-day-in-netherlands",
       "world-book-day-in-spain",
       "world-book-day-in-uk",
-      "world-book-day-in-norway"
+      "world-book-day-in-norway",
+      "world-book-day-in-australia",
+      "world-book-day-in-belgium",
+      "world-book-day-in-italy"
     ]
   },
   "world-cancer-day": {
@@ -6897,7 +7383,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-cancer-day",
@@ -6928,7 +7417,10 @@
       "world-cancer-day-in-netherlands",
       "world-cancer-day-in-spain",
       "world-cancer-day-in-uk",
-      "world-cancer-day-in-norway"
+      "world-cancer-day-in-norway",
+      "world-cancer-day-in-australia",
+      "world-cancer-day-in-belgium",
+      "world-cancer-day-in-italy"
     ]
   },
   "world-cup-2030": {
@@ -6975,7 +7467,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-fathers-day",
@@ -7007,6 +7502,9 @@
       "world-fathers-day-in-spain",
       "world-fathers-day-in-uk",
       "world-fathers-day-in-norway",
+      "world-fathers-day-in-australia",
+      "world-fathers-day-in-belgium",
+      "world-fathers-day-in-italy",
       "fathers-day"
     ]
   },
@@ -7042,7 +7540,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-happiness-day",
@@ -7073,7 +7574,10 @@
       "world-happiness-day-in-netherlands",
       "world-happiness-day-in-spain",
       "world-happiness-day-in-uk",
-      "world-happiness-day-in-norway"
+      "world-happiness-day-in-norway",
+      "world-happiness-day-in-australia",
+      "world-happiness-day-in-belgium",
+      "world-happiness-day-in-italy"
     ]
   },
   "world-no-tobacco-day": {
@@ -7108,7 +7612,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-no-tobacco-day",
@@ -7139,7 +7646,10 @@
       "world-no-tobacco-day-in-netherlands",
       "world-no-tobacco-day-in-spain",
       "world-no-tobacco-day-in-uk",
-      "world-no-tobacco-day-in-norway"
+      "world-no-tobacco-day-in-norway",
+      "world-no-tobacco-day-in-australia",
+      "world-no-tobacco-day-in-belgium",
+      "world-no-tobacco-day-in-italy"
     ]
   },
   "world-refugee-day": {
@@ -7174,7 +7684,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-refugee-day",
@@ -7205,7 +7718,10 @@
       "world-refugee-day-in-netherlands",
       "world-refugee-day-in-spain",
       "world-refugee-day-in-uk",
-      "world-refugee-day-in-norway"
+      "world-refugee-day-in-norway",
+      "world-refugee-day-in-australia",
+      "world-refugee-day-in-belgium",
+      "world-refugee-day-in-italy"
     ]
   },
   "world-tourism-day": {
@@ -7240,7 +7756,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-tourism-day",
@@ -7271,7 +7790,10 @@
       "world-tourism-day-in-netherlands",
       "world-tourism-day-in-spain",
       "world-tourism-day-in-uk",
-      "world-tourism-day-in-norway"
+      "world-tourism-day-in-norway",
+      "world-tourism-day-in-australia",
+      "world-tourism-day-in-belgium",
+      "world-tourism-day-in-italy"
     ]
   },
   "world-water-day": {
@@ -7306,7 +7828,10 @@
       "nl",
       "es",
       "gb",
-      "no"
+      "no",
+      "au",
+      "be",
+      "it"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-water-day",
@@ -7337,7 +7862,10 @@
       "world-water-day-in-netherlands",
       "world-water-day-in-spain",
       "world-water-day-in-uk",
-      "world-water-day-in-norway"
+      "world-water-day-in-norway",
+      "world-water-day-in-australia",
+      "world-water-day-in-belgium",
+      "world-water-day-in-italy"
     ]
   },
   "youth-day-morocco": {

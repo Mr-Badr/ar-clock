@@ -17,6 +17,8 @@ import {
   type DateInsightItem,
 } from '@/components/date/DateEditorialSections';
 import TodayClientHydration from './TodayClientHydration'; // Force TS Server refresh
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
@@ -356,26 +358,24 @@ async function TodayDynamicContent() {
           </section>
 
           {umalqura && astronomical && civil && (
-            <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="date-methods-heading">
-              <div className={styles.sectionPanel}>
-                <div className={styles.sectionHead}>
-                  <h2 id="date-methods-heading" className={styles.sectionTitle}>
-                    مقارنة طرق الحساب الثلاثة
-                  </h2>
-                  <p className={styles.sectionCopy}>
-                    هذه المقارنة توضّح لماذا قد يظهر التاريخ الهجري مختلفاً بيوم واحد عند استخدام بلد أو مرجع حساب مختلف.
-                  </p>
-                </div>
-                <MethodComparisonTable
-                  gregorianDate={isoDate}
-                  umalqura={umalqura}
-                  astronomical={astronomical}
-                  civil={civil}
-                />
-                <p className={styles.cardBody}>
-                  إذا رأيت فرق يوم واحد، فابدأ بمراجعة طريقة الحساب قبل الحكم على النتيجة. غالباً يكون الاختلاف بسبب مرجع بداية الشهر الهجري، لا بسبب اختلاف التاريخ الميلادي نفسه.
+            <section className={`container mx-auto px-4 ${styles.sectionBand} max-w-3xl`} aria-labelledby="date-methods-heading">
+              <div className={styles.sectionHead}>
+                <h2 id="date-methods-heading" className={styles.sectionTitle}>
+                  مقارنة طرق الحساب الثلاثة
+                </h2>
+                <p className={styles.sectionCopy}>
+                  هذه المقارنة توضّح لماذا قد يظهر التاريخ الهجري مختلفاً بيوم واحد عند استخدام بلد أو مرجع حساب مختلف.
                 </p>
               </div>
+              <MethodComparisonTable
+                gregorianDate={isoDate}
+                umalqura={umalqura}
+                astronomical={astronomical}
+                civil={civil}
+              />
+              <p className={styles.cardBody}>
+                إذا رأيت فرق يوم واحد، فابدأ بمراجعة طريقة الحساب قبل الحكم على النتيجة. غالباً يكون الاختلاف بسبب مرجع بداية الشهر الهجري، لا بسبب اختلاف التاريخ الميلادي نفسه.
+              </p>
             </section>
           )}
 
@@ -390,10 +390,11 @@ async function TodayDynamicContent() {
             faqItems={faqItems}
           />
 
-          <section className={`container mx-auto px-4 ${styles.sectionBand}`}>
-            <div className={styles.prosePanel}>
-              <h2 className={styles.sectionTitle}>متى تكفي صفحة تاريخ اليوم؟</h2>
-              <div className={styles.proseBody}>
+          {/* Plain text — a heading and two short paragraphs don't earn a card
+              (DESIGN.md Law 4). */}
+          <section className={`container mx-auto px-4 ${styles.sectionBand} max-w-3xl`}>
+            <h2 className={styles.sectionTitle}>متى تكفي صفحة تاريخ اليوم؟</h2>
+            <div className={styles.proseBody}>
               <p>
                 استخدم هذه الصفحة عندما تحتاج جواباً سريعاً للتاريخ الحالي مع سياق كافٍ لفهمه: اليوم من الأسبوع، التاريخ الهجري والميلادي، رقم الأسبوع، واليوم من السنة. إذا كان السؤال عن تاريخ سابق أو قادم، فمحوّل التاريخ هو المسار الأنسب لأنه يسمح بإدخال اليوم والشهر والسنة ومقارنة طرق الحساب.
               </p>
@@ -401,115 +402,74 @@ async function TodayDynamicContent() {
                 إذا كنت ترسل موعداً مهماً اليوم، فاكتب التاريخين معاً ولا تكتفِ بعبارة "اليوم". مثال واضح: {gregorianFormatted} ميلادي
                 {hijri ? `، الموافق ${hijri.formatted.ar} وفق أم القرى` : ''}. هذه الصيغة تساعد الطرف الآخر على فهم الموعد حتى لو كان في بلد أو منطقة زمنية مختلفة.
               </p>
-              </div>
             </div>
           </section>
 
           <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="today-decision-heading">
-            <div className={styles.sectionPanel}>
-              <div className={styles.sectionHead}>
-                <h2 id="today-decision-heading" className={styles.sectionTitle}>قاعدة الاعتماد على تاريخ اليوم</h2>
-                <p className={styles.sectionCopy}>
-                  تاريخ اليوم يبدو بسيطاً، لكن طريقة استخدامه تختلف بين مشاركة يوم عادي وموعد رسمي
-                  ومناسبة هجرية. هذه القاعدة تمنع الالتباس.
-                </p>
-              </div>
-              <div className={styles.infoGrid}>
-                {[
-                  {
-                    title: 'للمحادثة والمشاركة',
-                    body: 'استخدم التاريخ المعروض مباشرة. اكتب اليوم والشهر والسنة، ويفضل أن تضيف التقويمين إذا كان الطرف الآخر في بلد مختلف.',
-                  },
-                  {
-                    title: 'للمناسبات الهجرية',
-                    body: 'راجع مقارنة الطرق وصفحة الدولة، لأن بداية الشهر قد تختلف بين الحساب العام والإعلان المحلي.',
-                  },
-                  {
-                    title: 'للنماذج والتقارير',
-                    body: 'استخدم التاريخ الميلادي ورقم الأسبوع عند الحاجة. كثير من الأنظمة الإدارية تعتمد الميلادي أو رقم الأسبوع في التقارير.',
-                  },
-                  {
-                    title: 'لتاريخ غير اليوم',
-                    body: 'انتقل إلى محول التاريخ. صفحة اليوم لا تكفي إذا كان لديك تاريخ ميلاد، عقد، رحلة، أو مناسبة في يوم آخر.',
-                  },
-                ].map((card, index) => (
-                  <article
-                    key={card.title}
-                    className={`${styles.infoCard} ${index === 0 ? styles.infoCardLead : ''}`}
-                  >
-                    <h3 className={styles.cardTitle}>{card.title}</h3>
-                    <p className={styles.cardBody}>{card.body}</p>
-                  </article>
-                ))}
-              </div>
+            <div className={styles.sectionHead}>
+              <h2 id="today-decision-heading" className={styles.sectionTitle}>قاعدة الاعتماد على تاريخ اليوم</h2>
+              <p className={styles.sectionCopy}>
+                تاريخ اليوم يبدو بسيطاً، لكن طريقة استخدامه تختلف بين مشاركة يوم عادي وموعد رسمي
+                ومناسبة هجرية. هذه القاعدة تمنع الالتباس.
+              </p>
+            </div>
+            <div className={styles.infoGrid}>
+              {[
+                {
+                  title: 'للمحادثة والمشاركة',
+                  body: 'استخدم التاريخ المعروض مباشرة. اكتب اليوم والشهر والسنة، ويفضل أن تضيف التقويمين إذا كان الطرف الآخر في بلد مختلف.',
+                },
+                {
+                  title: 'للمناسبات الهجرية',
+                  body: 'راجع مقارنة الطرق وصفحة الدولة، لأن بداية الشهر قد تختلف بين الحساب العام والإعلان المحلي.',
+                },
+                {
+                  title: 'للنماذج والتقارير',
+                  body: 'استخدم التاريخ الميلادي ورقم الأسبوع عند الحاجة. كثير من الأنظمة الإدارية تعتمد الميلادي أو رقم الأسبوع في التقارير.',
+                },
+                {
+                  title: 'لتاريخ غير اليوم',
+                  body: 'انتقل إلى محول التاريخ. صفحة اليوم لا تكفي إذا كان لديك تاريخ ميلاد، عقد، رحلة، أو مناسبة في يوم آخر.',
+                },
+              ].map((card, index) => (
+                <article
+                  key={card.title}
+                  className={`${styles.infoCard} ${index === 0 ? styles.infoCardLead : ''}`}
+                >
+                  <h3 className={styles.cardTitle}>{card.title}</h3>
+                  <p className={styles.cardBody}>{card.body}</p>
+                </article>
+              ))}
             </div>
           </section>
 
-          <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="today-sources-heading">
-            <div className={styles.sectionPanel}>
-              <div className={styles.sectionHead}>
-                <h2 id="today-sources-heading" className={styles.sectionTitle}>مصادر ومنهج تاريخ اليوم</h2>
-                <p className={styles.sectionCopy}>
-                  نعرض التاريخ الحالي بسرعة، ونوضح في الوقت نفسه أن اختلاف التقويم الهجري أو رقم الأسبوع
-                  له سبب منهجي يمكن مراجعته.
-                </p>
-              </div>
-              <div className={styles.linkGrid}>
-                {TODAY_SOURCE_LINKS.map((source, index) => (
-                  <a
-                    key={source.href}
-                    href={source.href}
-                    className={`${styles.linkCard} ${index === 0 ? styles.linkCardPrimary : ''}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span className={styles.cardTitle}>{source.label}</span>
-                    <span className={styles.cardBody}>{source.description}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
+          {/* Related pages — small, clean, unique CARDS (owner, 2026-08-13), not a list. */}
+          <section className={`container mx-auto px-4 ${styles.sectionBand} max-w-3xl`}>
+            <SiteRelatedCardGrid
+              heading="بعد تاريخ اليوم: اختر الخطوة التالية"
+              headingId="today-next-paths-heading"
+              items={[
+                { href: '/date/today/hijri', label: 'تفاصيل التاريخ الهجري', Icon: Moon },
+                { href: '/date/today/gregorian', label: 'تفاصيل التاريخ الميلادي', Icon: CalendarDays },
+                { href: '/date/converter', label: 'محول التاريخ', Icon: ArrowLeftRight },
+                { href: '/holidays/ramadan', label: 'كم باقي على رمضان', Icon: Moon },
+              ]}
+            />
           </section>
 
-          <section className={`container mx-auto px-4 ${styles.sectionBand}`}>
-            <nav aria-label="مسارات تفصيل تاريخ اليوم وتحويله" className={styles.sectionPanel} dir="rtl">
-              <h2 className={styles.sectionTitle}>بعد تاريخ اليوم: اختر الخطوة التالية</h2>
-              <div className={`${styles.linkGrid} mt-5`}>
-
-              <Link href="/date/today/hijri" className={styles.linkCard}>
-                <span className={styles.cardIcon} aria-hidden="true">
-                  <Moon size={16} strokeWidth={1.75} />
-                </span>
-                <span className={styles.cardTitle}>تفاصيل التاريخ الهجري</span>
-                <span className={styles.cardBody}>بثلاث طرق حساب مع المناسبات</span>
-              </Link>
-
-              <Link href="/date/today/gregorian" className={styles.linkCard}>
-                <span className={styles.cardIcon} aria-hidden="true">
-                  <CalendarDays size={16} strokeWidth={1.75} />
-                </span>
-                <span className={styles.cardTitle}>تفاصيل التاريخ الميلادي</span>
-                <span className={styles.cardBody}>اليوم من السنة، رقم الأسبوع، ومسار اليوم الكامل</span>
-              </Link>
-
-              <Link href="/date/converter" className={styles.linkCard}>
-                <span className={styles.cardIcon} aria-hidden="true">
-                  <ArrowLeftRight size={16} strokeWidth={1.75} />
-                </span>
-                <span className={styles.cardTitle}>محول التاريخ</span>
-                <span className={styles.cardBody}>تحويل بين الهجري والميلادي بثلاث طرق</span>
-              </Link>
-
-              <Link href="/holidays/ramadan" className={styles.linkCard}>
-                <span className={styles.cardIcon} aria-hidden="true">
-                  <Moon size={16} strokeWidth={1.75} />
-                </span>
-                <span className={styles.cardTitle}>كم باقي على رمضان</span>
-                <span className={styles.cardBody}>عد تنازلي مباشر لبداية شهر رمضان القادم</span>
-              </Link>
-
-              </div>
-            </nav>
+          {/* Sources — last thing on the page (owner, 2026-08-13), plain small dot-list
+              like /tools, since these are external citations, not next-path cards. */}
+          <section className={`container mx-auto px-4 ${styles.sectionBand} max-w-3xl`}>
+            <SiteDotLinkList
+              heading="مصادر ومنهج تاريخ اليوم"
+              headingId="today-sources-heading"
+              items={TODAY_SOURCE_LINKS.map((source) => ({
+                href: source.href,
+                label: source.label,
+                description: source.description,
+                external: true,
+              }))}
+            />
           </section>
         </main>
       </AdLayoutWrapper>

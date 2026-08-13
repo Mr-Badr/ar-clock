@@ -5,7 +5,7 @@ import { Slot } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex min-h-[var(--space-11)] shrink-0 items-center justify-center gap-[var(--space-2)] whitespace-nowrap rounded-[var(--radius-lg)] border text-[var(--text-sm)] font-medium transition-[background-color,border-color,color,box-shadow] duration-100 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-[var(--space-4)] [&_svg]:shrink-0 outline-none focus-visible:border-[var(--border-focus)] focus-visible:shadow-[var(--shadow-focus)] aria-invalid:border-[var(--border-error)] aria-invalid:shadow-[var(--shadow-focus-danger)]",
+  "inline-flex min-h-[var(--space-11)] shrink-0 items-center justify-center gap-[var(--space-2)] whitespace-nowrap rounded-[var(--radius-lg)] border [font-size:var(--text-sm)] font-medium transition-[background-color,border-color,color,box-shadow] duration-100 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-[var(--space-4)] [&_svg]:shrink-0 outline-none focus-visible:border-[var(--border-focus)] focus-visible:shadow-[var(--shadow-focus)] aria-invalid:border-[var(--border-error)] aria-invalid:shadow-[var(--shadow-focus-danger)]",
   {
     variants: {
       variant: {
@@ -22,9 +22,9 @@ const buttonVariants = cva(
       },
       size: {
         default: "px-[var(--space-4)] py-0 has-[>svg]:px-[var(--space-3)]",
-        xs: "min-h-[var(--space-11)] gap-[var(--space-1)] rounded-[var(--radius-lg)] px-[var(--space-3)] text-[var(--text-xs)] has-[>svg]:px-[var(--space-2)] [&_svg:not([class*='size-'])]:size-[var(--space-3)]",
+        xs: "min-h-[var(--space-11)] gap-[var(--space-1)] rounded-[var(--radius-lg)] px-[var(--space-3)] [font-size:var(--text-xs)] has-[>svg]:px-[var(--space-2)] [&_svg:not([class*='size-'])]:size-[var(--space-3)]",
         sm: "min-h-[var(--space-11)] rounded-[var(--radius-lg)] gap-[var(--space-1-5)] px-[var(--space-3)] has-[>svg]:px-[var(--space-2-5)]",
-        lg: "min-h-[var(--space-11)] rounded-[var(--radius-lg)] px-[var(--space-5)] text-[var(--text-base)] has-[>svg]:px-[var(--space-4)]",
+        lg: "min-h-[var(--space-11)] rounded-[var(--radius-lg)] px-[var(--space-5)] [font-size:var(--text-base)] has-[>svg]:px-[var(--space-4)]",
         icon: "size-[var(--space-11)]",
         "icon-xs": "size-[var(--space-11)] rounded-[var(--radius-lg)] [&_svg:not([class*='size-'])]:size-[var(--space-3)]",
         "icon-sm": "size-[var(--space-11)]",

@@ -41,7 +41,7 @@ function CardTitle({
     <div
       data-slot="card-title"
       className={cn(
-        "text-[var(--text-lg)] font-semibold leading-[var(--leading-snug)] text-[var(--text-1)]",
+        "[font-size:var(--text-lg)] font-semibold leading-[var(--leading-snug)] text-[var(--text-1)]",
         className
       )}
       {...props}
@@ -57,7 +57,7 @@ function CardDescription({
     <div
       data-slot="card-description"
       className={cn(
-        "text-[var(--text-sm)] leading-[var(--leading-snug)] text-[var(--text-2)]",
+        "[font-size:var(--text-sm)] leading-[var(--leading-snug)] text-[var(--text-2)]",
         className
       )}
       {...props}

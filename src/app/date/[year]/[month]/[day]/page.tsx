@@ -28,6 +28,8 @@ import {
   type DateFaqItem,
   type DateInsightItem,
 } from '@/components/date/DateEditorialSections';
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
@@ -326,7 +328,7 @@ export default async function ProgrammaticDatePage({
 
           <DateBreadcrumb items={breadcrumb} />
 
-          <section className="date-hero-panel mb-6">
+          <section className="date-hero-panel date-hero-panel--single mb-12">
             <div className="date-hero-main">
               <p className="date-kicker m-0">
                 {hijri.dayNameAr}، {d} {MONTHS_AR[m - 1]} {y}م
@@ -334,6 +336,9 @@ export default async function ProgrammaticDatePage({
               <h1 className="date-hero-title tabular-nums">
                 {gregorianLabel} يوافق {hijriLabel}
               </h1>
+              <p className="date-hero-gregorian">
+                اليوم رقم {dayOfYear} من سنة {y}، ويتبقى <strong>{daysLeft} يوم</strong> حتى نهاية السنة
+              </p>
               <p className="date-hero-copy">
                 {gregorianLabel} يوافق {hijriLabel} حسب أم القرى. اقرأ النتيجة، ثم راجع الطرق الأخرى واليوم السابق
                 والتالي إذا كان التاريخ مرتبطاً بوثيقة أو مناسبة دينية أو موعد بين بلدين.
@@ -345,26 +350,19 @@ export default async function ProgrammaticDatePage({
                   </span>
                 </div>
               )}
-            </div>
-            <aside className="date-hero-rail" aria-label="ملخص التاريخ الميلادي والهجري">
-              <p className="date-hero-answer">{hijri.formatted.ar}</p>
-              <p className="date-hero-note">
-                اليوم رقم {dayOfYear} من سنة {y}، ويتبقى {daysLeft} يوم حتى نهاية السنة.
-              </p>
-              <div className="date-hero-actions">
-                <Link href="/date/converter" className="date-hero-link date-hero-link--primary">
+              <div className="date-hero-quick-actions">
+                <Link href="/date/converter" className="date-quick-action">
+                  <ArrowLeftRight size={16} strokeWidth={1.75} aria-hidden="true" />
                   تحويل تاريخ آخر
                 </Link>
                 {hijriPageUrl && (
-                  <Link
-                    href={hijriPageUrl}
-                    className="date-hero-link"
-                  >
+                  <Link href={hijriPageUrl} className="date-quick-action">
+                    <Moon size={16} strokeWidth={1.75} aria-hidden="true" />
                     فتح الصفحة الهجرية
                   </Link>
                 )}
               </div>
-            </aside>
+            </div>
           </section>
 
           <section className="date-stat-grid mb-8">
@@ -383,7 +381,8 @@ export default async function ProgrammaticDatePage({
             ))}
           </section>
 
-          <section className="date-detail-panel mb-8" aria-labelledby="gregorian-date-decision-heading">
+          {/* Plain text list — no bordered panel (DESIGN.md Law 4). */}
+          <section className="date-section max-w-3xl" aria-labelledby="gregorian-date-decision-heading">
             <h2 id="gregorian-date-decision-heading" className="date-section-title">
               قبل أن تعتمد نتيجة {gregorianLabel}
             </h2>
@@ -410,8 +409,8 @@ export default async function ProgrammaticDatePage({
             </section>
           )}
 
-          {/* ── UNIQUE CONTEXT (SEO) ──────────────────────────────────── */}
-          <section className="date-detail-panel mb-8">
+          {/* ── UNIQUE CONTEXT (SEO) — plain text, no bordered panel ──── */}
+          <section className="date-section max-w-3xl">
             <p className="date-editorial-copy m-0">{uniqueContext}</p>
           </section>
 
@@ -467,98 +466,39 @@ export default async function ProgrammaticDatePage({
             faqItems={faqItems}
           />
 
-          <section className="related-links mb-8" dir="rtl" aria-labelledby="gregorian-date-sources-heading">
-            <p id="gregorian-date-sources-heading" className="related-links__heading">
-              مصادر تساعدك على فهم التحويل
-            </p>
-            <div className="related-links__grid">
-              {DATE_SOURCE_LINKS.map((source) => (
-                <a
-                  key={source.href}
-                  href={source.href}
-                  className="related-link-card"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="related-link-card__body">
-                    <span className="related-link-card__label">{source.label}</span>
-                    <span className="related-link-card__desc">{source.description}</span>
-                  </span>
-                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
-                </a>
-              ))}
-            </div>
+          {/* Related pages — small, clean, unique CARDS (owner, 2026-08-13), not a list. */}
+          <section className="date-section max-w-3xl">
+            <SiteRelatedCardGrid
+              heading="إذا أردت تحويل تاريخ آخر أو مراجعة الصفحة الهجرية"
+              headingId="gregorian-date-next-paths-heading"
+              items={[
+                { href: '/date', label: 'صفحة التاريخ الرئيسية', Icon: CalendarDays },
+                { href: '/date/converter', label: 'تحويل تاريخ آخر', Icon: ArrowLeftRight },
+                ...(hijriPageUrl
+                  ? [{ href: hijriPageUrl, label: `صفحة ${hijri.formatted.ar} هجري`, Icon: Moon }]
+                  : []),
+                { href: currentCalendarUrl, label: `تقويم ${y} الميلادي`, Icon: CalendarDays },
+                ...(hijriCalendarUrl
+                  ? [{ href: hijriCalendarUrl, label: `تقويم ${hijri.year} الهجري`, Icon: Moon }]
+                  : []),
+              ]}
+            />
           </section>
 
-          {/* ── QUICK LINKS ──────────────────────────────────────────── */}
-          <nav aria-label="مسارات مراجعة التاريخ الميلادي المحدد" className="related-links" dir="rtl">
-            <p className="related-links__heading">إذا أردت تحويل تاريخ آخر أو مراجعة الصفحة الهجرية</p>
-            <div className="related-links__grid">
-
-              <Link href="/date" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <CalendarDays size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">صفحة التاريخ الرئيسية</span>
-                  <span className="related-link-card__desc">عرض التاريخ الهجري والميلادي</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-
-              <Link href="/date/converter" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <ArrowLeftRight size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">تحويل تاريخ آخر</span>
-                  <span className="related-link-card__desc">أداة تحويل التواريخ الهجرية والميلادية</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-
-              {hijriPageUrl && (
-                <Link
-                  href={hijriPageUrl}
-                  className="related-link-card"
-                >
-                  <span className="related-link-card__icon" aria-hidden="true">
-                    <Moon size={16} strokeWidth={1.75} />
-                  </span>
-                  <span className="related-link-card__body">
-                    <span className="related-link-card__label">صفحة {hijri.formatted.ar} هجري</span>
-                    <span className="related-link-card__desc">عرض هذا اليوم بالتقويم الهجري</span>
-                  </span>
-                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
-                </Link>
-              )}
-
-              <Link href={currentCalendarUrl} className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <CalendarDays size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">تقويم {y} الميلادي</span>
-                  <span className="related-link-card__desc">افتح السنة كاملة لترى موقع هذا اليوم داخل الشهر والأسبوع</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-
-              {hijriCalendarUrl && (
-                <Link href={hijriCalendarUrl} className="related-link-card">
-                  <span className="related-link-card__icon" aria-hidden="true">
-                    <Moon size={16} strokeWidth={1.75} />
-                  </span>
-                  <span className="related-link-card__body">
-                    <span className="related-link-card__label">تقويم {hijri.year} الهجري</span>
-                    <span className="related-link-card__desc">راجع السنة الهجرية التي يقع فيها هذا التاريخ</span>
-                  </span>
-                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
-                </Link>
-              )}
-
-            </div>
-          </nav>
+          {/* Sources — last thing on the page (owner, 2026-08-13), plain small dot-list
+              like /tools. */}
+          <section className="date-section max-w-3xl">
+            <SiteDotLinkList
+              heading="مصادر تساعدك على فهم التحويل"
+              headingId="gregorian-date-sources-heading"
+              items={DATE_SOURCE_LINKS.map((source) => ({
+                href: source.href,
+                label: source.label,
+                description: source.description,
+                external: true,
+              }))}
+            />
+          </section>
 
         </main>
       </AdLayoutWrapper>

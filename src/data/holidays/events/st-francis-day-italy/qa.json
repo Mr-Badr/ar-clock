@@ -1,0 +1,16 @@
+{
+  "slug": "st-francis-day-italy",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: إعادة اعتماد 4 أكتوبر عطلة رسمية مدفوعة موثقة عبر meininger-hotels.com (قائمة عطل إيطاليا المحدثة لسنة 2026 التي شملتها للمرة الأولى).",
+    "تم تفادي ذكر أي سنة ميلادية 20XX بشكل بارز في المحتوى المنشور (استُخدمت صيغ نسبية مثل 'مؤخراً' و'الذكرى الثمانمائة' بدل تواريخ رقمية) — مطابق تماماً لقاعدة hasHardcodedYear ولنمط unity-day-morocco السابق."
+  ],
+  "updatedAt": "2026-08-12T20:58:43.518Z"
+}

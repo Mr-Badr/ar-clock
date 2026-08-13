@@ -28,8 +28,7 @@
  *         <body>
  *           <Navbar />
  *           {children}
- *           <div className="sticky-anchor-spacer" aria-hidden="true" />
- *           <AdStickyAnchor />
+ *           <AdStickyAnchor />    ← renders its own reserved-space spacer alongside itself
  *           <AdSenseProvider />   ← load script last — non-blocking
  *         </body>
  *       </html>

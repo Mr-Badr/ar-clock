@@ -35,7 +35,16 @@ function AccordionTrigger({
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          "flex flex-1 items-start justify-between gap-[var(--space-4)] rounded-[var(--radius-md)] py-[var(--space-4)] text-start text-[var(--text-sm)] font-medium text-[var(--text-1)] outline-none transition-[color,box-shadow] hover:text-[var(--blue)] focus-visible:border-[var(--border-focus)] focus-visible:shadow-[var(--shadow-focus)] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180",
+          // Originally `text-[var(--text-sm)]` (font-size) sat next to `text-[var(--text-1)]`
+          // (color) — tailwind-merge can't resolve the opaque CSS var to tell size from
+          // color apart, categorizes both as the same "conflicting" group, and silently
+          // drops the earlier one. Found 2026-08-13: this dropped the size utility in every
+          // rendered FAQ trigger sitewide, so questions rendered at the browser's inherited
+          // ~27px instead of the intended 14px — same bug found and fixed across 21 files in
+          // src/components/ui/*.tsx. `[font-size:...]` (arbitrary PROPERTY, not arbitrary
+          // value of the `text-*` utility) sidesteps the conflict category entirely — never
+          // go back to `text-[var(--text-N)]` syntax for a size next to a text-color utility.
+          "flex flex-1 items-start justify-between gap-[var(--space-4)] rounded-[var(--radius-md)] py-[var(--space-4)] text-start [font-size:var(--text-sm)] font-medium text-[var(--text-1)] outline-none transition-[color,box-shadow] hover:text-[var(--blue)] focus-visible:border-[var(--border-focus)] focus-visible:shadow-[var(--shadow-focus)] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180",
           className
         )}
         {...props}
@@ -55,7 +64,9 @@ function AccordionContent({
   return (
     <AccordionPrimitive.Content
       data-slot="accordion-content"
-      className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-[var(--text-sm)] text-[var(--text-2)]"
+      // Same text-[...] vs text-[...] tailwind-merge collision as the trigger above — see
+      // that comment. Answer text was rendering at the browser-inherited size, not --text-sm.
+      className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden [font-size:var(--text-sm)] text-[var(--text-2)]"
       {...props}
     >
       <div className={cn("pt-0 pb-[var(--space-4)]", className)}>{children}</div>

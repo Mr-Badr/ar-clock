@@ -74,7 +74,13 @@ test('AdSense delivery becomes available after certified CMP confirmation', () =
 
     assert.equal(serverConfig.enabled, true);
     assert.equal(serverConfig.certifiedCmpEnabled, true);
-    assert.equal(serverConfig.autoAdsEnabled, true); // hybrid mode: auto ads enabled alongside manual slots
+    // Google Auto Ads disabled sitewide, fully (2026-08-13) — owner directive: "we do not want
+    // auto ads... we should create our ads but better than auto ads." It was the confirmed
+    // root cause of ad-related layout/UX regressions (see
+    // .claude/plans/curried-questing-fox.md Track 1). The manual slots below — built to match
+    // or beat Auto Ads' better formats under full control — are the sole ad source now,
+    // regardless of CMP confirmation.
+    assert.equal(serverConfig.autoAdsEnabled, false);
     assert.equal(serverConfig.manualSlots.topBanner, '8090183510');
     assert.equal(serverConfig.manualSlots.inArticle, '1176301123');
     assert.equal(serverConfig.manualSlots.inFeed, '1947291465');

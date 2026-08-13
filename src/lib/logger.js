@@ -52,10 +52,35 @@ export function serializeError(error) {
   return { message: String(error) };
 }
 
+function getSafeTimestamp() {
+  // Next.js Cache Components flags `new Date()` if it runs during static prerendering before
+  // any dynamic/uncached data source has been read in that render scope — even when an
+  // unrelated earlier `await` in the same component read *cached* ('use cache') data, since
+  // that doesn't count as opting into dynamic rendering. This function is called from every
+  // logger.* call sitewide, including inside try/catch error-logging paths that can
+  // legitimately fire during prerendering (e.g. a data-conversion edge case caught and warned
+  // about while generating a static page) — so a single unguarded `new Date()` here can crash
+  // an entire `next build` over what was meant to be a harmless log line.
+  //
+  // IMPORTANT: a plain try/catch around `new Date()` does NOT work here — verified by a real
+  // build crash even with one in place. Next's tracking isn't a normal catchable throw at the
+  // call site; it flags the render regardless of whether user code swallows what look like a
+  // thrown Error. The only real fix is to never construct a `Date` in that disallowed window at
+  // all, so this checks `NEXT_PHASE` (set by the Next.js CLI to `phase-production-build` only
+  // for the `next build` command itself — never during `next dev`, `next start`, or any real
+  // request/ISR-regeneration at runtime) and skips the constructor entirely during that phase.
+  // Every normal runtime call path (browser, per-request SSR, server actions, route handlers,
+  // ISR/on-demand regeneration under `next start`) still gets a real timestamp.
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    return 'unavailable-during-static-prerender';
+  }
+  return new Date().toISOString();
+}
+
 function toLogPayload(level, message, context = {}) {
   const payload = {
     level: level.toUpperCase(),
-    timestamp: new Date().toISOString(),
+    timestamp: getSafeTimestamp(),
     app: 'ar-clock',
     version: getAppVersion(),
     message,

@@ -39,6 +39,7 @@ import SameTimezoneCountries from '@/components/time-now/SameTimezoneCountries';
 import TimeNowFAQ from '@/components/time-now/TimeNowFAQ';
 import RelatedSearches from '@/components/time-now/RelatedSearches';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { Skeleton } from '@/components/ui/skeleton';
 import routeStyles from '@/app/time-now/TimeNowRoutePage.module.css';
@@ -602,7 +603,6 @@ async function CityTimePageSections({
           aria-labelledby="city-time-answer-heading"
           className={`container mx-auto px-4 ${routeStyles.sectionBand}`}
         >
-          <div className={routeStyles.sectionPanel}>
             <div className={routeStyles.sectionHead}>
               <h2 id="city-time-answer-heading" className={routeStyles.sectionTitle}>
                 ملخص التوقيت المحلي في {cityAr}
@@ -661,7 +661,6 @@ async function CityTimePageSections({
                 </article>
               )}
             </div>
-          </div>
         </section>
 
         {visibleSiblingCities.length > 0 && (
@@ -669,7 +668,6 @@ async function CityTimePageSections({
             aria-labelledby="cities-grid-h2"
             className={`container mx-auto px-4 ${routeStyles.sectionBand}`}
           >
-            <div className={routeStyles.sectionPanel}>
               <div className={routeStyles.sectionHeadRow}>
                 <div className={routeStyles.sectionHead}>
                   <h2 id="cities-grid-h2" className={routeStyles.sectionTitle}>
@@ -690,7 +688,6 @@ async function CityTimePageSections({
                   activeCitySlug={citySlug}
                 />
               </Suspense>
-            </div>
           </section>
         )}
 
@@ -698,20 +695,19 @@ async function CityTimePageSections({
           <AdInArticle slotId={`mid-time-city-${countrySlug}-${citySlug}-1`} />
         </section>
 
+        {/* TimezoneInfoCard already renders its own shadcn Card surface — no outer
+            sectionPanel around it (DESIGN.md: no nested cards). */}
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
-          <div className={routeStyles.sectionPanel}>
-            <TimezoneInfoCard
-              ianaTimezone={city.timezone}
-              countryAr={countryAr}
-              cityAr={cityAr}
-              utcOffset={offset}
-              nowIso={nowIso}
-            />
-          </div>
+          <TimezoneInfoCard
+            ianaTimezone={city.timezone}
+            countryAr={countryAr}
+            cityAr={cityAr}
+            utcOffset={offset}
+            nowIso={nowIso}
+          />
         </section>
 
         <section aria-labelledby="city-time-use-heading" className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
-          <div className={routeStyles.sectionPanel}>
             <div className={routeStyles.sectionHead}>
               <h2 id="city-time-use-heading" className={routeStyles.sectionTitle}>
                 كيف تستخدم وقت {cityAr} دون خطأ؟
@@ -744,23 +740,19 @@ async function CityTimePageSections({
                 </p>
               </article>
             </div>
-          </div>
         </section>
 
         {safeSameOffsetCountries.length > 0 && (
           <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
-            <div className={routeStyles.sectionPanel}>
-              <SameTimezoneCountries
-                countries={safeSameOffsetCountries}
-                utcOffset={timeFacts.offsetLabel}
-                currentCityAr={cityAr}
-              />
-            </div>
+            <SameTimezoneCountries
+              countries={safeSameOffsetCountries}
+              utcOffset={timeFacts.offsetLabel}
+              currentCityAr={cityAr}
+            />
           </section>
         )}
 
         <section aria-labelledby="city-time-rules-heading" className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
-          <div className={routeStyles.sectionPanel}>
             <div className={routeStyles.proseBlock}>
               <h2 id="city-time-rules-heading">
                 قاعدة مقارنة المواعيد من {cityAr}
@@ -777,72 +769,37 @@ async function CityTimePageSections({
                 <li>للسفر: استخدم اسم المدينة والمنطقة الزمنية في الحجز، وراجع التاريخ المحلي عند الوصول.</li>
               </ul>
             </div>
-          </div>
         </section>
 
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
-          <div className={routeStyles.sectionPanel}>
-            <TimeNowFAQ
-              placeLabelAr={cityAr}
-              introText={`إجابات عملية حول الوقت المحلي في ${cityAr}، التاريخ اليوم، UTC، التوقيت الصيفي، ومتى تحتاج صفحة المدينة بدلاً من صفحة الدولة.`}
-              items={faqItems}
-            />
-          </div>
+          <TimeNowFAQ
+            placeLabelAr={cityAr}
+            introText={`إجابات عملية حول الوقت المحلي في ${cityAr}، التاريخ اليوم، UTC، التوقيت الصيفي، ومتى تحتاج صفحة المدينة بدلاً من صفحة الدولة.`}
+            items={faqItems}
+          />
         </section>
 
         <section className="container mx-auto px-4">
           <AdInArticle slotId={`mid-time-city-${countrySlug}-${citySlug}-2`} />
         </section>
 
-        <section aria-labelledby="city-time-sources-heading" className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
-          <div className={routeStyles.sectionPanel}>
-            <div className={routeStyles.sectionHead}>
-              <h2 id="city-time-sources-heading" className={routeStyles.sectionTitle}>
-                مصادر لفهم توقيت {cityAr}
-              </h2>
-              <p className={routeStyles.sectionCopy}>
-                هذه مصادر تفسيرية لمفاهيم IANA وUTC وDST. لا تُستخدم في جلب الساعة أثناء عرض الصفحة، لكنها تساعدك على فهم سبب تغير الفروق بين المدن في بعض الفصول.
-              </p>
-            </div>
-            <div className={routeStyles.sourceGrid}>
-              {CITY_TIME_SOURCE_LINKS.map((source) => (
-                <a
-                  key={source.href}
-                  className={routeStyles.sourceCard}
-                  href={source.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <strong>{source.label}</strong>
-                  <span>{source.description}</span>
-                </a>
-              ))}
-            </div>
-          </div>
+        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <RelatedSearches
+            currentCountrySlug={countrySlug}
+            currentCityAr={cityAr}
+          />
         </section>
 
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
-          <div className={routeStyles.sectionPanel}>
-            <RelatedSearches
-              currentCountrySlug={countrySlug}
-              currentCityAr={cityAr}
-            />
-          </div>
+          <GeoInternalLinks
+            title={`خطوات تكمل وقت ${cityAr}`}
+            description={`بعد معرفة الساعة في ${cityAr}، اختر المسار الذي يكمّل سؤالك: تاريخ ${countryAr} المحلي، صفحة الدولة، أو مقارنة الوقت مع مدينة أخرى.`}
+            links={cityUtilityLinks}
+            ariaLabel={`خطوات تكمل وقت ${cityAr}`}
+          />
         </section>
 
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
-          <div className={routeStyles.sectionPanel}>
-            <GeoInternalLinks
-              title={`خطوات تكمل وقت ${cityAr}`}
-              description={`بعد معرفة الساعة في ${cityAr}، اختر المسار الذي يكمّل سؤالك: تاريخ ${countryAr} المحلي، صفحة الدولة، أو مقارنة الوقت مع مدينة أخرى.`}
-              links={cityUtilityLinks}
-              ariaLabel={`خطوات تكمل وقت ${cityAr}`}
-            />
-          </div>
-        </section>
-
-        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
-          <div className={routeStyles.sectionPanel}>
             <div className={routeStyles.proseBlock}>
               <h2>متى تعتمد على وقت {cityAr} ومتى تحتاج مقارنة؟</h2>
 
@@ -880,16 +837,22 @@ async function CityTimePageSections({
                 . بهذا تصبح الصفحة مفيدة للتخطيط لمكالمة أو سفر أو متابعة يومية، لا مجرد سطر ساعة معزول.
               </p>
             </div>
-          </div>
+        </section>
+
+        {/* Sources — last real content section (owner directive, 2026-08-13), plain small
+            dot-list like /tools, not the old bordered source-card grid. */}
+        <section aria-labelledby="city-time-sources-heading" className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
+          <h2 id="city-time-sources-heading" className="site-dot-list__heading">
+            مصادر لفهم توقيت {cityAr}
+          </h2>
+          <SiteDotLinkList
+            items={CITY_TIME_SOURCE_LINKS.map((source) => ({ ...source, external: true }))}
+            ariaLabel={`مصادر لفهم توقيت ${cityAr}`}
+          />
         </section>
 
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
           <AdMultiplex slotId={`end-time-city-${countrySlug}-${citySlug}`} />
-        </section>
-
-        <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
-          <div className={routeStyles.sectionPanel}>
-          </div>
         </section>
       </>
     );
@@ -911,14 +874,12 @@ async function CityTimePageSections({
           description={`ما زال الوقت الأساسي في ${cityAr} ومسارات الانتقال المهمة متاحة، لكن قسم المدن الأخرى والشرح التفصيلي لم يكتمل بعد. تم تسجيل المشكلة في السجل لتظهر بوضوح في staging وقبل أي نشر جديد.`}
         />
         <div className="mt-6">
-          <div className={routeStyles.sectionPanel}>
-            <GeoInternalLinks
-              title={`خطوات تكمل وقت ${cityAr}`}
-              description={`بعد معرفة الساعة في ${cityAr}، اختر تاريخ ${countryAr} المحلي، صفحة الدولة، أو مقارنة الوقت مع مدينة أخرى.`}
-              links={cityUtilityLinks}
-              ariaLabel={`خطوات تكمل وقت ${cityAr}`}
-            />
-          </div>
+          <GeoInternalLinks
+            title={`خطوات تكمل وقت ${cityAr}`}
+            description={`بعد معرفة الساعة في ${cityAr}، اختر تاريخ ${countryAr} المحلي، صفحة الدولة، أو مقارنة الوقت مع مدينة أخرى.`}
+            links={cityUtilityLinks}
+            ariaLabel={`خطوات تكمل وقت ${cityAr}`}
+          />
         </div>
       </section>
     );

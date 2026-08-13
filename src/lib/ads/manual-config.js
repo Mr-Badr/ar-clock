@@ -53,6 +53,13 @@ const MANUAL_AD_SLOT_REGISTRY = {
   sidebar: '',
   sidebarRight: '4134471107',
   sidebarLeft: '5183828891',
+  // Manual replacement for Google's Vignette (page-transition interstitial) — the one Auto
+  // Ads format the owner explicitly liked, now rebuilt under full control since Auto Ads is
+  // off entirely (owner, 2026-08-13). AdNavigationInterstitial.client.tsx shows this at most
+  // once per session, never on the very first page, always immediately closable. Needs a
+  // dedicated Interstitial/App-install-style unit from AdSense — empty (disabled) until one
+  // exists, same pattern as stickyAnchor above.
+  interstitial: '',
 };
 
 function normalizeManualSlotValue(value) {
@@ -94,5 +101,6 @@ export function getManualAdsConfig() {
     sidebar: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.sidebar),
     sidebarRight: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.sidebarRight),
     sidebarLeft: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.sidebarLeft),
+    interstitial: normalizeManualSlotValue(MANUAL_AD_SLOT_REGISTRY.interstitial),
   };
 }

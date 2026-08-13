@@ -1,0 +1,16 @@
+{
+  "slug": "easter-monday-netherlands",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: إثنين الفصح ضمن قائمة العطل الهولندية المعترف بها رسمياً، بخلاف الجمعة العظيمة — مؤكد عبر government.nl وiamexpat.nl.",
+    "متسق مع rule الموجودة مسبقاً في country-hub-data.js لهولندا."
+  ],
+  "updatedAt": "2026-08-12T14:46:13.090Z"
+}

@@ -13,6 +13,9 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { DateShareActions } from '@/components/date/DateShareActions';
 import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
+import { SiteFaqAccordion } from '@/components/shared/SiteFaqAccordion';
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdTopBanner from '@/components/ads/AdTopBanner';
@@ -676,7 +679,7 @@ export default async function CountryDatePage({
 
           <DateBreadcrumb items={breadcrumb} />
 
-          <section className="date-hero-panel mb-6">
+          <section className="date-hero-panel date-hero-panel--single mb-12">
             <div className="date-hero-main">
               <p className="date-kicker m-0">
                 <CountryFlag code={country.country_code} /> تاريخ محلي حسب الدولة
@@ -684,63 +687,63 @@ export default async function CountryDatePage({
               <h1 className="date-hero-title">
                 التاريخ اليوم في <span className="text-accent">{country.name_ar}</span>
               </h1>
+              <p className="date-hero-gregorian">
+                {hijri.formatted.ar}، يوافق <strong>{gregorian.formatted.ar}م</strong>
+              </p>
               <p className="date-hero-copy">
-                التاريخ الهجري اليوم في {country.name_ar} هو {hijri.formatted.ar}، ويوافق {gregorian.formatted.ar}م
-                حسب المنطقة الزمنية <span dir="ltr">{timezone}</span>. اقرأ التاريخين معاً قبل المشاركة، لأن فرق التوقيت
-                أو طريقة اعتماد بداية الشهر قد يغيّران فهم الموعد.
+                يوم {hijri.dayNameAr} حسب المنطقة الزمنية <span dir="ltr">{timezone}</span>، بطريقة حساب {methodNameAr}.
+                اقرأ التاريخين معاً قبل المشاركة، لأن فرق التوقيت أو طريقة اعتماد بداية الشهر قد يغيّران فهم الموعد.
               </p>
-            </div>
-            <aside className="date-hero-rail" aria-label={`ملخص التاريخ اليوم في ${country.name_ar}`}>
-              <p className="date-hero-answer">{hijri.formatted.ar}</p>
-              <p className="date-hero-note">
-                يوافق {gregorian.formatted.ar}م، يوم {hijri.dayNameAr}. طريقة الحساب: {methodNameAr}.
-              </p>
-              <div className="date-hero-actions">
-                <Link href={`/time-now/${countrySlug}`} className="date-hero-link date-hero-link--primary">
+              <div className="date-hero-quick-actions">
+                <Link href={`/time-now/${countrySlug}`} className="date-quick-action">
+                  <Clock size={16} strokeWidth={1.75} aria-hidden="true" />
                   الوقت الان في {country.name_ar}
                 </Link>
-                <Link href="/date/converter" className="date-hero-link">
+                <Link href="/date/converter" className="date-quick-action">
+                  <ArrowLeftRight size={16} strokeWidth={1.75} aria-hidden="true" />
                   تحويل تاريخ آخر
                 </Link>
               </div>
-            </aside>
-          </section>
-
-          <section className="date-detail-panel mb-8" aria-label="مشاركة تاريخ اليوم في الدولة">
-              <ErrorBoundary name="DateCountryShareActions">
-                <DateShareActions
-                  hijriFormatted={hijri.formatted.ar}
-                  gregorianFormatted={`${gregorian.day} ${gregorian.monthNameAr} ${gregorian.year}`}
-                  hijriIso={hijri.formatted.iso}
-                  gregorianIso={gregorian.formatted.iso}
-                  pageUrl={`${BASE_URL}/date/country/${countrySlug}`}
-                />
-              </ErrorBoundary>
-          </section>
-
-          <section className={styles.sectionPanel} aria-labelledby="country-date-method">
-            <div className={styles.sectionHead}>
-              <h2 id="country-date-method" className={styles.sectionTitle}>
-                كيف حُسب تاريخ اليوم؟
-              </h2>
-              <p className={styles.sectionCopy}>
-                بدأنا من التاريخ المحلي <span dir="ltr">{localDateIso}</span> في المنطقة الزمنية <span dir="ltr">{timezone}</span>،
-                ثم حوّلناه إلى هجري باستخدام {methodNameAr}. {methodNoteAr}
-                {!isGlobalDefault ? ' قد تختلف رؤية الهلال في بعض الدول المجاورة أو عند أول الشهر.' : ' قد تختلف النتائج عن التقاويم المحلية إذا اعتمدت الدولة إعلاناً رسمياً مختلفاً.'}
-              </p>
             </div>
           </section>
 
-          <section className="date-detail-panel mb-8" aria-labelledby="country-date-local-context">
+          <section className="mb-10" aria-label="مشاركة تاريخ اليوم في الدولة">
+            <ErrorBoundary name="DateCountryShareActions">
+              <DateShareActions
+                hijriFormatted={hijri.formatted.ar}
+                gregorianFormatted={`${gregorian.day} ${gregorian.monthNameAr} ${gregorian.year}`}
+                hijriIso={hijri.formatted.iso}
+                gregorianIso={gregorian.formatted.iso}
+                pageUrl={`${BASE_URL}/date/country/${countrySlug}`}
+              />
+            </ErrorBoundary>
+          </section>
+
+          {/* Plain text — a heading and one sentence don't earn a bordered panel
+              (DESIGN.md Law 4). */}
+          <section className="date-section max-w-3xl" aria-labelledby="country-date-method">
+            <h2 id="country-date-method" className="date-section-title">
+              كيف حُسب تاريخ اليوم؟
+            </h2>
+            <p className="date-editorial-copy m-0">
+              بدأنا من التاريخ المحلي <span dir="ltr">{localDateIso}</span> في المنطقة الزمنية <span dir="ltr">{timezone}</span>،
+              ثم حوّلناه إلى هجري باستخدام {methodNameAr}. {methodNoteAr}
+              {!isGlobalDefault ? ' قد تختلف رؤية الهلال في بعض الدول المجاورة أو عند أول الشهر.' : ' قد تختلف النتائج عن التقاويم المحلية إذا اعتمدت الدولة إعلاناً رسمياً مختلفاً.'}
+            </p>
+          </section>
+
+          {/* Only the peer cards below earn a surface — the prose above them stays plain
+              (DESIGN.md Law 4). */}
+          <section className="date-section" aria-labelledby="country-date-local-context">
             <h2 id="country-date-local-context" className="date-section-title">
               متى يفيدك هذا التاريخ في {country.name_ar}؟
             </h2>
-            <div className={styles.proseBody}>
+            <div className={`${styles.proseBody} max-w-3xl`}>
               <p>{localContext.intro}</p>
               <p>{localContext.timezoneNote}</p>
               <p>{localContext.officialNote}</p>
             </div>
-            <div className={styles.methodGrid}>
+            <div className={`${styles.methodGrid} mt-6`}>
               {localContext.cards.map((card) => (
                 <article key={card.label} className={styles.infoCard}>
                   <h3 className={styles.cardTitle}>{card.label}</h3>
@@ -750,7 +753,8 @@ export default async function CountryDatePage({
             </div>
           </section>
 
-          <section className="date-detail-panel mb-8" aria-labelledby="country-date-decision">
+          {/* Plain text list — no bordered panel (DESIGN.md Law 4). */}
+          <section className="date-section max-w-3xl" aria-labelledby="country-date-decision">
             <h2 id="country-date-decision" className="date-section-title">
               قبل أن تعتمد التاريخ في {country.name_ar}
             </h2>
@@ -764,141 +768,71 @@ export default async function CountryDatePage({
             </div>
           </section>
 
-          <section className={styles.prosePanel} aria-labelledby="country-date-reading">
-            <div className={styles.sectionHead}>
-              <h2 id="country-date-reading" className={styles.sectionTitle}>
-                كيف تقرأ التاريخ اليوم في {country.name_ar}؟
-              </h2>
-              <p className={styles.sectionCopy}>
-                هذه الملاحظات تساعدك على استخدام النتيجة في المواعيد، الرسائل، والمقارنات
-                بين الدول دون الخلط بين اليوم المحلي وتوقيت جهازك.
-              </p>
-            </div>
-            <div className={styles.proseBody}>
-              <p>
-                فكر في التاريخ كأنه بطاقة لها وجهان: وجه ميلادي تستخدمه أغلب التطبيقات والحجوزات، ووجه هجري تحتاجه
-                للمناسبات الدينية والعائلية وبعض السياقات الرسمية. في {country.name_ar}، تعرض هذه الصفحة الوجهين معاً
-                حتى لا تختار صيغة واحدة وتنسى أن الطرف الآخر قد يقرأ التاريخ بطريقة مختلفة.
-              </p>
-              <p>
-                الصفحة لا تعتمد على توقيت جهازك فقط؛ بل تقرأ اليوم المحلي في {country.name_ar}. هذا مهم عند متابعة بداية
-                اليوم في دولة أخرى، أو عند تنسيق موعد عائلي أو عملي أو مناسبة مرتبطة بالتاريخ الهجري. إذا كنت تقارن
-                بين بلدين، فابدأ من الوقت الان ثم عد إلى صفحة التاريخ حتى تفهم هل تغيّر اليوم محلياً أم لا.
-              </p>
-              <p>
-                التاريخ الهجري قد يختلف يوماً واحداً بين الدول إذا اعتمدت جهة رسمية رؤية محلية للهلال أو إعلاناً خاصاً
-                ببداية الشهر. لذلك نعرض طريقة الحساب المستخدمة بوضوح، ونربط الصفحة بمحوّل التاريخ والتقويم حتى تستطيع
-                مراجعة تاريخ آخر أو فتح سنة كاملة عند الحاجة.
-              </p>
-              <p>
-                عند استخدام الصفحة لتنسيق موعد بين بلدك و{country.name_ar}، لا تنظر إلى التاريخ منفصلاً عن الساعة.
-                قد يكون يومك المحلي بدأ فعلاً بينما ما زالت الدولة الأخرى في اليوم السابق، أو العكس. لهذا تربط الصفحة
-                بين التاريخ والوقت الان، لأن فرق المنطقة الزمنية هو السبب العملي الأكثر شيوعاً وراء الالتباس في الرسائل
-                والحجوزات والاجتماعات.
-              </p>
-              <p>
-                إذا كان الموعد دينياً أو حكومياً، تعامل مع التاريخ هنا كمرجع حسابي واضح، ثم قارنه مع الإعلان الرسمي
-                داخل {country.name_ar}. أما عند الاستخدام اليومي مثل مشاركة التاريخ، كتابة تذكير، أو مراجعة التقويم،
-                فوجود الهجري والميلادي معاً يكفي غالباً لتجنب سوء الفهم.
-              </p>
-              <p>
-                من الأفضل أيضاً فتح التقويم أو محوّل التاريخ عندما يكون الموعد بعد عدة أسابيع، لأن تاريخ اليوم وحده
-                لا يشرح لك كيف ينتقل الشهر الهجري خلال الفترة القادمة. الربط بين صفحة الدولة والوقت الان والتحويل يجعل
-                المسار أوضح: تعرف اليوم المحلي أولاً، ثم تفحص التاريخ المطلوب، ثم تشارك الصيغة المناسبة.
-              </p>
-            </div>
-            <div className={styles.methodGrid}>
-              <article className={styles.infoCard}>
-                <h3 className={styles.cardTitle}>للمواعيد اليومية</h3>
-                <p className={styles.cardBody}>استخدم التاريخ المحلي عندما يكون الموعد مرتبطاً بـ {country.name_ar} لا بجهازك الحالي.</p>
-              </article>
-              <article className={styles.infoCard}>
-                <h3 className={styles.cardTitle}>للهجري</h3>
-                <p className={styles.cardBody}>راجع طريقة الحساب والتنبيه لأن الإعلان الرسمي قد يغيّر بداية الشهر عند الحالات الحساسة.</p>
-              </article>
-              <article className={styles.infoCard}>
-                <h3 className={styles.cardTitle}>للمقارنة</h3>
-                <p className={styles.cardBody}>افتح محوّل التاريخ إذا كنت تريد مقارنة يوم سابق أو لاحق لا تاريخ اليوم فقط.</p>
-              </article>
-            </div>
+          {/* Condensed from six paragraphs to two (owner, 2026-08-13: "no one wants to
+              read all of that") — the three benefit cards become an icon-chip inline list. */}
+          <section className="date-section max-w-3xl" aria-labelledby="country-date-reading">
+            <h2 id="country-date-reading" className="date-section-title">
+              كيف تقرأ التاريخ اليوم في {country.name_ar}؟
+            </h2>
+            <p className="date-editorial-copy">
+              التاريخ هنا له وجهان: ميلادي تستخدمه أغلب التطبيقات والحجوزات، وهجري تحتاجه للمناسبات الدينية
+              والعائلية. الصفحة تقرأ اليوم المحلي في {country.name_ar} نفسها، لا توقيت جهازك — مهم عند تنسيق
+              موعد مع بلد آخر قد يكون ما زال في يومه السابق.
+            </p>
+            <p className="date-editorial-copy">
+              إذا كان الموعد دينياً أو حكومياً، اعتبر التاريخ هنا مرجعاً حسابياً واضحاً، ثم قارنه بالإعلان
+              الرسمي داخل {country.name_ar}. للاستخدام اليومي، وجود الهجري والميلادي معاً يكفي غالباً.
+            </p>
+            <ul className="date-use-inline-list">
+              <li>
+                <span className="date-use-icon" aria-hidden="true"><Clock size={16} strokeWidth={1.75} /></span>
+                <span><strong>للمواعيد اليومية</strong> — استخدم التاريخ المحلي عندما يكون الموعد مرتبطاً بـ {country.name_ar} لا بجهازك الحالي.</span>
+              </li>
+              <li>
+                <span className="date-use-icon" aria-hidden="true"><Calendar size={16} strokeWidth={1.75} /></span>
+                <span><strong>للهجري</strong> — راجع طريقة الحساب لأن الإعلان الرسمي قد يغيّر بداية الشهر عند الحالات الحساسة.</span>
+              </li>
+              <li>
+                <span className="date-use-icon" aria-hidden="true"><ArrowLeftRight size={16} strokeWidth={1.75} /></span>
+                <span><strong>للمقارنة</strong> — افتح محوّل التاريخ إذا كنت تريد مقارنة يوم سابق أو لاحق لا تاريخ اليوم فقط.</span>
+              </li>
+            </ul>
           </section>
 
-          <section className="date-section mb-8" aria-labelledby="country-date-faq-heading">
-            <div className="date-section-head">
-              <h2 id="country-date-faq-heading" className="date-section-title">
-                أسئلة شائعة عن تاريخ اليوم في {country.name_ar}
-              </h2>
-              <p className="date-section-copy">
-                هذه الأسئلة تختصر أكثر مواضع الالتباس: فرق التوقيت، اختلاف الهجري، وحدود الاعتماد الرسمي.
-              </p>
-            </div>
-            <div className="date-faq-grid">
-              {faqItems.map((item) => (
-                <article key={item.question} className="date-faq-item">
-                  <h3 className="date-faq-question">{item.question}</h3>
-                  <p className="date-faq-copy m-0">{item.answer}</p>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className="mt-8">
+          {/* FAQ — the one pattern used everywhere (owner, 2026-08-13: "FAQ should always
+              be like the FAQ in tools pages"). */}
+          <section className="date-section max-w-3xl" aria-labelledby="country-date-faq-heading">
+            <h2 id="country-date-faq-heading" className="date-section-title">
+              أسئلة شائعة عن تاريخ اليوم في {country.name_ar}
+            </h2>
+            <SiteFaqAccordion items={faqItems} />
           </section>
 
           <AdInArticle slotId={`mid-date-country-${countrySlug}-1`} slotKey="inArticleDate" />
 
-          <section className="related-links mb-8" dir="rtl" aria-labelledby="country-date-sources-heading">
-            <p id="country-date-sources-heading" className="related-links__heading">
-              مصادر تساعدك على فهم التاريخ المحلي
-            </p>
-            <div className="related-links__grid">
-              {COUNTRY_DATE_SOURCE_LINKS.map((source) => (
-                <a
-                  key={source.href}
-                  href={source.href}
-                  className="related-link-card"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="related-link-card__body">
-                    <span className="related-link-card__label">{source.label}</span>
-                    <span className="related-link-card__desc">{source.description}</span>
-                  </span>
-                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
-                </a>
-              ))}
-            </div>
+          {/* Related pages — small, clean, unique CARDS (owner, 2026-08-13), not a list. */}
+          <section className="date-section max-w-3xl">
+            <SiteRelatedCardGrid
+              heading={`إذا كنت تتابع الوقت في ${country.name_ar}`}
+              headingId="country-date-next-paths-heading"
+              items={links(countrySlug, country.name_ar).map(({ href, label, icon: Icon }) => ({ href, label, Icon }))}
+            />
           </section>
 
-          <nav
-            aria-label={`مسارات متابعة التاريخ المحلي في ${country.name_ar}`}
-            className="related-links"
-            dir="rtl"
-          >
-            <p className="related-links__heading">
-              إذا كنت تتابع الوقت في {country.name_ar}
-            </p>
-      
-            <div className="related-links__grid">
-              {links(countrySlug, country.name_ar).map(({ href, label, description, icon: Icon }) => (
-                <Link key={href} href={href} className="related-link-card">
-                  {/* Icon container */}
-                  <span className="related-link-card__icon" aria-hidden="true">
-                    <Icon size={16} strokeWidth={1.75} />
-                  </span>
-      
-                  {/* Text */}
-                  <span className="related-link-card__body">
-                    <span className="related-link-card__label">{label}</span>
-                    <span className="related-link-card__desc">{description}</span>
-                  </span>
-      
-                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
-                </Link>
-              ))}
-            </div>
-          </nav>
-
+          {/* Sources — last thing on the page (owner, 2026-08-13), plain small dot-list
+              like /tools. */}
+          <section className="date-section max-w-3xl">
+            <SiteDotLinkList
+              heading="مصادر تساعدك على فهم التاريخ المحلي"
+              headingId="country-date-sources-heading"
+              items={COUNTRY_DATE_SOURCE_LINKS.map((source) => ({
+                href: source.href,
+                label: source.label,
+                description: source.description,
+                external: true,
+              }))}
+            />
+          </section>
         </main>
       </AdLayoutWrapper>
     </>

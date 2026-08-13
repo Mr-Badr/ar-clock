@@ -26,7 +26,10 @@
     "ramadan-in-netherlands",
     "ramadan-in-spain",
     "ramadan-in-uk",
-    "ramadan-in-norway"
+    "ramadan-in-norway",
+    "ramadan-in-australia",
+    "ramadan-in-belgium",
+    "ramadan-in-italy"
   ],
   "eid-al-fitr": [
     "eid-al-fitr-in-saudi",
@@ -55,7 +58,10 @@
     "eid-al-fitr-in-netherlands",
     "eid-al-fitr-in-spain",
     "eid-al-fitr-in-uk",
-    "eid-al-fitr-in-norway"
+    "eid-al-fitr-in-norway",
+    "eid-al-fitr-in-australia",
+    "eid-al-fitr-in-belgium",
+    "eid-al-fitr-in-italy"
   ],
   "eid-al-adha": [
     "eid-al-adha-in-saudi",
@@ -84,7 +90,10 @@
     "eid-al-adha-in-netherlands",
     "eid-al-adha-in-spain",
     "eid-al-adha-in-uk",
-    "eid-al-adha-in-norway"
+    "eid-al-adha-in-norway",
+    "eid-al-adha-in-australia",
+    "eid-al-adha-in-belgium",
+    "eid-al-adha-in-italy"
   ],
   "day-of-arafa": [
     "day-of-arafa-in-saudi",
@@ -113,7 +122,10 @@
     "day-of-arafa-in-netherlands",
     "day-of-arafa-in-spain",
     "day-of-arafa-in-uk",
-    "day-of-arafa-in-norway"
+    "day-of-arafa-in-norway",
+    "day-of-arafa-in-australia",
+    "day-of-arafa-in-belgium",
+    "day-of-arafa-in-italy"
   ],
   "hajj-season": [
     "hajj-season-in-saudi",
@@ -142,7 +154,10 @@
     "hajj-season-in-netherlands",
     "hajj-season-in-spain",
     "hajj-season-in-uk",
-    "hajj-season-in-norway"
+    "hajj-season-in-norway",
+    "hajj-season-in-australia",
+    "hajj-season-in-belgium",
+    "hajj-season-in-italy"
   ],
   "islamic-new-year": [
     "islamic-new-year-in-saudi",
@@ -171,7 +186,10 @@
     "islamic-new-year-in-netherlands",
     "islamic-new-year-in-spain",
     "islamic-new-year-in-uk",
-    "islamic-new-year-in-norway"
+    "islamic-new-year-in-norway",
+    "islamic-new-year-in-australia",
+    "islamic-new-year-in-belgium",
+    "islamic-new-year-in-italy"
   ],
   "ashura": [
     "ashura-in-saudi",
@@ -200,7 +218,10 @@
     "ashura-in-netherlands",
     "ashura-in-spain",
     "ashura-in-uk",
-    "ashura-in-norway"
+    "ashura-in-norway",
+    "ashura-in-australia",
+    "ashura-in-belgium",
+    "ashura-in-italy"
   ],
   "laylat-al-qadr": [
     "laylat-al-qadr-in-saudi",
@@ -229,7 +250,10 @@
     "laylat-al-qadr-in-netherlands",
     "laylat-al-qadr-in-spain",
     "laylat-al-qadr-in-uk",
-    "laylat-al-qadr-in-norway"
+    "laylat-al-qadr-in-norway",
+    "laylat-al-qadr-in-australia",
+    "laylat-al-qadr-in-belgium",
+    "laylat-al-qadr-in-italy"
   ],
   "social-security-saudi": [],
   "isra-miraj": [
@@ -259,7 +283,10 @@
     "isra-miraj-in-netherlands",
     "isra-miraj-in-spain",
     "isra-miraj-in-uk",
-    "isra-miraj-in-norway"
+    "isra-miraj-in-norway",
+    "isra-miraj-in-australia",
+    "isra-miraj-in-belgium",
+    "isra-miraj-in-italy"
   ],
   "oman-accession-day": [],
   "first-dhul-hijjah": [
@@ -289,7 +316,10 @@
     "first-dhul-hijjah-in-netherlands",
     "first-dhul-hijjah-in-spain",
     "first-dhul-hijjah-in-uk",
-    "first-dhul-hijjah-in-norway"
+    "first-dhul-hijjah-in-norway",
+    "first-dhul-hijjah-in-australia",
+    "first-dhul-hijjah-in-belgium",
+    "first-dhul-hijjah-in-italy"
   ],
   "bac-results-tunisia": [],
   "winter-season": [],
@@ -354,7 +384,10 @@
     "valentines-day-in-netherlands",
     "valentines-day-in-spain",
     "valentines-day-in-uk",
-    "valentines-day-in-norway"
+    "valentines-day-in-norway",
+    "valentines-day-in-australia",
+    "valentines-day-in-belgium",
+    "valentines-day-in-italy"
   ],
   "labor-day": [],
   "sand-payment-saudi": [],
@@ -386,7 +419,10 @@
     "world-health-day-in-netherlands",
     "world-health-day-in-spain",
     "world-health-day-in-uk",
-    "world-health-day-in-norway"
+    "world-health-day-in-norway",
+    "world-health-day-in-australia",
+    "world-health-day-in-belgium",
+    "world-health-day-in-italy"
   ],
   "earth-day": [
     "earth-day-in-saudi",
@@ -415,7 +451,10 @@
     "earth-day-in-netherlands",
     "earth-day-in-spain",
     "earth-day-in-uk",
-    "earth-day-in-norway"
+    "earth-day-in-norway",
+    "earth-day-in-australia",
+    "earth-day-in-belgium",
+    "earth-day-in-italy"
   ],
   "world-diabetes-day": [
     "world-diabetes-day-in-saudi",
@@ -445,6 +484,9 @@
     "world-diabetes-day-in-spain",
     "world-diabetes-day-in-uk",
     "world-diabetes-day-in-norway",
+    "world-diabetes-day-in-australia",
+    "world-diabetes-day-in-belgium",
+    "world-diabetes-day-in-italy",
     "diabetes-day",
     "world-diabetes-day-countdown"
   ],
@@ -479,7 +521,10 @@
     "world-teachers-day-in-netherlands",
     "world-teachers-day-in-spain",
     "world-teachers-day-in-uk",
-    "world-teachers-day-in-norway"
+    "world-teachers-day-in-norway",
+    "world-teachers-day-in-australia",
+    "world-teachers-day-in-belgium",
+    "world-teachers-day-in-italy"
   ],
   "arabic-language-day": [
     "arabic-language-day-in-saudi",
@@ -508,7 +553,10 @@
     "arabic-language-day-in-netherlands",
     "arabic-language-day-in-spain",
     "arabic-language-day-in-uk",
-    "arabic-language-day-in-norway"
+    "arabic-language-day-in-norway",
+    "arabic-language-day-in-australia",
+    "arabic-language-day-in-belgium",
+    "arabic-language-day-in-italy"
   ],
   "saudi-flag-day": [],
   "jordan-independence-day": [],
@@ -549,7 +597,10 @@
     "mawlid-in-netherlands",
     "mawlid-in-spain",
     "mawlid-in-uk",
-    "mawlid-in-norway"
+    "mawlid-in-norway",
+    "mawlid-in-australia",
+    "mawlid-in-belgium",
+    "mawlid-in-italy"
   ],
   "halloween-usa": [],
   "mothers-day": [],
@@ -584,7 +635,10 @@
     "nisf-shaban-in-netherlands",
     "nisf-shaban-in-spain",
     "nisf-shaban-in-uk",
-    "nisf-shaban-in-norway"
+    "nisf-shaban-in-norway",
+    "nisf-shaban-in-australia",
+    "nisf-shaban-in-belgium",
+    "nisf-shaban-in-italy"
   ],
   "pension-day-egypt": [],
   "pension-day-saudi": [],
@@ -615,7 +669,10 @@
     "world-childrens-day-in-netherlands",
     "world-childrens-day-in-spain",
     "world-childrens-day-in-uk",
-    "world-childrens-day-in-norway"
+    "world-childrens-day-in-norway",
+    "world-childrens-day-in-australia",
+    "world-childrens-day-in-belgium",
+    "world-childrens-day-in-italy"
   ],
   "international-day-of-education": [
     "international-day-of-education-in-saudi",
@@ -644,7 +701,10 @@
     "international-day-of-education-in-netherlands",
     "international-day-of-education-in-spain",
     "international-day-of-education-in-uk",
-    "international-day-of-education-in-norway"
+    "international-day-of-education-in-norway",
+    "international-day-of-education-in-australia",
+    "international-day-of-education-in-belgium",
+    "international-day-of-education-in-italy"
   ],
   "world-mental-health-day": [
     "world-mental-health-day-in-saudi",
@@ -673,7 +733,10 @@
     "world-mental-health-day-in-netherlands",
     "world-mental-health-day-in-spain",
     "world-mental-health-day-in-uk",
-    "world-mental-health-day-in-norway"
+    "world-mental-health-day-in-norway",
+    "world-mental-health-day-in-australia",
+    "world-mental-health-day-in-belgium",
+    "world-mental-health-day-in-italy"
   ],
   "world-environment-day": [
     "world-environment-day-in-saudi",
@@ -702,7 +765,10 @@
     "world-environment-day-in-netherlands",
     "world-environment-day-in-spain",
     "world-environment-day-in-uk",
-    "world-environment-day-in-norway"
+    "world-environment-day-in-norway",
+    "world-environment-day-in-australia",
+    "world-environment-day-in-belgium",
+    "world-environment-day-in-italy"
   ],
   "independence-manifesto-day-morocco": [],
   "amazigh-new-year-algeria": [],
@@ -713,10 +779,13 @@
   "al-marbaaniya-saudi": [],
   "al-safari-saudi": [],
   "al-wasm-saudi": [],
+  "all-saints-day-belgium": [],
   "all-saints-day-france": [],
+  "all-saints-day-spain": [],
   "all-saints-sweden": [],
   "aman-social-tunisia": [],
   "annunciation-day-lebanon": [],
+  "anzac-day-australia": [],
   "april-fools": [
     "april-fools-in-saudi",
     "april-fools-in-egypt",
@@ -744,7 +813,10 @@
     "april-fools-in-netherlands",
     "april-fools-in-spain",
     "april-fools-in-uk",
-    "april-fools-in-norway"
+    "april-fools-in-norway",
+    "april-fools-in-australia",
+    "april-fools-in-belgium",
+    "april-fools-in-italy"
   ],
   "arab-orphan-day": [
     "arab-orphan-day-in-saudi",
@@ -773,12 +845,16 @@
     "arab-orphan-day-in-netherlands",
     "arab-orphan-day-in-spain",
     "arab-orphan-day-in-uk",
-    "arab-orphan-day-in-norway"
+    "arab-orphan-day-in-norway",
+    "arab-orphan-day-in-australia",
+    "arab-orphan-day-in-belgium",
+    "arab-orphan-day-in-italy"
   ],
   "armed-forces-day-morocco": [],
   "armed-forces-day-oman": [],
   "armed-forces-day-uae": [],
   "armenian-christmas-lebanon": [],
+  "armistice-day-belgium": [],
   "armistice-day-france": [],
   "army-day-iraq": [],
   "army-day-lebanon": [],
@@ -789,6 +865,7 @@
   "asir-summer-season": [],
   "assumption-day-france": [],
   "assumption-day-lebanon": [],
+  "australia-day": [],
   "autism-day": [],
   "babylon-international-festival-iraq": [],
   "bac-results-algeria": [],
@@ -824,7 +901,10 @@
     "badr-day-in-netherlands",
     "badr-day-in-spain",
     "badr-day-in-uk",
-    "badr-day-in-norway"
+    "badr-day-in-norway",
+    "badr-day-in-australia",
+    "badr-day-in-belgium",
+    "badr-day-in-italy"
   ],
   "bahraini-womens-day": [],
   "barnbidrag-sweden": [],
@@ -858,7 +938,10 @@
     "battle-of-uhud-in-netherlands",
     "battle-of-uhud-in-spain",
     "battle-of-uhud-in-uk",
-    "battle-of-uhud-in-norway"
+    "battle-of-uhud-in-norway",
+    "battle-of-uhud-in-australia",
+    "battle-of-uhud-in-belgium",
+    "battle-of-uhud-in-italy"
   ],
   "blood-donor-day": [
     "blood-donor-day-in-saudi",
@@ -887,7 +970,10 @@
     "blood-donor-day-in-netherlands",
     "blood-donor-day-in-spain",
     "blood-donor-day-in-uk",
-    "blood-donor-day-in-norway"
+    "blood-donor-day-in-norway",
+    "blood-donor-day-in-australia",
+    "blood-donor-day-in-belgium",
+    "blood-donor-day-in-italy"
   ],
   "bostadsbidrag-sweden": [],
   "boxing-day-canada": [],
@@ -905,6 +991,7 @@
   "christmas-eve-sweden": [],
   "christmas-germany": [],
   "christmas-jordan": [],
+  "christmas-netherlands": [],
   "christmas-palestine": [],
   "christmas-syria": [],
   "christmas-uk": [],
@@ -937,9 +1024,14 @@
     "conquest-of-andalusia-in-netherlands",
     "conquest-of-andalusia-in-spain",
     "conquest-of-andalusia-in-uk",
-    "conquest-of-andalusia-in-norway"
+    "conquest-of-andalusia-in-norway",
+    "conquest-of-andalusia-in-australia",
+    "conquest-of-andalusia-in-belgium",
+    "conquest-of-andalusia-in-italy"
   ],
+  "constitution-day-kuwait": [],
   "constitution-day-lebanon": [],
+  "constitution-day-spain": [],
   "coptic-christmas-egypt": [],
   "cost-of-living-allowance-bahrain": [],
   "crous-scholarship-france": [],
@@ -955,9 +1047,12 @@
   "early-may-bank-holiday-uk": [],
   "easter-monday-france": [],
   "easter-monday-germany": [],
+  "easter-monday-netherlands": [],
   "easter-monday-uk": [],
   "easter-syria": [],
   "education-day-uae": [],
+  "eid-al-fitr-australia": [],
+  "epiphany-spain": [],
   "epiphany-sweden": [],
   "evacuation-day-egypt": [],
   "evacuation-day-syria": [],
@@ -989,7 +1084,10 @@
     "fall-of-granada-in-netherlands",
     "fall-of-granada-in-spain",
     "fall-of-granada-in-uk",
-    "fall-of-granada-in-norway"
+    "fall-of-granada-in-norway",
+    "fall-of-granada-in-australia",
+    "fall-of-granada-in-belgium",
+    "fall-of-granada-in-italy"
   ],
   "family-day": [],
   "family-day-canada": [],
@@ -1020,13 +1118,18 @@
     "fath-makkah-in-netherlands",
     "fath-makkah-in-spain",
     "fath-makkah-in-uk",
-    "fath-makkah-in-norway"
+    "fath-makkah-in-norway",
+    "fath-makkah-in-australia",
+    "fath-makkah-in-belgium",
+    "fath-makkah-in-italy"
   ],
+  "ferragosto-italy": [],
   "fete-de-la-musique-france": [],
   "fete-du-travail-france": [],
   "final-exams-saudi": [],
   "flag-day-jordan": [],
   "flag-day-uae": [],
+  "flag-day-usa": [],
   "food-day": [
     "food-day-in-saudi",
     "food-day-in-egypt",
@@ -1054,7 +1157,10 @@
     "food-day-in-netherlands",
     "food-day-in-spain",
     "food-day-in-uk",
-    "food-day-in-norway"
+    "food-day-in-norway",
+    "food-day-in-australia",
+    "food-day-in-belgium",
+    "food-day-in-italy"
   ],
   "friendship-day": [],
   "geminids-meteor-shower": [],
@@ -1093,7 +1199,10 @@
     "human-rights-day-in-netherlands",
     "human-rights-day-in-spain",
     "human-rights-day-in-uk",
-    "human-rights-day-in-norway"
+    "human-rights-day-in-norway",
+    "human-rights-day-in-australia",
+    "human-rights-day-in-belgium",
+    "human-rights-day-in-italy"
   ],
   "independence-day-bahrain": [],
   "independence-day-kuwait": [],
@@ -1128,7 +1237,10 @@
     "international-coffee-day-in-netherlands",
     "international-coffee-day-in-spain",
     "international-coffee-day-in-uk",
-    "international-coffee-day-in-norway"
+    "international-coffee-day-in-norway",
+    "international-coffee-day-in-australia",
+    "international-coffee-day-in-belgium",
+    "international-coffee-day-in-italy"
   ],
   "international-peace-day": [
     "international-peace-day-in-saudi",
@@ -1157,7 +1269,10 @@
     "international-peace-day-in-netherlands",
     "international-peace-day-in-spain",
     "international-peace-day-in-uk",
-    "international-peace-day-in-norway"
+    "international-peace-day-in-norway",
+    "international-peace-day-in-australia",
+    "international-peace-day-in-belgium",
+    "international-peace-day-in-italy"
   ],
   "international-youth-day": [
     "international-youth-day-in-saudi",
@@ -1186,7 +1301,10 @@
     "international-youth-day-in-netherlands",
     "international-youth-day-in-spain",
     "international-youth-day-in-uk",
-    "international-youth-day-in-norway"
+    "international-youth-day-in-norway",
+    "international-youth-day-in-australia",
+    "international-youth-day-in-belgium",
+    "international-youth-day-in-italy"
   ],
   "invasion-remembrance-kuwait": [],
   "iraq-national-day": [],
@@ -1233,9 +1351,13 @@
     "last-ten-nights-ramadan-in-netherlands",
     "last-ten-nights-ramadan-in-spain",
     "last-ten-nights-ramadan-in-uk",
-    "last-ten-nights-ramadan-in-norway"
+    "last-ten-nights-ramadan-in-norway",
+    "last-ten-nights-ramadan-in-australia",
+    "last-ten-nights-ramadan-in-belgium",
+    "last-ten-nights-ramadan-in-italy"
   ],
   "liberation-day-libya": [],
+  "liberation-day-netherlands": [],
   "liberation-day-syria": [],
   "libya-independence-day": [],
   "literacy-day": [
@@ -1265,7 +1387,10 @@
     "literacy-day-in-netherlands",
     "literacy-day-in-spain",
     "literacy-day-in-uk",
-    "literacy-day-in-norway"
+    "literacy-day-in-norway",
+    "literacy-day-in-australia",
+    "literacy-day-in-belgium",
+    "literacy-day-in-italy"
   ],
   "martyrs-day-algeria": [],
   "martyrs-day-lebanon": [],
@@ -1288,6 +1413,7 @@
   "nakba-day": [],
   "national-aid-jordan": [],
   "national-charter-day-bahrain": [],
+  "national-day-belgium": [],
   "national-day-spain": [],
   "national-day-sweden": [],
   "national-labor-support-kuwait": [],
@@ -1321,7 +1447,10 @@
     "nurses-day-in-netherlands",
     "nurses-day-in-spain",
     "nurses-day-in-uk",
-    "nurses-day-in-norway"
+    "nurses-day-in-norway",
+    "nurses-day-in-australia",
+    "nurses-day-in-belgium",
+    "nurses-day-in-italy"
   ],
   "october-14-revolution-yemen": [],
   "omani-womens-day": [],
@@ -1371,7 +1500,10 @@
     "rajab-start-in-netherlands",
     "rajab-start-in-spain",
     "rajab-start-in-uk",
-    "rajab-start-in-norway"
+    "rajab-start-in-norway",
+    "rajab-start-in-australia",
+    "rajab-start-in-belgium",
+    "rajab-start-in-italy"
   ],
   "recapture-of-riyadh": [],
   "reef-support-saudi": [],
@@ -1379,6 +1511,7 @@
   "remembrance-sunday-uk": [],
   "renaissance-day-oman": [],
   "republic-day-iraq": [],
+  "republic-day-italy": [],
   "republic-day-tunisia": [],
   "republic-day-turkey": [],
   "retiree-salary-iraq": [],
@@ -1432,7 +1565,10 @@
     "shaban-start-in-netherlands",
     "shaban-start-in-spain",
     "shaban-start-in-uk",
-    "shaban-start-in-norway"
+    "shaban-start-in-norway",
+    "shaban-start-in-australia",
+    "shaban-start-in-belgium",
+    "shaban-start-in-italy"
   ],
   "six-days-shawwal": [
     "six-days-shawwal-in-saudi",
@@ -1461,7 +1597,10 @@
     "six-days-shawwal-in-netherlands",
     "six-days-shawwal-in-spain",
     "six-days-shawwal-in-uk",
-    "six-days-shawwal-in-norway"
+    "six-days-shawwal-in-norway",
+    "six-days-shawwal-in-australia",
+    "six-days-shawwal-in-belgium",
+    "six-days-shawwal-in-italy"
   ],
   "social-assistance-bahrain": [],
   "social-assistance-kuwait": [],
@@ -1472,6 +1611,7 @@
   "soundstorm-riyadh": [],
   "sovereignty-childrens-day-turkey": [],
   "spring-bank-holiday-uk": [],
+  "st-francis-day-italy": [],
   "student-allowance-kuwait": [],
   "student-day-algeria": [],
   "suez-canal-nationalization-egypt": [],
@@ -1504,7 +1644,10 @@
     "tarwiyah-day-in-netherlands",
     "tarwiyah-day-in-spain",
     "tarwiyah-day-in-uk",
-    "tarwiyah-day-in-norway"
+    "tarwiyah-day-in-norway",
+    "tarwiyah-day-in-australia",
+    "tarwiyah-day-in-belgium",
+    "tarwiyah-day-in-italy"
   ],
   "tashreeq-days": [
     "tashreeq-days-in-saudi",
@@ -1533,7 +1676,10 @@
     "tashreeq-days-in-netherlands",
     "tashreeq-days-in-spain",
     "tashreeq-days-in-uk",
-    "tashreeq-days-in-norway"
+    "tashreeq-days-in-norway",
+    "tashreeq-days-in-australia",
+    "tashreeq-days-in-belgium",
+    "tashreeq-days-in-italy"
   ],
   "tasua-day": [
     "tasua-day-in-saudi",
@@ -1562,7 +1708,10 @@
     "tasua-day-in-netherlands",
     "tasua-day-in-spain",
     "tasua-day-in-uk",
-    "tasua-day-in-norway"
+    "tasua-day-in-norway",
+    "tasua-day-in-australia",
+    "tasua-day-in-belgium",
+    "tasua-day-in-italy"
   ],
   "tax-day-usa": [],
   "tax-refund-france": [],
@@ -1614,7 +1763,10 @@
     "volunteer-day-in-netherlands",
     "volunteer-day-in-spain",
     "volunteer-day-in-uk",
-    "volunteer-day-in-norway"
+    "volunteer-day-in-norway",
+    "volunteer-day-in-australia",
+    "volunteer-day-in-belgium",
+    "volunteer-day-in-italy"
   ],
   "wafat-khadija": [],
   "washington-birthday-usa": [],
@@ -1648,7 +1800,10 @@
     "wildlife-day-in-netherlands",
     "wildlife-day-in-spain",
     "wildlife-day-in-uk",
-    "wildlife-day-in-norway"
+    "wildlife-day-in-norway",
+    "wildlife-day-in-australia",
+    "wildlife-day-in-belgium",
+    "wildlife-day-in-italy"
   ],
   "winter-at-tantora-alula": [],
   "winter-break-qatar": [],
@@ -1682,7 +1837,10 @@
     "world-book-day-in-netherlands",
     "world-book-day-in-spain",
     "world-book-day-in-uk",
-    "world-book-day-in-norway"
+    "world-book-day-in-norway",
+    "world-book-day-in-australia",
+    "world-book-day-in-belgium",
+    "world-book-day-in-italy"
   ],
   "world-cancer-day": [
     "world-cancer-day-in-saudi",
@@ -1711,7 +1869,10 @@
     "world-cancer-day-in-netherlands",
     "world-cancer-day-in-spain",
     "world-cancer-day-in-uk",
-    "world-cancer-day-in-norway"
+    "world-cancer-day-in-norway",
+    "world-cancer-day-in-australia",
+    "world-cancer-day-in-belgium",
+    "world-cancer-day-in-italy"
   ],
   "world-cup-2030": [],
   "world-fathers-day": [
@@ -1742,6 +1903,9 @@
     "world-fathers-day-in-spain",
     "world-fathers-day-in-uk",
     "world-fathers-day-in-norway",
+    "world-fathers-day-in-australia",
+    "world-fathers-day-in-belgium",
+    "world-fathers-day-in-italy",
     "fathers-day"
   ],
   "world-happiness-day": [
@@ -1771,7 +1935,10 @@
     "world-happiness-day-in-netherlands",
     "world-happiness-day-in-spain",
     "world-happiness-day-in-uk",
-    "world-happiness-day-in-norway"
+    "world-happiness-day-in-norway",
+    "world-happiness-day-in-australia",
+    "world-happiness-day-in-belgium",
+    "world-happiness-day-in-italy"
   ],
   "world-no-tobacco-day": [
     "world-no-tobacco-day-in-saudi",
@@ -1800,7 +1967,10 @@
     "world-no-tobacco-day-in-netherlands",
     "world-no-tobacco-day-in-spain",
     "world-no-tobacco-day-in-uk",
-    "world-no-tobacco-day-in-norway"
+    "world-no-tobacco-day-in-norway",
+    "world-no-tobacco-day-in-australia",
+    "world-no-tobacco-day-in-belgium",
+    "world-no-tobacco-day-in-italy"
   ],
   "world-refugee-day": [
     "world-refugee-day-in-saudi",
@@ -1829,7 +1999,10 @@
     "world-refugee-day-in-netherlands",
     "world-refugee-day-in-spain",
     "world-refugee-day-in-uk",
-    "world-refugee-day-in-norway"
+    "world-refugee-day-in-norway",
+    "world-refugee-day-in-australia",
+    "world-refugee-day-in-belgium",
+    "world-refugee-day-in-italy"
   ],
   "world-tourism-day": [
     "world-tourism-day-in-saudi",
@@ -1858,7 +2031,10 @@
     "world-tourism-day-in-netherlands",
     "world-tourism-day-in-spain",
     "world-tourism-day-in-uk",
-    "world-tourism-day-in-norway"
+    "world-tourism-day-in-norway",
+    "world-tourism-day-in-australia",
+    "world-tourism-day-in-belgium",
+    "world-tourism-day-in-italy"
   ],
   "world-water-day": [
     "world-water-day-in-saudi",
@@ -1887,7 +2063,10 @@
     "world-water-day-in-netherlands",
     "world-water-day-in-spain",
     "world-water-day-in-uk",
-    "world-water-day-in-norway"
+    "world-water-day-in-norway",
+    "world-water-day-in-australia",
+    "world-water-day-in-belgium",
+    "world-water-day-in-italy"
   ],
   "youth-day-morocco": [],
   "youth-sports-day-turkey": [],

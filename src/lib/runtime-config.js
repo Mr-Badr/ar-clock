@@ -67,7 +67,21 @@ export function getServerAdsConfig() {
     enabled,
     certifiedCmpEnabled,
     clientIdMatchesAccount,
-    autoAdsEnabled: enabled,  // enables hybrid
+    // Google Auto Ads (enable_page_level_ads) DISABLED sitewide, fully — owner directive,
+    // 2026-08-13 (see .claude/plans/curried-questing-fox.md Track 1): "we do not want auto
+    // ads... we should create our ads but better than auto ads." Auto Ads was running as an
+    // uncoordinated layer on top of the hand-built manual `.ad-slot` system, injecting its own
+    // containers as raw `body` children completely outside that system's CLS reservations,
+    // theme-safe transparent background/no-border rules, and RTL fixes — the confirmed root
+    // cause of white boxes in dark mode, pages growing/shrinking, drifting desktop rails
+    // merging into the footer, and ad clusters with no content between them. The manual system
+    // (topBanner, inArticle, multiplex, sidebar rails, and a top/bottom sticky anchor bar) is
+    // the sole ad source now, built to match or beat what Auto Ads' better formats looked like
+    // (fixed top/bottom bars, closable, fixed clean sidebar rails) under our own full control.
+    // Do not flip this back to `enabled` without a deliberate decision; if Auto Ads is ever
+    // reconsidered, also re-check the AdSense dashboard's own Auto ads toggle for the site,
+    // which independently gates it.
+    autoAdsEnabled: false,
     hasManualPlacements,
     manualSlots,
   };

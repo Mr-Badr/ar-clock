@@ -1,10 +1,13 @@
 "use client";
 
 /**
- * AdStickyAnchor — Fixed bottom banner (mobile only, < 960px)
+ * AdStickyAnchor — Fixed, closable bottom bar (owner directive, 2026-08-13: standard chrome
+ * fixture on every ad-delivering route, mobile AND desktop/tablet — no longer mobile-only).
  * ─────────────────────────────────────────────────────────────────────────────
- * Slides up from the bottom after the user has scrolled 20% of the page.
- * Dismissible via × button — remembers dismiss for the session.
+ * Slides up from the bottom after the user has scrolled 20% of the page, on every viewport
+ * width. Dismissible via × button — remembers dismiss for the session. Collapses to fully
+ * invisible (no bar, no border, no background) if Google returns no fill, same as every other
+ * manual ad slot — see watchAdFill() below.
  *
  * IMPORTANT: `stickyAnchor` slot in manual-config.js must use a dedicated
  * Anchor/Bottom banner ad unit from AdSense — NOT the same slot ID as
@@ -14,6 +17,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import { watchAdFill } from "@/lib/ads/unfilled";
 import { useMarketingPermission } from "@/lib/client/marketing";
 import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
 import { getAdRoutePolicy } from "@/lib/ads/route-policy";
@@ -36,6 +40,8 @@ export default function AdStickyAnchor({ className }: AdStickyAnchorProps) {
     return sessionStorage.getItem("waqt-fullscreen-companion-dismissed") === "1";
   });
   const [visible, setVisible] = useState(false);
+  const [isUnfilled, setIsUnfilled] = useState(false);
+  const insRef = useRef<HTMLModElement>(null);
   const loaded = useRef(false);
 
   // Slide up after user scrolls 20% of page height
@@ -71,6 +77,10 @@ export default function AdStickyAnchor({ className }: AdStickyAnchorProps) {
         error: serializeError(error),
       });
     }
+
+    // Collapse the whole bar (no chrome, no reserved space) if Google returns no fill —
+    // otherwise an empty docked bar sits at the bottom of the screen indefinitely.
+    return watchAdFill(insRef.current, () => setIsUnfilled(true));
   }, [canLoadAds, dismissed, routePolicy.enableFullscreenCompanion, visible]);
 
   const handleDismiss = () => {
@@ -79,42 +89,58 @@ export default function AdStickyAnchor({ className }: AdStickyAnchorProps) {
     sessionStorage.setItem("waqt-fullscreen-companion-dismissed", "1");
   };
 
-  if (!shouldRenderAds || !canLoadAds || dismissed || !routePolicy.enableFullscreenCompanion) {
+  if (
+    !shouldRenderAds
+    || !canLoadAds
+    || dismissed
+    || !routePolicy.enableFullscreenCompanion
+    || isUnfilled
+  ) {
     return null;
   }
 
   return (
-    <div
-      className={[
-        "ad-slot ad-slot--sticky-anchor",
-        !visible ? "is-hidden" : "",
-        resolvedClassName,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      role="complementary"
-      aria-label="إعلان"
-      aria-hidden={!visible}
-    >
-      <span className="ad-slot__label">إعلان</span>
-
-      <button
-        type="button"
-        className="ad-slot__close"
-        onClick={handleDismiss}
-        aria-label="إغلاق الإعلان"
+    <>
+      <div
+        className={[
+          "ad-slot ad-slot--sticky-anchor",
+          !visible ? "is-hidden" : "",
+          resolvedClassName,
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        role="complementary"
+        aria-label="إعلان"
+        aria-hidden={!visible}
       >
-        ×
-      </button>
+        <span className="ad-slot__label">إعلان</span>
 
-      <ins
-        className="adsbygoogle"
-        style={{ display: "block" }}
-        data-ad-client={clientId || undefined}
-        data-ad-slot={adSlot}
-        data-ad-format="horizontal"
-        data-full-width-responsive="true"
-      />
-    </div>
+        <button
+          type="button"
+          className="ad-slot__close"
+          onClick={handleDismiss}
+          aria-label="إغلاق الإعلان"
+        >
+          ×
+        </button>
+
+        <ins
+          ref={insRef}
+          className="adsbygoogle"
+          style={{ display: "block" }}
+          data-ad-client={clientId || undefined}
+          data-ad-slot={adSlot}
+          data-ad-format="horizontal"
+          data-full-width-responsive="true"
+        />
+      </div>
+      {/* Reserves room at the bottom of the document flow so the fixed bar above never covers
+          the last content item or the footer once it slides in. Rendered unconditionally
+          whenever the bar is eligible to appear at all (same guard as the bar itself, not
+          gated on `visible`) so there's no layout jump the moment the scroll threshold is
+          crossed — this is the fix for the pre-existing gap where the JSDoc usage example
+          called for this spacer but no mount site actually rendered one. */}
+      <div className="sticky-anchor-spacer" aria-hidden="true" />
+    </>
   );
 }

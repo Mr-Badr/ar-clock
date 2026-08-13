@@ -35,7 +35,7 @@ function Table({
       <table
         data-slot="table"
         className={cn(
-          "w-full caption-bottom text-[var(--text-sm)] text-[var(--text-1)] tabular-nums",
+          "w-full caption-bottom [font-size:var(--text-sm)] text-[var(--text-1)] tabular-nums",
           className
         )}
         {...props}
@@ -110,7 +110,7 @@ function TableHead({
     <th
       data-slot="table-head"
       className={cn(
-        "bg-[var(--muted)] px-[var(--space-3-5)] py-[var(--space-2)] text-start align-middle text-[var(--text-xs)] font-semibold leading-[var(--leading-none)] whitespace-nowrap text-[var(--text-3)] [&:has([role=checkbox])]:pe-0 [&>[role=checkbox]]:translate-y-[2px]",
+        "bg-[var(--muted)] px-[var(--space-3-5)] py-[var(--space-2)] text-start align-middle [font-size:var(--text-xs)] font-semibold leading-[var(--leading-none)] whitespace-nowrap text-[var(--text-3)] [&:has([role=checkbox])]:pe-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
       {...props}
@@ -142,7 +142,7 @@ function TableCaption({
     <caption
       data-slot="table-caption"
       className={cn(
-        "mt-[var(--space-4)] text-[var(--text-sm)] text-[var(--text-3)]",
+        "mt-[var(--space-4)] [font-size:var(--text-sm)] text-[var(--text-3)]",
         className
       )}
       {...props}

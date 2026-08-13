@@ -27,46 +27,67 @@
   line-height: 1.9;
 }
 
-.insightLayout {
-  display: grid;
-  gap: var(--space-5);
-}
-
-.primaryInsight {
-  display: grid;
-  gap: var(--space-3);
-  padding: var(--space-6);
-  border: 1px solid color-mix(in srgb, var(--border-default) 82%, transparent);
-  border-radius: var(--radius-lg);
-  background: color-mix(in srgb, var(--accent-soft) 40%, var(--bg-surface-1));
-}
-
-.insightList,
-.faqList {
-  display: grid;
-  gap: var(--space-3);
+/* Icon-chip rows, not stacked bordered boxes — real color per row without turning every
+   insight into "everything inside containers" (owner, 2026-08-13). */
+.insightList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
 }
 
 .insightRow {
   display: flex;
   align-items: flex-start;
-  flex-wrap: wrap;
-  gap: var(--space-4);
-  padding: var(--space-4);
-  border: 1px solid color-mix(in srgb, var(--border-default) 82%, transparent);
-  border-radius: var(--radius-lg);
-  background: var(--bg-surface-1);
+  gap: var(--space-3);
+}
+
+.insightIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  border-radius: var(--radius-full, 999px);
+}
+
+.chipAccent {
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+}
+
+.chipSuccess {
+  background: var(--green-subtle);
+  color: var(--green-text);
+}
+
+.chipInfo {
+  background: var(--blue-subtle);
+  color: var(--blue-text);
+}
+
+.chipWarning {
+  background: var(--amber-subtle);
+  color: var(--amber-text);
+}
+
+.chipDefault {
+  background: var(--bg-surface-2);
+  color: var(--text-secondary);
 }
 
 .insightRowBody {
   display: grid;
-  gap: var(--space-2);
-  flex: 1 1 18rem;
+  gap: var(--space-1);
+  flex: 1 1 auto;
   min-width: 0;
+  padding-top: 0.35rem;
 }
 
 .panelTitle {
-  margin: 0;
   color: var(--text-primary);
   font-size: var(--text-base);
   font-weight: var(--font-bold);
@@ -84,47 +105,4 @@
   color: var(--text-primary);
   font-size: var(--text-2xl);
   font-weight: var(--font-extrabold);
-}
-
-.faqItem {
-  padding: var(--space-4) var(--space-5);
-  border: 1px solid color-mix(in srgb, var(--border-default) 82%, transparent);
-  border-radius: var(--radius-lg);
-  background: var(--bg-surface-1);
-}
-
-.faqQuestion {
-  cursor: pointer;
-  color: var(--text-primary);
-  font-size: var(--text-base);
-  font-weight: var(--font-bold);
-  line-height: 1.5;
-  list-style: none;
-}
-
-.faqQuestion::-webkit-details-marker {
-  display: none;
-}
-
-.faqQuestion::after {
-  content: "+";
-  float: left;
-  color: var(--text-muted);
-  font-size: var(--text-xl);
-  line-height: 1;
-}
-
-.faqItem[open] .faqQuestion {
-  margin-bottom: var(--space-3);
-}
-
-.faqItem[open] .faqQuestion::after {
-  content: "−";
-}
-
-@media (min-width: 768px) {
-  .insightLayout {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-    align-items: start;
-  }
 }

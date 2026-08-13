@@ -7,6 +7,9 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import DateRouteLoading from '@/components/date/DateRouteLoading';
 import { ConverterForm } from '../converter/ConverterForm';
+import { SiteFaqAccordion } from '@/components/shared/SiteFaqAccordion';
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
@@ -14,9 +17,7 @@ import {
   ArrowLeftRight,
   CalendarCheck,
   CalendarDays,
-  CheckCircle2,
   FileText,
-  HelpCircle,
   Moon,
   ShieldCheck,
   Sunset,
@@ -297,193 +298,132 @@ async function GregorianToHijriDynamicContent() {
             </div>
           </section>
 
+          {/* Plain prose, no bordered panel — only the peer use-case cards below earn a
+              surface (DESIGN.md Law 4). */}
           <section className={`container mx-auto px-4 ${styles.sectionBand}`}>
-            <div className={styles.prosePanel}>
-              <h2 className={styles.sectionTitle}>كيف تقرأ نتيجة التحويل؟</h2>
-              <div className={styles.proseBody}>
-                <p>
-                  التحويل لا يعني تغيير الرقم فقط. أنت تبدأ من يوم في التقويم الميلادي، وهو تقويم شمسي،
-                  ثم تبحث عن اليوم الموافق في التقويم الهجري، وهو تقويم قمري. لذلك قد ترى اختلافاً
-                  قرب بداية الشهر الهجري لأن بداية الشهر قد تعتمد على أم القرى أو الرؤية المحلية أو نموذج حسابي.
-                </p>
-                <p>
-                  مثال عملي: إذا كان تاريخ الميلاد مكتوباً 20/06/2018، فأدخله كما هو في الحقول الميلادية.
-                  النتيجة الهجرية تساعدك على معرفة الشهر واليوم الهجريين، لكن التاريخ الميلادي يبقى المرجع
-                  الأصلي في السجل إذا كان مكتوباً في شهادة أو جواز أو نموذج رسمي.
-                </p>
-                <p>
-                  القاعدة المختصرة: استخدم أم القرى للمعاملات السعودية والخليجية، واستخدم الفلكي أو المدني
-                  للمقارنة والفهم. وعندما يكون التاريخ مرتبطاً برمضان أو العيد أو قرار رسمي، راجع الإعلان
-                  المحلي قبل الاعتماد النهائي.
-                </p>
-              </div>
-              <div className={styles.infoGrid}>
-                {USE_CASES.map((item, index) => {
-                  const Icon = item.icon;
+            <h2 className={styles.sectionTitle}>كيف تقرأ نتيجة التحويل؟</h2>
+            <div className={styles.proseBody}>
+              <p>
+                التحويل لا يعني تغيير الرقم فقط. أنت تبدأ من يوم في التقويم الميلادي، وهو تقويم شمسي،
+                ثم تبحث عن اليوم الموافق في التقويم الهجري، وهو تقويم قمري. لذلك قد ترى اختلافاً
+                قرب بداية الشهر الهجري لأن بداية الشهر قد تعتمد على أم القرى أو الرؤية المحلية أو نموذج حسابي.
+              </p>
+              <p>
+                مثال عملي: إذا كان تاريخ الميلاد مكتوباً 20/06/2018، فأدخله كما هو في الحقول الميلادية.
+                النتيجة الهجرية تساعدك على معرفة الشهر واليوم الهجريين، لكن التاريخ الميلادي يبقى المرجع
+                الأصلي في السجل إذا كان مكتوباً في شهادة أو جواز أو نموذج رسمي.
+              </p>
+            </div>
+            <div className={`${styles.infoGrid} mt-6`}>
+              {USE_CASES.map((item, index) => {
+                const Icon = item.icon;
 
-                  return (
-                    <article
-                      key={item.title}
-                      className={`${styles.infoCard} ${index === 0 ? styles.infoCardLead : ''}`}
-                    >
-                      <span className={styles.cardIcon} aria-hidden="true">
-                        <Icon size={16} strokeWidth={1.75} />
-                      </span>
-                      <h3 className={styles.cardTitle}>{item.title}</h3>
-                      <p className={styles.cardBody}>{item.body}</p>
-                    </article>
-                  );
-                })}
-              </div>
+                return (
+                  <article
+                    key={item.title}
+                    className={`${styles.infoCard} ${index === 0 ? styles.infoCardLead : ''}`}
+                  >
+                    <span className={styles.cardIcon} aria-hidden="true">
+                      <Icon size={16} strokeWidth={1.75} />
+                    </span>
+                    <h3 className={styles.cardTitle}>{item.title}</h3>
+                    <p className={styles.cardBody}>{item.body}</p>
+                  </article>
+                );
+              })}
             </div>
           </section>
 
+          {/* Only the table itself is a surface — no second bordered panel around it
+              (DESIGN.md: no nested cards). */}
           <section className={`container mx-auto px-4 ${styles.sectionBand}`}>
-            <div className={styles.prosePanel}>
-              <div className={styles.sectionHead}>
-                <h2 className={styles.sectionTitle}>قاعدة القرار قبل نسخ التاريخ الهجري</h2>
-                <p className={styles.sectionCopy}>
-                  نفس النتيجة لا تُستخدم بالطريقة نفسها في كل موقف. اختر كيف ستتعامل معها حسب سبب التحويل.
-                </p>
-              </div>
-              <div className="table-wrapper">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th className="text-right">الموقف</th>
-                      <th className="text-right">ما الذي تفعله؟</th>
-                      <th className="text-right">ما الذي تنتبه له؟</th>
+            <div className={styles.sectionHead}>
+              <h2 className={styles.sectionTitle}>قاعدة القرار قبل نسخ التاريخ الهجري</h2>
+              <p className={styles.sectionCopy}>
+                نفس النتيجة لا تُستخدم بالطريقة نفسها في كل موقف. اختر كيف ستتعامل معها حسب سبب التحويل.
+              </p>
+            </div>
+            <div className="table-wrapper">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th className="text-right">الموقف</th>
+                    <th className="text-right">ما الذي تفعله؟</th>
+                    <th className="text-right">ما الذي تنتبه له؟</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {DECISION_ROWS.map((row) => (
+                    <tr key={row.scenario}>
+                      <td>{row.scenario}</td>
+                      <td>{row.use}</td>
+                      <td>{row.caution}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {DECISION_ROWS.map((row) => (
-                      <tr key={row.scenario}>
-                        <td>{row.scenario}</td>
-                        <td>{row.use}</td>
-                        <td>{row.caution}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </section>
 
           {methodResults.length > 0 && (
             <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="gregorian-methods-heading">
-              <div className={styles.sectionPanel}>
-                <div className={styles.sectionHead}>
-                  <h2 id="gregorian-methods-heading" className={styles.sectionTitle}>
-                    مثال اليوم: نفس التاريخ الميلادي بثلاث طرق
-                  </h2>
-                  <p className={styles.sectionCopy}>
-                    هذه المقارنة توضّح لماذا لا ينبغي قراءة النتيجة كرقم معزول. في أغلب الأيام تتقارب النتائج،
-                    وعند أطراف الشهر قد يظهر فرق يوم واحد.
-                  </p>
-                </div>
-                <div className={styles.methodResultGrid}>
-                  {methodResults.map((item) => (
-                    <article key={item.label} className={styles.metricCard}>
-                      <span className={styles.metricLabel}>{item.label}</span>
-                      <strong className={styles.metricValue}>{item.result}</strong>
-                    </article>
-                  ))}
-                </div>
+              <div className={styles.sectionHead}>
+                <h2 id="gregorian-methods-heading" className={styles.sectionTitle}>
+                  مثال اليوم: نفس التاريخ الميلادي بثلاث طرق
+                </h2>
+                <p className={styles.sectionCopy}>
+                  هذه المقارنة توضّح لماذا لا ينبغي قراءة النتيجة كرقم معزول. في أغلب الأيام تتقارب النتائج،
+                  وعند أطراف الشهر قد يظهر فرق يوم واحد.
+                </p>
+              </div>
+              <div className={styles.methodResultGrid}>
+                {methodResults.map((item) => (
+                  <article key={item.label} className={styles.metricCard}>
+                    <span className={styles.metricLabel}>{item.label}</span>
+                    <strong className={styles.metricValue}>{item.result}</strong>
+                  </article>
+                ))}
               </div>
             </section>
           )}
 
           <AdInArticle slotId="mid-date-gregorian-to-hijri" />
 
-          <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="gregorian-faq-heading">
-            <div className={styles.sectionPanel}>
-              <div className={styles.sectionHead}>
-                <span className="badge badge-accent">أسئلة شائعة</span>
-                <h2 id="gregorian-faq-heading" className={styles.sectionTitle}>
-                  أسئلة مهمة قبل اعتماد التحويل إلى هجري
-                </h2>
-                <p className={styles.sectionCopy}>
-                  هذه الإجابات تركز على الحالات التي تسبب الالتباس: طريقة الحساب، تاريخ الميلاد، وبعد المغرب.
-                </p>
-              </div>
-              <div className={styles.faqGrid}>
-                {FAQ_ITEMS.map((item) => (
-                  <details key={item.question} className={styles.faqCard}>
-                    <summary className={styles.faqQuestion}>
-                      <HelpCircle size={16} strokeWidth={1.75} aria-hidden="true" />
-                      {item.question}
-                    </summary>
-                    <p className={styles.cardBody}>{item.answer}</p>
-                  </details>
-                ))}
-              </div>
-            </div>
+          {/* FAQ — the one pattern used everywhere (owner, 2026-08-13: "FAQ should always
+              be like the FAQ in tools pages"). */}
+          <section className={`container mx-auto px-4 ${styles.sectionBand} max-w-3xl`} aria-labelledby="gregorian-faq-heading">
+            <h2 id="gregorian-faq-heading" className={styles.sectionTitle}>
+              أسئلة مهمة قبل اعتماد التحويل إلى هجري
+            </h2>
+            <SiteFaqAccordion items={FAQ_ITEMS.map((item) => ({ question: item.question, answer: item.answer }))} />
           </section>
 
-          <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="gregorian-sources-heading">
-            <div className={styles.sectionPanel}>
-              <div className={styles.sectionHead}>
-                <h2 id="gregorian-sources-heading" className={styles.sectionTitle}>
-                  مصادر تساعدك على فهم التحويل
-                </h2>
-                <p className={styles.sectionCopy}>
-                  استخدم هذه المصادر عندما تريد معرفة الفرق بين التقويم الميلادي، أم القرى، والأنواع الحسابية للتقويم الإسلامي.
-                </p>
-              </div>
-              <div className={styles.linkGrid}>
-                {SOURCE_LINKS.map((source) => (
-                  <a
-                    key={source.href}
-                    href={source.href}
-                    className={styles.linkCard}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span className={styles.cardIcon} aria-hidden="true">
-                      <CheckCircle2 size={16} strokeWidth={1.75} />
-                    </span>
-                    <span className={styles.cardTitle}>{source.label}</span>
-                    <span className={styles.cardBody}>{source.description}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
+          {/* Related pages — small, clean, unique CARDS (owner, 2026-08-13), not a list. */}
+          <section className={`container mx-auto px-4 ${styles.sectionBand} max-w-3xl`}>
+            <SiteRelatedCardGrid
+              heading="إذا أردت مراجعة النتيجة أو عكس التحويل"
+              headingId="gregorian-next-paths-heading"
+              items={[
+                { href: '/date/hijri-to-gregorian', label: 'تحويل هجري إلى ميلادي', Icon: ArrowLeftRight },
+                { href: '/date/today/hijri', label: 'التاريخ الهجري اليوم', Icon: Moon },
+                { href: '/date/converter', label: 'محول التاريخ العام', Icon: CalendarDays },
+              ]}
+            />
           </section>
 
-          <section className={`container mx-auto px-4 ${styles.sectionBand}`}>
-            <nav aria-label="مسارات مراجعة نتيجة التحويل الميلادي إلى هجري" className={styles.sectionPanel} dir="rtl">
-              <div className={styles.sectionHead}>
-                <h2 className={styles.sectionTitle}>إذا أردت مراجعة النتيجة أو عكس التحويل</h2>
-                <p className={styles.sectionCopy}>
-                  بعد تحويل التاريخ الميلادي، اختر الخطوة التي تناسبك: عكس التحويل، قراءة تاريخ اليوم، أو فتح المحول العام.
-                </p>
-              </div>
-              <div className={`${styles.linkGrid} mt-5`}>
-                <Link href="/date/hijri-to-gregorian" className={`${styles.linkCard} ${styles.linkCardPrimary}`}>
-                  <span className={styles.cardIcon} aria-hidden="true">
-                    <ArrowLeftRight size={16} strokeWidth={1.75} />
-                  </span>
-                  <span className={styles.cardTitle}>تحويل هجري إلى ميلادي</span>
-                  <span className={styles.cardBody}>استخدمه لمراجعة النتيجة بالعكس أو عندما يصبح التاريخ الهجري هو التاريخ الأصلي.</span>
-                </Link>
-
-                <Link href="/date/today/hijri" className={styles.linkCard}>
-                  <span className={styles.cardIcon} aria-hidden="true">
-                    <Moon size={16} strokeWidth={1.75} />
-                  </span>
-                  <span className={styles.cardTitle}>التاريخ الهجري اليوم</span>
-                  <span className={styles.cardBody}>قارن النتيجة بتاريخ اليوم عندما يكون الموعد قريباً أو مرتبطاً بمناسبة حالية.</span>
-                </Link>
-
-                <Link href="/date/converter" className={styles.linkCard}>
-                  <span className={styles.cardIcon} aria-hidden="true">
-                    <CalendarDays size={16} strokeWidth={1.75} />
-                  </span>
-                  <span className={styles.cardTitle}>محول التاريخ العام</span>
-                  <span className={styles.cardBody}>افتحه عندما تحتاج اتجاهي التحويل أو تريد مقارنة عدة تواريخ في جلسة واحدة.</span>
-                </Link>
-              </div>
-            </nav>
+          {/* Sources — last thing on the page (owner, 2026-08-13), plain small dot-list
+              like /tools. */}
+          <section className={`container mx-auto px-4 ${styles.sectionBand} max-w-3xl`}>
+            <SiteDotLinkList
+              heading="مصادر تساعدك على فهم التحويل"
+              headingId="gregorian-sources-heading"
+              items={SOURCE_LINKS.map((source) => ({
+                href: source.href,
+                label: source.label,
+                description: source.description,
+                external: true,
+              }))}
+            />
           </section>
         </main>
       </AdLayoutWrapper>

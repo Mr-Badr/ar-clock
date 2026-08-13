@@ -14,6 +14,9 @@ import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBre
 import { MethodComparisonTable } from '@/components/date/MethodComparisonTable';
 import { DateShareActions } from '@/components/date/DateShareActions';
 import DateRouteLoading from '@/components/date/DateRouteLoading';
+import { SiteFaqAccordion } from '@/components/shared/SiteFaqAccordion';
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
@@ -196,10 +199,6 @@ async function TodayHijriDynamicContent() {
   const isRam = hijri ? checkRamadan(hijri.month) : false;
   const isSacred = hijri ? isSacredMonth(hijri.month) : false;
   const events = hijri ? getIslamicEventsForHijriDate(hijri.year, hijri.month, hijri.day) : [];
-  const daysInMonth = hijri ? (hijri.month % 2 !== 0 ? 30 : 29) : 30;
-  const progress = hijri ? Math.round((hijri.day / daysInMonth) * 100) : 0;
-  const daysLeft = hijri ? daysInMonth - hijri.day : 0;
-  const significance = hijri ? MONTH_SIGNIFICANCE[hijri.month] : '';
   let currentMonthRows: HijriMonthTableRow[] = [];
   if (hijri) {
     try {
@@ -213,6 +212,17 @@ async function TodayHijriDynamicContent() {
       });
     }
   }
+  // Real day count from the actual Hijri calendar table — NOT a fixed odd-month=30/
+  // even-month=29 guess. That guess is wrong often enough in practice (umalqura months don't
+  // strictly alternate) that it could show something like "day 30 of 29", a self-contradicting
+  // number found and fixed 2026-08-13 while making this section's copy clearer. Falls back to
+  // the guess only if the real calendar lookup itself failed.
+  const daysInMonth = hijri
+    ? (currentMonthRows.length || (hijri.month % 2 !== 0 ? 30 : 29))
+    : 30;
+  const progress = hijri ? Math.round((hijri.day / daysInMonth) * 100) : 0;
+  const daysLeft = hijri ? daysInMonth - hijri.day : 0;
+  const significance = hijri ? MONTH_SIGNIFICANCE[hijri.month] : '';
   const previousMonth = hijri ? getPreviousHijriMonth(hijri.year, hijri.month) : null;
   const nextMonth = hijri ? getNextHijriMonth(hijri.year, hijri.month) : null;
 
@@ -289,58 +299,51 @@ async function TodayHijriDynamicContent() {
 
           <DateBreadcrumb items={breadcrumb} />
 
-          <section className="date-hero-panel mb-6">
+          <section className="date-hero-panel date-hero-panel--single mb-12">
             {hijri ? (
-              <>
-                <div className="date-hero-main">
-                  <p className="date-kicker m-0">{dayOfWeek}</p>
-                  <h1 className="date-hero-title text-accent-alt">
-                    {hijri.day} {hijri.monthNameAr} {hijri.year} هجري
-                  </h1>
-                  <p className="date-hero-copy">
-                    هذا هو التاريخ الهجري اليوم وفق تقويم أم القرى، ويوافق{' '}
-                    <span dir="ltr" className="font-bold text-primary">
-                      {String(d).padStart(2, '0')}/{String(m).padStart(2, '0')}/{y}
-                    </span>{' '}
-                    ميلادي. إذا كان الموعد دينياً أو رسمياً، قارنه أيضاً مع إعلان بلدك لأن رؤية الهلال قد تغيّر بداية الشهر بيوم.
-                  </p>
-                  {(isRam || events.length > 0 || isSacred) && (
-                    <div className="flex flex-wrap gap-2">
-                      {isRam && (
-                        <span className="badge badge-warning">
-                          رمضان المبارك، اليوم {hijri.day} من {daysInMonth}
-                        </span>
-                      )}
-                      {events.length > 0 && (
-                        <span className="badge badge-success">
-                          {events.map(e => e.nameAr).join(' • ')}
-                        </span>
-                      )}
-                      {isSacred && !isRam && (
-                        <span className="badge badge-accent">من الأشهر الحرم</span>
-                      )}
-                    </div>
-                  )}
-                </div>
-                <aside className="date-hero-rail" aria-label="ملخص التاريخ الهجري اليوم">
-                  <p className="date-hero-answer">
-                    اليوم {hijri.day} من {daysInMonth}
-                  </p>
-                  <p className="date-hero-note">
-                    {daysLeft === 0
-                      ? `ينتهي شهر ${hijri.monthNameAr} اليوم وفق الحساب الحالي.`
-                      : `تبقى ${daysLeft} يوم في شهر ${hijri.monthNameAr} وفق الحساب الحالي.`}
-                  </p>
-                  <div className="date-hero-actions">
-                    <Link href="/date/today/gregorian" className="date-hero-link date-hero-link--primary">
-                      التاريخ الميلادي اليوم
-                    </Link>
-                    <Link href="/date/hijri-to-gregorian" className="date-hero-link">
-                      تحويل هجري إلى ميلادي
-                    </Link>
+              <div className="date-hero-main">
+                <p className="date-kicker m-0">{dayOfWeek}</p>
+                <h1 className="date-hero-title text-accent-alt">
+                  {hijri.day} {hijri.monthNameAr} {hijri.year} هجري
+                </h1>
+                <p className="date-hero-gregorian">
+                  يوافق{' '}
+                  <strong>
+                    {String(d).padStart(2, '0')}/{String(m).padStart(2, '0')}/{y}
+                  </strong>{' '}
+                  ميلادي
+                </p>
+                <p className="date-hero-copy">
+                  هذا هو التاريخ الهجري اليوم وفق تقويم أم القرى. إذا كان الموعد دينياً أو رسمياً، قارنه أيضاً مع إعلان بلدك لأن رؤية الهلال قد تغيّر بداية الشهر بيوم.
+                </p>
+                {(isRam || events.length > 0 || isSacred) && (
+                  <div className="flex flex-wrap gap-2">
+                    {isRam && (
+                      <span className="badge badge-warning">
+                        رمضان المبارك، اليوم {hijri.day} من {daysInMonth}
+                      </span>
+                    )}
+                    {events.length > 0 && (
+                      <span className="badge badge-success">
+                        {events.map(e => e.nameAr).join(' • ')}
+                      </span>
+                    )}
+                    {isSacred && !isRam && (
+                      <span className="badge badge-accent">من الأشهر الحرم</span>
+                    )}
                   </div>
-                </aside>
-              </>
+                )}
+                <div className="date-hero-quick-actions">
+                  <Link href="/date/today/gregorian" className="date-quick-action">
+                    <CalendarDays size={16} strokeWidth={1.75} aria-hidden="true" />
+                    التاريخ الميلادي اليوم
+                  </Link>
+                  <Link href="/date/hijri-to-gregorian" className="date-quick-action">
+                    <ArrowLeftRight size={16} strokeWidth={1.75} aria-hidden="true" />
+                    تحويل هجري إلى ميلادي
+                  </Link>
+                </div>
+              </div>
             ) : (
               <div className="date-hero-main">
                 <p className="date-kicker m-0">{dayOfWeek}</p>
@@ -356,12 +359,12 @@ async function TodayHijriDynamicContent() {
           </section>
 
           {hijri && (
-            <section className="date-detail-panel mb-6">
-              <div className="flex justify-between items-center mb-3 text-sm text-secondary">
-                <span className="font-bold">تقدم شهر {hijri.monthNameAr}</span>
-                <span className="font-medium tabular-nums">يوم {hijri.day} من {daysInMonth}، تبقى {daysLeft} يوم</span>
+            <section className="date-progress-panel mb-10" aria-label="موقع اليوم من الشهر الهجري">
+              <div className="date-progress-head">
+                <span className="date-progress-title">تقدم شهر {hijri.monthNameAr}</span>
+                <span className="date-progress-value">يوم {hijri.day} من {daysInMonth}</span>
               </div>
-              <div className="progress-track mb-3">
+              <div className="progress-track">
                 <div
                   className="progress-fill"
                   style={{
@@ -371,33 +374,44 @@ async function TodayHijriDynamicContent() {
                   }}
                 />
               </div>
-              {significance && (
-                <p className="text-xs text-muted leading-relaxed m-0">{significance}</p>
-              )}
+              <p className="date-progress-context">
+                {daysLeft === 0
+                  ? `ينتهي شهر ${hijri.monthNameAr} اليوم وفق الحساب الحالي.`
+                  : `تبقى ${daysLeft} يوم على نهاية شهر ${hijri.monthNameAr}.`}
+                {significance ? ` ${significance}` : ''}
+              </p>
             </section>
           )}
 
+          {/* Real stat cards, not deleted — just clearer labels than a bare "59 / 355"
+              fraction (owner, 2026-08-13: "after the progress bar we want cards but more
+              clear, not delete them... visual components and different colors to give the
+              page a life"). Each value is a single readable number with its own explained
+              unit; the icon-chip color rotates per DESIGN.md's anti-AI-template pattern. */}
           {hijri && (
-            <section className="date-stat-grid mb-8">
+            <section className="date-stat-grid mb-16">
               {[
-                { label: 'اليوم من الشهر', value: `${hijri.day} / ${daysInMonth}`, Icon: CalendarDays },
-                { label: 'اليوم من السنة', value: `${hijri.dayOfYear} / ${hijri.daysInYear}`, Icon: Calendar },
-                { label: 'الشهر', value: MONTH_ORDINALS[(hijri.month ?? 1) - 1], Icon: Moon },
-                { label: 'تبقى للسنة', value: `${hijri.daysInYear - hijri.dayOfYear} يوم`, Icon: Star },
+                { value: hijri.day, unit: `من ${daysInMonth} يوماً في الشهر`, Icon: CalendarDays },
+                { value: hijri.dayOfYear, unit: `من ${hijri.daysInYear} يوماً في السنة`, Icon: Calendar },
+                { value: MONTH_ORDINALS[(hijri.month ?? 1) - 1], unit: 'ترتيب الشهر في السنة', Icon: Moon },
+                { value: hijri.daysInYear - hijri.dayOfYear, unit: 'يوماً متبقياً على نهاية السنة', Icon: Star },
               ].map((s, i) => (
                 <div key={i} className="date-stat-item">
                   <span className="date-stat-icon" aria-hidden="true">
                     <s.Icon size={18} strokeWidth={1.75} />
                   </span>
                   <div className="date-stat-value">{s.value}</div>
-                  <div className="date-stat-label">{s.label}</div>
+                  <div className="date-stat-label">{s.unit}</div>
                 </div>
               ))}
             </section>
           )}
 
           {hijri && currentMonthRows.length > 0 && (
-            <section className="date-detail-panel mb-8" aria-labelledby="hijri-month-table-heading">
+            <section className="date-section" aria-labelledby="hijri-month-table-heading">
+              {/* Title + description sit as plain text, not inside a bordered card — a
+                  heading and a sentence don't earn a surface (owner, 2026-08-13: "why the
+                  section has border and different bg we do not know, just bad looking"). */}
               <div className="date-section-head">
                 <h2 id="hijri-month-table-heading" className="date-section-title">
                   جدول شهر {hijri.monthNameAr} {hijri.year} هـ بالميلادي
@@ -408,10 +422,13 @@ async function TodayHijriDynamicContent() {
                 </p>
               </div>
 
-              <div className="date-hero-actions mb-4">
+              {/* prev / full-calendar / next — one line, compact widths, never full-width
+                  stretched buttons (owner: "they should be same line, one left one right
+                  and calendar center"). Labels drop the year to stay compact. */}
+              <div className="date-month-nav">
                 {previousMonth && (
                   <Link href={getHijriMonthHref(previousMonth.year, previousMonth.month)} className="date-hero-link">
-                    → شهر {HIJRI_MONTHS_AR[previousMonth.month - 1]} {previousMonth.year} هـ
+                    → {HIJRI_MONTHS_AR[previousMonth.month - 1]}
                   </Link>
                 )}
                 <Link
@@ -422,7 +439,7 @@ async function TodayHijriDynamicContent() {
                 </Link>
                 {nextMonth && (
                   <Link href={getHijriMonthHref(nextMonth.year, nextMonth.month)} className="date-hero-link">
-                    شهر {HIJRI_MONTHS_AR[nextMonth.month - 1]} {nextMonth.year} هـ ←
+                    {HIJRI_MONTHS_AR[nextMonth.month - 1]} ←
                   </Link>
                 )}
               </div>
@@ -445,6 +462,10 @@ async function TodayHijriDynamicContent() {
                 })}
               </div>
 
+              {/* Only the table itself is a real surface — .table-wrapper is already a
+                  complete bordered/rounded surface with its own horizontal-scroll handling
+                  on mobile, so it does NOT get a second .date-detail-panel around it
+                  (DESIGN.md: "No nested cards"). */}
               <div className="table-wrapper" dir="rtl">
                 <table className="table table--compact">
                   <caption className="sr-only">
@@ -484,7 +505,7 @@ async function TodayHijriDynamicContent() {
           )}
 
           {umalqura && astronomical && civil && (
-            <section className="mb-8">
+            <section className="mb-16">
               <h2 className="text-lg font-bold text-primary mb-4">التاريخ الهجري حسب طريقة الحساب</h2>
               <MethodComparisonTable
                 gregorianDate={iso}
@@ -495,63 +516,44 @@ async function TodayHijriDynamicContent() {
             </section>
           )}
 
-          <section className="date-detail-panel mb-8">
+          {/* Plain text — a heading and two short paragraphs don't earn a card
+              (DESIGN.md Law 4). Condensed from the old 2-paragraph version (owner,
+              2026-08-13: "no one want to read all of that"). */}
+          <section className="date-section max-w-3xl">
             <h2 className="date-section-title">كيف يُحسب التاريخ الهجري؟</h2>
-            <div className="space-y-3">
-              <p className="date-editorial-copy m-0">
-                التقويم الهجري تقويم قمري يعتمد على دورة القمر. لذلك تكون أشهره غالباً 29 أو 30 يوماً، والسنة الهجرية أقصر من السنة الميلادية بنحو 10 إلى 11 يوماً.
-              </p>
-              <p className="date-editorial-copy m-0">
-                <strong className="text-primary">تقويم أم القرى</strong> مرجع إداري مستخدم في السعودية ويعتمد حساباً منظماً لبداية الأشهر. أما الطرق الفلكية أو المدنية أو الإعلانات المحلية فقد تعطي نتيجة مختلفة بيوم واحد، خصوصاً عند بداية الشهر ونهايته.
-              </p>
+            <p className="date-editorial-copy m-0">
+              التقويم الهجري تقويم قمري، فأشهره غالباً 29 أو 30 يوماً والسنة الهجرية أقصر من الميلادية بنحو 10-11 يوماً.{' '}
+              <strong className="text-primary">أم القرى</strong> هو المرجع الإداري في السعودية، لكن الطرق الفلكية أو المدنية أو إعلان بلدك قد تعطي نتيجة مختلفة بيوم واحد عند بداية الشهر أو نهايته.
+            </p>
+            <div className="date-fact-row">
+              <span className="date-fact-badge date-fact-badge--blue">
+                <Moon size={14} strokeWidth={1.75} aria-hidden="true" /> 29-30 يوماً بالشهر القمري
+              </span>
+              <span className="date-fact-badge date-fact-badge--amber">
+                <CalendarDays size={14} strokeWidth={1.75} aria-hidden="true" /> أم القرى: المرجع في السعودية
+              </span>
             </div>
           </section>
 
-          <section className="date-editorial-grid date-section">
-            <div className="max-w-3xl space-y-4">
-              <h2 className="date-editorial-title">كيف تستفيد من التاريخ الهجري اليوم؟</h2>
-              <p className="date-editorial-copy">
-                التاريخ الهجري لا يستخدم فقط لمعرفة رقم اليوم، بل يرتبط بالصيام، العبادات، المناسبات الإسلامية، بداية الأشهر، والتخطيط العائلي في كثير من الدول العربية. إذا كنت تراجع موعداً دينياً أو مناسبة قريبة، فاقرأ اسم الشهر وموضع اليوم داخل الشهر، ثم قارن الطريقة المعروضة مع الإعلان الرسمي في بلدك عند القرارات المهمة.
-              </p>
-              <p className="date-editorial-copy">
-                عند مشاركة التاريخ مع شخص في دولة أخرى، تذكّر أن اليوم الهجري قد يختلف بسبب الرؤية المحلية. لذلك تضيف الصفحة مسار التحويل والتاريخ الميلادي حتى تستطيع توضيح اليوم المقصود بصيغتين، لا بصيغة واحدة قد تُفهم بشكل مختلف.
-              </p>
-              <p className="date-editorial-copy">
-                إذا كان التاريخ مرتبطاً بسفر أو معاملة أو مناسبة رسمية، فاحفظ التاريخين معاً: الهجري للمعنى الديني أو المحلي، والميلادي للأنظمة الرقمية والحجوزات.
-              </p>
-              <p className="date-editorial-copy">
-                عند متابعة شهر رمضان أو الأشهر الحرم أو أيام الحج، لا تنظر إلى رقم اليوم وحده. اقرأ أيضاً عدد الأيام المتبقية في الشهر واسم المناسبة إن وجدت، لأن هذه التفاصيل تساعدك على ترتيب الصيام، الزيارات العائلية، السفر، أو الإجازات دون الرجوع إلى أكثر من مصدر.
-              </p>
-              <p className="date-editorial-copy">
-                الصفحة تعرض طريقة أم القرى كمرجع أساسي لأنها الأكثر استخداماً في الخليج، لكنها تذكر الفرق بين طرق الحساب حتى لا تبدو النتيجة وكأنها حقيقة مطلقة في كل بلد. إذا كان بلدك يعلن بداية الشهر بالرؤية الرسمية، فاجعل إعلان الجهة المحلية هو المرجع النهائي في القرارات الدينية والرسمية.
-              </p>
-              <p className="date-editorial-copy">
-                وللمتابعة اليومية، افتح صفحة التحويل عندما تريد تاريخاً سابقاً أو لاحقاً بدلاً من الاعتماد على تاريخ اليوم فقط. هذا يحافظ على دقة التخطيط عندما تكون المناسبة بعد أسابيع أو عندما تريد مقارنة تاريخ هجري مع موعد ميلادي محدد.
-              </p>
-            </div>
-            <div className="date-use-list">
-              <article className="date-use-item">
-                <h3 className="date-use-title">
-                  <span className="date-use-icon" aria-hidden="true"><Moon size={16} strokeWidth={1.75} /></span>
-                  للعبادات
-                </h3>
-                <p className="date-use-copy">تحقق من الشهر واليوم قبل الصيام أو متابعة الأيام الفاضلة، ثم قارن مع إعلان بلدك عند الحاجة.</p>
-              </article>
-              <article className="date-use-item">
-                <h3 className="date-use-title">
-                  <span className="date-use-icon" aria-hidden="true"><Calendar size={16} strokeWidth={1.75} /></span>
-                  للمناسبات
-                </h3>
-                <p className="date-use-copy">استخدم التاريخين معاً عند مشاركة موعد عائلي حتى يفهمه من يعتمد الهجري ومن يعتمد الميلادي.</p>
-              </article>
-              <article className="date-use-item">
-                <h3 className="date-use-title">
-                  <span className="date-use-icon" aria-hidden="true"><CalendarDays size={16} strokeWidth={1.75} /></span>
-                  للتخطيط
-                </h3>
-                <p className="date-use-copy">راقب تقدم الشهر وعدد الأيام المتبقية إذا كنت ترتب سفراً، إجازة، أو موعداً قريباً.</p>
-              </article>
-            </div>
+          <section className="date-section max-w-3xl">
+            <h2 className="date-section-title">كيف تستفيد من التاريخ الهجري اليوم؟</h2>
+            <p className="date-editorial-copy">
+              التاريخ الهجري يرتبط بالصيام والعبادات والمناسبات الإسلامية، لا برقم اليوم وحده. إذا كان موعدك دينياً أو رسمياً، قارن الطريقة المعروضة هنا مع إعلان بلدك — الرؤية المحلية قد تغيّر بداية الشهر بيوم.
+            </p>
+            <ul className="date-use-inline-list">
+              <li>
+                <span className="date-use-icon" aria-hidden="true"><Moon size={16} strokeWidth={1.75} /></span>
+                <span><strong>للعبادات</strong> — تحقق من الشهر واليوم قبل الصيام أو الأيام الفاضلة.</span>
+              </li>
+              <li>
+                <span className="date-use-icon" aria-hidden="true"><Calendar size={16} strokeWidth={1.75} /></span>
+                <span><strong>للمناسبات</strong> — شارك التاريخين معاً حتى يفهمهما من يعتمد الهجري ومن يعتمد الميلادي.</span>
+              </li>
+              <li>
+                <span className="date-use-icon" aria-hidden="true"><CalendarDays size={16} strokeWidth={1.75} /></span>
+                <span><strong>للتخطيط</strong> — راقب الأيام المتبقية في الشهر عند ترتيب سفر أو إجازة.</span>
+              </li>
+            </ul>
           </section>
 
           {hijri && (
@@ -569,114 +571,54 @@ async function TodayHijriDynamicContent() {
 
           <AdInArticle slotId="mid-date-today-hijri" />
 
-          <section className="date-editorial-grid date-section">
-            <div className="max-w-3xl space-y-4">
-              <h2 className="date-editorial-title">أسئلة قبل اعتماد التاريخ الهجري اليوم</h2>
-              {faqItems.map((item) => (
-                <details key={item.question} className="date-use-item">
-                  <summary className="date-use-title">{item.question}</summary>
-                  <p className="date-use-copy">{item.answer}</p>
-                </details>
-              ))}
-            </div>
-            <div className="date-use-list">
-              <article className="date-use-item">
-                <h3 className="date-use-title">قاعدة عملية</h3>
-                <p className="date-use-copy">للاستخدام اليومي استخدم أم القرى، وللعبادات الرسمية راجع إعلان بلدك، وللمواعيد الدولية اكتب الهجري والميلادي معاً.</p>
-              </article>
-            </div>
-          </section>
-
-          <section className="related-links mb-8" dir="rtl" aria-labelledby="hijri-sources-heading">
-            <p id="hijri-sources-heading" className="related-links__heading">
-              مصادر ومنهج التاريخ الهجري
+          {/* FAQ — the one pattern used everywhere (owner, 2026-08-13: "FAQ should always
+              be like the FAQ in tools pages"), never a two-column layout next to it. The old
+              "قاعدة عملية" side card becomes the closing line under the accordion instead of
+              its own box. */}
+          <section className="date-section max-w-3xl">
+            <h2 className="date-editorial-title">أسئلة قبل اعتماد التاريخ الهجري اليوم</h2>
+            <SiteFaqAccordion items={faqItems} />
+            <p className="date-editorial-copy mt-4">
+              <strong className="text-primary">قاعدة عملية:</strong> للاستخدام اليومي استخدم أم القرى، وللعبادات الرسمية راجع إعلان بلدك، وللمواعيد الدولية اكتب الهجري والميلادي معاً.
             </p>
-            <div className="related-links__grid">
-              {HIJRI_SOURCE_LINKS.map((source) => (
-                <a
-                  key={source.href}
-                  href={source.href}
-                  className="related-link-card"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="related-link-card__body">
-                    <span className="related-link-card__label">{source.label}</span>
-                    <span className="related-link-card__desc">{source.description}</span>
-                  </span>
-                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
-                </a>
-              ))}
-            </div>
           </section>
 
-          {/* ── FOOTER NAV ─────────────────────────────────────────────── */}
-          <nav aria-label="مسارات مراجعة التاريخ الهجري اليوم" className="related-links" dir="rtl">
-            <p className="related-links__heading">إذا أردت مقارنة التاريخ أو تحويله</p>
-            <div className="related-links__grid">
+          {/* Related pages — small, clean, unique CARDS (owner, 2026-08-13), not a list.
+              Title + icon only, no description text, so each card stays small. */}
+          <section className="date-section max-w-3xl">
+            <SiteRelatedCardGrid
+              heading="إذا أردت مقارنة التاريخ أو تحويله"
+              headingId="hijri-next-paths-heading"
+              items={[
+                { href: '/date/today/gregorian', label: 'التاريخ الميلادي اليوم', Icon: CalendarDays },
+                { href: '/date/today', label: 'الهجري والميلادي معاً', Icon: Moon },
+                { href: '/date/converter', label: 'محول التاريخ', Icon: ArrowLeftRight },
+                { href: '/date/hijri-to-gregorian', label: 'هجري إلى ميلادي', Icon: Calendar },
+                ...(hijri
+                  ? [{
+                    href: `/date/hijri/${hijri.year}/${String(hijri.month).padStart(2, '0')}/${String(hijri.day).padStart(2, '0')}`,
+                    label: `صفحة ${hijri.formatted.ar} هجري`,
+                    Icon: Star,
+                  }]
+                  : []),
+              ]}
+            />
+          </section>
 
-              <Link href="/date/today/gregorian" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <CalendarDays size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">التاريخ الميلادي اليوم</span>
-                  <span className="related-link-card__desc">اليوم الميلادي، رقم الأسبوع، وصيغة النسخ</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-
-              <Link href="/date/today" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <Moon size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">التاريخ الهجري والميلادي اليوم</span>
-                  <span className="related-link-card__desc">عرض التاريخين معاً مع مقارنة الطرق</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-
-              <Link href="/date/converter" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <ArrowLeftRight size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">محول التاريخ</span>
-                  <span className="related-link-card__desc">حوّل تاريخاً محدداً وقارن طرق الحساب</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-
-              <Link href="/date/hijri-to-gregorian" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <Calendar size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">هجري إلى ميلادي</span>
-                  <span className="related-link-card__desc">استخدمه عندما تريد المقابل الميلادي لهذا النوع من التاريخ</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-
-              {hijri && (
-                <Link
-                  href={`/date/hijri/${hijri.year}/${String(hijri.month).padStart(2, '0')}/${String(hijri.day).padStart(2, '0')}`}
-                  className="related-link-card"
-                >
-                  <span className="related-link-card__icon" aria-hidden="true">
-                    <Star size={16} strokeWidth={1.75} />
-                  </span>
-                  <span className="related-link-card__body">
-                    <span className="related-link-card__label">صفحة {hijri.formatted.ar} هجري</span>
-                    <span className="related-link-card__desc">تفاصيل اليوم نفسه مع روابط اليوم السابق والتالي</span>
-                  </span>
-                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
-                </Link>
-              )}
-
-            </div>
-          </nav>
+          {/* Sources — last thing on the page (owner, 2026-08-13), plain small dot-list
+              like /tools, since these are external citations, not next-path cards. */}
+          <section className="date-section max-w-3xl">
+            <SiteDotLinkList
+              heading="مصادر ومنهج التاريخ الهجري"
+              headingId="hijri-sources-heading"
+              items={HIJRI_SOURCE_LINKS.map((source) => ({
+                href: source.href,
+                label: source.label,
+                description: source.description,
+                external: true,
+              }))}
+            />
+          </section>
         </main>
       </AdLayoutWrapper>
     </>

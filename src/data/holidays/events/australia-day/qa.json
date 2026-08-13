@@ -1,0 +1,16 @@
+{
+  "slug": "australia-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 26 يناير موثق عبر fairwork.gov.au وlwb.org.au وThe Conversation. الجدل حول التسمية مُعالج بحياد صحفي، بلا انحياز سياسي.",
+    "التاريخ التأسيسي 1788 مذكور كحقيقة تاريخية قديمة، مطابق لقاعدة hasHardcodedYear."
+  ],
+  "updatedAt": "2026-08-12T14:46:38.639Z"
+}

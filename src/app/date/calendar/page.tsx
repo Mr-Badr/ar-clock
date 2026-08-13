@@ -1,11 +1,15 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Calendar, CalendarDays, Moon, Globe2, ArrowLeftRight } from 'lucide-react';
 
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { JsonLd } from '@/components/seo/JsonLd';
+import { SiteFaqAccordion } from '@/components/shared/SiteFaqAccordion';
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
 import { convertDate } from '@/lib/date-adapter';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { logger, serializeError } from '@/lib/logger';
@@ -242,7 +246,7 @@ export default async function CalendarRootPage() {
 
           <DateBreadcrumb items={breadcrumb} />
 
-          <section className="date-hero-panel mb-8">
+          <section className="date-hero-panel date-hero-panel--single mb-12">
             <div className="date-hero-main">
               <div className="date-kicker">
                 التقويم الميلادي
@@ -250,30 +254,22 @@ export default async function CalendarRootPage() {
               <h1 className="date-hero-title">
                 التقويم الميلادي: افتح السنة ثم انتقل إلى الشهر أو اليوم المطلوب
               </h1>
-              <p className="date-hero-copy mb-4">
+              <p className="date-hero-copy">
                 ابدأ من تقويم {currentYear} إذا كنت تريد السنة الحالية، أو اختر سنة قريبة للتخطيط
                 لموعد، إجازة، بداية شهر، أو مناسبة تحتاج ربطها بالمقابل الهجري.
               </p>
-              <p className="date-hero-copy mb-0">
+              <p className="date-hero-copy">
                 التقويم السنوي مناسب عندما يكون سؤالك أوسع من تاريخ اليوم: تريد رؤية الشهور
                 والأيام أولاً، ثم تضيق البحث إلى اليوم المحدد أو تنتقل إلى محول التاريخ.
               </p>
-            </div>
-            <div className="date-hero-rail" aria-label="إجراء التقويم الأساسي">
-              <div>
-                <div className="date-hero-answer">تقويم {currentYear}</div>
-                <p className="date-hero-note mb-0">
-                  السنة الحالية مع الشهور والأيام والمقابل الهجري.
-                </p>
-              </div>
-              <div className="date-hero-actions">
-                <Link href={`/date/calendar/${currentYear}`} className="date-hero-link date-hero-link--primary">
+              <div className="date-hero-quick-actions">
+                <Link href={`/date/calendar/${currentYear}`} className="date-quick-action">
+                  <Calendar size={16} strokeWidth={1.75} aria-hidden="true" />
                   افتح تقويم {currentYear}
-                  <span aria-hidden="true">←</span>
                 </Link>
-                <Link href="/date/converter" className="date-hero-link">
+                <Link href="/date/converter" className="date-quick-action">
+                  <ArrowLeftRight size={16} strokeWidth={1.75} aria-hidden="true" />
                   حوّل تاريخاً محدداً
-                  <span aria-hidden="true">←</span>
                 </Link>
               </div>
             </div>
@@ -352,7 +348,8 @@ export default async function CalendarRootPage() {
             </article>
           </section>
 
-          <section className="date-detail-panel mb-8">
+          {/* Plain text list — no bordered panel (DESIGN.md Law 4). */}
+          <section className="date-section max-w-3xl">
             <h2 className="date-section-title">طريقة قراءة التقويم السنوي دون تضييع وقت</h2>
             <div className="date-detail-list">
               {CALENDAR_DECISION_ROWS.map((row) => (
@@ -366,74 +363,41 @@ export default async function CalendarRootPage() {
 
           <AdInArticle slotId="mid-date-calendar" />
 
-          <section className="related-links mb-8" dir="rtl" aria-labelledby="calendar-sources-heading">
-            <p id="calendar-sources-heading" className="related-links__heading">
-              مصادر تساعدك على فهم التقويم السنوي
-            </p>
-            <div className="related-links__grid">
-              {CALENDAR_SOURCE_LINKS.map((source) => (
-                <a
-                  key={source.href}
-                  href={source.href}
-                  className="related-link-card"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="related-link-card__body">
-                    <span className="related-link-card__label">{source.label}</span>
-                    <span className="related-link-card__desc">{source.description}</span>
-                  </span>
-                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
-                </a>
-              ))}
-            </div>
-          </section>
-
-          <section className="date-section mb-10">
+          {/* FAQ — the one pattern used everywhere (owner, 2026-08-13: "FAQ should always
+              be like the FAQ in tools pages"). */}
+          <section className="date-section max-w-3xl mb-10">
             <h2 className="date-section-title">أسئلة قبل اختيار سنة أو تحويل يوم محدد</h2>
-            <div className="date-faq-grid">
-              {CALENDAR_FAQ_ITEMS.map((item) => (
-                <article key={item.question} className="date-faq-item">
-                  <h3 className="date-faq-question">{item.question}</h3>
-                  <p className="date-faq-copy m-0">{item.answer}</p>
-                </article>
-              ))}
-            </div>
+            <SiteFaqAccordion items={CALENDAR_FAQ_ITEMS} />
           </section>
 
-          <nav aria-label="مسارات الانتقال من التقويم الميلادي" className="related-links" dir="rtl">
-            <p className="related-links__heading">بعد التقويم: اختر المسار الذي يختصر عليك الوقت</p>
-            <div className="related-links__grid">
-              <Link href="/date" className="related-link-card">
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">مركز التاريخ</span>
-                  <span className="related-link-card__desc">تاريخ اليوم، التحويل، والتقاويم من مكان واحد</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-              <Link href={`/date/calendar/hijri/${currentHijriYear}`} className="related-link-card">
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">التقويم الهجري الحالي</span>
-                  <span className="related-link-card__desc">افتح السنة الهجرية {currentHijriYear} هـ وأيامها</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-              <Link href="/date/today" className="related-link-card">
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">تاريخ اليوم</span>
-                  <span className="related-link-card__desc">للإجابة السريعة إذا كان سؤالك مرتبطاً باليوم الحالي فقط</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-              <Link href="/date/country" className="related-link-card">
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">التاريخ حسب الدولة</span>
-                  <span className="related-link-card__desc">اعرف التاريخ المحلي والهجري بحسب البلد الذي يهمك</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-            </div>
-          </nav>
+          {/* Related pages — small, clean, unique CARDS (owner, 2026-08-13), not a list. */}
+          <section className="date-section max-w-3xl">
+            <SiteRelatedCardGrid
+              heading="بعد التقويم: اختر المسار الذي يختصر عليك الوقت"
+              headingId="calendar-next-paths-heading"
+              items={[
+                { href: '/date', label: 'مركز التاريخ', Icon: Globe2 },
+                { href: `/date/calendar/hijri/${currentHijriYear}`, label: 'التقويم الهجري الحالي', Icon: Moon },
+                { href: '/date/today', label: 'تاريخ اليوم', Icon: CalendarDays },
+                { href: '/date/country', label: 'التاريخ حسب الدولة', Icon: Globe2 },
+              ]}
+            />
+          </section>
+
+          {/* Sources — last thing on the page (owner, 2026-08-13), plain small dot-list
+              like /tools. */}
+          <section className="date-section max-w-3xl">
+            <SiteDotLinkList
+              heading="مصادر تساعدك على فهم التقويم السنوي"
+              headingId="calendar-sources-heading"
+              items={CALENDAR_SOURCE_LINKS.map((source) => ({
+                href: source.href,
+                label: source.label,
+                description: source.description,
+                external: true,
+              }))}
+            />
+          </section>
         </main>
       </AdLayoutWrapper>
     </>

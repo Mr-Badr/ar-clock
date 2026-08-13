@@ -1,11 +1,15 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Calendar, CalendarDays, Globe2, ArrowLeftRight } from 'lucide-react';
 
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { JsonLd } from '@/components/seo/JsonLd';
+import { SiteFaqAccordion } from '@/components/shared/SiteFaqAccordion';
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
 import { convertDate } from '@/lib/date-adapter';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { logger, serializeError } from '@/lib/logger';
@@ -304,7 +308,7 @@ export default async function HijriCalendarRootPage() {
 
           <DateBreadcrumb items={breadcrumb} />
 
-          <section className="date-hero-panel mb-8">
+          <section className="date-hero-panel date-hero-panel--single mb-12">
             <div className="date-hero-main">
               <div className="date-kicker">
                 تقويم أم القرى
@@ -312,28 +316,21 @@ export default async function HijriCalendarRootPage() {
               <h1 className="date-hero-title">
                 التقويم الهجري: اختر السنة ثم اعرف الشهر واليوم والمقابل الميلادي
               </h1>
-              <p className="date-hero-copy mb-4">
-                التقويم الهجري هو تقويم قمري؛ لذلك تأتي السنة الهجرية أقصر من الميلادية وتتحرك مناسبات مثل رمضان والعيد والحج داخل الشهور الميلادية. من هذه الصفحة تبدأ بالسنة الهجرية، ثم تفتح الشهر أو اليوم لمعرفة المقابل الميلادي وفق أم القرى.
+              <p className="date-hero-gregorian">
+                {currentHijriYear} هـ يمتد تقريباً: <strong>{buildHijriYearGregorianSpan(currentHijriYear)}</strong>
               </p>
-              <p className="date-hero-copy mb-0">
-                إذا كان لديك يوم هجري محدد فقط، استخدم التحويل المباشر. أما إذا كنت تريد رؤية موسم كامل أو التخطيط لشهر، فابدأ من التقويم السنوي.
+              <p className="date-hero-copy">
+                التقويم الهجري تقويم قمري؛ لذلك تأتي السنة الهجرية أقصر من الميلادية وتتحرك مناسبات مثل رمضان والعيد والحج داخل الشهور الميلادية. من هذه الصفحة تبدأ بالسنة الهجرية، ثم تفتح الشهر أو اليوم لمعرفة المقابل الميلادي وفق أم القرى.
+                إذا كان لديك يوم هجري محدد فقط، استخدم التحويل المباشر مباشرة.
               </p>
-            </div>
-            <div className="date-hero-rail" aria-label="إجراء التقويم الهجري الأساسي">
-              <div>
-                <div className="date-hero-answer">{currentHijriYear} هـ</div>
-                <p className="date-hero-note mb-0">
-                  السنة الهجرية الحالية تمتد تقريباً: {buildHijriYearGregorianSpan(currentHijriYear)}.
-                </p>
-              </div>
-              <div className="date-hero-actions">
-                <Link href={`/date/calendar/hijri/${currentHijriYear}`} className="date-hero-link date-hero-link--primary">
+              <div className="date-hero-quick-actions">
+                <Link href={`/date/calendar/hijri/${currentHijriYear}`} className="date-quick-action">
+                  <Calendar size={16} strokeWidth={1.75} aria-hidden="true" />
                   افتح تقويم {currentHijriYear} هـ
-                  <span aria-hidden="true">←</span>
                 </Link>
-                <Link href="/date/hijri-to-gregorian" className="date-hero-link">
+                <Link href="/date/hijri-to-gregorian" className="date-quick-action">
+                  <ArrowLeftRight size={16} strokeWidth={1.75} aria-hidden="true" />
                   حوّل هجري إلى ميلادي
-                  <span aria-hidden="true">←</span>
                 </Link>
               </div>
             </div>
@@ -405,7 +402,8 @@ export default async function HijriCalendarRootPage() {
             </article>
           </section>
 
-          <section className="date-detail-panel mb-8" aria-labelledby="hijri-calendar-decision-heading">
+          {/* Plain text list — no bordered panel (DESIGN.md Law 4). */}
+          <section className="date-section max-w-3xl" aria-labelledby="hijri-calendar-decision-heading">
             <h2 id="hijri-calendar-decision-heading" className="date-section-title">
               قاعدة القرار: من أين تبدأ؟
             </h2>
@@ -419,81 +417,43 @@ export default async function HijriCalendarRootPage() {
             </div>
           </section>
 
-          <section className="related-links mb-8" dir="rtl" aria-labelledby="hijri-calendar-sources-heading">
-            <p id="hijri-calendar-sources-heading" className="related-links__heading">
-              مصادر ومنهج التقويم الهجري
-            </p>
-            <div className="related-links__grid">
-              {HIJRI_CALENDAR_SOURCE_LINKS.map((source) => (
-                <a
-                  key={source.href}
-                  href={source.href}
-                  className="related-link-card"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="related-link-card__body">
-                    <span className="related-link-card__label">{source.label}</span>
-                    <span className="related-link-card__desc">{source.description}</span>
-                  </span>
-                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
-                </a>
-              ))}
-            </div>
-          </section>
-
           <AdInArticle slotId="mid-date-calendar-hijri" />
 
-          <section className="date-section mb-10">
-            <div className="date-section-head">
-              <h2 className="date-section-title">أسئلة قبل التخطيط بسنة هجرية</h2>
-              <p className="date-section-copy">
-                اقرأ هذه الإجابات إذا كنت تختار بين التقويم الهجري، محول التاريخ، تاريخ اليوم، أو صفحة الدولة.
-              </p>
-            </div>
-            <div className="date-faq-grid">
-              {HIJRI_CALENDAR_FAQ_ITEMS.map((item) => (
-                <article key={item.question} className="date-faq-item">
-                  <h3 className="date-faq-question">{item.question}</h3>
-                  <p className="date-faq-copy m-0">{item.answer}</p>
-                </article>
-              ))}
-            </div>
+          {/* FAQ — the one pattern used everywhere (owner, 2026-08-13: "FAQ should always
+              be like the FAQ in tools pages"). */}
+          <section className="date-section max-w-3xl mb-10">
+            <h2 className="date-section-title">أسئلة قبل التخطيط بسنة هجرية</h2>
+            <SiteFaqAccordion items={HIJRI_CALENDAR_FAQ_ITEMS} />
           </section>
 
-          <nav aria-label="مسارات الانتقال من التقويم الهجري" className="related-links" dir="rtl">
-            <p className="related-links__heading">بعد التقويم الهجري: اختر المقارنة التي تحتاجها</p>
-            <div className="related-links__grid">
-              <Link href="/date" className="related-link-card">
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">مركز التاريخ</span>
-                  <span className="related-link-card__desc">تاريخ اليوم والتحويل والتقاويم من مكان واحد</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-              <Link href={`/date/calendar/${currentGregorianYear}`} className="related-link-card">
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">التقويم الميلادي الحالي</span>
-                  <span className="related-link-card__desc">افتح سنة {currentGregorianYear} وما يقابلها من الهجري</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-              <Link href="/date/today/hijri" className="related-link-card">
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">التاريخ الهجري اليوم</span>
-                  <span className="related-link-card__desc">للإجابة السريعة إذا كان سؤالك يخص اليوم الحالي فقط</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-              <Link href="/date/country" className="related-link-card">
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">التاريخ حسب الدولة</span>
-                  <span className="related-link-card__desc">اعرف التاريخ المحلي والهجري وفق البلد الذي يهمك</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-            </div>
-          </nav>
+          {/* Related pages — small, clean, unique CARDS (owner, 2026-08-13), not a list. */}
+          <section className="date-section max-w-3xl">
+            <SiteRelatedCardGrid
+              heading="بعد التقويم الهجري: اختر المقارنة التي تحتاجها"
+              headingId="hijri-calendar-next-paths-heading"
+              items={[
+                { href: '/date', label: 'مركز التاريخ', Icon: Globe2 },
+                { href: `/date/calendar/${currentGregorianYear}`, label: 'التقويم الميلادي الحالي', Icon: Calendar },
+                { href: '/date/today/hijri', label: 'التاريخ الهجري اليوم', Icon: CalendarDays },
+                { href: '/date/country', label: 'التاريخ حسب الدولة', Icon: Globe2 },
+              ]}
+            />
+          </section>
+
+          {/* Sources — last thing on the page (owner, 2026-08-13), plain small dot-list
+              like /tools. */}
+          <section className="date-section max-w-3xl">
+            <SiteDotLinkList
+              heading="مصادر ومنهج التقويم الهجري"
+              headingId="hijri-calendar-sources-heading"
+              items={HIJRI_CALENDAR_SOURCE_LINKS.map((source) => ({
+                href: source.href,
+                label: source.label,
+                description: source.description,
+                external: true,
+              }))}
+            />
+          </section>
         </main>
       </AdLayoutWrapper>
     </>

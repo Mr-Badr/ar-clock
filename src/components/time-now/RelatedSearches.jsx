@@ -1,8 +1,6 @@
-import Link from 'next/link';
-
 import { getPopularTimeNowCountryLinks } from '@/lib/seo/popular-links';
 import { logger, serializeError } from '@/lib/logger';
-import styles from './TimeNowSupportSections.module.css';
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
 
 function isValidRelatedCountry(country) {
   return Boolean(
@@ -23,6 +21,8 @@ function buildFallbackDescription(currentCityAr) {
   return 'عندما يكون هدفك اجتماعاً أو مكالمة أو سفراً، لا تكتفِ بحفظ فرق الساعات. افتح المقارنة واختر المكانين معاً.';
 }
 
+// Same plain dot-list pattern used everywhere (owner directive, 2026-08-13) — was its own
+// bordered link-card grid before.
 export async function RelatedSearches({ currentCountrySlug, currentCityAr }) {
   let related = [];
   try {
@@ -43,55 +43,32 @@ export async function RelatedSearches({ currentCountrySlug, currentCityAr }) {
 
   if (related.length === 0) {
     return (
-      <section aria-labelledby="related-searches-heading" className={styles.section}>
-        <h2 id="related-searches-heading" className={styles.heading}>
+      <section aria-labelledby="related-searches-heading" className="date-section max-w-3xl">
+        <h2 id="related-searches-heading" className="date-editorial-title">
           مسار المقارنة الأسرع بعد معرفة الوقت
         </h2>
-
-        <p className={styles.intro}>
-          {buildFallbackDescription(currentCityAr)}
-        </p>
-
-        <div className={styles.grid}>
-          <Link
-            href="/time-difference"
-            className={styles.linkCard}
-            title="قارن الوقت بين مدينتين أو دولتين"
-          >
-            <span className={styles.linkLabel}>افتح حاسبة فرق التوقيت</span>
-            <span className={styles.linkDescription}>
-              اختر المكان الأول والمكان الثاني، ثم راجع الساعة المناسبة قبل تثبيت الموعد.
-            </span>
-          </Link>
-        </div>
+        <p className="date-editorial-copy mb-4">{buildFallbackDescription(currentCityAr)}</p>
+        <SiteDotLinkList
+          items={[{
+            href: '/time-difference',
+            label: 'افتح حاسبة فرق التوقيت',
+            description: 'اختر المكان الأول والمكان الثاني، ثم راجع الساعة المناسبة قبل تثبيت الموعد.',
+          }]}
+        />
       </section>
     );
   }
 
   return (
-    <section aria-labelledby="related-searches-heading" className={styles.section}>
-      <h2 id="related-searches-heading" className={styles.heading}>
+    <section aria-labelledby="related-searches-heading" className="date-section max-w-3xl">
+      <h2 id="related-searches-heading" className="date-editorial-title">
         إذا كنت تقارن الوقت بين أكثر من بلد
       </h2>
-
-      <p className={styles.intro}>
+      <p className="date-editorial-copy mb-4">
         اختر مساراً قريباً من نيتك الحالية بدلاً من الرجوع إلى فهرس طويل.
         {currentCityAr ? ` ابدأ من ${currentCityAr} ثم افتح البلد الذي تريد تنسيق موعده أو متابعة فرق الوقت معه.` : ' هذه الدول هي الأكثر استخداماً عند تنسيق السفر والعمل والمكالمات اليومية.'}
       </p>
-
-      <div className={styles.grid}>
-        {related.map((country, index) => (
-          <Link
-            key={country.href}
-            href={country.href}
-            className={`${styles.linkCard} ${index === 0 ? styles.linkCardPrimary : ''}`}
-            title={country.description}
-          >
-            <span className={styles.linkLabel}>{country.label}</span>
-            <span className={styles.linkDescription}>{country.description}</span>
-          </Link>
-        ))}
-      </div>
+      <SiteDotLinkList items={related} />
     </section>
   );
 }

@@ -1,0 +1,15 @@
+{
+  "slug": "constitution-day-spain",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 6 ديسمبر ذكرى استفتاء دستور 1978 (سنة تاريخية، مسموحة). جسر عطلة ديسمبر واختلافه الإقليمي موثق عبر idealista.com."
+  ],
+  "updatedAt": "2026-08-12T14:46:33.621Z"
+}

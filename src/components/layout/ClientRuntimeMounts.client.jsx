@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 const AdSenseProvider = dynamic(() => import('@/components/ads/AdSenseProvider'), { ssr: false });
 const AdBlockDetector = dynamic(() => import('@/components/ads/AdBlockDetector.client'), { ssr: false });
 const AdStickyAnchor = dynamic(() => import('@/components/ads/AdStickyAnchor'), { ssr: false });
+const AdNavigationInterstitial = dynamic(() => import('@/components/ads/AdNavigationInterstitial.client'), { ssr: false });
 const AnalyticsProvider = dynamic(() => import('@/components/analytics/AnalyticsProvider'), { ssr: false });
 const ConsentBanner = dynamic(() => import('@/components/consent/ConsentBanner'), { ssr: false });
 const ScrollToTopOnNav = dynamic(() => import('@/components/layout/ScrollToTopOnNav.client'), { ssr: false });
@@ -81,6 +82,7 @@ export default function ClientRuntimeMounts() {
       {idle && !isEmbed ? (
         <>
           <AdStickyAnchor />
+          <AdNavigationInterstitial />
           <SiteVisitTracker />
           <ScrollToTopButton />
           <AnalyticsProvider />

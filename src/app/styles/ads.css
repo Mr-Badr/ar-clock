@@ -61,7 +61,22 @@
     margin-inline: auto;
     padding-inline: var(--space-4);
     padding-block-start: var(--space-2);
+    /* Real breathing room before the footer (owner directive, 2026-08-13: "when i am in
+       footer they should stop and have some margin with footer") — without this, a sticky
+       sidebar rail's grid row ends exactly where the footer begins, so the rail can look
+       flush against it even though it's structurally incapable of overlapping. */
+    padding-block-end: var(--space-16);
     align-items: start;
+  }
+
+  /* Grid items default to `min-width: auto`, which refuses to shrink the item below its
+     content's intrinsic width — "grid blowout." Applies at EVERY width, not just the
+     desktop rail tiers below, since `.layout-with-ads` is `display: grid` even at mobile's
+     single ('1fr') column. Found 2026-08-13: this was letting the main content column force
+     itself wider than the mobile viewport on real pages, causing horizontal page scroll — the
+     exact class of bug that must never happen, on any page. This single rule is the fix. */
+  .layout-with-ads > :not(.ad-slot--sidebar) {
+    min-width: 0;
   }
 
   .layout-with-ads[data-layout='narrow'] {
@@ -89,7 +104,65 @@
     min-width: 0;
   }
 
-  /* Both rails now activate at the SAME breakpoint (1440px) for dual mode — previously the
+  /* Normal-laptop tier (owner directive, 2026-08-13: "in desktop and normal laptop we should
+     also have side left and right ads" — 1366×768 and 1280×800 are extremely common real
+     laptop resolutions that the old 1440px-only gate excluded entirely, showing zero rails).
+     Narrower 190px rails (vs 240px at 1440+) keep the content column comfortable:
+     1280 − 190×2 (rails) − 24×2 (gap) − 24×2 (padding) = 828px content, still close to the
+     900px cap and well above the 720px editorial-article floor from DESIGN.md §5.2. */
+  @media (min-width: 1180px) and (max-width: 1439.98px) {
+    .layout-with-ads[data-rail-mode='single'] {
+      grid-template-columns: 190px minmax(0, 900px);
+      gap: var(--space-6);
+      padding-inline: var(--space-6);
+    }
+
+    .layout-with-ads[data-layout='narrow'][data-rail-mode='single'] {
+      grid-template-columns: 190px minmax(0, 820px);
+    }
+
+    .layout-with-ads[data-layout='wide'][data-rail-mode='single'] {
+      grid-template-columns: 190px minmax(0, 1fr);
+    }
+
+    .layout-with-ads[data-rail-mode='dual'] {
+      grid-template-columns: 190px minmax(0, 900px) 190px;
+      gap: var(--space-6);
+      padding-inline: var(--space-6);
+    }
+
+    .layout-with-ads[data-layout='narrow'][data-rail-mode='dual'] {
+      grid-template-columns: 190px minmax(0, 820px) 190px;
+    }
+
+    .layout-with-ads[data-layout='wide'][data-rail-mode='dual'] {
+      grid-template-columns: 210px minmax(0, 1fr) 210px;
+    }
+
+    /* grid-row: 1 on all three is load-bearing, not decoration — see the "GRID ROW BUG" note
+       above the first tier below. Without it, sparse auto-placement can push the sidebar
+       items (DOM order: content, then right rail, then left rail — right rail renders AFTER
+       content so page H1 reaches crawlers/screen readers before ad markup) into a second
+       implicit row that only starts where the (very tall) content row ends — i.e. the rails
+       only appeared near the bottom of the page instead of from the top, alongside the first
+       section. Found 2026-08-13 via real measurement (getBoundingClientRect), not assumption. */
+    .layout-with-ads > :not(.ad-slot--sidebar) {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .layout-with-ads > .ad-slot--sidebar--right {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .layout-with-ads[data-rail-mode='dual'] > .ad-slot--sidebar--left {
+      grid-column: 3;
+      grid-row: 1;
+    }
+  }
+
+  /* Both rails activate at the SAME breakpoint (1440px) for dual mode — previously the
      left/static rail didn't get a grid column until 1680px, which meant a huge range of real
      laptop widths (1366–1679px, extremely common) either showed just one rail or showed a
      dual-mode page with the left rail rendered but with no assigned column at all (falling
@@ -131,16 +204,26 @@
       grid-template-columns: 280px minmax(0, 1fr) 280px;
     }
 
+    /* grid-row: 1 on all three is load-bearing, not decoration — see the "GRID ROW BUG" note
+       above the first tier below. Without it, sparse auto-placement can push the sidebar
+       items (DOM order: content, then right rail, then left rail — right rail renders AFTER
+       content so page H1 reaches crawlers/screen readers before ad markup) into a second
+       implicit row that only starts where the (very tall) content row ends — i.e. the rails
+       only appeared near the bottom of the page instead of from the top, alongside the first
+       section. Found 2026-08-13 via real measurement (getBoundingClientRect), not assumption. */
     .layout-with-ads > :not(.ad-slot--sidebar) {
       grid-column: 2;
+      grid-row: 1;
     }
 
     .layout-with-ads > .ad-slot--sidebar--right {
       grid-column: 1;
+      grid-row: 1;
     }
 
     .layout-with-ads[data-rail-mode='dual'] > .ad-slot--sidebar--left {
       grid-column: 3;
+      grid-row: 1;
     }
   }
 
@@ -224,7 +307,6 @@
   /* Shimmer skeleton — shown only while loading, fades out when ad appears */
   .ad-slot.is-loading {
     background: color-mix(in srgb, var(--bg-surface-2) 60%, transparent);
-    border-radius: var(--radius-md);
     border: none;
   }
 
@@ -259,7 +341,7 @@
 
 
   /* ──────────────────────────────────────────────────────────────────────────
-     TOP BANNER AD  (v3 — moved above the H1, 2026-07-21)
+     TOP BANNER AD  (v4 — fixed/sticky under the navbar on mobile, 2026-08-13)
 
      WHERE: Inside content-col, FIRST thing — BEFORE the breadcrumb and <h1>.
 
@@ -278,6 +360,16 @@
        Placing it first guarantees it renders in the same viewport as the
        navbar on every page. Full reasoning: AdTopBanner.tsx file header.
 
+     v4 (owner directive, 2026-08-13): on mobile (<768px) the banner is now
+     `position: sticky` right under the fixed navbar, so it stays visible as
+     the standard chrome fixture the owner asked for, instead of scrolling
+     away with the rest of the content. First-paint position is unchanged —
+     it still renders in the same spot right below the navbar — the only
+     difference is it now stays pinned there while scrolling instead of
+     moving with the page. Tablet/desktop (≥768px) stays in normal document
+     flow, unchanged — the owner's "fixed top bar" ask was mobile-specific;
+     desktop/tablet get the fixed bottom bar (AdStickyAnchor) instead.
+
      SIZES: 320×50 mobile → 728×90 tablet → 970×90 desktop
      ────────────────────────────────────────────────────────────────────────── */
   .ad-slot--top-banner {
@@ -288,8 +380,17 @@
     min-height: 50px;
     max-height: 100px;
     margin-block: var(--space-10);
-    border-radius: var(--radius-lg);
     overflow: hidden;
+  }
+
+  @media (max-width: 767px) {
+    .ad-slot--top-banner {
+      position: sticky;
+      top: var(--app-header-height);
+      z-index: var(--z-sticky);
+      /* Opaque so content scrolling underneath doesn't show through the docked bar. */
+      background: var(--bg-base);
+    }
   }
 
   @media (min-width: 768px) {
@@ -341,7 +442,6 @@
     max-width: min(720px, 100%);
     margin-inline: auto;
     margin-block: var(--space-12);
-    border-radius: var(--radius-lg);
     overflow: hidden;
     content-visibility: auto;
     contain-intrinsic-size: 0 200px;
@@ -372,7 +472,6 @@
     width: 100%;
     min-height: 216px;
     margin-block: var(--space-2);
-    border-radius: var(--radius-lg);
     overflow: hidden;
     display: flex;
     align-items: stretch;
@@ -391,7 +490,6 @@
     min-height: 50px;
     max-height: 100px;
     margin-block: var(--space-8);
-    border-radius: var(--radius-lg);
     overflow: hidden;
     content-visibility: auto;
     contain-intrinsic-size: 0 90px;
@@ -410,7 +508,6 @@
     max-width: 100%;
     min-height: 240px;
     margin-block: var(--space-12);
-    border-radius: var(--radius-lg);
     overflow: hidden;
     content-visibility: auto;
     contain-intrinsic-size: 0 280px;
@@ -425,41 +522,40 @@
   @media (max-width: 639px) {
     .ad-slot--top-banner {
       margin-block: var(--space-6);
-      border-radius: var(--radius-md);
     }
 
     .ad-slot--in-article {
       margin-block: var(--space-8);
-      border-radius: var(--radius-md);
     }
 
     .ad-slot--events-feed-horizontal {
       margin-block: var(--space-4);
-      border-radius: var(--radius-md);
     }
 
     .ad-slot--multiplex {
       min-height: 220px;
       margin-block: var(--space-8);
-      border-radius: var(--radius-md);
     }
   }
 
 
   /* ──────────────────────────────────────────────────────────────────────────
-     SIDEBAR AD (desktop only, ≥1440px)
-     
+     SIDEBAR AD (desktop + normal laptop, ≥1180px — lowered from 1440px 2026-08-13,
+     see the grid comment above for the "normal laptop" rationale)
+
      WHERE: As first and third children inside .layout-with-ads.
-     
-     VISIBILITY: display:none on all screens < 1440px.
+
+     VISIBILITY: display:none below 1180px.
      This means the sidebar occupies ZERO space on mobile/tablet.
      The ad script is not even requested on mobile (handled in component JS).
-     
-     STICKY: Follows scroll and clears the tokenized app header.
+
+     STICKY: Follows scroll and clears the tokenized app header. Bounded by its own grid
+     row (see .layout-with-ads padding-block-end below) so it always stops with real margin
+     before the footer, never flush against it.
      ────────────────────────────────────────────────────────────────────────── */
   .ad-slot--sidebar {
     display: none;
-    /* Fills whatever width its grid column actually is (240/280/300/340px depending on
+    /* Fills whatever width its grid column actually is (190/240/280/300/340px depending on
        layout+rail-mode — see the grid rules above) instead of hardcoding a px value that has
        to be kept in sync with every grid-template-columns variant by hand. */
     width: 100%;
@@ -471,7 +567,7 @@
     margin-block-start: var(--space-4);
   }
 
-  @media (min-width: 1440px) {
+  @media (min-width: 1180px) {
     .ad-slot--sidebar--sticky {
       display: block;
       position: sticky;
@@ -479,16 +575,20 @@
       max-height: calc(100vh - var(--app-header-height) - var(--space-14));
     }
 
-    /* Matches the grid's dual-mode column assignment above — both rails now activate at the
-       same 1440px breakpoint (was 1680px; see the grid comment above for why). The static
-       rail isn't sticky, so unlike the row above it isn't bounded by viewport height — give it
-       real room (was 600px) so a future 2-3-stacked-ad-unit column (owner's stated plan for
-       /tools pages) has somewhere to go without a follow-up CSS change. */
+    /* Matches the grid's dual-mode column assignment above. The static rail isn't sticky, so
+       unlike the row above it isn't bounded by viewport height — give it real room (was
+       600px) so a future 2-3-stacked-ad-unit column (owner's stated plan for /tools pages)
+       has somewhere to go without a follow-up CSS change. */
     .ad-slot--sidebar--static {
       display: block;
       position: relative;
       top: auto;
       max-height: 1400px;
+      /* Match the sticky rail's top clearance exactly (owner, 2026-08-13: "make sure they
+         have margin top so they are not close to navbar") — without this override the static
+         rail only got the base .ad-slot--sidebar margin-block-start (16px), landing far
+         closer to the navbar than its sticky sibling right next to it. */
+      margin-block-start: calc(var(--app-header-height) + var(--space-6));
     }
   }
 
@@ -514,16 +614,17 @@
 
 
   /* ──────────────────────────────────────────────────────────────────────────
-     STICKY ANCHOR BAR (mobile only, < 960px)
-     
+     STICKY ANCHOR BAR — fixed, closable bottom bar on EVERY viewport width
+     (owner directive, 2026-08-13 — used to be hidden ≥960px, "sidebars handle
+     desktop"; now it's standard chrome everywhere, alongside the sidebar
+     rails on desktop, not instead of them).
+
      WHERE: In root layout.tsx, LAST element in <body>, outside all containers.
-     
+
      CRITICAL: The `.sticky-anchor-spacer` div MUST be placed at the bottom
      of every page to prevent the anchor from covering the last content item.
-     The spacer height is ALWAYS set on mobile — not conditionally.
+     The spacer height is ALWAYS set, at every width — not conditionally.
      This prevents the "hidden content" bug from v1.
-     
-     VISIBILITY: Hidden on ≥960px (sidebars handle desktop).
      ────────────────────────────────────────────────────────────────────────── */
   .ad-slot--sticky-anchor {
     position: fixed;
@@ -554,19 +655,17 @@
     pointer-events: none;
   }
 
-  @media (min-width: 960px) {
-    .ad-slot--sticky-anchor {
-      display: none;
-    }
-  }
-
+  /* Spacer reserves room for the fixed bar at every width now (was mobile-only, <960px) —
+     see the header comment above. Slightly taller on desktop/tablet since the bar's own
+     min-height (106px) includes more breathing-room padding at rest than the visual ad
+     content strictly needs, and desktop pages have the room to spare. */
   .sticky-anchor-spacer {
-    height: 0;
+    height: 68px;
   }
 
-  @media (max-width: 959px) {
+  @media (min-width: 960px) {
     .sticky-anchor-spacer {
-      height: 68px;
+      height: 96px;
     }
   }
 
@@ -728,6 +827,93 @@
     .ad-slot-dev-preview--large {
       min-height: 240px;
     }
+  }
+
+  /* ──────────────────────────────────────────────────────────────────────────
+     NAVIGATION INTERSTITIAL — manual replacement for Google's Vignette
+     (AdNavigationInterstitial.client.tsx) — owner directive, 2026-08-13.
+
+     Above everything, including the fixed navbar and the sticky anchor bar — this is a true
+     modal. Backdrop is click-to-close; Escape closes it too (handled in the component).
+     ────────────────────────────────────────────────────────────────────────── */
+  .ad-interstitial-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--z-max) + 10);
+    background: color-mix(in srgb, var(--bg-base, #000) 55%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-base);
+  }
+
+  .ad-interstitial-backdrop.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .ad-interstitial-card {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    min-height: 280px;
+    background: var(--bg-surface-1);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8) var(--space-5) var(--space-5);
+    box-shadow: var(--shadow-3, 0 14px 36px rgba(0, 0, 0, .3));
+    transform: scale(.97);
+    transition: transform var(--transition-base);
+  }
+
+  .ad-interstitial-backdrop.is-visible .ad-interstitial-card {
+    transform: scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ad-interstitial-backdrop,
+    .ad-interstitial-card {
+      transition: none;
+    }
+  }
+
+  .ad-interstitial-close {
+    position: absolute;
+    top: var(--space-3);
+    inset-inline-end: var(--space-3);
+    width: 36px;
+    height: 36px;
+    min-width: 44px;
+    min-height: 44px;
+    margin: -4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-3);
+    color: var(--text-primary);
+    font-size: var(--text-lg);
+    line-height: 1;
+    cursor: pointer;
+    border: 1px solid var(--border-subtle);
+    z-index: 1;
+  }
+
+  .ad-interstitial-close:hover {
+    background-color: var(--bg-surface-4);
+  }
+
+  .ad-interstitial-close:focus-visible {
+    outline: 2px solid var(--accent-alt);
+    outline-offset: 2px;
+  }
+
+  .ad-interstitial-card > .adsbygoogle {
+    display: block;
+    min-height: 250px;
   }
 
 }

@@ -1,0 +1,16 @@
+{
+  "slug": "christmas-netherlands",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: يومان رسميان (25 و26 ديسمبر) موثقان عبر government.nl، وتراجع الأيام الأربعة القديمة موثق عبر dutchreview.com.",
+    "لا يتشابه محتوى الصفحة مع christmas-germany (الذي يركز على قيد الهدوء الليلي 24 ديسمبر) — تفرد المحتوى هنا حول ازدواجية اليومين وتاريخها."
+  ],
+  "updatedAt": "2026-08-12T14:46:18.352Z"
+}

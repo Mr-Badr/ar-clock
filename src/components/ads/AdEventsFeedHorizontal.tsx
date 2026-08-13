@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { watchAdFill } from "@/lib/ads/unfilled";
 import { useMarketingPermission } from "@/lib/client/marketing";
 import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
 import { logger, serializeError } from "@/lib/logger";
@@ -22,6 +23,8 @@ export default function AdEventsFeedHorizontal() {
     if (!canLoadAds) return;
     if (!ref.current || loaded.current) return;
 
+    let stopWatch: (() => void) | undefined;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -40,15 +43,11 @@ export default function AdEventsFeedHorizontal() {
               });
             }
 
-            if (insRef.current) {
-              const mutObs = new MutationObserver(() => {
-                if (insRef.current?.getAttribute("data-ad-status") === "unfilled") {
-                  setIsUnfilled(true);
-                  mutObs.disconnect();
-                }
-              });
-              mutObs.observe(insRef.current, { attributes: true, attributeFilter: ["data-ad-status"] });
-            }
+            // Shared helper (synchronous check + observer + timeout fallbacks) replaces the
+            // previous bare MutationObserver — see src/lib/ads/unfilled.ts for why the extra
+            // layers matter (a raw observer attached after push({}) can miss an attribute
+            // Google writes synchronously, especially on low-fill Arabic/MENA inventory).
+            stopWatch = watchAdFill(insRef.current, () => setIsUnfilled(true));
 
             observer.disconnect();
           }
@@ -58,7 +57,10 @@ export default function AdEventsFeedHorizontal() {
     );
 
     observer.observe(ref.current);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      stopWatch?.();
+    };
   }, [canLoadAds]);
 
   if (!shouldRenderAds || !canLoadAds || isUnfilled) return null;

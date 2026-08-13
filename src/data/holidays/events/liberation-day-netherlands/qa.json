@@ -1,0 +1,16 @@
+{
+  "slug": "liberation-day-netherlands",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 5 مايو موثق عبر government.nl و4en5mei.nl، مع قاعدة اللسترم (إجازة كاملة كل 5 سنوات) موثقة بدقة.",
+    "استسلام فاخينينغن 1945 مذكور كحقيقة تاريخية قديمة، لا كسنة حالية — مطابق لقاعدة hasHardcodedYear."
+  ],
+  "updatedAt": "2026-08-12T14:46:07.891Z"
+}

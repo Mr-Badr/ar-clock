@@ -1,0 +1,16 @@
+{
+  "slug": "eid-al-fitr-australia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق عبر WebFetch مباشر على education.nsw.gov.au: نظام رمز الحضور 'L' موثق حرفياً، يشمل Eid ضمن قائمة صريحة.",
+    "لا يوجد حق قانوني فدرالي بإجازة مدفوعة (fairwork.gov.au لا يذكر عيد الفطر ضمن العطل الرسمية). جزيرة كريسماس/كوكوس استثناء موثق عبر timeanddate.com."
+  ],
+  "updatedAt": "2026-08-12T14:46:48.867Z"
+}

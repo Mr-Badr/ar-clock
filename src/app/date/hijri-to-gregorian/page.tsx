@@ -7,6 +7,9 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import DateRouteLoading from '@/components/date/DateRouteLoading';
 import { ConverterForm } from '../converter/ConverterForm';
+import { SiteFaqAccordion } from '@/components/shared/SiteFaqAccordion';
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
@@ -14,10 +17,8 @@ import {
   ArrowLeftRight,
   Calendar,
   CalendarDays,
-  CheckCircle2,
   FileClock,
   FileText,
-  HelpCircle,
   Landmark,
   Moon,
   Plane,
@@ -301,201 +302,133 @@ async function HijriToGregorianDynamicContent() {
             </div>
           </section>
 
+          {/* Plain prose, no bordered panel — only the peer use-case cards below earn a
+              surface (DESIGN.md Law 4). */}
           <section className={`container mx-auto px-4 ${styles.sectionBand}`}>
-            <div className={styles.prosePanel}>
-              <h2 className={styles.sectionTitle}>كيف تفهم التاريخ الميلادي الناتج؟</h2>
-              <div className={styles.proseBody}>
-                <p>
-                  أنت تبدأ من تاريخ هجري، وهو تاريخ قمري. الأداة تبحث عن اليوم الميلادي المقابل له
-                  حسب طريقة الحساب التي اخترتها. لذلك لا تتعامل مع النتيجة كرقم منفصل، بل كترجمة
-                  لتاريخ له مرجع: أم القرى، حساب فلكي، أو نموذج مدني ثابت.
-                </p>
-                <p>
-                  مثال عملي: إذا وجدت في وثيقة تاريخاً مثل 10 رمضان 1447 هـ، فأدخله كما هو، ثم انسخ
-                  التاريخ الميلادي الناتج للمنصة أو النموذج الذي يطلب الميلادي. لا تغيّر الشهر الهجري
-                  إلى رقم تقديري من ذاكرتك، لأن أسماء الشهور المتشابهة أو ترتيبها قد يسبب خطأ كبيراً.
-                </p>
-                <p>
-                  القاعدة المختصرة: للتعاملات السعودية والخليجية ابدأ بأم القرى، وللمقارنة استخدم
-                  الفلكي أو المدني. أما إذا كان التاريخ مرتبطاً برمضان أو العيد أو قرار رسمي، فالمرجع
-                  النهائي هو إعلان الجهة المختصة في بلدك.
-                </p>
-              </div>
-              <div className={styles.infoGrid}>
-                {USE_CASES.map((item, index) => {
-                  const Icon = item.icon;
+            <h2 className={styles.sectionTitle}>كيف تفهم التاريخ الميلادي الناتج؟</h2>
+            <div className={styles.proseBody}>
+              <p>
+                أنت تبدأ من تاريخ هجري، وهو تاريخ قمري. الأداة تبحث عن اليوم الميلادي المقابل له
+                حسب طريقة الحساب التي اخترتها. لذلك لا تتعامل مع النتيجة كرقم منفصل، بل كترجمة
+                لتاريخ له مرجع: أم القرى، حساب فلكي، أو نموذج مدني ثابت.
+              </p>
+              <p>
+                مثال عملي: إذا وجدت في وثيقة تاريخاً مثل 10 رمضان 1447 هـ، فأدخله كما هو، ثم انسخ
+                التاريخ الميلادي الناتج للمنصة أو النموذج الذي يطلب الميلادي. لا تغيّر الشهر الهجري
+                إلى رقم تقديري من ذاكرتك، لأن أسماء الشهور المتشابهة أو ترتيبها قد يسبب خطأ كبيراً.
+              </p>
+            </div>
+            <div className={`${styles.infoGrid} mt-6`}>
+              {USE_CASES.map((item, index) => {
+                const Icon = item.icon;
 
-                  return (
-                    <article
-                      key={item.title}
-                      className={`${styles.infoCard} ${index === 0 ? styles.infoCardLead : ''}`}
-                    >
-                      <span className={styles.cardIcon} aria-hidden="true">
-                        <Icon size={16} strokeWidth={1.75} />
-                      </span>
-                      <h3 className={styles.cardTitle}>{item.title}</h3>
-                      <p className={styles.cardBody}>{item.body}</p>
-                    </article>
-                  );
-                })}
-              </div>
+                return (
+                  <article
+                    key={item.title}
+                    className={`${styles.infoCard} ${index === 0 ? styles.infoCardLead : ''}`}
+                  >
+                    <span className={styles.cardIcon} aria-hidden="true">
+                      <Icon size={16} strokeWidth={1.75} />
+                    </span>
+                    <h3 className={styles.cardTitle}>{item.title}</h3>
+                    <p className={styles.cardBody}>{item.body}</p>
+                  </article>
+                );
+              })}
             </div>
           </section>
 
+          {/* Only the table itself is a surface — no second bordered panel around it
+              (DESIGN.md: no nested cards). */}
           <section className={`container mx-auto px-4 ${styles.sectionBand}`}>
-            <div className={styles.prosePanel}>
-              <div className={styles.sectionHead}>
-                <h2 className={styles.sectionTitle}>قاعدة القرار قبل اعتماد التاريخ الميلادي</h2>
-                <p className={styles.sectionCopy}>
-                  اختر طريقة التعامل مع النتيجة حسب سبب التحويل، لأن تاريخاً للذكرى الشخصية ليس مثل تاريخ في رخصة أو عقد.
-                </p>
-              </div>
-              <div className="table-wrapper">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th className="text-right">الموقف</th>
-                      <th className="text-right">ما الذي تفعله؟</th>
-                      <th className="text-right">ما الذي تنتبه له؟</th>
+            <div className={styles.sectionHead}>
+              <h2 className={styles.sectionTitle}>قاعدة القرار قبل اعتماد التاريخ الميلادي</h2>
+              <p className={styles.sectionCopy}>
+                اختر طريقة التعامل مع النتيجة حسب سبب التحويل، لأن تاريخاً للذكرى الشخصية ليس مثل تاريخ في رخصة أو عقد.
+              </p>
+            </div>
+            <div className="table-wrapper">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th className="text-right">الموقف</th>
+                    <th className="text-right">ما الذي تفعله؟</th>
+                    <th className="text-right">ما الذي تنتبه له؟</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {DECISION_ROWS.map((row) => (
+                    <tr key={row.scenario}>
+                      <td>{row.scenario}</td>
+                      <td>{row.use}</td>
+                      <td>{row.caution}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {DECISION_ROWS.map((row) => (
-                      <tr key={row.scenario}>
-                        <td>{row.scenario}</td>
-                        <td>{row.use}</td>
-                        <td>{row.caution}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </section>
 
           {methodResults.length > 0 && (
             <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="hijri-methods-heading">
-              <div className={styles.sectionPanel}>
-                <div className={styles.sectionHead}>
-                  <h2 id="hijri-methods-heading" className={styles.sectionTitle}>
-                    مثال اليوم: نفس التاريخ الهجري بثلاث طرق
-                  </h2>
-                  <p className={styles.sectionCopy}>
-                    عند تحويل تاريخ هجري واحد، قد تتطابق النتيجة الميلادية أو تختلف عند أطراف الشهر.
-                    هذه المقارنة تساعدك على رؤية أثر طريقة الحساب قبل نسخ التاريخ.
-                  </p>
-                </div>
-                <div className={styles.methodResultGrid}>
-                  {methodResults.map((item) => (
-                    <article key={item.label} className={styles.metricCard}>
-                      <span className={styles.metricLabel}>{item.label}</span>
-                      <strong className={styles.metricValue}>{item.result}</strong>
-                    </article>
-                  ))}
-                </div>
+              <div className={styles.sectionHead}>
+                <h2 id="hijri-methods-heading" className={styles.sectionTitle}>
+                  مثال اليوم: نفس التاريخ الهجري بثلاث طرق
+                </h2>
+                <p className={styles.sectionCopy}>
+                  عند تحويل تاريخ هجري واحد، قد تتطابق النتيجة الميلادية أو تختلف عند أطراف الشهر.
+                  هذه المقارنة تساعدك على رؤية أثر طريقة الحساب قبل نسخ التاريخ.
+                </p>
+              </div>
+              <div className={styles.methodResultGrid}>
+                {methodResults.map((item) => (
+                  <article key={item.label} className={styles.metricCard}>
+                    <span className={styles.metricLabel}>{item.label}</span>
+                    <strong className={styles.metricValue}>{item.result}</strong>
+                  </article>
+                ))}
               </div>
             </section>
           )}
 
           <AdInArticle slotId="mid-date-hijri-to-gregorian" />
 
-          <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="hijri-faq-heading">
-            <div className={styles.sectionPanel}>
-              <div className={styles.sectionHead}>
-                <span className="badge badge-accent">أسئلة شائعة</span>
-                <h2 id="hijri-faq-heading" className={styles.sectionTitle}>
-                  أسئلة مهمة قبل اعتماد التحويل إلى ميلادي
-                </h2>
-                <p className={styles.sectionCopy}>
-                  هذه الأسئلة تغطي أكثر مواضع الالتباس: تاريخ الميلاد، فرق يوم واحد، والمواعيد الرسمية.
-                </p>
-              </div>
-              <div className={styles.faqGrid}>
-                {FAQ_ITEMS.map((item) => (
-                  <details key={item.question} className={styles.faqCard}>
-                    <summary className={styles.faqQuestion}>
-                      <HelpCircle size={16} strokeWidth={1.75} aria-hidden="true" />
-                      {item.question}
-                    </summary>
-                    <p className={styles.cardBody}>{item.answer}</p>
-                  </details>
-                ))}
-              </div>
-            </div>
+          {/* FAQ — the one pattern used everywhere (owner, 2026-08-13: "FAQ should always
+              be like the FAQ in tools pages"). */}
+          <section className={`container mx-auto px-4 ${styles.sectionBand} max-w-3xl`} aria-labelledby="hijri-faq-heading">
+            <h2 id="hijri-faq-heading" className={styles.sectionTitle}>
+              أسئلة مهمة قبل اعتماد التحويل إلى ميلادي
+            </h2>
+            <SiteFaqAccordion items={FAQ_ITEMS.map((item) => ({ question: item.question, answer: item.answer }))} />
           </section>
 
-          <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="hijri-sources-heading">
-            <div className={styles.sectionPanel}>
-              <div className={styles.sectionHead}>
-                <h2 id="hijri-sources-heading" className={styles.sectionTitle}>
-                  مصادر تساعدك على فهم التحويل
-                </h2>
-                <p className={styles.sectionCopy}>
-                  راجع هذه المصادر إذا أردت فهم الفرق بين التقويم الهجري القمري، أم القرى، والتقويم الميلادي الشمسي.
-                </p>
-              </div>
-              <div className={styles.linkGrid}>
-                {SOURCE_LINKS.map((source) => (
-                  <a
-                    key={source.href}
-                    href={source.href}
-                    className={styles.linkCard}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span className={styles.cardIcon} aria-hidden="true">
-                      <CheckCircle2 size={16} strokeWidth={1.75} />
-                    </span>
-                    <span className={styles.cardTitle}>{source.label}</span>
-                    <span className={styles.cardBody}>{source.description}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
+          {/* Related pages — small, clean, unique CARDS (owner, 2026-08-13), not a list. */}
+          <section className={`container mx-auto px-4 ${styles.sectionBand} max-w-3xl`}>
+            <SiteRelatedCardGrid
+              heading="إذا بدأت من تاريخ هجري وتحتاج خطوة ثانية"
+              headingId="hijri-next-paths-heading"
+              items={[
+                { href: '/date/gregorian-to-hijri', label: 'تحويل ميلادي إلى هجري', Icon: ArrowLeftRight },
+                { href: '/date/today/hijri', label: 'التاريخ الهجري اليوم', Icon: Moon },
+                { href: '/date/converter', label: 'محول التاريخ العام', Icon: Calendar },
+                { href: `/date/calendar/${y}`, label: `تقويم ${y}`, Icon: CalendarDays },
+              ]}
+            />
           </section>
 
-          <section className={`container mx-auto px-4 ${styles.sectionBand}`}>
-            <nav aria-label="مسارات مراجعة نتيجة التحويل الهجري إلى ميلادي" className={styles.sectionPanel} dir="rtl">
-              <div className={styles.sectionHead}>
-                <h2 className={styles.sectionTitle}>إذا بدأت من تاريخ هجري وتحتاج خطوة ثانية</h2>
-                <p className={styles.sectionCopy}>
-                  بعد التحويل، اختر المسار الذي يساعدك على المراجعة: عكس التحويل، قراءة تاريخ اليوم، أو فتح المحول العام.
-                </p>
-              </div>
-              <div className={`${styles.linkGrid} mt-5`}>
-                <Link href="/date/gregorian-to-hijri" className={`${styles.linkCard} ${styles.linkCardPrimary}`}>
-                  <span className={styles.cardIcon} aria-hidden="true">
-                    <ArrowLeftRight size={16} strokeWidth={1.75} />
-                  </span>
-                  <span className={styles.cardTitle}>تحويل ميلادي إلى هجري</span>
-                  <span className={styles.cardBody}>استخدمه للتأكد من أن التاريخ الميلادي الناتج يرجع إلى نفس اليوم الهجري.</span>
-                </Link>
-
-                <Link href="/date/today/hijri" className={styles.linkCard}>
-                  <span className={styles.cardIcon} aria-hidden="true">
-                    <Moon size={16} strokeWidth={1.75} />
-                  </span>
-                  <span className={styles.cardTitle}>التاريخ الهجري اليوم</span>
-                  <span className={styles.cardBody}>راجع السياق الحالي إذا كان الموعد قريباً من بداية شهر هجري أو مناسبة دينية.</span>
-                </Link>
-
-                <Link href="/date/converter" className={styles.linkCard}>
-                  <span className={styles.cardIcon} aria-hidden="true">
-                    <Calendar size={16} strokeWidth={1.75} />
-                  </span>
-                  <span className={styles.cardTitle}>محول التاريخ العام</span>
-                  <span className={styles.cardBody}>افتحه عندما تحتاج تغيير الاتجاه أو مقارنة أكثر من تاريخ في جلسة واحدة.</span>
-                </Link>
-
-                <Link href={`/date/calendar/${y}`} className={styles.linkCard}>
-                  <span className={styles.cardIcon} aria-hidden="true">
-                    <CalendarDays size={16} strokeWidth={1.75} />
-                  </span>
-                  <span className={styles.cardTitle}>تقويم {y}</span>
-                  <span className={styles.cardBody}>افتح السنة كاملة عندما تريد رؤية موقع التاريخ الميلادي داخل الشهر والخطة السنوية.</span>
-                </Link>
-              </div>
-            </nav>
+          {/* Sources — last thing on the page (owner, 2026-08-13), plain small dot-list
+              like /tools. */}
+          <section className={`container mx-auto px-4 ${styles.sectionBand} max-w-3xl`}>
+            <SiteDotLinkList
+              heading="مصادر تساعدك على فهم التحويل"
+              headingId="hijri-sources-heading"
+              items={SOURCE_LINKS.map((source) => ({
+                href: source.href,
+                label: source.label,
+                description: source.description,
+                external: true,
+              }))}
+            />
           </section>
         </main>
       </AdLayoutWrapper>

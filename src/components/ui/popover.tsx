@@ -59,7 +59,7 @@ function PopoverHeader({ className, ...props }: PopoverElementProps): React.JSX.
   return (
     <div
       data-slot="popover-header"
-      className={cn("flex flex-col gap-[var(--space-1)] text-[var(--text-sm)]", className)}
+      className={cn("flex flex-col gap-[var(--space-1)] [font-size:var(--text-sm)]", className)}
       {...props}
     />
   )

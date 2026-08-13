@@ -7,6 +7,8 @@ import { GREGORIAN_MONTHS_AR, HIJRI_MONTHS_AR } from '@/lib/constants';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import DateRouteLoading from '@/components/date/DateRouteLoading';
+import { SiteFaqAccordion } from '@/components/shared/SiteFaqAccordion';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
@@ -211,46 +213,40 @@ async function HijriMonthsDynamicContent() {
 
           <DateBreadcrumb items={breadcrumb} />
 
-          <section className="date-hero-panel mb-6">
+          <section className="date-hero-panel date-hero-panel--single mb-12">
             {hijri && currentMonthInfo ? (
-              <>
-                <div className="date-hero-main">
-                  <p className="date-kicker m-0">الشهر الهجري الحالي</p>
-                  <h1 className="date-hero-title text-accent-alt">
-                    أنت الآن في شهر {currentMonthInfo.name} {hijri.year} هـ
-                  </h1>
-                  <p className="date-hero-copy">
-                    اليوم هو {hijri.day} من {currentMonthInfo.name}، الموافق{' '}
-                    <span dir="ltr" className="font-bold text-primary">
-                      {padDatePart(d)}/{padDatePart(m)}/{y}
-                    </span>{' '}
-                    ميلادي. تعرض هذه الصفحة ترتيب الشهور الهجرية الاثني عشر كاملة مع معنى كل اسم وسبب تسميته وعدد أيامه، حتى تفهم التقويم الهجري لا أن تحفظ أسماءه فقط.
-                  </p>
-                  {currentMonthInfo.isSacred && (
-                    <div className="flex flex-wrap gap-2">
-                      <span className="badge badge-accent">من الأشهر الحرم</span>
-                    </div>
-                  )}
-                </div>
-                <aside className="date-hero-rail" aria-label="ملخص الشهر الهجري الحالي">
-                  <p className="date-hero-answer">
-                    باقي {daysLeftInMonth} يوم
-                  </p>
-                  <p className="date-hero-note">
-                    {nextMonthInfo
-                      ? `على بداية شهر ${nextMonthInfo.name}، الموافق ${nextMonthStartLabel} ميلادي تقريباً.`
-                      : 'على نهاية الشهر الهجري الحالي.'}
-                  </p>
-                  <div className="date-hero-actions">
-                    <Link href="/date/today/hijri" className="date-hero-link date-hero-link--primary">
-                      التاريخ الهجري اليوم بالتفصيل
-                    </Link>
-                    <Link href="/date/converter" className="date-hero-link">
-                      محول التاريخ
-                    </Link>
+              <div className="date-hero-main">
+                <p className="date-kicker m-0">الشهر الهجري الحالي</p>
+                <h1 className="date-hero-title text-accent-alt">
+                  أنت الآن في شهر {currentMonthInfo.name} {hijri.year} هـ
+                </h1>
+                <p className="date-hero-gregorian">
+                  اليوم {hijri.day} من {currentMonthInfo.name}، يوافق{' '}
+                  <strong>{padDatePart(d)}/{padDatePart(m)}/{y}</strong> ميلادي
+                </p>
+                <p className="date-hero-copy">
+                  باقي <strong className="text-primary">{daysLeftInMonth} يوم</strong>{' '}
+                  {nextMonthInfo
+                    ? `على بداية شهر ${nextMonthInfo.name}، الموافق ${nextMonthStartLabel} ميلادي تقريباً.`
+                    : 'على نهاية الشهر الهجري الحالي.'}{' '}
+                  تعرض هذه الصفحة ترتيب الشهور الهجرية الاثني عشر كاملة مع معنى كل اسم وسبب تسميته وعدد أيامه.
+                </p>
+                {currentMonthInfo.isSacred && (
+                  <div className="flex flex-wrap gap-2">
+                    <span className="badge badge-accent">من الأشهر الحرم</span>
                   </div>
-                </aside>
-              </>
+                )}
+                <div className="date-hero-quick-actions">
+                  <Link href="/date/today/hijri" className="date-quick-action">
+                    <Moon size={16} strokeWidth={1.75} aria-hidden="true" />
+                    التاريخ الهجري اليوم بالتفصيل
+                  </Link>
+                  <Link href="/date/converter" className="date-quick-action">
+                    <ArrowLeftRight size={16} strokeWidth={1.75} aria-hidden="true" />
+                    محول التاريخ
+                  </Link>
+                </div>
+              </div>
             ) : (
               <div className="date-hero-main">
                 <h1 className="date-hero-title">ترتيب الشهور الهجرية ومعانيها وعدد أيامها</h1>
@@ -261,7 +257,9 @@ async function HijriMonthsDynamicContent() {
             )}
           </section>
 
-          <section className="date-detail-panel mb-8" aria-labelledby="hijri-months-table-heading">
+          {/* Title + description sit as plain text, not inside a bordered card — only the
+              table itself is a surface (DESIGN.md: no nested cards). */}
+          <section className="date-section" aria-labelledby="hijri-months-table-heading">
             <div className="date-section-head">
               <h2 id="hijri-months-table-heading" className="date-section-title">
                 ترتيب الشهور الهجرية الاثني عشر مع معنى كل اسم
@@ -329,157 +327,69 @@ async function HijriMonthsDynamicContent() {
 
           <AdInArticle slotId="mid-date-hijri-months" />
 
-          <section className="date-editorial-grid date-section">
-            <div className="max-w-3xl space-y-4">
-              <h2 className="date-editorial-title">لماذا لا ترتبط أسماء الشهور الهجرية بالفصول اليوم؟</h2>
-              <p className="date-editorial-copy">
-                وُضعت أسماء الشهور الهجرية قبل الإسلام في زمن كانت فيه الأشهر مرتبطة فعلياً بفصول
-                السنة، مثل ربيع الأول وربيع الآخر في الربيع، وجمادى الأولى وجمادى الآخرة في الشتاء حين
-                يتجمد الماء. لكن التقويم الهجري تقويم قمري خالص لا يُدخِل شهراً كبيسياً لضبطه مع فصول
-                الشمس كما يفعل التقويم الميلادي، فتتنقل الشهور الهجرية عبر كل فصول السنة خلال دورة تمتد
-                نحو 33 سنة ميلادية. لهذا قد تجد رمضان في الصيف سنوات، ثم في الشتاء سنوات أخرى، رغم أن
-                اسمه مشتق أصلاً من شدة الحر.
-              </p>
-              <p className="date-editorial-copy">
-                هذا التنقل هو ما يميز التقويم الهجري عملياً: فهو يمنحك دورة كاملة من الفصول لكل مناسبة
-                دينية على مدى العمر، بدل أن ترتبط بفصل واحد ثابت كما هو الحال في كثير من التقاويم
-                الشمسية.
-              </p>
-              <h2 className="date-editorial-title">الأشهر الحرم الأربعة ولماذا تحمل مكانة خاصة</h2>
-              <p className="date-editorial-copy">
-                من بين الشهور الاثني عشر، أربعة أشهر تحمل اسم الأشهر الحرم: رجب منفرداً في منتصف السنة،
-                ثم ذو القعدة وذو الحجة والمحرم متتالية حول موسم الحج. سُمّيت حرماً لأن القتال كان
-                محرَّماً فيها في الجاهلية والإسلام إلا دفاعاً، ولأن العلماء يذكرون أن الحسنة فيها أعظم
-                والذنب فيها أشد. ذو القعدة وذو الحجة سبقا موسم الحج والعودة الآمنة منه، ومحرم أعطى
-                القبائل وقتاً للعودة إلى ديارها بأمان، بينما جاء رجب في منتصف العام لتيسير زيارة الكعبة
-                والاعتمار بها من مسافة بعيدة.
-              </p>
-              <h2 className="date-editorial-title">كيف تستفيد من هذه الصفحة عملياً</h2>
-              <p className="date-editorial-copy">
-                إذا كنت تحتاج معرفة الشهر الحالي فقط، فالمؤشر أعلى الصفحة يعطيك الجواب مباشرة مع عدد
-                الأيام المتبقية على بدايته أو نهايته. وإذا كنت تشرح التقويم الهجري لطالب أو تحضّر محتوى
-                عنه، استخدم الجدول والمعاني لتقديم شرح دقيق بدل تكرار الأسماء بلا سياق. ولمتابعة تاريخ
-                يوم بعينه بدقة أكبر، افتح صفحة التاريخ الهجري اليوم أو محول التاريخ.
-              </p>
-            </div>
-            <div className="date-use-list">
-              <article className="date-use-item">
-                <h3 className="date-use-title">
-                  <span className="date-use-icon" aria-hidden="true"><Moon size={16} strokeWidth={1.75} /></span>
-                  للعبادات
-                </h3>
-                <p className="date-use-copy">تابع الأشهر الحرم ورمضان وموسم الحج بمعرفة دقيقة لموقعك الحالي داخل السنة الهجرية.</p>
-              </article>
-              <article className="date-use-item">
-                <h3 className="date-use-title">
-                  <span className="date-use-icon" aria-hidden="true"><Calendar size={16} strokeWidth={1.75} /></span>
-                  للتعليم والمحتوى
-                </h3>
-                <p className="date-use-copy">استخدم معاني الأسماء الموثقة لشرح التقويم الهجري بدقة بدل تكرار الأسماء دون سياق.</p>
-              </article>
-              <article className="date-use-item">
-                <h3 className="date-use-title">
-                  <span className="date-use-icon" aria-hidden="true"><CalendarDays size={16} strokeWidth={1.75} /></span>
-                  للتخطيط
-                </h3>
-                <p className="date-use-copy">راقب عدد الأيام المتبقية على الشهر الحالي لترتيب مناسبة أو عبادة أو سفر قادم.</p>
-              </article>
-            </div>
+          {/* Plain single-column prose — no more two-column grid with a bordered card
+              list beside it (owner, 2026-08-13: "they should not be two columns from the
+              first place"). The three "benefit" cards become an icon-chip inline list. */}
+          <section className="date-section max-w-3xl">
+            <h2 className="date-section-title">لماذا لا ترتبط أسماء الشهور الهجرية بالفصول اليوم؟</h2>
+            <p className="date-editorial-copy">
+              وُضعت أسماء الشهور الهجرية قبل الإسلام في زمن كانت فيه الأشهر مرتبطة فعلياً بفصول
+              السنة، مثل ربيع الأول وربيع الآخر في الربيع، وجمادى الأولى وجمادى الآخرة في الشتاء حين
+              يتجمد الماء. لكن التقويم الهجري تقويم قمري خالص لا يُدخِل شهراً كبيسياً لضبطه مع فصول
+              الشمس كما يفعل التقويم الميلادي، فتتنقل الشهور الهجرية عبر كل فصول السنة خلال دورة تمتد
+              نحو 33 سنة ميلادية. لهذا قد تجد رمضان في الصيف سنوات، ثم في الشتاء سنوات أخرى، رغم أن
+              اسمه مشتق أصلاً من شدة الحر.
+            </p>
+            <h2 className="date-section-title mt-8">الأشهر الحرم الأربعة ولماذا تحمل مكانة خاصة</h2>
+            <p className="date-editorial-copy">
+              من بين الشهور الاثني عشر، أربعة أشهر تحمل اسم الأشهر الحرم: رجب منفرداً في منتصف السنة،
+              ثم ذو القعدة وذو الحجة والمحرم متتالية حول موسم الحج. سُمّيت حرماً لأن القتال كان
+              محرَّماً فيها في الجاهلية والإسلام إلا دفاعاً، ولأن العلماء يذكرون أن الحسنة فيها أعظم
+              والذنب فيها أشد.
+            </p>
+            <ul className="date-use-inline-list">
+              <li>
+                <span className="date-use-icon" aria-hidden="true"><Moon size={16} strokeWidth={1.75} /></span>
+                <span><strong>للعبادات</strong> — تابع الأشهر الحرم ورمضان وموسم الحج بمعرفة دقيقة لموقعك الحالي داخل السنة الهجرية.</span>
+              </li>
+              <li>
+                <span className="date-use-icon" aria-hidden="true"><Calendar size={16} strokeWidth={1.75} /></span>
+                <span><strong>للتعليم والمحتوى</strong> — استخدم معاني الأسماء الموثقة لشرح التقويم الهجري بدقة بدل تكرار الأسماء دون سياق.</span>
+              </li>
+              <li>
+                <span className="date-use-icon" aria-hidden="true"><CalendarDays size={16} strokeWidth={1.75} /></span>
+                <span><strong>للتخطيط</strong> — راقب عدد الأيام المتبقية على الشهر الحالي لترتيب مناسبة أو عبادة أو سفر قادم.</span>
+              </li>
+            </ul>
           </section>
 
-          <section className="date-editorial-grid date-section">
-            <div className="max-w-3xl space-y-4">
-              <h2 className="date-editorial-title">أسئلة عن ترتيب الشهور الهجرية</h2>
-              {faqItems.map((item) => (
-                <details key={item.question} className="date-use-item">
-                  <summary className="date-use-title">{item.question}</summary>
-                  <p className="date-use-copy">{item.answer}</p>
-                </details>
-              ))}
-            </div>
-            <div className="date-use-list">
-              <article className="date-use-item">
-                <h3 className="date-use-title">قاعدة عملية</h3>
-                <p className="date-use-copy">احفظ الترتيب لا الفصل: الشهور تتنقل بين الفصول عبر السنين، فلا تربط اسم الشهر بفصل ثابت.</p>
-              </article>
-            </div>
+          {/* FAQ — the one pattern used everywhere (owner, 2026-08-13: "FAQ should always
+              be like the FAQ in tools pages"), never a two-column layout next to it. */}
+          <section className="date-section max-w-3xl">
+            <h2 className="date-editorial-title">أسئلة عن ترتيب الشهور الهجرية</h2>
+            <SiteFaqAccordion items={faqItems} />
+            <p className="date-editorial-copy mt-4">
+              <strong className="text-primary">قاعدة عملية:</strong> احفظ الترتيب لا الفصل — الشهور تتنقل بين الفصول عبر السنين، فلا تربط اسم الشهر بفصل ثابت.
+            </p>
           </section>
 
-          <nav aria-label="مسارات مراجعة الشهور الهجرية" className="related-links" dir="rtl">
-            <p className="related-links__heading">تابع التاريخ الهجري بتفاصيل أكثر</p>
-            <div className="related-links__grid">
-              <Link href="/date/today/hijri" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <Moon size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">التاريخ الهجري اليوم</span>
-                  <span className="related-link-card__desc">اليوم والشهر والسنة الهجرية بالتفصيل مع مقارنة طرق الحساب</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-
-              {hijri && (
-                <Link
-                  href={`/date/calendar/hijri/${hijri.year}`}
-                  className="related-link-card"
-                >
-                  <span className="related-link-card__icon" aria-hidden="true">
-                    <CalendarDays size={16} strokeWidth={1.75} />
-                  </span>
-                  <span className="related-link-card__body">
-                    <span className="related-link-card__label">تقويم {hijri.year} هـ كاملاً</span>
-                    <span className="related-link-card__desc">كل أشهر السنة الهجرية الحالية في تقويم واحد</span>
-                  </span>
-                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
-                </Link>
-              )}
-
-              <Link href="/date/converter" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <ArrowLeftRight size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">محول التاريخ</span>
-                  <span className="related-link-card__desc">حوّل أي تاريخ هجري أو ميلادي وقارن طرق الحساب</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-
-              <Link href="/holidays/ramadan" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <Moon size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">رمضان — العد التنازلي</span>
-                  <span className="related-link-card__desc">تابع الأيام المتبقية على شهر رمضان القادم</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-
-              <Link href="/holidays/islamic-new-year" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <Calendar size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">رأس السنة الهجرية</span>
-                  <span className="related-link-card__desc">موعد بداية السنة الهجرية الجديدة (أول محرم)</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-
-              <Link href="/holidays/hajj-season" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <ShieldCheck size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">موسم الحج</span>
-                  <span className="related-link-card__desc">مواعيد أيام الحج في ذي الحجة، أحد الأشهر الحرم</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-            </div>
-          </nav>
+          {/* Related pages — small, clean, unique CARDS (owner, 2026-08-13), not a list. */}
+          <section className="date-section max-w-3xl">
+            <SiteRelatedCardGrid
+              heading="تابع التاريخ الهجري بتفاصيل أكثر"
+              headingId="hijri-months-next-paths-heading"
+              items={[
+                { href: '/date/today/hijri', label: 'التاريخ الهجري اليوم', Icon: Moon },
+                ...(hijri
+                  ? [{ href: `/date/calendar/hijri/${hijri.year}`, label: `تقويم ${hijri.year} هـ كاملاً`, Icon: CalendarDays }]
+                  : []),
+                { href: '/date/converter', label: 'محول التاريخ', Icon: ArrowLeftRight },
+                { href: '/holidays/ramadan', label: 'رمضان — العد التنازلي', Icon: Moon },
+                { href: '/holidays/islamic-new-year', label: 'رأس السنة الهجرية', Icon: Calendar },
+                { href: '/holidays/hajj-season', label: 'موسم الحج', Icon: ShieldCheck },
+              ]}
+            />
+          </section>
         </main>
       </AdLayoutWrapper>
     </>

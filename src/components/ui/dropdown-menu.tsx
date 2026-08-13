@@ -111,7 +111,7 @@ function DropdownMenuItem({
       data-inset={inset}
       data-variant={resolvedVariant}
       className={cn(
-        "relative flex cursor-default select-none items-center gap-[var(--space-2)] rounded-[var(--radius-sm)] px-[var(--space-2-5)] py-[var(--space-2)] text-[var(--text-sm)] leading-[var(--leading-snug)] text-[var(--text-1)] outline-none transition-[background-color,color] focus:bg-[var(--muted)] focus:text-[var(--text-1)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset=true]:ps-[var(--space-8)] data-[variant=destructive]:text-[var(--red-text)] data-[variant=destructive]:focus:bg-[var(--red-subtle)] data-[variant=destructive]:focus:text-[var(--red-text)] data-[variant=destructive]:*:[svg]:!text-[var(--red-text)] [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[var(--space-4)] [&_svg:not([class*='text-'])]:text-[var(--text-3)]",
+        "relative flex cursor-default select-none items-center gap-[var(--space-2)] rounded-[var(--radius-sm)] px-[var(--space-2-5)] py-[var(--space-2)] [font-size:var(--text-sm)] leading-[var(--leading-snug)] text-[var(--text-1)] outline-none transition-[background-color,color] focus:bg-[var(--muted)] focus:text-[var(--text-1)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset=true]:ps-[var(--space-8)] data-[variant=destructive]:text-[var(--red-text)] data-[variant=destructive]:focus:bg-[var(--red-subtle)] data-[variant=destructive]:focus:text-[var(--red-text)] data-[variant=destructive]:*:[svg]:!text-[var(--red-text)] [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[var(--space-4)] [&_svg:not([class*='text-'])]:text-[var(--text-3)]",
         className
       )}
       {...props}
@@ -129,7 +129,7 @@ function DropdownMenuCheckboxItem({
     <DropdownMenuPrimitive.CheckboxItem
       data-slot="dropdown-menu-checkbox-item"
       className={cn(
-        "relative flex cursor-default select-none items-center gap-[var(--space-2)] rounded-[var(--radius-sm)] py-[var(--space-2)] pe-[var(--space-2-5)] ps-[var(--space-8)] text-[var(--text-sm)] leading-[var(--leading-snug)] text-[var(--text-1)] outline-none transition-[background-color,color] focus:bg-[var(--muted)] focus:text-[var(--text-1)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[var(--space-4)]",
+        "relative flex cursor-default select-none items-center gap-[var(--space-2)] rounded-[var(--radius-sm)] py-[var(--space-2)] pe-[var(--space-2-5)] ps-[var(--space-8)] [font-size:var(--text-sm)] leading-[var(--leading-snug)] text-[var(--text-1)] outline-none transition-[background-color,color] focus:bg-[var(--muted)] focus:text-[var(--text-1)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[var(--space-4)]",
         className
       )}
       checked={checked}
@@ -165,7 +165,7 @@ function DropdownMenuRadioItem({
     <DropdownMenuPrimitive.RadioItem
       data-slot="dropdown-menu-radio-item"
       className={cn(
-        "relative flex cursor-default select-none items-center gap-[var(--space-2)] rounded-[var(--radius-sm)] py-[var(--space-2)] pe-[var(--space-2-5)] ps-[var(--space-8)] text-[var(--text-sm)] leading-[var(--leading-snug)] text-[var(--text-1)] outline-none transition-[background-color,color] focus:bg-[var(--muted)] focus:text-[var(--text-1)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[var(--space-4)]",
+        "relative flex cursor-default select-none items-center gap-[var(--space-2)] rounded-[var(--radius-sm)] py-[var(--space-2)] pe-[var(--space-2-5)] ps-[var(--space-8)] [font-size:var(--text-sm)] leading-[var(--leading-snug)] text-[var(--text-1)] outline-none transition-[background-color,color] focus:bg-[var(--muted)] focus:text-[var(--text-1)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[var(--space-4)]",
         className
       )}
       {...props}
@@ -190,7 +190,7 @@ function DropdownMenuLabel({
       data-slot="dropdown-menu-label"
       data-inset={inset}
       className={cn(
-        "px-[var(--space-2-5)] py-[var(--space-2)] text-[var(--text-xs)] font-semibold leading-[var(--leading-none)] text-[var(--text-3)] data-[inset=true]:ps-[var(--space-8)]",
+        "px-[var(--space-2-5)] py-[var(--space-2)] [font-size:var(--text-xs)] font-semibold leading-[var(--leading-none)] text-[var(--text-3)] data-[inset=true]:ps-[var(--space-8)]",
         className
       )}
       {...props}
@@ -222,7 +222,7 @@ function DropdownMenuShortcut({
     <span
       data-slot="dropdown-menu-shortcut"
       className={cn(
-        "ms-auto text-[var(--text-xs)] text-[var(--text-3)]",
+        "ms-auto [font-size:var(--text-xs)] text-[var(--text-3)]",
         className
       )}
       {...props}
@@ -247,7 +247,7 @@ function DropdownMenuSubTrigger({
       data-slot="dropdown-menu-sub-trigger"
       data-inset={inset}
       className={cn(
-        "flex cursor-default select-none items-center gap-[var(--space-2)] rounded-[var(--radius-sm)] px-[var(--space-2-5)] py-[var(--space-2)] text-[var(--text-sm)] leading-[var(--leading-snug)] text-[var(--text-1)] outline-none transition-[background-color,color] focus:bg-[var(--muted)] focus:text-[var(--text-1)] data-[state=open]:bg-[var(--muted)] data-[state=open]:text-[var(--text-1)] data-[inset=true]:ps-[var(--space-8)] [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[var(--space-4)] [&_svg:not([class*='text-'])]:text-[var(--text-3)]",
+        "flex cursor-default select-none items-center gap-[var(--space-2)] rounded-[var(--radius-sm)] px-[var(--space-2-5)] py-[var(--space-2)] [font-size:var(--text-sm)] leading-[var(--leading-snug)] text-[var(--text-1)] outline-none transition-[background-color,color] focus:bg-[var(--muted)] focus:text-[var(--text-1)] data-[state=open]:bg-[var(--muted)] data-[state=open]:text-[var(--text-1)] data-[inset=true]:ps-[var(--space-8)] [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[var(--space-4)] [&_svg:not([class*='text-'])]:text-[var(--text-3)]",
         className
       )}
       {...props}

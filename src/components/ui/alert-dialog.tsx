@@ -109,7 +109,7 @@ function AlertDialogTitle({
     <AlertDialogPrimitive.Title
       data-slot="alert-dialog-title"
       className={cn(
-        "text-[var(--text-lg)] font-semibold leading-[var(--leading-snug)] text-[var(--text-1)] sm:group-data-[size=default]/alert-dialog-content:group-has-data-[slot=alert-dialog-media]/alert-dialog-content:col-start-2",
+        "[font-size:var(--text-lg)] font-semibold leading-[var(--leading-snug)] text-[var(--text-1)] sm:group-data-[size=default]/alert-dialog-content:group-has-data-[slot=alert-dialog-media]/alert-dialog-content:col-start-2",
         className
       )}
       {...props}
@@ -124,7 +124,7 @@ function AlertDialogDescription({
   return (
     <AlertDialogPrimitive.Description
       data-slot="alert-dialog-description"
-      className={cn("text-[var(--text-sm)] leading-[var(--leading-normal)] text-[var(--text-2)]", className)}
+      className={cn("[font-size:var(--text-sm)] leading-[var(--leading-normal)] text-[var(--text-2)]", className)}
       {...props}
     />
   )

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { watchAdFill } from "@/lib/ads/unfilled";
 import { useMarketingPermission } from "@/lib/client/marketing";
 import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
 import { logger, serializeError } from "@/lib/logger";
@@ -46,19 +47,24 @@ export default function AdSidebarSticky({
   const shouldRenderAds = Boolean(clientId && adSlot);
   const canLoadAds = useMarketingPermission(shouldRenderAds);
   const ref = useRef<HTMLElement>(null);
+  const insRef = useRef<HTMLModElement>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isUnfilled, setIsUnfilled] = useState(false);
   const loaded = useRef(false);
 
   useEffect(() => {
     if (!canLoadAds) return;
     if (!ref.current || loaded.current) return;
 
-    // Both rails activate at the same breakpoint now (see ads.css, 2026-07-30) — the static
-    // rail used to gate at 1680px while its grid column only started at 1440px, reserving
-    // dead (ad-less) space on real laptop widths in between. sticky/static no longer need
-    // different thresholds.
-    const isDesktop = window.matchMedia("(min-width: 1440px)").matches;
+    // Both rails activate at the same breakpoint (see ads.css) — lowered to 1180px 2026-08-13
+    // (owner: "in desktop and normal laptop we should also have side left and right ads")
+    // from 1440px, which excluded very common 1280–1366px laptop widths entirely. Must stay
+    // in sync with the CSS visibility breakpoint in ads.css, or this JS gate blocks the ad
+    // request on a width where the CSS already shows the (then permanently empty) container.
+    const isDesktop = window.matchMedia("(min-width: 1180px)").matches;
     if (!isDesktop) return;
+
+    let stopWatch: (() => void) | undefined;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -79,6 +85,10 @@ export default function AdSidebarSticky({
               });
             }
 
+            // Collapse the reserved rail if Google returns no ad (unfilled) — otherwise the
+            // 400–600px-tall column sits there as an empty box next to real content forever.
+            stopWatch = watchAdFill(insRef.current, () => setIsUnfilled(true));
+
             observer.disconnect();
           }
         });
@@ -87,10 +97,13 @@ export default function AdSidebarSticky({
     );
 
     observer.observe(ref.current);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      stopWatch?.();
+    };
   }, [canLoadAds]);
 
-  if (!shouldRenderAds || !canLoadAds) return null;
+  if (!shouldRenderAds || !canLoadAds || isUnfilled) return null;
 
   return (
     <aside
@@ -111,6 +124,7 @@ export default function AdSidebarSticky({
     >
       <span className="ad-slot__label">إعلان</span>
       <ins
+        ref={insRef}
         className="adsbygoogle"
         style={{ display: "block" }}
         data-ad-client={clientId || undefined}

@@ -887,12 +887,32 @@
     "date": "{{year}}-10-16"
   },
   {
+    "id": "all-saints-day-belgium",
+    "slug": "all-saints-day-belgium",
+    "name": "عيد جميع القديسين في بلجيكا (Toussaint)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "be",
+    "month": 11,
+    "day": 1
+  },
+  {
     "id": "all-saints-day-france",
     "slug": "all-saints-day-france",
     "name": "عيد جميع القديسين في فرنسا",
     "type": "fixed",
     "category": "national",
     "_countryCode": "fr",
+    "month": 11,
+    "day": 1
+  },
+  {
+    "id": "all-saints-day-spain",
+    "slug": "all-saints-day-spain",
+    "name": "عيد جميع القديسين في إسبانيا (Día de Todos los Santos)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "es",
     "month": 11,
     "day": 1
   },
@@ -926,6 +946,16 @@
     "category": "national",
     "_countryCode": "lb",
     "month": 3,
+    "day": 25
+  },
+  {
+    "id": "anzac-day-australia",
+    "slug": "anzac-day-australia",
+    "name": "يوم أنزاك في أستراليا (Anzac Day)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "au",
+    "month": 4,
     "day": 25
   },
   {
@@ -987,6 +1017,16 @@
     "_countryCode": "lb",
     "month": 1,
     "day": 6
+  },
+  {
+    "id": "armistice-day-belgium",
+    "slug": "armistice-day-belgium",
+    "name": "ذكرى الهدنة في بلجيكا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "be",
+    "month": 11,
+    "day": 11
   },
   {
     "id": "armistice-day-france",
@@ -1082,6 +1122,16 @@
     "_countryCode": "lb",
     "month": 8,
     "day": 15
+  },
+  {
+    "id": "australia-day",
+    "slug": "australia-day",
+    "name": "اليوم الوطني الأسترالي (Australia Day)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "au",
+    "month": 1,
+    "day": 26
   },
   {
     "id": "autism-day",
@@ -1388,6 +1438,16 @@
     "day": 25
   },
   {
+    "id": "christmas-netherlands",
+    "slug": "christmas-netherlands",
+    "name": "عيد الميلاد في هولندا (Eerste en Tweede Kerstdag)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "nl",
+    "month": 12,
+    "day": 25
+  },
+  {
     "id": "christmas-palestine",
     "slug": "christmas-palestine",
     "name": "عيد الميلاد المجيد في فلسطين",
@@ -1448,6 +1508,16 @@
     "hijriDay": 28
   },
   {
+    "id": "constitution-day-kuwait",
+    "slug": "constitution-day-kuwait",
+    "name": "يوم الدستور الكويتي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "kw",
+    "month": 11,
+    "day": 11
+  },
+  {
     "id": "constitution-day-lebanon",
     "slug": "constitution-day-lebanon",
     "name": "ذكرى صدور الدستور اللبناني",
@@ -1456,6 +1526,16 @@
     "_countryCode": "lb",
     "month": 5,
     "day": 23
+  },
+  {
+    "id": "constitution-day-spain",
+    "slug": "constitution-day-spain",
+    "name": "يوم الدستور الإسباني (Día de la Constitución)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "es",
+    "month": 12,
+    "day": 6
   },
   {
     "id": "coptic-christmas-egypt",
@@ -1601,6 +1681,15 @@
     "easterOffset": 1
   },
   {
+    "id": "easter-monday-netherlands",
+    "slug": "easter-monday-netherlands",
+    "name": "إثنين الفصح في هولندا (Tweede Paasdag)",
+    "type": "easter",
+    "category": "national",
+    "_countryCode": "nl",
+    "easterOffset": 1
+  },
+  {
     "id": "easter-monday-uk",
     "slug": "easter-monday-uk",
     "name": "إثنين الفصح في بريطانيا",
@@ -1627,6 +1716,26 @@
     "_countryCode": "ae",
     "month": 2,
     "day": 28
+  },
+  {
+    "id": "eid-al-fitr-australia",
+    "slug": "eid-al-fitr-australia",
+    "name": "عيد الفطر في أستراليا",
+    "type": "hijri",
+    "category": "islamic",
+    "_countryCode": "au",
+    "hijriMonth": 10,
+    "hijriDay": 1
+  },
+  {
+    "id": "epiphany-spain",
+    "slug": "epiphany-spain",
+    "name": "عيد الغطاس في إسبانيا (يوم الملوك الثلاثة)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "es",
+    "month": 1,
+    "day": 6
   },
   {
     "id": "epiphany-sweden",
@@ -1707,6 +1816,16 @@
     "hijriDay": 20
   },
   {
+    "id": "ferragosto-italy",
+    "slug": "ferragosto-italy",
+    "name": "فيراغوستو في إيطاليا (Ferragosto)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "it",
+    "month": 8,
+    "day": 15
+  },
+  {
     "id": "fete-de-la-musique-france",
     "slug": "fete-de-la-musique-france",
     "name": "عيد الموسيقى في فرنسا",
@@ -1754,6 +1873,16 @@
     "_countryCode": "ae",
     "month": 11,
     "day": 3
+  },
+  {
+    "id": "flag-day-usa",
+    "slug": "flag-day-usa",
+    "name": "يوم العلم الأمريكي (Flag Day)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "us",
+    "month": 6,
+    "day": 14
   },
   {
     "id": "food-day",
@@ -2164,6 +2293,16 @@
     "day": 23
   },
   {
+    "id": "liberation-day-netherlands",
+    "slug": "liberation-day-netherlands",
+    "name": "يوم التحرير في هولندا (Bevrijdingsdag)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "nl",
+    "month": 5,
+    "day": 5
+  },
+  {
     "id": "liberation-day-syria",
     "slug": "liberation-day-syria",
     "name": "عيد التحرير في سوريا",
@@ -2402,6 +2541,16 @@
     "_countryCode": "bh",
     "month": 2,
     "day": 14
+  },
+  {
+    "id": "national-day-belgium",
+    "slug": "national-day-belgium",
+    "name": "اليوم الوطني البلجيكي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "be",
+    "month": 7,
+    "day": 21
   },
   {
     "id": "national-day-spain",
@@ -2738,6 +2887,16 @@
     "_countryCode": "iq",
     "month": 7,
     "day": 14
+  },
+  {
+    "id": "republic-day-italy",
+    "slug": "republic-day-italy",
+    "name": "يوم الجمهورية الإيطالية (Festa della Repubblica)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "it",
+    "month": 6,
+    "day": 2
   },
   {
     "id": "republic-day-tunisia",
@@ -3079,6 +3238,16 @@
     "month": 5,
     "weekday": 1,
     "nth": -1
+  },
+  {
+    "id": "st-francis-day-italy",
+    "slug": "st-francis-day-italy",
+    "name": "عيد القديس فرنسيس الأسيزي في إيطاليا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "it",
+    "month": 10,
+    "day": 4
   },
   {
     "id": "student-allowance-kuwait",

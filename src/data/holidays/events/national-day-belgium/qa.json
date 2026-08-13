@@ -1,0 +1,16 @@
+{
+  "slug": "national-day-belgium",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 21 يوليو موثق عبر belgium.be وVRT NWS. الفرق بين الاستقلال (أكتوبر 1830) واليوم الوطني (21 يوليو 1831) موثق ودقيق.",
+    "تواريخ 1830/1831/1890 مذكورة كحقائق تاريخية قديمة، مطابقة لقاعدة hasHardcodedYear."
+  ],
+  "updatedAt": "2026-08-12T20:37:42.713Z"
+}

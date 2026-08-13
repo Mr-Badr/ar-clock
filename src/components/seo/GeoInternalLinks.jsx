@@ -1,7 +1,10 @@
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
 
 /**
+ * Same props interface as before (title/description/links/ariaLabel) — only the rendered
+ * pattern changed, to the one dot-list used everywhere (owner directive, 2026-08-13). Used on
+ * 5 pages (time-now, time-difference, holidays), so this single fix applies there too.
+ *
  * @param {Object} props
  * @param {string} props.title
  * @param {string} [props.description]
@@ -18,80 +21,10 @@ export default function GeoInternalLinks(props) {
   if (safeLinks.length === 0) return null;
 
   return (
-    <div className="max-w-5xl mx-auto">
-      <h2
-        className="text-2xl font-bold mb-3"
-        style={{ color: 'var(--text-primary)' }}
-      >
-        {title}
-      </h2>
-      {description ? (
-        <p
-          className="mb-5"
-          style={{
-            color: 'var(--text-secondary)',
-            lineHeight: 1.8,
-            maxWidth: '72ch',
-          }}
-        >
-          {description}
-        </p>
-      ) : null}
-
-      <nav aria-label={ariaLabel || title}>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: '0.75rem',
-          }}
-        >
-          {safeLinks.map((link, index) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              style={{
-                display: 'grid',
-                gap: '0.4rem',
-                padding: '1rem',
-                borderRadius: 'var(--radius-lg)',
-                textDecoration: 'none',
-                background: index === 0 ? 'var(--bg-surface-2)' : 'transparent',
-                border: '1px solid var(--border-subtle)',
-              }}
-            >
-              <strong
-                style={{
-                  display: 'block',
-                  color: 'var(--text-primary)',
-                  marginBottom: '0.35rem',
-                }}
-              >
-                {link.label}
-              </strong>
-              {link.description ? (
-                <span style={{ color: 'var(--text-muted)', lineHeight: 1.7 }}>
-                  {link.description}
-                </span>
-              ) : null}
-              <span
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 'var(--space-2)',
-                  color: 'var(--accent-alt)',
-                  fontSize: 'var(--text-sm)',
-                  fontWeight: 'var(--font-semibold)',
-                  marginTop: 'var(--space-1)',
-                }}
-              >
-                افتح المسار
-                <ArrowLeft size={14} aria-hidden="true" />
-              </span>
-            </Link>
-          ))}
-        </div>
-      </nav>
+    <div className="max-w-3xl">
+      <h2 className="date-editorial-title">{title}</h2>
+      {description ? <p className="date-editorial-copy mb-4">{description}</p> : null}
+      <SiteDotLinkList items={safeLinks} ariaLabel={ariaLabel || title} />
     </div>
   );
 }

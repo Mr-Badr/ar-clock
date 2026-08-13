@@ -1,5 +1,4 @@
-
-import styles from './TimeNowSupportSections.module.css';
+import { SiteFaqAccordion } from '@/components/shared/SiteFaqAccordion';
 
 function isValidFaqItem(item) {
   return Boolean(
@@ -21,37 +20,22 @@ function buildFallbackFaq(placeLabelAr) {
   ];
 }
 
+// Same FAQ pattern as /tools everywhere on the site (owner directive, 2026-08-13) — shadcn
+// Accordion via SiteFaqAccordion, not a bespoke card-per-question list.
 export function TimeNowFAQ({ placeLabelAr, introText, items }) {
   const safePlaceLabel = placeLabelAr || 'هذه الصفحة';
   const faqItems = Array.isArray(items) ? items.filter(isValidFaqItem) : [];
   const visibleItems = faqItems.length > 0 ? faqItems : buildFallbackFaq(safePlaceLabel);
 
   return (
-    <section aria-labelledby="faq-h2" className={styles.section}>
-      <h2 id="faq-h2" className={styles.heading}>
+    <section aria-labelledby="faq-h2" className="date-section max-w-3xl">
+      <h2 id="faq-h2" className="date-editorial-title">
         أسئلة تساعدك على قراءة الوقت في {safePlaceLabel}
       </h2>
-      <p className={styles.intro}>
+      <p className="date-editorial-copy mb-4">
         {introText || `إجابات مختصرة عن الساعة الان في ${safePlaceLabel}، المنطقة الزمنية، والتاريخ المحلي اليوم.`}
       </p>
-
-      <div className={styles.faqList}>
-        {visibleItems.map((item, i) => (
-          <details
-            key={item.q || i}
-            name="time-faq"
-            className={styles.faqItem}
-          >
-            <summary className={styles.faqSummary}>
-              <span className={styles.faqQuestion}>{item.q}</span>
-              <span aria-hidden className={styles.faqChevron}>▼</span>
-            </summary>
-            <p className={styles.faqAnswer}>
-              {item.a}
-            </p>
-          </details>
-        ))}
-      </div>
+      <SiteFaqAccordion items={visibleItems.map((item) => ({ question: item.q, answer: item.a }))} />
     </section>
   );
 }

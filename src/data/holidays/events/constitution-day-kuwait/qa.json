@@ -1,0 +1,16 @@
+{
+  "slug": "constitution-day-kuwait",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 11 نوفمبر 1962 موثق كتاريخ تصديق الدستور عبر kuwaittimes.com وarabtimesonline.com (تغطيات سنوية متكررة تؤكد استمرارية الاحتفاء بهذه الذكرى). 183 مادة/5 أبواب موثقة.",
+    "الوضع القانوني للإجازة (رسمية مدفوعة أم رمزية) لم يُؤكد بشكل قاطع في المصادر — صيغت الإجابة بحذر ('يُنصح بمراجعة التقويم الرسمي') بدل الجزم."
+  ],
+  "updatedAt": "2026-08-12T20:58:49.096Z"
+}

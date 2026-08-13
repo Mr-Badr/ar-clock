@@ -1,0 +1,15 @@
+{
+  "slug": "epiphany-spain",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 6 يناير عطلة وطنية موحدة في إسبانيا، موثقة عبر BOE. أهمية اليوم كذروة موسم الهدايا موثقة عبر مصادر ثقافية متعددة."
+  ],
+  "updatedAt": "2026-08-12T14:46:23.381Z"
+}

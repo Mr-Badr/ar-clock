@@ -15,6 +15,8 @@ import {
 import CountdownTicker, { ShareBar } from '@/components/clocks/CountdownTicker';
 import CountdownCreatorForm from '@/components/countdown/CountdownCreatorForm.client';
 import { JsonLd } from '@/components/seo/JsonLd';
+import { SiteFaqAccordion } from '@/components/shared/SiteFaqAccordion';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
@@ -262,7 +264,6 @@ export default function CountdownPage({ searchParams }) {
           </section>
 
           <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="countdown-use-cases-heading">
-            <div className={styles.sectionPanel}>
               <div className={styles.sectionHead}>
                 <h2 id="countdown-use-cases-heading" className={styles.sectionTitle}>
                   لأي مناسبة تحتاج عداداً تنازلياً؟
@@ -285,90 +286,50 @@ export default function CountdownPage({ searchParams }) {
                   );
                 })}
               </div>
-            </div>
           </section>
 
-          <section className={`container mx-auto px-4 ${styles.sectionBand}`}>
-            <div className={styles.prosePanel}>
-              <h2 className={styles.sectionTitle}>لماذا هذا العداد التنازلي مختلف؟</h2>
-              <div className={styles.proseBody}>
-                <p>
-                  أغلب أدوات العد التنازلي العربية تكتفي بالتقويم الميلادي فقط. هنا يمكنك إدخال تاريخ
-                  المناسبة بالتقويم الهجري مباشرة، وسيحوّله الموقع تلقائياً باستخدام نفس محرك تقويم أم
-                  القرى المستخدم في صفحات التاريخ في الموقع — دون أي تحويل يدوي.
-                </p>
-                <p>
-                  الرابط الذي تحصل عليه بعد إنشاء العداد يشير إلى نفس اللحظة الزمنية الحقيقية لكل من
-                  يفتحه، أينما كان، مع أزرار مشاركة مباشرة عبر واتساب وتيليغرام، وخيار إضافة الموعد إلى
-                  تقويم جوجل أو تقويم آبل بضغطة واحدة.
-                </p>
-              </div>
+          {/* Plain text — a heading and two short paragraphs don't earn a card
+              (DESIGN.md Law 4). */}
+          <section className={`container mx-auto px-4 ${styles.sectionBand} max-w-3xl`}>
+            <h2 className={styles.sectionTitle}>لماذا هذا العداد التنازلي مختلف؟</h2>
+            <div className={styles.proseBody}>
+              <p>
+                أغلب أدوات العد التنازلي العربية تكتفي بالتقويم الميلادي فقط. هنا يمكنك إدخال تاريخ
+                المناسبة بالتقويم الهجري مباشرة، وسيحوّله الموقع تلقائياً باستخدام نفس محرك تقويم أم
+                القرى المستخدم في صفحات التاريخ في الموقع — دون أي تحويل يدوي.
+              </p>
+              <p>
+                الرابط الذي تحصل عليه بعد إنشاء العداد يشير إلى نفس اللحظة الزمنية الحقيقية لكل من
+                يفتحه، أينما كان، مع أزرار مشاركة مباشرة عبر واتساب وتيليغرام، وخيار إضافة الموعد إلى
+                تقويم جوجل أو تقويم آبل بضغطة واحدة.
+              </p>
             </div>
           </section>
 
           <AdInArticle slotId="inarticle-countdown" />
 
-          <section className={`container mx-auto px-4 ${styles.sectionBand}`} aria-labelledby="countdown-faq-heading">
-            <div className={styles.sectionPanel}>
-              <div className={styles.sectionHead}>
-                <span className="badge badge-accent">أسئلة شائعة</span>
-                <h2 id="countdown-faq-heading" className={styles.sectionTitle}>
-                  أسئلة قبل إنشاء عدادك التنازلي
-                </h2>
-              </div>
-              <div className={styles.faqGrid}>
-                {FAQ_ITEMS.map((item) => (
-                  <details key={item.question} className={styles.faqCard}>
-                    <summary className={styles.faqQuestion}>
-                      <HelpCircle size={16} strokeWidth={1.75} aria-hidden="true" />
-                      {item.question}
-                    </summary>
-                    <p className={styles.cardBody}>{item.answer}</p>
-                  </details>
-                ))}
-              </div>
-            </div>
+          {/* Same FAQ pattern as /tools everywhere on the site (owner directive,
+              2026-08-13) — SiteFaqAccordion, not a bespoke card-per-question grid. */}
+          <section className={`container mx-auto px-4 ${styles.sectionBand} max-w-3xl`} aria-labelledby="countdown-faq-heading">
+            <h2 id="countdown-faq-heading" className={styles.sectionTitle}>
+              أسئلة قبل إنشاء عدادك التنازلي
+            </h2>
+            <SiteFaqAccordion items={FAQ_ITEMS.map((item) => ({ question: item.question, answer: item.answer }))} />
           </section>
 
-          <section className={`container mx-auto px-4 ${styles.sectionBand}`}>
-            <nav aria-label="مسارات مرتبطة بالعداد التنازلي" className={styles.sectionPanel} dir="rtl">
-              <div className={styles.sectionHead}>
-                <h2 className={styles.sectionTitle}>أدوات مرتبطة</h2>
-              </div>
-              <div className={`${styles.linkGrid} mt-5`}>
-                <Link href="/tools/health/age-countdown" className={`${styles.linkCard} ${styles.linkCardPrimary}`}>
-                  <span className={styles.cardIcon} aria-hidden="true">
-                    <Gift size={16} strokeWidth={1.75} />
-                  </span>
-                  <span className={styles.cardTitle}>عداد عيد ميلادي القادم</span>
-                  <span className={styles.cardBody}>عداد جاهز خصيصاً لعيد ميلادك القادم من تاريخ ميلادك مباشرة.</span>
-                </Link>
-
-                <Link href="/holidays/ramadan" className={styles.linkCard}>
-                  <span className={styles.cardIcon} aria-hidden="true">
-                    <Moon size={16} strokeWidth={1.75} />
-                  </span>
-                  <span className={styles.cardTitle}>كم باقي على رمضان</span>
-                  <span className={styles.cardBody}>عداد جاهز ومحدّث تلقائياً لبداية شهر رمضان القادم.</span>
-                </Link>
-
-                <Link href="/holidays" className={styles.linkCard}>
-                  <span className={styles.cardIcon} aria-hidden="true">
-                    <CalendarClock size={16} strokeWidth={1.75} />
-                  </span>
-                  <span className={styles.cardTitle}>كل المناسبات والأعياد</span>
-                  <span className={styles.cardBody}>تصفح عدادات جاهزة لعشرات المناسبات الدينية والوطنية.</span>
-                </Link>
-
-                <Link href="/date/converter" className={styles.linkCard}>
-                  <span className={styles.cardIcon} aria-hidden="true">
-                    <CalendarClock size={16} strokeWidth={1.75} />
-                  </span>
-                  <span className={styles.cardTitle}>محول التاريخ الهجري والميلادي</span>
-                  <span className={styles.cardBody}>تحقق من تاريخ المناسبة بالتقويمين قبل إنشاء العداد.</span>
-                </Link>
-              </div>
-            </nav>
+          {/* Related tools — small clean unique cards, not the old bordered link-card grid
+              (owner directive, 2026-08-13). */}
+          <section className={`container mx-auto px-4 ${styles.sectionBand} max-w-3xl`}>
+            <SiteRelatedCardGrid
+              heading="أدوات مرتبطة"
+              headingId="countdown-related-heading"
+              items={[
+                { href: '/tools/health/age-countdown', label: 'عداد عيد ميلادي القادم', Icon: Gift },
+                { href: '/holidays/ramadan', label: 'كم باقي على رمضان', Icon: Moon },
+                { href: '/holidays', label: 'كل المناسبات والأعياد', Icon: CalendarClock },
+                { href: '/date/converter', label: 'محول التاريخ الهجري والميلادي', Icon: CalendarClock },
+              ]}
+            />
           </section>
 
           <AdMultiplex slotId="multiplex-countdown" />

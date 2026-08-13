@@ -5,7 +5,7 @@ import { Slot } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex w-fit shrink-0 items-center justify-center gap-[var(--space-1)] overflow-hidden rounded-[var(--radius-sm)] border px-[var(--space-2)] py-[var(--space-0-5)] text-[var(--text-xs)] font-medium leading-[var(--leading-none)] whitespace-nowrap transition-[background-color,border-color,box-shadow,color] focus-visible:shadow-[var(--shadow-focus)] data-[dot=true]:before:block data-[dot=true]:before:size-[var(--space-1)] data-[dot=true]:before:shrink-0 data-[dot=true]:before:rounded-[var(--radius-sm)] data-[dot=true]:before:bg-current aria-invalid:border-[var(--border-error)] aria-invalid:shadow-[var(--shadow-focus-danger)] [&>svg]:pointer-events-none [&>svg]:size-[var(--space-3)]",
+  "inline-flex w-fit shrink-0 items-center justify-center gap-[var(--space-1)] overflow-hidden rounded-[var(--radius-sm)] border px-[var(--space-2)] py-[var(--space-0-5)] [font-size:var(--text-xs)] font-medium leading-[var(--leading-none)] whitespace-nowrap transition-[background-color,border-color,box-shadow,color] focus-visible:shadow-[var(--shadow-focus)] data-[dot=true]:before:block data-[dot=true]:before:size-[var(--space-1)] data-[dot=true]:before:shrink-0 data-[dot=true]:before:rounded-[var(--radius-sm)] data-[dot=true]:before:bg-current aria-invalid:border-[var(--border-error)] aria-invalid:shadow-[var(--shadow-focus-danger)] [&>svg]:pointer-events-none [&>svg]:size-[var(--space-3)]",
   {
     variants: {
       variant: {

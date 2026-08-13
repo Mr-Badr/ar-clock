@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { DateBreadcrumb, buildBreadcrumbJsonLd } from '@/components/date/DateBreadcrumb';
 import { YearlyCalendar } from '@/components/date/YearlyCalendar';
+import { SiteFaqAccordion } from '@/components/shared/SiteFaqAccordion';
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import { Calendar, ArrowLeftRight, CalendarDays } from 'lucide-react';
@@ -378,40 +381,37 @@ export default async function GregorianCalendarPage({
 
           <DateBreadcrumb items={breadcrumb} />
 
-          <section className="date-hero-panel mb-8">
+          <section className="date-hero-panel date-hero-panel--single mb-12">
             <div className="date-hero-main">
               <p className="date-kicker m-0">التقويم الميلادي السنوي</p>
               <h1 className="date-hero-title text-accent-alt">
                 تقويم عام {year} ميلادي
               </h1>
+              <p className="date-hero-gregorian">
+                {totalDays} يوماً، من {firstDayName} إلى <strong>{lastDayName}</strong>
+              </p>
               <p className="date-hero-copy">
-                تقويم {year} الميلادي يعرض لك السنة كاملة من يناير إلى ديسمبر، مع المقابل الهجري لكل يوم وفق أم القرى. إذا كنت تريد معرفة أيام سنة {year}، هل هي كبيسة، أين يقع رمضان أو العيد، أو تريد فتح يوم محدد للتحويل، فابدأ من هذه الصفحة ثم انتقل إلى اليوم الذي تحتاجه.
+                تقويم {year} الميلادي يعرض لك السنة كاملة من يناير إلى ديسمبر، مع المقابل الهجري لكل يوم وفق أم القرى
+                (النطاق الهجري: {firstHijriLabel} إلى {lastHijriLabel}). إذا كنت تريد معرفة أيام سنة {year}، هل هي كبيسة، أين
+                يقع رمضان أو العيد، أو تريد فتح يوم محدد للتحويل، فابدأ من هذه الصفحة ثم انتقل إلى اليوم الذي تحتاجه.
               </p>
-            </div>
-            <aside className="date-hero-rail" aria-label="التنقل بين السنوات الميلادية">
-              <p className="date-hero-answer">
-                {totalDays} يوماً
-              </p>
-              <p className="date-hero-note">
-                تبدأ السنة يوم {firstDayName} وتنتهي يوم {lastDayName}. النطاق الهجري: {firstHijriLabel} إلى {lastHijriLabel}.
-              </p>
-              <div className="date-hero-actions">
+              <div className="date-hero-quick-actions">
                 <Link
                   href={`/date/calendar/${y - 1}`}
-                  className="date-hero-link"
+                  className="date-quick-action"
                   rel={isSeoIndexableGregorianCalendarYear(y - 1, currentYear) ? undefined : 'nofollow'}
                 >
                   → عام {y - 1}
                 </Link>
                 <Link
                   href={`/date/calendar/${y + 1}`}
-                  className="date-hero-link date-hero-link--primary"
+                  className="date-quick-action"
                   rel={isSeoIndexableGregorianCalendarYear(y + 1, currentYear) ? undefined : 'nofollow'}
                 >
                   عام {y + 1} ←
                 </Link>
               </div>
-            </aside>
+            </div>
           </section>
 
         <section className="date-stat-grid mb-8">
@@ -448,13 +448,11 @@ export default async function GregorianCalendarPage({
           </article>
         </section>
 
-        <section className="date-detail-panel mb-8">
+        {/* Plain text + chip list — no bordered panel (DESIGN.md Law 4). */}
+        <section className="date-section max-w-3xl">
           <h2 className="date-section-title">شهور عام {year} الميلادي</h2>
           <p className="date-editorial-copy mb-4">
             افتح بداية كل شهر من شهور سنة {year} للوصول إلى اليوم المطلوب بسرعة. هذه الروابط مفيدة عندما تعرف الشهر ولا تريد التمرير داخل السنة كاملة.
-          </p>
-          <p className="date-editorial-copy mb-4">
-            إذا كنت تخطط لموعد طويل المدى، فراجع الشهر كاملاً بدلاً من يوم واحد فقط. هذا يساعدك على ملاحظة نهايات الأسبوع، بدايات الشهور، والفترات التي قد تتقاطع مع مناسبات هجرية أو إجازات موسمية.
           </p>
           <div className="flex flex-wrap gap-2">
             {monthLinks.map((month) => (
@@ -466,7 +464,7 @@ export default async function GregorianCalendarPage({
         </section>
 
         {keyHijriEvents.length > 0 && (
-          <section className="date-detail-panel mb-8" aria-labelledby="gregorian-calendar-events-heading">
+          <section className="date-section max-w-3xl" aria-labelledby="gregorian-calendar-events-heading">
             <h2 id="gregorian-calendar-events-heading" className="date-section-title">
               مواعيد هجرية بارزة داخل سنة {year}
             </h2>
@@ -486,7 +484,7 @@ export default async function GregorianCalendarPage({
           </section>
         )}
 
-        <section className="date-detail-panel mb-8" aria-labelledby="gregorian-calendar-decision-heading">
+        <section className="date-section max-w-3xl" aria-labelledby="gregorian-calendar-decision-heading">
           <h2 id="gregorian-calendar-decision-heading" className="date-section-title">
             قاعدة القرار قبل الاعتماد على تقويم {year}
           </h2>
@@ -521,97 +519,41 @@ export default async function GregorianCalendarPage({
           </div>
         </section>
 
-        <section className="related-links mb-8" dir="rtl" aria-labelledby="gregorian-calendar-sources-heading">
-          <p id="gregorian-calendar-sources-heading" className="related-links__heading">
-            مصادر ومنهج قراءة تقويم {year}
-          </p>
-          <div className="related-links__grid">
-            {CALENDAR_YEAR_SOURCE_LINKS.map((source) => (
-              <a
-                key={source.href}
-                href={source.href}
-                className="related-link-card"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">{source.label}</span>
-                  <span className="related-link-card__desc">{source.description}</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </a>
-            ))}
-          </div>
+        {/* FAQ — the one pattern used everywhere (owner, 2026-08-13: "FAQ should always
+            be like the FAQ in tools pages"). */}
+        <section className="date-section max-w-3xl">
+          <h2 className="date-section-title">أسئلة قبل استخدام تقويم {year} في التخطيط</h2>
+          <SiteFaqAccordion items={faqItems} />
         </section>
 
-        <section className="date-section">
-          <div className="date-section-head">
-            <h2 className="date-section-title">أسئلة قبل استخدام تقويم {year} في التخطيط</h2>
-            <p className="date-section-copy">
-              هذه الإجابات تختصر أكثر الالتباسات شيوعاً: السنة الكبيسة، بداية السنة الهجرية، وحدود الاعتماد الرسمي.
-            </p>
-          </div>
-          <div className="date-faq-grid">
-            {faqItems.map((item) => (
-              <article key={item.question} className="date-faq-item">
-                <h3 className="date-faq-question">{item.question}</h3>
-                <p className="date-faq-copy m-0">{item.answer}</p>
-              </article>
-            ))}
-          </div>
+        {/* Related pages — small, clean, unique CARDS (owner, 2026-08-13), not a list. */}
+        <section className="date-section max-w-3xl">
+          <SiteRelatedCardGrid
+            heading="إذا أردت تحويل يوم أو فتح التقويم الهجري الموافق"
+            headingId="gregorian-calendar-next-paths-heading"
+            items={[
+              { href: '/date', label: 'صفحة التاريخ الرئيسية', Icon: CalendarDays },
+              { href: '/date/converter', label: 'محول التاريخ', Icon: ArrowLeftRight },
+              { href: '/date/hijri-to-gregorian', label: 'تحويل هجري إلى ميلادي', Icon: Calendar },
+              { href: `/date/calendar/hijri/${firstHijriYear}`, label: 'التقويم الهجري الموافق', Icon: Calendar },
+            ]}
+          />
         </section>
 
-        {/* NAVIGATION */}
-        <nav aria-label="مسارات متابعة تقويم السنة الميلادية" className="related-links" dir="rtl">
-          <p className="related-links__heading">إذا أردت تحويل يوم أو فتح التقويم الهجري الموافق</p>
-          <div className="related-links__grid">
-
-            <Link href="/date" className="related-link-card">
-              <span className="related-link-card__icon" aria-hidden="true">
-                <CalendarDays size={16} strokeWidth={1.75} />
-              </span>
-              <span className="related-link-card__body">
-                <span className="related-link-card__label">صفحة التاريخ الرئيسية</span>
-                <span className="related-link-card__desc">عرض التاريخ الهجري والميلادي</span>
-              </span>
-              <span className="related-link-card__arrow" aria-hidden="true">←</span>
-            </Link>
-
-            <Link href="/date/converter" className="related-link-card">
-              <span className="related-link-card__icon" aria-hidden="true">
-                <ArrowLeftRight size={16} strokeWidth={1.75} />
-              </span>
-              <span className="related-link-card__body">
-                <span className="related-link-card__label">محول التاريخ</span>
-                <span className="related-link-card__desc">تحويل بين الهجري والميلادي</span>
-              </span>
-              <span className="related-link-card__arrow" aria-hidden="true">←</span>
-            </Link>
-
-            <Link href="/date/hijri-to-gregorian" className="related-link-card">
-              <span className="related-link-card__icon" aria-hidden="true">
-                <Calendar size={16} strokeWidth={1.75} />
-              </span>
-              <span className="related-link-card__body">
-                <span className="related-link-card__label">تحويل هجري إلى ميلادي</span>
-                <span className="related-link-card__desc">تحويل مباشر من التقويم الهجري</span>
-              </span>
-              <span className="related-link-card__arrow" aria-hidden="true">←</span>
-            </Link>
-
-            <Link href={`/date/calendar/hijri/${firstHijriYear}`} className="related-link-card">
-              <span className="related-link-card__icon" aria-hidden="true">
-                <Calendar size={16} strokeWidth={1.75} />
-              </span>
-              <span className="related-link-card__body">
-                <span className="related-link-card__label">التقويم الهجري الموافق</span>
-                <span className="related-link-card__desc">ابدأ من عام {firstHijriYear} هـ الموافق لبداية السنة</span>
-              </span>
-              <span className="related-link-card__arrow" aria-hidden="true">←</span>
-            </Link>
-
-          </div>
-        </nav>
+        {/* Sources — last thing on the page (owner, 2026-08-13), plain small dot-list
+            like /tools. */}
+        <section className="date-section max-w-3xl">
+          <SiteDotLinkList
+            heading={`مصادر ومنهج قراءة تقويم ${year}`}
+            headingId="gregorian-calendar-sources-heading"
+            items={CALENDAR_YEAR_SOURCE_LINKS.map((source) => ({
+              href: source.href,
+              label: source.label,
+              description: source.description,
+              external: true,
+            }))}
+          />
+        </section>
 
         </main>
       </AdLayoutWrapper>

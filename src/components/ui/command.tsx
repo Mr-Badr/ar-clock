@@ -81,7 +81,7 @@ const CommandInput = React.forwardRef<
       <CommandPrimitive.Input
         ref={ref}
         className={cn(
-          "flex h-[var(--space-11)] w-full rounded-[var(--radius-md)] bg-transparent py-[var(--space-3)] text-[var(--text-sm)] text-[var(--text-1)] outline-none placeholder:text-[var(--text-4)] disabled:cursor-not-allowed disabled:opacity-50",
+          "flex h-[var(--space-11)] w-full rounded-[var(--radius-md)] bg-transparent py-[var(--space-3)] [font-size:var(--text-sm)] text-[var(--text-1)] outline-none placeholder:text-[var(--text-4)] disabled:cursor-not-allowed disabled:opacity-50",
           className
         )}
         {...props}
@@ -109,7 +109,7 @@ const CommandEmpty = React.forwardRef<
 >((props, ref) => (
   <CommandPrimitive.Empty
     ref={ref}
-    className="py-[var(--space-6)] text-center text-[var(--text-sm)] text-[var(--text-2)]"
+    className="py-[var(--space-6)] text-center [font-size:var(--text-sm)] text-[var(--text-2)]"
     {...props}
   />
 ))
@@ -122,7 +122,7 @@ const CommandGroup = React.forwardRef<
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
-      "p-[var(--space-1)] text-[var(--text-1)] [&_[cmdk-group-heading]]:px-[var(--space-2)] [&_[cmdk-group-heading]]:py-[var(--space-1-5)] [&_[cmdk-group-heading]]:text-[var(--text-xs)] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[var(--text-3)]",
+      "p-[var(--space-1)] text-[var(--text-1)] [&_[cmdk-group-heading]]:px-[var(--space-2)] [&_[cmdk-group-heading]]:py-[var(--space-1-5)] [&_[cmdk-group-heading]]:[font-size:var(--text-xs)] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[var(--text-3)]",
       className
     )}
     {...props}
@@ -149,7 +149,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] px-[var(--space-2)] py-[var(--space-1-5)] text-[var(--text-sm)] text-[var(--text-1)] outline-none transition-[background-color,color] data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 data-[selected='true']:bg-[var(--muted)] data-[selected=true]:text-[var(--text-1)]",
+      "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] px-[var(--space-2)] py-[var(--space-1-5)] [font-size:var(--text-sm)] text-[var(--text-1)] outline-none transition-[background-color,color] data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 data-[selected='true']:bg-[var(--muted)] data-[selected=true]:text-[var(--text-1)]",
       className
     )}
     {...props}
@@ -164,7 +164,7 @@ const CommandShortcut = ({
   return (
     <span
       className={cn(
-        "ms-auto text-[var(--text-xs)] text-[var(--text-3)]",
+        "ms-auto [font-size:var(--text-xs)] text-[var(--text-3)]",
         className
       )}
       {...props}

@@ -17,10 +17,12 @@ import {
   type DateInsightItem,
 } from '@/components/date/DateEditorialSections';
 import DateRouteLoading from '@/components/date/DateRouteLoading';
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
-import { Moon, ArrowLeftRight, CalendarDays } from 'lucide-react';
+import { Moon, ArrowLeftRight, CalendarDays, Calendar } from 'lucide-react';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildDateKeywords } from '@/lib/seo/section-search-intent';
@@ -327,89 +329,72 @@ async function TodayGregorianDynamicContent() {
 
           <DateBreadcrumb items={breadcrumb} />
 
-          <section className="date-hero-panel mb-6">
+          <section className="date-hero-panel date-hero-panel--single mb-12">
             <div className="date-hero-main">
-              <div className="date-kicker">{dayOfWeek}</div>
+              <p className="date-kicker m-0">{dayOfWeek}</p>
               <h1 className="date-hero-title text-accent-alt">
                 {d} {GREGORIAN_MONTHS_AR[m - 1]} {y}
               </h1>
               {hijri && (
-                <p className="date-hero-copy mb-0">
-                  الموافق هجرياً: <strong className="text-primary">{hijri.formatted.ar}</strong>
+                <p className="date-hero-gregorian">
+                  يوافق هجرياً <strong>{hijri.formatted.ar}</strong>
                 </p>
               )}
-              <p className="date-hero-copy mb-0">
+              <p className="date-hero-copy">
                 ستجد أيضاً رقم الأسبوع، اليوم من السنة، الربع السنوي، وصيغة ISO حتى تختار
                 الشكل المناسب للنماذج أو الرسائل أو التخطيط.
               </p>
-            </div>
-            <div className="date-hero-rail" aria-label="إجراءات تاريخ اليوم الميلادي">
-              <div>
-                <div className="date-hero-answer">{isoDate}</div>
-                <p className="date-hero-note mb-0">
-                  صيغة مناسبة للنماذج والأنظمة الرقمية.
-                </p>
-              </div>
-              <div className="date-hero-actions">
-                <Link href="/date/today/hijri" className="date-hero-link date-hero-link--primary">
+              <div className="date-hero-quick-actions">
+                <Link href="/date/today/hijri" className="date-quick-action">
+                  <Moon size={16} strokeWidth={1.75} aria-hidden="true" />
                   اعرض التاريخ الهجري
-                  <span aria-hidden="true">←</span>
                 </Link>
-                <Link href="/date/converter" className="date-hero-link">
+                <Link href="/date/converter" className="date-quick-action">
+                  <ArrowLeftRight size={16} strokeWidth={1.75} aria-hidden="true" />
                   حوّل تاريخاً آخر
-                  <span aria-hidden="true">←</span>
                 </Link>
               </div>
             </div>
           </section>
 
-          <section className="date-stat-grid mb-6">
+          <section className="date-stat-grid mb-16">
             {[
-              { label: 'اليوم من السنة', value: `${dayOfYear} / ${daysInYear}` },
-              { label: 'أسبوع رقم', value: weekNum },
-              { label: 'تبقى للسنة', value: `${daysLeft} يوم` },
-              { label: 'الربع السنوي', value: `الربع ${quarter}` },
-              { label: 'اليوم اليولياني', value: Math.floor(jd).toLocaleString('en') },
-              { label: 'صيغة ISO 8601', value: isoDate },
-            ].map((f, i) => (
-              <div
-                key={i}
-                className="date-stat-item"
-              >
-                <div className="date-stat-value">
-                  {f.value}
-                </div>
-                <div className="date-stat-label">
-                  {f.label}
-                </div>
+              { value: dayOfYear, unit: `من ${daysInYear} يوماً في السنة`, Icon: Calendar },
+              { value: weekNum, unit: 'رقم الأسبوع (ISO)', Icon: CalendarDays },
+              { value: `${daysLeft} يوم`, unit: 'متبقٍ على نهاية السنة', Icon: Moon },
+              { value: `الربع ${quarter}`, unit: 'من السنة الحالية', Icon: ArrowLeftRight },
+            ].map((s, i) => (
+              <div key={i} className="date-stat-item">
+                <span className="date-stat-icon" aria-hidden="true">
+                  <s.Icon size={18} strokeWidth={1.75} />
+                </span>
+                <div className="date-stat-value">{s.value}</div>
+                <div className="date-stat-label">{s.unit}</div>
               </div>
             ))}
           </section>
 
-          <section className="date-detail-panel mb-8">
-            <h2 className="date-section-title">
-              معلومات الشهر والسنة
-            </h2>
-            <div className="date-detail-list">
-              {[
-                ['الشهر', GREGORIAN_MONTHS_AR[m - 1]],
-                ['عدد أيام الشهر', new Date(y, m, 0).getDate()],
-                ['نوع السنة', isLeap ? 'سنة كبيسة (366 يوم)' : 'سنة بسيطة (365 يوم)'],
-                ['التاريخ الهجري الموافق', hijri ? hijri.formatted.ar : 'غير متاح'],
-              ].map(([label, val], i) => (
-                <div
-                  key={i}
-                  className="date-detail-row"
-                >
-                  <span className="date-detail-label">{label}</span>
-                  <span className="date-detail-value">{val}</span>
-                </div>
-              ))}
+          {/* Plain text, no bordered card — a heading, one sentence, and two fact badges
+              don't earn a surface (DESIGN.md Law 4). */}
+          <section className="date-section max-w-3xl">
+            <h2 className="date-section-title">كيف يُحسب التاريخ الميلادي؟</h2>
+            <p className="date-editorial-copy m-0">
+              شهر {GREGORIAN_MONTHS_AR[m - 1]} هذا العام عدده {new Date(y, m, 0).getDate()} يوماً، وسنة {y}{' '}
+              {isLeap ? 'سنة كبيسة (366 يوماً)' : 'سنة بسيطة (365 يوماً)'}. صيغة{' '}
+              <strong className="text-primary">ISO 8601</strong> ({isoDate}) هي الأنسب للنماذج والأنظمة الرقمية لأنها تبدأ بالسنة فتقلل الالتباس بين اليوم والشهر.
+            </p>
+            <div className="date-fact-row">
+              <span className="date-fact-badge date-fact-badge--blue">
+                <CalendarDays size={14} strokeWidth={1.75} aria-hidden="true" /> {isoDate} بصيغة ISO
+              </span>
+              <span className="date-fact-badge date-fact-badge--amber">
+                <Calendar size={14} strokeWidth={1.75} aria-hidden="true" /> اليوم اليولياني {Math.floor(jd).toLocaleString('en')}
+              </span>
             </div>
           </section>
 
           {currentMonthRows.length > 0 && (
-            <section className="date-detail-panel mb-8" aria-labelledby="gregorian-month-table-heading">
+            <section className="date-section" aria-labelledby="gregorian-month-table-heading">
               <div className="date-section-head">
                 <h2 id="gregorian-month-table-heading" className="date-section-title">
                   جدول شهر {GREGORIAN_MONTHS_AR[m - 1]} {y} بالهجري
@@ -420,18 +405,18 @@ async function TodayGregorianDynamicContent() {
                 </p>
               </div>
 
-              <div className="date-hero-actions mb-4">
+              <div className="date-month-nav">
                 <Link href={getGregorianMonthHref(previousMonth.year, previousMonth.month)} className="date-hero-link">
-                  → شهر {GREGORIAN_MONTHS_AR[previousMonth.month - 1]} {previousMonth.year}
+                  → {GREGORIAN_MONTHS_AR[previousMonth.month - 1]}
                 </Link>
                 <Link
                   href={`/date/calendar/${y}`}
                   className="date-hero-link date-hero-link--primary"
                 >
-                  تقويم {y} ميلادي كاملاً
+                  تقويم {y} كاملاً
                 </Link>
                 <Link href={getGregorianMonthHref(nextMonth.year, nextMonth.month)} className="date-hero-link">
-                  شهر {GREGORIAN_MONTHS_AR[nextMonth.month - 1]} {nextMonth.year} ←
+                  {GREGORIAN_MONTHS_AR[nextMonth.month - 1]} ←
                 </Link>
               </div>
 
@@ -502,132 +487,37 @@ async function TodayGregorianDynamicContent() {
             faqItems={faqItems}
           />
 
-          <section className="date-editorial-grid date-section">
-            <div className="max-w-3xl space-y-4">
-              <h2 className="date-editorial-title">لماذا لا يكفي عرض التاريخ كرقم فقط؟</h2>
-              <p className="date-editorial-copy">
-                كثير من النماذج والرسائل تحتاج التاريخ بصيغة مختلفة: صيغة عربية للقراءة، وصيغة رقمية للأنظمة، ورقم أسبوع للتخطيط، وتاريخ هجري للمناسبات. لذلك تعرض الصفحة التاريخ الميلادي اليوم مع معلومات تساعدك على نسخه واستخدامه في العمل أو الدراسة أو المواعيد الرسمية دون الرجوع إلى تقويم آخر.
-              </p>
-              <p className="date-editorial-copy">
-                عند إرسال التاريخ في رسالة أو نموذج، استخدم الصيغة العربية للقراءة والصيغة الرقمية عند التعامل مع نظام إلكتروني حتى لا يحدث لبس بين ترتيب اليوم والشهر.
-              </p>
-              <p className="date-editorial-copy">
-                رقم الأسبوع والربع السنوي يفيدان في العمل والدراسة أكثر مما يبدو للوهلة الأولى. فرق المتابعة، الجداول الدراسية، خطط المحتوى، ومواعيد التسليم تعتمد أحياناً على الأسبوع لا على اسم اليوم فقط. لذلك تجمع الصفحة بين الصيغة البشرية والصيغة التنظيمية في مكان واحد.
-              </p>
-              <p className="date-editorial-copy">
-                إذا كنت تنقل التاريخ إلى نظام أجنبي، فاستخدم صيغة ISO لأنها تبدأ بالسنة ثم الشهر ثم اليوم. أما في الرسائل العربية فاكتب اليوم والشهر بالحروف حتى لا يختلط ترتيب الأرقام، خصوصاً عندما يكون اليوم والشهر كلاهما أقل من 13.
-              </p>
-            </div>
-            <div className="date-use-list">
-              <article className="date-use-item">
-                <h3 className="date-use-title">للنماذج</h3>
-                <p className="date-use-copy">استخدم صيغة ISO عند تعبئة الأنظمة الرقمية لتقليل الخطأ في ترتيب الشهر واليوم.</p>
-              </article>
-              <article className="date-use-item">
-                <h3 className="date-use-title">للتخطيط</h3>
-                <p className="date-use-copy">راجع رقم الأسبوع واليوم من السنة عند متابعة خطط طويلة أو مواعيد مرتبطة بفترة زمنية.</p>
-              </article>
-              <article className="date-use-item">
-                <h3 className="date-use-title">للمشاركة</h3>
-                <p className="date-use-copy">اكتب اسم الشهر بالعربية عند إرسال التاريخ لشخص حتى تكون القراءة واضحة وسريعة.</p>
-              </article>
-            </div>
+          {/* Related pages — small, clean, unique CARDS (owner, 2026-08-13), not a list. */}
+          <section className="date-section max-w-3xl">
+            <SiteRelatedCardGrid
+              heading="إذا احتجت الصيغة الهجرية أو تاريخاً آخر"
+              headingId="gregorian-next-paths-heading"
+              items={[
+                { href: '/date/today/hijri', label: 'التاريخ الهجري اليوم', Icon: Moon },
+                { href: '/date/converter', label: 'محول التاريخ', Icon: ArrowLeftRight },
+                {
+                  href: `/date/${y}/${String(m).padStart(2, '0')}/${String(d).padStart(2, '0')}`,
+                  label: `صفحة تاريخ ${d} ${GREGORIAN_MONTHS_AR[m - 1]}`,
+                  Icon: CalendarDays,
+                },
+              ]}
+            />
           </section>
 
-          <section className="date-editorial-grid date-section">
-            <div className="max-w-3xl space-y-4">
-              <h2 className="date-editorial-title">قاعدة كتابة التاريخ الميلادي دون التباس</h2>
-              <p className="date-editorial-copy">
-                إذا كان التاريخ موجهاً لشخص، فاكتب الشهر بالحروف: {d} {GREGORIAN_MONTHS_AR[m - 1]} {y}.
-                وإذا كان موجهاً لنظام أو جدول بيانات، فاستخدم صيغة {isoDate}. بهذه الطريقة تقلل احتمال
-                الخلط بين اليوم والشهر، خصوصاً في التواريخ التي يكون فيها الرقمان أقل من 13.
-              </p>
-              <p className="date-editorial-copy">
-                لا تعتمد على رقم الأسبوع وحده إلا إذا كان الطرف الآخر يستخدم نفس معيار الأسبوع. في أغلب
-                السياقات الدولية يكون معيار ISO مناسباً، لكن بعض المؤسسات تبدأ الأسبوع من الأحد أو السبت.
-              </p>
-            </div>
-            <div className="date-use-list">
-              <article className="date-use-item">
-                <h3 className="date-use-title">لرسالة عربية</h3>
-                <p className="date-use-copy">اكتب: {dayOfWeek}، {d} {GREGORIAN_MONTHS_AR[m - 1]} {y}.</p>
-              </article>
-              <article className="date-use-item">
-                <h3 className="date-use-title">لنظام إلكتروني</h3>
-                <p className="date-use-copy">اكتب: {isoDate} حتى يكون الترتيب سنة، شهر، يوم.</p>
-              </article>
-              <article className="date-use-item">
-                <h3 className="date-use-title">لتقرير أسبوعي</h3>
-                <p className="date-use-copy">اكتب الأسبوع {weekNum} مع تاريخ بداية التقرير أو نهايته.</p>
-              </article>
-            </div>
+          {/* Sources — last thing on the page (owner, 2026-08-13), plain small dot-list
+              like /tools, since these are external citations, not next-path cards. */}
+          <section className="date-section max-w-3xl">
+            <SiteDotLinkList
+              heading="مصادر ومنهج التاريخ الميلادي"
+              headingId="gregorian-sources-heading"
+              items={GREGORIAN_SOURCE_LINKS.map((source) => ({
+                href: source.href,
+                label: source.label,
+                description: source.description,
+                external: true,
+              }))}
+            />
           </section>
-
-          <section className="related-links mt-8" dir="rtl" aria-labelledby="gregorian-sources-heading">
-            <p id="gregorian-sources-heading" className="related-links__heading">
-              مصادر ومنهج التاريخ الميلادي
-            </p>
-            <div className="related-links__grid">
-              {GREGORIAN_SOURCE_LINKS.map((source) => (
-                <a
-                  key={source.href}
-                  href={source.href}
-                  className="related-link-card"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="related-link-card__body">
-                    <span className="related-link-card__label">{source.label}</span>
-                    <span className="related-link-card__desc">{source.description}</span>
-                  </span>
-                  <span className="related-link-card__arrow" aria-hidden="true">←</span>
-                </a>
-              ))}
-            </div>
-          </section>
-
-          <nav aria-label="مسارات استخدام التاريخ الميلادي اليوم" className="related-links mt-8" dir="rtl">
-            <p className="related-links__heading">إذا احتجت الصيغة الهجرية أو تاريخاً آخر</p>
-            <div className="related-links__grid">
-
-              <Link href="/date/today/hijri" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <Moon size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">التاريخ الهجري اليوم</span>
-                  <span className="related-link-card__desc">اعرف تاريخ اليوم بالتقويم الهجري</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-
-              <Link href="/date/converter" className="related-link-card">
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <ArrowLeftRight size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">محول التاريخ</span>
-                  <span className="related-link-card__desc">تحويل بين الهجري والميلادي بثلاث طرق</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-
-              <Link
-                href={`/date/${y}/${String(m).padStart(2, '0')}/${String(d).padStart(2, '0')}`}
-                className="related-link-card"
-              >
-                <span className="related-link-card__icon" aria-hidden="true">
-                  <CalendarDays size={16} strokeWidth={1.75} />
-                </span>
-                <span className="related-link-card__body">
-                  <span className="related-link-card__label">صفحة تاريخ {d} {GREGORIAN_MONTHS_AR[m - 1]}</span>
-                  <span className="related-link-card__desc">تفاصيل هذا اليوم بالتقويمين</span>
-                </span>
-                <span className="related-link-card__arrow" aria-hidden="true">←</span>
-              </Link>
-
-            </div>
-          </nav>
         </main>
       </AdLayoutWrapper>
     </>

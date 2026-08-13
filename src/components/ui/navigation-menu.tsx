@@ -78,7 +78,7 @@ function NavigationMenuItem({
 }
 
 const navigationMenuTriggerStyle = cva(
-  "group inline-flex min-h-[var(--space-11)] w-max items-center justify-center gap-[var(--space-2)] rounded-[var(--radius-lg)] border border-transparent bg-transparent px-[var(--space-4)] py-[var(--space-2)] text-[var(--text-sm)] font-medium leading-[var(--leading-none)] text-[var(--text-2)] outline-none transition-[background-color,border-color,box-shadow,color] hover:bg-[var(--muted)] hover:text-[var(--text-1)] focus:bg-[var(--muted)] focus:text-[var(--text-1)] focus-visible:border-[var(--border-focus)] focus-visible:shadow-[var(--shadow-focus)] disabled:pointer-events-none disabled:opacity-50 data-[state=open]:border-[var(--border)] data-[state=open]:bg-[var(--surface)] data-[state=open]:text-[var(--text-1)]"
+  "group inline-flex min-h-[var(--space-11)] w-max items-center justify-center gap-[var(--space-2)] rounded-[var(--radius-lg)] border border-transparent bg-transparent px-[var(--space-4)] py-[var(--space-2)] [font-size:var(--text-sm)] font-medium leading-[var(--leading-none)] text-[var(--text-2)] outline-none transition-[background-color,border-color,box-shadow,color] hover:bg-[var(--muted)] hover:text-[var(--text-1)] focus:bg-[var(--muted)] focus:text-[var(--text-1)] focus-visible:border-[var(--border-focus)] focus-visible:shadow-[var(--shadow-focus)] disabled:pointer-events-none disabled:opacity-50 data-[state=open]:border-[var(--border)] data-[state=open]:bg-[var(--surface)] data-[state=open]:text-[var(--text-1)]"
 )
 
 function NavigationMenuTrigger({
@@ -148,7 +148,7 @@ function NavigationMenuLink({
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
       className={cn(
-        "flex flex-col gap-[var(--space-1)] rounded-[var(--radius-sm)] p-[var(--space-2)] text-[var(--text-sm)] text-[var(--text-2)] outline-none transition-[background-color,box-shadow,color] hover:bg-[var(--muted)] hover:text-[var(--text-1)] focus:bg-[var(--muted)] focus:text-[var(--text-1)] focus-visible:shadow-[var(--shadow-focus)] data-[active=true]:bg-[var(--blue-subtle)] data-[active=true]:text-[var(--blue-text)] data-[active=true]:focus:bg-[var(--blue-subtle)] data-[active=true]:hover:bg-[var(--blue-subtle)] [&_svg:not([class*='size-'])]:size-[var(--space-4)] [&_svg:not([class*='text-'])]:text-[var(--text-3)]",
+        "flex flex-col gap-[var(--space-1)] rounded-[var(--radius-sm)] p-[var(--space-2)] [font-size:var(--text-sm)] text-[var(--text-2)] outline-none transition-[background-color,box-shadow,color] hover:bg-[var(--muted)] hover:text-[var(--text-1)] focus:bg-[var(--muted)] focus:text-[var(--text-1)] focus-visible:shadow-[var(--shadow-focus)] data-[active=true]:bg-[var(--blue-subtle)] data-[active=true]:text-[var(--blue-text)] data-[active=true]:focus:bg-[var(--blue-subtle)] data-[active=true]:hover:bg-[var(--blue-subtle)] [&_svg:not([class*='size-'])]:size-[var(--space-4)] [&_svg:not([class*='text-'])]:text-[var(--text-3)]",
         className
       )}
       {...props}

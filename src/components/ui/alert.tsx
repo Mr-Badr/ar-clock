@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const alertVariants = cva(
-  "relative grid w-full grid-cols-[0_1fr] items-start gap-y-[var(--space-0-5)] rounded-[var(--radius-lg)] border px-[var(--space-4)] py-[var(--space-3)] text-[var(--text-sm)] has-[>svg]:grid-cols-[var(--space-4)_1fr] has-[>svg]:gap-x-[var(--space-3)] [&>svg]:size-[var(--space-4)] [&>svg]:translate-y-[var(--space-0-5)] [&>svg]:text-current",
+  "relative grid w-full grid-cols-[0_1fr] items-start gap-y-[var(--space-0-5)] rounded-[var(--radius-lg)] border px-[var(--space-4)] py-[var(--space-3)] [font-size:var(--text-sm)] has-[>svg]:grid-cols-[var(--space-4)_1fr] has-[>svg]:gap-x-[var(--space-3)] [&>svg]:size-[var(--space-4)] [&>svg]:translate-y-[var(--space-0-5)] [&>svg]:text-current",
   {
     variants: {
       variant: {
@@ -55,7 +55,7 @@ function AlertDescription({
     <div
       data-slot="alert-description"
       className={cn(
-        "col-start-2 grid justify-items-start gap-[var(--space-1)] text-[var(--text-sm)] leading-[var(--leading-normal)] text-[var(--text-2)] [&_p]:leading-[var(--leading-normal)]",
+        "col-start-2 grid justify-items-start gap-[var(--space-1)] [font-size:var(--text-sm)] leading-[var(--leading-normal)] text-[var(--text-2)] [&_p]:leading-[var(--leading-normal)]",
         className
       )}
       {...props}

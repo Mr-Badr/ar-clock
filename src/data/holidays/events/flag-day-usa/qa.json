@@ -1,0 +1,15 @@
+{
+  "slug": "flag-day-usa",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 14 يونيو 1777 اعتماد العلم موثق عبر va.gov. عدم الصفة الفدرالية الرسمية وحصرية بنسلفانيا (منذ 1937، غير مدفوعة حتى هناك) موثقان عبر fox43.com وnewsweek.com."
+  ],
+  "updatedAt": "2026-08-12T20:58:54.678Z"
+}

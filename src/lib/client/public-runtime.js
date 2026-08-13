@@ -47,6 +47,7 @@ const defaultConfig = Object.freeze({
       sidebar: null,
       sidebarRight: null,
       sidebarLeft: null,
+      interstitial: null,
     },
   },
 });

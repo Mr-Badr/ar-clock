@@ -140,7 +140,7 @@ function SheetTitle({
     <SheetPrimitive.Title
       data-slot="sheet-title"
       className={cn(
-        "text-[var(--text-lg)] font-semibold leading-[var(--leading-snug)] text-[var(--text-1)]",
+        "[font-size:var(--text-lg)] font-semibold leading-[var(--leading-snug)] text-[var(--text-1)]",
         className
       )}
       {...props}
@@ -156,7 +156,7 @@ function SheetDescription({
     <SheetPrimitive.Description
       data-slot="sheet-description"
       className={cn(
-        "text-[var(--text-sm)] leading-[var(--leading-normal)] text-[var(--text-2)]",
+        "[font-size:var(--text-sm)] leading-[var(--leading-normal)] text-[var(--text-2)]",
         className
       )}
       {...props}

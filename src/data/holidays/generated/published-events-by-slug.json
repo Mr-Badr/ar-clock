@@ -886,6 +886,16 @@
     "_countryCode": "sa",
     "date": "{{year}}-10-16"
   },
+  "all-saints-day-belgium": {
+    "id": "all-saints-day-belgium",
+    "slug": "all-saints-day-belgium",
+    "name": "عيد جميع القديسين في بلجيكا (Toussaint)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "be",
+    "month": 11,
+    "day": 1
+  },
   "all-saints-day-france": {
     "id": "all-saints-day-france",
     "slug": "all-saints-day-france",
@@ -893,6 +903,16 @@
     "type": "fixed",
     "category": "national",
     "_countryCode": "fr",
+    "month": 11,
+    "day": 1
+  },
+  "all-saints-day-spain": {
+    "id": "all-saints-day-spain",
+    "slug": "all-saints-day-spain",
+    "name": "عيد جميع القديسين في إسبانيا (Día de Todos los Santos)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "es",
     "month": 11,
     "day": 1
   },
@@ -926,6 +946,16 @@
     "category": "national",
     "_countryCode": "lb",
     "month": 3,
+    "day": 25
+  },
+  "anzac-day-australia": {
+    "id": "anzac-day-australia",
+    "slug": "anzac-day-australia",
+    "name": "يوم أنزاك في أستراليا (Anzac Day)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "au",
+    "month": 4,
     "day": 25
   },
   "april-fools": {
@@ -987,6 +1017,16 @@
     "_countryCode": "lb",
     "month": 1,
     "day": 6
+  },
+  "armistice-day-belgium": {
+    "id": "armistice-day-belgium",
+    "slug": "armistice-day-belgium",
+    "name": "ذكرى الهدنة في بلجيكا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "be",
+    "month": 11,
+    "day": 11
   },
   "armistice-day-france": {
     "id": "armistice-day-france",
@@ -1082,6 +1122,16 @@
     "_countryCode": "lb",
     "month": 8,
     "day": 15
+  },
+  "australia-day": {
+    "id": "australia-day",
+    "slug": "australia-day",
+    "name": "اليوم الوطني الأسترالي (Australia Day)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "au",
+    "month": 1,
+    "day": 26
   },
   "autism-day": {
     "id": "autism-day",
@@ -1387,6 +1437,16 @@
     "month": 12,
     "day": 25
   },
+  "christmas-netherlands": {
+    "id": "christmas-netherlands",
+    "slug": "christmas-netherlands",
+    "name": "عيد الميلاد في هولندا (Eerste en Tweede Kerstdag)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "nl",
+    "month": 12,
+    "day": 25
+  },
   "christmas-palestine": {
     "id": "christmas-palestine",
     "slug": "christmas-palestine",
@@ -1447,6 +1507,16 @@
     "hijriMonth": 9,
     "hijriDay": 28
   },
+  "constitution-day-kuwait": {
+    "id": "constitution-day-kuwait",
+    "slug": "constitution-day-kuwait",
+    "name": "يوم الدستور الكويتي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "kw",
+    "month": 11,
+    "day": 11
+  },
   "constitution-day-lebanon": {
     "id": "constitution-day-lebanon",
     "slug": "constitution-day-lebanon",
@@ -1456,6 +1526,16 @@
     "_countryCode": "lb",
     "month": 5,
     "day": 23
+  },
+  "constitution-day-spain": {
+    "id": "constitution-day-spain",
+    "slug": "constitution-day-spain",
+    "name": "يوم الدستور الإسباني (Día de la Constitución)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "es",
+    "month": 12,
+    "day": 6
   },
   "coptic-christmas-egypt": {
     "id": "coptic-christmas-egypt",
@@ -1600,6 +1680,15 @@
     "_countryCode": "de",
     "easterOffset": 1
   },
+  "easter-monday-netherlands": {
+    "id": "easter-monday-netherlands",
+    "slug": "easter-monday-netherlands",
+    "name": "إثنين الفصح في هولندا (Tweede Paasdag)",
+    "type": "easter",
+    "category": "national",
+    "_countryCode": "nl",
+    "easterOffset": 1
+  },
   "easter-monday-uk": {
     "id": "easter-monday-uk",
     "slug": "easter-monday-uk",
@@ -1627,6 +1716,26 @@
     "_countryCode": "ae",
     "month": 2,
     "day": 28
+  },
+  "eid-al-fitr-australia": {
+    "id": "eid-al-fitr-australia",
+    "slug": "eid-al-fitr-australia",
+    "name": "عيد الفطر في أستراليا",
+    "type": "hijri",
+    "category": "islamic",
+    "_countryCode": "au",
+    "hijriMonth": 10,
+    "hijriDay": 1
+  },
+  "epiphany-spain": {
+    "id": "epiphany-spain",
+    "slug": "epiphany-spain",
+    "name": "عيد الغطاس في إسبانيا (يوم الملوك الثلاثة)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "es",
+    "month": 1,
+    "day": 6
   },
   "epiphany-sweden": {
     "id": "epiphany-sweden",
@@ -1706,6 +1815,16 @@
     "hijriMonth": 9,
     "hijriDay": 20
   },
+  "ferragosto-italy": {
+    "id": "ferragosto-italy",
+    "slug": "ferragosto-italy",
+    "name": "فيراغوستو في إيطاليا (Ferragosto)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "it",
+    "month": 8,
+    "day": 15
+  },
   "fete-de-la-musique-france": {
     "id": "fete-de-la-musique-france",
     "slug": "fete-de-la-musique-france",
@@ -1754,6 +1873,16 @@
     "_countryCode": "ae",
     "month": 11,
     "day": 3
+  },
+  "flag-day-usa": {
+    "id": "flag-day-usa",
+    "slug": "flag-day-usa",
+    "name": "يوم العلم الأمريكي (Flag Day)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "us",
+    "month": 6,
+    "day": 14
   },
   "food-day": {
     "id": "food-day",
@@ -2163,6 +2292,16 @@
     "month": 10,
     "day": 23
   },
+  "liberation-day-netherlands": {
+    "id": "liberation-day-netherlands",
+    "slug": "liberation-day-netherlands",
+    "name": "يوم التحرير في هولندا (Bevrijdingsdag)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "nl",
+    "month": 5,
+    "day": 5
+  },
   "liberation-day-syria": {
     "id": "liberation-day-syria",
     "slug": "liberation-day-syria",
@@ -2402,6 +2541,16 @@
     "_countryCode": "bh",
     "month": 2,
     "day": 14
+  },
+  "national-day-belgium": {
+    "id": "national-day-belgium",
+    "slug": "national-day-belgium",
+    "name": "اليوم الوطني البلجيكي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "be",
+    "month": 7,
+    "day": 21
   },
   "national-day-spain": {
     "id": "national-day-spain",
@@ -2738,6 +2887,16 @@
     "_countryCode": "iq",
     "month": 7,
     "day": 14
+  },
+  "republic-day-italy": {
+    "id": "republic-day-italy",
+    "slug": "republic-day-italy",
+    "name": "يوم الجمهورية الإيطالية (Festa della Repubblica)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "it",
+    "month": 6,
+    "day": 2
   },
   "republic-day-tunisia": {
     "id": "republic-day-tunisia",
@@ -3079,6 +3238,16 @@
     "month": 5,
     "weekday": 1,
     "nth": -1
+  },
+  "st-francis-day-italy": {
+    "id": "st-francis-day-italy",
+    "slug": "st-francis-day-italy",
+    "name": "عيد القديس فرنسيس الأسيزي في إيطاليا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "it",
+    "month": 10,
+    "day": 4
   },
   "student-allowance-kuwait": {
     "id": "student-allowance-kuwait",

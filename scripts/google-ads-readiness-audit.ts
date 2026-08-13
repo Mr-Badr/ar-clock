@@ -48,6 +48,31 @@ const ADSBOT_USER_AGENT = [
   '(KHTML, like Gecko) Chrome/120.0 Mobile Safari/537.36',
 ].join(' ');
 
+// Max real ad units (.ad-slot--* elements) allowed to render on a single page, per page kind.
+// Enforces .claude/plans/curried-questing-fox.md Track 1 §5 ("ad budget discipline") — the
+// "ad space outweighs content" complaint came from Google Auto Ads stacking its own units on
+// top of these manual placements with no shared budget. Auto Ads is now disabled sitewide, in
+// full — the owner wants a manual ad system built to match or beat it, not a hybrid — so this
+// budget only needs to bound that manual system, deliberately curated per route in
+// src/lib/ads/manual-config.js + .claude/rules/ads-system.md. Numbers reflect the documented
+// placement rules there: top banner + up to 2 in-article + 1 multiplex (+ sidebar rails and the
+// top/bottom sticky anchor bar, which render outside the main content flow and are
+// intentionally not counted against this content-area budget).
+const AD_UNIT_BUDGET_BY_KIND: Record<LandingPageKind, number> = {
+  tool: 4,
+  article: 4,
+  hub: 4,
+  event: 4,
+  trust: 0,
+};
+
+// NOTE on Auto Ads: this script fetches raw HTML with no JS execution, and the Auto Ads loader
+// (`AdSenseProvider.jsx`) uses `next/script strategy="lazyOnload"`, which Next.js intentionally
+// never server-renders into the initial HTML at all — it's injected client-side after window
+// `load`, gated behind `autoAdsEnabled` (now permanently `false`, see runtime-config.js). That
+// means a regression (Auto Ads accidentally re-enabled) is not observable via a plain fetch —
+// verifying it stays off requires a real browser pass instead of a static HTML check here.
+
 const LANDING_PAGES: LandingPageCheck[] = [
   {
     path: '/time-now/saudi-arabia/riyadh',
@@ -304,6 +329,7 @@ function auditHtml(
   const missingTerms = page.requiredTerms.filter((term) => !bodyText.includes(term));
   const hasAdsenseMarkup = $('.adsbygoogle').length > 0 || result.body.includes('adsbygoogle');
   const hasUsefulAction = $('form, table, details, input, button, [data-testid], [aria-live]').length > 0;
+  const adSlotCount = $('[class*="ad-slot--"]').length;
 
   if (result.status !== 200) {
     pushIssue(issues, page.path, 'error', 'http-status', 'Landing page must return HTTP 200.', {
@@ -411,6 +437,18 @@ function auditHtml(
     pushIssue(issues, page.path, 'warning', 'ads-on-trust-page', 'Trust/legal pages should normally avoid ad markup.', {
       hasAdsenseMarkup,
     });
+  }
+
+  const adUnitBudget = AD_UNIT_BUDGET_BY_KIND[page.kind];
+  if (adSlotCount > adUnitBudget) {
+    pushIssue(
+      issues,
+      page.path,
+      'error',
+      'ad-unit-budget-exceeded',
+      'Page renders more ad units than the per-kind content-area budget allows.',
+      { adSlotCount, adUnitBudget, kind: page.kind },
+    );
   }
 
   if (page.path === '/privacy') {

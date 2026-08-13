@@ -1,0 +1,16 @@
+{
+  "slug": "all-saints-day-belgium",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 1 نوفمبر عطلة رسمية موحدة في بلجيكا, موثق عبر publicholidays.be. اختلاف عطلة الخريف بين المجتمعين اللغويين (فارق يصل أسبوعاً) موثق عبر publicholidays.be وexpatica.com لسنة دراسية حقيقية.",
+    "لم يُدرج أي تاريخ بداية/نهاية عطلة محدد كحقيقة أساسية في المحتوى المنشور — العدد التقريبي 'أسبوع تقريباً' فقط، تفادياً لالتزام بتاريخ متغير سنوياً."
+  ],
+  "updatedAt": "2026-08-12T20:37:56.522Z"
+}

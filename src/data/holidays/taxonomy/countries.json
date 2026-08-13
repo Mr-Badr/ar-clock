@@ -322,5 +322,41 @@
     "flag": "🇳🇴",
     "timezone": "Europe/Oslo",
     "order": 27
+  },
+  {
+    "code": "au",
+    "aliasSlugToken": "australia",
+    "nameAr": "أستراليا",
+    "officialNameAr": "أستراليا",
+    "authority": "المجالس الإسلامية المحلية",
+    "dateVarianceLabel": "إعلان محلي / حسابات فلكية",
+    "localTerms": ["أستراليا", "الأسترالية"],
+    "flag": "🇦🇺",
+    "timezone": "Australia/Sydney",
+    "order": 28
+  },
+  {
+    "code": "be",
+    "aliasSlugToken": "belgium",
+    "nameAr": "بلجيكا",
+    "officialNameAr": "مملكة بلجيكا",
+    "authority": "المجالس الإسلامية المحلية",
+    "dateVarianceLabel": "إعلان محلي / حسابات فلكية",
+    "localTerms": ["بلجيكا", "البلجيكية"],
+    "flag": "🇧🇪",
+    "timezone": "Europe/Brussels",
+    "order": 29
+  },
+  {
+    "code": "it",
+    "aliasSlugToken": "italy",
+    "nameAr": "إيطاليا",
+    "officialNameAr": "الجمهورية الإيطالية",
+    "authority": "المجالس الإسلامية المحلية",
+    "dateVarianceLabel": "إعلان محلي / حسابات فلكية",
+    "localTerms": ["إيطاليا", "الإيطالية"],
+    "flag": "🇮🇹",
+    "timezone": "Europe/Rome",
+    "order": 30
   }
 ]

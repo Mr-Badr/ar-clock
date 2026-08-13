@@ -15,6 +15,7 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import { watchAdFill } from "@/lib/ads/unfilled";
 import { useMarketingPermission } from "@/lib/client/marketing";
 import { useAdsRuntimeConfig } from "@/lib/client/public-runtime";
 import { logger, serializeError } from "@/lib/logger";
@@ -34,6 +35,8 @@ export default function AdBlogSidebar({
   const shouldRenderAds = Boolean(clientId && adSlot);
   const canLoadAds = useMarketingPermission(shouldRenderAds);
   const ref = useRef<HTMLDivElement>(null);
+  const insRef = useRef<HTMLModElement>(null);
+  const [isUnfilled, setIsUnfilled] = useState(false);
   const loaded = useRef(false);
 
   useEffect(() => {
@@ -43,6 +46,8 @@ export default function AdBlogSidebar({
     // The blog sidebar column only renders at ≥1100px. Below that the aside is
     // hidden/stacked, so there is no point requesting a desktop sidebar creative.
     if (!window.matchMedia("(min-width: 1100px)").matches) return;
+
+    let stopWatch: (() => void) | undefined;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -59,6 +64,11 @@ export default function AdBlogSidebar({
                 error: serializeError(error),
               });
             }
+
+            // Collapse the reserved column space if Google returns no ad (unfilled) —
+            // otherwise the min-height'd column sits there as an empty box forever.
+            stopWatch = watchAdFill(insRef.current, () => setIsUnfilled(true));
+
             observer.disconnect();
           }
         });
@@ -67,10 +77,13 @@ export default function AdBlogSidebar({
     );
 
     observer.observe(ref.current);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      stopWatch?.();
+    };
   }, [canLoadAds, slotId]);
 
-  if (!shouldRenderAds || !canLoadAds) return null;
+  if (!shouldRenderAds || !canLoadAds || isUnfilled) return null;
 
   return (
     <div
@@ -82,6 +95,7 @@ export default function AdBlogSidebar({
     >
       <span className="ad-slot__label">إعلان</span>
       <ins
+        ref={insRef}
         className="adsbygoogle"
         style={{ display: "block" }}
         data-ad-client={clientId || undefined}

@@ -1,0 +1,15 @@
+{
+  "slug": "anzac-day-australia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 25 أبريل موثق عبر anzacportal.dva.gov.au. قاعدة الإجازة التعويضية المختلفة بين NSW/WA/ACT وباقي الولايات موثقة عبر The Conversation."
+  ],
+  "updatedAt": "2026-08-12T14:46:43.735Z"
+}

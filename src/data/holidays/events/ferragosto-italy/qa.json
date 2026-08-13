@@ -1,0 +1,16 @@
+{
+  "slug": "ferragosto-italy",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 15 أغسطس عطلة رسمية إيطالية موحدة. أصل Feriae Augusti الروماني موثق عبر ويكيبيديا الإنجليزية ومصادر تاريخية متعددة.",
+    "تاريخ 18 قبل الميلاد مذكور كحقيقة تاريخية قديمة جداً، لا علاقة له بقاعدة hasHardcodedYear (تخص فقط سنوات 20XX)."
+  ],
+  "updatedAt": "2026-08-12T20:58:38.092Z"
+}

@@ -1,0 +1,15 @@
+{
+  "slug": "all-saints-day-spain",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "تحقق: 1 نوفمبر عطلة وطنية موحدة في إسبانيا، موثقة عبر BOE. الفرق مع هالوين (غير رسمي) موثق ومنطقي — لا مصدر رسمي يمنح 31 أكتوبر صفة عطلة."
+  ],
+  "updatedAt": "2026-08-12T14:46:28.386Z"
+}
