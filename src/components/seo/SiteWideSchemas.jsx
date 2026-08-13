@@ -14,11 +14,14 @@ const SITE_URL = getSiteUrl();
 const ORG_ID = `${SITE_URL}#organization`;
 const WEBSITE_ID = `${SITE_URL}#website`;
 const FOUNDER = getDefaultAuthor();
+// Order matches the site's positioning priority (owner, 2026-08-13: tools + holidays are the
+// main things) — was time-now/date first, tools 4th; this is purely the ItemList's ranking
+// signal, doesn't change any visible nav (that's the navbar component's own job).
 const CORE_SECTION_PAGES = [
+  { path: '/tools', name: 'الحاسبات والأدوات' },
+  { path: '/holidays', name: 'المناسبات والعد التنازلي' },
   { path: '/time-now', name: 'الوقت الان' },
   { path: '/date', name: 'التاريخ والتحويل' },
-  { path: '/holidays', name: 'المناسبات والعد التنازلي' },
-  { path: '/tools', name: 'الحاسبات' },
   { path: '/time-difference', name: 'فرق التوقيت' },
 ];
 

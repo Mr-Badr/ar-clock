@@ -30,8 +30,11 @@ const H2_ID = 'h2-holidays-faq'
 export default async function SectionFAQ() {
   const faqItems = await getFaqItems()
 
+  // No `subtle` — a full-bleed tinted background behind just the FAQ read as "boxed inside
+  // a different bg" (owner, 2026-08-13). Every other section on this page uses the plain
+  // page background; the FAQ should match, not stand apart.
   return (
-    <SectionWrapper id="section-holidays-faq" headingId={H2_ID} subtle>
+    <SectionWrapper id="section-holidays-faq" headingId={H2_ID}>
 
       <header className="section-head section-head--center">
         <SectionBadge><CheckCircle2 size={11} />قبل التخطيط</SectionBadge>

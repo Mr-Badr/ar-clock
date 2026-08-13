@@ -3,7 +3,7 @@
  * Static-first holidays landing page with client-synced query filters.
  */
 import Link from 'next/link';
-import { ArrowLeft, Calendar } from 'lucide-react';
+import { ArrowLeft, Calendar, Compass, CalendarCheck, ArrowLeftRight, ShieldAlert, CalendarDays, Clock3 } from 'lucide-react';
 
 import {
   approxHijriYear,
@@ -16,7 +16,7 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import HolidaysSections from '@/components/holidays/index';
-import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
 import CountryFlag from '@/components/shared/CountryFlag';
 import { COUNTRY_HUBS } from '@/lib/holidays/country-hub-data';
 import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
@@ -115,39 +115,30 @@ const HOLIDAY_QUICK_PATHS = [
   },
 ];
 
-const HOLIDAY_READING_RULES = [
+// Consolidated from two overlapping lists (reading rules + trust rules, 6 items with real
+// duplication — e.g. "الهجري قد يختلف محلياً" appeared in both) into one tight list (owner,
+// 2026-08-13: "better content not boaring"). Each rule owns one real idea, no repeated links to
+// destinations already covered by the quick-start shortcuts above or the related cards below.
+const HOLIDAY_QUICK_RULES = [
   {
-    title: 'ابدأ بالموعد الأقرب، لا بالقائمة الأطول',
-    description: 'إذا كانت المناسبة خلال أيام قليلة فافتح صفحتها أولاً. ستجد العدّاد والتاريخين ثم التفاصيل التي تساعدك على التخطيط بدون مقارنة عشرات النتائج.',
+    title: 'ابدأ بالأقرب، لا بأطول قائمة',
+    description: 'إذا كانت المناسبة خلال أيام قليلة، افتح صفحتها مباشرة — العدّاد والتاريخين والتفاصيل هناك، دون مقارنة عشرات النتائج.',
+    Icon: Compass,
   },
   {
-    title: 'راجع نوع التاريخ قبل الاعتماد النهائي',
-    description: 'المناسبات الهجرية قد تختلف محلياً بحسب الرؤية أو الإعلان الرسمي، أما التواريخ الثابتة فتبقى في نفس اليوم الميلادي غالباً.',
+    title: 'تحقق من نوع التاريخ',
+    description: 'الهجري قد يختلف يوماً حسب رؤية الهلال أو الإعلان المحلي، أما الثابت فيبقى في نفس اليوم الميلادي غالباً.',
+    Icon: CalendarCheck,
   },
   {
-    title: 'حوّل التاريخ عند الحجز أو السفر',
-    description: 'عندما يرتبط الموعد بإجازة أو رحلة أو دفع، حوّل التاريخ وتأكد من بلدك قبل أن تبني قراراً على العدّاد وحده.',
-  },
-];
-
-const HOLIDAY_TRUST_RULES = [
-  {
-    title: 'العداد يقرّبك من الموعد، لكنه ليس إعلاناً رسمياً',
-    description: 'استخدمه للتخطيط الأولي، ثم راجع الجهة الرسمية في بلدك عندما يتعلق الأمر بإجازة عمل، مدرسة، سفر، أو موعد دفع.',
-    href: '/disclaimer',
-    label: 'حدود الاعتماد',
+    title: 'حوّل التاريخ قبل الحجز أو السفر',
+    description: 'إذا ارتبط الموعد بإجازة أو رحلة أو دفع، تأكد من بلدك وحوّل التاريخ قبل أن تبني قراراً على العدّاد وحده.',
+    Icon: ArrowLeftRight,
   },
   {
-    title: 'التاريخ الهجري قد يختلف محلياً',
-    description: 'رمضان والعيدان وعرفة وبداية الأشهر قد تتغير يوماً حسب الرؤية أو الإعلان المحلي. لذلك نوضح طريقة الحساب عندما تكون مهمة.',
-    href: '/date/hijri-to-gregorian',
-    label: 'حوّل التاريخ الهجري',
-  },
-  {
-    title: 'ابدأ من البلد عند البحث عن إجازة',
-    description: 'اسم المناسبة وحده لا يكفي دائماً. الدولة تحدد هل اليوم إجازة، هل يوجد تعويض، وهل التاريخ عملي أم مجرد مناسبة عامة.',
-    href: '/holidays?country=sa',
-    label: 'اختر دولة',
+    title: 'العدّاد للتخطيط، لا للاعتماد الرسمي',
+    description: 'استخدمه للتقريب الأولي، ثم راجع الجهة الرسمية في بلدك عندما يتعلق الأمر بإجازة عمل أو مدرسة أو موعد دفع.',
+    Icon: ShieldAlert,
   },
 ];
 
@@ -191,12 +182,12 @@ export default async function HolidaysPage() {
     {
       href: '/date/today',
       label: 'كم التاريخ اليوم؟',
-      description: 'اعرف التاريخ الهجري والميلادي اليوم ثم انتقل إلى المناسبات المرتبطة به مباشرة.',
+      Icon: CalendarDays,
     },
     {
       href: '/time-now',
       label: 'كم الساعة الان؟',
-      description: 'راجع الوقت الحالي في مدينتك أو دولة أخرى عند متابعة العدادات المباشرة والمناسبات الدولية.',
+      Icon: Clock3,
     },
   ]);
   const featuredEventLinks = defaultData.events.slice(0, 12).map((event, index) => ({
@@ -349,51 +340,34 @@ export default async function HolidaysPage() {
           </div>
         </section>
 
-        <section aria-labelledby="holidays-reading-heading" className={styles.guideSection}>
-          <div className={styles.guidePanel}>
-            <div className={styles.sectionHead}>
-              <h2 id="holidays-reading-heading" className={styles.sectionTitle}>
-                كيف تستخدم العدّاد بدون قرار متسرع؟
-              </h2>
-              <p className={styles.sectionLead}>
-                العدّاد يجيب عن سؤال “كم بقي؟”، لكن القرار العملي يحتاج خطوة إضافية:
-                هل التاريخ ثابت، هل يختلف حسب البلد، وهل تحتاج تحويله قبل الحجز أو الترتيب؟
-              </p>
-            </div>
-            <div className={styles.guideGrid}>
-              <div className={styles.readingList}>
-                {HOLIDAY_READING_RULES.map((rule, index) => (
-                  <article key={rule.title} className={styles.readingItem}>
-                    <span className={styles.readingNumber}>{index + 1}</span>
-                    <div>
-                      <h3 className={styles.compactTitle}>{rule.title}</h3>
-                      <p className={styles.compactCopy}>{rule.description}</p>
-                    </div>
-                  </article>
-                ))}
-              </div>
-              <div className={styles.trustList} aria-label="حدود الاعتماد على العدادات">
-                {HOLIDAY_TRUST_RULES.map((rule) => (
-                  <article key={rule.title} className={styles.trustItem}>
-                    <h3 className={styles.compactTitle}>{rule.title}</h3>
-                    <p className={styles.compactCopy}>{rule.description}</p>
-                    <Link href={rule.href} className={styles.trustLink}>
-                      {rule.label}
-                      <ArrowLeft size={14} aria-hidden="true" />
-                    </Link>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </div>
+        {/* Plain text + icon-chip inline list — no bordered panel, no two-column split, no
+            border-bottom lines between items (owner, 2026-08-13: replacing the old .guidePanel/
+            .trustItem line-separated design; consolidated from 6 overlapping rules to 4). */}
+        <section aria-labelledby="holidays-reading-heading" className="date-section max-w-3xl">
+          <h2 id="holidays-reading-heading" className={styles.sectionTitle}>
+            قبل ما تعتمد على العدّاد
+          </h2>
+          <p className="date-editorial-copy">
+            العدّاد يجيب عن سؤال «كم بقي؟»، لكن القرار العملي يحتاج خطوة إضافية:
+            هل التاريخ ثابت، هل يختلف حسب البلد، وهل تحتاج تحويله قبل الحجز أو الترتيب؟
+          </p>
+          <ul className="date-use-inline-list">
+            {HOLIDAY_QUICK_RULES.map((rule) => (
+              <li key={rule.title}>
+                <span className="date-use-icon" aria-hidden="true"><rule.Icon size={16} strokeWidth={1.75} /></span>
+                <span><strong>{rule.title}</strong> — {rule.description}</span>
+              </li>
+            ))}
+          </ul>
         </section>
 
+        {/* Related pages — small clean cards, not a dot-list (owner, 2026-08-13: "related
+            pages and tools should be small clean cards"). */}
         <section className={styles.followupSection}>
-          <GeoInternalLinks
-            title="خطوتك التالية بعد اختيار مناسبة"
-            description="من يتابع رمضان أو العيد أو مناسبة قادمة يحتاج غالباً إلى تاريخ اليوم أو الوقت الان. اختر المسار الذي يكمّل التخطيط بدلاً من فتح صفحات كثيرة."
-            links={utilityLinks.slice(0, 3)}
-            ariaLabel="خطوات تكمل متابعة المناسبات"
+          <SiteRelatedCardGrid
+            heading="خطوتك التالية بعد اختيار مناسبة"
+            headingId="holidays-next-paths-heading"
+            items={utilityLinks.slice(0, 4)}
           />
         </section>
           </main>

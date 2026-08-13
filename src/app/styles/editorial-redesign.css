@@ -1265,17 +1265,20 @@
   }
 }
 
-/* Time-difference hub pass: tool first, fewer repeated card grids. */
+/* Time-difference hub pass. The previous version of this block (2026-08-13 and earlier) forced
+   every card grid on this page into a `border-block-end` line-separated list via `!important`
+   attribute selectors fighting the page's own inline styles — exactly the "boring line border
+   top/bottom" pattern the owner has repeatedly banned elsewhere in the design system, and the
+   fragile attribute-selector approach made it invisible to anyone editing page.jsx directly.
+   Replaced 2026-08-13 with real classNames in page.jsx itself (no more fighting inline styles)
+   and real card/list treatments per DESIGN.md Law 4 — see time-difference/page.jsx. Only the
+   width-consistency fix survives here as a real, minimal rule: the hub's `content-col` base
+   class already matches the [from]/[to] detail page's own width (900px) now that the old
+   `!important` 70rem override is gone — nothing else needed. */
 .time-diff-hub-page {
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--bg-surface-2) 68%, transparent), transparent 36rem),
     var(--bg-base);
-}
-
-.time-diff-hub-main {
-  width: min(100% - 2rem, 70rem) !important;
-  margin-inline: auto !important;
-  padding-block-start: calc(var(--app-header-height) + var(--space-10)) !important;
 }
 
 .time-diff-hub-hero {
@@ -1297,111 +1300,7 @@
   background: color-mix(in srgb, var(--bg-surface-1) 92%, var(--accent-soft));
 }
 
-.time-diff-hub-page [aria-labelledby="time-difference-decision-heading"],
-.time-diff-hub-page [aria-labelledby="time-difference-mistakes-heading"],
-.time-diff-hub-page [aria-labelledby="time-difference-sources-heading"],
-.time-diff-hub-page [aria-labelledby="popular-time-difference-links-heading"] {
-  margin-block: var(--space-16) !important;
-}
-
-.time-diff-hub-page [aria-labelledby="time-difference-decision-heading"] > div:last-child,
-.time-diff-hub-page [aria-labelledby="time-difference-mistakes-heading"] > div:last-child {
-  counter-reset: time-diff-step;
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 0 !important;
-  border-block: 1px solid var(--surface-hairline);
-}
-
-.time-diff-hub-page [aria-labelledby="time-difference-decision-heading"] article,
-.time-diff-hub-page [aria-labelledby="time-difference-mistakes-heading"] article {
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--space-2) var(--space-4) !important;
-  padding: var(--space-5) 0 !important;
-  border: 0 !important;
-  border-block-end: 1px solid var(--surface-hairline) !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-}
-
-.time-diff-hub-page [aria-labelledby="time-difference-decision-heading"] article:last-child,
-.time-diff-hub-page [aria-labelledby="time-difference-mistakes-heading"] article:last-child {
-  border-block-end: 0 !important;
-}
-
-.time-diff-hub-page [aria-labelledby="time-difference-decision-heading"] article::before,
-.time-diff-hub-page [aria-labelledby="time-difference-mistakes-heading"] article::before {
-  counter-increment: time-diff-step;
-  content: counter(time-diff-step);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: 2.25rem;
-  block-size: 2.25rem;
-  grid-row: span 3;
-  border-radius: var(--radius-md);
-  background: var(--accent-soft);
-  color: var(--accent-alt);
-  font-size: var(--text-sm);
-  font-weight: var(--font-black);
-}
-
-.time-diff-hub-page [aria-labelledby="time-difference-sources-heading"] > div:last-child,
-.time-diff-hub-page [aria-labelledby="popular-time-difference-links-heading"] > div:last-child {
-  display: grid !important;
-  gap: 0 !important;
-  border-block: 1px solid var(--surface-hairline);
-  grid-template-columns: 1fr !important;
-}
-
-.time-diff-hub-page [aria-labelledby="time-difference-sources-heading"] a,
-.time-diff-hub-page [aria-labelledby="popular-time-difference-links-heading"] a {
-  padding: var(--space-5) 0 !important;
-  border: 0 !important;
-  border-block-end: 1px solid var(--surface-hairline) !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-}
-
-.time-diff-hub-page [aria-labelledby="popular-time-difference-links-heading"] a:first-child {
-  padding: var(--space-6) !important;
-  border: 1px solid var(--border-accent) !important;
-  border-radius: var(--radius-lg) !important;
-  background: color-mix(in srgb, var(--accent-soft) 42%, var(--bg-surface-1)) !important;
-  margin-block: var(--space-3) !important;
-}
-
-@media (min-width: 980px) {
-  .time-diff-hub-hero {
-    max-width: 64rem;
-  }
-
-  .time-diff-hub-page [aria-labelledby="popular-time-difference-links-heading"] > div:last-child {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) !important;
-    gap: var(--space-4) !important;
-    border-block: 0;
-  }
-
-  .time-diff-hub-page [aria-labelledby="popular-time-difference-links-heading"] a {
-    padding: var(--space-5) !important;
-    border: 1px solid var(--surface-hairline) !important;
-    border-radius: var(--radius-lg) !important;
-    background: var(--bg-surface-1) !important;
-  }
-
-  .time-diff-hub-page [aria-labelledby="popular-time-difference-links-heading"] a:first-child {
-    grid-row: span 2;
-    align-content: center;
-    margin-block: 0 !important;
-  }
-}
-
 @media (max-width: 720px) {
-  .time-diff-hub-main {
-    width: min(100% - 1.25rem, 70rem) !important;
-    padding-block-start: calc(var(--app-header-height) + var(--space-6)) !important;
-  }
-
   .time-diff-hub-page [aria-label="حاسبة فرق التوقيت"] {
     padding: var(--space-4);
   }

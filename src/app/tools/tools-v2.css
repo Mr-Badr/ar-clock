@@ -178,7 +178,11 @@ html {
     order: initial;
     max-width: 460px;
     position: sticky;
-    top: var(--space-5);
+    /* Must account for the fixed navbar's real height, not a bare --space-N — otherwise the
+       panel sticks UNDER the navbar with its top ~44px hidden behind it while scrolling (found
+       2026-08-13, same bug pattern already fixed once for TocScrollSpy's desktop rail — see
+       calculator-ui-standards.md §"Every tool page needs a TOC" for that precedent). */
+    top: calc(var(--app-header-height) + var(--space-4));
   }
 }
 
@@ -936,16 +940,33 @@ input[type="number"]::-webkit-outer-spin-button {
    clearly labeled stats side by side, each with its OWN small caption, removes the ambiguity. */
 .tool-v2-result-stat-row {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
-  gap: var(--space-3);
-  margin-top: 4px;
+  flex-wrap: wrap;
+  /* Was --space-3 (12px) — cramped enough on 3-stat results (e.g. tire pressure PSI/bar/kPa)
+     that the three numbers read as one run-on string with no visual separation (owner,
+     2026-08-13: "so close, super bad ui ux"). Real gap plus the divider below fixes every
+     usage of this row, not just the 3-item ones — 2-item rows already had their own `×`
+     separator glyph and just get more breathing room around it now. */
+  gap: var(--space-4);
+  row-gap: var(--space-4);
+  margin-top: var(--space-2);
+  padding-block: var(--space-1);
 }
 .tool-v2-result-stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  justify-content: center;
+  gap: 4px;
+  min-width: 3.75rem;
+  padding-inline: var(--space-2);
+}
+/* A thin vertical hairline BETWEEN stat columns — a functional divider separating distinct data
+   points in one strip, not a decorative border-top/bottom stripe on a card (that rule is about
+   fake "design" accents on a single box, not a real separator between multiple values). */
+.tool-v2-result-stat + .tool-v2-result-stat {
+  border-inline-start: 1px solid var(--border-subtle);
 }
 .tool-v2-result-stat-value {
   font-size: clamp(1.55rem, 1.4rem + 0.9vw, 1.95rem);

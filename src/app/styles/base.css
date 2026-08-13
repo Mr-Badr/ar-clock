@@ -598,8 +598,16 @@
        can hit. This doesn't fix a root cause (see the .layout-with-ads min-width:0 fix in
        ads.css for the one found today) — it's a guarantee that whatever the next layout bug
        is, on any current or future page, it clips instead of creating a scrollable page.
-       Never remove this to "fix" an overflow — find and fix the element that's too wide. */
-    overflow-x: hidden;
+       Never remove this to "fix" an overflow — find and fix the element that's too wide.
+       MUST be `clip`, not `hidden` (found 2026-08-13, same day): `overflow-x: hidden` with no
+       explicit `overflow-y` makes the browser compute `overflow-y: auto` (the CSS spec's
+       overflow-pairing rule — any non-visible/non-clip value on one axis forces the other off
+       `visible` too), which turns html/body into a real scroll container and silently breaks
+       `position: sticky` for EVERY descendant sitewide (confirmed: a sticky tool panel scrolled
+       off with the page instead of sticking). `clip` is explicitly exempted from that pairing
+       rule (grouped with `visible`), so it blocks horizontal overflow without ever creating a
+       scroll container. Widely supported (Chrome/Edge 90+, Safari 16+, Firefox 113+). */
+    overflow-x: clip;
   }
 
   body {
@@ -616,8 +624,10 @@
       color var(--transition-theme);
     min-height: 100dvh;
     /* Paired with the same rule on html above — different browsers treat either element as
-       the actual scrolling root, so both need it for the safety net to be reliable. */
-    overflow-x: hidden;
+       the actual scrolling root, so both need it for the safety net to be reliable. Must be
+       `clip`, not `hidden` — see the html rule's comment for why `hidden` breaks
+       `position: sticky` sitewide. */
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "kern" 1, "liga" 1;

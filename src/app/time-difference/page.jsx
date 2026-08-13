@@ -5,9 +5,10 @@ import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import TimeDiffSections from '@/components/time-diff/index';
-import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
 import { POPULAR_PAIRS } from '@/components/time-diff/data/popularPairs';
-import { ArrowLeft, Globe } from 'lucide-react';
+import { ArrowLeft, ArrowLeftRight, Globe, PhoneCall, Users, Clock, CalendarClock, MapPinned } from 'lucide-react';
 import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -23,16 +24,19 @@ const TIME_DIFFERENCE_DECISION_STEPS = [
     label: 'قبل الاتصال',
     title: 'راجع من يسبق الآن',
     body: 'إذا كانت المدينة الثانية تسبقك أو تتأخر عنك، لا تنظر إلى الرقم وحده. اسأل: هل الطرف الآخر في وقت عمل، مساء، نوم، أو يوم مختلف؟',
+    Icon: PhoneCall,
   },
   {
     label: 'قبل الاجتماع',
     title: 'ابحث عن نافذة مشتركة',
     body: 'الوقت المناسب ليس منتصف اليوم عندك فقط. الأفضل أن يقع داخل ساعات عمل الطرفين، أو قريباً منها إذا قبل أحد الطرفين وقتاً مبكراً أو متأخراً.',
+    Icon: Users,
   },
   {
     label: 'قبل موعد مستقبلي',
     title: 'انتبه للتوقيت الصيفي',
     body: 'الفارق اليوم قد لا يبقى نفسه بعد شهر. إذا كان الموعد مستقبلياً، استخدم التحويل داخل الأداة ولا تعتمد على فرق ساعات محفوظ من الذاكرة.',
+    Icon: Clock,
   },
 ];
 
@@ -134,26 +138,27 @@ export default async function TimeDifferencePage() {
     ],
     keywords: hubKeywords,
   });
-  const popularPairQuickLinks = SAFE_POPULAR_PAIRS.slice(0, 5).map((pair) => ({
+  const popularPairQuickLinks = SAFE_POPULAR_PAIRS.slice(0, 6).map((pair) => ({
     href: `/time-difference/${pair.from.slug}/${pair.to.slug}`,
-    title: `فرق التوقيت بين ${pair.from.nameAr} و${pair.to.nameAr}`,
-    description: `افتح مقارنة جاهزة تعرض من يسبق الآن وأوقات التداخل المناسبة.`,
+    fromName: pair.from.nameAr,
+    toName: pair.to.nameAr,
+    volume: pair.volume || null,
   }));
   const utilityLinks = appendToolDiscoveryLinks([
     {
       href: "/time-now",
       label: "الوقت الان في المدن والدول",
-      description: "تحقق من الوقت الحالي في كل مدينة قبل المقارنة بينها وبين أي مدينة أخرى.",
+      Icon: MapPinned,
     },
     {
       href: "/date/today",
       label: "تاريخ اليوم",
-      description: "راجع التاريخ الهجري والميلادي اليوم قبل تثبيت موعد يمتد بين يومين أو منطقتين زمنيتين.",
+      Icon: CalendarClock,
     },
     {
       href: "/holidays",
       label: "المناسبات القادمة",
-      description: "استكشف المناسبات والإجازات القادمة عند تنسيق الاجتماعات والسفر عبر الدول.",
+      Icon: Globe,
     },
   ]);
 
@@ -248,326 +253,105 @@ export default async function TimeDifferencePage() {
           <TimeDiffCalculator />
         </section>
 
-        <section
-          aria-labelledby="time-difference-decision-heading"
-          style={{ marginBottom: 'var(--space-10)' }}
-        >
-          <div style={{ maxWidth: '72ch', marginBottom: 'var(--space-5)' }}>
-            <h2
-              id="time-difference-decision-heading"
-              style={{
-                fontSize: 'var(--text-xl)',
-                fontWeight: 'var(--font-bold)',
-                color: 'var(--text-primary)',
-                marginBottom: 'var(--space-2)',
-              }}
-            >
-              كيف تستخدم النتيجة بدون خطأ؟
-            </h2>
-            <p
-              style={{
-                color: 'var(--text-secondary)',
-                lineHeight: 'var(--leading-relaxed)',
-              }}
-            >
-              فرق التوقيت ليس رقماً للحفظ فقط. اقرأ النتيجة كقرار: هل أتصل الآن، هل أرسل دعوة اجتماع، وهل الموعد يقع في نفس اليوم عند الطرفين؟
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
-              gap: 'var(--space-3)',
-            }}
-          >
+        {/* Plain text + icon-chip inline list — sequential instructions, no card boxes and no
+            border-top/bottom lines (owner, 2026-08-13: replacing the old !important-driven
+            line-separated list in editorial-redesign.css). */}
+        <section aria-labelledby="time-difference-decision-heading" className="date-section max-w-3xl">
+          <h2 id="time-difference-decision-heading" className="date-section-title">
+            كيف تستخدم النتيجة بدون خطأ؟
+          </h2>
+          <p className="date-editorial-copy">
+            فرق التوقيت ليس رقماً للحفظ فقط. اقرأ النتيجة كقرار: هل أتصل الآن، هل أرسل دعوة اجتماع، وهل الموعد يقع في نفس اليوم عند الطرفين؟
+          </p>
+          <ul className="date-use-inline-list">
             {TIME_DIFFERENCE_DECISION_STEPS.map((step) => (
-              <article
-                key={step.title}
-                style={{
-                  display: 'grid',
-                  gap: 'var(--space-2)',
-                  padding: 'var(--space-4)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: 'var(--radius-lg)',
-                  background: 'var(--bg-surface-1)',
-                }}
-              >
-                <p
-                  style={{
-                    margin: 0,
-                    color: 'var(--text-muted)',
-                    fontSize: 'var(--text-xs)',
-                    fontWeight: 'var(--font-semibold)',
-                  }}
-                >
-                  {step.label}
-                </p>
-                <h3
-                  style={{
-                    margin: 0,
-                    color: 'var(--text-primary)',
-                    fontSize: 'var(--text-base)',
-                    fontWeight: 'var(--font-bold)',
-                    lineHeight: 'var(--leading-snug)',
-                  }}
-                >
-                  {step.title}
-                </h3>
-                <p
-                  style={{
-                    margin: 0,
-                    color: 'var(--text-secondary)',
-                    fontSize: 'var(--text-sm)',
-                    lineHeight: 'var(--leading-relaxed)',
-                  }}
-                >
-                  {step.body}
-                </p>
-              </article>
+              <li key={step.title}>
+                <span className="date-use-icon" aria-hidden="true"><step.Icon size={16} strokeWidth={1.75} /></span>
+                <span><strong>{step.title}</strong> — {step.body}</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
 
-        <section
-          aria-labelledby="time-difference-mistakes-heading"
-          style={{ marginBottom: 'var(--space-10)' }}
-        >
-          <div style={{ maxWidth: '72ch', marginBottom: 'var(--space-5)' }}>
-            <h2
-              id="time-difference-mistakes-heading"
-              style={{
-                fontSize: 'var(--text-xl)',
-                fontWeight: 'var(--font-bold)',
-                color: 'var(--text-primary)',
-                marginBottom: 'var(--space-2)',
-              }}
-            >
-              متى يكون حساب فرق التوقيت مضللاً؟
-            </h2>
-            <p
-              style={{
-                color: 'var(--text-secondary)',
-                lineHeight: 'var(--leading-relaxed)',
-              }}
-            >
-              الرقم الصحيح اليوم قد يصبح خاطئاً إذا تغير التاريخ أو دخل أحد الطرفين في توقيت صيفي. هذه أخطاء متكررة عند المكالمات والسفر والاجتماعات العابرة للمناطق الزمنية.
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
-              gap: 'var(--space-3)',
-            }}
-          >
+        {/* Real cards — 4 genuinely comparable "common mistake" facts, not sequential steps,
+            so a peer-card grid is the right shape here (DESIGN.md Law 4: cards for comparable
+            items, not for plain prose). */}
+        <section aria-labelledby="time-difference-mistakes-heading" className="date-section">
+          <h2 id="time-difference-mistakes-heading" className="date-section-title">
+            متى يكون حساب فرق التوقيت مضللاً؟
+          </h2>
+          <p className="date-section-copy mb-5">
+            الرقم الصحيح اليوم قد يصبح خاطئاً إذا تغير التاريخ أو دخل أحد الطرفين في توقيت صيفي. هذه أخطاء متكررة عند المكالمات والسفر والاجتماعات العابرة للمناطق الزمنية.
+          </p>
+          <div className="date-use-list" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))' }}>
             {TIME_DIFFERENCE_MISTAKES.map((item) => (
-              <article
-                key={item.title}
-                style={{
-                  display: 'grid',
-                  gap: 'var(--space-2)',
-                  padding: 'var(--space-4)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: 'var(--radius-lg)',
-                  background: 'var(--bg-surface-2)',
-                }}
-              >
-                <h3
-                  style={{
-                    margin: 0,
-                    color: 'var(--text-primary)',
-                    fontSize: 'var(--text-base)',
-                    fontWeight: 'var(--font-bold)',
-                  }}
-                >
-                  {item.title}
-                </h3>
-                <p
-                  style={{
-                    margin: 0,
-                    color: 'var(--text-secondary)',
-                    fontSize: 'var(--text-sm)',
-                    lineHeight: 'var(--leading-relaxed)',
-                  }}
-                >
-                  {item.body}
-                </p>
+              <article key={item.title} className="date-use-item">
+                <h3 className="date-use-title">{item.title}</h3>
+                <p className="date-use-copy">{item.body}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section
-          aria-labelledby="time-difference-sources-heading"
-          style={{ marginBottom: 'var(--space-10)' }}
-        >
-          <div style={{ maxWidth: '72ch', marginBottom: 'var(--space-5)' }}>
-            <h2
-              id="time-difference-sources-heading"
-              style={{
-                fontSize: 'var(--text-xl)',
-                fontWeight: 'var(--font-bold)',
-                color: 'var(--text-primary)',
-                marginBottom: 'var(--space-2)',
-              }}
-            >
-              مصادر مفيدة لفهم UTC وDST
-            </h2>
-            <p
-              style={{
-                color: 'var(--text-secondary)',
-                lineHeight: 'var(--leading-relaxed)',
-              }}
-            >
-              الحاسبة لا تسحب هذه المصادر أثناء التشغيل، لكنها مراجع تساعدك على فهم لماذا تختلف فروق التوقيت بين المدن ولماذا تستخدم التطبيقات أسماء مناطق IANA.
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-              gap: 'var(--space-3)',
-            }}
-          >
-            {TIME_DIFFERENCE_SOURCE_LINKS.map((source) => (
-              <a
-                key={source.href}
-                href={source.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'grid',
-                  gap: 'var(--space-2)',
-                  padding: 'var(--space-4)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: 'var(--radius-lg)',
-                  background: 'var(--bg-surface-1)',
-                  textDecoration: 'none',
-                }}
-              >
-                <strong style={{ color: 'var(--text-primary)' }}>{source.label}</strong>
-                <span
-                  style={{
-                    color: 'var(--text-secondary)',
-                    fontSize: 'var(--text-sm)',
-                    lineHeight: 'var(--leading-relaxed)',
-                  }}
-                >
-                  {source.description}
-                </span>
-              </a>
-            ))}
-          </div>
-        </section>
-
-        <section
-          aria-labelledby="popular-time-difference-links-heading"
-          style={{ marginBottom: 'var(--space-10)' }}
-        >
-          <div>
-            <h2
-              id="popular-time-difference-links-heading"
-              style={{
-                fontSize: 'var(--text-xl)',
-                fontWeight: 'var(--font-bold)',
-                color: 'var(--text-primary)',
-                marginBottom: 'var(--space-2)',
-              }}
-            >
-              مقارنات جاهزة إذا كان سؤالك شائعاً
-            </h2>
-            <p
-              style={{
-                color: 'var(--text-secondary)',
-                lineHeight: 'var(--leading-relaxed)',
-                maxWidth: '72ch',
-                marginBottom: 'var(--space-4)',
-              }}
-            >
-              إذا كنت تبحث عن زوج مدن معروف، افتح المقارنة مباشرة. أما إذا كان لديك
-              زوج مختلف، فالأداة في الأعلى تعطيك النتيجة نفسها لأي مدينة أو دولة.
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-              gap: 'var(--space-3)',
-            }}
-          >
-            {popularPairQuickLinks.length > 0 ? (
-              popularPairQuickLinks.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  style={{
-                    display: 'grid',
-                    gap: 'var(--space-2)',
-                    padding: 'var(--space-4)',
-                    borderRadius: 'var(--radius-lg)',
-                    background: item === popularPairQuickLinks[0]
-                      ? 'color-mix(in srgb, var(--accent-soft) 48%, var(--bg-surface-2))'
-                      : 'var(--bg-surface-2)',
-                    border: item === popularPairQuickLinks[0]
-                      ? '1px solid var(--border-accent)'
-                      : '1px solid var(--border-subtle)',
-                    textDecoration: 'none',
-                  }}
-                >
-                  <strong
-                    style={{
-                      color: 'var(--text-primary)',
-                      lineHeight: 'var(--leading-snug)',
-                    }}
-                  >
-                    {item.title}
-                  </strong>
-                  <span
-                    style={{
-                      color: 'var(--text-secondary)',
-                      fontSize: 'var(--text-sm)',
-                      lineHeight: 'var(--leading-relaxed)',
-                    }}
-                  >
-                    {item.description}
+        {/* Smart comparison cards — two specific cities + an optional "most searched" badge,
+            not a generic related-link card (owner, 2026-08-13: "should have better smart card
+            that catch the user eye"). Capped at 6, down from a plain list that could grow
+            unbounded ("so much related pages... not that much"). */}
+        <section aria-labelledby="popular-time-difference-links-heading" className="date-section">
+          <h2 id="popular-time-difference-links-heading" className="date-section-title">
+            مقارنات جاهزة إذا كان سؤالك شائعاً
+          </h2>
+          <p className="date-section-copy mb-5">
+            إذا كنت تبحث عن زوج مدن معروف، افتح المقارنة مباشرة. أما إذا كان لديك
+            زوج مختلف، فالأداة في الأعلى تعطيك النتيجة نفسها لأي مدينة أو دولة.
+          </p>
+          {popularPairQuickLinks.length > 0 ? (
+            <div className="site-pair-grid">
+              {popularPairQuickLinks.map((pair) => (
+                <Link key={pair.href} href={pair.href} className="site-pair-card">
+                  {pair.volume && <span className="badge badge-accent" style={{ width: 'fit-content' }}>{pair.volume}</span>}
+                  <span className="site-pair-cities">
+                    {pair.fromName}
+                    <ArrowLeftRight size={16} strokeWidth={1.75} aria-hidden="true" />
+                    {pair.toName}
                   </span>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', color: 'var(--accent-alt)', fontSize: 'var(--text-sm)', fontWeight: 'var(--font-semibold)' }}>
+                  <span className="site-pair-cta">
                     افتح المقارنة
                     <ArrowLeft size={14} aria-hidden="true" />
                   </span>
                 </Link>
-              ))
-            ) : (
-              <div
-                role="status"
-                style={{
-                  gridColumn: '1 / -1',
-                  padding: 'var(--space-4)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: 'var(--radius-lg)',
-                  background: 'var(--bg-surface-2)',
-                  color: 'var(--text-secondary)',
-                  lineHeight: 'var(--leading-relaxed)',
-                }}
-              >
-                لا تظهر المقارنات الجاهزة الآن، لكن الحاسبة في أعلى الصفحة ما زالت تعمل لأي مدينتين تختارهما.
-              </div>
-            )}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <p className="date-editorial-copy" role="status">
+              لا تظهر المقارنات الجاهزة الآن، لكن الحاسبة في أعلى الصفحة ما زالت تعمل لأي مدينتين تختارهما.
+            </p>
+          )}
+        </section>
+
+        {/* Sources — plain small dot-list like /tools, last thing before the FAQ. */}
+        <section aria-labelledby="time-difference-sources-heading" className="date-section max-w-3xl">
+          <SiteDotLinkList
+            heading="مصادر مفيدة لفهم UTC وDST"
+            headingId="time-difference-sources-heading"
+            items={TIME_DIFFERENCE_SOURCE_LINKS.map((source) => ({
+              href: source.href,
+              label: source.label,
+              description: source.description,
+              external: true,
+            }))}
+          />
         </section>
 
           </main>
           <TimeDiffSections />
           <section className="content-col pb-20">
-            <GeoInternalLinks
-              title="خطوتك التالية بعد حساب فرق التوقيت"
-              description="بعد معرفة الفارق، اختر المسار الذي يكمّل قرارك: الوقت الان للتحقق من المدينة، التاريخ عندما يعبر الموعد منتصف الليل، أو المناسبات عند ترتيب رحلة."
-              links={utilityLinks}
-              ariaLabel="خطوات تكمل حساب فرق التوقيت"
+            {/* Related pages — small clean cards, not a dot-list (owner, 2026-08-13: "related
+                pages and tools should be small clean cards"). */}
+            <SiteRelatedCardGrid
+              heading="خطوتك التالية بعد حساب فرق التوقيت"
+              headingId="time-difference-next-paths-heading"
+              items={utilityLinks}
             />
             <AdMultiplex slotId="end-time-difference-hub" />
           </section>

@@ -131,7 +131,25 @@ export default function AdTopBanner({
     };
   }, [canLoadAds]);
 
-  if (!shouldRenderAds || !canLoadAds || isUnfilled) return null;
+  if (!shouldRenderAds || !canLoadAds) return null;
+
+  // Unfilled: this is the FIRST element inside <main>, right below the fixed navbar — its whole
+  // job is guaranteeing real space between the navbar and the page title on every page (see the
+  // file JSDoc's v3 history). Collapsing to nothing here (like every other unfilled ad slot
+  // does) breaks that invariant: content jumps up flush against the navbar with zero margin the
+  // moment the fill check resolves, a few seconds after first paint (found 2026-08-13, real
+  // production behavior, not a dev-only artifact — a normal fraction of auctions go unfilled).
+  // Keep the same reserved footprint as a real ad (same classes, same CSS-driven min-height/
+  // aspect-ratio), just with no ad chrome — same "void space" logic as DevAdPlaceholder, applied
+  // to the real unfilled case too, not only the "ads not configured in this environment" case.
+  if (isUnfilled) {
+    return (
+      <div
+        className={`ad-slot ad-slot--top-banner ${size === "large" ? "ad-slot--top-banner--large" : ""} ${className}`}
+        aria-hidden="true"
+      />
+    );
+  }
 
   return (
     <div

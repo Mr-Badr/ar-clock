@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Calendar, CalendarDays, Globe2, ArrowLeftRight } from 'lucide-react';
+import { Calendar, CalendarDays, Globe2, ArrowLeftRight, Moon, MapPin, Sparkles, ScrollText, Share2 } from 'lucide-react';
 
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
@@ -10,11 +10,32 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { SiteFaqAccordion } from '@/components/shared/SiteFaqAccordion';
 import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
 import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
+import { YearJumpSelect } from '@/components/date/YearJumpSelect.client';
 import { convertDate } from '@/lib/date-adapter';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { logger, serializeError } from '@/lib/logger';
 import { buildDateKeywords } from '@/lib/seo/section-search-intent';
 import { getSiteUrl } from '@/lib/site-config';
+
+const GLANCE_DAY_NAMES = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+
+type GlanceChip = { dayName: string; num: number; isToday: boolean };
+
+function buildHijriGlanceStrip(now: Date): GlanceChip[] {
+  const chips: GlanceChip[] = [];
+  for (let offset = -3; offset <= 3; offset += 1) {
+    const d = new Date(now);
+    d.setUTCDate(d.getUTCDate() + offset);
+    const iso = d.toISOString().slice(0, 10);
+    try {
+      const hijri = convertDate({ date: iso, toCalendar: 'hijri', method: 'umalqura' });
+      chips.push({ dayName: GLANCE_DAY_NAMES[d.getUTCDay()], num: hijri.day, isToday: offset === 0 });
+    } catch {
+      // skip a day the conversion can't resolve rather than break the whole strip
+    }
+  }
+  return chips;
+}
 
 const BASE_URL = getSiteUrl();
 const HIJRI_CALENDAR_KEYWORDS = [
@@ -230,6 +251,9 @@ export default async function HijriCalendarRootPage() {
 
   const yearLinks = buildHijriYearLinks(currentHijriYear);
   const decisionRows = buildDecisionRows(currentHijriYear, currentGregorianYear);
+  const glanceStrip = buildHijriGlanceStrip(now);
+  const currentYearInfo = yearLinks.find((item) => item.year === currentHijriYear) ?? yearLinks[0];
+  const decisionIcons = [Moon, MapPin, Sparkles, Share2];
   const breadcrumb = [
     { label: 'الرئيسية', href: '/' },
     { label: 'التاريخ', href: '/date' },
@@ -314,18 +338,29 @@ export default async function HijriCalendarRootPage() {
                 تقويم أم القرى
               </div>
               <h1 className="date-hero-title">
-                التقويم الهجري: اختر السنة ثم اعرف الشهر واليوم والمقابل الميلادي
+                التقويم الهجري {currentHijriYear} هـ
               </h1>
               <p className="date-hero-gregorian">
-                {currentHijriYear} هـ يمتد تقريباً: <strong>{buildHijriYearGregorianSpan(currentHijriYear)}</strong>
+                يمتد تقريباً: <strong>{buildHijriYearGregorianSpan(currentHijriYear)}</strong>
               </p>
               <p className="date-hero-copy">
-                التقويم الهجري تقويم قمري؛ لذلك تأتي السنة الهجرية أقصر من الميلادية وتتحرك مناسبات مثل رمضان والعيد والحج داخل الشهور الميلادية. من هذه الصفحة تبدأ بالسنة الهجرية، ثم تفتح الشهر أو اليوم لمعرفة المقابل الميلادي وفق أم القرى.
-                إذا كان لديك يوم هجري محدد فقط، استخدم التحويل المباشر مباشرة.
+                اختر السنة الهجرية، ثم افتح الشهر أو اليوم لمعرفة المقابل الميلادي وفق أم القرى.
               </p>
+
+              {/* Real dates, not more paragraphs — a taste of the calendar right in the hero
+                  (owner, 2026-08-13: "even this page should have the calendar"). */}
+              <div className="date-hero-glance" aria-label="الأسبوع الحالي بالتقويم الهجري">
+                {glanceStrip.map((chip) => (
+                  <div key={`${chip.dayName}-${chip.num}`} className="date-hero-glance-chip" data-today={chip.isToday}>
+                    <span className="date-hero-glance-day">{chip.dayName}</span>
+                    <span className="date-hero-glance-num">{chip.num}</span>
+                  </div>
+                ))}
+              </div>
+
               <div className="date-hero-quick-actions">
-                <Link href={`/date/calendar/hijri/${currentHijriYear}`} className="date-quick-action">
-                  <Calendar size={16} strokeWidth={1.75} aria-hidden="true" />
+                <Link href={`/date/calendar/hijri/${currentHijriYear}`} className="date-hero-cta">
+                  <Calendar size={16} strokeWidth={2} aria-hidden="true" />
                   افتح تقويم {currentHijriYear} هـ
                 </Link>
                 <Link href="/date/hijri-to-gregorian" className="date-quick-action">
@@ -338,6 +373,7 @@ export default async function HijriCalendarRootPage() {
 
           <section className="date-action-list date-action-list--four mb-8">
             <Link href={`/date/calendar/hijri/${currentHijriYear}`} className="date-action-link">
+              <span className="date-action-icon" aria-hidden="true"><Calendar size={18} strokeWidth={1.75} /></span>
               <div className="date-action-meta">ابدأ من السنة الحالية</div>
               <div className="date-action-title text-accent-alt">{currentHijriYear} هـ</div>
               <p className="date-action-copy">
@@ -345,6 +381,7 @@ export default async function HijriCalendarRootPage() {
               </p>
             </Link>
             <Link href={`/date/calendar/hijri/${currentHijriYear + 1}`} className="date-action-link">
+              <span className="date-action-icon" aria-hidden="true"><Moon size={18} strokeWidth={1.75} /></span>
               <div className="date-action-meta">للمواسم القادمة</div>
               <div className="date-action-title">{currentHijriYear + 1} هـ</div>
               <p className="date-action-copy">
@@ -352,6 +389,7 @@ export default async function HijriCalendarRootPage() {
               </p>
             </Link>
             <Link href={`/date/calendar/${currentGregorianYear}`} className="date-action-link">
+              <span className="date-action-icon" aria-hidden="true"><Globe2 size={18} strokeWidth={1.75} /></span>
               <div className="date-action-meta">المسار الموازي</div>
               <div className="date-action-title">تقويم {currentGregorianYear} ميلادي</div>
               <p className="date-action-copy">
@@ -359,6 +397,7 @@ export default async function HijriCalendarRootPage() {
               </p>
             </Link>
             <Link href="/date/hijri-to-gregorian" className="date-action-link">
+              <span className="date-action-icon" aria-hidden="true"><ArrowLeftRight size={18} strokeWidth={1.75} /></span>
               <div className="date-action-meta">للتحويل المباشر</div>
               <div className="date-action-title">هجري إلى ميلادي</div>
               <p className="date-action-copy">
@@ -367,53 +406,89 @@ export default async function HijriCalendarRootPage() {
             </Link>
           </section>
 
+          {/* Current year gets its own showcase card; any OTHER year is a select, not a
+              7-card grid to scroll through (owner, 2026-08-13: "give him information that
+              he can select other years in a unique select button"). */}
           <section className="date-section">
-            <h2 className="date-section-title">سنوات هجرية قريبة يبدأ منها البحث غالباً</h2>
-            <div className="date-year-list">
-              {yearLinks.map((item) => (
-                <Link key={item.href} href={item.href} className="date-year-link">
-                  <span className="date-year-main">
-                    <span className="date-year-meta">تقويم أم القرى</span>
-                    <span className="date-year-title">{item.year} هـ</span>
-                    <span className="date-year-copy">يمتد ميلادياً: {item.gregorianSpan}</span>
-                    <span className="date-year-copy">{item.description}</span>
-                  </span>
-                  <span className="date-link-action">
-                    افتح تقويم {item.year} هـ ←
-                  </span>
-                </Link>
-              ))}
+            <h2 className="date-section-title">تقويم {currentHijriYear} هـ، أو اختر سنة أخرى</h2>
+            <div className="date-year-showcase-row">
+              <Link href={`/date/calendar/hijri/${currentHijriYear}`} className="date-year-showcase">
+                <span className="date-year-showcase-eyebrow">
+                  <Calendar size={14} strokeWidth={1.75} aria-hidden="true" />
+                  السنة الهجرية الحالية
+                </span>
+                <span className="date-year-showcase-num">{currentHijriYear} هـ</span>
+                <span className="date-year-showcase-copy">
+                  يمتد ميلادياً: {currentYearInfo?.gregorianSpan}. {currentYearInfo?.description}
+                </span>
+                <span className="date-year-showcase-action">افتح تقويم {currentHijriYear} هـ ←</span>
+              </Link>
+              <YearJumpSelect
+                basePath="/date/calendar/hijri"
+                currentYear={currentHijriYear}
+                suffix=" هـ"
+                label="اختر سنة هجرية أخرى"
+              />
             </div>
           </section>
 
-          <section className="date-editorial-grid date-section">
-            <article className="date-editorial-block">
-              <h2 className="date-editorial-title">لماذا لا يكفي أن تعرف تاريخ اليوم فقط؟</h2>
-              <p className="date-editorial-copy m-0">
-                لأن كثيراً من الأسئلة الهجرية تبدأ من موسم لا من يوم مفرد. قد تريد معرفة أين يقع رمضان داخل السنة الميلادية، أو متى يبدأ ذو الحجة، أو كيف تتوزع أيام العيد على الأسبوع. صفحة اليوم تجيبك عن الآن، أما صفحة السنة فتجعلك ترى الصورة كاملة قبل أن تختار اليوم.
-              </p>
-            </article>
+          {/* Scannable summary first, full paragraph tucked behind "التفاصيل" — content stays
+              in the DOM (crawlable) without forcing a text wall by default (owner, 2026-08-13:
+              "no one wants to read a lot of text with bad design"). */}
+          <section className="date-section max-w-3xl">
+            <h2 className="date-section-title">لماذا سنة كاملة، لا يوم واحد؟</h2>
+            <div className="date-key-points">
+              <article className="date-key-point">
+                <div className="date-key-point-head">
+                  <span className="date-key-point-icon" aria-hidden="true"><ScrollText size={18} strokeWidth={1.75} /></span>
+                  <h3 className="date-key-point-title">أغلب الأسئلة الهجرية تبدأ من موسم، لا من يوم مفرد</h3>
+                </div>
+                <p className="date-key-point-summary">
+                  أين يقع رمضان هذا العام، متى يبدأ ذو الحجة، كيف تتوزع أيام العيد على الأسبوع — صفحة السنة تعطيك الصورة كاملة قبل أن تختار يوماً محدداً.
+                </p>
+                <details className="date-key-point-more">
+                  <summary>التفاصيل</summary>
+                  <p>
+                    لأن كثيراً من الأسئلة الهجرية تبدأ من موسم لا من يوم مفرد. قد تريد معرفة أين يقع رمضان داخل السنة الميلادية، أو متى يبدأ ذو الحجة، أو كيف تتوزع أيام العيد على الأسبوع. صفحة اليوم تجيبك عن الآن، أما صفحة السنة فتجعلك ترى الصورة كاملة قبل أن تختار اليوم.
+                  </p>
+                </details>
+              </article>
 
-            <article className="date-editorial-block">
-              <h2 className="date-editorial-title">كيف نحافظ على وضوح العلاقة مع الميلادي؟</h2>
-              <p className="date-editorial-copy m-0">
-                لا نعزل التقويم الهجري عن الميلادي، بل نربطهما داخل الصفحات نفسها. كل سنة تعرض امتدادها الميلادي، وكل يوم يمكن فتحه لمعرفة المقابل بدقة أكبر. هذا مهم لأن الحياة اليومية غالباً تعمل بالتاريخ الميلادي، بينما تبقى المناسبات الدينية والاجتماعية مرتبطة بالشهور الهجرية.
-              </p>
-            </article>
+              <article className="date-key-point">
+                <div className="date-key-point-head">
+                  <span className="date-key-point-icon" aria-hidden="true"><ArrowLeftRight size={18} strokeWidth={1.75} /></span>
+                  <h3 className="date-key-point-title">كل سنة هجرية مربوطة بمقابلها الميلادي مباشرة</h3>
+                </div>
+                <p className="date-key-point-summary">
+                  لا نعزل التقويمين عن بعضهما — كل سنة تعرض امتدادها الميلادي، وكل يوم يمكن فتحه لمعرفة المقابل بدقة أكبر.
+                </p>
+                <details className="date-key-point-more">
+                  <summary>التفاصيل</summary>
+                  <p>
+                    هذا مهم لأن الحياة اليومية غالباً تعمل بالتاريخ الميلادي، بينما تبقى المناسبات الدينية والاجتماعية مرتبطة بالشهور الهجرية. الربط المباشر بين التقويمين في كل صفحة يمنعك من فتح أداة تحويل منفصلة كل مرة.
+                  </p>
+                </details>
+              </article>
+            </div>
           </section>
 
-          {/* Plain text list — no bordered panel (DESIGN.md Law 4). */}
-          <section className="date-section max-w-3xl" aria-labelledby="hijri-calendar-decision-heading">
+          {/* Decision cards — icon-chip grid, not a bordered label/value list (owner,
+              2026-08-13: "so boaring design... we do not want this border bottom"). */}
+          <section className="date-section" aria-labelledby="hijri-calendar-decision-heading">
             <h2 id="hijri-calendar-decision-heading" className="date-section-title">
               قاعدة القرار: من أين تبدأ؟
             </h2>
-            <div className="date-detail-list">
-              {decisionRows.map((row) => (
-                <div key={row.label} className="date-detail-row">
-                  <span className="date-detail-label">{row.label}</span>
-                  <span className="date-detail-value">{row.value}</span>
-                </div>
-              ))}
+            <div className="date-decision-grid">
+              {decisionRows.map((row, index) => {
+                const Icon = decisionIcons[index % decisionIcons.length];
+                return (
+                  <article key={row.label} className="date-decision-card">
+                    <span className="date-decision-icon" aria-hidden="true"><Icon size={18} strokeWidth={1.75} /></span>
+                    <h3 className="date-decision-label">{row.label}</h3>
+                    <p className="date-decision-value">{row.value}</p>
+                  </article>
+                );
+              })}
             </div>
           </section>
 

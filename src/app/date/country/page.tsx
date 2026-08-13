@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Clock, CalendarDays, ArrowLeftRight } from 'lucide-react';
+import { Clock, CalendarDays, ArrowLeftRight, Globe2, MapPinned, ScrollText, ShieldAlert } from 'lucide-react';
 
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
@@ -112,6 +112,8 @@ interface FaqItem {
   question: string;
   answer: string;
 }
+
+const DECISION_ICONS = [MapPinned, ArrowLeftRight, CalendarDays, ShieldAlert];
 
 const DECISION_ROWS: readonly DecisionRow[] = [
   {
@@ -331,18 +333,26 @@ export default async function DateCountryRootPage() {
             <div className="date-hero-main">
               <div className="date-kicker">التاريخ حسب الدولة</div>
               <h1 id="date-country-title" className="date-hero-title">
-                اختر بلدك لمعرفة التاريخ الهجري والميلادي اليوم
+                كم التاريخ اليوم في بلدك؟
               </h1>
               <p className="date-hero-copy">
-                إذا كنت تسأل: كم التاريخ اليوم في بلدي؟ فابدأ من الدولة. صفحة الدولة تعرض التاريخ
-                الهجري والميلادي وفق اليوم المحلي، ثم تساعدك على فتح الوقت الان
-                ومحول التاريخ من نفس السياق.
+                اختر دولتك لتقرأ التاريخ الهجري والميلادي وفق يومها المحلي، لا وفق جهازك فقط —
+                تاريخ صحيح عندك قد لا يكون بدأ بعد عند شخص آخر بسبب فرق التوقيت.
               </p>
-              <p className="date-hero-copy">
-                هذه الصفحة لا تعطيك رقماً عاماً فقط؛ بل تساعدك على تجنب خطأ شائع: مشاركة تاريخ صحيح
-                في بلدك لكنه لم يبدأ بعد في بلد آخر بسبب فرق التوقيت أو اختلاف بداية الشهر الهجري.
-                استخدم الاكتشاف السريع إذا أردت أقرب صفحة لك، أو اختر الدولة يدوياً عندما تريد مشاركة رابط واضح.
-              </p>
+              <div className="date-hero-fact-strip" aria-hidden="true">
+                <span className="date-hero-fact-chip">
+                  <Globe2 size={14} strokeWidth={1.75} />
+                  {directoryCountries.length}+ دولة
+                </span>
+                <span className="date-hero-fact-chip">
+                  <ScrollText size={14} strokeWidth={1.75} />
+                  هجري وميلادي معاً
+                </span>
+                <span className="date-hero-fact-chip">
+                  <MapPinned size={14} strokeWidth={1.75} />
+                  حسب اليوم المحلي
+                </span>
+              </div>
               <div className="date-hero-quick-actions">
                 <DateCountryRedirectClient />
                 <Link href="/date/today" className="date-quick-action">
@@ -379,7 +389,7 @@ export default async function DateCountryRootPage() {
                       التاريخ اليوم في {primaryCountry.name}
                     </span>
                     <span className="date-country-primary__copy">
-                      {primaryCountry.description} {primaryCountry.reason}
+                      {primaryCountry.reason}
                     </span>
                     <span className="date-link-action">
                       افتح صفحة {primaryCountry.name} ←
@@ -446,41 +456,73 @@ export default async function DateCountryRootPage() {
             </section>
           )}
 
-          <section className="date-editorial-grid date-section" aria-label="شرح اختيار التاريخ حسب الدولة">
-            <article className="date-editorial-block">
-              <h2 className="date-editorial-title">لماذا لا تكفي صفحة تاريخ عامة دائماً؟</h2>
-              <p className="date-editorial-copy m-0">
-                لأن التاريخ اليومي مرتبط بالوقت. قد تكون أنت في يوم جديد بينما الشخص الذي تراسله
-                في دولة أخرى ما زال في اليوم السابق. وعند الهجري، قد يضيف إعلان بداية الشهر فرقاً
-                بسيطاً بين بلد وآخر. لذلك تبدأ من الدولة عندما يكون السؤال محلياً، لا عندما تريد
-                معلومة تقويمية عامة فقط.
-              </p>
-            </article>
+          {/* Key-points cards, not a two-column prose wall (owner, 2026-08-13: "no one want to
+              read a lot of text with bad design") — same pattern as /date/calendar[/hijri]. */}
+          <section className="date-section" aria-label="شرح اختيار التاريخ حسب الدولة">
+            <div className="date-key-points">
+              <article className="date-key-point">
+                <div className="date-key-point-head">
+                  <span className="date-key-point-icon" aria-hidden="true">
+                    <Globe2 size={18} strokeWidth={1.75} />
+                  </span>
+                  <h3 className="date-key-point-title">لماذا لا تكفي صفحة تاريخ عامة دائماً؟</h3>
+                </div>
+                <p className="date-key-point-summary">
+                  التاريخ اليومي مرتبط بالوقت — أنت في يوم جديد وقد يكون غيرك في بلد آخر لا يزال في اليوم السابق.
+                </p>
+                <details className="date-key-point-more">
+                  <summary>التفاصيل</summary>
+                  <p>
+                    قد تكون أنت في يوم جديد بينما الشخص الذي تراسله في دولة أخرى ما زال في اليوم
+                    السابق. وعند الهجري، قد يضيف إعلان بداية الشهر فرقاً بسيطاً بين بلد وآخر. لذلك
+                    تبدأ من الدولة عندما يكون السؤال محلياً، لا عندما تريد معلومة تقويمية عامة فقط.
+                  </p>
+                </details>
+              </article>
 
-            <article className="date-editorial-block">
-              <h2 className="date-editorial-title">كيف تقرأ الصفحة دون أن تختلط عليك الأدوات؟</h2>
-              <p className="date-editorial-copy m-0">
-                صفحة الدولة تجيب عن “ما تاريخ اليوم هنا؟”. محول التاريخ يجيب عن “ما المقابل لتاريخ
-                محدد؟”. التقويم يجيب عن “كيف تبدو السنة أو الشهر كاملاً؟”. إذا عرفت الفرق بين هذه
-                الأسئلة، ستصل للنتيجة الصحيحة أسرع ولن تنسخ تاريخاً خارج سياقه.
-              </p>
-            </article>
+              <article className="date-key-point">
+                <div className="date-key-point-head">
+                  <span className="date-key-point-icon" aria-hidden="true">
+                    <ArrowLeftRight size={18} strokeWidth={1.75} />
+                  </span>
+                  <h3 className="date-key-point-title">كيف تقرأ الصفحة دون أن تختلط عليك الأدوات؟</h3>
+                </div>
+                <p className="date-key-point-summary">
+                  صفحة الدولة لتاريخ اليوم، المحوّل لتاريخ محدد، والتقويم لرؤية سنة أو شهر كاملاً.
+                </p>
+                <details className="date-key-point-more">
+                  <summary>التفاصيل</summary>
+                  <p>
+                    صفحة الدولة تجيب عن "ما تاريخ اليوم هنا؟". محول التاريخ يجيب عن "ما المقابل
+                    لتاريخ محدد؟". التقويم يجيب عن "كيف تبدو السنة أو الشهر كاملاً؟". إذا عرفت
+                    الفرق بين هذه الأسئلة، ستصل للنتيجة الصحيحة أسرع ولن تنسخ تاريخاً خارج سياقه.
+                  </p>
+                </details>
+              </article>
+            </div>
           </section>
 
-          {/* Plain text list — no bordered panel (DESIGN.md Law 4). */}
+          {/* Decision cards — icon-chip grid, not a bordered label/value list (owner,
+              2026-08-13: "so boaring design... we do not want this border bottom"). */}
           <section className="date-section max-w-3xl" aria-labelledby="date-country-decision-heading">
             <h2 id="date-country-decision-heading" className="date-section-title">
               قاعدة القرار: من أين تبدأ؟
             </h2>
-            <div className="date-detail-list">
-              {DECISION_ROWS.map((row) => (
-                <div key={row.need} className="date-detail-row">
-                  <span className="date-detail-label">{row.need}</span>
-                  <span className="date-detail-value">
-                    {row.startHere} {row.nextStep}
-                  </span>
-                </div>
-              ))}
+            <div className="date-decision-grid">
+              {DECISION_ROWS.map((row, index) => {
+                const Icon = DECISION_ICONS[index % DECISION_ICONS.length];
+                return (
+                  <article key={row.need} className="date-decision-card">
+                    <span className="date-decision-icon" aria-hidden="true">
+                      <Icon size={18} strokeWidth={1.75} />
+                    </span>
+                    <h3 className="date-decision-label">{row.need}</h3>
+                    <p className="date-decision-value">
+                      {row.startHere} {row.nextStep}
+                    </p>
+                  </article>
+                );
+              })}
             </div>
           </section>
 

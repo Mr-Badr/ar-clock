@@ -44,7 +44,8 @@ import { SITE_BRAND, getSiteUrl } from '@/lib/site-config';
 import { getTimeDifference } from '@/lib/time-diff';
 import { resolveTimeDifferenceCityFromSegment } from '@/lib/time-difference-route';
 import { buildTimeDifferenceHref } from '@/lib/time-difference-links';
-import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
+import { Clock3, CalendarDays } from 'lucide-react';
 import {
   buildTimeDifferenceKeywords,
   getCountrySeoNames,
@@ -365,22 +366,22 @@ export default async function ComparisonPage({ params }) {
       {
         href: `/time-now/${fromCity.country_slug}/${fromCity.city_slug}`,
         label: `الوقت الان في ${fromCity.city_name_ar}`,
-        description: `اعرف الساعة الحالية والتاريخ اليوم في ${fromCity.city_name_ar}.`,
+        Icon: Clock3,
       },
       {
         href: `/time-now/${toCity.country_slug}/${toCity.city_slug}`,
         label: `الوقت الان في ${toCity.city_name_ar}`,
-        description: `اعرف الساعة الحالية والتاريخ اليوم في ${toCity.city_name_ar}.`,
+        Icon: Clock3,
       },
       {
         href: `/date/country/${fromCity.country_slug}`,
         label: `التاريخ اليوم في ${fromCountryPrimary}`,
-        description: `راجع التاريخ الهجري والميلادي اليوم في ${fromCountryPrimary}.`,
+        Icon: CalendarDays,
       },
       {
         href: `/date/country/${toCity.country_slug}`,
         label: `التاريخ اليوم في ${toCountryPrimary}`,
-        description: `راجع التاريخ الهجري والميلادي اليوم في ${toCountryPrimary}.`,
+        Icon: CalendarDays,
       },
     ].map((link) => [link.href, link]),
     ).values(),
@@ -603,12 +604,13 @@ export default async function ComparisonPage({ params }) {
           </div>
         </section>
 
+        {/* Related pages — small clean cards, not a dot-list (owner, 2026-08-13: "related
+            pages and tools should be small clean cards"). */}
         <section className="td-section">
-          <GeoInternalLinks
-            title={`خطوات تكمل مقارنة ${fromCity.city_name_ar} و${toCity.city_name_ar}`}
-            description={`إذا بدأت بمقارنة ${fromCity.city_name_ar} و${toCity.city_name_ar}، فاختر المسار التالي حسب حاجتك: الوقت الحالي أو التاريخ في الصفحات المرتبطة بكل مدينة أو دولة.`}
-            links={comparisonUtilityLinks}
-            ariaLabel={`خطوات تكمل مقارنة ${fromCity.city_name_ar} و${toCity.city_name_ar}`}
+          <SiteRelatedCardGrid
+            heading={`خطوات تكمل مقارنة ${fromCity.city_name_ar} و${toCity.city_name_ar}`}
+            headingId="time-diff-pair-next-paths-heading"
+            items={comparisonUtilityLinks}
           />
         </section>
 

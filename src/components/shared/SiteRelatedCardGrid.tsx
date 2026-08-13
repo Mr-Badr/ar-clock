@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ArrowUpLeft } from 'lucide-react';
 import type { ComponentType } from 'react';
 
 /**
@@ -11,7 +12,10 @@ import type { ComponentType } from 'react';
 export type SiteRelatedCardItem = {
   href: string;
   label: string;
-  Icon: ComponentType<{ size?: number; strokeWidth?: number }>;
+  // Optional — some data sources feeding this component (e.g. TOP_DISCOVERY_LINKS in
+  // discovery-links.js) have no per-item icon; falls back to a plain arrow rather than crashing
+  // on `<item.Icon />` with an undefined component (found 2026-08-13, time-difference hub).
+  Icon?: ComponentType<{ size?: number; strokeWidth?: number }>;
 };
 
 export function SiteRelatedCardGrid({
@@ -34,14 +38,17 @@ export function SiteRelatedCardGrid({
         </p>
       )}
       <div className="site-related-grid">
-        {safeItems.map((item) => (
-          <Link key={item.href} href={item.href} className="site-related-card">
-            <span className="site-related-card__icon" aria-hidden="true">
-              <item.Icon size={18} strokeWidth={1.75} />
-            </span>
-            <span className="site-related-card__label">{item.label}</span>
-          </Link>
-        ))}
+        {safeItems.map((item) => {
+          const ItemIcon = item.Icon || ArrowUpLeft;
+          return (
+            <Link key={item.href} href={item.href} className="site-related-card">
+              <span className="site-related-card__icon" aria-hidden="true">
+                <ItemIcon size={18} strokeWidth={1.75} />
+              </span>
+              <span className="site-related-card__label">{item.label}</span>
+            </Link>
+          );
+        })}
       </div>
     </nav>
   );

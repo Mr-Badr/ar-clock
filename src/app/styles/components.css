@@ -3120,7 +3120,27 @@ html:not(.light) .tooltip-content.tooltip--danger .tooltip-arrow,
 
 .date-country-grid {
   display: grid;
+  gap: var(--space-2);
+}
+
+/* Directory grid is a dense "more countries" list, not a second row of featured cards
+   (owner, 2026-08-13: "a lot of big cards with flags"). Overrides the shared
+   .date-action-link/.date-country-link/.date-year-link block above to a compact
+   horizontal chip row — flag chip + name only, no title-sized text, no filler copy line. */
+.date-country-grid .date-country-link {
+  flex-direction: row;
+  align-items: center;
   gap: var(--space-3);
+  padding: var(--space-3);
+}
+
+.date-country-grid .date-country-title {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+}
+
+.date-country-grid .date-country-copy {
+  display: none;
 }
 
 .date-country-pathways {
@@ -3144,26 +3164,46 @@ html:not(.light) .tooltip-content.tooltip--danger .tooltip-arrow,
   transform: translateY(-1px);
 }
 
+/* Shrunk 2026-08-13 (owner: "the saudi card is taking so much space") — was --space-6 padding
+   with a text-5xl flag and text-2xl title, wildly oversized next to the compact 68px rows right
+   below it in the same list. Now proportionally bigger than a row (it IS the recommended start),
+   not a dominant block. */
 .date-country-primary {
   display: grid;
-  gap: var(--space-4);
-  border-radius: var(--radius-xl);
-  padding: var(--space-6);
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-3);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.date-country-primary__flag,
+.date-country-row__flag,
+.date-country-flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: var(--radius-full, 999px);
+  background: var(--accent-soft);
+  overflow: hidden;
 }
 
 .date-country-primary__flag {
-  font-size: var(--text-5xl);
-  line-height: 1;
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: var(--text-2xl);
 }
 
 .date-country-primary__body {
   display: grid;
-  gap: var(--space-2);
+  gap: var(--space-1);
+  min-width: 0;
 }
 
 .date-country-primary__title {
   color: var(--text-primary);
-  font-size: var(--text-2xl);
+  font-size: var(--text-lg);
   font-weight: var(--font-black);
   line-height: var(--leading-tight);
 }
@@ -3185,13 +3225,14 @@ html:not(.light) .tooltip-content.tooltip--danger .tooltip-arrow,
   display: grid;
   gap: var(--space-3);
   grid-template-columns: auto minmax(0, 1fr) auto;
-  min-height: 68px;
-  padding: var(--space-4);
+  min-height: 64px;
+  padding: var(--space-3) var(--space-4);
 }
 
 .date-country-row__flag {
-  font-size: var(--text-2xl);
-  line-height: 1;
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: var(--text-lg);
 }
 
 .date-country-row__main {
@@ -3211,11 +3252,16 @@ html:not(.light) .tooltip-content.tooltip--danger .tooltip-arrow,
   color: var(--text-secondary);
   font-size: var(--text-xs);
   line-height: var(--leading-relaxed);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .date-country-flag {
-  font-size: var(--text-3xl);
-  line-height: 1;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: var(--text-xl);
 }
 
 .date-stat-grid {
@@ -3330,6 +3376,408 @@ html:not(.light) .tooltip-content.tooltip--danger .tooltip-arrow,
 .date-quick-action svg {
   color: var(--accent-alt);
   flex-shrink: 0;
+}
+
+/* ─── Premium hero CTA (owner, 2026-08-13: "the button... should be unique, attractive,
+   maybe has some shadow, so he know this is the important button") ─────────────────────
+   Solid accent fill + real glow shadow + a one-shot shine sweep on hover — NOT a gradient
+   background (that's the banned "AI card" pattern; this is a filled action button, a
+   different, legitimate category). Distinguishes the ONE primary action in a
+   .date-hero-quick-actions row from the plain secondary pills beside it. */
+.date-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  color: var(--text-on-accent, #fff);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  padding: var(--space-3) var(--space-5);
+  min-height: 46px;
+  text-decoration: none;
+  box-shadow: 0 8px 24px -8px color-mix(in srgb, var(--accent) 65%, transparent);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.date-hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px -8px color-mix(in srgb, var(--accent) 75%, transparent);
+}
+
+.date-hero-cta:active {
+  transform: translateY(0);
+}
+
+.date-hero-cta svg {
+  flex-shrink: 0;
+}
+
+.date-hero-cta::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: -60%;
+  width: 40%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    color-mix(in srgb, white 45%, transparent),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: inset-inline-start 550ms ease;
+  pointer-events: none;
+}
+
+.date-hero-cta:hover::after {
+  inset-inline-start: 130%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .date-hero-cta,
+  .date-hero-cta::after {
+    transition: none;
+  }
+}
+
+/* ─── Hero "glance" week strip (owner, 2026-08-13: "even this page should have the
+   calendar, or make the first section super attractive") — a compact real-date preview
+   inside the hero itself instead of pure text, without pulling in a full month-grid build.
+   Today's chip is visually distinct (filled, not just outlined). ──────────────────────── */
+.date-hero-glance {
+  display: flex;
+  gap: var(--space-2);
+  margin-block-start: var(--space-5);
+  overflow-x: auto;
+  padding-block-end: 2px;
+}
+
+.date-hero-glance-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+  min-width: 3rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface);
+}
+
+.date-hero-glance-chip[data-today='true'] {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.date-hero-glance-day {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.date-hero-glance-chip[data-today='true'] .date-hero-glance-day {
+  color: color-mix(in srgb, var(--text-on-accent, #fff) 85%, transparent);
+}
+
+.date-hero-glance-num {
+  font-size: var(--text-lg);
+  font-weight: var(--font-black);
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.date-hero-glance-chip[data-today='true'] .date-hero-glance-num {
+  color: var(--text-on-accent, #fff);
+}
+
+/* Fact-strip — same "small chip row under the hero copy" idea as .date-hero-glance, but for
+   icon+label facts (no day/number to stack) instead of date-glance chips. Used on /date/country
+   where there's no single "today" cell to highlight. */
+.date-hero-fact-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block-start: var(--space-5);
+}
+
+.date-hero-fact-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full, 999px);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+}
+
+.date-hero-fact-chip svg {
+  color: var(--accent-alt);
+  flex-shrink: 0;
+}
+
+/* ─── Action-list icon chips (owner, 2026-08-13: "buttons are not feeling life, so
+   boaring") — same icon-chip-carries-color language used sitewide, rotated per card so a
+   row of 4 shortcuts doesn't read as 4 identical boxes. ──────────────────────────────── */
+.date-action-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-full, 999px);
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+  margin-bottom: var(--space-1);
+}
+
+.date-action-list--four .date-action-link:nth-child(4n+2) .date-action-icon {
+  background: var(--green-subtle);
+  color: var(--green-text);
+}
+
+.date-action-list--four .date-action-link:nth-child(4n+3) .date-action-icon {
+  background: var(--amber-subtle);
+  color: var(--amber-text);
+}
+
+.date-action-list--four .date-action-link:nth-child(4n+4) .date-action-icon {
+  background: var(--blue-subtle);
+  color: var(--blue-text);
+}
+
+/* ─── Year showcase + jump select (owner, 2026-08-13: replaces a flat repeated 7-card
+   grid — "the user want this calendar for this year... give him a unique select button"
+   for any other year) ──────────────────────────────────────────────────────────────── */
+.date-year-showcase-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: stretch;
+}
+
+@media (min-width: 720px) {
+  .date-year-showcase-row {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  }
+}
+
+.date-year-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-xl);
+  background: color-mix(in srgb, var(--accent-soft) 32%, var(--surface));
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.date-year-showcase:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md, 0 10px 24px -10px rgba(0, 0, 0, 0.35));
+}
+
+.date-year-showcase-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--accent-alt);
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+}
+
+.date-year-showcase-num {
+  font-size: clamp(2.25rem, 4vw, 2.75rem);
+  font-weight: var(--font-black);
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.date-year-showcase-copy {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-loose);
+}
+
+.date-year-showcase-action {
+  margin-top: var(--space-2);
+  color: var(--accent-alt);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+}
+
+.date-year-jump {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  justify-content: center;
+  padding: var(--space-6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+}
+
+.date-year-jump-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+}
+
+.date-year-jump-label svg {
+  color: var(--accent-alt);
+}
+
+.date-year-jump-trigger {
+  width: 100% !important;
+  min-height: 48px !important;
+  font-size: var(--text-base) !important;
+}
+
+/* ─── Decision cards (owner, 2026-08-13: replacing a plain label/value list — "so boaring
+   design... we do not want this border bottom... make the user enjoy") — icon-chip cards,
+   color-rotated, distinct in shape from the action-list cards above. ───────────────────── */
+.date-decision-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--space-3);
+}
+
+.date-decision-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.date-decision-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-full, 999px);
+  background: var(--blue-subtle);
+  color: var(--blue-text);
+}
+
+.date-decision-grid .date-decision-card:nth-child(4n+2) .date-decision-icon {
+  background: var(--green-subtle);
+  color: var(--green-text);
+}
+
+.date-decision-grid .date-decision-card:nth-child(4n+3) .date-decision-icon {
+  background: var(--amber-subtle);
+  color: var(--amber-text);
+}
+
+.date-decision-grid .date-decision-card:nth-child(4n+4) .date-decision-icon {
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+}
+
+.date-decision-label {
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-snug);
+}
+
+.date-decision-value {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-loose);
+}
+
+/* ─── Key-points summary (owner, 2026-08-13: "no one wants to read a lot of text with bad
+   design") — one scannable icon-chip line always visible, full paragraph tucked behind a
+   native <details> so the content stays crawlable without forcing a text wall by default. */
+.date-key-points {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.date-key-point {
+  padding: var(--space-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.date-key-point-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.date-key-point-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  border-radius: var(--radius-full, 999px);
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+}
+
+.date-key-points .date-key-point:nth-child(2) .date-key-point-icon {
+  background: var(--green-subtle);
+  color: var(--green-text);
+}
+
+.date-key-point-title {
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-snug);
+}
+
+.date-key-point-summary {
+  margin: var(--space-2) 0 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-loose);
+}
+
+.date-key-point-more {
+  margin-top: var(--space-2);
+}
+
+.date-key-point-more summary {
+  cursor: pointer;
+  color: var(--accent-alt);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  list-style: none;
+}
+
+.date-key-point-more summary::-webkit-details-marker {
+  display: none;
+}
+
+.date-key-point-more p {
+  margin: var(--space-2) 0 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-loose);
 }
 
 /* Consolidated "today's position" module — replaces the old separate progress-bar card
@@ -3976,5 +4424,62 @@ html:not(.light) .tooltip-content.tooltip--danger .tooltip-arrow,
   .ad-slot--in-article {
     margin-block: var(--space-6);
   }
+}
+
+/* City-pair comparison card — for "ready-made comparisons" grids (e.g. /time-difference's
+   "مقارنات جاهزة إذا كان سؤالك شائعاً") where a plain related-link card undersells what's
+   actually being offered: two specific cities being compared, not a generic destination link
+   (owner, 2026-08-13: "should have better smart card that catch the user eye"). Flat surface,
+   no gradient, no border-stripe — the two city names + arrow ARE the visual interest, plus an
+   optional "most searched" badge reusing the sitewide .badge system. */
+.site-pair-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--space-3);
+}
+
+.site-pair-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-1);
+  text-decoration: none;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.site-pair-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border-subtle));
+  transform: translateY(-1px);
+}
+
+.site-pair-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.site-pair-cities {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+}
+
+.site-pair-cities svg {
+  flex-shrink: 0;
+  color: var(--accent-alt);
+}
+
+.site-pair-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--accent-alt);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
 }
 

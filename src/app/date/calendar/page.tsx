@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Calendar, CalendarDays, Moon, Globe2, ArrowLeftRight } from 'lucide-react';
+import { Calendar, CalendarDays, Moon, Globe2, ArrowLeftRight, MapPin, Sparkles, ScrollText } from 'lucide-react';
 
 import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
@@ -10,11 +10,26 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { SiteFaqAccordion } from '@/components/shared/SiteFaqAccordion';
 import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
 import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
+import { YearJumpSelect } from '@/components/date/YearJumpSelect.client';
 import { convertDate } from '@/lib/date-adapter';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { logger, serializeError } from '@/lib/logger';
 import { buildDateKeywords } from '@/lib/seo/section-search-intent';
 import { getSiteUrl } from '@/lib/site-config';
+
+const GLANCE_DAY_NAMES = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+
+type GlanceChip = { dayName: string; num: number; isToday: boolean };
+
+function buildGregorianGlanceStrip(now: Date): GlanceChip[] {
+  const chips: GlanceChip[] = [];
+  for (let offset = -3; offset <= 3; offset += 1) {
+    const d = new Date(now);
+    d.setUTCDate(d.getUTCDate() + offset);
+    chips.push({ dayName: GLANCE_DAY_NAMES[d.getUTCDay()], num: d.getUTCDate(), isToday: offset === 0 });
+  }
+  return chips;
+}
 
 const BASE_URL = getSiteUrl();
 
@@ -185,6 +200,9 @@ export default async function CalendarRootPage() {
   }
 
   const yearLinks = buildGregorianYearLinks(currentYear);
+  const glanceStrip = buildGregorianGlanceStrip(now);
+  const currentYearInfo = yearLinks.find((item) => item.year === currentYear) ?? yearLinks[0];
+  const decisionIcons = [Calendar, ArrowLeftRight, MapPin, Sparkles];
   const breadcrumb = [
     { label: 'الرئيسية', href: '/' },
     { label: 'التاريخ', href: '/date' },
@@ -252,19 +270,26 @@ export default async function CalendarRootPage() {
                 التقويم الميلادي
               </div>
               <h1 className="date-hero-title">
-                التقويم الميلادي: افتح السنة ثم انتقل إلى الشهر أو اليوم المطلوب
+                التقويم الميلادي {currentYear}
               </h1>
               <p className="date-hero-copy">
-                ابدأ من تقويم {currentYear} إذا كنت تريد السنة الحالية، أو اختر سنة قريبة للتخطيط
-                لموعد، إجازة، بداية شهر، أو مناسبة تحتاج ربطها بالمقابل الهجري.
+                افتح السنة الحالية أو اختر سنة قريبة، ثم انتقل إلى الشهر أو اليوم والمقابل الهجري.
               </p>
-              <p className="date-hero-copy">
-                التقويم السنوي مناسب عندما يكون سؤالك أوسع من تاريخ اليوم: تريد رؤية الشهور
-                والأيام أولاً، ثم تضيق البحث إلى اليوم المحدد أو تنتقل إلى محول التاريخ.
-              </p>
+
+              {/* Real dates, not more paragraphs — a taste of the calendar right in the hero
+                  (owner, 2026-08-13: "even this page should have the calendar"). */}
+              <div className="date-hero-glance" aria-label="الأسبوع الحالي بالتقويم الميلادي">
+                {glanceStrip.map((chip) => (
+                  <div key={`${chip.dayName}-${chip.num}`} className="date-hero-glance-chip" data-today={chip.isToday}>
+                    <span className="date-hero-glance-day">{chip.dayName}</span>
+                    <span className="date-hero-glance-num">{chip.num}</span>
+                  </div>
+                ))}
+              </div>
+
               <div className="date-hero-quick-actions">
-                <Link href={`/date/calendar/${currentYear}`} className="date-quick-action">
-                  <Calendar size={16} strokeWidth={1.75} aria-hidden="true" />
+                <Link href={`/date/calendar/${currentYear}`} className="date-hero-cta">
+                  <Calendar size={16} strokeWidth={2} aria-hidden="true" />
                   افتح تقويم {currentYear}
                 </Link>
                 <Link href="/date/converter" className="date-quick-action">
@@ -277,6 +302,7 @@ export default async function CalendarRootPage() {
 
           <section className="date-action-list date-action-list--four mb-8">
             <Link href={`/date/calendar/${currentYear}`} className="date-action-link">
+              <span className="date-action-icon" aria-hidden="true"><Calendar size={18} strokeWidth={1.75} /></span>
               <div className="date-action-meta">ابدأ من الأكثر طلباً</div>
               <div className="date-action-title text-accent-alt">تقويم {currentYear}</div>
               <p className="date-action-copy">
@@ -284,6 +310,7 @@ export default async function CalendarRootPage() {
               </p>
             </Link>
             <Link href={`/date/calendar/${currentYear + 1}`} className="date-action-link">
+              <span className="date-action-icon" aria-hidden="true"><CalendarDays size={18} strokeWidth={1.75} /></span>
               <div className="date-action-meta">للتخطيط المسبق</div>
               <div className="date-action-title">تقويم {currentYear + 1}</div>
               <p className="date-action-copy">
@@ -291,6 +318,7 @@ export default async function CalendarRootPage() {
               </p>
             </Link>
             <Link href={`/date/calendar/hijri/${currentHijriYear}`} className="date-action-link">
+              <span className="date-action-icon" aria-hidden="true"><Moon size={18} strokeWidth={1.75} /></span>
               <div className="date-action-meta">المسار الموازي</div>
               <div className="date-action-title">التقويم الهجري {currentHijriYear}</div>
               <p className="date-action-copy">
@@ -298,6 +326,7 @@ export default async function CalendarRootPage() {
               </p>
             </Link>
             <Link href="/date/converter" className="date-action-link">
+              <span className="date-action-icon" aria-hidden="true"><ArrowLeftRight size={18} strokeWidth={1.75} /></span>
               <div className="date-action-meta">للإجابة المباشرة</div>
               <div className="date-action-title">محول التاريخ</div>
               <p className="date-action-copy">
@@ -306,58 +335,84 @@ export default async function CalendarRootPage() {
             </Link>
           </section>
 
+          {/* Current year gets its own showcase card; any OTHER year is a select, not a
+              7-card grid to scroll through (owner, 2026-08-13: "give him information that
+              he can select other years in a unique select button"). */}
           <section className="date-section">
-            <h2 className="date-section-title">سنوات ميلادية قريبة قد تحتاجها كثيراً</h2>
-            <div className="date-year-list">
-              {yearLinks.map((item) => (
-                <Link key={item.href} href={item.href} className="date-year-link">
-                  <span className="date-year-main">
-                    <span className="date-year-meta">تقويم سنوي مفهرس</span>
-                    <span className="date-year-title">{item.year}</span>
-                    <span className="date-year-copy">{item.description}</span>
-                  </span>
-                  <span className="date-link-action">
-                    افتح تقويم {item.year} ←
-                  </span>
-                </Link>
-              ))}
+            <h2 className="date-section-title">تقويم {currentYear}، أو اختر سنة أخرى</h2>
+            <div className="date-year-showcase-row">
+              <Link href={`/date/calendar/${currentYear}`} className="date-year-showcase">
+                <span className="date-year-showcase-eyebrow">
+                  <Calendar size={14} strokeWidth={1.75} aria-hidden="true" />
+                  السنة الميلادية الحالية
+                </span>
+                <span className="date-year-showcase-num">{currentYear}</span>
+                <span className="date-year-showcase-copy">{currentYearInfo?.description}</span>
+                <span className="date-year-showcase-action">افتح تقويم {currentYear} ←</span>
+              </Link>
+              <YearJumpSelect
+                basePath="/date/calendar"
+                currentYear={currentYear}
+                label="اختر سنة ميلادية أخرى"
+              />
             </div>
           </section>
 
-          <section className="date-editorial-grid date-section">
-            <article className="date-editorial-block">
-              <h2 className="date-editorial-title">متى يكون التقويم السنوي أفضل من صفحة اليوم؟</h2>
-              <p className="date-editorial-copy m-0">
-                يكون التقويم السنوي أفضل عندما تحتاج إلى رؤية أوسع من يوم واحد. قد تبحث عن
-                موعد يمتد على أكثر من شهر، أو تريد مقارنة بداية رمضان أو الإجازات مع الشهور
-                الميلادية، أو تراجع مواعيد مدرسة أو جامعة أو سفر. في هذه الحالات، يبدأ
-                البحث عادة من السنة ثم يضيق النطاق تدريجياً حتى يصل إلى اليوم المطلوب،
-                وهذا بالضبط ما يقدمه هذا المسار.
-              </p>
-            </article>
+          {/* Scannable summary first, full paragraph tucked behind "التفاصيل" — content stays
+              in the DOM (crawlable) without forcing a text wall by default (owner, 2026-08-13:
+              "no one wants to read a lot of text with bad design"). */}
+          <section className="date-section max-w-3xl">
+            <h2 className="date-section-title">متى يكون التقويم السنوي أفضل من صفحة اليوم؟</h2>
+            <div className="date-key-points">
+              <article className="date-key-point">
+                <div className="date-key-point-head">
+                  <span className="date-key-point-icon" aria-hidden="true"><ScrollText size={18} strokeWidth={1.75} /></span>
+                  <h3 className="date-key-point-title">عندما يتسع سؤالك عن أكثر من يوم واحد</h3>
+                </div>
+                <p className="date-key-point-summary">
+                  موعد يمتد على أكثر من شهر، مقارنة رمضان أو الإجازات مع الشهور الميلادية، أو مواعيد مدرسة وجامعة وسفر — ابدأ من السنة ثم ضيّق حتى اليوم.
+                </p>
+                <details className="date-key-point-more">
+                  <summary>التفاصيل</summary>
+                  <p>
+                    يكون التقويم السنوي أفضل عندما تحتاج إلى رؤية أوسع من يوم واحد. قد تبحث عن موعد يمتد على أكثر من شهر، أو تريد مقارنة بداية رمضان أو الإجازات مع الشهور الميلادية، أو تراجع مواعيد مدرسة أو جامعة أو سفر. في هذه الحالات، يبدأ البحث عادة من السنة ثم يضيق النطاق تدريجياً حتى يصل إلى اليوم المطلوب، وهذا بالضبط ما يقدمه هذا المسار.
+                  </p>
+                </details>
+              </article>
 
-            <article className="date-editorial-block">
-              <h2 className="date-editorial-title">كيف يساعدك هذا القسم في الوصول الأسرع؟</h2>
-              <p className="date-editorial-copy m-0">
-                بدلاً من كتابة التاريخ من جديد في كل مرة، يمكنك فتح السنة، ثم الشهر، ثم اليوم،
-                أو الانتقال مباشرة إلى السنة الهجرية الموافقة أو إلى أداة التحويل. هذا
-                التسلسل يقلل الاحتكاك ويجعل الصفحة مفيدة للزيارة الأولى وللعودة المتكررة،
-                خصوصاً عندما تكون لديك أكثر من نية: مراجعة سنة، تحويل، مقارنة، أو
-                مشاركة رابط سنة معينة مع الآخرين.
-              </p>
-            </article>
+              <article className="date-key-point">
+                <div className="date-key-point-head">
+                  <span className="date-key-point-icon" aria-hidden="true"><ArrowLeftRight size={18} strokeWidth={1.75} /></span>
+                  <h3 className="date-key-point-title">وصول أسرع من كتابة التاريخ من جديد كل مرة</h3>
+                </div>
+                <p className="date-key-point-summary">
+                  افتح السنة، ثم الشهر، ثم اليوم — أو انتقل مباشرة إلى السنة الهجرية الموافقة أو أداة التحويل.
+                </p>
+                <details className="date-key-point-more">
+                  <summary>التفاصيل</summary>
+                  <p>
+                    بدلاً من كتابة التاريخ من جديد في كل مرة، يمكنك فتح السنة، ثم الشهر، ثم اليوم، أو الانتقال مباشرة إلى السنة الهجرية الموافقة أو إلى أداة التحويل. هذا التسلسل يقلل الاحتكاك ويجعل الصفحة مفيدة للزيارة الأولى وللعودة المتكررة، خصوصاً عندما تكون لديك أكثر من نية: مراجعة سنة، تحويل، مقارنة، أو مشاركة رابط سنة معينة مع الآخرين.
+                  </p>
+                </details>
+              </article>
+            </div>
           </section>
 
-          {/* Plain text list — no bordered panel (DESIGN.md Law 4). */}
+          {/* Decision cards — icon-chip grid, not a bordered label/value list (owner,
+              2026-08-13: "so boaring design... we do not want this border bottom"). */}
           <section className="date-section max-w-3xl">
             <h2 className="date-section-title">طريقة قراءة التقويم السنوي دون تضييع وقت</h2>
-            <div className="date-detail-list">
-              {CALENDAR_DECISION_ROWS.map((row) => (
-                <div key={row.label} className="date-detail-row">
-                  <span className="date-detail-label">{row.label}</span>
-                  <span className="date-detail-value">{row.value}</span>
-                </div>
-              ))}
+            <div className="date-decision-grid">
+              {CALENDAR_DECISION_ROWS.map((row, index) => {
+                const Icon = decisionIcons[index % decisionIcons.length];
+                return (
+                  <article key={row.label} className="date-decision-card">
+                    <span className="date-decision-icon" aria-hidden="true"><Icon size={18} strokeWidth={1.75} /></span>
+                    <h3 className="date-decision-label">{row.label}</h3>
+                    <p className="date-decision-value">{row.value}</p>
+                  </article>
+                );
+              })}
             </div>
           </section>
 

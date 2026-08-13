@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { Compass } from 'lucide-react';
 
 import { getBrowserLocationHints, resolveCurrentUserCity } from '@/lib/user-location.client';
 import { logger, serializeError } from '@/lib/logger';
@@ -46,9 +47,10 @@ export default function DateCountryRedirectClient() {
       type="button"
       onClick={handleDetectCountry}
       disabled={isPending}
-      className="btn btn-primary"
+      className="date-hero-cta"
       aria-live="polite"
     >
+      <Compass size={16} strokeWidth={2} aria-hidden="true" />
       {isPending ? 'جارٍ فتح صفحة بلدك...' : buttonLabel}
     </button>
   );
