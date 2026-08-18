@@ -1,0 +1,17 @@
+{
+  "slug": "coptic-christmas-sudan",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: ويكيبيديا العربية: قائمة العطل الرسمية في السودان",
+    "fact-source: St-Takla.org: عيد الميلاد 25 ديسمبر أم 7 يناير",
+    "fact-check: 7 يناير معترف به رسمياً كعطلة يوم واحد في السودان، خاصة في الخرطوم وكوستي والقضارف"
+  ],
+  "updatedAt": "2026-08-18T03:21:26.816Z"
+}

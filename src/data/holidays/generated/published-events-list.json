@@ -840,6 +840,96 @@
     "day": 25
   },
   {
+    "id": "sudan-independence-day",
+    "slug": "sudan-independence-day",
+    "name": "عيد استقلال السودان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sd",
+    "month": 1,
+    "day": 1
+  },
+  {
+    "id": "mauritania-independence-day",
+    "slug": "mauritania-independence-day",
+    "name": "عيد استقلال موريتانيا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "mr",
+    "month": 11,
+    "day": 28
+  },
+  {
+    "id": "christmas-sudan",
+    "slug": "christmas-sudan",
+    "name": "عيد الميلاد المجيد في السودان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sd",
+    "month": 12,
+    "day": 25
+  },
+  {
+    "id": "coptic-christmas-sudan",
+    "slug": "coptic-christmas-sudan",
+    "name": "عيد الميلاد القبطي في السودان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sd",
+    "month": 1,
+    "day": 7
+  },
+  {
+    "id": "national-day-switzerland",
+    "slug": "national-day-switzerland",
+    "name": "اليوم الوطني السويسري",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ch",
+    "month": 8,
+    "day": 1
+  },
+  {
+    "id": "national-day-austria",
+    "slug": "national-day-austria",
+    "name": "العيد الوطني النمساوي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "at",
+    "month": 10,
+    "day": 26
+  },
+  {
+    "id": "independence-day-finland",
+    "slug": "independence-day-finland",
+    "name": "عيد استقلال فنلندا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "fi",
+    "month": 12,
+    "day": 6
+  },
+  {
+    "id": "constitution-day-denmark",
+    "slug": "constitution-day-denmark",
+    "name": "يوم الدستور الدنماركي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "dk",
+    "month": 6,
+    "day": 5
+  },
+  {
+    "id": "st-patricks-day-ireland",
+    "slug": "st-patricks-day-ireland",
+    "name": "يوم القديس باتريك",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ie",
+    "month": 3,
+    "day": 17
+  },
+  {
     "id": "abu-simbel-sun-alignment-february",
     "slug": "abu-simbel-sun-alignment-february",
     "name": "تعامد الشمس في أبو سمبل (فبراير)",

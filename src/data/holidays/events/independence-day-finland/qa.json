@@ -1,0 +1,17 @@
+{
+  "slug": "independence-day-finland",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: ويكيبيديا العربية: عيد استقلال فنلندا",
+    "fact-source: finland.fi: Finns celebrate freedom every December",
+    "fact-check: 6 ديسمبر 1917 إعلان الاستقلال عن روسيا بقيادة بير إفيند سفينهوفد، عطلة رسمية عامة"
+  ],
+  "updatedAt": "2026-08-18T03:49:55.539Z"
+}

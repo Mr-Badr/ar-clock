@@ -1,0 +1,17 @@
+{
+  "slug": "national-day-austria",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: ويكيبيديا العربية: العطلات الرسمية في النمسا",
+    "fact-source: advantageaustria.org: أيام العطل الرسمية في النمسا",
+    "fact-check: 26 أكتوبر 1955 إقرار قانون الحياد الدائم بعد جلاء قوات الاحتلال الأربع، عطلة رسمية لكل المصالح الحكومية"
+  ],
+  "updatedAt": "2026-08-18T03:41:01.509Z"
+}

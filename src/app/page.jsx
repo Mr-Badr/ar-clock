@@ -6,30 +6,39 @@ import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import TimeCinematicHero from '@/components/hero/TimeCinematicHero';
 import {
   SITE_BRAND,
+  SITE_HOME_TITLE,
+  SITE_DESCRIPTION,
   getSiteUrl,
 } from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
-const HOME_TITLE = 'ميقاتنا يجيبك: الوقت والتاريخ والحاسبات اليومية';
-const HOME_DESCRIPTION =
-  'ابدأ من سؤال واحد وافتح جوابك اليومي في ميقاتنا: الوقت الان، التاريخ، فرق التوقيت، الحاسبات، والمناسبات من واجهة عربية واضحة.';
+// Reuse the site-wide identity strings (site-config.js, owner correction 2026-08-13: "we like to
+// focus on tools and holidays as the main things") instead of the page's own stale copy — the
+// homepage previously defined its own HOME_TITLE/HOME_DESCRIPTION/schema.about that never picked
+// up that fix, so this page (and its H1 in CopyBlock.jsx) kept telling Google "time and date"
+// first while every other page's Organization/WebSite JSON-LD already said "tools and holidays"
+// first. Fixed 2026-08-18 — same root cause the owner flagged ("Google still sees our app as just
+// about time"). Visual layout/hero component untouched — that redesign is still deferred.
+const HOME_TITLE = SITE_HOME_TITLE;
+const HOME_DESCRIPTION = SITE_DESCRIPTION;
 const HOME_KEYWORDS = [
   'ميقاتنا',
-  'الوقت الان في مدينتي',
-  'الوقت الآن في مدينتي',
+  'أدوات وحاسبات عربية',
+  'حاسبات عربية لكل مجال',
+  'عداد المناسبات والأعياد',
+  'مواعيد المناسبات',
   'التاريخ الهجري والميلادي اليوم',
   'محول التاريخ الهجري والميلادي',
-  'حاسبات عربية يومية',
+  'الوقت الان في مدينتي',
   'فرق التوقيت بين المدن',
-  'عداد المناسبات والأعياد',
 ];
 const HOME_SECTIONS = [
+  { path: '/tools', name: 'الأدوات والحاسبات' },
+  { path: '/holidays', name: 'المناسبات والعد التنازلي' },
   { path: '/time-now', name: 'الوقت الان' },
   { path: '/date', name: 'التاريخ والتحويل' },
   { path: '/date/calendar', name: 'التقويم الميلادي والهجري' },
   { path: '/date/converter', name: 'محول التاريخ' },
-  { path: '/holidays', name: 'المناسبات والعد التنازلي' },
-  { path: '/tools', name: 'الحاسبات' },
   { path: '/time-difference', name: 'فرق التوقيت' },
 ];
 
@@ -52,13 +61,24 @@ export default function HomePage() {
       url: SITE_URL,
       name: SITE_BRAND,
     },
+    // Hand-picked, balanced subset of SITE_SCHEMA_TOPICS — a blind slice(0, N) front-loads
+    // holidays/time again because the master list orders those first; this mixes in real tool
+    // categories (finance, construction, car maintenance, health, Zakat) instead of repeating
+    // generic entries. Previously led with a duplicated 'الوقت الان'/'الوقت الآن' pair and a
+    // single generic 'الحاسبات العربية' entry despite 25+ real tool categories — fixed 2026-08-18.
     about: [
+      'أدوات وحاسبات عربية',
+      'المناسبات والإجازات',
+      'عداد المناسبات',
+      'التمويل الشخصي والحاسبات المالية',
+      'البناء والإنشاء',
+      'صيانة السيارات',
+      'النوم والصحة',
+      'الزكاة',
       'الوقت الان',
-      'الوقت الآن',
-      'التاريخ الهجري والميلادي',
       'فرق التوقيت',
-      'الحاسبات العربية',
-      'المناسبات والأعياد',
+      'التاريخ الهجري',
+      'التاريخ الميلادي',
     ],
     hasPart: HOME_SECTIONS.map((section) => ({
       '@type': 'WebPage',

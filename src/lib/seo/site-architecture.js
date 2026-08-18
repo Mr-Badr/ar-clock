@@ -64,8 +64,14 @@ export const ROOT_SITEMAP_ROUTES = Object.freeze(dedupeRoutes([
   { path: '/date/calendar', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
   { path: '/date/calendar/hijri', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
   { path: '/date/country', priority: 0.84, changeFrequency: 'weekly', websitePart: true },
-  { path: '/tools/sleep', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
-  { path: '/tools/personal-finance', priority: 0.86, changeFrequency: 'weekly', websitePart: true },
+  // /tools routes are deliberately promoted into the root sitemap too (test:
+  // tests/seo-sitemap.test.ts "root sitemap promotes all calculator tools as first-class routes")
+  // — an earlier, intentional fix for the same "Google reads this site as mostly time/date"
+  // problem: putting tools directly in the primary /sitemap.xml signals they're first-class, not
+  // buried behind an extra indirection hop. 2026-08-18 added a SEPARATE, ALSO-dedicated
+  // /tools/sitemap.js (src/app/tools/sitemap.js) so /tools also gets its own trackable per-family
+  // sitemap like holidays/time-now/date/imsakiya — this is deliberate duplication across two
+  // sitemap files (harmless; Google doesn't penalize overlapping sitemap entries), not a bug.
   ...ALL_CALCULATOR_SEO_ROUTES.map((route) => ({
     ...route,
     websitePart: route.websitePart ?? true,
@@ -92,6 +98,7 @@ export const WEBSITE_ARCHITECTURE_PATHS = Object.freeze(
 
 export const SITEMAP_INDEX_PATHS = Object.freeze([
   '/sitemap.xml',
+  '/tools/sitemap.xml',
   '/holidays/sitemap.xml',
   '/time-difference/sitemap.xml',
   '/time-now/sitemap.xml',

@@ -1,0 +1,18 @@
+{
+  "slug": "sudan-independence-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: Office Holidays: Sudan Independence Day",
+    "fact-source: mawdoo3.com: عيد الاستقلال في السودان",
+    "fact-source: ويكيبيديا العربية: جمهورية السودان الأولى",
+    "fact-check: تاريخ الاستقلال 1 يناير 1956، إعلان البرلمان 19 ديسمبر 1955، رئيس الوزراء إسماعيل الأزهري"
+  ],
+  "updatedAt": "2026-08-18T03:08:31.449Z"
+}

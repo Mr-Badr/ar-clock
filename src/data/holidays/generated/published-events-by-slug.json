@@ -839,6 +839,96 @@
     "month": 1,
     "day": 25
   },
+  "sudan-independence-day": {
+    "id": "sudan-independence-day",
+    "slug": "sudan-independence-day",
+    "name": "عيد استقلال السودان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sd",
+    "month": 1,
+    "day": 1
+  },
+  "mauritania-independence-day": {
+    "id": "mauritania-independence-day",
+    "slug": "mauritania-independence-day",
+    "name": "عيد استقلال موريتانيا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "mr",
+    "month": 11,
+    "day": 28
+  },
+  "christmas-sudan": {
+    "id": "christmas-sudan",
+    "slug": "christmas-sudan",
+    "name": "عيد الميلاد المجيد في السودان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sd",
+    "month": 12,
+    "day": 25
+  },
+  "coptic-christmas-sudan": {
+    "id": "coptic-christmas-sudan",
+    "slug": "coptic-christmas-sudan",
+    "name": "عيد الميلاد القبطي في السودان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "sd",
+    "month": 1,
+    "day": 7
+  },
+  "national-day-switzerland": {
+    "id": "national-day-switzerland",
+    "slug": "national-day-switzerland",
+    "name": "اليوم الوطني السويسري",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ch",
+    "month": 8,
+    "day": 1
+  },
+  "national-day-austria": {
+    "id": "national-day-austria",
+    "slug": "national-day-austria",
+    "name": "العيد الوطني النمساوي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "at",
+    "month": 10,
+    "day": 26
+  },
+  "independence-day-finland": {
+    "id": "independence-day-finland",
+    "slug": "independence-day-finland",
+    "name": "عيد استقلال فنلندا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "fi",
+    "month": 12,
+    "day": 6
+  },
+  "constitution-day-denmark": {
+    "id": "constitution-day-denmark",
+    "slug": "constitution-day-denmark",
+    "name": "يوم الدستور الدنماركي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "dk",
+    "month": 6,
+    "day": 5
+  },
+  "st-patricks-day-ireland": {
+    "id": "st-patricks-day-ireland",
+    "slug": "st-patricks-day-ireland",
+    "name": "يوم القديس باتريك",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ie",
+    "month": 3,
+    "day": 17
+  },
   "abu-simbel-sun-alignment-february": {
     "id": "abu-simbel-sun-alignment-february",
     "slug": "abu-simbel-sun-alignment-february",

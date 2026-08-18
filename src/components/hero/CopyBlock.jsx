@@ -25,7 +25,7 @@ export default function CopyBlock({ extraClass, titleId }) {
       <h1 id={titleId} className={styles.title}>
         <AuroraText>جواب يومك يبدأ من ميقاتنا </AuroraText>
         <span className={styles.titleSub}>
-          الوقت، التاريخ، الحاسبات والأدوات، والمناسبات في مسارات عربية واضحة.
+          أدوات وحاسبات لعشرات المجالات، مواعيد المناسبات، والوقت والتاريخ في مسارات عربية واضحة.
         </span>
       </h1>
 

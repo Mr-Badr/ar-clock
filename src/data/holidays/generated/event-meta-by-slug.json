@@ -2361,6 +2361,96 @@
     "canonicalPath": "/holidays/january-25-egypt",
     "aliases": []
   },
+  "sudan-independence-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/sudan-independence-day",
+    "aliases": []
+  },
+  "mauritania-independence-day": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/mauritania-independence-day",
+    "aliases": []
+  },
+  "christmas-sudan": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/christmas-sudan",
+    "aliases": []
+  },
+  "coptic-christmas-sudan": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/coptic-christmas-sudan",
+    "aliases": []
+  },
+  "national-day-switzerland": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/national-day-switzerland",
+    "aliases": []
+  },
+  "national-day-austria": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/national-day-austria",
+    "aliases": []
+  },
+  "independence-day-finland": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/independence-day-finland",
+    "aliases": []
+  },
+  "constitution-day-denmark": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/constitution-day-denmark",
+    "aliases": []
+  },
+  "st-patricks-day-ireland": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/st-patricks-day-ireland",
+    "aliases": []
+  },
   "abu-simbel-sun-alignment-february": {
     "publishStatus": "published",
     "retired": false,

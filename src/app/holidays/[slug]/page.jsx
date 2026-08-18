@@ -51,9 +51,27 @@ function getPriorityHolidayStaticSlugs(limit) {
     .slice(0, Math.min(limit, safeSlugs.length));
 }
 
-/* ── Static params (seed top holidays, render the rest on demand) ───────── */
+/* ── Static params ────────────────────────────────────────────────────────
+ * Reliability fix (2026-08-17): this used to seed only the top 48 slugs by
+ * `queueOrder` and let every other event — including EVERY single-country
+ * event (all 11 Bahrain-specific slugs among them: bahrain-national-day,
+ * salary-day-bahrain, pension-day-bahrain, ...) — render on demand. Under
+ * `cacheComponents: true` (next.config.js), an on-demand render of this route
+ * is one big implicit dynamic hole (this page has no Suspense of its own
+ * around its top-level `await getHolidayPageCriticalData(slug)`, so
+ * `loading.jsx` is the ONLY boundary for the entire page). If that hole's
+ * streamed resume is ever cut short — a mid-request deploy/restart, a proxy
+ * hiccup, any transient blip — the visitor is left on the bare `loading.jsx`
+ * shell (which reads as "empty, just the navbar") with no automatic retry,
+ * exactly the bug reported for /holidays/bahrain-national-day-style pages.
+ * ALL_EVENT_SLUGS is only 391 entries — prebuilding every one of them at
+ * build time (instead of a 48-slug slice) removes this whole page from the
+ * on-demand/dynamic-hole path entirely, for every event, every country.
+ * See `.claude/rules/event-creation-lessons.md` history and the
+ * `project-ppr-postponed-empty-page-bug` memory for the prior, narrower
+ * instance of this same class of bug. */
 export async function generateStaticParams() {
-  return getPriorityHolidayStaticSlugs(48).map((slug) => ({ slug }));
+  return getPriorityHolidayStaticSlugs(ALL_EVENT_SLUGS.length).map((slug) => ({ slug }));
 }
 
 /* ── Metadata ─────────────────────────────────────────────────────────────── */

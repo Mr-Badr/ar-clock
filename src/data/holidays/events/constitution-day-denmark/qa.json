@@ -1,0 +1,17 @@
+{
+  "slug": "constitution-day-denmark",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: Wikipedia: Constitution Day (Denmark)",
+    "fact-source: The Local DK: How is Constitution Day celebrated in Denmark",
+    "fact-check: 5 يونيو ليس helligdag رسمياً؛ يوم عطلة باتفاقية جماعية؛ Lukkeloven يلزم كبرى المتاجر بالإغلاق"
+  ],
+  "updatedAt": "2026-08-18T03:50:16.515Z"
+}

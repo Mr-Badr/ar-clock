@@ -1,0 +1,17 @@
+{
+  "slug": "christmas-sudan",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: جمهورية السودان: عطلة عيد الميلاد المجيد",
+    "fact-source: Sudan Independent: عطلة رسمية في السودان",
+    "fact-check: 25 ديسمبر عطلة رسمية معلنة من الأمانة العامة لمجلس الوزراء السوداني، تشمل كل موظفي الدولة"
+  ],
+  "updatedAt": "2026-08-18T03:21:11.762Z"
+}

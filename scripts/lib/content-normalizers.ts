@@ -522,5 +522,16 @@ export function ensureReciprocalLink(
   if (isYearNumberedSlug(sourceSlug)) return targetSlugs.slice(0, max);
   if (targetSlugs.includes(sourceSlug)) return targetSlugs.slice(0, max);
   if (targetSlugs.length < max) return [...targetSlugs, sourceSlug];
-  return [...targetSlugs.slice(0, max - 1), sourceSlug];
+  // BUG (found 2026-08-18, repeatedly corrupted unrelated events all session): this branch used
+  // to silently evict whichever slug happened to be sitting last (`targetSlugs.slice(0, max - 1)`)
+  // and replace it with sourceSlug — with zero topical-relevance check. That clobbered deliberate,
+  // curated relatedSlugs on events nowhere near the one actually being synced (real incidents:
+  // Bahrain/Lebanon/Qatar/Jordan/Libya independence-day pages losing a real related link to an
+  // unrelated new Sudan/Switzerland/Denmark event; a Sudan Coptic-Christmas page getting
+  // cross-linked onto Austria's and Switzerland's national-day pages). `related_not_reciprocal` is
+  // an explicitly non-blocking validator warning (see content-pipeline.md) — there is no
+  // correctness reason to force a link in by evicting something else. When the target is already
+  // at capacity, just leave it alone; a one-directional link is a documented, accepted, common
+  // state across the site already.
+  return targetSlugs.slice(0, max);
 }

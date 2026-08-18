@@ -1,0 +1,17 @@
+{
+  "slug": "st-patricks-day-ireland",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: ويكيبيديا العربية: يوم القديس باتريك",
+    "fact-source: Central Statistics Office Ireland: Census 2022 (20,115 Arab ethnicity)",
+    "fact-check: إجازة رسمية أيرلندية منذ 1903؛ حملة سياحية عالمية منذ 1995"
+  ],
+  "updatedAt": "2026-08-18T04:44:42.849Z"
+}

@@ -27,6 +27,10 @@
     "ads:readiness:live": "node --import tsx scripts/google-ads-readiness-audit.ts --base=https://miqatona.com",
     "growth:ctr": "node --import tsx scripts/search-console-ctr-triage.ts",
     "coverage:triage": "node --import tsx scripts/search-console-coverage-triage.ts",
+    "gsc:list-sites": "node --import tsx scripts/seo-intelligence/search-console/list-sites.ts",
+    "gsc:report": "node --import tsx scripts/seo-intelligence/search-console/report.ts",
+    "gsc:opportunities": "node --import tsx scripts/seo-intelligence/search-console/opportunities.ts",
+    "indexnow:submit": "node --import tsx scripts/indexnow-submit.ts",
     "research:topic": "node --import tsx scripts/research/topic-research.ts",
     "research:keywords": "node --import tsx scripts/research/keyword-suggest.ts",
     "health:routes": "node --import tsx scripts/route-health-check.ts",
@@ -144,6 +148,7 @@
   },
   "devDependencies": {
     "babel-plugin-react-compiler": "^1.0.0",
+    "googleapis": "^174.0.1",
     "postgres": "^3.4.8",
     "prisma": "^7.8.0",
     "shadcn": "^4.16.0",

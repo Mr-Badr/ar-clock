@@ -1,0 +1,18 @@
+{
+  "slug": "mauritania-independence-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: Office Holidays: Mauritania Independence Day",
+    "fact-source: ويكيبيديا العربية: استقلال موريتانيا",
+    "fact-source: al-ain.com: ذكرى استقلال موريتانيا",
+    "fact-check: تاريخ الاستقلال 28 نوفمبر 1960، أول رئيس المختار ولد داداه، العاصمة نواكشوط"
+  ],
+  "updatedAt": "2026-08-18T03:09:01.211Z"
+}

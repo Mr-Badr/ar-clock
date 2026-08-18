@@ -1,0 +1,18 @@
+{
+  "slug": "national-day-switzerland",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: aboutswitzerland.eda.admin.ch (official)",
+    "fact-source: Wikipedia: Swiss National Day",
+    "fact-source: Le News: Swiss national day holiday celebrates 30 year anniversary",
+    "fact-check: 1 أغسطس 1291 ميثاق التأسيس، إجازة موحدة إلزامية في كل الكانتونات منذ 1994 (استفتاء 83.8%)"
+  ],
+  "updatedAt": "2026-08-18T03:40:32.003Z"
+}

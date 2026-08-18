@@ -1,5 +1,6 @@
 import styles from '@/components/shared/RouteLoading.module.css';
 import { Skeleton } from '@/components/ui/skeleton';
+import StuckLoadingRecovery from '@/components/shared/StuckLoadingRecovery.client';
 
 function BreadcrumbSkeleton() {
   return (
@@ -16,6 +17,11 @@ function BreadcrumbSkeleton() {
 export default function HolidayPageLoading() {
   return (
     <div className={styles.page} dir="rtl" aria-busy="true">
+      {/* This skeleton is the ONLY Suspense boundary the page has (the real
+          page.jsx awaits its data at the top level, no inner Suspense) — if
+          the streamed content never arrives, this stays on screen forever
+          without the watchdog below. See StuckLoadingRecovery for why. */}
+      <StuckLoadingRecovery />
       <main className={styles.main}>
         <BreadcrumbSkeleton />
 
