@@ -4,6 +4,7 @@ import ElectricityConsumptionCalculator from '@/components/calculators/Electrici
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { FormulaCard, Frac } from '@/components/tools-v2/FormulaCard';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
@@ -27,7 +28,7 @@ const TOC_ITEMS = [
 const FAQ_ITEMS = [
   {
     question: `كيف تُحسب فاتورة الكهرباء ${CURRENT_YEAR}؟`,
-    answer: 'المعادلة الأساسية: استهلاك الجهاز بالواط × عدد ساعات التشغيل يومياً × 30 يوماً ÷ 1000 = الاستهلاك الشهري بالكيلوواط/ساعة، ثم يُضرب هذا الرقم في سعر الوحدة من فاتورتك. اختر أجهزتك في الأداة أعلى الصفحة للحصول على تقدير تلقائي بدل الحساب اليدوي.',
+    answer: 'بضرب استهلاك كل جهاز بالواط في ساعات تشغيله اليومية، ثم تحويل الناتج إلى كيلوواط/ساعة وضربه في سعر الوحدة — راجع المعادلة الكاملة في قسم "كيف تُحسب فاتورة الكهرباء؟" أعلى الصفحة، أو اختر أجهزتك في الأداة للحصول على تقدير تلقائي بدل الحساب اليدوي.',
   },
   {
     question: 'ما أكثر الأجهزة استهلاكاً للكهرباء في المنزل؟',
@@ -145,6 +146,13 @@ export default function ElectricityConsumptionCalculatorPage() {
               مرتفعة وأخرى معقولة غالباً يعود لعدد قليل من الأجهزة عالية الاستهلاك — لا لكل الأجهزة
               بالتساوي.
             </p>
+            <FormulaCard
+              label="استخدم هذه المعادلة لحساب الاستهلاك الشهري لأي جهاز بالكيلوواط/ساعة:"
+              note="اضرب الناتج في سعر الوحدة من فاتورتك للحصول على التكلفة الشهرية التقريبية لهذا الجهاز."
+            >
+              <span>الاستهلاك الشهري (ك.و.س) =</span>
+              <Frac num="واط الجهاز × ساعات التشغيل يومياً × 30" den="1000" />
+            </FormulaCard>
             <p>
               لكن رقم الواط "النموذجي" لأي جهاز لا يعني شيئاً كثيراً وحده — مكيفان من نفس النوع
               والحجم يختلفان في الاستهلاك الفعلي حسب عمر الجهاز وكفاءته وعدد ساعات تشغيلك الحقيقية،

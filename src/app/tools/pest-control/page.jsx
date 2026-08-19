@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -43,6 +44,21 @@ const TYPE_GROUPS = [
     name: 'قرارات',
     note: '',
     slugs: ['pest-control-contract-checker'],
+  },
+];
+
+const FAQ_ITEMS = [
+  {
+    question: 'هل أحتاج عقداً سنوياً لمكافحة الحشرات أم تكفيني معالجة واحدة؟',
+    answer: 'يعتمد على تكرار المشكلة وحجم عقارك — عقار به تكرار موسمي منتظم للحشرات يستفيد أكثر من عقد دوري، بينما مشكلة عرضية واحدة قد تحلها معالجة مفردة. أجب عن أسئلة أداة "عقد سنوي أم معالجة واحدة" لتحصل على توصية مباشرة تناسب حالتك.',
+  },
+  {
+    question: 'كيف أعرف إن كان سعر شركة المكافحة الذي عُرض عليّ معقولاً؟',
+    answer: 'التكلفة الواقعية تعتمد على مساحة العقار ونوع الآفة ودرجة الإصابة — احسب نطاقك التقديري في حاسبة التكلفة أولاً، وإن كان الأمر يتعلق بالنمل الأبيض تحديداً استخدم حاسبة تكلفة معالجة النمل الأبيض المخصصة لمقارنة طرق المعالجة الثلاث (حقن التربة، الطعوم، التبخير).',
+  },
+  {
+    question: 'ما علامات الإصابة بالنمل الأبيض التي يجب الانتباه لها مبكراً؟',
+    answer: 'اكتشاف الإصابة مبكراً يقلل تكلفة المعالجة بشكل كبير مقارنة باكتشافها بعد أن تتوسع — راجع الدليل المرافق لحاسبة تكلفة معالجة النمل الأبيض لمعرفة العلامات الشائعة التي تستحق فحصاً فورياً بدل الانتظار.',
   },
 ];
 
@@ -102,11 +118,13 @@ export default function PestControlCategoryHubPage() {
       }),
     },
   };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-pest-control-hub" />
 
@@ -122,7 +140,7 @@ export default function PestControlCategoryHubPage() {
           </div>
           <p>
             من تقدير تكلفة المعالجة إلى ضبط جرعة المبيد وتوثيق كل زيارة بتقرير احترافي — أدوات
-            لصاحب المنزل وللفني معاً، مبنية على بحث سوق حقيقي.
+            لصاحب المنزل وللفني معاً.
           </p>
           <div className="tool-v2-cat-meta">
             <span><b>{toolCount}</b> أدوات مرتبطة مباشرة</span>
@@ -163,6 +181,10 @@ export default function PestControlCategoryHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="hub-faq" title="الأسئلة الشائعة">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -131,6 +132,22 @@ export default function AttendanceCategoryHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="cost-drivers" title="ما الذي يرفع تكلفة نظام الحضور فعلياً؟">
+          <p>
+            السعر المعلن لكل موظف نادراً ما يكون الرقم النهائي — التكاليف الحقيقية غالباً تشمل
+            رسوم إعداد أولية، سعر الجهاز نفسه (للبصمة الفعلية لا التطبيق)، ورسوم تكامل مع نظام
+            الرواتب إن كان لديك نظام محاسبي منفصل. عدد الموظفين يغيّر أيضاً هيكل التسعير عند أغلب
+            المزودين — أحياناً بشكل غير خطي (خصم فعلي بعد عتبة معينة). احسب تكلفتك الفعلية في
+            الأداة أدناه بدل الاعتماد على السعر المعلن في الصفحة الرئيسية لأي مزود وحده.
+          </p>
+          <p>
+            التحول من نظام حضور يدوي (توقيع ورقي أو دفتر) إلى نظام إلكتروني يحتاج فترة تهيئة
+            حقيقية لموظفيك، لا تفعيلاً فورياً في يوم واحد — أوضح الغرض والفائدة لهم مسبقاً بدل
+            تقديمه كأداة مراقبة فقط، فذلك يقلل المقاومة الأولية ويسرّع الاعتياد على الروتين الجديد،
+            خصوصاً في الفرق التي اعتادت المرونة في تسجيل الحضور لسنوات طويلة.
+          </p>
+        </HubGuideSection>
       </div>
     </main>
   );

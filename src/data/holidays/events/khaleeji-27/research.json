@@ -1,7 +1,7 @@
 {
   "slug": "khaleeji-27",
   "locale": "ar",
-  "capturedAt": "2026-07-18T14:55:55.819Z",
+  "capturedAt": "2026-08-19T17:53:09.341Z",
   "primaryQueries": [
     "متى خليجي 27",
     "كم باقي على خليجي 27",
@@ -16,10 +16,37 @@
   ],
   "competitors": [
     {
-      "name": "kooora.com",
+      "site": "kooora.com",
+      "type": "competitor-ar",
       "url": "https://www.kooora.com",
-      "strengths": "Deep, real-time fixture/score coverage",
-      "gaps": "Zero countdown/date-explainer format — pure live journalism"
+      "focus": [
+        "Deep, real-time fixture/score coverage"
+      ],
+      "gaps": [
+        "Zero countdown/date-explainer format — pure live journalism"
+      ]
+    },
+    {
+      "site": "365Scores (Arabic)",
+      "type": "competitor-ar",
+      "url": "https://www.365scores.com/ar/news/magazine",
+      "focus": [
+        "Real-time fixture confirmation articles, large existing audience"
+      ],
+      "gaps": [
+        "One-off news articles per update, no live countdown, no consolidated FAQ"
+      ]
+    },
+    {
+      "site": "rahhal.wego.com (Wego travel blog)",
+      "type": "competitor-ar",
+      "url": "https://rahhal.wego.com/blog/%D8%AE%D9%84%D9%8A%D8%AC%D9%8A-27-%D8%AC%D8%AF%D8%A9-%D8%A7%D9%84%D9%85%D9%88%D8%B9%D8%AF-%D8%A7%D9%84%D9%85%D9%84%D8%A7%D8%B9%D8%A8-%D8%A7%D9%84%D9%85%D9%86%D8%AA%D8%AE%D8%A8%D8%A7%D8%AA/",
+      "focus": [
+        "Closest format match found — combines date, venues, and teams in one article for travelers"
+      ],
+      "gaps": [
+        "Travel-guide framing, no live countdown, static article rather than an evergreen auto-updating page"
+      ]
     }
   ],
   "coverageMatrix": [

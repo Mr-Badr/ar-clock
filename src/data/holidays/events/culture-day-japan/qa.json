@@ -1,0 +1,18 @@
+{
+  "slug": "culture-day-japan",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: nippon.com: Culture Day (Japan's National Holidays)",
+    "fact-source: Wikipedia: Order of Culture",
+    "fact-check: 3 نوفمبر يوم الثقافة، حفل وسام الثقافة الإمبراطوري، متاحف مجانية/مخفضة",
+    "correction: الاستنتاج الأولي بربط مهرجان جيدايماتسوري بهذا اليوم كان خطأً (جيدايماتسوري فعلياً في 22 أكتوبر) — تم التصحيح قبل النشر باستبدال المحتوى بحقيقة وسام الثقافة المؤكدة"
+  ],
+  "updatedAt": "2026-08-18T21:33:21.814Z"
+}

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -132,6 +133,22 @@ export default function AluminumGlassCategoryHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="glass-decision" title="ابدأ من الوظيفة، لا من المظهر فقط">
+          <p>
+            قبل مقارنة الألوان، حدد الوظيفة الأساسية التي تحتاجها: السيكوريت (الزجاج المقسّى)
+            للسلامة والمقاومة عند الكسر، الدبل جلاس للعزل الحراري والصوتي في الغرف المطلة على
+            الشارع، والزجاج العاكس لتقليل حرارة الشمس مع الحفاظ على قدر من الخصوصية نهاراً. الإطار
+            نفسه (ألومنيوم أم UPVC) قرار منفصل يؤثر على العزل والصيانة طويلة المدى أكثر من تأثيره
+            على المظهر. راجع الدليل الكامل أدناه للمقارنة التفصيلية بين كل الخيارات قبل الشراء.
+          </p>
+          <p>
+            لا تختر لون الزجاج العاكس من كتالوج فقط دون رؤيته على واجهة حقيقية أولاً — درجة العاكس
+            نفسها قد تبدو مختلفة تماماً حسب اتجاه الواجهة (شمالية أم جنوبية) وشدة إضاءة الشمس في
+            وقت المعاينة. اطلب من المورد عينة فعلية بحجم مناسب واحملها إلى موقع التركيب في أوقات
+            مختلفة من اليوم قبل تأكيد الطلب النهائي لكامل الواجهة.
+          </p>
+        </HubGuideSection>
       </div>
     </main>
   );

@@ -1,0 +1,17 @@
+{
+  "slug": "black-consciousness-day-brazil",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: eskimo.travel: Brazil Public Holidays & Carnival 2026",
+    "fact-source: Wikipedia: Black Consciousness Day (Brazil) / Zumbi",
+    "fact-check: 20 نوفمبر يخلّد ذكرى مقتل زومبي دوس بالماريس سنة 1695، أصبح عطلة رسمية اتحادية بموجب القانون رقم 14.759 لسنة 2023 (لم يكن كذلك قبلها)"
+  ],
+  "updatedAt": "2026-08-18T11:26:53.831Z"
+}

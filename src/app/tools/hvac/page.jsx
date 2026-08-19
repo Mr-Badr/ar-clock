@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -41,6 +42,21 @@ const TYPE_GROUPS = [
     name: 'الصيانة والأعطال',
     note: 'من التنظيف الدوري إلى تشخيص الأعطال وقرار الاستبدال.',
     slugs: ['maintenance-schedule', 'troubleshooting', 'replace-or-repair'],
+  },
+];
+
+const FAQ_ITEMS = [
+  {
+    question: 'هل يستحق مكيف الانفرتر فرق السعر عن المكيف العادي فعلاً؟',
+    answer: 'يعتمد على ساعات تشغيلك الفعلية — كلما زادت ساعات التشغيل اليومية، كان التوفير التراكمي على مدى سنوات أكبر ويستحق فرق السعر الأولي غالباً. احسب توفيرك التقديري الشهري والسنوي في أداة مقارنة الانفرتر بالريال قبل أن تقرر.',
+  },
+  {
+    question: 'مكيفي يبرّد بشكل ضعيف رغم أنه يعمل — هل يحتاج تعبئة فريون أم شيئاً آخر؟',
+    answer: 'ضعف التبريد له عدة أسباب شائعة غير الفريون (فلتر متسخ، مروحة الوحدة الخارجية معطلة، انسداد في التصريف) — راجع دليل تشخيص الأعطال لمعرفة السبب الأرجح لحالتك قبل استدعاء فني أو افتراض أنك تحتاج تعبئة غاز فوراً.',
+  },
+  {
+    question: 'مكيفي قديم ويتعطل بشكل متكرر — أصلحه أم أستبدله؟',
+    answer: 'قاعدة عملية بسيطة تساعدك على القرار: إن تجاوز عمر المكيف 10 سنوات وكانت تكلفة الإصلاح المتوقعة تقارب نصف سعر مكيف جديد، الاستبدال غالباً أوفر على المدى المتوسط. استخدم أداة استبدال أم إصلاح لإدخال عمر مكيفك وتكلفة الإصلاح والحصول على توصية مباشرة.',
   },
 ];
 
@@ -100,11 +116,13 @@ export default function HvacHubPage() {
       }),
     },
   };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-hvac-hub" />
 
@@ -120,7 +138,7 @@ export default function HvacHubPage() {
           </div>
           <p>
             من اختيار النوع المناسب، إلى حساب توفير الانفرتر بالريال، إلى الصيانة الدورية وتشخيص
-            الأعطال وقرار الاستبدال — كل قرار تكييف حقيقي في مكان واحد، ومبني على بحث فعلي لا تخمين.
+            الأعطال وقرار الاستبدال — كل قرار تكييف حقيقي تحتاجه في مكان واحد.
           </p>
           <div className="tool-v2-cat-meta">
             <span><b>{toolCount}</b> أدلة وأدوات مرتبطة مباشرة</span>
@@ -161,6 +179,10 @@ export default function HvacHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="hub-faq" title="الأسئلة الشائعة">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

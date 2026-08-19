@@ -19,7 +19,7 @@ export async function generateMetadata({ params }) {
   if (!author) return {};
   return buildCanonicalMetadata({
     title: `${author.name} — ${author.role} في ميقاتنا`,
-    description: author.bio,
+    description: author.metaDescription || author.bio,
     url: `${SITE_URL}/author/${id}`,
   });
 }

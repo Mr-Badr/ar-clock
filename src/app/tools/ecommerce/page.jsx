@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -36,6 +37,21 @@ const TYPE_GROUPS = [
     name: 'إدارة المتجر',
     note: 'أرقام حقيقية بعد رسوم منصتك، لا تقديراً عاماً.',
     slugs: ['store-profit-margin', 'shipping-cost-comparison'],
+  },
+];
+
+const FAQ_ITEMS = [
+  {
+    question: 'كيف أعرف إن كان متجري مشمولاً بمرحلة الربط والتكامل مع زاتكا؟',
+    answer: 'الشمول يعتمد على إيراداتك السنوية الخاضعة للضريبة ومقارنتها بعتبة الموجة الحالية — أدخل رقم إيراداتك في محقق الأهلية لمعرفة موقفك فوراً بدل الانتظار حتى يصلك إشعار رسمي قد يكون متأخراً.',
+  },
+  {
+    question: 'لماذا هامش ربحي على الورق أعلى من الرقم الفعلي في حسابي البنكي؟',
+    answer: 'لأن عمولة المنصة (سلة أو زد) ورسوم بوابة الدفع وتكلفة الشحن تُخصم قبل أن يصلك المبلغ، وأغلب أصحاب المتاجر يحسبون هامشهم من سعر البيع فقط دون طرح هذه الرسوم. احسب هامشك الحقيقي بعد كل الخصومات في الأداة لمعرفة ربحك الفعلي لكل عملية بيع.',
+  },
+  {
+    question: 'كيف أتحقق أن فاتورة استلمتها من مورد أو أصدرها متجري صحيحة فعلاً؟',
+    answer: 'كود QR في أي فاتورة ضريبية سعودية يحمل بيانات أساسية (اسم البائع، الرقم الضريبي، التاريخ، الإجمالي) يمكن التحقق منها مباشرة دون تطبيق خارجي — استخدم أداة فحص كود QR لقراءة محتوى الفاتورة والتأكد من مطابقتها للمذكور عليها ورقياً.',
   },
 ];
 
@@ -95,11 +111,13 @@ export default function EcommerceHubPage() {
       }),
     },
   };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-ecommerce-hub" />
 
@@ -156,6 +174,10 @@ export default function EcommerceHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="hub-faq" title="الأسئلة الشائعة">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

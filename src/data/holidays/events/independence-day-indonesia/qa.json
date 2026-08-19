@@ -1,0 +1,17 @@
+{
+  "slug": "independence-day-indonesia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: Indonesia Public Holidays",
+    "fact-source: Wikipedia: Independence Day (Indonesia)",
+    "fact-check: 17 أغسطس يوم استقلال إندونيسيا، أعلنه سوكارنو ومحمد هاتا سنة 1945 عن هولندا، إندونيسيا أكبر دولة مسلمة بالعالم"
+  ],
+  "updatedAt": "2026-08-18T15:10:03.747Z"
+}

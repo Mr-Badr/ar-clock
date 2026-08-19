@@ -13,6 +13,15 @@ import { getSiteUrl } from '@/lib/site-config';
 const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'maintenance-tracker');
 
+// Same intervals as SERVICES in CarMaintenanceTracker.client.jsx — shown as a quick reference so a
+// reader sees real intervals before entering their own car's data into the tracker.
+const SERVICE_INTERVALS = [
+  { name: 'زيت المحرك والفلتر', when: 'كل 10,000 كم أو 6 أشهر' },
+  { name: 'فحص/تبديل الإطارات', when: 'كل 60,000 كم' },
+  { name: 'سائل التبريد (الرديتر)', when: 'كل 50,000 كم أو 36 شهراً' },
+  { name: 'زيت الفرامل', when: 'كل 60 شهراً' },
+];
+
 const TOC_ITEMS = [
   ['how', 'كيف يحسب المتتبع موعدك'],
   ['tracker', 'احسب موعد الصيانة القادمة'],
@@ -133,6 +142,21 @@ export default function MaintenanceTrackerPage() {
                   معدل قيادتك الشهري التقريبي — والأداة تحسب التاريخين المحتملين وتختار الأقرب منهما
                   تلقائياً، تماماً كما تفعل الوكالات ومراكز الصيانة الحقيقية.
                 </p>
+                <div className="guide-v2-compare-list">
+                  {SERVICE_INTERVALS.map((s) => (
+                    <div className="guide-v2-compare-card" key={s.name}>
+                      <div className="guide-v2-compare-head">
+                        <span className="guide-v2-compare-title">{s.name}</span>
+                      </div>
+                      <div className="guide-v2-compare-rows">
+                        <div className="guide-v2-compare-row">
+                          <span className="guide-v2-compare-row-label">الموعد</span>
+                          <span className="guide-v2-compare-row-value">{s.when}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </section>
 
               <ToolInArticleAd slotId="mid-maintenance-tracker" />

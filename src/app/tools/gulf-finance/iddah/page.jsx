@@ -20,6 +20,14 @@ const TOC_ITEMS = [
   ['iddah-sources', 'مصادر'],
 ];
 
+// Same 4 cases used by IddahTool.client.jsx's SITUATION_OPTIONS.
+const IDDAH_CASES = [
+  { title: 'أرملة', rows: [['المدة', '4 أشهر و10 أيام هجرية'], ['المصدر', 'سورة البقرة: 234']] },
+  { title: 'مطلقة لا تحيض', rows: [['المدة', '3 أشهر هجرية'], ['المصدر', 'سورة الطلاق: 4']] },
+  { title: 'مطلقة تحيض', rows: [['المدة', '3 حيضات كاملة (مدى تقريبي)'], ['المصدر', 'يعتمد على دورتها الفعلية']] },
+  { title: 'حامل', rows: [['المدة', 'تنتهي بالولادة الفعلية'], ['المصدر', 'بصرف النظر عن كونها أرملة أو مطلقة']] },
+];
+
 export const metadata = buildCanonicalMetadata({
   title: PAGE.heroTitle,
   description: PAGE.description,
@@ -82,6 +90,23 @@ export default function IddahPage() {
               على دورتها الفعلية، فتعرض الأداة مدى تقريبياً لها لا تاريخاً جازماً. عدة الحامل تنتهي
               دائماً بالولادة الفعلية، بصرف النظر عن كونها أرملة أو مطلقة.
             </p>
+            <div className="guide-v2-compare-list">
+              {IDDAH_CASES.map((card) => (
+                <div className="guide-v2-compare-card" key={card.title}>
+                  <div className="guide-v2-compare-head">
+                    <span className="guide-v2-compare-title">{card.title}</span>
+                  </div>
+                  <div className="guide-v2-compare-rows">
+                    {card.rows.map(([label, value]) => (
+                      <div className="guide-v2-compare-row" key={label}>
+                        <span className="guide-v2-compare-row-label">{label}</span>
+                        <span className="guide-v2-compare-row-value">{value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </section>
 
           <ToolInArticleAd slotId="mid-iddah" />

@@ -6,6 +6,7 @@ import AdBlogSidebar from '@/components/ads/AdBlogSidebar';
 import TocScrollSpy from '@/components/tools-v2/TocScrollSpy.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { FormulaCard, Frac } from '@/components/tools-v2/FormulaCard';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildPrincipalPageSearchCoverage } from '@/lib/seo/page-search-coverage';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -69,7 +70,7 @@ const FAQ_ITEMS = [
   {
     question: 'كيف احسب حجم البيارة المناسب لمنزلي؟',
     answer:
-      'الصيغة الأساسية: الحجم اللازم = عدد أفراد الأسرة × استهلاك الفرد اليومي من المياه (95-150 لتر تقريباً شاملاً صرف المطبخ) × عدد الأيام التي تريد الانتظار بينها قبل التفريغ. أدخل عدد أفراد أسرتك في الحاسبة أعلاه لحساب الحجم التقريبي مباشرة، مع إمكانية تعديل الرقمين حسب استهلاكك الفعلي.',
+      'راجع الصيغة الأساسية في قسم "ما الحجم المناسب لعائلتك" أعلاه — تعتمد على عدد أفراد الأسرة واستهلاك الفرد اليومي من المياه وعدد أيام الانتظار بين مرات التفريغ. أدخل عدد أفراد أسرتك في الحاسبة أعلاه لحساب الحجم التقريبي مباشرة، مع إمكانية تعديل الرقمين حسب استهلاكك الفعلي.',
   },
   {
     question: 'لماذا تمتلئ البيارة بسرعة رغم حجمها الكبير؟',
@@ -225,9 +226,15 @@ export default function SepticTankGuidePage() {
                 <h2>ما الحجم المناسب لعائلتك</h2>
                 <p>
                   حجم أصغر من حاجتك الفعلية يعني تفريغاً متكرراً مكلفاً، وحجم أكبر بكثير من
-                  اللازم يعني تكلفة حفر إضافية بلا داعٍ حقيقي. استخدم الأداة التالية لحساب
-                  الحجم التقريبي المناسب لعدد أفراد أسرتك:
+                  اللازم يعني تكلفة حفر إضافية بلا داعٍ حقيقي.
                 </p>
+                <FormulaCard
+                  label="الصيغة الأساسية لتقدير الحجم اللازم للبيارة:"
+                  note="استهلاك الفرد اليومي يُقدَّر بين 95 و150 لتراً تقريباً شاملاً صرف المطبخ."
+                >
+                  <span>الحجم اللازم = عدد الأفراد × استهلاك الفرد اليومي × أيام الانتظار</span>
+                </FormulaCard>
+                <p>استخدم الأداة التالية لحساب الحجم التقريبي المناسب لعدد أفراد أسرتك مباشرة:</p>
                 <SepticTankSizeChecker />
               </section>
 

@@ -916,3 +916,138 @@
   font-size: 0.82rem;
 }
 .guide-v2-data-table tbody tr:hover { background: var(--bg-surface-2); }
+
+/* ── FormulaCard / ReferenceGrid shared component styles (2026-08-19) ──────
+   Same class names as tools-v2.css so src/components/tools-v2/FormulaCard.jsx
+   and ReferenceGrid.jsx work identically on guide-v2 pages. See
+   .claude/rules/calculator-ui-standards.md §0e. Kept as a literal copy across
+   every guide-v2.css file, matching this template's existing per-category-copy
+   convention (see the file header note about being deliberately separate from
+   tools-v2.css). ── */
+/* Equation card — see src/components/tools-v2/FormulaCard.jsx and calculator-ui-standards.md §0e.
+   Amber/yellow, flat surface (no gradient, per house style) — reads as a distinct "reference"
+   module, not a result panel (green) or a warning (also amber, but this is not a warning — the
+   color choice here matches the Omni Calculator convention the owner referenced, not the site's
+   own warning semantics; kept deliberately calm/light so it doesn't compete with real alerts). */
+.tool-v2-formula-card {
+  margin-block: var(--space-5);
+  padding: var(--space-5) var(--space-4);
+  border-radius: var(--radius-lg, 16px);
+  background: var(--amber-subtle);
+  border: 1px solid var(--amber-border);
+}
+.tool-v2-formula-card__label {
+  margin: 0 0 var(--space-3);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.7;
+  color: var(--amber-text);
+}
+.tool-v2-formula-card__note {
+  margin: var(--space-3) 0 0;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--amber-text);
+}
+.tool-v2-formula-eq {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  min-width: 0;
+  padding: var(--space-1) 0;
+  font-size: clamp(0.95rem, 3.6vw, 1.3rem);
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+/* Fraction: numerator/line/denominator stack, capped to the card's own width so a long Arabic
+   numerator wraps onto a second line instead of forcing the whole card into horizontal scroll
+   (found via real-browser screenshot check — a long nowrap numerator clipped past the article
+   column on desktop; wrapping is the correct fix, not a wider card or a smaller font alone). */
+.tool-v2-formula-frac {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  margin-inline: 0.2em;
+  line-height: 1.35;
+  max-width: 100%;
+}
+.tool-v2-formula-frac-num,
+.tool-v2-formula-frac-den {
+  padding: 0 0.35em;
+  white-space: normal;
+  max-width: 100%;
+}
+.tool-v2-formula-frac-num {
+  border-bottom: 2px solid var(--text-primary);
+  padding-bottom: 0.15em;
+}
+.tool-v2-formula-frac-den {
+  padding-top: 0.15em;
+}
+.tool-v2-formula-var {
+  display: inline-flex;
+  align-items: baseline;
+}
+.tool-v2-formula-sub {
+  font-size: 0.65em;
+  line-height: 1;
+}
+
+/* Reference-data grid — compact scannable chips for a fixed set of values (standard sizes,
+   ranges, presets) that used to get dumped as a comma-separated run-on sentence inside an FAQ
+   answer. See calculator-ui-standards.md §0e: this kind of structured data is real content and
+   belongs in a visual section, with the FAQ reduced to a short pointer instead of repeating it. */
+.tool-v2-ref-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--space-2);
+  margin-block: var(--space-4);
+}
+.tool-v2-ref-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  text-align: center;
+}
+.tool-v2-ref-chip__value {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  direction: ltr;
+}
+.tool-v2-ref-chip__meta {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--green-text);
+}
+
+
+/* Two-column formula grid (2026-08-19) — same as tools-v2.css. */
+
+/* Two-column layout for pages presenting several short formulas together (e.g. one equation per
+   shape/case) — each FormulaCard becomes a grid item; margin-block on .tool-v2-formula-card
+   collapses fine inside a grid cell. Falls back to single column below 640px. */
+.tool-v2-formula-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  margin-block: var(--space-4);
+}
+@media (min-width: 640px) {
+  .tool-v2-formula-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.tool-v2-formula-grid .tool-v2-formula-card {
+  margin-block: 0;
+}

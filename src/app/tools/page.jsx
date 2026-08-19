@@ -25,6 +25,7 @@ import {
 } from '@phosphor-icons/react/ssr';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection } from '@/components/tools-v2/HubGuideSection';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
 
@@ -332,7 +333,7 @@ const CATEGORIES = [
 export const metadata = buildCanonicalMetadata({
   title: 'الأدوات — حاسبات مالية وعملية مجانية بالعربي',
   description:
-    'دليل الأدوات والحاسبات المجانية في ميقاتنا، مقسّمة حسب الفئة — ابدأ بالرواتب والمزايا الخليجية، مع فئات جديدة تُضاف تباعاً بناءً على بحث حقيقي عن الكلمات المفتاحية.',
+    'كل حاسبات ميقاتنا المجانية في مكان واحد، مقسّمة حسب الفئة — من الرواتب والمزايا الخليجية إلى البناء والصحة والنوم، وفئات جديدة تُضاف باستمرار.',
   url: `${SITE_URL}/tools`,
 });
 
@@ -371,7 +372,7 @@ export default function ToolsHubPage() {
         <div className="tool-v2-hub-hero">
           <span className="tool-v2-kicker">الأدوات</span>
           <h1>كل الحاسبات في مكان واحد</h1>
-          <p className="tool-v2-lead">اختر فئة، وابدأ — كل فئة مبنية على بحث حقيقي، لا تخمين.</p>
+          <p className="tool-v2-lead">اختر فئة، وابدأ — نتيجة فورية بلا تسجيل ولا انتظار.</p>
         </div>
 
         <div className="tool-v2-cat-grid">
@@ -388,6 +389,20 @@ export default function ToolsHubPage() {
             );
           })}
         </div>
+
+        <HubGuideSection id="how-this-works" title="أدوات تحسبها لك، لا تخمّنها">
+          <p>
+            كل حاسبة هنا تعطيك رقماً حقيقياً بدل التقدير بالعين — أدخل بياناتك أنت، وستحصل على
+            نتيجة تخصك مباشرة دون تسجيل أو انتظار. اختر الفئة التي تحتاجها الآن، أو تصفّح الفئات
+            كلها لتكتشف أداة قد توفر عليك وقتاً ومالاً في مرة قادمة.
+          </p>
+          <p>
+            كل الحاسبات مجانية بالكامل ولا تطلب منك حساباً أو بريداً إلكترونياً لاستخدامها —
+            أدخل رقمك واحصل على النتيجة فوراً في نفس الصفحة. الفئات تغطي مجالات يومية حقيقية
+            (الرواتب، البناء، الصحة، النوم، المطبخ، السيارة، والمزيد)، ونضيف فئات جديدة كلما وجدنا
+            سؤالاً حقيقياً يستحق أداة مخصصة له بدل إجابة عامة لا تخصك.
+          </p>
+        </HubGuideSection>
       </div>
     </main>
   );

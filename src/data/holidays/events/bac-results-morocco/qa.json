@@ -1,13 +1,18 @@
 {
   "slug": "bac-results-morocco",
-  "publishStatus": "drafted",
+  "publishStatus": "published",
   "checks": {
-    "contentReady": false,
-    "factChecked": false,
-    "schemaValid": false,
-    "seoValidated": false,
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
     "hasHardcodedYear": false
   },
-  "notes": [],
-  "updatedAt": "2026-06-22T23:59:20.757Z"
+  "notes": [
+    "fact-source: Maroc.ma: 2025 Baccalaureate Exam — 250,075 Candidates Pass Ordinary Session",
+    "fact-source: orientation-chabab.com: Résultats BAC 2026 au Maroc — Session normale et rattrapage",
+    "fact-check (2026-08-19): corrected a real factual error — page previously said regular-session results announce 'early July', but Maroc.ma confirms mid-June for both 2025 (June 16) and 2026 (June 17); core.month/day corrected from 7/5 to 6/17 and all related text updated. Resit/dorat al-istidrak session confirmed mid-July, not end of July.",
+    "research.json was found completely empty (all fields blank) during a 2026-08-19 quality audit — fully researched and filled same session."
+  ],
+  "updatedAt": "2026-08-19T17:54:35.919Z"
 }

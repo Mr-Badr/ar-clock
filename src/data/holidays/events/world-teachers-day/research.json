@@ -1,7 +1,7 @@
 {
   "slug": "world-teachers-day",
   "locale": "ar",
-  "capturedAt": "2026-06-01T00:00:00.000Z",
+  "capturedAt": "2026-08-19T17:29:38.760Z",
   "primaryQueries": [
     "متى اليوم العالمي للمعلم {{year}}",
     "كم باقي على اليوم العالمي للمعلم {{year}}",
@@ -270,6 +270,10 @@
     {
       "label": "UNESCO IITE: World Teachers' Day - 5 October",
       "url": "https://iite.unesco.org/announcements/world-teachers-day-5-october/"
+    },
+    {
+      "label": "UNESCO: World Teachers’ Day",
+      "url": "https://www.unesco.org/en/days/teachers"
     }
   ],
   "notes": "أقوى فرصة هي تصحيح زاوية الصفحة: ليست صفحة عبارات شكر فقط. يجب أن تجيب عن 5 أكتوبر والعداد، ثم تشرح أن بعض الدول لها يوم معلم محلي مختلف، وتقدم أنشطة مدرسية قصيرة تحترم وقت المعلم."

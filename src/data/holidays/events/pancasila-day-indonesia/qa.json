@@ -1,0 +1,17 @@
+{
+  "slug": "pancasila-day-indonesia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: Wikipedia: Pancasila (politics)",
+    "fact-source: officeholidays.com: Indonesia Public Holidays",
+    "fact-check: 1 يونيو يوم بانتشاسيلا، خطاب سوكارنو 1945 عن المبادئ الفلسفية الخمسة الموحّدة لإندونيسيا"
+  ],
+  "updatedAt": "2026-08-18T15:10:11.394Z"
+}

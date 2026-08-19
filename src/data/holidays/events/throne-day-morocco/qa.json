@@ -14,5 +14,5 @@
     "fact-source: PublicHolidays Africa: Throne Day Morocco",
     "2026-06-01: Authored package refined with visible official sources, clearer direct answer, public-holiday wording, and distinction from Independence Day and Green March. Passed strict holiday content validation plus repo lint, typecheck, and SEO validation. events:build and rendered-route confirmation were intentionally skipped per instruction."
   ],
-  "updatedAt": "2026-06-01T00:00:00.000Z"
+  "updatedAt": "2026-08-19T17:11:41.563Z"
 }

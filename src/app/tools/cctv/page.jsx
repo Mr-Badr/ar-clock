@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -138,6 +139,23 @@ export default function CctvCategoryHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="storage-vs-cameras" title="ابدأ بالتخزين، لا بعدد الكاميرات فقط">
+          <p>
+            كثيرون يشترون الكاميرات أولاً ثم يفاجؤون بامتلاء القرص الصلب خلال أيام قليلة —
+            الترتيب الأصح هو تحديد كم يوماً تريد الاحتفاظ بالتسجيلات أولاً، ثم حساب السعة اللازمة
+            لعدد كاميراتك ودقتها، ثم اختيار قرص أكبر من الحد الأدنى المحسوب بهامش أمان. الدقة
+            الأعلى والترميز الأقدم (H.264 بدل H.265) يضاعفان المساحة المطلوبة بسرعة دون أن يلاحظ
+            المستخدم ذلك عند الشراء الأولي.
+          </p>
+          <p>
+            التخزين المحلي (على قرص داخل جهاز NVR أو DVR في منزلك) يمنحك تسجيلات لا تعتمد على
+            اتصال إنترنت مستمر ولا اشتراك شهري متكرر، بخلاف التخزين السحابي الذي يحفظ اللقطات
+            خارج الموقع فيبقى متاحاً حتى لو سُرق جهاز التسجيل نفسه أو تعطّل. كثير من الأنظمة
+            الحديثة تدعم الخيارين معاً — احسب سعة قرصك المحلي أولاً في الأداة أدناه بغض النظر عن
+            قرارك بشأن التخزين السحابي الإضافي.
+          </p>
+        </HubGuideSection>
       </div>
     </main>
   );

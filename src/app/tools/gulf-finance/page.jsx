@@ -44,7 +44,7 @@ const COUNTRY_GROUPS = [
     code: 'sa',
     name: 'السعودية',
     slugs: [
-      'end-of-service-benefits', 'sick-leave', 'saudi-pay-dates',
+      'end-of-service-benefits', 'sick-leave', 'saudi-pay-dates', 'saned-eligibility',
       'domestic-worker-cost', 'nafaqah',
       'article-77-compensation', 'traffic-fine-discount',
     ],
@@ -154,7 +154,7 @@ const FAQ_ITEMS = [
 export const metadata = buildCanonicalMetadata({
   title: 'حاسبات الرواتب ونهاية الخدمة في الخليج والدول العربية',
   description:
-    'حاسبات مالية عربية مبنية على بحث حقيقي: مكافأة نهاية الخدمة، تعويض المادة 77، خصم المخالفات المرورية، ونفقة — مقسّمة حسب كل دولة.',
+    'احسب مكافأة نهاية الخدمة، تعويض المادة 77، خصم المخالفات المرورية، والنفقة — حاسبات مالية عربية دقيقة، مقسّمة حسب كل دولة.',
   url: `${SITE_URL}/tools/gulf-finance`,
 });
 

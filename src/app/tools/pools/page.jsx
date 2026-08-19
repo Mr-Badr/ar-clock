@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -129,6 +130,23 @@ export default function PoolsCategoryHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="pool-care-basics" title="أساسيات العناية بالمسبح قبل الحساب">
+          <p>
+            قبل أن تحسب جرعة الكلور، حدد الهدف: المعالجة الروتينية تحافظ على نسبة كلور منخفضة
+            نسبياً (حول 1-3 ppm) للاستخدام اليومي الآمن، بينما معالجة الصدمة (Shock) ترفع النسبة
+            مؤقتاً بشكل أكبر بكثير للقضاء على تراكم الملوثات العضوية أو مياه تحولت لونها إلى
+            الأخضر — ولا يُسمح بالسباحة مباشرة بعدها حتى تعود النسبة لمستوى آمن. احسب حجم مسبحك
+            أولاً في الأداة أدناه، فالجرعة الصحيحة من أي منتج كلور تعتمد بشكل مباشر على هذا
+            الحجم، لا على تقدير تقريبي بالعين.
+          </p>
+          <p>
+            مسابح الأشكال غير المنتظمة (بيضاوية أو كلوية الشكل) هي الأكثر عرضة للتقدير الخاطئ عند
+            الحساب اليدوي، لأن معادلة المستطيل البسيطة لا تنطبق عليها مباشرة. الأداة أدناه تدعم
+            الأشكال الأربعة الشائعة (مستطيل، دائري، بيضاوي، كلوي) بمعادلة مخصصة لكل شكل، فلا تحتاج
+            تقريب مسبحك إلى أقرب شكل هندسي بسيط قبل الحساب.
+          </p>
+        </HubGuideSection>
       </div>
     </main>
   );

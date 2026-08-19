@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -46,6 +47,21 @@ const TYPE_GROUPS = [
   },
 ];
 
+const FAQ_ITEMS = [
+  {
+    question: 'هل أنا صاحب منزل أم صاحب شركة تنظيف — أي أداة تناسبني؟',
+    answer: 'إذا كنت تبحث عن تقدير تكلفة تنظيف منزلك قبل حجز شركة، ابدأ بحاسبة تكلفة التنظيف. إذا كنت تدير شركة أو تعمل تنظيفاً مستقلاً وتحتاج تسليم عرض سعر أو فاتورة احترافية لعميل، مولّد عرض السعر والفاتورة والعقد الشهري هو الأنسب.',
+  },
+  {
+    question: 'كيف أعرف إن كان سعر شركة التنظيف الذي عُرض عليّ معقولاً؟',
+    answer: 'احسب تقديرك الخاص أولاً في حاسبة تكلفة التنظيف حسب مساحة منزلك وتكرار الزيارات، ثم قارنه بالعرض المستلم — فارق كبير غير مبرر (أعلى بكثير أو أقل بشكل مريب) يستحق سؤالاً مباشراً عن التفاصيل قبل التوقيع.',
+  },
+  {
+    question: 'متى أحتاج تنظيفاً عميقاً بدل التنظيف الدوري المعتاد؟',
+    answer: 'التنظيف الدوري يغطي الأسطح الظاهرة والاستخدام اليومي، بينما التنظيف العميق يضيف ما لا يُلمس أسبوعياً (خلف الأثاث، السقوف، إطارات النوافذ). استخدم أداة "تنظيف عميق أم عادي" للحصول على توصية مباشرة حسب حالة منزلك ووقت آخر تنظيف عميق فعلي.',
+  },
+];
+
 function ToolLink({ slug }) {
   const route = findRoute(slug);
   return (
@@ -66,7 +82,7 @@ function ToolLink({ slug }) {
 export const metadata = buildCanonicalMetadata({
   title: 'حاسبات ومستندات التنظيف — تكلفة تنظيف المنزل بالعربي',
   description:
-    'حاسبة تكلفة تنظيف المنزل حسب المساحة والتكرار، مولّد عرض سعر وفاتورة وعقد تنظيف شهري، ومتتبع صيانة دورية — أدوات مبنية على بحث كلمات وأسعار حقيقية.',
+    'احسب تكلفة تنظيف منزلك حسب المساحة والتكرار، أصدر عرض سعر أو فاتورة أو عقد تنظيف شهري، وتابع صيانتك الدورية — كل هذا مجاناً وبلا تسجيل.',
   url: `${SITE_URL}/tools/cleaning`,
 });
 
@@ -102,11 +118,13 @@ export default function CleaningCategoryHubPage() {
       }),
     },
   };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-cleaning-hub" />
 
@@ -163,6 +181,10 @@ export default function CleaningCategoryHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="hub-faq" title="الأسئلة الشائعة">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

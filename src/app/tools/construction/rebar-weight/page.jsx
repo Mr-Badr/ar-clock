@@ -6,6 +6,7 @@ import EmbedCodeSnippet from '@/components/shared/EmbedCodeSnippet.client';
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { FormulaCard, Frac } from '@/components/tools-v2/FormulaCard';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getConstructionPageContent } from '@/lib/calculators/construction-page-content';
 import { REBAR_DIAMETERS, REBAR_TYPICAL_USE, REBAR_WEIGHT_PER_METER, fmt } from '@/lib/calculators/building/constants';
@@ -153,10 +154,13 @@ export default function RebarWeightToolPage() {
 
             <RebarWeightChart />
 
-            <div className="tool-v2-tip">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 8v5M12 16h.01" /></svg>
-              <span>المعادلة: الوزن (كجم/م) = القطر (مم)² ÷ 162 — تقريب هندسي شائع يتطابق مع الحساب الفيزيائي الدقيق بفارق أقل من 1%.</span>
-            </div>
+            <FormulaCard
+              label="المعادلة التي تحسب وزن المتر الواحد من قطر السيخ:"
+              note="تقريب هندسي شائع يتطابق مع الحساب الفيزيائي الدقيق بفارق أقل من 1%."
+            >
+              <span>الوزن (كجم/م) =</span>
+              <Frac num="القطر (مم)²" den="162" />
+            </FormulaCard>
 
             <PlainBlock eyebrow="أشيع خطأ عند الشراء" title="لا تقارن السعر قبل توحيد القطر والطول">
               الخطأ الشائع هو استخدام قطر خاطئ (12 بدل 16 مثلاً) أو نسيان أن المورد يبيع بالطن لا

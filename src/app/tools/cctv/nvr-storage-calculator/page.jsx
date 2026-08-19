@@ -4,6 +4,7 @@ import NvrStorageCalculator from '@/components/calculators/NvrStorageCalculator.
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { FormulaCard, Frac } from '@/components/tools-v2/FormulaCard';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildPrincipalPageSearchCoverage } from '@/lib/seo/page-search-coverage';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -17,7 +18,7 @@ const FAQ_ITEMS = [
   {
     question: 'كيف احسب سعة التخزين المطلوبة لكاميرات المراقبة؟',
     answer:
-      'المعادلة المعتمدة من مصنّعي أنظمة المراقبة: السعة بالجيجابايت = (معدل البت بالكيلوبت/ثانية ÷ 8) × 3600 × ساعات التسجيل يومياً × عدد الكاميرات × عدد أيام الاحتفاظ ÷ 1,000,000. أدخل قيمك الفعلية في الحاسبة أعلاه لنتيجة دقيقة لنظامك.',
+      'بضرب معدل البت لكل كاميرا في عدد ساعات التسجيل اليومية وعدد الكاميرات وأيام الاحتفاظ، ثم تحويل الناتج من كيلوبت إلى جيجابايت — راجع المعادلة الكاملة وشرحها في قسم "كيف تُحسب سعة التخزين فعلياً" أعلى الصفحة، أو أدخل قيمك الفعلية في الحاسبة مباشرة لنتيجة دقيقة لنظامك دون حساب يدوي.',
   },
   {
     question: 'كم تيرا أحتاج لكاميرات المراقبة في المنزل؟',
@@ -126,6 +127,16 @@ export default function NvrStorageCalculatorPage() {
               نمط التسجيل (24 ساعة مستمر مقابل التسجيل بالحركة فقط)، وعدد أيام الاحتفاظ. تجاهل أي
               واحد منها يعني تقديراً خاطئاً بفارق كبير جداً عن الرقم الحقيقي.
             </p>
+            <FormulaCard
+              label="استخدم هذه المعادلة المعتمدة من مصنّعي أنظمة المراقبة لحساب سعة التخزين بالجيجابايت من معدل البت وعدد الكاميرات وأيام الاحتفاظ:"
+              note="معدل البت يقاس بالكيلوبت/ثانية — تجده في مواصفات الكاميرا، أو استخدم القيم الافتراضية المقترحة تلقائياً في الحاسبة أعلاه حسب الدقة والترميز."
+            >
+              <span>السعة (جيجابايت) =</span>
+              <Frac
+                num="معدل البت × 3600 × ساعات التسجيل × الكاميرات × الأيام"
+                den="8,000,000"
+              />
+            </FormulaCard>
             <PlainBlock eyebrow="اشترِ قرصاً أكبر من الحد الأدنى" title="هامش أمان يستحق تكلفته الصغيرة">
               فارق السعر بين قرص 4 تيرابايت و6 تيرابايت صغير نسبياً مقارنة بإزعاج نفاد المساحة
               مبكراً وحذف تسجيلات أقدم مما تحتاج فعلاً — اختر دائماً أقرب سعة تجارية أعلى من الرقم

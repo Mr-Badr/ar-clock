@@ -1,0 +1,17 @@
+{
+  "slug": "federal-territory-day-malaysia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: quickhr.co: Malaysia Public Holiday 2026",
+    "fact-source: Wikipedia: Federal Territory Day",
+    "fact-check: 1 فبراير أحد 5 أعياد فيدرالية ماليزية إلزامية، يحتفي بالأقاليم الفيدرالية الثلاثة (كوالالمبور، بوتراجايا، لابوان)"
+  ],
+  "updatedAt": "2026-08-18T11:28:24.484Z"
+}

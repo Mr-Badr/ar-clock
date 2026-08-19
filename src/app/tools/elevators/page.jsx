@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -133,6 +134,22 @@ export default function ElevatorsCategoryHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="who-needs-this" title="لماذا يهمك هذا التحقق قبل التوقيع">
+          <p>
+            سواء كنت مالك مبنى، رئيس اتحاد ملاك، أو مسؤول صيانة تستلم عروض أسعار من أكثر من شركة،
+            الفرق بين عقد شامل وآخر غير شامل غالباً غير واضح من عنوان العقد وحده — يظهر فقط عند
+            قراءة البنود بالتفصيل. توقيع عقد ناقص قد يعني تحمّلك تكلفة قطع غيار غير متوقعة لاحقاً،
+            أو عدم استيفاء اشتراطات الدفاع المدني التي قد تُكتشف فقط عند التفتيش. راجع دليل عقود
+            الصيانة أدناه قبل أي توقيع نهائي، لا بعده.
+          </p>
+          <p>
+            إذا كنت تقارن أكثر من عرض سعر، لا تكتفِ بمقارنة الرقم الإجمالي وحده — اطلب من كل شركة
+            تفصيلاً كتابياً لما يشمله العقد (عدد الزيارات الدورية سنوياً، هل قطع الغيار مشمولة أم
+            منفصلة، زمن الاستجابة المضمون عند عطل طارئ). عرض أرخص بكثير من البقية غالباً يعني بنداً
+            مهماً غير مشمول، لا صفقة أفضل فعلياً.
+          </p>
+        </HubGuideSection>
       </div>
     </main>
   );

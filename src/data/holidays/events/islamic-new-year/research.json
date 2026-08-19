@@ -1,7 +1,7 @@
 {
   "slug": "islamic-new-year",
   "locale": "ar",
-  "capturedAt": "2026-06-01T00:00:00.000Z",
+  "capturedAt": "2026-08-19T17:28:47.824Z",
   "primaryQueries": [
     "متى رأس السنة الهجرية {{year}}",
     "كم باقي على رأس السنة الهجرية {{year}}",
@@ -314,6 +314,14 @@
     {
       "label": "ابن باز: هل فضل صيام المحرم يقصد به عاشوراء؟",
       "url": "https://binbaz.org.sa/fatwas/22626/%D9%87%D9%84-%D9%81%D8%B6%D9%84-%D8%B5%D9%8A%D8%A7%D9%85-%D8%A7%D9%84%D9%85%D8%AD%D8%B1%D9%85-%D9%8A%D9%82%D8%B5%D8%AF-%D8%A8%D9%87-%D8%B9%D8%A7%D8%B4%D9%88%D8%B1%D8%A7%D8%A1"
+    },
+    {
+      "label": "Agenda Maroc: رأس السنة الهجرية",
+      "url": "https://agendamaroc.com/ar/nouvel-an-hegirien"
+    },
+    {
+      "label": "1st Muharram - Islamic New Year | Islamic Relief UK",
+      "url": "https://www.islamic-relief.org.uk/resources/islamic-calendar/muharram/1st-muharram-islamic-new-year/"
     }
   ],
   "notes": "تم استبعاد صفحات الأخبار القصيرة وصفحات الإجازات الحكومية السنوية عندما كانت تخدم بلداً واحداً أو سنة واحدة فقط، لأنها لا تبني صفحة عربية أقوى على المدى الطويل. كما لم يتم اعتماد صفحات ضعيفة أو غير قابلة للاستخلاص إذا كانت لا تقدم محتوى usable يتجاوز مجرد تاريخ مختصر."

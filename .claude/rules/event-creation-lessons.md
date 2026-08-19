@@ -1,6 +1,40 @@
 # Event Creation — Lessons Learned & Hard Rules
 
-Last updated: 2026-07-07. Derived from: salary-day-uae/kuwait/qatar, pension-day-uae (session 1); ramadan, eid-al-fitr, eid-al-adha, takaful-karama-egypt, Saudi events (session 2); Wave 6/7 diaspora + Saudi social events, direct-address content audit (session 3).
+Last updated: 2026-08-19. Derived from: salary-day-uae/kuwait/qatar, pension-day-uae (session 1); ramadan, eid-al-fitr, eid-al-adha, takaful-karama-egypt, Saudi events (session 2); Wave 6/7 diaspora + Saudi social events, direct-address content audit (session 3); real-GSC-data SEO audit + `research.json` competitor-schema fix (session, 2026-08-19).
+
+---
+
+## -2. Hard Rule: `research.json` `competitors[]` MUST use `site`/`type`/`focus[]`/`gaps[]` — never `name`/`strengths`/`gaps` (string)
+
+Found 2026-08-19 while fixing `research_competitors_below_minimum` warnings on 6 events: `npm run
+events:sync` runs `events:sync-research --write`, which **silently rewrites `research.json`** on
+every sync (not just fixes it forward — it's a real, unconditional overwrite step). Its dedup logic
+keys each competitor entry on `` `${item.site}::${item.type}` `` — so if an entry uses `name` instead
+of `site` (and has no `type` at all), its dedup key collapses to the same empty string `"::"` as
+every other malformed entry. Result: 3 carefully-researched competitors written by hand all
+silently collapsed down to 1 after the very next `events:sync` call, with no error or warning —
+the sync log just prints `[events:sync-research] Updated 1 research file(s).` and moves on.
+
+**Always use this exact shape** for every `competitors[]` entry (see any `/holidays/events/*/research.json`
+written correctly, e.g. `africa-day-mauritania`, `khaleeji-27` after the fix):
+
+```json
+{
+  "site": "kooora.com",
+  "type": "competitor-ar",
+  "url": "https://www.kooora.com",
+  "focus": ["Real-time fixture/score coverage"],
+  "gaps": ["Zero countdown/date-explainer format"]
+}
+```
+
+`type` is conventionally `competitor-ar` / `competitor-en` / `official`. `focus` and `gaps` are
+**arrays of strings**, not a single string. After writing/editing `competitors[]` by hand, always
+re-read the file immediately after the next `events:sync` call to confirm the count actually
+survived — don't trust the sync log's "Updated N research file(s)" line alone, it reports files
+touched, not entries preserved.
+
+---
 
 ---
 

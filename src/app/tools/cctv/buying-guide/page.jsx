@@ -12,6 +12,27 @@ import { getSiteUrl } from '@/lib/site-config';
 const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'cctv-buying-guide');
 
+const WIRED_WIRELESS_CARDS = [
+  {
+    title: 'كاميرا سلكية',
+    rows: [
+      ['التركيب', 'يحتاج حفر/تمديد كابلات'],
+      ['الاستقرار', 'عالٍ، غير متأثر بالشبكة'],
+      ['المرونة في الموقع', 'محدودة بمسار الكابل'],
+      ['الأنسب لـ', 'مواقع ثابتة قريبة من التمديدات'],
+    ],
+  },
+  {
+    title: 'كاميرا لاسلكية',
+    rows: [
+      ['التركيب', 'سهل، بلا كابلات'],
+      ['الاستقرار', 'يعتمد على قوة الواي فاي'],
+      ['المرونة في الموقع', 'أي موقع تقريباً'],
+      ['الأنسب لـ', 'مواقع يصعب توصيل كابل لها'],
+    ],
+  },
+];
+
 const TOC_ITEMS = [
   ['wired-wireless', 'سلكية أم لاسلكية؟'],
   ['power', 'كاميرا تعمل بدون كهرباء'],
@@ -89,6 +110,23 @@ export default function CctvBuyingGuidePage() {
                   اللاسلكية أسهل تركيباً في أي موقع بلا حفر أو تمديد كابلات، لكنها تعتمد على قوة
                   إشارة الواي فاي وعمر بطاريتها إن كانت تعمل بها.
                 </p>
+                <div className="guide-v2-compare-list">
+                  {WIRED_WIRELESS_CARDS.map((card) => (
+                    <div className="guide-v2-compare-card" key={card.title}>
+                      <div className="guide-v2-compare-head">
+                        <span className="guide-v2-compare-title">{card.title}</span>
+                      </div>
+                      <div className="guide-v2-compare-rows">
+                        {card.rows.map(([label, value]) => (
+                          <div className="guide-v2-compare-row" key={label}>
+                            <span className="guide-v2-compare-row-label">{label}</span>
+                            <span className="guide-v2-compare-row-value">{value}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </section>
 
               <ToolInArticleAd slotId="mid-cctv-guide" />

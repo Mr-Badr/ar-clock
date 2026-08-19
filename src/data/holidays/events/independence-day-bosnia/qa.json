@@ -1,0 +1,19 @@
+{
+  "slug": "independence-day-bosnia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: en.wikipedia.org: Independence Day (Bosnia and Herzegovina)",
+    "fact-source: sabq.org: أفضل 25 وجهة سياحية في 2026",
+    "fact-check: 1 مارس 1992 استفتاء الاستقلال عن يوغوسلافيا الاتحادية الاشتراكية",
+    "fact-check: البوسنة والهرسك مذكورة كوجهة دخول بلا تأشيرة مسبقة/بتأشيرة إلكترونية سريعة لحاملي جواز السفر السعودي في مصادر سفر عربية 2026",
+    "content-note: عولجت خلفية الاستقلال بحيادية تاريخية صرفة (الاستفتاء فقط) دون الخوض في التعقيدات السياسية الداخلية للبلاد"
+  ],
+  "updatedAt": "2026-08-18T10:49:51.683Z"
+}

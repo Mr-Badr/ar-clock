@@ -119,6 +119,86 @@
     "canonicalSlug": "ramadan",
     "countryCode": "it"
   },
+  "ramadan-in-brazil": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "br"
+  },
+  "ramadan-in-argentina": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "ar"
+  },
+  "ramadan-in-chile": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "cl"
+  },
+  "ramadan-in-georgia": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "ge"
+  },
+  "ramadan-in-azerbaijan": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "az"
+  },
+  "ramadan-in-malaysia": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "my"
+  },
+  "ramadan-in-bosnia": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "ba"
+  },
+  "ramadan-in-finland": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "fi"
+  },
+  "ramadan-in-austria": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "at"
+  },
+  "ramadan-in-mauritania": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "mr"
+  },
+  "ramadan-in-sudan": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "sd"
+  },
+  "ramadan-in-denmark": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "dk"
+  },
+  "ramadan-in-switzerland": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "ch"
+  },
+  "ramadan-in-ireland": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "ie"
+  },
+  "ramadan-in-thailand": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "th"
+  },
+  "ramadan-in-indonesia": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "id"
+  },
+  "ramadan-in-maldives": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "mv"
+  },
+  "ramadan-in-armenia": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "am"
+  },
+  "ramadan-in-japan": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "jp"
+  },
+  "ramadan-in-south-korea": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "kr"
+  },
   "eid-al-fitr-in-saudi": {
     "canonicalSlug": "eid-al-fitr",
     "countryCode": "sa"
@@ -238,6 +318,86 @@
   "eid-al-fitr-in-italy": {
     "canonicalSlug": "eid-al-fitr",
     "countryCode": "it"
+  },
+  "eid-al-fitr-in-brazil": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "br"
+  },
+  "eid-al-fitr-in-argentina": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "ar"
+  },
+  "eid-al-fitr-in-chile": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "cl"
+  },
+  "eid-al-fitr-in-georgia": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "ge"
+  },
+  "eid-al-fitr-in-azerbaijan": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "az"
+  },
+  "eid-al-fitr-in-malaysia": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "my"
+  },
+  "eid-al-fitr-in-bosnia": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "ba"
+  },
+  "eid-al-fitr-in-finland": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "fi"
+  },
+  "eid-al-fitr-in-austria": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "at"
+  },
+  "eid-al-fitr-in-mauritania": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "mr"
+  },
+  "eid-al-fitr-in-sudan": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "sd"
+  },
+  "eid-al-fitr-in-denmark": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "dk"
+  },
+  "eid-al-fitr-in-switzerland": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "ch"
+  },
+  "eid-al-fitr-in-ireland": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "ie"
+  },
+  "eid-al-fitr-in-thailand": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "th"
+  },
+  "eid-al-fitr-in-indonesia": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "id"
+  },
+  "eid-al-fitr-in-maldives": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "mv"
+  },
+  "eid-al-fitr-in-armenia": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "am"
+  },
+  "eid-al-fitr-in-japan": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "jp"
+  },
+  "eid-al-fitr-in-south-korea": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "kr"
   },
   "eid-al-adha-in-saudi": {
     "canonicalSlug": "eid-al-adha",
@@ -359,6 +519,86 @@
     "canonicalSlug": "eid-al-adha",
     "countryCode": "it"
   },
+  "eid-al-adha-in-brazil": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "br"
+  },
+  "eid-al-adha-in-argentina": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "ar"
+  },
+  "eid-al-adha-in-chile": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "cl"
+  },
+  "eid-al-adha-in-georgia": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "ge"
+  },
+  "eid-al-adha-in-azerbaijan": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "az"
+  },
+  "eid-al-adha-in-malaysia": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "my"
+  },
+  "eid-al-adha-in-bosnia": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "ba"
+  },
+  "eid-al-adha-in-finland": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "fi"
+  },
+  "eid-al-adha-in-austria": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "at"
+  },
+  "eid-al-adha-in-mauritania": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "mr"
+  },
+  "eid-al-adha-in-sudan": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "sd"
+  },
+  "eid-al-adha-in-denmark": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "dk"
+  },
+  "eid-al-adha-in-switzerland": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "ch"
+  },
+  "eid-al-adha-in-ireland": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "ie"
+  },
+  "eid-al-adha-in-thailand": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "th"
+  },
+  "eid-al-adha-in-indonesia": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "id"
+  },
+  "eid-al-adha-in-maldives": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "mv"
+  },
+  "eid-al-adha-in-armenia": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "am"
+  },
+  "eid-al-adha-in-japan": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "jp"
+  },
+  "eid-al-adha-in-south-korea": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "kr"
+  },
   "day-of-arafa-in-saudi": {
     "canonicalSlug": "day-of-arafa",
     "countryCode": "sa"
@@ -478,6 +718,86 @@
   "day-of-arafa-in-italy": {
     "canonicalSlug": "day-of-arafa",
     "countryCode": "it"
+  },
+  "day-of-arafa-in-brazil": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "br"
+  },
+  "day-of-arafa-in-argentina": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "ar"
+  },
+  "day-of-arafa-in-chile": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "cl"
+  },
+  "day-of-arafa-in-georgia": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "ge"
+  },
+  "day-of-arafa-in-azerbaijan": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "az"
+  },
+  "day-of-arafa-in-malaysia": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "my"
+  },
+  "day-of-arafa-in-bosnia": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "ba"
+  },
+  "day-of-arafa-in-finland": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "fi"
+  },
+  "day-of-arafa-in-austria": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "at"
+  },
+  "day-of-arafa-in-mauritania": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "mr"
+  },
+  "day-of-arafa-in-sudan": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "sd"
+  },
+  "day-of-arafa-in-denmark": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "dk"
+  },
+  "day-of-arafa-in-switzerland": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "ch"
+  },
+  "day-of-arafa-in-ireland": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "ie"
+  },
+  "day-of-arafa-in-thailand": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "th"
+  },
+  "day-of-arafa-in-indonesia": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "id"
+  },
+  "day-of-arafa-in-maldives": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "mv"
+  },
+  "day-of-arafa-in-armenia": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "am"
+  },
+  "day-of-arafa-in-japan": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "jp"
+  },
+  "day-of-arafa-in-south-korea": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "kr"
   },
   "hajj-season-in-saudi": {
     "canonicalSlug": "hajj-season",
@@ -599,6 +919,86 @@
     "canonicalSlug": "hajj-season",
     "countryCode": "it"
   },
+  "hajj-season-in-brazil": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "br"
+  },
+  "hajj-season-in-argentina": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "ar"
+  },
+  "hajj-season-in-chile": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "cl"
+  },
+  "hajj-season-in-georgia": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "ge"
+  },
+  "hajj-season-in-azerbaijan": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "az"
+  },
+  "hajj-season-in-malaysia": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "my"
+  },
+  "hajj-season-in-bosnia": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "ba"
+  },
+  "hajj-season-in-finland": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "fi"
+  },
+  "hajj-season-in-austria": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "at"
+  },
+  "hajj-season-in-mauritania": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "mr"
+  },
+  "hajj-season-in-sudan": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "sd"
+  },
+  "hajj-season-in-denmark": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "dk"
+  },
+  "hajj-season-in-switzerland": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "ch"
+  },
+  "hajj-season-in-ireland": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "ie"
+  },
+  "hajj-season-in-thailand": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "th"
+  },
+  "hajj-season-in-indonesia": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "id"
+  },
+  "hajj-season-in-maldives": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "mv"
+  },
+  "hajj-season-in-armenia": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "am"
+  },
+  "hajj-season-in-japan": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "jp"
+  },
+  "hajj-season-in-south-korea": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "kr"
+  },
   "islamic-new-year-in-saudi": {
     "canonicalSlug": "islamic-new-year",
     "countryCode": "sa"
@@ -718,6 +1118,86 @@
   "islamic-new-year-in-italy": {
     "canonicalSlug": "islamic-new-year",
     "countryCode": "it"
+  },
+  "islamic-new-year-in-brazil": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "br"
+  },
+  "islamic-new-year-in-argentina": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "ar"
+  },
+  "islamic-new-year-in-chile": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "cl"
+  },
+  "islamic-new-year-in-georgia": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "ge"
+  },
+  "islamic-new-year-in-azerbaijan": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "az"
+  },
+  "islamic-new-year-in-malaysia": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "my"
+  },
+  "islamic-new-year-in-bosnia": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "ba"
+  },
+  "islamic-new-year-in-finland": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "fi"
+  },
+  "islamic-new-year-in-austria": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "at"
+  },
+  "islamic-new-year-in-mauritania": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "mr"
+  },
+  "islamic-new-year-in-sudan": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "sd"
+  },
+  "islamic-new-year-in-denmark": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "dk"
+  },
+  "islamic-new-year-in-switzerland": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "ch"
+  },
+  "islamic-new-year-in-ireland": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "ie"
+  },
+  "islamic-new-year-in-thailand": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "th"
+  },
+  "islamic-new-year-in-indonesia": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "id"
+  },
+  "islamic-new-year-in-maldives": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "mv"
+  },
+  "islamic-new-year-in-armenia": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "am"
+  },
+  "islamic-new-year-in-japan": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "jp"
+  },
+  "islamic-new-year-in-south-korea": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "kr"
   },
   "ashura-in-saudi": {
     "canonicalSlug": "ashura",
@@ -839,6 +1319,86 @@
     "canonicalSlug": "ashura",
     "countryCode": "it"
   },
+  "ashura-in-brazil": {
+    "canonicalSlug": "ashura",
+    "countryCode": "br"
+  },
+  "ashura-in-argentina": {
+    "canonicalSlug": "ashura",
+    "countryCode": "ar"
+  },
+  "ashura-in-chile": {
+    "canonicalSlug": "ashura",
+    "countryCode": "cl"
+  },
+  "ashura-in-georgia": {
+    "canonicalSlug": "ashura",
+    "countryCode": "ge"
+  },
+  "ashura-in-azerbaijan": {
+    "canonicalSlug": "ashura",
+    "countryCode": "az"
+  },
+  "ashura-in-malaysia": {
+    "canonicalSlug": "ashura",
+    "countryCode": "my"
+  },
+  "ashura-in-bosnia": {
+    "canonicalSlug": "ashura",
+    "countryCode": "ba"
+  },
+  "ashura-in-finland": {
+    "canonicalSlug": "ashura",
+    "countryCode": "fi"
+  },
+  "ashura-in-austria": {
+    "canonicalSlug": "ashura",
+    "countryCode": "at"
+  },
+  "ashura-in-mauritania": {
+    "canonicalSlug": "ashura",
+    "countryCode": "mr"
+  },
+  "ashura-in-sudan": {
+    "canonicalSlug": "ashura",
+    "countryCode": "sd"
+  },
+  "ashura-in-denmark": {
+    "canonicalSlug": "ashura",
+    "countryCode": "dk"
+  },
+  "ashura-in-switzerland": {
+    "canonicalSlug": "ashura",
+    "countryCode": "ch"
+  },
+  "ashura-in-ireland": {
+    "canonicalSlug": "ashura",
+    "countryCode": "ie"
+  },
+  "ashura-in-thailand": {
+    "canonicalSlug": "ashura",
+    "countryCode": "th"
+  },
+  "ashura-in-indonesia": {
+    "canonicalSlug": "ashura",
+    "countryCode": "id"
+  },
+  "ashura-in-maldives": {
+    "canonicalSlug": "ashura",
+    "countryCode": "mv"
+  },
+  "ashura-in-armenia": {
+    "canonicalSlug": "ashura",
+    "countryCode": "am"
+  },
+  "ashura-in-japan": {
+    "canonicalSlug": "ashura",
+    "countryCode": "jp"
+  },
+  "ashura-in-south-korea": {
+    "canonicalSlug": "ashura",
+    "countryCode": "kr"
+  },
   "laylat-al-qadr-in-saudi": {
     "canonicalSlug": "laylat-al-qadr",
     "countryCode": "sa"
@@ -958,6 +1518,86 @@
   "laylat-al-qadr-in-italy": {
     "canonicalSlug": "laylat-al-qadr",
     "countryCode": "it"
+  },
+  "laylat-al-qadr-in-brazil": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "br"
+  },
+  "laylat-al-qadr-in-argentina": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "ar"
+  },
+  "laylat-al-qadr-in-chile": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "cl"
+  },
+  "laylat-al-qadr-in-georgia": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "ge"
+  },
+  "laylat-al-qadr-in-azerbaijan": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "az"
+  },
+  "laylat-al-qadr-in-malaysia": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "my"
+  },
+  "laylat-al-qadr-in-bosnia": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "ba"
+  },
+  "laylat-al-qadr-in-finland": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "fi"
+  },
+  "laylat-al-qadr-in-austria": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "at"
+  },
+  "laylat-al-qadr-in-mauritania": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "mr"
+  },
+  "laylat-al-qadr-in-sudan": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "sd"
+  },
+  "laylat-al-qadr-in-denmark": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "dk"
+  },
+  "laylat-al-qadr-in-switzerland": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "ch"
+  },
+  "laylat-al-qadr-in-ireland": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "ie"
+  },
+  "laylat-al-qadr-in-thailand": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "th"
+  },
+  "laylat-al-qadr-in-indonesia": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "id"
+  },
+  "laylat-al-qadr-in-maldives": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "mv"
+  },
+  "laylat-al-qadr-in-armenia": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "am"
+  },
+  "laylat-al-qadr-in-japan": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "jp"
+  },
+  "laylat-al-qadr-in-south-korea": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "kr"
   },
   "isra-miraj-in-saudi": {
     "canonicalSlug": "isra-miraj",
@@ -1079,6 +1719,86 @@
     "canonicalSlug": "isra-miraj",
     "countryCode": "it"
   },
+  "isra-miraj-in-brazil": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "br"
+  },
+  "isra-miraj-in-argentina": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "ar"
+  },
+  "isra-miraj-in-chile": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "cl"
+  },
+  "isra-miraj-in-georgia": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "ge"
+  },
+  "isra-miraj-in-azerbaijan": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "az"
+  },
+  "isra-miraj-in-malaysia": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "my"
+  },
+  "isra-miraj-in-bosnia": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "ba"
+  },
+  "isra-miraj-in-finland": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "fi"
+  },
+  "isra-miraj-in-austria": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "at"
+  },
+  "isra-miraj-in-mauritania": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "mr"
+  },
+  "isra-miraj-in-sudan": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "sd"
+  },
+  "isra-miraj-in-denmark": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "dk"
+  },
+  "isra-miraj-in-switzerland": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "ch"
+  },
+  "isra-miraj-in-ireland": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "ie"
+  },
+  "isra-miraj-in-thailand": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "th"
+  },
+  "isra-miraj-in-indonesia": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "id"
+  },
+  "isra-miraj-in-maldives": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "mv"
+  },
+  "isra-miraj-in-armenia": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "am"
+  },
+  "isra-miraj-in-japan": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "jp"
+  },
+  "isra-miraj-in-south-korea": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "kr"
+  },
   "first-dhul-hijjah-in-saudi": {
     "canonicalSlug": "first-dhul-hijjah",
     "countryCode": "sa"
@@ -1198,6 +1918,86 @@
   "first-dhul-hijjah-in-italy": {
     "canonicalSlug": "first-dhul-hijjah",
     "countryCode": "it"
+  },
+  "first-dhul-hijjah-in-brazil": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "br"
+  },
+  "first-dhul-hijjah-in-argentina": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "ar"
+  },
+  "first-dhul-hijjah-in-chile": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "cl"
+  },
+  "first-dhul-hijjah-in-georgia": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "ge"
+  },
+  "first-dhul-hijjah-in-azerbaijan": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "az"
+  },
+  "first-dhul-hijjah-in-malaysia": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "my"
+  },
+  "first-dhul-hijjah-in-bosnia": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "ba"
+  },
+  "first-dhul-hijjah-in-finland": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "fi"
+  },
+  "first-dhul-hijjah-in-austria": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "at"
+  },
+  "first-dhul-hijjah-in-mauritania": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "mr"
+  },
+  "first-dhul-hijjah-in-sudan": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "sd"
+  },
+  "first-dhul-hijjah-in-denmark": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "dk"
+  },
+  "first-dhul-hijjah-in-switzerland": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "ch"
+  },
+  "first-dhul-hijjah-in-ireland": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "ie"
+  },
+  "first-dhul-hijjah-in-thailand": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "th"
+  },
+  "first-dhul-hijjah-in-indonesia": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "id"
+  },
+  "first-dhul-hijjah-in-maldives": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "mv"
+  },
+  "first-dhul-hijjah-in-armenia": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "am"
+  },
+  "first-dhul-hijjah-in-japan": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "jp"
+  },
+  "first-dhul-hijjah-in-south-korea": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "kr"
   },
   "valentines-day-in-saudi": {
     "canonicalSlug": "valentines-day",
@@ -1319,6 +2119,86 @@
     "canonicalSlug": "valentines-day",
     "countryCode": "it"
   },
+  "valentines-day-in-brazil": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "br"
+  },
+  "valentines-day-in-argentina": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "ar"
+  },
+  "valentines-day-in-chile": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "cl"
+  },
+  "valentines-day-in-georgia": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "ge"
+  },
+  "valentines-day-in-azerbaijan": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "az"
+  },
+  "valentines-day-in-malaysia": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "my"
+  },
+  "valentines-day-in-bosnia": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "ba"
+  },
+  "valentines-day-in-finland": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "fi"
+  },
+  "valentines-day-in-austria": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "at"
+  },
+  "valentines-day-in-mauritania": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "mr"
+  },
+  "valentines-day-in-sudan": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "sd"
+  },
+  "valentines-day-in-denmark": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "dk"
+  },
+  "valentines-day-in-switzerland": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "ch"
+  },
+  "valentines-day-in-ireland": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "ie"
+  },
+  "valentines-day-in-thailand": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "th"
+  },
+  "valentines-day-in-indonesia": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "id"
+  },
+  "valentines-day-in-maldives": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "mv"
+  },
+  "valentines-day-in-armenia": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "am"
+  },
+  "valentines-day-in-japan": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "jp"
+  },
+  "valentines-day-in-south-korea": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "kr"
+  },
   "world-health-day-in-saudi": {
     "canonicalSlug": "world-health-day",
     "countryCode": "sa"
@@ -1438,6 +2318,86 @@
   "world-health-day-in-italy": {
     "canonicalSlug": "world-health-day",
     "countryCode": "it"
+  },
+  "world-health-day-in-brazil": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "br"
+  },
+  "world-health-day-in-argentina": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "ar"
+  },
+  "world-health-day-in-chile": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "cl"
+  },
+  "world-health-day-in-georgia": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "ge"
+  },
+  "world-health-day-in-azerbaijan": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "az"
+  },
+  "world-health-day-in-malaysia": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "my"
+  },
+  "world-health-day-in-bosnia": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "ba"
+  },
+  "world-health-day-in-finland": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "fi"
+  },
+  "world-health-day-in-austria": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "at"
+  },
+  "world-health-day-in-mauritania": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "mr"
+  },
+  "world-health-day-in-sudan": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "sd"
+  },
+  "world-health-day-in-denmark": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "dk"
+  },
+  "world-health-day-in-switzerland": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "ch"
+  },
+  "world-health-day-in-ireland": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "ie"
+  },
+  "world-health-day-in-thailand": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "th"
+  },
+  "world-health-day-in-indonesia": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "id"
+  },
+  "world-health-day-in-maldives": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "mv"
+  },
+  "world-health-day-in-armenia": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "am"
+  },
+  "world-health-day-in-japan": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "jp"
+  },
+  "world-health-day-in-south-korea": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "kr"
   },
   "earth-day-in-saudi": {
     "canonicalSlug": "earth-day",
@@ -1559,6 +2519,86 @@
     "canonicalSlug": "earth-day",
     "countryCode": "it"
   },
+  "earth-day-in-brazil": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "br"
+  },
+  "earth-day-in-argentina": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "ar"
+  },
+  "earth-day-in-chile": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "cl"
+  },
+  "earth-day-in-georgia": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "ge"
+  },
+  "earth-day-in-azerbaijan": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "az"
+  },
+  "earth-day-in-malaysia": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "my"
+  },
+  "earth-day-in-bosnia": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "ba"
+  },
+  "earth-day-in-finland": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "fi"
+  },
+  "earth-day-in-austria": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "at"
+  },
+  "earth-day-in-mauritania": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "mr"
+  },
+  "earth-day-in-sudan": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "sd"
+  },
+  "earth-day-in-denmark": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "dk"
+  },
+  "earth-day-in-switzerland": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "ch"
+  },
+  "earth-day-in-ireland": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "ie"
+  },
+  "earth-day-in-thailand": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "th"
+  },
+  "earth-day-in-indonesia": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "id"
+  },
+  "earth-day-in-maldives": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "mv"
+  },
+  "earth-day-in-armenia": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "am"
+  },
+  "earth-day-in-japan": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "jp"
+  },
+  "earth-day-in-south-korea": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "kr"
+  },
   "world-diabetes-day-in-saudi": {
     "canonicalSlug": "world-diabetes-day",
     "countryCode": "sa"
@@ -1678,6 +2718,86 @@
   "world-diabetes-day-in-italy": {
     "canonicalSlug": "world-diabetes-day",
     "countryCode": "it"
+  },
+  "world-diabetes-day-in-brazil": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "br"
+  },
+  "world-diabetes-day-in-argentina": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "ar"
+  },
+  "world-diabetes-day-in-chile": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "cl"
+  },
+  "world-diabetes-day-in-georgia": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "ge"
+  },
+  "world-diabetes-day-in-azerbaijan": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "az"
+  },
+  "world-diabetes-day-in-malaysia": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "my"
+  },
+  "world-diabetes-day-in-bosnia": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "ba"
+  },
+  "world-diabetes-day-in-finland": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "fi"
+  },
+  "world-diabetes-day-in-austria": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "at"
+  },
+  "world-diabetes-day-in-mauritania": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "mr"
+  },
+  "world-diabetes-day-in-sudan": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "sd"
+  },
+  "world-diabetes-day-in-denmark": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "dk"
+  },
+  "world-diabetes-day-in-switzerland": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "ch"
+  },
+  "world-diabetes-day-in-ireland": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "ie"
+  },
+  "world-diabetes-day-in-thailand": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "th"
+  },
+  "world-diabetes-day-in-indonesia": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "id"
+  },
+  "world-diabetes-day-in-maldives": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "mv"
+  },
+  "world-diabetes-day-in-armenia": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "am"
+  },
+  "world-diabetes-day-in-japan": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "jp"
+  },
+  "world-diabetes-day-in-south-korea": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "kr"
   },
   "diabetes-day": {
     "canonicalSlug": "world-diabetes-day",
@@ -1815,6 +2935,86 @@
     "canonicalSlug": "world-teachers-day",
     "countryCode": "it"
   },
+  "world-teachers-day-in-brazil": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "br"
+  },
+  "world-teachers-day-in-argentina": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "ar"
+  },
+  "world-teachers-day-in-chile": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "cl"
+  },
+  "world-teachers-day-in-georgia": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "ge"
+  },
+  "world-teachers-day-in-azerbaijan": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "az"
+  },
+  "world-teachers-day-in-malaysia": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "my"
+  },
+  "world-teachers-day-in-bosnia": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "ba"
+  },
+  "world-teachers-day-in-finland": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "fi"
+  },
+  "world-teachers-day-in-austria": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "at"
+  },
+  "world-teachers-day-in-mauritania": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "mr"
+  },
+  "world-teachers-day-in-sudan": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "sd"
+  },
+  "world-teachers-day-in-denmark": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "dk"
+  },
+  "world-teachers-day-in-switzerland": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "ch"
+  },
+  "world-teachers-day-in-ireland": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "ie"
+  },
+  "world-teachers-day-in-thailand": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "th"
+  },
+  "world-teachers-day-in-indonesia": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "id"
+  },
+  "world-teachers-day-in-maldives": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "mv"
+  },
+  "world-teachers-day-in-armenia": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "am"
+  },
+  "world-teachers-day-in-japan": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "jp"
+  },
+  "world-teachers-day-in-south-korea": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "kr"
+  },
   "arabic-language-day-in-saudi": {
     "canonicalSlug": "arabic-language-day",
     "countryCode": "sa"
@@ -1934,6 +3134,86 @@
   "arabic-language-day-in-italy": {
     "canonicalSlug": "arabic-language-day",
     "countryCode": "it"
+  },
+  "arabic-language-day-in-brazil": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "br"
+  },
+  "arabic-language-day-in-argentina": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "ar"
+  },
+  "arabic-language-day-in-chile": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "cl"
+  },
+  "arabic-language-day-in-georgia": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "ge"
+  },
+  "arabic-language-day-in-azerbaijan": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "az"
+  },
+  "arabic-language-day-in-malaysia": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "my"
+  },
+  "arabic-language-day-in-bosnia": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "ba"
+  },
+  "arabic-language-day-in-finland": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "fi"
+  },
+  "arabic-language-day-in-austria": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "at"
+  },
+  "arabic-language-day-in-mauritania": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "mr"
+  },
+  "arabic-language-day-in-sudan": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "sd"
+  },
+  "arabic-language-day-in-denmark": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "dk"
+  },
+  "arabic-language-day-in-switzerland": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "ch"
+  },
+  "arabic-language-day-in-ireland": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "ie"
+  },
+  "arabic-language-day-in-thailand": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "th"
+  },
+  "arabic-language-day-in-indonesia": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "id"
+  },
+  "arabic-language-day-in-maldives": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "mv"
+  },
+  "arabic-language-day-in-armenia": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "am"
+  },
+  "arabic-language-day-in-japan": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "jp"
+  },
+  "arabic-language-day-in-south-korea": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "kr"
   },
   "mawlid-in-saudi": {
     "canonicalSlug": "mawlid",
@@ -2055,6 +3335,86 @@
     "canonicalSlug": "mawlid",
     "countryCode": "it"
   },
+  "mawlid-in-brazil": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "br"
+  },
+  "mawlid-in-argentina": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "ar"
+  },
+  "mawlid-in-chile": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "cl"
+  },
+  "mawlid-in-georgia": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "ge"
+  },
+  "mawlid-in-azerbaijan": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "az"
+  },
+  "mawlid-in-malaysia": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "my"
+  },
+  "mawlid-in-bosnia": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "ba"
+  },
+  "mawlid-in-finland": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "fi"
+  },
+  "mawlid-in-austria": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "at"
+  },
+  "mawlid-in-mauritania": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "mr"
+  },
+  "mawlid-in-sudan": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "sd"
+  },
+  "mawlid-in-denmark": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "dk"
+  },
+  "mawlid-in-switzerland": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "ch"
+  },
+  "mawlid-in-ireland": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "ie"
+  },
+  "mawlid-in-thailand": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "th"
+  },
+  "mawlid-in-indonesia": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "id"
+  },
+  "mawlid-in-maldives": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "mv"
+  },
+  "mawlid-in-armenia": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "am"
+  },
+  "mawlid-in-japan": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "jp"
+  },
+  "mawlid-in-south-korea": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "kr"
+  },
   "nisf-shaban-in-saudi": {
     "canonicalSlug": "nisf-shaban",
     "countryCode": "sa"
@@ -2174,6 +3534,86 @@
   "nisf-shaban-in-italy": {
     "canonicalSlug": "nisf-shaban",
     "countryCode": "it"
+  },
+  "nisf-shaban-in-brazil": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "br"
+  },
+  "nisf-shaban-in-argentina": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "ar"
+  },
+  "nisf-shaban-in-chile": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "cl"
+  },
+  "nisf-shaban-in-georgia": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "ge"
+  },
+  "nisf-shaban-in-azerbaijan": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "az"
+  },
+  "nisf-shaban-in-malaysia": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "my"
+  },
+  "nisf-shaban-in-bosnia": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "ba"
+  },
+  "nisf-shaban-in-finland": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "fi"
+  },
+  "nisf-shaban-in-austria": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "at"
+  },
+  "nisf-shaban-in-mauritania": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "mr"
+  },
+  "nisf-shaban-in-sudan": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "sd"
+  },
+  "nisf-shaban-in-denmark": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "dk"
+  },
+  "nisf-shaban-in-switzerland": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "ch"
+  },
+  "nisf-shaban-in-ireland": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "ie"
+  },
+  "nisf-shaban-in-thailand": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "th"
+  },
+  "nisf-shaban-in-indonesia": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "id"
+  },
+  "nisf-shaban-in-maldives": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "mv"
+  },
+  "nisf-shaban-in-armenia": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "am"
+  },
+  "nisf-shaban-in-japan": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "jp"
+  },
+  "nisf-shaban-in-south-korea": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "kr"
   },
   "world-childrens-day-in-saudi": {
     "canonicalSlug": "world-childrens-day",
@@ -2295,6 +3735,86 @@
     "canonicalSlug": "world-childrens-day",
     "countryCode": "it"
   },
+  "world-childrens-day-in-brazil": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "br"
+  },
+  "world-childrens-day-in-argentina": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "ar"
+  },
+  "world-childrens-day-in-chile": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "cl"
+  },
+  "world-childrens-day-in-georgia": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "ge"
+  },
+  "world-childrens-day-in-azerbaijan": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "az"
+  },
+  "world-childrens-day-in-malaysia": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "my"
+  },
+  "world-childrens-day-in-bosnia": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "ba"
+  },
+  "world-childrens-day-in-finland": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "fi"
+  },
+  "world-childrens-day-in-austria": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "at"
+  },
+  "world-childrens-day-in-mauritania": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "mr"
+  },
+  "world-childrens-day-in-sudan": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "sd"
+  },
+  "world-childrens-day-in-denmark": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "dk"
+  },
+  "world-childrens-day-in-switzerland": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "ch"
+  },
+  "world-childrens-day-in-ireland": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "ie"
+  },
+  "world-childrens-day-in-thailand": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "th"
+  },
+  "world-childrens-day-in-indonesia": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "id"
+  },
+  "world-childrens-day-in-maldives": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "mv"
+  },
+  "world-childrens-day-in-armenia": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "am"
+  },
+  "world-childrens-day-in-japan": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "jp"
+  },
+  "world-childrens-day-in-south-korea": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "kr"
+  },
   "international-day-of-education-in-saudi": {
     "canonicalSlug": "international-day-of-education",
     "countryCode": "sa"
@@ -2414,6 +3934,86 @@
   "international-day-of-education-in-italy": {
     "canonicalSlug": "international-day-of-education",
     "countryCode": "it"
+  },
+  "international-day-of-education-in-brazil": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "br"
+  },
+  "international-day-of-education-in-argentina": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "ar"
+  },
+  "international-day-of-education-in-chile": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "cl"
+  },
+  "international-day-of-education-in-georgia": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "ge"
+  },
+  "international-day-of-education-in-azerbaijan": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "az"
+  },
+  "international-day-of-education-in-malaysia": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "my"
+  },
+  "international-day-of-education-in-bosnia": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "ba"
+  },
+  "international-day-of-education-in-finland": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "fi"
+  },
+  "international-day-of-education-in-austria": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "at"
+  },
+  "international-day-of-education-in-mauritania": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "mr"
+  },
+  "international-day-of-education-in-sudan": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "sd"
+  },
+  "international-day-of-education-in-denmark": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "dk"
+  },
+  "international-day-of-education-in-switzerland": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "ch"
+  },
+  "international-day-of-education-in-ireland": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "ie"
+  },
+  "international-day-of-education-in-thailand": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "th"
+  },
+  "international-day-of-education-in-indonesia": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "id"
+  },
+  "international-day-of-education-in-maldives": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "mv"
+  },
+  "international-day-of-education-in-armenia": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "am"
+  },
+  "international-day-of-education-in-japan": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "jp"
+  },
+  "international-day-of-education-in-south-korea": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "kr"
   },
   "world-mental-health-day-in-saudi": {
     "canonicalSlug": "world-mental-health-day",
@@ -2535,6 +4135,86 @@
     "canonicalSlug": "world-mental-health-day",
     "countryCode": "it"
   },
+  "world-mental-health-day-in-brazil": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "br"
+  },
+  "world-mental-health-day-in-argentina": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "ar"
+  },
+  "world-mental-health-day-in-chile": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "cl"
+  },
+  "world-mental-health-day-in-georgia": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "ge"
+  },
+  "world-mental-health-day-in-azerbaijan": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "az"
+  },
+  "world-mental-health-day-in-malaysia": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "my"
+  },
+  "world-mental-health-day-in-bosnia": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "ba"
+  },
+  "world-mental-health-day-in-finland": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "fi"
+  },
+  "world-mental-health-day-in-austria": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "at"
+  },
+  "world-mental-health-day-in-mauritania": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "mr"
+  },
+  "world-mental-health-day-in-sudan": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "sd"
+  },
+  "world-mental-health-day-in-denmark": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "dk"
+  },
+  "world-mental-health-day-in-switzerland": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "ch"
+  },
+  "world-mental-health-day-in-ireland": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "ie"
+  },
+  "world-mental-health-day-in-thailand": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "th"
+  },
+  "world-mental-health-day-in-indonesia": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "id"
+  },
+  "world-mental-health-day-in-maldives": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "mv"
+  },
+  "world-mental-health-day-in-armenia": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "am"
+  },
+  "world-mental-health-day-in-japan": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "jp"
+  },
+  "world-mental-health-day-in-south-korea": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "kr"
+  },
   "world-environment-day-in-saudi": {
     "canonicalSlug": "world-environment-day",
     "countryCode": "sa"
@@ -2654,6 +4334,86 @@
   "world-environment-day-in-italy": {
     "canonicalSlug": "world-environment-day",
     "countryCode": "it"
+  },
+  "world-environment-day-in-brazil": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "br"
+  },
+  "world-environment-day-in-argentina": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "ar"
+  },
+  "world-environment-day-in-chile": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "cl"
+  },
+  "world-environment-day-in-georgia": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "ge"
+  },
+  "world-environment-day-in-azerbaijan": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "az"
+  },
+  "world-environment-day-in-malaysia": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "my"
+  },
+  "world-environment-day-in-bosnia": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "ba"
+  },
+  "world-environment-day-in-finland": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "fi"
+  },
+  "world-environment-day-in-austria": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "at"
+  },
+  "world-environment-day-in-mauritania": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "mr"
+  },
+  "world-environment-day-in-sudan": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "sd"
+  },
+  "world-environment-day-in-denmark": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "dk"
+  },
+  "world-environment-day-in-switzerland": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "ch"
+  },
+  "world-environment-day-in-ireland": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "ie"
+  },
+  "world-environment-day-in-thailand": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "th"
+  },
+  "world-environment-day-in-indonesia": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "id"
+  },
+  "world-environment-day-in-maldives": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "mv"
+  },
+  "world-environment-day-in-armenia": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "am"
+  },
+  "world-environment-day-in-japan": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "jp"
+  },
+  "world-environment-day-in-south-korea": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "kr"
   },
   "april-fools-in-saudi": {
     "canonicalSlug": "april-fools",
@@ -2775,6 +4535,86 @@
     "canonicalSlug": "april-fools",
     "countryCode": "it"
   },
+  "april-fools-in-brazil": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "br"
+  },
+  "april-fools-in-argentina": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "ar"
+  },
+  "april-fools-in-chile": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "cl"
+  },
+  "april-fools-in-georgia": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "ge"
+  },
+  "april-fools-in-azerbaijan": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "az"
+  },
+  "april-fools-in-malaysia": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "my"
+  },
+  "april-fools-in-bosnia": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "ba"
+  },
+  "april-fools-in-finland": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "fi"
+  },
+  "april-fools-in-austria": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "at"
+  },
+  "april-fools-in-mauritania": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "mr"
+  },
+  "april-fools-in-sudan": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "sd"
+  },
+  "april-fools-in-denmark": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "dk"
+  },
+  "april-fools-in-switzerland": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "ch"
+  },
+  "april-fools-in-ireland": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "ie"
+  },
+  "april-fools-in-thailand": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "th"
+  },
+  "april-fools-in-indonesia": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "id"
+  },
+  "april-fools-in-maldives": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "mv"
+  },
+  "april-fools-in-armenia": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "am"
+  },
+  "april-fools-in-japan": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "jp"
+  },
+  "april-fools-in-south-korea": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "kr"
+  },
   "arab-orphan-day-in-saudi": {
     "canonicalSlug": "arab-orphan-day",
     "countryCode": "sa"
@@ -2894,6 +4734,86 @@
   "arab-orphan-day-in-italy": {
     "canonicalSlug": "arab-orphan-day",
     "countryCode": "it"
+  },
+  "arab-orphan-day-in-brazil": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "br"
+  },
+  "arab-orphan-day-in-argentina": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "ar"
+  },
+  "arab-orphan-day-in-chile": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "cl"
+  },
+  "arab-orphan-day-in-georgia": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "ge"
+  },
+  "arab-orphan-day-in-azerbaijan": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "az"
+  },
+  "arab-orphan-day-in-malaysia": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "my"
+  },
+  "arab-orphan-day-in-bosnia": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "ba"
+  },
+  "arab-orphan-day-in-finland": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "fi"
+  },
+  "arab-orphan-day-in-austria": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "at"
+  },
+  "arab-orphan-day-in-mauritania": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "mr"
+  },
+  "arab-orphan-day-in-sudan": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "sd"
+  },
+  "arab-orphan-day-in-denmark": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "dk"
+  },
+  "arab-orphan-day-in-switzerland": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "ch"
+  },
+  "arab-orphan-day-in-ireland": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "ie"
+  },
+  "arab-orphan-day-in-thailand": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "th"
+  },
+  "arab-orphan-day-in-indonesia": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "id"
+  },
+  "arab-orphan-day-in-maldives": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "mv"
+  },
+  "arab-orphan-day-in-armenia": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "am"
+  },
+  "arab-orphan-day-in-japan": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "jp"
+  },
+  "arab-orphan-day-in-south-korea": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "kr"
   },
   "badr-day-in-saudi": {
     "canonicalSlug": "badr-day",
@@ -3015,6 +4935,86 @@
     "canonicalSlug": "badr-day",
     "countryCode": "it"
   },
+  "badr-day-in-brazil": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "br"
+  },
+  "badr-day-in-argentina": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "ar"
+  },
+  "badr-day-in-chile": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "cl"
+  },
+  "badr-day-in-georgia": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "ge"
+  },
+  "badr-day-in-azerbaijan": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "az"
+  },
+  "badr-day-in-malaysia": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "my"
+  },
+  "badr-day-in-bosnia": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "ba"
+  },
+  "badr-day-in-finland": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "fi"
+  },
+  "badr-day-in-austria": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "at"
+  },
+  "badr-day-in-mauritania": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "mr"
+  },
+  "badr-day-in-sudan": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "sd"
+  },
+  "badr-day-in-denmark": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "dk"
+  },
+  "badr-day-in-switzerland": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "ch"
+  },
+  "badr-day-in-ireland": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "ie"
+  },
+  "badr-day-in-thailand": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "th"
+  },
+  "badr-day-in-indonesia": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "id"
+  },
+  "badr-day-in-maldives": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "mv"
+  },
+  "badr-day-in-armenia": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "am"
+  },
+  "badr-day-in-japan": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "jp"
+  },
+  "badr-day-in-south-korea": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "kr"
+  },
   "battle-of-uhud-in-saudi": {
     "canonicalSlug": "battle-of-uhud",
     "countryCode": "sa"
@@ -3134,6 +5134,86 @@
   "battle-of-uhud-in-italy": {
     "canonicalSlug": "battle-of-uhud",
     "countryCode": "it"
+  },
+  "battle-of-uhud-in-brazil": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "br"
+  },
+  "battle-of-uhud-in-argentina": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "ar"
+  },
+  "battle-of-uhud-in-chile": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "cl"
+  },
+  "battle-of-uhud-in-georgia": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "ge"
+  },
+  "battle-of-uhud-in-azerbaijan": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "az"
+  },
+  "battle-of-uhud-in-malaysia": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "my"
+  },
+  "battle-of-uhud-in-bosnia": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "ba"
+  },
+  "battle-of-uhud-in-finland": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "fi"
+  },
+  "battle-of-uhud-in-austria": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "at"
+  },
+  "battle-of-uhud-in-mauritania": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "mr"
+  },
+  "battle-of-uhud-in-sudan": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "sd"
+  },
+  "battle-of-uhud-in-denmark": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "dk"
+  },
+  "battle-of-uhud-in-switzerland": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "ch"
+  },
+  "battle-of-uhud-in-ireland": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "ie"
+  },
+  "battle-of-uhud-in-thailand": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "th"
+  },
+  "battle-of-uhud-in-indonesia": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "id"
+  },
+  "battle-of-uhud-in-maldives": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "mv"
+  },
+  "battle-of-uhud-in-armenia": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "am"
+  },
+  "battle-of-uhud-in-japan": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "jp"
+  },
+  "battle-of-uhud-in-south-korea": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "kr"
   },
   "blood-donor-day-in-saudi": {
     "canonicalSlug": "blood-donor-day",
@@ -3255,6 +5335,86 @@
     "canonicalSlug": "blood-donor-day",
     "countryCode": "it"
   },
+  "blood-donor-day-in-brazil": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "br"
+  },
+  "blood-donor-day-in-argentina": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "ar"
+  },
+  "blood-donor-day-in-chile": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "cl"
+  },
+  "blood-donor-day-in-georgia": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "ge"
+  },
+  "blood-donor-day-in-azerbaijan": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "az"
+  },
+  "blood-donor-day-in-malaysia": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "my"
+  },
+  "blood-donor-day-in-bosnia": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "ba"
+  },
+  "blood-donor-day-in-finland": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "fi"
+  },
+  "blood-donor-day-in-austria": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "at"
+  },
+  "blood-donor-day-in-mauritania": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "mr"
+  },
+  "blood-donor-day-in-sudan": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "sd"
+  },
+  "blood-donor-day-in-denmark": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "dk"
+  },
+  "blood-donor-day-in-switzerland": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "ch"
+  },
+  "blood-donor-day-in-ireland": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "ie"
+  },
+  "blood-donor-day-in-thailand": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "th"
+  },
+  "blood-donor-day-in-indonesia": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "id"
+  },
+  "blood-donor-day-in-maldives": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "mv"
+  },
+  "blood-donor-day-in-armenia": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "am"
+  },
+  "blood-donor-day-in-japan": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "jp"
+  },
+  "blood-donor-day-in-south-korea": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "kr"
+  },
   "conquest-of-andalusia-in-saudi": {
     "canonicalSlug": "conquest-of-andalusia",
     "countryCode": "sa"
@@ -3374,6 +5534,86 @@
   "conquest-of-andalusia-in-italy": {
     "canonicalSlug": "conquest-of-andalusia",
     "countryCode": "it"
+  },
+  "conquest-of-andalusia-in-brazil": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "br"
+  },
+  "conquest-of-andalusia-in-argentina": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "ar"
+  },
+  "conquest-of-andalusia-in-chile": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "cl"
+  },
+  "conquest-of-andalusia-in-georgia": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "ge"
+  },
+  "conquest-of-andalusia-in-azerbaijan": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "az"
+  },
+  "conquest-of-andalusia-in-malaysia": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "my"
+  },
+  "conquest-of-andalusia-in-bosnia": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "ba"
+  },
+  "conquest-of-andalusia-in-finland": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "fi"
+  },
+  "conquest-of-andalusia-in-austria": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "at"
+  },
+  "conquest-of-andalusia-in-mauritania": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "mr"
+  },
+  "conquest-of-andalusia-in-sudan": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "sd"
+  },
+  "conquest-of-andalusia-in-denmark": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "dk"
+  },
+  "conquest-of-andalusia-in-switzerland": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "ch"
+  },
+  "conquest-of-andalusia-in-ireland": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "ie"
+  },
+  "conquest-of-andalusia-in-thailand": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "th"
+  },
+  "conquest-of-andalusia-in-indonesia": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "id"
+  },
+  "conquest-of-andalusia-in-maldives": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "mv"
+  },
+  "conquest-of-andalusia-in-armenia": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "am"
+  },
+  "conquest-of-andalusia-in-japan": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "jp"
+  },
+  "conquest-of-andalusia-in-south-korea": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "kr"
   },
   "fall-of-granada-in-saudi": {
     "canonicalSlug": "fall-of-granada",
@@ -3495,6 +5735,86 @@
     "canonicalSlug": "fall-of-granada",
     "countryCode": "it"
   },
+  "fall-of-granada-in-brazil": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "br"
+  },
+  "fall-of-granada-in-argentina": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "ar"
+  },
+  "fall-of-granada-in-chile": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "cl"
+  },
+  "fall-of-granada-in-georgia": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "ge"
+  },
+  "fall-of-granada-in-azerbaijan": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "az"
+  },
+  "fall-of-granada-in-malaysia": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "my"
+  },
+  "fall-of-granada-in-bosnia": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "ba"
+  },
+  "fall-of-granada-in-finland": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "fi"
+  },
+  "fall-of-granada-in-austria": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "at"
+  },
+  "fall-of-granada-in-mauritania": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "mr"
+  },
+  "fall-of-granada-in-sudan": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "sd"
+  },
+  "fall-of-granada-in-denmark": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "dk"
+  },
+  "fall-of-granada-in-switzerland": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "ch"
+  },
+  "fall-of-granada-in-ireland": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "ie"
+  },
+  "fall-of-granada-in-thailand": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "th"
+  },
+  "fall-of-granada-in-indonesia": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "id"
+  },
+  "fall-of-granada-in-maldives": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "mv"
+  },
+  "fall-of-granada-in-armenia": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "am"
+  },
+  "fall-of-granada-in-japan": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "jp"
+  },
+  "fall-of-granada-in-south-korea": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "kr"
+  },
   "fath-makkah-in-saudi": {
     "canonicalSlug": "fath-makkah",
     "countryCode": "sa"
@@ -3614,6 +5934,86 @@
   "fath-makkah-in-italy": {
     "canonicalSlug": "fath-makkah",
     "countryCode": "it"
+  },
+  "fath-makkah-in-brazil": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "br"
+  },
+  "fath-makkah-in-argentina": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "ar"
+  },
+  "fath-makkah-in-chile": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "cl"
+  },
+  "fath-makkah-in-georgia": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "ge"
+  },
+  "fath-makkah-in-azerbaijan": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "az"
+  },
+  "fath-makkah-in-malaysia": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "my"
+  },
+  "fath-makkah-in-bosnia": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "ba"
+  },
+  "fath-makkah-in-finland": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "fi"
+  },
+  "fath-makkah-in-austria": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "at"
+  },
+  "fath-makkah-in-mauritania": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "mr"
+  },
+  "fath-makkah-in-sudan": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "sd"
+  },
+  "fath-makkah-in-denmark": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "dk"
+  },
+  "fath-makkah-in-switzerland": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "ch"
+  },
+  "fath-makkah-in-ireland": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "ie"
+  },
+  "fath-makkah-in-thailand": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "th"
+  },
+  "fath-makkah-in-indonesia": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "id"
+  },
+  "fath-makkah-in-maldives": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "mv"
+  },
+  "fath-makkah-in-armenia": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "am"
+  },
+  "fath-makkah-in-japan": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "jp"
+  },
+  "fath-makkah-in-south-korea": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "kr"
   },
   "food-day-in-saudi": {
     "canonicalSlug": "food-day",
@@ -3735,6 +6135,86 @@
     "canonicalSlug": "food-day",
     "countryCode": "it"
   },
+  "food-day-in-brazil": {
+    "canonicalSlug": "food-day",
+    "countryCode": "br"
+  },
+  "food-day-in-argentina": {
+    "canonicalSlug": "food-day",
+    "countryCode": "ar"
+  },
+  "food-day-in-chile": {
+    "canonicalSlug": "food-day",
+    "countryCode": "cl"
+  },
+  "food-day-in-georgia": {
+    "canonicalSlug": "food-day",
+    "countryCode": "ge"
+  },
+  "food-day-in-azerbaijan": {
+    "canonicalSlug": "food-day",
+    "countryCode": "az"
+  },
+  "food-day-in-malaysia": {
+    "canonicalSlug": "food-day",
+    "countryCode": "my"
+  },
+  "food-day-in-bosnia": {
+    "canonicalSlug": "food-day",
+    "countryCode": "ba"
+  },
+  "food-day-in-finland": {
+    "canonicalSlug": "food-day",
+    "countryCode": "fi"
+  },
+  "food-day-in-austria": {
+    "canonicalSlug": "food-day",
+    "countryCode": "at"
+  },
+  "food-day-in-mauritania": {
+    "canonicalSlug": "food-day",
+    "countryCode": "mr"
+  },
+  "food-day-in-sudan": {
+    "canonicalSlug": "food-day",
+    "countryCode": "sd"
+  },
+  "food-day-in-denmark": {
+    "canonicalSlug": "food-day",
+    "countryCode": "dk"
+  },
+  "food-day-in-switzerland": {
+    "canonicalSlug": "food-day",
+    "countryCode": "ch"
+  },
+  "food-day-in-ireland": {
+    "canonicalSlug": "food-day",
+    "countryCode": "ie"
+  },
+  "food-day-in-thailand": {
+    "canonicalSlug": "food-day",
+    "countryCode": "th"
+  },
+  "food-day-in-indonesia": {
+    "canonicalSlug": "food-day",
+    "countryCode": "id"
+  },
+  "food-day-in-maldives": {
+    "canonicalSlug": "food-day",
+    "countryCode": "mv"
+  },
+  "food-day-in-armenia": {
+    "canonicalSlug": "food-day",
+    "countryCode": "am"
+  },
+  "food-day-in-japan": {
+    "canonicalSlug": "food-day",
+    "countryCode": "jp"
+  },
+  "food-day-in-south-korea": {
+    "canonicalSlug": "food-day",
+    "countryCode": "kr"
+  },
   "human-rights-day-in-saudi": {
     "canonicalSlug": "human-rights-day",
     "countryCode": "sa"
@@ -3854,6 +6334,86 @@
   "human-rights-day-in-italy": {
     "canonicalSlug": "human-rights-day",
     "countryCode": "it"
+  },
+  "human-rights-day-in-brazil": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "br"
+  },
+  "human-rights-day-in-argentina": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "ar"
+  },
+  "human-rights-day-in-chile": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "cl"
+  },
+  "human-rights-day-in-georgia": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "ge"
+  },
+  "human-rights-day-in-azerbaijan": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "az"
+  },
+  "human-rights-day-in-malaysia": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "my"
+  },
+  "human-rights-day-in-bosnia": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "ba"
+  },
+  "human-rights-day-in-finland": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "fi"
+  },
+  "human-rights-day-in-austria": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "at"
+  },
+  "human-rights-day-in-mauritania": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "mr"
+  },
+  "human-rights-day-in-sudan": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "sd"
+  },
+  "human-rights-day-in-denmark": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "dk"
+  },
+  "human-rights-day-in-switzerland": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "ch"
+  },
+  "human-rights-day-in-ireland": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "ie"
+  },
+  "human-rights-day-in-thailand": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "th"
+  },
+  "human-rights-day-in-indonesia": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "id"
+  },
+  "human-rights-day-in-maldives": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "mv"
+  },
+  "human-rights-day-in-armenia": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "am"
+  },
+  "human-rights-day-in-japan": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "jp"
+  },
+  "human-rights-day-in-south-korea": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "kr"
   },
   "international-coffee-day-in-saudi": {
     "canonicalSlug": "international-coffee-day",
@@ -3975,6 +6535,86 @@
     "canonicalSlug": "international-coffee-day",
     "countryCode": "it"
   },
+  "international-coffee-day-in-brazil": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "br"
+  },
+  "international-coffee-day-in-argentina": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "ar"
+  },
+  "international-coffee-day-in-chile": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "cl"
+  },
+  "international-coffee-day-in-georgia": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "ge"
+  },
+  "international-coffee-day-in-azerbaijan": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "az"
+  },
+  "international-coffee-day-in-malaysia": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "my"
+  },
+  "international-coffee-day-in-bosnia": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "ba"
+  },
+  "international-coffee-day-in-finland": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "fi"
+  },
+  "international-coffee-day-in-austria": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "at"
+  },
+  "international-coffee-day-in-mauritania": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "mr"
+  },
+  "international-coffee-day-in-sudan": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "sd"
+  },
+  "international-coffee-day-in-denmark": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "dk"
+  },
+  "international-coffee-day-in-switzerland": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "ch"
+  },
+  "international-coffee-day-in-ireland": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "ie"
+  },
+  "international-coffee-day-in-thailand": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "th"
+  },
+  "international-coffee-day-in-indonesia": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "id"
+  },
+  "international-coffee-day-in-maldives": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "mv"
+  },
+  "international-coffee-day-in-armenia": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "am"
+  },
+  "international-coffee-day-in-japan": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "jp"
+  },
+  "international-coffee-day-in-south-korea": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "kr"
+  },
   "international-peace-day-in-saudi": {
     "canonicalSlug": "international-peace-day",
     "countryCode": "sa"
@@ -4094,6 +6734,86 @@
   "international-peace-day-in-italy": {
     "canonicalSlug": "international-peace-day",
     "countryCode": "it"
+  },
+  "international-peace-day-in-brazil": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "br"
+  },
+  "international-peace-day-in-argentina": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "ar"
+  },
+  "international-peace-day-in-chile": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "cl"
+  },
+  "international-peace-day-in-georgia": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "ge"
+  },
+  "international-peace-day-in-azerbaijan": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "az"
+  },
+  "international-peace-day-in-malaysia": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "my"
+  },
+  "international-peace-day-in-bosnia": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "ba"
+  },
+  "international-peace-day-in-finland": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "fi"
+  },
+  "international-peace-day-in-austria": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "at"
+  },
+  "international-peace-day-in-mauritania": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "mr"
+  },
+  "international-peace-day-in-sudan": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "sd"
+  },
+  "international-peace-day-in-denmark": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "dk"
+  },
+  "international-peace-day-in-switzerland": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "ch"
+  },
+  "international-peace-day-in-ireland": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "ie"
+  },
+  "international-peace-day-in-thailand": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "th"
+  },
+  "international-peace-day-in-indonesia": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "id"
+  },
+  "international-peace-day-in-maldives": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "mv"
+  },
+  "international-peace-day-in-armenia": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "am"
+  },
+  "international-peace-day-in-japan": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "jp"
+  },
+  "international-peace-day-in-south-korea": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "kr"
   },
   "international-youth-day-in-saudi": {
     "canonicalSlug": "international-youth-day",
@@ -4215,6 +6935,86 @@
     "canonicalSlug": "international-youth-day",
     "countryCode": "it"
   },
+  "international-youth-day-in-brazil": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "br"
+  },
+  "international-youth-day-in-argentina": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "ar"
+  },
+  "international-youth-day-in-chile": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "cl"
+  },
+  "international-youth-day-in-georgia": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "ge"
+  },
+  "international-youth-day-in-azerbaijan": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "az"
+  },
+  "international-youth-day-in-malaysia": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "my"
+  },
+  "international-youth-day-in-bosnia": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "ba"
+  },
+  "international-youth-day-in-finland": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "fi"
+  },
+  "international-youth-day-in-austria": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "at"
+  },
+  "international-youth-day-in-mauritania": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "mr"
+  },
+  "international-youth-day-in-sudan": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "sd"
+  },
+  "international-youth-day-in-denmark": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "dk"
+  },
+  "international-youth-day-in-switzerland": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "ch"
+  },
+  "international-youth-day-in-ireland": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "ie"
+  },
+  "international-youth-day-in-thailand": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "th"
+  },
+  "international-youth-day-in-indonesia": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "id"
+  },
+  "international-youth-day-in-maldives": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "mv"
+  },
+  "international-youth-day-in-armenia": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "am"
+  },
+  "international-youth-day-in-japan": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "jp"
+  },
+  "international-youth-day-in-south-korea": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "kr"
+  },
   "last-ten-nights-ramadan-in-saudi": {
     "canonicalSlug": "last-ten-nights-ramadan",
     "countryCode": "sa"
@@ -4334,6 +7134,86 @@
   "last-ten-nights-ramadan-in-italy": {
     "canonicalSlug": "last-ten-nights-ramadan",
     "countryCode": "it"
+  },
+  "last-ten-nights-ramadan-in-brazil": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "br"
+  },
+  "last-ten-nights-ramadan-in-argentina": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "ar"
+  },
+  "last-ten-nights-ramadan-in-chile": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "cl"
+  },
+  "last-ten-nights-ramadan-in-georgia": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "ge"
+  },
+  "last-ten-nights-ramadan-in-azerbaijan": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "az"
+  },
+  "last-ten-nights-ramadan-in-malaysia": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "my"
+  },
+  "last-ten-nights-ramadan-in-bosnia": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "ba"
+  },
+  "last-ten-nights-ramadan-in-finland": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "fi"
+  },
+  "last-ten-nights-ramadan-in-austria": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "at"
+  },
+  "last-ten-nights-ramadan-in-mauritania": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "mr"
+  },
+  "last-ten-nights-ramadan-in-sudan": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "sd"
+  },
+  "last-ten-nights-ramadan-in-denmark": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "dk"
+  },
+  "last-ten-nights-ramadan-in-switzerland": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "ch"
+  },
+  "last-ten-nights-ramadan-in-ireland": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "ie"
+  },
+  "last-ten-nights-ramadan-in-thailand": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "th"
+  },
+  "last-ten-nights-ramadan-in-indonesia": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "id"
+  },
+  "last-ten-nights-ramadan-in-maldives": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "mv"
+  },
+  "last-ten-nights-ramadan-in-armenia": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "am"
+  },
+  "last-ten-nights-ramadan-in-japan": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "jp"
+  },
+  "last-ten-nights-ramadan-in-south-korea": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "kr"
   },
   "literacy-day-in-saudi": {
     "canonicalSlug": "literacy-day",
@@ -4455,6 +7335,86 @@
     "canonicalSlug": "literacy-day",
     "countryCode": "it"
   },
+  "literacy-day-in-brazil": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "br"
+  },
+  "literacy-day-in-argentina": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "ar"
+  },
+  "literacy-day-in-chile": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "cl"
+  },
+  "literacy-day-in-georgia": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "ge"
+  },
+  "literacy-day-in-azerbaijan": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "az"
+  },
+  "literacy-day-in-malaysia": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "my"
+  },
+  "literacy-day-in-bosnia": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "ba"
+  },
+  "literacy-day-in-finland": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "fi"
+  },
+  "literacy-day-in-austria": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "at"
+  },
+  "literacy-day-in-mauritania": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "mr"
+  },
+  "literacy-day-in-sudan": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "sd"
+  },
+  "literacy-day-in-denmark": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "dk"
+  },
+  "literacy-day-in-switzerland": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "ch"
+  },
+  "literacy-day-in-ireland": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "ie"
+  },
+  "literacy-day-in-thailand": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "th"
+  },
+  "literacy-day-in-indonesia": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "id"
+  },
+  "literacy-day-in-maldives": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "mv"
+  },
+  "literacy-day-in-armenia": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "am"
+  },
+  "literacy-day-in-japan": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "jp"
+  },
+  "literacy-day-in-south-korea": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "kr"
+  },
   "nurses-day-in-saudi": {
     "canonicalSlug": "nurses-day",
     "countryCode": "sa"
@@ -4574,6 +7534,86 @@
   "nurses-day-in-italy": {
     "canonicalSlug": "nurses-day",
     "countryCode": "it"
+  },
+  "nurses-day-in-brazil": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "br"
+  },
+  "nurses-day-in-argentina": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "ar"
+  },
+  "nurses-day-in-chile": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "cl"
+  },
+  "nurses-day-in-georgia": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "ge"
+  },
+  "nurses-day-in-azerbaijan": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "az"
+  },
+  "nurses-day-in-malaysia": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "my"
+  },
+  "nurses-day-in-bosnia": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "ba"
+  },
+  "nurses-day-in-finland": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "fi"
+  },
+  "nurses-day-in-austria": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "at"
+  },
+  "nurses-day-in-mauritania": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "mr"
+  },
+  "nurses-day-in-sudan": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "sd"
+  },
+  "nurses-day-in-denmark": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "dk"
+  },
+  "nurses-day-in-switzerland": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "ch"
+  },
+  "nurses-day-in-ireland": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "ie"
+  },
+  "nurses-day-in-thailand": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "th"
+  },
+  "nurses-day-in-indonesia": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "id"
+  },
+  "nurses-day-in-maldives": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "mv"
+  },
+  "nurses-day-in-armenia": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "am"
+  },
+  "nurses-day-in-japan": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "jp"
+  },
+  "nurses-day-in-south-korea": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "kr"
   },
   "rajab-start-in-saudi": {
     "canonicalSlug": "rajab-start",
@@ -4695,6 +7735,86 @@
     "canonicalSlug": "rajab-start",
     "countryCode": "it"
   },
+  "rajab-start-in-brazil": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "br"
+  },
+  "rajab-start-in-argentina": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "ar"
+  },
+  "rajab-start-in-chile": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "cl"
+  },
+  "rajab-start-in-georgia": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "ge"
+  },
+  "rajab-start-in-azerbaijan": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "az"
+  },
+  "rajab-start-in-malaysia": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "my"
+  },
+  "rajab-start-in-bosnia": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "ba"
+  },
+  "rajab-start-in-finland": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "fi"
+  },
+  "rajab-start-in-austria": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "at"
+  },
+  "rajab-start-in-mauritania": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "mr"
+  },
+  "rajab-start-in-sudan": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "sd"
+  },
+  "rajab-start-in-denmark": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "dk"
+  },
+  "rajab-start-in-switzerland": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "ch"
+  },
+  "rajab-start-in-ireland": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "ie"
+  },
+  "rajab-start-in-thailand": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "th"
+  },
+  "rajab-start-in-indonesia": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "id"
+  },
+  "rajab-start-in-maldives": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "mv"
+  },
+  "rajab-start-in-armenia": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "am"
+  },
+  "rajab-start-in-japan": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "jp"
+  },
+  "rajab-start-in-south-korea": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "kr"
+  },
   "shaban-start-in-saudi": {
     "canonicalSlug": "shaban-start",
     "countryCode": "sa"
@@ -4814,6 +7934,86 @@
   "shaban-start-in-italy": {
     "canonicalSlug": "shaban-start",
     "countryCode": "it"
+  },
+  "shaban-start-in-brazil": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "br"
+  },
+  "shaban-start-in-argentina": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "ar"
+  },
+  "shaban-start-in-chile": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "cl"
+  },
+  "shaban-start-in-georgia": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "ge"
+  },
+  "shaban-start-in-azerbaijan": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "az"
+  },
+  "shaban-start-in-malaysia": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "my"
+  },
+  "shaban-start-in-bosnia": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "ba"
+  },
+  "shaban-start-in-finland": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "fi"
+  },
+  "shaban-start-in-austria": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "at"
+  },
+  "shaban-start-in-mauritania": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "mr"
+  },
+  "shaban-start-in-sudan": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "sd"
+  },
+  "shaban-start-in-denmark": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "dk"
+  },
+  "shaban-start-in-switzerland": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "ch"
+  },
+  "shaban-start-in-ireland": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "ie"
+  },
+  "shaban-start-in-thailand": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "th"
+  },
+  "shaban-start-in-indonesia": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "id"
+  },
+  "shaban-start-in-maldives": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "mv"
+  },
+  "shaban-start-in-armenia": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "am"
+  },
+  "shaban-start-in-japan": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "jp"
+  },
+  "shaban-start-in-south-korea": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "kr"
   },
   "six-days-shawwal-in-saudi": {
     "canonicalSlug": "six-days-shawwal",
@@ -4935,6 +8135,86 @@
     "canonicalSlug": "six-days-shawwal",
     "countryCode": "it"
   },
+  "six-days-shawwal-in-brazil": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "br"
+  },
+  "six-days-shawwal-in-argentina": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "ar"
+  },
+  "six-days-shawwal-in-chile": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "cl"
+  },
+  "six-days-shawwal-in-georgia": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "ge"
+  },
+  "six-days-shawwal-in-azerbaijan": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "az"
+  },
+  "six-days-shawwal-in-malaysia": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "my"
+  },
+  "six-days-shawwal-in-bosnia": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "ba"
+  },
+  "six-days-shawwal-in-finland": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "fi"
+  },
+  "six-days-shawwal-in-austria": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "at"
+  },
+  "six-days-shawwal-in-mauritania": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "mr"
+  },
+  "six-days-shawwal-in-sudan": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "sd"
+  },
+  "six-days-shawwal-in-denmark": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "dk"
+  },
+  "six-days-shawwal-in-switzerland": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "ch"
+  },
+  "six-days-shawwal-in-ireland": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "ie"
+  },
+  "six-days-shawwal-in-thailand": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "th"
+  },
+  "six-days-shawwal-in-indonesia": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "id"
+  },
+  "six-days-shawwal-in-maldives": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "mv"
+  },
+  "six-days-shawwal-in-armenia": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "am"
+  },
+  "six-days-shawwal-in-japan": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "jp"
+  },
+  "six-days-shawwal-in-south-korea": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "kr"
+  },
   "tarwiyah-day-in-saudi": {
     "canonicalSlug": "tarwiyah-day",
     "countryCode": "sa"
@@ -5054,6 +8334,86 @@
   "tarwiyah-day-in-italy": {
     "canonicalSlug": "tarwiyah-day",
     "countryCode": "it"
+  },
+  "tarwiyah-day-in-brazil": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "br"
+  },
+  "tarwiyah-day-in-argentina": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "ar"
+  },
+  "tarwiyah-day-in-chile": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "cl"
+  },
+  "tarwiyah-day-in-georgia": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "ge"
+  },
+  "tarwiyah-day-in-azerbaijan": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "az"
+  },
+  "tarwiyah-day-in-malaysia": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "my"
+  },
+  "tarwiyah-day-in-bosnia": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "ba"
+  },
+  "tarwiyah-day-in-finland": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "fi"
+  },
+  "tarwiyah-day-in-austria": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "at"
+  },
+  "tarwiyah-day-in-mauritania": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "mr"
+  },
+  "tarwiyah-day-in-sudan": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "sd"
+  },
+  "tarwiyah-day-in-denmark": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "dk"
+  },
+  "tarwiyah-day-in-switzerland": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "ch"
+  },
+  "tarwiyah-day-in-ireland": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "ie"
+  },
+  "tarwiyah-day-in-thailand": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "th"
+  },
+  "tarwiyah-day-in-indonesia": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "id"
+  },
+  "tarwiyah-day-in-maldives": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "mv"
+  },
+  "tarwiyah-day-in-armenia": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "am"
+  },
+  "tarwiyah-day-in-japan": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "jp"
+  },
+  "tarwiyah-day-in-south-korea": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "kr"
   },
   "tashreeq-days-in-saudi": {
     "canonicalSlug": "tashreeq-days",
@@ -5175,6 +8535,86 @@
     "canonicalSlug": "tashreeq-days",
     "countryCode": "it"
   },
+  "tashreeq-days-in-brazil": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "br"
+  },
+  "tashreeq-days-in-argentina": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "ar"
+  },
+  "tashreeq-days-in-chile": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "cl"
+  },
+  "tashreeq-days-in-georgia": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "ge"
+  },
+  "tashreeq-days-in-azerbaijan": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "az"
+  },
+  "tashreeq-days-in-malaysia": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "my"
+  },
+  "tashreeq-days-in-bosnia": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "ba"
+  },
+  "tashreeq-days-in-finland": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "fi"
+  },
+  "tashreeq-days-in-austria": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "at"
+  },
+  "tashreeq-days-in-mauritania": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "mr"
+  },
+  "tashreeq-days-in-sudan": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "sd"
+  },
+  "tashreeq-days-in-denmark": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "dk"
+  },
+  "tashreeq-days-in-switzerland": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "ch"
+  },
+  "tashreeq-days-in-ireland": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "ie"
+  },
+  "tashreeq-days-in-thailand": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "th"
+  },
+  "tashreeq-days-in-indonesia": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "id"
+  },
+  "tashreeq-days-in-maldives": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "mv"
+  },
+  "tashreeq-days-in-armenia": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "am"
+  },
+  "tashreeq-days-in-japan": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "jp"
+  },
+  "tashreeq-days-in-south-korea": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "kr"
+  },
   "tasua-day-in-saudi": {
     "canonicalSlug": "tasua-day",
     "countryCode": "sa"
@@ -5294,6 +8734,86 @@
   "tasua-day-in-italy": {
     "canonicalSlug": "tasua-day",
     "countryCode": "it"
+  },
+  "tasua-day-in-brazil": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "br"
+  },
+  "tasua-day-in-argentina": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "ar"
+  },
+  "tasua-day-in-chile": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "cl"
+  },
+  "tasua-day-in-georgia": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "ge"
+  },
+  "tasua-day-in-azerbaijan": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "az"
+  },
+  "tasua-day-in-malaysia": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "my"
+  },
+  "tasua-day-in-bosnia": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "ba"
+  },
+  "tasua-day-in-finland": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "fi"
+  },
+  "tasua-day-in-austria": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "at"
+  },
+  "tasua-day-in-mauritania": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "mr"
+  },
+  "tasua-day-in-sudan": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "sd"
+  },
+  "tasua-day-in-denmark": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "dk"
+  },
+  "tasua-day-in-switzerland": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "ch"
+  },
+  "tasua-day-in-ireland": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "ie"
+  },
+  "tasua-day-in-thailand": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "th"
+  },
+  "tasua-day-in-indonesia": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "id"
+  },
+  "tasua-day-in-maldives": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "mv"
+  },
+  "tasua-day-in-armenia": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "am"
+  },
+  "tasua-day-in-japan": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "jp"
+  },
+  "tasua-day-in-south-korea": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "kr"
   },
   "volunteer-day-in-saudi": {
     "canonicalSlug": "volunteer-day",
@@ -5415,6 +8935,86 @@
     "canonicalSlug": "volunteer-day",
     "countryCode": "it"
   },
+  "volunteer-day-in-brazil": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "br"
+  },
+  "volunteer-day-in-argentina": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "ar"
+  },
+  "volunteer-day-in-chile": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "cl"
+  },
+  "volunteer-day-in-georgia": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "ge"
+  },
+  "volunteer-day-in-azerbaijan": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "az"
+  },
+  "volunteer-day-in-malaysia": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "my"
+  },
+  "volunteer-day-in-bosnia": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "ba"
+  },
+  "volunteer-day-in-finland": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "fi"
+  },
+  "volunteer-day-in-austria": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "at"
+  },
+  "volunteer-day-in-mauritania": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "mr"
+  },
+  "volunteer-day-in-sudan": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "sd"
+  },
+  "volunteer-day-in-denmark": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "dk"
+  },
+  "volunteer-day-in-switzerland": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "ch"
+  },
+  "volunteer-day-in-ireland": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "ie"
+  },
+  "volunteer-day-in-thailand": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "th"
+  },
+  "volunteer-day-in-indonesia": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "id"
+  },
+  "volunteer-day-in-maldives": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "mv"
+  },
+  "volunteer-day-in-armenia": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "am"
+  },
+  "volunteer-day-in-japan": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "jp"
+  },
+  "volunteer-day-in-south-korea": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "kr"
+  },
   "wildlife-day-in-saudi": {
     "canonicalSlug": "wildlife-day",
     "countryCode": "sa"
@@ -5534,6 +9134,86 @@
   "wildlife-day-in-italy": {
     "canonicalSlug": "wildlife-day",
     "countryCode": "it"
+  },
+  "wildlife-day-in-brazil": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "br"
+  },
+  "wildlife-day-in-argentina": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "ar"
+  },
+  "wildlife-day-in-chile": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "cl"
+  },
+  "wildlife-day-in-georgia": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "ge"
+  },
+  "wildlife-day-in-azerbaijan": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "az"
+  },
+  "wildlife-day-in-malaysia": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "my"
+  },
+  "wildlife-day-in-bosnia": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "ba"
+  },
+  "wildlife-day-in-finland": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "fi"
+  },
+  "wildlife-day-in-austria": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "at"
+  },
+  "wildlife-day-in-mauritania": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "mr"
+  },
+  "wildlife-day-in-sudan": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "sd"
+  },
+  "wildlife-day-in-denmark": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "dk"
+  },
+  "wildlife-day-in-switzerland": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "ch"
+  },
+  "wildlife-day-in-ireland": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "ie"
+  },
+  "wildlife-day-in-thailand": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "th"
+  },
+  "wildlife-day-in-indonesia": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "id"
+  },
+  "wildlife-day-in-maldives": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "mv"
+  },
+  "wildlife-day-in-armenia": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "am"
+  },
+  "wildlife-day-in-japan": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "jp"
+  },
+  "wildlife-day-in-south-korea": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "kr"
   },
   "world-book-day-in-saudi": {
     "canonicalSlug": "world-book-day",
@@ -5655,6 +9335,86 @@
     "canonicalSlug": "world-book-day",
     "countryCode": "it"
   },
+  "world-book-day-in-brazil": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "br"
+  },
+  "world-book-day-in-argentina": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "ar"
+  },
+  "world-book-day-in-chile": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "cl"
+  },
+  "world-book-day-in-georgia": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "ge"
+  },
+  "world-book-day-in-azerbaijan": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "az"
+  },
+  "world-book-day-in-malaysia": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "my"
+  },
+  "world-book-day-in-bosnia": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "ba"
+  },
+  "world-book-day-in-finland": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "fi"
+  },
+  "world-book-day-in-austria": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "at"
+  },
+  "world-book-day-in-mauritania": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "mr"
+  },
+  "world-book-day-in-sudan": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "sd"
+  },
+  "world-book-day-in-denmark": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "dk"
+  },
+  "world-book-day-in-switzerland": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "ch"
+  },
+  "world-book-day-in-ireland": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "ie"
+  },
+  "world-book-day-in-thailand": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "th"
+  },
+  "world-book-day-in-indonesia": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "id"
+  },
+  "world-book-day-in-maldives": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "mv"
+  },
+  "world-book-day-in-armenia": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "am"
+  },
+  "world-book-day-in-japan": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "jp"
+  },
+  "world-book-day-in-south-korea": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "kr"
+  },
   "world-cancer-day-in-saudi": {
     "canonicalSlug": "world-cancer-day",
     "countryCode": "sa"
@@ -5775,6 +9535,86 @@
     "canonicalSlug": "world-cancer-day",
     "countryCode": "it"
   },
+  "world-cancer-day-in-brazil": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "br"
+  },
+  "world-cancer-day-in-argentina": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "ar"
+  },
+  "world-cancer-day-in-chile": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "cl"
+  },
+  "world-cancer-day-in-georgia": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "ge"
+  },
+  "world-cancer-day-in-azerbaijan": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "az"
+  },
+  "world-cancer-day-in-malaysia": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "my"
+  },
+  "world-cancer-day-in-bosnia": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "ba"
+  },
+  "world-cancer-day-in-finland": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "fi"
+  },
+  "world-cancer-day-in-austria": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "at"
+  },
+  "world-cancer-day-in-mauritania": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "mr"
+  },
+  "world-cancer-day-in-sudan": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "sd"
+  },
+  "world-cancer-day-in-denmark": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "dk"
+  },
+  "world-cancer-day-in-switzerland": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "ch"
+  },
+  "world-cancer-day-in-ireland": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "ie"
+  },
+  "world-cancer-day-in-thailand": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "th"
+  },
+  "world-cancer-day-in-indonesia": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "id"
+  },
+  "world-cancer-day-in-maldives": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "mv"
+  },
+  "world-cancer-day-in-armenia": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "am"
+  },
+  "world-cancer-day-in-japan": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "jp"
+  },
+  "world-cancer-day-in-south-korea": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "kr"
+  },
   "world-fathers-day-in-saudi": {
     "canonicalSlug": "world-fathers-day",
     "countryCode": "sa"
@@ -5894,6 +9734,86 @@
   "world-fathers-day-in-italy": {
     "canonicalSlug": "world-fathers-day",
     "countryCode": "it"
+  },
+  "world-fathers-day-in-brazil": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "br"
+  },
+  "world-fathers-day-in-argentina": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "ar"
+  },
+  "world-fathers-day-in-chile": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "cl"
+  },
+  "world-fathers-day-in-georgia": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "ge"
+  },
+  "world-fathers-day-in-azerbaijan": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "az"
+  },
+  "world-fathers-day-in-malaysia": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "my"
+  },
+  "world-fathers-day-in-bosnia": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "ba"
+  },
+  "world-fathers-day-in-finland": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "fi"
+  },
+  "world-fathers-day-in-austria": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "at"
+  },
+  "world-fathers-day-in-mauritania": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "mr"
+  },
+  "world-fathers-day-in-sudan": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "sd"
+  },
+  "world-fathers-day-in-denmark": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "dk"
+  },
+  "world-fathers-day-in-switzerland": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "ch"
+  },
+  "world-fathers-day-in-ireland": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "ie"
+  },
+  "world-fathers-day-in-thailand": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "th"
+  },
+  "world-fathers-day-in-indonesia": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "id"
+  },
+  "world-fathers-day-in-maldives": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "mv"
+  },
+  "world-fathers-day-in-armenia": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "am"
+  },
+  "world-fathers-day-in-japan": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "jp"
+  },
+  "world-fathers-day-in-south-korea": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "kr"
   },
   "fathers-day": {
     "canonicalSlug": "world-fathers-day",
@@ -6019,6 +9939,86 @@
     "canonicalSlug": "world-happiness-day",
     "countryCode": "it"
   },
+  "world-happiness-day-in-brazil": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "br"
+  },
+  "world-happiness-day-in-argentina": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "ar"
+  },
+  "world-happiness-day-in-chile": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "cl"
+  },
+  "world-happiness-day-in-georgia": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "ge"
+  },
+  "world-happiness-day-in-azerbaijan": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "az"
+  },
+  "world-happiness-day-in-malaysia": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "my"
+  },
+  "world-happiness-day-in-bosnia": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "ba"
+  },
+  "world-happiness-day-in-finland": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "fi"
+  },
+  "world-happiness-day-in-austria": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "at"
+  },
+  "world-happiness-day-in-mauritania": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "mr"
+  },
+  "world-happiness-day-in-sudan": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "sd"
+  },
+  "world-happiness-day-in-denmark": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "dk"
+  },
+  "world-happiness-day-in-switzerland": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "ch"
+  },
+  "world-happiness-day-in-ireland": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "ie"
+  },
+  "world-happiness-day-in-thailand": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "th"
+  },
+  "world-happiness-day-in-indonesia": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "id"
+  },
+  "world-happiness-day-in-maldives": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "mv"
+  },
+  "world-happiness-day-in-armenia": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "am"
+  },
+  "world-happiness-day-in-japan": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "jp"
+  },
+  "world-happiness-day-in-south-korea": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "kr"
+  },
   "world-no-tobacco-day-in-saudi": {
     "canonicalSlug": "world-no-tobacco-day",
     "countryCode": "sa"
@@ -6138,6 +10138,86 @@
   "world-no-tobacco-day-in-italy": {
     "canonicalSlug": "world-no-tobacco-day",
     "countryCode": "it"
+  },
+  "world-no-tobacco-day-in-brazil": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "br"
+  },
+  "world-no-tobacco-day-in-argentina": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "ar"
+  },
+  "world-no-tobacco-day-in-chile": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "cl"
+  },
+  "world-no-tobacco-day-in-georgia": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "ge"
+  },
+  "world-no-tobacco-day-in-azerbaijan": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "az"
+  },
+  "world-no-tobacco-day-in-malaysia": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "my"
+  },
+  "world-no-tobacco-day-in-bosnia": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "ba"
+  },
+  "world-no-tobacco-day-in-finland": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "fi"
+  },
+  "world-no-tobacco-day-in-austria": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "at"
+  },
+  "world-no-tobacco-day-in-mauritania": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "mr"
+  },
+  "world-no-tobacco-day-in-sudan": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "sd"
+  },
+  "world-no-tobacco-day-in-denmark": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "dk"
+  },
+  "world-no-tobacco-day-in-switzerland": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "ch"
+  },
+  "world-no-tobacco-day-in-ireland": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "ie"
+  },
+  "world-no-tobacco-day-in-thailand": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "th"
+  },
+  "world-no-tobacco-day-in-indonesia": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "id"
+  },
+  "world-no-tobacco-day-in-maldives": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "mv"
+  },
+  "world-no-tobacco-day-in-armenia": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "am"
+  },
+  "world-no-tobacco-day-in-japan": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "jp"
+  },
+  "world-no-tobacco-day-in-south-korea": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "kr"
   },
   "world-refugee-day-in-saudi": {
     "canonicalSlug": "world-refugee-day",
@@ -6259,6 +10339,86 @@
     "canonicalSlug": "world-refugee-day",
     "countryCode": "it"
   },
+  "world-refugee-day-in-brazil": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "br"
+  },
+  "world-refugee-day-in-argentina": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "ar"
+  },
+  "world-refugee-day-in-chile": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "cl"
+  },
+  "world-refugee-day-in-georgia": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "ge"
+  },
+  "world-refugee-day-in-azerbaijan": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "az"
+  },
+  "world-refugee-day-in-malaysia": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "my"
+  },
+  "world-refugee-day-in-bosnia": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "ba"
+  },
+  "world-refugee-day-in-finland": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "fi"
+  },
+  "world-refugee-day-in-austria": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "at"
+  },
+  "world-refugee-day-in-mauritania": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "mr"
+  },
+  "world-refugee-day-in-sudan": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "sd"
+  },
+  "world-refugee-day-in-denmark": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "dk"
+  },
+  "world-refugee-day-in-switzerland": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "ch"
+  },
+  "world-refugee-day-in-ireland": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "ie"
+  },
+  "world-refugee-day-in-thailand": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "th"
+  },
+  "world-refugee-day-in-indonesia": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "id"
+  },
+  "world-refugee-day-in-maldives": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "mv"
+  },
+  "world-refugee-day-in-armenia": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "am"
+  },
+  "world-refugee-day-in-japan": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "jp"
+  },
+  "world-refugee-day-in-south-korea": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "kr"
+  },
   "world-tourism-day-in-saudi": {
     "canonicalSlug": "world-tourism-day",
     "countryCode": "sa"
@@ -6379,6 +10539,86 @@
     "canonicalSlug": "world-tourism-day",
     "countryCode": "it"
   },
+  "world-tourism-day-in-brazil": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "br"
+  },
+  "world-tourism-day-in-argentina": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "ar"
+  },
+  "world-tourism-day-in-chile": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "cl"
+  },
+  "world-tourism-day-in-georgia": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "ge"
+  },
+  "world-tourism-day-in-azerbaijan": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "az"
+  },
+  "world-tourism-day-in-malaysia": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "my"
+  },
+  "world-tourism-day-in-bosnia": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "ba"
+  },
+  "world-tourism-day-in-finland": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "fi"
+  },
+  "world-tourism-day-in-austria": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "at"
+  },
+  "world-tourism-day-in-mauritania": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "mr"
+  },
+  "world-tourism-day-in-sudan": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "sd"
+  },
+  "world-tourism-day-in-denmark": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "dk"
+  },
+  "world-tourism-day-in-switzerland": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "ch"
+  },
+  "world-tourism-day-in-ireland": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "ie"
+  },
+  "world-tourism-day-in-thailand": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "th"
+  },
+  "world-tourism-day-in-indonesia": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "id"
+  },
+  "world-tourism-day-in-maldives": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "mv"
+  },
+  "world-tourism-day-in-armenia": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "am"
+  },
+  "world-tourism-day-in-japan": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "jp"
+  },
+  "world-tourism-day-in-south-korea": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "kr"
+  },
   "world-water-day-in-saudi": {
     "canonicalSlug": "world-water-day",
     "countryCode": "sa"
@@ -6498,5 +10738,85 @@
   "world-water-day-in-italy": {
     "canonicalSlug": "world-water-day",
     "countryCode": "it"
+  },
+  "world-water-day-in-brazil": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "br"
+  },
+  "world-water-day-in-argentina": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "ar"
+  },
+  "world-water-day-in-chile": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "cl"
+  },
+  "world-water-day-in-georgia": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "ge"
+  },
+  "world-water-day-in-azerbaijan": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "az"
+  },
+  "world-water-day-in-malaysia": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "my"
+  },
+  "world-water-day-in-bosnia": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "ba"
+  },
+  "world-water-day-in-finland": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "fi"
+  },
+  "world-water-day-in-austria": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "at"
+  },
+  "world-water-day-in-mauritania": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "mr"
+  },
+  "world-water-day-in-sudan": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "sd"
+  },
+  "world-water-day-in-denmark": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "dk"
+  },
+  "world-water-day-in-switzerland": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "ch"
+  },
+  "world-water-day-in-ireland": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "ie"
+  },
+  "world-water-day-in-thailand": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "th"
+  },
+  "world-water-day-in-indonesia": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "id"
+  },
+  "world-water-day-in-maldives": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "mv"
+  },
+  "world-water-day-in-armenia": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "am"
+  },
+  "world-water-day-in-japan": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "jp"
+  },
+  "world-water-day-in-south-korea": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "kr"
   }
 }

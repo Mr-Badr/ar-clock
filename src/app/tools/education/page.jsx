@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -41,6 +42,29 @@ const TYPE_GROUPS = [
   },
 ];
 
+const FAQ_ITEMS = [
+  {
+    question: 'أي أداة أستخدم لمعدلي: GPA أم النسبة المئوية؟',
+    answer: 'إذا كانت جامعتك أو مدرستك تعتمد نظام النقاط (عادة من 4 أو 5)، استخدم حاسبة GPA مباشرة بإدخال درجاتك وساعات كل مقرر. إذا كان لديك بالفعل معدل GPA وتحتاج تحويله إلى نسبة مئوية (مثلاً لتقديم على منحة أو جهة تطلب النسبة)، استخدم حاسبة تحويل GPA إلى نسبة بدلاً من إعادة الحساب من الصفر.',
+  },
+  {
+    question: 'ما الفرق بين المعدل العادي والمعدل الموزون (Weighted GPA)؟',
+    answer: 'المعدل العادي يعامل كل مقرر بنفس الوزن بغض النظر عن صعوبته أو عدد ساعاته، بينما المعدل الموزون يضاعف تأثير المقررات الأصعب (مثل المقررات المتقدمة) أو الأعلى في عدد الساعات المعتمدة. إن كانت مدرستك أو جامعتك تفرّق بين مستويات المقررات في حساب المعدل، فأنت تحتاج حاسبة المعدل الموزون تحديداً، لا الحاسبة العادية.',
+  },
+  {
+    question: 'كيف أحول معدل GPA من نظام 4.0 إلى نظام 5.0 أو العكس؟',
+    answer: 'الأنظمة المختلفة (4.0 الأمريكي الشائع، 5.0 المستخدم في بعض الجامعات العربية) ليست مجرد ضرب بسيط في نسبة ثابتة — التحويل الدقيق يعتمد على جدول تقدير الجامعة المحدد (كيف تُترجم كل درجة حرفية إلى نقاط في كل نظام). استخدم حاسبة تحويل GPA إلى نسبة كخطوة وسيطة موثوقة، وارجع دائماً لجدول جامعتك الرسمي عند وجود فرق مهم في القرار (كالتقديم على منحة).',
+  },
+  {
+    question: 'لماذا أحتاج حاسبة الانحراف المعياري في سياق دراسي؟',
+    answer: 'الانحراف المعياري يفيدك عملياً في فهم مدى تشتت درجاتك أو درجات دفعتك حول المتوسط — مفيد خصوصاً إذا كنت تقارن أداءك بمعدل الشعبة، أو تحلل بيانات لمشروع بحثي أو تكليف إحصائي. أدخل مجموعة الدرجات في الحاسبة لتحصل على المتوسط والانحراف المعياري مباشرة دون حساب يدوي.',
+  },
+  {
+    question: 'هل التقويم الدراسي السعودي هنا يشمل كل الإجازات؟',
+    answer: 'نعم — بداية العام الدراسي، إجازة نصف العام، بداية الفصل الثاني، ونهاية العام، مع عداد تنازلي حي لكل موعد قادم حتى لا تحتاج متابعته يدوياً على تقويم ورقي أو تطبيق منفصل.',
+  },
+];
+
 function ToolLink({ slug }) {
   const route = findRoute(slug);
   return (
@@ -77,10 +101,12 @@ export default function EducationCategoryHubPage() {
       { '@type': 'ListItem', position: 3, name: 'التعليم', item: `${SITE_URL}/tools/education` },
     ],
   };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-education-hub" />
 
@@ -117,6 +143,21 @@ export default function EducationCategoryHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="how-to-choose" title="أي أداة تختار حسب سؤالك؟">
+          <p>
+            إذا كانت جامعتك تعتمد نظام النقاط، ابدأ بحاسبة المعدل التراكمي (GPA) وأدخل درجاتك
+            وساعات كل مقرر. إذا كان لديك معدل جاهز وتحتاج تحويله إلى نسبة مئوية لجهة تطلب ذلك،
+            انتقل إلى حاسبة تحويل GPA إلى نسبة مباشرة بدل إعادة الحساب. أما إذا كانت مقرراتك
+            تختلف في وزنها أو صعوبتها ضمن نظام تقييم جامعتك، فحاسبة المعدل الموزون هي الأدق. وإذا
+            كنت تحلل مجموعة درجات (لك أو لدفعتك) وتحتاج فهم مدى تشتتها، فحاسبة الانحراف المعياري
+            تعطيك ذلك مباشرة.
+          </p>
+        </HubGuideSection>
+
+        <HubGuideSection id="hub-faq" title="الأسئلة الشائعة">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

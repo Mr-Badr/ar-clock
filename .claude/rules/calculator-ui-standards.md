@@ -271,6 +271,82 @@ will understand and these are rules for any future hub."*
   informational clusters, TPMS troubleshooting and battery lifespan, were folded into existing
   pages instead of becoming two more thin pages).
 
+## 0e. Equations and structured reference data are real content, never FAQ prose (owner directive, 2026-08-19 — standing rule for every tool, existing and future)
+
+Triggered by a real example: `/tools/garage-doors/size-guide`'s FAQ answered "ما هو مقاس باب
+الجراج القياسي؟" with a comma-separated run-on sentence listing all 7 standard sizes — real,
+useful data buried in prose instead of shown as content. Owner's reference: Omni Calculator's
+formula-box pattern (light yellow/cream card, formula centered, clean typography) — same idea,
+Arabic-first.
+
+- **Any real mathematical formula belongs in `<FormulaCard>` (`src/components/tools-v2/
+  FormulaCard.jsx`), inside the article content section that explains it — never spelled out as a
+  sentence inside an FAQ answer.** `FormulaCard` renders a flat amber/cream card (`var(--amber-
+  subtle)` bg, `var(--amber-border)` border — no gradient, per §1/§1b) with an optional `label`
+  above the equation and an optional `note` below it. Use the `<Frac num den>` helper for a
+  fraction (numerator / line / denominator) and `<Var base sub>` for a subscripted variable.
+  Reference implementation: `/tools/cctv/nvr-storage-calculator` (`nvr-guide` section).
+- **Write formula terms in Arabic, not English words, and do NOT force `dir="ltr"` on an
+  Arabic-labeled formula.** `FormulaCard`/the `.tool-v2-formula-eq` container inherits the page's
+  own RTL direction by default — an Arabic equation like "السعة = معدل البت × ... ÷ 8,000,000"
+  reads correctly right-to-left as one sentence, exactly like any Arabic math-textbook formula;
+  numbers and `×`/`÷`/`=` operators resolve LTR automatically via Unicode bidi, no extra markup
+  needed. Only pass `dir="ltr"` for a formula written in genuine symbolic/Latin scientific
+  notation (single-letter variables like a physics/chemistry constant) — rare on this site's
+  practical calculators, and NOT the default case.
+  - **Keep numerator/denominator wording short and let it wrap** — do not rely on a single
+    unbroken line. A long Arabic numerator WILL wrap onto 2 lines inside the fraction on
+    narrower/desktop-article-column widths (`white-space: normal`, `max-width: 100%` are already
+    set on `.tool-v2-formula-frac-num/-den` — this was a real bug caught only by an actual
+    Puppeteer screenshot at 1440px, not by code review: `white-space: nowrap` clipped the text
+    past the card edge instead of wrapping). Always verify a new FormulaCard with a real
+    screenshot at both ~390px and ~1440px before shipping, not just a code read.
+- **Any fixed list of standard values (sizes, presets, ranges, tiers) belongs in
+  `<ReferenceGrid items={[{value, meta?}]} />` (`src/components/tools-v2/ReferenceGrid.jsx`) as a
+  scannable chip grid inside the content section it belongs to — never as a comma-separated
+  sentence inside an FAQ answer.** Reference implementation: `/tools/garage-doors/size-guide`
+  (`garage-sizes` section, `STANDARD_SIZES`). The FAQ entry for the same question stays, but
+  shrinks to a short pointer sentence ("راجع الجدول الكامل في قسم X أعلى الصفحة, أو استخدم
+  الأداة...") instead of repeating the full list — this keeps the FAQ schema valid and useful for
+  a quick direct-answer snippet without duplicating the real content.
+- **Never invent a meta/label value for a `ReferenceGrid` chip that isn't actually sourced.** The
+  garage-door sizes reference implementation deliberately ships bare size values with no per-size
+  car-count label, because the only sourced fact is a general range statement ("الأصغر لسيارة
+  واحدة والأكبر لسيارتين أو ثلاث"), not a precise per-size mapping — assigning a specific car
+  count to each of the 7 sizes would have been a fabricated fact. Only add a `meta` per chip when
+  the source genuinely supports that exact value.
+- **This is a full-site rollout, not a two-page fix.** These two pages are the reference
+  implementation; the same anti-pattern (an equation or a structured list written as FAQ prose)
+  exists across many other `/tools/*` pages and needs the same treatment — grep FAQ `answer`
+  strings for embedded `=`/multiple `×`/`÷` or long comma-separated value lists to find the rest.
+  Track progress in `docs/` or project memory rather than assuming this doc alone means it's done
+  everywhere.
+
+## 0f. Every hub index page carries real content, and no user-facing text ever talks about our own process (owner directive, 2026-08-19)
+
+Two related standing rules from the same session:
+
+- **Every `/tools/<category>` hub INDEX page gets a real content section** (a guide paragraph
+  and/or a category-level FAQ with its own `FAQPage` schema) rendered AFTER the required dot-list
+  nav (hero → featured-row → type-groups — never reorder or replace that, per §0e's sibling rule
+  in `.claude/rules/tools-hub-pattern.md`). Use `HubGuideSection`/`HubFaq`/`buildHubFaqSchema` from
+  `src/components/tools-v2/HubGuideSection.jsx` — don't hand-roll a new pattern per hub.
+  **Exception**: a genuinely single-tool hub (pools, elevators, welding, garage-doors, scaffolding,
+  aluminum-glass, cctv) gets only a short guide paragraph, never a full FAQ with its own
+  `FAQPage` schema — the one real sub-tool already ships its own FAQ, and a second, near-identical
+  FAQPage block on the parent hub trips `seo:audit:rendered`'s "duplicate FAQPage definitions"
+  check. Multi-tool hubs get a real hub-level FAQ whose questions are genuinely different from any
+  individual sub-tool's FAQ (choosing between tools, category-wide decisions), not overlapping.
+- **No user-facing text — page copy, meta description, hero paragraph, FAQ answer — ever mentions
+  how the site itself was built or researched.** Found and fixed real violations, both self-
+  introduced and pre-existing: phrases like "مبنية على بحث كلمات حقيقي (Keyword Planner)", "مبني
+  على بحث حقيقي", "بحث سوق حقيقي" read as internal SEO/process talk, not something a reader cares
+  about — and a `<meta name="description">` is genuinely user-facing (it's the Google search
+  result snippet), not just on-page prose. Every sentence must speak TO the reader about the
+  subject itself (what the tool does for them, how to use it, what decision it helps them make) —
+  never ABOUT our own research/build process. When auditing or writing hub/tool copy, grep for
+  "بحث|كلمات مفتاحية|keyword|planner|منافس" and rewrite any hit found outside a `//` code comment.
+
 ---
 
 ## 1. No Gradient Backgrounds — Ever

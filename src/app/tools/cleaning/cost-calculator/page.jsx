@@ -47,6 +47,40 @@ function PlainBlock({ eyebrow, title, children }) {
   );
 }
 
+// Same pricePerSqm rates used by CleaningCostCalculator.client.jsx's CLEAN_TYPES.
+const CLEAN_TYPE_BARS = [
+  { label: 'تنظيف عادي', rate: 4, colorVar: '--blue-text' },
+  { label: 'بعد انتقال (تسليم/استلام)', rate: 8, colorVar: '--blue-text' },
+  { label: 'تنظيف عميق', rate: 7, colorVar: '--green-text' },
+  { label: 'بعد تشطيب أو دهان', rate: 9, colorVar: '--amber-text' },
+];
+const CLEAN_TYPE_MAX = 9;
+
+function CleanTypeChart() {
+  return (
+    <div className="tool-v2-chart-card">
+      <div className="tool-v2-chart-head">
+        <h3>مقارنة سعر المتر بين أنواع التنظيف</h3>
+        <p>السعر النسبي لكل متر مربع حسب نوع التنظيف — العادي الأوفر، وبعد التشطيب أو الدهان الأعلى لأنه يزيل غبار البناء المتراكم.</p>
+      </div>
+      <div className="tool-v2-hbar-list">
+        {CLEAN_TYPE_BARS.map((row) => (
+          <div key={row.label} className="tool-v2-hbar-row">
+            <span className="tool-v2-hbar-label">{row.label}</span>
+            <div className="tool-v2-hbar-track">
+              <div
+                className="tool-v2-hbar-fill"
+                style={{ width: `${(row.rate / CLEAN_TYPE_MAX) * 100}%`, background: `var(${row.colorVar})` }}
+              />
+            </div>
+            <span className="tool-v2-hbar-value">{row.rate}/م²</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function RelatedToolsCard({ items, heading }) {
   if (!items.length) return null;
   return (
@@ -142,6 +176,7 @@ export default function CleaningCostCalculatorPage() {
               بالعادي)، و<strong>التكرار</strong> (الاتفاق الدوري يقلل سعر الزيارة الواحدة). هذا
               بالضبط ما تحسبه الأداة أعلاه بشكل منفصل وواضح، بدل رقم واحد غامض.
             </p>
+            <CleanTypeChart />
             <PlainBlock eyebrow="لماذا التنظيف العميق أغلى بكثير؟" title="الوقت هو الفارق، لا المواد">
               التنظيف العادي يغطي الأسطح الظاهرة فقط. التنظيف العميق يضيف خلف الأثاث والأجهزة،
               الزوايا والسقوف، وأحياناً غسيل مفصّل للمطبخ والحمامات بالكامل — عمل يستهلك ضعف الوقت

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Mosque } from '@phosphor-icons/react/ssr';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -61,6 +62,21 @@ const TYPE_GROUPS = [
   },
 ];
 
+const FAQ_ITEMS = [
+  {
+    question: 'أملك أنواعاً مختلفة من المال (نقد وذهب وأسهم) — هل أحسب زكاة كل نوع منفصلاً؟',
+    answer: 'حاسبة زكاة المال الشاملة تجمع كل أنواع أموالك في مكان واحد لتعطيك الصورة الكاملة، لكن إن أردت تفصيلاً أدق لنوع معيّن (كتحويل عيار الذهب لوزنه الخالص، أو نية الأسهم استثماراً مقابل تجارة)، الحاسبات المتخصصة لكل نوع تعطيك ذلك بعمق أكبر.',
+  },
+  {
+    question: 'ما الفرق العملي بين المذاهب الأربعة في حساب الزكاة؟',
+    answer: 'الفروق الحقيقية تظهر في تفاصيل مثل نصاب بعض الأصناف وكيفية التعامل مع الديون والحلي المستخدم — راجع دليل الفروق بين المذاهب لفهم كل فرق وتأثيره الفعلي على حسابك قبل اختيار مذهبك في الحاسبة.',
+  },
+  {
+    question: 'كيف أعرف أن حولي الهجري (سنة كاملة) قد اكتمل على أموالي؟',
+    answer: 'المتتبع يحفظ تاريخ بداية حولك على جهازك تلقائياً بمجرد إدخاله أول مرة، ويحسب لك التاريخ الهجري الذي يكتمل فيه الحول القادم — فلا تحتاج تذكّر التاريخ يدوياً أو حسابه من جديد كل مرة تراجع فيها زكاتك.',
+  },
+];
+
 function ToolLink({ slug }) {
   const route = findRoute(slug);
   return (
@@ -98,10 +114,12 @@ export default function IslamicCategoryHubPage() {
       { '@type': 'ListItem', position: 3, name: 'الأدوات الإسلامية', item: `${SITE_URL}/tools/islamic` },
     ],
   };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-islamic-hub" />
 
@@ -155,6 +173,10 @@ export default function IslamicCategoryHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="hub-faq" title="الأسئلة الشائعة">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

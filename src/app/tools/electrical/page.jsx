@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -41,6 +42,21 @@ const TYPE_GROUPS = [
   },
 ];
 
+const FAQ_ITEMS = [
+  {
+    question: 'كيف أعرف حجم المولد المناسب لمنزلي؟',
+    answer: 'اجمع القدرة بالواط لكل الأجهزة التي تريد تشغيلها وقت الانقطاع (مكيف واحد، ثلاجة، إضاءة، إلخ) — لا كل أجهزة المنزل. راجع دليل اختيار المولد لمعرفة معامل القدرة الصحيح ولماذا يحتاج بعض الأجهزة (كالمكيفات) قدرة إضافية عند بدء التشغيل تحديداً.',
+  },
+  {
+    question: 'فاتورة الكهرباء ارتفعت فجأة دون سبب واضح — من أين أبدأ؟',
+    answer: 'قبل الشك في عداد معطل، احسب استهلاكك المتوقع في حاسبة استهلاك الكهرباء بإدخال أجهزتك الفعلية وساعات تشغيلها — غالباً يتضح أن السبب جهاز واحد (مكيف يعمل ساعات أطول، سخان مياه قديم) لا خللاً في العداد نفسه.',
+  },
+  {
+    question: 'ما الفرق بين قاطع MCB وقاطع RCBO في لوحة التوزيع؟',
+    answer: 'كلاهما يحمي من التحميل الزائد، لكن RCBO يضيف حماية من تسرب التيار الكهربائي (كخطر الصعق عند لمس جهاز به عطل) وهو الأهم في الحمامات والمطابخ تحديداً. راجع دليل لوحة التوزيع لمعرفة متى تحتاج كل نوع.',
+  },
+];
+
 function ToolLink({ slug }) {
   const route = findRoute(slug);
   return (
@@ -61,7 +77,7 @@ function ToolLink({ slug }) {
 export const metadata = buildCanonicalMetadata({
   title: 'دليل الكهرباء — المولدات، لوحة التوزيع، العداد، ومحول الوحدات',
   description:
-    'أدلة وأدوات كهرباء منزلية مبنية على بحث كلمات حقيقي: اختيار حجم مولد الكهرباء، لوحة التوزيع والقواطع، عداد الكهرباء وفاتورته، أرقام طوارئ الخليج، ومحول وحدات وحاسبة استهلاك.',
+    'اختر حجم مولد الكهرباء المناسب، افهم لوحة التوزيع والقواطع، احسب فاتورتك، واحفظ أرقام طوارئ الكهرباء في الخليج — أدلة وأدوات كهرباء منزلية عملية.',
   url: `${SITE_URL}/tools/electrical`,
 });
 
@@ -97,11 +113,13 @@ export default function ElectricalHubPage() {
       }),
     },
   };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-electrical-hub" />
 
@@ -117,8 +135,8 @@ export default function ElectricalHubPage() {
           </div>
           <p>
             من اختيار حجم مولد يكفي فعلاً وقت الانقطاع، إلى فهم لوحة التوزيع والقواطع، إلى حل
-            مشاكل العداد والفاتورة، إلى تحويل الوحدات وتقدير استهلاكك — أدلة وأدوات عملية مبنية
-            على بحث حقيقي.
+            مشاكل العداد والفاتورة، إلى تحويل الوحدات وتقدير استهلاكك — أدلة وأدوات عملية تجيبك
+            مباشرة.
           </p>
           <div className="tool-v2-cat-meta">
             <span><b>{toolCount}</b> أدوات وأدلة مرتبطة مباشرة</span>
@@ -159,6 +177,10 @@ export default function ElectricalHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="hub-faq" title="الأسئلة الشائعة">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

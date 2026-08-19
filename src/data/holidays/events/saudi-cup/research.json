@@ -1,7 +1,7 @@
 {
   "slug": "saudi-cup",
   "locale": "ar",
-  "capturedAt": "2026-07-17T19:10:46.957Z",
+  "capturedAt": "2026-08-19T17:54:31.160Z",
   "primaryQueries": [
     "متى كأس السعودية",
     "كم باقي على كأس السعودية",
@@ -16,10 +16,37 @@
   ],
   "competitors": [
     {
-      "name": "VisitSaudi (official tourism site)",
+      "site": "VisitSaudi (official tourism site)",
+      "type": "official",
       "url": "https://www.visitsaudi.com/en/riyadh/events/saudi-cup",
-      "strengths": "Official, trustworthy, event background",
-      "gaps": "No countdown, no daily-updated remaining-days figure, English-first"
+      "focus": [
+        "Official, trustworthy, event background"
+      ],
+      "gaps": [
+        "No countdown, no daily-updated remaining-days figure, English-first"
+      ]
+    },
+    {
+      "site": "jcsa.sa (Jockey Club of Saudi Arabia — official)",
+      "type": "official",
+      "url": "https://jcsa.sa/en/saudi-cup/",
+      "focus": [
+        "The organizing body itself — most authoritative source for dates, prize money, race card"
+      ],
+      "gaps": [
+        "No countdown timer, no Arabic-first FAQ format, institutional tone"
+      ]
+    },
+    {
+      "site": "kooora.com — كأس السعودية",
+      "type": "competitor-ar",
+      "url": "https://www.kooora.com",
+      "focus": [
+        "Real-time Arabic sports coverage with large existing audience"
+      ],
+      "gaps": [
+        "News-article format re-published each edition, no persistent evergreen countdown page"
+      ]
     }
   ],
   "coverageMatrix": [

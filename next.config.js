@@ -156,7 +156,7 @@ const LEGACY_INDEXING_REDIRECTS = [
   { source: '/calculators/age/retirement', destination: '/tools/health/age-retirement' },
   { source: '/calculators/annual-leave', destination: '/tools/gulf-finance/annual-leave' },
   { source: '/calculators/aqiqah', destination: '/tools/gulf-finance/aqiqah' },
-  { source: '/calculators/bill-splitter', destination: '/tools/personal-finance' },
+  { source: '/calculators/bill-splitter', destination: '/tools/personal-finance/bill-splitter' },
   { source: '/calculators/bmi', destination: '/tools/health/bmi' },
   { source: '/calculators/boernepenge-denmark', destination: '/tools/gulf-finance/boernepenge-denmark' },
   { source: '/calculators/building', destination: '/tools/construction' },

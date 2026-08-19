@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -48,6 +49,21 @@ const TYPE_GROUPS = [
     name: 'المستندات',
     note: '',
     slugs: ['landscaping-quote-generator'],
+  },
+];
+
+const FAQ_ITEMS = [
+  {
+    question: 'أخطط لحديقة جديدة تماماً — من أين أبدأ؟',
+    answer: 'ابدأ بتقدير تكلفة تنسيق الحديقة الكاملة حسب مساحتك ومستوى التصميم الذي تريده، ثم انتقل للحاسبات التفصيلية (عشب صناعي، ري بالتنقيط، حصى) كلما اقتربت من مرحلة التنفيذ والشراء الفعلي.',
+  },
+  {
+    question: 'ما النباتات التي تتحمل حرارة الصيف دون عناية يومية؟',
+    answer: 'بعض النباتات تتحمل الحرارة وقلة الري بشكل طبيعي أفضل من غيرها، لكن الاختيار الأنسب يعتمد أيضاً على مقدار الشمس المباشرة ومستوى العناية الذي تستطيع تقديمه فعلياً. استخدم أداة اختيار النباتات لتحصل على قائمة تناسب ظروف حديقتك تحديداً.',
+  },
+  {
+    question: 'هل عرض السعر الذي استلمته من مصمم أو مقاول حدائق منطقي؟',
+    answer: 'قارن الرقم المستلم بتقديرك الخاص من حاسبة تكلفة تنسيق الحديقة أولاً — فرق كبير غير مبرر يستحق سؤالاً مباشراً عن البنود المشمولة (تصميم، عشب، ري، إضاءة، نباتات) قبل الموافقة، أو استخدم مولّد عرض السعر لإعداد عرضك الخاص إن كنت أنت من يقدّم الخدمة.',
   },
 ];
 
@@ -107,11 +123,13 @@ export default function LandscapingCategoryHubPage() {
       }),
     },
   };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-landscaping-hub" />
 
@@ -168,6 +186,10 @@ export default function LandscapingCategoryHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="hub-faq" title="الأسئلة الشائعة">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

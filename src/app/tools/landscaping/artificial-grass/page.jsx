@@ -28,6 +28,27 @@ const TOC_ITEMS = [
 
 export const metadata = buildCanonicalMetadata({ title: PAGE.heroTitle, description: PAGE.description, keywords: SEARCH_COVERAGE.metadataKeywords, url: `${SITE_URL}${PAGE.href}` });
 
+const GRASS_COMPARE_CARDS = [
+  {
+    title: 'عشب طبيعي',
+    rows: [
+      ['الري', 'يومي شبه ثابت طوال السنة'],
+      ['التبريد', 'يبرّد المكان طبيعياً'],
+      ['في الصيف الشديد', 'يحتاج ري أكثر ليبقى أخضر'],
+      ['التكلفة الأولى', 'أقل تركيباً'],
+    ],
+  },
+  {
+    title: 'عشب صناعي',
+    rows: [
+      ['الري', 'لا يحتاج ماء إطلاقاً'],
+      ['التبريد', 'لا يبرّد المكان'],
+      ['في الصيف الشديد', 'يبقى أخضراً دون أي ري'],
+      ['التكلفة الأولى', 'أعلى تركيباً'],
+    ],
+  },
+];
+
 function PlainBlock({ eyebrow, title, children }) {
   return (
     <div className="tool-v2-plain-block">
@@ -102,6 +123,23 @@ export default function ArtificialGrassCalculatorPage() {
               طبيعياً ويحتاج ري يومي شبه ثابت طوال السنة، بينما العشب الصناعي لا يحتاج ماء إطلاقاً
               ويبقى أخضراً حتى في أشد أشهر الصيف حرارة، مقابل تكلفة تركيب أولى أعلى.
             </p>
+            <div className="guide-v2-compare-list">
+              {GRASS_COMPARE_CARDS.map((card) => (
+                <div className="guide-v2-compare-card" key={card.title}>
+                  <div className="guide-v2-compare-head">
+                    <span className="guide-v2-compare-title">{card.title}</span>
+                  </div>
+                  <div className="guide-v2-compare-rows">
+                    {card.rows.map(([label, value]) => (
+                      <div className="guide-v2-compare-row" key={label}>
+                        <span className="guide-v2-compare-row-label">{label}</span>
+                        <span className="guide-v2-compare-row-value">{value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
             <PlainBlock eyebrow="الخطأ الأشيع عند شراء العشب الصناعي" title="تجاهل نسبة الهدر">
               كثيرون يشترون بالضبط مساحة الأرض المقاسة، فيكتشفون لاحقاً نقصاً عند القص للزوايا أو
               محاذاة اتجاه الألياف بين اللفات. هامش 10% الافتراضي في الحاسبة أعلاه يحل هذه المشكلة

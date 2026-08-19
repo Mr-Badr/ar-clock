@@ -1,0 +1,17 @@
+{
+  "slug": "christmas-day-sweden",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: publicholidays.se: Public Holidays in Sweden",
+    "fact-source: Wikipedia: Public holidays in Sweden",
+    "fact-check: 25 ديسمبر يولداغن، اليوم الرسمي قانونياً ضمن الأيام الحمراء الثلاثة عشر في السويد، بخلاف 24 ديسمبر الشعبي غير الرسمي"
+  ],
+  "updatedAt": "2026-08-18T14:53:40.880Z"
+}

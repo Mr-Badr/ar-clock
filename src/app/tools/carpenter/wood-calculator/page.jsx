@@ -6,6 +6,7 @@ import TocScrollSpy from '@/components/tools-v2/TocScrollSpy.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
 import WoodCalculator from '@/components/tools-v2/WoodCalculator.client';
+import { FormulaCard } from '@/components/tools-v2/FormulaCard';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
@@ -135,6 +136,9 @@ export default function WoodCalculatorPage() {
                   السماكة أو العرض بين مصدر وآخر. المعادلة بسيطة: الطول × العرض × السماكة (كلها
                   بالمتر) يعطيك حجم اللوح الواحد، واضربه بعدد الألواح للحجم الإجمالي.
                 </p>
+                <FormulaCard label="حجم الخشب الإجمالي (م³):" note="أضف 10-15% هامش هدر فوق هذا الرقم عند الشراء الفعلي.">
+                  <span>الطول × العرض × السماكة × عدد الألواح</span>
+                </FormulaCard>
               </section>
 
               <ToolInArticleAd slotId="mid-wood-calculator" />

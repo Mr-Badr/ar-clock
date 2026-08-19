@@ -1,0 +1,17 @@
+{
+  "slug": "martyrs-day-azerbaijan",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: National Holidays in Azerbaijan 2026",
+    "fact-source: Wikipedia: Black January",
+    "fact-check: 20 يناير 1990 اقتحام القوات السوفيتية لباكو (الأحد الأسود)، يوم حداد وطني رسمي، مراسم إحياء عند زقاق الشهداء في باكو"
+  ],
+  "updatedAt": "2026-08-18T11:28:09.533Z"
+}

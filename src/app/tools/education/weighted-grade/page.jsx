@@ -5,6 +5,7 @@ import WeightedGradeCalculator from '@/components/calculators/WeightedGradeCalcu
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { FormulaCard, Frac } from '@/components/tools-v2/FormulaCard';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
 import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
@@ -89,10 +90,20 @@ export default function WeightedGradePage() {
               <h3>مثال: طالب حصل على 35 من 40 في أعمال الفصل</h3>
               <p>
                 إذا كانت أعمال الفصل بوزن 40% وحصلت على 35/40 (أي 87.5%)، ووزن الاختبار النهائي 60%،
-                فدرجتك المضمونة حتى الآن = 40% × 87.5% = 35 نقطة من أصل 100. إذا أردت الوصول إلى 60%
-                إجمالاً، تحتاج (60 − 35) ÷ 60 × 100 = 41.7% فقط في الاختبار النهائي.
+                فهذه معادلة درجتك المضمونة حتى الآن، ثم ما تحتاجه في الاختبار النهائي:
               </p>
             </div>
+            <FormulaCard label="الدرجة المضمونة حتى الآن (من 100):">
+              <span>40% × 87.5% = 35 نقطة</span>
+            </FormulaCard>
+            <FormulaCard
+              label="إذا أردت الوصول إلى 60% إجمالاً، هذه الدرجة المطلوبة في الاختبار النهائي:"
+              note="بديل: 41.7% فقط في الاختبار النهائي كافية للوصول إلى هدفك."
+            >
+              <span>الدرجة المطلوبة =</span>
+              <Frac num="(60 − 35)" den="60" />
+              <span>× 100</span>
+            </FormulaCard>
             <div className="tool-v2-plain-block">
               <h3>لماذا هذا مفيد أكثر من حساب المعدل العادي؟</h3>
               <p>

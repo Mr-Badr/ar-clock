@@ -1,0 +1,17 @@
+{
+  "slug": "constitution-day-norway",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: Constitution Day in Norway",
+    "fact-source: Wikipedia: Constitution Day (Norway)",
+    "fact-check: 17 مايو 1814 توقيع الدستور النرويجي في إيدسفول، الاستقلال الكامل عن السويد تحقق سنة 1905، الاحتفال يتميز بمواكب أطفال بلا عروض عسكرية"
+  ],
+  "updatedAt": "2026-08-18T14:43:57.641Z"
+}

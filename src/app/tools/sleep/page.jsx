@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -28,6 +29,21 @@ function findRoute(slug) {
 const FEATURED_SLUGS = ['bedtime', 'nap-calculator', 'sleep-debt'];
 
 const TOOL_SLUGS = ['bedtime', 'wake-time', 'sleep-duration', 'nap-calculator', 'sleep-debt', 'sleep-needs-by-age'];
+
+const FAQ_ITEMS = [
+  {
+    question: 'أستيقظ متعباً حتى بعد نوم 8 ساعات كاملة — ما السبب؟',
+    answer: 'غالباً لأن استيقاظك وقع في منتصف دورة نوم بدل نهايتها — كل دورة نوم تستغرق نحو 90 دقيقة، والاستيقاظ في منتصفها يشعرك بخمول أكبر من الاستيقاظ عند نهاية دورة كاملة حتى لو كان مجموع الساعات أقل. استخدم حاسبة "متى أنام" لتحديد وقت نوم يوافق نهاية دورة كاملة عند موعد استيقاظك.',
+  },
+  {
+    question: 'هل القيلولة الطويلة أفضل من القصيرة؟',
+    answer: 'ليس بالضرورة — قيلولة قصيرة (حول 20 دقيقة) تنعشك دون دخول نوم عميق فيصعب الاستيقاظ منه، بينما قيلولة أطول (دورة كاملة تقريباً) تفيد أكثر إن كنت تعوّض نقص نوم حقيقياً لكنها تحتاج وقتاً أطول للاستيقاظ الكامل بعدها. اختر النوع المناسب لوقتك المتاح في حاسبة القيلولة.',
+  },
+  {
+    question: 'كيف أعرف إن كان لدي "دين نوم" متراكم فعلاً؟',
+    answer: 'إذا كنت تنام أقل من احتياجك الفعلي لعدة أيام متتالية (حتى لو بفارق ساعة أو ساعتين يومياً)، الفارق يتراكم فعلياً كعجز حقيقي يؤثر على تركيزك ومزاجك، لا يختفي بمجرد نوم ليلة واحدة كاملة لاحقاً. احسب عجزك التراكمي في حاسبة دين النوم لمعرفة حجمه الحقيقي وخطة تعويضه تدريجياً.',
+  },
+];
 
 function ToolLink({ slug }) {
   const route = findRoute(slug);
@@ -78,11 +94,13 @@ export default function SleepCategoryHubPage() {
       }),
     },
   };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-sleep-hub" />
 
@@ -135,6 +153,10 @@ export default function SleepCategoryHubPage() {
             </div>
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="hub-faq" title="الأسئلة الشائعة">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

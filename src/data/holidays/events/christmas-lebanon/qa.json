@@ -1,0 +1,17 @@
+{
+  "slug": "christmas-lebanon",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: timeanddate.com: Christmas Day in Lebanon",
+    "fact-source: Wikipedia: Public holidays in Lebanon",
+    "fact-check: 25 ديسمبر عيد الميلاد المجيد، عطلة رسمية معترف بها في لبنان ضمن نظام طائفي تعددي يمنح عطلاً لكل الطوائف الرئيسية"
+  ],
+  "updatedAt": "2026-08-18T14:48:24.519Z"
+}

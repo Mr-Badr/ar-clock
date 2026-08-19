@@ -1,0 +1,17 @@
+{
+  "slug": "independence-day-maldives",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: timeanddate.com: Independence Day in Maldives",
+    "fact-source: Wikipedia: Independence of the Maldives",
+    "fact-check: 26 يوليو يوم استقلال المالديف عن الحماية البريطانية 1965، دولة إسلامية بالكامل تقريباً؛ اليوم الوطني (National Day) هجري قمري مستبعد عمداً لعدم كونه ثابت التاريخ الميلادي"
+  ],
+  "updatedAt": "2026-08-18T15:10:18.682Z"
+}

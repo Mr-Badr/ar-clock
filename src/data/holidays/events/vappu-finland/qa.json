@@ -1,0 +1,17 @@
+{
+  "slug": "vappu-finland",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: eskimo.travel: Finland Public Holidays 2026",
+    "fact-source: Wikipedia: Public holidays in Finland",
+    "fact-check: 1 مايو فابو، عطلة رسمية فنلندية، يدمج عيد العمال مع احتفال الطلاب وبداية الربيع، تقليد قبعة الخريجين البيضاء يشمل الجميع"
+  ],
+  "updatedAt": "2026-08-18T14:44:11.346Z"
+}

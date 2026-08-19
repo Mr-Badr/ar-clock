@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Flower, GridFour, Sparkle, TreePalm } from '@phosphor-icons/react/ssr';
 
 import GardenCostCalculator from '@/components/calculators/GardenCostCalculator.client';
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
@@ -37,6 +38,14 @@ function PlainBlock({ eyebrow, title, children }) {
     </div>
   );
 }
+
+// Same FLOOR_TYPES used by GardenCostCalculator.client.jsx.
+const FLOOR_TYPES_PREVIEW = [
+  { label: 'عشب طبيعي', desc: 'أرخص تركيباً، يحتاج صيانة وري دوريين.', icon: Flower, color: 'green' },
+  { label: 'عشب صناعي', desc: 'أعلى تكلفة أولى، صفر صيانة دورية تقريباً.', icon: GridFour, color: 'blue' },
+  { label: 'حصى وزينة حجرية', desc: 'مناسب للممرات والمساحات الجافة قليلة الري.', icon: Sparkle, color: 'amber' },
+  { label: 'مختلط', desc: 'مزيج من عشب وحصى ونباتات حسب المناطق.', icon: TreePalm, color: 'green' },
+];
 
 function RelatedToolsCard({ items, heading }) {
   if (!items.length) return null;
@@ -104,6 +113,27 @@ export default function GardenCostCalculatorPage() {
               الاختيارية</strong> (ري، إضاءة، عناصر مائية) التي تُحسب كل واحدة على حدة في الحاسبة
               أعلاه بدل إخفائها داخل رقم واحد.
             </p>
+            <div className="tool-v2-info-grid">
+              {FLOOR_TYPES_PREVIEW.map((t) => {
+                const Icon = t.icon;
+                return (
+                  <div className="tool-v2-info-card" key={t.label}>
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                        width: '2rem', height: '2rem', borderRadius: '999px', marginBottom: '8px',
+                        background: `var(--${t.color}-subtle)`, color: `var(--${t.color}-text)`,
+                      }}
+                    >
+                      <Icon size={16} weight="bold" />
+                    </span>
+                    <h3>{t.label}</h3>
+                    <p>{t.desc}</p>
+                  </div>
+                );
+              })}
+            </div>
             <PlainBlock eyebrow="أكبر خطأ عند طلب عروض أسعار" title="اطلب دائماً تفصيل البنود">
               مقارنة رقمين إجماليين من شركتين مختلفتين بلا معرفة ما يشملانه مضللة تماماً — شركة قد
               تدرج الري والإضاءة ضمن سعرها والأخرى لا. استخدم تفصيل البنود في نتيجة الحاسبة أعلاه

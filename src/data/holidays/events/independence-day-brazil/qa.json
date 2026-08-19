@@ -1,0 +1,18 @@
+{
+  "slug": "independence-day-brazil",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: ويكيبيديا العربية: استقلال البرازيل",
+    "fact-source: Arab America: The History of the Arabs of South America",
+    "fact-check: 7 سبتمبر 1822 صرخة إيبيرانغا، إعلان دوم پيدرو الاستقلال عن البرتغال، اعتراف رسمي كامل عبر معاهدة 1825",
+    "fact-check: أرقام الجالية العربية في البرازيل (نحو 7 ملايين من أصل لبناني، 4 ملايين من أصل سوري) مصدرها تصريحات الحكومتين البرازيلية واللبنانية"
+  ],
+  "updatedAt": "2026-08-18T10:48:13.791Z"
+}

@@ -72,14 +72,24 @@ function buildCityPairSet(rows: readonly CityRouteRow[]): ReadonlySet<string> {
   );
 }
 
-const COUNTRY_SLUGS: ReadonlySet<string> = buildCountrySlugSet([
-  ...(fallbackCountries as CountryRouteRow[]),
-  ...(snapshotCountries as CountryRouteRow[]),
-]);
-const CITY_PAIRS: ReadonlySet<string> = buildCityPairSet([
-  ...(fallbackCities as CityRouteRow[]),
-  ...(snapshotCities as CityRouteRow[]),
-]);
+// Kept in sync with RETIRED_COUNTRY_SLUGS in src/lib/db/queries/countries.ts — this proxy reads
+// the raw fallback/snapshot JSON directly (not through that filtered query layer), so the
+// exclusion has to be repeated here too or this whitelist gate lets the retired slug straight
+// through to the page before the page's own resolution ever runs.
+const RETIRED_COUNTRY_SLUGS: ReadonlySet<string> = new Set(['israel']);
+
+const COUNTRY_SLUGS: ReadonlySet<string> = new Set(
+  Array.from(buildCountrySlugSet([
+    ...(fallbackCountries as CountryRouteRow[]),
+    ...(snapshotCountries as CountryRouteRow[]),
+  ])).filter((slug) => !RETIRED_COUNTRY_SLUGS.has(slug)),
+);
+const CITY_PAIRS: ReadonlySet<string> = new Set(
+  Array.from(buildCityPairSet([
+    ...(fallbackCities as CityRouteRow[]),
+    ...(snapshotCities as CityRouteRow[]),
+  ])).filter((pair) => !RETIRED_COUNTRY_SLUGS.has(pair.split('::')[0])),
+);
 
 function isSkippedPath(pathname: string): boolean {
   if (SKIPPED_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(prefix))) {

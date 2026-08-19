@@ -5,6 +5,7 @@ import AdBlogSidebar from '@/components/ads/AdBlogSidebar';
 import TocScrollSpy from '@/components/tools-v2/TocScrollSpy.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { FormulaCard, Frac } from '@/components/tools-v2/FormulaCard';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
@@ -25,8 +26,8 @@ const TOC_ITEMS = [
 export const metadata = buildCanonicalMetadata({ title: PAGE.heroTitle, description: PAGE.description, keywords: PAGE.keywords, url: `${SITE_URL}${PAGE.href}` });
 
 const QUICK_ANSWERS = [
-  { question: 'ما معادلة حساب وزن حديد التسليح؟', answer: 'وزن المتر بالكيلوجرام = القطر بالملم² ÷ 162 تقريباً. بعد ذلك: الوزن الإجمالي = وزن المتر × الطول بالمتر × عدد الأسياخ. هذه معادلة تقديرية مبنية على كثافة الفولاذ وتكفي للتسعير الأولي والمراجعة.' },
-  { question: 'كم وزن سيخ 12 متر قطر 16 ملم؟', answer: 'وزن متر قطر 16 ملم يساوي تقريباً 16 × 16 ÷ 162 = 1.58 كجم/م. سيخ 12 متر يزن حوالي 1.58 × 12 = 18.96 كجم، والحاسبة تعرضه تقريباً 18.94 كجم حسب التقريب المستخدم.' },
+  { question: 'ما معادلة حساب وزن حديد التسليح؟', answer: 'معادلتان متتاليتان: وزن المتر من القطر، ثم الوزن الإجمالي من وزن المتر — راجعهما كاملتين في قسم "الإجابات السريعة" أعلاه، أو استخدم حاسبة وزن الحديد للنتيجة مباشرة دون حساب يدوي.' },
+  { question: 'كم وزن سيخ 12 متر قطر 16 ملم؟', answer: 'وزن متر قطر 16 ملم يساوي تقريباً 1.58 كجم/م، وسيخ 12 متر يزن حوالي 18.96 كجم — راجع طريقة الحساب في قسم "الإجابات السريعة"، والحاسبة تعرضه تقريباً 18.94 كجم حسب التقريب المستخدم.' },
   { question: 'كيف أحول الوزن إلى طن؟', answer: 'اقسم الوزن بالكيلوجرام على 1000. إذا كان مجموع الحديد 2450 كجم، فهذا يساوي 2.45 طن. عند طلب عرض سعر، اسأل المورد هل السعر للطن فقط أم يشمل النقل والقص والتحميل.' },
   { question: 'هل أضيف هالك عند شراء الحديد؟', answer: 'نعم غالباً تضيف هامشاً صغيراً حسب التقطيع والتراكب وأخطاء الموقع، لكن لا تضفه عشوائياً في مشروع إنشائي. ابدأ بالحصر من المخطط، ثم ناقش الهالك مع المهندس أو المقاول.' },
   { question: 'هل التقدير يغني عن المخطط الإنشائي؟', answer: 'لا. الحساب يعطيك وزنًا للتسعير والمراجعة، لكنه لا يحدد كمية التسليح الآمنة ولا القطر المناسب للعنصر. التصميم والحصر النهائي يجب أن يرجعا للمخطط الإنشائي والمهندس.' },
@@ -123,6 +124,16 @@ export default function RebarWeightGuidePage() {
             <article className="guide-v2-article">
               <section id="quick-answers">
                 <h2>الإجابات السريعة</h2>
+                <FormulaCard label="الخطوة الأولى: احسب وزن المتر الواحد من قطر السيخ">
+                  <span>وزن المتر (كجم) =</span>
+                  <Frac num="القطر²" den="162" />
+                </FormulaCard>
+                <FormulaCard
+                  label="الخطوة الثانية: اضرب وزن المتر في الطول وعدد الأسياخ لتحصل على الوزن الإجمالي"
+                  note="مثال: قطر 16 ملم → وزن المتر ≈ 1.58 كجم. لسيخ بطول 12 متر: 1.58 × 12 = 18.96 كجم."
+                >
+                  <span>الوزن الإجمالي (كجم) = وزن المتر × الطول × عدد الأسياخ</span>
+                </FormulaCard>
                 {QUICK_ANSWERS.map((qa) => (
                   <div key={qa.question} style={{ marginBottom: 'var(--space-4)' }}>
                     <p style={{ fontWeight: 700, color: 'var(--text-1)', marginBottom: '4px' }}>{qa.question}</p>

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -52,6 +53,21 @@ const TYPE_GROUPS = [
   },
 ];
 
+const FAQ_ITEMS = [
+  {
+    question: 'من أين أبدأ إذا كنت أخطط لبناء منزل من الصفر؟',
+    answer: 'ابدأ بحاسبة تكلفة البناء لمعرفة نطاق التكلفة التقريبي في دولتك، ثم انتقل تدريجياً لحاسبات المواد التفصيلية (حديد، أسمنت، بلاط، دهان) كلما اقتربت من مرحلة الشراء الفعلية. لا تحاول حساب كل المواد دفعة واحدة في بداية التخطيط — الأرقام الدقيقة تحتاج مخططاً جاهزاً.',
+  },
+  {
+    question: 'هل هذه الحاسبات تغني عن مهندس أو مقاول؟',
+    answer: 'لا، وهذا ليس هدفها. كل حاسبة هنا تعطيك تقديراً سريعاً للمراجعة والتسعير الأولي — تساعدك على فهم الأرقام والتحقق من عروض الأسعار التي تستلمها، لكن القرار النهائي في أي مشروع إنشائي حقيقي يجب أن يرجع دائماً للمخطط الهندسي المعتمد والمهندس المشرف.',
+  },
+  {
+    question: 'كيف أتحقق أن عرض سعر المقاول أو المورد منطقي؟',
+    answer: 'احسب الكمية والتكلفة بنفسك أولاً باستخدام الحاسبة المناسبة (حديد، أسمنت، بلاط، حسب ما يخص عرض السعر)، ثم قارن الرقم بما استلمته. فرق كبير غير مبرر — سواء أعلى أو أقل بشكل مريب — يستحق سؤالاً مباشراً قبل الموافقة على أي عرض.',
+  },
+];
+
 function ToolLink({ slug }) {
   const route = findRoute(slug);
   return (
@@ -72,7 +88,7 @@ function ToolLink({ slug }) {
 export const metadata = buildCanonicalMetadata({
   title: 'حاسبات البناء والتشييد — تكلفة البناء والمواد بالعربي',
   description:
-    'حاسبات بناء مبنية على بحث كلمات حقيقي: تكلفة البناء وسعر المتر في 6 دول خليجية، وزن حديد التسليح، كمية الطوب والبلوك، وتحويل وحدات المساحة — بمعادلات هندسية دقيقة وموثّقة.',
+    'احسب تكلفة بناء منزلك وسعر المتر في 6 دول خليجية، وزن حديد التسليح، كمية الطوب والبلوك، وحوّل وحدات المساحة — حاسبات بناء بمعادلات هندسية دقيقة وموثّقة.',
   url: `${SITE_URL}/tools/construction`,
 });
 
@@ -108,11 +124,13 @@ export default function ConstructionCategoryHubPage() {
       }),
     },
   };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-construction-hub" />
 
@@ -170,6 +188,10 @@ export default function ConstructionCategoryHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="hub-faq" title="الأسئلة الشائعة">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

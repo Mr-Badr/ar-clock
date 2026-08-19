@@ -1,0 +1,18 @@
+{
+  "slug": "independence-day-georgia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: Independence Day in Georgia",
+    "fact-source: sabq.org: أفضل 25 وجهة سياحية في 2026",
+    "fact-check: 26 مايو 1918 إعلان أول جمهورية ديمقراطية جورجية، بقي التاريخ الرسمي المعتمد بعد استقلال 1991",
+    "fact-check: جورجيا مصنّفة ضمن أعلى الوجهات بحثاً للمسافرين الخليجيين في مصادر سفر عربية 2026"
+  ],
+  "updatedAt": "2026-08-18T10:49:11.520Z"
+}

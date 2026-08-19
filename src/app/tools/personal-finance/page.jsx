@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -22,9 +23,24 @@ function findRoute(slug) {
 // finance topics already covered in /tools/gulf-finance) — only small/generic calculator sites —
 // so kept and redesigned rather than dropped. This hub is deliberately currency-agnostic
 // (usePreferredCurrency, not Gulf-only) since personal budgeting applies pan-Arab, not just Gulf.
-const FEATURED_SLUGS = ['emergency-fund', 'debt-payoff', 'net-worth'];
+const FEATURED_SLUGS = ['bill-splitter', 'emergency-fund', 'debt-payoff'];
 
-const TOOL_SLUGS = ['emergency-fund', 'debt-payoff', 'savings-goal', 'net-worth'];
+const TOOL_SLUGS = ['bill-splitter', 'emergency-fund', 'debt-payoff', 'savings-goal', 'net-worth'];
+
+const FAQ_ITEMS = [
+  {
+    question: 'لا أعرف من أين أبدأ في ترتيب وضعي المالي — أي حاسبة أولاً؟',
+    answer: 'ابدأ بصندوق الطوارئ إن لم يكن لديك واحد بعد — هو الأساس الذي يحميك قبل التفكير بأي هدف آخر. إن كان لديك دين قائم، سداد الديون يستحق أولوية عالية أيضاً بسبب تراكم الفائدة. الادخار لهدف معيّن وصافي الثروة يفيدانك أكثر بعد استقرار هذين الأساسين.',
+  },
+  {
+    question: 'كيف أقسّم فاتورة مطعم أو رحلة بعدل بين مجموعة أصدقاء؟',
+    answer: 'إذا كان الجميع طلب بنفس القيمة تقريباً، القسمة بالتساوي كافية. أما إذا اختلفت الطلبات (شخص طلب أكثر، آخر لم يشارك في عنصر معيّن)، استخدم التقسيم التفصيلي بندأ ببند ليحسب لك بدقة من يدين لمن بالضبط، بما في ذلك حصة كل شخص من الضريبة والبقشيش.',
+  },
+  {
+    question: 'هل صافي الثروة السلبي (أقل من صفر) يعني أن وضعي المالي سيء؟',
+    answer: 'ليس بالضرورة — كثيرون في بداية حياتهم المهنية أو بعد قرض دراسي أو سكن لديهم صافي ثروة سلبي مؤقتاً. المهم هو الاتجاه: هل يتحسن الرقم مع الوقت أم يزداد سوءاً؟ راجع صافي ثروتك دورياً (كل عدة أشهر) لمتابعة الاتجاه الحقيقي بدل التركيز على رقم لحظة واحدة.',
+  },
+];
 
 function ToolLink({ slug }) {
   const route = findRoute(slug);
@@ -75,11 +91,13 @@ export default function PersonalFinanceCategoryHubPage() {
       }),
     },
   };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-personal-finance-hub" />
 
@@ -94,8 +112,9 @@ export default function PersonalFinanceCategoryHubPage() {
             <h1>حاسبات التخطيط المالي الشخصي</h1>
           </div>
           <p>
-            ابدأ من سؤالك المالي مباشرة: كم تحتاج صندوق طوارئ، متى تخلص من ديونك، كم تدخر شهرياً
-            لهدفك القادم، وما صافي ثروتك الحالي فعلاً — أربع حاسبات بأي عملة تختارها.
+            ابدأ من سؤالك المالي مباشرة: كيف تقسّم فاتورة مطعم أو رحلة بعدل، كم تحتاج صندوق طوارئ،
+            متى تخلص من ديونك، كم تدخر شهرياً لهدفك القادم، وما صافي ثروتك الحالي فعلاً — خمس
+            حاسبات بأي عملة تختارها.
           </p>
           <div className="tool-v2-cat-meta">
             <span><b>{toolCount}</b> حاسبات مالية مرتبطة مباشرة</span>
@@ -132,6 +151,10 @@ export default function PersonalFinanceCategoryHubPage() {
             </div>
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="hub-faq" title="الأسئلة الشائعة">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

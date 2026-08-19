@@ -1,0 +1,17 @@
+{
+  "slug": "all-saints-day-austria",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: All Saints' Day in Austria",
+    "fact-source: Wikipedia: Public holidays in Austria",
+    "fact-check: 1 نوفمبر عيد جميع القديسين، عطلة رسمية كاثوليكية في النمسا، تقليد زيارة المقابر وتنظيفها وإضاءة الشموع"
+  ],
+  "updatedAt": "2026-08-18T14:44:33.664Z"
+}

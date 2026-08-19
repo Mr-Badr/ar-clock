@@ -1,0 +1,17 @@
+{
+  "slug": "constitution-day-armenia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: advantour.com: Armenia Holidays 2026-2027",
+    "fact-source: Wikipedia: Public holidays in Armenia",
+    "fact-check: 5 يوليو يوم الدستور، استفتاء وطني 1995 أقرّ أول دستور أرميني بعد الاستقلال، منفصل عن يوم الاستقلال 1991"
+  ],
+  "updatedAt": "2026-08-18T21:33:06.635Z"
+}

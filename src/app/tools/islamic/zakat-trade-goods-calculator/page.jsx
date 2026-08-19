@@ -109,6 +109,28 @@ export default async function ZakatTradeGoodsCalculatorPage() {
                   وليس كل ما يملكه النشاط. الأصول الثابتة (المحل، المعدات، السيارات المستخدمة
                   للتشغيل) خارج وعاء هذه الزكاة تماماً.
                 </p>
+                <div className="guide-v2-compare-list">
+                  <div className="guide-v2-compare-card">
+                    <div className="guide-v2-compare-head">
+                      <span className="guide-v2-compare-title">يدخل في الوعاء</span>
+                    </div>
+                    <div className="guide-v2-compare-rows">
+                      <div className="guide-v2-compare-row"><span className="guide-v2-compare-row-label">بضاعة المتجر</span><span className="guide-v2-compare-row-value">المعدّة للبيع</span></div>
+                      <div className="guide-v2-compare-row"><span className="guide-v2-compare-row-label">وحدات عقارية</span><span className="guide-v2-compare-row-value">معدّة للبيع</span></div>
+                      <div className="guide-v2-compare-row"><span className="guide-v2-compare-row-label">سيارات المعرض</span><span className="guide-v2-compare-row-value">المعروضة للبيع</span></div>
+                    </div>
+                  </div>
+                  <div className="guide-v2-compare-card">
+                    <div className="guide-v2-compare-head">
+                      <span className="guide-v2-compare-title">لا يدخل في الوعاء</span>
+                    </div>
+                    <div className="guide-v2-compare-rows">
+                      <div className="guide-v2-compare-row"><span className="guide-v2-compare-row-label">المحل نفسه</span><span className="guide-v2-compare-row-value">أصل ثابت للتشغيل</span></div>
+                      <div className="guide-v2-compare-row"><span className="guide-v2-compare-row-label">الرفوف والمعدات</span><span className="guide-v2-compare-row-value">أصل ثابت للتشغيل</span></div>
+                      <div className="guide-v2-compare-row"><span className="guide-v2-compare-row-label">سيارة التوصيل</span><span className="guide-v2-compare-row-value">أداة تشغيل لا للبيع</span></div>
+                    </div>
+                  </div>
+                </div>
               </section>
 
               <ToolInArticleAd slotId="mid-zakat-trade-1" />

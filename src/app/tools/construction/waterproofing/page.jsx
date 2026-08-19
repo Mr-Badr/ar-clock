@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { Drop, ShieldCheck, SquaresFour } from '@phosphor-icons/react/ssr';
+
 import WaterproofingCalculator from '@/components/calculators/WaterproofingCalculator.client';
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
@@ -37,6 +39,14 @@ function PlainBlock({ eyebrow, title, children }) {
     </div>
   );
 }
+
+// Same INSULATION_TYPES used by WaterproofingCalculator.client.jsx — shown as a quick visual
+// overview of the three material types before the reader opens the calculator.
+const INSULATION_TYPES_PREVIEW = [
+  { label: 'عزل مائي سائل / دهان', desc: 'يُطبَّق بالفرشاة أو الرول على طبقتين غالباً.', icon: Drop, color: 'blue' },
+  { label: 'لفائف عزل بيتومينية', desc: 'لفائف جاهزة تُلحم أو تُلصق بالحرارة.', icon: SquaresFour, color: 'amber' },
+  { label: 'رغوة بولي يوريثان مرشوشة', desc: 'تُرش بمعدات متخصصة، السماكة تحدد كفاءة العزل الحراري.', icon: ShieldCheck, color: 'green' },
+];
 
 function RelatedToolsCard({ items, heading }) {
   if (!items.length) return null;
@@ -104,6 +114,27 @@ export default function WaterproofingToolPage() {
               (لترات، لفائف، أو أطقم) التي تحتاجها، لتشتريها أو تقارنها بعروض موردين حقيقيين
               بنفسك، لا سعراً وهمياً بلا معاينة.
             </p>
+            <div className="tool-v2-info-grid">
+              {INSULATION_TYPES_PREVIEW.map((t) => {
+                const Icon = t.icon;
+                return (
+                  <div className="tool-v2-info-card" key={t.label}>
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                        width: '2rem', height: '2rem', borderRadius: '999px', marginBottom: '8px',
+                        background: `var(--${t.color}-subtle)`, color: `var(--${t.color}-text)`,
+                      }}
+                    >
+                      <Icon size={16} weight="bold" />
+                    </span>
+                    <h3>{t.label}</h3>
+                    <p>{t.desc}</p>
+                  </div>
+                );
+              })}
+            </div>
             <PlainBlock eyebrow="اختر النوع المناسب لسطحك" title="ثلاثة أنواع، ثلاث رياضيات مختلفة">
               العزل السائل يُحسب باللتر حسب معدل التغطية وعدد الطبقات. اللفائف البيتومينية تُحسب
               بعدد اللفائف حسب مساحة اللفة الواحدة ونسبة التراكب. الرغوة المرشوشة تُحسب بعدد

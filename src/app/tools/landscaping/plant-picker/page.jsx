@@ -30,6 +30,18 @@ const RELATED_GUIDES = [
   { route: pickGuides(['landscaping-maintenance-tracker'])[0], reason: 'جدول صيانة شهري يناسب نباتاتك' },
 ].filter((item) => item.route);
 
+// Same real plant data used by PlantPickerChecker.client.jsx's PLANTS array — shown here as a
+// static preview grid so a reader sees real, specific plants immediately, before even opening the
+// interactive picker below. Never invented separately from the tool's own dataset.
+const FEATURED_PLANTS = [
+  { name: 'السدر', desc: 'شجرة ظل معمّرة تتحمل الحرارة والجفاف الشديد، تحتاج ريّاً قليلاً فقط بعد التأصيل.' },
+  { name: 'الغاف', desc: 'من أكثر الأشجار المحلية تحملاً للجفاف في الخليج، جذورها العميقة تصل للماء الجوفي.' },
+  { name: 'الجهنمية', desc: 'نبات مزهر بألوان زاهية يتحمل الحرارة القاسية، ممتاز كسياج مزهر كثيف.' },
+  { name: 'التيكوما', desc: 'شجيرة مزهرة صفراء سريعة النمو، تتحمل الحرارة والإهمال النسبي جيداً.' },
+  { name: 'الصبار والصباريات', desc: 'أقل النباتات احتياجاً للماء إطلاقاً — خيار مثالي لتقليل استهلاك الري.' },
+  { name: 'الياسمين الهندي', desc: 'رائحة عطرة مميزة، يفضّل ظلاً جزئياً وريّاً منتظماً غير مفرط.' },
+];
+
 const FAQ_ITEMS = [
   { question: 'ما أسهل النباتات نمواً في حرارة الخليج؟', answer: 'السدر والغاف من أكثر الأشجار تحملاً للجفاف والحرارة الشديدة معاً لأنها محلية أصلاً لبيئة الجزيرة العربية. من الشجيرات المزهرة، الجهنمية والتيكوما تتحملان الإهمال النسبي وقلة الري جيداً مقارنة بنباتات الزينة الأخرى.' },
   { question: 'هل يمكن زراعة نباتات تحتاج ظلاً في حديقة مكشوفة بالكامل؟', answer: 'يمكن ذلك إن وفّرت ظلاً صناعياً (شبك تظليل أو موقعها تحت شجرة كبيرة)، لكن الأسهل عملياً هو اختيار نباتات تتحمل الشمس الكاملة أصلاً لمنطقة الحديقة المكشوفة، وحفظ نباتات الظل الجزئي لمنطقة محمية طبيعياً كجانب المبنى.' },
@@ -90,6 +102,21 @@ export default function PlantPickerPage() {
                   جهد ري. اختيار نبات محلي أو متأقلم فعلياً مع الحرارة يوفر عليك تكاليف استبدال
                   متكررة ووقت عناية ضائعاً.
                 </p>
+                <div className="guide-v2-type-grid">
+                  {FEATURED_PLANTS.map((plant) => (
+                    <div className="guide-v2-type-card" key={plant.name}>
+                      <div className="guide-v2-type-card-head">
+                        <span className="guide-v2-type-card-icon" style={{ background: 'var(--green-subtle)', color: 'var(--green-text)' }}>
+                          <Flower size={16} weight="bold" />
+                        </span>
+                        <p className="guide-v2-type-card-title">{plant.name}</p>
+                      </div>
+                      <ul className="guide-v2-type-card-facts">
+                        <li>{plant.desc}</li>
+                      </ul>
+                    </div>
+                  ))}
+                </div>
               </section>
 
               <ToolInArticleAd slotId="mid-plant-picker" />

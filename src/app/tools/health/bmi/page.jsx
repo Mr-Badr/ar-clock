@@ -6,6 +6,7 @@ import EmbedCodeSnippet from '@/components/shared/EmbedCodeSnippet.client';
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { FormulaCard } from '@/components/tools-v2/FormulaCard';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
 import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
@@ -175,7 +176,12 @@ export default function BMIPage() {
                 <tbody>{BMI_TDEE_ROWS.map((row) => (<tr key={row[0]}><td>{row[0]}</td><td>{row[1]}</td><td>{row[2]}</td><td>{row[3]}</td></tr>))}</tbody>
               </table>
             </div>
-            <p className="tool-v2-option-hint">رجل: (10 × الوزن كجم) + (6.25 × الطول سم) − (5 × العمر) + 5 | امرأة: نفس المعادلة − 161 | ثم اضرب في معامل النشاط.</p>
+            <FormulaCard
+              label="لحساب معدل الأيض الأساسي (BMR) بمعادلة ميفلين-سانت جيور:"
+              note="للنساء: نفس المعادلة، لكن بدل +5 استخدمي −161. اضربي الناتج في معامل النشاط من الجدول أعلاه لتحصلي على السعرات اليومية الكلية (TDEE)."
+            >
+              <span>BMR = (10 × الوزن كجم) + (6.25 × الطول سم) − (5 × العمر) + 5</span>
+            </FormulaCard>
           </section>
 
           <section id="bmi-official">

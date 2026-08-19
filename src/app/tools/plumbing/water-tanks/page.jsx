@@ -6,6 +6,7 @@ import AdBlogSidebar from '@/components/ads/AdBlogSidebar';
 import TocScrollSpy from '@/components/tools-v2/TocScrollSpy.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { FormulaCard, Frac } from '@/components/tools-v2/FormulaCard';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
@@ -96,7 +97,7 @@ const FAQ_ITEMS = [
   },
   {
     question: 'كيف احسب سعة خزان الماء من أبعاده؟',
-    answer: 'للخزان الأسطواني: اضرب π (≈3.14) × مربع نصف القطر × الارتفاع (كل الأبعاد بالسنتيمتر)، ثم اقسم الناتج على 1000 للحصول على اللترات. للخزان المستطيل: اضرب الطول × العرض × الارتفاع ÷ 1000. استخدم وضع "احسب سعة خزاني الحالي" في الأداة أعلى هذا القسم لإدخال الأبعاد مباشرة بدل الحساب اليدوي.',
+    answer: 'راجع معادلتي الخزان الأسطواني والمستطيل في قسم "ما السعة المناسبة لك؟" أعلاه، أو استخدم وضع "احسب سعة خزاني الحالي" في الأداة لإدخال الأبعاد مباشرة بدل الحساب اليدوي.',
   },
 ];
 
@@ -217,9 +218,21 @@ export default function WaterTanksGuidePage() {
                 <h2>ما السعة المناسبة لك؟</h2>
                 <p>
                   لا تشترِ الخزان الأكبر "احتياطاً" — سعة أكبر من حاجتك تعني ماءً راكداً لفترة
-                  أطول داخل الخزان، وهذا يقلل جودته الصحية مع الوقت. استخدم الأداة التالية لمعرفة
-                  السعة المناسبة لعائلتك قبل الشراء، أو لحساب سعة خزانك الحالي إذا كنت تعرف أبعاده:
+                  أطول داخل الخزان، وهذا يقلل جودته الصحية مع الوقت.
                 </p>
+                <FormulaCard
+                  label="لحساب سعة خزان أسطواني باللتر من أبعاده (بالسنتيمتر):"
+                  note="π ≈ 3.14"
+                >
+                  <span>اللتر =</span>
+                  <Frac num="π × نصف القطر² × الارتفاع" den="1000" />
+                </FormulaCard>
+                <FormulaCard label="لحساب سعة خزان مستطيل باللتر من أبعاده (بالسنتيمتر):">
+                  <span>اللتر =</span>
+                  <Frac num="الطول × العرض × الارتفاع" den="1000" />
+                </FormulaCard>
+                <p>استخدم الأداة التالية لمعرفة السعة المناسبة لعائلتك قبل الشراء، أو وضع
+                  "احسب سعة خزاني الحالي" لإدخال أبعاد خزانك مباشرة بدل الحساب اليدوي:</p>
                 <WaterTankSizeChecker />
               </section>
 

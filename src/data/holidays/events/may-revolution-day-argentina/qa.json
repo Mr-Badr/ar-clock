@@ -1,0 +1,17 @@
+{
+  "slug": "may-revolution-day-argentina",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: National Holidays in Argentina 2026",
+    "fact-source: Wikipedia: May Revolution",
+    "fact-check: 25 مايو 1810 أحداث أسبوع مايو، تشكيل أول حكومة محلية (الخونتا الأولى)، سبق الاستقلال الرسمي 9 يوليو 1816 بست سنوات"
+  ],
+  "updatedAt": "2026-08-18T11:27:01.399Z"
+}

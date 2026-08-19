@@ -4,6 +4,7 @@ import PesticideDosageCalculator from '@/components/calculators/PesticideDosageC
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { FormulaCard } from '@/components/tools-v2/FormulaCard';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getPestControlPageContent } from '@/lib/calculators/pest-control-page-content';
 import { buildPrincipalPageSearchCoverage } from '@/lib/seo/page-search-coverage';
@@ -142,11 +143,12 @@ export default function PestDosageCalculatorPage() {
               لتعليمات الاستخدام الآمن. لهذا تطلب الحاسبة أعلاه رقمك أنت من ملصق منتجك، لا رقماً
               عاماً واحداً يُطبَّق على الجميع.
             </p>
-            <PlainBlock eyebrow="المعادلة ببساطة" title="مركّز × سعة الخزان = الكمية لكل خزان">
-              كمية المركّز لكل خزان كامل = معدل الجرعة على الملصق (مل أو غرام لكل لتر ماء) × سعة
-              الخزان باللتر. مثال: ملصق يقول &quot;5 مل لكل لتر&quot; وخزان 16 لتراً → 80 مل من
-              المركّز لكل خزان كامل.
-            </PlainBlock>
+            <FormulaCard
+              label="المعادلة البسيطة لحساب كمية المركّز لكل خزان كامل:"
+              note='مثال: ملصق يقول "5 مل لكل لتر" وخزان 16 لتراً → 80 مل من المركّز لكل خزان كامل.'
+            >
+              <span>الكمية لكل خزان = معدل الجرعة على الملصق × سعة الخزان باللتر</span>
+            </FormulaCard>
             <PlainBlock eyebrow="عند رش مساحة كبيرة" title="احسب عدد الخزانات قبل البدء">
               إن كنت تخطط لتغطية مساحة كبيرة، أدخل المساحة ومعدل الرش لكل متر مربع في الحاسبة أعلاه
               لمعرفة عدد الخزانات الكاملة التي ستحتاجها مسبقاً، بدل مقاطعة العمل لتحضير خزان إضافي

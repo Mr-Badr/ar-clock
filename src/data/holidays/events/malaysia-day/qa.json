@@ -1,0 +1,17 @@
+{
+  "slug": "malaysia-day",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: quickhr.co: Malaysia Public Holiday 2026",
+    "fact-source: mothership.sg: Merdeka Day & Malaysia Day are different days, explained",
+    "fact-check: 16 سبتمبر 1963 تأسيس اتحاد ماليزيا (صباح، سراوق، سنغافورة + مالايا)، سنغافورة انفصلت 1965، يوم ماليزيا أحد 5 أعياد فيدرالية إلزامية"
+  ],
+  "updatedAt": "2026-08-18T11:28:16.759Z"
+}

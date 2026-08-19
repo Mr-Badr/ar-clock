@@ -1,0 +1,17 @@
+{
+  "slug": "chulalongkorn-day-thailand",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: Chulalongkorn Day in Thailand",
+    "fact-source: expique.com: Chulalongkorn Day history",
+    "fact-check: 23 أكتوبر يوم تشولالونكورن، ذكرى وفاة الملك راما الخامس 1910، حافظ على استقلال تايلاند وحدّثها (إلغاء الرق، أول جامعة، سكك حديدية)"
+  ],
+  "updatedAt": "2026-08-18T15:09:56.044Z"
+}

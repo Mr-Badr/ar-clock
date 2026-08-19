@@ -1,0 +1,17 @@
+{
+  "slug": "tiradentes-day-brazil",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: National Holidays in Brazil in 2026",
+    "fact-source: Wikipedia: Tiradentes",
+    "fact-check: 21 أبريل 1792 إعدام جواكيم خوسيه دا سيلفا خافيير (تيرادينتيس)، قائد حركة الانكونفيدنسيا مينيرا 1789، رُفع لمكانة البطل القومي بعد إعلان الجمهورية 1889"
+  ],
+  "updatedAt": "2026-08-18T11:26:38.824Z"
+}

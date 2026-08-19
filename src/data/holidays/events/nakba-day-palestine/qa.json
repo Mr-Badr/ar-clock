@@ -1,0 +1,17 @@
+{
+  "slug": "nakba-day-palestine",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: ar.wikipedia.org: النكبة / ذكرى النكبة",
+    "fact-source: un.org/unispal: إحياء الذكرى الخامسة والسبعين للنكبة",
+    "fact-check: 15 مايو 1948 تهجير نحو 950 ألف فلسطيني، استُخدم التاريخ غير رسمياً منذ 1949، اكتسب طابعاً رسمياً واضحاً سنة 1998 بدعوة من الرئيس ياسر عرفات"
+  ],
+  "updatedAt": "2026-08-18T11:35:26.400Z"
+}

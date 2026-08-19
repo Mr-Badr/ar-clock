@@ -1,0 +1,17 @@
+{
+  "slug": "republic-day-maldives",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: timeanddate.com: Republic Day in Maldives",
+    "fact-source: Wikipedia: Public holidays in the Maldives",
+    "fact-check: 11 نوفمبر يوم الجمهورية، استفتاء شعبي 1968 ألغى نظام السلطنة وأسس الجمهورية الثانية، منفصل عن يوم الاستقلال 1965"
+  ],
+  "updatedAt": "2026-08-18T15:10:26.821Z"
+}

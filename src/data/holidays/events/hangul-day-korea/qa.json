@@ -1,0 +1,17 @@
+{
+  "slug": "hangul-day-korea",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: Wikipedia: Hangul Day",
+    "fact-source: officeholidays.com: South Korea Public Holidays 2026",
+    "fact-check: 9 أكتوبر يوم الهانغل، الملك سيجونغ اخترع الأبجدية 1443 وأعلنها 1446، كوريا الجنوبية الدولة الوحيدة عالمياً بعطلة رسمية لاختراع أبجديتها"
+  ],
+  "updatedAt": "2026-08-18T21:33:37.410Z"
+}

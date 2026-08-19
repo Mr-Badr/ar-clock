@@ -1,0 +1,18 @@
+{
+  "slug": "independence-day-argentina",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: ويكيبيديا العربية: إعلان الاستقلال الأرجنتيني",
+    "fact-source: latinarabia.com: The Latin Countries With The Most Arabs",
+    "fact-check: 9 يوليو 1816 إعلان مؤتمر توكومان الاستقلال عن إسبانيا، بمبنى كازا هيستوريكا كنصب تذكاري",
+    "fact-check: أرقام الجالية العربية في الأرجنتين (3.5-4.5 مليون) وأصل الرئيس السابق كارلوس منعم السوري مصدرها مصادر متعددة متطابقة"
+  ],
+  "updatedAt": "2026-08-18T10:48:42.915Z"
+}

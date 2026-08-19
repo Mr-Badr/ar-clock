@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -130,6 +131,22 @@ export default function GarageDoorsCategoryHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="before-you-buy" title="قبل شراء أو استبدال باب الجراج">
+          <p>
+            أكثر خطأ شائع عند اختيار مقاس باب الجراج هو الاعتماد على مقاس السيارة بالضبط بدل ترك
+            هامش حقيقي — الهامش الإضافي هو ما يتيح لك فتح الأبواب والمشي بجانب السيارة دون خدش.
+            وإذا كنت تواجه مشكلة في ريموت باب قائم بالفعل، معظم الحالات (بطارية فارغة، عين
+            استشعار متسخة) تُحل خلال دقائق دون فني — راجع الدليل الكامل أدناه لمعرفة مقاسك
+            المناسب أو تشخيص مشكلتك تحديداً.
+          </p>
+          <p>
+            قبل طلب أي باب جديد، قِس فتحة الجراج الفعلية بنفسك بدل الاعتماد على مقاس الباب القديم
+            وحده — أبعاد الفتحة الحقيقية (عرضاً وارتفاعاً) قد تختلف قليلاً عن الباب المركّب حالياً
+            بسبب إطارات أو تعديلات سابقة. خذ القياس من ثلاث نقاط مختلفة على كل بُعد (البداية،
+            المنتصف، النهاية) لأن الفتحات القديمة نادراً ما تكون متساوية الأبعاد تماماً.
+          </p>
+        </HubGuideSection>
       </div>
     </main>
   );

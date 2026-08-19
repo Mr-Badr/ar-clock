@@ -4,6 +4,7 @@ import GardenGravelCalculator from '@/components/calculators/GardenGravelCalcula
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { ReferenceGrid } from '@/components/tools-v2/ReferenceGrid';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getLandscapingPageContent } from '@/lib/calculators/landscaping-page-content';
 import { buildPrincipalPageSearchCoverage } from '@/lib/seo/page-search-coverage';
@@ -27,6 +28,14 @@ const TOC_ITEMS = [
 ];
 
 export const metadata = buildCanonicalMetadata({ title: PAGE.heroTitle, description: PAGE.description, keywords: SEARCH_COVERAGE.metadataKeywords, url: `${SITE_URL}${PAGE.href}` });
+
+// Same defaultDepth values used by GardenGravelCalculator.client.jsx's AREA_TYPES — shown as a
+// quick visual reference here, not a separately-invented set of numbers.
+const DEPTH_REFERENCE = [
+  { value: '5 سم', meta: 'ممر' },
+  { value: '8 سم', meta: 'حوض زينة' },
+  { value: '5 سم', meta: 'تغطية كاملة' },
+];
 
 function PlainBlock({ eyebrow, title, children }) {
   return (
@@ -102,6 +111,7 @@ export default function GardenGravelCalculatorPage() {
               للمشي المباشر تحتاج طبقة أرق نسبياً لأنها مضغوطة أكثر بطبيعتها، بينما أحواض الزينة
               تحتاج عمقاً أكبر قليلاً لتغطية أفضل ومنع نمو الأعشاب من التربة أسفلها.
             </p>
+            <ReferenceGrid items={DEPTH_REFERENCE} />
             <PlainBlock eyebrow="نسيت طبقة منع الأعشاب؟" title="أضفها قبل فرش الحصى">
               وضع قماش لاصق للأعشاب تحت الحصى مباشرة يقلل الحاجة لإزالة أعشاب متكررة لاحقاً بشكل
               كبير — خطوة رخيصة توفر عليك صيانة متكررة مزعجة على المدى الطويل.

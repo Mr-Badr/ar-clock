@@ -1,0 +1,17 @@
+{
+  "slug": "republic-day-brazil",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: National Holidays in Brazil in 2026",
+    "fact-source: Wikipedia: Proclamation of the Republic (Brazil)",
+    "fact-check: 15 نوفمبر 1889 انقلاب المارشال ديودورو دا فونسيكا أطاح بالإمبراطور دوم پيدرو الثاني وأنهى 67 عاماً من الحكم الإمبراطوري"
+  ],
+  "updatedAt": "2026-08-18T11:26:46.575Z"
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "st-georges-day-georgia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: National Holidays in Georgia 2026",
+    "fact-source: Wikipedia: Public holidays in Georgia / Saint George",
+    "fact-check: 23 نوفمبر عيد القديس جورج (جيورجوبا)، ثاني احتفال سنوي به بعد 6 مايو، القديس جورج شفيع جورجيا الرسمي ويظهر على العلم والشعار"
+  ],
+  "updatedAt": "2026-08-18T11:27:44.853Z"
+}

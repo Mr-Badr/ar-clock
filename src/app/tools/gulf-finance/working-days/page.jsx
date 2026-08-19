@@ -2,6 +2,7 @@ import WorkingDaysTool from '@/components/calculators/gulf-finance/WorkingDaysTo
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { ReferenceGrid } from '@/components/tools-v2/ReferenceGrid';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
 import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
@@ -18,6 +19,18 @@ const TOC_ITEMS = [
   ['wd-guide', 'لماذا تختلف عطلة نهاية الأسبوع بين الدول العربية؟'],
   ['wd-faq', 'الأسئلة الشائعة'],
   ['wd-sources', 'مصادر'],
+];
+
+// Same weekend rules used by WorkingDaysTool.client.jsx's WORKING_DAYS_COUNTRIES (engine.js).
+const WEEKEND_BY_COUNTRY = [
+  { value: 'السعودية', meta: 'الجمعة والسبت' },
+  { value: 'الإمارات', meta: 'السبت والأحد' },
+  { value: 'الكويت', meta: 'الجمعة والسبت' },
+  { value: 'قطر', meta: 'السبت والأحد' },
+  { value: 'البحرين', meta: 'الجمعة والسبت' },
+  { value: 'سلطنة عُمان', meta: 'الجمعة والسبت' },
+  { value: 'مصر', meta: 'الجمعة والسبت' },
+  { value: 'الأردن', meta: 'الجمعة والسبت' },
 ];
 
 export const metadata = buildCanonicalMetadata({
@@ -82,6 +95,7 @@ export default function WorkingDaysPage() {
               المعلومة القديمة الخاطئة. الحاسبة تستثني عطلة نهاية الأسبوع الرسمية فقط، ولا تستثني
               تلقائياً الإجازات الرسمية أو المناسبات الوطنية.
             </p>
+            <ReferenceGrid items={WEEKEND_BY_COUNTRY} />
           </section>
 
           <ToolInArticleAd slotId="mid-working-days" />

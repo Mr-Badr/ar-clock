@@ -6,6 +6,7 @@ import AdBlogSidebar from '@/components/ads/AdBlogSidebar';
 import TocScrollSpy from '@/components/tools-v2/TocScrollSpy.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { FormulaCard, Frac } from '@/components/tools-v2/FormulaCard';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getZakatLivePrices } from '@/lib/islamic/zakat-live-prices';
 import { buildPrincipalPageSearchCoverage } from '@/lib/seo/page-search-coverage';
@@ -49,7 +50,7 @@ const FAQ_ITEMS = [
   {
     question: `كم زكاة 100 جرام ذهب عيار 21 ${CURRENT_YEAR}؟`,
     answer:
-      'أولاً حوّل الوزن إلى الذهب الخالص: 100 جرام عيار 21 = 87.5 جراماً خالصاً (100 × 21/24). ثم اضرب هذا الوزن في سعر جرام الذهب الخالص (عيار 24) اليوم، فتحصل على قيمة القطعة. إن بلغت هذه القيمة (مع بقية أموالك) النصاب ومرّ عليها حول هجري كامل، فزكاتها 2.5% من القيمة. استخدم الحاسبة أعلى الصفحة لحساب هذا تلقائياً.',
+      'أولاً حوّل الوزن إلى الذهب الخالص (راجع معادلة تحويل العيار في قسم "تحويل العيار وحساب الوزن الخالص" أعلاه) — لعيار 21 يكون الناتج 87.5 جراماً خالصاً من كل 100 جرام. اضرب هذا الوزن في سعر جرام الذهب الخالص اليوم، فتحصل على قيمة القطعة. إن بلغت هذه القيمة (مع بقية أموالك) النصاب ومرّ عليها حول هجري كامل، فزكاتها 2.5% من القيمة. استخدم الحاسبة أعلى الصفحة لحساب هذا تلقائياً.',
   },
   {
     question: 'هل زكاة الذهب المستعمل تختلف عن الذهب الجديد؟',
@@ -139,6 +140,13 @@ export default async function ZakatGoldCalculatorPage() {
                   العيار يحدد نسبة الذهب الخالص في القطعة — الزكاة تُحسب على وزن الذهب الخالص فقط،
                   لا وزن القطعة كاملة إن كانت مخلوطة بمعادن أخرى:
                 </p>
+                <FormulaCard
+                  label="حوّل وزن أي قطعة إلى وزنها من الذهب الخالص (عيار 24) بهذه المعادلة:"
+                  note="مثال: 100 جرام عيار 21 = 100 × (21 ÷ 24) = 87.5 جراماً خالصاً."
+                >
+                  <span>الوزن الخالص = الوزن الكلي ×</span>
+                  <Frac num="العيار" den="24" />
+                </FormulaCard>
                 <div className="guide-v2-compare-list">
                   <div className="guide-v2-compare-card">
                     <div className="guide-v2-compare-rows">

@@ -2,6 +2,7 @@ import NafaqahTool from '@/components/calculators/gulf-finance/NafaqahTool.clien
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { ReferenceGrid } from '@/components/tools-v2/ReferenceGrid';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
 import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
@@ -13,6 +14,14 @@ const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'nafaqah');
 const CONTENT = getFinancePageContent('nafaqah');
 const SEARCH_COVERAGE = buildFinancePageSearchCoverage(PAGE, CONTENT);
+
+// Same limits applied by NafaqahTool.client.jsx after deducting fixed monthly obligations.
+const NAFAQAH_LIMITS = [
+  { value: 'النطاق المعتاد', meta: '10%-20% من الدخل المتاح' },
+  { value: 'الحد الأقصى للحالات الخاصة', meta: '25% من الدخل المتاح' },
+  { value: 'الحد الأدنى لكل مستحق', meta: '300 ريال شهرياً' },
+  { value: 'السقف الإجمالي', meta: '50% من دخل المنفق' },
+];
 
 const TOC_ITEMS = [
   ['nafaqah-guide', 'كيف يقدَّر مبلغ النفقة فعلياً؟'],
@@ -82,6 +91,7 @@ export default function NafaqahPage() {
               الالتزامات الشهرية الثابتة من الدخل. القاضي هو من يحدد المبلغ النهائي فعلياً؛ هذه
               الأداة تعطيك نطاقاً تقريبياً للتخطيط فقط.
             </p>
+            <ReferenceGrid items={NAFAQAH_LIMITS} />
           </section>
 
           <ToolInArticleAd slotId="mid-nafaqah" />

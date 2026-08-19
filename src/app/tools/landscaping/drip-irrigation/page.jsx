@@ -28,6 +28,13 @@ const TOC_ITEMS = [
 
 export const metadata = buildCanonicalMetadata({ title: PAGE.heroTitle, description: PAGE.description, keywords: SEARCH_COVERAGE.metadataKeywords, url: `${SITE_URL}${PAGE.href}` });
 
+// Same PLANT_TYPES used by DripIrrigationCalculator.client.jsx (flowRate in L/h, emitters per plant).
+const DRIP_PLANT_TYPES = [
+  { title: 'شجرة كبيرة', rows: [['معدل التصرف', '6 لتر/ساعة'], ['عدد النقّاطات', 'نقّاطتان']] },
+  { title: 'شجيرة متوسطة', rows: [['معدل التصرف', '4 لتر/ساعة'], ['عدد النقّاطات', 'نقّاطة واحدة']] },
+  { title: 'نبتة صغيرة', rows: [['معدل التصرف', '2 لتر/ساعة'], ['عدد النقّاطات', 'نقّاطة واحدة']] },
+];
+
 function PlainBlock({ eyebrow, title, children }) {
   return (
     <div className="tool-v2-plain-block">
@@ -103,6 +110,23 @@ export default function DripIrrigationCalculatorPage() {
               الجذر بمعدل بطيء ومستمر، ما يقلل الهدر بشكل كبير ويقلل عدد مرات الري اليدوي المطلوبة
               أسبوعياً.
             </p>
+            <div className="guide-v2-compare-list">
+              {DRIP_PLANT_TYPES.map((card) => (
+                <div className="guide-v2-compare-card" key={card.title}>
+                  <div className="guide-v2-compare-head">
+                    <span className="guide-v2-compare-title">{card.title}</span>
+                  </div>
+                  <div className="guide-v2-compare-rows">
+                    {card.rows.map(([label, value]) => (
+                      <div className="guide-v2-compare-row" key={label}>
+                        <span className="guide-v2-compare-row-label">{label}</span>
+                        <span className="guide-v2-compare-row-value">{value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
             <PlainBlock eyebrow="لا تعرف معدل تصرف نقّاطاتك الفعلي؟" title="تحقق من عبوة المنتج">
               النقّاطات التجارية مطبوع عليها معدل التصرف بالساعة (لتر/ساعة) عادة على العبوة أو
               النقّاطة نفسها — استخدم هذا الرقم في الحاسبة أعلاه بدل الاعتماد على القيمة الافتراضية

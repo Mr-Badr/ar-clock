@@ -5,6 +5,7 @@ import CleaningQuoteGenerator from '@/components/calculators/CleaningQuoteGenera
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { ReferenceGrid } from '@/components/tools-v2/ReferenceGrid';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getCleaningPageContent } from '@/lib/calculators/cleaning-page-content';
 import { buildPrincipalPageSearchCoverage } from '@/lib/seo/page-search-coverage';
@@ -25,6 +26,9 @@ function pickTools(slugs) {
   return slugs.map((slug) => CALCULATOR_ROUTES.find((item) => item.slug === slug)).filter((item) => item && !item.draft);
 }
 const RELATED_TOOLS = pickTools(['cleaning-cost-calculator', 'cleaning-deep-clean-checker', 'cleaning-water-tank-tracker']);
+
+// Same service/addon labels used by CleaningCostCalculator.client.jsx's CLEAN_TYPES + ADDONS.
+const QUOTE_COMMON_ITEMS = ['تنظيف عادي', 'تنظيف عميق', 'بعد تشطيب أو دهان', 'بعد انتقال (تسليم/استلام)', 'تنظيف سجاد وكنب', 'واجهات زجاجية خارجية', 'تنظيف خزان المياه'].map((value) => ({ value }));
 
 const TOC_ITEMS = [
   ['quote-guide', 'ما الذي يجعل عرض السعر يبدو احترافياً؟'],
@@ -141,6 +145,8 @@ export default function CleaningQuoteGeneratorPage() {
               بدل رقم واحد، تاريخ ومدة صلاحية واضحين، وشروط دفع مكتوبة صراحة بدل الاعتماد على
               اتفاق شفهي. المولّد أعلاه يبني لك هذا المستند تلقائياً بمجرد تعبئة الحقول.
             </p>
+            <p>بنود شائعة تظهر في عروض أسعار التنظيف — أضفها من القائمة الجاهزة في الأداة أعلاه:</p>
+            <ReferenceGrid items={QUOTE_COMMON_ITEMS} />
             <PlainBlock eyebrow="اربط الأداتين ببعض" title="من الحاسبة مباشرة إلى عرض السعر">
               إن جئت لهذه الصفحة من حاسبة تكلفة التنظيف، ستجد الرقم الذي حسبته معبّأً تلقائياً في
               أول بند — عدّله أو أضف بنوداً أخرى ثم حمّل المستند مباشرة.

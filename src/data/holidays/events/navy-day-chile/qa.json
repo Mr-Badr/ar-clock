@@ -1,0 +1,17 @@
+{
+  "slug": "navy-day-chile",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: National Holidays in Chile 2026",
+    "fact-source: Wikipedia: Battle of Iquique / Arturo Prat",
+    "fact-check: 21 مايو 1879 معركة إكيكي، غرق السفينة التشيلية إسميرالدا واستشهاد الكابتن آرتورو پرات، خلال حرب المحيط الهادئ"
+  ],
+  "updatedAt": "2026-08-18T11:27:16.232Z"
+}

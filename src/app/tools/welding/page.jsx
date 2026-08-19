@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -134,6 +135,23 @@ export default function WeldingCategoryHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="before-you-start" title="قبل أن تبدأ أي مشروع لحام">
+          <p>
+            نوع اللحام المناسب يعتمد على ثلاثة عوامل عملية: نوع المعدن (الحديد العادي يختلف عن
+            الألمنيوم أو الستانلس ستيل)، سماكته (المعادن الرقيقة تحتاج تحكماً أدق من الأنبوبية أو
+            القوس الكهربائي التقليدي)، وخبرتك الفعلية (القوس الكهربائي أسهل للمبتدئين رغم أنه أقل
+            دقة). لا تختر النوع بناءً على ما تملكه من معدات فقط — ابدأ من طبيعة المعدن الذي
+            ستلحمه، ثم راجع الدليل الكامل أدناه لمعرفة أي نوع يناسبه فعلياً، واحسب كمية القطب أو
+            السلك المطلوبة قبل الشراء بدل التقدير بالعين.
+          </p>
+          <p>
+            معدات الحماية الأساسية ليست اختيارية بغض النظر عن نوع اللحام: قناع وجه يحجب الأشعة
+            فوق البنفسجية والأشعة تحت الحمراء الناتجة عن القوس الكهربائي (وليس نظارات عادية داكنة)،
+            قفازات جلدية تتحمل الحرارة، وتهوية جيدة للمكان لأن أبخرة اللحام قد تكون ضارة عند
+            التنفس المتكرر في مساحة مغلقة. هذه المعدات تحمي من إصابات حقيقية وليست احتياطاً زائداً.
+          </p>
+        </HubGuideSection>
       </div>
     </main>
   );

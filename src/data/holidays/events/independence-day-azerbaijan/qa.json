@@ -1,0 +1,18 @@
+{
+  "slug": "independence-day-azerbaijan",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: Independence Day in Azerbaijan",
+    "fact-source: azerbaijan.az: Day of State Independence",
+    "fact-check: 18 أكتوبر 1991 اعتماد وثيقة إعلان الاستقلال، لم يعد عطلة رسمية بلا عمل منذ 2006 — تحقق من مصدرين متطابقين",
+    "fact-check: 28 مايو 1918 تأسيس الجمهورية الديمقراطية الأذربيجانية (يوم الجمهورية، عطلة منفصلة) — لا يُخلط مع هذا الحدث"
+  ],
+  "updatedAt": "2026-08-18T10:49:24.557Z"
+}

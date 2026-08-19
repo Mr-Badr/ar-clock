@@ -15,5 +15,5 @@
     "Focused validation passed with validate-holiday-content, ESLint, typecheck, and seo:validate.",
     "Generated holiday bundles were not regenerated because events:build was intentionally not run, so the rendered route can still lag behind the authored package."
   ],
-  "updatedAt": "2026-06-01T00:00:00.000Z"
+  "updatedAt": "2026-08-19T17:12:10.414Z"
 }

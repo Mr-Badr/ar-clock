@@ -1,0 +1,17 @@
+{
+  "slug": "africa-day-mauritania",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: Mauritania Public Holidays",
+    "fact-source: Wikipedia (Arabic): يوم أفريقيا",
+    "fact-check: 25 مايو يوم أفريقيا، عطلة رسمية في موريتانيا، يخلد تأسيس منظمة الوحدة الأفريقية 1963، موريتانيا عضو مزدوج في الاتحاد الأفريقي وجامعة الدول العربية"
+  ],
+  "updatedAt": "2026-08-18T14:44:22.551Z"
+}

@@ -930,6 +930,416 @@
     "day": 17
   },
   {
+    "id": "independence-day-brazil",
+    "slug": "independence-day-brazil",
+    "name": "عيد استقلال البرازيل",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "br",
+    "month": 9,
+    "day": 7
+  },
+  {
+    "id": "independence-day-argentina",
+    "slug": "independence-day-argentina",
+    "name": "عيد استقلال الأرجنتين",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ar",
+    "month": 7,
+    "day": 9
+  },
+  {
+    "id": "independence-day-chile",
+    "slug": "independence-day-chile",
+    "name": "عيد استقلال تشيلي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "cl",
+    "month": 9,
+    "day": 18
+  },
+  {
+    "id": "independence-day-georgia",
+    "slug": "independence-day-georgia",
+    "name": "عيد استقلال جورجيا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ge",
+    "month": 5,
+    "day": 26
+  },
+  {
+    "id": "independence-day-azerbaijan",
+    "slug": "independence-day-azerbaijan",
+    "name": "عيد استقلال أذربيجان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "az",
+    "month": 10,
+    "day": 18
+  },
+  {
+    "id": "independence-day-malaysia",
+    "slug": "independence-day-malaysia",
+    "name": "يوم استقلال ماليزيا (ميرديكا)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "my",
+    "month": 8,
+    "day": 31
+  },
+  {
+    "id": "independence-day-bosnia",
+    "slug": "independence-day-bosnia",
+    "name": "عيد استقلال البوسنة والهرسك",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ba",
+    "month": 3,
+    "day": 1
+  },
+  {
+    "id": "tiradentes-day-brazil",
+    "slug": "tiradentes-day-brazil",
+    "name": "يوم تيرادينتيس",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "br",
+    "month": 4,
+    "day": 21
+  },
+  {
+    "id": "republic-day-brazil",
+    "slug": "republic-day-brazil",
+    "name": "يوم إعلان الجمهورية البرازيلية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "br",
+    "month": 11,
+    "day": 15
+  },
+  {
+    "id": "black-consciousness-day-brazil",
+    "slug": "black-consciousness-day-brazil",
+    "name": "يوم الوعي الأسود",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "br",
+    "month": 11,
+    "day": 20
+  },
+  {
+    "id": "may-revolution-day-argentina",
+    "slug": "may-revolution-day-argentina",
+    "name": "ذكرى ثورة مايو الأرجنتينية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ar",
+    "month": 5,
+    "day": 25
+  },
+  {
+    "id": "flag-day-argentina",
+    "slug": "flag-day-argentina",
+    "name": "يوم العلم الأرجنتيني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ar",
+    "month": 6,
+    "day": 20
+  },
+  {
+    "id": "navy-day-chile",
+    "slug": "navy-day-chile",
+    "name": "يوم البحرية التشيلية (أمجاد البحرية)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "cl",
+    "month": 5,
+    "day": 21
+  },
+  {
+    "id": "army-day-chile",
+    "slug": "army-day-chile",
+    "name": "يوم أمجاد الجيش التشيلي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "cl",
+    "month": 9,
+    "day": 19
+  },
+  {
+    "id": "st-georges-day-georgia",
+    "slug": "st-georges-day-georgia",
+    "name": "عيد القديس جورج في جورجيا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ge",
+    "month": 11,
+    "day": 23
+  },
+  {
+    "id": "national-unity-day-georgia",
+    "slug": "national-unity-day-georgia",
+    "name": "يوم الوحدة الوطنية الجورجي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ge",
+    "month": 4,
+    "day": 9
+  },
+  {
+    "id": "republic-day-azerbaijan",
+    "slug": "republic-day-azerbaijan",
+    "name": "يوم الجمهورية الأذربيجاني",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "az",
+    "month": 5,
+    "day": 28
+  },
+  {
+    "id": "martyrs-day-azerbaijan",
+    "slug": "martyrs-day-azerbaijan",
+    "name": "يوم الشهداء الأذربيجاني (يوم الحزن الوطني)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "az",
+    "month": 1,
+    "day": 20
+  },
+  {
+    "id": "malaysia-day",
+    "slug": "malaysia-day",
+    "name": "يوم ماليزيا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "my",
+    "month": 9,
+    "day": 16
+  },
+  {
+    "id": "federal-territory-day-malaysia",
+    "slug": "federal-territory-day-malaysia",
+    "name": "يوم الإقليم الفيدرالي الماليزي",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "my",
+    "month": 2,
+    "day": 1
+  },
+  {
+    "id": "statehood-day-bosnia",
+    "slug": "statehood-day-bosnia",
+    "name": "يوم الدولة في البوسنة والهرسك",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ba",
+    "month": 11,
+    "day": 25
+  },
+  {
+    "id": "nakba-day-palestine",
+    "slug": "nakba-day-palestine",
+    "name": "ذكرى النكبة الفلسطينية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "ps",
+    "month": 5,
+    "day": 15
+  },
+  {
+    "id": "constitution-day-norway",
+    "slug": "constitution-day-norway",
+    "name": "عيد دستور النرويج (سيتيندي ماي)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "no",
+    "month": 5,
+    "day": 17
+  },
+  {
+    "id": "vappu-finland",
+    "slug": "vappu-finland",
+    "name": "فابو (عيد الربيع الفنلندي)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "fi",
+    "month": 5,
+    "day": 1
+  },
+  {
+    "id": "africa-day-mauritania",
+    "slug": "africa-day-mauritania",
+    "name": "يوم أفريقيا في موريتانيا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "mr",
+    "month": 5,
+    "day": 25
+  },
+  {
+    "id": "all-saints-day-austria",
+    "slug": "all-saints-day-austria",
+    "name": "عيد جميع القديسين في النمسا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "at",
+    "month": 11,
+    "day": 1
+  },
+  {
+    "id": "christmas-lebanon",
+    "slug": "christmas-lebanon",
+    "name": "عيد الميلاد المجيد في لبنان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "lb",
+    "month": 12,
+    "day": 25
+  },
+  {
+    "id": "christmas-day-sweden",
+    "slug": "christmas-day-sweden",
+    "name": "يوم عيد الميلاد الرسمي في السويد (يولداغن)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "se",
+    "month": 12,
+    "day": 25
+  },
+  {
+    "id": "second-day-christmas-sweden",
+    "slug": "second-day-christmas-sweden",
+    "name": "اليوم الثاني لعيد الميلاد في السويد (أنانداغ يول)",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "se",
+    "month": 12,
+    "day": 26
+  },
+  {
+    "id": "constitution-day-thailand",
+    "slug": "constitution-day-thailand",
+    "name": "يوم الدستور في تايلاند",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "th",
+    "month": 12,
+    "day": 10
+  },
+  {
+    "id": "chulalongkorn-day-thailand",
+    "slug": "chulalongkorn-day-thailand",
+    "name": "يوم تشولالونكورن في تايلاند",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "th",
+    "month": 10,
+    "day": 23
+  },
+  {
+    "id": "independence-day-indonesia",
+    "slug": "independence-day-indonesia",
+    "name": "يوم استقلال إندونيسيا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "id",
+    "month": 8,
+    "day": 17
+  },
+  {
+    "id": "pancasila-day-indonesia",
+    "slug": "pancasila-day-indonesia",
+    "name": "يوم بانتشاسيلا في إندونيسيا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "id",
+    "month": 6,
+    "day": 1
+  },
+  {
+    "id": "independence-day-maldives",
+    "slug": "independence-day-maldives",
+    "name": "يوم استقلال المالديف",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "mv",
+    "month": 7,
+    "day": 26
+  },
+  {
+    "id": "republic-day-maldives",
+    "slug": "republic-day-maldives",
+    "name": "يوم الجمهورية في المالديف",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "mv",
+    "month": 11,
+    "day": 11
+  },
+  {
+    "id": "independence-day-armenia",
+    "slug": "independence-day-armenia",
+    "name": "يوم استقلال أرمينيا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "am",
+    "month": 9,
+    "day": 21
+  },
+  {
+    "id": "constitution-day-armenia",
+    "slug": "constitution-day-armenia",
+    "name": "يوم الدستور في أرمينيا",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "am",
+    "month": 7,
+    "day": 5
+  },
+  {
+    "id": "constitution-memorial-day-japan",
+    "slug": "constitution-memorial-day-japan",
+    "name": "يوم الدستور التذكاري في اليابان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "jp",
+    "month": 5,
+    "day": 3
+  },
+  {
+    "id": "culture-day-japan",
+    "slug": "culture-day-japan",
+    "name": "يوم الثقافة في اليابان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "jp",
+    "month": 11,
+    "day": 3
+  },
+  {
+    "id": "liberation-day-korea",
+    "slug": "liberation-day-korea",
+    "name": "يوم التحرير في كوريا الجنوبية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "kr",
+    "month": 8,
+    "day": 15
+  },
+  {
+    "id": "hangul-day-korea",
+    "slug": "hangul-day-korea",
+    "name": "يوم الهانغل في كوريا الجنوبية",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "kr",
+    "month": 10,
+    "day": 9
+  },
+  {
     "id": "abu-simbel-sun-alignment-february",
     "slug": "abu-simbel-sun-alignment-february",
     "name": "تعامد الشمس في أبو سمبل (فبراير)",
@@ -1288,8 +1698,8 @@
     "type": "fixed",
     "category": "national",
     "_countryCode": "ma",
-    "month": 7,
-    "day": 5
+    "month": 6,
+    "day": 17
   },
   {
     "id": "bac-results-ae",

@@ -2,6 +2,7 @@ import PoolVolumeChlorineCalculator from '@/components/calculators/PoolVolumeChl
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { FormulaCard, Frac } from '@/components/tools-v2/FormulaCard';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildPrincipalPageSearchCoverage } from '@/lib/seo/page-search-coverage';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -15,7 +16,7 @@ const FAQ_ITEMS = [
   {
     question: 'كيف احسب حجم المسبح؟',
     answer:
-      'المعادلة تختلف حسب الشكل: مسبح مستطيل = الطول × العرض × متوسط العمق. دائري = π × (نصف القطر)² × متوسط العمق. بيضاوي = الطول × العرض × 0.785 × متوسط العمق. كلوي الشكل = 0.45 × مجموع العرضين × الطول × متوسط العمق. اختر شكل مسبحك في الحاسبة أعلاه وأدخل الأبعاد بالمتر للحصول على الحجم بالمتر المكعب واللتر مباشرة.',
+      'المعادلة تختلف حسب شكل المسبح — راجع الصيغ الأربع كاملة في قسم "لماذا نحسب بالمتري مباشرة لا بالغالون" أعلاه، أو اختر شكل مسبحك في الحاسبة وأدخل الأبعاد بالمتر للحصول على الحجم بالمتر المكعب واللتر مباشرة دون حساب يدوي.',
   },
   {
     question: 'كم كمية الكلور اللازمة للمسبح؟',
@@ -122,6 +123,23 @@ export default function PoolVolumeCalculatorPage() {
               ما يضيف خطوة ذهنية غير ضرورية للقارئ العربي. هذه الأداة تحسب مباشرة بالمتر المكعب
               واللتر، ثم تستخدم نفس الحجم فوراً لحساب جرعة الكلور بلا أي تحويل وسيط.
             </p>
+            <p style={{ fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-2)' }}>
+              معادلة حساب الحجم تختلف حسب شكل المسبح:
+            </p>
+            <div className="tool-v2-formula-grid">
+              <FormulaCard label="مسبح مستطيل">
+                <span>الحجم = الطول × العرض × متوسط العمق</span>
+              </FormulaCard>
+              <FormulaCard label="مسبح دائري">
+                <span>الحجم = π × نصف القطر² × متوسط العمق</span>
+              </FormulaCard>
+              <FormulaCard label="مسبح بيضاوي">
+                <span>الحجم = الطول × العرض × 0.785 × متوسط العمق</span>
+              </FormulaCard>
+              <FormulaCard label="مسبح كلوي الشكل">
+                <span>الحجم = 0.45 × مجموع العرضين × الطول × متوسط العمق</span>
+              </FormulaCard>
+            </div>
             <PlainBlock eyebrow="لا تعرف عمق مسبحك بالضبط؟" title="استخدم متوسط العمق">
               إن كان مسبحك بعمق ثابت في كل مكان، أدخل نفس الرقم في حقلي العمق الضحل والعميق. إن
               كان يتدرج (منطقة أطفال ضحلة ومنطقة سباحة أعمق)، أدخل العمقين الحقيقيين وستحسب

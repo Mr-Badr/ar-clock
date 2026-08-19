@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -42,6 +43,25 @@ const TYPE_GROUPS = [
     name: 'مرجع وتحويلات',
     note: 'أرقام وتحويلات تحتاجها قبل أي قرار صيانة.',
     slugs: ['tire-guide', 'oil-guide', 'fuel-efficiency'],
+  },
+];
+
+const FAQ_ITEMS = [
+  {
+    question: 'من أين أبدأ إذا كنت لا أعرف أي شيء عن صيانة سيارتي؟',
+    answer: 'ابدأ بجدول الصيانة الدورية لمعرفة ماذا يُفحص أو يُغيّر عند كل محطة مسافة (5,000، 10,000، 20,000 كم وهكذا)، ثم استخدم متتبع الصيانة لحساب موعدك القادم تحديداً بناءً على قراءة عدادك ومعدل قيادتك الفعلي — لا تحتاج حفظ الجدول كاملاً، الأداة تتذكره عنك.',
+  },
+  {
+    question: 'هل نفس جدول الصيانة يصلح لأي سيارة وأي بلد عربي؟',
+    answer: 'الجدول مبني على توافق التوصيات العامة بين الوكالات ومراكز الصيانة، ويصلح كمرجع عام لمعظم السيارات — لكن الرجوع لكتيب الصيانة الخاص بسيارتك يبقى الأدق دائماً، خصوصاً للسيارات الحديثة التي قد تختلف فتراتها عن المعتاد.',
+  },
+  {
+    question: 'ضوء تحذيري أضاء فجأة في لوحة القيادة — من أين أعرف خطورته؟',
+    answer: 'اللون يفرّق بين الحالات: الأحمر يعني توقفاً فورياً أو مراجعة عاجلة جداً (حرارة، زيت، فرامل)، بينما الأصفر يعني مراجعة قريبة لكن ليست طارئة بالضرورة. راجع دليل أضواء لوحة القيادة لمعرفة معنى كل ضوء تحديداً قبل أن تقرر متابعة القيادة أو التوقف.',
+  },
+  {
+    question: 'كيف أعرف بيانات سيارتي الحقيقية دون الرجوع لملصق أو وثيقة؟',
+    answer: 'رقم الشاصي (VIN) المكوّن من 17 خانة يحمل بلد الصنع وسنة الإنتاج والشركة المصنّعة والموديل — أدخله في أداة فحص رقم الشاصي للحصول على البيانات الحقيقية فوراً دون تسجيل أو رسوم.',
   },
 ];
 
@@ -101,11 +121,13 @@ export default function CarMaintenanceHubPage() {
       }),
     },
   };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-car-maintenance-hub" />
 
@@ -164,6 +186,10 @@ export default function CarMaintenanceHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="hub-faq" title="الأسئلة الشائعة">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

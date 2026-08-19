@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { CalendarBlank } from '@phosphor-icons/react/ssr';
+import { CalendarBlank, Drop, Leaf, Snowflake, Sun } from '@phosphor-icons/react/ssr';
 
 import AdBlogSidebar from '@/components/ads/AdBlogSidebar';
 import TocScrollSpy from '@/components/tools-v2/TocScrollSpy.client';
@@ -29,6 +29,14 @@ const RELATED_GUIDES = [
   { route: pickGuides(['landscaping-plant-picker'])[0], reason: 'أضف نباتات جديدة تناسب الموسم القادم' },
   { route: pickGuides(['landscaping-quote-generator'])[0], reason: 'حوّل خطة الصيانة إلى عرض سعر لعميلك' },
 ].filter((item) => item.route);
+
+// Same SEASON_TASKS used by GardenMaintenanceTracker.client.jsx (first task per season shown here).
+const SEASON_OVERVIEW = [
+  { label: 'الشتاء', icon: Snowflake, color: 'blue', fact: 'قلّل الري — الاحتياج المائي أقل مع انخفاض الحرارة' },
+  { label: 'الربيع', icon: Leaf, color: 'green', fact: 'موسم التسميد وزراعة الشتلات الجديدة' },
+  { label: 'الصيف', icon: Sun, color: 'amber', fact: 'زِد الري تدريجياً وراقب الإجهاد الحراري' },
+  { label: 'الخريف', icon: Drop, color: 'blue', fact: 'قلّل الري تدريجياً وأزل الأوراق المتساقطة' },
+];
 
 const FAQ_ITEMS = [
   { question: 'ما أهم مهمة صيانة يغفل عنها أصحاب الحدائق؟', answer: 'فحص نظام الري بحثاً عن تسريبات أو انسداد نقّاطات قبل بداية موسم الحرارة، لا بعده. تسريب صغير غير ملحوظ في الشتاء يتحول لمشكلة كبيرة (فاتورة مياه مرتفعة أو نباتات ذابلة) عندما يرتفع الاستهلاك صيفاً.' },
@@ -89,6 +97,28 @@ export default function GardenMaintenanceTrackerPage() {
                   أقل وفرصة جيدة للتقليم. تطبيق نفس روتين الصيانة طوال السنة يعني إما إفراطاً في
                   الري شتاءً أو تقصيراً فيه صيفاً.
                 </p>
+                <div className="guide-v2-type-grid">
+                  {SEASON_OVERVIEW.map((s) => {
+                    const Icon = s.icon;
+                    return (
+                      <div className="guide-v2-type-card" key={s.label}>
+                        <div className="guide-v2-type-card-head">
+                          <span
+                            className="guide-v2-type-card-icon"
+                            aria-hidden="true"
+                            style={{ background: `var(--${s.color}-subtle)`, color: `var(--${s.color}-text)` }}
+                          >
+                            <Icon size={17} weight="bold" />
+                          </span>
+                          <p className="guide-v2-type-card-title">{s.label}</p>
+                        </div>
+                        <ul className="guide-v2-type-card-facts">
+                          <li>{s.fact}</li>
+                        </ul>
+                      </div>
+                    );
+                  })}
+                </div>
               </section>
 
               <ToolInArticleAd slotId="mid-garden-maintenance" />

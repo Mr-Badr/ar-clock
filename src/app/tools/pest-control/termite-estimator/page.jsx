@@ -47,6 +47,40 @@ function PlainBlock({ eyebrow, title, children }) {
   );
 }
 
+// Same ratePerMeter values used by TermiteCostEstimator.client.jsx's METHODS array (soil=40,
+// bait=55, fumigation=65) — shown here relative to each other, not a separately invented scale.
+const METHOD_BARS = [
+  { label: 'حقن التربة', rate: 40, colorVar: '--green-text' },
+  { label: 'محطات الطعوم', rate: 55, colorVar: '--amber-text' },
+  { label: 'التبخير', rate: 65, colorVar: '--red-text' },
+];
+const METHOD_MAX = 65;
+
+function TermiteMethodChart() {
+  return (
+    <div className="tool-v2-chart-card">
+      <div className="tool-v2-chart-head">
+        <h3>مقارنة سريعة بين طرق المعالجة الثلاث</h3>
+        <p>السعر النسبي لكل متر طولي من محيط الأساس — حقن التربة الأسرع والأوفر، التبخير الأعلى تكلفة وللإصابات الشديدة فقط.</p>
+      </div>
+      <div className="tool-v2-hbar-list">
+        {METHOD_BARS.map((row) => (
+          <div key={row.label} className="tool-v2-hbar-row">
+            <span className="tool-v2-hbar-label">{row.label}</span>
+            <div className="tool-v2-hbar-track">
+              <div
+                className="tool-v2-hbar-fill"
+                style={{ width: `${(row.rate / METHOD_MAX) * 100}%`, background: `var(${row.colorVar})` }}
+              />
+            </div>
+            <span className="tool-v2-hbar-value">{row.rate}/م</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function RelatedToolsCard({ items, heading }) {
   if (!items.length) return null;
   return (
@@ -150,6 +184,7 @@ export default function TermiteEstimatorPage() {
               القضاء على المستعمرة بالكامل بمرور الوقت. التبخير يُحجز عادة للإصابات الشديدة داخل
               الهيكل الخشبي نفسه. قارن نطاق التكلفة الفعلي للثلاثة معاً في جدول النتيجة أدناه.
             </PlainBlock>
+            <TermiteMethodChart />
           </section>
 
           <ToolInArticleAd slotId="mid-termite-cost" />

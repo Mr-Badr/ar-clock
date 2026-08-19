@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowsClockwise } from '@phosphor-icons/react/ssr';
+import { ArrowsClockwise, Drop, Lightning, Warning, Waveform } from '@phosphor-icons/react/ssr';
 
 import AdBlogSidebar from '@/components/ads/AdBlogSidebar';
 import TocScrollSpy from '@/components/tools-v2/TocScrollSpy.client';
@@ -22,10 +22,10 @@ const TOC_ITEMS = [
 ];
 
 const SIGNS = [
-  'تلف الكمبروسر — أغلى قطعة في المكيف، وإصلاحها غالباً يقترب من سعر جهاز جديد',
-  'تكرار تسريبات غاز التبريد أكثر من مرة خلال فترة قصيرة',
-  'اهتزاز غير طبيعي بالوحدة وقصر فترة عملها الصحيح بعد كل إصلاح',
-  'ارتفاع فاتورة الكهرباء بشكل ملحوظ رغم عدم تغيّر عادات الاستخدام',
+  { title: 'تلف الكمبروسر', desc: 'أغلى قطعة في المكيف، وإصلاحها غالباً يقترب من سعر جهاز جديد', icon: Warning },
+  { title: 'تسريبات متكررة', desc: 'تكرار تسريبات غاز التبريد أكثر من مرة خلال فترة قصيرة', icon: Drop },
+  { title: 'اهتزاز غير طبيعي', desc: 'اهتزاز بالوحدة وقصر فترة عملها الصحيح بعد كل إصلاح', icon: Waveform },
+  { title: 'فاتورة كهرباء أعلى', desc: 'ارتفاع ملحوظ رغم عدم تغيّر عادات الاستخدام', icon: Lightning },
 ];
 
 export const metadata = buildCanonicalMetadata({
@@ -164,9 +164,21 @@ export default function ReplaceOrRepairPage() {
               <section id="signs">
                 <h2>علامات إضافية تدل على الاستبدال</h2>
                 <p>حتى لو لم تنطبق القاعدتان تماماً بعد، هذه العلامات تستحق أخذها بجدية:</p>
-                <ul>
-                  {SIGNS.map((s) => <li key={s}>{s}</li>)}
-                </ul>
+                <div className="guide-v2-type-grid">
+                  {SIGNS.map((s) => (
+                    <div className="guide-v2-type-card" key={s.title}>
+                      <div className="guide-v2-type-card-head">
+                        <span className="guide-v2-type-card-icon" style={{ background: 'var(--red-subtle)', color: 'var(--red-text)' }}>
+                          <s.icon size={16} weight="bold" />
+                        </span>
+                        <p className="guide-v2-type-card-title">{s.title}</p>
+                      </div>
+                      <ul className="guide-v2-type-card-facts">
+                        <li>{s.desc}</li>
+                      </ul>
+                    </div>
+                  ))}
+                </div>
               </section>
 
               <section id="why-worth-it">

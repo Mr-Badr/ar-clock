@@ -1,0 +1,17 @@
+{
+  "slug": "liberation-day-korea",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: South Korea Public Holidays 2026",
+    "fact-source: travelgateksa.com: السياحة في كوريا الجنوبية للسعوديين 2026",
+    "fact-check: 15 أغسطس يوم التحرير، نهاية الاحتلال الياباني 1945، دخول بلا تأشيرة 30 يوماً لدول الخليج، K-ETA معفى حتى نهاية 2026"
+  ],
+  "updatedAt": "2026-08-18T21:33:29.931Z"
+}

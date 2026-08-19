@@ -1,0 +1,17 @@
+{
+  "slug": "army-day-chile",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: National Holidays in Chile 2026",
+    "fact-source: Wikipedia: Fiestas Patrias (Chile)",
+    "fact-check: 19 سبتمبر عيد رسمي منفصل عن يوم الاستقلال (18 سبتمبر)، أكبر عرض عسكري سنوي في تشيلي بحديقة أوهيغينز، سانتياغو"
+  ],
+  "updatedAt": "2026-08-18T11:27:24.302Z"
+}

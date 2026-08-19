@@ -1,0 +1,17 @@
+{
+  "slug": "independence-day-armenia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: Independence Day in Armenia",
+    "fact-source: halaarmenia.com: تأشيرة أرمينيا للخليجيين 2026",
+    "fact-check: 21 سبتمبر يوم استقلال أرمينيا 1991 عن الاتحاد السوفييتي، السعوديون معفون دائماً من التأشيرة منذ مايو 2025، ارتفاع اهتمام 71% وفق Skyscanner"
+  ],
+  "updatedAt": "2026-08-18T21:32:58.764Z"
+}

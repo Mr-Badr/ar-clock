@@ -1,0 +1,17 @@
+{
+  "slug": "constitution-memorial-day-japan",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: japan-guide.com: Public Holidays and Annual Events in Japan",
+    "fact-source: Wikipedia: Constitution Memorial Day",
+    "fact-check: 3 مايو يوم الدستور التذكاري، دخول دستور 1947 حيز التنفيذ، جزء من غولدن ويك المزدحم"
+  ],
+  "updatedAt": "2026-08-18T21:33:14.205Z"
+}

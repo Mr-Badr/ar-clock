@@ -1,7 +1,7 @@
 {
   "slug": "republic-day-tunisia",
   "locale": "ar",
-  "capturedAt": "2026-06-30T17:21:26.114Z",
+  "capturedAt": "2026-08-19T17:54:10.117Z",
   "primaryQueries": [
     "عيد الجمهورية التونسي 25 يوليو 2026",
     "متى عيد الجمهورية التونسي 2026",
@@ -16,10 +16,42 @@
   ],
   "competitors": [
     {
+      "site": "nationaltoday.com",
+      "type": "competitor-en",
       "url": "https://nationaltoday.com/tunisia-republic-day/",
-      "language": "en",
-      "strengths": "تاريخي شامل عن دور بورقيبة، تفاصيل الاحتفالات، فرق واضح بين عيد الاستقلال وعيد الجمهورية",
-      "gaps": "لا عداد تنازلي، لا محتوى عربي، لا FAQ، لا معلومات عن وضع العطلة العملية"
+      "focus": [
+        "تاريخي شامل عن دور بورقيبة، تفاصيل الاحتفالات، فرق واضح بين عيد الاستقلال وعيد الجمهورية"
+      ],
+      "gaps": [
+        "لا عداد تنازلي",
+        "لا محتوى عربي",
+        "لا FAQ"
+      ]
+    },
+    {
+      "site": "publicholidays.africa — عيد الجمهورية تونس",
+      "type": "competitor-ar",
+      "url": "https://publicholidays.africa/tunisia/ar/republic-day/",
+      "focus": [
+        "يذكر مواعيد السنوات القادمة بالعربية (2026، 2027، 2028)، مصدر عربي مباشر"
+      ],
+      "gaps": [
+        "قائمة تواريخ مجردة بلا سياق تاريخي أو FAQ",
+        "لا عداد تنازلي حي"
+      ]
+    },
+    {
+      "site": "alaraby.co.uk — عيد الجمهورية في تونس 25 يوليو 1957",
+      "type": "competitor-ar",
+      "url": "https://www.alaraby.co.uk/maaref/events/25-%D9%8A%D9%88%D9%84%D9%8A%D9%88/%D8%B9%D9%8A%D8%AF-%D8%A7%D9%84%D8%AC%D9%85%D9%87%D9%88%D8%B1%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AA%D9%88%D9%86%D8%B3-25-%D9%8A%D9%88%D9%84%D9%8A%D9%88-1957",
+      "focus": [
+        "خلفية تاريخية عربية جيدة عن إعلان الجمهورية وإلغاء الملكية"
+      ],
+      "gaps": [
+        "مقال تاريخي ثابت",
+        "لا عداد تنازلي",
+        "لا FAQ"
+      ]
     }
   ],
   "coverageMatrix": [

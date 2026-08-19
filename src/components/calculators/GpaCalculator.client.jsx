@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { GraduationCap, Plus, ShareNetwork, Trash } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 
@@ -19,11 +19,6 @@ const TABS = [
   { id: 'plan', label: 'خطة رفع المعدل' },
 ];
 
-let _nextId = 1;
-function uid() {
-  return _nextId++;
-}
-
 async function shareResult(title, text) {
   if (navigator.share) {
     try { await navigator.share({ title, text }); return; } catch { /* cancelled */ }
@@ -33,8 +28,21 @@ async function shareResult(title, text) {
 }
 
 export default function GpaCalculator() {
+  // Per-instance counter (not module-level) — a module-level `let _nextId` counter here used to
+  // persist across every render on the server process, so a page loaded after other GPA renders
+  // in the same request cycle would start from whatever count the server had already reached
+  // (e.g. "gpa-name-28"), while the client's fresh module instance always started at 1 —
+  // a real SSR/hydration mismatch caught via a live React hydration warning, 2026-08-19. Scoping
+  // the counter to a ref makes it start fresh and identical on both the server render and the
+  // client's initial hydration render.
+  const idCounterRef = useRef(0);
+  const uid = () => {
+    idCounterRef.current += 1;
+    return idCounterRef.current;
+  };
+
   const [systemId, setSystemId] = useState('scale5');
-  const [subjects, setSubjects] = useState([
+  const [subjects, setSubjects] = useState(() => [
     { id: uid(), name: 'المادة 1', grade: '', hours: 3 },
     { id: uid(), name: 'المادة 2', grade: '', hours: 3 },
     { id: uid(), name: 'المادة 3', grade: '', hours: 2 },

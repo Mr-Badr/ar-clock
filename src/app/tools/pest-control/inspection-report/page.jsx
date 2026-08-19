@@ -4,6 +4,7 @@ import PestInspectionReportGenerator from '@/components/calculators/PestInspecti
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { ReferenceGrid } from '@/components/tools-v2/ReferenceGrid';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getPestControlPageContent } from '@/lib/calculators/pest-control-page-content';
 import { buildPrincipalPageSearchCoverage } from '@/lib/seo/page-search-coverage';
@@ -46,6 +47,11 @@ function PlainBlock({ eyebrow, title, children }) {
     </div>
   );
 }
+
+// Same PEST_TYPES/AREAS lists used by PestInspectionReportGenerator.client.jsx — shown here so a
+// reader sees exactly what the report covers before opening the tool.
+const REPORT_PEST_TYPES = ['صراصير', 'نمل', 'نمل أبيض', 'قوارض', 'بق فراش', 'أخرى'].map((v) => ({ value: v }));
+const REPORT_AREAS = ['المطبخ', 'الحمامات', 'غرف النوم', 'الصالة', 'المستودع', 'المحيط الخارجي'].map((v) => ({ value: v }));
 
 function RelatedToolsCard({ items, heading }) {
   if (!items.length) return null;
@@ -148,6 +154,14 @@ export default function PestInspectionReportPage() {
               احسب كمية المبيد والمركّز في حاسبة الجرعة أولاً، ثم انقل الرقم إلى حقل &quot;المبيد
               والكمية المستخدمة&quot; هنا — توثيق دقيق يطابق ما استُخدم فعلياً في الزيارة.
             </PlainBlock>
+            <p style={{ fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-2)' }}>
+              أنواع الآفات التي يغطيها التقرير:
+            </p>
+            <ReferenceGrid items={REPORT_PEST_TYPES} />
+            <p style={{ fontWeight: 700, color: 'var(--text-primary)', margin: 'var(--space-4) 0 var(--space-2)' }}>
+              مناطق العقار التي يمكن توثيقها:
+            </p>
+            <ReferenceGrid items={REPORT_AREAS} />
           </section>
 
           <ToolInArticleAd slotId="mid-pest-inspection" />

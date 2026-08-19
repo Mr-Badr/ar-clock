@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -63,6 +64,25 @@ const TYPE_GROUPS = [
   },
 ];
 
+const FAQ_ITEMS = [
+  {
+    question: 'كيف أختار نوع الخشب المناسب لمشروعي؟',
+    answer: 'يعتمد على الاستخدام: الخشب الصلب (كالبلوط والزان) يناسب الأثاث والأبواب المعرّضة للاستخدام اليومي المكثف لصلابته الأعلى، بينما الخشب الأخف (كالصنوبر) يناسب الديكورات والقطع الداخلية غير الحاملة. راجع دليل مقارنة أنواع الخشب لمعرفة صلابة كل نوع موثّقة رقمياً بدل التخمين.',
+  },
+  {
+    question: 'هل أحتاج نجاراً محترفاً أم يمكنني تنفيذ المشروع بنفسي؟',
+    answer: 'يعتمد على تعقيد الوصلة والدقة المطلوبة — مشاريع بسيطة (رف، صندوق) تناسب المبتدئين بأدوات أساسية، بينما القطع التي تحتاج وصلات دقيقة (خزائن، أبواب) أو تحمّل وزناً حقيقياً تستفيد من خبرة نجار محترف. دليل المبتدئين يعطيك نقطة انطلاق واقعية قبل أن تقرر.',
+  },
+  {
+    question: 'كيف أتحقق أن عرض سعر النجار أو المقاول منطقي؟',
+    answer: 'احسب الكمية والتكلفة التقديرية بنفسك أولاً (حاسبة الخشب أو حاسبة خزائن المطبخ حسب مشروعك)، ثم قارن الرقم بعرض السعر الذي استلمته — فرق كبير غير مبرر يستحق سؤالاً مباشراً عن سبب التفاوت قبل الموافقة.',
+  },
+  {
+    question: 'لماذا يتشقق أو يتقوس الخشب بعد فترة من التركيب؟',
+    answer: 'غالباً بسبب تمدد وانكماش طبيعي مع تغيّر الرطوبة الموسمية، خاصة إن لم تُترك فجوة تمدد كافية أثناء التركيب. راجع دليل تشخيص مشاكل الأثاث الخشبي لمعرفة السبب الأرجح لحالتك وحل عملي بدل استبدال القطعة بالكامل.',
+  },
+];
+
 function ToolLink({ slug }) {
   const route = findRoute(slug);
   return (
@@ -119,11 +139,13 @@ export default function CarpenterHubPage() {
       }),
     },
   };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-carpenter-hub" />
 
@@ -180,6 +202,10 @@ export default function CarpenterHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="hub-faq" title="الأسئلة الشائعة">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

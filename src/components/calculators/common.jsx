@@ -89,7 +89,7 @@ function getUniqueCalculatorLinks(items) {
 
 function getComplementSlugs(cluster) {
   const complementSlugsByCluster = {
-    finance: ['uae-end-of-service', 'article-77-compensation', 'traffic-fine-discount', 'domestic-worker-cost', 'domestic-worker-cost-uae', 'domestic-worker-cost-kuwait', 'domestic-worker-cost-qatar', 'domestic-worker-cost-bahrain', 'domestic-worker-cost-oman', 'domestic-worker-eligibility', 'domestic-worker-contract-generator', 'annual-leave', 'sick-leave', 'working-days', 'end-of-service-benefits', 'iqama', 'wasiyya', 'nafaqah'],
+    finance: ['uae-end-of-service', 'article-77-compensation', 'traffic-fine-discount', 'domestic-worker-cost', 'domestic-worker-cost-uae', 'domestic-worker-cost-kuwait', 'domestic-worker-cost-qatar', 'domestic-worker-cost-bahrain', 'domestic-worker-cost-oman', 'domestic-worker-eligibility', 'domestic-worker-contract-generator', 'saned-eligibility', 'annual-leave', 'sick-leave', 'working-days', 'end-of-service-benefits', 'iqama', 'wasiyya', 'nafaqah'],
     building: ['building', 'rebar', 'cement', 'tiles', 'masonry-units', 'gypsum-board', 'building-paint', 'construction-waterproofing', 'sqft-sqm-converter', 'iqama'],
     age: ['sleep', 'bedtime', 'retirement'],
     sleep: ['age-calculator', 'sleep', 'time-now'],

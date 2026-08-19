@@ -20,6 +20,26 @@ const TOC_ITEMS = [
   ['iqama-sources', 'مصادر رسمية'],
 ];
 
+// Same fine/grace rules used by IqamaTool.client.jsx's VISA_TYPES (src/lib/calculators/iqama.js).
+const IQAMA_FINE_CARDS = [
+  {
+    title: 'السعودية',
+    rows: [
+      ['مهلة السماح', 'لا توجد'],
+      ['الغرامة اليومية', '100 ريال/يوم'],
+      ['الحد الأقصى', '50,000 ريال'],
+    ],
+  },
+  {
+    title: 'الإمارات',
+    rows: [
+      ['مهلة السماح', '30 يوماً بعد الانتهاء'],
+      ['الغرامة اليومية', '50 درهم/يوم لأول 6 أشهر، ثم 100 درهم/يوم'],
+      ['الحد الأقصى', 'لا يوجد سقف ثابت'],
+    ],
+  },
+];
+
 export const metadata = buildCanonicalMetadata({
   title: PAGE.heroTitle,
   description: PAGE.description,
@@ -81,6 +101,23 @@ export default function IqamaPage() {
               100 درهم/يوم. يُنصح بالتجديد قبل 60 يوماً على الأقل من الانتهاء عبر منصة أبشر أو
               صاحب العمل في السعودية، أو ICP/GDRFA في الإمارات.
             </p>
+            <div className="guide-v2-compare-list">
+              {IQAMA_FINE_CARDS.map((card) => (
+                <div className="guide-v2-compare-card" key={card.title}>
+                  <div className="guide-v2-compare-head">
+                    <span className="guide-v2-compare-title">{card.title}</span>
+                  </div>
+                  <div className="guide-v2-compare-rows">
+                    {card.rows.map(([label, value]) => (
+                      <div className="guide-v2-compare-row" key={label}>
+                        <span className="guide-v2-compare-row-label">{label}</span>
+                        <span className="guide-v2-compare-row-value">{value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </section>
 
           <ToolInArticleAd slotId="mid-iqama" />

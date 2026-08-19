@@ -1,0 +1,17 @@
+{
+  "slug": "constitution-day-thailand",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: Thailand Public Holidays 2026",
+    "fact-source: sabq.org: تقرير سياحة السعوديين في تايلاند 2025",
+    "fact-check: 10 ديسمبر يوم الدستور، عطلة رسمية تايلاندية تخلّد دستور 1932، 151 ألف سعودي زاروا تايلاند سنة 2025، تأشيرة معفاة 60 يوماً لمواطني الخليج"
+  ],
+  "updatedAt": "2026-08-18T15:09:48.302Z"
+}

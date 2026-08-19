@@ -5,6 +5,7 @@ import LandscapingQuoteGenerator from '@/components/calculators/LandscapingQuote
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { ReferenceGrid } from '@/components/tools-v2/ReferenceGrid';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getLandscapingPageContent } from '@/lib/calculators/landscaping-page-content';
 import { buildPrincipalPageSearchCoverage } from '@/lib/seo/page-search-coverage';
@@ -21,6 +22,9 @@ function pickTools(slugs) {
   return slugs.map((slug) => CALCULATOR_ROUTES.find((item) => item.slug === slug)).filter((item) => item && !item.draft);
 }
 const RELATED_TOOLS = pickTools(['landscaping-garden-cost', 'landscaping-artificial-grass', 'landscaping-maintenance-tracker']);
+
+// Same SUGGESTED_ITEMS used by LandscapingQuoteGenerator.client.jsx's quick-add list.
+const QUOTE_SUGGESTED_ITEMS = ['تصميم الحديقة', 'عشب طبيعي', 'عشب صناعي', 'ري بالتنقيط', 'إضاءة الحديقة', 'حصى وزينة حجرية', 'نباتات وأشجار', 'صيانة أولى'].map((value) => ({ value }));
 
 const TOC_ITEMS = [
   ['ls-quote-guide', 'ما الذي يجعل عرض سعر تنسيق الحديقة يبدو موثوقاً؟'],
@@ -103,6 +107,8 @@ export default function LandscapingQuoteGeneratorPage() {
               ري، إضاءة، نباتات) يمنح العميل فهماً حقيقياً لما يدفع مقابله، ويسهّل عليه مقارنة عرضك
               بعروض أخرى بعدالة.
             </p>
+            <p>البنود الأكثر شيوعاً في عروض أسعار تنسيق الحدائق — أضفها من القائمة الجاهزة في الأداة أعلاه:</p>
+            <ReferenceGrid items={QUOTE_SUGGESTED_ITEMS} />
             <PlainBlock eyebrow="اربط الأداتين ببعض" title="من الحاسبة مباشرة إلى العرض">
               إن جئت من حاسبة تكلفة تنسيق الحديقة عبر زر "حوّل إلى عرض سعر"، ستجد الرقم والخدمة
               معبّأين تلقائياً في أول بند — عدّلهما أو أضف بنوداً أخرى من القائمة الجاهزة أعلاه.

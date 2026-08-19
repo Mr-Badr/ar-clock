@@ -39,6 +39,17 @@ export const metadata = buildCanonicalMetadata({
   url: `${SITE_URL}${PAGE.href}`,
 });
 
+// Same 5 stages (age range + texture) as WEANING_STAGES in src/lib/calculators/weaning-schedule.js
+// (WHO/UNICEF/AAP-sourced) — shown here as a quick visual overview before the reader enters a
+// birth date in the tool below.
+const WEANING_TIMELINE = [
+  { age: '0-6 أشهر', texture: 'حليب فقط' },
+  { age: 'الشهر 6', texture: 'هريس ناعم' },
+  { age: '7-8 أشهر', texture: 'مهروس أكثف' },
+  { age: '9-11 شهر', texture: 'قطع طرية' },
+  { age: '12+ شهر', texture: 'طعام العائلة' },
+];
+
 function RelatedToolsCard({ items, heading }) {
   if (!items.length) return null;
   return (
@@ -136,6 +147,14 @@ export default function WeaningSchedulePage() {
               وصولاً لطعام العائلة العادي بعد السنة الأولى — الأداة أعلاه تحسب المرحلة المناسبة
               تلقائياً حسب عمر رضيعك الفعلي بدلاً من مقال عام لا يخصّه.
             </p>
+            <div className="tool-v2-info-grid">
+              {WEANING_TIMELINE.map((stage) => (
+                <div className="tool-v2-info-card" key={stage.age}>
+                  <h3>{stage.age}</h3>
+                  <p className="tool-v2-info-desc">{stage.texture}</p>
+                </div>
+              ))}
+            </div>
             <div className="tool-v2-tip">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 8v5M12 16h.01" /></svg>
               <span>بعد ظهور النتيجة، اضغطي "طباعة الجدول الكامل" للحصول على ورقة مرجعية بكل المراحل الخمس مع تظليل مرحلة رضيعك الحالية — جاهزة للصق على الثلاجة.</span>

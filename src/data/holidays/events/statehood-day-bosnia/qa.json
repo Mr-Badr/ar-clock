@@ -1,0 +1,18 @@
+{
+  "slug": "statehood-day-bosnia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: officeholidays.com: National Holidays in Bosnia and Herzegovina 2026",
+    "fact-source: Wikipedia: Statehood Day (Bosnia and Herzegovina)",
+    "fact-check: 25 نوفمبر 1943 أول اجتماع لمجلس زاڤنوبيه، عطلة رسمية معتمدة في اتحاد البوسنة والهرسك تحديداً لا في جمهورية صرب البوسنة",
+    "content-note: عولج السياق السياسي بحياد تاريخي صرف دون الخوض في تفاصيل حساسة إضافية"
+  ],
+  "updatedAt": "2026-08-18T11:28:32.552Z"
+}

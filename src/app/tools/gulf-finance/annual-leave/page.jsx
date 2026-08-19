@@ -20,6 +20,19 @@ const TOC_ITEMS = [
   ['leave-sources', 'مصادر رسمية'],
 ];
 
+// Same entitlement rules used by AnnualLeaveTool.client.jsx's ANNUAL_LEAVE_COUNTRIES
+// (src/lib/calculators/engine.js).
+const LEAVE_COUNTRY_ROWS = [
+  { label: 'السعودية', early: '21 يوم (أقل من 5 سنوات)', late: '30 يوم (5 سنوات فأكثر)' },
+  { label: 'الإمارات', early: '30 يوم — تُحسب نسبياً في أول سنة', late: '30 يوم' },
+  { label: 'الكويت', early: '30 يوم', late: '30 يوم' },
+  { label: 'قطر', early: '21 يوم (أقل من 5 سنوات)', late: '30 يوم (5 سنوات فأكثر)' },
+  { label: 'البحرين', early: '30 يوم', late: '30 يوم' },
+  { label: 'سلطنة عُمان', early: '30 يوم — تُحسب نسبياً في أول سنة', late: '30 يوم' },
+  { label: 'مصر', early: '15 يوم (سنة أولى) ثم 21 يوم', late: '30 يوم (10 سنوات فأكثر)' },
+  { label: 'الأردن', early: '14 يوم', late: '21 يوم (5 سنوات فأكثر)' },
+];
+
 export const metadata = buildCanonicalMetadata({
   title: PAGE.heroTitle,
   description: PAGE.description,
@@ -82,6 +95,27 @@ export default function AnnualLeavePage() {
               متواصلة. عند انتهاء الخدمة يُصرف رصيد الإجازة المتبقي نقداً محتسباً بالأجر اليومي
               مضروباً في أيام الرصيد.
             </p>
+            <p>استحقاق الإجازة السنوية يختلف فعلياً حسب دولة العمل وسنوات الخدمة — اختر بلدك في الأداة أعلاه، أو راجع الجدول:</p>
+            <div className="tool-v2-table-wrap">
+              <table className="tool-v2-table">
+                <thead>
+                  <tr>
+                    <th>الدولة</th>
+                    <th>في بداية الخدمة</th>
+                    <th>بعد تجاوز الحد الأعلى</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {LEAVE_COUNTRY_ROWS.map((row) => (
+                    <tr key={row.label}>
+                      <td>{row.label}</td>
+                      <td>{row.early}</td>
+                      <td>{row.late}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </section>
 
           <ToolInArticleAd slotId="mid-annual-leave" />

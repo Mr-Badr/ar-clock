@@ -4,6 +4,7 @@ import GarageDoorSizeSelector from '@/components/calculators/GarageDoorSizeSelec
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { ReferenceGrid } from '@/components/tools-v2/ReferenceGrid';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildPrincipalPageSearchCoverage } from '@/lib/seo/page-search-coverage';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -21,7 +22,7 @@ const FAQ_ITEMS = [
   {
     question: `ما هو مقاس باب الجراج القياسي ${CURRENT_YEAR}؟`,
     answer:
-      'المقاسات القياسية الشائعة في السوق (عرض × ارتفاع) هي: 3×3 متر، 3.5×3 متر، 4×3 متر، 4.5×3 متر، 5×3 متر، 5.5×3 متر، و6×3 متر — الأصغر لسيارة واحدة والأكبر لسيارتين أو ثلاث. استخدم أداة الاختيار أعلاه لمعرفة المقاس المناسب لعدد سياراتك تحديداً.',
+      'سبعة مقاسات قياسية تغطي معظم الاحتياجات، من 3×3 متر وحتى 6×3 متر (عرض × ارتفاع) — راجع الجدول الكامل في قسم "المقاسات القياسية لأبواب الجراج" أعلى الصفحة، أو استخدم أداة الاختيار لمعرفة المقاس المناسب لعدد سياراتك تحديداً.',
   },
   {
     question: 'كم مقاس باب جراج لسيارتين؟',
@@ -78,6 +79,16 @@ function PlainBlock({ eyebrow, title, children }) {
     </div>
   );
 }
+
+const STANDARD_SIZES = [
+  { value: '3×3 م' },
+  { value: '3.5×3 م' },
+  { value: '4×3 م' },
+  { value: '4.5×3 م' },
+  { value: '5×3 م' },
+  { value: '5.5×3 م' },
+  { value: '6×3 م' },
+];
 
 const TROUBLESHOOT_TABLE = [
   { cause: 'بطارية الريموت فارغة', fix: 'استبدل البطارية — أشيع سبب على الإطلاق وأسهل حل' },
@@ -138,10 +149,11 @@ export default function GarageDoorSizeGuidePage() {
           <section id="garage-sizes">
             <h2>المقاسات القياسية لأبواب الجراج</h2>
             <p>
-              سبعة مقاسات تغطي معظم الاحتياجات في السوق، من عرض 3 أمتار وحتى 6 أمتار، جميعها
-              بارتفاع 3 أمتار تقريباً — أضيق من هذا يناسب سيارة واحدة، وأوسع يستوعب سيارتين أو
-              أكثر. اختر عدد سياراتك أعلى الأداة لمعرفة النطاق المناسب لك مباشرة.
+              سبعة مقاسات تغطي معظم الاحتياجات في السوق (عرض × ارتفاع)، جميعها بارتفاع 3 أمتار
+              تقريباً — أضيق من هذا يناسب سيارة واحدة، وأوسع يستوعب سيارتين أو أكثر. اختر عدد
+              سياراتك أعلى الأداة لمعرفة النطاق المناسب لك مباشرة، أو راجع القائمة الكاملة هنا:
             </p>
+            <ReferenceGrid items={STANDARD_SIZES} />
             <PlainBlock eyebrow="جراج ثلاث سيارات أو أكثر" title="غالباً بابان، لا باب واحد عريض">
               لا يوجد مقاس قياسي واحد شائع يغطي ثلاث سيارات في باب واحد — الحل الشائع عالمياً
               ومحلياً هو باب مزدوج (لسيارتين) بجانب باب مفرد منفصل لثالث سيارة، أو ثلاثة أبواب

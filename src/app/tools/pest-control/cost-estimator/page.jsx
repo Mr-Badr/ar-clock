@@ -47,6 +47,41 @@ function PlainBlock({ eyebrow, title, children }) {
   );
 }
 
+// Same relative per-m² rate multipliers used by PestCostEstimator.client.jsx's PEST_TYPES
+// (general=2, rodents=2.5, bedbugs=4) — kept identical to the calculator's real logic, not
+// invented separately, so the visual and the actual calculated result never disagree.
+const PEST_COST_BARS = [
+  { label: 'صراصير ونمل عام', rate: 2, colorVar: '--blue-text' },
+  { label: 'قوارض (فئران)', rate: 2.5, colorVar: '--amber-text' },
+  { label: 'بق الفراش', rate: 4, colorVar: '--red-text' },
+];
+const PEST_COST_MAX = 4;
+
+function PestCostChart() {
+  return (
+    <div className="tool-v2-chart-card">
+      <div className="tool-v2-chart-head">
+        <h3>لماذا يختلف السعر بهذا الشكل حسب نوع الآفة؟</h3>
+        <p>سعر كل نوع نسبةً إلى الآخر لكل متر مربع — بق الفراش يحتاج ضعف وقت المعالجة تقريباً مقارنة بالصراصير والنمل.</p>
+      </div>
+      <div className="tool-v2-hbar-list">
+        {PEST_COST_BARS.map((row) => (
+          <div key={row.label} className="tool-v2-hbar-row">
+            <span className="tool-v2-hbar-label">{row.label}</span>
+            <div className="tool-v2-hbar-track">
+              <div
+                className="tool-v2-hbar-fill"
+                style={{ width: `${(row.rate / PEST_COST_MAX) * 100}%`, background: `var(${row.colorVar})` }}
+              />
+            </div>
+            <span className="tool-v2-hbar-value">×{row.rate}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function RelatedToolsCard({ items, heading }) {
   if (!items.length) return null;
   return (
@@ -142,6 +177,7 @@ export default function PestCostEstimatorPage() {
               العمل يزيد مع المساحة). الحاسبة أعلاه تجمع الثلاثة معاً لتعطيك نطاقاً واقعياً بدل رقم
               عام لا يعكس حالتك.
             </p>
+            <PestCostChart />
             <PlainBlock eyebrow="لماذا بق الفراش أغلى دائماً؟" title="الوقت لا المادة">
               معالجة بق الفراش تحتاج فحص كل قطعة أثاث وزاوية غرفة بدقة، وغالباً أكثر من زيارة
               واحدة للتأكد من القضاء على البيض أيضاً لا الحشرات البالغة فقط — وقت عمل أطول بكثير

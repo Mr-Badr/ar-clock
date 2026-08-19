@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { FilePlus, Info, Sparkle, Trash } from '@phosphor-icons/react';
 
 import { AnimatedCircularProgressBar } from '@/components/ui/animated-circular-progress-bar';
@@ -10,17 +10,11 @@ import { getCurrencyByCode } from '@/lib/shared/arab-currencies';
 import { GOLD_PURITIES } from '@/lib/islamic/zakat-live-prices';
 import { MADHABS, NISAB_GOLD_GRAMS, NISAB_SILVER_GRAMS, ZAKAT_RATE, getMadhabRules } from '@/lib/islamic/zakat-madhab';
 
-let idCounter = 0;
-function nextId() {
-  idCounter += 1;
-  return `item-${idCounter}`;
+function newGoldItem(id) {
+  return { id, label: '', weightGrams: '', karat: 21, isPersonal: false };
 }
-
-function newGoldItem() {
-  return { id: nextId(), label: '', weightGrams: '', karat: 21, isPersonal: false };
-}
-function newSilverItem() {
-  return { id: nextId(), label: '', weightGrams: '', isPersonal: false };
+function newSilverItem(id) {
+  return { id, label: '', weightGrams: '', isPersonal: false };
 }
 
 function num(v) {
@@ -47,9 +41,17 @@ function FieldHint({ text }) {
 }
 
 export default function ZakatGoldCalculator({ livePrices }) {
+  // Per-instance counter (not module-level) — a module-level `let idCounter` here used to persist
+  // across every render on the server process, so a page loaded after other renders in the same
+  // request cycle would start from whatever count the server had already reached, while the
+  // client's fresh module instance always started at 0 — a real SSR/hydration mismatch, same root
+  // cause documented in GpaCalculator.client.jsx, 2026-08-19.
+  const idCounterRef = useRef(0);
+  const nextId = () => `item-${(idCounterRef.current += 1)}`;
+
   const [countryCode, setCountryCode] = useState('sa');
   const [madhabId, setMadhabId] = useState('cautious');
-  const [goldItems, setGoldItems] = useState(() => [newGoldItem()]);
+  const [goldItems, setGoldItems] = useState(() => [newGoldItem(nextId())]);
   const [silverItems, setSilverItems] = useState(() => []);
   const [goldPriceOverride, setGoldPriceOverride] = useState('');
   const [silverPriceOverride, setSilverPriceOverride] = useState('');
@@ -174,7 +176,7 @@ export default function ZakatGoldCalculator({ livePrices }) {
             </div>
           ))}
         </div>
-        <button type="button" className="tool-v2-action-btn" onClick={() => setGoldItems((prev) => [...prev, newGoldItem()])} style={{ marginTop: 8 }}>
+        <button type="button" className="tool-v2-action-btn" onClick={() => setGoldItems((prev) => [...prev, newGoldItem(nextId())])} style={{ marginTop: 8 }}>
           <FilePlus size={16} weight="bold" /> إضافة قطعة ذهب
         </button>
       </div>
@@ -208,7 +210,7 @@ export default function ZakatGoldCalculator({ livePrices }) {
             ))}
           </div>
         ) : null}
-        <button type="button" className="tool-v2-action-btn" onClick={() => setSilverItems((prev) => [...prev, newSilverItem()])} style={{ marginTop: 8 }}>
+        <button type="button" className="tool-v2-action-btn" onClick={() => setSilverItems((prev) => [...prev, newSilverItem(nextId())])} style={{ marginTop: 8 }}>
           <FilePlus size={16} weight="bold" /> إضافة قطعة فضة
         </button>
       </div>

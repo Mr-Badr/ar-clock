@@ -16,6 +16,11 @@ export const AUTHORS = {
     roleEn: 'Founder, Miqatona',
     credentials: 'متخصص في تطوير أدوات الويب العربية وتقنيات المعلومات',
     bio: 'أسس ميقاتنا عام 2024 بهدف تقديم مرجع عربي موثوق للوقت والتقويمات والحسابات اليومية لجمهور الوطن العربي. يُشرف على المحتوى والأدوات والمنهجية الحسابية ويُراجع مصادر البيانات الرسمية لضمان دقة ما يُنشر على الموقع. خلفيته في تطوير البرمجيات وأنظمة المعلومات تُمكّنه من بناء أدوات تقنية دقيقة ومراجعة الحسابات مقارنةً بالمراجع الأكاديمية والرسمية في كل تخصص.',
+    // Separate, shorter description for <meta name="description"> — the full `bio` above stays
+    // on-page (word count matters there); metaDescription exists only to satisfy the 90-175 char
+    // SEO range (found too long at 354 chars during the 2026-08-19 site-wide SEO audit).
+    metaDescription:
+      'بدر الدين الهرشالي، مؤسس ميقاتنا، أشرف على تأسيس الموقع كمرجع عربي موثوق للوقت والتقويمات والحسابات اليومية، ويراجع مصادر البيانات الرسمية لضمان دقة المحتوى.',
     // Was pointing at /images/authors/badr.jpg — file doesn't exist (confirmed 404 on production,
     // 2026-08-18), so the Person schema was citing a broken image URL in structured data. Cleared
     // until a real photo is supplied; buildPersonSchema() below already omits `image` entirely when

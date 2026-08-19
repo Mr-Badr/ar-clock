@@ -28,7 +28,7 @@ import { useEffect } from 'react';
  * sessionStorage guard keyed by path stops a genuinely broken destination
  * from reload-looping the visitor.
  */
-export default function StuckLoadingRecovery({ timeoutMs = 9000, storageKey }) {
+export default function StuckLoadingRecovery({ timeoutMs = 9000, storageKey = undefined }) {
   useEffect(() => {
     let key = null;
     try {

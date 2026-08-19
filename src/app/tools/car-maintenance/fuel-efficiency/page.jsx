@@ -6,6 +6,7 @@ import TocScrollSpy from '@/components/tools-v2/TocScrollSpy.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
 import FuelEfficiencyConverter from '@/components/tools-v2/FuelEfficiencyConverter.client';
+import { FormulaCard, Frac } from '@/components/tools-v2/FormulaCard';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
@@ -37,7 +38,7 @@ const RELATED_GUIDES = [
 const FAQ_ITEMS = [
   {
     question: 'كيف أحول من لتر/100كم إلى كم/لتر؟',
-    answer: 'اقسم 100 على رقم اللتر/100كم — مثلاً 7 لتر/100كم = 100 ÷ 7 ≈ 14.3 كم/لتر. استخدم المحول أعلاه لتحويل فوري ودقيق بين الوحدات الثلاث.',
+    answer: 'اقسم 100 على رقم اللتر/100كم — راجع المعادلة والمثال المحلول في قسم "محول وحدات استهلاك الوقود" أعلى الصفحة، أو استخدم المحول مباشرة لتحويل فوري ودقيق بين الوحدات الثلاث.',
   },
   {
     question: 'ما هو معدل استهلاك الوقود الطبيعي للسيارات؟',
@@ -112,6 +113,13 @@ export default function FuelEfficiencyPage() {
               <section id="converter">
                 <h2>محول وحدات استهلاك الوقود</h2>
                 <FuelEfficiencyConverter />
+                <FormulaCard
+                  label="لتحويل لتر/100كم إلى كم/لتر يدوياً، اقسم 100 على الرقم:"
+                  note="مثال: 7 لتر/100كم = 100 ÷ 7 ≈ 14.3 كم/لتر. نفس المعادلة تُستخدم بالعكس لتحويل كم/لتر إلى لتر/100كم."
+                >
+                  <span>كم/لتر =</span>
+                  <Frac num="100" den="لتر/100كم" />
+                </FormulaCard>
               </section>
 
               <ToolInArticleAd slotId="mid-fuel-efficiency" />

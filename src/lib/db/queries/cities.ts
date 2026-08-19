@@ -139,13 +139,18 @@ function mergeCities(rows: SearchableCity[], countryCode?: string) {
   return Array.from(merged.values()).sort(sortCities)
 }
 
+// Kept in sync with RETIRED_COUNTRY_SLUGS in src/lib/db/queries/countries.ts — country-level
+// resolution already blocks 'israel', but city-level static params are assembled independently
+// here, so the same exclusion needs to be repeated at this funnel too.
+const RETIRED_COUNTRY_SLUGS_FOR_CITIES = new Set(['israel'])
+
 function mergeCityParams(rows: CityParams[]) {
   const seen = new Set<string>()
   const merged: CityParams[] = []
 
   for (const row of rows) {
     const key = `${row.country}::${row.city}`
-    if (!row.country || !row.city || seen.has(key)) continue
+    if (!row.country || !row.city || seen.has(key) || RETIRED_COUNTRY_SLUGS_FOR_CITIES.has(row.country)) continue
     seen.add(key)
     merged.push(row)
   }
@@ -196,6 +201,8 @@ export async function getCitiesByCountry(countryCode: string): Promise<City[]> {
   cacheTag('cities', `cities-${countryCode}`)
   cacheLife('days')
 
+  if (countryCode && countryCode.toUpperCase() === 'IL') return []
+
   const fallbackRows = getFallbackCitiesByCountry(countryCode)
 
   if (!GEO_DB_FALLBACK_ENABLED) {
@@ -230,6 +237,8 @@ export async function getCityBySlug(countryCode: string, citySlug: string): Prom
   'use cache'
   cacheTag('cities', `city-${countryCode}-${citySlug}`)
   cacheLife('days')
+
+  if (countryCode && countryCode.toUpperCase() === 'IL') return null
 
   if (GEO_DB_FALLBACK_ENABLED) {
     try {
@@ -427,6 +436,7 @@ function searchFallbackCities(query: string) {
 
   return fallbackCities
     .filter((city) => {
+      if (RETIRED_COUNTRY_SLUGS_FOR_CITIES.has(getCityCountrySlug(city))) return false
       const nameAr = normalizeSearchQuery(String(city.name_ar || ''))
       const nameEn = String(city.name_en || '').toLowerCase()
       return nameAr.includes(q) || nameAr.includes(qStripped) || nameEn.includes(q)

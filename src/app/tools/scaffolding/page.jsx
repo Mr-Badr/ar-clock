@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -132,6 +133,22 @@ export default function ScaffoldingCategoryHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="rent-vs-buy" title="إيجار أم شراء — كيف تقرر؟">
+          <p>
+            القاعدة العملية الشائعة في المقاولات: إن كان المشروع لمرة واحدة أو موسمياً (صيانة
+            واجهة، دهان، ترميم قصير المدة)، الإيجار أوفر تكلفة إجمالية ولا يحمّلك تخزيناً أو صيانة
+            لاحقة. أما إن كنت تستخدم السقالة بشكل متكرر عبر عدة مشاريع (مقاول تنفيذ مستمر)، الشراء
+            يصبح أوفر على المدى الطويل رغم التكلفة الأولى الأعلى. راجع جدول الأسعار الكامل أدناه
+            لمقارنة كلا الخيارين حسب نوع السقالة الذي يناسب ارتفاع وطبيعة مشروعك تحديداً.
+          </p>
+          <p>
+            قدّر طول واجهة العمل بالمتر الطولي قبل طلب عرض سعر، لا مساحة المبنى الكلية — السقالة
+            تُسعَّر عادة بالمتر الطولي لكل مستوى ارتفاع، فواجهة طويلة ومنخفضة قد تكلف أكثر من واجهة
+            قصيرة ومرتفعة رغم تشابه المساحة الظاهرية بينهما. هذا الفرق يفيدك عند مقارنة عروض أسعار
+            من شركات مختلفة تستخدم طرق تسعير غير موحدة فيما بينها.
+          </p>
+        </HubGuideSection>
       </div>
     </main>
   );

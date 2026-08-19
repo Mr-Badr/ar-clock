@@ -50,6 +50,15 @@ function sortCountries(a: Country, b: Country) {
   )
 }
 
+// Countries never surfaced anywhere in the app — retirement, not a data-quality filter (owner
+// directive: no country called "Israel" anywhere on the site). Applies to every consumer of
+// getAllCountries/getCountryBySlug/getCountryByCode/getAllCountrySlugs — sitemap generation,
+// static param generation, pickers, cross-reference lists — since they all funnel through
+// mergeCountries(). The lone city that was filed under this country ("jerusalem") is unaffected
+// as a place — it already exists separately under the real "palestinian-territory" country entry
+// as "east-jerusalem".
+const RETIRED_COUNTRY_SLUGS = new Set(['israel'])
+
 function mergeCountries(rows: Country[]) {
   const merged = new Map<string, Country>()
 
@@ -67,6 +76,8 @@ function mergeCountries(rows: Country[]) {
     const key = getCountryKey(country)
     if (key) merged.set(key, country)
   }
+
+  RETIRED_COUNTRY_SLUGS.forEach((slug) => merged.delete(slug))
 
   return Array.from(merged.values()).sort(sortCountries)
 }
@@ -131,6 +142,8 @@ export async function getCountryBySlug(slug: string): Promise<Country | null> {
   cacheTag('countries', `country-${slug}`)
   cacheLife('days')
 
+  if (RETIRED_COUNTRY_SLUGS.has(slug)) return null
+
   if (GEO_DB_FALLBACK_ENABLED) {
     try {
       const country = await fetchCountryBySlugFromDb(slug)
@@ -150,6 +163,8 @@ export async function getCountryByCode(code: string): Promise<Country | null> {
   'use cache'
   cacheTag('countries', `country-code-${code}`)
   cacheLife('days')
+
+  if (code && code.toUpperCase() === 'IL') return null
 
   if (GEO_DB_FALLBACK_ENABLED) {
     try {
@@ -173,7 +188,7 @@ export async function getAllCountrySlugs(): Promise<string[]> {
 
   const fallbackSlugs = fallbackCountries
     .map((country) => country.country_slug)
-    .filter(Boolean)
+    .filter((slug): slug is string => Boolean(slug) && !RETIRED_COUNTRY_SLUGS.has(slug))
 
   if (!GEO_DB_FALLBACK_ENABLED) {
     return Array.from(new Set(fallbackSlugs))
@@ -182,7 +197,7 @@ export async function getAllCountrySlugs(): Promise<string[]> {
   try {
     const dbSlugs = await fetchAllCountrySlugsFromDb()
     if (dbSlugs.length > 0) {
-      return Array.from(new Set(dbSlugs))
+      return Array.from(new Set(dbSlugs.filter((slug) => !RETIRED_COUNTRY_SLUGS.has(slug))))
     }
   } catch (error) {
     warnCountryQueryFallback('getAllCountrySlugs-error', {

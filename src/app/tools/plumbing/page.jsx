@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -35,6 +36,21 @@ const TYPE_GROUPS = [
   },
 ];
 
+const FAQ_ITEMS = [
+  {
+    question: 'كيف أعرف أن لدي تسرب مياه مخفياً قبل أن يظهر أي أثر على الجدار؟',
+    answer: 'أوضح علامة مبكرة هي ارتفاع فاتورة المياه فجأة دون سبب واضح في استهلاكك اليومي — راجع دليل كشف التسربات لمعرفة العلامات الأخرى (صوت جريان مياه بلا استخدام، بقعة رطوبة صغيرة) وكيف تحدد مصدر التسرب قبل أن يتفاقم.',
+  },
+  {
+    question: 'خزان مياهي القديم — متى أستبدله بدل الاكتفاء بالتنظيف الدوري؟',
+    answer: 'التنظيف الدوري (مرتين سنوياً على الأقل) يحافظ على جودة المياه، لكنه لا يعالج الصدأ الداخلي أو التشققات في خزان متقدم بالعمر. راجع دليل اختيار خزان المياه لمعرفة علامات الاستبدال ومقارنة الأنواع (بلاستيك، فايبرجلاس، استانلس ستيل) قبل الشراء.',
+  },
+  {
+    question: 'سخان مياهي لا يعطي ماءً ساخناً كافياً — هل المشكلة في السخان نفسه أم في الاستخدام؟',
+    answer: 'يعتمد على نوع سخانك وسعته مقارنة بعدد أفراد أسرتك واستخدامهم المتزامن — راجع دليل سخانات المياه لمعرفة السعة المناسبة لحجم أسرتك والفرق بين السخان الفوري والمركزي قبل أن تفترض أن السخان معطل.',
+  },
+];
+
 function ToolLink({ slug }) {
   const route = findRoute(slug);
   return (
@@ -55,7 +71,7 @@ function ToolLink({ slug }) {
 export const metadata = buildCanonicalMetadata({
   title: 'دليل السباكة — كشف التسربات، الخزانات، السخانات، وعداد المياه',
   description:
-    'أدلة سباكة شاملة مبنية على بحث كلمات حقيقي: كشف تسربات المياه، اختيار خزان المياه المناسب، سخان فوري أم مركزي، وحل مشاكل عداد المياه وفاتورته.',
+    'اكشف تسرب المياه قبل أن يكلفك الكثير، اختر خزان المياه المناسب، قارن السخان الفوري بالمركزي، وحل مشاكل عداد المياه وفاتورته — أدلة سباكة عملية وشاملة.',
   url: `${SITE_URL}/tools/plumbing`,
 });
 
@@ -91,11 +107,13 @@ export default function PlumbingHubPage() {
       }),
     },
   };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-plumbing-hub" />
 
@@ -152,6 +170,10 @@ export default function PlumbingHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="hub-faq" title="الأسئلة الشائعة">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

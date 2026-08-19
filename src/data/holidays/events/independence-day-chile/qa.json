@@ -1,0 +1,18 @@
+{
+  "slug": "independence-day-chile",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: Wikipedia: Fiestas Patrias (Chile)",
+    "fact-source: arabamerica.com: The History of the Arabs of South America",
+    "fact-check: 18 سبتمبر 1810 تأسيس أول مجلس حكم وطني تشيلي، الاستقلال الكامل تحقق سنة 1818",
+    "fact-check: تشيلي موطن أكبر جالية فلسطينية خارج الشرق الأوسط (نحو 500 ألف) — مؤكد عبر مصادر متعددة متطابقة"
+  ],
+  "updatedAt": "2026-08-18T10:48:56.499Z"
+}

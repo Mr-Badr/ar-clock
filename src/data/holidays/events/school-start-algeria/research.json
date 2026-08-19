@@ -1,7 +1,7 @@
 {
   "slug": "school-start-algeria",
   "locale": "ar",
-  "capturedAt": "2026-06-01T00:00:00.000Z",
+  "capturedAt": "2026-08-19T17:12:18.868Z",
   "primaryQueries": [
     "متى الدخول المدرسي في الجزائر {{year}}",
     "موعد الدخول المدرسي في الجزائر {{year}}",
@@ -123,42 +123,6 @@
     },
     {
       "site": "news.radioalgerie.dz",
-      "language": "en",
-      "type": "news",
-      "url": "https://news.radioalgerie.dz/en/node/84255",
-      "title": "Ministry of Education: 1st-Year Primary School Registration to Be Conducted Exclusively via Parents' Platform",
-      "metaDescription": "English coverage of first-year primary registration for the 2026-2027 school year in Algeria.",
-      "h1": "Ministry of Education: 1st-Year Primary School Registration to Be Conducted Exclusively via Parents' Platform",
-      "headings": [
-        "Registration period",
-        "Parents' platform",
-        "Required documents",
-        "Results date"
-      ],
-      "bodySummary": "This page does not answer the school-start date question directly, but it proves that the 2026-2027 school year is already active in official workflows and gives practical details parents care about.",
-      "faqCount": 0,
-      "tableCount": 0,
-      "estimatedWordCount": 420,
-      "schemaHints": [
-        "NewsArticle"
-      ],
-      "sourceLinks": [
-        "https://awlyaa.education.dz"
-      ],
-      "confidence": "high",
-      "strengths": [
-        "Useful practical detail",
-        "Strong official signal",
-        "Good parent-focused extraction"
-      ],
-      "weaknesses": [
-        "Not a direct school-start answer page",
-        "No countdown or context around expected return date",
-        "Focused on one grade only"
-      ]
-    },
-    {
-      "site": "news.radioalgerie.dz",
       "language": "fr",
       "type": "replacement-for-weak-english",
       "url": "https://news.radioalgerie.dz/fr/node/68833",
@@ -195,39 +159,28 @@
       ]
     },
     {
-      "site": "news.radioalgerie.dz",
-      "language": "fr",
-      "type": "replacement-for-weak-english",
-      "url": "https://news.radioalgerie.dz/fr/node/71133",
-      "title": "Rentrée scolaire: 12 millions d'élèves rejoignent les bancs de l'école",
-      "metaDescription": "French report on the official start of the 2025-2026 school year and first-week priorities.",
-      "h1": "Rentrée scolaire: 12 millions d'élèves rejoignent les bancs de l'école",
-      "headings": [
-        "Official launch",
-        "School health week",
-        "Pedagogical measures"
+      "site": "الصحافة الجزائرية",
+      "type": "news",
+      "focus": [
+        "الدخول المدرسي",
+        "الكتب المدرسية",
+        "النقل والتنظيم"
       ],
-      "bodySummary": "This replacement page adds context about what happens on the first week of school, which competitors in Arabic often skip. It helped identify a missed angle: readers do not only ask when school starts, but what that first week usually looks like.",
-      "faqCount": 0,
-      "tableCount": 0,
-      "estimatedWordCount": 260,
-      "schemaHints": [
-        "NewsArticle"
+      "gaps": [
+        "تغطي الخبر ثم تختفي",
+        "ضعف في البنية المرجعية طويلة الأجل"
+      ]
+    },
+    {
+      "site": "صفحات العد التنازلي العربية",
+      "type": "countdown",
+      "focus": [
+        "كم باقي",
+        "متى تبدأ الدراسة"
       ],
-      "sourceLinks": [
-        "https://news.radioalgerie.dz/fr/node/71133"
-      ],
-      "confidence": "high",
-      "replacementReason": "Usable English long-form comparison pages on this Algerian school-start intent were not available; this French official-news variant provided practical first-week context instead.",
-      "strengths": [
-        "Explains what accompanies the school return",
-        "Adds first-week context",
-        "Official-news tone with concrete details"
-      ],
-      "weaknesses": [
-        "French, not English",
-        "No FAQ or structured planning",
-        "Season-bound coverage"
+      "gaps": [
+        "تعاني من عمومية زائدة",
+        "لا توضح القنوات الرسمية في الجزائر"
       ]
     }
   ],
@@ -309,6 +262,30 @@
     {
       "label": "الإذاعة الجزائرية - تمديد التسجيلات",
       "url": "https://news.radioalgerie.dz/ar/node/87252"
+    },
+    {
+      "label": "وزارة التربية الوطنية الجزائرية: انطلاق جلسات التحضير للدخول المدرسي",
+      "url": "https://www.education.gov.dz/2026/02/01/%D9%88%D8%B2%D9%8A%D8%B1-%D8%A7%D9%84%D8%AA%D8%B1%D8%A8%D9%8A%D8%A9-%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A%D8%A9-%D9%8A%D8%B4%D8%B1%D9%81-%D8%B9%D9%84%D9%89-%D8%A7%D9%86%D8%B7%D9%84%D8%A7%D9%82-%D8%AC-2/"
+    },
+    {
+      "label": "الإذاعة الجزائرية: ندوة وطنية لتحضير الامتحانات والدخول المدرسي المقبل",
+      "url": "https://news.radioalgerie.dz/ar/node/84159"
+    },
+    {
+      "label": "الموقع الرسمي لوزارة التربية الوطنية: صفحة الرزنامة",
+      "url": "https://www.education.gov.dz/%D8%A7%D9%84%D8%B1%D8%B2%D9%86%D8%A7%D9%85%D8%A9/"
+    },
+    {
+      "label": "وزارة التربية الوطنية - الجزائر",
+      "url": "https://www.education.gov.dz"
+    },
+    {
+      "label": "الديوان الوطني للمطبوعات المدرسية - الجزائر",
+      "url": "https://www.onps.dz"
+    },
+    {
+      "label": "الوكالة الرسمية للأنباء الجزائرية",
+      "url": "https://www.aps.dz"
     }
   ],
   "notes": "أظهرت المراجعة أن أفضل زاوية للصفحة ليست الادعاء بموعد نهائي مبكر، بل شرح ما هو مؤكد الآن وما يزال منتظراً، مع استخدام 21 سبتمبر كتقدير تخطيطي فقط إلى أن يصدر البيان الرسمي."

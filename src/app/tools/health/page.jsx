@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -46,6 +47,21 @@ const TYPE_GROUPS = [
     name: 'صحة يومية',
     note: '',
     slugs: ['bmi', 'calories', 'fasting', 'ovulation'],
+  },
+];
+
+const FAQ_ITEMS = [
+  {
+    question: 'أنا حامل وأريد معرفة موعد الولادة المتوقع — من أين أبدأ؟',
+    answer: 'حاسبة الحمل تعطيك موعد الولادة التقريبي وتتبع أسبوع الحمل بناءً على تاريخ آخر دورة، مبنية على نفس الطريقة المعتمدة طبياً. تذكّري أن الرقم تقديري دائماً — طبيبتك المتابعة لحملك هي المرجع الدقيق لموعدك الفعلي.',
+  },
+  {
+    question: 'متى أبدأ إدخال الأطعمة الصلبة لطفلي؟',
+    answer: 'جدول تغذية الرضيع يوضح لك التوقيت والمراحل المعتمدة من منظمات صحية دولية (كمنظمة الصحة العالمية ومنظمة اليونيسف)، مع ترتيب منطقي لإدخال الأطعمة تدريجياً. استشيري طبيب طفلك دائماً قبل أي تغيير في نظامه الغذائي، خصوصاً إن كان لديه حساسية معروفة.',
+  },
+  {
+    question: 'ما الفرق بين عمري بالميلادي وعمري بالهجري؟',
+    answer: 'السنة الهجري القمرية أقصر من السنة الميلادية بنحو 11 يوماً، فيتراكم الفرق مع الوقت ليصبح عمرك الهجري رقماً مختلفاً فعلياً عن عمرك الميلادي، لا مجرد تسمية أخرى لنفس الرقم. احسب عمرك بالتقويمين معاً في حاسبة العمر الهجري لترى الفرق الحقيقي بنفسك.',
   },
 ];
 
@@ -104,11 +120,13 @@ export default function HealthCategoryHubPage() {
       }),
     },
   };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <ToolTopAdSlot slotId="top-health-hub" />
 
@@ -165,6 +183,10 @@ export default function HealthCategoryHubPage() {
             ))}
           </div>
         </TooltipProvider>
+
+        <HubGuideSection id="hub-faq" title="الأسئلة الشائعة">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

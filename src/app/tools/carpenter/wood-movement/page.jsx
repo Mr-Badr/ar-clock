@@ -20,6 +20,44 @@ const TOC_ITEMS = [
   ['faq', 'الأسئلة الشائعة'],
 ];
 
+// Same tangential shrinkage rates used by WoodMovementCalculator.client.jsx's SPECIES list.
+const WOOD_MOVEMENT_BARS = [
+  { label: 'الزان', rate: 11.9, colorVar: '--red-text' },
+  { label: 'البلوط الأبيض', rate: 10.5, colorVar: '--red-text' },
+  { label: 'القيقب', rate: 9.9, colorVar: '--amber-text' },
+  { label: 'البلوط الأحمر', rate: 8.6, colorVar: '--amber-text' },
+  { label: 'الحور', rate: 8.2, colorVar: '--amber-text' },
+  { label: 'الجوز', rate: 7.8, colorVar: '--green-text' },
+  { label: 'الصنوبر', rate: 6.1, colorVar: '--green-text' },
+  { label: 'الساج', rate: 5.8, colorVar: '--green-text' },
+];
+const WOOD_MOVEMENT_MAX = 11.9;
+
+function WoodMovementChart() {
+  return (
+    <div className="tool-v2-chart-card">
+      <div className="tool-v2-chart-head">
+        <h3>أي الأنواع يتحرك أكثر؟</h3>
+        <p>نسبة الانكماش العرضي (من رطب إلى جاف تماماً) لكل نوع — الزان والبلوط الأكثر حركة، والساج والصنوبر الأكثر ثباتاً.</p>
+      </div>
+      <div className="tool-v2-hbar-list">
+        {WOOD_MOVEMENT_BARS.map((row) => (
+          <div key={row.label} className="tool-v2-hbar-row">
+            <span className="tool-v2-hbar-label">{row.label}</span>
+            <div className="tool-v2-hbar-track">
+              <div
+                className="tool-v2-hbar-fill"
+                style={{ width: `${(row.rate / WOOD_MOVEMENT_MAX) * 100}%`, background: `var(${row.colorVar})` }}
+              />
+            </div>
+            <span className="tool-v2-hbar-value">{row.rate}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export const metadata = buildCanonicalMetadata({
   title: PAGE.heroTitle,
   description: PAGE.description,
@@ -136,6 +174,7 @@ export default function WoodMovementPage() {
                   تقريباً. لهذا السبب لوح خشب واسع (كسطح طاولة) يتحرك بشكل ملحوظ مع الفصول، بينما
                   طوله يبقى شبه ثابت تماماً.
                 </p>
+                <WoodMovementChart />
               </section>
 
               <ToolInArticleAd slotId="mid-wood-movement" />

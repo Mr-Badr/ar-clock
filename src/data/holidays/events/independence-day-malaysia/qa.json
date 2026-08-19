@@ -1,0 +1,17 @@
+{
+  "slug": "independence-day-malaysia",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: mothership.sg: Merdeka Day & Malaysia Day are different days, explained",
+    "fact-source: publicholidays.com.my: Merdeka Day",
+    "fact-check: 31 أغسطس 1957 استقلال اتحاد مالايا عن بريطانيا (يوم ميرديكا)، 16 سبتمبر 1963 تأسيس اتحاد ماليزيا الأكبر (يوم ماليزيا) — تاريخان منفصلان مؤكدان"
+  ],
+  "updatedAt": "2026-08-18T10:49:38.684Z"
+}

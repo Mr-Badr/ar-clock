@@ -112,6 +112,11 @@ function sortCountriesByName(a, b) {
   );
 }
 
+// Countries never surfaced in auto-generated cross-references (timezone-sharing lists, etc.) —
+// site-wide policy, not a data-quality filter. Keep in sync with any other place that walks the
+// full `countries` geo list for similar auto-generated country callouts.
+const EXCLUDED_FROM_AUTO_COUNTRY_LISTS = new Set(['israel']);
+
 export function getCountriesSharingCurrentOffset(countries, {
   referenceTimezone,
   referenceDateOrIso,
@@ -125,7 +130,10 @@ export function getCountriesSharingCurrentOffset(countries, {
   if (!referenceOffset) return [];
 
   return countries
-    .filter((country) => country?.country_slug && country.country_slug !== excludeCountrySlug && country.timezone)
+    .filter((country) => country?.country_slug
+      && country.country_slug !== excludeCountrySlug
+      && !EXCLUDED_FROM_AUTO_COUNTRY_LISTS.has(country.country_slug)
+      && country.timezone)
     .map((country) => ({
       country_slug: country.country_slug,
       country_name_ar: country.name_ar,

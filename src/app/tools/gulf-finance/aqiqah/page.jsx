@@ -2,6 +2,7 @@ import AqiqahTool from '@/components/calculators/gulf-finance/AqiqahTool.client'
 import TocDetailsReveal from '@/components/shared/TocDetailsReveal.client';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
 import ToolInArticleAd from '@/components/tools-v2/ToolInArticleAd';
+import { ReferenceGrid } from '@/components/tools-v2/ReferenceGrid';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { getFinancePageContent } from '@/lib/calculators/finance-page-content';
 import { buildFinancePageSearchCoverage } from '@/lib/calculators/finance-search-coverage';
@@ -13,6 +14,12 @@ const SITE_URL = getSiteUrl();
 const PAGE = CALCULATOR_ROUTES.find((item) => item.slug === 'aqiqah');
 const CONTENT = getFinancePageContent('aqiqah');
 const SEARCH_COVERAGE = buildFinancePageSearchCoverage(PAGE, CONTENT);
+
+// Hadith of Aisha (رواه الترمذي وأبو داود) — same rule stated in the guide prose below.
+const AQIQAH_COUNT_BY_GENDER = [
+  { value: 'مولود ذكر', meta: 'شاتان' },
+  { value: 'مولودة أنثى', meta: 'شاة واحدة' },
+];
 
 const TOC_ITEMS = [
   ['aqiqah-guide', 'كم عدد الذبائح المطلوبة فعلياً؟'],
@@ -82,6 +89,7 @@ export default function AqiqahPage() {
               30-50%) — تختلف الأسعار في دول أخرى، فاعتبرها مرجعاً تقريبياً لا رقماً نهائياً إن
               كنت خارج السعودية.
             </p>
+            <ReferenceGrid items={AQIQAH_COUNT_BY_GENDER} />
           </section>
 
           <ToolInArticleAd slotId="mid-aqiqah" />
