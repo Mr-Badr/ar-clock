@@ -9,21 +9,10 @@
   overflow: hidden;
 }
 
-/* Ambient glow (2026-08-23, real UX audit) — the bento grid's own hover spotlight only appears
-   on interaction, so a visitor who's just scrolling (not hovering) saw a totally flat, static
-   section. This is a permanent, static counterpart — always there, not interaction-dependent. */
-.mb-section::before {
-  content: '';
-  position: absolute;
-  inset-block-start: -6%;
-  inset-inline-start: 50%;
-  translate: -50% 0;
-  width: min(56rem, 90vw);
-  height: 26rem;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 13%, transparent), transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
+/* Ambient glow removed 2026-08-24 (owner: "i do not like it, keep just other ones") — this
+   section previously had a permanent static radial glow here (`.mb-section::before`), matching
+   the other five homepage sections' ambient-glow treatment. Owner asked to drop just this one;
+   the other sections' glows (.tb-section, .ht-section, .srt-section, .hero-v2-content) stay. */
 
 .mb-inner {
   position: relative;
@@ -62,9 +51,16 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-3);
-  max-width: 54rem;
+  /* Real bug found + fixed 2026-08-24 (owner screenshot, 27" desktop): this used to carry its
+     OWN `max-width: 54rem` + `margin-inline: auto`, centering the grid independently inside
+     `.mb-inner` (which is itself already width-capped at 1080px and holds the title/lead at
+     full width, flush to the inline-start edge). At viewport widths where 1080px-minus-padding
+     exceeds 864px (54rem) — i.e. any large desktop screen — that produced two different start
+     edges: the title flush with `.mb-inner`'s edge, the card grid inset ~equally on both sides
+     by the leftover centering gap, reading as "shifted left" of the title. `.mb-inner` is the
+     only width cap this grid needs now, so it just fills 100% of that shared column and its
+     start edge lines up exactly with the title/lead above it. */
   width: 100%;
-  margin-inline: auto;
 }
 
 @media (min-width: 600px) {

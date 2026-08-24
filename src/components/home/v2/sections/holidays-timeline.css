@@ -9,12 +9,25 @@
 
 /* Ambient glow (2026-08-23, real UX audit) — same technique as the other sections, tuned warm
    (amber, echoing the feed's own "warning"-toned event chips) so consecutive sections don't all
-   glow the identical blue. */
+   glow the identical blue.
+
+   Real bug found + fixed 2026-08-24 (owner screenshot, 27" desktop: "positions so bad" — same
+   root cause as .tb-section::before in tools-breadth.css). `inset-inline-end: 7%` was 7% of
+   `.ht-section`'s full viewport width, not 7% of the actual content it's meant to sit near
+   (`.ht-inner`, capped at 1080px and centered) — the two widths are close on a laptop so the
+   original math happened to line up, but drift apart badly on a wide desktop screen. Anchored to
+   `.ht-inner`'s own edge instead: `max(0px, ...)` is the empty gap between the section edge and
+   the (up to 1080px) inner column — zero once the column is edge-to-edge, growing once the
+   section outgrows it — and `+ 75.6px` (7% of 1080px, the original ratio) reproduces the same
+   "inset a bit from the column's corner" placement as before, now held fixed at that value
+   instead of shrinking further on narrow screens (the original `7%` tapered toward 0 on a phone;
+   pinning it to 75.6px keeps the same deliberate inset there too — re-checked at 390px and 375px
+   via Puppeteer, no overflow/clipping regression, reads the same as before). */
 .ht-section::before {
   content: '';
   position: absolute;
   inset-block-start: 8%;
-  inset-inline-end: 7%;
+  inset-inline-end: calc(max(0px, (100% - 1080px) / 2) + 75.6px);
   width: min(45rem, 78vw);
   height: 30rem;
   background: radial-gradient(closest-side, color-mix(in srgb, var(--warning) 14%, transparent), transparent 72%);

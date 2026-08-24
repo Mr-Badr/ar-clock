@@ -73,10 +73,9 @@ const Footer = () => {
               أدوات وحاسبات عربية، ومواعيد المناسبات — بلا تسجيل، وبتجربة بسيطة وسريعة.
             </p>
 
-            <Link href="/tools" prefetch className="footer-brand-cta">
-              تصفح كل الأدوات
-              <ArrowLeft size={15} aria-hidden="true" />
-            </Link>
+          <p className="footer-brand-cta">
+            <a href={`mailto:${SITE_CONTACT_EMAIL}`} dir="ltr">{SITE_CONTACT_EMAIL}</a>
+          </p>
           </div>
 
           <nav className="footer-links-grid" aria-label="مسارات التذييل">
@@ -97,9 +96,6 @@ const Footer = () => {
 
         <div className="footer-bottom">
           <p>© {COPYRIGHT_YEAR} {SITE_BRAND}. أدوات ومحتوى عربي لخدمة القرار اليومي.</p>
-          <p className="footer-bottom-contact">
-            <a href={`mailto:${SITE_CONTACT_EMAIL}`} dir="ltr">{SITE_CONTACT_EMAIL}</a>
-          </p>
         </div>
       </div>
     </footer>

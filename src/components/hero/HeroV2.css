@@ -5,7 +5,13 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  min-height: min(84dvh, 680px);
+  /* Owner directive, 2026-08-24: hero must fill the full viewport on every device, including
+     large desktop screens — the previous `min(84dvh, 680px)`/`min(88dvh, 760px)` caps meant a
+     27" display (dvh far bigger than 680-760px) rendered a hero noticeably shorter than the
+     screen. `100vh` fallback first for browsers without `dvh` support, `100dvh` after so it wins
+     where supported (correct on mobile browsers with a collapsing address bar). */
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
 }
@@ -74,13 +80,20 @@
 /* Soft glow anchoring the centered composition — a deliberate premium touch (not decoration for
    its own sake): it draws the eye to the badge/headline first, the way most premium SaaS heroes
    (Linear, Vercel, Raycast) use a radial glow to give a centered hero a focal point instead of
-   just floating text on a photo. */
+   just floating text on a photo.
+
+   Real bug found + fixed 2026-08-24 (same root cause as .mb-section::before in magic-bento.css
+   and .srt-section::before in scroll-reveal-text.css). Under `dir="rtl"`, `inset-inline-start:
+   50%` resolves to the PHYSICAL `right`, not `left` — `translate`'s percentage is always
+   physical, so the LTR centering convention's `-50%` correction pulls the box a full glow-width
+   off-center instead of onto it. `50%` (positive) is the correct correction here. See
+   magic-bento.css for the full derivation. */
 .hero-v2-content::before {
   content: '';
   position: absolute;
   inset-block-start: -4rem;
   inset-inline-start: 50%;
-  translate: -50% 0;
+  translate: 50% 0;
   width: min(50rem, 90vw);
   height: 26rem;
   background: radial-gradient(closest-side, color-mix(in srgb, var(--accent-alt) 22%, transparent), transparent 72%);
@@ -342,10 +355,6 @@
 }
 
 @media (min-width: 768px) {
-  .hero-v2 {
-    min-height: min(88dvh, 760px);
-  }
-
   .hero-v2-content {
     padding-inline: var(--space-10);
     padding-block: calc(var(--app-header-height) + var(--space-14)) var(--space-14);

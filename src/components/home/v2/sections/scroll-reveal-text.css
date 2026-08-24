@@ -11,12 +11,18 @@
   overflow: hidden;
 }
 
+/* Real bug found + fixed 2026-08-24 (owner screenshot, 27" desktop: glow sitting off to one side
+   instead of centered — same root cause as .mb-section::before in magic-bento.css). Under
+   `dir="rtl"`, `inset-inline-start: 50%` resolves to the PHYSICAL `right`, not `left` —
+   `translate`'s percentage is always physical, so the LTR centering convention's `-50%`
+   correction pulls the box a full glow-width left of true center instead of onto it. `50%`
+   (positive) is the correct correction here. See magic-bento.css for the full derivation. */
 .srt-section::before {
   content: '';
   position: absolute;
   inset-block-start: 15%;
   inset-inline-start: 50%;
-  translate: -50% 0;
+  translate: 50% 0;
   width: min(50rem, 88vw);
   height: 28rem;
   background: radial-gradient(closest-side, color-mix(in srgb, var(--accent-alt) 14%, transparent), transparent 72%);

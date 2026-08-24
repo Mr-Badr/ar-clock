@@ -12,12 +12,27 @@
 /* Ambient glow (2026-08-23, real UX audit — sections sat on completely flat --bg-base with zero
    atmosphere, reading as empty/lifeless). A soft, oversized, heavily-blurred radial behind the
    numeral, same technique the hero already uses for its own focal glow — gives the section a
-   visual anchor without adding a shape anyone consciously notices. */
+   visual anchor without adding a shape anyone consciously notices.
+
+   Real bug found + fixed 2026-08-24 (owner screenshot, 27" desktop: "positions so bad"). The
+   original `inset-inline-end: -10%` is 10% of THIS ELEMENT'S CONTAINING BLOCK — `.tb-section`,
+   which is full viewport width — not 10% of the actual content it's meant to sit behind
+   (`.tb-panel`, capped at 1160px and centered). On a laptop viewport close to 1160px the two
+   widths are nearly equal so the math coincidentally lined up; on a 27" screen the section is
+   far wider than the panel, so a flat 10%-of-viewport offset drifts the glow well away from the
+   panel instead of hugging its corner. Anchored to the panel's own edge instead: `max(0px, ...)`
+   is the empty gap between the section edge and the (up to 1160px) panel — zero once the panel
+   is edge-to-edge, growing once the section outgrows it — and `- 116px` (10% of 1160px, the
+   original ratio) is the same "just past the panel's corner" overflow as before, now held fixed
+   at that value instead of shrinking further on narrow screens (the original `-10%` tapered all
+   the way to ~0 on a phone, tucking the glow flush against the panel's corner with almost no
+   visible bleed; pinning it to -116px keeps a small, deliberate overflow there too — re-checked
+   at 390px and 375px via Puppeteer, no overflow/clipping regression, reads the same as before). */
 .tb-section::before {
   content: '';
   position: absolute;
   inset-block-start: 10%;
-  inset-inline-end: -10%;
+  inset-inline-end: calc(max(0px, (100% - 1160px) / 2) - 116px);
   width: min(46rem, 80vw);
   height: 32rem;
   background: radial-gradient(closest-side, color-mix(in srgb, var(--accent-alt) 16%, transparent), transparent 72%);
@@ -86,6 +101,17 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  /* `direction: ltr` is only here so the digits themselves shape/order correctly (Arabic-Indic
+     shaping rules don't apply to Latin numerals, but a `+` prefix needs a fixed reading order) —
+     it's not meant to flip which SIDE of the page this sits on. Real bug found + fixed 2026-08-24
+     (owner, mobile screenshot): `direction: ltr` also flips the UA default `text-align: start`
+     from right to left, and on mobile `.tb-figure` stacks as a single full-width column (the
+     `auto 1fr` two-column grid only kicks in at 860px+), so this became the one piece of copy in
+     the whole section pinned to the left edge while the kicker/title/lead above and below it stay
+     right-aligned like the rest of the RTL page. `text-align: right` puts it back in line with
+     them; only applies visibly below 860px since above that `.tb-figure`'s grid columns (not
+     text-align) place the numeral in its own column already. */
+  text-align: right;
   direction: ltr;
 }
 
