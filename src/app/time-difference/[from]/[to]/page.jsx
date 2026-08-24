@@ -21,7 +21,7 @@ import TimeDiffCalculator from '@/components/TimeDifference/TimeDiffCalculatorV2
 import { ErrorBoundary } from '@/components/ErrorBoundary.client';
 import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronDown, Moon, Sun, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { ChevronDown, Moon, Sun, CheckCircle2, AlertTriangle, Minus } from 'lucide-react';
 import './time-difference.css';
 import {
   getOffsetMinutes,
@@ -36,6 +36,7 @@ import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdInArticle from '@/components/ads/AdInArticle';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import RouteUnavailableState from '@/components/shared/RouteUnavailableState';
+import CountryFlag from '@/components/shared/CountryFlag';
 import { POPULAR_PAIRS } from '@/components/time-diff/data/popularPairs';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { isSeoIndexableTimeDifferencePair } from '@/lib/seo/time-difference-indexing';
@@ -53,6 +54,10 @@ import {
 } from '@/lib/seo/section-search-intent';
 import { buildNoindexRouteMetadata, isRouteSlug, isRenderableCityData } from '@/lib/route-param-validation';
 import { logger, serializeError } from '@/lib/logger';
+
+// How many of the (now much larger) priority-hub pairs get built as static HTML at build time.
+// See the usage site in generateStaticParams for why this is bounded separately from the sitemap.
+const PRERENDER_HUB_PAIR_LIMIT = 1500;
 
 /** Western-numeral 12-hour Arabic time string */
 function fmtTime(h24) {
@@ -73,7 +78,14 @@ export async function generateStaticParams() {
 
   let priorityHubParams = [];
   try {
-    const priorityHubPairs = await getPriorityHubTimeDifferencePairs();
+    // Bounded on purpose: `getPriorityHubTimeDifferencePairs` can now return up to ~20,000 pairs
+    // (real per-country cities from the geo DB/snapshot, not just one hub each — see that file's
+    // JSDoc). Build-time prerendering every one of those would slow the build for little benefit,
+    // since a pair outside this set still renders on demand and gets indexed the moment a crawler
+    // reaches it (`isSeoIndexableTimeDifferencePair` was never limited to the prerendered set).
+    // `sitemap.js` calls the same function with no limit, so the FULL breadth is still submitted
+    // to Google for discovery — this cap only controls what gets built as static HTML up front.
+    const priorityHubPairs = await getPriorityHubTimeDifferencePairs({ limit: PRERENDER_HUB_PAIR_LIMIT });
     priorityHubParams = priorityHubPairs
       .filter((pair) => isRouteSlug(pair.from) && isRouteSlug(pair.to))
       .map((pair) => ({ from: pair.from, to: pair.to }));
@@ -157,6 +169,8 @@ export async function generateMetadata({ params }) {
       `أفضل وقت للاجتماعات المشتركة بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
       `كم الساعة عند وصولي من ${fromCity.city_name_ar} إلى ${toCity.city_name_ar}`,
       `حساب وقت الوصول حسب مدة الرحلة بين ${fromCity.city_name_ar} و${toCity.city_name_ar}`,
+      `هل ${toCity.city_name_ar} قبل ام بعد ${fromCity.city_name_ar} بالتوقيت`,
+      `كم الساعة الان في ${toCity.city_name_ar} بتوقيت ${fromCity.city_name_ar}`,
     ];
     const keywords = uniqueKeywords(keywordsArray);
 
@@ -279,6 +293,13 @@ export default async function ComparisonPage({ params }) {
         ? <>{fromCity.city_name_ar} تطبق التوقيت الصيفي بينما {toCity.city_name_ar} لا تطبقه. الفارق الحالي <strong className="text-primary">{diffLabel}</strong> قد يتغير موسميًا.</>
         : <>كلتاهما تطبقان التوقيت الصيفي. الفارق الحالي <strong className="text-primary">{diffLabel}</strong> قد يبقى ثابتًا أو يتغير ساعة حسب توقيت كل منهما.</>;
 
+  // ─── Live-ish clock strings for FAQ text — same CURRENT_DATE the rest of
+  // the page already renders "الآن" against, refreshed every few minutes via
+  // getCachedNowIso's cacheLife('minutes'), so this isn't a stale one-off. ──
+  const fromNowClock = getInitialClockParts(fromCity.timezone, CURRENT_DATE);
+  const toNowClock = getInitialClockParts(toCity.timezone, CURRENT_DATE);
+  const fmtClock = ({ h, m }) => fmtTime(h + m / 60);
+
   // ─── FAQ data — only questions not already answered by the hero/tool/table ─
   const faqs = [
     {
@@ -286,6 +307,16 @@ export default async function ComparisonPage({ params }) {
       a: bothFixed
         ? `لا، الفرق ثابت عند ${diffLabel} طوال السنة، إذ لا تطبق أيٌّ منهما التوقيت الصيفي.`
         : `نعم، قد يتغير بمقدار ساعة في فترات التوقيت الصيفي. الفرق الحالي ${diffLabel}.`,
+    },
+    {
+      q: `هل توقيت ${toCity.city_name_ar} قبل أم بعد توقيت ${fromCity.city_name_ar}؟`,
+      a: diffMinutes === 0
+        ? `لا "قبل" ولا "بعد" هنا — توقيت ${toCity.city_name_ar} مطابق تمامًا لتوقيت ${fromCity.city_name_ar} حاليًا (${fromOffStr}).`
+        : `توقيت ${ahead} بعد توقيت ${behind} بـ${diffLabel} — بعبارة أخرى، ${behind} قبل ${ahead} في عقارب الساعة.`,
+    },
+    {
+      q: `كم الساعة الآن في ${toCity.city_name_ar} بتوقيت ${fromCity.city_name_ar}؟`,
+      a: `الساعة الآن ${fmtClock(toNowClock)} في ${toCity.city_name_ar}، بينما الساعة ${fmtClock(fromNowClock)} في ${fromCity.city_name_ar} — تتحدّث هذه الصفحة تلقائيًا كل بضع دقائق فتبقى القراءة قريبة من اللحظة الفعلية.`,
     },
     {
       q: `هل هذا هو نفس فرق التوقيت بين كل مدن ${toCountryPrimary} و${fromCountryPrimary}؟`,
@@ -347,6 +378,13 @@ export default async function ComparisonPage({ params }) {
       { '@type': 'Thing', name: fromCity.city_name_ar },
       { '@type': 'Thing', name: toCity.city_name_ar },
     ],
+    // Lets voice assistants / AI answer engines lift the direct-answer
+    // sentence under the H1 as a clean, self-contained spoken answer instead
+    // of guessing at which paragraph on the page actually answers the query.
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['#td-answer'],
+    },
   };
 
   const faqSchema = {
@@ -430,9 +468,21 @@ export default async function ComparisonPage({ params }) {
               </>
             )}
           </h1>
-          <p className="text-sm text-secondary leading-relaxed">
+          <p id="td-answer" className="text-sm text-secondary leading-relaxed">
             {headerLine}
           </p>
+          <div className="td-header-chips">
+            <span className="td-header-chip">
+              <CountryFlag code={fromCity.country_code} square />
+              {fromCity.city_name_ar}
+              <span className="td-header-chip__offset tabular-nums" dir="ltr">{fromOffStr}</span>
+            </span>
+            <span className="td-header-chip">
+              <CountryFlag code={toCity.country_code} square />
+              {toCity.city_name_ar}
+              <span className="td-header-chip__offset tabular-nums" dir="ltr">{toOffStr}</span>
+            </span>
+          </div>
         </header>
 
         {/* ── Hero: the one live answer module ─────────────────────────
@@ -444,8 +494,10 @@ export default async function ComparisonPage({ params }) {
             toCity={toCity}
             diffMinutes={diffMinutes}
             diffLabel={diffLabel}
-            fromHasDST={fromDST}
-            toHasDST={toDST}
+            fromObservesDST={fromHasDST}
+            toObservesDST={toHasDST}
+            fromDSTActive={fromDST}
+            toDSTActive={toDST}
             fromInitial={getInitialClockParts(fromCity.timezone, CURRENT_DATE)}
             toInitial={getInitialClockParts(toCity.timezone, CURRENT_DATE)}
             shareHref={pairHref}
@@ -514,7 +566,7 @@ export default async function ComparisonPage({ params }) {
           <h3 className="td-h3">هل يتغير هذا الفارق خلال السنة؟</h3>
 
           <div className="table-wrapper mb-4">
-            <table className="table table--compact">
+            <table className="table table--compact td-dst-table">
               <thead>
                 <tr>
                   <th style={{ width: '40%' }}>المعلومة</th>
@@ -525,17 +577,17 @@ export default async function ComparisonPage({ params }) {
               <tbody>
                 <tr>
                   <td className="text-secondary text-xs">التوقيت (UTC)</td>
-                  <td className="td-col-center tabular-nums font-bold text-accent-alt" dir="ltr">{fromOffStr}</td>
-                  <td className="td-col-center tabular-nums font-bold text-accent-alt" dir="ltr">{toOffStr}</td>
+                  <td className="td-col-center tabular-nums font-bold text-accent-alt" dir="ltr" data-label={fromCity.city_name_ar}>{fromOffStr}</td>
+                  <td className="td-col-center tabular-nums font-bold text-accent-alt" dir="ltr" data-label={toCity.city_name_ar}>{toOffStr}</td>
                 </tr>
                 <tr>
                   <td className="text-secondary text-xs">يطبق التوقيت الصيفي؟</td>
-                  <td className="td-col-center">
+                  <td className="td-col-center" data-label={fromCity.city_name_ar}>
                     <span className={`badge ${fromHasDST ? 'badge-warning' : 'badge-default'}`}>
                       {fromHasDST ? 'نعم' : 'لا'}
                     </span>
                   </td>
-                  <td className="td-col-center">
+                  <td className="td-col-center" data-label={toCity.city_name_ar}>
                     <span className={`badge ${toHasDST ? 'badge-warning' : 'badge-default'}`}>
                       {toHasDST ? 'نعم' : 'لا'}
                     </span>
@@ -543,15 +595,23 @@ export default async function ComparisonPage({ params }) {
                 </tr>
                 <tr>
                   <td className="text-secondary text-xs">الحالة الآن</td>
-                  <td className="td-col-center">
-                    <span className={`badge ${fromDST ? 'badge-warning' : 'badge-info'}`}>
-                      {fromDST ? <><Sun size={12} aria-hidden="true" /> توقيت صيفي</> : <><Moon size={12} aria-hidden="true" /> توقيت شتوي</>}
-                    </span>
+                  <td className="td-col-center" data-label={fromCity.city_name_ar}>
+                    {!fromHasDST ? (
+                      <span className="badge badge-default"><Minus size={12} aria-hidden="true" /> ثابت طوال السنة</span>
+                    ) : fromDST ? (
+                      <span className="badge badge-warning"><Sun size={12} aria-hidden="true" /> توقيت صيفي</span>
+                    ) : (
+                      <span className="badge badge-info"><Moon size={12} aria-hidden="true" /> توقيت شتوي</span>
+                    )}
                   </td>
-                  <td className="td-col-center">
-                    <span className={`badge ${toDST ? 'badge-warning' : 'badge-info'}`}>
-                      {toDST ? <><Sun size={12} aria-hidden="true" /> توقيت صيفي</> : <><Moon size={12} aria-hidden="true" /> توقيت شتوي</>}
-                    </span>
+                  <td className="td-col-center" data-label={toCity.city_name_ar}>
+                    {!toHasDST ? (
+                      <span className="badge badge-default"><Minus size={12} aria-hidden="true" /> ثابت طوال السنة</span>
+                    ) : toDST ? (
+                      <span className="badge badge-warning"><Sun size={12} aria-hidden="true" /> توقيت صيفي</span>
+                    ) : (
+                      <span className="badge badge-info"><Moon size={12} aria-hidden="true" /> توقيت شتوي</span>
+                    )}
                   </td>
                 </tr>
                 <tr className="td-dst-summary-row">

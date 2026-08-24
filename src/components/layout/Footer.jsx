@@ -1,26 +1,47 @@
 // Footer.jsx
+// Third pass, 2026-08-20 — owner shared exact light/dark reference screenshots of withone.ai's
+// footer and said "rebuild... to be like this in both themes." That reference has no big CTA
+// headline/stat band — just a compact brand blurb, real link columns, and a copyright bar, all
+// floating on one continuous footer.jpg panel that stays legible by flipping between a light
+// airy scrim + dark text (light mode) and a dark moody scrim + white text (dark mode). See
+// footer.css's file header for the exact color pairs. The earlier big "سؤال واحد" CTA band is
+// gone — the shimmering <ToolsNavButton> in the header now carries that "blow-minded CTA to
+// /tools" job instead, so the footer doesn't need to repeat it.
+import Image from "next/image";
 import Link from "next/link";
-import { Clock } from "lucide-react";
+import { Clock, ArrowLeft } from "lucide-react";
 
 import { SITE_BRAND, SITE_CONTACT_EMAIL } from "@/lib/site-config";
 import "./footer.css";
 
-const PRODUCT_LINKS = [
-  { href: '/time-now', label: 'الوقت الان' },
-  { href: '/time-difference', label: 'فرق التوقيت' },
-  { href: '/tools', label: 'الأدوات' },
-  { href: '/holidays', label: 'المناسبات' },
-  { href: '/countdown', label: 'عداد تنازلي' },
-  { href: '/date', label: 'التاريخ والتحويل' },
-];
-
-const COMPANY_LINKS = [
-  { href: '/about', label: 'من نحن' },
-  { href: '/editorial-policy', label: 'السياسة التحريرية' },
-  { href: '/terms', label: 'شروط الاستخدام' },
-  { href: '/disclaimer', label: 'إخلاء المسؤولية' },
-  { href: '/privacy', label: 'سياسة الخصوصية' },
-  { href: '/contact', label: 'اتصل بنا' },
+const LINK_GROUPS = [
+  {
+    heading: 'الأدوات والصفحات',
+    links: [
+      { href: '/tools', label: 'الأدوات والحاسبات' },
+      { href: '/time-now', label: 'الوقت الان' },
+      { href: '/time-difference', label: 'فرق التوقيت' },
+      { href: '/date', label: 'التاريخ والتحويل' },
+      { href: '/holidays', label: 'المناسبات' },
+      { href: '/countdown', label: 'عداد تنازلي' },
+    ],
+  },
+  {
+    heading: 'الشركة',
+    links: [
+      { href: '/about', label: 'من نحن' },
+      { href: '/editorial-policy', label: 'السياسة التحريرية' },
+      { href: '/contact', label: 'اتصل بنا' },
+    ],
+  },
+  {
+    heading: 'قانوني',
+    links: [
+      { href: '/terms', label: 'شروط الاستخدام' },
+      { href: '/privacy', label: 'سياسة الخصوصية' },
+      { href: '/disclaimer', label: 'إخلاء المسؤولية' },
+    ],
+  },
 ];
 
 const COPYRIGHT_YEAR = 2026;
@@ -28,6 +49,16 @@ const COPYRIGHT_YEAR = 2026;
 const Footer = () => {
   return (
     <footer className="footer-root">
+      <Image
+        src="/img/footer.jpg"
+        alt=""
+        fill
+        sizes="100vw"
+        className="footer-bg-img"
+        aria-hidden="true"
+      />
+      <div className="footer-bg-scrim" aria-hidden="true" />
+
       <div className="footer-container" data-nosnippet>
         <div className="footer-main">
           <div className="footer-brand">
@@ -39,47 +70,36 @@ const Footer = () => {
             </Link>
 
             <p className="footer-brand-desc">
-              ابدأ من السؤال الأقرب لك: متى الموعد؟ كم النتيجة؟ ما التاريخ؟ ثم انتقل إلى الصفحة التي تعطيك جواباً عملياً وواضحاً.
+              أدوات وحاسبات عربية، ومواعيد المناسبات — بلا تسجيل، وبتجربة بسيطة وسريعة.
             </p>
 
-            <p className="footer-brand-contact">
-              للتواصل: <a href={`mailto:${SITE_CONTACT_EMAIL}`} dir="ltr">{SITE_CONTACT_EMAIL}</a>
-            </p>
+            <Link href="/tools" prefetch className="footer-brand-cta">
+              تصفح كل الأدوات
+              <ArrowLeft size={15} aria-hidden="true" />
+            </Link>
           </div>
 
           <nav className="footer-links-grid" aria-label="مسارات التذييل">
-            <div className="footer-col">
-              <h3 className="footer-col-heading">مسارات مهمة</h3>
-              <ul className="footer-col-list">
-                {COMPANY_LINKS.map(({ href, label }) => (
-                  <li key={href}>
-                    <Link href={href} className="footer-col-link">{label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="footer-col">
-              <h3 className="footer-col-heading">الصفحات الرئيسية</h3>
-              <ul className="footer-col-list">
-                {PRODUCT_LINKS.map(({ href, label }) => (
-                  <li key={href}>
-                    <Link href={href} className="footer-col-link">{label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
+            {LINK_GROUPS.map((group) => (
+              <div key={group.heading} className="footer-col">
+                <h3 className="footer-col-heading">{group.heading}</h3>
+                <ul className="footer-col-list">
+                  {group.links.map(({ href, label }) => (
+                    <li key={href}>
+                      <Link href={href} className="footer-col-link">{label}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </nav>
         </div>
 
         <div className="footer-bottom">
           <p>© {COPYRIGHT_YEAR} {SITE_BRAND}. أدوات ومحتوى عربي لخدمة القرار اليومي.</p>
-          <div className="footer-bottom-links" aria-label="مسارات الثقة">
-            <Link href="/editorial-policy">كيف نكتب المحتوى</Link>
-            <Link href="/privacy">الخصوصية</Link>
-            <Link href="/contact">التواصل</Link>
-          </div>
+          <p className="footer-bottom-contact">
+            <a href={`mailto:${SITE_CONTACT_EMAIL}`} dir="ltr">{SITE_CONTACT_EMAIL}</a>
+          </p>
         </div>
       </div>
     </footer>

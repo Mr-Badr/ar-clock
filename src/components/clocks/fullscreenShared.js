@@ -1,3 +1,7 @@
+'use client';
+
+import { useCallback, useEffect, useRef, useState } from 'react';
+
 // fourUnit's "large" level is deliberately more conservative than threeUnit's —
 // an 8-digit countdown row is already close to the edge of narrow mobile
 // viewports at the base size, so a bigger multiplier clips digits at the
@@ -8,11 +12,63 @@ export const FULLSCREEN_ZOOM_LEVELS = {
   fourUnit: [0.76, 1, 1.14],
 };
 
-export function getFullscreenZoomLabel(level) {
-  return ['تصغير', 'حجم عادي', 'تكبير'][level] || 'حجم عادي';
+// A 4th "extra large" tier, added 2026-08-25. Unlike the three tiers above —
+// flat numbers that have to stay safe on the narrowest phone in the fleet —
+// this one scales with viewport width: a laptop/desktop screen has room to
+// go noticeably bigger than a 360px phone, so a single flat multiplier would
+// either clip on mobile or waste the extra room everywhere else. Each
+// breakpoint's scale was verified with Puppeteer (measuring the rendered
+// digit row's bounding box against the viewport, real Noto Sans Arabic font)
+// across a spread of phone/tablet/laptop widths AND short-height laptop
+// viewports (1366x768 etc.) — every value here has real clipping margin, not
+// just a guess. Widths are `<= breakpoint` in ascending order.
+const XL_SCALE_TIERS = {
+  fourUnit: [
+    { maxWidth: 420, scale: 1.20 },
+    { maxWidth: 768, scale: 1.32 },
+    { maxWidth: 1200, scale: 1.45 },
+    { maxWidth: Infinity, scale: 1.60 },
+  ],
+  threeUnit: [
+    { maxWidth: 420, scale: 1.32 },
+    { maxWidth: 768, scale: 1.45 },
+    { maxWidth: 1200, scale: 1.60 },
+    { maxWidth: Infinity, scale: 1.75 },
+  ],
+};
+
+const DEFAULT_VIEWPORT_WIDTH = 1280;
+
+/** Pure lookup — safe to call during SSR (falls back to a laptop-ish width). */
+export function getResponsiveXLScale(variant = 'threeUnit', viewportWidth) {
+  const tiers = XL_SCALE_TIERS[variant] || XL_SCALE_TIERS.threeUnit;
+  const width = viewportWidth ?? (typeof window !== 'undefined' ? window.innerWidth : DEFAULT_VIEWPORT_WIDTH);
+  const tier = tiers.find((t) => width <= t.maxWidth) || tiers[tiers.length - 1];
+  return tier.scale;
 }
 
-export function getFullscreenScale(level, variant = 'threeUnit') {
+/** Tracks the live viewport width (resize/orientation-safe) for the XL zoom tier. */
+export function useViewportWidth() {
+  const [width, setWidth] = useState(() => (typeof window !== 'undefined' ? window.innerWidth : DEFAULT_VIEWPORT_WIDTH));
+
+  useEffect(() => {
+    const onResize = () => setWidth(window.innerWidth);
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  return width;
+}
+
+export function getFullscreenZoomLabel(level) {
+  return ['تصغير', 'حجم عادي', 'تكبير', 'أكبر حجم'][level] || 'حجم عادي';
+}
+
+export function getFullscreenScale(level, variant = 'threeUnit', viewportWidth) {
+  if (level === 3) {
+    return `scale(${getResponsiveXLScale(variant, viewportWidth)})`;
+  }
   const levels = FULLSCREEN_ZOOM_LEVELS[variant] || FULLSCREEN_ZOOM_LEVELS.threeUnit;
   return `scale(${levels[level] ?? levels[1]})`;
 }
@@ -231,3 +287,75 @@ export const FULLSCREEN_TITLE_STYLE = {
   maxWidth: 'min(90vw, 1080px)',
   lineHeight: 1.15,
 };
+
+/* ─────────────────────────────────────────────────────────────────────
+   IDLE AUTO-HIDE — keeps a fullscreen clock's corner buttons out of the
+   way for passive viewing (wall display, bedside table, presentation
+   screen): after a few seconds with no mouse/touch/keyboard activity the
+   toolbar fades out so only the numbers remain, and any activity brings
+   it straight back. Screen-sleep prevention is handled separately by each
+   caller's own WakeLock effect — this only concerns visual chrome.
+───────────────────────────────────────────────────────────────────── */
+const IDLE_HIDE_DELAY_MS = 3000;
+const ACTIVITY_EVENTS = ['mousemove', 'mousedown', 'touchstart', 'touchmove', 'keydown', 'pointerdown', 'wheel', 'focusin'];
+
+/**
+ * Returns whether fullscreen controls should currently be visible. Pass the
+ * component's own `isFullscreen` flag as `active` — while inactive this
+ * always returns true (normal, non-fullscreen view never hides its buttons).
+ */
+export function useFullscreenIdleHide(active) {
+  const [controlsVisible, setControlsVisible] = useState(true);
+  const timerRef = useRef(null);
+
+  const clearHideTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  const scheduleHide = useCallback(() => {
+    clearHideTimer();
+    timerRef.current = setTimeout(() => setControlsVisible(false), IDLE_HIDE_DELAY_MS);
+  }, [clearHideTimer]);
+
+  useEffect(() => {
+    if (!active) {
+      setControlsVisible(true);
+      clearHideTimer();
+      return undefined;
+    }
+
+    setControlsVisible(true);
+    scheduleHide();
+
+    const handleActivity = () => {
+      setControlsVisible(true);
+      scheduleHide();
+    };
+
+    ACTIVITY_EVENTS.forEach((evt) => document.addEventListener(evt, handleActivity, { passive: true }));
+    return () => {
+      ACTIVITY_EVENTS.forEach((evt) => document.removeEventListener(evt, handleActivity));
+      clearHideTimer();
+    };
+  }, [active, scheduleHide, clearHideTimer]);
+
+  return controlsVisible;
+}
+
+/** Style patch for a fullscreen toolbar — fades + disables pointer events while idle. */
+export function getFullscreenControlsVisibilityStyle(visible) {
+  return {
+    transition: 'opacity 0.35s ease, transform 0.35s ease',
+    opacity: visible ? 1 : 0,
+    pointerEvents: visible ? 'auto' : 'none',
+    transform: visible ? 'none' : 'translateY(-0.6rem)',
+  };
+}
+
+/** Style patch for the fullscreen layer itself — hides the mouse cursor while idle. */
+export function getFullscreenCursorStyle(visible) {
+  return { cursor: visible ? 'auto' : 'none' };
+}

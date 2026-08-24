@@ -745,5 +745,20 @@
     "flag": "🇰🇷",
     "timezone": "Asia/Seoul",
     "order": 50
+  },
+  {
+    "code": "uz",
+    "aliasSlugToken": "uzbekistan",
+    "nameAr": "أوزبكستان",
+    "officialNameAr": "جمهورية أوزبكستان",
+    "authority": "إدارة المسلمين في أوزبكستان",
+    "dateVarianceLabel": "إعلان محلي / حسابات فلكية",
+    "localTerms": [
+      "أوزبكستان",
+      "الأوزبكية"
+    ],
+    "flag": "🇺🇿",
+    "timezone": "Asia/Tashkent",
+    "order": 51
   }
 ]

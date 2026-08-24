@@ -12,6 +12,7 @@ const STATIC_PAGES = [
   '/date/converter',
   '/date/hijri-to-gregorian',
   '/date/gregorian-to-hijri',
+  '/date/hijri-months',
   '/date/calendar',
   '/date/calendar/hijri',
   '/date/country',

@@ -61,6 +61,7 @@ async function resolveTimeDifferenceCityFromSegmentInternal(segment) {
   return {
     country_slug: country.country_slug,
     country_name_ar: country.name_ar,
+    country_code: country.country_code,
     city_slug: city.city_slug,
     city_name_ar: city.name_ar || city.name_en,
     timezone: city.timezone || 'UTC',

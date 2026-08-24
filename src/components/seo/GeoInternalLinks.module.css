@@ -1,0 +1,47 @@
+/* "cards" variant only — the default (no className here) stays the plain
+   SiteDotLinkList used elsewhere. Small clean link-preview cards for
+   sections where the links ARE the content (owner, 2026-08-24: "related
+   pages not list, small clean cards of related pages"). */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-3);
+}
+
+.cardLink {
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.cardBody {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: var(--space-4);
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-extrabold);
+  line-height: 1.4;
+}
+
+.cardArrow {
+  flex: 0 0 auto;
+  color: var(--accent-alt);
+}
+
+.cardDescription {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.75;
+}

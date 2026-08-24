@@ -1,0 +1,173 @@
+/* home/v2/sections/tools-breadth.css — bespoke design #1: pure typography, no cards, no icons.
+   Mobile-first. Deliberately NOT reusing the site's shared button/card classes (owner
+   directive, 2026-08-20: sections should look "unique and special", not on-system). */
+
+.tb-section {
+  position: relative;
+  padding-block: var(--space-20) var(--space-16);
+  padding-inline: var(--space-4);
+  overflow: hidden;
+}
+
+/* Ambient glow (2026-08-23, real UX audit — sections sat on completely flat --bg-base with zero
+   atmosphere, reading as empty/lifeless). A soft, oversized, heavily-blurred radial behind the
+   numeral, same technique the hero already uses for its own focal glow — gives the section a
+   visual anchor without adding a shape anyone consciously notices. */
+.tb-section::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 10%;
+  inset-inline-end: -10%;
+  width: min(46rem, 80vw);
+  height: 32rem;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent-alt) 16%, transparent), transparent 72%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Panel (2026-08-23) — one bordered shell holding both the numeral block and the marquee
+   band, so the section reads as a single designed module instead of two stacked widgets with a
+   gap between them. The ambient glow behind it (.tb-section::before) shows faintly through the
+   panel's own translucent surface near the top edge.
+   Background and corner radius are owned by <BorderGlow> itself (its own border-glow-card rules,
+   see src/components/ui/border-glow.css) — this class only adds the layout/blur bits BorderGlow
+   doesn't know about, PLUS the two overrides below that keep BorderGlow to "hover adds an outer
+   glow around our existing border," nothing more. Deliberately NO overflow:hidden here: the
+   hover glow bleeds outside the box edges (glowRadius), and backdrop-filter still clips its own
+   blur to the border-radius shape without it. */
+.tb-panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1160px);
+  margin-inline: auto;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  /* Keep the panel's real border exactly what it was before BorderGlow — same color as every
+     other bordered surface on the site, not the component's own hardcoded white/15%. */
+  border-color: var(--border-subtle);
+}
+
+/* Owner correction, 2026-08-23: only the outer bloom (border-glow-card's ::edge-light span,
+   which sits entirely outside the box via a negative inset) should change color on hover. The
+   stock component also recolors the border ring itself on ::before — kill that layer so the
+   border stays its normal static color and only the glow around it moves. (::after, the
+   interior mesh-gradient "fill" wash, is already off via the fillOpacity={0} prop.) */
+.tb-panel.border-glow-card::before {
+  display: none;
+}
+
+.tb-inner {
+  padding: var(--space-10) var(--space-5) var(--space-8);
+}
+
+.tb-kicker {
+  margin: 0 0 var(--space-6);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  letter-spacing: 0.08em;
+}
+
+.tb-figure {
+  display: grid;
+  gap: var(--space-6);
+  align-items: end;
+}
+
+/* The one deliberate flourish: a gradient TEXT fill on a huge numeral — the Stripe/Linear
+   "big-stat" technique. Never a gradient background/card; only the glyph itself. */
+.tb-number {
+  font-family: var(--font-heading);
+  font-size: clamp(5rem, 3rem + 14vw, 11rem);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--accent-alt) 0%, var(--text-primary) 65%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  direction: ltr;
+}
+
+.tb-figure-copy {
+  display: grid;
+  gap: var(--space-3);
+  padding-block-end: var(--space-3);
+}
+
+.tb-title {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-thmanyah), var(--font-heading);
+  font-size: clamp(1.4rem, 1.15rem + 1vw, 1.9rem);
+  font-weight: var(--font-bold);
+}
+
+.tb-lead {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+/* ── Band (two rows, opposite directions — owner, 2026-08-21: "real band that scrolls...
+   no dots... modern look") ──────────────────────────────────────────────────────────────
+   A distinct ribbon crossing the full section width — its own tinted background + hairline
+   borders, not just floating text — housing two marquee rows moving opposite directions.
+   Each category is a pill, not plain text; no separator characters anywhere. */
+.tb-band {
+  width: 100%;
+  display: grid;
+  gap: var(--space-3);
+  padding-block: var(--space-6);
+  background: color-mix(in srgb, var(--bg-surface-1) 55%, transparent);
+  border-block-start: 1px solid var(--border-subtle);
+}
+
+.tb-band-row {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+
+.tb-band-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding-inline: var(--space-4);
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-base);
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  /* Cleaner elevation (owner, 2026-08-23) — a soft neutral shadow instead of a flat, shadowless
+     outline; token-driven (--shadow-xs/--shadow-sm) so it stays correct in both themes, same
+     approach as every other card in the app. No border-stripe/gradient — see arabic-rtl.md. */
+  box-shadow: var(--shadow-xs);
+  transition: border-color var(--transition-base), color var(--transition-base),
+    box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.tb-band-pill:hover {
+  border-color: color-mix(in srgb, var(--accent-alt) 45%, var(--border-subtle) 55%);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+@media (min-width: 860px) {
+  .tb-figure {
+    grid-template-columns: auto 1fr;
+    gap: var(--space-10);
+  }
+
+  .tb-band-pill {
+    font-size: var(--text-base);
+  }
+}

@@ -29,12 +29,16 @@ import {
   getFullscreenContentStyle,
   getFullscreenDigitStyle,
   getFullscreenRowStyle,
+  getFullscreenControlsVisibilityStyle,
+  getFullscreenCursorStyle,
   getFullscreenScale,
   getFullscreenSeparatorStyle,
   getFullscreenUnitWrapStyle,
   getFullscreenZoomLabel,
   requestElementFullscreen,
   syncFullscreenDocumentState,
+  useFullscreenIdleHide,
+  useViewportWidth,
 } from '../clocks/fullscreenShared';
 import { getSafeTimezone } from '@/lib/country-utils';
 import CountryFlag from '@/components/shared/CountryFlag';
@@ -244,9 +248,13 @@ export default function TimeNowHero({
     await copyShareUrl(getCurrentPageUrl());
   };
 
-  const scaleValue = getFullscreenScale(zoom, 'threeUnit');
+  const viewportWidth = useViewportWidth();
+  const scaleValue = getFullscreenScale(zoom, 'threeUnit', viewportWidth);
   const zoomLabel = getFullscreenZoomLabel(zoom);
   const t = td ?? { h: 0, m: 0, s: 0, dateAr: '', dateHijri: '' };
+
+  /* ── Auto-hide toolbar after a few idle seconds in fullscreen ── */
+  const controlsVisible = useFullscreenIdleHide(isFS);
 
   /* ══ MOUNT CHECK ══ */
   if (!mounted) {
@@ -288,13 +296,14 @@ export default function TimeNowHero({
         <div className="fullscreen-mode" style={{
           ...FULLSCREEN_LAYER_STYLE,
           background: 'var(--clock-bg)',
+          ...getFullscreenCursorStyle(controlsVisible),
         }} dir="rtl">
-          <div style={FULLSCREEN_TOOLBAR_STYLE}>
+          <div style={{ ...FULLSCREEN_TOOLBAR_STYLE, ...getFullscreenControlsVisibilityStyle(controlsVisible) }}>
             <IconBtn onClick={toggleFS} label="إغلاق ملء الشاشة"><Minimize2 size={18} /><span>إغلاق</span></IconBtn>
             <div style={FULLSCREEN_ZOOM_GROUP_STYLE}>
               <IconBtn onClick={() => setZoom(z => Math.max(z - 1, 0))} label="تصغير" disabled={zoom === 0} variant="none"><ZoomOut size={20} /></IconBtn>
               <span style={FULLSCREEN_ZOOM_LABEL_STYLE}>{zoomLabel}</span>
-              <IconBtn onClick={() => setZoom(z => Math.min(z + 1, 2))} label="تكبير" disabled={zoom === 2} variant="none"><ZoomIn size={20} /></IconBtn>
+              <IconBtn onClick={() => setZoom(z => Math.min(z + 1, 3))} label="تكبير" disabled={zoom === 3} variant="none"><ZoomIn size={20} /></IconBtn>
               <IconBtn onClick={handleShare} label={shareCopied ? 'تم نسخ الرابط' : 'مشاركة'} variant="none">
                 <Share2 size={18} />
               </IconBtn>

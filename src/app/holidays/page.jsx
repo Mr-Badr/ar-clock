@@ -3,7 +3,7 @@
  * Static-first holidays landing page with client-synced query filters.
  */
 import Link from 'next/link';
-import { ArrowLeft, Calendar, Compass, CalendarCheck, ArrowLeftRight, ShieldAlert, CalendarDays, Clock3 } from 'lucide-react';
+import { Calendar, Compass, CalendarCheck, ArrowLeftRight, ShieldAlert, CalendarDays, Clock3 } from 'lucide-react';
 
 import {
   approxHijriYear,
@@ -76,7 +76,7 @@ export async function generateMetadata() {
   return {
     title: `كم باقي على المناسبات القادمة؟ عداد عربي وتواريخ ${gr}`,
     description: `تابع المناسبات القادمة في ${SITE_BRAND}: عداد مباشر، تاريخ هجري وميلادي، تصفية حسب البلد والنوع، وتنبيهات واضحة عند اختلاف التواريخ الهجرية أو الإجازات الرسمية.`,
-    keywords: `كم باقي على المناسبات, عداد المناسبات القادمة, كم باقي على رمضان ${gr}, كم باقي على العيد ${gr}, المناسبات الإسلامية ${hi}, المناسبات الوطنية العربية, العطل الرسمية ${gr}, المناسبات المدرسية, العد التنازلي للأعياد, مواعيد الدعم والرواتب`,
+    keywords: `كم باقي على المناسبات, عداد المناسبات القادمة, كم باقي على رمضان ${gr}, كم باقي على العيد ${gr}, المناسبات الإسلامية ${hi}, المناسبات الوطنية العربية, العطل الرسمية ${gr}, المناسبات المدرسية, العد التنازلي للأعياد, مواعيد الدعم والرواتب, تقويم المناسبات ${gr}, متى العيد هذا العام, اجازات رسمية عربية ${gr}`,
     alternates: { canonical: `${SITE}/holidays`, languages: { ar: `${SITE}/holidays` } },
     robots: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large' },
     openGraph: {
@@ -88,32 +88,6 @@ export async function generateMetadata() {
 }
 
 const DEFAULT_FILTER = normalizeHolidayFilter();
-const HOLIDAY_QUICK_PATHS = [
-  {
-    href: '/holidays?category=islamic',
-    eyebrow: 'ديني وهجري',
-    title: 'المناسبات الإسلامية',
-    description: 'رمضان والعيدان وليلة القدر وعاشوراء مع تنبيه اختلاف الرؤية المحلية.',
-  },
-  {
-    href: '/holidays?country=sa',
-    eyebrow: 'حسب البلد',
-    title: 'المناسبات في السعودية',
-    description: 'ابدأ بالدولة عندما تبحث عن إجازة رسمية أو موعد دفع أو تقويم مدرسي.',
-  },
-  {
-    href: '/holidays?range=month',
-    eyebrow: 'هذا الشهر',
-    title: 'الأقرب زمنيًا',
-    description: 'قلّل النتائج إلى المواعيد القريبة التي يمكن أن تؤثر في خطتك الآن.',
-  },
-  {
-    href: '/date/today',
-    eyebrow: 'مرجع سريع',
-    title: 'التاريخ اليوم',
-    description: 'راجع التاريخ الهجري والميلادي قبل تحويل موعد أو مقارنة مناسبة.',
-  },
-];
 
 // Consolidated from two overlapping lists (reading rules + trust rules, 6 items with real
 // duplication — e.g. "الهجري قد يختلف محلياً" appeared in both) into one tight list (owner,
@@ -286,35 +260,6 @@ export default async function HolidaysPage() {
             initialFilters={DEFAULT_FILTER}
             initialFacetCounts={initialFacetCounts}
           />
-        </section>
-
-        <section aria-labelledby="holidays-quick-start-heading" className={styles.journeySection}>
-          <div className={styles.sectionHead}>
-            <h2 id="holidays-quick-start-heading" className={styles.sectionTitle}>
-              اختصارات مفيدة بعد البحث
-            </h2>
-            <p className={styles.sectionLead}>
-              لا تحتاج إلى تصفح كل شيء. اختر واحداً من هذه المسارات عندما تعرف أنك تريد مناسبة دينية، دولة محددة، موعداً قريباً، أو تاريخ اليوم.
-            </p>
-          </div>
-
-          <div className={styles.quickPathGrid}>
-            {HOLIDAY_QUICK_PATHS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={styles.quickPath}
-              >
-                <span className={styles.cardEyebrow}>{item.eyebrow}</span>
-                <strong className={styles.cardTitle}>{item.title}</strong>
-                <span className={styles.cardCopy}>{item.description}</span>
-                <span className={styles.cardAction}>
-                  افتح
-                  <ArrowLeft size={14} aria-hidden="true" />
-                </span>
-              </Link>
-            ))}
-          </div>
         </section>
 
         {/* Real internal traffic evidence (2026-08-09): the dedicated per-country pages get

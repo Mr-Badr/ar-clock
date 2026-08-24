@@ -1,0 +1,17 @@
+{
+  "slug": "constitution-day-uzbekistan",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: en.wikipedia.org: Public holidays in Uzbekistan — Constitution Day, December 8",
+    "fact-source: astanatimes.com: Uzbekistan visa-free regime for Bahrain/Kuwait/Oman from June 1 2025",
+    "fact-check: 8 ديسمبر يوم دستور أوزبكستان، أقرّه المجلس الأعلى سنة 1992 بعد الاستقلال 1991"
+  ],
+  "updatedAt": "2026-08-23T05:37:14.388Z"
+}

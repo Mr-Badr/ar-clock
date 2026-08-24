@@ -1,0 +1,133 @@
+/*
+ * imsakiya.css
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Scope: app/imsakiya/** (hub, country, city)
+ *
+ * Redesigned 2026-08-24 — the previous markup used raw Tailwind/shadcn utility
+ * classes (bg-card, text-muted-foreground, bg-amber-50 dark:bg-amber-950/30...)
+ * that never existed anywhere else on the site, so the whole feature looked
+ * visually disconnected from every other route. This file only adds what the
+ * SHARED site classes don't already cover — the hero, section rhythm, stat
+ * tiles, city-picker lists, and FAQ all reuse the same classes/components
+ * `/date` and `/time-difference` already use (`.date-hero-panel`,
+ * `.date-section`, `.date-stat-grid`, `SiteDotLinkList`, `SiteFaqAccordion`).
+ *
+ * RULES (same as time-difference.css):
+ *   ✅ Only CSS the shared stylesheets don't already provide
+ *   ✅ All values from CSS custom properties — zero hardcoded colours
+ *   ✅ tabular-nums on every numeric element
+ *   ✅ No letter-spacing on Arabic text
+ *   ✅ RTL-correct: logical properties
+ *
+ * Contents:
+ *   1. .ims-caveat        — small inline moon-sighting note (replaces the old amber box)
+ *   2. .ims-country-group — spacing between country-grouped city lists on the hub
+ *   3. .ims-table         — schedule table: tone tokens, ليلة القدر row, mobile fit
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+
+/* ── 1. Caveat note ───────────────────────────────────────────────────────────
+ * The moon-sighting caveat is real, useful context — but it's not an alert or
+ * a warning the reader must act on, so it doesn't earn a loud tinted box
+ * (DESIGN.md Law 4: surfaces are earned, not decorative). A small icon + muted
+ * line does the same job without visual noise.
+ */
+.ims-caveat {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  margin-block-start: var(--space-4);
+}
+.ims-caveat svg {
+  flex-shrink: 0;
+  margin-block-start: 2px;
+  color: var(--amber-text);
+}
+.ims-caveat strong {
+  color: var(--text-secondary);
+  font-weight: var(--font-semibold);
+}
+
+
+/* ── 2. Hub city-picker groups ────────────────────────────────────────────────
+ * One .date-section holds every country group; groups inside it use a smaller
+ * gap than the page-level section rhythm (64-96px would make the hub read as
+ * a wall of country headings with nothing between them and their own list).
+ */
+.ims-country-group + .ims-country-group {
+  margin-block-start: var(--space-10);
+}
+.ims-country-group__title {
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  margin-bottom: var(--space-2);
+}
+
+
+/* ── 3. Schedule table ────────────────────────────────────────────────────────
+ * Suhoor (dawn) and iftar (sunset) get distinct, theme-aware tones instead of
+ * hardcoded Tailwind text-blue-700/text-orange-600 — same token pair the date
+ * stat tiles already use, so the color language matches the rest of the page.
+ */
+.ims-table th,
+.ims-table td {
+  font-variant-numeric: tabular-nums;
+}
+/* At 390px the 4 mobile-visible columns (اليوم/التاريخ/السحور/الإفطار) plus
+ * `.table--compact`'s default --space-4 inline padding measured wider than the
+ * .table-wrapper itself (525px content in a 304px box) — technically scrollable
+ * via the wrapper's overflow-x:auto, but RTL's initial scroll position left the
+ * last column off-screen with zero visual hint, same class of bug fixed on
+ * /time-difference's DST table. Unlike that 3-row comparison table, a 29-row
+ * daily schedule genuinely wants to stay a real scannable table (not a
+ * card-stack) — so the fix here is tightening padding instead, which is enough
+ * to fit all 4 columns with no scrolling at all. Weekday name (`.hidden
+ * sm:inline` in the JSX) also drops on mobile to save width; the date itself
+ * (day + month) stays.
+ */
+@media (max-width: 639px) {
+  .ims-table th,
+  .ims-table td {
+    /* !important: page-scoped stylesheet load order relative to the shared
+       .table--compact rule isn't guaranteed by the bundler, and both selectors
+       land at equal specificity — same reasoning as time-difference.css's
+       mobile table override. */
+    padding-inline: var(--space-2) !important;
+  }
+}
+/* Specificity note: the shared `.table td { color: var(--text-primary) }` rule in
+   utilities.css is a 2-part compound selector, which beats a single class selector
+   regardless of source order — `.ims-table td.ims-table__suhoor` matches that
+   specificity so these tones actually win. */
+.ims-table td.ims-table__suhoor {
+  color: var(--blue-text);
+  font-weight: var(--font-bold);
+}
+.ims-table td.ims-table__iftar {
+  color: var(--amber-text);
+  font-weight: var(--font-bold);
+}
+.ims-table__qadr-row td {
+  background-color: color-mix(in srgb, var(--amber-subtle) 55%, transparent);
+}
+.ims-table__qadr-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-inline-start: var(--space-2);
+  color: var(--amber-text);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ims-caveat svg {
+    animation: none;
+  }
+}

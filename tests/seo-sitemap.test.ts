@@ -37,20 +37,33 @@ import {
   selectSeoCountrySlugs,
 } from '@/lib/seo/country-indexing';
 import { getSiteUrl } from '@/lib/site-config';
+import { COUNTRY_HUB_SLUGS } from '@/lib/holidays/country-hub-data';
 
-test('holiday sitemap contains published canonical events only', async () => {
+test('holiday sitemap contains published canonical events and every country hub', async () => {
   const sitemap = await holidaysSitemap();
   const publishedCanonicalSlugs = (manifest.events || [])
     .filter((row: { publishStatus?: string }) => ['published', 'monitored'].includes(String(row.publishStatus)))
     .map((row: { slug: string }) => row.slug)
     .sort();
 
-  const sitemapSlugs = sitemap
+  const sitemapPaths = sitemap
     .map((row) => String(row.url).split('/holidays/')[1])
-    .filter(Boolean)
-    .sort();
+    .filter(Boolean);
 
-  assert.deepEqual(sitemapSlugs, publishedCanonicalSlugs);
+  // Canonical event pages and /holidays/country/[country] hubs are two distinct, intentional
+  // route families in this same sitemap (added 2026-08-23 — the hubs existed live and were
+  // internally linked but had never been sitemapped) — verify each family separately rather
+  // than asserting the sitemap is canonical-events-only.
+  const canonicalSitemapSlugs = sitemapPaths
+    .filter((path) => !path.startsWith('country/'))
+    .sort();
+  assert.deepEqual(canonicalSitemapSlugs, publishedCanonicalSlugs);
+
+  const countryHubSitemapSlugs = sitemapPaths
+    .filter((path) => path.startsWith('country/'))
+    .map((path) => path.replace('country/', ''))
+    .sort();
+  assert.deepEqual(countryHubSitemapSlugs, [...COUNTRY_HUB_SLUGS].sort());
 });
 
 test('holiday sitemap excludes alias routes so duplicates do not compete with canonicals', async () => {
@@ -73,7 +86,12 @@ test('holiday sitemap urls use site base url and valid lastModified values', asy
 
   for (const row of sitemap) {
     assert.ok(String(row.url).startsWith(`${base}/holidays/`));
-    assert.equal(Number.isNaN(Date.parse(String(row.lastModified))), false);
+    // lastModified is optional by design (canonical event rows omit it when no dateModified is
+    // known, and country hub rows never carry one — see src/app/holidays/sitemap.js) — only
+    // validate it's a real parseable date when the row actually provides one.
+    if (row.lastModified !== undefined) {
+      assert.equal(Number.isNaN(Date.parse(String(row.lastModified))), false);
+    }
   }
 });
 

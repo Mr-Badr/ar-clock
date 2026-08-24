@@ -1,0 +1,41 @@
+.chipList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 40px;
+  padding: 0.4rem 0.85rem 0.4rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--border-default) 78%, transparent);
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--bg-surface-2) 74%, transparent);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+}
+
+.chip:hover {
+  border-color: var(--border-accent);
+  background: color-mix(in srgb, var(--accent-soft) 34%, var(--bg-surface-2));
+  transform: translateY(-1px);
+}
+
+.chip:focus-visible {
+  outline: 3px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.flag {
+  flex-shrink: 0;
+  font-size: 1.05rem;
+  line-height: 1;
+}

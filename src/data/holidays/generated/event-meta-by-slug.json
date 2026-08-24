@@ -54,7 +54,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/ramadan",
@@ -108,7 +109,8 @@
       "ramadan-in-maldives",
       "ramadan-in-armenia",
       "ramadan-in-japan",
-      "ramadan-in-south-korea"
+      "ramadan-in-south-korea",
+      "ramadan-in-uzbekistan"
     ]
   },
   "eid-al-fitr": {
@@ -166,7 +168,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/eid-al-fitr",
@@ -220,7 +223,8 @@
       "eid-al-fitr-in-maldives",
       "eid-al-fitr-in-armenia",
       "eid-al-fitr-in-japan",
-      "eid-al-fitr-in-south-korea"
+      "eid-al-fitr-in-south-korea",
+      "eid-al-fitr-in-uzbekistan"
     ]
   },
   "eid-al-adha": {
@@ -278,7 +282,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/eid-al-adha",
@@ -332,7 +337,8 @@
       "eid-al-adha-in-maldives",
       "eid-al-adha-in-armenia",
       "eid-al-adha-in-japan",
-      "eid-al-adha-in-south-korea"
+      "eid-al-adha-in-south-korea",
+      "eid-al-adha-in-uzbekistan"
     ]
   },
   "day-of-arafa": {
@@ -390,7 +396,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/day-of-arafa",
@@ -444,7 +451,8 @@
       "day-of-arafa-in-maldives",
       "day-of-arafa-in-armenia",
       "day-of-arafa-in-japan",
-      "day-of-arafa-in-south-korea"
+      "day-of-arafa-in-south-korea",
+      "day-of-arafa-in-uzbekistan"
     ]
   },
   "hajj-season": {
@@ -502,7 +510,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/hajj-season",
@@ -556,7 +565,8 @@
       "hajj-season-in-maldives",
       "hajj-season-in-armenia",
       "hajj-season-in-japan",
-      "hajj-season-in-south-korea"
+      "hajj-season-in-south-korea",
+      "hajj-season-in-uzbekistan"
     ]
   },
   "islamic-new-year": {
@@ -614,7 +624,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/islamic-new-year",
@@ -668,7 +679,8 @@
       "islamic-new-year-in-maldives",
       "islamic-new-year-in-armenia",
       "islamic-new-year-in-japan",
-      "islamic-new-year-in-south-korea"
+      "islamic-new-year-in-south-korea",
+      "islamic-new-year-in-uzbekistan"
     ]
   },
   "ashura": {
@@ -726,7 +738,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/ashura",
@@ -780,7 +793,8 @@
       "ashura-in-maldives",
       "ashura-in-armenia",
       "ashura-in-japan",
-      "ashura-in-south-korea"
+      "ashura-in-south-korea",
+      "ashura-in-uzbekistan"
     ]
   },
   "laylat-al-qadr": {
@@ -838,7 +852,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/laylat-al-qadr",
@@ -892,7 +907,8 @@
       "laylat-al-qadr-in-maldives",
       "laylat-al-qadr-in-armenia",
       "laylat-al-qadr-in-japan",
-      "laylat-al-qadr-in-south-korea"
+      "laylat-al-qadr-in-south-korea",
+      "laylat-al-qadr-in-uzbekistan"
     ]
   },
   "social-security-saudi": {
@@ -962,7 +978,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/isra-miraj",
@@ -1016,7 +1033,8 @@
       "isra-miraj-in-maldives",
       "isra-miraj-in-armenia",
       "isra-miraj-in-japan",
-      "isra-miraj-in-south-korea"
+      "isra-miraj-in-south-korea",
+      "isra-miraj-in-uzbekistan"
     ]
   },
   "oman-accession-day": {
@@ -1086,7 +1104,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/first-dhul-hijjah",
@@ -1140,7 +1159,8 @@
       "first-dhul-hijjah-in-maldives",
       "first-dhul-hijjah-in-armenia",
       "first-dhul-hijjah-in-japan",
-      "first-dhul-hijjah-in-south-korea"
+      "first-dhul-hijjah-in-south-korea",
+      "first-dhul-hijjah-in-uzbekistan"
     ]
   },
   "bac-results-tunisia": {
@@ -1616,7 +1636,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/valentines-day",
@@ -1670,7 +1691,8 @@
       "valentines-day-in-maldives",
       "valentines-day-in-armenia",
       "valentines-day-in-japan",
-      "valentines-day-in-south-korea"
+      "valentines-day-in-south-korea",
+      "valentines-day-in-uzbekistan"
     ]
   },
   "labor-day": {
@@ -1762,7 +1784,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-health-day",
@@ -1816,7 +1839,8 @@
       "world-health-day-in-maldives",
       "world-health-day-in-armenia",
       "world-health-day-in-japan",
-      "world-health-day-in-south-korea"
+      "world-health-day-in-south-korea",
+      "world-health-day-in-uzbekistan"
     ]
   },
   "earth-day": {
@@ -1874,7 +1898,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/earth-day",
@@ -1928,7 +1953,8 @@
       "earth-day-in-maldives",
       "earth-day-in-armenia",
       "earth-day-in-japan",
-      "earth-day-in-south-korea"
+      "earth-day-in-south-korea",
+      "earth-day-in-uzbekistan"
     ]
   },
   "world-diabetes-day": {
@@ -1986,7 +2012,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-diabetes-day",
@@ -2041,6 +2068,7 @@
       "world-diabetes-day-in-armenia",
       "world-diabetes-day-in-japan",
       "world-diabetes-day-in-south-korea",
+      "world-diabetes-day-in-uzbekistan",
       "diabetes-day",
       "world-diabetes-day-countdown"
     ]
@@ -2116,7 +2144,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-teachers-day",
@@ -2170,7 +2199,8 @@
       "world-teachers-day-in-maldives",
       "world-teachers-day-in-armenia",
       "world-teachers-day-in-japan",
-      "world-teachers-day-in-south-korea"
+      "world-teachers-day-in-south-korea",
+      "world-teachers-day-in-uzbekistan"
     ]
   },
   "arabic-language-day": {
@@ -2228,7 +2258,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/arabic-language-day",
@@ -2282,7 +2313,8 @@
       "arabic-language-day-in-maldives",
       "arabic-language-day-in-armenia",
       "arabic-language-day-in-japan",
-      "arabic-language-day-in-south-korea"
+      "arabic-language-day-in-south-korea",
+      "arabic-language-day-in-uzbekistan"
     ]
   },
   "saudi-flag-day": {
@@ -2484,7 +2516,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/mawlid",
@@ -2538,7 +2571,8 @@
       "mawlid-in-maldives",
       "mawlid-in-armenia",
       "mawlid-in-japan",
-      "mawlid-in-south-korea"
+      "mawlid-in-south-korea",
+      "mawlid-in-uzbekistan"
     ]
   },
   "halloween-usa": {
@@ -2664,7 +2698,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/nisf-shaban",
@@ -2718,7 +2753,8 @@
       "nisf-shaban-in-maldives",
       "nisf-shaban-in-armenia",
       "nisf-shaban-in-japan",
-      "nisf-shaban-in-south-korea"
+      "nisf-shaban-in-south-korea",
+      "nisf-shaban-in-uzbekistan"
     ]
   },
   "pension-day-egypt": {
@@ -2800,7 +2836,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-childrens-day",
@@ -2854,7 +2891,8 @@
       "world-childrens-day-in-maldives",
       "world-childrens-day-in-armenia",
       "world-childrens-day-in-japan",
-      "world-childrens-day-in-south-korea"
+      "world-childrens-day-in-south-korea",
+      "world-childrens-day-in-uzbekistan"
     ]
   },
   "international-day-of-education": {
@@ -2912,7 +2950,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/international-day-of-education",
@@ -2966,7 +3005,8 @@
       "international-day-of-education-in-maldives",
       "international-day-of-education-in-armenia",
       "international-day-of-education-in-japan",
-      "international-day-of-education-in-south-korea"
+      "international-day-of-education-in-south-korea",
+      "international-day-of-education-in-uzbekistan"
     ]
   },
   "world-mental-health-day": {
@@ -3024,7 +3064,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-mental-health-day",
@@ -3078,7 +3119,8 @@
       "world-mental-health-day-in-maldives",
       "world-mental-health-day-in-armenia",
       "world-mental-health-day-in-japan",
-      "world-mental-health-day-in-south-korea"
+      "world-mental-health-day-in-south-korea",
+      "world-mental-health-day-in-uzbekistan"
     ]
   },
   "world-environment-day": {
@@ -3136,7 +3178,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-environment-day",
@@ -3190,7 +3233,8 @@
       "world-environment-day-in-maldives",
       "world-environment-day-in-armenia",
       "world-environment-day-in-japan",
-      "world-environment-day-in-south-korea"
+      "world-environment-day-in-south-korea",
+      "world-environment-day-in-uzbekistan"
     ]
   },
   "independence-manifesto-day-morocco": {
@@ -3841,6 +3885,42 @@
     "canonicalPath": "/holidays/hangul-day-korea",
     "aliases": []
   },
+  "independence-day-uzbekistan": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "uz"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/independence-day-uzbekistan",
+    "aliases": []
+  },
+  "constitution-day-uzbekistan": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "uz"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/constitution-day-uzbekistan",
+    "aliases": []
+  },
+  "nowruz-uzbekistan": {
+    "publishStatus": "published",
+    "retired": false,
+    "countryScope": "none",
+    "distribution": "country_specific",
+    "countryCodes": [
+      "uz"
+    ],
+    "autoExpandCountries": false,
+    "canonicalPath": "/holidays/nowruz-uzbekistan",
+    "aliases": []
+  },
   "abu-simbel-sun-alignment-february": {
     "publishStatus": "published",
     "retired": false,
@@ -4040,7 +4120,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/april-fools",
@@ -4094,7 +4175,8 @@
       "april-fools-in-maldives",
       "april-fools-in-armenia",
       "april-fools-in-japan",
-      "april-fools-in-south-korea"
+      "april-fools-in-south-korea",
+      "april-fools-in-uzbekistan"
     ]
   },
   "arab-orphan-day": {
@@ -4152,7 +4234,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/arab-orphan-day",
@@ -4206,7 +4289,8 @@
       "arab-orphan-day-in-maldives",
       "arab-orphan-day-in-armenia",
       "arab-orphan-day-in-japan",
-      "arab-orphan-day-in-south-korea"
+      "arab-orphan-day-in-south-korea",
+      "arab-orphan-day-in-uzbekistan"
     ]
   },
   "armed-forces-day-morocco": {
@@ -4550,7 +4634,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/badr-day",
@@ -4604,7 +4689,8 @@
       "badr-day-in-maldives",
       "badr-day-in-armenia",
       "badr-day-in-japan",
-      "badr-day-in-south-korea"
+      "badr-day-in-south-korea",
+      "badr-day-in-uzbekistan"
     ]
   },
   "bahraini-womens-day": {
@@ -4720,7 +4806,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/battle-of-uhud",
@@ -4774,7 +4861,8 @@
       "battle-of-uhud-in-maldives",
       "battle-of-uhud-in-armenia",
       "battle-of-uhud-in-japan",
-      "battle-of-uhud-in-south-korea"
+      "battle-of-uhud-in-south-korea",
+      "battle-of-uhud-in-uzbekistan"
     ]
   },
   "blood-donor-day": {
@@ -4832,7 +4920,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/blood-donor-day",
@@ -4886,7 +4975,8 @@
       "blood-donor-day-in-maldives",
       "blood-donor-day-in-armenia",
       "blood-donor-day-in-japan",
-      "blood-donor-day-in-south-korea"
+      "blood-donor-day-in-south-korea",
+      "blood-donor-day-in-uzbekistan"
     ]
   },
   "bostadsbidrag-sweden": {
@@ -5206,7 +5296,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/conquest-of-andalusia",
@@ -5260,7 +5351,8 @@
       "conquest-of-andalusia-in-maldives",
       "conquest-of-andalusia-in-armenia",
       "conquest-of-andalusia-in-japan",
-      "conquest-of-andalusia-in-south-korea"
+      "conquest-of-andalusia-in-south-korea",
+      "conquest-of-andalusia-in-uzbekistan"
     ]
   },
   "constitution-day-kuwait": {
@@ -5652,7 +5744,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/fall-of-granada",
@@ -5706,7 +5799,8 @@
       "fall-of-granada-in-maldives",
       "fall-of-granada-in-armenia",
       "fall-of-granada-in-japan",
-      "fall-of-granada-in-south-korea"
+      "fall-of-granada-in-south-korea",
+      "fall-of-granada-in-uzbekistan"
     ]
   },
   "family-day": {
@@ -5786,7 +5880,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/fath-makkah",
@@ -5840,7 +5935,8 @@
       "fath-makkah-in-maldives",
       "fath-makkah-in-armenia",
       "fath-makkah-in-japan",
-      "fath-makkah-in-south-korea"
+      "fath-makkah-in-south-korea",
+      "fath-makkah-in-uzbekistan"
     ]
   },
   "ferragosto-italy": {
@@ -5982,7 +6078,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/food-day",
@@ -6036,7 +6133,8 @@
       "food-day-in-maldives",
       "food-day-in-armenia",
       "food-day-in-japan",
-      "food-day-in-south-korea"
+      "food-day-in-south-korea",
+      "food-day-in-uzbekistan"
     ]
   },
   "friendship-day": {
@@ -6208,7 +6306,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/human-rights-day",
@@ -6262,7 +6361,8 @@
       "human-rights-day-in-maldives",
       "human-rights-day-in-armenia",
       "human-rights-day-in-japan",
-      "human-rights-day-in-south-korea"
+      "human-rights-day-in-south-korea",
+      "human-rights-day-in-uzbekistan"
     ]
   },
   "independence-day-bahrain": {
@@ -6392,7 +6492,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/international-coffee-day",
@@ -6446,7 +6547,8 @@
       "international-coffee-day-in-maldives",
       "international-coffee-day-in-armenia",
       "international-coffee-day-in-japan",
-      "international-coffee-day-in-south-korea"
+      "international-coffee-day-in-south-korea",
+      "international-coffee-day-in-uzbekistan"
     ]
   },
   "international-peace-day": {
@@ -6504,7 +6606,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/international-peace-day",
@@ -6558,7 +6661,8 @@
       "international-peace-day-in-maldives",
       "international-peace-day-in-armenia",
       "international-peace-day-in-japan",
-      "international-peace-day-in-south-korea"
+      "international-peace-day-in-south-korea",
+      "international-peace-day-in-uzbekistan"
     ]
   },
   "international-youth-day": {
@@ -6616,7 +6720,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/international-youth-day",
@@ -6670,7 +6775,8 @@
       "international-youth-day-in-maldives",
       "international-youth-day-in-armenia",
       "international-youth-day-in-japan",
-      "international-youth-day-in-south-korea"
+      "international-youth-day-in-south-korea",
+      "international-youth-day-in-uzbekistan"
     ]
   },
   "invasion-remembrance-kuwait": {
@@ -6944,7 +7050,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/last-ten-nights-ramadan",
@@ -6998,7 +7105,8 @@
       "last-ten-nights-ramadan-in-maldives",
       "last-ten-nights-ramadan-in-armenia",
       "last-ten-nights-ramadan-in-japan",
-      "last-ten-nights-ramadan-in-south-korea"
+      "last-ten-nights-ramadan-in-south-korea",
+      "last-ten-nights-ramadan-in-uzbekistan"
     ]
   },
   "liberation-day-libya": {
@@ -7104,7 +7212,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/literacy-day",
@@ -7158,7 +7267,8 @@
       "literacy-day-in-maldives",
       "literacy-day-in-armenia",
       "literacy-day-in-japan",
-      "literacy-day-in-south-korea"
+      "literacy-day-in-south-korea",
+      "literacy-day-in-uzbekistan"
     ]
   },
   "martyrs-day-algeria": {
@@ -7552,7 +7662,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/nurses-day",
@@ -7606,7 +7717,8 @@
       "nurses-day-in-maldives",
       "nurses-day-in-armenia",
       "nurses-day-in-japan",
-      "nurses-day-in-south-korea"
+      "nurses-day-in-south-korea",
+      "nurses-day-in-uzbekistan"
     ]
   },
   "october-14-revolution-yemen": {
@@ -7912,7 +8024,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/rajab-start",
@@ -7966,7 +8079,8 @@
       "rajab-start-in-maldives",
       "rajab-start-in-armenia",
       "rajab-start-in-japan",
-      "rajab-start-in-south-korea"
+      "rajab-start-in-south-korea",
+      "rajab-start-in-uzbekistan"
     ]
   },
   "recapture-of-riyadh": {
@@ -8420,7 +8534,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/shaban-start",
@@ -8474,7 +8589,8 @@
       "shaban-start-in-maldives",
       "shaban-start-in-armenia",
       "shaban-start-in-japan",
-      "shaban-start-in-south-korea"
+      "shaban-start-in-south-korea",
+      "shaban-start-in-uzbekistan"
     ]
   },
   "six-days-shawwal": {
@@ -8532,7 +8648,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/six-days-shawwal",
@@ -8586,7 +8703,8 @@
       "six-days-shawwal-in-maldives",
       "six-days-shawwal-in-armenia",
       "six-days-shawwal-in-japan",
-      "six-days-shawwal-in-south-korea"
+      "six-days-shawwal-in-south-korea",
+      "six-days-shawwal-in-uzbekistan"
     ]
   },
   "social-assistance-bahrain": {
@@ -8822,7 +8940,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/tarwiyah-day",
@@ -8876,7 +8995,8 @@
       "tarwiyah-day-in-maldives",
       "tarwiyah-day-in-armenia",
       "tarwiyah-day-in-japan",
-      "tarwiyah-day-in-south-korea"
+      "tarwiyah-day-in-south-korea",
+      "tarwiyah-day-in-uzbekistan"
     ]
   },
   "tashreeq-days": {
@@ -8934,7 +9054,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/tashreeq-days",
@@ -8988,7 +9109,8 @@
       "tashreeq-days-in-maldives",
       "tashreeq-days-in-armenia",
       "tashreeq-days-in-japan",
-      "tashreeq-days-in-south-korea"
+      "tashreeq-days-in-south-korea",
+      "tashreeq-days-in-uzbekistan"
     ]
   },
   "tasua-day": {
@@ -9046,7 +9168,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/tasua-day",
@@ -9100,7 +9223,8 @@
       "tasua-day-in-maldives",
       "tasua-day-in-armenia",
       "tasua-day-in-japan",
-      "tasua-day-in-south-korea"
+      "tasua-day-in-south-korea",
+      "tasua-day-in-uzbekistan"
     ]
   },
   "tax-day-usa": {
@@ -9434,7 +9558,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/volunteer-day",
@@ -9488,7 +9613,8 @@
       "volunteer-day-in-maldives",
       "volunteer-day-in-armenia",
       "volunteer-day-in-japan",
-      "volunteer-day-in-south-korea"
+      "volunteer-day-in-south-korea",
+      "volunteer-day-in-uzbekistan"
     ]
   },
   "wafat-khadija": {
@@ -9602,7 +9728,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/wildlife-day",
@@ -9656,7 +9783,8 @@
       "wildlife-day-in-maldives",
       "wildlife-day-in-armenia",
       "wildlife-day-in-japan",
-      "wildlife-day-in-south-korea"
+      "wildlife-day-in-south-korea",
+      "wildlife-day-in-uzbekistan"
     ]
   },
   "winter-at-tantora-alula": {
@@ -9774,7 +9902,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-book-day",
@@ -9828,7 +9957,8 @@
       "world-book-day-in-maldives",
       "world-book-day-in-armenia",
       "world-book-day-in-japan",
-      "world-book-day-in-south-korea"
+      "world-book-day-in-south-korea",
+      "world-book-day-in-uzbekistan"
     ]
   },
   "world-cancer-day": {
@@ -9886,7 +10016,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-cancer-day",
@@ -9940,7 +10071,8 @@
       "world-cancer-day-in-maldives",
       "world-cancer-day-in-armenia",
       "world-cancer-day-in-japan",
-      "world-cancer-day-in-south-korea"
+      "world-cancer-day-in-south-korea",
+      "world-cancer-day-in-uzbekistan"
     ]
   },
   "world-cup-2030": {
@@ -10010,7 +10142,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-fathers-day",
@@ -10065,6 +10198,7 @@
       "world-fathers-day-in-armenia",
       "world-fathers-day-in-japan",
       "world-fathers-day-in-south-korea",
+      "world-fathers-day-in-uzbekistan",
       "fathers-day"
     ]
   },
@@ -10123,7 +10257,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-happiness-day",
@@ -10177,7 +10312,8 @@
       "world-happiness-day-in-maldives",
       "world-happiness-day-in-armenia",
       "world-happiness-day-in-japan",
-      "world-happiness-day-in-south-korea"
+      "world-happiness-day-in-south-korea",
+      "world-happiness-day-in-uzbekistan"
     ]
   },
   "world-no-tobacco-day": {
@@ -10235,7 +10371,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-no-tobacco-day",
@@ -10289,7 +10426,8 @@
       "world-no-tobacco-day-in-maldives",
       "world-no-tobacco-day-in-armenia",
       "world-no-tobacco-day-in-japan",
-      "world-no-tobacco-day-in-south-korea"
+      "world-no-tobacco-day-in-south-korea",
+      "world-no-tobacco-day-in-uzbekistan"
     ]
   },
   "world-refugee-day": {
@@ -10347,7 +10485,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-refugee-day",
@@ -10401,7 +10540,8 @@
       "world-refugee-day-in-maldives",
       "world-refugee-day-in-armenia",
       "world-refugee-day-in-japan",
-      "world-refugee-day-in-south-korea"
+      "world-refugee-day-in-south-korea",
+      "world-refugee-day-in-uzbekistan"
     ]
   },
   "world-tourism-day": {
@@ -10459,7 +10599,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-tourism-day",
@@ -10513,7 +10654,8 @@
       "world-tourism-day-in-maldives",
       "world-tourism-day-in-armenia",
       "world-tourism-day-in-japan",
-      "world-tourism-day-in-south-korea"
+      "world-tourism-day-in-south-korea",
+      "world-tourism-day-in-uzbekistan"
     ]
   },
   "world-water-day": {
@@ -10571,7 +10713,8 @@
       "mv",
       "am",
       "jp",
-      "kr"
+      "kr",
+      "uz"
     ],
     "autoExpandCountries": true,
     "canonicalPath": "/holidays/world-water-day",
@@ -10625,7 +10768,8 @@
       "world-water-day-in-maldives",
       "world-water-day-in-armenia",
       "world-water-day-in-japan",
-      "world-water-day-in-south-korea"
+      "world-water-day-in-south-korea",
+      "world-water-day-in-uzbekistan"
     ]
   },
   "youth-day-morocco": {

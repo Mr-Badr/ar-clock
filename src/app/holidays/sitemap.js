@@ -1,5 +1,6 @@
 import { getRichContent } from '@/lib/event-content';
 import { ALL_EVENT_SLUGS, getEventMeta } from '@/lib/events';
+import { COUNTRY_HUB_SLUGS } from '@/lib/holidays/country-hub-data';
 import { getSiteUrl } from '@/lib/site-config';
 
 export default async function sitemap() {
@@ -35,5 +36,15 @@ export default async function sitemap() {
     };
   });
 
-  return canonicalEntries;
+  // `/holidays/country/[country]` hubs (src/app/holidays/country/[country]/page.jsx) — fully
+  // built, prerendered, unique-metadata pages linked from /holidays, but never submitted in any
+  // sitemap (found 2026-08-23 during a traffic-diagnosis audit). Countdown-driven content changes
+  // daily, so they carry the same changeFrequency as the event canonicals above.
+  const countryHubEntries = COUNTRY_HUB_SLUGS.map((slug) => ({
+    url: `${BASE}/holidays/country/${slug}`,
+    changeFrequency: 'daily',
+    priority: 0.75,
+  }));
+
+  return [...canonicalEntries, ...countryHubEntries];
 }

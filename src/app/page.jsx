@@ -1,9 +1,10 @@
 // app/page.jsx
 
-import HomeSections from '@/components/home';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
-import TimeCinematicHero from '@/components/hero/TimeCinematicHero';
+import HeroV2 from '@/components/hero/HeroV2';
+import HomeFeatureSections from '@/components/home/v2/HomeFeatureSections';
+import FaqSection, { FAQ_ITEMS } from '@/components/home/v2/FaqSection';
 import {
   SITE_BRAND,
   SITE_HOME_TITLE,
@@ -31,6 +32,16 @@ const HOME_KEYWORDS = [
   'محول التاريخ الهجري والميلادي',
   'الوقت الان في مدينتي',
   'فرق التوقيت بين المدن',
+  'كم الساعة الان',
+  'التاريخ اليوم هجري',
+  'حاسبات مالية خليجية',
+  'حاسبة الزكاة',
+  'حاسبة تكلفة البناء',
+  'إمساكية رمضان',
+  'العطل الرسمية العربية',
+  'كم باقي على العيد',
+  'أدوات ومحولات وحاسبات عربية بموقع واحد',
+  'موقع أدوات عربية مجاني',
 ];
 const HOME_SECTIONS = [
   { path: '/tools', name: 'الأدوات والحاسبات' },
@@ -112,12 +123,25 @@ export default function HomePage() {
     })),
   };
 
+  const homeFaqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQ_ITEMS.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-base text-primary home-hub-page" dir="rtl">
-      <JsonLd data={[homeCollectionSchema, homeSectionsSchema, websiteSearchSchema]} />
+      <JsonLd
+        data={[homeCollectionSchema, homeSectionsSchema, websiteSearchSchema, homeFaqSchema]}
+      />
       <main>
-        <TimeCinematicHero cityNameAr="توقيتك المحلي" />
-        <HomeSections />
+        <HeroV2 />
+        <HomeFeatureSections />
+        <FaqSection />
       </main>
     </div>
   );

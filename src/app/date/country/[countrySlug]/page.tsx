@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 
-import { getPriorityCountrySlugs, getCountryBySlug } from '@/lib/db/queries/countries';
+import { getAllCountrySlugs, getCountryBySlug } from '@/lib/db/queries/countries';
 import { getCapitalCity } from '@/lib/db/queries/cities';
 import { getCachedNowIso } from '@/lib/date-utils';
 import { convertDate, GREGORIAN_MONTH_NAMES_AR, type ConversionMethod } from '@/lib/date-adapter';
@@ -447,7 +447,14 @@ const links = (countrySlug: string, countryNameAr: string): RelatedLink[] => [
 ];
 
 export async function generateStaticParams() {
-  const slugs = await getPriorityCountrySlugs(24);
+  // Unlike /time-difference's city-PAIR combinatorics, a country date page is one dimension —
+  // prerendering every real country (all 252, Israel already excluded upstream by
+  // `getAllCountrySlugs`) is cheap and linear, not combinatorial. Was `getPriorityCountrySlugs(24)`,
+  // which — since that helper's own `limit` truncates AFTER prepending the ~38-country priority+
+  // global set — didn't even guarantee build-time coverage of the full priority set, let alone the
+  // other 200+ real countries the DB actually has. Fixed 2026-08-24 alongside `dateCountry`'s SEO
+  // scope moving from PRIORITY to ALL in `country-indexing.ts`.
+  const slugs = await getAllCountrySlugs();
   return slugs.map(slug => ({ countrySlug: slug }));
 }
 

@@ -1,0 +1,60 @@
+.wrap {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.head {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 72ch;
+}
+
+.title {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-thmanyah), var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+}
+
+.description {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.85;
+}
+
+/* One isolated fact per tile — every tile is the same height (grid-auto-rows
+   stretches every row to its tallest item, and .tileBody fills that height
+   and centers its content), regardless of how short or long the value is. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: var(--space-3);
+}
+
+.tileBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 5.5rem;
+  height: 100%;
+  padding: var(--space-4);
+  text-align: center;
+}
+
+.tileLabel {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+}
+
+.tileValue {
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-extrabold);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}

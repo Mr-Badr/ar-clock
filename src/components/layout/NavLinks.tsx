@@ -14,6 +14,8 @@ import {
   Sun,
 } from "@phosphor-icons/react/ssr";
 
+import ToolsNavButton from "./ToolsNavButton";
+
 // ─────────────────────────────────────────────────
 // Generic nav types
 // ─────────────────────────────────────────────────
@@ -31,6 +33,7 @@ type NavLink = {
   sublinks?: SubLink[];
   panelDescription?: string;
   panelIcon?: string;
+  cta?: boolean;
 };
 
 const ICONS: Record<string, ElementType> = {
@@ -103,11 +106,20 @@ export default function NavLinks({ links }: { links: NavLink[] }) {
         const PanelIcon = getIcon(link.panelIcon);
         const isOpen = openHref === link.href;
 
+        if (link.cta) {
+          return (
+            <li key={link.href} className="header-nav-item header-nav-item--cta">
+              <ToolsNavButton />
+            </li>
+          );
+        }
+
         if (!link.sublinks?.length) {
           return (
             <li key={link.href} className="header-nav-item">
               <Link href={link.href} prefetch className="header-nav-link">
                 {link.label}
+                <span className="header-nav-underline" aria-hidden="true" />
               </Link>
             </li>
           );
@@ -129,6 +141,7 @@ export default function NavLinks({ links }: { links: NavLink[] }) {
             >
               {link.label}
               <CaretDown className="header-nav-caret" size={14} weight="bold" aria-hidden="true" />
+              <span className="header-nav-underline" aria-hidden="true" />
             </Link>
 
             <div

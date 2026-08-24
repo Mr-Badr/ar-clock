@@ -1880,6 +1880,15 @@ input[type="number"]::-webkit-outer-spin-button {
 .tool-v2-hub-content {
   max-width: 960px;
   margin-inline: auto;
+  /* Owner correction, 2026-08-19: the hub's last section (FAQ or featured-guide block) sat
+     almost flush against the footer with no breathing room. Give every /tools index and
+     /tools/<category> hub page real bottom space before the footer starts. */
+  padding-block-end: var(--space-16, 64px);
+}
+@media (min-width: 768px) {
+  .tool-v2-hub-content {
+    padding-block-end: var(--space-20, 80px);
+  }
 }
 
 /* Top-level /tools hub hero — centered, matches mockup's .hub-hero minus the gradient. */
@@ -2123,9 +2132,12 @@ input[type="number"]::-webkit-outer-spin-button {
    visuals, and an FAQPage schema of their own. Reuses the article typography scale
    (.tool-v2-lane-article h2/p) so it reads consistently with every tool detail page. ────────── */
 .tool-v2-hub-guide {
-  padding-block: var(--space-7, 28px) 0;
+  /* Owner correction, 2026-08-19: this section (often the hub's FAQ, directly after the
+     dot-list nav) read as glued to the content above it — bumped both the gap above the
+     divider and the padding below it for real breathing room. */
+  padding-block: var(--space-10, 40px) 0;
   border-top: 1px solid var(--border-subtle);
-  margin-top: var(--space-6);
+  margin-top: var(--space-10, 40px);
 }
 .tool-v2-hub-guide h2 {
   margin: 0 0 var(--space-3);
@@ -2143,7 +2155,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .tool-v2-hub-guide + .tool-v2-hub-guide {
   border-top: none;
   padding-top: 0;
-  margin-top: var(--space-5);
+  margin-top: var(--space-8, 32px);
 }
 
 /* ── Addon checklist rows (cleaning/landscaping/pest-control cost calculators) — a toggle

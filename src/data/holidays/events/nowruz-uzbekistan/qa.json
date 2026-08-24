@@ -1,0 +1,17 @@
+{
+  "slug": "nowruz-uzbekistan",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: en.wikipedia.org: Navruz in Uzbekistan",
+    "fact-source: en.wikipedia.org: Public holidays in Uzbekistan",
+    "fact-check: نوروز عطلة رسمية ثابتة في 21 مارس في أوزبكستان، أكبر احتفال وطني شعبي، يشمل طبق السومالاك التقليدي"
+  ],
+  "updatedAt": "2026-08-23T05:37:40.634Z"
+}

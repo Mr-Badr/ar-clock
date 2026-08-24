@@ -4,11 +4,18 @@
  */
 
 import Link from 'next/link';
+import { Moon, ArrowLeftRight, Calendar } from 'lucide-react';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/site-config';
 import { getUpcomingRamadanHijriYear, getRamadanGregorianStart } from '@/lib/imsakiyaEngine';
+import AdLayoutWrapper from '@/components/ads/AdLayoutWrapper';
 import AdTopBanner from '@/components/ads/AdTopBanner';
 import AdMultiplex from '@/components/ads/AdMultiplex';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
+import { SiteFaqAccordion } from '@/components/shared/SiteFaqAccordion';
+import { SiteRelatedCardGrid } from '@/components/shared/SiteRelatedCardGrid';
+import './imsakiya.css';
 
 const SITE_URL = getSiteUrl();
 
@@ -17,7 +24,9 @@ const _hijriYear = getUpcomingRamadanHijriYear();
 const _ramadanStart = getRamadanGregorianStart(_hijriYear);
 const _gregYear = _ramadanStart.year;
 
-// Top cities with Arabic names — static, curated list
+// Top cities with Arabic names — static, curated list. This is the hub's "start here"
+// shortlist, not a full directory (DESIGN.md: an exhaustive directory is never the main
+// experience) — every real city still has its own indexable page via /imsakiya/[country].
 const TOP_IMSAKIYA_CITIES = [
   // Saudi Arabia
   { country: 'saudi-arabia', countryAr: 'السعودية', city: 'riyadh', cityAr: 'الرياض' },
@@ -88,6 +97,16 @@ export const metadata = buildCanonicalMetadata({
     'إمساكية الإمارات',
     'إمساكية المغرب',
     `رمضان ${_gregYear}`,
+    'امساكية الرياض',
+    'امساكية القاهرة',
+    'امساكية دبي',
+    'امساكية الكويت',
+    'كم باقي على الافطار',
+    'موعد الاذان اليوم',
+    'إمساكية الجزائر',
+    'إمساكية العراق',
+    'اول يوم رمضان',
+    'الفرق بين الامساك والفجر',
   ],
   url: `${SITE_URL}/imsakiya`,
 });
@@ -98,7 +117,7 @@ export default function ImsakiyaHubPage() {
   const gregYear = _gregYear;
   const groups = groupByCountry(TOP_IMSAKIYA_CITIES);
 
-  const breadcrumb = {
+  const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
@@ -107,104 +126,130 @@ export default function ImsakiyaHubPage() {
     ],
   };
 
+  const faqItems = [
+    {
+      question: 'ما الفرق بين وقت الإمساك ووقت الفجر؟',
+      answer: 'وقت الإمساك هو الوقت الذي يُوصى فيه بالتوقف عن الأكل والشرب احتياطاً، وعادةً يسبق الأذان بعشر دقائق. أما وقت الفجر (السحور) فهو أذان الفجر الصادق، وهو الوقت الحقيقي لبداية الصيام وفق الفقه الإسلامي. كثير من الإمساكيات تعتمد وقت الفجر مباشرةً دون إمساك إضافي.',
+    },
+    {
+      question: 'لماذا يختلف وقت الإفطار بين المدن في نفس الدولة؟',
+      answer: 'يتحدد وقت الإفطار بغروب الشمس فلكياً، وهذا يختلف من موقع لآخر بحسب خط الطول. في الدول الكبيرة كالسعودية ومصر والمغرب، قد يصل الفرق بين أقصى الشرق وأقصى الغرب إلى 15-20 دقيقة. لهذا يُنصح دائماً باستخدام إمساكية مدينتك تحديداً.',
+    },
+    {
+      question: 'هل يمكن الاعتماد على هذه الإمساكيات للصيام؟',
+      answer: 'هذه الأوقات محسوبة فلكياً بدقة عالية وهي صالحة للاستخدام. للتأكد، يمكنك مقارنتها مع إمساكية المسجد المحلي في مدينتك أو توقيت دار الإفتاء في بلدك. الاختلافات الصغيرة (دقيقة أو دقيقتان) مقبولة فقهياً، ولا تؤثر على صحة الصيام.',
+    },
+    {
+      question: `كيف أعرف أول يوم رمضان ${gregYear}؟`,
+      answer: `وفق الحسابات الفلكية وتقويم أم القرى، يُتوقع أن يبدأ رمضان ${gregYear} في ${ramadanStart.day} ${GREGORIAN_MONTHS_AR[ramadanStart.month]} ${gregYear}. غير أن الإعلان الرسمي يعتمد على رؤية هلال رمضان، وقد يختلف من دولة لأخرى بيوم كامل. تابع إعلانات وزارة الأوقاف أو دار الإفتاء في بلدك للتأكيد.`,
+    },
+  ];
+
   return (
-    <main className="imsakiya-hub bg-base text-primary" dir="rtl" lang="ar">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+    <>
+      <JsonLd data={breadcrumbSchema} />
+      <AdLayoutWrapper>
+        <main className="content-col pt-24 pb-20">
+          {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
+          <AdTopBanner slotId="imsakiya-hub-top" />
 
-      {/* First thing on the page, before the breadcrumb/H1 — see AdTopBanner.tsx v3. */}
-      <AdTopBanner slotId="imsakiya-hub-top" />
+          <nav aria-label="مسار التنقل" className="text-xs text-muted mb-6 flex items-center gap-1 flex-wrap">
+            <Link href="/" className="hover:text-accent transition-colors">الرئيسية</Link>
+            <span aria-hidden="true">›</span>
+            <span className="text-secondary">إمساكية رمضان</span>
+          </nav>
 
-      {/* Hero */}
-      <section className="container mx-auto px-4 pt-10 pb-8">
-        <nav className="text-sm text-muted-foreground mb-4" aria-label="مسار التنقل">
-          <Link href="/">الرئيسية</Link>
-          <span className="mx-2">›</span>
-          <span>إمساكية رمضان</span>
-        </nav>
-
-        <h1 className="text-2xl md:text-3xl font-bold leading-snug mb-3">
-          إمساكية رمضان {hijriYear} هـ / {gregYear}
-        </h1>
-        <p className="text-muted-foreground text-lg">
-          أوقات السحور والإفطار لكل يوم من رمضان — اختر مدينتك لرؤية جدول كامل محسوب فلكياً بدقة.
-        </p>
-        <p className="text-sm bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg px-4 py-3 text-amber-800 dark:text-amber-300 mt-4">
-          <strong>تنبيه:</strong> أول رمضان المتوقع وفق تقويم أم القرى: {ramadanStart.day} {GREGORIAN_MONTHS_AR[ramadanStart.month]} {gregYear}. قد يتقدم يوماً أو يتأخر برؤية الهلال.
-        </p>
-      </section>
-
-      {/* Country Groups */}
-      <section className="container mx-auto px-4 pb-12">
-        <div className="space-y-8">
-          {groups.map(({ country, countryAr, cities }) => (
-            <div key={country}>
-              <h2 className="text-lg font-semibold mb-3 border-b pb-2">إمساكية رمضان {gregYear} في {countryAr}</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                {cities.map(({ city, cityAr }) => (
-                  <Link
-                    key={city}
-                    href={`/imsakiya/${country}/${city}`}
-                    className="flex items-center justify-between bg-card border rounded-lg px-4 py-3 hover:bg-muted/50 hover:border-primary/40 transition-colors text-sm font-medium"
-                  >
-                    <span>{cityAr}</span>
-                    <span className="text-muted-foreground text-xs">←</span>
-                  </Link>
-                ))}
-              </div>
+          <section className="date-hero-panel date-hero-panel--single mb-12">
+            <div className="date-hero-main">
+              <p className="date-kicker m-0">
+                <Moon size={15} aria-hidden="true" /> إمساكية رمضان حسب المدينة
+              </p>
+              <h1 className="date-hero-title">
+                إمساكية رمضان {hijriYear} هـ / {gregYear}
+              </h1>
+              <p className="date-hero-copy">
+                أوقات السحور والإفطار لكل يوم من رمضان — اختر مدينتك لرؤية جدول كامل محسوب فلكياً بدقة.
+              </p>
+              <p className="ims-caveat">
+                <Calendar size={16} aria-hidden="true" />
+                <span>
+                  <strong>أول رمضان المتوقع:</strong> {ramadanStart.day} {GREGORIAN_MONTHS_AR[ramadanStart.month]} {gregYear} وفق تقويم أم القرى — قد يتقدم يوماً أو يتأخر برؤية الهلال.
+                </span>
+              </p>
             </div>
-          ))}
-        </div>
-      </section>
+          </section>
 
-      {/* Info block */}
-      <section className="bg-muted/30 py-10">
-        <div className="container mx-auto px-4 max-w-2xl">
-          <h2 className="text-lg font-semibold mb-4">عن هذه الإمساكيات</h2>
-          <div className="space-y-3 text-sm text-foreground/80 leading-relaxed">
-            <p>
+          {/* City picker — dot lists, not equal boxes (DESIGN.md §4.4 / §12.2, the
+              site's one "choose from many links" pattern). */}
+          <section className="date-section" aria-labelledby="imsakiya-cities-heading">
+            <h2 id="imsakiya-cities-heading" className="date-section-title">
+              اختر مدينتك
+            </h2>
+            {groups.map(({ country, countryAr, cities }) => (
+              <div key={country} className="ims-country-group">
+                <h3 className="ims-country-group__title">{countryAr}</h3>
+                <SiteDotLinkList
+                  ariaLabel={`مدن ${countryAr}`}
+                  items={cities.map(({ city, cityAr }) => ({
+                    href: `/imsakiya/${country}/${city}`,
+                    label: cityAr,
+                    description: `إمساكية رمضان ${gregYear} في ${cityAr}`,
+                  }))}
+                />
+              </div>
+            ))}
+          </section>
+
+          {/* Plain text — a heading and two sentences don't earn a bordered panel
+              (DESIGN.md Law 4). */}
+          <section className="date-section max-w-3xl" aria-labelledby="imsakiya-about-heading">
+            <h2 id="imsakiya-about-heading" className="date-section-title">
+              كيف تُحسب هذه الإمساكيات؟
+            </h2>
+            <p className="date-editorial-copy">
               الأوقات محسوبة باستخدام بيانات الموقع الجغرافي الدقيق لكل مدينة ومعادلات الفلك الإسلامية المعتمدة إقليمياً.
               وقت السحور = وقت الفجر، ووقت الإفطار = وقت المغرب.
             </p>
-            <p>
+            <p className="date-editorial-copy mt-3">
               رمضان {hijriYear} هـ يبدأ المتوقع {ramadanStart.day} {GREGORIAN_MONTHS_AR[ramadanStart.month]} {gregYear} — هذا التاريخ مبني على تقويم أم القرى ويعتمد عملياً في السعودية وكثير من دول الخليج.
               قد تعتمد دول أخرى التقويم المحلي أو الرؤية المحلية للهلال.
             </p>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      <AdMultiplex slotId="imsakiya-hub-bottom" />
+          <AdMultiplex slotId="imsakiya-hub-bottom" />
 
-      {/* FAQ section */}
-      <section className="container mx-auto px-4 py-10 max-w-2xl">
-        <h2 className="text-lg font-semibold mb-5">أسئلة شائعة عن إمساكية رمضان {gregYear}</h2>
-        <div className="space-y-4">
-          <details className="bg-card border rounded-lg px-4 py-3">
-            <summary className="font-medium cursor-pointer">ما الفرق بين وقت الإمساك ووقت الفجر؟</summary>
-            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-              وقت الإمساك هو الوقت الذي يُوصى فيه بالتوقف عن الأكل والشرب احتياطاً، وعادةً يسبق الأذان بعشر دقائق. أما وقت الفجر (السحور) فهو أذان الفجر الصادق، وهو الوقت الحقيقي لبداية الصيام وفق الفقه الإسلامي. كثير من الإمساكيات تعتمد وقت الفجر مباشرةً دون إمساك إضافي.
-            </p>
-          </details>
-          <details className="bg-card border rounded-lg px-4 py-3">
-            <summary className="font-medium cursor-pointer">لماذا يختلف وقت الإفطار بين المدن في نفس الدولة؟</summary>
-            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-              يتحدد وقت الإفطار بغروب الشمس فلكياً، وهذا يختلف من موقع لآخر بحسب خط الطول. في الدول الكبيرة كالسعودية ومصر والمغرب، قد يصل الفرق بين أقصى الشرق وأقصى الغرب إلى 15-20 دقيقة. لهذا يُنصح دائماً باستخدام إمساكية مدينتك تحديداً.
-            </p>
-          </details>
-          <details className="bg-card border rounded-lg px-4 py-3">
-            <summary className="font-medium cursor-pointer">هل يمكن الاعتماد على هذه الإمساكيات للصيام؟</summary>
-            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-              هذه الأوقات محسوبة فلكياً بدقة عالية وهي صالحة للاستخدام. للتأكد، يمكنك مقارنتها مع إمساكية المسجد المحلي في مدينتك أو توقيت دار الإفتاء في بلدك. الاختلافات الصغيرة (دقيقة أو دقيقتان) مقبولة فقهياً، ولا تؤثر على صحة الصيام.
-            </p>
-          </details>
-          <details className="bg-card border rounded-lg px-4 py-3">
-            <summary className="font-medium cursor-pointer">كيف أعرف أول يوم رمضان {gregYear}؟</summary>
-            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-              وفق الحسابات الفلكية وتقويم أم القرى، يُتوقع أن يبدأ رمضان {gregYear} في {ramadanStart.day} {GREGORIAN_MONTHS_AR[ramadanStart.month]} {gregYear}. غير أن الإعلان الرسمي يعتمد على رؤية هلال رمضان، وقد يختلف من دولة لأخرى بيوم كامل. تابع إعلانات وزارة الأوقاف أو دار الإفتاء في بلدك للتأكيد.
-            </p>
-          </details>
-        </div>
-      </section>
-    </main>
+          <section className="date-section max-w-3xl" aria-labelledby="imsakiya-faq-heading">
+            <h2 id="imsakiya-faq-heading" className="date-section-title">
+              أسئلة شائعة عن إمساكية رمضان {gregYear}
+            </h2>
+            <SiteFaqAccordion items={faqItems} />
+          </section>
+
+          <section className="date-section" aria-labelledby="imsakiya-related-heading">
+            <SiteRelatedCardGrid
+              heading="خطوات تكمل رمضان"
+              headingId="imsakiya-related-heading"
+              items={[
+                {
+                  href: '/holidays/ramadan',
+                  label: `كم باقي على رمضان ${gregYear}`,
+                  Icon: Calendar,
+                },
+                {
+                  href: '/holidays/eid-al-fitr',
+                  label: `كم باقي على عيد الفطر ${gregYear}`,
+                  Icon: Calendar,
+                },
+                {
+                  href: '/date/hijri-months',
+                  label: 'الأشهر الهجرية بالترتيب',
+                  Icon: ArrowLeftRight,
+                },
+              ]}
+            />
+          </section>
+        </main>
+      </AdLayoutWrapper>
+    </>
   );
 }

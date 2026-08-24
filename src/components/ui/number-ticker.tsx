@@ -11,6 +11,8 @@ interface NumberTickerProps extends ComponentPropsWithoutRef<"span"> {
   direction?: "up" | "down"
   delay?: number
   decimalPlaces?: number
+  prefix?: string
+  suffix?: string
 }
 
 export function NumberTicker({
@@ -20,6 +22,8 @@ export function NumberTicker({
   delay = 0,
   className,
   decimalPlaces = 0,
+  prefix = "",
+  suffix = "",
   ...props
 }: NumberTickerProps) {
   const ref = useRef<HTMLSpanElement>(null)
@@ -50,25 +54,28 @@ export function NumberTicker({
     () =>
       springValue.on("change", (latest) => {
         if (ref.current) {
-          ref.current.textContent = Intl.NumberFormat("en-US", {
+          const formatted = Intl.NumberFormat("en-US", {
             minimumFractionDigits: decimalPlaces,
             maximumFractionDigits: decimalPlaces,
           }).format(Number(latest.toFixed(decimalPlaces)))
+          ref.current.textContent = `${prefix}${formatted}${suffix}`
         }
       }),
-    [springValue, decimalPlaces]
+    [springValue, decimalPlaces, prefix, suffix]
   )
 
   return (
+    // No hardcoded text-black/dark:text-white here (found + fixed 2026-08-20) — every real call
+    // site sets its own color (a gradient clip, white-on-photo, a themed accent), and a
+    // black/white default fights all of them. dir="ltr" keeps the digits themselves in the
+    // correct visual order inside an RTL page (matches every other numeral display on this site).
     <span
       ref={ref}
-      className={cn(
-        "inline-block tracking-wider text-black tabular-nums dark:text-white",
-        className
-      )}
+      dir="ltr"
+      className={cn("inline-block tracking-wider tabular-nums", className)}
       {...props}
     >
-      {startValue}
+      {prefix}{startValue}{suffix}
     </span>
   )
 }

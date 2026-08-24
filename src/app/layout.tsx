@@ -4,6 +4,7 @@ import 'flag-icons/css/flag-icons.min.css';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { Noto_Sans_Arabic } from 'next/font/google';
+import localFont from 'next/font/local';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/Footer';
 import ClientRuntimeMounts from '@/components/layout/ClientRuntimeMounts.client';
@@ -44,6 +45,24 @@ const notoSansArabic = Noto_Sans_Arabic({
   variable: '--font-noto-sans-arabic',
   display: 'swap',
   preload: true,
+});
+
+// Thmanyah Sans — owner-supplied custom Arabic type family (public/fonts/thmanyah-sans-*.woff2),
+// 2026-08-23. Scoped to the hero H1 only for now (see .hero-v2-title in HeroV2.css) — not the
+// sitewide heading font, so it's `preload:false` here (next/font/local still self-hosts and
+// prevents CLS, it just doesn't compete with Noto Sans Arabic for the critical preload budget on
+// every other page). All 4 weights are registered as one family; only Bold is actually requested
+// by any current CSS, so only that one file downloads.
+const thmanyahSans = localFont({
+  src: [
+    { path: '../../public/fonts/thmanyah-sans-Light.woff2', weight: '300', style: 'normal' },
+    { path: '../../public/fonts/thmanyah-sans-Regular.woff2', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/thmanyah-sans-Medium.woff2', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/thmanyah-sans-Bold.woff2', weight: '700', style: 'normal' },
+  ],
+  variable: '--font-thmanyah',
+  display: 'swap',
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -148,7 +167,7 @@ export default async function RootLayout({
       lang="ar"
       dir="rtl"
       suppressHydrationWarning
-      className={`dark ${notoSansArabic.variable}`}
+      className={`dark ${notoSansArabic.variable} ${thmanyahSans.variable}`}
     >
       <head>
         <meta

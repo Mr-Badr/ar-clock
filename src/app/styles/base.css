@@ -195,6 +195,16 @@
   --amber-muted: #5C3600;
   --amber-border: #7A4800;
   --amber-text: #FFD080;
+  /* Distinct from amber — amber trends orange, gold trends yellow-metallic. Given its own
+     tokens (not just reused as --warning) so it can carry an identity separate from other
+     amber/warning surfaces on the same page (ToolCategoryStackSection, 2026-08-24: two cards
+     using the plain amber/--warning tone read as the same color even when not adjacent). */
+  --gold: #D4AF37;
+  --gold-hover: #E5C158;
+  --gold-subtle: #1A1400;
+  --gold-muted: #4A3A08;
+  --gold-border: #6B5410;
+  --gold-text: #E8CE7A;
   --red: #FF4558;
   --red-hover: #FF7080;
   --red-subtle: #1A0306;
@@ -377,6 +387,12 @@
   --amber-muted: #FBDC8A;
   --amber-border: #F5C842;
   --amber-text: #6D3A00;
+  --gold: #A6811F;
+  --gold-hover: #8A6A16;
+  --gold-subtle: #FDF6E3;
+  --gold-muted: #F0DFA0;
+  --gold-border: #C9A63E;
+  --gold-text: #6B5000;
   --red: #CC1122;
   --red-hover: #A80E1C;
   --red-subtle: #FFF1F2;
@@ -786,10 +802,65 @@
     background: var(--scrollbar-hover);
   }
 
-  /* Respect reduced-motion — design system handles all animations */
+  /* Respect reduced-motion — design system handles all animations.
+     Exemption, owner directive 2026-08-23: the homepage tools-category marquee
+     (.animate-marquee/.animate-marquee-vertical, ToolsTicker.jsx) must keep moving by default for
+     every visitor regardless of this OS/browser setting — it's the only thing excluded here. This
+     `!important` universal rule is what was actually freezing it even after globals.css's own
+     marquee-specific reduced-motion block was removed — that block alone couldn't win against this
+     one, since `!important` + `*` beats layers/specificity. Every other sitewide animation/transition
+     still fully respects reduced-motion via this rule, unchanged.
+
+     Second exemption, same day: `.animate-shine` (Magic UI's ShineBorder, `src/components/ui/
+     shine-border.tsx`, currently only on the hero search bar). Found the exact same way — owner
+     reported the hero search's rainbow border looked static and moving on magicui.design's own
+     demo of the same component. Confirmed via Puppeteer's computed styles that this rule was the
+     actual cause (`animationDuration: "1e-05s"` under `prefers-reduced-motion: reduce`, i.e. this
+     rule's own `0.01ms`), not the component's `motion-safe:` variant — dropping `motion-safe:`
+     alone (still tried, still correct to do since it's redundant here) does nothing against a
+     universal `!important` rule with equal specificity's usual loser. Same reasoning as the
+     marquee: a decorative branding shimmer on a search bar is not the kind of large motion
+     reduced-motion users need suppressed.
+
+     Third exemption, same day: `.scroll-stack-card` (ToolCategoryStackSection's pinned cards,
+     ScrollStack.client.jsx). Owner reported the "tools and categories" stack section and the
+     values scroll-reveal text section right above it had no scroll effect at all — root cause was
+     these sections' own JS having a `prefers-reduced-motion` early-return (removed, same reasoning
+     as below). Both sections are scroll-linked content reveal driven directly by the visitor's own
+     deliberate scrolling — not autoplaying or parallax-style motion — so the same judgment call as
+     the marquee/shine applies. (In practice `.scroll-stack-card`'s own opacity/transform/filter
+     are written directly by JS every scroll frame, same as the GSAP-scrubbed `.srt-word` reveal
+     and the native `position: sticky` pin itself — none of that is a CSS animation/transition, so
+     none of it was ever actually subject to this rule. This exemption is kept anyway as a safety
+     net in case a future transition is added to this class.)
+
+     Fourth exemption, same day: `.ilink`, `.ilink-dot`, `.ilink-face` (InteractiveLink.jsx's
+     Magic UI InteractiveHoverButton pattern). Owner: "I hover and immediately the color changes
+     and the arrow appears" instead of the reference's smooth ~0.3-0.5s dot-expand sweep — this
+     rule alone was crushing all three of `.ilink`/`.ilink-dot`/`.ilink-face`'s own transitions to
+     `0.01ms` (confirmed via computed `transitionDuration`), on top of which `interactive-link.css`
+     also had its own redundant `prefers-reduced-motion` block explicitly zeroing the same
+     transitions (removed). This is the FOURTH time this exact rule has silently killed a real,
+     deliberately-added interaction this session (marquee, ShineBorder, the scroll-stack/values
+     sections, now this) — of all four this is the clearest case for exemption, since a hover
+     sweep can only ever play in response to the visitor's own active mouse/focus interaction, not
+     autoplay on page load the way genuinely disorienting motion does.
+
+     Fifth exemption, 2026-08-24: `.header-nav-underline` (header.css's navbar link hover
+     underline, a real <span> rendered by NavLinks.tsx). Owner: "line shows immediately and
+     disappears fast" even after the transition itself was confirmed correct via computed-style
+     measurement — root cause here is different from the first four: the underline was originally
+     a `::after` pseudo-element, and this rule's `*::before, *::after` clause targets EVERY
+     pseudo-element unconditionally, entirely outside the `:not(...)` exemption chain below (that
+     chain only ever matches the plain `*` selector, never `::before`/`::after` — a pseudo-element
+     categorically cannot be exempted this way no matter what class it's given). Moving the
+     underline to a real `<span class="header-nav-underline">` and exempting that real element
+     here is the actual fix; keeping it as `::after` and just adding a class would still have
+     silently failed. Same reasoning as `.ilink` applies once it's a real element: hover/focus-only
+     motion, not autoplay. */
   @media (prefers-reduced-motion: reduce) {
 
-    *,
+    *:not(.animate-marquee):not(.animate-marquee-vertical):not(.animate-shine):not(.scroll-stack-card):not(.ilink):not(.ilink-dot):not(.ilink-face):not(.header-nav-underline),
     *::before,
     *::after {
       animation-duration: 0.01ms !important;

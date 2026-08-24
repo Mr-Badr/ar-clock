@@ -30,11 +30,18 @@ export async function generateMetadata({ params }) {
     title: `العطل الرسمية في ${hub.nameAr} ${year} — جدول الإجازات والعداد التنازلي`,
     description: `جدول العطل الرسمية في ${hub.nameAr} ${year} كاملاً بالتاريخين الميلادي والهجري، مع عداد تنازلي لأقرب إجازة، ومدد إجازات الأعياد، والعطل الملتصقة بنهاية الأسبوع.`,
     keywords: [
+      `عطل ${hub.nameAr}`,
+      `إجازات ${hub.nameAr}`,
       `العطل الرسمية في ${hub.nameAr} ${year}`,
       `جدول الإجازات الرسمية ${hub.nameAr}`,
       `إجازات ${hub.nameAr} ${year}`,
       `كم باقي على العطلة القادمة في ${hub.nameAr}`,
       `العطل الرسمية ${hub.nameAr} ${year + 1}`,
+      `عدد العطل الرسمية في ${hub.nameAr}`,
+      `ما العطلة الرسمية القادمة في ${hub.nameAr}`,
+      `تقويم الإجازات الرسمية ${hub.nameAr}`,
+      `العطل الرسمية الملتصقة بنهاية الأسبوع في ${hub.nameAr}`,
+      `مواعيد الأعياد في ${hub.nameAr} ${year}`,
     ],
     url: `${SITE_URL}/holidays/country/${hub.slug}`,
   });

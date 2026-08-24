@@ -1,0 +1,178 @@
+/* home/v2/sections/scroll-stack.css — the "tools and categories" showcase (2026-08-23), built to
+   replace the Zakat section per the owner's brief: cards for the app's real major sections pin
+   and stack as you scroll the PAGE itself (native `position: sticky`, rebuilt same day per "we
+   should see the effect while scrolling as i see in there websites" — the first cut used a
+   self-contained scroll island that only reacted to scrolling inside it, not the page).
+
+   Card visual rebuilt again same day — owner rejected the original glass-panel + round-icon-chip
+   card as "boring... should not follow our system design" (that's the sitewide FormulaCard/tool-
+   card house style; this section was explicitly asked to break from it). New "index card /
+   dossier" concept: a full flat tone-tinted panel carries the color (not a gradient, not a
+   colored border stripe — the project's own anti-AI-template rule, `.claude/rules/arabic-rtl.md`),
+   a bold "01/06" numeral reads as an editorial chapter marker and reinforces the literal stack-of-
+   cards metaphor, and the icon becomes one oversized, faint watermark bled off a corner instead of
+   a small competing chip. All motion (opacity/scale/lift/covered-dim) is written directly by
+   ScrollStack.client.jsx every scroll frame — no CSS transition anywhere on `.scroll-stack-card`,
+   so it never lags behind fast or slow scrolling the way a CSS-transition-chasing-a-class-toggle
+   did in the first version. */
+
+.tcs-section {
+  position: relative;
+  padding-block: var(--space-16) var(--space-20);
+}
+
+.tcs-inner {
+  width: min(100%, 1080px);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+.tcs-kicker {
+  margin: 0;
+  color: var(--accent-alt);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  text-align: center;
+}
+
+.tcs-title {
+  margin: var(--space-2) auto 0;
+  max-width: 30ch;
+  color: var(--text-primary);
+  font-family: var(--font-thmanyah), var(--font-heading);
+  font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.4rem);
+  font-weight: var(--font-bold);
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* ── Scroll stack ──────────────────────────────────────────────────────
+   No container scroll of its own — it just flows in the page. Each card pins via native
+   `position: sticky` at its own slightly-deeper `top` offset (set inline per index in
+   ScrollStack.client.jsx), so as the page scrolls, each card holds in place until the next one's
+   top edge slides up and covers it. `.scroll-stack-end` gives the LAST card room to release its
+   pin before the section ends, instead of staying stuck to the viewport past the section edge. */
+.scroll-stack {
+  position: relative;
+  width: 100%;
+  margin-block-start: var(--space-10);
+}
+
+.scroll-stack-end {
+  width: 100%;
+  height: 40vh;
+}
+
+.scroll-stack-card {
+  position: sticky;
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+  margin-block-end: var(--space-8);
+  min-height: 16rem;
+  padding: var(--space-7) var(--space-7) var(--space-8);
+  border-radius: var(--radius-2xl, 28px);
+  border: 1px solid var(--border-subtle);
+  /* Flat tone wash, not a gradient — one color, mixed once against the real surface token. Each
+     card sets --tone-soft/--tone-text below via [data-tone]. */
+  background: color-mix(in srgb, var(--tone-soft) 62%, var(--bg-surface-1));
+  /* Two-layer shadow gives real physical weight — appropriate here specifically because this
+     section's whole premise is a literal stack of cards, unlike the flat-surface rule elsewhere
+     in the app (.claude/rules/arabic-rtl.md's anti-gradient/anti-stripe guidance is about
+     decorative flourishes on ordinary cards, not a depth cue that IS the feature). */
+  box-shadow:
+    0 44px 80px -38px rgba(0, 0, 0, 0.6),
+    0 12px 26px -14px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  /* Initial state before JS attaches (progressive enhancement: fully visible, no motion) —
+     ScrollStack.client.jsx overwrites opacity/transform/filter directly every scroll frame once
+     mounted. No CSS transition anywhere here on purpose: a transition would fight the per-frame
+     JS writes and reintroduce the exact lag the owner flagged ("not so smooth... in react bits
+     example the transition is so much better"). */
+  opacity: 1;
+  transform: none;
+  will-change: transform, opacity;
+}
+
+.scroll-stack-card[data-tone='accent'] { --tone-soft: var(--accent-soft); --tone-text: var(--accent-alt); }
+.scroll-stack-card[data-tone='info'] { --tone-soft: var(--info-soft); --tone-text: var(--info-text); }
+.scroll-stack-card[data-tone='success'] { --tone-soft: var(--success-soft); --tone-text: var(--green-text); }
+.scroll-stack-card[data-tone='warning'] { --tone-soft: var(--warning-soft); --tone-text: var(--amber-text); }
+.scroll-stack-card[data-tone='gold'] { --tone-soft: var(--gold-subtle); --tone-text: var(--gold-text); }
+.scroll-stack-card[data-tone='danger'] { --tone-soft: var(--danger-soft); --tone-text: var(--red-text); }
+
+/* Oversized atmospheric icon, bled off the far corner, painted FIRST so every text element below
+   it in the DOM naturally stacks on top — no z-index needed. A single faint wash of color, not a
+   focal point of its own; the numeral + title carry the actual hierarchy. */
+.tcs-card-glyph {
+  position: absolute;
+  inset-block-end: -18%;
+  inset-inline-end: -14%;
+  width: 68%;
+  height: 68%;
+  color: var(--tone-text);
+  opacity: 0.15;
+  transform: rotate(-8deg);
+  pointer-events: none;
+}
+
+.tcs-card-index {
+  position: relative;
+  display: block;
+  margin-block-end: var(--space-5);
+  color: var(--tone-text);
+  font-family: var(--font-thmanyah), var(--font-heading);
+  font-size: clamp(2.1rem, 1.85rem + 0.9vw, 2.6rem);
+  font-weight: var(--font-bold);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.tcs-card-index-total {
+  margin-inline-start: 0.15em;
+  color: var(--tone-text);
+  opacity: 0.45;
+  font-size: 0.5em;
+  font-weight: var(--font-bold);
+}
+
+.tcs-card-title {
+  position: relative;
+  margin: 0 0 var(--space-2);
+  color: var(--text-primary);
+  font-family: var(--font-thmanyah), var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+}
+
+.tcs-card-desc {
+  position: relative;
+  margin: 0;
+  max-width: 34ch;
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+}
+
+@media (max-width: 620px) {
+  .scroll-stack-card {
+    padding: var(--space-6) var(--space-5) var(--space-7);
+    min-height: 14rem;
+  }
+
+  .scroll-stack-end {
+    height: 25vh;
+  }
+
+  .tcs-card-index {
+    font-size: 1.8rem;
+  }
+}
+
+/* No prefers-reduced-motion override here on purpose: the sticky pin/stack is scroll-linked
+   content reveal driven by the visitor's own deliberate scrolling, not autoplaying/parallax
+   motion, so it stays active for reduced-motion users too — same call as the homepage marquee/
+   ShineBorder (see base.css's reduced-motion kill-rule comment, and ScrollStack.client.jsx's
+   header comment for the full reasoning). */

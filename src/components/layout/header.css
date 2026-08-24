@@ -1,35 +1,72 @@
 /* =============================================================================
    Header, navigation, and discovery shell
    Applies DESIGN.md as a component identity, not as scattered utility classes.
+
+   2026-08-22: every hover/focus transition in this file was switched from
+   `var(--transition-fast)` (90ms) to `var(--transition-base)` (160ms) — 90ms reads as an
+   abrupt snap rather than a smooth hover, which is what "buttons don't feel smooth" was
+   pointing at (owner feedback). Scoped to this file only, not the shared `--duration-fast`
+   token itself, since that token is used far beyond the header and changing it needs its own
+   sitewide pass.
    ============================================================================= */
 
+/* ── Floating glass-pill navbar (2026-08-20 redesign) ─────────────────────────────────────
+   `.header-nav` itself is a transparent, full-width, click-through band reserving the top
+   `--app-header-height` — it no longer paints anything. `.header-inner` is the visible piece:
+   a rounded, inset, frosted-glass capsule that floats above the page (photo hero or plain
+   surface alike) rather than a flush edge-to-edge bar. `var(--surface)` already resolves to a
+   near-black tone in dark mode and a near-white tone in light mode (see base.css), so
+   `color-mix(in srgb, var(--surface) N%, transparent)` gives the "darker glass in dark mode,
+   whiter glass in light mode" look for free — no extra `.dark`/`.light` overrides needed. */
 .header-nav {
   position: fixed;
   inset-block-start: 0;
   inset-inline: 0;
   z-index: var(--z-sticky);
-  height: var(--app-header-height);
-  background: var(--surface);
-  border-bottom: 1px solid var(--border-default);
-  transition:
-    border-color var(--transition-fast),
-    background-color var(--transition-theme);
-}
-
-.header-nav.scrolled {
-  border-color: var(--border-strong);
-  box-shadow: none;
+  height: calc(var(--app-header-height) - var(--space-1));
+  background: transparent;
+  border-bottom: 0;
+  pointer-events: none;
 }
 
 .header-inner {
-  width: min(100%, 1320px);
-  height: var(--app-header-height);
+  /* Content-hugging, not stretched to a near-full-width canvas (owner, 2026-08-20: "navbar
+     still had so much width") — `width: fit-content` + `margin-inline: auto` lets the pill
+     shrink-wrap around however many links it actually has instead of pre-allocating up to
+     1320px and leaving the extra space as visible empty pill background on both sides. */
+  pointer-events: auto;
+  width: fit-content;
+  max-width: calc(100% - var(--space-6));
+  height: var(--space-12);
   margin-inline: auto;
-  padding-inline: var(--space-5);
-  display: grid;
-  grid-template-columns: var(--space-11) minmax(0, 1fr) auto;
+  margin-block-start: var(--space-3);
+  padding-inline: var(--space-4);
+  display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-5);
+  border-radius: var(--radius-full, 999px);
+  background: color-mix(in srgb, var(--surface) 66%, transparent);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid color-mix(in srgb, var(--border-default) 55%, transparent);
+  box-shadow:
+    0 12px 32px -14px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 color-mix(in srgb, white 10%, transparent);
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.header-nav.scrolled .header-inner {
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border-color: var(--border-default);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .header-inner {
+    background: var(--surface);
+  }
 }
 
 .header-logo {
@@ -56,9 +93,9 @@
   background: var(--surface);
   color: var(--text-primary);
   transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    color var(--transition-fast);
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
 }
 
 .header-logo:hover .header-logo-mark {
@@ -112,29 +149,96 @@
   gap: var(--space-1-5);
   padding: 0 var(--space-3);
   border: 1px solid transparent;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-full, 999px);
   background: transparent;
-  color: var(--text-secondary);
+  /* Real UX audit, 2026-08-23 — --text-secondary is calibrated for flat design-system surfaces;
+     over this pill's blurred-photo glass it read washed out/low-presence for primary site
+     navigation. --text-primary at 88% is crisper while still visibly stepping down from the
+     hover/active state's full-strength color. */
+  color: color-mix(in srgb, var(--text-primary) 88%, transparent);
   font-size: var(--text-sm);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-semibold);
   line-height: var(--leading-none);
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
-  transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    color var(--transition-fast),
-    box-shadow var(--transition-fast);
+  transition: color var(--transition-base);
+}
+
+/* Underline reveal (owner, 2026-08-24: replaces the pill background-fill hover with an
+   underline sweep) — mirrored for RTL, and a continuous one-directional wipe rather than a
+   grow/shrink-in-place: it draws in from the right, and on mouse-out keeps sweeping the SAME
+   right→left direction to exit, instead of retreating back into the right edge it started from.
+   That needs the transform-origin to flip between the two states (a single fixed origin can only
+   ever grow and shrink around the one anchored edge, i.e. shrink back where it grew from — tried
+   that first, it read as "disappearing into the same place it started"):
+     - rest state:  transform-origin: left  (collapsed/invisible, pinned at the left edge)
+     - hover state: transform-origin: right (pinned at the right edge)
+   Hover-in: origin snaps to `right` the instant :hover matches, then scaleX animates 0→1 pivoting
+   there — draws out from the right, extending left. Hover-out: origin snaps back to the rest
+   value `left`, then scaleX animates 1→0 pivoting THERE — the right edge sweeps back toward the
+   left and vanishes at the left edge, i.e. it exits the same right→left direction it entered
+   with, not backing into the right edge again.
+
+   A REAL <span> (NavLinks.tsx), not a ::after pseudo-element — found 2026-08-24 why the owner
+   still saw an instant snap with no visible sweep despite the transition measuring correctly in
+   an automated check: base.css's global `prefers-reduced-motion: reduce` kill-rule targets
+   `*::before, *::after` UNCONDITIONALLY, completely outside its own `:not(.animate-marquee)...`
+   exemption chain (that chain only ever applied to the plain `*` selector, never to
+   pseudo-elements — see the rule itself). A real element CAN be added to that exemption chain;
+   a `::after` categorically cannot. On a system with "reduce motion" on (common, easy to have
+   on without noticing — same note already on that rule from three earlier bugs), this pill's
+   ::after was being crushed to a 0.01ms transition no matter what duration/easing was set here,
+   which reads exactly like "shows immediately, disappears fast." `.header-nav-underline` is
+   listed in that exemption chain now (base.css) for the same reason `.ilink`/`.ilink-dot` are:
+   a hover/focus sweep only ever plays in response to the visitor's own deliberate interaction,
+   not autoplay motion the way reduced-motion is meant to suppress. */
+.header-nav-underline {
+  position: absolute;
+  left: var(--space-3);
+  right: var(--space-3);
+  bottom: 5px;
+  height: 3px;
+  /* A fixed px radius, not --radius-full — at this thickness --radius-full (9999px) clamps to
+     exactly the same rounding a half-height px value does, but staying explicit here makes it
+     obvious the caps are meant to be fully round (no straight/square edge anywhere on the bar),
+     which is what actually needs to be true — the corners come from the shape itself, not from
+     however large the radius value happens to be. */
+  border-radius: 2px;
+  background: var(--accent-alt);
+  opacity: 0.6;
+  transform: scaleX(0);
+  transform-origin: left;
+  /* Plain `ease` on purpose, not this file's usual --ease-out/--ease-default tokens — those are
+     aggressive front-loaded curves (most of the motion happens in the first ~40% of the
+     duration, then barely anything for the rest), which read as an instant snap rather than a
+     visible sweep for a transform this quick. A gentle, evenly-paced curve is what actually
+     reads as "smooth motion" here, matching the reference's own plain `transition: transform
+     0.2s` (default easing, no custom curve). */
+  transition: transform 320ms ease;
+  pointer-events: none;
 }
 
 .header-nav-link:hover,
 .header-nav-link:focus-visible,
 .header-nav-item:focus-within > .header-nav-link,
 .header-nav-item:hover > .header-nav-link {
-  background: var(--muted);
   color: var(--text-primary);
-  border-color: var(--border-subtle);
+}
+
+.header-nav-link:hover > .header-nav-underline,
+.header-nav-link:focus-visible > .header-nav-underline,
+.header-nav-item:focus-within > .header-nav-link > .header-nav-underline,
+.header-nav-item:hover > .header-nav-link > .header-nav-underline {
+  transform-origin: right;
+  transform: scaleX(1);
+}
+
+/* Focus-visible keeps its own dedicated ring — the underline alone isn't enough of a focus
+   indicator for keyboard users (DESIGN.md: focus must never be removed). */
+.header-nav-link:focus-visible {
+  outline: 3px solid var(--border-focus);
+  outline-offset: 2px;
 }
 
 .header-nav-link.active,
@@ -150,7 +254,7 @@
   height: var(--space-3-5);
   margin-inline-start: var(--space-1);
   transform: translateY(1px);
-  transition: transform var(--transition-fast);
+  transition: transform var(--transition-base);
 }
 
 .header-nav-item:hover .header-nav-caret,
@@ -159,36 +263,33 @@
 }
 
 .header-theme-btn,
-.header-mobile-btn,
-.header-search-link {
+.header-mobile-btn {
   min-width: var(--space-11);
   height: var(--space-11);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 1px solid transparent;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-full, 999px);
   background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
   transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    color var(--transition-fast),
-    transform var(--transition-fast);
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base),
+    transform var(--transition-base);
 }
 
 .header-theme-btn:hover,
-.header-mobile-btn:hover,
-.header-search-link:hover {
+.header-mobile-btn:hover {
   background: var(--muted);
   color: var(--text-primary);
   border-color: var(--border-subtle);
 }
 
 .header-theme-btn:active,
-.header-mobile-btn:active,
-.header-search-link:active {
+.header-mobile-btn:active {
   transform: scale(0.98);
 }
 
@@ -208,33 +309,9 @@
   transform: rotate(20deg);
 }
 
-.header-search-link {
-  gap: var(--space-2);
-  min-width: auto;
-  padding-inline: var(--space-2-5) var(--space-3);
-  border-color: var(--border-default);
-  background: var(--elevated);
-  text-decoration: none;
-  appearance: none;
-  font: inherit;
-}
-
-.header-search-link__icon {
-  width: var(--space-8);
-  height: var(--space-8);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-md);
-  background: var(--blue-subtle);
-  color: var(--blue);
-}
-
-.header-search-link__label {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: inherit;
-}
+/* Search trigger moved out of the header entirely (owner directive, 2026-08-20: "search input
+   should be in hero not navbar") — see src/components/hero/HeroSearchTrigger.client.jsx and its
+   own CSS in HeroV2.css. Removing it here is also most of why the pill got noticeably shorter. */
 
 .header-mobile-btn {
   display: none;
@@ -256,8 +333,8 @@
   border-radius: var(--radius-sm);
   background: currentColor;
   transition:
-    inset-block-start var(--transition-fast),
-    transform var(--transition-fast);
+    inset-block-start var(--transition-base),
+    transform var(--transition-base);
 }
 
 .header-mobile-btn-icon::before {
@@ -318,9 +395,9 @@
   pointer-events: none;
   visibility: hidden;
   transition:
-    opacity var(--transition-fast),
-    visibility var(--transition-fast),
-    transform var(--transition-fast);
+    opacity var(--transition-base),
+    visibility var(--transition-base),
+    transform var(--transition-base);
 }
 
 .nav-mega-content--right {
@@ -445,9 +522,9 @@
   line-height: var(--leading-none);
   text-decoration: none;
   transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    color var(--transition-fast);
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
 }
 
 .nav-mega-panel-cta:hover,
@@ -492,9 +569,9 @@
   text-decoration: none;
   outline: none;
   transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    color var(--transition-fast);
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
 }
 
 .nav-mega-item:hover,
@@ -529,9 +606,9 @@
   background: var(--surface) !important;
   color: var(--text-secondary) !important;
   transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    color var(--transition-fast);
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
 }
 
 .nav-mega-item:hover .nav-mega-icon,
@@ -558,8 +635,8 @@
   flex: 0 0 auto;
   transform: rotate(-45deg);
   transition:
-    opacity var(--transition-fast),
-    transform var(--transition-fast);
+    opacity var(--transition-base),
+    transform var(--transition-base);
 }
 
 .nav-mega-item:hover .nav-mega-arrow,
@@ -652,9 +729,9 @@
   text-align: start;
   cursor: pointer;
   transition:
-    background var(--transition-fast),
-    border-color var(--transition-fast),
-    color var(--transition-fast);
+    background var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
 }
 
 .nav-calc-cat:hover {
@@ -678,9 +755,9 @@
   background: var(--surface);
   color: var(--text-secondary);
   transition:
-    background var(--transition-fast),
-    color var(--transition-fast),
-    border-color var(--transition-fast);
+    background var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base);
 }
 
 .nav-calc-cat-body {
@@ -750,9 +827,9 @@
   font-weight: var(--font-semibold);
   text-decoration: none;
   transition:
-    background var(--transition-fast),
-    color var(--transition-fast),
-    border-color var(--transition-fast);
+    background var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base);
 }
 
 .nav-calc-viewall:hover {
@@ -780,8 +857,8 @@
   color: inherit;
   text-decoration: none;
   transition:
-    background var(--transition-fast),
-    border-color var(--transition-fast);
+    background var(--transition-base),
+    border-color var(--transition-base);
 }
 
 .nav-calc-tool:hover {
@@ -798,8 +875,8 @@
   flex: 0 0 auto;
   border-radius: var(--radius-md);
   transition:
-    background var(--transition-fast),
-    color var(--transition-fast);
+    background var(--transition-base),
+    color var(--transition-base);
 }
 
 .nav-calc-tool-copy {
@@ -839,7 +916,7 @@
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
   text-decoration: none;
-  transition: background var(--transition-fast);
+  transition: background var(--transition-base);
 }
 
 .nav-calc-hub-link:hover {
@@ -924,9 +1001,9 @@
   color: var(--text-secondary);
   cursor: pointer;
   transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    color var(--transition-fast);
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
 }
 
 .header-mobile-menu-close:hover,
@@ -961,9 +1038,9 @@
   line-height: var(--leading-none);
   text-decoration: none;
   transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    color var(--transition-fast);
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
 }
 
 .header-mobile-link:hover,
@@ -1006,9 +1083,9 @@
   color: var(--text-secondary);
   text-decoration: none;
   transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    color var(--transition-fast);
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
 }
 
 .header-mobile-sublink:hover,
@@ -1228,15 +1305,6 @@
     gap: var(--space-3);
   }
 
-  .header-search-link {
-    min-width: var(--space-11);
-    padding-inline: var(--space-1);
-  }
-
-  .header-search-link__label {
-    display: none;
-  }
-
   .header-mobile-menu {
     inset-block-start: calc(var(--app-header-height) + var(--space-1));
     inset-inline: var(--space-2);
@@ -1255,4 +1323,64 @@
   .header-actions {
     gap: var(--space-1);
   }
+}
+
+/* Desktop "/tools" renders as <ToolsNavButton> INSIDE NavLinks.tsx's own list (see the
+   `link.cta` branch there), sitting in the nav-links row itself, not header-actions.
+   `.header-mobile-link--cta` below is separate: the mobile drawer keeps "/tools" in its plain
+   link list, just with cta-weight styling — it doesn't use ToolsNavButton/BorderBeam. */
+.header-mobile-link--cta {
+  margin-block-start: var(--space-2);
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--text-on-accent);
+  font-weight: var(--font-bold);
+  justify-content: center;
+}
+
+.header-mobile-link--cta:hover,
+.header-mobile-link--cta:focus-visible {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: var(--text-on-accent);
+}
+
+/* ── ToolsNavButton — Magic UI BorderBeam on a real <Link> (2026-08-20, second pass) ─────────
+   Owner: "premium... having border like this [magicui border-beam]" — a subtle outlined pill
+   with a small light traveling continuously around its border, not a filled/shimmer look. Sits
+   inline in the nav-links row (see NavLinks.tsx), right next to the plain links, not off in
+   header-actions — owner: "tools button should be close to other links". position:relative +
+   overflow:hidden are required here; BorderBeam positions itself absolute inset-0 of this
+   element and needs both to render its beam clipped to the pill's own rounded shape. */
+.tools-nav-btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  min-height: var(--space-10);
+  padding-inline: var(--space-3-5, 0.85rem);
+  border-radius: var(--radius-full, 999px);
+  border: 1px solid color-mix(in srgb, var(--accent-alt) 38%, var(--border-default) 62%);
+  background: color-mix(in srgb, var(--accent-soft) 55%, transparent);
+  color: var(--accent-alt);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--transition-base), border-color var(--transition-base);
+}
+
+.tools-nav-btn:hover,
+.tools-nav-btn:focus-visible {
+  background: color-mix(in srgb, var(--accent-soft) 80%, transparent);
+  border-color: color-mix(in srgb, var(--accent-alt) 55%, var(--border-default) 45%);
+}
+
+.tools-nav-btn__label {
+  position: relative;
+}
+
+.tools-nav-btn svg {
+  position: relative;
 }

@@ -5,10 +5,17 @@ import NavLinks from "./NavLinks";
 import ThemeToggle from "./ThemeToggle";
 import MobileMenu from "./MobileMenu";
 import HeaderRouteWarmup from "./HeaderRouteWarmup";
-import GlobalDiscoverySearch from "@/components/site/GlobalDiscoverySearch.client";
+import HeaderScrollEffect from "./HeaderScrollEffect";
 import { SITE_BRAND } from "@/lib/site-config";
 import "./header.css";
 
+// Third pass, 2026-08-20 (owner feedback): "/tools" moved from header-actions back INTO the
+// nav-links row itself — "tools button should be close to other links" — see NavLinks.tsx,
+// which renders <ToolsNavButton> in place of a plain link when `link.cta` is true, right where
+// it sits in this array (last). No search trigger here at all anymore — it moved into the hero
+// (src/components/hero/HeroSearchTrigger.client.jsx). "/" (الرئيسية) is still dropped from the
+// DESKTOP pill only (logo already goes home) — it stays in NAV_LINKS so the mobile drawer (no
+// persistent logo while it's open) still offers it explicitly.
 export const NAV_LINKS = [
   { href: "/", label: "الرئيسية" },
   {
@@ -28,11 +35,13 @@ export const NAV_LINKS = [
     ],
   },
   { href: "/time-difference", label: "فرق التوقيت" },
-  { href: "/tools", label: "الأدوات" },
   { href: "/time-now",        label: "الوقت الان"   },
   { href: "/holidays",        label: "المناسبات"   },
   { href: "/countdown",       label: "عداد تنازلي"  },
+  { href: "/tools", label: "الأدوات", cta: true },
 ];
+
+const DESKTOP_NAV_LINKS = NAV_LINKS.filter((link) => link.href !== "/");
 
 export default function Header() {
   const primaryRoutes = NAV_LINKS.map((link) => link.href);
@@ -54,11 +63,10 @@ export default function Header() {
           </Link>
 
           <nav className="header-center-nav" aria-label="التنقل الرئيسي">
-            <NavLinks links={NAV_LINKS} />
+            <NavLinks links={DESKTOP_NAV_LINKS} />
           </nav>
 
           <div className="header-actions">
-            <GlobalDiscoverySearch />
             <ThemeToggle />
             <MobileMenu links={NAV_LINKS} />
           </div>
@@ -66,6 +74,7 @@ export default function Header() {
         </div>
       </header>
 
+      <HeaderScrollEffect />
       <HeaderRouteWarmup routes={primaryRoutes} />
     </>
   );

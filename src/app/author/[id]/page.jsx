@@ -20,6 +20,7 @@ export async function generateMetadata({ params }) {
   return buildCanonicalMetadata({
     title: `${author.name} — ${author.role} في ميقاتنا`,
     description: author.metaDescription || author.bio,
+    keywords: [author.name, `${author.name} ميقاتنا`, author.role, `${author.role} في ميقاتنا`],
     url: `${SITE_URL}/author/${id}`,
   });
 }

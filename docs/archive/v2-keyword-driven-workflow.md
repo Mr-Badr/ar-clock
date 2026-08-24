@@ -179,7 +179,7 @@ and held rather than built on a guess. That's a content-accuracy hold, not a str
 Real `/tools/<category>/<slug>` page, full v2 design system (not the old `.calc-esb-*` look),
 migrated calculation logic (kept and improved, per the owner's standing instruction — never
 stripped). **The visual bar is Omni Calculator, not the original boxed mockup** — see
-`docs/tools-platform-v2-plan.md` §10a for the binding specifics (smaller type scale everywhere,
+`docs/archive/tools-platform-v2-plan.md` §10a for the binding specifics (smaller type scale everywhere,
 whitespace instead of boxes around plain prose, plain-surface result panel, one cohesive FAQ module,
 one reference card for related tools instead of a grid of boxed cards), §10b for the layout-structure
 round (even section spacing via flex/grid gap, title/lead/TOC sharing column 1's grid cell instead of

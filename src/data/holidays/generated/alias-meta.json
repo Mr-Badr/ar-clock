@@ -199,6 +199,10 @@
     "canonicalSlug": "ramadan",
     "countryCode": "kr"
   },
+  "ramadan-in-uzbekistan": {
+    "canonicalSlug": "ramadan",
+    "countryCode": "uz"
+  },
   "eid-al-fitr-in-saudi": {
     "canonicalSlug": "eid-al-fitr",
     "countryCode": "sa"
@@ -398,6 +402,10 @@
   "eid-al-fitr-in-south-korea": {
     "canonicalSlug": "eid-al-fitr",
     "countryCode": "kr"
+  },
+  "eid-al-fitr-in-uzbekistan": {
+    "canonicalSlug": "eid-al-fitr",
+    "countryCode": "uz"
   },
   "eid-al-adha-in-saudi": {
     "canonicalSlug": "eid-al-adha",
@@ -599,6 +607,10 @@
     "canonicalSlug": "eid-al-adha",
     "countryCode": "kr"
   },
+  "eid-al-adha-in-uzbekistan": {
+    "canonicalSlug": "eid-al-adha",
+    "countryCode": "uz"
+  },
   "day-of-arafa-in-saudi": {
     "canonicalSlug": "day-of-arafa",
     "countryCode": "sa"
@@ -798,6 +810,10 @@
   "day-of-arafa-in-south-korea": {
     "canonicalSlug": "day-of-arafa",
     "countryCode": "kr"
+  },
+  "day-of-arafa-in-uzbekistan": {
+    "canonicalSlug": "day-of-arafa",
+    "countryCode": "uz"
   },
   "hajj-season-in-saudi": {
     "canonicalSlug": "hajj-season",
@@ -999,6 +1015,10 @@
     "canonicalSlug": "hajj-season",
     "countryCode": "kr"
   },
+  "hajj-season-in-uzbekistan": {
+    "canonicalSlug": "hajj-season",
+    "countryCode": "uz"
+  },
   "islamic-new-year-in-saudi": {
     "canonicalSlug": "islamic-new-year",
     "countryCode": "sa"
@@ -1198,6 +1218,10 @@
   "islamic-new-year-in-south-korea": {
     "canonicalSlug": "islamic-new-year",
     "countryCode": "kr"
+  },
+  "islamic-new-year-in-uzbekistan": {
+    "canonicalSlug": "islamic-new-year",
+    "countryCode": "uz"
   },
   "ashura-in-saudi": {
     "canonicalSlug": "ashura",
@@ -1399,6 +1423,10 @@
     "canonicalSlug": "ashura",
     "countryCode": "kr"
   },
+  "ashura-in-uzbekistan": {
+    "canonicalSlug": "ashura",
+    "countryCode": "uz"
+  },
   "laylat-al-qadr-in-saudi": {
     "canonicalSlug": "laylat-al-qadr",
     "countryCode": "sa"
@@ -1598,6 +1626,10 @@
   "laylat-al-qadr-in-south-korea": {
     "canonicalSlug": "laylat-al-qadr",
     "countryCode": "kr"
+  },
+  "laylat-al-qadr-in-uzbekistan": {
+    "canonicalSlug": "laylat-al-qadr",
+    "countryCode": "uz"
   },
   "isra-miraj-in-saudi": {
     "canonicalSlug": "isra-miraj",
@@ -1799,6 +1831,10 @@
     "canonicalSlug": "isra-miraj",
     "countryCode": "kr"
   },
+  "isra-miraj-in-uzbekistan": {
+    "canonicalSlug": "isra-miraj",
+    "countryCode": "uz"
+  },
   "first-dhul-hijjah-in-saudi": {
     "canonicalSlug": "first-dhul-hijjah",
     "countryCode": "sa"
@@ -1998,6 +2034,10 @@
   "first-dhul-hijjah-in-south-korea": {
     "canonicalSlug": "first-dhul-hijjah",
     "countryCode": "kr"
+  },
+  "first-dhul-hijjah-in-uzbekistan": {
+    "canonicalSlug": "first-dhul-hijjah",
+    "countryCode": "uz"
   },
   "valentines-day-in-saudi": {
     "canonicalSlug": "valentines-day",
@@ -2199,6 +2239,10 @@
     "canonicalSlug": "valentines-day",
     "countryCode": "kr"
   },
+  "valentines-day-in-uzbekistan": {
+    "canonicalSlug": "valentines-day",
+    "countryCode": "uz"
+  },
   "world-health-day-in-saudi": {
     "canonicalSlug": "world-health-day",
     "countryCode": "sa"
@@ -2398,6 +2442,10 @@
   "world-health-day-in-south-korea": {
     "canonicalSlug": "world-health-day",
     "countryCode": "kr"
+  },
+  "world-health-day-in-uzbekistan": {
+    "canonicalSlug": "world-health-day",
+    "countryCode": "uz"
   },
   "earth-day-in-saudi": {
     "canonicalSlug": "earth-day",
@@ -2599,6 +2647,10 @@
     "canonicalSlug": "earth-day",
     "countryCode": "kr"
   },
+  "earth-day-in-uzbekistan": {
+    "canonicalSlug": "earth-day",
+    "countryCode": "uz"
+  },
   "world-diabetes-day-in-saudi": {
     "canonicalSlug": "world-diabetes-day",
     "countryCode": "sa"
@@ -2798,6 +2850,10 @@
   "world-diabetes-day-in-south-korea": {
     "canonicalSlug": "world-diabetes-day",
     "countryCode": "kr"
+  },
+  "world-diabetes-day-in-uzbekistan": {
+    "canonicalSlug": "world-diabetes-day",
+    "countryCode": "uz"
   },
   "diabetes-day": {
     "canonicalSlug": "world-diabetes-day",
@@ -3015,6 +3071,10 @@
     "canonicalSlug": "world-teachers-day",
     "countryCode": "kr"
   },
+  "world-teachers-day-in-uzbekistan": {
+    "canonicalSlug": "world-teachers-day",
+    "countryCode": "uz"
+  },
   "arabic-language-day-in-saudi": {
     "canonicalSlug": "arabic-language-day",
     "countryCode": "sa"
@@ -3214,6 +3274,10 @@
   "arabic-language-day-in-south-korea": {
     "canonicalSlug": "arabic-language-day",
     "countryCode": "kr"
+  },
+  "arabic-language-day-in-uzbekistan": {
+    "canonicalSlug": "arabic-language-day",
+    "countryCode": "uz"
   },
   "mawlid-in-saudi": {
     "canonicalSlug": "mawlid",
@@ -3415,6 +3479,10 @@
     "canonicalSlug": "mawlid",
     "countryCode": "kr"
   },
+  "mawlid-in-uzbekistan": {
+    "canonicalSlug": "mawlid",
+    "countryCode": "uz"
+  },
   "nisf-shaban-in-saudi": {
     "canonicalSlug": "nisf-shaban",
     "countryCode": "sa"
@@ -3614,6 +3682,10 @@
   "nisf-shaban-in-south-korea": {
     "canonicalSlug": "nisf-shaban",
     "countryCode": "kr"
+  },
+  "nisf-shaban-in-uzbekistan": {
+    "canonicalSlug": "nisf-shaban",
+    "countryCode": "uz"
   },
   "world-childrens-day-in-saudi": {
     "canonicalSlug": "world-childrens-day",
@@ -3815,6 +3887,10 @@
     "canonicalSlug": "world-childrens-day",
     "countryCode": "kr"
   },
+  "world-childrens-day-in-uzbekistan": {
+    "canonicalSlug": "world-childrens-day",
+    "countryCode": "uz"
+  },
   "international-day-of-education-in-saudi": {
     "canonicalSlug": "international-day-of-education",
     "countryCode": "sa"
@@ -4014,6 +4090,10 @@
   "international-day-of-education-in-south-korea": {
     "canonicalSlug": "international-day-of-education",
     "countryCode": "kr"
+  },
+  "international-day-of-education-in-uzbekistan": {
+    "canonicalSlug": "international-day-of-education",
+    "countryCode": "uz"
   },
   "world-mental-health-day-in-saudi": {
     "canonicalSlug": "world-mental-health-day",
@@ -4215,6 +4295,10 @@
     "canonicalSlug": "world-mental-health-day",
     "countryCode": "kr"
   },
+  "world-mental-health-day-in-uzbekistan": {
+    "canonicalSlug": "world-mental-health-day",
+    "countryCode": "uz"
+  },
   "world-environment-day-in-saudi": {
     "canonicalSlug": "world-environment-day",
     "countryCode": "sa"
@@ -4414,6 +4498,10 @@
   "world-environment-day-in-south-korea": {
     "canonicalSlug": "world-environment-day",
     "countryCode": "kr"
+  },
+  "world-environment-day-in-uzbekistan": {
+    "canonicalSlug": "world-environment-day",
+    "countryCode": "uz"
   },
   "april-fools-in-saudi": {
     "canonicalSlug": "april-fools",
@@ -4615,6 +4703,10 @@
     "canonicalSlug": "april-fools",
     "countryCode": "kr"
   },
+  "april-fools-in-uzbekistan": {
+    "canonicalSlug": "april-fools",
+    "countryCode": "uz"
+  },
   "arab-orphan-day-in-saudi": {
     "canonicalSlug": "arab-orphan-day",
     "countryCode": "sa"
@@ -4814,6 +4906,10 @@
   "arab-orphan-day-in-south-korea": {
     "canonicalSlug": "arab-orphan-day",
     "countryCode": "kr"
+  },
+  "arab-orphan-day-in-uzbekistan": {
+    "canonicalSlug": "arab-orphan-day",
+    "countryCode": "uz"
   },
   "badr-day-in-saudi": {
     "canonicalSlug": "badr-day",
@@ -5015,6 +5111,10 @@
     "canonicalSlug": "badr-day",
     "countryCode": "kr"
   },
+  "badr-day-in-uzbekistan": {
+    "canonicalSlug": "badr-day",
+    "countryCode": "uz"
+  },
   "battle-of-uhud-in-saudi": {
     "canonicalSlug": "battle-of-uhud",
     "countryCode": "sa"
@@ -5214,6 +5314,10 @@
   "battle-of-uhud-in-south-korea": {
     "canonicalSlug": "battle-of-uhud",
     "countryCode": "kr"
+  },
+  "battle-of-uhud-in-uzbekistan": {
+    "canonicalSlug": "battle-of-uhud",
+    "countryCode": "uz"
   },
   "blood-donor-day-in-saudi": {
     "canonicalSlug": "blood-donor-day",
@@ -5415,6 +5519,10 @@
     "canonicalSlug": "blood-donor-day",
     "countryCode": "kr"
   },
+  "blood-donor-day-in-uzbekistan": {
+    "canonicalSlug": "blood-donor-day",
+    "countryCode": "uz"
+  },
   "conquest-of-andalusia-in-saudi": {
     "canonicalSlug": "conquest-of-andalusia",
     "countryCode": "sa"
@@ -5614,6 +5722,10 @@
   "conquest-of-andalusia-in-south-korea": {
     "canonicalSlug": "conquest-of-andalusia",
     "countryCode": "kr"
+  },
+  "conquest-of-andalusia-in-uzbekistan": {
+    "canonicalSlug": "conquest-of-andalusia",
+    "countryCode": "uz"
   },
   "fall-of-granada-in-saudi": {
     "canonicalSlug": "fall-of-granada",
@@ -5815,6 +5927,10 @@
     "canonicalSlug": "fall-of-granada",
     "countryCode": "kr"
   },
+  "fall-of-granada-in-uzbekistan": {
+    "canonicalSlug": "fall-of-granada",
+    "countryCode": "uz"
+  },
   "fath-makkah-in-saudi": {
     "canonicalSlug": "fath-makkah",
     "countryCode": "sa"
@@ -6014,6 +6130,10 @@
   "fath-makkah-in-south-korea": {
     "canonicalSlug": "fath-makkah",
     "countryCode": "kr"
+  },
+  "fath-makkah-in-uzbekistan": {
+    "canonicalSlug": "fath-makkah",
+    "countryCode": "uz"
   },
   "food-day-in-saudi": {
     "canonicalSlug": "food-day",
@@ -6215,6 +6335,10 @@
     "canonicalSlug": "food-day",
     "countryCode": "kr"
   },
+  "food-day-in-uzbekistan": {
+    "canonicalSlug": "food-day",
+    "countryCode": "uz"
+  },
   "human-rights-day-in-saudi": {
     "canonicalSlug": "human-rights-day",
     "countryCode": "sa"
@@ -6414,6 +6538,10 @@
   "human-rights-day-in-south-korea": {
     "canonicalSlug": "human-rights-day",
     "countryCode": "kr"
+  },
+  "human-rights-day-in-uzbekistan": {
+    "canonicalSlug": "human-rights-day",
+    "countryCode": "uz"
   },
   "international-coffee-day-in-saudi": {
     "canonicalSlug": "international-coffee-day",
@@ -6615,6 +6743,10 @@
     "canonicalSlug": "international-coffee-day",
     "countryCode": "kr"
   },
+  "international-coffee-day-in-uzbekistan": {
+    "canonicalSlug": "international-coffee-day",
+    "countryCode": "uz"
+  },
   "international-peace-day-in-saudi": {
     "canonicalSlug": "international-peace-day",
     "countryCode": "sa"
@@ -6814,6 +6946,10 @@
   "international-peace-day-in-south-korea": {
     "canonicalSlug": "international-peace-day",
     "countryCode": "kr"
+  },
+  "international-peace-day-in-uzbekistan": {
+    "canonicalSlug": "international-peace-day",
+    "countryCode": "uz"
   },
   "international-youth-day-in-saudi": {
     "canonicalSlug": "international-youth-day",
@@ -7015,6 +7151,10 @@
     "canonicalSlug": "international-youth-day",
     "countryCode": "kr"
   },
+  "international-youth-day-in-uzbekistan": {
+    "canonicalSlug": "international-youth-day",
+    "countryCode": "uz"
+  },
   "last-ten-nights-ramadan-in-saudi": {
     "canonicalSlug": "last-ten-nights-ramadan",
     "countryCode": "sa"
@@ -7214,6 +7354,10 @@
   "last-ten-nights-ramadan-in-south-korea": {
     "canonicalSlug": "last-ten-nights-ramadan",
     "countryCode": "kr"
+  },
+  "last-ten-nights-ramadan-in-uzbekistan": {
+    "canonicalSlug": "last-ten-nights-ramadan",
+    "countryCode": "uz"
   },
   "literacy-day-in-saudi": {
     "canonicalSlug": "literacy-day",
@@ -7415,6 +7559,10 @@
     "canonicalSlug": "literacy-day",
     "countryCode": "kr"
   },
+  "literacy-day-in-uzbekistan": {
+    "canonicalSlug": "literacy-day",
+    "countryCode": "uz"
+  },
   "nurses-day-in-saudi": {
     "canonicalSlug": "nurses-day",
     "countryCode": "sa"
@@ -7614,6 +7762,10 @@
   "nurses-day-in-south-korea": {
     "canonicalSlug": "nurses-day",
     "countryCode": "kr"
+  },
+  "nurses-day-in-uzbekistan": {
+    "canonicalSlug": "nurses-day",
+    "countryCode": "uz"
   },
   "rajab-start-in-saudi": {
     "canonicalSlug": "rajab-start",
@@ -7815,6 +7967,10 @@
     "canonicalSlug": "rajab-start",
     "countryCode": "kr"
   },
+  "rajab-start-in-uzbekistan": {
+    "canonicalSlug": "rajab-start",
+    "countryCode": "uz"
+  },
   "shaban-start-in-saudi": {
     "canonicalSlug": "shaban-start",
     "countryCode": "sa"
@@ -8014,6 +8170,10 @@
   "shaban-start-in-south-korea": {
     "canonicalSlug": "shaban-start",
     "countryCode": "kr"
+  },
+  "shaban-start-in-uzbekistan": {
+    "canonicalSlug": "shaban-start",
+    "countryCode": "uz"
   },
   "six-days-shawwal-in-saudi": {
     "canonicalSlug": "six-days-shawwal",
@@ -8215,6 +8375,10 @@
     "canonicalSlug": "six-days-shawwal",
     "countryCode": "kr"
   },
+  "six-days-shawwal-in-uzbekistan": {
+    "canonicalSlug": "six-days-shawwal",
+    "countryCode": "uz"
+  },
   "tarwiyah-day-in-saudi": {
     "canonicalSlug": "tarwiyah-day",
     "countryCode": "sa"
@@ -8414,6 +8578,10 @@
   "tarwiyah-day-in-south-korea": {
     "canonicalSlug": "tarwiyah-day",
     "countryCode": "kr"
+  },
+  "tarwiyah-day-in-uzbekistan": {
+    "canonicalSlug": "tarwiyah-day",
+    "countryCode": "uz"
   },
   "tashreeq-days-in-saudi": {
     "canonicalSlug": "tashreeq-days",
@@ -8615,6 +8783,10 @@
     "canonicalSlug": "tashreeq-days",
     "countryCode": "kr"
   },
+  "tashreeq-days-in-uzbekistan": {
+    "canonicalSlug": "tashreeq-days",
+    "countryCode": "uz"
+  },
   "tasua-day-in-saudi": {
     "canonicalSlug": "tasua-day",
     "countryCode": "sa"
@@ -8814,6 +8986,10 @@
   "tasua-day-in-south-korea": {
     "canonicalSlug": "tasua-day",
     "countryCode": "kr"
+  },
+  "tasua-day-in-uzbekistan": {
+    "canonicalSlug": "tasua-day",
+    "countryCode": "uz"
   },
   "volunteer-day-in-saudi": {
     "canonicalSlug": "volunteer-day",
@@ -9015,6 +9191,10 @@
     "canonicalSlug": "volunteer-day",
     "countryCode": "kr"
   },
+  "volunteer-day-in-uzbekistan": {
+    "canonicalSlug": "volunteer-day",
+    "countryCode": "uz"
+  },
   "wildlife-day-in-saudi": {
     "canonicalSlug": "wildlife-day",
     "countryCode": "sa"
@@ -9214,6 +9394,10 @@
   "wildlife-day-in-south-korea": {
     "canonicalSlug": "wildlife-day",
     "countryCode": "kr"
+  },
+  "wildlife-day-in-uzbekistan": {
+    "canonicalSlug": "wildlife-day",
+    "countryCode": "uz"
   },
   "world-book-day-in-saudi": {
     "canonicalSlug": "world-book-day",
@@ -9415,6 +9599,10 @@
     "canonicalSlug": "world-book-day",
     "countryCode": "kr"
   },
+  "world-book-day-in-uzbekistan": {
+    "canonicalSlug": "world-book-day",
+    "countryCode": "uz"
+  },
   "world-cancer-day-in-saudi": {
     "canonicalSlug": "world-cancer-day",
     "countryCode": "sa"
@@ -9615,6 +9803,10 @@
     "canonicalSlug": "world-cancer-day",
     "countryCode": "kr"
   },
+  "world-cancer-day-in-uzbekistan": {
+    "canonicalSlug": "world-cancer-day",
+    "countryCode": "uz"
+  },
   "world-fathers-day-in-saudi": {
     "canonicalSlug": "world-fathers-day",
     "countryCode": "sa"
@@ -9814,6 +10006,10 @@
   "world-fathers-day-in-south-korea": {
     "canonicalSlug": "world-fathers-day",
     "countryCode": "kr"
+  },
+  "world-fathers-day-in-uzbekistan": {
+    "canonicalSlug": "world-fathers-day",
+    "countryCode": "uz"
   },
   "fathers-day": {
     "canonicalSlug": "world-fathers-day",
@@ -10019,6 +10215,10 @@
     "canonicalSlug": "world-happiness-day",
     "countryCode": "kr"
   },
+  "world-happiness-day-in-uzbekistan": {
+    "canonicalSlug": "world-happiness-day",
+    "countryCode": "uz"
+  },
   "world-no-tobacco-day-in-saudi": {
     "canonicalSlug": "world-no-tobacco-day",
     "countryCode": "sa"
@@ -10218,6 +10418,10 @@
   "world-no-tobacco-day-in-south-korea": {
     "canonicalSlug": "world-no-tobacco-day",
     "countryCode": "kr"
+  },
+  "world-no-tobacco-day-in-uzbekistan": {
+    "canonicalSlug": "world-no-tobacco-day",
+    "countryCode": "uz"
   },
   "world-refugee-day-in-saudi": {
     "canonicalSlug": "world-refugee-day",
@@ -10419,6 +10623,10 @@
     "canonicalSlug": "world-refugee-day",
     "countryCode": "kr"
   },
+  "world-refugee-day-in-uzbekistan": {
+    "canonicalSlug": "world-refugee-day",
+    "countryCode": "uz"
+  },
   "world-tourism-day-in-saudi": {
     "canonicalSlug": "world-tourism-day",
     "countryCode": "sa"
@@ -10619,6 +10827,10 @@
     "canonicalSlug": "world-tourism-day",
     "countryCode": "kr"
   },
+  "world-tourism-day-in-uzbekistan": {
+    "canonicalSlug": "world-tourism-day",
+    "countryCode": "uz"
+  },
   "world-water-day-in-saudi": {
     "canonicalSlug": "world-water-day",
     "countryCode": "sa"
@@ -10818,5 +11030,9 @@
   "world-water-day-in-south-korea": {
     "canonicalSlug": "world-water-day",
     "countryCode": "kr"
+  },
+  "world-water-day-in-uzbekistan": {
+    "canonicalSlug": "world-water-day",
+    "countryCode": "uz"
   }
 }

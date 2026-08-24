@@ -67,6 +67,27 @@
        flush against it even though it's structurally incapable of overlapping. */
     padding-block-end: var(--space-16);
     align-items: start;
+    /* Single-rail pages (data-rail-mode="single", e.g. /date, /time-difference,
+       /imsakiya — every page using bare `<AdLayoutWrapper>`) originally only defined 2
+       fixed-width tracks (rail + content, e.g. "240px 900px" at ≥1440px). Their combined
+       width was always less than the container, and with the grid's default
+       justify-content:normal (= start), CSS Grid packed both tracks against the inline-start
+       edge — the visual RIGHT in this RTL app — leaving a large empty dead-zone on the visual
+       left with nothing to balance it (confirmed 2026-08-23 via getBoundingClientRect: content
+       block ended ~30px short of centered, ~200px one-sided gap at 1440px). This
+       justify-content:center centers that 2-track block as a unit.
+       That was only half the fix, though (found 2026-08-24 from an actual screenshot, not
+       just measurement): centering the [rail][content] BLOCK still leaves the CONTENT itself
+       sitting visibly left of true viewport center, since the rail's width isn't balanced by
+       anything on the opposite side — every real page still read as "shoved left," especially
+       with the rail empty (no ad configured, e.g. local dev). The rest of the fix is a 3rd,
+       empty track matching the rail's width, added per-tier below (`minmax(0,1fr) 240px` etc.)
+       so content sits flanked equally on both sides. With that 3rd track in place, the 3
+       tracks always sum to exactly the container width, making this rule a no-op for
+       single-rail pages too now — left in place as a harmless safety net (e.g. any future
+       tier that doesn't sum exactly), and it's still the real fix for dual-rail/wide layouts
+       that don't fill the full container. */
+    justify-content: center;
   }
 
   /* Grid items default to `min-width: auto`, which refuses to shrink the item below its
@@ -109,20 +130,34 @@
      laptop resolutions that the old 1440px-only gate excluded entirely, showing zero rails).
      Narrower 190px rails (vs 240px at 1440+) keep the content column comfortable:
      1280 − 190×2 (rails) − 24×2 (gap) − 24×2 (padding) = 828px content, still close to the
-     900px cap and well above the 720px editorial-article floor from DESIGN.md §5.2. */
+     900px cap and well above the 720px editorial-article floor from DESIGN.md §5.2.
+
+     SINGLE-RAIL 3RD TRACK (found 2026-08-24 via screenshot, not just measurement — the
+     `justify-content: center` fix above only centers the [rail][content] BLOCK as a unit; the
+     content itself still sits visibly left-shifted inside that block, since nothing balances
+     the rail's width on the opposite side. On a real page this reads as "everything is
+     shoved left" even though the block-level math checks out. Fix: a 3rd track, same width as
+     the real rail, left empty (no DOM item placed there) — content (track 2) is now flanked
+     by equal space on both sides and sits at the page's true visual center, while the ad rail
+     keeps its exact place/size on the visual right. The content track switches from a fixed
+     `minmax(0,900px)` to fully flexible `minmax(0,1fr)` so the grid's own 3 tracks always sum
+     to exactly the container width — no overflow at the low end of this tier — and lets each
+     `.content-col` child keep enforcing its own 900px reading cap + auto-centering inside
+     whatever width that leaves (this is a no-op on any page already using `.content-col`,
+     since the grid track was never anything but a container for it). */
   @media (min-width: 1180px) and (max-width: 1439.98px) {
     .layout-with-ads[data-rail-mode='single'] {
-      grid-template-columns: 190px minmax(0, 900px);
+      grid-template-columns: 190px minmax(0, 1fr) 190px;
       gap: var(--space-6);
       padding-inline: var(--space-6);
     }
 
     .layout-with-ads[data-layout='narrow'][data-rail-mode='single'] {
-      grid-template-columns: 190px minmax(0, 820px);
+      grid-template-columns: 190px minmax(0, 1fr) 190px;
     }
 
     .layout-with-ads[data-layout='wide'][data-rail-mode='single'] {
-      grid-template-columns: 190px minmax(0, 1fr);
+      grid-template-columns: 190px minmax(0, 1fr) 190px;
     }
 
     .layout-with-ads[data-rail-mode='dual'] {
@@ -172,18 +207,19 @@
      32×2 (padding) ≈ 758px for content, comfortably above the 900px cap only when the
      viewport allows it and still very readable below that. */
   @media (min-width: 1440px) {
+    /* 3rd empty track same width as the rail — see the 1180px tier comment above for why. */
     .layout-with-ads[data-rail-mode='single'] {
-      grid-template-columns: 240px minmax(0, 900px);
+      grid-template-columns: 240px minmax(0, 1fr) 240px;
       gap: var(--space-8);
       padding-inline: var(--space-8);
     }
 
     .layout-with-ads[data-layout='narrow'][data-rail-mode='single'] {
-      grid-template-columns: 240px minmax(0, 820px);
+      grid-template-columns: 240px minmax(0, 1fr) 240px;
     }
 
     .layout-with-ads[data-layout='wide'][data-rail-mode='single'] {
-      grid-template-columns: 240px minmax(0, 1fr);
+      grid-template-columns: 240px minmax(0, 1fr) 240px;
     }
 
     .layout-with-ads[data-rail-mode='dual'] {
@@ -229,10 +265,12 @@
 
   /* Large desktop (27"+ monitors, ≥1800px): widen rails from 240px to 300px so
      Google can serve 300×600 / 300×250 — the strongest-RPM desktop display
-     sizes — instead of being limited to 160×600. Content column stays 900px. */
+     sizes — instead of being limited to 160×600. Content column stays capped at 900px via
+     `.content-col` itself; the track is `1fr` + a matching empty 3rd track (see the 1180px
+     tier comment) so content keeps sitting at true visual center, not just block-centered. */
   @media (min-width: 1800px) {
     .layout-with-ads[data-rail-mode='single'] {
-      grid-template-columns: 300px minmax(0, 900px);
+      grid-template-columns: 300px minmax(0, 1fr) 300px;
     }
 
     .layout-with-ads[data-rail-mode='dual'] {

@@ -49,12 +49,16 @@ import {
   getFullscreenContentStyle,
   getFullscreenDigitStyle,
   getFullscreenRowStyle,
+  getFullscreenControlsVisibilityStyle,
+  getFullscreenCursorStyle,
   getFullscreenScale,
   getFullscreenSeparatorStyle,
   getFullscreenUnitWrapStyle,
   getFullscreenZoomLabel,
   requestElementFullscreen,
   syncFullscreenDocumentState,
+  useFullscreenIdleHide,
+  useViewportWidth,
 } from './fullscreenShared';
 import { getCurrentPageUrl, useCopyFeedback } from '@/lib/share.client';
 
@@ -548,10 +552,14 @@ export default function CountdownTicker({
     };
   }, [isFS]);
 
-  const zoomIn = () => setZoom(z => Math.min(z + 1, 2));
+  const zoomIn = () => setZoom(z => Math.min(z + 1, 3));
   const zoomOut = () => setZoom(z => Math.max(z - 1, 0));
-  const scaleValue = getFullscreenScale(zoom, 'fourUnit');
+  const viewportWidth = useViewportWidth();
+  const scaleValue = getFullscreenScale(zoom, 'fourUnit', viewportWidth);
   const zoomLabel = getFullscreenZoomLabel(zoom);
+
+  /* ── Auto-hide toolbar after a few idle seconds in fullscreen ── */
+  const controlsVisible = useFullscreenIdleHide(isFS);
 
   /* ── Share ── */
   const handleShare = async () => {
@@ -576,17 +584,17 @@ export default function CountdownTicker({
       {isFS && (
         <div
           className="fullscreen-mode"
-          style={{ ...FULLSCREEN_LAYER_STYLE, background: 'var(--clock-bg)' }}
+          style={{ ...FULLSCREEN_LAYER_STYLE, background: 'var(--clock-bg)', ...getFullscreenCursorStyle(controlsVisible) }}
           dir="rtl"
         >
-          <div className="fullscreen-exit" style={FULLSCREEN_TOOLBAR_STYLE}>
+          <div className="fullscreen-exit" style={{ ...FULLSCREEN_TOOLBAR_STYLE, ...getFullscreenControlsVisibilityStyle(controlsVisible) }}>
             <IconBtn onClick={toggleFS} label="إغلاق ملء الشاشة">
               <Minimize2 size={18} /><span>إغلاق</span>
             </IconBtn>
             <div style={FULLSCREEN_ZOOM_GROUP_STYLE}>
               <IconBtn onClick={zoomOut} label="تصغير" disabled={zoom === 0}><ZoomOut size={20} /></IconBtn>
               <span style={FULLSCREEN_ZOOM_LABEL_STYLE}>{zoomLabel}</span>
-              <IconBtn onClick={zoomIn} label="تكبير" disabled={zoom === 2}><ZoomIn size={20} /></IconBtn>
+              <IconBtn onClick={zoomIn} label="تكبير" disabled={zoom === 3}><ZoomIn size={20} /></IconBtn>
               <IconBtn onClick={handleShare} label={shareCopied ? 'تم نسخ الرابط' : 'مشاركة'}>
                 {shareCopied ? <CheckCircle2 size={18} /> : <Share2 size={18} />}
               </IconBtn>

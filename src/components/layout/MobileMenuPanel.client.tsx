@@ -32,6 +32,7 @@ type NavLink = {
   href: string;
   label: string;
   sublinks?: SubLink[];
+  cta?: boolean;
 };
 
 function getPhosphorIcon(name: string | undefined): ElementType | null {
@@ -154,6 +155,7 @@ export default function MobileMenuPanel({
                 aria-current={isActive(link.href) ? "page" : undefined}
                 className={cn(
                   "header-mobile-link",
+                  link.cta && "header-mobile-link--cta",
                   isActive(link.href) && "active"
                 )}
                 {...getPrefetchHandlers(link.href)}

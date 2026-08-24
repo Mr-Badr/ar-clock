@@ -14,12 +14,14 @@
  * Contents:
  *   1.  .td-section        — consistent vertical rhythm, no divider lines
  *   2.  .td-h2 / .td-h3    — clean headings (no colored-bg strip)
+ *   2b. .td-header-chips   — flag + UTC-offset chips under the header answer
  *   3.  .td-body / .td-trust
  *   4.  .td-ad-gap
  *   5.  .td-hero           — hero live-comparison module
  *   6.  .td-hours          — shared-hours-bar module
  *   7.  .td-col-center     — DST table centre alignment
  *   8.  .td-dst-summary-row
+ *   8b. .td-dst-table      — DST table mobile card-stack re-flow (<640px)
  *   9.  Print / reduced-motion
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -52,6 +54,39 @@
   color: var(--text-primary);
   line-height: var(--leading-snug);
   margin-block: var(--space-8) var(--space-3);
+}
+
+
+/* ── 2b. Header UTC-offset chips ───────────────────────────────────────────
+ * Small at-a-glance row under the header answer sentence — flag + city +
+ * UTC offset for each side, so the two cities' actual offsets are visible
+ * before scrolling to the live clocks or the DST table below.
+ */
+.td-header-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+.td-header-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  padding: var(--space-1-5) var(--space-3);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-2);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+}
+.td-header-chip .fi {
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.td-header-chip__offset {
+  color: var(--accent-alt);
+  font-weight: var(--font-bold);
 }
 
 
@@ -493,6 +528,74 @@
 .td-dst-summary-row td {
   background-color: var(--bg-surface-3);
   border-top: 1px solid var(--border-default);
+}
+
+
+/* ── 8b. DST table — mobile card-stack layout ─────────────────────────────────
+ * Found 2026-08-23 (real device measurement): at 390px the plain 3-column
+ * table (40/30/30 split, --space-4 padding, nowrap badges) forced the table
+ * to 414px — wider than its own .table-wrapper (304px client width). The
+ * wrapper IS horizontally scrollable (overflow-x:auto), but RTL's initial
+ * scroll position left the last DOM column ("القاهرة") sitting off-screen
+ * with zero visual affordance that more content existed — it just looked
+ * clipped/broken, not "scrollable".
+ *
+ * Fix: below 640px, drop the table layout entirely and re-flow each row as a
+ * small card — the row's own label on top, then the two cities' values side
+ * by side, each carrying its own mini city-name heading (from a `data-label`
+ * attribute set in JSX, since the real <thead> is hidden here). Every value
+ * is now fully visible at readable size with zero horizontal scrolling.
+ * Desktop/tablet (≥640px) keep the original real <table> untouched.
+ */
+@media (max-width: 639px) {
+  .td-dst-table thead {
+    display: none;
+  }
+  .td-dst-table,
+  .td-dst-table tbody,
+  .td-dst-table tr {
+    display: block;
+    width: 100%;
+  }
+  .td-dst-table tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "label label" "from to";
+    gap: var(--space-1) var(--space-3);
+    padding: var(--space-3) var(--space-4) !important;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .td-dst-table tr:last-child {
+    border-bottom: none;
+  }
+  .td-dst-table td {
+    display: block;
+    padding: 0 !important;
+    border: none;
+  }
+  .td-dst-table td:first-child {
+    grid-area: label;
+    margin-bottom: var(--space-1);
+  }
+  .td-dst-table td:nth-child(2) { grid-area: from; }
+  .td-dst-table td:nth-child(3) { grid-area: to; }
+  .td-dst-table td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-size: var(--text-2xs);
+    font-weight: var(--font-medium);
+    color: var(--text-muted);
+    margin-bottom: 2px;
+  }
+  /* The colSpan summary row only ever has 2 <td>s (label + one shared verdict
+     for both cities) — its 2nd cell spans the full width instead of sitting
+     in the "from" half-column like every other row's 2nd cell does. */
+  .td-dst-summary-row {
+    grid-template-areas: "label label" "value value" !important;
+  }
+  .td-dst-summary-row td:nth-child(2) {
+    grid-area: value;
+  }
 }
 
 

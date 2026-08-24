@@ -1,0 +1,314 @@
+/* home/v2/sections/magic-bento.css — adapted from React Bits' MagicBento.css. Grid mechanics
+   (asymmetric nth-child spans, breakpoints, particle/spotlight/border-glow selectors) are kept
+   identical to the reference; colors, radius, typography, and spacing are pulled onto this
+   project's own tokens instead of the reference's hardcoded demo palette. */
+
+.mb-section {
+  position: relative;
+  padding-block: var(--space-20) var(--space-16);
+  overflow: hidden;
+}
+
+/* Ambient glow (2026-08-23, real UX audit) — the bento grid's own hover spotlight only appears
+   on interaction, so a visitor who's just scrolling (not hovering) saw a totally flat, static
+   section. This is a permanent, static counterpart — always there, not interaction-dependent. */
+.mb-section::before {
+  content: '';
+  position: absolute;
+  inset-block-start: -6%;
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  width: min(56rem, 90vw);
+  height: 26rem;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 13%, transparent), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mb-inner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1080px);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+  display: grid;
+  gap: var(--space-10);
+}
+
+.mb-kicker {
+  margin: 0;
+  color: var(--accent);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+}
+
+.mb-title {
+  margin: var(--space-2) 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-thmanyah), var(--font-heading);
+  font-size: clamp(1.5rem, 1.25rem + 1.1vw, 2.1rem);
+  font-weight: var(--font-bold);
+}
+
+.mb-lead {
+  margin: var(--space-3) 0 0;
+  max-width: 62ch;
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+/* ── Grid (React Bits card-grid mechanics, unchanged) ────────────────────── */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  max-width: 54rem;
+  width: 100%;
+  margin-inline: auto;
+}
+
+@media (min-width: 600px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  /* Real bug found + fixed 2026-08-23 (owner screenshot: "every card over the other"). The
+     reference React Bits CSS gives card 3 only a SIZE (`grid-column: span 2; grid-row: span 2`)
+     with no explicit start line, leaving its actual position up to the browser's auto-placement
+     algorithm — which is well-defined in isolation, but combining a size-only item with card 4's
+     fully-explicit position (`grid-column: 1 / span 2`) is exactly the kind of ambiguous mix
+     that resolved into two cards physically sharing screen space here (measured directly:
+     "فرق التوقيت" and "التاريخ والتحويل" overlapped by ~48px). Fixed by giving EVERY card a
+     fully explicit `start / end` on both axes — a complete, gap-free 4×3 tiling with zero
+     ambiguity left for the browser to resolve differently. */
+  .card-grid > :nth-child(1) {
+    grid-column: 4 / 5;
+    grid-row: 1 / 2;
+  }
+
+  .card-grid > :nth-child(2) {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+  }
+
+  .card-grid > :nth-child(3) {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+  }
+
+  .card-grid > :nth-child(4) {
+    grid-column: 3 / 5;
+    grid-row: 2 / 4;
+  }
+
+  .card-grid > :nth-child(5) {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+  }
+
+  .card-grid > :nth-child(6) {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+  }
+
+  /* Only enlarge the watermark once the card is actually spanning (see above) — at narrower
+     widths cards 3/4 are the same size as every other card and should keep the base icon size. */
+  .card-grid > :nth-child(3) .magic-bento-card__watermark,
+  .card-grid > :nth-child(4) .magic-bento-card__watermark {
+    display: block;
+    width: 11rem;
+    height: 11rem;
+    inset-inline-end: -1.5rem;
+    inset-block-end: -1.5rem;
+  }
+
+  /* Same fix as the width one above, applied to height: once every card has an explicit grid
+     cell (1, 2, or 2 rows tall — all now fully explicit, see .card-grid rules), let the card
+     fill that cell exactly rather than let aspect-ratio derive a height that doesn't match a
+     2-row cell's real size. */
+  .magic-bento-card {
+    height: 100%;
+  }
+}
+
+/* ── Card ──────────────────────────────────────────────────────────────── */
+.magic-bento-card {
+  --glow-x: 50%;
+  --glow-y: 50%;
+  --glow-intensity: 0;
+  --glow-radius: 200px;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* Real bug found + fixed 2026-08-23 (owner screenshot: cards visibly overlapping). Root cause,
+     confirmed by direct measurement: `aspect-ratio: 4/3` combined with `min-height: 200px` was
+     computing this card's WIDTH from that fixed height (200 × 4/3 ≈ 266.7px) instead of
+     stretching to fill its actual ~207px grid column — so every card rendered ~60px wider than
+     its own grid cell and physically overlapped its neighbor. An explicit `width: 100%` forces
+     the card back to its grid track's real width (grid items stretch by default; aspect-ratio
+     was overriding that), and `aspect-ratio` then correctly derives height FROM that width
+     instead of the reverse. */
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  min-height: 200px;
+  padding: var(--space-5);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  /* Light glass treatment (2026-08-23, real UX research — dark-glassmorphism is the standard
+     2026 SaaS card pattern): a translucent surface + blur instead of a flat fill, so the
+     section's own ambient glow (.mb-section::before) reads faintly through cards near it
+     instead of stopping dead at the first card edge. */
+  background: color-mix(in srgb, var(--bg-surface-1) 72%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  will-change: transform;
+  transition: border-color 300ms ease, transform 200ms ease, box-shadow 300ms ease;
+}
+
+.magic-bento-card:hover,
+.magic-bento-card:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border-subtle) 55%);
+  box-shadow: 0 20px 44px -26px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.magic-bento-card--border-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+    rgba(90, 170, 255, calc(var(--glow-intensity) * 0.85)) 0%,
+    rgba(90, 170, 255, calc(var(--glow-intensity) * 0.35)) 30%,
+    transparent 65%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Watermark icon (2026-08-23, real UX audit — see MagicBento.client.jsx). Real bug found and
+   fixed same day: this was first shipped on EVERY card, but only the two spanning cards
+   (nth-child 3/4) actually have dead space to fill — on the four regular-sized cards the
+   bottom-anchored description text sits in that exact same corner, so the icon collided with
+   and visually cut through the text (confirmed via an owner screenshot). Hidden by default now;
+   only re-enabled for the two spanning cards where there's genuine empty room, and even then
+   only at the ≥1024px breakpoint where the spanning layout itself applies (below that every
+   card is regular-sized — see the grid rules above). */
+.magic-bento-card__watermark {
+  display: none;
+  position: absolute;
+  inset-inline-end: -0.5rem;
+  inset-block-end: -0.5rem;
+  width: 5.5rem;
+  height: 5.5rem;
+  color: var(--accent);
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.magic-bento-card__header {
+  position: relative;
+  z-index: 1;
+}
+
+.magic-bento-card__label {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: var(--space-3);
+  padding-block: var(--space-1);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  /* --accent itself measured 3.47:1 against this pill's own tint in light mode (real WCAG
+     audit, 2026-08-23 — AA needs 4.5:1 here) — --blue-text is the dedicated "readable text on a
+     tinted chip" variant (darker in light mode, lighter in dark mode) and clears it in both. */
+  color: var(--blue-text);
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+}
+
+.magic-bento-card__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.magic-bento-card__title {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-thmanyah), var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+}
+
+.magic-bento-card--text-autohide .magic-bento-card__description {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-grid > :nth-child(3) .magic-bento-card__description,
+.card-grid > :nth-child(4) .magic-bento-card__description {
+  -webkit-line-clamp: 3;
+}
+
+/* particles spawned into .particle-container by MagicBento.client.jsx */
+.particle-container {
+  position: relative;
+}
+
+.particle {
+  will-change: transform, opacity;
+}
+
+/* Below 1024px the grid drops the asymmetric spanning layout (uniform 1-col/2-col instead —
+   see .card-grid above), so the fixed 4:3 aspect-ratio that gives the desktop spanning cards
+   real presence just leaves a large dead gap between the label chip and the title/description
+   on these smaller, content-sparse cards (confirmed via screenshot audit, 2026-08-22). Let card
+   height follow its own content here instead. */
+@media (max-width: 1023px) {
+  .magic-bento-card {
+    aspect-ratio: auto;
+    min-height: 0;
+  }
+
+  .magic-bento-card__content {
+    margin-block-start: var(--space-8);
+  }
+}
+
+@media (max-width: 767px) {
+  .magic-bento-card {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magic-bento-card {
+    transition: none;
+  }
+}

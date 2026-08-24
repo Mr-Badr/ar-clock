@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Clock3, MapPin, Search } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Clock3, MapPin, Search } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 import { getCountriesAction } from '@/app/actions/location';
@@ -11,11 +11,6 @@ import AdTopBanner from '@/components/ads/AdTopBanner';
 import SearchCity from '@/components/SearchCityWrapper.client';
 import TimeNowHero from '@/components/time-now/TimeNowHero';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
-import { appendToolDiscoveryLinks } from '@/lib/seo/discovery-links';
-import {
-  getPopularTimeNowCityLinks,
-  getPopularTimeNowCountryLinks,
-} from '@/lib/seo/popular-links';
 import { buildTimeNowKeywords } from '@/lib/seo/section-search-intent';
 import { getSiteUrl } from '@/lib/site-config';
 import { buildFreeToolPageSchema } from '@/lib/seo/tool-schema';
@@ -57,7 +52,7 @@ const TIME_NOW_FAQ_ITEMS = [
       'إذا كان السؤال سريعاً فمعرفة الساعة تكفي. أما للاجتماعات والرحلات والمواعيد العابرة لمنتصف الليل، فالأفضل أن تراجع فرق التوقيت والتاريخ المحلي أيضاً حتى لا تختار وقتاً يقع في يوم مختلف عند الطرف الآخر.',
   },
 ];
-const TIME_NOW_UTILITY_LINKS = appendToolDiscoveryLinks([
+const TIME_NOW_UTILITY_LINKS = [
   {
     href: '/time-difference',
     label: 'حاسبة فرق التوقيت',
@@ -73,7 +68,12 @@ const TIME_NOW_UTILITY_LINKS = appendToolDiscoveryLinks([
     label: 'المناسبات القادمة',
     description: 'استكشف العد التنازلي للأعياد والمناسبات والإجازات الرسمية المرتبطة بالتاريخ الحالي.',
   },
-]);
+  {
+    href: '/tools',
+    label: 'كل الحاسبات والأدوات',
+    description: 'تصفح جميع فئات الأدوات: المال والعمل، الصحة، البناء، التعليم، والمزيد من مكان واحد.',
+  },
+];
 const TIME_NOW_SOURCE_LINKS = [
   {
     href: 'https://www.iana.org/time-zones',
@@ -92,7 +92,7 @@ const TIME_NOW_SOURCE_LINKS = [
   },
 ];
 const TIME_NOW_SEARCH_EXAMPLES = ['الرياض', 'القاهرة', 'دبي', 'الدوحة', 'الكويت', 'الرباط'];
-const TIME_NOW_NEXT_STEP_TAGS = ['اجتماع', 'تاريخ', 'مناسبة'];
+const TIME_NOW_NEXT_STEP_TAGS = ['اجتماع', 'تاريخ', 'مناسبة', 'أدوات'];
 const TIME_NOW_NEXT_STEP_TONES = ['blue', 'green', 'amber', 'rose'];
 
 export const metadata = buildCanonicalMetadata({
@@ -155,44 +155,37 @@ export default function TimeNowPage() {
               كم الساعة الان في <span className={styles.heroAccent}>مدينتك</span>؟
             </h1>
             <p className={styles.heroLead}>
-              اكتب اسم المدينة أولاً. ستصل إلى صفحة تعرض الساعة الحية، تاريخ اليوم، والمنطقة الزمنية، ثم تختار إن كنت تحتاج فرق التوقيت.
+              اكتب اسم المدينة لتصل إلى صفحتها بالساعة الحية والتاريخ والمنطقة الزمنية، أو تحقق من ساعتك المحلية مباشرة أدناه.
             </p>
           </header>
 
-          <section aria-labelledby="time-now-search-heading" className={styles.searchSection}>
-            <div className={styles.searchPanel}>
-              <div className={styles.searchPanelHeader}>
-                <span className={styles.searchPanelKicker}>الخطوة الأولى</span>
-                <h2 id="time-now-search-heading" className={styles.searchPanelTitle}>
-                  ابحث عن المدينة
-                </h2>
-              </div>
-              <div className={styles.searchCommandShell}>
-                <SearchCity mode="time-now" />
-              </div>
-              <div className={styles.searchSuggestionRow} aria-label="أمثلة بحث سريعة">
-                {TIME_NOW_SEARCH_EXAMPLES.map((cityName) => (
-                  <span key={cityName}>{cityName}</span>
-                ))}
-              </div>
+          <div className={styles.searchPanel}>
+            <div className={styles.searchPanelHeader}>
+              <span className={styles.searchPanelKicker}>الخطوة الأولى</span>
+              <h2 id="time-now-search-heading" className={styles.searchPanelTitle}>
+                ابحث عن المدينة
+              </h2>
             </div>
-          </section>
-        </section>
-
-        <section aria-labelledby="time-now-local-clock-heading" className={styles.clockFocusSection}>
-          <div className={styles.clockIntro}>
-            <span className={styles.clockKicker}>
-              <Clock3 size={13} aria-hidden />
-              الساعة الحية
-            </span>
-            <h2 id="time-now-local-clock-heading" className={styles.clockTitle}>
-              توقيتك المحلي الآن
-            </h2>
-            <p className={styles.clockCopy}>
-              هذه البطاقة تعطيك الساعة الحالية من جهازك. للمدينة أو الدولة التي تريدها، استخدم البحث أعلاه حتى تكون النتيجة مرتبطة بالمنطقة الزمنية الصحيحة.
-            </p>
+            <div className={styles.searchCommandShell}>
+              <SearchCity mode="time-now" />
+            </div>
+            <div className={styles.searchSuggestionRow} aria-label="أمثلة بحث سريعة">
+              {TIME_NOW_SEARCH_EXAMPLES.map((cityName) => (
+                <span key={cityName}>{cityName}</span>
+              ))}
+            </div>
           </div>
-          <div className={styles.clockSection}>
+
+          <div className={styles.orDivider}>
+            <span className={styles.orDividerLine} aria-hidden="true" />
+            <h2 id="time-now-local-clock-heading" className={styles.orDividerLabel}>
+              <Clock3 size={13} aria-hidden />
+              أو تحقق من توقيتك المحلي الآن
+            </h2>
+            <span className={styles.orDividerLine} aria-hidden="true" />
+          </div>
+
+          <div className={styles.clockSection} aria-labelledby="time-now-local-clock-heading">
             <Suspense fallback={<div className={styles.heroSkeleton} />}>
               <TimeNowHero cityNameAr="توقيتك المحلي" />
             </Suspense>
@@ -212,57 +205,13 @@ export default function TimeNowPage() {
 }
 
 async function TimeNowLandingSections() {
-  const [allCountries, popularCityLinks, popularCountryLinks] = await Promise.all([
-    getCountriesAction(),
-    getPopularTimeNowCityLinks(),
-    getPopularTimeNowCountryLinks(),
-  ]);
+  const allCountries = await getCountriesAction();
   const safeCountries = Array.isArray(allCountries) ? allCountries : [];
-  const safePopularCityLinks = Array.isArray(popularCityLinks) ? popularCityLinks.filter((item) => item?.href && item?.label) : [];
-  const safePopularCountryLinks = Array.isArray(popularCountryLinks) ? popularCountryLinks.filter((item) => item?.href && item?.label) : [];
-  const featuredCityLinks = safePopularCityLinks.slice(0, 8);
-  const secondaryCityLinks = safePopularCityLinks.slice(8, 24);
-  const featuredCountryLinks = safePopularCountryLinks.slice(0, 10);
-  const secondaryCountryLinks = safePopularCountryLinks.slice(10, 26);
   const arabCountries = safeCountries.filter((country) => ARAB_COUNTRY_CODES.includes(country.country_code));
   const worldCountries = safeCountries.filter((country) => !ARAB_COUNTRY_CODES.includes(country.country_code));
-  const cityItemListSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'صفحات الوقت الان الأكثر بحثاً',
-    itemListElement: safePopularCityLinks.slice(0, 24).map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.label,
-      url: `${SITE_URL}${item.href}`,
-    })),
-  };
-  const countryItemListSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'صفحات الوقت الان في الدول',
-    itemListElement: safePopularCountryLinks.slice(0, 24).map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.label,
-      url: `${SITE_URL}${item.href}`,
-    })),
-  };
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(cityItemListSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(countryItemListSchema) }} />
-
-      <section aria-labelledby="popular-time-now-pages-heading" className={`${styles.section} ${styles.pathwaySection}`}>
-        <PopularTimeNowPathways
-          featuredCityLinks={featuredCityLinks}
-          secondaryCityLinks={secondaryCityLinks}
-          featuredCountryLinks={featuredCountryLinks}
-          secondaryCountryLinks={secondaryCountryLinks}
-        />
-      </section>
-
       <section className={`${styles.section} ${styles.nextStepSection}`}>
         <TimeNowNextSteps links={TIME_NOW_UTILITY_LINKS.slice(0, 4)} />
       </section>
@@ -312,34 +261,26 @@ async function TimeNowLandingSections() {
             </p>
           </div>
 
-          <div className={styles.methodGrid}>
-            <article className={styles.methodCard}>
-              <p className={styles.methodLabel}>استخدام سريع</p>
-              <h3 className={styles.methodTitle}>تريد معرفة الساعة الان فقط</h3>
-              <p className={styles.methodCopy}>
-                افتح صفحة المدينة أو الدولة واقرأ الساعة من البطاقة الأولى. هذا يكفي عندما
-                تريد الاطمئنان على الوقت المحلي أو مشاركة الساعة الحالية مع شخص آخر.
+          <ul className={styles.methodList}>
+            <li className={styles.methodRow}>
+              <span className={styles.methodIndex} aria-hidden="true">1</span>
+              <p className={styles.methodRowText}>
+                <strong>تريد معرفة الساعة الان فقط؟</strong> اقرأ الساعة من بطاقة المدينة مباشرة، هذا يكفي لمعرفة الوقت أو مشاركته.
               </p>
-            </article>
-
-            <article className={styles.methodCard}>
-              <p className={styles.methodLabel}>مكالمة أو اجتماع</p>
-              <h3 className={styles.methodTitle}>تحتاج معرفة من يسبق ومن يتأخر</h3>
-              <p className={styles.methodCopy}>
-                لا تكتفِ بساعة مدينة واحدة. افتح فرق التوقيت لتعرف هل الطرف الآخر في
-                بداية يومه، آخر الدوام، أو يوم مختلف تماماً بسبب عبور منتصف الليل.
+            </li>
+            <li className={styles.methodRow}>
+              <span className={styles.methodIndex} aria-hidden="true">2</span>
+              <p className={styles.methodRowText}>
+                <strong>عندك مكالمة أو اجتماع؟</strong> افتح فرق التوقيت لتعرف من يسبق ومن يتأخر، خصوصاً إذا غيّر التوقيت الصيفي الفرق بينكما.
               </p>
-            </article>
-
-            <article className={styles.methodCard}>
-              <p className={styles.methodLabel}>تنظيم اليوم</p>
-              <h3 className={styles.methodTitle}>اربط الساعة بالتاريخ</h3>
-              <p className={styles.methodCopy}>
-                إذا كان الوقت مرتبطاً برحلة أو موعد رسمي، فانتقل إلى تاريخ اليوم
-                حتى لا يكون قرارك مبنياً على الساعة وحدها.
+            </li>
+            <li className={styles.methodRow}>
+              <span className={styles.methodIndex} aria-hidden="true">3</span>
+              <p className={styles.methodRowText}>
+                <strong>الوقت مرتبط برحلة أو موعد رسمي؟</strong> افتح تاريخ اليوم لتربط الساعة بالتاريخ الصحيح قبل أن تقرر.
               </p>
-            </article>
-          </div>
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -355,20 +296,24 @@ async function TimeNowLandingSections() {
             </p>
           </div>
 
-          <div className={styles.sourceGrid}>
+          <ul className={styles.sourceList}>
             {TIME_NOW_SOURCE_LINKS.map((source) => (
-              <a
-                key={source.href}
-                href={source.href}
-                className={styles.sourceCard}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <strong className={styles.sourceTitle}>{source.label}</strong>
-                <span className={styles.sourceDescription}>{source.description}</span>
-              </a>
+              <li key={source.href}>
+                <a
+                  href={source.href}
+                  className={styles.sourceRow}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className={styles.sourceRowBody}>
+                    <strong className={styles.sourceRowTitle}>{source.label}</strong>
+                    <span className={styles.sourceRowDescription}>{source.description}</span>
+                  </span>
+                  <ArrowUpRight size={16} aria-hidden className={styles.sourceRowIcon} />
+                </a>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -397,92 +342,6 @@ async function TimeNowLandingSections() {
         </div>
       </section>
     </>
-  );
-}
-
-function getTimeNowLinkLabel(label) {
-  return String(label || '').replace(/^الوقت الان في\s+/u, '');
-}
-
-function PopularTimeNowPathways(props) {
-  const featuredCityLinks = Array.isArray(props.featuredCityLinks) ? props.featuredCityLinks : [];
-  const secondaryCityLinks = Array.isArray(props.secondaryCityLinks) ? props.secondaryCityLinks : [];
-  const featuredCountryLinks = Array.isArray(props.featuredCountryLinks) ? props.featuredCountryLinks : [];
-  const secondaryCountryLinks = Array.isArray(props.secondaryCountryLinks) ? props.secondaryCountryLinks : [];
-
-  return (
-    <div className={`${styles.panel} ${styles.popularPanel}`}>
-      <div className={styles.popularLayout}>
-        <div className={styles.popularIntro}>
-          <span className={styles.sectionKicker}>اختصارات بعد البحث</span>
-          <h2 id="popular-time-now-pages-heading" className={styles.sectionTitle}>
-            مدن يبحث عنها الزوار كثيراً
-          </h2>
-          <p className={styles.sectionCopy}>
-            اختر مدينة مشهورة فقط إذا كانت وجهتك واضحة. غير ذلك، البحث في الأعلى أسرع وأدق.
-          </p>
-        </div>
-
-        <nav className={styles.popularBody} aria-label="مدن الوقت الان الأكثر بحثاً">
-          {featuredCityLinks.length > 0 ? (
-            <div className={styles.featuredCityGrid}>
-              {featuredCityLinks.map((item, index) => (
-                <Link key={item.href} href={item.href} className={styles.featuredCityCard} title={item.description}>
-                  <span className={styles.featuredCityIndex}>{String(index + 1).padStart(2, '0')}</span>
-                  <span className={styles.featuredCityLabel}>{getTimeNowLinkLabel(item.label)}</span>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className={styles.emptyPanel}>
-              <strong>ابدأ من البحث أعلى الصفحة</strong>
-              <p>لم تتوفر قائمة المدن الشائعة الآن، لكن البحث المباشر سيأخذك إلى صفحة المدينة أو الدولة المناسبة.</p>
-            </div>
-          )}
-
-          {secondaryCityLinks.length > 0 && (
-            <details className={styles.compactDisclosure}>
-              <summary>مدن أكثر</summary>
-              <div className={styles.compactLinkGrid}>
-                {secondaryCityLinks.map((item) => (
-                  <Link key={item.href} href={item.href} className={styles.compactLink} title={item.description}>
-                    {getTimeNowLinkLabel(item.label)}
-                  </Link>
-                ))}
-              </div>
-            </details>
-          )}
-        </nav>
-      </div>
-
-      <div className={styles.countryRail} aria-labelledby="popular-time-now-country-heading">
-        <div className={styles.countryRailHead}>
-          <span className={styles.sectionKicker}>حسب الدولة</span>
-          <h3 id="popular-time-now-country-heading" className={styles.countryRailTitle}>
-            الوقت الان في الدول
-          </h3>
-        </div>
-        <div className={styles.countryPillGrid}>
-          {featuredCountryLinks.map((item) => (
-            <Link key={item.href} href={item.href} className={styles.countryPill} title={item.description}>
-              {getTimeNowLinkLabel(item.label)}
-            </Link>
-          ))}
-        </div>
-        {secondaryCountryLinks.length > 0 && (
-          <details className={styles.compactDisclosure}>
-            <summary>دول أكثر</summary>
-            <div className={styles.compactLinkGrid}>
-              {secondaryCountryLinks.map((item) => (
-                <Link key={item.href} href={item.href} className={styles.compactLink} title={item.description}>
-                  {getTimeNowLinkLabel(item.label)}
-                </Link>
-              ))}
-            </div>
-          </details>
-        )}
-      </div>
-    </div>
   );
 }
 
@@ -524,41 +383,27 @@ function TimeNowNextSteps({ links }) {
 function TimeNowLandingSectionsFallback() {
   return (
     <div className={styles.fallbackStack}>
-      <section aria-hidden="true" className={styles.fallbackGrid}>
-        {Array.from({ length: 18 }).map((_, index) => (
-          <Skeleton
-            key={`time-now-country-chip-${index}`}
-            className={styles.chipSkeleton}
-          />
-        ))}
-      </section>
-
       <section className="card" aria-hidden="true">
-        <Skeleton className={styles.skeletonTitleLarge} />
+        <Skeleton className={styles.skeletonTitleMedium} />
         <Skeleton className={styles.skeletonLineFull} />
-        <Skeleton className={styles.skeletonLineWide} />
+        <Skeleton className={styles.skeletonLineMedium} />
         <div className={styles.fallbackCards}>
-          {Array.from({ length: 6 }).map((_, index) => (
+          {Array.from({ length: 3 }).map((_, index) => (
             <Skeleton
-              key={`time-now-popular-city-${index}`}
+              key={`time-now-next-step-${index}`}
               className={styles.popularCitySkeleton}
             />
           ))}
         </div>
       </section>
 
-      <section className="card" aria-hidden="true">
-        <Skeleton className={styles.skeletonTitleMedium} />
-        <Skeleton className={styles.skeletonLineFull} />
-        <Skeleton className={styles.skeletonLineMedium} />
-        <div className={styles.fallbackChips}>
-          {Array.from({ length: 8 }).map((_, index) => (
-            <Skeleton
-              key={`time-now-popular-country-${index}`}
-              className={styles.popularCountrySkeleton}
-            />
-          ))}
-        </div>
+      <section aria-hidden="true" className={styles.fallbackGrid}>
+        {Array.from({ length: 21 }).map((_, index) => (
+          <Skeleton
+            key={`time-now-country-chip-${index}`}
+            className={styles.chipSkeleton}
+          />
+        ))}
       </section>
     </div>
   );

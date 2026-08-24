@@ -53,6 +53,15 @@ export const ROOT_SITEMAP_ROUTES = Object.freeze(dedupeRoutes([
   { path: '/holidays/country/uk', priority: 0.86, changeFrequency: 'daily', websitePart: true },
   { path: '/holidays/country/netherlands', priority: 0.86, changeFrequency: 'daily', websitePart: true },
   { path: '/holidays/country/spain', priority: 0.86, changeFrequency: 'daily', websitePart: true },
+  // australia/belgium/italy found missing 2026-08-23 — same class of bug as the uk/netherlands/spain
+  // note above: COUNTRY_HUBS in country-hub-data.js grew to 29 entries (added 2026-08-12) but this
+  // hand-curated list was never updated. This list has now drifted twice from the same root cause —
+  // `/holidays/sitemap.js` was changed the same day to derive its own country-hub entries directly
+  // from COUNTRY_HUB_SLUGS instead of a hand-kept list, so a future addition here is only a priority-
+  // tuning miss, not a total sitemap miss.
+  { path: '/holidays/country/australia', priority: 0.86, changeFrequency: 'daily', websitePart: true },
+  { path: '/holidays/country/belgium', priority: 0.86, changeFrequency: 'daily', websitePart: true },
+  { path: '/holidays/country/italy', priority: 0.86, changeFrequency: 'daily', websitePart: true },
   { path: '/time-difference', priority: 0.9, changeFrequency: 'daily', websitePart: true },
   { path: '/time-difference/converter', priority: 0.87, changeFrequency: 'weekly', websitePart: true },
   { path: '/date', priority: 0.9, changeFrequency: 'daily', websitePart: true },

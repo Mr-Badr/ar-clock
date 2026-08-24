@@ -65,8 +65,8 @@ export default function GeoCityDirectory({
               const cityName = city.name_ar || city.name_en;
               return (
                 <li key={city.city_slug}>
-                  <Link href={`${routeBase}/${city.city_slug}`}>
-                    {linkLabelPrefix} {cityName}
+                  <Link href={`${routeBase}/${city.city_slug}`} title={`${linkLabelPrefix} ${cityName}`}>
+                    {cityName}
                   </Link>
                 </li>
               );
@@ -87,8 +87,8 @@ export default function GeoCityDirectory({
                 const cityName = city.name_ar || city.name_en;
                 return (
                   <li key={city.city_slug}>
-                    <Link href={`${routeBase}/${city.city_slug}`}>
-                      {linkLabelPrefix} {cityName}
+                    <Link href={`${routeBase}/${city.city_slug}`} title={`${linkLabelPrefix} ${cityName}`}>
+                      {cityName}
                     </Link>
                   </li>
                 );

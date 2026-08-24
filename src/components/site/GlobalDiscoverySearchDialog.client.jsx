@@ -1,19 +1,14 @@
 'use client';
 
-import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import {
-  ArrowLeft,
   BookOpenText,
   BriefcaseBusiness,
   Calculator,
-  Clock3,
-  Compass,
   FileText,
   LayoutGrid,
-  PartyPopper,
   Search,
-  Sparkles,
   X,
 } from 'lucide-react';
 
@@ -27,17 +22,17 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from '@/components/ui/command';
-import {
-  DISCOVERY_RECENT_SEARCHES_KEY,
-  DISCOVERY_RECENT_VISITS_KEY,
-  getDiscoveryIconKey,
-  pushDiscoveryHistory,
-  readDiscoveryHistory,
-} from '@/lib/site/discovery-history';
 import { navigateToDiscoveryHref } from '@/lib/site/discovery-navigation';
 import { logger, serializeError } from '@/lib/logger';
 
 import styles from './DiscoveryWorkspace.module.css';
+
+// Empty-state redesign, 2026-08-20 (owner directive): the dialog used to greet an empty query
+// with recent-searches pills, "popular searches" pills, recent-visit shortcut cards, and a
+// type-tab row — four separate blocks of text before the user typed anything. Owner: "not
+// showing those random suggestions, just clean search... more modern and calmer." All of that
+// (and the history-reading it required) is gone. The empty state is now one calm line; typing
+// is the only path to results. Don't re-add recent/popular/featured blocks here without asking.
 
 const TYPE_ICONS = {
   tool: Calculator,
@@ -46,27 +41,10 @@ const TYPE_ICONS = {
   section: LayoutGrid,
 };
 
-const VISIT_ICONS = {
-  calculator: Calculator,
-  blog: BookOpenText,
-  holiday: PartyPopper,
-  date: Clock3,
-  difference: Compass,
-  clock: Clock3,
-  page: BriefcaseBusiness,
-};
-
 const SEARCH_GROUPS = [
   { id: 'pages', title: 'صفحات' },
   { id: 'tools', title: 'أدوات' },
   { id: 'articles', title: 'مقالات' },
-];
-
-const TAB_SHORTCUTS = [
-  { id: 'tools', label: 'أدوات' },
-  { id: 'articles', label: 'مقالات' },
-  { id: 'sections', label: 'أقسام' },
-  { id: 'featured', label: 'الأكثر' },
 ];
 
 function normalizeClientQuery(value) {
@@ -93,10 +71,6 @@ function groupSearchResults(items) {
 
 function getItemIcon(item) {
   return TYPE_ICONS[item?.kind] || BriefcaseBusiness;
-}
-
-function getVisitIcon(entry) {
-  return VISIT_ICONS[getDiscoveryIconKey(entry?.href || '')] || BriefcaseBusiness;
 }
 
 function getItemMetaLabel(item) {
@@ -127,39 +101,13 @@ export default function GlobalDiscoverySearchDialog({ open, onOpenChange }) {
   const pathname = usePathname();
   const router = useRouter();
   const [query, setQuery] = useState('');
-  const [recentSearches, setRecentSearches] = useState([]);
-  const [recentVisits, setRecentVisits] = useState([]);
-  const [featuredItems, setFeaturedItems] = useState([]);
-  const [topSearches, setTopSearches] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [resolvedQuery, setResolvedQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const deferredQuery = useDeferredValue(query);
-  const hasPrimedRef = useRef(false);
   const requestAbortRef = useRef(null);
 
   const groupedResults = useMemo(() => groupSearchResults(searchResults), [searchResults]);
-
-  const primeDiscoveryData = useCallback(async () => {
-    if (hasPrimedRef.current) return;
-    hasPrimedRef.current = true;
-    setIsLoading(true);
-
-    try {
-      const data = await fetchDiscoveryJson('/api/discovery-search', undefined);
-      setFeaturedItems(Array.isArray(data?.featuredItems) ? data.featuredItems : []);
-      setTopSearches(Array.isArray(data?.topSearches) ? data.topSearches : []);
-    } catch (error) {
-      hasPrimedRef.current = false;
-      logger.warn('global-discovery-search-prime-failed', {
-        component: 'GlobalDiscoverySearchDialog',
-        pathname,
-        error: serializeError(error),
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }, [pathname]);
 
   useEffect(() => {
     if (!open) {
@@ -167,17 +115,8 @@ export default function GlobalDiscoverySearchDialog({ open, onOpenChange }) {
       setSearchResults([]);
       setResolvedQuery('');
       requestAbortRef.current?.abort?.();
-      return;
     }
-
-    setRecentSearches(readDiscoveryHistory(DISCOVERY_RECENT_SEARCHES_KEY));
-    setRecentVisits(
-      readDiscoveryHistory(DISCOVERY_RECENT_VISITS_KEY).filter(
-        (item) => item?.href && item.href !== '/fahras' && item.href !== '/search',
-      ),
-    );
-    void primeDiscoveryData();
-  }, [open, primeDiscoveryData]);
+  }, [open]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -220,32 +159,11 @@ export default function GlobalDiscoverySearchDialog({ open, onOpenChange }) {
     return () => controller.abort();
   }, [deferredQuery, open, pathname]);
 
-  function rememberSearch(value) {
-    const normalized = normalizeClientQuery(value);
-    if (!normalized) return;
-
-    const nextEntries = pushDiscoveryHistory(
-      DISCOVERY_RECENT_SEARCHES_KEY,
-      { value: normalized },
-      { max: 6, idKey: 'value' },
-    );
-    setRecentSearches(nextEntries);
-  }
-
-  function refreshRecentVisits() {
-    setRecentVisits(
-      readDiscoveryHistory(DISCOVERY_RECENT_VISITS_KEY).filter(
-        (entry) => entry?.href && entry.href !== '/fahras' && entry.href !== '/search',
-      ),
-    );
-  }
-
   function navigateTo(href, options) {
     const resolvedOptions = options && typeof options === 'object' ? options : {};
     const title = resolvedOptions.title || '';
     const searchValue = resolvedOptions.searchValue || '';
 
-    if (searchValue) rememberSearch(searchValue);
     onOpenChange(false);
 
     navigateToDiscoveryHref({
@@ -258,17 +176,6 @@ export default function GlobalDiscoverySearchDialog({ open, onOpenChange }) {
         searchValue: searchValue || null,
       },
     });
-
-    if (title) {
-      refreshRecentVisits();
-    }
-  }
-
-  function handleOpenChange(nextOpen) {
-    onOpenChange(nextOpen);
-    if (nextOpen) {
-      void primeDiscoveryData();
-    }
   }
 
   const effectiveSearchValue = resolvedQuery || normalizeClientQuery(query);
@@ -276,7 +183,7 @@ export default function GlobalDiscoverySearchDialog({ open, onOpenChange }) {
   return (
     <CommandDialog
       open={open}
-      onOpenChange={handleOpenChange}
+      onOpenChange={onOpenChange}
       shouldFilter={false}
       showCloseButton={false}
       contentClassName={styles.commandDialog}
@@ -306,14 +213,7 @@ export default function GlobalDiscoverySearchDialog({ open, onOpenChange }) {
       />
 
       <CommandList className={styles.commandList}>
-        {isLoading && !searchResults.length && !effectiveSearchValue ? (
-          <div className={styles.commandEmptyState}>
-            <div className={styles.commandBlock}>
-              <h3>نجهّز البحث الآن</h3>
-              <p>بعد لحظات قصيرة ستظهر لك الصفحات والأدوات والمقالات فور الكتابة.</p>
-            </div>
-          </div>
-        ) : effectiveSearchValue ? (
+        {effectiveSearchValue ? (
           <>
             <CommandGroup heading="إجراء سريع">
               <CommandItem
@@ -358,92 +258,9 @@ export default function GlobalDiscoverySearchDialog({ open, onOpenChange }) {
             ) : null}
           </>
         ) : (
-          <div className={styles.commandEmptyState}>
-            {recentSearches.length ? (
-              <div className={styles.commandBlock}>
-                <h3>عمليات البحث الأخيرة</h3>
-                <div className={styles.commandPillRow}>
-                  {recentSearches.map((item) => (
-                    <button
-                      key={item.value}
-                      type="button"
-                      className={styles.commandPill}
-                      onClick={() => setQuery(item.value)}
-                    >
-                      {item.value}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-
-            {topSearches.length ? (
-              <div className={styles.commandBlock}>
-                <h3>عمليات شائعة</h3>
-                <div className={styles.commandPillRow}>
-                  {topSearches.slice(0, 6).map((item) => (
-                    <button
-                      key={item}
-                      type="button"
-                      className={styles.commandPill}
-                      onClick={() => setQuery(item)}
-                    >
-                      {item}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-
-            <div className={styles.commandBlock}>
-              <h3>{recentVisits.length ? 'آخر ما زرته' : 'اختصارات سريعة'}</h3>
-              <div className={styles.commandShortcutList}>
-                {(recentVisits.length ? recentVisits : featuredItems).slice(0, 5).map((item) => {
-                  const Icon = recentVisits.length ? getVisitIcon(item) : getItemIcon(item);
-                  const label = item.title || 'صفحة';
-
-                  return (
-                    <button
-                      key={`${item.href}-${label}`}
-                      type="button"
-                      className={styles.commandShortcutCard}
-                      onClick={() => navigateTo(item.href, { title: label })}
-                    >
-                      <Icon size={16} />
-                      <span>{label}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className={styles.commandBlock}>
-              <h3>اختر حسب النوع</h3>
-              <div className={styles.commandPillRow}>
-                {TAB_SHORTCUTS.map((tab) => (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    className={styles.commandPill}
-                    onClick={() => navigateTo(`/search?tab=${tab.id}`)}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className={styles.commandBlock}>
-              <button
-                type="button"
-                className={styles.commandShortcutCard}
-                onClick={() => navigateTo('/search')}
-              >
-                <Sparkles size={16} />
-                <span>افتح صفحة البحث الكاملة</span>
-                <ArrowLeft size={15} className={styles.directoryArrow} />
-              </button>
-            </div>
+          <div className={styles.commandIdleState}>
+            <Search size={20} className={styles.commandIdleIcon} aria-hidden="true" />
+            <p>اكتب اسم أداة أو مناسبة أو صفحة لعرض النتائج</p>
           </div>
         )}
       </CommandList>

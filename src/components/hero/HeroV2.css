@@ -1,0 +1,362 @@
+/* hero/HeroV2.css — new homepage hero, 2026-08-20 rebuild.
+   Mobile-first: base rules target ~375px, desktop rules layer on top at 768px/1024px. */
+
+.hero-v2 {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: min(84dvh, 680px);
+  display: flex;
+  align-items: center;
+}
+
+.hero-v2-scope {
+  position: relative;
+  width: 100%;
+  min-height: inherit;
+  display: flex;
+  align-items: center;
+}
+
+.hero-v2-media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.hero-v2-img {
+  object-fit: cover;
+  object-position: center 60%;
+}
+
+.hero-v2-scrim {
+  /* Real bug found + fixed 2026-08-23: this is a CHILD of .hero-v2-media, which itself is
+     `position:absolute; z-index:-2` — that z-index makes .hero-v2-media its own stacking
+     context. Inside that context, this scrim's old `z-index:-1` placed it in the "negative
+     z-index" paint layer, which sits BEHIND the <Image> sibling (rendered at the default
+     z-index:auto layer, which paints above negative values) — so the scrim was painting fully
+     behind the opaque photo the entire time, not blending over it. Confirmed by injecting solid
+     debug colors into this exact background: zero pixels changed anywhere on the page. Dropping
+     the z-index entirely: with no explicit stacking, DOM order decides, and this element comes
+     right after the <Image> — so it now correctly paints on top of it. */
+  position: absolute;
+  inset: 0;
+  /* Ninth pass, 2026-08-23: the earlier "too subtle" reports were the stacking bug above, not
+     the values — this was never actually painting, so every previous round of "make it
+     stronger" had zero visual effect no matter how high the opacity went. Now that it's fixed,
+     dialed back to a normal, real strength — two soft corner spotlights + a light base fade. */
+  background:
+    radial-gradient(60% 60% at 0% 0%, rgba(4, 7, 12, 0.85) 0%, transparent 60%),
+    radial-gradient(60% 60% at 100% 0%, rgba(4, 7, 12, 0.85) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(4, 7, 12, 0.55) 0%, rgba(4, 7, 12, 0) 55%);
+}
+
+.light .hero-v2-scrim {
+  background:
+    radial-gradient(60% 60% at 0% 0%, rgba(255, 255, 255, 0.85) 0%, transparent 60%),
+    radial-gradient(60% 60% at 100% 0%, rgba(255, 255, 255, 0.85) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 55%);
+}
+
+.hero-v2-content {
+  position: relative;
+  width: 100%;
+  max-width: 46rem;
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+  padding-block: calc(var(--app-header-height) + var(--space-10)) var(--space-10);
+  display: grid;
+  justify-items: center;
+  gap: var(--space-5);
+  text-align: center;
+}
+
+/* Soft glow anchoring the centered composition — a deliberate premium touch (not decoration for
+   its own sake): it draws the eye to the badge/headline first, the way most premium SaaS heroes
+   (Linear, Vercel, Raycast) use a radial glow to give a centered hero a focal point instead of
+   just floating text on a photo. */
+.hero-v2-content::before {
+  content: '';
+  position: absolute;
+  inset-block-start: -4rem;
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  width: min(50rem, 90vw);
+  height: 26rem;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent-alt) 22%, transparent), transparent 72%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.hero-v2-eyebrow {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full, 999px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  letter-spacing: 0.01em;
+}
+
+.light .hero-v2-eyebrow {
+  background: rgba(11, 17, 32, 0.08);
+  border-color: rgba(11, 17, 32, 0.16);
+  color: rgba(11, 17, 32, 0.9);
+}
+
+.hero-v2-title {
+  margin: 0;
+  max-width: 20ch;
+  color: #ffffff;
+  /* Thmanyah Sans (owner-supplied, public/fonts/) — real distinctive display type instead of the
+     sitewide Noto Sans Arabic for this one headline, the first thing every visitor reads. Bold
+     is the only weight this title ever renders at, so it's the only one requested here; falls
+     back to the sitewide heading font if the custom family somehow fails to load. */
+  font-family: var(--font-thmanyah), var(--font-heading);
+  font-size: clamp(2.1rem, 1.5rem + 3.4vw, 3.75rem);
+  line-height: 1.28;
+  font-weight: var(--font-bold);
+  text-wrap: balance;
+  perspective: 800px;
+}
+
+/* Word-by-word "fold down from the top" reveal (2026-08-23) — each word hinges down from its
+   own top edge into place, staggered via inline animationDelay in HeroV2.jsx. Pure CSS
+   `@keyframes`, not GSAP: this text is server-rendered and SEO-critical, and a JS-triggered
+   entrance risks a real flash-of-hidden-content bug if hydration lags behind paint (see this
+   file's other motion components for why that rule exists). A CSS animation starts on first
+   paint regardless of JS timing, so there's no such race here. */
+.hero-v2-title-word {
+  display: inline-block;
+  transform-origin: 50% 0%;
+  animation: hero-title-fold 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+@keyframes hero-title-fold {
+  from {
+    opacity: 0;
+    transform: rotateX(-85deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-v2-title-word {
+    animation: none;
+  }
+}
+
+.light .hero-v2-title {
+  color: #0b1120;
+}
+
+.hero-v2-lead {
+  margin: 0;
+  max-width: 42ch;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+}
+
+.light .hero-v2-lead {
+  color: rgba(11, 17, 32, 0.8);
+}
+
+.hero-v2-actions {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* ── Hero search bar (owner directive, 2026-08-20: "search input should be in hero not
+   navbar") — the real search entry point for the whole site now lives here, styled as a large
+   premium input rather than a button. It opens the same command dialog the nav trigger used to;
+   see HeroSearchTrigger.client.jsx.
+
+   Rainbow shining border, 2026-08-23 (owner: "shining border with rainbow colors that have
+   infinite shining moving in a smooth way"). Three hand-rolled CSS attempts (rotating a pseudo
+   box, a filled conic-gradient bleeding through the glass background, an `@property`-animated
+   angle that didn't animate in the owner's browser) were all replaced on final owner request
+   with Magic UI's actual `ShineBorder` component (magicui.design/docs/components/shine-border) —
+   see `HeroSearchTrigger.client.jsx` and `src/components/ui/shine-border.tsx`. `.hero-v2-search-
+   wrap` only needs to be a positioned, radius-matching container for it now; ShineBorder is an
+   absolutely-positioned `inset-0` overlay masked down to a thin ring (mask-composite: exclude
+   between a content-box and border-box layer — same technique the earlier attempts used), so it
+   paints only at the edge no matter what the button's own background does underneath. */
+.hero-v2-search-wrap {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  max-width: 34rem;
+  border-radius: var(--radius-full, 999px);
+}
+
+.hero-v2-search {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: var(--space-13, 3.25rem);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-inline: var(--space-5);
+  border-radius: var(--radius-full, 999px);
+  background: rgba(8, 11, 18, 0.42);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  color: rgba(255, 255, 255, 0.78);
+  cursor: pointer;
+  appearance: none;
+  font: inherit;
+  text-align: start;
+  transition:
+    background-color var(--transition-base),
+    transform var(--transition-base);
+}
+
+.hero-v2-search:hover,
+.hero-v2-search:focus-visible {
+  background: rgba(8, 11, 18, 0.58);
+  transform: translateY(-1px);
+}
+
+.light .hero-v2-search {
+  background: rgba(255, 255, 255, 0.55);
+  color: rgba(11, 17, 32, 0.75);
+}
+
+.light .hero-v2-search:hover,
+.light .hero-v2-search:focus-visible {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.hero-v2-search__icon {
+  flex: 0 0 auto;
+  color: #ffffff;
+}
+
+.light .hero-v2-search__icon {
+  color: #0b1120;
+}
+
+.hero-v2-search__placeholder {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+}
+
+
+/* Redesigned 2026-08-23 (owner: "make this section look premium and special... impressive and
+   smooth with perfect spacing for all devices"). Was three bare stat pairs floating on the
+   photo — now a single glass panel (the same frosted-surface language as the header pill and
+   the search bar right above it, so the hero reads as one coherent system of "floating glass"
+   elements) with real hairline dividers between each stat, giving the numbers a place to live
+   instead of drifting loose. */
+.hero-v2-facts {
+  margin: var(--space-6) 0 0;
+  display: inline-flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: var(--space-5);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-2xl, 28px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(8, 11, 18, 0.38);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  box-shadow: 0 20px 44px -26px rgba(0, 0, 0, 0.5);
+}
+
+.light .hero-v2-facts {
+  border-color: rgba(11, 17, 32, 0.12);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.hero-v2-fact-divider {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.light .hero-v2-fact-divider {
+  background: rgba(11, 17, 32, 0.14);
+}
+
+.hero-v2-fact {
+  display: grid;
+  justify-items: center;
+  gap: 0.25rem;
+  min-width: 3.75rem;
+}
+
+.hero-v2-fact dt {
+  margin: 0;
+}
+
+.hero-v2-fact-value {
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 1.9rem);
+  font-weight: var(--font-bold);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.light .hero-v2-fact-value {
+  color: #0b1120;
+}
+
+.hero-v2-fact dd {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  white-space: nowrap;
+}
+
+.light .hero-v2-fact dd {
+  color: rgba(11, 17, 32, 0.65);
+}
+
+@media (max-width: 420px) {
+  .hero-v2-facts {
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .hero-v2-fact {
+    min-width: 3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-v2 {
+    min-height: min(88dvh, 760px);
+  }
+
+  .hero-v2-content {
+    padding-inline: var(--space-10);
+    padding-block: calc(var(--app-header-height) + var(--space-14)) var(--space-14);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* ShineBorder's own `motion-safe:animate-shine` class already drops the animation under
+     reduced motion — nothing to do here for the ring itself. */
+  .hero-v2-search:hover,
+  .hero-v2-search:focus-visible {
+    transform: none;
+  }
+}

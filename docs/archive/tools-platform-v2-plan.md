@@ -1,3 +1,11 @@
+> **ARCHIVED 2026-08-23.** The v2 migration this plan describes is complete: `/tools` is the live
+> architecture (24 categories, 169 tool pages, verified in perfect sync with
+> `src/lib/seo/calculator-route-manifest.js`), `/calculators` is fully retired (redirects live in
+> `next.config.js`), and the hand-maintained mega-menu this doc's progress log flags as unfinished
+> was itself removed 2026-08-09. Durable rules extracted into `.claude/rules/tools-hub-pattern.md`
+> and `.claude/rules/calculator-ui-standards.md`. Kept for history only; do not resume from here —
+> `docs/PLAN.md` is the current living build-methodology reference.
+
 # Tools Platform v2 — Full Strategic Plan
 
 Status: **IN PROGRESS — Phase 1 started 2026-07-30.** Written 2026-07-29 from `docs/ideas` (the owner's

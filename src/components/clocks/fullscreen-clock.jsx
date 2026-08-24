@@ -6,8 +6,10 @@ import { Fullscreen, Minimize2, ZoomIn, ZoomOut } from 'lucide-react';
 import {
   exitActiveFullscreen,
   getActiveFullscreenElement,
+  getFullscreenCursorStyle,
   requestElementFullscreen,
   syncFullscreenDocumentState,
+  useFullscreenIdleHide,
 } from './fullscreenShared';
 
 /**
@@ -58,18 +60,23 @@ export default function FullscreenClock({ children, overlayContent, showExpandBu
     }
   };
 
-  const zoomIn = () => setZoomLevel(prev => Math.min(prev + 1, 2));
+  /* ── Auto-hide toolbar after a few idle seconds in fullscreen ── */
+  const controlsVisible = useFullscreenIdleHide(isFullscreen);
+
+  const zoomIn = () => setZoomLevel(prev => Math.min(prev + 1, 3));
   const zoomOut = () => setZoomLevel(prev => Math.max(prev - 1, 0));
 
   const getScale = () => {
     if (zoomLevel === 0) return 'scale-[0.7]';
     if (zoomLevel === 2) return 'scale-[1.3]';
+    if (zoomLevel === 3) return 'scale-[1.6]';
     return 'scale-100';
   };
 
   const getZoomLabel = () => {
     if (zoomLevel === 0) return 'تصغير (صغير)';
     if (zoomLevel === 2) return 'تكبير (كبير)';
+    if (zoomLevel === 3) return 'أكبر حجم';
     return 'حجم عادي';
   };
 
@@ -79,11 +86,14 @@ export default function FullscreenClock({ children, overlayContent, showExpandBu
       {isFullscreen && (
         <div
           className="fullscreen-mode text-primary"
-          style={{ backgroundColor: 'var(--bg-base)' }}
+          style={{ backgroundColor: 'var(--bg-base)', ...getFullscreenCursorStyle(controlsVisible) }}
           dir="rtl"
         >
-          {/* Controls Bar */}
-          <div className="absolute top-8 right-8 left-8 flex justify-between items-center z-[110]">
+          {/* Controls Bar — fades out after a few idle seconds, reappears on
+              any mouse/touch/keyboard activity (see useFullscreenIdleHide) */}
+          <div
+            className={`absolute top-8 right-8 left-8 flex justify-between items-center z-[110] transition-opacity duration-300 ${controlsVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          >
             <div className="flex gap-2">
               <button
                 onClick={toggleFullscreen}
@@ -111,8 +121,8 @@ export default function FullscreenClock({ children, overlayContent, showExpandBu
 
               <button
                 onClick={zoomIn}
-                disabled={zoomLevel === 2}
-                className={`p-3 rounded-[var(--radius-lg)] transition-colors ${zoomLevel === 2 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-surface-3 text-accent hover:text-accent-hover'}`}
+                disabled={zoomLevel === 3}
+                className={`p-3 rounded-[var(--radius-lg)] transition-colors ${zoomLevel === 3 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-surface-3 text-accent hover:text-accent-hover'}`}
                 title="تكبير"
               >
                 <ZoomIn className="w-6 h-6" />

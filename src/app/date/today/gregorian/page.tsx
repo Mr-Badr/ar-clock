@@ -33,7 +33,16 @@ const BASE_URL = getSiteUrl();
 export const metadata: Metadata = {
   title: 'التاريخ الميلادي اليوم | رقم الأسبوع وصيغة ISO والتاريخ الهجري',
   description: 'اعرف التاريخ الميلادي اليوم، رقم الأسبوع، اليوم من السنة، صيغة ISO 8601، الربع السنوي، والتاريخ الهجري الموافق مع قاعدة كتابة التاريخ دون التباس.',
-  keywords: buildDateKeywords(),
+  keywords: [
+    ...buildDateKeywords(),
+    'رقم الأسبوع',
+    'رقم الأسبوع اليوم',
+    'رقم الأسبوع الحالي',
+    'اليوم من السنة',
+    'صيغة ISO للتاريخ',
+    'تنسيق التاريخ ISO 8601',
+    'الربع السنوي الحالي',
+  ],
   alternates: { canonical: `${BASE_URL}/date/today/gregorian` },
   openGraph: {
     title: 'التاريخ الميلادي اليوم',

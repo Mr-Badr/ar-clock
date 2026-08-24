@@ -1,0 +1,238 @@
+/* home/v2/sections/holidays-timeline.css — bespoke design #4: a horizontal timeline/filmstrip
+   starting at "اليوم", no live digits anywhere. Mobile-first. */
+
+.ht-section {
+  position: relative;
+  padding-block: var(--space-20) var(--space-16);
+  overflow: hidden;
+}
+
+/* Ambient glow (2026-08-23, real UX audit) — same technique as the other sections, tuned warm
+   (amber, echoing the feed's own "warning"-toned event chips) so consecutive sections don't all
+   glow the identical blue. */
+.ht-section::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 8%;
+  inset-inline-end: 7%;
+  width: min(45rem, 78vw);
+  height: 30rem;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--warning) 14%, transparent), transparent 72%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ht-inner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1080px);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+  display: grid;
+  gap: var(--space-10);
+}
+
+.ht-kicker {
+  margin: 0;
+  color: var(--accent-alt);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+}
+
+.ht-title {
+  margin: var(--space-2) 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-thmanyah), var(--font-heading);
+  font-size: clamp(1.5rem, 1.25rem + 1.1vw, 2.1rem);
+  font-weight: var(--font-bold);
+}
+
+.ht-lead {
+  margin: var(--space-3) 0 0;
+  max-width: 62ch;
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.ht-copy .ilink {
+  margin-block-start: var(--space-2);
+}
+
+/* ── Frame (2026-08-23 — the feed used to float loose in the section with nothing anchoring it
+   as a real designed object, the weakest visual of the five homepage sections). A notification-
+   panel "device" shell: header bar with a live-style status dot + bell + label, the real
+   AnimatedList feed underneath. Gives the exact same MagicUI mechanic real physical presence. */
+.ha-frame {
+  width: 100%;
+  max-width: 25rem;
+  margin-inline: auto;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--bg-surface-1) 80%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.ha-frame-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-block-end: 1px solid var(--border-subtle);
+}
+
+.ha-frame-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: var(--success);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--success) 22%, transparent);
+}
+
+.ha-frame-icon {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  color: var(--accent-alt);
+}
+
+.ha-frame-label {
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+}
+
+.ha-shell {
+  position: relative;
+  width: 100%;
+  height: 20rem;
+  overflow: hidden;
+  /* Fades via alpha masking on both edges — no color-matched overlay div needed, so this keeps
+     working correctly regardless of what's behind it (now the frame's own translucent glass
+     surface, previously a flat --bg-base color). */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 86%, transparent 100%);
+}
+
+.ha-list {
+  /* Real bug found + fixed 2026-08-23: AnimatedList's own `flex flex-col items-center gap-4`
+     Tailwind classes were being silently dropped by cn()/tailwind-merge — the rendered element
+     only ever had `class="ha-list"`, no utility classes at all. Cards were stacking in plain
+     block flow instead, with adjacent margins collapsing through the unstyled `motion.div`
+     wrappers around each card. Declared directly in plain CSS here so it can't be lost to a
+     class-merging quirk again. */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Halved 2026-08-23 (owner: "the gap... is so much") — was --space-4 (16px), now --space-3
+     (12px), and the per-card margin-block below is gone so this is the only spacing mechanism
+     — 24px total down to 12px, exactly half. */
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-3);
+}
+
+.ha-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-1);
+  box-shadow: 0 12px 28px -20px rgba(0, 0, 0, 0.4);
+}
+
+.ha-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-full);
+}
+
+.ha-card-icon--accent {
+  background: var(--accent-soft);
+  color: var(--accent-alt);
+}
+
+.ha-card-icon--warning {
+  background: var(--warning-soft);
+  color: var(--amber-text);
+}
+
+.ha-card-icon--success {
+  background: var(--success-soft);
+  color: var(--green-text);
+}
+
+.ha-card-icon--danger {
+  background: var(--danger-soft);
+  color: var(--red-text);
+}
+
+.ha-card-icon--info {
+  background: var(--info-soft);
+  color: var(--info-text);
+}
+
+.ha-card-body {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.ha-card-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.ha-card-name {
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  white-space: nowrap;
+}
+
+.ha-card-tag {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: var(--space-2);
+  padding-block: 1px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text-muted) 14%, transparent);
+  /* --text-muted itself measured 3.74:1 against this pill's own tint in light mode (real WCAG
+     audit, 2026-08-23 — AA needs 4.5:1 for this font-size) — --text-secondary is the next step
+     darker and clears it comfortably in both themes. */
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  font-weight: var(--font-bold);
+}
+
+.ha-card-desc {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  line-height: var(--leading-relaxed);
+}
+
+@media (min-width: 860px) {
+  .ht-inner {
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+    align-items: center;
+    gap: var(--space-14);
+  }
+
+  .ha-shell {
+    height: 23rem;
+    margin-inline: 0;
+  }
+}

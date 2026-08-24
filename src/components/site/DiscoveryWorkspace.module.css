@@ -1449,6 +1449,10 @@
   font-size: var(--text-xs);
 }
 
+/* commandBlock, commandEmptyState, commandPill, and commandShortcut rules below are still used
+   by the full /search page's own results workspace (DiscoveryWorkspaceClient.jsx) — only the
+   header dialog (GlobalDiscoverySearchDialog.client.jsx) stopped using them in the 2026-08-20
+   calm-empty-state redesign. Don't remove these without checking that file too. */
 .commandEmptyState {
   display: grid;
   gap: var(--space-4);
@@ -1502,6 +1506,26 @@
   border-color: var(--border-accent);
   background: var(--accent-soft);
   color: var(--accent-alt);
+}
+
+/* Calm idle state (2026-08-20 redesign) — GlobalDiscoverySearchDialog.client.jsx's empty query
+   view: one centered line, no pills/cards/tabs. See that file's header comment for why. */
+.commandIdleState {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding: var(--space-12) var(--space-4);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.commandIdleIcon {
+  color: var(--text-disabled);
+}
+
+.commandIdleState p {
+  margin: 0;
+  font-size: var(--text-sm);
 }
 
 .tooltipContent {

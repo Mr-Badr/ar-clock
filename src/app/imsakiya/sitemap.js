@@ -1,12 +1,17 @@
-import { getPriorityCountrySlugs } from '@/lib/db/queries/countries';
-import { getPriorityCityParams } from '@/lib/db/queries/cities';
+import { getAllCountrySlugs } from '@/lib/db/queries/countries';
+import { getAllCityParams } from '@/lib/db/queries/cities';
 import { getSiteUrl } from '@/lib/site-config';
 
 export default async function sitemap() {
   const base = getSiteUrl();
+  // Was `getPriorityCountrySlugs(20)` + `getPriorityCityParams(60)` — a small curated slice.
+  // Sitemap listing doesn't cost build time (unlike generateStaticParams' prerendering, which
+  // stays bounded to a priority-first combo in the page files themselves), so it uses the full
+  // DB-first city/country lists directly — same reasoning as /time-difference and /time-now/
+  // /date's sitemaps. Fixed 2026-08-24.
   const [countrySlugs, cities] = await Promise.all([
-    getPriorityCountrySlugs(20),
-    getPriorityCityParams(60),
+    getAllCountrySlugs(),
+    getAllCityParams(),
   ]);
 
   const urls = [

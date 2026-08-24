@@ -139,7 +139,7 @@ export default function TimeDiffCalculator(props) {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
 
       {/* ── Search row — change the city pair ──────────────────────── */}
       <div className="card p-4">

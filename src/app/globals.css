@@ -72,7 +72,19 @@
   0% {
     transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * 1px)) rotate(calc(var(--angle) * -1deg));}
   100% {
-    transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px)) rotate(calc((var(--angle) * -1deg) - 360deg));}}}
+    transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px)) rotate(calc((var(--angle) * -1deg) - 360deg));}}
+  --animate-marquee: marquee var(--duration) linear infinite;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  @keyframes marquee {
+  from {
+    transform: translateX(0);}
+  to {
+    transform: translateX(calc(-100% - var(--gap)));}}
+  @keyframes marquee-vertical {
+  from {
+    transform: translateY(0);}
+  to {
+    transform: translateY(calc(-100% - var(--gap)));}}}
 
 /* ── View Transition (theme ripple) ────────────────────────────────────── */
 /* New snapshot always expands on top — works for both dark→light & light→dark */
@@ -86,6 +98,19 @@
   z-index: 999;
   will-change: clip-path; /* promotes to GPU layer → no composite blink */
 }
+
+/* Owner directive, 2026-08-23: the homepage tools-category marquee (ToolsTicker.jsx) must move
+   by default for every visitor, not just be an opt-in for a device setting we'd have to ask users
+   to change — so this no longer disables the animation under prefers-reduced-motion. (Previously
+   did; removed after the owner confirmed via Chrome DevTools' "Emulate CSS media feature
+   prefers-reduced-motion" that this was the actual cause of a "marquee looks frozen" report — the
+   marquee's mechanics themselves were never broken.) Scoped safely: `.animate-marquee`/
+   `.animate-marquee-vertical` are used by ONLY this one Marquee instance sitewide (grep
+   `@/components/ui/marquee` before reusing it elsewhere) — it's slow (38s, linear, no strobing)
+   and purely decorative (aria-hidden), which keeps the vestibular-safety risk low for the
+   motion-sensitive visitors this rule used to protect.
+
+*/
 
 ::view-transition-old(root) {
   z-index: 1;

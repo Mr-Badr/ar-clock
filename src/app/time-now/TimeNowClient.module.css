@@ -34,8 +34,9 @@
 .groupTitle {
   margin: 0;
   color: var(--text-primary);
+  font-family: var(--font-thmanyah), var(--font-heading);
   font-size: clamp(1.05rem, 1.8vw, 1.35rem);
-  font-weight: var(--font-extrabold);
+  font-weight: var(--font-bold);
   line-height: var(--leading-tight);
 }
 

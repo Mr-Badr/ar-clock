@@ -1339,6 +1339,36 @@
     "month": 10,
     "day": 9
   },
+  "independence-day-uzbekistan": {
+    "id": "independence-day-uzbekistan",
+    "slug": "independence-day-uzbekistan",
+    "name": "يوم استقلال أوزبكستان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "uz",
+    "month": 9,
+    "day": 1
+  },
+  "constitution-day-uzbekistan": {
+    "id": "constitution-day-uzbekistan",
+    "slug": "constitution-day-uzbekistan",
+    "name": "يوم دستور أوزبكستان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "uz",
+    "month": 12,
+    "day": 8
+  },
+  "nowruz-uzbekistan": {
+    "id": "nowruz-uzbekistan",
+    "slug": "nowruz-uzbekistan",
+    "name": "عيد نوروز في أوزبكستان",
+    "type": "fixed",
+    "category": "national",
+    "_countryCode": "uz",
+    "month": 3,
+    "day": 21
+  },
   "abu-simbel-sun-alignment-february": {
     "id": "abu-simbel-sun-alignment-february",
     "slug": "abu-simbel-sun-alignment-february",

@@ -37,7 +37,7 @@ export default function ReviewMeta({
   const publishDateLabel = formatDate(publishedAt);
 
   return (
-    <div className={styles.strip} role="complementary" aria-label="معلومات المراجعة والمصداقية">
+    <div className={`${styles.strip} my-5`} role="complementary" aria-label="معلومات المراجعة والمصداقية">
       <div className={styles.item}>
         <UserRound size={15} className={styles.icon} aria-hidden="true" />
         <div className={styles.copy}>

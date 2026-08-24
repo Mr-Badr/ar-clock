@@ -1,0 +1,64 @@
+/* home/v2/sections/scroll-reveal-text.css — bespoke design #2 (replaced the Zakat receipt,
+   2026-08-23). A single scroll-scrubbed statement about the product's real values, not a card or
+   a grid — text is the whole design here, so it needs real presence: Thmanyah Sans (same custom
+   family as every other homepage title) and generous letter-spacing, which is the actual
+   technique behind "the word became longer" — the owner's own description of Thmanyah's own
+   site — not a different/wider font file, just real tracking added to the one we have. */
+
+.srt-section {
+  position: relative;
+  padding-block: var(--space-24) var(--space-20);
+  overflow: hidden;
+}
+
+.srt-section::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 15%;
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  width: min(50rem, 88vw);
+  height: 28rem;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent-alt) 14%, transparent), transparent 72%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.srt-inner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 880px);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+  text-align: center;
+}
+
+.srt-kicker {
+  margin: 0 0 var(--space-5);
+  color: var(--accent-alt);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  letter-spacing: 0.08em;
+}
+
+.srt-text {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-thmanyah), var(--font-heading);
+  font-weight: var(--font-bold);
+  font-size: clamp(1.5rem, 1.1rem + 2.2vw, 2.75rem);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  text-wrap: balance;
+}
+
+.srt-word {
+  display: inline-block;
+  will-change: opacity, filter;
+}
+
+@media (min-width: 860px) {
+  .srt-text {
+    letter-spacing: 0.03em;
+  }
+}

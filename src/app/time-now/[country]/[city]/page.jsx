@@ -39,13 +39,14 @@ import SameTimezoneCountries from '@/components/time-now/SameTimezoneCountries';
 import TimeNowFAQ from '@/components/time-now/TimeNowFAQ';
 import RelatedSearches from '@/components/time-now/RelatedSearches';
 import GeoInternalLinks from '@/components/seo/GeoInternalLinks';
+import QuickFactsGrid from '@/components/time-now/QuickFactsGrid';
 import { SiteDotLinkList } from '@/components/shared/SiteDotLinkList';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { Skeleton } from '@/components/ui/skeleton';
 import routeStyles from '@/app/time-now/TimeNowRoutePage.module.css';
 
 import { getAllCountries, getCountryBySlug } from '@/lib/db/queries/countries';
-import { getPriorityCityParams, getPriorityCountriesCityParams, getCityBySlug, getTopCitiesByCountry } from '@/lib/db/queries/cities';
+import { getPriorityCityParams, getPriorityCountriesCityParams, getCityBySlug, getTopCitiesByCountry, getCapitalCity } from '@/lib/db/queries/cities';
 import { getCachedNowIso } from '@/lib/date-utils';
 import {
   GEO_ROUTE_INDEXING_POLICIES,
@@ -56,11 +57,11 @@ import { buildTimeNowKeywords } from '@/lib/seo/section-search-intent';
 import { buildNoindexRouteMetadata, isRouteSlug, isRenderableCityData } from '@/lib/route-param-validation';
 import {
   buildCityTimeNowFaqItems,
-  buildCallTimeWindows,
   getCountriesSharingCurrentOffset,
   getTimeNowSeoFacts,
 } from '@/lib/time-now-content';
 import { getSolarPrayerFacts } from '@/lib/solar-prayer-facts';
+import { getCountryFacts, formatPopulationAr, formatAreaAr } from '@/lib/geo/country-facts';
 import { logger, serializeError } from '@/lib/logger';
 
 const BASE = getSiteUrl();
@@ -439,7 +440,7 @@ export default async function CityTimePage({ params }) {
       <JsonLd data={[breadcrumbSchema, webPageSchema, placeSchema]} />
 
       <AdLayoutWrapper layout="wide" sidebarMode="dual">
-        <main>
+        <main className={routeStyles.main}>
 
         {/* First thing on the page, before the breadcrumb/H1 — see
             AdTopBanner.tsx v3. */}
@@ -493,32 +494,6 @@ export default async function CityTimePage({ params }) {
           </div>
         </section>
 
-        <section className={`container mx-auto px-4 ${routeStyles.summaryBand}`}>
-          <div className={routeStyles.summaryGrid}>
-            <div className={routeStyles.summaryCard}>
-              <p className={routeStyles.summaryLabel}>الدولة المرجعية</p>
-              <p className={routeStyles.summaryValue}>{countryAr}</p>
-              <p className={routeStyles.summaryCopy}>
-                المدينة هي المرجع العملي عندما يكون السؤال عن صلاة، رحلة، أو موعد في مكان محدد.
-              </p>
-            </div>
-            <div className={routeStyles.summaryCard}>
-              <p className={routeStyles.summaryLabel}>المنطقة الزمنية</p>
-              <p className={`${routeStyles.summaryValue} ${routeStyles.summaryValueLtr}`}>{offset || city.timezone}</p>
-              <p className={routeStyles.summaryCopy}>
-                فرق UTC الحالي واضح الآن، لكن الموعد المستقبلي يحتاج مراجعة التوقيت الصيفي للطرفين.
-              </p>
-            </div>
-            <div className={routeStyles.summaryCard}>
-              <p className={routeStyles.summaryLabel}>الفائدة العملية</p>
-              <p className={routeStyles.summaryValue}>وقت + تاريخ + مقارنة</p>
-              <p className={routeStyles.summaryCopy}>
-                انتقل إلى فرق التوقيت أو التاريخ من نفس الصفحة بدون إعادة إدخال المدينة.
-              </p>
-            </div>
-          </div>
-        </section>
-
         <Suspense fallback={<CityTimePageSectionsFallback />}>
           <CityTimePageSections
             city={city}
@@ -550,10 +525,11 @@ async function CityTimePageSections({
   offset,
 }) {
   try {
-    const [nowIso, siblingCities, allCountries] = await Promise.all([
+    const [nowIso, siblingCities, allCountries, capitalCity] = await Promise.all([
       getCachedNowIso(),
       getTopCitiesByCountry(country.country_code, 8),
       getAllCountries(),
+      city.is_capital ? Promise.resolve(null) : getCapitalCity(country.country_code),
     ]);
     const safeSiblingCities = Array.isArray(siblingCities)
       ? siblingCities.filter(isValidCityRecord)
@@ -574,7 +550,82 @@ async function CityTimePageSections({
       countryCode: country.country_code,
       cacheKey: `time-now::${countrySlug}::${citySlug}::solar`,
     });
-    const callTimeWindows = buildCallTimeWindows(city.timezone, nowIso);
+    const countryFacts = getCountryFacts(country.country_code);
+    const capitalAr = city.is_capital ? null : (capitalCity?.name_ar || capitalCity?.name_en || null);
+    const quickFactItems = [
+      city.is_capital
+        ? { key: 'capital', label: `عاصمة ${countryAr}`, value: cityAr }
+        : (capitalAr ? { key: 'capital', label: `عاصمة ${countryAr}`, value: capitalAr } : null),
+      city.population > 0 ? {
+        key: 'population-city',
+        label: `عدد سكان ${cityAr}`,
+        value: formatPopulationAr(city.population),
+      } : null,
+      (!city.is_capital && capitalCity?.population > 0) ? {
+        key: 'population-capital',
+        label: `عدد سكان ${capitalAr}`,
+        value: formatPopulationAr(capitalCity.population),
+      } : null,
+      (countryFacts?.subregionAr || countryFacts?.regionAr) ? {
+        key: 'region',
+        label: 'المنطقة الجغرافية',
+        value: countryFacts.subregionAr || countryFacts.regionAr,
+      } : null,
+      timeFacts.gregorianDateAr ? {
+        key: 'date-gregorian',
+        label: 'التاريخ الميلادي اليوم',
+        value: timeFacts.gregorianDateAr,
+      } : null,
+      timeFacts.hijriDateAr ? {
+        key: 'date-hijri',
+        label: 'التاريخ الهجري اليوم',
+        value: timeFacts.hijriDateAr,
+      } : null,
+      {
+        key: 'utc',
+        label: `منطقة ${cityAr} الزمنية`,
+        value: timeFacts.offsetLabel || offset || city.timezone,
+        ltr: true,
+      },
+      {
+        key: 'dst',
+        label: 'حالة التوقيت الصيفي',
+        value: timeFacts.hasDst ? 'تتغيّر مع التوقيت الصيفي' : 'إزاحة ثابتة طوال السنة',
+      },
+      solarFacts ? {
+        key: 'sun',
+        label: 'الشروق والغروب اليوم',
+        value: `${solarFacts.sunriseLabel} – ${solarFacts.sunsetLabel}`,
+        ltr: true,
+      } : null,
+      solarFacts?.dayLengthLabel ? {
+        key: 'day-length',
+        label: 'طول النهار',
+        value: solarFacts.dayLengthLabel,
+      } : null,
+      countryFacts?.areaKm2 ? {
+        key: 'area',
+        label: `مساحة ${countryAr}`,
+        value: formatAreaAr(countryFacts.areaKm2),
+      } : null,
+      countryFacts?.currencyCode ? {
+        key: 'currency',
+        label: 'العملة',
+        value: countryFacts.currencyCode,
+        ltr: true,
+      } : null,
+      countryFacts?.languagesAr?.length ? {
+        key: 'language',
+        label: 'اللغة الرسمية',
+        value: countryFacts.languagesAr.join('، '),
+      } : null,
+      countryFacts?.callingCode ? {
+        key: 'calling',
+        label: 'رمز الاتصال الدولي',
+        value: countryFacts.callingCode,
+        ltr: true,
+      } : null,
+    ].filter(Boolean);
     const sameOffsetCountries = getCountriesSharingCurrentOffset(safeAllCountries, {
       referenceTimezone: city.timezone,
       referenceDateOrIso: nowIso,
@@ -603,64 +654,12 @@ async function CityTimePageSections({
           aria-labelledby="city-time-answer-heading"
           className={`container mx-auto px-4 ${routeStyles.sectionBand}`}
         >
-            <div className={routeStyles.sectionHead}>
-              <h2 id="city-time-answer-heading" className={routeStyles.sectionTitle}>
-                ملخص التوقيت المحلي في {cityAr}
-              </h2>
-              <p className={routeStyles.sectionCopy}>
-                هذا هو الجزء الذي تحتاجه قبل مقارنة موعد أو حجز رحلة: التاريخ المحلي، فرق UTC،
-                حالة التوقيت الصيفي، ومعه الشروق والغروب عندما تتوفر إحداثيات المدينة.
-              </p>
-            </div>
-            <div className={routeStyles.insightGrid}>
-              <article className={routeStyles.insightCard}>
-                <span className={routeStyles.insightKicker}>اليوم المحلي</span>
-                <h3>التاريخ في {cityAr}</h3>
-                <p>
-                  {timeFacts.gregorianDateAr ? (
-                    <>
-                      اليوم هو <strong>{timeFacts.gregorianDateAr}</strong>
-                      {timeFacts.hijriDateAr ? <>، وبالهجري <strong>{timeFacts.hijriDateAr}</strong>.</> : '.'}
-                    </>
-                  ) : (
-                    <>تُعرض الساعة حسب التاريخ المحلي للمدينة، لا حسب توقيت جهازك أو بلدك الحالي.</>
-                  )}
-                </p>
-              </article>
-              <article className={routeStyles.insightCard}>
-                <span className={routeStyles.insightKicker}>UTC وDST</span>
-                <h3>منطقة IANA الرسمية</h3>
-                <p>
-                  المنطقة الزمنية هي <strong dir="ltr">{city.timezone}</strong> والإزاحة الحالية <strong dir="ltr">{timeFacts.offsetLabel}</strong>.
-                  {' '}{timeFacts.hasDst ? 'تتغير الإزاحة خلال السنة، لذلك راجع التاريخ قبل المواعيد المستقبلية.' : 'لا يظهر تغير بين يناير ويوليو في بيانات هذا العام.'}
-                </p>
-              </article>
-              {solarFacts ? (
-                <article className={routeStyles.insightCard}>
-                  <span className={routeStyles.insightKicker}>الشمس اليوم</span>
-                  <h3>الشروق والغروب</h3>
-                  <p>
-                    الشروق في {cityAr} عند <strong>{solarFacts.sunriseLabel}</strong> والغروب عند <strong>{solarFacts.sunsetLabel}</strong>
-                    {solarFacts.dayLengthLabel ? `، وطول النهار تقريباً ${solarFacts.dayLengthLabel}.` : '.'}
-                  </p>
-                </article>
-              ) : null}
-              {callTimeWindows.length > 0 && (
-                <article className={routeStyles.insightCard}>
-                  <span className={routeStyles.insightKicker}>الاتصال من العالم العربي</span>
-                  <h3>أفضل وقت للتواصل</h3>
-                  <p>
-                    لتصل مكالمتك في ساعات الدوام بـ{cityAr}، اتصل:{' '}
-                    {callTimeWindows.map((w, i) => (
-                      <span key={w.cityAr}>
-                        <strong>{w.cityAr}</strong>{' '}{w.windowStart}–{w.windowEnd}
-                        {i < callTimeWindows.length - 1 ? '، ' : '.'}
-                      </span>
-                    ))}
-                  </p>
-                </article>
-              )}
-            </div>
+          <QuickFactsGrid
+            headingId="city-time-answer-heading"
+            title={`حقائق سريعة عن ${cityAr}`}
+            description={`ما تحتاج معرفته عن ${cityAr} قبل مقارنة موعد أو حجز رحلة — الموقع والسياق العملي في مكان واحد.`}
+            items={quickFactItems}
+          />
         </section>
 
         {visibleSiblingCities.length > 0 && (
@@ -792,6 +791,7 @@ async function CityTimePageSections({
 
         <section className={`container mx-auto px-4 ${routeStyles.sectionBand}`}>
           <GeoInternalLinks
+            variant="cards"
             title={`خطوات تكمل وقت ${cityAr}`}
             description={`بعد معرفة الساعة في ${cityAr}، اختر المسار الذي يكمّل سؤالك: تاريخ ${countryAr} المحلي، صفحة الدولة، أو مقارنة الوقت مع مدينة أخرى.`}
             links={cityUtilityLinks}
@@ -875,6 +875,7 @@ async function CityTimePageSections({
         />
         <div className="mt-6">
           <GeoInternalLinks
+            variant="cards"
             title={`خطوات تكمل وقت ${cityAr}`}
             description={`بعد معرفة الساعة في ${cityAr}، اختر تاريخ ${countryAr} المحلي، صفحة الدولة، أو مقارنة الوقت مع مدينة أخرى.`}
             links={cityUtilityLinks}

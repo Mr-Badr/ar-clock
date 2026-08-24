@@ -1,0 +1,138 @@
+/* home/v2/interactive-link.css — Magic UI InteractiveHoverButton pattern
+   (magicui.design/docs/components/interactive-hover-button), plain CSS, tinted per usage via
+   the --ilink-accent custom property (see InteractiveLink.jsx).
+
+   Fourth pass, 2026-08-23 (owner: "not look like the effect in the website... contrast should
+   be better in dark and light"). Pulled the REAL current source from magicui's own MCP registry
+   to check against — two real divergences from it were the actual cause of both complaints:
+
+   1. The dot only scaled to 70x, the real component scales it 100.8x. On a 0.5rem dot that's the
+      difference between ~28rem and ~50rem of spread — 70x was cutting it close for anything wider
+      than a short label and could leave a visible unfilled sliver at the pill's far edge instead
+      of a clean full-coverage wipe, which reads as "doesn't look like the reference."
+   2. The real component's OUTER background never changes on hover (`bg-background` stays fixed
+      the whole time) — the dot alone becomes the button's entire visible fill once it scales up,
+      and the hover text uses `text-primary-foreground`, a color chosen specifically to contrast
+      against that ONE solid fill. This version was instead layering a second, independent
+      background change (a weak 10%-mixed accent tint) UNDER the dot, so the button was never
+      truly a solid accent color by the time text needed to read against it — an unpredictable
+      half-tone that's exactly why contrast felt off in both themes. Fixed by leaving the outer
+      background fixed (matching the reference) and letting the dot be the single, true full-
+      bleed fill — so `--text-on-accent`, the same token this codebase already uses everywhere
+      else text sits on a solid accent color, is correct here again. */
+
+.ilink {
+  --ilink-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: fit-content;
+  min-height: 2.75rem;
+  padding-inline: var(--space-5);
+  border-radius: 999px;
+  border: 1.5px solid var(--border-default);
+  background: var(--bg-surface-1);
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  text-decoration: none;
+  transition: border-color 450ms var(--ilink-ease), box-shadow 450ms var(--ilink-ease);
+}
+
+.ilink:hover,
+.ilink:focus-visible {
+  /* No translateY lift on purpose (owner: "do not make the button move up, keep the button at
+     it's place... we want just that effect inside without movement") — the dot-fill + text-swap
+     happening entirely inside the pill IS the effect; the button itself stays put. */
+  border-color: var(--ilink-accent);
+  box-shadow: 0 10px 24px -14px color-mix(in srgb, var(--ilink-accent) 55%, transparent);
+}
+
+.ilink-dot {
+  position: absolute;
+  inset-inline-start: var(--space-4);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--ilink-accent);
+  /* This duration only governs shrinking back down on mouse-leave (see the :hover rule below for
+     why entering uses its own, slower duration). Owner: leaving "looks cool" as-is. */
+  transition: transform 500ms var(--ilink-ease);
+  will-change: transform;
+}
+
+.ilink:hover .ilink-dot,
+.ilink:focus-visible .ilink-dot {
+  /* Matches the reference's own scale-[100.8] — big enough that a 0.5rem dot fully covers even
+     a long Arabic label before the pill's rounded edge clips it via .ilink's overflow:hidden. */
+  transform: scale(100);
+  /* Owner: "when I hover I see it faster... make it a little slower the first time" — a CSS
+     transition can have a different duration per direction simply by declaring it again on the
+     :hover rule itself, so entering (this rule) is deliberately slower than the 500ms above that
+     still governs leaving. Also swapped to a plain ease-out (no back-loaded easing) — the dot's
+     visible coverage grows with its AREA, not its scale factor, so the original curve made most
+     of the button look "already covered" very early in the timeline even though the transition
+     technically kept running — that mismatch between visual completion and actual duration is
+     what read as "rushed" despite a 500ms duration. */
+  transition: transform 750ms ease-out;
+}
+
+.ilink-face {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  /* Governs leaving (hover-face fading back out, idle-face returning) — kept at the original,
+     snappier pace; only entering is slowed down below, per the owner's feedback. */
+  transition: transform 450ms var(--ilink-ease), opacity 400ms var(--ilink-ease);
+}
+
+.ilink-face--idle {
+  padding-inline-start: var(--space-4);
+}
+
+.ilink:hover .ilink-face--idle,
+.ilink:focus-visible .ilink-face--idle {
+  transform: translateX(-1.1rem);
+  opacity: 0;
+  /* Slowed to match the dot's fill (see .ilink-dot's :hover rule) so the label exit and the
+     color sweep read as one deliberate motion instead of the text darting away first. */
+  transition: transform 700ms ease-out, opacity 650ms ease-out;
+}
+
+.ilink-face--hover {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(1.1rem);
+  opacity: 0;
+  /* Sits on the fully-expanded dot once hovered — a true solid --ilink-accent fill, not a weak
+     tint — so --text-on-accent (the same token every other on-accent surface in this codebase
+     uses) is the correct, guaranteed-contrast choice in both themes. */
+  color: var(--text-on-accent);
+}
+
+.ilink:hover .ilink-face--hover,
+.ilink:focus-visible .ilink-face--hover {
+  /* Slight overshoot past dead-center, mirroring the reference's own -translate-x-5 (it doesn't
+     settle exactly at 0 either) — reads as a confident single sweep rather than a mechanical
+     slide-and-stop. */
+  transform: translateX(-0.3rem);
+  opacity: 1;
+  /* Slowed to match the dot's fill entrance (see .ilink-dot) — arrives together with the color
+     sweep instead of snapping in ahead of it. */
+  transition: transform 400ms ease-out, opacity 650ms ease-out;
+}
+
+/* No prefers-reduced-motion override here on purpose (removed 2026-08-23, same day as the fix
+   above): this sweep only ever plays in response to the visitor's own active hover/focus, never
+   autoplays, so it stays active for reduced-motion users too — same call as the homepage marquee/
+   ShineBorder/scroll-stack (see base.css's reduced-motion kill-rule comment for the precedent).
+   `.ilink`/`.ilink-dot`/`.ilink-face` are exempted from that global kill rule so this component's
+   own transitions never get crushed to 0.01ms either. */

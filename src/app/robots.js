@@ -15,6 +15,13 @@ import { getSiteUrl } from '@/lib/site-config';
  *  - robots.txt must allow Googlebot
  *  - Pages must have original content
  *  - No cloaking or deceptive redirects
+ *
+ * AI crawlers (owner directive, 2026-08-23): deliberately let ALL AI bots read the site — no
+ * explicit block for GPTBot/ChatGPT-User/OAI-SearchBot/ClaudeBot/anthropic-ai/PerplexityBot/
+ * Google-Extended/etc. Every bot not named below inherits the `userAgent: '*'` allow rule as-is,
+ * which is the point: any current or future AI crawler gets through without this list needing to
+ * name it. AhrefsBot/SemrushBot stay blocked — that's a separate, unrelated call (competitive SEO
+ * tooling, not AI visibility) and wasn't part of this directive.
  */
 
 export default function robots() {
@@ -68,15 +75,7 @@ export default function robots() {
         ],
       },
       {
-        // Block known bad bots that waste crawl budget and skew analytics
-        userAgent: 'GPTBot',
-        disallow: '/',
-      },
-      {
-        userAgent: 'ChatGPT-User',
-        disallow: '/',
-      },
-      {
+        // Competitive SEO scraper — blocked deliberately, unrelated to AI-crawler policy above.
         userAgent: 'AhrefsBot',
         disallow: '/',
       },

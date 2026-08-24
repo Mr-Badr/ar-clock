@@ -1,5 +1,9 @@
 # Miqatona Routes And Sitemap Inventory
 
+Rewritten 2026-08-23 — the previous version described the pre-2026-08-09 architecture
+(`/calculators`, `/blog`, `/fahras`) which was fully retired that wave. This version was checked
+against the live site and the current codebase, not carried forward by assumption.
+
 Canonical production domain: `https://miqatona.com`
 
 Primary robots URL:
@@ -12,41 +16,63 @@ Primary sitemap submission URL:
 
 ### Core pages
 - `/` — homepage
-- `/fahras`
 - `/about`
+- `/author/[id]` — author bio pages (e.g. `/author/badr`)
 - `/contact`
 - `/privacy`
 - `/terms`
 - `/disclaimer`
 - `/editorial-policy`
+- `/countdown` — standalone countdown tool (deliberately `noindex` via `x-robots-tag` in
+  `src/proxy.ts`, not via page metadata — see the comment in `src/app/countdown/page.jsx`)
 
 ### Utility pages (public but intentionally not indexable)
-- `/search`
-- `/offline`
+- `/search` — internal search, `noindex, follow`
+- `/offline` — offline fallback, `noindex, nofollow`
 
-### Blog
-- `/blog`
-- `/blog/[slug]`
+### Retired (hard 404, no live route) — see `next.config.js` for the redirect exceptions below
+- `/calculators*` — replaced by `/tools/*` (2026-08-09). ~140 specific old URLs (the ones
+  confirmed via GSC to still carry real search impressions) 301-redirect to their closest living
+  `/tools/*` equivalent; everything else 404s by design.
+- `/blog*`, `/guide*`, `/guides*` — retired. A handful of specific legacy article URLs redirect to
+  their closest living `/tools/*` page (see `LEGACY_BLOG_CANONICAL_REDIRECTS` in `next.config.js`);
+  `src/app/guides` (the dead, page-less route directory) was deleted 2026-08-23.
+- `/fahras*` — retired discovery/site-map page. `/search` is now the only in-app discovery surface.
+- `/mwaqit-al-salat*` — prayer times, fully deleted (~155 files), no redirect.
+- `/map` — the real handler is now the `{ source: '/map', destination: '/' }` entry in
+  `LEGACY_INDEXING_REDIRECTS`. `src/app/map/route.ts` (an identical, but unreachable — Next.js
+  config-level redirects are matched before any app route — 308-to-`/` handler) was dead code and
+  was deleted 2026-08-23.
 
-### Calculators
-- `/calculators`
-- `/calculators/age/*`
-- `/calculators/building/*`
-- `/calculators/personal-finance/*`
-- `/calculators/sleep/*`
-- individual finance and percentage calculator routes
+### Tools
+- `/tools` — hub index
+- `/tools/<category>` — 24 categories: gulf-finance, personal-finance, sleep, health, education,
+  construction, electrical, plumbing, hvac, islamic, ecommerce, car-maintenance, carpenter,
+  cleaning, landscaping, pest-control, pools, elevators, welding, scaffolding, garage-doors,
+  aluminum-glass, cctv, attendance
+- `/tools/<category>/<tool>` — individual calculator/guide pages (169 as of 2026-08-23, tracked in
+  `src/lib/seo/calculator-route-manifest.js`)
 
 ### Time now
 - `/time-now`
 - `/time-now/[country]`
 - `/time-now/[country]/[city]`
 
+### Ramadan imsakiya
+- `/imsakiya`
+- `/imsakiya/[country]`
+- `/imsakiya/[country]/[city]`
+
 ### Holidays
 - `/holidays`
-- `/holidays/[slug]`
+- `/holidays/[slug]` — canonical event pages (alias slugs resolve but are excluded from the sitemap)
+- `/holidays/country` — country-hub directory
+- `/holidays/country/[country]` — per-country official-holidays hub (29 countries; `.ics` calendar
+  export at `/holidays/country/[country]/calendar.ics`)
 
 ### Time difference
 - `/time-difference`
+- `/time-difference/converter`
 - `/time-difference/[from]/[to]`
 
 ### Date
@@ -57,8 +83,10 @@ Primary sitemap submission URL:
 - `/date/converter`
 - `/date/gregorian-to-hijri`
 - `/date/hijri-to-gregorian`
+- `/date/hijri-months`
 - `/date/country` — country date directory
-- `/date/country/[countrySlug]` — priority countries are indexable; other valid countries use `noindex, follow`
+- `/date/country/[countrySlug]` — all real countries are indexable (was priority-only with
+  `noindex, follow` for the rest; broadened 2026-08-24 — see `GEO_ROUTE_INDEXING_POLICIES.dateCountry`)
 - `/date/calendar` — Gregorian calendar directory
 - `/date/calendar/[year]`
 - `/date/calendar/hijri` — Hijri calendar directory
@@ -70,120 +98,67 @@ Primary sitemap submission URL:
 
 ### Root sitemap layer
 - `/robots.txt`
-- `/sitemap-index.xml`
-- `/sitemap.xml`
+- `/sitemap-index.xml` — lists all 11 sitemaps below (source: `SITEMAP_INDEX_PATHS` in
+  `src/lib/seo/site-architecture.js`)
+- `/sitemap.xml` — curated root architecture pages, including `/tools/*` promoted as first-class
+  entries (deliberate duplication with `/tools/sitemap.xml` — harmless, see comment in
+  `src/lib/seo/site-architecture.js`)
 
 ### Feature sitemaps
-- `/calculators/sitemap.xml`
-- `/blog/sitemap.xml`
-- `/holidays/sitemap.xml`
-- `/time-difference/sitemap.xml`
-- `/time-now/sitemap.xml`
-- `/date/sitemap.xml` — feature-local diagnostic index
+- `/tools/sitemap.xml` — every `/tools/*` route, derived from `ALL_CALCULATOR_SEO_ROUTES`
+  (verified 2026-08-23: 169/169 in sync with the actual `page.jsx` files on disk, no drift either
+  direction)
+- `/holidays/sitemap.xml` — canonical event pages + all 29 `/holidays/country/[country]` hubs
+  (country hubs added 2026-08-23 — they existed live and were internally linked from `/holidays`
+  but had never been sitemapped)
+- `/time-difference/sitemap.xml` — grew ~155 → ~8,200 URLs 2026-08-24: hub-pair generation now
+  pulls real per-country cities DB-first (`getTopCitiesByCountry`) instead of one hub city per
+  country — see `src/lib/seo/time-difference-priority-pairs.js`
+- `/time-now/sitemap.xml` — already ALL-scoped (every real country + city, `GEO_ROUTE_INDEXING_
+  POLICIES.timeNow`); unchanged 2026-08-24, used as the reference pattern for the other fixes below
+- `/imsakiya/sitemap.xml` — broadened 2026-08-24 from a ~20-country/60-city curated slice to all
+  real countries/cities (`getAllCountrySlugs`/`getAllCityParams`)
+- `/date/sitemaps/static`
+- `/date/sitemaps/countries` — broadened 2026-08-24 from priority-only (~38 countries) to all real
+  countries (`GEO_ROUTE_INDEXING_POLICIES.dateCountry` scope PRIORITY → ALL)
+- `/date/sitemaps/calendars`
 - `/date/gregorian/sitemap.xml` — rolling Gregorian daily pages within ±370 days
 - `/date/hijri/sitemap.xml` — rolling Hijri daily pages within ±370 days
 
-### Date child sitemap routes
-- `/date/sitemaps/static`
-- `/date/sitemaps/countries`
-- `/date/sitemaps/calendars`
-- `/date/gregorian/sitemap/[year]` — legacy-compatible diagnostic route filtered to the rolling window
-- `/date/hijri/sitemap/[year]` — legacy-compatible diagnostic route filtered to the rolling window
+### Date child/diagnostic sitemap routes (not in `SITEMAP_INDEX_PATHS`, exist for legacy compatibility)
+- `/date/sitemap.xml` — feature-local diagnostic index
+- `/date/gregorian/sitemap/[year]`
+- `/date/hijri/sitemap/[year]`
 
-## Sitemap Coverage Map
+## Legacy Redirects (`next.config.js`)
 
-### Covered by `/sitemap.xml`
-- `/`
-- `/fahras`
-- `/time-now`
-- `/holidays`
-- `/time-difference`
-- `/calculators`
-- `/calculators/sleep`
-- `/calculators/personal-finance`
-- `/calculators/finance`
-- `/about`
-- `/editorial-policy`
-- `/terms`
-- `/disclaimer`
-- `/privacy`
-- `/contact`
+Two arrays, both mapped to `permanent: true` (308) redirects:
 
-### Covered by `/blog/sitemap.xml`
-- `/blog`
-- canonical `/blog/[slug]` article pages
+- `LEGACY_BLOG_CANONICAL_REDIRECTS` — old `/blog/*`, `/guide/*`, `/guides/*` article URLs still
+  carrying search visibility, repointed to their closest living `/tools/*` page.
+- `LEGACY_INDEXING_REDIRECTS` — ~140 entries. The first block (found 2026-08-11 via a live
+  `site:miqatona.com` check) covers old `/calculators/*` URLs Google was still ranking plus a few
+  typo/legacy geo slugs (`/time-now/netherlands` → `/time-now/the-netherlands`, Arabic-slug
+  variants, retired sub-city pages). The large bulk block (added 2026-08-18) covers all
+  `/calculators/*` URLs confirmed via a real GSC export to still generate impressions/clicks
+  (126K impressions / 1,850 clicks per 28 days across 117 URLs at the time) — exact tool matches
+  point to their direct `/tools/*` equivalent, retired tools with no direct replacement (e.g.
+  `percentage`, `vat`, generic insurance/mortgage/loan variants) point to the closest relevant hub.
 
-### Covered by `/calculators/sitemap.xml`
-- `/calculators`
-- `/calculators/sleep`
-- `/calculators/sleep/bedtime`
-- `/calculators/sleep/wake-time`
-- `/calculators/sleep/sleep-duration`
-- `/calculators/sleep/nap-calculator`
-- `/calculators/sleep/sleep-debt`
-- `/calculators/sleep/sleep-needs-by-age`
-- `/calculators/personal-finance`
-- `/calculators/personal-finance/emergency-fund`
-- `/calculators/personal-finance/debt-payoff`
-- `/calculators/personal-finance/savings-goal`
-- `/calculators/personal-finance/net-worth`
-- `/calculators/finance`
-- `/calculators/age`
-- `/calculators/age/*`
-- `/calculators/building`
-- `/calculators/building/cement`
-- `/calculators/building/rebar`
-- `/calculators/building/tiles`
-- `/calculators/building/[country]`
-- `/calculators/end-of-service-benefits`
-- `/calculators/monthly-installment`
-- `/calculators/vat`
-- `/calculators/percentage`
+**Verified 2026-08-23**: all 140 redirect sources are unique (no conflicting duplicate mappings),
+and all 65 unique destinations return live `200` pages — no broken redirect chains, no soft-404s
+in this list.
 
-### Legacy article redirects
-- `/guide`, `/guides`, `/guide/*`, and `/guides/*` permanently redirect to the
-  equivalent canonical `/blog` route.
-- `/map` permanently redirects to `/fahras`.
-- Legacy article URLs are not submitted in any sitemap.
-
-### Covered by `/holidays/sitemap.xml`
-- canonical `/holidays/[slug]` pages with `published` or `monitored` status
-- holiday alias slugs are intentionally excluded so they cannot compete with canonicals
-
-### Covered by `/time-difference/sitemap.xml`
-- `/time-difference`
-- popular `/time-difference/[from]/[to]` pairs from the data source
-
-### Covered by `/time-now/sitemap.xml`
-- `/time-now/[country]`
-- all valid `/time-now/[country]/[city]` pages
-
-### Covered by `/date/sitemaps/static`
-- `/date`
-- `/date/today`
-- `/date/today/hijri`
-- `/date/today/gregorian`
-- `/date/converter`
-- `/date/hijri-to-gregorian`
-- `/date/gregorian-to-hijri`
-
-### Covered by `/date/sitemaps/countries`
-- priority `/date/country/[countrySlug]` pages only
-
-### Covered by `/date/sitemaps/calendars`
-- `/date/calendar/[year]` for the current Gregorian year ±2
-- `/date/calendar/hijri/[year]` for the current Hijri year ±2
-
-### Covered by rolling daily-date sitemaps
-- `/date/[year]/[month]/[day]` within 370 days before or after today
-- `/date/hijri/[year]/[month]/[day]` within the same Gregorian relevance window
+There is also a general, unrelated redirect block for `www` → apex host, and two stray
+`/&`/`/%26` cleanup redirects.
 
 ## Intentionally Not In Sitemaps
 
 - `/search` and all query variants — internal search results use `noindex, follow`
 - `/offline` — utility/offline fallback page uses `noindex, nofollow`
+- `/countdown` — real, indexable-quality content but deliberately `noindex` via response header
+  (see `src/app/countdown/page.jsx` comment) rather than page metadata, to avoid a prerender issue
 - invalid dynamic placeholders and unknown country/city/date paths — return `404`
-- `/fahras?q=...` and `/fahras?tab=...` — variants use `X-Robots-Tag: noindex, follow`; only `/fahras` is indexable
 - holiday alias routes — excluded in favor of their canonical holiday pages
 - daily Gregorian and Hijri date pages outside the rolling ±370-day window
 - Gregorian and Hijri calendar years outside the current-year ±2 window
@@ -202,10 +177,19 @@ Recommended steady-state submission:
 
 Optional temporary diagnostic submissions:
 - `https://miqatona.com/sitemap.xml`
+- `https://miqatona.com/tools/sitemap.xml`
 - `https://miqatona.com/holidays/sitemap.xml`
 - `https://miqatona.com/time-difference/sitemap.xml`
 - `https://miqatona.com/time-now/sitemap.xml`
+- `https://miqatona.com/imsakiya/sitemap.xml`
 - `https://miqatona.com/date/sitemaps/static`
 - `https://miqatona.com/date/sitemaps/countries`
 - `https://miqatona.com/date/sitemaps/calendars`
 - `https://miqatona.com/date/sitemap.xml` — optional feature-local diagnostic index
+
+## AI crawler policy (updated 2026-08-23)
+
+`robots.txt` (`src/app/robots.js`) no longer blocks any AI crawler — the previous explicit
+`GPTBot`/`ChatGPT-User` disallow blocks were removed on owner directive so every AI bot (named or
+not yet invented) falls through to the `userAgent: '*'` allow rule. `AhrefsBot`/`SemrushBot` remain
+blocked — that's an unrelated, separate call (competitive SEO tooling, not AI visibility).

@@ -11,8 +11,25 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Share2, Check, Sun, Moon } from 'lucide-react';
+import { Share2, Check, Sun, Moon, Minus } from 'lucide-react';
 import { useCopyFeedback } from '@/lib/share.client';
+
+/**
+ * Three real DST states, not a صيفي/شتوي binary:
+ *   - City never observes DST at all (e.g. Riyadh, fixed UTC+3 year-round) → neutral
+ *     "ثابت" badge. Showing "شتوي" here used to imply a seasonal system the city doesn't
+ *     have — confusing next to the DST table's own "لا" answer for "يطبق التوقيت الصيفي؟".
+ *   - City observes DST and it's currently active → "صيفي" (sun, warning tone).
+ *   - City observes DST but it's currently inactive → "شتوي" (moon, info tone).
+ */
+function dstBadge(observesDST, isActive) {
+  if (!observesDST) {
+    return { cls: 'badge-default', icon: Minus, label: 'ثابت' };
+  }
+  return isActive
+    ? { cls: 'badge-warning', icon: Sun, label: 'صيفي' }
+    : { cls: 'badge-info', icon: Moon, label: 'شتوي' };
+}
 
 function clockParts(tz, date) {
   try {
@@ -41,7 +58,11 @@ function diffTone(absHours) {
 }
 
 export default function HeroLiveComparison(props) {
-  const { fromCity, toCity, diffMinutes, diffLabel, fromHasDST, toHasDST, fromInitial, toInitial, shareHref } = props;
+  const {
+    fromCity, toCity, diffMinutes, diffLabel,
+    fromObservesDST, toObservesDST, fromDSTActive, toDSTActive,
+    fromInitial, toInitial, shareHref,
+  } = props;
   const [fromT, setFromT] = useState(fromInitial);
   const [toT, setToT] = useState(toInitial);
   const { copied, copy } = useCopyFeedback();
@@ -85,9 +106,15 @@ export default function HeroLiveComparison(props) {
         <div className="td-hero__city">
           <p className="td-hero__name">{fromCity.city_name_ar}</p>
           <p className="td-hero__time tabular-nums" dir="ltr" suppressHydrationWarning>{fmt12(fromT.h, fromT.m, fromT.s)}</p>
-          <span className={`badge ${fromHasDST ? 'badge-warning' : 'badge-default'}`}>
-            {fromHasDST ? <><Sun size={10} aria-hidden="true" /> صيفي</> : <><Moon size={10} aria-hidden="true" /> شتوي</>}
-          </span>
+          {(() => {
+            const b = dstBadge(fromObservesDST, fromDSTActive);
+            const Icon = b.icon;
+            return (
+              <span className={`badge ${b.cls}`}>
+                <Icon size={10} aria-hidden="true" /> {b.label}
+              </span>
+            );
+          })()}
         </div>
 
         <div className="td-hero__diff">
@@ -102,9 +129,15 @@ export default function HeroLiveComparison(props) {
         <div className="td-hero__city">
           <p className="td-hero__name">{toCity.city_name_ar}</p>
           <p className="td-hero__time tabular-nums" dir="ltr" suppressHydrationWarning>{fmt12(toT.h, toT.m, toT.s)}</p>
-          <span className={`badge ${toHasDST ? 'badge-warning' : 'badge-default'}`}>
-            {toHasDST ? <><Sun size={10} aria-hidden="true" /> صيفي</> : <><Moon size={10} aria-hidden="true" /> شتوي</>}
-          </span>
+          {(() => {
+            const b = dstBadge(toObservesDST, toDSTActive);
+            const Icon = b.icon;
+            return (
+              <span className={`badge ${b.cls}`}>
+                <Icon size={10} aria-hidden="true" /> {b.label}
+              </span>
+            );
+          })()}
         </div>
       </div>
     </div>

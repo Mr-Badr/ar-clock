@@ -15,8 +15,13 @@ export const GEO_SEO_SCOPE = {
 type GeoSeoScope = typeof GEO_SEO_SCOPE[keyof typeof GEO_SEO_SCOPE];
 
 export const GEO_ROUTE_INDEXING_POLICIES = {
+  // Was PRIORITY-scoped (~38 of 252 real countries) even though the page itself renders the same
+  // generic, genuinely useful content (local Gregorian + Hijri date, capital-city timezone) for
+  // ANY valid country slug — there was no content-thinness reason for the cap, just an unused
+  // ceiling. Matches `timeNow` below now: DB-first, ALL real countries indexable. Found 2026-08-24
+  // during the same audit that fixed /time-difference's hub-pair coverage.
   dateCountry: {
-    countryScope: GEO_SEO_SCOPE.PRIORITY,
+    countryScope: GEO_SEO_SCOPE.ALL,
   },
   timeNow: {
     countryScope: GEO_SEO_SCOPE.ALL,

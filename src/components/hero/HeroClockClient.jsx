@@ -14,8 +14,11 @@ import { SectionDivider } from '@/components/shared/primitives';
 import {
   exitActiveFullscreen,
   getActiveFullscreenElement,
+  getFullscreenControlsVisibilityStyle,
+  getFullscreenCursorStyle,
   requestElementFullscreen,
   syncFullscreenDocumentState,
+  useFullscreenIdleHide,
 } from '@/components/clocks/fullscreenShared';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -303,6 +306,9 @@ export default function HeroClockClient({
     };
   }, [isFS]);
 
+  // ── Auto-hide top bar after a few idle seconds in fullscreen ──────────────
+  const controlsVisible = useFullscreenIdleHide(isFS);
+
   // ── Handlers ─────────────────────────────────────────────────────────────
   const handleShare = async () => {
     await copy(getCurrentPageUrl());
@@ -335,9 +341,15 @@ export default function HeroClockClient({
       className={`${styles.clockRoot} ${isFS ? styles.clockRootFullscreen : ''}`}
       dir="rtl"
       suppressHydrationWarning
+      style={isFS ? getFullscreenCursorStyle(controlsVisible) : undefined}
     >
-      {/* ── TOP BAR ─────────────────────────────────────────────── */}
-      <div className={styles.topbar}>
+      {/* ── TOP BAR ───────────────────────────────────────────────
+          Only fades/idle-hides while actually fullscreen — the
+          embedded (non-fullscreen) card always keeps its buttons. */}
+      <div
+        className={styles.topbar}
+        style={isFS ? getFullscreenControlsVisibilityStyle(controlsVisible) : undefined}
+      >
 
         <button
           type="button"

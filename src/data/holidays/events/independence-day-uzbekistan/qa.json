@@ -1,0 +1,17 @@
+{
+  "slug": "independence-day-uzbekistan",
+  "publishStatus": "published",
+  "checks": {
+    "contentReady": true,
+    "factChecked": true,
+    "schemaValid": true,
+    "seoValidated": true,
+    "hasHardcodedYear": false
+  },
+  "notes": [
+    "fact-source: astanatimes.com: Uzbekistan visa-free regime for Bahrain/Kuwait/Oman from June 1 2025",
+    "fact-source: tourismdailynews.com: Jazeera Airways doubled Kuwaiti visitors to Uzbekistan",
+    "fact-check: 1 سبتمبر يوم استقلال أوزبكستان عن الاتحاد السوفييتي 1991، إعفاء التأشيرة يشمل البحرين والكويت وعُمان فقط منذ يونيو 2025، السعودية والإمارات وقطر تحتاج تأشيرة إلكترونية"
+  ],
+  "updatedAt": "2026-08-23T05:36:16.835Z"
+}
