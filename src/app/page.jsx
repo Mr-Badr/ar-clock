@@ -98,19 +98,6 @@ export default function HomePage() {
     })),
   };
 
-  const websiteSearchSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: SITE_BRAND,
-    url: SITE_URL,
-    inLanguage: 'ar',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: `${SITE_URL}/search?q={search_term_string}`,
-      'query-input': 'required name=search_term_string',
-    },
-  };
-
   const homeSectionsSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -135,8 +122,16 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-base text-primary home-hub-page" dir="rtl">
+      {/* Real bug found + fixed 2026-08-24 (SEO cleanup pass): this used to also render its own
+          `websiteSearchSchema` (@type WebSite + SearchAction, target `/search?q=...`) — an exact
+          duplicate of the WebSite+SearchAction block `SiteWideSchemas` (src/app/layout.tsx)
+          already renders on every page including this one, just with fewer fields (no `@id`,
+          `alternateName`, `inLanguage`, `about`, `publisher`). `JsonLd` does no deduplication (see
+          its own source — it just maps every item to its own `<script>` tag), so the homepage was
+          literally shipping two competing `WebSite` entities in one page's structured data. Removed
+          the redundant local copy; the sitewide one already covers this page. */}
       <JsonLd
-        data={[homeCollectionSchema, homeSectionsSchema, websiteSearchSchema, homeFaqSchema]}
+        data={[homeCollectionSchema, homeSectionsSchema, homeFaqSchema]}
       />
       <main>
         <HeroV2 />
