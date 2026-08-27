@@ -9,7 +9,6 @@
 // /tools" job instead, so the footer doesn't need to repeat it.
 import Image from "next/image";
 import Link from "next/link";
-import { Clock, ArrowLeft } from "lucide-react";
 
 import { SITE_BRAND, SITE_CONTACT_EMAIL } from "@/lib/site-config";
 import "./footer.css";
@@ -63,9 +62,14 @@ const Footer = () => {
         <div className="footer-main">
           <div className="footer-brand">
             <Link href="/" className="footer-brand-logo" aria-label={`${SITE_BRAND} - الصفحة الرئيسية`}>
-              <div className="footer-brand-icon">
-                <Clock size={20} aria-hidden="true" />
-              </div>
+              <img
+                src="/img/logo.svg"
+                alt=""
+                className="footer-brand-icon"
+                width={36}
+                height={36}
+                aria-hidden="true"
+              />
               <span className="footer-brand-name">{SITE_BRAND}</span>
             </Link>
 

@@ -1,6 +1,5 @@
 // layout/header.jsx
 import Link from "next/link";
-import { ClockIcon } from "@phosphor-icons/react/ssr";
 import NavLinks from "./NavLinks";
 import ThemeToggle from "./ThemeToggle";
 import MobileMenu from "./MobileMenu";
@@ -57,9 +56,13 @@ export default function Header() {
             aria-label={`${SITE_BRAND} - الصفحة الرئيسية`}
             className="header-logo"
           >
-            <span className="header-logo-mark" aria-hidden="true">
-              <ClockIcon className="header-logo-icon" weight="duotone" />
-            </span>
+            <img
+              src="/img/logo.svg"
+              alt={SITE_BRAND}
+              className="header-logo-img"
+              width={32}
+              height={32}
+            />
           </Link>
 
           <nav className="header-center-nav" aria-label="التنقل الرئيسي">

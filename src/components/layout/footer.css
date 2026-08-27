@@ -79,17 +79,8 @@
 .footer-brand-icon {
   width: var(--space-9);
   height: var(--space-9);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   flex: 0 0 auto;
-  border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.1);
-  color: inherit;
-}
-
-.light .footer-brand-icon {
-  background: rgba(11, 17, 32, 0.08);
 }
 
 .footer-brand-name {
