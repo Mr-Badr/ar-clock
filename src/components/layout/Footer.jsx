@@ -64,14 +64,14 @@ const Footer = () => {
             <Link href="/" className="footer-brand-logo" aria-label={`${SITE_BRAND} - الصفحة الرئيسية`}>
               <img
                 src="/img/logo.svg"
-                alt=""
+                alt={SITE_BRAND}
                 className="footer-brand-icon"
-                width={36}
-                height={36}
-                aria-hidden="true"
+                width={72}
+                height={72}
               />
-              <span className="footer-brand-name">{SITE_BRAND}</span>
             </Link>
+
+            <h2 className="footer-brand-name">{SITE_BRAND}</h2>
 
             <p className="footer-brand-desc">
               أدوات وحاسبات عربية، ومواعيد المناسبات — بلا تسجيل، وبتجربة بسيطة وسريعة.
