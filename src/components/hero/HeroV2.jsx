@@ -30,6 +30,15 @@ export default function HeroV2() {
             fill
             priority
             sizes="100vw"
+            // Owner, 2026-08-27: "hero img... low resolution", then "make them super clean and
+            // clear in all devices" — bumped from Next's default 75 to 90 (the max whitelisted
+            // in next.config.js's `images.qualities`). This is the single largest, most visible
+            // photo on the site (full-bleed, above the fold, first thing every visitor sees) —
+            // worth the extra bytes for less visible compression artifacting. Paired with
+            // next.config.js's deviceSizes fix (same report), which addresses the bigger half of
+            // the original bug: a missing large-desktop srcset tier forcing this image to
+            // upscale on most laptop/desktop widths.
+            quality={90}
             className="hero-v2-img"
           />
           <div className="hero-v2-scrim" aria-hidden="true" />

@@ -331,7 +331,25 @@ const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 86400,
-    deviceSizes: [390, 640, 750, 828, 1080, 1200],
+    // Owner, 2026-08-27: "why i see the image in hero with lose resolution" — this list was
+    // deliberately tuned mobile-first (site is ~96% mobile traffic) and capped at 1200, but the
+    // hero's <Image> renders full-bleed (`sizes="100vw"`) — on ANY screen wider than 1200px
+    // (the large majority of real laptop/desktop widths: 1366, 1440, 1920, 2560...), the browser
+    // had no larger srcset candidate to pick and was forced to stretch the 1200px-wide image
+    // across a much wider box, which is exactly what read as "low resolution." Added the common
+    // desktop tiers (Next's own default list already goes up to 3840 — this project had trimmed
+    // below that on purpose for bandwidth, with this blur as an unintended side effect). The
+    // small mobile-tuned sizes stay untouched, so the ~96% mobile majority's requests are
+    // unaffected — these larger candidates only ever get requested by browsers whose viewport
+    // actually warrants them.
+    deviceSizes: [390, 640, 750, 828, 1080, 1200, 1440, 1920, 2560],
+    // Next 16 rejects any `quality` prop value not explicitly whitelisted here (confirmed via a
+    // real 400 response) — 75 stays as the sitewide implicit default for every other `<Image>`
+    // (calculator icons, event thumbnails, etc., where bandwidth matters more than photographic
+    // fidelity); 90 is opt-in only for the hero and footer's full-bleed background photos
+    // (owner: "make them super clean and clear images in all devices" — these are the two
+    // largest, most visually-important images on the site, worth the extra bytes).
+    qualities: [75, 90],
   },
 
   // ── Compiler ─────────────────────────────────────────────────────────────────

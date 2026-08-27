@@ -60,6 +60,9 @@ const Footer = () => {
         alt=""
         fill
         sizes="100vw"
+        // Same `sizes="100vw"` full-bleed pattern as the hero, same fix (2026-08-27) — see
+        // HeroV2.jsx's comment and next.config.js's deviceSizes/qualities for the root cause.
+        quality={90}
         className="footer-bg-img"
         aria-hidden="true"
       />
